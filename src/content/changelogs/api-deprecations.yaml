@@ -12,22 +12,22 @@ entries:
 
     Deprecated APIs:
 
-    - GET /zones/:zone_id/firewall/rules
-    - POST /zones/:zone_id/firewall/rules
-    - PATCH /zones/:zone_id/firewall/rules
-    - PUT /zones/:zone_id/firewall/rules
-    - DELETE /zones/:zone_id/firewall/rules
-    - GET /zones/:zone_id/firewall/rules/:rule_id
-    - PATCH /zones/:zone_id/firewall/rules/:rule_id
-    - PUT /zones/:zone_id/firewall/rules/:rule_id
-    - DELETE /zones/:zone_id/firewall/rules/:rule_id
-    - GET /zones/:zone_id/filters
-    - POST /zones/:zone_id/filters
-    - PUT /zones/:zone_id/filters
-    - DELETE /zones/:zone_id/filters
-    - GET /zones/:zone_id/filters/:filter_id
-    - PUT /zones/:zone_id/filters/:filter_id
-    - DELETE /zones/:zone_id/filters/:filter_id
+    - `GET /zones/:zone_id/firewall/rules`
+    - `POST /zones/:zone_id/firewall/rules`
+    - `PATCH /zones/:zone_id/firewall/rules`
+    - `PUT /zones/:zone_id/firewall/rules`
+    - `DELETE /zones/:zone_id/firewall/rules`
+    - `GET /zones/:zone_id/firewall/rules/:rule_id`
+    - `PATCH /zones/:zone_id/firewall/rules/:rule_id`
+    - `PUT /zones/:zone_id/firewall/rules/:rule_id`
+    - `DELETE /zones/:zone_id/firewall/rules/:rule_id`
+    - `GET /zones/:zone_id/filters`
+    - `POST /zones/:zone_id/filters`
+    - `PUT /zones/:zone_id/filters`
+    - `DELETE /zones/:zone_id/filters`
+    - `GET /zones/:zone_id/filters/:filter_id`
+    - `PUT /zones/:zone_id/filters/:filter_id`
+    - `DELETE /zones/:zone_id/filters/:filter_id`
 
     Replacement: [WAF custom rules](/waf/custom-rules/)
 
@@ -38,20 +38,20 @@ entries:
     
     Deprecated APIs:
 
-    - GET /zones/:zone_id/firewall/waf/packages
-    - GET /zones/:zone_id/firewall/waf/packages/:package_id
-    - PATCH /zones/:zone_id/firewall/waf/packages/:package_id
-    - GET /zones/:zone_id/firewall/waf/packages/:package_id/groups
-    - GET /zones/:zone_id/firewall/waf/packages/:package_id/groups/:group_id
-    - PATCH /zones/:zone_id/firewall/waf/packages/:package_id/groups/:group_id
-    - GET /zones/:zone_id/firewall/waf/packages/:package_id/rules
-    - GET /zones/:zone_id/firewall/waf/packages/:package_id/rules/:rule_id
-    - PATCH /zones/:zone_id/firewall/waf/packages/:package_id/rules/:rule_id
-    - GET /zones/:zone_id/firewall/waf/overrides
-    - POST /zones/:zone_id/firewall/waf/overrides
-    - GET /zones/:zone_id/firewall/waf/overrides/:override_id
-    - PUT /zones/:zone_id/firewall/waf/overrides/:override_id
-    - DELETE /zones/:zone_id/firewall/waf/overrides/:override_id
+    - `GET /zones/:zone_id/firewall/waf/packages`
+    - `GET /zones/:zone_id/firewall/waf/packages/:package_id`
+    - `PATCH /zones/:zone_id/firewall/waf/packages/:package_id`
+    - `GET /zones/:zone_id/firewall/waf/packages/:package_id/groups`
+    - `GET /zones/:zone_id/firewall/waf/packages/:package_id/groups/:group_id`
+    - `PATCH /zones/:zone_id/firewall/waf/packages/:package_id/groups/:group_id`
+    - `GET /zones/:zone_id/firewall/waf/packages/:package_id/rules`
+    - `GET /zones/:zone_id/firewall/waf/packages/:package_id/rules/:rule_id`
+    - `PATCH /zones/:zone_id/firewall/waf/packages/:package_id/rules/:rule_id`
+    - `GET /zones/:zone_id/firewall/waf/overrides`
+    - `POST /zones/:zone_id/firewall/waf/overrides`
+    - `GET /zones/:zone_id/firewall/waf/overrides/:override_id`
+    - `PUT /zones/:zone_id/firewall/waf/overrides/:override_id`
+    - `DELETE /zones/:zone_id/firewall/waf/overrides/:override_id`
 
     Replacement: [WAF Managed Rules](/waf/managed-rules/) (new version)
 
@@ -62,11 +62,11 @@ entries:
 
     Deprecated API:
 
-    - GET /zones/:zone_id/rate_limits
-    - POST /zones/:zone_id/rate_limits
-    - GET /zones/:zone_id/rate_limits/:rate_limit_id
-    - PUT /zones/:zone_id/rate_limits/:rate_limit_id
-    - DELETE /zones/:zone_id/rate_limits/:rate_limit_id
+    - `GET /zones/:zone_id/rate_limits`
+    - `POST /zones/:zone_id/rate_limits`
+    - `GET /zones/:zone_id/rate_limits/:rate_limit_id`
+    - `PUT /zones/:zone_id/rate_limits/:rate_limit_id`
+    - `DELETE /zones/:zone_id/rate_limits/:rate_limit_id`
 
     Replacement: [Rate limiting rules](/waf/rate-limiting-rules/) (new version)
     
@@ -94,11 +94,11 @@ entries:
 
     Modified API:
 
-    - GET /zones/:zone_id/dns_records
-    - POST /zones/:zone_id/dns_records
-    - GET /zones/:zone_id/dns_records/:dns_record_id
-    - PATCH /zones/:zone_id/dns_records/:dns_record_id
-    - PUT /zones/:zone_id/dns_records/:dns_record_id
+    - `GET /zones/:zone_id/dns_records`
+    - `POST /zones/:zone_id/dns_records`
+    - `GET /zones/:zone_id/dns_records/:dns_record_id`
+    - `PATCH /zones/:zone_id/dns_records/:dns_record_id`
+    - `PUT /zones/:zone_id/dns_records/:dns_record_id`
 
 - publish_date: '2024-10-01'
   title: "DNS Records: Error chains for DNS validation errors"
@@ -154,10 +154,10 @@ entries:
 
     Deprecated APIs:
 
-    - GET /zones/:zone_id/dns_settings/use_apex_ns
-    - PATCH /zones/:zone_id/dns_settings/use_apex_ns
-    - GET /zones/:zone_id/dns_settings/secondary_overrides
-    - PATCH /zones/:zone_id/dns_settings/secondary_overrides
+    - `GET /zones/:zone_id/dns_settings/use_apex_ns`
+    - `PATCH /zones/:zone_id/dns_settings/use_apex_ns`
+    - `GET /zones/:zone_id/dns_settings/secondary_overrides`
+    - `PATCH /zones/:zone_id/dns_settings/secondary_overrides`
 
 - publish_date: '2024-08-15'
   title: "Brotli"
@@ -166,8 +166,8 @@ entries:
 
     Deprecated APIs:
 
-    - GET /zones/:zone_id/settings/brotli
-    - PATCH /zones/:zone_id/settings/brotli
+    - `GET /zones/:zone_id/settings/brotli`
+    - `PATCH /zones/:zone_id/settings/brotli`
 
     Enterprise customers can override Cloudflare's default compression behavior using [Compression Rules](/rules/compression-rules/).
 
@@ -178,8 +178,8 @@ entries:
 
     Deprecated APIs:
 
-    - GET /zones/:zone_id/settings/minify
-    - PATCH /zones/:zone_id/settings/minify
+    - `GET /zones/:zone_id/settings/minify`
+    - `PATCH /zones/:zone_id/settings/minify`
 
 - publish_date: '2024-07-14'
   title: "DNS Records: 'locked' Field"
@@ -188,11 +188,11 @@ entries:
 
     Modified API:
 
-    - GET /zones/:zone_id/dns_records
-    - POST /zones/:zone_id/dns_records
-    - GET /zones/:zone_id/dns_records/:dns_record_id
-    - PATCH /zones/:zone_id/dns_records/:dns_record_id
-    - PUT /zones/:zone_id/dns_records/:dns_record_id
+    - `GET /zones/:zone_id/dns_records`
+    - `POST /zones/:zone_id/dns_records`
+    - `GET /zones/:zone_id/dns_records/:dns_record_id`
+    - `PATCH /zones/:zone_id/dns_records/:dns_record_id`
+    - `PUT /zones/:zone_id/dns_records/:dns_record_id`
 
 - publish_date: '2024-06-30'
   title: "Mobile redirect"
@@ -201,8 +201,8 @@ entries:
 
     Deprecated API:
 
-    - GET /zones/:zone_identifier/settings/mobile_redirect
-    - PATCH /zones/:zone_identifier/settings/mobile_redirect
+    - `GET /zones/:zone_identifier/settings/mobile_redirect`
+    - `PATCH /zones/:zone_identifier/settings/mobile_redirect`
 
     Replacement: [Single Redirects](/rules/url-forwarding/single-redirects/)
 
@@ -213,8 +213,8 @@ entries:
 
     Deprecated APIs:
 
-    - GET /zones/:zone_id/settings/server_side_exclude
-    - PATCH /zones/:zone_id/settings/server_side_exclude
+    - `GET /zones/:zone_id/settings/server_side_exclude`
+    - `PATCH /zones/:zone_id/settings/server_side_exclude`
 
 - publish_date: '2024-05-31'
   title: "Name-Related Data Fields on SRV (DNS) Records"
@@ -251,11 +251,11 @@ entries:
 
     Modified API:
 
-    - GET /zones/:zone_id/dns_records
-    - POST /zones/:zone_id/dns_records
-    - GET /zones/:zone_id/dns_records/:dns_record_id
-    - PATCH /zones/:zone_id/dns_records/:dns_record_id
-    - PUT /zones/:zone_id/dns_records/:dns_record_id
+    - `GET /zones/:zone_id/dns_records`
+    - `POST /zones/:zone_id/dns_records`
+    - `GET /zones/:zone_id/dns_records/:dns_record_id`
+    - `PATCH /zones/:zone_id/dns_records/:dns_record_id`
+    - `PUT /zones/:zone_id/dns_records/:dns_record_id`
 
 - publish_date: '2024-03-31'
   title: "Privacy Pass API Removal"
@@ -266,8 +266,8 @@ entries:
 
     Deprecated API:
 
-    - GET zones/:zone_identifier/settings/privacy_pass
-    - POST zones/:zone_identifier/settings/privacy_pass
+    - `GET zones/:zone_identifier/settings/privacy_pass`
+    - `POST zones/:zone_identifier/settings/privacy_pass`
 
 - publish_date: '2024-02-04'
   title: "Argo Tunnel"
@@ -276,10 +276,10 @@ entries:
 
     Deprecated API:
 
-    - GET accounts/:account_identifier/tunnels
-    - POST accounts/:account_identifier/tunnels
-    - GET accounts/:account_identifier/tunnels/:tunnel_id
-    - DELETE accounts/:account_identifier/tunnels/:tunnel_id
+    - `GET accounts/:account_identifier/tunnels`
+    - `POST accounts/:account_identifier/tunnels`
+    - `GET accounts/:account_identifier/tunnels/:tunnel_id`
+    - `DELETE accounts/:account_identifier/tunnels/:tunnel_id`
 
     Replacement:
     Cloudflare Tunnel API
@@ -311,9 +311,9 @@ entries:
 
     Deprecated API:
 
-    - GET `accounts/{account_identifier}/billing/profile`
-    - GET `user/billing/profile`
-    - GET `user/billing/history`
+    - `GET accounts/{account_identifier}/billing/profile`
+    - `GET user/billing/profile`
+    - `GET user/billing/history`
 
 - publish_date: '2023-04-03'
   title: "Load Balancing - notification_email"
@@ -329,14 +329,15 @@ entries:
 
     Deprecated API:
 
-    - GET accounts/:identifier/access/bookmarks
-    - GET accounts/:identifier/access/bookmarks/:uuid
-    - POST accounts/:identifier/access/bookmarks/:uuid
-    - PUT accounts/:identifier/access/bookmarks/:uuid
-    - DELETE accounts/:identifier/access/bookmarks/:uuid
+    - `GET accounts/:identifier/access/bookmarks`
+    - `GET accounts/:identifier/access/bookmarks/:uuid`
+    - `POST accounts/:identifier/access/bookmarks/:uuid`
+    - `PUT accounts/:identifier/access/bookmarks/:uuid`
+    - `DELETE accounts/:identifier/access/bookmarks/:uuid`
 
     Replacement:
     Access applications app type API
+
 - publish_date: '2022-10-11'
   title: "Page Shield"
   description: Replace `script_monitor` in Page Shield API routes with `page_shield`.
@@ -347,10 +348,10 @@ entries:
     This endpoint is deprecated in favor of using v2, which allows you to control metadata, define an access policy, and get the image ID.
 
     Deprecated API:
-    POST accounts/:account_identifier/images/v1/direct_upload
+    `POST accounts/:account_identifier/images/v1/direct_upload`
 
     Replacement:
-    POST accounts/:account_identifier/images/v2/direct_upload
+    `POST accounts/:account_identifier/images/v2/direct_upload`
 
 - publish_date: '2021-03-01'
   title: "Zone Analytics API"
@@ -359,8 +360,8 @@ entries:
 
     Deprecated API:
 
-    - GET zones/:zone_identifier/analytics/dashboard
-    - GET zones/:zone_identifier/analytics/colos
+    - `GET zones/:zone_identifier/analytics/dashboard`
+    - `GET zones/:zone_identifier/analytics/colos`
 
     Replacement:
     GraphQL Analytics API
@@ -372,26 +373,26 @@ entries:
   
     Deprecated API:
 
-    - GET organizations/:identifier
-    - PATCH organizations/:identifier
-    - GET organizations/:organization_identifier/invites
-    - POST organizations/:organization_identifier/invites
-    - GET organizations/:organization_identifier/invites/:identifier
-    - PATCH organizations/:organization_identifier/invites/:identifier
-    - DELETE organizations/:organization_identifier/invites/:identifier
-    - GET organizations/:organization_identifier/members
-    - GET organizations/:organization_identifier/members/:identifier
-    - PATCH organizations/:organization_identifier/members/:identifier
-    - DELETE organizations/:organization_identifier/members/:identifier
-    - GET organizations/:organization_identifier/roles
-    - GET organizations/:organization_identifier/roles/:identifier
-    - GET organizations/:organization_identifier/audit_logs
-    - GET organizations/:organization_identifier/railguns
-    - POST organizations/:organization_identifier/railguns
-    - GET organizations/:organization_identifier/railguns/:identifier
-    - PATCH organizations/:organization_identifier/railguns/:identifier
-    - DELETE organizations/:organization_identifier/railguns/:identifier
-    - GET organizations/:organization_identifier/railguns/:identifier/zones
+    - `GET organizations/:identifier`
+    - `PATCH organizations/:identifier`
+    - `GET organizations/:organization_identifier/invites`
+    - `POST organizations/:organization_identifier/invites`
+    - `GET organizations/:organization_identifier/invites/:identifier`
+    - `PATCH organizations/:organization_identifier/invites/:identifier`
+    - `DELETE organizations/:organization_identifier/invites/:identifier`
+    - `GET organizations/:organization_identifier/members`
+    - `GET organizations/:organization_identifier/members/:identifier`
+    - `PATCH organizations/:organization_identifier/members/:identifier`
+    - `DELETE organizations/:organization_identifier/members/:identifier`
+    - `GET organizations/:organization_identifier/roles`
+    - `GET organizations/:organization_identifier/roles/:identifier`
+    - `GET organizations/:organization_identifier/audit_logs`
+    - `GET organizations/:organization_identifier/railguns`
+    - `POST organizations/:organization_identifier/railguns`
+    - `GET organizations/:organization_identifier/railguns/:identifier`
+    - `PATCH organizations/:organization_identifier/railguns/:identifier`
+    - `DELETE organizations/:organization_identifier/railguns/:identifier`
+    - `GET organizations/:organization_identifier/railguns/:identifier/zones`
 
     Replacement:
     Accounts API
