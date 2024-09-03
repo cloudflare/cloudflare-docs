@@ -31,16 +31,20 @@ If your zone has not been migrated yet, you will only have [Custom SSL/TLS](#cus
 
 Automatic SSL/TLS uses the [SSL/TLS Recommender](/ssl/origin-configuration/ssl-tls-recommender/) to identify and apply the most secure encryption mode for your website. It continuously assesses your traffic to determine if a more secure option is needed based on your origin certification or capabilities, and updates your settings automatically to ensure the highest level of security for your domain.
 
-Oct 21, all unset zones in recommender will remain unset in automatic upgrader
-
 Cloudflare is rolling out Automatic SSL/TLS on the following dates:
 
-- **September 9, 2024**: All non-Enterprise plans that are using the SSL/TLS recommender and have not opted out will be migrated. Automatic upgrade scans for these zones will begin on or after this date.
-- **October 7, 2024**: All Enterprise plans that are using the SSL/TLS recommender and have not opted out will be migrated. Automatic upgrade scans for these zones will begin on or after this date.
-- **October 21, 2024**: Zones created on or after this date will be enrolled in the Upgrader.
+- **September 9, 2024**: All non-Enterprise plans that are using the SSL/TLS Recommender and have not opted out will be migrated. Automatic upgrade scans for these zones will begin on or after this date.
+- **October 7, 2024**: All Enterprise plans that are using the SSL/TLS Recommender and have not opted out will be migrated. Automatic upgrade scans for these zones will begin on or after this date.
+- **October 21, 2024**: Zones created on or after this date will be enrolled in the Automatic SSL/TLS.
 - **November 4, 2024**: The Recommender and Recommender API will be fully decommissioned. After this date, we will begin migrating zones that have never interacted with the Recommender or Automatic Upgrader. If you want to opt-out at this time, you can disable the Automatic Upgrader in the UI or API.
-- **December 4, 2024**: All non-Enterprise zones that have never used the Recommender or Automatic Upgrader will be migrated. Automatic upgrade scans for these zones will begin on or after this date.
-- **January 6, 2025**: All Enterprise zones that have never used the Recommender or Automatic Upgrader will be migrated. Automatic upgrade scans for these zones will begin on or after this date.
+- **December 4, 2024**: All non-Enterprise zones that have never used the Recommender or Automatic SSL/TLS will be migrated. Automatic upgrade scans for these zones will begin on or after this date.
+- **January 6, 2025**: All Enterprise zones that have never used the Recommender or Automatic SSL/TLS will be migrated. Automatic upgrade scans for these zones will begin on or after this date.
+
+:::note
+
+If your zone is created before October 21, 2024 and also not using the SSL/TLS Recommender, it will not be automatically upgraded to a different encryption mode.
+
+:::
 
 #### Opt out single zone
 
