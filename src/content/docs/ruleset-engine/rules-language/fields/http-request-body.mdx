@@ -151,7 +151,7 @@ A Map (or associative array) of multipart names to multipart values in the reque
 
 Example value:
 
-`{"field1": ["Alice"], "field2": ["Bob"]}`
+`{"username": ["alice_doe"], "picture": [<binary_content_of_file>]}`
 
 ## `http.request.body.multipart.names`
 
@@ -161,7 +161,11 @@ List of multipart names for every part in the multipart body.
 
 Example value:
 
-`[["field1"], ["field2"]]`
+`[["username"], ["picture"]]`
+
+Example:
+
+`any(http.request.body.multipart.names[*][0] == "picture")`
 
 ## `http.request.body.multipart.values`
 
@@ -171,7 +175,7 @@ List of multipart values for every part in the multipart body.
 
 Example value:
 
-`["Alice", "Bob"]`
+`["alice_doe", <binary_content_of_file>]`
 
 ## `http.request.body.multipart.content_types`
 
@@ -183,6 +187,10 @@ Example value:
 
 `[["text/plain"], ["image/jpeg"]]`
 
+Example:
+
+`any(http.request.body.multipart.content_types[*][0] == "application/octet-stream")`
+
 ## `http.request.body.multipart.content_dispositions`
 
 `http.request.body.multipart.content_dispositions` `Array<Array<String>>`
@@ -191,7 +199,7 @@ List of `Content-Disposition` headers for each part in the multipart body.
 
 Example value:
 
-`[["form-data; name=\"field1\"], ["form-data;name=\"field2\"]]`
+`[["form-data; name=\"username\"], ["form-data;name=\"picture\"]]`
 
 ## `http.request.body.multipart.content_transfer_encodings`
 
@@ -211,4 +219,4 @@ List of filenames for each part in the multipart body.
 
 Example value:
 
-`[["file1.txt"], ["file2.jpg"]]`
+`[["file1.txt"], ["photo.jpg"]]`
