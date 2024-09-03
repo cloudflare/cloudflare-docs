@@ -35,9 +35,12 @@ Oct 21, all unset zones in recommender will remain unset in automatic upgrader
 
 Cloudflare is rolling out Automatic SSL/TLS on the following dates:
 
-- **September 9th, 2024**: All non-Enterprise plans that are using the SSL/TLS recommender and have not opted out will be migrated.
-- **October 7th, 2024**: All Enterprise plans that are using the SSL/TLS recommender and have not opted out will be migrated.
-- **October 21st, 2024**: Any zone that has not opted into the SSL/TLS recommender will not be migrated.
+- **September 9, 2024**: All non-Enterprise plans that are using the SSL/TLS recommender and have not opted out will be migrated. Automatic upgrade scans for these zones will begin on or after this date.
+- **October 7, 2024**: All Enterprise plans that are using the SSL/TLS recommender and have not opted out will be migrated. Automatic upgrade scans for these zones will begin on or after this date.
+- **October 21, 2024**: Zones created on or after this date will be enrolled in the Upgrader.
+- **November 4, 2024**: The Recommender and Recommender API will be fully decommissioned. After this date, we will begin migrating zones that have never interacted with the Recommender or Automatic Upgrader. If you want to opt-out at this time, you can disable the Automatic Upgrader in the UI or API.
+- **December 4, 2024**: All non-Enterprise zones that have never used the Recommender or Automatic Upgrader will be migrated. Automatic upgrade scans for these zones will begin on or after this date.
+- **January 6, 2025**: All Enterprise zones that have never used the Recommender or Automatic Upgrader will be migrated. Automatic upgrade scans for these zones will begin on or after this date.
 
 #### Opt out single zone
 
