@@ -676,6 +676,27 @@
         }
       }
     },
+		"record_management": {
+      "title": "DNS records management",
+      "link": "/dns/manage-dns-records/",
+      "properties": {
+        "availability": {
+          "title": "Availability",
+          "summary": "Available on all plans",
+          "free": "Yes",
+          "pro": "Yes",
+          "biz": "Yes",
+          "ent": "Yes"
+        },
+        "records_quota": {
+          "title": "Number of records per zone",
+          "free": "200 for zones created on or after `2024-09-01 00:00:00 UTC`; 1000 for zones created before `2024-09-01 00:00:00 UTC`",
+          "pro": 3500,
+          "biz": 3500,
+          "ent": "3500 (can be increased)"
+        }
+      }
+    },
     "record_comments": {
       "title": "DNS record comments",
       "link": "/dns/manage-dns-records/reference/record-attributes/",
