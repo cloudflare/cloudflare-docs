@@ -8,25 +8,24 @@ head:
     content: Deploy Tunnels with Terraform
 description: Learn how to deploy a Cloudflare Tunnel using Terraform and our
   lightweight server-side daemon, cloudflared.
-
 ---
 
-import { Render } from "~/components"
+import { Render } from "~/components";
 
 [Terraform](https://www.terraform.io/) is an infrastructure as code software tool that allows you to deploy services from different providers using a standardized configuration syntax. When creating a Terraform configuration file, you define the final state of the configuration rather than the step-by-step procedure. This allows you to easily deploy, modify, and manage your Tunnels alongside your other infrastructure.
 
 In this guide, you will use Terraform to deploy:
 
-* A Google Cloud Project (GCP) virtual machine that runs an HTTP test server
-* A Cloudflare Tunnel that makes the server available over the Internet
-* A Cloudflare Access policy that defines who can connect to the server
+- A Google Cloud Project (GCP) virtual machine that runs an HTTP test server
+- A Cloudflare Tunnel that makes the server available over the Internet
+- A Cloudflare Access policy that defines who can connect to the server
 
 ## Prerequisites
 
 To complete the following procedure, you will need:
 
-* [A Google Cloud Project](https://cloud.google.com/resource-manager/docs/creating-managing-projects#creating_a_project)
-* [A zone on Cloudflare](/fundamentals/setup/manage-domains/add-site/)
+- [A Google Cloud Project](https://cloud.google.com/resource-manager/docs/creating-managing-projects#creating_a_project)
+- [A zone on Cloudflare](/fundamentals/setup/manage-domains/add-site/)
 
 ## 1. Install Terraform
 
@@ -39,7 +38,7 @@ Refer to the [Terraform installation guide](https://developer.hashicorp.com/terr
 2. Authenticate with the CLI by running:
 
    ```sh
-   $ gcloud auth application-default login
+   gcloud auth application-default login
    ```
 
 ## 3. Create a Cloudflare API token
@@ -73,7 +72,7 @@ You will need to declare the [providers](https://registry.terraform.io/browse/pr
 1. In your configuration directory, create a `.tf` file:
 
    ```sh
-   $ touch providers.tf
+   touch providers.tf
    ```
 
 2. Add the following providers to `providers.tf`. The `random` provider is used to generate a tunnel secret.
@@ -83,7 +82,7 @@ You will need to declare the [providers](https://registry.terraform.io/browse/pr
      required_providers {
        cloudflare = {
          source = "cloudflare/cloudflare"
-         version = ">= 4.9.0"
+         version = ">= 4.39.0"
        }
        google = {
          source = "hashicorp/google"
@@ -113,7 +112,7 @@ The following configuration will modify settings in your Cloudflare account.
 1. In your configuration directory, create a `.tf` file:
 
    ```sh
-   $ touch Cloudflare-config.tf
+   touch Cloudflare-config.tf
    ```
 
 2. Add the following resources to `Cloudflare-config.tf`:
@@ -137,7 +136,7 @@ The following configuration will modify settings in your Cloudflare account.
    resource "cloudflare_record" "http_app" {
      zone_id = var.cloudflare_zone_id
      name    = "http_app"
-     value   = "${cloudflare_tunnel.auto_tunnel.cname}"
+     content   = "${cloudflare_tunnel.auto_tunnel.cname}"
      type    = "CNAME"
      proxied = true
    }
@@ -195,7 +194,7 @@ The following configuration defines the specifications for the GCP virtual machi
 1. In your configuration directory, create a `.tf` file:
 
    ```sh
-   $ touch GCP-config.tf
+   touch GCP-config.tf
    ```
 
 2. Add the following content to `GCP-config.tf`:
@@ -245,7 +244,7 @@ The following script will install `cloudflared`, create a permissions and config
 1. In your configuration directory, create a Terraform template file:
 
    ```sh
-   $ touch install-tunnel.tftpl
+   touch install-tunnel.tftpl
    ```
 
 2. Open the file in a text editor and copy and paste the following bash script:
@@ -291,7 +290,7 @@ It may take several minutes for the GCP instance and tunnel to come online. You 
 
 :::note
 
-If you need to roll back the configuration, run `terraform destroy` to delete everything created through Terraform. Both `terraform apply` and `terraform destroy` prompt for user input before applying the changes. To run without requiring user input, you can add the `-auto-approve` flag to the command. 
+If you need to roll back the configuration, run `terraform destroy` to delete everything created through Terraform. Both `terraform apply` and `terraform destroy` prompt for user input before applying the changes. To run without requiring user input, you can add the `-auto-approve` flag to the command.
 :::
 
 ## 7. Test the connection

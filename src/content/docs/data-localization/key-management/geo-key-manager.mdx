@@ -25,14 +25,14 @@ sequenceDiagram
     participant User as End user
     participant CloudflarePoP as Closest data center without TLS Key
     participant CloudflarePoPwTLS as Data center with TLS Key
- 
+
     User->>CloudflarePoP: Initial request
     Note right of CloudflarePoP: Closest data center cannot decrypt
     CloudflarePoP-->>CloudflarePoPwTLS: Requests TLS Signature
     CloudflarePoPwTLS-->>CloudflarePoP: Sends TLS Signature in order to establish Session Key
     Note right of CloudflarePoP: Decrypts and performs business logic (for example, WAF, Configuration Rules, Load Balancing)
     CloudflarePoP-->>User: Subsequent requests use the Session Key
-    User-->>CloudflarePoP: 
+    User-->>CloudflarePoP: Subsequent requests use the Session Key
 ```
 
 <br/>

@@ -1,13 +1,12 @@
 ---
 {}
-
 ---
 
-import { TabItem, Tabs } from "~/components"
+import { TabItem, Tabs } from "~/components";
 
 To create an Access group:
 
-<Tabs> <TabItem label="Dashboard">
+<Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
 
 1. In [Zero Trust](https://one.dash.cloudflare.com), go to **Access** > **Access Groups**.
 2. Select **Add a Group**.
@@ -18,6 +17,7 @@ To create an Access group:
    | --------- | ---------------- | ----------- |
    | Include   | Country          | `Portugal`  |
    | Require   | Emails Ending In | `@team.com` |
+
 5. Select **Save**.
 
 </TabItem>

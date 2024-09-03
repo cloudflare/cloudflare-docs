@@ -4,41 +4,37 @@ pcx_content_type: changelog
 title: Scheduled changes
 sidebar:
   order: 2
-
+tableOfContents: false
 ---
 
-import { RuleID } from "~/components"
+import { RuleID } from "~/components";
 
 <table style="width: 100%">
-  <thead>
-    <tr>
-      <th>Announcement Date</th>
-      <th>Release Date</th>
-      <th>Release Behavior</th>
-      <th>Legacy Rule ID</th>
-      <th>Rule ID</th>
-      <th>Description</th>
-      <th>Comments</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>2024-08-12</td>
-      <td>2024-08-19</td>
-      <td>Log</td>
-      <td>100666</td>
-      <td><RuleID id="7ff77f19b2ec4f1dab9f031ef3f42616" /></td>
-      <td>Apache OFBiz - Remote Code Execution - CVE:CVE-2024-32113</td>
-      <td>New Detection</td>
-    </tr>
-    <tr>
-      <td>2024-08-12</td>
-      <td>2024-08-19</td>
-      <td>Log</td>
-      <td>100665</td>
-      <td><RuleID id="e960ac54d6e841cebcfe89d571eefd6f" /></td>
-      <td>Zoho ManageEngine - Remote Code Execution - CVE:CVE-2023-29084</td>
-      <td>New Detection</td>
-    </tr>
-  </tbody>
+	<thead>
+		<tr>
+			<th>Announcement Date</th>
+			<th>Release Date</th>
+			<th>Release Behavior</th>
+			<th>Legacy Rule ID</th>
+			<th>Rule ID</th>
+			<th>Description</th>
+			<th>Comments</th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr>
+			<td>2024-08-19</td>
+			<td>2024-08-26</td>
+			<td>Log</td>
+			<td>100526_BETA</td>
+			<td>
+				<RuleID id="53ed4a0e545b46efadcec7ceb0f0367b" />
+			</td>
+			<td>VMware vCenter - CVE:CVE-2022-22954, CVE:CVE-2022-22948</td>
+			<td>
+				This will replace 100526 in old WAF and{" "}
+				<RuleID id="bbf685d70ddc467e8efb0ed0a24f08b7" /> in new WAF
+			</td>
+		</tr>
+	</tbody>
 </table>

@@ -3,20 +3,29 @@ title: Insert vectors
 pcx_content_type: concept
 sidebar:
   order: 4
-
 ---
 
-import { Render } from "~/components"
+import { Render } from "~/components";
 
 Vectorize indexes allow you to insert vectors at any point: Vectorize will optimize the index behind the scenes to ensure that vector search remains efficient, even as new vectors are added or existing vectors updated.
+
+:::note[Insert vs Upsert]
+
+If the same vector id is _inserted_ twice in a Vectorize index, the index would reflect the vector that was added first.
+
+If the same vector id is _upserted_ twice in a Vectorize index, the index would reflect the vector that was added second.
+
+Use the upsert operation if you want to overwrite the vector value for a vector id that already exists in an index.
+
+:::
 
 ## Supported vector formats
 
 Vectorize supports vectors in three formats:
 
-* An array of floating point numbers (converted into a JavaScript `number[]` array).
-* A [Float32Array](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Float32Array)
-* A [Float64Array](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Float64Array)
+- An array of floating point numbers (converted into a JavaScript `number[]` array).
+- A [Float32Array](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Float32Array)
+- A [Float64Array](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Float64Array)
 
 In most cases, a `number[]` array is the easiest when dealing with other APIs, and is the return type of most machine-learning APIs.
 
@@ -28,14 +37,14 @@ Metadata keys cannot be empty, contain the dot character (`.`), contain the doub
 
 Metadata can be used to:
 
-* Include the object storage key, database UUID or other identifier to look up the content the vector embedding represents.
-* The raw content (up to the [metadata limits](/vectorize/platform/limits/)), which can allow you to skip additional lookups for smaller content.
-* Dates, timestamps, or other metadata that describes when the vector embedding was generated or how it was generated.
+- Include the object storage key, database UUID or other identifier to look up the content the vector embedding represents.
+- The raw content (up to the [metadata limits](/vectorize/platform/limits/)), which can allow you to skip additional lookups for smaller content.
+- Dates, timestamps, or other metadata that describes when the vector embedding was generated or how it was generated.
 
 For example, a vector embedding representing an image could include the path to the [R2 object](/r2/) it was generated from, the format, and a category lookup:
 
 ```ts
-{ id: '1', values: [32.4, 74.1, 3.2], metadata: { path: 'r2://bucket-name/path/to/image.png', format: 'png', category: 'profile_image' } }
+{ id: '1', values: [32.4, 74.1, 3.2, ...], metadata: { path: 'r2://bucket-name/path/to/image.png', format: 'png', category: 'profile_image' } }
 ```
 
 ## Namespaces
@@ -44,9 +53,9 @@ Namespaces provide a way to segment the vectors within your index. For example, 
 
 To associate vectors with a namespace, you can optionally provide a `namespace: string` value when performing an insert or upsert operation. When querying, you can pass the namespace to search within as an optional parameter to your query.
 
-A namespace can be up to 63 characters (bytes) in length and you can have up to 1,000 namespaces per index. Refer to the [Limits](/vectorize/platform/limits/) documentation for more details.
+A namespace can be up to 64 characters (bytes) in length and you can have up to 1,000 namespaces per index. Refer to the [Limits](/vectorize/platform/limits/) documentation for more details.
 
-When a namespace is provided, only vectors within that namespace are used for the search. Namespace filtering is applied before vector search, not after.
+When a namespace is specified in a query operation, only vectors within that namespace are used for the search. Namespace filtering is applied before vector search, not after.
 
 To insert vectors with a namespace:
 
@@ -55,21 +64,21 @@ To insert vectors with a namespace:
 // Vectors from a machine-learning model are typically ~100 to 1536 dimensions
 // wide (or wider still).
 const sampleVectors: Array<VectorizeVector> = [
-  {
-    id: "1",
-    values: [32.4, 74.1, 3.2],
-    namespace: "text",
-  },
-  {
-    id: "2",
-    values: [15.1, 19.2, 15.8],
-    namespace: "images",
-  },
-  {
-    id: "3",
-    values: [0.16, 1.2, 3.8],
-    namespace: "pdfs",
-  },
+	{
+		id: "1",
+		values: [32.4, 74.1, 3.2, ...],
+		namespace: "text",
+	},
+	{
+		id: "2",
+		values: [15.1, 19.2, 15.8, ...],
+		namespace: "images",
+	},
+	{
+		id: "3",
+		values: [0.16, 1.2, 3.8, ...],
+		namespace: "pdfs",
+	},
 ];
 
 // Insert your vectors, returning a count of the vectors inserted and their vector IDs.
@@ -80,7 +89,9 @@ To query vectors within a namespace:
 
 ```ts
 // Your queryVector will be searched against vectors within the namespace (only)
-let matches = await env.TUTORIAL_INDEX.query(queryVector, { namespace: "images" })
+let matches = await env.TUTORIAL_INDEX.query(queryVector, {
+	namespace: "images",
+});
 ```
 
 ## Examples
@@ -94,21 +105,21 @@ Use the `insert()` and `upsert()` methods available on an index from within a Cl
 // Vectors from a machine-learning model are typically ~100 to 1536 dimensions
 // wide (or wider still).
 const sampleVectors: Array<VectorizeVector> = [
-  {
-    id: "1",
-    values: [32.4, 74.1, 3.2],
-    metadata: { url: "/products/sku/13913913" },
-  },
-  {
-    id: "2",
-    values: [15.1, 19.2, 15.8],
-    metadata: { url: "/products/sku/10148191" },
-  },
-  {
-    id: "3",
-    values: [0.16, 1.2, 3.8],
-    metadata: { url: "/products/sku/97913813" },
-  },
+	{
+		id: "1",
+		values: [32.4, 74.1, 3.2, ...],
+		metadata: { url: "/products/sku/13913913" },
+	},
+	{
+		id: "2",
+		values: [15.1, 19.2, 15.8, ...],
+		metadata: { url: "/products/sku/10148191" },
+	},
+	{
+		id: "3",
+		values: [0.16, 1.2, 3.8, ...],
+		metadata: { url: "/products/sku/97913813" },
+	},
 ];
 
 // Insert your vectors, returning a count of the vectors inserted and their vector IDs.
@@ -127,8 +138,8 @@ Please use a maximum of 5000 vectors per embeddings.ndjson file to prevent the g
 
 You can bulk upload vector embeddings directly:
 
-* The file must be in newline-delimited JSON (NDJSON format): each complete vector must be newline separated, and not within an array or object.
-* Vectors must be complete and include a unique string `id` per vector.
+- The file must be in newline-delimited JSON (NDJSON format): each complete vector must be newline separated, and not within an array or object.
+- Vectors must be complete and include a unique string `id` per vector.
 
 An example NDJSON formatted file:
 
@@ -141,7 +152,7 @@ An example NDJSON formatted file:
 <Render file="vectorize-wrangler-version" />
 
 ```sh
-$ wrangler vectorize insert <your-index-name> --file=embeddings.ndjson
+wrangler vectorize insert <your-index-name> --file=embeddings.ndjson
 ```
 
 ### HTTP API
@@ -153,7 +164,7 @@ For example, to insert embeddings in [NDJSON format](#workers-api) directly from
 ```py
 import requests
 
-url = "https://api.cloudflare.com/client/v4/accounts/{}/vectorize/indexes/{}/insert".format("your-account-id", "index-name")
+url = "https://api.cloudflare.com/client/v4/accounts/{}/vectorize/v2/indexes/{}/insert".format("your-account-id", "index-name")
 
 headers = {
     "Authorization": "Bearer <your-api-token>"

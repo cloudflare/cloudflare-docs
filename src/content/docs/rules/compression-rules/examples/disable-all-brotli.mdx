@@ -2,15 +2,14 @@
 pcx_content_type: example
 summary: Create a compression rule to turn off Brotli compression for all
   incoming requests of a given zone.
-product:
+products:
   - Compression Rules
 title: Disable Brotli compression
 description: Create a compression rule to turn off Brotli compression for all
   incoming requests of a given zone.
-
 ---
 
-import { Example } from "~/components"
+import { Example } from "~/components";
 
 The following example rule will disable Brotli compression for all incoming requests of a given zone. The only available compression algorithm will be Gzip.
 
@@ -18,12 +17,12 @@ The following example rule will disable Brotli compression for all incoming requ
 
 **When incoming requests match**
 
-* All incoming requests
+- All incoming requests
 
 **Then**
 
-* **Compression options**: Custom
-* **Define a custom order for compression types**: `Gzip`
+- **Compression options**: Custom
+- **Define a custom order for compression types**: `Gzip`
 
 </Example>
 

@@ -3,7 +3,6 @@ pcx_content_type: how-to
 title: Generic SAML 2.0
 sidebar:
   order: 2
-
 ---
 
 Cloudflare Zero Trust integrates with any identity provider that supports SAML 2.0. If your identity provider is not listed in the integration list of login methods in Zero Trust, it can be configured using SAML 2.0 (or OpenID if OIDC based). Generic SAML can also be used if you would like to pass additional SAML headers or claims for an IdP in the integration list.
@@ -12,9 +11,9 @@ Cloudflare Zero Trust integrates with any identity provider that supports SAML 2
 
 Minimum requirements for identity providers:
 
-* The IdP must conform to SAML 2.0.
-* The IdP must provide a **Single sign-on URL**, an **Entity ID or Issuer URL**, and a **Signing certificate**.
-* The IdP must include the signing public key in the SAML response.
+- The IdP must conform to SAML 2.0.
+- The IdP must provide a **Single sign-on URL**, an **Entity ID or Issuer URL**, and a **Signing certificate**.
+- The IdP must include the signing public key in the SAML response.
 
 ## 1. Create an application in your identity provider
 
@@ -29,14 +28,14 @@ The typical setup requirements are:
    ```
    You can find your team name in Zero Trust under **Settings** > **Custom Pages**.
 3. Set the **Name ID/Email format** to `emailAddress`.
-4. (Optional) Set the signature policy to *Always Sign*.
+4. (Optional) Set the signature policy to _Always Sign_.
 
 ### (Optional) Upload SAML metadata
 
 If your identity provider supports metadata file configuration, you can use the default or identity provider specific metadata endpoint:
 
-* **Default:** `https://<your-team-name>.cloudflareaccess.com/cdn-cgi/access/saml-metadata`
-* **Identity provider specific:** `https://<your-team-name>.cloudflareaccess.com/cdn-cgi/access/<identity-provider-id>/saml-metadata`, where `<identity-provider-id>` is the `id` value obtained from [List Access identity providers](/api/operations/access-identity-providers-list-access-identity-providers). Use this endpoint if your IdP requires a configuration not defined in the default metadata file.
+- **Default:** `https://<your-team-name>.cloudflareaccess.com/cdn-cgi/access/saml-metadata`
+- **Identity provider specific:** `https://<your-team-name>.cloudflareaccess.com/cdn-cgi/access/<identity-provider-id>/saml-metadata`, where `<identity-provider-id>` is the `id` value obtained from [List Access identity providers](/api/operations/access-identity-providers-list-access-identity-providers). Use this endpoint if your IdP requires a configuration not defined in the default metadata file.
 
 To download the SAML metadata file, copy-paste the metadata endpoint into a web browser and save the page as an `.xml` file. Upload this XML file to the identity provider.
 
@@ -63,7 +62,7 @@ This optional configuration signs the [Access JWT](/cloudflare-one/identity/auth
 
 ### Email attribute name
 
-Many [Access policies](/cloudflare-one/policies/access/) depend on a user’s email address. Some identity providers have a different naming for the email address attribute (for example, `Email`, `e-mail`, `emailAddress`). This can typically be checked in the identity provider's SAML test option.
+Many [Access policies](/cloudflare-one/policies/access/) depend on a user's email address. Some identity providers have a different naming for the email address attribute (for example, `Email`, `e-mail`, `emailAddress`). This can typically be checked in the identity provider's SAML test option.
 
 Example in Okta:
 

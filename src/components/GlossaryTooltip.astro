@@ -16,11 +16,16 @@ const { term, prepend, link } = props.parse(Astro.props);
 
 const tooltip = await getGlossaryEntry(term);
 
-const definition = prepend
+let definition = prepend
 	? prepend.concat(tooltip.general_definition)
 	: tooltip.general_definition;
+
+definition = definition.charAt(0).toUpperCase() + definition.slice(1);
+
+definition = definition.split(/\r?\n/)[0];
 ---
 
+<!-- prettier-ignore -->
 <span
 	id={tooltip.term}
 	data-tooltip
@@ -28,14 +33,11 @@ const definition = prepend
 	class="border-b-2 border-dashed border-accent-600"
 	>{
 		link ? (
-			<a href={link}>
-				<slot />
-			</a>
+			<a href={link}><slot /></a>
 		) : (
 			<slot />
 		)
-	}</span
-><script>
+	}</span><script>
 	import tippy from "tippy.js";
 
 	const tooltips = document.querySelectorAll<HTMLSpanElement>("[data-tooltip]");
@@ -46,7 +48,7 @@ const definition = prepend
 			allowHTML: true,
 			interactive: true,
 			placement: "auto",
-			arrow: false
+			arrow: false,
 		});
 	}
 </script><style is:global>

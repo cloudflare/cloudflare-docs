@@ -6,12 +6,9 @@ pcx_content_type: tutorial
 title: Build a QR code generator
 languages:
   - JavaScript
-
 ---
 
-
-
-import { Render, PackageManagers } from "~/components"
+import { Render, PackageManagers } from "~/components";
 
 In this tutorial, you will build and publish a Worker application that generates QR codes.
 
@@ -23,14 +20,26 @@ If you would like to review the code for this tutorial, the final version of the
 
 First, use the [`create-cloudflare` CLI](/pages/get-started/c3) to create a new Cloudflare Workers project. To do this, open a terminal window and run the following command:
 
-<PackageManagers type="create" pkg="cloudflare@latest" args={'qr-code-generator'} />
+<PackageManagers
+	type="create"
+	pkg="cloudflare@latest"
+	args={"qr-code-generator"}
+/>
 
-<Render file="c3-post-run-steps" product="workers" params={{ one: "Hello World example", two: "Hello World Worker", three: "JavaScript" }} />
+<Render
+	file="c3-post-run-steps"
+	product="workers"
+	params={{
+		one: "Hello World example",
+		two: "Hello World Worker",
+		three: "JavaScript",
+	}}
+/>
 
 Then, move into your newly created directory:
 
 ```sh
-$ cd qr-code-generator
+cd qr-code-generator
 ```
 
 Inside of your new `qr-code-generator` Worker project directory, `index.js` represents the entry point to your Cloudflare Workers application.
@@ -40,7 +49,7 @@ All Cloudflare Workers applications start by listening for `fetch` events, which
 ```js
 export default {
 	async fetch(request, env, ctx) {
-		return new Response('Hello Worker!');
+		return new Response("Hello Worker!");
 	},
 };
 ```
@@ -60,8 +69,8 @@ At this point in the tutorial, your Worker function can receive requests and ret
 ```js null {2,3,4}
 export default {
 	async fetch(request, env, ctx) {
-		if (request.method === 'POST') {
-			return new Response('Hello Worker!');
+		if (request.method === "POST") {
+			return new Response("Hello Worker!");
 		}
 	},
 };
@@ -72,13 +81,13 @@ Currently, if an incoming request is not a `POST`, the function will return `und
 ```js null {7,8}
 export default {
 	async fetch(request, env, ctx) {
-		if (request.method === 'POST') {
-			return new Response('Hello Worker!');
+		if (request.method === "POST") {
+			return new Response("Hello Worker!");
 		}
 
-		return new Response('Expected POST request', {
+		return new Response("Expected POST request", {
 			status: 405,
-		})
+		});
 	},
 };
 ```
@@ -87,14 +96,15 @@ You have established the basic flow of the request. You will now set up a respon
 
 ```js null {7,8,9,10}
 export default {
-  async fetch(request, env, ctx) {
-    if (request.method === "POST") {}
-  }
-}
+	async fetch(request, env, ctx) {
+		if (request.method === "POST") {
+		}
+	},
+};
 
 async function generateQRCode(request) {
-  // TODO: Include QR code generation
-  return new Response("Hello worker!")
+	// TODO: Include QR code generation
+	return new Response("Hello worker!");
 }
 ```
 
@@ -102,12 +112,12 @@ With the `generateQRCode` function filled out, call it within `fetch` function a
 
 ```js null {4}
 export default {
-  async fetch(request, env, ctx) {
-    if (request.method === "POST") {
-      return generateQRCode(request)
-    }
-  }
-}
+	async fetch(request, env, ctx) {
+		if (request.method === "POST") {
+			return generateQRCode(request);
+		}
+	},
+};
 ```
 
 ## 3. Build a QR code generator
@@ -115,17 +125,17 @@ export default {
 All projects deployed to Cloudflare Workers support npm packages. This support makes it easy to rapidly build out functionality in your Workers. The [`qr-image`](https://github.com/alexeyten/qr-image) package is a great way to take text and encode it into a QR code. The package supports generating the QR codes in a number of file formats (such as PNG, the default, and SVG) and configuring other aspects of the generated QR code. In the command line, install and save `qr-image` to your project’s `package.json`:
 
 ```sh title="Installing the qr-image package"
-$ npm install --save qr-image
+npm install --save qr-image
 ```
 
 In `index.js`, import the `qr-image` package as the variable `qr`. In the `generateQRCode` function, parse the incoming request as JSON using `request.json`, and generate a QR code from `text` using `qr.imageSync`:
 
 ```js null {1,2,3,4,5,6}
-const qr = require("qr-image")
+const qr = require("qr-image");
 
 async function generateQRCode(request) {
-  const { text } = await request.json()
-  const qr_png = qr.imageSync(text || "https://workers.dev")
+	const { text } = await request.json();
+	const qr_png = qr.imageSync(text || "https://workers.dev");
 }
 ```
 
@@ -133,10 +143,10 @@ By default, the QR code is generated as a PNG. Construct a new instance of `Resp
 
 ```js null {3,4,5}
 async function generateQRCode(request) {
-  const { text } = await request.json()
-  const headers = { "Content-Type": "image/png" }
-  const qr_png = qr.imageSync(text || "https://workers.dev")
-  return new Response(qr_png, { headers })
+	const { text } = await request.json();
+	const headers = { "Content-Type": "image/png" };
+	const qr_png = qr.imageSync(text || "https://workers.dev");
+	return new Response(qr_png, { headers });
 }
 ```
 
@@ -152,23 +162,23 @@ The Worker will work if a user sends a `POST` request to a route, but it would b
 
 ```js null {23-54}
 export default {
-  async fetch(request, env, ctx) {
-  if (request.method === 'POST') {
-    return generateQRCode(request)
-  }
+	async fetch(request, env, ctx) {
+		if (request.method === "POST") {
+			return generateQRCode(request);
+		}
 
-  return new Response(landing, {
-    headers: {
-      "Content-Type": "text/html"
-    }
-  })
-},
-}
+		return new Response(landing, {
+			headers: {
+				"Content-Type": "text/html",
+			},
+		});
+	},
+};
 
 async function generateQRCode(request) {
-	const { text } = await request.json()
-	const headers = { "Content-Type": "image/png" }
-	const qr_png = qr.imageSync(text || "https://workers.dev")
+	const { text } = await request.json();
+	const headers = { "Content-Type": "image/png" };
+	const qr_png = qr.imageSync(text || "https://workers.dev");
 
 	return new Response(qr_png, { headers });
 }
@@ -197,7 +207,7 @@ const landing = `
 		})
 	}
 </script>
-`
+`;
 ```
 
 The `landing` variable, which is a static HTML string, sets up an `input` tag and a corresponding `button`, which calls the `generateQRCode` function. This function will make an HTTP `POST` request back to your Worker, allowing you to see the corresponding QR code image returned on the page.
@@ -205,26 +215,26 @@ The `landing` variable, which is a static HTML string, sets up an `input` tag an
 With the above steps complete, your Worker is ready. The full version of the code looks like this:
 
 ```js
-const qr = require('qr-image');
+const qr = require("qr-image");
 
 export default {
 	async fetch(request, env, ctx) {
-		if (request.method === 'POST') {
-			return generateQRCode(request)
+		if (request.method === "POST") {
+			return generateQRCode(request);
 		}
 
 		return new Response(landing, {
 			headers: {
-				"Content-Type": "text/html"
-			}
-		})
+				"Content-Type": "text/html",
+			},
+		});
 	},
 };
 
 async function generateQRCode(request) {
-	const { text } = await request.json()
-	const headers = { "Content-Type": "image/png" }
-	const qr_png = qr.imageSync(text || "https://workers.dev")
+	const { text } = await request.json();
+	const headers = { "Content-Type": "image/png" };
+	const qr_png = qr.imageSync(text || "https://workers.dev");
 
 	return new Response(qr_png, { headers });
 }
@@ -253,7 +263,7 @@ const landing = `
 		})
 	}
 </script>
-`
+`;
 ```
 
 ## 5. Deploy your Worker
@@ -263,7 +273,7 @@ With all the above steps complete, you have written the code for a QR code gener
 Wrangler has built-in support for bundling, uploading, and releasing your Cloudflare Workers application. To do this, run `npx wrangler deploy`, which will build and deploy your code.
 
 ```sh title="Deploy your Worker project"
-$ npx wrangler deploy
+npx wrangler deploy
 ```
 
 ## Related resources

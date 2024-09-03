@@ -3,7 +3,6 @@ title: Query vectors
 pcx_content_type: concept
 sidebar:
   order: 5
-
 ---
 
 Querying an index, or vector search, enables you to search an index by providing an input vector and returning the nearest vectors based on the [configured distance metric](/vectorize/best-practices/create-indexes/#distance-metrics).
@@ -17,52 +16,56 @@ To pass a vector as a query to an index, use the `query()` method on the index i
 A query vector is either an array of JavaScript numbers, 32-bit floating point or 64-bit floating point numbers: `number[]`, `Float32Array`, or `Float64Array`. Unlike when [inserting vectors](/vectorize/best-practices/insert-vectors/), a query vector does not need an ID or metadata.
 
 ```ts
-let queryVector = [54.8, 5.5, 3.1];
+// query vector dimensions must match the Vectorize index dimension being queried
+let queryVector = [54.8, 5.5, 3.1, ...]; 
 let matches = await env.YOUR_INDEX.query(queryVector);
 ```
 
-This would return a set of matches resembling the following, based on a `cosine` distance metric:
+This would return a set of matches resembling the following, based on the distance metric configured for the Vectorize index. Example response with `cosine` distance metric:
 
 ```json
 {
-  "matches": {
-    "count": 3,
-    "matches": [
-      { "score": 0.999909486, "id": "5" },
-      { "score": 0.789848214, "id": "4" },
-      { "score": 0.720476967, "id": "4444" }
-    ]
-  }
+	"matches": {
+		"count": 5,
+		"matches": [
+			{ "score": 0.999909486, "id": "5" },
+			{ "score": 0.789848214, "id": "4" },
+			{ "score": 0.720476967, "id": "4444" },
+			{ "score": 0.463884663, "id": "6" },
+			{ "score": 0.378282232, "id": "1" }
+		]
+	}
 }
 ```
 
 You can optionally change the number of results returned and/or whether results should include metadata and values:
 
 ```ts
-let queryVector = [54.8, 5.5, 3.1];
-// topK defaults to 3; returnValues defaults to false; returnMetadata defaults to false
+// query vector dimensions must match the Vectorize index dimension being queried
+let queryVector = [54.8, 5.5, 3.1, ...]; 
+// topK defaults to 5; returnValues defaults to false; returnMetadata defaults to "none"
 let matches = await env.YOUR_INDEX.query(queryVector, {
-  topK: 1,
-  returnValues: true,
-  returnMetadata: true,
+	topK: 1,
+	returnValues: true,
+	returnMetadata: "all",
 });
 ```
 
-This would return a set of matches resembling the following, based on a `cosine` distance metric:
+This would return a set of matches resembling the following, based on the distance metric configured for the Vectorize index. Example response with `cosine` distance metric:
 
 ```json
 {
-  "matches": {
-    "count": 1,
-    "matches": [
-      {
-        "score": 0.999909486,
-        "id": "5",
-        "values": [58.79999923706055, 6.699999809265137, 3.4000000953674316],
-        "metadata": { "url": "/products/sku/55519183" }
-      }
-    ]
-  }
+	"matches": {
+		"count": 1,
+		"matches": [
+			{
+				"score": 0.999909486,
+				"id": "5",
+				"values": [58.79999923706055, 6.699999809265137, 3.4000000953674316, ...],
+				"metadata": { "url": "/products/sku/55519183" }
+			}
+		]
+	}
 }
 ```
 
@@ -74,16 +77,16 @@ If you are generating embeddings from a [Workers AI](/workers-ai/models/#text-em
 
 ```ts
 interface EmbeddingResponse {
-  shape: number[];
-  data: number[][];
+	shape: number[];
+	data: number[][];
 }
 
 let userQuery = "a query from a user or service";
 const queryVector: EmbeddingResponse = await env.AI.run(
-  "@cf/baai/bge-base-en-v1.5",
-  {
-    text: [userQuery],
-  }
+	"@cf/baai/bge-base-en-v1.5",
+	{
+		text: [userQuery],
+	},
 );
 ```
 
@@ -107,8 +110,8 @@ const openai = new OpenAI({ apiKey: env.YOUR_OPENAPI_KEY });
 let userQuery = "a query from a user or service";
 
 let embeddingResponse = await openai.embeddings.create({
-  input: userQuery,
-  model: "text-embedding-ada-002",
+	input: userQuery,
+	model: "text-embedding-ada-002",
 });
 ```
 
@@ -116,6 +119,6 @@ Similar to Workers AI, you will need to provide the vector embedding itself (`.e
 
 ```ts
 let matches = await env.TEXT_EMBEDDINGS.query(embeddingResponse.embedding[0], {
-  topK: 1,
+	topK: 1,
 });
 ```

@@ -1,11 +1,10 @@
 ---
 {}
-
 ---
 
-import { TabItem, Tabs } from "~/components"
+import { TabItem, Tabs } from "~/components";
 
-<Tabs> <TabItem label="Dashboard">
+<Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
 
 To add a member to your account:
 
@@ -17,9 +16,9 @@ To add a member to your account:
 
 4. Fill out the following information:
 
-   * **Invite members**: Enter one or more email addresses (if multiple, separate addresses with commas).
-   * **Scope**: Use a variety of fields to adjust the [scope](/fundamentals/setup/manage-members/roles/) of your roles.
-   * **Roles**: Choose one or more [roles](/fundamentals/setup/manage-members/roles/) to assign your members.
+   - **Invite members**: Enter one or more email addresses (if multiple, separate addresses with commas).
+   - **Scope**: Use a variety of fields to adjust the [scope](/fundamentals/setup/manage-members/roles/) of your roles.
+   - **Roles**: Choose one or more [roles](/fundamentals/setup/manage-members/roles/) to assign your members.
 
 5. Select **Continue to summary**.
 
@@ -27,7 +26,7 @@ To add a member to your account:
 
 :::note
 
-If a user already has an account with Cloudflare and you have an Enterprise account, you can also select **Direct Add** to add them to your account without sending an email invitation. 
+If a user already has an account with Cloudflare and you have an Enterprise account, you can also select **Direct Add** to add them to your account without sending an email invitation.
 :::
 
 </TabItem> <TabItem label="API">

@@ -4,7 +4,6 @@ title: Environments
 head: []
 description: Deploy the same Worker application with different configuration for
   each environment.
-
 ---
 
 ## Background
@@ -76,7 +75,7 @@ kv_namespaces = [
 
 You may assign environment-specific [secrets](/workers/configuration/secrets/) by running the command [`wrangler secret put <KEY> -env`](/workers/wrangler/commands/#put-3).
 
-***
+---
 
 ## Examples
 
@@ -106,21 +105,30 @@ In order to use environments with this configuration, you can pass the name of t
 With this configuration, Wrangler will behave in the following manner:
 
 ```sh
-~/my-worker $ npx wrangler deploy
+npx wrangler deploy
+```
+
+```sh output
 Uploaded my-worker
 Published my-worker
   dev.example.com/*
 ```
 
 ```sh
-~/my-worker $ npx wrangler deploy --env staging
+npx wrangler deploy --env staging
+```
+
+```sh output
 Uploaded my-worker-staging
 Published my-worker-staging
   staging.example.com/*
 ```
 
 ```sh
-~/my-worker $ npx wrangler deploy --env production
+npx wrangler deploy --env production
+```
+
+```sh output
 Uploaded my-worker-production
 Published my-worker-production
   example.com/*
@@ -132,9 +140,9 @@ With this configuration, the `ENVIRONMENT` variable can be used to call specific
 
 ```js
 if (ENVIRONMENT === "staging") {
-  // staging-specific code
+	// staging-specific code
 } else if (ENVIRONMENT === "production") {
-  // production-specific code
+	// production-specific code
 }
 ```
 
@@ -153,14 +161,20 @@ workers_dev = true
 With this configuration, Wrangler will behave in the following manner:
 
 ```sh
-~/my-worker $ npx wrangler deploy
+npx wrangler deploy
+```
+
+```sh output
 Uploaded my-worker
 Published my-worker
   example.com/*
 ```
 
 ```sh
-~/my-worker $ npx wrangler deploy --env staging
+npx wrangler deploy --env staging
+```
+
+```sh output
 Uploaded my-worker
 Published my-worker
   https://my-worker-staging.<YOUR_SUBDOMAIN>.workers.dev
@@ -168,8 +182,6 @@ Published my-worker
 
 :::caution
 
-
 When you create a Worker via an environment, Cloudflare automatically creates an SSL certification for it. SSL certifications are discoverable and a matter of public record.
-
 
 :::

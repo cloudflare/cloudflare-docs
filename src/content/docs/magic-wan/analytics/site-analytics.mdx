@@ -9,29 +9,73 @@ head:
 
 ---
 
+import { Details } from "~/components"
+
 Magic WAN Site Analytics provides an overview of the connectivity status and traffic analytics of all Magic WAN sites. Magic WAN Site Analytics is a great place to start if you receive a Magic WAN alert, need to begin the Magic WAN troubleshooting process, or are performing routine monitoring.
 
 Magic WAN Site Analytics has the following data types available:
 
-* Geographic Map Summary
-  * Aggregate Magic WAN Site Health
-  * MWAN Site Geographic Location
-* Magic WAN Site Data Table
-  * Site Name
-  * Site Health
-  * Site Tunnel Names
-  * Site Tunnel Statuses
-  * Site Traffic Sent
-  * Site Traffic Received
-* Magic WAN Site Data
-  * Traffic Sent by Tunnel
-  * Traffic Received by Tunnel
+<Details header="Geographic map summary">
+	- [Aggregate Magic WAN site health](#site-health)
+	- [Magic WAN availability status for sites](#no-status-available)
+	- [Magic WAN site geographic location](#no-location-available)
+</Details>
+
+<Details header="Magic WAN site data table">
+	- Site Name
+	- Site Health
+	- Site Tunnel Names
+	- Site Tunnel Statuses
+	- Site Traffic Sent
+	- Site Traffic Received
+</Details>
+
+<Details header="Magic WAN site data">
+	- Traffic Sent by Tunnel
+	- Traffic Received by Tunnel
+</Details>
 
 To start using Magic WAN Site Analytics:
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/) and select your account.
 2. Select **Magic WAN** > **Overview**.
-3. You will have access to an overview map with all your active sites, and any alerts for sites that are unhealthy or have no status available to them.
+
+You will have access to an overview map with all your active sites, and any alerts for sites that are unhealthy or have no status available to them.
+
+Review the topics below to learn more about the options available to you.
+
+### All sites
+
+This section shows all the sites you configured with Magic WAN. At a glance, you can check:
+
+- How many active sites you have
+- Sites that are healthy or unhealthy
+- Sites that have no status available
+- Sites that have no location set
+
+#### Site health
+
+Sites can be healthy or unhealthy, and Magic WAN uses this information to route traffic. Refer to [Set thresholds for Magic WAN site health](#set-thresholds-for-magic-wan-site-health) to learn more about this topic.
+
+#### No status available
+
+The status of a site refers to its health. If your sites show a **No status available** message, this means you did not configure your [Tunnel health check alerts](/magic-wan/configuration/common-settings/configure-magic-tunnel-alerts/).
+
+#### No location available
+
+The dashboard shows you the number of sites with no location set, meaning sites for which you did not set up a geographic location. To add a location to a site, find the site you want to add location to, and select **no location set** to edit its location settings. Refer to [Set geographic coordinates](#set-geographic-coordinates) for more information.
+
+
+### Traffic overview
+
+Traffic overview aggregates all Magic WAN sites configured in your account. Here, you can check at-a-glance information about each site like:
+
+- Site status
+- Traffic sent and received
+
+Select one of your sites to have access to a more detailed view of its traffic, including traffic by tunnel.
+
+---
 
 ## Configure Magic WAN Site Analytics
 

@@ -68,15 +68,15 @@ After configuring the Cloud VPN gateway VPN and the tunnels as mentioned above, 
 ### IPsec tunnels
 
 1. Refer to [Add tunnels](/magic-wan/configuration/manually/how-to/configure-tunnels/#add-tunnels) to learn how to add an IPsec tunnel. When creating your IPsec tunnel, make sure you define the following settings:
-   * **Tunnel name**: `tunnel01`
-   * **Interface address**: The IPsec tunnel inner `/30`CIDR block. For example, `169.254.244.2`.
-   * **Customer endpoint**: The IP address from GCP VPN tunnel outside IP address. For example, `35.xx.xx.xx`.
-   * **Cloudflare endpoint**: Enter the first of your two anycast IPs.
-   * **Pre-shared key**: Choose **Use my own pre-shared key**, and enter the PSK you created for the GCP VPN tunnel.
-   * **Health check type**: Choose Reply
-   * **Health check destination**: Choose **custom** and set the IP corresponding to the interface address for the tunnel
-   * **Health check direction**: Choose **Bidirectional**
-   * **Replay protection**: Select **Enabled**.
+   - **Tunnel name**: `tunnel01`
+   - **Interface address**: The IPsec tunnel inner `/30`CIDR block. For example, `169.254.244.2`.
+   - **Customer endpoint**: The IP address from GCP VPN tunnel outside IP address. For example, `35.xx.xx.xx`.
+   - **Cloudflare endpoint**: Enter the first of your two anycast IPs.
+   - **Pre-shared key**: Choose **Use my own pre-shared key**, and enter the PSK you created for the GCP VPN tunnel.
+   - **Health check type**: Choose Reply
+   - **Health check destination**: Choose **custom** and set the IP corresponding to the interface address for the tunnel
+   - **Health check direction**: Choose **Bidirectional**
+   - **Replay protection**: Select **Enabled**.
 2. Select **Save**.
 3. Repeat the above steps for `tunnel02`. Chose the same prefix, but select the second IPsec tunnel for **Tunnel/Next hop**.
 

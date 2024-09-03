@@ -3,7 +3,6 @@ updated: 2021-08-19
 category: 🔐 Zero Trust
 pcx_content_type: tutorial
 title: Integrate Microsoft MCAS with Cloudflare Zero Trust
-
 ---
 
 Many security teams rely on Microsoft MCAS (Microsoft Cloud App Security), Microsoft's CASB solution, to identify and block threats on the Internet, as well as allow or block access to cloud applications. This tutorial covers how to integrate MCAS with Cloudflare Zero Trust, and create Gateway HTTP policies to ensure visibility and control over data.
@@ -24,7 +23,7 @@ Follow the guide for [Managing API tokens for Microsoft Cloud App Security](http
 Once you have the API token and API URL, use curl to get the list of banned applications from Microsoft MCAS:
 
 ```sh
-$ curl -v "https://<MCAS API URL>/api/discovery_block_scripts/?format=120&type=banned" -H "Authorization: Token <API token>"
+curl -v "https://<MCAS API URL>/api/discovery_block_scripts/?format=120&type=banned" -H "Authorization: Token <API token>"
 ```
 
 This will return a list of banned hostnames. In this case, Angie's List is the banned application.
@@ -38,13 +37,13 @@ As you can see, the banned hostnames are preceded by a `.`. To use this output f
 1. Run the curl API call and direct the output to a file, in this case `mcas.txt`:
 
    ```sh
-   $ curl -v "https://<MCAS API URL>/api/discovery_block_scripts/?format=120&type=banned" -H "Authorization: Token <API token>" > mcas.txt
+   curl -v "https://<MCAS API URL>/api/discovery_block_scripts/?format=120&type=banned" -H "Authorization: Token <API token>" > mcas.txt
    ```
 
 2. Remove the leading `.`, for example by running `sed` from the CLI:
 
    ```sh
-   $ sed -i 's/^.//' mcas.txt
+   sed -i 's/^.//' mcas.txt
    ```
 
 3. This will give you the list of hostnames without leading `.`.
@@ -56,7 +55,7 @@ As you can see, the banned hostnames are preceded by a `.`. To use this output f
 If you would like to get a list of all of the MCAS allowed applications, you can use the same API query, but instead of using `type=banned`, use `type=allowed`. This will return a much larger list.
 
 ```sh
-$ curl -v "https://<MCAS API URL>/api/discovery_block_scripts/?format=120&type=allowed" -H "Authorization: Token <API token>"
+curl -v "https://<MCAS API URL>/api/discovery_block_scripts/?format=120&type=allowed" -H "Authorization: Token <API token>"
 ```
 
 ## Adding a hostname list in Zero Trust
@@ -76,9 +75,9 @@ Your list is now ready to be referenced by Gateway HTTP policies.
 2. Select **Add a policy**.
 3. Create the following policy.
 
-   | Selector | Operator | Value                  | Action |
-   | -------- | -------- | ---------------------- | ------ |
-   | Host     | in list  | \<NEW\_HOSTNAME\_LIST> | Block  |
+   | Selector | Operator | Value                | Action |
+   | -------- | -------- | -------------------- | ------ |
+   | Host     | in list  | \<NEW_HOSTNAME_LIST> | Block  |
 
 Now when trying to visit one of the MCAS defined sites, the user will be blocked.
 

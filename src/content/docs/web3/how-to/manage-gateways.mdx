@@ -3,16 +3,15 @@ pcx_content_type: how-to
 title: Manage gateways
 sidebar:
   order: 1
-
 ---
 
-import { Render, TabItem, Tabs } from "~/components"
+import { Render, TabItem, Tabs } from "~/components";
 
 A Cloudflare Web3 gateway provides HTTP-accessible interfaces to various Web3 networks. You can interact with a gateway in several ways.
 
 ## Create a gateway
 
-<Tabs> <TabItem label="Dashboard">
+<Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
 
 <Render file="create-gateway-dashboard" />
 
@@ -24,7 +23,7 @@ A Cloudflare Web3 gateway provides HTTP-accessible interfaces to various Web3 ne
 
 <Render file="post-creation-steps" />
 
-***
+---
 
 ## Edit a gateway
 
@@ -32,7 +31,7 @@ Once you have [created a gateway](#create-a-gateway), you can only edit the **Ga
 
 If you need to edit other fields, [delete the gateway](#delete-a-gateway) and create a new one.
 
-<Tabs> <TabItem label="Dashboard">
+<Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
 
 To edit a gateway using the dashboard:
 
@@ -49,13 +48,13 @@ To edit specific settings for a gateway, use a [`PATCH`](/api/operations/web3-ho
 
 </TabItem> </Tabs>
 
-***
+---
 
 ## Refresh a gateway
 
 When your gateway is stuck in an **Error** [status](/web3/reference/gateway-status/), you should try refreshing the gateway, which attempts to re-create the associated DNS records for the hostname.
 
-<Tabs> <TabItem label="Dashboard">
+<Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
 
 To refresh a gateway using the dashboard:
 
@@ -70,7 +69,7 @@ To refresh a gateway using the API, send a [`PATCH`](/api/operations/web3-hostna
 
 </TabItem> </Tabs>
 
-***
+---
 
 ## Update blocklist
 
@@ -78,11 +77,11 @@ When you set up a [IPFS Universal Path gateway](/web3/ipfs-gateway/concepts/univ
 
 You have the ability to block access to one or more:
 
-* CIDs (`QmPZ9gcCEpqKTo6aq61g2nXGUhM4iCL3ewB6LDXZCtioEB`)
-* IPFS content paths (`/ipfs/QmYwAPJzv5CZsnA625s3Xf2nemtYgPpHdWEz79ojWnPbdG/readme`)
-* IPNS content paths (`/ipns/example.com`)
+- CIDs (`QmPZ9gcCEpqKTo6aq61g2nXGUhM4iCL3ewB6LDXZCtioEB`)
+- IPFS content paths (`/ipfs/QmYwAPJzv5CZsnA625s3Xf2nemtYgPpHdWEz79ojWnPbdG/readme`)
+- IPNS content paths (`/ipns/example.com`)
 
-<Tabs> <TabItem label="Dashboard">
+<Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
 
 To add an item to the blocklist using the dashboard:
 
@@ -98,9 +97,9 @@ To add an item to the blocklist using the dashboard:
 
 6. Enter the following information:
 
-   * **Blocklist entry type**: Choose **CID** or **Content path**.
-   * **Blocklist entry content**: Add a CID or content path to block, meaning either a valid CIDv0 or CIDv1 string (CID) or the entry should start with `/ipfs/` or `/ipns/` (content path).
-   * **Blocklist entry description**: Add a description to help you identify the blocklist entry.
+   - **Blocklist entry type**: Choose **CID** or **Content path**.
+   - **Blocklist entry content**: Add a CID or content path to block, meaning either a valid CIDv0 or CIDv1 string (CID) or the entry should start with `/ipfs/` or `/ipns/` (content path).
+   - **Blocklist entry description**: Add a description to help you identify the blocklist entry.
 
 7. Click **Add**.
 
@@ -110,13 +109,13 @@ To add a blocklist item using the API, send a [`POST`](/api/operations/web3-host
 
 </TabItem> </Tabs>
 
-***
+---
 
 ## Delete a gateway
 
 When you delete a gateway, Cloudflare will automatically remove all associated hostname DNS records. This action will impact your traffic and cannot be undone.
 
-<Tabs> <TabItem label="Dashboard">
+<Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
 
 To delete a gateway using the dashboard:
 

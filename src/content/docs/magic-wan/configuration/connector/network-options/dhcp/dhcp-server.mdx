@@ -1,14 +1,13 @@
 ---
 pcx_content_type: how-to
 title: DHCP server
-
 ---
 
-import { Render, TabItem, Tabs } from "~/components"
+import { Render, TabItem, Tabs } from "~/components";
 
 When you use a static IP address, Magic WAN Connector can also act as a DHCP server in your network. To enable this feature:
 
-<Tabs> <TabItem label="Dashboard">
+<Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/) and select your account.
 2. Go to **Magic WAN** > **Sites**.
@@ -18,9 +17,9 @@ When you use a static IP address, Magic WAN Connector can also act as a DHCP ser
 6. Select **Edit**.
 7. Under **Static addressing**, select **This is a DHCP Server**. You also have to specify:
 
-   * The DNS server address
-   * The DHCP pool start
-   * The DHCP pool end
+   - The DNS server address
+   - The DHCP pool start
+   - The DHCP pool end
 
    For example:
 

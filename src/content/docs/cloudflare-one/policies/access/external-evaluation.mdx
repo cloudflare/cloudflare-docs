@@ -3,15 +3,14 @@ pcx_content_type: how-to
 title: External Evaluation rules
 sidebar:
   order: 4
-
 ---
 
-import { GlossaryTooltip, Example } from "~/components"
+import { GlossaryTooltip, Example } from "~/components";
 
 With Cloudflare Access, you can create Allow or Block policies which evaluate the user based on custom criteria. This is done by adding an **External Evaluation** rule to your policy. The **External Evaluation** selector requires two values:
 
-* **Evaluate URL** — the API endpoint containing your business logic.
-* **Keys URL** — the key that Access uses to verify that the response came from your API
+- **Evaluate URL** — the API endpoint containing your business logic.
+- **Keys URL** — the key that Access uses to verify that the response came from your API
 
 After the user authenticates with your identity provider, Access sends the user's identity to the external API at **Evaluate URL**. The external API returns a True or False response to Access, which will then allow or deny access to the user. To protect against man-in-the-middle attacks, Access signs all requests with your Access account key and checks that responses are signed by the key at **Keys URL**.
 
@@ -21,10 +20,10 @@ You can set up External Evaluation rules using any API service, but to get start
 
 ### Prerequisites
 
-* [Workers account](/workers/get-started/guide/)
-* Install [npm](https://docs.npmjs.com/getting-started)
-* Install [Node.js](https://nodejs.org/en/)
-* Application protected by Access
+- [Workers account](/workers/get-started/guide/)
+- Install [npm](https://docs.npmjs.com/getting-started)
+- Install [Node.js](https://nodejs.org/en/)
+- Application protected by Access
 
 ### 1. Create a new Worker
 
@@ -85,15 +84,14 @@ You can set up External Evaluation rules using any API service, but to get start
 
 :::note
 
-
-* Sample code is available in our [GitHub repository](https://github.com/cloudflare/workers-access-external-auth-example).
-* To view a list of identity-based data fields, log in to your Access application and append `/cdn-cgi/access/get-identity` to the URL. For example, if `www.example.com` is behind Access, visit `https://www.example.com/cdn-cgi/access/get-identity`.
+- Sample code is available in our [GitHub repository](https://github.com/cloudflare/workers-access-external-auth-example).
+- To view a list of identity-based data fields, log in to your Access application and append `/cdn-cgi/access/get-identity` to the URL. For example, if `www.example.com` is behind Access, visit `https://www.example.com/cdn-cgi/access/get-identity`.
   :::
 
 2. Deploy the Worker to Cloudflare's global network.
 
    ```sh
-   $ npx wrangler deploy
+   npx wrangler deploy
    ```
 
 The Worker will be deployed to your `*.workers.dev` subdomain at `my-worker.<YOUR_SUBDOMAIN>.workers.dev`.
@@ -133,7 +131,7 @@ To debug your External Evaluation rule:
 1. Go to your Worker directory.
 
    ```sh
-   $ cd my-worker
+   cd my-worker
    ```
 
 2. Open `wrangler.toml` in a text editor and set the `debug` variable to `TRUE`.
@@ -141,13 +139,13 @@ To debug your External Evaluation rule:
 3. Deploy your changes.
 
    ```sh
-   $ npx wrangler deploy
+   npx wrangler deploy
    ```
 
 4. Next, start a session to output realtime logs from your Worker.
 
    ```sh
-   $ wrangler tail -f pretty
+   wrangler tail -f pretty
    ```
 
 5. Log in to your Access application.
@@ -169,9 +167,9 @@ To debug your External Evaluation rule:
 
    Access checks the outgoing JWT for all of the following criteria:
 
-   * Token was signed by **Keys URL**.
-   * Expiration date has not elapsed.
-   * API returns `"success": true`.
-   * `nonce` is unchanged from the incoming JWT. The `nonce` value is unique per request.
+   - Token was signed by **Keys URL**.
+   - Expiration date has not elapsed.
+   - API returns `"success": true`.
+   - `nonce` is unchanged from the incoming JWT. The `nonce` value is unique per request.
 
    If any condition fails, the External Evaluation rule evaluates to false.

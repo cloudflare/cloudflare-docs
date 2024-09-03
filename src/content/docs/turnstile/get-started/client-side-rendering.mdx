@@ -82,12 +82,6 @@ To:
 https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit
 ```
 
-Or:
-
-```txt
-https://challenges.cloudflare.com/turnstile/v0/api.js?onload=onloadTurnstileCallback
-```
-
 When using `render=explicit`, HTML elements with the `cf-turnstile` class will not show a challenge. The `turnstile.render` function must be invoked using the following steps. To combine both options, pass a query string of `?render=explicit&onload=onloadTurnstileCallback`:
 
 `https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit&onload=onloadTurnstileCallback`
@@ -200,8 +194,9 @@ By default, Turnstile tokens are obtained for a visitor upon the rendering of a 
 
 There are two options:
 
-* The challenge runs automatically after calling the `render()` function.
-* The challenge runs after the `render()` function has been called, by invoking the `turnstile.execute(container: string | HTMLElement, jsParams?: RenderParameters)` function separately.
+- The challenge runs automatically after calling the `render()` function.
+- The challenge runs after the `render()` function has been called, by invoking the `turnstile.execute(container: string | HTMLElement, jsParams?: RenderParameters)` function separately.
+  
   This detaches the appearance and rendering of a widget from its execution.
 
 ## Appearance modes
@@ -210,15 +205,25 @@ If a widget is visible, its appearance can be controlled via the `appearance` pa
 
 By default, `appearance` is set to `always` for visible widget types. However, if `appearance` is set to `execute`, the widget will only become visible after the challenge begins. This is helpful in situations where `execute()` is called after `render()`.  If `appearance` is set to `interaction-only`, the widget will become only visible in cases where an interaction is required.
 
+Refer to [Widget types](/turnstile/concepts/widget-types/) to see widgets by type and state.
+
 ## Widget size
 
 The Turnstile widget can have two different fixed sizes or a flexible width size when using the Managed or Non-interactive modes:
 
-| Size    | Width | Height |
-| ------- | ----- | ------ |
-| Normal  | 300px | 65px   |
-| Flexible | 100% (min: 300px) | 120px |
-| Compact | 130px | 120px  |
+<Render file="widget-size" />
+
+```html title="Flexible width example"
+<div style="display: block; flex-flow: row;">
+    <div class="cf-turnstile" data-sitekey="1x00000000000000000000AA" data-size="flexible"></div>
+</div>
+```
+
+```html title="Compact mode example"
+<div style="display: block; flex-flow: row;">
+    <div class="cf-turnstile" data-sitekey="1x00000000000000000000AA" data-size="compact"></div>
+</div>
+```
 
 ## Configurations
 

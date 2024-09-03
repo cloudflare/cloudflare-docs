@@ -3,10 +3,9 @@ pcx_content_type: how-to
 title: Manage DNS records
 sidebar:
   order: 1
-
 ---
 
-import { GlossaryTooltip, Render, TabItem, Tabs } from "~/components"
+import { GlossaryTooltip, Render, TabItem, Tabs } from "~/components";
 
 <Render file="dns-scan-intro" /> <br />
 
@@ -18,15 +17,13 @@ If you want more control over which DNS records are imported and how, [import a 
 
 :::note
 
-
 If your domain is added to Cloudflare by a hosting partner, manage your DNS records via the hosting partner.
-
 
 :::
 
 ## Create DNS records
 
-<Tabs> <TabItem label="Dashboard">
+<Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
 
 To create a DNS record in the dashboard:
 
@@ -39,9 +36,10 @@ To create a DNS record in the dashboard:
 4. Choose a record [**Type**](/dns/manage-dns-records/reference/dns-record-types/).
 
 5. Complete the required fields, which vary per record. Particularly important fields (for some records) include:
-   * **Proxy status**: For `A`, `AAAA`, and `CNAME` records, decide whether hostname traffic is <GlossaryTooltip term="proxy status" link="/dns/manage-dns-records/reference/proxied-dns-records/">proxied through Cloudflare</GlossaryTooltip>.
-   * **TTL**: Short for [*Time to Live*](/dns/manage-dns-records/reference/ttl/), this field controls how long each record is valid and — as a result — how long it takes for record updates to reach your end users.
-   * **Comment** and **Tag**: [Record attributes](/dns/manage-dns-records/reference/record-attributes/) meant for your reference.
+
+   - **Proxy status**: For `A`, `AAAA`, and `CNAME` records, decide whether hostname traffic is <GlossaryTooltip term="proxy status" link="/dns/manage-dns-records/reference/proxied-dns-records/">proxied through Cloudflare</GlossaryTooltip>.
+   - **TTL**: Short for [_Time to Live_](/dns/manage-dns-records/reference/ttl/), this field controls how long each record is valid and — as a result — how long it takes for record updates to reach your end users.
+   - **Comment** and **Tag**: [Record attributes](/dns/manage-dns-records/reference/record-attributes/) meant for your reference.
 
 6. Click **Save**.
 
@@ -55,11 +53,11 @@ For specific API examples, refer to [DNS record types](/dns/manage-dns-records/r
 
 </TabItem> </Tabs>
 
-***
+---
 
 ## Edit DNS records
 
-<Tabs> <TabItem label="Dashboard">
+<Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
 
 To edit DNS records in the dashboard:
 
@@ -77,11 +75,11 @@ To update part of a record with the API, use a [PATCH request](/api/operations/d
 
 </TabItem> </Tabs>
 
-***
+---
 
 ## Delete DNS records
 
-<Tabs> <TabItem label="Dashboard">
+<Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
 
 To delete DNS records in the dashboard:
 
