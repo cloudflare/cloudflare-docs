@@ -7,7 +7,9 @@ sidebar:
 
 Advanced security features such as [HTTPS traffic inspection](/cloudflare-one/policies/gateway/http-policies/tls-decryption/), [block pages](/cloudflare-one/policies/gateway/block-page/), [Data Loss Prevention](/cloudflare-one/policies/data-loss-prevention/), [anti-virus scanning](/cloudflare-one/policies/gateway/http-policies/antivirus-scanning/), and [Browser Isolation](/cloudflare-one/policies/browser-isolation/) require users to install and trust a root certificate on their device.
 
-Cloudflare assigns a unique root CA for each Zero Trust account. By default, you can [generate a certificate](#generate-a-cloudflare-root-certificate) and deploy it in Zero Trust. Alternatively, Enterprise users can upload their own [custom certificate](custom-certificate/). Once you deploy your certificate across Cloudflare and turn it on, you can install it on your user's devices either [with WARP](install-cert-with-warp/) or [manually](install-cloudflare-cert/).
+Gateway [generates a unique root CA](#generate-a-cloudflare-root-certificate) for each Zero Trust account and deploys its across the Cloudflare global network. Alternatively, Enterprise users can upload and deploy their own [custom certificate](custom-certificate/).
+
+Once you deploy your certificate across Cloudflare and turn it on, you can install it on your user's devices either [with WARP](install-cert-with-warp/) or [manually](install-cloudflare-cert/).
 
 | Deployment status | Description                                                                                    |
 | ----------------- | ---------------------------------------------------------------------------------------------- |
@@ -18,7 +20,11 @@ Cloudflare assigns a unique root CA for each Zero Trust account. By default, you
 
 ## Generate a Cloudflare root certificate
 
-To generate a Cloudflare root certificate:
+:::note[Certificate generation limitation]
+Each Zero Trust account can generate a new root certificate a maximum of three times.
+:::
+
+To generate a new Cloudflare root certificate for your Zero Trust organization:
 
 1. In [Zero Trust](https://one.dash.cloudflare.com/), go to **Settings** > **Resources**.
 2. In **Certificates**, select **Manage**.
@@ -32,14 +38,14 @@ The certificate will appear in your list of certificates as **Inactive**. To dep
 
 Once a certificate is generated in or uploaded to Zero Trust, you need to activate it. Activating a certificate deploys it across the Cloudflare network.
 
-To manage the status of your root certificates:
+To activate your root certificate:
 
 1. In [Zero Trust](https://one.dash.cloudflare.com/), go to **Settings** > **Resources**.
 2. In **Certificates**, select **Manage**.
 3. Select the certificate you want to activate.
 4. Select **Activate**.
 
-The status of the certificate will change to **Pending** while it deploys. Once your certificate is **Active**, you can turn it on for use in inspection:
+The status of the certificate will change to **Pending** while it deploys. Once the status of your certificate is **Active**, you can turn the certificate on for use in inspection:
 
 1. In [Zero Trust](https://one.dash.cloudflare.com/), go to **Settings** > **Resources**.
 2. In **Certificates**, select **Manage**.
