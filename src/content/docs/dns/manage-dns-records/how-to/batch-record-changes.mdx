@@ -1,25 +1,45 @@
 ---
 pcx_content_type: how-to
-title: Edit or delete multiple records in one action
+title: Batch record changes
 sidebar:
-  order: 3
-  label: Batch update or delete
+  order: 7
 
 ---
 
-Intro
+Cloudflare allows you to apply several changes to your zone records at the same time. You can use the Dashboard to delete or edit DNS records in bulk, or perform further batched operations via API.
 
-## Requirements
+## Availability and limits
+
+Batch DNS record changes is available on all plans.
+
+The number of records that you can operate with in one action depends on your zone plan:
+
+- Free: 200
+- Pro: 3,500
+- Businees: 3,500
+- Enterprise: 3,500
+
+---
+
+## Use the dashboard
+
+### Edit proxy status
+
+### Delete
+
+## Use the API
+
+### Requirements
 
 In case it's API only. Token permissions etc
 
-## Aspects to consider
+### Aspects to consider
 
 - Patch vs Put
 - Execution order
 - Propagation is not atomic
 
-## Example request
+### Example request
 
 ```bash
 {
