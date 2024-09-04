@@ -22,36 +22,48 @@ If your device does not support [certificate installation via WARP](/cloudflare-
 
 First, download the Cloudflare certificate. The certificate is available both as a `.pem` and as a `.crt` file. Certain applications require the certificate to be in a specific file type, so ensure you download the most appropriate file for your use case.
 
-- [Download certificate (.crt)](/cloudflare-one/static/Cloudflare_CA.crt)
-- [Download certificate (.pem)](/cloudflare-one/static/Cloudflare_CA.pem)
+1. In [Zero Trust](https://one.dash.cloudflare.com/), go to **Settings** > **Resources**.
+2. In **Certificates**, select **Manage**.
+3. Select the certificate you want to download.
+4. Select either **Download .pem** or **Download .crt**.
 
-### Verify the certificate fingerprint
+### Verify the downloaded certificate
 
-To verify your download, check that the certificate's thumbprint matches:
+To verify your download, use a terminal to check that the downloaded certificate's hash matches the thumbprint listed under **Certificate thumbprint**. For example:
 
 #### SHA1
 
-```txt
-BB:2D:B6:3D:6B:DE:DA:06:4E:CA:CB:40:F6:F2:61:40:B7:10:F0:6C
+```sh title="SHA1 .crt example"
+openssl x509 -noout -fingerprint -sha1 -inform der -in <Cloudflare_CA.crt>
 ```
 
-```
-➜  ~ openssl x509 -noout -fingerprint -sha1 -inform der -in <Cloudflare_CA.crt>
+```sh output
 SHA1 Fingerprint=BB:2D:B6:3D:6B:DE:DA:06:4E:CA:CB:40:F6:F2:61:40:B7:10:F0:6C
-➜  ~ openssl x509 -noout -fingerprint -sha1 -inform pem -in <Cloudflare_CA.pem>
+```
+
+```sh title="SHA1 .pem example"
+openssl x509 -noout -fingerprint -sha1 -inform pem -in <Cloudflare_CA.pem>
+```
+
+```sh output
 SHA1 Fingerprint=BB:2D:B6:3D:6B:DE:DA:06:4E:CA:CB:40:F6:F2:61:40:B7:10:F0:6C
 ```
 
 #### SHA256
 
-```txt
-F5:E1:56:C4:89:78:77:AD:79:3A:1E:83:FA:77:83:F1:9C:B0:C6:1B:58:2C:2F:50:11:B3:37:72:7C:62:3D:EF
+```sh title="SHA256 .crt example"
+openssl x509 -noout -fingerprint -sha256 -inform der -in <Cloudflare_CA.crt>
 ```
 
-```
-➜  ~ openssl x509 -noout -fingerprint -sha256 -inform der -in <Cloudflare_CA.crt>
+```sh output
 sha256 Fingerprint=F5:E1:56:C4:89:78:77:AD:79:3A:1E:83:FA:77:83:F1:9C:B0:C6:1B:58:2C:2F:50:11:B3:37:72:7C:62:3D:EF
-➜  ~ openssl x509 -noout -fingerprint -sha256 -inform pem -in <Cloudflare_CA.pem>
+```
+
+```sh title="SHA256 .pem example"
+openssl x509 -noout -fingerprint -sha256 -inform pem -in <Cloudflare_CA.pem>
+```
+
+```sh output
 sha256 Fingerprint=F5:E1:56:C4:89:78:77:AD:79:3A:1E:83:FA:77:83:F1:9C:B0:C6:1B:58:2C:2F:50:11:B3:37:72:7C:62:3D:EF
 ```
 
