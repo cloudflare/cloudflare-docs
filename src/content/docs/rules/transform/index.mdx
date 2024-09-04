@@ -28,9 +28,12 @@ To configure Transform Rules in the dashboard, go to the **Transform Rules** pag
 
 ## Get started
 
-<Render file="rules-templates" />
+<Render
+	file="rules-templates"
+	params={{ one: "[Examples gallery](/rules/transform/examples/)" }}
+/>
 
-Alternatively, you can create a transform rule from scratch in the dashboard or via Cloudflare API. Refer to the following sections for detailed instructions:
+Alternatively, create a transform rule from scratch in the dashboard or via Cloudflare API. Refer to the following sections for detailed instructions:
 
 - [Rewrite URL rules](/rules/transform/url-rewrite/)
 - [HTTP request header modification rules](/rules/transform/request-header-modification/)
