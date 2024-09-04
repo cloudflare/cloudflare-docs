@@ -690,10 +690,10 @@
         },
         "records_quota": {
           "title": "Number of records per zone",
-          "free": "200 for zones created on or after `2024-09-01 00:00:00 UTC`; 1000 for zones created before `2024-09-01 00:00:00 UTC`",
-          "pro": 3500,
-          "biz": 3500,
-          "ent": "3500 (can be increased)"
+          "free": "1,000 for zones created before `2024-09-01 00:00:00 UTC` <br /> 200 for zones created on or after `2024-09-01 00:00:00 UTC`",
+          "pro": "3,500",
+          "biz": "3,500",
+          "ent": "3,500 (can be increased)"
         }
       }
     },
