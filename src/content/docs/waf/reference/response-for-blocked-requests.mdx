@@ -1,0 +1,41 @@
+---
+title: Response for blocked requests
+pcx_content_type: reference
+sidebar:
+  order: 4
+---
+
+By default, when you select the _Block_ action in a rule, the WAF will send a response according to the preferred content type defined in the received `Accept` header value (if any):
+
+| Preferred content type          | Format of _Block_ action response |
+| ------------------------------- | --------------------------------- |
+| `text/html`                     | HTML                              |
+| `application/json`              | JSON                              |
+| `application/xml` or `text/xml` | XML                               |
+| `text/plain`                    | Plain text                        |
+| Other / Not defined             | HTML                              |
+
+The WAF will consider any quality factor values (`;q=<VALUE>`) specified in the `Accept` header when determining the preferred content type. For more information on quality factor values, refer to the [MDN documentation](https://developer.mozilla.org/en-US/docs/Glossary/Quality_values).
+
+## Custom response
+
+You can define a custom response for requests blocked by [custom rules](/waf/custom-rules/) or [rate limiting rules](/waf/rate-limiting-rules/). When you configure a custom response, the value of the `Accept` header will be ignored.
+
+To configure a custom block response for your entire account or zone, define the custom HTML response in [Custom Pages](/support/more-dashboard-apps/cloudflare-custom-pages/configuring-custom-pages-error-and-challenge/). For requests blocked by custom rules, configure the **WAF Block** page. For requests blocked by rate limiting rules, configure the **429 Errors** page. These custom pages will always have an HTML content type.
+
+To configure a custom block response for a specific [custom rule](/waf/custom-rules/) or [rate limiting rule](/waf/rate-limiting-rules/), select the _Block_ action in the rule and add your custom response configuration to the rule.
+
+A custom response for a specific rule has the following settings:
+
+- **Response type**: Choose a content type or the default block response from the list. The available custom response types are the following:
+
+  | Dashboard value | API value            |
+  | --------------- | -------------------- |
+  | Custom HTML     | `"text/html"`        |
+  | Custom Text     | `"text/plain"`       |
+  | Custom JSON     | `"application/json"` |
+  | Custom XML      | `"text/xml"`         |
+
+- **Response code**: Choose an HTTP status code for the response, in the range 400-499. The default response code is `403` for custom rules and `429` for rate limiting rules.
+
+- **Response body**: The body of the custom response. Configure a valid body according to the response type you selected. The maximum field size is 2 KB for custom rules and 30 KB for rate limiting rules.

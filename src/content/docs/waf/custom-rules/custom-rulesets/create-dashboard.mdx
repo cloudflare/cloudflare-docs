@@ -14,7 +14,6 @@ import { Render } from "~/components";
 Create and deploy custom rulesets in Account Home > **WAF** > **Custom rulesets**.
 
 :::note
-
 Account-level WAF configuration requires an Enterprise plan with a paid add-on.
 :::
 
@@ -36,7 +35,6 @@ Account-level WAF configuration requires an Enterprise plan with a paid add-on.
    - Select **Custom filter expression** to define a custom expression that defines when to execute the custom ruleset. Use the **Field** drop-down list to choose an HTTP property. For each request, the value of the property you choose for **Field** is compared to the value you specify for **Value** using the operator selected in **Operator**. Alternatively, select **Edit expression** to define your expression using the [Expression Editor](/ruleset-engine/rules-language/expressions/edit-expressions/#expression-editor).
 
    :::caution
-
    Deployed custom rulesets will only apply to incoming traffic of Enterprise domains. The Expression Builder will automatically include this filter. If you define a custom expression for the ruleset using the Expression Editor, you must use parentheses to enclose any custom conditions and end your expression with `and cf.zone.plan eq "ENT"` so that the rule only applies to domains on an Enterprise plan.
    :::
 
@@ -48,17 +46,10 @@ Account-level WAF configuration requires an Enterprise plan with a paid add-on.
 
 9. Select the rule action from the **Choose action** drop-down list. For example, selecting _Block_ tells Cloudflare to refuse requests that match the conditions you specified.
 
-10. (Optional) If you selected the _Block_ action, you can [configure a custom response](#configure-a-custom-response-for-blocked-requests).
+10. (Optional) If you selected the _Block_ action, you can [configure a custom response](/waf/reference/response-for-blocked-requests/#custom-response).
 
 11. Select **Deploy**.
 
 12. Add other rules to the custom ruleset, if needed. You can also duplicate an existing rule in the custom ruleset.
 
 13. Select **Create**.
-
-## Configure a custom response for blocked requests
-
-<Render
-	file="custom-response-blocked-requests"
-	params={{ one: "WAF block", two: "403", three: "2 KB" }}
-/>

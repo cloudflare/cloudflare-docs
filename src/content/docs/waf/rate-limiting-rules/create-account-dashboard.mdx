@@ -51,7 +51,7 @@ To create a new custom rate limiting ruleset:
 
 12. Under **Then take action**, select the rule action from the **Choose an action** drop-down list. For example, selecting _Block_ tells Cloudflare to refuse requests in the conditions you specified when the request limit is reached.
 
-13. (Optional) If you selected the _Block_ action, you can [configure a custom response](#configure-a-custom-response-for-blocked-requests) for requests exceeding the configured rate limit.
+13. (Optional) If you selected the _Block_ action, you can [configure a custom response](/waf/reference/response-for-blocked-requests/#custom-response) for requests exceeding the configured rate limit.
 
 14. Select the mitigation timeout in the **Duration** dropdown. This is the time period during which Cloudflare applies the select action once the rate is reached.
 
@@ -76,17 +76,9 @@ To deploy a custom rate limiting ruleset to one or more zones on an Enterprise p
 5. Under **Execution scope**, review the scope of the rate limiting ruleset to deploy. If necessary, select **Edit scope** and configure the expression that will determine the scope of the current rule.
 
    :::caution
-
    Deployed custom rate limiting rulesets will only apply to incoming traffic of zones on an Enterprise plan. The Expression Builder will automatically include this filter. If you define a custom expression using the Expression Editor, you must include `AND zone.level eq "ENT"` in your expression so that the rule only applies to zones on an Enterprise plan.
    :::
 
 6. To deploy your rule immediately, select **Deploy**. If you are not ready to deploy your rule, select **Save as Draft**.
 
 The **Deployed custom rate limiting rulesets** list will show a rule for each deployed custom rate limiting ruleset.
-
-## Configure a custom response for blocked requests
-
-<Render
-	file="custom-response-blocked-requests"
-	params={{ one: "rate limiting", two: "429", three: "30 KB" }}
-/>

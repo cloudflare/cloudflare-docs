@@ -25,13 +25,6 @@ import { Render } from "~/components";
 
 6. Under **Then take action**, select the rule action in the **Choose action** dropdown. For example, selecting _Block_ tells Cloudflare to refuse requests that match the conditions you specified.
 
-7. (Optional) If you selected the _Block_ action, you can [configure a custom response](#configure-a-custom-response-for-blocked-requests).
+7. (Optional) If you selected the _Block_ action, you can [configure a custom response](/waf/reference/response-for-blocked-requests/#custom-response).
 
 8. To save and deploy your rule, select **Deploy**. If you are not ready to deploy your rule, select **Save as Draft**.
-
-## Configure a custom response for blocked requests
-
-<Render
-	file="custom-response-blocked-requests"
-	params={{ one: "WAF block", two: "403", three: "2 KB" }}
-/>
