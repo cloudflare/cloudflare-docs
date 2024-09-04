@@ -26,6 +26,8 @@ In this tutorial, you will go through step-by-step instructions to bring an exis
 You will provision resources that qualify under free tier offerings for both Pulumi Cloud and Cloudflare.
 :::
 
+## Before you begin
+
 Ensure you have:
 
 - A Cloudflare account and API Token with permission to edit the resources in this tutorial. If you need to, sign up for a [Cloudflare account](https://dash.cloudflare.com/sign-up/workers-and-pages) before continuing. Your token must have:
@@ -36,6 +38,8 @@ Ensure you have:
 - The [Pulumi CLI](/pulumi/installing/) is installed on your machine.
 - A [Pulumi-supported programming language](https://github.com/pulumi/pulumi?tab=readme-ov-file#languages) is configured. (TypeScript, JavaScript, Python, Go, .NET, Java, or use YAML)
 - A domain name. You may use `example.com` to complete the tutorial.
+
+## Initialize Pulumi
 
 ### a. Create a directory
 
@@ -168,6 +172,8 @@ pulumi up --yes --stack dev
 ```
 
 At this point, you have not defined any resources so you'll have an empty stack.
+
+## Add a Zone
 
 :::note
 
@@ -477,6 +483,8 @@ pulumi stack output zoneId
 d8fcb6d731fe1c2d75e2e8d6ad63fad5
 ```
 
+## Update your nameservers
+
 Once you have added a domain to Cloudflare, that domain will receive two assigned authoritative nameservers.
 
 :::note
@@ -586,6 +594,8 @@ Once successfully registered, your domain `status` will change to `active`.
 ```sh
 pulumi stack output
 ```
+
+## Add a DNS record
 
 You will now add a DNS record to your domain.
 
@@ -873,6 +883,8 @@ outputs:
 pulumi up --yes --stack dev
 ```
 
+## Verify your setup
+
 You will run two `nslookup` commands against the Cloudflare-assigned nameservers.
 
 To test your site, run:
@@ -889,6 +901,8 @@ For .NET use `Nameservers` as the Output.
 
 Confirm your response returns the IP address(es) for your site.
 
+## Clean up
+
 In this last step, you will remove the resources and stack used throughout the tutorial.
 
 ### a. Delete the resources
@@ -904,5 +918,7 @@ pulumi stack rm dev
 ```
 
 You have incrementally defined Cloudflare resources needed to add a site to Cloudflare. After each new resource, you apply the changes to your `dev` stack via the `pulumi up` command. You declare the resources in your programming language of choice and let Pulumi handle the rest.
+
+## Next steps
 
 Follow the [Hello World tutorial](/pulumi/tutorial/hello-world/) to deploy a serverless app with Pulumi.
