@@ -4,18 +4,26 @@ title: Prioritized traffic
 head: []
 description: Prioritized traffic allows you to define which applications are
   processed first by Magic WAN Connector.
-
 ---
 
-import { Render } from "~/components"
+import { Render } from "~/components";
 
 Prioritized traffic allows you to define which applications Magic WAN Connector should process first. Applications not in the list will be queued behind prioritized traffic.
+
+Similarly to breakout traffic, prioritized traffic also works via DNS requests inspection.
+
+:::caution[Warning]
+Prioritized traffic will not work for applications that use DNS-over-HTTPs.
+:::
 
 ## Add an application
 
 You need to configure Prioritized traffic for each of your existing sites, as it is a per-site configuration.
 
-<Render file="connector/app-aware-policies/add-app" params={{ one: "Prioritized traffic" }} />
+<Render
+	file="connector/app-aware-policies/add-app"
+	params={{ one: "Prioritized traffic" }}
+/>
 
 6. Select one or more applications that should take precedence over other traffic. You can also use the search box.
 7. Select **Add applications**.
@@ -24,4 +32,7 @@ The traffic for the applications you chose are now processed first by Connector.
 
 ## Delete an application
 
-<Render file="connector/app-aware-policies/delete-app" params={{ one: "Prioritized traffic" }} />
+<Render
+	file="connector/app-aware-policies/delete-app"
+	params={{ one: "Prioritized traffic" }}
+/>
