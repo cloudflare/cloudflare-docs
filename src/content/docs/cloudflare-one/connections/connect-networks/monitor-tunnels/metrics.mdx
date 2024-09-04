@@ -6,6 +6,7 @@ sidebar:
 head:
   - tag: title
     content: Tunnel metrics
+tableOfContents: false
 ---
 
 Tunnel metrics show a Cloudflare Tunnel's throughput and resource usage over time. When you run a tunnel, you can configure `cloudflared` to spin up a Prometheus metrics endpoint — an HTTP server that exposes metrics in [Prometheus](https://prometheus.io/docs/introduction/overview/) format. You can then use the Prometheus toolkit on a remote machine to scrape metrics data from the `cloudflared` server.
