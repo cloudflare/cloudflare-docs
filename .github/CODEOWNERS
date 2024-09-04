@@ -1,6 +1,6 @@
 # Default owners if not more specific match
 
-- @cloudflare/pcx-technical-writing
+* @cloudflare/pcx-technical-writing
 
 # More dev-specific files
 
@@ -11,8 +11,8 @@
 /.github/styles/cloudflare/spelling-exceptions.txt @cloudflare/pcx-technical-writing
 /src/components/ @cloudflare/developer-advocacy @kristianfreeman @kodster28 @pedrosousa @haleycode @GregBrimble @KianNH
 /functions/ @cloudflare/developer-advocacy @kristianfreeman @kodster28 @pedrosousa @haleycode @GregBrimble @KianNH
-_.js @cloudflare/developer-advocacy @kristianfreeman @kodster28 @pedrosousa @haleycode @GregBrimble @KianNH
-_.ts @cloudflare/developer-advocacy @kristianfreeman @kodster28 @pedrosousa @haleycode @GregBrimble @KianNH
+*.js @cloudflare/developer-advocacy @kristianfreeman @kodster28 @pedrosousa @haleycode @GregBrimble @KianNH
+*.ts @cloudflare/developer-advocacy @kristianfreeman @kodster28 @pedrosousa @haleycode @GregBrimble @KianNH
 /src/content/workers-ai-models/ @kodster28 @craigsdennis @pedrosousa @cloudflare/pcx-technical-writing
 /public/_redirects @GregBrimble @cloudflare/pcx-technical-writing
 
