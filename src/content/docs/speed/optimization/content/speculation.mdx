@@ -102,4 +102,11 @@ To disable Speculation, set `value:` to `"off"`.
 
 </TabItem> </Tabs>
 
+## Caveats
+
+Speculation is not compatible with Workers. If you rely on Workers in your setup, enabling this feature may cause unexpected behavior or disruptions.
+
+Once this feature is enabled, your Origin will stop receiving `prefetch` requests. To restore this behavior, you must either disable the feature or modify the response to overwrite the speculation header.
+
+
 
