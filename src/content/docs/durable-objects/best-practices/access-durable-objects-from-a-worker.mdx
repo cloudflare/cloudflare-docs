@@ -10,9 +10,36 @@ To access a Durable Object from a Worker, you must first create a [Durable Objec
 
 Durable Object bindings allow for communication between a Worker and a Durable Object.
 
-If you are using [Wrangler environments](/workers/wrangler/environments/), you must specify any Durable Object bindings you wish to use on a per-environment basis.
+## Communicate with a Durable Object
 
-## 1. Create Durable Object IDs
+* RPC (Remote Procedure Call) (**recommended**)
+* HTTP via `fetch`
+
+```ts
+// Using the RPC API
+
+
+```
+
+```ts
+// Using the HTTP (fetch) API
+
+```
+
+
+| Feature                           | RPC                      | HTTP (fetch)        |
+| --------------------------------- | ---------------------------------------------- |
+| ABC                               |                          |                     |
+
+
+## Terminology
+
+TODO - stubs, classes, instances
+
+## Creating unique Durable Objects
+
+
+### Creating Durable Object IDs
 
 A Durable Object ID is a 64-digit hexadecimal number used to identify the Durable Object you are sending the request to. Not all 64-digit hex numbers are valid IDs. The Durable Object ID is tied to a class.
 
@@ -62,7 +89,6 @@ let id = OBJECT_NAMESPACE.idFromName(name);
 ```
 
 #### Parameters
-
 
 
 * `name` string
