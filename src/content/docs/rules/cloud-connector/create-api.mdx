@@ -3,11 +3,10 @@ title: Configure via API
 pcx_content_type: how-to
 sidebar:
   order: 3
-meta:
-  title: Configure a Cloud Connector rule via API
+head:
+  - tag: title
+	  content: Configure a Cloud Connector rule via API
 ---
-
-# Configure a rule via API
 
 You can configure Cloud Connector rules using the [Cloudflare API](/fundamentals/api/).
 
@@ -33,10 +32,10 @@ The `{zone_id}` argument is the [zone ID](/fundamentals/setup/find-account-and-z
 
 The following table summarizes the available operations.
 
-Operation | Verb + Endpoint
-----------|----------------
-List Cloud Connector rules | `GET zones/{zone_id}/cloud_connector/rules`
-Create/update/delete Cloud Connector rules | `PUT /zones/{zone_id}/cloud_connector/rules`
+| Operation                                  | Verb + Endpoint                              |
+| ------------------------------------------ | -------------------------------------------- |
+| List Cloud Connector rules                 | `GET zones/{zone_id}/cloud_connector/rules`  |
+| Create/update/delete Cloud Connector rules | `PUT /zones/{zone_id}/cloud_connector/rules` |
 
 ## Example API calls
 
@@ -51,21 +50,21 @@ curl https://api.cloudflare.com/client/v4/zones/{zone_id}/cloud_connector/rules 
 
 ```json title="Example response"
 {
-  "result": [
-    {
-      "id": "<RULE_1_ID>",
-      "provider": "aws_s3",
-      "expression": "http.request.uri.path wildcard \"/images/*\"",
-      "description": "Connect to S3 bucket containing images",
-      "enabled": true,
-      "parameters": {
-        "host": "examplebucketwithimages.s3.north-eu.amazonaws.com"
-      }
-    }
-  ],
-  "success": true,
-  "errors": [],
-  "messages": []
+	"result": [
+		{
+			"id": "<RULE_1_ID>",
+			"provider": "aws_s3",
+			"expression": "http.request.uri.path wildcard \"/images/*\"",
+			"description": "Connect to S3 bucket containing images",
+			"enabled": true,
+			"parameters": {
+				"host": "examplebucketwithimages.s3.north-eu.amazonaws.com"
+			}
+		}
+	],
+	"success": true,
+	"errors": [],
+	"messages": []
 }
 ```
 
