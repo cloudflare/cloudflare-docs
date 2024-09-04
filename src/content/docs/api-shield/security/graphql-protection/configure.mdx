@@ -128,9 +128,9 @@ Query depth 50th percentile is 1.0
 
 API Shield customers now have three new fields available in custom rules:
 
-* `cf.api_gateway.graphql.query_size` describes the size of a GraphQL query.
-* `cf.api_gateway.graphql.query_depth` describes the depth of a GraphQL query.
-* `cf.api_gateway.graphql.parsed_successfully` describes whether Cloudflare was able to parse the query. Presently, we run best-effort parsing, meaning we might not be able to parse some valid queries. This means that you must use a `and cf.api_gateway.graphql.parsed_successfully` filter in your custom rules when deploying GraphQL security rules.
+- `cf.api_gateway.graphql.query_size` describes the size of a GraphQL query.
+- `cf.api_gateway.graphql.query_depth` describes the depth of a GraphQL query.
+- `cf.api_gateway.graphql.parsed_successfully` describes whether Cloudflare was able to parse the query. Presently, we run best-effort parsing, meaning we might not be able to parse some valid queries. This means that you must use a `and cf.api_gateway.graphql.parsed_successfully` filter in your custom rules when deploying GraphQL security rules.
   <br />
 
 For example, you can deploy the following rule via the API or the dashboard to block queries that are deeply nested but ask for a few fields.

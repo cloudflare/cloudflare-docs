@@ -1,6 +1,6 @@
 ---
 import { getEntry } from "astro:content";
-import { getCollection, z } from "astro:content";
+import { z } from "astro:content";
 
 type Props = z.infer<typeof props>;
 
@@ -25,12 +25,13 @@ const filtered = resources.data.entries.filter((entry) => {
 	);
 });
 
-filtered.sort((a, b) => b.updated - a.updated);
+filtered.sort((a, b) => Number(b.updated) - Number(a.updated));
 ---
 
 <ul>
 	{
 		filtered.map((entry) => {
+			// @ts-expect-error TODO: fix resource types
 			const title = entry.name ?? entry.title;
 			return (
 				<li>

@@ -88,8 +88,8 @@ For information on how to set up an IPsec tunnel, refer to <a href={props.four}>
 
 {props.one} uses the following stages to establish an IPsec tunnel:
 
-* **Initial Exchange** (`IKE_SA_INIT`): IKE peers negotiate parameters for the IKE Security Association (SA) and establish a shared secret used for key derivation. After this exchange, the peers have a secure communication channel but they have not yet authenticated each other. If supported, the peers will also perform NAT detection in this exchange.
-* **Auth Exchange** (`IKE_AUTH`): Using the secure tunnel established in the initial exchange, IKE peers mutually authenticate each other. After authentication, the IKE security association (SA) is established. Next, the peers negotiate and establish an IPsec tunnel, known as a Child SA.
+- **Initial Exchange** (`IKE_SA_INIT`): IKE peers negotiate parameters for the IKE Security Association (SA) and establish a shared secret used for key derivation. After this exchange, the peers have a secure communication channel but they have not yet authenticated each other. If supported, the peers will also perform NAT detection in this exchange.
+- **Auth Exchange** (`IKE_AUTH`): Using the secure tunnel established in the initial exchange, IKE peers mutually authenticate each other. After authentication, the IKE security association (SA) is established. Next, the peers negotiate and establish an IPsec tunnel, known as a Child SA.
 
 :::note
 It is important to note that the IKE SA and the Child SA are separate things, each with their own parameters. The Child SA is the actual IPsec tunnel where user traffic flows (that is, the dataplane). The IKE SA is used to set up and manage the Child SA.
@@ -105,80 +105,76 @@ Below is a list of the configuration parameters supported by Magic WAN. Choose w
 
 IKE SA is sometimes referred to as Phase 1 as per IKEv1 language.
 
-* **Encryption**
-  * AES-GCM-16 with 128-bit or 256-bit key length
-  * AES-CBC with 256-bit key length
+- **Encryption**
+  - AES-GCM-16 with 128-bit or 256-bit key length
+  - AES-CBC with 256-bit key length
 
-* **Integrity** (sometimes referred to as Authentication)
-  * SHA2-256
+- **Integrity** (sometimes referred to as Authentication)
+  - SHA2-256
 
-* **Diffie-Hellman group**:
+- **Diffie-Hellman group**:
   <br/>
 
 Below is a list of all Diffie-Hellman (DH) groups supported by Cloudflare. However, Cloudflare recommends that you use only one DH group when configuring your device, specifically DH group 14.
 
-* DH group 20 (384-bit random ECP group)
+- DH group 20 (384-bit random ECP group)
 
-* DH group 14 (2048-bit MODP group)
+- DH group 14 (2048-bit MODP group)
 
-* DH group 5 (1536-bit MODP group)
+- DH group 5 (1536-bit MODP group)
 
-* **Pseudorandom function (PRF)** (not to be confused with PFS. PRF is often not a configurable setting.)
-  * SHA2-256
-  * SHA2-384
-  * SHA2-512
+- **Pseudorandom function (PRF)** (not to be confused with PFS. PRF is often not a configurable setting.)
+  - SHA2-256
+  - SHA2-384
+  - SHA2-512
 
 #### IPsec
 
 The Child SA. Sometimes referred to as Phase 2 as per IKEv1 language.
 
-* **Encryption**:
-  * AES-GCM-16 with 128-bit or 256-bit key length
-  * AES-CBC with 128-bit or 256-bit key length
+- **Encryption**:
+  - AES-GCM-16 with 128-bit or 256-bit key length
+  - AES-CBC with 128-bit or 256-bit key length
 
-* **Integrity** (sometimes referred to as Authentication.)
-  * SHA2-256
-  * SHA-1 
-    
+- **Integrity** (sometimes referred to as Authentication.)
+  - SHA2-256
+  - SHA-1
+
     :::note
     When using AES-GCM-16, an integrity algorithm is not required because AES GCM includes integrity checking (since it is an AEAD algorithm). Even when using an AEAD algorithm, however, some routers still require an integrity algorithm to be selected.
     :::
 
-* **PFS group** (sometimes referred to as Phase 2 Diffie-Hellman Group. Not to be confused with PRF.)
+- **PFS group** (sometimes referred to as Phase 2 Diffie-Hellman Group. Not to be confused with PRF.)
   <br/>
 
 Below is a list of all Diffie-Hellman (DH) groups supported by Cloudflare. However, Cloudflare recommends that you use only one DH group when configuring your device, specifically DH group 14.
 
-* DH group 20 (384-bit random ECP group)
-* DH group 14 (2048-bit MODP group)
-* DH group 5 (1536-bit MODP group)
+- DH group 20 (384-bit random ECP group)
+- DH group 14 (2048-bit MODP group)
+- DH group 5 (1536-bit MODP group)
 
 #### Required configuration parameters
 
-* The IKE version must be IKEv2.
-* The IKE authentication method must be Pre-Shared Key (PSK).
-* If your router is behind NAT and requires NAT traversal (NAT-T), then your router must initiate IKE communication on port `4500`. Most devices support configuring NAT-T to begin on port `4500` (exceptions include at least some versions of the Cisco ASA). NAT-T is not supported for IKE sessions which begin on port `500` and then switch to port `4500`.
-* (Uncommon) Extended Sequence Numbers (ESN) must be disabled.
-* If your tunnels need replay protection, enable Dead Peer Detection (DPD) in your router and select the option that restarts your IKE session when a DPD timeout occurs. This "restart" option ensures that the connection can recover in the event that a Cloudflare server goes offline. If your router does not expose this setting, check the router documentation for its dead peer detection behavior.
+- The IKE version must be IKEv2.
+- The IKE authentication method must be Pre-Shared Key (PSK).
+- If your router is behind NAT and requires NAT traversal (NAT-T), then your router must initiate IKE communication on port `4500`. Most devices support configuring NAT-T to begin on port `4500` (exceptions include at least some versions of the Cisco ASA). NAT-T is not supported for IKE sessions which begin on port `500` and then switch to port `4500`.
+- (Uncommon) Extended Sequence Numbers (ESN) must be disabled.
+- If your tunnels need replay protection, enable Dead Peer Detection (DPD) in your router and select the option that restarts your IKE session when a DPD timeout occurs. This "restart" option ensures that the connection can recover in the event that a Cloudflare server goes offline. If your router does not expose this setting, check the router documentation for its dead peer detection behavior.
 
 #### Optional configuration parameters
 
-* Disable <a href={props.three}>anti-replay protection</a>.
-* **Null encryption for IPsec:** This option should not be used unless necessary as it reduces security because IPsec traffic is not encrypted. You must explicitly opt in to use this option.
+- Disable <a href={props.three}>anti-replay protection</a>.
+- **Null encryption for IPsec:** This option should not be used unless necessary as it reduces security because IPsec traffic is not encrypted. You must explicitly opt in to use this option.
 
 ### Supported IKE ID formats
 
 {props.one} supports the following IKE ID types for IPsec:
 
-
-
-| RFC name         | Format                                                | Example                                                                 |
-| ---------------- | ----------------------------------------------------- | ----------------------------------------------------------------------- |
+| RFC name | Format | Example |
+| -------- | ------ | ------- |
 | `ID_RFC822_ADDR` | `ipsec@<TUNNEL_ID>.<ACCOUNT_ID>.ipsec.cloudflare.com` | `ipsec@f5407d8db1a542b196c59f6d04ba8bd1.123456789.ipsec.cloudflare.com` |
 | `ID_FQDN`        | `<TUNNEL_ID>.<ACCOUNT_ID>.ipsec.cloudflare.com`       | `f5407d8db1a542b196c59f6d04ba8bd1.123456789.ipsec.cloudflare.com`       |
 | `ID_KEY_ID`      | `<ACCOUNT_ID>_<TUNNEL_ID>`                            | `123456789_f5407d8db1a542b196c59f6d04ba8bd1`                            |
-
-
 
 Additionally, the IKE ID type of `ID_IPV4_ADDR` is supported if the following two conditions are met:
 
@@ -186,6 +182,5 @@ Additionally, the IKE ID type of `ID_IPV4_ADDR` is supported if the following tw
 2. The combination of `cloudflare_endpoint` and `customer_endpoint` is unique among the customer’s IPsec tunnels.
 
 :::caution
-
-Make sure each IPsec tunnel has a unique combination of a <a href={props.four}>Cloudflare endpoint and customer endpoint</a>. If this combination is not unique among your IPsec tunnels, you should use one of the custom IKE formats (`ID_RFC822_ADDR`, `ID_FQDN`, or `ID_KEY_ID`) to specify the tunnel ID and account ID. This helps Cloudflare link the IKE packet to the right IPsec tunnel for tasks like authentication. 
+Make sure each IPsec tunnel has a unique combination of a <a href={props.four}>Cloudflare endpoint and customer endpoint</a>. If this combination is not unique among your IPsec tunnels, you should use one of the custom IKE formats (`ID_RFC822_ADDR`, `ID_FQDN`, or `ID_KEY_ID`) to specify the tunnel ID and account ID. This helps Cloudflare link the IKE packet to the right IPsec tunnel for tasks like authentication.
 :::

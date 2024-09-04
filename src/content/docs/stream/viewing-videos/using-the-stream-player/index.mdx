@@ -10,6 +10,19 @@ import { InlineBadge } from "~/components"
 
 Cloudflare provides a customizable web player that can play both on-demand and live video, and requires zero additional engineering work.
 
+<figure data-type="stream">
+  <div class="AspectRatio" style="--aspect-ratio: calc(16 / 9)">
+    <iframe
+      class="AspectRatio--content"
+      src="https://iframe.videodelivery.net/5d5bc37ffcf54c9b82e996823bffbb81?mute=true"
+      style="border: none"
+      frame-border="0"
+      allow="accelerometer; gyroscope; autoplay; encrypted-media; picture-in-picture;"
+      allow-full-screen
+    ></iframe>
+  </div>
+</figure>
+
 To add the Stream Player to a web page, you can either:
 
 * Generate an embed code in the [Stream Dashboard](https://dash.cloudflare.com/?to=/:account/stream) for a specific video or live input.

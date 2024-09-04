@@ -3,10 +3,9 @@ pcx_content_type: how-to
 title: Session management
 sidebar:
   order: 3
-
 ---
 
-import { GlossaryTooltip } from "~/components"
+import { GlossaryTooltip } from "~/components";
 
 A user session determines how long a user can access an Access application without re-authenticating.
 
@@ -14,15 +13,13 @@ A user session determines how long a user can access an Access application witho
 
 When a user logs in to an application protected by Access, Access validates their identity against your Access policies and generates two signed JSON Web Tokens (JWTs):
 
-
-
 | Token                                                                                 | Description                                                                                                          | Expiration                                                                                                                                        | Storage                                                                           |
 | ------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------- |
 | Global session token                                                                  | Stores the user's identity from the IdP and provides single sign-on (SSO) functionality for all Access applications. | [Global session duration](#set-global-session-duration)                                                                                           | Your Cloudflare <GlossaryTooltip term="team domain">team domain</GlossaryTooltip> |
 | [Application token](/cloudflare-one/identity/authorization-cookie/application-token/) | Allows the user to access a specific Access application.                                                             | [Policy session duration](#set-policy-session-duration) (if set), otherwise the [application session duration](#set-application-session-duration) | The hostname protected by the Access application                                  |
 |                                                                                       |                                                                                                                      |                                                                                                                                                   |                                                                                   |
 
-The user can access the application for the entire duration of the application token’s lifecycle. When the application token expires, Cloudflare will automatically issue a new application token if the global token is still valid (and the user's identity still passes your Access policies). If the global token has also expired, the user will be prompted to re-authenticate with the IdP.
+The user can access the application for the entire duration of the application token's lifecycle. When the application token expires, Cloudflare will automatically issue a new application token if the global token is still valid (and the user's identity still passes your Access policies). If the global token has also expired, the user will be prompted to re-authenticate with the IdP.
 
 The global token expiration is usually set to equal or exceed the application token expiration. Setting a longer global token provides a more secure way to allow for longer user sessions, since the global token cannot be used to directly access an application.
 
@@ -79,7 +76,7 @@ Unless there are changes to rules in the policy, users can start a new session i
 
 ### Per-User
 
-Access can immediately revoke a single user session across all applications in your account. However, if the user’s identity profile is still active, they can generate a new session.
+Access can immediately revoke a single user session across all applications in your account. However, if the user's identity profile is still active, they can generate a new session.
 
 If you want to permanently revoke a user's access:
 
@@ -101,8 +98,8 @@ When administrators revoke a user's Cloudflare Access token, that user will not 
 
 To log out of Access, the end user can visit either of the following URLs:
 
-* `<your-application-domain>/cdn-cgi/access/logout`
-* `<your-team-name>.cloudflareaccess.com/cdn-cgi/access/logout`
+- `<your-application-domain>/cdn-cgi/access/logout`
+- `<your-team-name>.cloudflareaccess.com/cdn-cgi/access/logout`
 
 This action [revokes the user's session](#per-user) across all applications. Access will immediately clear the authorization cookie from the user's browser, and all previously issued tokens will stop being accepted in 20-30 seconds. The only difference between these two URLs is which domain the authorization cookie is deleted from. For example, going to `<your-application-domain>/cdn-cgi/access/logout` will remove the application cookie and make the logout action feel more instantaneous.
 
@@ -110,7 +107,7 @@ You can use these URLs to create custom logout buttons or links directly within 
 
 :::note
 
-At this time, end users cannot log themselves out on a per-application basis. 
+At this time, end users cannot log themselves out on a per-application basis.
 :::
 
 ## AJAX
