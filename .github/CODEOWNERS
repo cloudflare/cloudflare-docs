@@ -14,7 +14,7 @@
 *.js @cloudflare/developer-advocacy @kristianfreeman @kodster28 @pedrosousa @haleycode @GregBrimble @KianNH
 *.ts @cloudflare/developer-advocacy @kristianfreeman @kodster28 @pedrosousa @haleycode @GregBrimble @KianNH
 /src/content/workers-ai-models/ @kodster28 @craigsdennis @pedrosousa @cloudflare/pcx-technical-writing
-/public/_redirects @GregBrimble @cloudflare/pcx-technical-writing
+/public/_redirects @GregBrimble @KianNH @kodster28 @pedrosousa @cloudflare/pcx-technical-writing
 
 # AI
 
