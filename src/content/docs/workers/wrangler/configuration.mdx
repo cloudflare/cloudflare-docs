@@ -145,7 +145,7 @@ At a minimum, the `name`, `main` and `compatibility_date` keys are required to d
 
 * `node_compat` boolean optional
 
-  * Deprecated — Instead, [enable the `nodejs_compat_v2` compatibility flag](/workers/runtime-apis/nodejs/#enable-nodejs-with-workers).
+  * Deprecated — Instead, [enable the `nodejs_compat_v2` compatibility flag](/workers/runtime-apis/nodejs/#enable-nodejs-with-workers), which enables both built-in Node.js APIs, and adds polyfills as necessary.
 	Setting `node_compat = true` will add polyfills for Node.js built-in modules and globals to your Worker's code, when bundled with Wrangler.
 	This is powered by `@esbuild-plugins/node-globals-polyfill` which in itself is powered by [rollup-plugin-node-polyfills](https://github.com/ionic-team/rollup-plugin-node-polyfills/).
 
