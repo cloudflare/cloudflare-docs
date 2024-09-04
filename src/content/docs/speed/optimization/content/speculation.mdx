@@ -104,9 +104,12 @@ To disable Speculation, set `value:` to `"off"`.
 
 ## Caveats
 
-Speculation is not compatible with Workers. If you rely on Workers in your setup, enabling this feature may cause unexpected behavior or disruptions.
+Since prefetch responses are not guaranteed to be rendered by the browser, Speculation includes two safeguards to minimize the risk of [unsafe prefetching](https://developer.mozilla.org/en-US/docs/Web/API/Speculation_Rules_API#unsafe_prefetching): 
 
-Once this feature is enabled, your Origin will stop receiving `prefetch` requests. To restore this behavior, you must either disable the feature or modify the response to overwrite the speculation header.
+- Speculation will not prefetch on routes that run Workers. Without this safeguard, prefetch requests could inadvertently run Worker logic that assumes the incoming request is a normal (that is, not a prefetch) request. An example of this could be an incrementing page view counter running in a Worker. A page view counter should not increment if the page is not actually rendered in the browser.
+
+- Prefetch requests will never reach origin servers. Prefetch requests only serve content that is stored in Cloudflare’s Cache. If the content is not in Cache, the prefetch request will not continue to origin servers. Without this safeguard, origin server state could be modified despite the prefetch response not being rendered in the browser. An example of this could be a prefetch `GET` request to a sign-out URL inadvertently triggering a sign-out action on the server.
+
 
 
 
