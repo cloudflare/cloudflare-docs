@@ -13,10 +13,9 @@ title: 103 Early Hints
 sidebar:
   order: 1001
 description: Allow a client to request static assets while waiting for the HTML response.
-
 ---
 
-import { TabItem, Tabs } from "~/components"
+import { TabItem, Tabs } from "~/components";
 
 `103` Early Hints is an HTTP status code designed to speed up content delivery. When enabled, Cloudflare can cache the `Link` headers marked with preload and/or preconnect from HTML pages and serve them in a `103` Early Hints response before reaching the origin server. Browsers can use these hints to fetch linked assets while waiting for the origin’s final response, dramatically improving page load speeds.
 
@@ -28,7 +27,7 @@ To ensure Early Hints are enabled on your zone:
 
 You can return `Link` headers from a Worker running on your zone to speed up your page load times.
 
-<Tabs> <TabItem label="JavaScript" icon="seti:javascript">
+<Tabs syncKey="workersExamples"> <TabItem label="JavaScript" icon="seti:javascript">
 
 ```js
 const CSS = "body { color: red; }";
@@ -47,24 +46,24 @@ const HTML = `
 `;
 
 export default {
-  async fetch(req) {
-    // If request is for test.css, serve the raw CSS
-    if (/test\.css$/.test(req.url)) {
-      return new Response(CSS, {
-        headers: {
-          "content-type": "text/css",
-        },
-      });
-    } else {
-      // Serve raw HTML using Early Hints for the CSS file
-      return new Response(HTML, {
-        headers: {
-          "content-type": "text/html",
-          link: "</test.css>; rel=preload; as=style",
-        },
-      });
-    }
-  },
+	async fetch(req) {
+		// If request is for test.css, serve the raw CSS
+		if (/test\.css$/.test(req.url)) {
+			return new Response(CSS, {
+				headers: {
+					"content-type": "text/css",
+				},
+			});
+		} else {
+			// Serve raw HTML using Early Hints for the CSS file
+			return new Response(HTML, {
+				headers: {
+					"content-type": "text/html",
+					link: "</test.css>; rel=preload; as=style",
+				},
+			});
+		}
+	},
 };
 ```
 

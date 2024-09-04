@@ -3,10 +3,9 @@ pcx_content_type: reference
 title: Domain categories
 sidebar:
   order: 9
-
 ---
 
-import { Render } from "~/components"
+import { Render } from "~/components";
 
 Cloudflare Gateway allows you to block known and potential security risks on the public Internet, as well as specific categories of content. Domains are categorized by [Cloudflare Radar](/radar/glossary/#content-categories).
 
@@ -18,12 +17,10 @@ To request changes to a domain's categorization, refer to [Change categorization
 
 :::note[Subdomain category]
 
-Subdomains that have not been assigned a category will inherit the category of their parent domain. When Gateway categorizes a subdomain, the subdomain will carry only its own category. Categorized subdomains will not inherit their parent domain's categories. 
+Subdomains that have not been assigned a category will inherit the category of their parent domain. When Gateway categorizes a subdomain, the subdomain will carry only its own category. Categorized subdomains will not inherit their parent domain's categories.
 :::
 
 ## Security categories
-
-
 
 | Category                     | Definition                                                                                                                                              |
 | ---------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -37,9 +34,7 @@ Subdomains that have not been assigned a category will inherit the category of t
 | Phishing                     | Domains that are known for stealing personal information.                                                                                               |
 | Private IP Address           | Domains that resolve to private IP Addresses.                                                                                                           |
 | Spam                         | Sites that are known for targeting users with unwanted sweepstakes, surveys, and advertisements.                                                        |
-| Spyware                      | Sites that are known to distribute or contain code that displays unwanted advertisements or that gathers user information without the user’s knowledge. |
-
-
+| Spyware                      | Sites that are known to distribute or contain code that displays unwanted advertisements or that gathers user information without the user's knowledge. |
 
 ## Content categories
 
@@ -74,8 +69,6 @@ Subdomains that have not been assigned a category will inherit the category of t
 
 ### Miscellaneous subcategories
 
-
-
 | Category      | Definition                                                                   |
 | ------------- | ---------------------------------------------------------------------------- |
 | Login Screens | Sites hosting login screens that might also be included in other categories. |
@@ -84,11 +77,7 @@ Subdomains that have not been assigned a category will inherit the category of t
 | Redirect      | Domains that redirect to other sites.                                        |
 | Unreachable   | Domains that resolve to unreachable IP addresses.                            |
 
-
-
 ### Security risk subcategories
-
-
 
 | Category                  | Definition                                                             |
 | ------------------------- | ---------------------------------------------------------------------- |
@@ -96,11 +85,7 @@ Subdomains that have not been assigned a category will inherit the category of t
 | Newly Seen Domains        | Domains that were resolved for the first time within the past 30 days. |
 | Parked & For Sale Domains | Domains that are not connected to a hosting service.                   |
 
-
-
 ### Category and subcategory IDs
-
-
 
 | Category ID | Category Name          | Subcategory ID | Subcategory Name                           |
 | ----------- | ---------------------- | -------------- | ------------------------------------------ |
@@ -218,8 +203,6 @@ Subdomains that have not been assigned a category will inherit the category of t
 | 32          | Security Risks         | 169            | New Domains                                |
 | 32          | Security Risks         | 177            | Newly Seen Domains                         |
 | 34          | CIPA                   | 182            | CIPA Filter                                |
-
-
 
 ## Filtering options
 

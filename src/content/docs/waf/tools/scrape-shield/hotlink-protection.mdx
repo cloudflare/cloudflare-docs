@@ -4,18 +4,15 @@ source: https://support.cloudflare.com/hc/en-us/articles/200170026-Understanding
 title: Hotlink Protection
 sidebar:
   order: 3
-
 ---
 
-import { Render, TabItem, Tabs } from "~/components"
+import { Render, TabItem, Tabs } from "~/components";
 
 Hotlink Protection prevents your images from being used by other sites, which can reduce the bandwidth consumed by your origin server.
 
 :::note
 
-
 The supported file extensions are `gif`, `ico`, `jpg`, `jpeg`, and `png`.
-
 
 :::
 
@@ -30,7 +27,7 @@ Hotlink protection has no impact on crawling, but it will prevent the images fro
 
 ## Enable Hotlink Protection
 
-<Tabs> <TabItem label="Dashboard">
+<Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
 
 To enable **Hotlink Protection** in the dashboard:
 
@@ -47,7 +44,7 @@ To enable **Hotlink Protection** with the API, send a [`PATCH`](/api/operations/
 
 <Render file="configuration-rule-promotion" product="rules" />
 
-***
+---
 
 ## Allow hotlinking to specific images
 
@@ -65,7 +62,7 @@ To allow another website to use `logo.png` from `example.com`, put `logo.png` in
 
 Some examples of URLs that will not be checked for hotlinking:
 
-* `http://example.com/hotlink-ok/pic.jpg`
-* `http://example.com/images/hotlink-ok/pic.jpg`
-* `http://example.com/hotlink-ok/images/pic.jpg`
-* `http://example.com/images/main-site/hotlink-ok/pic.jpg`
+- `http://example.com/hotlink-ok/pic.jpg`
+- `http://example.com/images/hotlink-ok/pic.jpg`
+- `http://example.com/hotlink-ok/images/pic.jpg`
+- `http://example.com/images/main-site/hotlink-ok/pic.jpg`

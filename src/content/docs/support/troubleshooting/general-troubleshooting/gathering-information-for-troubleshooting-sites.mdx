@@ -2,7 +2,6 @@
 pcx_content_type: troubleshooting
 source: https://support.cloudflare.com/hc/en-us/articles/203118044-Gathering-information-for-troubleshooting-sites
 title: Gathering information for troubleshooting sites
-
 ---
 
 ## Overview
@@ -12,10 +11,10 @@ It is important to capture as much information as possible to diagnose an issue 
 :::note
 
 Cloudflare support cannot make configuration changes on behalf of
-customers due to security and liability concerns. 
+customers due to security and liability concerns.
 :::
 
-***
+---
 
 ## Generate a HAR file
 
@@ -28,7 +27,6 @@ information, and private keys.
 
 Remove sensitive information using a [HAR Sanitizer](https://har-sanitizer.pages.dev/).
 
-
 :::
 
 Some browsers either require a browser extension or cannot generate a HAR. When installing a browser extension, follow the instructions from the extension provider.
@@ -37,7 +35,7 @@ Some browsers either require a browser extension or cannot generate a HAR. When 
 
 1. In a browser page, right-click anywhere and select **Inspect Element**.
 
-2. The developer tools either appear at the bottom or left side of the browser. Click the **Network** tab. 
+2. The developer tools either appear at the bottom or left side of the browser. Click the **Network** tab.
 
 ![HAR network tab screenshot from Chrome developer tools](~/assets/images/support/gathering_har_file_network.png)
 
@@ -51,7 +49,7 @@ Some browsers either require a browser extension or cannot generate a HAR. When 
 
 ![HAR save menu in Chrome developer tools.](~/assets/images/support/gathering_har_file_save.png)
 
- 6. Attach the HAR file to your support ticket.
+6. Attach the HAR file to your support ticket.
 
 ### In Firefox
 
@@ -81,7 +79,7 @@ Some browsers either require a browser extension or cannot generate a HAR. When 
 
 ### In Mobile
 
-**For Android:** 
+**For Android:**
 
 1. Enable USB Debugging mode on your mobile device.
 
@@ -107,13 +105,13 @@ Some browsers either require a browser extension or cannot generate a HAR. When 
 
 9. Attach the HAR file to your support ticket alongside a screen recording from the affected Samsung device. Instructions on how to do this from Samsung devices can be found in [Samsung's documentation here](https://www.samsung.com/au/support/mobile-devices/screen-recorder/).
 
-***
+---
 
 **For iPhone:**
 
 Refer to [Okta](https://support.okta.com/help/s/article/How-to-generate-a-HAR-capture-on-an-iOS-device?language=en_US) or [Apple's](https://developer.apple.com/library/archive/documentation/AppleApplications/Conceptual/Safari_Developer_Guide/GettingStarted/GettingStarted.html#//apple_ref/doc/uid/TP40007874-CH2-SW1) support article on how to generate a HAR file from an iOS device. Attach the HAR file to your support ticket alongside a screen recording from the affected iOS device. Apple devices now have [built-in screen recording functionality](https://support.apple.com/en-us/HT207935).
 
-***
+---
 
 ## Export Console Log
 
@@ -153,7 +151,7 @@ In certain situations when request is not issued or cancelled by the browser (fo
 4. Select all the messages, right click and **Save Selected** to a log file.
 5. Attach the log file to your support ticket.
 
-***
+---
 
 ## Capture a NetLog dump
 
@@ -161,14 +159,14 @@ In some cases, in order to further troubleshoot issues related to protocols (err
 
 :::caution
 
-You can only generate a NetLog dump on the Google Chrome, Opera or Microsoft Edge browsers. 
+You can only generate a NetLog dump on the Google Chrome, Opera or Microsoft Edge browsers.
 :::
 
 1. Open a new tab and enter the following depending on the browser you're using:
 
-* `chrome://net-export`
-* `edge://net-export`
-* `opera://net-export`
+- `chrome://net-export`
+- `edge://net-export`
+- `opera://net-export`
 
 2. Click the **Start Logging To Disk** button.
 3. Reproduce the network problem in a different tab.
@@ -176,7 +174,7 @@ You can only generate a NetLog dump on the Google Chrome, Opera or Microsoft Edg
 4. Click **Stop Logging** button.
 5. Attach the log file to your support ticket.
 
-***
+---
 
 ## Identify the Cloudflare data center serving your request
 
@@ -187,36 +185,36 @@ Determine the Cloudflare data center serving requests for your browser by visiti
 
 Replace `www.example.com` with your domain and hostname.  Note the `colo` field from the output.
 
-***
+---
 
 ## Troubleshoot requests with curl
 
 [curl](https://curl.se/) is a command line tool for sending HTTP/HTTPS requests and is useful for troubleshooting:
 
-* HTTP/HTTPS Performance
-* HTTP Error Responses
-* HTTP Headers
-* APIs
-* Comparing Server/Proxy Responses
-* SSL Certificates
+- HTTP/HTTPS Performance
+- HTTP Error Responses
+- HTTP Headers
+- APIs
+- Comparing Server/Proxy Responses
+- SSL Certificates
 
 :::note
 
 If you are using Windows, you can find more details on how to use curl on Windows in our [Making API calls on Windows
-](/fundamentals/api/how-to/make-api-calls/#making-api-calls-on-windows) article. 
+](/fundamentals/api/how-to/make-api-calls/#making-api-calls-on-windows) article.
 :::
 
 Run the following command to send a standard HTTP GET request to your website (replace `www.example.com` with your hostname):
 
 ```
-$ curl -svo /dev/null http://www.example.com/
+curl -svo /dev/null http://www.example.com/
 ```
 
 This example curl command returns output detailing the HTTP response and request headers but discards the page body output. curl output confirms the HTTP response and whether Cloudflare is currently proxying traffic for the site.
 
 :::note
 
-Review the [curl command options](https://curl.se/docs/manpage.html) for additional functionality. 
+Review the [curl command options](https://curl.se/docs/manpage.html) for additional functionality.
 :::
 
 View the sections below for tips on troubleshooting HTTP errors, performance, caching, and SSL/TLS certificates:
@@ -226,7 +224,7 @@ View the sections below for tips on troubleshooting HTTP errors, performance, ca
 When troubleshooting HTTP errors in responses from Cloudflare, test whether your origin caused the errors by sending requests directly to your origin web server. To troubleshoot HTTP errors, run a curl directly to your origin web server IP address (bypassing Cloudflare’s proxy):
 
 ```
-$ curl -svo /dev/null http://example.com --connect-to ::203.0.113.34
+curl -svo /dev/null http://example.com --connect-to ::203.0.113.34
 ```
 
 :::note
@@ -234,7 +232,7 @@ $ curl -svo /dev/null http://example.com --connect-to ::203.0.113.34
 If you have multiple origin web servers, test each one to ensure there
 are no response differences. If you observe the issue when connecting
 directly to your origin web server, contact your hosting provider for
-assistance. 
+assistance.
 :::
 
 ### Performance
@@ -267,22 +265,22 @@ curl -svo /dev/null https://example.com/ -w "\nContent Type: %{content_type} \
 
 As demonstrated in the preceding example, cleaner results are achieved
 by denoting a new line with `\n` before each variable. Otherwise, all
-metrics are displayed together on a single line. 
+metrics are displayed together on a single line.
 :::
 
 ### Caching
 
 cURL helps review the HTTP response headers that influence caching. In particular, review several HTTP headers when troubleshooting Cloudflare caching:
 
-* CF-Cache-Status
-* Cache-Control/Pragma
-* Expires
-* Last-Modified
-* s-maxage
+- CF-Cache-Status
+- Cache-Control/Pragma
+- Expires
+- Last-Modified
+- s-maxage
 
 :::note
 
-You can refer to the [Cloudflare Cache documentation](/cache/get-started/) for more details. 
+You can refer to the [Cloudflare Cache documentation](/cache/get-started/) for more details.
 :::
 
 ### SSL/TLS certificates
@@ -292,37 +290,37 @@ You can refer to the [Cloudflare Cache documentation](/cache/get-started/) for m
 The following curl command shows the SSL certificate served by Cloudflare during an HTTPS request (replace `www.example.com` with your hostname):
 
 ```sh
-$ curl -svo /dev/null https://www.example.com/ 2>&1 | egrep -v "^{.*$|^}.*$|^* http.*$"
+curl -svo /dev/null https://www.example.com/ 2>&1 | egrep -v "^{.*$|^}.*$|^* http.*$"
 ```
 
 :::note
 
 `2\*>&1 | egrep -v "^{.*$|^}.*$|^\* http.\*$" \*` cleans and
-parses the TLS handshake and certificate information. 
+parses the TLS handshake and certificate information.
 :::
 
 To display the origin certificate (assuming one is installed), replace `203.0.113.34` below with the actual IP address of your origin web server and replace `www.example.com` with your domain and hostname:
 
 ```sh
-$ curl -svo /dev/null https://www.example.com --connect-to ::203.0.113.34 2>&1 | egrep -v "^{.*$|^}.*$|^* http.*$"
+curl -svo /dev/null https://www.example.com --connect-to ::203.0.113.34 2>&1 | egrep -v "^{.*$|^}.*$|^* http.*$"
 ```
 
 #### Testing TLS Versions
 
 If troubleshooting browser support or confirming what TLS versions are supported, curl allows you to test a specific TLS version by adding the [--tlsv1.X](https://curl.se/docs/manpage.html#--tlsv10) and [--tls-max](https://curl.se/docs/manpage.html#--tls-max) options to your curl:
 
-* `--tlsv1.0 --tls-max 1.0`
-* `--tlsv1.1 --tls-max 1.1`
-* `--tlsv1.2 --tls-max 1.2`
-* `--tlsv1.3 --tls-max 1.3`
+- `--tlsv1.0 --tls-max 1.0`
+- `--tlsv1.1 --tls-max 1.1`
+- `--tlsv1.2 --tls-max 1.2`
+- `--tlsv1.3 --tls-max 1.3`
 
-***
+---
 
 ## Temporarily pause Cloudflare
 
 For more details, refer to [Pause Cloudflare](/fundamentals/setup/manage-domains/pause-cloudflare/).
 
-***
+---
 
 ## Perform a traceroute
 
@@ -331,7 +329,7 @@ Traceroute is a network diagnostic tool that measures the route latency of packe
 :::note
 
 Timeouts are possible for ping results because Cloudflare limits ping
-requests. 
+requests.
 :::
 
 Review the instructions below for running traceroute on different operating systems. Replace `www.example.com` with your domain and hostname in the examples below:
@@ -347,13 +345,13 @@ Review the instructions below for running traceroute on different operating sys
 4. At the command line prompt, type: For IPv4 -
 
 ```sh
-$ tracert www.example.com
+tracert www.example.com
 ```
 
 For IPv6 -
 
 ```sh
-$ tracert -6 www.example.com
+tracert -6 www.example.com
 ```
 
 5. Press **Enter**.
@@ -369,13 +367,13 @@ $ tracert -6 www.example.com
 For IPv4 -
 
 ```sh
-$ traceroute www.example.com
+traceroute www.example.com
 ```
 
 For IPv6 -
 
 ```sh
-$ traceroute -6 www.example.com
+traceroute -6 www.example.com
 ```
 
 3. You can copy the results to save in a file or paste in another program.
@@ -389,7 +387,7 @@ $ traceroute -6 www.example.com
 
 Alternatively, follow the same Linux traceroute instructions above when using the Mac OS terminal program.
 
-***
+---
 
 ## Add the CF-RAY header to your logs
 
@@ -410,7 +408,7 @@ log_format cf_custom '$remote_addr - $remote_user [$time_local] '
 '$http_cf_ray';
 ```
 
-***
+---
 
 ## Perform a MTR
 
@@ -423,7 +421,7 @@ Like traceroute, MTR can use ICMP or UDP for outgoing packets but relies on ICMP
 :::note
 
 For MacOS users, MTR can be installed through [homebrew](https://formulae.brew.sh/formula/mtr).
-For Windows users, see [WinMTR](https://github.com/White-Tiger/WinMTR/releases). 
+For Windows users, see [WinMTR](https://github.com/White-Tiger/WinMTR/releases).
 :::
 
 ### How do I use MTR to generate network path report?
@@ -433,18 +431,18 @@ For Windows users, see [WinMTR](https://github.com/White-Tiger/WinMTR/releases).
 Generally, we'd use MTR as the following:
 
 ```sh
-$ mtr -rw <dest_hostname> e.g.: mtr -rw one.one.one.one
+mtr -rw <dest_hostname> e.g.: mtr -rw one.one.one.one
 ```
 
 or with destination IP:
 
 ```sh
-$ mtr -rw <dest_IP> e.g.: mtr -rw 1.1.1.1
+mtr -rw <dest_IP> e.g.: mtr -rw 1.1.1.1
 ```
 
 Please refer to this documentation, which explains more about analysing MTR: [How to read MTR](https://www.cloudflare.com/en-gb/learning/network-layer/what-is-mtr/).[](https://www.cloudflare.com/en-gb/learning/network-layer/what-is-mtr/)
 
-***
+---
 
 ## Run Packet Captures
 
@@ -459,24 +457,24 @@ Some HTTP errors generated by Cloudflare, such as [520s](https://support.cloudfl
 :::caution
 
 Please be aware, if you transmit any sensitive information while a
-packet capture is running, it will be recorded. 
+packet capture is running, it will be recorded.
 :::
 
-Cloudflare suggests [Wireshark](https://www.wireshark.org/download.html) for running packet captures. For instructions on how to use the *tcpdump* command line, refer to [this](https://www.wireshark.org/docs/wsug_html_chunked/AppToolstcpdump.html) article.
+Cloudflare suggests [Wireshark](https://www.wireshark.org/download.html) for running packet captures. For instructions on how to use the _tcpdump_ command line, refer to [this](https://www.wireshark.org/docs/wsug_html_chunked/AppToolstcpdump.html) article.
 
 1. Close all programs/browser tabs that could be sending data in the background to avoid having to use a lot of display filters later.
 2. Create your Wireshark capture filter (refer to [this](https://wiki.wireshark.org/CaptureFilters) article for more information).
 3. Select the appropriate interface (e.g. Wi-Fi: en0). If you're not sure which interface to use, Wireshark provides an I/O graph of each interface to give you a hint.
-4. Click the blue shark fin icon in the top left-hand corner to start your packet capture. 
+4. Click the blue shark fin icon in the top left-hand corner to start your packet capture.
 5. Reproduce the issue while running capture.
-6. Click the red square icon in the top left-hand corner to stop your packet capture. 
+6. Click the red square icon in the top left-hand corner to stop your packet capture.
 7. Save as a `.pcap` file and attach it to your support ticket.
 
-***
+---
 
 ## Related resources
 
-* [Contacting Cloudflare Support](/support/contacting-cloudflare-support/)
-* [Troubleshooting Cloudflare HTTP 5XX errors](https://support.cloudflare.com/hc/articles/115003011431)
-* [Diagnosing network issues with MTR and traceroute](https://www.cloudflare.com/en-gb/learning/network-layer/what-is-mtr/)
-* [cURL command line tool](https://curl.haxx.se/)
+- [Contacting Cloudflare Support](/support/contacting-cloudflare-support/)
+- [Troubleshooting Cloudflare HTTP 5XX errors](https://support.cloudflare.com/hc/articles/115003011431)
+- [Diagnosing network issues with MTR and traceroute](https://www.cloudflare.com/en-gb/learning/network-layer/what-is-mtr/)
+- [cURL command line tool](https://curl.haxx.se/)

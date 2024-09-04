@@ -4,10 +4,9 @@ pcx_content_type: reference
 head:
   - tag: title
     content: Replace insecure JavaScript libraries
-
 ---
 
-import { GlossaryTooltip, TabItem, Tabs } from "~/components"
+import { GlossaryTooltip, TabItem, Tabs } from "~/components";
 
 This feature, when turned on, automatically rewrites URLs to external JavaScript libraries to point to Cloudflare-hosted libraries instead. This change improves security and performance, and reduces the risk of malicious code being injected.
 
@@ -17,12 +16,12 @@ This rewrite operation currently supports the `polyfill` JavaScript library host
 
 You may need to update your <GlossaryTooltip term="content security policy (CSP)">Content Security Policy (CSP)</GlossaryTooltip> when turning on **Replace insecure JavaScript libraries**. The feature, when enabled, will not perform any URL rewrites if a CSP is present with a `script-src` or `default-src` directive. Cloudflare will not check `report-only` directives and it will not modify CSP headers.
 
-Additionally, if you are defining a CSP via HTML `meta` tag, you must either turn off this feature or switch to a CSP defined in an HTTP header. 
+Additionally, if you are defining a CSP via HTML `meta` tag, you must either turn off this feature or switch to a CSP defined in an HTTP header.
 :::
 
 ## How it works
 
-When turned on, Cloudflare will check HTTP(S) proxied traffic for `script` tags with an `src` attribute pointing to a potentially insecure service and replace the `src` value with the equivalent link hosted under [CDNJS](https://cdnjs.cloudflare.com/).
+When turned on, Cloudflare will check HTTP(S) proxied traffic for `script` tags with an `src` attribute pointing to a potentially insecure service and replace the `src` value with the equivalent link hosted under [cdnjs](https://cdnjs.cloudflare.com/).
 
 The rewritten URL will keep the original URL scheme (`http://` or `https://`).
 
@@ -32,11 +31,11 @@ For `polyfill.io` URL rewrites, all `3.*` versions of the `polyfill` library are
 
 The feature is available in all Cloudflare plans, and is turned on by default on Free plans.
 
-***
+---
 
 ## Configure
 
-<Tabs> <TabItem label="Dashboard">
+<Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) and select your account and zone.
 2. Go to **Security** > **Settings**.
@@ -56,7 +55,7 @@ curl --request PATCH \
 
 </TabItem> </Tabs>
 
-***
+---
 
 ## Final remarks
 

@@ -8,12 +8,9 @@ products:
   - KV
 languages:
   - JavaScript
-
 ---
 
-
-
-import { Render, PackageManagers } from "~/components"
+import { Render, PackageManagers } from "~/components";
 
 In this tutorial, you will build a todo list application using HTML, CSS, and JavaScript. The application data will be stored in [Workers KV](/kv/api/).
 
@@ -32,14 +29,22 @@ If you would like to see the finished code for this project, find the [project o
 
 First, use the [`create-cloudflare`](https://www.npmjs.com/package/create-cloudflare) CLI tool to create a new Cloudflare Workers project named `todos`. In this tutorial, you will use the default `Hello World` template to create a Workers project.
 
-<PackageManagers type="create" pkg="cloudflare@latest" args={'todos'} />
+<PackageManagers type="create" pkg="cloudflare@latest" args={"todos"} />
 
-<Render file="c3-post-run-steps" product="workers" params={{ one: "Hello World example", two: "Hello World Worker", three: "JavaScript" }} />
+<Render
+	file="c3-post-run-steps"
+	product="workers"
+	params={{
+		one: "Hello World example",
+		two: "Hello World Worker",
+		three: "JavaScript",
+	}}
+/>
 
 Move into your newly created directory:
 
 ```sh
-$ cd todos
+cd todos
 ```
 
 Inside of your new `todos` Worker project directory, `index.js` represents the entry point to your Cloudflare Workers application.
@@ -48,9 +53,9 @@ All incoming HTTP requests to a Worker are passed to the [`fetch()` handler](/wo
 
 ```js
 export default {
-  async fetch(request, env, ctx) {
-    return new Response('Hello World!');
-  },
+	async fetch(request, env, ctx) {
+		return new Response("Hello World!");
+	},
 };
 ```
 
@@ -79,7 +84,7 @@ To begin, you need to understand how to populate your todo list with actual data
 To get started with KV, set up a namespace. All of your cached data will be stored inside that namespace and, with configuration, you can access that namespace inside the Worker with a predefined variable. Use Wrangler to create a new namespace called `TODOS` with the [`kv:namespace create` command](/workers/wrangler/commands/#create-3) and get the associated namespace ID by running the following command in your terminal:
 
 ```sh title="Create a new KV namespace"
-$ npx wrangler kv:namespace create "TODOS" --preview
+npx wrangler kv:namespace create "TODOS" --preview
 ```
 
 The associated namespace can be combined with a `--preview` flag to interact with a preview namespace instead of a production namespace. Namespaces can be added to your application by defining them inside your Wrangler configuration. Copy your newly created namespace ID, and in your `wrangler.toml`, define a `kv_namespaces` key to set up your namespace:
@@ -96,19 +101,19 @@ Start storing data by defining an initial set of data, which you will put inside
 
 ```js
 export default {
-  async fetch(request, env, ctx) {
-    const defaultData = {
-      todos: [
-        {
-          id: 1,
-          name: 'Finish the Cloudflare Workers blog post',
-          completed: false,
-        },
-      ],
-    };
-    await env.TODOS.put('data', JSON.stringify(defaultData));
-    return new Response('Hello World!');
-  },
+	async fetch(request, env, ctx) {
+		const defaultData = {
+			todos: [
+				{
+					id: 1,
+					name: "Finish the Cloudflare Workers blog post",
+					completed: false,
+				},
+			],
+		};
+		await env.TODOS.put("data", JSON.stringify(defaultData));
+		return new Response("Hello World!");
+	},
 };
 ```
 
@@ -118,31 +123,31 @@ Given the presence of data in the cache and the assumption that your cache is ev
 
 ```js
 export default {
-  async fetch(request, env, ctx) {
-    const defaultData = {
-      todos: [
-        {
-          id: 1,
-          name: 'Finish the Cloudflare Workers blog post',
-          completed: false,
-        },
-      ],
-    };
-    const setCache = data => env.TODOS.put('data', data);
-    const getCache = () => env.TODOS.get('data');
+	async fetch(request, env, ctx) {
+		const defaultData = {
+			todos: [
+				{
+					id: 1,
+					name: "Finish the Cloudflare Workers blog post",
+					completed: false,
+				},
+			],
+		};
+		const setCache = (data) => env.TODOS.put("data", data);
+		const getCache = () => env.TODOS.get("data");
 
-    let data;
+		let data;
 
-    const cache = await getCache();
-    if (!cache) {
-      await setCache(JSON.stringify(defaultData));
-      data = defaultData;
-    } else {
-      data = JSON.parse(cache);
-    }
+		const cache = await getCache();
+		if (!cache) {
+			await setCache(JSON.stringify(defaultData));
+			data = defaultData;
+		} else {
+			data = JSON.parse(cache);
+		}
 
-    return new Response(JSON.stringify(data));
-  },
+		return new Response(JSON.stringify(data));
+	},
 };
 ```
 
@@ -226,7 +231,7 @@ Your static page can take in `window.todos` and render HTML based on it, but you
 First, your `html` variable will change to a function. The function will take in a `todos` argument, which will populate the `window.todos` variable in the above code sample:
 
 ```js null {1,6}
-const html = todos => `
+const html = (todos) => `
 <!doctype html>
 <html>
   <!-- existing content -->
@@ -260,21 +265,21 @@ Add this new functionality in `fetch`: if the request method is a PUT, it will t
 
 ```js null {5,6,7,8,9,10,11,12,13,14}
 export default {
-  async fetch(request, env, ctx) {
-    const setCache = data => env.TODOS.put('data', data);
+	async fetch(request, env, ctx) {
+		const setCache = (data) => env.TODOS.put("data", data);
 
-    if (request.method === 'PUT') {
-      const body = await request.text();
-      try {
-        JSON.parse(body);
-        await setCache(body);
-        return new Response(body, { status: 200 });
-      } catch (err) {
-        return new Response(err, { status: 500 });
-      }
-    }
-    // previous code
-  },
+		if (request.method === "PUT") {
+			const body = await request.text();
+			try {
+				JSON.parse(body);
+				await setCache(body);
+				return new Response(body, { status: 200 });
+			} catch (err) {
+				return new Response(err, { status: 500 });
+			}
+		}
+		// previous code
+	},
 };
 ```
 
@@ -283,7 +288,7 @@ Check that the request is a `PUT` and wrap the remainder of the code in a `try/c
 With this script, you can now add some dynamic functionality to your HTML page to actually hit this route. First, create an input for your todo name and a button for submitting the todo.
 
 ```js null {5,6,7,8}
-const html = todos => `
+const html = (todos) => `
 <!doctype html>
 <html>
   <!-- existing content -->
@@ -299,7 +304,7 @@ const html = todos => `
 Given that input and button, add a corresponding JavaScript function to watch for clicks on the button — once the button is clicked, the browser will `PUT` to `/` and submit the todo.
 
 ```js null {8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23}
-const html = todos => `
+const html = (todos) => `
 <!doctype html>
 <html>
   <!-- existing content -->
@@ -330,7 +335,7 @@ const html = todos => `
 This code updates the cache. Remember that the KV cache is eventually consistent — even if you were to update your Worker to read from the cache and return it, you have no guarantees it will actually be up to date. Instead, update the list of todos locally, by taking your original code for rendering the todo list, making it a reusable function called `populateTodos`, and calling it when the page loads and when the cache request has finished:
 
 ```js null {6,7,8,9,10,11,12,13,14,15,16}
-const html = todos => `
+const html = (todos) => `
 <!doctype html>
 <html>
   <!-- existing content -->
@@ -380,7 +385,7 @@ Luckily, a great deal of the infrastructure for this work is already in place. Y
 To start, the `populateTodos` function can be updated to generate a `div` for each todo. In addition, move the name of the todo into a child element of that `div`:
 
 ```js null {11,12,13}
-const html = todos => `
+const html = (todos) => `
 <!doctype html>
 <html>
   <!-- existing content -->
@@ -405,7 +410,7 @@ You have designed the client-side part of this code to handle an array of todos 
 To start, it would be useful to attach the ID of each todo in the HTML. By doing this, you can then refer to the element later in order to correspond it to the todo in the JavaScript part of your code. Data attributes and the corresponding `dataset` method in JavaScript are a perfect way to implement this. When you generate your `div` element for each todo, you can attach a data attribute called todo to each `div`:
 
 ```js null {11}
-const html = todos => `
+const html = (todos) => `
 <!doctype html>
 <html>
   <!-- existing content -->
@@ -438,7 +443,7 @@ Inside your HTML, each `div` for a todo now has an attached data attribute, whic
 You can now generate a checkbox for each todo element. This checkbox will default to unchecked for new todos but you can mark it as checked as the element is rendered in the window:
 
 ```js null {13,14,15,17}
-const html = todos => `
+const html = (todos) => `
 <!doctype html>
 <html>
   <!-- existing content -->
@@ -465,7 +470,7 @@ const html = todos => `
 The checkbox is set up to correctly reflect the value of completed on each todo but it does not yet update when you actually check the box. To do this, attach the `completeTodo` function as an event listener on the `click` event. Inside the function, inspect the checkbox element, find its parent (the todo `div`), and use its `todo` data attribute to find the corresponding todo in the data array. You can toggle the completed status, update its properties, and rerender the UI:
 
 ```js null {9,13,14,15,16,17,18,19,20,21,22}
-const html = todos => `
+const html = (todos) => `
 <!doctype html>
 <html>
   <!-- existing content -->
@@ -503,51 +508,51 @@ You may also want to add user-specific caching. Right now, the cache key is alwa
 
 ```js null {15,16,22,33}
 export default {
-  async fetch(request, env, ctx) {
-    const defaultData = {
-      todos: [
-        {
-          id: 1,
-          name: 'Finish the Cloudflare Workers blog post',
-          completed: false,
-        },
-      ],
-    };
-    const setCache = (key, data) => env.TODOS.put(key, data);
-    const getCache = key => env.TODOS.get(key);
+	async fetch(request, env, ctx) {
+		const defaultData = {
+			todos: [
+				{
+					id: 1,
+					name: "Finish the Cloudflare Workers blog post",
+					completed: false,
+				},
+			],
+		};
+		const setCache = (key, data) => env.TODOS.put(key, data);
+		const getCache = (key) => env.TODOS.get(key);
 
-    const ip = request.headers.get('CF-Connecting-IP');
-    const myKey = `data-${ip}`;
+		const ip = request.headers.get("CF-Connecting-IP");
+		const myKey = `data-${ip}`;
 
-    if (request.method === 'PUT') {
-      const body = await request.text();
-      try {
-        JSON.parse(body);
-        await setCache(myKey, body);
-        return new Response(body, { status: 200 });
-      } catch (err) {
-        return new Response(err, { status: 500 });
-      }
-    }
+		if (request.method === "PUT") {
+			const body = await request.text();
+			try {
+				JSON.parse(body);
+				await setCache(myKey, body);
+				return new Response(body, { status: 200 });
+			} catch (err) {
+				return new Response(err, { status: 500 });
+			}
+		}
 
-    let data;
+		let data;
 
-    const cache = await getCache();
-    if (!cache) {
-      await setCache(myKey, JSON.stringify(defaultData));
-      data = defaultData;
-    } else {
-      data = JSON.parse(cache);
-    }
+		const cache = await getCache();
+		if (!cache) {
+			await setCache(myKey, JSON.stringify(defaultData));
+			data = defaultData;
+		} else {
+			data = JSON.parse(cache);
+		}
 
-    const body = html(JSON.stringify(data.todos).replace(/</g, '\\u003c'));
+		const body = html(JSON.stringify(data.todos).replace(/</g, "\\u003c"));
 
-    return new Response(body, {
-      headers: {
-        'Content-Type': 'text/html',
-      },
-    });
-  },
+		return new Response(body, {
+			headers: {
+				"Content-Type": "text/html",
+			},
+		});
+	},
 };
 ```
 
@@ -556,7 +561,7 @@ After making these changes and deploying the Worker one more time, your todo lis
 The final version of your Worker script should look like this:
 
 ```js
-const html = todos => `
+const html = (todos) => `
 <!DOCTYPE html>
 <html>
   <head>
@@ -639,51 +644,51 @@ const html = todos => `
 `;
 
 export default {
-  async fetch(request, env, ctx) {
-    const defaultData = {
-      todos: [
-        {
-          id: 1,
-          name: 'Finish the Cloudflare Workers blog post',
-          completed: false,
-        },
-      ],
-    };
-    const setCache = (key, data) => env.TODOS.put(key, data);
-    const getCache = key => env.TODOS.get(key);
+	async fetch(request, env, ctx) {
+		const defaultData = {
+			todos: [
+				{
+					id: 1,
+					name: "Finish the Cloudflare Workers blog post",
+					completed: false,
+				},
+			],
+		};
+		const setCache = (key, data) => env.TODOS.put(key, data);
+		const getCache = (key) => env.TODOS.get(key);
 
-    const ip = request.headers.get('CF-Connecting-IP');
-    const myKey = `data-${ip}`;
+		const ip = request.headers.get("CF-Connecting-IP");
+		const myKey = `data-${ip}`;
 
-    if (request.method === 'PUT') {
-      const body = await request.text();
-      try {
-        JSON.parse(body);
-        await setCache(myKey, body);
-        return new Response(body, { status: 200 });
-      } catch (err) {
-        return new Response(err, { status: 500 });
-      }
-    }
+		if (request.method === "PUT") {
+			const body = await request.text();
+			try {
+				JSON.parse(body);
+				await setCache(myKey, body);
+				return new Response(body, { status: 200 });
+			} catch (err) {
+				return new Response(err, { status: 500 });
+			}
+		}
 
-    let data;
+		let data;
 
-    const cache = await getCache();
-    if (!cache) {
-      await setCache(myKey, JSON.stringify(defaultData));
-      data = defaultData;
-    } else {
-      data = JSON.parse(cache);
-    }
+		const cache = await getCache();
+		if (!cache) {
+			await setCache(myKey, JSON.stringify(defaultData));
+			data = defaultData;
+		} else {
+			data = JSON.parse(cache);
+		}
 
-    const body = html(JSON.stringify(data.todos).replace(/</g, '\\u003c'));
+		const body = html(JSON.stringify(data.todos).replace(/</g, "\\u003c"));
 
-    return new Response(body, {
-      headers: {
-        'Content-Type': 'text/html',
-      },
-    });
-  },
+		return new Response(body, {
+			headers: {
+				"Content-Type": "text/html",
+			},
+		});
+	},
 };
 ```
 

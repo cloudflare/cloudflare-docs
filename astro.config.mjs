@@ -7,6 +7,7 @@ import liveCode from "astro-live-code";
 import rehypeSlug from "rehype-slug";
 import rehypeMermaid from "rehype-mermaid";
 import rehypeAutolinkHeadings from "rehype-autolink-headings";
+import rehypeExternalLinks from "rehype-external-links";
 import { h } from "hastscript";
 import { readdir } from "fs/promises";
 import icon from "astro-icon";
@@ -64,6 +65,19 @@ export default defineConfig({
 					strategy: "pre-mermaid",
 				},
 			],
+			[
+				rehypeExternalLinks,
+				{
+					content: {
+						type: "text",
+						value: " ↗",
+					},
+					properties: {
+						target: "_blank",
+					},
+					rel: ["noopener"],
+				},
+			],
 			rehypeSlug,
 			[rehypeAutolinkHeadings, autolinkConfig],
 		],
@@ -85,7 +99,7 @@ export default defineConfig({
 				{
 					tag: "script",
 					content:
-						"<!-- Google Tag Manager -->(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);})(window,document,'script','dataLayer','GTM-NDGPDFZ');<!-- End Google Tag Manager -->",
+						"(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);})(window,document,'script','dataLayer','GTM-NDGPDFZ');",
 				},
 				{
 					tag: "meta",
@@ -133,6 +147,7 @@ export default defineConfig({
 			},
 			sidebar: await autogenSections(),
 			customCss: [
+				"./src/headings.css",
 				"./src/input.css",
 				"./src/kbd.css",
 				"./src/littlefoot.css",

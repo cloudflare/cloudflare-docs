@@ -3,10 +3,9 @@ pcx_content_type: how-to
 title: Service tokens
 sidebar:
   order: 6
-
 ---
 
-import { AvailableNotifications, Render } from "~/components"
+import { AvailableNotifications, Render } from "~/components";
 
 You can provide automated systems with service tokens to authenticate against your Zero Trust policies. Cloudflare Access will generate service tokens that consist of a Client ID and a Client Secret. Automated systems or applications can then use these values to reach an application protected by Access.
 
@@ -31,7 +30,7 @@ To authenticate to an Access application using your service token, add the follo
 For example,
 
 ```sh
-$ curl -H "CF-Access-Client-Id: <CLIENT_ID>" -H "CF-Access-Client-Secret: <CLIENT_SECRET>" https://app.example.com
+curl -H "CF-Access-Client-Id: <CLIENT_ID>" -H "CF-Access-Client-Secret: <CLIENT_SECRET>" https://app.example.com
 ```
 
 If the service token is valid, Access generates a JWT scoped to the application in the form of a [`CF_Authorization` cookie](/cloudflare-one/identity/authorization-cookie/). You can use this cookie to authenticate [subsequent requests](#subsequent-requests) to the application.
@@ -41,20 +40,20 @@ If the service token is valid, Access generates a JWT scoped to the application 
 After you have [authenticated to the application](#initial-request) using the service token, add the resulting `CF_Authorization` cookie to the headers of all subsequent requests:
 
 ```sh
-$ curl -H "cookie: CF_Authorization=<CF_AUTHORIZATION_COOKIE>" https://app.example.com
+curl -H "cookie: CF_Authorization=<CF_AUTHORIZATION_COOKIE>" https://app.example.com
 ```
 
 If you prefer to use a raw header, send the value as `cf-access-token`:
 
 ```sh
-$ curl -H "cf-access-token=<CF_AUTHORIZATION_COOKIE>" https://app.example.com
+curl -H "cf-access-token=<CF_AUTHORIZATION_COOKIE>" https://app.example.com
 ```
 
 All requests with this cookie will succeed until the JWT expires.
 
 :::note
 
-If your Access application only has Service Auth policies, you must send the service token on every subsequent request. You can only use the JWT if the application has at least one Allow policy. 
+If your Access application only has Service Auth policies, you must send the service token on every subsequent request. You can only use the JWT if the application has at least one Allow policy.
 :::
 
 ## Renew service tokens
@@ -82,7 +81,7 @@ Services that rely on a deleted service token can no longer reach your applicati
 
 :::note
 
-When editing an Access application, selecting **Revoke existing tokens** revokes existing sessions but does not prevent the user from starting a new session. As long as the Client ID and Client Secret are still valid, they can be exchanged for a new token on the next request. To revoke access, you must delete the service token. 
+When editing an Access application, selecting **Revoke existing tokens** revokes existing sessions but does not prevent the user from starting a new session. As long as the Client ID and Client Secret are still valid, they can be exchanged for a new token on the next request. To revoke access, you must delete the service token.
 :::
 
 ## Set a token expiration alert
@@ -95,7 +94,7 @@ To configure a service token expiration alert:
 
 1. In the [Cloudflare dashboard](https://dash.cloudflare.com), go to the **Notifications** tab.
 2. Select **Add**.
-3. Select *Expiring Access Service Token*.
+3. Select _Expiring Access Service Token_.
 4. Enter a name for your alert and an optional description.
 5. (Optional) Add other recipients for the notification email.
 6. Select **Save**.

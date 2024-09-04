@@ -3,16 +3,13 @@ title: Get started
 pcx_content_type: get-started
 sidebar:
   order: 1
-
 ---
 
-import { Render } from "~/components"
+import { Render } from "~/components";
 
 :::note
 
-
 Pub/Sub is currently in private beta. You can [sign up for the waitlist](https://www.cloudflare.com/cloudflare-pub-sub-lightweight-messaging-private-beta/) to register your interest.
-
 
 :::
 
@@ -20,9 +17,9 @@ Pub/Sub is a flexible, scalable messaging service built on top of the MQTT messa
 
 This guide will:
 
-* Instruct you through creating your first Pub/Sub Broker using the Cloudflare API.
-* Create a `<broker>.<namespace>.cloudflarepubsub.com` endpoint ready to publish and subscribe to using any MQTT v5.0 compatible client.
-* Help you send your first message to the Pub/Sub Broker.
+- Instruct you through creating your first Pub/Sub Broker using the Cloudflare API.
+- Create a `<broker>.<namespace>.cloudflarepubsub.com` endpoint ready to publish and subscribe to using any MQTT v5.0 compatible client.
+- Help you send your first message to the Pub/Sub Broker.
 
 Before you begin, you should be familiar with using the command line and running basic terminal commands.
 
@@ -38,9 +35,7 @@ During the Private Beta, your account will need to be explicitly granted access.
 
 :::note
 
-
 Pub/Sub support in Wrangler requires wrangler `2.0.16` or above. If you're using an older version of Wrangler, ensure you [update the installed version](/workers/wrangler/install-and-update/#update-wrangler).
-
 
 :::
 
@@ -53,7 +48,10 @@ To install [`wrangler`](https://github.com/cloudflare/workers-sdk/tree/main/pack
 Validate that you have a version of `wrangler` that supports Pub/Sub:
 
 ```sh
-$ wrangler --version
+wrangler --version
+```
+
+```sh output
 2.0.16 # should show 2.0.16 or greater - e.g. 2.0.17 or 2.1.0
 ```
 
@@ -65,9 +63,7 @@ To use Wrangler with Pub/Sub, you'll need an API Token that has permissions to b
 
 :::note
 
-
 This API token requirement will be lifted prior to Pub/Sub becoming Generally Available.
-
 
 :::
 
@@ -78,20 +74,18 @@ This API token requirement will be lifted prior to Pub/Sub becoming Generally Av
 5. Name the token - e.g. "Pub/Sub Write Access"
 6. Under the **Permissions** heading, choose **Account**, select **Pub/Sub** from the first drop-down, and **Edit** as the permission.
 7. Select **Add More** below the newly created permission. Choose **User** > **Memberships** from the first dropdown and **Read** as the permission.
-8. Select **Continue to Summary** at the bottom of the page, where you should see *All accounts - Pub/Sub:Edit* as the permission.
+8. Select **Continue to Summary** at the bottom of the page, where you should see _All accounts - Pub/Sub:Edit_ as the permission.
 9. Select **Create Token** and copy the token value.
 
 In your terminal, configure a `CLOUDFLARE_API_TOKEN` environmental variable with your Pub/Sub token. When this variable is set, `wrangler` will use it to authenticate against the Cloudflare API.
 
 ```sh
-$ export CLOUDFLARE_API_TOKEN="pasteyourtokenhere"
+export CLOUDFLARE_API_TOKEN="pasteyourtokenhere"
 ```
 
 :::caution[Warning]
 
-
 This token should be kept secret and not committed to source code or placed in any client-side code.
-
 
 :::
 
@@ -103,27 +97,25 @@ A namespace represents a collection of Pub/Sub Brokers, and they can be used to 
 
 Before you begin, consider the following:
 
-* **Choose your namespace carefully**. Although it can be changed later, it will be used as part of the hostname for your Brokers. You should not use secrets or other data that cannot be exposed on the Internet.
-* Namespace names are global; they are globally unique.
-* Namespaces must be valid DNS names per RFC 1035. In most cases, this means only a-z, 0-9, and hyphens are allowed. Names are case-insensitive.
+- **Choose your namespace carefully**. Although it can be changed later, it will be used as part of the hostname for your Brokers. You should not use secrets or other data that cannot be exposed on the Internet.
+- Namespace names are global; they are globally unique.
+- Namespaces must be valid DNS names per RFC 1035. In most cases, this means only a-z, 0-9, and hyphens are allowed. Names are case-insensitive.
 
 For example, a namespace of `my-namespace` and a broker of `staging` would create a hostname of `staging.my-namespace.cloudflarepubsub.com` for clients to connect to.
 
 With this in mind, create a new namespace. This example will use `my-namespace` as a placeholder:
 
 ```sh
-$ wrangler pubsub namespace create my-namespace 
+wrangler pubsub namespace create my-namespace
 ```
 
-You should receive a success response that resembles the following:
-
-```json
+```json output
 {
-  "id": "817170399d784d4ea8b6b90ae558c611",
-  "name": "my-namespace",
-  "description": "",
-  "created_on": "2022-05-11T23:13:08.383232Z",
-  "modified_on": "2022-05-11T23:13:08.383232Z"
+	"id": "817170399d784d4ea8b6b90ae558c611",
+	"name": "my-namespace",
+	"description": "",
+	"created_on": "2022-05-11T23:13:08.383232Z",
+	"modified_on": "2022-05-11T23:13:08.383232Z"
 }
 ```
 
@@ -137,35 +129,33 @@ This broker will be configured to accept `TOKEN` authentication. In MQTT terms, 
 
 Broker names must be:
 
-* Chosen carefully. Although it can be changed later, the name will be used as part of the hostname for your brokers. Do not use secrets or other data that cannot be exposed on the Internet.
-* Valid DNS names (per RFC 1035). In most cases, this means only `a-z`, `0-9` and hyphens are allowed. Names are case-insensitive.
-* Unique per namespace.
+- Chosen carefully. Although it can be changed later, the name will be used as part of the hostname for your brokers. Do not use secrets or other data that cannot be exposed on the Internet.
+- Valid DNS names (per RFC 1035). In most cases, this means only `a-z`, `0-9` and hyphens are allowed. Names are case-insensitive.
+- Unique per namespace.
 
 To create a new MQTT Broker called `example-broker` in the `my-namespace` namespace from the example above:
 
 ```sh
-$ wrangler pubsub broker create example-broker --namespace=my-namespace
+wrangler pubsub broker create example-broker --namespace=my-namespace
 ```
 
-You should receive a success response that resembles the following example:
-
-```json
+```json output
 {
-  "id": "4c63fa30ee13414ba95be5b56d896fea",
-  "name": "example-broker",
-  "authType": "TOKEN",
-  "created_on": "2022-05-11T23:19:24.356324Z",
-  "modified_on": "2022-05-11T23:19:24.356324Z",
-  "expiration": null,
-  "endpoint": "mqtts://example-broker.namespace.cloudflarepubsub.com:8883"
+	"id": "4c63fa30ee13414ba95be5b56d896fea",
+	"name": "example-broker",
+	"authType": "TOKEN",
+	"created_on": "2022-05-11T23:19:24.356324Z",
+	"modified_on": "2022-05-11T23:19:24.356324Z",
+	"expiration": null,
+	"endpoint": "mqtts://example-broker.namespace.cloudflarepubsub.com:8883"
 }
 ```
 
 In the example above, a broker is created with an endpoint of `mqtts://example-broker.my-namespace.cloudflarepubsub.com`. This means:
 
-* Our Pub/Sub (MQTT) Broker is reachable over MQTTS (MQTT over TLS) - port 8883
-* The hostname is `example-broker.my-namespace.cloudflarepubsub.com`
-* [Token authentication](/pub-sub/platform/authentication-authorization/) is required to clients to connect.
+- Our Pub/Sub (MQTT) Broker is reachable over MQTTS (MQTT over TLS) - port 8883
+- The hostname is `example-broker.my-namespace.cloudflarepubsub.com`
+- [Token authentication](/pub-sub/platform/authentication-authorization/) is required to clients to connect.
 
 ## 6. Create credentials for your broker
 
@@ -173,23 +163,21 @@ In order to connect to a Pub/Sub Broker, you need to securely authenticate. Cred
 
 Note that:
 
-* You can generate multiple credentials at once (up to 100 per API call), which can be useful when configuring multiple clients (such as IoT devices).
-* Credentials are associated with a specific Client ID and encoded as a signed JSON Web Token (JWT).
-* Each token has a unique identifier (a `jti` - or `JWT ID`) that you can use to revoke a specific token.
-* Tokens are prefixed with the broker name they are associate with (for example, `my-broker`) to make identifying tokens across multiple Pub/Sub brokers easier.
+- You can generate multiple credentials at once (up to 100 per API call), which can be useful when configuring multiple clients (such as IoT devices).
+- Credentials are associated with a specific Client ID and encoded as a signed JSON Web Token (JWT).
+- Each token has a unique identifier (a `jti` - or `JWT ID`) that you can use to revoke a specific token.
+- Tokens are prefixed with the broker name they are associate with (for example, `my-broker`) to make identifying tokens across multiple Pub/Sub brokers easier.
 
 :::note
 
-
 Ensure you do not commit your credentials to source control, such as GitHub. A valid token allows anyone to connect to your broker and publish or subscribe to messages. Treat credentials as secrets.
-
 
 :::
 
 To generate two tokens for a broker called `example-broker` with a 48 hour expiry:
 
 ```sh
-$ wrangler pubsub broker issue example-broker --namespace=NAMESPACE_NAME --number=2 --expiration=48h
+wrangler pubsub broker issue example-broker --namespace=NAMESPACE_NAME --number=2 --expiration=48h
 ```
 
 You should receive a success response that resembles the example below, which is a map of Client IDs and their associated tokens.
@@ -210,89 +198,93 @@ Your broker is now created and ready to accept messages from authenticated clien
 
 :::note
 
-You can view a live demo available at [demo.mqtt.dev](http://demo.mqtt.dev) that allows you to use your own Pub/Sub Broker and a valid token to subscribe to a topic and publish messages to it. The `JWT` field in the demo accepts a valid token from your Broker. 
+You can view a live demo available at [demo.mqtt.dev](http://demo.mqtt.dev) that allows you to use your own Pub/Sub Broker and a valid token to subscribe to a topic and publish messages to it. The `JWT` field in the demo accepts a valid token from your Broker.
 :::
 
 The example below uses [MQTT.js](https://github.com/mqttjs/MQTT.js) with Node.js to subscribe to a topic on a broker and publish a very basic "hello world" style message. You will need to have a [supported Node.js](https://nodejs.org/en/download/current/) version installed.
 
 ```sh
 # Check that Node.js is installed
-$ which node
+which node
 # Install MQTT.js
-$ npm i mqtt --save
+npm i mqtt --save
 ```
 
 Set your environment variables.
 
 ```sh
-$ export CLOUDFLARE_API_TOKEN="YourAPIToken"
-$ export CLOUDFLARE_ACCOUNT_ID="YourAccountID"
-$ export DEFAULT_NAMESPACE="TheNamespaceYouCreated"
-$ export BROKER_NAME="TheBrokerYouCreated"
+export CLOUDFLARE_API_TOKEN="YourAPIToken"
+export CLOUDFLARE_ACCOUNT_ID="YourAccountID"
+export DEFAULT_NAMESPACE="TheNamespaceYouCreated"
+export BROKER_NAME="TheBrokerYouCreated"
 ```
 
 We can now generate an access token for Pub/Sub. We will need both the client ID and the token (a JSON Web Token) itself to authenticate from our MQTT client:
 
 ```sh
-$ curl -s -H "Authorization: Bearer ${CLOUDFLARE_API_TOKEN}" -H "Content-Type: application/json" "https://api.cloudflare.com/client/v4/accounts/${CLOUDFLARE_ACCOUNT_ID}/pubsub/namespaces/namespace/brokers/is-it-broken/credentials?type=TOKEN&topicAcl=#" | jq '.result | to_entries | .[0]'
+curl -s -H "Authorization: Bearer ${CLOUDFLARE_API_TOKEN}" -H "Content-Type: application/json" "https://api.cloudflare.com/client/v4/accounts/${CLOUDFLARE_ACCOUNT_ID}/pubsub/namespaces/namespace/brokers/is-it-broken/credentials?type=TOKEN&topicAcl=#" | jq '.result | to_entries | .[0]'
 ```
 
 This will output a `key` representing the `clientId`, and a `value` representing our (secret) access token, resembling the following:
 
 ```json
 {
-  "key": "01HDQFD5Y8HWBFGFBBZPSWQ22M",
-  "value": "eyJhbGciOiJFZERTQSIsImtpZCI6IjU1X29UODVqQndJbjlFYnY0V3dzanRucG9ycTBtalFlb1VvbFZRZDIxeEUifQ....NVpToBedVYGGhzHJZmpEG1aG_xPBWrE-PgG1AFYcTPEBpZ_wtN6ApeAUM0JIuJdVMkoIC9mUg4vPtXM8jLGgBw"
+	"key": "01HDQFD5Y8HWBFGFBBZPSWQ22M",
+	"value": "eyJhbGciOiJFZERTQSIsImtpZCI6IjU1X29UODVqQndJbjlFYnY0V3dzanRucG9ycTBtalFlb1VvbFZRZDIxeEUifQ....NVpToBedVYGGhzHJZmpEG1aG_xPBWrE-PgG1AFYcTPEBpZ_wtN6ApeAUM0JIuJdVMkoIC9mUg4vPtXM8jLGgBw"
 }
 ```
 
 Copy the `value` field and set it as the `BROKER_TOKEN` environmental variable:
 
 ```sh
-$ export BROKER_TOKEN="<VALUE>"
+export BROKER_TOKEN="<VALUE>"
 ```
 
 Create a file called `index.js `, making sure that:
 
-* `brokerEndpoint` is set to the address of your Pub/Sub broker.
-* `clientId` is the `key` from your newly created access token
-* The `BROKER_TOKEN` environmental variable populated with your access token.
+- `brokerEndpoint` is set to the address of your Pub/Sub broker.
+- `clientId` is the `key` from your newly created access token
+- The `BROKER_TOKEN` environmental variable populated with your access token.
 
 :::note
 
-
 Your `BROKER_TOKEN` is sensitive, and should be kept secret to avoid unintended access to your Pub/Sub broker. Avoid committing it to source code.
-
 
 :::
 
 ```js
-const mqtt = require('mqtt')
+const mqtt = require("mqtt");
 
-const brokerEndpoint = "mqtts://my-broker.my-namespace.cloudflarepubsub.com"
-const clientId = "01HDQFD5Y8HWBFGFBBZPSWQ22M" // Replace this with your client ID
+const brokerEndpoint = "mqtts://my-broker.my-namespace.cloudflarepubsub.com";
+const clientId = "01HDQFD5Y8HWBFGFBBZPSWQ22M"; // Replace this with your client ID
 
 const options = {
-  port: 8883,
-  username: clientId, // MQTT.js requires this, but Pub/Sub does not
-  clientId: clientId, // Required by Pub/Sub
-  password: process.env.BROKER_TOKEN,
-  protocolVersion: 5, // MQTT 5
-}
+	port: 8883,
+	username: clientId, // MQTT.js requires this, but Pub/Sub does not
+	clientId: clientId, // Required by Pub/Sub
+	password: process.env.BROKER_TOKEN,
+	protocolVersion: 5, // MQTT 5
+};
 
-const client = mqtt.connect(brokerEndpoint, options)
+const client = mqtt.connect(brokerEndpoint, options);
 
-client.subscribe("example-topic")
-client.publish("example-topic", `message from ${client.options.clientId}: hello at ${Date.now()}`)
+client.subscribe("example-topic");
+client.publish(
+	"example-topic",
+	`message from ${client.options.clientId}: hello at ${Date.now()}`,
+);
 client.on("message", function (topic, message) {
-  console.log(`received message on ${topic}: ${message}`)
-})
+	console.log(`received message on ${topic}: ${message}`);
+});
 ```
 
 Run the example. You should see the output written to your terminal (stdout).
 
 ```sh
-$ node index.js
+node index.js
+```
+
+```sh output
 > received message on example-topic: hello from 01HDQFD5Y8HWBFGFBBZPSWQ22M at 1652102228
 ```
 
@@ -300,14 +292,14 @@ Your client ID and timestamp will be different from above, but you should see a 
 
 If you do not see the message you published, or you are receiving error messages, ensure that:
 
-* The `BROKER_TOKEN` environmental variable is not empty. Try echo `$BROKER_TOKEN` in your terminal.
-* You updated the `brokerEndpoint` to match the broker you created. The **Endpoint** field of your broker will show this address and port.
-* You correctly [installed MQTT.js](https://github.com/mqttjs/MQTT.js#install).
+- The `BROKER_TOKEN` environmental variable is not empty. Try echo `$BROKER_TOKEN` in your terminal.
+- You updated the `brokerEndpoint` to match the broker you created. The **Endpoint** field of your broker will show this address and port.
+- You correctly [installed MQTT.js](https://github.com/mqttjs/MQTT.js#install).
 
 ## Next Steps
 
 What's next?
 
-* [Connect a worker to your broker](/pub-sub/learning/integrate-workers/) to programmatically read, parse, and filter messages as they are published to a broker
-* [Learn how PubSub and the MQTT protocol work](/pub-sub/learning/how-pubsub-works)
-* [See example client code](/pub-sub/examples) for publishing or subscribing to a PubSub broker
+- [Connect a worker to your broker](/pub-sub/learning/integrate-workers/) to programmatically read, parse, and filter messages as they are published to a broker
+- [Learn how PubSub and the MQTT protocol work](/pub-sub/learning/how-pubsub-works)
+- [See example client code](/pub-sub/examples) for publishing or subscribing to a PubSub broker

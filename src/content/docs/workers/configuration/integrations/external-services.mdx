@@ -1,7 +1,6 @@
 ---
 pcx_content_type: concept
 title: External Services
-
 ---
 
 Many external services provide libraries and SDKs to interact with their APIs. While many Node-compatible libraries work on Workers right out of the box, some, which implement `fs`, `http/net`, or access the browser `window` do not directly translate to the Workers runtime, which is v8-based.
@@ -11,7 +10,7 @@ Many external services provide libraries and SDKs to interact with their APIs. W
 If your service requires authentication, use Wrangler secrets to securely store your credentials. To do this, create a secret in your Cloudflare Workers project using the following [`wrangler secret`](/workers/wrangler/commands/#secret) command:
 
 ```sh
-$ wrangler secret put SECRET_NAME
+wrangler secret put SECRET_NAME
 ```
 
 Then, retrieve the secret value in your code using the following code snippet:

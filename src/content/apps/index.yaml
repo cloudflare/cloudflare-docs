@@ -309,3 +309,19 @@ entries:
   languages: [TypeScript]
   cloudflare: false
   updated: 2024-08-12
+- link: https://github.com/Flosciante/nuxt-image-gallery
+  name: Nuxt Image Gallery
+  description: A web application to create an image gallery with Cloudflare R2 with a built-in image editor.
+  tags: [Nuxt]
+  products: [Pages, R2]
+  languages: [TypeScript]
+  cloudflare: false
+  updated: 2024-08-29
+- link: https://github.com/ra-jeev/hub-chat
+  name: AI Chat
+  description: A full-stack application made with Nuxt to chat with various Cloudflare Workers AI LLM.
+  tags: [Nuxt]
+  products: [Pages, Workers AI]
+  languages: [TypeScript]
+  cloudflare: false
+  updated: 2024-08-29
