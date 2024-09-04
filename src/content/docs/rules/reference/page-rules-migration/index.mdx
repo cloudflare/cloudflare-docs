@@ -89,7 +89,7 @@ The following table summarizes how different Page Rules settings will be migrate
 
 | Page Rules setting          | New implementation uses...           | Migration/Replacement instructions                                          |
 | --------------------------- | ------------------------------------ | --------------------------------------------------------------------------- |
-| Always Use HTTPS            | Redirect Rules (dynamic redirects)   | [Migrate Always Use HTTPS](#migrate-always-use-https)                       |
+| Always Use HTTPS            | Redirect Rules (Single Redirects)    | [Migrate Always Use HTTPS](#migrate-always-use-https)                       |
 | Browser Cache TTL           | Cache Rules                          | [Migrate Browser Cache TTL](#migrate-browser-cache-ttl)                     |
 | Browser Integrity Check     | Configuration Rules                  | [Migrate Browser Integrity Check](#migrate-browser-integrity-check)         |
 | Bypass Cache on Cookie      | Cache Rules                          | [Migrate Bypass Cache on Cookie](#migrate-bypass-cache-on-cookie)           |
@@ -106,7 +106,7 @@ The following table summarizes how different Page Rules settings will be migrate
 | Disable Zaraz               | Configuration Rules                  | [Migrate Disable Zaraz](#migrate-disable-zaraz)                             |
 | Edge Cache TTL              | Cache Rules                          | [Migrate Edge Cache TTL](#migrate-edge-cache-ttl)                           |
 | Email Obfuscation           | Configuration Rules                  | [Migrate Email Obfuscation](#migrate-email-obfuscation)                     |
-| Forwarding URL              | Redirect Rules (dynamic redirects)   | [Migrate Forwarding URL](#migrate-forwarding-url)                           |
+| Forwarding URL              | Redirect Rules (Single Redirects)    | [Migrate Forwarding URL](#migrate-forwarding-url)                           |
 | Host Header Override        | Origin Rules                         | [Migrate Host Header Override](#migrate-host-header-override)               |
 | IP Geolocation Header       | Transform Rules (Managed Transforms) | [Migrate IP Geolocation Header](#migrate-ip-geolocation-header)             |
 | Mirage                      | Configuration Rules                  | [Migrate Mirage](#migrate-mirage)                                           |
@@ -137,7 +137,7 @@ You configured a Page Rule to perform an automatic redirect from HTTP to HTTPS f
 
 **How to migrate**:
 
-1. [Create a dynamic redirect](/rules/url-forwarding/single-redirects/create-dashboard/) to always redirect HTTP requests to HTTPS for any hostname that contains `example.com`:
+1. [Create a single redirect](/rules/url-forwarding/single-redirects/create-dashboard/) to always redirect HTTP requests to HTTPS for any hostname that contains `example.com`:
 
     <div class="DocsMarkdown--example">
 
@@ -161,9 +161,9 @@ You configured a Page Rule to perform an automatic redirect from HTTP to HTTPS f
 
 </TabItem> <TabItem label="visual guide">
 
-| Page Rules configuration                                                                                                           | Migrate to a dynamic redirect                                                                                                                                          |
+| Page Rules configuration                                                                                                           | Migrate to a single redirect                                                                                                                                          |
 | ---------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| ![Example Page Rule with 'Always Use HTTPS' setting](~/assets/images/rules/reference/page-rules-migration/pr-always-use-https.png) | ![Dynamic redirect matching the 'Always Use HTTPS' setting of the example Page Rule](~/assets/images/rules/reference/page-rules-migration/pr-always-use-https-new.png) |
+| ![Example Page Rule with 'Always Use HTTPS' setting](~/assets/images/rules/reference/page-rules-migration/pr-always-use-https.png) | ![Single redirect matching the 'Always Use HTTPS' setting of the example Page Rule](~/assets/images/rules/reference/page-rules-migration/pr-always-use-https-new.png) |
 
 </TabItem> </Tabs>
 
@@ -899,7 +899,7 @@ You configured a Page Rule permanently redirecting `www.example.com` to `example
 
 **How to migrate**:
 
-1. [Create a dynamic redirect](/rules/url-forwarding/single-redirects/create-dashboard/) to permanently redirect requests from `www.example.com` to `example.com`:
+1. [Create a single redirect](/rules/url-forwarding/single-redirects/create-dashboard/) to permanently redirect requests from `www.example.com` to `example.com`:
 
     <div class="DocsMarkdown--example">
 
@@ -923,9 +923,9 @@ You configured a Page Rule permanently redirecting `www.example.com` to `example
 
 </TabItem> <TabItem label="visual guide">
 
-| Page Rules configuration                                                                                                          | Migrate to a dynamic redirect                                                                                                                                         |
+| Page Rules configuration                                                                                                          | Migrate to a single redirect                                                                                                                                         |
 | --------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| ![Example Page Rule #1 with 'Forwarding URL' setting](~/assets/images/rules/reference/page-rules-migration/pr-forwarding-url.png) | ![Dynamic redirect matching the 'Forwarding URL' setting of the example Page Rule #1](~/assets/images/rules/reference/page-rules-migration/pr-forwarding-url-new.png) |
+| ![Example Page Rule #1 with 'Forwarding URL' setting](~/assets/images/rules/reference/page-rules-migration/pr-forwarding-url.png) | ![Single redirect matching the 'Forwarding URL' setting of the example Page Rule #1](~/assets/images/rules/reference/page-rules-migration/pr-forwarding-url-new.png) |
 
 </TabItem> </Tabs>
 
@@ -944,7 +944,7 @@ You configured a Page Rule permanently redirecting `example.com/old-path` to `ex
 
 **How to migrate**:
 
-1. [Create a dynamic redirect](/rules/url-forwarding/single-redirects/create-dashboard/) to permanently redirect requests for `example.com/old-path` to `example.com/new-path`:
+1. [Create a single redirect](/rules/url-forwarding/single-redirects/create-dashboard/) to permanently redirect requests for `example.com/old-path` to `example.com/new-path`:
 
     <div class="DocsMarkdown--example">
 
@@ -969,9 +969,9 @@ You configured a Page Rule permanently redirecting `example.com/old-path` to `ex
 
 </TabItem> <TabItem label="visual guide">
 
-| Page Rules configuration                                                                                                            | Migrate to a dynamic redirect                                                                                                                                           |
+| Page Rules configuration                                                                                                            | Migrate to a single redirect                                                                                                                                           |
 | ----------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| ![Example Page Rule #2 with 'Forwarding URL' setting](~/assets/images/rules/reference/page-rules-migration/pr-forwarding-url-2.png) | ![Dynamic redirect matching the 'Forwarding URL' setting of the example Page Rule #2](~/assets/images/rules/reference/page-rules-migration/pr-forwarding-url-2-new.png) |
+| ![Example Page Rule #2 with 'Forwarding URL' setting](~/assets/images/rules/reference/page-rules-migration/pr-forwarding-url-2.png) | ![Single redirect matching the 'Forwarding URL' setting of the example Page Rule #2](~/assets/images/rules/reference/page-rules-migration/pr-forwarding-url-2-new.png) |
 
 </TabItem> </Tabs>
 
