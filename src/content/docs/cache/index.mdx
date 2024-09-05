@@ -1,3 +1,40 @@
+www.kaggle.com/competitions/um-game-playing-strength-of-mcts-variants/overview/prizesfrom tqdm import trange      # visualizing the progress
+from typing import Callabe
+
+# define a simple decorator(inner function) to mesure the execution of a function
+def measure_time(func:Callable)->Callable:
+    '''
+    args: one argument, is the function that we want to decorated(e,g functions that:
+    build the model, train the model, optimize the model, ...etc)
+    '''
+    # define the wrapper function that executes the original function(e,g arg func)
+    def wrapper(*args, **kwargs)->float:
+        '''
+        the wrapper function have the same argument as the object(e,g arg)function
+        '''
+        start_time=time()
+        # call the object function to process and manipulate ...
+        result=func(*args, **kwargs)
+        end_time=time()
+
+        processing_time=end_time-start_time
+        print(f'the processing time is {processing_time:.2f} secondes')
+        return result
+
+    return wrapper
+
+# applying that decorator in a simple function
+@measure_time
+def simple_function(n):
+  """A simple function that calculates the sum of squares of numbers from 1 to n."""
+  S= 0
+  for i in trange(1, n + 1):
+    S+=i**2
+  return S
+
+# Example usage
+n = 10000000
+result = simple_function(n)
 ---
 title: Overview
 pcx_content_type: overview
