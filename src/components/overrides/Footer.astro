@@ -113,7 +113,7 @@ if (import.meta.env.CF_PAGES_BRANCH === "production" || import.meta.env.GITHUB_R
               </a>
             </li>
           ))}
-            {isProduction && <OneTrust />}
+             <OneTrust />
           </li>
         </ul>
       </div>
@@ -130,7 +130,7 @@ if (import.meta.env.CF_PAGES_BRANCH === "production" || import.meta.env.GITHUB_R
             <span>{text}</span>
           </a>
         ))}
-        {isProduction && 
+        {
           <div class="mx-2 my-2 text-xs text-black dark:text-white underline decoration-accent-600 dark:decoration-accent-200">
             <OneTrust />
           </div>
