@@ -12,7 +12,7 @@ banner:
         On September 9, 2024, Cloudflare will start rebundling all Let's Encrypt certificates using a new chain.
 ---
 
-import { Details } from "~/components"
+import { Details } from "~/components";
 
 Let's Encrypt - one of the [certificate authorities (CAs)](/ssl/reference/certificate-authorities/) used by Cloudflare - has announced changes in its [chain of trust](/ssl/concepts/#chain-of-trust).[^1]
 
@@ -38,7 +38,7 @@ The expiration of the cross-signed chain will primarily affect older devices, fo
 * **September 9, 2024**: Cloudflare will stop using the cross-signed chain, both in certificate issuance and in [certificate bundling](#custom-certificates).
 * **September 30, 2024**: The cross-signed chain will expire.
 
-## How are your products affected
+## How your products are affected
 
 ### Universal SSL
 
@@ -75,7 +75,7 @@ As Cloudflare does not manage the [renewal of custom certificates](/ssl/edge-cer
 
 #### User-defined
 
-For user-defined bundle method, Cloudflare always serve the chain that you upload.
+For user-defined bundle method, Cloudflare always serves the chain that you upload.
 
 If you upload Let’s Encrypt certificates using this method, it is recommended that certificates uploaded after September 30, 2024, do not use the cross-signed chain.
 
