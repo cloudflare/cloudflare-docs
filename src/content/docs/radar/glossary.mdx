@@ -158,11 +158,13 @@ A TCP server may see timed-out or reset connections for a variety of reasons. So
 
 On Cloudflare Radar’s [Security & Attacks page](https://radar.cloudflare.com/security-and-attacks), you can view statistics on resets and timeouts from a sample of TCP connections to Cloudflare’s servers, broken down by how far the connection progressed before termination. The plot lines are defined as follows:
 
-* **Post-SYN (Mid-handshake)**: Connection resets or timeouts after the server received only a single SYN packet.
-* **Post-ACK (Immediately post-handshake)**: Connection resets or timeouts after the server received both a SYN packet and an ACK packet, meaning the connection was successfully established.
-* **Post-PSH (After first data packet)**: Connection resets or timeouts after the server received a packet with PSH flag set, following connection establishment. The PSH flag indicates that the TCP packet contains data (such as a TLS Client Hello message) ready to deliver to the application.
-* **Later (After multiple data packets)**: Connection resets within the first 10 packets from the client, but after the server has received multiple data packets.
+* **Post-SYN (mid-handshake)**: Connection resets or timeouts after the server received only a single SYN packet.
+* **Post-ACK (immediately post-handshake)**: Connection resets or timeouts after the server received both a SYN packet and an ACK packet, meaning the connection was successfully established.
+* **Post-PSH (after first data packet)**: Connection resets or timeouts after the server received a packet with PSH flag set, following connection establishment. The PSH flag indicates that the TCP packet contains data (such as a TLS Client Hello message) ready to deliver to the application.
+* **Later (after multiple data packets)**: Connection resets within the first 10 packets from the client, but after the server has received multiple data packets.
 * **None**: All other connections.
+
+Learn more about the TCP resets and timeouts dataset in our [blog post](https://blog.cloudflare.com/tcp-resets-timeouts).
 
 ## Threat Categories
 

@@ -6,10 +6,9 @@ sidebar:
 head:
   - tag: title
     content: Configure HTTP DDoS Attack Protection via API
-
 ---
 
-import { Details, Render } from "~/components"
+import { Details, Render } from "~/components";
 
 Configure the HTTP DDoS Attack Protection managed ruleset by defining overrides using the [Rulesets API](/ruleset-engine/rulesets-api/).
 
@@ -21,7 +20,7 @@ Use overrides to configure the HTTP DDoS Attack Protection managed ruleset. Over
 
 Overrides can have a ruleset, tag, or rule scope. Tag and rule configurations have greater priority than ruleset configurations.
 
-You can create overrides at the zone level and at the account level. Account-level overrides allow you to apply the same override to several zones in your account with a single rule. For example, you can use an account-level override to lower the sensitivity of a specific managed ruleset rule or exclude an [IP list](/waf/tools/lists/custom-lists/#ip-lists) for multiple zones. However, if a given zone has overrides for the HTTP DDoS Attack Protection managed ruleset, the account-level overrides will not be evaluated for that zone.
+You can create overrides at the zone level and at the account level. Account-level overrides allow you to apply the same override to several zones in your account with a single rule. For example, you can use an account-level override to lower the sensitivity of a specific managed ruleset rule or exclude an [IP list](/waf/tools/lists/custom-lists/#lists-with-ip-addresses-ip-lists) for multiple zones. However, if a given zone has overrides for the HTTP DDoS Attack Protection managed ruleset, the account-level overrides will not be evaluated for that zone.
 
 :::caution[Important]
 
@@ -29,13 +28,13 @@ You can create overrides at the zone level and at the account level. Account-lev
 - <Render file="managed-rulesets/read-only-rules-note" />
 - If you configure both account-level and zone-level overrides, only the zone-level overrides (the most specific ones) will be evaluated.
 - Currently, account-level overrides for the HTTP DDoS Attack Protection managed ruleset are only available via API.
+
 :::
 
 ### Creating multiple rules
 
 :::note
-
-Only available to Enterprise customers with the Advanced DDoS Protection subscription, which can create up to 10 rules. 
+Only available to Enterprise customers with the Advanced DDoS Protection subscription, which can create up to 10 rules.
 :::
 
 Create multiple rules in the `ddos_l7` phase entry point ruleset to define different overrides for different sets of incoming requests. Set each rule expression according to the traffic whose HTTP DDoS protection you wish to customize.
@@ -89,54 +88,52 @@ https://api.cloudflare.com/client/v4/zones/{zone_id}/rulesets/phases/ddos_l7/ent
 
 The response returns the created (or updated) phase entry point ruleset.
 
-
 <Details header="Response">
 
 ```json
 {
-  "result": {
-    "id": "<PHASE_ENTRY_POINT_RULESET_ID>",
-    "name": "default",
-    "description": "Execute HTTP DDoS Attack Protection managed ruleset in the zone-level phase entry point ruleset",
-    "kind": "zone",
-    "version": "1",
-    "rules": [
-      {
-        "id": "<RULE_ID>",
-        "version": "1",
-        "action": "execute",
-        "action_parameters": {
-          "id": "<MANAGED_RULESET_ID>",
-          "version": "latest",
-          "overrides": {
-            "action": "managed_challenge",
-            "categories": [
-              {
-                "category": "<TAG_NAME>",
-                "sensitivity_level": "low"
-              }
-            ],
-            "rules": [
-              {
-                "id": "<MANAGED_RULESET_RULE_ID>",
-                "action": "block"
-              }
-            ],
-            "sensitivity_level": "medium"
-          }
-        },
-        "expression": "true",
-        "last_updated": "2021-06-16T04:14:47.977741Z",
-        "ref": "<RULE_REF>",
-        "enabled": true
-      }
-    ],
-    "last_updated": "2021-06-16T04:14:47.977741Z",
-    "phase": "ddos_l7"
-  }
+	"result": {
+		"id": "<PHASE_ENTRY_POINT_RULESET_ID>",
+		"name": "default",
+		"description": "Execute HTTP DDoS Attack Protection managed ruleset in the zone-level phase entry point ruleset",
+		"kind": "zone",
+		"version": "1",
+		"rules": [
+			{
+				"id": "<RULE_ID>",
+				"version": "1",
+				"action": "execute",
+				"action_parameters": {
+					"id": "<MANAGED_RULESET_ID>",
+					"version": "latest",
+					"overrides": {
+						"action": "managed_challenge",
+						"categories": [
+							{
+								"category": "<TAG_NAME>",
+								"sensitivity_level": "low"
+							}
+						],
+						"rules": [
+							{
+								"id": "<MANAGED_RULESET_RULE_ID>",
+								"action": "block"
+							}
+						],
+						"sensitivity_level": "medium"
+					}
+				},
+				"expression": "true",
+				"last_updated": "2021-06-16T04:14:47.977741Z",
+				"ref": "<RULE_REF>",
+				"enabled": true
+			}
+		],
+		"last_updated": "2021-06-16T04:14:47.977741Z",
+		"phase": "ddos_l7"
+	}
 }
 ```
-
 
 </Details>
 
@@ -144,13 +141,12 @@ For more information on defining overrides for managed rulesets using the Rulese
 
 ### Account-level configuration example
 
-The following `PUT` example creates a new phase ruleset (or updates the existing one) for the `ddos_l7` phase at the account level. The example defines a single rule override for requests coming from IP addresses in the `allowlisted_ips` [IP list](/waf/tools/lists/custom-lists/#ip-lists), with the following configuration:
+The following `PUT` example creates a new phase ruleset (or updates the existing one) for the `ddos_l7` phase at the account level. The example defines a single rule override for requests coming from IP addresses in the `allowlisted_ips` [IP list](/waf/tools/lists/custom-lists/#lists-with-ip-addresses-ip-lists), with the following configuration:
 
-- The rule with ID `<MANAGED_RULESET_RULE_ID>`, belonging to the HTTP DDoS Attack Protection managed ruleset (with ID `<MANAGED_RULESET_ID>`),  will have an `eoff` (_Essentially Off_) sensitivity level and it will perform a `log` action.
+- The rule with ID `<MANAGED_RULESET_RULE_ID>`, belonging to the HTTP DDoS Attack Protection managed ruleset (with ID `<MANAGED_RULESET_ID>`), will have an `eoff` (_Essentially Off_) sensitivity level and it will perform a `log` action.
 
 :::note
-
-Custom rule expressions (different from `"true"`) and the `log` action require an Enterprise plan with the Advanced DDoS Protection subscription. 
+Custom rule expressions (different from `"true"`) and the `log` action require an Enterprise plan with the Advanced DDoS Protection subscription.
 :::
 
 ```bash title="Request"
@@ -183,47 +179,45 @@ https://api.cloudflare.com/client/v4/accounts/{account_id}/rulesets/phases/ddos_
 
 The response returns the created (or updated) phase entry point ruleset.
 
-
 <Details header="Response">
 
 ```json
 {
-  "result": {
-    "id": "<PHASE_ENTRY_POINT_RULESET_ID>",
-    "name": "default",
-    "description": "Disable a managed ruleset rule for allowlisted IP addresses",
-    "kind": "root",
-    "version": "1",
-    "rules": [
-      {
-        "id": "<RULE_ID>",
-        "version": "1",
-        "action": "execute",
-        "action_parameters": {
-          "id": "<MANAGED_RULESET_ID>",
-          "version": "latest",
-          "overrides": {
-            "rules": [
-              {
-                "id": "<MANAGED_RULESET_RULE_ID>",
-                "action": "log",
-                "sensitivity_level": "eoff"
-              }
-            ],
-          }
-        },
-        "expression": "ip.src in $allowlisted_ips",
-        "last_updated": "2022-10-16T04:14:47.977741Z",
-        "ref": "<RULE_REF>",
-        "enabled": true
-      }
-    ],
-    "last_updated": "2022-10-16T04:14:47.977741Z",
-    "phase": "ddos_l7"
-  }
+	"result": {
+		"id": "<PHASE_ENTRY_POINT_RULESET_ID>",
+		"name": "default",
+		"description": "Disable a managed ruleset rule for allowlisted IP addresses",
+		"kind": "root",
+		"version": "1",
+		"rules": [
+			{
+				"id": "<RULE_ID>",
+				"version": "1",
+				"action": "execute",
+				"action_parameters": {
+					"id": "<MANAGED_RULESET_ID>",
+					"version": "latest",
+					"overrides": {
+						"rules": [
+							{
+								"id": "<MANAGED_RULESET_RULE_ID>",
+								"action": "log",
+								"sensitivity_level": "eoff"
+							}
+						]
+					}
+				},
+				"expression": "ip.src in $allowlisted_ips",
+				"last_updated": "2022-10-16T04:14:47.977741Z",
+				"ref": "<RULE_REF>",
+				"enabled": true
+			}
+		],
+		"last_updated": "2022-10-16T04:14:47.977741Z",
+		"phase": "ddos_l7"
+	}
 }
 ```
-
 
 </Details>
 

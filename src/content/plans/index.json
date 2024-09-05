@@ -676,6 +676,27 @@
         }
       }
     },
+		"record_management": {
+      "title": "DNS records management",
+      "link": "/dns/manage-dns-records/",
+      "properties": {
+        "availability": {
+          "title": "Availability",
+          "summary": "Available on all plans",
+          "free": "Yes",
+          "pro": "Yes",
+          "biz": "Yes",
+          "ent": "Yes"
+        },
+        "records_quota": {
+          "title": "Number of records per zone",
+          "free": "1,000 for zones created before `2024-09-01 00:00:00 UTC` <br /> 200 for zones created on or after `2024-09-01 00:00:00 UTC`",
+          "pro": "3,500",
+          "biz": "3,500",
+          "ent": "3,500 (can be increased)"
+        }
+      }
+    },
     "record_comments": {
       "title": "DNS record comments",
       "link": "/dns/manage-dns-records/reference/record-attributes/",
@@ -2164,6 +2185,20 @@
           "ent": "Yes"
         }
       }
+    },
+    "speculation": {
+      "title": "Speculation",
+      "link": "/speed/optimization/content/speculation/",
+      "properties": {
+        "availability": {
+          "title": "Availability",
+          "summary": "Available on all plans",
+          "free": "Enabled by default",
+          "pro": "Yes",
+          "biz": "Yes",
+          "ent": "Yes"
+        }
+      }  
     },
     "tcp_turbo": {
       "title": "TCP Turbo",
