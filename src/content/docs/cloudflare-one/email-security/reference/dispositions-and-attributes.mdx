@@ -5,9 +5,13 @@ sidebar:
   order: 2
 ---
 
-import { Render, GlossaryTooltip } from "~/components"
+import { GlossaryTooltip, Render } from "~/components"
 
 Email Security uses a variety of factors to determine whether a given email message, domain, URL, or packet is part of a <GlossaryTooltip term="phishing">phishing</GlossaryTooltip> campaign. These small pattern assessments are dynamic in nature and — in many cases — no single pattern will determine the final verdict.
+
+:::note[Detection vs. disposition]
+Detection is the process Email Security does to identify what threat an email may contain. An email can have multiple detections, but they will only have one and final disposition. The detections an email have will determine the disposition of the email.
+:::
 
 ## Dispositions
 
