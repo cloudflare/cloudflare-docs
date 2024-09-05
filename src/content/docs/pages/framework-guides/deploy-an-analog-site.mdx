@@ -5,7 +5,13 @@ head: []
 description: The fullstack Angular meta-framework
 ---
 
-import { PagesBuildPreset, Render, TabItem, Tabs } from "~/components";
+import {
+	PagesBuildPreset,
+	Render,
+	TabItem,
+	Tabs,
+	PackageManagers,
+} from "~/components";
 
 [Analog](https://analogjs.org/) is a fullstack meta-framework for Angular, powered by [Vite](https://vitejs.dev/) and [Nitro](https://nitro.unjs.io/).
 
@@ -15,25 +21,11 @@ In this guide, you will create a new Analog application and deploy it using Clou
 
 The easiest way to create a new Analog project and deploy to Cloudflare Pages is to use the [`create-cloudflare`](https://www.npmjs.com/package/create-cloudflare) CLI (also known as C3). To get started, open a terminal and run:
 
-<Tabs> <TabItem label="npm">
-
-```sh
-npm create cloudflare@latest my-analog-app -- --framework=analog
-```
-
-</TabItem> <TabItem label="pnpm">
-
-```sh
-pnpm create cloudflare@latest my-analog-app --framework=analog
-```
-
-</TabItem> <TabItem label="bun">
-
-```sh
-bun create cloudflare@latest my-analog-app --framework=analog
-```
-
-</TabItem> </Tabs>
+<PackageManagers
+	type="create"
+	pkg="cloudflare@latest"
+	args="my-analog-app --framework=angular"
+/>
 
 C3 will walk you through the setup process and create a new project using `create-analog`, the official Analog creation tool. It will also install the necessary adapters along with the [Wrangler CLI](/workers/wrangler/install-and-update/#check-your-wrangler-version).
 
