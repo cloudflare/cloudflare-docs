@@ -159,11 +159,11 @@ export const POST: APIRoute = async ({ request }) => {
 	} else {
 		return new Response(
 			JSON.stringify({
-				message: `Message failed to send: ${sendCustom.error}`,
+				message: `Message failed to send: ${sendResend.error}`,
 			}),
 			{
 				status: 500,
-				statusText: `Internal Server Error: ${sendCustom.error}`,
+				statusText: `Internal Server Error: ${sendResend.error}`,
 			},
 		);
 	}
