@@ -365,7 +365,7 @@ export default {
 This new code provides a specific endpoint, `/hello-world`, which will provide translated responses. When this URL is accessed, our Worker code will first retrieve the language that is requested by the client in the `Accept-Language` request header and the translations from our KV store for the `hello-world.json` key. It then gets the translated message and returns the generated HTML.
 
 ```sh
-npx wrangler dev
+npx wrangler dev --remote
 ```
 
 With the Worker code running, we can notice that our application is now returning the properly translated "Hello World" message. From your browser's developer console, change the locale language (on Chromium browsers, Run `Show Sensors` to get a dropdown selection for locales).
