@@ -8,18 +8,18 @@
 | Rows written            | 100,000 / day                                      | First 50 million / month included + $1.00 / million rows  |
 | Storage (per GB stored) | 5 GB (total)                                       | First 5 GB included + $0.75 / GB-mo                       |
 
+:::note[Track your D1 usage]
+To accurately track your usage, use the [meta object](/d1/build-with-d1/d1-client-api/#return-object) or the [Cloudflare dashboard](https://dash.cloudflare.com/login). From your dashboard, navigate to: Storage & Databases > D1 > `[YOUR_DATABASE]` > Metrics > Row Metrics.
+:::
+
 ### Definitions
 
 1. Rows read measure how many rows a query reads (scans), regardless of the size of each row. For example, if you have a table with 5000 rows and run a `SELECT * FROM table` as a full table scan, this would count as 5,000 rows read. A query that filters on an [unindexed column](/d1/build-with-d1/use-indexes/) may return fewer rows to your Worker, but is still required to read (scan) more rows to determine which subset to return.
 2. Rows written measure how many rows were written to D1 database. Write operations include `INSERT`, `UPDATE`, and `DELETE`. Each of these operations contribute towards rows written. A query that `INSERT` 10 rows into a `users` table would count as 10 rows written.
-3. DDL operations are considered write operations and contribute towards rows written. You can track your usage using the [meta object](/d1/build-with-d1/d1-client-api/#return-object).
+3. DDL operations (for example, `CREATE`, `ALTER`, and `DROP`) are used to define or modify the structure of a database. They may contribute to a mix of read rows and write rows. Ensure you are accurately tracking your usage through the available tools.
 4. Row size or the number of columns in a row does not impact how rows are counted. A row that is 1 KB and a row that is 100 KB both count as one row.
 5. Defining [indexes](/d1/build-with-d1/use-indexes/) on your table(s) reduces the number of rows read by a query when filtering on that indexed field. For example, if the `users` table has an index on a timestamp column `created_at`, the query `SELECT * FROM users WHERE created_at > ?1` would only need to read a subset of the table.
 6. Indexes will add an additional written row when writes include the indexed column, as there are two rows written: one to the table itself, and one to the index. The performance benefit of an index and reduction in rows read will, in nearly all cases, offset this additional write.
 7. Storage is based on gigabytes stored per month, and is based on the sum of all databases in your account. Tables and indexes both count towards storage consumed.
 8. Free limits reset daily at 00:00 UTC. Monthly included limits reset based on your monthly subscription renewal date, which is determined by the day you first subscribed.
 9. There are no data transfer (egress) or throughput (bandwidth) charges for data accessed from D1.
-10. There are no charges for `CREATE TABLE`, `DROP TABLE`, and `DROP INDEX`.
-11. A `CREATE INDEX` on a table which already contains data immediately populates the index from that table data. This requires every row in the table to be read (incurring read charges) and a corresponding row inserted into the new index (incurring write charges).
-12. An `ALTER TABLE` which removes columns requires all existing rows in the table to be updated to reflect this change, incurring a write charge for each row.
-13. An `ALTER TABLE` which adds columns with a `CHECK` constraint or generated columns with a `NOT NULL` constraint, requires reading all existing data in the table to validate that this change can be made, incurring a read charge for each row in the table. When adding new columns which do not have these constraints (even those with a default value), there is no requirement for the data in the table to be read or updated, and therefore no charges will be incurred based on the number of rows in the table.
