@@ -1,0 +1,45 @@
+---
+pcx_content_type: concept
+title: Build Image
+head: []
+description: Understand the build image used in the Workers build system.
+sidebar:
+  badge:
+    text: Beta
+---
+
+Workers Build System build environment has broad support for a variety of languages, such as Ruby, Node.js, Python, PHP, and Go.
+
+If you need to use a specific version of a language, (for example, Node.js or Ruby) you can specify it by providing an associated environment variable in your build configuration, or setting the relevant file in your source code.
+
+## Supported Languages and Tools
+
+Workers Build System provides support with a variety of tools and languages. In the following table, review the preinstalled versions for tools included in the build environment, and how to override them as relevant:
+
+| Tool        | Default version  | Supported versions | Environment variable |
+| ----------- | ---------------- | ------------------ | -------------------- |
+| **Go**      | 1.22.0           | xx                 | xx                   |
+| **Node.js** | 20.16.0          | xx                 | xx                   |
+| **Python**  | 3.12.5           | xx                 | xx                   |
+| **Ruby**    | 3.3.4            | xx                 | xx                   |
+| **Bun**     | 1.1.22           | xx                 | xx                   |
+| **Hugo**    | extended_0.130.0 | xx                 | xx                   |
+
+## Build Environment
+
+Cloudflare Workers builds are run in the following environment:
+
+|                       |              |
+| --------------------- | ------------ |
+| **Build Enviornment** | Ubuntu 24.04 |
+| **Architecture**      | x86_64       |
+
+## Container Resources
+
+Each build will have the following resources:
+
+|                |        |
+| -------------- | ------ |
+| **CPU**        | 2 CPUs |
+| **Disk Space** | 8 GB   |
+| **Memory**     | 8 GB   |

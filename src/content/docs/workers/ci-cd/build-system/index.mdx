@@ -1,0 +1,35 @@
+---
+pcx_content_type: concept
+title: Build System
+head: []
+description: Leverage Worker's build system to integrate with Git and automatically build and deploy your project when you make a change.
+sidebar:
+  badge:
+    text: Beta
+---
+
+Connect your existing Worker to a GitHub or GitLab repository to set up automatic build and deployment for your Worker.
+
+## Get Started
+
+To set up your Git integration with a Worker:
+
+1. **Select your Worker** in the Dashboard and navigate to the Build settings of your Worker under the Settings tab.
+2. **Select the Git provider** you’d like to connect to by clicking "Connect". Follow the prompts to install the Cloudflare application on your git account.
+3. **Configure your build settings** by selecting your desired git repository, branch and configuring a deploy command.
+   :::caution
+   In Closed Beta, only GitHub respositories and branches named `Main` can be cloned successfully.
+   :::
+4. **Push a commit** to your repository to trigger your first build and deploy.
+
+If you have a monothelic repository or Wrangler enviornment setup, reference [Special Setup](/workers/ci-cd/build-system/build-configuration/#special-setup).
+
+## Build Details
+
+When a build is in progress you can monitor the build by viewing its logs. Navigate to the “View build history” on the deployments page, and select “View Build”. The build can take on the status of in progress, queued, successful, failed and canceled builds.
+
+When a commit is successfully built and deployed, you can also view build details for each new version created with git.
+
+## Pricing
+
+xyz

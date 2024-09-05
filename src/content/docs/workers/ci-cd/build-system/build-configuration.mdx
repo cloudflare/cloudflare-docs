@@ -1,0 +1,57 @@
+---
+pcx_content_type: concept
+title: Build Configuration
+head: []
+description: Understand the different settings associated with your build.
+sidebar:
+  badge:
+    text: Beta
+---
+
+You may tell Workers Build System how your application needs to be built and deployed.
+
+## Build Settings
+
+You can set the build for your Workers with the following options:
+
+- **Git account**
+  - Set the git account you would like to choose your repository from.
+- **Git repository**
+  - Select the git repository you would like to connect to your Worker.
+- **Git branch**
+  - Select the branch you would like Cloudflare to listen to for new commits. This will be defaulted to main.
+- **Build command** (Optional)
+  - Add a build command if your project requires a build step for example if you are building with assets. Reference supported frameworks for correct build command.
+- **Deploy command**
+  - The deploy command lets you choose the specific wrangler command you would like to use to deploy your Worker. Your deploy command is defaulted to `npx wrangler deploy`, but it can be customized as needed. You can also upload as a version, and take advantage of gradual deployments here.
+- **Root Directory** (Optional)
+  - Specify the root directory of your Worker. The root directory describes where the build command will run.
+- **API Key** (Optional)
+  - By default, Cloudflare will generate an API token for your account or you can create and select an existing API token from a previous build in the API token drop down. These API tokens will be created with the following permissions for your account:
+    - **Account:** Account Settings (read), Workers Scripts (edit), Workers KV Storage (edit), Workers R2 Storage (edit)
+    - **Zone:** Workers Routes (edit) for all zones on the account
+    - **User:** User Details (read), Memberships (read)
+- **Build variable** (Optional)
+  - Add variables and secrets accessible only to your build.
+
+## Special Setup
+
+If you have a monothelic repository (monorepo) or use Wrangler enviornments, you can follow the specific set up guide below:
+
+### Monorepo support
+
+You can choose to use a monorepo with Workers. To do so, you must:
+
+1. Connect your monorepo git repository to each of your associated Workers
+2. Set up your build configuration to only deploy to that specific worker by setting the correct root directory in your build configuration.
+
+Note that when a new commit is detected in the monorepo, all the associated Workers will trigger a new build and deploy.
+
+### Wrangler Environment support
+
+To set up Workers with wrangler environments:
+
+1. (Optional) Deploy via wrangler to create the Worker for your environments in the Dashboard, if you don’t already have them.
+2. Find the Workers for your environments. They are typically named `[name of Worker] - [environment name]`.
+3. Connect your repository to each of the Worker for your environment.
+4. Git push to your repository. All your associated Workers will trigger a new build.

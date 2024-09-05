@@ -1,0 +1,21 @@
+---
+pcx_content_type: concept
+title: Troubleshooting
+head: []
+description: Understand the build image used in the Workers build system.
+sidebar:
+  badge:
+    text: Beta
+---
+
+## Known Issues
+
+Currently in Closed Beta, we are working on patching the following issues:
+
+- **GitLab project:** Currently in Beta, GitLab projects are not yet supported. Only GitHub projects are supported.
+- **Branch name:** Currently in Beta, only branches named ‘Main’ can generate a build.
+- **Hardcoded build environment variables:** In the Build Details view, the build environment variables listed are not your own, they are hardcoded. We will be removing the hardcoding soon.
+- **Deleted API Keys listed:** In build configurations, you may see deleted API Keys still appear in the list of selectable API Keys.
+- **Disconnect Repository when deleting a Worker:** It is advised to first disconnect the associated git repository in 'Settings > Build' before deleting the Worker to avoid complications when reusing that repository in the future.
+
+If you discover additional issues, please notify us in the Closed Beta Discord channel.

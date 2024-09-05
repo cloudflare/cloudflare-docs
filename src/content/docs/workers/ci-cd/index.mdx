@@ -1,0 +1,32 @@
+---
+pcx_content_type: concept
+title: CI/CD
+head: []
+description: Set up continuous integration and continuous deployment for your Workers to optimize your development workflow.
+sidebar:
+  order: 7
+---
+
+Set up **continuous integration and continuous deployment (CI/CD)** for your Workers project by using either Workers build system, or using existing services and platforms to optimize your development workflow.
+
+## Why use CI/CD?
+
+It is good practice to only deploy your Workers from within a CI/CD environment, rather than running adhoc deployments manually using `wrangler deploy`. Among other benefits, deploying Workers from within a CI/CD environment makes sure that your Worker is built and deployed within a consistent environment, and it also makes it easier to control access to production credentials.
+
+## Workers Build System
+
+Workers Build System allows you to integrate with your Git provider, and automatically deploy your changes when you make a push. To set up your build system, reference [Build System](/workers/ci-cd/build-system/).
+
+## External CI/CD
+
+### Github Actions
+
+[Wrangler GitHub Action](https://github.com/cloudflare/wrangler-action) offers a reliable and convenient way to deploy Workers projects automatically when you push. To set up Github Actions with Workers, reference [External CI/CD](/workers/ci-cd/external-cicd).
+
+### GitLab Pipelines
+
+[GitLab Pipelines](https://docs.gitlab.com/ee/ci/pipelines/index.html) allow you to set up a continuous integration flow with Cloudflare Workers. To set up GitLab Pipelines with Workers, reference [External CI/CD](/workers/ci-cd/external-cicd).
+
+### Terraform
+
+[Terraform](https://www.terraform.io/) provides an alternative way to configure Workers and routes. Instead of using the Cloudflare dashboard or API directly, you define Worker code and routes in declarative configuration files. Terraform then figures out how to make the API calls for you. This also lets you treat your Worker configuration like your code. You can check your configuration files into version control and integrate them into your normal software development workflow.
