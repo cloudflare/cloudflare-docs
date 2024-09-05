@@ -20,7 +20,7 @@ Calls integrates with your backend and frontend application to add realtime func
 
 ## What makes Cloudflare Calls unique
 
-* \**Unopinonated*: Cloudflare Calls does not offer a SDK. It instead allows you to access raw WebRTC to solve unique problems that might not fit into existing concepts. The API is deliberately simple.
+* \**Unopinionated*: Cloudflare Calls does not offer a SDK. It instead allows you to access raw WebRTC to solve unique problems that might not fit into existing concepts. The API is deliberately simple.
 
 * **No rooms**: Unlike other WebRTC products, Cloudflare Calls lets you be in charge of each track (audio/video/data) instead of offering abstractions such as rooms. You define the presence protocol on top of simple pub/sub. Each end user can publish and subscribe to audio/video/data tracks as they wish.
 
@@ -28,7 +28,7 @@ Calls integrates with your backend and frontend application to add realtime func
 
 ## What exactly does Cloudflare Calls do?
 
-* **SFU**: Calls is a special kind of pub/sub server that is good at forwarding media data to clients that subscribe to certain data. Each client connects to Cloudflare Calls via WebRTC and either sends data, receives data or both usign WebRTC. This can be audio/video tracks or DataChannels.
+* **SFU**: Calls is a special kind of pub/sub server that is good at forwarding media data to clients that subscribe to certain data. Each client connects to Cloudflare Calls via WebRTC and either sends data, receives data or both using WebRTC. This can be audio/video tracks or DataChannels.
 
 * **It scales**: All Cloudflare servers act as a single server so millions of WebRTC clients can connect to Cloudflare Calls. Each can send data, receive data or both with other clients.
 
@@ -36,7 +36,7 @@ Calls integrates with your backend and frontend application to add realtime func
 
 1. Get started with the echo example, which you can download from the Cloudflare dashboard when you create a Calls App or from [demos](/calls/demos/). This will show you how to send and receive audio and video.
 
-2. Understand how you can manipulate who can recieve what media by passing around session and track ids. Remember, you control who receives what media. Each media track is represented by a unique ID. It's your responsibility to save and distribute this ID.
+2. Understand how you can manipulate who can receive what media by passing around session and track ids. Remember, you control who receives what media. Each media track is represented by a unique ID. It's your responsibility to save and distribute this ID.
 
 :::note[Calls is not a presence protocol]
 

@@ -4,7 +4,6 @@ pcx_content_type: get-started
 sidebar:
   badge:
     text: Beta
-
 ---
 
 [Mistral AI](https://mistral.ai) helps you build quickly with Mistral's advanced AI models.
@@ -17,10 +16,10 @@ sidebar:
 
 When making requests to the Mistral AI, you will need:
 
-* AI Gateway Account ID
-* AI Gateway gateway name
-* Mistral AI API token
-* Mistral AI model name
+- AI Gateway Account ID
+- AI Gateway gateway name
+- Mistral AI API token
+- Mistral AI model name
 
 ## URL structure
 
@@ -54,20 +53,20 @@ curl -X POST https://gateway.ai.cloudflare.com/v1/{account_id}/{gateway_id}/mist
 If you are using the `@mistralai/mistralai` package, you can set your endpoint like this:
 
 ```js title="JavaScript example"
-import { Mistral } from '@mistralai/mistralai';
+import { Mistral } from "@mistralai/mistralai";
 
 const client = new Mistral({
-    apiKey: MISTRAL_TOKEN,
-    serverURL: `https://gateway.ai.cloudflare.com/v1/{account_id}/{gateway_id}/mistral`,
+	apiKey: MISTRAL_TOKEN,
+	serverURL: `https://gateway.ai.cloudflare.com/v1/{account_id}/{gateway_id}/mistral`,
 });
 
 await client.chat.create({
-    model: 'mistral-large-latest',
-    messages: [
-        {
-            role: 'user',
-            content: 'What is Cloudflare?',
-        },
-    ],
+	model: "mistral-large-latest",
+	messages: [
+		{
+			role: "user",
+			content: "What is Cloudflare?",
+		},
+	],
 });
 ```

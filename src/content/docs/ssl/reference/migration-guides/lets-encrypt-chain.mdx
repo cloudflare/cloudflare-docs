@@ -83,11 +83,11 @@ If you upload Let’s Encrypt certificates using this method, it is recommended 
 
 For [custom hostname certificates](/cloudflare-for-platforms/cloudflare-for-saas/security/certificate-management/) that are specifically set to use Let's Encrypt, no change will happen automatically.
 
-Instead, Cloudflare will check the impact and reach out to you, as the SaaS provider, by email. The email will inform you which custom hostnames are receiving requests from [affected clients](#client-impact) so that you can take action as needed.
+Instead, Cloudflare will check the impact and reach out to you, as the SaaS provider, by email.
 
 To prevent this change from impacting clients, we recommend switching the CA that you use before September 9, 2024. Refer to the options below to understand how to achieve this:
 
-  * Use the [Edit Custom Hostname](http:///api/operations/custom-hostname-for-a-zone-edit-custom-hostname) endpoint to set the `certificate_authority` parameter to an empty string (`""`): this sets the custom hostname certificate to "default CA", leaving the choice up to Cloudflare. Cloudflare will always attempt to issue the certificate from a more compatible CA, such as [Google Trust Services](http:///ssl/reference/certificate-authorities/#google-trust-services), and will only fall back to using Let’s Encrypt if there is a [CAA record](http:///ssl/edge-certificates/caa-records/) in place that blocks Google from issuing a certificate.
+  * Use the [Edit Custom Hostname](/api/operations/custom-hostname-for-a-zone-edit-custom-hostname) endpoint to set the `certificate_authority` parameter to an empty string (`""`): this sets the custom hostname certificate to "default CA", leaving the choice up to Cloudflare. Cloudflare will always attempt to issue the certificate from a more compatible CA, such as [Google Trust Services](/ssl/reference/certificate-authorities/#google-trust-services), and will only fall back to using Let’s Encrypt if there is a [CAA record](/ssl/edge-certificates/caa-records/) in place that blocks Google from issuing a certificate.
     <Details header="Example API call">
 
     ```sh
@@ -108,7 +108,7 @@ To prevent this change from impacting clients, we recommend switching the CA tha
 
     </Details>
 
-  * Use the [Edit Custom Hostname](http:///api/operations/custom-hostname-for-a-zone-edit-custom-hostname) endpoint to set the `certificate_authority` parameter to `google`: this sets Google Trust Services as the CA for your custom hostnames.
+  * Use the [Edit Custom Hostname](/api/operations/custom-hostname-for-a-zone-edit-custom-hostname) endpoint to set the `certificate_authority` parameter to `google`: this sets Google Trust Services as the CA for your custom hostnames.
 
 ## Further recommendations
 

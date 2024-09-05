@@ -7,7 +7,7 @@ head:
 description: Create, develop, and deploy your Cloudflare Workers with Wrangler commands.
 ---
 
-import { TabItem, Tabs } from "~/components";
+import { TabItem, Tabs, Render } from "~/components";
 
 Wrangler offers a number of commands to manage your Cloudflare Workers.
 
@@ -592,63 +592,190 @@ Interact with a [Vectorize](/vectorize/) vector database.
 
 Creates a new vector index, and provides the binding and name that you will put in your `wrangler.toml` file.
 
-```txt
-wrangler vectorize create <INDEX_NAME> [--dimensions=<NUM_DIMENSIONS>] [--metric=<DISTANCE_METRIC>]
+```sh
+npx wrangler vectorize create <INDEX_NAME> [--dimensions=<NUM_DIMENSIONS>] [--metric=<DISTANCE_METRIC>] [--description=<DESCRIPTION>]
 ```
 
 - `INDEX_NAME` string required
-  - The name of the new index to create. Cannot be changed.
-- `--dimensions` number optional
+  - The name of the new index to create. Must be unique for an account and cannot be changed after creation or reused after the deletion of an index.
+- `--dimensions` number required
   - The vector dimension width to configure the index for. Cannot be changed after creation.
-- `--metric` string optional
+- `--metric` string required
   - The distance metric to use for calculating vector distance. Must be one of `cosine`, `euclidean`, or `dot-product`.
-
-### `get`
-
-Get details about an individual index, including its configuration.
-
-```txt
-wrangler vectorize get <INDEX_NAME>
-```
-
-- `INDEX_NAME` string required
-  - The name of the index to fetch details for.
+- `--description` string optional
+  - A description for your index.
+- `--deprecated-v1` boolean optional
+  - Create a legacy Vectorize index. Please note that legacy Vectorize indexes are on a [deprecation path](/vectorize/reference/transition-vectorize-legacy).
 
 ### `list`
 
 List all Vectorize indexes in your account, including the configured dimensions and distance metric.
 
-```txt
-wrangler vectorize list
+```sh
+npx wrangler vectorize list
 ```
+
+- `--deprecated-v1` boolean optional
+  - List legacy Vectorize indexes. Please note that legacy Vectorize indexes are on a [deprecation path](/vectorize/reference/transition-vectorize-legacy).
+
+### `get`
+
+Get details about an individual index, including its configuration.
+
+```sh
+npx wrangler vectorize get <INDEX_NAME>
+```
+
+- `INDEX_NAME` string required
+  - The name of the index to fetch details for.
+- `--deprecated-v1` boolean optional
+  - Get a legacy Vectorize index. Please note that legacy Vectorize indexes are on a [deprecation path](/vectorize/reference/transition-vectorize-legacy).
+
+### `info`
+
+Get some additional information about an individual index, including the vector count and details about the last processed mutation.
+
+```sh
+npx wrangler vectorize info <INDEX_NAME>
+```
+
+- `INDEX_NAME` string required
+  - The name of the index to fetch details for.
 
 ### `delete`
 
 Delete a Vectorize index.
 
-```txt
-wrangler vectorize delete <INDEX_NAME> [OPTIONS]
+```sh
+npx wrangler vectorize delete <INDEX_NAME> [OPTIONS]
 ```
 
 - `INDEX_NAME` string required
   - The name of the Vectorize index to delete.
 - `--force` boolean optional
   - Skip confirmation when deleting the index (Note: This is not a recoverable operation).
+- `--deprecated-v1` boolean optional
+  - Delete a legacy Vectorize index. Please note that legacy Vectorize indexes are on a [deprecation path](/vectorize/reference/transition-vectorize-legacy).
 
 ### `insert`
 
 Insert vectors into an index.
 
-```txt
-wrangler vectorize insert <INDEX_NAME> [OPTIONS]
+```sh
+npx wrangler vectorize insert <INDEX_NAME> [OPTIONS]
 ```
 
 - `INDEX_NAME` string required
-  - The name of the Vectorize index to delete.
+  - The name of the Vectorize index to upsert vectors in.
+- `--file` string required
+  - A file containing the vectors to insert in newline-delimited JSON (JSON) format.
+- `--batch-size` number optional
+  - The number of vectors to insert at a time (default: `1000`).
+- `--deprecated-v1` boolean optional
+  - Insert into a legacy Vectorize index. Please note that legacy Vectorize indexes are on a [deprecation path](/vectorize/reference/transition-vectorize-legacy).
+
+### `upsert`
+
+Upsert vectors into an index. Existing vectors in the index would be overwritten.
+
+```sh
+npx wrangler vectorize upsert <INDEX_NAME> [OPTIONS]
+```
+
+- `INDEX_NAME` string required
+  - The name of the Vectorize index to upsert vectors in.
 - `--file` string required
   - A file containing the vectors to insert in newline-delimited JSON (JSON) format.
 - `--batch-size` number optional
   - The number of vectors to insert at a time (default: `5000`).
+
+### `query`
+
+Query a Vectorize index for similar vectors.
+
+```sh
+npx wrangler vectorize query <INDEX_NAME> [OPTIONS]
+```
+
+- `INDEX_NAME` string required
+  - The name of the Vectorize index to query.
+- `--vector` array required
+  - Vector against which the Vectorize index is queried.
+- `--top-k` number optional
+  - The number of vectors to query (default: `5`).
+- `--return-values` boolean optional
+  - Enable to return vector values in the response (default: `false`).
+- `--return-metadata` string optional
+  - Enable to return vector metadata in the response. Must be one of `none`, `indexed`, or `all` (default: `none`).
+- `--namespace` string optional
+  - Query response to only include vectors from this namespace.
+- `--filter` string optional
+  - Filter vectors based on this metadata filter. Example: `'{ 'p1': 'abc', 'p2': { '$ne': true }, 'p3': 10, 'p4': false, 'nested.p5': 'abcd' }'`
+
+### `get-vectors`
+
+Fetch vectors from a Vectorize index using the provided ids.
+
+```sh
+npx wrangler vectorize get-vectors <INDEX_NAME> [OPTIONS]
+```
+
+- `INDEX_NAME` string required
+  - The name of the Vectorize index from which vectors need to be fetched.
+- `--ids` array required
+  - List of ids for which vectors must be fetched.
+
+### `delete-vectors`
+
+Delete vectors in a Vectorize index using the provided ids.
+
+```sh
+npx wrangler vectorize delete-vectors <INDEX_NAME> [OPTIONS]
+```
+
+- `INDEX_NAME` string required
+  - The name of the Vectorize index from which vectors need to be deleted.
+- `--ids` array required
+  - List of ids corresponding to the vectors that must be deleted.
+
+### `create-metadata-index`
+
+Enable metadata filtering on the specified property.
+
+```sh
+npx wrangler vectorize create-metadata-index <INDEX_NAME> [OPTIONS]
+```
+
+- `INDEX_NAME` string required
+  - The name of the Vectorize index for which metadata index needs to be created.
+- `--property-name` string required
+  - Metadata property for which metadata filtering should be enabled.
+- `--type` string required
+  - Data type of the property. Must be one of `string`, `number`, or `boolean`.
+
+### `list-metadata-index`
+
+List metadata properties on which metadata filtering is enabled.
+
+```sh
+npx wrangler vectorize list-metadata-index <INDEX_NAME> [OPTIONS]
+```
+
+- `INDEX_NAME` string required
+  - The name of the Vectorize index for which metadata indexes needs to be fetched.
+
+### `delete-metadata-index`
+
+Disable metadata filtering on the specified property.
+
+```sh
+npx wrangler vectorize delete-metadata-index <INDEX_NAME> [OPTIONS]
+```
+
+- `INDEX_NAME` string required
+  - The name of the Vectorize index for which metadata index needs to be disabled.
+- `--property-name` string required
+  - Metadata property for which metadata filtering should be disabled.
 
 ---
 
@@ -745,6 +872,8 @@ As of Wrangler v3.2.0, `wrangler dev` is supported by any Linux distributions pr
   - Specify Wrangler's logging level.
 - `--show-interactive-dev-session` boolean (default: true if the terminal supports interactivity) optional
   - Show the interactive dev session.
+- `--alias` `Array<string>`
+  - Specify modules to alias using [module aliasing](/workers/wrangler/configuration/#module-aliasing).
 
 `wrangler dev` is a way to [locally test](/workers/testing/local-development/) your Worker while developing. With `wrangler dev` running, send HTTP requests to `localhost:8787` and your Worker should execute as expected. You will also see `console.log` messages and exceptions appearing in your terminal.
 
@@ -856,498 +985,7 @@ wrangler delete [<SCRIPT>] [OPTIONS]
 - `--dry-run` boolean (default: false) optional
   - Do not actually delete the Worker. This is useful for testing the output of `wrangler delete`.
 
-## `kv namespace`
-
-Manage Workers KV namespaces.
-
-:::note
-
-The `kv ...` commands allow you to manage your Workers KV resources in the Cloudflare network. Learn more about using Workers KV with Wrangler in the [Workers KV guide](/kv/get-started/).
-:::
-
-:::caution
-
-Since version 3.60.0, Wrangler supports the `kv ...` syntax. If you are using versions below 3.60.0, the command follows the `kv:...` syntax. Learn more about the deprecation of the `kv:...` syntax in the [Wrangler commands](/kv/reference/kv-commands/) for KV page.
-:::
-
-### `create`
-
-Create a new namespace.
-
-```txt
-wrangler kv namespace create <NAMESPACE> [OPTIONS]
-```
-
-- `NAMESPACE` string required
-  - The name of the new namespace.
-- `--env` string optional
-  - Perform on a specific environment.
-- `--preview` boolean optional
-  - Interact with a preview namespace (the `preview_id` value).
-
-The following is an example of using the `create` command to create a KV namespace called `MY_KV`.
-
-```sh
-npx wrangler kv namespace create "MY_KV"
-```
-
-```sh output
-🌀 Creating namespace with title "worker-MY_KV"
-✨ Success!
-Add the following to your configuration file in your kv_namespaces array:
-kv_namespaces = [
-  { binding = "MY_KV", id = "e29b263ab50e42ce9b637fa8370175e8" }
-]
-```
-
-The following is an example of using the `create` command to create a preview KV namespace called `MY_KV`.
-
-```sh
-npx wrangler kv namespace create "MY_KV" --preview
-```
-
-```sh output
-🌀 Creating namespace with title "my-site-MY_KV_preview"
-✨ Success!
-Add the following to your configuration file in your kv_namespaces array:
-kv_namespaces = [
-  { binding = "MY_KV", preview_id = "15137f8edf6c09742227e99b08aaf273" }
-]
-```
-
-### `list`
-
-List all KV namespaces associated with the current account ID.
-
-```txt
-wrangler kv namespace list
-```
-
-The following is an example that passes the Wrangler command through the `jq` command:
-
-```sh
-npx wrangler kv namespace list | jq "."
-```
-
-```sh output
-[
-  {
-    "id": "06779da6940b431db6e566b4846d64db",
-    "title": "TEST_NAMESPACE"
-  },
-  {
-    "id": "32ac1b3c2ed34ed3b397268817dea9ea",
-    "title": "STATIC_CONTENT"
-  }
-]
-```
-
-### `delete`
-
-Delete a given namespace.
-
-```txt
-wrangler kv namespace delete {--binding=<BINDING>|--namespace-id=<NAMESPACE_ID>} [OPTIONS]
-```
-
-:::caution
-
-This command requires `--binding` or `--namespace-id`.
-:::
-
-- `--binding` string
-  - The binding name of the namespace, as stored in the `wrangler.toml` file, to delete.
-- `--namespace-id` string
-  - The ID of the namespace to delete.
-- `--env` string optional
-  - Perform on a specific environment.
-- `--preview` boolean optional
-  - Interact with a preview namespace instead of production.
-
-The following is an example of deleting a KV namespace called `MY_KV.`
-
-```sh
-npx wrangler kv namespace delete --binding=MY_KV
-```
-
-```sh output
-Are you sure you want to delete namespace f7b02e7fc70443149ac906dd81ec1791? [y/n]
-yes
-Deleting namespace f7b02e7fc70443149ac906dd81ec1791
-Deleted namespace f7b02e7fc70443149ac906dd81ec1791
-```
-
-The following is an example of deleting a preview KV namespace called `MY_KV`.
-
-```sh
-npx wrangler kv namespace delete --binding=MY_KV --preview
-```
-
-```sh output
-Are you sure you want to delete namespace 15137f8edf6c09742227e99b08aaf273? [y/n]
-yes
-Deleting namespace 15137f8edf6c09742227e99b08aaf273
-Deleted namespace 15137f8edf6c09742227e99b08aaf273
-```
-
-## `kv key`
-
-Manage key-value pairs within a Workers KV namespace.
-
-:::note
-
-The `kv ...` commands allow you to manage your Workers KV resources in the Cloudflare network. Learn more about using Workers KV with Wrangler in the [Workers KV guide](/kv/get-started/).
-:::
-
-:::caution
-
-Since version 3.60.0, Wrangler supports the `kv ...` syntax. If you are using versions below 3.60.0, the command follows the `kv:...` syntax. Learn more about the deprecation of the `kv:...` syntax in the [Wrangler commands](/kv/reference/kv-commands/) for KV page.
-:::
-
-### `put`
-
-Write a single key-value pair to a particular namespace.
-
-```txt
-wrangler kv key put <KEY> {<VALUE>|--path=<PATH>} {--binding=<BINDING>|--namespace-id=<NAMESPACE_ID>} [OPTIONS]
-```
-
-:::caution
-
-This command requires a `VALUE` or `--path`.<br/>
-This command requires a `--binding` or `--namespace-id` flag.
-:::
-
-- `KEY` string required
-  - The key to write to.
-- `VALUE` string optional
-  - The value to write.
-- `--path` optional
-  - When defined, the value is loaded from the file at `--path` rather than reading it from the `VALUE` argument. This is ideal for security-sensitive operations because it avoids saving keys and values into your terminal history.
-- `--binding` string
-  - The binding name of the namespace, as stored in the `wrangler.toml` file, to delete.
-- `--namespace-id` string
-  - The ID of the namespace to delete.
-- `--env` string optional
-  - Perform on a specific environment.
-- `--preview` boolean optional
-  - Interact with a preview namespace instead of production.
-- `--ttl` number optional
-  - The lifetime (in number of seconds) that the key-value pair should exist before expiring. Must be at least `60` seconds. This option takes precedence over the `expiration` option.
-- `--expiration` number optional
-  - The timestamp, in UNIX seconds, indicating when the key-value pair should expire.
-- `--metadata` string optional
-  - Any (escaped) JSON serialized arbitrary object to a maximum of 1024 bytes.
-- `--local` boolean optional
-  - Interact with locally persisted data.
-- `--persist-to` string optional
-  - Specify directory for locally persisted data.
-
-The following is an example that puts a key-value into the namespace with binding name of `MY_KV`.
-
-```sh
-npx wrangler kv key put --binding=MY_KV "my-key" "some-value"
-```
-
-```sh output
-Writing the value "some-value" to key "my-key" on namespace f7b02e7fc70443149ac906dd81ec1791.
-```
-
-The following is an example that puts a key-value into the preview namespace with binding name of `MY_KV`.
-
-```sh
-npx wrangler kv key put --binding=MY_KV --preview "my-key" "some-value"
-```
-
-```sh output
-Writing the value "some-value" to key "my-key" on namespace 15137f8edf6c09742227e99b08aaf273.
-```
-
-The following is an example that puts a key-value into a namespace, with a time-to-live value of `10000` seconds.
-
-```sh
-npx wrangler kv key put --binding=MY_KV "my-key" "some-value" --ttl=10000
-```
-
-```sh output
-Writing the value "some-value" to key "my-key" on namespace f7b02e7fc70443149ac906dd81ec1791.
-```
-
-The following is an example that puts a key-value into a namespace, where the value is read from the `value.txt` file.
-
-```sh
-npx wrangler kv key put --binding=MY_KV "my-key" --path=value.txt
-```
-
-```sh output
-Writing the contents of value.txt to the key "my-key" on namespace f7b02e7fc70443149ac906dd81ec1791.
-```
-
-### `list`
-
-Output a list of all keys in a given namespace.
-
-```txt
-wrangler kv key list {--binding=<BINDING>|--namespace-id=<NAMESPACE_ID>} [OPTIONS]
-```
-
-:::caution
-
-This command requires `--binding` or `--namespace-id`.
-:::
-
-- `--binding` string
-  - The binding name of the namespace, as stored in the `wrangler.toml` file, to delete.
-- `--namespace-id` string
-  - The ID of the namespace to delete.
-- `--env` string optional
-  - Perform on a specific environment.
-- `--preview` boolean optional
-  - Interact with a preview namespace instead of production.
-- `--prefix` string optional
-  - Only list keys that begin with the given prefix.
-- `--local` boolean optional
-  - Interact with locally persisted data.
-- `--persist-to` string optional
-  - Specify directory for locally persisted data.
-
-Below is an example that passes the Wrangler command through the `jq` command:
-
-```sh
-npx wrangler kv key list --binding=MY_KV --prefix="public" | jq "."
-```
-
-```sh output
-[
-  {
-    "name": "public_key"
-  },
-  {
-    "name": "public_key_with_expiration",
-    "expiration": "2019-09-10T23:18:58Z"
-  }
-]
-```
-
-### `get`
-
-Read a single value by key from the given namespace.
-
-```txt
-wrangler kv key get <KEY> {--binding=<BINDING>|--namespace-id=<NAMESPACE_ID>} [OPTIONS]
-```
-
-:::caution
-
-Exactly one of `--binding` or `--namespace-id` is required.
-:::
-
-- `KEY` string required
-  - The key value to get.
-- `--binding` string
-  - The binding name of the namespace, as stored in the `wrangler.toml` file, to get from.
-- `--namespace-id` string
-  - The ID of the namespace to get from.
-- `--env` string optional
-  - Perform on a specific environment.
-- `--preview` boolean optional
-  - Interact with a preview namespace instead of production.
-- `--text` boolean optional
-  - Decode the returned value as a UTF-8 string.
-- `--local` boolean optional
-  - Interact with locally persisted data.
-- `--persist-to` string optional
-  - Specify directory for locally persisted data.
-
-The following is an example that gets the value of the `"my-key"` key from the KV namespace with binding name `MY_KV`.
-
-```sh
-npx wrangler kv key get --binding=MY_KV "my-key"
-```
-
-```sh output
-value
-```
-
-### `delete`
-
-Remove a single key value pair from the given namespace.
-
-```txt
-wrangler kv key delete <KEY> {--binding=<BINDING>|--namespace-id=<NAMESPACE_ID>} [OPTIONS]
-```
-
-:::caution
-
-Exactly one of `--binding` or `--namespace-id` is required.
-:::
-
-- `KEY` string required
-  - The key value to get.
-- `--binding` string
-  - The binding name of the namespace, as stored in the `wrangler.toml` file, to delete.
-- `--namespace-id` string
-  - The ID of the namespace to delete.
-- `--env` string optional
-  - Perform on a specific environment.
-- `--preview` boolean optional
-  - Interact with a preview namespace instead of production.
-- `--local` boolean optional
-  - Interact with locally persisted data.
-- `--persist-to` string optional
-  - Specify directory for locally persisted data.
-
-The following is an example that deletes the key-value pair with key `"my-key"` from the KV namespace with binding name `MY_KV`.
-
-```sh
-npx wrangler kv key delete --binding=MY_KV "my-key"
-```
-
-```sh output
-Deleting the key "my-key" on namespace f7b02e7fc70443149ac906dd81ec1791.
-```
-
-## `kv bulk`
-
-Manage multiple key-value pairs within a Workers KV namespace in batches.
-
-:::note
-
-The `kv ...` commands allow you to manage your Workers KV resources in the Cloudflare network. Learn more about using Workers KV with Wrangler in the [Workers KV guide](/kv/get-started/).
-:::
-
-:::caution
-
-Since version 3.60.0, Wrangler supports the `kv ...` syntax. If you are using versions below 3.60.0, the command follows the `kv:...` syntax. Learn more about the deprecation of the `kv:...` syntax in the [Wrangler commands](/kv/reference/kv-commands/) for KV page.
-:::
-
-### `put`
-
-Write a JSON file containing an array of key-value pairs to the given namespace.
-
-```txt
-wrangler kv bulk put <FILENAME> {--binding=<BINDING>|--namespace-id=<NAMESPACE_ID>} [OPTIONS]
-```
-
-:::caution
-
-This command requires `--binding` or `--namespace-id`.
-:::
-
-- `FILENAME` string required
-  - The JSON file containing an array of key-value pairs to write to the namespace.
-- `--binding` string
-  - The binding name of the namespace, as stored in the `wrangler.toml` file, to delete.
-- `--namespace-id` string
-  - The ID of the namespace to delete.
-- `--env` string optional
-  - Perform on a specific environment.
-- `--preview` boolean optional
-  - Interact with a preview namespace instead of production.
-- `--local` boolean optional
-  - Interact with locally persisted data.
-- `--persist-to` string optional
-  - Specify directory for locally persisted data.
-
-This command takes a JSON file as an argument with a list of key-value pairs to upload. An example of JSON input:
-
-```json
-[
-	{
-		"key": "test_key",
-		"value": "test_value",
-		"expiration_ttl": 3600
-	}
-]
-```
-
-KV namespace values can only store strings. In order to save complex a value, stringify it to JSON:
-
-```json
-[
-	{
-		"key": "test_key",
-		"value": "{\"name\": \"test_value\"}",
-		"expiration_ttl": 3600
-	}
-]
-```
-
-Refer to the full schema for key-value entries uploaded via the bulk API:
-
-- `key` string required
-  - The key’s name. The name may be 512 bytes maximum. All printable, non-whitespace characters are valid.
-- `value` string required
-  - The UTF-8 encoded string to be stored, up to 25 MB in length.
-- `metadata` object optional
-  - Any arbitrary object (must serialize to JSON) to a maximum of 1024 bytes.
-- `expiration` number optional
-  - The time, measured in number of seconds since the UNIX epoch, at which the key should expire.
-- `expiration_ttl` number optional
-  - The number of seconds the document should exist before expiring. Must be at least `60` seconds.
-- `base64` boolean optional
-  - When true, the server will decode the value as base64 before storing it. This is useful for writing values that would otherwise be invalid JSON strings, such as images. Defaults to `false`.
-
-:::note
-
-If both `expiration` and `expiration_ttl` are specified for a given key, the API will prefer `expiration_ttl`.
-:::
-
-The following is an example of writing all the key-value pairs found in the `allthethingsupload.json` file.
-
-```sh
-npx wrangler kv bulk put --binding=MY_KV allthethingsupload.json
-```
-
-```sh output
-Success!
-```
-
-### `delete`
-
-Delete all keys read from a JSON file within a given namespace.
-
-```txt
-wrangler kv bulk delete <FILENAME> {--binding=<BINDING>|--namespace-id=<NAMESPACE_ID>} [OPTIONS]
-```
-
-:::caution
-
-This command requires `--binding` or `--namespace-id`.
-:::
-
-- `FILENAME` string required
-  - The JSON file containing an array of keys to delete from the namespace.
-- `--binding` string
-  - The binding name of the namespace, as stored in the `wrangler.toml` file, to delete.
-- `--namespace-id` string
-  - The ID of the namespace to delete.
-- `--env` string optional
-  - Perform on a specific environment.
-- `--preview` boolean optional
-  - Interact with a preview namespace instead of production.
-- `--local` boolean optional
-  - Interact with locally persisted data.
-- `--persist-to` string optional
-  - Specify directory for locally persisted data.
-
-This command takes a JSON file as an argument containing an array of keys to delete.
-The following is an example of the JSON input:
-
-```json
-["test_key_1", "test_key_2"]
-```
-
-The following is an example of deleting all the keys found in the `allthethingsdelete.json` file.
-
-```sh
-npx wrangler kv bulk delete --binding=MY_KV allthethingsdelete.json
-```
-
-```sh output
-? Are you sure you want to delete all keys in allthethingsdelete.json from kv-namespace with id "f7b02e7fc70443149ac906dd81ec1791"? › (Y/n)
-Success!
-```
+<Render file="wrangler-commands/kv" product="workers"/>
 
 ---
 
@@ -1404,43 +1042,43 @@ Event notifications is currently in beta. To report bugs or request features, fi
 Create an [event notification](/r2/buckets/event-notifications/) rule for an R2 bucket.
 
 ```txt
-wrangler r2 bucket notification create <NAME> [OPTIONS]
+wrangler r2 bucket notification create <NAME> --event-type <EVENT_TYPE> --queue <QUEUE_NAME> [OPTIONS]]
 ```
 
 - `NAME` string required
   - The name of the R2 bucket to create an event notification rule for.
-- `--event-type` "object-create"|"object-delete" required
+- `EVENT_TYPE` "object-create"|"object-delete" required
   - The [type of event](/r2/buckets/event-notifications/#event-types) that will trigger event notifications.
-- `--queue` string required
+- `QUEUE_NAME` string required
   - The name of the queue that will receive event notification messages.
 - `--prefix` string optional
-  - Specifies the key name prefix that an object must match to trigger event notifications.
+  - Specifies the key name prefix that an object must match to trigger event notifications. The value must be a string. Regular expressions are not supported.
 - `--suffix` string optional
-  - Specifies the key name suffix that an object must match to trigger event notifications.
+  - Specifies the key name suffix that an object must match to trigger event notifications. The value must be a string. Regular expressions are not supported.
 
 ### `notification delete`
 
 Remove a rule from a bucket's [event notification](/r2/buckets/event-notifications/) configuration.
 
 ```txt
-wrangler r2 bucket notification delete <NAME> [OPTIONS]
+wrangler r2 bucket notification delete <NAME> --queue <QUEUE_NAME>
 ```
 
 - `NAME` string required
   - The name of the R2 bucket to delete an event notification rule for.
-- `--queue` string required
+- `QUEUE_NAME` string required
   - The name of the queue that corresponds to the event notification rule.
 
 ### `notification get`
 
-Get the [event notification](/r2/buckets/event-notifications/) configuration for a bucket.
+List the [event notification](/r2/buckets/event-notifications/) configurations for a bucket.
 
 ```txt
 wrangler r2 bucket notification get <NAME>
 ```
 
 - `NAME` string required
-  - The name of the R2 bucket to get event notification configuration for.
+  - The name of the R2 bucket to get event notification configurations for.
 
 ### `sippy enable`
 
@@ -2155,7 +1793,7 @@ wrangler whoami
 
 The `--experimental-versions` flag is required to use the `wrangler versions` commands. You may use the shorthand `--x-versions` flag in place of `--experimental-versions` anywhere it is mentioned. For consistency in Wrangler's output, it is recommended that you use the `--experimental-versions` flag for all commands where it is an option.
 
-The minimum required wrangler version to use these commands is 3.40.0.
+The minimum required Wrangler version to use these commands is 3.40.0.
 
 :::
 
@@ -2272,7 +1910,7 @@ This command is currently in closed beta. Report bugs in [GitHub](https://github
 
 The `--experimental-versions` flag is required to use the `wrangler triggers` commands. You may use the shorthand `--x-versions` flag in place of `--experimental-versions` anywhere it is mentioned. For consistency in Wrangler's output, it is recommended that you use the `--experimental-versions` flag for all commands where it is an option.
 
-The minimum required wrangler version to use these commands is 3.40.0.
+The minimum required Wrangler version to use these commands is 3.40.0.
 
 :::
 
@@ -2592,13 +2230,32 @@ Generate types from bindings and module rules in configuration.
 wrangler types [<PATH>] [OPTIONS]
 ```
 
-- `PATH` string (default: `worker-configuration.d.ts`)
+:::note
 
-  - The path to where the declaration file for your Worker will be written.
-  - The path to the declaration file must have a `d.ts` extension.
+The `--experimental-include-runtime` flag dynamically generates runtime types according to the `compatibility_date` and `compatibility_flags` defined in your [config file](/workers/wrangler/configuration/).
+
+It is a replacement for the [`@cloudflare/workers-types` package](https://www.npmjs.com/package/@cloudflare/workers-types), so that package, if installed, should be uninstalled to avoid any potential conflict.
+
+After running the command, you must add the path of the generated runtime types file to the [`compilerOptions.types` field](https://www.typescriptlang.org/tsconfig/#types) in your project's [tsconfig.json](https://www.typescriptlang.org/docs/handbook/tsconfig-json.html) file.
+
+You may use the shorthand `--x-include-runtime` flag in place of `--experimental-include-runtime` anywhere it is mentioned.
+
+The minimum required Wrangler version to use this command is 3.66.0.
+
+:::
+
+- `PATH` string (default: `./worker-configuration.d.ts`)
+
+  - The path to where **the `Env` types** for your Worker will be written.
+  - The path must have a `d.ts` extension.
 
 - `--env-interface` string (default: `Env`)
+
   - The name of the interface to generate for the environment object.
   - Not valid if the Worker uses the Service Worker syntax.
 
-{/* <!--TODO Add examples of DTS generated output --> */}
+- `--experimental-include-runtime` string optional (default: `./.wrangler/types/runtime.d.ts`)
+  - The path to where the **runtime types** file will be written.
+  - Leave the path blank to use the default option, e.g. `npx wrangler types --x-include-runtime`
+  - A custom path must be relative to the project root, e.g. `./my-runtime-types.d.ts`
+  - A custom path must have a `d.ts` extension.

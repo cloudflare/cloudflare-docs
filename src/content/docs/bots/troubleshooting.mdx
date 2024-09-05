@@ -4,10 +4,9 @@ title: FAQ
 structured_data: true
 sidebar:
   order: 11
-
 ---
 
-import { Render } from "~/components"
+import { Render, RuleID } from "~/components";
 
 ## Bots
 
@@ -35,7 +34,7 @@ Yandex updates their bots very frequently, you may see more false positives whil
 
 **Workarounds:**
 
-- Create an [exception](/waf/managed-rules/waf-exceptions/) to temporarily skip the managed rule with ID 2854e3f18ad946049e6d90ccf6cbb163 when a request is coming from the **Yandex IP** and the user-agent contains **Yandex.**
+- Create an [exception](/waf/managed-rules/waf-exceptions/) to temporarily skip the managed rule with ID <RuleID id="2854e3f18ad946049e6d90ccf6cbb163" /> when a request is coming from the **Yandex IP** and the user-agent contains **Yandex.**
 - Create a [WAF custom rule with the _Skip_ action](/waf/custom-rules/skip/) to temporarily bypass WAF Managed Rules when a request is coming from the **Yandex IP** and the user-agent contains **Yandex.**
 
 If you are using the legacy WAF managed rules ([now deprecated](/waf/reference/migration-guides/waf-managed-rules-migration/)), disable the WAF managed rule with ID `100203` temporarily.
@@ -105,7 +104,7 @@ The JA3 Fingerprint can be null or empty in some cases. The most common case is 
 
 Cloudflare maintains a sample list of verified bots in [Cloudflare Radar](https://radar.cloudflare.com/verified-bots).
 
-As a bot operator, in order to be listed by Cloudflare as a Verified Bot, your bot must conform with our [verified bot public policy](/bots/reference/verified-bots-policy/).  If your bot meets this criteria, submit this [online application](https://docs.google.com/forms/d/e/1FAIpQLSdqYNuULEypMnp4i5pROSc-uP6x65Xub9svD27mb8JChA_-XA/viewform?usp=sf_link).
+As a bot operator, in order to be listed by Cloudflare as a Verified Bot, your bot must conform with our [verified bot public policy](/bots/reference/verified-bots-policy/). If your bot meets this criteria, submit this [online application](https://docs.google.com/forms/d/e/1FAIpQLSdqYNuULEypMnp4i5pROSc-uP6x65Xub9svD27mb8JChA_-XA/viewform?usp=sf_link).
 
 ---
 
@@ -119,7 +118,7 @@ The following information gathering are required when you are experiencing issue
 
 Because Bot Fight Mode (BFM) and Super Bot Fight Mode (SBFM) are set at a domain level, we often find that disabling these features is the best solution to false positives.
 
-Please follow instructions in the following questions on how to disable BFM and SBFM features. We conduct more thorough investigations for Enterprise Bot Management. 
+Please follow instructions in the following questions on how to disable BFM and SBFM features. We conduct more thorough investigations for Enterprise Bot Management.
 :::
 
 - RayIDs
@@ -143,6 +142,7 @@ Please follow instructions in the following questions on how to disable BFM and 
 - BFM and SBFM are high security features intended to quickly help customers under active attack stop as many bots as possible. Due to the high security threshold, false positives do sometimes happen.
 - BFM has limited control. You cannot bypass or skip BFM using the _Skip_ action in WAF custom rules or using Page Rules. BFM will be disabled if there are any IP Access rules present. If you turned on BFM during an attack, and the attack has subsided, we recommend either disabling the feature using IP Access rules to bypass BFM, or looking at [Bot Management for Enterprise](/bots/plans/bm-subscription/), which gives you the ability to precisely customize your security threshold and create exception rules as needed.
 - SBFM can be bypassed with IP Access _Allow_ action rules. You can use the _Skip_ action in [WAF custom rules](/waf/custom-rules/skip/) to specify where Super Bot Fight Mode should not run.
+
 :::
 
 **How to disable BFM/SBFM feature?**
@@ -165,22 +165,20 @@ Bot Fight Mode can still trigger if you have IP Access rules, but it cannot trig
 
 This is a known issue the Bots team is working to resolve in the near future. In the meantime, there is a workaround to resolve such issue. You will need to run the following API command to check and remove the SBFM ruleset:
 
-1. List the existing Rulesets at the zone level
+1. List the existing Rulesets at the zone level.
 
-```bash
-curl "https://api.cloudflare.com/client/v4/zones/{zone_id}/rulesets" \
---header "Authorization: Bearer <API_TOKEN>"
-```
+   ```bash
+   curl "https://api.cloudflare.com/client/v4/zones/{zone_id}/rulesets" \
+   --header "Authorization: Bearer <API_TOKEN>"
+   ```
 
 2. From the output in step 1, find the ruleset ID that is associated with the zone's SBFM configuration. You should be able to see `"kind": "zone"` and `"phase": "http_request_sbfm"` for that ruleset.
 
 3. Use the ruleset ID you found to delete the SBFM ruleset.
 
-```bash
-curl --request DELETE "https://api.cloudflare.com/client/v4/zones/{zone_id}/rulesets/{ruleset_id}" \
---header "Authorization: Bearer <API_TOKEN>"
-```
+   ```bash
+   curl --request DELETE "https://api.cloudflare.com/client/v4/zones/{zone_id}/rulesets/{ruleset_id}" \
+   --header "Authorization: Bearer <API_TOKEN>"
+   ```
 
 Note that you need to replace `<API_TOKEN>` with your own [API token](/fundamentals/api/get-started/create-token/).
-
-

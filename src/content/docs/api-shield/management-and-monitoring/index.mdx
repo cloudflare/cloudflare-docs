@@ -4,6 +4,7 @@ type: overview
 title: Management and Monitoring
 sidebar:
   order: 5
+  label: Endpoint Management
 
 ---
 
@@ -68,7 +69,28 @@ If you deselect **Save new endpoints to endpoint management**, the endpoints wil
 By selecting multiple checkboxes, you can add several endpoints from Discovery at once instead of individually. 
 :::
 
-When adding an endpoint manually, you can specify variable fields in the path or host by enclosing them in braces, `/api/user/{var1}/details` or `{var1}.example.com`.
+When adding an endpoint manually, you can specify variable fields in the path or host by enclosing them in braces, `/api/user/{var1}/details` or `{hostVar1}.example.com`. 
+
+Cloudflare supports hostname variables in the following formats:
+
+```txt
+
+Unknown macro: {hostVar1}.example.com
+
+.foo.example.com
+
+foo.{hostVar1}.example.com
+
+Unknown macro: {hostVar2}.{hostVar1}.example.com
+```
+
+Hostname variables must comprise the entire domain field and must not be used with other text in the field. 
+
+The following format is not supported: 
+
+```txt
+foo-{hostVar1}.example.com.
+```
 
 For more information on how Cloudflare uses variables in API Shield, refer to the examples from [API Discovery](/api-shield/security/api-discovery/).
 
