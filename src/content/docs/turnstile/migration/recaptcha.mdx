@@ -1,0 +1,61 @@
+---
+title: Migrate from reCAPTCHA
+pcx_content_type: migration
+sidebar:
+  order: 1
+
+---
+
+If you are using reCAPTCHA today, you can switch seamlessly to Cloudflare Turnstile by following the step-by-step guide below to assist with the upgrade process.
+
+To complete the migration, you must obtain the [sitekey and secret key](/turnstile/get-started/#get-a-sitekey-and-secret-key).
+
+:::note
+
+Turnstile migration is currently compatible up to reCAPTCHA v2. 
+:::
+
+## Client-side integration
+
+1. Update the client-side integration by inserting the Turnstile script snippet in your HTML's `<head>` element
+
+<div>
+
+```html title="Turnstile script snippet"
+<script src="https://challenges.cloudflare.com/turnstile/v0/api.js?compat=recaptcha" async defer></script>
+```
+
+:::note
+
+Adding `?compat=recaptcha` runs Turnstile in compatibility mode, which
+enables the following features:
+
+- implicit rendering for reCAPTCHA
+- `g-recaptcha-response` input name for forms
+- register the Turnstile API as `grecaptcha` 
+:::
+
+</div>
+
+2. Locate the `grecaptcha.render()` calls and replace the sitekey with your Turnstile sitekey.
+
+:::note
+
+Turnstile supports:
+
+- the `render()` call
+- reCAPTCHA v2 invisible mode with the `execute()` call 
+:::
+
+## Server-side integration
+
+Update the server-side integration by replacing the siteverify URL. Replace `https://www.google.com/recaptcha/api/siteverify` with `https://challenges.cloudflare.com/turnstile/v0/siteverify`
+
+:::caution[Differences to reCAPTCHA's siteverify]
+
+reCAPTCHA supports `GET` requests using query parameters, i.e: `GET /siteverify?response=<response>&secret=<secret>`.
+
+Turnstile's siteverify endpoint does _not_ support this and only accepts `POST` requests with a FormData or JSON body.
+
+Refer to [server-side validation](/turnstile/get-started/server-side-validation/) for more information. 
+:::

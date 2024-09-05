@@ -5,12 +5,13 @@ sidebar:
   order: 6
 ---
 
-# Metadata Filtering
+import { Render, PackageManagers } from "~/components";
 
 :::note[Enable metadata filtering]
 
-Vectorize v2 requires to define metadata properties that will support filtering. Please refer to [Vectorize API](/vectorize/reference/client-api/#create-metadata-index) for details.
-[Namespaces](/vectorize/best-practices/insert-vectors/#namespaces) support metadata filtering by default.
+Vectorize requires metadata indexes to be specified before vectors are inserted to support metadata filtering. Please refer to [Create metadata indexes](/vectorize/get-started/intro/#4-optional-create-metadata-indexes) for details.
+
+Vectorize supports [namespace](/vectorize/best-practices/insert-vectors/#namespaces) filtering by default.
 
 :::
 
@@ -62,23 +63,31 @@ Both [namespaces](/vectorize/best-practices/insert-vectors/#namespaces) and meta
 
 ```json
 { "pandas.nice": 42 }
- // looks for { "pandas": { "nice": 42 } }
+
+
+// looks for { "pandas": { "nice": 42 } }
 ```
 
 ## Examples
 
 ### Add metadata
 
-:::note[Using Vectorize v1?]
-
-Please use the 'wrangler vectorize --deprecated-v1' flag to create, get, list, delete and insert vectors into legacy Vectorize v1 indexes.
-
-:::
+<Render file="vectorize-legacy" />
 
 With the following index definition:
 
 ```sh
-npx wrangler vectorize create tutorial-index --dimensions=3 --metric=cosine
+npx wrangler vectorize create tutorial-index --dimensions=32 --metric=cosine
+```
+
+Create metadata indexes:
+
+```sh
+npx wrangler vectorize create-metadata-index tutorial-index --property-name=url --type=string
+```
+
+```sh
+npx wrangler vectorize create-metadata-index tutorial-index --property-name=streaming_platform --type=string
 ```
 
 Metadata can be added when [inserting or upserting vectors](/vectorize/best-practices/insert-vectors/#examples).
@@ -87,27 +96,27 @@ Metadata can be added when [inserting or upserting vectors](/vectorize/best-prac
 const newMetadataVectors: Array<VectorizeVector> = [
 	{
 		id: "1",
-		values: [32.4, 74.1, 3.2],
+		values: [32.4, 74.1, 3.2, ...],
 		metadata: { url: "/products/sku/13913913", streaming_platform: "netflix" },
 	},
 	{
 		id: "2",
-		values: [15.1, 19.2, 15.8],
+		values: [15.1, 19.2, 15.8, ...],
 		metadata: { url: "/products/sku/10148191", streaming_platform: "hbo" },
 	},
 	{
 		id: "3",
-		values: [0.16, 1.2, 3.8],
+		values: [0.16, 1.2, 3.8, ...],
 		metadata: { url: "/products/sku/97913813", streaming_platform: "amazon" },
 	},
 	{
 		id: "4",
-		values: [75.1, 67.1, 29.9],
+		values: [75.1, 67.1, 29.9, ...],
 		metadata: { url: "/products/sku/418313", streaming_platform: "netflix" },
 	},
 	{
 		id: "5",
-		values: [58.8, 6.7, 3.4],
+		values: [58.8, 6.7, 3.4, ...],
 		metadata: { url: "/products/sku/55519183", streaming_platform: "hbo" },
 	},
 ];
@@ -121,12 +130,11 @@ let upserted = await env.YOUR_INDEX.upsert(newMetadataVectors);
 Use the `query()` method:
 
 ```ts
-let queryVector: Array<number> = [54.8, 5.5, 3.1];
-// Best match is vector id = 5 (score closet to 1)
+let queryVector: Array<number> = [54.8, 5.5, 3.1, ...];
 let originalMatches = await env.YOUR_INDEX.query(queryVector, {
 	topK: 3,
 	returnValues: true,
-	returnMetadata: true,
+	returnMetadata: 'all',
 });
 ```
 
@@ -169,13 +177,12 @@ Results without metadata filtering:
 The same `query()` method with a `filter` property supports metadata filtering.
 
 ```ts
-let queryVector: Array<number> = [54.8, 5.5, 3.1];
-// Best match is vector id = 4 with metadata filter
+let queryVector: Array<number> = [54.8, 5.5, 3.1, ...];
 let metadataMatches = await env.YOUR_INDEX.query(queryVector, {
 	topK: 3,
 	filter: { streaming_platform: "netflix" },
 	returnValues: true,
-	returnMetadata: true,
+	returnMetadata: 'all',
 });
 ```
 
@@ -208,4 +215,5 @@ Results with metadata filtering:
 
 ## Limitations
 
-- Only newly created indexes on or after 2023-12-06 support metadata filtering. Previously created indexes cannot be migrated to support metadata filtering.
+- As of now, metadata indexes need to be created for Vectorize indexes _before_ vectors can be inserted to support metadata filtering.
+- Only indexes created on or after 2023-12-06 support metadata filtering. Previously created indexes cannot be migrated to support metadata filtering.

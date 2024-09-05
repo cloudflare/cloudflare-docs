@@ -51,7 +51,7 @@ If you use additional cookies in your Drupal site, you must ensure these are in 
 
 ![The Create a Page Rule dialog with the Cache Level set to Cache Everything, Bypass Cache on Cookie set to Drupal variables, and Edge Cache TTL set to a month.](~/assets/images/support/page_rules_caching_static_HTML_with_drupal.png)
 
-Now, when Cloudflare is serving cached files, a C\_F-Cache-Status: HIT\_ header will be sent back to the browser.
+Now, when Cloudflare is serving cached files, a response header `Cf-Cache-Status: HIT` will be sent back to the browser.
 
 ***
 

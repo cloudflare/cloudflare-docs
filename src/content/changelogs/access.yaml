@@ -5,6 +5,10 @@ productLink: "/cloudflare-one/applications/configure-apps/"
 productArea: Cloudflare One
 productAreaLink: /cloudflare-one/changelog/
 entries:
+- publish_date: '2024-08-26'
+  title: Reduce automatic seat deprovisioning minimum to 1 month, down from 2 months.
+  description: |-
+    Admins can now configure Zero Trust seats to [automatically expire](/cloudflare-one/identity/users/seat-management/#enable-seat-expiration) after 1 month of user inactivity. The previous minimum was 2 months.
 - publish_date: '2024-06-06'
   title: Scalability improvements to the App Launcher
   description: |-

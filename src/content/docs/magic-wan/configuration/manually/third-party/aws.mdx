@@ -18,7 +18,7 @@ Additionally, you also need to configure the necessary route table entries for t
 
 1. Go to **Transit gateways** > **Transit gateway attachments**, and select **Create transit gateway attachment**.
 2. Select the **Transit gateway ID** that you created previously from the dropdown.
-3. For **Attachment type**, select *VPN*.
+3. For **Attachment type**, select _VPN_.
 4. Under VPN attachment, select the following settings (you can leave settings not mentioned here with their default values):
    1. **Customer Gateway**: Select **New**.
    2. **IP Address**: Enter your Cloudflare anycast IP address.
@@ -46,22 +46,22 @@ Additionally, you also need to configure the necessary route table entries for t
    :::
 
 8. Configure the following settings for the IPsec tunnel. Note that the **Startup action** needs to be set to **Start**, which means the AWS side will initiate IPsec negotiation. Settings not mentioned here can be left at their default settings:
-   * **Phase 1 encryption algorithms**: `AES256-GCM-16`
-   * **Phase 2 encryption algorithms**: `AES256-GCM-16`
-   * **Phase 1 integrity algorithms**: `SHA2-256`
-   * **Phase 2 integrity algorithms**: `SHA2-256`
-   * **Phase 1 DH group numbers**: `14`
-   * **Phase 2 DH group numbers**: `14`
-   * **IKE Version**: `ikev2`
-   * **Startup action**: **Start**
-   * **DPD timeout action**: `Restart`
+   - **Phase 1 encryption algorithms**: `AES256-GCM-16`
+   - **Phase 2 encryption algorithms**: `AES256-GCM-16`
+   - **Phase 1 integrity algorithms**: `SHA2-256`
+   - **Phase 2 integrity algorithms**: `SHA2-256`
+   - **Phase 1 DH group numbers**: `14`
+   - **Phase 2 DH group numbers**: `14`
+   - **IKE Version**: `ikev2`
+   - **Startup action**: **Start**
+   - **DPD timeout action**: `Restart`
 
 9. Select **Save changes**.
 
 10. Repeat the steps above to configure the second VPN connection. Use the second outside IP address, and make the appropriate changes to IP addresses as well when configuring Cloudflare's side of the tunnel.
 
 :::note
-ECMP over two VPN tunnels is not supported with a static routing configuration. You will need to configure dynamic routing for the VPN between the transit gateway and the customer gateway device. Refer to [AWS documentation](https://docs.aws.amazon.com/vpc/latest/tgw/tgw-transit-gateways.html) for more information. 
+ECMP over two VPN tunnels is not supported with a static routing configuration. You will need to configure dynamic routing for the VPN between the transit gateway and the customer gateway device. Refer to [AWS documentation](https://docs.aws.amazon.com/vpc/latest/tgw/tgw-transit-gateways.html) for more information.
 :::
 
 ## Magic WAN
@@ -71,14 +71,14 @@ After configuring the AWS transit gateway VPN connection and the tunnel as menti
 ### IPsec tunnels
 
 1. Refer to [Add tunnels](/magic-wan/configuration/manually/how-to/configure-tunnels/#add-tunnels) to learn how to add an IPsec tunnel. When creating your IPsec tunnel, make sure you define the following settings:
-   * **Tunnel name**: `tunnel01`
-   * **Interface address**: The `/30`CIDR block enforced by AWS (first usable IP is for the AWS side). For example, `169.254.244.2`.
-   * **Customer endpoint**: The IP address from AWS's VPN tunnel outside IP address. For example, `35.xx.xx.xx`.
-   * **Cloudflare endpoint**: Enter the first of your two anycast IPs.
-   * **Pre-shared key**: Choose **Use my own pre-shared key**, and enter the PSK you created for the AWS VPN tunnel.
-   * **Health check type**: Choose **Request**
-   * **Health check direction**: Choose **Bidirectional**
-   * **Replay protection**: Select **Enabled**.
+   - **Tunnel name**: `tunnel01`
+   - **Interface address**: The `/30`CIDR block enforced by AWS (first usable IP is for the AWS side). For example, `169.254.244.2`.
+   - **Customer endpoint**: The IP address from AWS's VPN tunnel outside IP address. For example, `35.xx.xx.xx`.
+   - **Cloudflare endpoint**: Enter the first of your two anycast IPs.
+   - **Pre-shared key**: Choose **Use my own pre-shared key**, and enter the PSK you created for the AWS VPN tunnel.
+   - **Health check type**: Choose **Request**
+   - **Health check direction**: Choose **Bidirectional**
+   - **Replay protection**: Select **Enabled**.
 2. Select **Save**.
 3. Repeat the above steps for `tunnel02`. Chose the same prefix, but select the second IPsec tunnel for **Tunnel/Next hop**.
 

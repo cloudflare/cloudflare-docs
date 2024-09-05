@@ -1,6 +1,6 @@
 ---
 title: aws-sdk-js-v3
-pcx_content_type: configuration
+pcx_content_type: example
 ---
 
 import { Render } from "~/components";
@@ -28,7 +28,7 @@ const S3 = new S3Client({
 	},
 });
 
-console.log(await S3.send(new ListBucketsCommand("")));
+console.log(await S3.send(new ListBucketsCommand({})));
 // {
 //     '$metadata': {
 //     httpStatusCode: 200,

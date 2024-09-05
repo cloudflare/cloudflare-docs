@@ -182,6 +182,8 @@ You can get the Access Key ID and Secret Access Key values from the response of 
 * Access Key ID: The `id` of the API token.
 * Secret Access Key: The SHA-256 hash of the API token `value`.
 
+Refer to [Authenticate against R2 API using auth tokens](/r2/examples/authenticate-r2-auth-tokens/) for a tutorial with JavaScript, Python, and Go examples.
+
 ## Temporary access credentials
 
 If you need to create temporary credentials for a bucket or a prefix/object within a bucket, you can use the [temp-access-credentials endpoint](/api/operations/r2-create-temp-access-credentials) in the API. You will need an existing R2 token to pass in as the parent access key id. You can use the credentials from the API result for an S3-compatible request by setting the credential variables like so:

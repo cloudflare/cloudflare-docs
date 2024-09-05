@@ -16,18 +16,12 @@ Every Cloudflare data center configured to process your traffic sends tunnel hea
 When a probe attempt fails for a [healthy](#health-state-and-prioritization) tunnel, each server detecting the failure quickly probes up to two more times to obtain an accurate result. We also do the same if a tunnel has been down and probes start returning success. Because Cloudflare global network servers send probes up to every second, you can expect your network to receive several hundred health check packets per second — each Cloudflare data center will only send one health check packet as part of a probe. This represents a relatively trivial amount of traffic.
 
 :::note[Note]
-
-
 To avoid control plane policies enforced by the origin network, tunnel health checks use an encapsulated ICMP reply instead of an ICMP echo request. To use echo request packets, change your health check type to **Request** in your tunnels. Refer to <a href={props.five}>Configure tunnel endpoints</a> to learn how to change this setting.
-
-
 :::
-
 
 <Details header="Wireshark example of health check packets">
 
 ![Wireshark example for tunnel health checks with ICMP reply packet](~/assets/images/magic-transit/tunnel-health-check-packets.png)
-
 
 </Details>
 
@@ -40,32 +34,28 @@ Healthy tunnels are preferred to degraded tunnels, and degraded tunnels are pref
 {props.two} steers traffic to tunnels based on priorities you set when you <a href={props.three}>assign tunnel route priorities during onboarding</a>. Tunnel routes with lower values have priority over those with higher values.
 
 :::note[Note]
-
-
 Cloudflare global network servers may be able to reach the origin infrastructure from some locations at a given time but not others. This occurs because Cloudflare does not synchronize health checks among global network servers and because the Internet is not homogeneous.
 
 As a result, tunnel health may be in different states in different parts of the world at the same time. In the example from the previous paragraph, both tunnels could receive traffic simultaneously, even though Tunnel 1 has priority over Tunnel 2.
-
-
 :::
 
 ## Tunnel state determination
 
 ### Degraded
 
-* When at least 0.1% or more of tunnel health checks fail in the previous five minutes (with at least two failures), {props.two} considers the link lossy and sets the tunnel state to degraded (assuming the tunnel is not down).
-* {props.two} requires two failures so that a single lost packet does not trigger a penalty.
-* {props.two} then immediately sets the tunnel status to degraded and applies a priority penalty.
+- When at least 0.1% or more of tunnel health checks fail in the previous five minutes (with at least two failures), {props.two} considers the link lossy and sets the tunnel state to degraded (assuming the tunnel is not down).
+- {props.two} requires two failures so that a single lost packet does not trigger a penalty.
+- {props.two} then immediately sets the tunnel status to degraded and applies a priority penalty.
 
 ### Down
 
-* When all health checks of at least three samples in the last one second fail, {props.two} immediately transitions the tunnel from healthy or degraded to down, and applies a priority penalty to routes through that tunnel.
-* A down state determination takes precedence over a degraded state determination. This means that a tunnel can only be one of the following: down, degraded, or healthy.
+- When all health checks of at least three samples in the last one second fail, {props.two} immediately transitions the tunnel from healthy or degraded to down, and applies a priority penalty to routes through that tunnel.
+- A down state determination takes precedence over a degraded state determination. This means that a tunnel can only be one of the following: down, degraded, or healthy.
 
 When {props.two} identifies a route that is not healthy, it applies these penalties:
 
-* **Degraded**: Add `500,000` to priority.
-* **Down**: Add `1,000,000` to priority.
+- **Degraded**: Add `500,000` to priority.
+- **Down**: Add `1,000,000` to priority.
 
 The values for failure penalties are intentionally extreme so that they always exceed the priority values assigned during <a href={props.three}>routing configuration</a>.
 
@@ -84,16 +74,15 @@ Tunnels in a degraded state transition to healthy when the failure rate for the 
 {props.two}’s tunnel health check system allows a tunnel to quickly transition from healthy to degraded or down, but tunnel transition occurs slowly from degraded or down to healthy. This scenario is referred to as hysteresis — which is when a system’s output depends on its history of past inputs — and dampens changes to tunnel routing caused by flapping and other intermittent network failures.
 
 :::note[Note]
-
-Cloudflare always attempts to send traffic over available tunnel routes with the highest priority (lowest route value), even when all configured tunnels are in an unhealthy state. 
+Cloudflare always attempts to send traffic over available tunnel routes with the highest priority (lowest route value), even when all configured tunnels are in an unhealthy state.
 :::
 
 ## Example
 
 Consider two tunnels and their associated routing priorities. Remember that lower route values have priority.
 
-* Tunnel 1, route priority `100`
-* Tunnel 2, route priority `200`
+- Tunnel 1, route priority `100`
+- Tunnel 2, route priority `200`
 
 When both tunnels are in a healthy state, routing priority directs traffic exclusively to Tunnel 1 because its route priority of 100 beats that of Tunnel 2. Tunnel 2 does not receive any traffic, except for tunnel health check probes. Endpoint health checks only flow over Tunnel 1 to their destination inside the origin network.
 

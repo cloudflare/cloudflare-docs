@@ -6,12 +6,151 @@ sidebar:
 head:
   - tag: title
     content: Write Cloudflare Workers in TypeScript
-
 ---
+
+import { TabItem, Tabs } from "~/components";
 
 ## TypeScript
 
 TypeScript is a first-class language on Cloudflare Workers. Cloudflare publishes type definitions to [GitHub](https://github.com/cloudflare/workers-types) and [npm](https://www.npmjs.com/package/@cloudflare/workers-types) (`npm install -D @cloudflare/workers-types`). All APIs provided in Workers are fully typed, and type definitions are generated directly from [workerd](https://github.com/cloudflare/workerd), the open-source Workers runtime.
+
+### Generate types that match your Worker's configuration (experimental)
+
+Cloudflare continuously improves [workerd](https://github.com/cloudflare/workerd), the open-source Workers runtime.
+Changes in workerd can introduce JavaScript API changes, thus changing the respective TypeScript types. For example, the [`urlsearchparams_delete_has_value_arg`](/workers/configuration/compatibility-dates/#urlsearchparams-delete-and-has-value-argument) compatibility flag adds optional arguments to some methods, in order to support new additions to the WHATWG URL standard API.
+
+This means the correct TypeScript types for your Worker depend on:
+
+1. Your Worker's [Compatibility Date](/workers/configuration/compatibility-dates/).
+2. Your Worker's [Compatibility Flags](/workers/configuration/compatibility-dates/#compatibility-flags).
+
+For example, if you have `compatibility_flags = ["nodejs_als"]` in your `wrangler.toml`, then the runtime will allow you to use the [`AsyncLocalStorage`](https://nodejs.org/api/async_context.html#class-asynclocalstorage) class in your worker code, but you will not see this reflected in the type definitions in `@cloudflare/workers-types`.
+
+In order to solve this issue, and to ensure that your type definitions are always up-to-date with your compatibility settings, you can dynamically generate the runtime types (as of `wrangler 3.66.0`):
+
+```bash
+npx wrangler types --experimental-include-runtime
+```
+
+This will generate a `d.ts` file and (by default) save it to `.wrangler/types/runtime.d.ts`. You will be prompted in the command's output to add that file to your `tsconfig.json`'s `compilerOptions.types` array.
+
+If you would like to commit the file to git, you can provide a custom path. Here, for instance, the `runtime.d.ts` file will be saved to the root of your project:
+
+```bash
+npx wrangler types --experimental-include-runtime="./runtime.d.ts"
+```
+
+**Note: To ensure that your types are always up-to-date, make sure to run `wrangler types --experimental-include-runtime` after any changes to your config file.**
+
+See [the full list of available flags](/workers/wrangler/commands/#types) for more details.
+
+#### Migrating from `@cloudflare/workers-types` to `wrangler types --experimental-include-runtime`
+
+The `@cloudflare/workers-types` package provides runtime types for each distinct [compatibility date](https://github.com/cloudflare/workerd/tree/main/npm/workers-types#compatibility-dates), which is specified by the user in their `tsconfig.json`. But this package is superseded by the `wrangler types --experimental-include-runtime` command.
+
+Here are the steps to switch from `@cloudflare/workers-types` to using `wrangler types` with the experimental runtime inclusion:
+
+##### Uninstall `@cloudflare/workers-types`
+
+<Tabs> <TabItem label="npm">
+
+```sh
+npm uninstall @cloudflare/workers-types
+```
+
+</TabItem> <TabItem label="yarn">
+
+```sh
+yarn remove @cloudflare/workers-types
+```
+
+</TabItem> <TabItem label="pnpm">
+
+```sh
+pnpm uninstall @cloudflare/workers-types
+```
+
+</TabItem> <TabItem label="bun">
+
+```sh
+bun remove @cloudflare/workers-types
+```
+
+</TabItem> </Tabs>
+
+##### Generate runtime types using wrangler
+
+```bash
+npx wrangler types --experimental-include-runtime
+```
+
+This will generate a `.d.ts` file, saved to `.wrangler/types/runtime.d.ts` by default.
+
+##### Update your `tsconfig.json` to include the generated types
+
+```json
+{
+	"compilerOptions": {
+		"types": ["./.wrangler/types/runtime"]
+	}
+}
+```
+
+Note that if you have specified a custom path for the runtime types file, you should use that in your `compilerOptions.types` array instead of the default path.
+
+##### Update your scripts and CI pipelines
+
+When switching to `wrangler types --experimental-include-runtime`, you'll want to ensure that your development process always uses the most up-to-date types. The main thing to remember here is that - regardless of your specific framework or build tools - you should run the `wrangler types --experimental-include-runtime` command before any development tasks that rely on TypeScript. This ensures your editor and build tools always have access to the latest types.
+
+Most projects will have existing build and development scripts scripts, as well as some type-checking. In the example below, we're adding the `wrangler types --experimental-include-runtime` before the type-checking script in the project:
+
+```json
+{
+	"scripts": {
+		"dev": "existing-dev-command",
+		"build": "-existing-build-command",
+		"type-check": "wrangler types --experimental-include-runtime && tsc"
+	}
+}
+```
+
+In CI, you may have a separate build and test commands. It is best practice to run `wrangler types --experimental-include-runtime` before other CI commands. For example:
+
+<Tabs> <TabItem label="npm">
+
+```yaml
+- run: npm run generate-types
+- run: npm run build
+- run: npm test
+```
+
+</TabItem> <TabItem label="yarn">
+
+```yaml
+- run: yarn generate-types
+- run: yarn build
+- run: yarn test
+```
+
+</TabItem> <TabItem label="pnpm">
+
+```yaml
+- run: pnpm run generate-types
+- run: pnpm run build
+- run: pnpm test
+```
+
+</TabItem> <TabItem label="bun">
+
+```yaml
+- run: bun run generate-types
+- run: bun run build
+- run: bun test
+```
+
+</TabItem> </Tabs>
+
+By integrating the `wrangler types --experimental-include-runtime` command into your workflow this way, you ensure that your development environment, builds, and CI processes always use the most accurate and up-to-date types for your Cloudflare Worker, regardless of your specific framework or tooling choices.
 
 ### Known issues
 
@@ -33,7 +172,7 @@ For more information, refer to [this GitHub issue](https://github.com/cloudflare
 
 ### Resources
 
-* [TypeScript template](https://github.com/cloudflare/workers-sdk/tree/main/templates/worker-typescript)
-* [@cloudflare/workers-types](https://github.com/cloudflare/workers-types)
-* [Runtime APIs](/workers/runtime-apis/)
-* [TypeScript Examples](/workers/examples/?languages=TypeScript)
+- [TypeScript template](https://github.com/cloudflare/workers-sdk/tree/main/templates/worker-typescript)
+- [@cloudflare/workers-types](https://github.com/cloudflare/workers-types)
+- [Runtime APIs](/workers/runtime-apis/)
+- [TypeScript Examples](/workers/examples/?languages=TypeScript)

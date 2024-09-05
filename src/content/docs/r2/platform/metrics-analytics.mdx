@@ -43,17 +43,17 @@ Metrics can be queried (and are retained) for the past 31 days. These datasets r
 
 ## View via the dashboard
 
-Per-database analytics for R2 are available in the Cloudflare dashboard. To view current and historical metrics for a database:
+Per-bucket analytics for R2 are available in the Cloudflare dashboard. To view current and historical metrics for a bucket:
 
 2. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) and select your account.
-3. Go to the [R2 tab](https://dash.cloudflare.com/?to=/:account/workers/r2) and select your bucket.
+3. Go to the [R2 tab](https://dash.cloudflare.com/?to=/:account/r2) and select your bucket.
 4. Select the **Metrics** tab.
 
 You can optionally select a time window to query. This defaults to the last 24 hours.
 
 ## Query via the GraphQL API
 
-You can programmatically query analytics for your R2 databases via the [GraphQL Analytics API](/analytics/graphql-api/). This API queries the same dataset as the Cloudflare dashboard, and supports GraphQL [introspection](/analytics/graphql-api/features/discovery/introspection/).
+You can programmatically query analytics for your R2 buckets via the [GraphQL Analytics API](/analytics/graphql-api/). This API queries the same dataset as the Cloudflare dashboard, and supports GraphQL [introspection](/analytics/graphql-api/features/discovery/introspection/).
 
 ## Examples
 
@@ -70,7 +70,7 @@ query {
 				filter: {
 					datetime_geq: $startDate
 					datetime_leq: $endDate
-					bucketName: $bucketName 
+					bucketName: $bucketName
 				}
 			) {
 				sum {
@@ -78,7 +78,7 @@ query {
 				}
 				dimensions {
 					actionType
-				} 
+				}
 			}
 		}
 	}
@@ -100,7 +100,7 @@ query {
 				filter: {
 					datetime_geq: $startDate
 					datetime_leq: $endDate
-					bucketName: $bucketName 
+					bucketName: $bucketName
 				}
 				orderBy: [datetime_DESC]
 			) {
@@ -112,7 +112,7 @@ query {
 				}
 				dimensions {
 					datetime
-				} 
+				}
 			}
 		}
 	}

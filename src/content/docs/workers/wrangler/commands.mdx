@@ -592,63 +592,190 @@ Interact with a [Vectorize](/vectorize/) vector database.
 
 Creates a new vector index, and provides the binding and name that you will put in your `wrangler.toml` file.
 
-```txt
-wrangler vectorize create <INDEX_NAME> [--dimensions=<NUM_DIMENSIONS>] [--metric=<DISTANCE_METRIC>]
+```sh
+npx wrangler vectorize create <INDEX_NAME> [--dimensions=<NUM_DIMENSIONS>] [--metric=<DISTANCE_METRIC>] [--description=<DESCRIPTION>]
 ```
 
 - `INDEX_NAME` string required
-  - The name of the new index to create. Cannot be changed.
-- `--dimensions` number optional
+  - The name of the new index to create. Must be unique for an account and cannot be changed after creation or reused after the deletion of an index.
+- `--dimensions` number required
   - The vector dimension width to configure the index for. Cannot be changed after creation.
-- `--metric` string optional
+- `--metric` string required
   - The distance metric to use for calculating vector distance. Must be one of `cosine`, `euclidean`, or `dot-product`.
-
-### `get`
-
-Get details about an individual index, including its configuration.
-
-```txt
-wrangler vectorize get <INDEX_NAME>
-```
-
-- `INDEX_NAME` string required
-  - The name of the index to fetch details for.
+- `--description` string optional
+  - A description for your index.
+- `--deprecated-v1` boolean optional
+  - Create a legacy Vectorize index. Please note that legacy Vectorize indexes are on a [deprecation path](/vectorize/reference/transition-vectorize-legacy).
 
 ### `list`
 
 List all Vectorize indexes in your account, including the configured dimensions and distance metric.
 
-```txt
-wrangler vectorize list
+```sh
+npx wrangler vectorize list
 ```
+
+- `--deprecated-v1` boolean optional
+  - List legacy Vectorize indexes. Please note that legacy Vectorize indexes are on a [deprecation path](/vectorize/reference/transition-vectorize-legacy).
+
+### `get`
+
+Get details about an individual index, including its configuration.
+
+```sh
+npx wrangler vectorize get <INDEX_NAME>
+```
+
+- `INDEX_NAME` string required
+  - The name of the index to fetch details for.
+- `--deprecated-v1` boolean optional
+  - Get a legacy Vectorize index. Please note that legacy Vectorize indexes are on a [deprecation path](/vectorize/reference/transition-vectorize-legacy).
+
+### `info`
+
+Get some additional information about an individual index, including the vector count and details about the last processed mutation.
+
+```sh
+npx wrangler vectorize info <INDEX_NAME>
+```
+
+- `INDEX_NAME` string required
+  - The name of the index to fetch details for.
 
 ### `delete`
 
 Delete a Vectorize index.
 
-```txt
-wrangler vectorize delete <INDEX_NAME> [OPTIONS]
+```sh
+npx wrangler vectorize delete <INDEX_NAME> [OPTIONS]
 ```
 
 - `INDEX_NAME` string required
   - The name of the Vectorize index to delete.
 - `--force` boolean optional
   - Skip confirmation when deleting the index (Note: This is not a recoverable operation).
+- `--deprecated-v1` boolean optional
+  - Delete a legacy Vectorize index. Please note that legacy Vectorize indexes are on a [deprecation path](/vectorize/reference/transition-vectorize-legacy).
 
 ### `insert`
 
 Insert vectors into an index.
 
-```txt
-wrangler vectorize insert <INDEX_NAME> [OPTIONS]
+```sh
+npx wrangler vectorize insert <INDEX_NAME> [OPTIONS]
 ```
 
 - `INDEX_NAME` string required
-  - The name of the Vectorize index to delete.
+  - The name of the Vectorize index to upsert vectors in.
+- `--file` string required
+  - A file containing the vectors to insert in newline-delimited JSON (JSON) format.
+- `--batch-size` number optional
+  - The number of vectors to insert at a time (default: `1000`).
+- `--deprecated-v1` boolean optional
+  - Insert into a legacy Vectorize index. Please note that legacy Vectorize indexes are on a [deprecation path](/vectorize/reference/transition-vectorize-legacy).
+
+### `upsert`
+
+Upsert vectors into an index. Existing vectors in the index would be overwritten.
+
+```sh
+npx wrangler vectorize upsert <INDEX_NAME> [OPTIONS]
+```
+
+- `INDEX_NAME` string required
+  - The name of the Vectorize index to upsert vectors in.
 - `--file` string required
   - A file containing the vectors to insert in newline-delimited JSON (JSON) format.
 - `--batch-size` number optional
   - The number of vectors to insert at a time (default: `5000`).
+
+### `query`
+
+Query a Vectorize index for similar vectors.
+
+```sh
+npx wrangler vectorize query <INDEX_NAME> [OPTIONS]
+```
+
+- `INDEX_NAME` string required
+  - The name of the Vectorize index to query.
+- `--vector` array required
+  - Vector against which the Vectorize index is queried.
+- `--top-k` number optional
+  - The number of vectors to query (default: `5`).
+- `--return-values` boolean optional
+  - Enable to return vector values in the response (default: `false`).
+- `--return-metadata` string optional
+  - Enable to return vector metadata in the response. Must be one of `none`, `indexed`, or `all` (default: `none`).
+- `--namespace` string optional
+  - Query response to only include vectors from this namespace.
+- `--filter` string optional
+  - Filter vectors based on this metadata filter. Example: `'{ 'p1': 'abc', 'p2': { '$ne': true }, 'p3': 10, 'p4': false, 'nested.p5': 'abcd' }'`
+
+### `get-vectors`
+
+Fetch vectors from a Vectorize index using the provided ids.
+
+```sh
+npx wrangler vectorize get-vectors <INDEX_NAME> [OPTIONS]
+```
+
+- `INDEX_NAME` string required
+  - The name of the Vectorize index from which vectors need to be fetched.
+- `--ids` array required
+  - List of ids for which vectors must be fetched.
+
+### `delete-vectors`
+
+Delete vectors in a Vectorize index using the provided ids.
+
+```sh
+npx wrangler vectorize delete-vectors <INDEX_NAME> [OPTIONS]
+```
+
+- `INDEX_NAME` string required
+  - The name of the Vectorize index from which vectors need to be deleted.
+- `--ids` array required
+  - List of ids corresponding to the vectors that must be deleted.
+
+### `create-metadata-index`
+
+Enable metadata filtering on the specified property.
+
+```sh
+npx wrangler vectorize create-metadata-index <INDEX_NAME> [OPTIONS]
+```
+
+- `INDEX_NAME` string required
+  - The name of the Vectorize index for which metadata index needs to be created.
+- `--property-name` string required
+  - Metadata property for which metadata filtering should be enabled.
+- `--type` string required
+  - Data type of the property. Must be one of `string`, `number`, or `boolean`.
+
+### `list-metadata-index`
+
+List metadata properties on which metadata filtering is enabled.
+
+```sh
+npx wrangler vectorize list-metadata-index <INDEX_NAME> [OPTIONS]
+```
+
+- `INDEX_NAME` string required
+  - The name of the Vectorize index for which metadata indexes needs to be fetched.
+
+### `delete-metadata-index`
+
+Disable metadata filtering on the specified property.
+
+```sh
+npx wrangler vectorize delete-metadata-index <INDEX_NAME> [OPTIONS]
+```
+
+- `INDEX_NAME` string required
+  - The name of the Vectorize index for which metadata index needs to be disabled.
+- `--property-name` string required
+  - Metadata property for which metadata filtering should be disabled.
 
 ---
 
@@ -745,6 +872,8 @@ As of Wrangler v3.2.0, `wrangler dev` is supported by any Linux distributions pr
   - Specify Wrangler's logging level.
 - `--show-interactive-dev-session` boolean (default: true if the terminal supports interactivity) optional
   - Show the interactive dev session.
+- `--alias` `Array<string>`
+  - Specify modules to alias using [module aliasing](/workers/wrangler/configuration/#module-aliasing).
 
 `wrangler dev` is a way to [locally test](/workers/testing/local-development/) your Worker while developing. With `wrangler dev` running, send HTTP requests to `localhost:8787` and your Worker should execute as expected. You will also see `console.log` messages and exceptions appearing in your terminal.
 
@@ -1404,43 +1533,43 @@ Event notifications is currently in beta. To report bugs or request features, fi
 Create an [event notification](/r2/buckets/event-notifications/) rule for an R2 bucket.
 
 ```txt
-wrangler r2 bucket notification create <NAME> [OPTIONS]
+wrangler r2 bucket notification create <NAME> --event-type <EVENT_TYPE> --queue <QUEUE_NAME> [OPTIONS]]
 ```
 
 - `NAME` string required
   - The name of the R2 bucket to create an event notification rule for.
-- `--event-type` "object-create"|"object-delete" required
+- `EVENT_TYPE` "object-create"|"object-delete" required
   - The [type of event](/r2/buckets/event-notifications/#event-types) that will trigger event notifications.
-- `--queue` string required
+- `QUEUE_NAME` string required
   - The name of the queue that will receive event notification messages.
 - `--prefix` string optional
-  - Specifies the key name prefix that an object must match to trigger event notifications.
+  - Specifies the key name prefix that an object must match to trigger event notifications. The value must be a string. Regular expressions are not supported.
 - `--suffix` string optional
-  - Specifies the key name suffix that an object must match to trigger event notifications.
+  - Specifies the key name suffix that an object must match to trigger event notifications. The value must be a string. Regular expressions are not supported.
 
 ### `notification delete`
 
 Remove a rule from a bucket's [event notification](/r2/buckets/event-notifications/) configuration.
 
 ```txt
-wrangler r2 bucket notification delete <NAME> [OPTIONS]
+wrangler r2 bucket notification delete <NAME> --queue <QUEUE_NAME>
 ```
 
 - `NAME` string required
   - The name of the R2 bucket to delete an event notification rule for.
-- `--queue` string required
+- `QUEUE_NAME` string required
   - The name of the queue that corresponds to the event notification rule.
 
 ### `notification get`
 
-Get the [event notification](/r2/buckets/event-notifications/) configuration for a bucket.
+List the [event notification](/r2/buckets/event-notifications/) configurations for a bucket.
 
 ```txt
 wrangler r2 bucket notification get <NAME>
 ```
 
 - `NAME` string required
-  - The name of the R2 bucket to get event notification configuration for.
+  - The name of the R2 bucket to get event notification configurations for.
 
 ### `sippy enable`
 
@@ -2155,7 +2284,7 @@ wrangler whoami
 
 The `--experimental-versions` flag is required to use the `wrangler versions` commands. You may use the shorthand `--x-versions` flag in place of `--experimental-versions` anywhere it is mentioned. For consistency in Wrangler's output, it is recommended that you use the `--experimental-versions` flag for all commands where it is an option.
 
-The minimum required wrangler version to use these commands is 3.40.0.
+The minimum required Wrangler version to use these commands is 3.40.0.
 
 :::
 
@@ -2272,7 +2401,7 @@ This command is currently in closed beta. Report bugs in [GitHub](https://github
 
 The `--experimental-versions` flag is required to use the `wrangler triggers` commands. You may use the shorthand `--x-versions` flag in place of `--experimental-versions` anywhere it is mentioned. For consistency in Wrangler's output, it is recommended that you use the `--experimental-versions` flag for all commands where it is an option.
 
-The minimum required wrangler version to use these commands is 3.40.0.
+The minimum required Wrangler version to use these commands is 3.40.0.
 
 :::
 
@@ -2592,13 +2721,32 @@ Generate types from bindings and module rules in configuration.
 wrangler types [<PATH>] [OPTIONS]
 ```
 
-- `PATH` string (default: `worker-configuration.d.ts`)
+:::note
 
-  - The path to where the declaration file for your Worker will be written.
-  - The path to the declaration file must have a `d.ts` extension.
+The `--experimental-include-runtime` flag dynamically generates runtime types according to the `compatibility_date` and `compatibility_flags` defined in your [config file](/workers/wrangler/configuration/).
+
+It is a replacement for the [`@cloudflare/workers-types` package](https://www.npmjs.com/package/@cloudflare/workers-types), so that package, if installed, should be uninstalled to avoid any potential conflict.
+
+After running the command, you must add the path of the generated runtime types file to the [`compilerOptions.types` field](https://www.typescriptlang.org/tsconfig/#types) in your project's [tsconfig.json](https://www.typescriptlang.org/docs/handbook/tsconfig-json.html) file.
+
+You may use the shorthand `--x-include-runtime` flag in place of `--experimental-include-runtime` anywhere it is mentioned.
+
+The minimum required Wrangler version to use this command is 3.66.0.
+
+:::
+
+- `PATH` string (default: `./worker-configuration.d.ts`)
+
+  - The path to where **the `Env` types** for your Worker will be written.
+  - The path must have a `d.ts` extension.
 
 - `--env-interface` string (default: `Env`)
+
   - The name of the interface to generate for the environment object.
   - Not valid if the Worker uses the Service Worker syntax.
 
-{/* <!--TODO Add examples of DTS generated output --> */}
+- `--experimental-include-runtime` string optional (default: `./.wrangler/types/runtime.d.ts`)
+  - The path to where the **runtime types** file will be written.
+  - Leave the path blank to use the default option, e.g. `npx wrangler types --x-include-runtime`
+  - A custom path must be relative to the project root, e.g. `./my-runtime-types.d.ts`
+  - A custom path must have a `d.ts` extension.
