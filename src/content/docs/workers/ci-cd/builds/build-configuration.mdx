@@ -14,7 +14,7 @@ You may tell Workers Build System how your application needs to be built and dep
 
 You can configure Cloudflare to automatically build and deploy your Worker when a pull request is merged into a specific branch of your Git repository.
 
-The following options are available:
+Build settings can be found on the Settings page of your Worker. The following options are available:
 
 - **Git account**
   - Set the git account you would like to choose your repository from.
@@ -36,20 +36,16 @@ The following options are available:
 - **Build variable** (Optional)
   - Add variables and secrets accessible only to your build.
 
-## Special Setup
+## Monorepo support
 
-If you have a monothelic repository (monorepo) or use [Wrangler environments](/workers/wrangler/environments/), you can follow the specific set up guide below:
-
-### Monorepo support
-
-You can choose to use a monorepo with Workers. To do so, you must:
+You can choose to use a monorepo (a Git repository that contains multiple project) with Workers. To do so, you must:
 
 1. Connect your monorepo git repository to each of your associated Workers
 2. Set up your build configuration to only deploy to that specific Worker by setting the correct root directory in your build configuration.
 
 Note that when a new commit is detected in the monorepo, all the associated Workers will trigger a new build and deploy.
 
-### Wrangler Environment support
+## Wrangler Environment support
 
 To set up Workers with Wrangler environments:
 

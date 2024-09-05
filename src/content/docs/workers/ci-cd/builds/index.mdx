@@ -1,8 +1,8 @@
 ---
 pcx_content_type: concept
-title: Build System
+title: Builds
 head: []
-description: Leverage Worker's build system to integrate with Git and automatically build and deploy your project when you make a change.
+description: Leverage Workers Builds to integrate with Git and automatically build and deploy your project when you make a change.
 sidebar:
   badge:
     text: Beta
@@ -22,7 +22,7 @@ To set up your Git integration with a Worker:
    :::
 4. **Push a commit** to your repository to trigger your first build and deploy.
 
-If you have a monothelic repository or Wrangler enviornment setup, reference [Special Setup](/workers/ci-cd/build-system/build-configuration/#special-setup).
+If you have a monothelic repository or Wrangler enviornment setup, reference [Build Configuration](/workers/ci-cd/build-system/build-configuration/).
 
 ## Build Details
 
@@ -34,11 +34,11 @@ When a commit is successfully built and deployed, you can also view build detail
 
 In Closed Beta, the following limits are applicable for the build system:
 
-| Metric                | Description                                                                        | Limit   |
-| --------------------- | ---------------------------------------------------------------------------------- | ------- |
-| **Build Minutes**     | The amount of minutes that it takes to build a project.                            | -       |
-| **Concurrent Builds** | Number of builds that run in parallel across an account.                           | 1       |
-| **Build Timeout**     | The amount of minutes that a build can be run before it is interrupted and failed. | 20 mins |
+| Metric                | Description                                                                        | Limit     |
+| --------------------- | ---------------------------------------------------------------------------------- | --------- |
+| **Build Minutes**     | The amount of minutes that it takes to build a project.                            | Unlimited |
+| **Concurrent Builds** | Number of builds that run in parallel across an account.                           | 1         |
+| **Build Timeout**     | The amount of minutes that a build can be run before it is interrupted and failed. | 20 mins   |
 
 ## Pricing
 
