@@ -8,4 +8,69 @@ head:
     content: Get started
 ---
 
-Test
+import { Render, PackageManagers } from "~/components";
+
+:::note
+
+Pipelines is in **public beta**, and any developer with a [paid Workers plan](/workers/platform/pricing/#workers) can start using Pipelines immediately.
+
+Pipelines let you ingest real time streaming data, and store it in R2. By following this guide, you'll create your first Pipeline, connect it to your R2 bucket, and post data to it via HTTP.
+
+:::
+
+## Prerequisites
+
+To use Pipelines, you will need:
+
+<Render file="prereqs" product="workers" />
+
+### 1. Enable Pipelines
+
+TODO
+
+### 2. Install Wrangler
+TODO
+
+## 1. Setup an R2 bucket to use as a destination
+Pipelines is built to ingest data, and store it in an R2 bucket. Create a bucket, following our [Get Started Guide for R2](https://developers.cloudflare.com/r2/get-started/) if you need to. Save the bucket name; you'll need it for the next sep.
+
+## 2. Create a Pipeline
+To create a pipeline using Wrangler, run this command in a shell. Specify the name of your pipeline, as well as the name of the R2 bucket you created in Step 1.
+
+```sh
+npx wrangler pipelines create <PIPELINE-NAME> --r2 <R2-BUCKET-NAME>
+```
+
+Choose a descrpitive name for your Pipeline, related to the type of events you intend to ingest. You cannot change the Pipeline name after you have set it.
+
+TODO: Pipeline name limitations
+
+Once your pipeline is created, you'll receive an HTTP endpoint which you can post data to. You should see output which resembles the below:
+
+```sh
+🌀 Authorizing R2 bucket "<R2-BUCKET-NAME>"
+🌀 Creating pipeline named "<PIPELINE-NAME>"
+✅ Successfully created pipeline <PIPELINE-NAME> with ID <PIPELINE-ID>
+
+You can now send data to your pipeline with:
+  curl "https://<PIPELINE-ID>.pipelines.cloudflare.com/" -d '[{ ...JSON_DATA... }]'
+```
+
+## 3. Post data to your pipeline
+
+Use a curl command in your terminal to post an array of JSON objects to the endpoint you received in Step 1.
+
+```sh
+curl -H "Content-Type:application/json" \
+    -d '[{"account_id":"test", "other_data": "test"},{"account_id":"test","other_data": "test2"}]' \
+    <HTTP-endpoint>
+```
+
+Once the data has been successfully accepted by the Pipeline, you'll receive a success message.
+
+Pipelines handles batching the data, so you can continue posting data to the Pipeline. Once a batch is filled up, the data will be partitioned by date, and written to your R2 bucket.
+
+## 4. Verify in R2
+Navigate to the dashboard for the R2 bucket that you created in step 1. You should see a prefix for today's date. Click through, and you'll see a file created containing the JSON data you sent in Step 3.
+
+By completing this guide, you've got a pipeline, with an HTTP endpoint as a source, and an R2 bucket as a destination.
