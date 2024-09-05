@@ -1,5 +1,5 @@
 ---
-updated: 2024-09-29
+updated: 2024-09-05
 difficulty: Beginner
 content_type: 📝 Tutorial
 pcx_content_type: tutorial
@@ -223,7 +223,7 @@ app.use("*", async (c, next) => {
 });
 ```
 
-You can access the `DATABASE_KEY` environment variable from `c.env.DATABASE_KEY`. Workers run on a [custom JavaScript runtime](https://developers.cloudflare.com/workers/runtime-apis/nodejs/) instead of Node.js, so you cannot use `process.env` to access your environment variables.
+You can access the `DATABASE_KEY` environment variable from `c.env.DATABASE_KEY`. Workers run on a [custom JavaScript runtime](/workers/runtime-apis/) instead of Node.js, so you cannot use `process.env` to access your environment variables.
 
 ### Create product documents
 
