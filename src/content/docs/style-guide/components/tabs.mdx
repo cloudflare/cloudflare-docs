@@ -2,6 +2,8 @@
 title: Tabs
 ---
 
+import { Tabs, TabItem } from '~/components';
+
 This component can help you create a tabbed interface to show related information more efficiently. Use it when there are different ways of getting the same thing done:
 
 - Dashboard / API / Terraform
@@ -22,3 +24,41 @@ import { Tabs, TabItem } from '~/components';
   </TabItem>
 </Tabs>
 ```
+
+## Synchronize Tabs
+
+If you have tabs that follow a particular pattern (Dashboard / API / Terraform), add a `syncKey` parameter that includes a `string` value.
+
+We use the following `syncKey` values in our docs:
+
+- `dashPlusAPI`: Dashboard / API / Terraform
+- `workersExamples`: For different code language tabs in the Workers docs (JavaScript, TypeScript, Python, Rust)
+
+### Example
+
+```mdx live
+import { Tabs, TabItem } from '~/components';
+
+<Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
+
+Dash instructions
+
+</TabItem> <TabItem label="API">
+
+API instructions
+
+</TabItem> </Tabs>
+
+```
+
+Will synchronize with:
+
+<Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
+
+Dash instructions
+
+</TabItem> <TabItem label="API">
+
+API instructions
+
+</TabItem> </Tabs>
