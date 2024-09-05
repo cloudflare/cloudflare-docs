@@ -20,19 +20,13 @@ You can view which APIs are supported using the [Node.js compatability matrix](h
 
 To enable both built-in runtime APIs and polyfills for your Worker, add the [`nodejs_compat_v2`](/workers/configuration/compatibility-dates/#nodejs-compatibility-flag) [compatibility flag](/workers/configuration/compatibility-dates/#nodejs-compatibility-flag) to your `wrangler.toml`:
 
-```toml
----
-header: wrangler.toml
----
+```toml title="wrangler.toml"
 compatibility_flags = [ "nodejs_compat_v2" ]
 ```
 
 To only enable built-in runtime APIs, add the [`nodejs_compat`](/workers/configuration/compatibility-dates/#nodejs-compatibility-flag) [compatibility flag](/workers/configuration/compatibility-dates/#nodejs-compatibility-flag) to your `wrangler.toml`:
 
-```toml
----
-header: wrangler.toml
----
+```toml title="wrangler.toml"
 compatibility_flags = [ "nodejs_compat" ]
 ```
 
