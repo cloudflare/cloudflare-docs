@@ -26,7 +26,7 @@ To continue:
 2. Install [`npm`](https://docs.npmjs.com/getting-started).
 3. Install [`Node.js`](https://nodejs.org/en/). Use a Node version manager like [Volta](https://volta.sh/) or [nvm](https://github.com/nvm-sh/nvm) to avoid permission issues and change Node.js versions. [Wrangler](/workers/wrangler/install-and-update/) requires a Node version of `16.17.0` or later.
 
-## 1. Create a Worker project
+## 1. Create a Worker
 
 :::note 
 
@@ -64,7 +64,9 @@ This will create a new directory, which will include either a `src/index.js` or 
 
 
 
-## 2. Write a class to define a Durable Object
+## 2. Define your Durable Object
+
+TODO - define a DO
 
 A Durable Object has three primary concepts:
 
@@ -147,7 +149,46 @@ HTTP requests received by a Durable Object do not come directly from the Interne
 
 :::
 
-## 3. Instantiate and communicate with a Durable Object
+## 3. Configure Durable Object bindings
+
+[Bindings](/workers/runtime-apis/bindings/) allow your Workers to interact with resources on the Cloudflare developer platform. The Durable Object bindings in your Worker project's `wrangler.toml` will include a binding name (for this guide, use `MY_DURABLE_OBJECT`) and the class name (`MyDurableObject`).
+
+```toml
+[[durable_objects.bindings]]
+name = "MY_DURABLE_OBJECT"
+class_name = "MyDurableObject"
+
+# or
+
+[durable_objects]
+bindings = [
+  { name = "MY_DURABLE_OBJECT", class_name = "MyDurableObject" }
+]
+```
+
+The `[[durable_objects.bindings]]` section contains the following fields:
+
+- `name` - Required. The binding name to use within your Worker.
+- `class_name` - Required. The class name you wish to bind to.
+- `script_name` - Optional. Defaults to the current [environment's](/durable-objects/reference/environments/) Worker code.
+
+## 4. Configure Durable Object classes with migrations
+
+A migration is a mapping process from a class name to a runtime state. You perform a migration when creating a new Durable Object class, or when renaming, deleting or transferring an existing Durable Object class.
+
+Migrations are performed through the `[[migrations]]` configurations key in your `wrangler.toml` file.
+
+The Durable Object migration to create a new Durable Object class will look like the following in your Worker's `wrangler.toml` file:
+
+```toml
+[[migrations]]
+tag = "v1" # Should be unique for each entry
+new_classes = ["MyDurableObject"] # Array of new classes
+```
+
+Refer to [Durable Objects migrations](/durable-objects/reference/durable-objects-migrations/) to learn more about the migration process.
+
+## 5. Access and create Durable Object instances
 
 The `fetch()` handler allows you to instantiate and communicate to a Durable Object from a Worker.
 
@@ -204,46 +245,7 @@ In the code above, you have:
 
 Refer to [Access a Durable Object from a Worker](/durable-objects/best-practices/access-durable-objects-from-a-worker/) to learn more about communicating to a Durable Object.
 
-## 4. Configure Durable Object bindings
-
-[Bindings](/workers/runtime-apis/bindings/) allow your Workers to interact with resources on the Cloudflare developer platform. The Durable Object bindings in your Worker project's `wrangler.toml` will include a binding name (for this guide, use `MY_DURABLE_OBJECT`) and the class name (`MyDurableObject`).
-
-```toml
-[[durable_objects.bindings]]
-name = "MY_DURABLE_OBJECT"
-class_name = "MyDurableObject"
-
-# or
-
-[durable_objects]
-bindings = [
-  { name = "MY_DURABLE_OBJECT", class_name = "MyDurableObject" }
-]
-```
-
-The `[[durable_objects.bindings]]` section contains the following fields:
-
-- `name` - Required. The binding name to use within your Worker.
-- `class_name` - Required. The class name you wish to bind to.
-- `script_name` - Optional. Defaults to the current [environment's](/durable-objects/reference/environments/) Worker code.
-
-## 5. Configure Durable Object classes with migrations
-
-A migration is a mapping process from a class name to a runtime state. You perform a migration when creating a new Durable Object class, or when renaming, deleting or transferring an existing Durable Object class.
-
-Migrations are performed through the `[[migrations]]` configurations key in your `wrangler.toml` file.
-
-The Durable Object migration to create a new Durable Object class will look like the following in your Worker's `wrangler.toml` file:
-
-```toml
-[[migrations]]
-tag = "v1" # Should be unique for each entry
-new_classes = ["MyDurableObject"] # Array of new classes
-```
-
-Refer to [Durable Objects migrations](/durable-objects/reference/durable-objects-migrations/) to learn more about the migration process.
-
-## 6. Develop a Durable Object Worker locally
+## 6. Test locally
 
 To test your Durable Object locally, run [`wrangler dev`](/workers/wrangler/commands/#dev):
 
@@ -253,7 +255,7 @@ npx wrangler dev
 
 In your console, you should see a`Hello world` string returned by the Durable Object.
 
-## 7. Deploy your Durable Object Worker
+## 7. Deploy globally
 
 To deploy your Durable Object Worker:
 
@@ -269,6 +271,6 @@ By finishing this tutorial, you have successfully created, tested and deployed a
 
 ### Next steps
 
-- [Access a Durable Object from a Worker](/durable-objects/best-practices/access-durable-objects-from-a-worker/)
-- [Create Durable Object stubs](/durable-objects/best-practices/create-durable-object-stubs-and-send-requests/)
-- [Miniflare](https://github.com/cloudflare/workers-sdk/tree/main/packages/miniflare) - Helpful tools for mocking and testing your Durable Objects.
+* [Access a Durable Object from a Worker](/durable-objects/best-practices/access-durable-objects-from-a-worker/)
+* [Create Durable Object stubs](/durable-objects/best-practices/create-durable-object-stubs-and-send-requests/)
+* [Miniflare](https://github.com/cloudflare/workers-sdk/tree/main/packages/miniflare) - Helpful tools for mocking and testing your Durable Objects.
