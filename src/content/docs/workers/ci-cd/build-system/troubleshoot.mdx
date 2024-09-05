@@ -16,6 +16,8 @@ Currently in Closed Beta, we are working on patching the following issues:
 - **Branch name:** Currently in Beta, only branches named ‘Main’ can generate a build.
 - **Hardcoded build environment variables:** In the Build Details view, the build environment variables listed are not your own, they are hardcoded. We will be removing the hardcoding soon.
 - **Deleted API Keys listed:** In build configurations, you may see deleted API Keys still appear in the list of selectable API Keys.
-- **Disconnect Repository when deleting a Worker:** It is advised to first disconnect the associated git repository in 'Settings > Build' before deleting the Worker to avoid complications when reusing that repository in the future.
+- **Disconnect repository when deleting a Worker:** It is advised to first disconnect the associated git repository in 'Settings > Build' before deleting the Worker to avoid complications when reusing that repository in the future.
+- **Slow intialization time:** Our initialization times can be slow or inconsistent at the moment, we are working on patching this issue. If you are experiencing long initialization times, please try cancelling the build and triggering a new deployment.
+- **Wrangler.toml and Workers dashboard project name mismatch:** When you deploy a Worker that has a different name on the dashboard from its Wrangler.toml, then the project will build in the Worker you made the git connection on but deploy to a Worker with the same name as the one specified in the Wrangler.toml. To avoid this issue, please ensure that the project name in the Wrangler.toml matches the project name on the dashboard.
 
 If you discover additional issues, please notify us in the Closed Beta Discord channel.
