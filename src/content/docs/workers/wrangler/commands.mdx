@@ -1787,14 +1787,9 @@ wrangler whoami
 
 ## `versions`
 
-[Versions](/workers/configuration/versions-and-deployments/#versions) are currently in beta. Report bugs in [GitHub](https://github.com/cloudflare/workers-sdk/issues/new/choose).
 
-:::caution
-
-The `--experimental-versions` flag is required to use the `wrangler versions` commands. You may use the shorthand `--x-versions` flag in place of `--experimental-versions` anywhere it is mentioned. For consistency in Wrangler's output, it is recommended that you use the `--experimental-versions` flag for all commands where it is an option.
-
-The minimum required Wrangler version to use these commands is 3.40.0.
-
+:::note
+The minimum required wrangler version to use these commands is 3.40.0. For versions before 3.73.0, you will need to add the `--x-versions` flag.
 :::
 
 ### `upload`
@@ -1802,11 +1797,9 @@ The minimum required Wrangler version to use these commands is 3.40.0.
 Upload a new [version](/workers/configuration/versions-and-deployments/#versions) of your Worker that is not deployed immediately.
 
 ```txt
-wrangler versions upload [OPTIONS] --experimental-versions
+wrangler versions upload [OPTIONS]
 ```
 
-- `--experimental-versions` string required
-  - Required for `wrangler versions` commands. Can be replaced with `--x-versions`.
 - `--tag` string optional
   - Add a version tag. Accepts empty string.
 - `--message` string optional
@@ -1819,20 +1812,18 @@ wrangler versions upload [OPTIONS] --experimental-versions
 Deploy a previously created [version](/workers/configuration/versions-and-deployments/#versions) of your Worker all at once or create a [gradual deployment](/workers/configuration/versions-and-deployments/gradual-deployments/) to incrementally shift traffic to a new version by following an interactive prompt.
 
 ```txt
-wrangler versions deploy [OPTIONS] --experimental-versions
+wrangler versions deploy [OPTIONS]
 ```
 
-- `--experimental-versions` string required
-  - Required for `wrangler versions` commands. Can be replaced with `--x-versions`.
 - `--name` string optional
   - Perform on a specific Worker rather than inheriting from `wrangler.toml`.
 
 :::note
 
-The non-interactive version of this prompt is: `wrangler versions deploy version-id-1@percentage-1% version-id-2@percentage-2 -y --experimental-versions`
+The non-interactive version of this prompt is: `wrangler versions deploy version-id-1@percentage-1% version-id-2@percentage-2 -y`
 
 For example:
-`wrangler versions deploy 095f00a7-23a7-43b7-a227-e4c97cab5f22@10%   1a88955c-2fbd-4a72-9d9b-3ba1e59842f2@90% -y --experimental-versions`
+`wrangler versions deploy 095f00a7-23a7-43b7-a227-e4c97cab5f22@10%   1a88955c-2fbd-4a72-9d9b-3ba1e59842f2@90% -y`
 
 :::
 
@@ -1841,11 +1832,9 @@ For example:
 Retrieve details for the 10 most recent versions. Details include `Version ID`, `Created on`, `Author`, `Source`, and optionally, `Tag` or `Message`.
 
 ```txt
-wrangler versions list [OPTIONS] --experimental-versions
+wrangler versions list [OPTIONS]
 ```
 
-- `--experimental-versions` string required
-  - Required for `wrangler versions` commands. Can be replaced with `--x-versions`.
 - `--name` string optional
   - Perform on a specific Worker rather than inheriting from `wrangler.toml`.
 
@@ -1854,11 +1843,9 @@ wrangler versions list [OPTIONS] --experimental-versions
 Create or replace a secret for a Worker. Creates a new [version](/workers/configuration/versions-and-deployments/#versions) with modified secrets without [deploying](/workers/configuration/versions-and-deployments/#deployments) the Worker.
 
 ```txt
-wrangler versions secret put <KEY> [OPTIONS] --experimental-versions
+wrangler versions secret put <KEY> [OPTIONS]
 ```
 
-- `--experimental-versions` string required
-  - Required for `wrangler versions` commands. Can be replaced with `--x-versions`.
 - `KEY` string required
   - The variable name for this secret to be accessed in the Worker.
 - `--name` string optional
@@ -1871,11 +1858,9 @@ wrangler versions secret put <KEY> [OPTIONS] --experimental-versions
 Delete a secret for a Worker. Creates a new [version](/workers/configuration/versions-and-deployments/#versions) with modified secrets without [deploying](/workers/configuration/versions-and-deployments/#deployments) the Worker.
 
 ```txt
-wrangler versions delete <KEY> [OPTIONS] --experimental-versions
+wrangler versions delete <KEY> [OPTIONS]
 ```
 
-- `--experimental-versions` string required
-  - Required for `wrangler versions` commands. Can be replaced with `--x-versions`.
 - `KEY` string required
   - The variable name for this secret to be accessed in the Worker.
 - `--name` string optional
@@ -1888,11 +1873,9 @@ wrangler versions delete <KEY> [OPTIONS] --experimental-versions
 Upload multiple secrets for a Worker at once. Creates a new [version](/workers/configuration/versions-and-deployments/#versions) with modified secrets without [deploying](/workers/configuration/versions-and-deployments/#deployments) the Worker.
 
 ```txt
-wrangler versions secret bulk <FILENAME> [OPTIONS] --experimental-versions
+wrangler versions secret bulk <FILENAME> [OPTIONS]
 ```
 
-- `--experimental-versions` string required
-  - Required for `wrangler versions` commands. Can be replaced with `--x-versions`.
 - `FILENAME` string optional
   - The JSON file containing key-value pairs to upload as secrets, in the form `{"SECRET_NAME": "secret value", ...}`.
   - If omitted, Wrangler expects to receive input from `stdin` rather than a file.- `--name` string optional
@@ -1904,14 +1887,9 @@ wrangler versions secret bulk <FILENAME> [OPTIONS] --experimental-versions
 
 ## `triggers`
 
-This command is currently in closed beta. Report bugs in [GitHub](https://github.com/cloudflare/workers-sdk/issues/new/choose).
 
-:::caution
-
-The `--experimental-versions` flag is required to use the `wrangler triggers` commands. You may use the shorthand `--x-versions` flag in place of `--experimental-versions` anywhere it is mentioned. For consistency in Wrangler's output, it is recommended that you use the `--experimental-versions` flag for all commands where it is an option.
-
-The minimum required Wrangler version to use these commands is 3.40.0.
-
+:::note
+The minimum required wrangler version to use these commands is 3.40.0. For versions before 3.73.0, you will need to add the `--x-versions` flag.
 :::
 
 ### `deploy`
@@ -1919,74 +1897,29 @@ The minimum required Wrangler version to use these commands is 3.40.0.
 Apply changes to triggers ([Routes or domains](/workers/configuration/routing/) and [Cron Triggers](/workers/configuration/cron-triggers/)) when using [`wrangler versions upload`](/workers/wrangler/commands/#upload).
 
 ```txt
-wrangler triggers deploy [OPTIONS] --experimental-versions
+wrangler triggers deploy [OPTIONS]
 ```
 
-- `--experimental-versions` string required
-  - Required for `wrangler versions` commands. Can be replaced with `--x-versions`.
 - `--name` string optional
   - Perform on a specific Worker rather than inheriting from `wrangler.toml`.
 
-\--
+---
 
 ## `deployments`
 
 [Deployments](/workers/configuration/versions-and-deployments/#deployments) track the version(s) of your Worker that are actively serving traffic.
 
-:::note
-
-Deployments are currently in beta. Report bugs in [GitHub](https://github.com/cloudflare/workers-sdk/issues/new/choose).
-
-:::
-
-### `view`
-
-Retrieve details for the specified [deployment](/workers/configuration/versions-and-deployments/#deployments), or the latest if no ID is provided. Details include `Deployment ID`, `Author`, `Source`, `Created on`, and bindings. Where applicable, details also include rollback information and a `Message` if one was provided on a [rollback](/workers/configuration/versions-and-deployments/rollbacks/).
-
-```txt
-wrangler deployments view [OPTIONS]
-```
-
-- `DEPLOYMENT_ID` string optional
-  - The ID of the deployment you wish to view.
-- `--name` string optional
-  - Perform on a specific Worker rather than inheriting from `wrangler.toml`.
-
 ### `list`
 
-Retrieve details for the 10 most recent deployments. Details include `Deployment ID`, `Created on`, `Author`, `Source`, and an indication of which deployment is `Active`. Where applicable, details also include rollback information and a `Message` if one was provided on a rollback.
-
-```txt
-wrangler deployments list [OPTIONS]
-```
-
-- `--name` string optional
-  - Perform on a specific Worker rather than inheriting from `wrangler.toml`.
-
 :::note
-
-`Deployment ID` will be changed to `Version ID` in a future version of Wrangler. To learn more, refer to [Versions & deployments](/workers/configuration/versions-and-deployments).
-
+The minimum required wrangler version to use these commands is 3.40.0. For versions before 3.73.0, you will need to add the `--x-versions` flag.
 :::
-
-:::note
-
-The `--experimental-versions` flag is required to use the new commands below. You may use the shorthand `--x-versions` flag in place of `--experimental-versions` anywhere it is mentioned. For consistency in Wrangler's output, it is recommended that you use the `--experimental-versions` flag for all commands where it is an option.
-
-The minimum required wrangler version to use these commands is 3.40.0.
-:::
-
-### `list --experimental-versions`
 
 Retrieve details for the 10 most recent [deployments](/workers/configuration/versions-and-deployments/#deployments). Details include `Created on`, `Author`, `Source`, an optional `Message`, and metadata about the `Version(s)` in the deployment.
 
 ```txt
-wrangler deployments list [OPTIONS] --experimental-versions
+wrangler deployments list [OPTIONS]
 ```
-
-- `--experimental-versions` string required
-
-  - Required for version commands. Can be replaced with `--x-versions`.
 
 - `--name` string optional
   - Perform on a specific Worker rather than inheriting from `wrangler.toml`.
@@ -1996,54 +1929,22 @@ wrangler deployments list [OPTIONS] --experimental-versions
 Retrieve details for the most recent deployment. Details include `Created on`, `Author`, `Source`, an optional `Message`, and metadata about the `Version(s)` in the deployment.
 
 ```txt
-wrangler deployments status --experimental-versions
+wrangler deployments status
 ```
-
-- `--experimental-versions` string required
-
-  - Required for version commands. Can be replaced with `--x-versions`.
 
 - `--name` string optional
   - Perform on a specific Worker rather than inheriting from `wrangler.toml`.
 
 ## `rollback`
 
-:::note
-
-[Rollbacks](/workers/configuration/versions-and-deployments/rollbacks/) is currently in open beta. Report bugs in [GitHub](https://github.com/cloudflare/workers-sdk/issues/new/choose).
-
-:::
-
-[Roll back](/workers/configuration/versions-and-deployments/rollbacks/) to a specified [version](/workers/configuration/versions-and-deployments/#versions) by ID, or to the previous version if no ID is provided. The `rollback` command will prompt you for confirmation of the rollback. On confirmation, you will be prompted to provide an optional rollback message.
-
-There are limitations on which versions you can rollback to. Refer to [Rollbacks Limits](/workers/configuration/versions-and-deployments/rollbacks/#limits) for more information.
-
 :::caution
-
 A rollback will immediately create a new deployment with the specified version of your Worker and become the active deployment across all your deployed routes and domains. This change will not affect work in your local development environment.
 :::
 
-### `rollback`
-
 ```txt
-wrangler rollback [<DEPLOYMENT_ID>] [OPTIONS]
+wrangler rollback [<VERSION_ID>] [OPTIONS]
 ```
 
-- `DEPLOYMENT_ID` string optional
-  - The ID of the deployment you wish to roll back to.
-- `--name` string optional
-  - Perform on a specific Worker rather than inheriting from `wrangler.toml`.
-- `--message` string optional
-  - Add message for rollback. Accepts empty string. When specified, interactive prompts for rollback confirmation and message are skipped.
-
-### `rollback --experimental-versions`
-
-```txt
-wrangler rollback [<VERSION_ID>] [OPTIONS] --experimental-versions
-```
-
-- `--experimental-versions` string required
-  - Required for version commands. Can be replaced with `--x-versions`.
 - `VERSION_ID` string optional
   - The ID of the version you wish to roll back to. If not supplied, the `rollback` command defaults to the version uploaded before the latest version.
 - `--name` string optional
