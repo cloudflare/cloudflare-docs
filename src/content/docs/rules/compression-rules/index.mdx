@@ -31,7 +31,7 @@ Alternatively, follow the instructions in the following pages to get started:
 
 ## Availability
 
-Compression Rules are available to Enterprise customers.
+Compression Rules are available in all Cloudflare plans.
 
 <FeatureTable id="rules.compression_rules" />
 
@@ -47,7 +47,7 @@ The following fields are commonly used in expressions of compression rules:
 
 ## Important remarks
 
-- If there is a match for a compression rule but the client does not support any of the compression algorithms configured in the rule (according to the provided `Accept-Encoding` request header), the response sent to the client will not be compressed.
+- If there is a match for a compression rule but the client does not support any of the compression algorithms configured in the rule (according to the provided `accept-encoding` request header), the response sent to the client will not be compressed.
 
 - If there is a match for a compression rule but the response sent from the origin server contains a `cache-control: no-transform` HTTP header, the compression rule will not perform any changes to the response.
 

@@ -1108,18 +1108,18 @@
       "properties": {
         "availability": {
           "title": "Availability",
-          "summary": "Enterprise-only",
-          "free": "No",
-          "pro": "No",
-          "biz": "No",
+          "summary": "Available on all plans",
+          "free": "Yes",
+          "pro": "Yes",
+          "biz": "Yes",
           "ent": "Yes"
         },
         "num_rules": {
           "title": "Number of rules",
-          "free": 0,
-          "pro": 0,
-          "biz": 0,
-          "ent": 10
+          "free": 10,
+          "pro": 25,
+          "biz": 50,
+          "ent": 125
         }
       }
     },
@@ -2198,7 +2198,7 @@
           "biz": "Yes",
           "ent": "Yes"
         }
-      }  
+      }
     },
     "tcp_turbo": {
       "title": "TCP Turbo",
