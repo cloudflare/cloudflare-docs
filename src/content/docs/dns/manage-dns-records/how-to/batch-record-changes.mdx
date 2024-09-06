@@ -6,7 +6,9 @@ sidebar:
 
 ---
 
-Cloudflare allows you to apply several changes to your zone records at the same time. You can use the Dashboard to delete or edit DNS records in bulk, or perform further batched operations via API.
+import { GlossaryTooltip } from "~/components";
+
+Cloudflare allows you to apply several changes to your zone records in just one action. You can use the Dashboard to delete or update the <GlossaryTooltip term="proxy status">proxy status</GlossaryTooltip> of DNS records in bulk, or perform further batched operations via API.
 
 ## Availability and limits
 
@@ -14,7 +16,8 @@ Batch DNS record changes is available on all plans.
 
 The number of records that you can operate with in one action depends on your zone plan:
 
-- Free: 200
+- Free zones created before `2024-09-01 00:00:00 UTC`: 1,000
+- Free zones created on or after `2024-09-01 00:00:00 UTC`: 200
 - Pro: 3,500
 - Businees: 3,500
 - Enterprise: 3,500
@@ -23,7 +26,7 @@ The number of records that you can operate with in one action depends on your zo
 
 ## Use the dashboard
 
-### Edit records in bulk
+### Edit proxy status in bulk
 
 Record types callout
 
