@@ -1,0 +1,71 @@
+---
+pcx_content_type: configuration
+title: Custom Costs
+sidebar:
+  order: 3
+head: []
+description: Override default or public model costs on a per-request basis.
+---
+
+import { TabItem, Tabs } from "~/components";
+
+AI Gateway allows you to set custom costs at the request level, providing flexibility for users with negotiated pricing or special agreements. By using this feature, the cost metrics can accurately reflect your unique pricing, overriding the default or public model costs.
+
+:::note[Note]
+
+The cost metric is an **estimation** based on the number of tokens sent and received in requests. While this metric can help you monitor and predict cost trends, refer to your provider’s dashboard for the most **accurate** cost details.
+
+Providers may add new models or change pricing. If you believe a cost is out of date or you are using a model that does not yet have costs supported, please let us know through Discord/your account team what models you’d like to see added.
+
+:::
+
+## Custom cost
+
+To add custom costs to your API requests, use the `cf-aig-custom-cost` header. This header enables you to specify the cost per token for both input (tokens sent) and output (tokens received).
+
+- **per_token_in**: The negotiated input token cost (per token).
+- **per_token_out**: The negotiated output token cost (per token).
+
+There is no limit to the number of decimal places you can include, ensuring precise cost calculations, regardless of how small the values are.
+
+Custom costs will appear in the logs with an underline, making it easy to identify when custom pricing has been applied.
+
+In this example, if you have a negotiated price of $1 per million input tokens and $2 per million output tokens, include the `cf-aig-custom-cost` header as shown below.
+
+<Tabs syncKey="dashPlusAPI">
+  <TabItem label="Example">
+
+```bash title="Request with custom cost"
+curl https://gateway.ai.cloudflare.com/v1/{{account_id}}/{{gateway_id}}/openai/chat/completions \
+  --header 'Authorization: Bearer $TOKEN' \
+  --header 'Content-Type: application/json' \
+  --header 'cf-aig-custom-cost: {{"per_token_in":0.000001,"per_token_out":0.000002}}' \
+  --data ' {{
+        "model": "gpt-4o-mini",
+        "messages": [
+          {{
+            "role": "user",
+            "content": "When is Cloudflare’s Birthday Week?"
+          }}
+        ]
+      }}'
+```
+
+</TabItem>
+</Tabs>
+
+## Costs that we do not support
+
+Currently, we are unable to support custom costs for the following services:
+
+- OpenAI:
+  - Whisper
+  - DALL·E 3
+  - Threads
+  - Assistants
+  - Files
+  - chat/completions
+  - OpenAI Moderations: The moderation endpoint is free for most developers. For higher accuracy, try splitting text into chunks under 2,000 characters. If moderations do cost you, you can overwrite it with custom costs.
+- Hugging Face
+- AWS Bedrock
+- Google Vertex AI
