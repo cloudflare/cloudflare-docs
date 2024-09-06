@@ -2115,12 +2115,11 @@ wrangler pages secret bulk [<FILENAME>] [OPTIONS]
 
   - The name of your Pages project.
 
----
-
 ## `pipelines`
 :::note
 
 Pipelines is currently in open beta. Report Pipelines bugs in [GitHub](https://github.com/cloudflare/workers-sdk/issues/new/choose).
+
 :::
 
 Manage your [Pipelines](/pipelines/) configurations.
@@ -2148,9 +2147,9 @@ wrangler pipelines create <name> --r2 <r2-bucket-name> [OPTIONS]
 - `--compression` string optional
 	- Type of compression to apply to output files. Choices: "none", "gzip", "deflate"
 - `--filepath` string optional
-	- The path to store files in the destination bucket. Defaults to event_date=${date}/hr=${hr}
+	- The path to store files in the destination bucket. Defaults to `event_date=${date}/hr=${hr}`
 - `--filename` string optional
-	- The name of the file in the bucket. Must contain "${slug}". File extension is optional. Defaults to ${slug}-${hr}.json
+	- The name of the file in the bucket. Must contain `${slug}`. File extension is optional. Defaults to `${slug}-${hr}.json`
 
 ### `update`
 
@@ -2175,9 +2174,9 @@ wrangler pipelines create <name> [OPTIONS]
 - `--compression` string optional
 	- Type of compression to apply to output files. Choices: "none", "gzip", "deflate"
 - `--filepath` string optional
-	- The path to store files in the destination bucket. Defaults to event_date=${date}/hr=${hr}
+	- The path to store files in the destination bucket. Defaults to `event_date=${date}/hr=${hr`}`
 - `--filename` string optional
-	- The name of the file in the bucket. Must contain "${slug}". File extension is optional. Defaults to ${slug}-${hr}.json
+	- The name of the file in the bucket. Must contain `${slug}`. File extension is optional. Defaults to `${slug}-${hr}.json`
 
 ### `delete`
 
@@ -2187,6 +2186,9 @@ Deletes an existing pipeline
 wrangler pipelines delete <name> [OPTIONS]
 ```
 
+- `name` string required
+	- The name of the pipeline to delete
+
 ### `list`
 
 Lists all pipelines in your account.
@@ -2194,7 +2196,6 @@ Lists all pipelines in your account.
 ```txt
 wrangler pipelines list [OPTIONS]
 ```
-
 
 ## `queues`
 
