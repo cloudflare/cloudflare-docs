@@ -134,15 +134,24 @@ Deploy your Worker to Cloudflare to ensure that everything is set up correctly:
 npm run deploy
 ```
 
-- Login to your [Cloudflare dashboard](https://dash.cloudflare.com/).
-- Select the _integrations_ tab and click on the _Fauna_ integration.
-  ![Selecting the fauna integration](~/assets/images/workers/tutorials/store-data-with-fauna/integrate_fauna.png).
-- Login to your Fauna account.
-- Select the Fauna database you created earlier.
-- Select `server` role as your database role.
-- Select _Finish_.
-- Navigate to settings tab and select _Variables_. Notice that a new variable `DATABASE_KEY`
-  is added to your Worker.
+1.  Login to your [Cloudflare dashboard](https://dash.cloudflare.com/).
+
+2.  Select the **Integrations** tab and click on the **Fauna** integration.
+
+        ![Selecting the fauna integration](~/assets/images/workers/tutorials/store-data-with-fauna/integrate_fauna.png).
+
+3.  Login to your Fauna account.
+
+4.  Select the Fauna database you created earlier.
+
+5.  Select `server` role as your database role.
+
+6.  Enter `DATABASE_KEY` as the **Secret Name**.
+
+7.  Select **Finish**.
+
+8.  Navigate to **Settings** tab and select **Variables**. Notice that a new variable `DATABASE_KEY`
+    is added to your Worker.
 
 The integration creates a new Fauna authentication key and stores the key's secret in the Worker's `DATABASE_KEY` secret. The deployed Worker uses this key.
 
