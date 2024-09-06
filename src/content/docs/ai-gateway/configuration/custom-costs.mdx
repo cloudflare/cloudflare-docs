@@ -1,6 +1,6 @@
 ---
 pcx_content_type: configuration
-title: Custom Costs
+title: Custom costs
 sidebar:
   order: 3
 head: []
@@ -53,19 +53,3 @@ curl https://gateway.ai.cloudflare.com/v1/{{account_id}}/{{gateway_id}}/openai/c
 
 </TabItem>
 </Tabs>
-
-## Costs that we do not support
-
-Currently, we are unable to support custom costs for the following services:
-
-- OpenAI:
-  - Whisper
-  - DALL·E 3
-  - Threads
-  - Assistants
-  - Files
-  - chat/completions
-  - OpenAI Moderations: The moderation endpoint is free for most developers. For higher accuracy, try splitting text into chunks under 2,000 characters. If moderations do cost you, you can overwrite it with custom costs.
-- Hugging Face
-- AWS Bedrock
-- Google Vertex AI
