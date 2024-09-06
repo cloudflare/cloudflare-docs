@@ -360,10 +360,10 @@
       "properties": {
         "availability": {
           "title": "Availability",
-          "summary": "Enterprise-only",
-          "free": "No",
-          "pro": "No",
-          "biz": "No",
+          "summary": "Available on all plans",
+          "free": "Yes",
+          "pro": "Yes",
+          "biz": "Yes",
           "ent": "Yes"
         }
       }
