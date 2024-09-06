@@ -6,7 +6,7 @@ description: Breakout traffic allows you to define which applications should
   bypass Cloudflare’s security filtering.
 ---
 
-import { Render } from "~/components";
+import { Render, TabItem, Tabs } from "~/components";
 
 Breakout traffic allows you to define which applications should bypass Cloudflare’s security filtering, and go directly to the Internet. It works via DNS requests inspection. This means that if your network is caching DNS requests, Breakout traffic will only take effect after you cache entries expire and your client issues a new DNS request that the Magic WAN Connector can detect. This can take several minutes.
 
@@ -39,6 +39,8 @@ Refer to [Traffic steering](/magic-wan/reference/traffic-steering/) to learn how
 
 You need to configure Breakout traffic for each of your existing sites, as it is a per-site configuration.
 
+<Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
+
 <Render
 	file="connector/app-aware-policies/add-app"
 	params={{ one: "Breakout traffic" }}
@@ -48,6 +50,15 @@ You need to configure Breakout traffic for each of your existing sites, as it is
 7. Select **Add applications**.
 
 The traffic for that application will now go directly to the Internet and bypass Cloudflare's filtering.
+
+</TabItem> <TabItem label="API">
+
+<Render file="connector/account-id-api-key" />
+
+- This is API
+- this is other
+
+</TabItem> </Tabs>
 
 ## Delete an application
 
