@@ -104,12 +104,12 @@ To disable Speculation, set `value:` to `"off"`.
 
 ## Caveats
 
-Since prefetch responses are not guaranteed to be rendered by the browser, Speculation includes two safeguards to minimize the risk of [unsafe prefetching](https://developer.mozilla.org/en-US/docs/Web/API/Speculation_Rules_API#unsafe_prefetching): 
+- Since prefetch responses are not guaranteed to be rendered by the browser, Speculation includes two safeguards to minimize the risk of [unsafe prefetching](https://developer.mozilla.org/en-US/docs/Web/API/Speculation_Rules_API#unsafe_prefetching): 
 
-- Speculation will not prefetch on routes that run Workers. Without this safeguard, prefetch requests could inadvertently run Worker logic that assumes the incoming request is a normal (that is, not a prefetch) request. An example of this could be an incrementing page view counter running in a Worker. A page view counter should not increment if the page is not actually rendered in the browser.
+  - Speculation will not prefetch on routes that run Workers. Without this safeguard, prefetch requests could inadvertently run Worker logic that assumes the incoming request is a normal (that is, not a prefetch) request. An example of this could be an incrementing page view counter running in a Worker. A page view counter should not increment if the page is not actually rendered in the browser.
 
-- Prefetch requests will never reach origin servers. Prefetch requests only serve content that is stored in Cloudflare’s Cache. If the content is not in Cache, the prefetch request will not continue to origin servers. Without this safeguard, origin server state could be modified despite the prefetch response not being rendered in the browser. An example of this could be a prefetch `GET` request to a sign-out URL inadvertently triggering a sign-out action on the server.
+  - Prefetch requests will never reach origin servers. Prefetch requests only serve content that is stored in Cloudflare’s Cache. If the content is not in Cache, the prefetch request will not continue to origin servers. Without this safeguard, origin server state could be modified despite the prefetch response not being rendered in the browser. An example of this could be a prefetch `GET` request to a sign-out URL inadvertently triggering a sign-out action on the server.
 
-If origin server responses include the `Speculation-Rules` header, it will not be overriden.
+- If origin server responses include the `Speculation-Rules` header, it will not be overridden.
 
-
+- Speculation will not work with restrictive [Content Security Policy](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Security-Policy/script-src) configurations using `strict-dynamic` or `nonce-{hash}` attributes.
