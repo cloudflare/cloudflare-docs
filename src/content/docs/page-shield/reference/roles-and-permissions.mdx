@@ -6,32 +6,31 @@ sidebar:
 head: []
 description: User roles and API token permissions required to access and
   configure Page Shield.
-
 ---
 
-import { TabItem, Tabs } from "~/components"
+import { TabItem, Tabs } from "~/components";
 
 Cloudflare users with the following [roles](/fundamentals/setup/manage-members/roles/) have access to Page Shield in the Cloudflare dashboard:
 
-* Administrator
-* Super Administrator - All Privileges
-* Page Shield
-* Page Shield Read *(read-only access)*
-* Domain Page Shield
-* Domain Page Shield Read *(read-only access)*
+- Administrator
+- Super Administrator - All Privileges
+- Page Shield
+- Page Shield Read _(read-only access)_
+- Domain Page Shield
+- Domain Page Shield Read _(read-only access)_
 
 ## API token permissions
 
 To interact with the [Page Shield API](/page-shield/reference/page-shield-api/) you need an API token with one of the following [permissions](/fundamentals/api/reference/permissions/):
 
-<Tabs> <TabItem label="Dashboard">
+<Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
 
-* Page Shield > Edit
-* Page Shield > Read *(read-only access)*
+- Page Shield > Edit
+- Page Shield > Read _(read-only access)_
 
 </TabItem> <TabItem label="API">
 
-* Page Shield Write
-* Page Shield Read *(read-only access)*
+- Page Shield Write
+- Page Shield Read _(read-only access)_
 
 </TabItem> </Tabs>

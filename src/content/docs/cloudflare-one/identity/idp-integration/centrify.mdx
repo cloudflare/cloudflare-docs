@@ -3,7 +3,6 @@ pcx_content_type: how-to
 title: Centrify
 sidebar:
   order: 7
-
 ---
 
 Centrify secures access to infrastructure, DevOps, cloud, and other modern enterprise so you can prevent the number one cause of breaches: privileged access abuse.
@@ -30,7 +29,7 @@ Centrify secures access to infrastructure, DevOps, cloud, and other modern enter
 
 9. Enter a strong application secret on the **Trust** section.
 
-10. Under **Service Provider Configuration** enter your application’s authentication domain as the resource application URL.
+10. Under **Service Provider Configuration** enter your application's authentication domain as the resource application URL.
 
 11. Under **Authorized Redirect URIs**, select **Add**.
 
@@ -48,10 +47,10 @@ Centrify secures access to infrastructure, DevOps, cloud, and other modern enter
 
 14. Copy the following values:
 
-* **Client ID**
-* **Client Secret**
-* **OpenID Connect Issuer URL**
-* **Application ID** from the **Settings** tab
+- **Client ID**
+- **Client Secret**
+- **OpenID Connect Issuer URL**
+- **Application ID** from the **Settings** tab
 
 15. Go to the **User Access** tab.
 
@@ -73,13 +72,13 @@ To test that your connection is working, go to **Authentication** > **Login meth
 
 ```json
 {
-  "config": {
-    "client_id": "<your client id>",
-    "client_secret": "<your client secret>",
-    "centrify_account": "https://abc123.my.centrify.com/",
-    "centrify_app_id": "exampleapp"
-  },
-  "type": "centrify",
-  "name": "my example idp"
+	"config": {
+		"client_id": "<your client id>",
+		"client_secret": "<your client secret>",
+		"centrify_account": "https://abc123.my.centrify.com/",
+		"centrify_app_id": "exampleapp"
+	},
+	"type": "centrify",
+	"name": "my example idp"
 }
 ```

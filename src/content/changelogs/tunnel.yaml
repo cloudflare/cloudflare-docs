@@ -1,0 +1,11 @@
+---
+link: "/cloudflare-one/changelog/tunnel/"
+productName: Cloudflare Tunnel
+productLink: "/cloudflare-one/connections/connect-networks/"
+productArea: Cloudflare One
+productAreaLink: /cloudflare-one/changelog/
+entries:
+- publish_date: '2024-08-06'
+  title: cloudflared builds available in GitHub for Apple silicon
+  description: |-
+    macOS users can now download `cloudflared-arm64.pkg` directly from [GitHub](https://github.com/cloudflare/cloudflared/releases), in addition to being available via Homebrew.

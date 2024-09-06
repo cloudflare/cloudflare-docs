@@ -1,10 +1,9 @@
 ---
 title: OpenAI
 pcx_content_type: get-started
-
 ---
 
-[OpenAI](https://openai.com/about/)  helps you build with ChatGPT.
+[OpenAI](https://openai.com/about/) helps you build with ChatGPT.
 
 ## Endpoint
 
@@ -34,26 +33,35 @@ curl https://gateway.ai.cloudflare.com/v1/{account_id}/{gateway_id}/openai/chat/
 
 If you’re using a library like openai-node, set the `baseURL` to your OpenAI endpoint like this:
 
-```javascript
-import OpenAI from 'openai';
+```js title="JavaScript"
+import OpenAI from "openai";
+
+const apiKey = "my api key"; // defaults to process.env["OPENAI_API_KEY"]
+const accountId = "{account_id}";
+const gatewayId = "{gateway_id}";
+const baseURL = `https://gateway.ai.cloudflare.com/v1/${accountId}/${gatewayId}/openai`;
 
 const openai = new OpenAI({
-	apiKey: 'my api key', // defaults to process.env["OPENAI_API_KEY"]
-	baseURL: "https://gateway.ai.cloudflare.com/v1/{account_id}/{gateway_id}/openai"
+	apiKey,
+	baseURL,
 });
 
 try {
-  const chatCompletion = await openai.chat.completions.create({
-    model: "gpt-4o-mini",
-    messages: [{ role: "user", content: "What is a neuron?" }],
-    max_tokens: 100,
-  });
+	const model = "gpt-3.5-turbo-0613";
+	const messages = [{ role: "user", content: "What is a neuron?" }];
+	const maxTokens = 100;
 
-  const response = chatCompletion.choices[0].message;
+	const chatCompletion = await openai.chat.completions.create({
+		model,
+		messages,
+		max_tokens: maxTokens,
+	});
 
-  return new Response(JSON.stringify(response));
+	const response = chatCompletion.choices[0].message;
+
+	return new Response(JSON.stringify(response));
 } catch (e) {
-  return new Response(e);
+	return new Response(e);
 }
 
 ```

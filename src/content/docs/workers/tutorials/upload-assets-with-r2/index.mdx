@@ -8,12 +8,9 @@ products:
   - R2
 languages:
   - TypeScript
-
 ---
 
-
-
-import { Render } from "~/components"
+import { Render, PackageManagers } from "~/components";
 
 This tutorial explains how to create a TypeScript-based Cloudflare Workers project that can securely access files from and upload files to a [Cloudflare R2](/r2/) bucket. Cloudflare R2 allows developers to store large amounts of unstructured data without the costly egress bandwidth fees associated with typical cloud storage services.
 
@@ -29,14 +26,26 @@ To continue:
 
 First, use the [`create-cloudflare` CLI](https://github.com/cloudflare/workers-sdk/tree/main/packages/create-cloudflare) to create a new Worker. To do this, open a terminal window and run the following command:
 
-<Render file="c3-run-command-with-directory" product="workers" params={{ one: "upload-r2-assets" }} />
+<PackageManagers
+	type="create"
+	pkg="cloudflare@latest"
+	args={"upload-r2-assets"}
+/>
 
-<Render file="c3-post-run-steps" product="workers" params={{ one: "Hello World example", two: "Hello World Worker", three: "TypeScript" }} />
+<Render
+	file="c3-post-run-steps"
+	product="workers"
+	params={{
+		one: "Hello World example",
+		two: "Hello World Worker",
+		three: "TypeScript",
+	}}
+/>
 
 Move into your newly created directory:
 
 ```sh
-$ cd upload-r2-assets
+cd upload-r2-assets
 ```
 
 ## Create an R2 bucket
@@ -44,13 +53,13 @@ $ cd upload-r2-assets
 Before you integrate R2 bucket access into your Worker application, an R2 bucket must be created:
 
 ```sh
-$ npx wrangler r2 bucket create <YOUR_BUCKET_NAME>
+npx wrangler r2 bucket create <YOUR_BUCKET_NAME>
 ```
 
 Replace `<YOUR_BUCKET_NAME>` with the name you want to assign to your bucket. List your account's R2 buckets to verify that a new bucket has been added:
 
 ```sh
-$ npx wrangler r2 bucket list
+npx wrangler r2 bucket list
 ```
 
 ## Configure access to an R2 bucket
@@ -77,28 +86,28 @@ To fetch files from the R2 bucket, use the `BINDING.get` function. In the below 
 
 ```ts
 interface Env {
-  MY_BUCKET: R2Bucket;
+	MY_BUCKET: R2Bucket;
 }
 export default {
-  async fetch(request, env): Promise<Response> {
-    // For example, the request URL my-worker.account.workers.dev/image.png
-    const url = new URL(request.url);
-    const key = url.pathname.slice(1);
-    // Retrieve the key "image.png"
-    const object = await env.MY_BUCKET.get(key);
+	async fetch(request, env): Promise<Response> {
+		// For example, the request URL my-worker.account.workers.dev/image.png
+		const url = new URL(request.url);
+		const key = url.pathname.slice(1);
+		// Retrieve the key "image.png"
+		const object = await env.MY_BUCKET.get(key);
 
-    if (object === null) {
-      return new Response('Object Not Found', { status: 404 });
-    }
+		if (object === null) {
+			return new Response("Object Not Found", { status: 404 });
+		}
 
-    const headers = new Headers();
-    object.writeHttpMetadata(headers);
-    headers.set('etag', object.httpEtag);
+		const headers = new Headers();
+		object.writeHttpMetadata(headers);
+		headers.set("etag", object.httpEtag);
 
-    return new Response(object.body, {
-      headers,
-    });
-  },
+		return new Response(object.body, {
+			headers,
+		});
+	},
 } satisfies ExportedHandler<Env>;
 ```
 
@@ -111,36 +120,36 @@ Next, you will add the ability to upload to your R2 bucket using authentication.
 Create a secret value of your choice -- for instance, a random string or password. Using the Wrangler CLI, add the secret to your project as `AUTH_SECRET`:
 
 ```sh
-$ npx wrangler secret put AUTH_SECRET
+npx wrangler secret put AUTH_SECRET
 ```
 
 Now, add a new code path that handles a `PUT` HTTP request. This new code will check that the previously uploaded secret is correctly used for authentication, and then upload to R2 using `MY_BUCKET.put(key, data)`:
 
 ```ts
 interface Env {
-  MY_BUCKET: R2Bucket;
-  AUTH_SECRET: string;
+	MY_BUCKET: R2Bucket;
+	AUTH_SECRET: string;
 }
 export default {
-  async fetch(request, env): Promise<Response> {
-    if (request.method === 'PUT') {
-      // Note that you could require authentication for all requests
-      // by moving this code to the top of the fetch function.
-      const auth = request.headers.get('Authorization');
-      const expectedAuth = `Bearer ${env.AUTH_SECRET}`;
+	async fetch(request, env): Promise<Response> {
+		if (request.method === "PUT") {
+			// Note that you could require authentication for all requests
+			// by moving this code to the top of the fetch function.
+			const auth = request.headers.get("Authorization");
+			const expectedAuth = `Bearer ${env.AUTH_SECRET}`;
 
-      if (!auth || auth !== expectedAuth) {
-        return new Response('Unauthorized', { status: 401 });
-      }
+			if (!auth || auth !== expectedAuth) {
+				return new Response("Unauthorized", { status: 401 });
+			}
 
-      const url = new URL(request.url);
-      const key = url.pathname.slice(1);
-      await env.MY_BUCKET.put(key, request.body);
-      return new Response(`Object ${key} uploaded successfully!`);
-    }
+			const url = new URL(request.url);
+			const key = url.pathname.slice(1);
+			await env.MY_BUCKET.put(key, request.body);
+			return new Response(`Object ${key} uploaded successfully!`);
+		}
 
-    // include the previous code here...
-  },
+		// include the previous code here...
+	},
 } satisfies ExportedHandler<Env>;
 ```
 
@@ -151,7 +160,7 @@ This approach ensures that only clients who provide a valid bearer token, via th
 After completing your Cloudflare Worker project, deploy it to Cloudflare. Make sure you are in your Worker application directory that you created for this tutorial, then run:
 
 ```sh
-$ npx wrangler deploy
+npx wrangler deploy
 ```
 
 Your application is now live and accessible at `<YOUR_WORKER>.<YOUR_SUBDOMAIN>.workers.dev`.

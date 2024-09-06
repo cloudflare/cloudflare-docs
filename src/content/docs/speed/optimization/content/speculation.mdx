@@ -1,0 +1,115 @@
+---
+pcx_content_type: how-to
+title: Speculation
+sidebar: 
+  order: 9
+  badge:
+    text: Beta
+---
+
+import { FeatureTable, TabItem, Tabs } from "~/components";
+
+Speculation is a tool for improving web page performance by prefetching the most likely next navigation.
+
+---
+
+## Availability
+
+<FeatureTable id="speed.speculation" />
+
+---
+
+## Requirements
+
+Speculation works under the following conditions:
+- The Speculation feature is enabled in Cloudflare.
+- The browser of the web page visitor is using a Chromium-based browser version 121 or later.
+- The web page requested by the prefetch is eligible for cache.
+- The page requested by the prefetch does not invoke a Worker.
+
+For more information about Speculation Rules API, refer to the [Chrome documentation](https://developer.chrome.com/docs/web-platform/prerender-pages)
+
+
+## What is Speculation?
+
+The overall goal of Speculation is to try to download a webpage to the browser before a user navigates to it.
+
+Cloudflare leverages the [Speculation Rules API](https://developer.mozilla.org/en-US/docs/Web/API/Speculation_Rules_API) to improve web page performance by instructing the browser to consider prefetching future navigations. Speculation does not improve page load time for the first page that is visited on a website, but it can improve it for subsequent web pages that are navigated to on the same site.
+
+By prefetching pages that the browser considers likely to be navigated to, Speculation can enhance key metrics like [Largest Content Paint](https://web.dev/articles/lcp) (LCP), [Time to First Byte](https://web.dev/articles/ttfb) (TTFB) and overall page load time.
+
+## How Speculation works
+
+When Cloudflare’s Speculation feature is enabled, an HTTP header called `Speculation-Rules` is added to web page responses. The value for this header is an URL that hosts an opinionated Speculation-Rules configuration. This configuration instructs the browser to consider prefetching any future navigations with a `conservative` [eagerness](https://developer.chrome.com/docs/web-platform/prerender-pages#eagerness).
+
+The configuration looks like this:
+
+```json
+{
+  "prefetch": [{
+    "source": "document",
+    "where": {
+      "and": [
+        { "href_matches": "/*", "relative_to": "document" },
+      ]
+    },
+    "eagerness": "conservative"
+  }]
+}
+```
+
+This configuration instructs the browser to initiate prefetch requests for future navigations. These prefetch requests will include the `sec-purpose: prefetch` HTTP request header. Prefetches that are not successful will respond with a `503` status code. Prefetches that are successful will respond with a `200` status code.
+
+## Test Speculation
+
+To test that Speculation is enabled, you can check that your HTTP response headers for your web pages include the `Speculation-Rules` header. However, note that during the beta phase of Speculation, this behavior might not be 100% consistent.
+
+To test whether your browser is making prefetch requests, open the **Network** tab in Chrome DevTools. Then, mouse-down on a link on a webpage with Speculation enabled. This action should initiate a prefetch request, which will be  visible in the **Network** tab. However, note that there are several reasons why the browser might choose not to initiate a prefetch. Refer to the [Chrome Limits guide](https://developer.chrome.com/docs/web-platform/prerender-pages#chrome-limits) for more details. For more general information about debugging Speculation, refer to the [Chrome Speculation Debugging guide](https://developer.chrome.com/docs/devtools/application/debugging-speculation-rules).
+
+## RUM integration
+
+Speculation is designed to integrate with Web Analytics & Real User Measurements (RUM). This integration allows you to understand the web performance implications of Speculation within the Web Analytics interface in Cloudflare’s Dashboard.
+
+While you can use Speculation without RUM enabled, you will not have visibility into how the feature is affecting the performance of your web pages. For further details on how to set up RUM, refer to the [Web Analytics & RUM](/web-analytics/) documentation.
+
+## Enable and disable Speculation
+
+Speculation is available in Cloudflare’s **Speed** tab of the dashboard and also in the API and Terraform.
+
+<Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
+
+To enable **Prefetch URLs** in the dashboard:
+
+1. Log in to your [Cloudflare account](https://dash.cloudflare.com), select your account and go to a specific domain.
+2. Go to **Speed** > **Optimization** > **Content Optimization**.
+3. Enable **Speculation**.
+
+</TabItem> <TabItem label="API">
+
+Use the following `PATCH` request to enable Speculation:
+
+```bash
+curl --request PATCH \
+"https://api.cloudflare.com/client/v4/zones/{zone_id}/settings/speculation" \
+--header "Authorization: Bearer <API_TOKEN>" \
+--header "Content-Type: application/json" \
+--data '{
+  "value":"on"
+  }'
+```
+
+To disable Speculation, set `value:` to `"off"`.
+
+</TabItem> </Tabs>
+
+## Caveats
+
+Since prefetch responses are not guaranteed to be rendered by the browser, Speculation includes two safeguards to minimize the risk of [unsafe prefetching](https://developer.mozilla.org/en-US/docs/Web/API/Speculation_Rules_API#unsafe_prefetching): 
+
+- Speculation will not prefetch on routes that run Workers. Without this safeguard, prefetch requests could inadvertently run Worker logic that assumes the incoming request is a normal (that is, not a prefetch) request. An example of this could be an incrementing page view counter running in a Worker. A page view counter should not increment if the page is not actually rendered in the browser.
+
+- Prefetch requests will never reach origin servers. Prefetch requests only serve content that is stored in Cloudflare’s Cache. If the content is not in Cache, the prefetch request will not continue to origin servers. Without this safeguard, origin server state could be modified despite the prefetch response not being rendered in the browser. An example of this could be a prefetch `GET` request to a sign-out URL inadvertently triggering a sign-out action on the server.
+
+If origin server responses include the `Speculation-Rules` header, it will not be overriden.
+
+

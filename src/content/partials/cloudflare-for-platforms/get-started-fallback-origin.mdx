@@ -1,17 +1,14 @@
 ---
 {}
-
 ---
 
-import { Example, TabItem, Tabs } from "~/components"
+import { Example, TabItem, Tabs } from "~/components";
 
 The fallback origin is where Cloudflare will route traffic sent to your custom hostnames (must be proxied).
 
 :::note
 
-
 If you are an Enterprise customer, you can route custom hostnames to distinct origins by using [custom origin server](/cloudflare-for-platforms/cloudflare-for-saas/start/advanced-settings/custom-origin/).
-
 
 :::
 
@@ -29,7 +26,7 @@ To create your fallback origin:
 
 2. Designate that record as your fallback origin.
 
-<Tabs> <TabItem label="Dashboard">
+<Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
 
 1. Log into the [Cloudflare dashboard](https://dash.cloudflare.com).
 2. Select your account and zone.
@@ -49,6 +46,5 @@ Using the hostname of the record you just created, [update the fallback origin v
 When Cloudflare marks your fallback origin as **Active**, that only reflects that we are ready to send traffic to that DNS record.
 
 You need to make sure your DNS record is sending traffic to the correct origin location.
-
 
 :::

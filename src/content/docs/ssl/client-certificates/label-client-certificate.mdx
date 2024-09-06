@@ -4,7 +4,6 @@ source: https://support.cloudflare.com/hc/en-us/articles/4567119364749-How-to-la
 title: Label client certificates
 sidebar:
   order: 7
-
 ---
 
 After [creating client certificates](/ssl/client-certificates/) at Cloudflare, it may be hard to differentiate the generated certificates.
@@ -20,7 +19,7 @@ If you need to differentiate client certificates for your clients on a per-organ
 For example, if you run the following command (with OpenSSL installed):
 
 ```sh
-$ openssl req -new -newkey rsa:2048 -nodes -keyout client1.key -out client1.csr
+openssl req -new -newkey rsa:2048 -nodes -keyout client1.key -out client1.csr
 ```
 
 You can then specify:

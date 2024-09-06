@@ -1,10 +1,9 @@
 ---
 pcx_content_type: how-to
 title: Vite 3
-
 ---
 
-import { Render } from "~/components"
+import { Render } from "~/components";
 
 [Vite](https://vitejs.dev) is a next-generation build tool for front-end developers. With [the release of Vite 3](https://vitejs.dev/blog/announcing-vite3.html), developers can make use of new command line (CLI) improvements, starter templates, and [more](https://github.com/vitejs/vite/blob/main/packages/vite/CHANGELOG.md#300-2022-07-13) to help build their front-end applications.
 
@@ -13,7 +12,10 @@ Cloudflare Pages has native support for Vite 3 projects. Refer to the blog post 
 In this guide, you will learn how to start a new project using Vite 3, and deploy it to Cloudflare Pages.
 
 ```sh
-$ npm create vite@latest
+npm create vite@latest
+```
+
+```sh output
 ✔ Project name: … vite-on-pages
 ✔ Select a framework: › vue
 ✔ Select a variant: › vue
@@ -30,16 +32,34 @@ Done. Now run:
 You will now create a new GitHub repository, and push your code using [GitHub's `gh` command line (CLI)](https://cli.github.com):
 
 ```sh
-$ git init
+git init
+```
+
+```sh output
 Initialized empty Git repository in ~/vite-vue3-on-pages/.git/
-$ git add .
-$ git commit -m "Initial commit"                                           vite-vue3-on-pages/git/main +
+```
+
+```sh
+git add .
+git commit -m "Initial commit"                                           vite-vue3-on-pages/git/main +
+```
+
+```sh output
 [main (root-commit) dad4177] Initial commit
  14 files changed, 1452 insertions(+)
-$ gh repo create
+```
+
+```sh
+gh repo create
+```
+
+```sh output
 ✓ Created repository kristianfreeman/vite-vue3-on-pages on GitHub
 ✓ Added remote git@github.com:kristianfreeman/vite-vue3-on-pages.git
-$ git push
+```
+
+```sh
+git push
 ```
 
 To deploy your site to Pages:
@@ -58,3 +78,4 @@ Cloudflare Pages will automatically rebuild your project and deploy it on every 
 Additionally, you will have access to [preview deployments](/pages/configuration/preview-deployments/), which repeat the build-and-deploy process for pull requests. With these, you can preview changes to your project with a real URL before deploying them to production.
 
 <Render file="framework-guides/learn-more" params={{ one: "Vite 3" }} />
+```

@@ -15,14 +15,9 @@ spotlight:
   author: Dominik Fuerst
   author_bio_link: https://github.com/justDMNK
   author_bio_source: GitHub
-
 ---
 
-
-
-import { Render } from "~/components"
-
-
+import { Render, PackageManagers } from "~/components";
 
 This tutorial gives you an overview on how to create a TypeScript-based Cloudflare Worker which allows you to control file access based on a simple username and password authentication. To achieve this, we will use a [D1 database](/d1/) for user management and an [R2 bucket](/r2/) for file storage.
 
@@ -36,14 +31,26 @@ The following sections will guide you through the process of creating a Worker u
 
 To get started developing your Worker you will use the [`create-cloudflare` CLI](https://github.com/cloudflare/workers-sdk/tree/main/packages/create-cloudflare). To do this, open a terminal window and run the following command:
 
-<Render file="c3-run-command-with-directory" product="workers" params={{ one: "custom-access-control" }} />
+<PackageManagers
+	type="create"
+	pkg="cloudflare@latest"
+	args={"custom-access-control"}
+/>
 
-<Render file="c3-post-run-steps" product="workers" params={{ one: "Hello World example", two: "Hello World Worker", three: "TypeScript" }} />
+<Render
+	file="c3-post-run-steps"
+	product="workers"
+	params={{
+		one: "Hello World example",
+		two: "Hello World Worker",
+		three: "TypeScript",
+	}}
+/>
 
 Then, move into your newly created Worker:
 
 ```sh
-$ cd custom-access-control
+cd custom-access-control
 ```
 
 ## 2. Create a new D1 database and binding
@@ -56,7 +63,7 @@ To create a D1 database, just run the following command.
 If you get asked to install wrangler, just confirm by pressing `y` and then press `Enter`.
 
 ```sh
-$ npx wrangler d1 create <YOUR_DATABASE_NAME>
+npx wrangler d1 create <YOUR_DATABASE_NAME>
 ```
 
 Replace `<YOUR_DATABASE_NAME>` with the name you want to use for your database. Keep in mind that this name can't be changed later on.
@@ -79,7 +86,7 @@ This step can also be done through the Cloudflare Portal, but as before, we will
 To create an R2 bucket, run the following command:
 
 ```sh
-$ npx wrangler r2 bucket create <YOUR_BUCKET_NAME>
+npx wrangler r2 bucket create <YOUR_BUCKET_NAME>
 ```
 
 This works similar to the D1 database creation, where you will need to replace `<YOUR_BUCKET_NAME>` with the name you want to use for your bucket.
@@ -96,7 +103,7 @@ This file will then provide TypeScript with the correct type definitions for the
 You could either update it manually or run the following command in the directory of your project to update it automatically based on the wrangler configuration file (recommended).
 
 ```sh
-$ npm run cf-typegen
+npm run cf-typegen
 ```
 
 ## 4. Database preparation
@@ -115,9 +122,9 @@ For this tutorial you can replace the `<YOUR_USERNAME>` and `<YOUR_HASHED_PASSWO
 And `<YOUR_DATABASE_NAME>` should be replaced with the name you used to create the database.
 
 ```sh
-$ npx wrangler d1 execute <YOUR_DATABASE_NAME> --command "CREATE TABLE user (id INTEGER PRIMARY KEY NOT NULL, username STRING NOT NULL, password STRING NOT NULL)" --remote
-$ npx wrangler d1 execute <YOUR_DATABASE_NAME> --command "CREATE UNIQUE INDEX user_username ON user (username)"  --remote
-$ npx wrangler d1 execute <YOUR_DATABASE_NAME> --command "INSERT INTO user (username, password) VALUES ('<YOUR_USERNAME>', '<YOUR_HASHED_PASSWORD>')"  --remote
+npx wrangler d1 execute <YOUR_DATABASE_NAME> --command "CREATE TABLE user (id INTEGER PRIMARY KEY NOT NULL, username STRING NOT NULL, password STRING NOT NULL)" --remote
+npx wrangler d1 execute <YOUR_DATABASE_NAME> --command "CREATE UNIQUE INDEX user_username ON user (username)"  --remote
+npx wrangler d1 execute <YOUR_DATABASE_NAME> --command "INSERT INTO user (username, password) VALUES ('<YOUR_USERNAME>', '<YOUR_HASHED_PASSWORD>')"  --remote
 ```
 
 ## 5. Implement authentication in the Worker
@@ -133,31 +140,35 @@ To handle the authentication, you will need to replace the current code within `
 
 ```ts
 export default {
-	async fetch(request: Request, env: Env, ctx: ExecutionContext): Promise<Response> {
+	async fetch(
+		request: Request,
+		env: Env,
+		ctx: ExecutionContext,
+	): Promise<Response> {
 		try {
 			const url = new URL(request.url);
 			let authBase64;
-			if (request.method === 'POST') {
-				authBase64 = request.headers.get('Authorization');
-			} else if (request.method === 'GET') {
-				authBase64 = url.searchParams.get('Authorization');
+			if (request.method === "POST") {
+				authBase64 = request.headers.get("Authorization");
+			} else if (request.method === "GET") {
+				authBase64 = url.searchParams.get("Authorization");
 			} else {
-				return new Response('Method Not Allowed!', { status: 405 });
+				return new Response("Method Not Allowed!", { status: 405 });
 			}
-			if (!authBase64 || authBase64.substring(0, 6) !== 'Basic ') {
-				return new Response('Unauthorized!', { status: 401 });
+			if (!authBase64 || authBase64.substring(0, 6) !== "Basic ") {
+				return new Response("Unauthorized!", { status: 401 });
 			}
 
 			const authString = atob(authBase64.substring(6));
-			const [username, password] = authString.split(':');
+			const [username, password] = authString.split(":");
 			if (!username || !password) {
-				return new Response('Unauthorized!', { status: 401 });
+				return new Response("Unauthorized!", { status: 401 });
 			}
 
 			// TODO: Check if the username and password are correct
 		} catch (error) {
-			console.error('An error occurred!', error);
-			return new Response('Internal Server Error!', { status: 500 });
+			console.error("An error occurred!", error);
+			return new Response("Internal Server Error!", { status: 500 });
 		}
 	},
 };
@@ -171,17 +182,21 @@ To add this functionality, you will need to add the following code to the `fetch
 
 ```ts
 const passwordHashBuffer = await crypto.subtle.digest(
-	{ name: 'SHA-256', },
-	new TextEncoder().encode(password)
+	{ name: "SHA-256" },
+	new TextEncoder().encode(password),
 );
 const passwordHashArray = Array.from(new Uint8Array(passwordHashBuffer));
-const passwordHashString = passwordHashArray.map(b => b.toString(16).padStart(2, '0')).join('')
+const passwordHashString = passwordHashArray
+	.map((b) => b.toString(16).padStart(2, "0"))
+	.join("");
 
-const user = await env.DB.prepare('SELECT id FROM user WHERE username = ? AND password = ? LIMIT 1')
+const user = await env.DB.prepare(
+	"SELECT id FROM user WHERE username = ? AND password = ? LIMIT 1",
+)
 	.bind(username, passwordHashString)
 	.first<{ id: number }>();
 if (!user) {
-	return new Response('Unauthorized!', { status: 401 });
+	return new Response("Unauthorized!", { status: 401 });
 }
 
 // TODO: Implement upload functionality
@@ -200,10 +215,10 @@ And finally, you will return a `200 OK` response to the client.
 To implement this functionality, you will need to replace the TODO comment from the last code snippet with the following code:
 
 ```ts
-if (request.method === 'POST') {
+if (request.method === "POST") {
 	// Upload the file to the R2 bucket with the user id followed by a slash as the prefix and then the path of the URL
-    await env.BUCKET.put(`${user.id}/${url.pathname}`, request.body);
-    return new Response('OK', { status: 200 });
+	await env.BUCKET.put(`${user.id}/${url.pathname}`, request.body);
+	return new Response("OK", { status: 200 });
 }
 // TODO: Implement GET request handling
 ```
@@ -219,16 +234,16 @@ Within this code path, you will need to extract the URL pathname and then retrie
 To finalize the code, just replace the TODO comment for handling GET requests from the last code snippet with the following code:
 
 ```ts
-if (request.method === 'GET') {
+if (request.method === "GET") {
 	const file = await env.BUCKET.get(`${user.id}/${url.pathname.slice(1)}`);
 	if (!file) {
-		return new Response('Not Found!', { status: 404 });
+		return new Response("Not Found!", { status: 404 });
 	}
-  const headers = new Headers();
-  file.writeHttpMetadata(headers);
-  return new Response(file.body, { headers });
+	const headers = new Headers();
+	file.writeHttpMetadata(headers);
+	return new Response(file.body, { headers });
 }
-return new Response('Method Not Allowed!', { status: 405 });
+return new Response("Method Not Allowed!", { status: 405 });
 ```
 
 This code now allows you to fetch and return data from the R2 bucket when a `GET` request is made to the Worker application.
@@ -239,7 +254,7 @@ After completing the code for this Cloudflare Worker tutorial, you will need to 
 To do this open the terminal in the directory created for your application, and then run:
 
 ```sh
-$ npx wrangler deploy
+npx wrangler deploy
 ```
 
 You might get asked to authenticate (if not logged in already) and select an account. After that, the Worker will be deployed to Cloudflare.
@@ -254,7 +269,7 @@ Copy the following command which can be used to upload a simple JSON file with t
 Replace `<YOUR_API_SECRET>` with the base64 encoded username and password combination and then run the command. For this example you can use `YWRtaW46cGFzc3dvcmQ=`, which can be decoded to `admin` and `test`, for the api secret placeholder.
 
 ```sh
-$ curl --location '<YOUR_WORKER_URL>/myFile.json' \
+curl --location '<YOUR_WORKER_URL>/myFile.json' \
 --header 'Content-Type: application/json' \
 --header 'Authorization: Basic <YOUR_API_SECRET>' \
 --data '{
@@ -265,13 +280,13 @@ $ curl --location '<YOUR_WORKER_URL>/myFile.json' \
 Then run the next command, or simply open the URL in your browser, to fetch the file you just uploaded:
 
 ```sh
-$ curl --location '<YOUR_WORKER_URL>/myFile.json?Authorization=Basic%20YWRtaW46cGFzc3dvcmQ%3D'
+curl --location '<YOUR_WORKER_URL>/myFile.json?Authorization=Basic%20YWRtaW46cGFzc3dvcmQ%3D'
 ```
 
 ## Next steps
 
 If you want to learn more about Cloudflare Workers, R2, or D1 you can check out the following documentation:
 
-* [Cloudflare Workers](/workers/)
-* [Cloudflare R2](/r2/)
-* [Cloudflare D1](/d1/)
+- [Cloudflare Workers](/workers/)
+- [Cloudflare R2](/r2/)
+- [Cloudflare D1](/d1/)

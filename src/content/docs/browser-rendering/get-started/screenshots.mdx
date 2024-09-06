@@ -3,10 +3,9 @@ pcx_content_type: get-started
 title: Deploy a Browser Rendering Worker
 sidebar:
   order: 1
-
 ---
 
-import { Render, TabItem, Tabs } from "~/components"
+import { Render, TabItem, Tabs, PackageManagers } from "~/components";
 
 By following this guide, you will create a Worker that uses the Browser Rendering API to take screenshots from web pages. This is a common use case for browser automation.
 
@@ -18,16 +17,28 @@ By following this guide, you will create a Worker that uses the Browser Renderin
 
 Create a new Worker project named `browser-worker` by running:
 
-<Render file="c3-run-command-with-directory" product="workers" params={{ one: "browser-worker" }} />
+<PackageManagers
+	type="create"
+	pkg="cloudflare@latest"
+	args={"browser-worker"}
+/>
 
-<Render file="c3-post-run-steps" product="workers" params={{ one: "Hello World example", two: "Hello World Worker", three: "JavaScript / Typescript" }} />
+<Render
+	file="c3-post-run-steps"
+	product="workers"
+	params={{
+		one: "Hello World example",
+		two: "Hello World Worker",
+		three: "JavaScript / Typescript",
+	}}
+/>
 
 ## 2. Install Puppeteer
 
 In your `browser-worker` directory, install Cloudflare’s [fork of Puppeteer](/browser-rendering/platform/puppeteer/):
 
 ```sh
-$ npm install @cloudflare/puppeteer --save-dev
+npm install @cloudflare/puppeteer --save-dev
 ```
 
 ## 3. Create a KV namespace
@@ -39,8 +50,8 @@ For the purpose of this guide, you are going to use a [KV store](/kv/concepts/kv
 Create two namespaces, one for production, and one for development.
 
 ```sh
-$ npx wrangler kv:namespace create BROWSER_KV_DEMO
-$ npx wrangler kv:namespace create BROWSER_KV_DEMO --preview
+npx wrangler kv:namespace create BROWSER_KV_DEMO
+npx wrangler kv:namespace create BROWSER_KV_DEMO --preview
 ```
 
 Take note of the IDs for the next step.
@@ -95,9 +106,7 @@ export default {
 				},
 			});
 		} else {
-			return new Response(
-				"Please add an ?url=https://example.com/ parameter"
-			);
+			return new Response("Please add an ?url=https://example.com/ parameter");
 		}
 	},
 };
@@ -138,9 +147,7 @@ export default {
 				},
 			});
 		} else {
-			return new Response(
-				"Please add an ?url=https://example.com/ parameter"
-			);
+			return new Response("Please add an ?url=https://example.com/ parameter");
 		}
 	},
 } satisfies ExportedHandler<Env>;
@@ -172,4 +179,4 @@ To take your first screenshot, go to the following URL:
 
 ## Related resources
 
-* Other [Puppeteer examples](https://github.com/cloudflare/puppeteer/tree/main/examples)
+- Other [Puppeteer examples](https://github.com/cloudflare/puppeteer/tree/main/examples)

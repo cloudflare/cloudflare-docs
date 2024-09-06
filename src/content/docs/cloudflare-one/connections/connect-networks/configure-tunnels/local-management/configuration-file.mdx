@@ -3,14 +3,11 @@ pcx_content_type: reference
 title: Configuration file
 sidebar:
   order: 2
-
 ---
 
 :::note
 
-
 [Quick tunnels](/cloudflare-one/connections/connect-networks/get-started/tunnel-useful-terms/#quick-tunnels) do not need a configuration file.
-
 
 :::
 
@@ -26,7 +23,7 @@ If you are [exposing a private network](/cloudflare-one/connections/connect-netw
 tunnel: <Tunnel-UUID>
 credentials-file: /path/<Tunnel-UUID>.json
 warp-routing:
-    enabled: true
+  enabled: true
 ```
 
 ## File structure for public hostnames
@@ -53,9 +50,7 @@ When `cloudflared` receives an incoming request, it evaluates each ingress rule 
 
 :::note[Wildcards]
 
-
 You can use wildcards to match traffic to multiple subdomains or paths. For example, if you set the `hostname` key to `*.example.com`, both `test.example.com` and `try.example.com` will route traffic to your origin.
-
 
 :::
 
@@ -152,7 +147,7 @@ ingress:
 To validate the ingress rules in your configuration file, run:
 
 ```sh
-$ cloudflared tunnel ingress validate
+cloudflared tunnel ingress validate
 ```
 
 This will ensure that the set of ingress rules specified in your config file is valid.
@@ -162,7 +157,10 @@ This will ensure that the set of ingress rules specified in your config file is 
 To verify that `cloudflared` will proxy the right traffic to the right local service, use `cloudflared tunnel ingress rule`. This checks a URL against every rule, from first to last, and shows the first rule that matches. For example:
 
 ```sh
-$ cloudflared tunnel ingress rule https://foo.example.com
+cloudflared tunnel ingress rule https://foo.example.com
+```
+
+```sh output
 Using rules from /usr/local/etc/cloudflared/config.yml
 Matched rule #3
 	hostname: *.example.com
@@ -182,8 +180,6 @@ Your `cloudflared` will now be running with the updated version of your configur
 
 :::note[Traffic handling]
 
-
 When the first instance of `cloudflared` is stopped, long-lived HTTP requests (for example, Websocket) and TCP connections (for example, SSH) will be dropped. UDP flows will also be dropped, as they are modeled based on timeouts. When the new replica connects, it will handle all new traffic, including new HTTP requests, TCP connections, and UDP flows.
-
 
 :::

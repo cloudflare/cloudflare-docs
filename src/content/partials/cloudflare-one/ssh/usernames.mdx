@@ -1,18 +1,16 @@
 ---
 {}
-
 ---
 
-import { Details } from "~/components"
+import { Details } from "~/components";
 
-The simplest setup is one where a user's Unix username matches their email address prefix.  Issued short-lived certificates will be valid for the user's email address prefix. For example, if a user in your Okta or GSuite organization is registered as `jdoe@example.com`, they would log in to the SSH server as `jdoe`.
+The simplest setup is one where a user's Unix username matches their email address prefix. Issued short-lived certificates will be valid for the user's email address prefix. For example, if a user in your Okta or GSuite organization is registered as `jdoe@example.com`, they would log in to the SSH server as `jdoe`.
 
 For testing purposes, you can run the following command to generate a Unix user on the machine:
 
 ```sh
-$ sudo adduser jdoe
+sudo adduser jdoe
 ```
-
 
 <Details header="Advanced setup: Differing usernames">
 
@@ -22,7 +20,7 @@ By default, SSH servers authenticate the Unix username against the principals li
 
 :::note
 
-If you would like to use short-lived certificates with the browser-based terminal, the user's email address prefix needs to matches their Unix username. 
+If you would like to use short-lived certificates with the browser-based terminal, the user's email address prefix needs to matches their Unix username.
 :::
 
 **Username matches a different email**
@@ -38,7 +36,7 @@ Match user johndoe
 This tells the SSH server that, when someone tries to authenticate as the user `johndoe`, check their certificate for the principal `jdoe`. This would allow the user `jdoe@example.com` to sign into the server with a command such as:
 
 ```sh
-$ ssh johndoe@server
+ssh johndoe@server
 ```
 
 **Username matches multiple emails**
@@ -80,6 +78,5 @@ AuthorizedPrincipalsCommandUser nobody
 ```
 
 Since this will put the security of your server entirely dependent on your Access configuration, make sure your [Access policies](/cloudflare-one/policies/access/policy-management/) are correctly configured.
-
 
 </Details>

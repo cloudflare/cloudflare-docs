@@ -35,6 +35,40 @@ function demo() {
 ```
 ````
 
+:::caution
+Do not use the `$` sign in your code blocks before the command.
+:::
+
+## Output
+
+If you would like to include the output of your code block, create a second code block below and add the `output` property to the opening code fence.
+
+```sh
+npx wrangler vectorize create tutorial-index --dimensions=3 --metric=cosine
+```
+
+```sh output
+✅ Successfully created index 'tutorial-index'
+
+[[vectorize]]
+binding = "VECTORIZE_INDEX" # available in your Worker on env.VECTORIZE_INDEX
+index_name = "tutorial-index"
+```
+
+````mdx
+```sh
+npx wrangler vectorize create tutorial-index --dimensions=3 --metric=cosine
+```
+
+```sh output
+✅ Successfully created index 'tutorial-index'
+
+[[vectorize]]
+binding = "VECTORIZE_INDEX" # available in your Worker on env.VECTORIZE_INDEX
+index_name = "tutorial-index"
+```
+````
+
 ## Playground
 
 If you add the `playground` option to the opening code fence for a Worker example, it will

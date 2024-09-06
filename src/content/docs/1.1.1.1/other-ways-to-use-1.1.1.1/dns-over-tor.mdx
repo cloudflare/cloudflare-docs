@@ -2,14 +2,11 @@
 pcx_content_type: tutorial
 title: DNS over Tor
 slug: 1.1.1.1/other-ways-to-use-1.1.1.1/dns-over-tor
-
 ---
 
 :::caution
 
-
 The hidden resolver is still an experimental service and should not be used in production or for other critical uses.
-
 
 :::
 
@@ -26,13 +23,13 @@ Before you start, head to the [Tor Project website](https://www.torproject.org/d
 If you use Tor from the command line, create the following configuration file:
 
 ```txt
-$ SOCKSPort 9150
+SOCKSPort 9150
 ```
 
 Then you can run tor with:
 
 ```sh
-$ tor -f tor.conf
+tor -f tor.conf
 ```
 
 Also, if you use the Tor Browser, you can head to the resolver's address to see the usual 1.1.1.1 page:
@@ -43,16 +40,17 @@ https://dns4torpnlfs2ifuz2s2yf3fc7rdmsbhm6rw75euj35pac6ap25zgqad.onion/
 
 :::note[Note]
 
-
 The HTTPS certificate indicator should say "Cloudflare, Inc. (US)."
-
 
 :::
 
 If you ever forget 1.1.1.1's address, use cURL to retrieve it:
 
 ```sh
-$ curl -sI https://tor.cloudflare-dns.com | grep -i alt-svc
+curl -sI https://tor.cloudflare-dns.com | grep -i alt-svc
+```
+
+```sh output
 alt-svc: h2="dns4torpnlfs2ifuz2s2yf3fc7rdmsbhm6rw75euj35pac6ap25zgqad.onion:443"; ma=315360000; persist=1
 ```
 
@@ -65,7 +63,7 @@ Of course, not all DNS clients support connecting to the Tor client, so the easi
 The hidden resolver is set up to listen on TCP ports 53 and 853 for DNS over TCP and TLS. After setting up a Tor proxy, run the following `socat` command as a privileged user, replacing the port number appropriately:
 
 ```sh
-$ PORT=853; socat TCP4-LISTEN:${PORT},reuseaddr,fork SOCKS4A:127.0.0.1:dns4torpnlfs2ifuz2s2yf3fc7rdmsbhm6rw75euj35pac6ap25zgqad.onion:${PORT},socksport=9150
+PORT=853; socat TCP4-LISTEN:${PORT},reuseaddr,fork SOCKS4A:127.0.0.1:dns4torpnlfs2ifuz2s2yf3fc7rdmsbhm6rw75euj35pac6ap25zgqad.onion:${PORT},socksport=9150
 ```
 
 From here, you can follow the regular guide for [setting up 1.1.1.1](/1.1.1.1/setup/), except you should always use `127.0.0.1` instead of `1.1.1.1`. If you need to access the proxy from another device, simply replace `127.0.0.1` in `socat` commands with your local IP address.
@@ -79,7 +77,7 @@ From here, you can follow the regular guide for [setting up 1.1.1.1](/1.1.1.1/se
 2. Start a Tor SOCKS proxy and use `socat` to forward port TCP:443 to localhost:
 
 ```sh
-$ socat TCP4-LISTEN:443,reuseaddr,fork SOCKS4A:127.0.0.1:dns4torpnlfs2ifuz2s2yf3fc7rdmsbhm6rw75euj35pac6ap25zgqad.onion:443,socksport=9150
+socat TCP4-LISTEN:443,reuseaddr,fork SOCKS4A:127.0.0.1:dns4torpnlfs2ifuz2s2yf3fc7rdmsbhm6rw75euj35pac6ap25zgqad.onion:443,socksport=9150
 ```
 
 3. Instruct your machine to treat the `.onion` address as localhost:
@@ -93,7 +91,10 @@ EOF
 4. Finally, start a local DNS over UDP daemon:
 
 ```sh
-$ cloudflared proxy-dns --upstream "https://dns4torpnlfs2ifuz2s2yf3fc7rdmsbhm6rw75euj35pac6ap25zgqad.onion/dns-query"
+cloudflared proxy-dns --upstream "https://dns4torpnlfs2ifuz2s2yf3fc7rdmsbhm6rw75euj35pac6ap25zgqad.onion/dns-query"
+```
+
+```sh output
 INFO[0000] Adding DNS upstream                           url="https://dns4torpnlfs2ifuz2s2yf3fc7rdmsbhm6rw75euj35pac6ap25zgqad.onion/dns-query"
 INFO[0000] Starting DNS over HTTPS proxy server          addr="dns://localhost:53"
 INFO[0000] Starting metrics server                       addr="127.0.0.1:35659"

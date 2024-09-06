@@ -6,7 +6,7 @@ sidebar:
 head:
   - tag: title
     content: Tunnel metrics
-
+tableOfContents: false
 ---
 
 Tunnel metrics show a Cloudflare Tunnel's throughput and resource usage over time. When you run a tunnel, you can configure `cloudflared` to spin up a Prometheus metrics endpoint — an HTTP server that exposes metrics in [Prometheus](https://prometheus.io/docs/introduction/overview/) format. You can then use the Prometheus toolkit on a remote machine to scrape metrics data from the `cloudflared` server.
@@ -18,14 +18,14 @@ Perform these steps on the `cloudflared` server.
 1. Use the [--metrics](/cloudflare-one/connections/connect-networks/configure-tunnels/tunnel-run-parameters/#metrics) flag to create a metrics endpoint at the specified IP address and port. Here is an example command for a locally-managed tunnel:
 
    ```sh
-   $ cloudflared tunnel --metrics 127.0.0.1:60123 run my-tunnel
+   cloudflared tunnel --metrics 127.0.0.1:60123 run my-tunnel
    ```
 
    To learn how to add the `--metrics` flag to a remotely-managed tunnel, refer to [Configure a remotely-managed tunnel](/cloudflare-one/connections/connect-networks/configure-tunnels/remote-management/#add-tunnel-run-parameters).
 
 :::note
 
-If you plan to fetch metrics from another machine on the local network, replace `127.0.0.1` with the internal IP of the `cloudflared` server (for example, `198.168.x.x`). To serve metrics on all available network interfaces, use `0.0.0.0`. 
+If you plan to fetch metrics from another machine on the local network, replace `127.0.0.1` with the internal IP of the `cloudflared` server (for example, `198.168.x.x`). To serve metrics on all available network interfaces, use `0.0.0.0`.
 :::
 
 2. Verify that the metrics server is running by going to `http://localhost:60123/metrics`. This will only work if you configured a localhost IP (`127.0.0.1` or `0.0.0.0`).
@@ -35,8 +35,6 @@ You can now export the metrics to Prometheus and Grafana in order to visualize a
 ## Available metrics
 
 ### cloudflared metrics
-
-
 
 | Name                                                | Description                                                                                                | Type    | Labels                                     |
 | --------------------------------------------------- | ---------------------------------------------------------------------------------------------------------- | ------- | ------------------------------------------ |
@@ -56,7 +54,7 @@ You can now export the metrics to Prometheus and Grafana in order to visualize a
 | `cloudflared_tunnel_tunnel_authenticate_success`    | Number of successful tunnel authentication events.                                                         | COUNTER |                                            |
 | `cloudflared_tunnel_tunnel_register_success`        | Number of successful tunnel registrations.                                                                 | COUNTER | `rpcName`                                  |
 | `cloudflared_udp_active_sessions`                   | Concurrent number of UDP sessions that are being proxied to any origin.                                    | GAUGE   |                                            |
-| `cloudflared_udp_total_sessions`                    | Total number of UDP sessions that have been proxied to any origin.                                         | GAUGE   |                                            |
+| `cloudflared_udp_total_sessions`                    | Total number of UDP sessions that have been proxied to any origin.                                         | COUNTER   |                                            |
 | `coredns_panics_total`                              | Number of panics.                                                                                          | COUNTER |                                            |
 | `quic_client_closed_connections`                    | Number of connections that have been closed.                                                               | COUNTER |                                            |
 | `quic_client_latest_rtt`                            | Latest round-trip time (RTT) measured on a connection.                                                     | GAUGE   | `conn_index`                               |
@@ -66,11 +64,7 @@ You can now export the metrics to Prometheus and Grafana in order to visualize a
 | `quic_client_smoothed_rtt`                          | Smoothed RTT calculated for a connection in ms.                                                            | GAUGE   | `conn_index`                               |
 | `quic_client_total_connections`                     | Number of connections initiated. For all QUIC metrics, client means the side initiating the connection.    | COUNTER |                                            |
 
-
-
 ### Prometheus metrics
-
-
 
 | Name                                         | Description                                  | Type    | Labels |
 | -------------------------------------------- | -------------------------------------------- | ------- | ------ |
@@ -79,8 +73,6 @@ You can now export the metrics to Prometheus and Grafana in order to visualize a
 |                                              |                                              |         |        |
 
 ### Go runtime metrics
-
-
 
 | Name                               | Description                                                        | Type    | Labels    |
 | ---------------------------------- | ------------------------------------------------------------------ | ------- | --------- |

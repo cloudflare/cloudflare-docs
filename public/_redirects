@@ -1,8 +1,9 @@
 # homepage
 /docs/ /products/ 301
 /zero-trust/ /products/?product-group=Cloudflare+One 301
-/dashboarding-landing/ / 301
+/dashboard-landing/ / 301
 /tutorials/ /search/?content_type%5B0%5D=Tutorial 301
+/sitemap.xml /sitemap-index.xml
 
 # 1dot1_redirect
 /1.1.1.1/1.1.1.1-for-families/ /1.1.1.1/setup/ 301
@@ -692,10 +693,14 @@
 /logs/reference/logpush-api-configuration/examples/example-logpush-curl/ /logs/tutorials/examples/example-logpush-curl/ 301
 
 # magic-firewall
-/magic-firewall/reference/magic-firewall-fields/ /ruleset-engine/rules-language/fields/#magic-firewall-fields 301
+/magic-firewall/reference/magic-firewall-fields/ /ruleset-engine/rules-language/fields/magic-firewall/ 301
 /magic-firewall/reference/examples/ /magic-firewall/how-to/add-rules/ 301
 /magic-firewall/how-to/pcaps-bucket-setup/ /magic-firewall/packet-captures/pcaps-bucket-setup/ 301
 /magic-firewall/how-to/collect-pcaps/ /magic-firewall/packet-captures/collect-pcaps/ 301
+
+# magic-network-monitoring
+/magic-network-monitoring/routers/ /magic-network-monitoring/routers/supported-routers/ 301
+/magic-network-monitoring/tutorials/ /magic-network-monitoring/tutorials/graphql-analytics/ 301
 
 # magic-transit
 /magic-transit/magic-firewall/ /magic-firewall/ 301
@@ -713,6 +718,8 @@
 /magic-transit/flow-based-monitoring/ /magic-transit/magic-network-monitoring/ 301
 /magic-transit/how-to/auto-advertise-prefixes/ /magic-network-monitoring/rules/ 301
 /magic-transit/prerequisites/ /magic-transit/get-started/ 301
+/magic-transit/how-to/ /magic-transit/how-to/configure-tunnels/ 301
+/magic-transit/reference/ /magic-transit/reference/anti-replay-protection/ 301
 
 # magic-wan
 /magic-wan/tutorials/ipsec/ /magic-wan/reference/tunnels/#ipsec-tunnels 301
@@ -1004,10 +1011,12 @@
 /stream/uploading-videos/using-webhooks/ /stream/manage-video-library/using-webhooks/ 301
 /stream/edit-manage-videos/edit-videos/adding-captions/ /stream/edit-videos/adding-captions/ 301
 /stream/viewing-videos/using-the-player-api/ /stream/viewing-videos/using-the-stream-player/using-the-player-api/ 301
-/stream/changelog/ /stream/platform/changelog/ 301
-/stream/changelog/index.xml /stream/platform/changelog/index.xml 301
-/stream/webrtc-beta/ /stream/platform/webrtc-beta/ 301
-/stream/faq/ /stream/reference/faq/ 301
+/stream/platform/changelog/ /stream/changelog/ 301
+/stream/platform/changelog/index.xml /stream/changelog/index.xml 301
+/stream/platform/webrtc-beta/ /stream/webrtc-beta/ 301
+/stream/reference/faq/ /stream/faq/ 301
+/stream/platform/ /stream/platform/changelog/ 301
+/stream/reference/ /stream/faq/ 301
 
 # support
 
@@ -1159,6 +1168,10 @@
 /turnstile/reference/testing/ /turnstile/troubleshooting/testing/ 301
 /turnstile/reference/use-cases/ /turnstile/tutorials/ 301
 /turnstile/reference/use-cases/login-pages/ /turnstile/tutorials/login-pages/ 301
+/turnstile/troubleshooting/infinite-loops/ /turnstile/troubleshooting/challenge-solve-issues/ 301
+/turnstile/migration/migrating-from-recaptcha/ /turnstile/migration/recaptcha/ 301
+/turnstile/migration/migrating-from-hcaptcha/ /turnstile/migration/hcaptcha/ 301
+/turnstile/concepts/widget-types/ /turnstile/concepts/widget/ 301
 
 # waf
 /waf/about/file-scanning/ /waf/about/content-scanning/ 301
@@ -1225,6 +1238,7 @@
 /workers/about/routes/ /workers/configuration/routing/routes/ 301
 /workers/platform/routes/ /workers/configuration/routing/ 301
 /workers/about/tips/debugging/ /workers/observability/ 301
+/workers/testing/debugging-tools/ /workers/observability/dev-tools/ 301
 /workers/about/tips/signing-requests/ /workers/examples/signing-requests/ 301
 /workers/about/using-cache/ /workers/reference/how-the-cache-works/ 301
 /workers/learning/how-the-cache-works/ /workers/reference/how-the-cache-works/ 301
@@ -1424,6 +1438,7 @@
 /workers/tutorials/create-sitemap-from-sanity-cms/ /developer-spotlight/tutorials/create-sitemap-from-sanity-cms/ 301
 /workers/tutorials/custom-access-control-for-files-in-r2-using-d1-and-workers/ /developer-spotlight/tutorials/custom-access-control-for-files/ 301
 /workers/tutorials/handle-form-submission-with-astro-resend/ /developer-spotlight/tutorials/handle-form-submission-with-astro-resend/ 301
+/workers/ai/ /workers-ai/ 301
 
 # workers ai
 /workers-ai/models/llm/ /workers-ai/models/#text-generation 301
@@ -1470,6 +1485,8 @@
 /vectorize/platform/client-api/ /vectorize/reference/client-api/ 301
 /vectorize/changelog/ /vectorize/platform/changelog/ 301
 /vectorize/configuration/ /vectorize/best-practices/ 301
+/vectorize/examples/langchain/ https://js.langchain.com/v0.1/docs/integrations/vectorstores/cloudflare_vectorize/ 301
+/vectorize/examples/rag/ /reference-architecture/diagrams/ai/ai-rag/ 301
 
 
 # version management
@@ -1562,6 +1579,7 @@
 /cloudflare-one/connections/connect-devices/warp/warp-settings/ /cloudflare-one/connections/connect-devices/warp/configure-warp/warp-settings/ 301
 /cloudflare-one/connections/connect-networks/locations/ /cloudflare-one/connections/connect-devices/agentless/dns/locations/ 301
 /cloudflare-one/connections/connect-networks/monitor-tunnels/grafana/ /cloudflare-one/tutorials/grafana/ 301
+/cloudflare-one/connections/connect-networks/use-cases/kubectl/ /cloudflare-one/tutorials/many-cfd-one-tunnel/ 301
 /cloudflare-one/connections/connect-networks/use_cases/ssh/ /cloudflare-one/connections/connect-networks/use-cases/ssh/ 301
 /cloudflare-one/examples/ /cloudflare-one/api-terraform/ 301
 /cloudflare-one/faq/tunnel/ /cloudflare-one/faq/cloudflare-tunnels-faq/ 301

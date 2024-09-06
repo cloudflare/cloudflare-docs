@@ -3,10 +3,9 @@ pcx_content_type: configuration
 title: Rate limiting
 sidebar:
   order: 3
-
 ---
 
-import { TabItem, Tabs } from "~/components"
+import { TabItem, Tabs } from "~/components";
 
 Rate limiting controls the traffic that reaches your application, which prevents expensive bills and suspicious activity.
 
@@ -18,9 +17,13 @@ You can also select if you would like a **fixed** or **sliding** rate limiting t
 
 To illustrate this, let us say you had a limit of ten requests per ten minutes, starting at 12:00. So the fixed window is 12:00-12:10, 12:10-12:20, and so on. If you sent ten requests at 12:09 and ten requests at 12:11, all 20 requests would be successful in a fixed window strategy. However, they would fail in a sliding window strategy since there were more than ten requests in the last ten minutes.
 
+## Handling rate limits
+
+When your requests exceed the allowed rate, you'll encounter rate limiting. This means the server will respond with a `429 Too Many Requests` status code and your request won't be processed. 
+
 ## Default configuration
 
-<Tabs> <TabItem label="Dashboard">
+<Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
 
 To set the default rate limiting configuration in the dashboard:
 
@@ -36,8 +39,8 @@ To set the default rate limiting configuration using the API:
 
 1. [Create an API token](/fundamentals/api/get-started/create-token/) with the following permissions:
 
-* `AI Gateway - Read`
-* `AI Gateway - Edit`
+- `AI Gateway - Read`
+- `AI Gateway - Edit`
 
 2. Get your [Account ID](/fundamentals/setup/find-account-and-zone-ids/).
 3. Using that API token and Account ID, send a [`POST` request](/api/operations/aig-config-create-gateway) to create a new Gateway and include a value for the `rate_limiting_interval`, `rate_limiting_limit`, and `rate_limiting_technique`.

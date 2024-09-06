@@ -82,12 +82,6 @@ To:
 https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit
 ```
 
-Or:
-
-```txt
-https://challenges.cloudflare.com/turnstile/v0/api.js?onload=onloadTurnstileCallback
-```
-
 When using `render=explicit`, HTML elements with the `cf-turnstile` class will not show a challenge. The `turnstile.render` function must be invoked using the following steps. To combine both options, pass a query string of `?render=explicit&onload=onloadTurnstileCallback`:
 
 `https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit&onload=onloadTurnstileCallback`
@@ -200,8 +194,9 @@ By default, Turnstile tokens are obtained for a visitor upon the rendering of a 
 
 There are two options:
 
-* The challenge runs automatically after calling the `render()` function.
-* The challenge runs after the `render()` function has been called, by invoking the `turnstile.execute(container: string | HTMLElement, jsParams?: RenderParameters)` function separately.
+- The challenge runs automatically after calling the `render()` function.
+- The challenge runs after the `render()` function has been called, by invoking the `turnstile.execute(container: string | HTMLElement, jsParams?: RenderParameters)` function separately.
+  
   This detaches the appearance and rendering of a widget from its execution.
 
 ## Appearance modes
@@ -210,14 +205,25 @@ If a widget is visible, its appearance can be controlled via the `appearance` pa
 
 By default, `appearance` is set to `always` for visible widget types. However, if `appearance` is set to `execute`, the widget will only become visible after the challenge begins. This is helpful in situations where `execute()` is called after `render()`.  If `appearance` is set to `interaction-only`, the widget will become only visible in cases where an interaction is required.
 
+Refer to [Widget types](/turnstile/concepts/widget-types/) to see widgets by type and state.
+
 ## Widget size
 
-The Turnstile widget can have two different sizes when using the Managed or Non-interactive modes:
+The Turnstile widget can have two different fixed sizes or a flexible width size when using the Managed or Non-interactive modes:
 
-| Size    | Width | Height |
-| ------- | ----- | ------ |
-| Normal  | 300px | 65px   |
-| Compact | 130px | 120px  |
+<Render file="widget-size" />
+
+```html title="Flexible width example"
+<div style="display: block; flex-flow: row;">
+    <div class="cf-turnstile" data-sitekey="1x00000000000000000000AA" data-size="flexible"></div>
+</div>
+```
+
+```html title="Compact mode example"
+<div style="display: block; flex-flow: row;">
+    <div class="cf-turnstile" data-sitekey="1x00000000000000000000AA" data-size="compact"></div>
+</div>
+```
 
 ## Configurations
 
@@ -239,9 +245,10 @@ The Turnstile widget can have two different sizes when using the Managed or Non-
 | `timeout-callback`            | `data-timeout-callback`            | A JavaScript callback invoked when the challenge presents an interactive challenge but was not solved within a given time. A callback will reset the widget to allow a visitor to solve the challenge again.                                                                                                                                                    |
 | `response-field`              | `data-response-field`              | A boolean that controls if an input element with the response token is created, defaults to `true`.                                                                                                                                                                                                                                                             |
 | `response-field-name`         | `data-response-field-name`         | Name of the input element, defaults to `cf-turnstile-response`.                                                                                                                                                                                                                                                                                                 |
-| `size`                        |  `data-size`                       | The widget size. Can take the following values: `normal`, `compact`.                                                                                                                                                                                                                                                                                            |
+| `size`                        | `data-size`                        | The widget size. Can take the following values: `normal`, `flexible`, `compact`. |
 | `retry`                       |  `data-retry`                      | Controls whether the widget should automatically retry to obtain a token if it did not succeed. The default is `auto`, which will retry automatically. This can be set to `never` to disable retry on failure.                                                                                                                                                  |
 | `retry-interval`              |  `data-retry-interval`             | When `retry` is set to `auto`, `retry-interval` controls the time between retry attempts in milliseconds. Value must be a positive integer less than `900000`, defaults to `8000`.                                                                                                                                                                              |
 | `refresh-expired`             |  `data-refresh-expired`            | Automatically refreshes the token when it expires. Can take `auto`, `manual`, or `never`, defaults to `auto`.                                                                                                                                                                                                                                                   |
 | `refresh-timeout`             | `data-refresh-timeout`             | Controls whether the widget should automatically refresh upon entering an interactive challenge and observing a timeout. Can take `auto` (automatically refreshes upon encountering an interactive timeout), `manual` (prompts the visitor to manually refresh) or `never` (will show a timeout), defaults to `auto`.  Only applies to widgets of mode managed. |
 | `appearance`                  | `data-appearance`                  | Appearance controls when the widget is visible. It can be `always` (default), `execute`, or `interaction-only`. Refer to [Appearance modes](/turnstile/get-started/client-side-rendering/#appearance-modes) for more information.                                                                                                                               |
+| `feedback-enabled`            | `data-feedback-enabled`            | Allows Cloudflare to gather visitor feedback upon widget failure. It can be `true` (default) or `false`. |

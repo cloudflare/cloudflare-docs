@@ -3,6 +3,7 @@ import { z } from "astro:content";
 import { Card } from "~/components";
 import { indexPlans } from "~/util/plans";
 import { marked } from "marked";
+import { GlossaryTooltip } from "~/components";
 
 type Props = z.infer<typeof props>;
 
@@ -18,33 +19,61 @@ const plan = await indexPlans(id);
 
 // @ts-ignore types not implemented for plans JSON
 const properties = plan.properties;
+
+const markdown = (content: any) => {
+	if (typeof content !== "string") return content;
+
+	return marked.parse(content);
+};
 ---
 
 <table>
 	<thead>
 		<tr>
-			<td></td>
-			<td>Free</td>
-			<td>Pro</td>
-			<td>Business</td>
-			<td>Enterprise</td>
+			<th></th>
+			<th>Free</th>
+			<th>Pro</th>
+			<th>Business</th>
+			<th>Enterprise</th>
+			{
+				plan.ent_plus &&
+				<th>{plan.ent_plus}</th>
+			}
 		</tr>
 	</thead>
 	<tbody>
-		{
-			Object.entries(properties).map(([k, v]) => {
-				const markdown = (content) => {
-					if (typeof content !== "string") return content;
+    {Object.entries(properties).map(([k, v]) => {
+      const renderTitle = (title) => {
+        const placeholder = "[[GLOSSARY_TOOLTIP_SNIPPETS_SUBREQUEST]]";
 
-					return marked.parse(content);
-				};
+        if (title.includes(placeholder)) {
+          const [beforePlaceholder, afterPlaceholder] = title.split(placeholder);
+
+          return (
+            <>
+              {beforePlaceholder}
+              <GlossaryTooltip term="Snippets subrequest" prepend="A subrequest is ">
+                subrequests
+              </GlossaryTooltip>
+              {afterPlaceholder}
+            </>
+          );
+        }
+
+        return markdown(title);
+      };
+
 				return (
 					<tr>
-						<td set:html={markdown(v.title)} />
+						<th set:html={renderTitle(v.title)} />
 						<td set:html={markdown(v.free)} />
 						<td set:html={markdown(v.pro)} />
 						<td set:html={markdown(v.biz)} />
 						<td set:html={markdown(v.ent)} />
+						{
+							plan.ent_plus &&
+							<td set:html={markdown(v.ent_plus)} />
+						}
 					</tr>
 				);
 			})

@@ -13,12 +13,9 @@ languages:
   - TypeScript
 sidebar:
   order: 1
-
 ---
 
-
-
-import { Render } from "~/components"
+import { Render, PackageManagers } from "~/components";
 
 In this tutorial, you will use the [OpenAI](https://openai.com) API and [Cloudflare R2](/r2) to create a [fine-tuned model](https://platform.openai.com/docs/guides/fine-tuning).
 
@@ -38,24 +35,36 @@ To review the completed code for this application, refer to the [GitHub reposito
 
 Before you start, make sure you have:
 
-* A Cloudflare account with access to R2. If you do not have a Cloudflare account, [sign up](https://dash.cloudflare.com/sign-up/workers-and-pages) before continuing. Then purchase R2 from your Cloudflare dashboard.
-* An OpenAI API key.
-* A fine-tune document, structured as [JSON Lines](https://jsonlines.org/). Use the [example document](https://github.com/kristianfreeman/openai-finetune-r2-example/blob/16ca53ca9c8589834abe317487eeedb8a24c7643/example_data.jsonl) in the source code.
+- A Cloudflare account with access to R2. If you do not have a Cloudflare account, [sign up](https://dash.cloudflare.com/sign-up/workers-and-pages) before continuing. Then purchase R2 from your Cloudflare dashboard.
+- An OpenAI API key.
+- A fine-tune document, structured as [JSON Lines](https://jsonlines.org/). Use the [example document](https://github.com/kristianfreeman/openai-finetune-r2-example/blob/16ca53ca9c8589834abe317487eeedb8a24c7643/example_data.jsonl) in the source code.
 
 ## 1. Create a Worker application
 
 First, use the `c3` CLI to create a new Cloudflare Workers project.
 
-<Render file="c3-run-command-with-directory" product="workers" params={{ one: "finetune-chatgpt-model" }} />
+<PackageManagers
+	type="create"
+	pkg="cloudflare@latest"
+	args={"finetune-chatgpt-model"}
+/>
 
-<Render file="c3-post-run-steps" product="workers" params={{ one: "Hello World example", two: "Hello World Worker", three: "TypeScript" }} />
+<Render
+	file="c3-post-run-steps"
+	product="workers"
+	params={{
+		one: "Hello World example",
+		two: "Hello World Worker",
+		three: "TypeScript",
+	}}
+/>
 
 The above options will create the "Hello World" TypeScript project.
 
 Move into your newly created directory:
 
 ```sh
-$ cd finetune-chatgpt-model
+cd finetune-chatgpt-model
 ```
 
 ## 2. Upload a fine-tune document to R2
@@ -65,7 +74,7 @@ Next, upload the fine-tune document to R2. R2 is a key-value store that allows y
 To create a new R2 bucket use the [`wrangler r2 bucket create`](/workers/wrangler/commands/#create-2) command. Note that you are logged in with your Cloudflare account. If not logged in via Wrangler, use the [`wrangler login`](/workers/wrangler/commands/#login) command.
 
 ```sh
-$ npx wrangler r2 bucket create <BUCKET_NAME>
+npx wrangler r2 bucket create <BUCKET_NAME>
 ```
 
 Replace `<BUCKET_NAME>` with your desired bucket name. Note that bucket names must be lowercase and can only contain dashes.
@@ -73,7 +82,7 @@ Replace `<BUCKET_NAME>` with your desired bucket name. Note that bucket names mu
 Next, upload a file using the [`wrangler r2 object put`](/workers/wrangler/commands/#put-2) command.
 
 ```sh
-$ npx wrangler r2 object put <PATH> -f <FILE_NAME>
+npx wrangler r2 object put <PATH> -f <FILE_NAME>
 ```
 
 `<PATH>` is the combined bucket and file path of the file you want to upload -- for example, `fine-tune-ai/finetune.jsonl`, where `fine-tune-ai` is the bucket name. Replace `<FILE_NAME>` with the local filename of your fine-tune document.
@@ -95,13 +104,13 @@ bucket_name = '<YOUR_BUCKET_NAME>'
 You will use [Hono](https://hono.dev/), a lightweight framework for building Cloudflare Workers applications. Hono provides an interface for defining routes and middleware functions. Inside your project directory, run the following command to install Hono:
 
 ```sh
-$ npm install hono
+npm install hono
 ```
 
 You also need to install the [OpenAI Node API library](https://www.npmjs.com/package/openai). This library provides convenient access to the OpenAI REST API in a Node.js project. To install the library, execute the following command:
 
 ```sh
-$ npm install openai
+npm install openai
 ```
 
 Next, open the `src/index.ts` file and replace the default code with the below code. Replace `<MY_BUCKET>` with the binding name you set in `wrangler.toml` file.
@@ -136,7 +145,7 @@ app.onError((err, c) => {
 export default app;
 ```
 
-In the above code, you first import the required packages and define the types. Then, you initialize `app` as a new Hono instance. Using the  `use` middleware function, you add the OpenAI API client to the context of all routes. This middleware function allows you to access the client from within any route handler. `onError()` defines an error handler to return any errors as a JSON response.
+In the above code, you first import the required packages and define the types. Then, you initialize `app` as a new Hono instance. Using the `use` middleware function, you add the OpenAI API client to the context of all routes. This middleware function allows you to access the client from within any route handler. `onError()` defines an error handler to return any errors as a JSON response.
 
 ## 5. Read R2 files and upload them to OpenAI
 
@@ -184,23 +193,23 @@ This section includes the `GET /models` route and the `createModel` function. Th
 
 ```typescript
 const createModel = async (c: Context, fileId: string) => {
-	const openai: OpenAI = c.get("openai")
+	const openai: OpenAI = c.get("openai");
 
 	const body = {
 		training_file: fileId,
 		model: "gpt-4o-mini",
-	}
+	};
 
-	return openai.fineTuning.jobs.create(body)
-}
+	return openai.fineTuning.jobs.create(body);
+};
 
-app.get('/models', async c => {
-	const fileId = c.req.query("file_id")
-	if (!fileId) return c.text("Missing file ID query param", 400)
+app.get("/models", async (c) => {
+	const fileId = c.req.query("file_id");
+	if (!fileId) return c.text("Missing file ID query param", 400);
 
-	const model = await createModel(c, fileId)
-	return c.json(model)
-})
+	const model = await createModel(c, fileId);
+	return c.json(model);
+});
 ```
 
 ## 7. List all fine-tune jobs
@@ -209,15 +218,15 @@ This section describes the `GET /jobs` route and the corresponding `getJobs` fun
 
 ```typescript
 const getJobs = async (c: Context) => {
-	const openai: OpenAI = c.get("openai")
-	const resp = await openai.fineTuning.jobs.list()
-	return resp.data
-}
+	const openai: OpenAI = c.get("openai");
+	const resp = await openai.fineTuning.jobs.list();
+	return resp.data;
+};
 
-app.get('/jobs', async c => {
-	const jobs = await getJobs(c)
-	return c.json(jobs)
-})
+app.get("/jobs", async (c) => {
+	const jobs = await getJobs(c);
+	return c.json(jobs);
+});
 ```
 
 ## 8. Deploy your application
@@ -227,7 +236,7 @@ After you have created your Worker application and added the required functions,
 Before you deploy, you must set the `OPENAI_API_KEY` [secret](/workers/configuration/secrets/) for your application. Do this by running the [`wrangler secret put`](/workers/wrangler/commands/#put-3) command:
 
 ```sh
-$ npx wrangler secret put OPENAI_API_KEY
+npx wrangler secret put OPENAI_API_KEY
 ```
 
 To deploy your Worker application to the Cloudflare global network:
@@ -235,7 +244,7 @@ To deploy your Worker application to the Cloudflare global network:
 1. Make sure you are in your Worker project's directory, then run the [`wrangler deploy`](/workers/wrangler/commands/#deploy) command:
 
 ```sh
-$ npx wrangler deploy
+npx wrangler deploy
 ```
 
 2. Wrangler will package and upload your code.
@@ -247,13 +256,13 @@ $ npx wrangler deploy
 To use your application, create a new fine-tune job by making a request to the `/files` with a `file` query param matching the filename you uploaded earlier:
 
 ```sh
-$ curl https://your-worker-url.com/files?file=finetune.jsonl
+curl https://your-worker-url.com/files?file=finetune.jsonl
 ```
 
 When the file is uploaded, issue another request to `/models`, passing the `file_id` query parameter. This should match the `id` returned as JSON from the `/files` route:
 
 ```sh
-$ curl https://your-worker-url.com/models?file_id=file-abc123
+curl https://your-worker-url.com/models?file_id=file-abc123
 ```
 
 Finally, visit `/jobs` to see the status of your fine-tune jobs in OpenAI. Once the fine-tune job has completed, you can see the `fine_tuned_model` value, indicating a fine-tuned model has been created.
@@ -268,8 +277,8 @@ Use it in any API requests you make to OpenAI's chat completions endpoints. For 
 
 ```javascript
 openai.chat.completions.create({
-  messages: [{ role: "system", content: "You are a helpful assistant." }],
-  model: "ft:gpt-4o-mini:my-org:custom_suffix:id",
+	messages: [{ role: "system", content: "You are a helpful assistant." }],
+	model: "ft:gpt-4o-mini:my-org:custom_suffix:id",
 });
 ```
 

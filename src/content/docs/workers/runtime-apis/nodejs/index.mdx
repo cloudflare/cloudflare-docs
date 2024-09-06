@@ -2,16 +2,41 @@
 pcx_content_type: concept
 title: Node.js compatibility
 head: []
-description: Implemented Node.js runtime APIs and enablement instructions for
-  your Worker project.
-
+description: Node.js APIs available in Cloudflare Workers
 ---
 
-import { DirectoryListing } from "~/components"
+import { DirectoryListing } from "~/components";
 
-Most Workers import one or more packages of JavaScript or TypeScript code from [npm](https://www.npmjs.com/) as dependencies in `package.json`. Many of these packages rely on APIs from the [Node.js runtime](https://nodejs.org/en/about), and will not work unless these APIs are present.
+When you write a Worker, you may need to import packages from [npm](https://www.npmjs.com/). Many npm packages rely on APIs from the [Node.js runtime](https://nodejs.org/en/about), and will not work unless these Node.js APIs are available.
 
-To ensure compatibility with a wider set of npm packages, and make it easier for you to run existing applications on Cloudflare Workers, the following APIs from the [Node.js runtime](https://nodejs.org/en/about) are available directly as Workers runtime APIs, with no need to add polyfills to your own code:
+Cloudflare Workers provides a subset of Node.js APIs in two forms:
+
+1. As built-in APIs provided by the Workers Runtime
+2. As polyfills that [Wrangler](/workers/wrangler/) adds to your Worker's code
+
+You can view which APIs are supported using the [Node.js compatability matrix](https://workers-nodejs-compat-matrix.pages.dev).
+
+## Get Started
+
+To enable both built-in runtime APIs and polyfills for your Worker, add the [`nodejs_compat_v2`](/workers/configuration/compatibility-dates/#nodejs-compatibility-flag) [compatibility flag](/workers/configuration/compatibility-dates/#nodejs-compatibility-flag) to your `wrangler.toml`:
+
+```toml title="wrangler.toml"
+compatibility_flags = [ "nodejs_compat_v2" ]
+```
+
+To only enable built-in runtime APIs, add the [`nodejs_compat`](/workers/configuration/compatibility-dates/#nodejs-compatibility-flag) [compatibility flag](/workers/configuration/compatibility-dates/#nodejs-compatibility-flag) to your `wrangler.toml`:
+
+```toml title="wrangler.toml"
+compatibility_flags = [ "nodejs_compat" ]
+```
+
+:::note
+Starting on September 23rd, 2024, when your compatibility date is on or after `2024-09-23`, the `nodejs_compat` compatibility flag will enable the exact same behavior as `nodejs_compat_v2`.
+:::
+
+## Built-in Node.js Runtime APIs
+
+The following APIs from Node.js are provided directly by the Workers Runtime. They are available when using `nodejs_compat` or `nodejs_compat_v2`:
 
 <DirectoryListing />
 
@@ -19,44 +44,62 @@ Node.js APIs are available under the `node:` prefix, and this prefix must be use
 
 ```js
 // Do this:
-import { Buffer } from 'node:buffer';
+import { Buffer } from "node:buffer";
 
 // Do not do this:
-import { Buffer } from 'buffer';
+import { Buffer } from "buffer";
 ```
 
 Unless otherwise specified, implementations of Node.js APIs in Workers are intended to match the implementation in the [Current release of Node.js](https://github.com/nodejs/release#release-schedule).
+
+## Node.js API Polyfills
+
+When using the `nodejs_compat_v2` compatability flag, in addition to enabling Node.js APIs in the Workers Runtime, [Wrangler](/workers/wrangler/) will use [unenv](https://github.com/unjs/unenv) to automatically detect uses of Node.js APIs, and add polyfills where relevant.
+
+Adding polyfills maximizes compatibility with existing npm packages, while recognizing that not all APIs from Node.js make sense in the context of serverless functions.
+
+Where it is possible to provide a fully functional polyfill of the relevant Node.js API, unenv will do so.
+In cases where this is not possible, such as the [`fs`](https://nodejs.org/api/fs.html), unenv adds a module with mocked methods.
+Calling these mocked methods will either noop or will throw an error with a message like:
+
+```
+[unenv] <method name> is not implemented yet!
+```
+
+This allows you to import packages that use these Node.js modules, even if certain methods are not supported.
+
+For a full list of APIs supported, including information on which are mocked, see the [Node.js compatability matrix](https://workers-nodejs-compat-matrix.pages.dev).
 
 ## Enable Node.js with Workers
 
 Add the [`nodejs_compat`](/workers/configuration/compatibility-dates/#nodejs-compatibility-flag) [compatibility flag](/workers/configuration/compatibility-dates/#nodejs-compatibility-flag) to your `wrangler.toml`:
 
 ```toml title="wrangler.toml"
-compatibility_flags = [ "nodejs_compat" ]
+compatibility_flags = [ "nodejs_compat_v2" ]
 ```
 
-## Enable Node.js with Pages Functions
+## Enable Node.js in Pages Functions
 
-### Enable Node.js with Wrangler
+### Enable Node.js in Pages with Wrangler
 
 To enable `nodejs_compat` in local development, pass the [`--compatibility-flags`](/workers/wrangler/commands/#dev-1) argument with the `nodejs_compat` flag to `wrangler pages dev`:
 
 ```sh
-$ npx wrangler pages dev [<DIRECTORY>] --compatibility-flags="nodejs_compat"
+npx wrangler pages dev [<DIRECTORY>] --compatibility-flags="nodejs_compat"
 ```
 
 For additional options, refer to the list of [Pages-specific CLI commands](/workers/wrangler/commands/#dev-1).
 
-### Enable Node.js from the Cloudflare dashboard
+### Enable Node.js in Pages from the Cloudflare dashboard
 
 To enable Node.js for your Pages Function from the Cloudflare dashboard:
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) and select your account.
 2. Select **Workers & Pages** and in **Overview**, select your Pages project.
 3. Select **Settings** > **Functions** > **Compatibility Flags**.
-4. Add the `nodejs_compat` compatibility flag to your Preview and Production deployments.
+4. Add the `nodejs_compat_v2` compatibility flag to your Preview and Production deployments.
 
-### Enable only AsyncLocalStorage
+## Enable only AsyncLocalStorage
 
 To enable the Node.js `AsyncLocalStorage` API only, use the `nodejs_als` compatibility flag.
 
@@ -66,4 +109,4 @@ compatibility_flags = [ "nodejs_als" ]
 
 ## Related resources
 
-* Write your Worker code in [ES modules syntax](/workers/reference/migrate-to-module-workers/) for an optimized experience.
+- Write your Worker code in [ES modules syntax](/workers/reference/migrate-to-module-workers/) for an optimized experience.

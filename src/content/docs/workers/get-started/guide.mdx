@@ -6,10 +6,9 @@ sidebar:
 head:
   - tag: title
     content: Get started - CLI
-
 ---
 
-import { Details, Render } from "~/components"
+import { Details, Render, PackageManagers } from "~/components";
 
 Set up and deploy your first Worker with Wrangler, the Cloudflare Developer Platform CLI.
 
@@ -25,16 +24,27 @@ This guide will instruct you through setting up and deploying your first Worker.
 
 Open a terminal window and run C3 to create your Worker project:
 
-<Render file="c3-run-command-with-directory" product="workers" params={{ one: "my-first-worker" }} />
+<PackageManagers
+	type="create"
+	pkg="cloudflare@latest"
+	args={"my-first-worker"}
+/>
 
-<Render file="c3-post-run-steps" product="workers" params={{ one: "Hello World example", two: "Hello World Worker", three: "JavaScript" }} />
+<Render
+	file="c3-post-run-steps"
+	product="workers"
+	params={{
+		one: "Hello World example",
+		two: "Hello World Worker",
+		three: "JavaScript",
+	}}
+/>
 
 Now, you have a new project set up. Move into that project folder.
 
 ```sh
-$ cd my-first-worker
+cd my-first-worker
 ```
-
 
 <Details header="What files did C3 create?">
 
@@ -46,35 +56,32 @@ In your project directory, C3 will have generated the following:
 4. `package-lock.json`: Refer to [`npm` documentation on `package-lock.json`](https://docs.npmjs.com/cli/v9/configuring-npm/package-lock-json).
 5. `node_modules`: Refer to [`npm` documentation `node_modules`](https://docs.npmjs.com/cli/v7/configuring-npm/folders#node-modules).
 
-
 </Details>
-
 
 <Details header="What if I already have a project in a git repository?">
 
 In addition to creating new projects from C3 templates, C3 also supports creating new projects from Git repositories. To create a new project from a Git repository, open your terminal and run:
 
 ```sh
-$ npm create cloudflare@latest -- --template <SOURCE>
+npm create cloudflare@latest -- --template <SOURCE>
 ```
 
 `<SOURCE>` may be any of the following:
 
-* `user/repo` (GitHub)
-* `git@github.com:user/repo`
-* `https://github.com/user/repo`
-* `user/repo/some-template` (subdirectories)
-* `user/repo#canary` (branches)
-* `user/repo#1234abcd` (commit hash)
-* `bitbucket:user/repo` (Bitbucket)
-* `gitlab:user/repo` (GitLab)
+- `user/repo` (GitHub)
+- `git@github.com:user/repo`
+- `https://github.com/user/repo`
+- `user/repo/some-template` (subdirectories)
+- `user/repo#canary` (branches)
+- `user/repo#1234abcd` (commit hash)
+- `bitbucket:user/repo` (Bitbucket)
+- `gitlab:user/repo` (GitLab)
 
 At a minimum, template folders must contain the following:
 
-* `package.json`
-* `wrangler.toml`
-* `src/` containing a worker script referenced from `wrangler.toml`
-
+- `package.json`
+- `wrangler.toml`
+- `src/` containing a worker script referenced from `wrangler.toml`
 
 </Details>
 
@@ -85,18 +92,16 @@ The Workers command-line interface, [Wrangler](/workers/wrangler/install-and-upd
 After you have created your first Worker, run the [`wrangler dev`](/workers/wrangler/commands/#dev) command in the project directory to start a local server for developing your Worker. This will allow you to preview your Worker locally during development.
 
 ```sh
-$ npx wrangler dev
+npx wrangler dev
 ```
 
 If you have not used Wrangler before, it will try to open your web browser to login with your Cloudflare account.
 
 Go to [http://localhost:8787](http://localhost:8787) to view your Worker.
 
-
 <Details header="Browser issues?">
 
 If you have issues with this step or you do not have access to a browser interface, refer to the [`wrangler login`](/workers/wrangler/commands/#login) documentation.
-
 
 </Details>
 
@@ -108,12 +113,11 @@ Find the `src/index.js` file. `index.js` will be populated with the code below:
 
 ```js title="Original index.js"
 export default {
-  async fetch(request, env, ctx) {
-    return new Response("Hello World!");
-  },
+	async fetch(request, env, ctx) {
+		return new Response("Hello World!");
+	},
 };
 ```
-
 
 <Details header="Code explanation">
 
@@ -121,9 +125,9 @@ This code block consists of a few different parts.
 
 ```js title="Updated index.js" {1}
 export default {
-  async fetch(request, env, ctx) {
-    return new Response("Hello World!");
-  },
+	async fetch(request, env, ctx) {
+		return new Response("Hello World!");
+	},
 };
 ```
 
@@ -131,9 +135,9 @@ export default {
 
 ```js title="index.js" {2}
 export default {
-  async fetch(request, env, ctx) {
-    return new Response("Hello World!");
-  },
+	async fetch(request, env, ctx) {
+		return new Response("Hello World!");
+	},
 };
 ```
 
@@ -143,14 +147,13 @@ Additionally, the `fetch` handler will always be passed three parameters: [`requ
 
 ```js title="index.js" {3}
 export default {
-  async fetch(request, env, ctx) {
-    return new Response("Hello World!");
-  },
+	async fetch(request, env, ctx) {
+		return new Response("Hello World!");
+	},
 };
 ```
 
 The Workers runtime expects `fetch` handlers to return a `Response` object or a Promise which resolves with a `Response` object. In this example, you will return a new `Response` with the string `"Hello World!"`.
-
 
 </Details>
 
@@ -158,14 +161,13 @@ Replace the content in your current `index.js` file with the content below, whic
 
 ```js title="index.js" {3}
 export default {
-  async fetch(request, env, ctx) {
-    return new Response("Hello Worker!");
-  },
+	async fetch(request, env, ctx) {
+		return new Response("Hello Worker!");
+	},
 };
 ```
 
 Then, save the file and reload the page. Your Worker's output will have changed to the new text.
-
 
 <Details header="No visible changes?">
 
@@ -175,7 +177,6 @@ If the output for your Worker does not change, make sure that:
 2. You have `wrangler dev` running.
 3. You reloaded your browser.
 
-
 </Details>
 
 ## 4. Deploy your project
@@ -183,18 +184,16 @@ If the output for your Worker does not change, make sure that:
 Deploy your Worker via Wrangler to a `*.workers.dev` subdomain or a [Custom Domain](/workers/configuration/routing/custom-domains/).
 
 ```sh
-$ npx wrangler deploy
+npx wrangler deploy
 ```
 
 If you have not configured any subdomain or domain, Wrangler will prompt you during the publish process to set one up.
 
 Preview your Worker at `<YOUR_WORKER>.<YOUR_SUBDOMAIN>.workers.dev`.
 
-
 <Details header="Encountering errors?">
 
 When pushing to your `*.workers.dev` subdomain for the first time, you may see [`523` errors](/support/troubleshooting/cloudflare-errors/troubleshooting-cloudflare-5xx-errors/#error-523-origin-is-unreachable) while DNS is propagating. These errors should resolve themselves after a minute or so.
-
 
 </Details>
 
@@ -202,7 +201,7 @@ When pushing to your `*.workers.dev` subdomain for the first time, you may see [
 
 To do more:
 
-* Review our [Examples](/workers/examples/) and [Tutorials](/workers/tutorials/) for inspiration.
-* Set up [bindings](/workers/runtime-apis/bindings/) to allow your Worker to interact with other resources and unlock new functionality.
-* Learn how to [test and debug](/workers/testing/) your Workers.
-* Read about [Workers limits and pricing](/workers/platform/).
+- Review our [Examples](/workers/examples/) and [Tutorials](/workers/tutorials/) for inspiration.
+- Set up [bindings](/workers/runtime-apis/bindings/) to allow your Worker to interact with other resources and unlock new functionality.
+- Learn how to [test and debug](/workers/testing/) your Workers.
+- Read about [Workers limits and pricing](/workers/platform/).

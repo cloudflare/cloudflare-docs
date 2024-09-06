@@ -91,7 +91,7 @@ Many of these fields are referenced from the [Rules language documentation](/rul
   </thead>
   <tbody>
     <tr id="field-http-cookie">
-      <td valign="top"><a href="/ruleset-engine/rules-language/fields/#field-http-cookie"><code>http.cookie</code></a><br />`String`</td>
+      <td valign="top"><a href="/ruleset-engine/rules-language/fields/standard-fields/#httpcookie"><code>http.cookie</code></a><br />`String`</td>
       <td>(<a href="/load-balancing/additional-options/load-balancing-rules/expressions/#expression-editor">Manual entry only</a>)</td>
       <td>
         <p>Represents the entire cookie as a string.</p>
@@ -102,7 +102,7 @@ Many of these fields are referenced from the [Rules language documentation](/rul
       </td>
     </tr>
     <tr id="field-http-host">
-      <td valign="top"><a href="/ruleset-engine/rules-language/fields/#field-http-host"><code>http.host</code></a><br />`String`</td>
+      <td valign="top"><a href="/ruleset-engine/rules-language/fields/standard-fields/#httphost"><code>http.host</code></a><br />`String`</td>
       <td>(<a href="/load-balancing/additional-options/load-balancing-rules/expressions/#expression-editor">Manual entry only</a>)</td>
       <td>
         <p>Represents the hostname used in the full request URI.</p>
@@ -113,7 +113,7 @@ Many of these fields are referenced from the [Rules language documentation](/rul
       </td>
     </tr>
     <tr id="field-http-referer">
-      <td valign="top"><a href="/ruleset-engine/rules-language/fields/#field-http-referer"><code>http.referer</code></a><br />`String`</td>
+      <td valign="top"><a href="/ruleset-engine/rules-language/fields/standard-fields/#httpreferer"><code>http.referer</code></a><br />`String`</td>
       <td>(<a href="/load-balancing/additional-options/load-balancing-rules/expressions/#expression-editor">Manual entry only</a>)</td>
       <td>
         <p>Represents the HTTP Referer request header, which contains the address of the web page that linked to the currently requested page.</p>
@@ -124,7 +124,7 @@ Many of these fields are referenced from the [Rules language documentation](/rul
       </td>
     </tr>
     <tr id="field-http-request-headers">
-      <td valign="top"><a href="/ruleset-engine/rules-language/fields/#field-http-request-headers"><code>http.request.headers</code></a><br />`Map<Array<String>>`</td>
+      <td valign="top"><a href="/ruleset-engine/rules-language/fields/http-request-header/"><code>http.request.headers</code></a><br />`Map<Array<String>>`</td>
       <td><code>Header</code></td>
       <td>
         <p>Represents HTTP request headers as a Map (or associative array).</p>
@@ -146,7 +146,7 @@ Many of these fields are referenced from the [Rules language documentation](/rul
       </td>
     </tr>
     <tr id="field-http-request-method">
-      <td valign="top"><a href="/ruleset-engine/rules-language/fields/#field-http-request-method"><code>http.request.method</code></a><br />`String`</td>
+      <td valign="top"><a href="/ruleset-engine/rules-language/fields/standard-fields/#httprequestmethod"><code>http.request.method</code></a><br />`String`</td>
       <td><code>Request Method</code></td>
       <td>
         <p>Represents the HTTP method, returned as a string of uppercase characters.</p>
@@ -157,7 +157,7 @@ Many of these fields are referenced from the [Rules language documentation](/rul
       </td>
     </tr>
     <tr id="field-http-request-timestamp-sec">
-      <td valign="top"><a href="/ruleset-engine/rules-language/fields/#field-http-request-timestamp-sec"><code>http.request.timestamp.sec</code></a><br />`Integer`</td>
+      <td valign="top"><a href="/ruleset-engine/rules-language/fields/standard-fields/#httprequesttimestampsec"><code>http.request.timestamp.sec</code></a><br />`Integer`</td>
       <td><code>Timestamp</code></td>
       <td>
         <p>Represents the timestamp when Cloudflare received the request, expressed as Unix time in seconds. This value is 10 digits long.</p>
@@ -168,7 +168,7 @@ Many of these fields are referenced from the [Rules language documentation](/rul
       </td>
     </tr>
     <tr id="field-http-request-uri">
-      <td valign="top"><a href="/ruleset-engine/rules-language/fields/#field-http-request-uri"><code>http.request.uri</code></a><br />`String`</td>
+      <td valign="top"><a href="/ruleset-engine/rules-language/fields/standard-fields/#httprequesturi"><code>http.request.uri</code></a><br />`String`</td>
       <td><code>URI</code></td>
       <td>
         <p>Represents the URI path and query string of the request.</p>
@@ -179,7 +179,7 @@ Many of these fields are referenced from the [Rules language documentation](/rul
       </td>
     </tr>
     <tr id="field-http-request-uri-args">
-      <td valign="top"><a href="/ruleset-engine/rules-language/fields/#field-http-request-uri-args"><code>http.request.uri.args</code></a><br />`Map<Array<String>>`</td>
+      <td valign="top"><a href="/ruleset-engine/rules-language/fields/uri/"><code>http.request.uri.args</code></a><br />`Map<Array<String>>`</td>
       <td>(<a href="/load-balancing/additional-options/load-balancing-rules/expressions/#expression-editor">Manual entry only</a>)</td>
       <td>
         <p>Represents the HTTP URI arguments associated with a request as a Map (associative array).</p>
@@ -202,7 +202,7 @@ Many of these fields are referenced from the [Rules language documentation](/rul
       </td>
     </tr>
     <tr id="field-http-request-uri-args-names">
-      <td valign="top"><a href="/ruleset-engine/rules-language/fields/#field-http-request-uri-args-names"><code>http.request.uri.args.names</code></a><br />`Array<String>`</td>
+      <td valign="top"><a href="/ruleset-engine/rules-language/fields/uri/#httprequesturiargsnames"><code>http.request.uri.args.names</code></a><br />`Array<String>`</td>
       <td>(<a href="/load-balancing/additional-options/load-balancing-rules/expressions/#expression-editor">Manual entry only</a>)</td>
       <td>
         <p>Represents the names of the arguments in the HTTP URI query string. The names are not pre-processed and retain the original case used in the request.</p>
@@ -222,7 +222,7 @@ Many of these fields are referenced from the [Rules language documentation](/rul
       </td>
     </tr>
     <tr id="field-http-request-uri-args-values">
-      <td valign="top"><a href="/ruleset-engine/rules-language/fields/#field-http-request-uri-args-values"><code>http.request.uri.args.values</code></a><br />`Array<String>`</td>
+      <td valign="top"><a href="/ruleset-engine/rules-language/fields/uri/#httprequesturiargsvalues"><code>http.request.uri.args.values</code></a><br />`Array<String>`</td>
       <td>(<a href="/load-balancing/additional-options/load-balancing-rules/expressions/#expression-editor">Manual entry only</a>)</td>
       <td>
         <p>Represents the values of arguments in the HTTP URI query string. The values are not pre-processed and retain the original case used in the request. They are in the same order as in the request.</p>
@@ -242,7 +242,7 @@ Many of these fields are referenced from the [Rules language documentation](/rul
       </td>
     </tr>
     <tr id="field-http-request-uri-path">
-      <td valign="top"><a href="/ruleset-engine/rules-language/fields/#field-http-request-uri-path"><code>http.request.uri.path</code></a><br />`String`</td>
+      <td valign="top"><a href="/ruleset-engine/rules-language/fields/standard-fields/#httprequesturipath"><code>http.request.uri.path</code></a><br />`String`</td>
       <td><code>URI Path</code></td>
       <td>
         <p>Represents the URI path of the request.</p>
@@ -253,7 +253,7 @@ Many of these fields are referenced from the [Rules language documentation](/rul
       </td>
     </tr>
     <tr id="field-http-request-uri-query">
-      <td valign="top"><a href="/ruleset-engine/rules-language/fields/#field-http-request-uri-query"><code>http.request.uri.query</code></a><br />`String`</td>
+      <td valign="top"><a href="/ruleset-engine/rules-language/fields/standard-fields/#httprequesturiquery"><code>http.request.uri.query</code></a><br />`String`</td>
       <td><code>URI Query</code></td>
       <td>
         <p>Represents the entire query string, without the <code class="InlineCode">?</code> delimiter.</p>
@@ -264,7 +264,7 @@ Many of these fields are referenced from the [Rules language documentation](/rul
       </td>
     </tr>
     <tr id="field-http-request-version">
-      <td valign="top"><a href="/ruleset-engine/rules-language/fields/#field-http-request-version"><code>http.request.version</code></a><br />`String`</td>
+      <td valign="top"><a href="/ruleset-engine/rules-language/fields/standard-fields/#httprequestversion"><code>http.request.version</code></a><br />`String`</td>
       <td><code>HTTP Version</code></td>
       <td>
         <p>Represents the version of the HTTP protocol used. Use this field when you require different checks for different versions.</p>
