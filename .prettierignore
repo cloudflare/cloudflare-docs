@@ -1,5 +1,5 @@
 dist
 # generated actions JS
 .github/**/*/index.js
-public/_redirects
 .github/CODEOWNERS
+public/_redirects
