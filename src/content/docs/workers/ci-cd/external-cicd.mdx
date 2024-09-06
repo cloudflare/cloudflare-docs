@@ -1,7 +1,6 @@
 ---
 pcx_content_type: concept
 title: External CI/CD
-head: []
 description: Integrate Workers development into your existing continuous integration and continuous development workflows.
 ---
 
@@ -40,7 +39,7 @@ To set up your CI:
 
 :::caution
 
-It is important not to store the value of `CLOUDFLARE_API_TOKEN` in your repository, as it gives access to deploy Workers on your account. Instead, you should utilise your CI/CD provider's support for storing secrets.
+It is important not to store the value of `CLOUDFLARE_API_TOKEN` in your repository, as it gives access to deploy Workers on your account. Instead, you should utilize your CI/CD provider's support for storing secrets.
 :::
 
 2. Create a workflow that will be responsible for deploying the Worker. This workflow should run `wrangler deploy`. Review an example [GitHub Actions](https://docs.github.com/en/actions/using-workflows/about-workflows) workflow in the follow section.
