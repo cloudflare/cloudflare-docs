@@ -14,7 +14,7 @@ This example skips WAF rules for requests from IP addresses in an allowlist (def
 2.  Create a custom rule skipping all rules for any request from the IPs in the list you created (`allowed_ips` in the current example).
 
     - **Expression**: `(ip.src in $allowed_ips)`
-    - **Action**: `Skip:`
+    - **Action**: _Skip:_
       - _All remaining custom rules_
       - _Skip phases_:
         - _All rate limiting rules_

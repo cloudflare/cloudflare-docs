@@ -5,10 +5,8 @@ title: Challenge bad bots
 
 Cloudflare’s Bot Management feature scores the likelihood that a request originates from a bot.
 
-:::caution
-
+:::note
 Access to [Bot Management](/bots/plans/bm-subscription/) requires a Cloudflare Enterprise plan with Bot Management enabled.
-
 :::
 
 Bot score ranges from 1 through 99. A low score indicates the request comes from a script, API service, or an automated agent. A high score indicates that a human issued the request from a standard desktop or mobile web browser.
@@ -32,18 +30,18 @@ Your rules may also vary based on the [nature of your site](/bots/get-started/bm
 
 The following three rules provide baseline protection against malicious bots:
 
-1. Rule 1:
+**Rule 1:**
 
 - **Expression**: `(cf.bot_management.verified_bot)`
 - **Action**: _Skip:_
-  - All remaining custom rules
+  - _All remaining custom rules_
 
-2. Rule 2:
+**Rule 2:**
 
 - **Expression**: `(cf.bot_management.score eq 1)`
 - **Action**: _Block_
 
-3. Rule 3:
+**Rule 3:**
 
 - **Expression**: `(cf.bot_management.score gt 1 and cf.bot_management.score lt 30)`
 - **Action**: _Managed Challenge_
@@ -63,8 +61,7 @@ Since Bot Management detects automated users, you need to explicitly allow your 
 
 This example offers the same protection as the browser-only rule, but allows automated traffic to your API.
 
-- **Expression**: `(cf.bot_management.score lt 30 and not cf.bot_management.verified_bot and not
-        starts_with(http.request.uri.path, "/api"))`
+- **Expression**: `(cf.bot_management.score lt 30 and not cf.bot_management.verified_bot and not starts_with(http.request.uri.path, "/api"))`
 - **Action**: _Block_
 
 #### Adjust for mobile traffic
@@ -74,17 +71,17 @@ Since Bot Management can be more sensitive to mobile traffic, you may want to ad
 If you are handling requests from your own mobile application, you could potentially allow it based on its specific [JA3 fingerprint](/bots/concepts/ja3-ja4-fingerprint/).
 
 - **Expression**: `(cf.bot_management.ja3_hash eq "df669e7ea913f1ac0c0cce9a201a2ec1")`
-- **Action**: <em>Skip:</em>
-  — <em>All remaining custom rules</em>
+- **Action**: _Skip:_
+  - _All remaining custom rules_
 
 Otherwise, you could set lower thresholds for mobile traffic. The following rules would block definitely automated mobile traffic and challenge likely automated traffic.
 
-1. Rule 1:
+**Rule 1:**
 
 - **Expression**: `(cf.bot_management.score lt 2 and http.user_agent contains "App_Name 2.0")`
 - **Action**: _Block_
 
-2. Rule 2:
+**Rule 2:**
 
 - **Expression**: `(cf.bot_management.score lt 30 and http.user_agent contains "App_Name 2.0")`
 - **Action**: _Managed Challenge_
