@@ -27,7 +27,7 @@ jobs:
           UNUSED_FILES=""
           for FILE in $FILES; do
             FILENAME=$(basename "$FILE")
-            if ! grep -q -r -F --exclude-dir=.github "$FILENAME" --include="*.md" .; then
+            if ! grep -q -r -F --exclude-dir=.github "$FILENAME" --include="*.mdx" .; then
               UNUSED_FILES+="$FILE\n"
             fi
           done
