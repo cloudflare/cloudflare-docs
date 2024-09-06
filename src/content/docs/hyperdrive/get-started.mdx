@@ -82,7 +82,7 @@ Note that the `wrangler.toml` file contains the following option:
 compatibility_flags = [ "nodejs_compat" ]
 ```
 
-this enables the Node.js compatibility mode which is genrally required for database drivers to function.
+this enables the Node.js compatibility mode which is required for database drivers, including Postgres.js.
 
 :::
 
@@ -128,7 +128,7 @@ Most database providers will provide a connection string you can directly copy-a
 To create a Hyperdrive connection, run the `wrangler` command, replacing the placeholder values passed to the `--connection-string` flag with the values of your existing database:
 
 ```sh
-npx wrangler hyperdrive create YOUR_CONFIG_NAME --connection-string="postgres://user:password@HOSTNAME_OR_IP_ADDRESS:PORT/database_name"
+npx wrangler hyperdrive create <YOUR_CONFIG_NAME> --connection-string="postgres://user:password@HOSTNAME_OR_IP_ADDRESS:PORT/database_name"
 ```
 
 If successful, the command will output your new Hyperdrive configuration:
@@ -235,7 +235,7 @@ export default {
 } satisfies ExportedHandler<Env>;
 ```
 
-The code above, upon receiving a request:
+Upon receiving a request, the code above does the following:
 
 1. Creates a new database client configured to connect to your database via Hyperdrive, using the Hyperdrive connection string.
 2. Initiates a query via `await sql` that outputs all tables (user and system created) in the database (as an example query).
