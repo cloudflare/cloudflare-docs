@@ -28,9 +28,9 @@ The number of records that you can operate with in one action depends on your zo
 
 ### Edit proxy status in bulk
 
-Record types callout
+(Record types callout)
 
-Steps
+(Steps)
 
 ### Delete records in bulk
 
@@ -45,19 +45,31 @@ Deleting DNS records can cause downtime. Make sure you only select DNS records t
 3. Select **Delete records**.
 4. In the **Delete DNS records** prompt, type in `DELETE` and select **Delete** to confirm.
 
-
 ## Use the API
 
-### Requirements
+:::caution
 
-Token permissions, familiarity with API (Patch vs Put)
+This option requires familiarity with API usage and concepts. For guidance with the Cloudflare API, refer to [Fundamentals](/fundamentals/api/get-started/).
+
+:::
+
+The [Batched DNS record changes](TBD) endpoint allows you to trigger the execution of `DELETES`, `PATCHES`, `PUTS`, and `POSTS` in a single request.
+
+(Execution order)
 
 ### Aspects to consider
 
-- Execution order
-- Propagation is not atomic
+Although the execution of the batched operations is done in one action, the changes propagation through the Cloudflare network may not be atomic.
+
+For each operation that you list in the `/batch` request payload, you must observe the required information and unspecified fields behavior:
+- **`deletes`**: only the `id` is required for each record object. You can keep additional parameters such as `name` for readability, but any other fields aside from `id` will be ignored in this case.
+- **`patches`**: aside from each record `id`, you should specify the fields you want to update. All unspecified fields will remain as they are.
+- **`puts`**: you must specify each record `id` and any other fields you want to set to a value that is not the default. Any unspecified fields will assume their default value for each [record type](/dns/manage-dns-records/reference/dns-record-types/). This operation works as an overwrite, so all fields in a given record are always affected.
+- **`posts`**: since you are creating a new record, `id` is not required. For field definitions, refer to the [Create DNS Record](/api/operations/dns-records-for-a-zone-create-dns-record) endpoint and select the desired record type under the request body specification.
 
 ### Example request
+
+In this example, the `proxied` field for the first record listed under `"puts"` will assume the default value (`false`).
 
 ```bash
 {
@@ -85,7 +97,6 @@ Token permissions, familiarity with API (Patch vs Put)
             "id": "543004ef463b464a504bde5a5be9f94a",
             "content": "192.0.2.50",
             "name": "no-change.example.com",
-            "proxied": false,
             "ttl:": 1
         },
         {
@@ -116,6 +127,6 @@ Token permissions, familiarity with API (Patch vs Put)
 
 ## Use cases
 
-- Subdomain setup when subdomain records already existin
-- Clean slate after DNS records quick scan
-- SaaS providers
+(Subdomain setup when subdomain records already exist)
+(Clean slate after DNS records quick scan)
+(SaaS providers)
