@@ -9,8 +9,8 @@ import { Render } from "~/components";
 
 D1 bills based on:
 
-- **Usage**: Queries you issue against D1 will count as rows read, rows written, or both (for transactions or batches).
-- **Scale-to-zero**: You are not billed for hours or capacity units. If you are not issuing queries against your database, you are not billed for compute.
+- **Usage**: Queries you run against D1 will count as rows read, rows written, or both (for transactions or batches).
+- **Scale-to-zero**: You are not billed for hours or capacity units. If you are not running queries against your database, you are not billed for compute.
 - **Storage**: You are only billed for storage above the included [limits](/d1/platform/limits/) of your plan.
 
 ## Billing metrics
@@ -27,7 +27,7 @@ Yes, the [Workers Free plan](/workers/platform/pricing/#workers) will always inc
 
 ### What happens if I exceed the daily limits on reads and writes, or the total storage limit, on the Free plan?
 
-When your account hits the daily read and/or write limits, you will not be able to issue queries against D1. D1 API will return errors to your client indicating that your daily limits have been exceeded. Once you have reached your included storage limit, you will need to delete unused databases or clean up stale data before you can insert new data, create or alter tables or create indexes and triggers.
+When your account hits the daily read and/or write limits, you will not be able to run queries against D1. D1 API will return errors to your client indicating that your daily limits have been exceeded. Once you have reached your included storage limit, you will need to delete unused databases or clean up stale data before you can insert new data, create or alter tables or create indexes and triggers.
 
 Upgrading to the Workers Paid plan will remove these limits, typically within minutes.
 
@@ -60,11 +60,11 @@ No.
 
 ### Does D1 charge additional for additional compute?
 
-D1 itself does not charge for additional compute. Workers querying D1 and computing results: for example, serializing results into JSON and/or issuing queries, are billed per [Workers pricing](/workers/platform/pricing/#workers), in addition to your D1 specific usage.
+D1 itself does not charge for additional compute. Workers querying D1 and computing results: for example, serializing results into JSON and/or running queries, are billed per [Workers pricing](/workers/platform/pricing/#workers), in addition to your D1 specific usage.
 
-### Do queries I issue from the dashboard or wrangler (the CLI) count as billable usage?
+### Do queries I run from the dashboard or Wrangler (the CLI) count as billable usage?
 
-Yes, any queries you issue against your database, including inserting (`INSERT`) existing data into a new database, table scans (`SELECT * FROM table`), or creating indexes count as either reads or writes.
+Yes, any queries you run against your database, including inserting (`INSERT`) existing data into a new database, table scans (`SELECT * FROM table`), or creating indexes count as either reads or writes.
 
 ### Can I use an index to reduce the number of rows read by a query?
 
