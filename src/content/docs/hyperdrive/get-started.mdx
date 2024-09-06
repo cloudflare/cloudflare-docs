@@ -78,11 +78,12 @@ This will create a new `hyperdrive-tutorial` directory. Your new `hyperdrive-tut
 :::note
 
 Note that the `wrangler.toml` file contains the following option:
+
 ```toml title="wrangler.toml"
 compatibility_flags = [ "nodejs_compat" ]
 ```
 
-this enables the Node.js compatibility mode which is required for database drivers, including Postgres.js.
+This enables the Node.js compatibility mode which is required for database drivers, including Postgres.js.
 
 :::
 
@@ -229,7 +230,10 @@ export default {
 			return Response.json(results);
 		} catch (e) {
 			console.error(e);
-			return Response.json({ error: e instanceof Error ? e.message : e }, { status: 500 });
+			return Response.json(
+				{ error: e instanceof Error ? e.message : e },
+				{ status: 500 },
+			);
 		}
 	},
 } satisfies ExportedHandler<Env>;
