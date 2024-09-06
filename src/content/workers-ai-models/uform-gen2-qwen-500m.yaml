@@ -1,4 +1,3 @@
-
 model:
   id: "3dca5889-db3e-4973-aa0c-3a4a6bd22d29"
   source: 1
@@ -22,5 +21,3 @@ title: "uform-gen2-qwen-500m"
 json_schema:
   input: "{\n  \"oneOf\": [\n    {\n      \"type\": \"string\",\n      \"format\": \"binary\"\n    },\n    {\n      \"type\": \"object\",\n      \"properties\": {\n        \"temperature\": {\n          \"type\": \"number\"\n        },\n        \"prompt\": {\n          \"type\": \"string\"\n        },\n        \"raw\": {\n          \"type\": \"boolean\",\n          \"default\": false\n        },\n        \"messages\": {\n          \"type\": \"array\",\n          \"items\": {\n            \"type\": \"object\",\n            \"properties\": {\n              \"role\": {\n                \"type\": \"string\"\n              },\n              \"content\": {\n                \"type\": \"string\",\n                \"maxLength\": 6144\n              }\n            },\n            \"required\": [\n              \"role\",\n              \"content\"\n            ]\n          }\n        },\n        \"image\": {\n          \"oneOf\": [\n            {\n              \"type\": \"array\",\n              \"items\": {\n                \"type\": \"number\"\n              }\n            },\n            {\n              \"type\": \"string\",\n              \"format\": \"binary\"\n            }\n          ]\n        },\n        \"max_tokens\": {\n          \"type\": \"integer\",\n          \"default\": 512\n        }\n      },\n      \"required\": [\n        \"image\"\n      ],\n      \"not\": {\n        \"required\": [\n          \"prompt\",\n          \"messages\"\n        ]\n      },\n      \"errorMessage\": {\n        \"not\": \"\\\"prompt\\\" and \\\"messages\\\" are mutually exclusive\"\n      }\n    }\n  ]\n}"
   output: "{\n  \"type\": \"object\",\n  \"contentType\": \"application/json\",\n  \"properties\": {\n    \"description\": {\n      \"type\": \"string\"\n    }\n  }\n}"
-
-

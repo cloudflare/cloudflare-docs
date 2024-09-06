@@ -63,7 +63,10 @@
     "wrangler": "^3.72.2",
     "yaml": "^2.5.0"
   },
-	"engines": {
-		"node": ">=22"
-	}
+  "engines": {
+    "node": ">=22"
+  },
+  "volta": {
+    "node": "22.8.0"
+  }
 }

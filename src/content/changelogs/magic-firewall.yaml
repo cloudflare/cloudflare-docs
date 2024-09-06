@@ -1,0 +1,11 @@
+---
+link: "/magic-firewall/changelog/"
+productName: Magic Firewall
+productLink: "/magic-firewall/"
+productArea: Cloudflare One
+productAreaLink: /cloudflare-one/changelog/
+entries:
+- publish_date: '2024-08-16'
+  title: Magic Firewall Analytics Rule Log Enhancement
+  description: |-
+    Customers who create a rule in a disabled mode will see the rule as **Log (rule disabled)**.
