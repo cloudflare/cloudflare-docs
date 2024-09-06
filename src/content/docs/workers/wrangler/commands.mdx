@@ -30,6 +30,7 @@ Wrangler offers a number of commands to manage your Cloudflare Workers.
 - [`secret:bulk`](#secretbulk) - Manage multiple secret variables for a Worker.
 - [`tail`](#tail) - Start a session to livestream logs from a deployed Worker.
 - [`pages`](#pages) - Configure Cloudflare Pages.
+- [`pipelines`](#pipelines) - Configure Cloudflare Pipelines.
 - [`queues`](#queues) - Configure Workers Queues.
 - [`login`](#login) - Authorize Wrangler with your Cloudflare account using OAuth.
 - [`logout`](#logout) - Remove Wrangler’s authorization for accessing your account.
@@ -2115,6 +2116,85 @@ wrangler pages secret bulk [<FILENAME>] [OPTIONS]
   - The name of your Pages project.
 
 ---
+
+## `pipelines`
+:::note
+
+Pipelines is currently in open beta. Report Pipelines bugs in [GitHub](https://github.com/cloudflare/workers-sdk/issues/new/choose).
+:::
+
+Manage your [Pipelines](/pipelines/) configurations.
+
+### `create`
+
+Create a new pipeline
+
+```txt
+wrangler pipelines create <name> --r2 <r2-bucket-name> [OPTIONS]
+```
+
+- `name` string required
+	- The name of the pipeline to create
+- `--r2` string required
+	- The name of the R2 bucket used as the destination to store the data.
+- `--batch-max-mb` number optional
+	- The maximum size a batch before data is written, in megabytes. Default 10 MB.
+- `--batch-max-rows` number optional
+	- The maximum number of rows in a batch before data is written. Default 10,000.
+- `--batch-max-seconds` number optional
+	- The maximum duration of a batch before data is written, in seconds. Default 10 MB.
+- `--batch-max-mb` number optional
+	- The maximum size of a batch before data is written, in megabytes. Default 10 MB.
+- `--compression` string optional
+	- Type of compression to apply to output files. Choices: "none", "gzip", "deflate"
+- `--filepath` string optional
+	- The path to store files in the destination bucket. Defaults to event_date=${date}/hr=${hr}
+- `--filename` string optional
+	- The name of the file in the bucket. Must contain "${slug}". File extension is optional. Defaults to ${slug}-${hr}.json
+
+### `update`
+
+Update an existing pipeline
+
+```txt
+wrangler pipelines create <name> [OPTIONS]
+```
+
+- `name` string required
+	- The name of the pipeline to update
+- `--r2` string optional
+	- The name of the R2 bucket used as the destination to store the data.
+- `--batch-max-mb` number optional
+	- The maximum size a batch before data is written, in megabytes. Default 10 MB.
+- `--batch-max-rows` number optional
+	- The maximum number of rows in a batch before data is written. Default 10,000.
+- `--batch-max-seconds` number optional
+	- The maximum duration of a batch before data is written, in seconds. Default 10 MB.
+- `--batch-max-mb` number optional
+	- The maximum size of a batch before data is written, in megabytes. Default 10 MB.
+- `--compression` string optional
+	- Type of compression to apply to output files. Choices: "none", "gzip", "deflate"
+- `--filepath` string optional
+	- The path to store files in the destination bucket. Defaults to event_date=${date}/hr=${hr}
+- `--filename` string optional
+	- The name of the file in the bucket. Must contain "${slug}". File extension is optional. Defaults to ${slug}-${hr}.json
+
+### `delete`
+
+Deletes an existing pipeline
+
+```txt
+wrangler pipelines delete <name> [OPTIONS]
+```
+
+### `list`
+
+Lists all pipelines in your account.
+
+```txt
+wrangler pipelines list [OPTIONS]
+```
+
 
 ## `queues`
 
