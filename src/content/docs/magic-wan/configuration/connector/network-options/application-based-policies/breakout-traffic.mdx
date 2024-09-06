@@ -57,57 +57,124 @@ The traffic for that application will now go directly to the Internet and bypass
 
 1. Create a [`GET` request](/api/operations/magic-site-app-configs-list-app-configs) to list the applications associated with a site.
 
-Example:
+   Example:
 
-```bash
-curl https://api.cloudflare.com/client/v4/accounts/{account_id}/magic/sites/{site_id}/app_configs \
---header "X-Auth-Email: <EMAIL>" \
---header "X-Auth-Key: <API_KEY>" \
---header "Content-Type: application/json" \
-```
+   ```bash
+   curl https://api.cloudflare.com/client/v4/accounts/{account_id}/magic/sites/{site_id}/app_configs \
+   --header "X-Auth-Email: <EMAIL>" \
+   --header "X-Auth-Key: <API_KEY>" \
+   --header "Content-Type: application/json" \
+   ```
 
-If successful, you will receive a response like the following:
+   If successful, you will receive a response like the following:
 
-```json
-{
-	"errors": [],
-	"messages": [],
-	"result": [
-		{
-			"breakout": true,
-			"id": "023e105f4ecef8ad9ca31a8372d0c353",
-			"priority": 0,
-			"site_id": "023e105f4ecef8ad9ca31a8372d0c353",
-			"account_app_id": "ac60d3d0435248289d446cedd870bcf4"
-		}
-	],
-	"success": true
-}
-```
+   ```json
+   {
+   	"errors": [],
+   	"messages": [],
+   	"result": [
+   		{
+   			"breakout": true,
+   			"id": "023e105f4ecef8ad9ca31a8372d0c353",
+   			"priority": 0,
+   			"site_id": "023e105f4ecef8ad9ca31a8372d0c353",
+   			"account_app_id": "ac60d3d0435248289d446cedd870bcf4"
+   		}
+   	],
+   	"success": true
+   }
+   ```
 
-Take note of the `"account_app_id"` value for any application that want to configure.
+   Take note of the `"account_app_id"` value for any application that want to configure.
 
-2. Create a [`POST` request](/api/operations/magic-site-app-configs-add-app-config) to add new apps the breakout traffic list.
+2. Create a [`POST` request](/api/operations/magic-site-app-configs-add-app-config) to add new apps the breakout traffic policy.
 
-Example:
+   Example:
 
-```bash
-curl --request POST \
---url https://api.cloudflare.com/client/v4/accounts/{account_id}/magic/sites/{site_id}/app_configs \
---header "X-Auth-Email: <EMAIL>" \
---header "X-Auth-Key: <API_KEY>" \
---header "Content-Type: application/json" \
---data '{
-  "account_app_id": "ac60d3d0435248289d446cedd870bcf4",
-  "breakout": true
-}'
-```
+   ```bash
+   curl --request POST \
+   --url https://api.cloudflare.com/client/v4/accounts/{account_id}/magic/sites/{site_id}/app_configs \
+   --header "X-Auth-Email: <EMAIL>" \
+   --header "X-Auth-Key: <API_KEY>" \
+   --header "Content-Type: application/json" \
+   --data '{
+   	"account_app_id": "ac60d3d0435248289d446cedd870bcf4",
+   	"breakout": true
+   }'
+   ```
 
 </TabItem> </Tabs>
 
 ## Delete an application
 
+<Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
+
 <Render
 	file="connector/app-aware-policies/delete-app"
 	params={{ one: "Breakout traffic" }}
 />
+
+</TabItem> <TabItem label="API">
+
+<Render file="connector/account-id-api-key" />
+
+1. Create a [`GET` request](/api/operations/magic-site-app-configs-list-app-configs) to list the applications associated with a site.
+
+   Example:
+
+   ```bash
+   curl https://api.cloudflare.com/client/v4/accounts/{account_id}/magic/sites/{site_id}/app_configs \
+   --header "X-Auth-Email: <EMAIL>" \
+   --header "X-Auth-Key: <API_KEY>" \
+   --header "Content-Type: application/json" \
+   ```
+
+   If successful, you will receive a response like the following:
+
+   ```json
+   {
+   	"errors": [],
+   	"messages": [],
+   	"result": [
+   		{
+   			"breakout": true,
+   			"id": "023e105f4ecef8ad9ca31a8372d0c353",
+   			"priority": 0,
+   			"site_id": "023e105f4ecef8ad9ca31a8372d0c353",
+   			"account_app_id": "ac60d3d0435248289d446cedd870bcf4"
+   		}
+   	],
+   	"success": true
+   }
+   ```
+
+   Take note of the `"account_app_id"` value for the application that want to delete.
+
+2. Create a `DELETE` request [using the API](/api/operations/magic-site-app-configs-delete-app-config) to delete an application from the breakout traffic policy.
+
+   ```bash
+   curl --request DELETE \
+   --url https://api.cloudflare.com/client/v4/accounts/{account_id}/magic/sites/{site_id}/app_configs/{app_config_id} \
+   --header "X-Auth-Email: <EMAIL>" \
+   --header "X-Auth-Key: <API_KEY>" \
+   --header "Content-Type: application/json" \
+   ```
+
+   If successful, you will receive a confirmation message like the following:
+
+   ```json
+   {
+   	"errors": [],
+   	"messages": [],
+   	"result": {
+   		"breakout": true,
+   		"id": "023e105f4ecef8ad9ca31a8372d0c353",
+   		"priority": 0,
+   		"site_id": "023e105f4ecef8ad9ca31a8372d0c353",
+   		"account_app_id": "ac60d3d0435248289d446cedd870bcf4"
+   	},
+   	"success": true
+   }
+   ```
+
+</TabItem> </Tabs>
