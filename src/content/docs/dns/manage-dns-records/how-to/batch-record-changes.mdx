@@ -34,9 +34,17 @@ Steps
 
 ### Delete records in bulk
 
-Downtime callout and point to API if need to create or edit in the same action
+:::caution
 
-Steps
+Deleting DNS records can cause downtime. Make sure you only select DNS records that you can safely delete or [use the API](#use-the-api) to be able to create or update DNS records in the same API request.
+
+:::
+
+1. Go to [**DNS** > **Records**](https://dash.cloudflare.com/?to=/:account/:zone/dns/records).
+2. Select the DNS records you want to delete.
+3. Select **Delete records**.
+4. In the **Delete DNS records** prompt, type in `DELETE` and select **Delete** to confirm.
+
 
 ## Use the API
 
