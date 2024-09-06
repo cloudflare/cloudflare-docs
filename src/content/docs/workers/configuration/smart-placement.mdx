@@ -11,8 +11,6 @@ sidebar:
 
 By default, [Workers](/workers/) and [Pages Functions](/pages/functions/) are invoked in a data center closest to where the request was received. If you are running back-end logic in a Worker, it may be more performant to run that Worker closer to your back-end infrastructure rather than the end user. Smart Placement automatically places your workloads in an optimal location that minimizes latency and speeds up your applications.
 
-You may benefit from Smart Placement if you are making multiple round trips to a centralized database, API or origin server in a Worker.
-
 ## Background
 
 The following example demonstrates how moving your Worker close to your back-end services could decrease application latency:
@@ -27,28 +25,11 @@ The issue is the time that it takes the Worker to perform multiple round trips t
 
 ## Understand how Smart Placement works
 
-Smart Placement is enabled on a per-Worker basis. Once enabled, fetch requests (also known as subrequests) from your Worker are analyzed regularly. The Smart Placement algorithm determines the optimal placement to minimize the round-trip time (RTT) between the Worker and the back-end service the Worker is communicating with.
+Smart Placement is enabled on a per-Worker basis. Once enabled, Smart Placement analyzes the [request duration](/workers/observability/metrics-and-analytics/#request-duration) of the Worker in different Cloudflare locations around the world on a regular basis. Smart Placement decides where to run the Worker by comparing the estimated request duration in the location closest to where the request was received (the default location where the Worker would run) to a set of candidate locations around the world. For each candidate location, Smart Placement considers the performance of the Worker in that location as well as the network latency added by forwarding the request to that location. If the estimated request duration in the best candidate location is significantly faster than the location where the request was received, the request will be forwarded to that candidate location. Otherwise, the Worker will run in the default location closest to where the request was received.
 
-Smart Placement is only active for Workers that **make more than one roundtrip** to back-end infrastructure. If your Worker does less than one subrequest on average, Smart Placement will run the Worker at the data center closest to the user.
-
-Smart Placement is a best-effort attempt. Smart Placement will not take action unless it is more performant than the default (which is running the Worker at the data center closest to the user).
+Smart Placement only considers candidate locations where the Worker has previously run, since the estimated request duration in each candidate location is based on historical data from the Worker running in that location. This means that Smart Placement cannot run the Worker in a location that it does not normally receive traffic from.
 
 Smart Placement only affects the execution of [fetch event handlers](/workers/runtime-apis/handlers/fetch/). Workers without a fetch event handler will be ignored by Smart Placement. For Workers with both fetch and non-fetch event handlers, Smart Placement will only affect the execution of the fetch event handler.
-
-### D1
-
-Workers with a [D1](/d1/) binding will always be placed in a data center near the location of the D1 database they are bound to. Subrequests to other back-end services are ignored by Smart Placement in this case.
-
-### Unsupported back-end services
-
-There are some back-end services that are not considered by the Smart Placement algorithm:
-
-- **Globally distributed services**: If the services that your Worker communicates with are geo-distributed in many regions (for example, CDNs, distributed databases, distributed APIs), Smart Placement is not a good fit. We automatically rule these out of the Smart Placement optimization.
-
-  - Examples: Google APIs, services using Fastly or Akamai's CDN.
-
-- **Analytics or logging services**: Requests to analytics or logging services should not be in the critical path of your application. [`waitUntil()`](/workers/runtime-apis/context/#waituntil) should be used so that the response back to users is not blocked when instrumenting your code. Since `waitUntil()` does not impact the request duration from a user’s perspective, we automatically rule analytics and logging services out of the Smart Placement optimization.
-  - Examples: New Relic, Datadog, Tinybird, Grafana, Amplitude, Honeycomb.
 
 ## Enable Smart Placement
 
@@ -67,9 +48,9 @@ To enable Smart Placement via Wrangler:
    mode = "smart"
    ```
 
-3. Send some initial traffic (approximately 20-30 requests) to your Worker. It takes a few minutes after you have sent traffic to your Worker for Smart Placement to take effect.
+3. Wait for Smart Placement to analyze your Worker. This process may take up to 15 minutes.
 
-4. View your Worker's [request duration analytics](/workers/observability/metrics-and-analytics/).
+4. View your Worker's [request duration analytics](/workers/observability/metrics-and-analytics/#request-duration).
 
 ### Enable Smart Placement via the dashboard
 
@@ -80,8 +61,8 @@ To enable Smart Placement via the dashboard:
 3. In **Overview**,select your Worker.
 4. Select **Settings** > **General**.
 5. Under **Placement**, choose **Smart**.
-6. Send some initial traffic (approximately 20-30 requests) to your Worker. It takes a few minutes after you have sent traffic to your Worker for Smart Placement to take effect.
-7. View your Worker's [request duration analytics](/workers/observability/metrics-and-analytics/)
+6. Wait for Smart Placement to analyze your Worker. Smart Placement requires consistent traffic to the Worker from multiple locations around the world to make a placement decision. The analysis process may take up to 15 minutes.
+7. View your Worker's [request duration analytics](/workers/observability/metrics-and-analytics/#request-duration)
 
 ## Observability
 
@@ -97,11 +78,10 @@ curl -X GET https://api.cloudflare.com/client/v4/accounts/{ACCOUNT_ID}/workers/s
 
 Possible placement states include:
 
-- _(not present)_: The Worker has not been analyzed for Smart Placement yet.
-- `INSUFFICIENT_INVOCATIONS`: Not enough requests for Smart Placement to make a placement decision.
-- `NO_VALID_HOSTS`: The Worker does not send subrequests to back-end services supported by Smart Placement.
-- `INSUFFICIENT_SUBREQUESTS`: The Worker does not send enough subrequests to valid back-end services.
-- `SUCCESS`: The Worker has been successfully analyzed and will be optimized by Smart Placement.
+- _(not present)_: The Worker has not been analyzed for Smart Placement yet. The Worker will always run in the default Cloudflare location closest to where the request was received.
+- `SUCCESS`: The Worker was successfully analyzed and will be optimized by Smart Placement. The Worker will run in the Cloudflare location that minimizes expected request duration, which may be the default location closest to where the request was received or may be a faster location elsewhere in the world.
+- `INSUFFICIENT_INVOCATIONS`: The Worker has not received enough requests to make a placement decision. Smart Placement requires consistent traffic to the Worker from multiple locations around the world. The Worker will always run in the default Cloudflare location closest to where the request was received.
+- `UNSUPPORTED_APPLICATION`: Smart Placement began optimizing the Worker and measured the results, which showed that Smart Placement made the Worker slower. In response, Smart Placement reverted the placement decision. The Worker will always run in the default Cloudflare location closest to where the request was received, and Smart Placement will not analyze the Worker again until it's redeployed. This state is rare and accounts for less that 1% of Workers with Smart Placement enabled.
 
 ### Request Duration Analytics
 
