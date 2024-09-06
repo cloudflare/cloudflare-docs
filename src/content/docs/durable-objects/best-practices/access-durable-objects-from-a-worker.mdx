@@ -26,11 +26,6 @@ Durable Object bindings allow for communication between a Worker and a Durable O
 ```
 
 
-| Feature                           | RPC                      | HTTP (fetch)        |
-| --------------------------------- | ------------------------ | ------------------- |
-| ABC                               |                          |                     |
-
-
 ## Terminology
 
 TODO - stubs, classes, instances
@@ -62,6 +57,12 @@ To create a Durable Object ID, you can choose to:
 * Parse previously-created IDs from strings.
 
 All three methods will allow you to create Durable Object IDs.
+
+| Method                            | Best when                                         |
+| --------------------------------- | ------------------------------------------------- |
+| Generate randomly - `newUniqueId()` |                                                   |
+| From an existing string - `idFromName()` |                                                 |
+| From an existing Durable Object ID - `idFromString()` |                   |
 
 ### Generate IDs randomly
 
