@@ -44,7 +44,7 @@ At the same time, on-premise network(s) and cloud provider network(s) would stop
 You can instead advertise less-specific IP prefixes from their border routers to the Internet. This way, if the Magic Transit service ever experiences a failure in a very unlikely event, traffic can be quickly re-routed directly to network locations from the Internet.
 
 2. Traffic originated from the Internet and destined to the protected IP prefixes is ingested into Cloudflare network globally.
-3. All traffic is scrubbed, i.e. DDoS attack traffic removed and mitigated, in-line at every Cloudflare data center using advanced and automated [DDoS mitigation](/ddos-protection/) technologies.
+3. All traffic is scrubbed, that is, DDoS attack traffic is removed and mitigated in-line at every Cloudflare data center using advanced and automated [DDoS mitigation](/ddos-protection/) technologies.
 4. Traffic that passes DDoS mitigation is subjected to additional network firewall filtering using the included [Magic Firewall](/magic-firewall/) service.
 5. Clean, filtered traffic is routed to the protected networks either through private connections called [Cloudflare Network Interconnect](/network-interconnect/) (CNI), or through the public Internet using standard IP tunnels such as GRE or IPsec tunnels. More specific details on Magic Transit IP tunnels can be found [here](/magic-transit/about/tunnels-and-encapsulation).
 6. The server return traffic from protected IP prefixes to the Internet users are routed directly over the Internet from the hybrid cloud locations, bypassing the Cloudflare network. This is called direct server return (DSR).
