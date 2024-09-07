@@ -2912,6 +2912,14 @@
           "biz": "No",
           "ent": "Paid add-on"
         },
+        "session_revocation": {
+          "title": "Session Revocation",
+          "link": "/waiting-room/how-to/control-user-session/#revoke-a-users-session-using-origin-commands",
+          "free": "No",
+          "pro": "No",
+          "biz": "No",
+          "ent": "Paid add-on"
+        },
         "seo_crawler": {
           "title": "SEO Crawler Bypassing",
           "link": "/waiting-room/reference/best-practices/#waiting-room-and-seo",
