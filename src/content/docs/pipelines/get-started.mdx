@@ -14,11 +14,14 @@ import { Render, PackageManagers } from "~/components";
 
 Pipelines is in **public beta**, and any developer with a [paid Workers plan](/workers/platform/pricing/#workers) can start using Pipelines immediately.
 
-Pipelines let you ingest real time streaming data, and store it in R2. Pipeline handles batching, partitioning, and optionally compressing your final files. By following this guide, you will:
+Pipelines lets you ingest real time data streams, such as click events on a website or logs from a service. You can send data to a Pipeline from a Worker, or via HTTP. Pipelines handles batching requests, and scales in response to your workload. Finally, Pipelines delivers the output into R2, as JSON files, automatically handling partitioning and compression for efficient querying.
+
+By following this guide, you will:
 
 1. Create your first Pipeline.
 2. Connect it to your R2 bucket.
 3. Post data to it via HTTP.
+4. Verify the output file written to R2.
 
 :::
 
