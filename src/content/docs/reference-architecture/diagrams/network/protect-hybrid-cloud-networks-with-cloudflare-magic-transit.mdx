@@ -98,7 +98,7 @@ On-premise data center 2: 203.0.113.0/24
 7. This Magic Transit Egress traffic is subject to Magic Firewall filtering before being routed out to the Internet towards the users.
 8. The server return traffic from on-premises networks to the Internet users are direct server returned (DSR), bypassing the Cloudflare network.
 
-*Note*: Alternatively, customers can choose to also route the on-premise networks’ server return traffic through Cloudflare via policy-based routing and Magic Transit Egress functionality, adding an additional layer of security and control for the egress traffic with Magic Firewall filtering, e.g. blocking traffic destined to questionable IP addresses and sites, prohibited destinations or countries, etc.
+*Note*: Alternatively, customers can choose to also route the on-premise networks’ server return traffic through Cloudflare via policy-based routing and Magic Transit Egress functionality. This adds an additional layer of security and control for the egress traffic with Magic Firewall filtering. For example, it can block traffic destined to questionable IP addresses and sites, prohibited destinations, or countries.
 
 ## Related resources
 * [Magic Transit Reference Architecture](/reference-architecture/architectures/magic-transit/)
