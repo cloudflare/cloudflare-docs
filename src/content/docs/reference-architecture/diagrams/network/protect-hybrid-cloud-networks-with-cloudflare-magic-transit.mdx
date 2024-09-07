@@ -38,7 +38,9 @@ On-premise data center 2: 203.0.113.128/25
 ![Figure 1: Customer BYOIP for all Cloud and on-premises networks.](~/assets/images/reference-architecture/protect-hybrid-cloud-networks-with-cloudflare-magic-transit/figure-1.svg "Figure 1: Customer BYOIP for all Cloud and on-premises networks.")
 
 1. Using Border Gateway Protocol ([BGP](https://www.cloudflare.com/learning/security/glossary/what-is-bgp/)), Cloudflare advertises customer’s protected IP prefixes to the Internet from all of Cloudflare’s global data centers, enabling [IP Anycast](https://www.cloudflare.com/learning/cdn/glossary/anycast-network/), so that Internet traffic destined to these protected IP prefixes will always be routed to the Cloudflare data center that is closest to the source of the traffic.
+
 At the same time, on-premise network(s) and cloud provider network(s) would stop advertising the same exact prefixes from their respective on-premises border routers and cloud border routers. This ensures all Internet traffic destined to the Magic Transit protected IP prefixes will be routed through the Cloudflare network.
+
 You can instead advertise less-specific IP prefixes from their border routers to the Internet. This way, if the Magic Transit service ever experiences a failure in a very unlikely event, traffic can be quickly re-routed directly to network locations from the Internet.
 
 2. Traffic originated from the Internet and destined to the protected IP prefixes is ingested into Cloudflare network globally.
