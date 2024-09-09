@@ -55,12 +55,12 @@ The traffic for that application will now go directly to the Internet and bypass
 
 <Render file="connector/account-id-api-key" />
 
-1. Create a [`GET` request](/api/operations/magic-site-app-configs-list-app-configs) to list the applications associated with a site.
+1. Create a [`GET` request](/api/operations/magic-account-apps-list-apps) to list the applications associated with an account.
 
    Example:
 
    ```bash
-   curl https://api.cloudflare.com/client/v4/accounts/{account_id}/magic/sites/{site_id}/app_configs \
+   curl https://api.cloudflare.com/client/v4/accounts/{account_id}/magic/apps \
    --header "X-Auth-Email: <EMAIL>" \
    --header "X-Auth-Key: <API_KEY>" \
    --header "Content-Type: application/json" \
@@ -70,22 +70,21 @@ The traffic for that application will now go directly to the Internet and bypass
 
    ```json
    {
-   	"errors": [],
-   	"messages": [],
    	"result": [
    		{
-   			"breakout": true,
-   			"id": "023e105f4ecef8ad9ca31a8372d0c353",
-   			"priority": 0,
-   			"site_id": "023e105f4ecef8ad9ca31a8372d0c353",
-   			"account_app_id": "ac60d3d0435248289d446cedd870bcf4"
+   			"managed_app_id": "<MANAGED_APP_ID>",
+   			"name": "<APP_NAME>",
+   			"type": "<TYPE_OF_APP>",
+   			"hostnames": ["<HOSTNAME1.com>", "<HOSTNAME2.info>"]
    		}
    	],
-   	"success": true
+   	"success": true,
+   	"errors": [],
+   	"messages": []
    }
    ```
 
-   Take note of the `"account_app_id"` value for any application that want to configure.
+   Take note of the `"managed_app_id"` value for any application you want to configure.
 
 2. Create a [`POST` request](/api/operations/magic-site-app-configs-add-app-config) to add new apps the breakout traffic policy.
 
@@ -98,7 +97,7 @@ The traffic for that application will now go directly to the Internet and bypass
    --header "X-Auth-Key: <API_KEY>" \
    --header "Content-Type: application/json" \
    --data '{
-   	"account_app_id": "ac60d3d0435248289d446cedd870bcf4",
+   	"managed_app_id": "<MANAGED_APP_ID>",
    	"breakout": true
    }'
    ```
@@ -133,28 +132,27 @@ The traffic for that application will now go directly to the Internet and bypass
 
    ```json
    {
-   	"errors": [],
-   	"messages": [],
    	"result": [
    		{
-   			"breakout": true,
    			"id": "023e105f4ecef8ad9ca31a8372d0c353",
-   			"priority": 0,
    			"site_id": "023e105f4ecef8ad9ca31a8372d0c353",
-   			"account_app_id": "ac60d3d0435248289d446cedd870bcf4"
+   			"managed_app_id": "<MANAGED_APP_ID>",
+   			"breakout": true
    		}
    	],
-   	"success": true
+   	"success": true,
+   	"errors": [],
+   	"messages": []
    }
    ```
 
-   Take note of the `"account_app_id"` value for the application that want to delete.
+   Take note of the `"id"` value for the application that want to delete.
 
 2. Create a `DELETE` request [using the API](/api/operations/magic-site-app-configs-delete-app-config) to delete an application from the breakout traffic policy.
 
    ```bash
    curl --request DELETE \
-   --url https://api.cloudflare.com/client/v4/accounts/{account_id}/magic/sites/{site_id}/app_configs/{app_config_id} \
+   --url https://api.cloudflare.com/client/v4/accounts/{account_id}/magic/sites/{site_id}/app_configs/{id} \
    --header "X-Auth-Email: <EMAIL>" \
    --header "X-Auth-Key: <API_KEY>" \
    --header "Content-Type: application/json" \
@@ -164,16 +162,15 @@ The traffic for that application will now go directly to the Internet and bypass
 
    ```json
    {
-   	"errors": [],
-   	"messages": [],
    	"result": {
-   		"breakout": true,
    		"id": "023e105f4ecef8ad9ca31a8372d0c353",
-   		"priority": 0,
    		"site_id": "023e105f4ecef8ad9ca31a8372d0c353",
-   		"account_app_id": "ac60d3d0435248289d446cedd870bcf4"
+   		"managed_app_id": "<MANAGED_APP_ID>",
+   		"breakout": true
    	},
-   	"success": true
+   	"success": true,
+   	"errors": [],
+   	"messages": []
    }
    ```
 
