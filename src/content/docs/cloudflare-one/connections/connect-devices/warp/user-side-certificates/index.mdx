@@ -7,9 +7,9 @@ sidebar:
 
 Advanced security features such as [HTTPS traffic inspection](/cloudflare-one/policies/gateway/http-policies/tls-decryption/), [block pages](/cloudflare-one/policies/gateway/block-page/), [Data Loss Prevention](/cloudflare-one/policies/data-loss-prevention/), [anti-virus scanning](/cloudflare-one/policies/gateway/http-policies/antivirus-scanning/), and [Browser Isolation](/cloudflare-one/policies/browser-isolation/) require users to install and trust a root certificate on their device.
 
-Gateway [generates a unique root CA](#generate-a-cloudflare-root-certificate) for each Zero Trust account and deploys its across the Cloudflare global network. Alternatively, Enterprise users can upload and deploy their own [custom certificate](custom-certificate/).
+Gateway [generates a unique root CA](#generate-a-cloudflare-root-certificate) for each Zero Trust account and deploys its across the Cloudflare global network. Alternatively, Enterprise users can upload and deploy their own [custom certificate](/cloudflare-one/connections/connect-devices/warp/user-side-certificates/custom-certificate/).
 
-Once you deploy your certificate across Cloudflare and turn it on, you can install it on your user's devices either [with WARP](install-cert-with-warp/) or [manually](install-cloudflare-cert/).
+Once you deploy your certificate across Cloudflare and turn it on, you can install it on your user's devices either [with WARP](/cloudflare-one/connections/connect-devices/warp/user-side-certificates/install-cert-with-warp/) or [manually](/cloudflare-one/connections/connect-devices/warp/user-side-certificates/install-cloudflare-cert/).
 
 | Deployment status | Description                                                                                    |
 | ----------------- | ---------------------------------------------------------------------------------------------- |
@@ -36,7 +36,7 @@ The certificate will appear in your list of certificates as **Inactive**. To dep
 
 ## Activate a root certificate
 
-:::tip
+:::note
 Zero Trust accounts using the Cloudflare certificate prior to September 2024 will need to redeploy and activate the newly generated certificate. Zero Trust accounts created during or after September 2024 will use an active certificate by default.
 :::
 

@@ -61,7 +61,7 @@ openssl x509 -in <CUSTOM-ROOT-CERT>.pem -text
 
 ## Deploy a custom root certificate
 
-<Tabs>
+<Tabs syncKey="dashPlusAPI">
 
     <TabItem label="Dashboard">
     		1. In [Zero Trust](https://one.dash.cloudflare.com/), go to **Settings** > **Resources**.
@@ -128,10 +128,10 @@ openssl x509 -in <CUSTOM-ROOT-CERT>.pem -text
     	4. Activate the certificate for use in inspection with the [Activate a Zero Trust certificate endpoint](/api/operations/zero-trust-certificates-activate-zero-trust-certificate).
 
 				```bash
-				curl "https://api.cloudflare.com/client/v4/accounts/{account_id}/gateway/certificates/{certificate_id}/activate" \
+				curl --request POST \
+				"https://api.cloudflare.com/client/v4/accounts/{account_id}/gateway/certificates/{certificate_id}/activate" \
 				--header "X-Auth-Email: <EMAIL>" \
-				--header "X-Auth-Key: <API_KEY>" \
-				--header "Content-Type: application/json"
+				--header "X-Auth-Key: <API_KEY>"
 				```
 
     		The response will return the certificate and its current deployment status. For example:
