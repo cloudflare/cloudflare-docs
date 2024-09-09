@@ -1,11 +1,14 @@
 ---
 pcx_content_type: concept
-title: Language support and tools
+title: Build image
 rss: https://github.com/cloudflare/cloudflare-docs/commits/production/content/pages/_partials/_platform-language-support-and-tools.atom
-
 ---
 
-import { PagesBuildEnvironment, PagesBuildEnvironmentLanguages, PagesBuildEnvironmentTools } from "~/components"
+import {
+	PagesBuildEnvironment,
+	PagesBuildEnvironmentLanguages,
+	PagesBuildEnvironmentTools,
+} from "~/components";
 
 Cloudflare Pages' build environment has broad support for a variety of languages, such as Ruby, Node.js, Python, PHP, and Go.
 
@@ -25,11 +28,11 @@ If you were previously relying on the default versions of any languages or tools
 
 We are aware of some outstanding issues with the v2 build system that we intend on fixing:
 
-* Specifying Node.js versions as codenames (for example, `hydrogen` or `lts/hydrogen`).
-* Detecting Yarn version from `yarn.lock` file version.
-* Detecting pnpm version detection based `pnpm-lock.yaml` file version.
-* Detecting Node.js and package managers from `package.json` -> `"engines"`.
-* `pipenv` and `Pipfile` support.
+- Specifying Node.js versions as codenames (for example, `hydrogen` or `lts/hydrogen`).
+- Detecting Yarn version from `yarn.lock` file version.
+- Detecting pnpm version detection based `pnpm-lock.yaml` file version.
+- Detecting Node.js and package managers from `package.json` -> `"engines"`.
+- `pipenv` and `Pipfile` support.
 
 ## Supported languages and tools
 
