@@ -20,8 +20,8 @@ jobs:
       - name: Find Unused Files
         id: find-files
         run: |
-          # Find all .png and .svg files, excluding those in the ./static directory
-          FILES=$(find . -type f \( -name "*.png" -o -name "*.svg" \) -not -path "./static/*")
+          # Find all .png and .svg files, but only look in the ./src/assets/images directory
+          FILES=$(find . -type f \( -name "*.png" -o -name "*.svg" \) -path "./src/assets/images/*")
 
           # Check if files are referenced in any markdown file
           UNUSED_FILES=""
