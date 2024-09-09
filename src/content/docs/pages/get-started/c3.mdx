@@ -224,22 +224,9 @@ All the boolean options above can be specified with or without a value, for exam
 
 ## Telemetry
 
-Cloudflare collects anonymous usage data to improve create-cloudflare over time. You may opt-out if you'd not like to share any information.
+Cloudflare collects anonymous usage data to improve `create-cloudflare` over time. Read more about our data policy at [link to data policy](#).
 
-### Events
-
-We track general usage information, including:
-
-- Arguments passed to the CLI and the answers to each prompts
-- Versions of create-cloudflare
-- General machine information (e.g. MacOS/Linux/Windows, which package manager is being used)
-- Duration of each prompts
-
-You can find the list of events in the [repository](https://github.com/cloudflare/workers-sdk/tree/main/packages/create-cloudflare/src/event.ts).
-
-### Opting-out
-
-You can disable create-cloudflare from collecting usage data with `create-cloudflare telemetry disable`.
+You can opt-out if you'd not like to share any information.
 
 <PackageManagers
   type="create"
@@ -247,7 +234,7 @@ You can disable create-cloudflare from collecting usage data with `create-cloudf
 	args="telemetry disable"
 />
 
-You can check the status of telemetry collection at any time by running `create-cloudflare telemetry status`.
+You can check the status of telemetry collection at any time.
 
 <PackageManagers
   type="create"
@@ -255,7 +242,7 @@ You can check the status of telemetry collection at any time by running `create-
   args="telemetry status"
 />
 
-You can always re-enable telemetry collection by running `create-cloudflare telemetry enable`.
+You can always re-enable telemetry collection.
 
 <PackageManagers
   type="create"
