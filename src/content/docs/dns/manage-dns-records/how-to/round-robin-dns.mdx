@@ -30,6 +30,10 @@ If all associated records were unproxied, any request to Cloudflare's nameserver
 
 Each client (oftentimes a browser), would decide which IP address to send the request to. If one IP address fails, the client would choose another option. All requests would be sent directly to the origin server (to `192.0.2.X`).
 
+Does the user client receive a network range of address (in this case 192.0.2.0/x) when a request is made to an unproxied dns server (typically, only one IP address should respond to the client's request for connection)?
+Ideally, the expected behavior should be as follows:
+"When a request to one IP address fails, the unproxied dns server (if load balancing or failover feature is available) should automatically retry the request to other IP addresses associated with the same hostname. This behavior prevents end users from experiencing downtime."
+
 ### All records proxied (recommended)
 
 If all associated records were proxied, any request to Cloudflare's nameservers would return two `A` records from Cloudflare's list of IP addresses.
