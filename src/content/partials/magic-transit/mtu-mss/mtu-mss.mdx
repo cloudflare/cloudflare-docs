@@ -59,6 +59,8 @@ MSS is a tool that can be used to configure TCP packet size behavior. If a TCP e
 
 One way to modify the MSS setting is by changing the MTU of the network interface in the router's WAN interface to match the path MTU. Another way to modify MSS is by applying a MSS clamp, where an intermediary network device — such as a router — is configured to modify the MSS TCP option on-the-fly when packets pass through it. Note that changing the MTU on the interface of an intermediary network device is not the same as applying an MSS clamp, and it will not cause the TCP MSS value to be changed.
 
+Refer to [MSS clamping recommendations](#mss-clamping-recommendations) for information on what you should set your MSS clamping to, depending on the type of tunnel.
+
 :::caution
 Cloudflare only recommends applying a MSS clamp to adjust the size of TCP packets. Changing the MTU of a network interface is not recommended as this might have unforeseen impacts on traffic.
 :::
