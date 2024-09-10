@@ -9,12 +9,14 @@ sidebar:
 
 import { Badge, Details, Tabs, TabItem, Render } from "~/components"
 
+Access for Infrastructure allows you to have granular control over how users access individual servers, clusters, or databases in your private network. By adding an infrastructure application to Cloudflare Access, you can configure how users authenticate to the resource as well as specify the ports, protocols, and usernames that they can connect with. Access and command logs ensure regulatory compliance and provide visibility into user activity in case of a security breach.
+
+<Render file="access/short-lived-certs-intro" params={{ intro: "Furthermore, SSH applications replace" }} />
 
 ## Prerequisites
 
-- [Connect the private network](/cloudflare-one/connections/connect-networks/private-net/) to Cloudflare using `cloudflared` or WARP Connector.
-
-<Render file="tunnel/warp-to-tunnel-client" />
+- [Connect your private network](/cloudflare-one/connections/connect-networks/private-net/) to Cloudflare using `cloudflared` or WARP Connector.
+- [Deploy the WARP client](/cloudflare-one/connections/connect-devices/warp/deployment/) on user devices in Gateway with WARP mode.
 
 ## 1. Add a target
 
@@ -51,7 +53,7 @@ Next, create an infrastructure application to secure the target.
 3. Select **Infrastructure**.
 4. Enter any name for the application.
 5. In **Target criteria**, select the target hostname(s) that will represent the application. The application definition will apply to all targets that share the selected hostname.
-6. Enter the **Protocol** and **Port** that will be used to connect to the server. Currently, only SSH connections are supported (port `22`).
+6. Enter the **Protocol** and **Port** that will be used to connect to the server.
 7. (Optional) If a protocol runs on more than one port, select **Add new target criteria** and reconfigure the same target hostname and protocol with a different port number.
 8. Select **Next**.
 </TabItem>
@@ -61,13 +63,78 @@ Next, create an infrastructure application to secure the target.
 </Tabs>
 
 :::note
-Each port can only have one protocol assigned to it. You can reuse the pairing across infrastructure applications, but you can never reassign the port to another protocol.
+Access for Infrastructure only supports assigning one protocol per port. You can reuse a port/protocol pairing across infrastructure applications, but the port cannot be reassigned to another protocol.
 :::
 
-## 3. Add an Access policy
+## 3. Add a policy
+
+To secure your targets, configure a policy that defines who can connect and how they can connect:
+
+1. Enter any name for your policy.
+2. Create a rule that matches the users who are allowed to reach the targets. For more information, refer to  [Access policies](/cloudflare-one/policies/access/).
+3. In **Connection context**, enter the usernames that users can log in as (for example, `root` or `ec2-user`).
+4. Select **Add application**.
+
+A summary page will show the configured targets and policies for this application.
+
+:::note
+Gateway [network policies](/cloudflare-one/policies/gateway/network-policies/) take precedence over infrastructure policies. For example, if you block port `22` for all users in Gateway, then no one can SSH over port `22` to your targets.
+:::
+
+### Selectors
+
+The following [Access policy selectors](/cloudflare-one/policies/access/#selectors) are available for securing infrastructure applications:
+- Email
+- Emails ending in
+- SAML group
+- Country
+- Authentication method
+- Device posture
+- Azure group, Github organization, Google Workspace group, Okta group
 
 ## Connect as a user
 
+### Display available targets
+
+Users can use  `warp-cli` to display a list of targets they can access. On the WARP device, open a terminal and run the following command:
+
+```sh
+warp-cli target list
+```
+
+```sh output
+example output table here
+```
+
+### Connect over SSH
+
+Users can use any SSH client to connect to the target resource, as long as they are logged into the WARP client on their device. Users do not need to modify any existing SSH configs. For example, to SSH from a terminal:
+
+```sh
+ssh <username>@<target IP address>
+```
+
+If your organization has configured a [private DNS resolver](/cloudflare-one/policies/gateway/resolver-policies/), then this command may look like:
+
+```sh
+ssh <username>@<target hostname>
+```
+
+Cloudflare will authenticate, proxy, and optionally encrypt and record all SSH traffic through Gateway.
+
+### Connect to different VNET
+
+To connect to targets that are in different VNETS, users will need to [switch their connected virtual network](/cloudflare-one/connections/connect-networks/private-net/cloudflared/tunnel-virtual-networks/#connect-to-a-virtual-network) in the WARP client.
+
+:::note
+If a user is connected to a target in VNET-A and needs to connect to a target in VNET-B, swithing their VNET will not break any existing connections to targets within VNET-A. At present, connections are maintained between VNETs.
+:::
+
 ## View logs
 
+## Revoke a user's session
+
+To revoke a user's access to all infrastructure applications and targets, you can either [revoke the user from Zero Trust](/cloudflare-one/identity/users/session-management/#per-user) or revoke their device. There is currently no way to revoke a user's session for a specific resource.
+
+## Delete an infrastructure application
 
