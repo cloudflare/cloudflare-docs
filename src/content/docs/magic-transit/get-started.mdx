@@ -3,10 +3,9 @@ pcx_content_type: get-started
 title: Get started
 sidebar:
   order: 4
-
 ---
 
-import { GlossaryTooltip, Render } from "~/components"
+import { GlossaryTooltip, Render } from "~/components";
 
 Before you can begin using Magic Transit, be sure to complete the onboarding steps below. Cloudflare can significantly accelerate this timeline during active-attack scenarios.
 
@@ -54,9 +53,16 @@ You can also use the Resource Public Key Infrastructure (RPKI) as an additional 
 
 To check your prefixes, you can use [Cloudflare's RPKI Portal](https://rpki.cloudflare.com/?view=validator).
 
-<Render file="prerequisites/maximum-segment-size" params={{ one: "Magic Transit", two: "To accommodate the additional header data, you must set the MSS value to 1436 bytes at your physical egress interfaces — not the tunnel interfaces. For Magic Transit egress traffic, the MSS should be set via the tunnel’s interface for egress traffic." }} />
+### Set maximum segment size
+
+<Render
+	file="prerequisites/maximum-segment-size"
+	params={{ one: "Magic Transit" }}
+/>
 
 <Render file="prerequisites/clear-dont-fragment" />
+
+Refer to [Maximum Transmission Unit and Maximum Segment Size](/magic-transit/reference/mtu-mss/) for more details.
 
 <Render file="prerequisites/router-vendor-guidelines-mss-settings-origin" />
 
