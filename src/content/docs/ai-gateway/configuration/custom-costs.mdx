@@ -34,7 +34,7 @@ In this example, if you have a negotiated price of $1 per million input tokens a
 curl https://gateway.ai.cloudflare.com/v1/{{account_id}}/{{gateway_id}}/openai/chat/completions \
   --header 'Authorization: Bearer $TOKEN' \
   --header 'Content-Type: application/json' \
-  --header 'cf-aig-custom-cost: {{"per_token_in":0.000001,"per_token_out":0.000002}}' \
+  --header 'cf-aig-custom-cost: {"per_token_in":0.000001,"per_token_out":0.000002}' \
   --data ' {{
         "model": "gpt-4o-mini",
         "messages": [
