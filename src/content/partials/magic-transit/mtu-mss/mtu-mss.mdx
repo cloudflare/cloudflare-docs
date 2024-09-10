@@ -1,8 +1,9 @@
 ---
-{}
+params:
+	- productName
 ---
 
-Magic WAN/Transit have operation requirements that customers should know about to make sure their network works as intended. Customers should pay particular attention to the Maximum Transmission Unit (MTU) and Maximum Segment Size (MSS) values. The incorrect configuration of these values might lead to loss of performance or inability to deliver data packets.
+{props.productName} has operation requirements that customers should know about to make sure their network works as intended. Customers should pay particular attention to the Maximum Transmission Unit (MTU) and Maximum Segment Size (MSS) values. The incorrect configuration of these values might lead to loss of performance or inability to deliver data packets.
 
 ## MTU and MSS
 
@@ -14,7 +15,7 @@ One common misconception about MSS/MTU is that setting these values negatively i
 
 ## Encapsulation
 
-Since Magic Transit/Magic WAN use encapsulation to deliver its services, it is also important to understand why MTU and MSS matter in this case.
+Since {props.productName} uses encapsulation to deliver its services, it is also important to understand why MTU and MSS matter in this case.
 
 Encapsulation adds bytes to the packet, since we add a new IP header and (often) some sort of encapsulating header to every packet. For example, in the case of GRE for IPv4, we add 24 bytes – 20 bytes for the IPv4 header, and 4 bytes for the GRE tunnel header.
 
@@ -28,17 +29,17 @@ Setting the `do not fragment` bit in the TCP header to `1` denotes that the pack
 
 If you are experiencing issues with fragmentation and are unable to set an MSS clamp, Cloudflare can clear the `do not fragment` bit for you. When this option is enabled, Cloudflare fragments packets greater than 1500 bytes, and the packets are reassembled on your infrastructure after decapsulation. This should be a last resort option. Contact your account team for more information.
 
-## Fragmentation in Magic Transit/Magic WAN
+## Fragmentation in {props.productName}
 
 Consider a UDP datagram of size 3,000 bytes (8 bytes for the UDP header + 2992 bytes for the UDP data). To fit within a standard 1500 bytes MTU, this UDP datagram would be fragmented across three IP packets as follows:
 
 ![A diagram showing a UDP datagram and its various components.](~/assets/images/magic-transit/mtu-mss/udp-datagram.png)
 
-Suppose that the UDP datagram has source port `389` and is destined for a Magic Transit customer IP address. Let us also suppose that the Magic Transit customer has a firewall rule in place that drops UDP traffic with source port `389`, a common [Connectionless Lightweight Directory Access Protocol (CLDAP)](https://blog.cloudflare.com/reflections-on-reflections) reflection attack vector. The three packet fragments above will arrive at Cloudflare, but only the first fragment contains a UDP header with source port information — the second and third fragments, while they contain UDP data, do not have UDP header information. So the question is: which of these fragments does Cloudflare drop and which are delivered to the customer? If we only drop the first parts of fragmented packets, the remaining parts could still generate a large amount of traffic during a DoS attack.
+Suppose that the UDP datagram has source port `389` and is destined for a {props.productName} customer IP address. Let us also suppose that the {props.productName} customer has a firewall rule in place that drops UDP traffic with source port `389`, a common [Connectionless Lightweight Directory Access Protocol (CLDAP)](https://blog.cloudflare.com/reflections-on-reflections) reflection attack vector. The three packet fragments above will arrive at Cloudflare, but only the first fragment contains a UDP header with source port information — the second and third fragments, while they contain UDP data, do not have UDP header information. So the question is: which of these fragments does Cloudflare drop and which are delivered to the customer? If we only drop the first parts of fragmented packets, the remaining parts could still generate a large amount of traffic during a DoS attack.
 
 ### How Cloudflare actually handles fragments
 
-The diagram below shows how the three UDP fragments in the example above flow through Cloudflare and Magic Transit/Magic WAN. However, the main takeaways are:
+The diagram below shows how the three UDP fragments in the example above flow through Cloudflare and {props.productName}. However, the main takeaways are:
 
 - **Cloudflare will never send incomplete packets to a customer**: If we do not see all parts of a packet required to fully reassemble that packet, we will not send the partial data fragments on to the customer.
 - **Magic Firewall operates on fully reassembled packets, not individual fragments**: This means that filters that match on UDP/TCP header information, for example, will apply to the fully reassembled packet, not just the initial fragment. So, we will not leak non-initial fragments to customers.
@@ -61,19 +62,3 @@ One way to modify the MSS setting is by changing the MTU of the network interfac
 :::caution
 Cloudflare only recommends applying a MSS clamp to adjust the size of TCP packets. Changing the MTU of a network interface is not recommended as this might have unforeseen impacts on traffic.
 :::
-
-## MSS with Magic Transit and Direct Server Return
-
-Asymmetric routing is a common scenario especially with Magic Transit. Ingress traffic from the Internet enters the Cloudflare network, then traverses a GRE tunnel (MTU of 1476 bytes), and egress traffic from the datacenter is sent via Direct Server Return (DSR) over the Internet (MTU of 1500 bytes).
-
-In an asymmetric scenario, we want to reduce the MSS value of packets sent by Magic Transit users to the Internet in order to reduce the size of packets sent from the Internet towards their network. To accomplish this, the configuration must be done either on the customer's end-hosts or through an MSS clamp on an intermediary device on the egress path of traffic leaving their network. How MSS values affect payload sizes on both routing paths is detailed below.
-
-![A diagram how MSS works with Magic Transit and Direct Server Return.](~/assets/images/magic-transit/mtu-mss/dsr.png)
-
-_Key takeaway from the chart above: MSS clamping affects TCP packet payload sizes flowing in the opposite direction vs. where the clamp is applied._
-
-## Tunnel-in-tunnel scenario with Magic Transit
-
-MSS clamping only affects TCP traffic. If, for example, you have a web server on your Magic Transit prefix, then the MSS clamp will take effect on the TCP data from direct server return traffic. However, be aware that you will have to take a different approach for any tunnels inside of your Magic Transit tunnel (tunnel-in-tunnel scenario).
-
-For example, if you have a Magic Transit GRE tunnel set up, and then another IPsec or GRE tunnel running from third-party devices on your premises, MSS clamp will have no impact on the outer packets of the encapsulated traffic. This is because MSS clamping affects only TCP traffic, and IPsec/GRE encapsulated traffic is IP. For this scenario, you will have to lower the MTU of the internal tunnel interface further, both for your ingress and egress traffic.
