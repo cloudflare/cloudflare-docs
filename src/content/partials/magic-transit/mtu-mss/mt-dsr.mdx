@@ -2,7 +2,7 @@
 {}
 ---
 
-Asymmetric routing is a common scenario especially with Magic Transit. Ingress traffic from the Internet enters the Cloudflare network, then traverses a GRE tunnel (MTU of 1476 bytes), and egress traffic from the datacenter is sent via Direct Server Return (DSR) over the Internet (MTU of 1500 bytes).
+Asymmetric routing is a common scenario especially with Magic Transit. Ingress traffic from the Internet enters the Cloudflare network, then traverses a GRE tunnel (MTU of 1,476 bytes), and egress traffic from the datacenter is sent via Direct Server Return (DSR) over the Internet (MTU of 1,500 bytes).
 
 In an asymmetric scenario, we want to reduce the MSS value of packets sent by Magic Transit users to the Internet in order to reduce the size of packets sent from the Internet towards their network. To accomplish this, the configuration must be done either on the customer's end-hosts or through an MSS clamp on an intermediary device on the egress path of traffic leaving their network. How MSS values affect payload sizes on both routing paths is detailed below.
 
