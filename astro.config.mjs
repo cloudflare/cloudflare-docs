@@ -120,7 +120,7 @@ export default defineConfig({
 				{
 					tag: "script",
 					attrs: {
-						src: "/scripts/analytics.ts",
+						src: "./scripts/analytics.ts",
 						defer: true,
 						async: true,
 					},
