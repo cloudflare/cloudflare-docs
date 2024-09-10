@@ -43,8 +43,7 @@ The traffic for the applications you chose are now processed first by Connector.
    ```bash
    curl https://api.cloudflare.com/client/v4/accounts/{account_id}/magic/apps \
    --header "X-Auth-Email: <EMAIL>" \
-   --header "X-Auth-Key: <API_KEY>" \
-   --header "Content-Type: application/json" \
+   --header "X-Auth-Key: <API_KEY>"
    ```
 
    If successful, you will receive a response like the following:
@@ -72,8 +71,7 @@ The traffic for the applications you chose are now processed first by Connector.
    Example:
 
    ```bash
-   curl --request POST \
-   --url https://api.cloudflare.com/client/v4/accounts/{account_id}/magic/sites/{site_id}/app_configs \
+   curl https://api.cloudflare.com/client/v4/accounts/{account_id}/magic/sites/{site_id}/app_configs \
    --header "X-Auth-Email: <EMAIL>" \
    --header "X-Auth-Key: <API_KEY>" \
    --header "Content-Type: application/json" \
@@ -103,8 +101,7 @@ The traffic for the applications you chose are now processed first by Connector.
    ```bash
    curl https://api.cloudflare.com/client/v4/accounts/{account_id}/magic/sites/{site_id}/app_configs \
    --header "X-Auth-Email: <EMAIL>" \
-   --header "X-Auth-Key: <API_KEY>" \
-   --header "Content-Type: application/json" \
+   --header "X-Auth-Key: <API_KEY>"
    ```
 
    If successful, you will receive a response like the following:
@@ -131,10 +128,9 @@ The traffic for the applications you chose are now processed first by Connector.
 
    ```bash
    curl --request DELETE \
-   --url https://api.cloudflare.com/client/v4/accounts/{account_id}/magic/sites/{site_id}/app_configs/{id} \
+   https://api.cloudflare.com/client/v4/accounts/{account_id}/magic/sites/{site_id}/app_configs/{id} \
    --header "X-Auth-Email: <EMAIL>" \
-   --header "X-Auth-Key: <API_KEY>" \
-   --header "Content-Type: application/json" \
+   --header "X-Auth-Key: <API_KEY>"
    ```
 
    If successful, you will receive a confirmation message like the following:

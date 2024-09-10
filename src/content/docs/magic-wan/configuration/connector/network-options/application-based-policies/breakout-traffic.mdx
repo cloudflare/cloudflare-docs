@@ -62,8 +62,7 @@ The traffic for that application will now go directly to the Internet and bypass
    ```bash
    curl https://api.cloudflare.com/client/v4/accounts/{account_id}/magic/apps \
    --header "X-Auth-Email: <EMAIL>" \
-   --header "X-Auth-Key: <API_KEY>" \
-   --header "Content-Type: application/json" \
+   --header "X-Auth-Key: <API_KEY>"
    ```
 
    If successful, you will receive a response like the following:
@@ -91,8 +90,7 @@ The traffic for that application will now go directly to the Internet and bypass
    Example:
 
    ```bash
-   curl --request POST \
-   --url https://api.cloudflare.com/client/v4/accounts/{account_id}/magic/sites/{site_id}/app_configs \
+   curl https://api.cloudflare.com/client/v4/accounts/{account_id}/magic/sites/{site_id}/app_configs \
    --header "X-Auth-Email: <EMAIL>" \
    --header "X-Auth-Key: <API_KEY>" \
    --header "Content-Type: application/json" \
@@ -124,8 +122,7 @@ The traffic for that application will now go directly to the Internet and bypass
    ```bash
    curl https://api.cloudflare.com/client/v4/accounts/{account_id}/magic/sites/{site_id}/app_configs \
    --header "X-Auth-Email: <EMAIL>" \
-   --header "X-Auth-Key: <API_KEY>" \
-   --header "Content-Type: application/json" \
+   --header "X-Auth-Key: <API_KEY>"
    ```
 
    If successful, you will receive a response like the following:
@@ -148,14 +145,13 @@ The traffic for that application will now go directly to the Internet and bypass
 
    Take note of the `"id"` value for the application that want to delete.
 
-2. Create a `DELETE` request [using the API](/api/operations/magic-site-app-configs-delete-app-config) to delete an application from the breakout traffic policy.
+2. Create a [`DELETE` request](/api/operations/magic-site-app-configs-delete-app-config) to delete an application from the breakout traffic policy.
 
    ```bash
    curl --request DELETE \
-   --url https://api.cloudflare.com/client/v4/accounts/{account_id}/magic/sites/{site_id}/app_configs/{id} \
+   https://api.cloudflare.com/client/v4/accounts/{account_id}/magic/sites/{site_id}/app_configs/{id} \
    --header "X-Auth-Email: <EMAIL>" \
-   --header "X-Auth-Key: <API_KEY>" \
-   --header "Content-Type: application/json" \
+   --header "X-Auth-Key: <API_KEY>"
    ```
 
    If successful, you will receive a confirmation message like the following:
