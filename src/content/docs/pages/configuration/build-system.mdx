@@ -68,12 +68,12 @@ To override default versions of languages and tools in the build system, you can
 
 To set the version using **environment variables**, you can:
 
-1. Find the enviornment variable name for the language or tool on [this page](/pages/configuration/build-system/#supported-languages-and-tools).
+1. Find the environment variable name for the language or tool on [this page](/pages/configuration/build-system/#supported-languages-and-tools).
 2. Add the environment variable on the dashboard by going to **Settings** > **Environmnet variables** in your Pages project, or [add the environment variable via Wrangler](/workers/configuration/environment-variables/#add-environment-variables-via-wrangler).
 
 To set the version by **adding a file** to your project, you can:
 
-1. Find the enviornment variable name for the language or tool on [this page](/pages/configuration/build-system/#supported-languages-and-tools).
+1. Find the environment variable name for the language or tool on [this page](/pages/configuration/build-system/#supported-languages-and-tools).
 2. Add the specified file name to the root directory of your project, and add the desired version number as the contents of the file.
 
 For example, if you were previously relying on the default version of Node.js in the v1 build system, to migrate to v2, you must specify that you need Node.js `12.18.0` by setting a `NODE_VERSION = 12.18.0` environment variable or by adding a `.node-version` or `.nvmrc` file to your project with `12.18.0` added as the contents to the file.
