@@ -1,0 +1,49 @@
+---
+pcx_content_type: concept
+title: Custom Indicator Feeds
+sidebar:
+  order: 8
+head:
+  - tag: title
+    content: Custom Indicator Feeds
+---
+
+import { Render } from "~/components";
+
+Cloudflare's threat intelligence team crowdsources attack trends and protects users automatically, such as from zero-day vulnerabilities like the [HTTP/2 Rapid Reset attack](https://blog.cloudflare.com/technical-breakdown-http2-rapid-reset-ddos-attack/). However, in some cases, Cloudflare will partner with external entities that have their own feeds which can be shared with eligible Cloudflare users.
+
+With Custom Indicator Feeds, Cloudflare provides a threat intelligence feed based on data received from various Cyber Defense Collaboration groups. The security filtering capabilities are available to eligible public and private sector organizations.
+
+## Get started
+
+<Render file="indicator-feeds-overview" />
+
+If your organization is interested in becoming a provider or a subscriber, contact your account team to facilitate the required authorization.
+
+### Create a Custom Indicator Feed
+
+Providers can create and manage a Custom Indicator Feed with the [Indicator API endpoints](/api/operations/custom-indicator-feeds-get-indicator-feeds):
+
+1. Create a feed with the [Create new indicator feed endpoint](/api/operations/custom-indicator-feeds-create-indicator-feeds). Feeds are lists of indicators.
+2. Upload data to the feed with the [Update indicator feed data endpoint](/api/operations/custom-indicator-feeds-update-indicator-feed-data). Uploaded indicator data must be in a [`.stix2`](https://oasis-open.github.io/cti-documentation/stix/intro) formatted file.
+   :::note
+   Indicator feeds use a snapshot system. To update feeds with new data, providers must upload a file containing all previous and new indicators.
+   :::
+3. Grant access to subscribers with the [Grant permission to indicator feed endpoint](/api/operations/custom-indicator-feeds-add-permission). Any administrator of the account that owns the feed must add subscribers' `account_tag`s to the feed's allowed subscribers list.
+
+### Use a feed in Gateway
+
+Once an account is granted access to a feed, it will be available to match traffic as a [selector in Gateway DNS policies](/cloudflare-one/policies/gateway/dns-policies/#indicator-feeds).
+
+1. In [Zero Trust](https://one.dash.cloudflare.com/), go to **Gateway** > **Firewall Policies**. Select **DNS**.
+2. To create a new DNS policy, select **Add a policy**.
+3. Name your policy.
+4. In **Traffic**, add a condition with the **Indicator Feeds** selector. If your account has been granted access to a Custom Indicator Feed, Gateway will list the feed in **Value**. For example, you can block sites that appear in a feed:
+
+   | Selector        | Operator | Value               | Action |
+   | --------------- | -------- | ------------------- | ------ |
+   | Indicator Feeds | in       | _Threat Intel Feed_ | Block  |
+
+5. Select **Create policy**.
+
+For more information on creating Gateway policies, refer to [DNS policies](/cloudflare-one/policies/gateway/dns-policies/).
