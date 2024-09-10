@@ -1,5 +1,3 @@
-console.log("hi");
-
 const links = document.querySelectorAll<HTMLAnchorElement>("a");
 
 function $zarazLinkEvent(type: string, link: HTMLAnchorElement) {
