@@ -14,11 +14,11 @@ const url = new URL(`${videoId}/iframe`, baseUrl)
 url.searchParams.set("preload", "true");
 url.searchParams.set("letterboxColor", "transparent");
 
-const thumbnailUrl = new URL("/thumbnails/thumbnail.jpg", baseUrl)
-thumbnailUrl.searchParams.set("height", 600)
+const thumbnailUrl = new URL(`${videoId}/thumbnails/thumbnail.jpg`, baseUrl)
+thumbnailUrl.searchParams.set("fit", "crop")
 thumbnailUrl.searchParams.set("time", thumbnailStartTime)
 
-url.searchParams.set("poster",encodeURI(thumbnailUrl.toString()))
+url.searchParams.set("poster", encodeURI(thumbnailUrl.toString()))
 
 ---
 
