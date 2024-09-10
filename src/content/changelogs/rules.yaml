@@ -5,6 +5,11 @@ productLink: "/rules/"
 productArea: Application performance
 productAreaLink: /fundamentals/reference/changelog/performance/
 entries:
+  - publish_date: "2024-09-10"
+    title: wildcard_replace() function now supported in URL rewrites
+    description: |-
+      You can now use the [`wildcard_replace()`](/ruleset-engine/rules-language/functions/#wildcard_replace) function in rewrite expressions of [URL rewrites](/rules/transform/url-rewrite/).
+
   - publish_date: "2024-09-05"
     title: New Rules Templates for one-click rule creation
     description: |-
