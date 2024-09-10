@@ -1,0 +1,35 @@
+---
+{}
+---
+
+Magic WAN/Transit have operation requirements that customers should know about to make sure their network works as intended. Customers should pay particular attention to the Maximum Transmission Unit (MTU) and Maximum Segment Size (MSS) values. The incorrect configuration of these values might lead to loss of performance or inability to deliver data packets.
+
+## MTU and MSS
+
+The [Maximum Transmission Unit (or MTU)](https://www.cloudflare.com/learning/network-layer/what-is-mtu/) is a measurement representing the largest data packet that a network-connected device will accept. The MTU almost always applies to Layer 3 of the OSI model in networking, and includes the entire packet, including all headers (TCP, IP, etc.) and the data (payload) itself. For example, packets must be no bigger than 1500 bytes to be routable through the Internet.
+
+The [Maximum Segment Size (or MSS)](https://www.cloudflare.com/learning/network-layer/what-is-mss/) refers to the amount of data that can be sent in a single TCP datagram packet. This value is determined by subtracting the size of the IP and TCP headers from the MTU, which will instruct the router how large the payload can be. It applies to the Layer 4 of the OSI model in networking.
+
+One common misconception about MSS/MTU is that setting these values negatively impacts performance. While there is a slight performance penalty, it is worse not to configure these values to account for the specificities of your network.
+
+## Encapsulation
+
+Since Magic Transit/Magic WAN use encapsulation to deliver its services, it is also important to understand why MTU and MSS matter in this case.
+
+Encapsulation adds bytes to the packet, since we add a new IP header and (often) some sort of encapsulating header to every packet. For example, in the case of GRE for IPv4, we add 24 bytes – 20 bytes for the IPv4 header, and 4 bytes for the GRE tunnel header.
+
+A network interface which performs GRE encapsulation needs to account for the added overhead by reducing its MTU. Since the MTU maximum size is 1500 bytes, for IPv4 this means that the MTU can be 1476 bytes (the original 1500 bytes minus the 24 bytes from the GRE encapsulation). This reduced MTU defines the maximum size of the IP packet that can be encapsulated by GRE.
+
+## Fragmentation
+
+If the data packet is larger than what the network interface can accept, it either needs to be dropped or fragmented into smaller packets. When fragmentation occurs, Cloudflare only accepts data packets that can be completely reassembled. If some fragments are missing, all received fragments are discarded. Cloudflare does not forward incomplete packets to the customer.
+
+Setting the `do not fragment` bit in the TCP header to `1` denotes that the packet must be dropped rather than fragmented if it is larger than the MTU that intermediary network devices can accept. Most TCP implementations set the `do not fragment` bit to `1` to avoid the potential issues caused by fragmentation.
+
+If you are experiencing issues with fragmentation and are unable to set an MSS clamp, Cloudflare can clear the `do not fragment` bit for you. When this option is enabled, Cloudflare fragments packets greater than 1500 bytes, and the packets are reassembled on your infrastructure after decapsulation. This should be a last resort option. Contact your account team for more information.
+
+## Fragmentation in Magic Transit/Magic WAN
+
+Consider a UDP datagram of size 3,000 bytes (8 bytes for the UDP header + 2992 bytes for the UDP data). To fit within a standard 1500 bytes MTU, this UDP datagram would be fragmented across three IP packets as follows:
+
+![A diagram showing a UDP datagram and its various components.](~/assets/images/magic-transit/mtu-mss/udp-datagram.png)
