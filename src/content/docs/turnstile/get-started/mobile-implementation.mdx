@@ -29,7 +29,13 @@ These settings ensure that the mobile WebView can properly load and execute the 
 
 ## Update allowed origins
 
-In addition to ensuring proper WebView settings, it is essential to update the allowed origins list to include `challenges.cloudflare.com`.
+In addition to ensuring proper WebView settings, it is essential to update the allowed origins list to include:
+
+```txt
+
+challenges.cloudflare.com, about:blank, about:srcdoc
+
+```
 
 Without this, Turnstile challenges might fail to load. WebView should also be configured to allow insecure connections (`http` and `https`). 
 
@@ -37,9 +43,11 @@ Without this, Turnstile challenges might fail to load. WebView should also be co
 
 When implementing Turnstile with WebViews, the user agent must stay consistent as changing the user agent will cause the challenges to fail. 
 
-## Use Pre-Clearance cookies
+## Use clearance cookies
 
-When using [Pre-Clearance cookies](/turnstile/concepts/pre-clearance-support/) with Turnstile, make sure that it is executed in the same environment where the challenges will occur, including the same browser or device configuration. The `cf-clearance` cookie will be only accepted in the same configured domain for Turnstile widget with the corresponding zone. Domains configured with the Turnstile widget must match the Cloudflare zone for the [WAF challenge](/waf/reference/cloudflare-challenges/) action.
+When using [clearance cookies](/turnstile/concepts/pre-clearance-support/) with Turnstile, make sure that it is executed in the same environment where the challenges will occur, including the same browser and device configuration. The `cf-clearance` cookie will be only accepted in the same configured domain for Turnstile widget with the corresponding zone. Domains configured with the Turnstile widget must match the Cloudflare zone that issues challenges via the [WAF](/waf/reference/cloudflare-challenges/).
+
+If pre-clearance is done in a different environment, the clearance cookie may become invalid and lead to more issued challenges.
 
 ## Use Flutter with Turnstile
 
