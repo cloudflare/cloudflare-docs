@@ -102,9 +102,7 @@ You can use the [root CAs list](https://pki.goog/faq/#faq-27) for checking compa
 
 #### Limitations
 
-SSL.com DCV tokens are specific for RSA certificates and ECDSA certificates. This means that, for cases where you have to [manually perform DCV](/ssl/edge-certificates/changing-dcv-method/#partial-dns-setup---action-sometimes-required), you will have to place two validation tokens per certificate order.
-
-To avoid management overhead, consider using a [full setup](/ssl/edge-certificates/changing-dcv-method/#full-dns-setup---no-action-required), or setting up [Delegated DCV](/ssl/edge-certificates/changing-dcv-method/methods/delegated-dcv/).
+SSL.com DCV tokens are specific for RSA certificates and ECDSA certificates. This means that, for cases where you have to [manually perform DCV](/ssl/edge-certificates/changing-dcv-method/#partial-dns-setup---action-sometimes-required), you will have to place two validation tokens per certificate order. To avoid management overhead, consider using a [full setup](/ssl/edge-certificates/changing-dcv-method/#full-dns-setup---no-action-required), or setting up [Delegated DCV](/ssl/edge-certificates/changing-dcv-method/methods/delegated-dcv/).
 
 #### Browser compatibility
 
@@ -115,6 +113,8 @@ This section summarizes commonly requested client support information. For the c
 :::
 
 SSL.com is highly compatible, being accepted by over 99.9% of browsers, tablets, and mobile devices.
+
+SSL.com certificates are [cross-signed with Certum](https://www.ssl.com/repository/) and the [CA that cross-signs intermediates](https://crt.sh/?caid=840) is from 2004.
 
 #### Other resources
 [Acceptable top level domains (TLDs) and current restrictions](https://www.ssl.com/acceptable-top-level-domains-tlds-for-ssl-certificates/)
