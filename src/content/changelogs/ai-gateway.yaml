@@ -9,7 +9,6 @@ entries:
     title: Custom costs
     description: |-
       * **Configuration**: AI Gateway now allows you to set custom costs at the request level [custom costs](/ai-gateway/configuration/custom-costs/) to requests, accurately reflect your unique pricing, overriding the default or public model costs.
-
   - publish_date: "2024-08-02"
     title: Mistral AI
     description: |-
