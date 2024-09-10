@@ -1,6 +1,6 @@
 ---
 pcx_content_type: reference
-title: Entrust distrust by popular browsers
+title: Entrust distrust by major browsers
 sidebar:
   order: 1
   label: Entrust distrust
@@ -20,7 +20,7 @@ New Entrust certificates issued on **November 1, 2024 or after** will not be tru
 
 Refer to the announcements ([Chrome](https://security.googleblog.com/2024/06/sustaining-digital-certificate-security.html), [Mozilla](https://groups.google.com/a/mozilla.org/g/dev-security-policy/c/jCvkhBjg9Yw?pli=1)) for a full list of roots that will be distrusted.
 
-## Entrust response
+## Entrust's response
 
 To prevent their customers from facing issues, Entrust has partnered with SSL.com, a different certificate authority, trusted by both Chrome and Mozilla.
 
@@ -28,8 +28,7 @@ This means that Entrust certificates will be issued using SSL.com roots.
 
 ## Cloudflare managed certificates
 
-Since Cloudflare also [partners with SSL.com](/ssl/reference/certificate-authorities/), switching from uploading custom certificates by Entrust to using Cloudflare's managed certificates brings several advantages:
-
+Since Cloudflare also [partners with SSL.com](/ssl/reference/certificate-authorities/), you can switch from uploading custom certificates to using Cloudflare's managed certificates. This change brings the following advantages:
 
 * Use [Advanced certificates](/ssl/edge-certificates/advanced-certificate-manager/) to have more control and flexibility while also benefitting from automatic renewals.
 * Enable [Total TLS](/ssl/edge-certificates/additional-options/total-tls/) to automatically issue certificates for your [proxied hostnames](/dns/manage-dns-records/reference/proxied-dns-records/).
@@ -38,6 +37,7 @@ Since Cloudflare also [partners with SSL.com](/ssl/reference/certificate-authori
 
 ## More resources
 
+* [Use Cloudflare with SSL.com certificates](/ssl/reference/certificate-authorities/)
 * [Google Security Blog](https://security.googleblog.com/2024/06/sustaining-digital-certificate-security.html)
 * [Entrust TLS Certificate Information Center](https://www.entrust.com/tls-certificate-information-center)
 
