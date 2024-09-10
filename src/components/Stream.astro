@@ -35,6 +35,6 @@ url.searchParams.set("poster", encodeURI(thumbnailUrl.toString()));
 <script is:inline define:vars={{ videoId }}>
 	const video = document.getElementById(videoId);
 	Stream(video).addEventListener("play", () => {
-		zaraz.track("play docs video", { title: videoTitle });
+		zaraz.track("play docs video", { title: {videoTitle} });
 	});
 </script>
