@@ -36,7 +36,7 @@ The traffic for the applications you chose are now processed first by Connector.
 
 <Render file="connector/account-id-api-key" />
 
-1. Create a [`GET` request](/api/operations/magic-account-apps-list-apps) to list the applications associated with an account.
+1. Send a [`GET` request](/api/operations/magic-account-apps-list-apps) to list the applications associated with an account.
 
    Example:
 
@@ -46,9 +46,7 @@ The traffic for the applications you chose are now processed first by Connector.
    --header "X-Auth-Key: <API_KEY>"
    ```
 
-   If successful, you will receive a response like the following:
-
-   ```json
+   ```json output
    {
    	"result": [
    		{
@@ -66,7 +64,7 @@ The traffic for the applications you chose are now processed first by Connector.
 
    Take note of the `"managed_app_id"` value for any application you want to configure.
 
-2. Create a [`POST` request](/api/operations/magic-site-app-configs-add-app-config) to add new apps the priority traffic policy.
+2. Send a [`POST` request](/api/operations/magic-site-app-configs-add-app-config) to add new apps the priority traffic policy.
 
    Example:
 
@@ -79,6 +77,20 @@ The traffic for the applications you chose are now processed first by Connector.
    	"managed_app_id": "<MANAGED_APP_ID>",
    	"priority": 1
    }'
+   ```
+
+   ```json output
+   {
+   	"result": {
+   		"id": "023e105f4ecef8ad9ca31a8372d0c353",
+   		"site_id": "023e105f4ecef8ad9ca31a8372d0c353",
+   		"managed_app_id": "<MANAGED_APP_ID>",
+   		"breakout": true
+   	},
+   	"success": true,
+   	"errors": [],
+   	"messages": []
+   }
    ```
 
 </TabItem> </Tabs>
@@ -94,7 +106,7 @@ The traffic for the applications you chose are now processed first by Connector.
 
 </TabItem> <TabItem label="API">
 
-1. Create a [`GET` request](/api/operations/magic-site-app-configs-list-app-configs) to list the applications associated with a site.
+1. Send a [`GET` request](/api/operations/magic-site-app-configs-list-app-configs) to list the applications associated with a site.
 
    Example:
 
@@ -104,9 +116,7 @@ The traffic for the applications you chose are now processed first by Connector.
    --header "X-Auth-Key: <API_KEY>"
    ```
 
-   If successful, you will receive a response like the following:
-
-   ```json
+   ```json output
    {
    	"result": [
    		{
@@ -124,7 +134,7 @@ The traffic for the applications you chose are now processed first by Connector.
 
    Take note of the `"id"` value for the application that want to delete.
 
-2. Create a `DELETE` request [using the API](/api/operations/magic-site-app-configs-delete-app-config) to delete an application from the breakout traffic policy.
+2. Send a `DELETE` request [using the API](/api/operations/magic-site-app-configs-delete-app-config) to delete an application from the breakout traffic policy.
 
    ```bash
    curl --request DELETE \
@@ -133,9 +143,7 @@ The traffic for the applications you chose are now processed first by Connector.
    --header "X-Auth-Key: <API_KEY>"
    ```
 
-   If successful, you will receive a confirmation message like the following:
-
-   ```json
+   ```json output
    {
    	"result": {
    		"id": "023e105f4ecef8ad9ca31a8372d0c353",
