@@ -55,14 +55,18 @@ If you have already created DNS records covering your subdomain in the parent zo
 3. In your child zone, make sure you have all DNS records that relate to the subdomain. This includes all DNS records deeper than the delegated subdomain. For example, if you are delegating `www.example.com`, you should also move over records for `api.www.example.com`.
 
    :::note
-   If your child zone is on a full setup, consider [exporting](/dns/manage-dns-records/how-to/import-and-export/#export-records) records from the parent zone, deleting all unnecessary records, and then [importing](/dns/manage-dns-records/how-to/import-and-export/#import-records) the records into your new zone. 
+   If your child zone is on a full setup, consider [exporting](/dns/manage-dns-records/how-to/import-and-export/#export-records) records from the parent zone, deleting all unnecessary records, and then [importing](/dns/manage-dns-records/how-to/import-and-export/#import-records) the records into your new zone.
    :::
 
-4. If the parent zone is in Cloudflare, make sure that you migrate over any settings ([WAF custom rules](/waf/custom-rules/), [Rules](/rules/), [Workers](/workers/), and more) that might be needed for the child zone.
+4. If the parent zone is on Cloudflare, make sure that you migrate over any settings ([WAF custom rules](/waf/custom-rules/), [Rules](/rules/), [Workers](/workers/), and more) that might be needed for the child zone.
 
 5. In the child zone, [order an advanced SSL certificate](/ssl/edge-certificates/advanced-certificate-manager/) that covers the child subdomain and any deeper subdomains (if present).
 
 6. Get the nameserver names for the subdomain. These can be found within your newly created child zone in [DNS > Records](https://dash.cloudflare.com/?to=/:account/:zone/dns/records), and will **not** be the same nameservers as the ones used in the parent zone.
+
+   :::note[Avoid downtime]
+   If the parent zone is on Cloudflare, steps 7 and 9 below can be achieved via API. Use the [`/batch` endpoint](TBD) to delete and create or update DNS records within a single request. Refer to [Batch record changes](/dns/manage-dns-records/how-to/batch-record-changes/) for further guidance, or to our [blog post](TBD_BLOG-2508) for a complete example.
+   :::
 
 7. Within the **DNS** > **Records** of the parent zone, update existing address records (`A/AAAA`) on your subdomain to `NS` records. If you only have one address record, update the existing one and add a new `NS` record. If you have multiple address records, update any two of them.
 
