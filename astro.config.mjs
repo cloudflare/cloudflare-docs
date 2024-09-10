@@ -117,14 +117,6 @@ export default defineConfig({
 						content: "https://developers.cloudflare.com/cf-twitter-card.png",
 					},
 				},
-				{
-					tag: "script",
-					attrs: {
-						src: "./scripts/analytics.ts",
-						defer: true,
-						async: true,
-					},
-				},
 			],
 			social: {
 				github: "https://github.com/cloudflare/cloudflare-docs",
