@@ -5,6 +5,10 @@ productLink: "/cloudflare-one/connections/connect-networks/"
 productArea: Cloudflare One
 productAreaLink: /cloudflare-one/changelog/
 entries:
+- publish_date: '2024-09-10'
+  title: [2024.9.1] (https://github.com/cloudflare/cloudflared/releases/tag/2024.9.0) cloudflared build is available.
+  description: |-
+    The new cloudflared build has a bugfix related to the [cloudflare run parameter](https://developers.cloudflare.com/cloudflare-one/connections/connect-networks/configure-tunnels/tunnel-run-parameters/#grace-period) --grace-period, from this release cloudflared connectors will abide by this waiting period before forcefully closing the connections to the edge.
 - publish_date: '2024-08-06'
   title: cloudflared builds available in GitHub for Apple silicon
   description: |-
