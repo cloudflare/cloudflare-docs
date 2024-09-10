@@ -6,15 +6,16 @@ sidebar:
 
 ---
 
-Turnstile is designed to run in a standard browser environment, which includes mobile devices.
+Turnstile is designed to run in a standard browser environment, which includes mobile devices. On native mobile applications, Turnstile can be used with WebViews. This applies to native web applications for iOS and Android. When implementing Turnstile for mobile, ensure you address the common issues below to avoid integration problems.
 
 Any modifications to the environment, such as the User Agent, [Content Security Policy settings](/turnstile/reference/content-security-policy/), or domain allowlisting, can disrupt the successful completion of Turnstile challenges. To ensure compatibility, it is recommended to start with a default, unmodified environment and gradually introduce changes, validating Turnstile’s functionality after each adjustment.
 
-On native mobile applications, Turnstile can be used with WebViews. This applies to native web applications for iOS and Android. When implementing Turnstile for mobile, ensure you address the common issues below to avoid integration problems.
 
 ## WebView configurations
 
-Turnstile requires specific WebView settings to function properly. You must include the following lines in your code to enable necessary features:
+Turnstile requires specific WebView settings to function properly. For Android implementations, refer to [`setJavaScriptEnabled`](https://developer.android.com/reference/android/webkit/WebSettings#setJavaScriptEnabled(boolean)) to tell the WebView to enable JavaScript execution and [`setDomStorageEnabled`](https://developer.android.com/reference/android/webkit/WebSettings#setDomStorageEnabled(boolean)) to enable the DOM storage API. 
+
+You must include the following lines in your code to enable necessary features:
 
 ```javascript
 webView.settings.domStorageEnabled = true;
@@ -25,8 +26,6 @@ webView.settings.javaScriptEnabled = true;
 ```
 
 These settings ensure that the mobile WebView can properly load and execute the Turnstile challenge. If these configurations are missing, Turnstile may malfunction.
-
-For Android implementations, refer to [`setJavaScriptEnabled`](https://developer.android.com/reference/android/webkit/WebSettings#setJavaScriptEnabled(boolean)) to tell the WebView to enable JavaScript execution and [`setDomStorageEnabled`](https://developer.android.com/reference/android/webkit/WebSettings#setDomStorageEnabled(boolean)) to enable the DOM storage API.
 
 ## Update allowed origins
 
@@ -40,7 +39,7 @@ When implementing Turnstile with WebViews, the user agent must stay consistent a
 
 ## Use Pre-Clearance cookies
 
-When using [Pre-Clearance cookies](/turnstile/concepts/pre-clearance-support/) with Turnstile, make sure that it is executed in the same environment where the challenges will occur, including the same browser or device configuration. If Pre-Clearance is done in a different environment, the Pre-Clearance cookie may become invalid and lead to failed challenges.
+When using [Pre-Clearance cookies](/turnstile/concepts/pre-clearance-support/) with Turnstile, make sure that it is executed in the same environment where the challenges will occur, including the same browser or device configuration. The `cf-clearance` cookie will be only accepted in the same configured domain for Turnstile widget with the corresponding zone. Domains configured with the Turnstile widget must match the Cloudflare zone for the [WAF challenge](/waf/reference/cloudflare-challenges/) action.
 
 ## Use Flutter with Turnstile
 
