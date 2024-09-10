@@ -10,7 +10,7 @@ addEventListener("DOMContentLoaded", () => {
 	if (links.length > 0) {
 		for (const link of links) {
 			const linkURL = new URL(link.href);
-			const cfSubdomainRegex = new RegExp(`^[^.]+?\.cloudflare\.com`);
+			const cfSubdomainRegex = new RegExp(`^[^.]+?\\.cloudflare\\.com`);
 			if (linkURL.hostname !== "developers.cloudflare.com") {
 				if (
 					linkURL.hostname === "workers.cloudflare.com" &&
