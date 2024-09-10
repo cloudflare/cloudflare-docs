@@ -8,18 +8,17 @@ interface Props {
 const { videoId, videoTitle, thumbnailStartTime } = Astro.props;
 
 const customerId = "1mwganm1ma0xgnmj";
-const baseUrl = `https://customer-${customerId}.cloudflarestream.com/`
+const baseUrl = `https://customer-${customerId}.cloudflarestream.com/`;
 
-const url = new URL(`${videoId}/iframe`, baseUrl)
+const url = new URL(`${videoId}/iframe`, baseUrl);
 url.searchParams.set("preload", "true");
 url.searchParams.set("letterboxColor", "transparent");
 
-const thumbnailUrl = new URL(`${videoId}/thumbnails/thumbnail.jpg`, baseUrl)
-thumbnailUrl.searchParams.set("fit", "crop")
-thumbnailUrl.searchParams.set("time", thumbnailStartTime)
+const thumbnailUrl = new URL(`${videoId}/thumbnails/thumbnail.jpg`, baseUrl);
+thumbnailUrl.searchParams.set("fit", "crop");
+thumbnailUrl.searchParams.set("time", thumbnailStartTime);
 
-url.searchParams.set("poster", encodeURI(thumbnailUrl.toString()))
-
+url.searchParams.set("poster", encodeURI(thumbnailUrl.toString()));
 ---
 
 <div style="position: relative; padding-top: 56.25%">
@@ -36,6 +35,6 @@ url.searchParams.set("poster", encodeURI(thumbnailUrl.toString()))
 <script is:inline define:vars={{ videoId }}>
 	const video = document.getElementById(videoId);
 	Stream(video).addEventListener("play", () => {
-		console.log("Played");
+		zaraz.track("play docs video", { title: videoTitle });
 	});
 </script>
