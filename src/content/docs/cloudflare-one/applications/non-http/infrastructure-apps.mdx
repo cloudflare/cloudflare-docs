@@ -1,0 +1,73 @@
+---
+pcx_content_type: how-to
+title: Add an infrastructure application
+sidebar:
+  order: 2
+	badge:
+		text: Beta
+---
+
+import { Badge, Details, Tabs, TabItem, Render } from "~/components"
+
+
+## Prerequisites
+
+- [Connect the private network](/cloudflare-one/connections/connect-networks/private-net/) to Cloudflare using `cloudflared` or WARP Connector.
+
+<Render file="tunnel/warp-to-tunnel-client" />
+
+## 1. Add a target
+
+<Tabs>
+<TabItem label="Dashboard">
+1. In [Zero Trust](https://one.dash.cloudflare.com/), go to **Network** > **Targets**.
+2. Select **Add a target**.
+3. In **Target hostname**, enter a user-friendly name for the target resource. We recommend using the server hostname, for example `production-server`. The hostname does not need to be unique and can be reused for multiple targets.
+	<Details header="Format restrictions">
+			- Case insensitive
+			- Contain no more than 255 characters
+			- Contain only alphanumeric characters, `-`, or `.` (no spaces allowed)
+			- Start and end with an alphanumeric character
+	</Details>
+4. In **IP addresses**, enter the private IPv4 and/or IPv6 address of the target resource. If the IP address overlaps across multiple private networks, select the [virtual network](/cloudflare-one/connections/connect-networks/private-net/cloudflared/tunnel-virtual-networks/) where the target resource is located.
+:::note
+Public IPs are not currently supported.
+:::
+5. Select **Add target**.
+</TabItem>
+<TabItem label="API">
+
+</TabItem>
+</Tabs>
+
+Next, create an infrastructure application to secure the target.
+
+## 2. Add an infrastructure application
+
+<Tabs>
+<TabItem label="Dashboard">
+1. In [Zero Trust](https://one.dash.cloudflare.com/), go to **Access** > **Applications**.
+2. Select **Add an application**.
+3. Select **Infrastructure**.
+4. Enter any name for the application.
+5. In **Target criteria**, select the target hostname(s) that will represent the application. The application definition will apply to all targets that share the selected hostname.
+6. Enter the **Protocol** and **Port** that will be used to connect to the server. Currently, only SSH connections are supported (port `22`).
+7. (Optional) If a protocol runs on more than one port, select **Add new target criteria** and reconfigure the same target hostname and protocol with a different port number.
+8. Select **Next**.
+</TabItem>
+<TabItem label="API">
+
+</TabItem>
+</Tabs>
+
+:::note
+Each port can only have one protocol assigned to it. You can reuse the pairing across infrastructure applications, but you can never reassign the port to another protocol.
+:::
+
+## 3. Add an Access policy
+
+## Connect as a user
+
+## View logs
+
+
