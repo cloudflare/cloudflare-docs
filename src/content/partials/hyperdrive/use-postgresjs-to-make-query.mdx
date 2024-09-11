@@ -27,7 +27,7 @@ export default {
 
 		try {
 			// A very simple test query
-			const result = await sql`select * from pg_tables`;
+			const result = await sql`select * from pg_tables LIMIT 10`;
 
 			// Clean up the client, ensuring we don't kill the worker before that is
 			// completed.
