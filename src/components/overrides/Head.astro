@@ -67,6 +67,7 @@ Astro.props.entry.data.description ??= await getPageDescription(
 
 // content type
 if (Astro.props.entry.data.pcx_content_type) {
+	const contentType = Astro.props.entry.data.pcx_content_type;
 	Astro.props.entry.data.head.push({
 		tag: "meta",
 		attrs: {
@@ -178,4 +179,5 @@ if (Astro.props.entry.data.external_link) {
 
 	mermaid.initialize({ startOnLoad: true, theme: "neutral" });
 </script>
+<script src="src/scripts/analytics.ts"></script>
 <Default {...Astro.props}><slot /></Default>

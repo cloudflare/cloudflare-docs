@@ -6,15 +6,14 @@ sidebar:
 head:
   - tag: title
     content: Manage security findings
-
 ---
 
 Findings are security issues detected within SaaS applications that involve users, data at rest, and other configuration settings. With Cloudflare CASB, you can review a comprehensive list of findings in Zero Trust and immediately start taking action on the issues found.
 
 ## Prerequisites
 
-* You have [added](/cloudflare-one/applications/scan-apps/#add-an-integration) a CASB integration.
-* Your scan has surfaced at least one security finding.
+- You have [added](/cloudflare-one/applications/scan-apps/#add-an-integration) a CASB integration.
+- Your scan has surfaced at least one security finding.
 
 ## View findings
 
@@ -43,10 +42,10 @@ File findings for some integrations (such as [Microsoft 365](/cloudflare-one/app
 
 Cloudflare CASB labels each finding with one of the following severity levels:
 
-* **Critical**: Suggests the finding is something your team should act on today.
-* **High**: Suggests the finding is something your team should act on this week.
-* **Medium**: Suggests the finding should be reviewed sometime this month.
-* **Low**: Suggests the finding is informational or part of a scheduled review process.
+- **Critical**: Suggests the finding is something your team should act on today.
+- **High**: Suggests the finding is something your team should act on this week.
+- **Medium**: Suggests the finding should be reviewed sometime this month.
+- **Low**: Suggests the finding is informational or part of a scheduled review process.
 
 ### Change the severity level
 
@@ -54,7 +53,7 @@ You can change the severity level for a finding at any time, in case the default
 
 1. In [Zero Trust](https://one.dash.cloudflare.com), go to **CASB** > **Findings**.
 2. Locate the finding you want to modify and select **View**.
-3. In the severity level drop-down menu, choose your desired setting (*Critical*, *High*, *Medium*, or *Low*).
+3. In the severity level drop-down menu, choose your desired setting (_Critical_, _High_, _Medium_, or _Low_).
 
 The new severity level will only apply to the finding within this specific integration. If you added multiple integrations of the same SaaS application, the other integrations will not be impacted by this change.
 
@@ -64,7 +63,7 @@ Using the security findings from CASB allows for fine-grained Gateway policies w
 
 :::note[Before you begin]
 
-Ensure that you have [enabled HTTP filtering](/cloudflare-one/policies/gateway/initial-setup/http/) for your organization. 
+Ensure that you have [enabled HTTP filtering](/cloudflare-one/policies/gateway/initial-setup/http/) for your organization.
 :::
 
 To create a Gateway policy directly from a CASB finding:
@@ -72,11 +71,11 @@ To create a Gateway policy directly from a CASB finding:
 1. In [Zero Trust](https://one.dash.cloudflare.com), go to **CASB** > **Findings**.
 2. Locate the finding you want to modify and select **View**.
 3. Find the instance you want to block and select its three-dot menu.
-4. Select **Block with Gateway HTTP policy**. A new browser tab will open with a pre-filled HTTP policy. 
+4. Select **Block with Gateway HTTP policy**. A new browser tab will open with a pre-filled HTTP policy.
    :::note
-
-   Not all CASB findings will have the **Block with Gateway HTTP policy** option. Unsupported findings can only be resolved from your SaaS application dashboard or through your domain provider. 
+   Not all CASB findings will have the **Block with Gateway HTTP policy** option. Unsupported findings can only be resolved from your SaaS application dashboard or through your domain provider.
    :::
+
 5. (Optional) [Customize the HTTP policy](/cloudflare-one/policies/gateway/http-policies/). For example, if the policy blocks an unsanctioned third-party app, you can apply the policy to some or all users, or only block uploads or downloads.
 6. Select **Save**.
 
