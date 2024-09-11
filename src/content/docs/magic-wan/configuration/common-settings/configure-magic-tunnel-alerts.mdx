@@ -27,14 +27,16 @@ import { Render, Tabs, TabItem } from "~/components";
 4. Enter a name and description for the notification.
 5. Add webhooks or an email address for the person who should receive the notification, and select **Next**.
 6. Choose the tunnels you want to receive alerts for.
-7. Select the **Alert Sensitivity Level** threshold. It is predefined for _Medium_, but you can choose between _High_, _Medium_, and _Low_.
+7. Select the **Alert Sensitivity Level** threshold. It is predefined for _Medium_, but you can choose between _High_, _Medium_, and _Low_. If you need more than three sensitivity levels, use the API.
 8. Select **Create** when you are done.
 
 </TabItem> <TabItem label="API">
 
+:::note
 Refer to the [documentation for Notifications](/notifications/get-started/) to learn about specific permissions you need to access the service via the API.
+:::
 
-Send a [`POST` request](/api/operations/notification-policies-create-a-notification-policy) to create a Magic WAN tunnel health alert. You can set any SLO value between `0` and `99.99`.
+Send a [`POST` request](/api/operations/notification-policies-create-a-notification-policy) to create a Magic WAN tunnel health alert. You can set tunnel health alerts with any SLO value between `0` and `99.99`.
 
 ```bash
 curl https://api.cloudflare.com/client/v4/accounts/account_id/alerting/v3/policies \
