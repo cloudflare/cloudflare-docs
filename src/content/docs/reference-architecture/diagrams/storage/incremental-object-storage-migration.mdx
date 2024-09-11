@@ -1,0 +1,40 @@
+---
+title: Incremental Object Storage Migration
+pcx_content_type: reference-architecture-diagram
+products:
+  - R2
+sidebar:
+  order: 1
+head:
+  - tag: title
+    content: Incremental Object Storage Migration
+---
+
+## Incremental Object Storage Migration
+
+Migrating data between cloud object storage providers can be challenging and expensive. You need to ensure no objects are missed, especially when new data is coming in during your migration. Additionally, there may be a significant one-time data transfer fee to consider.
+
+To help solve these challenges, Cloudflare has developed [Sippy](/r2/data-migration/sippy/), an incremental data migration service. Sippy enables you to transfer data from other cloud providers to Cloudflare R2 as it's requested, reducing the unnecessary cloud egress fees typically associated with moving large amounts of data.
+
+Migration-specific egress fees are reduced by leveraging requests within the flow of your application where you would already be paying egress fees to copy objects to R2 simultaneously.
+
+Here's how Sippy works: it will first attempt to retrieve an object from R2 storage. If the object is not in R2, it will retrieve the object from your source cloud object storage. At the same time, it will add the object to R2 for future access, ensuring a seamless and efficient data migration process.
+
+Sippy can be used to migrate all data as it is requested. Additionally, Cloudflare offers the [Super Slurper](/r2/data-migration/super-slurper/) tool to migrate any remaining data. If you want to migrate all your data from an existing cloud provider to R2 at once, we recommend using Super Slurper.
+
+## Incremental Object Storage Migration with Sippy
+
+![Figure 1: R2 Incremental Migration with Sippy](~/assets/images/reference-architecture/incremental-object-storage-migration/sippy-migration-diagram.svg "Figure 1: R2 Incremental Migration with Sippy")
+
+1. The client requests an object from R2 using[ Workers](https://developers.cloudflare.com/r2/api/workers/),[ S3 API](https://developers.cloudflare.com/r2/api/s3/), or[ public bucket](https://developers.cloudflare.com/r2/buckets/public-buckets/).
+2. If the object is found in your R2 bucket it is served to the client.
+3. If the object is not found in R2, the object will simultaneously be returned from your source storage bucket and copied to R2. Note: Some large objects may take multiple requests to copy.
+
+After objects are copied, subsequent requests will be served from R2 and you’ll begin saving on egress fees immediately.
+
+
+## Related Resources
+
+* [Sippy Documentation](/r2/data-migration/sippy/)
+* [Super Slurper Documentation](/r2/data-migration/super-slurper/)
+* Sippy Release Blog: TBD
