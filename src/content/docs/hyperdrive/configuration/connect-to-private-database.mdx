@@ -20,7 +20,7 @@ When your database is isolated within a private network (such as a [virtual priv
 
 ## Prerequisites:
 
-- A database in your private network.
+- A database in your private network, [configured to use TLS/SSL](/hyperdrive/configuration/connect-to-postgres/#supported-tls-ssl-modes).
 - A default hostname on your Cloudflare account, which will be used to route requests to your database.
 
 ## 1. Create a tunnel in your private network
@@ -85,13 +85,11 @@ The service token will be used to restrict requests to the tunnel, and is needed
 
 10. Enter a name in the **Policy name** and set the **Action** to `Service Auth`.
 
-11. In **Configure rules**, create an **Include** rule. Specify a **Selector** of `Everyone`.
+11. In **Configure rules**, create an **Include** rule. Specify a **Selector** of `Service Token` and the **Value** of the service token you created in step [2. Create a service token](#2-create-a-service-token).
 
-12. In **Configure rules**, create a **Require** rule. Specify a **Selector** of `Service Token` and the **Value** of the service token you created in step [2. Create a service token](#2-create-a-service-token).
+12. Select **Next**.
 
-13. Select **Next**.
-
-14. Select **Add application** to create the Access application.
+13. Select **Add application** to create the Access application.
 
 ## 4. Use the Wrangler CLI to create a Hyperdrive configuration
 
