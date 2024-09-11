@@ -120,4 +120,10 @@ Use Postgres.js to send a test query to validate that the connection has been su
 
 <Render file="use-postgresjs-to-make-query" product="hyperdrive" />
 
-If you successfully receive the list of `pg_tables` from your database, your Hyperdrive has now been configured to securely connect to a private database using [Cloudflare Tunnel](/cloudflare-one/connections/connect-networks/) and [Cloudflare Access](/cloudflare-one/policies/access/).
+Now, deploy your Worker:
+
+```bash
+npx wrangler deploy
+```
+
+If you successfully receive the list of `pg_tables` from your database when you access your deployed Worker, your Hyperdrive has now been configured to securely connect to a private database using [Cloudflare Tunnel](/cloudflare-one/connections/connect-networks/) and [Cloudflare Access](/cloudflare-one/policies/access/).
