@@ -21,17 +21,16 @@ These settings ensure that the mobile WebView can properly load and execute the 
 
 In addition to ensuring proper WebView settings, if you have allowed origins configured, it is essential to update the list to include: 
 
-
-:::note
-
-Only [React Native](https://github.com/react-native-webview/react-native-webview/blob/master/docs/Reference.md#originwhitelist) contains the allowed origins below by default.
-:::
-
 ```txt
 
 challenges.cloudflare.com, about:blank, about:srcdoc
 
 ```
+
+:::note
+
+Only [React Native](https://github.com/react-native-webview/react-native-webview/blob/master/docs/Reference.md#originwhitelist) contain the allowed origins above by default.
+:::
 
 Without this, Turnstile challenges might fail to load. WebView should also be configured to allow insecure connections (`http` and `https`). 
 
