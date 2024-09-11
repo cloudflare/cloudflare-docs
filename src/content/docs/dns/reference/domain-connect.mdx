@@ -68,7 +68,7 @@ Send an email to `domain-connect@cloudflare.com`, including the following inform
 
 Since September, 2024, template updates are picked up by an automation.
 
-The automation works by comparing the template version number in Cloudflare with the authoritative source of the template on the Internet. This check runs multiple times a day. Although Cloudflare cannot guarantee when exactly each update will be picked up, the process is expected to take no longer than eight hours.
+The automation compares the template version number in Cloudflare with the authoritative source of the template on the Internet. This check runs multiple times a day. Although Cloudflare cannot guarantee when exactly each update will be picked up, the process is expected to take no longer than eight hours.
 
 :::note
 The authoritative source must be in raw `json` format for the automation to work correctly, as in [this example](https://raw.githubusercontent.com/Domain-Connect/Templates/master/exampleservice.domainconnect.org.template1.json).
