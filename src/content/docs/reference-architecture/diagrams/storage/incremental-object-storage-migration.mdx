@@ -14,13 +14,15 @@ head:
 
 Migrating data between cloud object storage providers can be challenging and expensive. You need to ensure no objects are missed, especially when new data is coming in during your migration. Additionally, there may be a significant one-time data transfer fee to consider.
 
-To help solve these challenges, Cloudflare has developed [Sippy](/r2/data-migration/sippy/), an incremental data migration service. Sippy enables you to transfer data from other cloud providers to Cloudflare R2 as it's requested, reducing the unnecessary cloud egress fees typically associated with moving large amounts of data.
+In order to address these challenges, Cloudflare has created two migration tools: [Sippy](/r2/data-migration/sippy/) and [Super Slurper](/r2/data-migration/super-slurper/). Sippy is an incremental data migration service, and it is the primary focus of this reference architecture diagram. On the other hand, Super Slurper is designed for large-scale, one-time migrations to R2. Moving all your data at once may not work for your scenario, so Sippy can help with that.
+
+Sippy enables you to transfer data from other cloud providers to Cloudflare R2 as the data is requested. This workflow is ideal for situations where you want to avoid large upfront data transfer bills and selectively migrate data as it's accessed.
 
 Migration-specific egress fees are reduced by leveraging requests within the flow of your application where you would already be paying egress fees to copy objects to R2 simultaneously.
 
-Here's how Sippy works: it will first attempt to retrieve an object from R2 storage. If the object is not in R2, it will retrieve the object from your source cloud object storage. At the same time, it will add the object to R2 for future access, ensuring a seamless and efficient data migration process.
+Use Sippy to migrate your commonly accessed data objects and start saving on egress fees right away. Then, use Super Sluper to migrate any remaining data.
 
-Sippy can be used to migrate all data as it is requested. Additionally, Cloudflare offers the [Super Slurper](/r2/data-migration/super-slurper/) tool to migrate any remaining data. If you want to migrate all your data from an existing cloud provider to R2 at once, we recommend using Super Slurper.
+Here's how Sippy works: it will first attempt to retrieve an object from R2 storage. If the object is not in R2, it will retrieve the object from your source cloud object storage. At the same time, it will add the object to R2 for future access, ensuring a seamless and efficient data migration process.
 
 ## Incremental Object Storage Migration with Sippy
 
