@@ -24,7 +24,11 @@ Magic Cloud Networking has the following cloud on-ramps integrations:
 
 Refer to [Reference](/magic-cloud-networking/reference/) to learn more about how Cloudflare orchestrates VPN connectivity to your cloud networks.
 
-## Create a Magic WAN cloud on-ramp
+---
+
+## Set up on-ramps
+
+### Create a Magic WAN cloud on-ramp
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/), and select your account.
 2. Select **Magic WAN** > **Cloud on-ramps**.
@@ -45,7 +49,7 @@ Refer to [Reference](/magic-cloud-networking/reference/) to learn more about how
 
 You have successfully created your Magic WAN on-ramp. However, on-ramp creation can take up to an hour before you can use it.
 
-## Edit a Magic WAN cloud on-ramp
+### Edit a Magic WAN cloud on-ramp
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/), and select your account.
 2. Select **Magic WAN** > **Cloud on-ramps**.
@@ -59,7 +63,7 @@ You have successfully created your Magic WAN on-ramp. However, on-ramp creation 
       If you uncheck any of the Propagation settings, you will have to manually configure Magic WAN or your cloud provider to ensure successful communication between them. Refer to the [How to](/magic-wan/configuration/manually/how-to/) section of Magic WAN, or consult the documentation for your cloud provider for more information.
       :::
 
-## Delete a Magic WAN cloud on-ramp
+### Delete a Magic WAN cloud on-ramp
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/), and select your account.
 2. Select **Magic WAN** > **Cloud on-ramps**.
@@ -69,7 +73,7 @@ You have successfully created your Magic WAN on-ramp. However, on-ramp creation 
    - **Detach**: Cloudflare will stop managing the cloud resources that were created to build this on-ramp, but will leave them in place. On-ramp connectivity will not be impacted.
    - **Destroy**: Cloudflare will delete the resources that were created to build this on-ramp in the cloud provider, if possible. Resources cannot be deleted if other resources depend upon them. For example, if an AWS Customer Gateway was created for this on-ramp, but was subsequently used in a second on-ramp, destroying this on-ramp will not destroy the AWS Customer Gateway.
 
-## Magic WAN Address Space
+### Magic WAN Address Space
 
 By default, Cloudflare installs the following summarized routes in your cloud route tables to direct traffic to Magic WAN:
 
