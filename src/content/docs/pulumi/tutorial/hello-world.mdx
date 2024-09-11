@@ -1,13 +1,18 @@
 ---
-title: Deploy a Worker with Pulumi
+title: Deploy a Worker
 pcx_content_type: tutorial
 products:
   - Workers
 updated: 2024-01-08
-content_type: 📝 Tutorial
 difficulty: Beginner
 languages:
+  - JavaScript
   - TypeScript
+  - Python
+  - Go
+  - Java
+  - .NET
+  - YAML
 sidebar:
   order: 3
 head:
@@ -16,8 +21,6 @@ head:
 ---
 
 In this tutorial, you will go through step-by-step instructions to deploy a Hello World web application using Cloudflare Workers and Pulumi Infrastructure as Code (IaC) so that you can become familiar with the resource management lifecycle. In particular, you will create a Worker, a Route, and a DNS Record to access the application before cleaning up all the resources.
-
-![alt_text](~/assets/images/pulumi/hello-world-tutorial/sn2.png "Running Cloudflare Workers application deployed with Pulumi")
 
 :::note
 
@@ -31,27 +34,15 @@ Ensure you have:
 
 - A Cloudflare account and API Token with permission to edit the resources in this tutorial. If you need to, sign up for a [Cloudflare account](https://dash.cloudflare.com/sign-up/workers-and-pages) before continuing.
 - A Pulumi Cloud account. You can sign up for an [always-free, individual tier](https://app.pulumi.com/signup).
-- [npm](https://docs.npmjs.com/downloading-and-installing-node-js-and-npm) and the [Pulumi CLI](/pulumi/installing/) installed on your machine.
-- A Cloudflare Zone. Complete the [Add a Site tutorial](/pulumi/tutorial/add-site/) to create one.
+- The [Pulumi CLI](/pulumi/installing/) is installed on your machine.
+- A [Pulumi-supported programming language](https://github.com/pulumi/pulumi?tab=readme-ov-file#languages) is configured. (TypeScript, JavaScript, Python, Go, .NET, Java, or use YAML)
+- A domain name. You may use `example.com` to complete the tutorial.
 
-:::note[Link to the full solution]
-
-You can find the complete solution of this tutorial under [this Pulumi repo and branch](https://github.com/pulumi/tutorials/tree/cloudflare-typescript-hello-world-end). To deploy the final version, run the following:
-
-```sh
-mkdir serverless-cloudflare && cd serverless-cloudflare
-pulumi new https://github.com/pulumi/tutorials/tree/cloudflare-typescript-hello-world-end
-npm install
-pulumi up --yes
-```
-
-:::
-
-## Initialize Pulumi
+## 1. Initialize Pulumi
 
 ### a. Create a directory
 
-You'll use a new and empty directory for this tutorial.
+Use a new and empty directory for this tutorial.
 
 ```sh
 mkdir serverless-cloudflare
@@ -70,65 +61,196 @@ pulumi login
 
 :::note
 
-A Pulumi program is code written in a [supported programming language](https://www.pulumi.com/docs/languages-sdks/) that defines infrastructure resources. We'll use TypeScript.
-
+A Pulumi program is code written in a [supported programming language](https://github.com/pulumi/pulumi?tab=readme-ov-file#languages) that defines infrastructure resources.
 :::
 
-To create a program, run:
+To create a program, select your language of choice and run the `pulumi` command:
+
+
+<Tabs> <TabItem label="JavaScript" icon="seti:javascript">
 
 ```sh
-pulumi new https://github.com/pulumi/tutorials/tree/cloudflare-typescript-hello-world-begin
+pulumi new javascript --name serverless-cloudflare --yes
+# wait a few seconds while the project is initialized
 ```
 
-Complete the prompts with defaults where available; otherwise, provide the requested information. You will need:
+</TabItem> <TabItem label="TypeScript" icon="seti:typescript">
+
+```sh
+pulumi new typescript --name serverless-cloudflare --yes
+# wait a few seconds while the project is initialized
+```
+
+</TabItem> <TabItem label="Python" icon="seti:python">
+
+```sh
+pulumi new python --name serverless-cloudflare --yes
+# wait a few seconds while the project is initialized
+```
+
+</TabItem> <TabItem label="go">
+
+```sh
+pulumi new go --name serverless-cloudflare --yes
+# wait a few seconds while the project is initialized
+```
+
+</TabItem> <TabItem label="Java">
+
+```sh
+pulumi new java --name serverless-cloudflare --yes
+# wait a few seconds while the project is initialized
+```
+
+</TabItem> <TabItem label=".NET">
+
+```sh
+pulumi new csharp --name serverless-cloudflare --yes
+# wait a few seconds while the project is initialized
+```
+
+</TabItem> <TabItem label="YAML">
+
+```sh
+pulumi new yaml --name serverless-cloudflare --yes
+```
+
+</TabItem> </Tabs>
+
+### d. Save your settings
+
+You will need:
 
 - Your Cloudflare [account ID](/fundamentals/setup/find-account-and-zone-ids/).
-- Your Cloudflare [Zone ID](/fundamentals/setup/find-account-and-zone-ids/).
-- A registered domain. For instance, `example.com`
 - A valid Cloudflare API [token](/fundamentals/api/get-started/create-token/).
-
-### d. Create a stack
+- A domain. For instance, `example.com`.
 
 :::note
 
-A Pulumi stack is an instance of a Pulumi program. Stacks are independently configurable and may represent different environments (development, staging, production) or feature branches.
-
+A Pulumi [ESC Environment](https://www.pulumi.com/docs/esc/environments/) is a YAML file containing configurations and secrets that pertain to your application and infrastructure. These can be accessed in several ways, including a Pulumi program. All ESC Environments reside in your Pulumi Cloud account.
 :::
 
-To create a stack, run:
+todo todo todo todo todo todo!!
+
+### e. Create a stack
+
+:::note
+
+A Pulumi [stack](https://www.pulumi.com/docs/concepts/stack/) is an instance of a Pulumi program. Stacks are independently configurable and may represent different environments (development, staging, production) or feature branches. For this tutorial, you'll use the `dev` stack.
+:::
+
+To instantiate your `dev` stack, run:
 
 ```sh
-pulumi up --yes
+pulumi up --yes --stack dev
+# wait a few seconds for the stack to be instantiated.
 ```
 
-After the above command completes, review the value of `myFirstOutput` for correctness.
+At this point, you have not defined any resources so you'll have an empty stack.
 
-### e. (Optional) Review the stack
-
-From the output above, follow **your** _View in Browser_ link to get familiar with the Pulumi stack.
-
-:::note
-
-You have not yet created any Cloudflare resources but have defined a variable, `myFirstOutput`, and the Pulumi stack.
-
-:::
-
-Example:
-
-```bash
-View in Browser (Ctrl+O):
-https://app.pulumi.com/diana-pulumi-corp/serverless-cloudflare/dev/updates/1
-```
-
-![alt_text](~/assets/images/pulumi/hello-world-tutorial/sn3.png "Pulumi Cloud stack")
+TODO next step here
 
 ## Add a Worker
 
-You will now add a Cloudflare Worker to the Pulumi stack, `dev`.
+You will now add the Pulumi Cloudflare package and a Cloudflare Worker to your Pulumi program.
 
-### a. Add Cloudflare Worker to index.ts
 
-Replace the contents of your `index.ts` file with the following:
+### a. Install dependencies
+
+<Tabs> <TabItem label="JavaScript" icon="seti:javascript">
+
+```sh
+npm install @pulumi/cloudflare
+```
+
+```sh output
+added 1 package ...
+```
+
+</TabItem> <TabItem label="TypeScript" icon="seti:typescript">
+
+```sh
+npm install @pulumi/cloudflare
+```
+
+```sh output
+added 1 package ...
+```
+
+</TabItem> <TabItem label="Python" icon="seti:python">
+
+```sh
+echo "pulumi_cloudflare>=5.35,<6.0.0" >> requirements.txt
+source venv/bin/activate
+pip install -r requirements.txt
+```
+
+```sh output
+...
+Collecting pulumi-cloudflare
+...
+```
+
+</TabItem> <TabItem label="go">
+
+```sh
+go get github.com/pulumi/pulumi-cloudflare/sdk/v3/go/cloudflare
+```
+
+```sh output
+go: downloading github.com/pulumi/pulumi-cloudflare ...
+```
+
+</TabItem> <TabItem label="Java">
+
+Below are Apache Maven instructions. For other Java project managers such as Gradle, see the official [Maven repository](https://central.sonatype.com/artifact/com.pulumi/cloudflare/overview)
+
+1. Open your `pom.xml` file.
+2. Add the Pulumi Cloudflare dependency inside the `<dependencies>` section.
+
+```xml
+<dependency>
+    <groupId>com.pulumi</groupId>
+    <artifactId>cloudflare</artifactId>
+    <version>5.35.1</version>
+</dependency>
+```
+
+1. Run:
+
+```sh
+mvn clean install
+```
+
+```sh output
+...
+[INFO] BUILD SUCCESS
+...
+```
+
+</TabItem> <TabItem label=".NET">
+
+```sh
+dotnet add package Pulumi.Cloudflare
+```
+
+```sh output
+...
+info : Adding PackageReference for package 'Pulumi.Cloudflare' into project
+...
+```
+
+</TabItem> <TabItem label="YAML">
+
+There are no dependencies to download for YAML. Skip ahead.
+
+</TabItem> </Tabs>
+
+### b. Modify the program
+
+Replace the contents of your entrypoint file with the following:
+
+<Tabs> <TabItem label="JavaScript" icon="seti:javascript">
 
 ```typescript
 import * as pulumi from "@pulumi/pulumi";
@@ -146,28 +268,16 @@ export const script = new cloudflare.WorkerScript("hello-world-script", {
 	content: fs.readFileSync("./app/worker.ts", "utf8"),
 });
 ```
+</TabItem>
 
-### b. Install dependencies
+TODO -- ADD OTHER LANGUAGES
 
-```sh
-npm install @pulumi/cloudflare
-```
 
-### c. Apply the changes
+### b. Apply the changes
 
 ```sh
-pulumi up --yes
+pulumi up --yes --stack dev
 ```
-
-### d. (Optional) View the Cloudflare Dashboard
-
-You can view your Cloudflare resource directly in the Cloudflare Dashboard to validate its existence.
-
-1. Log into the [Cloudflare dashboard](https://dash.cloudflare.com/).
-2. Select your account.
-3. Go to **Workers & Pages**.
-4. Open the "hello-world" application. Example:
-   ![alt_text](~/assets/images/pulumi/hello-world-tutorial/sn4.png)
 
 ## Add a Worker route
 
@@ -203,28 +313,11 @@ export const route = new cloudflare.WorkerRoute("hello-world-route", {
 });
 ```
 
-### b. Apply changes
-
-```sh
-pulumi up --yes
-```
-
-### c. (Optional) View the Cloudflare Worker route in the dashboard
-
-In the Cloudflare Dashboard, the Worker application now contains the previously defined Worker Route.
-
-1. Log into the [Cloudflare dashboard](https://dash.cloudflare.com/).
-2. Select your account.
-3. Go to **Workers & Pages**.
-4. Select your application.
-5. For **Routes**, select **View** to verify the Worker Route details match your definition.
-   ![alt_text](~/assets/images/pulumi/hello-world-tutorial/sn5.png "Cloudflare Dashboard - Worker Route")
 
 ## Add a DNS record
 
 You will now add a DNS record to your domain so the previously configured route can be accessed via a URL.
 
-### a. Add DNS Record to index.ts
 
 Replace the contents of your `index.ts` file with the following:
 
@@ -277,14 +370,6 @@ The last line in the code will create an output with the endpoint for the Hello 
 pulumi up --yes
 ```
 
-### c. (Optional) View all the resources in Pulumi Cloud
-
-1. In your browser, open your [Pulumi Cloud](https://app.pulumi.com/)
-2. Navigate to your stack, `serverless-cloudflare/dev`.
-3. Confirm all the defined resources are created and healthy. Example:
-
-![alt_text](~/assets/images/pulumi/hello-world-tutorial/sn6.png "Pulumi Cloud stack")
-
 ## Test the app
 
 You have incrementally added all the Cloudflare resources needed to run and access your Hello World application. This was done by defining the resources in TypeScript and letting Pulumi handle the rest.
@@ -297,9 +382,6 @@ You can test your application via the terminal or browser.
 pulumi stack output url
 ```
 
-```sh output
-hello-world.atxyall.com
-```
 
 ```sh
 curl "https://$(pulumi stack output url)"
@@ -325,12 +407,6 @@ Depending on your domain settings, you may need to use "http" instead.
 
 :::
 
-- In your browser, open `hello-world.YOUR_DOMAIN.com`
-
-Example:
-
-![alt_text](~/assets/images/pulumi/hello-world-tutorial/sn2.png "Hello World app browser screenshot")
-
 ## Clean up
 
 In this last step, you will run a couple of commands to clean up the resources and stack you used throughout the tutorial.
@@ -346,3 +422,7 @@ pulumi destroy
 ```sh
 pulumi stack rm dev
 ```
+
+## Next steps
+
+TODO
