@@ -398,7 +398,7 @@ Toggles the foreign key constraint enforcement. When `PRAGMA foreign_keys` is se
 
 Allows you to defer the enforcement of [foreign key constraints](/d1/build-with-d1/foreign-keys/) until the end of the current transaction. This can be useful during [database migrations](/d1/reference/migrations/), as schema changes may temporarily violate constraints depending on the order in which they are applied.
 
-This does not disable foreign key enforcement outside of the current transaction: if you have not resolved outstanding foreign key violations at the end of your transaction, it will fail with a `FOREIGN KEY constraint failed` error.
+This does not disable foreign key enforcement outside of the current transaction. If you have not resolved outstanding foreign key violations at the end of your transaction, it will fail with a `FOREIGN KEY constraint failed` error.
 
 Note that setting `PRAGMA defer_foreign_keys = ON` does not prevent `ON DELETE CASCADE` actions from being executed. While foreign key constraint checks are deferred until the end of a transaction, `ON DELETE CASCADE` operations will remain active, consistent with SQLite's behavior.
 
