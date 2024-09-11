@@ -1,0 +1,123 @@
+---
+pcx_content_type: concept
+title: Connect to a private database using Tunnel
+sidebar:
+  order: 4
+---
+
+import { TabItem, Tabs, Render } from "~/components";
+
+Hyperdrive can securely connect to your private databases using [Cloudflare Tunnel](/cloudflare-one/connections/connect-networks/) and [Cloudflare Access](/cloudflare-one/policies/access/).
+
+## How it works
+
+When your database is isolated within a private network (such as a [virtual private cloud](https://www.cloudflare.com/learning/cloud/what-is-a-virtual-private-cloud) or an on-premise network), you must enable a secure connection from your network to Cloudflare.
+
+- [Cloudflare Tunnel](/cloudflare-one/connections/connect-networks/) is used to establish the secure tunnel connection.
+- [Cloudflare Access](/cloudflare-one/policies/access/) is used to restrict access to your tunnel such that only specific Hyperdrive configurations can access it.
+
+<Render file="tutorials-before-you-start" product="workers" />
+
+## Prerequisites:
+
+- A database in your private network.
+- A default hostname on your Cloudflare account, which will be used to route requests to your database.
+
+## 1. Create a tunnel in your private network
+
+### 1.1. Create a tunnel
+
+First, create a [Cloudflare Tunnel](/cloudflare-one/connections/connect-networks/) in your private network to establish a secure connection between your network and Cloudflare. Your network must be configured such that the tunnel has permissions to egress to the Cloudflare network and access the database within your network.
+
+<Render file="tunnel/create-tunnel" product="cloudflare-one" />
+
+### 1.2. Connect your database using a public hostname
+
+Your tunnel must be configured to use a public hostname so that Hyperdrive can route requests to it.
+
+1. In the **Public Hostnames** tab, choose a **Domain** and specify any subdomain or path information. This will be used in your Hyperdrive configuration to route to this tunnel.
+
+2. In the **Service** section, specify **Type** `TCP` and the URL of your database, such as `https://127.0.0.1:5432`.
+
+3. Select **Save tunnel**.
+
+## 2. Create a service token
+
+The service token will be used to restrict requests to the tunnel, and is needed for the next step.
+
+1. In [Zero Trust](https://one.dash.cloudflare.com), go to **Access** > **Service Auth** > **Service Tokens**.
+
+2. Select **Create Service Token**.
+
+3. Name the service token. The name allows you to easily identify events related to the token in the logs and to revoke the token individually.
+
+4. Set a **Service Token Duration** of `Non-expiring`. This prevents the service token from expiring to be used throughout the life of the Hyperdrive configuration.
+
+5. Select **Generate token**. You will see the generated Client ID and Client Secret for the service token, as well as their respective request headers.
+
+6. Copy the Access Client ID and Access Client Secret. These will be used when creating the Hyperdrive configuration.
+
+   :::caution
+   This is the only time Cloudflare Access will display the Client Secret. If you lose the Client Secret, you must generate a new service token.
+   :::
+
+## 3. Create an Access application to secure the tunnel
+
+[Cloudflare Access](/cloudflare-one/policies/access/) will be used to verify that requests to the tunnel originate from Hyperdrive using the service token created above.
+
+1. In [Zero Trust](https://one.dash.cloudflare.com), go to **Access** > **Applications**.
+
+2. Select **Add an application**.
+
+3. Select **Self-hosted**.
+
+4. In **Application Configuration** > **Application name**, enter any name for the application.
+
+5. In **Application Configuration** > **Session Duration**, select `No duration, expires immediately`.
+
+6. In **Application Configuration** > **Application domain**, enter the subdomain and domain that was previously set for the tunnel application.
+
+7. In **Application Appearance**, disable the `Enable App in App Launcher` setting.
+
+8. In **Identify providers**, disable the `Accept all available identify providers` setting and select `Deselect all` identify providers.
+
+9. Select **Next**.
+
+10. Enter a name in the **Policy name** and set the **Action** to `Service Auth`.
+
+11. In **Configure rules**, create an **Include** rule. Specify a **Selector** of `Everyone`.
+
+12. In **Configure rules**, create a **Require** rule. Specify a **Selector** of `Service Token` and the **Value** of the service token you created in step [2. Create a service token](#2-create-a-service-token).
+
+13. Select **Next**.
+
+14. Select **Add application** to create the Access application.
+
+## 4. Use the Wrangler CLI to create a Hyperdrive configuration
+
+The Wrangler CLI will be used to create a Hyperdrive configuration using the Access application and Tunnel created above.
+
+```sh
+# wrangler v3.65 and above required
+npx wrangler hyperdrive create <NAME-OF-HYPERDRIVE-CONFIGURATION-FOR-DB-VIA-TUNNEL> --host=<HOSTNAME-FOR-THE-TUNNEL> --user=<USERNAME-FOR-YOUR-DATABASE> --password=<PASSWORD-FOR-YOUR-DATABASE> --database=<DATABASE-TO-CONNECT-TO> --access-client-id=<YOUR-ACCESS-CLIENT-ID> --access-client-secret=<YOUR-SERVICE-TOKEN-CLIENT-SECRET>
+```
+
+This command will create a Hyperdrive configuration using the usual database information (database name, database host, database user, and database password).
+
+In addition, it will also set the Access Client ID and the Access Client Secret of the Service Token. When Hyperdrive makes requests to the tunnel, requests will be intercepted by Access and validated using the credentials of the Service Token.
+
+## 5. Query your Hyperdrive configuration from a Worker (optional)
+
+To test your Hyperdrive configuration to the database using Tunnel and Access, use the Hyperdrive configuration ID in your Worker and deploy it.
+
+### Create a Hyperdrive binding
+
+<Render file="create-hyperdrive-binding" product="hyperdrive" />
+
+### Query your database using Postgres.js
+
+Use Postgres.js to send a test query to validate that the connection has been successful.
+
+<Render file="use-postgresjs-to-make-query" product="hyperdrive" />
+
+If you successfully receive the list of `pg_tables` from your database, your Hyperdrive has now been configured to securely connect to a private database using [Cloudflare Tunnel](/cloudflare-one/connections/connect-networks/) and [Cloudflare Access](/cloudflare-one/policies/access/).
