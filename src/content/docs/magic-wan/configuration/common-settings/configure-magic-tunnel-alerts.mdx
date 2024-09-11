@@ -32,30 +32,79 @@ import { Render } from "~/components";
 
 </TabItem> <TabItem label="API">
 
-An example of the API configuration for Magic Tunnel health alerts is provided below:
+:::note
+Refer to the [documentation for Notifications](/notifications/get-started/) to learn about specific permissions you need to access the service via the API.
+:::
+
+Send a [`POST` request](/api/operations/notification-policies-create-a-notification-policy) to create a Magic WAN tunnel health alert. You can set any SLO double value between `0` and `99.99`.
 
 ```bash
-curl https://api.cloudflare.com/client/v4/accounts/{account_id}/alerting/v3/policies \
---header "Authorization: Bearer <API_TOKEN>" \
---header "Content-Type: application/json" \
+curl https://api.cloudflare.com/client/v4/accounts/account_id/alerting/v3/policies \
+--header 'Authorization: Bearer <YOUR_TOKEN>' \
+--header 'Content-Type: application/json' \
 --data '{
-  "name": "<NAME_OF_MAGIC_TUNNEL_HEALTH_ALERT>",
-  "alert_type": "magic_tunnel_health_check_event",
-  "description": "<DESCRIPTION_OF_MAGIC_TUNNEL_HEALTH_ALERT>",
+  "alert_type": "magic_wan_tunnel_health",
+  "description": "<DESCRIBE_POLICY>",
   "enabled": true,
   "filters": {
-    "slo": [ "99.0" ],
-    "tunnel_name": [ "Name(s) of the tunnels monitored in the alert" ]
+    "slo": [
+      "99.9"
+    ]
   },
   "mechanisms": {
-    "email": [ { "id": "test@example.com" } ],
-    "pagerduty": [ { "id": "<PAGERDUTY_ID>" } ],
-    "webhooks": [ { "id": "<WEBHOOKS_ID>" } ]
-  }
+    "email": [
+      {
+        "id": "EMAIL_ADDRESS"
+      }
+    ],
+  "name": "<DESCRIBE_ALERT>"
 }'
 ```
 
-Refer to the [API documentation](/api/operations/notification-policies-list-notification-policies) for more details.
+```json output
+{
+	"result": [
+		{
+			"id": "f174e90a-fafe-4643-bbbc-4a0ed4fc8415",
+			"name": "<POLICY_NAME>",
+			"description": "<POLICY_DESCRIPTION>",
+			"enabled": true,
+			"alert_type": "magic_wan_tunnel_health",
+			"mechanisms": {
+				"email": [
+					{
+						"id": "<YOUR_EMAIL>"
+					}
+				]
+			},
+			"created": "2024-09-11T14:13:29.585658Z",
+			"modified": "2024-09-11T14:13:29.585658Z",
+			"conditions": {
+				"and": [
+					{
+						"or": [
+							{
+								"<=": [
+									{
+										"var": "slo"
+									},
+									"99.9"
+								]
+							}
+						]
+					}
+				]
+			},
+			"filters": {
+				"slo": ["99.9"]
+			}
+		}
+	],
+	"success": true,
+	"errors": [],
+	"messages": []
+}
+```
 
 </TabItem> </Tabs>
 
