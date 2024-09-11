@@ -4,7 +4,7 @@ inputParameters: productName
 
 import { Markdown, Render } from "~/components";
 
-Cloudflare {props.one} uses tunnels to deliver packets from our global network to your data centers. Cloudflare encapsulates these packets adding new headers. You need to account for the space these headers occupy when setting Maximum Transmission Unit (or MTU) and Maximum Segment Size (or MSS) values for your network.
+Cloudflare {props.one} uses tunnels to deliver packets from our global network to your data centers. Cloudflare encapsulates these packets adding new headers. You must account for the space consumed by these headers when configuring the maximum transmission unit (MTU) and maximum segment size (MSS) values for your network.
 
 #### MSS clamping recommendations
 
