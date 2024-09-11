@@ -10,20 +10,29 @@ When you use Cloudflare DNS, you can access data about DNS queries through a var
 
 ## Analytics
 
-DNS analytics allow you to evaluate aggregate data about DNS queries to your zone.
-
-For a quick summary, view your DNS analytics in the dashboard:
-
-1. Log into the [Cloudflare dashboard](https://dash.cloudflare.com) and select your account.
-2. Select your zone.
-3. Go to **Analytics** > **DNS**.
-
-For more detailed metrics, you can use
-
+DNS analytics allow you to evaluate data about DNS queries to your zone.
 
 :::caution[Warning]
-The [DNS analytics API](/api/operations/dns-analytics-table) along with the available [API properties](/dns/reference/analytics-api-properties/) will be deprecated soon.
+The [DNS analytics API](/api/operations/dns-analytics-table), along with the available [API properties](/dns/reference/analytics-api-properties/), will be deprecated soon. Refer to the sections below for information on how to use the new DNS analytics based on GraphQL.
 :::
+
+### View on the dashboard
+
+For a quick summary, view your DNS analytics on the dashboard:
+
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login) and select your account and domain.
+2. Go to **DNS** > **Analytics**.
+
+### Explore with the API
+
+For more detailed metrics, use the [GraphQL API](/analytics/graphql-api/). Refer to the GraphQL Analytics API documentation for guidance on how to [get started](/analytics/graphql-api/getting-started/).
+
+The DNS analytics has two [schemas](/analytics/graphql-api/getting-started/querying-basics/):
+
+* `dnsAnalyticsAdaptive`: Retrieve information about individual DNS queries.
+* `dnsAnalyticsAdaptiveGroups`: Get reports on aggregate information only.
+
+You can configure a maximum time frame over which analytics can be queried of up to 31 days.
 
 ## Logs
 
