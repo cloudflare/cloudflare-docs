@@ -144,9 +144,9 @@ entries:
   content_type: 🎥 Video
   pcx_content_type: tutorial
 - link: https://youtu.be/cK_leoJsBWY
-  title: ToCloudflare Workers AI: Build a "Hello, World" AI App!
+  title: Cloudflare Workers AI, Building a "Hello, World" AI App!
   description: Cloudflare's Workers AI helps you add AI functionality to the apps you’re building. In this video we will show you how simple and straightforward it is to build the Hello World of AI apps.. in under 5 minutes!
-  tags: [Workers,AI]
+  tags: [Workers, AI]
   languages: [TypeScript]
   products: [Workers AI]
   cloudflare: true
