@@ -35,10 +35,6 @@ Upgrading to the Workers Paid plan will remove these limits, typically within mi
 
 You will be billed for the additional reads, writes and storage according to [D1's pricing metrics](#billing-metrics).
 
-### When will D1 start billing me?
-
-For [Workers Paid plan](/workers/platform/pricing/#workers) users, Cloudflare intends to start billing for additional usage beyond the included reads, writes and storage by (no earlier than) September 2023. Cloudflare will notify all customers via email (the super administrator address on their account) prior to this change.
-
 ### How can I estimate my (eventual) bill?
 
 Every query returns a `meta` object that contains a total count of the rows read (`rows_read`) and rows written (`rows_written`) by that query. For example, a query that performs a full table scan (for instance, `SELECT * FROM users`) from a table with 5000 rows would return a `rows_read` value of `5000`:
