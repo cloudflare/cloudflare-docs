@@ -5,8 +5,22 @@ sidebar:
   order: 6
 ---
 
-To turn on file sandboxing:
+import { Render } from "~/components";
+
+In addition to [anti-virus (AV) scanning](/cloudflare-one/policies/gateway/http-policies/antivirus-scanning/), Gateway can quarantine previously unseen files downloaded by your users into a sandbox and scan them for malware.
+
+While in the sandbox, Gateway will present a scanning page to your users. If a file passes scanning, Gateway will release the file from the sandbox and proceed with downloading it to your user's device.
+
+## Get started
+
+To begin quarantining downloaded files, turn on file sandboxing:
 
 1. In [Zero Trust](https://one.dash.cloudflare.com), go to **Settings** > **Network**.
 2. In **Firewall**, turn on **File sandboxing**.
 3. (Optional) To block requests containing [non-scannable files](#non-scannable-files), select **Block requests for files that cannot be scanned**.
+
+You can now create [Quarantine HTTP policies](/cloudflare-one/policies/gateway/http-policies/#quarantine) to determine what files to scan in the sandbox.
+
+## Non-scannable files
+
+<Render file="gateway/nonscannable-files" />
