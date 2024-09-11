@@ -25,9 +25,9 @@ A network interface which performs GRE encapsulation needs to account for the ad
 
 If the data packet is larger than what the network interface can accept, it either needs to be dropped or fragmented into smaller packets. When fragmentation occurs, Cloudflare only accepts data packets that can be completely reassembled. If some fragments are missing, all received fragments are discarded. Cloudflare does not forward incomplete packets to the customer.
 
-Setting the `do not fragment` bit in the TCP header to `1` denotes that the packet must be dropped rather than fragmented if it is larger than the MTU that intermediary network devices can accept. Most TCP implementations set the `do not fragment` bit to `1` to avoid the potential issues caused by fragmentation.
+Setting the `do not fragment` (DF) bit in the TCP header to `1` denotes that the packet must be dropped rather than fragmented if it is larger than the MTU that intermediary network devices can accept. Most TCP implementations set the `do not fragment` (DF) bit to `1` to avoid the potential issues caused by fragmentation.
 
-If you are experiencing issues with fragmentation and are unable to set an MSS clamp, Cloudflare can clear the `do not fragment` bit for you. When this option is enabled, Cloudflare fragments packets greater than 1,500 bytes, and the packets are reassembled on your infrastructure after decapsulation. This should be a last resort option. Contact your account team for more information.
+If you are experiencing issues with fragmentation and are unable to set an MSS clamp, Cloudflare can clear the `do not fragment` (DF) bit for you. When this option is enabled, Cloudflare fragments packets greater than 1,500 bytes, and the packets are reassembled on your infrastructure after decapsulation. This should be a last resort option. Contact your account team for more information.
 
 ### Fragmentation in {props.productName}
 
