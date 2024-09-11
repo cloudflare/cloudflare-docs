@@ -21,48 +21,6 @@ If a Magic Tunnel health alert is fired, customers can expect the following data
 - Alert SLO
 - Timestamp
 
-## Set up Magic Tunnel health alerts
-
-<Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
-
-1. Log in to your [Cloudflare dashboard](https://dash.cloudflare.com/login), and select your account.
-2. Select **Notifications** > **Add**.
-3. Select **{props.one}** > **Magic Tunnel Health Check Alert** > **Select** to add a notification.
-4. Enter a name and description for the notification.
-5. Add webhooks or an email address for the person who should receive the notification, and select **Next**.
-6. Choose the tunnels you want to receive alerts for.
-7. Select the **Alert Sensitivity Level** threshold. It is predefined for _Medium_, but you can choose between _High_, _Medium_, and _Low_.
-8. Select **Create** when you are done.
-
-</TabItem> <TabItem label="API">
-
-An example of the API configuration for Magic Tunnel health alerts is provided below:
-
-```bash
-curl https://api.cloudflare.com/client/v4/accounts/{account_id}/alerting/v3/policies \
---header "Authorization: Bearer <API_TOKEN>" \
---header "Content-Type: application/json" \
---data '{
-  "name": "<NAME_OF_MAGIC_TUNNEL_HEALTH_ALERT>",
-  "alert_type": "magic_tunnel_health_check_event",
-  "description": "<DESCRIPTION_OF_MAGIC_TUNNEL_HEALTH_ALERT>",
-  "enabled": true,
-  "filters": {
-    "slo": [ "99.0" ],
-    "tunnel_name": [ "Name(s) of the tunnels monitored in the alert" ]
-  },
-  "mechanisms": {
-    "email": [ { "id": "test@example.com" } ],
-    "pagerduty": [ { "id": "<PAGERDUTY_ID>" } ],
-    "webhooks": [ { "id": "<WEBHOOKS_ID>" } ]
-  }
-}'
-```
-
-Refer to the [API documentation](/api/operations/notification-policies-list-notification-policies) for more details.
-
-</TabItem> </Tabs>
-
 ## Recommended SLO thresholds
 
 Currently, there are three SLO threshold values that are supported by the API. The SLO threshold for Magic Tunnel health alerts can be defined as the percentage of health checks that must be successful for each of the Magic Tunnel(s) included in the alert:
