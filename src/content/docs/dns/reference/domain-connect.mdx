@@ -66,30 +66,27 @@ Send an email to `domain-connect@cloudflare.com`, including the following inform
 
 ## Template updates
 
-Since September 2024 Cloudflare is using automatic template updates.
-The automation works by comparing template version number in Cloudflare with authoritative source of the template in the Internet.
-The template in the Internet needs to be in raw json format for automation to work correctly, for example:
+Since September, 2024, template updates are picked up by an automation.
 
-https://raw.githubusercontent.com/Domain-Connect/Templates/master/exampleservice.domainconnect.org.template1.json
+The automation works by comparing the template version number in Cloudflare with the authoritative source of the template on the Internet. This check runs multiple times a day. Although Cloudflare cannot guarantee when exactly each update will be picked up, the process is expected to take no longer than eight hours.
 
-Update automation is trying to find new versions multiple times per day.
-Cloudflare cannot promise when exactly update happens, but one should never need to wait longer than eight hours.
+:::note
+The authoritative source must be in raw `json` format for the automation to work correctly, as in [this example](https://raw.githubusercontent.com/Domain-Connect/Templates/master/exampleservice.domainconnect.org.template1.json).
 
-If upstream template is unavailable, or technically invalid, Cloudflare systems will keep old template in use until the upstream is fixed.
+If the source template is unavailable, or technically invalid, Cloudflare will keep the previous template in use until the updated version is fixed.
+:::
 
-A service provider can ask Cloudflare to stop automatic updates.
-Updates after automation is disabled can be requested one-by-one from `domain-connect@cloudflare.com`.
+You can contact Cloudflare to opt out of the automatic updates. Once the automation is disabled, you can request template updates individually, by writing to `domain-connect@cloudflare.com`.
 
-## Troubleshooting
+### Troubleshooting
 
-Please get in touch with `domain-connect@cloudflare.com` with following information in the email.
+Send an email to `domain-connect@cloudflare.com` with the following information:
 
-1. Describe in the email what is wrong.
-   - Mention the record(s) issue is related with.
-   - Tell what the template did.
-   - Tell what you expected template to do.
-2. Collect a
-   [HAR file](/support/troubleshooting/general-troubleshooting/gathering-information-for-troubleshooting-sites/#generate-a-har-file)
-   attachment that contains problematic update.
+1. Detailed description of what is wrong:
+   - List the record(s) that the issue is related with.
+   - Describe what the template did.
+   - Describe what you expected the template to do.
+
+2. A [HAR file](/support/troubleshooting/general-troubleshooting/gathering-information-for-troubleshooting-sites/#generate-a-har-file) attachment containing the problematic update.
 
 [^1]: A domain that can be queried for `TXT` records containing a public key to verify your digital signature.
