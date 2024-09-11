@@ -5,7 +5,7 @@ sidebar:
   order: 6
 ---
 
-import { Render } from "~/components";
+import { Render, Details } from "~/components";
 
 In addition to [anti-virus (AV) scanning](/cloudflare-one/policies/gateway/http-policies/antivirus-scanning/), Gateway can quarantine previously unseen files downloaded by your users into a sandbox and scan them for malware.
 
@@ -21,6 +21,12 @@ To begin quarantining downloaded files, turn on file sandboxing:
 
 You can now create [Quarantine HTTP policies](/cloudflare-one/policies/gateway/http-policies/#quarantine) to determine what files to scan in the sandbox.
 
-## Non-scannable files
+## Compatibility
+
+### Supported file types
+
+<Render file="gateway/sandbox-file-types" />
+
+### Non-scannable files
 
 <Render file="gateway/nonscannable-files" />

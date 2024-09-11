@@ -338,13 +338,54 @@ When a Do Not Scan rule matches, nothing is scanned, regardless of file size or 
 
 ### Quarantine
 
-:::note
-To use the Quarantine action, turn on [file sandboxing](/cloudflare-one/policies/gateway/http-policies/file-sandboxing/#get-started) in Zero Trust.
-:::
-
 API value: `quarantine`
 
-For more information, refer to [File sandboxing](/cloudflare-one/policies/gateway/http-policies/file-sandboxing/).
+<Details header="Available selectors">
+
+**Traffic**
+
+- [Application](#application)
+- [Content Categories](#content-categories)
+- [Destination Continent IP Geolocation](#destination-continent)
+- [Destination Country IP Geolocation](#destination-country)
+- [Destination IP](#destination-ip)
+- [Domain](#domain)
+- [Host](#host)
+- [HTTP Method](#http-method)
+- [Proxy Endpoint](#proxy-endpoint)
+- [Security Risks](#security-risks)
+- [Source Continent IP Geolocation](#source-continent)
+- [Source Country IP Geolocation](#source-country)
+- [Source Internal IP](#source-internal-ip)
+- [Source IP](#source-ip)
+- [URL](#url)
+- [URL Path](#url-path)
+- [URL Path & Query](#url-path-and-query)
+- [URL Query](#url-query)
+- [Virtual Network](#virtual-network)
+
+**Identity**
+
+- [SAML Attributes](#users)
+- [User Email](#users)
+- [User Group Emails](#users)
+- [User Group IDs](#users)
+- [User Group Names](#users)
+- [User Name](#users)
+
+**Device Posture**
+
+- [Passed Device Posture Checks](#device-posture)
+
+</Details>
+
+The Quarantine action sends files in matching requests to a file sandbox to scan for malware. Gateway will only send files not previously seen to the sandbox. For more information on this action, refer to [File sandboxing](/cloudflare-one/policies/gateway/http-policies/file-sandboxing/).
+
+#### Sandbox file types
+
+Quarantine policies require you to select at least one file type to sandbox after download.
+
+<Render file="gateway/sandbox-file-types" />
 
 ## Selectors
 
