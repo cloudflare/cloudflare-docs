@@ -32,9 +32,8 @@ If your zone has not been migrated yet, you will only have [Custom SSL/TLS](#cus
 Automatic SSL/TLS uses the [SSL/TLS Recommender](/ssl/origin-configuration/ssl-tls-recommender/) to identify and apply the most secure encryption mode for your website. It continuously assesses your traffic to determine if a more secure option is needed based on your origin certification or capabilities, and updates your settings automatically to ensure the highest level of security for your domain.
 
 :::note
-Automatic SSL/TLS will not change your setting to a less secure version. 
-For example if your origin certificate expires the encryption mode won't change from Full (strict) to Full.
-You need to ensure the validity of your SSL configuration at your origin at all time.
+Automatic SSL/TLS will not change your setting to a less secure encryption mode. For example, if your origin certificate expires, the encryption mode will not change from **Full (strict)** to **Full**. You must ensure the validity of your origin SSL configuration at all times.
+:::
 
 Cloudflare is enabling Automatic SSL/TLS on the following dates:
 
