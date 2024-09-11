@@ -15,21 +15,11 @@ Any modifications to the environment, such as the User Agent, [Content Security 
 
 Turnstile requires specific WebView settings to function properly. For Android implementations, refer to [`setJavaScriptEnabled`](https://developer.android.com/reference/android/webkit/WebSettings#setJavaScriptEnabled(boolean)) to tell the WebView to enable JavaScript execution and [`setDomStorageEnabled`](https://developer.android.com/reference/android/webkit/WebSettings#setDomStorageEnabled(boolean)) to enable the DOM storage API. 
 
-You must include the following lines in your code to enable necessary features:
-
-```javascript
-webView.settings.domStorageEnabled = true;
-```
-
-```javascript
-webView.settings.javaScriptEnabled = true;
-```
-
 These settings ensure that the mobile WebView can properly load and execute the Turnstile challenge. If these configurations are missing, Turnstile may malfunction.
 
 ## Update allowed origins
 
-In addition to ensuring proper WebView settings, it is essential to update the allowed origins list to include:
+In addition to ensuring proper WebView settings, if you have allowed origins configured, it is essential to update the list to include: 
 
 ```txt
 
