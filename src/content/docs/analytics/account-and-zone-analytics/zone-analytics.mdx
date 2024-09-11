@@ -7,6 +7,9 @@ sidebar:
 
 ---
 
+import { Badge } from "~/components";
+
+
 The Cloudflare zone analytics is a major component of the overall Cloudflare Analytics product line.  Specifically, this app gives you access to a wide range of metrics, collected at the website or domain level.
 
 :::note
@@ -14,7 +17,7 @@ The Cloudflare zone analytics is a major component of the overall Cloudflare Ana
 Read [Cloudflare Analytics](/analytics/faq/about-analytics/)
 for general information about all of Cloudflare's analytics offerings.
 You can also understand the characteristics of the data that Cloudflare
-captures and processes. 
+captures and processes.
 :::
 
 ***
@@ -55,7 +58,7 @@ These metrics include legitimate user requests as well as crawlers and threats. 
 :::note
 
 Privacy-first Web Traffic Analytics are available on the Pro, Business,
-and Enterprise plans. 
+and Enterprise plans.
 :::
 
 Analytics are based on Cloudflare’s edge logs, with no need for third party scripts or trackers. The Traffic tab features the following metrics:
@@ -86,7 +89,13 @@ The metrics aggregated under this tab span multiple Cloudflare services.  The p
 * **Origin Performance (Argo)** (add-on service) - Displays metrics related to response time between the Cloudflare edge network and origin servers for the last 48 hours.  For additional details, refer to [Argo Analytics](/argo-smart-routing/analytics/).
 * **Overview** - Displays a set of pie charts for: **Client HTTP Version Used**, **Bandwidth Saved**, and **Content Type Breakdown**. If available, the expandable **Details** link display a table with numerical data.
 
-### DNS
+### DNS <Badge text="Legacy" variant="caution" size="medium" />
+
+:::note[New DNS analytics]
+The **Analytics** > **DNS** tab will be deprecated soon.
+
+To access the new analytics dashboard, go to **DNS** > **Analytics**. Refer to [Analytics and logs](/dns/additional-options/analytics/) for details.
+:::
 
 The DNS tab presents statistics for DNS queries.  Note that metrics are available as long as Cloudflare is the site’s authoritative DNS server, even if the site is not proxied by Cloudflare. Therefore, DNS metrics are not offered for sites with a [CNAME Setup](/dns/zone-setups/partial-setup/).
 
