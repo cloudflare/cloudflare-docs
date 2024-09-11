@@ -143,3 +143,16 @@ entries:
   difficulty: Intermediate
   content_type: 🎥 Video
   pcx_content_type: tutorial
+- link: https://youtu.be/cK_leoJsBWY
+  title: Cloudflare Workers AI, Building a "Hello, World" AI App!
+  description: Cloudflare's Workers AI helps you add AI functionality to the apps you are building. In this video we show you how simple and straightforward it is to build the Hello World of AI apps in under 5 minutes.
+  tags: [Workers, AI]
+  languages: [TypeScript]
+  products: [Workers AI]
+  cloudflare: true
+  stream_id: 0b251ede0256f04f24f9127587e0c3aa
+  author: craig
+  updated: 2024-09-11
+  difficulty: Beginner
+  content_type: 🎥 Video
+  pcx_content_type: tutorial
