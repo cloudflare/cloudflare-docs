@@ -40,21 +40,21 @@ In this example, we'll use a simple login form written in plain HTML to demonstr
 
 ## Configuring WAF and Bot Management
 
-If your site is on Cloudflare's network, set up WAF and Bot Management:
+If your site is on Cloudflare's network and under an Enterprise plan, set up WAF and Bot Management:
 
 ### Issue challenges for potential bot traffic
 
 1. Log in to your Cloudflare dashboard.
 2. Navigate to Security > WAF.
-3. Create a new WAF rule:
-   - Condition: "Bot score is less than 30"
-   - Action: "Challenge (Managed Challenge)"
+3. Create a new custom WAF rule, clicking "Edit expression":
+   - Field: "Bot Score"
+	 - Operator: "less than or equal to"
+	 - Value: "30"
+   - Action: "Managed Challenge"
+
+![WAF rule to challenge bot traffic](~/assets/images/turnstile/complete-tut--rule-definition.png)
 
 This configuration challenges requests with a low bot score, leveraging network signals to identify potential threats before they reach your application. You may customize the score threshold based on your specific use case.
-
-### Enable the "CF Clearance Cookie" option in WAF settings
-
-Enable the "CF Clearance Cookie" option in WAF settings. This option allows Cloudflare to set a cookie on your site, which is used to identify and track users across different sessions. For more details on how this works, refer to the [Clearance Cookie documentation](/cloudflare-one/connections/connect-devices/warp/configure-warp/route-traffic/clearance-cookie/).
 
 ## Setting up Cloudflare Turnstile
 
@@ -62,8 +62,11 @@ Turnstile can be used on any site, regardless of whether it's on Cloudflare's ne
 
 1. In your Cloudflare dashboard, go to Security > Turnstile.
 2. Create a new Turnstile site.
+3. Add your domain to the Turnstile configuration.
 
 Turnstile adds an extra layer of security by analyzing browser and client-side signals, complementing the server-side checks performed by WAF and Bot Management.
+
+![Turnstile admin](~/assets/images/turnstile/complete-tut--admin.png)
 
 ### Enable the option to use the existing clearance cookie
 
@@ -90,16 +93,18 @@ Add the Turnstile widget to your existing login form:
 
 Replace `YOUR_SITE_KEY` with your actual Turnstile site key.
 
+![Turnstile widget in a login form](~/assets/images/turnstile/complete-tut--frontend.png)
+
 ## Handling the Login Request
 
 In your existing authentication route, add Turnstile validation:
 
 ```typescript
-async function validateTurnstileToken(token: string, secret: string): Promise<boolean> {
+async function validateTurnstileToken(ip: string, token: string, secret: string): Promise<boolean> {
   const response = await fetch('https://challenges.cloudflare.com/turnstile/v0/siteverify', {
     method: 'POST',
-    headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-    body: `secret=${secret}&response=${token}`
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ ip, secret, response: token })
   });
 
   const outcome = await response.json();
@@ -114,15 +119,16 @@ export async function onRequestPost(context) {
   const { username, password, token } = await request.json();
 
   // Validate Turnstile token
-	const secretKey = env.TURNSTILE_SECRET_KEY;
-  const turnstileValid = await validateTurnstileToken(token, secretKey);
+  const secretKey = env.TURNSTILE_SECRET_KEY;
+  const ip = request.headers.get('CF-Connecting-IP');
+  const turnstileValid = await validateTurnstileToken(ip, token, secretKey);
   if (!turnstileValid) {
-	  // Return back to the login page with an error message
-		return Response.redirect('/login', 302, {
-			headers: {
-				'Location': '/login?error=invalid-turnstile-token'
-			}
-		});
+    // Return back to the login page with an error message
+    return Response.redirect('/login', 302, {
+      headers: {
+        'Location': '/login?error=invalid-turnstile-token'
+      }
+    });
   }
 
   // Perform your existing authentication logic here
@@ -147,6 +153,13 @@ async function checkCredentials(username: string, password: string): Promise<boo
 ```
 
 This setup ensures that the Turnstile token is validated server-side before proceeding with the login process, adding an extra layer of security based on client-side signals.
+
+## Testing
+
+After deployment, you will want to test your integration. Because your bot score will be low, you will probably not receive a challenge. However, you can add additional rules as needed to force a redirect to the challenge page. Some options to do this are:
+
+1) Add a WAF rule that always forwards your IP address to the challenge page.
+2) Add a WAF rule that checks for the presence of a query parameter, such as `?challenge=true`.
 
 ## Best Practices
 
