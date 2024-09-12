@@ -106,28 +106,7 @@ ssh-keygen -R <targetIP or hostname>
 
 ## (Optional) Configure SSH Command Logging
 
-If you enabled **SSH Command Logging** in an [Audit SSH policy](#7-create-an-audit-ssh-policy), you will need to generate an HPKE key pair and upload the public key to your dashboard.
-
-1. [Download](https://github.com/cloudflare/ssh-log-cli/releases/latest/) the Cloudflare `ssh-log-cli` utility.
-
-2. Using the `ssh-log-cli` utility, generate a public and private key pair.
-
-   ```sh
-   ./ssh-log-cli generate-key-pair -o sshkey
-   ls
-   ```
-
-   ```sh output
-   README.md    ssh-log-cli    sshkey    sshkey.pub
-   ```
-
-   This command outputs two files, an `sshkey.pub` public key and a matching `sshkey` private key.
-
-3. In [Zero Trust](https://one.dash.cloudflare.com), go to **Settings** > **Network**.
-
-4. In the **SSH encryption public key** field, paste the contents of `sshkey.pub` and select **Save**. Note that this a different public key from the `ca.pub` file you used to configure the origin server.
-
-All proxied SSH commands are immediately encrypted using this public key. The matching private key is required to [view logs](#view-ssh-logs).
+<Render file="access/ssh-logging" params={{ note: "Note that this a different public key from the `ca.pub` file you used to configure the SSH server." }} />
 
 ## View SSH Logs
 
