@@ -6,9 +6,9 @@ productArea: Cloudflare One
 productAreaLink: /cloudflare-one/changelog/
 entries:
   - publish_date: "2024-09-11"
-    title: Cost estimates
+    title: Cost estimates for network resources
     description: |-
-      Customer can now view estimated costs associated with discovered network resources.
+      Customers can now view estimated costs for discovered network resources.
   - publish_date: "2024-08-14"
     title: GCP on-ramps
     description: |-
