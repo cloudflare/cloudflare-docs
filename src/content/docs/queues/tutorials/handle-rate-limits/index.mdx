@@ -127,7 +127,7 @@ interface Env {
 
 ## 4. Send message to the queue
 
-The application will send a message to the queue when this worker receives a request. For simplicity, you will send the email address as a message to the queue. A new message will be sent to the queue with a delay of 1 second.
+The application will send a message to the queue when this Worker receives a request. For simplicity, you will send the email address as a message to the queue. A new message will be sent to the queue with a delay of 1 second.
 
 ```ts title="src/index.ts"
 export default {
