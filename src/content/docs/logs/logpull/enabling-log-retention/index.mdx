@@ -5,7 +5,7 @@ sidebar:
   order: 13
 ---
 
-import { Render } from "~/components"
+import { Render } from "~/components";
 
 By default, your HTTP request logs are not retained. When using the Logpull API for the first time, you will need to enable retention. You can also turn off retention at any time. Note that after retention is turned off, previously saved logs will be available until the retention period expires (refer to [Data retention period](/logs/logpull/understanding-the-basics/#data-retention-period)).
 
@@ -18,9 +18,9 @@ There are two endpoints for managing log retention:
 
 :::note[Note]
 
-In the linux examples below we use the optional [jq](/logs/tutorials/parsing-json-log-data/) tool to help parse the response data.
+In the Linux examples below we use the optional [jq](/logs/tutorials/parsing-json-log-data/) tool to help parse the response data.
 
-To make a `POST` call, you must have zone-scoped `edit` permissions, such as Super Administrator, Administrator, or Log Share. Refer to the page [Make API Calls](/fundamentals/api/how-to/make-api-calls/) for more information.
+To make a `POST` call, you must have zone-scoped `edit` permissions, such as Super Administrator, Administrator, or Log Share. Refer to [Make API calls](/fundamentals/api/how-to/make-api-calls/) for more information.
 
 :::
 

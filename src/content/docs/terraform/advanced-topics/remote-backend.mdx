@@ -3,7 +3,7 @@ pcx_content_type: reference
 title: Remote R2 backend
 ---
 
-import { Render } from "~/components"
+import { Render } from "~/components";
 
 [Cloudflare R2](/r2/) and [Terraform remote backends](https://developer.hashicorp.com/terraform/language/settings/backends/remote) can interact with each other to provide a seamless experience for Terraform state management. 
 
@@ -13,18 +13,17 @@ Cloudflare R2 is an object storage service that provides a highly available, sca
 
 ### Create R2 bucket
 
-Using [Wrangler](/workers/wrangler/install-and-update/), [API](/api/operations/r2-create-bucket) or [Account View Dashboard](https://dash.cloudflare.com/?to=/:account/r2/new) create an [R2 Bucket](/r2/buckets/create-buckets/).
+Using [Wrangler](/workers/wrangler/install-and-update/), [API](/api/operations/r2-create-bucket), or [Account View Dashboard](https://dash.cloudflare.com/?to=/:account/r2/new) create an [R2 Bucket](/r2/buckets/create-buckets/).
 
 <Render file="create-r2-buckets" />
 
 :::note
-Bucket names can only contain lowercase letters (a-z), numbers (0-9), and hyphens (-). 
+Bucket names can only contain lowercase letters (`a-z`), numbers (`0-9`), and hyphens (`-`). 
 :::
-
 
 ### Create scoped bucket API keys
 
-Next you  will need to create a [bucket scoped R2 API token](/r2/api/s3/tokens/) with `Object Read & Write` permissions, to create an API token use the below workflow.
+Next you will need to create a [bucket scoped R2 API token](/r2/api/s3/tokens/) with `Object Read & Write` permissions. To create an API token, do the following:
 
 1. In **Account Home**, select **R2**.
 2. Under **Account details**, select **Manage R2 API tokens**.
@@ -35,11 +34,11 @@ Next you  will need to create a [bucket scoped R2 API token](/r2/api/s3/tokens/)
 
 After your token has been successfully created, review your **Secret Access Key** and **Access Key ID** values.
 
-## Defining R2 backend
+## Define R2 backend
 
-Update your [cloudflare.tf](/terraform/tutorial/initialize-terraform/), to include a [backend](https://developer.hashicorp.com/terraform/language/settings/backends/configuration) for the `your-tfstate-bucket-name` bucket you created above.
+Update your [`cloudflare.tf`](/terraform/tutorial/initialize-terraform/) file to include a [backend](https://developer.hashicorp.com/terraform/language/settings/backends/configuration) for the `your-tfstate-bucket-name` bucket you created above.
 
-```json
+```tf
 terraform {
   backend "s3" {
     bucket = "<YOUR_BUCKET_NAME>"
@@ -70,4 +69,4 @@ variable "account_id" { default = "<YOUR_ACCOUNT_ID>" }
 
 ## Migrate state file to R2 backend
 
-After updating your `cloudflare.tf` you can issue the `terraform init -reconfigure` command to migrate from a local state to [remote state](https://developer.hashicorp.com/terraform/language/state/remote).
+After updating your `cloudflare.tf` file you can issue the `terraform init -reconfigure` command to migrate from a local state to [remote state](https://developer.hashicorp.com/terraform/language/state/remote).

@@ -5,23 +5,22 @@
 
 import { TabItem, Tabs } from "~/components";
 
-<Tabs syncKey="dashPlusAPI"> <TabItem label="Linux">
+<Tabs> <TabItem label="Linux">
 
 ```bash
-curl --silent --request POST \
- --url https://api.cloudflare.com/client/v4/zones/{zone_id}/logs/control/retention/flag \
- --header "Authorization: Bearer <API_TOKEN>" \
- --header 'Content-Type: application/json' \
- --data '{"flag": false}' | jq .result
+curl https://api.cloudflare.com/client/v4/zones/{zone_id}/logs/control/retention/flag \
+--header "Authorization: Bearer <API_TOKEN>" \
+--header "Content-Type: application/json" \
+--data '{"flag": false}'
 ```
 
 </TabItem> <TabItem label="CMD">
 
 ```txt
-curl.exe -s POST "https://api.cloudflare.com/client/v4/zones/{zone_id}/logs/control/retention/flag" -H "Authorization: Bearer <API_TOKEN>" -d "{""flag"":false}"
+curl.exe "https://api.cloudflare.com/client/v4/zones/{zone_id}/logs/control/retention/flag" --header "Authorization: Bearer <API_TOKEN>" --data "{""flag"": false}"
 ```
 
-</TabItem> <TabItem label="Powershell">
+</TabItem> <TabItem label="PowerShell">
 
 ```powershell
 $uri = "https://api.cloudflare.com/client/v4/zones/{zone_id}/logs/control/retention/flag"
