@@ -29,14 +29,14 @@ Next you will need to create a [bucket scoped R2 API token](/r2/api/s3/tokens/) 
 2. Under **Account details**, select **Manage R2 API tokens**.
 3. Select [**Create API token**](https://dash.cloudflare.com/?to=/:account/r2/api-tokens).
 4. Select the **R2 Token** text to edit your API token name.
-5. Under **Permissions**, select the **Object Read and Write** permissions, then scope your token to your `your-tfstate-bucket-name` bucket.
+5. Under **Permissions**, select the **Object Read and Write** permissions, then scope your token to your `<YOUR_BUCKET_NAME>` bucket.
 6. Select **Create API Token**.
 
 After your token has been successfully created, review your **Secret Access Key** and **Access Key ID** values.
 
 ## Define R2 backend
 
-Update your [`cloudflare.tf`](/terraform/tutorial/initialize-terraform/) file to include a [backend](https://developer.hashicorp.com/terraform/language/settings/backends/configuration) for the `your-tfstate-bucket-name` bucket you created above.
+Update your [`cloudflare.tf`](/terraform/tutorial/initialize-terraform/) file to include a [backend](https://developer.hashicorp.com/terraform/language/settings/backends/configuration) for the `<YOUR_BUCKET_NAME>` bucket you created above.
 
 ```tf
 terraform {
