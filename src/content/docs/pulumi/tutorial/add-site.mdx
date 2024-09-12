@@ -39,7 +39,7 @@ Ensure you have:
 - A [Pulumi-supported programming language](https://github.com/pulumi/pulumi?tab=readme-ov-file#languages) is configured. (TypeScript, JavaScript, Python, Go, .NET, Java, or use YAML)
 - A domain name. You may use `example.com` to complete the tutorial.
 
-## Initialize Pulumi
+## 1. Initialize Pulumi
 
 ### a. Create a directory
 
@@ -173,7 +173,7 @@ pulumi up --yes --stack dev
 
 At this point, you have not defined any resources so you'll have an empty stack.
 
-## Add a Zone
+## 2. Add a Zone
 
 :::note
 
@@ -483,7 +483,7 @@ pulumi stack output zoneId
 d8fcb6d731fe1c2d75e2e8d6ad63fad5
 ```
 
-## Update your nameservers
+## 3. Update your nameservers
 
 Once you have added a domain to Cloudflare, that domain will receive two assigned authoritative nameservers.
 
@@ -595,7 +595,7 @@ Once successfully registered, your domain `status` will change to `active`.
 pulumi stack output
 ```
 
-## Add a DNS record
+## 4. Add a DNS record
 
 You will now add a DNS record to your domain.
 
@@ -883,7 +883,7 @@ outputs:
 pulumi up --yes --stack dev
 ```
 
-## Verify your setup
+## 5. Verify your setup
 
 You will run two `nslookup` commands against the Cloudflare-assigned nameservers.
 
@@ -901,7 +901,7 @@ For .NET use `Nameservers` as the Output.
 
 Confirm your response returns the IP address(es) for your site.
 
-## Clean up
+## 6. Clean up
 
 In this last step, you will remove the resources and stack used throughout the tutorial.
 
