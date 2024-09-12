@@ -183,7 +183,7 @@ added 1 package ...
 </TabItem> <TabItem label="Python" icon="seti:python">
 
 ```sh
-echo "pulumi_cloudflare>=5.35,<6.0.0" >> requirements.txt
+echo "pulumi_cloudflare>=5.38,<6.0.0" >> requirements.txt
 source venv/bin/activate
 pip install -r requirements.txt
 ```
@@ -215,7 +215,7 @@ Below are Apache Maven instructions. For other Java project managers such as Gra
 <dependency>
     <groupId>com.pulumi</groupId>
     <artifactId>cloudflare</artifactId>
-    <version>5.35.1</version>
+    <version>5.38.0</version>
 </dependency>
 ```
 
@@ -255,6 +255,11 @@ Replace the contents of your entrypoint file with the following:
 
 <Tabs> <TabItem label="JavaScript" icon="seti:javascript">
 
+```javascript
+```
+
+</TabItem> <TabItem label="TypeScript" icon="seti:typescript">
+
 ```typescript
 import * as pulumi from "@pulumi/pulumi";
 import * as cloudflare from "@pulumi/cloudflare";
@@ -263,18 +268,53 @@ const config = new pulumi.Config();
 const accountId = config.require("accountId");
 const domain = config.require("domain");
 
+const content = `
+addEventListener('fetch', event => {
+    event.respondWith(handleRequest(event.request))
+})
+
+async function handleRequest(request) {
+    return new Response('Hello, World!', {
+        headers: { 'content-type': 'text/plain' },
+    })
+}
+`;
 // A Worker script to invoke
-export const script = new cloudflare.WorkerScript("hello-world-script", {
+const script = new cloudflare.WorkerScript("hello-world-script", {
 	accountId: accountId,
 	name: "hello-world",
 	// Read the content of the worker from a file
-	// content: fs.readFileSync("./app/worker.ts", "utf8"), // TODO: Use inline code
+	content: content
 });
 ```
 
-</TabItem> </Tabs>
+</TabItem> <TabItem label="Python" icon="seti:python">
 
-TODO -- ADD OTHER LANGUAGES
+```python
+```
+
+</TabItem> <TabItem label="go">
+
+```go
+```
+
+</TabItem> <TabItem label="Java">
+
+```java
+```
+
+</TabItem> <TabItem label=".NET">
+
+```csharp
+```
+
+</TabItem> <TabItem label="YAML">
+
+```yaml
+```
+
+</TabItem>
+</Tabs>
 
 ## 3. Add a Worker route
 
@@ -282,7 +322,13 @@ You will now add a Worker Route to the Pulumi stack, `dev` so the script can hav
 
 Append the following code to your entrypoint file:
 
-<Tabs> <TabItem label="TypeScript" icon="seti:typescript">
+<Tabs> <TabItem label="JavaScript" icon="seti:javascript">
+
+```javascript
+```
+
+</TabItem> <TabItem label="TypeScript" icon="seti:typescript">
+
 ```typescript
 // A Worker route to serve requests and the Worker script
 export const route = new cloudflare.WorkerRoute("hello-world-route", {
@@ -291,13 +337,46 @@ export const route = new cloudflare.WorkerRoute("hello-world-route", {
 	scriptName: script.name,
 });
 ```
-</TabItem> </Tabs>
+</TabItem>  <TabItem label="Python" icon="seti:python">
+
+```python
+```
+
+</TabItem> <TabItem label="go">
+
+```go
+```
+
+</TabItem> <TabItem label="Java">
+
+```java
+```
+
+</TabItem> <TabItem label=".NET">
+
+```csharp
+```
+
+</TabItem> <TabItem label="YAML">
+
+```yaml
+```
+
+</TabItem></Tabs>
 
 ## 4. Add a DNS record
 
 You will now add a DNS record so the previously configured route can be accessed via a URL.
 
 Append the following code to your entrypoint file:
+
+
+<Tabs> <TabItem label="JavaScript" icon="seti:javascript">
+
+```javascript
+```
+
+</TabItem>  <TabItem label="TypeScript" icon="seti:typescript">
 
 ```typescript
 // A DNS record to access the route from the domain
@@ -312,6 +391,33 @@ export const record = new cloudflare.Record("hello-world-record", {
 export const url = route.pattern;
 ```
 
+</TabItem>  <TabItem label="Python" icon="seti:python">
+
+```python
+```
+
+</TabItem> <TabItem label="go">
+
+```go
+```
+
+</TabItem> <TabItem label="Java">
+
+```java
+```
+
+</TabItem> <TabItem label=".NET">
+
+```csharp
+```
+
+</TabItem> <TabItem label="YAML">
+
+```yaml
+```
+
+</TabItem></Tabs>
+
 ## 5. Deploy the changes
 
 Now that you have defined the resources, you can deploy the changes to your Cloudflare account using the Pulumi CLI.
@@ -319,7 +425,10 @@ Now that you have defined the resources, you can deploy the changes to your Clou
 To deploy the changes, run:
 
 ```sh
-$ pulumi up --yes
+pulumi up --yes
+```
+
+```sh output
 wait for stack to become ready
 ```
 
@@ -328,14 +437,16 @@ wait for stack to become ready
 You incrementally added Cloudflare resources to run and access your Hello World application. You can test your application by curling the `url` output from the Pulumi stack.
 
 ```sh
-$ pulumi stack output url
-$ curl "https://$(pulumi stack output url)"
-TODO
+curl "https://$(pulumi stack output url)"
+```
+
+```sh output
+Hello, World!
 ```
 
 :::note
 
-Depending on your domain settings, you may need to use "http" in the curl command instead.
+Depending on your domain settings, you may need to use `http` in the curl command instead.
 
 :::
 
