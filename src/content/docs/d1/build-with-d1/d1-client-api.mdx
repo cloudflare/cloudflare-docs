@@ -396,9 +396,13 @@ console.log(rows[1].results);
 
 ## PRAGMA statements
 
-D1 supports [SQLite PRAGMA](https://www.sqlite.org/pragma.html) statements.
+D1 supports [SQLite PRAGMA](https://www.sqlite.org/pragma.html) statements. PRAGMA statements are an extension to SQLite, which can be used to:
 
-For example, D1 supports `table_list` and `table_info`:
+- Modify the behavior of certain SQLite operations
+- Query your schema or table
+- Control environmental variables
+
+For example, D1 supports `PRAGMA table_list` and `PRAGMA table_info`:
 
 ```js
 const r = await db.batch([
@@ -445,7 +449,7 @@ D1 PRAGMA statements only apply to the current transaction.
 
 :::
 
-For the full list of supported PRAGMA statements, see [SQL statements](/d1/reference/sql-statements).
+For the full list of PRAGMA statements supported by D1, see [SQL statements](/d1/reference/sql-statements).
 
 ## Errors
 
