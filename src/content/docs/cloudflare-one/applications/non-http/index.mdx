@@ -6,21 +6,42 @@ sidebar:
 
 ---
 
-You can secure non-HTTP applications by [connecting your private network](/cloudflare-one/connections/connect-networks/private-net/) to Cloudflare. Users reach the application by installing the Cloudflare WARP client on their device and enrolling in your Zero Trust organization. Remote devices will be able to connect to your applications as if they were on your private network. By default, all devices enrolled in your organization can access the application unless you build policies to allow or block specific users.
+Cloudflare offers both client-based and clientless ways to grant secure access to non-HTTP applications.
 
-## Access for Infrastructure
+:::note
+Non-HTTP applications require [connecting your private network](/cloudflare-one/connections/connect-networks/private-net/) to Cloudflare. For more details, refer to our [Replace your VPN](/learning-paths/replace-vpn/connect-private-network/) implementation guide.
+:::
 
-## WARP to Tunnel
+## WARP client
 
-## Browser-based SSH
+Users can connect by installing the Cloudflare WARP client on their device and enrolling in your Zero Trust organization. Remote devices connect to your applications as if they were on your private network. By default, all devices enrolled in your organization can access the application unless you build policies to allow or block specific users.
 
-## cloudflared access
+You can optionally add the application to [Access for Infrastructure](/cloudflare-one/applications/non-http/infrastructure-apps/) for an additional layer of control and visibility over how users access non-HTTP applications. Benefits of using Access for Infrastructure include:
+- Define fine-grained policies to govern who has access to specific servers and exactly how a user may access that server.
+- Eliminate SSH keys by using short-lived certificates to authenticate users.
+- Export SSH command logs through a storage service or SIEM solution.
 
-## Setup
+:::note
+Access for Infrastructure currently only supports SSH. More protocols will be coming soon.
+:::
 
-For a comprehensive overview of how to connect a private network, refer to our implementation guide:
+## Clientless access
 
-* [Replace your VPN](/learning-paths/replace-vpn/connect-private-network/)
+Clientless access methods are suited for organizations that cannot deploy the WARP client or need to support third-party contractors. Clientless access requires onboarding a domain to Cloudflare and configuring a public hostname in order to make the server reachable. Command logging is not supported, and user email prefixes must match their username on the server.
+
+### Browser-based terminal
+
+Cloudflare's [browser-based terminal](/cloudflare-one/applications/non-http/browser-rendering/) allows users to connect over SSH and VNC without any configuration. When users visit the public hostname URL (for example, `https://ssh.example.com`) and log in with their Access credentials, Cloudflare will render a terminal in their browser.
+
+### Cloudflared authentication (legacy)
+
+:::note
+Not recommended for new deployments.
+:::
+
+Users can log in to the application by installing `cloudflared` on their device and running a hostname-specific command in their terminal. For more information, refer to [Cloudflared authentication](/cloudflare-one/applications/non-http/cloudflared-authentication/).
+
+## Related resources
 
 To connect to an application over a specific protocol, refer to these tutorials:
 

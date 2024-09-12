@@ -1,6 +1,6 @@
 ---
 pcx_content_type: how-to
-title: Connect using cloudflared
+title: Cloudflared authentication
 sidebar:
   order: 11
 
@@ -12,7 +12,7 @@ Users log in to the application by running a `cloudflared access` command in the
 
 :::note
 
-Automated services should only authenticate with `cloudflared` if they cannot use a [service token](/cloudflare-one/identity/service-tokens/). Cloudflared authentication relies on WebSockets to establish a connection. WebSockets have a known limitation where persistent connections may close unexpectedly. We recommend either a [Service Auth policy](/cloudflare-one/policies/access/#service-auth) or using [Warp to Tunnel routing](/cloudflare-one/applications/non-http/) in these instances. 
+Automated services should only authenticate with `cloudflared` if they cannot use a [service token](/cloudflare-one/identity/service-tokens/). Cloudflared authentication relies on WebSockets to establish a connection. WebSockets have a known limitation where persistent connections may close unexpectedly. We recommend either a [Service Auth policy](/cloudflare-one/policies/access/#service-auth) or using [Warp to Tunnel routing](/cloudflare-one/applications/non-http/) in these instances.
 :::
 
 ## Setup
