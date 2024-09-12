@@ -20,6 +20,8 @@ head:
     content: Deploy a Worker
 ---
 
+import { TabItem, Tabs } from "~/components";
+
 In this tutorial, you will go through step-by-step instructions to deploy a Hello World web application using Cloudflare Workers and Pulumi infrastructure as code (IaC) so that you can become familiar with the resource management lifecycle. In particular, you will create a Worker, a Route, and a DNS Record to access the application before cleaning up all the resources.
 
 :::note
@@ -111,7 +113,20 @@ pulumi new yaml --name serverless-cloudflare --yes
 
 </TabItem> </Tabs>
 
-### d. Save your application settings
+### e. Create a stack
+
+A Pulumi [stack](https://www.pulumi.com/docs/concepts/stack/) is an instance of a Pulumi program. Stacks are independently configurable and may represent different environments (development, staging, production) or feature branches. For this tutorial, you'll use the `dev` stack.
+
+To instantiate your `dev` stack, run:
+
+```sh
+pulumi up --yes
+# wait a few seconds for the stack to be instantiated.
+```
+
+At this point, you have not defined any resources so you'll have an empty stack.
+
+### e. Save your application settings
 
 In this step, you will store your application settings in a Pulumi [ESC Environment](https://www.pulumi.com/docs/esc/environments/). This is a YAML file containing configurations and secrets. These can be accessed in several ways, including a Pulumi program. All ESC Environments security reside in your Pulumi Cloud account and can be fully managed via the Pulumi CLI. For this tutorial, you will save the following:
 
@@ -124,7 +139,7 @@ In this step, you will store your application settings in a Pulumi [ESC Environm
 E=my-dev-env
 
 # Create a new Pulumi ESC Environment
-pulumi config env init --env $E --yes --stack dev
+pulumi config env init --env $E --yes
 
 # Replace abc123 with your Cloudflare account ID
 pulumi env set $E --plaintext pulumiConfig.accountId abc123
@@ -138,19 +153,6 @@ pulumi env set $E --plaintext pulumiConfig.domain example.com
 # Add the ESC Environment to your Pulumi stack
 pulumi config env add $E --yes --non-interactive
 ```
-
-### e. Create a stack
-
-A Pulumi [stack](https://www.pulumi.com/docs/concepts/stack/) is an instance of a Pulumi program. Stacks are independently configurable and may represent different environments (development, staging, production) or feature branches. For this tutorial, you'll use the `dev` stack.
-
-To instantiate your `dev` stack, run:
-
-```sh
-pulumi up --yes --stack dev
-# wait a few seconds for the stack to be instantiated.
-```
-
-At this point, you have not defined any resources so you'll have an empty stack.
 
 ### f. Install the Cloudflare package
 
@@ -318,7 +320,7 @@ To deploy the changes, run:
 
 ```sh
 $ pulumi up --yes
-waiting for stack to become ready
+wait for stack to become ready
 ```
 
 ## 6. Test the Worker
@@ -337,7 +339,7 @@ Depending on your domain settings, you may need to use "http" in the curl comman
 
 :::
 
-## 6. Clean up
+## 7. Clean up
 
 In this last step, you will clean up the resources and stack used throughout the tutorial.
 

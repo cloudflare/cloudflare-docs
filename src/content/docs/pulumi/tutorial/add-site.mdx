@@ -135,7 +135,7 @@ A Pulumi [ESC Environment](https://www.pulumi.com/docs/esc/environments/) is a Y
 E=my-dev-env
 
 # Create a new Pulumi ESC Environment
-pulumi config env init --env $E --yes --stack dev
+pulumi config env init --env $E --yes
 
 # Replace API_TOKEN with your Cloudflare API Token
 pulumi env set $E --secret  pulumiConfig.cloudflare:apiToken API_TOKEN
@@ -170,7 +170,7 @@ A Pulumi [stack](https://www.pulumi.com/docs/concepts/stack/) is an instance of 
 To instantiate your `dev` stack, run:
 
 ```sh
-pulumi up --yes --stack dev
+pulumi up --yes
 # wait a few seconds for the stack to be instantiated.
 ```
 
@@ -470,20 +470,8 @@ outputs:
 ### c. Apply the changes
 
 ```sh
-pulumi up --yes --stack dev
+pulumi up --yes
 # wait a few seconds while the changes take effect
-```
-
-### d. (Optional) Review the zone
-
-Review the value of `zoneId` to confirm the Zone creation.
-
-```sh
-pulumi stack output zoneId
-```
-
-```sh output
-d8fcb6d731fe1c2d75e2e8d6ad63fad5
 ```
 
 ## 3. Update your nameservers
@@ -565,7 +553,7 @@ status: ${exampleZone.status}
 ### b. Apply the changes
 
 ```sh
-pulumi up --yes --stack dev
+pulumi up --yes
 ```
 
 ### c. Obtain the nameservers
@@ -573,7 +561,7 @@ pulumi up --yes --stack dev
 Review the value of `nameservers` to retrieve the assigned nameservers:
 
 ```sh
-pulumi stack output --stack dev
+pulumi stack output
 ```
 
 ### d. Update your registrar
@@ -883,7 +871,7 @@ outputs:
 ### b. Apply the changes
 
 ```sh
-pulumi up --yes --stack dev
+pulumi up --yes
 ```
 
 ## 5. Verify your setup
