@@ -155,6 +155,9 @@ pulumi env open $E
     "domain": "example.com"
   }
 }
+
+# Add the ESC Environment to your Pulumi stack
+pulumi config env add $E --yes --non-interactive
 ```
 
 ### e. Create a stack
