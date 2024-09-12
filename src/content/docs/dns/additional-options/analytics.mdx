@@ -14,6 +14,8 @@ When you use Cloudflare DNS, you can access data about DNS queries through a var
 
 DNS analytics allow you to evaluate data about DNS queries to your zone.
 
+You can [use the dashboard](#view-on-the-dashboard) to get insights quickly based on the dimensions below, or [use the API](#explore-with-the-api) for access to all fields available in the GraphQL DNS analytics schemas.
+
 ### View on the dashboard
 
 For a quick summary, view your DNS analytics on the dashboard:
@@ -21,19 +23,28 @@ For a quick summary, view your DNS analytics on the dashboard:
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login) and select your account and domain.
 2. Go to **DNS** > **Analytics**.
 
-The DNS analytics dashboard contains four main sections, as described below. The filters and time frame that you specify at the top of the page apply to all of them.
+The DNS analytics dashboard contains [four main panels](#dns-analytics-panels). The filters and time frame that you specify at the top of the page apply to all of them.
 
-#### Query overview
+#### Available dimensions
 
-This section considers the number of queries per hour and their distribution over time. This information is segmented by each of the available dimensions and the graph displays the top five values. You can select the dimensions through the different tabs above the graph and quickly filter for or exclude a certain value from the results by hovering over it and selecting **Filter** or **Exclude**.
+- Query name
+- Query type (same as Record type)
+- Response code
+- Data center
+- Source IP
+- Destination IP
+- Protocol
+- IP version
 
-#### Query statistics
+#### DNS analytics panels
 
+- **Query overview**: the number of queries per hour and their distribution over time. This information is segmented by each of the available dimensions and the graph displays the top five values. You can select the dimensions through the different tabs above the graph and quickly filter for or exclude a certain value from the results by hovering over it and selecting **Filter** or **Exclude**.
 
-#### DNS queries by data center
+- **Query statistics**: an overview of query metrics based on your filters and selected time frame. Namely, **Total queries**, **Average queries per second**, and **Average processing time**. The average processing time is displayed in milliseconds and includes upstream queries in the case of [flattened CNAME records](/dns/cname-flattening/).
 
+- **DNS queries by data center**:
 
-#### Queries by source
+- **Queries by source**:
 
 
 ### Explore with the API
