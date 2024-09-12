@@ -201,7 +201,7 @@ entries:
 
 - term: target
   general_definition: |-
-    an object with an IP address or hostname that is reachable by Cloudflare, such as a server or web application.
+    a resource with an IP address or hostname that is reachable by Cloudflare, such as a server or web application.
 
 - term: team domain
   general_definition: |-
