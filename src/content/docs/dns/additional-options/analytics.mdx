@@ -8,13 +8,11 @@ sidebar:
 
 When you use Cloudflare DNS, you can access data about DNS queries through a variety of sources.
 
+---
+
 ## Analytics
 
 DNS analytics allow you to evaluate data about DNS queries to your zone.
-
-:::caution[Warning]
-The [DNS analytics API](/api/operations/dns-analytics-table), along with the available [API properties](/dns/reference/analytics-api-properties/), will be deprecated soon. Refer to the sections below for information on how to use the new DNS analytics based on GraphQL.
-:::
 
 ### View on the dashboard
 
@@ -22,6 +20,21 @@ For a quick summary, view your DNS analytics on the dashboard:
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login) and select your account and domain.
 2. Go to **DNS** > **Analytics**.
+
+The DNS analytics dashboard contains four main sections, as described below. The filters and time frame that you specify at the top of the page apply to all of them.
+
+#### Query overview
+
+This section considers the number of queries per hour and their distribution over time. This information is segmented by each of the available dimensions and the graph displays the top five values. You can select the dimensions through the different tabs above the graph and quickly filter for or exclude a certain value from the results by hovering over it and selecting **Filter** or **Exclude**.
+
+#### Query statistics
+
+
+#### DNS queries by data center
+
+
+#### Queries by source
+
 
 ### Explore with the API
 
@@ -33,6 +46,8 @@ The DNS analytics has two [schemas](/analytics/graphql-api/getting-started/query
 * `dnsAnalyticsAdaptiveGroups`: Get reports on aggregate information only.
 
 You can configure a maximum time frame over which analytics can be queried of up to 31 days.
+
+---
 
 ## Logs
 
