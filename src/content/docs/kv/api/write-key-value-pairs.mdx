@@ -3,40 +3,38 @@ pcx_content_type: concept
 title: Write key-value pairs
 sidebar:
   order: 5
-
 ---
 
-To create a new key-value pair, or to update the value for a particular key, call the `put()` method of the [KV binding](/kv/reference/kv-bindings/) on any [KV namespace](/kv/reference/kv-namespaces/) you have bound to your Worker code:
+To create a new key-value pair, or to update the value for a particular key, call the `put()` method of the [KV binding](/kv/concepts/kv-bindings/) on any [KV namespace](/kv/concepts/kv-namespaces/) you have bound to your Worker code:
 
 ```js
 env.NAMESPACE.put(key, value);
 ```
 
-#### Example 
+#### Example
 
 An example of writing a key-value pair from within a Worker:
 
 ```js
 export default {
-  async fetch(request, env, ctx) {
-    try {
-      await env.NAMESPACE.put("first-key", "This is the value for the key");
+	async fetch(request, env, ctx) {
+		try {
+			await env.NAMESPACE.put("first-key", "This is the value for the key");
 
-      return new Response("Successful write", {
-        status: 201
-      });
-    }
-    catch (e)
-    {
-      return new Response(e.message, {status: 500});
-    }
-  },
+			return new Response("Successful write", {
+				status: 201,
+			});
+		} catch (e) {
+			return new Response(e.message, { status: 500 });
+		}
+	},
 };
 ```
 
 ## Reference
 
 The following method is provided to write to KV:
+
 - [put()](#put-method)
 
 ### `put()` method
@@ -49,25 +47,26 @@ env.NAMESPACE.put(key, value, options?);
 
 #### Parameters
 
-* `key`: `string`
-  * The key to associate with the value. A key cannot be empty, have a `.` or `..`. All other keys are valid. Keys have a maximum length of 512 bytes.
-* `value`: `string` | `ReadableStream` | `ArrayBuffer`
-  * The value to store. The type is inferred. The maximum size of a value is 25 MiB.
+- `key`: `string`
+  - The key to associate with the value. A key cannot be empty, have a `.` or `..`. All other keys are valid. Keys have a maximum length of 512 bytes.
+- `value`: `string` | `ReadableStream` | `ArrayBuffer`
 
-* `options`: `{
+  - The value to store. The type is inferred. The maximum size of a value is 25 MiB.
+
+- `options`: `{
   expiration?: number,
   expirationTtl?: number,
   metadata?: object
 }`
-  * Optional. An object containing the `expiration` (optional), `expirationTtl` (optional), and `metadata` (optional) attributes. 
-    * `expiration` is the number that represents when to expire the key-value pair in seconds since epoch.
-    * `expirationTtl` is the number that represents when to expire the key-value pair in seconds from now. The minimum value is 60.
-    * `metadata` is an object that must serialize to JSON. The maximum size of the serialized JSON representation of the metadata object is 1024 bytes.
+  - Optional. An object containing the `expiration` (optional), `expirationTtl` (optional), and `metadata` (optional) attributes.
+    - `expiration` is the number that represents when to expire the key-value pair in seconds since epoch.
+    - `expirationTtl` is the number that represents when to expire the key-value pair in seconds from now. The minimum value is 60.
+    - `metadata` is an object that must serialize to JSON. The maximum size of the serialized JSON representation of the metadata object is 1024 bytes.
 
 #### Response
 
-* `response`: `Promise<void>`
-  * A `Promise` that resolves if the update is successful.
+- `response`: `Promise<void>`
+  - A `Promise` that resolves if the update is successful.
 
 The put() method returns a Promise that you should `await` on to verify a successful update.
 
@@ -75,21 +74,21 @@ The put() method returns a Promise that you should `await` on to verify a succes
 
 ### Concurrent writes to the same key
 
-Due to the eventually consistent nature of KV, concurrent writes to the same key can end up overwriting one another. It is a common pattern to write data from a single process with Wrangler or the API. This avoids competing concurrent writes because of the single stream. All data is still readily available within all Workers bound to the namespace. 
+Due to the eventually consistent nature of KV, concurrent writes to the same key can end up overwriting one another. It is a common pattern to write data from a single process with Wrangler or the API. This avoids competing concurrent writes because of the single stream. All data is still readily available within all Workers bound to the namespace.
 
-If concurrent writes are made to the same key, the last write will take precedence. 
+If concurrent writes are made to the same key, the last write will take precedence.
 
-Writes are immediately visible to other requests in the same global network location, but can take up to 60 seconds (or the value of the `cacheTtl` parameter of the `get()` or `getWithMetadata()` methods) to be visible in other parts of the world. 
+Writes are immediately visible to other requests in the same global network location, but can take up to 60 seconds (or the value of the `cacheTtl` parameter of the `get()` or `getWithMetadata()` methods) to be visible in other parts of the world.
 
-Refer to [How KV works](/kv/reference/how-kv-works/) for more information on this topic.
+Refer to [How KV works](/kv/concepts/how-kv-works/) for more information on this topic.
 
 ### Write data in bulk
 
-Write more than one key-value pair at a time with Wrangler or [via the API](/api/operations/workers-kv-namespace-write-multiple-key-value-pairs). 
+Write more than one key-value pair at a time with Wrangler or [via the API](/api/operations/workers-kv-namespace-write-multiple-key-value-pairs).
 
 The bulk API can accept up to 10,000 KV pairs at once.
 
-A `key` and a `value` are required for each KV pair. The entire request size must be less than 100 megabytes. Bulk writes are not supported using the [KV binding](/kv/reference/kv-bindings/).
+A `key` and a `value` are required for each KV pair. The entire request size must be less than 100 megabytes. Bulk writes are not supported using the [KV binding](/kv/concepts/kv-bindings/).
 
 ### Expiring keys
 
@@ -99,28 +98,29 @@ Once the expiration time of an expiring key is reached, it will be deleted from 
 
 :::note
 
-An `expiration` setting on a key will result in that key being deleted, even in cases where the `cacheTtl` is set to a higher (longer duration) value. Expiration always takes precedence.  
+An `expiration` setting on a key will result in that key being deleted, even in cases where the `cacheTtl` is set to a higher (longer duration) value. Expiration always takes precedence.
 
 :::
 
 There are two ways to specify when a key should expire:
 
- - Set a key's expiration using an absolute time specified in a number of [seconds since the UNIX epoch](https://en.wikipedia.org/wiki/Unix_time). For example, if you wanted a key to expire at 12:00AM UTC on April 1, 2019, you would set the key’s expiration to `1554076800`.
+- Set a key's expiration using an absolute time specified in a number of [seconds since the UNIX epoch](https://en.wikipedia.org/wiki/Unix_time). For example, if you wanted a key to expire at 12:00AM UTC on April 1, 2019, you would set the key’s expiration to `1554076800`.
 
- - Set a key's expiration time to live (TTL) using a relative number of seconds from the current time. For example, if you wanted a key to expire 10 minutes after creating it, you would set its expiration TTL to `600`.
+- Set a key's expiration time to live (TTL) using a relative number of seconds from the current time. For example, if you wanted a key to expire 10 minutes after creating it, you would set its expiration TTL to `600`.
 
 Expiration targets that are less than 60 seconds into the future are not supported. This is true for both expiration methods.
 
 #### Create expiring keys
+
 To create expiring keys, set `expiration` in the `put()` options to a number representing the seconds since epoch, or set `expirationTtl` in the `put()` options to a number representing the seconds from now:
 
 ```js
 await env.NAMESPACE.put(key, value, {
-  metadata: {expiration: secondsSinceEpoch},
+	metadata: { expiration: secondsSinceEpoch },
 });
 
 await env.NAMESPACE.put(key, value, {
-  metadata: {expirationTtl: secondsFromNow},
+	metadata: { expirationTtl: secondsFromNow },
 });
 ```
 
@@ -128,11 +128,11 @@ These assume that `secondsSinceEpoch` and `secondsFromNow` are variables defined
 
 ### Metadata
 
-To associate metadata with a key-value pair, set `metadata` in the `put()` options to an object (serializable to JSON): 
+To associate metadata with a key-value pair, set `metadata` in the `put()` options to an object (serializable to JSON):
 
 ```js
 await env.NAMESPACE.put(key, value, {
-  metadata: { someMetadataKey: "someMetadataValue" },
+	metadata: { someMetadataKey: "someMetadataValue" },
 });
 ```
 
