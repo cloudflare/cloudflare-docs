@@ -1,7 +1,9 @@
 # This is a test
 
-testing `worker-configuration.d.ts`.
+Bad link at [this page](/test/).
 
-Then also, ‘this thing'
+Build a better internet.
 
-What about wrangler or Wrangler.
+Testing [this page](https://developers.cloudflare.com/test/).
+
+Going to [the marketing site](https://www.cloudflare.com)
