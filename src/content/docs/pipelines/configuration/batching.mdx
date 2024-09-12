@@ -3,27 +3,26 @@ pcx_content_type: concept
 title: Batching
 sidebar:
   order: 10
-
 ---
 
-# Batching
-Pipelines automatically batches reqests that are received via HTTP or from a Worker. Batching is helpful to reduce the number of output files written to your destination, which can make them more efficient to query.
+Pipelines automatically batches requests that are received via HTTP or from a Worker. Batching helps reduce the number of output files written to your destination, which can make them more efficient to query.
 
 There are three ways to define how requests are batched:
-1. `batch-max-mb`: The maximum amount of data that will be batched, in megabytes. Default 10 MB, maximum 100 MB.
-2. `batch-max-rows`: The maximum number of rows or events in a batch before data is written. Default, and maximum, 10,000.
-3. `batch-max-seconds`: The maximum duration of a batch before data is written, in seconds. Default 15s. Maximum of 600s.
 
-All three batch definitions work together. Whichever limit is reached first will trigger the delivery of a batch.
+1. `batch-max-mb`: The maximum amount of data that will be batched, in megabytes. Default is 10 MB, maximum is 100 MB.
+2. `batch-max-rows`: The maximum number of rows or events in a batch before data is written. Default, and maximum, is 10,000 rows.
+3. `batch-max-seconds`: The maximum duration of a batch before data is written, in seconds. Default is 15 seconds, maximum is 600 seconds.
 
-For example, a `batch-max-mb` = 100 MB and a `batch-max-seconds` = 600 means that if 100 MB of events are posted to the Pipeline, the batch will be delivered. However, if it takes longer than 600s for 100 MB of events to be posted, a batch of all the messages that were posted during those 600s will be created and delivered.
+All three batch definitions work together. Whichever limit is reached first triggers the delivery of a batch.
+
+For example, a `batch-max-mb` = 100 MB and a `batch-max-seconds` = 600 means that if 100 MB of events are posted to the Pipeline, the batch will be delivered. However, if it takes longer than 600 seconds for 100 MB of events to be posted, a batch of all the messages that were posted during those 600 seconds will be created and delivered.
 
 ## Batch settings
-The following batch-level settings can be configured to adjust how Pipelines creates a batch:
 
-| Setting                                   | Default     | Minimum   | Maximum      |
-| ----------------------------------------- | ----------- | --------- | ------------ |
-| Maximum Batch Size `batch-max-mb`       	| 10 MB 			| 0.001 MB 	| 100 MB 			 |
-| Maximum Batch Timeout `batch-max-seconds` | 15 seconds  | 0 seconds | 600 seconds  |
-| Maximum Batch Rows `batch-max-rows`       | 10,000 rows | 1 row 		| 10,000 rows  |
+You can configure the following batch-level settings to adjust how Pipelines create a batch:
 
+| Setting                                   | Default     | Minimum   | Maximum     |
+| ----------------------------------------- | ----------- | --------- | ----------- |
+| Maximum Batch Size `batch-max-mb`         | 10 MB       | 0.001 MB  | 100 MB      |
+| Maximum Batch Timeout `batch-max-seconds` | 15 seconds  | 0 seconds | 600 seconds |
+| Maximum Batch Rows `batch-max-rows`       | 10,000 rows | 1 row     | 10,000 rows |
