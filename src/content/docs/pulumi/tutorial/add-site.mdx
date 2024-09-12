@@ -10,6 +10,7 @@ languages:
   - .NET
   - YAML
 updated: 2024-08-02
+difficulty: Beginner
 sidebar:
   order: 1
 head:
@@ -136,18 +137,27 @@ E=my-dev-env
 
 # Create a new Pulumi ESC Environment
 pulumi config env init --env $E --yes
+```
+
+```sh output
+Creating environment my-dev-env for stack dev...
+```
+
+```sh
+# Replace abc123 with your Cloudflare Account ID
+pulumi env set $E --plaintext pulumiConfig.accountId abc123
 
 # Replace API_TOKEN with your Cloudflare API Token
 pulumi env set $E --secret  pulumiConfig.cloudflare:apiToken API_TOKEN
-
-# Replace abc123 with your Cloudflare Account ID
-pulumi env set $E --plaintext pulumiConfig.accountId abc123
 
 # Replace example.com with your registered domain, or leave as is
 pulumi env set $E --plaintext pulumiConfig.domain example.com
 
 # Review your ESC Environment
 pulumi env open $E
+```
+
+```sh output
 {
   "pulumiConfig": {
     "accountId": "111222333",
@@ -155,9 +165,6 @@ pulumi env open $E
     "domain": "example.com"
   }
 }
-
-# Add the ESC Environment to your Pulumi stack
-pulumi config env add $E --yes --non-interactive
 ```
 
 ### e. Create a stack
