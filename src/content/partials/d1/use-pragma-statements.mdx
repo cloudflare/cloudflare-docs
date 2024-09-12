@@ -1,6 +1,5 @@
 ---
 {}
-
 ---
 
 import { Details } from "~/components";
@@ -38,6 +37,12 @@ CREATE TABLE IF NOT EXISTS "Territory" ( "Id" VARCHAR(8000) PRIMARY KEY, "Territ
 CREATE TABLE IF NOT EXISTS "EmployeeTerritory" ( "Id" VARCHAR(8000) PRIMARY KEY, "EmployeeId" INTEGER NOT NULL, "TerritoryId" VARCHAR(8000) NULL);
 CREATE VIEW [ProductDetails_V] as select p.*, c.CategoryName, c.Description as [CategoryDescription], s.CompanyName as [SupplierName], s.Region as [SupplierRegion] from [Product] p join [Category] c on p.CategoryId = c.id join [Supplier] s on s.id = p.SupplierId;
 ```
+
+:::caution
+
+D1 PRAGMA statements only apply to the current transaction.
+
+:::
 
 ### `PRAGMA table_list`
 
