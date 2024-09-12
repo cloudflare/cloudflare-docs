@@ -1878,7 +1878,8 @@ wrangler versions secret bulk <FILENAME> [OPTIONS]
 
 - `FILENAME` string optional
   - The JSON file containing key-value pairs to upload as secrets, in the form `{"SECRET_NAME": "secret value", ...}`.
-  - If omitted, Wrangler expects to receive input from `stdin` rather than a file.- `--name` string optional
+  - If omitted, Wrangler expects to receive input from `stdin` rather than a file.
+- `--name` string optional
   - Perform on a specific Worker rather than inheriting from `wrangler.toml`.
 - `--env` string optional
   - Perform on a specific environment.
