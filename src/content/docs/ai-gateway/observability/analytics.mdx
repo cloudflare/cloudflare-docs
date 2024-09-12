@@ -1,20 +1,11 @@
 ---
-title: Analytics
+title: Analytics and logging
 pcx_content_type: reference
 ---
 
 import { Render, TabItem, Tabs } from "~/components";
 
 <Render file="analytics-overview" /> <br />
-These analytics help you understand traffic patterns, token consumption, and
-potential issues across different AI providers or individual providers. You can
-view the following analytics:
-
-- **Requests**: View the total number of requests processed by the AI Gateway.
-- **Token Usage**: Analyze token consumption across all requests, giving insight into usage patterns and helping optimize token allocation.
-- **Costs**: Gain visibility into the costs associated with using different AI providers. This allows you to track spending, manage budgets, and optimize your resources.
-- **Error Rates**: Monitor the percentage of errors across requests, helping to identify and troubleshoot issues that may arise in provider responses.
-- **Cached Responses**: View the percentage of responses served from cache.
 
 ## View analytics
 
@@ -48,3 +39,7 @@ curl https://api.cloudflare.com/client/v4/graphql \
 The cost metric is an estimation based on the number of tokens sent and received in requests. While this metric can help you monitor and predict cost trends, refer to your provider’s dashboard for the most accurate cost details.
 
 :::
+
+## Logging
+
+Your AI Gateway dashboard also shows real-time logs of individual requests, such as the prompt, response, provider, timestamps, and whether the request was successful, cached, or if there was an error. These logs now persist and can store up to 10,000 logs per gateway for better observability and analysis.
