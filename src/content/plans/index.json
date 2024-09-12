@@ -1622,7 +1622,65 @@
         }
       }
     },
-    "waf_b_custom_rules": {
+    "waf_b_detections": {
+      "title": "WAF detections",
+      "link": "/waf/detections/",
+      "properties": {
+        "availability": {
+          "title": "Availability",
+          "summary": "Available on all plans",
+          "free": "Yes",
+          "pro": "Yes",
+          "biz": "Yes",
+          "ent": "Yes"
+        },
+        "b_malicious_uploads": {
+          "title": "Malicious uploads detection",
+          "summary": "Enterprise with add-on",
+          "link": "/waf/detections/malicious-uploads/",
+          "free": "No",
+          "pro": "No",
+          "biz": "No",
+          "ent": "No",
+          "ent_plus": "Yes"
+        },
+        "c_leaked_creds": {
+          "title": "Leaked credentials detection",
+          "summary": "Available on all plans",
+          "link": "/waf/detections/leaked-credentials/",
+          "free": "Yes",
+          "pro": "Yes",
+          "biz": "Yes",
+          "ent": "Yes"
+        },
+				"d_leaked_creds_fields": {
+					"title": "Leaked credentials fields",
+          "summary": "Available on all plans",
+          "link": "/waf/detections/leaked-credentials/",
+          "free": "Password Leaked",
+          "pro": "Password Leaked, User and Password Leaked",
+          "biz": "Password Leaked, User and Password Leaked",
+          "ent": "All leaked credentials fields"
+				},
+        "e_leaked_creds_locations": {
+          "title": "Number of custom detection locations",
+          "free": "0",
+          "pro": "0",
+          "biz": "0",
+          "ent": "10"
+        },
+        "f_attack_score": {
+          "title": "Attack score",
+          "summary": "Business and Enterprise plans",
+          "link": "/waf/detections/attack-score/",
+          "free": "No",
+          "pro": "No",
+          "biz": "One field only",
+          "ent": "Yes"
+        }
+      }
+    },
+    "waf_c_custom_rules": {
       "title": "WAF custom rules",
       "link": "/waf/custom-rules/",
       "properties": {
@@ -2198,7 +2256,7 @@
           "biz": "Yes",
           "ent": "Yes"
         }
-      }  
+      }
     },
     "tcp_turbo": {
       "title": "TCP Turbo",
