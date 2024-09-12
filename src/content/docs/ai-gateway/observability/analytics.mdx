@@ -1,12 +1,11 @@
 ---
 title: Analytics and logging
 pcx_content_type: reference
-
 ---
 
-import { Render, TabItem, Tabs } from "~/components"
+import { Render, TabItem, Tabs } from "~/components";
 
-<Render file="analytics-overview" /> <br/>
+<Render file="analytics-overview" /> <br />
 
 ## View analytics
 
@@ -35,7 +34,11 @@ curl https://api.cloudflare.com/client/v4/graphql \
 
 </TabItem> </Tabs>
 
-<Render file="analytics-warning" />
+:::note[Note]
+
+The cost metric is an estimation based on the number of tokens sent and received in requests. While this metric can help you monitor and predict cost trends, refer to your provider’s dashboard for the most accurate cost details.
+
+:::
 
 ## Logging
 
