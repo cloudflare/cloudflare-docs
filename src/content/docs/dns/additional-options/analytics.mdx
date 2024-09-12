@@ -6,6 +6,8 @@ sidebar:
 
 ---
 
+import { FeatureTable } from "~/components"
+
 When you use Cloudflare DNS, you can access data about DNS queries through a variety of sources.
 
 ---
@@ -14,7 +16,11 @@ When you use Cloudflare DNS, you can access data about DNS queries through a var
 
 DNS analytics allow you to evaluate data about DNS queries to your zone.
 
-You can [use the dashboard](#view-on-the-dashboard) to get insights quickly based on the dimensions below, or [use the API](#explore-with-the-api) for access to all fields available in the GraphQL DNS analytics schemas.
+You can [use the dashboard](#view-on-the-dashboard) to get insights quickly based on a [predefined set of dimensions](#available-dimensions), or [use the API](#explore-with-the-api) to have access to all fields available in the GraphQL DNS analytics schemas.
+
+### Availability and limits
+
+<FeatureTable id="dns.dns_analytics" />
 
 ### View on the dashboard
 
@@ -28,7 +34,7 @@ The DNS analytics dashboard contains [four main panels](#dns-analytics-panels). 
 #### Available dimensions
 
 - Query name
-- Query type (same as Record type)
+- Query type (same as DNS record type)
 - Response code
 - Data center
 - Source IP
@@ -38,13 +44,13 @@ The DNS analytics dashboard contains [four main panels](#dns-analytics-panels). 
 
 #### DNS analytics panels
 
-- **Query overview**: the number of queries per hour and their distribution over time. This information is segmented by each of the available dimensions and the graph displays the top five values. You can select the dimensions through the different tabs above the graph and quickly filter for or exclude a certain value from the results by hovering over it and selecting **Filter** or **Exclude**.
+- **Query overview**: the number of queries per hour and their distribution over time. This information is segmented by each of the [available dimensions](#available-dimensions) and the graph displays the top five values. You can select the dimensions through the different tabs above the graph and quickly filter for or exclude a certain value from the results by hovering over it and selecting **Filter** or **Exclude**.
 
 - **Query statistics**: an overview of query metrics based on your filters and selected time frame. Namely, **Total queries**, **Average queries per second**, and **Average processing time**. The average processing time is displayed in milliseconds and includes upstream queries in the case of [flattened CNAME records](/dns/cname-flattening/).
 
-- **DNS queries by data center**:
+- **DNS queries by data center**: a map indicating which Cloudflare data centers have handled DNS queries to your zone in the selected time period. You can also find a list of the ten top results and quickly filter for or exclude a certain data center from the results by hovering over it and selecting **Filter** or **Exclude**.
 
-- **Queries by source**:
+- **Queries by source**: a breakdown of the top five, ten, or fifteen results - based on your selection - and grouped by the [available dimensions](#available-dimensions).
 
 
 ### Explore with the API
