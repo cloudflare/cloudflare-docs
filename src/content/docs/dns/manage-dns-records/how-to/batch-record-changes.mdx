@@ -93,7 +93,7 @@ Also, for each operation that you list in the `/batch` request body, you must ob
 
 - **`deletes`**: only the `id` is required for each record object. You can keep additional parameters such as `name` for readability, but any other fields aside from `id` will be ignored in this case.
 - **`patches`**: aside from each record `id`, you should specify the fields you want to update. All unspecified fields will remain as they are.
-- **`puts`**: you must specify each record `id` and any other fields you want to set to a value that is not the default. Any unspecified fields will assume their default value for each [record type](/dns/manage-dns-records/reference/dns-record-types/). This operation works as an overwrite, so all fields in a given record are always affected.
+- **`puts`**: you must specify each record `id`, `content`, `name`, and `type`. You should also specify any other fields you want to set to a value that is not the default. Any unspecified fields will assume their default value for each [record type](/dns/manage-dns-records/reference/dns-record-types/). This operation works as an overwrite, so all fields in a given record are always affected.
 - **`posts`**: since you are creating a new record, `id` is not required. For field definitions, refer to the [Create DNS Record](/api/operations/dns-records-for-a-zone-create-dns-record) endpoint and select the desired record type under the request body specification.
 
 ### Example request
@@ -113,7 +113,7 @@ In this example, the `proxied` field for the first record listed under `"puts"` 
     "patches": [
         {
             "id": "00xx000xx000x00xx000xxx0x0xx0x0x",
-            "content": "192.0.2.45"
+            "content": "192.0.2.46"
         },
         {
             "id": "00x000xx000xx00x000xxx0x0xxx00x0x",
@@ -125,13 +125,15 @@ In this example, the `proxied` field for the first record listed under `"puts"` 
         {
             "id": "000000xx000x000x0000xxxx0xx0x000",
             "content": "192.0.2.50",
-            "name": "no-change.example.com",
+            "name": "change.example.com",
+						"type": "A",
             "ttl:": 1
         },
         {
             "id": "00x000xx000xx00x000xxx0x0xxx00x0x",
             "content": "192.0.2.45",
             "name": "no-change.example.com",
+						"type": "A",
             "proxied": false,
             "ttl:": 3000
         }
@@ -140,14 +142,14 @@ In this example, the `proxied` field for the first record listed under `"puts"` 
         {
             "name": "@",
             "type": "A",
-            "content": "192.0.2.45",
+            "content": "192.0.2.41",
             "proxied": false,
             "ttl": 3000
         },
         {
             "name": "a.example.com",
             "type": "A",
-            "content": "192.0.2.45",
+            "content": "192.0.2.42",
             "proxied": true
         }
     ]
