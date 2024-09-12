@@ -8,7 +8,7 @@ sidebar:
 
 import { GlossaryTooltip, Example, Render } from "~/components";
 
-Cloudflare allows you to apply several changes to your zone records in just one action. You can [use the dashboard](#use-the-dashboard) to delete or update the <GlossaryTooltip term="proxy status">proxy status</GlossaryTooltip> of DNS records in bulk, or perform further batched operations [via API](#use-the-api).
+Cloudflare allows you to apply several changes to your zone records in just one action. You can [use the dashboard](#use-the-dashboard) to delete DNS records or update their <GlossaryTooltip term="proxy status">proxy status</GlossaryTooltip> in bulk, or perform further batched operations [via API](#use-the-api).
 
 ## Availability and limits
 
@@ -27,7 +27,7 @@ The number of records that you can operate with in one action depends on your zo
 
 ### Edit proxy status in bulk
 
-`A`,`AAAA`, and `CNAME` records can be [proxied](/dns/manage-dns-records/reference/proxied-dns-records/). The **Proxy status** of a DNS record affects [how Cloudflare treats incoming traffic](/fundamentals/concepts/how-cloudflare-works/) to that record.
+`A`,`AAAA`, and `CNAME` records can be [proxied](/dns/manage-dns-records/reference/proxied-dns-records/). The **Proxy status** of a DNS record affects [how Cloudflare responds to DNS queries](/fundamentals/concepts/how-cloudflare-works/) to that record.
 
 <Render file="mix-proxied-and-unproxied" product="dns" />
 
@@ -55,7 +55,7 @@ For example, if you select the following records and then edit their proxy statu
 
 :::caution
 
-Deleting DNS records can cause downtime. Make sure you only select DNS records that you can safely delete or [use the API](#use-the-api) to be able to delete, create, or update DNS records within the same API request.
+Deleting DNS records can cause downtime and cannot be reverted. Make sure you only select DNS records that you can safely delete.
 
 :::
 
@@ -104,32 +104,32 @@ In this example, the `proxied` field for the first record listed under `"puts"` 
 {
     "deletes": [
         {
-            "id": "143004ef463b464a504bde5a5be9f94a"
+            "id": "000000xx000x000x000xxx0x0xx0x00x"
         },
         {
-            "id": "243004ef463b464a504bde5a5be9f94a"
+            "id": "000000xx000x000x0000xxxx0xx0x000"
         }
     ],
     "patches": [
         {
-            "id": "343004ef463b464a504bde5a5be9f94a",
+            "id": "00xx000xx000x00xx000xxx0x0xx0x0x",
             "content": "192.0.2.45"
         },
         {
-            "id": "443004ef463b464a504bde5a5be9f94a",
+            "id": "00x000xx000xx00x000xxx0x0xxx00x0x",
             "name": "update.example.com",
             "proxied": true
         }
     ],
     "puts": [
         {
-            "id": "543004ef463b464a504bde5a5be9f94a",
+            "id": "000000xx000x000x0000xxxx0xx0x000",
             "content": "192.0.2.50",
             "name": "no-change.example.com",
             "ttl:": 1
         },
         {
-            "id": "643004ef463b464a504bde5a5be9f94a",
+            "id": "00x000xx000xx00x000xxx0x0xxx00x0x",
             "content": "192.0.2.45",
             "name": "no-change.example.com",
             "proxied": false,
