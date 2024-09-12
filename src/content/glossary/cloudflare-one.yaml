@@ -199,6 +199,10 @@ entries:
   general_definition: |-
     Single Sign-On (SSO) is a technology that combines multiple application logins into one, requiring users to enter credentials only once.
 
+- term: target
+  general_definition: |-
+    an object with an IP address or hostname that is reachable by Cloudflare, such as a server or web application.
+
 - term: team domain
   general_definition: |-
     a unique subdomain assigned to your Cloudflare account (for example, `<your-team-name>.cloudflareaccess.com`), where users will find the apps you have secured behind Cloudflare Zero Trust.
