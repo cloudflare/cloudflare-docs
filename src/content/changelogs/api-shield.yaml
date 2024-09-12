@@ -6,6 +6,11 @@ productArea: Application security
 productAreaLink: /fundamentals/reference/changelog/security/
 entries:
 
+- publish_date: '2024-08-28'
+  title: Increased capacity for Endpoint Management and Schema Validation
+  description: |-
+    Endpoint Management and Schema Validation now support up to 10,000 saved and validated API endpoints.
+
 - publish_date: '2024-07-08'
   title: API Discovery's hostname variables
   description: |-

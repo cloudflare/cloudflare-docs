@@ -6,10 +6,9 @@ sidebar:
 head:
   - tag: title
     content: Network-layer DDoS Attack Protection managed ruleset
-
 ---
 
-import { GlossaryTooltip } from "~/components"
+import { GlossaryTooltip } from "~/components";
 
 The Cloudflare Network-layer DDoS Attack Protection managed ruleset is a set of pre-configured rules used to match [known DDoS attack vectors](/ddos-protection/about/attack-coverage/) at levels 3 and 4 of the OSI model.
 
@@ -30,7 +29,7 @@ To adjust rule behavior, use one of the following methods:
 
 - [Configure the managed ruleset in the Cloudflare dashboard](/ddos-protection/managed-rulesets/network/configure-dashboard/).
 - [Configure the managed ruleset via Cloudflare API](/ddos-protection/managed-rulesets/network/configure-api/).
-- [Configure the managed ruleset using Terraform](/terraform/additional-configurations/ddos-managed-rulesets/#example-network).
+- [Configure the managed ruleset using Terraform](/terraform/additional-configurations/ddos-managed-rulesets/#example-configure-network-layer-ddos-attack-protection).
 
 You can only configure the behavior of the managed ruleset to set a stronger mitigation action or a lower sensitivity. Refer to [Managed ruleset parameters](/ddos-protection/managed-rulesets/network/override-parameters/) for more information.
 

@@ -58,6 +58,8 @@ for (let i = 0; i < segments.length; i++) {
   let title = segments[i];
   if (entry) {
     title = entry.data.title;
+  } else if (i + 1 === segments.length) {
+    title = Astro.props.entry.data.title;
   }
 
   breadcrumbProps.crumbs.push({

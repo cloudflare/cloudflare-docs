@@ -7,7 +7,7 @@ head:
 description: Create, develop, and deploy your Cloudflare Workers with Wrangler commands.
 ---
 
-import { TabItem, Tabs } from "~/components";
+import { TabItem, Tabs, Render } from "~/components";
 
 Wrangler offers a number of commands to manage your Cloudflare Workers.
 
@@ -985,498 +985,7 @@ wrangler delete [<SCRIPT>] [OPTIONS]
 - `--dry-run` boolean (default: false) optional
   - Do not actually delete the Worker. This is useful for testing the output of `wrangler delete`.
 
-## `kv namespace`
-
-Manage Workers KV namespaces.
-
-:::note
-
-The `kv ...` commands allow you to manage your Workers KV resources in the Cloudflare network. Learn more about using Workers KV with Wrangler in the [Workers KV guide](/kv/get-started/).
-:::
-
-:::caution
-
-Since version 3.60.0, Wrangler supports the `kv ...` syntax. If you are using versions below 3.60.0, the command follows the `kv:...` syntax. Learn more about the deprecation of the `kv:...` syntax in the [Wrangler commands](/kv/reference/kv-commands/) for KV page.
-:::
-
-### `create`
-
-Create a new namespace.
-
-```txt
-wrangler kv namespace create <NAMESPACE> [OPTIONS]
-```
-
-- `NAMESPACE` string required
-  - The name of the new namespace.
-- `--env` string optional
-  - Perform on a specific environment.
-- `--preview` boolean optional
-  - Interact with a preview namespace (the `preview_id` value).
-
-The following is an example of using the `create` command to create a KV namespace called `MY_KV`.
-
-```sh
-npx wrangler kv namespace create "MY_KV"
-```
-
-```sh output
-🌀 Creating namespace with title "worker-MY_KV"
-✨ Success!
-Add the following to your configuration file in your kv_namespaces array:
-kv_namespaces = [
-  { binding = "MY_KV", id = "e29b263ab50e42ce9b637fa8370175e8" }
-]
-```
-
-The following is an example of using the `create` command to create a preview KV namespace called `MY_KV`.
-
-```sh
-npx wrangler kv namespace create "MY_KV" --preview
-```
-
-```sh output
-🌀 Creating namespace with title "my-site-MY_KV_preview"
-✨ Success!
-Add the following to your configuration file in your kv_namespaces array:
-kv_namespaces = [
-  { binding = "MY_KV", preview_id = "15137f8edf6c09742227e99b08aaf273" }
-]
-```
-
-### `list`
-
-List all KV namespaces associated with the current account ID.
-
-```txt
-wrangler kv namespace list
-```
-
-The following is an example that passes the Wrangler command through the `jq` command:
-
-```sh
-npx wrangler kv namespace list | jq "."
-```
-
-```sh output
-[
-  {
-    "id": "06779da6940b431db6e566b4846d64db",
-    "title": "TEST_NAMESPACE"
-  },
-  {
-    "id": "32ac1b3c2ed34ed3b397268817dea9ea",
-    "title": "STATIC_CONTENT"
-  }
-]
-```
-
-### `delete`
-
-Delete a given namespace.
-
-```txt
-wrangler kv namespace delete {--binding=<BINDING>|--namespace-id=<NAMESPACE_ID>} [OPTIONS]
-```
-
-:::caution
-
-This command requires `--binding` or `--namespace-id`.
-:::
-
-- `--binding` string
-  - The binding name of the namespace, as stored in the `wrangler.toml` file, to delete.
-- `--namespace-id` string
-  - The ID of the namespace to delete.
-- `--env` string optional
-  - Perform on a specific environment.
-- `--preview` boolean optional
-  - Interact with a preview namespace instead of production.
-
-The following is an example of deleting a KV namespace called `MY_KV.`
-
-```sh
-npx wrangler kv namespace delete --binding=MY_KV
-```
-
-```sh output
-Are you sure you want to delete namespace f7b02e7fc70443149ac906dd81ec1791? [y/n]
-yes
-Deleting namespace f7b02e7fc70443149ac906dd81ec1791
-Deleted namespace f7b02e7fc70443149ac906dd81ec1791
-```
-
-The following is an example of deleting a preview KV namespace called `MY_KV`.
-
-```sh
-npx wrangler kv namespace delete --binding=MY_KV --preview
-```
-
-```sh output
-Are you sure you want to delete namespace 15137f8edf6c09742227e99b08aaf273? [y/n]
-yes
-Deleting namespace 15137f8edf6c09742227e99b08aaf273
-Deleted namespace 15137f8edf6c09742227e99b08aaf273
-```
-
-## `kv key`
-
-Manage key-value pairs within a Workers KV namespace.
-
-:::note
-
-The `kv ...` commands allow you to manage your Workers KV resources in the Cloudflare network. Learn more about using Workers KV with Wrangler in the [Workers KV guide](/kv/get-started/).
-:::
-
-:::caution
-
-Since version 3.60.0, Wrangler supports the `kv ...` syntax. If you are using versions below 3.60.0, the command follows the `kv:...` syntax. Learn more about the deprecation of the `kv:...` syntax in the [Wrangler commands](/kv/reference/kv-commands/) for KV page.
-:::
-
-### `put`
-
-Write a single key-value pair to a particular namespace.
-
-```txt
-wrangler kv key put <KEY> {<VALUE>|--path=<PATH>} {--binding=<BINDING>|--namespace-id=<NAMESPACE_ID>} [OPTIONS]
-```
-
-:::caution
-
-This command requires a `VALUE` or `--path`.<br/>
-This command requires a `--binding` or `--namespace-id` flag.
-:::
-
-- `KEY` string required
-  - The key to write to.
-- `VALUE` string optional
-  - The value to write.
-- `--path` optional
-  - When defined, the value is loaded from the file at `--path` rather than reading it from the `VALUE` argument. This is ideal for security-sensitive operations because it avoids saving keys and values into your terminal history.
-- `--binding` string
-  - The binding name of the namespace, as stored in the `wrangler.toml` file, to delete.
-- `--namespace-id` string
-  - The ID of the namespace to delete.
-- `--env` string optional
-  - Perform on a specific environment.
-- `--preview` boolean optional
-  - Interact with a preview namespace instead of production.
-- `--ttl` number optional
-  - The lifetime (in number of seconds) that the key-value pair should exist before expiring. Must be at least `60` seconds. This option takes precedence over the `expiration` option.
-- `--expiration` number optional
-  - The timestamp, in UNIX seconds, indicating when the key-value pair should expire.
-- `--metadata` string optional
-  - Any (escaped) JSON serialized arbitrary object to a maximum of 1024 bytes.
-- `--local` boolean optional
-  - Interact with locally persisted data.
-- `--persist-to` string optional
-  - Specify directory for locally persisted data.
-
-The following is an example that puts a key-value into the namespace with binding name of `MY_KV`.
-
-```sh
-npx wrangler kv key put --binding=MY_KV "my-key" "some-value"
-```
-
-```sh output
-Writing the value "some-value" to key "my-key" on namespace f7b02e7fc70443149ac906dd81ec1791.
-```
-
-The following is an example that puts a key-value into the preview namespace with binding name of `MY_KV`.
-
-```sh
-npx wrangler kv key put --binding=MY_KV --preview "my-key" "some-value"
-```
-
-```sh output
-Writing the value "some-value" to key "my-key" on namespace 15137f8edf6c09742227e99b08aaf273.
-```
-
-The following is an example that puts a key-value into a namespace, with a time-to-live value of `10000` seconds.
-
-```sh
-npx wrangler kv key put --binding=MY_KV "my-key" "some-value" --ttl=10000
-```
-
-```sh output
-Writing the value "some-value" to key "my-key" on namespace f7b02e7fc70443149ac906dd81ec1791.
-```
-
-The following is an example that puts a key-value into a namespace, where the value is read from the `value.txt` file.
-
-```sh
-npx wrangler kv key put --binding=MY_KV "my-key" --path=value.txt
-```
-
-```sh output
-Writing the contents of value.txt to the key "my-key" on namespace f7b02e7fc70443149ac906dd81ec1791.
-```
-
-### `list`
-
-Output a list of all keys in a given namespace.
-
-```txt
-wrangler kv key list {--binding=<BINDING>|--namespace-id=<NAMESPACE_ID>} [OPTIONS]
-```
-
-:::caution
-
-This command requires `--binding` or `--namespace-id`.
-:::
-
-- `--binding` string
-  - The binding name of the namespace, as stored in the `wrangler.toml` file, to delete.
-- `--namespace-id` string
-  - The ID of the namespace to delete.
-- `--env` string optional
-  - Perform on a specific environment.
-- `--preview` boolean optional
-  - Interact with a preview namespace instead of production.
-- `--prefix` string optional
-  - Only list keys that begin with the given prefix.
-- `--local` boolean optional
-  - Interact with locally persisted data.
-- `--persist-to` string optional
-  - Specify directory for locally persisted data.
-
-Below is an example that passes the Wrangler command through the `jq` command:
-
-```sh
-npx wrangler kv key list --binding=MY_KV --prefix="public" | jq "."
-```
-
-```sh output
-[
-  {
-    "name": "public_key"
-  },
-  {
-    "name": "public_key_with_expiration",
-    "expiration": "2019-09-10T23:18:58Z"
-  }
-]
-```
-
-### `get`
-
-Read a single value by key from the given namespace.
-
-```txt
-wrangler kv key get <KEY> {--binding=<BINDING>|--namespace-id=<NAMESPACE_ID>} [OPTIONS]
-```
-
-:::caution
-
-Exactly one of `--binding` or `--namespace-id` is required.
-:::
-
-- `KEY` string required
-  - The key value to get.
-- `--binding` string
-  - The binding name of the namespace, as stored in the `wrangler.toml` file, to get from.
-- `--namespace-id` string
-  - The ID of the namespace to get from.
-- `--env` string optional
-  - Perform on a specific environment.
-- `--preview` boolean optional
-  - Interact with a preview namespace instead of production.
-- `--text` boolean optional
-  - Decode the returned value as a UTF-8 string.
-- `--local` boolean optional
-  - Interact with locally persisted data.
-- `--persist-to` string optional
-  - Specify directory for locally persisted data.
-
-The following is an example that gets the value of the `"my-key"` key from the KV namespace with binding name `MY_KV`.
-
-```sh
-npx wrangler kv key get --binding=MY_KV "my-key"
-```
-
-```sh output
-value
-```
-
-### `delete`
-
-Remove a single key value pair from the given namespace.
-
-```txt
-wrangler kv key delete <KEY> {--binding=<BINDING>|--namespace-id=<NAMESPACE_ID>} [OPTIONS]
-```
-
-:::caution
-
-Exactly one of `--binding` or `--namespace-id` is required.
-:::
-
-- `KEY` string required
-  - The key value to get.
-- `--binding` string
-  - The binding name of the namespace, as stored in the `wrangler.toml` file, to delete.
-- `--namespace-id` string
-  - The ID of the namespace to delete.
-- `--env` string optional
-  - Perform on a specific environment.
-- `--preview` boolean optional
-  - Interact with a preview namespace instead of production.
-- `--local` boolean optional
-  - Interact with locally persisted data.
-- `--persist-to` string optional
-  - Specify directory for locally persisted data.
-
-The following is an example that deletes the key-value pair with key `"my-key"` from the KV namespace with binding name `MY_KV`.
-
-```sh
-npx wrangler kv key delete --binding=MY_KV "my-key"
-```
-
-```sh output
-Deleting the key "my-key" on namespace f7b02e7fc70443149ac906dd81ec1791.
-```
-
-## `kv bulk`
-
-Manage multiple key-value pairs within a Workers KV namespace in batches.
-
-:::note
-
-The `kv ...` commands allow you to manage your Workers KV resources in the Cloudflare network. Learn more about using Workers KV with Wrangler in the [Workers KV guide](/kv/get-started/).
-:::
-
-:::caution
-
-Since version 3.60.0, Wrangler supports the `kv ...` syntax. If you are using versions below 3.60.0, the command follows the `kv:...` syntax. Learn more about the deprecation of the `kv:...` syntax in the [Wrangler commands](/kv/reference/kv-commands/) for KV page.
-:::
-
-### `put`
-
-Write a JSON file containing an array of key-value pairs to the given namespace.
-
-```txt
-wrangler kv bulk put <FILENAME> {--binding=<BINDING>|--namespace-id=<NAMESPACE_ID>} [OPTIONS]
-```
-
-:::caution
-
-This command requires `--binding` or `--namespace-id`.
-:::
-
-- `FILENAME` string required
-  - The JSON file containing an array of key-value pairs to write to the namespace.
-- `--binding` string
-  - The binding name of the namespace, as stored in the `wrangler.toml` file, to delete.
-- `--namespace-id` string
-  - The ID of the namespace to delete.
-- `--env` string optional
-  - Perform on a specific environment.
-- `--preview` boolean optional
-  - Interact with a preview namespace instead of production.
-- `--local` boolean optional
-  - Interact with locally persisted data.
-- `--persist-to` string optional
-  - Specify directory for locally persisted data.
-
-This command takes a JSON file as an argument with a list of key-value pairs to upload. An example of JSON input:
-
-```json
-[
-	{
-		"key": "test_key",
-		"value": "test_value",
-		"expiration_ttl": 3600
-	}
-]
-```
-
-KV namespace values can only store strings. In order to save complex a value, stringify it to JSON:
-
-```json
-[
-	{
-		"key": "test_key",
-		"value": "{\"name\": \"test_value\"}",
-		"expiration_ttl": 3600
-	}
-]
-```
-
-Refer to the full schema for key-value entries uploaded via the bulk API:
-
-- `key` string required
-  - The key’s name. The name may be 512 bytes maximum. All printable, non-whitespace characters are valid.
-- `value` string required
-  - The UTF-8 encoded string to be stored, up to 25 MB in length.
-- `metadata` object optional
-  - Any arbitrary object (must serialize to JSON) to a maximum of 1024 bytes.
-- `expiration` number optional
-  - The time, measured in number of seconds since the UNIX epoch, at which the key should expire.
-- `expiration_ttl` number optional
-  - The number of seconds the document should exist before expiring. Must be at least `60` seconds.
-- `base64` boolean optional
-  - When true, the server will decode the value as base64 before storing it. This is useful for writing values that would otherwise be invalid JSON strings, such as images. Defaults to `false`.
-
-:::note
-
-If both `expiration` and `expiration_ttl` are specified for a given key, the API will prefer `expiration_ttl`.
-:::
-
-The following is an example of writing all the key-value pairs found in the `allthethingsupload.json` file.
-
-```sh
-npx wrangler kv bulk put --binding=MY_KV allthethingsupload.json
-```
-
-```sh output
-Success!
-```
-
-### `delete`
-
-Delete all keys read from a JSON file within a given namespace.
-
-```txt
-wrangler kv bulk delete <FILENAME> {--binding=<BINDING>|--namespace-id=<NAMESPACE_ID>} [OPTIONS]
-```
-
-:::caution
-
-This command requires `--binding` or `--namespace-id`.
-:::
-
-- `FILENAME` string required
-  - The JSON file containing an array of keys to delete from the namespace.
-- `--binding` string
-  - The binding name of the namespace, as stored in the `wrangler.toml` file, to delete.
-- `--namespace-id` string
-  - The ID of the namespace to delete.
-- `--env` string optional
-  - Perform on a specific environment.
-- `--preview` boolean optional
-  - Interact with a preview namespace instead of production.
-- `--local` boolean optional
-  - Interact with locally persisted data.
-- `--persist-to` string optional
-  - Specify directory for locally persisted data.
-
-This command takes a JSON file as an argument containing an array of keys to delete.
-The following is an example of the JSON input:
-
-```json
-["test_key_1", "test_key_2"]
-```
-
-The following is an example of deleting all the keys found in the `allthethingsdelete.json` file.
-
-```sh
-npx wrangler kv bulk delete --binding=MY_KV allthethingsdelete.json
-```
-
-```sh output
-? Are you sure you want to delete all keys in allthethingsdelete.json from kv-namespace with id "f7b02e7fc70443149ac906dd81ec1791"? › (Y/n)
-Success!
-```
+<Render file="wrangler-commands/kv" product="workers"/>
 
 ---
 
@@ -2278,14 +1787,9 @@ wrangler whoami
 
 ## `versions`
 
-[Versions](/workers/configuration/versions-and-deployments/#versions) are currently in beta. Report bugs in [GitHub](https://github.com/cloudflare/workers-sdk/issues/new/choose).
 
-:::caution
-
-The `--experimental-versions` flag is required to use the `wrangler versions` commands. You may use the shorthand `--x-versions` flag in place of `--experimental-versions` anywhere it is mentioned. For consistency in Wrangler's output, it is recommended that you use the `--experimental-versions` flag for all commands where it is an option.
-
-The minimum required Wrangler version to use these commands is 3.40.0.
-
+:::note
+The minimum required wrangler version to use these commands is 3.40.0. For versions before 3.73.0, you will need to add the `--x-versions` flag.
 :::
 
 ### `upload`
@@ -2293,11 +1797,9 @@ The minimum required Wrangler version to use these commands is 3.40.0.
 Upload a new [version](/workers/configuration/versions-and-deployments/#versions) of your Worker that is not deployed immediately.
 
 ```txt
-wrangler versions upload [OPTIONS] --experimental-versions
+wrangler versions upload [OPTIONS]
 ```
 
-- `--experimental-versions` string required
-  - Required for `wrangler versions` commands. Can be replaced with `--x-versions`.
 - `--tag` string optional
   - Add a version tag. Accepts empty string.
 - `--message` string optional
@@ -2310,20 +1812,18 @@ wrangler versions upload [OPTIONS] --experimental-versions
 Deploy a previously created [version](/workers/configuration/versions-and-deployments/#versions) of your Worker all at once or create a [gradual deployment](/workers/configuration/versions-and-deployments/gradual-deployments/) to incrementally shift traffic to a new version by following an interactive prompt.
 
 ```txt
-wrangler versions deploy [OPTIONS] --experimental-versions
+wrangler versions deploy [OPTIONS]
 ```
 
-- `--experimental-versions` string required
-  - Required for `wrangler versions` commands. Can be replaced with `--x-versions`.
 - `--name` string optional
   - Perform on a specific Worker rather than inheriting from `wrangler.toml`.
 
 :::note
 
-The non-interactive version of this prompt is: `wrangler versions deploy version-id-1@percentage-1% version-id-2@percentage-2 -y --experimental-versions`
+The non-interactive version of this prompt is: `wrangler versions deploy version-id-1@percentage-1% version-id-2@percentage-2 -y`
 
 For example:
-`wrangler versions deploy 095f00a7-23a7-43b7-a227-e4c97cab5f22@10%   1a88955c-2fbd-4a72-9d9b-3ba1e59842f2@90% -y --experimental-versions`
+`wrangler versions deploy 095f00a7-23a7-43b7-a227-e4c97cab5f22@10%   1a88955c-2fbd-4a72-9d9b-3ba1e59842f2@90% -y`
 
 :::
 
@@ -2332,11 +1832,9 @@ For example:
 Retrieve details for the 10 most recent versions. Details include `Version ID`, `Created on`, `Author`, `Source`, and optionally, `Tag` or `Message`.
 
 ```txt
-wrangler versions list [OPTIONS] --experimental-versions
+wrangler versions list [OPTIONS]
 ```
 
-- `--experimental-versions` string required
-  - Required for `wrangler versions` commands. Can be replaced with `--x-versions`.
 - `--name` string optional
   - Perform on a specific Worker rather than inheriting from `wrangler.toml`.
 
@@ -2345,11 +1843,9 @@ wrangler versions list [OPTIONS] --experimental-versions
 Create or replace a secret for a Worker. Creates a new [version](/workers/configuration/versions-and-deployments/#versions) with modified secrets without [deploying](/workers/configuration/versions-and-deployments/#deployments) the Worker.
 
 ```txt
-wrangler versions secret put <KEY> [OPTIONS] --experimental-versions
+wrangler versions secret put <KEY> [OPTIONS]
 ```
 
-- `--experimental-versions` string required
-  - Required for `wrangler versions` commands. Can be replaced with `--x-versions`.
 - `KEY` string required
   - The variable name for this secret to be accessed in the Worker.
 - `--name` string optional
@@ -2362,11 +1858,9 @@ wrangler versions secret put <KEY> [OPTIONS] --experimental-versions
 Delete a secret for a Worker. Creates a new [version](/workers/configuration/versions-and-deployments/#versions) with modified secrets without [deploying](/workers/configuration/versions-and-deployments/#deployments) the Worker.
 
 ```txt
-wrangler versions delete <KEY> [OPTIONS] --experimental-versions
+wrangler versions delete <KEY> [OPTIONS]
 ```
 
-- `--experimental-versions` string required
-  - Required for `wrangler versions` commands. Can be replaced with `--x-versions`.
 - `KEY` string required
   - The variable name for this secret to be accessed in the Worker.
 - `--name` string optional
@@ -2379,14 +1873,13 @@ wrangler versions delete <KEY> [OPTIONS] --experimental-versions
 Upload multiple secrets for a Worker at once. Creates a new [version](/workers/configuration/versions-and-deployments/#versions) with modified secrets without [deploying](/workers/configuration/versions-and-deployments/#deployments) the Worker.
 
 ```txt
-wrangler versions secret bulk <FILENAME> [OPTIONS] --experimental-versions
+wrangler versions secret bulk <FILENAME> [OPTIONS]
 ```
 
-- `--experimental-versions` string required
-  - Required for `wrangler versions` commands. Can be replaced with `--x-versions`.
 - `FILENAME` string optional
   - The JSON file containing key-value pairs to upload as secrets, in the form `{"SECRET_NAME": "secret value", ...}`.
-  - If omitted, Wrangler expects to receive input from `stdin` rather than a file.- `--name` string optional
+  - If omitted, Wrangler expects to receive input from `stdin` rather than a file.
+- `--name` string optional
   - Perform on a specific Worker rather than inheriting from `wrangler.toml`.
 - `--env` string optional
   - Perform on a specific environment.
@@ -2395,14 +1888,9 @@ wrangler versions secret bulk <FILENAME> [OPTIONS] --experimental-versions
 
 ## `triggers`
 
-This command is currently in closed beta. Report bugs in [GitHub](https://github.com/cloudflare/workers-sdk/issues/new/choose).
 
-:::caution
-
-The `--experimental-versions` flag is required to use the `wrangler triggers` commands. You may use the shorthand `--x-versions` flag in place of `--experimental-versions` anywhere it is mentioned. For consistency in Wrangler's output, it is recommended that you use the `--experimental-versions` flag for all commands where it is an option.
-
-The minimum required Wrangler version to use these commands is 3.40.0.
-
+:::note
+The minimum required wrangler version to use these commands is 3.40.0. For versions before 3.73.0, you will need to add the `--x-versions` flag.
 :::
 
 ### `deploy`
@@ -2410,74 +1898,29 @@ The minimum required Wrangler version to use these commands is 3.40.0.
 Apply changes to triggers ([Routes or domains](/workers/configuration/routing/) and [Cron Triggers](/workers/configuration/cron-triggers/)) when using [`wrangler versions upload`](/workers/wrangler/commands/#upload).
 
 ```txt
-wrangler triggers deploy [OPTIONS] --experimental-versions
+wrangler triggers deploy [OPTIONS]
 ```
 
-- `--experimental-versions` string required
-  - Required for `wrangler versions` commands. Can be replaced with `--x-versions`.
 - `--name` string optional
   - Perform on a specific Worker rather than inheriting from `wrangler.toml`.
 
-\--
+---
 
 ## `deployments`
 
 [Deployments](/workers/configuration/versions-and-deployments/#deployments) track the version(s) of your Worker that are actively serving traffic.
 
-:::note
-
-Deployments are currently in beta. Report bugs in [GitHub](https://github.com/cloudflare/workers-sdk/issues/new/choose).
-
-:::
-
-### `view`
-
-Retrieve details for the specified [deployment](/workers/configuration/versions-and-deployments/#deployments), or the latest if no ID is provided. Details include `Deployment ID`, `Author`, `Source`, `Created on`, and bindings. Where applicable, details also include rollback information and a `Message` if one was provided on a [rollback](/workers/configuration/versions-and-deployments/rollbacks/).
-
-```txt
-wrangler deployments view [OPTIONS]
-```
-
-- `DEPLOYMENT_ID` string optional
-  - The ID of the deployment you wish to view.
-- `--name` string optional
-  - Perform on a specific Worker rather than inheriting from `wrangler.toml`.
-
 ### `list`
 
-Retrieve details for the 10 most recent deployments. Details include `Deployment ID`, `Created on`, `Author`, `Source`, and an indication of which deployment is `Active`. Where applicable, details also include rollback information and a `Message` if one was provided on a rollback.
-
-```txt
-wrangler deployments list [OPTIONS]
-```
-
-- `--name` string optional
-  - Perform on a specific Worker rather than inheriting from `wrangler.toml`.
-
 :::note
-
-`Deployment ID` will be changed to `Version ID` in a future version of Wrangler. To learn more, refer to [Versions & deployments](/workers/configuration/versions-and-deployments).
-
+The minimum required wrangler version to use these commands is 3.40.0. For versions before 3.73.0, you will need to add the `--x-versions` flag.
 :::
-
-:::note
-
-The `--experimental-versions` flag is required to use the new commands below. You may use the shorthand `--x-versions` flag in place of `--experimental-versions` anywhere it is mentioned. For consistency in Wrangler's output, it is recommended that you use the `--experimental-versions` flag for all commands where it is an option.
-
-The minimum required wrangler version to use these commands is 3.40.0.
-:::
-
-### `list --experimental-versions`
 
 Retrieve details for the 10 most recent [deployments](/workers/configuration/versions-and-deployments/#deployments). Details include `Created on`, `Author`, `Source`, an optional `Message`, and metadata about the `Version(s)` in the deployment.
 
 ```txt
-wrangler deployments list [OPTIONS] --experimental-versions
+wrangler deployments list [OPTIONS]
 ```
-
-- `--experimental-versions` string required
-
-  - Required for version commands. Can be replaced with `--x-versions`.
 
 - `--name` string optional
   - Perform on a specific Worker rather than inheriting from `wrangler.toml`.
@@ -2487,54 +1930,22 @@ wrangler deployments list [OPTIONS] --experimental-versions
 Retrieve details for the most recent deployment. Details include `Created on`, `Author`, `Source`, an optional `Message`, and metadata about the `Version(s)` in the deployment.
 
 ```txt
-wrangler deployments status --experimental-versions
+wrangler deployments status
 ```
-
-- `--experimental-versions` string required
-
-  - Required for version commands. Can be replaced with `--x-versions`.
 
 - `--name` string optional
   - Perform on a specific Worker rather than inheriting from `wrangler.toml`.
 
 ## `rollback`
 
-:::note
-
-[Rollbacks](/workers/configuration/versions-and-deployments/rollbacks/) is currently in open beta. Report bugs in [GitHub](https://github.com/cloudflare/workers-sdk/issues/new/choose).
-
-:::
-
-[Roll back](/workers/configuration/versions-and-deployments/rollbacks/) to a specified [version](/workers/configuration/versions-and-deployments/#versions) by ID, or to the previous version if no ID is provided. The `rollback` command will prompt you for confirmation of the rollback. On confirmation, you will be prompted to provide an optional rollback message.
-
-There are limitations on which versions you can rollback to. Refer to [Rollbacks Limits](/workers/configuration/versions-and-deployments/rollbacks/#limits) for more information.
-
 :::caution
-
 A rollback will immediately create a new deployment with the specified version of your Worker and become the active deployment across all your deployed routes and domains. This change will not affect work in your local development environment.
 :::
 
-### `rollback`
-
 ```txt
-wrangler rollback [<DEPLOYMENT_ID>] [OPTIONS]
+wrangler rollback [<VERSION_ID>] [OPTIONS]
 ```
 
-- `DEPLOYMENT_ID` string optional
-  - The ID of the deployment you wish to roll back to.
-- `--name` string optional
-  - Perform on a specific Worker rather than inheriting from `wrangler.toml`.
-- `--message` string optional
-  - Add message for rollback. Accepts empty string. When specified, interactive prompts for rollback confirmation and message are skipped.
-
-### `rollback --experimental-versions`
-
-```txt
-wrangler rollback [<VERSION_ID>] [OPTIONS] --experimental-versions
-```
-
-- `--experimental-versions` string required
-  - Required for version commands. Can be replaced with `--x-versions`.
 - `VERSION_ID` string optional
   - The ID of the version you wish to roll back to. If not supplied, the `rollback` command defaults to the version uploaded before the latest version.
 - `--name` string optional

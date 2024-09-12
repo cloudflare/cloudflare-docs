@@ -1,0 +1,11 @@
+---
+link: "/cloudflare-one/changelog/email-security/"
+productName: Email Security
+productLink: "/cloudflare-one/email-security/"
+productArea: Cloudflare One
+productAreaLink: /cloudflare-one/changelog/
+entries:
+- publish_date: '2024-08-06'
+  title: Email Security is live
+  description: |-
+    Email Security is now live under Zero Trust.

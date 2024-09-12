@@ -88,6 +88,7 @@ export default {
 * <code>list(optionsR2ListOptionsoptional)</code> : Promise\<R2Objects>
 
   * Returns an <code>R2Objects</code> containing a list of <code>R2Object</code> contained within the bucket.
+  * The returned list of objects is ordered lexicographically. 
   * Returns up to 1000 entries, but may return less in order to minimize memory pressure within the Worker.
   * To explicitly set the number of objects to list, provide an [R2ListOptions](/r2/api/workers/workers-api-reference/#r2listoptions) object with the `limit` property set. 
 
@@ -353,6 +354,8 @@ Only a single hashing algorithm can be specified at once.
 
 * <code>limit</code>numberoptional
   * The number of results to return. Defaults to `1000`, with a maximum of `1000`.
+
+  * If `include` is set, you may receive fewer than `limit` results in your response to accommodate metadata.
 
 * <code>prefix</code>stringoptional
   * The prefix to match keys against. Keys will only be returned if they start with given prefix.

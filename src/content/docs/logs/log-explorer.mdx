@@ -158,6 +158,12 @@ curl https://api.cloudflare.com/client/v4/zones/{zone_id}/logs/explorer/query/sq
   --url-query query="SELECT clientRequestMethod, clientRequestPath, clientRequestProtocol FROM http_requests WHERE date = '2023-10-12' LIMIT 500"
 ```
 
+### Additional query optimization tips
+
+- Narrow your query time frame. Focus on a smaller time window to reduce the volume of data processed. This helps avoid querying excessive amounts of data and speeds up response times.
+- Omit `ORDER BY` and `LIMIT` clauses. These clauses can slow down queries, especially when dealing with large datasets. For queries that return a large number of records, reduce the time frame instead of limiting to the newest `N` records from a broader time frame.
+- Select only necessary columns. For example, replace `SELECT *` with the list of specific columns you need. You can also use `SELECT RayId` as a first iteration and follow up with a query that filters by the Ray IDs to retrieve additional columns. Additionally, you can use `SELECT COUNT(*)` to probe for time frames with matching records without retrieving the full dataset.
+
 ## SQL queries supported
 
 These are the SQL query clauses supported by Log Explorer.

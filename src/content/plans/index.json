@@ -360,10 +360,10 @@
       "properties": {
         "availability": {
           "title": "Availability",
-          "summary": "Enterprise-only",
-          "free": "No",
-          "pro": "No",
-          "biz": "No",
+          "summary": "Available on all plans",
+          "free": "Yes",
+          "pro": "Yes",
+          "biz": "Yes",
           "ent": "Yes"
         }
       }
@@ -673,6 +673,27 @@
           "pro": "No",
           "biz": "Yes",
           "ent": "Yes"
+        }
+      }
+    },
+		"record_management": {
+      "title": "DNS records management",
+      "link": "/dns/manage-dns-records/",
+      "properties": {
+        "availability": {
+          "title": "Availability",
+          "summary": "Available on all plans",
+          "free": "Yes",
+          "pro": "Yes",
+          "biz": "Yes",
+          "ent": "Yes"
+        },
+        "records_quota": {
+          "title": "Number of records per zone",
+          "free": "1,000 for zones created before `2024-09-01 00:00:00 UTC` <br /> 200 for zones created on or after `2024-09-01 00:00:00 UTC`",
+          "pro": "3,500",
+          "biz": "3,500",
+          "ent": "3,500 (can be increased)"
         }
       }
     },
@@ -2165,6 +2186,20 @@
         }
       }
     },
+    "speculation": {
+      "title": "Speculation",
+      "link": "/speed/optimization/content/speculation/",
+      "properties": {
+        "availability": {
+          "title": "Availability",
+          "summary": "Available on all plans",
+          "free": "Enabled by default",
+          "pro": "Yes",
+          "biz": "Yes",
+          "ent": "Yes"
+        }
+      }  
+    },
     "tcp_turbo": {
       "title": "TCP Turbo",
       "properties": {
@@ -2872,6 +2907,14 @@
         "rules": {
           "title": "Waiting Room rules",
           "link": "/waiting-room/additional-options/waiting-room-rules/",
+          "free": "No",
+          "pro": "No",
+          "biz": "No",
+          "ent": "Paid add-on"
+        },
+        "session_revocation": {
+          "title": "Session Revocation",
+          "link": "/waiting-room/how-to/control-user-session/#revoke-a-users-session-using-origin-commands",
           "free": "No",
           "pro": "No",
           "biz": "No",
