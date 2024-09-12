@@ -52,7 +52,7 @@ Cloudflare HTTP DDoS Protection can also initiate mitigation based on the origin
 This rule is available for zones on any plan. 
 :::
 
-For zones on the Pro, Business, or Enterprise plan the rule is adaptive. An additional check is performed for better detection accuracy: the errors-per-second rate must also be at least five times the normal traffic levels.
+The rule is adaptive for zones on the Pro, Business, or Enterprise plan. It performs an additional check for better detection accuracy: the errors-per-second rate must also be at least five times the normal traffic levels.
 
 All HTTP errors in the 52x range (Internal Server Error) and all errors in the 53x range excluding [530](/support/troubleshooting/cloudflare-errors/troubleshooting-cloudflare-5xx-errors/#530error) are considered when factoring in the error rate.
 
