@@ -1,0 +1,35 @@
+---
+pcx_content_type: how-to
+title: Connect to SSH with Infrastructure Access
+sidebar:
+  order: 3
+  label: Infrastructure Access
+---
+
+import { Render } from "~/components";
+
+
+### Connect over SSH
+
+Users can use any SSH client to connect to the target resource, as long as they are logged into the WARP client on their device. Users do not need to modify any existing SSH configs. For example, to SSH from a terminal:
+
+```sh
+ssh <username>@<target IP address>
+```
+
+If your organization has configured a [private DNS resolver](/cloudflare-one/policies/gateway/resolver-policies/), then this command may look like:
+
+```sh
+ssh <username>@<target hostname>
+```
+
+
+## (Optional) Enable SSH command logging
+
+<Render file="access/ssh-logging" params={{ note: "" }} />
+
+## View logs
+
+To view logs, go to **Logs** > **Access**. There are two types of logs for infrastructure access:
+- **[Authentication audit logs](/cloudflare-one/insights/logs/audit-logs/#authentication-audit-logs)** provide details on who accessed the protected targets.
+- **SSH command logs** contain the actual SSH commands that a user ran on the target. These logs are encrypted using a [public key provided by the customer](/cloudflare-one/applications/non-http/infrastructure-apps/#optional-enable-ssh-command-logging) and are not visible to Cloudflare. As a result, the commands are not visible from the dashboard itself and must be exported and decrypted.

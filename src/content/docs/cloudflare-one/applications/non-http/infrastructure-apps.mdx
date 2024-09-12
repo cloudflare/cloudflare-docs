@@ -11,7 +11,9 @@ import { Badge, Details, Tabs, TabItem, Render } from "~/components"
 
 Access for Infrastructure allows you to have granular control over how users access individual servers, clusters, or databases in your private network. By adding an infrastructure application to Cloudflare Access, you can configure how users authenticate to the resource as well as specify the ports, protocols, and usernames that they can connect with. Access and command logs ensure regulatory compliance and provide visibility into user activity in case of a security breach.
 
-<Render file="access/short-lived-certs-intro" params={{ intro: "Furthermore, SSH applications replace" }} />
+:::note
+Access for Infrastructure currently only supports [SSH](/cloudflare-one/connections/connect-networks/use-cases/ssh/ssh-infrastructure-access/). More protocols will be coming soon.
+:::
 
 ## Prerequisites
 
@@ -19,6 +21,10 @@ Access for Infrastructure allows you to have granular control over how users acc
 - [Deploy the WARP client](/cloudflare-one/connections/connect-devices/warp/deployment/) on user devices in Gateway with WARP mode.
 
 ## 1. Add a target
+
+A target represents a single resource in your infrastructure (such as a server, Kubernetes cluster, database, or container) that users will connect to through Cloudflare. Targets are protocol-agnostic, meaning that you do not need to define a new target for each protocol that runs on the server.
+
+To create a new target:
 
 <Tabs>
 <TabItem label="Dashboard">
@@ -31,7 +37,7 @@ Access for Infrastructure allows you to have granular control over how users acc
 			- Contain only alphanumeric characters, `-`, or `.` (no spaces allowed)
 			- Start and end with an alphanumeric character
 	</Details>
-4. In **IP addresses**, enter the private IPv4 and/or IPv6 address of the target resource. If the IP address overlaps across multiple private networks, select the [virtual network](/cloudflare-one/connections/connect-networks/private-net/cloudflared/tunnel-virtual-networks/) where the target resource is located.
+4. In **IP addresses**, enter the private IPv4 and/or IPv6 address of the target resource. If the IP address overlaps across multiple private networks, select the [virtual network](/cloudflare-one/connections/connect-networks/private-net/cloudflared/tunnel-virtual-networks/) where the resource is located.
 :::note
 Public IPs are not currently supported.
 :::
@@ -72,10 +78,10 @@ To secure your targets, configure a policy that defines who can connect and how 
 
 1. Enter any name for your policy.
 2. Create a rule that matches the users who are allowed to reach the targets. For more information, refer to  [Access policies](/cloudflare-one/policies/access/).
-3. In **Connection context**, enter the usernames that users can log in as (for example, `root` or `ec2-user`).
+3. In **Connection context**, enter the Unix usernames that users can log in as (for example, `root` or `ec2-user`).
 4. Select **Add application**.
 
-A summary page will show the configured targets and policies for this application.
+The targets in this application are now secured by your infrastructure policies.
 
 :::note
 Gateway [network policies](/cloudflare-one/policies/gateway/network-policies/) take precedence over infrastructure policies. For example, if you block port `22` for all users in Gateway, then no one can SSH over port `22` to your targets.
@@ -94,6 +100,16 @@ The following [Access policy selectors](/cloudflare-one/policies/access/#selecto
 
 ## Connect as a user
 
+Users connect to the target's IP address as if they were on your private network. The user must be logged into the WARP client on their device, but no other client-side configuration is required.
+
+For example, to SSH from a terminal:
+
+```sh
+ssh <username>@<target IP address>
+```
+
+You can optionally configure a [private DNS resolver](/cloudflare-one/policies/gateway/resolver-policies/) to allow connections to the target's private hostname.
+
 ### Display available targets
 
 Users can use  `warp-cli` to display a list of targets they can access. On the WARP device, open a terminal and run the following command:
@@ -106,35 +122,16 @@ warp-cli target list
 example output table here
 ```
 
-### Connect over SSH
-
-Users can use any SSH client to connect to the target resource, as long as they are logged into the WARP client on their device. Users do not need to modify any existing SSH configs. For example, to SSH from a terminal:
-
-```sh
-ssh <username>@<target IP address>
-```
-
-If your organization has configured a [private DNS resolver](/cloudflare-one/policies/gateway/resolver-policies/), then this command may look like:
-
-```sh
-ssh <username>@<target hostname>
-```
-
-Cloudflare will authenticate, proxy, and optionally encrypt and record all SSH traffic through Gateway.
-
 ### Connect to different VNET
 
 To connect to targets that are in different VNETS, users will need to [switch their connected virtual network](/cloudflare-one/connections/connect-networks/private-net/cloudflared/tunnel-virtual-networks/#connect-to-a-virtual-network) in the WARP client.
 
 :::note
-If a user is connected to a target in VNET-A and needs to connect to a target in VNET-B, swithing their VNET will not break any existing connections to targets within VNET-A. At present, connections are maintained between VNETs.
+If a user is connected to a target in VNET-A and needs to connect to a target in VNET-B, switching their VNET will not break any existing connections to targets within VNET-A. At present, connections are maintained between VNETs.
 :::
 
-## View logs
 
 ## Revoke a user's session
 
-To revoke a user's access to all infrastructure applications and targets, you can either [revoke the user from Zero Trust](/cloudflare-one/identity/users/session-management/#per-user) or revoke their device. There is currently no way to revoke a user's session for a specific resource.
-
-## Delete an infrastructure application
+To revoke a user's access to all infrastructure targets, you can either [revoke the user from Zero Trust](/cloudflare-one/identity/users/session-management/#per-user) or revoke their device. There is currently no way to revoke a user's session for a specific target.
 
