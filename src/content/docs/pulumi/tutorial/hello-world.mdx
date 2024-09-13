@@ -3,7 +3,7 @@ title: Deploy a Worker
 pcx_content_type: tutorial
 products:
   - Workers
-updated: 2024-09-12
+updated: 2024-09-13
 difficulty: Beginner
 languages:
   - JavaScript
@@ -255,7 +255,7 @@ There are no dependencies to download for YAML. Skip ahead.
 
 </TabItem> </Tabs>
 
-## 3. Define Cloudflare resources in code
+## 2. Define Cloudflare resources in code
 
 With the Cloudflare package installed, you can now define any [supported Cloudflare resource](https://www.pulumi.com/registry/packages/cloudflare/) in your Pulumi program. You'll define a Worker, a Route, and a DNS Record next.
 
@@ -1170,7 +1170,7 @@ outputs:
 </TabItem>
 </Tabs>
 
-## 5. Deploy your application
+## 3. Deploy your application
 
 Now that you have defined all the Cloudflare resources, you can deploy the Hello World application to your Cloudflare account using the Pulumi CLI.
 
@@ -1184,7 +1184,7 @@ pulumi up --yes
 wait for the dev stack to become ready
 ```
 
-## 6. Test the Worker
+## 4. Test the Worker
 
 You incrementally added Cloudflare resources to run and access your Hello World application. You can test your application by curling the `url` output from the Pulumi stack.
 
@@ -1197,7 +1197,7 @@ Hello, World!
 ```
 
 
-## 7. Clean up
+## 5. Clean up
 
 In this last step, you will clean up the resources and stack used throughout the tutorial.
 
