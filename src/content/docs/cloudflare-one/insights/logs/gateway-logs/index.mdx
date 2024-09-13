@@ -34,27 +34,24 @@ These settings will only apply to logs displayed in Zero Trust. Logpush data is 
 | Field                 | Description                                                                                                                                                                                                                                                                                                                                                                                            |
 | --------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
 | **Query name**        | Name of the domain that was queried.                                                                                                                                                                                                                                                                                                                                                                   |
+| **Query ID**          | UUID of the query assigned by Cloudflare.                                                                                                                                                                                                                                                                                                                                                              |
 | **Email**             | Email address of the user who registered the WARP client where traffic originated from. If a non-identity on-ramp (such as a [proxy endpoint](/cloudflare-one/connections/connect-devices/agentless/pac-files/)) or machine-level authentication (such as a [service token](/cloudflare-one/identity/service-tokens/)) was used, this value will be `non_identity@<team-domain>.cloudflareaccess.com`. |
 | **Action**            | The [Action](/cloudflare-one/policies/gateway/dns-policies/#actions) Gateway applied to the query (such as Allow or Block).                                                                                                                                                                                                                                                                            |
 | **Time**              | Date and time of the DNS query.                                                                                                                                                                                                                                                                                                                                                                        |
 | **Resolver decision** | The reason why Gateway applied a particular **Action** to the request. Refer to the [list of resolver decisions](#resolver-decisions).                                                                                                                                                                                                                                                                 |
+| **Resolved IPs**      | Resolved IP addresses in the response (if any).                                                                                                                                                                                                                                                                                                                                                        |
+| **CNAMEs**            | `CNAME` record in the query (if any).                                                                                                                                                                                                                                                                                                                                                                  |
 
-#### Matched policies
+#### Configuration information
 
-| Field                  | Description                                          |
-| ---------------------- | ---------------------------------------------------- |
-| **Policy**             | Name of the matched policy (if there is one).        |
-| **Policy ID**          | ID of the matched policy (if there is one).          |
-| **Policy description** | Description of the matched policy (if there is one). |
-
-#### Custom resolver
-
-| Field                      | Description                                                 |
-| -------------------------- | ----------------------------------------------------------- |
-| **Address**                | Address of your custom resolver.                            |
-| **Policy**                 | Name of the matched resolver policy.                        |
-| **Response**               | Status of the custom resolver response.                     |
-| **Time (in milliseconds)** | Duration of time it took for the custom resolver to respond |
+| Field                  | Description                                                                                                                         |
+| ---------------------- | ----------------------------------------------------------------------------------------------------------------------------------- |
+| **DNS location**       | [User-configured location](/cloudflare-one/connections/connect-devices/agentless/dns/locations/) from where the DNS query was made. |
+| **Policy name**        | Name of the matched policy (if there is one).                                                                                       |
+| **Policy ID**          | ID of the matched policy (if there is one).                                                                                         |
+| **Policy description** | Description of the matched policy (if there is one).                                                                                |
+| **DoH subdomain**      |                                                                                                                                     |
+| **Protocol**           | Protocol that was used to make the DNS query (such as `https`).                                                                     |
 
 #### Identities
 
@@ -68,22 +65,40 @@ These settings will only apply to logs displayed in Zero Trust. Logpush data is 
 
 #### DNS query details
 
-| Field                           | Description                                                                                                                         |
-| ------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------- |
-| **Query type**                  | Type of [DNS query](https://en.wikipedia.org/wiki/List_of_DNS_record_types).                                                        |
-| **Query category**              | [Content categories](/cloudflare-one/policies/gateway/domain-categories/) that the domain belongs to.                               |
-| **Matched categories**          | Name of the Gateway policy category that match the domain.                                                                          |
-| **Matched indicator feed name** | Name of the indicator feeds that matched a Gateway policy (if any).                                                                 |
-| **Query indicator feed name**   | Name of the indicator feeds that a matched domain or IP belongs to (if any).                                                        |
-| **Source IP**                   | Public source IP address of the DNS query.                                                                                          |
-| **Source IP country**           | Country code of the DNS query.                                                                                                      |
-| **Source internal IP**          | Private IP address assigned by the user's local network (if any).                                                                   |
-| **Resolver IP**                 | Public IP address of the DNS resolver.                                                                                              |
-| **Resolved IPs**                | Resolved IP addresses in the response (if any).                                                                                     |
-| **Port**                        | Port that was used to make the DNS query.                                                                                           |
-| **Protocol**                    | Protocol that was used to make the DNS query (such as `https`).                                                                     |
-| **DNS location**                | [User-configured location](/cloudflare-one/connections/connect-devices/agentless/dns/locations/) from where the DNS query was made. |
-| **Location ID**                 | ID of the DNS location where the query originated.                                                                                  |
+| Field                               | Description                                                                                           |
+| ----------------------------------- | ----------------------------------------------------------------------------------------------------- |
+| **Query ID**                        | UUID of the query assigned by Cloudflare.                                                             |
+| **Query type**                      | Type of [DNS query](https://en.wikipedia.org/wiki/List_of_DNS_record_types).                          |
+| **Initial query domain categories** | [Content categories](/cloudflare-one/policies/gateway/domain-categories/) that the domain belongs to. |
+| **Matched categories**              | Name of the Gateway policy category that match the domain.                                            |
+| **Matched indicator feed names**    | Name of the indicator feeds that matched a Gateway policy (if any).                                   |
+| **Query indicator feed names**      | Name of the indicator feeds that a matched domain or IP belongs to (if any).                          |
+| **Source IP**                       | Public source IP address of the DNS query.                                                            |
+| **Application name**                | Name of the application in the query.                                                                 |
+| **Source IP country**               | Country code of the DNS query.                                                                        |
+| **Source internal IP**              | Private IP address assigned by the user's local network (if any).                                     |
+| **Resolver IP**                     | Public IP address of the DNS resolver.                                                                |
+| **Port**                            | Port that was used to make the DNS query.                                                             |
+| **Location ID**                     | ID of the DNS location where the query originated.                                                    |
+
+#### DNS response details
+
+| Field                           | Description |
+| ------------------------------- | ----------- |
+| **Resolved CNAME categories**   |             |
+| **Resolved IP categories**      |             |
+| **Resolved IPs**                |             |
+| **Authoritative nameserver IP** |             |
+| **EDE errors**                  |             |
+
+#### Custom resolver
+
+| Field                      | Description                                                 |
+| -------------------------- | ----------------------------------------------------------- |
+| **Address**                | Address of your custom resolver.                            |
+| **Policy**                 | Name of the matched resolver policy.                        |
+| **Response**               | Status of the custom resolver response.                     |
+| **Time (in milliseconds)** | Duration of time it took for the custom resolver to respond |
 
 ### Resolver decisions
 
