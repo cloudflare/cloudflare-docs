@@ -6,13 +6,15 @@ sidebar:
   order: 2
 ---
 
-import { Render, PackageManagers, Steps, FileTree } from "~/components";
+import { Render, PackageManagers, Steps, FileTree, Tabs, TabItem } from "~/components";
 
 This guide instructs you through:
 
 - Creating your first database using D1, Cloudflare’s native serverless SQL database.
 - Creating a schema and querying your database via the command-line.
 - Connecting a [Cloudflare Worker](/workers/) to your D1 database to query your D1 database programmatically.
+
+You can perform these tasks through the CLI or through the Cloudflare Dashboard.
 
 ## Prerequisites
 
@@ -27,6 +29,8 @@ To continue:
 ## 1. Create a Worker
 
 Create a new Worker as the means to query your database.
+
+<Tabs syncKey='CLIvDash'> <TabItem label='CLI'>
 
 <Steps>
 1. Create a new project named `d1-tutorial` by running:
@@ -73,11 +77,25 @@ For example: `CI=true npm create cloudflare@latest d1-tutorial --type=simple --g
 
 :::
 
+</TabItem> <TabItem label='Dashboard'>
+
+<Steps>
+1. Log in to your [Cloudflare dashboard](https://dash.cloudflare.com/sign-up/workers-and-pages).
+2. From the menu, go to your account > **Workers & Pages**.
+3. Select **Create**.
+4. Select **Create Worker**.
+5. Name for your Worker. For this tutorial, name your Worker "d1-tutorial".
+6. Select **Deploy**.
+</Steps>
+</TabItem> </Tabs>
+
 ## 2. Create a database
 
 A D1 database is conceptually similar to many other databases: a database may contain one or more tables, the ability to query those tables, and optional indexes. D1 uses the familiar [SQL query language](https://www.sqlite.org/lang.html) (as used by SQLite).
 
 To create your first D1 database:
+
+<Tabs syncKey='CLIvDash'> <TabItem label='CLI'>
 
 <Steps>
 1. Change into the directory you just created for your Workers project:
@@ -112,6 +130,20 @@ The `wrangler` command-line interface is Cloudflare's tool for managing and depl
 
 :::
 
+</TabItem> <TabItem label='Dashboard'>
+
+<Steps>
+1. Go to **Storage & Databases** > **D1**.
+2. Select **+ Create**.
+3. Name your database. For this tutorial, name your D1 database "prod-d1-tutorial".
+4. (Optional) Provide a location hint. Location hint is an optional parameter you can provide to indicate your desired geographical location for your database. See [Provide a location hint](/d1/configuration/data-location/#provide-a-location-hint).
+5. Select **Create**.
+
+</Steps>
+
+</TabItem>
+</Tabs>
+
 :::note
 
 For reference, a good database name is:
@@ -124,11 +156,16 @@ For reference, a good database name is:
 
 ## 3. Bind your Worker to your D1 database
 
-You must create a binding for your Worker to connect to your D1 database. [Bindings](/workers/runtime-apis/bindings/) allow your Workers to access resources, like D1, on the Cloudflare developer platform. You create bindings by updating your `wrangler.toml` file.
+You must create a binding for your Worker to connect to your D1 database. [Bindings](/workers/runtime-apis/bindings/) allow your Workers to access resources, like D1, on the Cloudflare developer platform.
 
 To bind your D1 database to your Worker:
 
+<Tabs syncKey='CLIvDash'> <TabItem label='CLI'>
+
+You create bindings by updating your `wrangler.toml` file.
+
 <Steps>
+
 1. Copy the lines obtained from [step 2](/d1/get-started/#2-create-a-database) from your terminal.
 2. Add them to the end of your `wrangler.toml` file.
 
@@ -155,9 +192,32 @@ When you execute the `wrangler d1 create` command, the client API package (which
 
 You can also bind your D1 database to a [Pages Function](/pages/functions/). For more information, refer to [Functions Bindings for D1](/pages/functions/bindings/#d1-databases).
 
+</TabItem> <TabItem label='Dashboard'>
+
+You create bindings by adding them to the Worker you have created.
+
+<Steps>
+1. From the menu, go to your account > **Workers & Pages** > **Overview**.
+2. Select the "d1-tutorial" Worker you created in [step 1](/d1/get-started/#1-create-a-worker).
+3. Select the **Settings** tab.
+4. Scroll to **Bindings**, then select **+ Add**.
+5. From the **Add a resource binding** panel, select **D1 database**.
+6. Name your binding in the **Variable name** field, then select the "prod-d1-tutorial" D1 database you created in [step 2](/d1/get-started/#2-create-a-database) from the dropdown menu. For this tutorial, name your binding "DB".
+7. Select **Deploy** to deploy your binding. When deploying, there are two options:
+	- **Deploy:** Immediately deploy the binding to 100% of your audience.
+	- **Save version:** Save a version of the binding which you can deploy in the future.
+
+	For this tutorial, select **Deploy**.
+</Steps>
+
+</TabItem>
+</Tabs>
+
 ## 4. Run a query against your D1 database
 
 ### Configure your D1 database
+
+<Tabs syncKey='CLIvDash'> <TabItem label='CLI'>
 
 With `wrangler.toml` configured properly, set up your database. Use the example `schema.sql` file below to initialize your database.
 
@@ -200,9 +260,35 @@ With `wrangler.toml` configured properly, set up your database. Use the example 
 
 </Steps>
 
+</TabItem> <TabItem label='Dashboard'>
+
+Use the Dashboard to create a table and populate it with data.
+
+<Steps>
+1. Go to **Storage & Databases** > **D1**.
+2. Select the "prod-d1-tutorial" database you created in [step 2](/d1/get-started/#2-create-a-database).
+3. Select **Create table**.
+4. Name your table. For this tutorial, create a table called "Customers".
+5. Create three columns (add more columns by selecting **+ Add Column**):
+	1. Column Name: `CustomerId`, Type: `integer`, Default Value: `NULL` (leave blank). Set this column as a primary key.
+	2. Column Name: `CompanyName`, Type: `text`, Default Value: `NULL` (leave blank).
+	3. Column Name: `ContactName`, Type: `text`, Default Value: `NULL` (leave blank).
+6. Select **Create**.
+7. Select the **Customers** table.
+8. Select **Add data** to populate the columns of the table. Select **Save** to add the row to the table. Add the following rows:
+	1. CustomerId: `1`, CompanyName: `Alfreds Futterkiste`, ContactName: `Maria Anders`.
+	2. CustomerId: `4`, CompanyName: `Around the Horn`, ContactName: `Thomas Hardy`.
+	3. CustomerId: `11`, CompanyName: `Bs Beverages`, ContactName: `Victoria Ashworth`.
+	4. CustomerId: `13`, CompanyName: `Bs Beverages`, ContactName: `Random Name`.
+</Steps>
+</TabItem>
+</Tabs>
+
 ### Write queries within your Worker
 
 After you have set up your database, run an SQL query from within your Worker.
+
+<Tabs syncKey='CLIvDash'> <TabItem label='CLI'>
 
 <Steps>
 1. Navigate to your `d1-tutorial` Worker and open the `index.ts` file. The `index.ts` file is where you configure your Worker's interactions with D1.
@@ -248,6 +334,19 @@ After you have set up your database, run an SQL query from within your Worker.
 </Steps>
 
 After configuring your Worker, you can test your project locally before you deploy globally.
+
+</TabItem> <TabItem label='Dashboard'>
+
+You can query your D1 database using your Worker.
+
+<Steps>
+1. Go to the Worker you created > **Workers & Pages**.
+2. Select the "d1-tutorial" Worker you created.
+3.
+
+</Steps>
+</TabItem>
+</Tabs>
 
 ## 5. Develop locally with Wrangler
 
