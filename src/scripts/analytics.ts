@@ -1,6 +1,7 @@
 const links = document.querySelectorAll<HTMLAnchorElement>("a");
 
 function $zarazLinkEvent(type: string, link: HTMLAnchorElement) {
+	// @ts-expect-error TODO: type zaraz
 	zaraz.track(type, { href: link.href, hostname: link.hostname });
 }
 

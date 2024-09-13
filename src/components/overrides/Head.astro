@@ -72,7 +72,7 @@ if (Astro.props.entry.data.pcx_content_type) {
 		tag: "meta",
 		attrs: {
 			name: "pcx_content_type",
-			content: Astro.props.entry.data.pcx_content_type,
+			content: contentType,
 		},
 		content: "",
 	});
@@ -80,7 +80,7 @@ if (Astro.props.entry.data.pcx_content_type) {
 		tag: "meta",
 		attrs: {
 			name: "algolia_content_type",
-			content: Astro.props.entry.data.pcx_content_type,
+			content: contentType,
 		},
 		content: "",
 	});
