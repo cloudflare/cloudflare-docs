@@ -1,35 +1,85 @@
 ---
 pcx_content_type: how-to
-title: Connect to SSH with Infrastructure Access
+title: Connect to SSH with Access for Infrastructure
 sidebar:
   order: 3
-  label: Infrastructure Access
+  label: Connect with Access for Infrastructure
 ---
 
 import { Render } from "~/components";
 
+[Access for Infrastructure](/cloudflare-one/applications/non-http/infrastructure-apps/) uses the same deployment model as [WARP-to-Tunnel](/cloudflare-one/connections/connect-networks/use-cases/ssh/ssh-warp-to-tunnel/) but unlocks more granular policy options, such as defining the Unix usernames that users can SSH with.
+<Render file="access/short-lived-certs-intro" params={{ intro: "Furthermore, Access for Infrastructure replaces" }} />
 
-### Connect over SSH
 
-Users can use any SSH client to connect to the target resource, as long as they are logged into the WARP client on their device. Users do not need to modify any existing SSH configs. For example, to SSH from a terminal:
+## 1. Connect the server to Cloudflare
+
+1. Create a Cloudflare Tunnel for your server by following our [dashboard setup guide](/cloudflare-one/connections/connect-networks/get-started/create-remote-tunnel/). You can skip the connect an application step and go straight to connecting a network.
+
+2. In the **Private Networks** tab for the tunnel, enter the private IP address of your server (or a range that includes the server IP).
+
+## 2. Set up the client
+
+<Render file="tunnel/warp-to-tunnel-client" />
+
+## 3. Route private network IPs through WARP
+
+<Render file="tunnel/warp-to-tunnel-route-ips" />
+
+## 4. Add a target
+
+<Render file="access/add-target" />
+
+## 5. Add an infrastructure application
+
+<Render file="access/add-infrastructure-app" />
+
+## 6. Add a policy
+
+<Render file="access/add-infrastructure-policy" />
+
+## 7. Configure SSH server
+
+Next, configure your SSH server to trust the Cloudflare SSH CA. This allows Access to authenticate using short-lived certificates instead of traditional SSH keys.
+
+### Generate a Cloudflare SSH CA
+<Render file="ssh/ssh-proxy-ca" />
+
+### Save the public key
+<Render file="ssh/public-key" />
+
+### Modify your SSHD config
+<Render file="ssh/modify-sshd" />
+
+### Restart your SSH server
+<Render file="ssh/restart-server" />
+
+## 8. Connect as a user
+
+Users can use any SSH client to connect to the target, as long as they are logged into the WARP client on their device. Users do not need to modify any SSH configs on their device. For example, to SSH from a terminal:
 
 ```sh
 ssh <username>@<target IP address>
 ```
 
-If your organization has configured a [private DNS resolver](/cloudflare-one/policies/gateway/resolver-policies/), then this command may look like:
+If your organization has configured a private DNS resolver, then this command may look like:
 
 ```sh
 ssh <username>@<target hostname>
 ```
 
+## SSH command logs
 
-## (Optional) Enable SSH command logging
+SSH command logs contain the actual SSH commands that a user ran on the target. These logs are encrypted using a public key provided by the customer and are not visible to Cloudflare.
 
-<Render file="access/ssh-logging" params={{ note: "" }} />
+### Enable SSH command logging
+<Render file="ssh/upload-ssh-key" params={{ note: "" }} />
 
-## View logs
+### View SSH logs
 
-To view logs, go to **Logs** > **Access**. There are two types of logs for infrastructure access:
-- **[Authentication audit logs](/cloudflare-one/insights/logs/audit-logs/#authentication-audit-logs)** provide details on who accessed the protected targets.
-- **SSH command logs** contain the actual SSH commands that a user ran on the target. These logs are encrypted using a [public key provided by the customer](/cloudflare-one/applications/non-http/infrastructure-apps/#optional-enable-ssh-command-logging) and are not visible to Cloudflare. As a result, the commands are not visible from the dashboard itself and must be exported and decrypted.
+SSH command logs are not visible from the dashboard itself and must be exported and decrypted.
+
+1. In [Zero Trust](https://one.dash.cloudflare.com), go to **Logs** > **Access**.
+2. Select a user who was allowed to access the target.
+3. Select **Download** to download the session's command log.
+4. <Render file="ssh/decrypt-ssh-log" />

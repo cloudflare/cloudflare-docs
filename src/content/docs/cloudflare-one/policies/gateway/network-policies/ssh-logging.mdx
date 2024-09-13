@@ -33,20 +33,9 @@ Other short-lived CAs, such as those used to [secure SSH servers behind Cloudfla
 
 To generate a Gateway SSH proxy CA and get its public key:
 
-1. Make a `POST` request to the Cloudflare API with your email address and [API key](/fundamentals/api/get-started/keys/) as request headers.
+<Render file="ssh/ssh-proxy-ca" />
 
-   ```bash
-   curl --request POST \
-   "https://api.cloudflare.com/client/v4/accounts/{account_id}/access/gateway_ca" \
-   --header "X-Auth-Email: <EMAIL>" \
-   --header "X-Auth-Key: <API_KEY>"
-   ```
-
-2. A success response will include a `public_key` value. Save the key for configuring your server.
-
-## 3. Save your public key
-
-1. Copy the `public_key` value returned by the API request in Step 2.
+## 3. Save the public key
 
 <Render file="ssh/public-key" />
 
@@ -106,21 +95,15 @@ ssh-keygen -R <targetIP or hostname>
 
 ## (Optional) Configure SSH Command Logging
 
-<Render file="access/ssh-logging" params={{ note: "Note that this a different public key from the `ca.pub` file you used to configure the SSH server." }} />
+<Render file="ssh/upload-ssh-key" params={{ note: "Note that this a different public key from the `ca.pub` file you used to configure the SSH server." }} />
 
 ## View SSH Logs
 
-1. In Zero Trust, go to **Logs** > **Gateway** > **SSH**.
+1. In [Zero Trust](https://one.dash.cloudflare.com), go to **Logs** > **Gateway** > **SSH**.
 
 2. If you enabled the **SSH Command Logging** feature, you can **Download** a session's command log.
 
-3. To decrypt the log, follow the instructions in the [SSH Logging CLI repository](https://github.com/cloudflare/ssh-log-cli/). The following example uses the private key generated in [Configure SSH Command Logging](#optional-configure-ssh-command-logging):
-
-   ```sh
-   ./ssh-log-cli decrypt -i sshlog -k sshkey
-   ```
-
-   This command outputs a `sshlog-decrypted.zip` file with the decrypted logs.
+3. <Render file="ssh/decrypt-ssh-log" />
 
 ## Limitations
 

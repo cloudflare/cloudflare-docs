@@ -1,0 +1,34 @@
+---
+{}
+
+---
+
+import { Tabs, TabItem, Render, Details } from "~/components"
+
+A target represents a single resource in your infrastructure (such as a server, Kubernetes cluster, database, or container) that users will connect to through Cloudflare. Targets are protocol-agnostic, meaning that you do not need to define a new target for each protocol that runs on the server.
+
+To create a new target:
+
+<Tabs>
+<TabItem label="Dashboard">
+1. In [Zero Trust](https://one.dash.cloudflare.com/), go to **Network** > **Targets**.
+2. Select **Add a target**.
+3. In **Target hostname**, enter a user-friendly name for the target resource. We recommend using the server hostname, for example `production-server`. The hostname does not need to be unique and can be reused for multiple targets.
+	<Details header="Format restrictions">
+			- Case insensitive
+			- Contain no more than 255 characters
+			- Contain only alphanumeric characters, `-`, or `.` (no spaces allowed)
+			- Start and end with an alphanumeric character
+	</Details>
+4. In **IP addresses**, enter the private IPv4 and/or IPv6 address of the target resource. If the IP address overlaps across multiple private networks, select the [virtual network](/cloudflare-one/connections/connect-networks/private-net/cloudflared/tunnel-virtual-networks/) where the resource is located.
+:::note
+Public IPs are not currently supported.
+:::
+5. Select **Add target**.
+</TabItem>
+<TabItem label="API">
+
+</TabItem>
+</Tabs>
+
+Next, create an infrastructure application to secure the target.

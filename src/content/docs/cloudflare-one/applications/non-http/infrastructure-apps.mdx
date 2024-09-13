@@ -12,7 +12,7 @@ import { Badge, Details, Tabs, TabItem, Render } from "~/components"
 Access for Infrastructure allows you to have granular control over how users access individual servers, clusters, or databases in your private network. By adding an infrastructure application to Cloudflare Access, you can configure how users authenticate to the resource as well as specify the ports, protocols, and usernames that they can connect with. Access and command logs ensure regulatory compliance and provide visibility into user activity in case of a security breach.
 
 :::note
-Access for Infrastructure currently only supports [SSH](/cloudflare-one/connections/connect-networks/use-cases/ssh/ssh-infrastructure-access/). More protocols will be coming soon.
+Access for Infrastructure currently only supports [SSH](/cloudflare-one/connections/connect-networks/use-cases/ssh/ssh-infrastructure-access/).
 :::
 
 ## Prerequisites
@@ -22,70 +22,15 @@ Access for Infrastructure currently only supports [SSH](/cloudflare-one/connecti
 
 ## 1. Add a target
 
-A target represents a single resource in your infrastructure (such as a server, Kubernetes cluster, database, or container) that users will connect to through Cloudflare. Targets are protocol-agnostic, meaning that you do not need to define a new target for each protocol that runs on the server.
-
-To create a new target:
-
-<Tabs>
-<TabItem label="Dashboard">
-1. In [Zero Trust](https://one.dash.cloudflare.com/), go to **Network** > **Targets**.
-2. Select **Add a target**.
-3. In **Target hostname**, enter a user-friendly name for the target resource. We recommend using the server hostname, for example `production-server`. The hostname does not need to be unique and can be reused for multiple targets.
-	<Details header="Format restrictions">
-			- Case insensitive
-			- Contain no more than 255 characters
-			- Contain only alphanumeric characters, `-`, or `.` (no spaces allowed)
-			- Start and end with an alphanumeric character
-	</Details>
-4. In **IP addresses**, enter the private IPv4 and/or IPv6 address of the target resource. If the IP address overlaps across multiple private networks, select the [virtual network](/cloudflare-one/connections/connect-networks/private-net/cloudflared/tunnel-virtual-networks/) where the resource is located.
-:::note
-Public IPs are not currently supported.
-:::
-5. Select **Add target**.
-</TabItem>
-<TabItem label="API">
-
-</TabItem>
-</Tabs>
-
-Next, create an infrastructure application to secure the target.
+<Render file="access/add-target" />
 
 ## 2. Add an infrastructure application
 
-<Tabs>
-<TabItem label="Dashboard">
-1. In [Zero Trust](https://one.dash.cloudflare.com/), go to **Access** > **Applications**.
-2. Select **Add an application**.
-3. Select **Infrastructure**.
-4. Enter any name for the application.
-5. In **Target criteria**, select the target hostname(s) that will represent the application. The application definition will apply to all targets that share the selected hostname.
-6. Enter the **Protocol** and **Port** that will be used to connect to the server.
-7. (Optional) If a protocol runs on more than one port, select **Add new target criteria** and reconfigure the same target hostname and protocol with a different port number.
-8. Select **Next**.
-</TabItem>
-<TabItem label="API">
-
-</TabItem>
-</Tabs>
-
-:::note
-Access for Infrastructure only supports assigning one protocol per port. You can reuse a port/protocol pairing across infrastructure applications, but the port cannot be reassigned to another protocol.
-:::
+<Render file="access/add-infrastructure-app" />
 
 ## 3. Add a policy
 
-To secure your targets, configure a policy that defines who can connect and how they can connect:
-
-1. Enter any name for your policy.
-2. Create a rule that matches the users who are allowed to reach the targets. For more information, refer to  [Access policies](/cloudflare-one/policies/access/).
-3. In **Connection context**, enter the UNIX usernames that users can log in as (for example, `root` or `ec2-user`).
-4. Select **Add application**.
-
-The targets in this application are now secured by your infrastructure policies.
-
-:::note
-Gateway [network policies](/cloudflare-one/policies/gateway/network-policies/) take precedence over infrastructure policies. For example, if you block port `22` for all users in Gateway, then no one can SSH over port `22` to your targets.
-:::
+<Render file="access/add-infrastructure-policy" />
 
 ### Selectors
 
@@ -98,17 +43,15 @@ The following [Access policy selectors](/cloudflare-one/policies/access/#selecto
 - Device posture
 - Azure group, GitHub organization, Google Workspace group, Okta group
 
+## 4. Configure the server
+
+Certain protocols require configuring the server to trust connections through Access for Infrastructure. For more information, refer to the protocol-specific tutorial:
+
+- [SSH](/cloudflare-one/connections/connect-networks/use-cases/ssh/ssh-infrastructure-access/#7-configure-ssh-server)
+
 ## Connect as a user
 
-Users connect to the target's IP address as if they were on your private network. The user must be logged into the WARP client on their device, but no other client-side configuration is required.
-
-For example, to SSH from a terminal:
-
-```sh
-ssh <username>@<target IP address>
-```
-
-You can optionally configure a [private DNS resolver](/cloudflare-one/policies/gateway/resolver-policies/) to allow connections to the target's private hostname.
+Users connect to the target's IP address as if they were on your private network, using their preferred client software. The user must be logged into WARP on their device, but no other system configuration is required. You can optionally configure a [private DNS resolver](/cloudflare-one/policies/gateway/resolver-policies/) to allow connections to the target's private hostname.
 
 ### Display available targets
 
