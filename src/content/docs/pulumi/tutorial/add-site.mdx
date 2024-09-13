@@ -20,7 +20,7 @@ head:
 
 import { TabItem, Tabs } from "~/components";
 
-In this tutorial, you will go through step-by-step instructions to bring an existing site to Cloudflare using Pulumi infrastructure as code (IaC) so that you can become familiar with the resource management lifecycle. In particular, you will create a Zone and a DNS record to resolve your newly added site. This tutorial adopts the IaC principle to complete the steps listed in the [Add site tutorial](/fundamentals/setup/manage-domains/add-site/).
+In this tutorial, you will follow step-by-step instructions to bring an existing site to Cloudflare using Pulumi infrastructure as code (IaC) to familiarize yourself with the resource management lifecycle. In particular, you will create a Zone and a DNS record to resolve your newly added site. This tutorial adopts the IaC principle to complete the steps listed in the [Add site tutorial](/fundamentals/setup/manage-domains/add-site/).
 
 :::note
 You will provision resources that qualify under free tier offerings for both Pulumi Cloud and Cloudflare.
@@ -34,14 +34,14 @@ Ensure you have:
   - `Zone-Zone-Edit` permission
   - `Zone-DNS-Edit` permission
   - `include-All zones from an account-<your account>` zone resource
-- A Pulumi Cloud account. You can sign up for an [always-free, individual tier](https://app.pulumi.com/signup).
+- A Pulumi Cloud account. You can sign up for an [always-free individual tier](https://app.pulumi.com/signup).
 - The [Pulumi CLI](/pulumi/installing/) is installed on your machine.
 - A [Pulumi-supported programming language](https://github.com/pulumi/pulumi?tab=readme-ov-file#languages) is configured. (TypeScript, JavaScript, Python, Go, .NET, Java, or use YAML)
 - A domain name. You may use `example.com` to complete the tutorial.
 
 ## 1. Initialize your project
 
-A Pulumi project is a collection of files in a dedicated folder that describe the infrastructure you want to create. The Pulumi project folder is identified by the presenece of the required `Pulumi.yaml` file. You will use the Pulumi CLI to create a new project and configure it.
+A Pulumi project is a collection of files in a dedicated folder that describes the infrastructure you want to create. The Pulumi project folder is identified by the required `Pulumi.yaml` file. You will use the Pulumi CLI to create and configure a new project.
 
 ### a. Create a directory
 
@@ -129,11 +129,11 @@ pulumi up --yes
 # wait a few seconds for the stack to be instantiated.
 ```
 
-At this point, you have not defined any resources so you'll have an empty stack.
+You have not defined any resources at this point, so you'll have an empty stack.
 
 ### e. Save your settings
 
-In this step, you will store your settings in a Pulumi [ESC Environment](https://www.pulumi.com/docs/esc/environments/). This is a YAML file containing configurations and secrets. These can be accessed in several ways, including a Pulumi program. All ESC Environments securely reside in your Pulumi Cloud account and can be fully managed via the Pulumi CLI. For this tutorial, you will store the following values:
+In this step, you will store your settings in a Pulumi [ESC Environment](https://www.pulumi.com/docs/esc/environments/), a YAML file containing configurations and secrets. These can be accessed in several ways, including a Pulumi program. All ESC Environments securely reside in your Pulumi Cloud account and can be fully managed via the Pulumi CLI. For this tutorial, you will store the following values:
 
 - Your Cloudflare [account ID](/fundamentals/setup/find-account-and-zone-ids/).
 - A valid Cloudflare API [token](/fundamentals/api/get-started/create-token/).
@@ -164,7 +164,7 @@ pulumi env set $E --plaintext pulumiConfig.domain example.com
 
 ### f. Install the Cloudflare package
 
-In order to define Cloudflare resources in your Pulumi program, you need to install the Cloudflare package for your language of choice.
+You need to install the Cloudflare package for your language of choice in order to define Cloudflare resources in your Pulumi program.
 
 Install the Cloudflare package by running the following command:
 
@@ -474,11 +474,11 @@ outputs:
 
 </TabItem> </Tabs>
 
-Notice the code also outputs a number of properties from the Zone resource, such as the `zoneId`, `nameservers`, and `status` so that these can easily be accessed in subsequent steps.
+Notice that the code also outputs several properties from the Zone resource, such as the `zoneId`, `nameservers`, and `status`, so that they can easily be accessed in subsequent steps.
 
 ### b. Add a DNS Record
 
-You will now add a DNS [Record resource](https://www.pulumi.com/registry/packages/cloudflare/api-docs/record/) so the previously configured Zone can be tested.
+You will now add a DNS [Record resource](https://www.pulumi.com/registry/packages/cloudflare/api-docs/record/) to test previously configured Zone.
 
 Add the following code snippet to your entrypoint file **after** the Zone resource definition:
 
@@ -598,7 +598,7 @@ new Record("my-record", new RecordArgs
 
 ## 3. Deploy your changes
 
-Now that you have defined your resources, you can deploy the changes so these are reflected in your Cloudflare account using the Pulumi CLI.
+Now that you have defined your resources, you can deploy the changes using the Pulumi CLI so that they are reflected in your Cloudflare account.
 
 To deploy the changes, run:
 
@@ -620,7 +620,7 @@ This process makes Cloudflare your authoritative DNS provider, allowing your DNS
 :::
 
 :::note
-If you use `example.com` as your site, skip ahead to [Test your site](#5-test-your-site).
+If your site is `example.com`, skip ahead to [Test your site](#5-test-your-site).
 :::
 
 ### a. Obtain your nameservers
@@ -635,7 +635,7 @@ pulumi stack output
 
 ### b. Update your registrar
 
-Update the nameservers at your registrar to activate Cloudflare services for your domain. Instructions are registrar-specific. You may be able to find guidance under [this consolidated list of common registrars](/dns/zone-setups/full-setup/setup/#update-your-registrar).
+Update the nameservers at your registrar to activate Cloudflare services for your domain. The instructions are registrar-specific. You may be able to find guidance under [this consolidated list of common registrars](/dns/zone-setups/full-setup/setup/#update-your-registrar).
 
 :::caution
 Registrars take up to 24 hours to process nameserver changes.
@@ -663,12 +663,12 @@ nslookup $DOMAIN $NS1
 nslookup $DOMAIN $NS2
 ```
 
-For .NET use `Nameservers` as the Output.
+For .NET, use `Nameservers` as the Output.
 
 Confirm your response returns the IP address(es) for your site.
 
 :::note
-If you use `example.com` as your site, you will not receive a valid response.
+You will not receive a valid response if you use `example.com` as your site.
 :::
 
 ## 6. Clean up
@@ -691,4 +691,4 @@ pulumi stack rm dev
 
 You have incrementally defined Cloudflare resources needed to add a site to Cloudflare. You declare the resources in your programming language of choice and let Pulumi handle the rest.
 
-Follow the [Deploy a Worker tutorial](/pulumi/tutorial/hello-world/) to deploy a serverless app with Pulumi.
+To deploy a serverless app with Pulumi, follow the [Deploy a Worker tutorial](/pulumi/tutorial/hello-world/).
