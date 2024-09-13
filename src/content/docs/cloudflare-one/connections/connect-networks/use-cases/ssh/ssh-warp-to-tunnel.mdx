@@ -1,9 +1,9 @@
 ---
 pcx_content_type: how-to
-title: Connect to SSH with WARP
+title: Connect to SSH with WARP-to-Tunnel
 sidebar:
   order: 2
-  label: WARP-to-Tunnel
+  label: Connect with WARP-to-Tunnel
 ---
 
 import { Render } from "~/components";
@@ -13,7 +13,7 @@ import { Render } from "~/components";
 
 This example walks through how to set up an SSH server on a Google Cloud Platform (GCP) virtual machine (VM), but you can use any machine that supports SSH connections.
 
-### 1. Create an SSH key pair
+## 1. Create an SSH key pair
 
 Before creating your VM instance you will need to create an SSH key pair.
 
@@ -40,7 +40,7 @@ Before creating your VM instance you will need to create an SSH key pair.
 You can configure SSH servers that do not require SSH keys and instead rely exclusively on Cloudflare Zero Trust policies or [short-lived certificates](/cloudflare-one/connections/connect-networks/use-cases/ssh/ssh-infrastructure-access/) to secure the server.
 :::
 
-### 2. Create a VM instance in GCP
+## 2. Create a VM instance in GCP
 
 Now that the SSH key pair has been created, you can create a VM instance.
 
@@ -58,19 +58,19 @@ Now that the SSH key pair has been created, you can create a VM instance.
 In order to be able to establish an SSH connection, do not enable [OS Login](https://cloud.google.com/compute/docs/oslogin) on the VM instance.
 :::
 
-### 3. Connect the server to Cloudflare
+## 3. Connect the server to Cloudflare
 
 <Render file="tunnel/warp-to-tunnel-server" />
 
-### 4. Set up the client
+## 4. Set up the client
 
 <Render file="tunnel/warp-to-tunnel-client" />
 
-### 5. Route private network IPs through WARP
+## 5. Route private network IPs through WARP
 
 <Render file="tunnel/warp-to-tunnel-route-ips" />
 
-### 6. Connect as a user
+## 6. Connect as a user
 
 Once you have set up the application and the user device, the user can now SSH into the machine using its private IP address. If your SSH server requires an SSH key, the key should be included in the command.
 
