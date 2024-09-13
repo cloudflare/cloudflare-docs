@@ -1641,12 +1641,10 @@
           "free": "No",
           "pro": "No",
           "biz": "No",
-          "ent": "No",
-          "ent_plus": "Yes"
+          "ent": "Paid add-on"
         },
         "c_leaked_creds": {
           "title": "Leaked credentials detection",
-          "summary": "Available on all plans",
           "link": "/waf/detections/leaked-credentials/",
           "free": "Yes",
           "pro": "Yes",
@@ -1655,7 +1653,6 @@
         },
 				"d_leaked_creds_fields": {
 					"title": "Leaked credentials fields",
-          "summary": "Available on all plans",
           "link": "/waf/detections/leaked-credentials/",
           "free": "Password Leaked",
           "pro": "Password Leaked, User and Password Leaked",
@@ -1664,6 +1661,7 @@
 				},
         "e_leaked_creds_locations": {
           "title": "Number of custom detection locations",
+					"summary": "Enterprise-only",
           "free": "0",
           "pro": "0",
           "biz": "0",
