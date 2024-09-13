@@ -1,6 +1,5 @@
 ---
-import { z, type InferEntrySchema } from "astro:schema";
-import { getCollection, getEntry } from "astro:content";
+import { getCollection, getEntry, type InferEntrySchema } from "astro:content";
 import { formatDistance } from "date-fns";
 
 const currentSection = Astro.params.slug?.split("/")[0];

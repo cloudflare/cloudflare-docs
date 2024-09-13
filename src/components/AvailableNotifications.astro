@@ -46,7 +46,7 @@ const showProductHeadings = !product && !notificationFilter;
 		.map(([product, entries]) => (
 			<>
 				{showProductHeadings && <AnchorHeading depth={2} title={product} />}
-				{entries.map((notification) => (
+				{(entries ?? []).map((notification) => (
 					<Details header={notification.name}>
 						<strong>Who is it for?</strong>
 						<p set:html={marked.parse(notification.audience)} />

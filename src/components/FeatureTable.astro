@@ -40,7 +40,7 @@ const markdown = (content: any) => {
 	</thead>
 	<tbody>
 		{
-			Object.entries(properties).map(([k, v]: [string, any]) => {
+			Object.entries(properties).map(([_, v]: [string, any]) => {
 				const renderTitle = (title: string) => {
 					const placeholder = "[[GLOSSARY_TOOLTIP_SNIPPETS_SUBREQUEST]]";
 
