@@ -5,6 +5,11 @@ productLink: "/rules/"
 productArea: Application performance
 productAreaLink: /fundamentals/reference/changelog/performance/
 entries:
+  - publish_date: "2024-09-13"
+    title: Snippets now available in beta
+    description: |-
+      [Cloudflare Snippets](/rules/snippets/) have transitioned from alpha to beta.
+
   - publish_date: "2024-09-10"
     title: wildcard_replace() function now supported in URL rewrites
     description: |-
