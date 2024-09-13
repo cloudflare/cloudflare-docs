@@ -470,11 +470,11 @@ When `true`, the Cloudflare WAF detected authentication credentials in the reque
 
 Only available when [leaked credentials detection](/waf/detections/leaked-credentials/) is enabled.
 
-## `cf.waf.credential_check.username_and_password_leaked`
+## `cf.waf.credential_check.password_leaked`
 
-`cf.waf.credential_check.username_and_password_leaked` `Boolean`
+`cf.waf.credential_check.password_leaked` `Boolean`
 
-When `true`, the authentication credentials detected in the request (username and password pair) were previously leaked.
+When `true`, the password detected in the request was previously leaked.
 
 Only available when [leaked credentials detection](/waf/detections/leaked-credentials/) is enabled.
 
@@ -483,6 +483,14 @@ Only available when [leaked credentials detection](/waf/detections/leaked-creden
 `cf.waf.credential_check.username_leaked` `Boolean`
 
 When `true`, the username detected in the request was previously leaked.
+
+Only available when [leaked credentials detection](/waf/detections/leaked-credentials/) is enabled.
+
+## `cf.waf.credential_check.username_and_password_leaked`
+
+`cf.waf.credential_check.username_and_password_leaked` `Boolean`
+
+When `true`, the authentication credentials detected in the request (username and password pair) were previously leaked.
 
 Only available when [leaked credentials detection](/waf/detections/leaked-credentials/) is enabled.
 
