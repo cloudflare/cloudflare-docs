@@ -9,7 +9,7 @@ params:
 
 The [maximum transmission unit (or MTU)](https://www.cloudflare.com/learning/network-layer/what-is-mtu/) is a measurement representing the largest data packet that a network-connected device will accept. The MTU almost always applies to Layer 3 of the OSI model in networking, and includes the entire packet, including all headers (TCP, IP, etc.) and the data (payload) itself. For example, packets must be no bigger than 1,500 bytes to be routable through the Internet.
 
-The [maximum segment size (or MSS)](https://www.cloudflare.com/learning/network-layer/what-is-mss/) refers to the amount of data that can be sent in a single TCP datagram packet. This value is determined by subtracting the size of the IP and TCP headers from the MTU, which will instruct the router how large the payload can be. It applies to the Layer 4 of the OSI model in networking.
+The [maximum segment size (or MSS)](https://www.cloudflare.com/learning/network-layer/what-is-mss/) refers to the amount of data that can be sent in a single TCP datagram packet. This value is determined by subtracting the size of the IP and TCP headers from the MTU, which will instruct the router how large the payload can be. It applies to Layer 4 of the OSI model in networking.
 
 One common misconception about MSS/MTU is that setting these values negatively impacts performance. While there is a slight performance penalty, it is worse not to configure these values to account for the specificities of your network.
 
@@ -37,7 +37,7 @@ Consider a UDP datagram of size 3,000 bytes (8 bytes for the UDP header + 2,992 
 
 Suppose that the UDP datagram has source port `389` and is destined for a {props.productName} customer IP address. Let us also suppose that the {props.productName} customer has a firewall rule in place that drops UDP traffic with source port `389`, a common [Connectionless Lightweight Directory Access Protocol (CLDAP)](https://blog.cloudflare.com/reflections-on-reflections) reflection attack vector. The three packet fragments above will arrive at Cloudflare, but only the first fragment contains a UDP header with source port information — the second and third fragments, while they contain UDP data, do not have UDP header information. So the question is: which of these fragments does Cloudflare drop and which are delivered to the customer? If we only drop the first parts of fragmented packets, the remaining parts could still generate a large amount of traffic during a DoS attack.
 
-### How Cloudflare actually handles fragments
+### How Cloudflare handles fragments
 
 The diagram below shows how the three UDP fragments in the example above flow through Cloudflare and {props.productName}. However, the main takeaways are:
 
