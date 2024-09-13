@@ -8,9 +8,8 @@ sidebar:
 
 import { Render } from "~/components";
 
-[Access for Infrastructure](/cloudflare-one/applications/non-http/infrastructure-apps/) uses the same deployment model as [WARP-to-Tunnel](/cloudflare-one/connections/connect-networks/use-cases/ssh/ssh-warp-to-tunnel/) but unlocks more granular policy options, such as defining the Unix usernames that users can SSH with.
+[Access for Infrastructure](/cloudflare-one/applications/non-http/infrastructure-apps/) uses the same deployment model as [WARP-to-Tunnel](/cloudflare-one/connections/connect-networks/use-cases/ssh/ssh-warp-to-tunnel/) but unlocks more granular policy options and command logging functionality.
 <Render file="access/short-lived-certs-intro" params={{ intro: "Furthermore, Access for Infrastructure replaces" }} />
-
 
 ## 1. Connect the server to Cloudflare
 
@@ -59,14 +58,10 @@ Next, configure your SSH server to trust the Cloudflare SSH CA. This allows Acce
 Users can use any SSH client to connect to the target, as long as they are logged into the WARP client on their device. Users do not need to modify any SSH configs on their device. For example, to SSH from a terminal:
 
 ```sh
-ssh <username>@<target IP address>
+ssh <username>@<target IP>
 ```
 
-If your organization has configured a private DNS resolver, then this command may look like:
-
-```sh
-ssh <username>@<target hostname>
-```
+For more information, refer to the [Access for Infrastructure documentation](/cloudflare-one/applications/non-http/infrastructure-apps/#connect-as-a-user).
 
 ## SSH command logs
 
@@ -79,7 +74,11 @@ SSH command logs contain the actual SSH commands that a user ran on the target. 
 
 SSH command logs are not visible from the dashboard itself and must be exported and decrypted.
 
+To manually retrieve logs:
+
 1. In [Zero Trust](https://one.dash.cloudflare.com), go to **Logs** > **Access**.
 2. Select a user who was allowed to access the target.
 3. Select **Download** to download the session's command log.
 4. <Render file="ssh/decrypt-ssh-log" />
+
+You can also export command logs via [Logpush](/cloudflare-one/insights/logs/logpush/)
