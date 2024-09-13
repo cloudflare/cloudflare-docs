@@ -5,6 +5,47 @@ productLink: "/fundamentals/"
 productArea: Core platform
 productAreaLink: /fundamentals/reference/changelog/platform/
 entries:
+- publish_date: '2025-03-21'
+  title: "Zone Setting: cname_flattening"
+  description: |-
+    Deprecation date: March 21, 2025
+
+    The "zone setting" API endpoints for managing zone-level CNAME flattening are deprecated.
+    Instead, use the [Show DNS Settings](/api/operations/dns-settings-for-a-zone-list-dns-settings) and [Update DNS Settings](/api/operations/dns-settings-for-a-zone-update-dns-settings) endpoints to manage this setting.
+
+    Changes via the old endpoints will be reflected in the new ones, and vice versa, so there is no need to migrate existing zones. However, future API calls must use DNS Settings instead of the Zone Settings endpoints.
+
+    Note that, with the deprecated zone setting, values `"off"` and `"apex"` have the same behavior. These are represented as `{"flatten_all_cnames": false}` in the new API.
+    The zone setting `"on"` corresponds to `{"flatten_all_cnames": true}` in the new API.
+
+    Affected APIs:
+
+    - `GET /zones/:zone_id/settings`
+    - `PATCH /zones/:zone_id/settings`
+
+    Deprecated APIs:
+
+    - `GET /zones/:zone_id/settings/cname_flattening`
+    - `PATCH /zones/:zone_id/settings/cname_flattening`
+
+- publish_date: '2025-03-14'
+  title: "Account Settings: default_nameservers and use_account_custom_ns_by_default"
+  description: |-
+    Deprecation date: March 14, 2025
+
+    The fields `"default_nameservers"` and `"use_account_custom_ns_by_default"` within the `"settings"` object of accounts are deprecated.
+    Instead, use the [Show DNS Settings](/api/operations/dns-settings-for-an-account-list-dns-settings) and [Update DNS Settings](/api/operations/dns-settings-for-an-account-update-dns-settings) endpoints to manage this setting.
+    This setting is available in the new API as `.zone_defaults.nameservers.type`, with allowed values `"cloudflare.standard"`, `"custom.account"` and `"custom.tenant"`.
+
+    Changes via the old endpoints will be reflected in the new ones, and vice versa, so there is no need to migrate existing zones. However, future API calls must use DNS Settings instead of the Accounts endpoints.
+
+    Affected APIs:
+
+    - `GET /accounts`
+    - `POST /accounts`
+    - `GET /accounts/:account_id`
+    - `PUT /accounts/:account_id`
+
 - publish_date: '2025-01-15'
   title: "Firewall Rules API and Filters API"
   description: |-
