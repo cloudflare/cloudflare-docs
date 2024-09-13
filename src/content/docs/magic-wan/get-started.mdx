@@ -48,6 +48,19 @@ Magic WAN relies on <GlossaryTooltip term="GRE tunnel" link="/magic-wan/referenc
 	product="magic-transit"
 	params={{ one: "Magic WAN" }}
 />
+#### MSS clamping recommendations
+
+##### GRE tunnels as off-ramp
+
+<Render file="mtu-mss/mss-clamping-gre" />
+
+##### IPsec tunnels
+
+<Render file="mtu-mss/mss-clamping-ipsec" />
+
+:::caution[Important]
+Refer to your device documentation to check if it sets IPsec MSS clamping automatically. If that is not the case and you are using IPsec inside GRE, you have to set MSS clamp manually.
+:::
 
 Refer to [Maximum transmission unit and maximum segment size](/magic-wan/reference/mtu-mss/) for more details.
 

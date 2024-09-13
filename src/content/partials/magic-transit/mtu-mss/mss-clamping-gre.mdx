@@ -13,7 +13,3 @@ The MSS value depends on how your network is set up.
 
   - **On the Magic Transit GRE tunnel internal interface**: Meaning where the Magit Transit egress traffic will traverse. This may be done automatically once the tunnel is configured but it depends on your devices. The TCP MSS clamp should be 1,436 bytes maximum.
   - **On any IPSEC/GRE tunnels with third parties on your Magic Transit prefix**: On the internal tunnel interface (most likely on a separate firewall behind the GRE-terminating router) to reduce its current value by 24 bytes.
-
-- **Magic WAN**
-
-  - **On your Edge router**: Apply the clamp to the GRE tunnel internal interface (meaning where the egress traffic will traverse). The MSS clamp should be 1,436 bytes. This may be done automatically once the tunnel is configured, but it depends on your devices.
