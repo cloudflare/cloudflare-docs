@@ -4,30 +4,40 @@ import Default from "@astrojs/starlight/components/Sidebar.astro";
 
 import { Icon as AstroIcon } from "astro-icon/components";
 import { getEntry } from "astro:content";
+import { z } from "astro:schema";
+import { Badge } from "@astrojs/starlight/components";
+import type { ComponentProps, HTMLAttributes } from "astro/types";
+import type { AstroBuiltinAttributes } from "astro";
 
 const { sidebar, slug } = Astro.props;
+
+const linkHTMLAttributesSchema = z.record(
+	z.union([z.string(), z.number(), z.boolean(), z.undefined()]),
+) as z.Schema<
+	Omit<HTMLAttributes<"a">, keyof AstroBuiltinAttributes | "children">
+>;
+type LinkHTMLAttributes = z.infer<typeof linkHTMLAttributesSchema>;
 
 interface Link {
 	type: "link";
 	label: string;
 	href: string;
 	isCurrent: boolean;
-	badge: any | undefined;
-	attrs: any;
+	badge: ComponentProps<typeof Badge> | undefined;
+	attrs: LinkHTMLAttributes;
 	order: number;
 }
+type SidebarEntry = Link | Group;
 
 interface Group {
 	type: "group";
 	label: string;
-	entries: (Link | Group)[];
+	entries: SidebarEntry[];
 	collapsed: boolean;
-	badge: Badge | undefined;
+	badge: ComponentProps<typeof Badge> | undefined;
 	order: number;
 }
 ``;
-
-type SidebarEntry = Link | Group;
 
 const currentSection = slug?.split("/")[0];
 
@@ -133,9 +143,11 @@ async function handleLink(link: Link): Promise<Link> {
 			...link,
 			label: link.label.concat(" ↗"),
 			href: frontmatter.external_link,
-			badge: frontmatter.external_link.startsWith("/api") && {
-				text: "API",
-			},
+			badge: frontmatter.external_link.startsWith("/api")
+				? {
+						text: "API",
+					}
+				: undefined,
 		};
 	}
 
@@ -163,14 +175,14 @@ const lookupProductTitle = async (slug: string) => {
 	if (product === "learning-paths") {
 		const path = segments[1];
 
-		const { data } = await getEntry("learning-paths", path);
+		const entryData = await getEntry("learning-paths", path);
 
-		return `${data.title} (Learning Paths)`;
+		return `${entryData?.data?.title} (Learning Paths)`;
 	}
 
-	const { data } = await getEntry("products", product);
+	const entryData = await getEntry("products", product);
 
-	return data.product.title;
+	return entryData?.data?.product?.title ?? "Unknown";
 };
 ---
 
@@ -188,6 +200,7 @@ const lookupProductTitle = async (slug: string) => {
 		</strong>
 	</span>
 </a>
+<!-- @ts-expect-error sidebar props don't match as we add additional things -->
 <Default {...Astro.props} sidebar={filtered.entries}><slot /></Default>
 
 <style is:global>
