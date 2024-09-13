@@ -9,13 +9,19 @@ head:
     content: Traffic detections
 ---
 
-import { DirectoryListing } from "~/components";
+import { DirectoryListing, FeatureTable } from "~/components";
 
 WAF traffic detections check incoming requests for malicious or potentially malicious activity. Each enabled detection provides one or more scores — available in the Security Analytics dashboard — that you can use in WAF rule expressions.
 
 The WAF currently provides the following detections for finding security threats in incoming requests:
 
 <DirectoryListing />
+
+## Availability
+
+<FeatureTable id="security.waf_b_detections" />
+
+For more information on bot score, refer to the [Bots documentation](/bots/concepts/bot-score/).
 
 ## Turn on a detection
 
