@@ -162,7 +162,7 @@ This command has been deprecated as of [Wrangler v3](/workers/wrangler/migration
 
 :::
 
-Create a new project using an existing [Workers template](https://github.com/cloudflare/workers-sdk/tree/main/templates/worker).
+Create a new project using an existing template.
 
 ```txt
 wrangler generate [<NAME>] [TEMPLATE]
@@ -171,7 +171,7 @@ wrangler generate [<NAME>] [TEMPLATE]
 - `NAME` string optional (default: name of working directory)
   - The name of the Workers project. This is both the directory name and `name` property in the generated `wrangler.toml` [configuration](/workers/wrangler/configuration/) file.
 - `TEMPLATE` string optional
-  - The URL of a GitHub template, with a default [worker-template](https://github.com/cloudflare/worker-template). Browse a list of available templates on the [cloudflare/workers-sdk](https://github.com/cloudflare/workers-sdk/tree/main/templates#usage) repository.
+  - The URL of a GitHub template, defaults to using `npm create cloudflare` if no template is provided.
 
 ---
 
@@ -985,7 +985,7 @@ wrangler delete [<SCRIPT>] [OPTIONS]
 - `--dry-run` boolean (default: false) optional
   - Do not actually delete the Worker. This is useful for testing the output of `wrangler delete`.
 
-<Render file="wrangler-commands/kv" product="workers"/>
+<Render file="wrangler-commands/kv" product="workers" />
 
 ---
 
@@ -1787,7 +1787,6 @@ wrangler whoami
 
 ## `versions`
 
-
 :::note
 The minimum required wrangler version to use these commands is 3.40.0. For versions before 3.73.0, you will need to add the `--x-versions` flag.
 :::
@@ -1887,7 +1886,6 @@ wrangler versions secret bulk <FILENAME> [OPTIONS]
 ---
 
 ## `triggers`
-
 
 :::note
 The minimum required wrangler version to use these commands is 3.40.0. For versions before 3.73.0, you will need to add the `--x-versions` flag.
