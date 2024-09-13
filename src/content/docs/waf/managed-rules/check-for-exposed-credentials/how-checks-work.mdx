@@ -10,11 +10,13 @@ head:
 
 import { Render, Example } from "~/components";
 
-<Render file="leaked-credentials-recommend-detection" />
-
 WAF rules can include a check for exposed credentials. When enabled in a given rule, exposed credentials checking happens when there is a match for the rule expression (that is, the rule expression evaluates to `true`).
 
 At this point, the WAF looks up the username/password pair in the request against a database of publicly available stolen credentials. When both the rule expression and the exposed credentials check are true, there is a rule match, and Cloudflare performs the action configured in the rule.
+
+<Render file="leaked-credentials-recommend-detection" />
+
+## Example
 
 For example, the following rule matches `POST` requests to the `/login.php` URI when Cloudflare identifies the submitted credentials as previously exposed:
 
