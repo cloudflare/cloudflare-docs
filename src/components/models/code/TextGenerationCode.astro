@@ -1,7 +1,7 @@
 ---
 import { z } from "astro:content";
-import { Aside, Code, Details } from "@astrojs/starlight/components";
-
+import { Aside, Code } from "@astrojs/starlight/components";
+import Details from "~/components/Details.astro";
 type Props = z.infer<typeof props>;
 
 const props = z.object({
