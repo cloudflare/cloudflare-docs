@@ -1,9 +1,8 @@
 ---
 inputParameters: productName;;mssURL;;productURL;;tunnelEndpoints
-
 ---
 
-import { GlossaryTooltip, Markdown } from "~/components"
+import { GlossaryTooltip, Markdown } from "~/components";
 
 ## Tunnels and encapsulation
 
@@ -11,7 +10,7 @@ import { GlossaryTooltip, Markdown } from "~/components"
 
 To accommodate additional header data introduced by encapsulation, the <GlossaryTooltip term="maximum segment size (MSS)">maximum segment size (MSS)</GlossaryTooltip> must be adjusted so that packets comply with the standard Internet routable maximum transmission unit (MTU), which is 1500 bytes.
 
-For instructions, refer to <a href={props.two}>Set Maximum Segment Size</a>.
+For instructions, refer to <a href={props.two}>Set Maximum segment size</a>.
 
 This diagram illustrates the flow of traffic with {props.one}.
 
@@ -29,7 +28,7 @@ C->>A: IP header <br> Protocol <br> Payload
 Note right of C: Egress <br> traffic
 ```
 
-<br/>
+<br />
 
 :::note
 By default, egress packets are routed by your ISP interface, not Cloudflare.
@@ -106,14 +105,16 @@ Below is a list of the configuration parameters supported by Magic WAN. Choose w
 IKE SA is sometimes referred to as Phase 1 as per IKEv1 language.
 
 - **Encryption**
+
   - AES-GCM-16 with 128-bit or 256-bit key length
   - AES-CBC with 256-bit key length
 
 - **Integrity** (sometimes referred to as Authentication)
+
   - SHA2-256
 
 - **Diffie-Hellman group**:
-  <br/>
+  <br />
 
 Below is a list of all Diffie-Hellman (DH) groups supported by Cloudflare. However, Cloudflare recommends that you use only one DH group when configuring your device, specifically DH group 14.
 
@@ -133,10 +134,12 @@ Below is a list of all Diffie-Hellman (DH) groups supported by Cloudflare. Howev
 The Child SA. Sometimes referred to as Phase 2 as per IKEv1 language.
 
 - **Encryption**:
+
   - AES-GCM-16 with 128-bit or 256-bit key length
   - AES-CBC with 128-bit or 256-bit key length
 
 - **Integrity** (sometimes referred to as Authentication.)
+
   - SHA2-256
   - SHA-1
 
@@ -145,7 +148,7 @@ The Child SA. Sometimes referred to as Phase 2 as per IKEv1 language.
     :::
 
 - **PFS group** (sometimes referred to as Phase 2 Diffie-Hellman Group. Not to be confused with PRF.)
-  <br/>
+  <br />
 
 Below is a list of all Diffie-Hellman (DH) groups supported by Cloudflare. However, Cloudflare recommends that you use only one DH group when configuring your device, specifically DH group 14.
 
@@ -170,8 +173,8 @@ Below is a list of all Diffie-Hellman (DH) groups supported by Cloudflare. Howev
 
 {props.one} supports the following IKE ID types for IPsec:
 
-| RFC name | Format | Example |
-| -------- | ------ | ------- |
+| RFC name         | Format                                                | Example                                                                 |
+| ---------------- | ----------------------------------------------------- | ----------------------------------------------------------------------- |
 | `ID_RFC822_ADDR` | `ipsec@<TUNNEL_ID>.<ACCOUNT_ID>.ipsec.cloudflare.com` | `ipsec@f5407d8db1a542b196c59f6d04ba8bd1.123456789.ipsec.cloudflare.com` |
 | `ID_FQDN`        | `<TUNNEL_ID>.<ACCOUNT_ID>.ipsec.cloudflare.com`       | `f5407d8db1a542b196c59f6d04ba8bd1.123456789.ipsec.cloudflare.com`       |
 | `ID_KEY_ID`      | `<ACCOUNT_ID>_<TUNNEL_ID>`                            | `123456789_f5407d8db1a542b196c59f6d04ba8bd1`                            |
