@@ -43,7 +43,6 @@ Ensure you have:
 
 A Pulumi project is a collection of files in a dedicated folder that describe the infrastructure you want to create. The Pulumi project folder is identified by the presenece of the required `Pulumi.yaml` file. You will use the Pulumi CLI to create a new project and configure it.
 
-
 ### a. Create a directory
 
 Use a new and empty directory for this tutorial.
@@ -260,7 +259,7 @@ With the Cloudflare package installed, you can now define any [supported Cloudfl
 
 ### a. Add a Zone
 
-A domain, or site, is known as a Zone in Cloudflare. In Pulumi, the [Zone resource](https://www.pulumi.com/registry/packages/cloudflare/api-docs/zone/) represents a Cloudflare Zone. 
+A domain, or site, is known as a Zone in Cloudflare. In Pulumi, the [Zone resource](https://www.pulumi.com/registry/packages/cloudflare/api-docs/zone/) represents a Cloudflare Zone.
 
 Replace the contents of your entrypoint file with the following:
 
@@ -481,7 +480,7 @@ Notice the code also outputs a number of properties from the Zone resource, such
 
 You will now add a DNS [Record resource](https://www.pulumi.com/registry/packages/cloudflare/api-docs/record/) so the previously configured Zone can be tested.
 
-Add the following code snippet to your entrypoint file **after** the Zone resource definition: 
+Add the following code snippet to your entrypoint file **after** the Zone resource definition:
 
 <Tabs> <TabItem label="JavaScript" icon="seti:javascript">
 

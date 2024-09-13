@@ -261,7 +261,7 @@ With the Cloudflare package installed, you can now define any [supported Cloudfl
 
 ### a. Add a Workers script
 
-The [Workers Script resource](https://www.pulumi.com/registry/packages/cloudflare/api-docs/workersscript/) represents a Cloudflare Worker that can be deployed to the Cloudflare network. 
+The [Workers Script resource](https://www.pulumi.com/registry/packages/cloudflare/api-docs/workersscript/) represents a Cloudflare Worker that can be deployed to the Cloudflare network.
 
 Replace the contents of your entrypoint file with the following:
 
@@ -491,7 +491,7 @@ resources:
 
 You will now add a [Workers Route resource](https://www.pulumi.com/registry/packages/cloudflare/api-docs/workersroute/) to your Pulumi program so the Workers script can have an endpoint and be active. To properly configure the Route, you will also look up the zone ID for your domain.
 
-Add the following code snippet to your entrypoint file **after** the Worker script resource: 
+Add the following code snippet to your entrypoint file **after** the Worker script resource:
 
 <Tabs> <TabItem label="JavaScript" icon="seti:javascript">
 
@@ -530,6 +530,7 @@ const route = new cloudflare.WorkersRoute("hello-world-route", {
   scriptName: worker.name,
 });
 ```
+
 </TabItem>  <TabItem label="Python" icon="seti:python">
 
 **Filename: `__main__.py`**
@@ -606,6 +607,7 @@ var route = new Cloudflare.WorkersRoute("hello-world-route", new()
 **Filename: `Pulumi.yaml`**
 
 Below the `runtime` key, add the following code:
+
 ```yaml
 # new top-level section
 variables:
@@ -618,6 +620,7 @@ variables:
 ```
 
 Below the `worker` resource, add the following code:
+
 ```yaml
   route:
     type: cloudflare:WorkersRoute
@@ -633,7 +636,7 @@ Below the `worker` resource, add the following code:
 
 You will now add a DNS [Record resource](https://www.pulumi.com/registry/packages/cloudflare/api-docs/record/) so the previously configured Route can be resolved. You'll also output the Route URL so it can be easily accessed in the next step.
 
-Add the following code snippet to your entrypoint file **after** the Route resource: 
+Add the following code snippet to your entrypoint file **after** the Route resource:
 
 <Tabs> <TabItem label="JavaScript" icon="seti:javascript">
 
@@ -875,6 +878,7 @@ const record = new cloudflare.Record("hello-world-record", {
 export const url = pulumi.interpolate`https://${record.hostname}`;
 
 ```
+
 </TabItem>
   <TabItem label="Python" icon="seti:python">
 
@@ -996,6 +1000,7 @@ func main() {
 }
 
 ```
+
 </TabItem>
   <TabItem label="Java">
 
@@ -1027,7 +1032,7 @@ public class App {
 				};
 			""";
 
-            var accountId = ctx.config().require("accountId");            
+            var accountId = ctx.config().require("accountId");
             var domain = ctx.config().require("domain");
 
             var worker = new WorkersScript("hello-world-worker", WorkersScriptArgs.builder()
@@ -1052,7 +1057,7 @@ public class App {
                 .zoneId(zone.applyValue(getZoneResult -> getZoneResult.id()))
                 .proxied(true)
                 .build());
-        
+
             ctx.export("url", Output.format("https://%s", record.hostname()));
             return;
         });
@@ -1060,6 +1065,7 @@ public class App {
 }
 
 ```
+
 </TabItem>
   <TabItem label=".NET">
 
@@ -1119,6 +1125,7 @@ return await Deployment.RunAsync(() =>
 });
 
 ```
+
 </TabItem>
   <TabItem label="YAML">
 
@@ -1167,6 +1174,7 @@ resources:
 outputs:
   url: "https://${record.hostname}"
 ```
+
 </TabItem>
 </Tabs>
 
@@ -1195,7 +1203,6 @@ curl $(pulumi stack output url)
 ```sh output
 Hello, World!
 ```
-
 
 ## 5. Clean up
 
