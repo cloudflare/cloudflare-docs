@@ -42,11 +42,11 @@ Use [Security Analytics](/waf/analytics/security-analytics/) and HTTP logs to va
 
 Refer to [Test your configuration](#test-your-configuration) for more information on the test credentials you can use to validate your configuration.
 
-Alternatively, create a WAF custom rule like described in the next step using a _Log_ action instead of a mitigation action like _Block_. This rule will generate firewall events (available in **Security** > **Events**) that will allow you to validate your configuration.
+Alternatively, create a WAF custom rule like the one described in the next step using a _Log_ action (only available to Enterprise customers). This rule will generate firewall events (available in **Security** > **Events**) that will allow you to validate your configuration.
 
 ### 3. Create a WAF rule
 
-If you are on a Free plan, deploy the suggested rate limiting rule template available in **WAF** > **Rate limiting**. When you deploy a rule using this template, you get instant protection against IPs attempting to access your application with a leaked password more than 5 times per 10 seconds. This rule can delay attacks by blocking them for a period of time.
+If you are on a Free plan, deploy the suggested [rate limiting rule](/waf/rate-limiting-rules/) template available in **WAF** > **Rate limiting**. When you deploy a rule using this template, you get instant protection against IPs attempting to access your application with a leaked password more than 5 times per 10 seconds. This rule can delay attacks by blocking them for a period of time.
 
 Paid plans have access to more granular controls when creating a WAF rule. If you are on a paid plan, create a [custom rule](/waf/custom-rules/) that logs requests containing leaked credentials.
 
