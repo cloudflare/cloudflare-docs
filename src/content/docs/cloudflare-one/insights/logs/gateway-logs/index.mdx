@@ -40,7 +40,7 @@ These settings will only apply to logs displayed in Zero Trust. Logpush data is 
 | **Time**              | Date and time of the DNS query.                                                                                                                                                                                                                                                                                                                                                                        |
 | **Resolver decision** | The reason why Gateway applied a particular **Action** to the request. Refer to the [list of resolver decisions](#resolver-decisions).                                                                                                                                                                                                                                                                 |
 | **Resolved IPs**      | Resolved IP addresses in the response.                                                                                                                                                                                                                                                                                                                                                                 |
-| **CNAMEs**            | `CNAME` record in the query.                                                                                                                                                                                                                                                                                                                                                                           |
+| **CNAMEs**            | `CNAME` records in the query.                                                                                                                                                                                                                                                                                                                                                                          |
 
 #### Configuration information
 
@@ -65,41 +65,46 @@ These settings will only apply to logs displayed in Zero Trust. Logpush data is 
 
 #### DNS query details
 
-| Field                               | Description                                                                                           |
-| ----------------------------------- | ----------------------------------------------------------------------------------------------------- |
-| **Query ID**                        | UUID of the query assigned by Cloudflare.                                                             |
-| **Query type**                      | Type of [DNS query](https://en.wikipedia.org/wiki/List_of_DNS_record_types).                          |
-| **Initial query domain categories** | [Content categories](/cloudflare-one/policies/gateway/domain-categories/) that the domain belongs to. |
-| **Matched categories**              | Name of the Gateway policy category that match the domain.                                            |
-| **Matched indicator feed names**    | Name of the indicator feeds that matched a Gateway policy.                                            |
-| **Query indicator feed names**      | Name of the indicator feeds that a matched domain or IP belongs to.                                   |
-| **Source IP**                       | Public source IP address of the DNS query.                                                            |
-| **Application name**                | Name of the application in the query.                                                                 |
-| **Source IP continent**             | Continent code of the DNS query.                                                                      |
-| **Source IP country**               | Country code of the DNS query.                                                                        |
-| **Source internal IP**              | Private IP address assigned by the user's local network.                                              |
-| **Resolver IP**                     | Public IP address of the DNS resolver.                                                                |
-| **Port**                            | Port that was used to make the DNS query.                                                             |
-| **Location ID**                     | ID of the DNS location where the query originated.                                                    |
+| Field                                      | Description                                                                                           |
+| ------------------------------------------ | ----------------------------------------------------------------------------------------------------- |
+| **Query ID**                               | UUID of the query assigned by Cloudflare.                                                             |
+| **Query type**                             | Type of [DNS query](https://en.wikipedia.org/wiki/List_of_DNS_record_types).                          |
+| **Initial query domain categories**        | [Content categories](/cloudflare-one/policies/gateway/domain-categories/) that the domain belongs to. |
+| **Matched categories**                     | Name of the Gateway policy category that match the domain.                                            |
+| **Matched indicator feed names**           | Name of the indicator feeds that matched a Gateway policy.                                            |
+| **Query indicator feed names**             | Name of the indicator feeds that a matched domain or IP belongs to.                                   |
+| **Resolved continent IP geolocation**      | Continent code of where the DNS query was resolved.                                                   |
+| **Resolved country IP geolocation**        | Country code of where the DNS query was resolved.                                                     |
+| **DoT subdomain**                          | DoT subdomain of the DNS location.                                                                    |
+| **Source IP**                              | Public source IP address of the DNS query.                                                            |
+| **Source IP continent**                    | Continent code of the DNS query.                                                                      |
+| **Source IP country**                      | Country code of the DNS query.                                                                        |
+| **Source internal IP**                     | Private IP address assigned by the user's local network.                                              |
+| **Application name**                       | Name of the application in the query.                                                                 |
+| **Resolver IP**                            | Public IP address of the DNS resolver.                                                                |
+| **Port**                                   | Port that was used to make the DNS query.                                                             |
+| **Location ID**                            | ID of the DNS location where the query originated.                                                    |
+| **Scheduling - Time zone**                 | Time zone of the DNS query source.                                                                    |
+| **Scheduling - Time zone inferred method** | Method used to determine the DNS query source's time zone.                                            |
 
 #### DNS response details
 
 | Field                           | Description                                                                              |
 | ------------------------------- | ---------------------------------------------------------------------------------------- |
-| **Resolved CNAME categories**   |                                                                                          |
-| **Resolved IP categories**      |                                                                                          |
+| **Resolved CNAME categories**   | Content categories associated with the resolved `CNAME` records in the response.         |
+| **Resolved IP categories**      | Content categories associated with the resolved IPs in the response.                     |
 | **Resolved IPs**                | Resolved IPs in the response.                                                            |
 | **Authoritative nameserver IP** | IP address of the authoritative nameserver answering the DNS query.                      |
 | **EDE errors**                  | [Extended DNS error codes](https://www.rfc-editor.org/rfc/rfc8914.html) in the response. |
 
 #### Custom resolver
 
-| Field                      | Description                                                 |
-| -------------------------- | ----------------------------------------------------------- |
-| **Address**                | Address of your custom resolver.                            |
-| **Policy**                 | Name of the matched resolver policy.                        |
-| **Response**               | Status of the custom resolver response.                     |
-| **Time (in milliseconds)** | Duration of time it took for the custom resolver to respond |
+| Field                      | Description                                                  |
+| -------------------------- | ------------------------------------------------------------ |
+| **Address**                | Address of your custom resolver.                             |
+| **Policy**                 | Name of the matched resolver policy.                         |
+| **Response**               | Status of the custom resolver response.                      |
+| **Time (in milliseconds)** | Duration of time it took for the custom resolver to respond. |
 
 ### Resolver decisions
 

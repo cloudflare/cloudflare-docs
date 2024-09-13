@@ -50,7 +50,7 @@ Refer to the Logpush documentation for a list of available fields.
 
 ## Parse Logpush logs
 
-Cloudflare Gateway logs DNS query information in [RData](https://datatracker.ietf.org/doc/html/rfc1035#section-4.1.3), a Base64-encoded binary format. The following resource record fields are available for each query:
+Cloudflare Gateway logs DNS query information in [resource record format](https://datatracker.ietf.org/doc/html/rfc1035#section-4.1.3), a Base64-encoded binary format. The following resource record fields are available for each query:
 
 - Query name
 - Query type
@@ -58,7 +58,7 @@ Cloudflare Gateway logs DNS query information in [RData](https://datatracker.iet
 - Response TTL
 - Response data
 
-To parse RData logs from Logpush, run the following Python script with your desired samples:
+To parse resource record logs from Logpush, run the following Python script with your desired samples:
 
 ```python
 import dnslib
