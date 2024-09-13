@@ -1,4 +1,4 @@
-import { z } from "astro:content";
+import { z } from "astro:schema";
 
 export type CompatibilityDatesSchema = z.infer<typeof compatibilityDatesSchema>;
 

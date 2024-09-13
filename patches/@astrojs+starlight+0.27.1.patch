@@ -1,5 +1,5 @@
 diff --git a/node_modules/@astrojs/starlight/utils/navigation.ts b/node_modules/@astrojs/starlight/utils/navigation.ts
-index cd1475d..e3cee5b 100644
+index cd1475d..69d8801 100644
 --- a/node_modules/@astrojs/starlight/utils/navigation.ts
 +++ b/node_modules/@astrojs/starlight/utils/navigation.ts
 @@ -346,8 +346,12 @@ export function getSidebarFromConfig(
@@ -11,7 +11,7 @@ index cd1475d..e3cee5b 100644
 -		return sidebarConfig.map((group) => configItemToEntry(group, pathname, locale, routes));
 +		return sidebarConfig.flatMap((group) => {
 +			if (group.label !== currentSection) return [];
-+			return configItemToEntry(group, pathname, locale, routes);
++			return configItemToEntry(group, pathname, locale, routes)
 +		});
  	} else {
  		const tree = treeify(routes, locale || '');

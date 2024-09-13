@@ -6,12 +6,12 @@ import { marked } from "marked";
 import { Breadcrumbs } from "astro-breadcrumbs";
 import "astro-breadcrumbs/breadcrumbs.css";
 
-import {
-	Badge,
-	Description,
-	SpotlightAuthorDetails,
-	LastReviewed,
-} from "~/components";
+import { Badge } from "@astrojs/starlight/components";
+
+import Description from "~/components/Description.astro";
+import SpotlightAuthorDetails from "~/components/SpotlightAuthorDetails.astro";
+import LastReviewed from "~/components/LastReviewed.astro";
+
 import { getEntry } from "astro:content";
 
 const spotlightDetails = Astro.props.entry.data.spotlight;

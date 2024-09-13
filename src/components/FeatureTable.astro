@@ -1,8 +1,8 @@
 ---
-import { z } from "astro:content";
+import { z } from "astro:schema";
 import { indexPlans } from "~/util/plans";
 import { marked } from "marked";
-import { GlossaryTooltip } from "~/components";
+import GlossaryTooltip from "~/components/GlossaryTooltip.astro";
 
 type Props = z.infer<typeof props>;
 
@@ -40,7 +40,7 @@ const markdown = (content: any) => {
 	</thead>
 	<tbody>
 		{
-			Object.entries(properties).map(([_, v]: [string, any]) => {
+			Object.entries(properties).map(([k, v]: [string, any]) => {
 				const renderTitle = (title: string) => {
 					const placeholder = "[[GLOSSARY_TOOLTIP_SNIPPETS_SUBREQUEST]]";
 

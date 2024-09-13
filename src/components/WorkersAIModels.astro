@@ -1,7 +1,10 @@
 ---
 import type { ComponentProps } from "astro/types";
 import { getCollection } from "astro:content";
-import { AnchorHeading, InlineBadge } from "~/components";
+import { slug } from "github-slugger";
+
+import AnchorHeading from "~/components/AnchorHeading.astro";
+import InlineBadge from "~/components/InlineBadge.astro";
 
 const models = await getCollection("workers-ai-models");
 const mapped = models.map((x) => x.data);

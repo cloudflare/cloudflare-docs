@@ -2,7 +2,7 @@
 import { getEntry, type CollectionEntry } from "astro:content";
 import { marked } from "marked";
 import { getChangelogs } from "~/util/changelogs";
-import { AnchorHeading } from "~/components";
+import AnchorHeading from "~/components/AnchorHeading.astro";
 
 const page = await getEntry("docs", Astro.params.slug!);
 

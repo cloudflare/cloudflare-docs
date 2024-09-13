@@ -2,8 +2,9 @@
 import type { Props } from "@astrojs/starlight/props";
 import Default from "@astrojs/starlight/components/Sidebar.astro";
 
-import { AstroIcon } from "~/components";
-import { getEntry, z } from "astro:content";
+import { Icon as AstroIcon } from "astro-icon/components";
+import { getEntry } from "astro:content";
+import { z } from "astro:schema";
 import { Badge } from "@astrojs/starlight/components";
 import type { ComponentProps, HTMLAttributes } from "astro/types";
 import type { AstroBuiltinAttributes } from "astro";
