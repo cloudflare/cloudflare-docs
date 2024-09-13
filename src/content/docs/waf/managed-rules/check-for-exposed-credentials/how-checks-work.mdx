@@ -6,10 +6,11 @@ sidebar:
 head:
   - tag: title
     content: How exposed credentials checks work
-
 ---
 
-import { Example } from "~/components"
+import { Render, Example } from "~/components";
+
+<Render file="leaked-credentials-recommend-detection" />
 
 WAF rules can include a check for exposed credentials. When enabled in a given rule, exposed credentials checking happens when there is a match for the rule expression (that is, the rule expression evaluates to `true`).
 
@@ -26,10 +27,10 @@ Rule expression:<br/>
 
 Exposed credentials check with the following configuration:
 
-* Username expression: `http.request.body.form["user_id"]`
-* Password expression: `http.request.body.form["password"]`
+- Username expression: `http.request.body.form["user_id"]`
+- Password expression: `http.request.body.form["password"]`
 
-Action: *Interactive Challenge*
+Action: _Interactive Challenge_
 
 </Example>
 

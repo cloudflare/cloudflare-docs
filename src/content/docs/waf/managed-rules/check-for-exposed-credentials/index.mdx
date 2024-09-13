@@ -5,23 +5,19 @@ sidebar:
   order: 12
 ---
 
-import { GlossaryTooltip } from "~/components";
+import { GlossaryTooltip, Render } from "~/components";
 
 Many web applications have suffered <GlossaryTooltip term="credential stuffing">credential stuffing</GlossaryTooltip> attacks in the recent past. In these attacks there is a massive number of login attempts using username/password pairs from databases of <GlossaryTooltip term="leaked credentials">exposed credentials</GlossaryTooltip>.
 
 Cloudflare offers you automated checks for exposed credentials using Cloudflare Web Application Firewall (WAF).
 
-:::note
-
-This feature is available to all paid plans.
-
-:::
+<Render file="leaked-credentials-recommend-detection" />
 
 The WAF provides two mechanisms for this check:
 
-- The [Exposed Credentials Check Managed Ruleset](/waf/managed-rules/reference/exposed-credentials-check/), which contains predefined rules for popular CMS applications. By enabling this ruleset for a given zone, you immediately enable checks for exposed credentials for these well-known applications.
+- The [Exposed Credentials Check Managed Ruleset](/waf/managed-rules/reference/exposed-credentials-check/), which contains predefined rules for popular CMS applications. By enabling this ruleset for a given zone, you immediately enable checks for exposed credentials for these well-known applications. The managed ruleset is available to all paid plans.
 
-- The ability to [write custom rules](#exposed-credentials-checks-in-custom-rules) at the account level that check for exposed credentials according to your criteria.
+- The ability to [write custom rules](#exposed-credentials-checks-in-custom-rules) at the account level that check for exposed credentials according to your criteria. This configuration option is available to Enterprise customers with a paid add-on.
 
 Cloudflare updates the databases of exposed credentials supporting the exposed credentials check feature on a regular basis.
 
@@ -32,6 +28,11 @@ The username and password credentials in clear text never leave the Cloudflare n
 The WAF can perform one of the following actions when it detects exposed credentials:
 
 - **Exposed-Credential-Check Header**: Adds a new HTTP header to HTTP requests with exposed credentials. Your application at the origin can then force a password reset, start a two-factor authentication process, or perform any other action. The name of the added HTTP header is `Exposed-Credential-Check` and its value is `1`.
+
+  :::caution
+  While the header name is the same as when using the [**Add leaked credentials header** managed transform](/rules/transform/managed-transforms/reference/#add-leaked-credentials-header), the header can have different values when using the managed transform (from `1` to `4`), depending on your Cloudflare plan.
+  :::
+
 - **Managed Challenge**: Helps reduce the lifetimes of human time spent solving CAPTCHAs across the Internet. Depending on the characteristics of a request, Cloudflare will dynamically choose the appropriate type of challenge based on specific criteria.
 - **Block**: Blocks HTTP requests containing exposed credentials.
 - **JS Challenge**: Presents a non-interactive challenge to the clients making HTTP requests with exposed credentials.
@@ -45,7 +46,6 @@ Cloudflare recommends that you only use the following actions: _Exposed-Credenti
 ## Exposed credentials checks in custom rules
 
 :::note
-
 Exposed credentials checks in custom rules are only available via API and require account-level WAF, which is available to Enterprise customers with a paid add-on.
 :::
 
