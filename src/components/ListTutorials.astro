@@ -1,5 +1,6 @@
 ---
-import { getCollection, getEntry, z } from "astro:content";
+import { z } from "astro:schema";
+import { getCollection, getEntry } from "astro:content";
 import { formatDistance } from "date-fns";
 
 const currentSection = Astro.params.slug?.split("/")[0];

@@ -1,9 +1,8 @@
 ---
-import { z } from "astro:content";
-import { Card } from "~/components";
+import { z } from "astro:schema";
 import { indexPlans } from "~/util/plans";
 import { marked } from "marked";
-import { GlossaryTooltip } from "~/components";
+import GlossaryTooltip from "~/components/GlossaryTooltip.astro";
 
 type Props = z.infer<typeof props>;
 
@@ -35,33 +34,35 @@ const markdown = (content: any) => {
 			<th>Pro</th>
 			<th>Business</th>
 			<th>Enterprise</th>
-			{
-				plan.ent_plus &&
-				<th>{plan.ent_plus}</th>
-			}
+			{plan.ent_plus && <th>{plan.ent_plus}</th>}
 		</tr>
 	</thead>
 	<tbody>
-    {Object.entries(properties).map(([k, v]) => {
-      const renderTitle = (title) => {
-        const placeholder = "[[GLOSSARY_TOOLTIP_SNIPPETS_SUBREQUEST]]";
+		{
+			Object.entries(properties).map(([k, v]) => {
+				const renderTitle = (title) => {
+					const placeholder = "[[GLOSSARY_TOOLTIP_SNIPPETS_SUBREQUEST]]";
 
-        if (title.includes(placeholder)) {
-          const [beforePlaceholder, afterPlaceholder] = title.split(placeholder);
+					if (title.includes(placeholder)) {
+						const [beforePlaceholder, afterPlaceholder] =
+							title.split(placeholder);
 
-          return (
-            <>
-              {beforePlaceholder}
-              <GlossaryTooltip term="Snippets subrequest" prepend="A subrequest is ">
-                subrequests
-              </GlossaryTooltip>
-              {afterPlaceholder}
-            </>
-          );
-        }
+						return (
+							<>
+								{beforePlaceholder}
+								<GlossaryTooltip
+									term="Snippets subrequest"
+									prepend="A subrequest is "
+								>
+									subrequests
+								</GlossaryTooltip>
+								{afterPlaceholder}
+							</>
+						);
+					}
 
-        return markdown(title);
-      };
+					return markdown(title);
+				};
 
 				return (
 					<tr>
@@ -70,10 +71,7 @@ const markdown = (content: any) => {
 						<td set:html={markdown(v.pro)} />
 						<td set:html={markdown(v.biz)} />
 						<td set:html={markdown(v.ent)} />
-						{
-							plan.ent_plus &&
-							<td set:html={markdown(v.ent_plus)} />
-						}
+						{plan.ent_plus && <td set:html={markdown(v.ent_plus)} />}
 					</tr>
 				);
 			})

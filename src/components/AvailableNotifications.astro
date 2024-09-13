@@ -1,7 +1,9 @@
 ---
-import { getEntry, z } from "astro:content";
+import { getEntry } from "astro:content";
+import { z } from "astro:schema";
 import { marked } from "marked";
-import { AnchorHeading, Details } from "~/components";
+import AnchorHeading from "./AnchorHeading.astro";
+import Details from "./Details.astro";
 
 type Props = z.infer<typeof props>;
 
@@ -30,44 +32,51 @@ if (notificationFilter) {
 	);
 }
 
-notifications = Object.groupBy(notifications, (entry) => entry.associatedProducts);
+notifications = Object.groupBy(
+	notifications,
+	(entry) => entry.associatedProducts,
+);
 
 const showProductHeadings = !product && !notificationFilter;
 ---
 
 {
-    Object.entries(notifications).sort().map(([product, entries]) => (
-        <>
-        { showProductHeadings && <AnchorHeading depth={2} title={product} /> }
-        {
-            entries.map((notification) => (
-                <Details header={notification.name}>
-                    <strong>Who is it for?</strong>
-                    <p set:html={marked.parse(notification.audience)}/>
+	Object.entries(notifications)
+		.sort()
+		.map(([product, entries]) => (
+			<>
+				{showProductHeadings && <AnchorHeading depth={2} title={product} />}
+				{entries.map((notification) => (
+					<Details header={notification.name}>
+						<strong>Who is it for?</strong>
+						<p set:html={marked.parse(notification.audience)} />
 
-                    <strong>Other options / filters</strong>
-                    <p set:html={marked.parse(notification.otherFilters)}/>
+						<strong>Other options / filters</strong>
+						<p set:html={marked.parse(notification.otherFilters)} />
 
-                    <strong>Included with</strong>
-                    <p set:html={marked.parse(notification.availability)}/>
+						<strong>Included with</strong>
+						<p set:html={marked.parse(notification.availability)} />
 
-                    <strong>What should you do if you receive one?</strong>
-                    <p set:html={marked.parse(notification.nextSteps)}/>
+						<strong>What should you do if you receive one?</strong>
+						<p set:html={marked.parse(notification.nextSteps)} />
 
-                    {
-                        notification.additional_information &&
-                        <strong>Additional information</strong>
-                        <p set:html={marked.parse(notification.additional_information)}/>
-                    }
+						{notification.additional_information && (
+							<>
+								<strong>Additional information</strong>
+								<p
+									set:html={marked.parse(notification.additional_information)}
+								/>
+							</>
+						)}
 
-                    {
-                        notification.limitations &&
-                        <strong>Limitations</strong>
-                        <p set:html={marked.parse(notification.limitations)}/>
-                    }
-                </Details>
-            ))
-        }
-        </>
-    ))
+						{notification.limitations && (
+							<>
+								<strong>Limitations</strong>
+								<p set:html={marked.parse(notification.limitations)} />
+							</>
+						)}
+					</Details>
+				))}
+			</>
+		))
 }

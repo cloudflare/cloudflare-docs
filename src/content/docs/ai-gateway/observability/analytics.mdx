@@ -1,12 +1,20 @@
 ---
 title: Analytics and logging
 pcx_content_type: reference
-
 ---
 
-import { Render, TabItem, Tabs } from "~/components"
+import { Render, TabItem, Tabs } from "~/components";
 
-<Render file="analytics-overview" /> <br/>
+Your AI Gateway dashboard shows metrics on requests, tokens, caching, errors, and cost. You can filter these metrics by time.
+These analytics help you understand traffic patterns, token consumption, and
+potential issues across AI providers. You can
+view the following analytics:
+
+- **Requests**: Track the total number of requests processed by AI Gateway.
+- **Token Usage**: Analyze token consumption across requests, giving insight into usage patterns.
+- **Costs**: Gain visibility into the costs associated with using different AI providers, allowing you to track spending, manage budgets, and optimize resources.
+- **Errors**: Monitor the number of errors across the gateway, helping to identify and troubleshoot issues.
+- **Cached Responses**: View the percentage of responses served from cache, which can help reduce costs and improve speed.
 
 ## View analytics
 
@@ -35,8 +43,11 @@ curl https://api.cloudflare.com/client/v4/graphql \
 
 </TabItem> </Tabs>
 
-<Render file="analytics-warning" />
+:::note[Note]
+
+The cost metric is an estimation based on the number of tokens sent and received in requests. While this metric can help you monitor and predict cost trends, refer to your provider’s dashboard for the most accurate cost details.
+:::
 
 ## Logging
 
-Your AI Gateway dashboard also shows real-time logs of individual requests, such as the prompt, response, provider, timestamps, and whether the request was successful, cached, or if there was an error. These logs do not persist and are deleted after 24 hours.
+Your AI Gateway dashboard also shows real-time logs of individual requests, such as the prompt, response, provider, timestamps, and whether the request was successful, cached, or if there was an error. These logs now persist and can store up to 10,000 logs per gateway for better observability and analysis.

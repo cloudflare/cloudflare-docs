@@ -163,7 +163,7 @@ export interface Env {
 export default {
 	async fetch(request, env, ctx): Promise<Response> {
 		const client = new Client({
-			connectionString: c.env.HYPERDRIVE.connectionString,
+			connectionString: env.HYPERDRIVE.connectionString,
 		});
 
 		try {
