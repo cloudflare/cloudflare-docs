@@ -7,7 +7,7 @@ For IPsec tunnels, the value you need to specify depends on how your network is 
 - **Magic Transit ingress-only traffic (DSR):**
 
   - **On your edge router transit ports**: TCP MSS clamp should be 1,360 bytes maximum.
-  - **On any IPSEC/GRE tunnels with third parties on your Magic Transit prefix**: on the internal tunnel interface (most likely on a separate firewall behind the GRE-terminating router) to reduce its current value by 140 bytes.
+  - **On any IPsec/GRE tunnels with third parties on your Magic Transit prefix**: on the internal tunnel interface (most likely on a separate firewall behind the GRE-terminating router) to reduce its current value by 140 bytes.
 
 - **Magic Transit ingress + egress traffic:**
 
