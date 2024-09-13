@@ -12,9 +12,7 @@ import { TabItem, Tabs, Details } from "~/components";
 
 ## 1. Turn on leaked credentials detection
 
-:::note
-On Free plans, the leaked credentials detection is enabled by default, and no action is required. You can configure whether to add or not the `Exposed-Credential-Check` [managed header](#) to incoming requests when leaked credentials are detected. This option is enabled by default.
-:::
+On Free plans, the leaked credentials detection is enabled by default, and no action is required. You can configure whether to add or not the `Exposed-Credential-Check` header via [managed transform](/rules/transform/managed-transforms/reference/#add-leaked-credentials-header) to incoming requests when leaked credentials are detected. This option is enabled by default.
 
 On paid plans, you can turn on the detection in the Cloudflare dashboard or via API. To achieve optimal latency performance, we recommend turning off the previous version of [Exposed Credentials Checks](/waf/managed-rules/reference/exposed-credentials-check/).
 
