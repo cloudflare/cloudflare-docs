@@ -1,6 +1,5 @@
 ---
-import { Card } from "~/components";
-import { slug } from "github-slugger";
+import { Card } from "@astrojs/starlight/components";
 
 const configuration = Object.entries({
 	available_ports_per_host: {
@@ -64,7 +63,13 @@ const metrics = Object.entries({
 			<div>
 				<label for={key}>{value.title}</label>
 				<br />
-				<input type="number" id={key} name={key} value={value.default} data-tunnel-calculator />
+				<input
+					type="number"
+					id={key}
+					name={key}
+					value={value.default}
+					data-tunnel-calculator
+				/>
 			</div>
 		))
 	}

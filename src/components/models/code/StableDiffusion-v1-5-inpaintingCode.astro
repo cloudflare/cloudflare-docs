@@ -1,11 +1,12 @@
 ---
 import { z } from "astro:schema";
-import { Code, Details } from "~/components";
+import { Code } from "@astrojs/starlight/components";
+import Details from "~/components/Details.astro";
 
 type Props = z.infer<typeof props>;
 
 const props = z.object({
-	name: z.string()
+	name: z.string(),
 });
 
 const { name } = props.parse(Astro.props);
@@ -49,7 +50,6 @@ export default {
 } satisfies ExportedHandler<Env>;
 `;
 
-
 const curl = `
 curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/run/${name}  \\
   -X POST  \\
@@ -60,10 +60,9 @@ curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/run
 
 <h2>Code Examples</h2>
 <Details header="Workers - Typescript">
-  <Code code={worker} lang="ts" />
+	<Code code={worker} lang="ts" />
 </Details>
 
 <Details header="curl">
-  <Code code={curl} lang="sh" />
+	<Code code={curl} lang="sh" />
 </Details>
-

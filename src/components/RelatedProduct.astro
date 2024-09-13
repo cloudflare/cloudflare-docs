@@ -1,6 +1,6 @@
 ---
 import { z } from "astro:schema";
-import { AstroIcon } from "~/components";
+import { Icon as AstroIcon } from "astro-icon/components";
 
 type Props = z.infer<typeof props>;
 
@@ -14,10 +14,15 @@ const { header, href, product } = props.parse(Astro.props);
 ---
 
 <div class="grid grid-cols-[32px_auto] gap-x-2 items-start">
-	<AstroIcon name={product} class="text-[color:var(--orange-accent-200)] text-7xl" />
+	<AstroIcon
+		name={product}
+		class="text-[color:var(--orange-accent-200)] text-7xl"
+	/>
 	<div class="!mt-0">
 		<strong>
-			<a href={href} class="!text-black dark:!text-white decoration-[color:var(--orange-accent-200)]"
+			<a
+				href={href}
+				class="!text-black dark:!text-white decoration-[color:var(--orange-accent-200)]"
 				>{header}</a
 			>
 		</strong>

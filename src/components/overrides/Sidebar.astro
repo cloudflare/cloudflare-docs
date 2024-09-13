@@ -2,7 +2,7 @@
 import type { Props } from "@astrojs/starlight/props";
 import Default from "@astrojs/starlight/components/Sidebar.astro";
 
-import { AstroIcon } from "~/components";
+import { Icon as AstroIcon } from "astro-icon/components";
 import { getEntry } from "astro:content";
 
 const { sidebar, slug } = Astro.props;
@@ -178,7 +178,10 @@ const lookupProductTitle = async (slug: string) => {
 	href={"/" + currentSection + "/"}
 	class="items-center flex hover:opacity-80 decoration-[color:var(--orange-accent-200)]"
 >
-	<AstroIcon name={currentSection} class="text-[color:var(--orange-accent-200)] text-4xl mr-2" />
+	<AstroIcon
+		name={currentSection}
+		class="text-[color:var(--orange-accent-200)] text-4xl mr-2"
+	/>
 	<span class="text-black dark:text-white">
 		<strong>
 			{lookupProductTitle(slug)}
@@ -188,21 +191,21 @@ const lookupProductTitle = async (slug: string) => {
 <Default {...Astro.props} sidebar={filtered.entries}><slot /></Default>
 
 <style is:global>
-:root {
-	a[aria-current="page"] {
-		background-color: var(--sidebar-blue-accent-600) !important;
-		border: 1px solid !important;
-		border-color: var(--blue-accent-900) !important;
-		color: var(--sidebar-blue-text) !important;
+	:root {
+		a[aria-current="page"] {
+			background-color: var(--sidebar-blue-accent-600) !important;
+			border: 1px solid !important;
+			border-color: var(--blue-accent-900) !important;
+			color: var(--sidebar-blue-text) !important;
+		}
 	}
-}
 
-:root[data-theme="dark"] {
-	a[aria-current="page"] {
-		background-color: var(--sidebar-orange-accent-600) !important;
-		border: 1px solid !important;
-		border-color: var(--orange-accent-200) !important;
-		color: var(--sl-color-white) !important;
+	:root[data-theme="dark"] {
+		a[aria-current="page"] {
+			background-color: var(--sidebar-orange-accent-600) !important;
+			border: 1px solid !important;
+			border-color: var(--orange-accent-200) !important;
+			color: var(--sl-color-white) !important;
+		}
 	}
-}
 </style>

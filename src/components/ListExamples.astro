@@ -2,7 +2,9 @@
 import { z } from "astro:schema";
 import { getCollection } from "astro:content";
 import { marked } from "marked";
-import { CardGrid, LinkTitleCard } from "~/components";
+
+import { CardGrid } from "@astrojs/starlight/components";
+import LinkTitleCard from "~/components/LinkTitleCard.astro";
 
 type Props = z.infer<typeof props>;
 
