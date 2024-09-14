@@ -61,6 +61,8 @@ export default {
 };
 ```
 
+You can prevent this by enforcing the [`no-floating-promises` eslint rule](https://typescript-eslint.io/rules/no-floating-promises/), which reports when a Promise is created and not properly handled.
+
 #### Cause 2: WebSocket connections that are never closed
 
 If a WebSocket is missing the proper code to close its server-side connection, the Workers runtime will throw a `script will never generate a response` error. In the example below, the `'close'` event from the client is not properly handled by calling `server.close()`, and the error is thrown. In order to avoid this, ensure that the WebSocket's server-side connection is properly closed via an event listener or other server-side logic.
