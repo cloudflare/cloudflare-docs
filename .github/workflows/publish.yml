@@ -32,4 +32,3 @@ jobs:
             node_modules/.astro/_astro
             node_modules/.astro/assets
           key: static
-
