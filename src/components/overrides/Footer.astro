@@ -5,137 +5,139 @@ import OneTrust from "../OneTrust.astro";
 import { getEntry } from "astro:content";
 
 let links = {
-  "Cloudflare Dashboard": "https://dash.cloudflare.com",
-  Discord: "https://discord.cloudflare.com",
-  Community: "https://community.cloudflare.com",
-  "Learning Center": "https://www.cloudflare.com/learning/",
-  "Support Portal": "/support/contacting-cloudflare-support/",
+	"Cloudflare Dashboard": "https://dash.cloudflare.com",
+	Discord: "https://discord.cloudflare.com",
+	Community: "https://community.cloudflare.com",
+	"Learning Center": "https://www.cloudflare.com/learning/",
+	"Support Portal": "/support/contacting-cloudflare-support/",
 };
 
 const currentSection = Astro.params.slug?.split("/")[0];
 
 if (currentSection) {
-  const product = await getEntry("products", currentSection);
+	const product = await getEntry("products", currentSection);
 
-  if (product) {
-    if (product.data.resources?.dashboard_link) {
-      links["Cloudflare Dashboard"] = product.data.resources.dashboard_link;
-    }
-  }
+	if (product) {
+		if (product.data.resources?.dashboard_link) {
+			links["Cloudflare Dashboard"] = product.data.resources.dashboard_link;
+		}
+	}
 }
 
 const homepageLinks = Object.entries({
-  "Stay in touch": [
-    { text: "GitHub", href: "https://github.com/cloudflare" },
-    { text: "Discord", href: "https://discord.cloudflare.com/" },
-  ],
-  Resources: [
-    { text: "API", href: "/api/" },
-    {
-      text: "New to Cloudflare?",
-      href: "/fundamentals/",
-    },
-    { text: "Products", href: "/products/" },
-    {
-      text: "Sponsorships",
-      href: "/sponsorships/",
-    },
-    { text: "Open Source", href: "https://github.com/cloudflare" },
-  ],
-  Support: [
-    { text: "Help Center", href: "https://support.cloudflare.com/" },
-    { text: "System Status", href: "https://www.cloudflarestatus.com/" },
-    {
-      text: "Compliance",
-      href: "https://www.cloudflare.com/trust-hub/compliance-resources/",
-    },
-    { text: "GDPR", href: "https://www.cloudflare.com/trust-hub/gdpr/" },
-  ],
-  "What we do": [
-    { text: "Our Team", href: "https://www.cloudflare.com/people/" },
-    { text: "Careers", href: "https://www.cloudflare.com/careers/" },
-  ],
-  Tools: [
-    { text: "Cloudflare Radar", href: "https://radar.cloudflare.com/" },
-    { text: "Speed Test", href: "https://speed.cloudflare.com/" },
-    { text: "Is BGP Safe Yet?", href: "https://isbgpsafeyet.com/" },
-    { text: "RPKI Toolkit", href: "https://rpki.cloudflare.com/" },
-    { text: "Certificate Transparency", href: "https://ct.cloudflare.com/" },
-  ],
+	"Stay in touch": [
+		{ text: "GitHub", href: "https://github.com/cloudflare" },
+		{ text: "Discord", href: "https://discord.cloudflare.com/" },
+	],
+	Resources: [
+		{ text: "API", href: "/api/" },
+		{
+			text: "New to Cloudflare?",
+			href: "/fundamentals/",
+		},
+		{ text: "Products", href: "/products/" },
+		{
+			text: "Sponsorships",
+			href: "/sponsorships/",
+		},
+		{ text: "Open Source", href: "https://github.com/cloudflare" },
+	],
+	Support: [
+		{ text: "Help Center", href: "https://support.cloudflare.com/" },
+		{ text: "System Status", href: "https://www.cloudflarestatus.com/" },
+		{
+			text: "Compliance",
+			href: "https://www.cloudflare.com/trust-hub/compliance-resources/",
+		},
+		{ text: "GDPR", href: "https://www.cloudflare.com/trust-hub/gdpr/" },
+	],
+	"What we do": [
+		{ text: "Our Team", href: "https://www.cloudflare.com/people/" },
+		{ text: "Careers", href: "https://www.cloudflare.com/careers/" },
+	],
+	Tools: [
+		{ text: "Cloudflare Radar", href: "https://radar.cloudflare.com/" },
+		{ text: "Speed Test", href: "https://speed.cloudflare.com/" },
+		{ text: "Is BGP Safe Yet?", href: "https://isbgpsafeyet.com/" },
+		{ text: "RPKI Toolkit", href: "https://rpki.cloudflare.com/" },
+		{ text: "Certificate Transparency", href: "https://ct.cloudflare.com/" },
+	],
 });
 
 const homepageLegalLinks = Object.entries({
-  "Privacy Policy": "https://www.cloudflare.com/privacypolicy/",
-  "Terms of Use": "https://www.cloudflare.com/website-terms/",
-  "Report Security Issues": "https://www.cloudflare.com/disclosure/",
-  Trademark: "https://www.cloudflare.com/trademark/",
+	"Privacy Policy": "https://www.cloudflare.com/privacypolicy/",
+	"Terms of Use": "https://www.cloudflare.com/website-terms/",
+	"Report Security Issues": "https://www.cloudflare.com/disclosure/",
+	Trademark: "https://www.cloudflare.com/trademark/",
 });
 
 const isHomepage =
-  Astro.props.siteTitleHref === "/" && Astro.props.id === ".md";
+	Astro.props.siteTitleHref === "/" && Astro.props.id === ".md";
 
 let isProduction = false;
 
-if (import.meta.env.CF_PAGES_BRANCH === "production" || import.meta.env.GITHUB_REF_NAME === "production") {
-  isProduction = true;
+if (
+	import.meta.env.CF_PAGES_BRANCH === "production" ||
+	import.meta.env.GITHUB_REF_NAME === "production"
+) {
+	isProduction = true;
 }
 ---
 
 {
-  isHomepage ? (
-    <>
-      <div class="flex flex-wrap justify-between">
-        {homepageLinks.map(([header, links]) => (
-          <div>
-            <strong>{header}</strong>
-            <ul class="list-none pl-0">
-              {links.map((link) => (
-                <li>
-                  <a
-                    href={link.href}
-                    class="no-underline text-black dark:text-white"
-                  >
-                    {link.text}
-                  </a>
-                </li>
-              ))}
-            </ul>
-          </div>
-        ))}
-      </div>
-      <div>
-        <ul class="list-none pl-0 flex gap-x-2 text-xs">
-          <li>© 2024 Cloudflare, Inc.</li>
-          {homepageLegalLinks.map(([text, href]) => (
-            <li>
-              <a href={href} class="no-underline text-black dark:text-white">
-                {text}
-              </a>
-            </li>
-          ))}
-            {isProduction && <OneTrust />}
-          </li>
-        </ul>
-      </div>
-    </>
-  ) : (
-    <>
-      <Default {...Astro.props} />
-      <div class="items-center flex flex-wrap">
-        {Object.entries(links).map(([text, href]) => (
-          <a
-            href={href}
-            class="mx-2 my-2 text-xs text-black dark:text-white decoration-accent-600 dark:decoration-accent-200"
-          >
-            <span>{text}</span>
-          </a>
-        ))}
-        {isProduction &&
-          <div class="mx-2 my-2 text-xs text-black dark:text-white underline decoration-accent-600 dark:decoration-accent-200">
-            <OneTrust />
-          </div>
-        }
-      </div>
-    </>
-  )
+	isHomepage ? (
+		<>
+			<div class="flex flex-wrap justify-between">
+				{homepageLinks.map(([header, links]) => (
+					<div>
+						<strong>{header}</strong>
+						<ul class="list-none pl-0">
+							{links.map((link) => (
+								<li>
+									<a
+										href={link.href}
+										class="no-underline text-black dark:text-white"
+									>
+										{link.text}
+									</a>
+								</li>
+							))}
+						</ul>
+					</div>
+				))}
+			</div>
+			<div>
+				<ul class="list-none pl-0 flex gap-x-2 text-xs">
+					<li>© 2024 Cloudflare, Inc.</li>
+					{homepageLegalLinks.map(([text, href]) => (
+						<li>
+							<a href={href} class="no-underline text-black dark:text-white">
+								{text}
+							</a>
+						</li>
+					))}
+					{isProduction && <OneTrust />}
+				</ul>
+			</div>
+		</>
+	) : (
+		<>
+			<Default {...Astro.props} />
+			<div class="items-center flex flex-wrap">
+				{Object.entries(links).map(([text, href]) => (
+					<a
+						href={href}
+						class="mx-2 my-2 text-xs text-black dark:text-white decoration-accent-600 dark:decoration-accent-200"
+					>
+						<span>{text}</span>
+					</a>
+				))}
+				{isProduction && (
+					<div class="mx-2 my-2 text-xs text-black dark:text-white underline decoration-accent-600 dark:decoration-accent-200">
+						<OneTrust />
+					</div>
+				)}
+			</div>
+		</>
+	)
 }
