@@ -399,7 +399,7 @@ console.log(rows[1].results);
 D1 supports [SQLite PRAGMA](https://www.sqlite.org/pragma.html) statements. The PRAGMA statement is an SQL extension for SQLite. PRAGMA commands can be used to:
 
 - Modify the behavior of certain SQLite operations
-- Query your schema or table
+- Query the SQLite library for internal data about schemas or tables (but note that PRAGMA statements cannot query the contents of a table)
 - Control environmental variables
 
 For example, D1 supports `PRAGMA table_list` and `PRAGMA table_info`:
