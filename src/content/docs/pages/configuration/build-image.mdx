@@ -1,6 +1,6 @@
 ---
 pcx_content_type: concept
-title: Build system
+title: Build Image
 rss: https://github.com/cloudflare/cloudflare-docs/commits/production/content/pages/_partials/_platform-language-support-and-tools.atom
 ---
 
@@ -12,9 +12,9 @@ import {
 
 Cloudflare Pages' build environment has broad support for a variety of languages, such as Ruby, Node.js, Python, PHP, and Go.
 
-If you need to use a [specific version](/pages/configuration/build-system/#overriding-default-versions) of a language, (for example, Node.js or Ruby) you can specify it by providing an associated environment variable in your build configuration, or setting the relevant file in your source code.
+If you need to use a [specific version](/pages/configuration/build-image/#overriding-default-versions) of a language, (for example, Node.js or Ruby) you can specify it by providing an associated environment variable in your build configuration, or setting the relevant file in your source code.
 
-## Build Image
+## Supported languages and tools
 
 In the following tables, review the preinstalled versions for languages and tools included in the Cloudflare Pages' build image, and the environment variables and/or files available for [overriding the preinstalled version](/pages/configuration/build-system/#overriding-default-versions):
 
@@ -53,12 +53,12 @@ To override default versions of languages and tools in the build system, you can
 
 To set the version using **environment variables**, you can:
 
-1. Find the environment variable name for the language or tool in [this table](/pages/configuration/build-system/#supported-languages-and-tools).
+1. Find the environment variable name for the language or tool in [this table](/pages/configuration/build-image/#supported-languages-and-tools).
 2. Add the environment variable on the dashboard by going to **Settings** > **Environmnet variables** in your Pages project, or [add the environment variable via Wrangler](/workers/configuration/environment-variables/#add-environment-variables-via-wrangler).
 
 Or, to set the version by **adding a file** to your project, you can:
 
-1. Find the environment variable name for the language or tool in [this table](/pages/configuration/build-system/#supported-languages-and-tools).
+1. Find the environment variable name for the language or tool in [this table](/pages/configuration/build-image/#supported-languages-and-tools).
 2. Add the specified file name to the root directory of your project, and add the desired version number as the contents of the file.
 
 For example, if you were previously relying on the default version of Node.js in the v1 build system, to migrate to v2, you must specify that you need Node.js `12.18.0` by setting a `NODE_VERSION = 12.18.0` environment variable or by adding a `.node-version` or `.nvmrc` file to your project with `12.18.0` added as the contents to the file.
@@ -75,7 +75,7 @@ To migrate to this new version, configure your Pages project settings in the das
 2. Select **Workers & Pages** > in **Overview**, select your Pages project.
 3. Go to **Settings** > **Build & deployments** > **Build system version** and select the latest version.
 
-If you were previously relying on the default versions of any languages or tools in the build system, your build may fail when migrating to v2. To fix this, you must specify the version you wish to use by [overriding](/pages/configuration/build-system/#overriding-default-versions) the default versions.
+If you were previously relying on the default versions of any languages or tools in the build system, your build may fail when migrating to v2. To fix this, you must specify the version you wish to use by [overriding](/pages/configuration/build-image/#overriding-default-versions) the default versions.
 
 ### Limitations
 

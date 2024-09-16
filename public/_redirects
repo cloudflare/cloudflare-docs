@@ -779,7 +779,7 @@
 /pages/framework-guides/deploy-a-vue-application/ /pages/framework-guides/deploy-a-vue-site 301
 /pages/how-to/deploy-a-zola-site/ /pages/framework-guides/deploy-a-zola-site/ 301
 /pages/how-to/elderjs/ /pages/framework-guides/deploy-an-elderjs-site/ 301
-/pages/configuration/language-support-and-tools/ /pages/configuration/build-system/ 301
+/pages/configuration/language-support-and-tools/ /pages/configuration/build-image/ 301
 /pages/platform/github-integration/ /pages/configuration/git-integration/ 301
 /pages/platform/direct-uploads/ /pages/get-started/direct-upload/ 301
 /pages/platform/direct-upload/ /pages/get-started/direct-upload/ 301
