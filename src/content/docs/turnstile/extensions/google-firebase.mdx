@@ -29,30 +29,25 @@ It is important to register your web app first to connect it with Turnstile late
 ## Set up Cloudflare Turnstile
 
 1. Create a Cloudflare Turnstile site by going to the [Cloudflare Turnstile dashboard](https://dash.cloudflare.com/?to=/:account/turnstile). 
-2. Create a new widget and get the [sitekey and secret key](/turnstile/get-started/#get-a-sitekey-and-secret-key). 
-  
-  - The domain you configure with the Turnstile widget should be the domain of your web app.
-  - The [widget mode](/turnstile/concepts/widget/) must be **Invisible**.
+2. Create a new widget and get the [sitekey and secret key](/turnstile/get-started/#get-a-sitekey-and-secret-key).
+   - The domain you configure with the Turnstile widget should be the domain of your web app.
+   - The [widget mode](/turnstile/concepts/widget/) must be **Invisible**.
 
 ## Integrate Firebase App Check with Turnstile
 
-### Enable App Check in Firebase.
+1. Enable App Check in Firebase.
+   1. Go to [Cloudflare Turnstile in the Firebase Extensions hub](https://extensions.dev/extensions/cloudflare/cloudflare-turnstile-app-check-provider).
+   2. Install the Cloudflare Turnstile extension to your Firebase project.
+   3. Enable [Cloud Functions](https://cloud.google.com/functions?hl=en), [Artifact Registry](https://cloud.google.com/artifact-registry), and [Secret Manager](https://cloud.google.com/security/products/secret-manager?hl=en).
+   4. Enter the secret key from Cloudflare Turnstile and your Firebase App ID.
+   5. Select **Install extension**.
 
-1. Go to [Cloudflare Turnstile in the Firebase Extensions hub](https://extensions.dev/extensions/cloudflare/cloudflare-turnstile-app-check-provider).
-2. Install the Cloudflare Turnstile extension to your Firebase project.
-3. Enable [Cloud Functions](https://cloud.google.com/functions?hl=en), [Artifact Registry](https://cloud.google.com/artifact-registry), and [Secret Manager](https://cloud.google.com/security/products/secret-manager?hl=en).
-4. Enter the secret key from Cloudflare Turnstile and your Firebase App ID.
-5. Select **Install extension**.
+2. Grant access to the Cloudflare extension under the IAM section of your project by selecting **Grant Access** under **View by Principals**.
+   1. Select `ext-cloudflare-turnstile` from the dropdown menu.
+   2. When filtering the token, select **Service Account Token Creator**.
 
-### Grant access to the Cloudflare extension 
-
-1. Grant access to the Cloudflare extension under the IAM section of your project by selecting **Grant Access** under **View by Principals**.
-2. Select `ext-cloudflare-turnstile` from the dropdown menu.
-3. When filtering the token, select **Service Account Token Creator**.
-
-### Configure Firebase in your app with Turnstile
-
-1. Create an `index.ts` file and add your Firebase configuration.
+3. Configure Firebase in your app with Turnstile
+   1. Create an `index.ts` file and add your Firebase configuration.
 
 ```js
 
@@ -89,7 +84,7 @@ cpo.getToken().then(({ token }) => {
 
 ```
 
-### Verify the App Check token in your web application 
+4. Verify the App Check token in your web application 
 
 :::note
 
