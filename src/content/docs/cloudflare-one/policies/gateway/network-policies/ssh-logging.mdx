@@ -7,6 +7,11 @@ sidebar:
 
 import { Render } from "~/components";
 
+
+:::note
+Cloudflare recommends configuring SSH command logs through our new [Access for Infrastructure](/cloudflare-one/connections/connect-networks/use-cases/ssh/ssh-infrastructure-access/) workflow. Access for Infrastructure supports differing SSH aliases out-of-the-box, custom SSH ports, and Logpush integrations.
+:::
+
 Cloudflare Zero Trust supports SSH proxying and command logging using Secure Web Gateway and the WARP client.
 
 You can create network policies to manage and monitor SSH access to your applications. When a device connects to your origin server over SSH, a session log will be generated showing which user connected, the session duration, and optionally a full replay of all commands run during the session.
@@ -28,7 +33,7 @@ Instead of traditional SSH keys, Gateway uses short-lived certificates to authen
 
 :::note
 
-Other short-lived CAs, such as those used to [secure SSH servers behind Cloudflare Access](/cloudflare-one/identity/users/short-lived-certificates/), are incompatible with the Gateway SSH proxy. For SSH logging to work, you must create a new CA using the `gateway_ca` API endpoint.
+Other short-lived CAs, such as those used to [secure SSH servers behind Cloudflare Access](/cloudflare-one/applications/non-http/short-lived-certificates-legacy/), are incompatible with the Gateway SSH proxy. For SSH logging to work, you must create a new CA using the `gateway_ca` API endpoint.
 :::
 
 To generate a Gateway SSH proxy CA and get its public key:
