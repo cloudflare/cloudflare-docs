@@ -14,7 +14,7 @@ This guide instructs you through:
 - Creating a schema and querying your database via the command-line.
 - Connecting a [Cloudflare Worker](/workers/) to your D1 database to query your D1 database programmatically.
 
-You can perform these tasks through the CLI or through the Cloudflare Dashboard.
+You can perform these tasks through the CLI or through the Cloudflare dashboard.
 
 ## Prerequisites
 
@@ -44,7 +44,7 @@ Create a new Worker as the means to query your database.
 			one: "Hello World example",
 			two: "Hello World Worker",
 			three: "TypeScript",
-		}}
+		}}z
 	/>
 
 	This creates a new `d1-tutorial` directory as illustrated below.
@@ -81,7 +81,7 @@ For example: `CI=true npm create cloudflare@latest d1-tutorial --type=simple --g
 
 <Steps>
 1. Log in to your [Cloudflare dashboard](https://dash.cloudflare.com/sign-up/workers-and-pages).
-2. From the menu, go to your account > **Workers & Pages**.
+2. From the menu, go to your account > **Workers & Pages** > **Overview**.
 3. Select **Create**.
 4. Select **Create Worker**.
 5. Name for your Worker. For this tutorial, name your Worker "d1-tutorial".
@@ -199,7 +199,7 @@ You create bindings by adding them to the Worker you have created.
 <Steps>
 1. From the menu, go to your account > **Workers & Pages** > **Overview**.
 2. Select the "d1-tutorial" Worker you created in [step 1](/d1/get-started/#1-create-a-worker).
-3. Select the **Settings** tab.
+3. Go to the **Settings** tab.
 4. Scroll to **Bindings**, then select **+ Add**.
 5. From the **Add a resource binding** panel, select **D1 database**.
 6. Name your binding in the **Variable name** field, then select the "prod-d1-tutorial" D1 database you created in [step 2](/d1/get-started/#2-create-a-database) from the dropdown menu. For this tutorial, name your binding "DB".
@@ -340,39 +340,47 @@ After configuring your Worker, you can test your project locally before you depl
 You can query your D1 database using your Worker.
 
 <Steps>
-1. Go to the Worker you created > **Workers & Pages**.
+1. Go to your account > **Workers & Pages** > **Overview**.
 2. Select the "d1-tutorial" Worker you created.
-3.
+3. Select **Edit Code**.
+4. Clear the contents of the `worker.js` file, then paste the following code:
+
+	```js
+	export default {
+		async fetch(request, env) {
+			const { pathname } = new URL(request.url);
+
+			if (pathname === "/api/beverages") {
+				// If you did not use `DB` as your binding name, change it here
+				const { results } = await env.DB.prepare(
+					"SELECT * FROM Customers WHERE CompanyName = ?"
+				)
+					.bind("Bs Beverages")
+					.all();
+				return new Response(JSON.stringify(results), {
+					headers: { 'Content-Type': 'application/json' }
+				});
+			}
+
+			return new Response(
+				"Call /api/beverages to see everyone who works at Bs Beverages"
+			);
+		},
+	};
+	```
+5. Select **Save**.
 
 </Steps>
 </TabItem>
 </Tabs>
 
-## 5. Develop locally with Wrangler
+## 5. Deploy your database
 
-While in your project directory, test your database locally.
+Deploy your database on Cloudflare's global network.
 
-<Steps>
-1. Run `wrangler dev`:
+<Tabs syncKey='CLIvDash'> <TabItem label='CLI'>
 
-	```sh
-	npx wrangler dev
-	```
-
-	When you run `wrangler dev`, Wrangler provides a URL (most likely `localhost:8787`) to review your Worker.
-
-2. Navigate to the URL.
-
-	The page displays `Call /api/beverages to see everyone who works at Bs Beverages`.
-
-3. Test your database is running successfully. Add `/api/beverages` to the provided Wrangler URL. For example, `localhost:8787/api/beverages`.
-</Steps>
-
-If successful, the browser displays your data.
-
-## 6. Deploy your database
-
-To deploy your Worker to production, you must first repeat the [database bootstrapping](/d1/get-started/#configure-your-d1-database) steps after replacing the `--local` flag with the `--remote` flag to give your Worker data to read. This creates the database tables and imports the data into the production version of your database, running on Cloudflare's global network.
+To deploy your Worker to production using Wrangler, you must first repeat the [database bootstrapping](/d1/get-started/#configure-your-d1-database) steps after replacing the `--local` flag with the `--remote` flag to give your Worker data to read. This creates the database tables and imports the data into the production version of your database.
 
 <Steps>
 1. Bootstrap your database with the `schema.sql` file you created in step 4:
@@ -396,25 +404,97 @@ To deploy your Worker to production, you must first repeat the [database bootstr
 	```sh output
 	Outputs: https://d1-tutorial.<YOUR_SUBDOMAIN>.workers.dev
 	```
+
+	You can now visit the URL for your newly created project to query your live database.
+
+	For example, if the URL of your new Worker is `d1-tutorial.<YOUR_SUBDOMAIN>.workers.dev`, accessing `https://d1-tutorial.<YOUR_SUBDOMAIN>.workers.dev/api/beverages` sends a request to your Worker that queries your live database directly.
+
+4. Test your database is running successfully. Add `/api/beverages` to the provided Wrangler URL. For example, `https://d1-tutorial.<YOUR_SUBDOMAIN>.workers.dev/api/beverages`.
+
 </Steps>
 
-You can now visit the URL for your newly created project to query your live database.
+</TabItem> <TabItem label='Dashboard'>
+<Steps>
 
-For example, if the URL of your new Worker is `d1-tutorial.<YOUR_SUBDOMAIN>.workers.dev`, accessing `https://d1-tutorial.<YOUR_SUBDOMAIN>.workers.dev/api/beverages` sends a request to your Worker that queries your live database directly.
+1. Go to your account > **Workers & Pages** > **Overview**.
+2. Select your "d1-tutorial" Worker.
+3. Go to the **Deployments** tab.
+4. From the **Version History** table, select **Deploy version**.
+5. From the **Deploy version** page, select **Deploy**.
+
+</Steps>
+
+This deploys the latest version of the Worker code to production.
+
+</TabItem></Tabs>
+
+## 6. (Optional) Develop locally with Wrangler
+
+If you are using D1 with Wrangler, you can test your database locally. While in your project directory:
+
+<Steps>
+1. Run `wrangler dev`:
+
+	```sh
+	npx wrangler dev
+	```
+
+	When you run `wrangler dev`, Wrangler provides a URL (most likely `localhost:8787`) to review your Worker.
+
+2. Navigate to the URL.
+
+	The page displays `Call /api/beverages to see everyone who works at Bs Beverages`.
+
+3. Test your database is running successfully. Add `/api/beverages` to the provided Wrangler URL. For example, `localhost:8787/api/beverages`.
+</Steps>
+
+If successful, the browser displays your data.
+
+:::note
+You can only develop locally if you are using Wrangler. You cannot develop locally through the Cloudflare dashboard.
+:::
 
 ## 7. (Optional) Delete your database
 
-To delete your database, run:
+To delete your **database**, run:
+
+<Tabs syncKey='CLIvDash'> <TabItem label='CLI'>
 
 ```sh
 npx wrangler d1 delete prod-d1-tutorial
 ```
 
-If you want to delete your Worker, run:
+</TabItem><TabItem label='Dashboard'>
+
+<Steps>
+1. Go to your account > **Storages & Databases** > **D1**.
+2. Select your "prod-d1-tutorial" D1 database.
+3. Go to the **Settings** tab.
+4. Select **Delete**.
+5. Type the name of the database ("prod-d1-tutorial") to confirm the deletion.
+</Steps>
+
+</TabItem> </Tabs>
+
+If you want to delete your **Worker**, run:
+
+<Tabs syncKey='CLIvDash'> <TabItem label='CLI'>
 
 ```sh
 npx wrangler delete d1-tutorial
 ```
+
+</TabItem> <TabItem label='Dashboard'>
+
+<Steps>
+1. Go to your account > **Workers & Pages** > **Overview**.
+2. Select your "d1-tutorial" Worker.
+3. Go to the **Settings** tab.
+4. Scroll to the bottom of the page, then select **Delete**.
+5. Type the name of the Worker ("d1-tutorial") to confirm the deletion.
+</Steps>
+
+</TabItem></Tabs>
 
 ## Summary
 
