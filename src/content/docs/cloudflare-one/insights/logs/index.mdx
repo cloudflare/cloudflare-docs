@@ -6,10 +6,9 @@ sidebar:
 head:
   - tag: title
     content: Zero Trust logs
-
 ---
 
-import { DirectoryListing } from "~/components"
+import { DirectoryListing } from "~/components";
 
 Review detailed logs for your Zero Trust organization.
 
@@ -27,7 +26,9 @@ Cloudflare Zero Trust logs are stored for a varying period of time based on the 
 | **Gateway**     | 30 days    | 24 hours    | 30 days                                        | 30 days      | 30 days   |
 | **Enterprise**  | 180 days   | 180 days    | 180 days<sup><a href="#footnote-1">1</a></sup> | 30 days      | 30 days   |
 
-<a name="footnote-1"><sup>1</sup></a> Enterprise users on per query plans cannot store DNS logs via Cloudflare. You can still export logs via [Logpush](logpush/). For more information, contact your account team.
+<a name="footnote-1"><sup>1</sup></a> Enterprise users on per query plans cannot store DNS logs via Cloudflare.
+You can still export logs via [Logpush](/cloudflare-one/insights/logs/logpush/).
+For more information, contact your account team.
 
 ## Customer Metadata Boundary
 
