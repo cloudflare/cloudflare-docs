@@ -198,11 +198,11 @@ You create bindings by adding them to the Worker you have created.
 
 <Steps>
 1. Go to **Workers & Pages** > **Overview**.
-2. Select the "d1-tutorial" Worker you created in [step 1](/d1/get-started/#1-create-a-worker).
-3. Go to the **Settings** tab.
-4. Scroll to **Bindings**, then select **+ Add**.
-5. From the **Add a resource binding** panel, select **D1 database**.
-6. Name your binding in the **Variable name** field, then select the "prod-d1-tutorial" D1 database you created in [step 2](/d1/get-started/#2-create-a-database) from the dropdown menu. For this tutorial, name your binding "DB".
+2. Select the `d1-tutorial` Worker you created in [step 1](/d1/get-started/#1-create-a-worker).
+3. Select **Settings**.
+4. Scroll to **Bindings**, then select **Add**.
+5. Select **D1 database**.
+6. Name your binding in **Variable name**, then select the `prod-d1-tutorial` D1 database you created in [step 2](/d1/get-started/#2-create-a-database) from the dropdown menu. For this tutorial, name your binding `DB`.
 7. Select **Deploy** to deploy your binding. When deploying, there are two options:
 	- **Deploy:** Immediately deploy the binding to 100% of your audience.
 	- **Save version:** Save a version of the binding which you can deploy in the future.
@@ -266,10 +266,10 @@ Use the Dashboard to create a table and populate it with data.
 
 <Steps>
 1. Go to **Storage & Databases** > **D1**.
-2. Select the "prod-d1-tutorial" database you created in [step 2](/d1/get-started/#2-create-a-database).
+2. Select the `prod-d1-tutorial` database you created in [step 2](/d1/get-started/#2-create-a-database).
 3. Select **Create table**.
-4. Name your table. For this tutorial, create a table called "Customers".
-5. Create three columns (add more columns by selecting **+ Add Column**):
+4. Name your table. For this tutorial, create a table called `Customers`.
+5. Create three columns (add more columns by selecting **Add Column**):
 	1. Column Name: `CustomerId`, Type: `integer`, Default Value: `NULL` (leave blank). Set this column as a primary key.
 	2. Column Name: `CompanyName`, Type: `text`, Default Value: `NULL` (leave blank).
 	3. Column Name: `ContactName`, Type: `text`, Default Value: `NULL` (leave blank).
@@ -340,8 +340,8 @@ After configuring your Worker, you can test your project locally before you depl
 You can query your D1 database using your Worker.
 
 <Steps>
-1. Go to your account > **Workers & Pages** > **Overview**.
-2. Select the "d1-tutorial" Worker you created.
+1. Go to **Workers & Pages** > **Overview**.
+2. Select the `d1-tutorial` Worker you created.
 3. Select **Edit Code**.
 4. Clear the contents of the `worker.js` file, then paste the following code:
 
@@ -416,9 +416,9 @@ To deploy your Worker to production using Wrangler, you must first repeat the [d
 </TabItem> <TabItem label='Dashboard'>
 <Steps>
 
-1. Go to your account > **Workers & Pages** > **Overview**.
-2. Select your "d1-tutorial" Worker.
-3. Go to the **Deployments** tab.
+1. Go to **Workers & Pages** > **Overview**.
+2. Select your `d1-tutorial` Worker.
+3. Select **Deployments**.
 4. From the **Version History** table, select **Deploy version**.
 5. From the **Deploy version** page, select **Deploy**.
 
@@ -441,7 +441,7 @@ If you are using D1 with Wrangler, you can test your database locally. While in 
 
 	When you run `wrangler dev`, Wrangler provides a URL (most likely `localhost:8787`) to review your Worker.
 
-2. Navigate to the URL.
+2. Go to the URL.
 
 	The page displays `Call /api/beverages to see everyone who works at Bs Beverages`.
 
@@ -469,11 +469,11 @@ npx wrangler d1 delete prod-d1-tutorial
 </TabItem><TabItem label='Dashboard'>
 
 <Steps>
-1. Go to your account > **Storages & Databases** > **D1**.
-2. Select your "prod-d1-tutorial" D1 database.
-3. Go to the **Settings** tab.
+1. Go to **Storages & Databases** > **D1**.
+2. Select your `prod-d1-tutorial` D1 database.
+3. Select **Settings**.
 4. Select **Delete**.
-5. Type the name of the database ("prod-d1-tutorial") to confirm the deletion.
+5. Type the name of the database (`prod-d1-tutorial`) to confirm the deletion.
 </Steps>
 
 </TabItem> </Tabs>
@@ -491,11 +491,11 @@ npx wrangler delete d1-tutorial
 </TabItem> <TabItem label='Dashboard'>
 
 <Steps>
-1. Go to your account > **Workers & Pages** > **Overview**.
-2. Select your "d1-tutorial" Worker.
-3. Go to the **Settings** tab.
+1. Go to **Workers & Pages** > **Overview**.
+2. Select your `d1-tutorial` Worker.
+3. Select **Settings**.
 4. Scroll to the bottom of the page, then select **Delete**.
-5. Type the name of the Worker ("d1-tutorial") to confirm the deletion.
+5. Type the name of the Worker (`d1-tutorial`) to confirm the deletion.
 </Steps>
 
 </TabItem></Tabs>
