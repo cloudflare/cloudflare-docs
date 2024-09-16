@@ -53,3 +53,28 @@ When rate exceeds:
 - **Period**: _1 minute_
 
 </Example>
+
+## Log requests containing leaked credentials
+
+:::note[Notes]
+
+- Access to the `cf.waf.credential_check.username_and_password_leaked` field requires a Pro plan or above.
+- The _Log_ action requires an Enterprise plan.
+
+:::
+
+Create a [custom rule](/waf/custom-rules/) that logs requests containing a previously leaked set of credentials (username and password).
+
+- **Expression**: If you use the Expression Builder, configure the following expression:
+
+  | Field                    | Operator | Value |
+  | ------------------------ | -------- | ----- |
+  | User and Password Leaked | equals   | True  |
+
+  If you use the Expression Editor, enter the following expression:
+
+  ```txt
+  (cf.waf.credential_check.username_and_password_leaked)
+  ```
+
+- **Action**: _Log_
