@@ -15,66 +15,64 @@ sidebar:
 
 ---
 
-Cloudflare's security tools offer powerful protection for web applications. In this tutorial, we'll explore how to integrate Cloudflare Turnstile, Web Application Firewall (WAF), and Bot Management into an existing authentication system. This combination creates a robust defense against various threats, including automated attacks and malicious login attempts.
+This tutorial will guide you on how to integrate Cloudflare Turnstile, [Web Application Firewall (WAF)](/waf/), and [Bot Management](/bots/get-started/bm-subscription/) into an existing authentication system. This combination creates a robust defense against various threats, including automated attacks and malicious login attempts.
 
 ## Overview
 
-To use WAF and Bot Management, your site must have its DNS pointing through Cloudflare. However, Turnstile can be used independently on any site, even those not on Cloudflare's network. We'll cover how to implement all three, but you can focus on Turnstile if your site isn't on Cloudflare.
+To use WAF and Bot Management, your site must have its DNS pointing through Cloudflare. However, Turnstile can be used independently on any site including those not on Cloudflare's network. This tutorial will cover how to implement all three products, but you can focus on Turnstile if your site is not on Cloudflare's network.
 
-These tools work well together, by working on different layers of the application:
+WAF, Bot Management, and Turnstile work well together by operating on different layers of the application:
 
 - WAF filters malicious traffic based on network signals.
 - Bot Management analyzes requests to identify and mitigate automated threats.
 - Turnstile examines client-side and browser signals to distinguish between human users and bots.
 
-By combining server-side (WAF and Bot Management) and client-side (Turnstile) security measures, you can combine together multiple layers of defense to create a protection system that is difficult for attackers to circumvent.
+By combining server-side (WAF and Bot Management) and client-side (Turnstile) security measures, you can combine multiple layers of defense to create a protection system that is difficult for attackers to circumvent.
 
-## Prerequisites
+## Before you begin
 
-Ensure you have:
+- You must have a Cloudflare account with access to WAF and Bot Management (if using).
+- An existing JavaScript/TypeScript-based route handling authentication.
 
-- A Cloudflare account with access to WAF and Bot Management (if using)
-- An existing JavaScript/TypeScript-based route handling authentication
+This tutorial uses a simple login form written in plain HTML to demonstrate how to integrate Turnstile into your application. In the backend, a stubbed out authentication route, written in TypeScript, will handle the login request. You may replace this with the language of your choice. As long as your language or framework is able to make an external HTTP request to [Turnstile's API](/api/operations/accounts-turnstile-widget-create), you can integrate Turnstile into your application.
 
-In this example, we'll use a simple login form written in plain HTML to demonstrate how to integrate Turnstile into your application. In the backend, we will use a stubbed out authentication route, written in TypeScript, to handle the login request. You may replace this with the language of your choice. As long as your language or framework is able to make an external HTTP request to Turnstile's API, you can integrate Turnstile into your application.
+## Configure WAF and Bot Management
 
-## Configuring WAF and Bot Management
-
-If your site is on Cloudflare's network and under an Enterprise plan, set up WAF and Bot Management:
+If your site is on Cloudflare's network and subscribed to an Enterprise plan, you must configure WAF and Bot Management.
 
 ### Issue challenges for potential bot traffic
 
-1. Log in to your Cloudflare dashboard.
-2. Navigate to Security > WAF.
-3. Create a new custom WAF rule, clicking "Edit expression":
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/) and select your account.
+2. Go to **Security** > **WAF**.
+3. Create a new custom WAF rule by selecting "Edit expression":
    - Field: "Bot Score"
 	 - Operator: "less than or equal to"
 	 - Value: "30"
    - Action: "Managed Challenge"
 
-![WAF rule to challenge bot traffic](~/assets/images/turnstile/complete-tut--rule-definition.png)
 
 This configuration challenges requests with a low bot score, leveraging network signals to identify potential threats before they reach your application. You may customize the score threshold based on your specific use case.
 
-## Setting up Cloudflare Turnstile
+## Set up Cloudflare Turnstile
 
-Turnstile can be used on any site, regardless of whether it's on Cloudflare's network:
+Turnstile can be used on any site, regardless of whether it is on Cloudflare's network:
 
-1. In your Cloudflare dashboard, go to Security > Turnstile.
-2. Create a new Turnstile site.
-3. Add your domain to the Turnstile configuration.
+1.Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/) and select your account.
+2. Go to **Security** > **Turnstile**.
+3. Select **Add a widget** and fill out the necessary information.
+4. Add your domain to the Turnstile configuration.
+5. Select **Create**.
 
 Turnstile adds an extra layer of security by analyzing browser and client-side signals, complementing the server-side checks performed by WAF and Bot Management.
 
-![Turnstile admin](~/assets/images/turnstile/complete-tut--admin.png)
 
 ### Enable the option to use the existing clearance cookie
 
-If your site is on Cloudflare, enable the option to use the existing clearance cookie in Turnstile settings. This integration allows Turnstile to use the Clearance Cookie as part of its determination of whether a user should receive a challenge. This integration is optional, but if you already are making use of WAF and Bot Management, it's recommended to enable this option.
+If your site is on Cloudflare, you can enable the option to use the existing [clearance cookie](/turnstile/concepts/pre-clearance-support/) in Turnstile's settings. This integration allows Turnstile to use the clearance cookie as part of its determination of whether a user should receive a challenge. This integration is optional, but recommended if you already are using WAF and Bot Management.
 
 ## Integrating Turnstile into Your Application
 
-There are two components to integrating Turnstile into your application: the Turnstile widget and the server-side validation logic.
+There are two components to implementing Turnstile into your application: the Turnstile widget and the server-side validation logic.
 
 ### Add the Turnstile widget to your login form
 
@@ -93,9 +91,8 @@ Add the Turnstile widget to your existing login form:
 
 Replace `YOUR_SITE_KEY` with your actual Turnstile site key.
 
-![Turnstile widget in a login form](~/assets/images/turnstile/complete-tut--frontend.png)
 
-## Handling the Login Request
+## Handle the login request
 
 In your existing authentication route, add Turnstile validation:
 
@@ -152,7 +149,7 @@ async function checkCredentials(username: string, password: string): Promise<boo
 }
 ```
 
-This setup ensures that the Turnstile token is validated server-side before proceeding with the login process, adding an extra layer of security based on client-side signals.
+This setup ensures that the Turnstile token is validated on the server-side before proceeding with the login process, adding an extra layer of security based on client-side signals.
 
 ## Testing
 
@@ -161,9 +158,9 @@ After deployment, you will want to test your integration. Because your bot score
 1) Add a WAF rule that always forwards your IP address to the challenge page.
 2) Add a WAF rule that checks for the presence of a query parameter, such as `?challenge=true`.
 
-## Best Practices
+## Best practices
 
-1. Always validate the Turnstile token server-side before checking credentials.
+1. Always validate the Turnstile token on the server-side before checking credentials.
 2. Use environment variables to store sensitive information like your Turnstile secret key.
 3. Implement proper error handling and logging to monitor for potential security issues.
 
@@ -171,7 +168,7 @@ By combining Turnstile with WAF and Bot Management, you can create a system that
 
 ## Resources
 
-If you're interested in customizing Turnstile, here are some additional resources to check out next:
+If you are interested in customizing Turnstile, refer to the resources below for more information:
 
 - **[Client-side rendering](/turnstile/get-started/client-side-rendering/)**. Learn how to customize how and when Turnstile renders in your user interface, to better fit your application's needs and user experience.
 - **[Server-side validation](/turnstile/get-started/server-side-validation/)**. Learn how Turnstile's API works, including request parameters, as well as how to handle different types of responses, including error codes.
