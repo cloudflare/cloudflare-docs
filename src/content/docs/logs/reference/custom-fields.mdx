@@ -57,9 +57,9 @@ Perform the following steps to create the rule:
 1. Use the [List existing rulesets](/ruleset-engine/rulesets-api/view/#list-existing-rulesets) operation to check if there is already a ruleset for the `http_log_custom_fields` phase at the zone level (you can only have one zone ruleset per phase):
 
    ```bash
-   curl "https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/rulesets" \
-   -H "X-Auth-Email: <EMAIL>" \
-   -H "X-Auth-Key: <API_KEY>"
+   curl https://api.cloudflare.com/client/v4/zones/{zone_id}/rulesets \
+   --header "X-Auth-Email: <EMAIL>" \
+   --header "X-Auth-Key: <API_KEY>"
    ```
 
    If there is a ruleset for the `http_log_custom_fields` phase at the zone level, take note of the ruleset ID.
@@ -67,8 +67,7 @@ Perform the following steps to create the rule:
 2. (Optional) If the response did not include a ruleset with `"kind": "zone"` and `"phase": "http_log_custom_fields"`, create the phase entry point ruleset using the [Create ruleset](/ruleset-engine/rulesets-api/create/) operation:
 
    ```bash
-   curl -X POST \
-   "https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/rulesets" \
+   curl https://api.cloudflare.com/client/v4/zones/{zone_id}/rulesets \
    --header "X-Auth-Email: <EMAIL>" \
    --header "X-Auth-Key: <API_KEY>" \
    --header "Content-Type: application/json" \
@@ -87,8 +86,8 @@ Perform the following steps to create the rule:
    The following example configures custom fields with the names of the HTTP request headers, HTTP response headers, and cookies you wish to include in Logpush logs:
 
    ```bash
-   curl -X PUT \
-   "https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/rulesets/<RULESET_ID>" \
+   curl --request PUT \
+   https://api.cloudflare.com/client/v4/zones/{zone_id}/rulesets/{ruleset_id}} \
    --header "X-Auth-Email: <EMAIL>" \
    --header "X-Auth-Key: <API_KEY>" \
    --header "Content-Type: application/json" \
@@ -101,7 +100,7 @@ Perform the following steps to create the rule:
          "action_parameters": {
            "request_fields": [
              { "name": "content-type" },
-             { "name": "x-forwarded-for"},
+             { "name": "x-forwarded-for" },
              { "name": "host" }
            ],
            "response_fields": [
@@ -112,7 +111,7 @@ Perform the following steps to create the rule:
            "cookie_fields": [
              { "name": "__ga" },
              { "name": "accountNumber" },
-             { "name": "__cfruid"}
+             { "name": "__cfruid" }
            ]
          }
        }
@@ -138,7 +137,7 @@ Perform the following steps to create the rule:
            "action_parameters": {
              "request_fields": [
                { "name": "content-type" },
-               { "name": "x-forwarded-for"},
+               { "name": "x-forwarded-for" },
                { "name": "host" }
              ],
              "response_fields": [
@@ -149,7 +148,7 @@ Perform the following steps to create the rule:
              "cookie_fields": [
                { "name": "__ga" },
                { "name": "accountNumber" },
-               { "name": "__cfruid"}
+               { "name": "__cfruid" }
              ]
            },
            "expression": "true",
@@ -174,20 +173,20 @@ Next, include `Cookies`, `RequestHeaders`, and/or `ResponseHeaders`, depending o
 
 For example, consider the following request that creates a job that includes custom fields:
 
-```json
-curl -X POST \
-"https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/logpush/jobs" \
--H "X-Auth-Email: <EMAIL>" \
--H "X-Auth-Key: <API_KEY>" \
--d '{
-  "name":"<DOMAIN_NAME>",
+```bash
+curl https://api.cloudflare.com/client/v4/zones/{zone_id}/logpush/jobs \
+--header "X-Auth-Email: <EMAIL>" \
+--header "X-Auth-Key: <API_KEY>" \
+--header "Content-Type: application/json" \
+--data '{
+  "name": "<DOMAIN_NAME>",
   "destination_conf": "s3://<BUCKET_PATH>?region=us-west-2",
   "dataset": "http_requests",
   "output_options": {
-      "field_names": ["RayID", "EdgeStartTimestamp", "Cookies", "RequestHeaders", "ResponseHeaders"],
-      "timestamp_format": "rfc3339"
-    },
-  "ownership_challenge":"00000000000000000000"
+    "field_names": ["RayID", "EdgeStartTimestamp", "Cookies", "RequestHeaders", "ResponseHeaders"],
+    "timestamp_format": "rfc3339"
+  },
+  "ownership_challenge": "<OWNERSHIP_CHALLENGE_TOKEN>"
 }'
 ```
 
