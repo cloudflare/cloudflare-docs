@@ -73,6 +73,7 @@ export const baseSchema = z.object({
 	operation: z.string().array().optional(),
 	sidebar: z
 		.object({
+			order: z.number().optional(),
 			group: z
 				.object({
 					label: z
