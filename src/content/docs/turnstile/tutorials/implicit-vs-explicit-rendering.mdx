@@ -181,7 +181,7 @@ turnstile.remove(widgetId)
 
 This will not call any callback and will remove all related DOM elements.
 
-## Server-side Verification
+## Server-side validation
 
 Regardless of the rendering method, Turnstile tokens need to be verified using `siteverify` because the front-end widget creates a cryptographically secured token. To ensure that a token is not forged by an attacker or has not been consumed yet, it is necessary to check the validity of the token using Cloudflare's siteverify API.
 
