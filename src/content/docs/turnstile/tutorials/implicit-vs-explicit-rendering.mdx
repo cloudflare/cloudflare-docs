@@ -150,9 +150,36 @@ Here's a complete HTML and JavaScript example:
 </body>
 </html>
 ```
-The Turnstile API script loads and calls onTurnstileLoad upon completion.
-turnstile.render() is used to manually render the widget in the specified container.
-The callback function handles the response token, which you can use for server-side verification.
+In the code above, The Turnstile script loads and calls `onTurnstileLoad` upon completion. `turnstile.render()` is used to manually render the widget in the specified container. The callback function handles the response token, which you can use for server-side verification.
+
+If the invocation is successful, the function returns a widgetId (string). If the invocation is unsuccessful, the function returns undefined.
+
+After rendering the Turnstile widget explicitly, you may need to interact with it based on your application's requirements. Here's how you can manage the widget's state:
+
+### Reset a Widget
+
+To reset the widget if for example the given widget timed out or expired you can use the function:
+
+```js
+turnstile.reset(widgetId);
+```
+
+### Get the Response Token
+Retrieve the current response token at any time:
+
+```js
+const responseToken = turnstile.getResponse(widgetId);
+```
+
+### Remove a widget
+
+When a widget is no longer needed, it can be removed from the page using:
+
+```js
+turnstile.remove(widgetId)
+```
+This will not call any callback and will remove all related DOM elements.
+
 
 ## Server-side Verification
 
