@@ -47,30 +47,6 @@ For example, if you use Gatsby, your `package.json` should include the following
 
 When your build starts, if not already [cached](/pages/configuration/build-caching/), version 5.13.7 of Gatsby will be installed using `npm install`.
 
-## V2 build system
-
-The [v2 build system](https://blog.cloudflare.com/moderizing-cloudflare-pages-builds-toolbox/) announced in May 2023 brings several improvements to project builds.
-
-### V1 to V2 Migration
-
-To migrate to this new version, configure your Pages project settings in the dashboard:
-
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) and select your account.
-2. Select **Workers & Pages** > in **Overview**, select your Pages project.
-3. Go to **Settings** > **Build & deployments** > **Build system version** and select the latest version.
-
-If you were previously relying on the default versions of any languages or tools in the build system, your build may fail when migrating to v2. To fix this, you must specify the version you wish to use by [overriding the default versions](/pages/configuration/build-system/#overriding-default-versions).
-
-### Limitations
-
-Here are some limitations with the v2 build system:
-
-- Specifying Node.js versions as codenames (for example, `hydrogen` or `lts/hydrogen`).
-- Detecting Yarn version from `yarn.lock` file version.
-- Detecting pnpm version detection based `pnpm-lock.yaml` file version.
-- Detecting Node.js and package managers from `package.json` -> `"engines"`.
-- `pipenv` and `Pipfile` support.
-
 ## Overriding Default Versions
 
 To override default versions of languages and tools in the build system, you can either set the desired version through environment variables or by adding files to your project.
@@ -86,6 +62,30 @@ Or, to set the version by **adding a file** to your project, you can:
 2. Add the specified file name to the root directory of your project, and add the desired version number as the contents of the file.
 
 For example, if you were previously relying on the default version of Node.js in the v1 build system, to migrate to v2, you must specify that you need Node.js `12.18.0` by setting a `NODE_VERSION = 12.18.0` environment variable or by adding a `.node-version` or `.nvmrc` file to your project with `12.18.0` added as the contents to the file.
+
+## V2 build system
+
+The [v2 build system](https://blog.cloudflare.com/moderizing-cloudflare-pages-builds-toolbox/) announced in May 2023 brings several improvements to project builds.
+
+### V1 to V2 Migration
+
+To migrate to this new version, configure your Pages project settings in the dashboard:
+
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) and select your account.
+2. Select **Workers & Pages** > in **Overview**, select your Pages project.
+3. Go to **Settings** > **Build & deployments** > **Build system version** and select the latest version.
+
+If you were previously relying on the default versions of any languages or tools in the build system, your build may fail when migrating to v2. To fix this, you must specify the version you wish to use by [overriding](/pages/configuration/build-system/#overriding-default-versions) the default versions.
+
+### Limitations
+
+Here are some limitations with the v2 build system:
+
+- Specifying Node.js versions as codenames (for example, `hydrogen` or `lts/hydrogen`).
+- Detecting Yarn version from `yarn.lock` file version.
+- Detecting pnpm version detection based `pnpm-lock.yaml` file version.
+- Detecting Node.js and package managers from `package.json` -> `"engines"`.
+- `pipenv` and `Pipfile` support.
 
 ## Build environment
 
