@@ -14,13 +14,11 @@ Cloudflare Pages' build environment has broad support for a variety of languages
 
 If you need to use a [specific version](/pages/configuration/build-system/#overriding-default-versions) of a language, (for example, Node.js or Ruby) you can specify it by providing an associated environment variable in your build configuration, or setting the relevant file in your source code.
 
-## Supported languages and tools
+## Build Image
 
-Cloudflare Pages offers a [v1 and v2 build system](/pages/configuration/build-system/#v2-build-system) with different language and tooling versions supported. You can [override the default versions](/pages/configuration/build-system/#overriding-default-versions) of languages and tools in both build systems.
+In the following tables, review the preinstalled versions for languages and tools included in the Cloudflare Pages' build image, and the environment variables and/or files available for [overriding the preinstalled version](/pages/configuration/build-system/#overriding-default-versions):
 
 ### Languages and runtime
-
-In the following table, review the preinstalled versions for languages and runtime included in the Cloudflare Pages' build system, and the environment variables and/or files available for overriding the preinstalled version:
 
 <PagesBuildEnvironmentLanguages />
 
@@ -30,8 +28,6 @@ Under Supported versions, "Any version" refers to support for all versions of th
 
 ### Tools
 
-In the following table, review the preinstalled versions for tools included in the Cloudflare Pages' build system, and the environment variables available for overriding the preinstalled version:
-
 <PagesBuildEnvironmentTools />
 
 :::note[Any version]
@@ -40,7 +36,16 @@ Under Supported versions, "Any version" refers to support for all versions of th
 
 ### Frameworks
 
-If you want to set a specific version of a framework your Cloudflare Pages project is using, Pages will respect your package manager of choice during your build process. For example, if you use Gatsby, your `package.json` should indicate a version of the `gatsby` npm package, which will be installed using `npm install` as your project builds on Cloudflare Pages.
+To use a specific version of a framework, specify it in the project's package manager configuration file.
+For example, if you use Gatsby, your `package.json` should include the following:
+
+```
+"dependencies": {
+	"gatsby": "^5.13.7",
+}
+```
+
+When your build starts, if not already [cached](/pages/configuration/build-caching/), version 5.13.7 of Gatsby will be installed using `npm install`.
 
 ## V2 build system
 
@@ -72,12 +77,12 @@ To override default versions of languages and tools in the build system, you can
 
 To set the version using **environment variables**, you can:
 
-1. Find the environment variable name for the language or tool on [this page](/pages/configuration/build-system/#supported-languages-and-tools).
+1. Find the environment variable name for the language or tool in [this table](/pages/configuration/build-system/#supported-languages-and-tools).
 2. Add the environment variable on the dashboard by going to **Settings** > **Environmnet variables** in your Pages project, or [add the environment variable via Wrangler](/workers/configuration/environment-variables/#add-environment-variables-via-wrangler).
 
 Or, to set the version by **adding a file** to your project, you can:
 
-1. Find the environment variable name for the language or tool on [this page](/pages/configuration/build-system/#supported-languages-and-tools).
+1. Find the environment variable name for the language or tool in [this table](/pages/configuration/build-system/#supported-languages-and-tools).
 2. Add the specified file name to the root directory of your project, and add the desired version number as the contents of the file.
 
 For example, if you were previously relying on the default version of Node.js in the v1 build system, to migrate to v2, you must specify that you need Node.js `12.18.0` by setting a `NODE_VERSION = 12.18.0` environment variable or by adding a `.node-version` or `.nvmrc` file to your project with `12.18.0` added as the contents to the file.
