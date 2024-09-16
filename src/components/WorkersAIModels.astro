@@ -1,20 +1,27 @@
 ---
+import type { ComponentProps } from "astro/types";
 import { getCollection } from "astro:content";
-import { slug } from "github-slugger";
-import { AnchorHeading, InlineBadge } from "~/components";
+
+import AnchorHeading from "~/components/AnchorHeading.astro";
+import InlineBadge from "~/components/InlineBadge.astro";
 
 const models = await getCollection("workers-ai-models");
 const mapped = models.map((x) => x.data);
 const grouped = Object.groupBy(mapped, (entry) => entry.task_type);
 const entries = Object.entries(grouped).reverse();
+
+type InlineBadgeProps = ComponentProps<typeof InlineBadge>;
 ---
 
 {
 	entries.map(([_, models]) => (
 		<>
-			<AnchorHeading depth={2} title={models?.at(0).model.task.name} />
+			<AnchorHeading
+				depth={2}
+				title={models?.at(0)?.model?.task?.name ?? "Unknown"}
+			/>
 
-			<p>{models?.at(0).model.task.description}</p>
+			<p>{models?.at(0)?.model?.task?.description ?? "Unknown"}</p>
 
 			<table>
 				<thead>
@@ -25,39 +32,44 @@ const entries = Object.entries(grouped).reverse();
 				</thead>
 				<tbody>
 					{models?.map((model) => {
-						const badges = model.model.properties.flatMap(
-							({ property_id, value }) => {
+						const badges = model.model.properties
+							.flatMap(({ property_id, value }): InlineBadgeProps | null => {
 								if (property_id === "beta" && value === "true") {
 									return {
 										preset: "beta",
-									};
+										text: "Beta",
+									} as const;
 								}
 
 								if (property_id === "lora" && value === "true") {
 									return {
-										variant: "tip", text: "LoRA",
-									};
+										variant: "tip",
+										text: "LoRA",
+									} as const;
 								}
 
 								if (property_id === "function_calling" && value === "true") {
 									return {
-										variant: "note", text: "Function calling",
-									};
+										variant: "note",
+										text: "Function calling",
+									} as const;
 								}
 
 								if (property_id === "planned_deprecation_date") {
-									const timestamp = Math.floor(new Date(value).getTime() / 1000)
+									const timestamp = Math.floor(
+										new Date(value).getTime() / 1000,
+									);
 
 									if (Date.now() > timestamp) {
-										return { variant: "danger", text: "Deprecated" }
+										return { variant: "danger", text: "Deprecated" };
 									}
 
 									return { variant: "danger", text: "Planned deprecation" };
 								}
 
-								return [];
-							},
-						);
+								return null;
+							})
+							.filter(Boolean) as InlineBadgeProps[];
 
 						return (
 							<tr>

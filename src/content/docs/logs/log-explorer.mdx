@@ -58,17 +58,17 @@ The following curl command is an example for enabling `http_requests`, as well a
 
 ```bash
 curl https://api.cloudflare.com/client/v4/zones/{zone_id}/logs/explorer/datasets \
-  --header 'Authorization: Bearer <API_TOKEN>' \
-  --header 'Content-Type: application/json' \
-  --data '{
+--header "Authorization: Bearer <API_TOKEN>" \
+--header "Content-Type: application/json" \
+--data '{
   "dataset": "http_requests"
 }'
 ```
 
-```bash
+```json
 {
   "result": {
-    "id": 1,
+    "id": <JOB_ID>,
     "dataset": "http_requests",
     "created_at": "2023-09-25T22:12:31Z",
     "updated_at": "2023-09-25T22:12:31Z"
@@ -110,13 +110,13 @@ For example, to find an HTTP request with a specific [Ray ID](/fundamentals/refe
 
 ```bash
 curl https://api.cloudflare.com/client/v4/zones/{zone_id}/logs/explorer/query/sql \
-  --header "Authorization: Bearer <API_TOKEN>" \
-  --url-query query="SELECT clientRequestScheme, clientRequestHost, clientRequestMethod, edgeResponseStatus, clientRequestUserAgent FROM http_requests WHERE RayID = '806c30a3cec56817' LIMIT 1"
+--header "Authorization: Bearer <API_TOKEN>" \
+--url-query query="SELECT clientRequestScheme, clientRequestHost, clientRequestMethod, edgeResponseStatus, clientRequestUserAgent FROM http_requests WHERE RayID = '806c30a3cec56817' LIMIT 1"
 ```
 
 Which returns the following HTTP request details:
 
-```bash
+```json
 {
   "result": [
     {
@@ -154,8 +154,8 @@ All the tables supported by Log Explorer contain a special column called `date`,
 
 ```bash
 curl https://api.cloudflare.com/client/v4/zones/{zone_id}/logs/explorer/query/sql \
-  --header 'Authorization: Bearer <API_TOKEN>' \
-  --url-query query="SELECT clientRequestMethod, clientRequestPath, clientRequestProtocol FROM http_requests WHERE date = '2023-10-12' LIMIT 500"
+--header "Authorization: Bearer <API_TOKEN>" \
+--url-query query="SELECT clientRequestMethod, clientRequestPath, clientRequestProtocol FROM http_requests WHERE date = '2023-10-12' LIMIT 500"
 ```
 
 ### Additional query optimization tips

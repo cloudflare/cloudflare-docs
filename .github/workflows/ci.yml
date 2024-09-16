@@ -35,8 +35,11 @@ jobs:
             ${{ runner.os }}-node-
 
       - run: npm ci
+      - run: npm run check
 
-      - run: npx astro build
+      ## TODO: formatting checks
+
+      - run: npm run build
         env:
           NODE_OPTIONS: "--max-old-space-size=4192"
           RUN_LINK_CHECK: true
