@@ -8,27 +8,27 @@ sidebar:
 
 ## Endpoints
 
-The table below summarizes the job operations available for both Logpush and Edge Log Delivery jobs. Make sure that Account-scoped datasets use `/accounts/{account_id}` and Zone-scoped use `/zone/{zone_id}`. For more information, refer to the [Log fields](/logs/reference/log-fields/) page.
+The table below summarizes the job operations available for both Logpush and Edge Log Delivery jobs. Make sure that Account-scoped datasets use `/accounts/{account_id}` and Zone-scoped datasets use `/zone/{zone_id}`. For more information, refer to the [Log fields](/logs/reference/log-fields/) page.
 
-The `{zone_id}` argument is the zone id (hexadecimal string). The `{account_id}` argument is the organization id (hexadecimal string). These arguments can be found using [API's zones endpoint](/fundamentals/setup/find-account-and-zone-ids/).
-The `{job_id}` argument is the numeric job id. The `{dataset_id}` argument indicates the log category (such as `http_requests`, `spectrum_events`, `firewall_events`, `nel_reports`, or `dns_logs`).
+You can locate `{zone_id}` and `{account_id}` arguments based on the [Find zone and account IDs](/fundamentals/setup/find-account-and-zone-ids/) page.
+The `{job_id}` argument is numeric, like 123456.
+The `{dataset_id}` argument indicates the log category (such as `http_requests` or `audit_logs`).
 
 
 
-| Operation | Description                                 | API                                                                                                                                                                                                              |
-| --------- | ------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `POST`    | Create job                                  | [Zone-scoped job](/api/operations/post-zones-zone_identifier-logpush-jobs) / [Account-scoped job](/api/operations/post-accounts-account_identifier-logpush-jobs)                                                 |
-| `GET`     | Retrieve job                                | [Zone-scoped job](/api/operations/get-zones-zone_identifier-logpush-jobs-job_identifier) / [Account-scoped job](/api/operations/get-accounts-account_identifier-logpush-jobs-job_identifier)                     |
-| `GET`     | Retrieve all jobs for all datasets          | [Zone-scoped jobs](/api/operations/get-zones-zone_identifier-logpush-jobs) / [Account-scoped jobs](/api/operations/get-accounts-account_identifier-logpush-jobs)                                                 |
-| `GET`     | Retrieve all jobs for a dataset             | [Zone-scoped jobs](/api/operations/get-zones-zone_identifier-logpush-datasets-dataset-jobs) / [Account-scoped jobs](/api/operations/get-accounts-account_identifier-logpush-datasets-dataset-jobs)               |
-| `GET`     | Retrieve all available fields for a dataset | [Zone-scoped fields](/api/operations/get-zones-zone_identifier-logpush-datasets-dataset-fields) / [Account-scoped fields](/api/operations/get-accounts-account_identifier-logpush-datasets-dataset-fields)       |
-| `PUT`     | Update job                                  | [Zone-scoped job](/api/operations/put-zones-zone_identifier-logpush-jobs-job_identifier) / [Account-scoped job](/api/operations/put-accounts-account_identifier-logpush-jobs-job_identifier)                     |
-| `DELETE`  | Delete job                                  | [Zone-scoped job](/api/operations/delete-zones-zone_identifier-logpush-jobs-job_identifier) / [Account-scoped job](/api/operations/delete-accounts-account_identifier-logpush-jobs-job_identifier)               |
-| `POST`    | Check whether destination exists            | [Zone-scoped job](/api/operations/post-zones-zone_identifier-logpush-validate-destination-exists) / [Account-scoped job](/api/operations/delete-accounts-account_identifier-logpush-validate-destination-exists) |
-| `POST`    | Get ownership challenge                     | [Zone-scoped job](/api/operations/post-zones-zone_identifier-logpush-ownership) / [Account-scoped job](/api/operations/post-accounts-account_identifier-logpush-ownership)                                       |
-| `POST`    | Validate ownership challenge                | [Zone-scoped job](/api/operations/post-zones-zone_identifier-logpush-ownership-validate) / [Account-scoped job](/api/operations/post-accounts-account_identifier-logpush-ownership-validate)                     |
-| `POST`    | Validate log options                        | [Zone-scoped job](/api/operations/post-zones-zone_identifier-logpush-validate-origin) / [Account-scoped job](/api/operations/post-accounts-account_identifier-logpush-validate-origin)                           |
-
+| Operation | Description                                 | API                                                                                                                                                                                              |
+| --------- | ------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `POST`    | Create job                                  | [Zone-scoped job](/api/operations/post-zones-zone_id-logpush-jobs) / [Account-scoped job](/api/operations/post-accounts-account_id-logpush-jobs)                                                 |
+| `GET`     | Retrieve job details                        | [Zone-scoped job](/api/operations/get-zones-zone_id-logpush-jobs-job_id) / [Account-scoped job](/api/operations/get-accounts-account_id-logpush-jobs-job_id)                                     |
+| `GET`     | Retrieve all jobs for all datasets          | [Zone-scoped jobs](/api/operations/get-zones-zone_id-logpush-jobs) / [Account-scoped jobs](/api/operations/get-accounts-account_id-logpush-jobs)                                                 |
+| `GET`     | Retrieve all jobs for a dataset             | [Zone-scoped jobs](/api/operations/get-zones-zone_id-logpush-datasets-dataset_id-jobs) / [Account-scoped jobs](/api/operations/get-accounts-account_id-logpush-datasets-dataset_id-jobs)         |
+| `GET`     | Retrieve all available fields for a dataset | [Zone-scoped fields](/api/operations/get-zones-zone_id-logpush-datasets-dataset_id-fields) / [Account-scoped fields](/api/operations/get-accounts-account_id-logpush-datasets-dataset_id-fields) |
+| `PUT`     | Update job                                  | [Zone-scoped job](/api/operations/put-zones-zone_id-logpush-jobs-job_id) / [Account-scoped job](/api/operations/put-accounts-account_id-logpush-jobs-job_id)                                     |
+| `DELETE`  | Delete job                                  | [Zone-scoped job](/api/operations/delete-zones-zone_id-logpush-jobs-job_id) / [Account-scoped job](/api/operations/delete-accounts-account_id-logpush-jobs-job_id)                               |
+| `POST`    | Check whether destination exists            | [Zone-scoped job](/api/operations/post-zones-zone_id-logpush-validate-destination-exists) / [Account-scoped job](/api/operations/delete-accounts-account_id-logpush-validate-destination-exists) |
+| `POST`    | Get ownership challenge                     | [Zone-scoped job](/api/operations/post-zones-zone_id-logpush-ownership) / [Account-scoped job](/api/operations/post-accounts-account_id-logpush-ownership)                                       |
+| `POST`    | Validate ownership challenge                | [Zone-scoped job](/api/operations/post-zones-zone_id-logpush-ownership-validate) / [Account-scoped job](/api/operations/post-accounts-account_id-logpush-ownership-validate)                     |
+| `POST`    | Validate log options                        | [Zone-scoped job](/api/operations/post-zones-zone_id-logpush-validate-origin) / [Account-scoped job](/api/operations/post-accounts-account_id-logpush-validate-origin)                           |
 
 
 For concrete examples, refer to the tutorials in [Logpush examples](/logs/tutorials/examples/).
@@ -135,14 +135,6 @@ Response
   "success": true
 }
 ```
-
-## Job object
-
-:::note[Note]
-
-
-For a detailed description, refer to the [API documentation](/api/operations/get-zones-zone_identifier-logpush-jobs).
-
 
 :::
 
