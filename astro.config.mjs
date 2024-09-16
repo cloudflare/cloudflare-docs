@@ -14,6 +14,8 @@ import { readdir } from "fs/promises";
 import icon from "astro-icon";
 import sitemap from "@astrojs/sitemap";
 
+const runLinkCheck = import.meta.env.RUN_LINK_CHECK || false;
+
 async function autogenSections() {
 	const sections = (
 		await readdir("./src/content/docs/", {
@@ -151,33 +153,42 @@ export default defineConfig({
 				"./src/table.css",
 				"./src/tailwind.css",
 			],
-			plugins: [
-				starlightLinksValidator({
-					errorOnInvalidHashes: false,
-					exclude: [
-						"/api/",
-						"/api/operations/**",
-						"/changelog/",
-						"/http/resources/**",
-						"{props.*}",
-						"/",
-						"**/glossary/?term=**",
-						"/products/?product-group=*",
-						"/products/",
-						"/rules/snippets/examples/?operation=*",
-						"/rules/transform/examples/?operation=*",
-						"/workers/examples/?languages=*",
-						"/workers/examples/?tags=*",
-						"/workers-ai/models/**",
+			plugins: runLinkCheck
+				? [
+						starlightLinksValidator({
+							errorOnInvalidHashes: false,
+							exclude: [
+								"/api/",
+								"/api/operations/**",
+								"/changelog/",
+								"/http/resources/**",
+								"{props.*}",
+								"/",
+								"**/glossary/?term=**",
+								"/products/?product-group=*",
+								"/products/",
+								"/rules/snippets/examples/?operation=*",
+								"/rules/transform/examples/?operation=*",
+								"/workers/examples/?languages=*",
+								"/workers/examples/?tags=*",
+								"/workers-ai/models/**",
+							],
+						}),
+						starlightDocSearch({
+							appId: "8MU1G3QO9P",
+							apiKey: "4edb0a6cef3338ff4bcfbc6b3d2db56b",
+							indexName: "TEST - Re-dev docs",
+						}),
+						starlightImageZoom(),
+					]
+				: [
+						starlightDocSearch({
+							appId: "8MU1G3QO9P",
+							apiKey: "4edb0a6cef3338ff4bcfbc6b3d2db56b",
+							indexName: "TEST - Re-dev docs",
+						}),
+						starlightImageZoom(),
 					],
-				}),
-				starlightDocSearch({
-					appId: "8MU1G3QO9P",
-					apiKey: "4edb0a6cef3338ff4bcfbc6b3d2db56b",
-					indexName: "TEST - Re-dev docs",
-				}),
-				starlightImageZoom(),
-			],
 		}),
 		tailwind({
 			applyBaseStyles: false,
