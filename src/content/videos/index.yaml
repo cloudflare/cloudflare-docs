@@ -156,3 +156,16 @@ entries:
     difficulty: Beginner
     content_type: 🎥 Video
     pcx_content_type: tutorial
+  - link: https://youtu.be/9IjfyBJsJRQ
+    title: Use Vectorize to add additional context to your AI Applications through RAG
+    description: A RAG based AI Chat app that uses Vectorize to access video game data for employees of Gamertown.
+    tags: [Workers, AI, Vectorize, RAG, Hono]
+    languages: [TypeScript]
+    products: [Workers, Workers AI, Vectorize]
+    cloudflare: true
+    # stream_id: 0b251ede0256f04f24f9127587e0c3aa
+    author: craig
+    updated: 2024-09-12
+    difficulty: Intermediate
+    content_type: 🎥 Video
+    pcx_content_type: tutorial

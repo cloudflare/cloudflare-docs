@@ -325,3 +325,11 @@ entries:
     languages: [TypeScript]
     cloudflare: false
     updated: 2024-08-29
+  - link: https://github.com/craigsdennis/gamertown-workers-ai-vectorize
+    name: Gamertown Customer Support Assistant
+    description: A RAG based AI Chat app that uses Vectorize to access video game data for employees of Gamertown.
+    tags: [AI, Hono, Vectorize]
+    products: [Workers, Workers AI, Vectorize]
+    languages: [TypeScript]
+    cloudflare: true
+    updated: 2024-09-12
