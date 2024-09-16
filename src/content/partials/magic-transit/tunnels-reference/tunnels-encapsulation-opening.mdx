@@ -2,7 +2,7 @@
 inputParameters: productName;;mssURL;;productURL;;tunnelEndpoints
 ---
 
-import { GlossaryTooltip, Markdown } from "~/components";
+import { GlossaryTooltip, Markdown, Details } from "~/components";
 
 ## Tunnels and encapsulation
 
@@ -100,7 +100,7 @@ In summary, an IKE SA is created that uses certain cryptographic transforms. Tha
 
 Below is a list of the configuration parameters supported by Magic WAN. Choose which ones to use based on what your appliance supports.
 
-#### IKE SA
+<Details header="IKE SA">
 
 IKE SA is sometimes referred to as Phase 1 as per IKEv1 language.
 
@@ -126,7 +126,9 @@ IKE SA is sometimes referred to as Phase 1 as per IKEv1 language.
   - SHA2-384
   - SHA2-512
 
-#### IPsec
+</Details>
+
+<Details header="IPsec">
 
 The Child SA. Sometimes referred to as Phase 2 as per IKEv1 language.
 
@@ -152,7 +154,9 @@ The Child SA. Sometimes referred to as Phase 2 as per IKEv1 language.
   - DH group 14 (2048-bit MODP group)
   - DH group 5 (1536-bit MODP group)
 
-#### Required configuration parameters
+</Details>
+
+<Details header="Required configuration parameters">
 
 - The IKE version must be IKEv2.
 - The IKE authentication method must be Pre-Shared Key (PSK).
@@ -160,20 +164,33 @@ The Child SA. Sometimes referred to as Phase 2 as per IKEv1 language.
 - (Uncommon) Extended Sequence Numbers (ESN) must be disabled.
 - If your tunnels need replay protection, enable Dead Peer Detection (DPD) in your router and select the option that restarts your IKE session when a DPD timeout occurs. This "restart" option ensures that the connection can recover in the event that a Cloudflare server goes offline. If your router does not expose this setting, check the router documentation for its dead peer detection behavior.
 
-#### Optional configuration parameters
+</Details>
+
+<Details header="Optional configuration parameters">
 
 - Disable <a href={props.three}>anti-replay protection</a>.
 - **`NULL` encryption for IPsec:** This option should not be used unless necessary as it reduces security because IPsec traffic is not encrypted. You must explicitly opt in to use this option.
+
+</Details>
 
 ### Supported IKE ID formats
 
 {props.one} supports the following IKE ID types for IPsec:
 
-| RFC name         | Format                                                | Example                                                                 |
-| ---------------- | ----------------------------------------------------- | ----------------------------------------------------------------------- |
-| `ID_RFC822_ADDR` | `ipsec@<TUNNEL_ID>.<ACCOUNT_ID>.ipsec.cloudflare.com` | `ipsec@f5407d8db1a542b196c59f6d04ba8bd1.123456789.ipsec.cloudflare.com` |
-| `ID_FQDN`        | `<TUNNEL_ID>.<ACCOUNT_ID>.ipsec.cloudflare.com`       | `f5407d8db1a542b196c59f6d04ba8bd1.123456789.ipsec.cloudflare.com`       |
-| `ID_KEY_ID`      | `<ACCOUNT_ID>_<TUNNEL_ID>`                            | `123456789_f5407d8db1a542b196c59f6d04ba8bd1`                            |
+<Details header="RFC name `ID_RFC822_ADDR`">
+- **Format**: `ipsec@<TUNNEL_ID>.<ACCOUNT_ID>.ipsec.cloudflare.com`
+- **Example**: `ipsec@f5407d8db1a542b196c59f6d04ba8bd1.123456789.ipsec.cloudflare.com`
+</Details>
+
+<Details header="RFC name `ID_FQDN`">
+- **Format**: `<TUNNEL_ID>.<ACCOUNT_ID>.ipsec.cloudflare.com`
+- **Example**: `f5407d8db1a542b196c59f6d04ba8bd1.123456789.ipsec.cloudflare.com`
+</Details>
+
+<Details header="RFC name `ID_KEY_ID`">
+- **Format**: `<ACCOUNT_ID>_<TUNNEL_ID>`
+- **Example**: `123456789_f5407d8db1a542b196c59f6d04ba8bd1`
+</Details>
 
 Additionally, the IKE ID type of `ID_IPV4_ADDR` is supported if the following two conditions are met:
 
