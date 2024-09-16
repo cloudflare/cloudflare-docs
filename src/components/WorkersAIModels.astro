@@ -1,7 +1,9 @@
 ---
 import { getCollection } from "astro:content";
 import { slug } from "github-slugger";
-import { AnchorHeading, InlineBadge } from "~/components";
+
+import AnchorHeading from "~/components/AnchorHeading.astro";
+import InlineBadge from "~/components/InlineBadge.astro";
 
 const models = await getCollection("workers-ai-models");
 const mapped = models.map((x) => x.data);
@@ -35,21 +37,25 @@ const entries = Object.entries(grouped).reverse();
 
 								if (property_id === "lora" && value === "true") {
 									return {
-										variant: "tip", text: "LoRA",
+										variant: "tip",
+										text: "LoRA",
 									};
 								}
 
 								if (property_id === "function_calling" && value === "true") {
 									return {
-										variant: "note", text: "Function calling",
+										variant: "note",
+										text: "Function calling",
 									};
 								}
 
 								if (property_id === "planned_deprecation_date") {
-									const timestamp = Math.floor(new Date(value).getTime() / 1000)
+									const timestamp = Math.floor(
+										new Date(value).getTime() / 1000,
+									);
 
 									if (Date.now() > timestamp) {
-										return { variant: "danger", text: "Deprecated" }
+										return { variant: "danger", text: "Deprecated" };
 									}
 
 									return { variant: "danger", text: "Planned deprecation" };

@@ -1,4 +1,5 @@
-import { getCollection, z } from "astro:content";
+import { z } from "astro:schema";
+import { getCollection } from "astro:content";
 import { type CollectionEntry } from "astro:content";
 
 export async function getChangelogs(opts?: { filter?: Function, wranglerOnly?: boolean }) {
