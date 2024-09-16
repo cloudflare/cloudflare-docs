@@ -17,7 +17,10 @@ curl https://api.cloudflare.com/client/v4/zones/{zone_id}/logs/control/retention
 </TabItem> <TabItem label="CMD">
 
 ```txt
-curl.exe "https://api.cloudflare.com/client/v4/zones/{zone_id}/logs/control/retention/flag" --header "Authorization: Bearer <API_TOKEN>" --data "{""flag"": true}"
+curl.exe "https://api.cloudflare.com/client/v4/zones/{zone_id}/logs/control/retention/flag" ^
+--header "Authorization: Bearer <API_TOKEN>" ^
+--header "Content-Type: application/json" ^
+--data "{""flag"": true}"
 ```
 
 </TabItem> <TabItem label="PowerShell">
