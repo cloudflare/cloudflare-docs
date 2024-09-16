@@ -13,8 +13,10 @@ import { h } from "hastscript";
 import { readdir } from "fs/promises";
 import icon from "astro-icon";
 import sitemap from "@astrojs/sitemap";
+import * as core from "@actions/core";
 
-const runLinkCheck = import.meta.env.RUN_LINK_CHECK || false;
+const runLinkCheck =
+	core.getInput("RUN_LINK_CHECK", { required: false }) || false;
 
 async function autogenSections() {
 	const sections = (
