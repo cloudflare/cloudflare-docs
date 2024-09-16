@@ -50,7 +50,7 @@ Alternatively, create a WAF custom rule like the one described in the next step 
 
 ## 3. Mitigate requests with leaked credentials
 
-If you are on a Free plan, deploy the suggested [rate limiting rule](/waf/rate-limiting-rules/) template available in **WAF** > **Rate limiting**. When you deploy a rule using this template, you get instant protection against IPs attempting to access your application with a leaked password more than 5 times per 10 seconds. This rule can delay attacks by blocking them for a period of time.
+If you are on a Free plan, deploy the suggested [rate limiting rule](/waf/rate-limiting-rules/) template available in **WAF** > **Rate limiting rules**. When you deploy a rule using this template, you get instant protection against IPs attempting to access your application with a leaked password more than 5 times per 10 seconds. This rule can delay attacks by blocking them for a period of time.
 
 Paid plans have access to more granular controls when creating a WAF rule. If you are on a paid plan, create a [custom rule](/waf/custom-rules/) that logs requests containing leaked credentials.
 
@@ -146,7 +146,7 @@ You only need to provide an expression for the username in custom detection loca
 
 ---
 
-# Test your configuration
+## Test your configuration
 
 Cloudflare provides a special set of case-sensitive credentials for testing the configuration of the leaked credentials detection.
 
