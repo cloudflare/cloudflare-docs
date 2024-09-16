@@ -8,6 +8,9 @@ entries:
   - publish_date: "2024-09-19"
     description: |-
       -  Revamped Workers and Pages UI settings to simplify the creation and management of project configurations. For bugs and general feedback, please submit this [form](https://forms.gle/XXqhRGbZmuzninuN9).
+  - publish_date: '2024-09-16'
+    description: |-
+      - Updated v8 to version 12.9.
   - publish_date: "2024-08-19"
     description: |-
       -  Workers now support the [`allow_custom_ports` compatibility flag](/workers/configuration/compatibility-dates/#allow-specifying-a-custom-port-when-making-a-subrequest-with-the-fetch-api) which enables using the `fetch()` calls to custom ports.
