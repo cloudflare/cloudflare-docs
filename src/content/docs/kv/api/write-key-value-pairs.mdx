@@ -116,11 +116,11 @@ To create expiring keys, set `expiration` in the `put()` options to a number rep
 
 ```js
 await env.NAMESPACE.put(key, value, {
-  metadata: {expiration: secondsSinceEpoch},
+  expiration: secondsSinceEpoch,
 });
 
 await env.NAMESPACE.put(key, value, {
-  metadata: {expirationTtl: secondsFromNow},
+  expirationTtl: secondsFromNow,
 });
 ```
 
