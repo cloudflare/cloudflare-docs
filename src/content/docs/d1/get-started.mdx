@@ -261,20 +261,20 @@ Use the Dashboard to create a table and populate it with data.
 <Steps>
 1. Go to **Storage & Databases** > **D1**.
 2. Select the `prod-d1-tutorial` database you created in [step 2](/d1/get-started/#2-create-a-database).
-3. Select **Create table**.
-4. Name your table. For this tutorial, create a table called `Customers`.
-5. Create three columns (add more columns by selecting **Add Column**):
-	1. Column Name: `CustomerId`, Type: `integer`, Default Value: `NULL` (leave blank). Set this column as a primary key.
-	2. Column Name: `CompanyName`, Type: `text`, Default Value: `NULL` (leave blank).
-	3. Column Name: `ContactName`, Type: `text`, Default Value: `NULL` (leave blank).
-6. Select **Create**.
-7. Select the **Customers** table.
-8. Select **Add data** to populate the columns of the table. Select **Save** to add the row to the table. Add the following rows:
-	1. CustomerId: `1`, CompanyName: `Alfreds Futterkiste`, ContactName: `Maria Anders`.
-	2. CustomerId: `4`, CompanyName: `Around the Horn`, ContactName: `Thomas Hardy`.
-	3. CustomerId: `11`, CompanyName: `Bs Beverages`, ContactName: `Victoria Ashworth`.
-	4. CustomerId: `13`, CompanyName: `Bs Beverages`, ContactName: `Random Name`.
+3. Select **Console**.
+4. Paste the following SQL snippet.
+
+	```sql
+	DROP TABLE IF EXISTS Customers;
+	CREATE TABLE IF NOT EXISTS Customers (CustomerId INTEGER PRIMARY KEY, CompanyName TEXT, ContactName TEXT);
+	INSERT INTO Customers (CustomerID, CompanyName, ContactName) VALUES (1, 'Alfreds Futterkiste', 'Maria Anders'), (4, 'Around the Horn', 'Thomas Hardy'), (11, 'Bs Beverages', 'Victoria Ashworth'), (13, 'Bs Beverages', 'Random Name');
+	```
+
+5. Select **Execute**. This creates a table called `Customers` in your `prod-d1-tutorial` database.
+6. Select **Tables**, then select the `Customers` table to view the contents of the table.
+
 </Steps>
+
 </TabItem>
 </Tabs>
 
