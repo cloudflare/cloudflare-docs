@@ -1109,18 +1109,18 @@
 				"availability": {
 					"title": "Availability",
 					"summary": "Available on all plans",
-          "free": "Yes",
-          "pro": "Yes",
-          "biz": "Yes",
-          "ent": "Yes"
-        },
-        "num_rules": {
-          "title": "Number of rules",
-          "free": 10,
-          "pro": 25,
-          "biz": 50,
-          "ent": 125
-        }
+					"free": "Yes",
+					"pro": "Yes",
+					"biz": "Yes",
+					"ent": "Yes"
+				},
+				"num_rules": {
+					"title": "Number of rules",
+					"free": 10,
+					"pro": 25,
+					"biz": 50,
+					"ent": 125
+				}
 			}
 		},
 		"origin_rules": {
