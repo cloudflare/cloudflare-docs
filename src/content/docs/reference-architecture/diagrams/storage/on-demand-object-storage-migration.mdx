@@ -26,7 +26,8 @@ Here's how Sippy works: it will first attempt to retrieve an object from R2 stor
 
 ## On-demand Object Storage Data Migration with Sippy
 
-![Figure 1: R2 On-demand Object Storage Data Migration with Sippy](~/assets/images/reference-architecture/on-demand-object-storage-migration/sippy-migration-diagram.svg "Figure 1: On-demand Object Storage Data Migration with Sippy")
+![Figure 1: R2 On-demand Object Storage Data Migration with Sippy](~/assets/images/reference-architecture/on-demand-object-storage-migration/sippy-migration-diagram.svg)
+_Figure 1: On-demand Object Storage Data Migration with Sippy_
 
 1. The client requests an object from R2 using[ Workers](https://developers.cloudflare.com/r2/api/workers/),[ S3 API](https://developers.cloudflare.com/r2/api/s3/), or[ public bucket](https://developers.cloudflare.com/r2/buckets/public-buckets/).
 2. If the object is found in your R2 bucket it is served to the client.

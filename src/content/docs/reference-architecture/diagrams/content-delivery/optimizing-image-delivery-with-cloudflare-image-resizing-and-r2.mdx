@@ -26,7 +26,8 @@ Optimizing image delivery for websites is crucial for enhancing user experience.
 
 ## Image Delivery with Cloudflare Image Resizing and R2
 
-![Figure 1: Cloudflare Image Resizing and R2](~/assets/images/reference-architecture/optimizing-image-delivery-with-cloudflare-image-resizing-and-r2-diagrams/optimizing-image-delivery-with-cloudflare-image-resizing-and-r2-diagram.svg "Figure 1: Cloudflare Image Resizing and R2")
+![Figure 1: Cloudflare Image Resizing and R2](~/assets/images/reference-architecture/optimizing-image-delivery-with-cloudflare-image-resizing-and-r2-diagrams/optimizing-image-delivery-with-cloudflare-image-resizing-and-r2-diagram.svg)
+_Figure 1: Cloudflare Image Resizing and R2_
 
 1. **User Request**: The user sends an HTTP request for an image (image.jpg), specifying transformations like width and quality directly in the URL as a comma-separated list of options.
 2. **Cache Hit**: Cloudflare processes the request at the point of presence closest to the user. It first checks if the requested image transformation is already in Cloudflare’s Cache. If so, the image is immediately returned to the user, eliminating the need for further processing. If not, the request moves to the next step.

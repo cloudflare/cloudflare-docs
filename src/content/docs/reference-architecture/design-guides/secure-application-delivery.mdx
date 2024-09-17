@@ -12,11 +12,13 @@ head:
 
 Cloudflare provides a complete suite of services around application performance, security, reliability, development, and zero trust. Cloudflare’s global network is approximately 50 ms away from about 95% of the Internet-connected population and consists of services that run on every server in every data center. The global scale of Cloudflare also allows for a robust threat intelligence source which is constantly fed back into Cloudflare security products to enhance the machine learning models and services even further.
 
-![Cloudflare provides application performance and security services that run on every server in every data center, ensuring the highest level of performance regardless of user location.](~/assets/images/reference-architecture/secure-application-delivery-design-guide/secure-app-dg-fig-1.png "Figure 1: Cloudflare services run on every server in every data center")
+![Cloudflare provides application performance and security services that run on every server in every data center, ensuring the highest level of performance regardless of user location.](~/assets/images/reference-architecture/secure-application-delivery-design-guide/secure-app-dg-fig-1.png)
+_Figure 1: Cloudflare services run on every server in every data center_
 
 Other differentiators include the fact that Cloudflare is not a point product unlike some vendors who only offer API security or zero trust services or specific performance/security services. Customers have started moving away from the point-product approach due to operational and management complexities, inefficiencies related to not being able to leverage cross-product innovation/integrations, and not being able to leverage scale of the network/resources across all services.
 
-![Cloudflare’s global platform integrates zero trust, network and application services through several product suites including Cloudflare One, Cloudflare’s Developer Platform and our compliance and privacy features.](~/assets/images/reference-architecture/secure-application-delivery-design-guide/secure-app-dg-fig-2.png "Figure 2: Cloudflare Global Cloud Platform.")
+![Cloudflare’s global platform integrates zero trust, network and application services through several product suites including Cloudflare One, Cloudflare’s Developer Platform and our compliance and privacy features.](~/assets/images/reference-architecture/secure-application-delivery-design-guide/secure-app-dg-fig-2.png)
+_Figure 2: Cloudflare Global Cloud Platform._
 
 Additionally, customers do not want to be locked in to a specific cloud provider, but many performance and security vendors lock customers into their platform by focusing on and optimizing services to their own cloud and making it operationally difficult to adopt a multi-cloud strategy.
 
@@ -34,7 +36,8 @@ Normal traffic flow without a reverse proxy would involve a client sending a DNS
 
 When a reverse proxy is introduced, the client still sends a DNS lookup request to its resolver, which is the first stop in the DNS lookup. In some cases, the vendor providing the reverse proxy also provides DNS services; this is visualized in Figure 3 below. However, the client now communicates to the reverse proxy and the reverse proxy communicates to the origin server(s). This traffic flow, where all traffic passes through the reverse proxy, allows for additional application security, performance, and reliability services to be implemented easily for applications.
 
-![Cloudflare provides reverse proxy functionality between clients and origin servers, enabling greater user and application security.](~/assets/images/reference-architecture/multi-vendor-architecture-images/Figure_3.png "Figure 3: Same vendor providing DNS and security/performance services via proxy.")
+![Cloudflare provides reverse proxy functionality between clients and origin servers, enabling greater user and application security.](~/assets/images/reference-architecture/multi-vendor-architecture-images/Figure_3.png)
+_Figure 3: Same vendor providing DNS and security/performance services via proxy._
 
 In this example, we have a website running on one of the major cloud providers and we want to use Cloudflare DNS, CDN, WAF, and Access. We want to start with these services for demonstration purposes; customers can expand these to include other Cloudflare services as desired. Cloudflare provides the benefit of decoupling all services from the cloud provider and if we want to change cloud providers later or protect other applications running in other clouds, the dashboard and operations all stay consistent.
 
@@ -48,7 +51,8 @@ In the most basic scenario, the Cloudflare proxy will route the request traffic 
 
 The below diagram describes the default connectivity to origins as requests flow through the Cloudflare network. When a request for the origin resolves to an IP hosted by Cloudflare, that request is then handled by the Cloudflare network and forwarded onto the origin server over the public Internet.
 
-![Cloudflare provides application performance and security services over Internet connectivity.](~/assets/images/reference-architecture/secure-application-delivery-design-guide/secure-app-dg-fig-4.png "Figure 4: Connectivity from Cloudflare to origin server(s) via Internet")
+![Cloudflare provides application performance and security services over Internet connectivity.](~/assets/images/reference-architecture/secure-application-delivery-design-guide/secure-app-dg-fig-4.png)
+_Figure 4: Connectivity from Cloudflare to origin server(s) via Internet_
 
 The origin is connected directly to the Internet and traffic is routed to the origin based on the IP address resolved by Cloudflare DNS. The DNS A record associates the domain name with the IP address of the origin server(s) or typically a load balancer the origin(s) are sitting behind.
 
@@ -72,7 +76,8 @@ Cloudflared creates an encrypted tunnel between your origin web server(s) and Cl
 
 The firewall and security posture is hardened by locking down all origin server ports and protocols via your firewall. Once Cloudflare Tunnel is in place and respective security applied, all requests on HTTP/S ports are dropped, including volumetric DDoS attacks. Data breach attempts, such as snooping of data in transit or brute force login attacks, are blocked entirely.
 
-![aCloudflare provides application performance and security services securely with Cloudflare Tunnel over the Internet.](~/assets/images/reference-architecture/secure-application-delivery-design-guide/secure-app-dg-fig-5.png "Figure 5: Connectivity from Cloudflare to origin server(s) via Cloudflare Tunnel")
+![aCloudflare provides application performance and security services securely with Cloudflare Tunnel over the Internet.](~/assets/images/reference-architecture/secure-application-delivery-design-guide/secure-app-dg-fig-5.png)
+_Figure 5: Connectivity from Cloudflare to origin server(s) via Cloudflare Tunnel_
 
 The above diagram describes the connectivity model through Cloudflare Tunnel. This option provides you with a secure way to connect your resources to Cloudflare without a publicly routable IP address. Cloudflare Tunnel can connect HTTP web servers, SSH servers, remote desktops, and other protocols safely to Cloudflare.
 
@@ -80,7 +85,8 @@ The above diagram describes the connectivity model through Cloudflare Tunnel. Th
 
 Most vendors also provide an option of directly connecting to their network. Direct connections provide security, reliability, and performance benefits over using the public Internet. These direct connections are done at peering facilities, Internet exchanges (IXs) where Internet service providers (ISPs) and Internet networks can interconnect with each other, or through vendor partners.
 
-![Cloudflare provides application performance and security services over a direct connection, Cloudflare Network Interconnect.](~/assets/images/reference-architecture/secure-application-delivery-design-guide/secure-app-dg-fig-6.png "Figure 6: Connectivity from Cloudflare to origin server(s) via Cloudflare Network Interconnect (CNI)")
+![Cloudflare provides application performance and security services over a direct connection, Cloudflare Network Interconnect.](~/assets/images/reference-architecture/secure-application-delivery-design-guide/secure-app-dg-fig-6.png)
+_Figure 6: Connectivity from Cloudflare to origin server(s) via Cloudflare Network Interconnect (CNI)_
 
 The above diagram describes origin connectivity through [Cloudflare Network Interconnect (CNI)](https://blog.cloudflare.com/cloudflare-network-interconnect/) which allows you to connect your network infrastructure directly with Cloudflare and communicate only over those direct links. CNI allows customers to interconnect branch and headquarter locations directly with Cloudflare. Customers can interconnect with Cloudflare in one of three ways: over a private network interconnect (PNI) available at [Cloudflare peering facilities](https://www.peeringdb.com/net/4224), via an IX at any of the [many global exchanges Cloudflare participates in](https://bgp.he.net/AS13335#_ix), or through one of Cloudflare’s [interconnection platform partners](https://blog.cloudflare.com/cloudflare-network-interconnect-partner-program).
 
@@ -100,7 +106,8 @@ In this example, we’ll connect our origin server to Cloudflare securely with C
 
 If Cloudflare is configured for just routing over the Internet, the DNS configuration would look something like below, where the A record points to the IP address of the origin server or respective load balancer. As Cloudflare is acting as a reverse proxy, the status shows as Proxied." As is, Cloudflare is still acting as a reverse proxy so all the Cloudflare services such as CDN, WAF, and Access can be used.
 
-![Typical configuration for directing traffic through Cloudflare network.](~/assets/images/reference-architecture/secure-application-delivery-design-guide/secure-app-dg-fig-7.png "Figure 7: DNS configuration for 'cftestsite3.com' - pointing to IP address of origin or load balancer.")
+![Typical configuration for directing traffic through Cloudflare network.](~/assets/images/reference-architecture/secure-application-delivery-design-guide/secure-app-dg-fig-7.png)
+_Figure 7: DNS configuration for 'cftestsite3.com' - pointing to IP address of origin or load balancer._
 
 We can also use Cloudflare Tunnel over the Internet to provide for more security and to prevent the need for opening any inbound firewall rules to the origin(s). In this way, instead of an A record in the DNS configuration, we will have a CNAME record pointing to the tunnel we deploy. Here we deploy a tunnel from the origin to the Cloudflare network, and the DNS will automatically be configured. A CNAME record that points to the tunnel will be created; this enforces all traffic going to the origin(s) be routed over the Cloudflare Tunnel.
 
@@ -112,77 +119,94 @@ A remotely-managed tunnel only requires the tunnel token to run. Anyone with acc
 
 In the Cloudflare dashboard, navigate to Zero Trust > Access > Tunnels. Select the "Create a tunnel" button, name the tunnel, and save.
 
-![Cloudflare allows for easily creating and naming a tunnel.](~/assets/images/reference-architecture/secure-application-delivery-design-guide/secure-app-dg-fig-8.png "Figure 8: Cloudflare Tunnel Creation.")
+![Cloudflare allows for easily creating and naming a tunnel.](~/assets/images/reference-architecture/secure-application-delivery-design-guide/secure-app-dg-fig-8.png)
+_Figure 8: Cloudflare Tunnel Creation._
 
 Next, you’ll be presented with a screen where you select the operating system (OS) of your origin server. You will then be provided a CLI command that you can run on your origin that will automatically download and install the Cloudflare Tunnel software.
 
-![Cloudflare supports tunnel deployment/configuration for all popular operating systems.](~/assets/images/reference-architecture/secure-application-delivery-design-guide/secure-app-dg-fig-9.png "Figure 9: Instructions to install and run a connector.")
+![Cloudflare supports tunnel deployment/configuration for all popular operating systems.](~/assets/images/reference-architecture/secure-application-delivery-design-guide/secure-app-dg-fig-9.png)
+_Figure 9: Instructions to install and run a connector._
 
 Below, the CLI command has been run to download and install the Cloudflare Tunnel software.
 
-![Cloudflare supports easy deployment/configuration of Cloudflare Tunnel via CLI.](~/assets/images/reference-architecture/secure-application-delivery-design-guide/secure-app-dg-fig-10.png "Figure 10: Downloading and installing Cloudflare Tunnel")
+![Cloudflare supports easy deployment/configuration of Cloudflare Tunnel via CLI.](~/assets/images/reference-architecture/secure-application-delivery-design-guide/secure-app-dg-fig-10.png)
+_Figure 10: Downloading and installing Cloudflare Tunnel_
 
 The connector will now automatically be displayed as connected.
 
-![On successful configuration, Cloudflare displays the Connectors and status of connection to Cloudflare network.](~/assets/images/reference-architecture/secure-application-delivery-design-guide/secure-app-dg-fig-11.png "Figure 11: Cloudflare Tunnel Connectors showing in dashboard.")
+![On successful configuration, Cloudflare displays the Connectors and status of connection to Cloudflare network.](~/assets/images/reference-architecture/secure-application-delivery-design-guide/secure-app-dg-fig-11.png)
+_Figure 11: Cloudflare Tunnel Connectors showing in dashboard._
 
 In the dashboard, you can now continue with the next step which is to create the tunnel and map it to a service on the origin as shown below. In this case, all HTTPS traffic will be sent over the tunnel to the origin server.
 
-![Cloudflare Tunnel configuration allows for routing traffic to specific services running on the origin.](~/assets/images/reference-architecture/secure-application-delivery-design-guide/secure-app-dg-fig-12.png "Figure 12: Cloudflare Tunnel Configuration.")
+![Cloudflare Tunnel configuration allows for routing traffic to specific services running on the origin.](~/assets/images/reference-architecture/secure-application-delivery-design-guide/secure-app-dg-fig-12.png)
+_Figure 12: Cloudflare Tunnel Configuration._
 
 You can now see in the dashboard that the tunnel has been created and is healthy.
 
-![Cloudflare provides health status of deployed tunnels.](~/assets/images/reference-architecture/secure-application-delivery-design-guide/secure-app-dg-fig-13.png "Figure 13: Cloudflare Tunnel is created and healthy.")
+![Cloudflare provides health status of deployed tunnels.](~/assets/images/reference-architecture/secure-application-delivery-design-guide/secure-app-dg-fig-13.png)
+_Figure 13: Cloudflare Tunnel is created and healthy._
 
 Further, if we look at the DNS configuration, we can see a DNS record was automatically created pointing to the tunnel ID. When you create a tunnel, Cloudflare generates a subdomain of `cfargotunnel.com` with the UUID of the created tunnel. Unlike publicly routable IP addresses, the subdomain will only proxy traffic for a DNS record in the same Cloudflare account. It’s not possible for another user to create a DNS record in another account or system to proxy traffic over this tunnel.
 
-![Cloudflare Tunnel automatically creates a CNAME DNS entry directing traffic to the deployed tunnel](~/assets/images/reference-architecture/secure-application-delivery-design-guide/secure-app-dg-fig-14.png "Figure 14: Cloudflare DNS CNAME record automatically created")
+![Cloudflare Tunnel automatically creates a CNAME DNS entry directing traffic to the deployed tunnel](~/assets/images/reference-architecture/secure-application-delivery-design-guide/secure-app-dg-fig-14.png)
+_Figure 14: Cloudflare DNS CNAME record automatically created_
 
 We now have secure application access. Users can only access the application through the tunnel connected to the Cloudflare network. Further, since Tunnel uses outbound connections to Cloudflare and any return traffic from an outbound connection will be allowed, no inbound firewall rule is required creating less overhead and more operational simplicity.
 
 If you were to deploy the tunnel via CLI, after the tunnel install, you would also need to authenticate [cloudflared](/cloudflare-one/glossary/?term=cloudflared) on the origin server. cloudflared is what connects the server to Cloudflare’s global network. This authentication can be done with the `cloudflared tunnel login` command as shown below.
 
-![Cloudflare provides for easily authenticating Cloudflare Tunnel with a Cloudflare account.](~/assets/images/reference-architecture/secure-application-delivery-design-guide/secure-app-dg-fig-15.png "Figure 15: Authenticating cloudflared on the origin server.")
+![Cloudflare provides for easily authenticating Cloudflare Tunnel with a Cloudflare account.](~/assets/images/reference-architecture/secure-application-delivery-design-guide/secure-app-dg-fig-15.png)
+_Figure 15: Authenticating cloudflared on the origin server._
 
 You’ll be asked to select the zone you want to add the tunnel to as shown below.
 
-![Cloudflare can enforce tunnel-only connections to a specific zone.](~/assets/images/reference-architecture/secure-application-delivery-design-guide/secure-app-dg-fig-16.png "Figure 16: Adding Cloudflare Tunnel to a selected zone.")
+![Cloudflare can enforce tunnel-only connections to a specific zone.](~/assets/images/reference-architecture/secure-application-delivery-design-guide/secure-app-dg-fig-16.png)
+_Figure 16: Adding Cloudflare Tunnel to a selected zone._
 
 Next, you’ll authorize the tunnel for the zone.
 
-![Users must authorize the zone a tunnel connects to.](~/assets/images/reference-architecture/secure-application-delivery-design-guide/secure-app-dg-fig-17.png "Figure 17: Authorizing the tunnel for a zone.")
+![Users must authorize the zone a tunnel connects to.](~/assets/images/reference-architecture/secure-application-delivery-design-guide/secure-app-dg-fig-17.png)
+_Figure 17: Authorizing the tunnel for a zone._
 
 Finally, you should receive confirmation that a certificate has been installed allowing your origin to create a tunnel on the respective zone.
 
-![Cloudflare provides a confirmation on successfully installing a certificate to origin, allowing it to connect via Tunnel to the Cloudflare network.](~/assets/images/reference-architecture/secure-application-delivery-design-guide/secure-app-dg-fig-18.png "Figure 18: Confirmation that certificate has been successfully installed.")
+![Cloudflare provides a confirmation on successfully installing a certificate to origin, allowing it to connect via Tunnel to the Cloudflare network.](~/assets/images/reference-architecture/secure-application-delivery-design-guide/secure-app-dg-fig-18.png)
+_Figure 18: Confirmation that certificate has been successfully installed._
 
 #### Securing the application with Cloudflare Access
 
 The current setup as described prior in this document is shown below, where the origin server(s) are connected to the Cloudflare network via Tunnel. Now, we can start to consume Cloudflare services.
 
-![Cloudflare behaves as a proxy where traffic is directed and performance and security services applied.](~/assets/images/reference-architecture/secure-application-delivery-design-guide/secure-app-dg-fig-19.png "Figure 19: Web app securely connected to Cloudflare network for performance and security services.")
+![Cloudflare behaves as a proxy where traffic is directed and performance and security services applied.](~/assets/images/reference-architecture/secure-application-delivery-design-guide/secure-app-dg-fig-19.png)
+_Figure 19: Web app securely connected to Cloudflare network for performance and security services._
 
 Currently the origin is only accessible via Cloudflare Tunnel. Because a public hostname is used, access to the origin is public. The application is secured behind Cloudflare and protected from DDoS and other types of attacks. For additional security, Cloudflare Access can be used to place a layer of authentication and access controls in front of the tunneled application. Access enforces an authentication step before requests to the origin can be served. Many other identity, device and network attributes can be used in the policy, allowing customers to define access beyond just authentication. For example, customers can define the network the request originates from, as well as ensuring the user device is running the latest operating system.
 
 Below, you can see an application has been created for cftestsite3.com.
 
-![Cloudflare Access allows for creating application policies to secure application access.](~/assets/images/reference-architecture/secure-application-delivery-design-guide/secure-app-dg-fig-20.png "Figure 20: Cloudflare Access Policy Configuration.")
+![Cloudflare Access allows for creating application policies to secure application access.](~/assets/images/reference-architecture/secure-application-delivery-design-guide/secure-app-dg-fig-20.png)
+_Figure 20: Cloudflare Access Policy Configuration._
 
 Looking at policy configuration below you can see it requires users to be part of the "Secure Employees" Access group.
 
-![Cloudflare allows assigning multiple Access groups to an application to enforce a set of predefined policies.](~/assets/images/reference-architecture/secure-application-delivery-design-guide/secure-app-dg-fig-21.png "Figure 21 : Access group assigned to the application.")
+![Cloudflare allows assigning multiple Access groups to an application to enforce a set of predefined policies.](~/assets/images/reference-architecture/secure-application-delivery-design-guide/secure-app-dg-fig-21.png)
+_Figure 21 : Access group assigned to the application._
 
 If we take a deeper look at the "Secure Employees" Access group, it can be seen below that members are from the company’s Okta identity provider (IdP) group called "Employees." Further, the Access group is enforcing multi-factor authentication (MFA).
 
-![Cloudflare Access groups allow for simplicity in defining criteria for certain groups/individuals to access the application.](~/assets/images/reference-architecture/secure-application-delivery-design-guide/secure-app-dg-fig-22.png "Figure 22 : Access group configuration with defined group criteria.")
+![Cloudflare Access groups allow for simplicity in defining criteria for certain groups/individuals to access the application.](~/assets/images/reference-architecture/secure-application-delivery-design-guide/secure-app-dg-fig-22.png)
+_Figure 22 : Access group configuration with defined group criteria._
 
 Looking at the "Image and Video Gallery" application, under "Authentication," customers can also manually select identity providers users can use to connect to this application.
 
-![Cloudflare Access supports all major Identity Providers (IdPs) and users can manually select which IdPs can be used.](~/assets/images/reference-architecture/secure-application-delivery-design-guide/secure-app-dg-fig-23.png "Figure 23 : Manually selecting identity providers users can use.")
+![Cloudflare Access supports all major Identity Providers (IdPs) and users can manually select which IdPs can be used.](~/assets/images/reference-architecture/secure-application-delivery-design-guide/secure-app-dg-fig-23.png)
+_Figure 23 : Manually selecting identity providers users can use._
 
 We now have secure application access to the origin(s) via Tunnel and also authentication and access policies to the application via Access. When users try to access the site, they are greeted with a Cloudflare Access page asking users to authenticate with the configured IdP; the page can be customized to customer’s liking as shown below.
 
-![Using Cloudflare Access configured with a company’s IdP, users are forced to authenticate to access the application.](~/assets/images/reference-architecture/secure-application-delivery-design-guide/secure-app-dg-fig-24.png "Figure 24 : Sign-in via IdP configured in Access.")
+![Using Cloudflare Access configured with a company’s IdP, users are forced to authenticate to access the application.](~/assets/images/reference-architecture/secure-application-delivery-design-guide/secure-app-dg-fig-24.png)
+_Figure 24 : Sign-in via IdP configured in Access._
 
 ### Using other Cloudflare services (CDN, WAF, Security Analytics, etc.)
 
@@ -194,27 +218,33 @@ When a DNS lookup request is made by a client for the respective website, in thi
 
 Cloudflare CDN leverages Cloudflare’s global anycast edge network. In addition to using anycast for network performance and resiliency, the Cloudflare CDN leverages [Argo Tiered Cache](/cache/how-to/tiered-cache/) to deliver optimized results while saving costs for customers. Customers can also enable [Argo Smart Routing](/argo-smart-routing/) to find the fastest network path to route requests to the origin server. As shown below, the Cloudflare CDN is now caching content globally and granular CDN policies to affect default behavior can be applied.
 
-![Cloudflare provides analytics for visibility into caching data and performance.](~/assets/images/reference-architecture/secure-application-delivery-design-guide/secure-app-dg-fig-25.png "Figure 25 : Cloudflare Caching Analytics.")
+![Cloudflare provides analytics for visibility into caching data and performance.](~/assets/images/reference-architecture/secure-application-delivery-design-guide/secure-app-dg-fig-25.png)
+_Figure 25 : Cloudflare Caching Analytics._
 
 There are [different caching topologies and configurations available](/reference-architecture/architectures/cdn/). Below, you can see a Cache Rule has been configured to cache requests to the domain and override the origin TTL.
 
-![Cloudflare Cache Rules allow for granular control of caching.](~/assets/images/reference-architecture/secure-application-delivery-design-guide/secure-app-dg-fig-26.png "Figure 26 : Cloudflare rule configuration.")
+![Cloudflare Cache Rules allow for granular control of caching.](~/assets/images/reference-architecture/secure-application-delivery-design-guide/secure-app-dg-fig-26.png)
+_Figure 26 : Cloudflare rule configuration._
 
 [Cloudflare Cache Reserve](/cache/advanced-configuration/cache-reserve/) has also been enabled by clicking the "Enable storage sync" button under "Caching > Cache Reserve" in the dashboard. Cache Reserve leverages Cloudflare’s persistent object storage, R2, to eliminate egress costs from other public cloud providers. It improves cache hit ratios by enabling customers to persistently cache data with the push of a single button.
 
-![Cloudflare provides one-click enablement of Cache Reserve which provides persistent object storage for CDN to cut down on egress fees charged by many cloud providers.](~/assets/images/reference-architecture/secure-application-delivery-design-guide/secure-app-dg-fig-27.png "Figure 27 : Cloudflare Cache Reserve.")
+![Cloudflare provides one-click enablement of Cache Reserve which provides persistent object storage for CDN to cut down on egress fees charged by many cloud providers.](~/assets/images/reference-architecture/secure-application-delivery-design-guide/secure-app-dg-fig-27.png)
+_Figure 27 : Cloudflare Cache Reserve._
 
 Additionally, as shown below, Cloudflare Security Analytics brings together all of Cloudflare’s detection capabilities and provides a global view and important insights for all traffic going to the respective site. As traffic is being routed through the Cloudflare network, Cloudflare has visibility into threats and insights which are exposed to customers in the dashboard, logs, and reporting.
 
-![Cloudflare Security Analytics brings together all of Cloudflare’s detection capabilities in one place.](~/assets/images/reference-architecture/secure-application-delivery-design-guide/secure-app-dg-fig-28.png "Figure 28 : Cloudflare Security Analytics.")
+![Cloudflare Security Analytics brings together all of Cloudflare’s detection capabilities in one place.](~/assets/images/reference-architecture/secure-application-delivery-design-guide/secure-app-dg-fig-28.png)
+_Figure 28 : Cloudflare Security Analytics._
 
 Cloudflare WAF rules can be applied to enforce policies on traffic inline. Below a firewall policy is in place to log all traffic with a bot score of < 30 and WAF attack score < 50. A bot score of < 30 signifies all traffic that’s classified as either automated or likely automated and a WAF attack score < 50 signifies all traffic that’s classified as either malicious or likely malicious.
 
-![Cloudflare WAF allows for easy configuration of rules with visibility into how often the rule is hit.](~/assets/images/reference-architecture/secure-application-delivery-design-guide/secure-app-dg-fig-29.png "Figure 29 : Cloudflare WAF.")
+![Cloudflare WAF allows for easy configuration of rules with visibility into how often the rule is hit.](~/assets/images/reference-architecture/secure-application-delivery-design-guide/secure-app-dg-fig-29.png)
+_Figure 29 : Cloudflare WAF._
 
 Cloudflare WAF allows for granular policies that can leverage many different request criteria including header information. Customers can take a [variety of actions](/firewall/cf-firewall-rules/actions/) including logging, blocking, and challenge.
 
-![Cloudflare allows for matching on a combination of request attributes and Cloudflare data/fields to determine if specific actions should be taken.](~/assets/images/reference-architecture/secure-application-delivery-design-guide/secure-app-dg-fig-30.png "Figure 30 : Cloudflare WAF Rule Configuration.")
+![Cloudflare allows for matching on a combination of request attributes and Cloudflare data/fields to determine if specific actions should be taken.](~/assets/images/reference-architecture/secure-application-delivery-design-guide/secure-app-dg-fig-30.png)
+_Figure 30 : Cloudflare WAF Rule Configuration._
 
 Customers can use WAF to implement and use custom rules, rate limiting rules, and managed rules. A brief description of each is provided below.
 
@@ -227,7 +257,8 @@ Customers can use WAF to implement and use custom rules, rate limiting rules, an
 
 The same methodology applies for all other Cloudflare Application Performance and Security products (API Gateway, Bot Management, etc.): once configured to route traffic through the Cloudflare network, customers can start leveraging the Cloudflare services. Figure 31 displays Cloudflare’s Bot Analytics which categorizes the traffic based on bot score, shows the bot score distribution, and other bot analytics. All of the request data is captured inline and all enforcement based on defined policies is also done inline.
 
-![Cloudflare provides analytics and insights into bot traffic including bot score distribution.](~/assets/images/reference-architecture/secure-application-delivery-design-guide/secure-app-dg-fig-31.png "Figure 31 : Cloudflare Bot Management - Bot Analytics.")
+![Cloudflare provides analytics and insights into bot traffic including bot score distribution.](~/assets/images/reference-architecture/secure-application-delivery-design-guide/secure-app-dg-fig-31.png)
+_Figure 31 : Cloudflare Bot Management - Bot Analytics._
 
 ## Summary
 

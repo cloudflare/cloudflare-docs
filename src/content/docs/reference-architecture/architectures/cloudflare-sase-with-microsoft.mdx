@@ -60,7 +60,8 @@ Cloudflare's integration with Entra ID allows you to leverage your identities in
 * It offers a wide range of parameters to control user access to applications, such as user risk level, sign-in risk level, device platform, location, client apps, and more.
 * Security teams can define their security controls in Entra ID and enforce them at the network layer, for every request, with Cloudflare's ZTNA service.
 
-![Figure 1: Microsoft Entra ID integrates with Cloudflare for ZTNA access to SaaS and self hosted applications.](~/assets/images/reference-architecture/cloudflare-sase-with-microsoft/cloudflare-sase-with-microsoft-fig1.svg "Figure 1: Microsoft Entra ID integrates with Cloudflare for ZTNA access to SaaS and self hosted applications.")
+![Figure 1: Microsoft Entra ID integrates with Cloudflare for ZTNA access to SaaS and self hosted applications.](~/assets/images/reference-architecture/cloudflare-sase-with-microsoft/cloudflare-sase-with-microsoft-fig1.svg)
+_Figure 1: Microsoft Entra ID integrates with Cloudflare for ZTNA access to SaaS and self hosted applications._
 
 ### Microsoft InTune with Cloudflare
 
@@ -70,7 +71,8 @@ Cloudflare is able to enforce access policies that include information about dev
 * Intune provides detailed information about the security status and configuration of user devices, enabling more informed access control decisions.
 * This integration allows administrators to ensure that only compliant and secure devices are granted access to critical networks and applications.
 
-![Figure 2: Figure 2: Using Intune and Cloudflare device posture data for secure application access.](~/assets/images/reference-architecture/cloudflare-sase-with-microsoft/cloudflare-sase-with-microsoft-fig2.svg "Figure 2: Using Intune and Cloudflare device posture data for secure application access.")
+![Figure 2: Figure 2: Using Intune and Cloudflare device posture data for secure application access.](~/assets/images/reference-architecture/cloudflare-sase-with-microsoft/cloudflare-sase-with-microsoft-fig2.svg)
+_Figure 2: Using Intune and Cloudflare device posture data for secure application access._
 
 ### Cloudflare CASB for Microsoft 365
 
@@ -95,7 +97,8 @@ By leveraging Cloudflare SWG as a secure gateway for Microsoft 365 access, organ
 
 Phishing is the root cause of upwards of 90% of breaches that lead to financial loss and brand damage. Cloudflare's email security solution sits in front of all email going to your Microsoft 365 tenant, filtering out spam, bulk, malicious and spoof content. The solution can leverage Microsoft [rules for quarantine actions](/email-security/deployment/inline/setup/office-365-area1-mx/use-cases/four-user-quarantine-admin-quarantine/), allowing you to fine tune how different email detections are handled.
 
-![Figure 3: Cloud email security protects all Microsoft 365 inboxes.](~/assets/images/reference-architecture/cloudflare-sase-with-microsoft/cloudflare-sase-with-microsoft-fig3.svg "Figure 3: Cloud email security protects all Microsoft 365 inboxes.")
+![Figure 3: Cloud email security protects all Microsoft 365 inboxes.](~/assets/images/reference-architecture/cloudflare-sase-with-microsoft/cloudflare-sase-with-microsoft-fig3.svg)
+_Figure 3: Cloud email security protects all Microsoft 365 inboxes._
 
 It is also possible to configure cloud email security to scan [Microsoft 365 inboxes via API](/email-security/deployment/api/), avoiding the need to make changes to existing DNS records.
 
@@ -103,7 +106,8 @@ It is also possible to configure cloud email security to scan [Microsoft 365 inb
 
 By leveraging Cloudflare and its integrations with Microsoft, organizations can establish a Zero Trust security posture that goes beyond the limitations of traditional network security models. With Cloudflare's Zero Trust Network Access (ZTNA), organizations can replace self hosted VPNs and enforce conditional access based on user identity and device posture. The integration with Microsoft Entra ID allows for authentication and access control, while Microsoft InTune provides device posture information. Additionally, Cloudflare's CASB offers visibility into the security of Microsoft 365 configuration, the Secure Web Gateway inspects and filters traffic to Microsoft 365, and Email Security protects against phishing attacks, ensuring a secure and compliant environment. This approach enables faster and more secure access to applications, while providing granular control over user access based on identity and device posture.
 
-![Figure 4: A summary of Cloudflare SASE and Microsoft integrations.](~/assets/images/reference-architecture/cloudflare-sase-with-microsoft/cloudflare-sase-with-microsoft-fig4.svg "Figure 4: A summary of Cloudflare SASE and Microsoft integrations")
+![Figure 4: A summary of Cloudflare SASE and Microsoft integrations.](~/assets/images/reference-architecture/cloudflare-sase-with-microsoft/cloudflare-sase-with-microsoft-fig4.svg)
+_Figure 4: A summary of Cloudflare SASE and Microsoft integrations_
 
 ## Related resources
 

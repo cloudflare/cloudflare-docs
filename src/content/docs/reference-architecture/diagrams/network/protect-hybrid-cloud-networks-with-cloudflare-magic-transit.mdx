@@ -35,7 +35,8 @@ On-premise data center 1: 203.0.113.64/26
 On-premise data center 2: 203.0.113.128/25
 ```
 
-![Figure 1: Customer BYOIP for all Cloud and on-premises networks.](~/assets/images/reference-architecture/protect-hybrid-cloud-networks-with-cloudflare-magic-transit/figure-1.svg "Figure 1: Customer BYOIP for all Cloud and on-premises networks.")
+![Figure 1: Customer BYOIP for all Cloud and on-premises networks.](~/assets/images/reference-architecture/protect-hybrid-cloud-networks-with-cloudflare-magic-transit/figure-1.svg)
+_Figure 1: Customer BYOIP for all Cloud and on-premises networks._
 
 1. Using Border Gateway Protocol ([BGP](https://www.cloudflare.com/learning/security/glossary/what-is-bgp/)), Cloudflare advertises customer’s protected IP prefixes to the Internet from all of Cloudflare’s global data centers, enabling [IP Anycast](https://www.cloudflare.com/learning/cdn/glossary/anycast-network/), so that Internet traffic destined to these protected IP prefixes will always be routed to the Cloudflare data center that is closest to the source of the traffic.
 
@@ -66,7 +67,8 @@ On-premise data center 1: 192.0.2.48/28
 On-premise data center 2: 192.0.2.64/28
 ```
 
-![Figure 2: Customer lease IPs from Cloudflare for both on-premise and cloud network deployments.](~/assets/images/reference-architecture/protect-hybrid-cloud-networks-with-cloudflare-magic-transit/figure-2.svg "Figure 2: Customer lease IPs from Cloudflare for both on-premise and cloud network deployments.")
+![Figure 2: Customer lease IPs from Cloudflare for both on-premise and cloud network deployments.](~/assets/images/reference-architecture/protect-hybrid-cloud-networks-with-cloudflare-magic-transit/figure-2.svg)
+_Figure 2: Customer lease IPs from Cloudflare for both on-premise and cloud network deployments._
 
 1. Using Border Gateway Protocol (BGP), Cloudflare advertises its owned IP prefixes to the Internet, which includes the IP addresses that you lease.
 
@@ -88,7 +90,8 @@ On-premise data center 1: 198.51.100.0/24
 On-premise data center 2: 203.0.113.0/24
 ```
 
-![Figure 3: Customer BYOIP for on-premise networks and lease IP from Cloudflare for cloud network deployments.](~/assets/images/reference-architecture/protect-hybrid-cloud-networks-with-cloudflare-magic-transit/figure-3.svg "Figure 3: Customer BYOIP for on-premise networks and lease IP from Cloudflare for cloud network deployments.")
+![Figure 3: Customer BYOIP for on-premise networks and lease IP from Cloudflare for cloud network deployments.](~/assets/images/reference-architecture/protect-hybrid-cloud-networks-with-cloudflare-magic-transit/figure-3.svg)
+_Figure 3: Customer BYOIP for on-premise networks and lease IP from Cloudflare for cloud network deployments._
 
 1. Using Border Gateway Protocol (BGP), Cloudflare advertises both customer-owned and Cloudflare-owned IP prefixes to the Internet.
 

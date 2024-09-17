@@ -28,7 +28,8 @@ So how do you allow access to private resources, without creating public DNS rec
 
 Follow this [tutorial](/cloudflare-one/tutorials/clientless-access-private-dns/) for information on how to configure secure access to private web-based resources without having to deploy client agents.
 
-![Figure 1: Remote Access Internal Hostname](~/assets/images/reference-architecture/sase-clientless-access-private-dns/diagram1.svg "Figure 1: Remote browser connected to private web service using internal hostname")
+![Figure 1: Remote Access Internal Hostname](~/assets/images/reference-architecture/sase-clientless-access-private-dns/diagram1.svg)
+_Figure 1: Remote browser connected to private web service using internal hostname_
 
 1. Users start their access by authenticating to the [Cloudflare Browser Isolation](https://your_team_domain.cloudflareaccess.com/browser) service. Note this is a browser running on Cloudflare’s edge network, therefore all requests will by default be handled by Cloudflare. The contents are rendered back to the users’ browser via secure encrypted vector streams that use HTTPS and WebRTC channels.
 2. Once the user has authenticated to the remote browser, they make a request to an internal hostname which is a record in the internal DNS service. e.g. [https://app.company.internal](https://app.company.internal)
