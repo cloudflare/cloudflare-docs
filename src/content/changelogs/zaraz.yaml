@@ -7,6 +7,13 @@ productAreaLink: /workers/platform/changelog/platform/
 entries:
 - publish_date: '2024-08-23'
   description: |
+    * **Automatic Actions**: Ecommerce support is now integrated with Automatic Actions
+    * **Consent Management**: Support styling the Consent Modal when CSP is enabled
+    * **Consent Management**: Fix an issue that could cause tools to load before consent was granted when TCF is enabled
+    * **Zaraz Debugger**: Remove redundant messages related to empty values
+    * **Amplitude Managed Component**: Respect the EU endpoint setting 
+- publish_date: '2024-08-23'
+  description: |
     * **Automatic Actions**: Automatic Event Tracking is now fully available
     * **Consent Management**: Fixed issues with rendering the Consent modal on iOS
     * **Zaraz Debugger**: Remove redundant messages related to `__zarazEcommerce`
