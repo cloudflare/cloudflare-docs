@@ -1195,7 +1195,7 @@
       }
     },
     "snippets": {
-      "title": "Snippets (alpha)",
+      "title": "Snippets (beta)",
       "link": "/rules/snippets/",
       "properties": {
         "availability": {
@@ -2198,7 +2198,7 @@
           "biz": "Yes",
           "ent": "Yes"
         }
-      }  
+      }
     },
     "tcp_turbo": {
       "title": "TCP Turbo",

@@ -4,10 +4,34 @@ title: Configure hardware Connector
 sidebar:
   order: 3
   label: Configure hardware Connector
-
 ---
 
-import { GlossaryTooltip, Render } from "~/components"
+import { GlossaryTooltip, Render, Card } from "~/components";
+
+## Before you begin
+
+You can install up to two Magic WAN Connectors for redundancy at each of your sites. If one of your Connectors fail, traffic will fail over to the other Connector ensuring that you never lose connectivity to that site.
+
+In this type of high availability (HA) configuration, you will choose a reliable LAN interface as the HA link which will be used to monitor the health of the peer connector. HA links can be dedicated links or can be shared with other LAN traffic.
+
+You must decide the type of configuration you want for your site from the beginning: no redundancy or with redundancy. You cannot add redundancy after finishing configuring your dashboard settings. If, at a later stage, you decide to enable redundancy, you will need to delete your site configuration in the Cloudflare dashboard, and start again.
+
+<Card title="Do you need a high availability configuration?" icon="information">
+
+- If you need a high availability configuration for your premises, refer to
+  [About high availability configurations](#about-high-availability-configurations) for more information
+  and learn how to configure your Connector in this mode.
+
+- If you do not need a high availability configuration for you premises, proceed to [Configure
+  Cloudflare dashboard settings](#configure-cloudflare-dashboard-settings).
+
+</Card>
+
+:::caution[Warning]
+You cannot enable high availability for an existing site. To add high availability to an existing site in the Cloudflare dashboard, you need to delete the site and start again. Plan accordingly to create a high availability configuration from the start if needed.
+:::
+
+---
 
 ## Prerequisites
 
@@ -16,22 +40,6 @@ You need to purchase [Magic WAN](https://www.cloudflare.com/magic-wan/) before y
 You also need to purchase a Magic WAN Connector before you can start configuring your settings in the Cloudflare dashboard. After buying a Magic WAN Connector, the device will be registered with your Cloudflare account and show up in your Cloudflare dashboard.
 
 Contact your account representative to learn more about purchasing options for the Magic WAN Connector device.
-
----
-
-## High availability configurations
-
-You can install up to two Magic WAN Connectors for redundancy at each of your sites. If one of your Connectors fails, traffic will fail over to the other Connector ensuring that you never lose connectivity to that site.
-
-In this type of high availability (HA) configuration, you will choose a reliable LAN interface as the HA link which will be used to monitor the health of the peer connector. HA links can be dedicated links or can be shared with other LAN traffic.
-
-If you need a high availability configuration for your premises, refer to [About high availability configurations](#about-high-availability-configurations) for more information.
-
-If you do not need a high availability configuration for you premises, proceed to [Configure Cloudflare dashboard settings](#configure-cloudflare-dashboard-settings).
-
-:::caution[Warning]
-You cannot enable high availability for an existing site. To add high availability to an existing site in the Cloudflare dashboard, you need to delete the site and start again. Plan accordingly to create a high availability configuration from the start if needed.
-:::
 
 ---
 
@@ -45,7 +53,15 @@ Refer to [SFP+ port information](/magic-wan/configuration/connector/configure-ha
 
 ## Configure Cloudflare dashboard settings
 
-<Render file="connector/create-site" params={{ one: "refers to the physical Magic WAN Connector Ethernet port that you are using for your WAN. The ports are labeled `GE1`, `GE2`, `GE3`, `GE4`, `GE5`, and `GE6`. Choose the number corresponding to the port that you are using in Connector. <br> If you need a throughput higher than 1 Gbps, you can use one of the SFP+ ports. Refer to [SFP+ port information](/magic-wan/configuration/connector/configure-hardware-connector/sfp-port-information/) for more information on the hardware supported.", two: "refers to the physical Magic WAN Connector Ethernet port that you are using for your LAN. The ports are labeled `GE1`, `GE2`, `GE3`, `GE4`, `GE5`, and `GE6`. Choose a number corresponding to the port that you are using in Connector. <br> If you need a throughput higher than 1 Gbps, you can use one of the SFP+ ports. Refer to [SFP+ port information](/magic-wan/configuration/connector/configure-hardware-connector/sfp-port-information/) for more information on the hardware supported.", three: "You need to have bought a Connector already for it to show up here. Refer to [Prerequisites](#prerequisites) if no Connector shows up in this list." }} />
+<Render
+	file="connector/create-site"
+	params={{
+		one: "refers to the physical Magic WAN Connector Ethernet port that you are using for your WAN. The ports are labeled `GE1`, `GE2`, `GE3`, `GE4`, `GE5`, and `GE6`. Choose the number corresponding to the port that you are using in Connector. <br> If you need a throughput higher than 1 Gbps, you can use one of the SFP+ ports. Refer to [SFP+ port information](/magic-wan/configuration/connector/configure-hardware-connector/sfp-port-information/) for more information on the hardware supported.",
+		two: "refers to the physical Magic WAN Connector Ethernet port that you are using for your LAN. The ports are labeled `GE1`, `GE2`, `GE3`, `GE4`, `GE5`, and `GE6`. Choose a number corresponding to the port that you are using in Connector. <br> If you need a throughput higher than 1 Gbps, you can use one of the SFP+ ports. Refer to [SFP+ port information](/magic-wan/configuration/connector/configure-hardware-connector/sfp-port-information/) for more information on the hardware supported.",
+		three:
+			"You need to have bought a Connector already for it to show up here. Refer to [Prerequisites](#prerequisites) if no Connector shows up in this list.",
+	}}
+/>
 
 ## Set up your Magic WAN Connector
 
@@ -69,11 +85,11 @@ accTitle: Magic WAN Connector set up as a DHCP server, and connecting to the Int
     class a,c orange
 ```
 
-<br/>
+<br />
 
 In the example below, the Connector sits behind the WAN router in your site, and on-ramps only some of the existing LANs to Cloudflare.
 
-<br/>
+<br />
 
 ```mermaid
 flowchart LR
@@ -95,6 +111,7 @@ accTitle: Magic WAN Connector connects to the router in the site, and only some 
 
 If there is a firewall deployed upstream of the Magic WAN Connector, configure the firewall to allow the following traffic:
 
+{/* prettier-ignore */}
 | Protocol/port | Destination IP/URL | Purpose |
 | --- | --- |--- |
 | `UDP/53` | DNS destination IP `1.1.1.1` | Needed to allow DNS traffic to Cloudflare DNS servers. Cloudflare uses this port for DNS lookups of control plane API |
@@ -106,7 +123,10 @@ If there is a firewall deployed upstream of the Magic WAN Connector, configure t
 
 ## Activate connector
 
-<Render file="connector/activate-connector" params={{ one: "The Magic WAN Connector is shipped to you deactivated" }} />
+<Render
+	file="connector/activate-connector"
+	params={{ one: "The Magic WAN Connector is shipped to you deactivated" }}
+/>
 
 ### WAN with a static IP address
 
@@ -134,10 +154,11 @@ Because Connectors in high availability configurations share a single site, you 
 Make sure all IPs are part of the same subnet.
 
 :::note
+
 - Failure conditions include Connector down or software restart, LAN or WAN link down, tunnel health down.
 - High availability (HA) is run in non-preempt mode, which means either the primary or the secondary node can come up as active through an election process which includes node health parameters.
 - In the case of a failover where a Connector is acting as a DHCP server, DHCP leases will be synchronized.
-:::
+  :::
 
 ### ​​Create a high availability configuration
 
