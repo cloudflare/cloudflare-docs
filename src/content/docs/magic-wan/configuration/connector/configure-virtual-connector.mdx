@@ -27,7 +27,7 @@ Before you can install Virtual Connector, you need an Enterprise account with Ma
 
 Refer to [VMware's documentation](https://docs.vmware.com/en/VMware-vSphere/7.0/com.vmware.esxi.install.doc/GUID-B2F01BF5-078A-4C7E-B505-5DFFED0B8C38.html) for more information on how to install ESXi and configure a virtual machine.
 
-## 1. Obtain the Virtual Connector image
+## Obtain the Virtual Connector image
 
 Contact your account team at Cloudflare to obtain the Virtual Connector [OVA package](https://docs.vmware.com/en/VMware-vSphere/7.0/com.vmware.vsphere.vm_admin.doc/GUID-AE61948B-C2EE-436E-BAFB-3C7209088552.html) and license keys. The OVA image includes the files required to install and configure the virtual machine (VM) for Virtual Connector with the appropriate settings.
 
@@ -35,7 +35,7 @@ This image can be deployed multiple times to create several instances of a Virtu
 
 You will consume one license key for each instance created. For example, if you want to deploy 10 Virtual Connectors you should request 10 license keys, and your account team will create 10 Connector instances in your Cloudflare dashboard.
 
-## 2. Deploy the Virtual Connector on VMware
+## Deploy the Virtual Connector on VMware
 
 The following instructions assume you already have VMware ESXi hypervisor installed with sufficient resources. Refer to [Prerequisites](#prerequisites) for more information.
 
@@ -99,7 +99,7 @@ You cannot use the same license key twice, or reuse a key once the virtual machi
 12. Select **Save** to finish configuring your Virtual Connector.
 13. Continue set up in your [Cloudflare dashboard](#3-set-up-cloudflare-dashboard).
 
-## 3. Set up Cloudflare dashboard
+## Set up Cloudflare dashboard
 
 <Render
 	file="connector/create-site"
@@ -111,7 +111,7 @@ You cannot use the same license key twice, or reuse a key once the virtual machi
 	}}
 />
 
-## 4. Activate Connector
+## Activate Connector
 
 <Render
 	file="connector/activate-connector"
@@ -120,7 +120,7 @@ You cannot use the same license key twice, or reuse a key once the virtual machi
 	}}
 />
 
-## 5. Boot your Virtual Connector
+## Boot your Virtual Connector
 
 1. Go to **Virtual Machines** in VMware, and boot up Virtual Connector's VM.
 2. The Virtual Connector will make a request to Cloudflare. This is the step where Virtual Connector registers your provided license key and [downloads the site configuration](#1-create-a-site) for its connected site.
