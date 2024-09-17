@@ -16,14 +16,14 @@ Non-HTTP applications require [connecting your private network](/cloudflare-one/
 
 Users can connect by installing the Cloudflare WARP client on their device and enrolling in your Zero Trust organization. Remote devices connect to your applications as if they were on your private network. By default, all devices enrolled in your organization can access the application unless you build policies to allow or block specific users.
 
-You can optionally add the application to [Access for Infrastructure](/cloudflare-one/applications/non-http/infrastructure-apps/) for an additional layer of control and visibility over how users access non-HTTP applications. Benefits of using Access for Infrastructure include:
+If you would like to define how users access specific infrastructure servers within your network, create an infrastructure application in [Access for Infrastructure](/cloudflare-one/applications/non-http/infrastructure-apps/). Access for Infrastructure provides an additional layer of control and visibility over how users access non-HTTP applications, including:
 - Define fine-grained policies to govern who has access to specific servers and exactly how a user may access that server.
 - Eliminate SSH keys by using short-lived certificates to authenticate users.
-- Export SSH command logs through a storage service or SIEM solution.
+- Export SSH command logs to a storage service or SIEM solution using [Logpush](/logs/about/).
 
 ## Clientless access
 
-Clientless access methods are suited for organizations that cannot deploy the WARP client or need to support third-party contractors. Clientless access requires onboarding a domain to Cloudflare and configuring a public hostname in order to make the server reachable. Command logging is not supported, and user email prefixes must match their username on the server.
+Clientless access methods are suited for organizations that cannot deploy the WARP client or need to support third-party contractors where installing a client is not possible. Clientless access requires onboarding a domain to Cloudflare and configuring a public hostname in order to make the server reachable. Command logging is not supported, and user email prefixes must match their username on the server.
 
 ### Browser-based terminal
 

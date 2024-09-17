@@ -71,7 +71,16 @@ For more information, refer to the [Access for Infrastructure documentation](/cl
 SSH command logs contain the actual SSH commands that a user ran on the target. These logs are encrypted using a public key provided by the customer and are not visible to Cloudflare.
 
 ### Enable SSH command logging
+
 <Render file="ssh/upload-ssh-key" params={{ note: "" }} />
+
+### Disable SSH command logging
+
+To turn off SSH command logging, delete your uploaded public key using the API:
+
+```sh
+
+```
 
 ### View SSH logs
 

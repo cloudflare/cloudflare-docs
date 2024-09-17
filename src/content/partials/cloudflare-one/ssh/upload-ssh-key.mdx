@@ -24,6 +24,6 @@ To log SSH commands, you will need to generate an HPKE key pair and upload the p
 
 3. In [Zero Trust](https://one.dash.cloudflare.com), go to **Settings** > **Network**.
 
-4. In the **SSH encryption public key** field, paste the contents of `sshkey.pub` and select **Save**. {props.note}
+4. In the **SSH encryption public key** field, paste the contents of `sshkey.pub` and select **Save**. <Markdown text={props.note} />
 
 All proxied SSH commands are immediately encrypted using this public key. The matching private key is required to view logs.
