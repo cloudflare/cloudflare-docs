@@ -6,16 +6,15 @@ sidebar:
 head:
   - tag: title
     content: Configure DDoS managed rulesets with Terraform
-
 ---
 
-import { Render } from "~/components"
+import { Render } from "~/components";
 
 This page provides examples of configuring DDoS managed rulesets in your zone or account using Terraform. It covers the following configurations:
 
-* [Example: Configure HTTP DDoS Attack Protection](#example-http)
-* [Example: Configure Network-layer DDoS Attack Protection](#example-network)
-* [Use case: Mitigate large HTTP DDoS attacks and monitor flagged traffic](#use-case-http)
+- [Example: Configure HTTP DDoS Attack Protection](#example-configure-http-ddos-attack-protection)
+- [Example: Configure Network-layer DDoS Attack Protection](#example-configure-network-layer-ddos-attack-protection)
+- [Use case: Mitigate large HTTP DDoS attacks and monitor flagged traffic](#use-case-mitigate-large-http-ddos-attacks-and-monitor-flagged-traffic)
 
 DDoS managed rulesets are always enabled. Depending on your Cloudflare services, you may be able to adjust their behavior.
 
@@ -31,7 +30,7 @@ For more information on DDoS managed rulesets, refer to [Managed rulesets](/ddos
 
 <Render file="import-delete-existing-rulesets" />
 
-***
+---
 
 ## Example: Configure HTTP DDoS Attack Protection
 
@@ -73,10 +72,10 @@ This example configures the [Network-layer DDoS Attack Protection](/ddos-protect
 
 :::caution[Important]
 
+- Only Magic Transit and Spectrum customers on an Enterprise plan can configure this managed ruleset using overrides.
+- This managed ruleset only supports overrides at the account level.
 
-* Only Magic Transit and Spectrum customers on an Enterprise plan can configure this managed ruleset using overrides.
-* This managed ruleset only supports overrides at the account level. 
-  :::
+:::
 
 ```tf
 resource "cloudflare_ruleset" "account_level_network_ddos_config" {
@@ -108,23 +107,22 @@ resource "cloudflare_ruleset" "account_level_network_ddos_config" {
 
 For more information about Network-layer DDoS Attack Protection, refer to [Network-layer DDoS Attack Protection managed ruleset](/ddos-protection/managed-rulesets/network/).
 
-***
+---
 
 ## Use case: Mitigate large HTTP DDoS attacks and monitor flagged traffic
 
 In the following example, a customer is concerned about false positives, but wants to get protection against large HTTP DDoS attacks. The two rules, containing two overrides each, in their [HTTP DDoS protection](/ddos-protection/managed-rulesets/http/) configuration will have the following behavior:
 
-1. Mitigate any large HTTP DDoS attacks by configuring a rule with a *Low* [sensitivity level](/ddos-protection/managed-rulesets/http/override-parameters/#sensitivity-level) and a *Block* action.
-2. Monitor traffic being flagged by the DDoS protection system by configuring a rule with the default sensitivity level (*High*) and a *Log* action.
+1. Mitigate any large HTTP DDoS attacks by configuring a rule with a _Low_ [sensitivity level](/ddos-protection/managed-rulesets/http/override-parameters/#sensitivity-level) and a _Block_ action.
+2. Monitor traffic being flagged by the DDoS protection system by configuring a rule with the default sensitivity level (_High_) and a _Log_ action.
 
 The order of the rules is important: the rule with the highest sensitivity level must come after the rule with the lowest sensitivity level, otherwise it will never be evaluated.
 
 :::caution[Important considerations]
 
-
-* When a DDoS attack mitigation is ongoing, Cloudflare will check the rules order and apply the first one that matches both the expression and the sensitivity level.
-* Since rules are evaluated in order and the first one to match the conditions of both the expression and the sensitivity level will get applied, take care when editing and reordering existing rules. Changing a rule from Block to Log may allow attack traffic to reach your web property.
-* Overrides will not affect read-only rules in the managed ruleset. 
+- When a DDoS attack mitigation is ongoing, Cloudflare will check the rules order and apply the first one that matches both the expression and the sensitivity level.
+- Since rules are evaluated in order and the first one to match the conditions of both the expression and the sensitivity level will get applied, take care when editing and reordering existing rules. Changing a rule from Block to Log may allow attack traffic to reach your web property.
+- Overrides will not affect read-only rules in the managed ruleset.
 
 :::
 

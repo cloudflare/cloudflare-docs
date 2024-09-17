@@ -913,6 +913,10 @@
 /rules/url-forwarding/single-redirects/examples/ /rules/url-forwarding/examples/ 301
 /rules/url-forwarding/dynamic-redirects/parameters/ /rules/url-forwarding/single-redirects/settings/ 301
 
+# security center
+/security-center/indicator-feeds/getting-started/ /security-center/indicator-feeds/ 301
+/security-center/indicator-feeds/get-started/ /security-center/indicator-feeds/ 301
+
 # spectrum
 /spectrum/getting-started/ /spectrum/get-started/ 301
 /spectrum/getting-started/byoip/ /spectrum/about/byoip/ 301
@@ -1015,7 +1019,7 @@
 /stream/platform/changelog/index.xml /stream/changelog/index.xml 301
 /stream/platform/webrtc-beta/ /stream/webrtc-beta/ 301
 /stream/reference/faq/ /stream/faq/ 301
-/stream/platform/ /stream/platform/changelog/ 301
+/stream/platform/ /stream/changelog/ 301
 /stream/reference/ /stream/faq/ 301
 
 # support
@@ -1154,13 +1158,13 @@
 
 # turnstile
 /turnstile/get-started/domain-management/ /turnstile/reference/domain-management/ 301
-/turnstile/get-started/migrating-from-recaptcha/ /turnstile/migration/migrating-from-recaptcha/ 301
+/turnstile/get-started/migrating-from-recaptcha/ /turnstile/migration/recaptcha/ 301
 /turnstile/reference/pre-clearance-support/ /turnstile/get-started/pre-clearance-support/ 301
 /turnstile/reference/turnstile-analytics/ /turnstile/turnstile-analytics/ 301
 /turnstile/reference/tooltips/ /turnstile/turnstile-analytics/ 301
 /turnstile/reference/domain-management/ /turnstile/concepts/domain-management/ 301
 /turnstile/get-started/pre-clearance-support/ /turnstile/concepts/pre-clearance-support/ 301
-/turnstile/reference/widget-types/ /turnstile/concepts/widget-types/ 301
+/turnstile/reference/widget-types/ /turnstile/concepts/widget/ 301
 /turnstile/reference/terraform/ /turnstile/get-started/terraform/ 301
 /turnstile/reference/client-side-errors/ /turnstile/troubleshooting/client-side-errors/ 301
 /turnstile/reference/feedback-reports/ /turnstile/troubleshooting/feedback-reports/ 301
@@ -1438,7 +1442,6 @@
 /workers/tutorials/create-sitemap-from-sanity-cms/ /developer-spotlight/tutorials/create-sitemap-from-sanity-cms/ 301
 /workers/tutorials/custom-access-control-for-files-in-r2-using-d1-and-workers/ /developer-spotlight/tutorials/custom-access-control-for-files/ 301
 /workers/tutorials/handle-form-submission-with-astro-resend/ /developer-spotlight/tutorials/handle-form-submission-with-astro-resend/ 301
-/workers/ai/ /workers-ai/ 301
 
 # workers ai
 /workers-ai/models/llm/ /workers-ai/models/#text-generation 301
