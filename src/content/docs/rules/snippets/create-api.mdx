@@ -84,9 +84,9 @@ Once you’ve created a code snippet, you can link it to rules. This is done via
 
 ```bash
 curl --request PUT
-"https://api.cloudflare.com/client/v4/zones/{zone_id}/snippets/snippet_rules"
---header "Authorization: Bearer <API_TOKEN>"
---header "Content-Type: application/json"
+"https://api.cloudflare.com/client/v4/zones/{zone_id}/snippets/snippet_rules" \
+--header "Authorization: Bearer <API_TOKEN>" \
+--header "Content-Type: application/json" \
 --data '{
   "rules": [
     {
