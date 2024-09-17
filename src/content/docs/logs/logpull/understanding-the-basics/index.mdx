@@ -30,23 +30,25 @@ This means that to obtain logs for a given time range, you can issue one call fo
 
 The Logpull API returns data in NDJSON format, whereby each log line is a valid JSON object. Major analysis tools like Google BigQuery and AWS Kinesis require this format.
 
-To turn the resulting log data into a JSON array with one array element per log line, you can use the *jq* tool. Essentially, you pipe the API response into *jq* using the *slurp* (or simply *s*) flag:
+To turn the resulting log data into a JSON array with one array element per log line, you can use the `jq` tool. Essentially, you pipe the API response into *jq* using the *slurp* (or simply *s*) flag:
 
 `<API request data> | jq -s`
+
+Refer to [Download jq](https://jqlang.github.io/jq/download/) for more information on obtaining and installing `jq`.
 
 The following is a sample log with default fields:
 
 ```json
 {
-    "ClientIP": "89.163.242.206",
-    "ClientRequestHost": "www.theburritobot.com",
-    "ClientRequestMethod": "GET",
-    "ClientRequestURI": "/static/img/testimonial-hipster.png",
-    "EdgeEndTimestamp": 1506702504461999900,
-    "EdgeResponseBytes": 69045,
-    "EdgeResponseStatus": 200,
-    "EdgeStartTimestamp": 1506702504433000200,
-    "RayID": "3a6050bcbe121a87"
+  "ClientIP": "89.163.242.206",
+  "ClientRequestHost": "www.theburritobot.com",
+  "ClientRequestMethod": "GET",
+  "ClientRequestURI": "/static/img/testimonial-hipster.png",
+  "EdgeEndTimestamp": 1506702504461999900,
+  "EdgeResponseBytes": 69045,
+  "EdgeResponseStatus": 200,
+  "EdgeStartTimestamp": 1506702504433000200,
+  "RayID": "3a6050bcbe121a87"
 }
 ```
 
