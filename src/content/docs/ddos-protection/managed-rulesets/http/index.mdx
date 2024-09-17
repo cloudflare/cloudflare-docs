@@ -6,7 +6,6 @@ sidebar:
 head:
   - tag: title
     content: HTTP DDoS Attack Protection managed ruleset
-
 ---
 
 The Cloudflare HTTP DDoS Attack Protection managed ruleset is a set of pre-configured rules used to match [known DDoS attack vectors](/ddos-protection/about/attack-coverage/) at layer 7 (application layer) on the Cloudflare global network. The rules match known attack patterns and tools, suspicious patterns, protocol violations, requests causing large amounts of origin errors, excessive traffic hitting the origin/cache, and additional attack vectors at the application layer.
@@ -29,16 +28,33 @@ You can adjust the behavior of the rules in the managed ruleset by modifying the
 :::note[Notes]
 
 - Certain actions or sensitivity levels may not be available to all Cloudflare plans.
-- Currently, you can only define account-level configurations (or overrides) for the HTTP DDoS Attack Protection managed ruleset via API. 
+- Currently, you can only define account-level configurations (or overrides) for the HTTP DDoS Attack Protection managed ruleset via API.
 :::
 
 To adjust rule behavior, do one of the following:
 
 - [Configure the managed ruleset in the Cloudflare dashboard](/ddos-protection/managed-rulesets/http/configure-dashboard/).
 - [Configure the managed ruleset via API](/ddos-protection/managed-rulesets/http/configure-api/).
-- [Configure the managed ruleset using Terraform](/terraform/additional-configurations/ddos-managed-rulesets/#example-http).
+- [Configure the managed ruleset using Terraform](/terraform/additional-configurations/ddos-managed-rulesets/#example-configure-http-ddos-attack-protection).
 
 For more information on the available configuration parameters, refer to [Managed ruleset parameters](/ddos-protection/managed-rulesets/http/override-parameters/).
+
+## Origin Protect rules
+
+Cloudflare HTTP DDoS Protection can also initiate mitigation based on the origin health. Floods of requests that cause a high number of zone errors (default sensitivity level is 1,000 errors per second) can initiate mitigation to alleviate the strain on the zone.
+
+| Rule ID | Description | 
+| --- | --- |
+| `dd42da7baabe4e518eaf11c393596a9d` | HTTP requests causing a high number of origin errors. |
+
+:::note
+
+This rule is available for zones on any plan. 
+:::
+
+The rule is adaptive for zones on the Pro, Business, or Enterprise plan. It performs an additional check for better detection accuracy: the errors-per-second rate must also be at least five times the normal traffic levels.
+
+All HTTP errors in the 52x range (Internal Server Error) and all errors in the 53x range excluding [530](/support/troubleshooting/cloudflare-errors/troubleshooting-cloudflare-5xx-errors/#530error) are considered when factoring in the error rate.
 
 ## Availability
 

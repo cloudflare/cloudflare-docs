@@ -77,25 +77,21 @@ This will create a new `hyperdrive-tutorial` directory. Your new `hyperdrive-tut
 
 :::note
 
-If you are familiar with Cloudflare Workers, or initializing projects in a Continuous Integration (CI) environment, initialize a new project non-interactively by setting `CI=true` as an environmental variable when running `create cloudflare@latest`.
-
-For example: `CI=true npm create cloudflare@latest hyperdrive-tutorial --type=simple --git --ts --deploy=false` will create a basic "Hello World" project ready to build on.
-
-:::
-
-### Enable Node.js compatibility
-
-To enable Node.js compatibility, add the `nodejs_compat` compatibility flag in your `wrangler.toml` configuration:
+Note that the `wrangler.toml` file contains the following option:
 
 ```toml title="wrangler.toml"
 compatibility_flags = [ "nodejs_compat" ]
 ```
 
+This enables the Node.js compatibility mode which is required for database drivers, including Postgres.js.
+
+:::
+
 ## 3. Connect Hyperdrive to a database
 
 :::note
 
-Hyperdrive currently works with PostgreSQL and/or PostgreSQL compatible databases, including CockroachDB and Materialize.
+Hyperdrive currently works with PostgreSQL and PostgreSQL compatible databases, including CockroachDB and Materialize.
 
 Support for other database engines, including MySQL, is on the roadmap.
 
@@ -118,7 +114,7 @@ Support for the new `hyperdrive` commands in the wrangler CLI requires a wrangle
 To create your first Hyperdrive, you will need:
 
 - The IP address (or hostname) and port of your database.
-- The database username (for example, `hyperdrive-demo`) you configured in a previous step.
+- The database username (for example, `hyperdrive-demo`).
 - The password associated with that username.
 - The name of the database you want Hyperdrive to connect to. For example, `postgres`.
 
@@ -133,7 +129,7 @@ Most database providers will provide a connection string you can directly copy-a
 To create a Hyperdrive connection, run the `wrangler` command, replacing the placeholder values passed to the `--connection-string` flag with the values of your existing database:
 
 ```sh
-npx wrangler hyperdrive create $NAME --connection-string="postgres://user:password@HOSTNAME_OR_IP_ADDRESS:PORT/database_name"
+npx wrangler hyperdrive create <YOUR_CONFIG_NAME> --connection-string="postgres://user:password@HOSTNAME_OR_IP_ADDRESS:PORT/database_name"
 ```
 
 If successful, the command will output your new Hyperdrive configuration:
@@ -141,7 +137,7 @@ If successful, the command will output your new Hyperdrive configuration:
 ```json
 {
 	"id": "<example id: 57b7076f58be42419276f058a8968187>",
-	"name": "your-config-name",
+	"name": "YOUR_CONFIG_NAME",
 	"origin": {
 		"host": "YOUR_DATABASE_HOST",
 		"port": 5432,
@@ -169,11 +165,9 @@ You must create a binding for your Worker to connect to your Hyperdrive configur
 To bind your Hyperdrive configuration to your Worker, add the following to the end of your `wrangler.toml` file:
 
 ```toml
-compatibility_flags = [ "nodejs_compat" ] # required for database drivers to function
-
 [[hyperdrive]]
 binding = "HYPERDRIVE"
-id = "a76a99bc342644deb02c38d66082262a" # the ID associated with the Hyperdrive you just created
+id = "<YOUR_DATABASE_ID>" # the ID associated with the Hyperdrive you just created
 ```
 
 Specifically:
@@ -190,10 +184,7 @@ To connect to your database, you will need a database driver which allows you to
 
 To install `postgres`, ensure you are in the `hyperdrive-tutorial` directory. Open your terminal and run the following command:
 
-```sh
-npm i postgres
-# This should install v3.4.4 or later.
-```
+<PackageManagers pkg="postgres" comment="This should install v3.4.4 or later" />
 
 With the driver installed, you can now create a Worker script that queries your database.
 
@@ -201,7 +192,9 @@ With the driver installed, you can now create a Worker script that queries your 
 
 After you have set up your database, you will run a SQL query from within your Worker.
 
-Go to your `hyperdrive-tutorial` Worker and open the `index.ts` file. The `index.ts` file is where you configure your Worker's interactions with D1.
+Go to your `hyperdrive-tutorial` Worker and open the `index.ts` file.
+
+The `index.ts` file is where you configure your Worker's interactions with Hyperdrive.
 
 Populate your `index.ts` file with the following code:
 
@@ -236,18 +229,21 @@ export default {
 			// Return result rows as JSON
 			return Response.json(results);
 		} catch (e) {
-			console.log(e);
-			return Response.json({ error: e.message }, { status: 500 });
+			console.error(e);
+			return Response.json(
+				{ error: e instanceof Error ? e.message : e },
+				{ status: 500 },
+			);
 		}
 	},
 } satisfies ExportedHandler<Env>;
 ```
 
-In the code above, you have:
+Upon receiving a request, the code above does the following:
 
-1. Created a new database client configured to connect to your database via Hyperdrive, using the Hyperdrive connection string.
-2. Initiated a query via `await sql` that outputs all tables (user and system created) in the database (as an example query).
-3. Returned the response as JSON to the client.
+1. Creates a new database client configured to connect to your database via Hyperdrive, using the Hyperdrive connection string.
+2. Initiates a query via `await sql` that outputs all tables (user and system created) in the database (as an example query).
+3. Returns the response as JSON to the client.
 
 ## 6. Deploy your Worker
 

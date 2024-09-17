@@ -11,6 +11,7 @@ import {
 	Render,
 	TabItem,
 	Tabs,
+	PackageManagers,
 } from "~/components";
 
 [Hono](https://honojs.dev/) is a small, simple, and ultrafast web framework for Cloudflare Pages and Workers, Deno, and Bun. In this guide, you will create a new Hono application and deploy it using Cloudflare Pages.
@@ -21,9 +22,11 @@ Use the [`create-cloudflare`](https://www.npmjs.com/package/create-cloudflare) C
 
 To use `create-cloudflare` to create a new Hono project, run the following command:
 
-```sh
-npm create cloudflare@latest my-hono-app -- --framework=hono
-```
+<PackageManagers
+	type="create"
+	pkg="cloudflare@latest"
+	args="my-hono-app --framework=hono"
+/>
 
 Open your project and create a `src/server.js` file (or `src/server.ts` if you are using TypeScript). Add the following content to your file:
 
