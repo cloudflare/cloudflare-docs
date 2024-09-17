@@ -6,16 +6,15 @@ sidebar:
 head:
   - tag: title
     content: Content compression | Brotli
-
 ---
 
-import { Render } from "~/components"
+import { Render } from "~/components";
 
 Cloudflare compresses content in two ways: between Cloudflare and your website visitors and between Cloudflare and your origin server.
 
 ## Compression between Cloudflare and website visitors
 
-In addition to Cloudflare's [default caching behavior](/cache/concepts/default-cache-behavior/), Cloudflare supports Gzip and Brotli compression when delivering content to website visitors.
+In addition to Cloudflare's [default caching behavior](/cache/concepts/default-cache-behavior/), Cloudflare supports Gzip, Brotli, and Zstandard compression when delivering content to website visitors.
 
 ```mermaid
 flowchart LR
@@ -27,7 +26,7 @@ B((Cloudflare))
 C[(Origin server)]
 
 A == "Request" ==> B -.-> C
-C -.-> B == "Response<br>(Gzip / Brotli / No compression)" ==> A
+C -.-> B == "Response<br>(Gzip / Brotli / Zstandard / No compression)" ==> A
 
 style A stroke-width: 2px
 style B stroke: orange,fill: orange,color: black
@@ -36,7 +35,11 @@ linkStyle 0,3 stroke-width: 2px
 linkStyle 1,2 stroke-width: 1px
 ```
 
-If supported by visitors' web browsers, Cloudflare will return Gzip or Brotli-encoded responses for the following content types:
+:::note
+Zstandard compression is enabled by default on Free plans. Customers in other plans can enable Zstandard compression through [Compression Rules](/rules/compression-rules/).
+:::
+
+If supported by visitors' web browsers, Cloudflare will return Gzip, Brotli, or Zstandard-encoded responses for the following content types:
 
 ```
 text/html
@@ -88,26 +91,28 @@ application/graphql+json
 application/geo+json
 ```
 
-Cloudflare's global network can deliver content to website visitors using Gzip compression, Brotli compression, or no compression, according to the values visitors provide in the `Accept-Encoding` request header.
+Cloudflare's global network can deliver content to website visitors using Gzip compression, Brotli compression, Zstandard compression, or no compression, depending on:
+
+- The values visitors provide in the `accept-encoding` request header.
+- The value of the [Brotli setting](/speed/optimization/content/brotli/) at the zone level.
+- Any configured [compression rule](/rules/compression-rules/) that matches incoming requests.
 
 For responses with error status codes, Cloudflare will only compress responses if their error status code is `403` or `404`. For successful response status codes, Cloudflare will only compress responses if their status code is `200`. Responses with other status codes will not be compressed.
 
-Enterprise customers can override Cloudflare's default compression behavior using [Compression Rules](/rules/compression-rules/).
+You can override Cloudflare's default compression behavior using [Compression Rules](/rules/compression-rules/).
 
 :::caution[Minimum response size for compression]
 
-
 Cloudflare will only apply compression to responses with a minimum size when sending them to website visitors:
 
-* For Gzip, responses must have a minimum size of 48 bytes.
-* For Brotli, responses must have a minimum size of 50 bytes.
+- For Gzip, responses must have a minimum size of 48 bytes.
+- For Brotli and Zstandard, responses must have a minimum size of 50 bytes.
 
 Smaller responses will not be compressed, regardless of their content type.
 
-
 :::
 
-***
+---
 
 ## Content compression from origin servers to the Cloudflare network
 
@@ -134,9 +139,9 @@ linkStyle 0,3 stroke-width: 1px
 
 If your origin server responds to a Cloudflare request using Gzip/Brotli compression, we will keep the same compression in the response sent to the website visitor if:
 
-* You include a `Content-Encoding` header in your server response mentioning the compression being used (`gzip` or `br`).
-* The visitor browser (or client) supports the compression algorithm.
-* You do not enable Cloudflare features that change the response content (refer to [Notes about end-to-end compression](#notes-about-end-to-end-compression) for details).
+- You include a `content-encoding` header in your server response mentioning the compression being used (`gzip` or `br`).
+- The visitor browser (or client) supports the compression algorithm.
+- You do not enable Cloudflare features that change the response content (refer to [Notes about end-to-end compression](#notes-about-end-to-end-compression) for details).
 
 Cloudflare's reverse proxy can also convert between compressed formats and uncompressed formats. Cloudflare can receive content from your origin server with Gzip or Brotli compression and serve it to visitors uncompressed (or vice versa), independently of caching.
 
@@ -144,9 +149,9 @@ If you do not want a particular response from your origin to be encoded with Gzi
 
 :::caution[Warning]
 
-Cloudflare will take into consideration the `Accept-Encoding` header value in website visitors' requests when sending responses to those visitors. However, when requesting content from your origin server, Cloudflare will send a different `Accept-Encoding` header, supporting Gzip and Brotli compression. 
+Cloudflare will take into consideration the `accept-encoding` header value in website visitors' requests when sending responses to those visitors. However, when requesting content from your origin server, Cloudflare will send a different `Accept-Encoding` header, supporting Gzip and Brotli compression.
 :::
 
-***
+---
 
 <Render file="brotli-compression-warning" />
