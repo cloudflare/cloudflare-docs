@@ -6,7 +6,6 @@ sidebar:
 head:
   - tag: title
     content: IP Access rule parameters
-
 ---
 
 An IP Access rule will apply a certain action to incoming traffic based on the visitor's IP address, IP range, country, or Autonomous System Number (ASN).
@@ -20,8 +19,6 @@ An IP Access rule will apply a certain action to incoming traffic based on the v
 
 ## IP range
 
-
-
 | Type             | Example value    | Start of range | End of range                             |                    Number of addresses |
 | ---------------- | ---------------- | -------------- | ---------------------------------------- | -------------------------------------: |
 | IPv4 `/24` range | `192.0.2.0/24`   | `192.0.2.0`    | `192.0.2.255`                            |                                    256 |
@@ -30,27 +27,25 @@ An IP Access rule will apply a certain action to incoming traffic based on the v
 | IPv6 `/48` range | `2001:db8::/48`  | `2001:db8::`   | `2001:db8:0000:ffff:ffff:ffff:ffff:ffff` |      1,208,925,819,614,629,174,706,176 |
 | IPv6 `/32` range | `2001:db8::/32`  | `2001:db8::`   | `2001:db8:ffff:ffff:ffff:ffff:ffff:ffff` | 79,228,162,514,264,337,593,543,950,336 |
 
-
-
 ## Country
 
-You can specify a country by name or two-letter [ISO-3166-1 alpha-2 codes](https://www.iso.org/iso-3166-country-codes.html). For example:
+Specify a country using two-letter [ISO-3166-1 alpha-2 codes](https://www.iso.org/iso-3166-country-codes.html). Additionally, the Cloudflare dashboard accepts country names. For example:
 
-* `US`
-* `germany`
-* `CN`
+- `US`
+- `CN`
+- `germany` (dashboard only)
 
 Cloudflare uses the following special country alpha-2 codes that are not part of the ISO:
 
-* `T1`: [Tor exit nodes](/network/onion-routing/) (country name: `Tor`)
-* `XX`: Unknown/reserved
+- `T1`: [Tor exit nodes](/network/onion-routing/) (country name: `Tor`)
+- `XX`: Unknown/reserved
 
 :::note[Notes about country blocking]
 
+- Block by country is only available on Enterprise plans.
+- IP addresses globally allowed by Cloudflare will override an IP Access rule country block, but they will not override a country block via [WAF custom rules](/waf/custom-rules/).
 
-* Block by country is only available on Enterprise plans.
-* IP addresses globally allowed by Cloudflare will override an IP Access rule country block, but they will not override a country block via [WAF custom rules](/waf/custom-rules/). 
-  :::
+:::
 
 ## Autonomous System Number (ASN)
 
