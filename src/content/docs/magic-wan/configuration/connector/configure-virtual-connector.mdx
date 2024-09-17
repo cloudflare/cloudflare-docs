@@ -3,16 +3,15 @@ pcx_content_type: how-to
 title: Configure virtual Connector
 sidebar:
   order: 4
-
 ---
 
-import { Render } from "~/components"
+import { Render } from "~/components";
 
 Virtual Magic WAN Connector (Virtual Connector) is a virtual appliance alternative to the hardware based Magic WAN Connector appliance. These two versions of Connector are identical otherwise.
 
 ## Prerequisites
 
-Before you can install Virtual Connector, you need an Enterprise account with Magic WAN enabled. Additionally,  you need to have a VMware host with sufficient compute, memory, and storage to run the virtual machine with Virtual Connector. This includes:
+Before you can install Virtual Connector, you need an Enterprise account with Magic WAN enabled. Additionally, you need to have a VMware host with sufficient compute, memory, and storage to run the virtual machine with Virtual Connector. This includes:
 
 - Intel x86 CPU architecture
 - ESXi hypervisor 7.0U1 or higher
@@ -73,6 +72,7 @@ Refer to [VMWare's documentation](https://kb.vmware.com/s/article/1003825) for m
 7. Select where you want to save the files extracted from the OVA image > **Next**.
 
 8. In **Networking mappings**, select assignments for your desired topology according to the port groups you set up previously:
+
    1. For example, map `eno1` port to `VM Network` to create your WAN, and `eno2` to `LAN0` to act as your LAN port.
    2. Allocate any unused ports to the `null` port group.
    3. Take note of your configuration. You will need this information to configure your network in the Cloudflare dashboard.
@@ -97,11 +97,24 @@ You cannot use the same license key twice, or reuse a key once the virtual machi
 
 ## 3. Set up Cloudflare dashboard
 
-<Render file="connector/create-site" params={{ one: "needs to correspond to the virtual network interface on the Virtual Connector instance you have set up in VMware. Following our example from the previous steps, you need to choose port `1` since that is what corresponds to the `eno1` port we set up in VMware.", two: "needs to correspond to the virtual LAN interface on the Virtual Connector instance you have set up in VMware. Following our example from the previous steps, you need to choose port `2` since that is what corresponds to the `eno2` port we set up in VMware.", three: "For a Virtual Connector to show up you need to have already obtained your [OVA package and licence keys](#1-obtain-the-virtual-connector-image)." }} />
+<Render
+	file="connector/create-site"
+	params={{
+		one: "needs to correspond to the virtual network interface on the Virtual Connector instance you have set up in VMware. Following our example from the previous steps, you need to choose port `1` since that is what corresponds to the `eno1` port we set up in VMware.",
+		two: "needs to correspond to the virtual LAN interface on the Virtual Connector instance you have set up in VMware. Following our example from the previous steps, you need to choose port `2` since that is what corresponds to the `eno2` port we set up in VMware.",
+		three:
+			"For a Virtual Connector to show up you need to have already obtained your [OVA package and licence keys](#1-obtain-the-virtual-connector-image).",
+	}}
+/>
 
 ## 4. Activate Connector
 
-<Render file="connector/activate-connector" params={{ one: "Virtual Magic WAN Connector is deactivated after you install it" }} />
+<Render
+	file="connector/activate-connector"
+	params={{
+		one: "Virtual Magic WAN Connector is deactivated after you install it",
+	}}
+/>
 
 ## 5. Boot your Virtual Connector
 
@@ -110,6 +123,10 @@ You cannot use the same license key twice, or reuse a key once the virtual machi
 3. The Virtual Connector will set up the LAN and WAN connections according to the configuration downloaded from the site you created on the Cloudflare dashboard. The Virtual Connector will also establish IPsec tunnels.
 4. If successful, the [tunnel health checks](/magic-wan/configuration/common-settings/check-tunnel-health-dashboard/) will show as healthy.
 5. If you do not see a [healthy heartbeat](/magic-wan/configuration/connector/maintenance/heartbeat/) the Cloudflare dashboard, reboot the Virtual Connector's VM in VMware.
+
+---
+
+<Render file="connector/ha-configs" />
 
 ---
 
