@@ -83,7 +83,7 @@ When using this endpoint to create a new rule and keep existing rules, you must 
 Once you’ve created a code snippet, you can link it to rules. This is done via the following `PUT` request to the `snippet_rules` endpoint.
 
 ```bash
-curl --request PUT
+curl --request PUT \
 "https://api.cloudflare.com/client/v4/zones/{zone_id}/snippets/snippet_rules" \
 --header "Authorization: Bearer <API_TOKEN>" \
 --header "Content-Type: application/json" \
