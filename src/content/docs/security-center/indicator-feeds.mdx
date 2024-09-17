@@ -28,14 +28,105 @@ If your organization is interested in becoming a provider or a subscriber, conta
 
 ### Create a Custom Indicator Feed
 
-Providers can create and manage a Custom Indicator Feed with the [Indicator API endpoints](/api/operations/custom-indicator-feeds-get-indicator-feeds):
+Providers can create and manage a Custom Indicator Feed with the [Custom Indicator Feeds API endpoints](/api/operations/custom-indicator-feeds-get-indicator-feeds):
 
-1. Create a feed with the [Create new indicator feed endpoint](/api/operations/custom-indicator-feeds-create-indicator-feeds). Feeds are lists of indicators.
-2. Upload data to the feed with the [Update indicator feed data endpoint](/api/operations/custom-indicator-feeds-update-indicator-feed-data). Uploaded indicator data must be in a [`.stix2`](https://oasis-open.github.io/cti-documentation/stix/intro) formatted file.
+1. Contact your account team to configure your account as an indicator feed provider.
+2. Create a feed with the [Create new indicator feed endpoint](/api/operations/custom-indicator-feeds-create-indicator-feeds). For example:
+
+   ```bash title="Create new indicator feed"
+   curl --request POST \
+   	--url https://api.cloudflare.com/client/v4/accounts/{account_id}/intel/indicator-feeds \
+   	--header 'Content-Type: application/json' \
+   	--header 'X-Auth-Email: <EMAIL>' \
+   	--header 'X-Auth-Key: <API_KEY>' \
+   	--data '{
+   	"description": "example feed description",
+   	"name": "example_feed_1"
+   }'
+   ```
+
+   ```json output
+   {
+   	"result": {
+   		"id": 10,
+   		"name": "indicator_feed_2",
+   		"description": "Test #2",
+   		"created_on": "2023-08-01T18:00:26.65715Z",
+   		"modified_on": "2023-08-01T18:00:26.65715Z"
+   	},
+   	"success": true,
+   	"errors": [],
+   	"messages": []
+   }
+   ```
+
+3. Upload data to the feed with the [Update indicator feed data endpoint](/api/operations/custom-indicator-feeds-update-indicator-feed-data). Uploaded indicator data must be in a [`.stix2`](https://oasis-open.github.io/cti-documentation/stix/intro) formatted file. For example:
+
+   ```bash title="Update indicator feed data"
+   curl --request PUT \
+   	--url https://api.cloudflare.com/client/v4/accounts/account_id/intel/indicator-feeds/feed_id/snapshot \
+   	--header 'Content-Type: multipart/form-data' \
+   	--header 'X-Auth-Email: <EMAIL>' \
+   	--header 'X-Auth-Key: <API_KEY>' \
+   	--form 'source=@/path/to/file'
+   ```
+
+   ```json output
+   {
+   	"errors": [],
+   	"messages": [],
+   	"success": true,
+   	"result": {
+   		"file_id": 1,
+   		"filename": "snapshot_file.unified",
+   		"status": "unified"
+   	}
+   }
+   ```
+
    :::note
    Indicator feeds use a snapshot system. To update feeds with new data, providers must upload a file containing all previous and new indicators.
    :::
-3. Grant access to subscribers with the [Grant permission to indicator feed endpoint](/api/operations/custom-indicator-feeds-add-permission). Any administrator of the account that owns the feed must add subscribers' `account_tag`s to the feed's allowed subscribers list.
+
+4. (Optional) Verify the status of your feed upload with the [Get indicator feed data endpoint](/api/operations/custom-indicator-feeds-get-indicator-feed-data). For example:
+
+   ```bash title="Get indicator feed data"
+   curl --request GET \
+   	--url https://api.cloudflare.com/client/v4/accounts/{account_id}/intel/indicator-feeds/{feed_id}/data \
+   	--header 'Content-Type: application/json' \
+   	--header 'X-Auth-Email: <EMAIL>' \
+   	--header 'X-Auth-Key: <API_KEY>'
+   ```
+
+   ```json output {8}
+   {
+   	"result": {
+   		"id": 10,
+   		"name": "indicator_feed_2",
+   		"description": "Test #2",
+   		"created_on": "2023-08-01T18:00:26.65715Z",
+   		"modified_on": "2023-08-01T18:00:26.65715Z",
+   		"latest_upload_status": "Complete"
+   	},
+   	"success": true,
+   	"errors": [],
+   	"messages": []
+   }
+   ```
+
+5. Grant access to subscribers with the [Grant permission to indicator feed endpoint](/api/operations/custom-indicator-feeds-add-permission). Any administrator of the account that owns the feed must add subscribers' `account_tag`s to the feed's allowed subscribers list. For example:
+
+   ```bash title="Update indicator feed data"
+   curl --request PUT \
+   	--url https://api.cloudflare.com/client/v4/accounts/account_id/intel/indicator-feeds/feed_id/snapshot \
+   	--header 'Content-Type: multipart/form-data' \
+   	--header 'X-Auth-Email: <EMAIL>' \
+   	--header 'X-Auth-Key: <API_KEY>' \
+   	--data '{
+   	"account_tag": "823f45f16fd2f7e21e1e054aga4d2859",
+   	"feed_id": 1
+   }'
+   ```
 
 ### Use a feed in Gateway
 
