@@ -14,7 +14,6 @@ sidebar:
 head:
   - tag: title
     content: "Reference Architecture Diagram: Retrieval Augmented Generation (RAG)"
-
 ---
 
 ## Introduction
@@ -29,7 +28,8 @@ In the context of Retrieval-Augmented Generation (RAG), knowledge seeding involv
 
 ## Knowledge Seeding
 
-![Figure 1: Knowledge seeding](~/assets/images/reference-architecture/rag-ref-architecture-diagrams/rag-architecture-seeding.svg "Figure 1: Knowledge seeding")
+![Figure 1: Knowledge seeding](~/assets/images/reference-architecture/rag-ref-architecture-diagrams/rag-architecture-seeding.svg)
+_Figure 1: Knowledge seeding_
 
 1. **Client upload**: Send POST request with documents to API endpoint.
 2. **Input processing**: Process incoming request using [Workers](/workers/) and send messages to [Queues](/queues/) to add processing backlog.
@@ -41,7 +41,8 @@ In the context of Retrieval-Augmented Generation (RAG), knowledge seeding involv
 
 ## Knowledge Queries
 
-![Figure 2: Knowledge queries](~/assets/images/reference-architecture/rag-ref-architecture-diagrams/rag-architecture-query.svg "Figure 2: Knowledge queries")
+![Figure 2: Knowledge queries](~/assets/images/reference-architecture/rag-ref-architecture-diagrams/rag-architecture-query.svg)
+_Figure 2: Knowledge queries_
 
 1. **Client query**: Send GET request with query to API endpoint.
 2. **Embedding generation**: Generate embedding vectors by calling [Workers AI](/workers-ai/) [text embedding models](/workers-ai/models/#text-embeddings) for the incoming query.
@@ -51,6 +52,6 @@ In the context of Retrieval-Augmented Generation (RAG), knowledge seeding involv
 
 ## Related resources
 
-* [Tutorial: Build a RAG AI](/workers-ai/tutorials/build-a-retrieval-augmented-generation-ai/)
-* [Workers AI: Text embedding models](/workers-ai/models/#text-embeddings)
-* [Workers AI: Text generation models](/workers-ai/models/#text-generation)
+- [Tutorial: Build a RAG AI](/workers-ai/tutorials/build-a-retrieval-augmented-generation-ai/)
+- [Workers AI: Text embedding models](/workers-ai/models/#text-embeddings)
+- [Workers AI: Text generation models](/workers-ai/models/#text-generation)

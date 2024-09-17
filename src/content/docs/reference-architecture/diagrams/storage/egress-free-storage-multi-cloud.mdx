@@ -6,7 +6,6 @@ products:
   - R2
 sidebar:
   order: 1
-
 ---
 
 ## Introduction
@@ -21,14 +20,15 @@ Egress fees are charges incurred when data is transferred out of a cloud provide
 
 ## R2 multi-cloud setup
 
-![Figure 1: R2 multi-cloud setup](~/assets/images/reference-architecture/r2-multi-cloud/r2-multi-cloud.svg "Figure 1: R2-multi-cloud setup")
+![Figure 1: R2 multi-cloud setup](~/assets/images/reference-architecture/r2-multi-cloud/r2-multi-cloud.svg)
+_Figure 1: R2-multi-cloud setup_
 
 1. **Worker and R2 interaction**: Use R2's [Workers API](/r2/api/workers/workers-api-reference/) to interact with R2 from a Worker. Alternatively, for improved portability, use R2's [S3 API](/r2/api/s3/) from a Worker. No R2 egress fees apply.
 2. **External service and R2 interaction**: Use R2's [S3 API](/r2/api/s3/) to interact with R2 from external services. No R2 egress fees apply.
 
 ## Related resources
 
-* [R2: Get started](/r2/get-started)
-* [R2: S3 API](/r2/api/s3/)
-* [R2: Workers API](/r2/api/workers/)
-* [R2: Configure aws4fetch for R2](/r2/examples/aws/aws4fetch/)
+- [R2: Get started](/r2/get-started)
+- [R2: S3 API](/r2/api/s3/)
+- [R2: Workers API](/r2/api/workers/)
+- [R2: Configure aws4fetch for R2](/r2/examples/aws/aws4fetch/)

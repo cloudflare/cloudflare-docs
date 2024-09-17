@@ -6,7 +6,6 @@ sidebar:
 head:
   - tag: title
     content: Protect Hybrid Cloud Networks with Cloudflare Magic Transit
-
 ---
 
 ## Introduction
@@ -35,7 +34,8 @@ On-premise data center 1: 203.0.113.64/26
 On-premise data center 2: 203.0.113.128/25
 ```
 
-![Figure 1: Customer BYOIP for all Cloud and on-premises networks.](~/assets/images/reference-architecture/protect-hybrid-cloud-networks-with-cloudflare-magic-transit/figure-1.svg "Figure 1: Customer BYOIP for all Cloud and on-premises networks.")
+![Figure 1: Customer BYOIP for all Cloud and on-premises networks.](~/assets/images/reference-architecture/protect-hybrid-cloud-networks-with-cloudflare-magic-transit/figure-1.svg)
+_Figure 1: Customer BYOIP for all Cloud and on-premises networks._
 
 1. Using Border Gateway Protocol ([BGP](https://www.cloudflare.com/learning/security/glossary/what-is-bgp/)), Cloudflare advertises customer’s protected IP prefixes to the Internet from all of Cloudflare’s global data centers, enabling [IP Anycast](https://www.cloudflare.com/learning/cdn/glossary/anycast-network/), so that Internet traffic destined to these protected IP prefixes will always be routed to the Cloudflare data center that is closest to the source of the traffic.
 
@@ -54,6 +54,7 @@ With Magic Transit service being the single, consolidated cloud-native network p
 One other added benefit of using such consolidated, cloud-native network protection solutions is that you can easily migrate or relocate Internet-facing networks between the various hybrid cloud environments without ever losing protection to these networks. They can do so by simply changing routes in the Magic Transit configuration to route traffic to the new location.
 
 ## Scenario 2 - Customer lease IP address from Cloudflare for both on-premise and cloud network deployments
+
 In the case where you do not own any network prefixes that are equal to or larger than /24, but would still like to use Magic Transit to protect their networks, you can [lease IPs](/magic-transit/cloudflare-ips/) from Cloudflare to assign to these smaller networks. The following diagram illustrates the architecture of such a deployment. Similar to the previous scenario, these customer networks are deployed at on-premise locations as well as across multiple cloud providers’ regions.
 
 For illustration purposes, below is an example list of the locations of Internet-facing networks and their respective IP prefixes.
@@ -66,7 +67,8 @@ On-premise data center 1: 192.0.2.48/28
 On-premise data center 2: 192.0.2.64/28
 ```
 
-![Figure 2: Customer lease IPs from Cloudflare for both on-premise and cloud network deployments.](~/assets/images/reference-architecture/protect-hybrid-cloud-networks-with-cloudflare-magic-transit/figure-2.svg "Figure 2: Customer lease IPs from Cloudflare for both on-premise and cloud network deployments.")
+![Figure 2: Customer lease IPs from Cloudflare for both on-premise and cloud network deployments.](~/assets/images/reference-architecture/protect-hybrid-cloud-networks-with-cloudflare-magic-transit/figure-2.svg)
+_Figure 2: Customer lease IPs from Cloudflare for both on-premise and cloud network deployments._
 
 1. Using Border Gateway Protocol (BGP), Cloudflare advertises its owned IP prefixes to the Internet, which includes the IP addresses that you lease.
 
@@ -76,6 +78,7 @@ On-premise data center 2: 192.0.2.64/28
 7. Magic Transit Egress traffic is subject to Magic Firewall filtering before being routed out to the Internet towards the users.
 
 ## Scenario 3 - Customer BYOIP for on-premise networks and lease IP address from Cloudflare for cloud network deployments
+
 In this scenario, you can deploy larger on-premise networks and smaller cloud-based networks. You assign your own /24 IP prefixes to the on-premise networks while leasing IPs from Cloudflare for your cloud-based networks.
 
 For illustration purposes, below is an example list of the locations of Internet-facing networks and their respective IP prefixes.
@@ -88,7 +91,8 @@ On-premise data center 1: 198.51.100.0/24
 On-premise data center 2: 203.0.113.0/24
 ```
 
-![Figure 3: Customer BYOIP for on-premise networks and lease IP from Cloudflare for cloud network deployments.](~/assets/images/reference-architecture/protect-hybrid-cloud-networks-with-cloudflare-magic-transit/figure-3.svg "Figure 3: Customer BYOIP for on-premise networks and lease IP from Cloudflare for cloud network deployments.")
+![Figure 3: Customer BYOIP for on-premise networks and lease IP from Cloudflare for cloud network deployments.](~/assets/images/reference-architecture/protect-hybrid-cloud-networks-with-cloudflare-magic-transit/figure-3.svg)
+_Figure 3: Customer BYOIP for on-premise networks and lease IP from Cloudflare for cloud network deployments._
 
 1. Using Border Gateway Protocol (BGP), Cloudflare advertises both customer-owned and Cloudflare-owned IP prefixes to the Internet.
 
@@ -98,14 +102,14 @@ On-premise data center 2: 203.0.113.0/24
 7. This Magic Transit Egress traffic is subject to Magic Firewall filtering before being routed out to the Internet towards the users.
 8. The server return traffic from on-premises networks to the Internet users are direct server returned (DSR), bypassing the Cloudflare network.
 
-*Note*: Alternatively, customers can choose to also route the on-premise networks’ server return traffic through Cloudflare via policy-based routing and Magic Transit Egress functionality. This adds an additional layer of security and control for the egress traffic with Magic Firewall filtering. For example, it can block traffic destined to questionable IP addresses and sites, prohibited destinations, or countries.
+_Note_: Alternatively, customers can choose to also route the on-premise networks’ server return traffic through Cloudflare via policy-based routing and Magic Transit Egress functionality. This adds an additional layer of security and control for the egress traffic with Magic Firewall filtering. For example, it can block traffic destined to questionable IP addresses and sites, prohibited destinations, or countries.
 
 ## Related resources
-* [Magic Transit Reference Architecture](/reference-architecture/architectures/magic-transit/)
-* [Cloudflare Magic Transit](/magic-transit/)
-* [Cloudflare Network Interconnect](/network-interconnect/)
-* [Cloudflare DDoS Protection](/ddos-protection/)
-* [Cloudflare Magic Firewall](/magic-firewall/)
-* [Cloudflare Magic IPsec Device Compatibility Matrix](/magic-wan/reference/device-compatibility/)
-* [Cloudflare Magic Transit Leased IP](/magic-transit/cloudflare-ips/)
 
+- [Magic Transit Reference Architecture](/reference-architecture/architectures/magic-transit/)
+- [Cloudflare Magic Transit](/magic-transit/)
+- [Cloudflare Network Interconnect](/network-interconnect/)
+- [Cloudflare DDoS Protection](/ddos-protection/)
+- [Cloudflare Magic Firewall](/magic-firewall/)
+- [Cloudflare Magic IPsec Device Compatibility Matrix](/magic-wan/reference/device-compatibility/)
+- [Cloudflare Magic Transit Leased IP](/magic-transit/cloudflare-ips/)

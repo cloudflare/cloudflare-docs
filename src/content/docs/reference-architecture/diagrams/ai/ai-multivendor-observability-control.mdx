@@ -14,7 +14,6 @@ head:
 description: By shifting features such as rate limiting, caching, and error
   handling to the proxy layer, organizations can apply unified configurations
   across services and inference service providers.
-
 ---
 
 ## Introduction
@@ -25,11 +24,11 @@ Inference-as-a-Service is a cloud-based model that allows users to deploy and ex
 
 As this field evolves rapidly, developers and organizations face several challenges:
 
-* Fragmentation: Many inference service providers offer only a limited range of models and features. Different use cases may require multiple vendors, leading to fragmentation.
-* Availability: With increasing demand and fast-paced technological advancements, inference service providers struggle to maintain high API availability.
-* Lack of observability: Providers often offer limited analytics and logging capabilities, which vary across vendors. Gaining a unified view of AI usage proves challenging.
-* Lack of security control: Organizations encounter difficulties in maintaining adequate security measures.
-* Lack of cost control: Understanding usage insights can be challenging, and the absence of custom rate limits poses risks in public-facing AI use cases.
+- Fragmentation: Many inference service providers offer only a limited range of models and features. Different use cases may require multiple vendors, leading to fragmentation.
+- Availability: With increasing demand and fast-paced technological advancements, inference service providers struggle to maintain high API availability.
+- Lack of observability: Providers often offer limited analytics and logging capabilities, which vary across vendors. Gaining a unified view of AI usage proves challenging.
+- Lack of security control: Organizations encounter difficulties in maintaining adequate security measures.
+- Lack of cost control: Understanding usage insights can be challenging, and the absence of custom rate limits poses risks in public-facing AI use cases.
 
 Using a forward proxy can mitigate these challenges. Positioned between the service making inference requests and the inference service platform, it serves as a single point for observability and control. By shifting features such as rate limiting, caching, and error handling to the proxy layer, organizations can apply unified configurations across services and inference service providers.
 
@@ -37,7 +36,8 @@ Using a forward proxy can mitigate these challenges. Positioned between the serv
 
 The following architecture illustrates the setup of [AI Gateway](/ai-gateway/) as a forward proxy between a service and one or multiple AI inference providers, such as [Workers AI](/workers-ai/)
 
-![Figure 1: Multi-vendor AI architecture](~/assets/images/reference-architecture/ai-multivendor-observability-control/ai-multi-vendor-observability-control.svg "Multi-vendor AI architecture")
+![Figure 1: Multi-vendor AI architecture](~/assets/images/reference-architecture/ai-multivendor-observability-control/ai-multi-vendor-observability-control.svg)
+_Multi-vendor AI architecture_
 
 1. **Inference request**: Send POST request to your AI gateway.
 2. **Request proxying**: Forward `POST` request to AI Inference provider or serve response from [cache, if enabled and available](/ai-gateway/configuration/caching). During this process, both [analytics](/ai-gateway/observability/analytics/) and [logs](/ai-gateway/observability/analytics/#logging) are collected. Additionally, controls such as Rate Limiting are enforced.
@@ -45,5 +45,5 @@ The following architecture illustrates the setup of [AI Gateway](/ai-gateway/) a
 
 ## Related resources
 
-* [AI Gateway: Get started](/ai-gateway/get-started/)
-* [AI Gateway: Supported Providers](/ai-gateway/providers/)
+- [AI Gateway: Get started](/ai-gateway/get-started/)
+- [AI Gateway: Supported Providers](/ai-gateway/providers/)

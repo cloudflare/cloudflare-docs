@@ -5,9 +5,9 @@ sidebar:
   order: 1
 head:
   - tag: title
-    content: "Reference Architecture Diagram: Access to private apps without having
+    content:
+      "Reference Architecture Diagram: Access to private apps without having
       to deploy client agents"
-
 ---
 
 ## Introduction
@@ -16,9 +16,9 @@ Using Cloudflare to access private resources - such as applications, servers, an
 
 Typically, to provide access to internal resources, you use Cloudflare Zero Trust Network Access [ZTNA](https://www.cloudflare.com/learning/access-management/what-is-ztna/) which supports two methods for how the user device accesses a private resource.
 
-* A CNAME in public DNS, that resolves to a hostname representing the Cloudflare tunnel which proxies the request to the internal application.
+- A CNAME in public DNS, that resolves to a hostname representing the Cloudflare tunnel which proxies the request to the internal application.
 
-* An IP address exposed by Cloudflare tunnel, that again, proxies traffic direct to that IP address.
+- An IP address exposed by Cloudflare tunnel, that again, proxies traffic direct to that IP address.
 
 ## Accessing private applications
 
@@ -28,7 +28,8 @@ So how do you allow access to private resources, without creating public DNS rec
 
 Follow this [tutorial](/cloudflare-one/tutorials/clientless-access-private-dns/) for information on how to configure secure access to private web-based resources without having to deploy client agents.
 
-![Figure 1: Remote Access Internal Hostname](~/assets/images/reference-architecture/sase-clientless-access-private-dns/diagram1.svg "Figure 1: Remote browser connected to private web service using internal hostname")
+![Figure 1: Remote Access Internal Hostname](~/assets/images/reference-architecture/sase-clientless-access-private-dns/diagram1.svg)
+_Figure 1: Remote browser connected to private web service using internal hostname_
 
 1. Users start their access by authenticating to the [Cloudflare Browser Isolation](https://your_team_domain.cloudflareaccess.com/browser) service. Note this is a browser running on Cloudflare’s edge network, therefore all requests will by default be handled by Cloudflare. The contents are rendered back to the users’ browser via secure encrypted vector streams that use HTTPS and WebRTC channels.
 2. Once the user has authenticated to the remote browser, they make a request to an internal hostname which is a record in the internal DNS service. e.g. [https://app.company.internal](https://app.company.internal)
@@ -38,4 +39,4 @@ Follow this [tutorial](/cloudflare-one/tutorials/clientless-access-private-dns/)
 
 ## Related resources
 
-* [Tutorial: Access a web application via its private hostname without WARP](/cloudflare-one/tutorials/clientless-access-private-dns/)
+- [Tutorial: Access a web application via its private hostname without WARP](/cloudflare-one/tutorials/clientless-access-private-dns/)

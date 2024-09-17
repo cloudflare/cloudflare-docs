@@ -25,17 +25,20 @@ Additionally, serverless APIs often integrate seamlessly with other cloud servic
 
 Most cloud serverless implementations have a single region where your code is executed. This means any request, from anywhere in the world, must traverse the Internet to get to this single location. All responses to the API request must also be sent back over the same Internet route to the user.
 
-![Figure 1: Traditional single-region architecture](~/assets/images/reference-architecture/serverless-global-apis/single-region.png "Figure 1:  Traditional single-region architecture")
+![Figure 1: Traditional single-region architecture](~/assets/images/reference-architecture/serverless-global-apis/single-region.png)
+_Figure 1: Traditional single-region architecture_
 
 Cloudflare follows a different, global-first approach. Globally-deployed architectures enable lower latency and high availability for users accessing the API from different parts of the world. In order to realize performance gains, not only the compute needs to be distributed, but ideally the data as well. Different solutions such as a caching as well as global replication can enable this.
 
-![Figure 2: Region Earth](~/assets/images/reference-architecture/serverless-global-apis/region-earth.png "Figure 2:  Region Earth")
+![Figure 2: Region Earth](~/assets/images/reference-architecture/serverless-global-apis/region-earth.png)
+_Figure 2: Region Earth_
 
 Overall, serverless globally-deployed APIs offer a cost-effective, scalable, and agile approach to building modern applications and services, allowing organizations to focus on delivering value to their users without being encumbered by the complexities of managing infrastructure.
 
 ## Serverless global APIs
 
-![Figure 3: Serverless global APIs](~/assets/images/reference-architecture/serverless-global-apis/serverless-global-apis.svg "Figure 3: Serverless global APIs")
+![Figure 3: Serverless global APIs](~/assets/images/reference-architecture/serverless-global-apis/serverless-global-apis.svg)
+_Figure 3: Serverless global APIs_
 
 This is an example architecture of a serverless API on Cloudflare and aims to illustrate how different compute and data products could interact with each other.
 
