@@ -47,16 +47,19 @@ The following table summarizes the available operations.
 To create or update a Snippet, use the following `PUT` request. The snippet is named `{snippet_name}` and the body contains the JavaScript code.
 
 ```bash
-curl -X PUT https://api.cloudflare.com/client/v4/zones/{zone_id}/snippets/{snippet_name} \
+curl --request PUT https://api.cloudflare.com/client/v4/zones/{zone_id}/snippets/{snippet_name} \
 --header "Authorization: Bearer <API_TOKEN>" \
---header 'Content-Type: multipart/form-data' \
+--header "Content-Type: multipart/form-data" \
 --form files=@example.js \
 --form metadata='{"main_module":"example.js"}'
 ```
 
-The required body parameters are `files` (the file with your JavaScript code) and `metadata` (containing the `main_module`, which must match the filename of the uploaded file).
+The required body parameters are:
 
-To make this example work, you need to save your JavaScript code in a file named `example.js`, then execute `curl` command with a PUT request from the folder where `example.js` is located.
+- `files`: The file with your JavaScript code.
+- `metadata`: Object containing `main_module`, which must match the filename of the uploaded file.
+
+To make this example work, save your JavaScript code in a file named `example.js`, and then execute `curl` command with a `PUT` request from the folder where `example.js` is located.
 
 ```json title="Example response"
 {
