@@ -1,0 +1,35 @@
+---
+{}
+
+---
+
+import { TabItem, Tabs } from "~/components";
+
+<Tabs> <TabItem label="Linux">
+
+```bash
+curl https://api.cloudflare.com/client/v4/zones/{zone_id}/logs/control/retention/flag \
+--header "Authorization: Bearer <API_TOKEN>" \
+--header "Content-Type: application/json" \
+--data '{"flag": true}'
+```
+
+</TabItem> <TabItem label="CMD">
+
+```txt
+curl.exe "https://api.cloudflare.com/client/v4/zones/{zone_id}/logs/control/retention/flag" ^
+--header "Authorization: Bearer <API_TOKEN>" ^
+--header "Content-Type: application/json" ^
+--data "{""flag"": true}"
+```
+
+</TabItem> <TabItem label="PowerShell">
+
+```powershell
+$uri = "https://api.cloudflare.com/client/v4/zones/{zone_id}/logs/control/retention/flag"
+$headers = @{"Authorization" = "Bearer <API_TOKEN>"}
+$bodyFlag = @{flag = $true} | ConvertTo-Json
+Invoke-RestMethod -Uri $uri -Method Post -Headers $headers -Body $bodyFlag -ContentType "application/json"
+```
+
+</TabItem> </Tabs>

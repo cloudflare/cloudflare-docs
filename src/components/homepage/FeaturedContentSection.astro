@@ -1,9 +1,9 @@
 ---
 import { Image } from "astro:assets";
-import { z } from "astro:content";
+import { z } from "astro:schema";
 import { marked } from "marked";
 
-import { CardGrid, Card, LinkCard } from "~/components";
+import { CardGrid, Card, LinkCard } from "@astrojs/starlight/components";
 
 const props = z.object({
 	title: z.string(),
