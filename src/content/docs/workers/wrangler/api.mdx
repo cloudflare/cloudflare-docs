@@ -376,6 +376,15 @@ The bindings supported by `getPlatformProxy` are:
 
 * [D1 database bindings](/d1/build-with-d1/d1-client-api/)
 
+* [Hyperdrive bindings](/hyperdrive)
+
+  :::note[Hyperdrive values are simple passthrough ones]
+
+  Values provided by hyperdrive bindings such as `connectionString` and `host` do not have a valid meaning outside of a `workerd` process.
+  This means that Hyperdrive proxies return passthrough values, which are values corresponding to the database connection provided by the user.  Otherwise, it would return values which would be unusable from within node.js.
+
+  :::
+
 * [Workers AI bindings](/workers-ai/get-started/workers-wrangler/#2-connect-your-worker-to-workers-ai)
 
   <Render file="ai-local-usage-charges" product="workers" />
