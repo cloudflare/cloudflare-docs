@@ -40,3 +40,5 @@ Workers
 VMware
 VPN
 YubiKey
+Zstandard
+Zstd
