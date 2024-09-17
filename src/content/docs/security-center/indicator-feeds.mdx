@@ -31,28 +31,27 @@ If your organization is interested in becoming a provider or a subscriber, conta
 Providers can create and manage a Custom Indicator Feed with the [Custom Indicator Feeds API endpoints](/api/operations/custom-indicator-feeds-get-indicator-feeds):
 
 1. Contact your account team to configure your account as an indicator feed provider.
-2. Create a feed with the [Create new indicator feed endpoint](/api/operations/custom-indicator-feeds-create-indicator-feeds). For example:
+2. Create a feed with the [Create new indicator feed endpoint](/api/operations/custom-indicator-feeds-create-indicator-feeds). Make note of the `feed_id` generated for your feed. For example:
 
    ```bash title="Create new indicator feed"
-   curl --request POST \
-   	--url https://api.cloudflare.com/client/v4/accounts/{account_id}/intel/indicator-feeds \
+   curl "https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/intel/indicator-feeds" \
    	--header 'Content-Type: application/json' \
    	--header 'X-Auth-Email: <EMAIL>' \
    	--header 'X-Auth-Key: <API_KEY>' \
    	--data '{
-   	"description": "example feed description",
-   	"name": "example_feed_1"
+   	"description": "Custom indicator feed to detect threats",
+   	"name": "threat_indicator_feed"
    }'
    ```
 
-   ```json output
+   ```json output {3}
    {
    	"result": {
    		"id": 10,
-   		"name": "indicator_feed_2",
-   		"description": "Test #2",
-   		"created_on": "2023-08-01T18:00:26.65715Z",
-   		"modified_on": "2023-08-01T18:00:26.65715Z"
+   		"name": "threat_indicator_feed",
+   		"description": "Custom indicator feed to detect threats",
+   		"created_on": "2024-09-17T21:16:09.412Z",
+   		"modified_on": "2024-09-17T21:16:09.412Z"
    	},
    	"success": true,
    	"errors": [],
@@ -60,11 +59,11 @@ Providers can create and manage a Custom Indicator Feed with the [Custom Indicat
    }
    ```
 
-3. Upload data to the feed with the [Update indicator feed data endpoint](/api/operations/custom-indicator-feeds-update-indicator-feed-data). Uploaded indicator data must be in a [`.stix2`](https://oasis-open.github.io/cti-documentation/stix/intro) formatted file. For example:
+3. Upload data to the feed with the [Update indicator feed data endpoint](/api/operations/custom-indicator-feeds-update-indicator-feed-data). Uploaded indicator data must be in a [`.stix2`](https://oasis-open.github.io/cti-documentation/stix/intro) formatted file.
 
    ```bash title="Update indicator feed data"
    curl --request PUT \
-   	--url https://api.cloudflare.com/client/v4/accounts/account_id/intel/indicator-feeds/feed_id/snapshot \
+   	"https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/intel/indicator-feeds/<FEED_ID>/snapshot" \
    	--header 'Content-Type: multipart/form-data' \
    	--header 'X-Auth-Email: <EMAIL>' \
    	--header 'X-Auth-Key: <API_KEY>' \
@@ -73,14 +72,14 @@ Providers can create and manage a Custom Indicator Feed with the [Custom Indicat
 
    ```json output
    {
-   	"errors": [],
-   	"messages": [],
-   	"success": true,
    	"result": {
    		"file_id": 1,
    		"filename": "snapshot_file.unified",
    		"status": "unified"
-   	}
+   	},
+   	"errors": [],
+   	"messages": [],
+   	"success": true
    }
    ```
 
@@ -92,7 +91,7 @@ Providers can create and manage a Custom Indicator Feed with the [Custom Indicat
 
    ```bash title="Get indicator feed data"
    curl --request GET \
-   	--url https://api.cloudflare.com/client/v4/accounts/{account_id}/intel/indicator-feeds/{feed_id}/data \
+   	"https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/intel/indicator-feeds/<FEED_ID>/data" \
    	--header 'Content-Type: application/json' \
    	--header 'X-Auth-Email: <EMAIL>' \
    	--header 'X-Auth-Key: <API_KEY>'
@@ -102,8 +101,8 @@ Providers can create and manage a Custom Indicator Feed with the [Custom Indicat
    {
    	"result": {
    		"id": 10,
-   		"name": "indicator_feed_2",
-   		"description": "Test #2",
+   		"name": "threat_indicator_feed",
+   		"description": "Custom indicator feed to detect threats",
    		"created_on": "2023-08-01T18:00:26.65715Z",
    		"modified_on": "2023-08-01T18:00:26.65715Z",
    		"latest_upload_status": "Complete"
@@ -114,17 +113,17 @@ Providers can create and manage a Custom Indicator Feed with the [Custom Indicat
    }
    ```
 
-5. Grant access to subscribers with the [Grant permission to indicator feed endpoint](/api/operations/custom-indicator-feeds-add-permission). Any administrator of the account that owns the feed must add subscribers' `account_tag`s to the feed's allowed subscribers list. For example:
+5. Grant access to subscribers with the [Grant permission to indicator feed endpoint](/api/operations/custom-indicator-feeds-add-permission). You can add subscribers to the feed's allowed subscribers list using their [account IDs](/fundamentals/setup/find-account-and-zone-ids/). For example:
 
    ```bash title="Update indicator feed data"
    curl --request PUT \
-   	--url https://api.cloudflare.com/client/v4/accounts/account_id/intel/indicator-feeds/feed_id/snapshot \
+   	"https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/intel/indicator-feeds/<FEED_ID>/snapshot" \
    	--header 'Content-Type: multipart/form-data' \
    	--header 'X-Auth-Email: <EMAIL>' \
    	--header 'X-Auth-Key: <API_KEY>' \
    	--data '{
    	"account_tag": "823f45f16fd2f7e21e1e054aga4d2859",
-   	"feed_id": 1
+   	"feed_id": 10
    }'
    ```
 
