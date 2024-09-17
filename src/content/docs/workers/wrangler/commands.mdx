@@ -1058,7 +1058,7 @@ wrangler r2 bucket notification create <NAME> [OPTIONS]
 
 ### `notification delete`
 
-Remove a rule from a bucket's [event notification](/r2/buckets/event-notifications/) configuration.
+Remove an event notification rule from a bucket's [event notification](/r2/buckets/event-notifications/) configuration.
 
 ```txt
 wrangler r2 bucket notification delete <NAME> [OPTIONS]
@@ -1071,16 +1071,16 @@ wrangler r2 bucket notification delete <NAME> [OPTIONS]
 - `--rule` string optional
   - The ID of the event notification rule to delete.
 
-### `notification get`
+### `notification list`
 
-List the [event notification](/r2/buckets/event-notifications/) configurations for a bucket.
+List the [event notification](/r2/buckets/event-notifications/) rules for a bucket.
 
 ```txt
-wrangler r2 bucket notification get <NAME>
+wrangler r2 bucket notification list <NAME>
 ```
 
 - `NAME` string required
-  - The name of the R2 bucket to get event notification configurations for.
+  - The name of the R2 bucket to get event notification rules for.
 
 ### `sippy enable`
 
