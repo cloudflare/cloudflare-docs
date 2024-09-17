@@ -33,7 +33,12 @@ jobs:
           CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
       - run: npm run build:worker && npx wrangler deploy -c ./wrangler-workers.toml
         if: github.ref == 'refs/heads/production'
-        name: Deploy to Cloudflare Workers
+        name: Deploy to Cloudflare Workers [production]
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+      - run: npm run build:worker && npx wrangler versions upload -c ./wrangler-workers.toml
+        if: github.ref != 'refs/heads/production'
+        name: Deploy to Cloudflare Workers [preview]
         env:
           CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
       - uses: actions/cache/save@v4
