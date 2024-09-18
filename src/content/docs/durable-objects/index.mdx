@@ -23,15 +23,20 @@ Create collaborative applications, real-time chat, multiplayer games and more wi
 
 <Plan type="paid" />
 
-Durable Objects provide a powerful API for coordinating multiple clients or users, each with private, transactional and strongly consistent storage attached.
+Durable Objects provide a powerful compute API for coordinating multiple clients or users. Each Durable Object has private, transactional and strongly consistent storage attached.
 
-Use Durable Objects to build collaborative editing tools, interactive chat, multiplayer games and applications that need coordination among multiple clients, without requiring you to build serialization and coordination primitives on your own.
+Use Durable Objects to build collaborative editing tools, interactive chat, multiplayer games and applications that need coordination among multiple clients, without requiring you to build serialization and coordination primitives or manage separate storage on your own.
 
+:::note[SQLite in DO Beta]
+
+New beta version of Durable Objects is available where each Durable Object has a private, embedded SQLite database. When creating a Durabe Object namespace, users can [opt-in to using SQL storage](TODO link).
+
+:::
 ***
 
 ## Features
 
-<Feature header="In-memory state" href="/durable-objects/reference/in-memory-state/">
+<Feature header="In-memory State" href="/durable-objects/reference/in-memory-state/">
 
 Learn how Durable Objects coordinate connections among multiple clients or events.
 
@@ -40,7 +45,7 @@ Learn how Durable Objects coordinate connections among multiple clients or event
 
 <Feature header="Transactional Storage API" href="/durable-objects/api/transactional-storage-api/">
 
-Learn how Durable Objects provide strongly consistent, serializable key-value storage.
+Learn how Durable Objects provide strongly consistent, serializable key-value storage or (beta) SQL storage.
 
 
 </Feature>
