@@ -55,28 +55,6 @@ Certain protocols require configuring the server to trust connections through Ac
 
 Users connect to the target's IP address as if they were on your private network, using their preferred client software. The user must be logged into WARP on their device, but no other system configuration is required. You can optionally configure a [private DNS resolver](/cloudflare-one/policies/gateway/resolver-policies/) to allow connections to the target's private hostname.
 
-### Display available targets
-
-Users can use  `warp-cli` to display a list of targets they can access. On the WARP device, open a terminal and run the following command:
-
-```sh
-warp-cli target list
-```
-
-```sh output
-╭──────────────────────────────────────┬──────────┬──────┬────────────────────────────────┬───────────────────────────────────────────────────────────────────┬─────────────╮
-│ Target ID                            │ Protocol │ Port │ Attributes                     │ IP (Virtual Network)                                              │ Usernames   │
-├──────────────────────────────────────┼──────────┼──────┼────────────────────────────────┼───────────────────────────────────────────────────────────────────┼─────────────┤
-│ d97525c8-3941-40e8-876a-227ebdfb9102 │ ssh      │ 22   │ env: dev, staging              │ 10.0.0.1 (f3399768-d320-11ec-9d64-0242ac120012)                   │ root, admin │
-│                                      │          │      │ hostname: vault 420, vault 421 │                                                                   │             │
-├──────────────────────────────────────┼──────────┼──────┼────────────────────────────────┼───────────────────────────────────────────────────────────────────┼─────────────┤
-│ 46c2d5d1-dab0-4342-bbcb-3a270cde2ad8 │ ssh      │ 23   │ color: blue, red               │ 10.0.0.2 (f3399768-d320-11ec-9d64-0242ac120011)                   │ root, user  │
-│                                      │          │      │ env: production                │ 2001:0:130f::9c0:876a:130b (f3499768-d320-11ec-9d64-0242ac120011) │             │
-│                                      │          │      │ hostname: vault 420, vault 424 │                                                                   │             │
-╰──────────────────────────────────────┴──────────┴──────┴────────────────────────────────┴───────────────────────────────────────────────────────────────────┴─────────────╯
-
-```
-
 ### Connect to different VNET
 
 To connect to targets that are in different VNETS, users will need to [switch their connected virtual network](/cloudflare-one/connections/connect-networks/private-net/cloudflared/tunnel-virtual-networks/#connect-to-a-virtual-network) in the WARP client.
