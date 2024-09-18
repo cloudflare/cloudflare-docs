@@ -9,20 +9,53 @@ sidebar:
 
 Workers Builds' build environment has broad support for a variety of languages, such as Ruby, Node.js, Python, PHP, and Go.
 
-If you need to use a specific version of a language, (for example, Node.js or Ruby) you can specify it by providing an associated environment variable in your build configuration, or setting the relevant file in your source code.
+If you need to use a [specific version](/workers/ci-cd/builds/build-image/#overriding-default-versions) of a language, (for example, Node.js or Ruby) you can specify it by providing an associated environment variable in your build configuration, or setting the relevant file in your source code.
 
 ## Supported Languages and Tools
 
-Workers Builds provides support with a variety of tools and languages. In the following table, review the preinstalled versions for tools included in the build environment, and how to override them as relevant:
+In the following tables, review the preinstalled versions for languages and tools included in the Cloudflare Pages' build image, and the environment variables and/or files available for [overriding the preinstalled version](/workers/ci-cd/builds/build-image/#overriding-default-versions):
 
-| Tool        | Default version  | Supported versions | Environment variable |
-| ----------- | ---------------- | ------------------ | -------------------- |
-| **Go**      | 1.22.0           | xx                 | xx                   |
-| **Node.js** | 20.16.0          | xx                 | xx                   |
-| **Python**  | 3.12.5           | xx                 | xx                   |
-| **Ruby**    | 3.3.4            | xx                 | xx                   |
-| **Bun**     | 1.1.22           | xx                 | xx                   |
-| **Hugo**    | extended_0.130.0 | xx                 | xx                   |
+| Tool        | Default version  | Supported versions | Environment variable | File                         |
+| ----------- | ---------------- | ------------------ | -------------------- | ---------------------------- |
+| **Go**      | 1.22.0           | Any version        | `GO_VERSION`         |                              |
+| **Node.js** | 20.16.0          | Any version        | `NODE_VERSION`       | .nvmrc, .node-version        |
+| **Python**  | 3.12.5           | Any version        | `PYTHON_VERSION`     | .python-version, runtime.txt |
+| **Ruby**    | 3.3.4            | Any version        | `RUBY_VERSION`       | .ruby-version                |
+| **Bun**     | 1.1.22           | Any version        | `BUN_VERSION`        |                              |
+| **Hugo**    | extended_0.130.0 | Any version        | `HUGO_VERSION`       |                              |
+
+:::note[Any version]
+Under Supported versions, "Any version" refers to support for all versions of the language or tool including versions newer than the Default version.
+:::
+
+### Frameworks
+
+To use a specific version of a framework, specify it in the project's package manager configuration file.
+For example, if you use Gatsby, your `package.json` should include the following:
+
+```
+"dependencies": {
+	"gatsby": "^5.13.7",
+}
+```
+
+When your build starts, version 5.13.7 of Gatsby will be installed using `npm install`.
+
+## Overriding default versions
+
+To override default versions of languages and tools in the build system, you can either set the desired version through environment variables or by adding files to your project.
+
+To set the version using **environment variables**, you can:
+
+1. Find the environment variable name for the language or tool in [this table]().
+2. Add the environment variable on the dashboard by going to **Settings** > **Environmnet variables** in your Pages project, or [add the environment variable via Wrangler](/workers/configuration/environment-variables/#add-environment-variables-via-wrangler).
+
+Or, to set the version by **adding a file** to your project, you can:
+
+1. Find the environment variable name for the language or tool in [this table]().
+2. Add the specified file name to the root directory of your project, and add the desired version number as the contents of the file.
+
+For example, if you were previously relying on the default version of Node.js in the v1 build system, to migrate to v2, you must specify that you need Node.js `12.18.0` by setting a `NODE_VERSION = 12.18.0` environment variable or by adding a `.node-version` or `.nvmrc` file to your project with `12.18.0` added as the contents to the file.
 
 ## Build Environment
 

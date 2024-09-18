@@ -21,18 +21,18 @@ Build settings can be found on the Settings page of your Worker. The following o
   - Select the git repository you would like to connect to your Worker.
 - **Git branch**
   - Select the branch you would like Cloudflare to listen to for new commits. This will be defaulted to main.
-- **Build command** (Optional)
+- **Build command** _(Optional)_
   - Add a build command if your project requires a build step for example if you are building with assets. Reference supported frameworks for correct build command.
 - **Deploy command**
-  - The deploy command lets you choose the specific Wrangler command you would like to use to deploy your Worker. Your deploy command is defaulted to `npx Wrangler deploy`, but it can be customized as needed. You can also upload as a version, and take advantage of gradual deployments here.
-- **Root Directory** (Optional)
+  - The deploy command lets you choose the specific Wrangler command you would like to use to deploy your Worker. Your deploy command is defaulted to `npx wrangler deploy`, but it can be customized as needed. You can also upload as a version, and take advantage of [gradual deployments](/workers/configuration/versions-and-deployments/gradual-deployments/).
+- **Root Directory** _(Optional)_
   - Specify the root directory of your Worker. The root directory describes where the build command will run.
-- **API Key** (Optional)
+- **API Key** _(Optional)_
   - By default, Cloudflare will generate an API token for your account or you can create and select an existing API token from a previous build in the API token drop down. These API tokens will be created with the following permissions for your account:
     - **Account:** Account Settings (read), Workers Scripts (edit), Workers KV Storage (edit), Workers R2 Storage (edit)
     - **Zone:** Workers Routes (edit) for all zones on the account
     - **User:** User Details (read), Memberships (read)
-- **Build variable** (Optional)
+- **Build variable** _(Optional)_
   - Add variables and secrets accessible only to your build.
 
 ## Monorepo support
@@ -42,7 +42,7 @@ You can choose to use a monorepo (a Git repository that contains multiple projec
 1. Connect your monorepo git repository to each of your associated Workers on the dashboard
 2. In each of the Workers, set up your build configuration to only deploy to that specific Worker by setting the correct root directory in your build configuration.
 
-Note that when a new commit is detected in the monorepo, all the associated Workers will trigger a new build and deploy.
+When a new commit is detected in the monorepo, all the associated Workers will trigger a new build and deploy.
 
 ### Example
 
@@ -75,9 +75,9 @@ ecommerce-monorepo/
 
 To set up Workers with [Wrangler Enviornments](/workers/wrangler/environments/):
 
-1. (Optional) Deploy via Wrangler to create the Workers for your environments in the Dashboard, if you don’t already have them.
+1. (Optional) [Deploy via Wrangler](/workers/wrangler/commands/#deploy) to create the Worker for your environments in the Dashboard, if you don’t already have them.
 2. Find the Workers for your environments. They are typically named `[name of Worker] - [environment name]`.
 3. Connect your repository to each of the Workers for your environment.
 4. In each of the Workers, edit your Wrangler deploy command to include the flag `--env: <environment name>` in the build configurations.
 
-Note that when a new commit is detected in the repository, all the associated Workers will trigger a new build and deploy.
+When a new commit is detected in the repository, all the associated Workers will trigger a new build and deploy.
