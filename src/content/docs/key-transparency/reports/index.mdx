@@ -1,4 +1,65 @@
 ---
 pcx_content_type: overview
 title: Reports
+sidebar:
+  order: 4
 ---
+
+## Verify a signature
+
+1. Install the `plexi` cli.
+
+```sh
+# Email thibault@cloudflare.com for access
+git clone git@github.com:cloudflare/plexi.git && cd plexi
+cargo install plexi --path .
+```
+
+2. Verify the signature locally.
+
+```sh
+AUDITOR_PUBLIC_KEY="$(curl -sS 'https://plexi-staging.research.cloudflare.com/info' | jq -r '.keys[0].public_key')"
+curl -sS 'https://plexi-staging.research.cloudflare.com/namespaces/{namespace}/audits/1' | \
+  plexi verify --namespace {namespace} --publickey "${AUDITOR_PUBLIC_KEY}"
+
+Signature valid
+```
+
+## Get all reports
+
+A report is a signature over (timestamp, epoch, digest) by the Log which has not been seen by the auditor. This means the Log is trying to bypass the auditor validation.
+
+
+```sh
+curl 'https://plexi-staging.research.cloudflare.com/namespaces/{namespace}/reports'
+[
+  {
+    "id": "f7837d1c-fa0f-404f-ab40-5337a38d330e",
+    "report": {
+	"namespace": "{namespace}",
+      "timestamp": 1712588155604,
+      "epoch": 2,
+      "digest": "2222222222222222222222222222222222222222222222222222222222222222",
+      "signature": "f5533adbe1ce96c20d2bf20a0a052ca4e3e5670cd7888e1b9088523ba704c94c22942ce61d385158f241f3a56871b88d962a63c7b2f6eb92b66567898762f007"
+    }
+  }
+]
+```
+
+## Submit a report
+
+```sh
+curl 'https://plexi-staging.research.cloudflare.com/namespaces/{namespace}/reports' \
+      --header 'Content-Type: application/json' \
+      --data '{"namespace":"{namespace}","timestamp":1712588155604,"epoch":2,"digest":"2222222222222222222222222222222222222222222222222222222222222222","signature":"f5533adbe1ce96c20d2bf20a0a052ca4e3e5670cd7888e1b9088523ba704c94c22942ce61d385158f241f3a56871b88d962a63c7b2f6eb92b66567898762f007"}'
+
+{
+  "id": "f7837d1c-fa0f-404f-ab40-5337a38d330e",
+  "report": {
+    "timestamp": 1712588155604,
+    "epoch": 2,
+    "digest": "2222222222222222222222222222222222222222222222222222222222222222",
+    "signature": "f5533adbe1ce96c20d2bf20a0a052ca4e3e5670cd7888e1b9088523ba704c94c22942ce61d385158f241f3a56871b88d962a63c7b2f6eb92b66567898762f007"
+  }
+}
+```
