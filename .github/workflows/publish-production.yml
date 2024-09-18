@@ -1,5 +1,7 @@
 on:
   pull_request:
+    branches:
+      - production
     types:
       - closed
 
