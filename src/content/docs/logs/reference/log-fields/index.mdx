@@ -17,9 +17,9 @@ The datasets below describe the fields available by log category:
 
 The list of fields can also be accessed directly from the API using the following endpoints:
 
-* For zone-scoped datasets: `https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/logpush/datasets/<DATASET>/fields`
+* For zone-scoped datasets: `https://api.cloudflare.com/client/v4/zones/{zone_id}/logpush/datasets/<DATASET>/fields`
 
-* For account-scoped datasets: `https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/logpush/datasets/<DATASET>/fields`
+* For account-scoped datasets: `https://api.cloudflare.com/client/v4/accounts/{account_id}/logpush/datasets/<DATASET>/fields`
 
 The `<DATASET>` argument indicates the log category. For example, `http_requests`, `spectrum_events`, `firewall_events`, `nel_reports`, or `dns_logs`.
 

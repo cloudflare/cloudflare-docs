@@ -19,9 +19,9 @@ This guide will instruct you through:
 
 ## Prerequisites
 
-:::note[Workers Paid plan required]
+:::note[Workers Free or Paid plans required]
 
-Vectorize is available to all users on the [Workers Paid plan](/workers/platform/pricing/#workers).
+Vectorize is available to all users on the [Workers Free or Paid plans](/workers/platform/pricing/#workers).
 
 :::
 
@@ -82,11 +82,7 @@ To create your first Vectorize index, change into the directory you just created
 cd vectorize-tutorial
 ```
 
-:::note[Using Vectorize v1?]
-
-Please use the 'wrangler vectorize --deprecated-v1' flag to create, get, list, delete and insert vectors into legacy Vectorize v1 indexes.
-
-:::
+<Render file="vectorize-legacy" />
 
 To create an index, you will need to use the `wrangler vectorize create` command and provide a name for the index. A good index name is:
 
@@ -94,21 +90,23 @@ To create an index, you will need to use the `wrangler vectorize create` command
 - Descriptive of the use-case and environment. For example, "production-doc-search" or "dev-recommendation-engine".
 - Only used for describing the index, and is not directly referenced in code.
 
-In addition, you will need to define both the `dimensions` of the vectors you will store in the index, as well as the distance `metric` used to determine similar vectors when creating the index. A `metric` can be Euclidean, cosine, or dot product. **This configuration cannot be changed later**, as a vector database is configured for a fixed vector configuration.
+In addition, you will need to define both the `dimensions` of the vectors you will store in the index, as well as the distance `metric` used to determine similar vectors when creating the index. A `metric` can be euclidean, cosine, or dot product. **This configuration cannot be changed later**, as a vector database is configured for a fixed vector configuration.
 
 <Render file="vectorize-wrangler-version" />
 
 Run the following `wrangler vectorize` command:
 
 ```sh
-npx wrangler vectorize create tutorial-index --dimensions=3 --metric=cosine
+npx wrangler vectorize create tutorial-index --dimensions=32 --metric=euclidean
 ```
 
 ```sh output
-✅ Successfully created index 'tutorial-index'
+🚧 Creating index: 'tutorial-index'
+✅ Successfully created a new Vectorize index: 'tutorial-index'
+📋 To start querying from a Worker, add the following binding configuration into 'wrangler.toml':
 
 [[vectorize]]
-binding = "VECTORIZE_INDEX" # available in your Worker on env.VECTORIZE_INDEX
+binding = "VECTORIZE" # available in your Worker on env.VECTORIZE
 index_name = "tutorial-index"
 ```
 
@@ -116,65 +114,131 @@ The command above will create a new vector database, and output the [binding](/w
 
 ## 3. Bind your Worker to your index
 
-You must create a binding for your Worker to connect to your Vectorize index. [Bindings](/workers/runtime-apis/bindings/) allow your Workers to access resources, like Vectorize or R2, from Cloudflare Workers. You create bindings by updating your `wrangler.toml` file.
+You must create a binding for your Worker to connect to your Vectorize index. [Bindings](/workers/runtime-apis/bindings/) allow your Workers to access resources, like Vectorize or R2, from Cloudflare Workers. You create bindings by updating the worker's `wrangler.toml` file.
 
 To bind your index to your Worker, add the following to the end of your `wrangler.toml` file:
 
 ```toml
 [[vectorize]]
-binding = "VECTORIZE_INDEX" # available in your Worker on env.VECTORIZE_INDEX
+binding = "VECTORIZE" # available in your Worker on env.VECTORIZE
 index_name = "tutorial-index"
 ```
 
 Specifically:
 
-- The value (string) you set for `<BINDING_NAME>` will be used to reference this database in your Worker. In this tutorial, name your binding `VECTORIZE_INDEX`.
+- The value (string) you set for `<BINDING_NAME>` will be used to reference this database in your Worker. In this tutorial, name your binding `VECTORIZE`.
 - The binding must be [a valid JavaScript variable name](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Grammar_and_types#variables). For example, `binding = "MY_INDEX"` or `binding = "PROD_SEARCH_INDEX"` would both be valid names for the binding.
 - Your binding is available in your Worker at `env.<BINDING_NAME>` and the Vectorize [client API](/vectorize/reference/client-api/) is exposed on this binding for use within your Workers application.
 
-## 4. Insert vectors
+## 4. [Optional] Create metadata indexes
+
+Vectorize allows you to add up to 10KiB of metadata per vector into your index, and also provides the ability to filter on that metadata while querying vectors. To do so you would need to specify a metadata field as a "metadata index" for your Vectorize index.
+
+:::note[When to create metadata indexes?]
+
+As of today, the metadata fields on which vectors can be filtered need to be specified before the vectors are inserted, and it is recommended that these metadata fields are specified right after the creation of a Vectorize index.
+
+:::
+
+To enable vector filtering on a metadata field during a query, use a command like:
+
+```sh
+npx wrangler vectorize create-metadata-index tutorial-index --property-name=url --type=string
+```
+
+```sh output
+📋 Creating metadata index...
+✅ Successfully enqueued metadata index creation request. Mutation changeset identifier: xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx.
+```
+
+Here `url` is the metadata field on which filtering would be enabled. The `--type` parameter defines the data type for the metadata field; `string`, `number` and `boolean` types are supported.
+
+It typically takes a few seconds for the metadata index to be created. You can check the list of metadata indexes for your Vectorize index by running:
+
+```sh
+npx wrangler vectorize list-metadata-index tutorial-index
+```
+
+```sh output
+📋 Fetching metadata indexes...
+┌──────────────┬────────┐
+│ propertyName │ type   │
+├──────────────┼────────┤
+│ url          │ String │
+└──────────────┴────────┘
+```
+
+You can create up to 10 metadata indexes per Vectorize index.
+
+For metadata indexes of type `number`, the indexed number precision is that of float64.
+
+For metadata indexes of type `string`, each vector indexes the first 64B of the string data truncated on UTF-8 character boundaries to the longest well-formed UTF-8 substring within that limit, so vectors are filterable on the first 64B of their value for each indexed property.
+
+See [Vectorize Limits](/vectorize/platform/limits/) for a complete list of limits.
+
+## 5. Insert vectors
 
 Before you can query a vector database, you need to insert vectors for it to query against. These vectors would be generated from data (such as text or images) you pass to a machine learning model. However, this tutorial will define static vectors to illustrate how vector search works on its own.
 
 First, go to your `vectorize-tutorial` Worker and open the `src/index.ts` file. The `index.ts` file is where you configure your Worker's interactions with your Vectorize index.
 
-Clear the content of `index.ts`, and paste the following code snippet into your `index.ts` file. On the `env` parameter, replace `<BINDING_NAME>` with `VECTORIZE_INDEX`:
+Clear the content of `index.ts`, and paste the following code snippet into your `index.ts` file. On the `env` parameter, replace `<BINDING_NAME>` with `VECTORIZE`:
 
 ```typescript
 export interface Env {
-	// This makes your vector index methods available on env.VECTORIZE_INDEX.*
-	// For example, env.VECTORIZE_INDEX.insert() or query()
-	VECTORIZE_INDEX: VectorizeIndex;
+	// This makes your vector index methods available on env.VECTORIZE.*
+	// For example, env.VECTORIZE.insert() or query()
+	VECTORIZE: Vectorize;
 }
 
-// Sample vectors: 3 dimensions wide.
+// Sample vectors: 32 dimensions wide.
 //
-// Vectors from a machine-learning model are typically ~100 to 1536 dimensions
+// Vectors from popular machine-learning models are typically ~100 to 1536 dimensions
 // wide (or wider still).
 const sampleVectors: Array<VectorizeVector> = [
 	{
 		id: "1",
-		values: [32.4, 74.1, 3.2],
+		values: [
+			0.12, 0.45, 0.67, 0.89, 0.23, 0.56, 0.34, 0.78, 0.12, 0.9, 0.24, 0.67,
+			0.89, 0.35, 0.48, 0.7, 0.22, 0.58, 0.74, 0.33, 0.88, 0.66, 0.45, 0.27,
+			0.81, 0.54, 0.39, 0.76, 0.41, 0.29, 0.83, 0.55,
+		],
 		metadata: { url: "/products/sku/13913913" },
 	},
 	{
 		id: "2",
-		values: [15.1, 19.2, 15.8],
+		values: [
+			0.14, 0.23, 0.36, 0.51, 0.62, 0.47, 0.59, 0.74, 0.33, 0.89, 0.41, 0.53,
+			0.68, 0.29, 0.77, 0.45, 0.24, 0.66, 0.71, 0.34, 0.86, 0.57, 0.62, 0.48,
+			0.78, 0.52, 0.37, 0.61, 0.69, 0.28, 0.8, 0.53,
+		],
 		metadata: { url: "/products/sku/10148191" },
 	},
 	{
 		id: "3",
-		values: [0.16, 1.2, 3.8],
+		values: [
+			0.21, 0.33, 0.55, 0.67, 0.8, 0.22, 0.47, 0.63, 0.31, 0.74, 0.35, 0.53,
+			0.68, 0.45, 0.55, 0.7, 0.28, 0.64, 0.71, 0.3, 0.77, 0.6, 0.43, 0.39, 0.85,
+			0.55, 0.31, 0.69, 0.52, 0.29, 0.72, 0.48,
+		],
 		metadata: { url: "/products/sku/97913813" },
 	},
 	{
 		id: "4",
-		values: [75.1, 67.1, 29.9],
+		values: [
+			0.17, 0.29, 0.42, 0.57, 0.64, 0.38, 0.51, 0.72, 0.22, 0.85, 0.39, 0.66,
+			0.74, 0.32, 0.53, 0.48, 0.21, 0.69, 0.77, 0.34, 0.8, 0.55, 0.41, 0.29,
+			0.7, 0.62, 0.35, 0.68, 0.53, 0.3, 0.79, 0.49,
+		],
 		metadata: { url: "/products/sku/418313" },
 	},
 	{
 		id: "5",
-		values: [58.8, 6.7, 3.4],
+		values: [
+			0.11, 0.46, 0.68, 0.82, 0.27, 0.57, 0.39, 0.75, 0.16, 0.92, 0.28, 0.61,
+			0.85, 0.4, 0.49, 0.67, 0.19, 0.58, 0.76, 0.37, 0.83, 0.64, 0.53, 0.3,
+			0.77, 0.54, 0.43, 0.71, 0.36, 0.26, 0.8, 0.53,
+		],
 		metadata: { url: "/products/sku/55519183" },
 	},
 ];
@@ -191,9 +255,9 @@ export default {
 			// Insert some sample vectors into your index
 			// In a real application, these vectors would be the output of a machine learning (ML) model,
 			// such as Workers AI, OpenAI, or Cohere.
-			const inserted = await env.VECTORIZE_INDEX.insert(sampleVectors);
+			const inserted = await env.VECTORIZE.insert(sampleVectors);
 
-			// Return the number of IDs you successfully inserted
+			// Return the mutation identifier for this insert operation
 			return Response.json(inserted);
 		}
 
@@ -210,49 +274,69 @@ In the code above, you:
 
 In the next step, you will expand the Worker to query the index and the vectors you insert.
 
-## 5. Query vectors
+## 6. Query vectors
 
 In this step, you will take a vector representing an incoming query and use it to search your index.
 
 First, go to your `vectorize-tutorial` Worker and open the `src/index.ts` file. The `index.ts` file is where you configure your Worker's interactions with your Vectorize index.
 
-Clear the content of `index.ts`. Paste the following code snippet into your `index.ts` file. On the `env` parameter, replace `<BINDING_NAME>` with `VECTORIZE_INDEX`:
+Clear the content of `index.ts`. Paste the following code snippet into your `index.ts` file. On the `env` parameter, replace `<BINDING_NAME>` with `VECTORIZE`:
 
 ```typescript
 export interface Env {
-	// This makes our vector index methods available on env.VECTORIZE_INDEX.*
-	// For example, env.VECTORIZE_INDEX.insert() or query()
-	VECTORIZE_INDEX: VectorizeIndex;
+	// This makes your vector index methods available on env.VECTORIZE.*
+	// For example, env.VECTORIZE.insert() or query()
+	VECTORIZE: Vectorize;
 }
 
-// Sample vectors: 3 dimensions wide.
+// Sample vectors: 32 dimensions wide.
 //
-// Vectors from a machine-learning model are typically ~100 to 1536 dimensions
+// Vectors from popular machine-learning models are typically ~100 to 1536 dimensions
 // wide (or wider still).
 const sampleVectors: Array<VectorizeVector> = [
 	{
 		id: "1",
-		values: [32.4, 74.1, 3.2],
+		values: [
+			0.12, 0.45, 0.67, 0.89, 0.23, 0.56, 0.34, 0.78, 0.12, 0.9, 0.24, 0.67,
+			0.89, 0.35, 0.48, 0.7, 0.22, 0.58, 0.74, 0.33, 0.88, 0.66, 0.45, 0.27,
+			0.81, 0.54, 0.39, 0.76, 0.41, 0.29, 0.83, 0.55,
+		],
 		metadata: { url: "/products/sku/13913913" },
 	},
 	{
 		id: "2",
-		values: [15.1, 19.2, 15.8],
+		values: [
+			0.14, 0.23, 0.36, 0.51, 0.62, 0.47, 0.59, 0.74, 0.33, 0.89, 0.41, 0.53,
+			0.68, 0.29, 0.77, 0.45, 0.24, 0.66, 0.71, 0.34, 0.86, 0.57, 0.62, 0.48,
+			0.78, 0.52, 0.37, 0.61, 0.69, 0.28, 0.8, 0.53,
+		],
 		metadata: { url: "/products/sku/10148191" },
 	},
 	{
 		id: "3",
-		values: [0.16, 1.2, 3.8],
+		values: [
+			0.21, 0.33, 0.55, 0.67, 0.8, 0.22, 0.47, 0.63, 0.31, 0.74, 0.35, 0.53,
+			0.68, 0.45, 0.55, 0.7, 0.28, 0.64, 0.71, 0.3, 0.77, 0.6, 0.43, 0.39, 0.85,
+			0.55, 0.31, 0.69, 0.52, 0.29, 0.72, 0.48,
+		],
 		metadata: { url: "/products/sku/97913813" },
 	},
 	{
 		id: "4",
-		values: [75.1, 67.1, 29.9],
+		values: [
+			0.17, 0.29, 0.42, 0.57, 0.64, 0.38, 0.51, 0.72, 0.22, 0.85, 0.39, 0.66,
+			0.74, 0.32, 0.53, 0.48, 0.21, 0.69, 0.77, 0.34, 0.8, 0.55, 0.41, 0.29,
+			0.7, 0.62, 0.35, 0.68, 0.53, 0.3, 0.79, 0.49,
+		],
 		metadata: { url: "/products/sku/418313" },
 	},
 	{
 		id: "5",
-		values: [58.8, 6.7, 3.4],
+		values: [
+			0.11, 0.46, 0.68, 0.82, 0.27, 0.57, 0.39, 0.75, 0.16, 0.92, 0.28, 0.61,
+			0.85, 0.4, 0.49, 0.67, 0.19, 0.58, 0.76, 0.37, 0.83, 0.64, 0.53, 0.3,
+			0.77, 0.54, 0.43, 0.71, 0.36, 0.26, 0.8, 0.53,
+		],
 		metadata: { url: "/products/sku/55519183" },
 	},
 ];
@@ -269,9 +353,9 @@ export default {
 			// Insert some sample vectors into your index
 			// In a real application, these vectors would be the output of a machine learning (ML) model,
 			// such as Workers AI, OpenAI, or Cohere.
-			let inserted = await env.VECTORIZE_INDEX.insert(sampleVectors);
+			let inserted = await env.VECTORIZE.insert(sampleVectors);
 
-			// Return the number of IDs we successfully inserted
+			// Return the mutation identifier for this insert operation
 			return Response.json(inserted);
 		}
 
@@ -281,8 +365,12 @@ export default {
 		// vector database" - and transform it into a vector embedding first.
 		//
 		// In this example, you will construct a vector that should
-		// match vector id #5
-		const queryVector: Array<number> = [54.8, 5.5, 3.1];
+		// match vector id #4
+		const queryVector: Array<number> = [
+			0.13, 0.25, 0.44, 0.53, 0.62, 0.41, 0.59, 0.68, 0.29, 0.82, 0.37, 0.5,
+			0.74, 0.46, 0.57, 0.64, 0.28, 0.61, 0.73, 0.35, 0.78, 0.58, 0.42, 0.32,
+			0.77, 0.65, 0.49, 0.54, 0.31, 0.29, 0.71, 0.57,
+		]; // vector of dimensions 32
 
 		// Query your index and return the three (topK = 3) most similar vector
 		// IDs with their similarity score.
@@ -290,16 +378,16 @@ export default {
 		// By default, vector values are not returned, as in many cases the
 		// vector id and scores are sufficient to map the vector back to the
 		// original content it represents.
-		const matches = await env.VECTORIZE_INDEX.query(queryVector, {
+		const matches = await env.VECTORIZE.query(queryVector, {
 			topK: 3,
 			returnValues: true,
-			returnMetadata: true,
+			returnMetadata: "all",
 		});
 
 		return Response.json({
-			// This will return the closest vectors: you will notice that the vector
-			// with id = 5 has the highest score (closest to 1.0) as the
-			// distance between it and our query vector is the smallest.
+			// This will return the closest vectors: the vectors are arranged according
+			// to their scores. Vectors that are more similar would show up near the top.
+			// In this example, Vector id #4 would turn out to be the most similar to the queried vector.
 			// You return the full set of matches so you can check the possible scores.
 			matches: matches,
 		});
@@ -307,7 +395,7 @@ export default {
 } satisfies ExportedHandler<Env>;
 ```
 
-## 6. Deploy your Worker
+## 7. Deploy your Worker
 
 Before deploying your Worker globally, log in with your Cloudflare account by running:
 
@@ -325,7 +413,7 @@ npx wrangler deploy
 
 Once deployed, preview your Worker at `https://vectorize-tutorial.<YOUR_SUBDOMAIN>.workers.dev`.
 
-## 7. Query your index
+## 8. Query your index
 
 To insert vectors and then query them, use the URL for your deployed Worker, such as `https://vectorize-tutorial.<YOUR_SUBDOMAIN>.workers.dev/`. Open your browser and:
 
@@ -333,14 +421,33 @@ To insert vectors and then query them, use the URL for your deployed Worker, suc
 
 ```json
 // https://vectorize-tutorial.<YOUR_SUBDOMAIN>.workers.dev/insert
-{ "count": 5, "ids": [1, 2, 3, 4, 5] }
+{
+	"mutationId": "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx"
+}
 ```
 
-Subsequent visits will return `count:0` as you cannot `insert()` the same vector IDs.
+The mutationId here refers to a unique identifier that corresponds to this asynchronous insert operation. Typically it takes a few seconds for inserted vectors to be available for querying.
 
-2. Query your index - expect your query vector of `[54.8, 5.5, 3.1]` to be closest to vector ID `5` by visiting the root path of `/` . This query will return the three (`topK: 3`) closest matches, as well as their vector values and metadata.
+You can use the index info operation to check the last processed mutation:
 
-You will notice that `id: 5` has a `score` of `0.999909486`. Because you are using `cosine` as our distance metric, the closer the score to `1.0`, the closer your vectors are.
+```sh
+npx wrangler vectorize info tutorial-index
+```
+
+```sh output
+📋 Fetching index info...
+┌────────────┬─────────────┬──────────────────────────────────────┬──────────────────────────┐
+│ dimensions │ vectorCount │ processedUpToMutation                │ processedUpToDatetime    │
+├────────────┼─────────────┼──────────────────────────────────────┼──────────────────────────┤
+│ 32         │ 5           │ xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx │ YYYY-MM-DDThh:mm:ss.SSSZ │
+└────────────┴─────────────┴──────────────────────────────────────┴──────────────────────────┘
+```
+
+Subsequent inserts using the same vector ids will return a mutation id, but it would not change the index vector count since the same vector ids cannot be inserted twice. You will need to use an `upsert` operation instead to update the vector values for an id that already exists in an index.
+
+2. Query your index - expect your query vector of `[0.13, 0.25, 0.44, ...]` to be closest to vector ID `4` by visiting the root path of `/` . This query will return the three (`topK: 3`) closest matches, as well as their vector values and metadata.
+
+You will notice that `id: 4` has a `score` of `0.46348256`. Because you are using `euclidean` as our distance metric, the closer the score to `0.0`, the closer your vectors are.
 
 ```json
 // https://vectorize-tutorial.<YOUR_SUBDOMAIN>.workers.dev/
@@ -349,25 +456,37 @@ You will notice that `id: 5` has a `score` of `0.999909486`. Because you are usi
 		"count": 3,
 		"matches": [
 			{
-				"id": "5",
-				"score": 0.999909486,
-				"values": [58.79999923706055, 6.699999809265137, 3.4000000953674316],
-				"metadata": {
-					"url": "/products/sku/55519183"
-				}
-			},
-			{
 				"id": "4",
-				"score": 0.789848214,
-				"values": [75.0999984741211, 67.0999984741211, 29.899999618530273],
+				"score": 0.46348256,
+				"values": [
+					0.17, 0.29, 0.42, 0.57, 0.64, 0.38, 0.51, 0.72, 0.22, 0.85, 0.39,
+					0.66, 0.74, 0.32, 0.53, 0.48, 0.21, 0.69, 0.77, 0.34, 0.8, 0.55, 0.41,
+					0.29, 0.7, 0.62, 0.35, 0.68, 0.53, 0.3, 0.79, 0.49
+				],
 				"metadata": {
 					"url": "/products/sku/418313"
 				}
 			},
 			{
+				"id": "3",
+				"score": 0.52920616,
+				"values": [
+					0.21, 0.33, 0.55, 0.67, 0.8, 0.22, 0.47, 0.63, 0.31, 0.74, 0.35, 0.53,
+					0.68, 0.45, 0.55, 0.7, 0.28, 0.64, 0.71, 0.3, 0.77, 0.6, 0.43, 0.39,
+					0.85, 0.55, 0.31, 0.69, 0.52, 0.29, 0.72, 0.48
+				],
+				"metadata": {
+					"url": "/products/sku/97913813"
+				}
+			},
+			{
 				"id": "2",
-				"score": 0.611976262,
-				"values": [15.100000381469727, 19.200000762939453, 15.800000190734863],
+				"score": 0.6337869,
+				"values": [
+					0.14, 0.23, 0.36, 0.51, 0.62, 0.47, 0.59, 0.74, 0.33, 0.89, 0.41,
+					0.53, 0.68, 0.29, 0.77, 0.45, 0.24, 0.66, 0.71, 0.34, 0.86, 0.57,
+					0.62, 0.48, 0.78, 0.52, 0.37, 0.61, 0.69, 0.28, 0.8, 0.53
+				],
 				"metadata": {
 					"url": "/products/sku/10148191"
 				}

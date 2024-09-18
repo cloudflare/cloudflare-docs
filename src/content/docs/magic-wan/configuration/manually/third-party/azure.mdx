@@ -17,7 +17,7 @@ You will need to have an existing Resource group, Virtual Network, and Virtual M
 
 ### 1. Create a Gateway subnet
 
-You should already have a Virtual Network (VNET) created with a subnet assigned to it. The next step is to create a gateway subnet that Azure will use for addressing services related to Azure's Virtual Network Gateway.
+You should already have a Virtual Network (VNET) created with a subnet assigned to it. The next step is to create a gateway subnet that Azure will use for addressing services related to Azure's Virtual Network Gateway. If you already have a gateway subnet, Azure will prevent you from creating a second one. If that is your case, update your gateway subnet settings.
 
 1. Go to your **Virtual Network** > **Subnets**.
 2. Select the option to add a **Gateway subnet**.
@@ -39,21 +39,19 @@ This configuration guide applies to Azure Virtual Network Gateway which includes
 5. Select **Create**.
 
 :::note
-It can take anywhere from 30 to 45 minutes for Azure to fully provision the Virtual Network Gateway.
+The time it takes for Azure to fully provision the Virtual Network Gateway depends on the deployment region.
 :::
 
 ### 3. Create a Local Network Gateway
 
 The Local Network Gateway typically refers to your on-premises location. In this case, the Local Network Gateway represents the Cloudflare side of the connection.
 
-We recommend creating two Local Network Gateways - one for each of the two Cloudflare anycast IPs associated with your Magic WAN account.
+We recommend creating a Local Network Gateway for your Cloudflare IPsec tunnel.
 
 1. Create a new local network gateway.
-2. In **Anycast**, select **IP address** and enter the Cloudflare anycast address.
-3. In **Address space**, specify the address range of any subnets you wish to access remotely via the Magic WAN connection. For example, if you want to reach a network with an IP range of `192.168.1.0/24`, and this network is connected to your Magic WAN tenant, you would add `192.168.1.0/24` to the local network gateway address space.
+2. In **Instance details** > **Endpoint**, select **IP address** and enter the Cloudflare anycast address in the IP address field.
+3. In **Address space(s)**, specify the address range of any subnets you wish to access remotely through the Magic WAN connection. For example, if you want to reach a network with an IP range of `192.168.1.0/24`, and this network is connected to your Magic WAN tenant, you would add `192.168.1.0/24` to the local network gateway address space.
 4. Go to the **Advanced** tab > **BGP settings**, and make sure you select **No**.
-
-Repeat this process to create a Local Network Gateway to represent the redundant Cloudflare anycast IP address.
 
 ### 4. Configure Local Network Gateway for Magic IPsec tunnel health checks
 
@@ -90,8 +88,6 @@ To configure the Address Space for the Local Network Gateway to support Tunnel H
 3. Add the`/31` subnet in CIDR notation (for example, `10.252.3.54/31`) under **Address Space(s)**.
 4. Select **Save**.
 
-Repeat this process to define the Address Space on the Local Network Gateway corresponding to the redundant Cloudflare anycast IP address.
-
 ### 5. Create an IPsec VPN Connection
 
 Choose the following settings when creating your VPN Connection:
@@ -119,17 +115,6 @@ Choose the following settings when creating your VPN Connection:
 
 Repeat this process to define the settings for the Connection to the Local Network Gateway that corresponds to the redundant Cloudflare anycast IP address.
 
-### 5. Define remote Magic WAN Sites
-
-Use the Address Space settings within the Local Network Gateway objects to define the remote subnets within your Magic WAN environment.
-
-1. Navigate to **Local network gateways** and select the desired object.
-2. Navigate to **Configuration** then **Address Space(s)** and specify the remote subnets (in CIDR notation) corresponding to the remote subnets within your Magic WAN environment. For example, `192.168.1.0/24`.
-3. Do not remove the subnet configured to support the Tunnel Health Checks.
-4. Select **Save**
-
-Repeat this process to define the settings for the Connection to the Local Network Gateway that corresponds to the redundant Cloudflare anycast IP address.
-
 ### 6. Route all Internet traffic through Magic WAN and Cloudflare Gateway
 
 Cloudflare Zero Trust customers can route Internet-bound traffic through Magic WAN to the Internet through Cloudflare Gateway.
@@ -140,8 +125,6 @@ Microsoft does not permit specifying a default route (`0.0.0.0/0`) under Address
 2. Go to **Configuration** > **Address Space(s)** and specify the following two subnets: `0.0.0.0/1` & `128.0.0.0/1`.
 3. Do not remove the subnet configured to support the Tunnel Health Checks.
 4. Select **Save**
-
-Repeat this process to define the settings for the Connection to the Local Network Gateway that corresponds to the redundant Cloudflare anycast IP address.
 
 ## Install Cloudflare Zero Trust CA Certificate
 
@@ -176,7 +159,7 @@ ICMP (ping/traceroute) will work to remote Magic WAN sites, but is not forwarded
 ## Configure Magic WAN
 
 1. Create an [IPsec tunnel](/magic-wan/configuration/manually/how-to/configure-tunnels/#add-tunnels) in the Cloudflare dashboard.
-2. For each tunnel, make sure that you have the following settings:
+2. Make sure you have the following settings:
    1. **Interface address**: As the Azure Local Network Gateway will only permit specifying the lower IP address in a `/31` subnet, add the upper IP address within the `/31` subnet selected in [step 4 of the Configure Azure section](#4-configure-local-network-gateway-for-magic-ipsec-tunnel-health-checks). Refer to [Tunnel endpoints](/magic-wan/configuration/manually/how-to/configure-tunnels/) for more details.
    2. **Customer endpoint**: The Public IP associated with your Azure Virtual Network Gateway. For example, `40.xxx.xxx.xxx`.
    3. **Cloudflare endpoint**: Use the Cloudflare anycast address you have received from your account team. This will also be the IP address corresponding to the Local Network Gateway in Azure. For example, `162.xxx.xxx.xxx`.

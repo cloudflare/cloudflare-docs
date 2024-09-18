@@ -38,7 +38,7 @@ For example, if an Advanced Error Rate policy is filtered to status codes betwee
 
 Since service-level indicators (SLI) are calculated separately for each status code when grouping is enabled, a notification policy with status code grouping may not be in violation, but the same policy without status code grouping is in violation. This can happen if there are spikes in the rates of multiple status codes, but no individual spike is large enough.
 
-***
+---
 
 ## Traffic Anomalies
 
@@ -46,7 +46,7 @@ Traffic Anomalies alerts must have a z-score of more than 3.5 or less than -3.5,
 
 You can filter the alerts by domain, whether or not to include traffic already mitigated by the WAF and DoS, and specific status codes. You can also choose if you want to be alerted on drops and/or spikes in your traffic.
 
-***
+---
 
 ## Limitations
 

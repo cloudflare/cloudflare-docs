@@ -6,7 +6,7 @@ title: Detection IDs
 
 import { Render } from "~/components"
 
-<Render file="detection-ids" /> <br/>
+<Render file="detection-ids" />
 
 If you are having an issue with one of our heuristics, detection IDs allow you to decide which heuristics to enforce on your zones using customer configurable heuristics. You can choose unique actions for different bots, detected through Cloudflare’s heuristics engine. You can block, allow, or serve alternate content to specific bots to meet the unique needs of your site’s traffic.
 
@@ -17,10 +17,10 @@ A request can trigger multiple detection IDs.
 
 You can use `cf.bot_management.detection_ids` fields in tools such as:
 
-* [Custom rules](/waf/custom-rules/)
-* [Advanced Rate Limiting](/waf/rate-limiting-rules/)
-* [Transform Rules](/rules/transform/)
-* [Workers](/workers/) (as `request.cf.botManagement.detectionIds`)
+- [Custom rules](/waf/custom-rules/)
+- [Advanced Rate Limiting](/waf/rate-limiting-rules/)
+- [Transform Rules](/rules/transform/)
+- [Workers](/workers/) (as `request.cf.botManagement.detectionIds`)
 
 ## Bot Detection IDs via Logpush
 
@@ -44,13 +44,9 @@ You can create or edit their existing Logpush jobs to include the new Bot Detect
 ## Create or edit an expression
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/) and select your account and domain.
-
-2. Go to **Security** > **Bots**, apply filters and select **Create custom rule** to create a [custom rule](/waf/custom-rules/create-dashboard/) based on those filters.
-
-   Alternatively, if you already created a custom rule, go to **Security** > **WAF** > **Custom rules** and edit the expression of an existing custom rule.
-
+2. Go to **Security** > **Bots**, apply filters and select **Create custom rule** to create a [custom rule](/waf/custom-rules/create-dashboard/) based on those filters. 
+   - Alternatively, if you already created a custom rule, go to **Security** > **WAF** > **Custom rules** and edit the expression of an existing custom rule.
 3. Use the `cf.bot_management.detection_ids` field in the rule expression.
-
 4. Select **Save**.
 
 ## Use cases

@@ -3,16 +3,13 @@ pcx_content_type: configuration
 title: Network policies
 sidebar:
   order: 3
-
 ---
 
-import { Details, InlineBadge, Render } from "~/components"
+import { Details, InlineBadge, Render } from "~/components";
 
 :::note
 
-
 To enable this feature, download and deploy the [WARP client](/cloudflare-one/connections/connect-devices/warp/deployment/) on your devices.
-
 
 :::
 
@@ -20,13 +17,16 @@ With Cloudflare Zero Trust, you can configure policies to control network-level 
 
 A network policy consists of an **Action** as well as a logical expression that determines the scope of the action. To build an expression, you need to choose a **Selector** and an **Operator**, and enter a value or range of values in the **Value** field. You can use **And** and **Or** logical operators to evaluate multiple conditions.
 
-* [Actions](#actions)
-* [Selectors](#selectors)
-* [Comparison operators](#comparison-operators)
-* [Value](#value)
-* [Logical operators](#logical-operators)
+- [Actions](#actions)
+- [Selectors](#selectors)
+- [Comparison operators](#comparison-operators)
+- [Value](#value)
+- [Logical operators](#logical-operators)
 
-<Render file="gateway/response" params={{ one: "query", two: "Source IP", three: "Resolved IP" }} />
+<Render
+	file="gateway/response"
+	params={{ one: "query", two: "Source IP", three: "Resolved IP" }}
+/>
 
 ## Actions
 
@@ -36,41 +36,39 @@ Like actions in DNS and HTTP policies, actions in network policies define which 
 
 API value: `allow`
 
-
 <Details header="Available selectors">
 
 **Traffic**
 
-* [Application](#application)
-* [Destination Continent IP Geolocation](#destination-continent)
-* [Destination Country IP Geolocation](#destination-country)
-* [Destination IP](#destination-ip)
-* [Destination Port](#destination-port)
-* [Detected Protocol](#detected-protocol)
-* [Protocol](#protocol)
-* [Proxy Endpoint](#proxy-endpoint)
-* [SNI](#sni)
-* [SNI Domain](#sni-domain)
-* [Source Continent IP Geolocation](#source-continent)
-* [Source Country IP Geolocation](#source-country)
-* [Source Internal IP](#source-internal-ip)
-* [Source IP](#source-ip)
-* [Source Port](#source-port)
-* [Virtual Network](#virtual-network)
+- [Application](#application)
+- [Destination Continent IP Geolocation](#destination-continent)
+- [Destination Country IP Geolocation](#destination-country)
+- [Destination IP](#destination-ip)
+- [Destination Port](#destination-port)
+- [Detected Protocol](#detected-protocol)
+- [Protocol](#protocol)
+- [Proxy Endpoint](#proxy-endpoint)
+- [SNI](#sni)
+- [SNI Domain](#sni-domain)
+- [Source Continent IP Geolocation](#source-continent)
+- [Source Country IP Geolocation](#source-country)
+- [Source Internal IP](#source-internal-ip)
+- [Source IP](#source-ip)
+- [Source Port](#source-port)
+- [Virtual Network](#virtual-network)
 
 **Identity**
 
-* [SAML Attributes](#users)
-* [User Email](#users)
-* [User Group Emails](#users)
-* [User Group IDs](#users)
-* [User Group Names](#users)
-* [User Name](#users)
+- [SAML Attributes](#users)
+- [User Email](#users)
+- [User Group Emails](#users)
+- [User Group IDs](#users)
+- [User Group Names](#users)
+- [User Name](#users)
 
 **Device Posture**
 
-* [Passed Device Posture Checks](#device-posture)
-
+- [Passed Device Posture Checks](#device-posture)
 
 </Details>
 
@@ -85,35 +83,33 @@ Policies with Allow actions allow network traffic to reach certain IPs or ports.
 
 API value: `audit_ssh`
 
-
 <Details header="Available selectors">
 
 **Traffic**
 
-* [Application](#application)
-* [Destination Continent IP Geolocation](#destination-continent)
-* [Destination Country IP Geolocation](#destination-country)
-* [Destination IP](#destination-ip)
-* [Source Continent IP Geolocation](#source-continent)
-* [Source Country IP Geolocation](#source-country)
-* [Source Internal IP](#source-internal-ip)
-* [Source IP](#source-ip)
-* [Source Port](#source-port)
-* [Virtual Network](#virtual-network)
+- [Application](#application)
+- [Destination Continent IP Geolocation](#destination-continent)
+- [Destination Country IP Geolocation](#destination-country)
+- [Destination IP](#destination-ip)
+- [Source Continent IP Geolocation](#source-continent)
+- [Source Country IP Geolocation](#source-country)
+- [Source Internal IP](#source-internal-ip)
+- [Source IP](#source-ip)
+- [Source Port](#source-port)
+- [Virtual Network](#virtual-network)
 
 **Identity**
 
-* [SAML Attributes](#users)
-* [User Email](#users)
-* [User Group Emails](#users)
-* [User Group IDs](#users)
-* [User Group Names](#users)
-* [User Name](#users)
+- [SAML Attributes](#users)
+- [User Email](#users)
+- [User Group Emails](#users)
+- [User Group IDs](#users)
+- [User Group Names](#users)
+- [User Name](#users)
 
 **Device Posture**
 
-* [Passed Device Posture Checks](#device-posture)
-
+- [Passed Device Posture Checks](#device-posture)
 
 </Details>
 
@@ -123,7 +119,7 @@ Policies with Audit SSH actions allow administrators to log SSH traffic. Gateway
 | -------------- | -------- | -------------- | --------- |
 | Destination IP | in       | `203.0.113.83` | Audit SSH |
 
-For more information on SSH logging, refer to [Configure SSH proxy and command logs](ssh-logging/).
+For more information on SSH logging, refer to [Configure SSH proxy and command logs](/cloudflare-one/policies/gateway/network-policies/ssh-logging/).
 
 :::note
 Gateway only audits SSH traffic over port `22`. Non-standard ports, including those specified with the [Destination Port selector](#destination-port), are not supported.
@@ -133,41 +129,39 @@ Gateway only audits SSH traffic over port `22`. Non-standard ports, including th
 
 API value: `block`
 
-
 <Details header="Available selectors">
 
 **Traffic**
 
-* [Application](#application)
-* [Destination Continent IP Geolocation](#destination-continent)
-* [Destination Country IP Geolocation](#destination-country)
-* [Destination IP](#destination-ip)
-* [Destination Port](#destination-port)
-* [Detected Protocol](#detected-protocol)
-* [Protocol](#protocol)
-* [Proxy Endpoint](#proxy-endpoint)
-* [SNI](#sni)
-* [SNI Domain](#sni-domain)
-* [Source Continent IP Geolocation](#source-continent)
-* [Source Country IP Geolocation](#source-country)
-* [Source Internal IP](#source-internal-ip)
-* [Source IP](#source-ip)
-* [Source Port](#source-port)
-* [Virtual Network](#virtual-network)
+- [Application](#application)
+- [Destination Continent IP Geolocation](#destination-continent)
+- [Destination Country IP Geolocation](#destination-country)
+- [Destination IP](#destination-ip)
+- [Destination Port](#destination-port)
+- [Detected Protocol](#detected-protocol)
+- [Protocol](#protocol)
+- [Proxy Endpoint](#proxy-endpoint)
+- [SNI](#sni)
+- [SNI Domain](#sni-domain)
+- [Source Continent IP Geolocation](#source-continent)
+- [Source Country IP Geolocation](#source-country)
+- [Source Internal IP](#source-internal-ip)
+- [Source IP](#source-ip)
+- [Source Port](#source-port)
+- [Virtual Network](#virtual-network)
 
 **Identity**
 
-* [SAML Attributes](#users)
-* [User Email](#users)
-* [User Group Emails](#users)
-* [User Group IDs](#users)
-* [User Group Names](#users)
-* [User Name](#users)
+- [SAML Attributes](#users)
+- [User Email](#users)
+- [User Group Emails](#users)
+- [User Group IDs](#users)
+- [User Group Names](#users)
+- [User Name](#users)
 
 **Device Posture**
 
-* [Passed Device Posture Checks](#device-posture)
-
+- [Passed Device Posture Checks](#device-posture)
 
 </Details>
 
@@ -185,42 +179,40 @@ Policies with Block actions block network traffic from reaching certain IPs or p
 
 API value: `l4_override`
 
-
 <Details header="Available selectors">
 
 **Traffic**
 
-* [Destination Continent IP Geolocation](#destination-continent)
-* [Destination Country IP Geolocation](#destination-country)
-* [Destination IP](#destination-ip)
-* [Destination Port](#destination-port)
-* [Protocol](#protocol)
-* [SNI](#sni)
-* [SNI Domain](#sni-domain)
-* [Source Continent IP Geolocation](#source-continent)
-* [Source Country IP Geolocation](#source-country)
-* [Source Internal IP](#source-internal-ip)
-* [Source IP](#source-ip)
-* [Source Port](#source-port)
-* [Virtual Network](#virtual-network)
+- [Destination Continent IP Geolocation](#destination-continent)
+- [Destination Country IP Geolocation](#destination-country)
+- [Destination IP](#destination-ip)
+- [Destination Port](#destination-port)
+- [Protocol](#protocol)
+- [SNI](#sni)
+- [SNI Domain](#sni-domain)
+- [Source Continent IP Geolocation](#source-continent)
+- [Source Country IP Geolocation](#source-country)
+- [Source Internal IP](#source-internal-ip)
+- [Source IP](#source-ip)
+- [Source Port](#source-port)
+- [Virtual Network](#virtual-network)
 
 **Identity**
 
-* [SAML Attributes](#users)
-* [User Email](#users)
-* [User Group Emails](#users)
-* [User Group IDs](#users)
-* [User Group Names](#users)
-* [User Name](#users)
+- [SAML Attributes](#users)
+- [User Email](#users)
+- [User Group Emails](#users)
+- [User Group IDs](#users)
+- [User Group Names](#users)
+- [User Name](#users)
 
 **Device Posture**
 
-* [Passed Device Posture Checks](#device-posture)
-
+- [Passed Device Posture Checks](#device-posture)
 
 </Details>
 
-Policies with Network Override actions override traffic directed to, or coming from, certain IPv4/IPv6 addresses or ports. Destination IPs can be public IPs or private IPs connected to your Zero Trust network. For example, the following configuration overrides traffic sent to a public IP with a private IP based on a user’s identity:
+Policies with Network Override actions override traffic directed to, or coming from, certain IPv4/IPv6 addresses or ports. Destination IPs can be public IPs or private IPs connected to your Zero Trust network. For example, the following configuration overrides traffic sent to a public IP with a private IP based on a user's identity:
 
 | Selector       | Operator | Value           | Logic | Action           |
 | -------------- | -------- | --------------- | ----- | ---------------- |
@@ -238,11 +230,17 @@ Gateway matches network traffic against the following selectors, or criteria.
 
 ### Destination Continent
 
-<Render file="gateway/selectors/destination-continent" params={{ one: "net.dst" }} />
+<Render
+	file="gateway/selectors/destination-continent"
+	params={{ one: "net.dst" }}
+/>
 
 ### Destination Country
 
-<Render file="gateway/selectors/destination-country" params={{ one: "net.dst" }} />
+<Render
+	file="gateway/selectors/destination-country"
+	params={{ one: "net.dst" }}
+/>
 
 ### Destination IP
 
@@ -266,9 +264,7 @@ Gateway matches network traffic against the following selectors, or criteria.
 
 :::note
 
-
 To enable Gateway filtering on TCP and UDP, go to **Settings** > **Network** > **Proxy**. Network policies apply to all enabled protocols unless you use the **Protocol** selector within a policy.
-
 
 :::
 
@@ -294,7 +290,10 @@ The country of the user making the request. <Render file="gateway/selectors/sour
 
 ### Source Internal IP
 
-<Render file="gateway/selectors/source-internal-ip" params={{ one: "network", two: "net" }} />
+<Render
+	file="gateway/selectors/source-internal-ip"
+	params={{ one: "network", two: "net" }}
+/>
 
 ### Source IP
 
@@ -310,7 +309,10 @@ The country of the user making the request. <Render file="gateway/selectors/sour
 
 ### Virtual Network
 
-<Render file="gateway/selectors/virtual-network" params={{ one: "net.vnet_id" }} />
+<Render
+	file="gateway/selectors/virtual-network"
+	params={{ one: "net.vnet_id" }}
+/>
 
 ## Comparison operators
 
@@ -318,9 +320,7 @@ The country of the user making the request. <Render file="gateway/selectors/sour
 
 :::note
 
-
-The *in* operator allows you to specify IP addresses or networks using CIDR notation.
-
+The _in_ operator allows you to specify IP addresses or networks using CIDR notation.
 
 :::
 
@@ -330,4 +330,7 @@ The *in* operator allows you to specify IP addresses or networks using CIDR nota
 
 ## Logical operators
 
-<Render file="gateway/logical-operators" params={{ one: "**Identity** or **Device Posture**" }} />
+<Render
+	file="gateway/logical-operators"
+	params={{ one: "**Identity** or **Device Posture**" }}
+/>

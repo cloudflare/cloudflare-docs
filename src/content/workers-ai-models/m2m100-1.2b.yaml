@@ -1,4 +1,3 @@
-
 model:
   id: "617e7ec3-bf8d-4088-a863-4f89582d91b5"
   source: 1
@@ -26,5 +25,3 @@ title: "m2m100-1.2b"
 json_schema:
   input: "{\n  \"type\": \"object\",\n  \"properties\": {\n    \"text\": {\n      \"type\": \"string\",\n      \"minLength\": 1\n    },\n    \"source_lang\": {\n      \"type\": \"string\",\n      \"default\": \"en\"\n    },\n    \"target_lang\": {\n      \"type\": \"string\"\n    }\n  },\n  \"required\": [\n    \"text\",\n    \"target_lang\"\n  ]\n}"
   output: "{\n  \"type\": \"object\",\n  \"contentType\": \"application/json\",\n  \"properties\": {\n    \"translated_text\": {\n      \"type\": \"string\"\n    }\n  }\n}"
-
-

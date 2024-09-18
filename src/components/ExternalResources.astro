@@ -1,6 +1,6 @@
 ---
 import { getEntry } from "astro:content";
-import { getCollection, z } from "astro:content";
+import { z } from "astro:schema";
 
 type Props = z.infer<typeof props>;
 
@@ -17,7 +17,7 @@ const resources = await getEntry(type, "index");
 
 const filtered = resources.data.entries.filter((entry) => {
 	return (
-		(cloudflare ? cloudflare : false) &&
+		(cloudflare ? entry.cloudflare : false) &&
 		(tags ? entry.tags?.some((v: string) => tags.includes(v)) : true) &&
 		(products
 			? entry.products?.some((v: string) => products.includes(v))
@@ -25,13 +25,13 @@ const filtered = resources.data.entries.filter((entry) => {
 	);
 });
 
-filtered.sort((a, b) => b.updated - a.updated);
+filtered.sort((a, b) => Number(b.updated) - Number(a.updated));
 ---
 
 <ul>
 	{
 		filtered.map((entry) => {
-			const title = entry.name ?? entry.title;
+			const title = "name" in entry ? entry.name : entry.title;
 			return (
 				<li>
 					<>
