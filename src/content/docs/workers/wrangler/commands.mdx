@@ -484,11 +484,11 @@ Manage [Hyperdrive](/hyperdrive/) database configurations.
 Create a new Hyperdrive configuration.
 
 ```txt
-wrangler hyperdrive create <ID> [OPTIONS]
+wrangler hyperdrive create <CONFIG_NAME> [OPTIONS]
 ```
 
-- `ID` string required
-  - The ID of the Hyperdrive configuration to create.
+- `CONFIG_NAME` string required
+  - The name of the Hyperdrive configuration to create.
 - `--connection-string` string optional
   - The database connection string in the form `postgres://user:password@hostname:port/database`.
 - `--host` string optional
