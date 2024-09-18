@@ -1,8 +1,8 @@
 on: [push, workflow_dispatch]
 
 concurrency:
-  group: ${{ github.head_ref || github.run_id }}
-  cancel-in-progress: true
+  group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: ${{ !contains(github.ref, 'production')}}
 
 jobs:
   publish:
