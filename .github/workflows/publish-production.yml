@@ -1,13 +1,10 @@
 on:
-  pull_request:
+  push:
     branches:
       - production
-    types:
-      - closed
 
 jobs:
   publish:
-    if: github.event.pull_request.merged == true
     runs-on: ubuntu-22.04
     permissions:
       contents: read
