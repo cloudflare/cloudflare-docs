@@ -76,10 +76,15 @@ SSH command logs contain the actual SSH commands that a user ran on the target. 
 
 ### Disable SSH command logging
 
-To turn off SSH command logging, delete your uploaded public key using the API:
+To turn off SSH command logging, delete your uploaded public key using the [API](/api/operations/zero-trust-update-audit-ssh-settings):
 
 ```sh
-
+curl --request PUT https://api.cloudflare.com/client/v4/accounts/{account_id}/gateway/audit_ssh_settings \
+--header "X-Auth-Email: <EMAIL>" \
+--header "X-Auth-Key: <API_KEY>" \
+--data '{
+  "public_key": ""
+}'
 ```
 
 ### View SSH logs

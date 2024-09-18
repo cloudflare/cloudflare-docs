@@ -30,6 +30,25 @@ To create a new target:
 </TabItem>
 <TabItem label="API">
 
+```sh
+curl https://api.cloudflare.com/client/v4/accounts/{account_id}/infrastructure/targets \
+--header "X-Auth-Email: <EMAIL>" \
+--header "X-Auth-Key: <API_KEY>" \
+--data '{
+  "hostname": "infra-access-target",
+  "ip": {
+    "ipv4": {
+      "ip_addr": "187.26.29.249",
+      "virtual_network_id": "c77b744e-acc8-428f-9257-6878c046ed55"
+    },
+    "ipv6": {
+      "ip_addr": "64c0:64e8:f0b4:8dbf:7104:72b0:ec8f:f5e0",
+      "virtual_network_id": "c77b744e-acc8-428f-9257-6878c046ed55"
+    }
+  }
+}'
+```
+
 </TabItem>
 </Tabs>
 
