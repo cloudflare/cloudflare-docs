@@ -6,9 +6,11 @@ sidebar:
 
 ---
 
-The Transactional Storage API allows you to achieve consistent key-value storage.
+import { Render } from "~/components";
 
-Durable Objects gain access to a persistent Transactional Storage API via `state`, the first parameter passed to the Durable Object constructor.
+The Transactional Storage API allows Durable Objects to access consistent key-value storage or (beta) [SQL storage](/durable-objects/api/transactional-storage-api/#sqlexec). A Durable Object's attached storage is private to its unique instance and cannot be accessed by other objects. 
+
+Durable Objects gain access to a persistent Transactional Storage API via `ctx.storage`, on the `ctx` parameter passed to the Durable Object constructor.
 
 While access to a Durable Object instance is single-threaded, request executions can still interleave with each other when they wait on I/O, such as when waiting on the promises returned by persistent storage methods or `fetch()` requests.
 
@@ -39,13 +41,19 @@ export class Counter {
 
 ## Methods
 
+:::note[SQLite in Durable Objects Beta]
+
+New beta version of Durable Objects is available where each Durable Object has a private, embedded SQLite database. SQL storage is [opt-in during beta](/durable-objects/reference/durable-objects-migrations/#enable-sql-storage-on-create-durable-object-class-migration) when creating a Durable Object class; otherwise, a Durable Object class has the standard, private key-value storage. Objects with SQL storage can use the [SQL API](/durable-objects/api/transactional-storage-api/#sqlexec). 
+
+All Transactional Storage API methods work with SQL storage. Key-value methods like `get()`, `put()`, `delete()`, or `list()` store data in a hidden SQLite table. 
+
+:::
+
 The Transactional Storage API comes with several methods.
 
 Each method is implicitly wrapped inside a transaction, such that its results are atomic and isolated from all other storage operations, even when accessing multiple key-value pairs.
 
 ### get
-
-
 
 * <code>get(keystring, optionsObjectoptional)</code> : Promise\<any>
 
@@ -218,7 +226,82 @@ The `put()` method returns a `Promise`, but most applications can discard this p
 
 * `setAlarm()` and `deleteAlarm()` support the same options as [`put()`](/durable-objects/api/transactional-storage-api/#put), but without `noCache`.
 
+### sql.exec
 
+:::note[SQLite in Durable Objects Beta]
+
+SQL API methods accessed with `ctx.storage.sql` are only allowed on [Durable Object classes with SQL storage](/durable-objects/reference/durable-objects-migrations/#enable-sql-storage-on-create-durable-object-class-migration) and will return an error if called on Durable Objects with key-value storage.
+
+:::
+
+<code>ctx.storage.sql.exec(query: string, ...bindings: any[])</code> : SqlStorageCursor
+
+#### Parameters
+* `query`: string 
+  * The SQL query string to be executed. `query` can contain `?` placeholders for parameter bindings.
+* `bindings`: any[] Optional
+  * Optional variable number of arguments that correspond to the `?` placeholders in `query`.
+
+#### Returns 
+A cursor (`SqlStorageCursor`) to iterate over query row results as objects with the following supported methods:
+  
+* `raw()`: Iterator
+  * Returns cursor of query rows as arrays of row values.
+* `columnNames()`: string[]
+  * Returns an array of column name strings. Often used with `raw()` to find index of specific column(s).
+*  `rowsRead()`: number
+  * Returns number of rows read by the executed SQL `query` based on cursor consumption. Metric is the same one used for [SQL billing](TODO link).
+*  `rowsWritten()`: number
+  * Returns number of rows written by the executed SQL `query` based on curosr consumption. Metric is the same one used for [SQL billing](TODO link).
+
+#### Examples
+
+<Render file="durable-objects-sql" />
+
+### sql.prepare
+
+<code>ctx.storage.sql.prepare(query: string)</code> : SqlStorageStatement
+
+#### Parameters
+* `query`: string 
+  * The prepared SQL query string to be executed. `query` can contain `?` placeholders for parameter bindings.
+
+#### Returns 
+A cursor to iterate over query row results as objects with the [same supported methods as `sql.exec`](/durable-objects/api/transactional-storage-api/#returns)
+
+#### Examples
+
+```ts
+  let stmt = this.sql.prepare("SELECT * FROM artist WHERE artistid = ?;");
+  let result = stmt(123);
+  console.log([...result.raw()]); // prints [[123, 'Alice' ]]
+```
+
+### sql.databaseSize
+
+<code>ctx.storage.sql.databaseSize()</code> : number
+
+#### Returns
+The current SQLite database size in bytes.
+
+```ts
+  let size = ctx.storage.sql.databaseSize();
+```
+
+### Point in time recovery
+
+For [Durable Objects classes with SQL storage](/durable-objects/reference/durable-objects-migrations/#enable-sql-storage-on-create-durable-object-class-migration), the following Storage API methods are available to restore a Durable Object's embedded SQLite database to any point in time in the past 30 days.
+
+<code>ctx.storage.getCurrentBookmark()</code> : Promise\<string>
+<code>ctx.storage.getBookmarkForTime(timestamp: number | Date)</code>: Promise\<string>
+<code>ctx.storage.onNextSessionRestoreBookmark(bookmark: string)</code>: Promise\<string>
+
+```ts
+  let now = new Date();
+  // restore to 2 days from current date and time
+  let bookmark = ctx.storage.getBookmarkForTime(now - 2);
+  ctx.storage.onNextSessionRestoreBookmark(bookmark);
+```
 
 ### Related resources
 

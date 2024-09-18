@@ -71,7 +71,7 @@ Your `MyDurableObject` class will have a constructor with two parameters. The fi
 <Tabs> <TabItem label="JavaScript" icon="seti:javascript">
 
 ```js
-export class MyDurableObject {
+export class MyDurableObject extends DurableObject{
 	constructor(state, env) {}
 }
 ```
@@ -79,7 +79,7 @@ export class MyDurableObject {
 </TabItem> <TabItem label="TypeScript" icon="seti:typescript">
 
 ```ts
-export class MyDurableObject {
+export class MyDurableObject extends DurableObject{
 	constructor(state: DurableObjectState, env: Env) {}
 }
 ```
@@ -93,7 +93,7 @@ Your file should now look like:
 <Tabs> <TabItem label="JavaScript" icon="seti:javascript">
 
 ```js
-export class MyDurableObject {
+export class MyDurableObject extends DurableObject{
 	constructor(state, env) {}
 
 	async fetch(request) {
@@ -105,7 +105,7 @@ export class MyDurableObject {
 </TabItem> <TabItem label="TypeScript" icon="seti:typescript">
 
 ```ts
-export class MyDurableObject {
+export class MyDurableObject extends DurableObject{
 	constructor(state: DurableObjectState, env: Env) {}
 
 	async fetch(request: Request) {
@@ -216,6 +216,24 @@ The Durable Object migration to create a new Durable Object class will look like
 [[migrations]]
 tag = "v1" # Should be unique for each entry
 new_classes = ["MyDurableObject"] # Array of new classes
+```
+
+### 6.a Optional: Configure new Durable Object class for SQL storage
+
+:::note[SQLite in Durable Objects Beta]
+
+New beta version of Durable Objects is available where each Durable Object has a private, embedded SQLite database. SQL storage is opt-in during beta; otherwise, a Durable Object class has the standard, private key-value storage. Objects can access long-lived durable storage with the [Transactional Storage API](/durable-objects/api/transactional-storage-api/). 
+
+:::
+
+A Durable Object class can only have a single storage type, which cannot be changed after the Durable Object class is created.
+
+To configure SQL storage and API, replace `new_classes` with `new_sqlite_classes` in your Worker's `wrangler.toml` file:
+
+```toml
+[[migrations]]
+tag = "v1" # Should be unique for each entry
+new_sqlite_classes = ["MyDurableObject"] # Array of new classes
 ```
 
 Refer to [Durable Objects migrations](/durable-objects/reference/durable-objects-migrations/) to learn more about the migration process.

@@ -5,6 +5,12 @@ productLink: "/durable-objects/"
 productArea: Developer platform
 productAreaLink: /workers/platform/changelog/platform/
 entries:
+  - publish_date: "2024-09-26"
+    description: |-
+      New beta version of Durable Objects is available where each Durable Object has a private, embedded SQLite database. When creating a Durabe Object class, users can [opt-in to using SQL storage](durable-objects/best-practices/access-durable-objects-storage/#sql-storage) in order to access Transactional Storage [SQL API](/durable-objects/api/transactional-storage-api/#sqlexec).
+
+      During the initial beta, billing is not enabled for SQL queries (rows read and rows written) and SQL storage. SQLite-backed Durable Objects will incur [charges for requests and duration](/durable-objects/platform/pricing/#billing-metrics). We plan to enable [SQL billing](/durable-objects/platform/pricing/#transactional-storage-api-billing) in the first half of 2025 with advance notice. SQL billing metrics will be added to GraphQL analytics in the future as well.
+
   - publish_date: "2024-06-24"
     description: |-
       [Exceptions](/durable-objects/best-practices/error-handling) thrown from Durable Object internal operations and tunneled to the caller may now be populated with a `.retryable: true` property if the exception was likely due to a transient failure, or populated with an `.overloaded: true` property if the exception was due to [overload](/durable-objects/observability/troubleshooting/#durable-object-is-overloaded).
