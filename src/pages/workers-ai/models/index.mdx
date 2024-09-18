@@ -1,0 +1,11 @@
+---
+title: Models
+---
+
+import StarlightPage from "@astrojs/starlight/components/StarlightPage.astro";
+import ModelCatalog from "~/components/ModelCatalog.jsx";
+
+<StarlightPage frontmatter={{ title: "Models", tableOfContents: false }}>
+	<style>{`.sl-container{ max-width: 1350px; }`}</style>
+	<ModelCatalog client:load />
+</StarlightPage>

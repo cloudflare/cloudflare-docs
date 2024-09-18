@@ -1,0 +1,64 @@
+---
+import {
+	SchemaTree,
+	SchemaNodeKind,
+	isRegularNode,
+} from "@stoplight/json-schema-tree";
+import { resolveInlineRef } from "@stoplight/json";
+import SchemaRow from "~/components/models/SchemaRow.astro";
+import { Tabs, TabItem } from "~/components";
+
+const { schema } = Astro.props;
+
+const defaultResolver =
+	(contextObject) =>
+	({ pointer }, _, currentObject) => {
+		const activeObject = contextObject ?? currentObject;
+
+		if (pointer === null) {
+			return null;
+		}
+
+		if (pointer === "#") {
+			return activeObject;
+		}
+
+		const resolved = resolveInlineRef(activeObject, pointer);
+
+		if (resolved) return resolved;
+
+		throw new ReferenceError(`Could not resolve '${pointer}`);
+	};
+
+const jsonSchemaTree = new SchemaTree(schema, {
+	mergeAllOf: true,
+	refResolver: defaultResolver,
+	maxRefDepth: 1,
+});
+
+jsonSchemaTree.populate();
+
+const hasMultipleInputTypes =
+	jsonSchemaTree.root.children && jsonSchemaTree.root.children.length > 1;
+---
+
+<Tabs>
+	<TabItem label="Prompt">
+		<ul class="list-none m-0 p-0">
+			{
+				jsonSchemaTree.root.children[0].children[0].children.map((node) => (
+					<SchemaRow node={node} />
+				))
+			}
+		</ul>
+	</TabItem>
+	<TabItem label="Messages">
+		<ul class="list-none m-0 p-0">
+			{
+				jsonSchemaTree.root.children[0].children[1].children.map((node) => (
+					<SchemaRow node={node} />
+				))
+			}
+		</ul>
+	</TabItem>
+</Tabs>
