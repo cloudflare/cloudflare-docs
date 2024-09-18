@@ -14,7 +14,7 @@ Not recommended for new deployments. We recommend using [Access for Infrastructu
 
 End users can connect to an SSH server without the WARP client by authenticating through `cloudflared` in their native terminal. This method requires having `cloudflared` installed on both the server machine and on the client machine, as well as an active zone on Cloudflare. The traffic is proxied over this connection, and the user logs in to the server with their Cloudflare Access credentials.
 
-The public hostname method can be implemented in conjunction with routing over WARP so that there are multiple ways to connect to the server. You can reuse the same tunnel for both the private network and public hostname routes.
+Client-side `cloudflared` can be used in conjunction with [routing over WARP](/cloudflare-one/connections/connect-networks/use-cases/ssh/ssh-warp-to-tunnel/) and [Access for Infrastructure](/cloudflare-one/connections/connect-networks/use-cases/ssh/ssh-infrastructure-access/) so that there are multiple ways to connect to the server. You can reuse the same Cloudflare Tunnel when configuring each connection method.
 
 ## 1. Connect the server to Cloudflare
 

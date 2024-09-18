@@ -1,6 +1,6 @@
 ---
 pcx_content_type: how-to
-title: Connect to SSH with WARP-to-Tunnel
+title: Connect with self-managed SSH keys
 sidebar:
   order: 3
   label: Self-managed SSH keys
@@ -8,7 +8,12 @@ sidebar:
 
 import { Render } from "~/components";
 
-<Render file="tunnel/warp-to-tunnel-intro" />
+If you want to manage your own SSH keys, you can use Cloudflare Tunnel to create a secure, outbound-only connection from your server to Cloudflare's global network. This requires running the `cloudflared` daemon on the server (or any other host machine within the private network). Users with SSH keys that are trusted by the SSH server can access the server by installing the [Cloudflare WARP client](/cloudflare-one/connections/connect-devices/warp/) on their device and enrolling in your Zero Trust organization. Remote devices will be able to connect as if they were on your private network. By default, all devices enrolled in your organization can SSH to the server unless you build policies to allow or block specific users.
+
+:::note
+
+If you want to create more granular access policies, allow Cloudflare to manage SSH keys for you, or to obtain command logs, consider using [Access for Infrastructure](/cloudflare-one/connections/connect-networks/use-cases/ssh/ssh-infrastructure-access/) instead.
+:::
 
 This example walks through how to set up an SSH server on a Google Cloud Platform (GCP) virtual machine (VM), but you can use any machine that supports SSH connections.
 
@@ -33,11 +38,6 @@ Before creating your VM instance you will need to create an SSH key pair.
    ```
 
 4. Copy the output. This will be used when creating the VM instance in GCP.
-
-:::note
-
-You can configure SSH servers that do not require SSH keys and instead rely exclusively on Cloudflare Zero Trust policies or [short-lived certificates](/cloudflare-one/connections/connect-networks/use-cases/ssh/ssh-infrastructure-access/) to secure the server.
-:::
 
 ## 2. Create a VM instance in GCP
 
