@@ -1,6 +1,8 @@
 ---
 pcx_content_type: overview
 title: Namespaces
+sidebar:
+  order: 2
 ---
 
 ## Create a namespace
@@ -15,7 +17,7 @@ The following fields are required when making a `POST` request:
 The `log_directory` field is optional but is the URL used to retrieve the log public key.
 
 ```sh
-curl --request POST 'https://plexi-staging.research.cloudflare.com/namespaces' \
+curl 'https://plexi-staging.research.cloudflare.com/namespaces' \
         	--header 'Content-Type: application/json' \
         	--data '{
  	"name": "whatsapp-2024",

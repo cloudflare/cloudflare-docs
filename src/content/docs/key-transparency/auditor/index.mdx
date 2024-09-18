@@ -1,6 +1,8 @@
 ---
 pcx_content_type: overview
 title: Auditor
+sidebar: 
+  order: 1
 ---
 
 The auditor is designed to sign epoch information, which includes the timestamp seen by the auditor, epoch number, and epoch digest. The auditor serialises this information in binary using protobuf or bincode and checks whether the requested inclusion is valid, as in not seen, and incremental.
