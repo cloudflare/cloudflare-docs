@@ -22,7 +22,11 @@ import { Badge, Render } from "~/components";
 
 ## 2. Set up the client
 
-<Render file="tunnel/warp-to-tunnel-client" />
+To connect your devices to Cloudflare:
+
+1. [Deploy the WARP client](/cloudflare-one/connections/connect-devices/warp/deployment/) on your devices in Gateway with WARP mode.
+2. Install and trust the [Cloudflare root certificate](/cloudflare-one/connections/connect-devices/warp/user-side-certificates/) on your devices.
+3. [Create device enrollment rules](/cloudflare-one/connections/connect-devices/warp/deployment/device-enrollment/) to determine which devices can enroll to your Zero Trust organization.
 
 ## 3. Route private network IPs through WARP
 
