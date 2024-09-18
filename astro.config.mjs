@@ -204,4 +204,13 @@ export default defineConfig({
 			},
 		}),
 	],
+	vite: {
+		build: {
+			rollupOptions: {
+				output: {
+					entryFileNames: "_astro/[name].js",
+				},
+			},
+		},
+	},
 });
