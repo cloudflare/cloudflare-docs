@@ -24,7 +24,7 @@ To deploy a custom ruleset in your account, follow these general steps:
 
 For more information, refer to [Work with custom rulesets](/ruleset-engine/custom-rulesets/) in the Ruleset Engine documentation.
 
-:::caution[Important]
+:::caution
 
 - Deployed custom rulesets will only apply to incoming traffic of Enterprise domains. Regarding the expression of the rule deploying the custom ruleset, you must use parentheses to enclose any custom conditions and end your expression with `and cf.zone.plan eq "ENT"` or else the API operation will fail.
 
