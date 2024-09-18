@@ -9,7 +9,7 @@ sidebar:
     text: New
 ---
 
-import { Badge, Render } from "~/components";
+import { Tabs, TabItem, Badge, Render } from "~/components";
 
 [Access for Infrastructure](/cloudflare-one/applications/non-http/infrastructure-apps/) uses the same deployment model as [WARP-to-Tunnel](/cloudflare-one/connections/connect-networks/use-cases/ssh/ssh-warp-to-tunnel/) but unlocks more granular policy options and command logging functionality.
 <Render file="access/short-lived-certs-intro" params={{ intro: "Furthermore, Access for Infrastructure replaces" }} />
@@ -80,7 +80,17 @@ SSH command logs contain the actual SSH commands that a user ran on the target. 
 
 ### Disable SSH command logging
 
-To turn off SSH command logging, delete your uploaded public key using the [API](/api/operations/zero-trust-update-audit-ssh-settings):
+To turn off SSH command logging, delete your uploaded public key:
+
+<Tabs>
+<TabItem label="Dashboard">
+
+1. In [Zero Trust](https://one.dash.cloudflare.com), go to **Settings** > **Network** > **SSH encryption public key**.
+
+2. Select **Remove**.
+
+</TabItem>
+<TabItem label="API">
 
 ```sh
 curl --request PUT https://api.cloudflare.com/client/v4/accounts/{account_id}/gateway/audit_ssh_settings \
@@ -90,6 +100,8 @@ curl --request PUT https://api.cloudflare.com/client/v4/accounts/{account_id}/ga
   "public_key": ""
 }'
 ```
+</TabItem>
+</Tabs>
 
 ### View SSH logs
 
