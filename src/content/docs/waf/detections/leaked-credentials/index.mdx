@@ -17,7 +17,7 @@ If Cloudflare detects authentication credentials in the request, those credentia
 
 Cloudflare will populate the existing [leaked credentials fields](#leaked-credentials-fields) based on the scan results. You can check these results in the Security Analytics dashboard, and use these fields in rule expressions ([custom rules](/waf/custom-rules/) or [rate limiting rules](/waf/rate-limiting-rules/)) to protect your application against the usage of compromised credentials by your end users, and also against leaked credential attacks.
 
-In addition, leaked credentials detection provides a [managed transform](/rules/transform/managed-transforms/reference/#add-leaked-credentials-header) that adds an `Exposed-Credential-Check` request header with a value indicating which field was leaked. For example, if both username and password were previously leaked, the header value will be `1`; if only the password was leaked, the value will be `4`.
+In addition, leaked credentials detection provides a [managed transform](/rules/transform/managed-transforms/reference/#add-leaked-credentials-checks-header) that adds an `Exposed-Credential-Check` request header with a value indicating which field was leaked. For example, if both username and password were previously leaked, the header value will be `1`; if only the password was leaked, the value will be `4`.
 
 One common approach used in web applications when detecting the use of stolen credentials is to warn end users about the situation and ask them to update their password. You can do this based on the managed header received at your origin server.
 

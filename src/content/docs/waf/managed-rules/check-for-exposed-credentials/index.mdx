@@ -30,7 +30,7 @@ The WAF can perform one of the following actions when it detects exposed credent
 - **Exposed-Credential-Check Header**: Adds a new HTTP header to HTTP requests with exposed credentials. Your application at the origin can then force a password reset, start a two-factor authentication process, or perform any other action. The name of the added HTTP header is `Exposed-Credential-Check` and its value is `1`.
 
   :::caution
-  While the header name is the same as when using the [**Add leaked credentials header** managed transform](/rules/transform/managed-transforms/reference/#add-leaked-credentials-header), the header can have different values when using the managed transform (from `1` to `4`), depending on your Cloudflare plan.
+  While the header name is the same as when using the [**Add Leaked Credentials Checks Header** managed transform](/rules/transform/managed-transforms/reference/#add-leaked-credentials-checks-header), the header can have different values when using the managed transform (from `1` to `4`), depending on your Cloudflare plan.
   :::
 
 - **Managed Challenge**: Helps reduce the lifetimes of human time spent solving CAPTCHAs across the Internet. Depending on the characteristics of a request, Cloudflare will dynamically choose the appropriate type of challenge based on specific criteria.

@@ -110,7 +110,7 @@ For example, consider an incoming request proxied by two CDNs (`CDN_1` and `CDN_
 With **Remove visitor IP headers** enabled, the `x-forwarded-for` header sent to the origin server will be:<br/>
 `x-forwarded-for: <THIRD_PARTY_CDN_2_IP>`
 
-### Add leaked credentials header
+### Add Leaked Credentials Checks Header
 
 Adds an `Exposed-Credential-Check` request header whenever the WAF detects leaked credentials in the incoming request.
 
@@ -126,7 +126,7 @@ The header can have these values:
 You will only receive this managed header at your origin server if:
 
 - The [leaked credentials detection](/waf/detections/leaked-credentials/) in the WAF is turned on.
-- The **Add leaked credentials header** managed transform is turned on (it is on by default when you turn on the leaked credentials detection).
+- The **Add Leaked Credentials Checks Header** managed transform is turned on. For paid plans, the managed transform is automatically enabled when you turn on leaked credentials detection. If you are on a Free plan or using the API, you must specifically turn on the managed transform either in the dashboard or using the API.
 - Your Cloudflare plan supports the type of credentials detection. For example, Free plans can only know if a password was previously leaked. In this situation, Cloudflare will add an `Exposed-Credential-Check: 4` header to the request.
 
 ## HTTP response headers
