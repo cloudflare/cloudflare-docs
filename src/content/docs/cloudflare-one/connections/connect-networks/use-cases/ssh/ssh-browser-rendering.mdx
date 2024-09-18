@@ -1,0 +1,25 @@
+---
+pcx_content_type: how-to
+title: Connect to SSH in the browser
+sidebar:
+  order: 4
+  label: Browser-rendered SSH terminal
+---
+
+import { Render } from "~/components";
+
+End users can connect to the SSH server without any configuration by using Cloudflare's browser-based terminal.
+
+This method requires routing applications through a public hostname, which allows users to connect to the application without the WARP client. The traffic is proxied over this connection, and the user logs in to the server with their Cloudflare Access credentials.
+
+The public hostname method can be implemented in conjunction with routing over WARP so that there are multiple ways to connect to the server. You can reuse the same tunnel for both the private network and public hostname routes.
+
+## 1. Connect the server to Cloudflare
+
+<Render file="ssh/tunnel-public-hostname" />
+
+## 2. Connect as a user
+
+To enable browser-rendering for SSH, refer to [Browser-rendered terminal](/cloudflare-one/applications/non-http/browser-rendering/).
+
+When users visit the public hostname URL (for example, `https://ssh.example.com`) and log in with their Access credentials, Cloudflare will render a terminal in their browser.
