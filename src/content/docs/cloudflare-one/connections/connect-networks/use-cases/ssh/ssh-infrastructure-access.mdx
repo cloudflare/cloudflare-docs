@@ -92,6 +92,8 @@ To turn off SSH command logging, delete your uploaded public key:
 </TabItem>
 <TabItem label="API">
 
+To delete the SSH encryption public key using the [API](/api/operations/zero-trust-update-audit-ssh-settings):
+
 ```sh
 curl --request PUT https://api.cloudflare.com/client/v4/accounts/{account_id}/gateway/audit_ssh_settings \
 --header "X-Auth-Email: <EMAIL>" \
