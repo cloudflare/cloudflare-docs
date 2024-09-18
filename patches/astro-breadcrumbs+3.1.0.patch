@@ -1,0 +1,26 @@
+diff --git a/node_modules/astro-breadcrumbs/src/Breadcrumbs.astro b/node_modules/astro-breadcrumbs/src/Breadcrumbs.astro
+index b4a60ee..75f5345 100644
+--- a/node_modules/astro-breadcrumbs/src/Breadcrumbs.astro
++++ b/node_modules/astro-breadcrumbs/src/Breadcrumbs.astro
+@@ -33,7 +33,6 @@ const {
+ const paths = Astro.url.pathname.split("/").filter((crumb: any) => crumb);
+ const hasTrailingSlash = Astro.url.pathname.endsWith("/");
+ const pathLength = paths?.length;
+-const UUID = crypto.randomUUID();
+ const listCssClasses = [
+   `${mainBemClass}__crumbs`,
+   Astro.slots.has("separator") ? " has-separators" : " has-no-separators",
+@@ -63,11 +62,11 @@ debugInformation(debug, parts, customizedParts);
+ 
+ <astro-breadcrumbs
+   data-main-bem-class={mainBemClass}
+-  data-id={UUID}
+   data-path-length={pathLength}
+   data-truncated={truncated}
++	data-id="title-breadcrumbs"
+ >
+-  <nav aria-label={ariaLabel} class={mainBemClass} id={UUID} {...customizeNav}>
++  <nav aria-label={ariaLabel} class={mainBemClass} id="title-breadcrumbs" {...customizeNav}>
+     <ol class:list={listCssClasses} {...customizeList}>
+       {
+         processedParts.map(
