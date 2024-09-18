@@ -1,0 +1,88 @@
+---
+{}
+---
+
+import { Details } from "~/components"
+
+[SQL API](/durable-objects/api/transactional-storage-api/#sqlexec) examples below use the following SQL schema:
+
+```ts
+export class MyDurableObject extends DurableObject{
+  sql: SqlStorage
+	constructor(ctx: DurableObjectState, env: Env) {
+		super(ctx, env);
+		this.sql = ctx.storage.sql;
+
+    this.sql.exec(`CREATE TABLE IF NOT EXISTS artist( 
+				artistid    INTEGER PRIMARY KEY, 
+				artistname  TEXT
+			);`,
+      `INSERT INTO artist (artistid, artistname) VALUES 
+				(123, 'Alice'),
+				(456, 'Bob'),
+				(789, 'Charlie');`);
+	}
+}
+```
+
+Iterate over query results as row objects:
+```ts
+  let cursor = this.sql.exec("SELECT * FROM artist;");
+
+  for (let row of cursor) {
+    // Iterate over row object and do something
+  }
+```
+
+Convert query results to an array of row objects:
+```ts
+  // Return array of row objects: [{"artistid":123,"artistname":"Alice"},{"artistid":456,"artistname":"Bob"},{"artistid":789,"artistname":"Charlie"}]
+  let resultsArray = [...this.sql.exec("SELECT * FROM artist;")];
+  // OR
+  let resultsArray2 = Array.from(this.sql.exec("SELECT * FROM artist;"));
+  // OR
+  let resultsArray3 = this.sql.exec("SELECT * FROM artist;").toArray();
+```
+
+Convert query results to an array of row values arrays:
+```ts
+  // Returns [[123,"Alice"],[456,"Bob"],[789,"Charlie"]]
+  let resultsArray = [...this.sql.exec("SELECT * FROM artist;").raw()];	
+
+  // Returns ["artistid","artistname"]
+  let columnNameArray = Array.from(this.sql.exec("SELECT * FROM artist;").columnNames);
+```
+
+Get first row object of query results:
+```ts
+  // Returns {"artistid":123,"artistname":"Alice"}
+  let firstRow = Array.from(this.sql.exec("SELECT * FROM artist ORDER BY artistname DESC;"))[0];
+```
+
+Check if query results has exactly one row:
+```ts
+  // returns error
+  this.sql.exec("SELECT * FROM artist ORDER BY artistname ASC;").one();
+
+  // returns { artistid: 123, artistname: 'Alice' }
+  let oneRow = this.sql.exec("SELECT * FROM artist WHERE artistname = ?;", "Alice").one()
+```
+
+Cursor behavior:
+```ts
+  let cursor = this.sql.exec("SELECT * FROM artist ORDER BY artistname ASC;");
+  let { value: firstRow } = cursor[Symbol.iterator]().next()
+  console.log(firstRow); // prints { artistid: 123, artistname: 'Alice' }
+
+  let remainingRows = Array.from(cursor); // TODO: will be cursor.toArray
+  console.log(remainingRows); // prints [{ artistid: 456, artistname: 'Bob' },{ artistid: 789, artistname: 'Charlie' }]
+```
+
+```ts
+  let cursor = this.sql.exec("SELECT * FROM artist;");
+  let { value: firstRow } = cursor[Symbol.iterator]().next()
+  console.log(cursor.rowsRead); // prints 1
+
+  let remainingRows = Array.from(cursor); // TODO: will be cursor.toArray
+  console.log(cursor.rowsRead); // prints 3
+```

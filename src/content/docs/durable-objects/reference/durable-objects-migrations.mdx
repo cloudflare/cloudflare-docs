@@ -94,3 +94,21 @@ Note that `.toml` files do not allow line breaks in inline tables (the `{key = "
 
 
 :::
+
+### Enable SQL storage on create Durable Object class migration
+
+:::note[SQLite in Durable Objects Beta]
+
+New beta version of Durable Objects is available where each Durable Object has a private, embedded SQLite database. SQL storage is opt-in during beta; otherwise, a Durable Object class has the standard, private key-value storage. Objects with SQL storage can use the [SQL API](/durable-objects/api/transactional-storage-api/#sqlexec). 
+
+:::
+
+To allow a new Durable Object class to use SQL storage and SQL API, use `new_sqlite_classes` on the migration in your Worker's `wrangler.toml` file:
+
+```toml
+[[migrations]]
+tag = "v1" # Should be unique for each entry
+new_sqlite_classes = ["MyDurableObject"] # Array of new classes
+```
+
+You cannot enable SQL storage and SQL API on an existing, deployed Durable Object class, so setting `new_sqlite_classes` on later migrations will fail with an error. Automatic migration of deployed classes to allow SQL access will be available in the future.
