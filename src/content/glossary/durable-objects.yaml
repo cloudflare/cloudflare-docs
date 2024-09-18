@@ -1,6 +1,42 @@
 ---
 productName: Durable Objects
 entries:
+- term: "Durable Objects"
+  general_defintion: |-
+    The product name, or the collective noun referring to more than one Durable Object instance.
+
+- term: "Namespace"
+  general_defintion: |-
+    A container for a collection of Durable Objects that all share the same Durable Object (class) definition. A single Namespace can have (tens of) millions of Durable Objects. Metrics are scoped per Namespace.
+
+- term: "Durable Object"
+  general_defintion: |-
+    An individual Durable Object. A Durable Object is globally unique (referenced by ID), provides a global point of coordination for all methods/requests sent to it, and has private, persistent storage that is not shared with other Durable Objects within a Namespace.
+
+- term: "Stub"
+  general_defintion: |-
+    An object that refers to a unique Durable Object within a Namespace and allows you to call into that Durable Object via RPC methods or the `fetch` API. - e.g. `let stub = env.MY_DURABLE_OBJECT.get(id)`
+
+- term: "actor"
+  general_defintion: |-
+    A term referring to a unique Durable Object.
+
+- term: "instance"
+  general_defintion: |-
+    See 'actor'.
+
+- term: "Durable Object class"
+  general_defintion: |-
+    The JavaScript class that defines the methods (RPC) and handlers (`fetch`, `alarm`) as part of your Durable Object, and/or an optional `constructor`. All Durable Objects within a single Namespace share the same class definition.
+
+- term: "Transactional Storage API"
+  general_defintion: |-
+    The strongly consistent (serializable) [key-value storage API](/durable-objects/api/transactional-storage-api/) for persisting data within each Durable Object instance. State stored within a unique DO instance is "private" to that Durable Object, and not accessible from other Durable Objects.
+
+- term: "SQL Storage API"
+  general_defintion: |-
+    The strongly consistent SQL API for querying and persisting data within each SQL-enabled Durable Object instance. State stored within a unique DO instance is "private" to that Durable Object, and not accessible from other Durable Objects. 
+
 - term: migration
   general_definition: |-
     a Durable Object migration is a mapping process from a class name to a runtime state.
@@ -11,6 +47,6 @@ entries:
     - Delete a Durable Object class.
     - Transfer an existing Durable Objects class.
 
-- term: alarm
+- term: Alarm
   general_definition: |-
     a Durable Object alarm is a mechanism that allows you to schedule the Durable Object to be woken up at a time in the future.
