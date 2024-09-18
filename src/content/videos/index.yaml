@@ -169,3 +169,29 @@ entries:
     difficulty: Intermediate
     content_type: 🎥 Video
     pcx_content_type: tutorial
+  - link: https://youtu.be/doKt9wWQF9A
+    title: AI meets Maps | Using Cloudflare AI, Langchain, Mapbox, Folium and Streamlit
+    description: Welcome to RouteMe, a smart tool that helps you plan the most efficient route between landmarks in any city. Powered by Cloudflare Workers AI, Langchain and Mapbox. This Streamlit webapp uses LLMs and Mapbox off my scripts API to solve the classic traveling salesman problem, turning your sightseeing into an optimized adventure!
+    tags: [Workers, Workers AI]
+    languages: [Python]
+    products: [Workers, Workers AI]
+    cloudflare: true
+    stream_id: f610dee9aa20ec843b0e451b3014540a
+    author: lizzie
+    updated: 2024-09-16
+    difficulty: Intermediate
+    content_type: 🎥 Video
+    pcx_content_type: tutorial    
+  - link: https://youtu.be/WhG5dfsOUtM
+    title: Welcome to the Cloudflare Developer Channel
+    description: Welcome to the Cloudflare Developers YouTube channel. We've got tutorials and working demos and everything you need to level up your projects. Whether you're working on your next big thing or just dorking around with some side projects, we've got you covered! So why don't you come hang out, subscribe to our developer channel and together we'll build something awesome. You're gonna love it.
+    tags: [Workers, AI, Vectorize, RAG, Hono, KV, D1, R2, AI Gateway]
+    languages: [TypeScript, JavaScript, Python]
+    products: [Workers, Workers AI, Vectorize, RAG, Hono, KV, D1, R2, AI Gateway]
+    cloudflare: true
+    stream_id: 0fe3acaf4dc09ba0285b75af6602c362
+    author: craig
+    updated: 2024-09-18
+    difficulty: Beginner
+    content_type: 🎥 Video
+    pcx_content_type: tutorial
