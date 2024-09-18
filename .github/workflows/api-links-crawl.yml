@@ -6,7 +6,7 @@ name: Crawl API docs links
 
 on:
   schedule:
-    - cron: "0 0 * * 0"  # Run at 00:00 UTC every Sunday
+    - cron: "0 0 * * 0" # Run at 00:00 UTC every Sunday
   workflow_dispatch:
 
 jobs:
@@ -51,6 +51,3 @@ jobs:
             -H "Accept: application/vnd.github+json" \
             "https://api.github.com/repos/cloudflare/cloudflare-docs/issues" \
             -d "{\"title\": \"Broken API docs links\", \"body\": \"The following API doc links are broken: ${EXPORTED_VARIABLE}\", \"assignees\": [\"kodster28\", \"haleycode\"]}"
-
-
-

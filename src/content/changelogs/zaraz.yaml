@@ -11,7 +11,7 @@ entries:
     * **Consent Management**: Support styling the Consent Modal when CSP is enabled
     * **Consent Management**: Fix an issue that could cause tools to load before consent was granted when TCF is enabled
     * **Zaraz Debugger**: Remove redundant messages related to empty values
-    * **Amplitude Managed Component**: Respect the EU endpoint setting 
+    * **Amplitude Managed Component**: Respect the EU endpoint setting
 - publish_date: '2024-08-23'
   description: |
     * **Automatic Actions**: Automatic Event Tracking is now fully available
@@ -23,7 +23,7 @@ entries:
     * **Automatic Actions**: Automatic Pageview tracking is now fully available
     * **Google Analytics 4**: Support Google Consent signals when using e-commerce tracking
     * **HTTP Events API**: Ignore bot score detection on the HTTP Events API endpoint
-    * **Zaraz Debugger**: Show client-side network requests initiated by Managed Components 
+    * **Zaraz Debugger**: Show client-side network requests initiated by Managed Components
 - publish_date: '2024-08-12'
   description: |
     * **Automatic Actions**: New tools now support Automatic Pageview tracking
@@ -76,7 +76,7 @@ entries:
     * **Bugfix**: Prevent duplicate pageviews in monitoring after consent granting
     * **Bugfix**: Prevent Managed Component routes from blocking origin routes unintentionally
 - publish_date: '2024-02-15'
-  
+
   description: |-
     * **Single Page Applications**: Introduce `zaraz.spaPageview()` for manually triggering SPA pageviews
     * **Pinterest Managed Component**: Add ecommerce support
