@@ -6,15 +6,16 @@ sidebar:
 head:
   - tag: title
     content: Work with custom rulesets using the API
-
 ---
 
 Use the [Rulesets API](/ruleset-engine/rulesets-api/) to work with custom rulesets using an API.
 
 :::note
 
-Account-level WAF configuration requires an Enterprise plan with a paid add-on. 
+Account-level WAF configuration requires an Enterprise plan with a paid add-on.
 :::
+
+## Deploy custom ruleset
 
 To deploy a custom ruleset in your account, follow these general steps:
 
@@ -25,10 +26,8 @@ For more information, refer to [Work with custom rulesets](/ruleset-engine/custo
 
 :::caution[Important]
 
+- Deployed custom rulesets will only apply to incoming traffic of Enterprise domains. Regarding the expression of the rule deploying the custom ruleset, you must use parentheses to enclose any custom conditions and end your expression with `and cf.zone.plan eq "ENT"` or else the API operation will fail.
 
-* Deployed custom rulesets will only apply to incoming traffic of Enterprise domains. Regarding the expression of the rule deploying the custom ruleset, you must use parentheses to enclose any custom conditions and end your expression with `and cf.zone.plan eq "ENT"` or else the API operation will fail.
-
-* Currently, you can only deploy custom rulesets to a phase at the account level.
-
+- Currently, you can only deploy custom rulesets to a phase at the account level.
 
 :::
