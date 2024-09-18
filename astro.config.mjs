@@ -141,7 +141,6 @@ export default defineConfig({
 				PageSidebar: "./src/components/overrides/PageSidebar.astro",
 				SiteTitle: "./src/components/overrides/SiteTitle.astro",
 				PageTitle: "./src/components/overrides/PageTitle.astro",
-				Pagination: "./src/components/overrides/Pagination.astro",
 				SocialIcons: "./src/components/overrides/SocialIcons.astro",
 				SkipLink: "./src/components/overrides/SkipLink.astro",
 			},
@@ -155,6 +154,7 @@ export default defineConfig({
 				"./src/table.css",
 				"./src/tailwind.css",
 			],
+			pagination: false,
 			plugins: runLinkCheck
 				? [
 						starlightLinksValidator({
