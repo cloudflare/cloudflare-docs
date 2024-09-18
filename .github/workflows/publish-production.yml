@@ -1,15 +1,17 @@
-on: [push, workflow_dispatch]
-
-concurrency:
-  group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
-  cancel-in-progress: ${{ !contains(github.ref, 'production')}}
+on:
+  pull_request:
+    branches:
+      - production
+    types:
+      - closed
 
 jobs:
   publish:
+    if: github.event.pull_request.merged == true
     runs-on: ubuntu-22.04
     permissions:
       contents: read
-    name: Publish to Cloudflare Pages
+    name: Publish to Cloudflare Pages (Production)
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
@@ -30,16 +32,6 @@ jobs:
         name: Deploy to Cloudflare Pages
         env:
           CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
-          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
-      - run: npm run build:worker && npx wrangler deploy -c ./wrangler-workers.toml
-        if: github.ref == 'refs/heads/production'
-        name: Deploy to Cloudflare Workers [production]
-        env:
-          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
-      - run: npm run build:worker && npx wrangler versions upload -c ./wrangler-workers.toml
-        if: github.ref != 'refs/heads/production'
-        name: Deploy to Cloudflare Workers [preview]
-        env:
           CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
       - uses: actions/cache/save@v4
         if: always()
