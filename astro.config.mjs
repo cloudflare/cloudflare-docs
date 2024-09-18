@@ -13,6 +13,7 @@ import { h } from "hastscript";
 import { readdir } from "fs/promises";
 import icon from "astro-icon";
 import sitemap from "@astrojs/sitemap";
+import rehypeTitleFigure from "rehype-title-figure";
 
 const runLinkCheck = process.env.RUN_LINK_CHECK || false;
 
@@ -83,6 +84,7 @@ export default defineConfig({
 			],
 			rehypeSlug,
 			[rehypeAutolinkHeadings, autolinkConfig],
+			rehypeTitleFigure,
 		],
 	},
 	experimental: {
