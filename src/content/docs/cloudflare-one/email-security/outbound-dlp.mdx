@@ -25,3 +25,30 @@ Outbound DLP is only compatible with Microsoft 365.
 After configuring the Cloudflare add-in in Microsoft 365, you can select **Add a policy** to create an [outbound DLP policy](#create-an-outbound-policy).
 
 ## Create an outbound policy
+
+To create an outbound DLP policy:
+
+1. In [Zero Trust](https://one.dash.cloudflare.com), go to **Email Security** > **Outbound DLP**.
+2. Select **Add a policy**.
+3. Name your policy.
+4. Build an expression to match specific email traffic. For example, you can create a policy that blocks outbound emails containing identifying numbers:
+
+   | Selector            | Operator | Value                                                     | Logic | Action |
+   | ------------------- | -------- | --------------------------------------------------------- | ----- | ------ |
+   | Recipient email     | not in   | `example.com`                                             | And   | Block  |
+   | Matched DLP profile | in       | _Social Security, Insurance, Tax, and Identifier Numbers_ |       |        |
+
+5. (Optional) Choose whether to use the default block message or a custom message.
+6. Select **Create policy**.
+
+After creating your policy, you can modify or reorder your policies in **Email Security** > **Outbound DLP**.
+
+### Selectors
+
+#### Recipient email
+
+#### Email sender
+
+#### Matched DLP profile
+
+For more information, refer to [DLP profiles](/cloudflare-one/policies/data-loss-prevention/dlp-profiles/).
