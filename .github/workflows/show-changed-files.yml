@@ -5,7 +5,7 @@ name: Show Changed Files
 # **Who does it impact**: PCX team
 
 on:
-   issue_comment:
+  issue_comment:
     types:
       - created
       - edited
