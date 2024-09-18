@@ -5,6 +5,9 @@ productLink: "/workers/"
 productArea: Developer platform
 productAreaLink: /workers/platform/changelog/platform/
 entries:
+  - publish_date: "2024-09-26"
+    description: |-
+      -  You can now use [Workers Builds](/workers/ci-cd/builds/) to connect an existing Worker to a GitHub or GitLab repository to set up automatic builds and deployment.
   - publish_date: "2024-08-19"
     description: |-
       -  Workers now support the [`allow_custom_ports` compatibility flag](/workers/configuration/compatibility-dates/#allow-specifying-a-custom-port-when-making-a-subrequest-with-the-fetch-api) which enables using the `fetch()` calls to custom ports.
