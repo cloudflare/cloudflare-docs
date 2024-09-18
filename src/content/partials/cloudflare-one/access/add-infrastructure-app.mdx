@@ -19,6 +19,48 @@ import { Tabs, TabItem, Render } from "~/components"
 </TabItem>
 <TabItem label="API">
 
+```json
+curl https://api.cloudflare.com/client/v4/accounts/{account_id}/access/apps \
+--header "Authorization: Bearer <API_TOKEN>" \
+--header "Content-Type: application/json" \
+--data '{
+	"name": "example app",
+	"type": "infrastructure",
+	"target_criteria": [
+		{
+			"target_attributes": {
+				"hostname": [
+					"infra-access-target"
+				]
+			},
+			"port": 22,
+			"protocol": "SSH"
+		}
+	],
+	"policies": [
+		{
+			"name": "Allow a specific email",
+			"decision": "allow",
+			"include": [
+				{
+					"email": {
+						"email": "jdoe@company.com"
+					}
+				}
+			],
+			"connection_rules": {
+				"ssh": {
+					"usernames": [
+						"root",
+						"ec2-user"
+					]
+				}
+			}
+		}
+	]
+}'
+```
+
 </TabItem>
 </Tabs>
 
