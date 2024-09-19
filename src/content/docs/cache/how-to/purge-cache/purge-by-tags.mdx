@@ -39,7 +39,7 @@ When your content reaches our edge network, Cloudflare:
 * A single HTTP response can have more than one `Cache-Tag` HTTP header field.
 * The minimum length of a cache-tag is one byte.
 * Individual tags do not have a maximum length, but the aggregate `Cache-Tag` HTTP header cannot exceed 16 KB after the header field name, which is approximately 1,000 unique tags. Length includes whitespace and commas but does not include the header field name.
-* For ms, the maximum length of a cache-tag in an API call is 1,024 characters.
+* For cache purges, the maximum length of a cache-tag in an API call is 1,024 characters.
 * The `Cache-Tag` HTTP header must only contain UTF-8 encoded characters.
 * Spaces are not allowed in cache-tags.
 * Case does not matter. For example, `Tag1` and `tag1` are considered the same.
