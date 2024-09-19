@@ -68,7 +68,7 @@ To configure the concurrency settings for your consumer Worker from the dashboar
 2. Select **Workers & Pages** > **Queues**.
 3. Select your queue > **Settings**.
 4. Select **Edit Consumer** under Consumer details.
-5. Set **Maximum consumer invocations** to a value between `1` and `10`. This value represents the maximum number of concurrent consumer invocations available to your queue.
+5. Set **Maximum consumer invocations** to a value between `1` and `250`. This value represents the maximum number of concurrent consumer invocations available to your queue.
 
 To remove a fixed maximum value, select **auto (recommended)**.
 
@@ -97,7 +97,7 @@ To remove the limit, remove the `max_concurrency` setting from the `[[queues.con
     ### wrangler CLI
 
     ```sh
-    # where `N` is a positive integer between 1 and 10
+    # where `N` is a positive integer between 1 and 250
     wrangler queues consumer update <script-name> --max-concurrency=N
     ```
 
