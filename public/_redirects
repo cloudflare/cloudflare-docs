@@ -947,6 +947,7 @@
 /speed/optimization/other/troubleshooting/ /speed/optimization/other/ 301
 /speed/optimization/content/auto-minify/ /speed/optimization/content/ 301
 /speed/optimization/content/troubleshooting/auto-minify-not-working/ /speed/optimization/content/troubleshooting/ 301
+/speed/optimization/content/speculation/ /speed/optimization/content/speed-brain/ 301
 
 # ssl
 /ssl/ssl-for-saas/certificate-signing-requests/ /cloudflare-for-platforms/cloudflare-for-saas/security/certificate-management/custom-certificates/certificate-signing-requests/ 301
