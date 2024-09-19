@@ -1676,8 +1676,8 @@
 			"properties": {
 				"availability": {
 					"title": "Availability",
-					"summary": "Pro and above",
-					"free": "No",
+					"summary": "Available on all plans",
+					"free": "Yes",
 					"pro": "Yes",
 					"biz": "Yes",
 					"ent": "Yes",
@@ -1685,8 +1685,8 @@
 				},
 				"b_script_monitor": {
 					"title": "Script monitor",
-					"summary": "Pro and above",
-					"free": "No",
+					"summary": "Available on all plans",
+					"free": "Yes",
 					"pro": "Yes",
 					"biz": "Yes",
 					"ent": "Yes",
@@ -2186,9 +2186,9 @@
 				}
 			}
 		},
-		"speculation": {
-			"title": "Speculation",
-			"link": "/speed/optimization/content/speculation/",
+		"speed_brain": {
+			"title": "Speed Brain",
+			"link": "/speed/optimization/content/speed-brain/",
 			"properties": {
 				"availability": {
 					"title": "Availability",

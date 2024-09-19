@@ -198,8 +198,8 @@
 
 # Waiting Room
 
-/src/content/docs/waiting-room/ @aolache @angelampcosta @cloudflare/pcx-technical-writing
-/src/content/changelogs/waiting-room.yaml @aolache @angelampcosta @cloudflare/pcx-technical-writing
+/src/content/docs/waiting-room/ @angelampcosta @cloudflare/pcx-technical-writing
+/src/content/changelogs/waiting-room.yaml @angelampcosta @cloudflare/pcx-technical-writing
 
 # Web Analytics
 
