@@ -1,5 +1,5 @@
 ---
-title: Deploy a Hello World app with Pulumi
+title: Deploy a Worker with Pulumi
 pcx_content_type: tutorial
 products:
   - Workers
@@ -9,10 +9,10 @@ difficulty: Beginner
 languages:
   - TypeScript
 sidebar:
-  order: 2
+  order: 3
 head:
   - tag: title
-    content: Deploy a Hello World app
+    content: Deploy a Worker
 ---
 
 In this tutorial, you will go through step-by-step instructions to deploy a Hello World web application using Cloudflare Workers and Pulumi Infrastructure as Code (IaC) so that you can become familiar with the resource management lifecycle. In particular, you will create a Worker, a Route, and a DNS Record to access the application before cleaning up all the resources.
@@ -24,6 +24,8 @@ In this tutorial, you will go through step-by-step instructions to deploy a Hell
 You will provision resources that qualify under free tier offerings for both Pulumi Cloud and Cloudflare.
 
 :::
+
+## Before you begin
 
 Ensure you have:
 
@@ -44,6 +46,8 @@ pulumi up --yes
 ```
 
 :::
+
+## Initialize Pulumi
 
 ### a. Create a directory
 
@@ -118,6 +122,8 @@ https://app.pulumi.com/diana-pulumi-corp/serverless-cloudflare/dev/updates/1
 
 ![alt_text](~/assets/images/pulumi/hello-world-tutorial/sn3.png "Pulumi Cloud stack")
 
+## Add a Worker
+
 You will now add a Cloudflare Worker to the Pulumi stack, `dev`.
 
 ### a. Add Cloudflare Worker to index.ts
@@ -162,6 +168,8 @@ You can view your Cloudflare resource directly in the Cloudflare Dashboard to va
 3. Go to **Workers & Pages**.
 4. Open the "hello-world" application. Example:
    ![alt_text](~/assets/images/pulumi/hello-world-tutorial/sn4.png)
+
+## Add a Worker route
 
 You will now add a Worker Route to the Pulumi stack, `dev` so the script can have an endpoint.
 
@@ -211,6 +219,8 @@ In the Cloudflare Dashboard, the Worker application now contains the previously 
 4. Select your application.
 5. For **Routes**, select **View** to verify the Worker Route details match your definition.
    ![alt_text](~/assets/images/pulumi/hello-world-tutorial/sn5.png "Cloudflare Dashboard - Worker Route")
+
+## Add a DNS record
 
 You will now add a DNS record to your domain so the previously configured route can be accessed via a URL.
 
@@ -275,6 +285,8 @@ pulumi up --yes
 
 ![alt_text](~/assets/images/pulumi/hello-world-tutorial/sn6.png "Pulumi Cloud stack")
 
+## Test the app
+
 You have incrementally added all the Cloudflare resources needed to run and access your Hello World application. This was done by defining the resources in TypeScript and letting Pulumi handle the rest.
 
 You can test your application via the terminal or browser.
@@ -318,6 +330,8 @@ Depending on your domain settings, you may need to use "http" instead.
 Example:
 
 ![alt_text](~/assets/images/pulumi/hello-world-tutorial/sn2.png "Hello World app browser screenshot")
+
+## Clean up
 
 In this last step, you will run a couple of commands to clean up the resources and stack you used throughout the tutorial.
 

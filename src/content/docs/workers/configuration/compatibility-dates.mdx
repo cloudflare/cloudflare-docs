@@ -6,7 +6,7 @@ head: []
 description: Opt into a specific version of the Workers runtime for your Workers project.
 ---
 
-import { CompatibilityDates } from "~/components"
+import { CompatibilityDates } from "~/components";
 
 Cloudflare regularly updates the Workers runtime. These updates apply to all Workers globally and should never cause a Worker that is already deployed to stop functioning. Sometimes, though, some changes may be backwards-incompatible. In particular, there might be bugs in the runtime API that existing Workers may inadvertently depend upon. Cloudflare implements bug fixes that new Workers can opt into while existing Workers will continue to see the buggy behavior to prevent breaking deployed Workers.
 
@@ -74,6 +74,14 @@ Compatibility flags can be set when uploading a Worker using the [Workers Script
 ## Compatibility flags
 
 ### Node.js compatibility flag
+
+:::note
+You can opt into improved Node.js compatibility by using `nodejs_compat_v2` instead of `nodejs_compat`. This provides the functionality of `nodejs_compat`, but
+additionally you can import Node.js modules without the `node:` prefix and use polyfilled Node.js modules and globals that are not available with `nodejs_compat`.
+
+On September 23, 2024, `nodejs_compat` will use the improved Node.js compatibility currently enabled with `nodejs_compat_v2`. This will require updating your
+compatability_date to 2024-09-23 or later.
+:::
 
 A [growing subset](/workers/runtime-apis/nodejs/) of Node.js APIs are available directly as [Runtime APIs](/workers/runtime-apis/nodejs), with no need to add polyfills to your own code. To enable these APIs in your Worker, add the `nodejs_compat` compatibility flag to your `wrangler.toml`:
 

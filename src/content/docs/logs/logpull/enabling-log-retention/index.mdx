@@ -5,72 +5,54 @@ sidebar:
   order: 13
 ---
 
+import { Render } from "~/components";
+
 By default, your HTTP request logs are not retained. When using the Logpull API for the first time, you will need to enable retention. You can also turn off retention at any time. Note that after retention is turned off, previously saved logs will be available until the retention period expires (refer to [Data retention period](/logs/logpull/understanding-the-basics/#data-retention-period)).
 
 ## Endpoints
 
 There are two endpoints for managing log retention:
 
-- `GET /logs/control/retention/flag` - returns whether retention is on
+- `GET /logs/control/retention/flag` - returns the current status of retention
 - `POST /logs/control/retention/flag` - turns retention on or off
 
 :::note[Note]
 
-To make a `POST` call, you must have zone-scoped `edit` permissions, such as Super Administrator, Administrator, or Log Share.
+In the Linux examples below we use the optional [jq](/logs/tutorials/parsing-json-log-data/) tool to help parse the response data.
+
+To make a `POST` call, you must have zone-scoped `edit` permissions, such as Super Administrator, Administrator, or Log Share. Refer to [Make API calls](/fundamentals/api/how-to/make-api-calls/) for more information.
 
 :::
 
 ## Example API requests using cURL
 
-### Check whether log retention is turned on:
+### Check log retention status
 
-```sh
-curl -s -H "X-Auth-Email: <EMAIL>" -H "X-Auth-Key: <API_KEY>" -X GET "https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/logs/control/retention/flag" | jq .
-```
+<Render file="check-log-retention" />
 
-#### Response:
+If the zone has log retention [enabled](/logs/logpull/enabling-log-retention/#enabled-response) you get the value `true`, whereas a value of `false` is returned when it is [disabled](/logs/logpull/enabling-log-retention/#disabled-response).
+
+### Turn on log retention
+
+<Render file="enable-log-retention" />
+
+#### Enabled response
 
 ```json
 {
-	"errors": [],
-	"messages": [],
-	"result": {
-		"flag": false
-	},
-	"success": true
+  "flag": true
 }
 ```
 
-### Turn on log retention:
+### Turn off log retention
 
-On Linux or macOS:
+<Render file="disable-log-retention" />
 
-```bash
-curl -s -H "X-Auth-Email: <EMAIL>" -H "X-Auth-Key: <API_KEY>" -X POST "https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/logs/control/retention/flag" -d'{"flag":true}' | jq .
-```
-
-On Windows in Command Prompt:
-
-```
-curl.exe -s -H "X-Auth-Email: <EMAIL>" -H "X-Auth-Key: <API_KEY>" POST "https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/logs/control/retention/flag" -d "{""flag"":true}"
-```
-
-For further help with API calls on Windows, refer to [Making API calls on Windows](/fundamentals/api/how-to/make-api-calls/#making-api-calls-on-windows).
-
-#### Parameters
-
-- _flag_ - can be either `true` or `false`
-
-#### Response:
+#### Disabled response
 
 ```json
 {
-	"errors": [],
-	"messages": [],
-	"result": {
-		"flag": true
-	},
-	"success": true
+  "flag": false
 }
 ```
 

@@ -56,4 +56,6 @@ The status of the certificate will change to **Pending** while it deploys. Once 
 3. Select the certificate you want to turn on.
 4. In **Basic information**, select **Confirm and turn on certificate**.
 
+Advanced security features such as [HTTPS traffic inspection](/cloudflare-one/policies/gateway/http-policies/tls-decryption/), [Data Loss Prevention](/cloudflare-one/policies/data-loss-prevention/), [anti-virus scanning](/cloudflare-one/policies/gateway/http-policies/antivirus-scanning/), [Access for Infrastructure](/cloudflare-one/applications/non-http/infrastructure-apps/), and [Browser Isolation](/cloudflare-one/policies/browser-isolation/) require users to install and trust a root certificate on their device. You can either install the certificate provided by Cloudflare (default option), or generate your own custom certificate and upload it to Cloudflare.
+
 Only one certificate can be turned on for inspection at a time. Setting a certificate as **In-Use** will set any other turned on certificates as **Active** and prevent them from being used for inspection until turned on again.
