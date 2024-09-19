@@ -36,7 +36,9 @@ Wi-Fi
 WordPress
 Worker
 Workers
-Wrangler
+[wW]rangler
 VMware
 VPN
 YubiKey
+Zstandard
+Zstd

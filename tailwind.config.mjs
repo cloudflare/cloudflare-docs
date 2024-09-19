@@ -16,13 +16,13 @@ export default {
 	content: ["./src/**/*.{astro,html,js,jsx,md,mdx,svelte,ts,tsx,vue}"],
 	theme: {
 		extend: {
-			colors: { 
+			colors: {
 				accent: {
 					200: "var(--tw-accent-200)",
 					600: "var(--tw-accent-600)",
 					900: "var(--tw-accent-900)",
 				},
-				gray
+				gray,
 			},
 		},
 	},
