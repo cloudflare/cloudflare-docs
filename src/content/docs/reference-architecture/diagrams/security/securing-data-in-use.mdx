@@ -3,9 +3,8 @@ title: Securing data in use
 pcx_content_type: reference-architecture-diagram
 sidebar:
   order: 1
-head:
-  - tag: title
-    content: "Reference Architecture Diagram: Securing data in use"
+	label: Securing data in use
+updated: 2024-05-01
 
 ---
 
@@ -25,9 +24,9 @@ Even more, organizations can enforce specific data in use access controls, like 
 
 Common policies used with RBI:
 
-* Content category - [Social Networks](/cloudflare-one/policies/gateway/domain-categories/) (e.g. Facebook): Given the large volumes of data that popular social media platforms collect, these apps are an attractive target and yet another attack vector for malicious entities. RBI allows for limiting what data, especially if that data matches a DLP profile, from being pasted into these applications.
-* Application - [Artificial Intelligence](/cloudflare-one/policies/gateway/application-app-types/) (e.g. ChatGPT): Generative AI tools can boost employee productivity, but understanding who is using them and for what is imperative at this stage of the generative AI evolution. Again, DLP profiles here can be applied to prevent the copy and pasting of sensitive data into public AI tools.
-* Application - [SaaS](/cloudflare-one/policies/gateway/application-app-types/) (e.g. Salesforce, Zendesk, etc): These applications can often contain highly confidential data. RBI can be used to really lock down access for risky users that require some access, such as contractors or partners. Controls such as preventing printing, or even preventing any keyboard input at all, can result in third party users only looking at a read only view of the application, as if RBI is a pane of glass between the user and the data.
+- Content category - [Social Networks](/cloudflare-one/policies/gateway/domain-categories/) (e.g. Facebook): Given the large volumes of data that popular social media platforms collect, these apps are an attractive target and yet another attack vector for malicious entities. RBI allows for limiting what data, especially if that data matches a DLP profile, from being pasted into these applications.
+- Application - [Artificial Intelligence](/cloudflare-one/policies/gateway/application-app-types/) (e.g. ChatGPT): Generative AI tools can boost employee productivity, but understanding who is using them and for what is imperative at this stage of the generative AI evolution. Again, DLP profiles here can be applied to prevent the copy and pasting of sensitive data into public AI tools.
+- Application - [SaaS](/cloudflare-one/policies/gateway/application-app-types/) (e.g. Salesforce, Zendesk, etc): These applications can often contain highly confidential data. RBI can be used to really lock down access for risky users that require some access, such as contractors or partners. Controls such as preventing printing, or even preventing any keyboard input at all, can result in third party users only looking at a read only view of the application, as if RBI is a pane of glass between the user and the data.
 
 The following diagram visualizes a typical interaction between a user, RBI and a website such as ChatGPT.
 
@@ -41,5 +40,5 @@ The following diagram visualizes a typical interaction between a user, RBI and a
 
 ## Related resources
 
-* [Securing data in transit](/reference-architecture/diagrams/security/securing-data-in-transit/)
-* [Securing data at rest](/reference-architecture/diagrams/security/securing-data-at-rest/)
+- [Securing data in transit](/reference-architecture/diagrams/security/securing-data-in-transit/)
+- [Securing data at rest](/reference-architecture/diagrams/security/securing-data-at-rest/)
