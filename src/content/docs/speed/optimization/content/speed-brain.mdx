@@ -40,7 +40,7 @@ By prefetching pages that the browser considers likely to be navigated to, Speed
 
 ## How Speed Brain works
 
-When Cloudflare’s Speed Brain feature is enabled, an HTTP header called `Speculation-Rules` is added to web page responses. The value for this header is an URL that hosts an opinionated Speculation-Rules configuration. This configuration instructs the browser to consider prefetching any future navigations with a `conservative` [eagerness](https://developer.chrome.com/docs/web-platform/prerender-pages#eagerness).
+When Cloudflare's Speed Brain feature is enabled, an HTTP header called `Speculation-Rules` is added to web page responses. The value for this header is an URL that hosts an opinionated Speculation-Rules configuration. This configuration instructs the browser to consider prefetching any future navigations with a `conservative` [eagerness](https://developer.chrome.com/docs/web-platform/prerender-pages#eagerness).
 
 The configuration looks like this:
 
