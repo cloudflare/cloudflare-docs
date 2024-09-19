@@ -5,7 +5,7 @@ sidebar:
   order: 4
 ---
 
-Advanced security features such as [HTTPS traffic inspection](/cloudflare-one/policies/gateway/http-policies/tls-decryption/), [block pages](/cloudflare-one/policies/gateway/block-page/), [Data Loss Prevention](/cloudflare-one/policies/data-loss-prevention/), [anti-virus scanning](/cloudflare-one/policies/gateway/http-policies/antivirus-scanning/), and [Browser Isolation](/cloudflare-one/policies/browser-isolation/) require users to install and trust a root certificate on their device.
+Advanced security features such as [HTTPS traffic inspection](/cloudflare-one/policies/gateway/http-policies/tls-decryption/), [Data Loss Prevention](/cloudflare-one/policies/data-loss-prevention/), [anti-virus scanning](/cloudflare-one/policies/gateway/http-policies/antivirus-scanning/), [Access for Infrastructure](/cloudflare-one/applications/non-http/infrastructure-apps/), and [Browser Isolation](/cloudflare-one/policies/browser-isolation/) require users to install and trust a root certificate on their device. You can either install the certificate provided by Cloudflare (default option), or generate your own custom certificate and upload it to Cloudflare.
 
 Gateway [generates a unique root CA](#generate-a-cloudflare-root-certificate) for each Zero Trust account and deploys its across the Cloudflare global network. Alternatively, Enterprise users can upload and deploy their own [custom certificate](/cloudflare-one/connections/connect-devices/warp/user-side-certificates/custom-certificate/).
 
@@ -55,7 +55,5 @@ The status of the certificate will change to **Pending** while it deploys. Once 
 2. In **Certificates**, select **Manage**.
 3. Select the certificate you want to turn on.
 4. In **Basic information**, select **Confirm and turn on certificate**.
-
-Advanced security features such as [HTTPS traffic inspection](/cloudflare-one/policies/gateway/http-policies/tls-decryption/), [Data Loss Prevention](/cloudflare-one/policies/data-loss-prevention/), [anti-virus scanning](/cloudflare-one/policies/gateway/http-policies/antivirus-scanning/), [Access for Infrastructure](/cloudflare-one/applications/non-http/infrastructure-apps/), and [Browser Isolation](/cloudflare-one/policies/browser-isolation/) require users to install and trust a root certificate on their device. You can either install the certificate provided by Cloudflare (default option), or generate your own custom certificate and upload it to Cloudflare.
 
 Only one certificate can be turned on for inspection at a time. Setting a certificate as **In-Use** will set any other turned on certificates as **Active** and prevent them from being used for inspection until turned on again.
