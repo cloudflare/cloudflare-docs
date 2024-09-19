@@ -1436,6 +1436,7 @@
 /workers/observability/local-development-and-testing/ /workers/testing/local-development/ 301
 /workers/configuration/deployments/ /workers/configuration/versions-and-deployments/ 301
 /workers/configuration/continuous-integration/ /workers/ci-cd/ 301
+/workers/wrangler/ci-cd/ /workers/ci-cd/external-cicd/ 301
 /workers/tutorials/hello-world-rust/ /workers/tutorials/ 301
 /workers/tutorials/introduction-to-cloudflare-workers/ https://www.youtube.com/watch?v=H7Qe96fqg1M 301
 /workers/configuration/bindings/about-service-bindings/ /workers/runtime-apis/bindings/service-bindings/ 301
