@@ -6,9 +6,9 @@ sidebar:
 
 ---
 
-The Transactional Storage API allows you to achieve consistent key-value storage.
+The Transactional Storage API allows you to access consistent key-value storage or (beta) SQL storage.
 
-Durable Objects gain access to a persistent Transactional Storage API via `state`, the first parameter passed to the Durable Object constructor.
+Durable Objects gain access to a persistent Transactional Storage API via `ctx.storage`, the first parameter passed to the Durable Object constructor.
 
 While access to a Durable Object instance is single-threaded, request executions can still interleave with each other when they wait on I/O, such as when waiting on the promises returned by persistent storage methods or `fetch()` requests.
 
@@ -43,9 +43,9 @@ The Transactional Storage API comes with several methods.
 
 Each method is implicitly wrapped inside a transaction, such that its results are atomic and isolated from all other storage operations, even when accessing multiple key-value pairs.
 
+SQL API methods are only allowed on [Durable Object classes with SQL storage](/durable-objects/reference/durable-objects-migrations/#enable-sql-storage-on-create-durable-object-class-migration).
+
 ### get
-
-
 
 * <code>get(keystring, optionsObjectoptional)</code> : Promise\<any>
 
@@ -218,7 +218,82 @@ The `put()` method returns a `Promise`, but most applications can discard this p
 
 * `setAlarm()` and `deleteAlarm()` support the same options as [`put()`](/durable-objects/api/transactional-storage-api/#put), but without `noCache`.
 
+### sql.exec
 
+<code>ctx.storage.sql.exec(query: string, ...bindings: any[])</code> : SqlStorageCursor
+
+#### Parameters
+* `query`: string 
+  * The SQL query string to be executed. `query` can contain `?` placeholders for parameter bindings.
+* `bindings`: any[] Optional
+  * Optional variable number of arguments that correspond to the `?` placeholders in `query`.
+
+#### Returns 
+A cursor (`SqlStorageCursor`) that implements Javascript Iterator of query row results as objects with supported methods:
+  
+* `raw()`: Iterator
+  * Returns cursor of query rows as arrays of row values.
+* `columnNames()`: string[]
+  * Returns an array of column name strings. Often used with `raw()` to find index of specific column(s).
+*  `rowsRead()`: number
+  * Returns number of rows read by the executed SQL `query`. Metric is the same one used for [SQL billing](TODO link).
+*  `rowsWritten()`: number
+  * Returns number of rows written by the executed SQL `query`. Metric is the same one used for [SQL billing](TODO link).
+
+
+#### Examples
+
+SQL examples below use the following SQL schema:
+```ts
+export class MyDurableObject extends DurableObject{
+  sql: SqlStorage
+	constructor(ctx: DurableObjectState, env: Env) {
+		super(ctx, env);
+		this.sql = ctx.storage.sql;
+
+    this.sql.exec(`CREATE TABLE IF NOT EXISTS artist( 
+				artistid    INTEGER PRIMARY KEY, 
+				artistname  TEXT
+			);`,
+      `INSERT INTO artist (artistid, artistname) VALUES 
+				(123, 'Alice'),
+				(456, 'Bob'),
+				(789, 'Charlie');`);
+	}
+}
+```
+
+Iterate over query row objects:
+```ts
+  let cursor = this.sql.exec("SELECT * FROM artist;");
+
+  for (let row or cursor) {
+    // Iterate over row object and do something
+  }
+```
+
+Query results as an array of row objects:
+```ts
+  // Returns [{"artistid":123,"artistname":"Alice"},{"artistid":456,"artistname":"Bob"},{"artistid":789,"artistname":"Charlie"}]
+  let resultsArray = [...this.sql.exec("SELECT * FROM artist;")];
+  // OR
+  let resultsArray2 = Array.from(this.sql.exec("SELECT * FROM artist;"));
+```
+
+Query results as an array of row values arrays:
+```ts
+  // Returns [[123,"Alice"],[456,"Bob"],[789,"Charlie"]]
+  let resultsArray = [...this.sql.exec("SELECT * FROM artist;").raw()];
+  
+  // Returns ["artistid","artistname"]
+  let columnNameArray = Array.from(this.sql.exec("SELECT * FROM artist;").columnNames);
+```
+
+Get first row object or query results:
+```ts
+  // Returns {"artistid":123,"artistname":"Alice"}
+  let firstRow = Array.from(this.sql.exec("SELECT * FROM artist ORDER BY artistname DESC;"))[0];
+```
 
 ### Related resources
 
