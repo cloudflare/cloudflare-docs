@@ -2,15 +2,15 @@
 pcx_content_type: configuration
 title: Build Configuration
 description: Understand the different settings associated with your build.
+sidebar:
+  order: 2
 ---
 
 You may tell Workers Builds how your application needs to be built and deployed.
 
 ## Build Settings
 
-You can configure Cloudflare to automatically build and deploy your Worker when a pull request is merged into a specific branch of your Git repository.
-
-Build settings can be found on the Settings page of your Worker. The following options are available:
+Build settings can be found on the **Settings** page of your Worker. The following options are available:
 
 - **Git account**
   - Set the git account you would like to choose your repository from.
@@ -31,50 +31,3 @@ Build settings can be found on the Settings page of your Worker. The following o
     - **User:** User Details (read), Memberships (read)
 - **Build variable** _(Optional)_
   - Add variables and secrets accessible only to your build.
-
-## Monorepo support
-
-You can choose to use a monorepo (a Git repository that contains multiple project) with Workers Builds. To do so, you must:
-
-1. Connect your monorepo git repository to each of your associated Workers on the dashboard
-2. In each of the Workers, set up your build to only deploy to that specific Worker by setting the correct root directory in your build configuration.
-
-When a new commit is detected in the monorepo, all the associated Workers will trigger a new build and deploy.
-
-### Example
-
-In the example `ecommerce-monorepo`, a Workers project should be created for `product-service`, `auth-service`, `order-service`, and `notification-service`. A git connection to `ecommerce-monorepo` should be added in all of the Workers projects, with the root directory in the build configurations set as `workers/product-service/`, `workers/auth-service/`, `workers/order-service/`, and `workers/notification-service/` respectively.
-
-When a push is made to `ecommerce-monorepo`, a build will be triggered for all of the Workers.
-
-```
-ecommerce-monorepo/
-│
-├── workers/
-│ ├── product-service/
-│ │ ├── src/
-│ │ └── wrangler.toml
-│ ├── auth-service/
-│ │ ├── src/
-│ │ └── wrangler.toml
-│ ├── order-service/
-│ │ ├── src/
-│ │ └── wrangler.toml
-│ └── notification-service/
-│ ├── src/
-│ └── wrangler.toml
-├── shared/
-│ └── utils/
-└── README.md
-```
-
-## Wrangler Environment support
-
-To set up Workers with [Wrangler Enviornments](/workers/wrangler/environments/):
-
-1. (Optional) [Deploy via Wrangler](/workers/wrangler/commands/#deploy) to create the Worker for your environments in the Dashboard, if you don't already have them.
-2. Find the Workers for your environments. They are typically named `[name of Worker] - [environment name]`.
-3. Connect your repository to each of the Workers for your environment.
-4. In each of the Workers, edit your Wrangler deploy command to include the flag `--env: <environment name>` in the build configurations.
-
-When a new commit is detected in the repository, all the associated Workers will trigger a new build and deploy.

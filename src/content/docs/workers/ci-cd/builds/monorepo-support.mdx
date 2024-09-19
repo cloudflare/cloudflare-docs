@@ -1,0 +1,47 @@
+---
+pcx_content_type: reference
+title: Monorepo Support
+description: Learn how to use a monorepo with Workers Builds.
+sidebar:
+  order: 4
+---
+
+You can choose to use a monorepo (a Git repository that contains multiple project) with Workers Builds. Here is how you can set it up:
+
+## Set up
+
+To set up a monorepo with Workers Builds:
+
+1. Connect your monorepo git repository to each of your associated Workers on the dashboard
+2. Set up your build to only deploy to each specific Worker by setting the correct root directory in your build configuration
+
+When a new commit is detected in the monorepo, all the associated Workers will trigger a new build and deploy.
+
+## Example
+
+In the example `ecommerce-monorepo`, a Workers project should be created for `product-service`, `auth-service`, `order-service`, and `notification-service`.
+
+A git connection to `ecommerce-monorepo` should be added in all of the Workers projects, with the root directory in the Workers' build configurations set as `workers/product-service/`, `workers/auth-service/`, `workers/order-service/`, and `workers/notification-service/` corresponding to the Worker. Note that a `wrangler.toml` should exist in the root directory of the Worker.
+
+When a git push is made to `ecommerce-monorepo`, a build will be triggered for all of the Workers.
+
+```
+ecommerce-monorepo/
+│
+├── workers/
+│ ├── product-service/
+│ │ ├── src/
+│ │ └── wrangler.toml
+│ ├── auth-service/
+│ │ ├── src/
+│ │ └── wrangler.toml
+│ ├── order-service/
+│ │ ├── src/
+│ │ └── wrangler.toml
+│ └── notification-service/
+│ ├── src/
+│ └── wrangler.toml
+├── shared/
+│ └── utils/
+└── README.md
+```
