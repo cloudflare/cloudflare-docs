@@ -10,24 +10,16 @@ You can set up continuous integration and continuous deployment (CI/CD) for your
 
 ## Why use CI/CD?
 
-It is best practice to deploy your Workers from a CI/CD environment, automating the build and deployment process instead of running adhoc deployments manually using `wrangler deploy`. This approach ensures that your Worker is consistently built and deployed in the same environment, reducing variability. Additionally, it simplifies managing access to production credentials.
+It is best practice to deploy your Workers with a CI/CD pipeline to automate the build and deployment process instead of running adhoc deployments manually using `wrangler deploy`. This approach ensures that your Worker is consistently built and deployed in the same environment to reduce variability. Additionally, it simplifies managing access to production credentials.
 
 ## Workers Builds
 
-[Workers Builds](/workers/ci-cd/builds) is the native CI/CD system that allows you to integrate with GitHub or GitLab, and automatically deploy your changes when you merge a pull request.
+[Workers Builds](/workers/ci-cd/builds) is Cloudflare's native CI/CD system that allows you to integrate with GitHub or GitLab, and automatically deploy your changes with each new commit. 
 
 ![Workers Builds Workflow Diagram](~/assets/images/workers/platform/ci-cd/workers-builds-workflow.png)
 
 ## External CI/CD
 
-### GitHub Actions
-
-[Wrangler GitHub Action](https://github.com/cloudflare/wrangler-action) offers a reliable and convenient way to deploy Workers projects automatically when you push. To set up GitHub Actions with Workers, reference [External CI/CD](/workers/ci-cd/external-cicd).
-
-### GitLab Pipelines
-
-[GitLab Pipelines](https://docs.gitlab.com/ee/ci/pipelines/index.html) allow you to set up a continuous integration flow with Cloudflare Workers. To set up GitLab Pipelines with Workers, reference [External CI/CD](/workers/ci-cd/external-cicd).
-
-### Terraform
-
-[Terraform](https://www.terraform.io/) provides an alternative way to configure Workers and routes. Instead of using the Cloudflare dashboard or API directly, you define Worker code and routes in declarative configuration files. Terraform then figures out how to make the API calls for you. This also lets you treat your Worker configuration like your code. You can check your configuration files into version control and integrate them into your normal software development workflow.
+You can also choose to set up your CI/CD pipeline with an external provider. 
+- [GitHub Actions](https://github.com/marketplace/actions/deploy-to-cloudflare-workers-with-wrangler)
+- [GitLab CI/CD](https://docs.gitlab.com/ee/ci/pipelines/index.html)
