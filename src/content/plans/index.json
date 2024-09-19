@@ -2428,7 +2428,7 @@
 					"ent": "Yes"
 				},
 				"b_initial_quota": {
-					"title": "Hostnames included",
+					"title": "Hostnames included<sup>1</sup>",
 					"summary": "Varies",
 					"free": 100,
 					"pro": 100,
