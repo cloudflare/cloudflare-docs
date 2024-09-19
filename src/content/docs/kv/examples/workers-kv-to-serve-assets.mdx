@@ -10,7 +10,6 @@ sidebar:
 description: Example of how to use Workers KV to store static assets
 ---
 
-
 import { Render, PackageManagers } from "~/components";
 
 By storing static assets in Workers KV, you can retrieve these assets globally with low-latency and high throughput. You can then serve these assets directly, or use them to dynamically generate responses. This can be useful when serving files and images, or when generating dynamic HTML responses from static assets such as translations.
@@ -89,7 +88,7 @@ To create a KV store via Wrangler:
    id = "<GENERATED_NAMESPACE_ID>"
    ```
 
-   The [KV binding](/kv/reference/kv-bindings) `assets` is how your Worker will interact with the [KV namespace](/kv/reference/kv-namespaces/). This binding will be provided as a runtime variable within your Workers code by the Workers runtime.
+   The [KV binding](/kv/concepts/kv-bindings/) `assets` is how your Worker will interact with the [KV namespace](/kv/concepts/kv-namespaces/). This binding will be provided as a runtime variable within your Workers code by the Workers runtime.
 
    We'll also create a preview KV namespace. It is recommended to create a separate KV namespace when developing locally to avoid making changes to the production namespace. When developing locally against remote resources, the Wrangler CLI will only use the namespace specified by `preview_id` in the KV namespace configuration of the `wrangler.toml` file.
 

@@ -236,7 +236,7 @@ export default {
 			env.router = buildRouter(env);
 		}
 
-		return env.router.handle(request);
+		return env.router.fetch(request);
 	},
 } satisfies ExportedHandler<Env>;
 

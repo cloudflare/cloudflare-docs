@@ -479,103 +479,7 @@ wrangler d1 migrations apply <DATABASE_NAME> [OPTIONS]
 
 Manage [Hyperdrive](/hyperdrive/) database configurations.
 
-### `create`
-
-Create a new Hyperdrive configuration.
-
-```txt
-wrangler hyperdrive create <ID> [OPTIONS]
-```
-
-- `ID` string required
-  - The ID of the Hyperdrive configuration to create.
-- `--connection-string` string optional
-  - The database connection string in the form `postgres://user:password@hostname:port/database`.
-- `--host` string optional
-  - The hostname or IP address Hyperdrive should connect to.
-- `--port` number optional
-  - The database port to connect to.
-- `--scheme` string optional
-  - The scheme used to connect to the origin database - e.g. postgresql or postgres.
-- `--database` string optional
-  - The database (name) to connect to. For example, Postgres or defaultdb.
-- `--user` string optional
-  - The username used to authenticate to the database.
-- `--password` string optional
-  - The password used to authenticate to the database.
-- `--access-client-id` string optional
-  - The Client ID of the Access token to use when connecting to the origin database, must be set with a Client Access Secret. Mutually exclusive with `port`.
-- `--access-client-secret` string optional
-  - The Client Secret of the Access token to use when connecting to the origin database, must be set with a Client Access ID. Mutually exclusive with `port`.
-- `--caching-disabled` boolean optional
-  - Disables the caching of SQL responses.
-- `--max-age` number optional
-  - Specifies max duration for which items should persist in the cache, cannot be set when caching is disabled.
-- `--swr` number optional
-  - Stale While Revalidate - Indicates the number of seconds cache may serve the response after it becomes stale, cannot be set when caching is disabled.
-
-### `update`
-
-Update an existing Hyperdrive configuration.
-
-```txt
-wrangler hyperdrive update <ID> [OPTIONS]
-```
-
-- `ID` string required
-  - The ID of the Hyperdrive configuration to update.
-- `--name` string optional
-  - The new name of the Hyperdrive configuration.
-- `--origin-host` string optional
-  - The new database hostname or IP address Hyperdrive should connect to.
-- `--origin-port` string optional
-  - The new database port to connect to.
-- `--database` string optional
-  - The new database (name) to connect to. For example, Postgres or defaultdb.
-- `--origin-user` string optional
-  - The new username used to authenticate to the database.
-- `--origin-password` string optional
-  - The new password used to authenticate to the database.
-- `--access-client-id` string optional
-  - The Client ID of the Access token to use when connecting to the origin database, must be set with a Client Access Secret. Mutually exclusive with `origin-port`.
-- `--access-client-secret` string optional
-  - The Client Secret of the Access token to use when connecting to the origin database, must be set with a Client Access ID. Mutually exclusive with `origin-port`.
-- `--caching-disabled` boolean optional
-  - Disables the caching of SQL responses.
-- `--max-age` number optional
-  - Specifies max duration for which items should persist in the cache, cannot be set when caching is disabled.
-- `--swr` number optional
-  - Stale While Revalidate - Indicates the number of seconds cache may serve the response after it becomes stale, cannot be set when caching is disabled.
-
-### `list`
-
-List all Hyperdrive configurations.
-
-```txt
-wrangler hyperdrive list
-```
-
-### `delete`
-
-Delete an existing Hyperdrive configuration.
-
-```txt
-wrangler hyperdrive delete <ID>
-```
-
-- `ID` string required
-  - The name of the Hyperdrive configuration to delete.
-
-### `get`
-
-Get an existing Hyperdrive configuration.
-
-```txt
-wrangler hyperdrive get <ID>
-```
-
-- `ID` string required
-  - The name of the Hyperdrive configuration to get.
+<Render file="wrangler-commands/hyperdrive" product="workers" />
 
 ---
 
@@ -985,7 +889,7 @@ wrangler delete [<SCRIPT>] [OPTIONS]
 - `--dry-run` boolean (default: false) optional
   - Do not actually delete the Worker. This is useful for testing the output of `wrangler delete`.
 
-<Render file="wrangler-commands/kv" product="workers"/>
+<Render file="wrangler-commands/kv" product="workers" />
 
 ---
 
@@ -1042,43 +946,45 @@ Event notifications is currently in beta. To report bugs or request features, fi
 Create an [event notification](/r2/buckets/event-notifications/) rule for an R2 bucket.
 
 ```txt
-wrangler r2 bucket notification create <NAME> --event-type <EVENT_TYPE> --queue <QUEUE_NAME> [OPTIONS]]
+wrangler r2 bucket notification create <NAME> [OPTIONS]
 ```
 
 - `NAME` string required
   - The name of the R2 bucket to create an event notification rule for.
-- `EVENT_TYPE` "object-create"|"object-delete" required
-  - The [type of event](/r2/buckets/event-notifications/#event-types) that will trigger event notifications.
-- `QUEUE_NAME` string required
+- `--event-type` "object-create"|"object-delete"[] required
+  - The [type of event(s)](/r2/buckets/event-notifications/#event-types) that will trigger event notifications.
+- `--queue` string required
   - The name of the queue that will receive event notification messages.
 - `--prefix` string optional
-  - Specifies the key name prefix that an object must match to trigger event notifications. The value must be a string. Regular expressions are not supported.
+  - The prefix that an object must match to emit event notifications (note: regular expressions are not supported).
 - `--suffix` string optional
-  - Specifies the key name suffix that an object must match to trigger event notifications. The value must be a string. Regular expressions are not supported.
+  - The suffix that an object must match to emit event notifications (note: regular expressions are not supported).
 
 ### `notification delete`
 
-Remove a rule from a bucket's [event notification](/r2/buckets/event-notifications/) configuration.
+Remove an event notification rule from a bucket's [event notification](/r2/buckets/event-notifications/) configuration.
 
 ```txt
-wrangler r2 bucket notification delete <NAME> --queue <QUEUE_NAME>
+wrangler r2 bucket notification delete <NAME> [OPTIONS]
 ```
 
 - `NAME` string required
   - The name of the R2 bucket to delete an event notification rule for.
-- `QUEUE_NAME` string required
-  - The name of the queue that corresponds to the event notification rule.
+- `--queue` string required
+  - The name of the queue that corresponds to the event notification rule. If no `rule` is provided, all event notification rules associated with the queue will be deleted.
+- `--rule` string optional
+  - The ID of the event notification rule to delete.
 
-### `notification get`
+### `notification list`
 
-List the [event notification](/r2/buckets/event-notifications/) configurations for a bucket.
+List the [event notification](/r2/buckets/event-notifications/) rules for a bucket.
 
 ```txt
-wrangler r2 bucket notification get <NAME>
+wrangler r2 bucket notification list <NAME>
 ```
 
 - `NAME` string required
-  - The name of the R2 bucket to get event notification configurations for.
+  - The name of the R2 bucket to get event notification rules for.
 
 ### `sippy enable`
 
@@ -1787,7 +1693,6 @@ wrangler whoami
 
 ## `versions`
 
-
 :::note
 The minimum required wrangler version to use these commands is 3.40.0. For versions before 3.73.0, you will need to add the `--x-versions` flag.
 :::
@@ -1887,7 +1792,6 @@ wrangler versions secret bulk <FILENAME> [OPTIONS]
 ---
 
 ## `triggers`
-
 
 :::note
 The minimum required wrangler version to use these commands is 3.40.0. For versions before 3.73.0, you will need to add the `--x-versions` flag.

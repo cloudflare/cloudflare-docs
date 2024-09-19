@@ -1,6 +1,6 @@
 import type { CollectionEntry } from "astro:content";
 import { parse } from "node-html-parser";
-import { entryToString } from "./container"
+import { entryToString } from "./container";
 /*
     1. If there is a `description` property in the frontmatter, return that.
     2. If there is a `<p>...</p>` element in the HTML, return that.
