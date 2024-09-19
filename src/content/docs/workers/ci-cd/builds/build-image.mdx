@@ -10,7 +10,7 @@ The build environment has broad support for a variety of languages, such as Ruby
 
 If you need to use a [specific version](/workers/ci-cd/builds/build-image/#overriding-default-versions) of a language, (for example, Node.js or Ruby) you can specify it by providing an associated environment variable in your build configuration, or setting the relevant file in your source code.
 
-## Supported languages and tools
+## Supported Languages and Tools
 
 In the following table, review the preinstalled versions for languages and tools included in the Cloudflare Workers' build image, and the environment variables and/or files available for [overriding the preinstalled version](/workers/ci-cd/builds/build-image/#overriding-default-versions):
 
@@ -29,7 +29,7 @@ Under Supported versions, "Any version" refers to support for all versions of th
 
 The default versions will be updated regularly to the latest minor version. No major version updates will be made without notice. If you need a specific minor version, please specify it by overriding the default version.
 
-### Overriding default versions
+### Overriding Default Versions
 
 To override default versions of languages and tools in the build system, you can either set the desired version through environment variables or by adding files to your project.
 
@@ -45,7 +45,7 @@ Or, to set the version by adding a file to your project, you can:
 
 For example, if you were previously relying on the default version of Node.js in the v1 build system, to migrate to v2, you must specify that you need Node.js `12.18.0` by setting a `NODE_VERSION = 12.18.0` environment variable or by adding a `.node-version` or `.nvmrc` file to your project with `12.18.0` added as the contents to the file.
 
-## Pre-installed packages
+## Pre-installed Packages
 
 In the following table, review the pre-installed packages in the build image. The packages are installed with `apt`, a package manager for Linux distributions.
 
@@ -61,7 +61,7 @@ In the following table, review the pre-installed packages in the build image. Th
 | `gnupg`           | `liblzma-dev`     | `zstd`            |
 | `libffi-dev`      | `libncurses5-dev` |                   |
 
-## Framework support
+## Framework Support
 
 To use a specific version of a framework, specify it in the project's package manager configuration file.
 For example, if you use Gatsby, your `package.json` should include the following:
@@ -87,8 +87,8 @@ Cloudflare Workers builds are run in the following environment:
 
 Each build will have the following resources:
 
-|                |        |
-| -------------- | ------ |
-| **CPU**        | 2 CPUs |
-| **Disk Space** | 8 GB   |
-| **Memory**     | 8 GB   |
+| Resource       | Allocation |
+| -------------- | ---------- |
+| **CPU**        | 2 CPUs     |
+| **Disk Space** | 8 GB       |
+| **Memory**     | 8 GB       |
