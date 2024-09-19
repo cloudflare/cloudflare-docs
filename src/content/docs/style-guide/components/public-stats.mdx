@@ -1,0 +1,23 @@
+---
+title: Public stats
+---
+
+The `PublicStats` component allows you to reference specific values about Cloudflare's network without maintaining those values in multiple files.
+
+Refer to the examples below for more information.
+
+```mdx live
+import { PublicStats } from "~/components";
+
+Cloudflare has data centers in <PublicStats id="data_center_cities" />.
+
+Our network has <PublicStats id="total_bandwidth" />.
+
+Cloudflare also has <PublicStats id="network_peers" />.
+```
+
+:::note
+
+If you need more stats or to update these stats, submit a pull request to update [PublicStats.astro](https://github.com/cloudflare/cloudflare-docs/blob/production/src/components/PublicStats.astro)
+
+:::

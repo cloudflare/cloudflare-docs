@@ -27,13 +27,24 @@ jobs:
         env:
           NODE_OPTIONS: --max-old-space-size=4096
       - run: npx wrangler pages deploy --project-name cloudflare-docs dist
+        name: Deploy to Cloudflare Pages
         env:
           CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
           CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+      - run: npm run build:worker && npx wrangler deploy -c ./wrangler-workers.toml
+        if: github.ref == 'refs/heads/production'
+        name: Deploy to Cloudflare Workers [production]
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+      - run: npm run build:worker && npx wrangler versions upload -c ./wrangler-workers.toml
+        if: github.ref != 'refs/heads/production'
+        name: Deploy to Cloudflare Workers [preview]
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
       - uses: actions/cache/save@v4
+        if: always()
         with:
           path: |
             node_modules/.astro/_astro
             node_modules/.astro/assets
           key: static
-
