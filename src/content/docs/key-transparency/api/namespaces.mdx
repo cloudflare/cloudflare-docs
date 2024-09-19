@@ -1,0 +1,80 @@
+---
+pcx_content_type: overview
+title: Namespaces
+sidebar:
+  order: 2
+---
+
+Cloudflare Key Transparency API is organised in namespaces, representing a Log Cloudflare Auditor monitors. If you want to register a namespace, please contact us.
+
+## Create a namespace
+
+The following fields are required when making a `POST` request:
+
+- `name`
+- `public`
+- `root`
+- `signature_version`: 0x0001 is for [Protobuf serialisation](https://github.com/cloudflare/plexi/blob/main/plexi_core/src/proto/specs/types.proto) and Ed25519 signature from the Auditor, 0x0002 is for [bincode serialisation](https://github.com/bincode-org/bincode/blob/trunk/docs/spec.md) and E25519 serialisation by the Auditor.
+
+The `log_directory` field is optional. If set, Cloudflare will use it to fetch audit proofs and validate them.
+
+```sh
+curl 'https://plexi.key-transparency.cloudflare.com/namespaces' \
+        	--header 'Content-Type: application/json' \
+        	--data '{
+ 	"name": "your.new.log.com",
+ 	"root": "1/1111111111111111111111111111111111111111111111111111111111111111",
+ 	"log_directory": "https://your.new.log.com/path/to/proofs",
+	"signature_version": 1
+  }'
+{
+  "name": "your.new.log.com",
+  "log_directory": "https://your.new.log.com/path/to/proofs",
+  "root": "1/1111111111111111111111111111111111111111111111111111111111111111",
+  "status": "Initialization",
+  "reports_uri": "/namespaces/your.new.log.com/reports",
+  "audits_uri": "/namespaces/your.new.log.com/audits",
+  "signature_version": 1
+}
+```
+
+After publishing the first epoch, `status` will show `Online`. Possible statuses include:
+- `Online`
+- `Initialization`
+- `Disabled`
+
+## List all namespaces
+
+Refer to the example below to get information about all public namespaces.
+
+```sh
+curl 'https://plexi.key-transparency.cloudflare.com/namespaces'
+{
+   "namespaces": [
+       { "name": "your.new.log.com", "root": "1/abc", "reports_uri": "/namespaces/your.new.log.com/reports", "audits_uri": "/namespaces/your.new.log.com/audits", "log_directory": "https://your.new.log.com/path/to/proofs", "status": "online" },
+       { "name": "my.new.log.com", "reports_uri": "/namespaces/meta-bt-2024/reports", "audits_uri": "/namespaces/meta-bt-2024/audits", "status": "initialization" }
+   ]
+}
+```
+
+## Disable a namespace
+
+If a log state has been corrupted, lost, or needs to be sharded to be maintainbale, the Auditor allows the Log operator to mark a namespace as `Disabled`.
+
+
+```sh
+curl -X PATCH 'https://plexi.key-transparency.cloudflare.com/namespaces/{namespace}' \
+        	-H 'Content-Type: application/json' \
+        	-d '{
+ 	"status": "Disabled"
+  }'
+{
+  "name": "your.new.log.com",
+  "log_directory": "https://your.new.log.com/path/to/proofs",
+  "root": "1/1111111111111111111111111111111111111111111111111111111111111111",
+  "status": "Disabled",
+  "reports_uri": "/namespaces/your.new.log.com/reports",
+  "audits_uri": "/namespaces/your.new.log.com/audits",
+  "signature_version": 1
+}
+```

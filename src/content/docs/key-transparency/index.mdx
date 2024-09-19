@@ -13,8 +13,10 @@ import { CardGrid, Description, Feature, LinkTitleCard } from "~/components"
 
 <Description>
 
-Ensure the transparency of end-to-end encrypted messaging conversations.
+Secure the distribution of public keys in your end-to-end encrypted (E2EE) messaging systems
 
 </Description>
 
-Cloudflare verifies key transparency audit proofs to ensure the transparency of end-to-end encrypted messaging conversations without the use of QR codes. 
+Key Transparency aims to secure the distribution of public keys for end-to-end encrypted (E2EE) messaging systems, such as Signal or Whatsapp. It achieves this by building a verifiable append-only data structure called a Log, similar to [Certificate Transparency](https://developer.mozilla.org/en-US/docs/Web/Security/Certificate_Transparency).
+
+Cloudflare verifies Key Transparency Logs to ensure the transparency of end-to-end encrypted messaging public keys. This component is called an Auditor. Cloudflare provides an API for anyone to monitor the work of the Auditor, and verify the state of its associated Logs locally.
