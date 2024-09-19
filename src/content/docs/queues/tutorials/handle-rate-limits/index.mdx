@@ -93,7 +93,7 @@ max_batch_timeout = 10
 max_retries = 3
 ```
 
-Adding the `max_batch_size` of 2 to the consumer queue is important because the Resend API has a default rate limit of 2 requests per second. This batch size allows the queue to process the message in the batch size of 2. If the batch size is less than 2, the queue will wait for 10 seconds to collect the next message. If no more messages are available, the queue will process the message in the batch.
+Adding the `max_batch_size` of 2 to the consumer queue is important because the Resend API has a default rate limit of 2 requests per second. This batch size allows the queue to process the message in the batch size of 2. If the batch size is less than 2, the queue will wait for 10 seconds to collect the next message. If no more messages are available, the queue will process the message in the batch. For more information, refer to the [Batching, Retries and Delays documentation](/queues/configuration/batching-retries)
 
 Your final `wrangler.toml` file should look similar to the one below.
 
@@ -149,7 +149,11 @@ This will accept requests to any subpath and forwards the request's body. It exp
 
 ## 5. Process the messages in the queue
 
-After the message is sent to the queue, it will be processed by the consumer queue. The consumer queue will process the message and send the email. Add the `queue()` handler as shown below.
+After the message is sent to the queue, it will be processed by the consumer Worker. The consumer Worker will process the message and send the email.
+
+Since you have not configured Resend yet, you will log the message to the console. After you configure Resend, you will use it to send the email.
+
+Add the `queue()` handler as shown below.
 
 ```ts title="src/index.ts" ins={1-3,17-28}
 interface Message {
@@ -172,7 +176,7 @@ export default {
 		for (const message of batch.messages) {
 			try {
 				console.log(message.body.email);
-				// send email
+				// After configuring Resend, you can send email
 				message.ack();
 			} catch (e) {
 				console.error(e);
