@@ -97,16 +97,19 @@ To create a job, make a `POST` request to the Logpush jobs endpoint with the fol
 Example request using cURL:
 
 ```bash
-curl -s -X POST \
-https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/logpush/jobs \
--d '{
-"name":"<DOMAIN_NAME>",
-"destination_conf":"s3://<BUCKET_NAME>/<BUCKET_PATH>?region=<REGION>&access-key-id=<ACCESS_KEY_ID>&secret-access-key=<SECRET_ACCESS_KEY>&endpoint=<ENDPOINT_URL>",
-"output_options": {
+curl https://api.cloudflare.com/client/v4/zones/{zone_id}/logpush/jobs \
+--header "X-Auth-Email: <EMAIL>" \
+--header "X-Auth-Key: <API_KEY>" \
+--header "Content-Type: application/json" \
+--data '{
+  "name": "<DOMAIN_NAME>",
+  "destination_conf": "s3://<BUCKET_NAME>/<BUCKET_PATH>?region=<REGION>&access-key-id=<ACCESS_KEY_ID>&secret-access-key=<SECRET_ACCESS_KEY>&endpoint=<ENDPOINT_URL>",
+  "output_options": {
     "field_names": ["ClientIP", "ClientIP", "ClientRequestHost", "ClientRequestMethod", "ClientRequestURI","EdgeEndTimestamp", "EdgeResponseBytes", "EdgeResponseStatus", "EdgeStartTimestamp", "RayID"],
     "timestamp_format": "rfc3339"
-},  
-"dataset": "http_requests"}' | jq .
+  },  
+  "dataset": "http_requests"
+}'
 ```
 
 Response:
@@ -116,13 +119,13 @@ Response:
   "errors": [],
   "messages": [],
   "result": {
-    "id": 100,
+    "id": <JOB_ID>,
     "dataset": "http_requests",
     "enabled": false,
     "name": "<DOMAIN_NAME>",
     "output_options": {
-        "field_names": ["ClientIP", "ClientRequestHost", "ClientRequestMethod", "ClientRequestURI", "EdgeEndTimestamp","EdgeResponseBytes", "EdgeResponseStatus", "EdgeStartTimestamp", "RayID"],
-        "timestamp_format": "rfc3339"
+      "field_names": ["ClientIP", "ClientRequestHost", "ClientRequestMethod", "ClientRequestURI", "EdgeEndTimestamp","EdgeResponseBytes", "EdgeResponseStatus", "EdgeStartTimestamp", "RayID"],
+      "timestamp_format": "rfc3339"
     },
     "destination_conf": "s3://<BUCKET_NAME>/<BUCKET_PATH>?region=<REGION>&access-key-id=<ACCESS_KEY_ID>&secret-access-key=<SECRET_ACCESS_KEY>&endpoint=<ENDPOINT_URL>",
     "last_complete": null,
@@ -140,8 +143,14 @@ To enable a job, make a `PUT` request to the Logpush jobs endpoint. You will use
 Example request using cURL:
 
 ```bash
-curl -s -X PUT \
-https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/logpush/jobs/100 -d'{"enabled":true}' | jq .
+curl --request PUT \
+https://api.cloudflare.com/client/v4/zones/{zone_id}/logpush/jobs/{job_id} \
+--header "X-Auth-Email: <EMAIL>" \
+--header "X-Auth-Key: <API_KEY>" \
+--header "Content-Type: application/json" \
+--data '{
+  "enabled": true
+}'
 ```
 
 Response:
@@ -151,13 +160,13 @@ Response:
   "errors": [],
   "messages": [],
   "result": {
-    "id": 100,
+    "id": <JOB_ID>,
     "dataset": "http_requests",
     "enabled": true,
     "name": "<DOMAIN_NAME>",
     "output_options": {
-        "field_names": ["ClientIP", "ClientRequestHost", "ClientRequestMethod", "ClientRequestURI", "EdgeEndTimestamp","EdgeResponseBytes", "EdgeResponseStatus", "EdgeStartTimestamp", "RayID"],
-        "timestamp_format": "rfc3339"
+      "field_names": ["ClientIP", "ClientRequestHost", "ClientRequestMethod", "ClientRequestURI", "EdgeEndTimestamp","EdgeResponseBytes", "EdgeResponseStatus", "EdgeStartTimestamp", "RayID"],
+      "timestamp_format": "rfc3339"
     },
     "destination_conf": "s3://<BUCKET_NAME>/<BUCKET_PATH>?region=<REGION>&access-key-id=<ACCESS_KEY_ID>&secret-access-key=<SECRET_ACCESS_KEY>&endpoint=<ENDPOINT_URL>",
     "last_complete": null,

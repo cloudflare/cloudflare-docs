@@ -1,7 +1,7 @@
 openapi: 3.0.0
 info:
   title: Cloudflare Calls API
-  version: '1.0'
+  version: "1.0"
 externalDocs:
   description: Find out more about Cloudflare Calls
   url: https://developers.cloudflare.com/calls/
@@ -23,7 +23,7 @@ paths:
           required: true
           description: WebRTC application ID
       responses:
-        '201':
+        "201":
           description: Created
           headers:
             vary:
@@ -34,7 +34,7 @@ paths:
             application/json:
               schema:
                 allOf:
-                  - $ref: '#/components/schemas/NewSessionResponse'
+                  - $ref: "#/components/schemas/NewSessionResponse"
                   - example:
                       sessionId: e017a2629c754fedc1f7d8587e06d126
   /apps/{appId}/sessions/{sessionId}/tracks/new:
@@ -46,7 +46,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/TracksRequest'
+              $ref: "#/components/schemas/TracksRequest"
             examples:
               local_tracks:
                 description: Share a track to be played by remote peers
@@ -66,7 +66,7 @@ paths:
                     type: offer
                   tracks:
                     - location: local
-                      mid: '4'
+                      mid: "4"
                       trackName: 1a037563-c35c-4bf6-a9ee-2b474cbb9a51
               remote_tracks:
                 description: Play a track from a remote peer
@@ -91,7 +91,7 @@ paths:
           required: true
           description: Current PeerConnection session ID
       responses:
-        '200':
+        "200":
           description: OK
           headers:
             vary:
@@ -101,14 +101,14 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/TracksResponse'
+                $ref: "#/components/schemas/TracksResponse"
               examples:
                 local_tracks:
                   value:
                     requiresImmediateRenegotiation: false
                     tracks:
-                        - trackName: 1a037563-c35c-4bf6-a9ee-2b474cbb9a51
-                          mid: '4'
+                      - trackName: 1a037563-c35c-4bf6-a9ee-2b474cbb9a51
+                        mid: "4"
                     sessionDescription:
                       sdp: |
                         v=0
@@ -128,7 +128,7 @@ paths:
                     tracks:
                       - sessionId: 2a45361d5fd7cc14eface0587c276c94
                         trackName: 2e037563-a35d-4bf6-a9ee-2d474cbb9a58
-                        mid: '7'
+                        mid: "7"
                     sessionDescription:
                       sdp: |
                         v=0
@@ -153,7 +153,7 @@ paths:
             schema:
               properties:
                 sessionDescription:
-                  $ref: '#/components/schemas/SessionDescription'
+                  $ref: "#/components/schemas/SessionDescription"
             example:
               sessionDescription:
                 sdp: |
@@ -183,7 +183,7 @@ paths:
             type: string
           required: true
       responses:
-        '200':
+        "200":
           description: OK
           headers:
             vary:
@@ -193,7 +193,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/SessionDescription'
+                $ref: "#/components/schemas/SessionDescription"
               example: {}
   /apps/{appId}/sessions/{sessionId}/tracks/close:
     put:
@@ -205,10 +205,10 @@ paths:
           application/json:
             schema:
               allOf:
-                - $ref: '#/components/schemas/CloseTracksRequest'
+                - $ref: "#/components/schemas/CloseTracksRequest"
                 - example:
                     tracks:
-                      - mid: '7'
+                      - mid: "7"
                     sessionDescription:
                       sdp: |
                         v=0
@@ -238,7 +238,7 @@ paths:
             type: string
           required: true
       responses:
-        '200':
+        "200":
           description: OK
           headers:
             vary:
@@ -248,7 +248,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/CloseTracksResponse'
+                $ref: "#/components/schemas/CloseTracksResponse"
               example:
                 sessionDescription:
                   sdp: |
@@ -265,7 +265,7 @@ paths:
                   type: answer
                 requiresImmediateRenegotiation: false
                 tracks:
-                  - mid: '7'
+                  - mid: "7"
   /apps/{appId}/sessions/{sessionId}:
     get:
       tags:
@@ -286,7 +286,7 @@ paths:
             type: string
           required: true
       responses:
-        '200':
+        "200":
           description: OK
           headers:
             vary:
@@ -296,15 +296,15 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/GetSessionStateResponse'
+                $ref: "#/components/schemas/GetSessionStateResponse"
               example:
                 tracks:
                   - location: local
-                    mid: '2'
+                    mid: "2"
                     trackName: 1a037563-c35c-4bf6-a9ee-2b474cbb9a51
                     status: active
                   - location: remote
-                    mid: '7'
+                    mid: "7"
                     sessionId: 2a45361d5fd7cc14eface0587c276c94
                     trackName: 2e037563-a35d-4bf6-a9ee-2d474cbb9a58
                     status: active
@@ -350,14 +350,14 @@ components:
           type: string
           description: mid associated to the track's transceiver to close
     TracksRequest:
-        type: object
-        properties:
-          sessionDescription:
-            $ref: "#/components/schemas/SessionDescription"
-          tracks:
-            type: array
-            items:
-              $ref: "#/components/schemas/TrackObject"
+      type: object
+      properties:
+        sessionDescription:
+          $ref: "#/components/schemas/SessionDescription"
+        tracks:
+          type: array
+          items:
+            $ref: "#/components/schemas/TrackObject"
     TracksResponse:
       type: object
       properties:

@@ -1,7 +1,8 @@
 ---
 {}
-
 ---
+
+import { AnchorHeading } from "~/components";
 
 ## `kv namespace`
 
@@ -17,7 +18,7 @@ The `kv ...` commands allow you to manage your Workers KV resources in the Cloud
 Since version 3.60.0, Wrangler supports the `kv ...` syntax. If you are using versions below 3.60.0, the command follows the `kv:...` syntax. Learn more about the deprecation of the `kv:...` syntax in the [Wrangler commands](/kv/reference/kv-commands/#deprecations) for KV page.
 :::
 
-### `create`
+<AnchorHeading title="`create`" slug="kv-namespace-create" depth={3} />
 
 Create a new namespace.
 
@@ -62,7 +63,7 @@ kv_namespaces = [
 ]
 ```
 
-### `list`
+<AnchorHeading title="`list`" slug="kv-namespace-list" depth={3} />
 
 List all KV namespaces associated with the current account ID.
 
@@ -89,7 +90,7 @@ npx wrangler kv namespace list | jq "."
 ]
 ```
 
-### `delete`
+<AnchorHeading title="`delete`" slug="kv-namespace-delete" depth={3} />
 
 Delete a given namespace.
 
@@ -151,7 +152,7 @@ The `kv ...` commands allow you to manage your Workers KV resources in the Cloud
 Since version 3.60.0, Wrangler supports the `kv ...` syntax. If you are using versions below 3.60.0, the command follows the `kv:...` syntax. Learn more about the deprecation of the `kv:...` syntax in the [Wrangler commands](/kv/reference/kv-commands/) for KV page.
 :::
 
-### `put`
+<AnchorHeading title="`put`" slug="kv-key-put" depth={3} />
 
 Write a single key-value pair to a particular namespace.
 
@@ -230,7 +231,7 @@ npx wrangler kv key put --binding=MY_KV "my-key" --path=value.txt
 Writing the contents of value.txt to the key "my-key" on namespace f7b02e7fc70443149ac906dd81ec1791.
 ```
 
-### `list`
+<AnchorHeading title="`list`" slug="kv-key-list" depth={3} />
 
 Output a list of all keys in a given namespace.
 
@@ -276,7 +277,7 @@ npx wrangler kv key list --binding=MY_KV --prefix="public" | jq "."
 ]
 ```
 
-### `get`
+<AnchorHeading title="`get`" slug="kv-key-get" depth={3} />
 
 Read a single value by key from the given namespace.
 
@@ -316,7 +317,7 @@ npx wrangler kv key get --binding=MY_KV "my-key"
 value
 ```
 
-### `delete`
+<AnchorHeading title="`delete`" slug="kv-key-delete" depth={3} />
 
 Remove a single key value pair from the given namespace.
 
@@ -368,7 +369,7 @@ The `kv ...` commands allow you to manage your Workers KV resources in the Cloud
 Since version 3.60.0, Wrangler supports the `kv ...` syntax. If you are using versions below 3.60.0, the command follows the `kv:...` syntax. Learn more about the deprecation of the `kv:...` syntax in the [Wrangler commands](/kv/reference/kv-commands/) for KV page.
 :::
 
-### `put`
+<AnchorHeading title="`put`" slug="kv-bulk-put" depth={3} />
 
 Write a JSON file containing an array of key-value pairs to the given namespace.
 
@@ -450,7 +451,7 @@ npx wrangler kv bulk put --binding=MY_KV allthethingsupload.json
 Success!
 ```
 
-### `delete`
+<AnchorHeading title="`delete`" slug="kv-bulk-delete" depth={3} />
 
 Delete all keys read from a JSON file within a given namespace.
 
