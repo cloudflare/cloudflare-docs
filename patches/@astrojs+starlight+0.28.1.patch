@@ -1,8 +1,8 @@
 diff --git a/node_modules/@astrojs/starlight/utils/navigation.ts b/node_modules/@astrojs/starlight/utils/navigation.ts
-index cd1475d..69d8801 100644
+index 526d9f2..de8c64a 100644
 --- a/node_modules/@astrojs/starlight/utils/navigation.ts
 +++ b/node_modules/@astrojs/starlight/utils/navigation.ts
-@@ -346,8 +346,12 @@ export function getSidebarFromConfig(
+@@ -360,8 +360,12 @@ export function getSidebarFromConfig(
  	locale: string | undefined
  ): SidebarEntry[] {
  	const routes = getLocaleRoutes(locale);
