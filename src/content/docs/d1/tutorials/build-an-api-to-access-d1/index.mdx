@@ -31,9 +31,7 @@ D1 uses parameterized queries. This prevents SQL injection. To make your API mor
 
 ## Prerequisites
 
-1. Sign up for a [Cloudflare account](https://dash.cloudflare.com/sign-up/workers-and-pages) if you have not already.
-2. Install [`npm`](https://docs.npmjs.com/getting-started).
-3. Install [`Node.js`](https://nodejs.org/en/). Use a Node version manager like [Volta](https://volta.sh/) or [nvm](https://github.com/nvm-sh/nvm) to avoid permission issues and change Node.js versions. [Wrangler](/workers/wrangler/install-and-update/) requires a Node version of `16.17.0` or later.
+<Render file="prereqs" product="workers" />
 
 ## 1. Create a new project
 
@@ -63,9 +61,9 @@ In this tutorial, you will use [Hono](https://github.com/honojs/hono), an Expres
 
 <PackageManagers type="add" pkg="hono" frame="none" />
 
-## 3. Add API_KEY
+## 3. Add an API_KEY
 
-You will need an API Key to make authenticated calls to the API. To ensure that the API Key is secure, you will add it as a [secret](../../../workers/configuration/secrets). For local development, create a `.dev.vars` file in the root directory. Add your API key in the file as follows.
+You need an API key to make authenticated calls to the API. To ensure that the API key is secure, add it as a [secret](/workers/configuration/secrets). For local development, create a `.dev.vars` file in the root directory. Add your API key in the file as follows.
 
 ```env
 API_KEY="YOUR_API_KEY"
@@ -139,7 +137,7 @@ To test the API locally, execute the below cURL command. Replace `YOUR_API_KEY` 
 curl -H "Authorization: Bearer YOUR_API_KEY" "http://localhost:8787/api/all" --data '{}'
 ```
 
-You should get the following output
+You should get the following output:
 
 ```txt
 /api/all endpoint
