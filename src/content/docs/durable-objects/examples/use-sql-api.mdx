@@ -1,0 +1,146 @@
+---
+title: Use the SQL API in Durable Objects
+summary: Use the SQL API in Durable Objects
+pcx_content_type: example
+sidebar:
+  order: 20
+head:
+  - tag: title
+    content: Durable Objects - Use the SQL API
+description: Use the SQL API in Durable Objects
+---
+
+The following examples show you how to use the [SQL API](TODO:update link) in Durable Objects to interact with the SQLite database.
+
+# Build a counter
+
+This example shows you how to build a counter using the SQL API in Durable Objects and Worker with RPC methods. It can increment, decrement, and get the current value of the a `name` counter. `name` is provided by the URL query string parameter, for example, `?name=hello`.
+
+```ts
+import { DurableObject } from "cloudflare:workers";
+export interface Env {
+	COUNTER: DurableObjectNamespace<Counter>;
+}
+
+// Defines the Durable Object class.
+export class Counter extends DurableObject {
+	sql = this.ctx.storage.sql;
+
+	constructor(ctx: DurableObjectState, env: Env) {
+		super(ctx, env);
+		// Initialize the database.
+		this.sql.exec(`
+			CREATE TABLE IF NOT EXISTS counter (name TEXT PRIMARY KEY, value INTEGER)
+			`);
+	}
+
+	increment(name: string) {
+		// Get the cursor of the given name.
+		const cursor = this.sql.exec(
+			`SELECT value FROM counter WHERE name = ?`,
+			name,
+		);
+
+		const result = [...cursor][0];
+
+		// If the cursor is empty, insert a new row.
+		if (!result) {
+			this.sql.exec(`INSERT INTO counter VALUES (?, ?)`, name, 0);
+
+			return 0;
+		} else {
+			// Otherwise, increment the value.
+			let value = result.value as number;
+			value += 1;
+			this.sql.exec(`UPDATE counter SET value = ? WHERE name = ?`, value, name);
+			return value;
+		}
+	}
+
+	decrement(name: string) {
+		// Get the cursor of the given name.
+		const cursor = this.sql.exec(
+			`SELECT value FROM counter WHERE name = ?`,
+			name,
+		);
+
+		const result = [...cursor][0];
+
+		// If the cursor is empty, insert a new row.
+		if (!result) {
+			this.sql.exec(`INSERT INTO counter VALUES (?, ?)`, name, 0);
+
+			return 0;
+		} else {
+			// Otherwise, decrement the value.
+			let value = result.value as number;
+			value -= 1;
+			console.log(
+				this.sql.exec(
+					`UPDATE counter SET value = ? WHERE name = ?`,
+					value,
+					name,
+				),
+			);
+			return value;
+		}
+	}
+
+	getCounterValue(name: string) {
+		// Get the cursor of the given name.
+		const cursor = this.sql.exec(
+			`SELECT value FROM counter WHERE name = ?`,
+			name,
+		);
+		const result = [...cursor][0];
+
+		// If the cursor is empty, throw an error.
+		if (!result) {
+			throw new Error(`Counter with the name ${name} does not exist`);
+		}
+		return result.value as number;
+	}
+}
+
+export default {
+	async fetch(request, env) {
+		let url = new URL(request.url);
+		let name = url.searchParams.get("name");
+		if (!name) {
+			return new Response(
+				"Select a Durable Object to contact by using" +
+					" the `name` URL query string parameter, for example, ?name=A",
+			);
+		}
+
+		// Every unique ID refers to an individual instance of the Counter class that
+		// has its own state. `idFromName()` always returns the same ID when given the
+		// same string as input (and called on the same class), but never the same
+		// ID for two different strings (or for different classes).
+		let id = env.COUNTER.idFromName("counter");
+
+		// Construct the stub for the Durable Object using the ID.
+		// A stub is a client Object used to send messages to the Durable Object.
+		let stub = env.COUNTER.get(id);
+
+		// Send a request to the Durable Object using RPC methods, then await its response.
+		let count = null;
+		switch (url.pathname) {
+			case "/increment":
+				count = await stub.increment(name);
+				break;
+			case "/decrement":
+				count = await stub.decrement(name);
+				break;
+			case "/":
+				// Serves the current value.
+				count = await stub.getCounterValue(name);
+				break;
+			default:
+				return new Response("Not found", { status: 404 });
+		}
+
+		return new Response(`Durable Object '${name}' count: ${count}`);
+	},
+} satisfies ExportedHandler<Env>;
+```
