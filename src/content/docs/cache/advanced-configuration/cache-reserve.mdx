@@ -121,7 +121,7 @@ Class B operations are performed when data needs to be fetched from Cache Reserv
 
 Asset purges are free operations.
 
-Cache Reserve will also be purged along with edge cache when you send a purge by URL request.
+Cache Reserve will also be immediately purged along with edge cache when you send a purge by URL request.
 
 Other purge methods, such as purge by tag, host, prefix, or purge everything will force an attempt to revalidate on the subsequent request for the Cache Reserve asset. Note that assets purged this way will still incur storage costs until their retention TTL expires.
 
