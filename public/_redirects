@@ -916,7 +916,6 @@
 # security center
 /security-center/indicator-feeds/getting-started/ /security-center/indicator-feeds/ 301
 /security-center/indicator-feeds/get-started/ /security-center/indicator-feeds/ 301
-/security-center/infrastructure.mdx /security-center/infrastructure/index.mdx 301 
 
 # spectrum
 /spectrum/getting-started/ /spectrum/get-started/ 301
