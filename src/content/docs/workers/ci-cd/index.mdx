@@ -6,15 +6,15 @@ sidebar:
   order: 7
 ---
 
-You can set up **continuous integration and continuous deployment (CI/CD)** for your Workers project by using either [Workers Builds](#workers-builds) or using [existing services and platforms](#external-cicd) to optimize your development workflow.
+You can set up continuous integration and continuous deployment (CI/CD) for your Workers project by using either the native build system, [Workers Builds](#workers-builds), or using [third-party services](#external-cicd) to optimize your development workflow.
 
 ## Why use CI/CD?
 
-It is good practice to only deploy your Workers from within a CI/CD environment, rather than running adhoc deployments manually using `wrangler deploy`. Among other benefits, deploying Workers from within a CI/CD environment makes sure that your Worker is built and deployed within a consistent environment, and it also makes it easier to control access to production credentials.
+It is best practice to deploy your Workers from a CI/CD environment, automating the build and deployment process instead of running adhoc deployments manually using `wrangler deploy`. This approach ensures that your Worker is consistently built and deployed in the same environment, reducing variability. Additionally, it simplifies managing access to production credentials.
 
 ## Workers Builds
 
-[Workers Builds](/workers/ci-cd/builds) allows you to integrate with your Git provider, and automatically deploy your changes when you make a push.
+[Workers Builds](/workers/ci-cd/builds) is the native CI/CD system that allows you to integrate with GitHub or GitLab, and automatically deploy your changes when you merge a pull request.
 
 ## External CI/CD
 
