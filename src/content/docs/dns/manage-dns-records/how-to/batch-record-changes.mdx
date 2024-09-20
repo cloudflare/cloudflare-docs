@@ -3,12 +3,11 @@ pcx_content_type: how-to
 title: Batch record changes
 sidebar:
   order: 7
-
 ---
 
 import { GlossaryTooltip, Example, Render } from "~/components";
 
-Cloudflare allows you to apply several changes to your zone records in just one action. You can [use the dashboard](#use-the-dashboard) to delete DNS records or update their <GlossaryTooltip term="proxy status">proxy status</GlossaryTooltip> in bulk, or perform further batched operations [via API](#use-the-api).
+Cloudflare allows you to apply several changes to your zone records in just one action. You can [use the dashboard](#use-the-dashboard) to delete DNS records or update their <GlossaryTooltip term="proxy status">proxy status</GlossaryTooltip> in bulk, or [use the API](#use-the-api) to perform further batched operations.
 
 :::caution[Propagation through the Cloudflare network]
 Although Cloudflare will execute the batched operations in a single [database transaction](https://en.wikipedia.org/wiki/Database_transaction), Cloudflare's distributed KV store must treat each record change as a single key-value pair. This means that the propagation of changes is not atomic. Refer to our [blog post](https://blog.cloudflare.com/) for details.
@@ -48,10 +47,10 @@ You can only set records to either **Proxied** or **DNS only** in bulk. This mea
 For example, if you select the following records and then edit their proxy status in bulk, choosing **Proxied** in [step 4 above](#edit-proxy-status-in-bulk), the outcome will be:
 
 | Selected records | Original proxy status | Resulting proxy status |
-|--------------------------|-----------------------|------------------------|
-| `www`               | DNS only              | Proxied                |
-| `blog`               | DNS only              | Proxied                |
-| `docs`               | Proxied               | Proxied                |
+| ---------------- | --------------------- | ---------------------- |
+| `www`            | DNS only              | Proxied                |
+| `blog`           | DNS only              | Proxied                |
+| `docs`           | Proxied               | Proxied                |
 
 </Example>
 
@@ -95,7 +94,7 @@ Within each of these four lists, each individual action is executed following th
 Although Cloudflare will execute the batched operations in a single [database transaction](https://en.wikipedia.org/wiki/Database_transaction), Cloudflare's distributed KV store must treat each record change as a single key-value pair. This means that the propagation of changes is not atomic. Refer to our [blog post](https://blog.cloudflare.com/) for details.
 :::
 
-For each operation that you list in the `/batch` request body, you must observe the required information and unspecified fields behavior:
+For each operation that you list in the `/batch` request body, consider the required information and how unspecified fields will behave:
 
 - **`deletes`**: only the `id` is required for each record object. You can keep additional parameters such as `name` for readability, but any other fields aside from `id` will be ignored in this case.
 - **`patches`**: aside from each record `id`, you should specify the fields you want to update. All unspecified fields will remain as they are.
