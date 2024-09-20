@@ -74,7 +74,7 @@ In this tutorial, you will use [Hono](https://github.com/honojs/hono), an Expres
 	<PackageManagers type="add" pkg="hono" frame="none" />
 </Steps>
 
-## 3. Add an API_KEY
+## 3. Add a API_KEY
 
 You need an API key to make authenticated calls to the API. To ensure that the API key is secure, add it as a [secret](/workers/configuration/secrets).
 
@@ -93,7 +93,11 @@ You need an API key to make authenticated calls to the API. To ensure that the A
 	```
 </Steps>
 
-## 4. Initialise the application
+:::note
+In this step, we have defined the name of the API key to be `API_KEY`.
+:::
+
+## 4. Initialize the application
 
 Import the required packages, initialize a new Hono application, and configure the following middleware:
 
@@ -170,6 +174,9 @@ Import the required packages, initialize a new Hono application, and configure t
 	```txt
 	/api/all endpoint
 	```
+
+5. Stop the local server from running by pressing `x` in the first terminal.
+
 </Steps>
 
 The Hono application is now set up. You can test the other endpoints and add more endpoints if needed. The API does not yet return any information from your database. In the next steps, you will create a database, add its bindings, and update the endpoints to interact with the database.
@@ -180,7 +187,7 @@ If you do not have a D1 database already, you can create a new database with `wr
 
 <Steps>
 
-1. In your second terminal, run:
+1. In your terminal, run:
 
 	```sh frame="none"
 	npx wrangler d1 create d1-http-example
@@ -409,13 +416,13 @@ Now that everything is working as expected, the last step is to deploy it to the
 	```
 
 	```sh output
-	[API_KEY]
+	[YOUR_API_KEY]
 	```
 
-4. Execute the `wrangler secret put [KEY]` command to add the `API_KEY` to the deployed project.
+4. Execute the `wrangler secret put` command to add an API to the deployed project.
 
 	```sh frame="none"
-	npx wrangler secret put [API_KEY]
+	npx wrangler secret put API_KEY
 	```
 
 	```sh output
@@ -424,20 +431,20 @@ Now that everything is working as expected, the last step is to deploy it to the
 
 	The terminal will prompt you to enter a secret value.
 
-5. Enter the value of your API key again. Your API key will now be added to your project. Using this value you can make secure API calls to your deployed API.
+5. Enter the value of your API key (`YOUR_API_KEY`). Your API key will now be added to your project. Using this value you can make secure API calls to your deployed API.
 
 	```sh
-	✔ Enter a secret value: [API_KEY]
+	✔ Enter a secret value: [YOUR_API_KEY]
 	```
 
 	```sh output
 	🌀 Creating the secret for the Worker "d1-http"
-	✨ Success! Uploaded secret [API_KEY]
+	✨ Success! Uploaded secret API_KEY
 	```
 
 6. To test it, run the following cURL command with the correct `YOUR_API_KEY` and `WORKERS_URL`.
 
-	- Use the `API_KEY` you have generated as the secret API key.
+	- Use the `YOUR_API_KEY` you have generated as the secret API key.
 	- You can find your `WORKERS_URL` from the Cloudflare dashboard > **Workers & Pages** > **`d1-http`** > **Settings** > **Domains & Routes**.
 
 	```sh frame="none"
