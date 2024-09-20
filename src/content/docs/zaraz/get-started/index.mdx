@@ -3,7 +3,6 @@ pcx_content_type: get-started
 title: Get started
 sidebar:
   order: 2
-
 ---
 
 Before being able to use Zaraz, it is recommended that you proxy your website through Cloudflare. Refer to [Set up Cloudflare](/fundamentals/setup/) for more information. If you do not want to proxy your website through Cloudflare, refer to [Use Zaraz on domains not proxied by Cloudflare](/zaraz/advanced/domains-not-proxied/).
@@ -14,7 +13,17 @@ Zaraz relies on events and triggers to determine when to load the tools you need
 
 Every tool needs an action to work, and actions must have a trigger. A trigger can be based on an event, or a condition. A tool without actions will not do anything.
 
-Some tools come with a preconfigured `Pageview` action, that uses the built-in `Pageview` system trigger. For example, when adding Google Analytics to your site, Zaraz will, by default, send page views whenever a page is loaded. Other tools might not use the concept of page views. These tools will require you to create triggers and define your own actions. Whatever the case, Zaraz is flexible and allows you to configure it for your specific use case or needs.
+### Automated Actions
+
+Some tools come with a preconfigured `Pageviews` action, that uses the built-in `Pageview` system trigger.
+For example, when adding Google Analytics to your site, Zaraz will, by default, send page views whenever a page is loaded. Other tools might not use the concept of page views. These tools will require you to create triggers and define your own actions. Whatever the case, Zaraz is flexible and allows you to configure it for your specific use case or needs.
+
+Tools may also come with a preconfigured `Events` action, that uses the built-in `All Tracks` system trigger.
+For example, when adding Facebook pixel to your site, you can track all events you send using `zaraz.track()`. Read more about using `zaraz.track()` in our [documentation on tracking events](/zaraz/web-api/track).
+
+Finally, some tools come with a preconfigured `E-Commerce` action.
+This allows you to track common events of the e-commerce user journey, such as when a user adds a product to cart, starts the checkout funnel or completes an order on your website.
+Read more about `zaraz.ecommerce()` in the [ecommerce API documentation](/zaraz/web-api/ecommerce).
 
 ## ​Web API
 
