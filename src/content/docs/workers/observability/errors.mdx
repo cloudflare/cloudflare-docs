@@ -141,7 +141,7 @@ are handled.
 
 The easiest way to understand what kind of conditions can lead to this error is to look at an example.
 
-This is a rather silly example as is because there's no practical reason why someone would write a worker that operates like this but it is useful for illustration:
+This is a rather silly example as is because there's no practical reason why someone would write a Worker that operates like this but it is useful for illustration:
 
 ```js
 export default {
@@ -156,7 +156,7 @@ export default {
 };
 ```
 
-The first time a request is made to this worker, it will initiate a `fetch()` and place the returned `Response` on the global object. The second request received by the Worker will attempt to use that `fetch()` response. However, each of the two requests has its own "I/O Context", which means I/O initiated under each request is isolate from other requests. Or, put more simply: the `Response` object returned by the `fetch()` is *bound* to the first requests I/O Context and will lead to the error `Cannot perform I/O on behalf of a different request` being thrown on the second request.
+The first time a request is made to this Worker, it will initiate a `fetch()` and place the returned `Response` on the global object. The second request received by the Worker will attempt to use that `fetch()` response. However, each of the two requests has its own "I/O Context", which means I/O initiated under each request is isolate from other requests. Or, put more simply: the `Response` object returned by the `fetch()` is *bound* to the first requests I/O Context and will lead to the error `Cannot perform I/O on behalf of a different request` being thrown on the second request.
 
 There are a number of I/O Context bound objects in the runtime: `ReadableStream`, `WritableStream`, `TransformStream`, `AbortSignal` are the most common examples. When these are created within a request they should only be used within the scope of that request.
 
@@ -164,7 +164,7 @@ An common way of triggering this error is to use a global cache for fetches. Spe
 
 To avoid this error, ensure that I/O operations are scoped to the request that initiated them. If you need to share data between requests, consider using a Durable Object, Workers KV, or some other form of shared storage.
 
-Under certain conditions, the runtime may emit a warning: `A promise was resolved or rejected from a different request context than the one it was created in. However, the creating request has already been completed or canceled. Continuations for that request are unlikely to run safely and have been canceled.` This warning specifically indicates that a JavaScript promise originating from one request has been resolved or rejected from another request. However, the original request has been canceled or completed making it unsafe to actually scheduling any promise continuations that would have otherwise been scheduled by resolving the promise (a continuation is any code that follows an `await` statement or any code running in a `.then(...)`, `.catch(...)`, or `.finally(...)` handler). When this warning is emitted, the runtime will not schedule any continuations for the promise that was resolved or rejected. This signals a bug in the worker code that should be fixed. An attempt will be made to print the stack trace identifying where the promise was resolved or rejected.
+Under certain conditions, the runtime may emit a warning: `A promise was resolved or rejected from a different request context than the one it was created in. However, the creating request has already been completed or canceled. Continuations for that request are unlikely to run safely and have been canceled.` This warning specifically indicates that a JavaScript promise originating from one request has been resolved or rejected from another request. However, the original request has been canceled or completed making it unsafe to actually scheduling any promise continuations that would have otherwise been scheduled by resolving the promise (a continuation is any code that follows an `await` statement or any code running in a `.then(...)`, `.catch(...)`, or `.finally(...)` handler). When this warning is emitted, the runtime will not schedule any continuations for the promise that was resolved or rejected. This signals a bug in the Worker code that should be fixed. An attempt will be made to print the stack trace identifying where the promise was resolved or rejected.
 
 ## Errors on Worker upload
 
