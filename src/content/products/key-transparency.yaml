@@ -1,14 +1,14 @@
-name: Key Transparency
+name: Key Transparency Auditor
 
 product:
-  title: Key Transparency
+  title: Key Transparency Auditor
   url: /key-transparency/
   group: Application security
 
 meta:
-  title: Key Transparency
+  title: Key Transparency Auditor
   description:
-    Key Transparency docs
+    Key Transparency Auditor docs
   author: "@cloudflare"
 
 externals:
