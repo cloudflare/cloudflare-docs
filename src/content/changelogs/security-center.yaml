@@ -11,4 +11,4 @@ entries:
 
   - publish_date: "2024-09-19"
     description: |-
-      - Customers can now create a security.txt file file to provide the security research team with a standardized way to report vulnerabilities. 
+      - Customers can now create a `security.txt` file file to provide the security research team with a standardized way to report vulnerabilities. 
