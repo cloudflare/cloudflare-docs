@@ -1,5 +1,5 @@
 ---
-updated: 2024-08-23
+updated: 2024-09-20
 difficulty: Intermediate
 content_type: 📝 Tutorial
 pcx_content_type: tutorial
@@ -42,8 +42,10 @@ Use a Node version manager like [Volta](https://volta.sh/) or [nvm](https://gith
 
 ## 1. Create a new project
 
+Create a new Worker to create and deploy your API.
+
 <Steps>
-1. Use [C3](/learning-paths/workers/get-started/c3-and-wrangler/#c3), the command-line tool for Cloudflare's developer products, to create a new directory and initialize a new Worker project:
+1. Create a Worker named `d1-http` by running:
 
 	<PackageManagers type="create" pkg="cloudflare@latest" args={"d1-http"} />
 
@@ -99,7 +101,7 @@ In this step, we have defined the name of the API key to be `API_KEY`.
 
 ## 4. Initialize the application
 
-Import the required packages, initialize a new Hono application, and configure the following middleware:
+To initialize the application, you need to import the required packages, initialize a new Hono application, and configure the following middleware:
 
 - [Bearer Auth](https://hono.dev/docs/middleware/builtin/bearer-auth): Adds authentication to the API.
 - [Logger](https://hono.dev/docs/middleware/builtin/logger): Allows monitoring the flow of requests and responses.
@@ -161,7 +163,7 @@ Import the required packages, initialize a new Hono application, and configure t
 
 	<PackageManagers type="run" args={"dev"} frame="none" />
 
-3. To test the API locally, open a second terminal, and change into your `d1-http` directory.
+3. To test the API locally, open a second terminal.
 
 4. In the second terminal, execute the below cURL command. Replace `YOUR_API_KEY` with the value you set in the `.dev.vars` file.
 
@@ -442,13 +444,13 @@ Now that everything is working as expected, the last step is to deploy it to the
 	✨ Success! Uploaded secret API_KEY
 	```
 
-6. To test it, run the following cURL command with the correct `YOUR_API_KEY` and `WORKERS_URL`.
+6. To test it, run the following cURL command with the correct `YOUR_API_KEY` and `DEPLOYED_APP_LINK`.
 
 	- Use the `YOUR_API_KEY` you have generated as the secret API key.
-	- You can find your `WORKERS_URL` from the Cloudflare dashboard > **Workers & Pages** > **`d1-http`** > **Settings** > **Domains & Routes**.
+	- You can also find your `DEPLOYED_APP_LINK` from the Cloudflare dashboard > **Workers & Pages** > **`d1-http`** > **Settings** > **Domains & Routes**.
 
 	```sh frame="none"
-	curl -H "Authorization: Bearer YOUR_API_KEY" "https://WORKERS_URL.workers.dev/api/exec" --data '{"query": "SELECT 1"}'
+	curl -H "Authorization: Bearer YOUR_API_KEY" "https://DEPLOYED_APP_LINK/api/exec" --data '{"query": "SELECT 1"}'
 	```
 </Steps>
 
