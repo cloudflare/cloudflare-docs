@@ -2,14 +2,25 @@
 title: Anchor heading
 ---
 
-The `AnchorHeading` component emulates the behaviour of the [`rehype-slug`](https://github.com/rehypejs/rehype-slug) and [`rehype-autolink-headings`](https://github.com/rehypejs/rehype-autolink-headings) plugins.
+The `AnchorHeading` component defines headings. Specifically, `AnchorHeading` performs the following:
 
-It adds an `id` based on the output of [`github-slugger`](https://github.com/Flet/github-slugger/) to the heading, as well as adding a button to copy a link to that particular heading.
-
-This is only required when writing headings yourself inside components, Markdown (including partials) will have this applied via the aforementioned rehype plugins.
+1. Generates URL fragments corresponding to headers.
+2. Formats URL fragments into compatible syntax. For example, a `&` is replaced with a `-`.
+3. Creates a button to copy the URL at each fragment.
+4. Allows heading fragments to be defined separately from the text of the heading itself.
 
 ```mdx live
-import { AnchorHeading } from "~/components"
+import { AnchorHeading } from "~/components";
 
-<AnchorHeading title="Foo & Bar & Baz" depth={2} />
+<AnchorHeading title="How to use AnchorHeading" slug="use-anchorheading" depth={2} />
 ```
+
+By default, markdown files (including partials) have this behavior applied via rehype plugins. Therefore, the `AnchorHeading` component is usually only required when writing headings yourself inside components, or when working on non-markdown files.
+
+Additionally, `AnchorHeading`s are useful when rendering partial files into one location where there are duplicate headings (for example, when there are multiple H3 "`create`" headings in one page). `AnchorHeading`'s ability to explicitly define a fragment allows you to ensure each heading can be linked correctly with unique fragments.
+
+:::note
+
+The `AnchorHeading` component emulates the behavior of the [`rehype-slug`](https://github.com/rehypejs/rehype-slug) and the [`rehype-autolink-headings`](https://github.com/rehypejs/rehype-autolink-headings). It adds an `id` based on the output of [`github-slugger`](https://github.com/Flet/github-slugger/) to the heading, as well as adding a button to copy a link to that particular heading.
+
+:::
