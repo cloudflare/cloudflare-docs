@@ -147,8 +147,7 @@ Cloudflare's reverse proxy can also convert between compressed formats and uncom
 
 If you do not want a particular response from your origin to be encoded with Gzip/Brotli when delivered to website visitors, you can disable this by including a `cache-control: no-transform` HTTP header in the response from your origin web server.
 
-:::caution[Warning]
-
+:::caution
 Cloudflare will take into consideration the `accept-encoding` header value in website visitors' requests when sending responses to those visitors. However, when requesting content from your origin server, Cloudflare will send a different `Accept-Encoding` header, supporting Gzip and Brotli compression.
 :::
 
