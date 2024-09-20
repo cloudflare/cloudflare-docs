@@ -37,7 +37,6 @@ The Application Check device posture attribute checks that a specific applicatio
 
    - Be sure to enter the binary file path, not the application launch path. When checking for an application on macOS, a common mistake is to enter `/Applications/ApplicationName.app`. This will not work as `ApplicationName.app` is a folder. The executable file that will be running is located within the folder, for example `ApplicationName.app/Contents/MacOS/ApplicationName`.
    - Some applications change their file path after an update. Ensure that the application is always in a stable location, or use an environment variable to identify a specific folder. For example, Windows provides [recognized environment variables](https://learn.microsoft.com/en-us/windows/deployment/usmt/usmt-recognized-environment-variables) that you can reference in your file path (`%PROGRAMFILES%\myfolder\myfile.exe`).
-   - The path entered in the dashboard is canonicalized. The full path of the process (once confirmed to be running) is also canonicalized. The two must match for the application check to be true.
      :::
 
 5. **Signing certificate thumbprint (recommended)**: Enter the [thumbprint of the publishing certificate](#determine-the-signing-thumbprint) used to sign the binary. Adding this information will enable the check to ensure that the application was signed by the expected software developer.
