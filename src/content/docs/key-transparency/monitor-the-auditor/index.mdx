@@ -5,9 +5,9 @@ sidebar:
   order: 2
 ---
 
-Cloudflare Key Transparency Auditor validates Log audit proofs and provides a signature for them. This allows Log to distribute these signatures to its end-users, and provides users with confidence that the Log is not tricking them.
+Cloudflare's Key Transparency Auditor validates Log audit proofs and provides a signature for them. The Log can then distribute these signatures to its end-users, and provides users with confidence that keys have not been tampered with.
 
-Cloudflare provides [Plexi](https://github.com/cloudflare/plexi), a cli companion to verify an Auditor claims locally. This leverages the public [API](./api/index.mdx), and allows users to verify Cloudflare Auditor claims.
+In order to verify _our_ work, you can use [Plexi](https://github.com/cloudflare/plexi), a CLI tool that allows anyone to perform proof verification locally via a public [API](./api/index.mdx).
 
 ## Features
 
@@ -54,7 +54,7 @@ whatsapp.key-transparency.v1
 
 ### Audit a signature
 
-Key Transparency Auditor vouches for Log validity by ensuring epoch uniqueness. and verifying the associated proof
+The Key Transparency Auditor vouches for Log validity by ensuring epoch uniqueness. and verifying the associated proof
 
 `plexi audit` provides information about a given epoch and its validity. It can perform a local audit to confirm the auditor behaviour.
 
