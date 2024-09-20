@@ -5,11 +5,15 @@ productLink: "/cloudflare-one/policies/data-loss-prevention/"
 productArea: Cloudflare One
 productAreaLink: /cloudflare-one/changelog/
 entries:
-- publish_date: '2024-05-23'
-  title: Data-at-rest DLP for Box and Dropbox
-  description: |-
-    You can now scan your [Box](/cloudflare-one/applications/scan-apps/casb-integrations/box/#data-loss-prevention-optional) and [Dropbox](/cloudflare-one/applications/scan-apps/casb-integrations/dropbox/#data-loss-prevention-optional) files for DLP matches.
-- publish_date: '2024-04-16'
-  title: Optical character recognition
-  description: |-
-    DLP can now [detect sensitive data](/cloudflare-one/policies/data-loss-prevention/dlp-profiles/advanced-settings/#optical-character-recognition-ocr) in jpeg, jpg, and png files. This helps companies prevent the leak of sensitive data in images, such as screenshots.
+  - publish_date: "2024-09-03"
+    title: Exact Data Match multi-entry upload support
+    description: |-
+      You can now upload files with [multiple columns of data](/cloudflare-one/policies/data-loss-prevention/datasets/#upload-a-new-dataset) as Exact Data Match datasets. DLP can use each column as a separate existing detection entry.
+  - publish_date: "2024-05-23"
+    title: Data-at-rest DLP for Box and Dropbox
+    description: |-
+      You can now scan your [Box](/cloudflare-one/applications/scan-apps/casb-integrations/box/#data-loss-prevention-optional) and [Dropbox](/cloudflare-one/applications/scan-apps/casb-integrations/dropbox/#data-loss-prevention-optional) files for DLP matches.
+  - publish_date: "2024-04-16"
+    title: Optical character recognition
+    description: |-
+      DLP can now [detect sensitive data](/cloudflare-one/policies/data-loss-prevention/dlp-profiles/advanced-settings/#optical-character-recognition-ocr) in jpeg, jpg, and png files. This helps companies prevent the leak of sensitive data in images, such as screenshots.
