@@ -13,7 +13,7 @@ While the Workers Builds beta has limited support for monorepos, it is still pos
 
 In the example `ecommerce-monorepo`, a Workers project should be created for `product-service`, `auth-service`, `order-service`, and `notification-service`.
 
-A git connection to `ecommerce-monorepo` should be added in all of the Workers projects. If you are using a monorepo tool (e.g. Turborepo, NX, Lerna), you can configure a different deploy command for each Worker (e.g. `turbo deploy -F product-service`). When a new commit is made to `ecommerce-monorepo`, a build and deploy will be triggered for each of the Workers (i.e. `product-service`, `auth-service`, `order-service`, `notification-service`) and respect the configured commands for that Worker. 
+A git connection to `ecommerce-monorepo` should be added in all of the Workers projects. If you are using a monorepo tool (e.g. [Turborepo](https://turbo.build/)), you can configure a different deploy command for each Worker (e.g. `turbo deploy -F product-service`). When a new commit is made to `ecommerce-monorepo`, a build and deploy will be triggered for each of the Workers (i.e. `product-service`, `auth-service`, `order-service`, `notification-service`) and respect the configured commands for that Worker. 
 
 ```
 ecommerce-monorepo/
