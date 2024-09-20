@@ -229,7 +229,7 @@ The `put()` method returns a `Promise`, but most applications can discard this p
   * Optional variable number of arguments that correspond to the `?` placeholders in `query`.
 
 #### Returns 
-A cursor (`SqlStorageCursor`) that implements Javascript Iterator of query row results as objects with supported methods:
+A cursor (`SqlStorageCursor`) to iterate over query row results as objects with the following supported methods:
   
 * `raw()`: Iterator
   * Returns cursor of query rows as arrays of row values.
@@ -239,7 +239,6 @@ A cursor (`SqlStorageCursor`) that implements Javascript Iterator of query row r
   * Returns number of rows read by the executed SQL `query`. Metric is the same one used for [SQL billing](TODO link).
 *  `rowsWritten()`: number
   * Returns number of rows written by the executed SQL `query`. Metric is the same one used for [SQL billing](TODO link).
-
 
 #### Examples
 
@@ -263,37 +262,71 @@ export class MyDurableObject extends DurableObject{
 }
 ```
 
-Iterate over query row objects:
+Iterate over query results as row objects:
 ```ts
-  let cursor = this.sql.exec("SELECT * FROM artist;");
+  const cursor = this.sql.exec("SELECT * FROM artist;");
 
-  for (let row or cursor) {
+  for (let row of cursor) {
     // Iterate over row object and do something
   }
 ```
 
-Query results as an array of row objects:
+Convert query results to an array of row objects:
 ```ts
-  // Returns [{"artistid":123,"artistname":"Alice"},{"artistid":456,"artistname":"Bob"},{"artistid":789,"artistname":"Charlie"}]
-  let resultsArray = [...this.sql.exec("SELECT * FROM artist;")];
+  // Return array of row objects: [{"artistid":123,"artistname":"Alice"},{"artistid":456,"artistname":"Bob"},{"artistid":789,"artistname":"Charlie"}]
+  const resultsArray = [...this.sql.exec("SELECT * FROM artist;")];
   // OR
-  let resultsArray2 = Array.from(this.sql.exec("SELECT * FROM artist;"));
+  const resultsArray2 = Array.from(this.sql.exec("SELECT * FROM artist;"));
+  // OR
+  const resultsArray3 = this.sql.exec("SELECT * FROM artist;").toArray();
 ```
 
-Query results as an array of row values arrays:
+Convert query results to an array of row values arrays:
 ```ts
   // Returns [[123,"Alice"],[456,"Bob"],[789,"Charlie"]]
-  let resultsArray = [...this.sql.exec("SELECT * FROM artist;").raw()];
-  
+  const resultsArray = [...this.sql.exec("SELECT * FROM artist;").raw()];	
+
   // Returns ["artistid","artistname"]
-  let columnNameArray = Array.from(this.sql.exec("SELECT * FROM artist;").columnNames);
+  const columnNameArray = Array.from(this.sql.exec("SELECT * FROM artist;").columnNames);
 ```
 
-Get first row object or query results:
+Get first row object of query results:
 ```ts
   // Returns {"artistid":123,"artistname":"Alice"}
   let firstRow = Array.from(this.sql.exec("SELECT * FROM artist ORDER BY artistname DESC;"))[0];
 ```
+
+Check if query results has exactly one row:
+```ts
+  // returns error
+  this.sql.exec("SELECT * FROM artist ORDER BY artistname ASC;").one();
+
+  // returns { artistid: 123, artistname: 'Alice' }
+  const oneRow = this.sql.exec("SELECT * FROM artist WHERE artistname = ?;", "Alice").one()
+```
+
+Cursor behavior:
+```ts
+  const cursor = this.sql.exec("SELECT * FROM artist ORDER BY artistname ASC;");
+  let { value: firstRow } = cursor[Symbol.iterator]().next()
+  console.log(firstRow); // prints { artistid: 123, artistname: 'Alice' }
+
+  const remainingRows = Array.from(cursor); // TODO: will be cursor.toArray
+  console.log(remainingRows); // prints [{ artistid: 456, artistname: 'Bob' },{ artistid: 789, artistname: 'Charlie' }]
+```
+
+```ts
+  const cursor = this.sql.exec("SELECT * FROM artist;");
+  const { value: firstRow } = cursor[Symbol.iterator]().next()
+  console.log(cursor.rowsRead); // prints 1
+
+  const remainingRows = Array.from(cursor); // TODO: will be cursor.toArray
+  console.log(cursor.rowsRead); // prints 3
+```
+
+### TODO sql.prepare
+
+### TODO sql.databaseSize
 
 ### Related resources
 
