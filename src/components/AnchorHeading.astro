@@ -7,17 +7,20 @@ type Props = z.infer<typeof props>;
 
 const props = z.object({
 	title: z.string(),
+	id: z.string().optional(),
 	depth: z.number().min(1).max(6),
 });
 
-const { title, depth } = props.parse(Astro.props);
+const { title, id, depth } = props.parse(Astro.props);
+
+const slugified = slug(id ?? title);
 
 const Heading = `h${depth}` as "h1" | "h2" | "h3" | "h4" | "h5" | "h6";
 ---
 
 <div tabindex="-1" class=`heading-wrapper level-h${depth}`>
-	<Heading id={slug(title)} set:html={marked.parseInline(title) as string} />
-	<a class="anchor-link" href={`#${slug(title)}`}>
+	<Heading id={slugified} set:html={marked.parseInline(title) as string} />
+	<a class="anchor-link" href={`#${slugified}`}>
 		<span aria-hidden class="anchor-icon">
 			<svg width="16" height="16" viewBox="0 0 24 24">
 				<path

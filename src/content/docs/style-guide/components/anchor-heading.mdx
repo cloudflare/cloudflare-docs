@@ -11,5 +11,7 @@ This is only required when writing headings yourself inside components, Markdown
 ```mdx live
 import { AnchorHeading } from "~/components"
 
+{/* A custom id to be slugified can be passed, otherwise it will slugify the title. */}
 <AnchorHeading title="Foo & Bar & Baz" depth={2} />
+<AnchorHeading title="Foo & Bar & Baz" depth={2} id="foo" />
 ```
