@@ -96,7 +96,7 @@ You probably have enabled **Hide Originating IP Address** in the [Settings optio
 
 There is not a correct option, as the two options available in Google Analytics (GA) do different things.
 
-The **Hide Originating IP Address** option in [Tool Settings](/zaraz/custom-actions/edit-tools-and-actions/) prevents Zaraz from sending the IP address from a visitor to Google. This means that GA treats Zaraz’s Worker’s IP address as the visitor’s IP address. This is often close in terms of location, but it might not be.
+The "Hide Originating IP Address" option in [Tool Settings](/zaraz/custom-actions/edit-tools-and-actions/) prevents Zaraz from sending the IP address from a visitor to Google. This means that GA treats Zaraz’s Worker’s IP address as the visitor’s IP address. This is often close in terms of location, but it might not be.
 
 With the **Anonymize Originating IP Address** available in the [Add field](/zaraz/custom-actions/additional-fields/) option, Cloudflare sends the visitor’s IP address to Google as is, and passes the [`aip` parameter](https://developers.google.com/analytics/devguides/collection/protocol/v1/parameters#aip) to GA. This asks GA to anonymize the data.
 
