@@ -5,7 +5,7 @@ sidebar:
   order: 2
 ---
 
-Cloudflare Key Transparency Auditor validates Log audit proofs, and provides a signature for them. This allows Log to distribute these signatures to its end-users, and users to have confidence that the Log is not tricking them.
+Cloudflare Key Transparency Auditor validates Log audit proofs and provides a signature for them. This allows Log to distribute these signatures to its end-users, and provides users with confidence that the Log is not tricking them.
 
 Cloudflare provides [Plexi](https://github.com/cloudflare/plexi), a cli companion to verify an Auditor claims locally. This leverages the public [API](./api/index.mdx), and allows users to verify Cloudflare Auditor claims.
 
@@ -23,7 +23,7 @@ Cloudflare provides [Plexi](https://github.com/cloudflare/plexi), a cli companio
 
 ## Usage
 
-You can use the `--help` option to get more details about the commands and their options.
+Use the `--help` option for more details about the commands and their options.
 
 ```bash
 plexi [OPTIONS] <COMMAND>
@@ -31,11 +31,11 @@ plexi [OPTIONS] <COMMAND>
 
 ### Configure your auditor remote
 
-`plexi` does not come with a default remote auditor. You should decide whichever suit your needs.
+`plexi` does not come with a default remote auditor, and you will need to choose your own. 
 
-You can do so either by passing `--remote-url=<REMOTE>`, or setting `PLEXI_REMOTE_URL` environment variable.
+You can do so either by passing `--remote-url=<REMOTE>` or setting the `PLEXI_REMOTE_URL` environment variable.
 
-A list of common remote is provided bellow
+A  common remote is provided below:
 
 | Name       | Remote                                          |
 |:-----------|:------------------------------------------------|
@@ -43,22 +43,22 @@ A list of common remote is provided bellow
 
 If you have deployed your own auditor, you can add a remote by filing a [GitHub issue](https://github.com/cloudflare/plexi/issues).
 
-### Listing monitored Logs
+### List monitored Logs
 
-An auditor monitors multiple Logs at once. To discover which Logs an auditor is monitoring, you run the following
+An auditor monitors multiple Logs at once. To discover which Logs an auditor is monitoring, run the following:
 
 ```shell
 plexi ls --remote-url 'https://plexi.key-transparency.cloudflare.com'
 whatsapp.key-transparency.v1
 ```
 
-### Auditting a signature
+### Audit a signature
 
-Key Transparency Auditor vouch for Log validity. They do so by ensuring epoch uniqueness, and verifying the associated proof
+Key Transparency Auditor vouches for Log validity by ensuring epoch uniqueness. and verifying the associated proof
 
-`plexi audit` provides information about a given epoch, and its validity. It can perform a local audit to confirm the auditor behaviour.
+`plexi audit` provides information about a given epoch and its validity. It can perform a local audit to confirm the auditor behaviour.
 
-For instance, to verify WhatsApp Log auditted by Cloudflare Auditor, you run the following
+For instance, to verify WhatsApp Log auditted by Cloudflare Auditor, run the following:
 ```shell
 > plexi audit --remote-url 'https://plexi.key-transparency.cloudflare.com' --namespace 'whatsapp.key-transparency.v1' --long
 Namespace: whatsapp.key-transparency.v1
