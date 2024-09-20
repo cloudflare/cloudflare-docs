@@ -57,7 +57,7 @@ bundle init
 Open the `Gemfile` that was created for you, and add the following line to the bottom of the file:
 
 ```ruby title="Specifying the github-pages version"
-gem "github-pages", "~> 215", group: :jekyll_plugins
+gem "github-pages", group: :jekyll_plugins
 ```
 
 Your `Gemfile` should resemble the below:
@@ -70,7 +70,7 @@ source "https://rubygems.org"
 git_source(:github) { |repo_name| "https://github.com/#{repo_name}" }
 
 # gem "rails"
-gem "github-pages", "~> 215", group: :jekyll_plugins
+gem "github-pages", group: :jekyll_plugins
 ```
 
 Run `bundle update`, which will install the `github-pages` gem for you, and create a `Gemfile.lock` file with the resolved dependency versions.
