@@ -7,31 +7,19 @@ sidebar:
     text: Beta
 ---
 
-Connect your existing Worker to a GitHub or GitLab repository to set up automatic build and deployment for your Workers development workflow.
+Workers Builds allows you to connect an existing Worker to a GitHub or GitLab repository to set up automatic builds and deployments for your development workflow. 
 
 ## Get Started
 
-To set up your Git integration with a Worker:
+To set up your Git integration with Workers:
 
-1. **Select your Worker** in the Dashboard and navigate to the Build settings of your Worker under the Settings tab.
-2. **Select the Git provider** you'd like to connect to by selecting "Connect". Follow the prompts to install the Cloudflare application on your git account.
-3. **Configure your build settings** by selecting your desired git repository, branch and configuring a deploy command.
+1. **Select your Worker** in the dashboard and navigate to Settings > Build 
+2. **Select the Git provider** you'd like to connect to by clicking "Connect". Follow the prompts to install the Cloudflare application on your git account.
+3. **Configure your build settings** by selecting your desired git repository, branch, and configuring a deploy command and optionally a build command.
 4. **Push a commit** to your repository to trigger your first build and deploy.
 
-If you have a monorepo or [Wrangler Enviornments](/workers/wrangler/environments/) setup, reference [Build Configuration](/workers/ci-cd/builds/build-configuration).
 
-## Build Details
+## View Build Details
 
-When a build is in progress you can monitor the build by viewing its logs. Navigate to **"View build history"** on the deployments page, and select **"View Build"**. The build can take on the status of in progress, queued, successful, failed and canceled builds.
+Once a build is in progress, you can monitor its build logs and view build history by navigating to **"View build history"** on the deployments tab of your Worker. If successful, you can also view the build details for each new [version](https://developers.cloudflare.com/workers/configuration/versions-and-deployments/) created. ## Build Limits
 
-When a commit is successfully built and deployed, you can also view build details for each new version created with git.
-
-## Build Limits
-
-In Beta, the following limits are applicable for Workers Builds:
-
-| Metric                | Description                                                                        | Limit     |
-| --------------------- | ---------------------------------------------------------------------------------- | --------- |
-| **Build Minutes**     | The amount of minutes that it takes to build a project.                            | Unlimited |
-| **Concurrent Builds** | Number of builds that run in parallel across an account.                           | 1         |
-| **Build Timeout**     | The amount of minutes that a build can be run before it is interrupted and failed. | 20 mins   |
