@@ -1632,6 +1632,7 @@
 /support/traffic/argo-tunnel/exposing-applications-running-on-microsoft-azure-with-cloudflare-argo-tunnel/ /cloudflare-one/connections/connect-apps/deployment-guides/azure/ 301
 /cloudflare-docs/content/cloudflare-one/tutorials/area-1/ /cloudflare-one/applications/configure-apps/saas-apps/area-1/ 301
 /cloudflare-docs/content/cloudflare-one/tutorials/azuread-conditional-access/ /cloudflare-docs/content/cloudflare-one/tutorials/entra-id-conditional-access/ 301
+/cloudflare-docs/content/cloudflare-one/tutorials/azuread-risky-users/ /cloudflare-docs/content/cloudflare-one/tutorials/entra-id-risky-users/ 301
 /cloudflare-one/tutorials/zendesk-sso-saas/ /cloudflare-one/applications/configure-apps/saas-apps/zendesk-sso-saas/ 301
 /cloudflare-one/tutorials/docusign-access/ /cloudflare-one/applications/configure-apps/saas-apps/docusign-access/ 301
 /cloudflare-one/tutorials/hubspot-saas/ /cloudflare-one/applications/configure-apps/saas-apps/hubspot-saas/ 301
