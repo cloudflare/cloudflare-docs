@@ -18,6 +18,8 @@ The following fields are required when making a `POST` request:
 
 The `log_directory` field is optional. If set, Cloudflare will use it to fetch audit proofs and validate them.
 
+This API is authenticated via [mTLS](https://www.cloudflare.com/learning/access-management/what-is-mutual-tls/).
+
 ```sh
 curl 'https://plexi.key-transparency.cloudflare.com/namespaces' \
         	--header 'Content-Type: application/json' \
@@ -59,7 +61,9 @@ curl 'https://plexi.key-transparency.cloudflare.com/namespaces'
 
 ## Disable a namespace
 
-If a log state has been corrupted, lost, or needs to be sharded to be maintainbale, the Auditor allows the Log operator to mark a namespace as `Disabled`.
+If a log state has been corrupted, lost, or needs to be sharded to be maintainable, the Auditor allows the Log operator to mark a namespace as `Disabled`.
+
+This API is authenticated via [mTLS](https://www.cloudflare.com/learning/access-management/what-is-mutual-tls/).
 
 
 ```sh
