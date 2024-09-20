@@ -32,6 +32,7 @@ export const baseSchema = z.object({
 			z.literal("example"),
 			z.literal("learning-unit"),
 			z.literal("design-guide"),
+			z.literal("video"),
 		])
 		.catch((ctx) => ctx.input)
 		.optional()
