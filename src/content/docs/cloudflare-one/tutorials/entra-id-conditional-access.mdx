@@ -2,27 +2,27 @@
 updated: 2024-01-12
 category: 🔐 Access
 pcx_content_type: tutorial
-title: Use Azure AD Conditional Access policies in Cloudflare Access
+title: Use Microsoft Entra ID Conditional Access policies in Cloudflare Access
 ---
 
-With Azure Active Directory (AD)'s [Conditional Access](https://learn.microsoft.com/en-us/azure/active-directory/conditional-access/overview), administrators can enforce policies on applications and users directly in Azure AD. Conditional Access has a set of checks that are specialized to Windows and are often preferred by organizations with Windows power users.
+With [Conditional Access](https://learn.microsoft.com/entra/identity/conditional-access/overview) in Microsoft Entra ID (formerly Azure AD), administrators can enforce policies on applications and users directly in Entra ID. Conditional Access has a set of checks that are specialized to Windows and are often preferred by organizations with Windows power users.
 
 ## Before you begin
 
 Make sure you have:
 
-- Global admin rights to an Azure AD account
-- Configured users in the Azure AD account
+- Global admin rights to Microsoft Entra ID account
+- Configured users in the Microsoft Entra ID account
 
 ## Set up an identity provider for your application
 
-Refer to [our IdP setup instructions](/cloudflare-one/identity/idp-integration/entra-id/#set-up-azure-ad-as-an-identity-provider) for Azure AD.
+Refer to [our IdP setup instructions](/cloudflare-one/identity/idp-integration/entra-id/#set-up-azure-ad-as-an-identity-provider) for Entra ID.
 
-## Add API permission in Azure AD
+## Add API permission in Entra ID
 
-Once the base IdP integration is tested and working, grant permission for Cloudflare to read Conditional Access policies from Azure AD.
+Once the base IdP integration is tested and working, grant permission for Cloudflare to read Conditional Access policies from Entra ID.
 
-1. In Azure Active Directory, go to **App registrations**.
+1. In Microsoft Entra ID, go to **App registrations**.
 
 2. Select the application you created for the IdP integration.
 
@@ -34,9 +34,9 @@ Once the base IdP integration is tested and working, grant permission for Cloudf
 
 6. Select **Grant admin consent**.
 
-## Configure Conditional Access in Azure AD
+## Configure Conditional Access in Entra ID
 
-1. In Azure Active Directory, go to **Enterprise applications** > **Conditional Access**.
+1. In Microsoft Entra ID, go to **Enterprise applications** > **Conditional Access**.
 2. Go to **Authentication Contexts**.
 3. [Create an authentication context](https://learn.microsoft.com/en-us/entra/identity/conditional-access/concept-conditional-access-cloud-apps#authentication-context) to reference in your Cloudflare Access policies. Give the authentication context a descriptive name (for example, `Require compliant devices`).
 4. Next, go to **Policies**.
