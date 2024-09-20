@@ -8,7 +8,7 @@ sidebar:
 
 Workers Builds uses a build image with support for a variety of languages and tools such as Node.js, Python, PHP, Ruby, and Go.
 
-## Supported languages and tools
+## Supported Languages and Tools
 
 In the following table, review the preinstalled versions for languages and tools included in the Cloudflare Workers' build image, and the environment variables and/or files available for [overriding the preinstalled version](/workers/ci-cd/builds/build-image/#overriding-default-versions):
 
@@ -23,7 +23,9 @@ In the following table, review the preinstalled versions for languages and tools
 
 The default versions will be updated regularly to the latest minor version. No major version updates will be made without notice. If you need a specific minor version, please specify it by overriding the default version.
 
-### Overriding default versions
+The default versions will be updated regularly to the latest minor version. No major version updates will be made without notice. If you need a specific minor version, please specify it by overriding the default version.
+
+### Overriding Default Versions
 
 If you need to override a [specific version](/workers/ci-cd/builds/build-image/#overriding-default-versions) of a language or tool within the image, you can specify it as a [build environment variable](/workers/ci-cd/builds/build-configuration/#build-settings), or set the relevant file in your source code as shown above.
 
@@ -37,7 +39,7 @@ Or, to set the version by adding a file to your project, you can:
 1. Find the filename for the language or tool (e.g. `.nvmrc`)
 2. Add the specified file name to the root directory and add the desired version number as the contents of the file (e.g. 22)
 
-## Pre-installed packages
+## Pre-installed Packages
 
 In the following table, review the pre-installed packages in the build image. The packages are installed with `apt`, a package manager for Linux distributions.
 
@@ -62,5 +64,3 @@ Workers Builds are run in the following environment:
 | --------------------- | ------------ |
 | **Build Environment** | Ubuntu 24.04 |
 | **Architecture**      | x86_64       |
-
-
