@@ -12,24 +12,6 @@ description: Examples of rules for mitigating requests containing leaked credent
 
 import { Example } from "~/components";
 
-## Rewrite path for requests with leaked passwords
-
-Create a [URL rewrite](/rules/transform/url-rewrite/) to send your end users to the reset password page at your origin server if their login attempt contains a previously leaked password.
-
-<Example>
-
-**When incoming requests match**:
-
-- **Custom filter expression**:<br/>
-  `(http.request.uri.path eq "/login" and cf.waf.credential_check.password_leaked)`
-
-**Then**:
-
-- **Path** > **Rewrite to**: _Static_ | **Value**: `/resetpassword`
-- **Query** > **Preserve**
-
-</Example>
-
 ## Rate limit suspicious logins with leaked credentials
 
 :::note
@@ -54,16 +36,13 @@ When rate exceeds:
 
 </Example>
 
-## Log requests containing leaked credentials
+## Challenge requests containing leaked credentials
 
-:::note[Notes]
-
-- Access to the `cf.waf.credential_check.username_and_password_leaked` field requires a Pro plan or above.
-- The _Log_ action requires an Enterprise plan.
-
+:::note
+Access to the _User and Password Leaked_ (`cf.waf.credential_check.username_and_password_leaked`) field requires a Pro plan or above.
 :::
 
-Create a [custom rule](/waf/custom-rules/) that logs requests containing a previously leaked set of credentials (username and password).
+Create a [custom rule](/waf/custom-rules/) that challenges requests containing a previously leaked set of credentials (username and password).
 
 - **Expression**: If you use the Expression Builder, configure the following expression:
 
@@ -77,4 +56,4 @@ Create a [custom rule](/waf/custom-rules/) that logs requests containing a previ
   (cf.waf.credential_check.username_and_password_leaked)
   ```
 
-- **Action**: _Log_
+- **Action**: _Managed Challenge_

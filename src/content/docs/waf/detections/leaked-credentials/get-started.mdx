@@ -37,7 +37,7 @@ curl "https://api.cloudflare.com/client/v4/zones/{zone_id}/leaked-credential-che
 </TabItem> </Tabs>
 
 :::note
-To achieve optimal latency performance, Cloudflare recommends that you turn off [Exposed Credentials Checks](/waf/managed-rules/reference/exposed-credentials-check/), which refers to a previous implementation.
+To achieve optimal latency performance, Cloudflare recommends that you turn off [Exposed Credentials Checks](/waf/managed-rules/reference/exposed-credentials-check/) (a previous implementation) after turning on leaked credentials detection and setting up your mitigation strategy as described in the next steps.
 :::
 
 ## 2. Validate the leaked credentials detection behavior
@@ -50,11 +50,9 @@ Alternatively, create a WAF custom rule like the one described in the next step 
 
 ## 3. Mitigate requests with leaked credentials
 
-If you are on a Free plan, deploy the suggested [rate limiting rule](/waf/rate-limiting-rules/) template available in **WAF** > **Rate limiting rules**. When you deploy a rule using this template, you get instant protection against IPs attempting to access your application with a leaked password more than 5 times per 10 seconds. This rule can delay attacks by blocking them for a period of time.
+If you are on a Free plan, deploy the suggested [rate limiting rule](/waf/rate-limiting-rules/) template available in **WAF** > **Rate limiting rules**. When you deploy a rule using this template, you get instant protection against IPs attempting to access your application with a leaked password more than 5 times per 10 seconds. This rule can delay attacks by blocking them for a period of time. Alternatively, you can create a custom rule.
 
-Paid plans have access to more granular controls when creating a WAF rule. If you are on a paid plan, create a [custom rule](/waf/custom-rules/) that logs requests containing leaked credentials.
-
-For example, create a custom rule that logs requests containing leaked credentials:
+Paid plans have access to more granular controls when creating a WAF rule. If you are on a paid plan, create a [custom rule](/waf/custom-rules/) that challenges requests containing leaked credentials:
 
 | Field                    | Operator | Value |
 | ------------------------ | -------- | ----- |
@@ -65,6 +63,8 @@ If you use the Expression Editor, enter the following expression:
 ```txt
 (cf.waf.credential_check.username_and_password_leaked)
 ```
+
+Rule action: _Managed Challenge_
 
 This rule will match requests where the WAF detects a previously leaked set of credentials (username and password). For a list of fields provided by leaked credentials detection, refer to [Leaked credentials fields](/waf/detections/leaked-credentials/#leaked-credentials-fields).
 
@@ -95,6 +95,14 @@ You can combine the previous expression with other [fields](/ruleset-engine/rule
 </Details>
 
 For additional examples, refer to [Mitigation examples](/waf/detections/leaked-credentials/examples/).
+
+### Handle detected leaked credentials at the origin server
+
+Additionally, you may want to handle leaked credentials detected by Cloudflare at your origin server.
+
+Make sure the [**Add Leaked Credentials Checks Header** managed transform](/rules/transform/managed-transforms/reference/#add-leaked-credentials-checks-header) is turned on. For paid plans, the managed transform is automatically enabled when you turn on leaked credentials detection. If you are on a Free plan or using the API, you must specifically turn on the managed transform either in the dashboard or using the API.
+
+Then, for requests received at the origin server containing the `Exposed-Credential-Check` header, you could redirect your end users to your reset password page when detecting previously leaked credentials.
 
 ## 4. (Optional) Configure a custom detection location
 
