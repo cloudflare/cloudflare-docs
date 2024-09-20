@@ -16,7 +16,7 @@ Make sure you have:
 
 ## Set up an identity provider for your application
 
-Refer to [our IdP setup instructions](/cloudflare-one/identity/idp-integration/entra-id/#set-up-azure-ad-as-an-identity-provider) for Entra ID.
+Refer to [our IdP setup instructions](/cloudflare-one/identity/idp-integration/entra-id/#set-up-entra-id-as-an-identity-provider) for Entra ID.
 
 ## Add API permission in Entra ID
 
@@ -52,7 +52,7 @@ Once the base IdP integration is tested and working, grant permission for Cloudf
 To import your Conditional Access policies into Cloudflare Access:
 
 1. In [Zero Trust](https://one.dash.cloudflare.com), go to **Settings** > **Authentication**.
-2. Find your Azure AD integration and select **Edit**.
+2. Find your Microsoft Entra ID integration and select **Edit**.
 3. Enable **Azure AD Policy Sync**.
 4. Select **Save**.
 
@@ -66,7 +66,7 @@ To enforce your Conditional Access policies on a Cloudflare Access application:
 
 3. In **Application domain**, enter the target URL of the protected application.
 
-4. For **Identity providers**, select your Azure AD integration.
+4. For **Identity providers**, select your Microsoft Entra ID integration.
 
 5. Finally, create an [Access policy](/cloudflare-one/policies/access/) using the _Azure AD - Auth context_ selector. For example:
 
@@ -75,4 +75,4 @@ To enforce your Conditional Access policies on a Cloudflare Access application:
    | Allow  | Include   | Emails ending in        | `@example.com`              |
    |        | Require   | Azure AD - Auth context | `Require compliant devices` |
 
-Users will only be allowed access if they pass the Azure AD Conditional Access policies associated with this authentication context.
+Users will only be allowed access if they pass the Microsoft Entra ID Conditional Access policies associated with this authentication context.

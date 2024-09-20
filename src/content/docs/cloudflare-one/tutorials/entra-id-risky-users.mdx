@@ -24,7 +24,7 @@ This tutorial demonstrates how to automatically redirect users to a remote brows
 
 ## 1. Set up Entra ID as an identity provider
 
-Refer to [our IdP setup instructions](/cloudflare-one/identity/idp-integration/entra-id/#set-up-azure-ad-as-an-identity-provider) for Entra ID.
+Refer to [our IdP setup instructions](/cloudflare-one/identity/idp-integration/entra-id/#set-up-entra-id-as-an-identity-provider) for Entra ID.
 
 :::note
 
@@ -80,8 +80,8 @@ To get started quickly, deploy our example Cloudflare Workers script by followin
 3. Modify `wrangler.toml` to include the following values:
 
    - `<ACCOUNT_ID>`: your Cloudflare [account ID](/fundamentals/setup/find-account-and-zone-ids/).
-   - `<TENANT_ID>`: your Entra ID **Directory (tenant) ID**, obtained when [setting up Entra ID as an identity provider](#1-set-up-azure-ad-as-an-identity-provider).
-   - `<CLIENT_ID>`: your Entra ID **Application (client) ID**, obtained when [setting up Entra ID as an identity provider](#1-set-up-azure-ad-as-an-identity-provider).
+   - `<TENANT_ID>`: your Entra ID **Directory (tenant) ID**, obtained when [setting up Entra ID as an identity provider](#1-set-up-entra-id-as-an-identity-provider).
+   - `<CLIENT_ID>`: your Entra ID **Application (client) ID**, obtained when [setting up Entra ID as an identity provider](#1-set-up-entra-id-as-an-identity-provider).
 
    ```toml
    name = "risky-users"
