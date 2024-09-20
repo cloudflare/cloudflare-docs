@@ -163,19 +163,19 @@ There is a limit of 10,000 total operations for enabled schemas.
 
 ### Required fields
 
-Although not strictly required by the OpenAPI specification, Schema Validation strictly requires these fields Schema Validation.
+Although not strictly required by the OpenAPI specification, Schema Validation strictly requires these fields.
 
 #### `schema`
 
 - [`type`](https://spec.openapis.org/oas/v3.0.3#schema-object)
-   - All schemas require a type to be set. If the specific type is not supported by schema validation, it is usually best to simply set the type to string instead.
+   - All schemas require a type to be set. If the specific type is not supported by Schema Validation, it is usually best to simply set the type to `string` instead.
 
 #### `parameter`
 
 - [`schema`](https://spec.openapis.org/oas/v3.0.3#schema-object)
-   - Schema Validation does not support the content field in parameters (for more details further down). Instead, a schema is strictly required on all parameters objects.
+   - Schema Validation does not support the content field in parameters. For more details, refer to the [notes on validated and supported fields](#notes-on-validated-and-supported-fields) below. Instead, a schema is strictly required on all parameters objects.
 
-### Validated and supported fields
+### Notes on validated and supported fields
 
 Refer to the information below for more details on Schema Validation's current support for various OpenAPI specification (OAS) objects and fields.
 
