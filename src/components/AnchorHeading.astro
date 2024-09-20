@@ -1,19 +1,19 @@
 ---
 import { z } from "astro:schema";
 import { marked } from "marked";
-import { slug } from "github-slugger";
+import { slug as GithubSlug } from "github-slugger";
 
 type Props = z.infer<typeof props>;
 
 const props = z.object({
 	title: z.string(),
-	id: z.string().optional(),
+	slug: z.string().optional(),
 	depth: z.number().min(1).max(6),
 });
 
-const { title, id, depth } = props.parse(Astro.props);
+const { title, slug, depth } = props.parse(Astro.props);
 
-const slugified = slug(id ?? title);
+const slugified = GithubSlug(slug ?? title);
 
 const Heading = `h${depth}` as "h1" | "h2" | "h3" | "h4" | "h5" | "h6";
 ---
