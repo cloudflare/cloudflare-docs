@@ -3,10 +3,9 @@ pcx_content_type: reference
 title: Additional information
 sidebar:
   order: 11
-
 ---
 
-import { GlossaryTooltip } from "~/components"
+import { GlossaryTooltip } from "~/components";
 
 ## Validation checks
 
@@ -20,18 +19,14 @@ In the downloaded JSON file for the event, the `ruleId` value indicates the dete
 
 ```json null {3}
 {
-  "action": "drop",
-  "ruleId": "sanity-shellshock",
-  "source": "sanitycheck",
-  "userAgent": "() { :;}; printf \\\\\"detection[%s]string\\\\\" \\\\\"TjcLLwVzBtLzvbN\\\\"
-  //...
+	"action": "drop",
+	"ruleId": "sanity-shellshock",
+	"source": "sanitycheck",
+	"userAgent": "() { :;}; printf \\\\\"detection[%s]string\\\\\" \\\\\"TjcLLwVzBtLzvbN\\\\"
+	//...
 }
 ```
 
-:::caution
-
-
+:::note
 Currently, you cannot disable validation checks. They run early in Cloudflare's infrastructure before the configuration for domains has been loaded.
-
-
 :::

@@ -6,22 +6,22 @@ Code blocks are powered by [Expressive Code](https://expressive-code.com/), a pr
 This is just a small showcase of functionality, it has a lot of options!
 
 ````mdx live
-```powershell title="PowerShell terminal example"
+```powershell title="PowerShell"
 Write-Output "This one has a title!"
 ```
 
 ```js wrap
 // Example with wrap
 function getLongString() {
-  return 'This is a very long string that will most probably not fit into the available space unless the container is extremely wide'
+	return "This is a very long string that will most probably not fit into the available space unless the container is extremely wide";
 }
 ```
 
 ```js "return true;" ins="inserted" del="deleted"
 function demo() {
-  console.log('These are inserted and deleted marker types');
-  // The return statement uses the default marker type
-  return true;
+	console.log("These are inserted and deleted marker types");
+	// The return statement uses the default marker type
+	return true;
 }
 ```
 
@@ -76,18 +76,18 @@ add a "Run Worker in Playground" link that will take the user to the [Worker's p
 
 ```js playground
 export default {
-  fetch() {
-    return new Response("Test!")
-  }
-}
+	fetch() {
+		return new Response("Test!");
+	},
+};
 ```
 
 ````mdx
 ```js playground
 export default {
-  fetch() {
-    return new Response("Test!")
-  }
-}
+	fetch() {
+		return new Response("Test!");
+	},
+};
 ```
 ````
