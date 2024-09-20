@@ -1,15 +1,14 @@
-on: [push, workflow_dispatch]
-
-concurrency:
-  group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
-  cancel-in-progress: true
+on:
+  push:
+    branches:
+      - production
 
 jobs:
   publish:
     runs-on: ubuntu-22.04
     permissions:
       contents: read
-    name: Publish to Cloudflare Pages
+    name: Publish to Cloudflare Pages (Production)
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
@@ -27,13 +26,14 @@ jobs:
         env:
           NODE_OPTIONS: --max-old-space-size=4096
       - run: npx wrangler pages deploy --project-name cloudflare-docs dist
+        name: Deploy to Cloudflare Pages
         env:
           CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
           CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
       - uses: actions/cache/save@v4
+        if: always()
         with:
           path: |
             node_modules/.astro/_astro
             node_modules/.astro/assets
           key: static
-

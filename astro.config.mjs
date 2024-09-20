@@ -13,6 +13,7 @@ import { h } from "hastscript";
 import { readdir } from "fs/promises";
 import icon from "astro-icon";
 import sitemap from "@astrojs/sitemap";
+import rehypeTitleFigure from "rehype-title-figure";
 
 const runLinkCheck = process.env.RUN_LINK_CHECK || false;
 
@@ -83,6 +84,7 @@ export default defineConfig({
 			],
 			rehypeSlug,
 			[rehypeAutolinkHeadings, autolinkConfig],
+			rehypeTitleFigure,
 		],
 	},
 	experimental: {
@@ -139,7 +141,6 @@ export default defineConfig({
 				PageSidebar: "./src/components/overrides/PageSidebar.astro",
 				SiteTitle: "./src/components/overrides/SiteTitle.astro",
 				PageTitle: "./src/components/overrides/PageTitle.astro",
-				Pagination: "./src/components/overrides/Pagination.astro",
 				SocialIcons: "./src/components/overrides/SocialIcons.astro",
 				SkipLink: "./src/components/overrides/SkipLink.astro",
 			},
@@ -153,6 +154,7 @@ export default defineConfig({
 				"./src/table.css",
 				"./src/tailwind.css",
 			],
+			pagination: false,
 			plugins: runLinkCheck
 				? [
 						starlightLinksValidator({
@@ -202,4 +204,13 @@ export default defineConfig({
 			},
 		}),
 	],
+	vite: {
+		build: {
+			rollupOptions: {
+				output: {
+					entryFileNames: "_astro/[name].js",
+				},
+			},
+		},
+	},
 });

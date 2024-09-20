@@ -3,26 +3,23 @@ pcx_content_type: how-to
 title: Public buckets
 sidebar:
   order: 2
-
 ---
 
-import { Render } from "~/components"
+import { Render } from "~/components";
 
 Public Bucket is a feature that allows users to expose the contents of their R2 buckets directly to the Internet. By default, buckets are never publicly accessible and will always require explicit user permission to enable.
 
 Public buckets can be set up in either one of two ways:
 
-* Expose your bucket as a custom domain under your control.
-* Expose your bucket as a Cloudflare-managed subdomain under `https://r2.dev`.
+- Expose your bucket as a custom domain under your control.
+- Expose your bucket as a Cloudflare-managed subdomain under `https://r2.dev`.
 
 To configure WAF custom rules, caching, access controls, or bot management for your bucket, you must do so through a custom domain.
 Using a custom domain does not require enabling `r2.dev`.
 
 :::note
 
-
 Currently, public buckets do not let you list the bucket contents at the root of your (sub) domain.
-
 
 :::
 
@@ -34,9 +31,7 @@ Domain access through a custom domain allows you to use [Cloudflare Cache](/cach
 
 :::note
 
-
 By default, only certain file types are cached. To cache all files in your bucket, you must set a Cache Everything page rule. For more information on default Cache behavior and how to customize it, refer to [Default Cache Behavior](/cache/concepts/default-cache-behavior/#default-cached-file-extensions)
-
 
 :::
 
@@ -44,16 +39,18 @@ By default, only certain file types are cached. To cache all files in your bucke
 
 To restrict access to your custom domain's bucket, use Cloudflare's existing security products.
 
-* [Cloudflare Zero Trust Access](/cloudflare-one/applications/configure-apps): Protects buckets that should only be accessible by your teammates.
-* [Cloudflare WAF Token Authentication](/waf/custom-rules/use-cases/configure-token-authentication/): Restricts access to documents, files, and media to selected users by providing them with an access token.
+- [Cloudflare Zero Trust Access](/cloudflare-one/applications/configure-apps): Protects buckets that should only be accessible by your teammates.
+- [Cloudflare WAF Token Authentication](/waf/custom-rules/use-cases/configure-token-authentication/): Restricts access to documents, files, and media to selected users by providing them with an access token.
 
 :::caution
 
-
 Disable public access to your [`r2.dev` subdomain](#disable-managed-public-access) when using products like WAF or Cloudflare Access. If you do not disable public access, your bucket will remain publicly available through your `r2.dev` subdomain.
 
-
 :::
+
+### Minimum TLS Version
+
+To specify the minimum TLS version of a custom hostname of an R2 bucket, you can issue an API call to edit [R2 custom domain settings](/api/operations/r2-edit-custom-domain-settings).
 
 ## Connect a bucket to a custom domain
 
@@ -63,9 +60,7 @@ To view the added DNS record, select **...** next to the connected domain and se
 
 :::note
 
-
 If the zone is on an Enterprise plan, make sure that you [release the zone hold](/fundamentals/setup/account/account-security/zone-holds/#release-zone-holds) before adding the custom domain. A zone hold would prevent the custom subdomain from activating.
-
 
 :::
 
@@ -73,9 +68,9 @@ If the zone is on an Enterprise plan, make sure that you [release the zone hold]
 
 There are a few restrictions when using custom domains to access R2 buckets.
 
-* The domain being used must belong to the same account as the R2 bucket.
-* Use of a domain with CNAME flattening enabled is not supported. You will need to disable [CNAME flattening](/dns/cname-flattening/) before enabling domain access.
-* Object access is only available via HTTPS; plaintxt HTTP is not supported.
+- The domain being used must belong to the same account as the R2 bucket.
+- Use of a domain with CNAME flattening enabled is not supported. You will need to disable [CNAME flattening](/dns/cname-flattening/) before enabling domain access.
+- Object access is only available via HTTPS; plaintxt HTTP is not supported.
 
 ## Disable domain access
 
@@ -110,11 +105,9 @@ When you enable managed public access for your bucket, the content of your bucke
 
 :::note
 
-
 Public access through `r2.dev` subdomains are rate limited and should only be used for development purposes.
 
 To enable access management, Cache and bot management features, you must set up a custom domain when enabling public access to your bucket.
-
 
 :::
 
