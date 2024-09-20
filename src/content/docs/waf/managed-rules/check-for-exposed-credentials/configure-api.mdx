@@ -6,19 +6,18 @@ sidebar:
 head:
   - tag: title
     content: Configure exposed credentials checks via API
-
 ---
 
 Configure exposed credentials checks using the [Rulesets API](/ruleset-engine/rulesets-api/). You can do the following:
 
-* [Deploy the Cloudflare Exposed Credentials Check Managed Ruleset](/waf/managed-rules/reference/exposed-credentials-check/#configure-via-api).
-* Create custom rules that check for exposed credentials.
+- [Deploy the Cloudflare Exposed Credentials Check Managed Ruleset](/waf/managed-rules/reference/exposed-credentials-check/#configure-via-api).
+- Create custom rules that check for exposed credentials.
 
 ## Create a custom rule checking for exposed credentials
 
 :::note
 
-This feature requires account-level WAF, which is available to Enterprise customers with a paid add-on. 
+This feature requires account-level WAF, which is available to Enterprise customers with a paid add-on.
 :::
 
 You can create rules that check for exposed credentials using the [Rulesets API](/ruleset-engine/rulesets-api/). Include these rules in a custom ruleset, which you must create at the account level, and then deploy the custom ruleset to a phase.
@@ -27,17 +26,15 @@ A rule checking for exposed credentials has a match when both the rule expressio
 
 To check for exposed credentials in a custom rule, include the `exposed_credential_check` object in the rule definition. This object must have the following properties:
 
-* `username_expression` — Expression that selects the user ID used in the credentials check. This property can have up to 1024 characters.
-* `password_expression` — Expression that selects the password used in the credentials check. This property can have up to 1024 characters.
+- `username_expression` — Expression that selects the user ID used in the credentials check. This property can have up to 1024 characters.
+- `password_expression` — Expression that selects the password used in the credentials check. This property can have up to 1024 characters.
 
-:::caution[Important]
-
+:::note
 
 These properties have additional requirements:
 
-* Each expression must evaluate to a string.
-* You can only use the [`upper()`](/ruleset-engine/rules-language/functions/#upper), [`lower()`](/ruleset-engine/rules-language/functions/#lower), [`url_decode()`](/ruleset-engine/rules-language/functions/#url_decode), and [`lookup_json_string()`](/ruleset-engine/rules-language/functions/#lookup_json_string) functions, and you cannot nest these functions.
-
+- Each expression must evaluate to a string.
+- You can only use the [`upper()`](/ruleset-engine/rules-language/functions/#upper), [`lower()`](/ruleset-engine/rules-language/functions/#lower), [`url_decode()`](/ruleset-engine/rules-language/functions/#url_decode), and [`lookup_json_string()`](/ruleset-engine/rules-language/functions/#lookup_json_string) functions, and you cannot nest these functions.
 
 :::
 
@@ -76,34 +73,34 @@ The response returns the created ruleset. Note the presence of the `exposed_cred
 
 ```json null {15-18}
 {
-  "result": {
-    "id": "<CUSTOM_RULESET_ID>",
-    "name": "Custom Ruleset A",
-    "description": "This ruleset includes a rule checking for exposed credentials.",
-    "kind": "custom",
-    "version": "1",
-    "rules": [
-      {
-        "id": "<CUSTOM_RULE_ID>",
-        "version": "1",
-        "action": "log",
-        "description": "Exposed credentials check on login.php page",
-        "expression": "http.request.method == \"POST\" && http.request.uri == \"/login.php\"",
-        "exposed_credential_check": {
-          "username_expression": "url_decode(http.request.body.form[\"username\"][0])",
-          "password_expression": "url_decode(http.request.body.form[\"password\"][0])"
-        },
-        "last_updated": "2021-03-19T10:48:04.057775Z",
-        "ref": "<CUSTOM_RULE_REF>",
-        "enabled": true
-      }
-    ],
-    "last_updated": "2021-03-19T10:48:04.057775Z",
-    "phase": "http_request_firewall_custom"
-  },
-  "success": true,
-  "errors": [],
-  "messages": []
+	"result": {
+		"id": "<CUSTOM_RULESET_ID>",
+		"name": "Custom Ruleset A",
+		"description": "This ruleset includes a rule checking for exposed credentials.",
+		"kind": "custom",
+		"version": "1",
+		"rules": [
+			{
+				"id": "<CUSTOM_RULE_ID>",
+				"version": "1",
+				"action": "log",
+				"description": "Exposed credentials check on login.php page",
+				"expression": "http.request.method == \"POST\" && http.request.uri == \"/login.php\"",
+				"exposed_credential_check": {
+					"username_expression": "url_decode(http.request.body.form[\"username\"][0])",
+					"password_expression": "url_decode(http.request.body.form[\"password\"][0])"
+				},
+				"last_updated": "2021-03-19T10:48:04.057775Z",
+				"ref": "<CUSTOM_RULE_REF>",
+				"enabled": true
+			}
+		],
+		"last_updated": "2021-03-19T10:48:04.057775Z",
+		"phase": "http_request_firewall_custom"
+	},
+	"success": true,
+	"errors": [],
+	"messages": []
 }
 ```
 
@@ -148,48 +145,48 @@ curl "https://api.cloudflare.com/client/v4/accounts/{account_id}/rulesets" \
 
 The response returns the created ruleset. Note the presence of the following elements in the rule definition:
 
-* The `rewrite` action.
-* The `action_parameters` object configuring the HTTP header added to requests with exposed credentials.
-* The `exposed_credential_check` object.
+- The `rewrite` action.
+- The `action_parameters` object configuring the HTTP header added to requests with exposed credentials.
+- The `exposed_credential_check` object.
 
 ```json null {12-20,23-26}
 {
-  "result": {
-    "id": "<CUSTOM_RULESET_ID>",
-    "name": "Custom Ruleset B",
-    "description": "This ruleset includes a rule checking for exposed credentials.",
-    "kind": "custom",
-    "version": "1",
-    "rules": [
-      {
-        "id": "<CUSTOM_RULE_ID>",
-        "version": "1",
-        "action": "rewrite",
-        "action_parameters": {
-          "headers": {
-            "Exposed-Credential-Check": {
-              "operation": "set",
-              "value": "1"
-            }
-          }
-        },
-        "description": "Exposed credentials check on login endpoint with JSON body",
-        "expression": "http.request.method == \"POST\" && http.request.uri == \"/login.php\" && any(http.request.headers[\"content-type\"][*] == \"application/json\")",
-        "exposed_credential_check": {
-          "username_expression": "lookup_json_string(http.request.body.raw, \"username\")",
-          "password_expression": "lookup_json_string(http.request.body.raw, \"password\")"
-        },
-        "last_updated": "2022-03-19T12:48:04.057775Z",
-        "ref": "<CUSTOM_RULE_REF>",
-        "enabled": true
-      }
-    ],
-    "last_updated": "2022-03-19T12:48:04.057775Z",
-    "phase": "http_request_firewall_custom"
-  },
-  "success": true,
-  "errors": [],
-  "messages": []
+	"result": {
+		"id": "<CUSTOM_RULESET_ID>",
+		"name": "Custom Ruleset B",
+		"description": "This ruleset includes a rule checking for exposed credentials.",
+		"kind": "custom",
+		"version": "1",
+		"rules": [
+			{
+				"id": "<CUSTOM_RULE_ID>",
+				"version": "1",
+				"action": "rewrite",
+				"action_parameters": {
+					"headers": {
+						"Exposed-Credential-Check": {
+							"operation": "set",
+							"value": "1"
+						}
+					}
+				},
+				"description": "Exposed credentials check on login endpoint with JSON body",
+				"expression": "http.request.method == \"POST\" && http.request.uri == \"/login.php\" && any(http.request.headers[\"content-type\"][*] == \"application/json\")",
+				"exposed_credential_check": {
+					"username_expression": "lookup_json_string(http.request.body.raw, \"username\")",
+					"password_expression": "lookup_json_string(http.request.body.raw, \"password\")"
+				},
+				"last_updated": "2022-03-19T12:48:04.057775Z",
+				"ref": "<CUSTOM_RULE_REF>",
+				"enabled": true
+			}
+		],
+		"last_updated": "2022-03-19T12:48:04.057775Z",
+		"phase": "http_request_firewall_custom"
+	},
+	"success": true,
+	"errors": [],
+	"messages": []
 }
 ```
 
