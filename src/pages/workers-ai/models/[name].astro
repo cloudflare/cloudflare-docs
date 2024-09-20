@@ -28,6 +28,7 @@ import TranslationResponses from "~/components/models/responses/TranslationRespo
 import TranslationCode from "~/components/models/code/TranslationCode.astro";
 import StableDiffusionV15Img2ImgCode from "~/components/models/code/StableDiffusion-v1-5-img2imgCode.astro";
 import StableDiffusionV15InpaintingCode from "~/components/models/code/StableDiffusion-v1-5-inpaintingCode.astro";
+import type { ComponentProps } from "astro/types";
 
 export const getStaticPaths = (async () => {
 	const models = await getCollection("workers-ai-models");
@@ -52,106 +53,118 @@ const hasLora = Boolean(
 	data.model.properties.find((x) => x.property_id === "lora"),
 );
 
-const badges = data.model.properties.flatMap(({ property_id, value }) => {
-	if (property_id === "beta" && value === "true") {
-		return {
-			preset: "beta",
-		};
-	}
+type InlineBadgeProps = ComponentProps<typeof InlineBadge>;
 
-	if (property_id === "lora" && value === "true") {
-		return {
-			variant: "tip",
-			text: "LoRA",
-		};
-	}
-
-	if (property_id === "function_calling" && value === "true") {
-		return {
-			variant: "note",
-			text: "Function calling",
-		};
-	}
-
-	if (property_id === "planned_deprecation_date") {
-		const timestamp = Math.floor(new Date(value).getTime() / 1000);
-
-		if (Date.now() > timestamp) {
-			return { variant: "danger", text: "Deprecated" };
+const badges = data.model.properties
+	.flatMap(({ property_id, value }): InlineBadgeProps | null => {
+		if (property_id === "beta" && value === "true") {
+			return {
+				preset: "beta",
+				text: "Beta",
+			} as const;
 		}
 
-		return { variant: "danger", text: "Planned deprecation" };
-	}
+		if (property_id === "lora" && value === "true") {
+			return {
+				variant: "tip",
+				text: "LoRA",
+			} as const;
+		}
 
-	return [];
-});
+		if (property_id === "function_calling" && value === "true") {
+			return {
+				variant: "note",
+				text: "Function calling",
+			} as const;
+		}
 
-let CodeExamples;
-let Responses;
+		if (property_id === "planned_deprecation_date") {
+			const timestamp = Math.floor(new Date(value).getTime() / 1000);
 
-switch (data.task_type) {
-	case "text-generation": {
-		CodeExamples = TextGenerationCode;
-		Responses = TextGenerationResponses;
+			if (Date.now() > timestamp) {
+				return { variant: "danger", text: "Deprecated" } as const;
+			}
+
+			return { variant: "danger", text: "Planned deprecation" } as const;
+		}
+
+		return null;
+	})
+	.filter(Boolean) as InlineBadgeProps[];
+
+function getComponents(info: typeof data) {
+	switch (info.task_type) {
+		case "text-generation": {
+			return {
+				CodeExamples: TextGenerationCode,
+				Responses: TextGenerationResponses,
+			};
+		}
+		case "automatic-speech-recognition":
+			return {
+				CodeExamples: AutomaticSpeechRecognitionCode,
+				Responses: AutomaticSpeechRecognitionResponses,
+			};
+		case "image-classification":
+			return {
+				CodeExamples: ImageClassificationCode,
+				Responses: ImageClassificationResponses,
+			};
+		case "image-to-text":
+			return {
+				CodeExamples: ImageToTextCode,
+				Responses: ImageToTextResponses,
+			};
+		case "object-detection":
+			return {
+				CodeExamples: ObjectDetectionCode,
+				Responses: ObjectDetectionResponses,
+			};
+		case "summarization":
+			return {
+				CodeExamples: SummarizationCode,
+				Responses: SummarizationResponses,
+			};
+		case "text-classification":
+			return {
+				CodeExamples: TextClassificationCode,
+				Responses: TextClassificationResponses,
+			};
+		case "text-embeddings":
+			return {
+				CodeExamples: TextEmbeddingCode,
+				Responses: TextEmbeddingsResponses,
+			};
+		case "text-to-image":
+			return {
+				CodeExamples: TextToImageCode,
+				Responses: TextToImageResponses,
+			};
+		case "translation":
+			return {
+				CodeExamples: TranslationCode,
+				Responses: TranslationResponses,
+			};
 	}
-	break;
-	case "automatic-speech-recognition": {
-		CodeExamples = AutomaticSpeechRecognitionCode;
-		Responses = AutomaticSpeechRecognitionResponses;
-	}
-	break;
-	case "image-classification": {
-		CodeExamples = ImageClassificationCode;
-		Responses = ImageClassificationResponses;
-	}
-	break;
-	case "image-to-text": {
-		CodeExamples = ImageToTextCode;
-		Responses = ImageToTextResponses;
-	}
-	break;
-	case "object-detection": {
-		CodeExamples = ObjectDetectionCode;
-		Responses = ObjectDetectionResponses;
-	}
-	break;
-	case "summarization": {
-		CodeExamples = SummarizationCode;
-		Responses = SummarizationResponses;
-	}
-	break;
-	case "text-classification": {
-		CodeExamples = TextClassificationCode;
-		Responses = TextClassificationResponses;
-	}
-	break;
-	case "text-embeddings": {
-		CodeExamples = TextEmbeddingCode;
-		Responses = TextEmbeddingsResponses;
-	}
-	break;
-	case "text-to-image": {
-		CodeExamples = TextToImageCode;
-		Responses = TextToImageResponses;
-	}
-	break;
-	case "translation": {
-		CodeExamples = TranslationCode;
-		Responses = TranslationResponses;
-	}
-	break;
+	// default
+	return {
+		CodeExamples: null,
+		Responses: null,
+	};
 }
+const components = getComponents(data);
+const CodeExamples = components.CodeExamples;
+const Responses = components.Responses;
 
 if (data.model.name === "@cf/runwayml/stable-diffusion-v1-5-inpainting") {
-	CodeExamples = StableDiffusionV15InpaintingCode;
+	components.CodeExamples = StableDiffusionV15InpaintingCode;
 } else if (data.model.name === "@cf/runwayml/stable-diffusion-v1-5-img2img") {
-	CodeExamples = StableDiffusionV15Img2ImgCode;
+	components.CodeExamples = StableDiffusionV15Img2ImgCode;
 }
-
 ---
 
 <StarlightPage frontmatter={{ title: name, description }}>
-	{badges.map((badge) => <InlineBadge {...badge} /> )}
+	{badges.map((badge) => <InlineBadge {...badge} />)}
 	<p>
 		<strong>Model ID: </strong>
 		<code>{data.model.name}</code>
@@ -170,12 +183,12 @@ if (data.model.name === "@cf/runwayml/stable-diffusion-v1-5-inpainting") {
 		<a href={`/workers-ai/models/#${data.task_type}`}>{data.model.task.name}</a>
 	</p>
 	{showPlayground && <Playground name={data.model.name} />}
-	<CodeExamples name={data.model.name} lora={hasLora} />
+	{CodeExamples && <CodeExamples name={data.model.name} lora={hasLora} />}
 	{
 		data.task_type === "text-generation" && (
 			<TextGenerationPrompting lora={hasLora} />
 		)
 	}
-	<Responses name={data.model.name} />
+	{Responses && <Responses name={data.model.name} />}
 	<Schemas schemas={data.json_schema} />
 </StarlightPage>

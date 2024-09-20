@@ -6,10 +6,9 @@ sidebar:
 head:
   - tag: title
     content: Create a compression rule via API
-
 ---
 
-import { Render } from "~/components"
+import { Render } from "~/components";
 
 Use the [Rulesets API](/ruleset-engine/rulesets-api/) to create a compression rule via API.
 
@@ -17,14 +16,17 @@ Use the [Rulesets API](/ruleset-engine/rulesets-api/) to create a compression ru
 
 When creating a compression rule via API, make sure you:
 
-* Set the rule action to `compress_response`.
-* Define the parameters in the `action_parameters` field according to the [settings](/rules/compression-rules/settings/#api-configuration-settings) you wish to override for matching requests.
-* Deploy the rule to the `http_response_compression` phase at the zone level.
+- Set the rule action to `compress_response`.
+- Define the parameters in the `action_parameters` field according to the [settings](/rules/compression-rules/settings/#api-configuration-settings) you wish to override for matching requests.
+- Deploy the rule to the `http_response_compression` phase at the zone level.
 
 ## Procedure
 
-<Render file="rules-creation-workflow" params={{ one: "a compression rule", two: "http_response_compression" }} />
+<Render
+	file="rules-creation-workflow"
+	params={{ one: "a compression rule", two: "http_response_compression" }}
+/>
 
-## Example requests
+## Examples
 
-Refer to the [Rules examples gallery](/rules/compression-rules/examples/) for example API requests.
+For example API requests, refer to the [Examples gallery](/rules/compression-rules/examples/).
