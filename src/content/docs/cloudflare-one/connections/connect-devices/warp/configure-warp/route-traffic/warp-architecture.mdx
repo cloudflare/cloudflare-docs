@@ -111,10 +111,10 @@ resolver #2
 On Windows, open a PowerShell window and run `ipconfig`. The DNS servers should be set to WARP's local DNS proxy IPs.
 
 ```powershell
-PS C:\> ipconfig
+ipconfig
 ```
 
-```powershell {15-16} output
+```txt {15-16} output
 Windows IP Configuration
 
 Unknown adapter CloudflareWARP:
@@ -200,11 +200,10 @@ utun3: flags=8051<UP,POINTOPOINT,RUNNING,MULTICAST> mtu 1280
 On Windows, run `ipconfig`. When WARP is turned on, you will see an adapter called `CloudflareWARP` with IP address `172.16.0.2`.
 
 ```powershell
-PS C:\> ipconfig
+ipconfig
 ```
 
-```powershell {12} output
-
+```txt {12} output
 Windows IP Configuration
 
 Unknown adapter CloudflareWARP:
@@ -299,11 +298,10 @@ To view the entire routing table on Windows, run `netstat -r`.
 You can also search the routing table for an IP address. In this example, we see that traffic to `1.1.1.1` is sent through the WARP virtual interface:
 
 ```powershell
-PS C:\> Find-NetRoute -RemoteIPAddress "1.1.1.1" | Select-Object InterfaceAlias -Last 1
+Find-NetRoute -RemoteIPAddress "1.1.1.1" | Select-Object InterfaceAlias -Last 1
 ```
 
-```powershell output
-
+```txt output
 InterfaceAlias
 --------------
 CloudflareWARP
@@ -312,11 +310,10 @@ CloudflareWARP
 In contrast, this DHCP address is excluded from WARP and uses the default interface:
 
 ```powershell
-PS C:\> Find-NetRoute -RemoteIPAddress "169.254.0.0" | Select-Object InterfaceAlias -Last 1
+Find-NetRoute -RemoteIPAddress "169.254.0.0" | Select-Object InterfaceAlias -Last 1
 ```
 
-```powershell output
-
+```txt output
 InterfaceAlias
 --------------
 Wi-Fi

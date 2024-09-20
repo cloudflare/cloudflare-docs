@@ -18,7 +18,7 @@ To update `cloudflared` for a tunnel [created through the dashboard](/cloudflare
 Run the following command:
 
 ```powershell
-PS C:\> cloudflared update
+cloudflared update
 ```
 
 This updates `cloudflared` and automatically restarts the service.
@@ -139,7 +139,7 @@ Windows systems require services to have a unique name and display name. You can
 1. Install and configure `cloudflared`.
 2. Next, create a service with a unique name and point to the `cloudflared` executable and configuration file.
 
-```bash
+```powershell
 sc.exe create <unique-name> binPath='<path-to-exe>' --config '<path-to-config>' displayname="Unique Name"
 ```
 
@@ -147,6 +147,6 @@ sc.exe create <unique-name> binPath='<path-to-exe>' --config '<path-to-config>' 
 
 4. You can now start each unique service.
 
-```bash
+```powershell
 sc.exe start <unique-name>
 ```
