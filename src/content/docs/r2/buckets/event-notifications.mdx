@@ -5,12 +5,6 @@ pcx_content_type: how-to
 
 Event notifications send messages to your [queue](/queues/) when data in your R2 bucket changes. You can consume these messages with a [consumer Worker](/queues/reference/how-queues-works/#create-a-consumer-worker) or [pull over HTTP](/queues/configuration/pull-consumers/) from outside of Cloudflare Workers.
 
-:::note[Open Beta]
-
-The event notifications feature is currently in open beta. To report bugs or request features, go to the #r2-storage channel in the [Cloudflare Developer Discord](https://discord.cloudflare.com) or fill out the [feedback form](https://forms.gle/2HBKD9zG9PFiU4v79).
-
-:::
-
 ## Get started with event notifications
 
 ### Prerequisites
@@ -21,13 +15,23 @@ Before getting started, you will need:
 - An existing queue. If you do not already have a queue, refer to [Create a queue](/queues/get-started/#3-create-a-queue).
 - A [consumer Worker](/queues/reference/how-queues-works/#create-a-consumer-worker) or [HTTP pull](/queues/configuration/pull-consumers/) enabled on your Queue.
 
-### Set up Wrangler
+### Enable event notifications via Dashboard
 
-To begin, refer to [Install/Update Wrangler](/workers/wrangler/install-and-update/#install-wrangler) to install Wrangler, the Cloudflare Developer Platform CLI. Log into Wrangler with the [`wrangler login` command](/workers/wrangler/commands/#login).
+1. From the Cloudflare dashboard, select **R2** from the sidebar.
+2. Select the bucket you'd like to add an event notification rule to.
+3. Switch to the **Settings** tab, then scroll down to the **Event notifications** card.
+4. Select **Add notification** and choose the queue you'd like to receive notifications and the [type of event(s)](/r2/buckets/event-notifications/#event-types) that will trigger them.
+5. Select **Add notification**.
 
-### Enable event notifications on your R2 bucket
+### Enable event notifications via Wrangler
 
-To enable event notifications, add an event notification rule to your bucket by running the [`r2 bucket notification create` command](/workers/wrangler/commands/#notification-create). Event notification rules determine the [event types](/r2/buckets/event-notifications/#event-types) that trigger notifications and enable filtering based on object `prefix` and `suffix`.
+#### Set up Wrangler
+
+To begin, install [`npm`](https://docs.npmjs.com/getting-started). Then [install Wrangler, the Developer Platform CLI](/workers/wrangler/install-and-update/).
+
+#### Enable event notifications on your R2 bucket
+
+Log in to Wrangler with the [`wrangler login` command](/workers/wrangler/commands/#login). Then add an [event notification rule](/r2/buckets/event-notifications/#event-notification-rules) to your bucket by running the [`r2 bucket notification create` command](/workers/wrangler/commands/#notification-create).
 
 ```sh
 npx wrangler r2 bucket notification create <BUCKET_NAME> --event-type <EVENT_TYPE> --queue <QUEUE_NAME>
@@ -47,6 +51,10 @@ $ npx wrangler r2 bucket notification create <BUCKET_NAME> --event-type <EVENT_T
 ```
 
 For a more complete step-by-step example, refer to the [Log and store upload events in R2 with event notifications](/r2/examples/upload-logs-event-notifications/) example.
+
+## Event notification rules
+
+Event notification rules determine the [event types](/r2/buckets/event-notifications/#event-types) that trigger notifications and optionally enable filtering based on object `prefix` and `suffix`. You can have up to 100 event notification rules per R2 bucket.
 
 ## Event types
 
@@ -81,17 +89,14 @@ For a more complete step-by-step example, refer to the [Log and store upload eve
 			<td>
 				<code>object-delete</code>
 			</td>
-			<td>
-				Triggered when an object is explicitly removed from the bucket.
-				<br />
-				<br />
-				<b>Note</b>: During the beta, deletes that occur as a result of object
-				lifecycle policies will not trigger this event.
-			</td>
+			<td>Triggered when an object is explicitly removed from the bucket.</td>
 			<td>
 				<ul>
 					<li>
 						<code>DeleteObject</code>
+					</li>
+					<li>
+						<code>LifecycleDeletion</code>
 					</li>
 				</ul>
 			</td>
@@ -224,12 +229,7 @@ Queue consumers receive notifications as [Messages](/queues/configuration/javasc
 	</tbody>
 </table>
 
-## Limitations
+## Notes
 
-During the beta, event notifications has the following limitations:
-
-- Queues [per-queue message throughput](/queues/platform/limits/) is currently 400 messages per second. If your workload produces more than 400 notifications per second, messages may be dropped.
-- For a given bucket, only one event notification rule can be created per queue.
-- Each bucket can have up to 5 event notification rules.
-- Deletes that occur as a result of object lifecycle policies will not trigger an event notification.
-- Event notifications are not available for buckets with [jursdictional restrictions](/r2/reference/data-location/#jurisdictional-restrictions).
+- Event notifications are not available for buckets with [jursdictional restrictions](/r2/reference/data-location/#jurisdictional-restrictions) (_coming soon_).
+- Queues [per-queue message throughput](/queues/platform/limits/) is currently 5,000 messages per second. If your workload produces more than 5,000 notifications per second, we recommend splitting notification rules across multiple queues.
