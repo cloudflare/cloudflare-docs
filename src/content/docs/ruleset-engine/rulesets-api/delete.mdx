@@ -4,13 +4,12 @@ type: overview
 title: Delete rulesets
 sidebar:
   order: 10
-
 ---
 
 You can use the API to delete all the versions of a ruleset or delete a specific version of a ruleset.
 
-* [Delete ruleset (all versions)](#delete-ruleset)
-* [Delete ruleset version](#delete-ruleset-version)
+- [Delete ruleset (all versions)](#delete-ruleset)
+- [Delete ruleset version](#delete-ruleset-version)
 
 ## Delete ruleset
 
@@ -24,18 +23,15 @@ Use one of the following API endpoints:
 | [Delete a zone ruleset][dr-zone]        | `DELETE /zones/{zone_id}/rulesets/{ruleset_id}`       |
 
 [dr-account]: /api/operations/deleteAccountRuleset
-
 [dr-zone]: /api/operations/deleteZoneRuleset
 
 If the delete operation succeeds, the API method call returns a `204 No Content` HTTP status code.
 
-:::caution[Important]
-
+:::note
 
 You cannot delete a ruleset that is still referenced in other rules. For example, you cannot delete a custom ruleset that is being deployed in a rule with `execute` action.
 
 To delete the ruleset, update or delete any rules that reference the ruleset and try again.
-
 
 :::
 
@@ -61,20 +57,17 @@ Use one of the following API endpoints:
 | [Delete a zone ruleset version][drv-zone]        | `DELETE /zones/{zone_id}/rulesets/{ruleset_id}/versions/{version_number}`       |
 
 [drv-account]: /api/operations/deleteAccountRulesetVersion
-
 [drv-zone]: /api/operations/deleteZoneRulesetVersion
 
 If the delete operation succeeds, the method call returns a `204 No Content` HTTP status code.
 
 Later updates to the ruleset will not reuse the version number of a deleted ruleset version.
 
-:::caution[Important]
-
+:::note
 
 You cannot delete a ruleset version if it is the latest ruleset version and there is a rule with `execute` action deploying that ruleset.
 
 To delete the ruleset version, update or delete any rules that reference the ruleset and try again.
-
 
 :::
 

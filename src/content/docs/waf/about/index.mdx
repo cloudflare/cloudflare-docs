@@ -3,16 +3,15 @@ title: Concepts
 pcx_content_type: concept
 sidebar:
   order: 3
-
 ---
 
-import { GlossaryTooltip, Render } from "~/components"
+import { GlossaryTooltip, Render } from "~/components";
 
 <Render file="waf-intro" />
 
 :::note[What is a Web Application Firewall?]
 
-A Web Application Firewall or WAF creates a shield between a web app and the Internet. This shield can help mitigate many common attacks. For a more thorough definition, refer to [Web Application Firewall explained](https://www.cloudflare.com/learning/ddos/glossary/web-application-firewall-waf/) in the Learning Center. 
+A Web Application Firewall or WAF creates a shield between a web app and the Internet. This shield can help mitigate many common attacks. For a more thorough definition, refer to [Web Application Firewall explained](https://www.cloudflare.com/learning/ddos/glossary/web-application-firewall-waf/) in the Learning Center.
 :::
 
 ## Rules and rulesets
@@ -25,49 +24,47 @@ A [ruleset](/ruleset-engine/about/rulesets/) is an ordered set of rules that you
 
 The Cloudflare WAF includes:
 
-* [Managed Rules](/waf/managed-rules/) (for example, the [Cloudflare Managed Ruleset](/waf/managed-rules/reference/cloudflare-managed-ruleset/)), which are signature-based rules created by Cloudflare that provide immediate protection against known attacks.
-* [Traffic detections](#available-traffic-detections) (for example, bot score and attack score) that enrich requests with metadata.
-* User-defined rules for your specific needs, including [custom rules](/waf/custom-rules/) and <GlossaryTooltip term="rate limiting" link="/waf/rate-limiting-rules/">rate limiting rules</GlossaryTooltip>.
+- [Managed Rules](/waf/managed-rules/) (for example, the [Cloudflare Managed Ruleset](/waf/managed-rules/reference/cloudflare-managed-ruleset/)), which are signature-based rules created by Cloudflare that provide immediate protection against known attacks.
+- [Traffic detections](#available-traffic-detections) (for example, bot score and attack score) that enrich requests with metadata.
+- User-defined rules for your specific needs, including [custom rules](/waf/custom-rules/) and <GlossaryTooltip term="rate limiting" link="/waf/rate-limiting-rules/">rate limiting rules</GlossaryTooltip>.
 
 ## Detection versus mitigation
 
 The two main roles of the Cloudflare WAF are the following:
 
-* **Detection**: Run incoming requests through one or more [traffic detections](#available-traffic-detections) to find malicious or potentially malicious activity. The scores from enabled detections are available in the [Security Analytics](/waf/analytics/security-analytics/) dashboard, where you can analyze your security posture and determine the most appropriate mitigation rules.
+- **Detection**: Run incoming requests through one or more [traffic detections](#available-traffic-detections) to find malicious or potentially malicious activity. The scores from enabled detections are available in the [Security Analytics](/waf/analytics/security-analytics/) dashboard, where you can analyze your security posture and determine the most appropriate mitigation rules.
 
-* **Mitigation**: Blocks, challenges, or throttles requests through different [mitigation features](#waf-mitigation-features) such as custom rules, WAF Managed Rules, and rate limiting rules. Rules that mitigate traffic can include scores from traffic scans in their expressions to better address possibly malicious requests.
+- **Mitigation**: Blocks, challenges, or throttles requests through different [mitigation features](#waf-mitigation-features) such as custom rules, WAF Managed Rules, and rate limiting rules. Rules that mitigate traffic can include scores from traffic scans in their expressions to better address possibly malicious requests.
 
-:::caution[Warning]
-
-Enabling traffic detections will not apply any mitigation measures to incoming traffic; detections only provide signals that you can use to define your attack mitigation strategy. 
+:::caution
+Enabling traffic detections will not apply any mitigation measures to incoming traffic; detections only provide signals that you can use to define your attack mitigation strategy.
 :::
 
 ### Available traffic detections
 
 The WAF currently provides the following detections for finding security threats in incoming requests:
 
-* [**Bots**](/bots/reference/bot-management-variables/#ruleset-engine-fields): Scores traffic on a scale from 1 (likely to be a bot) to 99 (likely to be human).
-* [**Attacks**](/waf/about/waf-attack-score/): Checks for known attack variations and malicious payloads. Scores traffic on a scale from 1 (likely to be malicious) to 99 (unlikely to be malicious).
-* [**Malicious uploads**](/waf/about/content-scanning/): Scans content objects, such as uploaded files, for malicious signatures like malware.
+- [**Bots**](/bots/reference/bot-management-variables/#ruleset-engine-fields): Scores traffic on a scale from 1 (likely to be a bot) to 99 (likely to be human).
+- [**Attacks**](/waf/about/waf-attack-score/): Checks for known attack variations and malicious payloads. Scores traffic on a scale from 1 (likely to be malicious) to 99 (unlikely to be malicious).
+- [**Malicious uploads**](/waf/about/content-scanning/): Scans content objects, such as uploaded files, for malicious signatures like malware.
 
 To enable traffic detections in the Cloudflare dashboard, go to your domain > **Security** > **Settings**.
 
-:::note[Note]
-
-Currently, you cannot manage the [Bots](/bots/reference/bot-management-variables/#ruleset-engine-fields) and [Attacks](/waf/about/waf-attack-score/) detections from the **Security** > **Settings** page. Refer to the documentation of each feature for availability details. 
+:::note
+Currently, you cannot manage the [Bots](/bots/reference/bot-management-variables/#ruleset-engine-fields) and [Attacks](/waf/about/waf-attack-score/) detections from the **Security** > **Settings** page. Refer to the documentation of each feature for availability details.
 :::
 
 ### WAF mitigation features
 
 The WAF provides the following mitigation features for traffic posing as a security threat:
 
-* [**Custom rules**](/waf/custom-rules/): Allow you to control incoming traffic by filtering requests to a zone. You can perform actions like Block or Managed Challenge on incoming requests according to rules you define.
-* [**Rate limiting rules**](/waf/rate-limiting-rules/): Allow you to define rate limits for requests matching an expression, and the action to perform when those rate limits are reached.
-* [**Managed rules**](/waf/managed-rules/): Allow you to deploy pre-configured managed rulesets that provide immediate protection against common attacks.
+- [**Custom rules**](/waf/custom-rules/): Allow you to control incoming traffic by filtering requests to a zone. You can perform actions like Block or Managed Challenge on incoming requests according to rules you define.
+- [**Rate limiting rules**](/waf/rate-limiting-rules/): Allow you to define rate limits for requests matching an expression, and the action to perform when those rate limits are reached.
+- [**Managed rules**](/waf/managed-rules/): Allow you to deploy pre-configured managed rulesets that provide immediate protection against common attacks.
 
 To configure these mitigation features in the Cloudflare dashboard, go to your domain > **Security** > **WAF**.
 
-***
+---
 
 ## Rule execution order
 
