@@ -24,7 +24,7 @@ Build settings can be found by navigating to **Settings** > **Build** within you
 | **Build variables and secrets** _(Optional)_ | Add environment variables and secrets accessible only to your build. Build variables will not be accessible at runtime. If you would like to configure runtime variables you can do so in **Settings** > **Variables & Secrets**                                                                                                                                                                                                |
 
 :::note[API Token Permissions]
-The Workers Builds API token will be created automatically with the following permissions:
+When you connect your Worker to a git repository and configure Workers Builds, Workers Builds will create an API token automatically with the following permissions:
 
 - **Account:** Account Settings (read), Workers Scripts (edit), Workers KV Storage (edit), Workers R2 Storage (edit)
 - **Zone:** Workers Routes (edit) for all zones on the account
