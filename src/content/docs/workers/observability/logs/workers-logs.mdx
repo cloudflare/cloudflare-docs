@@ -1,0 +1,161 @@
+---
+pcx_content_type: concept
+title: Workers Logs
+head: []
+description: Store, filter, and analyze log data emitted from Cloudflare Workers.
+sidebar:
+  badge:
+    variant: tip
+    text: New
+
+---
+
+import { TabItem, Tabs, Steps } from "~/components"
+
+Workers Logs is a fully managed service that allows you to collect, store, filter, and analyze logging data emitted from Cloudflare Workers. Logs include [execution logs](/workers/observability/logs/workers-logs/#execution-logs), [custom logs](/workers/observability/logs/workers-logs/#add-custom-logs), errors, and uncaught exceptions. All newly created Workers will come with the observability setting enabled by default. Workers Logs is available to all developers.
+
+
+![Example showing the Workers Logs Dashboard](~/assets/images/workers-observability/preview.png)
+
+If you want to send logs to a third party, use [Workers Logpush](/workers/observability/logging/logpush/) or [Tail Workers](/workers/observability/logging/tail-workers/).
+
+## Enable Workers Logs
+
+:::note[Wrangler version]
+Minimum required Wrangler version: 3.77.0. Check your version by running `wrangler version`. To update Wrangler, refer to [Install/Update Wrangler](/workers/wrangler/install-and-update/).
+:::
+
+You must add the observability setting for your Worker to emit logs to Workers Logs. To add the setting to your Worker, add the following to your `wrangler.toml` file. 
+
+	```toml
+	[observability]
+	enabled = true
+	head_sampling_rate = 0.01 # optional. default = 1.
+	```
+
+	Specifically:
+	- The default value for `head_sampling_rate` is 1, meaning 100% of your logs are sampled. `head_sampling_rate` can be set to a value between 0 and 1. For example, 0.01 indicates that 1% of your logs are sampled.
+
+### Enabling with environments
+
+[Environments](workers/wrangler/environments/) allow you to deploy the same Worker application with different configurations. To configure observability for your environment:
+	1. Add the following configuration below `[env.<NAME>]`
+	```toml
+	[env.<NAME>.observability]
+	enabled = true
+	head_sampling_rate = 0.1 # optional
+	```
+	2. Deploy your Worker with `npx wrangler deploy -e <NAME>`
+	3. Repeat step 1 and 2 for each environment.
+
+## View logs from the dashboard
+
+To view Workers logs associated with any deployed Worker using the Cloudflare dashboard:
+
+<Steps>
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) and select your account.
+2. In Account Home, go to **Workers & Pages**.
+3. In **Overview**, select your **Worker** > and select **Logs**.
+</Steps>
+
+## Features
+
+### Add custom logs
+
+By default a Worker will emit execution logs containing details about the Request, Response and related metadata.
+
+In addition, you can add custom logs throughout your code. Any `console.log` statements within your Worker will be visible in Workers Logs. The following example demonstrates a custom `console.log` within a Worker request handler.
+
+<Tabs> <TabItem label="Module Worker" icon="seti:javascript">
+
+```js
+export default {
+        async fetch(request) {
+                const { cf } = request;
+                const { city, country } = cf;
+
+                console.log(`Request came from city: ${city} in country: ${country}`);
+
+                return new Response("Hello worker!", {
+                        headers: { "content-type": "text/plain" },
+                });
+        },
+};
+```
+
+</TabItem> <TabItem label="Service Worker" icon="seti:javascript">
+
+```js
+addEventListener("fetch", (event) => {
+        event.respondWith(handleRequest(event.request));
+});
+
+/**
+ * Respond with hello worker text
+ * @param {Request} request
+ */
+async function handleRequest(request) {
+        const { cf } = request;
+        const { city, country } = cf;
+
+        console.log(`Request came from city: ${city} in country: ${country}`);
+
+        return new Response("Hello worker!", {
+                headers: { "content-type": "text/plain" },
+        });
+}
+```
+
+</TabItem> </Tabs>
+
+After you deploy the above code, view your Worker's logs in [the dashboard](/workers/observability/logs/workers-logs/#view-logs-from-the-dashboard) or with [real-time logs](/workers/observability/logs/real-time-logs/).
+
+### Head-based Sampling
+
+Head-based sampling allows you to log only a subset of incoming requests to your Cloudflare Workers. Especially for high-traffic applications, this helps reduce log volume and manage costs, while still providing meaningful insights into your application’s performance. When you configure a head-based sampling rate, you can control the percentage of requests that get logged. All logs within the context of the request are collected. 
+
+To enable head-based sampling, simply set `head_sampling_rate` within the observability configuration. For example, setting a sampling rate of 0.01 (1%) will log one out of every one hundred requests. If the `head_sampling_rate` is unspecified, it is configured to a default value of 1 (100%).
+
+### Summary Logs
+
+Each Workers invocation returns an execution log that contain details about the Request, Response, and related metadata.
+
+## Limits
+
+| Description                                                        | Retention  |
+| ------------------------------------------------------------------ | ---------- | 
+| Maximum log retention period                                       | 7 Days     |
+| Maximum logs per account per day<sup>1</sup>                       | 5 Billion  |
+| Maximum log size<sup>2</sup>                                       | 128 KB     |
+
+<sup>1</sup> While Workers Logs is in open beta, there is a daily limit of 5 billion logs per account per day. After the limit is exceed, a 1% head-based sample will be applied for the remainder of the day.
+
+<sup>2</sup> A single log has a maximum size limit of [128 KB](workers/platform/limits/#log-size). Logs exceeding that size will be truncated and the log's `$cloudflare.truncated` field will be set to true.
+
+## Pricing
+
+|                    | Logs                                                               | Retention  |
+| ------------------ | ------------------------------------------------------------------ | ---------- | 
+| **Workers Free**   | 200,000 per day                                                    | 7 Days     |
+| **Workers Paid**   | 20 million included per month <br /> +$0.60 per additional million | 7 Days     |
+
+
+### Example Pricing
+
+#### Example 1
+
+A Worker serves 15 million requests per month. Each request emits 1 summary log and 1 `console.log`. `head_sampling_rate` is configured to 1.
+
+|            | Monthly Costs     | Formula                                                                                                                |
+| ---------- | ----------------- | ---------------------------------------------------------------------------------------------------------------------- | 
+| **Logs**   | $6.00             | ((1,500,000 requests per month \* 2 logs per request \* 100% sample) - 20,000,000 included logs) / 1,000,000 \* $0.60    |
+| **Total**  | $6.00             |                                                                                                                        |
+
+#### Example 2
+
+A Worker serves 1 billion requests per month. Each request emits 1 summary log and 1 `console.log`. `head_sampling_rate` is configured to 0.1.
+
+|            | Monthly Costs     | Formula                                                                                                                |
+| ---------- | ----------------- | ---------------------------------------------------------------------------------------------------------------------- | 
+| **Logs**   | $108.00           | ((1,000,000,000 requests per month \* 2 logs per request \* 10% sample) - 20,000,000 included logs) / 1,000,000 \* $0.60 |
+| **Total**  | $108.00           |                                                                                                                        |
