@@ -246,7 +246,7 @@ Web Application Firewall (WAF) [Managed Rules](/waf/managed-rules/) allow you to
 
 WAF checks incoming web requests and filters undesired traffic based on sets of rules (rulesets) deployed at the edge. These managed rulesets are maintained and regularly updated by Cloudflare. From the extensive threat intelligence obtained from across our global network, Cloudflare is able to quickly detect and classify threats. As new attacks/threats are identified, Cloudflare will automatically push WAF rules to customers to ensure they are protected against the latest zero-day attacks.
 
-Additionally, Cloudflare provides for [WAF Attack Score](/waf/about/waf-attack-score/), which complements Cloudflare managed rules by detecting attack variations. These variations are typically achieved by malicious actors via fuzzing techniques that are trying to identify ways to bypass existing security policies. WAF classifies each request using a machine learning algorithm, assigning an attack score from 1 to 99 based on the likelihood that the request is malicious. Rules can then be written which use these scores to determine what traffic is permitted to the application.
+Additionally, Cloudflare provides for [WAF Attack Score](/waf/detections/attack-score/), which complements Cloudflare managed rules by detecting attack variations. These variations are typically achieved by malicious actors via fuzzing techniques that are trying to identify ways to bypass existing security policies. WAF classifies each request using a machine learning algorithm, assigning an attack score from 1 to 99 based on the likelihood that the request is malicious. Rules can then be written which use these scores to determine what traffic is permitted to the application.
 
 ![Machine learning maintains lists of managed rules to determine if the request should be let through the WAF or not.](~/assets/images/reference-architecture/security/security-ref-arch-6.svg)
 
@@ -349,7 +349,7 @@ Malware can refer to viruses, worms, trojans, ransomware, spyware, adware, and o
 
 When Uploaded Content Scanning is enabled, content scanning attempts to detect items such as uploaded files, and scans them for malicious signatures like malware. The scan results, along with additional metadata, are exposed as fields available in WAF custom rules, allowing customers to implement fine-grained mitigation rules.
 
-Products: [WAF - Uploaded Content Scanning](/waf/about/content-scanning/)
+Products: [WAF - Uploaded Content Scanning](/waf/detections/malicious-uploads/)
 
 #### Cloudflare application security products
 
