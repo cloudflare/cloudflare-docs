@@ -97,14 +97,36 @@ The service token will be used to restrict requests to the tunnel, and is needed
 
 13. Select **Add application** to create the Access application.
 
-## 4. Use the Wrangler CLI to create a Hyperdrive configuration
+## 4. Create a Hyperdrive configuration
 
-The Wrangler CLI will be used to create a Hyperdrive configuration using the Access application and Tunnel created above.
+To create a Hyperdrive configuration for your private database, you'll need to specify the Access application and Tunnel information upon creation.
+
+<Tabs> <TabItem label="Wrangler">
 
 ```sh
 # wrangler v3.65 and above required
 npx wrangler hyperdrive create <NAME-OF-HYPERDRIVE-CONFIGURATION-FOR-DB-VIA-TUNNEL> --host=<HOSTNAME-FOR-THE-TUNNEL> --user=<USERNAME-FOR-YOUR-DATABASE> --password=<PASSWORD-FOR-YOUR-DATABASE> --database=<DATABASE-TO-CONNECT-TO> --access-client-id=<YOUR-ACCESS-CLIENT-ID> --access-client-secret=<YOUR-SERVICE-TOKEN-CLIENT-SECRET>
 ```
+
+</TabItem> <TabItem label="Terraform">
+
+```terraform
+resource "cloudflare_hyperdrive_config"  "<TERRAFORM_VARIABLE_NAME_FOR_CONFIGURATION>" {
+  account_id = "<YOUR_ACCOUNT_ID>"
+  name       = "<NAME_OF_HYPERDRIVE_CONFIGURATION>"
+  origin     = {
+    host     = "<HOSTNAME_OF_TUNNEL>"
+    database = "<NAME_OF_DATABASE>"
+    user     = "<NAME_OF_DATABASE_USER>"
+    password = "<DATABASE_PASSWORD>"
+    scheme   = "postgres"
+    access_client_id     = "<ACCESS_CLIENT_ID>"
+    access_client_secret = "<ACCESS_CLIENT_SECRET>"
+  }
+}
+```
+
+</TabItem> </Tabs>
 
 This command will create a Hyperdrive configuration using the usual database information (database name, database host, database user, and database password).
 
