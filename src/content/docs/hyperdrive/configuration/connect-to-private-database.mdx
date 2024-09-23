@@ -3,6 +3,8 @@ pcx_content_type: concept
 title: Connect to a private database using Tunnel
 sidebar:
   order: 4
+  badge:
+    text: Beta
 ---
 
 import { TabItem, Tabs, Render } from "~/components";
@@ -40,6 +42,10 @@ Your tunnel must be configured to use a public hostname so that Hyperdrive can r
 2. In the **Service** section, specify **Type** `TCP` and the URL and configured port of your database, such as `localhost:5432`. This address will be used by the tunnel to route requests to your database.
 
 3. Select **Save tunnel**.
+
+:::note
+If you are setting up the tunnel through the CLI instead ([locally-managed tunnel](/cloudflare-one/connections/connect-networks/configure-tunnels/local-management/)), you will have to complete these steps manually. Follow the Cloudflare Zero Trust documentation to [add a public hostname to your tunnel](/cloudflare-one/connections/connect-networks/routing-to-tunnel/dns/) and [configure the public hostname to route to the address of your database](/cloudflare-one/connections/connect-networks/configure-tunnels/local-management/configuration-file/).
+:::
 
 ## 2. Create a service token
 
@@ -103,6 +109,10 @@ npx wrangler hyperdrive create <NAME-OF-HYPERDRIVE-CONFIGURATION-FOR-DB-VIA-TUNN
 This command will create a Hyperdrive configuration using the usual database information (database name, database host, database user, and database password).
 
 In addition, it will also set the Access Client ID and the Access Client Secret of the Service Token. When Hyperdrive makes requests to the tunnel, requests will be intercepted by Access and validated using the credentials of the Service Token.
+
+:::note
+When creating the Hyperdrive configuration for the private database, you must enter the `access-client-id` and the `access-client-id`, and omit the `port`. Hyperdrive will route database messages to the public hostname of the tunnel, and the tunnel will rely on its service configuration (as configured in [1.2. Connect your database using a public hostname](#12-connect-your-database-using-a-public-hostname)) to route requests to the database within your private network.
+:::
 
 ## 5. Query your Hyperdrive configuration from a Worker (optional)
 
