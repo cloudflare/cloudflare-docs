@@ -3,7 +3,7 @@ pcx_content_type: reference
 title: Advanced Setups
 description: Learn how to use Workers Builds with more advanced setups
 sidebar:
-  order: 3
+  order: 5
 ---
 
 ## Monorepos
@@ -41,7 +41,7 @@ ecommerce-monorepo/
 
 If you are using [Wrangler Environments](/workers/wrangler/environments/), you can choose to continue using with Workers Builds with a bit of set up:
 
-1. [Deploy via Wrangler](/workers/wrangler/commands/deploy) to create the Workers for your environments in the Dashboard, if you don't already have them.
+1. [Deploy via Wrangler](/workers/wrangler/commands/#deploy) to create the Workers for your environments in the Dashboard, if you don't already have them.
 2. Find the Workers for your environments. They are typically named `[name of Worker] - [environment name]`.
 3. Connect your repository to each of the Workers for your environment.
 4. In each of the Workers, edit your Wrangler deploy command to include the flag `--env: <environment name>` in the build configurations.
