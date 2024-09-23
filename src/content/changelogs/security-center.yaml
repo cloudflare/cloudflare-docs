@@ -14,5 +14,5 @@ entries:
       - Customers can now create a `security.txt` file file to provide the security research team with a standardized way to report vulnerabilities. 
 
 - publish_date: "2024-09-23"
-    description: |-
-      - Customers can now export all matches from a saved query. Select your **Query name** > select the three dots > **Export matches**.
+  description: |-
+    - Customers can now export all matches from a saved query. Select your **Query name** > select the three dots > **Export matches**.
