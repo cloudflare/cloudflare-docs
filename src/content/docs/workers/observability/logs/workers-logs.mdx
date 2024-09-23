@@ -13,19 +13,21 @@ sidebar:
 
 import { TabItem, Tabs, Steps } from "~/components"
 
-Workers Logs is a fully managed service that allows you to collect, store, filter, and analyze logging data emitted from Cloudflare Workers. Logs include [execution logs](/workers/observability/logs/workers-logs/#execution-logs), [custom logs](/workers/observability/logs/workers-logs/#add-custom-logs), errors, and uncaught exceptions. All newly created Workers will come with the observability setting enabled by default. Workers Logs is available to all developers.
+Workers Logs lets you automatically collect, store, filter, and analyze logging data emitted from Cloudflare Workers. Data is written to your Cloudflare Account, and you can query it in the dashboard for each of your Workers. All newly created Workers will come with the observability setting enabled by default.
+
+Logs include [execution logs](/workers/observability/logs/workers-logs/#execution-logs), [custom logs](/workers/observability/logs/workers-logs/#add-custom-logs), errors, and uncaught exceptions.
 
 ![Example showing the Workers Logs Dashboard](~/assets/images/workers-observability/preview.png)
 
-If you want to send logs to a third party, use [Workers Logpush](/workers/observability/logging/logpush/) or [Tail Workers](/workers/observability/logging/tail-workers/).
+To send logs to a third party, use [Workers Logpush](/workers/observability/logging/logpush/) or [Tail Workers](/workers/observability/logging/tail-workers/).
 
 ## Enable Workers Logs
 
 :::note[Wrangler version]
-Minimum required Wrangler version: 3.77.0. Check your version by running `wrangler version`. To update Wrangler, refer to [Install/Update Wrangler](/workers/wrangler/install-and-update/).
+Minimum required Wrangler version: 3.78.6. Check your version by running `wrangler version`. To update Wrangler, refer to [Install/Update Wrangler](/workers/wrangler/install-and-update/).
 :::
 
-You must add the observability setting for your Worker to emit logs to Workers Logs. To add the setting to your Worker, add the following to your `wrangler.toml` file. 
+You must add the observability setting for your Worker to write logs to Workers Logs. Add the following setting to your Worker's `wrangler.toml` file and redeploy your Worker.
 
 	```toml
 	[observability]
@@ -33,8 +35,7 @@ You must add the observability setting for your Worker to emit logs to Workers L
 	head_sampling_rate = 0.01 # optional. default = 1.
 	```
 
-	Specifically:
-	- The default value for `head_sampling_rate` is 1, meaning 100% of your logs are sampled. `head_sampling_rate` can be set to a value between 0 and 1. For example, 0.01 indicates that 1% of your logs are sampled.
+The default value for `head_sampling_rate` is 1, meaning 100% of your logs are sampled. `head_sampling_rate` can be set to a value between 0 and 1. For example, 0.01 indicates that 1% of your logs are sampled.
 
 ### Enabling with environments
 
@@ -50,7 +51,7 @@ You must add the observability setting for your Worker to emit logs to Workers L
 
 ## View logs from the dashboard
 
-To view Workers logs associated with any deployed Worker using the Cloudflare dashboard:
+To view logs for your Worker:
 
 <Steps>
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) and select your account.
@@ -66,11 +67,15 @@ To get the most out of Workers Logs, it is recommended to log in JSON format. Wo
 
 ## Features
 
+### Execution Logs
+
+Each Workers invocation returns an execution log that contain details about the Request, Response, and related metadata. TODO
+
 ### Add custom logs
 
-By default a Worker will emit execution logs containing details about the Request, Response and related metadata.
+By default a Worker will emit [execution logs](/workers/observability/logs/workers-logs/#execution-logs) containing details about the Request, Response and related metadata.
 
-In addition, you can add custom logs throughout your code. Any `console.log` statements within your Worker will be visible in Workers Logs. The following example demonstrates a custom `console.log` within a Worker request handler.
+You can also add custom logs throughout your code. Any `console.log` statements within your Worker will be visible in Workers Logs. The following example demonstrates a custom `console.log` within a Worker request handler.
 
 <Tabs> <TabItem label="Module Worker" icon="seti:javascript">
 
@@ -121,10 +126,6 @@ After you deploy the above code, view your Worker's logs in [the dashboard](/wor
 Head-based sampling allows you to log only a subset of incoming requests to your Cloudflare Workers. Especially for high-traffic applications, this helps reduce log volume and manage costs, while still providing meaningful insights into your application’s performance. When you configure a head-based sampling rate, you can control the percentage of requests that get logged. All logs within the context of the request are collected. 
 
 To enable head-based sampling, simply set `head_sampling_rate` within the observability configuration. For example, setting a sampling rate of 0.01 (1%) will log one out of every one hundred requests. If the `head_sampling_rate` is unspecified, it is configured to a default value of 1 (100%).
-
-### Execution Logs
-
-Each Workers invocation returns an execution log that contain details about the Request, Response, and related metadata. TODO
 
 ## Limits
 

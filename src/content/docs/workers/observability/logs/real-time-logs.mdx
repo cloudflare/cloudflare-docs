@@ -84,14 +84,14 @@ You can filter real-time logs in the dashboard or using [`wrangler tail`](/worke
 
 Note that:
 
-- Workers logs are not stored. You can start and stop the stream at any time to view them, but they do not persist.
+- Real-time logs does not store Workers Logs. To store logs, use [Workers Logs](/workers/observability/logs/workers-logs).
 - If your Worker has a high volume of traffic, the real-time logs might enter sampling mode. This will cause some of your messages to be dropped and a warning to appear in your logs.
 - Logs from any [Durable Objects](/durable-objects/) your Worker is using will show up in the dashboard.
 - A maximum of 10 clients can view a Worker's logs at one time. This can be a combination of either dashboard sessions or `wrangler tail` calls.
 
 ## Persist logs
 
-Logs can be persisted, filtered, and analyzed with [Workers Logs](/workers/observability/logs/workers-logs). If you prefer to send logs to a third party, use [Workers Logpush](/workers/observability/logs/logpush/) or [Tail Workers](/workers/observability/logs/tail-workers/).
+Logs can be persisted, filtered, and analyzed with [Workers Logs](/workers/observability/logs/workers-logs). To send logs to a third party, use [Workers Logpush](/workers/observability/logs/logpush/) or [Tail Workers](/workers/observability/logs/tail-workers/).
 
 ## Related resources
 
