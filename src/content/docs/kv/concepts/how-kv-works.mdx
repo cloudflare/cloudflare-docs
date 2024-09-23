@@ -21,7 +21,7 @@ Initial reads from a location do not have a cached value. Data must be read from
 
 :::note[Hot and cold read]
 
-A hot read means that the data is cached on Cloudflare's edge network using the [CDN](https://developers.cloudflare.com/cache/), whether it is in a local cache or a regional cache. A cold read means that the data is not cached, so the data must be fetched from the storage backends.
+A hot read means that the data is cached on Cloudflare's edge network using the [CDN](/cache/), whether it is in a local cache or a regional cache. A cold read means that the data is not cached, so the data must be fetched from the storage backends.
 :::
 
 ![Initial reads will miss the cache and go to the nearest central data store first.](~/assets/images/kv/kv-slow-read.svg)
