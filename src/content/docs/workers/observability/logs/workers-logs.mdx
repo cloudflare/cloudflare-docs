@@ -4,6 +4,7 @@ title: Workers Logs
 head: []
 description: Store, filter, and analyze log data emitted from Cloudflare Workers.
 sidebar:
+  order: 2
   badge:
     variant: tip
     text: New
@@ -13,7 +14,6 @@ sidebar:
 import { TabItem, Tabs, Steps } from "~/components"
 
 Workers Logs is a fully managed service that allows you to collect, store, filter, and analyze logging data emitted from Cloudflare Workers. Logs include [execution logs](/workers/observability/logs/workers-logs/#execution-logs), [custom logs](/workers/observability/logs/workers-logs/#add-custom-logs), errors, and uncaught exceptions. All newly created Workers will come with the observability setting enabled by default. Workers Logs is available to all developers.
-
 
 ![Example showing the Workers Logs Dashboard](~/assets/images/workers-observability/preview.png)
 
@@ -57,6 +57,12 @@ To view Workers logs associated with any deployed Worker using the Cloudflare da
 2. In Account Home, go to **Workers & Pages**.
 3. In **Overview**, select your **Worker** > and select **Logs**.
 </Steps>
+
+## Best Practices
+
+### Logging JSON objects
+
+To get the most out of Workers Logs, it is recommended to log in JSON format. Workers Logs automatically extracts the fields and indexes  TODO
 
 ## Features
 
@@ -116,9 +122,9 @@ Head-based sampling allows you to log only a subset of incoming requests to your
 
 To enable head-based sampling, simply set `head_sampling_rate` within the observability configuration. For example, setting a sampling rate of 0.01 (1%) will log one out of every one hundred requests. If the `head_sampling_rate` is unspecified, it is configured to a default value of 1 (100%).
 
-### Summary Logs
+### Execution Logs
 
-Each Workers invocation returns an execution log that contain details about the Request, Response, and related metadata.
+Each Workers invocation returns an execution log that contain details about the Request, Response, and related metadata. TODO
 
 ## Limits
 
@@ -144,7 +150,7 @@ Each Workers invocation returns an execution log that contain details about the 
 
 #### Example 1
 
-A Worker serves 15 million requests per month. Each request emits 1 summary log and 1 `console.log`. `head_sampling_rate` is configured to 1.
+A Worker serves 15 million requests per month. Each request emits 1 execution log and 1 `console.log`. `head_sampling_rate` is configured to 1.
 
 |            | Monthly Costs     | Formula                                                                                                                |
 | ---------- | ----------------- | ---------------------------------------------------------------------------------------------------------------------- | 
@@ -153,7 +159,7 @@ A Worker serves 15 million requests per month. Each request emits 1 summary log 
 
 #### Example 2
 
-A Worker serves 1 billion requests per month. Each request emits 1 summary log and 1 `console.log`. `head_sampling_rate` is configured to 0.1.
+A Worker serves 1 billion requests per month. Each request emits 1 execution log and 1 `console.log`. `head_sampling_rate` is configured to 0.1.
 
 |            | Monthly Costs     | Formula                                                                                                                |
 | ---------- | ----------------- | ---------------------------------------------------------------------------------------------------------------------- | 
