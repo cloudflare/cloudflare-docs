@@ -1490,11 +1490,25 @@
 			"properties": {
 				"availability": {
 					"title": "Availability",
-					"summary": "Business and above",
-					"free": "No",
-					"pro": "No",
+					"summary": "Available on all plans",
+					"free": "Yes",
+					"pro": "Yes",
 					"biz": "Yes",
 					"ent": "Yes"
+				},
+				"retention": {
+					"title": "Retention",
+					"free": "7",
+					"pro": "31",
+					"biz": "31",
+					"ent": "90"
+				},
+				"query_window": {
+					"title": "Query window",
+					"free": "1",
+					"pro": "7",
+					"biz": "31",
+					"ent": "31"
 				}
 			}
 		},
