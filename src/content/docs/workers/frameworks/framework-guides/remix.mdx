@@ -52,7 +52,9 @@ After you have created your project, run the following command in the project di
 
 ## 3. Deploy your Project
 
-Deploy your Worker via Wrangler to a `*.workers.dev` subdomain or configure a [Custom Domain](/workers/configuration/routing/custom-domains/).
+Your project can be deployed to a `*.workers.dev` subdomain or a [Custom Domain](/workers/configuration/routing/custom-domains/), from your own machine or from any CI/CD system, including Cloudflare's own.
+
+The following command will build and deploy your project. If you're using CI, ensure you update your ["deploy command"](/workers/ci-cd/builds/build-configuration/#build-settings) configuration appropriately.
 
 <PackageManagers type="run" args={"deploy"} />
 
