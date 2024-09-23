@@ -35,7 +35,7 @@ Limits for individual queries (listed above) applies to each individual statemen
 
 [^2]: A single Worker script can have up to 1 MB of script metadata. A binding is defined as a binding to a resource, such as a D1 database, KV namespace, environmental variable or secret. Each resource binding is approximately 150-bytes, however environmental variables and secrets are controlled by the size of the value you provide. Excluding environmental variables, you can bind up to \~5,000 D1 databases to a single Worker script.
 
-[^3]: The duration limit determines the maximum number of queries that can be run in a single batch statement.
+[^3]: Requests to Cloudflare API must resolve in 30 seconds. Therefore, this duration limit also applies to the entire batch call.
 
 [^4]: The imported file is uploaded to R2. See [R2 upload limit](/r2/platform/limits).
 
