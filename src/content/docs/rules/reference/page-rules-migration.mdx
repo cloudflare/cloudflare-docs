@@ -162,7 +162,7 @@ You configured a Page Rule to perform an automatic redirect from HTTP to HTTPS f
 </TabItem> <TabItem label="visual guide">
 
 | Page Rules configuration                                                                                                           | Migrate to a single redirect                                                                                                                                          |
-| ---------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| ---------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | ![Example Page Rule with 'Always Use HTTPS' setting](~/assets/images/rules/reference/page-rules-migration/pr-always-use-https.png) | ![Single redirect matching the 'Always Use HTTPS' setting of the example Page Rule](~/assets/images/rules/reference/page-rules-migration/pr-always-use-https-new.png) |
 
 </TabItem> </Tabs>
@@ -664,7 +664,6 @@ You configured a Page Rule turning off Cloudflare Apps (deprecated) for all subd
 ### Replace Disable Performance
 
 :::caution
-
 The **Disable Performance** setting is deprecated. Any Page Rules with this setting will not be migrated.
 :::
 
@@ -714,7 +713,6 @@ You configured a Page Rule with **Disable Performance** (deprecated) for all sub
 ### Replace Disable Security
 
 :::caution
-
 The **Disable Security** setting is deprecated. Any Page Rules with this setting will not be migrated.
 :::
 
@@ -745,7 +743,6 @@ This setting turned off a subset of Cloudflare security features: Email Obfuscat
 4. If your tests succeed, delete the existing Page Rule.
 
 :::caution
-
 If you are still using WAF managed rules (previous version) or Rate Limiting (previous version), consider migrating to the new versions of these products. It is not possible to turn off these older products using modern Rules features. Refer to the [WAF's migration guides](/waf/reference/migration-guides/) for more information.
 :::
 
@@ -924,7 +921,7 @@ You configured a Page Rule permanently redirecting `www.example.com` to `example
 </TabItem> <TabItem label="visual guide">
 
 | Page Rules configuration                                                                                                          | Migrate to a single redirect                                                                                                                                         |
-| --------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| --------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | ![Example Page Rule #1 with 'Forwarding URL' setting](~/assets/images/rules/reference/page-rules-migration/pr-forwarding-url.png) | ![Single redirect matching the 'Forwarding URL' setting of the example Page Rule #1](~/assets/images/rules/reference/page-rules-migration/pr-forwarding-url-new.png) |
 
 </TabItem> </Tabs>
@@ -970,7 +967,7 @@ You configured a Page Rule permanently redirecting `example.com/old-path` to `ex
 </TabItem> <TabItem label="visual guide">
 
 | Page Rules configuration                                                                                                            | Migrate to a single redirect                                                                                                                                           |
-| ----------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| ----------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | ![Example Page Rule #2 with 'Forwarding URL' setting](~/assets/images/rules/reference/page-rules-migration/pr-forwarding-url-2.png) | ![Single redirect matching the 'Forwarding URL' setting of the example Page Rule #2](~/assets/images/rules/reference/page-rules-migration/pr-forwarding-url-2-new.png) |
 
 </TabItem> </Tabs>
