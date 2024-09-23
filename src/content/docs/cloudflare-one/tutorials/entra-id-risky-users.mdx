@@ -3,12 +3,12 @@ updated: 2023-01-06
 category: 🔐 Zero Trust
 difficulty: Advanced
 pcx_content_type: tutorial
-title: Isolate Azure AD risky users
+title: Isolate risky Entra ID users
 ---
 
-Azure Active Directory (AD) calculates a user's [risk level](https://learn.microsoft.com/en-us/azure/active-directory/identity-protection/howto-identity-protection-investigate-risk) based on the probability that their account has been compromised. With Cloudflare Zero Trust, you can synchronize the Azure AD risky users list with Cloudflare Access and apply more stringent Zero Trust policies to users at higher risk.
+Microsoft Entra ID (formerly Azure Active Directory) calculates a user's [risk level](https://learn.microsoft.com/entra/id-protection/howto-identity-protection-investigate-risk) based on the probability that their account has been compromised. With Cloudflare Zero Trust, you can synchronize the Entra ID risky users list with Cloudflare Access and apply more stringent Zero Trust policies to users at higher risk.
 
-This tutorial demonstrates how to automatically redirect users to a remote browser when they are deemed risky by Azure.
+This tutorial demonstrates how to automatically redirect users to a remote browser when they are deemed risky by Entra ID.
 
 **Time to complete:**
 
@@ -16,15 +16,15 @@ This tutorial demonstrates how to automatically redirect users to a remote brows
 
 ## Prerequisites
 
-- Azure AD Premium P2 license
+- Microsoft Entra ID Premium P2 license
 - [Cloudflare Browser Isolation](/cloudflare-one/policies/browser-isolation/) add-on
 - [Gateway HTTP filtering](/cloudflare-one/policies/gateway/initial-setup/http/) enabled on your devices
 - [npm](https://docs.npmjs.com/getting-started) installation
 - [Node.js](https://nodejs.org/en/) installation
 
-## 1. Set up Azure AD as an identity provider
+## 1. Set up Entra ID as an identity provider
 
-Refer to [our IdP setup instructions](/cloudflare-one/identity/idp-integration/azuread/#set-up-azure-ad-as-an-identity-provider) for Azure AD.
+Refer to [our IdP setup instructions](/cloudflare-one/identity/idp-integration/entra-id/#set-up-entra-id-as-an-identity-provider) for Entra ID.
 
 :::note
 
@@ -32,11 +32,11 @@ Refer to [our IdP setup instructions](/cloudflare-one/identity/idp-integration/a
 - Save the **Application (client) ID**, **Directory (tenant) ID**, and **Client secret** as you will need them again in a later step.
   :::
 
-## 2. Add Azure AD API permissions
+## 2. Add Entra ID API permissions
 
-Once the base IdP integration is tested and working, enable additional permissions that will allow a script to create and update risky user groups in Azure AD:
+Once the base IdP integration is tested and working, enable additional permissions that will allow a script to create and update risky user groups in Entra ID:
 
-1. In Azure Active Directory, go to **App registrations**.
+1. In Microsoft Entra ID, go to **App registrations**.
 
 2. Select the application you created for the IdP integration.
 
@@ -57,13 +57,13 @@ Once the base IdP integration is tested and working, enable additional permissio
 
 You will see the list of enabled permissions.
 
-![API permissions in Azure AD](~/assets/images/cloudflare-one/identity/azure/risky-users-permissions.png)
+![API permissions in Entra ID](~/assets/images/cloudflare-one/identity/azure/risky-users-permissions.png)
 
-## 3. Add risky users to Azure AD group
+## 3. Add risky users to Entra ID group
 
-Next, configure an automated script that will populate an Azure AD security group with risky users.
+Next, configure an automated script that will populate an Entra ID security group with risky users.
 
-To get started quickly, deploy our example Cloudflare Workers script by following the step-by-step instructions below. Alternatively, you can implement the script using [Azure Functions](https://learn.microsoft.com/en-us/azure/azure-functions/functions-overview) or any other tool.
+To get started quickly, deploy our example Cloudflare Workers script by following the step-by-step instructions below. Alternatively, you can implement the script using [Azure Functions](https://learn.microsoft.com/azure/azure-functions/functions-overview) or any other tool.
 
 1. Open a terminal and clone our example project.
 
@@ -80,8 +80,8 @@ To get started quickly, deploy our example Cloudflare Workers script by followin
 3. Modify `wrangler.toml` to include the following values:
 
    - `<ACCOUNT_ID>`: your Cloudflare [account ID](/fundamentals/setup/find-account-and-zone-ids/).
-   - `<TENANT_ID>`: your Azure AD **Directory (tenant) ID**, obtained when [setting up Azure AD as an identity provider](#1-set-up-azure-ad-as-an-identity-provider).
-   - `<CLIENT_ID>`: your Azure AD **Application (client) ID**, obtained when [setting up Azure AD as an identity provider](#1-set-up-azure-ad-as-an-identity-provider).
+   - `<TENANT_ID>`: your Entra ID **Directory (tenant) ID**, obtained when [setting up Entra ID as an identity provider](#1-set-up-entra-id-as-an-identity-provider).
+   - `<CLIENT_ID>`: your Entra ID **Application (client) ID**, obtained when [setting up Entra ID as an identity provider](#1-set-up-entra-id-as-an-identity-provider).
 
    ```toml
    name = "risky-users"
@@ -116,7 +116,7 @@ The [Cron Trigger](/workers/configuration/cron-triggers/) in this example schedu
    wrangler secret put AZURE_AD_CLIENT_SECRET
    ```
 
-   You will be prompted to input the secret's value. Enter the **Client secret** obtained when [setting up AzureAD as an identity provider](#1-set-up-azure-ad-as-an-identity-provider).
+   You will be prompted to input the secret's value. Enter the **Client secret** obtained when [setting up Microsoft Entra ID as an identity provider](#1-set-up-azure-ad-as-an-identity-provider).
 
 The Worker script will begin executing once per minute. To view realtime logs, run the following command and wait for the script to execute:
 
@@ -124,22 +124,22 @@ The Worker script will begin executing once per minute. To view realtime logs, r
 wrangler tail --format pretty
 ```
 
-After the initial run, the auto-generated groups will appear in the Azure AD dashboard.
+After the initial run, the auto-generated groups will appear in the Entra ID dashboard.
 
-![Risky user groups in the Azure AD dashboard](~/assets/images/cloudflare-one/identity/azure/risky-users-groups.png)
+![Risky user groups in the Entra ID dashboard](~/assets/images/cloudflare-one/identity/azure/risky-users-groups.png)
 
 ## 4. Synchronize risky user groups
 
-Next, synchronize Azure AD risky user groups with Cloudflare Access:
+Next, synchronize Entra ID risky user groups with Cloudflare Access:
 
-1. [Enable SCIM synchronization](/cloudflare-one/identity/idp-integration/azuread/#synchronize-users-and-groups).
+1. [Enable SCIM synchronization](/cloudflare-one/identity/idp-integration/entra-id/#synchronize-users-and-groups).
 
-2. In Azure AD, assign the following groups to your SCIM enterprise application:
+2. In Entra ID, assign the following groups to your SCIM enterprise application:
    - `IdentityProtection-RiskyUser-RiskLevel-high`
    - `IdentityProtection-RiskyUser-RiskLevel-medium`
    - `IdentityProtection-RiskyUser-RiskLevel-low`
 
-Cloudflare Access will now synchronize changes in group membership with Azure AD. You can verify the synchronization status on the SCIM application's **Provisioning** page.
+Cloudflare Access will now synchronize changes in group membership with Entra ID. You can verify the synchronization status on the SCIM application's **Provisioning** page.
 
 ## 5. Create a browser isolation policy
 
@@ -156,4 +156,4 @@ Finally, create a [Gateway HTTP policy](/cloudflare-one/policies/gateway/http-po
    | Domain           | in       | `app1.example.com`, `app2.example.com`        | And   | Isolate |
    | User Group Names | in       | `IdentityProtection-RiskyUser-RiskLevel-high` |       |         |
 
-To test the policy, refer to the Microsoft documentation for [simulating risky detections](https://learn.microsoft.com/en-us/azure/active-directory/identity-protection/howto-identity-protection-simulate-risk).
+To test the policy, refer to the Microsoft documentation for [simulating risky detections](https://learn.microsoft.com/entra/id-protection/howto-identity-protection-simulate-risk).
