@@ -86,7 +86,7 @@
 /access/ssh/ /cloudflare-one/connections/connect-networks/use-cases/ssh/ 301
 /cloudflare-one/tutorials/ssh/ /cloudflare-one/connections/connect-networks/use-cases/ssh/ 301
 /cloudflare-one/tutorials/ssh-browser/ /cloudflare-one/connections/connect-networks/use-cases/ssh/ 301
-/access/ssh/short-live-cert-server/ /cloudflare-one/identity/users/short-lived-certificates/ 301
+/access/ssh/short-live-cert-server/ /cloudflare-one/connections/connect-networks/use-cases/ssh/ssh-infrastructure-access/ 301
 /access/ssh/ssh-guide/ /cloudflare-one/connections/connect-networks/use-cases/ssh/ 301
 
 # ai
@@ -693,10 +693,14 @@
 /logs/reference/logpush-api-configuration/examples/example-logpush-curl/ /logs/tutorials/examples/example-logpush-curl/ 301
 
 # magic-firewall
-/magic-firewall/reference/magic-firewall-fields/ /ruleset-engine/rules-language/fields/#magic-firewall-fields 301
+/magic-firewall/reference/magic-firewall-fields/ /ruleset-engine/rules-language/fields/magic-firewall/ 301
 /magic-firewall/reference/examples/ /magic-firewall/how-to/add-rules/ 301
 /magic-firewall/how-to/pcaps-bucket-setup/ /magic-firewall/packet-captures/pcaps-bucket-setup/ 301
 /magic-firewall/how-to/collect-pcaps/ /magic-firewall/packet-captures/collect-pcaps/ 301
+
+# magic-network-monitoring
+/magic-network-monitoring/routers/ /magic-network-monitoring/routers/supported-routers/ 301
+/magic-network-monitoring/tutorials/ /magic-network-monitoring/tutorials/graphql-analytics/ 301
 
 # magic-transit
 /magic-transit/magic-firewall/ /magic-firewall/ 301
@@ -714,6 +718,8 @@
 /magic-transit/flow-based-monitoring/ /magic-transit/magic-network-monitoring/ 301
 /magic-transit/how-to/auto-advertise-prefixes/ /magic-network-monitoring/rules/ 301
 /magic-transit/prerequisites/ /magic-transit/get-started/ 301
+/magic-transit/how-to/ /magic-transit/how-to/configure-tunnels/ 301
+/magic-transit/reference/ /magic-transit/reference/anti-replay-protection/ 301
 
 # magic-wan
 /magic-wan/tutorials/ipsec/ /magic-wan/reference/tunnels/#ipsec-tunnels 301
@@ -773,6 +779,7 @@
 /pages/framework-guides/deploy-a-vue-application/ /pages/framework-guides/deploy-a-vue-site 301
 /pages/how-to/deploy-a-zola-site/ /pages/framework-guides/deploy-a-zola-site/ 301
 /pages/how-to/elderjs/ /pages/framework-guides/deploy-an-elderjs-site/ 301
+/pages/configuration/language-support-and-tools/ /pages/configuration/build-image/ 301
 /pages/platform/github-integration/ /pages/configuration/git-integration/ 301
 /pages/platform/direct-uploads/ /pages/get-started/direct-upload/ 301
 /pages/platform/direct-upload/ /pages/get-started/direct-upload/ 301
@@ -907,6 +914,10 @@
 /rules/url-forwarding/single-redirects/examples/ /rules/url-forwarding/examples/ 301
 /rules/url-forwarding/dynamic-redirects/parameters/ /rules/url-forwarding/single-redirects/settings/ 301
 
+# security center
+/security-center/indicator-feeds/getting-started/ /security-center/indicator-feeds/ 301
+/security-center/indicator-feeds/get-started/ /security-center/indicator-feeds/ 301
+
 # spectrum
 /spectrum/getting-started/ /spectrum/get-started/ 301
 /spectrum/getting-started/byoip/ /spectrum/about/byoip/ 301
@@ -936,6 +947,7 @@
 /speed/optimization/other/troubleshooting/ /speed/optimization/other/ 301
 /speed/optimization/content/auto-minify/ /speed/optimization/content/ 301
 /speed/optimization/content/troubleshooting/auto-minify-not-working/ /speed/optimization/content/troubleshooting/ 301
+/speed/optimization/content/speculation/ /speed/optimization/content/speed-brain/ 301
 
 # ssl
 /ssl/ssl-for-saas/certificate-signing-requests/ /cloudflare-for-platforms/cloudflare-for-saas/security/certificate-management/custom-certificates/certificate-signing-requests/ 301
@@ -1009,7 +1021,7 @@
 /stream/platform/changelog/index.xml /stream/changelog/index.xml 301
 /stream/platform/webrtc-beta/ /stream/webrtc-beta/ 301
 /stream/reference/faq/ /stream/faq/ 301
-/stream/platform/ /stream/platform/changelog/ 301
+/stream/platform/ /stream/changelog/ 301
 /stream/reference/ /stream/faq/ 301
 
 # support
@@ -1148,13 +1160,13 @@
 
 # turnstile
 /turnstile/get-started/domain-management/ /turnstile/reference/domain-management/ 301
-/turnstile/get-started/migrating-from-recaptcha/ /turnstile/migration/migrating-from-recaptcha/ 301
+/turnstile/get-started/migrating-from-recaptcha/ /turnstile/migration/recaptcha/ 301
 /turnstile/reference/pre-clearance-support/ /turnstile/get-started/pre-clearance-support/ 301
 /turnstile/reference/turnstile-analytics/ /turnstile/turnstile-analytics/ 301
 /turnstile/reference/tooltips/ /turnstile/turnstile-analytics/ 301
 /turnstile/reference/domain-management/ /turnstile/concepts/domain-management/ 301
 /turnstile/get-started/pre-clearance-support/ /turnstile/concepts/pre-clearance-support/ 301
-/turnstile/reference/widget-types/ /turnstile/concepts/widget-types/ 301
+/turnstile/reference/widget-types/ /turnstile/concepts/widget/ 301
 /turnstile/reference/terraform/ /turnstile/get-started/terraform/ 301
 /turnstile/reference/client-side-errors/ /turnstile/troubleshooting/client-side-errors/ 301
 /turnstile/reference/feedback-reports/ /turnstile/troubleshooting/feedback-reports/ 301
@@ -1162,10 +1174,20 @@
 /turnstile/reference/testing/ /turnstile/troubleshooting/testing/ 301
 /turnstile/reference/use-cases/ /turnstile/tutorials/ 301
 /turnstile/reference/use-cases/login-pages/ /turnstile/tutorials/login-pages/ 301
+/turnstile/troubleshooting/infinite-loops/ /turnstile/troubleshooting/challenge-solve-issues/ 301
+/turnstile/migration/migrating-from-recaptcha/ /turnstile/migration/recaptcha/ 301
+/turnstile/migration/migrating-from-hcaptcha/ /turnstile/migration/hcaptcha/ 301
+/turnstile/concepts/widget-types/ /turnstile/concepts/widget/ 301
 
 # waf
-/waf/about/file-scanning/ /waf/about/content-scanning/ 301
-/waf/about/waf-ml/ /waf/about/waf-attack-score/ 301
+/waf/about/ /waf/concepts/ 301
+/waf/about/content-scanning/ /waf/detections/malicious-uploads/ 301
+/waf/about/content-scanning/get-started/ /waf/detections/malicious-uploads/get-started/ 301
+/waf/about/content-scanning/example-rules/ /waf/detections/malicious-uploads/example-rules/ 301
+/waf/about/content-scanning/api-calls/ /waf/detections/malicious-uploads/api-calls/ 301
+/waf/about/file-scanning/ /waf/detections/malicious-uploads/ 301
+/waf/about/waf-attack-score/ /waf/detections/attack-score/ 301
+/waf/about/waf-ml/ /waf/detections/attack-score/ 301
 /waf/alerts/ /waf/reference/alerts/ 301
 /waf/custom-rules/custom-firewall/ /waf/custom-rules/ 301
 /waf/custom-rules/custom-firewall/create-api/ /waf/custom-rules/create-api/ 301
@@ -1228,6 +1250,7 @@
 /workers/about/routes/ /workers/configuration/routing/routes/ 301
 /workers/platform/routes/ /workers/configuration/routing/ 301
 /workers/about/tips/debugging/ /workers/observability/ 301
+/workers/testing/debugging-tools/ /workers/observability/dev-tools/ 301
 /workers/about/tips/signing-requests/ /workers/examples/signing-requests/ 301
 /workers/about/using-cache/ /workers/reference/how-the-cache-works/ 301
 /workers/learning/how-the-cache-works/ /workers/reference/how-the-cache-works/ 301
@@ -1506,6 +1529,8 @@
 /cloudflare-one/analytics/access/ /cloudflare-one/insights/analytics/access/ 301
 /cloudflare-one/analytics/gateway/ /cloudflare-one/insights/analytics/gateway/ 301
 /cloudflare-one/analytics/users/ /cloudflare-one/insights/logs/users/ 301
+/cloudflare-one/api-terraform/access-api-examples/azure-group/ /cloudflare-one/api-terraform/access-api-examples/entra-group/ 301
+/cloudflare-one/applications/non-http/arbitrary-tcp/ /cloudflare-one/applications/non-http/cloudflared-authentication/arbitrary-tcp/ 301
 /cloudflare-one/connections/connect-apps/configuration/ /cloudflare-one/connections/connect-networks/configure-tunnels/ 301
 /cloudflare-one/connections/connect-apps/install-and-setup/setup/ /cloudflare-one/connections/connect-networks/get-started/ 301
 /cloudflare-one/connections/connect-apps/run-tunnel/deploy-cloudflared-replicas/ /cloudflare-one/connections/connect-networks/deploy-tunnels/deploy-cloudflared-replicas/ 301
@@ -1567,6 +1592,7 @@
 /cloudflare-one/connections/connect-devices/warp/warp-settings/ /cloudflare-one/connections/connect-devices/warp/configure-warp/warp-settings/ 301
 /cloudflare-one/connections/connect-networks/locations/ /cloudflare-one/connections/connect-devices/agentless/dns/locations/ 301
 /cloudflare-one/connections/connect-networks/monitor-tunnels/grafana/ /cloudflare-one/tutorials/grafana/ 301
+/cloudflare-one/connections/connect-networks/use-cases/kubectl/ /cloudflare-one/tutorials/many-cfd-one-tunnel/ 301
 /cloudflare-one/connections/connect-networks/use_cases/ssh/ /cloudflare-one/connections/connect-networks/use-cases/ssh/ 301
 /cloudflare-one/examples/ /cloudflare-one/api-terraform/ 301
 /cloudflare-one/faq/tunnel/ /cloudflare-one/faq/cloudflare-tunnels-faq/ 301
@@ -1582,14 +1608,17 @@
 /cloudflare-one/identity/devices/require-gateway/ /cloudflare-one/identity/devices/warp-client-checks/require-gateway/ 301
 /cloudflare-one/identity/devices/require-warp/ /cloudflare-one/identity/devices/warp-client-checks/require-warp/ 301
 /cloudflare-one/identity/devices/sentinel-one/ /cloudflare-one/identity/devices/warp-client-checks/sentinel-one/ 301
+/cloudflare-one/identity/idp-integration/azuread/ /cloudflare-one/identity/entra-id/ 301
 /cloudflare-one/identity/idp-integration/one-time-pin/ /cloudflare-one/identity/one-time-pin/ 301
 /cloudflare-one/identity/idp-integration/saml-centrify/ /cloudflare-one/identity/idp-integration/centrify-saml/ 301
 /cloudflare-one/identity/idp-integration/ping-saml/ /cloudflare-one/identity/idp-integration/pingfederate-saml/ 301
 /cloudflare-one/identity/idp-integration/saml-okta/ /cloudflare-one/identity/idp-integration/okta-saml/ 301
 /cloudflare-one/identity/idp-integration/workspace-one/ /cloudflare-one/identity/devices/service-providers/workspace-one/ 301
 /cloudflare-one/identity/login-page/ /cloudflare-one/applications/login-page/ 301
+/cloudflare-one/insights/logs/logpush/rdata/ /cloudflare-one/insights/logs/logpush/#parse-logpush-logs 301
 /cloudflare-one/applications/custom-pages/ /cloudflare-one/applications/ 301
 /cloudflare-one/identity/service-auth/service-tokens/ /cloudflare-one/identity/service-tokens/ 301
+/cloudflare-one/identity/users/short-lived-certificates/ /cloudflare-one/connections/connect-networks/use-cases/ssh/ssh-infrastructure-access/ 301
 /cloudflare-one/identity/users/validating-json/ /cloudflare-one/identity/authorization-cookie/validating-json/ 301
 /cloudflare-one/policies/lists/ /cloudflare-one/policies/gateway/lists 301
 /cloudflare-one/policies/zero-trust/ /cloudflare-one/policies/access/ 301
@@ -1609,6 +1638,8 @@
 /support/traffic/argo-tunnel/ /cloudflare-one/connections/connect-networks/ 301
 /support/traffic/argo-tunnel/exposing-applications-running-on-microsoft-azure-with-cloudflare-argo-tunnel/ /cloudflare-one/connections/connect-apps/deployment-guides/azure/ 301
 /cloudflare-docs/content/cloudflare-one/tutorials/area-1/ /cloudflare-one/applications/configure-apps/saas-apps/area-1/ 301
+/cloudflare-docs/content/cloudflare-one/tutorials/azuread-conditional-access/ /cloudflare-docs/content/cloudflare-one/tutorials/entra-id-conditional-access/ 301
+/cloudflare-docs/content/cloudflare-one/tutorials/azuread-risky-users/ /cloudflare-docs/content/cloudflare-one/tutorials/entra-id-risky-users/ 301
 /cloudflare-one/tutorials/zendesk-sso-saas/ /cloudflare-one/applications/configure-apps/saas-apps/zendesk-sso-saas/ 301
 /cloudflare-one/tutorials/docusign-access/ /cloudflare-one/applications/configure-apps/saas-apps/docusign-access/ 301
 /cloudflare-one/tutorials/hubspot-saas/ /cloudflare-one/applications/configure-apps/saas-apps/hubspot-saas/ 301
@@ -1636,7 +1667,7 @@
 /cloudflare-one/tutorials/secure-dns-network/ /cloudflare-one/connections/connect-devices/agentless/dns/locations/ 301
 /cloudflare-one/tutorials/share-new-site/ /cloudflare-one/connections/connect-networks/get-started/ 301
 /cloudflare-one/tutorials/single-command/ /cloudflare-one/connections/connect-networks/get-started/ 301
-/cloudflare-one/tutorials/ssh-cert-bastion/ /cloudflare-one/identity/users/short-lived-certificates/ 301
+/cloudflare-one/tutorials/ssh-cert-bastion/ /cloudflare-one/connections/connect-networks/use-cases/ssh/ssh-infrastructure-access/ 301
 /cloudflare-one/tutorials/ssh-service-token/ /cloudflare-one/identity/service-tokens/ 301
 /cloudflare-one/tutorials/smb/ /cloudflare-one/connections/connect-networks/use-cases/smb/ 301
 /cloudflare-one/tutorials/split-tunnel/ /cloudflare-one/connections/connect-devices/warp/configure-warp/route-traffic/ 301

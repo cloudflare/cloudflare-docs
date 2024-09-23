@@ -21,4 +21,23 @@ To edit member permissions using the API, get a [list of roles](/api/operations/
 
 Then, send a [`PUT` request](/api/operations/account-members-update-member) to edit their permissions.
 
+
+```bash title="Request"
+
+curl --request PUT \
+  --url https://api.cloudflare.com/client/v4/accounts/{account_id}/members/{member_id} \
+  --header 'Authorization: Bearer <API_TOKEN>' \
+  --header 'Content-Type: application/json' \
+  --data '{
+	  "roles": [
+	        {
+	            "id": "<ROLE_ID1>"
+	        },
+	        {
+	            "id": "<ROLE_ID2>"
+	        }
+	  	]
+		}'
+```
+
 </TabItem> </Tabs>

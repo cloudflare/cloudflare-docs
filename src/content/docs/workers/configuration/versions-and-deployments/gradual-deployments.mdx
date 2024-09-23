@@ -3,9 +3,6 @@ pcx_content_type: configuration
 title: Gradual deployments
 head: []
 description: Incrementally deploy code changes to your Workers with gradual deployments.
-sidebar:
-  badge:
-    text: Beta
 ---
 
 import { Example } from "~/components";
@@ -20,14 +17,6 @@ Using gradual deployments, you can:
 - Monitor error rates and exceptions across versions using [analytics and logging](/workers/configuration/versions-and-deployments/gradual-deployments/#observability) tooling.
 - [Roll back](/workers/configuration/versions-and-deployments/rollbacks/) to a previously stable version if you notice issues when deploying a new version.
 
-:::caution
-
-Gradual deployments are in **beta and under active development**. Review [Limits](/workers/configuration/versions-and-deployments//gradual-deployments/#limits) associated with rollbacks before using this feature.
-
-Provide your feedback on the rollbacks feature through the [feedback form](https://www.cloudflare.com/lp/developer-week-deployments).
-
-:::
-
 ## Use gradual deployments
 
 The following section guides you through an example usage of gradual deployments. You will choose to use either [Wrangler](/workers/configuration/versions-and-deployments/gradual-deployments/#via-wrangler) or the [Cloudflare dashboard](/workers/configuration/versions-and-deployments/gradual-deployments/#via-the-cloudflare-dashboard) to:
@@ -41,7 +30,7 @@ The following section guides you through an example usage of gradual deployments
 
 :::note
 
-Minimum required wrangler version: 3.40.0.
+Minimum required Wrangler version: 3.40.0. Versions before 3.73.0 require you to specify a `--x-versions` flag.
 
 :::
 
@@ -60,7 +49,7 @@ Answer `yes` or `no` to using TypeScript. Answer `yes` to deploying your applica
 To create a new version of the Worker, edit the Worker code by changing the `Response` content to your desired text and upload the Worker by using the [`wrangler versions upload`](/workers/wrangler/commands/#upload) command.
 
 ```sh
-npx wrangler versions upload --experimental-versions
+npx wrangler versions upload
 ```
 
 This will create a new version of the Worker that is not automatically deployed.
@@ -71,7 +60,7 @@ Use the [`wrangler versions deploy`](/workers/wrangler/commands/#deploy-2) comma
 create a new deployment that splits traffic between two versions of the Worker. Follow the interactive prompts to create a deployment with the versions uploaded in [step #1](/workers/configuration/versions-and-deployments/gradual-deployments/#1-create-and-deploy-a-new-worker) and [step #2](/workers/configuration/versions-and-deployments/gradual-deployments/#2-create-a-new-version-of-the-worker). Select your desired percentages for each version.
 
 ```sh
-npx wrangler versions deploy --experimental-versions
+npx wrangler versions deploy
 ```
 
 #### 4. Test the split deployment
@@ -94,7 +83,7 @@ You can test also target a specific version using [version overrides](#version-o
 Run `wrangler versions deploy` again and follow the interactive prompts. Select the version uploaded in [step 2](/workers/configuration/versions-and-deployments/gradual-deployments/#2-create-a-new-version-of-the-worker) and set it to 100% deployment.
 
 ```sh
-npx wrangler versions deploy --experimental-versions
+npx wrangler versions deploy
 ```
 
 ### Via the Cloudflare dashboard
@@ -168,7 +157,7 @@ curl -s https://$SCRIPT_NAME.$SUBDOMAIN.workers.dev -H 'Cloudflare-Workers-Versi
 
 The dictionary can contain multiple key-value pairs. Each key indicates the name of the Worker the override should be applied to. The value indicates the version ID that should be used and must be a [String](https://www.rfc-editor.org/rfc/rfc8941#name-strings).
 
-A version override will only be applied if the specified version is in the current deployment. The versions in the current deployment can be found using the [`wrangler deployments list --experimental-versions`](/workers/wrangler/commands/#list---experimental-versions) command or on the [Workers Dashboard](https://dash.cloudflare.com/?to=/:account/workers) under Worker > Deployments > Active Deployment.
+A version override will only be applied if the specified version is in the current deployment. The versions in the current deployment can be found using the [`wrangler deployments list`](/workers/wrangler/commands/#list#TODO) command or on the [Workers Dashboard](https://dash.cloudflare.com/?to=/:account/workers) under Worker > Deployments > Active Deployment.
 
 :::note[Verifying that the version override was applied]
 
@@ -193,7 +182,7 @@ In this example, your deployment is initially configured to route all traffic to
 | :----------------------------------: | :--------: |
 | db7cd8d3-4425-4fe7-8c81-01bf963b6067 |    100%    |
 
-Create a new deployment using [`wrangler versions deploy --experimental-versions`](/workers/wrangler/commands/#deploy-2) and specify 0% for the new version whilst keeping the previous version at 100%.
+Create a new deployment using [`wrangler versions deploy`](/workers/wrangler/commands/#deploy-2) and specify 0% for the new version whilst keeping the previous version at 100%.
 
 |              Version ID              | Percentage |
 | :----------------------------------: | :--------: |

@@ -20,7 +20,7 @@ In order of precedence:
 
 #### On an index page
 
-Index page labels default to `Overview` if `sidebar.label` is not defined. 
+Index page labels default to `Overview` if `sidebar.label` is not defined.
 
 `title` is not taken into consideration due to `title` being used in group labelling.
 
@@ -41,9 +41,9 @@ For example, given the following pages:
 ---
 title: Bar
 sidebar:
-    label: IndexTitle
-    group:
-        label: GroupTitle
+  label: IndexTitle
+  group:
+    label: GroupTitle
 ---
 ```
 
@@ -142,8 +142,55 @@ sidebar:
   group:
     hideIndex: true
 ---
+
+import { DirectoryListing } from "~/components";
+
+<DirectoryListing />
 ```
+
+:::note
+
+Since these pages are still accessible via other links and directly navigating to the URL, always include a `DirectoryListing` component within the page content.
+
+:::
 
 ### Hiding child pages of a group
 
 To make a group render as if it was a single page, which links to the index page, use the top-level `hideChildren` property.
+
+## Badges
+
+### Links
+
+To specify a badge next to the link, use the `sidebar.badge` property.
+
+```mdx title="/src/content/docs/examples/example.mdx"
+---
+title: Example
+sidebar:
+  badge: New!
+---
+```
+
+<FileTree>
+- Examples
+  - Example [New!]
+</FileTree>
+
+### Groups
+
+To specify a badge next to the group label, use the `sidebar.group.badge` inside the group's `index.mdx` frontmatter.
+
+```mdx title="/src/content/docs/examples/index.mdx"
+---
+title: Examples
+sidebar:
+  group:
+    badge: New!
+---
+```
+
+<FileTree>
+- Examples [New!]
+  - Example
+</FileTree>

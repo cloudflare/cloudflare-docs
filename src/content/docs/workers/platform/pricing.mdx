@@ -10,17 +10,6 @@ description: Workers plans and pricing information.
 
 import { GlossaryTooltip, Render } from "~/components"
 
-:::caution
-
-
-All users on the Workers Paid plan have been **automatically migrated** from the Bundled and Unbound usage models to the [Standard usage model](https://blog.cloudflare.com/workers-pricing-scale-to-zero/) on March 1, 2024.
-
-* To learn what this migration means for Workers pricing, refer to [Pricing](/workers/platform/pricing/).
-* To learn about how this migration impacts Worker limits, refer to [Limits](/workers/platform/limits/).
-
-
-:::
-
 By default, users have access to the Workers Free plan. The Workers Free plan includes limited usage of Workers, Pages Functions and Workers KV. Read more about the [Free plan limits](/workers/platform/limits/#worker-limits).
 
 The Workers Paid plan includes Workers, Pages Functions, Workers KV, and Durable Objects usage for a minimum charge of $5 USD per month for an account. The plan includes increased initial usage allotments, with clear charges for usage that exceeds the base plan.
@@ -37,13 +26,7 @@ All [Pages Functions](/pages/functions/) are billed as Workers. All pricing and 
 
 ## Workers
 
-Usage models are settings on your Workers that specify how you are billed for usage, as well as the upper [limits](/workers/platform/limits/#worker-limits) for how many milliseconds of <GlossaryTooltip term="CPU time" link="/workers/glossary/?term=cpu+time">CPU time</GlossaryTooltip> your Worker can use per invocation.
-
-Users on the Workers Paid plan only have access to the Standard usage model.
-
-Workers Enterprise accounts are billed based on the usage model specified in their contract. To switch to the Standard usage model, reach out to your CSM. Some Workers Enterprise customers maintain the ability to change usage models.
-
-
+Users on the Workers Paid plan  have access to the Standard usage model. Workers Enterprise accounts are billed based on the usage model specified in their contract. To switch to the Standard usage model, reach out to your CSM. 
 
 |              | Requests<sup>1</sup>                                               | Duration                        | CPU time                                                                                                                                                                                                                                                                                                                                   |
 | ------------ | ------------------------------------------------------------------ | ------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
@@ -52,7 +35,7 @@ Workers Enterprise accounts are billed based on the usage model specified in the
 
  <sup>1</sup>  Inbound requests to your Worker. Cloudflare does not bill for [subrequests](/workers/platform/limits/#subrequests) you make from your Worker.
 
-### Example pricing: Standard Usage Model
+### Example pricing
 
 #### Example 1
 
@@ -113,78 +96,6 @@ If you had a Worker on the Bundled usage model prior to the migration to Standar
 
 :::
 
-### Deprecated usage models
-
-
-
-|             | Requests<sup>1</sup>                                               | Duration                                                                                  | CPU time                                                                                                                                                                                                      |
-| ----------- | ------------------------------------------------------------------ | ----------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| **Bundled** | 10 million included per month <br /> +$0.50 per additional million | No charge for duration                                                                    | 50 milliseconds CPU time per invocation                                                                                                                                                                       |
-| **Unbound** | 1 million included per month <br /> +$0.15 per additional million  | 400,000 GB-s included per month <br /> +$12.50 per additional million GB-s<sup>2, 3</sup> | 30 seconds of CPU time per invocation <br /> 15 minutes of CPU time per [Cron Trigger](/workers/configuration/cron-triggers/) or [Queue Consumer](/queues/configuration/javascript-apis/#consumer) invocation |
-
-
-
-<sup>1</sup>  Inbound requests to your Worker. [Subrequests](/workers/platform/limits/#subrequests) to external services are not billed on a unit basis, but do impact the duration (wall-clock time) of your Worker.
-
-<sup>2</sup>  Cloudflare will bill for duration charges based on the higher of your wall time or CPU time, with a multiple of 8 applied to the CPU time to account for the processing power allotted to your Worker. Cloudflare will not bill for wall time duration charges beyond the execution [limit](/workers/platform/limits/#worker-limits) given.
-
-<sup>3</sup>  Duration billing will charge for the 128 MB of memory allocated to your Worker, regardless of actual usage. If your account has significant traffic to a single Worker, multiple instances of that Worker may run in the same isolate on the same physical machine and share the 128 MB of memory. These Workers are still billed as if they were separate instances, with each being charged as if it had its own 128 MB of memory.
-
-#### Example pricing: Bundled Usage Model
-
-A Worker that serves 100 million requests per month would have the following estimated costs:
-
-
-
-|                       | Monthly Costs | Formula                                                                    |
-| --------------------- | ------------- | -------------------------------------------------------------------------- |
-| **Workers Paid Plan** | $5            |                                                                            |
-| **Requests**          | $45           | (100,000,000 requests - 10,000,000 included requests) / 1,000,000 \* $0.50 |
-| **Total**             | $50           |                                                                            |
-
-
-
-#### Example pricing: Unbound Usage Model
-
-Consider a Worker that serves 100 million requests per month, with an average duration (wall-clock time) of 200 milliseconds per request. This translates to the following duration (wall-clock time) metrics:
-
-* 0.2 seconds per request (200 milliseconds / 1000)
-* 0.025 gigabyte seconds (GB-s) per request (0.2 seconds \* 128 MB / 1024 MB)
-* 2,500,000 gigabyte seconds (GB-s) per month (0.025 GB-s per request \* 100,000,000 requests)
-
-Resulting in the following estimated costs:
-
-
-
-|                       | Monthly Costs | Formula                                                                   |
-| --------------------- | ------------- | ------------------------------------------------------------------------- |
-| **Workers Paid Plan** | $5.00         |                                                                           |
-| **Requests**          | $14.85        | (100,000,000 requests - 1,000,000 included requests) / 1,000,000 \* $0.15 |
-| **Duration**          | $26.25        | (2,500,000 GB-s per month - 400,000 included GB-s) / 1,000,000 \* $12.50  |
-| **Total**             | $46.10        |                                                                           |
-
-
-
-### How to switch usage models
-
-:::note
-
-Only some Workers Enterprise customers maintain the ability to change usage models. 
-:::
-
-Usage models can be changed at the individual Worker level:
-
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) and select your account.
-2. In Account Home, select **Workers & Pages**.
-3. In **Overview**, select your Worker > **Settings** > **Usage Model**.
-
-To change your default account-wide usage model:
-
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) and select your account.
-2. In Account Home, select **Workers & Pages**.
-3. Find **Usage Model** on the right-side menu > **Change**.
-
-Existing Workers will not be impacted when changing the default usage model. You may change the usage model for individual Workers without affecting your account-wide default usage model.
 
 ## Workers Trace Events Logpush
 
@@ -262,11 +173,16 @@ Vectorize is currently only available on the Workers paid plan.
 
 ## Service bindings
 
-Service bindings cost the same as any normal Worker. Each invocation is charged as if it is a request from the Internet.
+Requests made from your Worker to another worker via a [Service Binding](/workers/runtime-apis/bindings/service-bindings/) do not incur additional request fees. This allows you to split apart functionality into multiple Workers, without incurring additional costs.
 
-If your Worker is on the Unbound usage model, you will be charged a single billable duration across all Workers triggered by a single incoming request.
+For example, if Worker A makes a subrequest to Worker B via a Service Binding, or calls an RPC method provided by Worker B via a Service Binding, this is billed as:
 
-For more information on how service bindings work, refer to [About Service bindings](/workers/runtime-apis/bindings/service-bindings/).
+- One request (for the initial invocation of Worker A)
+- The total amount of CPU time used across both Worker A and Worker B
+
+:::note[Only available on Workers Standard pricing]
+If your Worker is on the deprecated [Bundled](/workers/platform/pricing/#example-pricing-bundled-usage-model) or [Unbound](/workers/platform/pricing/#example-pricing-unbound-usage-model) pricing plans, subrequests and RPC calls made via Service Bindings are charged as if they are request from the Internet. In the example above, you would be charged for two requests, one to Worker A, and one to Worker B.
+:::
 
 ## Fine Print
 

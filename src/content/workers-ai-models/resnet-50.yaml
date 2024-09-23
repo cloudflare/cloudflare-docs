@@ -1,4 +1,3 @@
-
 model:
   id: "7f9a76e1-d120-48dd-a565-101d328bbb02"
   source: 1
@@ -22,5 +21,3 @@ title: "resnet-50"
 json_schema:
   input: "{\n  \"oneOf\": [\n    {\n      \"type\": \"string\",\n      \"format\": \"binary\"\n    },\n    {\n      \"type\": \"object\",\n      \"properties\": {\n        \"image\": {\n          \"type\": \"array\",\n          \"items\": {\n            \"type\": \"number\"\n          }\n        }\n      },\n      \"required\": [\n        \"image\"\n      ]\n    }\n  ]\n}"
   output: "{\n  \"type\": \"array\",\n  \"contentType\": \"application/json\",\n  \"items\": {\n    \"type\": \"object\",\n    \"properties\": {\n      \"score\": {\n        \"type\": \"number\"\n      },\n      \"label\": {\n        \"type\": \"string\"\n      }\n    }\n  }\n}"
-
-

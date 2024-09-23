@@ -42,8 +42,10 @@ To uninstall the WARP client:
 1. First, locate the `.msi` package with the following PowerShell command:
 
 ```powershell
-PS C:\Users\JohnDoe> Get-WmiObject Win32_Product | Where-Object { $_.Name -match "WARP" } | Sort-Object -Property Name | Format-Table IdentifyingNumber, Name, LocalPackage -AutoSize
+Get-WmiObject Win32_Product | Where-Object { $_.Name -match "WARP" } | Sort-Object -Property Name | Format-Table IdentifyingNumber, Name, LocalPackage -AutoSize
+```
 
+```txt output
 IdentifyingNumber                      Name            LocalPackage
 -----------------                      ----            ------------
 {5RA4DJWK-13D8-2NSX-QRF8-UANLODWD6D90} Cloudflare WARP C:\WINDOWS\Installer\3f476db.msi
@@ -51,7 +53,7 @@ IdentifyingNumber                      Name            LocalPackage
 
 2. You can then use the LocalPackage output in the uninstall command. For example,
 
-```bash
+```powershell
 msiexec /x C:\WINDOWS\Installer\<WARP_RELEASE>.msi /quiet
 ```
 
@@ -72,7 +74,7 @@ Changes to this file are processed immediately by the WARP client.
 
 ### Authenticate in embedded browser
 
-By default WARP will use the user’s default browser to perform registration. You can override the default setting to instead authenticate users in an embedded browser. The embedded browser will work around any protocol handler issues that may prevent the default browser from launching.
+By default WARP will use the user's default browser to perform registration. You can override the default setting to instead authenticate users in an embedded browser. The embedded browser will work around any protocol handler issues that may prevent the default browser from launching.
 
 To use an embedded browser:
 

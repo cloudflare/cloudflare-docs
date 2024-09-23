@@ -6,27 +6,26 @@ sidebar:
 head:
   - tag: title
     content: Create private networks with WARP-to-WARP
-
 ---
 
-import { GlossaryTooltip } from "~/components"
+import { GlossaryTooltip } from "~/components";
 
-With Cloudflare Zero Trust, you can create a private network between any two or more devices running Cloudflare WARP. This means that you can have a private network between your phone and laptop without ever needing to be connected to the same physical network. If you already have an existing Zero Trust deployment, you can also enable this feature to add device-to-device connectivity to your private network with the press of a button. This will allow you to connect to any service that relies on TCP, UDP, or ICMP-based protocols through Cloudflare’s network.
+With Cloudflare Zero Trust, you can create a private network between any two or more devices running Cloudflare WARP. This means that you can have a private network between your phone and laptop without ever needing to be connected to the same physical network. If you already have an existing Zero Trust deployment, you can also enable this feature to add device-to-device connectivity to your private network with the press of a button. This will allow you to connect to any service that relies on TCP, UDP, or ICMP-based protocols through Cloudflare's network.
 
 Users in your organization can reach these services by enrolling into your organization's Zero Trust account. Once enrolled, each device is assigned a virtual IP address in the `100.96.0.0/12` range which will allow users or systems to address these devices directly. Administrators will then be able to build Zero Trust policies to determine who within your organization can reach those virtual IPs.
 
 This guide covers how to:
 
-* Enable WARP-to-WARP connectivity to establish a private network between your devices.
-* Manage Split Tunnel preferences for the WARP client to determine what traffic should be routed to the Cloudflare global network.
-* Create Zero Trust security policies to restrict access.
-* Connect to virtual IP spaces from WARP devices without any client-side configuration changes.
+- Enable WARP-to-WARP connectivity to establish a private network between your devices.
+- Manage Split Tunnel preferences for the WARP client to determine what traffic should be routed to the Cloudflare global network.
+- Create Zero Trust security policies to restrict access.
+- Connect to virtual IP spaces from WARP devices without any client-side configuration changes.
 
 ## Prerequisites
 
-* [Install the Cloudflare WARP client](/cloudflare-one/connections/connect-devices/warp/deployment/) on your devices.
-* [Define device enrollment permissions](/cloudflare-one/connections/connect-devices/warp/deployment/device-enrollment/).
-* [Enroll your devices](/cloudflare-one/connections/connect-devices/warp/deployment/manual-deployment/) in your Zero Trust organization.​​
+- [Install the Cloudflare WARP client](/cloudflare-one/connections/connect-devices/warp/deployment/) on your devices.
+- [Define device enrollment permissions](/cloudflare-one/connections/connect-devices/warp/deployment/device-enrollment/).
+- [Enroll your devices](/cloudflare-one/connections/connect-devices/warp/deployment/manual-deployment/) in your Zero Trust organization.​​
 
 ## Enable WARP-to-WARP
 
@@ -35,8 +34,8 @@ This guide covers how to:
 3. Enable **Warp-to-Warp**. This allows Cloudflare to route traffic to the <GlossaryTooltip term="CGNAT IP">CGNAT IP</GlossaryTooltip> space.
 4. In your [Split Tunnel configuration](/cloudflare-one/connections/connect-devices/warp/configure-warp/route-traffic/split-tunnels/), ensure that traffic to `100.96.0.0/12` is going through WARP:
 
-* If using **Exclude** mode, remove `100.96.0.0/12` from your list.
-* If using **Include** mode, add `100.96.0.0/12` to your list.
+- If using **Exclude** mode, remove `100.96.0.0/12` from your list.
+- If using **Include** mode, add `100.96.0.0/12` to your list.
 
 This will instruct WARP to begin proxying any traffic destined for a `100.96.0.0/12` IP address to Cloudflare for routing and policy enforcement.
 

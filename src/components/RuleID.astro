@@ -1,6 +1,6 @@
 ---
-import { Icon } from "~/components";
-import { z } from "astro:content";
+import { z } from "astro:schema";
+import { Icon } from "@astrojs/starlight/components";
 
 type Props = z.infer<typeof props>;
 
@@ -16,7 +16,7 @@ const { id } = props.parse(Astro.props);
 <code
 	title="Click to copy the full ID"
 	onclick=`navigator.clipboard.writeText("${id}")`
-	class="flex w-fit hover:bg-accent-600/50 hover:cursor-pointer active:bg-accent-600"
+	class="inline-flex w-fit hover:bg-accent-600/50 hover:cursor-pointer active:bg-accent-600"
 >
 	{`...${id.slice(-8)}`}
 	<Icon name="document" class="!inline justify-center" />
