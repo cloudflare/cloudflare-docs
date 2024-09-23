@@ -5,6 +5,16 @@ productLink: "/page-shield/"
 productArea: Application security
 productAreaLink: /fundamentals/reference/changelog/security/
 entries:
+  - publish_date: "2024-09-18"
+    title: Page Shield's script monitor now available in Free plan
+    description: |-
+      The Page Shield's script monitor feature is now available to all users, including users in the Free plan.
+
+  - publish_date: "2024-09-18"
+    title: Page Shield policy changes now available in audit logs
+    description: |-
+      Cloudflare [Audit Logs](/fundamentals/setup/account/account-security/review-audit-logs/) now include entries for any changes to Page Shield's policies.
+
   - publish_date: "2024-06-18"
     title: Cookie Monitor now available
     description: |-

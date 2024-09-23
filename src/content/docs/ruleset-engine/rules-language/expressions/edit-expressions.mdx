@@ -9,13 +9,12 @@ head:
 description: Edit expressions in the Cloudflare dashboard using the Expression
   Builder, which allows for a visual approach, or using the Expression Editor,
   in which you type the expression.
-
 ---
 
 In the Cloudflare dashboard, there are two options for editing [expressions](/ruleset-engine/rules-language/expressions/):
 
-* **Expression Builder**: Allows you to create expressions using drop-down lists, emphasizing a visual approach to defining an expression.
-* **Expression Editor**: A text-only interface that supports advanced features, such as grouping symbols and functions for transforming and validating values.
+- **Expression Builder**: Allows you to create expressions using drop-down lists, emphasizing a visual approach to defining an expression.
+- **Expression Editor**: A text-only interface that supports advanced features, such as grouping symbols and functions for transforming and validating values.
 
 In general, you can switch back and forth between the Expression Builder and the Expression Editor. However, the Expression Builder does not support [nested expressions](#create-nested-expressions) or the [raw string syntax](/ruleset-engine/rules-language/values/#raw-string-syntax).
 
@@ -69,14 +68,13 @@ ip.geoip.country ne "MY"
 
 Only the Expression Editor supports nested expressions such as the one above. If you create a rule with nested expressions in the Expression Editor and try to switch to the Expression Builder, a dialog will warn you that the expression is not supported in the builder. You will be prompted to **Discard changes** and switch to the Expression Builder or **Cancel** and continue working in the editor.
 
-:::note[Note]
+:::note
 
 String comparison in rule expressions is case sensitive. To account for possible variations of string capitalization in an expression, you can use the [`lower()`](/ruleset-engine/rules-language/functions/#lower) function and compare the result with a lowercased string, like in the following example:
 
 ```txt
 lower(http.request.uri.path) contains "/wp-login.php"
 ```
-
 
 :::
 

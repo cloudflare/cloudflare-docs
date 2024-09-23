@@ -24,11 +24,12 @@ For every request with one or more detected content objects, the content scanner
 
 Cloudflare uses the same [anti-virus (AV) scanner used in Cloudflare Zero Trust](/cloudflare-one/policies/gateway/http-policies/antivirus-scanning/) for WAF content scanning.
 
-:::caution[Warning]
+:::caution
 
 Content scanning will not apply any mitigation actions to requests with content objects considered malicious. It only provides a signal that you can use to define your attack mitigation strategy. You must create rules — [custom rules](/waf/custom-rules/) or [rate limiting rules](/waf/rate-limiting-rules/) — to perform actions based on detected signals.
 
 For more information on detection versus mitigation, refer to [Concepts](/waf/about/#detection-versus-mitigation).
+
 :::
 
 ## What is a content object?
@@ -55,8 +56,7 @@ All content objects in an incoming request will be checked, namely for requests 
 
 The content scanner will fully check content objects with a size up to 15 MB. For larger content objects, the scanner will analyze the first 15 MB and provide scan results based on that portion of the object.
 
-:::caution[Warning]
-
+:::caution
 The AV scanner will not scan some particular types of files, namely encrypted or password-protected files. Refer to [Non-scannable files](/cloudflare-one/policies/gateway/http-policies/antivirus-scanning/#non-scannable-files) for a list of AV scanning limitations.
 :::
 

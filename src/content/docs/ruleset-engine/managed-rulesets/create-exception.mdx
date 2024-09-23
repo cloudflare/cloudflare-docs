@@ -3,25 +3,23 @@ title: Create an exception
 pcx_content_type: how-to
 sidebar:
   order: 5
-
 ---
 
 Use exceptions to skip the execution of a managed ruleset of some of its rules. Exceptions are also known as skip rules, since the rule action is `skip`.
 
 The exception configuration includes an [expression](/ruleset-engine/rules-language/expressions/) that defines the skip conditions, and the rules or managed rulesets to skip under those conditions.
 
-:::note[Note]
-
-Currently, only the [Cloudflare Web Application Firewall (WAF)](/waf/managed-rules/waf-exceptions/) supports managed rules exceptions. 
+:::note
+Currently, only the [Cloudflare Web Application Firewall (WAF)](/waf/managed-rules/waf-exceptions/) supports managed rules exceptions.
 :::
 
 ## Types of exceptions
 
 An exception can have one of the following behaviors (from highest to lowest priority):
 
-* [Skip all remaining rules in the entry point ruleset](#skip-all-remaining-rules)
-* [Skip one or more managed rulesets](#skip-one-or-more-managed-rulesets)
-* [Skip one or more rules of managed rulesets](#skip-one-or-more-rules-of-managed-rulesets)
+- [Skip all remaining rules in the entry point ruleset](#skip-all-remaining-rules)
+- [Skip one or more managed rulesets](#skip-one-or-more-managed-rulesets)
+- [Skip one or more rules of managed rulesets](#skip-one-or-more-rules-of-managed-rulesets)
 
 You define exceptions in a given context — zone level or account level — and they apply only to that context. For example, if you define an exception that skips all remaining rules at the account level, the rules defined in the entry point ruleset at the zone level will still be evaluated.
 
@@ -30,8 +28,7 @@ If there is a match for the expressions of several exceptions, Cloudflare will c
 Exceptions only apply to rules executing a managed ruleset listed after them. If you add an exception at the end of the list of rules of an entry point ruleset, nothing will be skipped.
 
 :::caution[Additional requirement for account-level exceptions]
-
-Rules in entry point rulesets at the account level only apply to Enterprise zones. This also includes exceptions (or skip rules). When adding an exception at the account level, you must use parentheses to enclose any custom conditions in the rule expression and end the expression with `and cf.zone.plan eq "ENT"`, or else the API operation will fail. 
+Rules in entry point rulesets at the account level only apply to Enterprise zones. This also includes exceptions (or skip rules). When adding an exception at the account level, you must use parentheses to enclose any custom conditions in the rule expression and end the expression with `and cf.zone.plan eq "ENT"`, or else the API operation will fail.
 :::
 
 ### Skip all remaining rules
@@ -42,11 +39,11 @@ Example of rule definition:
 
 ```json
 {
-  "expression": "<RULE_EXPRESSION>",
-  "action": "skip",
-  "action_parameters": {
-    "ruleset": "current"
-  }
+	"expression": "<RULE_EXPRESSION>",
+	"action": "skip",
+	"action_parameters": {
+		"ruleset": "current"
+	}
 }
 ```
 
@@ -62,11 +59,11 @@ Example of rule definition:
 
 ```json
 {
-  "expression": "<RULE_EXPRESSION>",
-  "action": "skip",
-  "action_parameters": {
-    "rulesets": ["<MANAGED_RULESET_1_ID>", "<MANAGED_RULESET_2_ID>"]
-  }
+	"expression": "<RULE_EXPRESSION>",
+	"action": "skip",
+	"action_parameters": {
+		"rulesets": ["<MANAGED_RULESET_1_ID>", "<MANAGED_RULESET_2_ID>"]
+	}
 }
 ```
 
@@ -80,14 +77,14 @@ Example of a rule definition that skips rules `A` and `B` of managed ruleset `1`
 
 ```json
 {
-  "expression": "<RULE_EXPRESSION>",
-  "action": "skip",
-  "action_parameters": {
-    "rules": {
-      "<MANAGED_RULESET_1_ID>": ["<RULE_A_ID>", "<RULE_B_ID>"],
-      "<MANAGED_RULESET_2_ID>": ["<RULE_X_ID>"]
-    }
-  }
+	"expression": "<RULE_EXPRESSION>",
+	"action": "skip",
+	"action_parameters": {
+		"rules": {
+			"<MANAGED_RULESET_1_ID>": ["<RULE_A_ID>", "<RULE_B_ID>"],
+			"<MANAGED_RULESET_2_ID>": ["<RULE_X_ID>"]
+		}
+	}
 }
 ```
 
@@ -95,7 +92,7 @@ The rules in the `rules` object must belong to the specified managed rulesets, o
 
 For a full example, refer to the [WAF documentation](/waf/managed-rules/waf-exceptions/define-api/#skip-one-or-more-rules-of-waf-managed-rulesets).
 
-***
+---
 
 ## Additional notes
 

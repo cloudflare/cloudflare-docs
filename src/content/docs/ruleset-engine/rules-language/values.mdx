@@ -49,7 +49,7 @@ http.request.uri.path matches "a\"#b"
 regex_replace(http.host, "a", "\\")
 ```
 
-:::caution[Warning]
+:::caution
 
 In some situations you will need to double-escape a string — for example, when using the [`regex_replace()`](/ruleset-engine/rules-language/functions/#regex_replace) function with a regular expression matching a backslash (`\`).
 
@@ -62,6 +62,7 @@ regex_replace(http.host, "\\\\", "a")
 ```
 
 To avoid this situation, Cloudflare recommends that you use the [raw string syntax](#raw-string-syntax) for specifying regular expressions.
+
 :::
 
 ### Raw string syntax
