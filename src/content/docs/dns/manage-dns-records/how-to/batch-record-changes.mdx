@@ -10,7 +10,7 @@ import { GlossaryTooltip, Example, Render } from "~/components";
 Cloudflare allows you to apply several changes to your zone records in just one action. You can [use the dashboard](#use-the-dashboard) to delete DNS records or update their <GlossaryTooltip term="proxy status">proxy status</GlossaryTooltip> in bulk, or [use the API](#use-the-api) to perform further batched operations.
 
 :::caution[Propagation through the Cloudflare network]
-Although Cloudflare will execute the batched operations in a single [database transaction](https://en.wikipedia.org/wiki/Database_transaction), Cloudflare's distributed KV store must treat each record change as a single key-value pair. This means that the propagation of changes is not atomic. Refer to our [blog post](https://blog.cloudflare.com/) for details.
+Although Cloudflare will execute the batched operations in a single [database transaction](https://en.wikipedia.org/wiki/Database_transaction), Cloudflare's distributed KV store must treat each record change as a single key-value pair. This means that the propagation of changes is not atomic. Refer to our [blog post](https://blog.cloudflare.com/batched-dns-changes/) for details.
 :::
 
 ## Availability and limits
@@ -91,7 +91,7 @@ Within each of these four lists, each individual action is executed following th
 ### Aspects to consider
 
 :::caution[Propagation through the Cloudflare network]
-Although Cloudflare will execute the batched operations in a single [database transaction](https://en.wikipedia.org/wiki/Database_transaction), Cloudflare's distributed KV store must treat each record change as a single key-value pair. This means that the propagation of changes is not atomic. Refer to our [blog post](https://blog.cloudflare.com/) for details.
+Although Cloudflare will execute the batched operations in a single [database transaction](https://en.wikipedia.org/wiki/Database_transaction), Cloudflare's distributed KV store must treat each record change as a single key-value pair. This means that the propagation of changes is not atomic. Refer to our [blog post](https://blog.cloudflare.com/batched-dns-changes/) for details.
 :::
 
 For each operation that you list in the `/batch` request body, consider the required information and how unspecified fields will behave:
