@@ -3,20 +3,20 @@ title: WAF attack score
 pcx_content_type: concept
 sidebar:
   order: 2
+	label: Attack score
 ---
 
 import { GlossaryTooltip } from "~/components";
 
-WAF attack score is a feature that complements [WAF Managed Rules](/waf/managed-rules/).
+The attack score [traffic detection](/waf/concepts/#detection-versus-mitigation) helps identify variations of known attacks and their malicious payloads. This detection complements [WAF Managed Rules](/waf/managed-rules/).
 
 WAF's managed rulesets contain rules that are continuously updated to better detect malicious payloads. They target specific patterns of established attack vectors and have a very low rate of false positives. However, managed rulesets are not optimized for attacks based on variations of the original signature introduced, for example, by fuzzing techniques.
 
-WAF attack score allows you to identify these attack variations and their malicious payloads. It classifies each request using a machine learning algorithm, assigning an attack score from 1 to 99 based on the likelihood that the request is malicious. Just like [Bot Management](/bots/plans/bm-subscription/), you can use this score to identify potentially malicious traffic that is not an exact match to any of the rules in WAF Managed Rules.
+Attack score allows you to identify these attack variations and their malicious payloads. It classifies each request using a machine learning algorithm, assigning an attack score from 1 to 99 based on the likelihood that the request is malicious. Just like [Bot Management](/bots/plans/bm-subscription/), you can use this score to identify potentially malicious traffic that is not an exact match to any of the rules in WAF Managed Rules.
 
-To maximize protection, Cloudflare recommends that you use both Managed Rules and WAF attack score.
+To maximize protection, Cloudflare recommends that you use both Managed Rules and attack score.
 
 :::note
-
 This feature is available to Enterprise customers. Business plans have access to a single field (WAF Attack Score Class).
 :::
 
@@ -32,7 +32,7 @@ The Cloudflare WAF provides the following attack scores:
 | WAF RCE Attack Score   | Enterprise            | Remote Code Execution (RCE) | [`cf.waf.score.rce`](/ruleset-engine/rules-language/fields/dynamic-fields/#cfwafscorerce)     |
 | WAF Attack Score Class | Business              | N/A (global classification) | [`cf.waf.score.class`](/ruleset-engine/rules-language/fields/dynamic-fields/#cfwafscoreclass) |
 
-You can use the fields for these scores in expressions of [custom rules](/waf/custom-rules/) and [rate limiting rules](/waf/rate-limiting-rules/) where:
+You can use these fields in expressions of [custom rules](/waf/custom-rules/) and [rate limiting rules](/waf/rate-limiting-rules/) where:
 
 - A score of `1` indicates that the request is almost certainly malicious.
 - A score of `99` indicates that the request is likely clean.
@@ -55,7 +55,7 @@ Attack score automatically detects and decodes Base64, JavaScript (Unicode escap
 
 ---
 
-## Start using the WAF attack score
+## Start using WAF attack score
 
 ### 1. Create a custom rule
 
