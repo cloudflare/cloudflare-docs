@@ -103,8 +103,8 @@ if (
 				</div>
 			</div>
 			<div>
-				<ul class="flex gap-x-4 text-xs list-outside pl-0 justify-center">
-					<li class="text-gray-600 dark:text-gray-400 list-none">
+				<ul class="flex gap-x-4 text-xs list-outside pl-0 justify-center text-gray-600 dark:!text-gray-400">
+					<li class="list-none text-gray-600 dark:text-gray-400">
 						2024 Cloudflare, Inc.
 					</li>
 					{homepageLegalLinks.map(([text, href]) => (
@@ -117,7 +117,9 @@ if (
 							</a>
 						</li>
 					))}
-					{isProduction && <OneTrust />}
+					<li class="text-gray-600 dark:!text-gray-400">
+						{isProduction && <OneTrust />}
+					</li>
 				</ul>
 			</div>
 		</>
