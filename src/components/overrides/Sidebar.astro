@@ -86,6 +86,7 @@ async function handleGroup(group: Group): Promise<SidebarEntry> {
 
 	group.label = frontmatter.sidebar.group?.label ?? frontmatter.title;
 	group.order = frontmatter.sidebar.order ?? Number.MAX_VALUE;
+	group.badge = frontmatter.sidebar.group?.badge;
 
 	if (frontmatter.hideChildren) {
 		return {
