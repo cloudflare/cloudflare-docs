@@ -207,40 +207,44 @@ const lookupProductTitle = async (slug: string) => {
 	:root {
 		.sidebar-content {
 			--sl-color-hairline-light: #cacaca !important;
+
+			& > * {
+				a {
+					padding: 0.2375em var(--sl-sidebar-item-padding-inline) !important;
+
+					&[aria-current="page"] {
+						background-color: unset !important;
+						border: unset !important;
+						border-color: unset !important;
+						color: var(--sl-color-accent) !important;
+						font-weight: 600 !important;
+					}
+				}
+
+				summary {
+					padding: 0.1375em var(--sl-sidebar-item-padding-inline) !important;
+				}
+
+				.large {
+					color: var(--sl-color-gray-2) !important;
+					font-weight: unset !important;
+					font-size: unset !important;
+
+					@media (min-width: 50rem) {
+						font-size: var(--sl-text-sm) !important;
+					}
+				}
+
+				.caret {
+					font-size: 1rem !important;
+				}
+			}
 		}
 	}
 
 	:root[data-theme="dark"] {
 		.sidebar-content {
 			--sl-color-hairline-light: #444444 !important;
-		}
-	}
-
-	.sidebar-content > * a {
-		padding: 0.2375em var(--sl-sidebar-item-padding-inline) !important;
-	}
-
-	.sidebar-content > * summary {
-		padding: 0.1375em var(--sl-sidebar-item-padding-inline) !important;
-	}
-
-	.sidebar-content > * .large {
-		color: var(--sl-color-gray-2) !important;
-		font-weight: unset !important;
-		font-size: unset !important;
-	}
-
-	.sidebar-content > * a[aria-current="page"] {
-		background-color: unset !important;
-		border: unset !important;
-		border-color: unset !important;
-		color: var(--sl-color-accent) !important;
-		font-weight: 600 !important;
-	}
-
-	@media (min-width: 50rem) {
-		.sidebar-content > * .large {
-			font-size: var(--sl-text-sm) !important;
 		}
 	}
 </style>
