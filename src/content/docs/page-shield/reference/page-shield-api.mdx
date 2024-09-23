@@ -145,6 +145,9 @@ curl "https://api.cloudflare.com/api/v4/zones/{zone_id}/page_shield/scripts?host
 			"js_integrity_score": 10,
 			"obfuscation_score": 10,
 			"dataflow_score": 8,
+			"malware_score": 8,
+			"cryptomining_score": 9,
+			"magecart_score": 8,
 			"fetched_at": "2023-05-21T16:58:07Z"
 		}
 		// (...)
@@ -194,6 +197,9 @@ curl "https://api.cloudflare.com/api/v4/zones/{zone_id}/page_shield/scripts?stat
 			"js_integrity_score": 48,
 			"obfuscation_score": 49,
 			"dataflow_score": 45,
+			"malware_score": 45,
+			"cryptomining_score": 37,
+			"magecart_score": 49,
 			"fetched_at": "2023-05-18T03:58:07Z"
 		}
 		// (...)
@@ -243,6 +249,9 @@ curl "https://api.cloudflare.com/api/v4/zones/{zone_id}/page_shield/scripts/8337
 		"js_integrity_score": 48,
 		"obfuscation_score": 49,
 		"dataflow_score": 45,
+		"malware_score": 42,
+		"cryptomining_score": 32,
+		"magecart_score": 44,
 		"fetched_at": "2023-05-21T16:58:07Z",
 		"page_urls": [
 			"http://malicious.example.com/page_two.html",
@@ -252,7 +261,12 @@ curl "https://api.cloudflare.com/api/v4/zones/{zone_id}/page_shield/scripts/8337
 		"versions": [
 			{
 				"hash": "9245aad577e846dd9b990b1b32425a3fae4aad8b8a28441a8b80084b6bb75a45",
-				"js_integrity_score": 50,
+				"js_integrity_score": 48,
+				"obfuscation_score": 49,
+				"dataflow_score": 45,
+				"malware_score": 42,
+				"cryptomining_score": 32,
+				"magecart_score": 44,
 				"fetched_at": "2023-05-21T16:58:07Z"
 			}
 		]
