@@ -1,0 +1,70 @@
+---
+pcx_content_type: how-to
+title: Add an infrastructure application
+sidebar:
+  order: 2
+  badge:
+    variant: tip
+    text: New
+---
+
+import { Badge, Details, Tabs, TabItem, Render } from "~/components"
+
+Access for Infrastructure allows you to have granular control over how users access individual servers, clusters, or databases in your private network. By adding an infrastructure application to Cloudflare Access, you can configure how users authenticate to the resource as well as control and authorize the ports, protocols, and usernames that they can connect with. Access and command logs ensure regulatory compliance and allow for auditing of user activity in case of a security breach.
+
+:::note
+Access for Infrastructure is available in early access and currently only supports [SSH](/cloudflare-one/connections/connect-networks/use-cases/ssh/ssh-infrastructure-access/).
+:::
+
+## Prerequisites
+
+- [Connect your private network](/cloudflare-one/connections/connect-networks/private-net/) to Cloudflare using `cloudflared` or WARP Connector.
+- [Deploy the WARP client](/cloudflare-one/connections/connect-devices/warp/deployment/) on user devices in Gateway with WARP mode.
+- Install and trust the [Cloudflare root certificate](/cloudflare-one/connections/connect-devices/warp/user-side-certificates/) on user devices.
+
+## 1. Add a target
+
+<Render file="access/add-target" />
+
+## 2. Add an infrastructure application
+
+<Render file="access/add-infrastructure-app" />
+
+## 3. Add a policy
+
+<Render file="access/add-infrastructure-policy" />
+
+### Selectors
+
+The following [Access policy selectors](/cloudflare-one/policies/access/#selectors) are available for securing infrastructure applications:
+- Email
+- Emails ending in
+- SAML group
+- Country
+- Authentication method
+- Device posture
+- Azure group, GitHub organization, Google Workspace group, Okta group
+
+## 4. Configure the server
+
+Certain protocols require configuring the server to trust connections through Access for Infrastructure. For more information, refer to the protocol-specific tutorial:
+
+- [SSH](/cloudflare-one/connections/connect-networks/use-cases/ssh/ssh-infrastructure-access/#7-configure-ssh-server)
+
+## Connect as a user
+
+Users connect to the target's IP address as if they were on your private network, using their preferred client software. The user must be logged into WARP on their device, but no other system configuration is required. You can optionally configure a [private DNS resolver](/cloudflare-one/policies/gateway/resolver-policies/) to allow connections to the target's private hostname.
+
+### Connect to different VNET
+
+To connect to targets that are in different VNETS, users will need to [switch their connected virtual network](/cloudflare-one/connections/connect-networks/private-net/cloudflared/tunnel-virtual-networks/#connect-to-a-virtual-network) in the WARP client.
+
+:::note
+If a user is connected to a target in VNET-A and needs to connect to a target in VNET-B, switching their VNET will not break any existing connections to targets within VNET-A. At present, connections are maintained between VNETs.
+:::
+
+
+## Revoke a user's session
+
+To revoke a user's access to all infrastructure targets, you can either [revoke the user from Zero Trust](/cloudflare-one/identity/users/session-management/#per-user) or revoke their device. Cloudflare does not currently support revoking a user's session for a specific target.
+
