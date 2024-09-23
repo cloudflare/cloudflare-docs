@@ -123,6 +123,9 @@ resource "cloudflare_hyperdrive_config"  "<TERRAFORM_VARIABLE_NAME_FOR_CONFIGURA
     access_client_id     = "<ACCESS_CLIENT_ID>"
     access_client_secret = "<ACCESS_CLIENT_SECRET>"
   }
+  caching = {
+    disabled = false
+  }
 }
 ```
 
