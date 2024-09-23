@@ -6,11 +6,11 @@ description: Debug your Worker application by accessing logs and exceptions
   through the Cloudflare dashboard or `wrangler tail`.
 ---
 
-import { TabItem, Tabs } from "~/components";
+import { TabItem, Tabs, Steps } from "~/components";
 
-Logging is a fundamental building block supporting application development — it can provide insights during the initial stages of development and is often times crucial to understanding an issue occurring in production.
+With Real-time logs, access all your log events in near real-time for log events happening globally. Real-time logs is helpful for immediate feedback, such as the status of a new deployment.
 
-The Workers platform captures all `console.log`'s and uncaught exceptions, in addition to information about the event itself.
+Real-time logs captures [execution logs](/workers/observability/logs/workers-logs/#execution-logs), [custom logs](/workers/observability/logs/workers-logs/#add-custom-logs), errors, and uncaught exceptions. For high-traffic applications, real-time logs may enter sampling mode, which means some messages will be dropped and a warning will appear in your logs.
 
 :::caution
 
@@ -18,63 +18,16 @@ Real-time logs are not available for zones on the [Cloudflare China Network](/ch
 
 :::
 
-## Add custom logs
-
-By default a Worker will emit execution logs containing details about the Request, Response and related metadata.
-
-In addition, you can add custom logs throughout your code. Any `console.log` statements within your Worker will be visible in the dashboard or [`wrangler tail`](/workers/wrangler/commands/#tail). The following example demonstrates a custom `console.log` within a Worker request handler.
-
-<Tabs> <TabItem label="Module Worker" icon="seti:javascript">
-
-```js
-export default {
-	async fetch(request) {
-		const { cf } = request;
-		const { city, country } = cf;
-
-		console.log(`Request came from city: ${city} in country: ${country}`);
-
-		return new Response("Hello worker!", {
-			headers: { "content-type": "text/plain" },
-		});
-	},
-};
-```
-
-</TabItem> <TabItem label="Service Worker" icon="seti:javascript">
-
-```js
-addEventListener("fetch", (event) => {
-	event.respondWith(handleRequest(event.request));
-});
-
-/**
- * Respond with hello worker text
- * @param {Request} request
- */
-async function handleRequest(request) {
-	const { cf } = request;
-	const { city, country } = cf;
-
-	console.log(`Request came from city: ${city} in country: ${country}`);
-
-	return new Response("Hello worker!", {
-		headers: { "content-type": "text/plain" },
-	});
-}
-```
-
-</TabItem> </Tabs>
-
-After you deploy the [above code](/workers/observability/logging/real-time-logs/#add-custom-logs), view the real-time logs in [the dashboard](/workers/observability/logging/real-time-logs/#view-logs-from-the-dashboard) or [`wrangler tail`](/workers/observability/logging/real-time-logs/#view-logs-using-wrangler-tail).
-
 ## View logs from the dashboard
 
 To view real-time logs associated with any deployed Worker using the Cloudflare dashboard:
 
+<Steps>
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) and select your account.
 2. In Account Home, go to **Workers & Pages**.
-3. In **Overview**, select your **Worker** > and select **Logs**.
+3. In **Overview**, select your **Worker** > and select **Logs**. 
+4. In the right-hand navigation bar, select **Live**.
+</Steps>
 
 ## View logs using `wrangler tail`
 
@@ -121,6 +74,12 @@ You can customize how `wrangler tail` works to fit your needs. Refer to [the `wr
 
 ## Limits
 
+:::note
+
+You can filter real-time logs in the dashboard or using [`wrangler tail`](/workers/wrangler/commands/#tail). If your Worker has a high volume of messages, filtering real-time logs can help mitgate messages from being dropped.
+
+:::
+
 Note that:
 
 - Workers logs are not stored. You can start and stop the stream at any time to view them, but they do not persist.
@@ -128,31 +87,15 @@ Note that:
 - Logs from any [Durable Objects](/durable-objects/) your Worker is using will show up in the dashboard.
 - A maximum of 10 clients can view a Worker's logs at one time. This can be a combination of either dashboard sessions or `wrangler tail` calls.
 
-:::note
-
-You can filter real-time logs in the dashboard or using [`wrangler tail`](/workers/wrangler/commands/#tail). If your Worker has a high volume of messages, filtering real-time logs can help mitgate messages from being dropped.
-
-:::
-
 ## Persist logs
 
-Logs can be persisted in two ways:
-
-1. [Workers Logpush](/workers/observability/logging/logpush/).
-2. [Tail Workers](/workers/observability/logging/tail-workers/).
-
-[Workers Logpush](/workers/observability/logging/logpush/) allows you to send Workers Trace Event Logs to a [supported destination](/logs/get-started/enable-destinations/). Worker's Trace Events Logpush includes metadata about requests and responses, unstructured `console.log()` messages and any uncaught exceptions.
-
-Refer to the [Workers Logpush documentation](/workers/observability/logging/logpush/) to learn how to create and configure Logpush jobs.
-
-[Tail Workers](/workers/observability/logging/tail-workers/) allow you to automatically invoke Tail Workers after the invocation of a producer Worker (the Worker the Tail Worker will track) that contains the application logic. It captures events after the producer has finished executing. You can filter, change the format of the data and send events to any HTTP endpoint.
-
-Refer to the [Tail Workers documentation](/workers/observability/logging/tail-workers/) to learn how to create and configure Tail Workers.
+Logs can be persisted, filtered, and analyzed with [Workers Logs](/workers/observability/logs/workers-logs). If you prefer to send logs to a third party, use [Workers Logpush](/workers/observability/logs/logpush/) or [Tail Workers](/workers/observability/logs/tail-workers/).
 
 ## Related resources
 
 - [Errors and exceptions](/workers/observability/errors/) - Review common Workers errors.
 - [Local development and testing](/workers/testing/local-development/) - Develop and test you Workers locally.
-- [Logpush](/workers/observability/logging/logpush/) - Learn how to push Workers Trace Event Logs to supported destinations.
-- [Tail Workers](/workers/observability/logging/tail-workers/) - Learn how to attach Tail Workers to transform your logs and send them to HTTP endpoints.
+- [Workers Logs](/workers/observability/logs/workers-logs) - Collect, store, filter and analyze logging data emitted from Cloudflare Workers.
+- [Logpush](/workers/observability/logs/logpush/) - Learn how to push Workers Trace Event Logs to supported destinations.
+- [Tail Workers](/workers/observability/logs/tail-workers/) - Learn how to attach Tail Workers to transform your logs and send them to HTTP endpoints.
 - [Source maps and stack traces](/workers/observability/source-maps) - Learn how to enable source maps and generate stack traces for Workers.
