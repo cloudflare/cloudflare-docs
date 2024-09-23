@@ -69,6 +69,30 @@ At this time, learned schemas will not overwrite customer-uploaded schemas. If a
 If an endpoint is currently protected by a learned schema, the date of the last applied learned schema will be shown in the current schema field. 
 :::
 
+### Add validation by adding a fallthrough rule
+
+A fallthrough rule acts as a catch-all for requests that do not match endpoints in [Endpoint Management](/api-shield/management-and-monitoring/). 
+
+By ensuring that all your endpoints in a schema are added to Endpoint Management, the fallthrough action can protect you against legacy or zombie endpoints that your team may not know exist. 
+
+To set up a fallthrough action:
+
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/) and select your account and domain.
+2. Go to **Security** > **API Shield**.
+3. Under **Settings**, go to **Fallthrough settings**.
+4. Select **Use Template**.
+5. Choose one or more hostnames from the drop down menu. The fallthrough rule will act on all traffic that does not match an existing endpoint in Endpoint Management to the selected hostnames.
+6. Select **Continue to custom rule**.
+7. Name your rule and select your action
+8. Select **Save as draft** to deploy later, or **Deploy** to deploy now.
+
+Your current fallthrough rules can be viewed in the custom rules list or in API Shield's settings under **Fallthrough settings**.
+
+:::note
+
+You can use the `cf.api_gateway.fallthrough_triggered` syntax in your own custom rule for more customized logic checking. This detection will evaluate as `true` when a request does not match an endpoint in Endpoint Management, so it is important to check against your API's hostname or root path to ensure that you are not blocking any non-API traffic on your zone.
+:::
+
 ### Change the action of an entire schema
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/) and select your account and domain.
