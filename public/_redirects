@@ -1180,13 +1180,14 @@
 /turnstile/concepts/widget-types/ /turnstile/concepts/widget/ 301
 
 # waf
-/waf/about/file-scanning/ /waf/detections/malicious-uploads/ 301
-/waf/about/waf-ml/ /waf/detections/attack-score/ 301
+/waf/about/ /waf/concepts/ 301
 /waf/about/content-scanning/ /waf/detections/malicious-uploads/ 301
 /waf/about/content-scanning/get-started/ /waf/detections/malicious-uploads/get-started/ 301
 /waf/about/content-scanning/example-rules/ /waf/detections/malicious-uploads/example-rules/ 301
 /waf/about/content-scanning/api-calls/ /waf/detections/malicious-uploads/api-calls/ 301
+/waf/about/file-scanning/ /waf/detections/malicious-uploads/ 301
 /waf/about/waf-attack-score/ /waf/detections/attack-score/ 301
+/waf/about/waf-ml/ /waf/detections/attack-score/ 301
 /waf/alerts/ /waf/reference/alerts/ 301
 /waf/custom-rules/custom-firewall/ /waf/custom-rules/ 301
 /waf/custom-rules/custom-firewall/create-api/ /waf/custom-rules/create-api/ 301
