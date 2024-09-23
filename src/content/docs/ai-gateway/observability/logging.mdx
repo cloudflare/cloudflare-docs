@@ -18,7 +18,7 @@ To learn more about your plan limits, refer to the [Pricing](/ai-gateway/pricing
 
 ## Default configuration
 
-Logs, which include metrics as well as request and response data are enabled by default for each gateway. If you are concerned about privacy or compliance and want to turn log collection off, you can go to settings and opt out of logs.
+Logs, which include metrics as well as request and response data are enabled by default for each gateway. If you are concerned about privacy or compliance and want to turn log collection off, you can go to settings and opt out of logs or set logging behavior on a per-request basis. 
 
 <Render file="logging" />
 
@@ -36,9 +36,9 @@ To override the default logging behavior set in the settings tab, you can define
 
 ## Collect logs (cf-aig-collect-log)
 
-The `cf-aig-collect-log` header allows you to bypass the default log setting for the gateway. If the gateway is configured to save logs, the header will exclude the user prompt and model response data for that specific request. Conversely, if logging is disabled at the gateway level, this header will save the user prompt and model response data for that request.
+The `cf-aig-collect-log` header allows you to bypass the default log setting for the gateway. If the gateway is configured to save logs, the header will exclude the log for that specific request. Conversely, if logging is disabled at the gateway level, this header will save the log for that request.
 
-In this example, the gateway is configured to save logs, however we do not want this specific request to save the user prompt and model response.
+In this example, the gateway is configured to save logs, however we do not want this specific request saved.
 
 ```bash
 curl https://gateway.ai.cloudflare.com/v1/{account_id}/{gateway_id}/openai/chat/completions \
