@@ -52,7 +52,7 @@ At this point, continuing the example mentioned above, you should have a mapping
 | Variables  | Description                                        |
 |-------------------------------|----------------------------------------------------|
 | `{service_id}`                  | The ID of the CDN service within Cloudflare. <br /><br /> Example: `969xxxxxxxx000xxx0000000x00001bf`           |
-| `{prefix_id}`                   | The ID of the Magic Transit protected prefix (`203.0.113.100/24`) you want to configure <br /><br /> Example: `6b25xxxxxxx000xxx0000000x0000cfc` |
+| `{prefix_id}`                   | The ID of the Magic Transit protected prefix (`203.0.113.100/24`) you want to configure. <br /><br /> Example: `6b25xxxxxxx000xxx0000000x0000cfc` |
 
 </Example>
 
@@ -69,11 +69,11 @@ curl https://api.cloudflare.com/client/v4/accounts/{account_id}/addressing/prefi
 
 ## 2. Create service binding
 
-:::caution
+:::caution[Caution]
 Once this step is completed, a four to six-hour propagation state will initiate. Only after the service binding reaches an **active** state, all traffic will be processed through the CDN pipeline.
 :::
 
-1. Make a `POST` request to the [Create Service Binding](/api/operations/ip-address-management-service-bindings-create-service-binding/) endpoint, indicating the IP address you want to bind to the CDN. Don't forget to specify the **corresponding network mask**.
+1. Make a `POST` request to the [Create Service Binding](/api/operations/ip-address-management-service-bindings-create-service-binding/) endpoint, indicating the IP address you want to bind to the CDN. Specify the **corresponding network mask** as needed.
 
 <Example>
 
@@ -190,7 +190,7 @@ At this point, if an address map for a zone `example.com` specifies that Cloudfl
 2. Cloudflare proxies requests through the CDN and then routes the requests via [GRE](/magic-transit/reference/tunnels/#gre-and-ipsec-tunnels) or [CNI](/magic-transit/network-interconnect/) to the origin server `203.0.113.150` (Magic Transit protected prefix).
 3. Depending on whether Magic Transit is implemented with [direct server return model or with Magic Transit egress](/magic-transit/how-to/configure-tunnels/#bidirectional-vs-unidirectional-health-checks), the origin server responds back to Cloudflare either:
 
-    * Directly over the Internet in a Magic Transit in a direct server return model
+    * Directly over the Internet in a Magic Transit direct server return model
     * Back through the Magic GRE tunnel(s) in a Magic Transit egress model
 4. As the HTTP response egresses the Cloudflare network back to the client side, the source IP address of the response becomes `203.0.113.100` (the IP address that the HTTP request originally landed on).
 
