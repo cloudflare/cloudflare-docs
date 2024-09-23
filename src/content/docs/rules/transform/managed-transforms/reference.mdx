@@ -126,7 +126,7 @@ The header can have these values:
 You will only receive this managed header at your origin server if:
 
 - The [leaked credentials detection](/waf/detections/leaked-credentials/) in the WAF is turned on.
-- The **Add Leaked Credentials Checks Header** managed transform is turned on. For paid plans, the managed transform is automatically enabled when you turn on leaked credentials detection. If you are on a Free plan or using the API, you must specifically turn on the managed transform either in the dashboard or using the API.
+- The **Add Leaked Credentials Checks Header** managed transform is turned on.
 - Your Cloudflare plan supports the type of credentials detection. For example, Free plans can only know if a password was previously leaked. In this situation, Cloudflare will add an `Exposed-Credential-Check: 4` header to the request.
 
 ## HTTP response headers
