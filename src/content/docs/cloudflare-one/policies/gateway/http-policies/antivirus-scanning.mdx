@@ -23,7 +23,7 @@ When a request is blocked due to the presence of malware, Gateway will log the m
 
 ## File scan criteria
 
-If AV scanning is turned on, Gateway will use the following to determine whether a file is present in a request or response, and whether to scan that file (first match will result in the file being scanned):
+If AV scanning is turned on, Gateway will use the following criteria to determine whether a file is present in a request or response, and whether to scan that file. The first match will result in the file being scanned.
 
 - If the `Content-Disposition` HTTP header is `Attachment`
 - If the byte signature of the body of the request matches a signature Gateway identifies as one of the following file type categories:
@@ -44,7 +44,7 @@ When an admin turns on AV scanning for uploads and/or downloads, Gateway will sc
 | -------- | ------------- | ------------- | ----------- |
 | Hostname | matches regex | `example.com` | Do Not Scan |
 
-Opting out of AV scanning applies to both uploads and downloads of files, matching your account's global AV scanning setting. For example, if you have configured Gateway to globally scan uploads only, then opting out of AV scanning will only apply to uploads.
+Opting out of AV scanning applies to uploads and/or downloads of files, matching your account's global AV scanning setting. For example, if you have configured Gateway to globally scan uploads only, then opting out of AV scanning will only apply to uploads.
 
 ## Compatibility
 
