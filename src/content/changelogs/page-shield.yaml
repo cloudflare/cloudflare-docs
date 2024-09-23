@@ -5,6 +5,11 @@ productLink: "/page-shield/"
 productArea: Application security
 productAreaLink: /fundamentals/reference/changelog/security/
 entries:
+  - publish_date: "2024-09-27"
+    title: New machine learning (ML) scores for detected scripts
+    description: |-
+      In addition to the global integrity score, Page Shield now provides individual script scores (from 1 to 99) for the following malicious code detections: Magecart, Crypto mining, and Malware.
+
   - publish_date: "2024-09-18"
     title: Page Shield's script monitor now available in Free plan
     description: |-
