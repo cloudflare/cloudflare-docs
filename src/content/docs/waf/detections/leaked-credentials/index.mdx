@@ -22,7 +22,7 @@ In addition, leaked credentials detection provides a [managed transform](/rules/
 One common approach used in web applications when detecting the use of stolen credentials is to warn end users about the situation and ask them to update their password. You can do this based on the managed header received at your origin server.
 
 :::note
-Cloudflare may detect leaked credentials because an attacker is performing a credential stuffing attack, but also because a legitimate end user is reusing a previously leaked password.
+Cloudflare may detect leaked credentials either because an attacker is performing a credential stuffing attack or because a legitimate end user is reusing a previously leaked password.
 :::
 
 ## Availability
