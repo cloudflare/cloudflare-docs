@@ -3,7 +3,6 @@ pcx_content_type: reference
 title: Predefined profiles
 sidebar:
   order: 2
-
 ---
 
 Cloudflare Zero Trust provides predefined DLP profiles for common types of sensitive data. Some profiles include built-in validation checks to increase detection granularity. Additionally, you can configure [advanced settings](/cloudflare-one/policies/data-loss-prevention/dlp-profiles/advanced-settings/) for predefined profiles.
@@ -12,16 +11,14 @@ Cloudflare Zero Trust provides predefined DLP profiles for common types of sensi
 
 The following secrets are validated with regex.
 
-* Google Cloud Platform keys
-* AWS keys
-* Azure API keys
-* SSH keys
+- Google Cloud Platform keys
+- AWS keys
+- Azure API keys
+- SSH keys
 
 ## Financial information
 
 Credit card numbers begin with a six or eight-digit Issuer Identification Number (IIN) and are followed by up to 23 additional digits. CVVs are not validated.
-
-
 
 | Detection entry                  | Notes                                                                             |
 | -------------------------------- | --------------------------------------------------------------------------------- |
@@ -38,21 +35,17 @@ Credit card numbers begin with a six or eight-digit Issuer Identification Number
 | United States ABA Routing Number | Validated algorithmically with checksum.                                          |
 | IBAN                             | Validated with checksum.                                                          |
 
-
-
 ## Health information
 
 The following diagnosis and medication names are checked for surrounding ASCII characters to prevent false positives.
 
-* FDA active ingredients
-* FDA drug names
-* ICD-10 FY2023 short descriptions
+- FDA active ingredients
+- FDA drug names
+- ICD-10 FY2023 short descriptions
 
 ## National identifiers
 
 Detections are validated algorithmically when possible.
-
-
 
 | Detection entry                                      | Notes                                                                                                                                                                                             |
 | ---------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -71,21 +64,19 @@ Detections are validated algorithmically when possible.
 | United Kingdom NHS Number                            | Validated with checksum.                                                                                                                                                                          |
 | United Kingdom National Insurance Number             | Validated with regex.                                                                                                                                                                             |
 
-
-
 ## Source code
 
 The following programming languages are validated with natural language processing (NLP).
 
-* C
-* C++
-* C#
-* Go
-* Haskell
-* Java
-* JavaScript
-* Lua
-* Python
-* R
-* Rust
-* Swift
+- C
+- C++
+- C#
+- Go
+- Haskell
+- Java
+- JavaScript
+- Lua
+- Python
+- R
+- Rust
+- Swift

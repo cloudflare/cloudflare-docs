@@ -157,3 +157,40 @@ Since these pages are still accessible via other links and directly navigating t
 ### Hiding child pages of a group
 
 To make a group render as if it was a single page, which links to the index page, use the top-level `hideChildren` property.
+
+## Badges
+
+### Links
+
+To specify a badge next to the link, use the `sidebar.badge` property.
+
+```mdx title="/src/content/docs/examples/example.mdx"
+---
+title: Example
+sidebar:
+  badge: New!
+---
+```
+
+<FileTree>
+- Examples
+  - Example [New!]
+</FileTree>
+
+### Groups
+
+To specify a badge next to the group label, use the `sidebar.group.badge` inside the group's `index.mdx` frontmatter.
+
+```mdx title="/src/content/docs/examples/index.mdx"
+---
+title: Examples
+sidebar:
+  group:
+    badge: New!
+---
+```
+
+<FileTree>
+- Examples [New!]
+  - Example
+</FileTree>

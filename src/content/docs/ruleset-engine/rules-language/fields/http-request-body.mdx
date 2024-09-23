@@ -15,9 +15,11 @@ Access to HTTP request body fields requires a Cloudflare Enterprise plan with a 
 The Rules language includes fields that represent properties of an HTTP request body. Many of these return [arrays](/ruleset-engine/rules-language/values/#arrays) containing the respective values.
 
 :::caution
+
 All `http.request.body.*` fields (except `http.request.body.size`) handle a maximum body size of 128 KB, which means that you cannot define expressions that rely on request body data beyond the first 128 KB. If the request body is larger, the body fields will contain a truncated value and the `http.request.body.truncated` field will be set to `true`. The `http.request.body.size` field will contain the full size of the request without any truncation.
 
 The maximum body size of 128 KB applies only to the values of HTTP body fields — the origin server will still receive the complete request body.
+
 :::
 
 The Cloudflare Rules language supports these HTTP body fields.
@@ -54,7 +56,7 @@ This field may have a value larger than the one returned by `len(http.request.bo
 
 ## `http.request.body.form`
 
-`http.request.body.form` `Map<Array>String>>`
+`http.request.body.form` `Map<Array<String>>`
 
 Represents the HTTP request body of a form as a Map (or associative array). Populated when the Content-Type header is `application/x-www-form-urlencoded`.
 
@@ -142,3 +144,81 @@ Example:
 `image/jpeg`
 
 This field is available on all Cloudflare plans.
+
+## `http.request.body.multipart`
+
+`http.request.body.multipart` `Map<Array<String>>`
+
+A Map (or associative array) of multipart names to multipart values in the request body.
+
+Example value:
+
+`{"username": ["alice_doe"], "picture": [<binary_content_of_file>]}`
+
+## `http.request.body.multipart.names`
+
+`http.request.body.multipart.names` `Array<Array<String>>`
+
+List of multipart names for every part in the multipart body.
+
+Example value:
+
+`[["username"], ["picture"]]`
+
+Example:
+
+`any(http.request.body.multipart.names[*][0] == "picture")`
+
+## `http.request.body.multipart.values`
+
+`http.request.body.multipart.values` `Array<String>`
+
+List of multipart values for every part in the multipart body.
+
+Example value:
+
+`["alice_doe", <binary_content_of_file>]`
+
+## `http.request.body.multipart.content_types`
+
+`http.request.body.multipart.content_types` `Array<Array<String>>`
+
+List of `Content-Type` headers for each part in the multipart body.
+
+Example value:
+
+`[["text/plain"], ["image/jpeg"]]`
+
+Example:
+
+`any(http.request.body.multipart.content_types[*][0] == "application/octet-stream")`
+
+## `http.request.body.multipart.content_dispositions`
+
+`http.request.body.multipart.content_dispositions` `Array<Array<String>>`
+
+List of `Content-Disposition` headers for each part in the multipart body.
+
+Example value:
+
+`[["form-data; name=\"username\"], ["form-data;name=\"picture\"]]`
+
+## `http.request.body.multipart.content_transfer_encodings`
+
+`http.request.body.multipart.content_transfer_encodings` `Array<Array<String>>`
+
+List of `Content-Transfer-Encoding` headers for each part in the multipart body.
+
+Example value:
+
+`[["quoted-printable"], ["quoted-printable"]]`
+
+## `http.request.body.multipart.filenames`
+
+`http.request.body.multipart.filenames` `Array<Array<String>>`
+
+List of filenames for each part in the multipart body.
+
+Example value:
+
+`[["file1.txt"], ["photo.jpg"]]`

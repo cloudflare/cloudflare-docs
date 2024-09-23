@@ -182,8 +182,10 @@ On Windows, you can use PowerShell commands if `dig` is not available.
 To test DNS:
 
 ```powershell
-PS C:\Windows\system32> Resolve-DnsName -Name _v2-origintunneld._tcp.argotunnel.com SRV
+Resolve-DnsName -Name _v2-origintunneld._tcp.argotunnel.com SRV
+```
 
+```txt output
 Name                                     Type   TTL   Section    NameTarget                     Priority Weight Port
 ----                                     ----   ---   -------    ----------                     -------- ------ ----
 _v2-origintunneld._tcp.argotunnel.com       SRV    112   Answer     region2.v2.argotunnel.com         2        1      7844
@@ -193,8 +195,10 @@ _v2-origintunneld._tcp.argotunnel.com       SRV    112   Answer     region1.v2.a
 To test ports:
 
 ```powershell
-PS C:\Cloudflared\bin> tnc region1.v2.argotunnel.com -port 443
+tnc region1.v2.argotunnel.com -port 443
+```
 
+```txt output
 ComputerName     : region1.v2.argotunnel.com
 RemoteAddress    : 198.41.192.227
 RemotePort       : 443
@@ -204,8 +208,10 @@ TcpTestSucceeded : True
 ```
 
 ```powershell
-PS C:\Cloudflared\bin> tnc region1.v2.argotunnel.com -port 7844
+tnc region1.v2.argotunnel.com -port 7844
+```
 
+```txt output
 ComputerName     : region1.v2.argotunnel.com
 RemoteAddress    : 198.41.192.227
 RemotePort       : 7844

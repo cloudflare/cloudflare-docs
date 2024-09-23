@@ -4,17 +4,17 @@
 
 # More dev-specific files
 
-/.github/ @kodster28 @pedrosousa @haleycode @kristianfreeman @GregBrimble @KianNH @maxvp @marciocloudflare
+/.github/ @kodster28 @pedrosousa @haleycode @kristianfreeman @GregBrimble @KianNH @maxvp @marciocloudflare @WalshyDev
 /.github/CODEOWNERS @cloudflare/pcx-technical-writing
 /.github/actions/assign-issue/index.js @cloudflare/pcx-technical-writing
 /.github/actions/assign-pr/index.js @cloudflare/pcx-technical-writing
 /.github/styles/cloudflare/spelling-exceptions.txt @cloudflare/pcx-technical-writing
-/src/components/ @cloudflare/developer-advocacy @kristianfreeman @kodster28 @pedrosousa @marciocloudflare @haleycode @maxvp @GregBrimble @KianNH
-/functions/ @cloudflare/developer-advocacy @kristianfreeman @kodster28 @pedrosousa @haleycode @marciocloudflare @maxvp @GregBrimble @KianNH
-*.js @cloudflare/developer-advocacy @kristianfreeman @kodster28 @pedrosousa @haleycode @maxvp @marciocloudflare @GregBrimble @KianNH
-*.ts @cloudflare/developer-advocacy @kristianfreeman @kodster28 @pedrosousa @haleycode @maxvp @marciocloudflare @GregBrimble @KianNH
+/src/components/ @cloudflare/developer-advocacy @kristianfreeman @kodster28 @pedrosousa @marciocloudflare @haleycode @maxvp @GregBrimble @KianNH @WalshyDev
+/functions/ @cloudflare/developer-advocacy @kristianfreeman @kodster28 @pedrosousa @haleycode @marciocloudflare @maxvp @GregBrimble @KianNH @WalshyDev
+*.js @cloudflare/developer-advocacy @kristianfreeman @kodster28 @pedrosousa @haleycode @maxvp @marciocloudflare @GregBrimble @KianNH @WalshyDev
+*.ts @cloudflare/developer-advocacy @kristianfreeman @kodster28 @pedrosousa @haleycode @maxvp @marciocloudflare @GregBrimble @KianNH @WalshyDev
 /src/content/workers-ai-models/ @kodster28 @craigsdennis @pedrosousa @cloudflare/pcx-technical-writing
-/public/_redirects @GregBrimble @KianNH @kodster28 @pedrosousa @cloudflare/pcx-technical-writing
+/public/_redirects @GregBrimble @KianNH @kodster28 @pedrosousa @WalshyDev @cloudflare/pcx-technical-writing
 
 # AI
 
@@ -198,8 +198,8 @@
 
 # Waiting Room
 
-/src/content/docs/waiting-room/ @aolache @angelampcosta @cloudflare/pcx-technical-writing
-/src/content/changelogs/waiting-room.yaml @aolache @angelampcosta @cloudflare/pcx-technical-writing
+/src/content/docs/waiting-room/ @angelampcosta @cloudflare/pcx-technical-writing
+/src/content/changelogs/waiting-room.yaml @angelampcosta @cloudflare/pcx-technical-writing
 
 # Web Analytics
 

@@ -122,8 +122,31 @@ function outputCodeblocks() {
 	});
 }
 
+function defaultLanguageTitles() {
+	return definePlugin({
+		name: "Adds language-specific default titles.",
+		hooks: {
+			preprocessLanguage: async (context) => {
+				switch (context.codeBlock.language) {
+					case "powershell": {
+						context.codeBlock.props.title ??= "PowerShell";
+						break;
+					}
+					default: {
+						return;
+					}
+				}
+			},
+		},
+	});
+}
+
 export default {
-	plugins: [workersPlaygroundButton(), outputCodeblocks()],
+	plugins: [
+		workersPlaygroundButton(),
+		outputCodeblocks(),
+		defaultLanguageTitles(),
+	],
 	themes: [darkTheme, lightTheme],
 	styleOverrides: {
 		textMarkers: {
