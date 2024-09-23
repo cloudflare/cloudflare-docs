@@ -42,8 +42,10 @@ To uninstall the WARP client:
 1. First, locate the `.msi` package with the following PowerShell command:
 
 ```powershell
-PS C:\Users\JohnDoe> Get-WmiObject Win32_Product | Where-Object { $_.Name -match "WARP" } | Sort-Object -Property Name | Format-Table IdentifyingNumber, Name, LocalPackage -AutoSize
+Get-WmiObject Win32_Product | Where-Object { $_.Name -match "WARP" } | Sort-Object -Property Name | Format-Table IdentifyingNumber, Name, LocalPackage -AutoSize
+```
 
+```txt output
 IdentifyingNumber                      Name            LocalPackage
 -----------------                      ----            ------------
 {5RA4DJWK-13D8-2NSX-QRF8-UANLODWD6D90} Cloudflare WARP C:\WINDOWS\Installer\3f476db.msi
@@ -51,7 +53,7 @@ IdentifyingNumber                      Name            LocalPackage
 
 2. You can then use the LocalPackage output in the uninstall command. For example,
 
-```bash
+```powershell
 msiexec /x C:\WINDOWS\Installer\<WARP_RELEASE>.msi /quiet
 ```
 

@@ -6,7 +6,6 @@ sidebar:
 head:
   - tag: title
     content: Protecting ISP and telecommunications networks from DDoS attacks
-
 ---
 
 ## Introduction
@@ -27,7 +26,7 @@ The first step is to gain visibility into the attacks taking place against the s
 
 1. Cloudflare is made aware of the networks to be protected. Service providers identify the prefixes (i.e. 203.0.113.0/24) they wish to protect and initiate a one-off task to onboard these prefixes onto the Cloudflare Magic Transit service; this step is a prerequisite and doesn’t affect the actual network traffic flow. Cloudflare recommends onboarding more specific prefixes compared to those the service providers advertise to the Internet. As in this example, if 203.0.113.0/24 is the protected prefix that is onboarded to Cloudflare, then the less specific 203.0.112.0/23 that encompasses both 112.0/24 and 113.0/24 prefixes, can be advertised to your upstream ISP.
 2. Service provider network devices send all traffic flow data (Netflow, IPFIX or sFlow) to the [Cloudflare Magic Network Monitoring](/magic-network-monitoring/) service. Cloudflare analyses this flow data to detect DDoS attacks.
-3. Cloudflare recommends, when possible, to connect to the Cloudflare network by setting up redundant [Cloudflare Network Interconnect](/network-interconnect/) (CNI) at our [Interconnection facilities](https://www.peeringdb.com/net/4224), this allows adherence to the 1500 Bytes Maximum Transmission Unit (MTU) for routed user traffic. Alternatively you can connect to the Cloudflare network using [Generic Routing Encapsulation (GRE) tunnels](/magic-transit/reference/tunnels/) over the Internet.
+3. Cloudflare recommends, when possible, to connect to the Cloudflare network by setting up redundant [Cloudflare Network Interconnect](/network-interconnect/) (CNI) at our [Interconnection facilities](https://www.peeringdb.com/net/4224), this allows adherence to the 1500 Bytes maximum transmission unit (MTU) for routed user traffic. Alternatively you can connect to the Cloudflare network using [Generic Routing Encapsulation (GRE) tunnels](/magic-transit/reference/tunnels/) over the Internet.
 4. In peacetime, traffic flows as usual between the ISP network and their upstream transit and peer networks, bypassing the Cloudflare network.
 
 ![Figure 1: Overall solution of user access controls to, and the discovery of, sensitive data.](~/assets/images/reference-architecture/protecting-sp-networks-from-ddos/protecting-sp-networks-from-ddos-fig2.svg)
@@ -42,6 +41,6 @@ The above diagram shows how Cloudflare monitors service provider traffic and, up
 
 ## Related resources
 
-* [Magic Transit Reference Architecture](/reference-architecture/architectures/magic-transit/)
-* [Cloudflare Network Interconnect](/reference-architecture/architectures/magic-transit/)
-* [Flow-based monitoring for Magic Transit](https://blog.cloudflare.com/flow-based-monitoring-for-magic-transit)
+- [Magic Transit Reference Architecture](/reference-architecture/architectures/magic-transit/)
+- [Cloudflare Network Interconnect](/reference-architecture/architectures/magic-transit/)
+- [Flow-based monitoring for Magic Transit](https://blog.cloudflare.com/flow-based-monitoring-for-magic-transit)

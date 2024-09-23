@@ -15,24 +15,28 @@ import { Render } from "~/components"
 
 For publicly trusted certificates, Cloudflare partners with different certificate authorities (CAs). Refer to this page to check what CAs are used for each Cloudflare offering and for more details about the CAs [features, limitations, and browser compatibility](#features-limitations-and-browser-compatibility).
 
+:::caution[SSL.com availability]
+SSL.com is currently in beta for select customers and will be further rolled out starting September 2024.
+:::
+
 ## Availability per certificate type and encryption algorithm
 
 
 
-| Certificate                                                                                                       | Algorithm                                                    | [Let's Encrypt](#lets-encrypt) | [Google Trust Services](#google-trust-services) | [Sectigo](#sectigo)      | [DigiCert](#digicert-deprecating-soon)                                               |
-| ----------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------ | ------------------------------ | ----------------------------------------------- | ------------------------ | ------------------------------------------------------------------------------------ |
-| [Universal](/ssl/edge-certificates/universal-ssl/)                                                                | ECDSA<br /><br /><br />RSA<br /><sub>(Paid plans only)</sub> | ✅<br /><br /><br />✅           | ✅<br /><br /><br />✅                            | N/A<br /><br /><br />N/A | ✅<br /> <sub>Deprecating soon</sub> <br /><br />✅<br /> <sub>Deprecating soon</sub>  |
-| [Advanced](/ssl/edge-certificates/advanced-certificate-manager/)                                                  | ECDSA<br /><br /><br />RSA                                   | ✅<br /><br /><br />✅           | ✅<br /><br /><br />✅                            | N/A<br /><br /><br />N/A | ✅<br /> <sub>Deprecating soon</sub> <br /><br /> ✅<br /> <sub>Deprecating soon</sub> |
-| [Total TLS](/ssl/edge-certificates/additional-options/total-tls/)                                                 | ECDSA<br /><br /><br />RSA                                   | ✅<br /><br /><br />✅           | ✅<br /><br /><br />✅                            | N/A<br /><br /><br />N/A | ❌ <br /><br /><br /> ❌                                                               |
-| [SSL for SaaS](/cloudflare-for-platforms/cloudflare-for-saas/security/certificate-management/issue-and-validate/) | ECDSA<br /><br /><br />RSA                                   | ✅<br /><br /><br />✅           | ✅<br /><br /><br />✅                            | N/A<br /><br /><br />N/A | ✅<br /> <sub>Deprecating soon</sub> <br /><br /> ✅<br /> <sub>Deprecating soon</sub> |
-| [Backup](/ssl/edge-certificates/backup-certificates/)                                                             | ECDSA<br /><br />RSA                                         | ✅<br /><br />✅                 | ✅<br /><br />✅                                  | ✅<br /><br />✅           | ❌ <br /><br /> ❌                                                                     |
+| Certificate         | Algorithm | [Let's Encrypt](#lets-encrypt) | [Google Trust Services](#google-trust-services) | [SSL.com](#sslcom) | [Sectigo](#sectigo) | [DigiCert](#digicert-deprecating-soon)                 |
+|---------------------|-------|---------------|-----------------------|-|---------|--------------------------|
+| [Universal](/ssl/edge-certificates/universal-ssl/)| ECDSA<br /><br /><br />RSA<br /><sub>(Paid plans only)</sub> | ✅<br /><br /><br />✅| ✅<br /><br /><br />✅ | ❌<br /><br /><br />❌ | N/A<br /><br /><br />N/A | ✅<br /> <sub>Deprecating soon</sub> <br />✅<br /> <sub>Deprecating soon</sub> |
+| [Advanced](/ssl/edge-certificates/advanced-certificate-manager/) | ECDSA<br /><br /><br />RSA | ✅<br /><br /><br />✅| ✅<br /><br /><br />✅ | ✅<br /> <sub>Gradual roll-out</sub> <br /> ✅<br /> <sub>Gradual roll-out</sub> | N/A<br /><br /><br />N/A | ✅<br /> <sub>Deprecating soon</sub> <br /> ✅<br /> <sub>Deprecating soon</sub> |
+| [Total TLS](/ssl/edge-certificates/additional-options/total-tls/) | ECDSA<br /><br /><br />RSA | ✅<br /><br /><br />✅| ✅<br /><br /><br />✅ | ✅<br /> <sub>Gradual roll-out</sub> <br /> ✅<br /> <sub>Gradual roll-out</sub> | N/A<br /><br /><br />N/A | ❌ <br /><br /><br /> ❌ |
+| [SSL for SaaS](/cloudflare-for-platforms/cloudflare-for-saas/security/certificate-management/issue-and-validate/) | ECDSA<br /><br /><br />RSA |✅<br /><br /><br />✅| ✅<br /><br /><br />✅ | ✅<br /> <sub>Gradual roll-out</sub> <br /> ✅<br /> <sub>Gradual roll-out</sub> | N/A<br /><br /><br />N/A | ✅<br /> <sub>Deprecating soon</sub> <br /> ✅<br /> <sub>Deprecating soon</sub> |
+| [Backup](/ssl/edge-certificates/backup-certificates/) | ECDSA<br /><br />RSA | ✅<br /><br />✅| ✅<br /><br />✅ | ✅<br /><br />✅ | ✅<br /><br />✅ | ❌ <br /><br /> ❌ |
 
 
 
 ## Features, limitations and browser compatibility
 
 :::caution[Universal SSL]
- <Render file="universal-ssl-validity" /> 
+ <Render file="universal-ssl-validity" />
 :::
 
 ***
@@ -49,7 +53,7 @@ For publicly trusted certificates, Cloudflare partners with different certificat
 
 #### Browser compatibility
 
-:::caution
+:::caution[Warning]
 
 
 This section summarizes commonly requested client support information. For the complete and most up-to-date certificate compatibility, refer to [Let's Encrypt documentation](https://letsencrypt.org/docs/certificate-compatibility/).
@@ -78,7 +82,7 @@ You can find the full list of supported clients in the [Let's Encrypt documentat
 
 #### Browser compatibility (most compatible)
 
-:::caution
+:::caution[Warning]
 
 
 This section summarizes commonly requested client support information. For the complete and most up-to-date certificate compatibility, refer to [Google Trust Services documentation](https://pki.goog/faq/).
@@ -91,6 +95,33 @@ By cross-signing with a [GlobalSign root CA](https://valid.r1.roots.globalsign.c
 Currently trusted by Microsoft, Mozilla, Safari, Cisco, Oracle Java, and Qihoo’s 360 browser, all browsers or operating systems that depend on these root programs are covered.
 
 You can use the [root CAs list](https://pki.goog/faq/#faq-27) for checking compatibility between chain and client but, as explained in [Certificate pinning](/ssl/reference/certificate-pinning/), you should **not** use this list for pinning against.
+
+***
+
+### SSL.com
+
+* Supports [validity periods](/ssl/reference/certificate-validity-periods/) of 14, 30, and 90 days. Enterprise customers using [advanced certificates](/ssl/edge-certificates/advanced-certificate-manager/) can also choose a validity period of one year.
+* [DCV tokens](/ssl/edge-certificates/changing-dcv-method/) are valid for 14 days.
+
+#### Limitations
+
+SSL.com DCV tokens are specific for RSA certificates and ECDSA certificates. This means that, for cases where you have to [manually perform DCV](/ssl/edge-certificates/changing-dcv-method/#partial-dns-setup---action-sometimes-required), you will have to place two validation tokens per certificate order. To avoid management overhead, consider using a [full setup](/ssl/edge-certificates/changing-dcv-method/#full-dns-setup---no-action-required), or setting up [Delegated DCV](/ssl/edge-certificates/changing-dcv-method/methods/delegated-dcv/).
+
+#### Browser compatibility
+
+:::caution[Warning]
+
+This section summarizes commonly requested client support information. For the complete and most up-to-date certificate compatibility, refer to [SSL.com documentation](https://www.ssl.com/browser_compatibility/).
+
+:::
+
+SSL.com is highly compatible, being accepted by over 99.9% of browsers, tablets, and mobile devices.
+
+SSL.com certificates are [cross-signed with Certum](https://www.ssl.com/repository/) and the [CA that cross-signs intermediates](https://crt.sh/?caid=840) is from 2004.
+
+#### Other resources
+
+[Acceptable top level domains (TLDs) and current restrictions](https://www.ssl.com/acceptable-top-level-domains-tlds-for-ssl-certificates/)
 
 ***
 
@@ -135,11 +166,11 @@ If you are using Cloudflare as your DNS provider, then the CAA records will be a
 The following table lists the CAA record content for each CA:
 
 
-
 | Certificate authority | CAA record content                       |
-| --------------------- | ---------------------------------------- |
+|-----------------------|------------------------------------------|
 | Let's Encrypt         | `letsencrypt.org`                        |
 | Google Trust Services | `pki.goog; cansignhttpexchanges=yes`     |
-| DigiCert              | `digicert.com; cansignhttpexchanges=yes` |
+| SSL.com               | `ssl.com`                                |
 | Sectigo               | `sectigo.com`                            |
+| DigiCert              | `digicert.com; cansignhttpexchanges=yes` |
 

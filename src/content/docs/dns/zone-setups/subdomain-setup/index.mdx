@@ -3,19 +3,16 @@ pcx_content_type: concept
 title: Subdomain setup
 sidebar:
   order: 3
-
+  label: About
 ---
 
 import { DirectoryListing, FeatureTable, GlossaryTooltip } from "~/components"
 
-When you use a subdomain setup, you can manage the [Cloudflare configurations](/fundamentals/concepts/how-cloudflare-works/) for one or more subdomains separately from those associated with your <GlossaryTooltip term="apex domain">apex domain</GlossaryTooltip>.
+When you use a subdomain setup, you can manage the [Cloudflare configurations](/fundamentals/concepts/how-cloudflare-works/) for one or more subdomains separately from those associated with your <GlossaryTooltip term="apex domain">apex domain</GlossaryTooltip>. This means that, on your [account homepage](https://dash.cloudflare.com/?to=/:account/), you would find websites like `example.com` or `blog.example.com` listed as separate <GlossaryTooltip term="DNS zone">zones</GlossaryTooltip>.
 
-:::undefined
-
-This is different from simply creating a subdomain for a site you already have in Cloudflare. If you do not need separate Cloudflare configuration for your subdomain, refer to [Create a subdomain record](/dns/manage-dns-records/how-to/create-subdomain/). 
+:::note
+This is different from simply creating a subdomain for a site you already have in Cloudflare. If you do not need separate Cloudflare configuration for your subdomain, refer to [Create a subdomain record](/dns/manage-dns-records/how-to/create-subdomain/).
 :::
-
-![Screenshot showing a zone with a parent domain and a child subdomain](~/assets/images/dns/subdomain-zone.png)
 
 You might use this setup when you want to share access to a specific subdomain's settings with different teams, but have stricter controls on your apex domain. For example, a subdomain setup could allow your documentation team to manage the Cloudflare configuration for `docs.example.com`, while preventing them from adjusting any settings on `example.com`.
 

@@ -1,4 +1,4 @@
-import { z } from "astro:content";
+import { z } from "astro:schema";
 
 const spotlightAuthorDetails = z
 	.object({
@@ -32,6 +32,7 @@ export const baseSchema = z.object({
 			z.literal("example"),
 			z.literal("learning-unit"),
 			z.literal("design-guide"),
+			z.literal("video"),
 		])
 		.catch((ctx) => ctx.input)
 		.optional()
@@ -73,6 +74,7 @@ export const baseSchema = z.object({
 	operation: z.string().array().optional(),
 	sidebar: z
 		.object({
+			order: z.number().optional(),
 			group: z
 				.object({
 					label: z

@@ -3,16 +3,24 @@ title: Get started
 pcx_content_type: navigation
 sidebar:
   order: 3
-
 ---
 
-import { GlossaryTooltip, Render, Card } from "~/components"
+import { GlossaryTooltip, Render, Card } from "~/components";
 
 Magic WAN allows you to achieve any-to-any connectivity across branch and retail sites and data centers, with Cloudflare connectivity cloud.
 
 <Card icon="setting" title="Magic WAN set up options">
-- **Automatically**: Through Magic WAN Connector (preferred method). You can choose between the hardware version or the virtual version of the Magic WAN Connector. The virtual version can be installed on your own machines. Refer to [Configure with Connector](/magic-wan/configuration/connector/) for more information.
-- **Manually**: Through a third-party device. Read the [Prerequisites](#prerequisites) below before following the steps in [Manual configuration](/magic-wan/configuration/manually/).
+
+- **Automatically**: Through Magic WAN Connector (preferred method). You can
+  choose between the hardware version or the virtual version of the Magic WAN
+  Connector. The virtual version can be installed on your own machines. Refer to
+  [Configure with Connector](/magic-wan/configuration/connector/) for more
+  information.
+
+- **Manually**: Through a third-party device. Read the
+  [Prerequisites](#prerequisites) below before following the steps in [Manual
+  configuration](/magic-wan/configuration/manually/).
+
 </Card>
 
 ## Before you begin
@@ -33,6 +41,32 @@ Magic WAN relies on <GlossaryTooltip term="GRE tunnel" link="/magic-wan/referenc
 - Support <GlossaryTooltip term="maximum segment size (MSS)">maximum segment size (MSS)</GlossaryTooltip> clamping.
 - Support the configuration parameters for IPsec mentioned in [IPsec tunnels](/magic-wan/reference/tunnels/#supported-configuration-parameters).
 
-<Render file="prerequisites/maximum-segment-size" product="magic-transit" params={{ one: "Magic WAN", two: "To accommodate the additional header data, **you must set the MSS value to 1436 bytes at your tunnel interfaces** (not the physical interfaces)." }} />
+### Set maximum segment size
 
-<Render file="prerequisites/router-vendor-guidelines-mss-settings-origin" product="magic-transit" />
+<Render
+	file="prerequisites/maximum-segment-size"
+	product="magic-transit"
+	params={{ one: "Magic WAN" }}
+/>
+#### MSS clamping recommendations
+
+##### GRE tunnels as off-ramp
+
+<Render file="mtu-mss/mss-clamping-gre" />
+
+##### IPsec tunnels
+
+<Render file="mtu-mss/mss-clamping-ipsec" />
+
+:::caution[Important]
+Refer to your device documentation to check if it sets IPsec MSS clamping automatically. If that is not the case and you are using IPsec inside GRE, you have to set MSS clamp manually.
+:::
+
+Refer to [Maximum transmission unit and maximum segment size](/magic-wan/reference/mtu-mss/) for more details.
+
+### Follow router vendor guidelines
+
+<Render
+	file="prerequisites/router-vendor-guidelines-mss-settings-origin"
+	product="magic-transit"
+/>

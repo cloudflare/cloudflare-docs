@@ -5,11 +5,11 @@ productLink: "/cloudflare-one/connections/connect-networks/"
 productArea: Cloudflare One
 productAreaLink: /cloudflare-one/changelog/
 entries:
-- publish_date: '2024-09-10'
-  title:  Bugfix for --grace-period
-  description: |-
-    The new `cloudflared` build [2024.9.1](https://github.com/cloudflare/cloudflared/releases/tag/2024.9.0) has a bugfix related to the [--grace-period](/cloudflare-one/connections/connect-networks/configure-tunnels/tunnel-run-parameters/#grace-period) tunnel run parameter. `cloudflared` connectors will now abide by the specified waiting period before forcefully closing connections to Cloudflare's network.
-- publish_date: '2024-08-06'
-  title: cloudflared builds available in GitHub for Apple silicon
-  description: |-
-    macOS users can now download `cloudflared-arm64.pkg` directly from [GitHub](https://github.com/cloudflare/cloudflared/releases), in addition to being available via Homebrew.
+  - publish_date: "2024-09-10"
+    title: Bugfix for --grace-period
+    description: |-
+      The new `cloudflared` build [2024.9.1](https://github.com/cloudflare/cloudflared/releases/tag/2024.9.0) has a bugfix related to the [--grace-period](/cloudflare-one/connections/connect-networks/configure-tunnels/tunnel-run-parameters/#grace-period) tunnel run parameter. `cloudflared` connectors will now abide by the specified waiting period before forcefully closing connections to Cloudflare's network.
+  - publish_date: "2024-08-06"
+    title: cloudflared builds available in GitHub for Apple silicon
+    description: |-
+      macOS users can now download `cloudflared-arm64.pkg` directly from [GitHub](https://github.com/cloudflare/cloudflared/releases), in addition to being available via Homebrew.
