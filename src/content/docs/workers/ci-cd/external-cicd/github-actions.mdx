@@ -1,10 +1,10 @@
 ---
 pcx_content_type: how-to
-title: External CI/CD
-description: Integrate Workers development into your existing continuous integration and continuous development workflows, such as GitHub Actions or GitLab Pipelines.
+title: GitHub Actions
+description: Integrate Workers development into your existing GitHub Actions workflows.
 ---
 
-You can deploy Workers with external CI providers such as [GitHub Actions](https://github.com/marketplace/actions/deploy-to-cloudflare-workers-with-wrangler) or [GitLab CI/CD](https://about.gitlab.com/topics/ci-cd/)
+You can deploy Workers with [GitHub Actions](https://github.com/marketplace/actions/deploy-to-cloudflare-workers-with-wrangler). Here is how you can set up your GitHub Actions workflow.
 
 ## 1. Authentication
 
@@ -26,13 +26,13 @@ To create an API token to authenticate Wrangler in your CI job:
 
 You will need to choose the account and zone resources that the generated API token will have access to. We recommend scoping these down as much as possible to limit the access of your token. For example, if you have access to three different Cloudflare accounts, you should restrict the generated API token to only the account on which you will be deploying a Worker.
 
-## 2. Set up CI
+## 2. Set up CI/CD
 
 The method for running Wrangler in your CI/CD environment will depend on the specific setup for your project (whether you use GitHub Actions/Jenkins/GitLab or something else entirely).
 
-To set up your CI:
+To set up your CI/CD:
 
-1. Go to your CI platform and add the following as secrets:
+1. Go to your CI/CD platform and add the following as secrets:
 
 - `CLOUDFLARE_ACCOUNT_ID`: Set to the [Cloudflare account ID](/workers/ci-cd/external-cicd/#cloudflare-account-id) for the account on which you want to deploy your Worker.
 - `CLOUDFLARE_API_TOKEN`: Set to the [Cloudflare API token you generated](/workers/ci-cd/external-cicd/#api-token).
@@ -46,7 +46,7 @@ Don't store the value of `CLOUDFLARE_API_TOKEN` in your repository, as it gives 
 
 ### GitHub Actions
 
-If you use GitHub Actions, Cloudflare provides [an official action](https://github.com/cloudflare/wrangler-action) for deploying Workers. Refer to the following example workflow which deploys your Worker on push to the `main` branch.
+Cloudflare provides [an official action](https://github.com/cloudflare/wrangler-action) for deploying Workers. Refer to the following example workflow which deploys your Worker on push to the `main` branch.
 
 ```yaml
 name: Deploy Worker
@@ -67,8 +67,3 @@ jobs:
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
 ```
-
-### GitLab CI/CD
-
-Refer to [GitLab's blog](https://about.gitlab.com/blog/2022/11/21/deploy-remix-with-gitlab-and-cloudflare/) for an example pipeline. Under the `script` key, replace `npm run deploy` with [`npx wrangler deploy`](/workers/wrangler/commands/#deploy).
-

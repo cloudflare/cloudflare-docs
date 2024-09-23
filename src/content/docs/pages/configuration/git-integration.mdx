@@ -1,18 +1,21 @@
 ---
 pcx_content_type: concept
 title: Git integration
-
 ---
 
 Cloudflare supports connecting Cloudflare Pages to your GitHub and GitLab repositories to look for new changes to your project. Pages does not currently support self-hosted instances of GitHub or GitLab.
 
 ## Custom branches
 
-Suppose you have a custom Git workflow that uses specific branches to represent your project's production build. In that case, you can specify a custom branch when creating (or managing an existing) project in the Pages dashboard by going to  **Settings** > **Builds & deployments** and clicking the **Configure Production deployments** button. You can change the production branch to any other branch in the dropdown menu under **production branch**.
+Suppose you have a custom Git workflow that uses specific branches to represent your project's production build. In that case, you can specify a custom branch when creating (or managing an existing) project in the Pages dashboard by going to **Settings** > **Builds & deployments** and clicking the **Configure Production deployments** button. You can change the production branch to any other branch in the dropdown menu under **production branch**.
 
 You can also use [preview deployments](/pages/configuration/preview-deployments/) to preview how the new version of your project looks before merging into `production`. In addition, Pages allows you to configure which of your preview branches are built and deployed by using [branch build controls](/pages/configuration/branch-build-controls/).
 
 To configure this in your Pages project go to **Settings** > **Builds & deployments** > **Configure preview deployment** and select **Custom branches**. Here you can specify branches you wish to include and exclude from automatic deployments in the provided configuration fields. To learn more refer to the [branch build controls](/pages/configuration/branch-build-controls/) documentation.
+
+## Skipping a specific build via a commit message
+
+Without any configuration required, you can choose to skip a deployment on an adhoc basis. By adding the `[CI Skip]`, `[CI-Skip]`, `[Skip CI]`, `[Skip-CI]` or `[CF-Pages-Skip]` flag as a prefix in your commit message, and Pages will omit that deployment. The prefixes are case insensitive.
 
 ## Organizational access
 
@@ -24,9 +27,7 @@ When authorizing Cloudflare Pages to access a GitHub account, you can specify ac
 
 :::caution[GitHub security consideration]
 
-
 A GitHub account should only point to one Cloudflare account, however, this is not enforced. If you are setting up Cloudflare with GitHub for your organization, Cloudflare recommends that you limit the scope of the application to only the repositories you intend to build with Pages at the time that you set up your project. You can modify these permissions as you build more applications.
-
 
 :::
 
@@ -34,17 +35,19 @@ A GitHub account should only point to one Cloudflare account, however, this is n
 
 By authorizing Cloudflare Pages to access your GitLab account, you will automatically allow access to organizations, groups, and namespaces your GitLab account can access for use by Cloudflare Pages. Managing access to these organizations and groups is handled by GitLab.
 
-## Removing access to your GitHub account
+## Removing access
 
-You can remove Cloudflare Pages' access to your GitHub account by viewing the [**Applications** page](https://github.com/settings/installations) on GitHub. Note that removing access to GitHub will also disable new builds, though the last build of your site will continue to be hosted via Cloudflare Pages.
+### GitHub
 
-## Removing access to your GitLab account
+You can remove Cloudflare Pages' access to your GitHub account by viewing the [**Applications** page](https://github.com/settings/installations) on GitHub. The GitHub App is named Cloudflare Workers and Pages, and it is shared between Workers and Pages projects.
+
+Note that removing access to GitHub will disable new builds for Workers and Pages, though the last build of your site will continue to be hosted via Cloudflare Pages.
+
+### GitLab
 
 You can remove Cloudflare Pages' access to your GitLab account by navigating to **User Settings** > **Applications** > **Authorized Applications**. Find the applications called Cloudflare Pages and select the **Revoke** button to revoke access.
 
-## Skipping a specific build via a commit message
-
-Without any configuration required, you can choose to skip a deployment on an adhoc basis. By adding the `[CI Skip]`, `[CI-Skip]`, `[Skip CI]`, `[Skip-CI]` or `[CF-Pages-Skip]` flag as a prefix in your commit message, and Pages will omit that deployment. The prefixes are case insensitive.
+Note that the GitLab application Cloudflare Pages is shared between Workers and Pages projects, and removing access to GitLab will disable new builds for Workers and Pages, though the last build of your site will continue to be hosted via Cloudflare Pages.
 
 ## Reinstall a Git installation
 
@@ -67,7 +70,7 @@ When encountering Git integration related issues, one potential troubleshooting 
 2. Click the "Revoke" button on your Cloudflare Pages installation if it exists.
 3. Go back to the **Workers & Pages** overview page at `https://dash.cloudflare.com/[YOUR_ACCOUNT_ID]/workers-and-pages`. Click **Create application** > **Pages** > **Connect to Git**
 4. Select the **GitLab** tab at the top, click the **+ Add account** button, click the GitLab account you want to add, and then click **Authorize** on the modal titled "Authorize Cloudflare Pages to use your account?".
-5. You should be redirected to the create project page with your GitHub account or organization in the account list.
+5. You should be redirected to the create project page with your GitLab account or organization in the account list.
 6. Attempt to make a new deployment with your project which was previously broken.
 
 ## Troubleshooting
@@ -98,8 +101,8 @@ To resolve this issue, follow the steps provided above in the [Reinstalling a Gi
 
 Go to your GitHub installation settings:
 
-* `https://github.com/settings/installations` for individual accounts
-* `https://github.com/organizations/<YOUR_ORGANIZATION_NAME>/settings/installations` for organizational accounts
+- `https://github.com/settings/installations` for individual accounts
+- `https://github.com/organizations/<YOUR_ORGANIZATION_NAME>/settings/installations` for organizational accounts
 
 Click **Configure** on the Cloudflare Pages application. Scroll down to the bottom of the page and click **Unsuspend** to allow Cloudflare Pages to make future deployments.
 
@@ -109,10 +112,10 @@ You may have deleted or transferred the repository associated with this Cloudfla
 
 #### `The repository cannot be accessed, this may cause deployments to fail.`
 
-You may have excluded this repository from your installation's repository access settings.  Go to your GitHub installation settings:
+You may have excluded this repository from your installation's repository access settings. Go to your GitHub installation settings:
 
-* `https://github.com/settings/installations` for individual accounts
-* `https://github.com/organizations/<YOUR_ORGANIZATION_NAME>/settings/installations` for organizational accounts
+- `https://github.com/settings/installations` for individual accounts
+- `https://github.com/organizations/<YOUR_ORGANIZATION_NAME>/settings/installations` for organizational accounts
 
 Click **Configure** on the Cloudflare Pages application. Under **Repository access**, ensure that the repository associated with your Cloudflare Pages project is included in the list.
 
@@ -122,4 +125,4 @@ This is an internal error in the Cloudflare Pages SCM system. You can attempt to
 
 ## Related resources
 
-* [Branch build controls](/pages/configuration/branch-build-controls/#production-branch-control) -  Control which environments and branches you would like to automatically deploy to.
+- [Branch build controls](/pages/configuration/branch-build-controls/#production-branch-control) - Control which environments and branches you would like to automatically deploy to.

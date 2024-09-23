@@ -3,7 +3,7 @@ pcx_content_type: reference
 title: Build Image
 description: Understand the build image used in Workers Builds.
 sidebar:
-  order: 3
+  order: 5
 ---
 
 Workers Builds uses a build image with support for a variety of languages and tools such as Node.js, Python, PHP, Ruby, and Go.
@@ -14,14 +14,12 @@ In the following table, review the preinstalled versions for languages and tools
 
 | Tool        | Default version  | Environment variable | File                         |
 | ----------- | ---------------- | -------------------- | ---------------------------- |
-| **Go**      | 1.22.0           | `GO_VERSION`         |                              |
+| **Go**      | 1.23.0           | `GO_VERSION`         |                              |
 | **Node.js** | 22               | `NODE_VERSION`       | .nvmrc, .node-version        |
 | **Python**  | 3.12.5           | `PYTHON_VERSION`     | .python-version, runtime.txt |
-| **Ruby**    | 3.3.4            | `RUBY_VERSION`       | .ruby-version                |
-| **Bun**     | 1.1.22           | `BUN_VERSION`        |                              |
-| **Hugo**    | extended_0.130.0 | `HUGO_VERSION`       |                              |
-
-The default versions will be updated regularly to the latest minor version. No major version updates will be made without notice. If you need a specific minor version, please specify it by overriding the default version.
+| **Ruby**    | 3.3.5            | `RUBY_VERSION`       | .ruby-version                |
+| **Bun**     | 1.1.28           | `BUN_VERSION`        |                              |
+| **Hugo**    | extended_0.134.3 | `HUGO_VERSION`       |                              |
 
 The default versions will be updated regularly to the latest minor version. No major version updates will be made without notice. If you need a specific minor version, please specify it by overriding the default version.
 
@@ -32,7 +30,7 @@ If you need to override a [specific version](/workers/ci-cd/builds/build-image/#
 To set the version using a build environment variables, you can:
 
 1. Find the environment variable name for the language or tool and desired version (e.g. `NODE_VERSION = 22`)
-2. Add and save the environment variable on the dashboard by going to **Settings** > **Build** > **Build Variables and Secrets* in your Workers project
+2. Add and save the environment variable on the dashboard by going to **Settings** > **Build** > \*_Build Variables and Secrets_ in your Workers project
 
 Or, to set the version by adding a file to your project, you can:
 
@@ -54,7 +52,6 @@ In the following table, review the pre-installed packages in the build image. Th
 | `bzip2`           | `libgmp-dev`      | `zlib1g-dev`      |
 | `gnupg`           | `liblzma-dev`     | `zstd`            |
 | `libffi-dev`      | `libncurses5-dev` |                   |
-
 
 ## Build Environment
 

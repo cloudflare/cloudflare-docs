@@ -1,19 +1,20 @@
 ---
 pcx_content_type: reference
-title: Advanced Setups 
+title: Advanced Setups
 description: Learn how to use Workers Builds with more advanced setups
 sidebar:
-  order: 5
+  order: 3
 ---
 
 ## Monorepos
-While the Workers Builds beta has limited support for monorepos, it is still possible to set up a monorepo workflow. In the dashboard, you must connect your monorepo to each of the existing Worker projects. When a new commit is detected in the monorepo, a new build/deploy will trigger for each Worker. 
+
+While the Workers Builds beta has limited support for monorepos, it is still possible to set up a monorepo workflow. In the dashboard, you must connect your monorepo to each of the existing Worker projects. When a new commit is detected in the monorepo, a new build/deploy will trigger for each Worker.
 
 ### Example
 
 In the example `ecommerce-monorepo`, a Workers project should be created for `product-service`, `auth-service`, `order-service`, and `notification-service`.
 
-A git connection to `ecommerce-monorepo` should be added in all of the Workers projects. If you are using a monorepo tool (e.g. [Turborepo](https://turbo.build/)), you can configure a different deploy command for each Worker (e.g. `turbo deploy -F product-service`). When a new commit is made to `ecommerce-monorepo`, a build and deploy will be triggered for each of the Workers (i.e. `product-service`, `auth-service`, `order-service`, `notification-service`) and respect the configured commands for that Worker. 
+A git connection to `ecommerce-monorepo` should be added in all of the Workers projects. If you are using a monorepo tool (e.g. [Turborepo](https://turbo.build/)), you can configure a different deploy command for each Worker (e.g. `turbo deploy -F product-service`). When a new commit is made to `ecommerce-monorepo`, a build and deploy will be triggered for each of the Workers (i.e. `product-service`, `auth-service`, `order-service`, `notification-service`) and respect the configured commands for that Worker.
 
 ```
 ecommerce-monorepo/
@@ -37,14 +38,15 @@ ecommerce-monorepo/
 ```
 
 ## Wrangler environments
-If you are using [Wrangler Environments](/workers/wrangler/environments/), you can choose to continue using with Workers Builds with a bit of set up: 
+
+If you are using [Wrangler Environments](/workers/wrangler/environments/), you can choose to continue using with Workers Builds with a bit of set up:
 
 1. [Deploy via Wrangler](/workers/wrangler/commands/deploy) to create the Workers for your environments in the Dashboard, if you don't already have them.
-2. Find the Workers for your environments. They are typically named `[name of Worker] - [environment name]`. 
+2. Find the Workers for your environments. They are typically named `[name of Worker] - [environment name]`.
 3. Connect your repository to each of the Workers for your environment.
 4. In each of the Workers, edit your Wrangler deploy command to include the flag `--env: <environment name>` in the build configurations.
 
-When a new commit is detected in the repository, a new build/deploy will trigger for each associated Worker. 
+When a new commit is detected in the repository, a new build/deploy will trigger for each associated Worker.
 
 ### Example
 

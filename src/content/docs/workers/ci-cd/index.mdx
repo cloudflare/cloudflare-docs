@@ -10,16 +10,25 @@ You can set up continuous integration and continuous deployment (CI/CD) for your
 
 ## Why use CI/CD?
 
-It is best practice to deploy your Workers with a CI/CD pipeline to automate the build and deployment process instead of running adhoc deployments manually using `wrangler deploy`. This approach ensures that your Worker is consistently built and deployed in the same environment to reduce variability. Additionally, it simplifies managing access to production credentials.
+It is best practice to deploy your Workers with a CI/CD pipeline to automate the build and deployment process. A CI/CD pipeline offers several advantages:
+
+- Streamlines the build and deployment process, eliminating the need for manual adhoc `wrangler deploy` commands
+- Ensures your Worker is always built and deployed in a uniform environment, reducing variability and potential errors
+- Simplifies managing access to production credentials
+- Facilitates handling multiple environments (e.g., staging, production) with minimal manual intervention
+- Enables team-based development by automatically deploying code changes, eliminating the need for developers to manually coordinate or deploy updates
 
 ## Workers Builds
 
-[Workers Builds](/workers/ci-cd/builds) is Cloudflare's native CI/CD system that allows you to integrate with GitHub or GitLab, and automatically deploy your changes with each new commit. 
+[Workers Builds](/workers/ci-cd/builds) is Cloudflare's native CI/CD system that allows you to integrate with GitHub or GitLab, and automatically deploy your changes with each new commit.
 
 ![Workers Builds Workflow Diagram](~/assets/images/workers/platform/ci-cd/workers-builds-workflow.png)
 
+Ready to streamline your Workers deployment? Get started with [Workers Builds](/workers/ci-cd/builds/#get-started).
+
 ## External CI/CD
 
-You can also choose to set up your CI/CD pipeline with an external provider. 
-- [GitHub Actions](https://github.com/marketplace/actions/deploy-to-cloudflare-workers-with-wrangler)
-- [GitLab CI/CD](https://docs.gitlab.com/ee/ci/pipelines/index.html)
+You can also choose to set up your CI/CD pipeline with an external provider.
+
+- [GitHub Actions](/workers/ci-cd/external-cicd/github-actions/)
+- [GitLab Pipelines](/workers/ci-cd/external-cicd/gitlab-pipelines/)
