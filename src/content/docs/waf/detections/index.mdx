@@ -1,0 +1,41 @@
+---
+pcx_content_type: concept
+title: Traffic detections
+sidebar:
+  order: 4
+head:
+  - tag: title
+    content: Traffic detections
+---
+
+import { DirectoryListing, FeatureTable } from "~/components";
+
+WAF traffic detections check incoming requests for malicious or potentially malicious activity. Each enabled detection provides one or more scores — available in the [Security Analytics](/waf/analytics/security-analytics/) dashboard — that you can use in WAF rule expressions.
+
+The WAF currently provides the following detections for finding security threats in incoming requests:
+
+<DirectoryListing />
+
+## Availability
+
+<FeatureTable id="security.waf_b_detections" />
+
+For more information on bot score, refer to the [Bots documentation](/bots/concepts/bot-score/).
+
+## Turn on a detection
+
+To turn on a traffic detection:
+
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/), and select your account and domain.
+2. Go to **Security** > **Settings**.
+3. Under **Incoming traffic detections**, turn on the desired detections.
+
+Enabled detections will run for all incoming traffic.
+
+:::note
+Currently, you cannot manage the [bot score](/bots/concepts/bot-score/) and [attack score](/waf/detections/attack-score/) detections from the **Security** > **Settings** page. Refer to the documentation of each feature for availability details.
+:::
+
+## More resources
+
+For more information on detection versus mitigation, refer to [Concepts](/waf/concepts/#detection-versus-mitigation).
