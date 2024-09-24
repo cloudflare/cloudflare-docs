@@ -1,5 +1,5 @@
 ---
-link: "/r2/reference/changelog/"
+link: "/r2/platform/changelog/"
 productName: R2
 productLink: "/r2/"
 productArea: Developer platform
@@ -16,8 +16,8 @@ entries:
       - When an `OPTIONS` request against the public entrypoint does not include an `origin` header, an `HTTP 400` instead of an `HTTP 401` is returned.
   - publish_date: "2024-02-06"
     description: |-
-      - The response shape of `GET /buckets/:bucket/sippy` has changed. 
-      - The `/buckets/:bucket/sippy/validate` endpoint is exposed over APIGW to validate Sippy's configuration. 
+      - The response shape of `GET /buckets/:bucket/sippy` has changed.
+      - The `/buckets/:bucket/sippy/validate` endpoint is exposed over APIGW to validate Sippy's configuration.
       - The shape of the configuration object when modifying Sippy's configuration has changed.
   - publish_date: "2024-01-30"
     description: |-
@@ -30,7 +30,7 @@ entries:
       - Sippy is available for Google Cloud Storage (GCS) beta.
   - publish_date: "2023-12-11"
     description: |-
-      - The `x-id` query param for `S3 ListBuckets` action is now ignored. 
+      - The `x-id` query param for `S3 ListBuckets` action is now ignored.
       - The `x-id` query param is now ignored for all S3 actions.
   - publish_date: "2023-10-23"
     description: |-

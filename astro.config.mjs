@@ -125,7 +125,7 @@ export default defineConfig({
 			],
 			social: {
 				github: "https://github.com/cloudflare/cloudflare-docs",
-				twitter: "https://twitter.com/cloudflare",
+				"x.com": "https://x.com/cloudflare",
 				youtube: "https://www.youtube.com/cloudflare",
 			},
 			editLink: {
@@ -146,6 +146,7 @@ export default defineConfig({
 			},
 			sidebar: await autogenSections(),
 			customCss: [
+				"./src/asides.css",
 				"./src/headings.css",
 				"./src/input.css",
 				"./src/kbd.css",
