@@ -5,53 +5,79 @@ sidebar:
   order: 6
 
 ---
+import {  Plan } from "~/components"
 
-## Cloudflare Images
+<Plan type="all" />
 
-Cloudflare Images lets you store, optimize, and deliver images from one unified API. The Images product consists of three line items:
+The Free plan includes access to the transformations feature, which lets you optimize images in remote sources (like R2. 
 
-* Images Stored
-* Images Delivered
-* Images Transformed
+The Paid plan allows transformations, as well as includes access to storage features within Images.
 
-If you are not storing your images within the Images product, you will only pay for Images Transformed.
+Pricing is dependent on which features you use. The table below shows which metrics are used for each use case.
 
-## Images Stored
+| Use case | Metrics | Availability |
+|----------|---------|--------------|
+| Optimize images in remote sources | Images Transformed | Free and Paid plans |
+| Optimized images that are stored in Cloudflare Images | Images Stored, Images Delivered | Only Paid plans |
 
-Images Stored is a pre-paid pricing dimension. You purchase storage in increments of $5 per 100,000 original images.
+## Images Free
 
-Each original image can have up to 20 predefined variants *at no additional cost*. A predefined variant supports following properties:
+By default, all users have access to the Images Free plan. You can use Images to request up to 5,000 unique transformations each month.
 
-* Width
-* Height
-* Fit
-* Metadata
-* Blurring
+Once you exceed 5,000 unique transformations:
 
-Predefined variants can be configured from the Cloudflare dashboard by visiting **Images** > **Variants**.
+- Existing transformations in cache will continue to be served as expected.
+- New transformations will return a `9423` error. If your source image is from the same domain where the transformation is served, then you can use the [`onerror` parameter](/images/transform-images/transform-via-url/#onerror) to redirect to the original image.
+- You will not be charged for exceeding the limits in the Free plan.
 
-Predefined variants do not count against your storage limit. For example, if you upload demo.jpg and have 10 predefined variants, it will count as one original image, not 11.
+To request more than 5,000 unique transformations each month, you can purchase an Images Paid plan.
 
-## Images Delivered
+## Images Paid 
 
-Images Delivered is a post-paid pricing dimension and *only* applies to images stored within the Images product. You will not be billed for Images Delivered if you are optimizing images that are stored elsewhere (in S3 or R2, for example).
+When you purchase an Images Paid plan, you can choose your own storage or add storage within Images.
 
-Images Delivered costs $1 per 100,000 images delivered. Every image requested by the browser counts as one delivered image. For example, if you have a product page displaying 10 images stored on the Images product, and the page is visited 10,000 times over the course of the month, it will result in 100,000 delivered images or $1.00 in billable usage.
+| Metric | Pricing |
+|--------|---------|
+| Images Transformed | First 5,000 unique transformations included + $0.50/1,000 unique transformations/day |
+| Images Stored | $5/100,000 images stored/day |
+| Images Delivered | $1/100,000 images delivered/day |
 
-## Images Transformed
+If you optimize an image in a remote source, then you will only be billed for Images Transformed.
 
-Images Transformed is a post-paid pricing dimension. If your images are not stored on Cloudflare Images, you will *not* be billed for Images Delivered pricing dimension and do not need to purchase Images Stored. Transformations cost $0.50 per 1,000 unique transformations per month.
+Alternatively, Images Stored and Images Delivered apply only to images that are stored in your Images bucket. When you optimize an image that is stored in Images, then this counts toward Images Delivered — not Images Transformed.
 
-A unique transformation is defined as a request to transform an original image with a combination of [supported flags](https://developers.cloudflare.com/images/transform-images/transform-via-url/#options), with the exception of the `format` flag.
+## Metrics
 
-Unique transformations are counted over a 30-day sliding window. For example, if you request an image variant on the 30th of one month, it counts once for that billing period. If you request the same image variant on the 1st of the next month, it does not count towards usage as the same transformation was requested within the last 30 days.
+### Images Transformed
 
-The `format` flag being exempted from counting as a unique transformation means that if demo.jpg is resized to 100x100 and is delivered to some of your users as webp and others as avif or png, it will still count as one billable transformation for that month instead of three.
+A unique transformation is a request to transform an original image based on a set of [supported parameters](/images/transform-images/transform-via-url/#options). This metric is used only when optimizing images that are stored outside of Images.
 
-Images Transformed count is not impacted by the cache hit rate. This makes estimating pricing more predictable. For example, 1,000 product images that are resized 5 different ways will result in 5,000 unique transformations per month and cost $2.50.
+For example, if you transform `thumbnail.jpg` as 100x100, then this counts as 1 unique transformation. If you transform the same `thumbnail.jpg` as 200x200, then this counts as a separate unique transformation.
 
-:::note[Note]
+You are billed for the number of unique transformations that are counted during each billing period.
 
+Unique transformations are counted over a 30-day sliding window. For example, if you request `width=100/thumbnail.jpg `on June 30, then this counts once for that billing period. If you request the same transformation on July 1, then this does not count as a billable request, since the same transformation was already requested within the last 30 days.
 
-Images is an account-level product. You do not need a Pro/Biz subscription to use the Images product. It can be purchased and used with any of your zones, including free zones. 
-:::
+The `format` parameter counts as only 1 billable transformation, even if multiple copies of an image are served. In other words, if `width=100,format=auto/thumbnail.jpg` is served to some users as AVIF and to others as WebP, then this counts as 1 unique transformation instead of 2.
+
+#### Example
+
+A retail website that has 1,000 original product images that get served in 5 different sizes each month. This results in 5,000 unique transformations — or a cost of $2.50 per month.
+
+### Images Stored 
+
+Storage within Images is available only with an Images Paid plan. You can purchase storage in increments of $5 for every 100,000 images stored per month.
+
+You can create predefined variants to specify how an image should be resized, such as `thumbnail` as 100x100 and hero as 1600x500.
+
+Only uploaded images count toward Images Stored; defining variants will not impact your storage limit.
+
+### Images Delivered 
+
+For images that are stored in Images, you will incur $1 for every 100,000 images delivered per month. This metric does not include transformed images that are stored in remote sources.
+
+Every image requested by the browser counts as one billable request.
+
+#### Example
+
+A retail website has a product page that is visited 10,000 times this month and uses Images to display 10 images. This results in 100,000 images delivered — or $1.00 in billable usage.
