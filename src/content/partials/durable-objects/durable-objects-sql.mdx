@@ -36,11 +36,11 @@ Iterate over query results as row objects:
 Convert query results to an array of row objects:
 ```ts
   // Return array of row objects: [{"artistid":123,"artistname":"Alice"},{"artistid":456,"artistname":"Bob"},{"artistid":789,"artistname":"Charlie"}]
-  let resultsArray = [...this.sql.exec("SELECT * FROM artist;")];
+  let resultsArray1 = this.sql.exec("SELECT * FROM artist;").toArray();
   // OR
   let resultsArray2 = Array.from(this.sql.exec("SELECT * FROM artist;"));
   // OR
-  let resultsArray3 = this.sql.exec("SELECT * FROM artist;").toArray();
+  let resultsArray3 = [...this.sql.exec("SELECT * FROM artist;")]; // JavaScript spread syntax
 ```
 
 Convert query results to an array of row values arrays:
@@ -67,21 +67,41 @@ Check if query results has exactly one row:
   let oneRow = this.sql.exec("SELECT * FROM artist WHERE artistname = ?;", "Alice").one()
 ```
 
-Cursor behavior:
+Returned cursor behavior:
 ```ts
   let cursor = this.sql.exec("SELECT * FROM artist ORDER BY artistname ASC;");
-  let { value: firstRow } = cursor[Symbol.iterator]().next()
-  console.log(firstRow); // prints { artistid: 123, artistname: 'Alice' }
+  let result = cursor.next();
+  if (!result.done) {
+    console.log(result.value); // prints { artistid: 123, artistname: 'Alice' }
+  } else {
+    // query returned zero results
+  }
 
-  let remainingRows = Array.from(cursor); // TODO: will be cursor.toArray
+  let remainingRows = cursor.toArray();
   console.log(remainingRows); // prints [{ artistid: 456, artistname: 'Bob' },{ artistid: 789, artistname: 'Charlie' }]
 ```
 
+Returned cursor and `raw()` iterator iterate over the same query results:
+```ts
+  let cursor = this.sql.exec("SELECT * FROM artist ORDER BY artistname ASC;");
+  let result = cursor.raw().next();
+
+  if (!result.done) {
+    console.log(result.value); // prints [ artistid: 123, artistname: 'Alice' ]
+  } else {
+    // query returned zero results
+  }
+
+  console.log(cursor.toArray()); // prints [{ artistid: 456, artistname: 'Bob' },{ artistid: 789, artistname: 'Charlie' }]
+```
+
+`sql.exec().rowsRead()`:
 ```ts
   let cursor = this.sql.exec("SELECT * FROM artist;");
-  let { value: firstRow } = cursor[Symbol.iterator]().next()
+  cursor.next()
   console.log(cursor.rowsRead); // prints 1
 
-  let remainingRows = Array.from(cursor); // TODO: will be cursor.toArray
+  cursor.toArray(); // consumes remaining cursor
   console.log(cursor.rowsRead); // prints 3
 ```
+

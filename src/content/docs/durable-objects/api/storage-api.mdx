@@ -243,16 +243,40 @@ SQL API methods accessed with `ctx.storage.sql` are only allowed on [Durable Obj
   * Optional variable number of arguments that correspond to the `?` placeholders in `query`.
 
 #### Returns 
-A cursor (`SqlStorageCursor`) to iterate over query row results as objects with the following supported methods:
+A cursor (`SqlStorageCursor`) to iterate over query row results as objects. Cursor is a JavaScript [Iterable](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Iteration_protocols#the_iterable_protocol),which supports iteration using `for (let row of cursor)`. Cursor is also a JavaScript [Iterator](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Iteration_protocols#the_iterator_protocol), which supports iteration using `cursor.next()`.
+
+Returned cursor supports the following supported:
   
+* `next()`
+  * Returns an object representing the next value of the cursor. Object has `done` and `value` properties. `done` is set to `false` when a next value is present and `value` is the next row object in query results. `done` is set to `true` when the entire cursor is consumed, and no `value` is set. 
+* `toArray()`
+  * Iterates through remaining cursor value(s) and returns an array of returned row objects. 
+* `one()`
+  * Returns row object if query result has exactly one row. If query result has zero or more than one row, `one()` returns an error. 
 * `raw()`: Iterator
-  * Returns an iterator over the same query results, with each row as an array of column values (with no column names) rather than an object.
+  * Returns an iterator over the same query results, with each row as an array of column values (with no column names) rather than an object. 
+  * Returned Iterator supports `next()`, `toArray()`, and `one()` methods above.
+  * Returned cursor and `raw()` iterator iterate over the same query results and can be combined.
+
+```ts
+  let cursor = this.sql.exec("SELECT * FROM artist ORDER BY artistname ASC;");
+  let result = cursor.raw().next();
+
+  if (!result.done) {
+    console.log(result.value); // prints [ artistid: 123, artistname: 'Alice' ]
+  } else {
+    // query returned zero results
+  }
+
+  console.log(cursor.toArray()); // prints [{ artistid: 456, artistname: 'Bob' },{ artistid: 789, artistname: 'Charlie' }]
+```
+
 * `columnNames()`: string[]
   * Returns an array of column name strings. Often used with `raw()` to find index of specific column(s).
 *  `rowsRead()`: number
-  * Returns the number of rows read so far as part of this SQL query. This may increase as you iterate the cursor. The final value is used for [SQL billing](TODO link).
+  * Returns the number of rows read so far as part of this SQL `query`. This may increase as you iterate the cursor. The final value is used for [SQL billing](/durable-objects/platform/pricing/#sql-storage-billing).
 *  `rowsWritten()`: number
-  * Returns the number of rows written so far as part of this SQL query. This may increase as you iterate the cursor. The final value is used for [SQL billing](TODO link).
+  * Returns the number of rows written so far as part of this SQL `query`. This may increase as you iterate the cursor. The final value is used for [SQL billing](/durable-objects/platform/pricing/#sql-storage-billing).
 
 #### Examples
 
