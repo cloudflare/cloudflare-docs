@@ -2,23 +2,14 @@
 pcx_content_type: how-to
 title: Custom actions
 sidebar:
-  order: 3
+  order: 2
 head:
   - tag: title
     content: Create a third-party tool action
 ---
 
-Tools on Zaraz must have actions configured in order to do something. Every action has triggers assigned to it. When the conditions of the triggers are met, the action will start. An action can be anything the tool can do - sending analytics information, showing a widget, adding a script and much more.
+Tools on Zaraz must have actions configured in order to do something. Often, using Automatic Actions is enough for configuring a tool. But you might want to use Custom Actions to create a more customized setup, or perhaps you are using a tool that does not support Automatic Actions. In these cases, you will need to configure Custom Actions manually.
 
-To start using actions, first create a trigger to determine when this action will start. If you have already [set up a trigger](/zaraz/custom-actions/create-trigger/), follow these steps to create an action.
+Every action has firing triggers assigned to it. When the conditions of the firing triggers are met, the action will start. An action can be anything the tool can do - sending analytics information, showing a widget, adding a script and much more.
 
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login), and select your account and domain.
-2. Go to **Zaraz** > **Tools Configuration**.
-3. Under **Third-party tools**, locate the tool you want to configure an action for, and select **Edit**.
-4. Under Custom actions select **Create action**.
-5. Give the action a descriptive name.
-6. In the **Firing Triggers** field, choose the relevant trigger or triggers you [previously created](/zaraz/custom-actions/create-trigger/). If you choose more than one trigger, the action will start when any of the selected triggers are matched.
-7. Depending on the tool you are adding an action for, you might also have the option to choose an **Action type**. You might also need to fill in more fields in order to complete setting up the action.
-8. Select **Save**.
-
-The new action will appear under **Tool actions**. To edit or disable/enable an action, refer to [Edit tools and actions](/zaraz/custom-actions/edit-tools-and-actions/).
+To start using actions, first [create a trigger](/zaraz/custom-actions/create-trigger/) to determine when this action will start. If you have already set up a trigger, or if you are using one of the built-in triggers, follow these steps to [create an action](/zaraz/custom-actions/create-action/).
