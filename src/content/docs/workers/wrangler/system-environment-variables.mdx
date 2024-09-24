@@ -20,39 +20,39 @@ Wrangler supports the following environment variables:
 
 
 
-* `CLOUDFLARE_ACCOUNT_ID` string optional
+* `CLOUDFLARE_ACCOUNT_ID` <Type text="string" /> <MetaInfo text="optional" />
 
   * The [account ID](/fundamentals/setup/find-account-and-zone-ids/) for the Workers related account.
 
-* `CLOUDFLARE_API_TOKEN` string optional
+* `CLOUDFLARE_API_TOKEN` `Type text="string" /> <MetaInfo text="optional" />
 
   * The [API token](/fundamentals/api/get-started/create-token/) for your Cloudflare account, can be used for authentication for situations like CI/CD, and other automation.
 
-* `CLOUDFLARE_API_KEY` string optional
+* `CLOUDFLARE_API_KEY` <Type text="string" /> <MetaInfo text="optional" />
 
   * The API key for your Cloudflare account, usually used for older authentication method with `CLOUDFLARE_EMAIL=`.
 
-* `CLOUDFLARE_EMAIL` string optional
+* `CLOUDFLARE_EMAIL` <Type text="string" /> <MetaInfo text="optional" />
 
   * The email address associated with your Cloudflare account, usually used for older authentication method with `CLOUDFLARE_API_KEY=`.
 
-* `WRANGLER_SEND_METRICS` string optional
+* `WRANGLER_SEND_METRICS` <Type text="string" /> <MetaInfo text="optional" />
 
   * Options for this are `true` and `false`, the default behavior is `false`.
 
-* `WRANGLER_HYPERDRIVE_LOCAL_CONNECTION_STRING_<BINDING_NAME>` string optional
+* `WRANGLER_HYPERDRIVE_LOCAL_CONNECTION_STRING_<BINDING_NAME>`<Type text="string" /> <MetaInfo text="optional" />
 
   * The [local connection string](/hyperdrive/configuration/local-development/) for your database to use in local development with [Hyperdrive](/hyperdrive/). For example, if the binding for your Hyperdrive is named `PROD_DB`, this would be `WRANGLER_HYPERDRIVE_LOCAL_CONNECTION_STRING_PROD_DB="postgres://user:password@127.0.0.1:5432/testdb"`. Each Hyperdrive is uniquely distinguished by the binding name.
 
-* `CLOUDFLARE_API_BASE_URL` string optional
+* `CLOUDFLARE_API_BASE_URL` <Type text="string" /> <MetaInfo text="optional" />
 
   * The default value is `"https://api.cloudflare.com/client/v4"`.
 
-* `WRANGLER_LOG` string optional
+* `WRANGLER_LOG` <Type text="string" /> <MetaInfo text="optional" />
 
   * Options for Logging levels are `"none"`, `"error"`, `"warn"`, `"info"`, `"log"` and `"debug"`. Levels are case-insensitive and default to `"log"`. If an invalid level is specified, Wrangler will fallback to the default.
 
-* `FORCE_COLOR` string optional
+* `FORCE_COLOR` <Type text="string" /> <MetaInfo text="optional" />
 
   * By setting this to `0`, you can disable Wrangler's colorised output, which makes it easier to read with some terminal setups. For example, `FORCE_COLOR=0`.
 

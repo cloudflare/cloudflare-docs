@@ -905,11 +905,11 @@ In order to save JSON data, cast `value` to a string:
 
 The schema below is the full schema for key-value entries uploaded via the bulk API:
 
-- `key` string required
+- `key` <Type text="string" /> <MetaInfo text="required" />
 
   - The key’s name. The name may be 512 bytes maximum. All printable, non-whitespace characters are valid.
 
-- `value` string required
+- `value` <Type text="string" /> <MetaInfo text="required" />
 
   - The UTF-8 encoded string to be stored, up to 25 MB in length.
 
@@ -972,11 +972,11 @@ This command takes a JSON file as an argument with a list of key-value pairs to 
 ]
 ```
 
-- `key` string required
+- `key` <Type text="string" /> <MetaInfo text="required" />
 
   - The key’s name. The name may be at most 512 bytes. All printable, non-whitespace characters are valid.
 
-- `value` string required
+- `value` <Type text="string" /> <MetaInfo text="required" />
 
   - This field must be specified for deserialization purposes, but is unused because the provided keys are being deleted, not written.
 
