@@ -32,6 +32,15 @@ If you have issues while HTTP DCV is in place, review the following settings:
    <Render file="dcv-path-security" /> 
   :::
 
+## Redirection
+
+Enabling [Always Use HTTPS](/ssl/edge-certificates/additional-options/always-use-https/) doesn't impact the validation process.
+
+In a [Partial (CNAME) setup](/ssl/edge-certificates/changing-dcv-method/#partial-dns-setup---action-sometimes-required) where you are managing the token on the origin side, please ensure that no redirection from HTTP to HTTPS occurs on the `/.well-known/*` path.
+
+When using [Redirect Rules](/rules/url-forwarding/single-redirects/) the `/.well-known/*` path should be excluded from redirections.
+
+
 ## DNS settings and records
 
 The errors below refer to situations that have to be addressed at the authoritative DNS provider:
