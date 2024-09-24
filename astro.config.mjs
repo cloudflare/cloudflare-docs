@@ -125,7 +125,7 @@ export default defineConfig({
 			],
 			social: {
 				github: "https://github.com/cloudflare/cloudflare-docs",
-				"x.com": "https://twitter.com/cloudflare",
+				"x.com": "https://x.com/cloudflare",
 				youtube: "https://www.youtube.com/cloudflare",
 			},
 			editLink: {
