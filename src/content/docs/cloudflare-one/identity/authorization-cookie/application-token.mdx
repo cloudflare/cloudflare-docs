@@ -71,7 +71,7 @@ Access allows you to add custom SAML attributes and OIDC claims to your JWT for 
 
 #### User identity
 
-User identity is useful for checking application permissions. For example, your application can validate that a given user is a member of an Okta or AzureAD group such as `Finance-Team`.
+User identity is useful for checking application permissions. For example, your application can validate that a given user is a member of an Okta or Microsoft Entra ID group such as `Finance-Team`.
 
 Due to cookie size limits and bandwidth considerations, the application token only contains a subset of the user's identity. To get the user's full identity, send the `CF_Authorization` cookie to `https://<your-team-name>.cloudflareaccess.com/cdn-cgi/access/get-identity`. Your request should be structured as follows:
 

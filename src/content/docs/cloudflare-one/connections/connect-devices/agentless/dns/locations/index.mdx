@@ -1,12 +1,12 @@
 ---
 pcx_content_type: how-to
-title: Add locations
+title: Locations
 sidebar:
   order: 1
-
+  label: Add locations
 ---
 
-import { GlossaryDefinition, Render } from "~/components"
+import { GlossaryDefinition, Render } from "~/components";
 
 <Render file="gateway/add-locations" />
 
@@ -26,17 +26,15 @@ Cloudflare will prefill the [**Source IPv4 Address**](/cloudflare-one/connection
 
 You do not need to configure the IPv4 DNS endpoint if:
 
-* Your network only uses IPv6.
-* Your users will send all DNS requests from this location using [DNS over HTTPS](#dns-over-https-doh) via a browser.
-* You will deploy the [WARP client](/cloudflare-one/connections/connect-devices/warp/).
+- Your network only uses IPv6.
+- Your users will send all DNS requests from this location using [DNS over HTTPS](#dns-over-https-doh) via a browser.
+- You will deploy the [WARP client](/cloudflare-one/connections/connect-devices/warp/).
 
 :::note[Your IPv4 address is taken]
-
 
 When you try to configure a DNS location over IPv4, Gateway may display a **Your source IPv4 address is taken** error. This may mean someone else in the same network configured Gateway before you did. If your network supports IPv6, you can still use Gateway's DNS filtering by sending DNS queries over IPv6. You can also use the DNS over HTTPS hostname to send queries using a DNS over HTTPS client.
 
 If you think someone else is wrongfully using this IPv4 address, [contact Cloudflare support](/support/contacting-cloudflare-support/#getting-help-with-an-issue).
-
 
 :::
 

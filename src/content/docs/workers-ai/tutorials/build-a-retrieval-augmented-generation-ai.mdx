@@ -315,27 +315,6 @@ app.get('/', async (c) => {
   )
 
   return c.text(answer);
-})
-
-
-	const contextMessage = notes.length
-		? `Context:\n${notes.map((note) => `- ${note}`).join("\n")}`
-		: "";
-
-	const systemPrompt = `When answering the question or responding, use the context provided, if it is provided and relevant.`;
-
-	const { response: answer } = await c.env.AI.run(
-		"@cf/meta/llama-3-8b-instruct",
-		{
-			messages: [
-				...(notes.length ? [{ role: "system", content: contextMessage }] : []),
-				{ role: "system", content: systemPrompt },
-				{ role: "user", content: question },
-			],
-		},
-	);
-
-	return c.text(answer);
 });
 
 app.onError((err, c) => {

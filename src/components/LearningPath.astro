@@ -1,10 +1,9 @@
 ---
-import { z } from "astro:content";
+import { z } from "astro:schema";
 import { getEntry } from "astro:content";
 import { marked } from "marked";
-import { LinkButton } from "~/components";
-import Details from "./Details.astro";
-import { Steps } from "@astrojs/starlight/components";
+import Details from "~/components/Details.astro";
+import { LinkButton, Steps } from "@astrojs/starlight/components";
 import { getCollection } from "astro:content";
 import { sortBySidebarOrder } from "~/util/sidebar";
 

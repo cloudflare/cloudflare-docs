@@ -7,11 +7,9 @@ sidebar:
 
 import { Render, PackageManagers } from "~/components";
 
-# Metadata Filtering
-
 :::note[Enable metadata filtering]
 
-Vectorize requires metadata indexes to be specified before vectors are inserted to support metadata filtering. Please refer to [Create metadata indexes](/vectorize/get-started/intro/#4-optional-create-metadata-indexes) for details.
+Vectorize requires metadata indexes to be specified before vectors are inserted to support metadata filtering. `string`, `number` and `boolean` metadata indexes are supported. Please refer to [Create metadata indexes](/vectorize/get-started/intro/#4-optional-create-metadata-indexes) for details.
 
 Vectorize supports [namespace](/vectorize/best-practices/insert-vectors/#namespaces) filtering by default.
 
@@ -20,6 +18,16 @@ Vectorize supports [namespace](/vectorize/best-practices/insert-vectors/#namespa
 In addition to providing an input vector to your query, you can also filter by [vector metadata](/vectorize/best-practices/insert-vectors/#metadata) associated with every vector. Query results only include vectors that match `filter` criteria, meaning that `filter` is applied first, and `topK` results are taken from the filtered set.
 
 By using metadata filtering to limit the scope of a query, you can filter by specific customer IDs, tenant, product category or any other metadata you associate with your vectors.
+
+## Limits
+
+You can store up to 10KiB of metadata per vector, and create up to 10 metadata indexes per Vectorize index.
+
+For metadata indexes of type `number`, the indexed number precision is that of float64.
+
+For metadata indexes of type `string`, each vector indexes the first 64B of the string data truncated on UTF-8 character boundaries to the longest well-formed UTF-8 substring within that limit, so vectors are filterable on the first 64B of their value for each indexed property.
+
+See [Vectorize Limits](/vectorize/platform/limits/) for a complete list of limits.
 
 ## Supported operations
 
