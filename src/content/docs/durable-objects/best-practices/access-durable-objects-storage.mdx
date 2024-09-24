@@ -44,7 +44,7 @@ export class Counter extends DurableObject {
 
 :::note[SQLite in Durable Objects Beta]
 
-New beta version of Durable Objects is available where each Durable Object has a private, embedded SQLite database. SQL storage is opt-in during beta; otherwise, a Durable Object class has the standard, private key-value storage. Objects with SQL storage can use the [SQL API](/durable-objects/api/storage-api/#sqlexec). 
+New beta version of Durable Objects is available where each Durable Object has a private, embedded SQLite database. When deploying a new Durable Object class, users can opt-in to using SQL storage in order to access [Storage SQL API methods](/durable-objects/api/storage-api/#sqlexec). Otherwise, a Durable Object class has the standard, private key-value storage.
 
 :::
 
@@ -56,8 +56,14 @@ tag = "v1" # Should be unique for each entry
 new_sqlite_classes = ["MyDurableObject"] # Array of new classes
 ```
 
-[SQL API](/durable-objects/api/storage-api/#sqlexec) methods are available on `ctx.storage.sql` parameter passed to the Durable Object constructor.
+[SQL API methods](/durable-objects/api/storage-api/#sqlexec) are available on `ctx.storage.sql` parameter passed to the Durable Object constructor.
 
 ### Examples
 
 <Render file="durable-objects-sql" />
+
+<Render file="durable-objects-vs-d1" />
+
+## Related resources
+
+* [Zero-latency SQLite storage in every Durable Object blog post](https://blog.cloudflare.com/sqlite-in-durable-objects)

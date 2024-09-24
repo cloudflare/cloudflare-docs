@@ -200,3 +200,13 @@ To get started with Vectorize:
 - [Create your first vector database](/vectorize/get-started/intro/).
 - Combine [Workers AI and Vectorize](/vectorize/get-started/embeddings/) to generate, store and query text embeddings.
 - Learn more about [how vector databases work](/vectorize/reference/what-is-a-vector-database/).
+
+<Render file="durable-objects-vs-d1" product="durable-objects" />
+
+:::note[SQLite in Durable Objects Beta]
+
+New beta version of Durable Objects is available where each Durable Object has a private, embedded SQLite database. When deploying a new Durable Object class, users can opt-in to using SQL storage in order to access [Storage SQL API methods](/durable-objects/api/storage-api/#sqlexec). Otherwise, a Durable Object class has the standard, private key-value storage.
+
+:::
+
+
