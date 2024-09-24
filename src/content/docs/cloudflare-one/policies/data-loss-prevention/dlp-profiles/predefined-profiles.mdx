@@ -5,6 +5,8 @@ sidebar:
   order: 2
 ---
 
+import { Render } from "~/components";
+
 Cloudflare Zero Trust provides predefined DLP profiles for common types of sensitive data. Some profiles include built-in validation checks to increase detection granularity. Additionally, you can configure [advanced settings](/cloudflare-one/policies/data-loss-prevention/dlp-profiles/advanced-settings/) for predefined profiles.
 
 ## Credentials and Secrets
@@ -17,6 +19,11 @@ The following secrets are validated with regex.
 - SSH keys
 
 ## Financial Information
+
+<Render
+	file="profile-all-plans"
+	product="cloudflare-one/data-loss-prevention"
+/>
 
 Credit card numbers begin with a six or eight-digit Issuer Identification Number (IIN) and are followed by up to 23 additional digits. Card verification values (CVVs) are not validated.
 
@@ -44,6 +51,11 @@ The following diagnosis and medication names are checked for surrounding ASCII c
 - ICD-10 FY2023 short descriptions
 
 ## Social Security, Insurance, Tax, and Identifier Numbers
+
+<Render
+	file="profile-all-plans"
+	product="cloudflare-one/data-loss-prevention"
+/>
 
 The following national identifier detections are validated algorithmically when possible.
 
