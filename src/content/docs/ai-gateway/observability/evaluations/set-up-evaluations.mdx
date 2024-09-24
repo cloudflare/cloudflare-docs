@@ -16,7 +16,7 @@ Datasets are collections of logs stored for analysis that can be used in an eval
 1. Apply filters to narrow down your logs. Filter options include provider, number of tokens, request status, and more. 
 2. Select **Create Dataset** to store the filtered logs for future analysis.
 
-You can manage datasets by selecting Manage datasets from the Logs tab. From here, you can:
+You can manage datasets by selecting **Manage datasets** from the Logs tab. From here, you can:
 
 - Edit
 - Update
@@ -24,7 +24,7 @@ You can manage datasets by selecting Manage datasets from the Logs tab. From her
 
 :::note[Note]
 
-Datasets can currently only be created with `AND` joins so there can only be one item per filter (e.g., one model, one provider). Future updates will allow more flexibility in dataset creation.
+Please keep in mind that datasets currently use `AND` joins so there can only be one item per filter (e.g., one model, one provider). Future updates will allow more flexibility in dataset creation.
 
 :::
 
@@ -35,7 +35,7 @@ After creating a dataset, choose the evaluation parameters:
 - Cost: Calculates the average cost of inference requests within the dataset (only for requests with [cost data](https://developers.cloudflare.com/ai-gateway/observability/costs/)).
 - Speed: Calculates the average duration of inference requests within the dataset.
 - Performance:
-  - Human feedback: Measures performance based on human feedback, calculated y the % of thumbs up users have annotated in the Logs tab. The evaluation calculates performance based on these annotations.
+  - Human feedback: Measures performance based on human feedback, calculated by the % of thumbs up on the logs, annotated from the Logs tab.
 
 :::note[Note]
 
@@ -51,7 +51,9 @@ Additional evaluators will be introduced in future updates to expand performance
 
 ## 4. Review and analyze results
 
-Evaluation results will appear in the Evaluations tab. The results show the status of the evaluation (e.g., in progress, completed, or error). Metrics for the selected evaluators will be displayed, excluding any logs with missing fields. You will also see the number of logs used to calculate each metric. While datasets automatically update based on filters, evaluations do not. If you would like to rerun an existing evaluation with new logs, you can select **Rerun** at the far right of the evaluation result. 
+Evaluation results will appear in the Evaluations tab. The results show the status of the evaluation (e.g., in progress, completed, or error). Metrics for the selected evaluators will be displayed, excluding any logs with missing fields. You will also see the number of logs used to calculate each metric. 
+
+While datasets automatically update based on filters, evaluations do not. If you would like to rerun an existing evaluation with new logs, you can select **Rerun** at the far right of the evaluation result. 
 
 Use these insights to adjust your setup and optimize based on your application's priorities. Based on the results, you may choose to:
 
