@@ -30,7 +30,10 @@ const ModelBadges = ({ model }) => {
 	return (
 		<ul className="list-none m-0 p-0 flex items-center gap-2 text-xs">
 			{badges.map((badge) => (
-				<li className="bg-gray-100 px-2 py-1 rounded-md block !mt-0">
+				<li
+					key={badge.text}
+					className="bg-gray-100 px-2 py-1 rounded-md block !mt-0"
+				>
 					{badge.text}
 				</li>
 			))}

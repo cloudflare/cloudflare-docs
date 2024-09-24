@@ -2,14 +2,10 @@
 import type { GetStaticPaths } from "astro";
 import StarlightPage from "@astrojs/starlight/components/StarlightPage.astro";
 import { getCollection } from "astro:content";
-import { Code } from "~/components";
-import { InlineBadge } from "~/components";
-import Schemas from "~/components/models/Schemas.astro";
-import Playground from "~/components/models/Playground.astro";
 import ModelInfo from "~/components/models/ModelInfo";
 import ModelBadges from "~/components/models/ModelBadges";
-import { LinkButton } from "~/components";
-import ModelCodeExamples from "~/components/models/ModelCodeExamples";
+import { LinkButton, Tabs, TabItem, Code } from "~/components";
+
 import TextGenerationResponses from "~/components/models/responses/TextGenerationResponses.astro";
 import TextGenerationCode from "~/components/models/code/TextGenerationCode.astro";
 import TextGenerationPrompting from "~/components/models/prompting/TextGenerationPrompting.astro";
@@ -35,9 +31,7 @@ import StableDiffusionV15Img2ImgCode from "~/components/models/code/StableDiffus
 import StableDiffusionV15InpaintingCode from "~/components/models/code/StableDiffusion-v1-5-inpaintingCode.astro";
 
 import SchemaViewer from "~/components/models/SchemaViewer.astro";
-import ModelPlayground from "~/components/models/ModelPlayground.jsx";
 import { authorData } from "~/components/models/data";
-import { Tabs, TabItem } from "~/components";
 
 export const getStaticPaths = (async () => {
 	const models = await getCollection("workers-ai-models");
@@ -57,8 +51,6 @@ const { model } = Astro.props;
 
 const description = model.description;
 const terms = model.properties.find((x) => x.property_id === "terms");
-const showPlayground = model.task.name === "Text Generation";
-const hasLora = Boolean(model.properties.find((x) => x.property_id === "lora"));
 
 const isBeta = model.properties.find(
 	({ property_id, value }) => property_id === "beta" && value === "true",
@@ -88,7 +80,7 @@ const author = authorData[model.name.split("/")[1]];
 				<img class="mr-4 w-12 h-12 block" src={author.logo} />
 			) : (
 				<div class="w-12 h-12 mr-4 rounded-md bg-gray-100 text-gray-400 uppercase text-2xl font-black flex justify-center items-center">
-					{model.name.split("/")[1].substr(0, 1)}
+					{model.name.split("/")[1].substring(0, 1)}
 				</div>
 			)
 		}

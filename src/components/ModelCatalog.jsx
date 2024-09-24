@@ -95,7 +95,7 @@ const ModelCatalog = ({ models }) => {
 					</span>
 
 					{tasks.map((task) => (
-						<label className="block !my-2">
+						<label key={task} className="block !my-2">
 							<input
 								type="checkbox"
 								className="mr-2"
@@ -125,7 +125,7 @@ const ModelCatalog = ({ models }) => {
 					</span>
 
 					{capabilities.map((capability) => (
-						<label className="block !my-2">
+						<label key={capability} className="block !my-2">
 							<input
 								type="checkbox"
 								value={capability}
@@ -157,7 +157,7 @@ const ModelCatalog = ({ models }) => {
 					</span>
 
 					{authors.map((author) => (
-						<label className="block !my-2">
+						<label key={author} className="block !my-2">
 							<input
 								type="checkbox"
 								className="mr-2"
