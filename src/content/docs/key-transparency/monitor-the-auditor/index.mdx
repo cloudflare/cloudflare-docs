@@ -62,11 +62,14 @@ For instance, to verify WhatsApp Log auditted by Cloudflare Auditor, run the fol
 
 ```shell
 > plexi audit --remote-url 'https://plexi.key-transparency.cloudflare.com' --namespace 'whatsapp.key-transparency.v1' --long
-Namespace: whatsapp.key-transparency.v1
-Ciphersuite: ed25519(protobuf)
-Timestamp: 2024-09-19T09:59:44Z
-Epoch height: 476847
-Epoch digest: 9d217c91dc629d16a3b1379e8fd7c949c27b1b6038259e3918bd0da3cd6c34d1
-Signature: e4c83e3091ba8764752120bd7a726a28759d25a01f39d07131d6ba66a913d58d8f0f48f63bc7e037cc5ddd81dc76acc847dbf8d02b2f55251e6f2b1f00191902
-Verification: success
+Namespace
+  Name               : whatsapp.key-transparency.v1
+  Ciphersuite        : ed25519(protobuf)
+
+Signature (2024-09-23T16:53:45Z)
+  Epoch height      	: 489193
+  Epoch digest      	: cbe5097ae832a3ae51ad866104ffd4aa1f7479e873fd18df9cb96a02fc91ebfe
+  Signature         	: fe94973e19da826487b637c019d3ce52f0c08093ada00b4fe6563e2f8117b4345121342bc33aae249be47979dfe704478e2c18aed86e674df9f934b718949c08
+  Signature verification: success
+  Proof verification	: success
 ```
