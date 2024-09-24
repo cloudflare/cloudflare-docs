@@ -5,7 +5,7 @@ sidebar:
   order: 6
 ---
 
-import { Render, TabItem, Tabs } from "~/components";
+import { Render, TabItem, Tabs, Type, MetaInfo } from "~/components";
 
 :::caution
 
@@ -278,15 +278,15 @@ API_KEY = "6567875fvgt"
 
 Inheritable keys are configurable at the top-level, and can be inherited (or overridden) by environment-specific configuration.
 
-- `name` string required
+- `name` <Type text="string" /> <MetaInfo text="required" />
 
   - The name of your Pages project. Alphanumeric and dashes only.
 
-- `pages_build_output_dir` string required
+- `pages_build_output_dir` <Type text="string" /> <MetaInfo text="required" />
 
   - The path to your project's build output folder. For example: `./dist`.
 
-- `compatibility_date` string required
+- `compatibility_date` <Type text="string" /> <MetaInfo text="required" />
 
   - A date in the form `yyyy-mm-dd`, which will be used to determine which version of the Workers runtime is used. Refer to [Compatibility dates](/workers/configuration/compatibility-dates/).
 
@@ -294,7 +294,7 @@ Inheritable keys are configurable at the top-level, and can be inherited (or ove
 
   - A list of flags that enable features from upcoming features of the Workers runtime, usually used together with `compatibility_date`. Refer to [compatibility dates](/workers/configuration/compatibility-dates/).
 
-- `send_metrics` boolean optional
+- `send_metrics` <Type text="boolean" /> <MetaInfo text="optional" />
 
   - Whether Wrangler should send usage metrics to Cloudflare for this project.
 
@@ -335,47 +335,47 @@ API_KEY = "8901234bfgd"
 
 This will work for local development, but will fail to validate when you try to deploy.
 
-- `vars` object optional
+- `vars` <Type text="object" /> <MetaInfo text="optional" />
 
   - A map of environment variables to set when deploying your Function. Refer to [Environment variables](/pages/functions/bindings/#environment-variables).
 
-- `d1_databases` object optional
+- `d1_databases` <Type text="object" /> <MetaInfo text="optional" />
 
   - A list of D1 databases that your Function should be bound to. Refer to [D1 databases](/pages/functions/bindings/#d1-databases).
 
-- `durable_objects` object optional
+- `durable_objects` <Type text="object" /> <MetaInfo text="optional" />
 
   - A list of Durable Objects that your Function should be bound to. Refer to [Durable Objects](/pages/functions/bindings/#durable-objects).
 
-- `hyperdrive` object optional
+- `hyperdrive` <Type text="object" /> <MetaInfo text="optional" />
 
   - Specifies Hyperdrive configs that your Function should be bound to. Refer to [Hyperdrive](/pages/functions/bindings/#r2-buckets).
 
-- `kv_namespaces` object optional
+- `kv_namespaces` <Type text="object" /> <MetaInfo text="optional" />
 
   - A list of KV namespaces that your Function should be bound to. Refer to [KV namespaces](/pages/functions/bindings/#kv-namespaces).
 
-- `queues.producers` object optional
+- `queues.producers` <Type text="object" /> <MetaInfo text="optional" />
 
   - Specifies Queues Producers that are bound to this Function. Refer to [Queues Producers](/queues/get-started/#4-set-up-your-producer-worker).
 
-- `r2_buckets` object optional
+- `r2_buckets` <Type text="object" /> <MetaInfo text="optional" />
 
   - A list of R2 buckets that your Function should be bound to. Refer to [R2 buckets](/pages/functions/bindings/#r2-buckets).
 
-- `vectorize` object optional
+- `vectorize` <Type text="object" /> <MetaInfo text="optional" />
 
   - A list of Vectorize indexes that your Function should be bound to. Refer to [Vectorize indexes](/vectorize/get-started/intro/#3-bind-your-worker-to-your-index).
 
-- `services` object optional
+- `services` <Type text="object" /> <MetaInfo text="optional" />
 
   - A list of service bindings that your Function should be bound to. Refer to [service bindings](/pages/functions/bindings/#service-bindings).
 
-- `analytics_engine_datasets` object optional
+- `analytics_engine_datasets` <Type text="object" /> <MetaInfo text="optional" />
 
   - Specifies analytics engine datasets that are bound to this Function. Refer to [Workers Analytics Engine](/analytics/analytics-engine/get-started/).
 
-- `ai` object optional
+- `ai` <Type text="object" /> <MetaInfo text="optional" />
 
   - Specifies an AI binding to this Function. Refer to [Workers AI](/pages/functions/bindings/#workers-ai).
 
