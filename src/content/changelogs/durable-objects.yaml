@@ -6,10 +6,11 @@ productArea: Developer platform
 productAreaLink: /workers/platform/changelog/platform/
 entries:
   - publish_date: "2024-09-26"
+    title: SQLite in Durable Objects
     description: |-
-      New beta version of Durable Objects is available where each Durable Object has a private, embedded SQLite database. When creating a Durabe Object class, users can [opt-in to using SQL storage](durable-objects/best-practices/access-durable-objects-storage/#sql-storage) in order to access Transactional Storage [SQL API](/durable-objects/api/transactional-storage-api/#sqlexec).
+      New beta version of Durable Objects is available where each Durable Object has a private, embedded SQLite database. When creating a Durable Object class, users can [opt-in to using SQL storage](durable-objects/best-practices/access-durable-objects-storage/#sql-storage) in order to access [SQL API methods](/durable-objects/api/storage-api/#sqlexec).
 
-      During the initial beta, billing is not enabled for SQL queries (rows read and rows written) and SQL storage. SQLite-backed Durable Objects will incur [charges for requests and duration](/durable-objects/platform/pricing/#billing-metrics). We plan to enable [SQL billing](/durable-objects/platform/pricing/#transactional-storage-api-billing) in the first half of 2025 with advance notice. SQL billing metrics will be added to GraphQL analytics in the future as well.
+      During the initial beta, Storage API billing is not enabled for Durable Object classes with SQLite storage. SQLite-backed Durable Objects will incur [charges for requests and duration](/durable-objects/platform/pricing/#billing-metrics). We plan to enable [Storage API billing](/durable-objects/platform/pricing/#storage-api-billing) in the first half of 2025 with advance notice. SQL billing metrics will be added to GraphQL analytics in the future as well.
 
   - publish_date: "2024-06-24"
     description: |-
