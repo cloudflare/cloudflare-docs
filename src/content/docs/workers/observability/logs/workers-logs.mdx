@@ -11,7 +11,7 @@ sidebar:
 
 ---
 
-import { TabItem, Tabs, Steps } from "~/components"
+import { TabItem, Tabs, Steps, Render } from "~/components"
 
 Workers Logs lets you automatically collect, store, filter, and analyze logging data emitted from Cloudflare Workers. Data is written to your Cloudflare Account, and you can query it in the dashboard for each of your Workers. All newly created Workers will come with the observability setting enabled by default.
 
@@ -32,19 +32,19 @@ You must add the observability setting for your Worker to write logs to Workers 
 	```toml
 	[observability]
 	enabled = true
-	head_sampling_rate = 0.01 # optional. default = 1.
+	head_sampling_rate = 1 # optional. default = 1.
 	```
 
 The default value for `head_sampling_rate` is 1, meaning 100% of your logs are sampled. `head_sampling_rate` can be set to a value between 0 and 1. For example, 0.01 indicates that 1% of your logs are sampled.
 
 ### Enabling with environments
 
-[Environments](workers/wrangler/environments/) allow you to deploy the same Worker application with different configurations. To configure observability for your environment:
+[Environments](workers/wrangler/environments/) allow you to deploy the same Worker application with different configurations. For example, you may want to configure a different `head_sampling_rate` to staging and production. To configure observability for your environment:
 	1. Add the following configuration below `[env.<NAME>]`
 	```toml
 	[env.<NAME>.observability]
 	enabled = true
-	head_sampling_rate = 0.1 # optional
+	head_sampling_rate = 1 # optional
 	```
 	2. Deploy your Worker with `npx wrangler deploy -e <NAME>`
 	3. Repeat step 1 and 2 for each environment.
@@ -119,11 +119,11 @@ async function handleRequest(request) {
 
 </TabItem> </Tabs>
 
-After you deploy the above code, view your Worker's logs in [the dashboard](/workers/observability/logs/workers-logs/#view-logs-from-the-dashboard) or with [real-time logs](/workers/observability/logs/real-time-logs/).
+After you deploy the code above, view your Worker's logs in [the dashboard](/workers/observability/logs/workers-logs/#view-logs-from-the-dashboard) or with [real-time logs](/workers/observability/logs/real-time-logs/).
 
 ### Head-based Sampling
 
-Head-based sampling allows you to log only a subset of incoming requests to your Cloudflare Workers. Especially for high-traffic applications, this helps reduce log volume and manage costs, while still providing meaningful insights into your application’s performance. When you configure a head-based sampling rate, you can control the percentage of requests that get logged. All logs within the context of the request are collected. 
+Head-based sampling allows you to log only a subset of incoming requests to your Cloudflare Workers. Especially for high-traffic applications, this helps reduce log volume and manage costs, while still providing meaningful insights into your application's performance. When you configure a head-based sampling rate, you can control the percentage of requests that get logged. All logs within the context of the request are collected.
 
 To enable head-based sampling, simply set `head_sampling_rate` within the observability configuration. For example, setting a sampling rate of 0.01 (1%) will log one out of every one hundred requests. If the `head_sampling_rate` is unspecified, it is configured to a default value of 1 (100%).
 
@@ -141,11 +141,10 @@ To enable head-based sampling, simply set `head_sampling_rate` within the observ
 
 ## Pricing
 
-|                    | Logs                                                               | Retention  |
-| ------------------ | ------------------------------------------------------------------ | ---------- | 
-| **Workers Free**   | 200,000 per day                                                    | 7 Days     |
-| **Workers Paid**   | 20 million included per month <br /> +$0.60 per additional million | 7 Days     |
-
+:::note[Billing start date]
+Workers Logs billing will begin on November 1, 2024.
+:::
+<Render file="workers_logs_pricing" />
 
 ### Example Pricing
 
