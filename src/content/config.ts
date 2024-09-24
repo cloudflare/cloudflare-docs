@@ -62,8 +62,14 @@ export const collections = {
 		type: "data",
 	}),
 	"workers-ai-models": defineCollection({
+		loader: async () => {
+			// Fetch public model and schema data at build-time from the API
+			const data = await fetch("https://ai.cloudflare.com/api/models").then(
+				(res) => res.json(),
+			);
+			return data.models;
+		},
 		schema: workersAiSchema,
-		type: "data",
 	}),
 	videos: defineCollection({
 		schema: videosSchema,

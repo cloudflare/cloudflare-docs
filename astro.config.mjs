@@ -80,6 +80,7 @@ export default defineConfig({
 	},
 	experimental: {
 		contentIntellisense: true,
+		contentLayer: true,
 	},
 	server: {
 		port: 1111,

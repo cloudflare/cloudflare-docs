@@ -3,16 +3,14 @@ import ModelInfo from "./models/ModelInfo";
 import ModelBadges from "./models/ModelBadges";
 import { authorData } from "./models/data";
 
-import models from "./models/models.json";
-
-const ModelCatalog = () => {
+const ModelCatalog = ({ models }) => {
 	const [filters, setFilters] = useState({
 		search: "",
 		authors: [],
 		tasks: [],
 		capabilities: [],
 	});
-	const mapped = models.result.map((model) => ({
+	const mapped = models.map((model) => ({
 		model: {
 			...model,
 			capabilities: model.properties
@@ -30,13 +28,11 @@ const ModelCatalog = () => {
 		model_display_name: model.name.split("/").at(-1),
 	}));
 
-	const tasks = [...new Set(models.result.map((model) => model.task.name))];
-	const authors = [
-		...new Set(models.result.map((model) => model.name.split("/")[1])),
-	];
+	const tasks = [...new Set(models.map((model) => model.task.name))];
+	const authors = [...new Set(models.map((model) => model.name.split("/")[1]))];
 	const capabilities = [
 		...new Set(
-			models.result
+			models
 				.map((model) =>
 					model.properties
 						.flatMap(({ property_id, value }) => {
@@ -230,6 +226,7 @@ const ModelCatalog = () => {
 
 					return (
 						<a
+							key={model.model.id}
 							className="p-3 border-gray-200 border-solid border rounded-md w-[48%] block !text-inherit no-underline self-start hover:bg-gray-50 mb-3"
 							href={`/workers-ai/models/${model.model_display_name}`}
 						>

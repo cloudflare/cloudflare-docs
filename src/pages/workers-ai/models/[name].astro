@@ -8,6 +8,7 @@ import Schemas from "~/components/models/Schemas.astro";
 import Playground from "~/components/models/Playground.astro";
 import ModelInfo from "~/components/models/ModelInfo";
 import ModelBadges from "~/components/models/ModelBadges";
+import { LinkButton } from "~/components";
 import ModelCodeExamples from "~/components/models/ModelCodeExamples";
 import TextGenerationResponses from "~/components/models/responses/TextGenerationResponses.astro";
 import TextGenerationCode from "~/components/models/code/TextGenerationCode.astro";
@@ -44,483 +45,28 @@ export const getStaticPaths = (async () => {
 	return models.map((entry) => {
 		return {
 			params: {
-				name: entry.id,
+				name: entry.data.name.split("/")[2],
 			},
-			props: { data: entry.data },
+			props: { model: entry.data },
 		};
 	});
 }) satisfies GetStaticPaths;
 
 const { name } = Astro.params;
-const { data } = Astro.props;
+const { model } = Astro.props;
 
-const description = data.model.description;
-const terms = data.model.properties.find((x) => x.property_id === "terms");
-const showPlayground = data.model.task.name === "Text Generation";
-const hasLora = Boolean(
-	data.model.properties.find((x) => x.property_id === "lora"),
-);
+const description = model.description;
+const terms = model.properties.find((x) => x.property_id === "terms");
+const showPlayground = model.task.name === "Text Generation";
+const hasLora = Boolean(model.properties.find((x) => x.property_id === "lora"));
 
-let CodeExamples = TextGenerationCode;
-let Responses = TextGenerationResponses;
-
-switch (data.task_type) {
-	case "text-generation":
-		{
-			CodeExamples = TextGenerationCode;
-			Responses = TextGenerationResponses;
-		}
-		break;
-	case "automatic-speech-recognition":
-		{
-			CodeExamples = AutomaticSpeechRecognitionCode;
-			Responses = AutomaticSpeechRecognitionResponses;
-		}
-		break;
-	case "image-classification":
-		{
-			CodeExamples = ImageClassificationCode;
-			Responses = ImageClassificationResponses;
-		}
-		break;
-	case "image-to-text":
-		{
-			CodeExamples = ImageToTextCode;
-			Responses = ImageToTextResponses;
-		}
-		break;
-	case "object-detection":
-		{
-			CodeExamples = ObjectDetectionCode;
-			Responses = ObjectDetectionResponses;
-		}
-		break;
-	case "summarization":
-		{
-			CodeExamples = SummarizationCode;
-			Responses = SummarizationResponses;
-		}
-		break;
-	case "text-classification":
-		{
-			CodeExamples = TextClassificationCode;
-			Responses = TextClassificationResponses;
-		}
-		break;
-	case "text-embeddings":
-		{
-			CodeExamples = TextEmbeddingCode;
-			Responses = TextEmbeddingsResponses;
-		}
-		break;
-	case "text-to-image":
-		{
-			CodeExamples = TextToImageCode;
-			Responses = TextToImageResponses;
-		}
-		break;
-	case "translation":
-		{
-			CodeExamples = TranslationCode;
-			Responses = TranslationResponses;
-		}
-		break;
-}
-
-if (data.model.name === "@cf/runwayml/stable-diffusion-v1-5-inpainting") {
-	CodeExamples = StableDiffusionV15InpaintingCode;
-} else if (data.model.name === "@cf/runwayml/stable-diffusion-v1-5-img2img") {
-	CodeExamples = StableDiffusionV15Img2ImgCode;
-}
-
-const isBeta = data.model.properties.find(
+const isBeta = model.properties.find(
 	({ property_id, value }) => property_id === "beta" && value === "true",
 );
 
-const hasPlayground = data.task_type === "text-generation";
+const hasPlayground = model.task.name === "Text Generation";
 
-const author = authorData[data.model.name.split("/")[1]];
-console.log(JSON.stringify(JSON.parse(data.json_schema.output), null, 4));
-
-const schema = {
-	input: {
-		type: "object",
-		oneOf: [
-			{
-				title: "Prompt",
-				properties: {
-					prompt: {
-						type: "string",
-						minLength: 1,
-						maxLength: 131072,
-						description:
-							"The input text prompt for the model to generate a response",
-					},
-					raw: {
-						type: "boolean",
-						default: false,
-						description:
-							"If true, a chat template is not applied and you must adhere to the specific model's expected formatting",
-					},
-					stream: {
-						type: "boolean",
-						default: false,
-						description:
-							"If true, the response will be streamed back incrementally using SSE, Server Sent Events",
-					},
-					max_tokens: {
-						type: "integer",
-						default: 256,
-						description:
-							"The maximum number of tokens to generate in the response",
-					},
-					temperature: {
-						type: "number",
-						default: 0.6,
-						minimum: 0,
-						maximum: 5,
-						description:
-							"Controls the randomness of the output; higher values produce more random results",
-					},
-					top_p: {
-						type: "number",
-						minimum: 0,
-						maximum: 2,
-						description:
-							"Adjusts the creativity of the AI's responses by controlling how many possible words it considers. Lower values make outputs more predictable; higher values allow for more varied and creative responses",
-					},
-					top_k: {
-						type: "integer",
-						minimum: 1,
-						maximum: 50,
-						description:
-							"Limits the AI to choose from the top 'k' most probable words. Lower values make responses more focused; higher values introduce more variety and potential surprises",
-					},
-					seed: {
-						type: "integer",
-						minimum: 1,
-						maximum: 9999999999,
-						description: "Random seed for reproducibility of the generation",
-					},
-					repetition_penalty: {
-						type: "number",
-						minimum: 0,
-						maximum: 2,
-						description:
-							"Penalty for repeated tokens; higher values discourage repetition",
-					},
-					frequency_penalty: {
-						type: "number",
-						minimum: 0,
-						maximum: 2,
-						description:
-							"Decreases the likelihood of the model repeating the same lines verbatim",
-					},
-					presence_penalty: {
-						type: "number",
-						minimum: 0,
-						maximum: 2,
-						description:
-							"Increases the likelihood of the model introducing new topics",
-					},
-					lora: {
-						type: "string",
-						description:
-							"Name of the LoRA (Low-Rank Adaptation) model to fine-tune the base model",
-					},
-				},
-				required: ["prompt"],
-			},
-			{
-				title: "Messages",
-				properties: {
-					messages: {
-						type: "array",
-						description:
-							"An array of message objects representing the conversation history",
-						items: {
-							type: "object",
-							properties: {
-								role: {
-									type: "string",
-									description:
-										"The role of the message sender (e.g., 'user', 'assistant', 'system', 'tool')",
-								},
-								content: {
-									type: "string",
-									maxLength: 131072,
-									description: "The content of the message",
-								},
-							},
-							required: ["role", "content"],
-						},
-					},
-					functions: {
-						type: "array",
-						items: {
-							type: "object",
-							properties: {
-								name: {
-									type: "string",
-								},
-								code: {
-									type: "string",
-								},
-							},
-							required: ["name", "code"],
-						},
-					},
-					tools: {
-						type: "array",
-						description: "A list of tools available for the assistant to use",
-						items: {
-							type: "object",
-							oneOf: [
-								{
-									properties: {
-										name: {
-											type: "string",
-											description:
-												"The name of the tool. More descriptive the better",
-										},
-										description: {
-											type: "string",
-											description: "A brief description of what the tool does",
-										},
-										parameters: {
-											type: "object",
-											description:
-												"Schema defining the parameters accepted by the tool",
-											properties: {
-												type: {
-													type: "string",
-													description:
-														"The type of the parameters object (usually 'object')",
-												},
-												required: {
-													type: "array",
-													description: "List of required parameter names",
-													items: {
-														type: "string",
-													},
-												},
-												properties: {
-													type: "object",
-													description: "Definitions of each parameter",
-													additionalProperties: {
-														type: "object",
-														properties: {
-															type: {
-																type: "string",
-																description: "The data type of the parameter",
-															},
-															description: {
-																type: "string",
-																description:
-																	"A description of the expected parameter",
-															},
-														},
-														required: ["type", "description"],
-													},
-												},
-											},
-											required: ["type", "properties"],
-										},
-									},
-									required: ["name", "description", "parameters"],
-								},
-								{
-									properties: {
-										type: {
-											type: "string",
-											description:
-												"Specifies the type of tool (e.g., 'function')",
-										},
-										function: {
-											type: "object",
-											description: "Details of the function tool",
-											properties: {
-												name: {
-													type: "string",
-													description: "The name of the function",
-												},
-												description: {
-													type: "string",
-													description:
-														"A brief description of what the function does",
-												},
-												parameters: {
-													type: "object",
-													description:
-														"Schema defining the parameters accepted by the function.",
-													properties: {
-														type: {
-															type: "string",
-															description:
-																"The type of the parameters object (usually 'object')",
-														},
-														required: {
-															type: "array",
-															description: "List of required parameter names",
-															items: {
-																type: "string",
-															},
-														},
-														properties: {
-															type: "object",
-															description: "Definitions of each parameter",
-															additionalProperties: {
-																type: "object",
-																properties: {
-																	type: {
-																		type: "string",
-																		description:
-																			"The data type of the parameter",
-																	},
-																	description: {
-																		type: "string",
-																		description:
-																			"A description of the expected parameter",
-																	},
-																},
-																required: ["type", "description"],
-															},
-														},
-													},
-													required: ["type", "properties"],
-												},
-											},
-											required: ["name", "description", "parameters"],
-										},
-									},
-									required: ["type", "function"],
-								},
-							],
-						},
-					},
-					stream: {
-						type: "boolean",
-						default: false,
-						description:
-							"If true, the response will be streamed back incrementally",
-					},
-					max_tokens: {
-						type: "integer",
-						default: 256,
-						description:
-							"The maximum number of tokens to generate in the response",
-					},
-					temperature: {
-						type: "number",
-						default: 0.6,
-						minimum: 0,
-						maximum: 5,
-						description:
-							"Controls the randomness of the output; higher values produce more random results",
-					},
-					top_p: {
-						type: "number",
-						minimum: 0,
-						maximum: 2,
-						description:
-							"Controls the creativity of the AI's responses by adjusting how many possible words it considers. Lower values make outputs more predictable; higher values allow for more varied and creative responses",
-					},
-					top_k: {
-						type: "integer",
-						minimum: 1,
-						maximum: 50,
-						description:
-							"Limits the AI to choose from the top 'k' most probable words. Lower values make responses more focused; higher values introduce more variety and potential surprises",
-					},
-					seed: {
-						type: "integer",
-						minimum: 1,
-						maximum: 9999999999,
-						description: "Random seed for reproducibility of the generation",
-					},
-					repetition_penalty: {
-						type: "number",
-						minimum: 0,
-						maximum: 2,
-						description:
-							"Penalty for repeated tokens; higher values discourage repetition",
-					},
-					frequency_penalty: {
-						type: "number",
-						minimum: 0,
-						maximum: 2,
-						description:
-							"Decreases the likelihood of the model repeating the same lines verbatim",
-					},
-					presence_penalty: {
-						type: "number",
-						minimum: 0,
-						maximum: 2,
-						description:
-							"Increases the likelihood of the model introducing new topics",
-					},
-				},
-				required: ["messages"],
-			},
-		],
-	},
-	output: {
-		oneOf: [
-			{
-				type: "object",
-				contentType: "application/json",
-				properties: {
-					response: {
-						type: "string",
-						description: "The generated text response from the model",
-					},
-					tool_calls: {
-						type: "array",
-						description:
-							"An array of tool calls requests made during the response generation",
-						items: {
-							type: "object",
-							properties: {
-								arguments: {
-									type: "object",
-									description:
-										"The arguments passed to be passed to the tool call request",
-								},
-								name: {
-									type: "string",
-									description: "The name of the tool to be called",
-								},
-							},
-						},
-					},
-				},
-			},
-			{
-				type: "string",
-				contentType: "text/event-stream",
-				format: "binary",
-			},
-		],
-	},
-};
-const inputSchema = {};
-if (schema.input.oneOf) {
-	schema.input.oneOf.forEach((schema) => {
-		Object.entries(schema.properties).forEach(([name, params]) => {
-			inputSchema[name] = {
-				name,
-				...params,
-			};
-		});
-	});
-} else {
-	Object.entries(schema.input.properties).forEach(([name, params]) => {
-		inputSchema[name] = {
-			name,
-			...params,
-		};
-	});
-}
+const author = authorData[model.name.split("/")[1]];
 ---
 
 <StarlightPage
@@ -530,14 +76,22 @@ if (schema.input.oneOf) {
 	}}
 	headings={[
 		hasPlayground && { depth: 2, slug: "Playground", text: "Playground" },
-		{ depth: 2, slug: "Parameters", text: "Parameters" },
 		{ depth: 2, slug: "Usage", text: "Usage" },
+		{ depth: 2, slug: "Parameters", text: "Parameters" },
 		{ depth: 2, slug: "API Schemas", text: "API Schemas" },
 	].filter((v) => Boolean(v))}
 	hideTitle
 >
 	<div class="flex align-center">
-		{author && <img class="mr-4 w-12 h-12 block" src={author.logo} />}
+		{
+			author ? (
+				<img class="mr-4 w-12 h-12 block" src={author.logo} />
+			) : (
+				<div class="w-12 h-12 mr-4 rounded-md bg-gray-100 text-gray-400 uppercase text-2xl font-black flex justify-center items-center">
+					{model.name.split("/")[1].substr(0, 1)}
+				</div>
+			)
+		}
 		<div>
 			<h1
 				id="_top"
@@ -552,29 +106,33 @@ if (schema.input.oneOf) {
 					)
 				}
 			</h1>
-			<span class="block -mt-1"><ModelInfo model={data.model} /></span>
+			<span class="block -mt-1"><ModelInfo model={model} /></span>
 		</div>
 	</div>
 
-	<span class="font-mono text-gray-400 text-sm mt-4 block"
-		>{data.model.name}</span
-	>
+	<span class="font-mono text-gray-400 text-sm mt-4 block">{model.name}</span>
 
 	<p class="mt-3 !mb-2">{description}</p>
 	{terms && <a href={terms.value}>Terms and License</a>}
-	<ModelBadges model={data.model} />
+	<ModelBadges model={model} />
 
 	{
 		hasPlayground && (
-			<div class="!my-6" id="Playground">
-				<ModelPlayground client:load model={data.model} />
-			</div>
+			<>
+				<h2 id="Playground">Playground</h2>
+				<p>
+					Try out this model with Workers AI LLM Playground. It does not require
+					any setup or authentication and an instant way to preview and test a
+					model directly in the browser.
+				</p>
+				<LinkButton
+					href={`https://playground.ai.cloudflare.com/?model=${model.name}`}
+				>
+					Launch the LLM Playground
+				</LinkButton>
+			</>
 		)
 	}
-
-	<h2 id="Parameters">Parameters</h2>
-
-	<SchemaViewer schema={schema.input} />
 
 	<h2 id="Usage">Usage</h2>
 	<Tabs>
@@ -583,7 +141,7 @@ if (schema.input.oneOf) {
 				lang="js"
 				code={`export default {
   async fetch(request, env) {
-    const response = await env.AI.run("${data.model.name}", {
+    const response = await env.AI.run("${model.name}", {
       prompt: "tell me a story",
     });
     return Response.json(response);
@@ -594,15 +152,16 @@ if (schema.input.oneOf) {
 		<TabItem label="HTTP">
 			<Code
 				lang="sh"
-				code={`curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/run/${data.model.name}
-  -X POST
-  -H "Authorization: Bearer $CLOUDFLARE_AUTH_TOKEN"
-  -d '{
-    "prompt": "tell me a story"
-  }'`}
+				code={`curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/run/${model.name}
+-X POST
+-H "Authorization: Bearer $CLOUDFLARE_AUTH_TOKEN"
+-d '{ "prompt": "tell me a story" }'`}
 			/>
 		</TabItem>
 	</Tabs>
+
+	<h2 id="Parameters">Parameters</h2>
+	<SchemaViewer schema={model.schema.input} />
 
 	<h2 id="API Schemas">API Schemas</h2>
 	<p>The following schemas are based on JSON Schema</p>
@@ -617,7 +176,7 @@ if (schema.input.oneOf) {
 				>
 			</div>
 			<pre
-				class="!p-0 !border-0">{JSON.stringify(JSON.parse(data.json_schema.input), null, 4)}</pre>
+				class="!p-0 !border-0">{JSON.stringify(model.schema.input, null, 4)}</pre>
 		</div>
 		<div
 			class="w-1/2 overflow-auto !bg-gray-100 p-2 rounded-sm border !border-gray-200 !mt-0"
@@ -629,7 +188,7 @@ if (schema.input.oneOf) {
 				>
 			</div>
 			<pre
-				class="!p-0 !border-0">{JSON.stringify(JSON.parse(data.json_schema.output), null, 4)}</pre>
+				class="!p-0 !border-0">{JSON.stringify(model.schema.output, null, 4)}</pre>
 		</div>
 	</div>
 </StarlightPage>
