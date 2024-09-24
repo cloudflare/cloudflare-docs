@@ -1,6 +1,6 @@
 .starlight-aside {
 	border: unset;
-	border-radius: 4px;
+	border-radius: 0.25rem;
 
 	&.starlight-aside--note {
 		background-color: rgb(236, 244, 255);
@@ -8,20 +8,23 @@
 
 	&.starlight-aside--caution {
 		background-color: rgb(255, 248, 228);
-
 	}
 
 	.starlight-aside__title {
-		margin-left: 30px;
+		margin-left: 2rem;
+		margin-bottom: 0.25rem;
+		gap: 0.75rem;
+		font-size: 0.875rem;
 
 		svg {
-			margin-left: -30px;
+			margin-left: -2rem;
 		}
 	}
 
 	.starlight-aside__content {
 		margin-top: unset;
-		margin-left: 30px;
+		margin-left: 2rem;
+		font-size: 0.875rem;
 	}
 }
 
