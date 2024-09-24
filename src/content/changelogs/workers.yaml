@@ -7,7 +7,7 @@ productAreaLink: /workers/platform/changelog/platform/
 entries:
   - publish_date: "2024-09-26"
     description: |-
-      -  You can now connect your GitHub or GitLab respository to an existing Worker to automatically build and deploy your changes when you make a git push with [Workers Builds](/workers/ci-cd/builds/).
+      -  You can now connect your GitHub or GitLab repository to an existing Worker to automatically build and deploy your changes when you make a git push with [Workers Builds](/workers/ci-cd/builds/).
   - publish_date: "2024-09-19"
     description: |-
       -  Revamped Workers and Pages UI settings to simplify the creation and management of project configurations. For bugs and general feedback, please submit this [form](https://forms.gle/XXqhRGbZmuzninuN9).
