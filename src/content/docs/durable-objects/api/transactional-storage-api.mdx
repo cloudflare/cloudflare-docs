@@ -258,25 +258,6 @@ A cursor (`SqlStorageCursor`) to iterate over query row results as objects with 
 
 <Render file="durable-objects-sql" />
 
-### sql.prepare
-
-<code>ctx.storage.sql.prepare(query: string)</code> : SqlStorageStatement
-
-#### Parameters
-* `query`: string 
-  * The prepared SQL query string to be executed. `query` can contain `?` placeholders for parameter bindings.
-
-#### Returns 
-A cursor to iterate over query row results as objects with the [same supported methods as `sql.exec`](/durable-objects/api/transactional-storage-api/#returns)
-
-#### Examples
-
-```ts
-  let stmt = this.sql.prepare("SELECT * FROM artist WHERE artistid = ?;");
-  let result = stmt(123);
-  console.log([...result.raw()]); // prints [[123, 'Alice' ]]
-```
-
 ### sql.databaseSize
 
 <code>ctx.storage.sql.databaseSize()</code> : number
