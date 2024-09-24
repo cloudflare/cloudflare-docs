@@ -13,7 +13,7 @@ const frontmatter = {
 	description:
 		"API reference, how-to guides, tutorials, example code, and more.",
 	template: "splash",
-};
+} as const;
 
 function productGroups(products: Array<CollectionEntry<"products">>) {
 	const groups = products.flatMap((p) => p.data.product.group ?? []);

@@ -1,7 +1,6 @@
 ---
 pcx_content_type: concept
 title: Changelog
-
 ---
 
 ## Purpose
@@ -12,7 +11,7 @@ The purpose of a changelog is to log or record notable changes.
 
 instructional, straightforward
 
-## content\_type
+## content_type
 
 `changelog`
 
@@ -26,80 +25,77 @@ The structure of the page can differ depending on the frequency or type of page.
 
 Do not use the following terms: change log (two words), release notes, what's new, or README.
 
-"What's New" is a specific [content type](https://www.cloudflare.com/whats-new/) for marketing communication. 
+"What's New" is a specific [content type](https://www.cloudflare.com/whats-new/) for marketing communication.
 :::
 
 ## Structure (single-page)
 
-When creating a changelog, you need a Markdown page file and a corresponding YAML file in the [`/data/changelogs` folder](https://github.com/cloudflare/cloudflare-docs/tree/production/data/changelogs).
+When creating a changelog, you need a Markdown page file and a corresponding YAML file in the [`src/content/changelogs` folder](https://github.com/cloudflare/cloudflare-docs/tree/production/src/content/changelogs).
 
 The combination of these files allows us to:
 
-* Render traditional changelog content on an [HTML page](/stream/platform/changelog/).
-* Programmatically create an [RSS feed](/stream/platform/changelog/index.xml) with the changelog content.
-* Pull all our changelog content into a [Cloudflare-wide changelog](/changelog/).
+- Render traditional changelog content on an [HTML page](/stream/changelog/).
+- Programmatically create an [RSS feed](/stream/changelog/index.xml) with the changelog content.
+- Pull all our changelog content into a [Cloudflare-wide changelog](/changelog/).
 
 ### Markdown file
 
 Your Markdown file needs to have several special values to pull in the changelog information. These values are highlighted in the sample page.
 
-```
+```mdx title="src/content/queues/platform/changelog.mdx"
 ---
 pcx_content_type: changelog
 title: Changelog
-weight: 11
-layout: changelog
-changelog_file_name: [<YAML_FILE_NAME>] (for example, [queues])
-outputs:
-    - html
-    - rss
+changelog_file_name:
+  - queues
+sidebar:
+  order: 4
 ---
 
-# Changelog
+import { ProductChangelog } from "~/components";
 
-{{</*product-changelog*/>}}
+{/* <!-- Actual content lives in /data/changelogs/queues.yaml. Update the file there for new entries to appear here. For more details, refer to https://developers.cloudflare.com/style-guide/documentation-content-strategy/content-types/changelog/#yaml-file --> */}
+
+<ProductChangelog />
 ```
 
 ### YAML file
 
 The `product-changelog` component renders data that lives in a file within the [`/data/changelogs` folder](https://github.com/cloudflare/cloudflare-docs/tree/production/data/changelogs).
 
+- `link` string required
 
+  - Relative path to the changelog page, such as `"/queues/changelog/"`.
 
-* `link` string required
+- `productName` string required
 
-  * Relative path to the changelog page, such as `"/queues/changelog/"`.
+  - Product name to display on the [changelog](/changelog/) product filter list, as well as other areas of the template.
 
-* `productName` string required
+- `productLink` string required
 
-  * Product name to display on the [changelog](/changelog/) product filter list, as well as other areas of the template.
+  - Link to top-level docs for your product (helpful for context if someone is landing on the top-level changelog page)
 
-* `productLink` string required
+- `productArea` string required
 
-  * Link to top-level docs for your product (helpful for context if someone is landing on the top-level changelog page)
+  - Rollup grouping to surface related products together in context.
 
-* `productArea` string required
+- `productAreaLink` string required
 
-  * Rollup grouping to surface related products together in context.
+  - Rollup grouping to surface related products together in context. Helps pull together related RSS feeds.
 
-* `productAreaLink` string required
+- `entries` object required
 
-  * Rollup grouping to surface related products together in context. Helps pull together related RSS feeds.
+  - `publish_date` date required
 
-* `entries` object required
-  * `publish_date` date required
+    - Date of published change, formatted as `YYYY-MM-DD`.
 
-    * Date of published change, formatted as `YYYY-MM-DD`.
+  - `title` string optional
 
-  * `title` string optional
+    - Name of published change. Optional, but highly encouraged.
 
-    * Name of published change. Optional, but highly encouraged.
+  - `description` string required
 
-  * `description` string required
-
-    * Markdown string that also follows YAML conventions. For multi-line strings, start the entry with `|-` and then type on an indented new line.
-
-
+    - Markdown string that also follows YAML conventions. For multi-line strings, start the entry with `|-` and then type on an indented new line.
 
 ```yml title="/data/changelogs/queues.yaml"
 ---
@@ -109,42 +105,46 @@ productLink: "/queues/"
 productArea: Developer platform
 productAreaLink: /workers/platform/changelog/platform/
 entries:
-- publish_date: '2023-03-28'
-  title: Consumer concurrency (enabled)
-  description: Queue consumers will now [automatically scale up](/queues/learning/consumer-concurrency/)
-    based on the number of messages being written to the queue. To control or limit
-    concurrency, you can explicitly define a [`max_concurrency`](/queues/platform/configuration/#consumer)
-    for your consumer.
-- publish_date: '2023-03-15'
-  title: Consumer concurrency (upcoming)
-  description: |-
-    Queue consumers will soon automatically scale up concurrently as a queues' backlog grows in order to keep overall message processing latency down. Concurrency will be enabled on all existing queues by 2023-03-28.
+  - publish_date: "2023-03-28"
+    title: Consumer concurrency (enabled)
+    description:
+      Queue consumers will now [automatically scale up](/queues/learning/consumer-concurrency/)
+      based on the number of messages being written to the queue. To control or limit
+      concurrency, you can explicitly define a [`max_concurrency`](/queues/platform/configuration/#consumer)
+      for your consumer.
+  - publish_date: "2023-03-15"
+    title: Consumer concurrency (upcoming)
+    description: |-
+      Queue consumers will soon automatically scale up concurrently as a queues' backlog grows in order to keep overall message processing latency down. Concurrency will be enabled on all existing queues by 2023-03-28.
 
-    **To opt-out, or to configure a fixed maximum concurrency**, set `max_concurrency = 1` in your `wrangler.toml` file or via [the queues dashboard](https://dash.cloudflare.com/?to=/:account/queues).
+      **To opt-out, or to configure a fixed maximum concurrency**, set `max_concurrency = 1` in your `wrangler.toml` file or via [the queues dashboard](https://dash.cloudflare.com/?to=/:account/queues).
 
-    **To opt-in, you do not need to take any action**: your consumer will begin to scale out as needed to keep up with your message backlog. It will scale back down as the backlog shrinks, and/or if a consumer starts to generate a higher rate of errors. To learn more about how consumers scale, refer to the [consumer concurrency](/queues/learning/consumer-concurrency/) documentation.
-- publish_date: '2023-03-02'
-  title: Explicit acknowledgement (new feature)
-  description: |-
-    You can now [acknowledge individual messages with a batch](/queues/learning/batching-retries/#explicit-acknowledgement) by calling `.ack()` on a message.
+      **To opt-in, you do not need to take any action**: your consumer will begin to scale out as needed to keep up with your message backlog. It will scale back down as the backlog shrinks, and/or if a consumer starts to generate a higher rate of errors. To learn more about how consumers scale, refer to the [consumer concurrency](/queues/learning/consumer-concurrency/) documentation.
+  - publish_date: "2023-03-02"
+    title: Explicit acknowledgement (new feature)
+    description: |-
+      You can now [acknowledge individual messages with a batch](/queues/learning/batching-retries/#explicit-acknowledgement) by calling `.ack()` on a message.
 
-    This allows you to mark a message as delivered as you process it within a batch, and avoids the entire batch from being redelivered if your consumer throws an error during batch processing. This can be particularly useful when you are calling external APIs, writing messages to a database, or otherwise performing non-idempotent actions on individual messages within a batch.
-- publish_date: '2023-03-01'
-  title: Higher per-queue throughput
-  description: The per-queue throughput limit has now been [raised to 400 messages
-    per second](/queues/platform/limits/).
-- publish_date: '2022-12-12'
-  title: Increased per-account limits
-  description: Queues now allows developers to create up to 100 queues per account,
-    up from the initial beta limit of 10 per account. This limit will continue to
-    increase over time.
-- publish_date: '2022-12-13'
-  title: sendBatch support
-  description: The JavaScript API for Queue producers now includes a `sendBatch` method
-    which supports sending up to 100 messages at a time.
+      This allows you to mark a message as delivered as you process it within a batch, and avoids the entire batch from being redelivered if your consumer throws an error during batch processing. This can be particularly useful when you are calling external APIs, writing messages to a database, or otherwise performing non-idempotent actions on individual messages within a batch.
+  - publish_date: "2023-03-01"
+    title: Higher per-queue throughput
+    description:
+      The per-queue throughput limit has now been [raised to 400 messages
+      per second](/queues/platform/limits/).
+  - publish_date: "2022-12-12"
+    title: Increased per-account limits
+    description:
+      Queues now allows developers to create up to 100 queues per account,
+      up from the initial beta limit of 10 per account. This limit will continue to
+      increase over time.
+  - publish_date: "2022-12-13"
+    title: sendBatch support
+    description:
+      The JavaScript API for Queue producers now includes a `sendBatch` method
+      which supports sending up to 100 messages at a time.
 ```
 
-***
+---
 
 ## Structure (multi-page)
 
@@ -172,51 +172,44 @@ productLink: "/waf/"
 productArea: Application security
 productAreaLink: /fundamentals/reference/changelog/security/
 entries:
-- publish_date: '2023-09-18'
-  scheduled_date: '2023-09-25'
-  individual_page: true
-  scheduled: true
-  link: '/waf/change-log/scheduled-changes/'
-- publish_date: '2023-09-18'
-  individual_page: true
-  link: '/waf/change-log/2023-09-18/'
-...
+  - publish_date: "2023-09-18"
+    scheduled_date: "2023-09-25"
+    individual_page: true
+    scheduled: true
+    link: "/waf/change-log/scheduled-changes/"
+  - publish_date: "2023-09-18"
+    individual_page: true
+    link: "/waf/change-log/2023-09-18/"
 ```
 
+- `publish_date` date required
 
+  - Date when the page was published, formatted as `YYYY-MM-DD`. For pages with scheduled changes, you should update this field when adding/updating entries, so that the changelog item gets placed at the top of the changelog list (and feed). You should _not_ update this date when clearing all scheduled changes due to a release, since this change is not as relevant.
 
-* `publish_date` date required
+- `individual_page` boolean required
 
-  * Date when the page was published, formatted as `YYYY-MM-DD`. For pages with scheduled changes, you should update this field when adding/updating entries, so that the changelog item gets placed at the top of the changelog list (and feed). You should *not* update this date when clearing all scheduled changes due to a release, since this change is not as relevant.
+  - Used to pull in the content from the page itself, as opposed to structured data in YAML.
 
-* `individual_page` boolean required
+- `link` string required
 
-  * Used to pull in the content from the page itself, as opposed to structured data in YAML.
+  - Link to the individual page.
 
-* `link` string required
+- `scheduled` boolean optional
 
-  * Link to the individual page.
+  - Should be included for scheduled pages. Because this component renders content on the underlying page, you should only have a) one scheduled entry per scheduled entry page and b) only a scheduled entry when the scheduled entry page has content.
 
-* `scheduled` boolean optional
+- `scheduled_date` date required
 
-  * Should be included for scheduled pages. Because this component renders content on the underlying page, you should only have a) one scheduled entry per scheduled entry page and b) only a scheduled entry when the scheduled entry page has content.
-
-* `scheduled_date` date required
-
-  * Should be included for pages with scheduled changes. Helps render the date of the upcoming change in the title, which provides more actionable information to folks scanning titles or the associated RSS feeds.
-
-
+  - Should be included for pages with scheduled changes. Helps render the date of the upcoming change in the title, which provides more actionable information to folks scanning titles or the associated RSS feeds.
 
 :::note
 
-
 If the scheduled date gets pushed for a change, update the `publish_date` and `scheduled_date` fields of the changelog entry. This process makes sure customers will receive notifications via their RSS feeds.
-
 
 :::
 
 ## Examples
 
-* [Stream Changelog](/stream/platform/changelog/)
-* [Pages Changelog](/pages/platform/changelog/)
-* [WAF Changelog](/waf/change-log/)
+- [Stream Changelog](/stream/changelog/)
+- [Pages Changelog](/pages/platform/changelog/)
+- [WAF Changelog](/waf/change-log/)

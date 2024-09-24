@@ -13,11 +13,19 @@ IP Access rules are commonly used to block or challenge suspected malicious traf
 
 :::caution
 
+- Allowing an IP, ASN, or country will bypass any configured [custom rules](/waf/custom-rules/), [rate limiting rules](/waf/rate-limiting-rules/), and firewall rules (deprecated).
+- Allowing a country will **not** bypass [WAF Managed Rules](/waf/managed-rules/) or [WAF managed rules (previous version)](/waf/reference/legacy/old-waf-managed-rules/).
+
+:::
+
+## Recommendation: Use WAF custom rules instead
+
 Cloudflare recommends that you create [WAF custom rules](/waf/custom-rules/) instead of IP Access rules to perform IP-based or geography-based blocking (geoblocking):
 
 - For IP-based blocking, use an [IP list](/waf/tools/lists/custom-lists/#lists-with-ip-addresses-ip-lists) in the custom rule expression.
 - For geoblocking, use fields such as _AS Num_, _Country_, and _Continent_ in the custom rule expression.
-  :::
+
+---
 
 ## Availability
 
@@ -27,9 +35,7 @@ Each Cloudflare account can have a maximum of 50,000 rules. If you are an Enterp
 
 Block by country is only available on the Enterprise plan. Other customers may perform country blocking using [WAF custom rules](/waf/custom-rules/).
 
-## Important remarks
-
-- Allowing a country code does not bypass [WAF Managed Rules](/waf/managed-rules/) or [WAF managed rules (previous version)](/waf/reference/legacy/old-waf-managed-rules/).
+## Final remarks
 
 - By design, IP Access rules configured to _Allow_ traffic do not show up in [Security Events](/waf/analytics/security-events/).
 

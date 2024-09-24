@@ -6,13 +6,12 @@ import { marked } from "marked";
 import { Breadcrumbs } from "astro-breadcrumbs";
 import "astro-breadcrumbs/breadcrumbs.css";
 
-import {
-	Badge,
-	Description,
-	SpotlightAuthorDetails,
-	LastReviewed,
-} from "~/components";
-import type { ComponentProps } from "astro/types";
+import { Badge } from "@astrojs/starlight/components";
+
+import Description from "~/components/Description.astro";
+import SpotlightAuthorDetails from "~/components/SpotlightAuthorDetails.astro";
+import LastReviewed from "~/components/LastReviewed.astro";
+
 import { getEntry } from "astro:content";
 
 const spotlightDetails = Astro.props.entry.data.spotlight;
@@ -28,6 +27,7 @@ const breadcrumbProps: Record<string, any> = {
 		},
 	],
 	truncated: true,
+	id: "breadcrumbs",
 };
 
 const slug = Astro.props.entry.slug;
@@ -58,11 +58,12 @@ for (let i = 0; i < segments.length; i++) {
 	let title = segments[i];
 	if (entry) {
 		title = entry.data.title;
+	} else if (i + 1 === segments.length) {
+		title = Astro.props.entry.data.title;
 	}
 
 	breadcrumbProps.crumbs.push({
-		text:
-			title.substring(0, 1).toUpperCase() + title.substring(1).toLowerCase(),
+		text: title,
 		href: `/${path}/`,
 	});
 }

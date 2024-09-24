@@ -1,5 +1,5 @@
 ---
-import { Code } from "~/components";
+import { Code } from "@astrojs/starlight/components";
 
 const json = `{
   "text": "It is a good day",
@@ -36,6 +36,12 @@ const json = `{
 
 <h2>Response</h2>
 
-<p>Automatic speech recognition responses return both a single string <code>text</code> property with the audio transcription and an optional array of <code>words</code> with start and end timestamps if the model supports that.</p>
+<p>
+	Automatic speech recognition responses return both a single string <code
+		>text</code
+	> property with the audio transcription and an optional array of <code
+		>words</code
+	> with start and end timestamps if the model supports that.
+</p>
 
 <Code code={json} lang="json" />

@@ -5,19 +5,26 @@ productLink: "/vectorize/"
 productArea: Developer platform
 productAreaLink: /workers/platform/changelog/platform/
 entries:
+  - publish_date: "2024-09-16"
+    title: Vectorize is available on Workers Free plan
+    description: |-
+      Developers with a Workers Free plan can:
+      * Query up to 30 million queried vector dimensions / month per account.
+      * Store up to 5 million stored vector dimensions per account.
+
   - publish_date: "2024-08-14"
     title: Vectorize v1 is deprecated
     description: |
       With the new Vectorize storage engine, which supports substantially larger indexes (up to 5 million vector dimensions) and reduced query latencies, we are deprecating the original "legacy" (v1) storage subsystem.
-      
+
       To continue interacting with legacy (v1) indexes in [wrangler versions after `3.71.0`](https://github.com/cloudflare/workers-sdk/releases/tag/wrangler%403.71.0), pass the `--deprecated-v1` flag.
-      
+
       For example: 'wrangler vectorize --deprecated-v1' flag to `create`, `get`, `list`, `delete` and `insert` vectors into legacy Vectorize v1 indexes. There is no currently no ability to migrate existing indexes from v1 to v2. Existing Workers querying or clients to use the REST API against legacy Vectorize indexes will continue to function.
   - publish_date: "2024-08-14"
     title: Vectorize v2 in public beta
     description: |-
       Vectorize now has a new underlying storage subsystem (Vectorize v2) that supports significantly larger indexes, improved query latency, and changes to metadata filtering.
-      
+
       Specifically:
       - Indexes can now support up to 5 million vector dimensions each, up from 200,000 per index.
       - Metadata filtering now requires explicitly defining the metadata properties that will be filtered on.

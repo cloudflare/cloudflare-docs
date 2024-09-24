@@ -1,15 +1,19 @@
 ---
-title: Cloudflare SASE with Microsoft
+title: Reference Architecture using Cloudflare SASE with Microsoft
 pcx_content_type: reference-architecture
+products:
+  - Access
+  - Gateway
+  - CASB
+  - Email Security
 sidebar:
   order: 1
-head:
-  - tag: title
-    content: "Reference Architecture: Architecture using Cloudflare SASE with Microsoft"
+  label: Cloudflare SASE with Microsoft
+updated: 2024-13-06
 
 ---
 
-import { Render } from "~/components"
+import { Render } from "~/components";
 
 ## Introduction
 
@@ -28,13 +32,13 @@ To build a stronger baseline understanding of Cloudflare, we recommend the follo
 
 <Render file="what-is-cloudflare-link" />
 
-* Solution Brief: [Cloudflare One](https://cfl.re/SASE-SSE-platform-brief) (3 minute read)
-* Whitepaper: [Reference Architecture for Internet-Native Transformation](https://cfl.re/internet-native-transformation-wp) (10 minute read)
-* Blog: [Zero Trust, SASE, and SSE: foundational concepts for your next-generation network](https://blog.cloudflare.com/zero-trust-sase-and-sse-foundational-concepts-for-your-next-generation-network/) (14 minute read)
+- Solution Brief: [Cloudflare One](https://cfl.re/SASE-SSE-platform-brief) (3 minute read)
+- Whitepaper: [Reference Architecture for Internet-Native Transformation](https://cfl.re/internet-native-transformation-wp) (10 minute read)
+- Blog: [Zero Trust, SASE, and SSE: foundational concepts for your next-generation network](https://blog.cloudflare.com/zero-trust-sase-and-sse-foundational-concepts-for-your-next-generation-network/) (14 minute read)
 
 Those who read this reference architecture will learn:
 
-* How Cloudflare and Microsoft can be integrated together to protect users, devices, applications and networks from a Zero Trust perspective
+- How Cloudflare and Microsoft can be integrated together to protect users, devices, applications and networks from a Zero Trust perspective
 
 This document is also accompanied by a reference architecture with a more indepth look at [Cloudflare and SASE](/reference-architecture/architectures/sase/).
 
@@ -46,19 +50,19 @@ Cloudflare's [Zero Trust Network Access](https://www.cloudflare.com/zero-trust/p
 
 Microsoft and Cloudflare can be integrated in the following ways.
 
-* Using Microsoft [Entra ID](https://learn.microsoft.com/en-us/entra/fundamentals/whatis) for authentication to all Cloudflare protected resources
-* Leveraging Microsoft [InTune](https://learn.microsoft.com/en-us/mem/intune/fundamentals/what-is-intune) device posture in Cloudflare policies to ensure only managed, trusted devices have access to protected resources
-* Using Cloudflare [CASB](/cloudflare-one/applications/scan-apps/) to inspect your [Microsoft 365](https://www.microsoft.com/en-us/microsoft-365/what-is-microsoft-365) tenants and alert on security findings for incorrectly configured accounts and shared files containing sensitive data
-* Using Cloudflare's [Secure Web Gateway](/cloudflare-one/policies/gateway/) to control access to Microsoft SaaS applications such as Outline, OneDrive and Teams
-* Using Cloudflare's [Email Security](/email-security/) service to increase protection of email from phishing attacks and business email compromise.
+- Using Microsoft [Entra ID](https://learn.microsoft.com/en-us/entra/fundamentals/whatis) for authentication to all Cloudflare protected resources
+- Leveraging Microsoft [InTune](https://learn.microsoft.com/en-us/mem/intune/fundamentals/what-is-intune) device posture in Cloudflare policies to ensure only managed, trusted devices have access to protected resources
+- Using Cloudflare [CASB](/cloudflare-one/applications/scan-apps/) to inspect your [Microsoft 365](https://www.microsoft.com/en-us/microsoft-365/what-is-microsoft-365) tenants and alert on security findings for incorrectly configured accounts and shared files containing sensitive data
+- Using Cloudflare's [Secure Web Gateway](/cloudflare-one/policies/gateway/) to control access to Microsoft SaaS applications such as Outlook, OneDrive and Teams
+- Using Cloudflare's [Email Security](/email-security/) service to increase protection of email from phishing attacks and business email compromise.
 
 ### Microsoft Entra ID with Cloudflare
 
 Cloudflare's integration with Entra ID allows you to leverage your identities in Entra for authentication to any Cloudflare protected application. Groups can also be imported via SCIM to be used in access policies, simplifying management and abstracting access control by managing group membership in Entra ID.
 
-* Entra ID enables administrators to create and enforce policies on both applications and users using Conditional Access policies.
-* It offers a wide range of parameters to control user access to applications, such as user risk level, sign-in risk level, device platform, location, client apps, and more.
-* Security teams can define their security controls in Entra ID and enforce them at the network layer, for every request, with Cloudflare's ZTNA service.
+- Entra ID enables administrators to create and enforce policies on both applications and users using Conditional Access policies.
+- It offers a wide range of parameters to control user access to applications, such as user risk level, sign-in risk level, device platform, location, client apps, and more.
+- Security teams can define their security controls in Entra ID and enforce them at the network layer, for every request, with Cloudflare's ZTNA service.
 
 ![Figure 1: Microsoft Entra ID integrates with Cloudflare for ZTNA access to SaaS and self hosted applications.](~/assets/images/reference-architecture/cloudflare-sase-with-microsoft/cloudflare-sase-with-microsoft-fig1.svg "Figure 1: Microsoft Entra ID integrates with Cloudflare for ZTNA access to SaaS and self hosted applications.")
 
@@ -66,9 +70,9 @@ Cloudflare's integration with Entra ID allows you to leverage your identities in
 
 Cloudflare is able to enforce access policies that include information about device posture. InTune can be integrated into Cloudflare so that information about InTune managed and protected devices can be used to enforce access control to Cloudflare protected resources.
 
-* With a device connected using our [agent](/cloudflare-one/connections/connect-devices/warp/), Cloudflare's ZTNA service can leverage the enhanced telemetry and context provided by Intune regarding a user's device posture and compliance state.
-* Intune provides detailed information about the security status and configuration of user devices, enabling more informed access control decisions.
-* This integration allows administrators to ensure that only compliant and secure devices are granted access to critical networks and applications.
+- With a device connected using our [agent](/cloudflare-one/connections/connect-devices/warp/), Cloudflare's ZTNA service can leverage the enhanced telemetry and context provided by Intune regarding a user's device posture and compliance state.
+- Intune provides detailed information about the security status and configuration of user devices, enabling more informed access control decisions.
+- This integration allows administrators to ensure that only compliant and secure devices are granted access to critical networks and applications.
 
 ![Figure 2: Figure 2: Using Intune and Cloudflare device posture data for secure application access.](~/assets/images/reference-architecture/cloudflare-sase-with-microsoft/cloudflare-sase-with-microsoft-fig2.svg "Figure 2: Using Intune and Cloudflare device posture data for secure application access.")
 
@@ -85,7 +89,7 @@ Learn more about how our CASB solution can [protect data at rest here](/referenc
 Cloudflare's Secure Web Gateway (SWG) can help organizations achieve safe and secure access to Microsoft 365 in the following ways:
 
 1. Traffic inspection and filtering: Cloudflare's SWG inspects all user and device traffic destined for the Internet, including traffic to Microsoft 365. This allows organizations to apply security policies, content filtering, and threat prevention measures to ensure that only legitimate and authorized traffic reaches Microsoft 365 services.
-   As seen above, policies can be designed so that only managed, secure devices can access any part of the Microsoft 365 and	Azure platform.
+   As seen above, policies can be designed so that only managed, secure devices can access any part of the Microsoft 365 and Azure platform.
 2. Data protection with DLP profiles: Traffic is not only inspected based on device posture and identity information, but our DLP engine can also examine the content of the request and allow/block downloads/uploads of confidential information to and from Microsoft 365 and Azure.
 3. Enforce Cloudflare gateway: Microsoft 365 can be configured to accept user traffic only from a specific range of IP addresses. Cloudflare makes it possible to define and associate IP addresses attached to all traffic leaving the SWG. This means that organizations can configure Microsoft 365 to only accept traffic coming from the IP address range designated by Cloudflare SWG, ensuring that all traffic has been inspected and approved by Cloudflare's security policies before reaching Microsoft 365.
 
@@ -107,5 +111,5 @@ By leveraging Cloudflare and its integrations with Microsoft, organizations can 
 
 ## Related resources
 
-* [Overview of Microsoft and Cloudflare partnership](https://www.cloudflare.com/partners/technology-partners/microsoft/)
-* [Set up Entra ID (formerly Azure AD) as an identity provider](/cloudflare-one/identity/idp-integration/azuread/#set-up-azure-ad-as-an-identity-provider)
+- [Overview of Microsoft and Cloudflare partnership](https://www.cloudflare.com/partners/technology-partners/microsoft/)
+- [Set up Microsoft Entra ID (formerly Azure Active Directory) as an identity provider](/cloudflare-one/identity/idp-integration/entra-id/#set-up-entra-id-as-an-identity-provider)
