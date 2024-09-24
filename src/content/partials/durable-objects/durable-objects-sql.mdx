@@ -4,7 +4,7 @@
 
 import { Details } from "~/components"
 
-[SQL API](/durable-objects/api/transactional-storage-api/#sqlexec) examples below use the following SQL schema:
+[SQL API](/durable-objects/api/storage-api/#sqlexec) examples below use the following SQL schema:
 
 ```ts
 export class MyDurableObject extends DurableObject{
@@ -14,13 +14,13 @@ export class MyDurableObject extends DurableObject{
 	  this.sql = ctx.storage.sql;
 
     this.sql.exec(`CREATE TABLE IF NOT EXISTS artist( 
-			  artistid    INTEGER PRIMARY KEY, 
-			  artistname  TEXT
-			);INSERT INTO artist (artistid, artistname) VALUES 
-				(123, 'Alice'),
-				(456, 'Bob'),
-				(789, 'Charlie');`);
-	}
+        artistid    INTEGER PRIMARY KEY, 
+        artistname  TEXT
+      );INSERT INTO artist (artistid, artistname) VALUES 
+        (123, 'Alice'),
+        (456, 'Bob'),
+        (789, 'Charlie');`);
+  }
 }
 ```
 
