@@ -72,6 +72,14 @@ switch (model.task.name) {
 		break;
 }
 
+if (model.name === "@cf/runwayml/stable-diffusion-v1-5-img2img") {
+	CodeExamples = StableDiffusionV15Img2ImgCode;
+}
+
+if (model.name === "@cf/runwayml/stable-diffusion-v1-5-inpainting") {
+	CodeExamples = StableDiffusionV15InpaintingCode;
+}
+
 const description = model.description;
 const terms = model.properties.find((x) => x.property_id === "terms");
 
@@ -93,6 +101,8 @@ const author = authorData[model.name.split("/")[1]];
 		hasPlayground && { depth: 2, slug: "Playground", text: "Playground" },
 		CodeExamples && { depth: 2, slug: "Usage", text: "Usage" },
 		{ depth: 2, slug: "Parameters", text: "Parameters" },
+		{ depth: 3, slug: "Input", text: "Input" },
+		{ depth: 3, slug: "Output", text: "Output" },
 		{ depth: 2, slug: "API Schemas", text: "API Schemas" },
 	].filter((v) => Boolean(v))}
 	hideTitle
@@ -159,10 +169,10 @@ const author = authorData[model.name.split("/")[1]];
 	}
 
 	<h2 id="Parameters">Parameters</h2>
-	<h3>Input</h3>
+	<h3 id="Input">Input</h3>
 	<SchemaViewer schema={model.schema.input} />
 
-	<h3>Output</h3>
+	<h3 id="Output">Output</h3>
 	<SchemaViewer schema={model.schema.output} />
 
 	<h2 id="API Schemas">API Schemas</h2>
