@@ -5,9 +5,6 @@ sidebar:
   order: 6
 
 ---
-import {  Plan } from "~/components"
-
-<Plan type="all" />
 
 The Free plan includes access to the transformations feature, which lets you optimize images in remote sources (like R2). 
 
@@ -22,7 +19,7 @@ Pricing is dependent on which features you use. The table below shows which metr
 
 ## Images Free
 
-By default, all users have access to the Images Free plan. You can use Images to request up to 5,000 unique transformations each month.
+On the Free plan, you can request up to 5,000 unique transformations each month for free.
 
 Once you exceed 5,000 unique transformations:
 
@@ -42,7 +39,7 @@ When you purchase an Images Paid plan, you can choose your own storage or add st
 | Images Stored | $5/100,000 images stored/day |
 | Images Delivered | $1/100,000 images delivered/day |
 
-If you optimize an image in a remote source, then you will only be billed for Images Transformed.
+If you optimize an image in a remote source, then you will be billed only  for Images Transformed.
 
 Alternatively, Images Stored and Images Delivered apply only to images that are stored in your Images bucket. When you optimize an image that is stored in Images, then this counts toward Images Delivered — not Images Transformed.
 
@@ -56,13 +53,13 @@ For example, if you transform `thumbnail.jpg` as 100x100, then this counts as 1 
 
 You are billed for the number of unique transformations that are counted during each billing period.
 
-Unique transformations are counted over a 30-day sliding window. For example, if you request `width=100/thumbnail.jpg `on June 30, then this counts once for that billing period. If you request the same transformation on July 1, then this does not count as a billable request, since the same transformation was already requested within the last 30 days.
+Unique transformations are counted over a 30-day sliding window. For example, if you request `width=100/thumbnail.jpg` on June 30, then this counts once for that billing period. If you request the same transformation on July 1, then this will not count as a billable request, since the same transformation was already requested within the last 30 days.
 
 The `format` parameter counts as only 1 billable transformation, even if multiple copies of an image are served. In other words, if `width=100,format=auto/thumbnail.jpg` is served to some users as AVIF and to others as WebP, then this counts as 1 unique transformation instead of 2.
 
 #### Example
 
-A retail website that has 1,000 original product images that get served in 5 different sizes each month. This results in 5,000 unique transformations — or a cost of $2.50 per month.
+A retail website has 1,000 original product images that get served in 5 different sizes each month. This results in 5,000 unique transformations — or a cost of $2.50 per month.
 
 ### Images Stored 
 
@@ -76,8 +73,8 @@ Only uploaded images count toward Images Stored; defining variants will not impa
 
 For images that are stored in Images, you will incur $1 for every 100,000 images delivered per month. This metric does not include transformed images that are stored in remote sources.
 
-Every image requested by the browser counts as one billable request.
+Every image requested by the browser counts as 1 billable request.
 
 #### Example
 
-A retail website has a product page that is visited 10,000 times this month and uses Images to display 10 images. This results in 100,000 images delivered — or $1.00 in billable usage.
+A retail website has a product page that uses Images to serve 10 images. If the page was visited 10,000 times this month, then this results in 100,000 images delivered — or $1.00 in billable usage.
