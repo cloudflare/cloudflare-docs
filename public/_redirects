@@ -313,6 +313,7 @@
 /dns/additional-options/cname-flattening/ /dns/cname-flattening/ 301
 /dns/additional-options/dnssec/ /dns/dnssec/ 301
 /dns/faq/ /dns/troubleshooting/ 301
+/dns/foundation-dns/graphql-analytics/ /dns/additional-options/analytics/ 301
 /dns/manage-dns-records/how-to/dns-load-balancing/ /dns/manage-dns-records/how-to/round-robin-dns/ 301
 /dns/manage-dns-records/how-to/create-root-domain/ /dns/manage-dns-records/how-to/create-zone-apex/ 301
 /dns/reference/troubleshooting/ /dns/reference/recommended-third-party-tools/ 301
