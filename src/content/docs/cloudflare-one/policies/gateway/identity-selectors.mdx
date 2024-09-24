@@ -96,15 +96,15 @@ Cloudflare Gateway can integrate with your organization's identity providers (Id
 
 Because IdPs expose user groups in different formats, reference the list below to choose the appropriate identity-based selector.
 
-### Azure AD
+### Microsoft Entra ID
 
 | Selector       | Value                                 |
 | -------------- | ------------------------------------- |
 | User Group IDs | `61503835-b6fe-4630-af88-de551dd59a2` |
 
-**Value** is the [Object Id](/cloudflare-one/identity/idp-integration/azuread/#azure-groups-in-zero-trust-policies) for an Azure group.
+**Value** is the [Object Id](/cloudflare-one/identity/idp-integration/entra-id/#entra-groups-in-zero-trust-policies) for an Entra group.
 
-If you enabled user and group synchronization with [SCIM](/cloudflare-one/identity/idp-integration/azuread/#synchronize-users-and-groups), the synchronized groups will appear under _User Group Names_:
+If you enabled user and group synchronization with [SCIM](/cloudflare-one/identity/idp-integration/entra-id/#synchronize-users-and-groups), the synchronized groups will appear under _User Group Names_:
 
 | Selector         | Value        |
 | ---------------- | ------------ |

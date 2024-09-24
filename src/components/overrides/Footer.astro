@@ -25,10 +25,6 @@ if (currentSection) {
 }
 
 const homepageLinks = Object.entries({
-	"Stay in touch": [
-		{ text: "GitHub", href: "https://github.com/cloudflare" },
-		{ text: "Discord", href: "https://discord.cloudflare.com/" },
-	],
 	Resources: [
 		{ text: "API", href: "/api/" },
 		{
@@ -51,8 +47,9 @@ const homepageLinks = Object.entries({
 		},
 		{ text: "GDPR", href: "https://www.cloudflare.com/trust-hub/gdpr/" },
 	],
-	"What we do": [
-		{ text: "Our Team", href: "https://www.cloudflare.com/people/" },
+	Company: [
+		{ text: "cloudflare.com", href: "https://www.cloudflare.com/" },
+		{ text: "Our team", href: "https://www.cloudflare.com/people/" },
 		{ text: "Careers", href: "https://www.cloudflare.com/careers/" },
 	],
 	Tools: [
@@ -87,36 +84,42 @@ if (
 {
 	isHomepage ? (
 		<>
-			<div class="flex flex-wrap justify-between">
-				{homepageLinks.map(([header, links]) => (
-					<div>
-						<strong>{header}</strong>
-						<ul class="list-none pl-0">
-							{links.map((link) => (
-								<li>
-									<a
-										href={link.href}
-										class="no-underline text-black dark:text-white"
-									>
-										{link.text}
-									</a>
-								</li>
-							))}
-						</ul>
-					</div>
-				))}
+			<div class="bleed !mt-0">
+				<div class="flex flex-wrap justify-between bg-[#001C43] py-6">
+					{homepageLinks.map(([header, links]) => (
+						<div class="basis-1/2 md:basis-auto">
+							<strong class="text-gray-400">{header}</strong>
+							<ul class="list-none pl-0">
+								{links.map((link) => (
+									<li>
+										<a href={link.href} class="no-underline text-white">
+											{link.text}
+										</a>
+									</li>
+								))}
+							</ul>
+						</div>
+					))}
+				</div>
 			</div>
 			<div>
-				<ul class="list-none pl-0 flex gap-x-2 text-xs">
-					<li>© 2024 Cloudflare, Inc.</li>
+				<ul class="flex gap-x-4 text-xs list-outside pl-0 justify-center text-gray-600 dark:!text-gray-400">
+					<li class="list-none text-gray-600 dark:text-gray-400">
+						2024 Cloudflare, Inc.
+					</li>
 					{homepageLegalLinks.map(([text, href]) => (
 						<li>
-							<a href={href} class="no-underline text-black dark:text-white">
+							<a
+								href={href}
+								class="no-underline text-gray-600 dark:!text-gray-400"
+							>
 								{text}
 							</a>
 						</li>
 					))}
-					{isProduction && <OneTrust />}
+					<li class="text-gray-600 dark:!text-gray-400">
+						{isProduction && <OneTrust />}
+					</li>
 				</ul>
 			</div>
 		</>
@@ -141,3 +144,10 @@ if (
 		</>
 	)
 }
+
+<style>
+	.bleed {
+		box-shadow: 0 0 0 100vmax #001c43 !important;
+		clip-path: inset(0 -100vmax);
+	}
+</style>
