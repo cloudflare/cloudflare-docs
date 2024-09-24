@@ -293,7 +293,7 @@ The current SQLite database size in bytes.
   let size = ctx.storage.sql.databaseSize;
 ```
 
-### Point-in-time-recovery APIs
+### Point in time recovery
 
 For [Durable Objects classes with SQL storage](/durable-objects/reference/durable-objects-migrations/#enable-sql-storage-on-create-durable-object-class-migration), the following point-in-time-recovery (PITR) API methods are available to restore a Durable Object's embedded SQLite database to any point in time in the past 30 days. These methods apply to the entire SQLite database contents, including both the object's stored SQL data and stored key-value data using the key-value `put()` API. PITR API is not supported in local development because a durable log of data changes is not stored locally. 
 
