@@ -6,6 +6,8 @@ description: Customize how your code is compiled, before being processed by Wran
 
 ---
 
+import { Render, Type, MetaInfo } from "~/components"
+
 Custom builds are a way for you to customize how your code is compiled, before being processed by Wrangler.
 
 :::note
@@ -27,7 +29,7 @@ Custom builds are configured by adding a `[build]` section in your `wrangler.tom
 
   * The directory in which the command is executed.
 
-* `watch_dir` string | string\[] optional
+* `watch_dir` <Type text="string | string\[]" /> <MetaInfo text="optional" />
 
   * The directory to watch for changes while using `wrangler dev`. Defaults to the current working directory.
 
