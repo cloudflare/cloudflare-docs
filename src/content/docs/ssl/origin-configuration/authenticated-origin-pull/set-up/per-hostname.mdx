@@ -9,23 +9,83 @@ head:
 
 ---
 
-import { AvailableNotifications, Render } from "~/components"
+import { AvailableNotifications, Render, Details } from "~/components"
 
 When you enable Authenticated Origin Pulls per hostname, all proxied traffic to the specified hostname is authenticated at the origin web server. You can use client certificates from your Private PKI to authenticate connections from Cloudflare.
 
+## Before you begin
 
 :::caution[Warning]
  <Render file="aop-per-hostname-cert-requirement" />
 :::
 
+Refer to the steps below for an example of how to generate a custom certificate using OpenSSL:
+
+<Details header="OpenSSL example">
+
+1. Run the following command to generate a 4096-bit RSA private key, using AES-256 encryption. Enter a passphrase when prompted.
+
+```bash
+openssl genrsa -aes256 -out rootca.key 4096
+```
+
+2. Create the CA root certificate. When prompted, fill in the information to be included in the certificate. For the `Common Name` field, use the domain name as value, not the hostname.
+
+```bash
+openssl req -x509 -new -nodes -key rootca.key -sha256 -days 1826 -out rootca.crt
+```
+
+3. Create a Certificate Signing Request (CSR). When prompted, fill in the information to be included in the request. For the `Common Name` field, use the hostname as value.
+
+```bash
+openssl req -new -nodes -out cert.csr -newkey rsa:4096 -keyout cert.key
+```
+
+4. Sign the certificate using the `rootca.key` and `rootca.crt` created in previous steps.
+
+```bash
+openssl x509 -req -in cert.csr -CA rootca.crt -CAkey rootca.key -CAcreateserial -out cert.crt -days 730 -sha256 -extfile ./cert.v3.ext
+```
+
+5. Make sure the certificate extensions file `cert.v3.ext` specifies the following:
+
+```
+basicConstraints=CA:FALSE
+```
+
+</Details>
+
 ## 1. Upload custom certificate
 
-First, follow the API instructions to [upload a custom certificate to Cloudflare](/ssl/edge-certificates/custom-certificates/uploading/#upload-a-custom-certificate), but use the [`/origin_tls_client_auth/hostnames/certificates` endpoint](/api/operations/per-hostname-authenticated-origin-pull-upload-a-hostname-client-certificate).
+Use the [`/origin_tls_client_auth/hostnames/certificates`](/api/operations/per-hostname-authenticated-origin-pull-upload-a-hostname-client-certificate) endpoint to upload your custom certificate.
 
 :::note
 
 You must upload a [leaf certificate](/ssl/concepts/#chain-of-trust). If you upload a root CA instead, the API will return a `missing leaf certificate` error.
 :::
+
+```bash
+MYCERT="$(cat cert.crt|perl -pe 's/\r?\n/\\n/'|sed -e 's/..$//')"
+MYKEY="$(cat cert.key|perl -pe 's/\r?\n/\\n/'|sed -e's/..$//')"
+
+request_body=$(< <(cat <<EOF
+{
+"certificate": "$MYCERT",
+"private_key": "$MYKEY",
+"bundle_method":"ubiquitous"
+}
+EOF
+))
+
+# Push the certificate
+
+curl --silent \
+"https://api.cloudflare.com/client/v4/zones/$ZONEID/origin_tls_client_auth/hostnames/certificates" \
+--header "Content-Type: application/json" \
+--header "X-Auth-Email: $MYAUTHEMAIL" \
+--header "X-Auth-Key: $MYAUTHKEY" \
+--data "$request_body"
+```
 
 In the API response, save the certificate `id` since it will be required in step 4.
 
