@@ -3,10 +3,9 @@ pcx_content_type: concept
 title: Errors and exceptions
 head: []
 description: Review Workers errors and exceptions.
-
 ---
 
-import { TabItem, Tabs } from "~/components"
+import { TabItem, Tabs } from "~/components";
 
 Review Workers errors and exceptions.
 
@@ -31,7 +30,7 @@ Other `11xx` errors generally indicate a problem with the Workers runtime itself
 
 ### Loop limit
 
-A Worker cannot call itself or another Worker more than 16 times. In  order to prevent infinite loops between Workers, the [`CF-EW-Via`](/fundamentals/reference/http-request-headers/#cf-ew-via) header's value is an integer that indicates how many invocations are left. Every time a Worker is invoked, the integer will decrement by 1. If the count reaches zero, a [`1019`](#error-pages-generated-by-workers) error is returned.
+A Worker cannot call itself or another Worker more than 16 times. In order to prevent infinite loops between Workers, the [`CF-EW-Via`](/fundamentals/reference/http-request-headers/#cf-ew-via) header's value is an integer that indicates how many invocations are left. Every time a Worker is invoked, the integer will decrement by 1. If the count reaches zero, a [`1019`](#error-pages-generated-by-workers) error is returned.
 
 ### "The script will never generate a response" errors
 
@@ -47,17 +46,17 @@ In the example below, the Response relies on a Promise resolution that never hap
 
 ```js null {9}
 export default {
-  fetch(req) {
-    let response = new Response("Example response");
-    let { promise, resolve } = Promise.withResolvers();
+	fetch(req) {
+		let response = new Response("Example response");
+		let { promise, resolve } = Promise.withResolvers();
 
-    // If the promise is not resolved, the Workers runtime will
-    // recognize this and throw an error.
+		// If the promise is not resolved, the Workers runtime will
+		// recognize this and throw an error.
 
-    // setTimeout(resolve, 0)
+		// setTimeout(resolve, 0)
 
-    return promise.then(() => response);
-  },
+		return promise.then(() => response);
+	},
 };
 ```
 
@@ -67,21 +66,20 @@ If a WebSocket is missing the proper code to close its server-side connection, t
 
 ```js null {10}
 async function handleRequest(request) {
-  let webSocketPair = new WebSocketPair();
-  let [client, server] = Object.values(webSocketPair);
-  server.accept();
+	let webSocketPair = new WebSocketPair();
+	let [client, server] = Object.values(webSocketPair);
+	server.accept();
 
-  server.addEventListener('close', () => {
-    // This missing line would keep a WebSocket connection open indefinitely
-    // and results in "The script will never generate a response" errors
+	server.addEventListener("close", () => {
+		// This missing line would keep a WebSocket connection open indefinitely
+		// and results in "The script will never generate a response" errors
+		// server.close();
+	});
 
-    // server.close();
-  });
-
-  return new Response(null, {
-    status: 101,
-    webSocket: client,
-  });
+	return new Response(null, {
+		status: 101,
+		webSocket: client,
+	});
 }
 ```
 
@@ -99,15 +97,15 @@ The following code will error:
 
 ```js
 export default {
-  async fetch(request, env, ctx) {
-    // destructuring ctx makes waitUntil lose its 'this' reference
-    const { waitUntil } = ctx;
-    // waitUntil errors, as it has no 'this'
-    waitUntil(somePromise);
+	async fetch(request, env, ctx) {
+		// destructuring ctx makes waitUntil lose its 'this' reference
+		const { waitUntil } = ctx;
+		// waitUntil errors, as it has no 'this'
+		waitUntil(somePromise);
 
-    return fetch(request);
-  }
-}
+		return fetch(request);
+	},
+};
 ```
 
 Avoid destructuring or re-bind the function to the original context to avoid the error.
@@ -116,20 +114,20 @@ The following code will run properly:
 
 ```js
 export default {
-  async fetch(request, env, ctx) {
-    // directly calling the method on ctx avoids the error
-    ctx.waitUntil(somePromise);
+	async fetch(request, env, ctx) {
+		// directly calling the method on ctx avoids the error
+		ctx.waitUntil(somePromise);
 
-    // alternatively re-binding to ctx via apply, call, or bind avoids the error
-    const { waitUntil } = ctx;
-    waitUntil.apply(ctx, [somePromise]);
-    waitUntil.call(ctx, somePromise);
-    const reboundWaitUntil = waitUntil.bind(ctx);
-    reboundWaitUntil(somePromise);
+		// alternatively re-binding to ctx via apply, call, or bind avoids the error
+		const { waitUntil } = ctx;
+		waitUntil.apply(ctx, [somePromise]);
+		waitUntil.call(ctx, somePromise);
+		const reboundWaitUntil = waitUntil.bind(ctx);
+		reboundWaitUntil(somePromise);
 
-    return fetch(request);
-  }
-}
+		return fetch(request);
+	},
+};
 ```
 
 ## Errors on Worker upload
@@ -150,7 +148,7 @@ These errors occur when a Worker is uploaded or modified.
 | `10052`    | A [binding](/workers/runtime-apis/bindings/) is uploaded without a name.                                                    |
 | `10054`    | A environment variable or secret exceeds the [size limit](/workers/platform/limits/#environment-variables).                 |
 | `10055`    | The number of environment variables or secrets exceeds the [limit/Worker](/workers/platform/limits/#environment-variables). |
-| `10056`    | [Binding](/workers/runtime-apis/bindings/)  not found.                                                                      |
+| `10056`    | [Binding](/workers/runtime-apis/bindings/) not found.                                                                       |
 | `10068`    | The uploaded Worker has no registered [event handlers](/workers/runtime-apis/handlers/).                                    |
 | `10069`    | The uploaded Worker contains [event handlers](/workers/runtime-apis/handlers/) unsupported by the Workers runtime.          |
 
@@ -166,7 +164,7 @@ A Worker can be up to 10 MB in size after compression on the Workers Paid plan, 
 
 To reduce the upload size of a Worker, you should consider removing unnecessary dependencies and/or using Workers KV, a D1 database or R2 to store configuration files, static assets and binary data instead of attempting to bundle them within your Worker code.
 
-Another method to reduce a Worker's filzesize is to split its functionality across multiple Workers and connect them using [Service bindings](/workers/runtime-apis/bindings/service-bindings/#service-bindings).
+Another method to reduce a Worker's file size is to split its functionality across multiple Workers and connect them using [Service bindings](/workers/runtime-apis/bindings/service-bindings/).
 
 #### Script startup exceeded CPU time limit
 
@@ -214,41 +212,41 @@ When using an external logging strategy, remember that outstanding asynchronous 
 
 ```js
 export default {
-  async fetch(request, env, ctx) {
-    function postLog(data) {
-      return fetch("https://log-service.example.com/", {
-        method: "POST",
-        body: data,
-      });
-    }
+	async fetch(request, env, ctx) {
+		function postLog(data) {
+			return fetch("https://log-service.example.com/", {
+				method: "POST",
+				body: data,
+			});
+		}
 
-    // Without ctx.waitUntil(), the `postLog` function may or may not complete.
-    ctx.waitUntil(postLog(stack));
-    return fetch(request);
-  }
-}
+		// Without ctx.waitUntil(), the `postLog` function may or may not complete.
+		ctx.waitUntil(postLog(stack));
+		return fetch(request);
+	},
+};
 ```
 
 </TabItem> <TabItem label="Service Worker" icon="seti:javascript">
 
 ```js
 addEventListener("fetch", (event) => {
-  event.respondWith(handleEvent(event));
+	event.respondWith(handleEvent(event));
 });
 
 async function handleEvent(event) {
-  // ...
+	// ...
 
-  // Without event.waitUntil(), the `postLog` function may or may not complete.
-  event.waitUntil(postLog(stack));
-  return fetch(event.request);
+	// Without event.waitUntil(), the `postLog` function may or may not complete.
+	event.waitUntil(postLog(stack));
+	return fetch(event.request);
 }
 
 function postLog(data) {
-  return fetch("https://log-service.example.com/", {
-    method: "POST",
-    body: data,
-  });
+	return fetch("https://log-service.example.com/", {
+		method: "POST",
+		body: data,
+	});
 }
 ```
 
@@ -262,26 +260,26 @@ By using [`event.passThroughOnException`](/workers/runtime-apis/context/#passthr
 
 ```js
 export default {
-  async fetch(request, env, ctx) {
-    ctx.passThroughOnException();
-    // an error here will return the origin response, as if the Worker wasn't present
-    return fetch(request);
-  }
-}
+	async fetch(request, env, ctx) {
+		ctx.passThroughOnException();
+		// an error here will return the origin response, as if the Worker wasn't present
+		return fetch(request);
+	},
+};
 ```
 
 </TabItem> <TabItem label="Service Worker" icon="seti:javascript">
 
 ```js
 addEventListener("fetch", (event) => {
-  event.passThroughOnException();
-  event.respondWith(handleRequest(event.request));
+	event.passThroughOnException();
+	event.respondWith(handleRequest(event.request));
 });
 
 async function handleRequest(request) {
-  // An error here will return the origin response, as if the Worker wasn’t present.
-  // ...
-  return fetch(request);
+	// An error here will return the origin response, as if the Worker wasn’t present.
+	// ...
+	return fetch(request);
 }
 ```
 
@@ -289,6 +287,6 @@ async function handleRequest(request) {
 
 ## Related resources
 
-* [Log from Workers](/workers/observability/logging/) - Learn how to log your Workers.
-* [Logpush](/workers/observability/logging/logpush/) - Learn how to push Workers Trace Event Logs to supported destinations.
-* [RPC error handling](/workers/runtime-apis/rpc/error-handling/) - Learn how to handle errors from remote-procedure calls.
+- [Log from Workers](/workers/observability/logging/) - Learn how to log your Workers.
+- [Logpush](/workers/observability/logging/logpush/) - Learn how to push Workers Trace Event Logs to supported destinations.
+- [RPC error handling](/workers/runtime-apis/rpc/error-handling/) - Learn how to handle errors from remote-procedure calls.
