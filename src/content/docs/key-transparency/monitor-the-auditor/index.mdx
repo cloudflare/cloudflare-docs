@@ -1,0 +1,72 @@
+---
+pcx_content_type: overview
+title: Monitor the Auditor
+sidebar:
+  order: 2
+---
+
+Cloudflare's Key Transparency Auditor validates Log audit proofs and provides a signature for them. The Log can then distribute these signatures to its end-users, and provides users with confidence that keys have not been tampered with.
+
+In order to verify our work, you can use [Plexi](https://github.com/cloudflare/plexi), a CLI tool that allows anyone to perform proof verification locally via a public [API](/key-transparency/api/).
+
+## Features
+
+- Verify authenticity of a signature, to confirm it has been signed by a given public key
+- Verify the validity of [facebook/akd](https://github.com/facebook/akd) proofs
+- List Logs an Auditor monitors
+
+## Installation
+
+| Environment                                                   | CLI Command           |
+| :------------------------------------------------------------ | :-------------------- |
+| [Cargo](https://www.rust-lang.org/tools/install) (Rust 1.76+) | `cargo install plexi` |
+
+## Usage
+
+Use the `--help` option for more details about the commands and their options.
+
+```bash
+plexi [OPTIONS] <COMMAND>
+```
+
+### Configure your auditor remote
+
+`plexi` does not come with a default remote auditor, and you will need to choose your own.
+
+You can do so either by passing `--remote-url=<REMOTE>` or setting the `PLEXI_REMOTE_URL` environment variable.
+
+A common remote is provided below:
+
+| Name       | Remote                                          |
+| :--------- | :---------------------------------------------- |
+| Cloudflare | `https://plexi.key-transparency.cloudflare.com` |
+
+If you have deployed your own auditor, you can add a remote by filing a [GitHub issue](https://github.com/cloudflare/plexi/issues).
+
+### List monitored Logs
+
+An auditor monitors multiple Logs at once. To discover which Logs an auditor is monitoring, run the following:
+
+```shell
+plexi ls --remote-url 'https://plexi.key-transparency.cloudflare.com'
+whatsapp.key-transparency.v1
+```
+
+### Audit a signature
+
+The Key Transparency Auditor vouches for Log validity by ensuring epoch uniqueness and verifying the associated proof.
+
+`plexi audit` provides information about a given epoch and its validity. It can perform a local audit to confirm the auditor behaviour.
+
+For instance, to verify WhatsApp Log auditted by Cloudflare Auditor, run the following:
+
+```shell
+> plexi audit --remote-url 'https://plexi.key-transparency.cloudflare.com' --namespace 'whatsapp.key-transparency.v1' --long
+Namespace: whatsapp.key-transparency.v1
+Ciphersuite: ed25519(protobuf)
+Timestamp: 2024-09-19T09:59:44Z
+Epoch height: 476847
+Epoch digest: 9d217c91dc629d16a3b1379e8fd7c949c27b1b6038259e3918bd0da3cd6c34d1
+Signature: e4c83e3091ba8764752120bd7a726a28759d25a01f39d07131d6ba66a913d58d8f0f48f63bc7e037cc5ddd81dc76acc847dbf8d02b2f55251e6f2b1f00191902
+Verification: success
+```
