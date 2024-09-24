@@ -549,14 +549,6 @@
 					"pro": "No",
 					"biz": "No",
 					"ent": "Included with [Foundation DNS](/dns/foundation-dns/)"
-				},
-				"graphql_analytics": {
-					"title": "GraphQL DNS analytics",
-					"summary": "Advanced nameservers analytics are accessible by GraphQL",
-					"free": "No",
-					"pro": "No",
-					"biz": "No",
-					"ent": "Yes"
 				}
 			}
 		},
@@ -598,7 +590,7 @@
 		},
 		"dns_analytics": {
 			"title": "DNS analytics",
-			"link": "/analytics/account-and-zone-analytics/zone-analytics/",
+			"link": "/dns/additional-options/analytics/",
 			"properties": {
 				"availability": {
 					"title": "Availability",
@@ -608,13 +600,19 @@
 					"biz": "Yes",
 					"ent": "Yes"
 				},
+				"maximum_duration": {
+					"title": "Maximum time interval",
+					"free": "2 days",
+					"pro": "31 days",
+					"biz": "31 days",
+					"ent": "31 days"
+				},
 				"historical_data": {
-					"title": "Historical time",
-					"free": "6 hours",
-					"pro": "24 hours",
-					"pro_plus": "36 hours",
-					"biz": "7 days",
-					"ent": "30 days"
+					"title": "Historical data",
+					"free": "8 days",
+					"pro": "31 days",
+					"biz": "31 days",
+					"ent": "31 days"
 				}
 			}
 		},
@@ -1490,11 +1488,25 @@
 			"properties": {
 				"availability": {
 					"title": "Availability",
-					"summary": "Business and above",
-					"free": "No",
-					"pro": "No",
+					"summary": "Available on all plans",
+					"free": "Yes",
+					"pro": "Yes",
 					"biz": "Yes",
 					"ent": "Yes"
+				},
+				"retention": {
+					"title": "Retention",
+					"free": "7",
+					"pro": "31",
+					"biz": "31",
+					"ent": "90"
+				},
+				"query_window": {
+					"title": "Query window",
+					"free": "1",
+					"pro": "7",
+					"biz": "31",
+					"ent": "31"
 				}
 			}
 		},

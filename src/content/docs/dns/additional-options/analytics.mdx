@@ -6,24 +6,67 @@ sidebar:
 
 ---
 
+import { FeatureTable } from "~/components"
+
 When you use Cloudflare DNS, you can access data about DNS queries through a variety of sources.
+
+---
 
 ## Analytics
 
-DNS analytics allow you to evaluate aggregate data about DNS queries to your zone.
+DNS analytics allow you to evaluate data about DNS queries to your zone.
 
-:::note
+You can [use the dashboard](#view-on-the-dashboard) to get insights quickly based on a [predefined set of dimensions](#available-dimensions), or [use the API](#explore-with-the-api) to have access to all fields available in the GraphQL DNS analytics schemas.
 
-If you have [Foundation DNS](/dns/foundation-dns/) and advanced nameservers are enabled, analytics for your zone are available in **DNS** > **Analytics**. Refer to [GraphQL DNS analytics](/dns/foundation-dns/graphql-analytics/) for details. 
-:::
+### Availability and limits
 
-For a quick summary, view your DNS analytics in the dashboard:
+<FeatureTable id="dns.dns_analytics" />
 
-1. Log into the [Cloudflare dashboard](https://dash.cloudflare.com) and select your account.
-2. Select your zone.
-3. Go to **Analytics** > **DNS**.
+### View on the dashboard
 
-For more detailed metrics, you can use the [DNS analytics operation](/api/operations/dns-analytics-table) along with the available [Analytics API properties](/dns/reference/analytics-api-properties/).
+For a quick summary, view your DNS analytics on the dashboard:
+
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login) and select your account and domain.
+2. Go to **DNS** > **Analytics**.
+
+The DNS analytics dashboard contains [four main panels](#dns-analytics-panels). The filters and time frame that you specify at the top of the page apply to all of them.
+
+#### Available dimensions
+
+- Query name
+- Query type (same as DNS record type)
+- Response code
+- Data center
+- Source IP
+- Destination IP
+- Protocol
+- IP version
+
+#### DNS analytics panels
+
+- **Query overview**: the number of queries per hour and their distribution over time. This information is segmented by each of the [available dimensions](#available-dimensions) and the graph displays the top five values. You can select the dimensions through the different tabs above the graph and quickly filter for or exclude a certain value from the results by hovering over it and selecting **Filter** or **Exclude**.
+
+- **Query statistics**: an overview of query metrics based on your filters and selected time frame. Namely, **Total queries**, **Average queries per second**, and **Average processing time**. The average processing time is displayed in milliseconds and includes upstream queries in the case of [flattened CNAME records](/dns/cname-flattening/).
+
+  :::note
+  Processing time is different from response time. Response time would have to include information that is not available to Cloudflare, such as how long the query takes from the client to the resolver and from the resolver to Cloudflare (as your authoritative DNS provider).
+  :::
+
+- **DNS queries by data center**: a map indicating which Cloudflare data centers have handled DNS queries to your zone in the selected time period. You can also find a list of the ten top results and quickly filter for or exclude a certain data center from the results by hovering over it and selecting **Filter** or **Exclude**.
+
+- **Queries by source**: a breakdown of the top five, ten, or fifteen results - based on your selection - and grouped by the [available dimensions](#available-dimensions).
+
+
+### Explore with the API
+
+For more detailed metrics, use the [GraphQL API](/analytics/graphql-api/). Refer to the GraphQL Analytics API documentation for guidance on how to [get started](/analytics/graphql-api/getting-started/).
+
+The DNS analytics has two [schemas](/analytics/graphql-api/getting-started/querying-basics/):
+
+* `dnsAnalyticsAdaptive`: Retrieve information about individual DNS queries.
+* `dnsAnalyticsAdaptiveGroups`: Get reports on aggregate information only.
+
+---
 
 ## Logs
 

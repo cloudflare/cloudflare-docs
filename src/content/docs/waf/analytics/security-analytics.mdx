@@ -5,23 +5,25 @@ sidebar:
   order: 1
 ---
 
-import { GlossaryTooltip, Badge } from "~/components";
+import { FeatureTable, GlossaryTooltip, Badge } from "~/components";
 
 Security Analytics displays information about all incoming HTTP requests for your domain, including requests not handled by Cloudflare security products.
-
-:::note
-Available to customers on Business and Enterprise plans.
-:::
 
 Use the Security Analytics dashboard to:
 
 - View the traffic distribution for your domain.
 - Understand which traffic is being mitigated by Cloudflare security products, and where non-mitigated traffic is being served from (Cloudflare global network or origin server).
 - Analyze suspicious traffic and create tailored WAF custom rules based on applied filters.
-- Learn more about Cloudflare’s security scores (<GlossaryTooltip term="attack score" link="/waf/detections/attack-score/">attack score</GlossaryTooltip>, [bot score](/bots/concepts/bot-score/), [uploaded content scanning](/waf/detections/malicious-uploads/) results) with real data.
+- Learn more about Cloudflare's security scores (<GlossaryTooltip term="attack score" link="/waf/about/waf-attack-score/">attack score</GlossaryTooltip>, [bot score](/bots/concepts/bot-score/), [malicious uploads](/waf/detections/malicious-uploads/), and [leaked credentials](/waf/detections/leaked-credentials/) results) with real data.
 - [Find an appropriate rate limit](/waf/rate-limiting-rules/find-rate-limit/) for incoming traffic.
 
 If you need to modify existing security-related rules you already configured, consider also using the [Security Events](/waf/analytics/security-events/) dashboard. This dashboard displays information about requests affected by Cloudflare security products.
+
+## Availability
+
+Zone/domain-level analytics are included with all plans, though the retention period, query window, displayed statistics, and filter options vary by plan. Account-level analytics are only available to customers on Business and Enterprise domain plans.
+
+<FeatureTable id="security.security_analytics" />
 
 ## Access
 
@@ -29,9 +31,9 @@ To use Security Analytics:
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/) and select your account.
 
-2. Go to the account or zone dashboard:
+2. Go to the account or zone/domain dashboard:
 
-   - For the zone dashboard, select your domain and go to **Security** > **Analytics**.
+   - For the zone/domain dashboard, select your domain and go to **Security** > **Analytics**.
    - For the account dashboard, go to **Security Center** > **Security Analytics**.
 
 ## Adjusting displayed data
@@ -90,7 +92,7 @@ To apply the filters for an insight to the data displayed in the Security Analyt
 
 ### Score-based analyses
 
-The **Attack likelihood**, **Bot likelihood**, and **Malicious uploads** sections display statistics related to WAF attack scores, bot scores, and WAF content scanning scores of incoming requests for the selected time frame.
+The **Attack likelihood**, **Bot likelihood**, **Malicious uploads**, and **Account abuse likelihood** sections display statistics related to WAF attack scores, bot scores, WAF content scanning scores, and leaked credentials scanning of incoming requests for the selected time frame. All plans include access to the **Leaked Credentials Check** under **Account Abuse Likelihood**. This feature detects login attempts using credentials that have been exposed online. For more information on what to do if you have credentials that have been leaked, refer to the [mitigation examples page](/waf/detections/leaked-credentials/examples/).
 
 You can examine different traffic segments according to the current metric (attack score, bot score, or content scanning). To apply score filters for different segments, select the buttons below the traffic chart. For example, select **Likely attack** under **Attack likelihood** to filter requests that are likely an attack (requests with WAF attack score values between 21 and 50).
 
@@ -159,6 +161,6 @@ You can switch to [Log Explorer](/logs/log-explorer/) to dive deeper on your ana
 Currently, changing the time frame or the applied filters while showing raw logs may cause the Cloudflare dashboard to switch automatically to sampled logs. This happens if the total number of request logs for the selected time frame is high.
 :::
 
-## Final remarks
+## Sampling
 
 The Security Analytics dashboard uses [sampled data](/analytics/graphql-api/sampling/), except when showing raw logs. Most information in the dashboard is obtained from `httpRequestsAdaptiveGroups` and `httpRequestsAdaptive` GraphQL nodes. For more information on working directly with GraphQL datasets, refer to [Datasets (tables)](/analytics/graphql-api/features/data-sets/).
