@@ -713,7 +713,7 @@ As of Wrangler v3.2.0, `wrangler dev` is supported by any Linux distributions pr
   - Perform on a specific environment.
 - `--compatibility-date` <Type text="string" /> <MetaInfo text="optional" />
   - A date in the form yyyy-mm-dd, which will be used to determine which version of the Workers runtime is used.
-- `--compatibility-flags`, `--compatibility-flag` <Type text="string\[]" /> <MetaInfo text="optional" />
+- `--compatibility-flags`, `--compatibility-flag` <Type text="string[]" /> <MetaInfo text="optional" />
   - Flags to use for compatibility checks.
 - `--latest` <Type text="boolean" /> <MetaInfo text="(default: true) optional" />
   - Use the latest version of the Workers runtime.
@@ -723,7 +723,7 @@ As of Wrangler v3.2.0, `wrangler dev` is supported by any Linux distributions pr
   - Port to listen on.
 - `--inspector-port` <Type text="number" /> <MetaInfo text="optional" />
   - Port for devtools to connect to.
-- `--routes`, `--route` <Type text="string\[]" /> <MetaInfo text="optional" />
+- `--routes`, `--route` <Type text="string[]" /> <MetaInfo text="optional" />
   - Routes to upload.
   - For example: `--route example.com/*`.
 - `--host` <Type text="string" /> <MetaInfo text="optional" />
@@ -746,9 +746,9 @@ As of Wrangler v3.2.0, `wrangler dev` is supported by any Linux distributions pr
     :::
 - `--site` <Type text="string" /> <MetaInfo text="optional" />
   - Root folder of static assets for Workers Sites.
-- `--site-include` <Type text="string\[]" /> <MetaInfo text="optional" />
+- `--site-include` <Type text="string[]" /> <MetaInfo text="optional" />
   - Array of `.gitignore`-style patterns that match file or directory names from the sites directory. Only matched items will be uploaded.
-- `--site-exclude` <Type text="string\[]" /> <MetaInfo text="optional" />
+- `--site-exclude` <Type text="string[]" /> <MetaInfo text="optional" />
   - Array of `.gitignore`-style patterns that match file or directory names from the sites directory. Matched items will not be uploaded.
 - `--upstream-protocol` <Type text="'http'|'https'" /> <MetaInfo text="(default: https) optional" />
   - Protocol to forward requests to host on.
@@ -809,7 +809,7 @@ None of the options for this command are required. Also, many can be set in your
   - Path to directory where Wrangler will write the bundled Worker files.
 - `--compatibility-date` <Type text="string" /> <MetaInfo text="optional" />
   - A date in the form yyyy-mm-dd, which will be used to determine which version of the Workers runtime is used.
-- `--compatibility-flags`, `--compatibility-flag` <Type text="string\[]" /> <MetaInfo text="optional" />
+- `--compatibility-flags`, `--compatibility-flag` <Type text="string[]" /> <MetaInfo text="optional" />
   - Flags to use for compatibility checks.
 - `--latest` <Type text="boolean" /> <MetaInfo text="(default: true) optional" />
   - Use the latest version of the Workers runtime.
@@ -823,9 +823,9 @@ None of the options for this command are required. Also, many can be set in your
     :::
 - `--site` <Type text="string" /> <MetaInfo text="optional" />
   - Root folder of static assets for Workers Sites.
-- `--site-include` <Type text="string\[]" /> <MetaInfo text="optional" />
+- `--site-include` <Type text="string[]" /> <MetaInfo text="optional" />
   - Array of `.gitignore`-style patterns that match file or directory names from the sites directory. Only matched items will be uploaded.
-- `--site-exclude` <Type text="string\[]" /> <MetaInfo text="optional" />
+- `--site-exclude` <Type text="string[]" /> <MetaInfo text="optional" />
   - Array of `.gitignore`-style patterns that match file or directory names from the sites directory. Matched items will not be uploaded.
 - `--var` <Type text="key:value\[]" /> <MetaInfo text="optional" />
   - Array of `key:value` pairs to inject as variables into your code. The value will always be passed as a string to your Worker.
@@ -835,7 +835,7 @@ None of the options for this command are required. Also, many can be set in your
   - Array of `key:value` pairs to replace global identifiers in your code.
   - For example, `--define GIT_HASH:$(git rev-parse HEAD)` will replace all uses of `GIT_HASH` with the actual value at build time.
   - This flag is an alternative to defining [`define`](/workers/wrangler/configuration/#non-inheritable-keys) in your `wrangler.toml`. If defined in both places, this flag's values will be used.
-- `--triggers`, `--schedule`, `--schedules` <Type text="string\[]" /> <MetaInfo text="optional" />
+- `--triggers`, `--schedule`, `--schedules` <Type text="string[]" /> <MetaInfo text="optional" />
   - Cron schedules to attach to the deployed Worker. Refer to [Cron Trigger Examples](/workers/configuration/cron-triggers/#examples).
 - `--routes`, `--route` string\[] optional
   - Routes where this Worker will be deployed.
@@ -1323,19 +1323,19 @@ wrangler pages dev [<DIRECTORY>] [OPTIONS]
   - IP address to listen on, defaults to `localhost`.
 - `--port` <Type text="number" /> <MetaInfo text="optional (default: 8788)" /> 
   - The port to listen on (serve from).
-- `--binding` <Type text="string\[]" /> <MetaInfo text="optional" />
+- `--binding` <Type text="string[]" /> <MetaInfo text="optional" />
   - Bind an environment variable or secret (for example, `--binding <VARIABLE_NAME>=<VALUE>`).
-- `--kv` <Type text="string\[]" /> optional
+- `--kv` <Type text="string[]" /> optional
   - Binding name of [KV namespace](/kv/) to bind (for example, `--kv <BINDING_NAME>`).
-- `--r2` <Type text="string\[]" /> <MetaInfo text="optional" />
+- `--r2` <Type text="string[]" /> <MetaInfo text="optional" />
   - Binding name of [R2 bucket](/pages/functions/bindings/#interact-with-your-r2-buckets-locally) to bind (for example, `--r2 <BINDING_NAME>`).
-- `--d1` <Type text="string\[]" /> <MetaInfo text="optional" />
+- `--d1` <Type text="string[]" /> <MetaInfo text="optional" />
   - Binding name of [D1 database](/pages/functions/bindings/#interact-with-your-d1-databases-locally) to bind (for example, `--d1 <BINDING_NAME>`).
-- `--do` <Type text="string\[]" /> <MetaInfo text="optional" />
+- `--do` <Type text="string[]" /> <MetaInfo text="optional" />
   - Binding name of Durable Object to bind (for example, `--do <BINDING_NAME>=<CLASS>`).
 - `--live-reload` <Type text="boolean" /> <MetaInfo text="optional (default: false)" /> 
   - Auto reload HTML pages when change is detected.
-- `--compatibility-flag` <Type text="string\[]" /> <MetaInfo text="optional" />
+- `--compatibility-flag` <Type text="string[]" /> <MetaInfo text="optional" />
   - Runtime compatibility flags to apply.
 - `--compatibility-date` <Type text="string" /> <MetaInfo text="optional" />
   - Runtime compatibility date to apply.
