@@ -3,9 +3,9 @@
 
 ---
 
-The Durable Objects [Transactional Storage API](/durable-objects/api/transactional-storage-api) is only accessible from within Durable Objects.
+The Durable Objects [Storage API](/durable-objects/api/storage-api) is only accessible from within Durable Objects.
 
-Durable Objects do not have to use the Transactional Storage API, but if your code does call methods on `ctx.storage`, it will incur the following additional charges:
+Durable Objects do not have to use the Storage API, but if your code does call methods on `ctx.storage`, it will incur the following additional charges:
 
 |                                  | Workers Paid plan          |
 | -------------------------------- | -------------------------- |
@@ -24,7 +24,7 @@ Durable Objects do not have to use the Transactional Storage API, but if your co
 
 <sup>5</sup>  Durable Objects will be billed for stored data until the data is removed. Once the data is removed, the object will be cleaned up automatically by the system.
 
-Requests that hit the [Durable Objects in-memory cache](/durable-objects/reference/in-memory-state/) or that use the [multi-key versions of `get()`/`put()`/`delete()` methods](/durable-objects/api/transactional-storage-api/) are billed the same as if they were a normal, individual request for each key.
+Requests that hit the [Durable Objects in-memory cache](/durable-objects/reference/in-memory-state/) or that use the [multi-key versions of `get()`/`put()`/`delete()` methods](/durable-objects/api/storage-api/) are billed the same as if they were a normal, individual request for each key.
 
 ### SQL storage billing 
 
@@ -34,7 +34,7 @@ New beta version of Durable Objects is available where each Durable Object has a
 
 During the initial beta, billing is not enabled for SQL queries (rows read and rows written) and SQL storage. SQLite-backed Durable Objects will incur [charges for requests and duration](/durable-objects/platform/pricing/#billing-metrics). We plan to enable SQL billing in the first half of 2025 with advance notice.
 
-You can introspect rows read and rows written using `cursor.rowsRead` and `cursor.rowsWritten` on the [cursor returned](/durable-objects/api/transactional-storage-api/#returns) by a SQL query. [`ctx.storage.sql.databaseSize`](/durable-objects/api/transactional-storage-api/#sqldatabaseSize) returns the current SQL database size for a Durable Object. SQL billing metrics will be added to GraphQL analytics in the future.
+You can introspect rows read and rows written using `cursor.rowsRead` and `cursor.rowsWritten` on the [cursor returned](/durable-objects/api/storage-api/#returns) by a SQL query. [`ctx.storage.sql.databaseSize`](/durable-objects/api/storage-api/#sqldatabaseSize) returns the current SQL database size for a Durable Object. SQL billing metrics will be added to GraphQL analytics in the future.
 
 :::
 
