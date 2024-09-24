@@ -13,7 +13,7 @@ const blocks = [
 			},
 			{
 				text: "Twitter",
-				icon: "twitter",
+				icon: "x.com",
 				href: "https://x.com/CloudflareDev",
 			},
 			{
@@ -69,7 +69,11 @@ const blocks = [
 				<ul class="list-none pl-0">
 					{links.map((link) => (
 						<li class="flex !mt-4">
-							<Icon name={link.icon} size="1.5rem" color="black" />
+							<Icon
+								name={link.icon}
+								size="1.5rem"
+								color="var(--sl-color-white)"
+							/>
 							<a
 								href={link.href}
 								class="pl-2 no-underline !text-black dark:!text-white"
