@@ -10,7 +10,7 @@ import { Render } from "~/components";
 
 Durable Objects are a powerful compute API that provides a compute with storage building block. Each Durable Object has it's own private, transactional and strongly consistent storage. By default, key-value storage is available. SQL storage(/durable-objects/best-practices/access-durable-objects-storage/#sql-storage) is available on a new beta version of Durable Objects.
 
-You should use Durable Objects storage to persist state durably on-disk that needs to survive beyond the lifetime of a Durable Object, that is, eviction of a Durable Object from memory. A Durable Object is alive based on the request traffic incoming to the instance. There are also normal operations like [code deployments](/workers/configuration/versions-and-deployments/) that trigger a Durable Object to reset. For these reasons, Durable Objects storage is recommended for persisting [in-memory state](/durable-objects/reference/in-memory-state/).
+A Durable Object's [in-memory state](/durable-objects/reference/in-memory-state/) is preserved as long as the Durable Object is not evicted from memory. Inactive Durable Objects with no incoming request traffic can be evicted. There are normal operations like [code deployments](/workers/configuration/versions-and-deployments/) that trigger Durable Objects to restart and lose their in-memory state. For these reasons, you should use Durable Objects Storage API to persist state durably on-disk that needs to survive eviction or restart of Durable Objects. 
 
 ## Access storage
 

@@ -51,7 +51,7 @@ Convert query results to an array of row values arrays:
   let resultsArray = cursor.raw().toArray();
 
   // Returns ["artistid","artistname"]
-  let columnNameArray = this.sql.exec("SELECT * FROM artist;").columnNames().toArray();
+  let columnNameArray = this.sql.exec("SELECT * FROM artist;").columnNames.toArray();
 ```
 
 Get first row object of query results:

@@ -256,20 +256,21 @@ A cursor (`SqlStorageCursor`) to iterate over query row results as objects. `Sql
 * `raw()`: Iterator
   * Returns an Iterator over the same query results, with each row as an array of column values (with no column names) rather than an object. 
   * Returned Iterator supports `next()`, `toArray()`, and `one()` methods above.
-  * Returned cursor and `raw()` iterator iterate over the same query results and can be combined.
+  * Returned cursor and `raw()` iterator iterate over the same query results and can be combined. For example:
 
 ```ts
   let cursor = this.sql.exec("SELECT * FROM artist ORDER BY artistname ASC;");
-  let result = cursor.raw().next();
+  let rawResult = cursor.raw().next();
 
-  if (!result.done) {
-    console.log(result.value); // prints [ artistid: 123, artistname: 'Alice' ]
+  if (!rawResult.done) {
+    console.log(rawResult.value); // prints [ 123, 'Alice' ]
   } else {
     // query returned zero results
   }
 
   console.log(cursor.toArray()); // prints [{ artistid: 456, artistname: 'Bob' },{ artistid: 789, artistname: 'Charlie' }]
 ```
+`SqlStorageCursor` had the following properties:
 
 * `columnNames`: string[]
   * The column names of the query in the order they appear in each row array returned by the `raw` iterator.
