@@ -1,36 +1,25 @@
 ---
 import type { GetStaticPaths } from "astro";
-import StarlightPage from "@astrojs/starlight/components/StarlightPage.astro";
 import { getCollection } from "astro:content";
-import ModelInfo from "~/components/models/ModelInfo";
-import ModelBadges from "~/components/models/ModelBadges";
+import StarlightPage from "@astrojs/starlight/components/StarlightPage.astro";
 import { LinkButton, Tabs, TabItem, Code } from "~/components";
+import ModelInfo from "~/components/models/ModelInfo.jsx";
+import ModelBadges from "~/components/models/ModelBadges.jsx";
+import SchemaViewer from "~/components/models/SchemaViewer.astro";
 
-import TextGenerationResponses from "~/components/models/responses/TextGenerationResponses.astro";
 import TextGenerationCode from "~/components/models/code/TextGenerationCode.astro";
-import TextGenerationPrompting from "~/components/models/prompting/TextGenerationPrompting.astro";
-import AutomaticSpeechRecognitionResponses from "~/components/models/responses/AutomaticSpeechRecognitionResponses.astro";
 import AutomaticSpeechRecognitionCode from "~/components/models/code/AutomaticSpeechRecognitionCode.astro";
-import ImageClassificationResponses from "~/components/models/responses/ImageClassificationResponses.astro";
 import ImageClassificationCode from "~/components/models/code/ImageClassificationCode.astro";
-import ImageToTextResponses from "~/components/models/responses/ImageToTextResponses.astro";
 import ImageToTextCode from "~/components/models/code/ImageToTextCode.astro";
-import ObjectDetectionResponses from "~/components/models/responses/ObjectDetectionResponses.astro";
 import ObjectDetectionCode from "~/components/models/code/ObjectDetectionCode.astro";
-import SummarizationResponses from "~/components/models/responses/SummarizationResponses.astro";
 import SummarizationCode from "~/components/models/code/SummarizationCode.astro";
-import TextClassificationResponses from "~/components/models/responses/TextClassificationResponses.astro";
 import TextClassificationCode from "~/components/models/code/TextClassificationCode.astro";
-import TextEmbeddingsResponses from "~/components/models/responses/TextEmbeddingsResponses.astro";
 import TextEmbeddingCode from "~/components/models/code/TextEmbeddingCode.astro";
-import TextToImageResponses from "~/components/models/responses/TextToImageResponses.astro";
 import TextToImageCode from "~/components/models/code/TextToImageCode.astro";
-import TranslationResponses from "~/components/models/responses/TranslationResponses.astro";
 import TranslationCode from "~/components/models/code/TranslationCode.astro";
 import StableDiffusionV15Img2ImgCode from "~/components/models/code/StableDiffusion-v1-5-img2imgCode.astro";
 import StableDiffusionV15InpaintingCode from "~/components/models/code/StableDiffusion-v1-5-inpaintingCode.astro";
 
-import SchemaViewer from "~/components/models/SchemaViewer.astro";
 import { authorData } from "~/components/models/data";
 
 export const getStaticPaths = (async () => {
@@ -48,6 +37,40 @@ export const getStaticPaths = (async () => {
 
 const { name } = Astro.params;
 const { model } = Astro.props;
+
+let CodeExamples = null;
+switch (model.task.name) {
+	case "Text Generation":
+		CodeExamples = TextGenerationCode;
+		break;
+	case "Automatic Speech Recognition":
+		CodeExamples = AutomaticSpeechRecognitionCode;
+		break;
+	case "Image Classification":
+		CodeExamples = ImageClassificationCode;
+		break;
+	case "Object Detection":
+		CodeExamples = ObjectDetectionCode;
+		break;
+	case "Image-to-Text":
+		CodeExamples = ImageToTextCode;
+		break;
+	case "Text-to-Image":
+		CodeExamples = TextToImageCode;
+		break;
+	case "Translation":
+		CodeExamples = TranslationCode;
+		break;
+	case "Summarization":
+		CodeExamples = SummarizationCode;
+		break;
+	case "Text Embedding":
+		CodeExamples = TextEmbeddingCode;
+		break;
+	case "Text Classification":
+		CodeExamples = TextClassificationCode;
+		break;
+}
 
 const description = model.description;
 const terms = model.properties.find((x) => x.property_id === "terms");
@@ -68,7 +91,7 @@ const author = authorData[model.name.split("/")[1]];
 	}}
 	headings={[
 		hasPlayground && { depth: 2, slug: "Playground", text: "Playground" },
-		{ depth: 2, slug: "Usage", text: "Usage" },
+		CodeExamples && { depth: 2, slug: "Usage", text: "Usage" },
 		{ depth: 2, slug: "Parameters", text: "Parameters" },
 		{ depth: 2, slug: "API Schemas", text: "API Schemas" },
 	].filter((v) => Boolean(v))}
@@ -126,34 +149,21 @@ const author = authorData[model.name.split("/")[1]];
 		)
 	}
 
-	<h2 id="Usage">Usage</h2>
-	<Tabs>
-		<TabItem label="Workers">
-			<Code
-				lang="js"
-				code={`export default {
-  async fetch(request, env) {
-    const response = await env.AI.run("${model.name}", {
-      prompt: "tell me a story",
-    });
-    return Response.json(response);
-  }
-}`}
-			/>
-		</TabItem>
-		<TabItem label="HTTP">
-			<Code
-				lang="sh"
-				code={`curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/run/${model.name}
--X POST
--H "Authorization: Bearer $CLOUDFLARE_AUTH_TOKEN"
--d '{ "prompt": "tell me a story" }'`}
-			/>
-		</TabItem>
-	</Tabs>
+	{
+		CodeExamples && (
+			<>
+				<h2 id="Usage">Usage</h2>
+				<CodeExamples name={model.name} lora={false} />
+			</>
+		)
+	}
 
 	<h2 id="Parameters">Parameters</h2>
+	<h3>Input</h3>
 	<SchemaViewer schema={model.schema.input} />
+
+	<h3>Output</h3>
+	<SchemaViewer schema={model.schema.output} />
 
 	<h2 id="API Schemas">API Schemas</h2>
 	<p>The following schemas are based on JSON Schema</p>
