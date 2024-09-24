@@ -29,9 +29,9 @@ entries:
   general_definition: |-
     The JavaScript class that defines the methods (RPC) and handlers (`fetch`, `alarm`) as part of your Durable Object, and/or an optional `constructor`. All Durable Objects within a single Namespace share the same class definition.
 
-- term: "Transactional Storage API"
+- term: "Storage API"
   general_definition: |-
-    The strongly consistent (serializable) [key-value storage API](/durable-objects/api/transactional-storage-api/) for persisting data within each Durable Object instance. State stored within a unique DO instance is "private" to that Durable Object, and not accessible from other Durable Objects.
+    The strongly consistent (serializable) [key-value storage API](/durable-objects/api/storage-api/) for persisting data within each Durable Object instance. State stored within a unique DO instance is "private" to that Durable Object, and not accessible from other Durable Objects.
 
 - term: "SQL Storage API"
   general_definition: |-
