@@ -1,9 +1,22 @@
 ---
 pcx_content_type: overview
-title: Verify epochs
+title: Epochs
 sidebar:
   order: 3
 ---
+
+## Get an epoch
+
+```sh
+curl 'https://plexi.key-transparency.cloudflare.com/namespaces/{namespace}/audits/1'
+{
+  "namespace": "your.new.log.com",
+  "timestamp": 1717084639921,
+  "epoch": 1,
+  "digest": "1111111111111111111111111111111111111111111111111111111111111111",
+  "signature": "f6a51443bb6703813b330959d9d97471bc06464142165e59733fa102a18b052782a5307d59c31b8b13c1af7dfff6f6e7bf44e880d44e26e96c50a72f72a30c07"
+}
+```
 
 ## Publish a new epoch
 
@@ -38,21 +51,4 @@ If a namespace is disabled, you receive the following error:
 ```txt
 HTTP 400 Bad Request
 Namespace is disabled and read-only.
-```
-
-:::note
-Avoid publishing more than 100 epochs as reset might not work beyond this threshold.
-:::
-
-## Get an epoch
-
-```sh
-curl 'https://plexi.key-transparency.cloudflare.com/namespaces/{namespace}/audits/1'
-{
-  "namespace": "your.new.log.com",
-  "timestamp": 1717084639921,
-  "epoch": 1,
-  "digest": "1111111111111111111111111111111111111111111111111111111111111111",
-  "signature": "f6a51443bb6703813b330959d9d97471bc06464142165e59733fa102a18b052782a5307d59c31b8b13c1af7dfff6f6e7bf44e880d44e26e96c50a72f72a30c07"
-}
 ```
