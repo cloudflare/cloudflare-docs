@@ -13,9 +13,9 @@ You can upload changes (versions) to your Worker independent of changing the ver
 
 Using versions and deployments is useful if:
 
-* You are running critical applications on Workers and want to reduce risk when deploying new versions of your Worker using a rolling deployment strategy.
-* You want to monitor for performance differences when deploying new versions of your Worker.
-* You have a CI pipeline configured for Workers but want to cut manual releases.
+- You are running critical applications on Workers and want to reduce risk when deploying new versions of your Worker using a rolling deployment strategy.
+- You want to monitor for performance differences when deploying new versions of your Worker.
+- You have a CI/CD pipeline configured for Workers but want to cut manual releases.
 
 ## Versions
 
@@ -43,7 +43,11 @@ Review the different ways you can create versions of your Worker and deploy them
 
 #### Upload a new version and deploy it immediately
 
-Changes uploaded with [`wrangler deploy`](/workers/wrangler/commands/#deploy), via the Cloudflare dashboard, or the [Workers Script Upload API](/api/operations/worker-script-upload-worker-module) create a new version that is automatically deployed to 100% of traffic.
+A new version that is automatically deployed to 100% of traffic when:
+
+- Changes are uploaded with [`wrangler deploy`](/workers/wrangler/commands/#deploy) via the Cloudflare dashboard
+- Changes are deployed with the command [`npx wrangler deploy`](/workers/wrangler/commands/#deploy) via [Workers Builds](/workers/ci-cd/builds)
+- Changes are uploaded with the [Workers Script Upload API](/api/operations/worker-script-upload-worker-module)
 
 #### Upload a new version to be gradually deployed or deployed at a later time
 
