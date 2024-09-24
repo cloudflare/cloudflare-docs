@@ -6,7 +6,7 @@ sidebar:
   order: 7
 ---
 
-You can set up continuous integration and continuous deployment (CI/CD) for your Workers project by using either the native build system, [Workers Builds](#workers-builds), or using [third-party services](#external-cicd) to optimize your development workflow.
+You can set up continuous integration and continuous deployment (CI/CD) for your Workers by using either the native build system, [Workers Builds](#workers-builds), or using [external providers](#external-cicd) to optimize your development workflow.
 
 ## Why use CI/CD?
 
@@ -15,8 +15,16 @@ It is best practice to deploy your Workers with a CI/CD pipeline to automate the
 - Streamlines the build and deployment process, eliminating the need for manual adhoc `wrangler deploy` commands
 - Ensures your Worker is always built and deployed in a uniform environment, reducing variability and potential errors
 - Simplifies managing access to production credentials
-- Facilitates handling multiple environments (e.g., staging, production) with minimal manual intervention
-- Enables team-based development by automatically deploying code changes, eliminating the need for developers to manually coordinate or deploy updates
+
+## Which CI/CD should I use?
+
+Choose [Workers Builds](/workers/ci-cd/builds) if you want a fully integrated solution within Cloudflare's ecosystem that requires minimal setup and configuration for GitHub or GitLab users.
+
+We recommend using [external CI/CD providers](/workers/ci-cd/external-cicd) if you:
+
+- Already have an existing pipeline
+- Have a self-hosted instance of GitHub or GitLabs, which is currently not supported in Workers Builds
+- Are using a git provider that is not GitHub or GitLab
 
 ## Workers Builds
 
