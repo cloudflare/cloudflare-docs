@@ -89,7 +89,7 @@ Returned cursor and `raw()` iterator iterate over the same query results:
   let result = cursor.raw().next();
 
   if (!result.done) {
-    console.log(result.value); // prints [ artistid: 123, artistname: 'Alice' ]
+    console.log(result.value); // prints [ 123, 'Alice' ]
   } else {
     // query returned zero results
   }

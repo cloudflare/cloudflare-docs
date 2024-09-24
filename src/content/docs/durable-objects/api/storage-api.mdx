@@ -243,16 +243,16 @@ SQL API methods accessed with `ctx.storage.sql` are only allowed on [Durable Obj
   * Optional variable number of arguments that correspond to the `?` placeholders in `query`.
 
 #### Returns 
-A cursor (`SqlStorageCursor`) to iterate over query row results as objects. Cursor is a JavaScript [Iterable](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Iteration_protocols#the_iterable_protocol), which supports iteration using `for (let row of cursor)`. Cursor is also a JavaScript [Iterator](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Iteration_protocols#the_iterator_protocol), which supports iteration using `cursor.next()`.
+A cursor (`SqlStorageCursor`) to iterate over query row results as objects. `SqlStorageCursor` is a JavaScript [Iterable](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Iteration_protocols#the_iterable_protocol), which supports iteration using `for (let row of cursor)`. `SqlStorageCursor` is also a JavaScript [Iterator](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Iteration_protocols#the_iterator_protocol), which supports iteration using `cursor.next()`.
 
-Returned cursor supports the following methods:
+`SqlStorageCursor` supports the following methods:
   
 * `next()`
-  * Returns an object representing the next value of the cursor. Object has `done` and `value` properties. `done` is set to `false` when a next value is present, and `value` is set to the next row object in the query result. `done` is set to `true` when the entire cursor is consumed, and no `value` is set. 
+  * Returns an object representing the next value of the cursor. The returned object has  `done` and `value` properties adhering to the JavaScript [Iterator](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Iteration_protocols#the_iterator_protocol). `done` is set to `false` when a next value is present, and `value` is set to the next row object in the query result. `done` is set to `true` when the entire cursor is consumed, and no `value` is set. 
 * `toArray()`
   * Iterates through remaining cursor value(s) and returns an array of returned row objects. 
 * `one()`
-  * Returns a row object if query result has exactly one row. If query result has zero or more than one row, `one()` returns an error. 
+  * Returns a row object if query result has exactly one row. If query result has zero rows or more than one row, `one()` throws an exception. 
 * `raw()`: Iterator
   * Returns an Iterator over the same query results, with each row as an array of column values (with no column names) rather than an object. 
   * Returned Iterator supports `next()`, `toArray()`, and `one()` methods above.
@@ -271,12 +271,12 @@ Returned cursor supports the following methods:
   console.log(cursor.toArray()); // prints [{ artistid: 456, artistname: 'Bob' },{ artistid: 789, artistname: 'Charlie' }]
 ```
 
-* `columnNames()`: string[]
-  * Consumes the returned cursor and returns an array of column name strings. Often used with `raw()` to find index of specific column(s).
-*  `rowsRead()`: number
-  * Returns the number of rows read so far as part of this SQL `query`. This may increase as you iterate the cursor. The final value is used for [SQL billing](/durable-objects/platform/pricing/#sql-storage-billing).
-*  `rowsWritten()`: number
-  * Returns the number of rows written so far as part of this SQL `query`. This may increase as you iterate the cursor. The final value is used for [SQL billing](/durable-objects/platform/pricing/#sql-storage-billing).
+* `columnNames`: string[]
+  * The column names of the query in the order they appear in each row array returned by the `raw` iterator.
+*  `rowsRead`: number
+  * The number of rows read so far as part of this SQL `query`. This may increase as you iterate the cursor. The final value is used for [SQL billing](/durable-objects/platform/pricing/#sql-storage-billing).
+*  `rowsWritten`: number
+  * The number of rows written so far as part of this SQL `query`. This may increase as you iterate the cursor. The final value is used for [SQL billing](/durable-objects/platform/pricing/#sql-storage-billing).
 
 #### Examples
 
@@ -295,9 +295,9 @@ The current SQLite database size in bytes.
 
 ### Point in time recovery
 
-For [Durable Objects classes with SQL storage](/durable-objects/reference/durable-objects-migrations/#enable-sql-storage-on-new-durable-object-class-migration), the following point-in-time-recovery (PITR) API methods are available to restore a Durable Object's embedded SQLite database to any point in time in the past 30 days. These methods apply to the entire SQLite database contents, including both the object's stored SQL data and stored key-value data using the key-value `put()` API. PITR API is not supported in local development because a durable log of data changes is not stored locally. 
+For [Durable Objects classes with SQL storage](/durable-objects/reference/durable-objects-migrations/#enable-sql-storage-on-new-durable-object-class-migration), the following point-in-time-recovery (PITR) API methods are available to restore a Durable Object's embedded SQLite database to any point in time in the past 30 days. These methods apply to the entire SQLite database contents, including both the object's stored SQL data and stored key-value data using the key-value `put()` API. The PITR API is not supported in local development because a durable log of data changes is not stored locally. 
 
-The point-in-time-recovery (PITR) API represents points in times using "bookmarks". A bookmark is a mostly alphanumeric string like `0000007b-0000b26e-00001538-0c3e87bb37b3db5cc52eedb93cd3b96b`. Bookmarks are designed to be lexically comparable: a bookmark representing an earlier point in time compares less than one representing a later point, using regular string comparison.
+The PITR API represents points in times using "bookmarks". A bookmark is a mostly alphanumeric string like `0000007b-0000b26e-00001538-0c3e87bb37b3db5cc52eedb93cd3b96b`. Bookmarks are designed to be lexically comparable: a bookmark representing an earlier point in time compares less than one representing a later point, using regular string comparison.
 
 <code>ctx.storage.getCurrentBookmark()</code> : Promise\<string>
 
@@ -309,7 +309,7 @@ The point-in-time-recovery (PITR) API represents points in times using "bookmark
 
 <code>ctx.storage.onNextSessionRestoreBookmark(bookmark: string)</code>: Promise\<string>
 
-  * Instructs that the next time the Durable Object restarts, it should restore its storage to exactly match what it contained at the given bookmark. After calling this, the application should typically invoke `ctx.abort()` to restart the Durable Object, thus completing the point-in-time recovery.
+  * Configure the Durable Object so that the next time it restarts, it should restore its storage to exactly match what the storage contained at the given bookmark. After calling this, the application should typically invoke `ctx.abort()` to restart the Durable Object, thus completing the point-in-time recovery.
 
   This method returns a special bookmark representing the point in time immediately before the recovery takes place (even though that point in time is still technically in the future). Thus, after the recovery completes, it can be undone by performing a second recovery to this bookmark.
 
