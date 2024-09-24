@@ -9,10 +9,10 @@ import { Details } from "~/components"
 ```ts
 export class MyDurableObject extends DurableObject{
   sql: SqlStorage
-	constructor(ctx: DurableObjectState, env: Env) {
-	  super(ctx, env);
-	  this.sql = ctx.storage.sql;
-
+  constructor(ctx: DurableObjectState, env: Env) {
+    super(ctx, env);
+    this.sql = ctx.storage.sql;
+    
     this.sql.exec(`CREATE TABLE IF NOT EXISTS artist( 
         artistid    INTEGER PRIMARY KEY, 
         artistname  TEXT
@@ -20,7 +20,7 @@ export class MyDurableObject extends DurableObject{
         (123, 'Alice'),
         (456, 'Bob'),
         (789, 'Charlie');`);
-  }
+    }
 }
 ```
 
