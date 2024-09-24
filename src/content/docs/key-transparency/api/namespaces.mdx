@@ -5,7 +5,7 @@ sidebar:
   order: 2
 ---
 
-The Cloudflare Key Transparency API is organized in namespaces, representing a log Cloudflare Auditor monitors. If you want to register a namespace, contact us.
+The Cloudflare Key Transparency API is organized in namespaces, each one representing a Log Cloudflare Auditor monitors. If you want to register a namespace, contact us.
 
 ## Create a namespace
 
@@ -15,8 +15,8 @@ The following fields are required when making a `POST` request:
 - `public`
 - `root`
 - `signature_version`: 
-  - 0x0001 is for [Protobuf serialisation](https://github.com/cloudflare/plexi/blob/main/plexi_core/src/proto/specs/types.proto) Ed25519 signature from the Auditor 
-  - 0x0002 is for [bincode serialisation](https://github.com/bincode-org/bincode/blob/trunk/docs/spec.md) E25519 serialisation by the Auditor
+  - 0x0001 for [Protobuf serialisation](https://github.com/cloudflare/plexi/blob/main/plexi_core/src/proto/specs/types.proto) Ed25519 signature from the Auditor 
+  - 0x0002 for [bincode serialisation](https://github.com/bincode-org/bincode/blob/trunk/docs/spec.md) E25519 serialisation by the Auditor
 
 The `log_directory` field is optional. If set, Cloudflare will use it to fetch audit proofs and validate them.
 
