@@ -47,16 +47,17 @@ Convert query results to an array of row objects:
 Convert query results to an array of row values arrays:
 ```ts
   // Returns [[123,"Alice"],[456,"Bob"],[789,"Charlie"]]
-  let resultsArray = [...this.sql.exec("SELECT * FROM artist;").raw()];	
+  let cursor = this.sql.exec("SELECT * FROM artist;");
+  let resultsArray = cursor.raw().toArray();
 
   // Returns ["artistid","artistname"]
-  let columnNameArray = this.sql.exec("SELECT * FROM artist;").columnNames;
+  let columnNameArray = this.sql.exec("SELECT * FROM artist;").columnNames().toArray();
 ```
 
 Get first row object of query results:
 ```ts
   // Returns {"artistid":123,"artistname":"Alice"}
-  let firstRow = Array.from(this.sql.exec("SELECT * FROM artist ORDER BY artistname DESC;"))[0];
+  let firstRow = this.sql.exec("SELECT * FROM artist ORDER BY artistname DESC;").toArray()[0];
 ```
 
 Check if query results has exactly one row:

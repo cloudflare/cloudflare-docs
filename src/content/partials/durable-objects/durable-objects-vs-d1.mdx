@@ -4,20 +4,20 @@
 
 ## SQL in Durable Objects vs D1
 
-Cloudflare Workers offers a SQLite-backed database product - [D1](/d1/). How should you compare [SQLite in Durable Objects](/durable-objects/best-practices/access-durable-objects-storage/#sql-storage) and D1?
+Cloudflare Workers offers a SQLite-backed serverless database product - [D1](/d1/). How should you compare [SQLite in Durable Objects](/durable-objects/best-practices/access-durable-objects-storage/#sql-storage) and D1?
 
-D1 should be viewed as a managed database product. 
+**D1 should be viewed as a managed database product.** 
 
 D1 fits into a familiar architecture for developers, where application servers communicate with a database over the network. Application servers are typically Workers; however, D1 also supports external, non-Worker access via [HTTP API](https://developers.cloudflare.com/api/operations/cloudflare-d1-create-database). 
 
-D1 aims for a "batteries included" feature set, including HTTP API, database schema management, [data import/export](/d1/build-with-d1/import-export-data/), database query [insights](/d1/observability/metrics-analytics/#query-insights), and upcoming built-in read replication. 
+D1 aims for a "batteries included" feature set, including HTTP API, [database schema management](/d1/reference/migrations/#_top), [data import/export](/d1/build-with-d1/import-export-data/), database query [insights](/d1/observability/metrics-analytics/#query-insights), and upcoming built-in read replication. 
 
 With D1, your application code and SQL database queries are not colocated which can impact application performance. Workers has [Smart Placement](/workers/configuration/smart-placement/#_top) to dynamically run your Worker in the best location to reduce total Worker request latency, considering everything your Worker talks to, including D1.
 
-SQLite in Durable Objects is a lower-level compute with storage building block for distributed systems. By design, Durable Objects are accessed with Workers-only.
+**SQLite in Durable Objects is a lower-level compute with storage building block for distributed systems.** By design, Durable Objects are accessed with Workers-only.
 
 Durable Objects require a bit more effort, but in return, give you more flexibility and control. With Durable Objects, you have two pieces of code that run in different places: a front-end Worker which routes incoming requests from the Internet to a unique Durable Object, and the Durable Object itself, which runs on the same machine as the SQLite database. 
  
 You may need to carefully consider where to run different application code, and you may need to build some of your own database tooling that exists out-of-the-box with D1. But because you are in full control, you can tailor the solution to your application's needs and potentially achieve more.
 
-SQL query pricing and limitsare intended to be identical between D1 ([pricing](/d1/platform/pricing/), [limits](/d1/platform/limits/)) and SQLite in Durable Objects([pricing](/durable-objects/platform/pricing/#sql-storage-billing), [limits](/durable-objects/platform/limits/)). During SQLite in Durable Objects beta, Storage per Durable Object is 1GB, which will be raised to mirror storage per D1 database (10GB) by general availability.
+SQL query pricing and limits are intended to be identical between D1 ([pricing](/d1/platform/pricing/), [limits](/d1/platform/limits/)) and SQLite in Durable Objects ([pricing](/durable-objects/platform/pricing/#sql-storage-billing), [limits](/durable-objects/platform/limits/)). During SQLite in Durable Objects beta, Storage per Durable Object is 1GB, which will be raised to mirror storage per D1 database (10GB) by general availability.
