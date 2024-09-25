@@ -134,23 +134,23 @@ export default {
 
 These errors occur when a Worker is uploaded or modified.
 
-| Error code | Meaning                                                                                                                     |
-| ---------- | --------------------------------------------------------------------------------------------------------------------------- |
-| `10006`    | Could not parse your Worker's code.                                                                                         |
-| `10007`    | Worker or [workers.dev subdomain](/workers/configuration/routing/workers-dev/) not found.                                   |
-| `10015`    | Account is not entitled to use Workers.                                                                                     |
-| `10016`    | Invalid Worker name.                                                                                                        |
-| `10021`    | Validation Error. Refer to [Validation Errors](/workers/observability/errors/#validation-errors-10021) for details.         |
-| `10026`    | Could not parse request body.                                                                                               |
-| `10027`    | Your Worker exceeded the size limit of XX MB                                                                                |
-| `10035`    | Multiple attempts to modify a resource at the same time                                                                     |
-| `10037`    | An account has exceeded the number of [Workers allowed](/workers/platform/limits/#number-of-workers).                       |
-| `10052`    | A [binding](/workers/runtime-apis/bindings/) is uploaded without a name.                                                    |
-| `10054`    | A environment variable or secret exceeds the [size limit](/workers/platform/limits/#environment-variables).                 |
-| `10055`    | The number of environment variables or secrets exceeds the [limit/Worker](/workers/platform/limits/#environment-variables). |
-| `10056`    | [Binding](/workers/runtime-apis/bindings/) not found.                                                                       |
-| `10068`    | The uploaded Worker has no registered [event handlers](/workers/runtime-apis/handlers/).                                    |
-| `10069`    | The uploaded Worker contains [event handlers](/workers/runtime-apis/handlers/) unsupported by the Workers runtime.          |
+| Error code | Meaning                                                                                                                         |
+| ---------- | ------------------------------------------------------------------------------------------------------------------------------- |
+| `10006`    | Could not parse your Worker's code.                                                                                             |
+| `10007`    | Worker or [workers.dev subdomain](/workers/configuration/routing/workers-dev/) not found.                                       |
+| `10015`    | Account is not entitled to use Workers.                                                                                         |
+| `10016`    | Invalid Worker name.                                                                                                            |
+| `10021`    | Validation Error. Refer to [Validation Errors](/workers/observability/errors/#validation-errors-10021) for details.             |
+| `10026`    | Could not parse request body.                                                                                                   |
+| `10027`    | Your Worker exceeded the size limit of XX MB (for more details see [Worker size limits](/workers/platform/limits/#worker-size)) |
+| `10035`    | Multiple attempts to modify a resource at the same time                                                                         |
+| `10037`    | An account has exceeded the number of [Workers allowed](/workers/platform/limits/#number-of-workers).                           |
+| `10052`    | A [binding](/workers/runtime-apis/bindings/) is uploaded without a name.                                                        |
+| `10054`    | A environment variable or secret exceeds the [size limit](/workers/platform/limits/#environment-variables).                     |
+| `10055`    | The number of environment variables or secrets exceeds the [limit/Worker](/workers/platform/limits/#environment-variables).     |
+| `10056`    | [Binding](/workers/runtime-apis/bindings/) not found.                                                                           |
+| `10068`    | The uploaded Worker has no registered [event handlers](/workers/runtime-apis/handlers/).                                        |
+| `10069`    | The uploaded Worker contains [event handlers](/workers/runtime-apis/handlers/) unsupported by the Workers runtime.              |
 
 ### Validation Errors (10021)
 
