@@ -5,6 +5,15 @@ productLink: "/queues/"
 productArea: Developer platform
 productAreaLink: /workers/platform/changelog/platform/
 entries:
+  - publish_date: "2024-09-26"
+    title: Queues is GA, with higher throughput & consumer concurrency
+    description: |-
+      Queues is now generally available.
+
+      The per-queue message throughput has increased from 400 to 5,000 messages per second. This applies to new and existing queues.
+
+      Maximum concurrent consumers has increased from 20 to 250. This applies to new and existing queues. Queues with no explicit limit will automatically scale to the new maximum. Review the [consumer concurrency documentation](/queues/configuration/consumer-concurrency) to learn more.
+
   - publish_date: "2024-03-26"
     title: Delay messages published to a queue
     description: |-
