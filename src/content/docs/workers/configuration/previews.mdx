@@ -1,0 +1,45 @@
+---
+pcx_content_type: configuration
+title: Preview URLs
+head: []
+sidebar:
+  badge:
+    text: Beta
+description: Preview deployments allow you to preview new versions of your project without deploying it to production.
+---
+
+import { Render } from "~/components";
+
+Preview URLs allow you to preview new versions of your Worker without deploying it to production. A unique preview URL is created for each [version](/workers/configuration/versions-and-deployments/#versions) of your Worker. By default, preview deployments are enabled and available publicly.
+
+Preview URLs can be:
+
+- Integrated into CI/CD pipelines, allowing automatic generation of preview environments for every pull request.
+- Used for collaboration between teams to test code changes in a live environment and verify updates.
+- Used to test new API endpoints, validate data formats, and ensure backward compatibility with existing services.
+
+When testing zone level performance or security featues for a version, it's recommended to use [version overrides](/workers/configuration/versions-and-deployments/gradual-deployments/#version-overrides) so that your zone's performance and security settings apply.
+
+:::note
+Preview URLs are only available for Worker versions uploaded past 09/25/2024.
+:::
+
+## View preview URLs using wrangler
+
+The [`wrangler versions upload`](/workers/wrangler/commands/#upload) command uploads a new [version](/workers/configuration/versions-and-deployments/#versions) of your Worker and returns a preview URL for each version uploaded.
+
+## View preview URLs on the Workers dashboard
+
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/?to=/:account/workers) and select your project.
+2. Head to the "Depoyments" tab find the version you would like to view.
+
+## Disabling Preview URLs
+
+Preview URLs run on your [`workers.dev` subdomain](/workers/configuration/routing/workers-dev/). If your `workers.dev` subdomain is enabled for a Worker, it will automatically generate preview URLs for the Worker.
+
+To disable preview URLs, you must disable your Workers `workers.dev` subdomain. Learn how to [disable your Workers `workers.dev` subdomain](/workers/configuration/routing/workers-dev/#disabling-workersdev).
+
+## Limitations
+
+- Preview URLs are not generated for Workers with a Durable Objects binding.
+- You cannot currently secure `workers.dev` URLs behind [Cloudflare Access](/cloudflare-one/policies/access/). This is a temporary limitation, we are working to remove it.

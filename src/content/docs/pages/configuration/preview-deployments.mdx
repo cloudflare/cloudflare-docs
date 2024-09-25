@@ -1,7 +1,6 @@
 ---
 pcx_content_type: concept
 title: Preview deployments
-
 ---
 
 Preview deployments allow you to preview new versions of your project without deploying it to production. To view preview deployments:
@@ -30,9 +29,9 @@ Any custom domains, as well as your `user-example.pages.dev` site, will not be a
 
 ## Customize preview deployments access
 
-You can use [Cloudflare Access](/cloudflare-one/policies/access/) to manage access to your deployment previews. By default, these deployment URLs are public. Enabling the access policy will restrict viewing project deployments to your Cloudflare account.
+You can use [Cloudflare Access](/cloudflare-one/policies/access/) to manage access to your preview URLs. By default, these URLs are public. Enabling the access policy will restrict viewing project preview URLs to your Cloudflare account.
 
-Once enabled, you can [set up a multi-user account](/fundamentals/setup/manage-members/) to allow other members of your team to view preview deployments.
+Once enabled, you can [set up a multi-user account](/fundamentals/setup/manage-members/) to allow other members of your team to view preview URLs.
 
 By default, preview deployments are enabled and available publicly. In your project's settings, you can require visitors to authenticate to view preview deployment. This allows you to lock down access to these preview deployments to your teammates, organization, or anyone else you specify via [Access policies](/cloudflare-one/policies/).
 
@@ -47,9 +46,7 @@ Note that this will only protect your preview deployments (for example, `373f31e
 
 :::note
 
-
 If you want to enable Access for your `*.pages.dev` domain and your custom domain along with your preview deployments, review [Known issues](/pages/platform/known-issues/#enable-access-on-your-pagesdev-domain) for instructions.
-
 
 :::
 
