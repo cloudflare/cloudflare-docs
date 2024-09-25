@@ -15,7 +15,7 @@ entries:
 
 - term: "Stub"
   general_definition: |-
-    An object that refers to a unique Durable Object within a Namespace and allows you to call into that Durable Object via RPC methods or the `fetch` API. - e.g. `let stub = env.MY_DURABLE_OBJECT.get(id)`
+    An object that refers to a unique Durable Object within a Namespace and allows you to call into that Durable Object via RPC methods or the `fetch` API. For example, `let stub = env.MY_DURABLE_OBJECT.get(id)`
 
 - term: "actor"
   general_definition: |-
@@ -39,7 +39,7 @@ entries:
 
 - term: migration
   general_definition: |-
-    a Durable Object migration is a mapping process from a class name to a runtime state.
+    A Durable Object migration is a mapping process from a class name to a runtime state.
     Initiate a Durable Object migration when you need to:
 
     - Create a new Durable Object class.
@@ -49,4 +49,4 @@ entries:
 
 - term: Alarm
   general_definition: |-
-    a Durable Object alarm is a mechanism that allows you to schedule the Durable Object to be woken up at a time in the future.
+    A Durable Object alarm is a mechanism that allows you to schedule the Durable Object to be woken up at a time in the future.

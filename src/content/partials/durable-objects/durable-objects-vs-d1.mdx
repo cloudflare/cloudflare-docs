@@ -14,7 +14,9 @@ D1 aims for a "batteries included" feature set, including the above HTTP API, [d
 
 With D1, your application code and SQL database queries are not colocated which can impact application performance. If performance is a concern with D1, Workers has [Smart Placement](/workers/configuration/smart-placement/#_top) to dynamically run your Worker in the best location to reduce total Worker request latency, considering everything your Worker talks to, including D1.
 
-**SQLite in Durable Objects is a lower-level compute with storage building block for distributed systems.** By design, Durable Objects are accessed with Workers-only.
+**SQLite in Durable Objects is a lower-level compute with storage building block for distributed systems.**
+
+By design, Durable Objects are accessed with Workers-only.
 
 Durable Objects require a bit more effort, but in return, give you more flexibility and control. With Durable Objects, you must implement two pieces of code that run in different places: a front-end Worker which routes incoming requests from the Internet to a unique Durable Object, and the Durable Object itself, which runs on the same machine as the SQLite database. You get to choose what runs where, and it may be that your application benefits from running some application business logic right next to the database.
  

@@ -60,7 +60,7 @@ Get first row object of query results:
   let firstRow = this.sql.exec("SELECT * FROM artist ORDER BY artistname DESC;").toArray()[0];
 ```
 
-Check if query results has exactly one row:
+Check if query results have exactly one row:
 ```ts
   // returns error
   this.sql.exec("SELECT * FROM artist ORDER BY artistname ASC;").one();
