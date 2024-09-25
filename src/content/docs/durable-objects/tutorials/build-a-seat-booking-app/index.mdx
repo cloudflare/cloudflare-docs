@@ -15,7 +15,7 @@ import { Render, PackageManagers, Details } from "~/components";
 
 In this tutorial, you will learn how to build a seat reservation app using Durable Objects. This app will allow users to book a seat for a flight. The app will be written in TypeScript and will use the new [SQLite storage in Durable Object](/durable-objects/best-practices/access-durable-objects-storage/#sql-storage) to store the data.
 
-Using Durable Objects, you can write reusable code that can handle coordination and state management for multiple clients. Moreover, writing data to SQLite in Durable Objects is synchronous and uses local discs, therefore all queries are executed with great performance. You can learn more about SQLite storage in Durable Objects in the [SQLite in Durable Objects blogpost](https://blog.cloudflare.com/sqlite-in-durable-objects).
+Using Durable Objects, you can write reusable code that can handle coordination and state management for multiple clients. Moreover, writing data to SQLite in Durable Objects is synchronous and uses local disks, therefore all queries are executed with great performance. You can learn more about SQLite storage in Durable Objects in the [SQLite in Durable Objects blog post](https://blog.cloudflare.com/sqlite-in-durable-objects).
 
 :::note[SQLite in Durable Objects]
 
@@ -70,13 +70,13 @@ Create a new Worker project to create and deploy your app.
 
 2.  Change into your new project directory to start developing:
 
-        ```sh frame="none"
-        cd seat-booking
-        ```
+```sh frame="none"
+cd seat-booking
+```
 
 ## 2. Create the frontend
 
-The frontend of the application is a simple HTML page that allows users to select a seat and enter their name. The application uses [Workers Assets](/workers/platform/assets/) to serve the frontend.
+The frontend of the application is a simple HTML page that allows users to select a seat and enter their name. The application uses [Workers Static Assets](/workers/static-assets/binding/) to serve the frontend.
 
 1. Create a new directory named `public` in the project root.
 
@@ -199,7 +199,7 @@ The frontend of the application is a simple HTML page that allows users to selec
     			async function fetchSeats() {
     				const response = await fetch(`/seats?flightId=${flightId}`);
     				const seats = await response.json();
-    				createSeatGrid(JSON.parse(seats));
+    				createSeatGrid(seats);
     			}
 
     			async function bookSeat(seatNumber) {
@@ -243,6 +243,7 @@ The frontend of the application is a simple HTML page that allows users to selec
 ```
 
 </Details>
+
 - The frontend makes an HTTP `GET` request to the `/seats` endpoint to retrieve the available seats for the flight.
 - It also uses a WebSocket connection to receive updates about the available seats.
 - When a user clicks on a seat, the `bookSeat()` function is called that prompts the user to enter their name and then makes a `POST` request to the `/book-seat` endpoint.
@@ -250,7 +251,7 @@ The frontend of the application is a simple HTML page that allows users to selec
 4. Update the bindings in `wrangler.toml` to configure `assets` to serve the `public` directory.
 
 ```toml title="wrangler.toml"
-[experimental_assets]
+[assets]
 directory = "public"
 ```
 
@@ -260,9 +261,9 @@ directory = "public"
 npm run dev
 ```
 
-:::note[Workers Assets]
+:::note[Workers Static Assets]
 
-[Workers Assets](/workers/static-assets/binding/) is currently in beta. You can also use Cloudflare Pages to serve the frontend. However, you will need a separate Worker for the backend.
+[Workers Static Assets](/workers/static-assets/binding/) is currently in beta. You can also use Cloudflare Pages to serve the frontend. However, you will need a separate Worker for the backend.
 
 :::
 
@@ -270,9 +271,9 @@ npm run dev
 
 The application already has the binding for the Durable Objects class configured in `wrangler.toml`. If you update the name of the Durable Objects class in `src/index.ts`, make sure to also update the binding in `wrangler.toml`.
 
-1. Update the binding to use the SQLite storage in Durable Objects. In `wrangler.toml`, update the following configuration.
+1. Update the binding to use the SQLite storage in Durable Objects. In `wrangler.toml`, replace `new_classes=["MyDurableObject"]` with `new_sqlite_classes=["MyDurableObject"]`. Your `wrangler.toml` should look like this:
 
-```toml ins={10} del={9} title="wrangler.toml"
+```toml {9} title="wrangler.toml"
 [[durable_objects.bindings]]
 name = "MY_DURABLE_OBJECT"
 class_name = "MyDurableObject"
@@ -281,7 +282,6 @@ class_name = "MyDurableObject"
 # Docs: https://developers.cloudflare.com/workers/wrangler/configuration/#migrations
 [[migrations]]
 tag = "v1"
-new_classes = ["MyDurableObject"]
 new_sqlite_classes = ["MyDurableObject"]
 ```
 
@@ -291,16 +291,12 @@ Your application can now use the SQLite storage in Durable Objects.
 
 For this tutorial, the function creates an identical seating plan for all the flights. However, in production, you would want to update this function to insert seats based on the flight type.
 
-```ts title="src/index.ts" ins={9,12,15-39} del={2-8, 40-50}
+Replace the `MyDurableObject` class with the following code:
+
+```ts title="src/index.ts"
 export class MyDurableObject extends DurableObject {
-	/**
-	 * The constructor is invoked once upon creation of the Durable Object, i.e. the first call to
-	 * 	`DurableObjectStub::get` for a given identifier (no-op constructors can be omitted)
-	 *
-	 * @param ctx - The interface for interacting with Durable Object state
-	 * @param env - The interface to reference bindings declared in wrangler.toml
-	 */
 	sql = this.ctx.storage.sql;
+
 	constructor(ctx: DurableObjectState, env: Env) {
 		super(ctx, env);
 		this.initializeSeats();
@@ -331,48 +327,25 @@ export class MyDurableObject extends DurableObject {
 			}
 		}
 	}
-
-	/**
-	 * The Durable Object exposes an RPC method sayHello which will be invoked when when a Durable
-	 *  Object instance receives a request from a Worker via the same method invocation on the stub
-	 *
-	 * @param name - The name provided to a Durable Object instance from a Worker
-	 * @returns The greeting to be sent back to the Worker
-	 */
-	async sayHello(name: string): Promise<string> {
-		return `Hello, ${name}!`;
-	}
 }
 ```
 
-3. Next, update the Worker's fetch handler to create a unique Durable Object instance for each flight.
+3. Add a `fetch` handler to the `MyDurableObject` class. This handler will return a text response. In [Step 5](#5-handle-websocket-connections) You will update the `fetch` handler to handle the WebSocket connection.
 
-```ts title="src/index.ts" ins={26-39} del={11-25}
+```ts title="src/index.ts" {3-5}
+export class MyDurableObject extends DurableObject {
+  ...
+  async fetch(request: Request): Promise<Response> {
+    return new Response("Hello from Durable Object!", { status: 200 });
+  }
+}
+```
+
+4. Next, update the Worker's fetch handler to create a unique Durable Object for each flight.
+
+```ts title="src/index.ts"
 export default {
-	/**
-	 * This is the standard fetch handler for a Cloudflare Worker
-	 *
-	 * @param request - The request submitted to the Worker from the client
-	 * @param env - The interface to reference bindings declared in wrangler.toml
-	 * @param ctx - The execution context of the Worker
-	 * @returns The response to be sent back to the client
-	 */
 	async fetch(request, env, ctx): Promise<Response> {
-		// We will create a `DurableObjectId` using the pathname from the Worker request
-		// This id refers to a unique instance of our 'MyDurableObject' class above
-		let id: DurableObjectId = env.MY_DURABLE_OBJECT.idFromName(
-			new URL(request.url).pathname,
-		);
-		// This stub creates a communication channel with the Durable Object instance
-		// The Durable Object constructor will be invoked upon the first call for a given id
-		let stub = env.MY_DURABLE_OBJECT.get(id);
-
-		// We call the `sayHello()` RPC method on the stub to invoke the method on the remote
-		// Durable Object instance
-		let greeting = await stub.sayHello("world");
-
-		return new Response(greeting);
-
 		// Get flight id from the query parameter
 		const url = new URL(request.url);
 		const flightId = url.searchParams.get("flightId");
@@ -391,13 +364,13 @@ export default {
 } satisfies ExportedHandler<Env>;
 ```
 
-Using the flight ID, from the query parameter, a unique Durable Object instance is created. This Durable Object instance is initialized with a table if it does not exist.
+Using the flight ID, from the query parameter, a unique Durable Object is created. This Durable Object is initialized with a table if it does not exist.
 
 ## 4. Add methods to the Durable Object
 
 1. Add the `getSeats()` function to the `MyDurableObject` class. This function returns all the seats in the table.
 
-```ts title="src/index.ts" ins={8-22}
+```ts title="src/index.ts" {8-22}
 export class MyDurableObject extends DurableObject {
     ...
 
@@ -418,14 +391,14 @@ export class MyDurableObject extends DurableObject {
 			results.push({ seatNumber: row.seatId, occupant: row.occupant });
 		}
 
-		return JSON.stringify(results);
+		return results;
 	}
 }
 ```
 
 2. Add the `assignSeat()` function to the `MyDurableObject` class. This function will assign a seat to a passenger. It takes the seat number and the passenger name as parameters.
 
-```ts title="src/index.ts" ins={13-48}
+```ts title="src/index.ts" {13-48}
 export class MyDurableObject extends DurableObject {
 	...
 
@@ -448,10 +421,10 @@ export class MyDurableObject extends DurableObject {
 		let result = [...cursor][0]; // Get the first result from the cursor.
 
 		if (!result) {
-			return new Response("Seat not available", { status: 400 });
+			return {message: 'Seat not available',  status: 400 };
 		}
 		if (result.occupant !== null) {
-			return new Response("Seat not available", { status: 400 });
+			return {message: 'Seat not available',  status: 400 };
 		}
 
 		// If the occupant is already in a different seat, remove them.
@@ -472,7 +445,7 @@ export class MyDurableObject extends DurableObject {
 
 		// Broadcast the updated seats.
 		this.broadcastSeats();
-		return new Response(`Seat ${seatId} booked successfully`);
+		return {message: `Seat ${seatId} booked successfully`, status: 200 };
 	}
 }
 ```
@@ -485,7 +458,7 @@ All the clients will connect to the Durable Object using WebSockets. The Durable
 
 1. Add the `handleWebSocket()` function to the `MyDurableObject` class. This function handles the WebSocket connections.
 
-```ts title="src/index.ts" ins={18-26}
+```ts title="src/index.ts" {18-26}
 export class MyDurableObject extends DurableObject {
 	...
 
@@ -503,7 +476,7 @@ export class MyDurableObject extends DurableObject {
 		...
 	}
 
-    private handleWebSocket(request: Request) {
+  private handleWebSocket(request: Request) {
 		console.log('WebSocket connection requested');
 		const [client, server] = Object.values(new WebSocketPair());
 
@@ -517,7 +490,7 @@ export class MyDurableObject extends DurableObject {
 
 2. Add the `broadcastSeats()` function to the `MyDurableObject` class. This function will broadcast the updated seats to all the connected clients.
 
-```ts title="src/index.ts" ins={22-24}
+```ts title="src/index.ts" {22-24}
 export class MyDurableObject extends DurableObject {
 	...
 
@@ -535,11 +508,11 @@ export class MyDurableObject extends DurableObject {
 		...
 	}
 
-    private handleWebSocket(request: Request) {
+  private handleWebSocket(request: Request) {
 		...
 	}
 
-    private broadcastSeats() {
+  private broadcastSeats() {
 		this.ctx.getWebSockets().forEach((ws) => ws.send(this.getSeats()));
 	}
 }
@@ -547,7 +520,7 @@ export class MyDurableObject extends DurableObject {
 
 3. Next, update the `fetch` handler in the `MyDurableObject` class. This handler will handle all the incoming requests from the Worker and handle the WebSocket connections using the `handleWebSocket()` method.
 
-```ts title="src/index.ts" ins={26-39}
+```ts title="src/index.ts" {26-28}
 export class MyDurableObject extends DurableObject {
 	...
 
@@ -565,15 +538,15 @@ export class MyDurableObject extends DurableObject {
 		...
 	}
 
-    private handleWebSocket(request: Request) {
+  private handleWebSocket(request: Request) {
 		...
 	}
 
-    private broadcastSeats() {
+  private broadcastSeats() {
 		...
 	}
 
-    async fetch(request: Request) {
+  async fetch(request: Request) {
 		return this.handleWebSocket(request);
 	}
 }
@@ -581,7 +554,7 @@ export class MyDurableObject extends DurableObject {
 
 4. Finally, update the `fetch` handler of the Worker.
 
-```ts title="src/index.ts" ins={8-22} del={23}
+```ts title="src/index.ts" {8-22}
 export default {
 	...
 
@@ -591,20 +564,19 @@ export default {
 
 		if (request.method === "GET" && url.pathname === "/seats") {
 			return new Response(JSON.stringify(await stub.getSeats()), {
-				headers: { "Content-Type": "application/json" },
+				headers: { 'Content-Type': 'application/json' },
 			});
 		} else if (request.method === "POST" && url.pathname === "/book-seat") {
 			const { seatNumber, name } = (await request.json()) as {
 				seatNumber: string;
 				name: string;
 			};
-			return stub.assignSeat(seatNumber, name);
+			return new Response(JSON.stringify(stub.assignSeat(seatNumber, name)));
 		} else if (request.headers.get("Upgrade") === "websocket") {
 			return stub.fetch(request);
 		}
 
 		return new Response("Not found", { status: 404 });
-		return stub.fetch(request);
 	},
 } satisfies ExportedHandler<Env>;
 ```
