@@ -109,7 +109,16 @@ After you have created your Worker, run the [`wrangler dev`](/workers/wrangler/c
 npx wrangler dev
 ```
 
-### 3. Deploy your Project
+### 3. Modify your Project
+
+With your new project generated and running, you can begin to write and edit your project:
+
+- The `src/index.ts` file is populated with sample code. Modify the content in the `index.js` to change the Worker.
+- The `public/index.html` file is populated with sample code. Modify the content in the `index.html` to change static asset.
+
+Then, save the files and reload the page. Your Project's output will have changed based on your modifications.
+
+### 4. Deploy your Project
 
 Deploy your Worker via Wrangler to a `*.workers.dev` subdomain or configure a [Custom Domain](/workers/configuration/routing/custom-domains/).
 
