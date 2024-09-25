@@ -1,5 +1,5 @@
 ---
-updated: 2024-09-12
+updated: 2024-09-25
 difficulty: Beginner
 title: Handle rate limits of external APIs
 summary: Example of how to use Queues to handle rate limits of external APIs.
@@ -32,7 +32,7 @@ Resend is a service that allows you to send emails from your application. It pro
 
 ### Queues access
 
-Additionally, you will need access to Queues.
+Additionally, you will need access to Cloudflare Queues.
 
 <Render file="enable-queues" />
 
@@ -386,7 +386,7 @@ To test your Worker, you could use the following cURL request. Replace `<YOUR_WO
 curl -X POST -d "delivered@resend.dev" <YOUR_WORKER_URL>
 ```
 
-Refer to the [GitHub repository for the complete tutorial](https://github.com/cloudflare/queues-rate-limit). If you are using [Hono](https://hono.dev/), you refer to the [Hono example](https://github.com/harshil1712/resend-rate-limit-demo).
+Refer to the [GitHub repository](https://github.com/harshil1712/queues-rate-limit) for the complete code for this tutorial. If you are using [Hono](https://hono.dev/), you can refer to the [Hono example](https://github.com/harshil1712/resend-rate-limit-demo).
 
 ## Related resources
 
