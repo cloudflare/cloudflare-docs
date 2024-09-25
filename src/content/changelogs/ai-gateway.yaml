@@ -5,10 +5,36 @@ productLink: "/ai-gateway/"
 productArea: Developer platform
 productAreaLink: /workers/platform/changelog/platform/
 entries:
+  - publish_date: "2024-09-25"
+    title: Persistent logs
+    description: |-
+      * **Logs**: AI Gateway now has [logs that persist](/ai-gateway/observability/logging/index.mdx), giving you the flexibility to store them for your preferred duration.
+
+  - publish_date: "2024-09-25"
+    title: Logpush
+    description: |-
+      * **Logs**: AI Gateway now allows you securely export logs to an external storage location, where you can decrypt and process them with [Logpush](/ai-gateway/observability/logging/logpush).
+
+  - publish_date: "2024-09-25"
+    title: Pricing
+    description: |-
+      * **Pricing**: Added log storage [pricing](/ai-gateway/pricing/).
+
+  - publish_date: "2024-09-25"
+    title: Limits
+    description: |-
+      * **Logs**: Added [limits](/ai-gateway/reference/limits/) to include 10M logs per gateway and 10M per log.
+
+  - publish_date: "2024-09-25"
+    title: Evaluations
+    description: |-
+      * **Configurations**: AI Gateway now provides the data needed to make informed decisions on how to optimize your AI application with [Evaluations](/ai-gateway/observability/evaluations/index.mdx).
+
   - publish_date: "2024-09-10"
     title: Custom costs
     description: |-
       * **Configuration**: AI Gateway now allows you to set custom costs at the request level [custom costs](/ai-gateway/configuration/custom-costs/) to requests, accurately reflect your unique pricing, overriding the default or public model costs.
+
   - publish_date: "2024-08-02"
     title: Mistral AI
     description: |-
