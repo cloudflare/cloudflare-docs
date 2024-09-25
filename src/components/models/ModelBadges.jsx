@@ -32,7 +32,7 @@ const ModelBadges = ({ model }) => {
 			{badges.map((badge) => (
 				<li
 					key={badge.text}
-					className="bg-gray-100 px-2 py-1 rounded-md block !mt-0"
+					className="bg-gray-100 dark:bg-gray-700 px-2 py-1 rounded-md block !mt-0"
 				>
 					{badge.text}
 				</li>

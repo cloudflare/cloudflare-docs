@@ -83,14 +83,14 @@ const ModelCatalog = ({ models }) => {
 			<div className="w-1/4 mr-8">
 				<input
 					type="text"
-					className="w-full rounded-md bg-white border-2 border-gray-200 px-2 py-2"
+					className="w-full rounded-md bg-white dark:bg-black border-2 border-gray-200 dark:border-gray-700 px-2 py-2"
 					placeholder="Search models"
 					value={filters.search}
 					onChange={(e) => setFilters({ ...filters, search: e.target.value })}
 				/>
 
 				<div className="!mt-8">
-					<span className="uppercase text-gray-600 text-sm font-bold">
+					<span className="uppercase text-gray-600 dark:text-gray-200 text-sm font-bold">
 						▼ Model Types
 					</span>
 
@@ -120,7 +120,7 @@ const ModelCatalog = ({ models }) => {
 				</div>
 
 				<div className="!mt-8">
-					<span className="uppercase text-gray-600 text-sm font-bold">
+					<span className="uppercase text-gray-600 dark:text-gray-200 text-sm font-bold">
 						▼ Capabilities
 					</span>
 
@@ -152,7 +152,7 @@ const ModelCatalog = ({ models }) => {
 				</div>
 
 				<div className="!mt-8">
-					<span className="uppercase text-gray-600 text-sm font-bold">
+					<span className="uppercase text-gray-600 dark:text-gray-200 text-sm font-bold">
 						▼ Authors
 					</span>
 
@@ -227,7 +227,7 @@ const ModelCatalog = ({ models }) => {
 					return (
 						<a
 							key={model.model.id}
-							className="p-3 border-gray-200 border-solid border rounded-md w-[48%] block !text-inherit no-underline self-start hover:bg-gray-50 mb-3"
+							className="p-3 border-gray-200 dark:border-gray-700 border-solid border rounded-md w-[48%] block !text-inherit no-underline self-start hover:bg-gray-50 dark:hover:bg-black mb-3"
 							href={`/workers-ai/models/${model.model_display_name}`}
 						>
 							<div className="-mb-1 flex items-center">

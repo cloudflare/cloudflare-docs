@@ -1,4 +1,6 @@
 ---
+import { Type } from "~/components";
+
 const { node } = Astro.props;
 ---
 
@@ -6,11 +8,7 @@ const { node } = Astro.props;
 	<code class="mr-2 font-mono rounded-md bg-gray-100">
 		{node.subpath[node.subpath.length - 1]}
 	</code>
-	<span
-		class="font-mono mr-2 text-sm border border-gray-200 px-1 py-1 rounded-md"
-	>
-		{node.primaryType}
-	</span>
+	{node.primaryType && <Type text={node.primaryType} />}
 
 	{
 		node.annotations.default && (
@@ -37,7 +35,7 @@ const { node } = Astro.props;
 
 	{
 		node.children && (
-			<ul className="!list-none m-0 p-0 ml-4">
+			<ul class="!list-none m-0 p-0 ml-4">
 				{node.children.map((node) => (
 					<Astro.self node={node} />
 				))}

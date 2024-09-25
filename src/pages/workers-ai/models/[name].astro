@@ -19,7 +19,6 @@ import TextToImageCode from "~/components/models/code/TextToImageCode.astro";
 import TranslationCode from "~/components/models/code/TranslationCode.astro";
 import StableDiffusionV15Img2ImgCode from "~/components/models/code/StableDiffusion-v1-5-img2imgCode.astro";
 import StableDiffusionV15InpaintingCode from "~/components/models/code/StableDiffusion-v1-5-inpaintingCode.astro";
-import type { ComponentProps } from "astro/types";
 
 import { authorData } from "~/components/models/data";
 
@@ -178,30 +177,13 @@ const author = authorData[model.name.split("/")[1]];
 
 	<h2 id="API Schemas">API Schemas</h2>
 	<p>The following schemas are based on JSON Schema</p>
-	<div class="flex gap-2">
-		<div
-			class="w-1/2 overflow-auto !bg-gray-100 p-2 rounded-sm border !border-gray-200"
-		>
-			<div class="!m-0">
-				<span
-					class="text-sm bg-gray-200 px-2 py-1 border border-gray-300 rounded-md"
-					>input</span
-				>
-			</div>
-			<pre
-				class="!p-0 !border-0">{JSON.stringify(model.schema.input, null, 4)}</pre>
-		</div>
-		<div
-			class="w-1/2 overflow-auto !bg-gray-100 p-2 rounded-sm border !border-gray-200 !mt-0"
-		>
-			<div class="!m-0">
-				<span
-					class="text-sm bg-gray-200 px-2 py-1 border border-gray-300 rounded-md"
-					>output</span
-				>
-			</div>
-			<pre
-				class="!p-0 !border-0">{JSON.stringify(model.schema.output, null, 4)}</pre>
-		</div>
-	</div>
+
+	<Tabs>
+		<TabItem label="Input">
+			<Code code={JSON.stringify(model.schema.input, null, 4)} lang="json" />
+		</TabItem>
+		<TabItem label="Output">
+			<Code code={JSON.stringify(model.schema.output, null, 4)} lang="json" />
+		</TabItem>
+	</Tabs>
 </StarlightPage>
