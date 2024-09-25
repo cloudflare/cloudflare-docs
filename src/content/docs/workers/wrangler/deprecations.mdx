@@ -128,7 +128,7 @@ A few configuration fields which were previously required, are now optional in p
 
   The `account_id` field is not required for any of the commands. Any relevant commands will check if you are logged in, and if not, will prompt you to log in. Once logged in, it will use your account ID and will not prompt you again until your login session expires. If you have multiple account IDs, you will be presented with a list of accounts to choose from.
 
-  You can still configure `account_id` in your `wrangler.toml` file, or as an environment variable `CLOUDFLARE_ACCOUNT_ID`; this will make startup faster, and bypass the list of choices if you have multiple IDs. The `CLOUDFLARE_API_TOKEN` environment variable is also useful for situations where it is not possible to login interactively - refer to [Running in CI/CD](/workers/ci-cd/external-cicd/).
+  You can still configure `account_id` in your `wrangler.toml` file, or as an environment variable `CLOUDFLARE_ACCOUNT_ID`. This makes startup faster and bypasses the list of choices if you have multiple IDs. The `CLOUDFLARE_API_TOKEN` environment variable is also useful for situations where it is not possible to login interactively. To learn more, visit [Running in CI/CD](/workers/ci-cd/external-cicd/).
 
 * **`workers_dev`** `boolean`, default: `true` when no routes are present
 
