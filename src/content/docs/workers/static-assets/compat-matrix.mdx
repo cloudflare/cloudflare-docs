@@ -1,0 +1,64 @@
+---
+pcx_content_type: concept
+title: Compatibility Matrix
+sidebar:
+  order: 10
+head: []
+description: Compatibility matrix for asset hosting on Cloudflare Workers and Pages.
+---
+
+import {
+	Badge,
+	Description,
+	FileTree,
+	InlineBadge,
+	Render,
+	TabItem,
+	Tabs,
+} from "~/components";
+
+Cloudflare [Workers with static assets](/workers/static-assets/) and [Pages](/pages/) both have the ability to host frontend applications. The following compatibility matrix shows the features are available for each product to help you when choosing which product to start with.
+
+We plan to bridge the gaps between Workers and Pages and provide ways to migrate your Pages projects to Workers.
+
+|                                   | Asset hosting on Workers | Pages |
+| --------------------------------- | ------------------------ | ----- |
+| **Features**                      |                          |       |
+| Middleware                        | ❌ <sup>1</sup>          | ✅    |
+| Redirects                         | ❌ <sup>2</sup>          | ✅    |
+| Smart Placement                   | ❌ <sup>3</sup>          | ✅    |
+| **Observability**                 |                          |       |
+| Persistent Logs                   | ✅                       | ❌    |
+| Logpush                           | ✅                       | ❌    |
+| Tail Workers                      | ❌                       | ❌    |
+| Real-time logs                    | ✅                       | ✅    |
+| **Bindings**                      |                          |       |
+| AI                                | ✅                       | ✅    |
+| Analytics Engine                  | ✅                       | ✅    |
+| Assets                            | ✅                       | ❌    |
+| Browser Rendering                 | ✅                       | ✅    |
+| D1                                | ✅                       | ✅    |
+| Dispatcher(Workers for Platforms) | ✅                       | ❌    |
+| Durable Objects                   | ✅                       | ❌    |
+| Environment Variables             | ✅                       | ✅    |
+| Hyperdrive                        | ✅                       | ❌    |
+| KV                                | ✅                       | ✅    |
+| mTLS                              | ✅                       | ✅    |
+| Queue Producers                   | ✅                       | ✅    |
+| Queue Consumers                   | ✅                       | ❌    |
+| R2                                | ✅                       | ✅    |
+| Rate Limiting                     | ✅                       | ✅    |
+| Secrets                           | ✅                       | ✅    |
+| Service bindings                  | ✅                       | ✅    |
+| Vectorize                         | ✅                       | ✅    |
+| Version Metadata                  | ✅                       | ❌    |
+
+<sup>1</sup> Recommend using a Worker infront of the Worker with assets to run
+middleware, connected through a [service
+binding](/workers/runtime-apis/bindings/service-bindings/).
+<sup>2</sup> Redirects can be handled in a Worker or using [bulk
+redirects](/rules/url-forwarding/bulk-redirects/#_top)(only available if your
+Worker is running on a [route or custom
+domain](/workers/configuration/routing/)).
+<sup>3</sup> Cannot be enabled right now. Actively working on removing this
+limitation.
