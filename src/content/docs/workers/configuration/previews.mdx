@@ -5,12 +5,12 @@ head: []
 sidebar:
   badge:
     text: Beta
-description: Preview deployments allow you to preview new versions of your project without deploying it to production.
+description: Preview URLs allow you to preview new versions of your project without deploying it to production.
 ---
 
 import { Render } from "~/components";
 
-Preview URLs allow you to preview new versions of your Worker without deploying it to production. A unique preview URL is created for each [version](/workers/configuration/versions-and-deployments/#versions) of your Worker. By default, preview deployments are enabled and available publicly.
+Preview URLs allow you to preview new versions of your Worker without deploying it to production. A unique preview URL is created for each [version](/workers/configuration/versions-and-deployments/#versions) of your Worker. By default, preview URLs are enabled and available publicly.
 
 Preview URLs can be:
 
@@ -21,7 +21,7 @@ Preview URLs can be:
 When testing zone level performance or security featues for a version, it's recommended to use [version overrides](/workers/configuration/versions-and-deployments/gradual-deployments/#version-overrides) so that your zone's performance and security settings apply.
 
 :::note
-Preview URLs are only available for Worker versions uploaded past 09/25/2024.
+Preview URLs are only available for Worker versions uploaded past 2024-09-25.
 :::
 
 ## View preview URLs using wrangler
@@ -31,7 +31,7 @@ The [`wrangler versions upload`](/workers/wrangler/commands/#upload) command upl
 ## View preview URLs on the Workers dashboard
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/?to=/:account/workers) and select your project.
-2. Head to the "Depoyments" tab find the version you would like to view.
+2. Head to the "Deployments" tab find the version you would like to view.
 
 ## Disabling Preview URLs
 
