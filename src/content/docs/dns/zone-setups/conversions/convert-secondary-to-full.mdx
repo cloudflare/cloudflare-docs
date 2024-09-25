@@ -25,7 +25,7 @@ Follow the steps below to achieve this conversion.
     - If you have [Secondary DNS override](/dns/zone-setups/zone-transfers/cloudflare-as-secondary/proxy-traffic/), confirm each record has the appropriate setting (**Proxied** or **DNS only**).
     - If [Secondary DNS override](/dns/zone-setups/zone-transfers/cloudflare-as-secondary/proxy-traffic/) is disabled, make sure all of your DNS records are listed as **DNS only**.
 
-3. (Optional) For consistency, apply SOA record overrides according to your needs. Once Cloudflare automatically generates an SOA record for your zone on full setup, the field overrides will be considered.
+3. (Optional) For consistency, use the [Update DNS Settings](/api/operations/dns-settings-for-a-zone-update-dns-settings) endpoint to specify SOA record fields according to your needs. Once Cloudflare automatically generates an SOA record for your zone on full setup, the field overrides will be considered.
 
 ## 3. Convert your zone
 
