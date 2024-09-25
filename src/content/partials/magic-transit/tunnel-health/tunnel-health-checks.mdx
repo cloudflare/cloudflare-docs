@@ -1,9 +1,8 @@
 ---
 inputParameters: healthCheckFrequencyURL;;productName;;onboardingURL;;configureTunnelEndpointsURL;;urlChangeHealthCheckType
-
 ---
 
-import { Details, GlossaryTooltip, Markdown, Render } from "~/components"
+import { Details, GlossaryTooltip, Markdown, Render } from "~/components";
 
 A tunnel health check probe contains an [ICMP (Internet Control Message Protocol)](https://www.cloudflare.com/learning/ddos/glossary/internet-control-message-protocol-icmp/) reply packet that originates from an IP address on the origin side of the tunnel and whose destination address is a public Cloudflare IP.
 
@@ -15,7 +14,7 @@ Every Cloudflare data center configured to process your traffic sends tunnel hea
 
 When a probe attempt fails for a [healthy](#health-state-and-prioritization) tunnel, each server detecting the failure quickly probes up to two more times to obtain an accurate result. We also do the same if a tunnel has been down and probes start returning success. Because Cloudflare global network servers send probes up to every second, you can expect your network to receive several hundred health check packets per second — each Cloudflare data center will only send one health check packet as part of a probe. This represents a relatively trivial amount of traffic.
 
-:::note[Note]
+:::note
 To avoid control plane policies enforced by the origin network, tunnel health checks use an encapsulated ICMP reply instead of an ICMP echo request. To use echo request packets, change your health check type to **Request** in your tunnels. Refer to <a href={props.five}>Configure tunnel endpoints</a> to learn how to change this setting.
 :::
 
@@ -33,7 +32,7 @@ Healthy tunnels are preferred to degraded tunnels, and degraded tunnels are pref
 
 {props.two} steers traffic to tunnels based on priorities you set when you <a href={props.three}>assign tunnel route priorities during onboarding</a>. Tunnel routes with lower values have priority over those with higher values.
 
-:::note[Note]
+:::note
 Cloudflare global network servers may be able to reach the origin infrastructure from some locations at a given time but not others. This occurs because Cloudflare does not synchronize health checks among global network servers and because the Internet is not homogeneous.
 
 As a result, tunnel health may be in different states in different parts of the world at the same time. In the example from the previous paragraph, both tunnels could receive traffic simultaneously, even though Tunnel 1 has priority over Tunnel 2.

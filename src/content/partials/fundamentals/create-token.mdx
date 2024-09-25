@@ -1,15 +1,12 @@
 ---
 {}
-
 ---
 
-import { Render } from "~/components"
+import { Render } from "~/components";
 
-:::note[Prerequisite]
+:::note
 
-
-Before you begin, [find your zone and account IDs](/fundamentals/setup/find-account-and-zone-ids/).
-
+Prerequisite: Before you begin, [find your zone and account IDs](/fundamentals/setup/find-account-and-zone-ids/).
 
 :::
 
@@ -25,7 +22,7 @@ Before you begin, [find your zone and account IDs](/fundamentals/setup/find-acco
 
    ![Token template overview screen](~/assets/images/fundamentals/api/template-customize.png)
 
-6. Modify the token's permissions. After selecting a permissions group (*Account*, *User*, or *Zone*), choose what level of access to grant the token. Most groups offer `Edit` or `Read` options. `Edit` is full CRUDL (create, read, update, delete, list) access, while `Read` is the read permission and list where appropriate. Refer to the [available token permissions](/fundamentals/api/reference/permissions/) for more information.
+6. Modify the token's permissions. After selecting a permissions group (_Account_, _User_, or _Zone_), choose what level of access to grant the token. Most groups offer `Edit` or `Read` options. `Edit` is full CRUDL (create, read, update, delete, list) access, while `Read` is the read permission and list where appropriate. Refer to the [available token permissions](/fundamentals/api/reference/permissions/) for more information.
 
 7. Select which resources the token is authorized to access. For example, granting `Zone DNS Read` access to a zone `example.com` will allow the token to read DNS records only for that specific zone. Any other zone will return an error for DNS record reads operations. Any other operation on that zone will also return an error.
 
@@ -35,7 +32,7 @@ Before you begin, [find your zone and account IDs](/fundamentals/setup/find-acco
 
 10. Review the token summary. Select **Edit token** to make adjustments. You can also edit a token after creation.
 
-   ![Token summary screen displaying the resources and permissions selected](~/assets/images/fundamentals/api/token-summary.png)
+![Token summary screen displaying the resources and permissions selected](~/assets/images/fundamentals/api/token-summary.png)
 
 11. Select **Create Token** to generate the token's secret.
 
@@ -56,19 +53,19 @@ The result:
 
 ```json
 {
-  "result": {
-    "id": "100bf38cc8393103870917dd535e0628",
-    "status": "active"
-  },
-  "success": true,
-  "errors": [],
-  "messages": [
-    {
-      "code": 10000,
-      "message": "This API Token is valid and active",
-      "type": null
-    }
-  ]
+	"result": {
+		"id": "100bf38cc8393103870917dd535e0628",
+		"status": "active"
+	},
+	"success": true,
+	"errors": [],
+	"messages": [
+		{
+			"code": 10000,
+			"message": "This API Token is valid and active",
+			"type": null
+		}
+	]
 }
 ```
 

@@ -1,9 +1,8 @@
 ---
 {}
-
 ---
 
-import { Render } from "~/components"
+import { Render } from "~/components";
 
 ```mermaid
 flowchart TB
@@ -103,7 +102,7 @@ When DNS queries are received, Gateway evaluates policies with pre-resolution se
 | 1          | Resolved Country IP Geolocation | is       | United States | Allow  |
 | 2          | Domain                          | is       | `example.com` | Block  |
 
-Despite an explicit Allow policy ordered first, policy 2 takes precedence because the *Domain* selector is evaluated before DNS resolution.
+Despite an explicit Allow policy ordered first, policy 2 takes precedence because the _Domain_ selector is evaluated before DNS resolution.
 
 If a policy contains both pre-resolution and post-resolution selectors, Gateway will evaluate the entire policy after DNS resolution. For information on when each selector is evaluated, refer to the [list of DNS selectors](/cloudflare-one/policies/gateway/dns-policies/#selectors).
 
@@ -123,7 +122,7 @@ This order of enforcement allows Gateway to first determine whether decryption s
 
 :::note
 
-The only exception is if you are using [Clientless Web Isolation](/cloudflare-one/policies/browser-isolation/setup/clientless-browser-isolation/) — all sites within the clientless remote browser are implicitly isolated even if they match a Do Not Inspect policy. 
+The only exception is if you are using [Clientless Web Isolation](/cloudflare-one/policies/browser-isolation/setup/clientless-browser-isolation/) — all sites within the clientless remote browser are implicitly isolated even if they match a Do Not Inspect policy.
 :::
 
 Next, Gateway checks decrypted traffic against your Isolate policies. When a user makes a request which triggers an Isolate policy, the request will be rerouted to a [remote browser](/cloudflare-one/policies/browser-isolation/).
@@ -132,29 +131,33 @@ Lastly, Gateway evaluates all Allow, Block, and Do Not Scan policies. These poli
 
 ### Order of precedence
 
-<Render file="gateway/order-of-precedence" product="cloudflare-one" params={{ one: "DNS, network, or HTTP" }} />
+<Render
+	file="gateway/order-of-precedence"
+	product="cloudflare-one"
+	params={{ one: "DNS, network, or HTTP" }}
+/>
 
-:::caution[Terraform precedence limitation]
+:::caution
 
-To avoid conflicts, Terraform applies a hash calculation to precedences. For example, a precedence of `1000` may become `1000901`. This can cause errors when reordering policies. To avoid this issue, manually set the precedence of your policies via the [Cloudflare API](/api/operations/zero-trust-gateway-rules-update-zero-trust-gateway-rule). 
+Terraform precedence limitation. To avoid conflicts, Terraform applies a hash calculation to precedences. For example, a precedence of `1000` may become `1000901`. This can cause errors when reordering policies. To avoid this issue, manually set the precedence of your policies via the [Cloudflare API](/api/operations/zero-trust-gateway-rules-update-zero-trust-gateway-rule).
 :::
 
 ## Example
 
 Suppose you have a list of policies arranged in the following order of precedence:
 
-* DNS policies: <Render file="gateway/order-of-precedence-dns" product="cloudflare-one" />
-* HTTP policies:
-  | Precedence | Selector | Operator | Value               | Action         |
+- DNS policies: <Render file="gateway/order-of-precedence-dns" product="cloudflare-one" />
+- HTTP policies:
+  | Precedence | Selector | Operator | Value | Action |
   | ---------- | -------- | -------- | ------------------- | -------------- |
-  | 1          | Host     | is       | `example.com`       | Block          |
-  | 2          | Host     | is       | `test2.example.com` | Do Not Inspect |
-* Network policies:
-  | Precedence | Selector         | Operator | Value              | Action |
+  | 1 | Host | is | `example.com` | Block |
+  | 2 | Host | is | `test2.example.com` | Do Not Inspect |
+- Network policies:
+  | Precedence | Selector | Operator | Value | Action |
   | ---------- | ---------------- | -------- | ------------------ | ------ |
-  | 1          | Destination Port | is       | `80`               | Block  |
-  | 2          | Destination port | is       | `443`              | Allow  |
-  | 3          | SNI Domain       | is       | `test.example.com` | Block  |
+  | 1 | Destination Port | is | `80` | Block |
+  | 2 | Destination port | is | `443` | Allow |
+  | 3 | SNI Domain | is | `test.example.com` | Block |
 
 When a user goes to `https://test.example.com`, Gateway performs the following operations:
 
