@@ -22,21 +22,38 @@ import {
 Assets are served using file-based routing. The structure and organization of files in your project's directory determine the routing paths for your application. When a request invokes a Worker with assets:
 
 1. If a request is found with a matching path to the current route requested then that asset will always be served.
+
+In this example, request to `example.com/blog` serves the `blog.html` file.
+
+![A request to `example.com/blog` serves the `blog.html` file. ](~/assets/images/workers/platform/assets/workers-assets-serve-asset.png)
+
 2. If there are no assets that match the current route requested then the Worker will be invoked. If there is no Worker, a 404 will be served dependent on [`not_found_handling`](/workers/static-assets/routing/#not_found_handling) configuration.
+
+In this example, request to `example.com/api` doesn't match a static asset so the Worker is invoked.
+
+![A request to `example.com/blog` runs the Worker.](~/assets/images/workers/platform/assets/workers-assets-invoke-worker.png)
 
 ## Routing: Asset Serving
 
-If a request does not match an asset based on file-based routing, files are served based on the configuration options defined. There are two areas of asset handling that can be configured:
+If a request does not match an asset based on file-based routing, files are served based on the configuration options defined. There are two areas of asset handling that can be [configured in `wrangler.toml`](/workers/wrangler/configuration/#assets):
 
-1. **`html_handling`**: Trailing slashes on websites (for example, `example.com/page/` vs. `example.com/page`) can impact SEO because search engines treat URLs with and without trailing slashes as different, separate pages. This distinction can lead to duplicate content issues, indexing problems, and overall confusion about the correct canonical version of a page.
+#### 1. `html_handling`
 
-   `html_handling` configuration determines redirects/rewrites of requests for HTML content. It is used to specify handling that redirects non-canonical URLs to canonical ones, and writes the asset path to serve the expected content at those canonical URLs.
+Trailing slashes on websites (for example, `example.com/page/` vs. `example.com/page`) can impact SEO because search engines treat URLs with and without trailing slashes as different, separate pages. This distinction can lead to duplicate content issues, indexing problems, and overall confusion about the correct canonical version of a page.
 
-2. **`not_found_handling`**: Handling of requests that do not map to an asset.
+`html_handling` configuration determines redirects/rewrites of requests for HTML content. It is used to specify handling that redirects non-canonical URLs to canonical ones, and writes the asset path to serve the expected content at those canonical URLs.
 
-## Default configuration
+#### 2. `not_found_handling`
 
-### 1. `html_handling`
+Response for requests that do not map to an asset and are not handled by the Worker.
+
+Define a custom page to be displayed when there is no match for the requested file by creating a `404.html`file. If one is not found in the same directory as the route you are currently requesting, it will continue to look up the directory tree for a matching `404.html` file. This means that you can define custom 404 paths for situations like`/blog/404.html and /404.html`, and Workers will automatically render the correct one depending on the situation.
+
+If your project has a Worker, `not_found_handling` behaviour will apply to requests made through the [assets binding](/workers/static-assets/routing/#2-not_found_handling).
+
+### Default configuration
+
+#### 1. `html_handling`
 
 `auto-trailing-slash` is the default mode if `html_handling` is not explicitly specified.
 
@@ -63,26 +80,18 @@ Based on the incoming requests, the following assets would be served:
 | /folder/index      | 307 /folder/    | -                  |
 | /folder/index.html | 307 /folder/    | -                  |
 
-### 2. `not_found_handling`
-
-**Static Site**
+#### 2. `not_found_handling`
 
 ```
 /not-found -> 404
 /foo/path/doesnt/exist -> 404
 ```
 
-**Full-stack Application**
-
-```
-/not-found -> Worker
-/foo/path/doesnt/exist -> Worker
-
-```
+### Alternate configuration options
 
 Alternate configuration options are outlined on this page and can be specified in your project's `wrangler.toml` file. If you're deploying using a Framework[link], these options will be defined by the Framework provider.
 
-## html_handling
+#### `html_handling = "auto-trailing-slash" | "force-trailing-slash" | "drop-trailing-slash" | "none"`
 
 Take the following directory structure:
 
@@ -92,7 +101,7 @@ Take the following directory structure:
       |___ index.html
 ```
 
-#### `html_handling: "force-trailing-slash"`
+**`html_handling: "force-trailing-slash"`**
 
 Based on the incoming requests, the following assets would be served:
 
@@ -109,7 +118,7 @@ Based on the incoming requests, the following assets would be served:
 | /folder/index      | 307 /folder/    | -                  |
 | /folder/index.html | 307 /folder/    | -                  |
 
-#### `html_handling: "auto-trailing-slash"`
+**`html_handling: "auto-trailing-slash"`**
 
 Based on the incoming requests, the following assets would be served:
 
@@ -126,7 +135,7 @@ Based on the incoming requests, the following assets would be served:
 | /folder/index      | 307 /folder    | -                  |
 | /folder/index.html | 307 /folder    | -                  |
 
-#### `html_handling: "drop-trailing-slash"`
+**`html_handling: "drop-trailing-slash"`**
 
 Based on the incoming requests, the following assets would be served:
 
@@ -143,7 +152,7 @@ Based on the incoming requests, the following assets would be served:
 | /folder/index      | 307 /folder    | -                  |
 | /folder/index.html | 307 /folder    | -                  |
 
-#### `html_handling: "none"`
+**`html_handling: "none"`**
 
 Based on the incoming requests, the following assets would be served:
 
@@ -160,60 +169,18 @@ Based on the incoming requests, the following assets would be served:
 | /folder/index      | Depends on `not_found_handling` | Depends on `not_found_handling` |
 | /folder/index.html | 200                             | /folder/index.html              |
 
-## not_found_handling
+#### `not_found_handling = "404-page" | "single-page-application" | "none"`
 
-#### `not_found_handling: "single-page-application"`
-
-**Static Site**
-
-```
-/not-found -> 200 /index.html
-/foo/path/doesnt/exist -> 200 /index.html
-```
-
-**Full-stack Application**
-
-```
-/not-found ->  Worker
-/foo/path/doesnt/exist ->  Worker
-```
-
-#### `not_found_handling: "404-page"`
-
-**Static Site**
+**`not_found_handling: "404-page"`**
 
 ```
 /not-found -> 404 /404.html
 /foo/path/doesnt/exist -> 404 /404.html
 ```
 
-Define a custom page to be displayed when there is no match for the requested file by creating a `404.html` file. If one is not found in the same directory as the route you are currently requesting, it will continue to look up the directory tree for a matching `404.html` file. This means that you can define custom 404 paths for situations like`/blog/404.html and /404.html`, and Workers will automatically render the correct one depending on the situation.
-
-**Full-stack Application**
+**`not_found_handling: "single-page-application"`**
 
 ```
-/not-found ->  Worker
-/foo/path/doesnt/exist ->  Worker
+/not-found -> 200 /index.html
+/foo/path/doesnt/exist -> 200 /index.html
 ```
-
-#### `not_found_handling: "none"`
-
-**Static Site**
-
-```
-/not-found -> 404 Null body response
-/foo/path/doesnt/exist -> 404  Null body response
-```
-
-Define a custom page to be displayed when there is no match for the requested file by creating a `404.html`file. If one is not found in the same directory as the route you are currently requesting, it will continue to look up the directory tree for a matching `404.html` file. This means that you can define custom 404 paths for situations like`/blog/404.html and /404.html`, and Workers will automatically render the correct one depending on the situation.
-
-**Full-stack Application**
-
-```
-/not-found ->  Worker
-/foo/path/doesnt/exist ->  Worker
-```
-
-## Encoding
-
-// TO-DO

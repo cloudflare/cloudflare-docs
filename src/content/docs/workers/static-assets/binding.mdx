@@ -3,9 +3,8 @@ pcx_content_type: concept
 title: Binding
 sidebar:
   order: 7
-  badge: Beta
 head: []
-description: Create a Worker with assets throught the wrangler CLI or through a Git integration.
+description: Details on the Workers assets binding and runtime API.
 ---
 
 import {
@@ -27,7 +26,7 @@ Root folder of static assets to be served. For static site only projects. For ma
 ```sh title="wrangler.toml"
 name = "my-worker"
 compatibility_date = "2024-09-19"
-assets = { directory = "public"}
+assets = { directory = "./public"}
 ```
 
 ## Binding
@@ -42,7 +41,9 @@ compatibility_date = "2024-09-19"
 assets = { directory = "./public", binding = "ASSETS" }
 ```
 
-### `fetch()`
+### Runtime API Reference
+
+#### `fetch()`
 
 **Parameters**
 
@@ -54,7 +55,7 @@ assets = { directory = "./public", binding = "ASSETS" }
 
 **Example**
 
-Your dynamic code can make or forward requests to your project’s static assets using the assets binding.
+Your dynamic code can make or forward requests to your project's static assets using the assets binding.
 
 Take the following example that configures a Worker to return a response under all requests headed for `/api/`. Otherwise, the Worker will fallback to returning static assets.
 
@@ -102,7 +103,7 @@ export default {
 The following methods are experimental and subject to change.
 :::
 
-### `unstable_exists()`
+#### `unstable_exists()`
 
 **Parameters**:
 
@@ -112,7 +113,7 @@ The following methods are experimental and subject to change.
 
 - `Promise<string | null` Returns a promise of an etag for a specific assets.
 
-### `unstable_exists()`
+#### `unstable_exists()`
 
 **Parameters**:
 
@@ -122,7 +123,7 @@ The following methods are experimental and subject to change.
 
 - `Promise<{ readableStream: ReadableStream; contentType: string }>` Returns a ReadableStream of data and contentType for a specific assets. Can be used to construct a response object.
 
-### `unstable_getByPathName()`
+#### `unstable_getByPathName()`
 
 **Parameters**:
 

@@ -192,7 +192,7 @@ Non-inheritable keys are configurable at the top-level, but cannot be inherited 
 
 - `vectorize` <Type text="object" /> <MetaInfo text="optional" />
 
-  - A list of Vectorize indexes that your Worker should be bound to.. Refer to [Vectorize indexes](#vectorize-indexes).
+  - A list of Vectorize indexes that your Worker should be bound to. Refer to [Vectorize indexes](#vectorize-indexes).
 
 - `services` <Type text="object" /> <MetaInfo text="optional" />
 
@@ -895,11 +895,11 @@ To bind assets to your Worker, assign an array of the below object to the `asset
 
 - `html_handling`: <Type text="'auto-trailing-slash' | 'force-trailing-slash' | 'drop-trailing-slash' | 'none'" /> <MetaInfo text="optional" />
 
-  - Determines redirects/rewrites of requests for HTML content. If unspecified, the default mode is `'auto-trailing-slash'`. Learn more [here](/workers/static-assets/routing/#html_handling).
+  - Determines redirects/rewrites of requests for HTML content. If unspecified, the default mode is `'auto-trailing-slash'`. Learn more about the various options in [assets routing](/workers/static-assets/routing/).
 
 - `not_found_handling`: <Type text="`'single-page-application' | '404-page' | 'none'`" /> <MetaInfo text="optional" />
 
-  - Determines the handling of requests that do not map to an asset. If unspecified, the default mode is `'not_found_handling'`. Learn more [here](/workers/static-assets/routing/#not_found_handling).
+  - Determines the handling of requests that do not map to an asset. If unspecified, the default mode is `'not_found_handling'`. Learn more about the various options in [assets routing](/workers/static-assets/routing/).
 
 Example:
 
@@ -913,7 +913,7 @@ You can bundle modules into your Worker using the `rules` key, making these modu
 
 - `type` <Type text="string" /> <MetaInfo text="required" />
 
-  - The type of asset. Must be one of: `ESModule`, `CommonJS`, `CompiledWasm`, `Text` or `Data`.
+  - The type of module. Must be one of: `ESModule`, `CommonJS`, `CompiledWasm`, `Text` or `Data`.
 
 - `globs` <Type text="string[]" /> <MetaInfo text="required" />
 
