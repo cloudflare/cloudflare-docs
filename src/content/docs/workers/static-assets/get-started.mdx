@@ -1,0 +1,122 @@
+---
+pcx_content_type: concept
+title: Get Started
+head: []
+sidebar:
+  order: 6
+  badge: Beta
+description: Run frontend websites — static or dynamic — directly on Cloudflare's global network.
+---
+
+import {
+	Badge,
+	Description,
+	InlineBadge,
+	Render,
+	PackageManagers,
+} from "~/components";
+
+This guide will instruct you through setting up and deploying a static site or a full-stack application without a framework on Workers. You may prefer to build your website from scratch if:
+
+- You're interested in learning by implementing core functionalities on your own.
+- You're working on a simple project where a framework might be overkill.
+- You want to optimize for performance by minimizing external dependencies.
+- You require complete control over every aspect of the application.
+
+Alternativley, you use can a number of popular frameworks(LINK) that come with ready-to-use components, a pre-defined structured architecture, and community support. View framework specific guides(LINK) to get started using a framework.
+
+## Deploy a static site
+
+This guide will instruct you through setting up and deploying a static site on Workers.
+
+### 1. Create a new Worker project using the CLI
+
+[C3 (`create-cloudflare-cli`)](https://github.com/cloudflare/workers-sdk/tree/main/packages/create-cloudflare) is a command-line tool designed to help you set up and deploy new applications to Cloudflare. Open a terminal window and run C3 to create your Worker project:
+
+<PackageManagers
+	type="create"
+	pkg="cloudflare@latest"
+	args={"my-static-site --experimental"}
+/>
+
+<Render
+	file="c3-post-run-steps"
+	product="workers"
+	params={{
+		one: "Hello World example",
+		two: "Hello World - Assets Only",
+		three: "TypeScript",
+	}}
+/>
+
+### 2. Develop locally
+
+After you have created your Worker, run the [`wrangler dev`](/workers/wrangler/commands/#dev) command in the project directory to start a local server for developing your Worker. This will allow you to preview your Worker locally during development.
+
+```sh
+npx wrangler dev
+```
+
+### 3. Deploy your project
+
+Deploy your Worker via Wrangler to a `*.workers.dev` subdomain or configure a [Custom Domain](/workers/configuration/routing/custom-domains/).
+
+```sh
+npx wrangler deploy
+```
+
+:::note
+
+Learn about how assets are configured and how routing works from [Assets configuration](/workers/configuration/assets/)
+
+:::
+
+## Deploy a full-stack application
+
+This guide will instruct you through setting up and deploying dynamic and interactive server-side rendered (SSR) applications on Cloudflare Workers.
+
+When building a full-stack application, you can use any [Workers bindings](/workers/runtime-apis/bindings/) to interact with resources on the Cloudflare developer platform.
+
+### 1. Create a new Worker project
+
+[C3 (`create-cloudflare-cli`)](https://github.com/cloudflare/workers-sdk/tree/main/packages/create-cloudflare) is a command-line tool designed to help you set up and deploy new applications to Cloudflare.
+
+Open a terminal window and run C3 to create your Worker project:
+
+<PackageManagers
+	type="create"
+	pkg="cloudflare@latest"
+	args={"my-dynamic-site --experimental"}
+/>
+
+<Render
+	file="c3-post-run-steps"
+	product="workers"
+	params={{
+		one: "Hello World example",
+		two: "Hello World Worker + Assets",
+		three: "TypeScript",
+	}}
+/>
+
+### 2. Develop locally
+
+After you have created your Worker, run the [`wrangler dev`](/workers/wrangler/commands/#dev) command in the project directory to start a local server for developing your Worker. This will allow you to preview your Worker locally during development.
+
+```sh
+npx wrangler dev
+```
+
+### 3. Deploy your Project
+
+Deploy your Worker via Wrangler to a `*.workers.dev` subdomain or configure a [Custom Domain](/workers/configuration/routing/custom-domains/).
+
+```sh
+npx wrangler deploy
+```
+
+:::note
+
+Learn about how assets are configured and how routing works from [Assets configuration](/workers/configuration/assets/).
+
+:::
