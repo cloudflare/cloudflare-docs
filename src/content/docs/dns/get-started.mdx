@@ -11,3 +11,22 @@ head:
 
 import { GlossaryDefinition, Render } from "~/components";
 
+Cloudflare's authoritative DNS offering covers a variety of [setups](/dns/zone-setups/).
+
+For the most common setup, Cloudflare will work as your primary DNS provider. This means that the **DNS** > **Records** page is where you will control which resources are available on the apex domain (`example.com`) or specific subdomains (`blog.example.com`) of your website, as well as control other configurations.
+
+The following links introduce important concepts and guide you through actions you may need to take while having your website on Cloudflare.
+
+- [DNS records](/dns/manage-dns-records/): DNS records communicate information about your domain to visitors and other web services.
+
+- [Nameservers](/dns/nameservers/): In the context of Cloudflare DNS, nameservers refer to authoritative nameservers. When a nameserver is authoritative for `example.com`, it means that DNS resolvers will consider responses from this nameserver when a user tries to access `example.com`.
+
+- [Proxy status](/dns/manage-dns-records/reference/proxied-dns-records/): The proxy status of a DNS record affects how Cloudflare responds to DNS queries to that record.
+
+- [How Cloudflare works](/fundamentals/concepts/how-cloudflare-works/): An overview of how Cloudflare works and how you can use it as a DNS provider and as a reverse proxy.
+
+- [DNS concepts](/dns/concepts/): Basic concepts organized to help you make sense of specific DNS terminology.
+
+- [DNS analytics](/dns/additional-options/analytics/): An overview of the different data sources and insights you can get when using Cloudflare DNS.
+
+- [Troubleshooting](/dns/troubleshooting/): A full resources list for when something is not working.
