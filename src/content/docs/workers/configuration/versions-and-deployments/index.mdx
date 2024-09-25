@@ -13,13 +13,21 @@ You can upload changes (versions) to your Worker independent of changing the ver
 
 Using versions and deployments is useful if:
 
-* You are running critical applications on Workers and want to reduce risk when deploying new versions of your Worker using a rolling deployment strategy.
-* You want to monitor for performance differences when deploying new versions of your Worker.
-* You have a CI pipeline configured for Workers but want to cut manual releases.
+- You are running critical applications on Workers and want to reduce risk when deploying new versions of your Worker using a rolling deployment strategy.
+- You want to monitor for performance differences when deploying new versions of your Worker.
+- You have a CI pipeline configured for Workers but want to cut manual releases.
+
+:::note
+
+Versions and deployments are in **beta and under active development**. Refer to [Limits](/workers/configuration/versions-and-deployments/#limits) before using these features.
+
+Provide your feedback on versions and deployments through the [feedback form](https://www.cloudflare.com/lp/developer-week-deployments).
+
+:::
 
 ## Versions
 
-A version is defined by the state of code as well as the state of configuration in a Worker's [`wrangler.toml`](/workers/wrangler/configuration/) file. Versions track historical changes to [bundled code](/workers/wrangler/bundling/) and changes to configuration like [bindings](/workers/runtime-apis/bindings/) and [compatibility date and compatibility flags](/workers/configuration/compatibility-dates/) over time.
+A version is defined by the state of code as well as the state of configuration in a Worker's [`wrangler.toml`](/workers/wrangler/configuration/) file. Versions track historical changes to [bundled code](/workers/wrangler/bundling/), [static assets](/workers/configuration/assets/) and changes to configuration like [bindings](/workers/runtime-apis/bindings/) and [compatibility date and compatibility flags](/workers/configuration/compatibility-dates/) over time.
 
 Versions also track metadata associated with a version, including: the version ID, the user that created the version, deploy source, and timestamp. Optionally, a version message and version tag can be configured on version upload.
 

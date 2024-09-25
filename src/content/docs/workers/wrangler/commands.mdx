@@ -736,19 +736,18 @@ As of Wrangler v3.2.0, `wrangler dev` is supported by any Linux distributions pr
   - Path to a custom certificate.
 - `--local-upstream` <Type text="string" /> <MetaInfo text="optional" />
   - Host to act as origin in local mode, defaults to `dev.host` or route.
-- `--legacy-assets` <Type text="string" /> <MetaInfo text="optional experimental" />
+- `--assets` <Type text="string" /> <MetaInfo text="optional beta" />
+  - Root folder of static assets to be served. Replaces [Workers Sites](/workers/configuration/sites/). Visit [assets](/workers/configuration/assets/) for more information.
+- `--legacy-assets` <Type text="string" /> <MetaInfo text="optional deprecated, use `--assets`" />
   - Root folder of static assets to be served.
-  - Use in combination with `--name` and `--latest` for basic static file hosting. For example: `wrangler dev --name personal_blog --legacy-assets dist/ --latest`.
-- `--assets` <Type text="string" /> <MetaInfo text="optional experimental" /> 
-  - Root folder of static assets to be served.
-    :::caution
-    This is an experimental feature and its behavior will be changing soon. Use `--legacy-assets` instead to ensure that you get consistent behavior when this option changes.
-    :::
-- `--site` <Type text="string" /> <MetaInfo text="optional" />
+- `--site` <Type text="string" /> <MetaInfo text="optional deprecated, use `--assets`" />
   - Root folder of static assets for Workers Sites.
-- `--site-include` <Type text="string[]" /> <MetaInfo text="optional" />
+    :::caution
+    Workers Sites is deprecated. Please use [Workers Assets](/workers/configuration/assets/) or [Pages](/pages/})
+    :::
+- `--site-include` <Type text="string[]" /> <MetaInfo text="optional deprecated" />
   - Array of `.gitignore`-style patterns that match file or directory names from the sites directory. Only matched items will be uploaded.
-- `--site-exclude` <Type text="string[]" /> <MetaInfo text="optional" />
+- `--site-exclude` <Type text="string[]" /> <MetaInfo text="optional deprecated" />
   - Array of `.gitignore`-style patterns that match file or directory names from the sites directory. Matched items will not be uploaded.
 - `--upstream-protocol` <Type text="'http'|'https'" /> <MetaInfo text="(default: https) optional" />
   - Protocol to forward requests to host on.
@@ -801,7 +800,7 @@ None of the options for this command are required. Also, many can be set in your
   - The path to an entry point for your Worker. Only required if your `wrangler.toml` does not include a `main` key (for example, `main = "index.js"`).
 - `--name` <Type text="string" /> <MetaInfo text="optional" />
   - Name of the Worker.
-- `--no-bundle` <Type text="boolean" />  <MetaInfo text="(default: false) optional" />
+- `--no-bundle` <Type text="boolean" /> <MetaInfo text="(default: false) optional" />
   - Skip Wrangler's build steps. Particularly useful when using custom builds. Refer to [Bundling](https://developers.cloudflare.com/workers/wrangler/bundling/) for more information.
 - `--env` <Type text="string" /> <MetaInfo text="optional" />
   - Perform on a specific environment.
@@ -813,19 +812,18 @@ None of the options for this command are required. Also, many can be set in your
   - Flags to use for compatibility checks.
 - `--latest` <Type text="boolean" /> <MetaInfo text="(default: true) optional" />
   - Use the latest version of the Workers runtime.
-- `--legacy-assets` <Type text="string" /> <MetaInfo text="optional experimental" />
+- `--assets` <Type text="string" /> <MetaInfo text="optional beta" />
+  - Root folder of static assets to be served. Replaces [Workers Sites](/workers/configuration/sites/). Visit [assets](/workers/configuration/assets/) for more information.
+- `--legacy-assets` <Type text="string" /> <MetaInfo text="optional deprecated, use `--assets`" />
   - Root folder of static assets to be served.
-  - Use in combination with `--name` and `--latest` for basic static file hosting. For example: `wrangler dev --name personal_blog --legacy-assets dist/ --latest`.
-- `--assets` <Type text="string" /> <MetaInfo text="optional experimental" />
-  - Root folder of static assets to be served.
-    :::caution
-    This is an experimental feature and its behavior will be changing soon. Use `--legacy-assets` instead to ensure that you get consistent behavior when this option changes.
-    :::
-- `--site` <Type text="string" /> <MetaInfo text="optional" />
+- `--site` <Type text="string" /> <MetaInfo text="optional deprecated, use `--assets`" />
   - Root folder of static assets for Workers Sites.
-- `--site-include` <Type text="string[]" /> <MetaInfo text="optional" />
+    :::caution
+    Workers Sites is deprecated. Please use [Workers Assets](/workers/configuration/assets/) or [Pages](/pages/})
+    :::
+- `--site-include` <Type text="string[]" /> <MetaInfo text="optional deprecated" />
   - Array of `.gitignore`-style patterns that match file or directory names from the sites directory. Only matched items will be uploaded.
-- `--site-exclude` <Type text="string[]" /> <MetaInfo text="optional" />
+- `--site-exclude` <Type text="string[]" /> <MetaInfo text="optional deprecated" />
   - Array of `.gitignore`-style patterns that match file or directory names from the sites directory. Matched items will not be uploaded.
 - `--var` <Type text="key:value\[]" /> <MetaInfo text="optional" />
   - Array of `key:value` pairs to inject as variables into your code. The value will always be passed as a string to your Worker.
@@ -1317,11 +1315,11 @@ wrangler pages dev [<DIRECTORY>] [OPTIONS]
 
 - `DIRECTORY` <Type text="string" /> <MetaInfo text="optional" />
   - The directory of static assets to serve.
-- `--local` <Type text="boolean" /> <MetaInfo text="optional (default: true)" /> 
+- `--local` <Type text="boolean" /> <MetaInfo text="optional (default: true)" />
   - Run on your local machine.
 - `--ip` <Type text="string" /> <MetaInfo text="optional" />
   - IP address to listen on, defaults to `localhost`.
-- `--port` <Type text="number" /> <MetaInfo text="optional (default: 8788)" /> 
+- `--port` <Type text="number" /> <MetaInfo text="optional (default: 8788)" />
   - The port to listen on (serve from).
 - `--binding` <Type text="string[]" /> <MetaInfo text="optional" />
   - Bind an environment variable or secret (for example, `--binding <VARIABLE_NAME>=<VALUE>`).
@@ -1333,13 +1331,13 @@ wrangler pages dev [<DIRECTORY>] [OPTIONS]
   - Binding name of [D1 database](/pages/functions/bindings/#interact-with-your-d1-databases-locally) to bind (for example, `--d1 <BINDING_NAME>`).
 - `--do` <Type text="string[]" /> <MetaInfo text="optional" />
   - Binding name of Durable Object to bind (for example, `--do <BINDING_NAME>=<CLASS>`).
-- `--live-reload` <Type text="boolean" /> <MetaInfo text="optional (default: false)" /> 
+- `--live-reload` <Type text="boolean" /> <MetaInfo text="optional (default: false)" />
   - Auto reload HTML pages when change is detected.
 - `--compatibility-flag` <Type text="string[]" /> <MetaInfo text="optional" />
   - Runtime compatibility flags to apply.
 - `--compatibility-date` <Type text="string" /> <MetaInfo text="optional" />
   - Runtime compatibility date to apply.
-- `--show-interactive-dev-session` <Type text="boolean" /> <MetaInfo text="optional (default: true if the terminal supports interactivity)" /> 
+- `--show-interactive-dev-session` <Type text="boolean" /> <MetaInfo text="optional (default: true if the terminal supports interactivity)" />
   - Show the interactive dev session.
 - `--https-key-path` <Type text="string" /> <MetaInfo text="optional" />
   - Path to a custom certificate key.

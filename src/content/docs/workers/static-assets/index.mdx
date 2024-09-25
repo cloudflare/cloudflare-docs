@@ -1,0 +1,62 @@
+---
+pcx_content_type: navigation
+title: Static Assets
+sidebar:
+  order: 6
+  badge: Beta
+head: []
+description: Create full-stack applications deployed to Cloudflare Workers.
+---
+
+import {
+	Badge,
+	Description,
+	InlineBadge,
+	Render,
+	TabItem,
+	Tabs,
+	Feature,
+} from "~/components";
+
+<Description>
+	Create fast, scalable frontend applications deployed to Cloudflare Workers.
+</Description>
+
+---
+
+### What you can build
+
+<Feature header="Static Websites" href="/workers/frameworks/get-started/#deploying-a-static-site" cta="Deploy a static site">
+
+Deploy static sites like blogs, portfolios, or documentation pages. Serve HTML, CSS, JavaScript, and media files directly from Cloudflare's network for low-latency access worldwide.
+
+</Feature>
+
+<Feature header="Full-stack Applications" href="/workers/frameworks/get-started/#deploying-a-dynamic-site" cta="Deploy a full-stack application">
+
+Build dynamic and interactive server-side rendered (SSR) applications on Cloudflare Workers.
+
+Combine asset hosting with Cloudflare's data and storage products such as [Workers KV](/kv/), [Durable Objects](/durable-objects/), and [R2 Storage](/r2/) to build full-stack applications. Manage both frontend and backend logic on Cloudflare's Developer Platform.
+
+</Feature>
+
+### Supported frameworks
+
+The following Frameworks are currently supported on Cloudflare Workers:
+
+- Angular
+- Astro
+- Docusaurus
+- Gatsby
+- Nuxt
+- Qwik
+- Remix
+- Solid
+- Svelte
+
+:::note
+
+If you're looking for a framework not on this list, it may be supported in [Cloudflare Pages](/pages/). For example, popular frameworks such as [Next.js](/pages/framework-guides/nextjs/) and [Vue](/pages/framework-guides/deploy-a-vue-site/) are supported on Pages. Visit [Pages Frameworks guides](/pages/framework-guides/) for a full list.
+
+Have a framework you would like to see supported on Workers or a feature request? Tell us about it! [link to feedback form]
+:::

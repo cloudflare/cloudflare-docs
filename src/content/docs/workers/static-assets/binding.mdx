@@ -1,0 +1,133 @@
+---
+pcx_content_type: concept
+title: Binding
+sidebar:
+  order: 7
+  badge: Beta
+head: []
+description: Create a Worker with assets throught the wrangler CLI or through a Git integration.
+---
+
+import {
+	Badge,
+	Description,
+	FileTree,
+	InlineBadge,
+	Render,
+	TabItem,
+	Tabs,
+} from "~/components";
+
+Configuring a project with assets requires specifying a [directory](/workers/configuration/assets/#directory) or an [assets binding](/workers/configuration/assets/#binding) in the project's `wrangler.toml` file. Only one assets directory/binding can be configured for each project.
+
+## Directory
+
+Root folder of static assets to be served. For static site only projects. For many frameworks, this is the `./public` or `./dist` folder.
+
+```sh title="wrangler.toml"
+name = "my-worker"
+compatibility_date = "2024-09-19"
+assets = { directory = "public"}
+```
+
+## Binding
+
+The assets binding is used in full-stack applications. The [binding](/workers/runtime-apis/bindings) gives you access to the directory of assets from within a Worker.
+
+```sh title="wrangler.toml"
+name = "my-worker"
+main = "src/index.js"
+compatibility_date = "2024-09-19"
+
+assets = { directory = "./public", binding = "ASSETS" }
+```
+
+### `fetch()`
+
+**Parameters**
+
+- `request: Request` Pass a [Request object](/workers/runtime-apis/request/), URL string, or URL object.Requests made through this method have `html_handling` and `not_found_handling` configuration applied to them.
+
+**Response**
+
+- `Promise<Response>` Returns a static asset matching the given request.
+
+**Example**
+
+Your dynamic code can make or forward requests to your project’s static assets using the assets binding.
+
+Take the following example that configures a Worker to return a response under all requests headed for `/api/`. Otherwise, the Worker will fallback to returning static assets.
+
+<Tabs> <TabItem label="JavaScript" icon="seti:javascript">
+
+```js
+export default {
+	async fetch(request, env) {
+		const url = new URL(request.url);
+		if (url.pathname.startsWith("/api/")) {
+			// TODO: Add your custom /api/* logic here.
+			return new Response("Ok");
+		}
+		// Otherwise, serve the static assets.
+		// Without this, the Worker will error and no assets will be served.
+		return env.ASSETS.fetch(request);
+	},
+};
+```
+
+</TabItem> <TabItem label="TypeScript" icon="seti:typescript">
+
+```ts
+interface Env {
+	ASSETS: Fetcher;
+}
+
+export default {
+	async fetch(request, env): Promise<Response> {
+		const url = new URL(request.url);
+		if (url.pathname.startsWith("/api/")) {
+			// TODO: Add your custom /api/* logic here.
+			return new Response("Ok");
+		}
+		// Otherwise, serve the static assets.
+		// Without this, the Worker will error and no assets will be served.
+		return env.ASSETS.fetch(request);
+	},
+} satisfies ExportedHandler<Env>;
+```
+
+</TabItem> </Tabs>
+
+:::caution
+The following methods are experimental and subject to change.
+:::
+
+### `unstable_exists()`
+
+**Parameters**:
+
+- `pathname: string` URL path. Requests made through this method are treated as "raw access" as they do not have `html_handling` and `not_found_handling` configuration applied to them.
+
+**Response**:
+
+- `Promise<string | null` Returns a promise of an etag for a specific assets.
+
+### `unstable_exists()`
+
+**Parameters**:
+
+- `eTag: string` eTag returned for an asset.
+
+**Response**:
+
+- `Promise<{ readableStream: ReadableStream; contentType: string }>` Returns a ReadableStream of data and contentType for a specific assets. Can be used to construct a response object.
+
+### `unstable_getByPathName()`
+
+**Parameters**:
+
+- `pathname: string` URL path. Requests made through this method are treated as "raw access" as they do not have `html_handling` and `not_found_handling` configuration applied to them.
+
+**Response**:
+
+- `Promise<{ readableStream: ReadableStream; contentType: string }>` Returns a ReadableStream of data and contentType for a specific assets. Can be used to construct a response object.
