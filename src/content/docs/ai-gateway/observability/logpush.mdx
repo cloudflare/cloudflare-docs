@@ -8,7 +8,10 @@ sidebar:
 
 import { Render } from "~/components";
 
-AI Gateway allows you to securely export logs to an external storage location, where you can decrypt and process them. This guide explains how to set up Logpush for AI Gateway, generate an RSA key pair for encryption, and decrypt the logs once they are received.
+AI Gateway allows you to securely export logs to an external storage location, where you can decrypt and process them.
+You can toggle Logpush on and off in the [Cloudflare dashboard](https://dash.cloudflare.com) settings.
+
+This guide explains how to set up Logpush for AI Gateway, generate an RSA key pair for encryption, and decrypt the logs once they are received.
 Logpush has a limit of 4 jobs. If you have reached the [limit of logs stored for your plan](/ai-gateway/reference/limits/), logs will not be exported through Logpush.
 
 <Render file="limits-increase" product="ai-gateway" />
@@ -46,13 +49,21 @@ console.log(publicKey);
 console.log(privateKey);
 ```
 
+This script will output your RSA privateKey and publicKey. Keep the private key secure, as it will be used to decrypt the logs.
+
 ## 2. Upload public key to gateway settings
 
-Once you have generated the key pair, upload the public key to your AI Gateway settings. This key will be used to encrypt your logs.
+Once you have generated the key pair, upload the public key to your AI Gateway settings. This key will be used to encrypt your logs. For more information on Logpush refer to [Logs](/logs/get-started/).
+
+:::note[Note]
+You should enable Logpush in AI Gateway settings. This option only shows up when logs are enabled.
+You can toggle on or off as needed. If you do not have logs turned on nothing will be saved.
+
+:::
 
 ## 3. Receive encrypted logs
 
-After configuring Logpush, logs will be sent encrypted using the public key you uploaded. To access the data, you will need to decrypt it using your private key.
+After configuring Logpush, logs will be sent encrypted using the public key you uploaded. To access the data, you will need to decrypt it using your private key. The logs will be sent to the object storage provider that you have selected.
 
 ## 4. Decrypting logs
 
