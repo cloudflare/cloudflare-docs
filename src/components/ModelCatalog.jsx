@@ -79,17 +79,17 @@ const ModelCatalog = ({ models }) => {
 	});
 
 	return (
-		<div className="flex">
-			<div className="w-1/4 mr-8">
+		<div className="md:flex">
+			<div className="md:w-1/4 w-full mr-8">
 				<input
 					type="text"
-					className="w-full rounded-md bg-white dark:bg-black border-2 border-gray-200 dark:border-gray-700 px-2 py-2"
+					className="w-full mb-8 rounded-md bg-white dark:bg-black border-2 border-gray-200 dark:border-gray-700 px-2 py-2"
 					placeholder="Search models"
 					value={filters.search}
 					onChange={(e) => setFilters({ ...filters, search: e.target.value })}
 				/>
 
-				<div className="!mt-8">
+				<div className="!mb-8 md:block hidden">
 					<span className="uppercase text-gray-600 dark:text-gray-200 text-sm font-bold">
 						▼ Model Types
 					</span>
@@ -119,7 +119,7 @@ const ModelCatalog = ({ models }) => {
 					))}
 				</div>
 
-				<div className="!mt-8">
+				<div className="!mb-8 md:block hidden">
 					<span className="uppercase text-gray-600 dark:text-gray-200 text-sm font-bold">
 						▼ Capabilities
 					</span>
@@ -151,7 +151,7 @@ const ModelCatalog = ({ models }) => {
 					))}
 				</div>
 
-				<div className="!mt-8">
+				<div className="md:block hidden">
 					<span className="uppercase text-gray-600 dark:text-gray-200 text-sm font-bold">
 						▼ Authors
 					</span>
@@ -183,38 +183,8 @@ const ModelCatalog = ({ models }) => {
 					))}
 				</div>
 			</div>
-			<div className="flex w-3/4 gap-[1%] items-stretch self-start flex-wrap !mt-0">
+			<div className="flex md:w-3/4 w-full gap-[1%] items-stretch self-start flex-wrap !mt-0">
 				{modelList.map((model) => {
-					const badges = model.model.properties.flatMap(
-						({ property_id, value }) => {
-							if (property_id === "lora" && value === "true") {
-								return {
-									variant: "tip",
-									text: "LoRA",
-								};
-							}
-
-							if (property_id === "function_calling" && value === "true") {
-								return {
-									variant: "note",
-									text: "Function calling",
-								};
-							}
-
-							if (property_id === "planned_deprecation_date") {
-								const timestamp = Math.floor(new Date(value).getTime() / 1000);
-
-								if (Date.now() > timestamp) {
-									return { variant: "danger", text: "Deprecated" };
-								}
-
-								return { variant: "danger", text: "Planned deprecation" };
-							}
-
-							return [];
-						},
-					);
-
 					const isBeta = model.model.properties.find(
 						({ property_id, value }) =>
 							property_id === "beta" && value === "true",
@@ -227,7 +197,7 @@ const ModelCatalog = ({ models }) => {
 					return (
 						<a
 							key={model.model.id}
-							className="p-3 border-gray-200 dark:border-gray-700 border-solid border rounded-md w-[48%] block !text-inherit no-underline self-start hover:bg-gray-50 dark:hover:bg-black mb-3"
+							className="p-3 border-gray-200 dark:border-gray-700 border-solid border rounded-md lg:w-[48%] w-full block !text-inherit no-underline self-start hover:bg-gray-50 dark:hover:bg-black mb-3"
 							href={`/workers-ai/models/${model.model_display_name}`}
 						>
 							<div className="-mb-1 flex items-center">
