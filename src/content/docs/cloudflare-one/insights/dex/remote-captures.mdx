@@ -33,16 +33,19 @@ Remote captures allow administrators to collect packet captures (PCAPs) and WARP
 To capture data from a remote device:
 
 1. In [Zero Trust](https://one.dash.cloudflare.com/), go to **DEX** > **Remote captures**.
-2. Select the device(s) you want to run a capture on. Devices must be [registered](/cloudflare-one/connections/connect-devices/warp/deployment/) in your Zero Trust organization.
+2. Select up to 10 devices that you want to run a capture on. Devices must be [registered](/cloudflare-one/connections/connect-devices/warp/deployment/) in your Zero Trust organization.
 3. Configure the types of captures to run.
-	- **PCAP**: Performs packet captures by running `warp-cli debug pcap start` and `warp-cli debug pcap stop` commands on the device. The capture will include two files -- a PCAP for traffic outside of the WARP tunnel (default network interface), and a PCAP for traffic inside of the WARP tunnel ([WARP virtual interface](/cloudflare-one/connections/connect-devices/warp/configure-warp/route-traffic/warp-architecture/#ip-traffic)).
-		<Details header="PCAP limits">
+	- **PCAP**: Performs packet captures for traffic outside of the WARP tunnel (default network interface) and traffic inside of the WARP tunnel ([WARP virtual interface](/cloudflare-one/connections/connect-devices/warp/configure-warp/route-traffic/warp-architecture/#ip-traffic)).
+		<Details header="PCAP capture limits">
 		Packet captures are subject to the following limits:
-			- **Maximum time limit**: 1,800 seconds
-			- **Maximum file size**: 100 MB
-			- **Maximum packet size**: 160 bytes
+			- **Maximum time limit**: 600 seconds
+			- **Maximum file size**: 50 MB
+			- **Maximum packet size**: 1500 bytes
 		</Details>
-	- **WARP Diagnostics Logs**: Generates [WARP diagnostic logs](/cloudflare-one/connections/connect-devices/warp/troubleshooting/warp-logs/#warp-diag-logs) by running a `warp-diag` command on the device. You can optionally select **Test all routes** to run an `ip route get` command for all IPs and domains in your [Split Tunnel configuration](/cloudflare-one/connections/connect-devices/warp/configure-warp/route-traffic/split-tunnels/).
+	- **WARP Diagnostics Logs**: Generates a [WARP diagnostic log](/cloudflare-one/connections/connect-devices/warp/troubleshooting/warp-logs/#warp-diag-logs) of the past 96 hours. To include a routing test for all IPs and domains in your [Split Tunnel configuration](/cloudflare-one/connections/connect-devices/warp/configure-warp/route-traffic/split-tunnels/), select **Test all routes**.
+		<Details header="WARP capture limits">
+		WARP diagnostic logs have no file size limit, but files larger than 100 MB cannot be uploaded to Cloudflare and must be shared directly with the admin.
+		</Details>
 4. Select **Start a capture**.
 
 DEX will now send capture requests to the configured devices. If the WARP client is disconnected, the capture will time out after 10 minutes.
