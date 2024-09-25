@@ -7,7 +7,9 @@ The Durable Objects [Storage API](/durable-objects/api/storage-api) is only acce
 
 Durable Objects do not have to use the Storage API, but if your code does call methods on `ctx.storage`, it will incur additional charges.
 
-### Key-value storage billing
+Pricing depends on whether a Durable Object class has default, key-value storage backend or opt-in [SQLite storage backend](/durable-objects/best-practices/access-durable-objects-storage/#sqlite-storage-backend). 
+
+### Key-value storage backend
 
 |                                  | Workers Paid plan          |
 | -------------------------------- | -------------------------- |
@@ -28,19 +30,19 @@ Durable Objects do not have to use the Storage API, but if your code does call m
 
 Requests that hit the [Durable Objects in-memory cache](/durable-objects/reference/in-memory-state/) or that use the [multi-key versions of `get()`/`put()`/`delete()` methods](/durable-objects/api/storage-api/) are billed the same as if they were a normal, individual request for each key.
 
-### SQL storage billing 
+### SQLite storage backend 
 
 :::note[SQLite in Durable Objects Beta]
 
-New beta version of Durable Objects is available where each Durable Object has a private, embedded SQLite database. When deploying a new Durable Object class, users can [opt-in to using SQL storage](/durable-objects/best-practices/access-durable-objects-storage/#sql-storage) in order to access [Storage SQL API methods](/durable-objects/api/storage-api/#sqlexec).
+The new beta version of Durable Objects is available where each Durable Object has a private, embedded SQLite database. When deploying a new Durable Object class, users can [opt-in to a SQLite storage backend](/durable-objects/best-practices/access-durable-objects-storage/#sqlite-storage-backend) in order to access new [SQL API](/durable-objects/api/storage-api/#sqlexec).
 
-During the initial beta, Storage API billing is not enabled for Durable Object classes with SQL storage. SQLite-backed Durable Objects will incur [charges for requests and duration](/durable-objects/platform/pricing/#billing-metrics). We plan to enable SQL storage billing in the first half of 2025 with advance notice. 
+During the initial beta, Storage API billing is not enabled for Durable Object classes using SQLite storage backend. SQLite-backed Durable Objects will incur [charges for requests and duration](/durable-objects/platform/pricing/#billing-metrics). We plan to enable Storage API billing for Durable Objects using SQLite storage backend in the first half of 2025 after advance notice with the below pricing.
 
-You can introspect rows read and rows written using `cursor.rowsRead` and `cursor.rowsWritten` on the [cursor returned](/durable-objects/api/storage-api/#returns) by a SQL query. [`ctx.storage.sql.databaseSize`](/durable-objects/api/storage-api/#sqldatabaseSize) returns the current SQL database size for a Durable Object. SQL billing metrics will be added to GraphQL analytics in the future.
+You can introspect rows read and rows written using `cursor.rowsRead` and `cursor.rowsWritten` on the [cursor returned](/durable-objects/api/storage-api/#returns) by a SQL query and using [GraphQL analytics](/durable-objects/observability/graphql-analytics/#query-via-the-graphql-api). [`ctx.storage.sql.databaseSize`](/durable-objects/api/storage-api/#sqldatabaseSize) returns the current SQL database size for a Durable Object.
 
 :::
 
-For [Durable Objects classes with SQL access](/durable-objects/reference/durable-objects-migrations/#enable-sql-storage-on-create-durable-object-class-migration) via `ctx.storage.sql` the following pricing is used instead:
+For [Durable Objects classes with SQLite storage backend](/durable-objects/reference/durable-objects-migrations/#enable-sqlite-storage-backend-on-create-durable-object-class-migration) via `ctx.storage.sql` the following pricing is used instead:
 
 |                             | Workers Paid plan          |
 | ----------------------------| -------------------------- |

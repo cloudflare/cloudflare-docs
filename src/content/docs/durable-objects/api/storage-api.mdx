@@ -8,7 +8,7 @@ sidebar:
 
 import { Render } from "~/components";
 
-The Storage API allows Durable Objects to access transactional and strongly consistent key-value storage or (beta) [SQL storage](/durable-objects/api/storage-api/#sqlexec). A Durable Object's attached storage is private to its unique instance and cannot be accessed by other objects. 
+The Storage API allows Durable Objects to access transactional and strongly consistent storage. A Durable Object's attached storage is private to its unique instance and cannot be accessed by other objects. 
 
 Durable Objects gain access to a persistent Storage API via `ctx.storage`, on the `ctx` parameter passed to the Durable Object constructor.
 
@@ -43,13 +43,14 @@ export class Counter {
 
 :::note[SQLite in Durable Objects Beta]
 
-New beta version of Durable Objects is available where each Durable Object has a private, embedded SQLite database. SQL storage is [opt-in during beta](/durable-objects/reference/durable-objects-migrations/#enable-sql-storage-on-create-durable-object-class-migration) when creating a Durable Object class; otherwise, a Durable Object class has the standard, private key-value storage. Objects with SQL storage can use the [SQL API](/durable-objects/api/storage-api/#sqlexec). 
-
-All Storage API methods work with SQL storage. Key-value methods like `get()`, `put()`, `delete()`, or `list()` store data in a hidden SQLite table. 
+The ew beta version of Durable Objects is available where each Durable Object has a private, embedded SQLite database. When deploying a new Durable Object class, users can [opt-in to a SQLite storage backend](/durable-objects/best-practices/access-durable-objects-storage/#sqlite-storage-backend) in order to access new [SQL API](/durable-objects/api/storage-api/#sqlexec). Otherwise, a Durable Object class has a key-value storage backend.
 
 :::
 
-The Storage API comes with several methods.
+The Storage API comes with several methods, including key-value (KV) API, SQL API, and point-in-time-recovery (PITR) API. 
+
+- Durable Object classes with the default, key-value storage backend can use KV API.
+- Durable Object classes with the [SQLite storage backend](/durable-objects/best-practices/access-durable-objects-storage/#sqlite-storage-backend) can use KV API, SQL API, and PITR API. KV API methods like `get()`, `put()`, `delete()`, or `list()` store data in a hidden SQLite table. 
 
 Each method is implicitly wrapped inside a transaction, such that its results are atomic and isolated from all other storage operations, even when accessing multiple key-value pairs.
 
@@ -230,7 +231,7 @@ The `put()` method returns a `Promise`, but most applications can discard this p
 
 :::note[SQLite in Durable Objects Beta]
 
-SQL API methods accessed with `ctx.storage.sql` are only allowed on [Durable Object classes with SQL storage](/durable-objects/reference/durable-objects-migrations/#enable-sql-storage-on-create-durable-object-class-migration) and will return an error if called on Durable Objects with key-value storage.
+SQL API methods accessed with `ctx.storage.sql` are only allowed on [Durable Object classes with SQLite storage backen](/durable-objects/reference/durable-objects-migrations/#enable-sqlite-storage-backend-on-create-durable-object-class-migration) and will return an error if called on Durable Object classes with a key-value storage backend.
 
 :::
 
@@ -296,7 +297,7 @@ The current SQLite database size in bytes.
 
 ### Point in time recovery
 
-For [Durable Objects classes with SQL storage](/durable-objects/reference/durable-objects-migrations/#enable-sql-storage-on-new-durable-object-class-migration), the following point-in-time-recovery (PITR) API methods are available to restore a Durable Object's embedded SQLite database to any point in time in the past 30 days. These methods apply to the entire SQLite database contents, including both the object's stored SQL data and stored key-value data using the key-value `put()` API. The PITR API is not supported in local development because a durable log of data changes is not stored locally. 
+For [Durable Objects classes with SQL storage](/durable-objects/reference/durable-objects-migrations/#enable-sqlite-storage-backend-on-new-durable-object-class-migration), the following point-in-time-recovery (PITR) API methods are available to restore a Durable Object's embedded SQLite database to any point in time in the past 30 days. These methods apply to the entire SQLite database contents, including both the object's stored SQL data and stored key-value data using the key-value `put()` API. The PITR API is not supported in local development because a durable log of data changes is not stored locally. 
 
 The PITR API represents points in times using "bookmarks". A bookmark is a mostly alphanumeric string like `0000007b-0000b26e-00001538-0c3e87bb37b3db5cc52eedb93cd3b96b`. Bookmarks are designed to be lexically comparable: a bookmark representing an earlier point in time compares less than one representing a later point, using regular string comparison.
 
