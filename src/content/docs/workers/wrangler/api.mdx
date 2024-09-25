@@ -9,7 +9,7 @@ description: A set of programmatic APIs that can be integrated with local
 
 ---
 
-import { Render, TabItem, Tabs } from "~/components"
+import { Render, TabItem, Tabs, Type, MetaInfo } from "~/components"
 
 Wrangler offers APIs to programmatically interact with your Cloudflare Workers.
 
@@ -48,7 +48,7 @@ const worker = await unstable_dev(script, options)
 
   * A string containing a path to your Worker script, relative to your Worker project's root directory.
 
-* `options` object optional
+* `options` <Type text="object" /> <MetaInfo text="optional" />
 
   * Optional options object containing `wrangler dev` configuration settings.
   * Include an `experimental` object inside `options` to access experimental features such as `disableExperimentalWarning`.
@@ -257,7 +257,7 @@ const platform = await getPlatformProxy(options);
 
 
 
-* `options` object optional
+* `options` <Type text="object" /> <MetaInfo text="optional" />
 
   * Optional options object containing preferences for the bindings:
 
@@ -375,6 +375,15 @@ The bindings supported by `getPlatformProxy` are:
 * [Queue bindings](/queues/configuration/javascript-apis/)
 
 * [D1 database bindings](/d1/build-with-d1/d1-client-api/)
+
+* [Hyperdrive bindings](/hyperdrive)
+
+  :::note[Hyperdrive values are simple passthrough ones]
+
+  Values provided by hyperdrive bindings such as `connectionString` and `host` do not have a valid meaning outside of a `workerd` process.
+  This means that Hyperdrive proxies return passthrough values, which are values corresponding to the database connection provided by the user.  Otherwise, it would return values which would be unusable from within node.js.
+
+  :::
 
 * [Workers AI bindings](/workers-ai/get-started/workers-wrangler/#2-connect-your-worker-to-workers-ai)
 

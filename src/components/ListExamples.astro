@@ -1,5 +1,6 @@
 ---
-import { getCollection, z } from "astro:content";
+import { z } from "astro:schema";
+import { getCollection } from "astro:content";
 import { marked } from "marked";
 
 import { CardGrid } from "@astrojs/starlight/components";
@@ -26,7 +27,7 @@ if (directory) {
 const examples = await getCollection("docs", (entry) => {
 	return (
 		entry.data.pcx_content_type === "example" &&
-		(entry.slug.startsWith(target) ||
+		((target && entry.slug.startsWith(target)) ||
 			(additionalProducts !== undefined &&
 				entry.data.products?.some((v: string) =>
 					additionalProducts?.includes(v),

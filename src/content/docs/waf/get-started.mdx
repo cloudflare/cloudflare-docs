@@ -11,7 +11,7 @@ The Cloudflare Web Application Firewall (Cloudflare WAF) checks incoming web and
 
 This page will guide you through the recommended initial steps for configuring the WAF to get immediate protection against the most common attacks.
 
-Refer to [Concepts](/waf/about/) for more information on WAF concepts, main components, and roles.
+Refer to [Concepts](/waf/concepts/) for more information on WAF concepts, main components, and roles.
 
 :::note
 This guide focuses on configuring WAF for individual domains, known as <GlossaryTooltip term="zone">zones</GlossaryTooltip>. The WAF configuration is also available at the account level for Enterprise customers with a paid add-on.
@@ -52,7 +52,7 @@ For more information on configuring the Cloudflare Managed Ruleset in the dashbo
 WAF attack score is only available to Business customers (limited access to a single field) and Enterprise customers (full access).
 :::
 
-[WAF attack score](/waf/about/waf-attack-score/) is a machine-learning layer that complements Cloudflare's managed rulesets, providing additional protection against SQL injection (SQLi), Cross-site scripting (XSS), and many remote code execution (RCE) attacks. It helps identify rule bypasses and potentially new, undiscovered attacks.
+[WAF attack score](/waf/detections/attack-score/) is a machine-learning layer that complements Cloudflare's managed rulesets, providing additional protection against SQL injection (SQLi), Cross-site scripting (XSS), and many remote code execution (RCE) attacks. It helps identify rule bypasses and potentially new, undiscovered attacks.
 
 If you are an Enterprise customer, do the following:
 
@@ -71,7 +71,7 @@ If you are an Enterprise customer, do the following:
 
       - **Choose action**: Block
 
-If you are on a Business plan, create a custom rule as mentioned above but use the [WAF Attack Score Class](/waf/about/waf-attack-score/#available-scores) field instead. For example, you could use the following rule expression: `WAF Attack Score Class equals Attack`.
+If you are on a Business plan, create a custom rule as mentioned above but use the [WAF Attack Score Class](/waf/detections/attack-score/#available-scores) field instead. For example, you could use the following rule expression: `WAF Attack Score Class equals Attack`.
 
 ## 3. Create custom rule based on bot score
 
@@ -104,8 +104,7 @@ Once you have deployed the Cloudflare Managed Ruleset and rules based on attack 
 
 After configuring the Cloudflare Managed Ruleset and attack score, you can also deploy the [Cloudflare OWASP Core Ruleset](/waf/managed-rules/reference/owasp-core-ruleset/). This managed ruleset is Cloudflare's implementation of the OWASP ModSecurity Core Rule Set. Its attack coverage significantly overlaps with Cloudflare Managed Ruleset by detecting common attack vectors such as SQLi and XSS.
 
-:::caution[Warning]
-
+:::caution
 The Cloudflare OWASP Core Ruleset is prone to false positives and offers only marginal benefits when added on top of Cloudflare Managed Ruleset and WAF attack score. If you decide to deploy this managed ruleset, you will need to monitor and adjust its settings based on your traffic to prevent false positives.
 :::
 
@@ -134,7 +133,7 @@ Users on the Free plan only have access to Security Events.
 
 After setting up your WAF configuration, review how incoming traffic is being affected by your current settings using the following dashboards:
 
-- Use [Security Analytics](/waf/analytics/security-analytics/) to explore all traffic, including traffic not affected by WAF mitigation measures. All data provided by [traffic detections](/waf/about/#available-traffic-detections) is available in this dashboard.
+- Use [Security Analytics](/waf/analytics/security-analytics/) to explore all traffic, including traffic not affected by WAF mitigation measures. All data provided by [traffic detections](/waf/concepts/#available-traffic-detections) is available in this dashboard.
 - Use [Security Events](/waf/analytics/security-events/) to get more information about requests that are being mitigated by Cloudflare security products.
 
 Enterprise customers can also obtain data about HTTP requests and security events using [Cloudflare Logs](/logs/).
@@ -167,7 +166,7 @@ Use [leaked credential checks](/waf/managed-rules/check-for-exposed-credentials/
 Available to Enterprise customers with a paid add-on.
 :::
 
-[Use WAF content scanning](/waf/about/content-scanning/get-started/) to scan content being uploaded to your application, searching for malicious content.
+[Use WAF content scanning](/waf/detections/malicious-uploads/get-started/) to scan content being uploaded to your application, searching for malicious content.
 
 ### Get additional security for your APIs
 

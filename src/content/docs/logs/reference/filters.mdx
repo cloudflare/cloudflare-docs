@@ -48,22 +48,22 @@ Filters can be set via API or the Cloudflare dashboard. Note that using a filter
 Here is an example request using cURL via API:
 
 ```bash
-curl -s -X POST https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/logpush/jobs \
--H 'X-Auth-Key: <KEY>' \
--H 'X-Auth-Email: <EMAIL>' \
--H 'Content-Type: application/json' \
--d '{
-"name":"static-assets",
-"output_options": {
+curl https://api.cloudflare.com/client/v4/zones/{zone_id}/logpush/jobs \
+--header "X-Auth-Email: <EMAIL>" \
+--header "X-Auth-Key: <API_KEY>" \
+--header "Content-Type: application/json" \
+--data '{
+  "name": "static-assets",
+  "output_options": {
     "field_names": ["ClientIP", "EdgeStartTimestamp", "RayID"],
     "sample_rate": 0.1,
     "timestamp_format": "rfc3339"
     "CVE-2021-44228": "true"
-},
-"dataset": "http_requests",
-"filter":"{\"where\":{\"and\":[{\"key\":\"ClientRequestPath\",\"operator\":\"contains\",\"value\":\"/static\"},{\"key\":\"ClientRequestHost\",\"operator\":\"eq\",\"value\":\"example.com\"}]}}",
-"destination_conf": "s3://<BUCKET_PATH>?region=us-west-2/"
-}' | jq .
+  },
+  "dataset": "http_requests",
+  "filter": "{\"where\":{\"and\":[{\"key\":\"ClientRequestPath\",\"operator\":\"contains\",\"value\":\"/static\"},{\"key\":\"ClientRequestHost\",\"operator\":\"eq\",\"value\":\"example.com\"}]}}",
+  "destination_conf": "s3://<BUCKET_PATH>?region=us-west-2/"
+}'
 ```
 
 ### Dashboard

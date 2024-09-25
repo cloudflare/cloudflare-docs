@@ -1,0 +1,71 @@
+---
+{}
+
+---
+
+import { Tabs, TabItem, Render } from "~/components"
+
+
+<Tabs syncKey="dashPlusAPI">
+<TabItem label="Dashboard">
+1. In [Zero Trust](https://one.dash.cloudflare.com/), go to **Access** > **Applications**.
+2. Select **Add an application**.
+3. Select **Infrastructure**.
+4. Enter any name for the application.
+5. In **Target criteria**, select the target hostname(s) that will represent the application. The application definition will apply to all targets that share the selected hostname, including any targets added in the future.
+6. Enter the **Protocol** and **Port** that will be used to connect to the server.
+7. (Optional) If a protocol runs on more than one port, select **Add new target criteria** and reconfigure the same target hostname and protocol with a different port number.
+8. Select **Next**.
+</TabItem>
+<TabItem label="API">
+
+To add an infrastructure application using the [API](/api/operations/access-applications-add-an-application):
+
+```sh
+curl https://api.cloudflare.com/client/v4/accounts/{account_id}/access/apps \
+--header "Authorization: Bearer <API_TOKEN>" \
+--header "Content-Type: application/json" \
+--data '{
+	"name": "example app",
+	"type": "infrastructure",
+	"target_criteria": [
+		{
+			"target_attributes": {
+				"hostname": [
+					"infra-access-target"
+				]
+			},
+			"port": 22,
+			"protocol": "SSH"
+		}
+	],
+	"policies": [
+		{
+			"name": "Allow a specific email",
+			"decision": "allow",
+			"include": [
+				{
+					"email": {
+						"email": "jdoe@company.com"
+					}
+				}
+			],
+			"connection_rules": {
+				"ssh": {
+					"usernames": [
+						"root",
+						"ec2-user"
+					]
+				}
+			}
+		}
+	]
+}'
+```
+
+</TabItem>
+</Tabs>
+
+:::note
+Access for Infrastructure only supports assigning one protocol per port. You can reuse a port/protocol pairing across infrastructure applications, but the port cannot be reassigned to another protocol.
+:::

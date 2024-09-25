@@ -17,7 +17,8 @@ At the account level, you must first create a custom rate limiting ruleset, cont
 
 - Account-level rate limiting configuration requires an Enterprise plan with a paid add-on.
 - At the API level, custom rate limiting rulesets are regular [custom rulesets](/waf/custom-rules/custom-rulesets/) with one or more rate limiting rules. The concept of custom rate limiting ruleset exists only in the Cloudflare dashboard to make it clear that you are configuring and deploying rate limiting rules at the account level.
-  :::
+
+:::
 
 ## 1. Create a custom rate limiting ruleset
 
@@ -76,7 +77,6 @@ To deploy a custom rate limiting ruleset to one or more zones on an Enterprise p
 5. Under **Execution scope**, review the scope of the rate limiting ruleset to deploy. If necessary, select **Edit scope** and configure the expression that will determine the scope of the current rule.
 
    :::caution
-
    Deployed custom rate limiting rulesets will only apply to incoming traffic of zones on an Enterprise plan. The Expression Builder will automatically include this filter. If you define a custom expression using the Expression Editor, you must include `AND zone.level eq "ENT"` in your expression so that the rule only applies to zones on an Enterprise plan.
    :::
 

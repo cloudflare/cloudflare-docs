@@ -1,5 +1,5 @@
 ---
-import { getEntry } from "astro:content";
+import { getEntry, type CollectionEntry } from "astro:content";
 import { marked } from "marked";
 import { getChangelogs } from "~/util/changelogs";
 import AnchorHeading from "~/components/AnchorHeading.astro";
@@ -25,13 +25,13 @@ if (page.data.changelog_file_name && page.data.changelog_file_name.length > 1) {
 }
 
 const name =
-	page.data.changelog_product_area_name ?? page.data.changelog_file_name[0];
+	page.data.changelog_product_area_name ?? page.data.changelog_file_name?.[0];
 
 let changelogs;
 
 if (page.data.changelog_product_area_name) {
 	const opts = {
-		filter: (entry) => {
+		filter: (entry: CollectionEntry<"changelogs">) => {
 			return entry.data.productArea === name;
 		},
 	};
@@ -44,7 +44,7 @@ if (page.data.changelog_product_area_name) {
 		({ changelogs } = await getChangelogs(opts));
 	} else {
 		const opts = {
-			filter: (entry) => {
+			filter: (entry: CollectionEntry<"changelogs">) => {
 				return entry.id === name;
 			},
 		};
@@ -63,7 +63,7 @@ if (!changelogs) {
 	changelogs.map(([date, entries]) => (
 		<div data-date={date}>
 			<AnchorHeading depth={2} title={date} />
-			{entries.map((entry) => (
+			{(entries ?? []).map((entry) => (
 				<div data-product={entry.product.toLowerCase()}>
 					{page.data.changelog_product_area_name && (
 						<h3 class="!mt-4">
@@ -71,7 +71,7 @@ if (!changelogs) {
 						</h3>
 					)}
 					{entry.title && <strong>{entry.title}</strong>}
-					<Fragment set:html={marked.parse(entry.description)} />
+					<Fragment set:html={marked.parse(entry.description ?? "")} />
 				</div>
 			))}
 		</div>
