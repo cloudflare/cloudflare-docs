@@ -165,6 +165,10 @@
 /src/content/docs/speed/ @angelampcosta @cloudflare/pcx-technical-writing
 /src/content/docs/web3/ @cloudflare/pcx-technical-writing
 
+# Privacy
+
+/src/content/docs/key-transparency/ @cloudflare/privacy @cloudflare/pcx-technical-writing
+
 # Radar
 
 /src/content/docs/radar/ @meddulla @G4brym @tiagoad @cloudflare/pcx-technical-writing
