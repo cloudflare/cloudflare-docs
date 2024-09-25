@@ -7,19 +7,17 @@ sidebar:
 
 import { GlossaryDefinition } from "~/components";
 
-:::note
+:::note[Availability]
 Available as an add-on to Zero Trust Enterprise plans.
+
+Users on Zero Trust Free and Pay-as-you-go plans can use the [Financial Information](/cloudflare-one/policies/data-loss-prevention/dlp-profiles/predefined-profiles/#financial-information) and [Social Security, Insurance, Tax, and Identifier Numbers](/cloudflare-one/policies/data-loss-prevention/dlp-profiles/predefined-profiles/#social-security-insurance-tax-and-identifier-numbers) predefined profiles, [payload logging](/cloudflare-one/policies/data-loss-prevention/dlp-policies/payload-logging/), and [false positive reporting](/cloudflare-one/policies/data-loss-prevention/dlp-policies/#report-false-positives).
 :::
 
 <GlossaryDefinition term="Cloudflare Data Loss Prevention (DLP)" />
 
 ## Data in transit
 
-:::note
-DLP requires [TLS decryption](/cloudflare-one/policies/gateway/http-policies/tls-decryption/) for visibility into data in transit. The depth of visibility varies for each site or application.
-:::
-
-Data Loss Prevention complements [Secure Web Gateway](/cloudflare-one/policies/gateway/) to detect sensitive data transferred in HTTP requests. DLP scans the entire HTTP body, which may include [uploaded or downloaded files](#supported-file-types), chat messages, forms, and other web content. DLP does not scan non-HTTP traffic such as email, nor does it scan any traffic that bypasses Cloudflare Gateway (for example, traffic that matches a [Do Not Inspect](/cloudflare-one/policies/gateway/http-policies/#do-not-inspect) policy.
+Data Loss Prevention complements [Secure Web Gateway](/cloudflare-one/policies/gateway/) to detect sensitive data transferred in HTTP requests. DLP scans the entire HTTP body, which may include [uploaded or downloaded files](#supported-file-types), chat messages, forms, and other web content. DLP does not scan non-HTTP traffic such as email, nor does it scan any traffic that bypasses Cloudflare Gateway (for example, traffic that matches a [Do Not Inspect](/cloudflare-one/policies/gateway/http-policies/#do-not-inspect) policy. The depth of visibility into data in transit varies for each site or application.
 
 To get started, refer to [Scan HTTP traffic with DLP](/cloudflare-one/policies/data-loss-prevention/dlp-policies/).
 
