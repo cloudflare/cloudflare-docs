@@ -98,37 +98,3 @@ export default {
 ```
 
 </TabItem> </Tabs>
-
-:::caution
-The following methods are experimental and subject to change.
-:::
-
-#### `unstable_exists()`
-
-**Parameters**:
-
-- `pathname: string` URL path. Requests made through this method are treated as "raw access" as they do not have `html_handling` and `not_found_handling` configuration applied to them.
-
-**Response**:
-
-- `Promise<string | null` Returns a promise of an etag for a specific assets.
-
-#### `unstable_exists()`
-
-**Parameters**:
-
-- `eTag: string` eTag returned for an asset.
-
-**Response**:
-
-- `Promise<{ readableStream: ReadableStream; contentType: string }>` Returns a ReadableStream of data and contentType for a specific assets. Can be used to construct a response object.
-
-#### `unstable_getByPathName()`
-
-**Parameters**:
-
-- `pathname: string` URL path. Requests made through this method are treated as "raw access" as they do not have `html_handling` and `not_found_handling` configuration applied to them.
-
-**Response**:
-
-- `Promise<{ readableStream: ReadableStream; contentType: string }>` Returns a ReadableStream of data and contentType for a specific assets. Can be used to construct a response object.

@@ -17,7 +17,7 @@ import {
 	Tabs,
 } from "~/components";
 
-## Routing: Worker and assets
+## File-based routing
 
 Assets are served using file-based routing. The structure and organization of files in your project's directory determine the routing paths for your application. When a request invokes a Worker with assets:
 
@@ -33,7 +33,7 @@ In this example, request to `example.com/api` doesn't match a static asset so th
 
 ![A request to `example.com/blog` runs the Worker.](~/assets/images/workers/platform/assets/workers-assets-invoke-worker.png)
 
-## Routing: Asset Serving
+## How to configure file-based routing
 
 If a request does not match an asset based on file-based routing, files are served based on the configuration options defined. There are two areas of asset handling that can be [configured in `wrangler.toml`](/workers/wrangler/configuration/#assets):
 

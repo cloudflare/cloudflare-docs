@@ -18,6 +18,7 @@ import {
 	TabItem,
 	Tabs,
 	Feature,
+	LinkButton,
 } from "~/components";
 
 <Description>
@@ -26,21 +27,25 @@ import {
 
 ---
 
-### What you can build
+## What you can build
 
-<Feature header="Static Websites" href="/workers/frameworks/get-started/#deploying-a-static-site" cta="Deploy a static site">
+### Static Websites
 
 Deploy static sites like blogs, portfolios, or documentation pages. Serve HTML, CSS, JavaScript, and media files directly from Cloudflare's network for low-latency access worldwide.
 
-</Feature>
+<LinkButton href="/workers/static-assets/get-started/#deploy-a-static-site">
+	Deploy a static site
+</LinkButton>
 
-<Feature header="Full-stack Applications" href="/workers/frameworks/get-started/#deploying-a-dynamic-site" cta="Deploy a full-stack application">
+### Full-stack Applicatoins
 
 Build dynamic and interactive server-side rendered (SSR) applications on Cloudflare Workers.
 
 Combine asset hosting with Cloudflare's data and storage products such as [Workers KV](/kv/), [Durable Objects](/durable-objects/), and [R2 Storage](/r2/) to build full-stack applications. Manage both frontend and backend logic on Cloudflare's Developer Platform.
 
-</Feature>
+<LinkButton href="/workers/static-assets/get-started/#deploy-a-full-stack-application">
+	Deploy a full-stack application
+</LinkButton>
 
 ### Supported frameworks
 
@@ -50,9 +55,8 @@ The following Frameworks are currently supported on Cloudflare Workers:
 
 :::note
 
-If you're looking for a framework not on this list, it may be supported in [Cloudflare Pages](/pages/). For example, popular frameworks such as [Next.js](/pages/framework-guides/nextjs/) and [Vue](/pages/framework-guides/deploy-a-vue-site/) are supported on Pages. Visit [Pages Frameworks guides](/pages/framework-guides/) for a full list.
+Static Assets for Workers is currently in open beta. If you're looking for a framework not on this list, it may be supported in [Cloudflare Pages](/pages/). Visit [Pages Frameworks guides](/pages/framework-guides/) for a full list.
 
-Have a framework you would like to see supported on Workers or a feature request? Tell us about it on [Cloudflare's Developer Discord](https://discord.gg/dqgZUwcD)!
 :::
 
 ### Pricing
@@ -61,10 +65,16 @@ Requests to static assets are free and unlimited. Refer to [pricing](/workers/pl
 
 ### Limitations
 
-The following limitations apply for Workers with assets:
+The following limitations apply for Workers with static assets:
 
-- [Smart Placement](/workers/configuration/smart-placement/) cannot be enabled for projects with Assets. We are actively working on removing this limitation.
-- Assets cannot be uploaded to [Workers for Platforms](/cloudflare-for-platforms/workers-for-platforms/) [user workers](/cloudflare-for-platforms/workers-for-platforms/reference/how-workers-for-platforms-works/). We are working on removing this limitation during the beta period.
-- [RPC](/workers/runtime-apis/bindings/service-bindings/rpc/) communication between service bindings are not supported in `wrangler dev` for Workers with assets. We are working on removing this limitation during the beta period.
-- Workers with assets cannot run on a [route or domain](/workers/configuration/routing/) with a path. Eg. `example.com` is an acceptable route but `example.com/foo` is not and will throw an error.
+- You cannot yet enable [Smart Placement](/workers/configuration/smart-placement/) projects with static assets. This is a temporary limitation, we are working to remove it.
+- You cannot upload static assets to [Workers for Platforms](/cloudflare-for-platforms/workers-for-platforms/) [user workers](/cloudflare-for-platforms/workers-for-platforms/reference/how-workers-for-platforms-works/). This is a temporary limitation, we are working to remove it.
+- In local development, you cannot make [Service Binding RPC calls](/workers/runtime-apis/bindings/service-bindings/rpc/) to a Worker with static assets. This is a temporary limitation, we are working to remove it.
+- Workers with assets cannot run on a [route or domain](/workers/configuration/routing/) with a path. Eg. `example.com` is an acceptable route but `example.com/foo` is not. The Worker will throw an error when you try and add the route with a path.
 - The [Vitest Integration](/workers/testing/vitest-integration/) does not currently handle static assets. All requests will reach your Worker, which can otherwise be tested as usual. This is a temporary limitation - we are working to remove it.
+
+:::note
+
+Have a framework you would like to see supported on Workers or a feature request? Tell us about it on [Cloudflare's Developer Discord](https://discord.gg/dqgZUwcD)!
+
+:::
