@@ -11,24 +11,24 @@ languages:
   - SQL
 ---
 
-import { Render, PackageManagers, Steps, Details } from "~/components";
+import { Render, PackageManagers, Details } from "~/components";
 
-In this tutorial, you will learn how to build a seat reservation app using Durable Objects. This app will allow users to book a seat for a flight. The app will be written in TypeScript and will use the new SQLite storage in Durable Object to store the data.
+In this tutorial, you will learn how to build a seat reservation app using Durable Objects. This app will allow users to book a seat for a flight. The app will be written in TypeScript and will use the new [SQLite storage in Durable Object](/durable-objects/best-practices/access-durable-objects-storage/#sql-storage) to store the data.
 
-Using Durable Objects, you can write reusable code that can handle coordination and state management for multiple clients. Moreover, writing data to an SQLite database is synchronous, which means that the code will not block the main thread. You can learn more about SQLite storage in Durable Objects in the [SQLite in Durable Objects blogpost](https://blog.cloudflare.com/UPDATE_THIS/).
+Using Durable Objects, you can write reusable code that can handle coordination and state management for multiple clients. Moreover, writing data to SQLite in Durable Objects is synchronous and uses local discs, therefore all queries are executed with great performance. You can learn more about SQLite storage in Durable Objects in the [SQLite in Durable Objects blogpost](https://blog.cloudflare.com/sqlite-in-durable-objects).
 
 :::note[SQLite in Durable Objects]
 
-SQLite in Durable Objects is currently in beta. You can learn more about the limitations of SQLite in Durable Objects in the [SQLite in Durable Objects documentation](https://blog.cloudflare.com/UPDATE_THIS/).
+SQLite in Durable Objects is currently in beta. You can learn more about the limitations of SQLite in Durable Objects in the [SQLite in Durable Objects documentation](/durable-objects/best-practices/access-durable-objects-storage/#sql-storage).
 
 :::
 
 The application will function as follows:
 
 - A user navigates to the application with a flight number passed as a query parameter.
-- The application will create a new Durable Object namespace for the flight number, if it does not already exist.
-- If the namespace already exists, the application will retrieve the seats information from the SQLite database.
-- If the namespace does not exist, the application will create a new namespace and initialize the SQLite database with the seats information. For the purpose of this tutorial, the seats information is hard-coded in the application.
+- The application will create a new Durable Object for the flight number, if it does not already exist.
+- If the Durable Object already exists, the application will retrieve the seats information from the SQLite database.
+- If the Durable Object does not exist, the application will create a new Durable Object and initialize the SQLite database with the seats information. For the purpose of this tutorial, the seats information is hard-coded in the application.
 - When a user selects a seat, the application asks for their name. The application will then reserve the seat and store the name in the SQLite database.
 - The application also broadcasts any changes to the seats to all clients.
 
@@ -84,6 +84,7 @@ The frontend of the application is a simple HTML page that allows users to selec
 
 3. Add the following HTML code to the `index.html` file:
 
+<Details header="public/index.html">
 ```html title="public/index.html"
 <!doctype html>
 <html lang="en">
@@ -152,94 +153,96 @@ The frontend of the application is a simple HTML page that allows users to selec
 			</div>
 		</div>
 
-		<script>
-			const seatGrid = document.getElementById("seatGrid");
-			const title = document.getElementById("title");
+    	<script>
+    		const seatGrid = document.getElementById("seatGrid");
+    		const title = document.getElementById("title");
 
-			const flightId = window.location.search.split("=")[1];
+    		const flightId = window.location.search.split("=")[1];
 
-			if (flightId === undefined) {
-				title.textContent = "No Flight ID provided";
-				seatGrid.innerHTML = "<p>Add `flightId` to the query string</p>";
-			} else {
-				handleBooking();
-			}
+    		if (flightId === undefined) {
+    			title.textContent = "No Flight ID provided";
+    			seatGrid.innerHTML = "<p>Add `flightId` to the query string</p>";
+    		} else {
+    			handleBooking();
+    		}
 
-			function handleBooking() {
-				const ws = new WebSocket(`ws://localhost:8787/ws?flightId=${flightId}`);
+    		function handleBooking() {
+    			const ws = new WebSocket(`ws://localhost:8787/ws?flightId=${flightId}`);
 
-				title.textContent = `Book seat for flight ${flightId}`;
+    			title.textContent = `Book seat for flight ${flightId}`;
 
-				ws.onopen = () => {
-					console.log("Connected to WebSocket server");
-				};
+    			ws.onopen = () => {
+    				console.log("Connected to WebSocket server");
+    			};
 
-				function createSeatGrid(seats) {
-					seatGrid.innerHTML = "";
-					for (let row = 1; row <= 10; row++) {
-						for (let col = 0; col < 6; col++) {
-							if (col === 3) {
-								const aisle = document.createElement("div");
-								aisle.className = "aisle";
-								seatGrid.appendChild(aisle);
-							}
+    			function createSeatGrid(seats) {
+    				seatGrid.innerHTML = "";
+    				for (let row = 1; row <= 10; row++) {
+    					for (let col = 0; col < 6; col++) {
+    						if (col === 3) {
+    							const aisle = document.createElement("div");
+    							aisle.className = "aisle";
+    							seatGrid.appendChild(aisle);
+    						}
 
-							const seatNumber = `${row}${String.fromCharCode(65 + col)}`;
-							const seat = seats.find((s) => s.seatNumber === seatNumber);
-							const seatElement = document.createElement("div");
-							seatElement.className = `seat ${seat && seat.occupant ? "unavailable" : "available"}`;
-							seatElement.textContent = seatNumber;
-							seatElement.onclick = () => bookSeat(seatNumber);
-							seatGrid.appendChild(seatElement);
-						}
-					}
-				}
+    						const seatNumber = `${row}${String.fromCharCode(65 + col)}`;
+    						const seat = seats.find((s) => s.seatNumber === seatNumber);
+    						const seatElement = document.createElement("div");
+    						seatElement.className = `seat ${seat && seat.occupant ? "unavailable" : "available"}`;
+    						seatElement.textContent = seatNumber;
+    						seatElement.onclick = () => bookSeat(seatNumber);
+    						seatGrid.appendChild(seatElement);
+    					}
+    				}
+    			}
 
-				async function fetchSeats() {
-					const response = await fetch(`/seats?flightId=${flightId}`);
-					const seats = await response.json();
-					createSeatGrid(JSON.parse(seats));
-				}
+    			async function fetchSeats() {
+    				const response = await fetch(`/seats?flightId=${flightId}`);
+    				const seats = await response.json();
+    				createSeatGrid(JSON.parse(seats));
+    			}
 
-				async function bookSeat(seatNumber) {
-					const name = prompt("Please enter your name:");
-					if (!name) {
-						return; // User canceled the prompt
-					}
+    			async function bookSeat(seatNumber) {
+    				const name = prompt("Please enter your name:");
+    				if (!name) {
+    					return; // User canceled the prompt
+    				}
 
-					const response = await fetch(`book-seat?flightId=${flightId}`, {
-						method: "POST",
-						headers: { "Content-Type": "application/json" },
-						body: JSON.stringify({ seatNumber, name }),
-					});
-					const result = await response.text();
-					fetchSeats();
-				}
+    				const response = await fetch(`book-seat?flightId=${flightId}`, {
+    					method: "POST",
+    					headers: { "Content-Type": "application/json" },
+    					body: JSON.stringify({ seatNumber, name }),
+    				});
+    				const result = await response.text();
+    				fetchSeats();
+    			}
 
-				ws.onmessage = (event) => {
-					try {
-						const seats = JSON.parse(event.data);
-						createSeatGrid(seats);
-					} catch (error) {
-						console.error("Error parsing WebSocket message:", error);
-					}
-				};
+    			ws.onmessage = (event) => {
+    				try {
+    					const seats = JSON.parse(event.data);
+    					createSeatGrid(seats);
+    				} catch (error) {
+    					console.error("Error parsing WebSocket message:", error);
+    				}
+    			};
 
-				ws.onerror = (error) => {
-					console.error("WebSocket error:", error);
-				};
+    			ws.onerror = (error) => {
+    				console.error("WebSocket error:", error);
+    			};
 
-				ws.onclose = (event) => {
-					console.log("WebSocket connection closed:", event);
-				};
+    			ws.onclose = (event) => {
+    				console.log("WebSocket connection closed:", event);
+    			};
 
-				fetchSeats();
-			}
-		</script>
-	</body>
+    			fetchSeats();
+    		}
+    	</script>
+    </body>
+
 </html>
 ```
 
+</Details>
 - The frontend makes an HTTP `GET` request to the `/seats` endpoint to retrieve the available seats for the flight.
 - It also uses a WebSocket connection to receive updates about the available seats.
 - When a user clicks on a seat, the `bookSeat()` function is called that prompts the user to enter their name and then makes a `POST` request to the `/book-seat` endpoint.
@@ -259,7 +262,7 @@ npm run dev
 
 :::note[Workers Assets]
 
-[Workers Assets](/workers) is currently in beta. You can also use Cloudflare Pages to serve the frontend. However, you will need a separate Worker for the backend.
+[Workers Assets](/workers/static-assets/binding/) is currently in beta. You can also use Cloudflare Pages to serve the frontend. However, you will need a separate Worker for the backend.
 
 :::
 
@@ -288,7 +291,7 @@ Your application can now use the SQLite storage in Durable Objects.
 
 For this tutorial, the function creates an identical seating plan for all the flights. However, in production, you would want to update this function to insert seats based on the flight type.
 
-```ts title="src/index.ts" ins={9,12,15-38} del={2-8, 39-49}
+```ts title="src/index.ts" ins={9,12,15-39} del={2-8, 40-50}
 export class MyDurableObject extends DurableObject {
 	/**
 	 * The constructor is invoked once upon creation of the Durable Object, i.e. the first call to
@@ -307,7 +310,7 @@ export class MyDurableObject extends DurableObject {
 		const cursor = this.sql.exec(`PRAGMA table_list`);
 
 		// Check if a table exists.
-		if ([...cursor][0].name === "seats") {
+		if ([...cursor].find((t) => t.name === "seats")) {
 			console.log("Table already exists");
 			return;
 		}
@@ -320,6 +323,7 @@ export class MyDurableObject extends DurableObject {
 				`);
 
 		// For this demo, we populate the table with 60 seats.
+		// Since SQLite in DOs is fast, we can do a query per INSERT instead of batching them in a transaction.
 		for (let row = 1; row <= 10; row++) {
 			for (let col = 0; col < 6; col++) {
 				const seatNumber = `${row}${String.fromCharCode(65 + col)}`;
@@ -343,7 +347,7 @@ export class MyDurableObject extends DurableObject {
 
 3. Next, update the Worker's fetch handler to create a unique Durable Object instance for each flight.
 
-```ts title="src/index.ts" ins={26-36} del={11-25}
+```ts title="src/index.ts" ins={26-39} del={11-25}
 export default {
 	/**
 	 * This is the standard fetch handler for a Cloudflare Worker
@@ -374,7 +378,10 @@ export default {
 		const flightId = url.searchParams.get("flightId");
 
 		if (!flightId) {
-			return new Response("Flight ID not found", { status: 404 });
+			return new Response(
+				"Flight ID not found. Provide flightId in the query parameter",
+				{ status: 404 },
+			);
 		}
 
 		const id = env.MY_DURABLE_OBJECT.idFromName(flightId);
@@ -399,7 +406,7 @@ export class MyDurableObject extends DurableObject {
 	}
 
 	// Get all seats.
-	private getSeats() {
+	getSeats() {
 		let results = [];
 
 		// Query returns a cursor.
@@ -427,7 +434,7 @@ export class MyDurableObject extends DurableObject {
 	}
 
 	// Get all seats.
-	private getSeats() {
+	getSeats() {
 		...
 	}
 
@@ -487,12 +494,12 @@ export class MyDurableObject extends DurableObject {
 	}
 
 	// Get all seats.
-	private getSeats() {
+	getSeats() {
 		...
 	}
 
 	// Assign a seat to a passenger.
-	private assignSeat(seatId: string, occupant: string) {
+	assignSeat(seatId: string, occupant: string) {
 		...
 	}
 
@@ -519,12 +526,12 @@ export class MyDurableObject extends DurableObject {
 	}
 
 	// Get all seats.
-	private getSeats() {
+	getSeats() {
 		...
 	}
 
 	// Assign a seat to a passenger.
-	private assignSeat(seatId: string, occupant: string) {
+	assignSeat(seatId: string, occupant: string) {
 		...
 	}
 
@@ -538,7 +545,7 @@ export class MyDurableObject extends DurableObject {
 }
 ```
 
-3. Lastly, add the `fetch` handler to the `MyDurableObject` class. This handler will handle all the incoming requests and route them to the appropriate function.
+3. Next, update the `fetch` handler in the `MyDurableObject` class. This handler will handle all the incoming requests from the Worker and handle the WebSocket connections using the `handleWebSocket()` method.
 
 ```ts title="src/index.ts" ins={26-39}
 export class MyDurableObject extends DurableObject {
@@ -549,12 +556,12 @@ export class MyDurableObject extends DurableObject {
 	}
 
 	// Get all seats.
-	private getSeats() {
+	getSeats() {
 		...
 	}
 
 	// Assign a seat to a passenger.
-	private assignSeat(seatId: string, occupant: string) {
+	assignSeat(seatId: string, occupant: string) {
 		...
 	}
 
@@ -567,23 +574,42 @@ export class MyDurableObject extends DurableObject {
 	}
 
     async fetch(request: Request) {
-		const url = new URL(request.url);
-
-		if (request.method === 'GET' && url.pathname === '/seats') {
-			return new Response(JSON.stringify(this.getSeats()), { headers: { 'Content-Type': 'application/json' } });
-		} else if (request.method === 'POST' && url.pathname === '/book-seat') {
-			const { seatNumber, name } = (await request.json()) as { seatNumber: string; name: string };
-			return this.assignSeat(seatNumber, name);
-		} else if (request.headers.get('Upgrade') === 'websocket') {
-			return this.handleWebSocket(request);
-		}
-
-		return new Response('Not found', { status: 404 });
+		return this.handleWebSocket(request);
 	}
 }
 ```
 
-The Worker passes the request to the Durable Object as is. The `fetch` handler in the Durable Object then routes the request to the appropriate function. If the request is a `GET` request to `/seats`, the Durable Object returns the seats. If the request is a `POST` request to `/book-seat`, the Durable Object assigns the seat to the passenger. If the request is a WebSocket connection, the Durable Object handles the WebSocket connection.
+4. Finally, update the `fetch` handler of the Worker.
+
+```ts title="src/index.ts" ins={8-22} del={23}
+export default {
+	...
+
+	async fetch(request, env, ctx): Promise<Response> {
+		// Get flight id from the query parameter
+		...
+
+		if (request.method === "GET" && url.pathname === "/seats") {
+			return new Response(JSON.stringify(await stub.getSeats()), {
+				headers: { "Content-Type": "application/json" },
+			});
+		} else if (request.method === "POST" && url.pathname === "/book-seat") {
+			const { seatNumber, name } = (await request.json()) as {
+				seatNumber: string;
+				name: string;
+			};
+			return stub.assignSeat(seatNumber, name);
+		} else if (request.headers.get("Upgrade") === "websocket") {
+			return stub.fetch(request);
+		}
+
+		return new Response("Not found", { status: 404 });
+		return stub.fetch(request);
+	},
+} satisfies ExportedHandler<Env>;
+```
+
+The `fetch` handler in the Worker now calls appropriate Durable Object function to handle the incoming request. If the request is a `GET` request to `/seats`, the Worker returns the seats from the Durable Object. If the request is a `POST` request to `/book-seat`, the Worker calls the `bookSeat` method of the Durable Object to assign the seat to the passenger. If the request is a WebSocket connection, the Durable Object handles the WebSocket connection.
 
 ## 6. Test the application
 
