@@ -55,7 +55,6 @@ It is important to understand how SSL setting changes affect the cache:
 
 This behavior is important to consider when adjusting SSL settings, as any change in the origin scheme (HTTP to HTTPS or vice versa) triggers a cache reset.
 
-
 ### Cache Level: Ignore Query String
 
 A [Cache Level](/cache/how-to/set-caching-levels/) of Ignore Query String creates a Cache Key that includes all the elements in the default cache key, except for the query string in the URI that is no longer included. For instance, a request for `http://example.com/file.jpg?something=123` and a request for `http://example.com/file.jpg?something=789` will have the same cache key, in this case.
