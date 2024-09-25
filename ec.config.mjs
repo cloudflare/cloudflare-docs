@@ -153,4 +153,7 @@ export default {
 			defaultLuminance: ["32%", "88%"],
 		},
 	},
+	frames: {
+		extractFileNameFromCode: false,
+	},
 };
