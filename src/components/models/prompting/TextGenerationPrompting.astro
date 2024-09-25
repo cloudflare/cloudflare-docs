@@ -1,14 +1,15 @@
 ---
 import { z } from "astro:schema";
-import { Code } from "@astrojs/starlight/components";
+import { Aside, Code } from "@astrojs/starlight/components";
 
 type Props = z.infer<typeof props>;
 
 const props = z.object({
 	lora: z.boolean(),
+	name: z.string(),
 });
 
-const { lora } = props.parse(Astro.props);
+const { lora, name } = props.parse(Astro.props);
 
 const scopedExampleOne = `
 {
@@ -44,7 +45,37 @@ const unscopedExampleTwo = `
   raw: true
 };
 `;
+
+const showAgreePrompt = name === "@cf/meta/llama-3.2-11b-vision-instruct";
+const agreeCurl = `curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/run/@cf/meta/llama-3.2-11b-vision-instruct \
+  -X POST \
+  -H "Authorization: Bearer $CLOUDFLARE_AUTH_TOKEN" \
+  -d '{ "prompt": "agree"}'`;
 ---
+
+{
+	showAgreePrompt ? (
+		<Aside>
+			<p>
+				To use Llama 3.2 11b Vision Instruct, you need to agree to the{" "}
+				<a href="https://github.com/meta-llama/llama-models/blob/main/models/llama3_2/LICENSE">
+					Meta License
+				</a>{" "}
+				and{" "}
+				<a href="https://github.com/meta-llama/llama-models/blob/main/models/llama3_2/USE_POLICY.md">
+					Acceptable Use Policy
+				</a>
+				. To do so, please send an initial request to
+				<code>@cf/meta/llama-3.2-11b-vision-instruct</code> with
+				<code>"prompt" : "agree"</code>. After that, you'll be able to use the
+				model as normal.
+			</p>
+			<Code code={agreeCurl} lang="sh" />
+		</Aside>
+	) : (
+		<span />
+	)
+}
 
 <h2>Prompting</h2>
 

@@ -186,7 +186,7 @@ if (data.model.name === "@cf/runwayml/stable-diffusion-v1-5-inpainting") {
 	{CodeExamples && <CodeExamples name={data.model.name} lora={hasLora} />}
 	{
 		data.task_type === "text-generation" && (
-			<TextGenerationPrompting lora={hasLora} />
+			<TextGenerationPrompting lora={hasLora} name={data.model.name} />
 		)
 	}
 	{Responses && <Responses name={data.model.name} />}
