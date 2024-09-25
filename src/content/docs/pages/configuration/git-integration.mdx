@@ -7,7 +7,7 @@ Cloudflare supports connecting Cloudflare Pages to your GitHub and GitLab reposi
 
 ## Custom branches
 
-Suppose you have a custom Git workflow that uses specific branches to represent your project's production build. In that case, you can specify a custom branch when creating (or managing an existing) project in the Pages dashboard by going to **Settings** > **Builds & deployments** and clicking the **Configure Production deployments** button. You can change the production branch to any other branch in the dropdown menu under **production branch**.
+Suppose you have a custom Git workflow that uses specific branches to represent your project's production build. In that case, you can specify a custom branch when creating (or managing an existing) project in the Pages dashboard by going to **Settings** > **Builds & deployments** > **Configure Production deployments**. To change the production branch, click the **production branch** dropdown menu and choose any other branch.
 
 You can also use [preview deployments](/pages/configuration/preview-deployments/) to preview how the new version of your project looks before merging into `production`. In addition, Pages allows you to configure which of your preview branches are built and deployed by using [branch build controls](/pages/configuration/branch-build-controls/).
 
@@ -15,7 +15,7 @@ To configure this in your Pages project go to **Settings** > **Builds & deployme
 
 ## Skipping a specific build via a commit message
 
-Without any configuration required, you can choose to skip a deployment on an adhoc basis. By adding the `[CI Skip]`, `[CI-Skip]`, `[Skip CI]`, `[Skip-CI]` or `[CF-Pages-Skip]` flag as a prefix in your commit message, and Pages will omit that deployment. The prefixes are case insensitive.
+Without any configuration required, you can choose to skip a deployment on an adhoc basis. By adding the `[CI Skip]`, `[CI-Skip]`, `[Skip CI]`, `[Skip-CI]`, or `[CF-Pages-Skip]` flag as a prefix in your commit message, and Pages will omit that deployment. The prefixes are not case sensitive.
 
 ## Organizational access
 
@@ -58,7 +58,7 @@ When encountering Git integration related issues, one potential troubleshooting 
 1. Go to the installation settings page on GitHub:
    1. `https://github.com/settings/installations` for individual accounts.
    2. `https://github.com/organizations/<YOUR_ORGANIZATION_NAME>/settings/installations` for organizational accounts.
-2. If the Cloudflare Workers and Pages installation is there, click **Configure**, and click **Uninstall "Cloudflare Workers and Pages"** (if there is no "Cloudflare Workers and Pages" installation, the user doesn't need to do anything)
+2. If the Cloudflare Workers and Pages installation is there, click **Configure**, and click **Uninstall "Cloudflare Workers and Pages"**. If there is no "Cloudflare Workers and Pages" installation there, then you don't need to do anything.
 3. Go back to the **Workers & Pages** overview page at `https://dash.cloudflare.com/[YOUR_ACCOUNT_ID]/workers-and-pages`. Click **Create application** > **Pages** > **Connect to Git**
 4. Click the **+ Add account** button, click the GitHub account you want to add, and then click **Install & Authorize**.
 5. You should be redirected to the create project page with your GitHub account or organization in the account list.
@@ -70,7 +70,7 @@ When encountering Git integration related issues, one potential troubleshooting 
 2. Click the "Revoke" button on your Cloudflare Pages installation if it exists.
 3. Go back to the **Workers & Pages** overview page at `https://dash.cloudflare.com/[YOUR_ACCOUNT_ID]/workers-and-pages`. Click **Create application** > **Pages** > **Connect to Git**
 4. Select the **GitLab** tab at the top, click the **+ Add account** button, click the GitLab account you want to add, and then click **Authorize** on the modal titled "Authorize Cloudflare Pages to use your account?".
-5. You should be redirected to the create project page with your GitLab account or organization in the account list.
+5. You will be redirected to the create project page with your GitLab account or organization in the account list.
 6. Attempt to make a new deployment with your project which was previously broken.
 
 ## Troubleshooting
