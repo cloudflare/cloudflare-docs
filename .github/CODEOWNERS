@@ -97,7 +97,7 @@
 /src/content/partials/hyperdrive/ @elithrar @thomasgauvin @sejoker @oxyjun @cloudflare/pcx-technical-writing
 /src/content/changelogs/durable-objects.yaml @elithrar @vy-ton @joshthoward @kodster28 @cloudflare/pcx-technical-writing
 /src/content/docs/images/ @dcpena @cloudflare/pcx-technical-writing @renandincer @third774
-/src/content/docs/pages/ @cloudflare/workers-docs @GregBrimble @WalshyDev @kodster28 @aninibread @cloudflare/pcx-technical-writing
+/src/content/docs/pages/ @cloudflare/workers-docs @GregBrimble @WalshyDev @kodster28 @aninibread @irvinebroque @cloudflare/pcx-technical-writing
 /src/assets/images/pages/ @cloudflare/workers-docs @GregBrimble @WalshyDev @kodster28 @aninibread @cloudflare/pcx-technical-writing
 /src/content/changelogs/pages.yaml @cloudflare/workers-docs @GregBrimble @WalshyDev @kodster28 @aninibread @cloudflare/pcx-technical-writing
 /src/content/docs/kv/ @elithrar @thomasgauvin @rts-rob @oxyjun @cloudflare/pcx-technical-writing
