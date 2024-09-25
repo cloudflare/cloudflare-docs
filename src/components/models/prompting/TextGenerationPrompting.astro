@@ -47,9 +47,9 @@ const unscopedExampleTwo = `
 `;
 
 const showAgreePrompt = name === "@cf/meta/llama-3.2-11b-vision-instruct";
-const agreeCurl = `curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/run/@cf/meta/llama-3.2-11b-vision-instruct \
-  -X POST \
-  -H "Authorization: Bearer $CLOUDFLARE_AUTH_TOKEN" \
+const agreeCurl = `curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/run/@cf/meta/llama-3.2-11b-vision-instruct \\
+  -X POST \\
+  -H "Authorization: Bearer $CLOUDFLARE_AUTH_TOKEN" \\
   -d '{ "prompt": "agree"}'`;
 ---
 
