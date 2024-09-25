@@ -41,7 +41,7 @@ Deploy static sites like blogs, portfolios, or documentation pages. Serve HTML, 
 
 Build dynamic and interactive server-side rendered (SSR) applications on Cloudflare Workers.
 
-Combine asset hosting with Cloudflare's data and storage products such as [Workers KV](/kv/), [Durable Objects](/durable-objects/), and [R2 Storage](/r2/) to build full-stack applications. Manage both frontend and backend logic on Cloudflare's Developer Platform.
+You can combine asset hosting with Cloudflare's data and storage products such as [Workers KV](/kv/), [Durable Objects](/durable-objects/), and [R2 Storage](/r2/) to build full-stack applications that serve both frontend and backend logic in a single Worker.
 
 <LinkButton href="/workers/static-assets/get-started/#deploy-a-full-stack-application">
 	Deploy a full-stack application
@@ -61,7 +61,9 @@ Static Assets for Workers is currently in open beta. If you're looking for a fra
 
 ### Pricing
 
-Requests to static assets are free and unlimited. Refer to [pricing](/workers/platform/pricing/#example-2) for an example.
+Requests to a project with static assets can either return static assets or invoke the Worker, dependent on [file-based routing](/workers/static-assets/routing/#file-based-routing).
+
+**Requests to static assets are free and unlimited**. Requests to the Worker (eg. in the case of SSR content) are billed according to Workers pricing. Refer to [pricing](/workers/platform/pricing/#example-2) for an example.
 
 ### Limitations
 

@@ -89,7 +89,13 @@ Based on the incoming requests, the following assets would be served:
 
 ### Alternate configuration options
 
-Alternate configuration options are outlined on this page and can be specified in your project's `wrangler.toml` file. If you're deploying using a Framework[link], these options will be defined by the Framework provider.
+Alternate configuration options are outlined on this page and can be specified in your project's [`wrangler.toml`](/workers/wrangler/configuration/#assets) file. If you're deploying using a [framework](/workers/frameworks/), these options will be defined by the framework provider.
+
+Example `wrangler.toml` configuration:
+
+```toml title="wrangler.toml"
+assets = { directory = "./public", binding = "ASSETS", html_handling = "force-trailing-slash", not_found_handling = "none" }
+```
 
 #### `html_handling = "auto-trailing-slash" | "force-trailing-slash" | "drop-trailing-slash" | "none"`
 

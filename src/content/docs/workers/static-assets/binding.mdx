@@ -17,7 +17,9 @@ import {
 	Tabs,
 } from "~/components";
 
-Configuring a project with assets requires specifying a [directory](/workers/configuration/assets/#directory) or an [assets binding](/workers/static-assets/binding/) in the project's `wrangler.toml` file. Only one assets directory/binding can be configured for each project.
+Configuring a project with assets requires specifying a [directory](/workers/configuration/assets/#directory) or an [assets binding](/workers/static-assets/binding/) in the project's `wrangler.toml` file. The [assets binding](/workers/static-assets/binding/) allows you to dynamically invoke assets from the Worker using `env.ASSETS.fetch()`.
+
+Only one assets directory/binding can be configured for each project.
 
 ## Directory
 
