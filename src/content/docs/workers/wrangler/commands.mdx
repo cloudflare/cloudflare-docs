@@ -737,13 +737,13 @@ As of Wrangler v3.2.0, `wrangler dev` is supported by any Linux distributions pr
 - `--local-upstream` <Type text="string" /> <MetaInfo text="optional" />
   - Host to act as origin in local mode, defaults to `dev.host` or route.
 - `--assets` <Type text="string" /> <MetaInfo text="optional beta" />
-  - Root folder of static assets to be served. Replaces [Workers Sites](/workers/configuration/sites/). Visit [assets](/workers/configuration/assets/) for more information.
+  - Root folder of static assets to be served. Replaces [Workers Sites](/workers/configuration/sites/). Visit [assets](/workers/static-assets/) for more information.
 - `--legacy-assets` <Type text="string" /> <MetaInfo text="optional deprecated, use `--assets`" />
   - Root folder of static assets to be served.
 - `--site` <Type text="string" /> <MetaInfo text="optional deprecated, use `--assets`" />
   - Root folder of static assets for Workers Sites.
     :::caution
-    Workers Sites is deprecated. Please use [Workers Assets](/workers/configuration/assets/) or [Pages](/pages/})
+    Workers Sites is deprecated. Please use [Workers Assets](/workers/static-assets/) or [Pages](/pages/})
     :::
 - `--site-include` <Type text="string[]" /> <MetaInfo text="optional deprecated" />
   - Array of `.gitignore`-style patterns that match file or directory names from the sites directory. Only matched items will be uploaded.
@@ -813,13 +813,13 @@ None of the options for this command are required. Also, many can be set in your
 - `--latest` <Type text="boolean" /> <MetaInfo text="(default: true) optional" />
   - Use the latest version of the Workers runtime.
 - `--assets` <Type text="string" /> <MetaInfo text="optional beta" />
-  - Root folder of static assets to be served. Replaces [Workers Sites](/workers/configuration/sites/). Visit [assets](/workers/configuration/assets/) for more information.
+  - Root folder of static assets to be served. Replaces [Workers Sites](/workers/configuration/sites/). Visit [assets](/workers/static-assets/) for more information.
 - `--legacy-assets` <Type text="string" /> <MetaInfo text="optional deprecated, use `--assets`" />
   - Root folder of static assets to be served.
 - `--site` <Type text="string" /> <MetaInfo text="optional deprecated, use `--assets`" />
   - Root folder of static assets for Workers Sites.
     :::caution
-    Workers Sites is deprecated. Please use [Workers Assets](/workers/configuration/assets/) or [Pages](/pages/})
+    Workers Sites is deprecated. Please use [Workers Assets](/workers/static-assets/) or [Pages](/pages/})
     :::
 - `--site-include` <Type text="string[]" /> <MetaInfo text="optional deprecated" />
   - Array of `.gitignore`-style patterns that match file or directory names from the sites directory. Only matched items will be uploaded.

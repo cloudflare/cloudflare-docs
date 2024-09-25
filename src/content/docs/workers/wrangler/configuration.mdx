@@ -879,7 +879,7 @@ binding = "AI" # available in your Worker code on `env.AI`
 
 ### Assets
 
-The [assets binding](/workers/configuration/assets/) allows developers to run frontend websites on Workers. It provides asset hosting and routing configuration options.
+The [assets binding](/workers/static-assets/binding/) allows developers to run frontend websites on Workers. It provides asset hosting and routing configuration options.
 
 This binding is limited to one set of assets per Worker project.
 
@@ -895,11 +895,11 @@ To bind assets to your Worker, assign an array of the below object to the `asset
 
 - `html_handling`: <Type text="'auto-trailing-slash' | 'force-trailing-slash' | 'drop-trailing-slash' | 'none'" /> <MetaInfo text="optional" />
 
-  - Determines redirects/rewrites of requests for HTML content. If unspecified, the default mode is `'auto-trailing-slash'`. Learn more [here](/workers/configuration/assets/#how-it-works).
+  - Determines redirects/rewrites of requests for HTML content. If unspecified, the default mode is `'auto-trailing-slash'`. Learn more [here](/workers/static-assets/routing/#html_handling).
 
 - `not_found_handling`: <Type text="`'single-page-application' | '404-page' | 'none'`" /> <MetaInfo text="optional" />
 
-  - Determines the handling of requests that do not map to an asset. If unspecified, the default mode is `'not_found_handling'`. Learn more [here](/workers/configuration/assets/#how-it-works).
+  - Determines the handling of requests that do not map to an asset. If unspecified, the default mode is `'not_found_handling'`. Learn more [here](/workers/static-assets/routing/#not_found_handling).
 
 Example:
 
