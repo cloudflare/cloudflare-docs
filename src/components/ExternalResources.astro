@@ -17,7 +17,7 @@ const resources = await getEntry(type, "index");
 
 const filtered = resources.data.entries.filter((entry) => {
 	return (
-		(cloudflare ? cloudflare : false) &&
+		(cloudflare ? entry.cloudflare : false) &&
 		(tags ? entry.tags?.some((v: string) => tags.includes(v)) : true) &&
 		(products
 			? entry.products?.some((v: string) => products.includes(v))
@@ -31,8 +31,7 @@ filtered.sort((a, b) => Number(b.updated) - Number(a.updated));
 <ul>
 	{
 		filtered.map((entry) => {
-			// @ts-expect-error TODO: fix resource types
-			const title = entry.name ?? entry.title;
+			const title = "name" in entry ? entry.name : entry.title;
 			return (
 				<li>
 					<>

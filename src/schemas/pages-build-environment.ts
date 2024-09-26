@@ -20,5 +20,6 @@ export const pagesBuildEnvironmentSchema = z
 			operating_system: z.string(),
 			architecture: z.string(),
 		}),
+		status: z.string().optional().nullable(),
 	})
 	.strict();

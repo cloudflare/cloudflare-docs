@@ -18,11 +18,7 @@ To use Queues, you will need:
 
 <Render file="prereqs" product="workers" />
 
-## 1. Enable Queues
-
-<Render file="enable-queues" />
-
-## 2. Create a Worker project
+## 1. Create a Worker project
 
 You will access your queue from a Worker, the producer Worker. You must create at least one producer Worker to publish messages onto your queue.
 
@@ -38,9 +34,9 @@ To create a producer Worker, run:
 	file="c3-post-run-steps"
 	product="workers"
 	params={{
-		one: "Hello World example",
-		two: "Hello World Worker",
-		three: "TypeScript",
+		category: "hello-world",
+		type: "Hello World Worker",
+		lang: "TypeScript",
 	}}
 />
 
@@ -52,7 +48,7 @@ Move into the newly created directory:
 cd producer-worker
 ```
 
-## 3. Create a queue
+## 2. Create a queue
 
 To use queues, you need to create at least one queue to publish messages to and consume messages from.
 
@@ -68,7 +64,7 @@ Queue names must be 1 to 63 characters long. Queue names cannot contain special 
 
 You cannot change your queue name after you have set it. After you create your queue, you will set up your producer Worker to access it.
 
-## 4. Set up your producer worker
+## 3. Set up your producer Worker
 
 To expose your queue to the code inside your Worker, you need to connect your queue to your Worker by creating a binding. [Bindings](/workers/runtime-apis/bindings/) allow your Worker to access resources, such as Queues, on the Cloudflare developer platform.
 
@@ -140,7 +136,7 @@ Copy your `*.workers.dev` subdomain and paste it into a new browser tab. Refresh
 
 You have built a queue and a producer Worker to publish messages to the queue. You will now create a consumer Worker to consume the messages published to your queue. Without a consumer Worker, the messages will stay on the queue until they expire, which defaults to four (4) days.
 
-## 5. Create your consumer Worker
+## 4. Create your consumer Worker
 
 A consumer Worker receives messages from your queue. When the consumer Worker receives your queue's messages, it can write them to another source, such as a logging console or storage objects.
 
@@ -213,7 +209,7 @@ With your `wrangler.toml` file and `index.ts` file configured, publish your cons
 npx wrangler deploy
 ```
 
-## 6. Read messages from your queue
+## 5. Read messages from your queue
 
 After you set up consumer Worker, you can read messages from the queue.
 
