@@ -8,7 +8,7 @@ entries:
   - publish_date: "2024-09-26"
     title: Persistent logs
     description: |-
-      * **Logs**: AI Gateway now has [logs that persist](/ai-gateway/observability/logging/index.mdx), giving you the flexibility to store them for your preferred duration.
+      * **Logs**: AI Gateway now has [logs that persist](/ai-gateway/observability/logging/index), giving you the flexibility to store them for your preferred duration.
 
   - publish_date: "2024-09-26"
     title: Logpush
