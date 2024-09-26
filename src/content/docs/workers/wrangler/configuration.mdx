@@ -156,8 +156,11 @@ At a minimum, the `name`, `main` and `compatibility_date` keys are required to d
 
   - Configures limits to be imposed on execution at runtime. Refer to [Limits](#limits).
 
-* `assets` <Type text="Assets" /> <MetaInfo text="optional" />
+* `observability` object optional
 
+  * Configures automatic observability settings for telemetry data emitted from your Worker. Refer to [Observability](#observability).
+
+* `assets` <Type text="Assets" /> <MetaInfo text="optional" />
   - Configures static assets that will be served. Refer to [Assets](/workers/static-assets/binding/) for more details.
 
 ### Usage model
@@ -609,6 +612,27 @@ id = "<NAMESPACE_ID1>"
 [[kv_namespaces]]
 binding = "<BINDING_NAME2>"
 id = "<NAMESPACE_ID2>"
+```
+
+### Observability
+
+The [Observability](/workers/observability/logs/workers-logs) setting allows you to automatically ingest, store, filter, and analyze logging data emitted from Cloudflare Workers directly from your Cloudflare Worker's dashboard.
+
+* `enabled` boolean required
+  * When set to `true` on a Worker, logs for the Worker are persisted. Defaults to `true` for all new Workers.
+
+* `head_sampling_rate` number optional
+  * A number between 0 and 1, where 0 indicates zero out of one hundred requests are logged, and 1 indicates every request is logged. If `head_sampling_rate` is unspecified, it is configured to a default value of 1 (100%). Read more about [head-based sampling](/workers/observability/logs/workers-logs/#head-based-sampling).
+
+Example:
+
+```toml title="wrangler.toml"
+[observability]
+enabled = true
+
+[observability]
+enabled = true
+head_sampling_rate = 0.1 # 10% of requests are logged
 ```
 
 ### Queues
