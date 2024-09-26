@@ -3,17 +3,35 @@ pcx_content_type: reference
 title: Pricing
 sidebar:
   order: 8
-
 ---
 
 AI Gateway is available to use on all plans.
 
-AI Gateway’s core features available today are offered for free, and all it takes is a Cloudflare account and one line of code to [get started](/ai-gateway/get-started/). Core features include: dashboard analytics, real-time logs, caching, and rate limiting.
+AI Gateway's core features available today are offered for free, and all it takes is a Cloudflare account and one line of code to [get started](/ai-gateway/get-started/). Core features include: dashboard analytics, caching, and rate limiting.
 
 We will continue to build and expand AI Gateway. Some new features may be additional core features that will be free while others may be part of a premium plan. We will announce these as they become available.
 
 You can monitor your usage in the AI Gateway dashboard.
 
-## Fine Print
+## Persistent logs (Beta)
+
+:::note[Note]
+
+During the open beta, paid users can store logs persistently up to our limit of 10 million logs per gateway without being charged. Free users can use up to the free allocation below. Billing and plan limits will be applied once this feature reaches General Availability (GA). We will provide ample advance notice before this transition.
+
+:::
+
+We have extended our real-time log storage (previously limited to 24 hours) to allow storage of logs for extended periods, up to 10 million logs per gateway. Persistent logs are available on all plans, with a free allocation for both free and paid plans. Charges for additional logs beyond those limits are based on the number of logs stored per month.
+
+### Free allocation and overage pricing
+
+| Plan         | Free logs stored   | Overage pricing                      |
+| ------------ | ------------------ | ------------------------------------ |
+| Workers Free | 100,000 logs total | N/A – Upgrade to Workers Paid        |
+| Workers Paid | 200,000 logs total | $8 per 100,000 logs stored per month |
+
+Allocations are based on the total logs stored across all gateways. If your limit is reached, new logs will stop being saved. To continue saving logs, you must delete older logs to free up space.
+
+## Fine print
 
 Prices subject to change. If you are an Enterprise customer, reach out to your account team to confirm pricing details.
