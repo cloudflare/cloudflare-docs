@@ -139,7 +139,7 @@ export default {
 Uncaught (in promise) Error: Cannot perform I/O on behalf of a different request. I/O objects (such as streams, request/response bodies, and others) created in the context of one request handler cannot be accessed from a different request's handler.
 ```
 
-This error occurs when you attempt to share input/output (I/O) objects—such as streams, requests, or responses created by one invocation of your Worker in the context of a different invocation.
+This error occurs when you attempt to share input/output (I/O) objects (such as streams, requests, or responses) created by one invocation of your Worker in the context of a different invocation.
 
 In Cloudflare Workers, each invocation is handled independently and has its own execution context. This design ensures optimal performance and security by isolating requests from one another. When you try to share I/O objects between different invocations, you break this isolation. Since these objects are tied to the specific request they were created in, accessing them from another request's handler is not allowed and leads to the error.
 
@@ -173,7 +173,7 @@ export default {
 };
 ```
 
-If you need to share state across requests, consider using [Durable Objects](/durable-objects/), or if you need to cache data across requests, consider using [Workers KV](/kv/).
+If you need to share state across requests, consider using [Durable Objects](/durable-objects/). If you need to cache data across requests, consider using [Workers KV](/kv/).
 
 ## Errors on Worker upload
 
