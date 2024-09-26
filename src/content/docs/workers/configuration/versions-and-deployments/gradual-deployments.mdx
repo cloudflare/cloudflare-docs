@@ -114,7 +114,7 @@ You may want requests associated with a particular identifier (such as user, ses
 You can do this by setting the `Cloudflare-Workers-Version-Key` header on the incoming request to your Worker. For example:
 
 ```sh
-curl -s https://$SCRIPT_NAME.$SUBDOMAIN.workers.dev -H 'Cloudflare-Workers-Version-Key: foo'
+curl -s https://example.com -H 'Cloudflare-Workers-Version-Key: foo'
 ```
 
 For a given [deployment](/workers/configuration/versions-and-deployments/#deployments), all requests with a version key set to `foo` will be handled by the same version of your Worker. The specific version of your Worker that the version key `foo` corresponds to is determined by the percentages you have configured for each Worker version in your deployment.
@@ -150,7 +150,7 @@ You can use version overrides to send a request to a specific version of your Wo
 To specify a version override in your request, you can set the `Cloudflare-Workers-Version-Overrides` header on the request to your Worker. For example:
 
 ```sh
-curl -s https://$SCRIPT_NAME.$SUBDOMAIN.workers.dev -H 'Cloudflare-Workers-Version-Overrides: my-worker-name="dc8dcd28-271b-4367-9840-6c244f84cb40"'
+curl -s https://example.com -H 'Cloudflare-Workers-Version-Overrides: my-worker-name="dc8dcd28-271b-4367-9840-6c244f84cb40"'
 ```
 
 `Cloudflare-Workers-Version-Overrides` is a [Dictionary Structured Header](https://www.rfc-editor.org/rfc/rfc8941#name-dictionaries).
@@ -192,7 +192,7 @@ Create a new deployment using [`wrangler versions deploy`](/workers/wrangler/com
 Now test the new version with a version override before gradually progressing the new version to 100%:
 
 ```sh
-curl -s https://$SCRIPT_NAME.$SUBDOMAIN.workers.dev -H 'Cloudflare-Workers-Version-Overrides: my-worker-name="dc8dcd28-271b-4367-9840-6c244f84cb40"'
+curl -s https://example.com -H 'Cloudflare-Workers-Version-Overrides: my-worker-name="dc8dcd28-271b-4367-9840-6c244f84cb40"'
 ```
 
 ## Gradual deployments for Durable Objects
