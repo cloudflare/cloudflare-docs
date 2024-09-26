@@ -40,7 +40,7 @@ The following table compares the features of NAv1 and NAv2:
 
 For more information on the differences in terms of sampling method and historical data retention, refer to [Main differences between Network Analytics v1 and v2](/analytics/graphql-api/migration-guides/network-analytics-v2/differences/).
 
-:::note[Note]
+:::note
 
 
 The `attackId` field value may be different between NAv1 and NAv2 for the same attack.
@@ -65,9 +65,9 @@ Each row represents one packet sample. The data is sampled at Cloudflare’s edg
 
 For reference information on NAv2 nodes, refer to the [NAv2 node reference](/analytics/graphql-api/migration-guides/network-analytics-v2/node-reference/).
 
-:::note[Obtaining data for ingress traffic only]
+:::note
 
-All the NAv2 `*AnalyticsAdaptiveGroups` nodes include data for ingress and egress traffic. To obtain data about ingress traffic only, include `direction: "ingress"` in your [GraphQL query filter](/analytics/graphql-api/features/filtering/). 
+Obtaining data for ingress traffic only. All the NAv2 `*AnalyticsAdaptiveGroups` nodes include data for ingress and egress traffic. To obtain data about ingress traffic only, include `direction: "ingress"` in your [GraphQL query filter](/analytics/graphql-api/features/filtering/). 
 :::
 
 ## Schema comparison

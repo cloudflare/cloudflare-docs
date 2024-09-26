@@ -75,9 +75,9 @@ The counting expression can include [HTTP response fields](/ruleset-engine/rules
 
 In some cases, you cannot include HTTP response fields in the counting expression due to configuration restrictions. Refer to [Configuration restrictions](#configuration-restrictions) for details.
 
-:::note[The counting expression does not extend the rule expression]
+:::note
 
-If you set a custom counting expression, it will not automatically extend the rule matching expression. Therefore, you may wish to include the matching expression in the counting expression.
+The counting expression does not extend the rule expression. If you set a custom counting expression, it will not automatically extend the rule matching expression. Therefore, you may wish to include the matching expression in the counting expression.
 
 For example, you might want to perform rate limiting for clients sending more than five requests to `/api/` resulting in a `403` HTTP status code from the origin server. In this case, the matching expression would be `starts_with(http.request.uri.path, "/api/")` and the counting expression would be `http.response.code eq 403 and starts_with(http.request.uri.path, "/api/")`. If the counting expression did not include the matching expression (that is, if you had set the counting expression to `http.response.code eq 403`), any response with a `403` status code on any URL would increase the counter.
 :::
@@ -153,9 +153,9 @@ Customers on Free, Pro, and Business plans cannot select a duration when using a
 
 Enterprise customers can always configure a duration (or mitigation timeout), even when using one of the challenge actions.
 
-:::note[Notes for API users]
+:::note
 
-- If you are on a Free, Pro, or Business plan and are using the API, you must enable request throttling by setting the `mitigation_timeout` value to `0` (zero) when using the actions `managed_challenge`, `js_challenge`, or `challenge`.
+Notes for API users. - If you are on a Free, Pro, or Business plan and are using the API, you must enable request throttling by setting the `mitigation_timeout` value to `0` (zero) when using the actions `managed_challenge`, `js_challenge`, or `challenge`.
 - Enterprise customers can use a `mitigation_timeout` value greater than or equal to `0` (zero), regardless of the rate limiting action they select.
   :::
 

@@ -164,9 +164,9 @@ Invoke-RestMethod -URI 'https://api.cloudflare.com/client/v4/zones/{zone_id}/ssl
 }
 ```
 
-:::caution[ConvertFrom-Json handling of DateTime values]
+:::caution
 
-The `ConvertTo-Json` cmdlet tries to convert strings formatted as timestamps to DateTime values, according to the exact format in the string. For details on this behavior, refer to the notes in the [ConvertFrom-Json](https://learn.microsoft.com/en-us/powershell/module/microsoft.powershell.utility/convertfrom-json#notes) documentation.
+ConvertFrom-Json handling of DateTime values. The `ConvertTo-Json` cmdlet tries to convert strings formatted as timestamps to DateTime values, according to the exact format in the string. For details on this behavior, refer to the notes in the [ConvertFrom-Json](https://learn.microsoft.com/en-us/powershell/module/microsoft.powershell.utility/convertfrom-json#notes) documentation.
 :::
 
 You can also use the curl tool in PowerShell. However, in PowerShell `curl` is an alias to the `Invoke-WebRequest` cmdlet, which supports a different syntax from the usual curl tool. To use curl, enter `curl.exe` instead.

@@ -62,9 +62,9 @@ Applications can be incompatible with [TLS decryption](/cloudflare-one/policies/
 
 Gateway automatically groups applications incompatible with TLS decryption into the *Do Not Inspect* app type. As Cloudflare identifies incompatible applications, Gateway will periodically update this app type to add new applications. To ensure Gateway does not intercept any current or future incompatible traffic, you can [create a Do Not Inspect HTTP policy](/cloudflare-one/policies/gateway/initial-setup/http/#bypass-inspection-for-incompatible-applications) with the entire *Do Not Inspect* app type selected.
 
-:::note[Install Cloudflare certificate manually to allow TLS decryption]
+:::note
 
-Instead of creating a Do Not Inspect policy for an application, you may be able to configure the application to [trust the Cloudflare certificate](/cloudflare-one/connections/connect-devices/warp/user-side-certificates/install-cloudflare-cert/#add-the-certificate-to-applications). Doing so will allow the application to function without losing visibility into your traffic. 
+Install Cloudflare certificate manually to allow TLS decryption. Instead of creating a Do Not Inspect policy for an application, you may be able to configure the application to [trust the Cloudflare certificate](/cloudflare-one/connections/connect-devices/warp/user-side-certificates/install-cloudflare-cert/#add-the-certificate-to-applications). Doing so will allow the application to function without losing visibility into your traffic. 
 :::
 
 #### Microsoft 365 integration

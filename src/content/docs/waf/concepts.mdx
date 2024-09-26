@@ -9,9 +9,9 @@ import { GlossaryTooltip, Render } from "~/components";
 
 <Render file="waf-intro" />
 
-:::note[What is a Web Application Firewall?]
+:::note
 
-A Web Application Firewall or WAF creates a shield between a web app and the Internet. This shield can help mitigate many common attacks. For a more thorough definition, refer to [Web Application Firewall explained](https://www.cloudflare.com/learning/ddos/glossary/web-application-firewall-waf/) in the Learning Center.
+What is a Web Application Firewall?. A Web Application Firewall or WAF creates a shield between a web app and the Internet. This shield can help mitigate many common attacks. For a more thorough definition, refer to [Web Application Firewall explained](https://www.cloudflare.com/learning/ddos/glossary/web-application-firewall-waf/) in the Learning Center.
 :::
 
 ## Rules and rulesets
@@ -36,7 +36,7 @@ The two main roles of the Cloudflare WAF are the following:
 
 - **Mitigation**: Blocks, challenges, or throttles requests through different mitigation features such as [custom rules](/waf/custom-rules/), [Managed Rules](/waf/managed-rules/), and [rate limiting rules](/waf/rate-limiting-rules/). Rules that mitigate traffic can include scores from traffic scans in their expressions to better address possibly malicious requests.
 
-:::caution[Warning]
+:::caution
 
 Enabling traffic detections will not apply any mitigation measures to incoming traffic; detections only provide signals that you can use to define your attack mitigation strategy.
 :::

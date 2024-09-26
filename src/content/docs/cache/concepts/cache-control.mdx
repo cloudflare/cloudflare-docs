@@ -28,7 +28,7 @@ In the following sections, we will provide more details regarding:
 
 A `Cache-Control` header can include a number of directives, and the directive dictates who can cache a resource along with how long those resources can be cached before they must be updated.
 
-:::note[Note]
+:::note
 
 
 For more information about `Cache-Control` directives at origin servers, refer to the [Mozilla Cache-Control documentation](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Cache-Control).
@@ -52,7 +52,7 @@ Cacheability refers to whether or not a resource should enter a cache, and the d
 
 Expiration refers to how long a resource should remain in the cache, and the directives below affect how long a resource stays in the cache.
 
-:::note[Note]
+:::note
 
 
 Cloudflare respects whichever value is higher: the [Browser Cache TTL](/cache/how-to/edge-browser-cache-ttl/) in Cloudflare or the `max-age` header. You can also simultaneously specify a Cloudflare Edge Cache TTL different than a Browser's Cache TTL respectively via the `s-maxage` and `max-age` `Cache-Control` headers.

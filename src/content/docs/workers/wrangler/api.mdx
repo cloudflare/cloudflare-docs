@@ -378,9 +378,9 @@ The bindings supported by `getPlatformProxy` are:
 
 * [Hyperdrive bindings](/hyperdrive)
 
-  :::note[Hyperdrive values are simple passthrough ones]
+  :::note
 
-  Values provided by hyperdrive bindings such as `connectionString` and `host` do not have a valid meaning outside of a `workerd` process.
+Hyperdrive values are simple passthrough ones.   Values provided by hyperdrive bindings such as `connectionString` and `host` do not have a valid meaning outside of a `workerd` process.
   This means that Hyperdrive proxies return passthrough values, which are values corresponding to the database connection provided by the user.  Otherwise, it would return values which would be unusable from within node.js.
 
   :::

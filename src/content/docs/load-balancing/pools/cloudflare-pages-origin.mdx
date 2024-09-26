@@ -61,9 +61,9 @@ Monitors define the criteria based on which an endpoint will be considered healt
 
    When you are using a service like Cloudflare Pages, it is possible that requests from the health monitor - as well as the ones from your visitors - are redirected before reaching their destination. Enabling this option prevents the monitor from reporting an unhealthy endpoint when it actually has only been redirected (with a `301` code, for example).
 
-:::note[Tip]
+:::note
 
-You can name the monitor after the parameters you have defined. For example: `HTTP - 200 - Follow Redirects`.
+Tip. You can name the monitor after the parameters you have defined. For example: `HTTP - 200 - Follow Redirects`.
 
 This way you can easily remember the criteria a certain monitor is using when you decide to attach it to other endpoints as well. 
 :::
@@ -78,7 +78,7 @@ Pools hold information about where the health monitor requests and your visitors
 
 To support the [use cases](#use-cases) mentioned above, and assuming you only have one origin server for your production website and one for the Cloudflare Pages instance, create two pools with one endpoint each:
 
-:::caution[Important]
+:::caution
 
 The endpoint pointing to [Cloudflare Pages](/pages/) must have **host header** filled in with the project domain (`<project>.pages.dev`) for it to resolve correctly. You can find a reference table for correct setup in Step 8 below.
 
@@ -196,7 +196,7 @@ If you have used a temporary hostname for your load balancer, follow the steps b
 
    If you find issues, revise your pools, monitor, and load balancer configurations to confirm they followed the instructions above. Also refer to [Troubleshooting](/load-balancing/troubleshooting/common-error-codes/) or [FAQ](/load-balancing/troubleshooting/load-balancing-faq/) if needed.
 
-:::caution[Important]
+:::caution
 
 After you confirm everything is working correctly, make sure you re-enable the pools within the load balancer. 
 :::

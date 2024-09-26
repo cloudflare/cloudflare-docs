@@ -247,7 +247,7 @@ This setting is intended as a workaround for users whose home network uses the s
 
 When `Enabled`, users have the option to access local network resources (such as printers and storage devices) while connected to WARP. When the user enables **Access local network** in the WARP GUI, WARP will detect the local IP range advertised by the user's home network (for example, `10.0.0.0/24`) and temporarily exclude this range from the WARP tunnel. The user will need to re-request access after the **Timeout** expires. Setting **Timeout** to `0 minutes` will allow LAN access until the next WARP reconnection, such as a reboot or a laptop waking from sleep.
 
-:::caution[Warning]
+:::caution
 
 Enabling this setting comes with two major consequences:
 

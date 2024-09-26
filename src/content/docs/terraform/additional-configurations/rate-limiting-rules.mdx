@@ -64,10 +64,9 @@ resource "cloudflare_ruleset" "zone_rl" {
 
 <Details header="Account-level example configuration">
 
-:::note[Before you start]
+:::note
 
-
-* Account-level rate limiting configuration requires an Enterprise plan with a paid add-on.
+Before you start. * Account-level rate limiting configuration requires an Enterprise plan with a paid add-on.
 
 * Custom rulesets deployed at the account level will only apply to incoming traffic of zones on an Enterprise plan. The expression of your `execute` rule must end with `and cf.zone.plan eq "ENT"`. 
   :::

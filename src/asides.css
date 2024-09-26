@@ -1,6 +1,10 @@
 .starlight-aside {
 	border: unset;
 	border-radius: 0.25rem;
+	display: flex;
+	flex-wrap: nowrap; 
+	align-items: flex-start;
+	padding: 0.75rem 1rem;
 
 	&.starlight-aside--note {
 		background-color: rgb(236, 244, 255);
@@ -11,20 +15,26 @@
 	}
 
 	.starlight-aside__title {
-		margin-left: 2rem;
-		margin-bottom: 0.25rem;
-		gap: 0.75rem;
-		font-size: 0.875rem;
+		font-size: 0;
+		line-height: 0;
+		display: flex;
+		align-items: flex-start; 
+		margin-right: 0.125rem; 
+		margin-top: 0.25rem;
 
 		svg {
-			margin-left: -2rem;
+			display: block;
+			width: 1rem;
+			height: 1rem;
+			flex-shrink: 0;
 		}
 	}
 
 	.starlight-aside__content {
 		margin-top: unset;
-		margin-left: 2rem;
+		display: inline;
 		font-size: 0.875rem;
+		flex: 1; 
 	}
 }
 
@@ -34,6 +44,6 @@
 	}
 
 	.starlight-aside--caution {
-		background-color: rgb(98, 73, 10);
+		background-color: rgb(62, 45, 10);
 	}
 }

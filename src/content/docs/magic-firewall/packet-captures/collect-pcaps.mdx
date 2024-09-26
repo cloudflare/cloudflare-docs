@@ -19,7 +19,7 @@ Packet captures are available for Advanced Magic Firewall users. For access, con
 
 Currently, when a packet capture is requested, packets flowing at Cloudflare's global network through the Magic Transit system are captured. The default API field for this is `"system": "magic-transit"`, both for the request and response.
 
-:::note[Note]
+:::note
 
 For help determining which data center to select for a packet capture, visit [https://cloudflare.com/cdn-cgi/trace](https://cloudflare.com/cdn-cgi/trace) and refer to the `colo` field. Note some data centers can be regional such as `ORD` while other names may be more specific like `ord02`. Either of these names can be used for this same field.
 

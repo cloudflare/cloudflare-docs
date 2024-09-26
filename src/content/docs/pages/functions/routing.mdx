@@ -31,10 +31,9 @@ The following routes will be generated based on the above file structure. These 
 | /functions/fruits/apple.js  | example.com/fruits/apple  |
 | /functions/fruits/banana.js | example.com/fruits/banana |
 
-:::note[Trailing slash]
+:::note
 
-
-Trailing slash is optional. Both `/foo` and `/foo/` will be routed to `/functions/foo.js` or `/functions/foo/index.js`. If your project has both a `/functions/foo.js` and `/functions/foo/index.js` file, `/foo` and `/foo/` would route to `/functions/foo/index.js`.
+Trailing slash. Trailing slash is optional. Both `/foo` and `/foo/` will be routed to `/functions/foo.js` or `/functions/foo/index.js`. If your project has both a `/functions/foo.js` and `/functions/foo/index.js` file, `/foo` and `/foo/` would route to `/functions/foo/index.js`.
 
 
 :::
@@ -70,10 +69,9 @@ By placing two sets of brackets around your filename – for example, `/users/[[
 | /users/daniel/xyz/123 | Yes      |
 | /nevi                 | No       |
 
-:::note[Route specificity]
+:::note
 
-
-More specific routes (routes with fewer wildcards) take precedence over less specific routes.
+Route specificity. More specific routes (routes with fewer wildcards) take precedence over less specific routes.
 
 
 :::

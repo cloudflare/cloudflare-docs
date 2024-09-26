@@ -86,10 +86,9 @@ Next, create a `functions` directory and start coding your Plugin. The `function
 * if you want your Plugin to be mounted and serve all requests beyond a certain path (for example, `/admin/login` and `/admin/dashboard`), create a `functions/[[path]].ts` file.
 * if you want your Plugin to intercept requests but fallback on either other Functions or the project's static assets, create a `functions/_middleware.ts` file.
 
-:::note[Do not include the mounted path in your Plugin]
+:::note
 
-
-Your Plugin should not use the mounted path anywhere in the file structure (for example, `/foo` or `/admin`). Developers should be free to mount your Plugin wherever they choose, but you can make recommendations of how you expect this to be mounted in your `README.md`.
+Do not include the mounted path in your Plugin. Your Plugin should not use the mounted path anywhere in the file structure (for example, `/foo` or `/admin`). Developers should be free to mount your Plugin wherever they choose, but you can make recommendations of how you expect this to be mounted in your `README.md`.
 
 
 :::

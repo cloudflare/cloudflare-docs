@@ -33,9 +33,9 @@ You should use Delegated DCV when all of the following conditions are true:
 - Your zone is not using multiple CDN providers.
 - The Certificate Authority is either Google or Let's Encrypt
 
-:::note[Delegated DCV and origin certificates]
+:::note
 
-As explained in the [announcement blog post](https://blog.cloudflare.com/introducing-dcv-delegation/), currently, you can only delegate DCV to one provider at a time. If you also issue publicly trusted certificates for the same hostname for your [origin server](/ssl/concepts/#origin-certificate), this will no longer be possible. You can use [Cloudflare Origin CA certificates](/ssl/origin-configuration/origin-ca/) instead.
+Delegated DCV and origin certificates. As explained in the [announcement blog post](https://blog.cloudflare.com/introducing-dcv-delegation/), currently, you can only delegate DCV to one provider at a time. If you also issue publicly trusted certificates for the same hostname for your [origin server](/ssl/concepts/#origin-certificate), this will no longer be possible. You can use [Cloudflare Origin CA certificates](/ssl/origin-configuration/origin-ca/) instead.
 :::
 
 ## Setup
@@ -70,9 +70,9 @@ _acme-challenge.sub.example.com CNAME sub.example.com.<COPIED_VALIDATION_URL>.
 
 </Example>
 
-:::caution[Remove previous TXT records]
+:::caution
 
-Existing TXT records for `_acme-challenge` will conflict with the delegated DCV CNAME record. Make sure to check and remove records such as the following:
+Remove previous TXT records. Existing TXT records for `_acme-challenge` will conflict with the delegated DCV CNAME record. Make sure to check and remove records such as the following:
 
 ```txt
 _acme-challenge.example.com TXT <CERTIFICATE_VALIDATION_VALUE>

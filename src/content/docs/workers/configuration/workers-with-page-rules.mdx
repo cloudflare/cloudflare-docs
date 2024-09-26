@@ -52,20 +52,18 @@ The following Page Rules may not work as expected when an incoming request is ma
 
 This is because the default setting of these Page Rules will be disabled when Cloudflare recognizes that the request is headed to a Worker.
 
-:::caution[Testing]
+:::caution
 
-
-Due to ongoing changes to the Workers runtime, detailed documentation on how these rules will be affected are updated following testing.
+Testing. Due to ongoing changes to the Workers runtime, detailed documentation on how these rules will be affected are updated following testing.
 
 
 :::
 
 To learn what these Page Rules do, refer to [Page Rules](/rules/page-rules/).
 
-:::note[Same zone versus other zone]
+:::note
 
-
-A same zone subrequest is a request the Worker makes to an orange-clouded hostname in the same zone the Worker runs on. Depending on your DNS configuration, any request that falls outside that definition may be considered an other zone request by the Cloudflare network.
+Same zone versus other zone. A same zone subrequest is a request the Worker makes to an orange-clouded hostname in the same zone the Worker runs on. Depending on your DNS configuration, any request that falls outside that definition may be considered an other zone request by the Cloudflare network.
 
 
 :::

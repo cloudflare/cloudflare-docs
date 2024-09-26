@@ -23,9 +23,9 @@ To use `create-cloudflare` to create a new Remix project, run the following comm
 
 `create-cloudflare` will install additional dependencies, including the [Wrangler](/workers/wrangler/install-and-update/#check-your-wrangler-version) CLI and any necessary adapters, and ask you setup questions.
 
-:::caution[Before you deploy]
+:::caution
 
-Your Remix project will include a `functions/[[path]].ts` file. The `[[path]]` filename indicates that this file will handle requests to all incoming URLs. Refer to [Path segments](/pages/functions/routing/#dynamic-routes) to learn more.
+Before you deploy. Your Remix project will include a `functions/[[path]].ts` file. The `[[path]]` filename indicates that this file will handle requests to all incoming URLs. Refer to [Path segments](/pages/functions/routing/#dynamic-routes) to learn more.
 
 The `functions/[[path]].ts` will not function as expected if you attempt to deploy your site before running `remix vite:build`.
 :::
@@ -94,9 +94,9 @@ export const loader = ({ context }: LoaderFunctionArgs) => {
 };
 ```
 
-:::undefined[Correcting the env type]
+:::undefined
 
-You may have noticed that `context.cloudflare.env` is not typed correctly when you add additional bindings in `wrangler.toml`.
+Correcting the env type. You may have noticed that `context.cloudflare.env` is not typed correctly when you add additional bindings in `wrangler.toml`.
 
 To fix this, run `npm run typegen` to generate the missing types. This will update the `Env` interface defined in `worker-configuration.d.ts`.
 After running the command, you can access the bindings in your `loader` or `action` using `context.cloudflare.env` as shown above.

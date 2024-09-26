@@ -16,10 +16,9 @@ The Workers Paid plan includes Workers, Pages Functions, Workers KV, and Durable
 
 All included usage is on a monthly basis.
 
-:::note[Pages Functions billing]
+:::note
 
-
-All [Pages Functions](/pages/functions/) are billed as Workers. All pricing and inclusions in this document apply to Pages Functions. Refer to [Functions Pricing](/pages/functions/pricing/) for more information on Pages Functions pricing.
+Pages Functions billing. All [Pages Functions](/pages/functions/) are billed as Workers. All pricing and inclusions in this document apply to Pages Functions. Refer to [Functions Pricing](/pages/functions/pricing/) for more information on Pages Functions pricing.
 
 
 :::
@@ -86,10 +85,9 @@ A high traffic Worker that serves 100 million requests per month, and uses an av
 
 
 
-:::note[Custom limits]
+:::note
 
-
-To prevent accidental runaway bills or denial-of-wallet attacks, configure the maximum amount of CPU time that can be used per invocation by [defining limits in your Worker's `wrangler.toml` file](/workers/wrangler/configuration/#limits), or via the Cloudflare dashboard (Workers & Pages > Select your Worker > Settings > CPU Limits).
+Custom limits. To prevent accidental runaway bills or denial-of-wallet attacks, configure the maximum amount of CPU time that can be used per invocation by [defining limits in your Worker's `wrangler.toml` file](/workers/wrangler/configuration/#limits), or via the Cloudflare dashboard (Workers & Pages > Select your Worker > Settings > CPU Limits).
 
 If you had a Worker on the Bundled usage model prior to the migration to Standard pricing on March 1, 2024, Cloudflare has automatically added a 50 ms CPU limit on your Worker.
 
@@ -115,10 +113,9 @@ Workers Logpush is only available on the Workers Paid plan.
 
 <Render file="kv_pricing" />
 
-:::note[KV documentation]
+:::note
 
-
-To learn more about KV, refer to the [KV documentation](/kv/).
+KV documentation. To learn more about KV, refer to the [KV documentation](/kv/).
 
 
 :::
@@ -127,10 +124,9 @@ To learn more about KV, refer to the [KV documentation](/kv/).
 
 <Render file="queues_pricing" />
 
-:::note[Queues billing examples]
+:::note
 
-
-To learn more about Queues pricing and review billing examples, refer to [Queues Pricing](/queues/platform/pricing/).
+Queues billing examples. To learn more about Queues pricing and review billing examples, refer to [Queues Pricing](/queues/platform/pricing/).
 
 
 :::
@@ -141,10 +137,9 @@ D1 is available on both the [Workers Free](#workers) and [Workers Paid](#workers
 
 <Render file="d1-pricing" />
 
-:::note[D1 billing]
+:::note
 
-
-Refer to [D1 Pricing](/d1/platform/pricing/) to learn more about how D1 is billed.
+D1 billing. Refer to [D1 Pricing](/d1/platform/pricing/) to learn more about how D1 is billed.
 
 
 :::
@@ -153,10 +148,9 @@ Refer to [D1 Pricing](/d1/platform/pricing/) to learn more about how D1 is bille
 
 <Render file="durable_objects_pricing" />
 
-:::note[Durable Objects billing examples]
+:::note
 
-
-For more information and [examples of Durable Objects billing](/durable-objects/platform/pricing/#durable-objects-billing-examples), refer to [Durable Objects Pricing](/durable-objects/platform/pricing/).
+Durable Objects billing examples. For more information and [examples of Durable Objects billing](/durable-objects/platform/pricing/#durable-objects-billing-examples), refer to [Durable Objects Pricing](/durable-objects/platform/pricing/).
 
 
 :::
@@ -180,8 +174,9 @@ For example, if Worker A makes a subrequest to Worker B via a Service Binding, o
 - One request (for the initial invocation of Worker A)
 - The total amount of CPU time used across both Worker A and Worker B
 
-:::note[Only available on Workers Standard pricing]
-If your Worker is on the deprecated [Bundled](/workers/platform/pricing/#example-pricing-bundled-usage-model) or [Unbound](/workers/platform/pricing/#example-pricing-unbound-usage-model) pricing plans, subrequests and RPC calls made via Service Bindings are charged as if they are request from the Internet. In the example above, you would be charged for two requests, one to Worker A, and one to Worker B.
+:::note
+
+Only available on Workers Standard pricing. If your Worker is on the deprecated [Bundled](/workers/platform/pricing/#example-pricing-bundled-usage-model) or [Unbound](/workers/platform/pricing/#example-pricing-unbound-usage-model) pricing plans, subrequests and RPC calls made via Service Bindings are charged as if they are request from the Internet. In the example above, you would be charged for two requests, one to Worker A, and one to Worker B.
 :::
 
 ## Fine Print

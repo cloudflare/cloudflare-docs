@@ -34,7 +34,7 @@ All packets with a destination IP in the VIP space need to be routed back throug
 ip route add 100.96.0.0/12 dev gre1
 ```
 
-:::note[Note]
+:::note
 
 After set up, **HTTP** and **Network logs** in Gateway will show the virtual IP address of your WARP device as the **Source IP**. DNS logs will continue to show the original WARP device IP because DNS traffic is sent over the public Internet to Cloudflare’s public-facing resolver.
 :::

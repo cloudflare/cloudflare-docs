@@ -23,9 +23,9 @@ Context is exposed via the following places:
 * Fire off events to external analytics providers. (note that when you use [Workers Analytics Engine](/analytics/analytics-engine/), you do not need to use `waitUntil`)
 * Put items into cache using the [Cache API](/workers/runtime-apis/cache/)
 
-:::note[Alternatives to waitUntil]
+:::note
 
-If you are using `waitUntil()` to emit logs or exceptions, we recommend using [Tail Workers](/workers/observability/logging/tail-workers/) instead. Even if your Worker throws an uncaught exception, the Tail Worker will execute, ensuring that you can emit logs or exceptions regardless of the Worker's invocation status.
+Alternatives to waitUntil. If you are using `waitUntil()` to emit logs or exceptions, we recommend using [Tail Workers](/workers/observability/logging/tail-workers/) instead. Even if your Worker throws an uncaught exception, the Tail Worker will execute, ensuring that you can emit logs or exceptions regardless of the Worker's invocation status.
 
 [Cloudflare Queues](/queues/) is purpose-built for performing work out-of-band, without blocking returning a response back to the client Worker. 
 :::
@@ -56,9 +56,9 @@ export default {
 
 ## `passThroughOnException`
 
-:::caution[Reuse of body]
+:::caution
 
-The Workers Runtime uses streaming for request and response bodies. It does not buffer the body. Hence, if an exception occurs after the body has been consumed, `passThroughOnException()` cannot send the body again.
+Reuse of body. The Workers Runtime uses streaming for request and response bodies. It does not buffer the body. Hence, if an exception occurs after the body has been consumed, `passThroughOnException()` cannot send the body again.
 
 If this causes issues, we recommend cloning the request body and handling exceptions in code. This will protect against uncaught code exceptions. However some exception times such as exceed CPU or memory limits will not be mitigated. 
 :::

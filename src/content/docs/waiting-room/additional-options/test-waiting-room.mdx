@@ -10,7 +10,7 @@ import { Details } from "~/components"
 
 Follow this tutorial to test your waiting room behavior in response to load. To accurately simulate traffic through your waiting room with a load test, run your test script or planner for a period of time longer than a minute, ideally more than 2-3 minutes. You can run a load test using a variety of tools including [loader.io](http://loader.io), [jmeter](http://jmeter.apache.org), and [postman.com](http://postman.com). You can also write a plain shell script to simulate user requests (each representing a distinct user).
 
-:::caution[Warning]
+:::caution
 
 This tutorial uses an open-sourced load testing tool that is not created or supported by Cloudflare. 
 :::
@@ -119,7 +119,7 @@ From our test, we got the following results (these are extracted from results of
 
 The first minute mark, 15:35:00 UTC, shows 137 active users past the waiting room. This is because our traffic was set to gradually ramp up within the first minute and the test did not start exactly at the minute mark. When data was aggregated for the following minute, 15:36:00 UTC, the waiting room reported the total 200 users active we expected on the site as each “user” made subrequests. The active user count remained stable at 200 as long as it received subrequests from the traffic sent by the load test.
 
-:::note[Note]
+:::note
 
 
 Obtain your API token from the dashboard. Make sure your API token grants access to the **Analytics** resource. For more information on how to get the API token, follow the [Configure Analytics API token](/analytics/graphql-api/getting-started/authentication/api-token-auth/) guide. 

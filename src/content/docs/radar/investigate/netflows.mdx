@@ -18,9 +18,9 @@ Netflows includes all types of traffic from Cloudflare's routers, not just traff
 
 Besides comparing time series across locations or date ranges (discussed in [Make comparisons](/radar/get-started/making-comparisons/)), we can also examine `ALL` traffic versus only `HTTP` traffic using the `product` filter. For more information, refer to the [API reference](/api/operations/radar-get-netflows-timeseries) for this endpoint.
 
-:::note[NetFlow products]
+:::note
 
-`HTTP` traffic only includes web traffic to Cloudflare's zones, while `ALL` also includes traffic to all other services, like [Spectrum](/spectrum/), [Magic Transit](/magic-transit/), [1.1.1.1](/1.1.1.1/), and others. 
+NetFlow products. `HTTP` traffic only includes web traffic to Cloudflare's zones, while `ALL` also includes traffic to all other services, like [Spectrum](/spectrum/), [Magic Transit](/magic-transit/), [1.1.1.1](/1.1.1.1/), and others. 
 :::
 
 In the following example, we will examine both `ALL` and `HTTP` traffic in two [autonomous systems](https://www.cloudflare.com/en-gb/learning/network-layer/what-is-an-autonomous-system/). First, we will examine [AS3243](https://radar.cloudflare.com/as3243), a Portuguese local Internet Service Provider (ISP). The parameters for all traffic are `name=AS3243_all&product=ALL&dateRange=1d&asn=3243`, and for just the HTTP traffic are `name=AS3243_http&product=HTTP&dateRange=1d&asn=3243`):

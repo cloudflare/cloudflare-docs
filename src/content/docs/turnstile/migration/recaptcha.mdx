@@ -51,9 +51,9 @@ Turnstile supports:
 
 Update the server-side integration by replacing the siteverify URL. Replace `https://www.google.com/recaptcha/api/siteverify` with `https://challenges.cloudflare.com/turnstile/v0/siteverify`
 
-:::caution[Differences to reCAPTCHA's siteverify]
+:::caution
 
-reCAPTCHA supports `GET` requests using query parameters, i.e: `GET /siteverify?response=<response>&secret=<secret>`.
+Differences to reCAPTCHA's siteverify. reCAPTCHA supports `GET` requests using query parameters, i.e: `GET /siteverify?response=<response>&secret=<secret>`.
 
 Turnstile's siteverify endpoint does _not_ support this and only accepts `POST` requests with a FormData or JSON body.
 

@@ -19,9 +19,9 @@ Cloudflare Workers provides first-class support for Python, including support fo
 - A robust [foreign function interface (FFI)](/workers/languages/python/ffi) that lets you use JavaScript objects and functions directly from Python — including all [Runtime APIs](/workers/runtime-apis/)
 - [Built-in packages](/workers/languages/python/packages), including [FastAPI](https://fastapi.tiangolo.com/), [Langchain](https://pypi.org/project/langchain/), [httpx](https://www.python-httpx.org/) and more.
 
-:::caution[Python Workers are in beta. Packages do not run in production.]
+:::caution
 
-Currently, you can only deploy Python Workers that use the standard library. [Packages](/workers/languages/python/packages/#supported-packages) **cannot be deployed** and will only work in local development for the time being.
+Python Workers are in beta. Packages do not run in production.. Currently, you can only deploy Python Workers that use the standard library. [Packages](/workers/languages/python/packages/#supported-packages) **cannot be deployed** and will only work in local development for the time being.
 
 You must add the `python_workers` compatibility flag to your Worker, while Python Workers are in open beta.
 

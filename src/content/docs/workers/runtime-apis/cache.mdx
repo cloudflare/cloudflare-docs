@@ -12,10 +12,9 @@ The [Cache API](https://developer.mozilla.org/en-US/docs/Web/API/Cache) allows f
 
 The Cache API is available globally but the contents of the cache do not replicate outside of the originating data center. A `GET /users` response can be cached in the originating data center, but will not exist in another data center unless it has been explicitly created.
 
-:::caution[Tiered caching]
+:::caution
 
-
-The `cache.put` method is not compatible with tiered caching. Refer to [Cache API](/workers/reference/how-the-cache-works/#cache-api) for more information. To perform tiered caching, use the [fetch API](/workers/reference/how-the-cache-works/#interact-with-the-cloudflare-cache).
+Tiered caching. The `cache.put` method is not compatible with tiered caching. Refer to [Cache API](/workers/reference/how-the-cache-works/#cache-api) for more information. To perform tiered caching, use the [fetch API](/workers/reference/how-the-cache-works/#interact-with-the-cloudflare-cache).
 
 
 :::
@@ -215,10 +214,9 @@ Deletes the `Response` object from the cache and returns a `Promise` for a Boole
 * `true`: The response was cached but is now deleted
 * `false`: The response was not in the cache at the time of deletion.
 
-:::caution[Global purges]
+:::caution
 
-
-The `cache.delete` method only purges content of the cache in the data center that the Worker was invoked. For global purges, refer to [Purging assets stored with the Cache API](/workers/reference/how-the-cache-works/#purge-assets-stored-with-the-cache-api).
+Global purges. The `cache.delete` method only purges content of the cache in the data center that the Worker was invoked. For global purges, refer to [Purging assets stored with the Cache API](/workers/reference/how-the-cache-works/#purge-assets-stored-with-the-cache-api).
 
 
 :::

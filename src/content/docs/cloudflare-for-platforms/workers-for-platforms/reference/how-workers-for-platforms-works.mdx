@@ -27,10 +27,9 @@ Workers for Platforms introduces a new architecture model as outlined on this pa
 
 A dispatch namespace is composed of a collection of user Workers. With dispatch namespaces, a dynamic dispatch Worker can be used to call any user Worker in a namespace.
 
-:::note[Best practice]
+:::note
 
-
-Having a production and staging namespace is useful to test changes that you have made to your dynamic dispatch Worker.
+Best practice. Having a production and staging namespace is useful to test changes that you have made to your dynamic dispatch Worker.
 
 If you have multiple distinct services you are providing your customers, you should split these out into different dispatch workers and namespaces. We discourage creating a new namespace for each customer.
 

@@ -25,10 +25,9 @@ A Durable Object stub is a client Object used to send requests to a remote Durab
 
 Any uncaught exceptions thrown by a Durable Object or its infrastructure will be propagated to the callsite of the client. Catching these exceptions allows you to retry creating the Durable Object stub and sending requests.
 
-:::note[Durable Object stubs]
+:::note
 
-
-If any exception is thrown from a Durable Object stub, then the stub will need to be recreated prior to retrying requests. This is to provide E-order semantics as discussed in [create Durable Object stubs and send requests](/durable-objects/best-practices/create-durable-object-stubs-and-send-requests/#create-durable-object-stubs-and-send-requests).
+Durable Object stubs. If any exception is thrown from a Durable Object stub, then the stub will need to be recreated prior to retrying requests. This is to provide E-order semantics as discussed in [create Durable Object stubs and send requests](/durable-objects/best-practices/create-durable-object-stubs-and-send-requests/#create-durable-object-stubs-and-send-requests).
 
 JavaScript Errors with the property `.retryable` set to True are suggested to be retried if requests to the Durable Object are idempotent, or can be applied multiple times without changing the response. If requests are not idempotent, then you will need to decide what is best for your application.
 

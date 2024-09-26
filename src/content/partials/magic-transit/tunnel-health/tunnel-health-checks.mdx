@@ -72,7 +72,7 @@ Tunnels in a degraded state transition to healthy when the failure rate for the 
 
 {props.two}’s tunnel health check system allows a tunnel to quickly transition from healthy to degraded or down, but tunnel transition occurs slowly from degraded or down to healthy. This scenario is referred to as hysteresis — which is when a system’s output depends on its history of past inputs — and dampens changes to tunnel routing caused by flapping and other intermittent network failures.
 
-:::note[Note]
+:::note
 Cloudflare always attempts to send traffic over available tunnel routes with the highest priority (lowest route value), even when all configured tunnels are in an unhealthy state.
 :::
 

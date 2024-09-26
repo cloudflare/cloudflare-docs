@@ -17,7 +17,7 @@ The Cloudflare Logpush integration can be used in three different modes to colle
 * **AWS S3 polling mode** - Cloudflare writes data to S3, and the Elastic Agent polls the S3 bucket by listing its contents and reading new files.
 * **AWS S3 SQS mode** - Cloudflare writes data to S3, S3 pushes a new object notification to SQS, the Elastic Agent receives the notification from SQS, and then reads the S3 object. Multiple Agents can be used in this mode.
 
-:::note[Note]
+:::note
 
 
 Elastic recommends the AWS S3 SQS mode.

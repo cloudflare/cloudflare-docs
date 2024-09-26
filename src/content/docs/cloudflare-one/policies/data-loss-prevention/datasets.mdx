@@ -39,9 +39,9 @@ Column title cells may result in false positives in Custom Wordlist datasets and
 
 DLP will detect and use title cells as column names for Exact Data Match datasets. If multiple columns have the same name, DLP will append a number sign (`#`) and number to their names.
 
-:::tip[Update EDM datasets]
+:::tip
 
-To select which Exact Data Match columns to use, you will need to [reupload any EDM datasets](#manage-existing-datasets) added prior to column support.
+Update EDM datasets. To select which Exact Data Match columns to use, you will need to [reupload any EDM datasets](#manage-existing-datasets) added prior to column support.
 
 :::
 
@@ -88,8 +88,8 @@ Uploaded DLP datasets are read-only. To update a dataset, you must upload a new 
 
 Your new dataset will replace the original dataset.
 
-:::caution[Remove existing column entries]
+:::caution
 
-If you want to update an Exact Data Match dataset to remove a column in use as an [existing detection entry](/cloudflare-one/policies/data-loss-prevention/dlp-profiles/#build-a-custom-profile), you must remove the existing entry from any custom DLP profiles using it before updating the dataset.
+Remove existing column entries. If you want to update an Exact Data Match dataset to remove a column in use as an [existing detection entry](/cloudflare-one/policies/data-loss-prevention/dlp-profiles/#build-a-custom-profile), you must remove the existing entry from any custom DLP profiles using it before updating the dataset.
 
 :::

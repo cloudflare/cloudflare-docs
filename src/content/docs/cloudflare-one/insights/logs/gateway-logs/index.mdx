@@ -7,9 +7,9 @@ sidebar:
 
 import { Render, GlossaryTooltip } from "~/components";
 
-:::note[Private source IP substitution]
+:::note
 
-Gateway logs will only show the public IP address for the **Source IP** field. Private IP addresses are substituted by a public IP address via network address translation (NAT).
+Private source IP substitution. Gateway logs will only show the public IP address for the **Source IP** field. Private IP addresses are substituted by a public IP address via network address translation (NAT).
 
 :::
 
@@ -121,9 +121,9 @@ These settings will only apply to logs displayed in Zero Trust. Logpush data is 
 
 ## Network logs
 
-:::caution[Failed connection logs]
+:::caution
 
-Gateway will only log failed connections in [network session logs](/logs/reference/log-fields/account/zero_trust_network_sessions/). These logs are available for Enterprise users via [Logpush](/cloudflare-one/insights/logs/logpush/) or [GraphQL](/cloudflare-one/insights/analytics/gateway/#graphql-queries).
+Failed connection logs. Gateway will only log failed connections in [network session logs](/logs/reference/log-fields/account/zero_trust_network_sessions/). These logs are available for Enterprise users via [Logpush](/cloudflare-one/insights/logs/logpush/) or [GraphQL](/cloudflare-one/insights/analytics/gateway/#graphql-queries).
 
 :::
 

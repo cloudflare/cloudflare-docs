@@ -159,9 +159,9 @@ The dictionary can contain multiple key-value pairs. Each key indicates the name
 
 A version override will only be applied if the specified version is in the current deployment. The versions in the current deployment can be found using the [`wrangler deployments list`](/workers/wrangler/commands/#list-6) command or on the [Workers Dashboard](https://dash.cloudflare.com/?to=/:account/workers) under Worker > Deployments > Active Deployment.
 
-:::note[Verifying that the version override was applied]
+:::note
 
-There are a number of reasons why a request's version override may not be applied. For example:
+Verifying that the version override was applied. There are a number of reasons why a request's version override may not be applied. For example:
 
 - The deployment containing the specified version may not have propagated yet.
 - The header value may not be a valid [Dictionary](https://www.rfc-editor.org/rfc/rfc8941#name-dictionaries).

@@ -9,9 +9,9 @@ import { Render } from "~/components";
 
 Vectorize indexes allow you to insert vectors at any point: Vectorize will optimize the index behind the scenes to ensure that vector search remains efficient, even as new vectors are added or existing vectors updated.
 
-:::note[Insert vs Upsert]
+:::note
 
-If the same vector id is _inserted_ twice in a Vectorize index, the index would reflect the vector that was added first.
+Insert vs Upsert. If the same vector id is _inserted_ twice in a Vectorize index, the index would reflect the vector that was added first.
 
 If the same vector id is _upserted_ twice in a Vectorize index, the index would reflect the vector that was added second.
 
@@ -130,9 +130,9 @@ Refer to [Vectorize API](/vectorize/reference/client-api/) for additional exampl
 
 ### wrangler CLI
 
-:::note[Cloudflare API rate limit]
+:::note
 
-Please use a maximum of 5000 vectors per embeddings.ndjson file to prevent the global [rate limit](/fundamentals/api/reference/limits/) for the Cloudflare API.
+Cloudflare API rate limit. Please use a maximum of 5000 vectors per embeddings.ndjson file to prevent the global [rate limit](/fundamentals/api/reference/limits/) for the Cloudflare API.
 
 :::
 

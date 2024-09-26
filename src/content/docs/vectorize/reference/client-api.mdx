@@ -77,9 +77,9 @@ The `returnMetadata` field provides three ways to fetch vector metadata while qu
 2. `indexed`: Fetched metadata only for the indexed metadata fields. There is no latency overhead with this option, but long text fields may be truncated.
 3. `all`: Fetch all metadata associated with a vector. Queries may run slower with this option, and `topK` would be limited to 20.
 
-:::note[`topK` and `returnMetadata` for legacy Vectorize indexes]
+:::note
 
-For legacy Vectorize (V1) indexes, `topK` is limited to 20, and the `returnMetadata` is a boolean field.
+`topK` and `returnMetadata` for legacy Vectorize indexes. For legacy Vectorize (V1) indexes, `topK` is limited to 20, and the `returnMetadata` is a boolean field.
 
 :::
 

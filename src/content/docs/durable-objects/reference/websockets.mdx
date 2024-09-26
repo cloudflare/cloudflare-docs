@@ -18,10 +18,9 @@ When a client connects to your application using a WebSocket, you need a way for
 
 Durable Objects can use the web standard APIs described in [WebSockets API](/durable-objects/api/websockets/). Refer to [Cloudflare Edge Chat Demo](https://github.com/cloudflare/workers-chat-demo) for an example of using Durable Objects with WebSockets.
 
-:::caution[WebSockets disconnection]
+:::caution
 
-
-Code updates will disconnect all WebSockets. If you deploy a new version of a Worker, every Durable Object is restarted. Any connections to old Durable Objects will be disconnected.
+WebSockets disconnection. Code updates will disconnect all WebSockets. If you deploy a new version of a Worker, every Durable Object is restarted. Any connections to old Durable Objects will be disconnected.
 
 
 :::
@@ -52,10 +51,9 @@ For WebSocket proxy use cases, refer to the [standard WebSocket API documentatio
 
 If an event occurs for a hibernated Durable Object's corresponding handler method, it will return to memory. This will call the Durable Object's constructor, so it is best to minimize work in the constructor when using WebSocket hibernation.
 
-:::caution[Support for local development]
+:::caution
 
-
-Prior to `wrangler@3.13.2` and Miniflare `v3.20231016.0`, WebSockets did not hibernate when using local development environments such as `wrangler dev` or Miniflare.
+Support for local development. Prior to `wrangler@3.13.2` and Miniflare `v3.20231016.0`, WebSockets did not hibernate when using local development environments such as `wrangler dev` or Miniflare.
 
 If you are using older versions, note that while hibernatable WebSocket events such as [`webSocketMessage()`](/durable-objects/api/websockets/#websocketmessage) will still be delivered, the Durable Object will never be evicted from memory.
 

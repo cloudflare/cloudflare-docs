@@ -34,7 +34,7 @@ Migrations can also be used for transferring stored data between two Durable Obj
 
 The destination class (the class that stored Durable Objects are being transferred to) for a rename or transfer migration must be exported by the deployed Worker.
 
-:::caution[Important]
+:::caution
 
 
 After a rename or transfer migration, requests to the destination Durable Object class will have access to the source Durable Object's stored data.
@@ -46,10 +46,9 @@ After a migration, any existing bindings to the original Durable Object class (f
 
 Migrations can also be used to delete a Durable Object class and its stored Durable Objects.
 
-:::caution[Delete migrations]
+:::caution
 
-
-Running a delete migration will delete all Durable Object instances associated with the deleted class, including all of their stored data. Do not run a delete migration on a class without first ensuring that you are not relying on the Durable Objects within that class anymore. Copy any important data to some other location before deleting.
+Delete migrations. Running a delete migration will delete all Durable Object instances associated with the deleted class, including all of their stored data. Do not run a delete migration on a class without first ensuring that you are not relying on the Durable Objects within that class anymore. Copy any important data to some other location before deleting.
 
 
 :::

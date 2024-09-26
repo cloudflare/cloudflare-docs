@@ -231,9 +231,9 @@ if (Astro.request.method === "POST") {
 
 This code creates an Astro component that renders a form and handles the form submission. When the form is submitted, the component will send a POST request to the `/api/sendEmail.json` endpoint created in the previous step with the form data.
 
-:::caution[File Extension]
+:::caution
 
-Astro requires an absolute URL, which is why you should use `Astro.url + "/api/sendEmail.json`. If you use a relative path the post request will fail.
+File Extension. Astro requires an absolute URL, which is why you should use `Astro.url + "/api/sendEmail.json`. If you use a relative path the post request will fail.
 
 :::
 

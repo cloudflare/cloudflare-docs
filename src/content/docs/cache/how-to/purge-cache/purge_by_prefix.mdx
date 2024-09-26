@@ -30,15 +30,14 @@ Purging by prefix is useful in different scenarios, such as:
 6. Enter the appropriate value(s) in the text field using the format shown in the example.
 7. Select **Purge**.
 
-:::note[API]
+:::note
 
-
-You can purge prefixes via the Cloudflare API. For more information, refer to the [API documentation](/api/operations/zone-purge). You can use up to 30 prefixes per API call and make up to 30,000 purge API calls in a 24-hour period.
+API. You can purge prefixes via the Cloudflare API. For more information, refer to the [API documentation](/api/operations/zone-purge). You can use up to 30 prefixes per API call and make up to 30,000 purge API calls in a 24-hour period.
 
 
 :::
 
-:::caution[Warning]
+:::caution
 
 
 If you have a [Transform Rule](/rules/transform/) in place that is modifying part of a URL path, you must use the post-transformed (origin) URL when performing a prefix purge so that purge can take effect.
@@ -64,7 +63,7 @@ There are several limitations regarding purge by prefix:
   * `www.example.com/foo?a=b` (query string)
   * `www.example.com/foo#bar` (fragment)
 
-:::caution[Warning]
+:::caution
 
 
 Because purge by prefix purges a directory, any URI for a resource within the purged directory is purged regardless of query string or fragment (though fragments are not generally sent by browsers). Purge by prefix rules do not accept fragments and query strings.

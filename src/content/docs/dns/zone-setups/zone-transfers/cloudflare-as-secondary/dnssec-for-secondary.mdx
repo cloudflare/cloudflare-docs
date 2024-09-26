@@ -65,9 +65,9 @@ https://api.cloudflare.com/client/v4/zones/{zone_id}/dnssec \
 
 ## Set up pre-signed DNSSEC
 
-:::caution[Important: NSEC3 not supported]
+:::caution
 
-If your primary DNS provider uses NSEC3 instead of NSEC, Cloudflare will fail to serve the pre-signed zone. Authenticated denial of existence is an essential part of DNSSEC ([RFC 7129](https://www.rfc-editor.org/rfc/rfc7129.html)) and is only supported by Cloudflare through NSEC.
+Important: NSEC3 not supported. If your primary DNS provider uses NSEC3 instead of NSEC, Cloudflare will fail to serve the pre-signed zone. Authenticated denial of existence is an essential part of DNSSEC ([RFC 7129](https://www.rfc-editor.org/rfc/rfc7129.html)) and is only supported by Cloudflare through NSEC.
 :::
 
 ### Prerequisites

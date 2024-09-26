@@ -247,8 +247,9 @@ The matching algorithm used by the `wildcard` operator is case insensitive. To p
 
 To enter a literal `*` character in a literal string with wildcards you must escape it using `\*`. Additionally, you must also escape `\` using `\\`. Two unescaped `*` characters in a row (`**`) in a wildcard literal string are considered invalid and cannot be used. If you need to perform character escaping, it is recommended that you use the [raw string syntax](/ruleset-engine/rules-language/values/#raw-string-syntax) to specify a literal string with wildcards.
 
-:::note[Wildcard matching versus regex matching]
-The `wildcard`/`strict wildcard` operators always consider the entire field value (left-side operand) when determining if there is a match. The `matches` operator can match a partial value.
+:::note
+
+Wildcard matching versus regex matching. The `wildcard`/`strict wildcard` operators always consider the entire field value (left-side operand) when determining if there is a match. The `matches` operator can match a partial value.
 :::
 
 ### Regular expression matching

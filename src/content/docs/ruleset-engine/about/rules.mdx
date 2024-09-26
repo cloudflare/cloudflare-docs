@@ -26,10 +26,9 @@ If the entire expression evaluates to `true`, there is a rule match and Cloudfla
 
 When you use `true` as the rule filter expression, this means "apply the rule to every incoming request" at the current [phase](/ruleset-engine/about/phases/) level, which can be zone or account.
 
-:::note[Notes]
+:::note
 
-
-* A rule filter expression must evaluate to a boolean value (either `true` or `false`).
+Notes. * A rule filter expression must evaluate to a boolean value (either `true` or `false`).
 * Rules of specific Cloudflare products, such as [Transform Rules](/rules/transform/), may include other expressions used to specify dynamic values. These expressions do not have to evaluate to a boolean value. 
   :::
 

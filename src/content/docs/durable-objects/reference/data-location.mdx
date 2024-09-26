@@ -37,10 +37,9 @@ To derive a unique Object ID from the given name string that will only run and p
 let id = subnamespace.idFromName(name);
 ```
 
-:::note[IDs derived from the same name but different jurisdictions will differ]
+:::note
 
-
-Because the jurisdiction is encoded permanently in the Durable Object ID, it is possible to have the same name represent different Durable Objects in different jurisdictions. For example: `OBJECT_NAMESPACE.idFromName('my-name')` and `OBJECT_NAMESPACE.jurisdiction('eu').idFromName('my-name')` represent different Durable Objects. They will have their own transient (in-memory) and persistent state, and will likely run in different geographical regions.
+IDs derived from the same name but different jurisdictions will differ. Because the jurisdiction is encoded permanently in the Durable Object ID, it is possible to have the same name represent different Durable Objects in different jurisdictions. For example: `OBJECT_NAMESPACE.idFromName('my-name')` and `OBJECT_NAMESPACE.jurisdiction('eu').idFromName('my-name')` represent different Durable Objects. They will have their own transient (in-memory) and persistent state, and will likely run in different geographical regions.
 
 This may be counterintuitive at first, but it would be impossible to enforce two different non-overlapping jurisdictions for a single name. The key insight to remember is that Durable Object namespaces operate on IDs, not names, and the jurisdiction is a permanent part of the ID.
 
@@ -75,10 +74,9 @@ Your Workers may still access Durable Objects constrained to a jurisdiction from
 
 The currently supported jurisdictions are `eu` (the European Union) and `fedramp` (FedRAMP).
 
-:::note[ID logging]
+:::note
 
-
-Durable Object IDs will be logged outside of the specified jurisdiction for billing and debugging purposes.
+ID logging. Durable Object IDs will be logged outside of the specified jurisdiction for billing and debugging purposes.
 
 
 :::
@@ -89,10 +87,9 @@ Durable Objects, as with any stateful API, will often add response latency as re
 
 Durable Objects do not currently change locations after they are created<sup>1</sup>. By default, a Durable Object is instantiated in a data center close to where the initial `get()` request is made. This may not be in the same data center that the `get()` request is made from, but in most cases, it will be in close proximity.
 
-:::caution[Initial requests to Durable Objects]
+:::caution
 
-
-It can negatively impact latency to pre-create Durable Objects prior to the first client request or when the first client request is not representative of where the majority of requests will come from. It is better for latency to create Durable Objects in response to actual production traffic or provide explicit location hints.
+Initial requests to Durable Objects. It can negatively impact latency to pre-create Durable Objects prior to the first client request or when the first client request is not representative of where the majority of requests will come from. It is better for latency to create Durable Objects in response to actual production traffic or provide explicit location hints.
 
 
 :::

@@ -13,9 +13,9 @@ head:
 
 import { GlossaryTooltip, Render } from "~/components";
 
-:::caution[Area 1 has been renamed]
+:::caution
 
-<Render file="rename-area1-to-ces" />
+Area 1 has been renamed. <Render file="rename-area1-to-ces" />
 
 :::
 
@@ -237,7 +237,7 @@ DNS changes will reach the major DNS servers in about an hour or follow the TTL 
 
 One method of DNS attacks is to search for old MX records and send <GlossaryTooltip term="phishing">phishing</GlossaryTooltip> emails directly to the mail server. To secure the email flow, you will want to enforce an email flow where inbound messages are accepted by Office 365 only when they originate from Email Security. This can be done by adding a connector to only allow email from Email Security with TLS encryption. This step is optional but recommended.
 
-:::caution[Important]
+:::caution
 This step should not be performed until 24 hours after all domains (excluding your `<on_microsoft.com>` domain) in your Office 365 organization have been onboarded to Email Security, and Email Security is their MX record. If a domain has not been onboarded or DNS is still propagating, you will impact production email flow for that domain.
 :::
 

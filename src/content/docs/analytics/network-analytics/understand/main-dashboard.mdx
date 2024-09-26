@@ -68,9 +68,9 @@ Since the mitigation system may generate several mitigation rules (and therefore
 
 To obtain the metadata of recently mitigated DDoS attacks, query the [`dosdAttackAnalyticsGroups`](/analytics/graphql-api/migration-guides/network-analytics-v2/node-reference/#dosdattackanalyticsgroups) GraphQL node.
 
-:::note[Note about attack rates]
+:::note
 
-Attack rates in the executive summary may seem lower than the ones displayed in the time series graph because they are calculated based on the maximum rate of unique attack events and only by the Network-layer DDoS Attack Protection managed ruleset. However, in practice, multiple attacks and mitigation systems can contribute to blocking a single attack, resulting in a larger rate than the one displayed.
+Note about attack rates. Attack rates in the executive summary may seem lower than the ones displayed in the time series graph because they are calculated based on the maximum rate of unique attack events and only by the Network-layer DDoS Attack Protection managed ruleset. However, in practice, multiple attacks and mitigation systems can contribute to blocking a single attack, resulting in a larger rate than the one displayed.
 
 Additionally, attack rates may change based on the sampling and adaptive bit rate (ABR) as you zoom in and out in the time series graph. Refer to [Concepts](/analytics/network-analytics/understand/concepts/) for more information. 
 :::

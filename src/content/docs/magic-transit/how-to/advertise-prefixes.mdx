@@ -29,7 +29,7 @@ List all prefixes and the [autonomous systems (ASNs)](https://www.cloudflare.com
 
 </Details>
 
-:::note[Note]
+:::note
 When customers supply their own ASN, Cloudflare prepends the main Cloudflare ASN (AS13335) to the BGP `AS_PATH`. For example, if the customer ASN is AS64496, anyone directly peering with Cloudflare sees the path as `13335 64496`.
 
 If you do not have an ASN or do not want to bring your ASN to Cloudflare, you can use the Cloudflare Customer ASN (AS209242). In this case, the path becomes `13335 209242`.
@@ -51,8 +51,9 @@ After you add the prefix, you can edit its status.
 3. _(Optional)_ Edit the description for your prefix.
 4. Select **Edit IP Prefix** to save your changes.
 
-:::note[Note:]
-To avoid latency and potentially dropped routes, enable prefix advertisement from Cloudflare before withdrawing the advertisement from your data center.
+:::note
+
+Note:. To avoid latency and potentially dropped routes, enable prefix advertisement from Cloudflare before withdrawing the advertisement from your data center.
 :::
 
 ## Delete a prefix

@@ -10,10 +10,9 @@ When connected to your git repository, Pages allows you to control which environ
 
 ## Production branch control
 
-:::caution[Direct Upload]
+:::caution
 
-
-<Render file="prod-branch-update" />
+Direct Upload. <Render file="prod-branch-update" />
 
 
 :::
@@ -37,10 +36,9 @@ By selecting **Custom branches**, you can specify branches you wish to include a
 * **Static branch names**: Enter the precise name of the branch you are looking to include or exclude (for example, staging or dev).
 * **Wildcard syntax**: Use wildcards to match multiple branches. You can specify wildcards at the start or end of your rule. The order of execution for the configuration is (1) Excludes, (2) Includes, (3) Skip. Pages will process the exclude configuration first, then go to the include configuration. If a branch does not match either then it will be skipped.
 
-:::note[Wildcard syntax]
+:::note
 
-
-A wildcard (`*`) is a character that is used within rules. It can be placed alone to match anything or placed at the start or end of a rule to allow for better control over branch configuration. A wildcard will match zero or more characters.For example, if you wanted to match all branches that started with `fix/` then you would create the rule `fix/*` to match strings like `fix/1`, `fix/bugs`or `fix/`.
+Wildcard syntax. A wildcard (`*`) is a character that is used within rules. It can be placed alone to match anything or placed at the start or end of a rule to allow for better control over branch configuration. A wildcard will match zero or more characters.For example, if you wanted to match all branches that started with `fix/` then you would create the rule `fix/*` to match strings like `fix/1`, `fix/bugs`or `fix/`.
 
 
 :::

@@ -37,7 +37,7 @@ If you are an Internet service provider (ISP) and advertising <GlossaryTooltip t
 
 If you are using a [Cloudflare IP address](/magic-transit/cloudflare-ips/), you do not need to submit an LOA.
 
-:::note[Note]
+:::note
 The LOA must be a PDF. Transit providers may reject the LOA if it is a JPG or PNG.
 :::
 
@@ -70,7 +70,7 @@ To check your prefixes, you can use [Cloudflare's RPKI Portal](https://rpki.clou
 
 <Render file="mtu-mss/mss-clamping-ipsec" />
 
-:::caution[Important]
+:::caution
 Refer to your device documentation to check if it sets IPsec MSS clamping automatically. If that is not the case and you are using IPsec inside GRE, you have to set MSS clamp manually.
 :::
 
@@ -106,7 +106,7 @@ Once pre-flight checks are completed, Cloudflare will unlock your <GlossaryToolt
 
 If you are using a Cloudflare IP, you do not need to advertise your prefixes.
 
-:::caution[Important]
+:::caution
 You must [put the appropriate MSS clamps](#set-maximum-segment-size) in place before routing changes are made. Failure to apply an MSS clamp can result in dropped packets and hard-to-debug connectivity issues.
 
 Also, when using [Cloudflare Network Interconnect](/magic-transit/network-interconnect/) with Magic Transit you must set the following MSS clamp sizes to accommodate additional overhead:

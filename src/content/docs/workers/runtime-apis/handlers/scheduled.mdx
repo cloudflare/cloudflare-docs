@@ -7,9 +7,9 @@ title: Scheduled Handler
 
 When a Worker is invoked via a [Cron Trigger](/workers/configuration/cron-triggers/), the `scheduled()` handler handles the invocation.
 
-:::note[Testing scheduled() handlers in local development]
+:::note
 
-You can test the behavior of your `scheduled()` handler in local development using Wrangler.
+Testing scheduled() handlers in local development. You can test the behavior of your `scheduled()` handler in local development using Wrangler.
 
 Cron Triggers can be tested using `Wrangler` by passing in the `--test-scheduled` flag to [`wrangler dev`](/workers/wrangler/commands/#dev). This will expose a `/__scheduled` route which can be used to test using a http request. To simulate different cron patterns, a `cron` query parameter can be passed in.
 

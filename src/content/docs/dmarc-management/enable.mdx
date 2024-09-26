@@ -12,9 +12,9 @@ import { GlossaryTooltip } from "~/components"
 
 You need to enable DMARC Management to allow Cloudflare to process DMARC reports on your behalf. DMARC Management only works with <GlossaryTooltip term="apex domain">apex domains</GlossaryTooltip> and not domains in [subdomain setups](/dns/zone-setups/subdomain-setup/).
 
-:::caution[A warning on DMARC Management and SPF records]
+:::caution
 
-DMARC Management does not support actions on SPF records when your zone has a CNAME record that points to a different domain. Changing the SPF record would make DMARC rules invalid, as Cloudflare cannot change other DNS records to reflect your updates.
+A warning on DMARC Management and SPF records. DMARC Management does not support actions on SPF records when your zone has a CNAME record that points to a different domain. Changing the SPF record would make DMARC rules invalid, as Cloudflare cannot change other DNS records to reflect your updates.
 :::
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/), and select your account and domain.

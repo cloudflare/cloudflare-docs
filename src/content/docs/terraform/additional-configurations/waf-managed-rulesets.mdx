@@ -73,9 +73,9 @@ resource "cloudflare_ruleset" "zone_level_managed_waf" {
 
 <Details header="Account-level example configuration">
 
-:::note[Before you start]
+:::note
 
-- Account-level WAF configuration requires an Enterprise plan with a paid add-on.
+Before you start. - Account-level WAF configuration requires an Enterprise plan with a paid add-on.
 
 - Managed rulesets deployed at the account level will only apply to incoming traffic of zones on an Enterprise plan. The expression of your `execute` rule must end with `and cf.zone.plan eq "ENT"`.
   :::
@@ -170,7 +170,7 @@ resource "cloudflare_ruleset" "account_level_managed_waf" {
 }
 ```
 
-:::caution[Important]
+:::caution
 
 Ensure that you place the skip rules **before** the rule that executes the managed ruleset (or some of its rules) that you wish to skip, as in the previous example.
 :::
@@ -183,7 +183,7 @@ The following example adds three [overrides](/ruleset-engine/managed-rulesets/ov
 - A rule override for rule with ID `75a0060762034a6cb663fd51a02344cb` disabling the rule.
 - A tag override for the `wordpress` tag, setting the action of all the rules with this tag to `js_challenge`.
 
-:::caution[Important]
+:::caution
 
 Ruleset overrides and tag overrides apply to both existing and **future** rules in the managed ruleset. If you wish to override existing rules only, you must use rule overrides.
 :::

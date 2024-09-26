@@ -16,10 +16,9 @@ Certificate Transparency (CT) Monitoring is an [opt-in](#opt-in-and-out) feature
 
 CT Monitoring alerts are triggered not only by Cloudflare processes - including [backup certificates](/ssl/edge-certificates/backup-certificates/) -, but whenever a certificate that covers your monitored domain is issued by a [Certificate Authority (CA)](/ssl/concepts/#certificate-authority-ca) and added to a public CT log. You can learn more about how this works in the [introductory blog post](https://blog.cloudflare.com/introducing-certificate-transparency-and-nimbus/).
 
-:::caution[Aspects to consider]
+:::caution
 
-
-* If you use Cloudflare or other services that automatically issue certificates for your domain or subdomains, this may trigger CT Monitoring emails as well.
+Aspects to consider. * If you use Cloudflare or other services that automatically issue certificates for your domain or subdomains, this may trigger CT Monitoring emails as well.
 * If your domain is included in a shared certificate, you may receive notifications for domains or subdomains that do not belong to you but are included as <GlossaryTooltip term="Subject Alternative Names (SANs)">subject alternative names (SANs)</GlossaryTooltip> together with your domain. You can use a tool like [Certificate Search](https://crt.sh/) to gather more information in such cases.
 * CT Monitoring does not detect phishing attempts. For example, for `cloudflare.com`, an alert would not trigger if a certificate was issued for `cloudf1are.com` or `cloud-flare.com`.
 

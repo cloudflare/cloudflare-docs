@@ -115,9 +115,9 @@ Once Smart Placement is enabled, Cloudflare adds a `cf-placement` header to all 
 
 For example, the `cf-placement: remote-LHR` header's `remote` value indicates that the request was routed using Smart Placement to a Cloudflare data center near London. The `cf-placement: local-EWR` header's `local` value indicates that the request was not routed using Smart Placement and the Worker was invoked in a data center closest to where the request was received, close to Newark Liberty International Airport (EWR).
 
-:::caution[Beta use only]
+:::caution
 
-We may remove the `cf-placement` header before Smart Placement enters general availability.
+Beta use only. We may remove the `cf-placement` header before Smart Placement enters general availability.
 
 :::
 

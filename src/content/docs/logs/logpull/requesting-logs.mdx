@@ -57,7 +57,7 @@ The following table describes the parameters available:
 
 
 
-:::note[Note]
+:::note
 
 
 The maximum time range from **start** to **end** cannot exceed 1 hour. Because **start** is inclusive and **end** is exclusive, to get all the data for every minute, starting at 10AM, the proper values are:
@@ -87,7 +87,7 @@ curl "https://api.cloudflare.com/client/v4/zones/{zone_id}/logs/rayids/{ray_id}}
 --header "X-Auth-Key: <API_KEY>"
 ```
 
-:::note[Note]
+:::note
 
 
 The IATA code returned as part of the **RayID** does not need to included in the request. For example, if you have a **RayID** such as `49ddb3e70e665831-DFW`, only include `49ddb3e70e665831` in your request.

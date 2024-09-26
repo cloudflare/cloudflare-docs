@@ -28,9 +28,9 @@ Before integrating a device posture check in a Gateway or Access policy, verify 
 
 You can now use your device posture check in an [Access policy](/cloudflare-one/policies/access/) or a Gateway [network](/cloudflare-one/policies/gateway/network-policies/common-policies/#enforce-device-posture) or [HTTP](/cloudflare-one/policies/gateway/http-policies/common-policies/#check-device-posture) policy. In Access, the enabled device posture attributes will appear in the list of available [selectors](/cloudflare-one/policies/access/#selectors). In Gateway, the attributes will appear when you choose the [Passed Device Posture Check](/cloudflare-one/policies/gateway/network-policies/#device-posture) selector.
 
-:::caution[Gateway policy limitation]
+:::caution
 
-Gateway does not support device posture checks for the [Tanium Access integration](/cloudflare-one/identity/devices/access-integrations/tanium/).
+Gateway policy limitation. Gateway does not support device posture checks for the [Tanium Access integration](/cloudflare-one/identity/devices/access-integrations/tanium/).
 :::
 
 ## 4. Ensure traffic is going through WARP

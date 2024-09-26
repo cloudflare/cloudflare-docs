@@ -26,10 +26,9 @@ If instead you need to isolate specific pages, you can list the domains for whic
 | -------- | -------- | ---------------------------- | ------- |
 | Domain   | In       | `example.com`, `example.net` | Isolate |
 
-:::note[Isolate identity providers for applications]
+:::note
 
-
-Existing cookies and sessions from non-isolated browsing are not sent to the remote browser. Websites that implement single sign-on using third-party cookies will also need to be isolated.
+Isolate identity providers for applications. Existing cookies and sessions from non-isolated browsing are not sent to the remote browser. Websites that implement single sign-on using third-party cookies will also need to be isolated.
 
 For example, if `example.com` authenticates using Google Workspace, you will also need to isolate the top level [Google Workspace URLs](https://support.google.com/a/answer/9012184).
 

@@ -24,9 +24,9 @@ Both `max_batch_size` and `max_batch_timeout` work together. Whichever limit is 
 
 For example, a `max_batch_size = 30` and a `max_batch_timeout = 10` means that if 30 messages are written to the queue, the consumer will deliver a batch of 30 messages. However, if it takes longer than 10 seconds for those 30 messages to be written to the queue, then the consumer will get a batch of messages that contains however many messages were on the queue at the time (somewhere between 1 and 29, in this case).
 
-:::note[Empty queues]
+:::note
 
-When a queue is empty, a push-based (Worker) consumer's `queue` handler will not be invoked until there are messages to deliver. A queue does not attempt to push empty batches to a consumer and thus does not invoke unnecessary reads.
+Empty queues. When a queue is empty, a push-based (Worker) consumer's `queue` handler will not be invoked until there are messages to deliver. A queue does not attempt to push empty batches to a consumer and thus does not invoke unnecessary reads.
 
 [Pull-based consumers](/queues/configuration/pull-consumers/) that attempt to pull from a queue, even when empty, will incur a read operation.
 
@@ -103,9 +103,9 @@ Each retry counts as an additional read operation per [Queues pricing](/queues/p
 
 When a single message within a batch fails to be delivered, the entire batch is retried, unless you have [explicitly acknowledged](#explicit-acknowledgement-and-retries) a message (or messages) within that batch. For example, if a batch of 10 messages is delivered, but the 8th message fails to be delivered, all 10 messages will be retried and thus redelivered to your consumer in full.
 
-:::caution[Retried messages and consumer concurrency]
+:::caution
 
-Retrying messages with `retry()` or calling `retryAll()` on a batch will **not** cause the consumer to autoscale down if consumer concurrency is enabled. Refer to [Consumer concurrency](/queues/configuration/consumer-concurrency/) to learn more.
+Retried messages and consumer concurrency. Retrying messages with `retry()` or calling `retryAll()` on a batch will **not** cause the consumer to autoscale down if consumer concurrency is enabled. Refer to [Consumer concurrency](/queues/configuration/consumer-concurrency/) to learn more.
 
 :::
 

@@ -61,9 +61,9 @@ curl "https://api.cloudflare.com/client/v4/radar/http/summary/device_type?dateRa
 
 Running the above, can you find any differences between both in the distribution of mobile versus desktop traffic?
 
-:::note[The <code>result.meta</code> property]
+:::note
 
-The `result.meta` property in the response includes metadata about the current request. In the example above, `meta.dateRange` returns the date range specified in the query, while `meta.normalization` returns the type of normalization applied to the data (refer to [Normalization methods](/radar/concepts/normalization) for more information).
+The <code>result.meta</code> property. The `result.meta` property in the response includes metadata about the current request. In the example above, `meta.dateRange` returns the date range specified in the query, while `meta.normalization` returns the type of normalization applied to the data (refer to [Normalization methods](/radar/concepts/normalization) for more information).
 
 When querying for time series, `result.meta` will also include the returned [aggregation interval](/radar/concepts/aggregation-intervals) in `meta.aggInterval`.
 

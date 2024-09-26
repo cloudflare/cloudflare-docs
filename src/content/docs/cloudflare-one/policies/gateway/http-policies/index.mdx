@@ -289,10 +289,9 @@ API value: `off`
 
 </Details>
 
-:::caution[Visibility limitation]
+:::caution
 
-
-When you create a Do Not Inspect policy for a given hostname, application, or app type, you will lose the ability to log or block HTTP requests, apply DLP policies, and perform AV scanning.
+Visibility limitation. When you create a Do Not Inspect policy for a given hostname, application, or app type, you will lose the ability to log or block HTTP requests, apply DLP policies, and perform AV scanning.
 
 Information contained within HTTPS encryption, such as the full requested URL, will not be visible if it bypasses Gateway inspection. However, you can still apply [network policies](/cloudflare-one/policies/gateway/network-policies/) to this traffic. For more information, refer to [TLS decryption](/cloudflare-one/policies/gateway/http-policies/tls-decryption/).
 
@@ -372,10 +371,9 @@ Gateway matches HTTP traffic against the following selectors, or criteria:
 
 <Render file="gateway/selectors/application" params={{ one: "HTTP" }} />
 
-:::caution[Multiple API selectors required for Terraform]
+:::caution
 
-
-When using Terraform to create a policy with the [Do Not Inspect](#do-not-inspect) action, you must use the `app.hosts_ids` and `app.supports_ids` selectors. For example, to create a Do Not Inspect policy for Google Cloud Platform traffic, create a policy with both `any(app.hosts_ids[*] in {1245})` and `any(app.supports_ids[*] in {1245})`.
+Multiple API selectors required for Terraform. When using Terraform to create a policy with the [Do Not Inspect](#do-not-inspect) action, you must use the `app.hosts_ids` and `app.supports_ids` selectors. For example, to create a Do Not Inspect policy for Google Cloud Platform traffic, create a policy with both `any(app.hosts_ids[*] in {1245})` and `any(app.supports_ids[*] in {1245})`.
 
 
 :::
@@ -431,10 +429,9 @@ Use this selector to match against a domain and all subdomains — for example,
 
 ### Download and Upload File Types
 
-:::caution[Deprecated selectors]
+:::caution
 
-
-The **Download File Types** and **Upload File Types** selectors supersede the **Download File Type** and **Upload File Type** selectors. Gateway will still evaluate policies with the previous selectors. However, Cloudflare recommends migrating any policies with deprecated selectors to the new corresponding selectors.
+Deprecated selectors. The **Download File Types** and **Upload File Types** selectors supersede the **Download File Type** and **Upload File Type** selectors. Gateway will still evaluate policies with the previous selectors. However, Cloudflare recommends migrating any policies with deprecated selectors to the new corresponding selectors.
 
 
 :::

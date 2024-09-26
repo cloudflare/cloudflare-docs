@@ -178,7 +178,7 @@ In this example, we will create a WARP Connector for subnet `10.0.0.0/24` and in
 
   </Details>
 
-:::caution[Warning]
+:::caution
 
 If you are managing the deployment remotely over SSH, your connection may drop when you register the WARP Connector. Because the connector immediately starts forwarding traffic to Cloudflare, the remote SSH server's traffic will be routed to Cloudflare instead of via the server's public IP and will timeout your existing connection. You can work around this issue by temporarily adding the public IP of your local machine to your [Split Tunnel Exclude list](/cloudflare-one/connections/connect-devices/warp/configure-warp/route-traffic/split-tunnels/).
 :::
@@ -242,9 +242,9 @@ Run the following commands on the machine where you installed WARP Connector. Yo
         		```
         </Details>
 
-:::note[IP forwarding on VPC]
+:::note
 
-If you are setting up WARP Connector on a [virtual private cloud (VPC)](https://www.cloudflare.com/learning/cloud/what-is-a-virtual-private-cloud/), you may need to enable IP forwarding on the VM instance.
+IP forwarding on VPC. If you are setting up WARP Connector on a [virtual private cloud (VPC)](https://www.cloudflare.com/learning/cloud/what-is-a-virtual-private-cloud/), you may need to enable IP forwarding on the VM instance.
 :::
 
 2.  WARP's [virtual interface](/cloudflare-one/connections/connect-devices/warp/configure-warp/route-traffic/warp-architecture/#virtual-interface) has a [maximum transmission unit (MTU)](https://www.cloudflare.com/learning/network-layer/what-is-mtu/) of 1280 bytes, whereas the standard Ethernet MTU is 1500 bytes. To avoid dropping packets that exceed 1280 bytes, clamp the [maximum segment size (MSS)](https://www.cloudflare.com/learning/network-layer/what-is-mss/) of the host machine so that incoming payloads are less than the MTU of WARP:
@@ -383,9 +383,9 @@ route /p add <DESTINATION-IP> mask 255.255.255.255 <WARP-CONNECTOR-IP>
 
 </TabItem> </Tabs>
 
-:::note[WARP device IPs]
+:::note
 
-`100.96.0.0/12` is the default CIDR for all user devices running [Cloudflare WARP](/cloudflare-one/connections/connect-devices/warp/). Setting `<DESTINATION-IP>` to `100.96.0.0/12` configures the local machine to connect to user devices through Cloudflare.
+WARP device IPs. `100.96.0.0/12` is the default CIDR for all user devices running [Cloudflare WARP](/cloudflare-one/connections/connect-devices/warp/). Setting `<DESTINATION-IP>` to `100.96.0.0/12` configures the local machine to connect to user devices through Cloudflare.
 :::
 
 #### Verify routes

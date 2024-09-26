@@ -8,9 +8,9 @@ Cloudflare uses a wide range of [error codes](/support/troubleshooting/cloudflar
 
 If you are on the Pro, Business, or Enterprise plan you can customize and brand these pages for your whole account or for specific domains. You can design custom error pages to appear during a security challenge or when an error occurs.
 
-:::note[Notes]
+:::note
 
-- Responses with 500, 501, 503, and 505 HTTP status codes do not trigger custom error pages to avoid breaking specific API endpoints and other web applications.
+Notes. - Responses with 500, 501, 503, and 505 HTTP status codes do not trigger custom error pages to avoid breaking specific API endpoints and other web applications.
 - Your custom error pages are not used if requests do not contain `accept-encoding` headers. In these cases, Cloudflare will show the standard error pages to website visitors.
 
 :::
@@ -38,9 +38,9 @@ You can use the following custom error template to start building your page:
 </html>
 ```
 
-:::caution[Warnings]
+:::caution
 
-- Your custom error page should include a page-specific custom error token if applicable and cannot exceed 1.43 MB. Also, it must include HTML `<head>` and `</head>` tags.
+Warnings. - Your custom error page should include a page-specific custom error token if applicable and cannot exceed 1.43 MB. Also, it must include HTML `<head>` and `</head>` tags.
 - Make sure that the `referrer` meta tag is not present in your custom error page's HTML code since it will disrupt [Cloudflare challenges](/waf/reference/cloudflare-challenges/): `<meta name="referrer" (...) />`
 
 :::

@@ -16,7 +16,7 @@ Cache-tag purging makes multi-file purging easier because you can instantly bulk
 4. Use specific cache-tags to instantly purge your Cloudflare CDN cache of all content containing that cache-tag from your dashboard or [using our API](/api/operations/zone-purge).
 5. Cloudflare forces a [cache MISS](/cache/concepts/cache-responses/#miss) on content with the purged cache-tag.
 
-:::caution[Warning]
+:::caution
 
 
 Be careful when purging. A cache MISS can cause execution delays by requiring a fetch from your origin server.
@@ -53,10 +53,9 @@ When your content reaches our edge network, Cloudflare:
 5. In the text box, enter your tags to use to purge the cached resources. To purge multiple cache-tagged resources, separate each tag with a comma or have one tag per line.
 6. Select **Purge**.
 
-:::note[API]
+:::note
 
-
-You can purge using cache-tags via the Cloudflare API. For more information, refer to the [API documentation](/api/operations/zone-purge). You can purge up to 30 cache-tags per API call and up to 250,000 cache-tags per a 24-hour period.
+API. You can purge using cache-tags via the Cloudflare API. For more information, refer to the [API documentation](/api/operations/zone-purge). You can purge up to 30 cache-tags per API call and up to 250,000 cache-tags per a 24-hour period.
 
 
 :::

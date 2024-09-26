@@ -25,9 +25,9 @@ After processing a batch of messages, Queues will check to see if the number of 
 
 Where possible, Queues will optimize for keeping your backlog from growing exponentially, in order to minimize scenarios where the backlog of messages in a queue grows to the point that they would reach the [message retention limit](/queues/platform/limits/) before being processed.
 
-:::note[Consumer concurrency and retried messages]
+:::note
 
-[Retrying messages with `retry()`](/queues/configuration/batching-retries/#explicit-acknowledgement-and-retries) or calling `retryAll()` on a batch will **not** count as a failed invocation.
+Consumer concurrency and retried messages. [Retrying messages with `retry()`](/queues/configuration/batching-retries/#explicit-acknowledgement-and-retries) or calling `retryAll()` on a batch will **not** count as a failed invocation.
 
 :::
 
@@ -47,9 +47,9 @@ If your consumers are not autoscaling, there are a few likely causes:
 
 ## Limit concurrency
 
-:::caution[Recommended concurrency setting]
+:::caution
 
-Cloudflare recommends leaving the maximum concurrency unset, which will allow your queue consumer to scale up as much as possible. Setting a fixed number means that your consumer will only ever scale up to that maximum, even as Queues increases the maximum supported invocations over time.
+Recommended concurrency setting. Cloudflare recommends leaving the maximum concurrency unset, which will allow your queue consumer to scale up as much as possible. Setting a fixed number means that your consumer will only ever scale up to that maximum, even as Queues increases the maximum supported invocations over time.
 
 :::
 

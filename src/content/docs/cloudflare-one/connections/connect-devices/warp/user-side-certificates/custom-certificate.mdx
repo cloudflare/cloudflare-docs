@@ -114,9 +114,9 @@ openssl x509 -in <CUSTOM-ROOT-CERT>.pem -text
 
 Once `binding_status` changes to `active`, Gateway will sign your traffic using the custom root certificate and private key. If you disable the custom certificate, Gateway will revert to the default Cloudflare certificate.
 
-:::caution[Private key visibility]
+:::caution
 
-When you upload a private key to Zero Trust, Cloudflare encrypts the key and stores it at rest. Only your delegated apps have the necessary decryption keys to decrypt the private key. You will not be able to retrieve the private key after upload.
+Private key visibility. When you upload a private key to Zero Trust, Cloudflare encrypts the key and stores it at rest. Only your delegated apps have the necessary decryption keys to decrypt the private key. You will not be able to retrieve the private key after upload.
 
 :::
 

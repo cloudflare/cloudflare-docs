@@ -190,10 +190,9 @@ curl https://api.cloudflare.com/client/v4/zones/{zone_id}/logpush/jobs \
 }'
 ```
 
-:::note[Note for Cloudflare Access users]
+:::note
 
-
-If you are a Cloudflare Access user, as of March 2022 you have to manually add the `cf-access-user` user identity header to your logs by creating a custom fields ruleset or adding the `cf-access-user` HTTP request header to your custom fields configuration. Additionally, make sure that you include the `RequestHeaders` field in your Logpush job.
+Note for Cloudflare Access users. If you are a Cloudflare Access user, as of March 2022 you have to manually add the `cf-access-user` user identity header to your logs by creating a custom fields ruleset or adding the `cf-access-user` HTTP request header to your custom fields configuration. Additionally, make sure that you include the `RequestHeaders` field in your Logpush job.
 
 
 :::

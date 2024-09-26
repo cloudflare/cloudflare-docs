@@ -16,10 +16,9 @@ However, due to random network disruptions or other transient issues, a Durable 
 
 To make new requests to the Durable Object, you must call `OBJECT_NAMESPACE.get(id)` again to get a new Durable Object stub. There are no ordering guarantees between requests to the new stub compared to the old one. If ordering is not a concern, you can create a new Durable Object for every request.
 
-:::note[E-order]
+:::note
 
-
-E-order is a concept deriving from the [E distributed programming language](https://en.wikipedia.org/wiki/E_\(programming_language\)). E-order is implemented by the [Cap'n Proto](https://capnproto.org) distributed object-capability RPC protocol, which Cloudflare Workers uses for internal communications.
+E-order. E-order is a concept deriving from the [E distributed programming language](https://en.wikipedia.org/wiki/E_\(programming_language\)). E-order is implemented by the [Cap'n Proto](https://capnproto.org) distributed object-capability RPC protocol, which Cloudflare Workers uses for internal communications.
 
 
 :::

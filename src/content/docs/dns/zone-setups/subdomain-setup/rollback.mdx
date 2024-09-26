@@ -16,7 +16,7 @@ Refer to the following process to understand how you can rollback a [subdomain s
 * This guide assumes both your child domain (`blog.example.com`) and its parent domain (`example.com`) are in Cloudflare.
 * In the child zone, review and [export](/dns/manage-dns-records/how-to/import-and-export/#export-records) the DNS records.
 
-:::caution[Important]
+:::caution
 
 This process may incur in downtime, as it is not possible to add address records (`A`/`AAAA`) while still having [corresponding `NS` records at the same name](/dns/manage-dns-records/troubleshooting/existing-ns-record/) within the parent zone. 
 :::

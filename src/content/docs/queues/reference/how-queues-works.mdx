@@ -146,10 +146,9 @@ You then connect that consumer to a queue with `wrangler queues consumer <queue-
 
 Importantly, each queue can only have one active consumer. This allows Cloudflare Queues to achieve at least once delivery and minimize the risk of duplicate messages beyond that.
 
-:::note[Best practice]
+:::note
 
-
-Configure a single consumer per queue. This both logically separates your queues, and ensures that errors (failures) in processing messages from one queue do not impact your other queues.
+Best practice. Configure a single consumer per queue. This both logically separates your queues, and ensures that errors (failures) in processing messages from one queue do not impact your other queues.
 
 
 :::

@@ -108,10 +108,9 @@ Please allowlist the following IP addresses:
 * `2a06:98c1:3200::1/128`
 * `141.101.90.1/32`
 
-:::caution[Watch for IP changes]
+:::caution
 
-
-Cloudflare tries to, but cannot guarantee that the IP addresses used for the TURN service won't change. If you are allowlisting IP addresses and do not have a enterprise contract, you must set up alerting that detects changes the DNS response from `turn.cloudflare.com` (A and AAAA records) and update the hardcoded IP address(es) accordingly within 14 days of the DNS change.
+Watch for IP changes. Cloudflare tries to, but cannot guarantee that the IP addresses used for the TURN service won't change. If you are allowlisting IP addresses and do not have a enterprise contract, you must set up alerting that detects changes the DNS response from `turn.cloudflare.com` (A and AAAA records) and update the hardcoded IP address(es) accordingly within 14 days of the DNS change.
 
 For more details about static IPs, guarantees and other arrangements please discuss with your enterprise account team.
 

@@ -34,9 +34,9 @@ Use the [Rulesets API](/ruleset-engine/rulesets-api/) to configure payload loggi
 
    Replace `<PUBLIC_KEY_VALUE>` with the public key you want to use for payload logging. You can generate a public key [in the command line](/waf/managed-rules/payload-logging/command-line/generate-key-pair/) or [in the Cloudflare dashboard](/waf/managed-rules/payload-logging/configure/).
 
-:::note[Account-level configuration]
+:::note
 
-To configure payload logging for a managed ruleset deployed at the account level (only available in Enterprise plans with a paid add-on), use the following API operations instead:
+Account-level configuration. To configure payload logging for a managed ruleset deployed at the account level (only available in Enterprise plans with a paid add-on), use the following API operations instead:
 
 - In step 1: [Get an account entry point ruleset](/api/operations/getAccountEntrypointRuleset)
 - In step 2: [Update an account ruleset rule](/api/operations/updateAccountRulesetRule)

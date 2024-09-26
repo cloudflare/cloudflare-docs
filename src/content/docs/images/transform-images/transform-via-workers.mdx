@@ -130,7 +130,7 @@ These typings are also available in [our Workers TypeScript definitions library]
 
 Create a new script in the Workers section of the Cloudflare dashboard. Scope your Worker script to a path dedicated to serving assets, such as `/images/*` or `/assets/*`. Only supported image formats can be resized. Attempting to resize any other type of resource (CSS, HTML) will result in an error.
 
-:::caution[Warning]
+:::caution
 
 
 Do not set up the Image Resizing worker for the entire zone (`/*`). This will block all non-image requests and make your website inaccessible.
@@ -160,7 +160,7 @@ addEventListener("fetch", event => {
 
 ## Lack of preview in the dashboard
 
-:::note[Note]
+:::note
 
 
 Image transformations are not simulated in the preview of in the Workers dashboard editor.

@@ -20,7 +20,7 @@ With a root certificate authority (CA) in place, Access only allows requests fro
 
 ## Add mTLS authentication to your Access configuration
 
-:::caution[Important]
+:::caution
 
 The mTLS certificate is used only to verify the client certificate. It does not control the SSL certificate presented during the [server hello](https://www.cloudflare.com/learning/ssl/what-happens-in-a-tls-handshake/).
 
@@ -216,7 +216,7 @@ The instructions here cover usage with a computer running macOS.
 
 1. In the same working directory, run the following command to add the client certificate into the macOS Keychain.
 
-:::caution[Important]
+:::caution
 
 The command adds the client certificate to the trusted store on your device. Only proceed if you are comfortable doing so and intend to keep these testing certificates safeguarded.
 :::

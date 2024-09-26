@@ -37,9 +37,9 @@ Once rate limit recommendations appear in **Endpoint Management**, select the en
 
 Cloudflare recommends choosing the overall rate limit recommendation, as our analysis includes the variance of the request rate distribution across your API sessions. Choosing a single p-value may cause false positives due to a high number of outliers.
 
-:::note[p-values]
+:::note
 
-p-values describe what percentile of your traffic fits below the value. For example, if your p90 value is `83`, then 90% of your sessions had maximum request rates less than 83 requests per 10 minutes. 
+p-values. p-values describe what percentile of your traffic fits below the value. For example, if your p90 value is `83`, then 90% of your sessions had maximum request rates less than 83 requests per 10 minutes. 
 :::
 
 In **Endpoint Management**, you can review our confidence in the recommendation and how many unique sessions we have seen over the last seven (7) days. In general, endpoints with fewer unique sessions and high variability of user behavior will have lower confidence scores.

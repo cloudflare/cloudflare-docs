@@ -275,9 +275,9 @@ You can use the following method to redirect a rate-limited client to a specific
 
 Follow the same approach if you wish to return plain text or JSON content but the response is larger than 32 KB. In this case, the redirect URL would be the URL of the plain text or JSON resource you would like to display.
 
-:::note[Notes]
+:::note
 
-- Your rate limiting rule must not match the redirect URL you included in the custom HTML page for `429` errors.
+Notes. - Your rate limiting rule must not match the redirect URL you included in the custom HTML page for `429` errors.
 - To protect from denial-of-service (DoS) attacks, the page for the redirect should only include resources cached by Cloudflare.
 
 :::

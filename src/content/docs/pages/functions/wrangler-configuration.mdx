@@ -19,9 +19,9 @@ This page serves as a reference on how to configure your Pages project via `wran
 
 If using `wrangler.toml`, you must treat your `wrangler.toml` as the [source of truth](/pages/functions/wrangler-configuration/#source-of-truth) for your Pages project configuration.
 
-:::note[Configuration via `wrangler.toml` is in open beta.]
+:::note
 
-Cloudflare welcomes your feedback. Join the #functions channel in the [Cloudflare Developers Discord](https://discord.com/invite/cloudflaredev) to report bugs and request features.
+Configuration via `wrangler.toml` is in open beta.. Cloudflare welcomes your feedback. Join the #functions channel in the [Cloudflare Developers Discord](https://discord.com/invite/cloudflaredev) to report bugs and request features.
 
 :::
 
@@ -84,9 +84,9 @@ If you would like to use your existing `wrangler.toml` file for your Pages proje
 
 If you add the `pages_build_output_dir` key to `wrangler.toml` and deploy your Pages project, Pages will use whatever configuration was defined for local use, which is very likely to be non-production. Do not deploy until you are confident that your `wrangler.toml` is ready for production use.
 
-:::caution[Overwriting configuration]
+:::caution
 
-Running [`wrangler pages download config`](/pages/functions/wrangler-configuration/#projects-without-existing-wranglertoml-file) will overwrite your existing `wrangler.toml` file with a generated `wrangler.toml` file based on your Cloudflare dashboard configuration. Run this command only if you want to discard your previous `wrangler.toml` file that you used for local development and start over with configuration pulled from the Cloudflare dashboard.
+Overwriting configuration. Running [`wrangler pages download config`](/pages/functions/wrangler-configuration/#projects-without-existing-wranglertoml-file) will overwrite your existing `wrangler.toml` file with a generated `wrangler.toml` file based on your Cloudflare dashboard configuration. Run this command only if you want to discard your previous `wrangler.toml` file that you used for local development and start over with configuration pulled from the Cloudflare dashboard.
 
 :::
 
