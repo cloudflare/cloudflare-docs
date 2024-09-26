@@ -1,5 +1,6 @@
 ---
 import { Type } from "~/components";
+import { type SchemaNode } from "@stoplight/json-schema-tree";
 
 const { node } = Astro.props;
 ---
@@ -36,7 +37,7 @@ const { node } = Astro.props;
 	{
 		node.children && (
 			<ul class="!list-none m-0 p-0 ml-4">
-				{node.children.map((node) => (
+				{node.children.map((node: SchemaNode) => (
 					<Astro.self node={node} />
 				))}
 			</ul>

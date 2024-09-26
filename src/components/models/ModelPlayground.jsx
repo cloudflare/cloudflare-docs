@@ -10,7 +10,7 @@ const ModelPlayground = ({ model }) => {
 			method: "POST",
 			body: JSON.stringify({
 				model: model.name,
-				propmt,
+				prompt,
 			}),
 		});
 	};
