@@ -32,7 +32,7 @@ To export logs using [Logpush](/ai-gateway/observability/logging/logpush), you m
 
 To override the default logging behavior set in the settings tab, you can define headers on a per-request basis.
 
-## Collect logs (cf-aig-collect-log)
+## Collect logs (`cf-aig-collect-log`)
 
 The `cf-aig-collect-log` header allows you to bypass the default log setting for the gateway. If the gateway is configured to save logs, the header will exclude the log for that specific request. Conversely, if logging is disabled at the gateway level, this header will save the log for that request.
 
