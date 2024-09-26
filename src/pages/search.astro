@@ -251,7 +251,6 @@ import "instantsearch.css/themes/satellite.css";
 
 	const search = instantsearch({
 		indexName: indexName,
-		// @ts-expect-error TODO: improve types
 		searchClient,
 		insights: true,
 		routing: {
@@ -372,7 +371,6 @@ import "instantsearch.css/themes/satellite.css";
 			},
 		}),
 		configure({
-			// @ts-expect-error TODO: improve types
 			hitsPerPage: 10,
 			attributesToSnippet: ["content:30"],
 		}),
