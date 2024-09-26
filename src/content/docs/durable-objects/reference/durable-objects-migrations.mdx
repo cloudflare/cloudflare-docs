@@ -111,4 +111,4 @@ tag = "v1" # Should be unique for each entry
 new_sqlite_classes = ["MyDurableObject"] # Array of new classes
 ```
 
-You cannot enable SQL storage and API on an existing, deployed Durable Object class, so setting `new_sqlite_classes` on later migrations will fail with an error. Automatic migration of deployed classes to allow SQL access will be available in the future.
+You cannot enable SQL storage and API on an existing, deployed Durable Object class. Therefore, setting `new_sqlite_classes` on later migrations will fail with an error. Automatic migration of deployed classes to allow SQL access will be available in the future.
