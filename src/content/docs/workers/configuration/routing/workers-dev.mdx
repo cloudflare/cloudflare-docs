@@ -27,7 +27,7 @@ To disable the `workers.dev` route for a Worker, include the following in your W
 workers_dev = false
 ```
 
-When you redeploy your Worker with this change, the `workers.dev` route will be disabled.
+When you redeploy your Worker with this change, the `workers.dev` route will be disabled. Disabling your `workers.dev` subdomain will also make [preview URLs](/workers/configuration/previews) inaccessible.
 
 If you do not specify `workers_dev = false` but add a [`routes` component](/workers/wrangler/configuration/#routes) to your `wrangler.toml`, the value of `workers_dev` will be inferred as `false` on the next deploy.
 
@@ -35,6 +35,10 @@ If you do not specify `workers_dev = false` but add a [`routes` component](/work
 
 If you disable your `workers.dev` route in the Cloudflare dashboard but do not update your Worker's `wrangler.toml` file with `workers_dev = false`, the `workers.dev` route will re-enable the next time you publish your Worker.
 :::
+
+## Limitations
+
+- You cannot currently secure `workers.dev` URLs behind [Cloudflare Access](/cloudflare-one/policies/access/). This is a temporary limitation, we are working to remove it.
 
 ## Related resources
 
