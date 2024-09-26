@@ -13,13 +13,13 @@ import { GlossaryDefinition, Render } from "~/components";
 
 Cloudflare's authoritative DNS offering covers a variety of [setups](/dns/zone-setups/).
 
-When you [add your domain](/fundamentals/setup/manage-domains/add-site/) with Cloudflare as your [primary DNS provider](https://developers.cloudflare.com/dns/zone-setups/full-setup/) (the most common setup), we import your DNS records and become the authoritative DNS provider for that domain, meaning:
+In the most common setup (full), you [add your domain](/fundamentals/setup/manage-domains/add-site/), we import your DNS records, and you [update your nameservers](/dns/nameservers/update-nameservers/) to make Cloudflare your primary DNS provider. Once the setup is completed:
 
 - You [manage DNS records](/dns/manage-dns-records/how-to/create-dns-records/) through the Cloudflare dashboard or API. This is how you control which resources are available on the apex domain (`example.com`) or specific subdomains (`blog.example.com`) of your website, as well as control other configurations.
 
-- We [respond to all DNS queries](/fundamentals/concepts/how-cloudflare-works/#how-cloudflare-works-as-a-dns-provider) for your hostnames.
+- Cloudflare [responds to all DNS queries](/fundamentals/concepts/how-cloudflare-works/#how-cloudflare-works-as-a-dns-provider) for your hostnames.
 
-- The DNS records file (AKA the [DNS zone](/dns/concepts/#zone)) is cached across the[ Cloudflare global network](https://www.cloudflare.com/network/), speeding up DNS resolution.
+- The DNS records file (AKA the [DNS zone](/dns/concepts/#zone)) is cached across the [Cloudflare global network](https://www.cloudflare.com/network/), speeding up DNS resolution.
 
 - A, AAAA, and CNAME records are set to [proxy through Cloudflare](/dns/manage-dns-records/reference/proxied-dns-records/) by default.
 
