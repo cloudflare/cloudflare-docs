@@ -8,25 +8,23 @@ sidebar:
 
 import { Render } from "~/components";
 
-Logging is a fundamental building block for application development. Logging provides insights during the early stages of development and is often critical to understanding issues occurring in production.
+Logging is a fundamental building block for application development. Logs provide insights during the early stages of development and are often critical to understanding issues occurring in production.
 
-Your AI Gateway dashboard shows logs of individual requests, including the user prompt, model response, provider, timestamp, request status, token usage, cost, and duration. These logs persist, giving you the flexibility to store them for your preferred duration and do more with valuable request data. You can store up to 10 million logs per gateway.
+Your AI Gateway dashboard shows logs of individual requests, including the user prompt, model response, provider, timestamp, request status, token usage, cost, and duration. These logs persist, giving you the flexibility to store them for your preferred duration and do more with valuable request data. 
 
-When you are nearing your plan limit, an alert will be displayed in the dashboard. If your limit is reached, new logs will stop being saved. To continue saving logs, you must delete older logs to free up space for new logs.
+You can store up to 10 million logs per gateway. If your limit is reached, new logs will stop being saved. To continue saving logs, you must delete older logs to free up space for new logs.
 
 To learn more about your plan limits, refer to the [Pricing](/ai-gateway/pricing/) page.
 
 ## Default configuration
 
-Logs, which include metrics as well as request and response data are enabled by default for each gateway. If you are concerned about privacy or compliance and want to turn log collection off, you can go to settings and opt out of logs or set logging behavior on a per-request basis.
+Logs, which include metrics as well as request and response data, are enabled by default for each gateway. This logging behavior will be uniformly applied to all requests in the gateway. If you are concerned about privacy or compliance and want to turn log collection off, you can go to settings and opt out of logs. If you need to modify the log settings for specific requests, you can override this setting on a per-request basis.
 
 <Render file="logging" />
 
-This logging behavior will be uniformly applied to all requests in the gateway. If you need to modify the logging settings for specific requests, you can override this setting on a per-request basis.
-
 :::note[Note]
 
-To export logs using [Logpush](/ai-gateway/observability/logging/logpush), you must have logs turned on for the gateway or have overridden the gateway settings by using the `cf-aig-collect-log` request header.
+To export logs using [Logpush](/ai-gateway/observability/logging/logpush), you must have logs turned on for the gateway.
 
 :::
 
