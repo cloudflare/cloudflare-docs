@@ -80,7 +80,7 @@ The difference between these examples is in how you index your logs to enable fa
 
 Each Workers invocation returns a single execution log that contains details such as the Request, Response, and related metadata. These execution logs can be identified by the field `$cloudflare.$metadata.type = "cf-worker-event"`. Each execution log is enriched with information available to Cloudlare in the context of the invocation.  
 
-In the Workers Logs UI, logs are presented with a localized timestamp and a Message. The Message is dependent on the invocation handler. For example, Fetch requests will have a message describing the request method and the request URL, while cron events will be listed as cron. Below is a list of invocation handlers along with their execution message.
+In the Workers Logs UI, logs are presented with a localized timestamp and a message. The message is dependent on the invocation handler. For example, Fetch requests will have a message describing the request method and the request URL, while cron events will be listed as cron. Below is a list of invocation handlers along with their execution message.
 
 | Invocation Handler                                              | Execution Message          |
 | --------------------------------------------------------------- | -------------------------- |
