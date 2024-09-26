@@ -2,50 +2,41 @@
 pcx_content_type: reference
 title: Google Admin
 rss: file
-
 ---
 
-import { Render } from "~/components"
+import { Render } from "~/components";
 
-<Render file="casb/integration-description" params={{ one: "Google Admin", two: "Google Workspace account" }} />
+<Render
+  file="casb/integration-description"
+  params={{ one: "Google Admin", two: "Google Workspace account" }}
+/>
 
 ## Integration prerequisites
 
-<Render file="casb/google-prereqs" />
+<Render file="casb/google/google-prereqs" />
 
 ## Integration permissions
 
-<Render file="casb/integration-perms" params={{ one: "Google Workspace", two: "google-workspace" }} />
+<Render
+  file="casb/integration-perms"
+  params={{ one: "Google Workspace", two: "google-workspace" }}
+/>
 
 ## Security findings
 
-<Render file="casb/security-findings" params={{ one: "Google Admin", two: "google-workspace/google-admin" }} />
+<Render
+  file="casb/security-findings"
+  params={{ one: "Google Admin", two: "google-workspace/google-admin" }}
+/>
 
 ### User account settings
 
-| Finding                                      | Severity | Description                                                                           |
-| -------------------------------------------- | -------- | ------------------------------------------------------------------------------------- |
-| Google Workspace Admin User 2FA Disabled     | Critical | An administrator in Google Workspace does not have two-factor authentication enabled. |
-| Google Workspace User 2FA Disabled           | High     | A user in Google Workspace does not have two-factor authentication enabled.           |
-| Google Workspace User without Recovery Email | Low      | A user in Google Workspace does not have a recovery email set.                        |
-| Google Workspace User without Recovery Phone | Low      | A user in Google Workspace does not have a recovery phone number set.                 |
+<Render file="casb/google/user-account-settings" />
 
 ### Inactive or suspended users
 
-| Finding                               | Severity | Description                                                                 |
-| ------------------------------------- | -------- | --------------------------------------------------------------------------- |
-| Google Workspace Admin User Inactive  | Medium   | An administrator account in Google Workspace has not logged in for 30 days. |
-| Google Workspace Admin User Suspended | Medium   | An administrator account in Google Workspace is suspended.                  |
-| Google Workspace User Inactive        | Low      | A user account in Google Workspace has not logged in for 30 days.           |
-| Google Workspace User Suspended       | Low      | A user account in Google Workspace is suspended.                            |
+<Render file="casb/google/inactive-suspended-users" />
 
 ### Third-party apps
 
-| Finding                                            | Severity | Description                                                                          |
-| -------------------------------------------------- | -------- | ------------------------------------------------------------------------------------ |
-| Installed 3rd Party App with Drive Access          | High     | A third-party application has been granted permissions to a user's Google Drive.     |
-| Installed 3rd Party App with Gmail Access          | High     | A third-party application has been granted permissions to a user's Gmail.            |
-| Installed 3rd Party App with Google Docs Access    | Medium   | A third-party application has been granted permissions to a user's Google Documents. |
-| Installed 3rd Party App with Google Slides Access  | Medium   | A third-party application has been granted permissions to a user's Google Slides.    |
-| Installed 3rd Party App with Google Sheets Access  | Medium   | A third-party application has been granted permissions to a user's Google Sheets.    |
-| Installed 3rd Party App with Google Sign In Access | Low      | A user has used their Google Workspace account to sign up for a third party service. |
+<Render file="casb/google/third-party-apps" />

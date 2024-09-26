@@ -1,7 +1,6 @@
 ---
 pcx_content_type: how-to
 title: Debugging Pages
-
 ---
 
 When setting up your Pages project, you may encounter various errors that prevent you from successfully deploying your site. This guide gives an overview of some common errors and solutions.
@@ -25,7 +24,7 @@ Possible errors in this step could be caused by improper installation during Git
 To fix this in GitHub:
 
 1. Log in to your GitHub account.
-2. Go to **Settings**  from your user icon > find **Applications** under Integrations.
+2. Go to **Settings** from your user icon > find **Applications** under Integrations.
 3. Find **Cloudflare Pages** > **Configure** > scroll down and select **Uninstall**.
 4. Re-authorize your GitHub user/organisation on the Cloudflare dashboard.
 
@@ -94,7 +93,10 @@ Pages uses HTTP validation and needs to hit an HTTP endpoint during validation. 
 To check this, run a `curl` command against your domain hitting `/.well-known/acme-challenge/randomstring`. For example:
 
 ```sh
-$ curl -I https://example.com/.well-known/acme-challenge/randomstring
+curl -I https://example.com/.well-known/acme-challenge/randomstring
+```
+
+```sh output
 
 HTTP/2 302
 date: Mon, 03 Apr 2023 08:37:39 GMT
@@ -116,7 +118,10 @@ If nothing is blocking the HTTP validation, then you may be missing Certificatio
 To check this, run a `dig` on the custom domain's apex (or zone, if this is a [subdomain zone](/dns/zone-setups/subdomain-setup/)). For example:
 
 ```sh
-$ dig CAA example.com
+dig CAA example.com
+```
+
+```sh output
 
 ; <<>> DiG 9.10.6 <<>> CAA example.com
 ;; global options: +cmd
@@ -163,9 +168,7 @@ Once the custom domain has been successfully completed, you may [reinstate the z
 
 :::caution[Still having issues]
 
-
 If you have done the steps above and your domain is still verifying after 15 minutes, join our [Discord](https://discord.cloudflare.com) for support or contact our support team through the [Support Portal](https://dash.cloudflare.com/?to=/:account/support).
-
 
 :::
 

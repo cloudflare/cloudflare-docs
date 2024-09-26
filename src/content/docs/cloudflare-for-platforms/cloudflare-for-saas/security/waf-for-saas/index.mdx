@@ -3,14 +3,14 @@ pcx_content_type: overview
 title: WAF for SaaS
 sidebar:
   order: 1
-
+  label: Setup
 ---
 
 [Web Application Firewall (WAF)](/waf/) allows you to create additional security measures through Cloudflare. As a SaaS provider, you can link custom rules, rate limiting rules, and managed rules to your custom hostnames. This provides more control to keep your domains safe from malicious traffic.
 
 As a SaaS provider, you may want to apply different security measures to different custom hostnames. With WAF for SaaS, you can create multiple WAF configuration that you can apply to different sets of custom hostnames. This added flexibility and security leads to optimal protection across the domains of your end customers.
 
-***
+---
 
 ## Prerequisites
 
@@ -46,9 +46,7 @@ curl "https://api.cloudflare.com/client/v4/zones/{zone_id}/custom_hostnames" \
 
 :::note
 
-
 One instance of low, medium, and high rules could be rate limiting. You can specify three different thresholds: low - 100 requests/minute, medium - 85 requests/minute, high - 50 requests/minute, for example. Another possibility is a WAF custom rule in which low challenges requests and high blocks them.
-
 
 :::
 

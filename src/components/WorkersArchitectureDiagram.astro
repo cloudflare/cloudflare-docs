@@ -1,3 +1,7 @@
+---
+// @ts-nocheck xmlns in SVGs makes Astro very upset, so we'll just ignore this file
+---
+
 <svg
 	xmlns="http://www.w3.org/2000/svg"
 	xmlns:xlink="http://www.w3.org/1999/xlink"
@@ -5,6 +9,7 @@
 	width="701px"
 	height="863px"
 	viewBox="-0.5 -0.5 701 863"
+	class="dark:invert"
 	><defs></defs><g
 		><rect
 			x="140"
@@ -1139,11 +1144,3 @@
 			pointer-events="none"></path></g
 	></svg
 >
-
-<!-- TODO: fix dark mode styling -->
-<style>
-	[data-theme="dark"] svg {
-		filter: invert(1);
-		-webkit-filter: invert(1);
-	}
-</style>

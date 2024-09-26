@@ -1,18 +1,18 @@
 ---
 pcx_content_type: how-to
-title: Zone level
+title: Set up zone custom nameservers
 sidebar:
   order: 3
+  label: Zone level
 head:
   - tag: title
     content: Zone custom nameservers
 description: With zone-level custom nameservers, each custom nameserver name
   must be a subdomain of the zone where the custom nameservers are configured.
   These custom nameservers can only be used within the respective zone.
-
 ---
 
-import { TabItem, Tabs } from "~/components"
+import { TabItem, Tabs } from "~/components";
 
 With zone custom nameservers (ZCNS), each custom nameserver name must be a subdomain of the zone where the custom nameservers are configured.
 
@@ -24,7 +24,7 @@ For example, for a zone `domain.test`, the ZCNS can be `ns1.domain.test` and `ns
 
 To create zone custom nameservers:
 
-<Tabs> <TabItem label="Dashboard">
+<Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) and select your account and zone.
 2. Go to **DNS** > **Records**.
@@ -44,8 +44,8 @@ Cloudflare will assign an IPv4 and an IPv6 address to each ZCNS name and automat
 
 The next step depends on whether you are using [Cloudflare Registrar](/registrar/) for your domain:
 
-* If you are using Cloudflare Registrar for your domain, [contact Cloudflare Support](/support/contacting-cloudflare-support/) to add the custom nameservers and IP addresses as glue records to the domain.
-* If you are not using Cloudflare Registrar for your domain, add the zone custom nameservers at your registrar as your authoritative nameservers and as [glue (A and AAAA) records](https://www.rfc-editor.org/rfc/rfc1912.html#section-2.3). If you do not add these records, DNS lookups for your domain will fail.
+- If you are using Cloudflare Registrar for your domain, [contact Cloudflare Support](/support/contacting-cloudflare-support/) to add the custom nameservers and IP addresses as glue records to the domain.
+- If you are not using Cloudflare Registrar for your domain, add the zone custom nameservers at your registrar as your authoritative nameservers and as [glue (A and AAAA) records](https://www.rfc-editor.org/rfc/rfc1912.html#section-2.3). If you do not add these records, DNS lookups for your domain will fail.
 
 ### Secondary zones
 
@@ -59,7 +59,7 @@ If you are using [Cloudflare as a secondary DNS provider](/dns/zone-setups/zone-
 
 To remove zone custom nameservers (and their associated, read-only DNS records):
 
-<Tabs> <TabItem label="Dashboard">
+<Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) and select your account and zone.
 2. Go to **DNS** > **Records**.

@@ -1,0 +1,55 @@
+---
+title: Trusted domains
+pcx_content_type: how-to
+sidebar:
+  order: 3
+---
+
+Email Security allows you to exempt known partner and internal domains from typical detection scanning. Adding trusted domains helps to reduce false positives on [malicious, suspicious, and spoof dispositions](/cloudflare-one/email-security/reference/dispositions-and-attributes/).
+
+To configure a trusted domain:
+
+1. Log in to [Zero Trust](https://one.dash.cloudflare.com/).
+2. Select **Email Security**.
+3. Select **Settings**, go to **Detection settings** > **Trusted domains**.
+4. On the **Detection settings** page, select **Add a domain**.
+5. Select the **Input method**: Choose between **Manual input**, and **Upload trusted domain list**:
+   - **Manual input**:
+     - **Domain info**: Enter a valid domain name.
+     - **Domain type**: Select one or both options:
+       * **Proximity domain**: Domains with similar spelling to your existing domain.
+       * **Recent domain**: Domains created recently.
+     * **Notes**: Provide additional information about the trusted domain list.
+   - **Upload trusted domain list**: You can upload a file no larger than 150 KB of multiple trusted domains. The file can only contain `Domain`, `Notes`, `Proximity` and `Recent` fields. The first row must be a header row. 
+6. Select **Save**.
+
+## Export trusted domains
+
+To export a list of trusted domains:
+
+1. On the **Detection settings** page, select the trusted domains you want to delete.
+2. Select **Action**.
+3. Select **Export to CSV**.
+
+## Edit trusted domains
+
+To edit a trusted domain:
+
+1. On the **Detection settings** page, select the trusted domains you want to edit.
+2. Select the three dots > Edit.
+3. Edit the trusted domain.
+4. Select **Save**.
+
+## Delete trusted domains
+
+To delete trusted domains:
+
+1. On the **Detection settings** page, select the trusted domain you want to delete.
+2. Select the three dots > **Delete**.
+3. On the pop up message, select **Delete**.
+
+To delete multiple trusted domains at once:
+
+1. On the **Detection settings** page, select the trusted domains you want to delete.
+2. Select **Action**.
+3. Select **Delete**.

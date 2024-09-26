@@ -3,15 +3,13 @@ title: Recommended network policies
 pcx_content_type: learning-unit
 sidebar:
   order: 1
-
 ---
 
-import { Details, GlossaryTooltip, Render } from "~/components"
+import { Details, GlossaryTooltip, Render } from "~/components";
 
 We recommend you add the following network policies to build an Internet and SaaS app security strategy for your organization.
 
 For more information on building network policies, refer to [Network policies](/cloudflare-one/policies/gateway/network-policies/).
-
 
 <Details header="Quarantined-Users-NET-Restricted-Access">
 
@@ -19,14 +17,12 @@ For more information on building network policies, refer to [Network policies](/
 
 | Selector         | Operator    | Value                               | Logic | Action |
 | ---------------- | ----------- | ----------------------------------- | ----- | ------ |
-| Destination IP   | not in list | *Quarantined-Users-IPAllowlist*     | Or    | Block  |
-| SNI              | not in list | *Quarantined-Users-HostAllowlist*   | Or    |        |
-| Domain SNI       | not in list | *Quarantined-Users-DomainAllowlist* | And   |        |
-| User Group Names | in          | *Quarantined Users*                 |       |        |
-
+| Destination IP   | not in list | _Quarantined-Users-IPAllowlist_     | Or    | Block  |
+| SNI              | not in list | _Quarantined-Users-HostAllowlist_   | Or    |        |
+| Domain SNI       | not in list | _Quarantined-Users-DomainAllowlist_ | And   |        |
+| User Group Names | in          | _Quarantined Users_                 |       |        |
 
 </Details>
-
 
 <Details header="Posture-Fail-NET-Restricted-Access">
 
@@ -34,16 +30,14 @@ Restrict access for devices where baseline posture checks have not passed. If po
 
 | Selector                     | Operator    | Value                               | Logic | Action |
 | ---------------------------- | ----------- | ----------------------------------- | ----- | ------ |
-| Destination IP               | not in list | *Posture-Fail-IPAllowlist*          | Or    | Block  |
-| SNI                          | not in list | *Posture-Fail-HostAllowlist*        | Or    |        |
-| Domain SNI                   | not in list | *Posture-Fail-DomainAllowlist*      | And   |        |
-| Passed Device Posture Checks | not in      | *Windows 10 or higher (OS version)* |       |        |
+| Destination IP               | not in list | _Posture-Fail-IPAllowlist_          | Or    | Block  |
+| SNI                          | not in list | _Posture-Fail-HostAllowlist_        | Or    |        |
+| Domain SNI                   | not in list | _Posture-Fail-DomainAllowlist_      | And   |        |
+| Passed Device Posture Checks | not in      | _Windows 10 or higher (OS version)_ |       |        |
 
 You can add a number of WARP client device posture checks as needed, such as [Disk encryption](/cloudflare-one/identity/devices/warp-client-checks/disk-encryption/) and [Domain joined](/cloudflare-one/identity/devices/warp-client-checks/domain-joined/). For more information on device posture checks, refer to [Enforce device posture](/cloudflare-one/identity/devices/).
 
-
 </Details>
-
 
 <Details header="FinanceUsers-NET-HTTPS-FinanceServers (example)">
 
@@ -51,12 +45,10 @@ Allow HTTPS access for user groups. For example, the following policy gives fina
 
 | Selector         | Operator | Value             | Logic | Action |
 | ---------------- | -------- | ----------------- | ----- | ------ |
-| Destination IP   | in list  | *Finance Servers* | And   | Allow  |
-| User Group Names | in       | *Finance Users*   |       |        |
-
+| Destination IP   | in list  | _Finance Servers_ | And   | Allow  |
+| User Group Names | in       | _Finance Users_   |       |        |
 
 </Details>
-
 
 <Details header="All-NET-Internet-Blocklist">
 
@@ -66,17 +58,15 @@ Block traffic to destination IPs, <GlossaryTooltip term="Server Name Indication 
 
 | Selector       | Operator | Value              | Logic | Action |
 | -------------- | -------- | ------------------ | ----- | ------ |
-| Destination IP | in list  | *IP Blocklist*     | Or    | Block  |
-| SNI            | in list  | *Host Blocklist*   | Or    |        |
-| Domain SNI     | in list  | *Domain Blocklist* |       |        |
+| Destination IP | in list  | _IP Blocklist_     | Or    | Block  |
+| SNI            | in list  | _Host Blocklist_   | Or    |        |
+| Domain SNI     | in list  | _Domain Blocklist_ |       |        |
 
 :::note
 The **Detected Protocol** selector is only available for Enterprise users. For more information, refer to [Protocol detection](/cloudflare-one/policies/gateway/network-policies/protocol-detection/).
 :::
 
-
 </Details>
-
 
 <Details header="All-NET-SSH-Internet-Allowlist">
 
@@ -86,14 +76,12 @@ Optionally, you can include a selector to filter by source IP or IdP group.
 
 | Selector          | Operator | Value               | Logic | Action |
 | ----------------- | -------- | ------------------- | ----- | ------ |
-| Destination IP    | in list  | *SSHAllowList*      | Or    | Allow  |
-| SNI               | in list  | *SSHAllowlistFQDN*  | And   |        |
-| Detected Protocol | is       | *SSH*               | And   |        |
-| User Group Names  | in       | *SSH-Allowed-Users* |       |        |
-
+| Destination IP    | in list  | _SSHAllowList_      | Or    | Allow  |
+| SNI               | in list  | _SSHAllowlistFQDN_  | And   |        |
+| Detected Protocol | is       | _SSH_               | And   |        |
+| User Group Names  | in       | _SSH-Allowed-Users_ |       |        |
 
 </Details>
-
 
 <Details header="All-NET-NO-HTTP-HTTPS-Internet-Deny">
 
@@ -101,12 +89,10 @@ Block all non-web traffic towards the Internet. By using the **Detected Protocol
 
 | Selector          | Operator    | Value             | Logic | Action |
 | ----------------- | ----------- | ----------------- | ----- | ------ |
-| Destination IP    | not in list | *InternalNetwork* | And   | Block  |
-| Detected Protocol | is not in   | *HTTP*, *HTTPS*   |       |        |
-
+| Destination IP    | not in list | _InternalNetwork_ | And   | Block  |
+| Detected Protocol | not in      | _HTTP_, _HTTP2_   |       |        |
 
 </Details>
-
 
 <Details header="All-NET-InternalNetwork-ImplicitDeny">
 
@@ -114,7 +100,6 @@ Implicitly deny all of your internal IP ranges included in a list. We recommend 
 
 | Selector       | Operator | Value                  | Action |
 | -------------- | -------- | ---------------------- | ------ |
-| Destination IP | in list  | *Internal Network IPs* | Block  |
-
+| Destination IP | in list  | _Internal Network IPs_ | Block  |
 
 </Details>

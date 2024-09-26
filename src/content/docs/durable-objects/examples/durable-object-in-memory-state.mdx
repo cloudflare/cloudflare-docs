@@ -4,7 +4,7 @@ summary: Create a Durable Object that stores the last location it was accessed
   from in-memory.
 tags:
   - Durable Objects
-pcx_content_type: configuration
+pcx_content_type: example
 title: Durable Object in-memory state
 sidebar:
   order: 3
@@ -13,7 +13,7 @@ description: Create a Durable Object that stores the last location it was
 
 ---
 
-This example shows you how Durable Objects are stateful, meaning in-memory state can be retained between requests. After a brief period of inactivity, the Durable Object will be evicted, and all in-memory state will be lost. The next request will reconstruct the object, but instead of showing the city of the previous request, it will display a message indicating that the object has been reinitialized. If you need your applications state to survive eviction, write the state to storage by using the [storage API](/durable-objects/api/transactional-storage-api/), or by storing your data elsewhere.
+This example shows you how Durable Objects are stateful, meaning in-memory state can be retained between requests. After a brief period of inactivity, the Durable Object will be evicted, and all in-memory state will be lost. The next request will reconstruct the object, but instead of showing the city of the previous request, it will display a message indicating that the object has been reinitialized. If you need your applications state to survive eviction, write the state to storage by using the [storage API](/durable-objects/api/storage-api/), or by storing your data elsewhere.
 
 ```js
 // Worker

@@ -82,12 +82,78 @@ function workersPlaygroundButton() {
 	});
 }
 
+function outputCodeblocks() {
+	return definePlugin({
+		name: "Adds the '.code-output' class if 'output' is passed on the opening codefence.",
+		hooks: {
+			preprocessMetadata: async (context) => {
+				if (!context.codeBlock.meta.includes("output")) return;
+				context.codeBlock.props.frame = "none";
+			},
+			postprocessRenderedBlock: async (context) => {
+				if (!context.codeBlock.meta.includes("output")) return;
+				context.renderData.blockAst.properties.className.push("code-output");
+				context.addStyles(`
+					div.expressive-code:has(figure.code-output) {
+						margin-top: 0 !important;
+					}
+
+					.code-output .copy {
+						display: none !important;
+					}
+
+					.code-output > pre {
+						border-top-width: 0 !important;
+						background: var(--sl-color-gray-6) !important;
+					}
+
+					.code-output > pre > code {
+						user-select: none;
+						transition: opacity 0.5s ease;
+					}
+
+					.code-output > pre > code:hover {
+						cursor: default;
+						opacity: 0.5;
+					}
+				`);
+			},
+		},
+	});
+}
+
+function defaultLanguageTitles() {
+	return definePlugin({
+		name: "Adds language-specific default titles.",
+		hooks: {
+			preprocessLanguage: async (context) => {
+				switch (context.codeBlock.language) {
+					case "powershell": {
+						context.codeBlock.props.title ??= "PowerShell";
+						break;
+					}
+					default: {
+						return;
+					}
+				}
+			},
+		},
+	});
+}
+
 export default {
-	plugins: [workersPlaygroundButton()],
+	plugins: [
+		workersPlaygroundButton(),
+		outputCodeblocks(),
+		defaultLanguageTitles(),
+	],
 	themes: [darkTheme, lightTheme],
 	styleOverrides: {
 		textMarkers: {
 			defaultLuminance: ["32%", "88%"],
 		},
+	},
+	frames: {
+		extractFileNameFromCode: false,
 	},
 };

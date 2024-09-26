@@ -1,11 +1,10 @@
 ---
 {}
-
 ---
 
-import { TabItem, Tabs } from "~/components"
+import { TabItem, Tabs } from "~/components";
 
-<Tabs> <TabItem label="Dashboard">
+<Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
 
 To set up an AI Gateway in the dashboard:
 
@@ -20,8 +19,9 @@ To set up an AI Gateway in the dashboard:
 To set up an AI Gateway using the API:
 
 1. [Create an API token](/fundamentals/api/get-started/create-token/) with the following permissions:
-   * `AI Gateway - Read`
-   * `AI Gateway - Edit`
+
+   - `AI Gateway - Read`
+   - `AI Gateway - Edit`
 
 2. Get your [Account ID](/fundamentals/setup/find-account-and-zone-ids/).
 

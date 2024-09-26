@@ -1,10 +1,9 @@
 ---
 pcx_content_type: configuration
 title: PlanetScale
-
 ---
 
-import { Render } from "~/components"
+import { Render } from "~/components";
 
 [PlanetScale](https://planetscale.com/) is a MySQL-compatible platform that makes databases infinitely scalable, easier and safer to manage.
 
@@ -46,36 +45,36 @@ To set up an integration with PlanetScale:
 5. In your Worker, install the `@planetscale/database` driver to connect to your PlanetScale database and start manipulating data:
 
    ```sh
-   $ npm install @planetscale/database
+   npm install @planetscale/database
    ```
 
 6. The following example shows how to make a query to your PlanetScale database in a Worker. The credentials needed to connect to PlanetScale have been automatically added as secrets to your Worker through the integration.
 
    ```js
-   import { connect } from '@planetscale/database';
+   import { connect } from "@planetscale/database";
 
    export default {
-     async fetch(request, env) {
-       const config = {
-         host: env.DATABASE_HOST,
-         username: env.DATABASE_USERNAME,
-         password: env.DATABASE_PASSWORD,
-         // see https://github.com/cloudflare/workerd/issues/698
-         fetch: (url, init) => {
-           delete (init)["cache"];
-           return fetch(url, init);
-         }
-       }
-       
-       const conn = connect(config)
-       const data = await conn.execute('SELECT * FROM products;')
-       return new Response(JSON.stringify(data.rows), {
-         status: 200,
-         headers: {
-           'Content-Type': 'application/json'
-         }
-       });
-     },
+   	async fetch(request, env) {
+   		const config = {
+   			host: env.DATABASE_HOST,
+   			username: env.DATABASE_USERNAME,
+   			password: env.DATABASE_PASSWORD,
+   			// see https://github.com/cloudflare/workerd/issues/698
+   			fetch: (url, init) => {
+   				delete init["cache"];
+   				return fetch(url, init);
+   			},
+   		};
+
+   		const conn = connect(config);
+   		const data = await conn.execute("SELECT * FROM products;");
+   		return new Response(JSON.stringify(data.rows), {
+   			status: 200,
+   			headers: {
+   				"Content-Type": "application/json",
+   			},
+   		});
+   	},
    };
    ```
 

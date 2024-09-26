@@ -3,10 +3,17 @@ pcx_content_type: how-to
 title: Nuxt
 head: []
 description: Web framework making Vue.js-based development simple and powerful.
-
 ---
 
-import { PagesBuildPreset, Render, TabItem, Tabs } from "~/components"
+import {
+	PagesBuildPreset,
+	Render,
+	TabItem,
+	Tabs,
+	ResourcesBySelector,
+	ExternalResources,
+	PackageManagers,
+} from "~/components";
 
 [Nuxt](https://nuxt.com) is a web framework making Vue.js-based development simple and powerful.
 
@@ -16,9 +23,11 @@ In this guide, you will create a new Nuxt application and deploy it using Cloudf
 
 The [`create-cloudflare` CLI (C3)](/pages/get-started/c3/) will configure your Nuxt site for Cloudflare Pages. Run the following command in your terminal to create a new Nuxt site:
 
-```sh
-$ npm create cloudflare@latest my-nuxt-app -- --framework=nuxt
-```
+<PackageManagers
+	type="create"
+	pkg="cloudflare@latest"
+	args="my-nuxt-app --framework=nuxt"
+/>
 
 C3 will ask you a series of setup questions and create a new project with [`nuxi` (the official Nuxt CLI)](https://github.com/nuxt/cli). C3 will also install the necessary adapters along with the [Wrangler CLI](/workers/wrangler/install-and-update/#check-your-wrangler-version).
 
@@ -27,14 +36,12 @@ After creating your project, C3 will generate a new `my-nuxt-app` directory usin
 When creating your new project, C3 will give you the option of deploying an initial version of your application via [Direct Upload](/pages/how-to/use-direct-upload-with-continuous-integration/). You can redeploy your application at any time by running following command inside your project directory:
 
 ```sh
-$ npm run deploy
+npm run deploy
 ```
 
 :::note[Git integration]
 
-
 The initial deployment created via C3 is referred to as a [Direct Upload](/pages/get-started/direct-upload/). To set up a deployment via the Pages Git integration, refer to the [Git Integration](#git-integration) section below.
-
 
 :::
 
@@ -51,13 +58,13 @@ To deploy a Nuxt project without C3, follow the [Nuxt Get Started guide](https:/
 ```sh
 # Skip the following three commands if you have built your application
 # using C3 or already committed your changes
-$ git init
-$ git add .
-$ git commit -m "Initial commit"
+git init
+git add .
+git commit -m "Initial commit"
 
-$ git branch -M main
-$ git remote add origin https://github.com/<YOUR_GH_USERNAME>/<REPOSITORY_NAME>
-$ git push -u origin main
+git branch -M main
+git remote add origin https://github.com/<YOUR_GH_USERNAME>/<REPOSITORY_NAME>
+git push -u origin main
 ```
 
 ### Create a Pages project
@@ -91,7 +98,7 @@ Projects created via C3 come with `nitro-cloudflare-dev`, a `nitro` module that 
 
 ```typescript
 export default defineNuxtConfig({
-  modules: ["nitro-cloudflare-dev"],
+	modules: ["nitro-cloudflare-dev"],
 });
 ```
 
@@ -99,9 +106,7 @@ This module is powered by the [`getPlatformProxy` helper function](/workers/wran
 
 :::note
 
-
 `wrangler.toml` is currently **only** used for local development. Bindings specified in it are not available remotely.
-
 
 :::
 
@@ -116,19 +121,24 @@ To get proper type support, you need to create a new `env.d.ts` file in the root
 The following is an example of adding a `KVNamespace` binding:
 
 ```ts null {9}
-import { CfProperties, Request, ExecutionContext, KVNamespace } from '@cloudflare/workers-types';
+import {
+	CfProperties,
+	Request,
+	ExecutionContext,
+	KVNamespace,
+} from "@cloudflare/workers-types";
 
-declare module 'h3' {
-    interface H3EventContext {
-        cf: CfProperties,
-        cloudflare: {
-          request: Request,
-          env: {
-            MY_KV: KVNamespace,
-          }
-          context: ExecutionContext,
-        };
-    }
+declare module "h3" {
+	interface H3EventContext {
+		cf: CfProperties;
+		cloudflare: {
+			request: Request;
+			env: {
+				MY_KV: KVNamespace;
+			};
+			context: ExecutionContext;
+		};
+	}
 }
 ```
 
@@ -142,11 +152,11 @@ The following code block shows an example of accessing a KV namespace in Nuxt.
 
 ```javascript null {2}
 export default defineEventHandler(({ context }) => {
-  const MY_KV = context.cloudflare.env.MY_KV;
+	const MY_KV = context.cloudflare.env.MY_KV;
 
-  return {
-    // ...
-  };
+	return {
+		// ...
+	};
 });
 ```
 
@@ -154,14 +164,28 @@ export default defineEventHandler(({ context }) => {
 
 ```typescript null {2}
 export default defineEventHandler(({ context }) => {
-  const MY_KV = context.cloudflare.env.MY_KV;
+	const MY_KV = context.cloudflare.env.MY_KV;
 
-  return {
-    // ...
-  };
+	return {
+		// ...
+	};
 });
 ```
 
 </TabItem> </Tabs>
 
 <Render file="framework-guides/learn-more" params={{ one: "Nuxt" }} />
+
+## Related resources
+
+### Tutorials
+
+For more tutorials involving Nuxt, refer to the following resources:
+
+<ResourcesBySelector tags={["Nuxt"]} types={["tutorial"]} />
+
+### Demo apps
+
+For demo applications using Nuxt, refer to the following resources:
+
+<ExternalResources tags={["Nuxt"]} type="apps" />

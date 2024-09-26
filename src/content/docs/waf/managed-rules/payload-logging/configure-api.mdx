@@ -6,8 +6,9 @@ sidebar:
 head:
   - tag: title
     content: Configure payload logging for a managed ruleset via API
-
 ---
+
+import { RuleID } from "~/components";
 
 Use the [Rulesets API](/ruleset-engine/rulesets-api/) to configure payload logging for a managed ruleset via API.
 
@@ -15,8 +16,8 @@ Use the [Rulesets API](/ruleset-engine/rulesets-api/) to configure payload loggi
 
 1. Use the [Get a zone entry point ruleset](/api/operations/getZoneEntrypointRuleset) operation to obtain the following IDs:
 
-   * The ID of the [entry point ruleset](/ruleset-engine/about/rulesets/#entry-point-ruleset) of the `http_request_firewall_managed` [phase](/ruleset-engine/about/phases/).
-   * The ID of the rule deploying the WAF managed ruleset (an `execute` rule) for which you want to configure payload logging.
+   - The ID of the [entry point ruleset](/ruleset-engine/about/rulesets/#entry-point-ruleset) of the `http_request_firewall_managed` [phase](/ruleset-engine/about/phases/).
+   - The ID of the rule deploying the WAF managed ruleset (an `execute` rule) for which you want to configure payload logging.
 
 2. Use the [Update a zone ruleset rule](/api/operations/updateZoneRulesetRule) operation to update the rule you identified in the previous step.
 
@@ -35,12 +36,10 @@ Use the [Rulesets API](/ruleset-engine/rulesets-api/) to configure payload loggi
 
 :::note[Account-level configuration]
 
-
 To configure payload logging for a managed ruleset deployed at the account level (only available in Enterprise plans with a paid add-on), use the following API operations instead:
 
-* In step 1: [Get an account entry point ruleset](/api/operations/getAccountEntrypointRuleset)
-* In step 2: [Update an account ruleset rule](/api/operations/updateAccountRulesetRule)
-
+- In step 1: [Get an account entry point ruleset](/api/operations/getAccountEntrypointRuleset)
+- In step 2: [Update an account ruleset rule](/api/operations/updateAccountRulesetRule)
 
 :::
 
@@ -57,49 +56,49 @@ This example configures payload logging for the [Cloudflare Managed Ruleset](/wa
 
    ```json title="Example response" {3,12,20}
    {
-     "result": {
-       "id": "060013b1eeb14c93b0dcd896537e0d2c", // entry point ruleset ID
-       "name": "default",
-       "description": "",
-       "source": "firewall_managed",
-       "kind": "zone",
-       "version": "3",
-       "rules": [
-         // (...)
-         {
-           "id": "1bdb49371c1f46958fc8b985efcb79e7", // `execute` rule ID
-           "version": "1",
-           "action": "execute",
-           "expression": "true",
-           "last_updated": "2024-01-20T14:21:28.643979Z",
-           "ref": "1bdb49371c1f46958fc8b985efcb79e7",
-           "enabled": true,
-           "action_parameters": {
-             "id": "efb7b8c949ac4650a09736fc376e9aee", // "Cloudflare Managed Ruleset" ID
-             "version": "latest"
-           }
-         },
-         // (...)
-       ],
-       "last_updated": "2024-01-20T14:29:00.190643Z",
-       "phase": "http_request_firewall_managed"
-     },
-     "success": true,
-     "errors": [],
-     "messages": []
+   	"result": {
+   		"id": "060013b1eeb14c93b0dcd896537e0d2c", // entry point ruleset ID
+   		"name": "default",
+   		"description": "",
+   		"source": "firewall_managed",
+   		"kind": "zone",
+   		"version": "3",
+   		"rules": [
+   			// (...)
+   			{
+   				"id": "1bdb49371c1f46958fc8b985efcb79e7", // `execute` rule ID
+   				"version": "1",
+   				"action": "execute",
+   				"expression": "true",
+   				"last_updated": "2024-01-20T14:21:28.643979Z",
+   				"ref": "1bdb49371c1f46958fc8b985efcb79e7",
+   				"enabled": true,
+   				"action_parameters": {
+   					"id": "efb7b8c949ac4650a09736fc376e9aee", // "Cloudflare Managed Ruleset" ID
+   					"version": "latest"
+   				}
+   			}
+   			// (...)
+   		],
+   		"last_updated": "2024-01-20T14:29:00.190643Z",
+   		"phase": "http_request_firewall_managed"
+   	},
+   	"success": true,
+   	"errors": [],
+   	"messages": []
    }
    ```
 
 2. Save the following IDs for the next step:
 
-   * The ID of the entry point ruleset: 060013b1eeb14c93b0dcd896537e0d2c
-   * The ID of the `execute` rule deploying the Cloudflare Managed Ruleset: 1bdb49371c1f46958fc8b985efcb79e7
+   - The ID of the entry point ruleset: `060013b1eeb14c93b0dcd896537e0d2c`
+   - The ID of the `execute` rule deploying the Cloudflare Managed Ruleset: `1bdb49371c1f46958fc8b985efcb79e7`
 
-   To find the correct rule in the `rules` array, search for an `execute` rule containing the ID of the Cloudflare Managed Ruleset (efb7b8c949ac4650a09736fc376e9aee) in `action_parameters` > `id`.
+   To find the correct rule in the `rules` array, search for an `execute` rule containing the ID of the Cloudflare Managed Ruleset (<RuleID id="efb7b8c949ac4650a09736fc376e9aee" />) in `action_parameters` > `id`.
 
    :::note
 
-   To get the IDs of existing WAF managed rulesets, refer to [WAF Managed Rules](/waf/managed-rules/#managed-rulesets) or use the [List account rulesets](/api/operations/listAccountRulesets) operation. 
+   To get the IDs of existing WAF managed rulesets, refer to [WAF Managed Rules](/waf/managed-rules/#managed-rulesets) or use the [List account rulesets](/api/operations/listAccountRulesets) operation.
    :::
 
 3. Invoke the [Update a zone ruleset rule](/api/operations/updateZoneRulesetRule) operation (a `PATCH` request) to update the configuration of the rule you identified. The rule will now include the payload logging configuration (`matched_data` object).
@@ -125,7 +124,7 @@ This example configures payload logging for the [Cloudflare Managed Ruleset](/wa
 
 For more information on deploying managed rulesets via API, refer to [Deploy a managed ruleset](/ruleset-engine/managed-rulesets/deploy-managed-ruleset/) in the Ruleset Engine documentation.
 
-***
+---
 
 ## Disable payload logging
 

@@ -8,12 +8,9 @@ languages:
   - JavaScript
 tags:
   - HTMLRewriter
-
 ---
 
-
-
-import { Render } from "~/components"
+import { Render, PackageManagers } from "~/components";
 
 In this tutorial, you will build an example internationalization and localization engine (commonly referred to as **i18n** and **l10n**) for your application, serve the content of your site, and automatically translate the content based on your visitors’ location in the world.
 
@@ -21,7 +18,7 @@ This tutorial uses the [`HTMLRewriter`](/workers/runtime-apis/html-rewriter/) cl
 
 ![An example site that has been successfully localized in Japanese, German and English](~/assets/images/workers/tutorials/localize-website/i18n.jpg)
 
-***
+---
 
 <Render file="tutorials-before-you-start" />
 
@@ -35,20 +32,23 @@ If you would like to deploy your own version of the site, you can find the sourc
 
 Create a new application using the [`create-cloudflare`](/pages/get-started/c3), a CLI for creating and deploying new applications to Cloudflare.
 
-<Render file="c3-run-command-with-directory" product="workers" params={{ one: "i18n-example" }} />
+<PackageManagers type="create" pkg="cloudflare@latest" args={"i18n-example"} />
 
 For setup, select the following options:
 
-* For *What would you like to start with*?, select `Framework Starter`.
-* For *Which development framework do you want to use?*, select `React`.
-* For, *Do you want to deploy your application?*, select `No`.
+- For _What would you like to start with_?, select `Framework Starter`.
+- For _Which development framework do you want to use?_, select `React`.
+- For, _Do you want to deploy your application?_, select `No`.
 
 The newly generated `i18n-example` project will contain two folders: `public` and `src` these contain files for a React application:
 
 ```sh
-$ cd i18n-example
-$ ls
-$ public src package.json
+cd i18n-example
+ls
+```
+
+```sh output
+public src package.json
 ```
 
 We have to make a few adjustments to the generated project, first we want to the replace the content inside of the `public` directory, with the default generated HTML code for the HTML5 UP template seen in the demo screenshot: download a [release](https://github.com/signalnerve/i18n-example-workers/archive/v1.0.zip) (ZIP file) of the code for this project and copy the `public` folder to your own project to get started.
@@ -56,9 +56,9 @@ We have to make a few adjustments to the generated project, first we want to the
 Next, let's create a functions directory with an `index.js` file, this will be where the logic of the application will be written.
 
 ```sh
-$ mkdir functions
-$ cd functions
-$ touch index.js
+mkdir functions
+cd functions
+touch index.js
 ```
 
 Additionally, we'll remove the `src/` directory since its content isn't necessary for this project. With the static HTML for this project updated, you can focus on the script inside of the `functions` folder, at `index.js`.
@@ -77,9 +77,9 @@ What is unique about this page is the addition of [data attributes](https://deve
 <!-- source clipped from i18n-example site -->
 
 <div class="inner">
-  <h1 data-i18n-key="headline">Example Site</h1>
-  <p data-i18n-key="subtitle">This is my example site. Depending o...</p>
-  <p data-i18n-key="disclaimer">Disclaimer: the initial translations...</p>
+	<h1 data-i18n-key="headline">Example Site</h1>
+	<p data-i18n-key="subtitle">This is my example site. Depending o...</p>
+	<p data-i18n-key="disclaimer">Disclaimer: the initial translations...</p>
 </div>
 ```
 
@@ -95,7 +95,7 @@ Inside of this file, start by adding the default code for running a [Pages Funct
 
 ```js
 export function onRequest(context) {
-  return new Response("Hello, world!")
+	return new Response("Hello, world!");
 }
 ```
 
@@ -103,11 +103,11 @@ The important part of the code lives in the `onRequest` function. To implement t
 
 ```js
 export async function onRequest(context) {
-  const { request, env } = context;
-  const response = await env.ASSETS.fetch(request)
-  return new HTMLRewriter()
-    .on('[data-i18n-key]', new ElementHandler(countryStrings))
-    .transform(response)
+	const { request, env } = context;
+	const response = await env.ASSETS.fetch(request);
+	return new HTMLRewriter()
+		.on("[data-i18n-key]", new ElementHandler(countryStrings))
+		.transform(response);
 }
 ```
 
@@ -119,9 +119,9 @@ In [How it works](#understanding-data-i18n-key), the documentation describes `da
 
 ```js
 class ElementHandler {
-  element(element) {
-    const i18nKey = element.getAttribute('data-i18n-key');
-  }
+	element(element) {
+		const i18nKey = element.getAttribute("data-i18n-key");
+	}
 }
 ```
 
@@ -129,14 +129,14 @@ With `i18nKey` defined, you can use it to search for a corresponding translated 
 
 ```js null {1,2,3,4,5,10}
 const strings = {
-  headline: 'Beispielseite',
+	headline: "Beispielseite",
 };
 
 class ElementHandler {
-  element(element) {
-    const i18nKey = element.getAttribute('data-i18n-key');
-    const string = strings[i18nKey];
-  }
+	element(element) {
+		const i18nKey = element.getAttribute("data-i18n-key");
+		const string = strings[i18nKey];
+	}
 }
 ```
 
@@ -144,17 +144,17 @@ Take your translated `string` and insert it into the original element, using the
 
 ```js null {11,12,13}
 const strings = {
-  headline: 'Beispielseite',
+	headline: "Beispielseite",
 };
 
 class ElementHandler {
-  element(element) {
-    const i18nKey = element.getAttribute('data-i18n-key');
-    const string = strings[i18nKey];
-    if (string) {
-      element.setInnerContent(string);
-    }
-  }
+	element(element) {
+		const i18nKey = element.getAttribute("data-i18n-key");
+		const string = strings[i18nKey];
+		if (string) {
+			element.setInnerContent(string);
+		}
+	}
 }
 ```
 
@@ -171,86 +171,86 @@ To implement this:
 To parse the `Accept-Language` header, install the [`accept-language-parser`](https://www.npmjs.com/package/accept-language-parser) npm package:
 
 ```sh
-$ npm i accept-language-parser
+npm i accept-language-parser
 ```
 
 Once imported into your code, use the package to parse the most relevant language for a client based on `Accept-Language` header, and pass it to `ElementHandler`. Your final code for the project, with an included sample translation for Germany and Japan (using Google Translate) looks like this:
 
 ```js null {32,33,34,39,62,63,64,65}
-import parser from 'accept-language-parser'
+import parser from "accept-language-parser";
 
 // do not set to true in production!
-const DEBUG = false
+const DEBUG = false;
 
 const strings = {
-  de: {
-    title: 'Beispielseite',
-    headline: 'Beispielseite',
-    subtitle:
-      'Dies ist meine Beispielseite. Abhängig davon, wo auf der Welt Sie diese Site besuchen, wird dieser Text in die entsprechende Sprache übersetzt.',
-    disclaimer:
-      'Haftungsausschluss: Die anfänglichen Übersetzungen stammen von Google Translate, daher sind sie möglicherweise nicht perfekt!',
-    tutorial:
-      'Das Tutorial für dieses Projekt finden Sie in der Cloudflare Workers-Dokumentation.',
-    copyright: 'Design von HTML5 UP.',
-  },
-  ja: {
-    title: 'サンプルサイト',
-    headline: 'サンプルサイト',
-    subtitle:
-      'これは私の例のサイトです。 このサイトにアクセスする世界の場所に応じて、このテキストは対応する言語に翻訳されます。',
-    disclaimer:
-      '免責事項：最初の翻訳はGoogle翻訳からのものですので、完璧ではないかもしれません！',
-    tutorial:
-      'Cloudflare Workersのドキュメントでこのプロジェクトのチュートリアルを見つけてください。',
-    copyright: 'HTML5 UPによる設計。',
-  },
-}
+	de: {
+		title: "Beispielseite",
+		headline: "Beispielseite",
+		subtitle:
+			"Dies ist meine Beispielseite. Abhängig davon, wo auf der Welt Sie diese Site besuchen, wird dieser Text in die entsprechende Sprache übersetzt.",
+		disclaimer:
+			"Haftungsausschluss: Die anfänglichen Übersetzungen stammen von Google Translate, daher sind sie möglicherweise nicht perfekt!",
+		tutorial:
+			"Das Tutorial für dieses Projekt finden Sie in der Cloudflare Workers-Dokumentation.",
+		copyright: "Design von HTML5 UP.",
+	},
+	ja: {
+		title: "サンプルサイト",
+		headline: "サンプルサイト",
+		subtitle:
+			"これは私の例のサイトです。 このサイトにアクセスする世界の場所に応じて、このテキストは対応する言語に翻訳されます。",
+		disclaimer:
+			"免責事項：最初の翻訳はGoogle翻訳からのものですので、完璧ではないかもしれません！",
+		tutorial:
+			"Cloudflare Workersのドキュメントでこのプロジェクトのチュートリアルを見つけてください。",
+		copyright: "HTML5 UPによる設計。",
+	},
+};
 
 class ElementHandler {
-  constructor(countryStrings) {
-    this.countryStrings = countryStrings
-  }
+	constructor(countryStrings) {
+		this.countryStrings = countryStrings;
+	}
 
-  element(element) {
-    const i18nKey = element.getAttribute('data-i18n-key')
-    if (i18nKey) {
-      const translation = this.countryStrings[i18nKey]
-      if (translation) {
-        element.setInnerContent(translation)
-      }
-    }
-  }
+	element(element) {
+		const i18nKey = element.getAttribute("data-i18n-key");
+		if (i18nKey) {
+			const translation = this.countryStrings[i18nKey];
+			if (translation) {
+				element.setInnerContent(translation);
+			}
+		}
+	}
 }
 
 export async function onRequest(context) {
-  const { request, env } = context;
-  try {
-    let options = {}
-    if (DEBUG) {
-      options = {
-        cacheControl: {
-          bypassCache: true,
-        },
-      }
-    }
-    const languageHeader = request.headers.get('Accept-Language')
-    const language = parser.pick(['de', 'ja'], languageHeader)
-    const countryStrings = strings[language] || {}
+	const { request, env } = context;
+	try {
+		let options = {};
+		if (DEBUG) {
+			options = {
+				cacheControl: {
+					bypassCache: true,
+				},
+			};
+		}
+		const languageHeader = request.headers.get("Accept-Language");
+		const language = parser.pick(["de", "ja"], languageHeader);
+		const countryStrings = strings[language] || {};
 
-    const response = await env.ASSETS.fetch(request)
-    return new HTMLRewriter()
-      .on('[data-i18n-key]', new ElementHandler(countryStrings))
-      .transform(response)
-  } catch (e) {
-    if (DEBUG) {
-      return new Response(e.message || e.toString(), {
-        status: 404,
-      })
-    } else {
-      return env.ASSETS.fetch(request)
-    }
-  }
+		const response = await env.ASSETS.fetch(request);
+		return new HTMLRewriter()
+			.on("[data-i18n-key]", new ElementHandler(countryStrings))
+			.transform(response);
+	} catch (e) {
+		if (DEBUG) {
+			return new Response(e.message || e.toString(), {
+				status: 404,
+			});
+		} else {
+			return env.ASSETS.fetch(request);
+		}
+	}
 }
 ```
 
@@ -266,7 +266,7 @@ pages_build_output_dir = "./public"
 compatibility_date = "2024-01-29"
 ```
 
-Next, you need to configure a deploy script in `package.json` file in your project.  Add a deploy script with the value `wrangler pages deploy`:
+Next, you need to configure a deploy script in `package.json` file in your project. Add a deploy script with the value `wrangler pages deploy`:
 
 ```json null {3}
 "scripts": {
@@ -278,7 +278,7 @@ Next, you need to configure a deploy script in `package.json` file in your proje
 Using `wrangler`, deploy to Cloudflare’s network, using the `deploy` command:
 
 ```sh
-$ npm run deploy
+npm run deploy
 ```
 
 ![An example site that has been successfully localized in Japanese, German and English](~/assets/images/workers/tutorials/localize-website/i18n.jpg)

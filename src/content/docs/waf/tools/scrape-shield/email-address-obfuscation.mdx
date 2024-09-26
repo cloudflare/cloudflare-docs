@@ -4,10 +4,9 @@ source: https://support.cloudflare.com/hc/en-us/articles/200170016-What-is-Email
 title: Email Address Obfuscation
 sidebar:
   order: 1
-
 ---
 
-import { Render, TabItem, Tabs } from "~/components"
+import { Render, TabItem, Tabs } from "~/components";
 
 By enabling Cloudflare Email Address Obfuscation, email addresses on your web page will be hidden from bots, while keeping them visible to humans. In fact, there are no visible changes to your website for visitors.
 
@@ -21,7 +20,7 @@ Web administrators have come up with clever ways to protect against this by writ
 
 Cloudflare enables email address obfuscation automatically when you sign up.
 
-<Tabs> <TabItem label="Dashboard">
+<Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
 
 To disable **Email Address Obfuscation** in the dashboard:
 
@@ -42,38 +41,36 @@ To disable **Email Address Obfuscation** with the API, send a [`PATCH`](/api/ope
 
 To prevent Cloudflare from obfuscating specific email addresses, you can:
 
-* Add the following comment in the page HTML code: 
+- Add the following comment in the page HTML code:
 
   ```
   <!--email_off-->contact@example.com<!--/email_off-->
   ```
 
-* Return email addresses in JSON format for AJAX calls, making sure your web server returns a content type of `application/json`.
+- Return email addresses in JSON format for AJAX calls, making sure your web server returns a content type of `application/json`.
 
-* Disable the Email Obfuscation feature by creating a [Configuration Rule](/rules/configuration-rules/) to be applied on a specific endpoint.
+- Disable the Email Obfuscation feature by creating a [Configuration Rule](/rules/configuration-rules/) to be applied on a specific endpoint.
 
-***
+---
 
 ## Troubleshoot email obfuscation
 
 To prevent unexpected website behavior, email addresses are not obfuscated when they appear in:
 
-* Any HTML tag attribute, except for the *href* attribute of the *a* tag.
-* Other HTML tags:
-  * *script* tags: `<script></script>`
-  * *noscript* tags: `<noscript></noscript>`
-  * *textarea* tags: `<textarea></textarea>`
-  * *xmp* tags: `<xmp></xmp>`
-  * *head* tags: `<head></head>`
-* Any page that does not have a MIME type of `text/html` or `application/xhtml+xml`.
+- Any HTML tag attribute, except for the _href_ attribute of the _a_ tag.
+- Other HTML tags:
+  - _script_ tags: `<script></script>`
+  - _noscript_ tags: `<noscript></noscript>`
+  - _textarea_ tags: `<textarea></textarea>`
+  - _xmp_ tags: `<xmp></xmp>`
+  - _head_ tags: `<head></head>`
+- Any page that does not have a MIME type of `text/html` or `application/xhtml+xml`.
 
-:::caution[Warnings]
-
+:::caution
 
 Email Obfuscation will not apply in the following cases:
 
-* You are using the `Cache-Control: no-transform` header.
-* The HTML/JS code is specifically added by a [Worker](/workers/).
-
+- You are using the `Cache-Control: no-transform` header.
+- The HTML/JS code is specifically added by a [Worker](/workers/).
 
 :::

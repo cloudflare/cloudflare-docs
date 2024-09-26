@@ -4,10 +4,9 @@ pcx_content_type: tutorial
 head:
   - tag: title
     content: Use WARP as an on-ramp
-
 ---
 
-import { GlossaryTooltip, Render } from "~/components"
+import { GlossaryTooltip, Render } from "~/components";
 
 Use [WARP](/cloudflare-one/connections/connect-devices/warp/) as an <GlossaryTooltip term="on-ramp">on-ramp</GlossaryTooltip> to Magic WAN and route traffic from user devices with WARP installed to any network connected with Cloudflare Tunnel or Magic IP-layer tunnels (<GlossaryTooltip term="anycast">anycast</GlossaryTooltip> <GlossaryTooltip term="GRE tunnel" link="/magic-wan/configuration/manually/how-to/configure-tunnels/#add-tunnels">GRE</GlossaryTooltip>, <GlossaryTooltip term="IPsec tunnel" link="/magic-wan/configuration/manually/how-to/configure-tunnels/#add-tunnels">IPsec</GlossaryTooltip>, or [CNI](/network-interconnect/)). Take advantage of the integration between Magic WAN and [Magic Firewall](/magic-firewall/) and enforce policies at Cloudflare’s global network.
 
@@ -19,7 +18,7 @@ Before you can begin using WARP as an on-ramp to Magic WAN, you must set up your
 
 When connecting a WARP device to Magic WAN, you will have virtual IP addresses from WARP, in the `100.96.0.0/12` range.
 
-***
+---
 
 ## Set up WARP with Magic WAN
 
@@ -32,12 +31,12 @@ Cloudflare will assign IP addresses from the WARP virtual IP (VIP) space to your
 All packets with a destination IP in the VIP space need to be routed back through the tunnel. For example, with a single GRE tunnel named `gre1`, in Linux, the following command would add a routing rule that would route such packets:
 
 ```sh
-$ ip route add 100.96.0.0/12 dev gre1
+ip route add 100.96.0.0/12 dev gre1
 ```
 
 :::note[Note]
 
-After set up, **HTTP** and **Network logs** in Gateway will show the virtual IP address of your WARP device as the **Source IP**. DNS logs will continue to show the original WARP device IP because DNS traffic is sent over the public Internet to Cloudflare’s public-facing resolver. 
+After set up, **HTTP** and **Network logs** in Gateway will show the virtual IP address of your WARP device as the **Source IP**. DNS logs will continue to show the original WARP device IP because DNS traffic is sent over the public Internet to Cloudflare’s public-facing resolver.
 :::
 
 ### 2. Configure Split Tunnels
@@ -56,9 +55,21 @@ You must log out and log back in with at least one WARP device to ensure the con
 
 <Render file="traceroute" />
 
+## Double encapsulation
+
+When a WARP user goes to a location (like an office) with a Magic WAN tunnel already set up, WARP traffic is doubly encapsulated — first by WARP and then by Magic WAN. This is unnecessary, since each on-ramp method provides full Zero Trust protection.
+
+Since WARP traffic is already protected on its own, Cloudflare recommends that you set up Magic WAN to exclude WARP traffic, sending it to the Internet through regular connections.
+
+To learn which IP addresses and UDP ports you should exclude to accomplish this, refer to [WARP ingress IP](/cloudflare-one/connections/connect-devices/warp/deployment/firewall/#warp-ingress-ip).
+
+### WARP and Magic WAN Connector
+
+<Render file="connector/app-aware-policies/warp-traffic" />
+
 ## Test WARP integration
 
-Before testing, be sure to [configure domain fallback](/cloudflare-one/connections/connect-devices/warp/configure-warp/route-traffic/local-domains/#configure-local-domain-fallback) for the server or service in WARP settings. This is needed because by default Cloudflare Zero Trust excludes common top level domains used for local resolution from being sent to Gateway for processing.
+Before testing, be sure to [configure domain fallback](/cloudflare-one/connections/connect-devices/warp/configure-warp/route-traffic/local-domains/#add-a-domain) for the server or service in WARP settings. This is needed because by default Cloudflare Zero Trust excludes common top level domains used for local resolution from being sent to Gateway for processing.
 
 If WARP integration has been enabled for the account within the last day, log off and on again in the WARP client before testing.
 
@@ -67,17 +78,9 @@ To check if WARP is working correctly as an on-ramp, you can do a resolution tes
 For example:
 
 ```sh
-$ nslookup <SERVER_BEHIND_MAGIC_WAN>
+nslookup <SERVER_BEHIND_MAGIC_WAN>
 ```
 
 This DNS lookup should return a valid IP address associated with the server or service you are testing for.
 
 Next, test with a browser that you can connect to a service on the WAN by opening a webpage that is only accessible on the WAN. The server can be the same server used in the DNS lookup or another server in the WAN. Connecting using an IP address instead of a domain name should work.
-
-## Double encapsulation
-
-When a WARP user goes to a location (like an office) with a Magic WAN tunnel already set up, WARP traffic is doubly encapsulated - first by WARP and then by Magic WAN. This is unnecessary, since each on-ramp method provides full Zero Trust protection.
-
-Since WARP traffic is already protected on its own, Cloudflare recommends that you set up Magic WAN to exclude WARP traffic, sending it to the Internet through regular connections.
-
-To learn which IP addresses and UDP ports you should exclude to accomplish this, refer to [WARP ingress IP](/cloudflare-one/connections/connect-devices/warp/deployment/firewall/#warp-ingress-ip) and [WARP UDP ports](/cloudflare-one/connections/connect-devices/warp/deployment/firewall/#warp-ingress-ip).

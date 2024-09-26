@@ -3,10 +3,9 @@ title: Build Data Loss Prevention (DLP) policies
 pcx_content_type: learning-unit
 sidebar:
   order: 3
-
 ---
 
-import { Render, TabItem, Tabs } from "~/components"
+import { Render, TabItem, Tabs } from "~/components";
 
 In order to use Data Loss Prevention (DLP) tools within Cloudflare Zero Trust, you first need to define your DLP profiles. [DLP profiles](/cloudflare-one/policies/data-loss-prevention/dlp-profiles/) are complex objects with dictionaries, pre-built detections, and custom logic that you can reference as selectors within your Gateway policies.
 
@@ -16,7 +15,10 @@ You may either use DLP profiles predefined by Cloudflare, or create your own cus
 
 ### Configure a predefined profile
 
-<Render file="data-loss-prevention/predefined-profile" product="cloudflare-one" />
+<Render
+	file="data-loss-prevention/predefined-profile"
+	product="cloudflare-one"
+/>
 
 ### Build a custom profile
 
@@ -34,12 +36,12 @@ If your organization is most concerned about general data patterns that fit exis
 
 To help this better match the needs of your organization, you can also build a complex profile that matches data to both an existing library and a custom string detection or database. For example:
 
-<Tabs> <TabItem label="Dashboard">
+<Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
 
 | Selector    | Operator | Value                     | Logic | Action |
 | ----------- | -------- | ------------------------- | ----- | ------ |
-| DLP Profile | in       | *Credentials and Secrets* | Or    | Block  |
-| DLP Profile | in       | *AWS Key Dataset*         |       |        |
+| DLP Profile | in       | _Credentials and Secrets_ | Or    | Block  |
+| DLP Profile | in       | _AWS Key Dataset_         |       |        |
 
 </TabItem> <TabItem label="API">
 
@@ -71,12 +73,12 @@ If your data patterns take many different forms and contexts, consider building 
 
 Cloudflare implements regular expressions with Rust. Make sure you account for this difference when writing expressions or using regular expression builders and generative AI.
 
-To validate your regex, use [Rustexp](https://rustexp.lpil.uk/). 
+To validate your regex, use [Rustexp](https://rustexp.lpil.uk/).
 :::
 
 For example, you can use a custom expression to detect when your users share product SKUs in the format `CF1234-56789`:
 
-<Tabs> <TabItem label="Dashboard">
+<Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
 
 1. [Build a custom profile](#build-a-custom-profile) with the following custom entry:
 
@@ -88,7 +90,7 @@ For example, you can use a custom expression to detect when your users share pro
 
    | Selector    | Operator      | Value                        | Logic | Action |
    | ----------- | ------------- | ---------------------------- | ----- | ------ |
-   | DLP Profile | in            | *Product SKUs*               | And   | Block  |
+   | DLP Profile | in            | _Product SKUs_               | And   | Block  |
    | User Email  | matches regex | `[a-z0-9]{0,15}@example.com` |       |        |
 
 </TabItem>
@@ -144,12 +146,12 @@ The best way to start applying data loss prevention to your traffic, minimize th
 
 Many organizations want to detect and log financial information egressing from user devices to critical SaaS applications. To limit the risk of false positives and to filter out logging noise, Cloudflare recommends building your first series of policies to specify both target data and target destination. For example, you can block financial information from being sent to AI chatbots, such as ChatGPT and Gemini:
 
-<Tabs> <TabItem label="Dashboard">
+<Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
 
 | Selector           | Operator | Value                     | Logic | Action |
 | ------------------ | -------- | ------------------------- | ----- | ------ |
-| DLP Profile        | in       | *Financial Information*   | And   | Block  |
-| Content Categories | in       | *Artificial Intelligence* |       |        |
+| DLP Profile        | in       | _Financial Information_   | And   | Block  |
+| Content Categories | in       | _Artificial Intelligence_ |       |        |
 
 </TabItem>
 

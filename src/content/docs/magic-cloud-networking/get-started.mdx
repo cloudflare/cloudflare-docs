@@ -45,10 +45,10 @@ Before you can connect Magic Cloud Networking to your cloud provider, you first 
 2. Follow the [instructions on AWS](https://docs.aws.amazon.com/IAM/latest/UserGuide/id_users_create.html) to create an IAM user up until step 4 — do not check the **Provide users access to the AWS Management Console** option.
 
 3. **In Give users permissions to manage their own security credentials** (step 7 of the AWS instructions) select **Attach policies directly**, and add the following policies:
-   * `AmazonEC2ReadOnlyAccess`
-   * `IAMReadOnlyAccess`
-   * `NetworkAdministrator`
-   * `<THE_NAME_OF_YOUR_CUSTOM_POLICY>` (from step 1).
+   - `AmazonEC2ReadOnlyAccess`
+   - `IAMReadOnlyAccess`
+   - `NetworkAdministrator`
+   - `<THE_NAME_OF_YOUR_CUSTOM_POLICY>` (from step 1).
 
 4. [Add an Access Key](https://docs.aws.amazon.com/IAM/latest/UserGuide/id_credentials_access-keys.html) to the new user. Take note of the access key as you cannot retrieve this information later. Cloudflare will ask for this value when you make an AWS Cloud Integration.
 
@@ -82,6 +82,6 @@ You have successfully connected your cloud provider to Magic Cloud Networking. C
 
 ## Next steps
 
-* [Set up Magic WAN](/magic-cloud-networking/cloud-on-ramps/) as an on-ramp to your cloud.
-* [Manage resources](/magic-cloud-networking/manage-resources/) found by Magic Cloud Networking.
-* [Edit](/magic-cloud-networking/manage-resources/#edit-cloud-integrations) cloud integrations.
+- [Set up Magic WAN](/magic-cloud-networking/cloud-on-ramps/) as an on-ramp to your cloud.
+- [Manage resources](/magic-cloud-networking/manage-resources/) found by Magic Cloud Networking.
+- [Edit](/magic-cloud-networking/manage-resources/#edit-cloud-integrations) cloud integrations.

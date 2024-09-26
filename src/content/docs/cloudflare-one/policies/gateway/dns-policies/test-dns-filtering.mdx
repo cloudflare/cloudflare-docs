@@ -3,10 +3,9 @@ pcx_content_type: how-to
 title: Test DNS filtering
 sidebar:
   order: 2
-
 ---
 
-import { Details } from "~/components"
+import { Details } from "~/components";
 
 This section covers how to validate your Gateway DNS configuration.
 
@@ -26,8 +25,11 @@ For example, if you created a policy to block `example.com`, you can do the foll
 
 3. If the [block page](/cloudflare-one/policies/gateway/configuring-block-page/) is disabled for the policy, you should see `REFUSED` in the answer section:
 
-   ```sh null {6}
-   $ dig example.com
+   ```sh
+   dig example.com
+   ```
+
+   ```sh {4} output
 
    ; <<>> DiG 9.10.6 <<>> example.com
    ;; global options: +cmd
@@ -46,8 +48,11 @@ For example, if you created a policy to block `example.com`, you can do the foll
 
    If the [block page](/cloudflare-one/policies/gateway/configuring-block-page/) is enabled for the policy, you should see `NOERROR` in the answer section and `162.159.36.12` and `162.159.46.12` as the answers:
 
-   ```sh null {6,15,16}
-   $ dig example.com
+   ```sh null
+   dig example.com
+   ```
+
+   ```sh {4,13,14} output
 
    ; <<>> DiG 9.10.6 <<>> example.com
    ;; global options: +cmd
@@ -78,33 +83,33 @@ Once you have configured your Gateway policy to block the category, the test dom
 
 #### Test domain format
 
-* **One-word category** — For categories with one-word names (for example, *Malware*), the test domain uses the following format:
+- **One-word category** — For categories with one-word names (for example, _Malware_), the test domain uses the following format:
 
   ```txt
   <NAME_OF_CATEGORY>.testcategory.com
   ```
 
-* **Multi-word category** — For categories with multiple words in the name (for example, *Parked & For Sale Domains*), the test domain uses the following format:
+- **Multi-word category** — For categories with multiple words in the name (for example, _Parked & For Sale Domains_), the test domain uses the following format:
 
-  * Remove any spaces between the words
-  * Replace `&` with `and`
-  * Lowercase all letters
+  - Remove any spaces between the words
+  - Replace `&` with `and`
+  - Lowercase all letters
 
 #### Common test domains
 
 | Category                       | Test domain                                   |
 | ------------------------------ | --------------------------------------------- |
-| *Anonymizer*                   | `anonymizer.testcategory.com`                 |
-| *Command and Control & Botnet* | `commandandcontrolandbotnet.testcategory.com` |
-| *Cryptomining*                 | `cryptomining.testcategory.com`               |
-| *Malware*                      | `malware.testcategory.com`                    |
-| *New Domains*                  | `newdomains.testcategory.com`                 |
-| *Parked & For Sale Domains*    | `parkedandforsaledomains.testcategory.com`    |
-| *Phishing*                     | `phishing.testcategory.com`                   |
-| *Private IP Address*           | `privateipaddress.testcategory.com`           |
-| *Spam*                         | `spam.testcategory.com`                       |
-| *Spyware*                      | `spyware.testcategory.com`                    |
-| *Unreachable*                  | `unreachable.testcategory.com`                |
+| _Anonymizer_                   | `anonymizer.testcategory.com`                 |
+| _Command and Control & Botnet_ | `commandandcontrolandbotnet.testcategory.com` |
+| _Cryptomining_                 | `cryptomining.testcategory.com`               |
+| _Malware_                      | `malware.testcategory.com`                    |
+| _New Domains_                  | `newdomains.testcategory.com`                 |
+| _Parked & For Sale Domains_    | `parkedandforsaledomains.testcategory.com`    |
+| _Phishing_                     | `phishing.testcategory.com`                   |
+| _Private IP Address_           | `privateipaddress.testcategory.com`           |
+| _Spam_                         | `spam.testcategory.com`                       |
+| _Spyware_                      | `spyware.testcategory.com`                    |
+| _Unreachable_                  | `unreachable.testcategory.com`                |
 
 ## Test EDNS configuration
 
@@ -119,46 +124,49 @@ If you [enabled EDNS client subnet](/cloudflare-one/connections/connect-devices/
 2. Open a terminal and run the following command:
 
    ```sh
-   $ curl 'https://<DOH_SUBDOMAIN>.cloudflare-gateway.com/dns-query?type=TXT&name=o-o.myaddr.google.com' -H 'Accept: application/dns-json' | json_pp
+   curl 'https://<DOH_SUBDOMAIN>.cloudflare-gateway.com/dns-query?type=TXT&name=o-o.myaddr.google.com' -H 'Accept: application/dns-json' | json_pp
    ```
 
    The output should contain your EDNS client subnet:
 
    ```json null {12}
    {
-   "AD" : false,
-   "Answer" : [
-       {
-           "TTL" : 60,
-           "data" : "\"108.162.218.211\"",
-           "name" : "o-o.myaddr.google.com",
-           "type" : 16
-       },
-       {
-           "TTL" : 60,
-           "data" : "\"edns0-client-subnet 136.62.0.0/24\"",
-           "name" : "o-o.myaddr.google.com",
-           "type" : 16
-       }
-   ],
-   "CD" : false,
-   "Question" : [
-       {
-           "name" : "o-o.myaddr.google.com",
-           "type" : 16
-       }
-   ],
-   "RA" : true,
-   "RD" : true,
-   "Status" : 0,
-   "TC" : false
+   	"AD": false,
+   	"Answer": [
+   		{
+   			"TTL": 60,
+   			"data": "\"108.162.218.211\"",
+   			"name": "o-o.myaddr.google.com",
+   			"type": 16
+   		},
+   		{
+   			"TTL": 60,
+   			"data": "\"edns0-client-subnet 136.62.0.0/24\"",
+   			"name": "o-o.myaddr.google.com",
+   			"type": 16
+   		}
+   	],
+   	"CD": false,
+   	"Question": [
+   		{
+   			"name": "o-o.myaddr.google.com",
+   			"type": 16
+   		}
+   	],
+   	"RA": true,
+   	"RD": true,
+   	"Status": 0,
+   	"TC": false
    }
    ```
 
 3. To verify your EDNS client subnet, obtain your source IP address:
 
    ```sh
-   $ curl ifconfig.me
+   curl ifconfig.me
+   ```
+
+   ```sh output
    136.62.12.156%
    ```
 
@@ -170,15 +178,12 @@ Modern web browsers and operating systems are designed to cache DNS records for 
 
 To clear your DNS cache:
 
-
 <Details header="ChromeOS">
 
 1. Go to `chrome://net-internals/#dns`.
 2. Select **Clear host cache**.
 
-
 </Details>
-
 
 <Details header="Windows">
 
@@ -189,9 +194,7 @@ To clear your DNS cache:
 ipconfig /flushdns
 ```
 
-
 </Details>
-
 
 <Details header="macOS">
 
@@ -199,10 +202,9 @@ ipconfig /flushdns
 2. Run the following commands:
 
 ```sh
-$ sudo killall -HUP mDNSResponder
-$ sudo killall mDNSResponderHelper
-$ sudo dscacheutil -flushcache
+sudo killall -HUP mDNSResponder
+sudo killall mDNSResponderHelper
+sudo dscacheutil -flushcache
 ```
-
 
 </Details>

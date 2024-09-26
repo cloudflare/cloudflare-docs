@@ -3,7 +3,6 @@ title: Local development
 pcx_content_type: concept
 sidebar:
   order: 6
-
 ---
 
 Hyperdrive can be used when developing and testing your Workers locally by connecting to any local database instance running on your machine directly. Local development uses [Wrangler](/workers/wrangler/install-and-update/), the command-line interface for Workers, to manage local development sessions and state.
@@ -12,28 +11,26 @@ Hyperdrive can be used when developing and testing your Workers locally by conne
 
 :::note
 
-
 This guide assumes you are using `wrangler` version `3.27.0` or later.
 
 If you are new to Hyperdrive and/or Cloudflare Workers, refer to [Hyperdrive tutorial](/hyperdrive/get-started/) to install `wrangler` and deploy their first database.
-
 
 :::
 
 To specify a database to connect to when developing locally, you can:
 
-* **Recommended** Create a `WRANGLER_HYPERDRIVE_LOCAL_CONNECTION_STRING_<BINDING_NAME>` environmental variable with the connection string of your database. `<BINDING_NAME>` is the name of the binding assigned to your Hyperdrive in your `wrangler.toml` or Pages configuration. This allows you to avoid committing potentially sensitive credentials to source control in your `wrangler.toml`, if your test/development database is not ephemeral. If you have configured multiple Hyperdrive bindings, replace `<BINDING_NAME>` with the unique binding name for each.
-* Set `localConnectionString` in `wrangler.toml`.
+- **Recommended** Create a `WRANGLER_HYPERDRIVE_LOCAL_CONNECTION_STRING_<BINDING_NAME>` environmental variable with the connection string of your database. `<BINDING_NAME>` is the name of the binding assigned to your Hyperdrive in your `wrangler.toml` or Pages configuration. This allows you to avoid committing potentially sensitive credentials to source control in your `wrangler.toml`, if your test/development database is not ephemeral. If you have configured multiple Hyperdrive bindings, replace `<BINDING_NAME>` with the unique binding name for each.
+- Set `localConnectionString` in `wrangler.toml`.
 
 If both the `WRANGLER_HYPERDRIVE_LOCAL_CONNECTION_STRING_<BINDING_NAME>` environmental variable and `localConnectionString` in `wrangler.toml` are set, `wrangler dev` will use the environmental variable instead. Use `unset WRANGLER_HYPERDRIVE_LOCAL_CONNECTION_STRING_<BINDING_NAME>` to unset any existing environmental variables.
 
 For example, to use the environmental variable, export the environmental variable before running `wrangler dev`:
 
 ```sh
-# Your configured Hyperdrive binding is "TEST_DB" 
-$ export WRANGLER_HYPERDRIVE_LOCAL_CONNECTION_STRING_TEST_DB="postgres://user:password@localhost:5432/databasename"
+# Your configured Hyperdrive binding is "TEST_DB"
+export WRANGLER_HYPERDRIVE_LOCAL_CONNECTION_STRING_TEST_DB="postgres://user:password@localhost:5432/databasename"
 # Start a local development session referencing this local instance
-$ npx wrangler dev
+npx wrangler dev
 ```
 
 To configure a `localConnectionString` in `wrangler.toml`, ensure your Hyperdrive bindings have a `localConnectionString` property set:
@@ -51,16 +48,24 @@ The following example shows you how to check your wrangler version, set a `WRANG
 
 ```sh
 # Confirm you are using wrangler v3.0+
-$ npx wrangler --version
-⛅️ wrangler 3.27.0
+npx wrangler --version
+```
 
+```sh output
+⛅️ wrangler 3.27.0
+```
+
+```sh
 # Set your environmental variable: your configured Hyperdrive binding is "TEST_DB".
 export WRANGLER_HYPERDRIVE_LOCAL_CONNECTION_STRING_TEST_DB="postgres://user:password@localhost:5432/databasename"
+```
 
+```sh
 # Start a local dev session:
-$ npx wrangler dev
+npx wrangler dev
+```
 
-# Outputs:
+```sh output
 ------------------
 Found a non-empty WRANGLER_HYPERDRIVE_LOCAL_CONNECTION_STRING_TEST_DB variable. Hyperdrive will connect to this database
 during local development.
@@ -82,6 +87,6 @@ Refer to the [`wrangler dev` documentation](/workers/wrangler/commands/#dev) to 
 
 ## Related resources
 
-* Use [`wrangler dev`](/workers/wrangler/commands/#dev) to run your Worker and Hyperdrive locally and debug issues before deploying.
-* Learn [how Hyperdrive works](/hyperdrive/configuration/how-hyperdrive-works/).
-* Understand how to [configure query caching in Hyperdrive](/hyperdrive/configuration/query-caching/).
+- Use [`wrangler dev`](/workers/wrangler/commands/#dev) to run your Worker and Hyperdrive locally and debug issues before deploying.
+- Learn [how Hyperdrive works](/hyperdrive/configuration/how-hyperdrive-works/).
+- Understand how to [configure query caching in Hyperdrive](/hyperdrive/configuration/query-caching/).
