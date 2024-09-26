@@ -6,11 +6,13 @@ productArea: Developer platform
 productAreaLink: /workers/platform/changelog/platform/
 entries:
   - publish_date: "2024-09-26"
-    title: SQLite in Durable Objects
+    title: (Beta) SQLite storage backend & SQL API availabe on new Durable Object classes
     description: |-
-      New beta version of Durable Objects is available where each Durable Object has a private, embedded SQLite database. When creating a Durable Object class, users can [opt-in to using SQL storage](durable-objects/best-practices/access-durable-objects-storage/#sql-storage) in order to access [SQL API methods](/durable-objects/api/storage-api/#sqlexec).
+      The new beta version of Durable Objects is available where each Durable Object has a private, embedded SQLite database. When deploying a new Durable Object class, users can [opt-in to a SQLite storage backend](/durable-objects/best-practices/access-durable-objects-storage/#sqlite-storage-backend) in order to access new [SQL API](/durable-objects/api/storage-api/#sqlexec) and [point-in-time-recovery API](/durable-objects/api/storage-api/#point-in-time-recovery), part of Durable Objects Storage API.
 
-      During the initial beta, Storage API billing is not enabled for Durable Object classes with SQLite storage. SQLite-backed Durable Objects will incur [charges for requests and duration](/durable-objects/platform/pricing/#billing-metrics). We plan to enable [SQL storage billing](/durable-objects/platform/pricing/#sql-storage-billing) in the first half of 2025 with advance notice. SQL billing metrics will be added to GraphQL analytics in the future as well.
+      You cannot enable a SQLite storage backend on an existing, deployed Durable Object class. Automatic migration of deployed classes from their key-value storage backend to SQLite storage backend will be available in the future.
+
+      During the initial beta, Storage API billing is not enabled for Durable Object classes using SQLite storage backend. SQLite-backed Durable Objects will incur [charges for requests and duration](/durable-objects/platform/pricing/#billing-metrics). We plan to enable Storage API billing for Durable Objects using SQLite storage backend in the first half of 2025 after advance notice with the following [pricing](/durable-objects/platform/pricing/#sqlite-storage-backend).
 
   - publish_date: "2024-06-24"
     description: |-

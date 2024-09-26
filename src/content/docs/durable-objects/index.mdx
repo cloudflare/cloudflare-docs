@@ -29,7 +29,9 @@ Use Durable Objects to build collaborative editing tools, interactive chat, mult
 
 :::note[SQLite in Durable Objects Beta]
 
-New beta version of Durable Objects is available where each Durable Object has a private, embedded SQLite database. When creating a Durabe Object class, users can [opt-in to using SQL storage](/durable-objects/best-practices/access-durable-objects-storage/#sql-storage) in order to access Storage [SQL API](/durable-objects/api/storage-api/#sqlexec).
+The new beta version of Durable Objects is available where each Durable Object has a private, embedded SQLite database. When deploying a new Durable Object class, users can [opt-in to a SQLite storage backend](/durable-objects/best-practices/access-durable-objects-storage/#sqlite-storage-backend) in order to access new [SQL API](/durable-objects/api/storage-api/#sqlexec) and [point-in-time-recovery API](/durable-objects/api/storage-api/#point-in-time-recovery), part of Durable Objects Storage API.
+
+Storage API billing is not enabled for Durable Object classes using SQLite storage backend. SQLite-backed Durable Objects will incur [charges for requests and duration](/durable-objects/platform/pricing/#billing-metrics). We plan to enable Storage API billing for Durable Objects using SQLite storage backend in the first half of 2025 after advance notice with the following [pricing](/durable-objects/platform/pricing/#sql-storage-billing).
 
 :::
 ***
@@ -45,7 +47,7 @@ Learn how Durable Objects coordinate connections among multiple clients or event
 
 <Feature header="Storage API" href="/durable-objects/api/storage-api/">
 
-Learn how Durable Objects provide transactional, strongly consistent, and serializable storage, either key-value storage or (beta) SQL storage.
+Learn how Durable Objects provide transactional, strongly consistent, and serializable storage.
 
 
 </Feature>

@@ -6,11 +6,11 @@ sidebar:
 
 ---
 
-import { Render } from "~/components"
+import { Render } from "~/components";
 
 Durable Objects are only available on the [Workers Paid plan](/workers/platform/pricing/#workers). Durable Objects limits are the same as [Workers Limits](/workers/platform/limits/), as well as the following limits that are specific to Durable Objects:
 
-| Feature                                  | Limit for class with key-value storage                           | Limit for class with SQL storage <sup>1</sup> |
+| Feature                                  | Limit for class with key-value storage backend                   | Limit for class with SQite storage backend <sup>1</sup> |
 | ---------------------------------        | ---------------------------------------------------------------- | --------------------------------------------- |
 | Number of Objects                        | Unlimited (within an account or of a given class)                | Unlimited (within an account or of a given class)                |
 | Maximum Durable Object namespaces        | 500 (identical to the [script limit](/workers/platform/limits/)) | 500 (identical to the [script limit](/workers/platform/limits/)) |
@@ -22,7 +22,7 @@ Durable Objects are only available on the [Workers Paid plan](/workers/platform/
 | WebSocket message size                   | 1 MiB (only for received messages)                               | 1 MiB (only for received messages)                               |
 | CPU per request                          | 30s (including WebSocket messages) <sup>3</sup>                  | 30s (including WebSocket messages) <sup>3</sup>                  |
 
-<sup>1</sup> New beta version of Durable Objects is available where each Durable Object has a private, embedded SQLite database. When creating a Durabe Object class, users can [opt-in to using SQL storage](/durable-objects/reference/durable-objects-migrations/#enable-sql-storage-on-create-durable-object-class-migration).
+<sup>1</sup> The new beta version of Durable Objects is available where each Durable Object has a private, embedded SQLite database. When creating a Durabe Object class, users can [opt-in to using SQL storage](/durable-objects/reference/durable-objects-migrations/#enable-sql-storage-on-create-durable-object-class-migration).
 
 <sup>2</sup> Durable Objects both bills and measures storage based on a gigabyte <br/> (1 GB = 1,000,000,000 bytes) and not a gibibyte (GiB). <br/>
 
@@ -32,13 +32,15 @@ Durable Objects are only available on the [Workers Paid plan](/workers/platform/
 
 <Render file="limits_increase" product="workers" />
 
-For classes with SQL storage these SQL limits apply:
-| SQL                                                      | Limit | 
+For Durable Object classes with [SQLite storage backend](/durable-objects/best-practices/access-durable-objects-storage/#sqlite-storage-backend) these SQL limits apply:
+
+| SQL                                                      | Limit |
+| -------------------------------------------------------- | ----- |
 | Maximum number of columns per table                      | 100 |
 | Maximum number of rows per table                         | Unlimited (excluding per-object storage limits) |
-| Maximum string, `BLOB` or table row size                 | 2 MB | 
+| Maximum string, `BLOB` or table row size                 | 2 MB |
 | Maximum SQL statement length                             | 100 KB  |
-| Maximum bound parameters per query                       | 100 | 
+| Maximum bound parameters per query                       | 100 |
 | Maximum arguments per SQL function                       | 32 |
 | Maximum characters (bytes) in a `LIKE` or `GLOB` pattern | 50 bytes |
 
@@ -46,9 +48,9 @@ For classes with SQL storage these SQL limits apply:
 
 Durable Objects can scale horizontally across many Durable Objects. Each individual Object is inherently single-threaded.
 
-* An individual Object has a soft limit of 1,000 requests per second. You can have an unlimited number of individual objects per namespace.
-* A simple [storage](/durable-objects/api/storage-api/) `get()` on a small value that directly returns the response may realize a higher request throughput compared to a Durable Object that (for example) serializes and/or deserializes large JSON values.
-* Similarly, a Durable Object that performs multiple `list()` operations may be more limited in terms of request throughput.
+- An individual Object has a soft limit of 1,000 requests per second. You can have an unlimited number of individual objects per namespace.
+- A simple [storage](/durable-objects/api/storage-api/) `get()` on a small value that directly returns the response may realize a higher request throughput compared to a Durable Object that (for example) serializes and/or deserializes large JSON values.
+- Similarly, a Durable Object that performs multiple `list()` operations may be more limited in terms of request throughput.
 
 A Durable Object that receives too many requests will, after attempting to queue them, return an [overloaded](/durable-objects/observability/troubleshooting/#durable-object-is-overloaded) error to the caller.
 
@@ -56,6 +58,6 @@ A Durable Object that receives too many requests will, after attempting to queue
 
 Durable Objects are designed such that the number of individual objects in the system do not need to be limited, and can scale horizontally.
 
-* You can create and run as many separate Durable Objects as you want within a given Durable Object namespace.
-* The main limit to your usage of Durable Objects is the total storage limit per account.
-* If you need more storage, contact your account team or complete the [Limit Increase Request Form](https://forms.gle/ukpeZVLWLnKeixDu7) and we will contact you with next steps.
+- You can create and run as many separate Durable Objects as you want within a given Durable Object namespace.
+- The main limit to your usage of Durable Objects is the total storage limit per account.
+- If you need more storage, contact your account team or complete the [Limit Increase Request Form](https://forms.gle/ukpeZVLWLnKeixDu7) and we will contact you with next steps.

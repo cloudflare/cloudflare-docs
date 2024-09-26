@@ -8,13 +8,15 @@ sidebar:
 
 import { Render } from "~/components";
 
-Durable Objects are a powerful compute API that provides a compute with storage building block. Each Durable Object has private, transactional and strongly consistent storage attached. By default, key-value storage is available. SQL storage(/durable-objects/best-practices/access-durable-objects-storage/#sql-storage) is available on a new beta version of Durable Objects.
+Durable Objects are a powerful compute API that provides a compute with storage building block. Each Durable Object has its own private, transactional and strongly consistent storage. Durable Objects [Storage API](/durable-objects/api/storage-api/#methods) provides access to a Durable Object's attached storage.
 
-You should use Durable Objects storage to persist state durably on-disk that needs to survive beyond the lifetime of a Durable Object, that is, eviction of a Durable Object from memory. A Durable Object is alive based on the request traffic incoming to the instance. There are also normal operations like [code deployments](/workers/configuration/versions-and-deployments/) that trigger a Durable Object to reset. For these reasons, Durable Objects storage is recommended for persisting [in-memory state](/durable-objects/reference/in-memory-state/).
+A Durable Object's [in-memory state](/durable-objects/reference/in-memory-state/) is preserved as long as the Durable Object is not evicted from memory. Inactive Durable Objects with no incoming request traffic can be evicted. There are normal operations like [code deployments](/workers/configuration/versions-and-deployments/) that trigger Durable Objects to restart and lose their in-memory state. For these reasons, you should use Storage API to persist state durably on disk that needs to survive eviction or restart of Durable Objects.
 
 ## Access storage
 
-[Storage API](/durable-objects/api/storage-api/#methods) methods are available on `ctx.storage` parameter passed to the Durable Object constructor.
+By default, a Durable Object class leverages a key-value storage backend. New Durable Object classes can opt-in to using a [SQLite storage backend](/durable-objects/best-practices/access-durable-objects-storage/#sqlite-storage-backend).
+
+[Storage API](/durable-objects/api/storage-api/#methods) methods are available on `ctx.storage` parameter passed to the Durable Object constructor. Storage API has key-value APIs and SQL APIs. Only Durable Object classes with a SQLite storage backend can access SQL API.
 
 A common pattern is to initialize a Durable Object from [persistent storage](/durable-objects/api/storage-api/) and set instance variables the first time it is accessed. Since future accesses are routed to the same Durable Object, it is then possible to return any initialized values without making further calls to persistent storage.
 
@@ -40,15 +42,15 @@ export class Counter extends DurableObject {
 }
 ```
 
-## SQL Storage
+## SQLite storage backend
 
 :::note[SQLite in Durable Objects Beta]
 
-New beta version of Durable Objects is available where each Durable Object has a private, embedded SQLite database. SQL storage is opt-in during beta; otherwise, a Durable Object class has the standard, private key-value storage. Objects with SQL storage can use the [SQL API](/durable-objects/api/storage-api/#sqlexec). 
+The new beta version of Durable Objects is available where each Durable Object has a private, embedded SQLite database. When deploying a new Durable Object class, users can opt-in to a SQLite storage backend in order to access new [SQL API](/durable-objects/api/storage-api/#sqlexec). Otherwise, a Durable Object class has a key-value storage backend.
 
 :::
 
-To allow a new Durable Object class to use SQL storage and API, use `new_sqlite_classes` on the migration in your Worker's `wrangler.toml` file:
+To allow a new Durable Object class to use SQLite storage backend, use `new_sqlite_classes` on the migration in your Worker's `wrangler.toml` file:
 
 ```toml
 [[migrations]]
@@ -56,8 +58,14 @@ tag = "v1" # Should be unique for each entry
 new_sqlite_classes = ["MyDurableObject"] # Array of new classes
 ```
 
-[SQL API](/durable-objects/api/storage-api/#sqlexec) methods are available on `ctx.storage.sql` parameter passed to the Durable Object constructor.
+[SQL API](/durable-objects/api/storage-api/#sqlexec) is available on `ctx.storage.sql` parameter passed to the Durable Object constructor.
 
 ### Examples
 
 <Render file="durable-objects-sql" />
+
+<Render file="durable-objects-vs-d1" />
+
+## Related resources
+
+* [Zero-latency SQLite storage in every Durable Object blog post](https://blog.cloudflare.com/sqlite-in-durable-objects)

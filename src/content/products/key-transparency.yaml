@@ -1,0 +1,21 @@
+name: Key Transparency Auditor
+
+product:
+  title: Key Transparency Auditor
+  url: /key-transparency/
+  group: Application security
+
+meta:
+  title: Key Transparency Auditor
+  description:
+    Key Transparency Auditor docs
+  author: "@cloudflare"
+
+externals:
+  - title: Cloudflare homepage
+    url: https://cloudflare.com
+
+algolia:
+  index: TEST - Re-dev docs
+  apikey: 4edb0a6cef3338ff4bcfbc6b3d2db56b
+  product: security-center
