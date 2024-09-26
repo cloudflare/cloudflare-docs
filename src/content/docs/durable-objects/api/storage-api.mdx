@@ -276,9 +276,9 @@ A cursor (`SqlStorageCursor`) to iterate over query row results as objects. `Sql
 * `columnNames`: string[]
   * The column names of the query in the order they appear in each row array returned by the `raw` iterator.
 *  `rowsRead`: number
-  * The number of rows read so far as part of this SQL `query`. This may increase as you iterate the cursor. The final value is used for [SQL billing](/durable-objects/platform/pricing/#sql-storage-billing).
+  * The number of rows read so far as part of this SQL `query`. This may increase as you iterate the cursor. The final value is used for [SQL billing](/durable-objects/platform/pricing/#sqlite-storage-backend).
 *  `rowsWritten`: number
-  * The number of rows written so far as part of this SQL `query`. This may increase as you iterate the cursor. The final value is used for [SQL billing](/durable-objects/platform/pricing/#sql-storage-billing).
+  * The number of rows written so far as part of this SQL `query`. This may increase as you iterate the cursor. The final value is used for [SQL billing](/durable-objects/platform/pricing/#sqlite-storage-backend).
 
 #### Examples
 
