@@ -4,7 +4,7 @@ import { getCollection } from "astro:content";
 import StarlightPage, {
 	type StarlightPageProps,
 } from "@astrojs/starlight/components/StarlightPage.astro";
-import { LinkButton, Tabs, TabItem, Code } from "~/components";
+import { LinkButton, Tabs, TabItem, Code, Aside } from "~/components";
 import ModelInfo from "~/components/models/ModelInfo.jsx";
 import ModelBadges from "~/components/models/ModelBadges.jsx";
 import SchemaViewer from "~/components/models/SchemaViewer.astro";
@@ -147,6 +147,34 @@ const starlightPageProps = {
 	<p class="mt-3 !mb-2">{description}</p>
 	{terms && <a href={terms.value}>Terms and License</a>}
 	<ModelBadges model={model} />
+
+	{
+		model.name === "@cf/meta/llama-3.2-11b-vision-instruct" && (
+			<Aside>
+				<p>
+					To use Llama 3.2 11b Vision Instruct, you need to agree to the{" "}
+					<a href="https://github.com/meta-llama/llama-models/blob/main/models/llama3_2/LICENSE">
+						Meta License
+					</a>{" "}
+					and{" "}
+					<a href="https://github.com/meta-llama/llama-models/blob/main/models/llama3_2/USE_POLICY.md">
+						Acceptable Use Policy
+					</a>
+					. To do so, please send an initial request to
+					<code>@cf/meta/llama-3.2-11b-vision-instruct</code> with
+					<code>"prompt" : "agree"</code>. After that, you'll be able to use the
+					model as normal.
+				</p>
+				<Code
+					code={`curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/run/@cf/meta/llama-3.2-11b-vision-instruct \\
+   -X POST \\
+   -H "Authorization: Bearer $CLOUDFLARE_AUTH_TOKEN" \\
+   -d '{ "prompt": "agree"}'`}
+					lang="sh"
+				/>
+			</Aside>
+		)
+	}
 
 	{
 		hasPlayground && (
