@@ -62,9 +62,9 @@ Create a new Worker project to create and deploy your app.
     	file="c3-post-run-steps"
     	product="workers"
     	params={{
-    		one: "Hello World example",
-    		two: "Hello World Worker Using Durable Objects",
-    		three: "TypeScript",
+    		category: "Hello World example",
+    		type: "Hello World Worker Using Durable Objects",
+    		lang: "TypeScript",
     	}}
     />
 
@@ -159,6 +159,8 @@ The frontend of the application is a simple HTML page that allows users to selec
 
     		const flightId = window.location.search.split("=")[1];
 
+        const hostname = window.location.hostname;
+
     		if (flightId === undefined) {
     			title.textContent = "No Flight ID provided";
     			seatGrid.innerHTML = "<p>Add `flightId` to the query string</p>";
@@ -167,7 +169,13 @@ The frontend of the application is a simple HTML page that allows users to selec
     		}
 
     		function handleBooking() {
-    			const ws = new WebSocket(`ws://localhost:8787/ws?flightId=${flightId}`);
+    			let ws;
+    			if (hostname === 'localhost') {
+            const port = window.location.port;
+    				ws = new WebSocket(`ws://${hostname}:${port}/ws?flightId=${flightId}`);
+    			} else {
+    				ws = new WebSocket(`wss://${hostname}/ws?flightId=${flightId}`);
+    			}
 
     			title.textContent = `Book seat for flight ${flightId}`;
 
@@ -554,7 +562,7 @@ export class MyDurableObject extends DurableObject {
 
 4. Finally, update the `fetch` handler of the Worker.
 
-```ts title="src/index.ts" {8-22}
+```ts title="src/index.ts" {8-23}
 export default {
 	...
 
@@ -571,7 +579,8 @@ export default {
 				seatNumber: string;
 				name: string;
 			};
-			return new Response(JSON.stringify(stub.assignSeat(seatNumber, name)));
+			const result = await stub.assignSeat(seatNumber, name);
+			return new Response(JSON.stringify(result));
 		} else if (request.headers.get("Upgrade") === "websocket") {
 			return stub.fetch(request);
 		}
