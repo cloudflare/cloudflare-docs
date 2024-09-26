@@ -13,7 +13,7 @@ Use import and export to have more control over your DNS records and make proces
 ## Import records
 
 :::caution
- <Render file="zone-file-size-limit" /> 
+ <Render file="zone-file-size-limit" />
 :::
 
 ### Format your zone file
@@ -91,6 +91,10 @@ f.example.com.  60  IN  A   1.1.1.1 ; this is the comment cf_tags=tag1:value1,ta
 g.example.com.  60  IN  A   1.1.1.1
 ```
 
-## DNS Zone File Directives
+## DNS zone file directives
 
-A DNS zone file can be constructed using Directives in addition to Resource Records (RRs). Directives start with `$` and are standardized - `$ORIGIN` and `$INCLUDE` (defined in [RFC 1035](https://www.rfc-editor.org/rfc/rfc1035#section-5.1)) and `$TTL` (defined in [RFC 2308](https://www.rfc-editor.org/rfc/rfc2308)). BIND additionally provides the non-standard `$GENERATE` directive. Cloudflare support `$ORIGIN`, `$TTL` and `$GENERATE` directives as expected, however `$INCLUDE` does not work in the context of a file uploaded to Cloudflare. When a zone file contain `$INCLUDE` directive, Cloudflare respond with parsing error, `$INCLUDE directive not allowed`.
+A DNS zone file can be constructed using directives in addition to resource records (RRs). Directives start with `$` and are standardized - `$ORIGIN` and `$INCLUDE` are defined in [RFC 1035](https://www.rfc-editor.org/rfc/rfc1035#section-5.1), and `$TTL` is defined in [RFC 2308](https://www.rfc-editor.org/rfc/rfc2308). Additionally, BIND provides the non-standard `$GENERATE` directive.
+
+Cloudflare supports `$ORIGIN`, `$TTL`, and `$GENERATE` directives.
+
+`$INCLUDE` is not supported. When a zone file contains a `$INCLUDE` directive, Cloudflare responds with a parsing error `$INCLUDE directive not allowed`.
