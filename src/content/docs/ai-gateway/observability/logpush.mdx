@@ -12,13 +12,12 @@ AI Gateway allows you to securely export logs to an external storage location, w
 You can toggle Logpush on and off in the [Cloudflare dashboard](https://dash.cloudflare.com) settings.
 
 This guide explains how to set up Logpush for AI Gateway, generate an RSA key pair for encryption, and decrypt the logs once they are received.
-Logpush has a limit of 4 jobs. If you have reached the [limit of logs stored for your plan](/ai-gateway/reference/limits/), logs will not be exported through Logpush.
 
-<Render file="limits-increase" product="ai-gateway" />
+You can store up to 10 million logs per gateway. If your limit is reached, new logs will stop being saved and will not be exported through Logpush. To continue saving and exporting logs, you must delete older logs to free up space for new logs. Logpush has a limit of 4 jobs. 
 
 :::note[Note]
 
-To export logs using Logpush, you must have logs turned on for the gateway or have overridden the gateway settings by using the `cf-aig-collect-log` request header.
+To export logs using Logpush, you must have logs turned on for the gateway.
 
 :::
 
@@ -59,19 +58,17 @@ This script will output your RSA privateKey and publicKey on your terminal. Keep
 
 ## 2. Upload public key to gateway settings
 
-Once you have generated the key pair, upload the public key to your AI Gateway settings. This key will be used to encrypt your logs. For more information on Logpush refer to [Logs](/logs/get-started/).
+Once you have generated the key pair, upload the public key to your AI Gateway settings. This key will be used to encrypt your logs. In order to enable Logpush, you will need logs enabled for that gateway. 
 
-:::note[Note]
-You should enable Logpush in AI Gateway settings. This option only shows up when logs are enabled.
-You can toggle on or off as needed. If you do not have logs turned on nothing will be saved.
+## 3. Set up Logpush
 
-:::
+To set up Logpush, refer to [Logpush Get Started](/logs/get-started/).
 
-## 3. Receive encrypted logs
+## 4. Receive encrypted logs
 
 After configuring Logpush, logs will be sent encrypted using the public key you uploaded. To access the data, you will need to decrypt it using your private key. The logs will be sent to the object storage provider that you have selected.
 
-## 4. Decrypting logs
+## 5. Decrypting logs
 
 To decrypt the encrypted log bodies and metadata from AI Gateway, you can use the following Node.js script:
 
@@ -116,6 +113,12 @@ lineReader.on("line", (line) => {
 	});
 	console.log("--");
 });
+```
+
+Run the script by executing the code below on your terminal. Where `file name` is the name of your JavaScript file.
+
+```bash
+node {file name}
 ```
 
 ## Script Explanation
