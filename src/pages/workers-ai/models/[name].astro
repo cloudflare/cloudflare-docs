@@ -1,7 +1,9 @@
 ---
-import type { GetStaticPaths } from "astro";
+import type { GetStaticPaths, MarkdownHeading } from "astro";
 import { getCollection } from "astro:content";
-import StarlightPage from "@astrojs/starlight/components/StarlightPage.astro";
+import StarlightPage, {
+	type StarlightPageProps,
+} from "@astrojs/starlight/components/StarlightPage.astro";
 import { LinkButton, Tabs, TabItem, Code } from "~/components";
 import ModelInfo from "~/components/models/ModelInfo.jsx";
 import ModelBadges from "~/components/models/ModelBadges.jsx";
@@ -89,24 +91,29 @@ const isBeta = model.properties.find(
 
 const hasPlayground = model.task.name === "Text Generation";
 
-const author = authorData[model.name.split("/")[1]];
----
+const author = (authorData as any)[model.name.split("/")[1]];
 
-<StarlightPage
-	frontmatter={{
+// Strong type coercion needed due to Starlight's component override for hideTitle
+const starlightPageProps = {
+	frontmatter: {
 		title: name,
 		description,
-	}}
-	headings={[
-		hasPlayground && { depth: 2, slug: "Playground", text: "Playground" },
-		CodeExamples && { depth: 2, slug: "Usage", text: "Usage" },
+	},
+	headings: [
+		hasPlayground
+			? { depth: 2, slug: "Playground", text: "Playground" }
+			: false,
+		CodeExamples ? { depth: 2, slug: "Usage", text: "Usage" } : false,
 		{ depth: 2, slug: "Parameters", text: "Parameters" },
 		{ depth: 3, slug: "Input", text: "Input" },
 		{ depth: 3, slug: "Output", text: "Output" },
 		{ depth: 2, slug: "API Schemas", text: "API Schemas" },
-	].filter((v) => Boolean(v))}
-	hideTitle
->
+	].filter((v) => Boolean(v)) as MarkdownHeading[],
+	hideTitle: true,
+} as StarlightPageProps;
+---
+
+<StarlightPage {...starlightPageProps}>
 	<div class="flex align-center">
 		{
 			author ? (
