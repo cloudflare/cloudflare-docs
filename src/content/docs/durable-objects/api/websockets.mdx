@@ -32,7 +32,7 @@ To learn more about WebSocket Hibernation, refer to [Build a WebSocket server wi
 
   * Keeps a copy of `value` in memory (not on disk) to survive hibernation. The value can be any type supported by the [structured clone algorithm](https://developer.mozilla.org/en-US/docs/Web/API/Web_Workers_API/Structured_clone_algorithm), which is true of most types.
 
-  * If you modify `value` after calling this method, those changes will not be retained unless you call this method again. The serialized size of `value` is limited to 2,048 bytes, otherwise this method will throw an error. If you need larger values to survive hibernation, use the [Transactional Storage API](/durable-objects/api/transactional-storage-api/) and pass the corresponding key to this method so it can be retrieved later.
+  * If you modify `value` after calling this method, those changes will not be retained unless you call this method again. The serialized size of `value` is limited to 2,048 bytes, otherwise this method will throw an error. If you need larger values to survive hibernation, use the [Storage API](/durable-objects/api/storage-api/) and pass the corresponding key to this method so it can be retrieved later.
 
 
 
