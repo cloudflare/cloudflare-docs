@@ -1,10 +1,10 @@
 ---
 pcx_content_type: concept
-title: Binding
+title: Configuration and binding
 sidebar:
   order: 7
 head: []
-description: Details on the Workers assets binding and runtime API.
+description: Details on how to configure Workers static assets and its binding.
 ---
 
 import {
@@ -17,31 +17,33 @@ import {
 	Tabs,
 } from "~/components";
 
-Configuring a project with assets requires specifying a [directory](/workers/configuration/assets/#directory) or an [assets binding](/workers/static-assets/binding/) in the project's `wrangler.toml` file. The [assets binding](/workers/static-assets/binding/) allows you to dynamically invoke assets from the Worker using `env.ASSETS.fetch()`.
+Configuring a Worker with assets requires specifying a [directory](/workers/static-assets/binding/#directory) and, optionally, an [assets binding](/workers/static-assets/binding/), in your Worker's `wrangler.toml` file. The [assets binding](/workers/static-assets/binding/) allows you to dynamically fetch assets from within your Worker script (e.g. `env.ASSETS.fetch()`), similarly to how you might with a make a `fetch()` call with a [Service binding](/workers/runtime-apis/bindings/service-bindings/http/).
 
-Only one assets directory/binding can be configured for each project.
+Only one collection of static assets can be configured in each Worker.
 
-## Directory
+## `directory`
 
-Root folder of static assets to be served. For static site only projects. For many frameworks, this is the `./public` or `./dist` folder.
+The folder of static assets to be served. For many frameworks, this is the `./public/`, `./dist/`, or `./build/` folder.
 
-```sh title="wrangler.toml"
+```toml title="wrangler.toml"
 name = "my-worker"
 compatibility_date = "2024-09-19"
-assets = { directory = "./public"}
+assets = { directory = "./public/" }
 ```
 
-## Binding
+## `binding`
 
-The assets binding is required when executing a Worker alongside the static assets. The [binding](/workers/runtime-apis/bindings) gives you access to the directory of assets from within a Worker.
+Configuring the optional [binding](/workers/runtime-apis/bindings) gives you access to the collection of assets from within your Worker script.
 
-```sh title="wrangler.toml"
+```toml title="wrangler.toml"
 name = "my-worker"
-main = "src/index.js"
+main = "./src/index.js"
 compatibility_date = "2024-09-19"
 
-assets = { directory = "./public", binding = "ASSETS" }
+assets = { directory = "./public/", binding = "ASSETS" }
 ```
+
+In the example above, assets would be available through `env.ASSETS`.
 
 ### Runtime API Reference
 
@@ -49,15 +51,15 @@ assets = { directory = "./public", binding = "ASSETS" }
 
 **Parameters**
 
-- `request: Request` Pass a [Request object](/workers/runtime-apis/request/), URL string, or URL object.Requests made through this method have `html_handling` and `not_found_handling` configuration applied to them.
+- `request: Request` Pass a [Request object](/workers/runtime-apis/request/), URL string, or URL object. Requests made through this method have `html_handling` and `not_found_handling` configuration applied to them.
 
 **Response**
 
-- `Promise<Response>` Returns a static asset matching the given request.
+- `Promise<Response>` Returns a static asset response for the given request.
 
 **Example**
 
-Your dynamic code can make or forward requests to your project's static assets using the assets binding.
+Your dynamic code can make new, or forward incoming, requests to your project's static assets using the assets binding.
 
 Take the following example that configures a Worker to return a response under all requests headed for `/api/`. Otherwise, the Worker will fallback to returning static assets.
 
@@ -100,3 +102,7 @@ export default {
 ```
 
 </TabItem> </Tabs>
+
+## Routing configuration
+
+For the various static asset routing configuration options, refer to [Routing](/workers/static-assets/routing/).

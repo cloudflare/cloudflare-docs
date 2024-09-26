@@ -4,7 +4,7 @@ title: Get Started
 head: []
 sidebar:
   order: 6
-description: Run frontend websites — static or dynamic — directly on Cloudflare's global network.
+description: Run front-end websites — static or dynamic — directly on Cloudflare's global network.
 ---
 
 import {
@@ -15,9 +15,9 @@ import {
 	PackageManagers,
 } from "~/components";
 
-For most frontend applications, you'll want to use a framework. Workers supports number of popular [frameworks](/workers/frameworks/) that come with ready-to-use components, a pre-defined structured architecture, and community support. View [framework specific guides](/workers/frameworks/) to get started using a framework.
+For most front-end applications, you'll want to use a framework. Workers supports number of popular [frameworks](/workers/frameworks/) that come with ready-to-use components, a pre-defined and structured architecture, and community support. View [framework specific guides](/workers/frameworks/) to get started using a framework.
 
-Alternativley, you may prefer to build your website from scratch if:
+Alternatively, you may prefer to build your website from scratch if:
 
 - You're interested in learning by implementing core functionalities on your own.
 - You're working on a simple project where you might not need a framework.
@@ -51,9 +51,15 @@ This guide will instruct you through setting up and deploying a static site on W
 	}}
 />
 
+After setting up your project, change your directory by running the following command:
+
+```sh
+cd my-static-site
+```
+
 ### 2. Develop locally
 
-After you have created your Worker, run the [`wrangler dev`](/workers/wrangler/commands/#dev) command in the project directory to start a local server for developing your Worker. This will allow you to preview your Worker locally during development.
+After you have created your Worker, run the [`wrangler dev`](/workers/wrangler/commands/#dev) in the project directory to start a local server. This will allow you to preview your project locally during development.
 
 ```sh
 npx wrangler dev
@@ -61,7 +67,9 @@ npx wrangler dev
 
 ### 3. Deploy your project
 
-Deploy your Worker via Wrangler to a `*.workers.dev` subdomain or configure a [Custom Domain](/workers/configuration/routing/custom-domains/).
+Your project can be deployed to a `*.workers.dev` subdomain or a [Custom Domain](/workers/configuration/routing/custom-domains/), from your own machine or from any CI/CD system, including [Cloudflare's own](/workers/ci-cd/builds/).
+
+The [`wrangler deploy`](/workers/wrangler/commands/#deploy) will build and deploy your project. If you're using CI, ensure you update your ["deploy command"](/workers/ci-cd/builds/configuration/#build-settings) configuration appropriately.
 
 ```sh
 npx wrangler deploy
@@ -69,7 +77,7 @@ npx wrangler deploy
 
 :::note
 
-Learn about how assets are configured and how routing works from [Routing configuration](/workers/static-assets/routing/)
+Learn about how assets are configured and how routing works from [Routing configuration](/workers/static-assets/routing/).
 
 :::
 
@@ -77,7 +85,7 @@ Learn about how assets are configured and how routing works from [Routing config
 
 This guide will instruct you through setting up and deploying dynamic and interactive server-side rendered (SSR) applications on Cloudflare Workers.
 
-When building a full-stack application, you can use any [Workers bindings](/workers/runtime-apis/bindings/) to interact with resources on the Cloudflare developer platform.
+When building a full-stack application, you can use any [Workers bindings](/workers/runtime-apis/bindings/), [including assets' own](/workers/static-assets/binding/), to interact with resources on the Cloudflare Developer Platform.
 
 ### 1. Create a new Worker project
 
@@ -101,9 +109,15 @@ Open a terminal window and run C3 to create your Worker project:
 	}}
 />
 
+After setting up your project, change your directory by running the following command:
+
+```sh
+cd my-dynamic-site
+```
+
 ### 2. Develop locally
 
-After you have created your Worker, run the [`wrangler dev`](/workers/wrangler/commands/#dev) command in the project directory to start a local server for developing your Worker. This will allow you to preview your Worker locally during development.
+After you have created your Worker, run the [`wrangler dev`](/workers/wrangler/commands/#dev) in the project directory to start a local server. This will allow you to preview your project locally during development.
 
 ```sh
 npx wrangler dev
@@ -113,14 +127,16 @@ npx wrangler dev
 
 With your new project generated and running, you can begin to write and edit your project:
 
-- The `src/index.ts` file is populated with sample code. Modify the content in the `index.js` to change the Worker.
-- The `public/index.html` file is populated with sample code. Modify the content in the `index.html` to change static asset.
+- The `src/index.ts` file is populated with sample code. Modify its content to change the server-side behavior of your Worker.
+- The `public/index.html` file is populated with sample code. Modify its content, or anything else in `public/`, to change the static assets of your Worker.
 
-Then, save the files and reload the page. Your Project's output will have changed based on your modifications.
+Then, save the files and reload the page. Your project's output will have changed based on your modifications.
 
 ### 4. Deploy your Project
 
-Deploy your Worker via Wrangler to a `*.workers.dev` subdomain or configure a [Custom Domain](/workers/configuration/routing/custom-domains/).
+Your project can be deployed to a `*.workers.dev` subdomain or a [Custom Domain](/workers/configuration/routing/custom-domains/), from your own machine or from any CI/CD system, including [Cloudflare's own](/workers/ci-cd/builds/).
+
+The [`wrangler deploy`](/workers/wrangler/commands/#deploy) will build and deploy your project. If you're using CI, ensure you update your ["deploy command"](/workers/ci-cd/builds/configuration/#build-settings) configuration appropriately.
 
 ```sh
 npx wrangler deploy

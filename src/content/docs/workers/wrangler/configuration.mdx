@@ -158,7 +158,7 @@ At a minimum, the `name`, `main` and `compatibility_date` keys are required to d
 
 * `assets` <Type text="Assets" /> <MetaInfo text="optional" />
 
-  - Configures static assets that will be served. Refer to [Assets](/workers/configuration/assets/#configuration) for more details.
+  - Configures static assets that will be served. Refer to [Assets](/workers/static-assets/binding/) for more details.
 
 ### Usage model
 
@@ -792,6 +792,10 @@ service = "<WORKER_NAME>"
 entrypoint = "<ENTRYPOINT_NAME>"
 ```
 
+### Static assets
+
+Refer to [Assets](#assets).
+
 ### Analytics Engine Datasets
 
 [Workers Analytics Engine](/analytics/analytics-engine/) provides analytics, observability and data logging from Workers. Write data points to your Worker binding then query the data using the [SQL API](/analytics/analytics-engine/sql-api/).
@@ -877,34 +881,34 @@ ai = { binding = "<AI>" }
 binding = "AI" # available in your Worker code on `env.AI`
 ```
 
-### Assets
+## Assets
 
-The [assets binding](/workers/static-assets/binding/) allows developers to run frontend websites on Workers. It provides asset hosting and routing configuration options.
+[Static assets](/workers/static-assets/) allows developers to run front-end websites on Workers. You can configure the directory of assets, an optional runtime binding, and routing configuration options.
 
-This binding is limited to one set of assets per Worker project.
+You can only configure one collection of assets per Worker.
 
-To bind assets to your Worker, assign an array of the below object to the `assets` key.
+The following options are available under the `assets` key.
 
 - `directory` <Type text="string" /> <MetaInfo text="required" />
 
-  - Root folder of static assets to be served.
+  - Folder of static assets to be served.
 
 - `binding` <Type text="string" /> <MetaInfo text="optional" />
 
-  - The binding name used to refer to the assets. Only required when executing a Worker alongside the static assets.
+  - The binding name used to refer to the assets. Optional, and only useful when a Worker script is set with `main`.
 
-- `html_handling`: <Type text="'auto-trailing-slash' | 'force-trailing-slash' | 'drop-trailing-slash' | 'none'" /> <MetaInfo text="optional" />
+- `html_handling`: <Type text={'"auto-trailing-slash" | "force-trailing-slash" | "drop-trailing-slash" | "none"'} /> <MetaInfo text={'optional, defaults to "auto-trailing-slash"'} />
 
-  - Determines redirects/rewrites of requests for HTML content. If unspecified, the default mode is `'auto-trailing-slash'`. Learn more about the various options in [assets routing](/workers/static-assets/routing/).
+  - Determines the redirects and rewrites of requests for HTML content. Learn more about the various options in [assets routing](/workers/static-assets/routing/#html_handling).
 
-- `not_found_handling`: <Type text="`'single-page-application' | '404-page' | 'none'`" /> <MetaInfo text="optional" />
+- `not_found_handling`: <Type text={'"single-page-application" | "404-page" | "none"'} /> <MetaInfo text={'optional, defaults to "none"'} />
 
-  - Determines the handling of requests that do not map to an asset. If unspecified, the default mode is `'not_found_handling'`. Learn more about the various options in [assets routing](/workers/static-assets/routing/).
+  - Determines the handling of requests that do not map to an asset. Learn more about the various options in [assets routing](/workers/static-assets/routing/#not_found_handling).
 
 Example:
 
 ```toml title="wrangler.toml"
-assets = { directory = "./public", binding = "ASSETS", html_handling = "force-trailing-slash", not_found_handling = "none" }
+assets = { directory = "./public", binding = "ASSETS", html_handling = "force-trailing-slash", not_found_handling = "404-page" }
 ```
 
 ## Bundling
