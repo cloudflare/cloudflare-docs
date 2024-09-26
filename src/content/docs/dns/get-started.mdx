@@ -13,7 +13,15 @@ import { GlossaryDefinition, Render } from "~/components";
 
 Cloudflare's authoritative DNS offering covers a variety of [setups](/dns/zone-setups/).
 
-For the most common setup, Cloudflare will work as your primary DNS provider. This means that the **DNS** > **Records** page is where you will control which resources are available on the apex domain (`example.com`) or specific subdomains (`blog.example.com`) of your website, as well as control other configurations.
+When you [add your domain](/fundamentals/setup/manage-domains/add-site/) with Cloudflare as your [primary DNS provider](https://developers.cloudflare.com/dns/zone-setups/full-setup/) (the most common setup), we import your DNS records and become the authoritative DNS provider for that domain, meaning:
+
+- You [manage DNS records](/dns/manage-dns-records/how-to/create-dns-records/) through the Cloudflare dashboard or API. This is how you control which resources are available on the apex domain (`example.com`) or specific subdomains (`blog.example.com`) of your website, as well as control other configurations.
+
+- We [respond to all DNS queries](/fundamentals/concepts/how-cloudflare-works/#how-cloudflare-works-as-a-dns-provider) for your hostnames.
+
+- The DNS records file (AKA the [DNS zone](/dns/concepts/#zone)) is cached across the[ Cloudflare global network](https://www.cloudflare.com/network/), speeding up DNS resolution.
+
+- A, AAAA, and CNAME records are set to [proxy through Cloudflare](/dns/manage-dns-records/reference/proxied-dns-records/) by default.
 
 The following links introduce important concepts and guide you through actions you may need to take while having your website or application on Cloudflare.
 
