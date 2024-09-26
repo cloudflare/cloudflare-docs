@@ -159,21 +159,7 @@ Hyperdrive will attempt to connect to your database with the provided credential
 
 ## 4. Bind your Worker to Hyperdrive
 
-You must create a binding for your Worker to connect to your Hyperdrive configuration. [Bindings](/workers/runtime-apis/bindings/) allow your Workers to access resources, like D1, on the Cloudflare developer platform. You create bindings by updating your `wrangler.toml` file.
-
-To bind your Hyperdrive configuration to your Worker, add the following to the end of your `wrangler.toml` file:
-
-```toml
-[[hyperdrive]]
-binding = "HYPERDRIVE"
-id = "<YOUR_DATABASE_ID>" # the ID associated with the Hyperdrive you just created
-```
-
-Specifically:
-
-- The value (string) you set for the `name` (binding name) will be used to reference this database in your Worker. In this tutorial, name your binding `HYPERDRIVE`.
-- The binding must be [a valid JavaScript variable name](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Grammar_and_types#variables). For example, `binding = "hyperdrive"` or `binding = "productionDB"` would both be valid names for the binding.
-- Your binding is available in your Worker at `env.<BINDING_NAME>`.
+<Render file="create-hyperdrive-binding" product="hyperdrive" />
 
 ## 5. Run a query against your database
 
