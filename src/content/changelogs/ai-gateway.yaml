@@ -5,30 +5,25 @@ productLink: "/ai-gateway/"
 productArea: Developer platform
 productAreaLink: /workers/platform/changelog/platform/
 entries:
-  - publish_date: "2024-09-25"
+  - publish_date: "2024-09-26"
     title: Persistent logs
     description: |-
       * **Logs**: AI Gateway now has [logs that persist](/ai-gateway/observability/logging/index.mdx), giving you the flexibility to store them for your preferred duration.
 
-  - publish_date: "2024-09-25"
+  - publish_date: "2024-09-26"
     title: Logpush
     description: |-
-      * **Logs**: AI Gateway now allows you securely export logs to an external storage location, where you can decrypt and process them with [Logpush](/ai-gateway/observability/logging/logpush).
+      * **Logs**: Securely export logs to an external storage location using [Logpush](/ai-gateway/observability/logging/logpush).
 
-  - publish_date: "2024-09-25"
+  - publish_date: "2024-09-26"
     title: Pricing
     description: |-
-      * **Pricing**: Added log storage [pricing](/ai-gateway/pricing/).
+      * **Pricing**: Added [pricing](/ai-gateway/pricing/) for storing logs persistently.
 
-  - publish_date: "2024-09-25"
-    title: Limits
-    description: |-
-      * **Logs**: Added [limits](/ai-gateway/reference/limits/) to include 10M logs per gateway and 10M per log.
-
-  - publish_date: "2024-09-25"
+  - publish_date: "2024-09-26"
     title: Evaluations
     description: |-
-      * **Configurations**: AI Gateway now provides the data needed to make informed decisions on how to optimize your AI application with [Evaluations](/ai-gateway/observability/evaluations/index.mdx).
+      * **Configurations**: Use AI Gateway’s [Evaluations](/ai-gateway/observability/evaluations/index.mdx) to make informed decisions on how to optimize your AI application.
 
   - publish_date: "2024-09-10"
     title: Custom costs
