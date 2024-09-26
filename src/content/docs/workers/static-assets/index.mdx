@@ -1,0 +1,82 @@
+---
+pcx_content_type: navigation
+title: Static Assets
+sidebar:
+  order: 6
+  group:
+    badge: Beta
+head: []
+description: Create full-stack applications deployed to Cloudflare Workers.
+---
+
+import {
+	Badge,
+	Description,
+	InlineBadge,
+	DirectoryListing,
+	Render,
+	TabItem,
+	Tabs,
+	Feature,
+	LinkButton,
+} from "~/components";
+
+<Description>
+	Create fast, scalable front-end applications deployed to Cloudflare Workers.
+</Description>
+
+---
+
+## What you can build
+
+### Static Websites
+
+Deploy static sites like blogs, portfolios, or documentation pages. Serve HTML, CSS, JavaScript, and media files directly from Cloudflare's network for low-latency access worldwide.
+
+<LinkButton href="/workers/static-assets/get-started/#deploy-a-static-site">
+	Deploy a static site
+</LinkButton>
+
+### Full-stack Applications
+
+Build dynamic and interactive server-side rendered (SSR) applications on Cloudflare Workers.
+
+You can combine asset hosting with Cloudflare's data and storage products such as [Workers KV](/kv/), [Durable Objects](/durable-objects/), and [R2 Storage](/r2/) to build full-stack applications that serve both front-end and back-end logic in a single Worker.
+
+<LinkButton href="/workers/static-assets/get-started/#deploy-a-full-stack-application">
+	Deploy a full-stack application
+</LinkButton>
+
+### Supported frameworks
+
+The following Frameworks are currently supported on Cloudflare Workers:
+
+<DirectoryListing folder="workers/frameworks/framework-guides" />
+
+:::note
+
+Static Assets for Workers is currently in open beta. If you're looking for a framework not on this list, it may be supported in [Cloudflare Pages](/pages/). Visit [Pages Frameworks guides](/pages/framework-guides/) for a full list.
+
+:::
+
+### Pricing
+
+Requests to a project with static assets can either return static assets or invoke the Worker script, depending on if the request [matches a static asset or not](/workers/static-assets/routing/).
+
+**Requests to static assets are free and unlimited**. Requests to the Worker script (e.g. in the case of SSR content) are billed according to Workers pricing. Refer to [pricing](/workers/platform/pricing/#example-2) for an example.
+
+### Limitations
+
+The following limitations apply for Workers with static assets:
+
+- You cannot yet enable [Smart Placement](/workers/configuration/smart-placement/) projects with static assets. This is a temporary limitation, we are working to remove it.
+- You cannot upload static assets to [Workers for Platforms](/cloudflare-for-platforms/workers-for-platforms/) [user workers](/cloudflare-for-platforms/workers-for-platforms/reference/how-workers-for-platforms-works/). This is a temporary limitation, we are working to remove it.
+- In local development, you cannot make [Service Binding RPC calls](/workers/runtime-apis/bindings/service-bindings/rpc/) to a Worker with static assets. This is a temporary limitation, we are working to remove it.
+- Workers with assets cannot run on a [route or domain](/workers/configuration/routing/) with a path component. For example, `example.com/*` is an acceptable route, but `example.com/foo/*` is not. Wrangler and the Cloudflare dashboard will throw anerror when you try and add a route with a path component.
+- Workers' [Vitest integration](/workers/testing/vitest-integration/) does not currently handle static assets. All requests will reach your Worker script, which can otherwise be tested as usual. This is a temporary limitation — we are working to remove it.
+
+:::note
+
+Have a framework you would like to see supported on Workers or a feature request? Tell us about it on [Cloudflare's Developer Discord](https://discord.gg/dqgZUwcD)!
+
+:::
