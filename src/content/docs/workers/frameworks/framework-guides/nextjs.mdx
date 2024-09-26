@@ -23,6 +23,10 @@ npm create cloudflare@latest --no-auto-update --experimental --framework next
 
 #### Existing Next.js apps
 
+::: note
+Minimum required Wrangler version: 3.78.10. Check your version by running `wrangler version`. To update Wrangler, refer to [Install/Update Wrangler](https://developers.cloudflare.com/workers/wrangler/install-and-update/).
+:::
+
 ##### 1. Install @opennextjs/cloudflare
 
 First, install [@opennextjs/cloudflare](https://www.npmjs.com/package/@opennextjs/cloudflare):
@@ -54,7 +58,7 @@ As shown above, you must enable the [`nodejs_compat` compatibility flag](/worker
 Add the following to the scripts field of your `package.json` file:
 
 ```json
-"build:worker": "cloudflare", TODO
+"build:worker": "cloudflare",
 "dev:worker": "wrangler dev --port 8771",
 "preview:worker": "npm run build:worker && npm run dev:worker",
 "deploy:worker": "npm run build:worker && wrangler deploy"
@@ -109,6 +113,6 @@ Or [connect a GitHub or GitLab repository](/workers/ci-cd/), and Cloudflare will
 
 ## Static assets
 
-You can serve static assets your Astro application by placing them in the `./public/` directory. This can be useful for resource files such as images, stylesheets, fonts, and manifests.
+You can serve static assets your Next.js application by placing them in the `./public/` directory. This can be useful for resource files such as images, stylesheets, fonts, and manifests.
 
 <Render file="workers-assets-routing-summary" />
