@@ -35,7 +35,7 @@ You must add the observability setting for your Worker to write logs to Workers 
 	head_sampling_rate = 1 # optional. default = 1.
 	```
 
-The default value for `head_sampling_rate` is 1, meaning 100% of your logs are sampled. `head_sampling_rate` can be set to a value between 0 and 1. For example, 0.01 indicates that 1% of your logs are sampled.
+[Head-based sampling](/workers/observability/logs/workers-logs/#head-based-sampling) allows you set the percentage of Workers requests that are logged. 
 
 ### Enabling with environments
 
@@ -56,20 +56,42 @@ To view logs for your Worker:
 <Steps>
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) and select your account.
 2. In Account Home, go to **Workers & Pages**.
-3. In **Overview**, select your **Worker** > and select **Logs**.
+3. In **Overview**, select your **Worker**.
+4. Select **Logs**.
 </Steps>
 
 ## Best Practices
 
-### Logging JSON objects
+### Logging structured JSON objects
 
-To get the most out of Workers Logs, it is recommended to log in JSON format. Workers Logs automatically extracts the fields and indexes  TODO
+To get the most out of Workers Logs, it is recommended you log in JSON format. Workers Logs automatically extracts the fields and indexes them intelligently in the database. The benefit of this structured logging technique is in how it allows you to easily segment data across any dimension for fields with unlimited cardinality. Consider the following scenarios:
+
+| Scenario | Logging Code                                               | Event Log (Partial)                           | 
+| -------- | ---------------------------------------------------------- | --------------------------------------------- |
+|    1     | `console.log("user_id: " + 123)`                           | `{message: "user_id: 123"}`                   |
+|    2     | `console.log({user_id: 123})`                              | `{user_id: 123}`                              |
+|    3     | `console.log({user_id: 123, user_email: "a@example.com"})` | `{user_id: 123, user_email: "a@example.com"}` |
+
+The difference between these examples is in how you index your logs to enable faster queries. In scenario 1, the `user_id` is embedded within a message. To find all logs relating to a particular user_id, you would have to run a text match. In scenarios 2 and 3, your logs can be filtered against the keys `user_id` and `user_email`. 
 
 ## Features
 
 ### Execution Logs
 
-Each Workers invocation returns an execution log that contain details about the Request, Response, and related metadata. TODO
+Each Workers invocation returns a single execution log that contains details such as the Request, Response, and related metadata. These execution logs can be identified by the field `$cloudflare.$metadata.type = "cf-worker-event"`. Each execution log is enriched with information available to Cloudlare in the context of the invocation.  
+
+In the Workers Logs UI, logs are presented with a localized timestamp and a Message. The Message is dependent on the invocation handler. For example, Fetch requests will have a message describing the request method and the request URL, while cron events will be listed as cron. Below is a list of invocation handlers along with their execution message.
+
+| Invocation Handler                                              | Execution Message          |
+| --------------------------------------------------------------- | -------------------------- |
+| [Alarm](/durable-objects/api/alarms/)                           | \<Scheduled Time\>         |
+| [Email](/email-routing/email-workers/runtime-api/)              | \<Email Recipient\>        |
+| [Fetch](/workers/runtime-apis/handlers/fetch/)                  | \<Method\> \<URL\>         |
+| [Queue](/queues/configuration/javascript-apis/#consumer)        | \<Queue Name\>             |
+| [Cron](/workers/runtime-apis/handlers/scheduled/)               | \<unix-cron schedule\>     |
+| [Tail](/workers/runtime-apis/handlers/tail/)                    | tail                       |
+| [RPC](/workers/runtime-apis/rpc/)                               | \<RPC method\>             |
+| [Websocket](/workers/examples/websockets/)                      | \<Websocket Event Type\>   |
 
 ### Add custom logs
 
@@ -121,11 +143,17 @@ async function handleRequest(request) {
 
 After you deploy the code above, view your Worker's logs in [the dashboard](/workers/observability/logs/workers-logs/#view-logs-from-the-dashboard) or with [real-time logs](/workers/observability/logs/real-time-logs/).
 
-### Head-based Sampling
+### Head-based sampling
 
-Head-based sampling allows you to log only a subset of incoming requests to your Cloudflare Workers. Especially for high-traffic applications, this helps reduce log volume and manage costs, while still providing meaningful insights into your application's performance. When you configure a head-based sampling rate, you can control the percentage of requests that get logged. All logs within the context of the request are collected.
+Head-based sampling allows you to log a percentage of incoming requests to your Cloudflare Worker. Especially for high-traffic applications, this helps reduce log volume and manage costs, while still providing meaningful insights into your application's performance. When you configure a head-based sampling rate, you can control the percentage of requests that get logged. All logs within the context of the request are collected.
 
-To enable head-based sampling, simply set `head_sampling_rate` within the observability configuration. For example, setting a sampling rate of 0.01 (1%) will log one out of every one hundred requests. If the `head_sampling_rate` is unspecified, it is configured to a default value of 1 (100%).
+To enable head-based sampling, set `head_sampling_rate` within the observability configuration. The valid range is from 0 to 1, where 0 indicates zero out of one hundred requests are logged, and 1 indicates every request is logged. If `head_sampling_rate` is unspecified, it is configured to a default value of 1 (100%). In the example below, `head_sampling_rate` is set to 0.01, which means one out of every one hundred requests is logged.
+
+```toml
+[observability]
+enabled = true
+head_sampling_rate = 0.01 # 1% sampling rate
+```
 
 ## Limits
 
