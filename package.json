@@ -62,7 +62,7 @@
 		"tailwindcss": "^3.4.10",
 		"tippy.js": "^6.3.7",
 		"typescript": "^5.5.4",
-		"wrangler": "^3.75.0",
+		"wrangler": "^3.78.10",
 		"yaml": "^2.5.1"
 	},
 	"engines": {

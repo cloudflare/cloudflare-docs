@@ -7,7 +7,7 @@ rules = [
 	{ type = "Text", globs = ["**/_redirects"], fallthrough = true },
 ]
 
-[experimental_assets]
+[assets]
 directory = "./dist"
 binding = "ASSETS"
 not_found_handling = "404-page"
