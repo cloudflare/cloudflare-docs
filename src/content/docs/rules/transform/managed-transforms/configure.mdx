@@ -5,12 +5,11 @@ sidebar:
   order: 1
 head: []
 description: Learn how to configure Managed Transforms.
-
 ---
 
-import { Details, TabItem, Tabs } from "~/components"
+import { Details, TabItem, Tabs } from "~/components";
 
-<Tabs> <TabItem label="Dashboard">
+<Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/), and select your account and website.
 
@@ -37,64 +36,63 @@ curl https://api.cloudflare.com/client/v4/zones/{zone_id}/managed_headers \
 --header "Authorization: Bearer <API_TOKEN>"
 ```
 
-
 <Details header="Response">
 
 ```json
 {
-  "result": {
-    "managed_request_headers": [
-      {
-        "id": "add_bot_protection_headers",
-        "enabled": false,
-        "has_conflict": false
-      },
-      {
-        "id": "add_client_certificate_headers",
-        "enabled": false,
-        "has_conflict": false
-      },
-      {
-        "id": "add_visitor_location_headers",
-        "enabled": false,
-        "has_conflict": false
-      },
-      {
-        "id": "add_true_client_ip_headers",
-        "enabled": false,
-        "has_conflict": false,
-        "conflicts_with": [
-          "remove_visitor_ip_headers"
-        ]
-      },
-      {
-        "id": "remove_visitor_ip_headers",
-        "enabled": false,
-        "has_conflict": false,
-        "conflicts_with": [
-          "add_true_client_ip_headers"
-        ]
-      }
-    ],
-    "managed_response_headers": [
-      {
-        "id": "remove_x-powered-by_header",
-        "enabled": false,
-        "has_conflict": false
-      },
-      {
-        "id": "add_security_headers",
-        "enabled": false,
-        "has_conflict": false
-      }
-    ]
-  },
-  "success": true,
-  "errors": [],
-  "messages": []
+	"result": {
+		"managed_request_headers": [
+			{
+				"id": "add_bot_protection_headers",
+				"enabled": false,
+				"has_conflict": false
+			},
+			{
+				"id": "add_client_certificate_headers",
+				"enabled": false,
+				"has_conflict": false
+			},
+			{
+				"id": "add_visitor_location_headers",
+				"enabled": false,
+				"has_conflict": false
+			},
+			{
+				"id": "add_true_client_ip_headers",
+				"enabled": false,
+				"has_conflict": false,
+				"conflicts_with": ["remove_visitor_ip_headers"]
+			},
+			{
+				"id": "remove_visitor_ip_headers",
+				"enabled": false,
+				"has_conflict": false,
+				"conflicts_with": ["add_true_client_ip_headers"]
+			},
+			{
+				"id": "add_waf_credential_check_status_header",
+				"enabled": false,
+				"has_conflict": false
+			}
+		],
+		"managed_response_headers": [
+			{
+				"id": "remove_x-powered-by_header",
+				"enabled": false,
+				"has_conflict": false
+			},
+			{
+				"id": "add_security_headers",
+				"enabled": false,
+				"has_conflict": false
+			}
+		]
+	},
+	"success": true,
+	"errors": [],
+	"messages": []
 }
 ```
-
 
 </Details>
 
@@ -129,64 +127,58 @@ https://api.cloudflare.com/client/v4/zones/{zone_id}/managed_headers \
 
 The response will include all the available Managed Transforms and their new status after the update.
 
-
 <Details header="Response">
 
 ```json
 {
-  "result": {
-    "managed_request_headers": [
-      {
-        "id": "add_bot_protection_headers",
-        "enabled": false,
-        "has_conflict": false
-      },
-      {
-        "id": "add_client_certificate_headers",
-        "enabled": false,
-        "has_conflict": false
-      },
-      {
-        "id": "add_visitor_location_headers",
-        "enabled": true,
-        "has_conflict": false
-      },
-      {
-        "id": "add_true_client_ip_headers",
-        "enabled": false,
-        "has_conflict": false,
-        "conflicts_with": [
-          "remove_visitor_ip_headers"
-        ]
-      },
-      {
-        "id": "remove_visitor_ip_headers",
-        "enabled": false,
-        "has_conflict": false,
-        "conflicts_with": [
-          "add_true_client_ip_headers"
-        ]
-      }
-    ],
-    "managed_response_headers": [
-      {
-        "id": "remove_x-powered-by_header",
-        "enabled": true,
-        "has_conflict": false
-      },
-      {
-        "id": "add_security_headers",
-        "enabled": false,
-        "has_conflict": false
-      }
-    ]
-  },
-  "success": true,
-  "errors": [],
-  "messages": []
+	"result": {
+		"managed_request_headers": [
+			{
+				"id": "add_bot_protection_headers",
+				"enabled": false,
+				"has_conflict": false
+			},
+			{
+				"id": "add_client_certificate_headers",
+				"enabled": false,
+				"has_conflict": false
+			},
+			{
+				"id": "add_visitor_location_headers",
+				"enabled": true,
+				"has_conflict": false
+			},
+			{
+				"id": "add_true_client_ip_headers",
+				"enabled": false,
+				"has_conflict": false,
+				"conflicts_with": ["remove_visitor_ip_headers"]
+			},
+			{
+				"id": "remove_visitor_ip_headers",
+				"enabled": false,
+				"has_conflict": false,
+				"conflicts_with": ["add_true_client_ip_headers"]
+			}
+		],
+		"managed_response_headers": [
+			{
+				"id": "remove_x-powered-by_header",
+				"enabled": true,
+				"has_conflict": false
+			},
+			{
+				"id": "add_security_headers",
+				"enabled": false,
+				"has_conflict": false
+			}
+		]
+	},
+	"success": true,
+	"errors": [],
+	"messages": []
 }
 ```
-
 
 </Details>
 

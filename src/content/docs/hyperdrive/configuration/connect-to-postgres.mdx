@@ -3,10 +3,9 @@ pcx_content_type: concept
 title: Connect to PostgreSQL
 sidebar:
   order: 3
-
 ---
 
-import { TabItem, Tabs } from "~/components"
+import { TabItem, Tabs, Render } from "~/components";
 
 Hyperdrive supports PostgreSQL and PostgreSQL-compatible databases, [popular drivers](#supported-drivers) and Object Relational Mapper (ORM) libraries that use those drivers.
 
@@ -14,9 +13,7 @@ Hyperdrive supports PostgreSQL and PostgreSQL-compatible databases, [popular dri
 
 :::note
 
-
 New to Hyperdrive? Refer to the [Get started guide](/hyperdrive/get-started/) to learn how to set up your first Hyperdrive.
-
 
 :::
 
@@ -26,13 +23,14 @@ When using wrangler, replace the placeholder value provided to `--connection-str
 
 ```sh
 # wrangler v3.11 and above required
-$ npx wrangler hyperdrive create my-first-hyperdrive --connection-string="postgres://user:password@database.host.example.com:5432/databasenamehere"
+npx wrangler hyperdrive create my-first-hyperdrive --connection-string="postgres://user:password@database.host.example.com:5432/databasenamehere"
 ```
 
 The command above will output the ID of your Hyperdrive, which you will need to set in the `wrangler.toml` configuration file for your Workers project:
 
 ```toml
-node_compat = true # required for database drivers to function
+# required for database drivers to function
+compatibility_flags = [ "nodejs_compat_v2" ]
 
 [[hyperdrive]]
 binding = "HYPERDRIVE"
@@ -47,14 +45,14 @@ Refer to the [Examples documentation](/hyperdrive/examples/) for step-by-step gu
 
 Hyperdrive uses Workers [TCP socket support](/workers/runtime-apis/tcp-sockets/#connect) to support TCP connections to databases. The following table lists the supported database drivers and the minimum version that works with Hyperdrive:
 
-| Driver                        | Documentation                                                                | Minimum Version Required | Notes                                                                                                                                                                                                                                    |
-| ----------------------------- | ---------------------------------------------------------------------------- | ------------------------ | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Postgres.js (**recommended**) | [https://github.com/porsager/postgres](https://github.com/porsager/postgres) | `postgres@3.4.4`         | Supported in both Workers & Pages.                                                                                                                                                                                                       |
-| node-postgres - `pg`          | [https://node-postgres.com/](https://node-postgres.com/)                     | `pg@8.11.0`              | `8.11.4` introduced a bug with URL parsing and will not work. `8.11.5` fixes this. Requires the [legacy `node_compat = true`](/workers/wrangler/configuration/#add-polyfills-using-wrangler) to be set, which is not supported in Pages. |
-| Drizzle                       | [https://orm.drizzle.team/](https://orm.drizzle.team/)                       | `0.26.2`^                |                                                                                                                                                                                                                                          |
-| Kysely                        | [https://kysely.dev/](https://kysely.dev/)                                   | `0.26.3`^                |                                                                                                                                                                                                                                          |
+| Driver                        | Documentation                                                                | Minimum Version Required | Notes                                                                                                                                                                                                        |
+| ----------------------------- | ---------------------------------------------------------------------------- | ------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| Postgres.js (**recommended**) | [https://github.com/porsager/postgres](https://github.com/porsager/postgres) | `postgres@3.4.4`         | Supported in both Workers & Pages.                                                                                                                                                                           |
+| node-postgres - `pg`          | [https://node-postgres.com/](https://node-postgres.com/)                     | `pg@8.11.0`              | `8.11.4` introduced a bug with URL parsing and will not work. `8.11.5` fixes this. Requires the [`node_compat`](/workers/wrangler/configuration/#add-polyfills-using-wrangler) compatibility flag to be set. |
+| Drizzle                       | [https://orm.drizzle.team/](https://orm.drizzle.team/)                       | `0.26.2`^                |                                                                                                                                                                                                              |
+| Kysely                        | [https://kysely.dev/](https://kysely.dev/)                                   | `0.26.3`^                |                                                                                                                                                                                                              |
 
-^ *The marked libraries use `node-postgres` as a dependency.*
+^ _The marked libraries use `node-postgres` as a dependency._
 
 Other drivers and ORMs not listed may also be supported: this list is not exhaustive.
 
@@ -72,9 +70,7 @@ Hyperdrive supports the following [PostgreSQL TLS (SSL)](https://www.postgresql.
 
 :::caution
 
-
 Hyperdrive does not currently support uploading client CA certificates. In the future, you will be able to provide the client CA to Hyperdrive as part of your database configuration.
-
 
 :::
 
@@ -90,69 +86,28 @@ The following examples show you how to:
 
 The following Workers code shows you how to use [Postgres.js](https://github.com/porsager/postgres) with Hyperdrive.
 
-Install the Postgres.js driver:
-
-```sh
-$ npm install postgres
-```
-
-Create a new `sql` instance and pass the Hyperdrive parameters:
-
-<Tabs> <TabItem label="postgres-js">
-
-```ts
-import postgres from "postgres";
-
-export interface Env {
-	// If you set another name in wrangler.toml as the value for 'binding',
-	// replace "HYPERDRIVE" with the variable name you defined.
-	HYPERDRIVE: Hyperdrive;
-}
-
-export default {
-	async fetch(request: Request, env: Env, ctx: ExecutionContext) {
-
-    // NOTE: if `prepare: false` is passed when connecting, performance will
-    // be slower but still correctly supported.
-    const sql = postgres(env.HYPERDRIVE.connectionString)
-
-		try {
-			// A very simple test query
-			const result = await sql`select * from pg_tables`
-
-			// Return result rows as JSON
-			return Response.json({ result: result });
-		} catch (e) {
-			console.log(e);
-			return Response.json({ error: e.message }, { status: 500 });
-		}
-	},
-} satisfies ExportedHandler<Env>;
-```
-
-</TabItem> </Tabs>
+<Render file="use-postgresjs-to-make-query" product="hyperdrive" />
 
 ### node-postgres / pg
 
 Install the `node-postgres` driver:
 
 ```sh
-$ npm install pg
+npm install pg
 ```
 
 Ensure you have `node_compat = true` set in your `wrangler.toml` configuration file:
 
 ```toml
 # other fields elided
-node_compat = true # require for node-postgres to work
+# required for node-postgres to work
+node_compat = true
 ```
 
 Create a new `Client` instance and pass the Hyperdrive parameters:
 
-<Tabs> <TabItem label="node-postgres">
-
 ```ts
-import { Client } from 'pg';
+import { Client } from "pg";
 
 export interface Env {
 	// If you set another name in wrangler.toml as the value for 'binding',
@@ -162,17 +117,20 @@ export interface Env {
 
 export default {
 	async fetch(request, env, ctx): Promise<Response> {
-
-    // NOTE: if `prepare: false` is passed when connecting, performance will
-    // be slower but still correctly supported.
-    const sql = postgres(env.HYPERDRIVE.connectionString)
+		const client = new Client({
+			connectionString: env.HYPERDRIVE.connectionString,
+		});
 
 		try {
 			// Connect to your database
 			await client.connect();
 
 			// A very simple test query
-			const result = await client.query({ text: 'SELECT * FROM pg_tables' });
+			const result = await client.query({ text: "SELECT * FROM pg_tables" });
+
+			// Clean up the client, ensuring we don't kill the worker before that is
+			// completed.
+			ctx.waitUntil(client.end());
 
 			// Return result rows as JSON
 			return Response.json({ result: result });
@@ -184,17 +142,15 @@ export default {
 } satisfies ExportedHandler<Env>;
 ```
 
-</TabItem> </Tabs>
-
 ## Identify connections from Hyperdrive
 
 To identify active connections to your Postgres database server from Hyperdrive:
 
-* Hyperdrive's connections to your database will show up with `Cloudflare Hyperdrive` as the `application_name` in the `pg_stat_activity` table.
-* Run `SELECT DISTINCT usename, application_name FROM pg_stat_activity WHERE application_name = 'Cloudflare Hyperdrive'` to show whether Hyperdrive is currently holding a connection (or connections) open to your database.
+- Hyperdrive's connections to your database will show up with `Cloudflare Hyperdrive` as the `application_name` in the `pg_stat_activity` table.
+- Run `SELECT DISTINCT usename, application_name FROM pg_stat_activity WHERE application_name = 'Cloudflare Hyperdrive'` to show whether Hyperdrive is currently holding a connection (or connections) open to your database.
 
 ## Next steps
 
-* Refer to the list of [supported database integrations](/workers/databases/connecting-to-databases/) to understand other ways to connect to existing databases.
-* Learn more about how to use the [Socket API](/workers/runtime-apis/tcp-sockets) in a Worker.
-* Understand the [protocols supported by Workers](/workers/reference/protocols/).
+- Refer to the list of [supported database integrations](/workers/databases/connecting-to-databases/) to understand other ways to connect to existing databases.
+- Learn more about how to use the [Socket API](/workers/runtime-apis/tcp-sockets) in a Worker.
+- Understand the [protocols supported by Workers](/workers/reference/protocols/).

@@ -4,10 +4,9 @@ title: Zone Lockdown
 source: https://support.cloudflare.com/hc/en-us/articles/115001595131-Understanding-Cloudflare-Zone-Lockdown
 sidebar:
   order: 4
-
 ---
 
-import { FeatureTable, TabItem, Tabs } from "~/components"
+import { FeatureTable, TabItem, Tabs } from "~/components";
 
 Zone Lockdown specifies a list of one or more IP addresses, CIDR ranges, or networks that are the only IPs allowed to access a domain, subdomain, or URL. You can configure multiple destinations, including IPv4/IPv6 addresses, in a single Zone Lockdown rule.
 
@@ -19,10 +18,9 @@ Cloudflare recommends that you create [WAF custom rules](/waf/custom-rules/) ins
 
 For example, a custom rule equivalent to the Zone Lockdown [example rule](#example-rule) provided in this page could have the following configuration:
 
-* **Description**: `Block all traffic to staging and wiki unless it comes from HQ or branch offices`
-* **Expression**: `((http.host eq "staging.example.com") or (http.host eq "staging.example.com" and starts_with(http.request.uri.path, "/wiki/")) and not ip.src in {192.0.2.0/24 2001:DB8::/64 203.0.133.1}`
-* **Action**: *Block*
-
+- **Description**: `Block all traffic to staging and wiki unless it comes from HQ or branch offices`
+- **Expression**: `((http.host eq "staging.example.com") or (http.host eq "staging.example.com" and starts_with(http.request.uri.path, "/wiki/")) and not ip.src in {192.0.2.0/24 2001:DB8::/64 203.0.133.1}`
+- **Action**: _Block_
 
 :::
 
@@ -34,13 +32,13 @@ Cloudflare Zone Lockdown is available on paid plans. The number of available Zon
 
 ## Create a Zone Lockdown rule
 
-<Tabs> <TabItem label="Dashboard">
+<Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/) and select your account and domain.
 
 2. Go to **Security** > **WAF**, and select the **Tools** tab.
 
-3. Under **Zone Lockdown**, select **Create lockdown rule**. 
+3. Under **Zone Lockdown**, select **Create lockdown rule**.
 
 4. Enter a descriptive name for the rule in **Name**.
 
@@ -92,20 +90,20 @@ curl "https://api.cloudflare.com/client/v4/zones/{zone_id}/firewall/lockdowns" \
 
 The following example rule will only allow visitors connecting from a company’s headquarters or branch offices to access the staging environment and the wiki:
 
-* Name:
+- Name:
 
   ```txt
   Block all traffic to staging and wiki unless it comes from HQ or branch offices
   ```
 
-* URLs:
+- URLs:
 
   ```txt
   staging.example.com/*
   example.com/wiki/*
   ```
 
-* IP Range:
+- IP Range:
 
   ```txt
   192.0.2.0/24
@@ -121,10 +119,10 @@ A visitor from an unauthorized IP will get the following error when there is a m
 
 ![Example of Error 1106 (access denied) received by a user accessing the zone from an unauthorized IP address](~/assets/images/waf/tools/zone-lockdown-rule-error-1106-access-denied.png)
 
-***
+---
 
 ## Related resources
 
-* [Secure your application](/learning-paths/application-security/)
-* [User Agent Blocking](/waf/tools/user-agent-blocking/)
-* [Allow Health Checks to bypass Zone Lockdown](/health-checks/how-to/zone-lockdown/)
+- [Secure your application](/learning-paths/application-security/)
+- [User Agent Blocking](/waf/tools/user-agent-blocking/)
+- [Allow Health Checks to bypass Zone Lockdown](/health-checks/how-to/zone-lockdown/)

@@ -6,10 +6,9 @@ sidebar:
 head:
   - tag: title
     content: Rate limiting best practices
-
 ---
 
-import { Render } from "~/components"
+import { Render } from "~/components";
 
 The following sections cover typical rate limiting configurations for common use cases. You can combine the provided example rules and adjust them to your own scenario.
 
@@ -35,7 +34,7 @@ A common use case is to limit the rate of requests performed by individual user 
 
 Another use case when controlling access to resources is to exclude or include IP addresses or Autonomous System Numbers (ASNs) from a rate limiting rule.
 
-The following example rule allows up to 10 requests per minute from the same IP address doing a `GET` request for `/status`, as long as the visitor's IP address is not included in the `partner_ips` [IP list](/waf/tools/lists/custom-lists/#ip-lists).
+The following example rule allows up to 10 requests per minute from the same IP address doing a `GET` request for `/status`, as long as the visitor's IP address is not included in the `partner_ips` [IP list](/waf/tools/lists/custom-lists/#lists-with-ip-addresses-ip-lists).
 
 | Setting                  | Value                                                                                                        |
 | ------------------------ | ------------------------------------------------------------------------------------------------------------ |
@@ -59,7 +58,7 @@ Some applications receive requests originated by other sources (for example, use
 
 [^1]: The HTTP header name uses a misspelling of "referrer".
 
-*This example rule requires Advanced Rate Limiting.*
+_This example rule requires Advanced Rate Limiting._
 
 ### Limit by destination host
 
@@ -75,7 +74,7 @@ The following example rule will track the rate of requests to the `/login` endpo
 | Rate (Requests / Period) | 10 requests / 10 minutes                                             |
 | Action                   | Block                                                                |
 
-*This example rule requires Advanced Rate Limiting.*
+_This example rule requires Advanced Rate Limiting._
 
 ## Protecting against credential stuffing
 
@@ -130,7 +129,7 @@ For example, rule #3 computes the rate considering `POST` requests to `/login` t
 
 :::note[Configuring additional protection]
 
-Login endpoints are also commonly protected against the [use of exposed credentials](/waf/managed-rules/check-for-exposed-credentials/) and [bot abuse](/bots/). 
+Login endpoints are also commonly protected against the [use of exposed credentials](/waf/managed-rules/check-for-exposed-credentials/) and [bot abuse](/bots/).
 :::
 
 ## Limiting the number of operations
@@ -139,7 +138,7 @@ You can use rate limiting to limit the number of operations performed by a clien
 
 ### Prevent content scraping (via query string)
 
-In this example, clients perform operations (such as looking up prices and adding to basket) on an ecommerce website  using different query string parameters. For example, a typical request sent by a client could be similar to the following:
+In this example, clients perform operations (such as looking up prices and adding to basket) on an ecommerce website using different query string parameters. For example, a typical request sent by a client could be similar to the following:
 
 ```txt
 GET https://store.com/merchant?action=lookup_price&product_id=215
@@ -180,7 +179,7 @@ To limit the lookup of a specific `product_id` via query string parameter, you c
 | Rate (Requests / Period) | 50 requests / 10 seconds               |
 | Action                   | Block                                  |
 
-*This example rule requires Advanced Rate Limiting.*
+_This example rule requires Advanced Rate Limiting._
 
 You could follow the same pattern of rate limiting rules to protect applications handling reservations and bookings.
 
@@ -209,7 +208,7 @@ In this scenario, you could write a rule to limit the number of actions from ind
 | Rate (Requests / Period) | 10 requests / 2 minutes                                                                                          |
 | Action                   | Managed Challenge                                                                                                |
 
-*This example rule requires Advanced Rate Limiting and payload inspection.*
+_This example rule requires Advanced Rate Limiting and payload inspection._
 
 You could also limit the number of lookups of each `product_id` regardless of the client making the requests by deploying a rule like the following:
 
@@ -221,17 +220,16 @@ You could also limit the number of lookups of each `product_id` regardless of th
 | Rate (Requests / Period) | 50 requests / 10 seconds                                                                                         |
 | Action                   | Block                                                                                                            |
 
-*This example rule requires Advanced Rate Limiting and payload inspection.*
+_This example rule requires Advanced Rate Limiting and payload inspection._
 
 :::note
 
-
-If the request body is not JSON, you can use the [`http.request.body.raw`](/ruleset-engine/rules-language/fields/#field-http-request-body-raw) field and regular expressions (along with the [`matches` operator](/ruleset-engine/rules-language/operators/#comparison-operators)) to achieve the same goal. 
+If the request body is not JSON, you can use the [`http.request.body.raw`](/ruleset-engine/rules-language/fields/http-request-body/#httprequestbodyraw) field and regular expressions (along with the [`matches` operator](/ruleset-engine/rules-language/operators/#comparison-operators)) to achieve the same goal.
 :::
 
 ### Limit requests from bots
 
-A general approach to identify traffic from bots is to rate limit requests that trigger a large volume of `403` or `404`  response status codes from the origin server. This usually indicates automated activity from scraping applications.
+A general approach to identify traffic from bots is to rate limit requests that trigger a large volume of `403` or `404` response status codes from the origin server. This usually indicates automated activity from scraping applications.
 
 In this situation, you could configure a rule similar to the following:
 
@@ -269,7 +267,7 @@ If your application tracks sessions using a cookie, you can use the cookie to se
 | Rate (Requests / Period) | 20 requests / 5 minute                                                              |
 | Action                   | Block                                                                               |
 
-*These example rules require Advanced Rate Limiting and Bot Management.*
+_These example rules require Advanced Rate Limiting and Bot Management._
 
 If the application does not use a session cookie, you can use [JA3 fingerprints](/bots/concepts/ja3-ja4-fingerprint/) to identify individual clients. A JA3 fingerprint is a unique identifier, available to customers with [Bot Management](/bots/get-started/bm-subscription/), that allows Cloudflare to identify requests coming from the same client. All clients have an associated fingerprint, whether they are automated or not.
 
@@ -281,7 +279,7 @@ If the application does not use a session cookie, you can use [JA3 fingerprints]
 | Rate (Requests / Period) | 10 requests / 1 minute                                                   |
 | Action                   | Managed Challenge                                                        |
 
-*This example rule requires Advanced Rate Limiting and Bot Management.*
+_This example rule requires Advanced Rate Limiting and Bot Management._
 
 ## Protecting REST APIs
 
@@ -301,12 +299,12 @@ A common concern is to limit `POST` actions. For authenticated traffic, you can 
 | Rate (Requests / Period) | As suggested by API Discovery or assessed by analyzing past traffic.      |
 | Action                   | Block                                                                     |
 
-*This example rule requires Advanced Rate Limiting. API Discovery requires an additional license.*
+_This example rule requires Advanced Rate Limiting. API Discovery requires an additional license._
 
 The counting characteristic can be any header, key, token, cookie, query parameter, or even JSON body field, since some APIs include a session ID or user ID as part of the JSON body. Refer to the following sections for additional information:
 
-* If your unique identifier is in the URI path, refer to [Protect resources](#protect-resources).
-* If your unique identifier is in the JSON body, refer to [Prevent content scraping (via body)](#prevent-content-scraping-via-body).
+- If your unique identifier is in the URI path, refer to [Protect resources](#protect-resources).
+- If your unique identifier is in the JSON body, refer to [Prevent content scraping (via body)](#prevent-content-scraping-via-body).
 
 ### Protect resources
 
@@ -327,7 +325,7 @@ You probably wish to limit the number of downloads to avoid abuse, but you do no
 | Rate (Requests / Period) | As suggested by API Discovery or assessed by analyzing past traffic. |
 | Action                   | Block                                                                |
 
-*This example rule requires Advanced Rate Limiting.*
+_This example rule requires Advanced Rate Limiting._
 
 The rule defines a limit of 10 downloads in 10 minutes for every file under `https://api.store.com/files/*`. By using Path as the rule characteristic, you avoid having to write a new rule every time there is a new uploaded file with a different `<FILE_ID>`. With this rule, the rate is computed on every request, regardless of their source IP or session identifier.
 
@@ -341,7 +339,7 @@ You could also combine Path with the `x-api-key` header (or IP, if you do not ha
 | Rate (Requests / Period) | As suggested by API Discovery or assessed by analyzing past traffic. |
 | Action                   | Block                                                                |
 
-*This example rule requires Advanced Rate Limiting.*
+_This example rule requires Advanced Rate Limiting._
 
 ## Protecting GraphQL APIs
 
@@ -378,7 +376,7 @@ To limit the rate of actions, you could use the following rule:
 | Rate (Requests / Period) | 5 requests / 1 hour                                                                     |
 | Action                   | Block                                                                                   |
 
-*This example rule requires Advanced Rate Limiting and payload inspection.*
+_This example rule requires Advanced Rate Limiting and payload inspection._
 
 ### Prevent server overload
 
@@ -399,11 +397,11 @@ For example, the following rule defines a total complexity budget of 1,000 per h
 | Score location              | Response header (`score`)             |
 | Action                      | Block                                 |
 
-*This example rule requires Advanced Rate Limiting and payload inspection.*
+_This example rule requires Advanced Rate Limiting and payload inspection._
 
 :::note
 
-Currently, you can only create complexity-based (or score-based) rules such as the one above [via API](/waf/rate-limiting-rules/create-api/#example-d---complexity-based-rate-limiting-rule). 
+Currently, you can only create complexity-based (or score-based) rules such as the one above [via API](/waf/rate-limiting-rules/create-api/#example-d---complexity-based-rate-limiting-rule).
 
 :::
 

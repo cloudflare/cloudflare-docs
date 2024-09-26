@@ -1,7 +1,7 @@
-DirectoryPath: "public"
+DirectoryPath: "dist"
 EnforceHTTPS: false
 IgnoreURLs:
-- "/api/*"
+  - "/api/*"
 CheckLinks: true
 CheckImages: false
 CheckScripts: false

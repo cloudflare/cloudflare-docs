@@ -6,18 +6,15 @@ sidebar:
 head:
   - tag: title
     content: Enable Brotli
-
 ---
 
-import { Render } from "~/components"
+import { Render } from "~/components";
 
-:::caution[Warning]
-
+:::caution
 
 Brotli compression will be enabled by default for all zones on 2024-08-15. The Brotli setting will be gradually removed until then.
 
 Enterprise customers can override Cloudflare's default compression behavior using [Compression Rules](/rules/compression-rules/).
-
 
 :::
 
@@ -29,6 +26,6 @@ To enable Brotli compression:
 2. Go to **Speed** > **Optimization** > **Content Optimization**.
 3. For **Brotli**, toggle the switch to **On**.
 
-***
+---
 
 <Render file="brotli-compression-warning" />

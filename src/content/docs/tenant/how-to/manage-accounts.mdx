@@ -3,10 +3,9 @@ pcx_content_type: how-to
 title: Manage accounts
 sidebar:
   order: 1
-
 ---
 
-import { Render, TabItem, Tabs } from "~/components"
+import { Render, TabItem, Tabs } from "~/components";
 
 <Render file="account-preamble" />
 
@@ -14,7 +13,7 @@ import { Render, TabItem, Tabs } from "~/components"
 
 <Render file="account-preamble" />
 
-<Tabs> <TabItem label="Dashboard">
+<Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
 
 <Render file="create-account-dash" />
 
@@ -28,7 +27,7 @@ import { Render, TabItem, Tabs } from "~/components"
 
 When you create an account with the Tenant API, your Cloudflare user owns that account from creation, ongoing management, and finally deletion.
 
-<Tabs> <TabItem label="Dashboard">
+<Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
 
 To view any accounts owned by your tenant using the dashboard:
 
@@ -49,32 +48,32 @@ curl https://api.cloudflare.com/client/v4/accounts \
 
 ```json title="Response"
 {
-  "result": [
-    {
-      "id": "a34bd6cc645a31486aa2ef71f1b9afb6",
-      "name": "My Personal Account",
-      "settings": {
-        "enforce_twofactor": false
-      }
-    },
-    {
-      "id": "1b16db169c9cb7853009857198fae1b9",
-      "name": "Created Account",
-      "settings": {
-        "enforce_twofactor": false
-      }
-    }
-  ],
-  "result_info": {
-    "page": 1,
-    "per_page": 20,
-    "total_pages": 1,
-    "count": 2,
-    "total_count": 2
-  },
-  "success": true,
-  "errors": [],
-  "messages": []
+	"result": [
+		{
+			"id": "a34bd6cc645a31486aa2ef71f1b9afb6",
+			"name": "My Personal Account",
+			"settings": {
+				"enforce_twofactor": false
+			}
+		},
+		{
+			"id": "1b16db169c9cb7853009857198fae1b9",
+			"name": "Created Account",
+			"settings": {
+				"enforce_twofactor": false
+			}
+		}
+	],
+	"result_info": {
+		"page": 1,
+		"per_page": 20,
+		"total_pages": 1,
+		"count": 2,
+		"total_count": 2
+	},
+	"success": true,
+	"errors": [],
+	"messages": []
 }
 ```
 
@@ -101,11 +100,11 @@ A successful request will return the id to confirm the operation:
 
 ```json title="Response"
 {
-  "result": {
-    "id": "1b16db169c9cb7853009857198fae1b9"
-  },
-  "success": true,
-  "errors": [],
-  "messages": []
+	"result": {
+		"id": "1b16db169c9cb7853009857198fae1b9"
+	},
+	"success": true,
+	"errors": [],
+	"messages": []
 }
 ```

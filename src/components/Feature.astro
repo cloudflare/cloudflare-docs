@@ -1,5 +1,5 @@
 ---
-import { LinkCard } from "~/components";
+import { LinkCard } from "@astrojs/starlight/components";
 
 interface Props {
 	header: string;
@@ -16,11 +16,11 @@ if (cta) {
 ---
 
 <h3>{header}</h3>
-<div class="grid grid-cols-2">
+<div class="grid grid-cols-2 gap-x-12">
 	<div>
 		<slot />
 	</div>
-	<div class="!mt-0">
+	<div class="!mt-0 self-center">
 		<LinkCard title={title} href={href} />
 	</div>
 </div>

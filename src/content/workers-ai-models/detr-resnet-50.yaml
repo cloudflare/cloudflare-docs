@@ -1,4 +1,3 @@
-
 model:
   id: "cc34ce52-3059-415f-9a48-12aa919d37ee"
   source: 1
@@ -20,5 +19,3 @@ title: "detr-resnet-50"
 json_schema:
   input: "{\n  \"oneOf\": [\n    {\n      \"type\": \"string\",\n      \"format\": \"binary\"\n    },\n    {\n      \"type\": \"object\",\n      \"properties\": {\n        \"image\": {\n          \"type\": \"array\",\n          \"items\": {\n            \"type\": \"number\"\n          }\n        }\n      }\n    }\n  ]\n}"
   output: "{\n  \"type\": \"array\",\n  \"contentType\": \"application/json\",\n  \"items\": {\n    \"type\": \"object\",\n    \"properties\": {\n      \"score\": {\n        \"type\": \"number\"\n      },\n      \"label\": {\n        \"type\": \"string\"\n      },\n      \"box\": {\n        \"type\": \"object\",\n        \"properties\": {\n          \"xmin\": {\n            \"type\": \"number\"\n          },\n          \"ymin\": {\n            \"type\": \"number\"\n          },\n          \"xmax\": {\n            \"type\": \"number\"\n          },\n          \"ymax\": {\n            \"type\": \"number\"\n          }\n        }\n      }\n    }\n  }\n}"
-
-

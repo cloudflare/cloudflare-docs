@@ -7,24 +7,32 @@ head:
   - tag: title
     content: Manage pools
 description: Learn how to set up and maintain pools.
-
 ---
 
-import { AvailableNotifications, GlossaryDefinition, Render, TabItem, Tabs } from "~/components"
+import {
+	AvailableNotifications,
+	GlossaryDefinition,
+	Render,
+	TabItem,
+	Tabs,
+} from "~/components";
 
 <GlossaryDefinition term="pool" />
 
 For more background information on pools, refer to [Pools](/load-balancing/pools/).
 
 :::caution
- <Render file="endpoints-introduction-callout" /> 
+
+{" "}
+
+<Render file="endpoints-introduction-callout" />
 :::
 
-***
+---
 
 ## Create a pool
 
-<Tabs> <TabItem label="Dashboard">
+<Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
 
 <Render file="pool-create" />
 
@@ -34,11 +42,11 @@ For more background information on pools, refer to [Pools](/load-balancing/pools
 
 </TabItem> </Tabs>
 
-***
+---
 
 ## Edit a pool
 
-<Tabs> <TabItem label="Dashboard">
+<Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
 
 To edit a pool in the dashboard:
 
@@ -56,7 +64,7 @@ To update specific settings without having to resubmit the entire configuration,
 
 </TabItem> </Tabs>
 
-***
+---
 
 ## Delete a pool
 
@@ -66,10 +74,10 @@ If you get an error when trying to delete a pool, consider the hostnames listed 
 
 :::note
 
-If the pool is referenced by geo steering, the configuration is **not** automatically removed when you change to a different **Traffic Steering** method. To make sure you remove it, select **Geo Steering**, remove the pool, and then apply and save any other necessary changes. 
+If the pool is referenced by geo steering, the configuration is **not** automatically removed when you change to a different **Traffic Steering** method. To make sure you remove it, select **Geo Steering**, remove the pool, and then apply and save any other necessary changes.
 :::
 
-<Tabs> <TabItem label="Dashboard">
+<Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
 
 To delete a pool in the dashboard:
 
@@ -83,7 +91,7 @@ To delete a pool using the API, send a [DELETE](/api/operations/account-load-bal
 
 </TabItem> </Tabs>
 
-***
+---
 
 ## Set up alerts
 

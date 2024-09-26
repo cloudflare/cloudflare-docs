@@ -1,6 +1,6 @@
 ---
 title: aws-sdk-net
-pcx_content_type: configuration
+pcx_content_type: example
 
 ---
 
@@ -54,7 +54,7 @@ static async Task ListObjectsV2()
 	{
 		BucketName = "sdk-example"
 	};
-            
+
 	var response = await s3Client.ListObjectsV2Async(request);
 
 	foreach (var s3Object in response.S3Objects)
@@ -87,9 +87,9 @@ static async Task PutObject()
 		BucketName = "sdk-example",
 		DisablePayloadSigning = true
 	};
-            
+
 	var response = await s3Client.PutObjectAsync(request);
-            
+
 	Console.WriteLine("ETag: {0}", response.ETag);
 }
 // ETag: "186a71ee365d9686c3b98b6976e1f196"
@@ -100,7 +100,7 @@ static async Task GetObject()
 {
   var bucket = "sdk-example";
   var key = "file.txt"
-  
+
 	var response = await s3Client.GetObjectAsync(bucket, key);
 
 	Console.WriteLine("ETag: {0}", response.ETag);
@@ -123,12 +123,12 @@ static string? GeneratePresignedUrl()
 		Verb = HttpVerb.GET,
 		Expires = DateTime.Now.AddDays(7),
 	};
-            
+
 	var presignedUrl = s3Client.GetPreSignedURL(presign);
-            
+
 	Console.WriteLine(presignedUrl);
-	
+
 	return presignedUrl;
 }
-// URL: https://<accountid>.r2.cloudflarestorage.com/sdk-example/file.txt?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=<credential>&X-Amz-Date=<timestamp>&X-Amz-Expires=3600&X-Amz-SignedHeaders=host&X-Amz-Signature=<signature>   
+// URL: https://<accountid>.r2.cloudflarestorage.com/sdk-example/file.txt?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=<credential>&X-Amz-Date=<timestamp>&X-Amz-Expires=3600&X-Amz-SignedHeaders=host&X-Amz-Signature=<signature>
 ```

@@ -1,9 +1,8 @@
 ---
 {}
-
 ---
 
-import { TabItem, Tabs } from "~/components"
+import { TabItem, Tabs } from "~/components";
 
 ### Dashboard
 
@@ -27,7 +26,7 @@ To develop more advanced applications or [implement tests](/workers/testing/), s
 
 :::note[Node.js version manager]
 
-Use a Node version manager like [Volta](https://volta.sh/) or [nvm](https://github.com/nvm-sh/nvm) to avoid permission issues and change Node.js versions. [Wrangler](/workers/wrangler/install-and-update/), discussed later in this guide, requires a Node version of `16.17.0` or later. 
+Use a Node version manager like [Volta](https://volta.sh/) or [nvm](https://github.com/nvm-sh/nvm) to avoid permission issues and change Node.js versions. [Wrangler](/workers/wrangler/install-and-update/), discussed later in this guide, requires a Node version of `16.17.0` or later.
 :::
 
 3. Run the following command, replacing the value of `[<DIRECTORY>]` which the location you want to put your Worker Script.
@@ -35,25 +34,25 @@ Use a Node version manager like [Volta](https://volta.sh/) or [nvm](https://gith
 <Tabs> <TabItem label="npm">
 
 ```sh
-$ npm create cloudflare@latest [<DIRECTORY>] -- --type=pre-existing
+npm create cloudflare@latest [<DIRECTORY>] -- --type=pre-existing
 ```
 
 </TabItem> <TabItem label="yarn">
 
 ```sh
-$ yarn create cloudflare@latest [<DIRECTORY>] --type=pre-existing
+yarn create cloudflare@latest [<DIRECTORY>] --type=pre-existing
 ```
 
 </TabItem> <TabItem label="pnpm">
 
 ```sh
-$ pnpm create cloudflare@latest [<DIRECTORY>] --type=pre-existing
+pnpm create cloudflare@latest [<DIRECTORY>] --type=pre-existing
 ```
 
 </TabItem> <TabItem label="bun">
 
 ```sh
-$ bun create cloudflare@latest [<DIRECTORY>] --type=pre-existing
+bun create cloudflare@latest [<DIRECTORY>] --type=pre-existing
 ```
 
 </TabItem> </Tabs>

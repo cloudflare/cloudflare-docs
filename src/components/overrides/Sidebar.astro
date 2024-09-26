@@ -2,32 +2,42 @@
 import type { Props } from "@astrojs/starlight/props";
 import Default from "@astrojs/starlight/components/Sidebar.astro";
 
-import { AstroIcon } from "~/components";
+import { Icon as AstroIcon } from "astro-icon/components";
 import { getEntry } from "astro:content";
+import { z } from "astro:schema";
+import { Badge } from "@astrojs/starlight/components";
+import type { ComponentProps, HTMLAttributes } from "astro/types";
+import type { AstroBuiltinAttributes } from "astro";
 
 const { sidebar, slug } = Astro.props;
+
+const linkHTMLAttributesSchema = z.record(
+	z.union([z.string(), z.number(), z.boolean(), z.undefined()]),
+) as z.Schema<
+	Omit<HTMLAttributes<"a">, keyof AstroBuiltinAttributes | "children">
+>;
+type LinkHTMLAttributes = z.infer<typeof linkHTMLAttributesSchema>;
 
 interface Link {
 	type: "link";
 	label: string;
 	href: string;
 	isCurrent: boolean;
-	badge: any | undefined;
-	attrs: any;
+	badge: ComponentProps<typeof Badge> | undefined;
+	attrs: LinkHTMLAttributes;
 	order: number;
 }
+type SidebarEntry = Link | Group;
 
 interface Group {
 	type: "group";
 	label: string;
-	entries: (Link | Group)[];
+	entries: SidebarEntry[];
 	collapsed: boolean;
-	badge: Badge | undefined;
+	badge: ComponentProps<typeof Badge> | undefined;
 	order: number;
 }
 ``;
-
-type SidebarEntry = Link | Group;
 
 const currentSection = slug?.split("/")[0];
 
@@ -74,8 +84,9 @@ async function handleGroup(group: Group): Promise<SidebarEntry> {
 
 	const frontmatter = indexPage.data;
 
-	group.label = frontmatter.title;
+	group.label = frontmatter.sidebar.group?.label ?? frontmatter.title;
 	group.order = frontmatter.sidebar.order ?? Number.MAX_VALUE;
+	group.badge = frontmatter.sidebar.group?.badge;
 
 	if (frontmatter.hideChildren) {
 		return {
@@ -99,11 +110,18 @@ async function handleGroup(group: Group): Promise<SidebarEntry> {
 	group.entries = group.entries.sort(sortGroup);
 
 	const indexIdx = group.entries.findIndex(
-		(x) => x.type === "link" && x.href === indexLink.href,
+		(x) =>
+			x.type === "link" &&
+			[indexLink.href, frontmatter.external_link].includes(x.href),
 	) as number;
 
+	if (indexPage.data.sidebar.group?.hideIndex) {
+		group.entries.splice(indexIdx, 1)[0];
+		return group;
+	}
+
 	group.entries.unshift(group.entries.splice(indexIdx, 1)[0]);
-	group.entries[0].label = "Overview";
+	group.entries[0].label = indexPage.data.sidebar.label ?? "Overview";
 
 	return group;
 }
@@ -128,10 +146,11 @@ async function handleLink(link: Link): Promise<Link> {
 			...link,
 			label: link.label.concat(" ↗"),
 			href: frontmatter.external_link,
-			badge: frontmatter.external_link.startsWith("/api") && {
-				variant: "caution",
-				text: "API",
-			},
+			badge: frontmatter.external_link.startsWith("/api")
+				? {
+						text: "API",
+					}
+				: undefined,
 		};
 	}
 
@@ -152,20 +171,83 @@ filtered.entries = filtered.entries.sort(sortGroup);
 
 filtered.entries[0].label = "Overview";
 
-const lookupProductTitle = async (product: string) => {
-	const { data } = await getEntry("products", product);
+const lookupProductTitle = async (slug: string) => {
+	const segments = slug.split("/");
+	const product = segments[0];
 
-	return data.product.title;
+	if (product === "learning-paths") {
+		const path = segments[1];
+
+		const entryData = await getEntry("learning-paths", path);
+
+		return `${entryData?.data?.title} (Learning Paths)`;
+	}
+
+	const entryData = await getEntry("products", product);
+
+	return entryData?.data?.product?.title ?? "Unknown";
 };
 ---
 
 <a
 	href={"/" + currentSection + "/"}
-	class="items-center flex hover:opacity-80 decoration-accent-200"
+	class="items-center flex hover:opacity-80 decoration-[color:var(--orange-accent-200)]"
 >
-	<AstroIcon name={currentSection} class="text-accent-200 text-4xl mr-2" />
-	<h3 class="text-black dark:text-white">
-		{lookupProductTitle(currentSection)}
-	</h3>
+	<AstroIcon
+		name={currentSection}
+		class="text-[color:var(--orange-accent-200)] text-4xl mr-2"
+	/>
+	<span class="text-black dark:text-white">
+		<strong>
+			{lookupProductTitle(slug)}
+		</strong>
+	</span>
 </a>
+<!-- @ts-expect-error sidebar props don't match as we add additional things -->
 <Default {...Astro.props} sidebar={filtered.entries}><slot /></Default>
+
+<style is:global>
+	:root {
+		.sidebar-content {
+			--sl-color-hairline-light: #cacaca !important;
+
+			& > * {
+				a {
+					padding: 0.2375em var(--sl-sidebar-item-padding-inline) !important;
+
+					&[aria-current="page"] {
+						background-color: unset !important;
+						border: unset !important;
+						border-color: unset !important;
+						color: var(--sl-color-accent) !important;
+						font-weight: 600 !important;
+					}
+				}
+
+				summary {
+					padding: 0.1375em var(--sl-sidebar-item-padding-inline) !important;
+				}
+
+				.large {
+					color: var(--sl-color-gray-2) !important;
+					font-weight: unset !important;
+					font-size: unset !important;
+
+					@media (min-width: 50rem) {
+						font-size: var(--sl-text-sm) !important;
+					}
+				}
+
+				.caret {
+					font-size: 1rem !important;
+				}
+			}
+		}
+	}
+
+	:root[data-theme="dark"] {
+		.sidebar-content {
+			--sl-color-hairline-light: #444444 !important;
+		}
+	}
+</style>

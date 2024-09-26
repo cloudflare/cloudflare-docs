@@ -7,7 +7,6 @@ head: []
 description: Migrate from [Miniflare
   2](https://github.com/cloudflare/miniflare?tab=readme-ov-file) to the Workers
   Vitest integration.
-
 ---
 
 [Miniflare 2](https://github.com/cloudflare/miniflare?tab=readme-ov-file) provided custom environments for Jest and Vitest in the `jest-environment-miniflare` and `vitest-environment-miniflare` packages respectively.
@@ -15,17 +14,13 @@ The `@cloudflare/vitest-pool-workers` package provides similar functionality usi
 
 :::caution
 
-
 Cloudflare no longer provides a Jest testing environment for Workers. If you previously used Jest, you will need to [migrate to Vitest](https://vitest.dev/guide/migration.html#migrating-from-jest) first, then follow the rest of this guide. Vitest provides built-in support for TypeScript, ES modules, and hot-module reloading for tests out-of-the-box.
-
 
 :::
 
 :::caution
 
-
 The Workers Vitest integration does not support testing Workers using the service worker format. [Migrate to ES modules format](/workers/reference/migrate-to-module-workers/) first.
-
 
 :::
 
@@ -34,9 +29,9 @@ The Workers Vitest integration does not support testing Workers using the servic
 First, you will need to uninstall the old environment and install the new pool. Vitest environments can only customize the global scope, whereas pools can run tests using a completely different runtime. In this case, the pool runs your tests inside [`workerd`](https://github.com/cloudflare/workerd) instead of Node.js.
 
 ```sh
-$ npm uninstall vitest-environment-miniflare
-$ npm install --save-dev --save-exact vitest@1.5.0
-$ npm install --save-dev @cloudflare/vitest-pool-workers
+npm uninstall vitest-environment-miniflare
+npm install --save-dev --save-exact vitest@2.0.5
+npm install --save-dev @cloudflare/vitest-pool-workers
 ```
 
 ## Update your Vitest configuration file
@@ -95,11 +90,11 @@ If you are using TypeScript, add an ambient `.d.ts` declaration file defining a 
 
 ```ts
 declare module "cloudflare:test" {
-  interface ProvidedEnv {
-    NAMESPACE: KVNamespace;
-  }
-  // ...or if you have an existing `Env` type...
-  interface ProvidedEnv extends Env {}
+	interface ProvidedEnv {
+		NAMESPACE: KVNamespace;
+	}
+	// ...or if you have an existing `Env` type...
+	interface ProvidedEnv extends Env {}
 }
 ```
 
@@ -133,8 +128,8 @@ The `new ExecutionContext()` constructor and `getMiniflareWaitUntil()` function 
 
 The `getMiniflareFetchMock()` function has been replaced with the new `fetchMock` helper from the `cloudflare:test` module. `fetchMock` has the same type as the return type of `getMiniflareFetchMock()`. There are a couple of differences between `fetchMock` and the previous return value of `getMiniflareFetchMock()`:
 
-* `fetchMock` is deactivated by default, whereas previously it would start activated. This deactivation prevents unnecessary buffering of request bodies if you are not using `fetchMock`. You will need to call `fetchMock.activate()` before calling `fetch()` to enable it.
-* `fetchMock` is reset at the start of each test run, whereas previously, interceptors added in previous runs would apply to the current one. This ensures test runs are not affected by previous runs.
+- `fetchMock` is deactivated by default, whereas previously it would start activated. This deactivation prevents unnecessary buffering of request bodies if you are not using `fetchMock`. You will need to call `fetchMock.activate()` before calling `fetch()` to enable it.
+- `fetchMock` is reset at the start of each test run, whereas previously, interceptors added in previous runs would apply to the current one. This ensures test runs are not affected by previous runs.
 
 ```diff
   import { beforeAll, afterAll } from "vitest";
@@ -186,7 +181,7 @@ The `getMiniflareDurableObjectStorage()`, `getMiniflareDurableObjectState()`, `g
   });
 ```
 
-The `flushMiniflareDurableObjectAlarms()` function has been replaced with the `runDurableObjectAlarm()` function from the `cloudflare:test` module. The `runDurableObjectAlarm()`  function accepts a single `DurableObjectStub` and returns a `Promise` that resolves to `true` if an alarm was scheduled and the `alarm()` handler was executed, or `false` otherwise. To "flush" multiple instances' alarms, call `runDurableObjectAlarm()` in a loop.
+The `flushMiniflareDurableObjectAlarms()` function has been replaced with the `runDurableObjectAlarm()` function from the `cloudflare:test` module. The `runDurableObjectAlarm()` function accepts a single `DurableObjectStub` and returns a `Promise` that resolves to `true` if an alarm was scheduled and the `alarm()` handler was executed, or `false` otherwise. To "flush" multiple instances' alarms, call `runDurableObjectAlarm()` in a loop.
 
 ```diff
 + import { env, runDurableObjectAlarm } from "cloudflare:test";

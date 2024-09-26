@@ -11,12 +11,9 @@ tags:
 languages:
   - JavaScript
   - SQL
-
 ---
 
-
-
-import { Render } from "~/components"
+import { Render, PackageManagers } from "~/components";
 
 In this tutorial, you will learn how to use D1 to add comments to a static blog site. To do this, you will construct a new D1 database, and build a JSON API that allows the creation and retrieval of comments.
 
@@ -24,14 +21,22 @@ In this tutorial, you will learn how to use D1 to add comments to a static blog 
 
 Use [C3](https://developers.cloudflare.com/learning-paths/workers/get-started/c3-and-wrangler/#c3), the command-line tool for Cloudflare's developer products, to create a new directory and initialize a new Worker project:
 
-<Render file="c3-run-command-with-directory" product="workers" params={{ one: "d1-example" }} />
+<PackageManagers type="create" pkg="cloudflare@latest" args={"d1-example"} />
 
-<Render file="c3-post-run-steps" product="workers" params={{ one: "Hello World example", two: "Hello World Worker", three: "JavaScript" }} />
+<Render
+	file="c3-post-run-steps"
+	product="workers"
+	params={{
+		category: "hello-world",
+		type: "Hello World Worker",
+		lang: "JavaScript",
+	}}
+/>
 
 To start developing your Worker, `cd` into your new project directory:
 
 ```sh
-$ cd d1-example
+cd d1-example
 ```
 
 ## 1. Install Hono
@@ -39,32 +44,32 @@ $ cd d1-example
 In this tutorial, you will use [Hono](https://github.com/honojs/hono), an Express.js-style framework, to build your API. To use Hono in this project, install it using `npm`:
 
 ```sh
-$ npm install hono
+npm install hono
 ```
 
 ## 2. Initialize your Hono application
 
 In `src/worker.js`, initialize a new Hono application, and define the following endpoints:
 
-* `GET /api/posts/:slug/comments`.
-* `POST /api/posts/:slug/comments`.
+- `GET /api/posts/:slug/comments`.
+- `POST /api/posts/:slug/comments`.
 
 ```js
-import { Hono } from 'hono'
+import { Hono } from "hono";
 
-const app = new Hono()
+const app = new Hono();
 
-app.get('/api/posts/:slug/comments', async c => {
-  // Do something and return an HTTP response
-  // Optionally, do something with `c.req.param("slug")`
-})
+app.get("/api/posts/:slug/comments", async (c) => {
+	// Do something and return an HTTP response
+	// Optionally, do something with `c.req.param("slug")`
+});
 
-app.post('/api/posts/:slug/comments', async c => {
-  // Do something and return an HTTP response
-  // Optionally, do something with `c.req.param("slug")`
-})
+app.post("/api/posts/:slug/comments", async (c) => {
+	// Do something and return an HTTP response
+	// Optionally, do something with `c.req.param("slug")`
+});
 
-export default app
+export default app;
 ```
 
 ## 3. Create a database
@@ -72,7 +77,7 @@ export default app
 You will now create a D1 database. In Wrangler v2, there is support for the `wrangler d1` subcommand, which allows you to create and query your D1 databases directly from the command line. Create a new database with `wrangler d1 create`:
 
 ```sh
-$ npx wrangler d1 create d1-example
+npx wrangler d1 create d1-example
 ```
 
 Reference your created database in your Worker code by creating a [binding](/workers/runtime-apis/bindings/) inside of your `wrangler.toml` file, Wrangler's configuration file. Bindings allow us to access Cloudflare resources, like D1 databases, KV namespaces, and R2 buckets, using a variable name in code. In `wrangler.toml`, set up the binding `DB` and connect it to the `database_name` and `database_id`:
@@ -91,7 +96,10 @@ With your binding configured in your `wrangler.toml` file, you can interact with
 Interact with D1 by issuing direct SQL commands using `wrangler d1 execute`:
 
 ```sh
-$ npx wrangler d1 execute d1-example --remote --command "SELECT name FROM sqlite_schema WHERE type ='table'"
+npx wrangler d1 execute d1-example --remote --command "SELECT name FROM sqlite_schema WHERE type ='table'"
+```
+
+```sh output
 
 Executing on d1-example:
 
@@ -104,7 +112,7 @@ Executing on d1-example:
 
 You can also pass a SQL file - perfect for initial data seeding in a single command. Create `schemas/schema.sql`, which will create a new `comments` table for your project:
 
-```SQL
+```sql
 DROP TABLE IF EXISTS comments;
 CREATE TABLE IF NOT EXISTS comments (
   id integer PRIMARY KEY AUTOINCREMENT,
@@ -122,7 +130,7 @@ CREATE INDEX idx_comments_post_slug ON comments (post_slug);
 With the file created, execute the schema file against the D1 database by passing it with the flag `--file`:
 
 ```sh
-$ npx wrangler d1 execute d1-example --remote --file schemas/schema.sql
+npx wrangler d1 execute d1-example --remote --file schemas/schema.sql
 ```
 
 ## 5. Execute SQL
@@ -130,13 +138,17 @@ $ npx wrangler d1 execute d1-example --remote --file schemas/schema.sql
 In earlier steps, you created a SQL database and populated it with initial data. Now, you will add a route to your Workers function to retrieve data from that database. Based on your `wrangler.toml` configuration in previous steps, your D1 database is now accessible via the `DB` binding. In your code, use the binding to prepare SQL statements and execute them, for example, to retrieve comments:
 
 ```js
-app.get('/api/posts/:slug/comments', async c => {
-  const { slug } = c.req.param()
-  const { results } = await c.env.DB.prepare(`
+app.get("/api/posts/:slug/comments", async (c) => {
+	const { slug } = c.req.param();
+	const { results } = await c.env.DB.prepare(
+		`
     select * from comments where post_slug = ?
-  `).bind(slug).all()
-  return c.json(results)
-})
+  `,
+	)
+		.bind(slug)
+		.all();
+	return c.json(results);
+});
 ```
 
 The above code makes use of the `prepare`, `bind`, and `all` functions on a D1 binding to prepare and execute a SQL statement. Refer to [D1 client API](/d1/build-with-d1/d1-client-api/) for a list of all methods available.
@@ -148,25 +160,29 @@ In this function, you accept a `slug` URL query parameter and set up a new SQL s
 The previous steps grant read-only access to your data. To create new comments by inserting data into the database, define another endpoint in `src/worker.js`:
 
 ```js
-app.post('/api/posts/:slug/comments', async c => {
-  const { slug } = c.req.param()
-  const { author, body } = await c.req.json()
+app.post("/api/posts/:slug/comments", async (c) => {
+	const { slug } = c.req.param();
+	const { author, body } = await c.req.json();
 
-  if (!author) return c.text("Missing author value for new comment")
-  if (!body) return c.text("Missing body value for new comment")
+	if (!author) return c.text("Missing author value for new comment");
+	if (!body) return c.text("Missing body value for new comment");
 
-  const { success } = await c.env.DB.prepare(`
+	const { success } = await c.env.DB.prepare(
+		`
     insert into comments (author, body, post_slug) values (?, ?, ?)
-  `).bind(author, body, slug).run()
+  `,
+	)
+		.bind(author, body, slug)
+		.run();
 
-  if (success) {
-    c.status(201)
-    return c.text("Created")
-  } else {
-    c.status(500)
-    return c.text("Something went wrong")
-  }
-})
+	if (success) {
+		c.status(201);
+		return c.text("Created");
+	} else {
+		c.status(500);
+		return c.text("Something went wrong");
+	}
+});
 ```
 
 ## 7. Deploy your Hono application
@@ -191,14 +207,14 @@ database_id = "<YOUR_DATABASE_UUID>"
 Now, run `npx wrangler deploy` to deploy your project to Cloudflare.
 
 ```sh
-$ npx wrangler deploy
+npx wrangler deploy
 ```
 
 When it has successfully deployed, test the API by making a `GET` request to retrieve comments for an associated post. Since you have no posts yet, this response will be empty, but it will still make a request to the D1 database regardless, which you can use to confirm that the application has deployed correctly:
 
 ```sh
 # Note: Your workers.dev deployment URL may be different
-$ curl https://d1-example.signalnerve.workers.dev/api/posts/hello-world/comments
+curl https://d1-example.signalnerve.workers.dev/api/posts/hello-world/comments
 [
   {
     "id": 1,
@@ -213,14 +229,14 @@ $ curl https://d1-example.signalnerve.workers.dev/api/posts/hello-world/comments
 
 This application is an API back-end, best served for use with a front-end UI for creating and viewing comments. To test this back-end with a prebuild front-end UI, refer to the example UI in the [example-frontend directory](https://github.com/cloudflare/workers-sdk/tree/main/templates/worker-d1-api/example-frontend). Notably, the [`loadComments` and `submitComment` functions](https://github.com/cloudflare/workers-sdk/tree/main/templates/worker-d1-api/example-frontend/src/views/PostView.vue#L57-L82) make requests to a deployed version of this site, meaning you can take the frontend and replace the URL with your deployed version of the codebase in this tutorial to use your own data.
 
-Interacting with this API from a front-end will require enabling specific Cross-Origin Resource Sharing (or *CORS*) headers in your back-end API. Hono allows you to enable Cross-Origin Resource Sharing for your application. Import the `cors` module and add it as middleware to your API in `src/worker.js`:
+Interacting with this API from a front-end will require enabling specific Cross-Origin Resource Sharing (or _CORS_) headers in your back-end API. Hono allows you to enable Cross-Origin Resource Sharing for your application. Import the `cors` module and add it as middleware to your API in `src/worker.js`:
 
 ```typescript null {5}
-import { Hono } from 'hono';
-import { cors } from 'hono/cors';
+import { Hono } from "hono";
+import { cors } from "hono/cors";
 
 const app = new Hono();
-app.use('/api/*', cors());
+app.use("/api/*", cors());
 ```
 
 Now, when you make requests to `/api/*`, Hono will automatically generate and add CORS headers to responses from your API, allowing front-end UIs to interact with it without erroring.

@@ -3,8 +3,9 @@ pcx_content_type: reference
 title: Rate limiting parameters
 sidebar:
   order: 18
-
 ---
+
+import { Type } from "~/components";
 
 The available rate limiting rule parameters are described in the following sections.
 
@@ -12,15 +13,15 @@ The available rate limiting rule parameters are described in the following secti
 
 ### If incoming requests match
 
-* Data type: `String`.
-* Field name in the API: `expression` (rule field).
+- Data type: <Type text="String" />
+- Field name in the API: `expression` (rule field)
 
 Defines the criteria for the rate limiting rule to match a request.
 
 ### Also apply rate limiting to cached assets
 
-* Data type: `Boolean`.
-* Field name in the API: `requests_to_origin` (optional, with the opposite meaning of the Cloudflare dashboard option).
+- Data type: <Type text="Boolean" />
+- Field name in the API: `requests_to_origin` (optional, with the opposite meaning of the Cloudflare dashboard option)
 
 If this parameter is disabled (or when the `requests_to_origin` API field is set to `true`), only the requests going to the origin (that is, requests that are not cached) will be considered when determining the request rate.
 
@@ -28,54 +29,51 @@ In some cases, you cannot disable the **Also apply rate limiting to cached asset
 
 ### With the same characteristics
 
-* Data type: `Array<String>`.
-* Field name in the API: `characteristics`.
+- Data type: <Type text="Array<String>" />
+- Field name in the API: `characteristics`
 
 Set of parameters defining how Cloudflare tracks the request rate for the rule.
 
 Use one or more of the following characteristics:
 
-| Dashboard value  | API value | Notes |
-| --- | --- | --- |
-| N/A(implicitly included) | `cf.colo.id`(mandatory) | [Do not use in expressions](#do-not-use-cfcoloid-as-a-field-in-expressions) |
-| IP | `ip.src` | [Incompatible with **IP with NAT support**](#incompatible-characteristics) |
-| IP with NAT support | `cf.unique_visitor_id` | [Incompatible with **IP**](#incompatible-characteristics)
-| **Header value of** (enter header name) | `http.request.headers["<header_name>"]` | [Use lowercased header name in API](#use-a-lowercased-header-name-for-api-users) and [Missing field versus empty value](#missing-field-versus-empty-value) |
-| **Cookie value of** (enter cookie name) |  `http.request.cookies["<cookie_name>"]` | [Recommended configurations](#recommended-configurations-when-using-cookie-value-of) and [Missing field versus empty value](#missing-field-versus-empty-value) |
-| **Query value of** (enter parameter name) | `http.request.uri.args["<query_param_name>"]` | [Missing field versus empty value](#missing-field-versus-empty-value) |
-| **Host** | `http.host` |
-| **Path** | `http.request.uri.path` |
-| **AS Num** | `ip.geoip.asnum` |
-| **Country** | `ip.geoip.country` |
-| **JA3 Fingerprint** | `cf.bot_management.ja3_hash` |
-| **JA4** | `cf.bot_management.ja4` |
-| **JSON string value of** (enter key) | `lookup_json_string(http.request.body.raw, "<key>")` | [Missing field versus empty value](#missing-field-versus-empty-value) and [`lookup_json_string()` function reference](/ruleset-engine/rules-language/functions/#function-lookup_json_string) |
-| **JSON integer value of** (enter key) | `lookup_json_integer(http.request.body.raw, "<key>")` | [Missing field versus empty value](#missing-field-versus-empty-value) and [`lookup_json_integer()` function reference](/ruleset-engine/rules-language/functions/#function-lookup_json_integer) |
-| **Form input value of** (enter field name) | `http.request.body.form["<input_field_name>"]` | [Missing field versus empty value](#missing-field-versus-empty-value) |
-| **JWT claim of** (enter token configuration ID, claim name) | `lookup_json_string(http.request.jwt.claims["<token_configuration_id>"][0], "<claim_name>")` | [Missing field versus empty value](#missing-field-versus-empty-value) and [JWT Validation reference](/api-shield/security/jwt-validation/transform-rules/) |
-| **Body** | `http.request.body.raw` |
-| **Body size** (select operator, enter size) | `http.request.body.size` |
-| **Custom** (enter expression) | Enter a custom expression. You can use a function such as `substring()` or `lower()`, or enter a more complex expression. | [Functions](/ruleset-engine/rules-language/functions/) |
-
-
+| Dashboard value                                             | API value                                                                                                                 | Notes                                                                                                                                                                                 |
+| ----------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| N/A(implicitly included)                                    | `cf.colo.id`(mandatory)                                                                                                   | [Do not use in expressions](#do-not-use-cfcoloid-as-a-field-in-expressions)                                                                                                           |
+| IP                                                          | `ip.src`                                                                                                                  | [Incompatible with **IP with NAT support**](#incompatible-characteristics)                                                                                                            |
+| IP with NAT support                                         | `cf.unique_visitor_id`                                                                                                    | [Incompatible with **IP**](#incompatible-characteristics)                                                                                                                             |
+| **Header value of** (enter header name)                     | `http.request.headers["<header_name>"]`                                                                                   | [Use lowercased header name in API](#use-a-lowercased-header-name-for-api-users) and [Missing field versus empty value](#missing-field-versus-empty-value)                            |
+| **Cookie value of** (enter cookie name)                     | `http.request.cookies["<cookie_name>"]`                                                                                   | [Recommended configurations](#recommended-configurations-when-using-cookie-value-of) and [Missing field versus empty value](#missing-field-versus-empty-value)                        |
+| **Query value of** (enter parameter name)                   | `http.request.uri.args["<query_param_name>"]`                                                                             | [Missing field versus empty value](#missing-field-versus-empty-value)                                                                                                                 |
+| **Host**                                                    | `http.host`                                                                                                               |
+| **Path**                                                    | `http.request.uri.path`                                                                                                   |
+| **AS Num**                                                  | `ip.geoip.asnum`                                                                                                          |
+| **Country**                                                 | `ip.geoip.country`                                                                                                        |
+| **JA3 Fingerprint**                                         | `cf.bot_management.ja3_hash`                                                                                              |
+| **JA4**                                                     | `cf.bot_management.ja4`                                                                                                   |
+| **JSON string value of** (enter key)                        | `lookup_json_string(http.request.body.raw, "<key>")`                                                                      | [Missing field versus empty value](#missing-field-versus-empty-value) and [`lookup_json_string()` function reference](/ruleset-engine/rules-language/functions/#lookup_json_string)   |
+| **JSON integer value of** (enter key)                       | `lookup_json_integer(http.request.body.raw, "<key>")`                                                                     | [Missing field versus empty value](#missing-field-versus-empty-value) and [`lookup_json_integer()` function reference](/ruleset-engine/rules-language/functions/#lookup_json_integer) |
+| **Form input value of** (enter field name)                  | `http.request.body.form["<input_field_name>"]`                                                                            | [Missing field versus empty value](#missing-field-versus-empty-value)                                                                                                                 |
+| **JWT claim of** (enter token configuration ID, claim name) | `lookup_json_string(http.request.jwt.claims["<token_configuration_id>"][0], "<claim_name>")`                              | [Missing field versus empty value](#missing-field-versus-empty-value) and [JWT Validation reference](/api-shield/security/jwt-validation/transform-rules/)                            |
+| **Body**                                                    | `http.request.body.raw`                                                                                                   |
+| **Body size** (select operator, enter size)                 | `http.request.body.size`                                                                                                  |
+| **Custom** (enter expression)                               | Enter a custom expression. You can use a function such as `substring()` or `lower()`, or enter a more complex expression. | [Functions](/ruleset-engine/rules-language/functions/)                                                                                                                                |
 
 The available characteristics depend on your Cloudflare plan. Refer to [Availability](/waf/rate-limiting-rules/#availability) for more information.
 
 :::caution
-
-For important details about these characteristics, refer to [Notes about rate limiting characteristics](#notes-about-rate-limiting-characteristics). 
+For important details about these characteristics, refer to [Notes about rate limiting characteristics](#notes-about-rate-limiting-characteristics).
 :::
 
 ### Increment counter when
 
-* Data type: `String`.
-* Field name in the API: `counting_expression` (optional).
+- Data type: <Type text="String" />
+- Field name in the API: `counting_expression` (optional)
 
 Only available in the Cloudflare dashboard when you enable **Use custom counting expression**.
 
 Defines the criteria used for determining the request rate. By default, the counting expression is the same as the rule matching expression (defined in **If incoming requests match**). This default is also applied when you set this field to an empty string (`""`).
 
-The counting expression can include [HTTP response fields](/ruleset-engine/rules-language/fields/#http-response-fields). When there are response fields in the counting expression, the counting will happen after the response is sent.
+The counting expression can include [HTTP response fields](/ruleset-engine/rules-language/fields/http-request-response/). When there are response fields in the counting expression, the counting will happen after the response is sent.
 
 In some cases, you cannot include HTTP response fields in the counting expression due to configuration restrictions. Refer to [Configuration restrictions](#configuration-restrictions) for details.
 
@@ -83,20 +81,20 @@ In some cases, you cannot include HTTP response fields in the counting expressio
 
 If you set a custom counting expression, it will not automatically extend the rule matching expression. Therefore, you may wish to include the matching expression in the counting expression.
 
-For example, you might want to perform rate limiting for clients sending more than five requests to `/api/` resulting in a `403` HTTP status code from the origin server. In this case, the matching expression would be `starts_with(http.request.uri.path, "/api/")` and the counting expression would be `http.response.code eq 403 and starts_with(http.request.uri.path, "/api/")`. If the counting expression did not include the matching expression (that is, if you had set the counting expression to `http.response.code eq 403`), any response with a `403` status code on any URL would increase the counter. 
+For example, you might want to perform rate limiting for clients sending more than five requests to `/api/` resulting in a `403` HTTP status code from the origin server. In this case, the matching expression would be `starts_with(http.request.uri.path, "/api/")` and the counting expression would be `http.response.code eq 403 and starts_with(http.request.uri.path, "/api/")`. If the counting expression did not include the matching expression (that is, if you had set the counting expression to `http.response.code eq 403`), any response with a `403` status code on any URL would increase the counter.
 :::
 
 ### When rate exceeds > Requests
 
-* Data type: `Integer`.
-* Field name in the API: `requests_per_period`.
+- Data type: <Type text="Integer" />
+- Field name in the API: `requests_per_period`
 
 The number of requests over the period of time that will trigger the rule.
 
 ### When rate exceeds > Period
 
-* Data type: `Integer`.
-* Field name in the API: `period`.
+- Data type: <Type text="Integer" />
+- Field name in the API: `period`
 
 The period of time to consider (in seconds) when evaluating the request rate. The available values [vary according to your Cloudflare plan](/waf/rate-limiting-rules/#availability).
 
@@ -104,50 +102,50 @@ The available API values are: `10`, `60` (one minute), `120` (two minutes), `300
 
 ### Then take action
 
-* Data type: `String`.
-* Field name in the API: `action` (rule field).
+- Data type: <Type text="String" />
+- Field name in the API: `action` (rule field)
 
 Action to perform when the rate specified in the rule is reached.
 
 Use one of the following values in the API: `block`, `challenge`, `js_challenge`, `managed_challenge`, or `log`.
 
-If you select the *Block* action, you can define a custom response using the following parameters:
+If you select the _Block_ action, you can define a custom response using the following parameters:
 
-* [**With response type**](#with-response-type)
-* [**With response code**](#with-response-code)
-* [**Response body**](#response-body)
+- [**With response type**](#with-response-type-for-block-action)
+- [**With response code**](#with-response-code-for-block-action)
+- [**Response body**](#response-body-for-block-action)
 
-#### With response type (for *Block* action)
+#### With response type (for _Block_ action)
 
-* Data type: `String`.
-* Field name in the API: `response` > `content_type` (optional).
+- Data type: <Type text="String" />
+- Field name in the API: `response` > `content_type` (optional)
 
-Defines the content type of a custom response when blocking a request due to rate limiting. Only available when you set the [rule action](#then-take-action) to *Block*.
+Defines the content type of a custom response when blocking a request due to rate limiting. Only available when you set the [rule action](#then-take-action) to _Block_.
 
 Available API values: `application/json`, `text/html`, `text/xml`, or `text/plain`.
 
-#### With response code (for *Block* action) 
+#### With response code (for _Block_ action)
 
-* Data type: `Integer`.
-* Field name in the API: `response` > `status_code` (optional).
+- Data type: <Type text="Integer" />
+- Field name in the API: `response` > `status_code` (optional)
 
-Defines the HTTP status code returned to the visitor when blocking the request due to rate limiting. Only available when you set the [rule action](#then-take-action) to *Block*.
+Defines the HTTP status code returned to the visitor when blocking the request due to rate limiting. Only available when you set the [rule action](#then-take-action) to _Block_.
 
 You must enter a value between `400` and `499`. The default value is `429` (`Too many requests`).
 
-#### Response body (for *Block* action)
+#### Response body (for _Block_ action)
 
-* Data type: `String`.
-* Field name in the API: `response` > `content` (optional).
+- Data type: <Type text="String" />
+- Field name in the API: `response` > `content` (optional)
 
-Defines the body of the returned HTTP response when the request is blocked due to rate limiting. Only available when you set the [rule action](#then-take-action) to *Block*.
+Defines the body of the returned HTTP response when the request is blocked due to rate limiting. Only available when you set the [rule action](#then-take-action) to _Block_.
 
 The maximum field size is 30 KB.
 
 ### For duration
 
-* Data type: `Integer`.
-* Field name in the API: `mitigation_timeout`.
+- Data type: <Type text="Integer" />
+- Field name in the API: `mitigation_timeout`
 
 Once the rate is reached, the rate limiting rule applies the rule action to further requests for the period of time defined in this field (in seconds).
 
@@ -157,34 +155,34 @@ Customers on Free, Pro, and Business plans cannot select a duration when using a
 
 Enterprise customers can always configure a duration (or mitigation timeout), even when using one of the challenge actions.
 
-  :::note[Notes for API users]
+:::note[Notes for API users]
 
-
-  * If you are on a Free, Pro, or Business plan and are using the API, you must enable request throttling by setting the `mitigation_timeout` value to `0` (zero) when using the actions `managed_challenge`, `js_challenge`, or `challenge`.
-  * Enterprise customers can use a `mitigation_timeout` value greater than or equal to `0` (zero), regardless of the rate limiting action they select. 
+- If you are on a Free, Pro, or Business plan and are using the API, you must enable request throttling by setting the `mitigation_timeout` value to `0` (zero) when using the actions `managed_challenge`, `js_challenge`, or `challenge`.
+- Enterprise customers can use a `mitigation_timeout` value greater than or equal to `0` (zero), regardless of the rate limiting action they select.
   :::
 
 ### With the following behavior
 
-* Data type: `Integer`.
-* Field name in the API: `mitigation_timeout`.
+- Data type: <Type text="Integer" />
+- Field name in the API: `mitigation_timeout`
 
 Defines the exact behavior of the selected action.
 
 :::note
 
-Only Enterprise customers can throttle requests using the *Block* action.
+Only Enterprise customers can throttle requests using the _Block_ action.
 
-Other users can throttle requests using a challenge action, or perform the action during a period of time. Refer to [For duration](#for-duration) for details. 
+Other users can throttle requests using a challenge action, or perform the action during a period of time. Refer to [For duration](#for-duration) for details.
+
 :::
 
 The action behavior can be one of the following:
 
-* **Perform action during the selected duration**: Applies the configured action to all requests received during the selected duration. To configure this behavior via API, set `mitigation_timeout` to a value greater than zero. Refer to [For duration](#for-duration) for more information.
+- **Perform action during the selected duration**: Applies the configured action to all requests received during the selected duration. To configure this behavior via API, set `mitigation_timeout` to a value greater than zero. Refer to [For duration](#for-duration) for more information.
 
   ![Chart displaying the action of a rate limiting rule configured to apply its action during the entire mitigation period](~/assets/images/waf/rate-limiting-rules/behavior-apply-action-for-duration.png)
 
-* **Throttle requests over the maximum configured rate**: Applies the selected action to incoming requests over the configured limit, allowing other requests. To configure this behavior via API, set `mitigation_timeout` to `0` (zero).
+- **Throttle requests over the maximum configured rate**: Applies the selected action to incoming requests over the configured limit, allowing other requests. To configure this behavior via API, set `mitigation_timeout` to `0` (zero).
 
   ![Chart displaying the behavior of a rate limiting configured to throttle requests above the configured limit](~/assets/images/waf/rate-limiting-rules/behavior-throttle.png)
 
@@ -222,11 +220,11 @@ Where `<header_name>` is the same header name used as a rate limiting characteri
 
 If you use **Cookie value of** as a rate limiting rule characteristic, follow these recommendations:
 
-* Create a [custom rule](/waf/custom-rules/) that blocks requests with more than one value for the cookie.
-* Validate the cookie value at the origin before performing any demanding server operations.
+- Create a [custom rule](/waf/custom-rules/) that blocks requests with more than one value for the cookie.
+- Validate the cookie value at the origin before performing any demanding server operations.
 
 ## Configuration restrictions
 
-* If the rule expression [includes IP lists](/waf/tools/lists/use-in-expressions/), you must enable the **Also apply rate limiting to cached assets** parameter.
+- If the rule expression [includes IP lists](/waf/tools/lists/use-in-expressions/), you must enable the **Also apply rate limiting to cached assets** parameter.
 
-* The rule counting expression, defined in the **Increment counter when** parameter, cannot include both [HTTP response fields](/ruleset-engine/rules-language/fields/#http-response-fields) and [IP lists](/waf/tools/lists/custom-lists/#ip-lists). If you use IP lists, you must enable the **Also apply rate limiting to cached assets** parameter.
+- The rule counting expression, defined in the **Increment counter when** parameter, cannot include both [HTTP response fields](/ruleset-engine/rules-language/fields/http-request-response/) and [IP lists](/waf/tools/lists/custom-lists/#lists-with-ip-addresses-ip-lists). If you use IP lists, you must enable the **Also apply rate limiting to cached assets** parameter.

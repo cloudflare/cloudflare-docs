@@ -34,22 +34,25 @@ import "instantsearch.css/themes/satellite.css";
 
 	// Functions needed for dropdowns, pulled from https://www.algolia.com/doc/guides/building-search-ui/ui-and-ux-patterns/facet-dropdown/js/
 
-	function hasClassName(elem, className) {
+	function hasClassName(elem: HTMLElement | null, className: string) {
+		if (!elem) return;
 		return elem.className.split(" ").indexOf(className) >= 0;
 	}
 
-	function addClassName(elem, className) {
+	function addClassName(elem: HTMLElement | null, className: string) {
+		if (!elem) return;
 		elem.className = [...elem.className.split(" "), className].join(" ");
 	}
 
-	function removeClassName(elem, className) {
+	function removeClassName(elem: HTMLElement | null, className: string) {
+		if (!elem) return;
 		elem.className = elem.className
 			.split(" ")
 			.filter((name) => name !== className)
 			.join(" ");
 	}
 
-	function capitalize(str) {
+	function capitalize(str: string) {
 		if (typeof str !== "string") return "";
 		return str.charAt(0).toUpperCase() + str.slice(1);
 	}
@@ -58,15 +61,20 @@ import "instantsearch.css/themes/satellite.css";
 	const CLASS_BUTTON = "ais-Dropdown-button";
 	const CLASS_CLOSE_BUTTON = "ais-Dropdown-close";
 
-	const cx = (...args) => args.filter(Boolean).join(" ");
+	const cx = (...args: string[]) => args.filter(Boolean).join(" ");
 
 	export function createDropdown(
-		baseWidget,
+		baseWidget: any,
 		{
 			cssClasses: userCssClasses = {},
 			buttonText,
 			buttonClassName,
 			closeOnChange,
+		}: {
+			cssClasses?: Record<string, string>;
+			buttonText?: string;
+			buttonClassName?: string | ((options: any) => string);
+			closeOnChange?: boolean | (() => boolean);
 		} = {},
 	) {
 		// Merge class names with the default ones and the ones from user
@@ -79,7 +87,7 @@ import "instantsearch.css/themes/satellite.css";
 			),
 			closeButton: cx(CLASS_CLOSE_BUTTON, userCssClasses.closeButton),
 		};
-		const makeWidget = panel({
+		const makeWidget = panel<typeof refinementList>({
 			cssClasses,
 			templates: {
 				header: (options) => {
@@ -121,10 +129,14 @@ import "instantsearch.css/themes/satellite.css";
 			},
 		})(baseWidget);
 
-		return (widgetParams) => {
+		return (widgetParams: any) => {
 			const widget = makeWidget(widgetParams);
-			let state = {};
-			let rootElem, headerElem, closeButtonElem;
+			let state: {
+				windowClickListener?: (event: MouseEvent) => void;
+			} = {};
+			let rootElem: HTMLElement | null;
+			let headerElem: HTMLElement | null;
+			let closeButtonElem: HTMLButtonElement | null;
 
 			const open = () => {
 				addClassName(rootElem, CLASS_OPENED);
@@ -134,7 +146,7 @@ import "instantsearch.css/themes/satellite.css";
 				setTimeout(() => {
 					state.windowClickListener = (event) => {
 						// Close if the outside is clicked
-						if (!event.composedPath().includes(rootElem)) {
+						if (rootElem && !event.composedPath().includes(rootElem)) {
 							close();
 						}
 					};
@@ -145,7 +157,9 @@ import "instantsearch.css/themes/satellite.css";
 			const close = () => {
 				removeClassName(rootElem, CLASS_OPENED);
 				// Remove the event listener when the panel is closed
-				window.removeEventListener("click", state.windowClickListener);
+				if (state.windowClickListener) {
+					window.removeEventListener("click", state.windowClickListener);
+				}
 				delete state.windowClickListener;
 			};
 			const isOpened = () => hasClassName(rootElem, CLASS_OPENED);
@@ -158,10 +172,10 @@ import "instantsearch.css/themes/satellite.css";
 			};
 
 			// Add a click listener to the header (button) and the caret symbol
-			const buttonListener = (event) => {
+			const buttonListener = (event: MouseEvent) => {
 				if (
-					!event.target.matches("." + CLASS_BUTTON) &&
-					!event.target.matches(".caretDownFilter")
+					!(event.target as HTMLElement)?.matches("." + CLASS_BUTTON) &&
+					!(event.target as HTMLElement)?.matches(".caretDownFilter")
 				) {
 					return;
 				}
@@ -170,7 +184,7 @@ import "instantsearch.css/themes/satellite.css";
 
 			// Setup a clean-up function, which will be called in `dispose`.
 			const cleanUp = () => {
-				headerElem.removeEventListener("click", buttonListener);
+				headerElem?.removeEventListener("click", buttonListener);
 				if (state.windowClickListener) {
 					window.removeEventListener("click", state.windowClickListener);
 				}
@@ -180,7 +194,7 @@ import "instantsearch.css/themes/satellite.css";
 			return {
 				...widget,
 				$$widgetType: "cmty.facetDropdown",
-				render: (options) => {
+				render: (options: any) => {
 					if (!rootElem) {
 						rootElem = document
 							.querySelector(widgetParams.container)
@@ -188,15 +202,16 @@ import "instantsearch.css/themes/satellite.css";
 					}
 
 					if (!headerElem) {
-						headerElem = rootElem.querySelector(".ais-Panel-header");
+						headerElem = rootElem?.querySelector(".ais-Panel-header") ?? null;
 
-						headerElem.addEventListener("click", buttonListener);
+						headerElem?.addEventListener("click", buttonListener);
 					}
 
 					if (!closeButtonElem) {
-						closeButtonElem = rootElem.querySelector("." + CLASS_CLOSE_BUTTON);
+						closeButtonElem =
+							rootElem?.querySelector("." + CLASS_CLOSE_BUTTON) ?? null;
 
-						closeButtonElem.addEventListener("click", close);
+						closeButtonElem?.addEventListener("click", close);
 					}
 
 					// Whenever uiState changes, it closes the panel.
@@ -217,7 +232,7 @@ import "instantsearch.css/themes/satellite.css";
 
 					return widget.render.call(widget, options);
 				},
-				dispose: (options) => {
+				dispose: (options: any) => {
 					if (typeof cleanUp === "function") {
 						cleanUp();
 					}
@@ -236,6 +251,7 @@ import "instantsearch.css/themes/satellite.css";
 
 	const search = instantsearch({
 		indexName: indexName,
+		// @ts-expect-error TODO: improve types
 		searchClient,
 		insights: true,
 		routing: {
@@ -257,6 +273,7 @@ import "instantsearch.css/themes/satellite.css";
 							indexUiState.refinementList.content_type,
 					};
 				},
+				// @ts-expect-error TODO: improve types
 				routeToState(routeState) {
 					return {
 						[indexName]: {
@@ -355,6 +372,7 @@ import "instantsearch.css/themes/satellite.css";
 			},
 		}),
 		configure({
+			// @ts-expect-error TODO: improve types
 			hitsPerPage: 10,
 			attributesToSnippet: ["content:30"],
 		}),

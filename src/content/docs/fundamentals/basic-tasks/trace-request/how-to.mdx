@@ -4,7 +4,6 @@ title: Use Cloudflare Trace
 sidebar:
   order: 2
   badge:
-    variant: caution
     text: Beta
 head:
   - tag: title
@@ -35,9 +34,9 @@ import { GlossaryTooltip } from "~/components"
    * **Protocol** (HTTP protocol version)
    * **Request headers**
    * **Cookies**
-   * **Geolocation** (request source [country](/ruleset-engine/rules-language/fields/#field-ip-src-country), [region](/ruleset-engine/rules-language/fields/#field-ip-src-region_code), and [city](/ruleset-engine/rules-language/fields/#field-ip-src-city))
+   * **Geolocation** (request source [country](/ruleset-engine/rules-language/fields/standard-fields/#ipsrccountry), [region](/ruleset-engine/rules-language/fields/standard-fields/#ipsrcregion), and [city](/ruleset-engine/rules-language/fields/standard-fields/#ipsrccity))
    * [**Bot score**](/bots/concepts/bot-score/)
-   * <GlossaryTooltip term="threat score" link="/ruleset-engine/rules-language/fields/#field-cf-threat_score">**Threat score**</GlossaryTooltip>
+   * <GlossaryTooltip term="threat score" link="/ruleset-engine/rules-language/fields/dynamic-fields/#cfthreat_score">**Threat score**</GlossaryTooltip>
    * **Request body** (for `POST`, `PUT`, and `PATCH` requests)
    * **Skip challenge** (skips a Cloudflare-issued [challenge](/waf/reference/cloudflare-challenges/), if any, allowing the trace to continue)
 

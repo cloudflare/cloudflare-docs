@@ -11,7 +11,7 @@ product:
 meta:
   title: Constellation docs
   description: Run machine learning models with Cloudflare Workers.
-  author: '@cloudflare'
+  author: "@cloudflare"
 
 resources:
   community: https://community.cloudflare.com/tag/constellation
@@ -23,6 +23,6 @@ externals:
     url: https://discord.cloudflare.com
 
 algolia:
-  index: developers-cloudflare2
+  index: TEST - Re-dev docs
   apikey: 4edb0a6cef3338ff4bcfbc6b3d2db56b
   product: constellation

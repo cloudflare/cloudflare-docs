@@ -6,10 +6,9 @@ title: Connect to AWS RDS and Aurora
 sidebar:
   order: 11
 description: Connect Hyperdrive to an AWS RDS or Aurora database instance.
-
 ---
 
-import { Render } from "~/components"
+import { Render } from "~/components";
 
 This example shows you how to connect Hyperdrive to an Amazon Relational Database Service (Amazon RDS) Postgres or Amazon Aurora database instance.
 
@@ -31,11 +30,9 @@ When creating or modifying an instance in the AWS console:
 
 :::caution
 
-
 You must ensure that the [VPC security group](https://docs.aws.amazon.com/vpc/latest/userguide/vpc-security-groups.html) associated with your database allows public IPv4 access to your database port.
 
 Refer to AWS' [database server rules](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/security-group-rules-reference.html#sg-rules-db-server) for details on how to configure rules specific to your RDS or Aurora database.
-
 
 :::
 
@@ -65,7 +62,7 @@ To create a new user, log in to the database and use the `CREATE ROLE` command:
 
 ```sh
 # Log in to the database
-$ psql postgresql://MASTER_USERNAME:MASTER_PASSWORD@ENDPOINT_NAME:PORT/database_name
+psql postgresql://MASTER_USERNAME:MASTER_PASSWORD@ENDPOINT_NAME:PORT/database_name
 ```
 
 Run the following SQL statements:

@@ -4,10 +4,9 @@ source: https://support.cloudflare.com/hc/en-us/articles/360017421192-Cloudflare
 title: General FAQ
 sidebar:
   order: 1
-
 ---
 
-import { Render } from "~/components"
+import { Render } from "~/components";
 
 ## Is Cloudflare a free DNS (domain nameserver) provider?
 
@@ -16,7 +15,7 @@ Yes. Cloudflare offers [free DNS services](https://www.cloudflare.com/dns) to 
 1. You do not need to change your hosting provider to use Cloudflare.
 2. You do not need to move away from your registrar. The only change you make with your registrar is to point the authoritative nameservers to the Cloudflare nameservers.
 
-***
+---
 
 ## Does Cloudflare charge for or limit DNS queries?
 
@@ -26,7 +25,7 @@ For customers on Free, Pro, or Business plans, Cloudflare does not charge for DN
 
 For customers on Enterprise plans, Cloudflare uses the number of monthly DNS queries as a pricing input to generate a custom quote.
 
-***
+---
 
 ## Where do I change my nameservers to point to Cloudflare?
 
@@ -34,36 +33,45 @@ Make the change at your registrar, which may or may not be your hosting provider
 
 :::caution
 
-Some country code TLDs may not be supported by ICANN Lookup. If that is the case, use a different WHOis search tool. 
+Some country code TLDs may not be supported by ICANN Lookup. If that is the case, use a different WHOis search tool.
 :::
 
 Once you identify your registrar, follow the instructions in [change nameservers to Cloudflare](/dns/zone-setups/full-setup/setup/#update-your-nameservers).
 
-***
+---
 
 ## Does Cloudflare limit the number of DNS records a domain can have?
 
 Yes. All customers have a limit on the number of DNS records they can create.
 
-Pro, Business, and Enterprise have a limit of 3,500 DNS records.
+- Free zones created before `2024-09-01 00:00:00 UTC`: 1,000
+- Free zones created on or after `2024-09-01 00:00:00 UTC`: 200
+- Pro: 3,500
+- Business: 3,500
+- Enterprise: 3,500
 
-If you are an Enterprise customer, contact your account team if you require more DNS records. Cloudflare can support millions of DNS records on a single zone.
+:::note[For more DNS records]
 
-***
+If you are an Enterprise customer and require more DNS records, contact your account team. Cloudflare can support millions of DNS records on a single zone.
+
+:::
+
+
+---
 
 ## Which record types does Cloudflare not proxy?
 
 Cloudflare does not proxy the following record types:
 
-* `LOC`
-* `MX`
-* `NS`
-* `SPF`
-* `TXT`
-* `SRV`
-* `CAA`
+- `LOC`
+- `MX`
+- `NS`
+- `SPF`
+- `TXT`
+- `SRV`
+- `CAA`
 
-***
+---
 
 ## Can I CNAME a domain not on Cloudflare to a domain that is on Cloudflare?
 
@@ -71,13 +79,13 @@ No. If you would like to do a redirect for a site not on Cloudflare, then set up
 
 Redirecting non-Cloudflare sites via `CNAME` records would cause a DNS resolution error. Since Cloudflare is a reverse proxy for the domain that is on Cloudflare, the `CNAME` redirect for the domain (not on Cloudflare) would not know where to send the traffic to.
 
-***
+---
 
 ## Does Cloudflare support wildcard DNS entries?
 
 Cloudflare supports proxying wildcard '\*' record for DNS management in all customer plans.
 
-***
+---
 
 ## How long does it take for a DNS change I made to push out?
 
@@ -85,13 +93,13 @@ By default, any changes or additions you make to your Cloudflare zone file will 
 
 This setting is controlled by the Time-to-Live (TTL) value on a [DNS record](/dns/manage-dns-records/how-to/create-dns-records/). Proxied records update within 300 seconds (Auto), but the TTL for unproxied records can be customized.
 
-***
+---
 
 ## Does Cloudflare offer domain masking?
 
 No. Cloudflare does not offer domain masking or DNS redirect services (your hosting provider might). However, we do offer URL forwarding through [Bulk Redirects](/rules/url-forwarding/bulk-redirects/).
 
-***
+---
 
 ## Why can't I make ANY queries to Cloudflare DNS servers?
 
@@ -107,7 +115,7 @@ The decision to block `ANY` queries was implemented for all Authoritative DNS cu
 
 Read [Deprecating the DNS ANY meta-query type](https://blog.cloudflare.com/deprecating-dns-any-meta-query-type/) in the Cloudflare blog.
 
-***
+---
 
 ## Why do I have to remove my `DS` record when signing up for Cloudflare?
 
@@ -115,13 +123,13 @@ Read [Deprecating the DNS ANY meta-query type](https://blog.cloudflare.com/depr
 
 For more help, refer to [Enabling DNSSEC in Cloudflare](/dns/dnssec/).
 
-***
+---
 
 ## What happens when I remove the `DS` record?
 
 When you remove your DS record, an invalidation process begins which results in the unsigning of your domain’s DNS records. This will allow your authoritative nameservers to be changed. If you are an existing customer, this will not affect your ability to use Cloudflare. New customers will need to complete this step before Cloudflare can be used successfully.
 
-***
+---
 
 ## Does Cloudflare support EDNS0 (extension mechanisms for DNS)?
 
@@ -129,13 +137,13 @@ Yes, Cloudflare DNS supports EDNS0. EDNS0 is enabled for all Cloudflare customer
 
 EDNS0 is the first approved set of mechanisms for [DNS extensions](http://en.wikipedia.org/wiki/Extension_mechanisms_for_DNS), originally published as [RFC 2671](https://datatracker.ietf.org/doc/html/rfc2671).
 
-***
+---
 
 ## What should I do if I change my server IP address or hosting provider?
 
 After switching hosting providers or server IP addresses, update the IP addresses in your Cloudflare **DNS** app. Your new hosting provider will provide the new IP addresses that your DNS should use.  To modify DNS record content in the **DNS** app, click on the IP address, and enter the new IP address.
 
-***
+---
 
 ## Where can I find my Cloudflare nameservers?
 
@@ -144,29 +152,32 @@ Under the **DNS** app of your Cloudflare account, review the **Cloudflare Nam
 The IP address associated with a specific Cloudflare nameserver can be retrieved via a dig command or a third-party DNS lookup tool hosted online such as [whatsmydns.net](https://www.whatsmydns.net/):
 
 ```sh
-$ dig kate.ns.cloudflare.com
+dig kate.ns.cloudflare.com
+```
+
+```sh output
 kate.ns.cloudflare.com.    68675    IN    A    173.245.58.124.
 ```
 
-***
+---
 
 ## Why are Cloudflare's A or AAAA records / IP addresses for my domain's DNS responses appearing?
 
 For DNS records proxied to Cloudflare, Cloudflare's IP addresses are returned in DNS queries instead of your original server IP address. This allows Cloudflare to optimize, cache, and protect all requests for your website.
 
-***
+---
 
 ## Should the cloud icon beside my DNS record be orange or gray?
 
 By default, only A and CNAME records that handle web traffic (HTTP and HTTPS) can be proxied to Cloudflare. All other DNS records should be toggled to a gray cloud. For further details, refer to our [support guide](/dns/manage-dns-records/reference/proxied-dns-records).
 
-***
+---
 
 ## Can subdomains be added directly to Cloudflare?
 
 Only Enterprise customers can add subdomains directly to Cloudflare via [Subdomain Support](/dns/zone-setups/subdomain-setup/).
 
-***
+---
 
 ## 403 Authentication error when creating DNS records using Terraform
 
@@ -176,13 +187,13 @@ Only Enterprise customers can add subdomains directly to Cloudflare via [Subdom
 
 **Root Cause**
 
-Error seems to be misleading, as the error was found to be in customer code syntax, specifically: zone\_id = data.cloudflare\_zones.example\_com.id
+Error seems to be misleading, as the error was found to be in customer code syntax, specifically: zone_id = data.cloudflare_zones.example_com.id
 
 **Solution**
 
 Make sure the argument `zone_id = data.cloudflare_zones.example_com.zones[0].id`. A more detailed use case can be found in [this](https://github.com/cloudflare/terraform-provider-cloudflare/issues/913) GitHub thread.
 
-***
+---
 
 ## Why am I getting hundreds of random DNS records after adding my domain?
 
@@ -194,23 +205,23 @@ You can also:
 2. Delete the wildcard record from your authoritative DNS.
 3. [Re-add](/fundamentals/setup/manage-domains/add-site/) the domain.
 
-***
+---
 
 ## What IP should I use for parked domain / redirect-only / originless setup?
 
 In the case a placeholder address is needed for “originless” setups, use the IPv6 reserved address `100::` or the IPv4 reserved address `192.0.2.0` in your Cloudflare DNS to create a [proxied DNS record](/dns/manage-dns-records/reference/proxied-dns-records/) that can use Cloudflare [Redirect Rules](/rules/url-forwarding/), [Page Rules](/rules/page-rules/), or [Cloudflare Workers](/workers/).
 
-***
+---
 
 ## Why are DNS queries returning incorrect results?
 
 Third-party tools can sometimes fail to return correct DNS results if a recursive DNS cache fails to refresh. In this circumstance, purge your public DNS cache via these methods:
 
-* [Purging your DNS cache at OpenDNS](http://www.opendns.com/support/cache/)
-* [Purging your DNS cache at Google](https://developers.google.com/speed/public-dns/cache)
-* [Purging your DNS cache locally](https://docs.cpanel.net/knowledge-base/dns/how-to-clear-your-dns-cache/)
+- [Purging your DNS cache at OpenDNS](http://www.opendns.com/support/cache/)
+- [Purging your DNS cache at Google](https://developers.google.com/speed/public-dns/cache)
+- [Purging your DNS cache locally](https://docs.cpanel.net/knowledge-base/dns/how-to-clear-your-dns-cache/)
 
-***
+---
 
 ## No A, AAAA or CNAME record found?
 
@@ -221,20 +232,20 @@ Third-party tools can sometimes fail to return correct DNS results if a recursiv
 :::note
 
 Sites generally have at least an `A` record that points to the origin
-server IP address, typically for the `www` subdomain and the apex domain (also known as "root domain" and represented by `@`). 
+server IP address, typically for the `www` subdomain and the apex domain (also known as "root domain" and represented by `@`).
 :::
 
-***
+---
 
 ## Why have I received an email: Your Name Servers have Changed?
 
 For domains where Cloudflare hosts the DNS, Cloudflare continuously checks whether the domain uses Cloudflare’s nameservers for DNS resolution. If Cloudflare's nameservers are not used, the [domain status](/dns/zone-setups/reference/domain-status/) is updated from *Active* to *Moved* in the Cloudflare **Overview** app and an email is sent to the customer.
 
-This is important because - if a domain is in a *Moved* state for a [long enough period of time](/dns/zone-setups/reference/domain-status/) - it will be deleted from Cloudflare.
+This is important because - if a domain is in a _Moved_ state for a [long enough period of time](/dns/zone-setups/reference/domain-status/) - it will be deleted from Cloudflare.
 
 <Render file="recover-deleted-domain" />
 
-***
+---
 
 ## Why can't I add certain TLDs via the DNS API?
 
@@ -242,7 +253,7 @@ The DNS API cannot be used for domains with `.cf`, `.ga`, `.gq`, `.ml`, or `.tk`
 
 Enterprise customer can [contact Cloudflare Support](/support/contacting-cloudflare-support/) to remove this limitation.
 
-***
+---
 
 ## How to configure records on local DNS servers?
 

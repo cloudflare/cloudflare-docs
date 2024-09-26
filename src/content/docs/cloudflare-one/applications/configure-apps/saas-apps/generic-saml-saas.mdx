@@ -3,24 +3,23 @@ pcx_content_type: how-to
 title: Generic SAML application
 sidebar:
   order: 1
-
 ---
 
-import { Render } from "~/components"
+import { Render } from "~/components";
 
 This page provides generic instructions for setting up a SaaS application in Cloudflare Access using the SAML authentication protocol.
 
 ## Prerequisites
 
-* An [identity provider](/cloudflare-one/identity/idp-integration/) configured in Cloudflare Zero Trust
-* Admin access to the account of the SaaS application
+- An [identity provider](/cloudflare-one/identity/idp-integration/) configured in Cloudflare Zero Trust
+- Admin access to the account of the SaaS application
 
 ## 1. Get SaaS application URLs
 
 Obtain the following URLs from your SaaS application account:
 
-* **Entity ID**: A unique URL issued for your SaaS application, for example `https://<your-domain>.my.salesforce.com`.
-* **Assertion Consumer Service URL**: The service provider's endpoint for receiving and parsing SAML assertions.
+- **Entity ID**: A unique URL issued for your SaaS application, for example `https://<your-domain>.my.salesforce.com`.
+- **Assertion Consumer Service URL**: The service provider's endpoint for receiving and parsing SAML assertions.
 
 ## 2. Add your application to Access
 
@@ -38,15 +37,15 @@ Obtain the following URLs from your SaaS application account:
 
 7. Enter the **Entity ID** and **Assertion Consumer Service URL** obtained from your SaaS application account.
 
-8. Select the **Name ID Format** expected by your SaaS application (usually *Email*).
+8. Select the **Name ID Format** expected by your SaaS application (usually _Email_).
 
 9. Copy the **SSO endpoint**, **Access Entity ID or Issuer**, and **Public key**.
 
-10. If your SaaS application requires additional **SAML attribute statements**, add the mapping of your IdP’s attributes you would like to include in the SAML statement sent to the SaaS application.
+10. If your SaaS application requires additional **SAML attribute statements**, add the mapping of your IdP's attributes you would like to include in the SAML statement sent to the SaaS application.
 
 :::note[IdP groups]
 
-If you are using Okta, AzureAD, Google Workspace, or GitHub as your IdP, Access will automatically send a SAML attribute titled `groups` with all of the user's associated groups as attribute values. 
+If you are using Okta, Microsoft Entra ID (formerly Azure AD), Google Workspace, or GitHub as your IdP, Access will automatically send a SAML attribute titled `groups` with all of the user's associated groups as attribute values.
 :::
 
 11. (Optional) Configure [App Launcher settings](/cloudflare-one/applications/app-launcher/) for the application.
@@ -67,9 +66,9 @@ If you are using Okta, AzureAD, Google Workspace, or GitHub as your IdP, Access 
 
 Next, configure your SaaS application to require users to log in through Cloudflare Access. Refer to your SaaS application documentation for instructions on how to configure a third-party SAML SSO provider. You will need the following values from the Zero Trust dashboard:
 
-* **SSO endpoint**
-* **Access Entity ID or Issuer**
-* **Public key**
+- **SSO endpoint**
+- **Access Entity ID or Issuer**
+- **Public key**
 
 You can either manually enter this data into your SaaS application or upload a metadata XML file. The metadata is available at the URL: `<SSO endpoint>/saml-metadata`.
 

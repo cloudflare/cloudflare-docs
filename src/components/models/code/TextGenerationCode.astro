@@ -1,6 +1,7 @@
 ---
-import { z } from "astro:content";
-import { Aside, Code, Details } from "~/components";
+import { z } from "astro:schema";
+import { Aside, Code } from "@astrojs/starlight/components";
+import Details from "~/components/Details.astro";
 
 type Props = z.infer<typeof props>;
 

@@ -1,0 +1,30 @@
+---
+pcx_content_type: how-to
+title: Transfer a Cloudflare Registrar domain registration between accounts
+---
+
+Cloudflare supports the transfer of domain registrations between Cloudflare accounts when the source and target account both confirm the transfer. The transfer will result in the loss of all configurations and settings for the domain in the source account.
+
+:::caution[Important]
+
+This process only applies to domains which are registered with Cloudflare Registrar. For domains with other registrars, refer to [Move a domain between Cloudflare accounts](/fundamentals/setup/manage-domains/move-domain/).
+:::
+
+Before proceeding, please be aware of the following:
+
+* WHOIS contact information will be transferred as is.
+* No other configuration will be transferred.
+* After successful transfer, the registration will be transfer-locked for 30 days.
+* The target account will become responsible for domain renewals going forward.
+
+## 1. Prepare for the transfer
+
+Before you request the transfer, you need to [disable DNSSEC](/dns/dnssec/#disable-dnssec) for the domain(s) and ensure the domain(s) are set up and ready in the new dashboard account you intend to transfer them to.
+
+## 2. Submit a transfer request
+
+Go to the Support and select **Contact Cloudflare** from the Cloudflare dashboard. Select the category **Registrar** and then **Transfer a domain between Cloudflare accounts**. Select the domain(s) in your account that you wish to transfer, enter a Summary and select **Open a Ticket**. 
+
+The form will ask you to confirm that you understand the process and ask you to specify an email address of a new superadmin for the account you intend to transfer the domain(s) to. The new super admin you specify will need to reply to the support ticket to agree to receive the transfer.
+
+Once this has been done, the transfer takes around three to five working days to complete.

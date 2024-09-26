@@ -6,10 +6,9 @@ sidebar:
 head:
   - tag: title
     content: HTTP request response fields | Fields reference
-
 ---
 
-import { Details } from "~/components"
+import { Details } from "~/components";
 
 The Cloudflare Rules language supports these HTTP response fields.
 
@@ -35,11 +34,13 @@ When there are repeating headers, the array includes them in the order they appe
 - Non-ASCII: preserved
 
 Example:
+
 ```txt
 any(http.response.headers["server"][*] == "nginx")
 ```
 
 Example value:
+
 ```txt
 {"server": ["nginx"]}
 ```
@@ -57,6 +58,7 @@ Duplicate headers are listed multiple times.
 - Non-ASCII: preserved
 
 Example:
+
 ```
 any(http.response.headers.names[*] == "content-type")
 ```
@@ -78,6 +80,7 @@ Duplicate headers are listed multiple times.
 - Non-ASCII: preserved
 
 Example 1:
+
 ```
 any(http.response.headers.values[*] == "application/json")
 ```
@@ -87,6 +90,7 @@ Example value 1: `["application/json"]`
 Additionally used to match responses according to the specified operator and the length/size entered for the header value.
 
 Example 2:
+
 ```
 any(len(http.response.headers.values[*])[*] gt 10)
 ```
@@ -99,7 +103,7 @@ Example value 2:
 `http.response.content_type.media_type` `String`
 
 The lowercased content type (including subtype and suffix) without any parameters such as `charset`, based on the response's `Content-Type` header.
-   
+
 <Details header="Example values">
 <table class="Small">
 <tr>
@@ -144,7 +148,7 @@ Example value:
 `1020`
 
 :::note
-Note: This field is only available in [HTTP response header modifications](/rules/transform/response-header-modification/) and [custom error responses](/rules/custom-error-responses/).
+Note: This field is only available in [HTTP response header modifications](/rules/transform/response-header-modification/) and [Custom Error Responses](/rules/custom-error-responses/).
 :::
 
 ## `cf.response.error_type`
@@ -169,11 +173,5 @@ The available values are the following:
 You can use this field to customize the response for a specific type of error (for example, all 1xxx errors or all WAF block actions).
 
 :::note
-
-This field is only available in [HTTP response header modifications](/rules/transform/response-header-modification/) and [custom error responses](/rules/custom-error-responses/).
-
+This field is only available in [HTTP response header modifications](/rules/transform/response-header-modification/) and [Custom Error Responses](/rules/custom-error-responses/).
 :::
-
-***
-
-*GeoIP is the registered trademark of MaxMind, Inc.*

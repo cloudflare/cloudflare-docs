@@ -1,8 +1,16 @@
-content_dir: /content
+content_dir: /src/content
 authorized_users:
+  - crwaters16
+  - dcpena
   - kodster28
   - KianNH
+  - marciocloudflare
   - pedrosousa
+  - ranbel
+  - RebeccaTamachiro
 style_guide:
   enabled: true
-  unmanaged_vale: true
+openapi:
+  enabled: true
+  urls:
+    - https://raw.githubusercontent.com/cloudflare/api-schemas/main/openapi.json

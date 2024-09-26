@@ -8,7 +8,7 @@ sidebar:
 
 ## Background
 
-Durable Objects alarms allow you to schedule the Durable Object to be woken up at a time in the future. When the alarm's scheduled time comes, the `alarm()` handler method will be called. Alarms are modified using the [Transactional Storage API](/durable-objects/api/transactional-storage-api/), and alarm operations follow the same rules as other storage operations.
+Durable Objects alarms allow you to schedule the Durable Object to be woken up at a time in the future. When the alarm's scheduled time comes, the `alarm()` handler method will be called. Alarms are modified using the [Storage API](/durable-objects/api/storage-api/), and alarm operations follow the same rules as other storage operations.
 
 Notably:
 
@@ -28,7 +28,7 @@ Alarms are directly scheduled from within your Durable Object. Cron Triggers, on
 
 Alarms can be used to build distributed primitives, like queues or batching of work atop Durable Objects. Alarms also provide a mechanism to guarantee that operations within a Durable Object will complete without relying on incoming requests to keep the Durable Object alive. For a complete example, refer to [Use the Alarms API](/durable-objects/examples/alarms-api/).
 
-## Transactional Storage methods
+## Storage methods
 
 ### getAlarm
 
@@ -110,7 +110,7 @@ export class AlarmExample {
   }
   async alarm() {
     // The alarm handler will be invoked whenever an alarm fires.
-    // You can use this to do work, read from the Transactional Storage API, make HTTP calls
+    // You can use this to do work, read from the Storage API, make HTTP calls
     // and set future alarms to run using this.storage.setAlarm() from within this handler.
   }
 }
@@ -120,4 +120,4 @@ export class AlarmExample {
 
 * Understand how to [use the Alarms API](/durable-objects/examples/alarms-api/) in an end-to-end example.
 * Read the [Durable Objects alarms announcement blog post](https://blog.cloudflare.com/durable-objects-alarms/).
-* Review the [Transactional Storage API](/durable-objects/api/transactional-storage-api/) documentation for Durable Objects.
+* Review the [Storage API](/durable-objects/api/storage-api/) documentation for Durable Objects.

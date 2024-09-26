@@ -14,27 +14,26 @@ sidebar:
   order: 11
 description: Access custom Cloudflare properties and control how Cloudflare
   features are applied to every request.
-
 ---
 
-import { TabItem, Tabs } from "~/components"
+import { TabItem, Tabs } from "~/components";
 
-<Tabs> <TabItem label="JavaScript" icon="seti:javascript">
+<Tabs syncKey="workersExamples"> <TabItem label="JavaScript" icon="seti:javascript">
 
 ```js
 export default {
-  async fetch(req) {
-    const data =
-      req.cf !== undefined
-        ? req.cf
-        : { error: "The `cf` object is not available inside the preview." };
+	async fetch(req) {
+		const data =
+			req.cf !== undefined
+				? req.cf
+				: { error: "The `cf` object is not available inside the preview." };
 
-    return new Response(JSON.stringify(data, null, 2), {
-      headers: {
-        "content-type": "application/json;charset=UTF-8",
-      },
-    });
-  },
+		return new Response(JSON.stringify(data, null, 2), {
+			headers: {
+				"content-type": "application/json;charset=UTF-8",
+			},
+		});
+	},
 };
 ```
 
@@ -42,18 +41,18 @@ export default {
 
 ```ts
 export default {
-  async fetch(req): Promise<Response> {
-    const data =
-      req.cf !== undefined
-        ? req.cf
-        : { error: "The `cf` object is not available inside the preview." };
+	async fetch(req): Promise<Response> {
+		const data =
+			req.cf !== undefined
+				? req.cf
+				: { error: "The `cf` object is not available inside the preview." };
 
-    return new Response(JSON.stringify(data, null, 2), {
-      headers: {
-        "content-type": "application/json;charset=UTF-8",
-      },
-    });
-  },
+		return new Response(JSON.stringify(data, null, 2), {
+			headers: {
+				"content-type": "application/json;charset=UTF-8",
+			},
+		});
+	},
 } satisfies ExportedHandler;
 ```
 

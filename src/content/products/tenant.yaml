@@ -12,13 +12,13 @@ meta:
     manage Cloudflare accounts and services for your team or your customers. A
     new set of APIs built into our Client v4 API library make a streamlined
     onboarding and setup experience
-  author: '@cloudflare'
+  author: "@cloudflare"
 
 externals:
   - title: Cloudflare homepage
     url: https://cloudflare.com
 
 algolia:
-  index: developers-cloudflare2
+  index: TEST - Re-dev docs
   apikey: 4edb0a6cef3338ff4bcfbc6b3d2db56b
   product: tenant

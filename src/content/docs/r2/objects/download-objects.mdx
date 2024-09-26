@@ -3,7 +3,6 @@ title: Download objects
 pcx_content_type: how-to
 sidebar:
   order: 2
-
 ---
 
 You can download objects from your bucket from the Cloudflare dashboard or using the Wrangler.
@@ -22,8 +21,10 @@ You can download objects from a bucket, including private buckets in your accoun
 For example, to download `file.bin` from `test-bucket`:
 
 ```sh
-$ wrangler r2 object get test-bucket/file.bin
+wrangler r2 object get test-bucket/file.bin
+```
 
+```sh output
 Downloading "file.bin" from "test-bucket".
 Download complete.
 ```

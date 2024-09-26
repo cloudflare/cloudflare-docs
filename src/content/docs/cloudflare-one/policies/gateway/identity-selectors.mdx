@@ -3,10 +3,9 @@ pcx_content_type: reference
 title: Identity-based policies
 sidebar:
   order: 10
-
 ---
 
-import { Render } from "~/components"
+import { Render } from "~/components";
 
 With Cloudflare Zero Trust, you can create Secure Web Gateway policies that filter outbound traffic down to the user identity level. To do that, you can build DNS, HTTP or Network policies using a set of [identity-based selectors](#identity-based-selectors). These selectors require you to deploy the Zero Trust WARP client in [Gateway with WARP mode](/cloudflare-one/connections/connect-devices/warp/configure-warp/warp-modes/).
 
@@ -18,8 +17,8 @@ Gateway checks identity when a user logs in or re-authenticates. To check your u
 
 Unless you use an [IdP that supports SCIM provisioning](#automatic-scim-idp-updates), Gateway will not detect when you add or remove a user from a group in your IdP until the user re-authenticates to your Zero Trust instance. There are two ways a user can re-authenticate:
 
-* Log out from an Access-protected application and log back in.
-* In their WARP client settings, select **Preferences** > **Account** > **Re-Authenticate Session**. This will open a browser window and prompt the user to log in.
+- Log out from an Access-protected application and log back in.
+- In their WARP client settings, select **Preferences** > **Account** > **Re-Authenticate Session**. This will open a browser window and prompt the user to log in.
 
 To view the identity that Gateway will use when evaluating policies, check the [user registry](/cloudflare-one/insights/logs/users/).
 
@@ -47,7 +46,7 @@ Specify a value from the SAML Attribute Assertion.
 
 ### User Email
 
-Use this selector to create identity-based Gateway rules based on a user’s email.
+Use this selector to create identity-based Gateway rules based on a user's email.
 
 | UI name    | API example value                           |
 | ---------- | ------------------------------------------- |
@@ -87,9 +86,7 @@ Use this selector to create identity-based Gateway rules based on an IdP usernam
 
 :::note[Gateway groups vs. Access groups]
 
-
 In Gateway, a **User Group** refers to a group in your IdP (for example, an Okta group). Gateway does not currently support applying DNS, HTTP, and Network policies to [Access groups](/cloudflare-one/identity/users/groups/). This is because Access groups may include criteria not available through the IdP, such as device location or IP address.
-
 
 :::
 
@@ -99,15 +96,15 @@ Cloudflare Gateway can integrate with your organization's identity providers (Id
 
 Because IdPs expose user groups in different formats, reference the list below to choose the appropriate identity-based selector.
 
-### Azure AD
+### Microsoft Entra ID
 
 | Selector       | Value                                 |
 | -------------- | ------------------------------------- |
 | User Group IDs | `61503835-b6fe-4630-af88-de551dd59a2` |
 
-**Value** is the [Object Id](/cloudflare-one/identity/idp-integration/azuread/#azure-groups-in-zero-trust-policies) for an Azure group.
+**Value** is the [Object Id](/cloudflare-one/identity/idp-integration/entra-id/#entra-groups-in-zero-trust-policies) for an Entra group.
 
-If you enabled user and group synchronization with [SCIM](/cloudflare-one/identity/idp-integration/azuread/#synchronize-users-and-groups), the synchronized groups will appear under *User Group Names*:
+If you enabled user and group synchronization with [SCIM](/cloudflare-one/identity/idp-integration/entra-id/#synchronize-users-and-groups), the synchronized groups will appear under _User Group Names_:
 
 | Selector         | Value        |
 | ---------------- | ------------ |

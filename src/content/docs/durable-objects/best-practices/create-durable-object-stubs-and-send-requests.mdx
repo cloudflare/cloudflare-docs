@@ -6,6 +6,8 @@ sidebar:
 
 ---
 
+import { Glossary } from "~/components"
+
 A Durable Object stub is a client Object used to send requests to a remote Durable Object.
 
 `OBJECT_NAMESPACE.get(id)` creates a Durable Object.
@@ -24,6 +26,12 @@ E-order is a concept deriving from the [E distributed programming language](http
 
 :::
 
+## Terminology
+
+Durable Objects documentation uses several concepts and terms, including:
+
+<Glossary product="durable-objects" />
+
 ## Get a Durable Object stub
 
 ```js
@@ -31,8 +39,6 @@ let durableObjectStub = OBJECT_NAMESPACE.get(id);
 ```
 
 ### Parameters
-
-
 
 * `id` DurableObjectId
   * An ID constructed using `newUniqueId()`, `idFromName()`, or `idFromString()` on this Durable Object namespace. For details, refer to [Access a Durable Object](/durable-objects/best-practices/access-durable-objects-from-a-worker/#generate-ids-randomly) .
@@ -49,8 +55,8 @@ let durableObjectStub = OBJECT_NAMESPACE.get(id);
 
 You can call a Durable Object by:
 
+* **Recommended** Invoking [Remote Procedure Call (RPC)](/workers/runtime-apis/rpc/) methods defined on a Durable Object class (available for Workers with a [compatibility date greater than or equal to `2024-04-03`](/workers/configuration/compatibility-dates/#durable-object-stubs-and-service-bindings-support-rpc)).
 * [Sending HTTP requests](/durable-objects/best-practices/create-durable-object-stubs-and-send-requests/#send-http-requests) to a Durable Object's `fetch()` handler.
-* Invoking [Remote Procedure Call (RPC)](/workers/runtime-apis/rpc/) methods defined on a Durable Object class (available for Workers with a [compatibility date greater than or equal to `2024-04-03`](/workers/configuration/compatibility-dates/#durable-object-stubs-and-service-bindings-support-rpc)).
 * Using the [WebSocket API](/durable-objects/reference/websockets/).
 
 ### Call RPC methods

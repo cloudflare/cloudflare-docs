@@ -1,0 +1,86 @@
+---
+{}
+---
+import { Tabs, TabItem } from "~/components"
+
+Affects interpretation of `width` and `height`. All resizing modes preserve aspect ratio. Used as a string in Workers integration. Available modes are:
+
+- `scale down`\
+  Similar to `contain`, but the image is never enlarged. If the image is larger than given `width` or `height`, it will be resized. Otherwise its original size will be kept. Example:
+
+<Tabs>
+  <TabItem label="URL format">
+    ```js 
+    fit=scale-down
+    ```
+  </TabItem>
+  <TabItem label="Workers">
+  ```js 
+  cf: {image: {fit: "scale-down"}}
+  ```
+  </TabItem>
+</Tabs>
+
+- `contain`\
+  Image will be resized (shrunk or enlarged) to be as large as possible within the given `width` or `height` while preserving the aspect ratio. If you only provide a single dimension (for example, only `width`), the image will be shrunk or enlarged to exactly match that dimension.
+
+<Tabs>
+  <TabItem label="URL format">
+    ```js 
+    fit=contain
+    ```
+  </TabItem>
+  <TabItem label="Workers">
+  ```js 
+  cf: {image: {fit: "contain"}}
+  ```
+  </TabItem>
+</Tabs>
+
+- `cover`\
+  Resizes (shrinks or enlarges) to fill the entire area of `width` and `height`. If the image has an aspect ratio different from the ratio of `width` and `height`, it will be cropped to fit.
+
+<Tabs>
+  <TabItem label="URL format">
+    ```js 
+    fit=cover
+    ```
+  </TabItem>
+  <TabItem label="Workers">
+  ```js 
+  cf: {image: {fit: "cover"}}
+  ```
+  </TabItem>
+</Tabs>
+
+- `crop`\
+  Image will be shrunk and cropped to fit within the area specified by `width` and `height`. The image will not be enlarged. For images smaller than the given dimensions, it is the same as `scale-down`. For images larger than the given dimensions, it is the same as `cover`. See also [`trim`](#trim)
+
+<Tabs>
+  <TabItem label="URL format">
+    ```js 
+    fit=crop
+    ```
+  </TabItem>
+  <TabItem label="Workers">
+  ```js 
+  cf: {image: {fit: "crop"}}
+  ```
+  </TabItem>
+</Tabs>
+
+- `pad`\
+  Resizes to the maximum size that fits within the given `width` and `height`, and then fills the remaining area with a `background` color (white by default). This mode is not recommended, since you can achieve the same effect more efficiently with the `contain` mode and the CSS `object-fit: contain` property.
+
+<Tabs>
+  <TabItem label="URL format">
+    ```js 
+    fit=pad
+    ```
+  </TabItem>
+  <TabItem label="Workers">
+  ```js 
+  cf: {image: {fit: "pad"}}
+  ```
+  </TabItem>
+</Tabs>

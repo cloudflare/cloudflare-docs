@@ -1,10 +1,9 @@
 ---
 title: Cache Reserve
 pcx_content_type: concept
-
 ---
 
-import { Render, TabItem, Tabs } from "~/components"
+import { Render, TabItem, Tabs } from "~/components";
 
 Cache Reserve is a large, persistent data store [implemented on top of R2](/r2/). By pushing a single button in the dashboard, your website’s cacheable content will be written to Cache Reserve. In the same way that [Tiered Cache](/cache/how-to/tiered-cache/) builds a hierarchy of caches between your visitors and your origin, Cache Reserve serves as the ultimate [upper-tier cache](/cache/how-to/tiered-cache/) that will reserve storage space for your assets for as long as you want. This ensures that your content is served from cache longer, shielding your origin from unneeded egress fees.
 
@@ -22,7 +21,7 @@ Cache Reserve is a usage-based product and [pricing](#pricing) is detailed below
 
 A paid Cache Reserve Plan is required for the enablement.
 
-<Tabs> <TabItem label="Dashboard">
+<Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login) and select a domain.
 2. Go to **Caching** > **Cache Reserve**.
@@ -44,18 +43,18 @@ If you are an Enterprise customer and are interested in Cache Reserve, contact y
 
 Not all assets are eligible for Cache Reserve. To be admitted into Cache Reserve, assets must:
 
-* Be cacheable, according to Cloudflare's standard [cacheability factors](/cache),
-* Have a freshness time-to-live (TTL) of at least 10 hours (set by any means such as Cache-Control / [CDN-Cache-Control](/cache/concepts/cache-control/) origin response headers, [Edge Cache TTL](/cache/how-to/edge-browser-cache-ttl/#edge-cache-ttl), [Cache TTL By Status](/cache/how-to/configure-cache-status-code/), or [Cache Rules](/cache/how-to/cache-rules/)),
-* Have a Content-Length response header.
-* When using [Image transformations](/images/manage-images/create-variants/), original files are eligible for Cache Reserve, but resized file variants are not eligible because transformations happen after Cache Reserve in the response flow.
+- Be cacheable, according to Cloudflare's standard [cacheability factors](/cache),
+- Have a freshness time-to-live (TTL) of at least 10 hours (set by any means such as Cache-Control / [CDN-Cache-Control](/cache/concepts/cache-control/) origin response headers, [Edge Cache TTL](/cache/how-to/edge-browser-cache-ttl/#edge-cache-ttl), [Cache TTL By Status](/cache/how-to/configure-cache-status-code/), or [Cache Rules](/cache/how-to/cache-rules/)),
+- Have a Content-Length response header.
+- When using [Image transformations](/images/manage-images/create-variants/), original files are eligible for Cache Reserve, but resized file variants are not eligible because transformations happen after Cache Reserve in the response flow.
 
 ## Limits
 
-* Cache Reserve file limits are the same as [R2 limits](/r2/platform/limits/). Note that [CDN cache limits](/cache/concepts/default-cache-behavior/#customization-options-and-limits) still apply. Assets larger than standard limits will not be stored in the standard CDN cache, so these assets will incur Cache Reserve operations costs far more frequently.
-* Origin Range requests are not supported at this time from Cache Reserve.
-* Vary for Images is currently not compatible with Cache Reserve.
-* Requests to [R2 public buckets linked to a zone's domain](/r2/buckets/public-buckets//) will not use Cache Reserve. Enabling Cache Reserve for the connected zone will use Cache Reserve only for requests not destined for the R2 bucket.
-* Cache Reserve makes requests for uncompressed content directly from the origin. Unlike the standard Cloudflare CDN, Cache Reserve does not include the `Accept-Encoding: gzip` header when sending requests to the origin.
+- Cache Reserve file limits are the same as [R2 limits](/r2/platform/limits/). Note that [CDN cache limits](/cache/concepts/default-cache-behavior/#customization-options-and-limits) still apply. Assets larger than standard limits will not be stored in the standard CDN cache, so these assets will incur Cache Reserve operations costs far more frequently.
+- Origin Range requests are not supported at this time from Cache Reserve.
+- Vary for Images is currently not compatible with Cache Reserve.
+- Requests to [R2 public buckets linked to a zone's domain](/r2/buckets/public-buckets/) will not use Cache Reserve. Enabling Cache Reserve for the connected zone will use Cache Reserve only for requests not destined for the R2 bucket.
+- Cache Reserve makes requests for uncompressed content directly from the origin. Unlike the standard Cloudflare CDN, Cache Reserve does not include the `Accept-Encoding: gzip` header when sending requests to the origin.
 
 ## Usage
 
@@ -69,30 +68,30 @@ Cache Reserve monthly operations and storage usage are viewable in the dashboard
 
 Cache Reserve charges based on the total volume of data stored, along with two classes of operations on that data:
 
-* [Class A operations](/r2/pricing/#class-a-operations) which are more expensive and tend to mutate state.
-* [Class B operations](/r2/pricing/#class-b-operations) which tend to read existing state.
+- [Class A operations](/r2/pricing/#class-a-operations) which are more expensive and tend to mutate state.
+- [Class B operations](/r2/pricing/#class-b-operations) which tend to read existing state.
 
 In most cases, a Cache Reserve miss will result in both one class A and one class B operation, and a Cache Reserve hit will result in one class B operation. Assets larger than 1 GB will incur more operations proportional to their size.
 
 ### Cache Reserve pricing
 
 <table>
-  <tbody>
-    <th></th>
-    <th>Rates</th>
-    <tr>
-      <td>Storage</td>
-      <td>$0.015 / GB-month</td>
-    </tr>
-    <tr>
-      <td>Class A Operations (writes)</td>
-      <td>$4.50 / million requests</td>
-    </tr>
-    <tr>
-      <td>Class B Operations (reads)</td>
-      <td>$0.36 / million requests</td>
-    </tr>
-  </tbody>
+	<tbody>
+		<th></th>
+		<th>Rates</th>
+		<tr>
+			<td>Storage</td>
+			<td>$0.015 / GB-month</td>
+		</tr>
+		<tr>
+			<td>Class A Operations (writes)</td>
+			<td>$4.50 / million requests</td>
+		</tr>
+		<tr>
+			<td>Class B Operations (reads)</td>
+			<td>$0.36 / million requests</td>
+		</tr>
+	</tbody>
 </table>
 
 <Render file="cache-reserve-billing-note" />
@@ -103,8 +102,8 @@ Storage is billed using gigabyte-month (GB-month) as the billing metric. A GB-mo
 
 For example:
 
-* Storing 1 GB for 30 days will be charged as 1 GB-month.
-* Storing 2 GB for 15 days will be charged as 1 GB-month.
+- Storing 1 GB for 30 days will be charged as 1 GB-month.
+- Storing 2 GB for 15 days will be charged as 1 GB-month.
 
 ### Operations
 
@@ -122,7 +121,7 @@ Class B operations are performed when data needs to be fetched from Cache Reserv
 
 Asset purges are free operations.
 
-Cache Reserve will also be purged along with edge cache when you send a purge by URL request.
+Cache Reserve will be instantly purged along with edge cache when you send a purge by URL request.
 
 Other purge methods, such as purge by tag, host, prefix, or purge everything will force an attempt to revalidate on the subsequent request for the Cache Reserve asset. Note that assets purged this way will still incur storage costs until their retention TTL expires.
 
@@ -135,8 +134,6 @@ Note this differs from the standard CDN's purge by tag, host, or prefix features
 #### Example 1
 
 Assuming 1,000 assets (each 1 GB) are written to Cache Reserve at the start of the month and each asset is read 1,000 times, the estimated cost for the month would be:
-
-
 
 |                    | Usage                                     | Billable Quantity | Price      |
 | ------------------ | ----------------------------------------- | ----------------- | ---------- |
@@ -152,12 +149,10 @@ Assuming 1,000 assets (each 1 GB) are written to Cache Reserve at the start of t
 
 Assuming 1,000,000 assets (each 1 MB) are in Cache Reserve, and:
 
-* each asset expires and is rewritten into Cache Reserve 1 time per day
-* each asset is read 2 times per day
+- each asset expires and is rewritten into Cache Reserve 1 time per day
+- each asset is read 2 times per day
 
 the estimated cost for the month would be:
-
-
 
 |                    | Usage                                                | Billable Quantity | Price       |
 | ------------------ | ---------------------------------------------------- | ----------------- | ----------- |
@@ -179,23 +174,23 @@ Cache Reserve Analytics provides insights regarding your Cache Reserve usage. It
 
 In the **Overview** section, under **Cache Reserve**, you have access to the following metrics:
 
-* **Egress savings (bandwidth)** - is an estimation based on response bytes served from Cache Reserve that did not need to be served from your origin server. These are represented as cache hits.
-* **Requests served by Cache Reserve** - is the number of requests served by Cache Reserve (total).
-* **Data storage summary** - is based on a representative sample of requests. Refer to [Sampling](/analytics/graphql-api/sampling/) for more details about how Cloudflare samples data.
-  * **Current data stored** - is the data stored (currently) over time.
-  * **Aggregate storage usage** - is the total of storage used for the selected timestamp.
-* **Operations** - [Class A](/cache/advanced-configuration/cache-reserve/#class-a-operations-writes) (writes) and [Class B](/cache/advanced-configuration/cache-reserve/#class-b-operations-reads) (reads) operations over time.
+- **Egress savings (bandwidth)** - is an estimation based on response bytes served from Cache Reserve that did not need to be served from your origin server. These are represented as cache hits.
+- **Requests served by Cache Reserve** - is the number of requests served by Cache Reserve (total).
+- **Data storage summary** - is based on a representative sample of requests. Refer to [Sampling](/analytics/graphql-api/sampling/) for more details about how Cloudflare samples data.
+  - **Current data stored** - is the data stored (currently) over time.
+  - **Aggregate storage usage** - is the total of storage used for the selected timestamp.
+- **Operations** - [Class A](/cache/advanced-configuration/cache-reserve/#class-a-operations-writes) (writes) and [Class B](/cache/advanced-configuration/cache-reserve/#class-b-operations-reads) (reads) operations over time.
 
 ## Cache Reserve clear button
 
 You can remove all data stored in Cache Reserve through the dashboard or via API. To clear your cache reserve:
 
-* Cache Reserve must have already been enabled for the zone.
-* Cache Reserve needs to be off.
+- Cache Reserve must have already been enabled for the zone.
+- Cache Reserve needs to be off.
 
 Be aware that the deletion may take up to 24 hours to complete.
 
-<Tabs> <TabItem label="Dashboard">
+<Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login) and select a domain.
 2. Go to **Caching** > **Cache Reserve**.
@@ -212,14 +207,14 @@ curl https://api.cloudflare.com/client/v4/zones/{zone_id}/cache/cache_reserve \
 
 ```json title="Response"
 {
-  "result": {
-    "editable": true,
-    "id": "cache_reserve",
-    "value": "off"
-  },
-  "success": true,
-  "errors": [],
-  "messages": []
+	"result": {
+		"editable": true,
+		"id": "cache_reserve",
+		"value": "off"
+	},
+	"success": true,
+	"errors": [],
+	"messages": []
 }
 ```
 
@@ -233,14 +228,14 @@ https://api.cloudflare.com/client/v4/zones/{zone_id}/cache/cache_reserve_clear \
 
 ```json title="Response"
 {
-  "result": {
-    "id": "cache_reserve_clear",
-    "start_ts": "2024-06-02T10:00:00.12345Z",
-    "state": "In-progress"
-  },
-  "success": true,
-  "errors": [],
-  "messages": []
+	"result": {
+		"id": "cache_reserve_clear",
+		"start_ts": "2024-06-02T10:00:00.12345Z",
+		"state": "In-progress"
+	},
+	"success": true,
+	"errors": [],
+	"messages": []
 }
 ```
 

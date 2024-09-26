@@ -7,7 +7,6 @@ head:
   - tag: title
     content: Get started - REST API
 description: Use the Cloudflare Workers AI REST API to deploy a large language model (LLM).
-
 ---
 
 This guide will instruct you through setting up and deploying your first Workers AI project. You will use the Workers AI REST API to experiment with a large language model (LLM).
@@ -35,9 +34,7 @@ To get these values:
 
 :::note
 
-
 If you choose to [create an API token](/fundamentals/api/get-started/create-token/) instead of using the template, that token will need permissions for both `Workers AI - Read` and `Workers AI - Edit`.
-
 
 :::
 
@@ -48,7 +45,7 @@ After creating your API token, authenticate and make requests to the API using y
 You will use the [Execute AI model](/api/operations/workers-ai-post-run-model) endpoint to run the [`@cf/meta/llama-3.1-8b-instruct`](/workers-ai/models/llama-3.1-8b-instruct/) model:
 
 ```bash
-$ curl https://api.cloudflare.com/client/v4/accounts/{ACCOUNT_ID}/ai/run/@cf/meta/llama-3.1-8b-instruct \
+curl https://api.cloudflare.com/client/v4/accounts/{ACCOUNT_ID}/ai/run/@cf/meta/llama-3.1-8b-instruct \
   -H 'Authorization: Bearer {API_TOKEN}' \
   -d '{ "prompt": "Where did the phrase Hello World come from" }'
 ```
@@ -59,12 +56,12 @@ The API response will look like the following:
 
 ```json
 {
-  "result": {
-    "response": "Hello, World first appeared in 1974 at Bell Labs when Brian Kernighan included it in the C programming language example. It became widely used as a basic test program due to simplicity and clarity. It represents an inviting greeting from a program to the world."
-  },
-  "success": true,
-  "errors": [],
-  "messages": []
+	"result": {
+		"response": "Hello, World first appeared in 1974 at Bell Labs when Brian Kernighan included it in the C programming language example. It became widely used as a basic test program due to simplicity and clarity. It represents an inviting greeting from a program to the world."
+	},
+	"success": true,
+	"errors": [],
+	"messages": []
 }
 ```
 
@@ -74,4 +71,4 @@ By completing this guide, you have created a Cloudflare account (if you did not 
 
 ## Related resources
 
-* [Models](/workers-ai/models/) - Browse the Workers AI models catalog.
+- [Models](/workers-ai/models/) - Browse the Workers AI models catalog.

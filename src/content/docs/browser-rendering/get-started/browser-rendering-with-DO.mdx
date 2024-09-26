@@ -12,12 +12,9 @@ languages:
   - JavaScript
 sidebar:
   order: 2
-
 ---
 
-
-
-import { Render } from "~/components"
+import { Render, PackageManagers } from "~/components";
 
 By following this guide, you will create a Worker that uses the Browser Rendering API along with [Durable Objects](/durable-objects/) to take screenshots from web pages and store them in [R2](/r2/).
 
@@ -31,7 +28,11 @@ Using Durable Objects to persist browser sessions improves performance by elimin
 
 Create a new Worker project named `browser-worker` by running:
 
-<Render file="c3-run-command-with-directory" product="workers" params={{ one: "browser-worker" }} />
+<PackageManagers
+	type="create"
+	pkg="cloudflare@latest"
+	args={"browser-worker"}
+/>
 
 ## 2. Enable Durable Objects in the dashboard
 
@@ -46,7 +47,7 @@ To enable Durable Objects, you will need to purchase the Workers Paid plan:
 In your `browser-worker` directory, install Cloudflare’s [fork of Puppeteer](/browser-rendering/platform/puppeteer/):
 
 ```sh
-$ npm install @cloudflare/puppeteer --save-dev
+npm install @cloudflare/puppeteer --save-dev
 ```
 
 ## 4. Create a R2 bucket
@@ -56,14 +57,14 @@ Create two R2 buckets, one for production, and one for development.
 Note that bucket names must be lowercase and can only contain dashes.
 
 ```sh
-$ wrangler r2 bucket create screenshots
-$ wrangler r2 bucket create screenshots-test
+wrangler r2 bucket create screenshots
+wrangler r2 bucket create screenshots-test
 ```
 
 To check that your buckets were created, run:
 
 ```sh
-$ wrangler r2 bucket list
+wrangler r2 bucket list
 ```
 
 After running the `list` command, you will see all bucket names, including the ones you have just created.
@@ -109,11 +110,10 @@ The code below uses Durable Object to instantiate a browser using Puppeteer. It 
 The Durable Object keeps a browser session open for 60 seconds after last use. If a browser session is open, any requests will re-use the existing session rather than creating a new one. Update your Worker code by copy and pasting the following:
 
 ```js
-import puppeteer from '@cloudflare/puppeteer';
+import puppeteer from "@cloudflare/puppeteer";
 
 export default {
 	async fetch(request, env) {
-
 		let id = env.BROWSER.idFromName("browser");
 		let obj = env.BROWSER.get(id);
 
@@ -121,7 +121,7 @@ export default {
 		let resp = await obj.fetch(request.url);
 
 		return resp;
-	}
+	},
 };
 
 const KEEP_BROWSER_ALIVE_IN_SECONDS = 60;
@@ -136,24 +136,28 @@ export class Browser {
 
 	async fetch(request) {
 		// screen resolutions to test out
-		const width = [1920, 1366, 1536, 360, 414]
-		const height = [1080, 768, 864, 640, 896]
+		const width = [1920, 1366, 1536, 360, 414];
+		const height = [1080, 768, 864, 640, 896];
 
 		// use the current date and time to create a folder structure for R2
-		const nowDate = new Date()
-		var coeff = 1000 * 60 * 5
-		var roundedDate = (new Date(Math.round(nowDate.getTime() / coeff) * coeff)).toString();
-		var folder = roundedDate.split(" GMT")[0]
+		const nowDate = new Date();
+		var coeff = 1000 * 60 * 5;
+		var roundedDate = new Date(
+			Math.round(nowDate.getTime() / coeff) * coeff,
+		).toString();
+		var folder = roundedDate.split(" GMT")[0];
 
 		//if there's a browser session open, re-use it
 		if (!this.browser || !this.browser.isConnected()) {
 			console.log(`Browser DO: Starting new instance`);
 			try {
-			  this.browser = await puppeteer.launch(this.env.MYBROWSER);
+				this.browser = await puppeteer.launch(this.env.MYBROWSER);
 			} catch (e) {
-			  console.log(`Browser DO: Could not start browser instance. Error: ${e}`);
+				console.log(
+					`Browser DO: Could not start browser instance. Error: ${e}`,
+				);
 			}
-		  }
+		}
 
 		// Reset keptAlive after each call to the DO
 		this.keptAliveInSeconds = 0;
@@ -164,10 +168,10 @@ export class Browser {
 		for (let i = 0; i < width.length; i++) {
 			await page.setViewport({ width: width[i], height: height[i] });
 			await page.goto("https://workers.cloudflare.com/");
-			const fileName = "screenshot_" + width[i] + "x" + height[i]
+			const fileName = "screenshot_" + width[i] + "x" + height[i];
 			const sc = await page.screenshot({ path: fileName + ".jpg" });
 
-			await this.env.BUCKET.put(folder + "/"+ fileName + ".jpg", sc);
+			await this.env.BUCKET.put(folder + "/" + fileName + ".jpg", sc);
 		}
 
 		// Close tab when there is no more work to be done on the page
@@ -192,21 +196,24 @@ export class Browser {
 
 		// Extend browser DO life
 		if (this.keptAliveInSeconds < KEEP_BROWSER_ALIVE_IN_SECONDS) {
-		  console.log(`Browser DO: has been kept alive for ${this.keptAliveInSeconds} seconds. Extending lifespan.`);
-		  await this.storage.setAlarm(Date.now() + 10 * 1000);
-		  // You could ensure the ws connection is kept alive by requesting something
-		  // or just let it close automatically when there  is no work to be done
-          // for example, `await this.browser.version()`
+			console.log(
+				`Browser DO: has been kept alive for ${this.keptAliveInSeconds} seconds. Extending lifespan.`,
+			);
+			await this.storage.setAlarm(Date.now() + 10 * 1000);
+			// You could ensure the ws connection is kept alive by requesting something
+			// or just let it close automatically when there  is no work to be done
+			// for example, `await this.browser.version()`
 		} else {
-			console.log(`Browser DO: exceeded life of ${KEEP_BROWSER_ALIVE_IN_SECONDS}s.`);
+			console.log(
+				`Browser DO: exceeded life of ${KEEP_BROWSER_ALIVE_IN_SECONDS}s.`,
+			);
 			if (this.browser) {
 				console.log(`Closing browser.`);
 				await this.browser.close();
 			}
 		}
-	  }
-
-  }
+	}
+}
 ```
 
 ## 7. Test
@@ -219,6 +226,6 @@ Run [`npx wrangler deploy`](/workers/wrangler/commands/#deploy) to deploy your W
 
 ## Related resources
 
-* Other [Puppeteer examples](https://github.com/cloudflare/puppeteer/tree/main/examples)
-* Get started with [Durable Objects](/durable-objects/get-started/)
-* [Using R2 from Workers](/r2/api/workers/workers-api-usage/)
+- Other [Puppeteer examples](https://github.com/cloudflare/puppeteer/tree/main/examples)
+- Get started with [Durable Objects](/durable-objects/get-started/)
+- [Using R2 from Workers](/r2/api/workers/workers-api-usage/)

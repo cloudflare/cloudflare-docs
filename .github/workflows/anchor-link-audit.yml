@@ -6,7 +6,7 @@ name: Anchor link audit
 
 on:
   schedule:
-    - cron: "0 0 * * 0"  # Run at 00:00 UTC every Sunday
+    - cron: "0 0 * * 0" # Run at 00:00 UTC every Sunday
   workflow_dispatch:
 
 jobs:
@@ -19,11 +19,7 @@ jobs:
           fetch-depth: 1
       - uses: actions/setup-node@v4
         with:
-          node-version: 20
-      - uses: peaceiris/actions-hugo@v3
-        with:
-          hugo-version: '0.125.6'
-          extended: true
+          node-version: 22
 
       - name: Get npm cache directory
         id: npm-cache-dir
@@ -40,9 +36,9 @@ jobs:
 
       - run: npm ci
 
-      - run: make build
+      - run: npx astro build
         env:
-          NODE_OPTIONS: "--max-old-space-size=8192"
+          NODE_OPTIONS: "--max-old-space-size=4192"
 
       - name: Install dependencies
         run: curl https://htmltest.wjdp.uk | bash

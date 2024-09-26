@@ -6,20 +6,21 @@ sidebar:
 head:
   - tag: title
     content: Dynamic fields | Fields reference
-
 ---
 
-import { Render } from "~/components"
+import { Render } from "~/components";
 
 Dynamic fields represent computed or derived values, typically related to threat intelligence about an HTTP request.
 
 :::note
 
-* Access to `cf.bot_management.*` fields requires a Cloudflare Enterprise plan with [Bot Management](/bots/plans/bm-subscription/) enabled.
+- Access to `cf.bot_management.*` fields requires a Cloudflare Enterprise plan with [Bot Management](/bots/plans/bm-subscription/) enabled.
 
-* Access to `cf.waf.content_scan.*` fields requires a Cloudflare Enterprise plan with [WAF content scanning](/waf/about/content-scanning/) enabled.
+- Access to `cf.waf.content_scan.*` fields requires a Cloudflare Enterprise plan with [malicious uploads detection](/waf/detections/malicious-uploads/) enabled.
 
-* The `cf.tls_client_auth.*` string fields are only filled in if the request includes a client certificate for [mTLS authentication](/ssl/client-certificates/enable-mtls/).
+- Access to fields `cf.waf.auth_detected` and `cf.waf.credential_check.*` depends on your Cloudflare plan and add-ons. For more information, refer to [Leaked credentials detection](/waf/detections/leaked-credentials/).
+
+- The `cf.tls_client_auth.*` string fields are only filled in if the request includes a client certificate for [mTLS authentication](/ssl/client-certificates/enable-mtls/).
 
 :::
 
@@ -74,6 +75,7 @@ Indicates whether the visitor has previously passed a JS Detection. For more det
 List of IDs that correlate to the Bot Management heuristic detections made on a request (you can have multiple heuristic detections on the same request). Use this field to explicitly match a specific heuristic or to exclude a heuristic in a rule.
 
 Example:
+
 ```txt
 any(cf.bot_management.detection_ids[*] eq 33554817)
 ```
@@ -106,13 +108,13 @@ Returns the string representation of the per-hostname [custom metadata](/cloudfl
 
 `cf.random_seed` `Bytes`
 
-Returns per-request random bytes that you can use in the [`uuidv4()`](https://example.com/ruleset-engine/rules-language/functions/#function-uuidv4) function.
+Returns per-request random bytes that you can use in the [`uuidv4()`](/ruleset-engine/rules-language/functions/#uuidv4) function.
 
 ## `cf.ray_id`
 
 `cf.ray_id` `String`
 
-The Ray ID of the current request. A [Ray ID](https://example.com/fundamentals/reference/cloudflare-ray-id/) is an identifier given to every request that goes through Cloudflare.
+The Ray ID of the current request. A [Ray ID](/fundamentals/reference/cloudflare-ray-id/) is an identifier given to every request that goes through Cloudflare.
 
 ## `cf.threat_score`
 
@@ -127,6 +129,7 @@ Represents a Cloudflare threat score from 0–100, where 0 indicates low risk. V
 The cipher for the connection to Cloudflare.
 
 Example:
+
 ```txt
 "AES128-SHA256"
 ```
@@ -156,8 +159,21 @@ Returns `true` when a request presents a certificate (valid or not).
 The Distinguished Name (DN) of the Certificate Authority (CA) that issued the certificate included in the request.
 
 Example:
+
 ```txt
 "CN=Access Testing CA,OU=TX,O=Access Testing,L=Austin,ST=Texas,C=US"
+```
+
+## `cf.tls_client_auth.cert_subject_dn`
+
+`cf.tls_client_auth.cert_subject_dn` `String`
+
+The Distinguished Name (DN) of the owner (or requester) of the certificate included in the request.
+
+Example:
+
+```txt
+"CN=James Royal,OU=Access Admins,O=Access,L=Austin,ST=Texas,C=US"
 ```
 
 ## `cf.tls_client_auth.cert_issuer_dn_rfc2253`
@@ -167,6 +183,7 @@ Example:
 The Distinguished Name (DN) of the Certificate Authority (CA) that issued the certificate in the request in [RFC 2253](https://datatracker.ietf.org/doc/html/rfc2253) format.
 
 Example:
+
 ```
 "CN=Access Testing CA,OU=TX,O=Access Testing,L=Austin,ST=Texas,C=US"
 ```
@@ -178,6 +195,7 @@ Example:
 The Distinguished Name (DN) of the owner (or requester) of the certificate in the request in [RFC 2253](https://datatracker.ietf.org/doc/html/rfc2253) format.
 
 Example:
+
 ```
 "CN=James Royal,OU=Access Admins,O=Access,L=Austin,ST=Texas,C=US"
 ```
@@ -189,6 +207,7 @@ Example:
 The Distinguished Name (DN) of the Certificate Authority (CA) that issued the certificate in the request in a legacy format.
 
 Example:
+
 ```
 "/C=US/ST=Texas/L=Austin/O=Access Testing/OU=TX/CN=Access Testing CA"
 ```
@@ -200,6 +219,7 @@ Example:
 The Distinguished Name (DN) of the owner (or requester) of the certificate in the request in a legacy format.
 
 Example:
+
 ```
 "/C=US/ST=Texas/L=Austin/O=Access/OU=Access Admins/CN=James Royal"
 ```
@@ -211,6 +231,7 @@ Example:
 Serial number of the certificate in the request.
 
 Example:
+
 ```
 "527E0F20A20EA2A4146C78390F34CE7AF0878CA4"
 ```
@@ -222,6 +243,7 @@ Example:
 Serial number of the direct issuer of the certificate in the request.
 
 Example:
+
 ```
 "2688201DBA77402EA87118876F2E1B24CF8B0395"
 ```
@@ -233,6 +255,7 @@ Example:
 The SHA-256 fingerprint of the certificate in the request.
 
 Example:
+
 ```
 "af363dc85bc942a892d3cee9796190fdb36d89cd588a4f1cb17c74a943439714"
 ```
@@ -244,6 +267,7 @@ Example:
 The SHA-1 fingerprint of the certificate in the request.
 
 Example:
+
 ```
 "933ad5282c560ae3f482a43ecd73bc9de878a190"
 ```
@@ -255,6 +279,7 @@ Example:
 The certificate in the request is not valid before this date.
 
 Example:
+
 ```
 "Mar 21 13:35:00 2022 GMT"
 ```
@@ -266,6 +291,7 @@ Example:
 The certificate in the request is not valid after this date.
 
 Example:
+
 ```
 "Mar 21 13:35:00 2023 GMT"
 ```
@@ -277,6 +303,7 @@ Example:
 The Subject Key Identifier (SKI) of the certificate in the request.
 
 Example:
+
 ```
 "27846FAE6EAC4A8DAD9101B519CF1EB460242831"
 ```
@@ -288,6 +315,7 @@ Example:
 The Subject Key Identifier (SKI) of the direct issuer of the certificate in the request.
 
 Example:
+
 ```
 "8204924CF49D471E855862706D889F58F6B784D3"
 ```
@@ -299,6 +327,7 @@ Example:
 The SHA-1 fingerprint of TLS client extensions, encoded in Base64.
 
 Example:
+
 ```
 "OWFiM2I5ZDc0YWI0YWYzZmFkMGU0ZjhlYjhiYmVkMjgxNTU5YTU2Mg=="
 ```
@@ -310,6 +339,7 @@ Example:
 The length of the client hello message sent in a [TLS handshake](https://www.cloudflare.com/learning/ssl/what-happens-in-a-tls-handshake). Specifically, the length of the bytestring of the client hello.
 
 Example:
+
 ```
 508
 ```
@@ -321,6 +351,7 @@ Example:
 The value of the 32-byte random value provided by the client in a [TLS handshake](https://www.cloudflare.com/learning/ssl/what-happens-in-a-tls-handshake), encoded in Base64. Refer to [RFC 8446](https://datatracker.ietf.org/doc/html/rfc8446#section-4.1.2) for more details.
 
 Example:
+
 ```
 "YWJjZA=="
 ```
@@ -332,6 +363,7 @@ Example:
 The TLS version of the connection to Cloudflare.
 
 Example:
+
 ```
 "TLSv1.2"
 ```
@@ -342,7 +374,7 @@ Example:
 
 When `true`, the request contains at least one [content object](https://www.cloudflare.com/learning/ssl/what-happens-in-a-tls-handshake/).
 
-For more details, refer to [Uploaded content scanning](https://www.cloudflare.com/waf/about/content-scanning/).
+For more details, refer to [Malicious uploads detection](/waf/detections/malicious-uploads/).
 
 ## `cf.waf.content_scan.has_malicious_obj`
 
@@ -350,7 +382,7 @@ For more details, refer to [Uploaded content scanning](https://www.cloudflare.co
 
 When `true`, the request contains at least one malicious content object.
 
-For more details, refer to [Uploaded content scanning](https://www.cloudflare.com/waf/about/content-scanning/).
+For more details, refer to [Malicious uploads detection](/waf/detections/malicious-uploads/).
 
 ## `cf.waf.content_scan.num_malicious_obj`
 
@@ -358,7 +390,7 @@ For more details, refer to [Uploaded content scanning](https://www.cloudflare.co
 
 The number of malicious content objects detected in the request (zero or greater).
 
-For more details, refer to [Uploaded content scanning](https://www.cloudflare.com/waf/about/content-scanning/).
+For more details, refer to [Malicious uploads detection](/waf/detections/malicious-uploads/).
 
 ## `cf.waf.content_scan.has_failed`
 
@@ -366,7 +398,7 @@ For more details, refer to [Uploaded content scanning](https://www.cloudflare.co
 
 When `true`, the file scanner was unable to scan all the content objects detected in the request.
 
-For more details, refer to [Uploaded content scanning](https://www.cloudflare.com/waf/about/content-scanning/).
+For more details, refer to [Malicious uploads detection](/waf/detections/malicious-uploads/).
 
 ## `cf.waf.content_scan.num_obj`
 
@@ -374,7 +406,7 @@ For more details, refer to [Uploaded content scanning](https://www.cloudflare.co
 
 The number of content objects detected in the request (zero or greater).
 
-For more details, refer to [Uploaded content scanning](https://www.cloudflare.com/waf/about/content-scanning/).
+For more details, refer to [Malicious uploads detection](/waf/detections/malicious-uploads/).
 
 ## `cf.waf.content_scan.obj_sizes`
 
@@ -382,7 +414,7 @@ For more details, refer to [Uploaded content scanning](https://www.cloudflare.co
 
 An array of file sizes in bytes, in the order the content objects were detected in the request.
 
-For more details, refer to [Uploaded content scanning](https://www.cloudflare.com/waf/about/content-scanning/).
+For more details, refer to [Malicious uploads detection](/waf/detections/malicious-uploads/).
 
 ## `cf.waf.content_scan.obj_types`
 
@@ -390,7 +422,7 @@ For more details, refer to [Uploaded content scanning](https://www.cloudflare.co
 
 An array of file types in the order the content objects were detected in the request. If Cloudflare cannot determine the file type of a content object, the corresponding value in the `obj_types` array will be `application/octet-stream`.
 
-For more details, refer to [Uploaded content scanning](https://www.cloudflare.com/waf/about/content-scanning/).
+For more details, refer to [Malicious uploads detection](/waf/detections/malicious-uploads/).
 
 ## `cf.waf.content_scan.obj_results`
 
@@ -398,13 +430,13 @@ For more details, refer to [Uploaded content scanning](https://www.cloudflare.co
 
 An array of scan results in the order the content objects were detected in the request. The possible values are: `clean`, `suspicious`, `infected`, and `not scanned`.
 
-For more details, refer to [Uploaded content scanning](https://www.cloudflare.com/waf/about/content-scanning/).
+For more details, refer to [Malicious uploads detection](/waf/detections/malicious-uploads/).
 
 ## `cf.waf.score`
 
 `cf.waf.score` `Number`
 
-A global score from 1 to 99 that combines the score of each WAF attack vector into a single score. This is the standard [WAF attack score](https://www.cloudflare.com/waf/about/waf-attack-score/) to detect variants of attack patterns.
+A global score from 1 to 99 that combines the score of each WAF attack vector into a single score. This is the standard [WAF attack score](/waf/detections/attack-score/) to detect variants of attack patterns.
 
 ## `cf.waf.score.sqli`
 
@@ -430,6 +462,46 @@ An attack score from 1 to 99 classifying the command injection or Remote Code Ex
 
 The attack score class of the current request, based on the WAF attack score. Can have one of the following values: `attack`, `likely_attack`, `likely_clean`, `clean`.
 
+## `cf.waf.auth_detected`
+
+`cf.waf.auth_detected` `Boolean`
+
+When `true`, the Cloudflare WAF detected authentication credentials in the request.
+
+Only available when [leaked credentials detection](/waf/detections/leaked-credentials/) is enabled.
+
+## `cf.waf.credential_check.password_leaked`
+
+`cf.waf.credential_check.password_leaked` `Boolean`
+
+When `true`, the password detected in the request was previously leaked.
+
+Only available when [leaked credentials detection](/waf/detections/leaked-credentials/) is enabled.
+
+## `cf.waf.credential_check.username_leaked`
+
+`cf.waf.credential_check.username_leaked` `Boolean`
+
+When `true`, the username detected in the request was previously leaked.
+
+Only available when [leaked credentials detection](/waf/detections/leaked-credentials/) is enabled.
+
+## `cf.waf.credential_check.username_and_password_leaked`
+
+`cf.waf.credential_check.username_and_password_leaked` `Boolean`
+
+When `true`, the authentication credentials detected in the request (username and password pair) were previously leaked.
+
+Only available when [leaked credentials detection](/waf/detections/leaked-credentials/) is enabled.
+
+## `cf.waf.credential_check.username_password_similar`
+
+`cf.waf.credential_check.username_password_similar` `Boolean`
+
+When `true`, a similar version of the username and password credentials detected in the request were previously leaked.
+
+Only available when [leaked credentials detection](/waf/detections/leaked-credentials/) is enabled.
+
 ## `cf.worker.upstream_zone`
 
 `cf.worker.upstream_zone` `String`
@@ -439,7 +511,3 @@ Identifies whether a request comes from a worker or not. When a request comes fr
 ## Corporate Proxy
 
 <Render file="corporate_proxy" product="bots" />
-
-***
-
-*GeoIP is the registered trademark of MaxMind, Inc.*

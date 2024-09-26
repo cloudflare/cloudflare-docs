@@ -14,34 +14,33 @@ sidebar:
   order: 4
 description: Send a GET request and read in JSON from the response. Use to fetch
   external data.
-
 ---
 
-import { TabItem, Tabs } from "~/components"
+import { TabItem, Tabs } from "~/components";
 
-<Tabs> <TabItem label="JavaScript" icon="seti:javascript">
+<Tabs syncKey="workersExamples"> <TabItem label="JavaScript" icon="seti:javascript">
 
 ```js
 export default {
-  async fetch(request, env, ctx) {
-    const url = "https://jsonplaceholder.typicode.com/todos/1";
+	async fetch(request, env, ctx) {
+		const url = "https://jsonplaceholder.typicode.com/todos/1";
 
-    // gatherResponse returns both content-type & response body as a string
-    async function gatherResponse(response) {
-      const { headers } = response;
-      const contentType = headers.get("content-type") || "";
-      if (contentType.includes("application/json")) {
-        return { contentType, result: JSON.stringify(await response.json()) };
-      }
-      return { contentType, result: response.text() };
-    }
+		// gatherResponse returns both content-type & response body as a string
+		async function gatherResponse(response) {
+			const { headers } = response;
+			const contentType = headers.get("content-type") || "";
+			if (contentType.includes("application/json")) {
+				return { contentType, result: JSON.stringify(await response.json()) };
+			}
+			return { contentType, result: response.text() };
+		}
 
-    const response = await fetch(url);
-    const { contentType, result } = await gatherResponse(response);
+		const response = await fetch(url);
+		const { contentType, result } = await gatherResponse(response);
 
-    const options = { headers: { "content-type": contentType } };
-    return new Response(result, options);
-  },
+		const options = { headers: { "content-type": contentType } };
+		return new Response(result, options);
+	},
 };
 ```
 
@@ -50,25 +49,25 @@ export default {
 ```ts
 interface Env {}
 export default {
-  async fetch(request, env, ctx): Promise<Response> {
-    const url = "https://jsonplaceholder.typicode.com/todos/1";
+	async fetch(request, env, ctx): Promise<Response> {
+		const url = "https://jsonplaceholder.typicode.com/todos/1";
 
-    // gatherResponse returns both content-type & response body as a string
-    async function gatherResponse(response) {
-      const { headers } = response;
-      const contentType = headers.get("content-type") || "";
-      if (contentType.includes("application/json")) {
-        return { contentType, result: JSON.stringify(await response.json()) };
-      }
-      return { contentType, result: response.text() };
-    }
+		// gatherResponse returns both content-type & response body as a string
+		async function gatherResponse(response) {
+			const { headers } = response;
+			const contentType = headers.get("content-type") || "";
+			if (contentType.includes("application/json")) {
+				return { contentType, result: JSON.stringify(await response.json()) };
+			}
+			return { contentType, result: response.text() };
+		}
 
-    const response = await fetch(url);
-    const { contentType, result } = await gatherResponse(response);
+		const response = await fetch(url);
+		const { contentType, result } = await gatherResponse(response);
 
-    const options = { headers: { "content-type": contentType } };
-    return new Response(result, options);
-  },
+		const options = { headers: { "content-type": contentType } };
+		return new Response(result, options);
+	},
 } satisfies ExportedHandler<Env>;
 ```
 

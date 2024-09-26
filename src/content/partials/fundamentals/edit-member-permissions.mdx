@@ -1,11 +1,10 @@
 ---
 {}
-
 ---
 
-import { TabItem, Tabs } from "~/components"
+import { TabItem, Tabs } from "~/components";
 
-<Tabs> <TabItem label="Dashboard">
+<Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
 
 To edit member permissions using the dashboard:
 
@@ -21,5 +20,24 @@ To edit member permissions using the dashboard:
 To edit member permissions using the API, get a [list of roles](/api/operations/account-roles-list-roles) available for an account.
 
 Then, send a [`PUT` request](/api/operations/account-members-update-member) to edit their permissions.
+
+
+```bash title="Request"
+
+curl --request PUT \
+  --url https://api.cloudflare.com/client/v4/accounts/{account_id}/members/{member_id} \
+  --header 'Authorization: Bearer <API_TOKEN>' \
+  --header 'Content-Type: application/json' \
+  --data '{
+	  "roles": [
+	        {
+	            "id": "<ROLE_ID1>"
+	        },
+	        {
+	            "id": "<ROLE_ID2>"
+	        }
+	  	]
+		}'
+```
 
 </TabItem> </Tabs>
