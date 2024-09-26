@@ -70,6 +70,8 @@ For more information, refer to [Troubleshooting Cloudflare 503 errors](/support/
 - `522` - Our edge could not establish a TCP connection to the origin server.
 - `523` - Origin server is unreachable (for example, the origin IP changed but DNS was not updated, or due to network issues between our edge and the origin).
 - `524` - Our edge established a TCP connection, but the origin did not reply with a HTTP response before the connection timed out.
+- `525` - This error indicates that the SSL handshake between Cloudflare and the origin web server failed, either due to a network issue or a certificare issue at the origin.
+- `526` - The certificate configured at the origin is not valid.
 
 For more information, refer to [Troubleshooting Cloudflare 5XX errors](/support/troubleshooting/cloudflare-errors/troubleshooting-cloudflare-5xx-errors/).
 
