@@ -8,12 +8,12 @@ sidebar:
     text: New
 ---
 
-import { Badge, Details, Tabs, TabItem, Render } from "~/components"
+import { Badge, Details, Tabs, TabItem, Render } from "~/components";
 
 Access for Infrastructure allows you to have granular control over how users access individual servers, clusters, or databases in your private network. By adding an infrastructure application to Cloudflare Access, you can configure how users authenticate to the resource as well as control and authorize the ports, protocols, and usernames that they can connect with. Access and command logs ensure regulatory compliance and allow for auditing of user activity in case of a security breach.
 
 :::note
-Access for Infrastructure currently only supports [SSH](/cloudflare-one/connections/connect-networks/use-cases/ssh/ssh-infrastructure-access/).
+Access for Infrastructure is available in early access and currently only supports [SSH](/cloudflare-one/connections/connect-networks/use-cases/ssh/ssh-infrastructure-access/).
 :::
 
 ## Prerequisites
@@ -37,13 +37,14 @@ Access for Infrastructure currently only supports [SSH](/cloudflare-one/connecti
 ### Selectors
 
 The following [Access policy selectors](/cloudflare-one/policies/access/#selectors) are available for securing infrastructure applications:
+
 - Email
 - Emails ending in
 - SAML group
 - Country
 - Authentication method
 - Device posture
-- Azure group, GitHub organization, Google Workspace group, Okta group
+- Entra group, GitHub organization, Google Workspace group, Okta group
 
 ## 4. Configure the server
 
@@ -63,8 +64,6 @@ To connect to targets that are in different VNETS, users will need to [switch th
 If a user is connected to a target in VNET-A and needs to connect to a target in VNET-B, switching their VNET will not break any existing connections to targets within VNET-A. At present, connections are maintained between VNETs.
 :::
 
-
 ## Revoke a user's session
 
 To revoke a user's access to all infrastructure targets, you can either [revoke the user from Zero Trust](/cloudflare-one/identity/users/session-management/#per-user) or revoke their device. Cloudflare does not currently support revoking a user's session for a specific target.
-
