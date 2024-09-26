@@ -20,23 +20,21 @@ description: Example of how to use Queues to handle rate limits of external APIs
 
 import { Render, PackageManagers } from "~/components";
 
-This tutorial explains how to use Queues to handle rate limits of external APIs. In this tutorial, you will build an application that sends email notifications using [Resend](https://www.resend.com/), but you can use this pattern to handle rate limits of any external API.
+This tutorial explains how to use Queues to handle rate limits of external APIs by building an application that sends email notifications using [Resend](https://www.resend.com/). However, you can use this pattern to handle rate limits of any external API.
 
-Resend is a service that allows you to send emails from your application. It provides a simple API that you can use to send emails. Resend has a default [rate limit](https://resend.com/docs/api-reference/introduction#rate-limit) of 2 requests per second. You will use Queues to handle the rate limit of Resend.
+Resend is a service that allows you to send emails from your application via an API. Resend has a default [rate limit](https://resend.com/docs/api-reference/introduction#rate-limit) of two requests per second. You will use Queues to handle the rate limit of Resend.
 
 ## Prerequisites
 
 <Render file="prereqs" product="workers" />
 
-4. Sign up for Resend and generate an API key by following the instructions on the [Resend documentation](https://resend.com/docs/dashboard/api-keys/introduction).
+4. Sign up for [Resend](https://resend.com/) and generate an API key by following the guide on the [Resend documentation](https://resend.com/docs/dashboard/api-keys/introduction).
 
-### Queues access
-
-Additionally, you will need access to Cloudflare Queues.
+5. Additionally, you will need access to Cloudflare Queues.
 
 <Render file="enable-queues" />
 
-## 1. Create new Workers application
+## 1. Create a new Workers application
 
 To get started, create a Worker application using the [`create-cloudflare` CLI](https://github.com/cloudflare/workers-sdk/tree/main/packages/create-cloudflare). Open a terminal window and run the following command:
 
@@ -58,7 +56,7 @@ To get started, create a Worker application using the [`create-cloudflare` CLI](
 	}}
 />
 
-Then, move into your newly created directory:
+Then, go to your newly created directory:
 
 ```sh frame="none"
 cd resend-rate-limit-queue
@@ -66,20 +64,20 @@ cd resend-rate-limit-queue
 
 ## 2. Set up a Queue
 
-You need to create a Queue and a binding to your Worker. Run the following command to create a Queue named `rate-limit-queue`.
+You need to create a Queue and a binding to your Worker. Run the following command to create a Queue named `rate-limit-queue`:
 
 ```sh title="Create a Queue"
 npx wrangler queues create rate-limit-queue
 ```
 
-```txt title="Output"
+```sh output
 Creating queue rate-limit-queue.
 Created queue rate-limit-queue.
 ```
 
-### Add Queue bindings to wrangler.toml
+### Add Queue bindings to `wrangler.toml`
 
-Next, in your `wrangler.toml` file, add the following:
+In your `wrangler.toml` file, add the following:
 
 ```toml
 [[queues.producers]]
@@ -93,9 +91,9 @@ max_batch_timeout = 10
 max_retries = 3
 ```
 
-Adding the `max_batch_size` of 2 to the consumer queue is important because the Resend API has a default rate limit of 2 requests per second. This batch size allows the queue to process the message in the batch size of 2. If the batch size is less than 2, the queue will wait for 10 seconds to collect the next message. If no more messages are available, the queue will process the message in the batch. For more information, refer to the [Batching, Retries and Delays documentation](/queues/configuration/batching-retries)
+It is important to include the `max_batch_size` of two to the consumer queue is important because the Resend API has a default rate limit of two requests per second. This batch size allows the queue to process the message in the batch size of two. If the batch size is less than two, the queue will wait for 10 seconds to collect the next message. If no more messages are available, the queue will process the message in the batch. For more information, refer to the [Batching, Retries and Delays documentation](/queues/configuration/batching-retries)
 
-Your final `wrangler.toml` file should look similar to the one below.
+Your final `wrangler.toml` file should look similar to the example below.
 
 ```toml title="wrangler.toml"
 #:schema node_modules/wrangler/config-schema.json
@@ -117,7 +115,7 @@ max_retries = 3
 
 ## 3. Add bindings to environment
 
-Add the bindings to the environment interface in `worker-configuration.d.ts`, so TypeScript correctly types the bindings. Type the queue as `Queue<any>`. The following step will show you how to change this type.
+Add the bindings to the environment interface in `worker-configuration.d.ts`, so TypeScript correctly types the bindings. Type the queue as `Queue<any>`. Refer to the following step for instructions on how to change this type.
 
 ```ts title="worker-configuration.d.ts"
 interface Env {
@@ -127,7 +125,7 @@ interface Env {
 
 ## 4. Send message to the queue
 
-The application will send a message to the queue when this Worker receives a request. For simplicity, you will send the email address as a message to the queue. A new message will be sent to the queue with a delay of 1 second.
+The application will send a message to the queue when the Worker receives a request. For simplicity, you will send the email address as a message to the queue. A new message will be sent to the queue with a delay of one second.
 
 ```ts title="src/index.ts"
 export default {
@@ -145,7 +143,7 @@ export default {
 };
 ```
 
-This will accept requests to any subpath and forwards the request's body. It expects that the request body only contains an email. In production, you should check that the request was a `POST` request. Moreover, you should avoid sending such sensitive information (email) directly to the queue. Instead, you can send a message to the queue that contains a unique identifier for the user. Then, your consumer queue can use the unique identifier to look up the email address in a database and use that to send the email.
+This will accept requests to any subpath and forwards the request's body. It expects that the request body to contain only an email. In production, you should check that the request was a `POST` request. You should also avoid sending such sensitive information (email) directly to the queue. Instead, you can send a message to the queue that contains a unique identifier for the user. Then, your consumer queue can use the unique identifier to look up the email address in a database and use that to send the email.
 
 ## 5. Process the messages in the queue
 
@@ -153,7 +151,7 @@ After the message is sent to the queue, it will be processed by the consumer Wor
 
 Since you have not configured Resend yet, you will log the message to the console. After you configure Resend, you will use it to send the email.
 
-Add the `queue()` handler as shown below.
+Add the `queue()` handler as shown below:
 
 ```ts title="src/index.ts" ins={1-3,17-28}
 interface Message {
@@ -187,23 +185,21 @@ export default {
 };
 ```
 
-The above `queue()` handler will log the email address to the console and send the email. It will also retry the message if the email sending fails. The `delaySeconds` is set to 5 seconds to avoid sending the email too quickly.
+The above `queue()` handler will log the email address to the console and send the email. It will also retry the message if sending the email fails. The `delaySeconds` is set to five seconds to avoid sending the email too quickly.
 
-To test the application, run the following command.
+To test the application, run the following command:
 
 ```sh title="Start the development server"
 npm run dev
 ```
 
-Use the following cURL command to send a request to the application.
+Use the following cURL command to send a request to the application:
 
 ```sh title="Test with a cURL request"
 curl -X POST -d "test@example.com" http://localhost:8787/
 ```
 
-On success, you should see the following output in the console.
-
-```txt title="Output"
+```sh output
 [wrangler:inf] POST / 200 OK (2ms)
 QueueMessage {
   attempts: 1,
@@ -232,7 +228,7 @@ interface Env {
 }
 ```
 
-Lastly, install the [`resend` package](https://www.npmjs.com/package/resend) using the following command
+Lastly, install the [`resend` package](https://www.npmjs.com/package/resend) using the following command:
 
 ```sh title="Install Resend"
 npm install resend
@@ -295,9 +291,9 @@ export default {
 };
 ```
 
-The `queue()` handler will now send the email using the Resend API. It also checks if the email sending failed and retries the message if it did.
+The `queue()` handler will now send the email using the Resend API. It also checks if sending the email failed and will retry the message.
 
-The final script is included below.
+The final script is included below:
 
 ```ts title="src/index.ts"
 import { Resend } from "resend";
@@ -348,13 +344,13 @@ export default {
 };
 ```
 
-To test the application, start the development server using the following command.
+To test the application, start the development server using the following command:
 
 ```sh title="Start the development server"
 npm run dev
 ```
 
-Use the following cURL command to send a request to the application.
+Use the following cURL command to send a request to the application:
 
 ```sh title="Test with a cURL request"
 curl -X POST -d "delivered@resend.dev" http://localhost:8787/
@@ -370,7 +366,7 @@ To deploy your Worker, run the following command:
 npx wrangler deploy
 ```
 
-Lastly, add the Resend API key using the following command.
+Lastly, add the Resend API key using the following command:
 
 ```sh title="Add the Resend API key"
 npx wrangler secret put RESEND_API_KEY
