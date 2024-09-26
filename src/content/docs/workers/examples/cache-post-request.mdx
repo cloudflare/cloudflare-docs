@@ -17,6 +17,12 @@ description: Cache POST requests using the Cache API.
 
 import { TabItem, Tabs } from "~/components";
 
+POST requests can be cached either via Cache API or [Workers KV](/kv/).
+
+## Using Cache API
+
+The Cache API allows for a simple API to cache POST requests. However, Cache API does not [support the use of Tiered Caching or Reserve Reserve](/workers/reference/how-the-cache-works/#cache-api). To increase Cache Hit Rates and offload origin load, consider using Workers KV instead (see below).
+
 <Tabs syncKey="workersExamples"> <TabItem label="JavaScript" icon="seti:javascript">
 
 ```js
@@ -148,3 +154,114 @@ async def on_fetch(request, _, ctx):
 ```
 
 </TabItem> </Tabs>
+
+
+## Using Workers KV
+
+KV allows
+
+<Tabs syncKey="workersExamples"> <TabItem label="JavaScript" icon="seti:javascript">
+
+```js
+
+const serializeResponse() = () => {
+	// TODO: Implement Request -> JSON/Text
+}
+
+const deserializeResponse() = () => {
+	// TODO: Implement JSON/Text -> Request
+}
+
+export default {
+	async fetch(request, env, ctx) {
+		async function sha256(message) {
+			// encode as UTF-8
+			const msgBuffer = await new TextEncoder().encode(message);
+			// hash the message
+			const hashBuffer = await crypto.subtle.digest("SHA-256", msgBuffer);
+			// convert bytes to hex string
+			return [...new Uint8Array(hashBuffer)]
+				.map((b) => b.toString(16).padStart(2, "0"))
+				.join("");
+		}
+		try {
+			if (request.method.toUpperCase() === "POST") {
+				const body = await request.clone().text();
+				// Hash the request body to use it as a part of the cache key
+				const hash = await sha256(body);
+				const cacheUrl = new URL(request.url);
+				// Store the URL in cache by prepending the body's hash
+				cacheUrl.pathname = "/posts" + cacheUrl.pathname + hash;
+				// Convert to a GET to be able to cache
+				const cacheKey = new Request(cacheUrl.toString(), {
+					headers: request.headers,
+					method: "GET",
+				});
+
+				// Find the cache key in KV
+				let response = deserializeResponse(await env.KV.get());
+				// Otherwise, fetch response to POST request from origin
+				if (!response) {
+					response = await fetch(request);
+					// TODO: Add expiry
+					ctx.waitUntil(env.KV.put(cacheKey, serializeResponse()));
+				}
+				return response;
+			}
+			return fetch(request);
+		} catch (e) {
+			return new Response("Error thrown " + e.message);
+		}
+	},
+};
+```
+
+</TabItem> <TabItem label="TypeScript" icon="seti:typescript">
+
+```ts
+interface Env {}
+export default {
+	async fetch(request, env, ctx): Promise<Response> {
+		async function sha256(message) {
+			// encode as UTF-8
+			const msgBuffer = await new TextEncoder().encode(message);
+			// hash the message
+			const hashBuffer = await crypto.subtle.digest("SHA-256", msgBuffer);
+			// convert bytes to hex string
+			return [...new Uint8Array(hashBuffer)]
+				.map((b) => b.toString(16).padStart(2, "0"))
+				.join("");
+		}
+		try {
+			if (request.method.toUpperCase() === "POST") {
+				const body = await request.clone().text();
+				// Hash the request body to use it as a part of the cache key
+				const hash = await sha256(body);
+				const cacheUrl = new URL(request.url);
+				// Store the URL in cache by prepending the body's hash
+				cacheUrl.pathname = "/posts" + cacheUrl.pathname + hash;
+				// Convert to a GET to be able to cache
+				const cacheKey = new Request(cacheUrl.toString(), {
+					headers: request.headers,
+					method: "GET",
+				});
+
+				const cache = caches.default;
+				// Find the cache key in the cache
+				let response = await cache.match(cacheKey);
+				// Otherwise, fetch response to POST request from origin
+				if (!response) {
+					response = await fetch(request);
+					ctx.waitUntil(cache.put(cacheKey, response.clone()));
+				}
+				return response;
+			}
+			return fetch(request);
+		} catch (e) {
+			return new Response("Error thrown " + e.message);
+		}
+	},
+} satisfies ExportedHandler<Env>;
+```
+
+</TabItem></Tabs>
