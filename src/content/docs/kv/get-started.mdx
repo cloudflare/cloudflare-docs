@@ -36,38 +36,38 @@ Create a new Worker to read and write to your KV namespace.
 <Steps>
 1. Create a new project named `kv-tutorial` by running:
 
-	<PackageManagers type="create" pkg="cloudflare@latest" args={"kv-tutorial"} />
+    <PackageManagers type="create" pkg="cloudflare@latest" args={"kv-tutorial"} />
 
-	<Render
-		file="c3-post-run-steps"
-		product="workers"
-		params={{
-			one: "Hello World example",
-			two: "Hello World Worker",
-			three: "TypeScript",
-		}}
-	/>
+    <Render
+    	file="c3-post-run-steps"
+    	product="workers"
+    	params={{
+    	category: "hello-world",
+    	type: "Hello World Worker",
+    	lang: "TypeScript",
+    	}}
+    />
 
-	This creates a new `kv-tutorial` directory, illustrated below.
+    This creates a new `kv-tutorial` directory, illustrated below.
 
-	<FileTree>
-		- kv-tutorial/
-			- node_modules/
-			- test/
-			- src
-				- **index.ts**
-			- package-lock.json
-			- package.json
-			- testconfig.json
-			- vitest.config.mts
-			- worker-configuration.d.ts
-			- **wrangler.toml**
-		</FileTree>
+    <FileTree>
+    	- kv-tutorial/
+    		- node_modules/
+    		- test/
+    		- src
+    			- **index.ts**
+    		- package-lock.json
+    		- package.json
+    		- testconfig.json
+    		- vitest.config.mts
+    		- worker-configuration.d.ts
+    		- **wrangler.toml**
+    </FileTree>
 
-	Your new `kv-tutorial` directory includes:
+    Your new `kv-tutorial` directory includes:
 
-	- A `"Hello World"` [Worker](/workers/get-started/guide/#3-write-code) in `index.ts`.
-	- A [`wrangler.toml`](/workers/wrangler/configuration/) configuration file. `wrangler.toml` is how your `kv-tutorial` Worker accesses your kv database.
+    - A `"Hello World"` [Worker](/workers/get-started/guide/#3-write-code) in `index.ts`.
+    - A [`wrangler.toml`](/workers/wrangler/configuration/) configuration file. `wrangler.toml` is how your `kv-tutorial` Worker accesses your kv database.
 
 2. Change into the directory you just created for your Worker project:
 
@@ -171,7 +171,7 @@ To bind your KV namespace to your Worker:
 
 	```
 
-	Binding names do not need to correspond to the namespace you created. Binding names are only a reference. Specifically:
+   Binding names do not need to correspond to the namespace you created. Binding names are only a reference. Specifically:
 
 	- The value (string) you set for `<BINDING_NAME>` is used to reference this KV namespace in your Worker. For this tutorial, this should be `kv_binding_name`.
 	- The binding must be [a valid JavaScript variable name](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Grammar_and_types#variables). For example, `binding = "MY_KV"` or `binding = "routingConfig"` would both be valid names for the binding.
@@ -262,27 +262,28 @@ To access the value using Wrangler:
 <Steps>
 1. Run the `wrangler kv key get` subcommand in your terminal, and input your key value:
 
-	```sh
-	# Replace [OPTIONS] with --binding or --namespace-id
-	npx wrangler kv key get [OPTIONS] "<KEY>"
-	```
+    ```sh
+    # Replace [OPTIONS] with --binding or --namespace-id
+    npx wrangler kv key get [OPTIONS] "<KEY>"
+    ```
 
-	A KV namespace can be specified in two ways:
+    A KV namespace can be specified in two ways:
 
-	<Details header="With a `--binding`">
+    <Details header="With a `--binding`">
 
 	```sh
 	npx wrangler kv key get --binding=<BINDING_NAME> "<KEY>"
 	```
 
-	</Details>
+    </Details>
 
-	<Details header ="With a `--namespace-id`">
+    <Details header ="With a `--namespace-id`">
 
-	```sh
-	npx wrangler kv key get --namespace-id=<YOUR_ID> "<KEY>"
-	```
-	</Details>
+    ```sh
+    npx wrangler kv key get --namespace-id=<YOUR_ID> "<KEY>"
+    ```
+    </Details>
+
 </Steps>
 
 You can add a `--preview` flag to interact with a preview namespace instead of a production namespace.
@@ -435,13 +436,14 @@ The browser should simply return the `VALUE` corresponding to the `KEY` you have
 <Steps>
 1. Run the following command to deploy KV to Cloudflare's global network:
 
-	```sh
-	npx wrangler deploy
-	```
+    ```sh
+    npx wrangler deploy
+    ```
 
 2. Visit the URL for your newly created Workers KV application.
 
-	For example, if the URL of your new Worker is `kv-tutorial.<YOUR_SUBDOMAIN>.workers.dev`, accessing `https://kv-tutorial.<YOUR_SUBDOMAIN>.workers.dev/` sends a request to your Worker that writes (and reads) from Workers KV.
+   For example, if the URL of your new Worker is `kv-tutorial.<YOUR_SUBDOMAIN>.workers.dev`, accessing `https://kv-tutorial.<YOUR_SUBDOMAIN>.workers.dev/` sends a request to your Worker that writes (and reads) from Workers KV.
+
 </Steps>
 
 </TabItem><TabItem label='Dashboard'>

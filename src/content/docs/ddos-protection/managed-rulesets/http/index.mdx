@@ -29,6 +29,7 @@ You can adjust the behavior of the rules in the managed ruleset by modifying the
 
 - Certain actions or sensitivity levels may not be available to all Cloudflare plans.
 - Currently, you can only define account-level configurations (or overrides) for the HTTP DDoS Attack Protection managed ruleset via API.
+
 :::
 
 To adjust rule behavior, do one of the following:
@@ -43,18 +44,17 @@ For more information on the available configuration parameters, refer to [Manage
 
 Cloudflare HTTP DDoS Protection can also initiate mitigation based on the origin health. Floods of requests that cause a high number of zone errors (default sensitivity level is 1,000 errors per second) can initiate mitigation to alleviate the strain on the zone.
 
-| Rule ID | Description | 
-| --- | --- |
+| Rule ID                            | Description                                           |
+| ---------------------------------- | ----------------------------------------------------- |
 | `dd42da7baabe4e518eaf11c393596a9d` | HTTP requests causing a high number of origin errors. |
 
 :::note
-
-This rule is available for zones on any plan. 
+This rule is available for zones on any plan.
 :::
 
 The rule is adaptive for zones on the Pro, Business, or Enterprise plan. It performs an additional check for better detection accuracy: the errors-per-second rate must also be at least five times the normal traffic levels.
 
-All HTTP errors in the 52x range (Internal Server Error) and all errors in the 53x range excluding [530](/support/troubleshooting/cloudflare-errors/troubleshooting-cloudflare-5xx-errors/#530error) are considered when factoring in the error rate.
+All HTTP errors in the 52x range (Internal Server Error) and all errors in the 53x range excluding [530](/support/troubleshooting/cloudflare-errors/troubleshooting-cloudflare-5xx-errors/#error-530) are considered when factoring in the error rate.
 
 ## Availability
 

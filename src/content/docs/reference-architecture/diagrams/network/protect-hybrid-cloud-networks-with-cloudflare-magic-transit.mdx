@@ -1,12 +1,16 @@
 ---
-title: Protect Hybrid Cloud Networks with Cloudflare Magic Transit
+title: Protect hybrid cloud networks with Cloudflare Magic Transit
 pcx_content_type: reference-architecture-diagram
+products:
+  - Magic Firewall
+  - Network Interconnect
+  - DDoS Protection
+  - Magic Transit
+  - BYOIP
 sidebar:
   order: 1
-head:
-  - tag: title
-    content: Protect Hybrid Cloud Networks with Cloudflare Magic Transit
-
+  label: Protect hybrid cloud networks
+updated: 2024-09-09
 ---
 
 ## Introduction
@@ -54,6 +58,7 @@ With Magic Transit service being the single, consolidated cloud-native network p
 One other added benefit of using such consolidated, cloud-native network protection solutions is that you can easily migrate or relocate Internet-facing networks between the various hybrid cloud environments without ever losing protection to these networks. They can do so by simply changing routes in the Magic Transit configuration to route traffic to the new location.
 
 ## Scenario 2 - Customer lease IP address from Cloudflare for both on-premise and cloud network deployments
+
 In the case where you do not own any network prefixes that are equal to or larger than /24, but would still like to use Magic Transit to protect their networks, you can [lease IPs](/magic-transit/cloudflare-ips/) from Cloudflare to assign to these smaller networks. The following diagram illustrates the architecture of such a deployment. Similar to the previous scenario, these customer networks are deployed at on-premise locations as well as across multiple cloud providers’ regions.
 
 For illustration purposes, below is an example list of the locations of Internet-facing networks and their respective IP prefixes.
@@ -76,6 +81,7 @@ On-premise data center 2: 192.0.2.64/28
 7. Magic Transit Egress traffic is subject to Magic Firewall filtering before being routed out to the Internet towards the users.
 
 ## Scenario 3 - Customer BYOIP for on-premise networks and lease IP address from Cloudflare for cloud network deployments
+
 In this scenario, you can deploy larger on-premise networks and smaller cloud-based networks. You assign your own /24 IP prefixes to the on-premise networks while leasing IPs from Cloudflare for your cloud-based networks.
 
 For illustration purposes, below is an example list of the locations of Internet-facing networks and their respective IP prefixes.
@@ -98,14 +104,14 @@ On-premise data center 2: 203.0.113.0/24
 7. This Magic Transit Egress traffic is subject to Magic Firewall filtering before being routed out to the Internet towards the users.
 8. The server return traffic from on-premises networks to the Internet users are direct server returned (DSR), bypassing the Cloudflare network.
 
-*Note*: Alternatively, customers can choose to also route the on-premise networks’ server return traffic through Cloudflare via policy-based routing and Magic Transit Egress functionality. This adds an additional layer of security and control for the egress traffic with Magic Firewall filtering. For example, it can block traffic destined to questionable IP addresses and sites, prohibited destinations, or countries.
+_Note_: Alternatively, customers can choose to also route the on-premise networks’ server return traffic through Cloudflare via policy-based routing and Magic Transit Egress functionality. This adds an additional layer of security and control for the egress traffic with Magic Firewall filtering. For example, it can block traffic destined to questionable IP addresses and sites, prohibited destinations, or countries.
 
 ## Related resources
-* [Magic Transit Reference Architecture](/reference-architecture/architectures/magic-transit/)
-* [Cloudflare Magic Transit](/magic-transit/)
-* [Cloudflare Network Interconnect](/network-interconnect/)
-* [Cloudflare DDoS Protection](/ddos-protection/)
-* [Cloudflare Magic Firewall](/magic-firewall/)
-* [Cloudflare Magic IPsec Device Compatibility Matrix](/magic-wan/reference/device-compatibility/)
-* [Cloudflare Magic Transit Leased IP](/magic-transit/cloudflare-ips/)
 
+- [Magic Transit Reference Architecture](/reference-architecture/architectures/magic-transit/)
+- [Cloudflare Magic Transit](/magic-transit/)
+- [Cloudflare Network Interconnect](/network-interconnect/)
+- [Cloudflare DDoS Protection](/ddos-protection/)
+- [Cloudflare Magic Firewall](/magic-firewall/)
+- [Cloudflare Magic IPsec Device Compatibility Matrix](/magic-wan/reference/device-compatibility/)
+- [Cloudflare Magic Transit Leased IP](/magic-transit/cloudflare-ips/)
