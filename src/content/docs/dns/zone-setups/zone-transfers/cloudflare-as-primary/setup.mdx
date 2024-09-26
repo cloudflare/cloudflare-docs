@@ -87,7 +87,7 @@ If you previously [created a peer DNS server](#step-2---create-peer-dns-server-o
 
 <Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
 
-To create a secondary zone using the dashboard:
+To link a primary zone to a peer using the dashboard:
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login).
 2. Select your account and zone.
@@ -101,6 +101,10 @@ To create a secondary zone using the dashboard:
 To link a primary zone to a peer using the API, send a [POST](</api/operations/secondary-dns-(-primary-zone)-create-primary-zone-configuration>) request with the ID of the peer you [previously created](#step-2---create-peer-dns-server-optional).
 
 </TabItem> </Tabs>
+
+:::caution[Multiple peers and TSIG]
+If you link more than one peer to a zone and at least one of them has TSIG configured, all peers are expected to also use the same TSIG.
+:::
 
 ## Step 4 - Create an ACL
 
