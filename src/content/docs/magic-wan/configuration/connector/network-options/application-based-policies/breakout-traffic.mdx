@@ -180,9 +180,6 @@ Take note of the `"id"` value for the application that want to delete.
 
 </TabItem> </Tabs>
 
-## Avoid double-encapsulating WARP traffic
+## WARP traffic
 
-<Render
-	file="connector/app-aware-policies/warp-traffic"
-	params={{ one: "If you have the Cloudflare WARP client deployed in your premises, you should avoid double-encapsulating traffic, first by the WARP client and then by Magic WAN Connector. This is done by bypassing Magic WAN's IPsec tunnels and sending WARP traffic directly to the Internet.", two: "[Add an application](#add-an-application)" }}
-/>
+<Render file="connector/app-aware-policies/warp-traffic" />

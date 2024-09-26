@@ -57,19 +57,15 @@ You must log out and log back in with at least one WARP device to ensure the con
 
 ## Double encapsulation
 
-When a WARP user goes to a location (like an office) with a Magic WAN tunnel already set up, WARP traffic is doubly encapsulated - first by WARP and then by Magic WAN. This is unnecessary, since each on-ramp method provides full Zero Trust protection.
+When a WARP user goes to a location (like an office) with a Magic WAN tunnel already set up, WARP traffic is doubly encapsulated — first by WARP and then by Magic WAN. This is unnecessary, since each on-ramp method provides full Zero Trust protection.
 
 Since WARP traffic is already protected on its own, Cloudflare recommends that you set up Magic WAN to exclude WARP traffic, sending it to the Internet through regular connections.
 
 To learn which IP addresses and UDP ports you should exclude to accomplish this, refer to [WARP ingress IP](/cloudflare-one/connections/connect-devices/warp/deployment/firewall/#warp-ingress-ip) and [WARP UDP ports](/cloudflare-one/connections/connect-devices/warp/deployment/firewall/#warp-ingress-ip).
 
-## Double-encapsulating and Magic WAN Connector
+### WARP and Magic WAN Connector
 
-<Render
-	file="connector/app-aware-policies/warp-traffic"
-	params={{ one: "If you have Magic WAN Connector and the Cloudflare WARP client deployed in your premises, you should also avoid double-encapsulating traffic. This is done by setting up WARP as a breakout app in the Connector dashboard. This bypasses Magic WAN's IPsec tunnels and sends WARP traffic directly to the Internet", two:"**Breakout traffic** > [Add an application](/magic-wan/configuration/connector/network-options/application-based-policies/breakout-traffic/#add-an-application)" }}
-/>
-
+<Render file="connector/app-aware-policies/warp-traffic" />
 
 ## Test WARP integration
 
