@@ -15,7 +15,7 @@ import { TabItem, Tabs, Steps, Render } from "~/components"
 
 Workers Logs lets you automatically collect, store, filter, and analyze logging data emitted from Cloudflare Workers. Data is written to your Cloudflare Account, and you can query it in the dashboard for each of your Workers. All newly created Workers will come with the observability setting enabled by default.
 
-Logs include [execution logs](/workers/observability/logs/workers-logs/#execution-logs), [custom logs](/workers/observability/logs/workers-logs/#add-custom-logs), errors, and uncaught exceptions.
+Logs include [invocation logs](/workers/observability/logs/workers-logs/#invocation-logs), [custom logs](/workers/observability/logs/workers-logs/#custom-logs), errors, and uncaught exceptions.
 
 ![Example showing the Workers Logs Dashboard](~/assets/images/workers-observability/preview.png)
 
@@ -76,13 +76,13 @@ The difference between these examples is in how you index your logs to enable fa
 
 ## Features
 
-### Execution Logs
+### Invocation Logs
 
-Each Workers invocation returns a single execution log that contains details such as the Request, Response, and related metadata. These execution logs can be identified by the field `$cloudflare.$metadata.type = "cf-worker-event"`. Each execution log is enriched with information available to Cloudlare in the context of the invocation.  
+Each Workers invocation returns a single invocation log that contains details such as the Request, Response, and related metadata. These invocation logs can be identified by the field `$cloudflare.$metadata.type = "cf-worker-event"`. Each invocation log is enriched with information available to Cloudflare in the context of the invocation.
 
-In the Workers Logs UI, logs are presented with a localized timestamp and a message. The message is dependent on the invocation handler. For example, Fetch requests will have a message describing the request method and the request URL, while cron events will be listed as cron. Below is a list of invocation handlers along with their execution message.
+In the Workers Logs UI, logs are presented with a localized timestamp and a message. The message is dependent on the invocation handler. For example, Fetch requests will have a message describing the request method and the request URL, while cron events will be listed as cron. Below is a list of invocation handlers along with their invocation message.
 
-| Invocation Handler                                              | Execution Message          |
+| Invocation Handler                                              | Invocation Message         |
 | --------------------------------------------------------------- | -------------------------- |
 | [Alarm](/durable-objects/api/alarms/)                           | \<Scheduled Time\>         |
 | [Email](/email-routing/email-workers/runtime-api/)              | \<Email Recipient\>        |
@@ -93,9 +93,9 @@ In the Workers Logs UI, logs are presented with a localized timestamp and a mess
 | [RPC](/workers/runtime-apis/rpc/)                               | \<RPC method\>             |
 | [WebSocket](/workers/examples/websockets/)                      | \<WebSocket Event Type\>   |
 
-### Add custom logs
+### Custom logs
 
-By default a Worker will emit [execution logs](/workers/observability/logs/workers-logs/#execution-logs) containing details about the request, response and related metadata.
+By default a Worker will emit [invocation logs](/workers/observability/logs/workers-logs/#invocation-logs) containing details about the request, response and related metadata.
 
 You can also add custom logs throughout your code. Any `console.log` statements within your Worker will be visible in Workers Logs. The following example demonstrates a custom `console.log` within a Worker request handler.
 
@@ -174,11 +174,11 @@ Workers Logs billing will begin on November 1, 2024.
 :::
 <Render file="workers_logs_pricing" />
 
-### Example Pricing
+### Examples
 
 #### Example 1
 
-A Worker serves 15 million requests per month. Each request emits 1 execution log and 1 `console.log`. `head_sampling_rate` is configured to 1.
+A Worker serves 15 million requests per month. Each request emits 1 invocation log and 1 `console.log`. `head_sampling_rate` is configured to 1.
 
 |            | Monthly Costs     | Formula                                                                                                                |
 | ---------- | ----------------- | ---------------------------------------------------------------------------------------------------------------------- | 
@@ -187,7 +187,7 @@ A Worker serves 15 million requests per month. Each request emits 1 execution lo
 
 #### Example 2
 
-A Worker serves 1 billion requests per month. Each request emits 1 execution log and 1 `console.log`. `head_sampling_rate` is configured to 0.1.
+A Worker serves 1 billion requests per month. Each request emits 1 invocation log and 1 `console.log`. `head_sampling_rate` is configured to 0.1.
 
 |            | Monthly Costs     | Formula                                                                                                                |
 | ---------- | ----------------- | ---------------------------------------------------------------------------------------------------------------------- | 
