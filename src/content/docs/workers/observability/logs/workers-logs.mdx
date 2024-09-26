@@ -39,7 +39,7 @@ You must add the observability setting for your Worker to write logs to Workers 
 
 ### Enabling with environments
 
-[Environments](workers/wrangler/environments/) allow you to deploy the same Worker application with different configurations. For example, you may want to configure a different `head_sampling_rate` to staging and production. To configure observability for your environment:
+[Environments](/workers/wrangler/environments/) allow you to deploy the same Worker application with different configurations. For example, you may want to configure a different `head_sampling_rate` to staging and production. To configure observability for your environment:
 	1. Add the following configuration below `[env.<NAME>]`
 	```toml
 	[env.<NAME>.observability]
@@ -165,7 +165,7 @@ head_sampling_rate = 0.01 # 1% sampling rate
 
 <sup>1</sup> While Workers Logs is in open beta, there is a daily limit of 5 billion logs per account per day. After the limit is exceed, a 1% head-based sample will be applied for the remainder of the day.
 
-<sup>2</sup> A single log has a maximum size limit of [128 KB](workers/platform/limits/#log-size). Logs exceeding that size will be truncated and the log's `$cloudflare.truncated` field will be set to true.
+<sup>2</sup> A single log has a maximum size limit of [128 KB](/workers/platform/limits/#log-size). Logs exceeding that size will be truncated and the log's `$cloudflare.truncated` field will be set to true.
 
 ## Pricing
 
