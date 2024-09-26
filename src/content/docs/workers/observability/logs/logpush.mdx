@@ -1,9 +1,11 @@
 ---
 pcx_content_type: concept
-title: Logpush
+title: Workers Logpush
 head: []
 description: Send Workers Trace Event Logs to a supported third party, such as a
   storage or logging provider.
+sidebar:
+  order: 5
 
 ---
 
@@ -19,7 +21,9 @@ Workers Trace Events Logpush is not available for zones on the [Cloudflare China
 
 ## Verify your Logpush access
 
-Workers Logpush requires a Wrangler version of `2.2.0` or higher. Check your version by running `wrangler version`. To update Wrangler, refer to [Install/Update Wrangler](/workers/wrangler/install-and-update/).
+:::note[Wrangler version]
+Minimum required Wrangler version: 2.2.0. Check your version by running `wrangler version`. To update Wrangler, refer to [Install/Update Wrangler](/workers/wrangler/install-and-update/).
+:::
 
 To configure a Logpush job, verify that your Cloudflare account role can use Logpush. To check your role:
 
@@ -40,6 +44,7 @@ To create a Logpush job in the Cloudflare dashboard:
 3. Select **Add Logpush job**.
 4. Select **Workers trace events** as the data set > **Next**.
 5. If needed, customize your data fields. Otherwise, select **Next**.
+
 6. Follow the instructions on the dashboard to verify ownership of your data's destination and complete job creation.
 
 ### Via cURL

@@ -14,7 +14,7 @@ Gradual Deployments give you the ability to incrementally deploy new [versions](
 Using gradual deployments, you can:
 
 - Gradually shift traffic to a newer version of your Worker.
-- Monitor error rates and exceptions across versions using [analytics and logging](/workers/configuration/versions-and-deployments/gradual-deployments/#observability) tooling.
+- Monitor error rates and exceptions across versions using [analytics and logs](/workers/configuration/versions-and-deployments/gradual-deployments/#observability) tooling.
 - [Roll back](/workers/configuration/versions-and-deployments/rollbacks/) to a previously stable version if you notice issues when deploying a new version.
 
 ## Use gradual deployments
@@ -238,7 +238,7 @@ When using gradual deployments, you may want to attribute Workers invocations to
 
 ### Logpush
 
-A new `ScriptVersion` object is available in [Workers Logpush](/workers/observability/logging/logpush/). `ScriptVersion` can only be added through the [Logpush API](/api/operations/post-accounts-account_identifier-logpush-jobs) right now. Sample API call:
+A new `ScriptVersion` object is available in [Workers Logpush](/workers/observability/logs/logpush/). `ScriptVersion` can only be added through the [Logpush API](/api/operations/post-accounts-account_identifier-logpush-jobs) right now. Sample API call:
 
 ```bash
 curl -X POST 'https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/logpush/jobs' \
