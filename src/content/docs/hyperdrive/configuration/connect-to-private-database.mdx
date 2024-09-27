@@ -20,6 +20,11 @@ When your database is isolated within a private network (such as a [virtual priv
 
 <Render file="tutorials-before-you-start" product="workers" />
 
+:::caution[Warning]
+
+If your organization also uses [Super Bot Fight Mode](/bots/get-started/pro/), keep **Definitely Automated** set to **Allow**. Otherwise, tunnels might fail with a `websocket: bad handshake` error.
+:::
+
 ## Prerequisites
 
 - A database in your private network, [configured to use TLS/SSL](/hyperdrive/configuration/connect-to-postgres/#supported-tls-ssl-modes).
