@@ -72,7 +72,7 @@ To create a peer using the dashboard:
    - **IP**: If configured, specifies where Cloudflare sends NOTIFY requests to.
    - **Port**: Specifies the IP Port for the NOTIFY IP.
    - **Enable incremental (IXFR) zone transfers**: Does not apply when you are using Cloudflare as your primary DNS provider (Cloudflare zones always accept IXFR requests).
-   - **Link an existing TSIG**: If desired, link the TSIG you [previously created](#step-1---create-tsig-optional).
+   - **Link an existing TSIG**: If desired, link the TSIG you [previously created](#1-create-tsig-optional).
 6. Select **Create**.
 
 </TabItem> <TabItem label="API">
@@ -83,7 +83,7 @@ To create a peer DNS server using the API, send a [POST](</api/operations/second
 
 ## 3. Link peer to primary zone (optional)
 
-If you previously [created a peer DNS server](#step-2---create-peer-dns-server-optional), you should link it to your primary zone.
+If you previously [created a peer DNS server](#2-create-peer-dns-server-optional), you should link it to your primary zone.
 
 <Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
 
@@ -98,7 +98,7 @@ To link a primary zone to a peer using the dashboard:
 
 </TabItem> <TabItem label="API">
 
-To link a primary zone to a peer using the API, send a [POST](</api/operations/secondary-dns-(-primary-zone)-create-primary-zone-configuration>) request with the ID of the peer you [previously created](#step-2---create-peer-dns-server-optional).
+To link a primary zone to a peer using the API, send a [POST](</api/operations/secondary-dns-(-primary-zone)-create-primary-zone-configuration>) request with the ID of the peer you [previously created](#2-create-peer-dns-server-optional).
 
 </TabItem> </Tabs>
 
@@ -114,7 +114,7 @@ For more details, refer to [create an ACL](/dns/zone-setups/zone-transfers/acces
 
 ## 5. Update your secondary DNS provider
 
-Your secondary DNS provider should send zone transfer requests (via AXFR or IXFR) to [this IP](/dns/zone-setups/zone-transfers/access-control-lists/cloudflare-ip-addresses/#transfer-ip) on port 53 and from the IP address specified in your [peer configuration](#step-2---create-peer-dns-server-optional).
+Your secondary DNS provider should send zone transfer requests (via AXFR or IXFR) to [this IP](/dns/zone-setups/zone-transfers/access-control-lists/cloudflare-ip-addresses/#transfer-ip) on port 53 and from the IP address specified in your [peer configuration](#2-create-peer-dns-server-optional).
 
 It should also have updated [Access Control Lists (ACLs)](/dns/zone-setups/zone-transfers/access-control-lists/cloudflare-ip-addresses/#allow-range) to prevent NOTIFY messages sent from Cloudflare IP ranges from being blocked.
 
