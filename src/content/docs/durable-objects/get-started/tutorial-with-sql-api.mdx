@@ -123,6 +123,8 @@ export class MyDurableObject extends DurableObject {
 }
 ```
 
+</TabItem> </Tabs>
+
 In the code above, you have:
 1. Defined a RPC method, `sayHello()`, that can be called by a Worker to communicate with a Durable Object.
 2. Accessed a Durable Object's attached storage, which is an private SQLite database only accesible to the object. [SQL API](/durable-objects/api/storage-api/#sqlexec) available on `ctx.storage` was called.
