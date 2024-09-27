@@ -175,7 +175,7 @@ To bind your KV namespace to your Worker:
 
    Binding names do not need to correspond to the namespace you created. Binding names are only a reference. Specifically:
 
-	- The value (string) you set for `<BINDING_NAME>` is used to reference this KV namespace in your Worker. For this tutorial, this should be `kv_binding_name`.
+	- The value (string) you set for `<BINDING_NAME>` is used to reference this KV namespace in your Worker. For this tutorial, this should be `BINDING_NAME`.
 	- The binding must be [a valid JavaScript variable name](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Grammar_and_types#variables). For example, `binding = "MY_KV"` or `binding = "routingConfig"` would both be valid names for the binding.
 	- Your binding is available in your Worker at `env.<BINDING_NAME>` from within your Worker.
 </Steps>
