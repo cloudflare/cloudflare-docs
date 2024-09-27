@@ -106,19 +106,13 @@ To link a primary zone to a peer using the API, send a [POST](</api/operations/s
 If you link more than one peer to a zone and at least one of them has TSIG configured, all peers are expected to also use the same TSIG.
 :::
 
-## 4. Create an ACL
-
-When you create an Access Control List (ACL), that list contains the source IP addresses that are allowed to send zone transfer requests. If you do not configure an ACL, your zone transfers will fail from IP addresses other than the one specified in the peer DNS server linked to your primary zone on Cloudflare.
-
-For more details, refer to [create an ACL](/dns/zone-setups/zone-transfers/access-control-lists/create-new-list/).
-
-## 5. Update your secondary DNS provider
+## 4. Update your secondary DNS provider
 
 Your secondary DNS provider should send zone transfer requests (via AXFR or IXFR) to [this IP](/dns/zone-setups/zone-transfers/access-control-lists/cloudflare-ip-addresses/#transfer-ip) on port 53 and from the IP address specified in your [peer configuration](#2-create-peer-dns-server-optional).
 
 It should also have updated [Access Control Lists (ACLs)](/dns/zone-setups/zone-transfers/access-control-lists/cloudflare-ip-addresses/#allow-range) to prevent NOTIFY messages sent from Cloudflare IP ranges from being blocked.
 
-## 6. Add secondary nameservers within Cloudflare
+## 5. Add secondary nameservers within Cloudflare
 
 Using the information from your secondary DNS provider, [create `NS` records](/dns/manage-dns-records/how-to/create-dns-records/#create-dns-records) on your zone apex listing your secondary nameservers.
 
@@ -146,7 +140,7 @@ curl --request PATCH \
 
 </TabItem> </Tabs>
 
-## 7. Enable outgoing zone transfers
+## 6. Enable outgoing zone transfers
 
 When you enable outgoing zone transfers, this will send a DNS NOTIFY message to your secondary DNS provider.
 
@@ -163,6 +157,6 @@ To enable outgoing zone transfers using the API, send a [POST](</api/operations/
 
 </TabItem> </Tabs>
 
-## 8. Add secondary nameservers to registrar
+## 7. Add secondary nameservers to registrar
 
 At your registrar, add the nameservers of your secondary DNS provider.
