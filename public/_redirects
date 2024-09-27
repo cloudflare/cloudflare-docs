@@ -128,7 +128,7 @@
 /support/analytics/learn-more/what-are-the-types-of-threats/ /analytics/account-and-zone-analytics/threat-types/ 301
 /analytics/graphql-api/tutorials/build-your-own-analytics/ /analytics/graphql-api/tutorials/ 301
 
-# area1
+# email-security
 /email-security/reporting/search/unified-search/ /email-security/reporting/search/ 301
 /email-security/reporting/search/detection-search/ /email-security/reporting/search/ 301
 /email-security/reporting/search/detection-search/available-parameters/ /email-security/reporting/search/available-parameters/ 301
@@ -365,8 +365,8 @@
 /email-routing/known-limitations/ /email-routing/postmaster/ 301
 
 # email-security
-/email-security/setup/api-deployment/ /email-security/setup/post-delivery-deployment/api/ 301
-/email-security/setup/api-deployment/office365-api/ /email-security/setup/post-delivery-deployment/api/office365-api/ 301
+/email-security/setup/api-deployment/* /email-security/setup/post-delivery-deployment/api/ 301
+/email-security/setup/api-deployment/office365-api/* /email-security/setup/post-delivery-deployment/api/office365-api/ 301
 
 # firewall
 /firewall/api/cf-lists/ /waf/tools/lists/lists-api/ 301
