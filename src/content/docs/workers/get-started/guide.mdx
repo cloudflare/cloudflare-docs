@@ -20,9 +20,7 @@ This guide will instruct you through setting up and deploying your first Worker.
 
 ## 1. Create a new Worker project
 
-[C3 (`create-cloudflare-cli`)](https://github.com/cloudflare/workers-sdk/tree/main/packages/create-cloudflare) is a command-line tool designed to help you set up and deploy new applications to Cloudflare.
-
-Open a terminal window and run C3 to create your Worker project:
+Open a terminal window and run C3 to create your Worker project. [C3 (`create-cloudflare-cli`)](https://github.com/cloudflare/workers-sdk/tree/main/packages/create-cloudflare) is a command-line tool designed to help you set up and deploy new applications to Cloudflare.
 
 <PackageManagers
 	type="create"
@@ -50,11 +48,11 @@ cd my-first-worker
 
 In your project directory, C3 will have generated the following:
 
-1. `wrangler.toml`: Your [Wrangler](/workers/wrangler/configuration/#sample-wranglertoml-configuration) configuration file.
-2. `index.js` (in `/src`): A minimal `'Hello World!'` Worker written in [ES module](/workers/reference/migrate-to-module-workers/) syntax.
-3. `package.json`: A minimal Node dependencies configuration file.
-4. `package-lock.json`: Refer to [`npm` documentation on `package-lock.json`](https://docs.npmjs.com/cli/v9/configuring-npm/package-lock-json).
-5. `node_modules`: Refer to [`npm` documentation `node_modules`](https://docs.npmjs.com/cli/v7/configuring-npm/folders#node-modules).
+* `wrangler.toml`: Your [Wrangler](/workers/wrangler/configuration/#sample-wranglertoml-configuration) configuration file.
+* `index.js` (in `/src`): A minimal `'Hello World!'` Worker written in [ES module](/workers/reference/migrate-to-module-workers/) syntax.
+* `package.json`: A minimal Node dependencies configuration file.
+* `package-lock.json`: Refer to [`npm` documentation on `package-lock.json`](https://docs.npmjs.com/cli/v9/configuring-npm/package-lock-json).
+* `node_modules`: Refer to [`npm` documentation `node_modules`](https://docs.npmjs.com/cli/v7/configuring-npm/folders#node-modules).
 
 </Details>
 
@@ -87,7 +85,7 @@ At a minimum, template folders must contain the following:
 
 ## 2. Develop with Wrangler CLI
 
-The Workers command-line interface, [Wrangler](/workers/wrangler/install-and-update/), allows you to [create](/workers/wrangler/commands/#init), [test](/workers/wrangler/commands/#dev), and [deploy](/workers/wrangler/commands/#deploy) your Workers projects. C3 will install Wrangler in projects by default.
+C3 installs [Wrangler](/workers/wrangler/install-and-update/), the Workers command-line interface, in Workers projects by default. Wrangler lets you to [create](/workers/wrangler/commands/#init), [test](/workers/wrangler/commands/#dev), and [deploy](/workers/wrangler/commands/#deploy) your Workers projects.
 
 After you have created your first Worker, run the [`wrangler dev`](/workers/wrangler/commands/#dev) command in the project directory to start a local server for developing your Worker. This will allow you to preview your Worker locally during development.
 
@@ -95,7 +93,7 @@ After you have created your first Worker, run the [`wrangler dev`](/workers/wran
 npx wrangler dev
 ```
 
-If you have not used Wrangler before, it will try to open your web browser to login with your Cloudflare account.
+If you have never used Wrangler before, it will open your web browser so you can login to your Cloudflare account.
 
 Go to [http://localhost:8787](http://localhost:8787) to view your Worker.
 
@@ -191,9 +189,9 @@ If you have not configured any subdomain or domain, Wrangler will prompt you dur
 
 Preview your Worker at `<YOUR_WORKER>.<YOUR_SUBDOMAIN>.workers.dev`.
 
-<Details header="Encountering errors?">
+<Details header="Seeing 523 errors?">
 
-When pushing to your `*.workers.dev` subdomain for the first time, you may see [`523` errors](/support/troubleshooting/cloudflare-errors/troubleshooting-cloudflare-5xx-errors/#error-523-origin-is-unreachable) while DNS is propagating. These errors should resolve themselves after a minute or so.
+If you see [`523` errors](/support/troubleshooting/cloudflare-errors/troubleshooting-cloudflare-5xx-errors/#error-523-origin-is-unreachable) when pushing your  `*.workers.dev` subdomain for the first time, wait a minute or so and the errors will resolve themselves.
 
 </Details>
 
@@ -201,6 +199,7 @@ When pushing to your `*.workers.dev` subdomain for the first time, you may see [
 
 To do more:
 
+- Visit the [Cloudlfare dashboard](https://dash.cloudflare.com/) for simpler editing.
 - Review our [Examples](/workers/examples/) and [Tutorials](/workers/tutorials/) for inspiration.
 - Set up [bindings](/workers/runtime-apis/bindings/) to allow your Worker to interact with other resources and unlock new functionality.
 - Learn how to [test and debug](/workers/testing/) your Workers.
