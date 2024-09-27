@@ -356,6 +356,7 @@
 /durable-objects/reference/error-handling/ /durable-objects/best-practices/error-handling/ 301
 /durable-objects/reference/troubleshooting/ /durable-objects/observability/troubleshooting/ 301
 /durable-objects/reference/graphql-analytics/ /durable-objects/observability/graphql-analytics/ 301
+/durable-objects/api/transactional-storage-api/ /durable-objects/api/storage-api/ 301
 
 # email-routing
 /email-routing/enable-email-routing/ /email-routing/get-started/enable-email-routing/ 301
@@ -1433,7 +1434,7 @@
 /workers/runtime-apis/webgpu/ /durable-objects/api/webgpu/ 301
 /workers/runtime-apis/websockets/use-websockets/ /workers/examples/websockets/ 301
 /workers/runtime-apis/websockets/websockets/ /workers/runtime-apis/websockets/ 301
-/workers/learning/continuous-integration/ /workers/configuration/continuous-integration/ 301
+/workers/learning/continuous-integration/ /workers/ci-cd/ 301
 /workers/learning/security-model/ /workers/reference/security-model/ 301
 /workers/runtime-apis/R2/ /workers/runtime-apis/bindings/R2/ 301
 /workers/runtime-apis/durable-objects/ /durable-objects/api/ 301
@@ -1443,6 +1444,8 @@
 /workers/runtime-apis/service-bindings/ /workers/runtime-apis/bindings/service-bindings/ 301
 /workers/observability/local-development-and-testing/ /workers/testing/local-development/ 301
 /workers/configuration/deployments/ /workers/configuration/versions-and-deployments/ 301
+/workers/configuration/continuous-integration/ /workers/ci-cd/ 301
+/workers/wrangler/ci-cd/ /workers/ci-cd/external-cicd/ 301
 /workers/tutorials/hello-world-rust/ /workers/tutorials/ 301
 /workers/tutorials/introduction-to-cloudflare-workers/ https://www.youtube.com/watch?v=H7Qe96fqg1M 301
 /workers/configuration/bindings/about-service-bindings/ /workers/runtime-apis/bindings/service-bindings/ 301
@@ -1521,6 +1524,16 @@
 /zaraz/advanced/block-zaraz/ /zaraz/advanced/load-selectively/ 301
 /zaraz/web-api/zaraz-track/ /zaraz/web-api/track/ 301
 /zaraz/pricing/ /zaraz/pricing-info/ 301
+/zaraz/get-started/add-tool/ /zaraz/get-started/ 301
+/zaraz/get-started/create-actions/ /zaraz/custom-actions/ 301
+/zaraz/get-started/create-trigger/ /zaraz/custom-actions/create-trigger/ 301
+/zaraz/get-started/additional-fields/ /zaraz/custom-actions/additional-fields/ 301
+/zaraz/get-started/edit-tools-and-actions/ /zaraz/custom-actions/edit-tools-and-actions/ 301
+/zaraz/get-started/edit-triggers/ /zaraz/custom-actions/edit-triggers/ 301
+/zaraz/get-started/edit-variables/ /zaraz/variables/edit-variables/ 301
+/zaraz/get-started/create-variables/ /zaraz/variables/create-variables/ 301
+/zaraz/advanced/worker-variables/ /zaraz/variables/worker-variables/ 301
+/zaraz/history/history/ /zaraz/history/versions/ 301
 
 # cloudflare-one / zero-trust
 /access/common-access-configurations/common-bypass/ /cloudflare-one/policies/access/#bypass 301
@@ -1682,19 +1695,6 @@
 /access/configuring-identity-providers/* /cloudflare-one/identity/idp-integration/:splat 301
 /api-security/* /api-shield/:splat 301
 /api-shield/products/* /api-shield/security/:splat 301
-/cloudflare-one/connections/connect-networks/install-and-setup/tunnel-guide/local/as-a-service/* /cloudflare-one/connections/connect-networks/configure-tunnels/local-management/as-a-service/:splat 301
-/cloudflare-one/connections/connect-apps/install-and-setup/deployment-guides/* /cloudflare-one/connections/connect-networks/deploy-tunnels/deployment-guides/:splat 301
-/cloudflare-one/connections/connect-networks/deployment-guides/* /cloudflare-one/connections/connect-networks/deploy-tunnels/deployment-guides/:splat 301
-/cloudflare-one/analytics/logs/* /cloudflare-one/insights/logs/:splat 301
-/cloudflare-one/connections/connect-apps/use_cases/* /cloudflare-one/connections/connect-networks/use-cases/:splat 301
-/cloudflare-one/connections/connect-apps/* /cloudflare-one/connections/connect-networks/:splat 301
-/cloudflare-one/connections/connect-devices/warp/exclude-traffic/* /cloudflare-one/connections/connect-devices/warp/configure-warp/route-traffic/:splat 301
-/cloudflare-one/examples/* /cloudflare-one/api-terraform/access-api-examples/:splat 301
-/cloudflare-one/learning-paths/* /cloudflare-one/implementation-guides/:splat 301
-/cloudflare-one/policies/filtering/* /cloudflare-one/policies/gateway/:splat 301
-/cloudflare-one/policies/browser-isolation/agentless/* /cloudflare-one/policies/browser-isolation/setup/:splat 301
-/cloudflare-one/policies/filtering/http-policies/data-loss-prevention/* /cloudflare-one/policies/data-loss-prevention/ 301
-/cloudflare-one/policies/data-loss-prevention/configuration-guides/* /cloudflare-one/policies/data-loss-prevention/dlp-policies/common-policies/ 301
 /distributed-web/* /web3/:splat 301
 /dns/additional-options/custom-nameservers/* /dns/nameservers/custom-nameservers/:splat 301
 /docs-engine/* https://github.com/cloudflare/cloudflare-docs/blob/production/README.md 301
@@ -1724,6 +1724,22 @@
 /waf/security-events/* /waf/analytics/security-events/:splat 301
 /web3/polygon-gateway/* /web3/ 301
 /vectorize/configuration/* /vectorize/best-practices/:splat 301
+
+# Cloudflare One / Zero Trust
+/cloudflare-one/connections/connect-networks/install-and-setup/tunnel-guide/local/as-a-service/* /cloudflare-one/connections/connect-networks/configure-tunnels/local-management/as-a-service/:splat 301
+/cloudflare-one/connections/connect-apps/install-and-setup/deployment-guides/* /cloudflare-one/connections/connect-networks/deploy-tunnels/deployment-guides/:splat 301
+/cloudflare-one/connections/connect-networks/deployment-guides/* /cloudflare-one/connections/connect-networks/deploy-tunnels/deployment-guides/:splat 301
+/cloudflare-one/analytics/logs/* /cloudflare-one/insights/logs/:splat 301
+/cloudflare-one/connections/connect-apps/use_cases/* /cloudflare-one/connections/connect-networks/use-cases/:splat 301
+/cloudflare-one/connections/connect-apps/* /cloudflare-one/connections/connect-networks/:splat 301
+/cloudflare-one/connections/connect-devices/warp/exclude-traffic/* /cloudflare-one/connections/connect-devices/warp/configure-warp/route-traffic/:splat 301
+/cloudflare-one/examples/* /cloudflare-one/api-terraform/access-api-examples/:splat 301
+/cloudflare-one/faq/teams-* /cloudflare-one/faq/:splat 301
+/cloudflare-one/learning-paths/* /cloudflare-one/implementation-guides/:splat 301
+/cloudflare-one/policies/filtering/* /cloudflare-one/policies/gateway/:splat 301
+/cloudflare-one/policies/browser-isolation/agentless/* /cloudflare-one/policies/browser-isolation/setup/:splat 301
+/cloudflare-one/policies/filtering/http-policies/data-loss-prevention/* /cloudflare-one/policies/data-loss-prevention/ 301
+/cloudflare-one/policies/data-loss-prevention/configuration-guides/* /cloudflare-one/policies/data-loss-prevention/dlp-policies/common-policies/ 301
 
 # Learning paths
 /learning-paths/modules/cybersafe/cybersafe-account-creation/* /learning-paths/cybersafe/account-creation/:splat 301
@@ -1775,6 +1791,8 @@
 # Workers
 /workers/reference/apis/* /workers/runtime-apis/:splat 301
 /workers/templates/pages/* /workers/examples/:splat 301
+/workers/observability/sentry-integration /workers/observability/integrations/sentry 301
+/workers/observability/logging/* /workers/observability/logs/:splat 301
 
 # Others
 /ssl/custom-certificates/* /ssl/edge-certificates/custom-certificates/:splat 301

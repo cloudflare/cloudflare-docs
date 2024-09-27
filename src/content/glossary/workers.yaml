@@ -107,7 +107,7 @@ entries:
 
   - term: Tail Worker
     general_definition: |-
-      A [Tail Worker](/workers/observability/logging/tail-workers/) receives information about the execution of other Workers (known as producer Workers), such as HTTP statuses, data passed to `console.log()` or uncaught exceptions.
+      A [Tail Worker](/workers/observability/logs/tail-workers/) receives information about the execution of other Workers (known as producer Workers), such as HTTP statuses, data passed to `console.log()` or uncaught exceptions.
 
   - term: version
     general_definition: |-
