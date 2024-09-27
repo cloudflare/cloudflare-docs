@@ -39,7 +39,7 @@ If using the API, you may also want to [locate your Zone and Account IDs](/funda
 
 ---
 
-## Step 1 - Create TSIG (optional)
+## 1. Create TSIG (optional)
 
 <Render file="tsig-definition" />
 
@@ -53,7 +53,7 @@ If using the API, you may also want to [locate your Zone and Account IDs](/funda
 
 </TabItem> </Tabs>
 
-## Step 2 - Create Peer DNS Server (optional)
+## 2. Create Peer DNS Server (optional)
 
 You only need to create a peer DNS server if you want:
 
@@ -81,7 +81,7 @@ To create a peer DNS server using the API, send a [POST](</api/operations/second
 
 </TabItem> </Tabs>
 
-## Step 3 - Link peer to primary zone (optional)
+## 3. Link peer to primary zone (optional)
 
 If you previously [created a peer DNS server](#step-2---create-peer-dns-server-optional), you should link it to your primary zone.
 
@@ -106,19 +106,19 @@ To link a primary zone to a peer using the API, send a [POST](</api/operations/s
 If you link more than one peer to a zone and at least one of them has TSIG configured, all peers are expected to also use the same TSIG.
 :::
 
-## Step 4 - Create an ACL
+## 4. Create an ACL
 
 When you create an Access Control List (ACL), that list contains the source IP addresses that are allowed to send zone transfer requests. If you do not configure an ACL, your zone transfers will fail from IP addresses other than the one specified in the peer DNS server linked to your primary zone on Cloudflare.
 
 For more details, refer to [create an ACL](/dns/zone-setups/zone-transfers/access-control-lists/create-new-list/).
 
-## Step 5 - Update your secondary DNS provider
+## 5. Update your secondary DNS provider
 
 Your secondary DNS provider should send zone transfer requests (via AXFR or IXFR) to [this IP](/dns/zone-setups/zone-transfers/access-control-lists/cloudflare-ip-addresses/#transfer-ip) on port 53 and from the IP address specified in your [peer configuration](#step-2---create-peer-dns-server-optional).
 
 It should also have updated [Access Control Lists (ACLs)](/dns/zone-setups/zone-transfers/access-control-lists/cloudflare-ip-addresses/#allow-range) to prevent NOTIFY messages sent from Cloudflare IP ranges from being blocked.
 
-## Step 6 - Add secondary nameservers within Cloudflare
+## 6. Add secondary nameservers within Cloudflare
 
 Using the information from your secondary DNS provider, [create `NS` records](/dns/manage-dns-records/how-to/create-dns-records/#create-dns-records) on your zone apex listing your secondary nameservers.
 
@@ -146,7 +146,7 @@ curl --request PATCH \
 
 </TabItem> </Tabs>
 
-## Step 7 - Enable outgoing zone transfers
+## 7. Enable outgoing zone transfers
 
 When you enable outgoing zone transfers, this will send a DNS NOTIFY message to your secondary DNS provider.
 
@@ -163,6 +163,6 @@ To enable outgoing zone transfers using the API, send a [POST](</api/operations/
 
 </TabItem> </Tabs>
 
-## Step 8 - Add secondary nameservers to registrar
+## 8. Add secondary nameservers to registrar
 
 At your registrar, add the nameservers of your secondary DNS provider.
