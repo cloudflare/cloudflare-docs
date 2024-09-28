@@ -64,7 +64,7 @@ The reference architecture diagram below illustrates how Cloudflare services \- 
 2. Upon entering the Cloudflare network, outbound Internet traffic is first routed through Magic Firewall where it is subject to any configured network firewall policies.
 3. Outbound Internet traffic is subsequently sent to [Cloudflare Gateway](/cloudflare-one/policies/gateway/), our secure web gateway service where various [policies](/cloudflare-one/policies/gateway/) enforce a comprehensive set of security and control measures on the outbound traffic, ensuring the utmost protection for your networks.
 4. Once traffic clears inspection, Gateway proxies the outbound traffic to their destinations on the Internet. The source IP addresses of the outbound traffic are the Cloudflare owned IP addresses associated with the Gateway service.
-5. Return traffic from the internet, destined to Cloudflare's IP addresses linked to the Gateway service, is routed into Cloudflare's global network..
+5. Return traffic from the Internet, destined to Cloudflare's IP addresses linked to the Gateway service, is routed into Cloudflare's global network.
 6. Traffic is inspected against Gateway policies.
 7. Return traffic that passes Gateway inspection is routed to Magic Firewall for further packet filtering, if any.
 8. Return traffic that passes Magic Firewall filtering is routed from Cloudflare to your network locations via CNIs or IP Tunnels over the Internet.
