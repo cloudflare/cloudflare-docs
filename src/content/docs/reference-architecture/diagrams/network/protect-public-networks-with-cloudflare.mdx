@@ -50,7 +50,7 @@ The reference architecture diagram below illustrates how Cloudflare Magic Transi
 2. Traffic originating from the Internet and destined to the protected IP prefixes is ingested into the global Cloudflare network.
 3. All DDoS attack traffic is mitigated in-line at every Cloudflare data center using advanced and automated [DDoS mitigation](/ddos-protection/) technologies.
 4. Traffic that passes DDoS mitigation is subjected to additional network firewall filtering using the included [Magic Firewall](/magic-firewall/) service.
-5. Clean, filtered traffic is routed to the protected networks either through private [Cloudflare Network Interconnect](/network-interconnect/) (CNI) connections, or the public Internet using GRE or IPsec tunnels. More specific details on Magic Transit IP tunnels can be found [here](/magic-transit/about/tunnels-and-encapsulation).
+5. Clean, filtered traffic is routed to the protected networks either through private [Cloudflare Network Interconnect](/network-interconnect/) (CNI) connections, or the public Internet using GRE or IPsec tunnels. More specific details on Magic Transit IP tunnels can be found in the [Magic Transit Tunnels and Encapsulation documentation](/magic-transit/about/tunnels-and-encapsulation).
 6. The server return traffic is routed back through the Cloudflare network to reach the Internet, using [Magic Transit Egress](/magic-transit/reference/egress/). It can be routed to the Cloudflare network via the same CNIs or GRE, IPsec tunnels that the ingress traffic traversed, using routing techniques such as policy-based routing (PBR) at your sites.
 7. Magic Transit Egress traffic is subject to Magic Firewall filtering before being routed out to the Internet towards the users.
 
