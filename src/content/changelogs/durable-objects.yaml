@@ -5,6 +5,11 @@ productLink: "/durable-objects/"
 productArea: Developer platform
 productAreaLink: /workers/platform/changelog/platform/
 entries:
+  - publish_date: "2024-09-27"
+    title: Alarms disabled in (beta) SQLite-backed Durable Object classes
+    description: |-
+      An issue was identified with [alarms](/durable-objects/api/alarms/) in [beta Durable Object classes with a SQLite storage backend](/durable-objects/best-practices/access-durable-objects-storage/#sqlite-storage-backend). Alarms have been temporarily disabled for only SQLite-backed Durable Objects while a fix is implemented. Alarms in Durable Objects with default, key-value storage backend are unaffected and continue to operate.
+
   - publish_date: "2024-09-26"
     title: (Beta) SQLite storage backend & SQL API availabe on new Durable Object classes 
     description: |-

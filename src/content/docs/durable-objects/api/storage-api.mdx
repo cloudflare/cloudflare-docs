@@ -199,6 +199,12 @@ The `put()` method returns a `Promise`, but most applications can discard this p
 
   * This is similar to normal behavior from automatic write coalescing. If there are any pending writes in the write buffer (including those submitted with [the `allowUnconfirmed` option](/durable-objects/api/storage-api/#supported-options-1)), the returned promise will resolve when they complete. If there are no pending writes, the returned promise will be already resolved.
 
+:::note[Alarms disabled for SQLite in Durable Objects Beta]
+
+An issue was identified with [alarms](/durable-objects/api/alarms/) in [beta Durable Object classes with a SQLite storage backend](/durable-objects/best-practices/access-durable-objects-storage/#sqlite-storage-backend). Alarms have been temporarily disabled for only SQLite-backed Durable Objects while a fix is implemented. Alarms in Durable Objects with default, key-value storage backend are unaffected and continue to operate.
+
+:::
+
 ### getAlarm
 
 * <code>getAlarm(optionsObjectoptional)</code> : Promise\<Number | null>
