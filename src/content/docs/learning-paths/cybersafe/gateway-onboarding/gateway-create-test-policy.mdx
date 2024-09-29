@@ -17,9 +17,9 @@ To ensure a smooth deployment, we recommend testing a simple policy before deplo
 3. In the browser, go to `malware.testcategory.com`. You should see a generic Gateway block page.
 4. In **Logs** > **Gateway** > **DNS**, verify that you see the blocked domain.
 
-:::undefined
+:::note
 
-When testing against frequently-visited sites, you may need to [clear the DNS cache](/cloudflare-one/policies/gateway/dns-policies/test-dns-filtering/#clear-dns-cache) in your browser or OS. Otherwise, the DNS lookup will return the locally-cached IP address and bypass your DNS policies. 
+When testing against frequently-visited sites, you may need to [clear the DNS cache](/cloudflare-one/policies/gateway/dns-policies/test-dns-filtering/#clear-dns-cache) in your browser or OS. Otherwise, the DNS lookup will return the locally-cached IP address and bypass your DNS policies.
 :::
 
 You have now validated DNS filtering!

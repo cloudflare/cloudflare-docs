@@ -167,12 +167,10 @@ if (Astro.props.entry.data.external_link) {
 <script>
 	import littlefoot from "littlefoot";
 
-	document.addEventListener("DOMContentLoaded", () => {
-		littlefoot();
-		document
-			.querySelectorAll("span.littlefoot")
-			.forEach((x) => x.classList.add("not-content"));
-	});
+	littlefoot();
+	document
+		.querySelectorAll("span.littlefoot")
+		.forEach((x) => x.classList.add("not-content"));
 </script>
 <script>
 	import mermaid from "mermaid";
