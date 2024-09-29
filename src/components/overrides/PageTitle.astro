@@ -67,6 +67,10 @@ for (let i = 0; i < segments.length; i++) {
 		href: `/${path}/`,
 	});
 }
+
+// Currently the officially sanctioned way to alter behaviour on specific routes
+// https://starlight.astro.build/guides/overriding-components/#only-override-on-specific-pages
+const hideTitle = Astro.props.hideTitle;
 ---
 
 <Breadcrumbs {...breadcrumbProps}>
@@ -84,7 +88,7 @@ for (let i = 0; i < segments.length; i++) {
 		><polyline points="9 18 15 12 9 6"></polyline>
 	</svg>
 </Breadcrumbs>
-<Default {...Astro.props} />
+{!hideTitle && <Default {...Astro.props} />}
 
 {badge && <Badge variant={badge.variant} text={badge.text} />}
 

@@ -60,6 +60,8 @@ export default {
 };
 ```
 
+You can prevent this by enforcing the [`no-floating-promises` eslint rule](https://typescript-eslint.io/rules/no-floating-promises/), which reports when a Promise is created and not properly handled.
+
 #### Cause 2: WebSocket connections that are never closed
 
 If a WebSocket is missing the proper code to close its server-side connection, the Workers runtime will throw a `script will never generate a response` error. In the example below, the `'close'` event from the client is not properly handled by calling `server.close()`, and the error is thrown. In order to avoid this, ensure that the WebSocket's server-side connection is properly closed via an event listener or other server-side logic.
@@ -130,27 +132,70 @@ export default {
 };
 ```
 
+
+### Cannot perform I/O on behalf of a different request
+
+```
+Uncaught (in promise) Error: Cannot perform I/O on behalf of a different request. I/O objects (such as streams, request/response bodies, and others) created in the context of one request handler cannot be accessed from a different request's handler.
+```
+
+This error occurs when you attempt to share input/output (I/O) objects (such as streams, requests, or responses) created by one invocation of your Worker in the context of a different invocation.
+
+In Cloudflare Workers, each invocation is handled independently and has its own execution context. This design ensures optimal performance and security by isolating requests from one another. When you try to share I/O objects between different invocations, you break this isolation. Since these objects are tied to the specific request they were created in, accessing them from another request's handler is not allowed and leads to the error.
+
+This error is most commonly caused by attempting to cache an I/O object, like a [Request](/workers/runtime-apis/request/) in global scope, and then access it in a subsequent request. For example, if you create a Worker and run the following code in local development, and make two requests to your Worker in quick succession, you can reproduce this error:
+
+```js
+let cachedResponse = null;
+
+export default {
+  async fetch(request, env, ctx) {
+	  if (cachedResponse) { return cachedResponse; }
+	  cachedResponse = new Response('Hello, world!');
+	  await new Promise(resolve => setTimeout(resolve, 5000)); // Sleep for 5s to demonstrate this particular error case
+	  return cachedResponse;
+  }
+};
+```
+
+You can fix this by instead storing only the data in global scope, rather than the I/O object itself:
+
+```js
+let cachedData = null;
+
+export default {
+  async fetch(request, env, ctx) {
+    if (cachedData) { return new Response(cachedData); }
+	const response = new Response('Hello, world!');
+    cachedData = await response.text();
+	return new Response(cachedData, response);
+  }
+};
+```
+
+If you need to share state across requests, consider using [Durable Objects](/durable-objects/). If you need to cache data across requests, consider using [Workers KV](/kv/).
+
 ## Errors on Worker upload
 
 These errors occur when a Worker is uploaded or modified.
 
-| Error code | Meaning                                                                                                                     |
-| ---------- | --------------------------------------------------------------------------------------------------------------------------- |
-| `10006`    | Could not parse your Worker's code.                                                                                         |
-| `10007`    | Worker or [workers.dev subdomain](/workers/configuration/routing/workers-dev/) not found.                                   |
-| `10015`    | Account is not entitled to use Workers.                                                                                     |
-| `10016`    | Invalid Worker name.                                                                                                        |
-| `10021`    | Validation Error. Refer to [Validation Errors](/workers/observability/errors/#validation-errors-10021) for details.         |
-| `10026`    | Could not parse request body.                                                                                               |
-| `10027`    | Your Worker exceeded the size limit of XX MB                                                                                |
-| `10035`    | Multiple attempts to modify a resource at the same time                                                                     |
-| `10037`    | An account has exceeded the number of [Workers allowed](/workers/platform/limits/#number-of-workers).                       |
-| `10052`    | A [binding](/workers/runtime-apis/bindings/) is uploaded without a name.                                                    |
-| `10054`    | A environment variable or secret exceeds the [size limit](/workers/platform/limits/#environment-variables).                 |
-| `10055`    | The number of environment variables or secrets exceeds the [limit/Worker](/workers/platform/limits/#environment-variables). |
-| `10056`    | [Binding](/workers/runtime-apis/bindings/) not found.                                                                       |
-| `10068`    | The uploaded Worker has no registered [event handlers](/workers/runtime-apis/handlers/).                                    |
-| `10069`    | The uploaded Worker contains [event handlers](/workers/runtime-apis/handlers/) unsupported by the Workers runtime.          |
+| Error code | Meaning                                                                                                                         |
+| ---------- | ------------------------------------------------------------------------------------------------------------------------------- |
+| `10006`    | Could not parse your Worker's code.                                                                                             |
+| `10007`    | Worker or [workers.dev subdomain](/workers/configuration/routing/workers-dev/) not found.                                       |
+| `10015`    | Account is not entitled to use Workers.                                                                                         |
+| `10016`    | Invalid Worker name.                                                                                                            |
+| `10021`    | Validation Error. Refer to [Validation Errors](/workers/observability/errors/#validation-errors-10021) for details.             |
+| `10026`    | Could not parse request body.                                                                                                   |
+| `10027`    | Your Worker exceeded the size limit of XX MB (for more details see [Worker size limits](/workers/platform/limits/#worker-size)) |
+| `10035`    | Multiple attempts to modify a resource at the same time                                                                         |
+| `10037`    | An account has exceeded the number of [Workers allowed](/workers/platform/limits/#number-of-workers).                           |
+| `10052`    | A [binding](/workers/runtime-apis/bindings/) is uploaded without a name.                                                        |
+| `10054`    | A environment variable or secret exceeds the [size limit](/workers/platform/limits/#environment-variables).                     |
+| `10055`    | The number of environment variables or secrets exceeds the [limit/Worker](/workers/platform/limits/#environment-variables).     |
+| `10056`    | [Binding](/workers/runtime-apis/bindings/) not found.                                                                           |
+| `10068`    | The uploaded Worker has no registered [event handlers](/workers/runtime-apis/handlers/).                                        |
+| `10069`    | The uploaded Worker contains [event handlers](/workers/runtime-apis/handlers/) unsupported by the Workers runtime.              |
 
 ### Validation Errors (10021)
 
@@ -287,6 +332,6 @@ async function handleRequest(request) {
 
 ## Related resources
 
-- [Log from Workers](/workers/observability/logging/) - Learn how to log your Workers.
-- [Logpush](/workers/observability/logging/logpush/) - Learn how to push Workers Trace Event Logs to supported destinations.
+- [Log from Workers](/workers/observability/logs/) - Learn how to log your Workers.
+- [Logpush](/workers/observability/logs/logpush/) - Learn how to push Workers Trace Event Logs to supported destinations.
 - [RPC error handling](/workers/runtime-apis/rpc/error-handling/) - Learn how to handle errors from remote-procedure calls.
