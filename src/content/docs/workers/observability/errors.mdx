@@ -132,6 +132,49 @@ export default {
 };
 ```
 
+
+### Cannot perform I/O on behalf of a different request
+
+```
+Uncaught (in promise) Error: Cannot perform I/O on behalf of a different request. I/O objects (such as streams, request/response bodies, and others) created in the context of one request handler cannot be accessed from a different request's handler.
+```
+
+This error occurs when you attempt to share input/output (I/O) objects (such as streams, requests, or responses) created by one invocation of your Worker in the context of a different invocation.
+
+In Cloudflare Workers, each invocation is handled independently and has its own execution context. This design ensures optimal performance and security by isolating requests from one another. When you try to share I/O objects between different invocations, you break this isolation. Since these objects are tied to the specific request they were created in, accessing them from another request's handler is not allowed and leads to the error.
+
+This error is most commonly caused by attempting to cache an I/O object, like a [Request](/workers/runtime-apis/request/) in global scope, and then access it in a subsequent request. For example, if you create a Worker and run the following code in local development, and make two requests to your Worker in quick succession, you can reproduce this error:
+
+```js
+let cachedResponse = null;
+
+export default {
+  async fetch(request, env, ctx) {
+	  if (cachedResponse) { return cachedResponse; }
+	  cachedResponse = new Response('Hello, world!');
+	  await new Promise(resolve => setTimeout(resolve, 5000)); // Sleep for 5s to demonstrate this particular error case
+	  return cachedResponse;
+  }
+};
+```
+
+You can fix this by instead storing only the data in global scope, rather than the I/O object itself:
+
+```js
+let cachedData = null;
+
+export default {
+  async fetch(request, env, ctx) {
+    if (cachedData) { return new Response(cachedData); }
+	const response = new Response('Hello, world!');
+    cachedData = await response.text();
+	return new Response(cachedData, response);
+  }
+};
+```
+
+If you need to share state across requests, consider using [Durable Objects](/durable-objects/). If you need to cache data across requests, consider using [Workers KV](/kv/).
+
 ## Errors on Worker upload
 
 These errors occur when a Worker is uploaded or modified.
