@@ -332,7 +332,7 @@ app.delete("/notes/:id", async (c) => {
 	const { id } = c.req.param();
 
 	const query = `DELETE FROM notes WHERE id = ?`;
-	await c.env.DATABASE.prepare(query).bind(id).run();
+	await c.env.DB.prepare(query).bind(id).run();
 
 	await c.env.VECTOR_INDEX.deleteByIds([id]);
 
