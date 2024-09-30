@@ -17,6 +17,12 @@ When you enable Authenticated Origin Pulls for a zone, all proxied traffic to yo
 
 Make sure your zone is using an [SSL/TLS encryption mode](/ssl/origin-configuration/ssl-modes/) of **Full** or higher.
 
+:::caution
+
+In the Cloudflare for SaaS context you'll need to use [Per-hostname AOP](/ssl/origin-configuration/authenticated-origin-pull/set-up/per-hostname/) as otherwise the same zone-level certificate will be used for all your configured custom hostnames and custom origins!
+
+:::
+
 ## 1. Upload certificate to origin
 
 First, upload a certificate to your origin.
