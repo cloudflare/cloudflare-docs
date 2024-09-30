@@ -21,7 +21,7 @@ const summary = Astro.props.entry.data.summary;
 
 const slug = Astro.props.entry.slug;
 
-const showBreadcrumbs = slug !== "products";
+const showBreadcrumbs = !["products"].includes(slug);
 
 const breadcrumbProps: Record<string, any> = {
 	crumbs: [
