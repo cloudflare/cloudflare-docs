@@ -223,6 +223,9 @@
 /cache/troubleshooting/chunked-encoding-and-dynamic-content/ /cache/how-to/cache-rules/ 301
 /cache/how-to/edge-browser-cache-ttl/create-page-rules/ /cache/how-to/cache-rules/ 301
 
+# Cloudflare Calls
+/calls/turn/overview/ /calls/turn/ 301
+
 # china network
 /support/about-cloudflare/enterprise-documentation/understanding-and-configuring-an-icp-number/ /china-network/concepts/icp/ 301
 
