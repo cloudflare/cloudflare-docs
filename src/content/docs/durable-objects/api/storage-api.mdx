@@ -92,7 +92,7 @@ Each method is implicitly wrapped inside a transaction, such that its results ar
 
   * Deletes the key and associated value. Returns `true` if the key existed or `false` if it did not.
 
-* <code>delete(keysArray <Type text='string'/>, optionsObjectoptional)</code>: <Type text='Promise<number>' />
+* <code>delete(keys <Type text='Array<string>'/>, options <Type='Object' /> <MetaInfo text='optional' />)</code>: <Type text='Promise<number>' />
 
   * Deletes the provided keys and their associated values. Supports up to 128 keys at a time. Returns a count of the number of key-value pairs deleted.
 
