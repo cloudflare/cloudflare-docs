@@ -554,6 +554,7 @@
 /fundamentals/setup/allow-cloudflare-ip-addresses/ /fundamentals/concepts/cloudflare-ip-addresses/ 301
 /fundamentals/basic-tasks/login/ /fundamentals/setup/account/login/ 301
 /fundamentals/concepts/redirects/ /fundamentals/reference/redirects/ 301
+/fundamentals/reference/changelog/ /fundamentals/reference/ 302
 
 # gateway
 /gateway/about/ /cloudflare-one/policies/gateway/ 301
