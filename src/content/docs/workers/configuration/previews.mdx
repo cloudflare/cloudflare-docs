@@ -25,7 +25,7 @@ When testing zone level performance or security featues for a version, we recomm
 :::note
 Preview URLs are only available for Worker versions uploaded after 2024-09-25.
 
-Minimum required Wrangler version: 3.74.0. Check your version by running `wrangler version`. To update Wrangler, refer to [Install/Update Wrangler](/workers/wrangler/install-and-update/).
+Minimum required Wrangler version: 3.74.0. Check your version by running `wrangler --version`. To update Wrangler, refer to [Install/Update Wrangler](/workers/wrangler/install-and-update/).
 :::
 
 ## View preview URLs using wrangler
@@ -47,7 +47,7 @@ To limit your preview URLs to authorized emails only:
 2. Select your account
 3. Add an application
 4. Select "Self Hosted"
-5. Name your application (for example, My-Worker) and add your `workers.dev` subdomain as the "Application domain".
+5. Name your application (for example, "my-worker") and add your `workers.dev` subdomain as the "Application domain".
 
 For example, if you want to secure preview URLs for a Worker running on `my-worker.my-subdomain.workers.dev`.
 
@@ -59,7 +59,7 @@ You must press enter after you input your Application domain for it to save. You
 :::
 
 6. Go to the next page
-7. Add a name for your access policy (for example, Authorized preview emails for my-Worker)
+7. Add a name for your access policy (for example, "Allow employees access to preview URLs for my-worker")
 8. In the "Configure rules" section create a new rule with the "Emails" selector. Enter the emails you want to authorize to access the version preview. View [access policies](/cloudflare-one/policies/access/#selectors) to learn about configuring alternate rules.
 9. Go to the next page
 10. Add application
