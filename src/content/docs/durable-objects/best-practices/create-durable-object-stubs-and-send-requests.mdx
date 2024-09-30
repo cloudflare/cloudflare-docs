@@ -6,7 +6,7 @@ sidebar:
 
 ---
 
-import { Glossary } from "~/components"
+import { Glossary, Type } from "~/components";
 
 A Durable Object stub is a client Object used to send requests to a remote Durable Object.
 
@@ -40,7 +40,7 @@ let durableObjectStub = OBJECT_NAMESPACE.get(id);
 
 ### Parameters
 
-* `id` DurableObjectId
+* `id` <Type text='DurableObjectId' />
   * An ID constructed using `newUniqueId()`, `idFromName()`, or `idFromString()` on this Durable Object namespace. For details, refer to [Access a Durable Object](/durable-objects/best-practices/access-durable-objects-from-a-worker/#generate-ids-randomly) .
 
   * This method constructs an Object, which is a local client that provides access to a remote Object.
@@ -48,7 +48,6 @@ let durableObjectStub = OBJECT_NAMESPACE.get(id);
   * If the remote Object does not already exist, it will be created. Thus, there will always be an Object accessible from the stub.
 
   * This method always returns the Object immediately, before it has connected to the remote Object. This allows you to begin making requests to the Object right away, without waiting for a network round trip.
-
 
 
 ## Call a Durable Object
@@ -85,14 +84,11 @@ let response = await durableObjectStub.increment();
 
 :::note
 
-
 When you write a Worker that does not extend the [`DurableObject` class](/workers/configuration/compatibility-dates/#durable-object-stubs-and-service-bindings-support-rpc), the `ctx` object in your Durable Object is instead called `state`, and is provided as the first argument to the constructor, but not set as a property of your class.
 
 With RPC, the `DurableObject` superclass defines `ctx` and `env` as class properties. What was previously called `state` is now called `ctx` when you extend the `DurableObject` class.
 
 This naming change from `state` to `ctx` was made both to ensure consistency between `DurableObject` and `WorkerEntrypoint`, and to avoid setting the false expectation that directly mutating the value of `state` would persist data.
-
-
 :::
 
 Refer to [Build a Counter](/durable-objects/examples/build-a-counter/) for a full example.
@@ -124,10 +120,7 @@ let resp = await durableObjectStub.fetch(`http://do/write?userId=${userId}`)
 
 :::note
 
-
 To understand how exceptions are thrown from within a Durable Object, refer to the [Error handling](/durable-objects/best-practices/error-handling/) documentation.
-
-
 :::
 
 ## List Durable Objects
