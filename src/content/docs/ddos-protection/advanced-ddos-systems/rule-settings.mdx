@@ -20,7 +20,7 @@ Advanced TCP Protection rules can have one of the following scopes:
 
 The rule scope allows you to adjust the system's tolerance for out-of-state packets in locations where you may have more or less traffic than usual, or due to any other networking reasons.
 
-Besides defining rules with one of the above scopes, you must also select the [prefixes](/ddos-protection/tcp-protection/concepts/#prefixes) that you wish to protect with Advanced TCP Protection.
+Besides defining rules with one of the above scopes, you must also select the [prefixes](/ddos-protection/advanced-ddos-systems/concepts/#prefixes) that you wish to protect with Advanced TCP Protection.
 
 ## Mode
 
@@ -30,7 +30,8 @@ The Advanced TCP Protection system constantly learns your TCP connections to mit
   - In this mode, Advanced TCP Protection will not impact any packets. Instead, the protection system will learn your legitimate TCP connections and show you what it would have mitigated. Check Network Analytics to visualize what actions Advanced TCP Protection would have taken on incoming packets, according to the current configuration.
 
 - **​​Mitigation (Enabled)**
-  - In this mode, Advanced TCP Protection will learn your legitimate TCP connections and perform mitigation actions on incoming TCP DDoS attacks based on the rule configuration (burst and rate sensitivity) and your [allowlist](/ddos-protection/tcp-protection/concepts/#allowlist).
+  - In this mode, Advanced TCP Protection will learn your legitimate TCP connections and perform mitigation actions on incoming TCP DDoS attacks based on the rule configuration (burst and rate sensitivity) and your [allowlist](/ddos-protection/advanced-ddos-systems/concepts/#allowlist).
+
 
 - **Disabled**
   - In this mode, a rule will not evaluate any incoming packets.
@@ -54,6 +55,10 @@ The rate sensitivity is the rule's sensitivity to the sustained packet rate:
 The default rate sensitivity is _Medium_.
 
 ## Profile sensitivity
+
+:::note
+Profile sensitivity is available for Advanced DNS Protection only.
+:::
 
 The sensitivity to DNS queries that have not been recently seen.
 
