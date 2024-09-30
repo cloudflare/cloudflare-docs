@@ -3,10 +3,9 @@ title: First Worker
 pcx_content_type: learning-unit
 sidebar:
   order: 2
-
 ---
 
-import { Render, PackageManagers } from "~/components"
+import { Render, PackageManagers } from "~/components";
 
 ## Build and deploy your first Worker
 
@@ -30,17 +29,25 @@ You must have a Cloudflare account to create a Worker. To get started with Cloud
 
 To create your Worker project, run:
 
-<PackageManagers type="create" pkg="cloudflare@latest" args={'first-worker'} />
+<PackageManagers type="create" pkg="cloudflare@latest" args={"first-worker"} />
 
 This will prompt you to install the [`create-cloudflare`](https://www.npmjs.com/package/create-cloudflare) package, and lead you through setup.
 
-<Render file="c3-post-run-steps" product="workers" params={{ one: "Hello World example", two: "Hello World Worker", three: "JavaScript" }} />
+<Render
+	file="c3-post-run-steps"
+	product="workers"
+	params={{
+		category: "hello-world",
+		type: "Hello World Worker",
+		lang: "JavaScript",
+	}}
+/>
 
 You will be asked if you would like to deploy the project to Cloudflare.
 
-* If you choose to deploy, you will be asked to authenticate (if not logged in already), and your project will be deployed to the Cloudflare global network and available on your custom [`workers.dev` subdomain](/workers/configuration/routing/workers-dev/).
+- If you choose to deploy, you will be asked to authenticate (if not logged in already), and your project will be deployed to the Cloudflare global network and available on your custom [`workers.dev` subdomain](/workers/configuration/routing/workers-dev/).
 
-* If you choose not to deploy, go to the newly created project directory to begin writing code. Deploy your project by running the [`wrangler deploy`](/workers/wrangler/commands/#deploy) command.
+- If you choose not to deploy, go to the newly created project directory to begin writing code. Deploy your project by running the [`wrangler deploy`](/workers/wrangler/commands/#deploy) command.
 
 Refer to [How to run Wrangler commands](/workers/wrangler/commands/#how-to-run-wrangler-commands) to learn how to run Wrangler commands according to your package manager.
 
@@ -58,10 +65,10 @@ To continue building your Worker, open the `index.js` file to write your code. R
 
 You have learned how to:
 
-* Create and deploy a Worker project using the Cloudflare dashboard and programmatically, using your terminal.
+- Create and deploy a Worker project using the Cloudflare dashboard and programmatically, using your terminal.
 
 In the next section, you can follow a video tutorial to create your first Cloudflare Workers application.
 
 ### Related resources
 
-* [Get started guide](/workers/get-started/guide/) - Create a new Worker with Cloudflare Workers' Get started guide.
+- [Get started guide](/workers/get-started/guide/) - Create a new Worker with Cloudflare Workers' Get started guide.

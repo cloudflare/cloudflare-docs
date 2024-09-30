@@ -7,11 +7,7 @@ sidebar:
 
 import { Render } from "~/components";
 
-:::note
-
-Vectorize is currently in public beta and is free to use on [Workers Free or Paid plans](/workers/platform/pricing/#workers).
-
-:::
+<Render file="vectorize-ga" />
 
 Vectorize bills based on:
 
@@ -22,19 +18,19 @@ You are not billed for CPU, memory, "active index hours", or the number of index
 
 ## Billing metrics
 
-<Render file="vectorize-pricing" product="workers" />
+<Render file="vectorize-pricing" />
 
 ### Usage examples
 
 The following table defines a number of example use-cases and the estimated monthly cost for querying a Vectorize index. These estimates do not include the Vectorize usage that is part of the Workers Free and Paid plans.
 
-| Workload   | Dimensions per vector | Stored dimensions | Queries per month | Calculation                             | Estimated total                |
-| ---------- | --------------------- | ----------------- | ----------------- | --------------------------------------- | ------------------------------ |
-| Experiment | 384                   | 5,000 vectors     | 10,000            | `(5000+10000)*384*(0.040/1000000)`      | $0.24 / mo <sup>included</sup> |
-| Scaling    | 768                   | 25,000 vectors    | 50,000            | `(25000+50000)*768*(0.040/1000000)`     | $2.31 / mo <sup>partial</sup>  |
-| Production | 768                   | 50,000 vectors    | 200,000           | `(50000+200000)*768*(0.040/1000000)`    | $7.68 / mo                     |
-| Large      | 768                   | 250,000 vectors   | 500,000           | `(250000+500000)*768*(0.040/1000000)`   | $23.04 / mo                    |
-| XL         | 1536                  | 500,000 vectors   | 1,000,000         | `(500000+1000000)*1536*(0.040/1000000)` | $92.16 / mo                    |
+| Workload   | Dimensions per vector | Stored dimensions | Queries per month | Calculation                                                      | Estimated total                |
+| ---------- | --------------------- | ----------------- | ----------------- | ---------------------------------------------------------------- | ------------------------------ |
+| Experiment | 384                   | 5,000 vectors     | 10,000            | `(10000*384*(0.01/1000000))    + (5000*384*(0.05/100000000))`    | $0.04 / mo <sup>included</sup> |
+| Scaling    | 768                   | 25,000 vectors    | 50,000            | `(50000*768*(0.01/1000000))    + (25000*768*(0.05/100000000))`   | $0.39 / mo <sup>partial</sup>  |
+| Production | 768                   | 50,000 vectors    | 200,000           | `(200000*768*(0.01/1000000))   + (50000*768*(0.05/100000000))`   | $1.56 / mo                     |
+| Large      | 768                   | 250,000 vectors   | 500,000           | `(500000*768*(0.01/1000000))   + (250000*768*(0.05/100000000))`  | $3.94 / mo                     |
+| XL         | 1536                  | 500,000 vectors   | 1,000,000         | `(1000000*1536*(0.01/1000000)) + (500000*1536*(0.05/100000000))` | $15.74 / mo                    |
 
 <sup>included</sup> All of this usage would fall into the Vectorize usage
 included in the Workers Free or Paid plan.
@@ -45,10 +41,6 @@ within the Workers Paid plan.
 ## Frequently Asked Questions
 
 Frequently asked questions related to Vectorize pricing:
-
-- When will Vectorize start charging me?
-
-We intend to enable billing for Vectorize usage in January 2024.
 
 - Will Vectorize always have a free tier?
 

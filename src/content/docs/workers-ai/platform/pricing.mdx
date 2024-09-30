@@ -9,114 +9,81 @@ sidebar:
 :::note
 
 
-Workers AI will begin billing for usage on non-beta models after April 1, 2024.
+Workers AI has deprecated the usage of neurons in favor of unit-based pricing. The Cloudflare dashboards will be migrated this unit-based pricing soon so you can track your usage. Individual model pages will soon document the price for each model. We also made pricing cheaper! 
+
+We will begin billing for all models under this new pricing structure beginning November 1, 2024.
 
 
 :::
 
-Workers AI is included in both the [Free and Paid Workers plans](/workers/platform/pricing/) and is priced at **$0.011 / 1,000 Regular Twitch Neurons** (also known as Neurons).
+Workers AI is included in both the [Free and Paid Workers plans](/workers/platform/pricing/) and is priced based on model task, model size, and units.
 
-Our free allocation allows anyone to use a total of **10,000 Neurons per day at no charge on our [non-beta models](#non-beta-models)**. You can still enjoy unlimited usage on the beta models in the catalog until they graduate out of beta.
+Individual model pages will have the pricing listed on them, but the general pricing structure across our models is laid out below.
 
-To use more than 10,000 Neurons per day for non-beta models, you need to sign up for the [Workers Paid plan](/workers/platform/pricing/#workers). On Workers Paid, you will be charged at $0.011 / 1,000 Neurons for any usage above the free allocation of 10,000 Neurons per day for the non-beta models.
+These docs will be updated as we add new pricing for new task types in our model catalog.
 
-You can monitor your Neuron usage in the [Cloudflare Workers AI dashboard](https://dash.cloudflare.com/?to=/:account/ai/workers-ai). To estimate Neurons and costs, use the [pricing calculator](https://ai.cloudflare.com/#pricing-calculator).
+## Pricing Structure
 
-|              | Free <br/> allocation  | Overage<br/>pricing           |
-| ------------ | ---------------------- | ----------------------------- |
-| Workers Free | 10,000 Neurons per day | N/A - Upgrade to Workers Paid |
-| Workers Paid | 10,000 Neurons per day | $0.011 / 1,000 Neurons        |
+### Text Generation LLMs (incl Vision models)
+Model size is measured in parameters.
+Pricing is based on blended tokens (input + output).
+Vision models will convert the image input into tokens for billing. Depending on size an aspect ratio, images will be charged for between 1,601 and 6,404 tokens. Most images that are more that 224 pixels wide or tall will be charged as 6,404 tokens each.
+
+| Model Size       | Pricing                  |
+| ---------------- | ------------------------ |
+| \<= 3B            | $0.10 per Million Tokens |
+| 3.1B - 8B        | $0.15 per Million Tokens |
+| 8.1B - 20B       | $0.20 per Million Tokens |
+| 20.1B - 40B      | $0.50 per Million Tokens |
+| 40.1B+           | $0.75 per Million Tokens |
+
+### Embeddings
+Model size is measured in parameters.
+Pricing is based on input tokens.
+
+| Model Size         | Pricing                   |
+| ------------------ | ------------------------- |
+| \<= 150M parameters | $0.008 per Million Tokens |
+| 151M+ parameters   | $0.015 per Million Tokens |
+
+## Image Generation
+Standard models are large image models such as `@cf/stabilityai/stable-diffusion-xl-base-1.0`
+Fast models are usually smaller image models that require fewer steps to generate an image, such as `@cf/black-forest-labs/flux-1-schnell` and `@cf/bytedance/stable-diffusion-xl-lightning`
+We take the maximum of the image height and width to calculate pricing. For example, and image of 1024x768 would fall under 1024x1024 pricing.
+
+| Image Size  | Model Type | Price                 |
+| ----------- | ---------- | --------------------- |
+| \<=256x256   | Standard   | $0.00125 per 25 steps |
+| \<=256x256   | Fast       | $0.00025 per 5 steps  |
+| \<=512x512   | Standard   | $0.0025 per 25 steps  |
+| \<=512x512   | Fast       | $0.0005 per 5 steps   |
+| \<=1024x1024 | Standard   | $0.005 per 25 steps   |
+| \<=1024x1024 | Fast       | $0.001 per 5 steps    |
+| \<=2048x2048 | Standard   | $0.01 per 25 steps    |
+| \<=2048x2048 | Fast       | $0.002 per 5 steps    |
+
+## Speech-to-text
+Speech to text models like `@cf/openai/whisper` is billed on minutes of audio input.
+
+| Price                            |
+| $0.0039 per minute of audio input|
+
+
+## Free Allocation
+
+Our free allocation allows anyone to use Workers AI up to a certain limit per day. To use more than the free allocation, upgrade to the Workers Paid plan, where you will be charged on any usage above the free tier based on the pricing structure above.
+
+
+| Model                 | Free tier size                               |
+| --------------------- | -------------------------------------------- |
+| Text Generation - LLM | 10,000 tokens a day across any model size    |
+| Embeddings            | 10,000 tokens a day across any model size    |
+| Images                | Sum of 250 steps, up to 1024x1024 resolution |
+| Speech-to-text        | 10 minutes of audio a day                    |
 
 All limits reset daily at 00:00 UTC. If you exceed any one of the above limits, further operations will fail with an error.
 
-## What are Neurons?
-
-Neurons are our way of measuring AI outputs across different models. To give you a sense of what you can accomplish with 10,000 Neurons, you can: generate 100-200 LLM responses, 500 translations, 500 seconds of speech-to-text audio, 10,000 text classifications, or 1,500 - 15,000 embeddings depending on which models you use. Our serverless model allows you to pay only for what you use without having to worry about renting, managing, or scaling GPUs.
-
-To estimate how many Neurons your requests will consume, use the [pricing calculator](https://ai.cloudflare.com/#pricing-calculator).
-
-![Workers AI Pricing Calculator](~/assets/images/workers-ai/pricing-calculator.png)
-
-## Non-beta models
-
-Beginning April 1, 2024, Cloudflare will begin charging $0.011/1,000 Neurons for all usage exceeding 10,000 Neurons per day for the following models:
-
-* [bge-small-en-v1.5](/workers-ai/models/bge-small-en-v1.5/)
-* [bge-base-en-v1.5](/workers-ai/models/bge-base-en-v1.5/)
-* [bge-large-en-v1.5](/workers-ai/models/bge-large-en-v1.5/)
-* [distilbert-sst-2-int8](/workers-ai/models/distilbert-sst-2-int8/)
-* [llama-2-7b-chat-int8](/workers-ai/models/llama-2-7b-chat-int8/)
-* [llama-2-7b-chat-fp16](/workers-ai/models/llama-2-7b-chat-fp16/)
-* [mistral-7b-instruct-v0.1](/workers-ai/models/mistral-7b-instruct-v0.1/)
-* [m2m100-1.2b](/workers-ai/models/m2m100-1.2b/)
-* [resnet-50](/workers-ai/models/resnet-50/)
-* [whisper](/workers-ai/models/whisper/)
-
-Cloudflare will continue to add Neuron calculations for the other models in the catalog and graduate them out of beta in the future.
-
-## Pricing comparison
-
-Cloudflare uses Neurons to measure and bill for inference on Workers AI. This may differ from the input-based pricing you might see from other providers. We’ve prepared the below tables to help you understand and evaluate the estimated cost of Neurons and usage on Workers AI compared with the inputs used for the models available in our catalog.
-
-**Please note that the below is provided for informational purposes only.** All conversions are based on Cloudflare’s public fees as of March 1, 2024, and do not include taxes and any other fees.
-
-### Automatic Speech Recognition
-
-| Model     | Price per <br/> minute of audio |
-| --------- | ------------------------------- |
-| `whisper` | $0.0022                         |
-
-### Image Classification
-
-| Model       | Price per image |
-| ----------- | --------------- |
-| `Resnet-50` | $0.0000025      |
-
-### Text Classification
-
-| Model                   | Price per 1M <br/> input tokens |
-| ----------------------- | ------------------------------- |
-| `distilbert-sst-2-int8` | $0.33                           |
-
-### Text Embeddings
-
-| Model               | Price per 1M <br/> input tokens |
-| ------------------- | ------------------------------- |
-| `bge-small-en-v1.5` | $0.003                          |
-| `bge-base-en-v1.5`  | $0.014                          |
-| `bge-large-en-v1.5` | $0.022                          |
-
-### Text Generation
-
-On April 2, 2024, we updated pricing for our `mistral-7b-instruct` models to be 17x cheaper and `llama-2-7b-chat-int8` to be 7x cheaper. The pricing table below reflects the new pricing, but you can take a look at the [archived pricing](/workers-ai/platform/pricing/#archived-pricing) to see how pricing has changed.
-
-| Model                  | Price per 1M <br/> input tokens | Price per 1M <br/> output tokens |
-| ---------------------- | ------------------------------- | -------------------------------- |
-| `llama-2-7b-chat-fp16` | $0.56                           | $6.66                            |
-| `llama-2-7b-chat-int8` | $0.16                           | $0.24                            |
-| `mistral-7b-instruct`  | $0.11                           | $0.19                            |
-
-### Translation
-
-| Model         | Price per 1M <br/> input tokens | Price per 1M <br/> output tokens |
-| ------------- | ------------------------------- | -------------------------------- |
-| `m2m100-1.2b` | $0.13                           | $0.70                            |
-
-## Pricing Example
-
-All users receive free allocation of 10k Neurons a day (totaling to 300k Neurons a month).
-
-If a user uses 50k Neurons per day, every day of the month, the Workers AI usage charge will be $13.20.
-
-`(50k Neurons - 10k included daily Neurons) * 30 days * $0.011 / 1k Neurons = $13.20`
 
 ## Archived Pricing
 
-As we find optimizations for our inference platform, we pass on these optimizations to our customers. You can refer to the archived pricing below to see how pricing has changed.
-
-Before April 2, 2024:
-
-| Model                  | Price per 1M <br/> input tokens | Price per 1M <br/> output tokens |
-| ---------------------- | ------------------------------- | -------------------------------- |
-| `llama-2-7b-chat-int8` | $0.28                           | $1.72                            |
-| `mistral-7b-instruct`  | $0.28                           | $3.33                            |
+Workers AI was previously metered by Neurons. We deprecated this in favor of unit-based pricing on September 26, 2024. We wanted to make it simple for people to compare and contrast Workers AI with other providers, and we also generally updated pricing to be cheaper with these new units.

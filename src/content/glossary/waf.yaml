@@ -23,9 +23,9 @@ entries:
     general_definition: |-
       credential stuffing is the automated injection of stolen username and password pairs (known as "credentials") into website login forms, trying to gain access to user accounts.
 
-  - term: exposed credentials
+  - term: leaked credentials
     general_definition: |-
-      exposed credentials refers to sensitive authentication information disclosed in some way (for example, due to misconfigurations, data breaches, or simple human error), allowing other parties to gain access to digital resources.
+      leaked credentials refers to sensitive authentication information disclosed in some way (for example, due to misconfigurations, data breaches, or simple human error), allowing other parties to gain access to digital resources.
 
       Credentials may include usernames, passwords, API keys, authentication tokens, or private keys.
 
