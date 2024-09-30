@@ -23,8 +23,10 @@ npm create cloudflare@latest --no-auto-update --experimental --framework next
 
 #### Existing Next.js apps
 
-::: note
+:::note
+
 Minimum required Wrangler version: 3.78.10. Check your version by running `wrangler version`. To update Wrangler, refer to [Install/Update Wrangler](/workers/wrangler/install-and-update/).
+
 :::
 
 ##### 1. Install @opennextjs/cloudflare
@@ -48,7 +50,7 @@ experimental_assets = { directory = ".worker-next/assets", binding = "ASSETS" }
 ```
 
 :::note
-As shown above, you must enable the [`nodejs_compat` compatibility flag](/workers/runtime-apis/nodejs/) *and* set your [compatibility date](/workers/configuration/compatibility-dates/) to `2024-09-23` or later for your Next.js app to work with @opennextjs/cloudflare.
+As shown above, you must enable the [`nodejs_compat` compatibility flag](/workers/runtime-apis/nodejs/) _and_ set your [compatibility date](/workers/configuration/compatibility-dates/) to `2024-09-23` or later for your Next.js app to work with @opennextjs/cloudflare.
 :::
 
 `wrangler.toml` is where you configure your Worker and define what resources it can access via [bindings](/workers/runtime-apis/bindings/).
