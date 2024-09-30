@@ -8,7 +8,7 @@ entries:
   - publish_date: "2024-09-27"
     title: Magic WAN Connector sends WARP client traffic to Internet
     description: |-
-      All Magic WAN Connectors now route WARP client traffic directly to the Internet without IPsec tunneling to avoid double encapsulating WARP traffic.
+      All Magic WAN Connectors now route WARP client traffic directly to the Internet, bypassing IPsec tunneling, to prevent double encapsulation of WARP traffic.
   - publish_date: "2024-07-17"
     title: Updates to High Availability on the Magic WAN Connector
     description: |-
