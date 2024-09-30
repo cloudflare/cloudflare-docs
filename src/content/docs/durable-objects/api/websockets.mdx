@@ -45,7 +45,7 @@ To learn more about WebSocket Hibernation, refer to [Build a WebSocket server wi
 
 ### acceptWebSocket
 
-- <code>acceptWebSocket(wsWebSocket, tagsArray <Type text='string'/> <MetaInfo text='optional'/>)</code>: <Type text='void' />
+- <code>acceptWebSocket(ws <Type text='WebSocket' />, tags <Type text='Array<string>'/> <MetaInfo text='optional'/>)</code>: <Type text='void' />
 
   - Adds a WebSocket to the set attached to this Durable Object. `ws.accept()` must not have been called separately. Once called, any incoming messages will be delivered by calling the Durable Object's `webSocketMessage()` handler, and `webSocketClose()` will be invoked upon disconnect.
 
