@@ -19,7 +19,7 @@ When you enable Authenticated Origin Pulls per hostname, all proxied traffic to 
  <Render file="aop-per-hostname-cert-requirement" />
 :::
 
-Refer to the steps below for an example of how to generate a custom certificate using OpenSSL:
+Refer to the steps below for an example of how to generate a custom certificate using OpenSSL. The CA root certificate that you use to issue the custom certificate should be the same CA that you will [upload to your origin](#2-configure-origin-to-accept-client-certificates).
 
 <Details header="OpenSSL example">
 <Render file="custom-cert-openssl-commands" />
