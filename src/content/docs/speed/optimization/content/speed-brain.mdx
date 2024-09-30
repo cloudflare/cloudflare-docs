@@ -71,7 +71,7 @@ While you can use Speed Brain without RUM enabled, you will not have visibility 
 
 ## Enable and disable Speed Brain
 
-Speed Brain is available in Cloudflare's **Speed** tab of the dashboard and also in the API and Terraform.
+Speed Brain is available in Cloudflare's **Speed** tab of the dashboard and also in the API.
 
 <Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
 
@@ -110,3 +110,5 @@ To disable Speed Brain, set `value:` to `"off"`.
 - If origin server responses include the `Speculation-Rules` header, it will not be overridden.
 
 - Speed Brain will not work with restrictive [Content Security Policy](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Security-Policy/script-src) configurations using `strict-dynamic` or `nonce-{hash}` attributes.
+
+- Currently, Speed Brain is not compatible with websites that use or rely on `pages.dev`. 

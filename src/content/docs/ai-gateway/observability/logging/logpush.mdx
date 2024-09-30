@@ -1,0 +1,126 @@
+---
+pcx_content_type: reference
+title: Logpush
+sidebar:
+  badge:
+    text: Beta
+---
+
+import { Render } from "~/components";
+
+AI Gateway allows you to securely export logs to an external storage location, where you can decrypt and process them.
+You can toggle Logpush on and off in the [Cloudflare dashboard](https://dash.cloudflare.com) settings.
+
+This guide explains how to set up Logpush for AI Gateway, generate an RSA key pair for encryption, and decrypt the logs once they are received.
+
+You can store up to 10 million logs per gateway. If your limit is reached, new logs will stop being saved and will not be exported through Logpush. To continue saving and exporting logs, you must delete older logs to free up space for new logs. Logpush has a limit of 4 jobs. 
+
+:::note[Note]
+
+To export logs using Logpush, you must have logs turned on for the gateway.
+
+:::
+
+## Setting up Logpush
+
+To configure Logpush for AI Gateway, follow these steps:
+
+## 1. Generate an RSA key pair locally
+
+You need to generate a key pair to encrypt and decrypt the logs. This script will output your RSA privateKey and publicKey. Keep the private key secure, as it will be used to decrypt the logs. Below is a sample script to generate the keys using Node.js.
+
+```js title="JavaScript"
+const crypto = require("crypto");
+
+const { privateKey, publicKey } = crypto.generateKeyPairSync("rsa", {
+	modulusLength: 4096,
+	publicKeyEncoding: {
+		type: "spki",
+		format: "pem",
+	},
+	privateKeyEncoding: {
+		type: "pkcs8",
+		format: "pem",
+	},
+});
+
+console.log(publicKey);
+console.log(privateKey);
+```
+
+Run the script by executing the below code on your terminal. Replace `file name` with the name of your JavaScript file.
+
+```bash
+node {file name}
+```
+
+
+## 2. Upload public key to gateway settings
+
+Once you have generated the key pair, upload the public key to your AI Gateway settings. This key will be used to encrypt your logs. In order to enable Logpush, you will need logs enabled for that gateway. 
+
+## 3. Set up Logpush
+
+To set up Logpush, refer to [Logpush Get Started](/logs/get-started/).
+
+## 4. Receive encrypted logs
+
+After configuring Logpush, logs will be sent encrypted using the public key you uploaded. To access the data, you will need to decrypt it using your private key. The logs will be sent to the object storage provider that you have selected.
+
+## 5. Decrypt logs
+
+To decrypt the encrypted log bodies and metadata from AI Gateway, you can use the following Node.js script:
+
+```js title="JavaScript"
+const privateKey = `-----BEGIN RSA PRIVATE KEY-----
+....
+-----END RSA PRIVATE KEY-----`;
+
+const crypto = require("crypto");
+const key = crypto.createPrivateKey(privateKey);
+
+const fs = require("fs");
+const zlib = require("zlib");
+const readline = require("readline");
+
+function decryptBase64(key, string) {
+	const decryptedData = crypto.privateDecrypt(
+		{
+			key: key,
+			oaepHash: "SHA256",
+		},
+		Buffer.from(string, "base64"),
+	);
+
+	return decryptedData.toString();
+}
+
+let lineReader = readline.createInterface({
+	input: fs.createReadStream("my_log.log.gz").pipe(zlib.createGunzip()),
+});
+
+lineReader.on("line", (line) => {
+	line = JSON.parse(line);
+
+	const { Metadata, RequestBody, ResponseBody, ...remaining } = line;
+
+	console.log({
+		...remaining,
+		Metadata: decryptBase64(key, Metadata.data),
+		RequestBody: decryptBase64(key, RequestBody.data),
+		ResponseBody: decryptBase64(key, ResponseBody.data),
+	});
+	console.log("--");
+});
+```
+
+Run the script by executing the below code on your terminal. Replace `file name` with the name of your JavaScript file.
+
+```bash
+node {file name}
+```
+
+## Script Explanation
+
+The script reads the encrypted log file `(my_log.log.gz)`, decrypts the metadata, request body, and response body, and prints the decrypted data.
+Ensure you replace the `privateKey` variable with your actual private RSA key that you generated in step 1.
