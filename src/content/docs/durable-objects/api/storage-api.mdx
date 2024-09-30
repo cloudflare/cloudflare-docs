@@ -76,7 +76,7 @@ Each method is implicitly wrapped inside a transaction, such that its results ar
 
 ### put
 
-* `put(keystring, valueany, optionsObjectoptional)`: <Type text='Promise' />
+* <code>put(key <Type text='string' />, value <Type text='any' />, options <Type text='Object' /> <MetaInfo text='optional' />)</code>: <Type text='Promise' />
 
   * Stores the value and associates it with the given key. The value can be any type supported by the [structured clone algorithm](https://developer.mozilla.org/en-US/docs/Web/API/Web_Workers_API/Structured_clone_algorithm), which is true of most types. Keys are limited to a max size of 2,048 bytes and values are limited to 128 KiB (131,072 bytes).<br/><br/>
 
