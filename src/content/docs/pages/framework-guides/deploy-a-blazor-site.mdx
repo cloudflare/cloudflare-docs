@@ -1,10 +1,9 @@
 ---
 pcx_content_type: how-to
 title: Blazor
-
 ---
 
-import { Render } from "~/components"
+import { Render } from "~/components";
 
 [Blazor](https://blazor.net) is an SPA framework that can use C# code, rather than JavaScript in the browser. In this guide, you will build a site using Blazor, and deploy it using Cloudflare Pages.
 
@@ -19,7 +18,7 @@ There are two types of Blazor hosting models: [Blazor Server](https://learn.micr
 Create a new Blazor WebAssembly (WASM) application by running the following command:
 
 ```sh
-$ dotnet new blazorwasm -o my-blazor-project
+dotnet new blazorwasm -o my-blazor-project
 ```
 
 ## Create the build script
@@ -44,7 +43,7 @@ Your `build.sh` file needs to be executable for the build command to work. You c
 Creating a `.gitignore` file ensures that only what is needed gets pushed onto your GitHub repository. Create a `.gitignore` file by running the following command:
 
 ```sh
-$ dotnet new gitignore
+dotnet new gitignore
 ```
 
 <Render file="framework-guides/create-github-repository" />
@@ -73,9 +72,7 @@ After configuring your site, you can begin your first deploy. You should see Clo
 
 :::note
 
-
 For the complete guide to deploying your first site to Cloudflare Pages, refer to the [Get started guide](/pages/get-started/).
-
 
 :::
 

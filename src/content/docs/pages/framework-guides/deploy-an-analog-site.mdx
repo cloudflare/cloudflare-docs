@@ -3,10 +3,15 @@ pcx_content_type: how-to
 title: Analog
 head: []
 description: The fullstack Angular meta-framework
-
 ---
 
-import { PagesBuildPreset, Render, TabItem, Tabs } from "~/components"
+import {
+	PagesBuildPreset,
+	Render,
+	TabItem,
+	Tabs,
+	PackageManagers,
+} from "~/components";
 
 [Analog](https://analogjs.org/) is a fullstack meta-framework for Angular, powered by [Vite](https://vitejs.dev/) and [Nitro](https://nitro.unjs.io/).
 
@@ -16,33 +21,17 @@ In this guide, you will create a new Analog application and deploy it using Clou
 
 The easiest way to create a new Analog project and deploy to Cloudflare Pages is to use the [`create-cloudflare`](https://www.npmjs.com/package/create-cloudflare) CLI (also known as C3). To get started, open a terminal and run:
 
-<Tabs> <TabItem label="npm">
-
-```sh
-$ npm create cloudflare@latest my-analog-app -- --framework=analog
-```
-
-</TabItem> <TabItem label="pnpm">
-
-```sh
-$ pnpm create cloudflare@latest my-analog-app --framework=analog
-```
-
-</TabItem> <TabItem label="bun">
-
-```sh
-$ bun create cloudflare@latest my-analog-app --framework=analog
-```
-
-</TabItem> </Tabs>
+<PackageManagers
+	type="create"
+	pkg="cloudflare@latest"
+	args="my-analog-app --framework=analog"
+/>
 
 C3 will walk you through the setup process and create a new project using `create-analog`, the official Analog creation tool. It will also install the necessary adapters along with the [Wrangler CLI](/workers/wrangler/install-and-update/#check-your-wrangler-version).
 
 :::note[Deployment]
 
-
 The final step of the C3 workflow will offer to deploy your application to Cloudflare. For more information on deployment options, see the [Deployment](#deployment) section below.
-
 
 :::
 
@@ -58,12 +47,12 @@ The following code block shows an example of accessing a KV namespace in Analog.
 
 ```typescript null {2}
 export default defineEventHandler(async ({ context }) => {
-  const { MY_KV } = context.cloudflare.env;
-  const greeting = (await MY_KV.get("greeting")) ?? "hello";
+	const { MY_KV } = context.cloudflare.env;
+	const greeting = (await MY_KV.get("greeting")) ?? "hello";
 
-  return {
-    greeting,
-  };
+	return {
+		greeting,
+	};
 });
 ```
 
@@ -93,23 +82,23 @@ export default defineConfig({
 This module in turn loads a plugin which adds bindings to the event context in dev:
 
 ```typescript
-import { NitroApp } from 'nitropack';
-import { defineNitroPlugin } from 'nitropack/dist/runtime/plugin';
+import { NitroApp } from "nitropack";
+import { defineNitroPlugin } from "nitropack/dist/runtime/plugin";
 
 export default defineNitroPlugin((nitroApp: NitroApp) => {
-  nitroApp.hooks.hook('request', async (event) => {
-    const _pkg = 'wrangler'; // Bypass bundling!
-    const { getPlatformProxy } = (await import(
-      _pkg
-    )) as typeof import('wrangler');
-    const platform = await getPlatformProxy();
+	nitroApp.hooks.hook("request", async (event) => {
+		const _pkg = "wrangler"; // Bypass bundling!
+		const { getPlatformProxy } = (await import(
+			_pkg
+		)) as typeof import("wrangler");
+		const platform = await getPlatformProxy();
 
-    event.context.cf = platform['cf'];
-    event.context.cloudflare = {
-      env: platform['env'] as unknown as Env,
-      context: platform['ctx'],
-    };
-  });
+		event.context.cf = platform["cf"];
+		event.context.cloudflare = {
+			env: platform["env"] as unknown as Env,
+			context: platform["ctx"],
+		};
+	});
 });
 ```
 
@@ -118,7 +107,7 @@ In the code above, the `getPlatformProxy` helper function will automatically det
 A new type definition for the `Env` type (used by `context.cloudflare.env`) can be generated from `wrangler.toml` with the following command:
 
 ```sh
-$ npm run cf-typegen
+npm run cf-typegen
 ```
 
 This should be done any time you add new bindings to `wrangler.toml`.
@@ -132,7 +121,7 @@ In order to access bindings in a deployed application, you will need to [configu
 When creating your new project, C3 will give you the option of deploying an initial version of your application via [Direct Upload](/pages/how-to/use-direct-upload-with-continuous-integration/). You can redeploy your application at any time by running following command inside your project directory:
 
 ```sh
-$ npm run deploy
+npm run deploy
 ```
 
 <Render file="framework-guides/git-integration" />
@@ -144,13 +133,13 @@ $ npm run deploy
 ```sh
 # Skip the following three commands if you have built your application
 # using C3 or already committed your changes
-$ git init
-$ git add .
-$ git commit -m "Initial commit"
+git init
+git add .
+git commit -m "Initial commit"
 
-$ git branch -M main
-$ git remote add origin https://github.com/<YOUR_GH_USERNAME>/<REPOSITORY_NAME>
-$ git push -u origin main
+git branch -M main
+git remote add origin https://github.com/<YOUR_GH_USERNAME>/<REPOSITORY_NAME>
+git push -u origin main
 ```
 
 ### Create a Pages project

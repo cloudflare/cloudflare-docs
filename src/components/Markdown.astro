@@ -1,7 +1,14 @@
 ---
+import { z } from "astro:schema";
 import { marked } from "marked";
 
-const content = await Astro.slots.render("default");
+type Props = z.infer<typeof props>;
+
+const props = z.object({
+  text: z.string(),
+});
+
+const { text } = props.parse(Astro.props);
 ---
 
-<Fragment set:html={marked.parseInline(content)} />
+<Fragment set:html={marked.parseInline(text)} />

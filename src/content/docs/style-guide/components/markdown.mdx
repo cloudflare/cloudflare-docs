@@ -1,0 +1,21 @@
+---
+title: Markdown
+---
+
+This component uses `marked` to turn the `text` prop into HTML. This is useful with, for example partial files that have variables you need to format.
+
+```mdx live
+import { Markdown } from "~/components";
+
+<Markdown text="**foo** <br/> [bar](/style-guide/components/markdown/)" />
+```
+
+## Example for variables in partials
+
+If you have a variable that needs to be formatted in any special way (for example, it needs to be a URL, an unordered list, or something else), you can wrap the variable with the markdown component in your partial file. For example:
+
+```mdx
+<Markdown text={props.foo} />
+```
+
+Note that you need to wrap your variabble in curly braces, as well as use `text=` or this will not work.

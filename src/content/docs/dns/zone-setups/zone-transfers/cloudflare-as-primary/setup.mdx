@@ -6,10 +6,9 @@ sidebar:
 head:
   - tag: title
     content: Set up outgoing zone transfers (Cloudflare as Primary)
-
 ---
 
-import { Render, TabItem, Tabs } from "~/components"
+import { Render, TabItem, Tabs } from "~/components";
 
 With [outgoing zone transfers](/dns/zone-setups/zone-transfers/cloudflare-as-primary/), you can keep Cloudflare as your primary DNS provider and use one or more secondary providers for increased availability and fault tolerance.
 
@@ -21,8 +20,8 @@ As explained in [DNS record types](/dns/manage-dns-records/reference/dns-record-
 
 Depending on the [settings](/dns/cname-flattening/set-up-cname-flattening/) you have, when you use DNS-only `CNAME` records with outgoing zone transfers, you can expect the following:
 
-* For DNS-only `CNAME` records on the zone apex, Cloudflare will always transfer out the flattened IP addresses.
-* For DNS-only `CNAME` records on subdomains, Cloudflare will only transfer out flattened IP addresses if the setting [**Flatten all CNAMEs**](/dns/cname-flattening/set-up-cname-flattening/#for-all-cname-records) is enabled.
+- For DNS-only `CNAME` records on the zone apex, Cloudflare will always transfer out the flattened IP addresses.
+- For DNS-only `CNAME` records on subdomains, Cloudflare will only transfer out flattened IP addresses if the setting [**Flatten all CNAMEs**](/dns/cname-flattening/set-up-cname-flattening/#for-all-cname-records) is enabled.
 
 ### Proxied records
 
@@ -38,13 +37,13 @@ Review your [existing DNS records](/dns/manage-dns-records/how-to/create-dns-rec
 
 If using the API, you may also want to [locate your Zone and Account IDs](/fundamentals/setup/find-account-and-zone-ids/).
 
-***
+---
 
-## Step 1 - Create TSIG (optional)
+## 1. Create TSIG (optional)
 
 <Render file="tsig-definition" />
 
-<Tabs> <TabItem label="Dashboard">
+<Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
 
 <Render file="tsig-create-dash" />
 
@@ -54,14 +53,14 @@ If using the API, you may also want to [locate your Zone and Account IDs](/funda
 
 </TabItem> </Tabs>
 
-## Step 2 - Create Peer DNS Server (optional)
+## 2. Create Peer DNS Server (optional)
 
 You only need to create a peer DNS server if you want:
 
-* Your secondary nameservers to receive **NOTIFYs**  for changes to your Cloudflare DNS records.
-* A **TSIG** to sign zone transfer requests and **NOTIFYs**.
+- Your secondary nameservers to receive **NOTIFYs** for changes to your Cloudflare DNS records.
+- A **TSIG** to sign zone transfer requests and **NOTIFYs**.
 
-<Tabs> <TabItem label="Dashboard">
+<Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
 
 To create a peer using the dashboard:
 
@@ -70,25 +69,25 @@ To create a peer using the dashboard:
 3. Select **DNS Zone Transfers**.
 4. For **Peer DNS servers**, select **Create**.
 5. Enter the following information, paying particular attention to:
-   * **IP**: If configured, specifies where Cloudflare sends NOTIFY requests to.
-   * **Port**: Specifies the IP Port for the NOTIFY IP.
-   * **Enable incremental (IXFR) zone transfers**: Does not apply when you are using Cloudflare as your primary DNS provider (Cloudflare zones always accept IXFR requests).
-   * **Link an existing TSIG**: If desired, link the TSIG you [previously created](#step-1---create-tsig-optional).
+   - **IP**: If configured, specifies where Cloudflare sends NOTIFY requests to.
+   - **Port**: Specifies the IP Port for the NOTIFY IP.
+   - **Enable incremental (IXFR) zone transfers**: Does not apply when you are using Cloudflare as your primary DNS provider (Cloudflare zones always accept IXFR requests).
+   - **Link an existing TSIG**: If desired, link the TSIG you [previously created](#1-create-tsig-optional).
 6. Select **Create**.
 
 </TabItem> <TabItem label="API">
 
-To create a peer DNS server using the API, send a [POST](/api/operations/secondary-dns-\(-peer\)-create-peer) request.
+To create a peer DNS server using the API, send a [POST](</api/operations/secondary-dns-(-peer)-create-peer>) request.
 
 </TabItem> </Tabs>
 
-## Step 3 - Link peer to primary zone (optional)
+## 3. Link peer to primary zone (optional)
 
-If you previously [created a peer DNS server](#step-2---create-peer-dns-server-optional), you should link it to your primary zone.
+If you previously [created a peer DNS server](#2-create-peer-dns-server-optional), you should link it to your primary zone.
 
-<Tabs> <TabItem label="Dashboard">
+<Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
 
-To create a secondary zone using the dashboard:
+To link a primary zone to a peer using the dashboard:
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login).
 2. Select your account and zone.
@@ -99,29 +98,27 @@ To create a secondary zone using the dashboard:
 
 </TabItem> <TabItem label="API">
 
-To link a primary zone to a peer using the API, send a [POST](/api/operations/secondary-dns-\(-primary-zone\)-create-primary-zone-configuration) request with the ID of the peer you [previously created](#step-2---create-peer-dns-server-optional).
+To link a primary zone to a peer using the API, send a [POST](</api/operations/secondary-dns-(-primary-zone)-create-primary-zone-configuration>) request with the ID of the peer you [previously created](#2-create-peer-dns-server-optional).
 
 </TabItem> </Tabs>
 
-## Step 4 - Create an ACL
+:::caution[Multiple peers and TSIG]
+If you link more than one peer to a zone and at least one of them has TSIG configured, all peers are expected to also use the same TSIG.
+:::
 
-When you create an Access Control List (ACL), that list contains the source IP addresses that are allowed to send zone transfer requests. If you do not configure an ACL, your zone transfers will fail from IP addresses other than the one specified in the peer DNS server linked to your primary zone on Cloudflare.
+## 4. Update your secondary DNS provider
 
-For more details, refer to [create an ACL](/dns/zone-setups/zone-transfers/access-control-lists/create-new-list/).
-
-## Step 5 - Update your secondary DNS provider
-
-Your secondary DNS provider should send zone transfer requests (via AXFR or IXFR) to [this IP](/dns/zone-setups/zone-transfers/access-control-lists/cloudflare-ip-addresses/#transfer-ip) on port 53 and from the IP address specified in your [peer configuration](#step-2---create-peer-dns-server-optional).
+Your secondary DNS provider should send zone transfer requests (via AXFR or IXFR) to [this IP](/dns/zone-setups/zone-transfers/access-control-lists/cloudflare-ip-addresses/#transfer-ip) on port 53 and from the IP address specified in your [peer configuration](#2-create-peer-dns-server-optional).
 
 It should also have updated [Access Control Lists (ACLs)](/dns/zone-setups/zone-transfers/access-control-lists/cloudflare-ip-addresses/#allow-range) to prevent NOTIFY messages sent from Cloudflare IP ranges from being blocked.
 
-## Step 6 - Add secondary nameservers within Cloudflare
+## 5. Add secondary nameservers within Cloudflare
 
 Using the information from your secondary DNS provider, [create `NS` records](/dns/manage-dns-records/how-to/create-dns-records/#create-dns-records) on your zone apex listing your secondary nameservers.
 
 By default, Cloudflare ignores `NS` records that are added to the zone apex. To modify this behaviour, enable [multi-provider DNS](/dns/nameservers/nameserver-options/#multi-provider-dns):
 
-<Tabs> <TabItem label="Dashboard">
+<Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login).
 2. Select your account and zone.
@@ -143,11 +140,11 @@ curl --request PATCH \
 
 </TabItem> </Tabs>
 
-## Step 7 - Enable outgoing zone transfers
+## 6. Enable outgoing zone transfers
 
 When you enable outgoing zone transfers, this will send a DNS NOTIFY message to your secondary DNS provider.
 
-<Tabs> <TabItem label="Dashboard">
+<Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login).
 2. Select your account and zone.
@@ -156,10 +153,10 @@ When you enable outgoing zone transfers, this will send a DNS NOTIFY message to 
 
 </TabItem> <TabItem label="API">
 
-To enable outgoing zone transfers using the API, send a [POST](/api/operations/secondary-dns-\(-primary-zone\)-enable-outgoing-zone-transfers) request.
+To enable outgoing zone transfers using the API, send a [POST](</api/operations/secondary-dns-(-primary-zone)-enable-outgoing-zone-transfers>) request.
 
 </TabItem> </Tabs>
 
-## Step 8 - Add secondary nameservers to registrar
+## 7. Add secondary nameservers to registrar
 
 At your registrar, add the nameservers of your secondary DNS provider.

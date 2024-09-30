@@ -1,7 +1,7 @@
-name: Cloudflare Image Optimization
+name: Cloudflare Images
 
 product:
-  title: Cloudflare Image Optimization
+  title: Cloudflare Images
   url: /images/
   group: Developer platform
   additional_groups: [Media]
@@ -9,10 +9,10 @@ product:
   preview_tryout: true
 
 meta:
-  title: Cloudflare Image Optimization docs
-  description: Choose between Cloudflare Images and Cloudflare Image Resizing, two
-    products tailored to your different needs.
-  author: '@cloudflare'
+  title: Cloudflare Images docs
+  description:
+    Store, transform, optimize, and deliver images at scale.
+  author: "@cloudflare"
 
 resources:
   community: https://community.cloudflare.com/c/developers/images
@@ -25,6 +25,6 @@ externals:
     url: https://cloudflare.com
 
 algolia:
-  index: developers-cloudflare2
+  index: TEST - Re-dev docs
   apikey: 4edb0a6cef3338ff4bcfbc6b3d2db56b
   product: images

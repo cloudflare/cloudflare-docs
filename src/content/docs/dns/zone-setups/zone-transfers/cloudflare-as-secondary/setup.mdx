@@ -6,10 +6,9 @@ sidebar:
 head:
   - tag: title
     content: Set up incoming zone transfers (Cloudflare as Secondary)
-
 ---
 
-import { Render, TabItem, Tabs } from "~/components"
+import { Render, TabItem, Tabs } from "~/components";
 
 With [incoming zone transfers](/dns/zone-setups/zone-transfers/cloudflare-as-secondary/), you can keep your primary DNS provider and use Cloudflare as a secondary DNS provider.
 
@@ -17,8 +16,8 @@ With [incoming zone transfers](/dns/zone-setups/zone-transfers/cloudflare-as-sec
 
 ## Before you begin
 
-* You should already have a registered domain, set up with your primary DNS provider.
-* Make sure you have completed the following tasks at your primary DNS provider and at Cloudflare.
+- You should already have a registered domain, set up with your primary DNS provider.
+- Make sure you have completed the following tasks at your primary DNS provider and at Cloudflare.
 
 ### At your primary DNS provider
 
@@ -30,11 +29,11 @@ We strongly recommend configuring [DNS NOTIFY](https://datatracker.ietf.org/doc/
 
 You will also need the following information from your Primary DNS provider:
 
-* **Primary IP address**: The IP address that Cloudflare sends zone transfer requests to (via AXFR or IXFR).
-* **Zone transfer type**: Will zone transfers be full (AXFR) or incremental (IXFR)?
-* **TSIG name** (optional): A descriptive name of the TSIG following domain name syntax ([RFC 8945 section 4.2](https://datatracker.ietf.org/doc/html/rfc8945#section-4.2)). <Render file="tsig-name-match" />
-* **TSIG secret** (optional): The secret string used to authenticate zone transfers.
-* **TSIG algorithm** (optional): The algorithm used to authenticate zone transfers.
+- **Primary IP address**: The IP address that Cloudflare sends zone transfer requests to (via AXFR or IXFR).
+- **Zone transfer type**: Will zone transfers be full (AXFR) or incremental (IXFR)?
+- **TSIG name** (optional): A descriptive name of the TSIG following domain name syntax ([RFC 8945 section 4.2](https://datatracker.ietf.org/doc/html/rfc8945#section-4.2)). <Render file="tsig-name-match" />
+- **TSIG secret** (optional): The secret string used to authenticate zone transfers.
+- **TSIG algorithm** (optional): The algorithm used to authenticate zone transfers.
 
 ### At Cloudflare
 
@@ -42,17 +41,17 @@ Make sure your account team has enabled your zone for Secondary DNS.
 
 Get the following values from your Cloudflare account:
 
-* [Account ID](/fundamentals/setup/find-account-and-zone-ids/)
-* [Zone ID](/fundamentals/setup/find-account-and-zone-ids/)
-* [Nameserver names](/dns/zone-setups/full-setup/setup/#get-nameserver-names), which should have **secondary** in the name.
+- [Account ID](/fundamentals/setup/find-account-and-zone-ids/)
+- [Zone ID](/fundamentals/setup/find-account-and-zone-ids/)
+- [Nameserver names](/dns/zone-setups/full-setup/setup/#get-nameserver-names), which should have **secondary** in the name.
 
-***
+---
 
 ## 1. Create TSIG (optional)
 
 <Render file="tsig-definition" />
 
-<Tabs> <TabItem label="Dashboard">
+<Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
 
 <Render file="tsig-create-dash" />
 
@@ -68,7 +67,7 @@ Get the following values from your Cloudflare account:
 
 ## 3. Create the Secondary Zone
 
-<Tabs> <TabItem label="Dashboard">
+<Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
 
 To create a secondary zone using the dashboard:
 
@@ -77,19 +76,21 @@ To create a secondary zone using the dashboard:
 3. Enter your zone name and choose **Secondary DNS** (if this option is not available, contact your account team).
 4. Click **Add site**.
 5. Select your plan type.
-6. Choose a value for **Zone refresh**, which controls the number of seconds between zone updates from your primary DNS server. :::caution
-   Cloudflare will not use the REFRESH value inside the SOA record that is served by your primary provider. Instead the value of zone refresh configured for your secondary zone on Cloudflare will be used to determine the interval after which the SOA serial of the primary zone will be checked for changes. 
+6. Choose a value for **Zone refresh**, which controls the number of seconds between zone updates from your primary DNS server.
+   :::caution
+   Cloudflare will not use the REFRESH value inside the SOA record that is served by your primary provider. Instead the value of zone refresh configured for your secondary zone on Cloudflare will be used to determine the interval after which the SOA serial of the primary zone will be checked for changes.
    :::
 7. Select the peer server you [previously created](#2-create-peer-server). If needed, you can link more than one peer server to a zone.
 8. Click **Continue**.
-9. Review the list of transferred records and click **Continue**. :::note
-   &#x20;If no records appear, you may have misconfigured the TSIG or the IP address of the peer server or the [Access Control List](/dns/zone-setups/zone-transfers/access-control-lists/cloudflare-ip-addresses/#cloudflare-as-secondary) was improperly configured at your primary DNS provider. 
+9. Review the list of transferred records and click **Continue**.
+   :::note
+   If no records appear, you may have misconfigured the TSIG or the IP address of the peer server or the [Access Control List](/dns/zone-setups/zone-transfers/access-control-lists/cloudflare-ip-addresses/#cloudflare-as-secondary) was improperly configured at your primary DNS provider.
    :::
 10. Click **Initiate zone transfer**.
 
 </TabItem> <TabItem label="API">
 
-To create a secondary zone using the API, send a [POST](/api/operations/secondary-dns-\(-secondary-zone\)-create-secondary-zone-configuration) request with the `type` parameter set to `"secondary"`.
+To create a secondary zone using the API, send a [POST](</api/operations/secondary-dns-(-secondary-zone)-create-secondary-zone-configuration>) request with the `type` parameter set to `"secondary"`.
 
 </TabItem> </Tabs>
 

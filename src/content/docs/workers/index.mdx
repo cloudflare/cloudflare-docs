@@ -7,14 +7,23 @@ sidebar:
 head:
   - tag: title
     content: Cloudflare Workers
-
 ---
 
-import { CardGrid, Description, Feature, LinkButton, LinkTitleCard, Plan, RelatedProduct, Render } from "~/components"
+import {
+	CardGrid,
+	Description,
+	Feature,
+	LinkButton,
+	LinkTitleCard,
+	Plan,
+	RelatedProduct,
+	Render,
+} from "~/components";
 
 <Description>
 
-Build serverless applications and deploy instantly across the globe for exceptional performance, reliability, and scale. 
+Build serverless applications and deploy instantly across the globe for exceptional performance, reliability, and scale.
+
 </Description>
 
 <Plan type="all" />
@@ -23,12 +32,16 @@ Cloudflare Workers provides a [serverless](https://www.cloudflare.com/learning/s
 
 Cloudflare Workers runs on [Cloudflare’s global network](https://www.cloudflare.com/network/) in hundreds of cities worldwide, offering both [Free and Paid plans](/workers/platform/pricing/).
 
- <LinkButton variant="primary" href="/workers/get-started/">Get started</LinkButton> <LinkButton variant="secondary" href="https://dash.cloudflare.com/?to=/:account/workers-and-pages/create">Workers dashboard</LinkButton>
+<LinkButton variant="primary" href="/workers/get-started/guide/">
+	Get started
+</LinkButton> <LinkButton
+	variant="secondary"
+	href="https://dash.cloudflare.com/?to=/:account/workers-and-pages/create"
+>
+	Workers dashboard
+</LinkButton>
 
-
-<Render file="non-contract-enablement" product="fundamentals" />
-
-***
+---
 
 ## Features
 
@@ -36,13 +49,11 @@ Cloudflare Workers runs on [Cloudflare’s global network](https://www.cloudflar
 
 The Workers command-line interface, Wrangler, allows you to [create](/workers/wrangler/commands/#init), [test](/workers/wrangler/commands/#dev), and [deploy](/workers/wrangler/commands/#deploy) your Workers projects.
 
-
 </Feature>
 
 <Feature header="Bindings" href="/workers/runtime-apis/bindings/">
 
 Bindings allow your Workers to interact with resources on the Cloudflare developer platform, including [R2](/r2/), [KV](/kv/concepts/how-kv-works/), [Durable Objects](/durable-objects/), and [D1](/d1/).
-
 
 </Feature>
 
@@ -50,10 +61,9 @@ Bindings allow your Workers to interact with resources on the Cloudflare develop
 
 The Playground is a sandbox which gives you an instant way to preview and test a Worker directly in the browser against any site. No setup required.
 
-
 </Feature>
 
-***
+---
 
 ## Related products
 
@@ -61,13 +71,11 @@ The Playground is a sandbox which gives you an instant way to preview and test a
 
 Run machine learning models, powered by serverless GPUs, on Cloudflare’s global network.
 
-
 </RelatedProduct>
 
 <RelatedProduct header="R2" href="/r2/" product="r2">
 
 Store large amounts of unstructured data without the costly egress bandwidth fees associated with typical cloud storage services.
-
 
 </RelatedProduct>
 
@@ -75,13 +83,11 @@ Store large amounts of unstructured data without the costly egress bandwidth fee
 
 Create new serverless SQL databases to query from your Workers and Pages projects.
 
-
 </RelatedProduct>
 
 <RelatedProduct header="Durable Objects" href="/durable-objects/" product="durable-objects">
 
 A globally distributed coordination API with strongly consistent storage.
-
 
 </RelatedProduct>
 
@@ -89,13 +95,11 @@ A globally distributed coordination API with strongly consistent storage.
 
 Create a global, low-latency, key-value data storage.
 
-
 </RelatedProduct>
 
 <RelatedProduct header="Queues" href="/queues/" product="queues">
 
 Send and receive messages with guaranteed delivery and no charges for egress bandwidth.
-
 
 </RelatedProduct>
 
@@ -103,13 +107,11 @@ Send and receive messages with guaranteed delivery and no charges for egress ban
 
 Turn your existing regional database into a globally distributed database.
 
-
 </RelatedProduct>
 
 <RelatedProduct header="Vectorize" href="/vectorize/" product="vectorize">
 
 Build full-stack AI applications with Vectorize, Cloudflare’s vector database.
-
 
 </RelatedProduct>
 
@@ -117,37 +119,54 @@ Build full-stack AI applications with Vectorize, Cloudflare’s vector database.
 
 Offload third-party tools and services to the cloud and improve the speed and security of your website.
 
-
 </RelatedProduct>
 
-***
+---
 
 ## More resources
 
 <CardGrid>
 
 <LinkTitleCard title="Learning Path" href="/learning-paths/workers/" icon="pen">
-New to Workers? Get started with the Workers Learning Path.
+	New to Workers? Get started with the Workers Learning Path.
 </LinkTitleCard>
 
-<LinkTitleCard title="Plans" href="/workers/platform/pricing/" icon="seti:shell">
-Learn about Free and Paid plans.
+<LinkTitleCard
+	title="Plans"
+	href="/workers/platform/pricing/"
+	icon="seti:shell"
+>
+	Learn about Free and Paid plans.
 </LinkTitleCard>
 
 <LinkTitleCard title="Limits" href="/workers/platform/limits/" icon="document">
-Learn about plan limits (Free plans get 100,000 requests per day).
+	Learn about plan limits (Free plans get 100,000 requests per day).
 </LinkTitleCard>
 
-<LinkTitleCard title="Storage options" href="/workers/platform/storage-options/" icon="open-book">
-Learn which storage option is best for your project.
+<LinkTitleCard
+	title="Storage options"
+	href="/workers/platform/storage-options/"
+	icon="open-book"
+>
+	Learn which storage option is best for your project.
 </LinkTitleCard>
 
-<LinkTitleCard title="Developer Discord" href="https://discord.cloudflare.com" icon="discord">
-Connect with the Workers community on Discord to ask questions, share what you are building, and discuss the platform with other developers.
+<LinkTitleCard
+	title="Developer Discord"
+	href="https://discord.cloudflare.com"
+	icon="discord"
+>
+	Connect with the Workers community on Discord to ask questions, share what you
+	are building, and discuss the platform with other developers.
 </LinkTitleCard>
 
-<LinkTitleCard title="@CloudflareDev" href="https://x.com/cloudflaredev" icon="x.com">
-Follow @CloudflareDev on Twitter to learn about product announcements, and what is new in Cloudflare Workers.
+<LinkTitleCard
+	title="@CloudflareDev"
+	href="https://x.com/cloudflaredev"
+	icon="x.com"
+>
+	Follow @CloudflareDev on Twitter to learn about product announcements, and
+	what is new in Cloudflare Workers.
 </LinkTitleCard>
 
 </CardGrid>

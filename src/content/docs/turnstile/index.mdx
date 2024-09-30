@@ -6,14 +6,21 @@ sidebar:
 head:
   - tag: title
     content: Cloudflare Turnstile
-
 ---
 
-import { Description, Feature, LinkButton, Plan, RelatedProduct, Render } from "~/components"
+import {
+	Description,
+	Feature,
+	LinkButton,
+	Plan,
+	RelatedProduct,
+	Render,
+} from "~/components";
 
 <Description>
 
-Cloudflare’s smart CAPTCHA alternative. 
+Cloudflare’s smart CAPTCHA alternative.
+
 </Description>
 
 Turnstile can be embedded into any website without sending traffic through Cloudflare and works without showing visitors a CAPTCHA.
@@ -30,51 +37,67 @@ With Turnstile, we adapt the actual challenge outcome to the individual visitor 
 
 Turnstile also includes machine learning models that detect common features of end visitors who were able to pass a challenge before. The computational hardness of those initial challenges may vary by visitor, but is targeted to run fast.
 
-Turnstile [widget types](/turnstile/concepts/widget-types/) include:
+Turnstile [widget types](/turnstile/concepts/widget/) include:
 
-* A non-interactive challenge.
-* A non-intrusive interactive challenge (such as checking a box), if the visitor is a suspected bot.
-* An invisible challenge to the browser.
+- A non-interactive challenge.
+- A non-intrusive interactive challenge (such as checking a box), if the visitor is a suspected bot.
+- An invisible challenge to the browser.
 
-***
+---
 
 ## Accessibility
 
 Turnstile is WCAG 2.1 AA compliant.
 
-***
+---
 
 ## Availability
 
 Refer to [Cloudflare Turnstile's product page](https://www.cloudflare.com/products/turnstile/) for more information on Turnstile's plans.
 
-***
+---
 
 ## Get started
 
- <LinkButton variant="primary" href="/turnstile/get-started/">Get started</LinkButton> <LinkButton variant="secondary" href="/turnstile/migration/">Migration guides</LinkButton> <LinkButton variant="secondary" href="https://dash.cloudflare.com/?to=/:account/turnstile">Dashboard</LinkButton>
+{" "}
+<LinkButton variant="primary" href="/turnstile/get-started/">
+	Get started
+</LinkButton> <LinkButton variant="secondary" href="/turnstile/migration/">
+	Migration guides
+</LinkButton> <LinkButton
+	variant="secondary"
+	href="https://dash.cloudflare.com/?to=/:account/turnstile"
+>
+	Dashboard
+</LinkButton>
 
-
-***
+---
 
 ## Features
 
 <Feature header="Turnstile analytics" href="/turnstile/turnstile-analytics/">
-Assess the number of challenges issued, evaluate the challenge solve rate, and view the metrics of issued challenges. 
+	Assess the number of challenges issued, evaluate the challenge solve rate, and
+	view the metrics of issued challenges.
 </Feature>
 
-<Feature header="Pre-Clearance" href="/turnstile/concepts/pre-clearance-support/">
-Integrate Cloudflare challenges on single-page applications (SPAs) by allowing Turnstile to issue a Pre-Clearance cookie. 
+<Feature
+	header="Pre-Clearance"
+	href="/turnstile/concepts/pre-clearance-support/"
+>
+	Integrate Cloudflare challenges on single-page applications (SPAs) by allowing
+	Turnstile to issue a Pre-Clearance cookie.
 </Feature>
 
-***
+---
 
 ## Related products
 
 <RelatedProduct header="Bots" href="/bots/" product="bots">
-Cloudflare bot solutions identify and mitigate automated traffic to protect your domain from bad bots. 
+	Cloudflare bot solutions identify and mitigate automated traffic to protect
+	your domain from bad bots.
 </RelatedProduct>
 
 <RelatedProduct header="WAF" href="/waf/" product="waf">
-Get automatic protection from vulnerabilities and the flexibility to create custom rules. 
+	Get automatic protection from vulnerabilities and the flexibility to create
+	custom rules.
 </RelatedProduct>

@@ -1,9 +1,6 @@
 ---
 pcx_content_type: how-to
 title: Okta (SAML)
-sidebar:
-  order: 18
-
 ---
 
 Cloudflare Zero Trust can integrate SAML with Okta as an identity provider.
@@ -32,18 +29,18 @@ To set up SAML with Okta as your identity provider:
 
 6. In the **Attribute Statements** section, enter the following information:
 
-   * **Name**: Enter `email`.
-   * **Value**: Enter `user.email`.
+   - **Name**: Enter `email`.
+   - **Value**: Enter `user.email`.
 
 7. (Optional) If you are using Okta groups, create a **Group Attribute Statement** with the following information:
-   * **Name**: Enter `groups`.
-   * **Filter**: Select *Matches regex* and enter `.*`.
+   - **Name**: Enter `groups`.
+   - **Filter**: Select _Matches regex_ and enter `.*`.
 
 ![Configuring attribute statements in Okta](~/assets/images/cloudflare-one/identity/okta-saml/okta-saml-2.png)
 
 8. Select **Next**.
 
-9. Select **I’m an Okta customer adding an internal app** and check **This is an internal app that we have created**.
+9. Select **I'm an Okta customer adding an internal app** and check **This is an internal app that we have created**.
 
 ![Configuring feedback options in Okta](~/assets/images/cloudflare-one/identity/okta-saml/okta-saml-3.png)
 
@@ -61,14 +58,14 @@ To set up SAML with Okta as your identity provider:
 
 13. In [Zero Trust](https://one.dash.cloudflare.com), go to **Settings** > **Authentication**.
 
-14. Select **Add new** under **Login Methods**, and select *SAML*.
+14. Select **Add new** under **Login Methods**, and select _SAML_.
 
 15. Fill in the following information:
 
-    * **Name**: Name your identity provider.
-    * **Single Sign On URL**: Enter the Identity Provider Single-Sign-On URL from Okta.
-    * **Issuer ID**: Enter the Identity Provider Issuer from Okta, for example `http://www.okta.com/<your-okta-entity-id>`.
-    * **Signing Certificate**: Copy-paste the X.509 Certificate from Okta.
+    - **Name**: Name your identity provider.
+    - **Single Sign On URL**: Enter the Identity Provider Single-Sign-On URL from Okta.
+    - **Issuer ID**: Enter the Identity Provider Issuer from Okta, for example `http://www.okta.com/<your-okta-entity-id>`.
+    - **Signing Certificate**: Copy-paste the X.509 Certificate from Okta.
 
 16. (Recommended) Enable **Sign SAML authentication request**.
 
@@ -82,9 +79,7 @@ To test that your connection is working, go to **Settings** > **Authentication**
 
 :::caution
 
-
 SAML attributes are only refreshed during authentications with the Okta identity provider. This means the Okta group membership is not updated unless a user logs in and out of the WARP client, or logs in to an Access application.
-
 
 :::
 
@@ -92,20 +87,17 @@ SAML attributes are only refreshed during authentications with the Okta identity
 
 ```json
 {
-  "config": {
-      "issuer_url": "http://www.okta.com/exkbhqj29iGxT7GwT0h7",
-      "sso_target_url": "https://dev-abc123.oktapreview.com/app/myapp/exkbhqj29iGxT7GwT0h7/sso/saml",
-      "attributes": [
-          "email",
-          "group",
-      ],
-      "email_attribute_name": "",
-      "sign_request": false,
-      "idp_public_certs": [
-          "MIIDpDCCAoygAwIBAgIGAV2ka+55MA0GCSqGSIb3DQEBCwUAMIGSMQswCQYDVQQGEwJVUzETMBEG\nA1UEC.....GF/Q2/MHadws97cZg\nuTnQyuOqPuHbnN83d/2l1NSYKCbHt24o"
-      ]
-  },
-  "type": "saml",
-  "name": "okta saml example"
+	"config": {
+		"issuer_url": "http://www.okta.com/exkbhqj29iGxT7GwT0h7",
+		"sso_target_url": "https://dev-abc123.oktapreview.com/app/myapp/exkbhqj29iGxT7GwT0h7/sso/saml",
+		"attributes": ["email", "group"],
+		"email_attribute_name": "",
+		"sign_request": false,
+		"idp_public_certs": [
+			"MIIDpDCCAoygAwIBAgIGAV2ka+55MA0GCSqGSIb3DQEBCwUAMIGSMQswCQYDVQQGEwJVUzETMBEG\nA1UEC.....GF/Q2/MHadws97cZg\nuTnQyuOqPuHbnN83d/2l1NSYKCbHt24o"
+		]
+	},
+	"type": "saml",
+	"name": "okta saml example"
 }
 ```

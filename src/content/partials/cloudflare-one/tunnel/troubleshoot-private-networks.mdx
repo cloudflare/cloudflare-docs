@@ -1,9 +1,8 @@
 ---
 {}
-
 ---
 
-import { GlossaryTooltip, TabItem, Tabs } from "~/components"
+import { GlossaryTooltip, TabItem, Tabs } from "~/components";
 
 Follow this troubleshooting procedure when end users running Cloudflare WARP have issues connecting to a private network behind Cloudflare Tunnel.
 
@@ -23,9 +22,9 @@ If WARP is stuck in the `Disconnected` state or frequently changes between `Conn
 
 This step is only needed if users access your application via a private hostname (for example, `wiki.internal.com`).
 
-* If you are using [custom resolver policies](/cloudflare-one/policies/gateway/resolver-policies/) to handle private DNS, go to your Gateway DNS logs (**Logs** > **Gateway** > **DNS**) and search for DNS queries to the hostname.
+- If you are using [custom resolver policies](/cloudflare-one/policies/gateway/resolver-policies/) to handle private DNS, go to your Gateway DNS logs (**Logs** > **Gateway** > **DNS**) and search for DNS queries to the hostname.
 
-* If you are using [Local Domain Fallback](/cloudflare-one/connections/connect-devices/warp/configure-warp/route-traffic/local-domains/) to handle private DNS, go to your Gateway Network logs (**Logs** > **Gateway** > **Network**) and search for port `53` traffic to your DNS server IP.
+- If you are using [Local Domain Fallback](/cloudflare-one/connections/connect-devices/warp/configure-warp/route-traffic/local-domains/) to handle private DNS, go to your Gateway Network logs (**Logs** > **Gateway** > **Network**) and search for port `53` traffic to your DNS server IP.
 
 If there are no relevant Gateway logs, it means that WARP was unable to forward the query to your private DNS server. Check your resolver policies or Local Domain Fallback configuration and refer to [How WARP handles DNS requests](/cloudflare-one/connections/connect-devices/warp/configure-warp/route-traffic/#how-the-warp-client-handles-dns-requests).
 
@@ -41,9 +40,9 @@ To check if a Gateway block event occurred:
 
 1. Go to **Logs** > **Gateway** and select the **DNS**, **Network**, or **HTTP** tab.
 2. Apply the following filters:
-   * **Email**: User's email address
-   * **Event**: *Blocked*
-   * **Date Time Range**: Time period when the user accessed the application
+   - **Email**: User's email address
+   - **Event**: _Blocked_
+   - **Date Time Range**: Time period when the user accessed the application
 
 ## 5. Is the user matching the correct Gateway policy?
 
@@ -52,16 +51,16 @@ Determine whether the user is matching any policy, or if they are matching a pol
 1. To determine the actual policy that was applied:
    1. Go to **Logs** > **Gateway** and select the **DNS**, **Network**, or **HTTP** tab.
    2. Apply the following filters:
-      * **Email**: User's email address
-      * **Date Time Range**: Time period when the user accessed the application
+      - **Email**: User's email address
+      - **Date Time Range**: Time period when the user accessed the application
    3. In the search box, filter by the destination IP or FQDN.
    4. In the results, select a log and note its **Policy Name** value.
 2. Go to **Gateway** > **Firewall Policies** and compare the [order of enforcement](/cloudflare-one/policies/gateway/order-of-enforcement/) of the matched policy versus the expected policy.
 3. Compare the Gateway log values with the expected policy criteria.
 
-   * If the mismatched value is related to identity, [check the user registry](/cloudflare-one/insights/logs/users/) and verify the values that are passed to Gateway from your IdP. Cloudflare updates the registry when the user enrolls in the WARP client. If the user's identity is outdated, ask the user to re-authenticate WARP (**Preferences** > **Account** > **Re-Authenticate Session**).
+   - If the mismatched value is related to identity, [check the user registry](/cloudflare-one/insights/logs/users/) and verify the values that are passed to Gateway from your IdP. Cloudflare updates the registry when the user enrolls in the WARP client. If the user's identity is outdated, ask the user to re-authenticate WARP (**Preferences** > **Account** > **Re-Authenticate Session**).
 
-   * If the mismatched value is related to device posture, [view posture check results](/cloudflare-one/identity/devices/#2-verify-device-posture-checks) for the user's device. Verify that the device passes the posture checks configured in the policy.
+   - If the mismatched value is related to device posture, [view posture check results](/cloudflare-one/identity/devices/#2-verify-device-posture-checks) for the user's device. Verify that the device passes the posture checks configured in the policy.
 
 ## 6. Are the correct Gateway proxy settings enabled?
 
@@ -75,17 +74,17 @@ Under **Settings** > **Network**, ensure that **Proxy** is enabled for TCP, UDP,
 
 Verify that you can connect to the application directly from the `cloudflared` host machine:
 
-<Tabs> <TabItem label="macos and linux">
+<Tabs> <TabItem label="macOS and Linux">
 
 Open Terminal and run the following command:
 
 ```sh
-$ telnet test.example.com 443
+telnet test.example.com 443
 ```
 
 If `telnet` fails to open the connection, check your infrastructure for firewalls, load balancers, or other network devices that may be interfering with the connection between `cloudflared` and the application server.
 
-</TabItem> <TabItem label="windows">
+</TabItem> <TabItem label="Windows">
 
 Open PowerShell and run the following command:
 
@@ -123,6 +122,6 @@ To troubleshoot TLS inspection:
 
    To work around the issue:
 
-   * **Option 1:** Create a permanent [`Do Not Inspect` HTTP policy](/cloudflare-one/policies/gateway/http-policies/#do-not-inspect) for this application.
-   * **Option 2:** Customers who use their [own certificate infrastructure](/cloudflare-one/connections/connect-devices/warp/user-side-certificates/custom-certificate/) for inspection can opt to create an [Allow *Pass Through* policy](/cloudflare-one/policies/gateway/http-policies/#untrusted-certificates) which enables our proxy to accept the TLS negotiation from your application. This will allow requests to flow correctly without the need for a `Do Not Inspect` policy.
-   * **Option 3:** If your application uses `HTTPS` or other common protocols, you can add a [public hostname route](/cloudflare-one/connections/connect-networks/routing-to-tunnel/) to your Cloudflare Tunnel and set [noTLSVerify](/cloudflare-one/connections/connect-networks/configure-tunnels/origin-configuration/#notlsverify) to `true`. This will allow `cloudflared` to trust your self-signed certificate.
+   - **Option 1:** Create a permanent [`Do Not Inspect` HTTP policy](/cloudflare-one/policies/gateway/http-policies/#do-not-inspect) for this application.
+   - **Option 2:** Customers who use their [own certificate infrastructure](/cloudflare-one/connections/connect-devices/warp/user-side-certificates/custom-certificate/) for inspection can opt to create an [Allow _Pass Through_ policy](/cloudflare-one/policies/gateway/http-policies/#untrusted-certificates) which enables our proxy to accept the TLS negotiation from your application. This will allow requests to flow correctly without the need for a `Do Not Inspect` policy.
+   - **Option 3:** If your application uses `HTTPS` or other common protocols, you can add a [public hostname route](/cloudflare-one/connections/connect-networks/routing-to-tunnel/) to your Cloudflare Tunnel and set [noTLSVerify](/cloudflare-one/connections/connect-networks/configure-tunnels/origin-configuration/#notlsverify) to `true`. This will allow `cloudflared` to trust your self-signed certificate.

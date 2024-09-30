@@ -1,7 +1,6 @@
 ---
 pcx_content_type: how-to
 title: Preview Local Projects with Cloudflare Tunnel
-
 ---
 
 [Cloudflare Tunnel](/cloudflare-one/connections/connect-networks/) runs a lightweight daemon (`cloudflared`) in your infrastructure that establishes outbound connections (Tunnels) between your origin web server and the Cloudflare global network. In practical terms, you can use Cloudflare Tunnel to allow remote access to services running on your local machine. It is an alternative to popular tools like [Ngrok](https://ngrok.com), and provides free, long-running tunnels via the [TryCloudflare](/cloudflare-one/connections/connect-networks/do-more-with-tunnels/trycloudflare/) service.
@@ -15,7 +14,10 @@ Cloudflare Tunnel can be installed on Windows, Linux, and macOS. To learn about 
 Confirm that `cloudflared` is installed correctly by running `cloudflared --version` in your command line:
 
 ```sh
-$ cloudflared --version
+cloudflared --version
+```
+
+```sh output
 cloudflared version 2021.5.9 (built 2021-05-21-1541 UTC)
 ```
 
@@ -28,7 +30,10 @@ The easiest way to get up and running with Cloudflare Tunnel is to have an appli
 With a local development server running, a new Cloudflare Tunnel can be instantiated by running `cloudflared tunnel` in a new command line window, passing in the `--url` flag with your `localhost` URL and port. `cloudflared` will output logs to your command line, including a banner with a tunnel URL:
 
 ```sh
-$ cloudflared tunnel --url http://localhost:3000
+cloudflared tunnel --url http://localhost:3000
+```
+
+```sh output
 2021-07-15T20:11:29Z INF Cannot determine default configuration path. No file [config.yml config.yaml] in [~/.cloudflared ~/.cloudflare-warp ~/cloudflare-warp /etc/cloudflared /usr/local/etc/cloudflared]
 2021-07-15T20:11:29Z INF Version 2021.5.9
 2021-07-15T20:11:29Z INF GOOS: linux, GOVersion: devel +11087322f8 Fri Nov 13 03:04:52 2020 +0100, GoArch: amd64

@@ -40,7 +40,7 @@ To retrieve those values:
 7. Go to **Host setup and management** > **Sensor downloads** and copy your Customer ID.
 8. Get an auth token from your CrowdStrike API endpoint:
 
-   ```curl
+   ```bash
    curl -X POST "<BASE_URL>/oauth2/token" \
        -H "accept: application/json" \
        -H "Content-Type: application/x-www-form-urlencoded" \
@@ -78,4 +78,4 @@ Device posture data is gathered from the [CrowdStrike Zero Trust Assessment APIs
 | Sensor config | Sensor signal score                                                                               | `1` to `100`                                                                                  |
 | Version       | ZTA score version                                                                                 | `2.1.0`                                                                                       |
 | State         | Current online status of the device                                                               | *Online*, *Offline*, or *Unknown*                                                             |
-| Last seen     | Elapsed time since the device was last seen. Only returned if its state is `online` or `unknown`. | Less than 1 hour, 3 hours, 6 hours, 12 hours, 24 hours, 7 days, 30 days, or more than 30 days |
+| Last seen     | Elapsed time since the device was last seen. Only returned if its state is `online` or `unknown`. | In the last 1 hour, 3 hours, 6 hours, 12 hours, 24 hours, 7 days, 30 days, or more than 30 days |

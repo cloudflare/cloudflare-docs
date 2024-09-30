@@ -3,10 +3,9 @@ updated: 2021-01-12
 category: 🌐 Connections
 pcx_content_type: tutorial
 title: Migrate to Named Tunnels with Load Balancer
-
 ---
 
-import { Example, GlossaryTooltip } from "~/components"
+import { Example, GlossaryTooltip } from "~/components";
 
 Cloudflare Tunnel is available in two deployment modes: "Legacy" Tunnel and "Named" Tunnel. [Named Tunnel](https://blog.cloudflare.com/argo-tunnels-that-live-forever/) mode improves maintainability and stability by distinguishing between routing and configuration.
 
@@ -16,8 +15,8 @@ If you are using Legacy Tunnel today you can migrate to Named Tunnel deployment 
 
 **This tutorial covers how to:**
 
-* Migrate a Legacy Tunnel deployment to Named Tunnel model
-* Use Cloudflare Load Balancer to perform a zero downtime migration
+- Migrate a Legacy Tunnel deployment to Named Tunnel model
+- Use Cloudflare Load Balancer to perform a zero downtime migration
 
 **Time to complete:**
 
@@ -25,7 +24,7 @@ If you are using Legacy Tunnel today you can migrate to Named Tunnel deployment 
 
 See additional documentation for working with [Kubernetes](/cloudflare-one/connections/connect-networks/deploy-tunnels/deployment-guides/kubernetes/).
 
-***
+---
 
 ## Legacy Tunnel with Cloudflare Load Balancer
 
@@ -38,16 +37,16 @@ In both modes, the first step is to create a load balancer and endpoint pool.
 2. Select **Create Load Balancer**.
 
 3. On the **Hostname** page:
-   * Enter a **Hostname**, which is the DNS name at which the load balancer is available. For more details on record priority, refer to [DNS records for load balancing](/load-balancing/load-balancers/dns-records/).
-   * Toggle the orange cloud icon to update the [proxy mode](/load-balancing/understand-basics/proxy-modes/), which affects how traffic is routed and which IP addresses are advertised.
-   * If you want [session-based load balancing](/load-balancing/understand-basics/session-affinity/), toggle the **Session Affinity** switch.
+   - Enter a **Hostname**, which is the DNS name at which the load balancer is available. For more details on record priority, refer to [DNS records for load balancing](/load-balancing/load-balancers/dns-records/).
+   - Toggle the orange cloud icon to update the [proxy mode](/load-balancing/understand-basics/proxy-modes/), which affects how traffic is routed and which IP addresses are advertised.
+   - If you want [session-based load balancing](/load-balancing/understand-basics/session-affinity/), toggle the **Session Affinity** switch.
 
 Next, [create an endpoint pool](/load-balancing/pools/create-pool/#create-a-pool) for the load balancer. A pool is a group of <GlossaryTooltip term="endpoint">endpoints</GlossaryTooltip> or origins, whether Cloudflare Tunnel connections or traditional IP addresses, used by the load balancer.
 
 In Legacy mode, adding a new instance of `cloudflared` into a Load Balancer pool must be done from the command line tool itself. The `cloudflared` agent will start and create 4 separate connections, enrolling each of these into a load balancer pool.
 
 ```sh
-$ cloudflared tunnel --hostname app.widgetcorp.tech --url http://localhost:8000 --lb-pool lisbon-data-center
+cloudflared tunnel --hostname app.widgetcorp.tech --url http://localhost:8000 --lb-pool lisbon-data-center
 ```
 
 <Example>
@@ -64,8 +63,8 @@ For this example, the load balancer `app.widgetcorp.tech` would have a pool `lis
 
 However, the Legacy Tunnel mode has some downsides, including:
 
-* You cannot manage these connections from the Cloudflare dashboard.
-* When `cloudflared` restarts, it will attempt to register these connections as new connections which can lead to service disruption.
+- You cannot manage these connections from the Cloudflare dashboard.
+- When `cloudflared` restarts, it will attempt to register these connections as new connections which can lead to service disruption.
 
 The Named Tunnel, documented below, model provides easier management and greater stability.
 
@@ -76,7 +75,7 @@ To migrate to the Named Tunnel model, first [download and authenticate](/cloudfl
 To begin, create a Named Tunnel with the following command.
 
 ```sh
-$ cloudflared tunnel create lisbon-app
+cloudflared tunnel create lisbon-app
 ```
 
 This command will create a Tunnel object in your Cloudflare account that is represented by this instance of `cloudflared`. You can point DNS records or LB records to this connection when you run the Tunnel.
@@ -98,7 +97,7 @@ You can now run the Tunnel. Running the Tunnel will connect `cloudflared` to Clo
 Run the following command, replacing `lisbon-app` with the name of your Tunnel.
 
 ```sh
-$ cloudflared tunnel run lisbon-app
+cloudflared tunnel run lisbon-app
 ```
 
 ## Migrate the Load Balancer configuration

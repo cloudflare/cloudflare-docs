@@ -1,0 +1,46 @@
+---
+pcx_content_type: configuration
+title: Preview URLs
+head: []
+sidebar:
+  badge:
+    text: Beta
+description: Preview URLs allow you to preview new versions of your project without deploying it to production.
+---
+
+import { Render } from "~/components";
+
+Preview URLs allow you to preview new versions of your Worker without deploying it to production.
+
+Every time you create a new [version](/workers/configuration/versions-and-deployments/#versions) of your Worker a unique preview URL is generated. New [versions](/workers/configuration/versions-and-deployments/#versions) of a Worker are created on [`wrangler deploy`](/workers/wrangler/commands/#deploy), [`wrangler versions upload`](/workers/wrangler/commands/#upload) or when you make edits on the Cloudflare dashboard. By default, preview URLs are enabled and available publicly.
+
+Preview URLs can be:
+
+- Integrated into CI/CD pipelines, allowing automatic generation of preview environments for every pull request.
+- Used for collaboration between teams to test code changes in a live environment and verify updates.
+- Used to test new API endpoints, validate data formats, and ensure backward compatibility with existing services.
+
+When testing zone level performance or security featues for a version, we recommended using [version overrides](/workers/configuration/versions-and-deployments/gradual-deployments/#version-overrides) so that your zone's performance and security settings apply.
+
+:::note
+Preview URLs are only available for Worker versions uploaded after 2024-09-25.
+:::
+
+## View preview URLs using wrangler
+
+The [`wrangler versions upload`](/workers/wrangler/commands/#upload) command uploads a new [version](/workers/configuration/versions-and-deployments/#versions) of your Worker and returns a preview URL for each version uploaded.
+
+## View preview URLs on the Workers dashboard
+
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/?to=/:account/workers) and select your project.
+2. Head to the "Deployments" tab find the version you would like to view.
+
+## Making Preview URLs inaccessible
+
+Preview URLs run on your [`workers.dev` subdomain](/workers/configuration/routing/workers-dev/). To make preview URLs inaccessible, you must disable your Workers `workers.dev` subdomain. Learn how to [disable your Workers `workers.dev` subdomain](/workers/configuration/routing/workers-dev/#disabling-workersdev).
+
+## Limitations
+
+- Preview URLs are not generated for Workers that implement a [Durable Object](/durable-objects/).
+- Preview URLs are not currently generated for [Workers for Platforms](/cloudflare-for-platforms/workers-for-platforms/) [user Workers](/cloudflare-for-platforms/workers-for-platforms/reference/how-workers-for-platforms-works/#user-workers). This is a temporary limitation, we are working to remove it.
+- You cannot currently secure `workers.dev` URLs behind [Cloudflare Access](/cloudflare-one/policies/access/). This is a temporary limitation, we are working to remove it.

@@ -1,0 +1,23 @@
+---
+{}
+
+---
+
+import { TabItem, Tabs } from "~/components";
+
+<Tabs> <TabItem label="Wrangler">
+
+```sh
+wrangler r2 bucket create <YOUR_BUCKET_NAME>
+```
+
+</TabItem> <TabItem label="API">
+
+```bash
+ curl https://api.cloudflare.com/client/v4/accounts/{account_id}/r2/buckets \
+--header "Authorization: Bearer <API_TOKEN>" \
+--header "Content-Type: application/json" \
+--data '{"name": "<YOUR_BUCKET_NAME>"}'
+```
+
+</TabItem> </Tabs>

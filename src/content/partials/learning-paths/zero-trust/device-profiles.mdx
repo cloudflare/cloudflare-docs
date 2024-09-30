@@ -1,9 +1,8 @@
 ---
 inputParameters: zeroTrustUseCase;;modeSwitchUseCase
-
 ---
 
-import { Markdown, Render, TabItem, Tabs } from "~/components"
+import { Markdown, Render, TabItem, Tabs } from "~/components";
 
 <Render file="warp/device-profiles-intro" product="cloudflare-one" />
 
@@ -13,7 +12,7 @@ Set your default device profile to be applicable to a majority of your userbase,
 
 To customize the default settings:
 
-<Tabs> <TabItem label="Dashboard">
+<Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
 
 1. Go to **Settings** > **WARP Client**.
 
@@ -24,7 +23,7 @@ To customize the default settings:
    | Setting                              | State                   | Notes                                                                                                                                                                                                                                                                                          |
    | ------------------------------------ | ----------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
    | Captive portal detection             | Enabled                 |                                                                                                                                                                                                                                                                                                |
-   | Mode switch                          | Disabled                | If enabled, users have the option to switch to a DNS-only security mode and lose access to your private network. {props.two}                                                                                                                                                                            |
+   | Mode switch                          | Disabled                | If enabled, users have the option to switch to a DNS-only security mode and lose access to your private network. {props.two}                                                                                                                                                                   |
    | Lock WARP switch                     | Enabled                 | Should be enabled unless users have an explicit reason to disable WARP, such as a conflicting VPN client on the device or other extenuating circumstances. If disabled for concerns about user experience, **Auto Connect** should be enabled and set on a short interval, like 10-15 minutes. |
    | Allow device to leave organization   | Disabled                |                                                                                                                                                                                                                                                                                                |
    | Allow updates                        | Disabled                | Usually disabled on managed devices. If enabled, users who are local administrators on their device can update the WARP client on their own — this can introduce version consistency control issues if WARP versions are centrally managed by IT.                                              |
@@ -34,7 +33,6 @@ To customize the default settings:
    | Local Domain Fallback                |                         | Refer to [Resolve Private DNS](/learning-paths/replace-vpn/configure-device-agent/private-dns/).                                                                                                                                                                                               |
    | Split Tunnels                        | Exclude IPs and domains | Refer to [Define Split Tunnels settings](/learning-paths/replace-vpn/configure-device-agent/split-tunnel-settings/).                                                                                                                                                                           |
    | Directly route Microsoft 365 traffic | Disabled                | Usually disabled to allow inspection of Microsoft 365 traffic.                                                                                                                                                                                                                                 |
-
 
 4. Save the profile.
 

@@ -7,17 +7,16 @@ sidebar:
 head:
   - tag: title
     content: Configure the Worker for JWT Validation
-
 ---
 
 Use a Worker to automatically keep your identity provider’s latest public key in the JWT Validation configuration.
 
 ## Prerequisites
 
-* Find your zone ID. You can locate this ID in your zone overview in the [Cloudflare dashboard](https://dash.cloudflare.com/).
-* Find your identity provider’s JSON Web Key Set (JWKs) URL. Identity providers commonly list it in Open Authorization (OAuth) settings.
-* Create a [Token Validation Configuration](/api-shield/security/jwt-validation/#add-a-token-validation-configuration).
-* [Create a new API token](https://dash.cloudflare.com/profile/api-tokens) with the API Gateway `Write` permission.
+- Find your zone ID. You can locate this ID in your zone overview in the [Cloudflare dashboard](https://dash.cloudflare.com/).
+- Find your identity provider’s JSON Web Key Set (JWKs) URL. Identity providers commonly list it in Open Authorization (OAuth) settings.
+- Create a [Token Validation Configuration](/api-shield/security/jwt-validation/#add-a-token-validation-configuration).
+- [Create a new API token](https://dash.cloudflare.com/profile/api-tokens) with the API Gateway `Write` permission.
 
 ## Process
 
@@ -32,11 +31,14 @@ Find your Identity Provider’s URL and fetch the keys using `curl` and `jq`. Yo
 
 :::note
 
-The keys listed below are for example purposes only and must not be used in your production environment, as they will never match the keys used by your identity provider to sign JWTs. 
+The keys listed below are for example purposes only and must not be used in your production environment, as they will never match the keys used by your identity provider to sign JWTs.
 :::
 
 ```sh title="Query the JWKs endpoint"
-$ curl https://<your-team-name>.cloudflareaccess.com/cdn-cgi/access/certs -s | jq .keys
+curl https://<your-team-name>.cloudflareaccess.com/cdn-cgi/access/certs -s | jq .keys
+```
+
+```sh output
 [
   {
     "kid": "ca96ae653935dbfb49b4e19de600cc5f9d5c63e3ac2dbee406ed4bf0ae100cce",
@@ -67,7 +69,7 @@ $ curl https://<your-team-name>.cloudflareaccess.com/cdn-cgi/access/certs -s | j
 
 :::note
 
-Identity provider URLs can typically be accessed at a known URL specific to your deployment. If you are unsure of the URL, contact your identity provider. 
+Identity provider URLs can typically be accessed at a known URL specific to your deployment. If you are unsure of the URL, contact your identity provider.
 :::
 
 6. If your JWKs URL returns the keys in any JSON object other than `keys`, update the `fetchCredentials()` function to return only the key data.
@@ -103,8 +105,7 @@ Identity provider URLs can typically be accessed at a known URL specific to your
 
 var zone_id = "760549bc17c54280d6e6ae256c3dd6ae";
 var token_config_id = "91007e72-8f17-46b7-a223-5e57bd333b78";
-var url = "https://cfdata.cloudflareaccess.com/cdn-cgi/access/certs" // JWKs
-
+var url = "https://cfdata.cloudflareaccess.com/cdn-cgi/access/certs"; // JWKs
 
 /**
  * fetchCredentials fetches new Token Configuration credentials using the URL defined above.
@@ -115,14 +116,15 @@ var url = "https://cfdata.cloudflareaccess.com/cdn-cgi/access/certs" // JWKs
  * @returns {string} credentials
  */
 async function fetchCredentials() {
-    var requestOptions = {
-        method: "GET",
-        redirect: "follow"
-    };
-    const keys = await fetch(url, requestOptions).then((e) => e.json()).then((e) => e.keys);
-    return JSON.stringify({ keys: keys })
+	var requestOptions = {
+		method: "GET",
+		redirect: "follow",
+	};
+	const keys = await fetch(url, requestOptions)
+		.then((e) => e.json())
+		.then((e) => e.keys);
+	return JSON.stringify({ keys: keys });
 }
-
 
 /**
  * updateCredentials updates Token Configuration credentials using the Cloudflare API.
@@ -132,45 +134,46 @@ async function fetchCredentials() {
  * @returns {string} Cloudflare API response from the update request
  */
 async function updateCredentials(bearer) {
-    // Cloudflare API endpoint for credentials update
-    const url = `https://api.cloudflare.com/client/v4/zones/${zone_id}/api_gateway/token_validation/${token_config_id}/credentials`
-    const init = {
-        body: (await fetchCredentials()),
-        method: "PUT",
-        headers: {
-            "Authorization": `Bearer ${bearer}`,
-            "content-type": "application/json;charset=UTF-8",
-        },
-    };
-    const response = await fetch(url, init);
-    return response.text();
+	// Cloudflare API endpoint for credentials update
+	const url = `https://api.cloudflare.com/client/v4/zones/${zone_id}/api_gateway/token_validation/${token_config_id}/credentials`;
+	const init = {
+		body: await fetchCredentials(),
+		method: "PUT",
+		headers: {
+			Authorization: `Bearer ${bearer}`,
+			"content-type": "application/json;charset=UTF-8",
+		},
+	};
+	const response = await fetch(url, init);
+	return response.text();
 }
-
 
 // Export a default object containing event handlers
 export default {
-    /**
-     * fetch handles requests made directly to the Worker.
-     *
-     */
-    async fetch(request, env, ctx) {
-        let responseBody = ""
-        if (request.method === "GET") {
-            responseBody = await fetchCredentials();
-        } else if (request.method === "POST") {
-            responseBody = await updateCredentials(env.CF_API_TOKEN);
-        }
-        return new Response(responseBody, { headers: { "content-type": "application/json;charset=UTF-8" } });
-    },
+	/**
+	 * fetch handles requests made directly to the Worker.
+	 *
+	 */
+	async fetch(request, env, ctx) {
+		let responseBody = "";
+		if (request.method === "GET") {
+			responseBody = await fetchCredentials();
+		} else if (request.method === "POST") {
+			responseBody = await updateCredentials(env.CF_API_TOKEN);
+		}
+		return new Response(responseBody, {
+			headers: { "content-type": "application/json;charset=UTF-8" },
+		});
+	},
 
-    /**
-     * scheduled is the handler for cron triggers.
-     *
-     * For details, refer to https://developers.cloudflare.com/workers/configuration/cron-triggers/
-     *
-     */
-    async scheduled(request, env, ctx) {
-        ctx.waitUntil(updateCredentials(env.CF_API_TOKEN));
-    }
+	/**
+	 * scheduled is the handler for cron triggers.
+	 *
+	 * For details, refer to https://developers.cloudflare.com/workers/configuration/cron-triggers/
+	 *
+	 */
+	async scheduled(request, env, ctx) {
+		ctx.waitUntil(updateCredentials(env.CF_API_TOKEN));
+	},
 };
 ```

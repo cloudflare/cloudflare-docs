@@ -6,18 +6,17 @@ sidebar:
 head:
   - tag: title
     content: Create a custom error response via API
-
 ---
 
-Configure custom error responses as [rules](/ruleset-engine/about/rules/) belonging to the `http_custom_errors` phase. Use the [Rulesets API](/ruleset-engine/rulesets-api/) to create custom error responses via API.
+Configure Custom Error Responses as [rules](/ruleset-engine/about/rules/) belonging to the `http_custom_errors` phase. Use the [Rulesets API](/ruleset-engine/rulesets-api/) to create Custom Error Responses via API.
 
 ## Basic rule settings
 
 When creating a custom error response via API, make sure you:
 
-* Set the rule action to `serve_error`.
-* Define the [parameters](/rules/custom-error-responses/parameters/) in the `action_parameters` field according to response type.
-* Deploy the custom error response rule to the `http_custom_errors` phase at the zone level.
+- Set the rule action to `serve_error`.
+- Define the [parameters](/rules/custom-error-responses/parameters/) in the `action_parameters` field according to response type.
+- Deploy the custom error response rule to the `http_custom_errors` phase at the zone level.
 
 The first rule in the `http_custom_errors` phase ruleset that matches will be applied. No other rules in the ruleset will be matched or applied.
 
@@ -34,9 +33,9 @@ Follow this workflow to create a custom error response rule for a given zone via
 
 The examples in this section use the following fields in their rule expressions:
 
-* [`http.response.code`](/ruleset-engine/rules-language/fields/http-request-response/#httpresponsecode): Represents the HTTP status code returned to the client, either set by a Cloudflare product or returned by the origin server. Use this field to customize the error response for error codes returned by the origin server or by a Cloudflare product such as a Worker.
+- [`http.response.code`](/ruleset-engine/rules-language/fields/http-request-response/#httpresponsecode): Represents the HTTP status code returned to the client, either set by a Cloudflare product or returned by the origin server. Use this field to customize the error response for error codes returned by the origin server or by a Cloudflare product such as a Worker.
 
-* [`cf.response.1xxx_code`](/ruleset-engine/rules-language/fields/#cf-response-1xxx_code): Contains the specific error code for Cloudflare-generated errors. This field will only work for Cloudflare-generated errors such as [52x](/support/troubleshooting/cloudflare-errors/troubleshooting-cloudflare-5xx-errors/) and [1xxx](/support/troubleshooting/cloudflare-errors/troubleshooting-cloudflare-1xxx-errors/).
+- [`cf.response.1xxx_code`](/ruleset-engine/rules-language/fields/http-request-response/#cfresponse1xxx_code): Contains the specific error code for Cloudflare-generated errors. This field will only work for Cloudflare-generated errors such as [52x](/support/troubleshooting/cloudflare-errors/troubleshooting-cloudflare-5xx-errors/) and [1xxx](/support/troubleshooting/cloudflare-errors/troubleshooting-cloudflare-1xxx-errors/).
 
 ### Custom JSON response for all 5xx errors
 
@@ -118,10 +117,10 @@ https://api.cloudflare.com/client/v4/zones/{zone_id}/rulesets/phases/http_custom
 
 This `PUT` request, corresponding to the [Update a zone entry point ruleset](/api/operations/updateZoneEntrypointRuleset) operation, replaces any existing rules in the `http_custom_errors` phase entry point ruleset.
 
-***
+---
 
 ## ​​Required API token permissions
 
-The API token used in API requests to manage custom error responses must have at least the following permission:
+The API token used in API requests to manage Custom Error Responses must have at least the following permission:
 
-* *Custom Error Rules* > *Edit*
+- _Custom Error Rules_ > _Edit_

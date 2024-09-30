@@ -1,0 +1,41 @@
+---
+pcx_content_type: example
+summary: Create a redirect rule to forward HTTPS requests from the root (also known as the “apex” or “naked” domain) to the WWW subdomain.
+products:
+  - Redirect Rules
+title: Redirect from root to WWW
+description: Create a redirect rule to forward HTTPS requests from the root (also known as the “apex” or “naked” domain) to the WWW subdomain.
+---
+
+import { Example } from "~/components";
+
+This example creates a redirect rule that forwards HTTPS requests from the root domain (`example.com`) to the WWW subdomain (`www.example.com`), while retaining the original path and query string.
+
+<Example>
+
+**When incoming requests match**
+
+- **Wildcard pattern**
+  - **Request URL**: `https://example.com/*`
+
+**Then**
+
+- **Target URL**: `https://www.example.com/${1}`
+- **Status code**: _301_
+- **Preserve query string**: Enabled
+
+</Example>
+
+This rule ensures that only HTTPS requests from the root domain are redirected to the WWW subdomain, leaving other requests (such as HTTP or requests to other subdomains) unchanged.
+
+For example, the redirect rule would perform the following redirects:
+
+| Request URL                                   | Target URL                                        | Status code |
+| --------------------------------------------- | ------------------------------------------------- | ----------- |
+| `https://example.com/products/`               | `https://www.example.com/products/`               | `301`       |
+| `https://store.example.com/products/`         | (unchanged)                                       | n/a         |
+| `https://example.com/admin/?logged_out=true`  | `https://www.example.com/admin/?logged_out=true`  | `301`       |
+| `http://example.com/?all_items=true`          | (unchanged)                                       | n/a         |
+| `http://www.example.com/admin/`               | (unchanged)                                       | n/a         |
+
+Make sure to replace `example.com` with your actual hostname before deploying your rule.

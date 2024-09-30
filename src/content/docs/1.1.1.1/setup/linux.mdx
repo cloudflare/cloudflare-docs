@@ -8,10 +8,9 @@ head:
     content: Set up 1.1.1.1 on Linux
 description: Learn how to set up 1.1.1.1 as your DNS resolver on a Linux system.
 slug: 1.1.1.1/setup/linux
-
 ---
 
-import { Render } from "~/components"
+import { Render } from "~/components";
 
 Before you begin, take note of any DNS addresses you might have set up, and save them in a safe place in case you need to use them later.
 
@@ -28,7 +27,7 @@ Usually, `/etc/resolv.conf` is where you can configure the resolver IPs that you
 In that case, you can use the following one-line command to specify `1.1.1.1` as your DNS resolver and `1.0.0.1` as backup:
 
 ```sh
-$ echo -e "nameserver 1.1.1.1\nnameserver 1.0.0.1" | sudo tee /etc/resolv.conf
+echo -e "nameserver 1.1.1.1\nnameserver 1.0.0.1" | sudo tee /etc/resolv.conf
 ```
 
 :::caution
@@ -45,7 +44,7 @@ If you use `systemd-resolved` utility and the resolver IPs configuration is in `
 1. Run the following command, replacing `<EDITOR>` with your preferred editor.
 
 ```sh
-$ sudo <EDITOR> /etc/systemd/resolved.conf
+sudo <EDITOR> /etc/systemd/resolved.conf
 ```
 
 2. In the editor, add or edit the following lines:
@@ -71,10 +70,10 @@ DNS=1.1.1.1
 
 1. Go to **System Settings** > **Wi-Fi & Internet** > **Wi-Fi & Networking**. (or **Connections**, if on Plasma 5)
 2. Select the connection you want to configure - like your current connected network.
-3. On the **IPv4** tab, select the **Method** drop-down menu > *Automatic (Only addresses)*.
+3. On the **IPv4** tab, select the **Method** drop-down menu > _Automatic (Only addresses)_.
 4. Select the text box next to **DNS servers**.
 5. <Render file="all-ipv4" />
-6. On the **IPv6** tab, select the **Method** drop-down menu > *Automatic (Only addresses)*.
+6. On the **IPv6** tab, select the **Method** drop-down menu > _Automatic (Only addresses)_.
 7. Select the text box next to **DNS servers**.
 8. <Render file="all-ipv6" />
 9. Select **Apply**.

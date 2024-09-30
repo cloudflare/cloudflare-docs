@@ -1,372 +1,1225 @@
 ---
-title: Deploy a Hello World app with Pulumi
+title: Deploy a Worker
 pcx_content_type: tutorial
 products:
   - Workers
-updated: 2024-01-08
-content_type: 📝 Tutorial
+updated: 2024-09-13
 difficulty: Beginner
 languages:
+  - JavaScript
   - TypeScript
+  - Python
+  - Go
+  - Java
+  - .NET
+  - YAML
 sidebar:
-  order: 2
+  order: 3
 head:
   - tag: title
-    content: Deploy a Hello World app
-
+    content: Deploy a Worker
 ---
 
+import { TabItem, Tabs } from "~/components";
 
-
-In this tutorial, you will go through step-by-step instructions to deploy a Hello World web application using Cloudflare Workers and Pulumi Infrastructure as Code (IaC) so that you can become familiar with the resource management lifecycle. In particular, you will create a Worker, a Route, and a DNS Record to access the application before cleaning up all the resources.
-
-![alt\_text](~/assets/images/pulumi/hello-world-tutorial/sn2.png "Running Cloudflare Workers application deployed with Pulumi")
+In this tutorial, you will follow step-by-step instructions to deploy a Hello World application using Cloudflare Workers and Pulumi infrastructure as code (IaC) to familiarize yourself with the resource management lifecycle. In particular, you will create a Worker, a Route, and a DNS Record to access the application before cleaning up all the resources.
 
 :::note
-
-
 You will provision resources that qualify under free tier offerings for both Pulumi Cloud and Cloudflare.
-
-
 :::
 
-
-
-
+## Before you begin
 
 Ensure you have:
+ 
+- A Cloudflare account and API Token with permission to edit the resources in this tutorial. If you need to, sign up for a [Cloudflare account](https://www.cloudflare.com/sign-up) before continuing. Your token must have the following:
+  - `Account-Workers Scripts-Edit` permission
+  - `Zone-Workers Route-Edit` permission
+  - `Zone-DNS-Edit` permission
+- A Pulumi Cloud account. You can sign up for an [always-free individual tier](https://app.pulumi.com/signup).
+- The [Pulumi CLI](/pulumi/installing/) is installed on your machine.
+- A [Pulumi-supported programming language](https://github.com/pulumi/pulumi?tab=readme-ov-file#languages) configured. (TypeScript, JavaScript, Python, Go, .NET, Java, or use YAML)
+- A Cloudflare-managed domain. Complete the [Add a site tutorial](/pulumi/tutorial/add-site/) to bring your existing domain under Cloudflare.
 
-* A Cloudflare account and API Token with permission to edit the resources in this tutorial. If you need to, sign up for a [Cloudflare account](https://dash.cloudflare.com/sign-up/workers-and-pages) before continuing.
-* A Pulumi Cloud account. You can sign up for an [always-free, individual tier](https://app.pulumi.com/signup).
-* [npm](https://docs.npmjs.com/downloading-and-installing-node-js-and-npm) and the [Pulumi CLI](/pulumi/installing/) installed on your machine.
-* A Cloudflare Zone. Complete the [Add a Site tutorial](/pulumi/tutorial/add-site/) to create one.
+## 1. Initialize your project
 
-
-
-:::note[Link to the full solution]
-
-
-You can find the complete solution of this tutorial under [this Pulumi repo and branch](https://github.com/pulumi/tutorials/tree/cloudflare-typescript-hello-world-end). To deploy the final version, run the following:
-
-```sh
-$ mkdir serverless-cloudflare && cd serverless-cloudflare
-$ pulumi new https://github.com/pulumi/tutorials/tree/cloudflare-typescript-hello-world-end
-$ npm install
-$ pulumi up --yes
-```
-
-
-:::
-
-
+A Pulumi project is a collection of files in a dedicated folder that describes the infrastructure you want to create. The Pulumi project folder is identified by the required `Pulumi.yaml` file. You will use the Pulumi CLI to create and configure a new project.
 
 ### a. Create a directory
 
-You'll use a new and empty directory for this tutorial.
+Use a new and empty directory for this tutorial.
 
 ```sh
-$ mkdir serverless-cloudflare
-$ cd serverless-cloudflare
+mkdir serverless-cloudflare
+cd serverless-cloudflare
 ```
 
-### b. Login
+### b. Login to Pulumi Cloud
+
+[Pulumi Cloud](https://www.pulumi.com/product/pulumi-cloud/) is a hosted service that provides a secure and scalable platform for managing your infrastructure as code. You will use it to store your Pulumi backend configurations.
 
 At the prompt, press Enter to log into your Pulumi Cloud account via the browser. Alternatively, you may provide a [Pulumi Cloud access token](https://www.pulumi.com/docs/pulumi-cloud/access-management/access-tokens/).
 
 ```sh
-$ pulumi login
+pulumi login
 ```
 
-### c. Create a program
+### c. Create a new program
 
-:::note
+A Pulumi program is code written in a [supported programming language](https://github.com/pulumi/pulumi?tab=readme-ov-file#languages) that defines infrastructure resources.
 
+To create a program, select your language of choice and run the `pulumi` command:
 
-A Pulumi program is code written in a [supported programming language](https://www.pulumi.com/docs/languages-sdks/) that defines infrastructure resources. We'll use TypeScript.
-
-
-:::
-
-To create a program, run:
+<Tabs> <TabItem label="JavaScript" icon="seti:javascript">
 
 ```sh
-$ pulumi new https://github.com/pulumi/tutorials/tree/cloudflare-typescript-hello-world-begin
+pulumi new javascript --name serverless-cloudflare --yes
+# wait a few seconds while the project is initialized
 ```
 
-Complete the prompts with defaults where available; otherwise, provide the requested information. You will need:
+</TabItem> <TabItem label="TypeScript" icon="seti:typescript">
 
-* Your Cloudflare [account ID](/fundamentals/setup/find-account-and-zone-ids/).
-* Your Cloudflare [Zone ID](/fundamentals/setup/find-account-and-zone-ids/).
-* A registered domain. For instance, `example.com`
-* A valid Cloudflare API [token](/fundamentals/api/get-started/create-token/).
+```sh
+pulumi new typescript --name serverless-cloudflare --yes
+# wait a few seconds while the project is initialized
+```
+
+</TabItem> <TabItem label="Python" icon="seti:python">
+
+```sh
+pulumi new python --name serverless-cloudflare --yes
+# wait a few seconds while the project is initialized
+```
+
+</TabItem> <TabItem label="go">
+
+```sh
+pulumi new go --name serverless-cloudflare --yes
+# wait a few seconds while the project is initialized
+```
+
+</TabItem> <TabItem label="Java">
+
+```sh
+pulumi new java --name serverless-cloudflare --yes
+# wait a few seconds while the project is initialized
+```
+
+</TabItem> <TabItem label=".NET">
+
+```sh
+pulumi new csharp --name serverless-cloudflare --yes
+# wait a few seconds while the project is initialized
+```
+
+</TabItem> <TabItem label="YAML">
+
+```sh
+pulumi new yaml --name serverless-cloudflare --yes
+```
+
+</TabItem> </Tabs>
 
 ### d. Create a stack
 
-:::note
+A Pulumi [stack](https://www.pulumi.com/docs/concepts/stack/) is an instance of a Pulumi program. Stacks are independently configurable and may represent different environments (development, staging, production) or feature branches. For this tutorial, you'll use the `dev` stack.
 
-
-A Pulumi stack is an instance of a Pulumi program. Stacks are independently configurable and may represent different environments (development, staging, production) or feature branches.
-
-
-:::
-
-To create a stack, run:
+To instantiate your `dev` stack, run:
 
 ```sh
-$ pulumi up --yes
+pulumi up --yes
+# wait a few seconds for the stack to be instantiated.
 ```
 
-After the above command completes, review the value of `myFirstOutput` for correctness.
+You have not defined any resources at this point, so you'll have an empty stack.
 
-### e. (Optional) Review the stack
+### e. Save your application settings
 
-From the output above, follow **your** *View in Browser* link to get familiar with the Pulumi stack.
+In this step, you will store your application settings in a Pulumi [ESC Environment](https://www.pulumi.com/docs/esc/environments/), a YAML file containing configurations and secrets. These can be accessed in several ways, including a Pulumi program. All ESC Environments securely reside in your Pulumi Cloud account and can be fully managed via the Pulumi CLI. For this tutorial, you will store the following values:
 
-:::note
+- Your Cloudflare [account ID](/fundamentals/setup/find-account-and-zone-ids/).
+- A valid Cloudflare API [token](/fundamentals/api/get-started/create-token/).
+- A domain. For instance, `example.com`.
 
+```sh
+# Give your new ESC Environment a name
+E=hello-world/dev-env
 
-You have not yet created any Cloudflare resources but have defined a variable, `myFirstOutput`, and the Pulumi stack.
-
-
-:::
-
-Example:
-
-```bash
-View in Browser (Ctrl+O):
-https://app.pulumi.com/diana-pulumi-corp/serverless-cloudflare/dev/updates/1
+# Initialize the new ESC Environment
+pulumi config env init --env $E --yes
 ```
 
-![alt\_text](~/assets/images/pulumi/hello-world-tutorial/sn3.png "Pulumi Cloud stack")
+```sh output
+Creating environment hello-world/dev-env for stack dev...
+```
 
+```sh
+# Replace abc123 with your Cloudflare account ID
+pulumi env set $E --plaintext pulumiConfig.accountId abc123
 
+# Replace API_TOKEN with your Cloudflare API token
+pulumi env set $E --secret pulumiConfig.cloudflare:apiToken API_TOKEN
 
+# Replace example.com with your domain
+pulumi env set $E --plaintext pulumiConfig.domain example.com
+```
 
+### f. Install the Cloudflare package
 
-You will now add a Cloudflare Worker to the Pulumi stack, `dev`.
+You need to install the Cloudflare package for your language of choice in order to define Cloudflare resources in your Pulumi program.
 
-### a. Add Cloudflare Worker to index.ts
+Install the Cloudflare package by running the following command:
 
-Replace the contents of your `index.ts` file with the following:
+<Tabs> <TabItem label="JavaScript" icon="seti:javascript">
+
+```sh
+npm install @pulumi/cloudflare
+```
+
+```sh output
+added 1 package ...
+```
+
+</TabItem> <TabItem label="TypeScript" icon="seti:typescript">
+
+```sh
+npm install @pulumi/cloudflare
+```
+
+```sh output
+added 1 package ...
+```
+
+</TabItem> <TabItem label="Python" icon="seti:python">
+
+```sh
+echo "pulumi_cloudflare>=5.38,<6.0.0" >> requirements.txt
+source venv/bin/activate
+pip install -r requirements.txt
+```
+
+```sh output
+...Collecting pulumi-cloudflare...
+```
+
+</TabItem> <TabItem label="go">
+
+```sh
+go get github.com/pulumi/pulumi-cloudflare/sdk/v3/go/cloudflare
+```
+
+```sh output
+go: downloading github.com/pulumi/pulumi-cloudflare ...
+```
+
+</TabItem> <TabItem label="Java">
+
+Below are Apache Maven instructions. For other Java project managers such as Gradle, see the official [Maven repository](https://central.sonatype.com/artifact/com.pulumi/cloudflare/overview)
+
+1. Open your `pom.xml` file.
+2. Add the Pulumi Cloudflare dependency inside the `<dependencies>` section.
+
+```xml
+<dependency>
+    <groupId>com.pulumi</groupId>
+    <artifactId>cloudflare</artifactId>
+    <version>5.38.0</version>
+</dependency>
+```
+
+3. Run:
+
+```sh
+mvn clean install
+```
+
+```sh output
+...[INFO] BUILD SUCCESS...
+```
+
+</TabItem> <TabItem label=".NET">
+
+```sh
+dotnet add package Pulumi.Cloudflare
+```
+
+```sh output
+...
+info : Adding PackageReference for package 'Pulumi.Cloudflare' into project
+...
+```
+
+</TabItem> <TabItem label="YAML">
+
+There are no dependencies to download for YAML. Skip ahead.
+
+</TabItem> </Tabs>
+
+## 2. Define Cloudflare resources in code
+
+With the Cloudflare package installed, you can now define any [supported Cloudflare resource](https://www.pulumi.com/registry/packages/cloudflare/) in your Pulumi program. Next, define a Worker, a Route, and a DNS Record.
+
+### a. Add a Workers script
+
+The [Workers Script resource](https://www.pulumi.com/registry/packages/cloudflare/api-docs/workersscript/) represents a Cloudflare Worker that can be deployed to the Cloudflare network.
+
+Replace the contents of your entrypoint file with the following:
+
+<Tabs> <TabItem label="JavaScript" icon="seti:javascript">
+
+**Filename: `index.js`**
+
+```javascript
+"use strict";
+const pulumi = require("@pulumi/pulumi");
+const cloudflare = require("@pulumi/cloudflare");
+
+const config = new pulumi.Config();
+const accountId = config.require("accountId");
+const domain = config.require("domain");
+
+const content = `export default {
+  async fetch(request) {
+    const options = { headers: { 'content-type': 'text/plain' } };
+    return new Response("Hello World!", options);
+  },
+};`
+
+const worker = new cloudflare.WorkersScript("hello-world-worker", {
+	accountId: accountId,
+	name: "hello-world-worker",
+	content: content,
+  module: true, // ES6 module
+});
+```
+
+</TabItem> <TabItem label="TypeScript" icon="seti:typescript">
+
+**Filename: `index.ts`**
 
 ```typescript
 import * as pulumi from "@pulumi/pulumi";
 import * as cloudflare from "@pulumi/cloudflare";
-import * as fs from "fs";
 
 const config = new pulumi.Config();
 const accountId = config.require("accountId");
+const domain = config.require("domain");
 
-// A Worker script to invoke
-export const script = new cloudflare.WorkerScript("hello-world-script", {
+const content = `export default {
+  async fetch(request) {
+    const options = { headers: { 'content-type': 'text/plain' } };
+    return new Response("Hello World!", options);
+  },
+};`
+
+const worker = new cloudflare.WorkersScript("hello-world-worker", {
   accountId: accountId,
-  name: "hello-world",
-  // Read the content of the worker from a file
-  content: fs.readFileSync("./app/worker.ts", "utf8"),
+  name: "hello-world-worker",
+  content: content,
+  module: true, // ES6 module
 });
 ```
 
-### b. Install dependencies
+</TabItem> <TabItem label="Python" icon="seti:python">
 
-```sh
-$ npm install @pulumi/cloudflare
+**Filename: `__main__.py`**
+
+```python
+"""Pulumi program """
+import pulumi
+import pulumi_cloudflare as cloudflare
+
+CONFIG = pulumi.Config()
+ACCOUNT_ID = CONFIG.get("accountId")
+DOMAIN = CONFIG.require("domain")
+CONTENT = """
+export default {
+  async fetch(request) {
+    const options = { headers: { 'content-type': 'text/plain' } };
+    return new Response("Hello World!", options);
+  },
+};
+"""
+
+worker = cloudflare.WorkersScript("hello-world-worker",
+    account_id=ACCOUNT_ID,
+    name="hello-world-worker",
+    content=CONTENT,
+    module=True  # ES6 module
+)
 ```
 
-### c. Apply the changes
+</TabItem> <TabItem label="go">
 
-```sh
-$ pulumi up --yes
+**Filename: `main.go`**
+
+```go
+package main
+
+import (
+	"github.com/pulumi/pulumi-cloudflare/sdk/v5/go/cloudflare"
+	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
+	"github.com/pulumi/pulumi/sdk/v3/go/pulumi/config"
+)
+
+func main() {
+	pulumi.Run(func(ctx *pulumi.Context) error {
+		conf := config.New(ctx, "")
+		accountID := conf.Get("accountId")
+		domain := conf.Get("domain")
+		content := `
+		export default {
+		  async fetch(request) {
+		    const options = { headers: { 'content-type': 'text/plain' } };
+		    return new Response("Hello World!", options);
+		  },
+		};
+		`
+		worker, err := cloudflare.NewWorkersScript(ctx, "hello-world-worker", &cloudflare.WorkersScriptArgs{
+			AccountId: pulumi.String(accountID),
+			Name:      pulumi.String("hello-world-worker"),
+			Content:   pulumi.String(content),
+			Module:    pulumi.Bool(true), // ES6 module
+		})
+		if err != nil {
+			return err
+		}
+
+		return nil
+	})
+}
 ```
 
-### d. (Optional) View the Cloudflare Dashboard
+</TabItem> <TabItem label="Java">
 
-You can view your Cloudflare resource directly in the Cloudflare Dashboard to validate its existence.
+**Filename: `src/main/java/myproject/App.java`**
 
-1. Log into the [Cloudflare dashboard](https://dash.cloudflare.com/).
-2. Select your account.
-3. Go to **Workers & Pages**.
-4. Open the "hello-world" application. Example:
-   ![alt\_text](~/assets/images/pulumi/hello-world-tutorial/sn4.png)
+```java
+package myproject;
 
+import com.pulumi.Pulumi;
+import com.pulumi.cloudflare.WorkersScript;
+import com.pulumi.cloudflare.WorkersScriptArgs;
+import com.pulumi.core.Output;
 
+public class App {
+    public static void main(String[] args) {
+        Pulumi.run(ctx -> {
+            var content = """
+              export default {
+                async fetch(request) {
+                  const options = { headers: { 'content-type': 'text/plain' } };
+                  return new Response("Hello World!", options);
+                },
+              };
+            """;
 
+            var accountId = ctx.config().require("accountId");
+            var domain = ctx.config().require("domain");
+            var worker = new WorkersScript("hello-world-worker", WorkersScriptArgs.builder()
+                .accountId(accountId)
+                .name("hello-world-worker")
+                .content(content)
+                .module(true)
+                .build());
 
+            return;
+        });
+    }
+}
+```
 
-You will now add a Worker Route to the Pulumi stack, `dev` so the script can have an endpoint.
+</TabItem> <TabItem label=".NET">
 
-### a. Add Worker Route to index.ts
+**Filename: `Program.cs`**
 
-Replace the contents of your `index.ts` file with the following:
+```csharp
+using Pulumi;
+using Cloudflare = Pulumi.Cloudflare;
 
-```typescript
-import * as pulumi from "@pulumi/pulumi";
-import * as cloudflare from "@pulumi/cloudflare";
-import * as fs from "fs";
+return await Deployment.RunAsync(() =>
+{
+    var config = new Config();
+    var accountId = config.Require("accountId");
+    var domain = config.Require("domain");
+    var content = @"
+            export default {
+                async fetch(request) {
+                    const options = { headers: { 'content-type': 'text/plain' } };
+                    return new Response(""Hello World!"", options);
+                },
+            };
+        ";
 
-const config = new pulumi.Config();
-const accountId = config.require("accountId");
-const zoneId = config.require("zoneId");
-const domain = config.require("domain")
+    var worker = new Cloudflare.WorkersScript("hello-world-worker", new()
+    {
+        AccountId = accountId,
+        Name = "hello-world-worker",
+        Content = content,
+        Module = true
+    });
+    return;
+});
+```
 
-// A Worker script to invoke
-export const script = new cloudflare.WorkerScript("hello-world-script", {
+</TabItem> <TabItem label="YAML">
+
+**Filename: `Pulumi.yaml`**
+
+```yaml
+name: serverless-cloudflare
+runtime: yaml
+resources:
+  worker:
+    type: cloudflare:WorkersScript
+    properties:
+      accountId: "${accountId}"
+      name: "hello-world-worker"
+      content: |
+        export default {
+            async fetch(request) {
+                const options = { headers: { 'content-type': 'text/plain' } };
+                return new Response("Hello World!", options);
+            },
+        };
+      module: true
+```
+
+</TabItem> </Tabs>
+
+### b. Add a Route
+
+You will now add a [Workers Route resource](https://www.pulumi.com/registry/packages/cloudflare/api-docs/workersroute/) to your Pulumi program so the Workers script can have an endpoint and be active. To properly configure the Route, you will also look up the zone ID for your domain.
+
+Add the following code snippet to your entrypoint file **after** the Worker script resource:
+
+<Tabs> <TabItem label="JavaScript" icon="seti:javascript">
+
+**Filename: `index.js`**
+
+```javascript
+const zone = cloudflare.getZone({
   accountId: accountId,
-  name: "hello-world",
-  // Read the content of the worker from a file
-  content: fs.readFileSync("./app/worker.ts", "utf8"),
+  name: domain
 });
 
-// A Worker route to serve requests and the Worker script
-export const route = new cloudflare.WorkerRoute("hello-world-route", {
+const zoneId = zone.then(z => z.zoneId);
+
+const route = new cloudflare.WorkersRoute("hello-world-route", {
   zoneId: zoneId,
   pattern: "hello-world." + domain,
-  scriptName: script.name,
+  scriptName: worker.name,
 });
 ```
 
-### b. Apply changes
+</TabItem> <TabItem label="TypeScript" icon="seti:typescript">
 
-```sh
-$ pulumi up --yes
-```
-
-### c. (Optional) View the Cloudflare Worker route in the dashboard
-
-In the Cloudflare Dashboard, the Worker application now contains the previously defined Worker Route.
-
-1. Log into the [Cloudflare dashboard](https://dash.cloudflare.com/).
-2. Select your account.
-3. Go to **Workers & Pages**.
-4. Select your application.
-5. For **Routes**, select **View** to verify the Worker Route details match your definition.
-   ![alt\_text](~/assets/images/pulumi/hello-world-tutorial/sn5.png "Cloudflare Dashboard - Worker Route")
-
-
-
-
-
-You will now add a DNS record to your domain so the previously configured route can be accessed via a URL.
-
-### a. Add DNS Record to index.ts
-
-Replace the contents of your `index.ts` file with the following:
+**Filename: `index.ts`**
 
 ```typescript
-import * as pulumi from "@pulumi/pulumi";
-import * as cloudflare from "@pulumi/cloudflare";
-import * as fs from "fs";
-
-const config = new pulumi.Config();
-const accountId = config.require("accountId");
-const zoneId = config.require("zoneId");
-const domain = config.require("domain")
-
-// A Worker script to invoke
-export const script = new cloudflare.WorkerScript("hello-world-script", {
+const zone = cloudflare.getZone({
   accountId: accountId,
-  name: "hello-world",
-  // Read the content of the worker from a file
-  content: fs.readFileSync("./app/worker.ts", "utf8"),
+  name: domain
 });
 
-// A Worker route to serve requests and the Worker script
-export const route = new cloudflare.WorkerRoute("hello-world-route", {
+const zoneId = zone.then(z => z.zoneId);
+
+const route = new cloudflare.WorkersRoute("hello-world-route", {
   zoneId: zoneId,
   pattern: "hello-world." + domain,
-  scriptName: script.name,
+  scriptName: worker.name,
 });
+```
 
-// A DNS record to access the route from the domain
-export const record = new cloudflare.Record("hello-world-record", {
-  zoneId: zoneId,
-  name: script.name,
-  value: "192.0.2.1",
+</TabItem>  <TabItem label="Python" icon="seti:python">
+
+**Filename: `__main__.py`**
+
+```python
+zone = cloudflare.get_zone(account_id=ACCOUNT_ID, name=DOMAIN)
+zone_id = zone.zone_id
+route = cloudflare.WorkersRoute("hello-world-route",
+    zone_id=zone_id,
+    pattern="hello-world." + DOMAIN,
+    script_name=worker.name
+)
+```
+
+</TabItem> <TabItem label="go">
+
+**Filename: `main.go`**
+
+```go
+zone, err := cloudflare.LookupZone(ctx, &cloudflare.LookupZoneArgs{
+  AccountId: &accountID,
+  Name:      &domain,
+}, nil)
+if err != nil {
+  return err
+}
+
+route, err := cloudflare.NewWorkersRoute(ctx, "hello-world-route", &cloudflare.WorkersRouteArgs{
+  ZoneId:     pulumi.String(zone.Id),
+  Pattern:    pulumi.String("hello-world." + domain),
+  ScriptName: worker.Name,
+})
+if err != nil {
+  return err
+}
+```
+
+</TabItem> <TabItem label="Java">
+
+**Filename: `src/main/java/myproject/App.java`**
+
+```java
+final var zone = CloudflareFunctions.getZone(GetZoneArgs.builder()
+  .accountId(accountId)
+  .name(domain)
+  .build());
+var route = new WorkersRoute("hello-world-route", WorkersRouteArgs.builder()
+  .zoneId(zone.applyValue(getZoneResult -> getZoneResult.id()))
+  .pattern("hello-world." + domain)
+  .scriptName(worker.name())
+  .build());
+```
+
+</TabItem> <TabItem label=".NET">
+
+**Filename: `Program.cs`**
+
+```csharp
+var zone = Output.Create(Cloudflare.GetZone.InvokeAsync(new()
+{
+    AccountId = accountId,
+    Name = domain,
+}));
+var route = new Cloudflare.WorkersRoute("hello-world-route", new()
+{
+    ZoneId = zone.Apply(z => z.Id),
+    Pattern = "hello-world." + domain,
+    ScriptName = worker.Name,
+});
+```
+
+</TabItem> <TabItem label="YAML">
+
+**Filename: `Pulumi.yaml`**
+
+Below the `runtime` key, add the following code:
+
+```yaml
+# new top-level section
+variables:
+  zone:
+    fn::invoke:
+      function: cloudflare:getZone
+      arguments:
+        accountId: ${accountId}
+        name: ${domain}
+```
+
+Below the `worker` resource, add the following code:
+
+```yaml
+  route:
+    type: cloudflare:WorkersRoute
+    properties:
+      zoneId: ${zone.id}
+      pattern: "hello-world.${domain}"
+      scriptName: ${worker.name}
+```
+
+</TabItem></Tabs>
+
+### c. Add a DNS Record
+
+You will now add a DNS [Record resource](https://www.pulumi.com/registry/packages/cloudflare/api-docs/record/) to resolve the previously configured Route. In the next step, you'll also output the Route URL so it can be easily accessed.
+
+Add the following code snippet to your entrypoint file **after** the Route resource:
+
+<Tabs> <TabItem label="JavaScript" icon="seti:javascript">
+
+**Filename: `index.js`**
+
+```javascript
+const record = new cloudflare.Record("hello-world-record", {
+  name: route.pattern,
   type: "A",
+  content: "192.0.2.1",
+  zoneId: zoneId,
   proxied: true
 });
 
-export const url = route.pattern
+exports.url = pulumi.interpolate`https://${record.hostname}`
 ```
+
+</TabItem>  <TabItem label="TypeScript" icon="seti:typescript">
+
+**Filename: `index.ts`**
+
+```typescript
+const record = new cloudflare.Record("hello-world-record", {
+  name: route.pattern,
+  type: "A",
+  content: "192.0.2.1",
+  zoneId: zoneId,
+  proxied: true,
+});
+
+export const url = pulumi.interpolate`https://${record.hostname}`;
+```
+
+</TabItem>  <TabItem label="Python" icon="seti:python">
+
+**Filename: `__main__.py`**
+
+```python
+record = cloudflare.Record("hello-world-record",
+    name=route.pattern,
+    type="A",
+    content="192.0.2.1",
+    zone_id=zone_id,
+    proxied=True
+)
+
+url = pulumi.Output.concat("https://", record.hostname)
+pulumi.export('url', url)
+```
+
+</TabItem> <TabItem label="go">
+
+**Filename: `main.go`**
+
+```go
+record, err := cloudflare.NewRecord(ctx, "hello-world-record", &cloudflare.RecordArgs{
+  Name:    route.Pattern,
+  Type:    pulumi.String("A"),
+  Content: pulumi.String("192.0.2.1"),
+  ZoneId:  pulumi.String(zone.Id),
+  Proxied: pulumi.Bool(true),
+})
+if err != nil {
+  return err
+}
+
+ctx.Export("url", pulumi.Sprintf("https://%s", record.Hostname))
+```
+
+</TabItem> <TabItem label="Java">
+
+**Filename: `src/main/java/myproject/App.java`**
+
+```java
+var record = new Record("hello-world-record", RecordArgs.builder()
+    .name(route.pattern())
+    .type("A")
+    .content("192.0.2.1")
+    .zoneId(zone.applyValue(getZoneResult -> getZoneResult.id()))
+    .proxied(true)
+    .build());
+
+ctx.export("url", Output.format("https://%s", record.hostname()));
+```
+
+</TabItem> <TabItem label=".NET">
+
+**Filename: `Program.cs`**
+
+Notice the updated ' return ' statement because you're now exporting a value. Ensure that you also include `using System.Collections.Generic;` in your imports.
+
+```csharp
+var record = new Cloudflare.Record("hello-world-record", new()
+{
+    Name = route.Pattern,
+    Type = "A",
+    Content = "192.0.2.1",
+    ZoneId = zone.Apply(z => z.Id),
+    Proxied = true
+});
+
+return new Dictionary<string, object?>
+{
+    ["url"] = Output.Format($"https://{record.Hostname}")
+};
+```
+
+</TabItem> <TabItem label="YAML">
+
+Notice the new top-level `outputs` section.
+
+```yaml
+  record:
+    type: cloudflare:Record
+    properties:
+      name: ${route.pattern}
+      type: A
+      content: "192.0.2.1"
+      zoneId: ${zone.id}
+      proxied: true
+
+outputs:
+  url: "https://${record.hostname}"
+```
+
+</TabItem></Tabs>
 
 :::note
 
-
-The last line in the code will create an output with the endpoint for the Hello World app.
-
+You may need to use `http` instead depending on your domain settings.
 
 :::
 
-### b. Apply the changes
+### d. (Optional) Verify your code
 
-```sh
-$ pulumi up --yes
+Confirm all your changes match the full solution below:
+
+<Tabs>
+  <TabItem label="JavaScript" icon="seti:javascript">
+
+**Filename: `index.js`**
+
+```javascript
+"use strict";
+const pulumi = require("@pulumi/pulumi");
+const cloudflare = require("@pulumi/cloudflare");
+
+const config = new pulumi.Config();
+const accountId = config.require("accountId");
+const domain = config.require("domain");
+
+const content = `export default {
+  async fetch(request) {
+    const options = { headers: { 'content-type': 'text/plain' } };
+    return new Response("Hello World!", options);
+  },
+};`
+
+const worker = new cloudflare.WorkersScript("hello-world-worker", {
+  accountId: accountId,
+  name: "hello-world-worker",
+  content: content,
+  module: true, // ES6 module
+});
+
+const zone = cloudflare.getZone({
+  accountId: accountId,
+  name: domain
+});
+
+const zoneId = zone.then(z => z.zoneId);
+
+const route = new cloudflare.WorkersRoute("hello-world-route", {
+  zoneId: zoneId,
+  pattern: "hello-world." + domain,
+  scriptName: worker.name,
+});
+
+const record = new cloudflare.Record("hello-world-record", {
+  name: route.pattern,
+  type: "A",
+  content: "192.0.2.1",
+  zoneId: zoneId,
+  proxied: true
+});
+
+exports.url = pulumi.interpolate`https://${record.hostname}`
+
 ```
 
-### c. (Optional) View all the resources in Pulumi Cloud
+</TabItem>
+  <TabItem label="TypeScript" icon="seti:typescript">
 
-1. In your browser, open your [Pulumi Cloud](https://app.pulumi.com/)
-2. Navigate to your stack, `serverless-cloudflare/dev`.
-3. Confirm all the defined resources are created and healthy. Example:
+**Filename: `index.ts`**
 
-![alt\_text](~/assets/images/pulumi/hello-world-tutorial/sn6.png "Pulumi Cloud stack")
+```typescript
+import * as pulumi from "@pulumi/pulumi";
+import * as cloudflare from "@pulumi/cloudflare";
 
+const config = new pulumi.Config();
+const accountId = config.require("accountId");
+const domain = config.require("domain");
 
+const content = `export default {
+  async fetch(request) {
+    const options = { headers: { 'content-type': 'text/plain' } };
+    return new Response("Hello World!", options);
+  },
+};`
 
+const worker = new cloudflare.WorkersScript("hello-world-worker", {
+  accountId: accountId,
+  name: "hello-world-worker",
+  content: content,
+  module: true, // ES6 module
+});
 
+const zone = cloudflare.getZone({
+  accountId: accountId,
+  name: domain
+});
 
-You have incrementally added all the Cloudflare resources needed to run and access your Hello World application. This was done by defining the resources in TypeScript and letting Pulumi handle the rest.
+const zoneId = zone.then(z => z.zoneId);
 
-You can test your application via the terminal or browser.
+const route = new cloudflare.WorkersRoute("hello-world-route", {
+  zoneId: zoneId,
+  pattern: "hello-world." + domain,
+  scriptName: worker.name,
+});
 
-* In the terminal
+const record = new cloudflare.Record("hello-world-record", {
+  name: route.pattern,
+  type: "A",
+  content: "192.0.2.1",
+  zoneId: zoneId,
+  proxied: true,
+});
 
-```sh
-$ pulumi stack output url
-hello-world.atxyall.com
-$ curl "https://$(pulumi stack output url)"
-<!DOCTYPE html>
-  <html>
-    <head>
-      <title>  Hello World </title>
-    </head>
-    <body>
-      <h1>Serverless with Pulumi</h1>
-      <p>The current time is: <span id="date">Thu Oct 05 2023 22:02:17 GMT+0000 (Coordinated Universal Time)</span>.</p>
-    <script defer src="https://static.cloudflareinsights.com/beacon.min.js/v8b253dfea2ab4077af8c6f58422dfbfd1689876627854" integrity="sha512-bjgnUKX4azu3dLTVtie9u6TKqgx29RBwfj3QXYt5EKfWM/9hPSAI/4qcV5NACjwAo8UtTeWefx6Zq5PHcMm7Tg==" data-cf-beacon='{"rayId":"8118f2b5ddb5eb02","version":"2023.8.0","r":1,"b":1,"token":"240f365d9d42457597f861e6e46c6ce9","si":100}' crossorigin="anonymous"></script>
-</body>
-  </html>
+export const url = pulumi.interpolate`https://${record.hostname}`;
+
 ```
 
-:::note
+</TabItem>
+  <TabItem label="Python" icon="seti:python">
 
+**Filename: `__main__.py`**
 
-Depending on your domain settings, you may need to use "http" instead.
+```python
+"""Pulumi program """
+import pulumi
+import pulumi_cloudflare as cloudflare
 
+CONFIG = pulumi.Config()
+ACCOUNT_ID = CONFIG.get("accountId")
+DOMAIN = CONFIG.require("domain")
+CONTENT = """
+export default {
+  async fetch(request) {
+    const options = { headers: { 'content-type': 'text/plain' } };
+    return new Response("Hello World!", options);
+  },
+};
+"""
 
-:::
+worker = cloudflare.WorkersScript("hello-world-worker",
+    account_id=ACCOUNT_ID,
+    name="hello-world-worker",
+    content=CONTENT,
+    module=True  # ES6 module
+)
 
-* In your browser, open `hello-world.YOUR_DOMAIN.com`
+zone = cloudflare.get_zone(account_id=ACCOUNT_ID, name=DOMAIN)
+zone_id = zone.zone_id
+route = cloudflare.WorkersRoute("hello-world-route",
+    zone_id=zone_id,
+    pattern="hello-world." + DOMAIN,
+    script_name=worker.name
+)
 
-Example:
+record = cloudflare.Record("hello-world-record",
+    name=route.pattern,
+    type="A",
+    content="192.0.2.1",
+    zone_id=zone_id,
+    proxied=True
+)
 
-![alt\_text](~/assets/images/pulumi/hello-world-tutorial/sn2.png "Hello World app browser screenshot")
+url = pulumi.Output.concat("https://", record.hostname)
+pulumi.export('url', url)
 
+```
 
+</TabItem>
+  <TabItem label="go">
 
+**Filename: `main.go`**
 
+```go
+package main
 
-In this last step, you will run a couple of commands to clean up the resources and stack you used throughout the tutorial.
+import (
+	"github.com/pulumi/pulumi-cloudflare/sdk/v5/go/cloudflare"
+	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
+	"github.com/pulumi/pulumi/sdk/v3/go/pulumi/config"
+)
+
+func main() {
+	pulumi.Run(func(ctx *pulumi.Context) error {
+		conf := config.New(ctx, "")
+		accountID := conf.Get("accountId")
+		domain := conf.Get("domain")
+		content := `
+		export default {
+		  async fetch(request) {
+		    const options = { headers: { 'content-type': 'text/plain' } };
+		    return new Response("Hello World!", options);
+		  },
+		};
+		`
+		worker, err := cloudflare.NewWorkersScript(ctx, "hello-world-worker", &cloudflare.WorkersScriptArgs{
+			AccountId: pulumi.String(accountID),
+			Name:      pulumi.String("hello-world-worker"),
+			Content:   pulumi.String(content),
+			Module:    pulumi.Bool(true), // ES6 module
+		})
+		if err != nil {
+			return err
+		}
+		zone, err := cloudflare.LookupZone(ctx, &cloudflare.LookupZoneArgs{
+			AccountId: &accountID,
+			Name:      &domain,
+		}, nil)
+		if err != nil {
+			return err
+		}
+
+		route, err := cloudflare.NewWorkersRoute(ctx, "hello-world-route", &cloudflare.WorkersRouteArgs{
+			ZoneId:     pulumi.String(zone.Id),
+			Pattern:    pulumi.String("hello-world." + domain),
+			ScriptName: worker.Name,
+		})
+		if err != nil {
+			return err
+		}
+
+		record, err := cloudflare.NewRecord(ctx, "hello-world-record", &cloudflare.RecordArgs{
+			Name:    route.Pattern,
+			Type:    pulumi.String("A"),
+			Content: pulumi.String("192.0.2.1"),
+			ZoneId:  pulumi.String(zone.Id),
+			Proxied: pulumi.Bool(true),
+		})
+		if err != nil {
+			return err
+		}
+
+		ctx.Export("url", pulumi.Sprintf("https://%s", record.Hostname))
+
+		return nil
+	})
+}
+
+```
+
+</TabItem>
+  <TabItem label="Java">
+
+**Filename: `src/main/java/myproject/App.java`**
+
+```java
+package myproject;
+
+import com.pulumi.Pulumi;
+import com.pulumi.core.Output;
+import com.pulumi.cloudflare.WorkersScript;
+import com.pulumi.cloudflare.WorkersScriptArgs;
+import com.pulumi.cloudflare.CloudflareFunctions;
+import com.pulumi.cloudflare.inputs.GetZoneArgs;
+import com.pulumi.cloudflare.WorkersRoute;
+import com.pulumi.cloudflare.WorkersRouteArgs;
+import com.pulumi.cloudflare.Record;
+import com.pulumi.cloudflare.RecordArgs;
+
+public class App {
+    public static void main(String[] args) {
+        Pulumi.run(ctx -> {
+            var content = """
+				export default {
+				  async fetch(request) {
+				    const options = { headers: { 'content-type': 'text/plain' } };
+				    return new Response("Hello World!", options);
+				  },
+				};
+			""";
+
+            var accountId = ctx.config().require("accountId");
+            var domain = ctx.config().require("domain");
+
+            var worker = new WorkersScript("hello-world-worker", WorkersScriptArgs.builder()
+                .accountId(accountId)
+                .name("hello-world-worker")
+                .content(content)
+                .module(true)
+                .build());
+            final var zone = CloudflareFunctions.getZone(GetZoneArgs.builder()
+                .accountId(accountId)
+                .name(domain)
+                .build());
+            var route = new WorkersRoute("hello-world-route", WorkersRouteArgs.builder()
+                .zoneId(zone.applyValue(getZoneResult -> getZoneResult.id()))
+                .pattern("hello-world." + domain)
+                .scriptName(worker.name())
+                .build());
+            var record = new Record("hello-world-record", RecordArgs.builder()
+                .name(route.pattern())
+                .type("A")
+                .content("192.0.2.1")
+                .zoneId(zone.applyValue(getZoneResult -> getZoneResult.id()))
+                .proxied(true)
+                .build());
+
+            ctx.export("url", Output.format("https://%s", record.hostname()));
+            return;
+        });
+    }
+}
+
+```
+
+</TabItem>
+  <TabItem label=".NET">
+
+**Filename: `Program.cs`**
+
+```csharp
+using System.Collections.Generic;
+using Pulumi;
+using Cloudflare = Pulumi.Cloudflare;
+
+return await Deployment.RunAsync(() =>
+{
+    var config = new Config();
+    var accountId = config.Require("accountId");
+    var domain = config.Require("domain");
+    var content = @"
+            export default {
+                async fetch(request) {
+                    const options = { headers: { 'content-type': 'text/plain' } };
+                    return new Response(""Hello World!"", options);
+                },
+            };
+        ";
+
+    var worker = new Cloudflare.WorkersScript("hello-world-worker", new()
+    {
+        AccountId = accountId,
+        Name = "hello-world-worker",
+        Content = content,
+        Module = true
+    });
+    var zone = Output.Create(Cloudflare.GetZone.InvokeAsync(new()
+    {
+        AccountId = accountId,
+        Name = domain,
+    }));
+    var route = new Cloudflare.WorkersRoute("hello-world-route", new()
+    {
+        ZoneId = zone.Apply(z => z.Id),
+        Pattern = "hello-world." + domain,
+        ScriptName = worker.Name,
+    });
+
+    var record = new Cloudflare.Record("hello-world-record", new()
+    {
+        Name = route.Pattern,
+        Type = "A",
+        Content = "192.0.2.1",
+        ZoneId = zone.Apply(z => z.Id),
+        Proxied = true
+    });
+
+    return new Dictionary<string, object?>
+    {
+        ["url"] = Output.Format($"https://{record.Hostname}")
+    };
+});
+
+```
+
+</TabItem>
+  <TabItem label="YAML">
+
+**Filename: `Pulumi.yaml`**
+
+```yaml
+name: serverless-cloudflare
+runtime: yaml
+variables:
+  zone:
+    fn::invoke:
+      function: cloudflare:getZone
+      arguments:
+        accountId: ${accountId}
+        name: ${domain}
+
+resources:
+  worker:
+    type: cloudflare:WorkersScript
+    properties:
+      accountId: "${accountId}"
+      name: "hello-world-worker"
+      content: |
+        export default {
+            async fetch(request) {
+                const options = { headers: { 'content-type': 'text/plain' } };
+                return new Response("Hello World!", options);
+            },
+        };
+      module: true
+  route:
+    type: cloudflare:WorkersRoute
+    properties:
+      zoneId: ${zone.id}
+      pattern: "hello-world.${domain}"
+      scriptName: ${worker.name}
+  record:
+    type: cloudflare:Record
+    properties:
+      name: ${route.pattern}
+      type: A
+      content: "192.0.2.1"
+      zoneId: ${zone.id}
+      proxied: true
+
+outputs:
+  url: "https://${record.hostname}"
+```
+
+</TabItem>
+</Tabs>
+
+## 3. Deploy your application
+
+Now that you have defined all the Cloudflare resources, you can deploy the Hello World application to your Cloudflare account using the Pulumi CLI.
+
+To deploy the changes, run:
+
+```sh
+pulumi up --yes
+```
+
+```sh output
+wait for the dev stack to become ready
+```
+
+## 4. Test the Worker
+
+You incrementally added Cloudflare resources to run and access your Hello World application. You can test your application by curling the `url` output from the Pulumi stack.
+
+```sh
+curl $(pulumi stack output url)
+```
+
+```sh output
+Hello, World!
+```
+
+## 5. Clean up
+
+In this last step, you will clean up the resources and stack used throughout the tutorial.
 
 ### a. Delete the Cloudflare resources
 
 ```sh
-$ pulumi destroy
+pulumi destroy
 ```
 
 ### b. Remove the Pulumi stack
 
 ```sh
-$ pulumi stack rm dev
+pulumi stack rm dev
 ```
 
+## Next steps
 
+Visit the [Cloudflare package documentation](https://www.pulumi.com/docs/reference/pkg/cloudflare/) to explore other resources you can define with Pulumi and Cloudflare.

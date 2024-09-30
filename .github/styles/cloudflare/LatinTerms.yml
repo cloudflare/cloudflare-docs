@@ -1,0 +1,17 @@
+---
+# Warning: cloudflare.LatinTerms
+#
+# Checks for use of Latin terms.
+# Uses https://github.com/errata-ai/Google/blob/master/Google/Latin.yml for ideas.
+#
+# For a list of all options, see https://vale.sh/docs/topics/styles/
+
+extends: substitution
+message: "Use '%s' instead of '%s', but consider rewriting the sentence."
+link: https://developers.cloudflare.com/style-guide/grammar/parts-of-speech/abbreviations/#ie-vs-eg
+level: warning
+nonword: true
+ignorecase: true
+swap:
+  '\b(?:e\.?g[\s.,;:])': for example
+  '\b(?:i\.?e[\s.,;:])': that is

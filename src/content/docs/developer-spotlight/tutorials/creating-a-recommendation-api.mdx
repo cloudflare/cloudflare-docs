@@ -20,14 +20,9 @@ tags:
   - Stripe
 sidebar:
   order: 2
-
 ---
 
-
-
-import { Render, TabItem, Tabs } from "~/components"
-
-
+import { Render, TabItem, Tabs } from "~/components";
 
 E-commerce and media sites often work on increasing the average transaction value to boost profitability. One of the strategies to increase the average transaction value is "cross-selling," which involves recommending related products. Cloudflare offers a range of products designed to build mechanisms for retrieving data related to the products users are viewing or requesting. In this tutorial, you will experience developing functionalities necessary for cross-selling by creating APIs for related product searches and product recommendations.
 
@@ -43,9 +38,9 @@ By developing these APIs, you will learn about the resources needed to build cro
 
 You will also learn how to use the following Cloudflare products:
 
-* [**Cloudflare Workers**](/workers/): Execution environment for API applications
-* [**Cloudflare Vectorize**](/vectorize/): Vector DB used for related product searches
-* [**Cloudflare Workers AI**](/workers-ai/): Used for vectorizing data and generating recommendation texts
+- [**Cloudflare Workers**](/workers/): Execution environment for API applications
+- [**Cloudflare Vectorize**](/vectorize/): Vector DB used for related product searches
+- [**Cloudflare Workers AI**](/workers-ai/): Used for vectorizing data and generating recommendation texts
 
 <Render file="tutorials-before-you-start" product="workers" />
 
@@ -56,12 +51,6 @@ You will also learn how to use the following Cloudflare products:
 This tutorial involves the use of several Cloudflare products. Some of these products have free tiers, while others may incur minimal charges. Please review the following billing information carefully.
 
 <Render file="ai-local-usage-charges" product="workers" />
-
-:::note[Vectorize usage charges]
-
-
-You will also need access to [Vectorize](/vectorize/platform/pricing/). <Render file="vectorize-pricing" product="workers" /> 
-:::
 
 ## 1. Create a new Worker project
 
@@ -75,19 +64,19 @@ Open your command line interface (CLI) and run the following command:
 <Tabs> <TabItem label="npm">
 
 ```sh
-$ npm create cloudflare@latest cross-sell-api -- --framework hono
+npm create cloudflare@latest cross-sell-api -- --framework hono
 ```
 
 </TabItem> <TabItem label="yarn">
 
 ```sh
-$ yarn create cloudflare@latest cross-sell-api -- --framework hono
+yarn create cloudflare@latest cross-sell-api -- --framework hono
 ```
 
 </TabItem> <TabItem label="pnpm">
 
 ```sh
-$ pnpm create cloudflare@latest cross-sell-api -- --framework hono
+pnpm create cloudflare@latest cross-sell-api -- --framework hono
 ```
 
 </TabItem> </Tabs>
@@ -147,7 +136,10 @@ Cloudflare Workers applications can be developed and tested in a local environme
 You can send a request to the API using the `curl` command. If you see the text `Hello Hono!`, the API is running correctly.
 
 ```sh
-$ curl http://localhost:8787
+curl http://localhost:8787
+```
+
+```sh output
 Hello Hono!
 ```
 
@@ -184,7 +176,7 @@ Let's start implementing step-by-step.
 This API requires the use of Workers AI and Vectorize. To use these resources from a Worker, you will need to first create the resources then [bind](/workers/runtime-apis/bindings/#what-is-a-binding) them to a Worker. First, let's create a Vectorize index with Wrangler using the command `wrangler vectorize create {index_name} --dimensions={number_of_dimensions} --metric={similarity_metric}`. The values for `dimensions` and `metric` depend on the type of [Text Embedding Model](/workers-ai/models/#text-embeddings) you are using for data vectorization (Embedding). For example, if you are using the `bge-large-en-v1.5` model, the command is:
 
 ```sh
-$ npx wrangler vectorize create stripe-products --dimensions=1024 --metric=cosine
+npx wrangler vectorize create stripe-products --dimensions=1024 --metric=cosine
 ```
 
 When this command executes successfully, you will see a message like the following. It provides the items you need to add to `wrangler.toml` to bind the Vectorize index with your Worker application. Copy the three lines starting with `[[vectorize]]`.
@@ -228,7 +220,10 @@ binding = "AI" # available in your Worker on env.AI
 When handling bound resources from your application, you can generate TypeScript type definitions to develop more safely. Run the `npm run cf-typegen` command. This command updates the `worker-configuration.d.ts` file, allowing you to use both Vectorize and Workers AI in a type-safe manner.
 
 ```sh
-$ npm run cf-typegen
+npm run cf-typegen
+```
+
+```sh output
 
 > cf-typegen
 > wrangler types --env-interface CloudflareBindings
@@ -245,17 +240,17 @@ interface CloudflareBindings {
 Once you save these changes, the respective resources and APIs will be available for use in the Workers application. You can access these properties from `env`. In this example, you can use them as follows:
 
 ```ts
-app.get('/', (c) => {
-  c.env.AI // Workers AI SDK
-  c.env.VECTORIZE_INDEX // Vectorize SDK
-  return c.text('Hello Hono!')
-})
+app.get("/", (c) => {
+	c.env.AI; // Workers AI SDK
+	c.env.VECTORIZE_INDEX; // Vectorize SDK
+	return c.text("Hello Hono!");
+});
 ```
 
 Finally, rerun the `npx wrangler dev` command with the `--remote` option. This is necessary because Vectorize indexes are not supported in local mode. If you see the message, `Vectorize bindings are not currently supported in local mode. Please use --remote if you are working with them.`, rerun the command with the `--remote` option added.
 
 ```sh
-$ npx wrangler dev --remote
+npx wrangler dev --remote
 ```
 
 ### Create a webhook API to handle product registration events
@@ -263,14 +258,14 @@ $ npx wrangler dev --remote
 You can receive notifications about product registration and information via POST requests using webhooks. Let's create an API that accepts POST requests. Open your `src/index.ts` file and add the following code:
 
 ```ts
-app.post('/webhook', async (c) => {
-  const body = await c.req.json()
-  if (body.type === 'product.created') {
-    const product = body.data.object
-    console.log(JSON.stringify(product, null, 2))
-  }
-  return c.text('ok', 200)
-})
+app.post("/webhook", async (c) => {
+	const body = await c.req.json();
+	if (body.type === "product.created") {
+		const product = body.data.object;
+		console.log(JSON.stringify(product, null, 2));
+	}
+	return c.text("ok", 200);
+});
 ```
 
 This code implements an API that processes POST requests to the `/webhook` endpoint. The data sent by Stripe's Webhook events is included in the request body in JSON format. Therefore, we use `c.req.json()` to extract the data. There are multiple types of Webhook events that Stripe can send, so we added a conditional to only process events when a product is newly added, as indicated by the `type`.
@@ -290,7 +285,7 @@ STRIPE_SECRET_API_KEY=sk_test_XXXX
 4. Use the following Stripe CLI command to forward Webhook events from Stripe to your local application.
 
 ```sh
-$ stripe listen --forward-to http://localhost:8787/webhook --events product.created
+stripe listen --forward-to http://localhost:8787/webhook --events product.created
 ```
 
 5. Copy the signing secret that starts with `whsec_` from the Stripe CLI command output.
@@ -313,20 +308,20 @@ STRIPE_WEBHOOK_SECRET=whsec_xxxxxx
 Finally, modify the source code of `src/index.ts` as follows to ensure that the webhook API cannot be used from sources other than your Stripe account.
 
 ````ts
-import { Hono } from 'hono'
-import { env } from 'hono/adapter'
-import Stripe from 'stripe'
+import { Hono } from "hono";
+import { env } from "hono/adapter";
+import Stripe from "stripe";
 
 type Bindings = {
-  [key in keyof CloudflareBindings]: CloudflareBindings[key]
-}
+	[key in keyof CloudflareBindings]: CloudflareBindings[key];
+};
 
 const app = new Hono<{
-  Bindings: Bindings;
-  Variables: {
-    stripe: Stripe;
-  }
-}>()
+	Bindings: Bindings;
+	Variables: {
+		stripe: Stripe;
+	};
+}>();
 
 /**
  * Initialize Stripe SDK client
@@ -336,46 +331,49 @@ const app = new Hono<{
  * const stripe = c.get('stripe')
  * ```
  */
-app.use('*', async (c, next) => {
-  const { STRIPE_SECRET_API_KEY } = env(c)
-  const stripe = new Stripe(STRIPE_SECRET_API_KEY)
-  c.set('stripe', stripe)
-  await next()
-})
+app.use("*", async (c, next) => {
+	const { STRIPE_SECRET_API_KEY } = env(c);
+	const stripe = new Stripe(STRIPE_SECRET_API_KEY);
+	c.set("stripe", stripe);
+	await next();
+});
 
-app.post('/webhook', async (c) => {
-  const { STRIPE_WEBHOOK_SECRET } = env(c)
-  const stripe = c.get('stripe')
-  const signature = c.req.header('stripe-signature')
-  if (!signature || !STRIPE_WEBHOOK_SECRET || !stripe) {
-      return c.text("", 400)
-  }
-  try {
-    const body = await c.req.text()
-    const event = await stripe.webhooks.constructEventAsync(
-        body,
-        signature,
-        STRIPE_WEBHOOK_SECRET,
-    )
-    if (event.type === 'product.created') {
-      const product = event.data.object
-      console.log(JSON.stringify(product, null, 2))
-    }
-    return c.text("", 200)
-  } catch (err) {
-    const errorMessage = `⚠️  Webhook signature verification failed. ${err instanceof Error ? err.message : "Internal server error"}`
-    console.log(errorMessage)
-    return c.text(errorMessage, 400)
-  }
-})
+app.post("/webhook", async (c) => {
+	const { STRIPE_WEBHOOK_SECRET } = env(c);
+	const stripe = c.get("stripe");
+	const signature = c.req.header("stripe-signature");
+	if (!signature || !STRIPE_WEBHOOK_SECRET || !stripe) {
+		return c.text("", 400);
+	}
+	try {
+		const body = await c.req.text();
+		const event = await stripe.webhooks.constructEventAsync(
+			body,
+			signature,
+			STRIPE_WEBHOOK_SECRET,
+		);
+		if (event.type === "product.created") {
+			const product = event.data.object;
+			console.log(JSON.stringify(product, null, 2));
+		}
+		return c.text("", 200);
+	} catch (err) {
+		const errorMessage = `⚠️  Webhook signature verification failed. ${err instanceof Error ? err.message : "Internal server error"}`;
+		console.log(errorMessage);
+		return c.text(errorMessage, 400);
+	}
+});
 
-export default app
+export default app;
 ````
 
 This ensures that an HTTP 400 error is returned if the Webhook API is called directly by unauthorized sources.
 
 ```sh
-$ curl -XPOST http://localhost:8787/webhook -I
+curl -XPOST http://localhost:8787/webhook -I
+```
+
+```sh output
 HTTP/1.1 400 Bad Request
 Content-Length: 0
 Content-Type: text/plain; charset=UTF-8
@@ -384,7 +382,10 @@ Content-Type: text/plain; charset=UTF-8
 Use the Stripe CLI command to test sending events from Stripe.
 
 ```sh
-$ stripe trigger product.created
+stripe trigger product.created
+```
+
+```sh output
 Setting up fixture for: product
 Running fixture for: product
 Trigger succeeded! Check dashboard for event details.
@@ -426,15 +427,17 @@ We've prepared to ingest product information, so let's start implementing the pr
 In this step, we'll first implement the process of converting externally sent data into text data. This is necessary because the information to be converted into vector data is in text form. If you want to include product names, descriptions, and metadata as search targets, add the following processing.
 
 ```ts null {3,4,5,6,7,8,9}
-if (event.type === 'product.created') {
-  const product = event.data.object
-  const productData = [
-    `## ${product.name}`,
-    product.description,
-    '### metadata',
-    Object.entries(product.metadata).map(([key, value]) => `- ${key}: ${value}`).join('\n')
-  ].join('\n')
-  console.log(JSON.stringify(productData, null, 2))
+if (event.type === "product.created") {
+	const product = event.data.object;
+	const productData = [
+		`## ${product.name}`,
+		product.description,
+		"### metadata",
+		Object.entries(product.metadata)
+			.map(([key, value]) => `- ${key}: ${value}`)
+			.join("\n"),
+	].join("\n");
+	console.log(JSON.stringify(productData, null, 2));
 }
 ```
 
@@ -451,18 +454,17 @@ Now that we've converted the data to text, let's convert it to vector data. By u
 
 ```ts null {7,8,9,10,11,12,13}
 const productData = [
-  `## ${product.name}`,
-  product.description,
-  '### metadata',
-  Object.entries(product.metadata).map(([key, value]) => `- ${key}: ${value}`).join('\n')
-].join('\n')
-const embeddings = await c.env.AI.run(
-  '@cf/baai/bge-large-en-v1.5',
-  {
-    text: productData,
-  }
-)
-console.log(JSON.stringify(embeddings, null, 2))
+	`## ${product.name}`,
+	product.description,
+	"### metadata",
+	Object.entries(product.metadata)
+		.map(([key, value]) => `- ${key}: ${value}`)
+		.join("\n"),
+].join("\n");
+const embeddings = await c.env.AI.run("@cf/baai/bge-large-en-v1.5", {
+	text: productData,
+});
+console.log(JSON.stringify(embeddings, null, 2));
 ```
 
 When using Workers AI, execute the `c.env.AI.run()` function. Specify the model you want to use as the first argument. In the second argument, input text data about the text you want to convert using the Text Embedding model or the instructions for the generated images or text. If you want to save the converted vector data using Vectorize, make sure to select a model that matches the number of `dimensions` specified in the `npx wrangler vectorize create` command. If the numbers do not match, there is a possibility that the converted vector data cannot be saved.
@@ -472,38 +474,38 @@ When using Workers AI, execute the `c.env.AI.run()` function. Specify the model 
 Finally, let's save the created data to Vectorize. Edit `src/index.ts` to implement the indexing process using the `VECTORIZE_INDEX` binding. Since the data to be saved will be vector data, save the pre-conversion text data as metadata.
 
 ```ts null {16,17,18,19,20,21,22,23,24}
-if (event.type === 'product.created') {
-  const product = event.data.object
-  const productData = [
-    `## ${product.name}`,
-    product.description,
-    '### metadata',
-    Object.entries(product.metadata).map(([key, value]) => `- ${key}: ${value}`).join('\n')
-  ].join('\n')
-  console.log(JSON.stringify(productData, null, 2))
-  const embeddings = await c.env.AI.run(
-    '@cf/baai/bge-large-en-v1.5',
-    {
-      text: productData,
-    }
-  )
-  await c.env.VECTORIZE_INDEX.insert([{
-    id: product.id,
-    values: embeddings.data[0],
-    metadata: {
-      name: product.name,
-      description: product.description || '',
-      product_metadata: product.metadata,
-    }
-  }])
+if (event.type === "product.created") {
+	const product = event.data.object;
+	const productData = [
+		`## ${product.name}`,
+		product.description,
+		"### metadata",
+		Object.entries(product.metadata)
+			.map(([key, value]) => `- ${key}: ${value}`)
+			.join("\n"),
+	].join("\n");
+	console.log(JSON.stringify(productData, null, 2));
+	const embeddings = await c.env.AI.run("@cf/baai/bge-large-en-v1.5", {
+		text: productData,
+	});
+	await c.env.VECTORIZE_INDEX.insert([
+		{
+			id: product.id,
+			values: embeddings.data[0],
+			metadata: {
+				name: product.name,
+				description: product.description || "",
+				product_metadata: product.metadata,
+			},
+		},
+	]);
 }
-
 ```
 
 With this, we have established a mechanism to synchronize the product data with the database for recommendations. Use Stripe CLI commands to save some product data.
 
 ```bash
-$ stripe products create --name="Smartphone X" \
+stripe products create --name="Smartphone X" \
   --description="Latest model with cutting-edge features" \
   -d "default_price_data[currency]=usd" \
   -d "default_price_data[unit_amount]=79900" \
@@ -511,7 +513,7 @@ $ stripe products create --name="Smartphone X" \
 ```
 
 ```bash
-$ stripe products create --name="Ultra Notebook" \
+stripe products create --name="Ultra Notebook" \
   --description="Lightweight and powerful notebook computer" \
   -d "default_price_data[currency]=usd" \
   -d "default_price_data[unit_amount]=129900" \
@@ -519,7 +521,7 @@ $ stripe products create --name="Ultra Notebook" \
 ```
 
 ```bash
-$ stripe products create --name="Wireless Earbuds Pro" \
+stripe products create --name="Wireless Earbuds Pro" \
   --description="High quality sound with noise cancellation" \
   -d "default_price_data[currency]=usd" \
   -d "default_price_data[unit_amount]=19900" \
@@ -527,7 +529,7 @@ $ stripe products create --name="Wireless Earbuds Pro" \
 ```
 
 ```bash
-$ stripe products create --name="Smartwatch 2" \
+stripe products create --name="Smartwatch 2" \
   --description="Stay connected with the latest smartwatch" \
   -d "default_price_data[currency]=usd" \
   -d "default_price_data[unit_amount]=29900" \
@@ -535,7 +537,7 @@ $ stripe products create --name="Smartwatch 2" \
 ```
 
 ```bash
-$ stripe products create --name="Tablet Pro" \
+stripe products create --name="Tablet Pro" \
   --description="Versatile tablet for work and play" \
   -d "default_price_data[currency]=usd" \
   -d "default_price_data[unit_amount]=49900" \
@@ -560,160 +562,160 @@ Now that we have prepared the index for searching, the next step is to implement
 In this API, the product ID is received as a part of the API path. Using the received ID, vector data is retrieved from Vectorize using `c.env.VECTORIZE_INDEX.getByIds()`. The return value of this process includes vector data, which is then passed to `c.env.VECTORIZE_INDEX.query()` to conduct a similarity search. To quickly check which products are recommended, we set `returnMetadata` to `true` to obtain the stored metadata information as well. The `topK` parameter specifies the number of data items to retrieve. Change this value if you want to obtain less than 2 or more than 4 data items.
 
 ```ts
-app.get('/products/:product_id', async (c) => {
-  // Get the product ID from API path parameters
-  const productId = c.req.param('product_id')
+app.get("/products/:product_id", async (c) => {
+	// Get the product ID from API path parameters
+	const productId = c.req.param("product_id");
 
-  // Retrieve the indexed data by the product ID
-  const [product] = await c.env.VECTORIZE_INDEX.getByIds([productId])
+	// Retrieve the indexed data by the product ID
+	const [product] = await c.env.VECTORIZE_INDEX.getByIds([productId]);
 
-  // Search similar products by using the embedding data
-  const similarProducts = await c.env.VECTORIZE_INDEX.query(product.values, {
-    topK: 3,
-    returnMetadata: true,
-  })
+	// Search similar products by using the embedding data
+	const similarProducts = await c.env.VECTORIZE_INDEX.query(product.values, {
+		topK: 3,
+		returnMetadata: true,
+	});
 
-  return c.json({
-    product: {
-      ...product.metadata
-    },
-    similarProducts,
-  })
-})
+	return c.json({
+		product: {
+			...product.metadata,
+		},
+		similarProducts,
+	});
+});
 ```
 
 Let's run this API. Use a product ID that starts with `prod_`, which can be obtained from the result of running the `stripe products crate` command or the `stripe products list` command.
 
 ```sh
-$ curl http://localhost:8787/products/prod_xxxx
+curl http://localhost:8787/products/prod_xxxx
 ```
 
 If you send a request using a product ID that exists in the Vectorize index, the data for that product and two related products will be returned as follows.
 
 ```json
 {
-  "product": {
-    "name": "Tablet Pro",
-    "description": "Versatile tablet for work and play",
-    "product_metadata": {
-      "category": "computers"
-    }
-  },
-  "similarProducts": {
-    "count": 3,
-    "matches": [
-      {
-        "id": "prod_QGxFoHEpIyxHHF",
-        "metadata": {
-          "name": "Tablet Pro",
-          "description": "Versatile tablet for work and play",
-          "product_metadata": {
-            "category": "computers"
-          }
-        },
-        "score": 1
-      },
-      {
-        "id": "prod_QGxFEgfmOmy5Ve",
-        "metadata": {
-          "name": "Ultra Notebook",
-          "description": "Lightweight and powerful notebook computer",
-          "product_metadata": {
-            "category": "computers"
-          }
-        },
-        "score": 0.724717327
-      },
-      {
-        "id": "prod_QGwkGYUcKU2UwH",
-        "metadata": {
-          "name": "demo product",
-          "description": "aaaa",
-          "product_metadata": {
-            "test": "hello"
-          }
-        },
-        "score": 0.635707003
-      }
-    ]
-  }
+	"product": {
+		"name": "Tablet Pro",
+		"description": "Versatile tablet for work and play",
+		"product_metadata": {
+			"category": "computers"
+		}
+	},
+	"similarProducts": {
+		"count": 3,
+		"matches": [
+			{
+				"id": "prod_QGxFoHEpIyxHHF",
+				"metadata": {
+					"name": "Tablet Pro",
+					"description": "Versatile tablet for work and play",
+					"product_metadata": {
+						"category": "computers"
+					}
+				},
+				"score": 1
+			},
+			{
+				"id": "prod_QGxFEgfmOmy5Ve",
+				"metadata": {
+					"name": "Ultra Notebook",
+					"description": "Lightweight and powerful notebook computer",
+					"product_metadata": {
+						"category": "computers"
+					}
+				},
+				"score": 0.724717327
+			},
+			{
+				"id": "prod_QGwkGYUcKU2UwH",
+				"metadata": {
+					"name": "demo product",
+					"description": "aaaa",
+					"product_metadata": {
+						"test": "hello"
+					}
+				},
+				"score": 0.635707003
+			}
+		]
+	}
 }
 ```
 
 Looking at the `score` in `similarProducts`, you can see that there is data with a `score` of `1`. This means it is exactly the same as the query used to search. By looking at the metadata, it is evident that the data is the same as the product ID sent in the request. Since we want to search for related products, let's add a `filter` to prevent the same product from being included in the search results. Here, a filter is added to exclude data with the same product name using the `metadata` name.
 
 ```ts null {7,8,9,10,11}
-app.get('/products/:product_id', async (c) => {
-  const productId = c.req.param('product_id')
-  const [product] = await c.env.VECTORIZE_INDEX.getByIds([productId])
-  const similarProducts = await c.env.VECTORIZE_INDEX.query(product.values, {
-    topK: 3,
-    returnMetadata: true,
-    filter: {
-      name: {
-        "$ne": product.metadata?.name.toString(),
-      }
-    }
-  })
+app.get("/products/:product_id", async (c) => {
+	const productId = c.req.param("product_id");
+	const [product] = await c.env.VECTORIZE_INDEX.getByIds([productId]);
+	const similarProducts = await c.env.VECTORIZE_INDEX.query(product.values, {
+		topK: 3,
+		returnMetadata: true,
+		filter: {
+			name: {
+				$ne: product.metadata?.name.toString(),
+			},
+		},
+	});
 
-  return c.json({
-    product: {
-      ...product.metadata
-    },
-    similarProducts,
-  })
-})
+	return c.json({
+		product: {
+			...product.metadata,
+		},
+		similarProducts,
+	});
+});
 ```
 
 After adding this process, if you run the API, you will see that there is no data with a `score` of `1`.
 
 ```json
 {
-  "product": {
-    "name": "Tablet Pro",
-    "description": "Versatile tablet for work and play",
-    "product_metadata": {
-      "category": "computers"
-    }
-  },
-  "similarProducts": {
-    "count": 3,
-    "matches": [
-      {
-        "id": "prod_QGxFEgfmOmy5Ve",
-        "metadata": {
-          "name": "Ultra Notebook",
-          "description": "Lightweight and powerful notebook computer",
-          "product_metadata": {
-            "category": "computers"
-          }
-        },
-        "score": 0.724717327
-      },
-      {
-        "id": "prod_QGwkGYUcKU2UwH",
-        "metadata": {
-          "name": "demo product",
-          "description": "aaaa",
-          "product_metadata": {
-            "test": "hello"
-          }
-        },
-        "score": 0.635707003
-      },
-      {
-        "id": "prod_QGxFEafrNDG88p",
-        "metadata": {
-          "name": "Smartphone X",
-          "description": "Latest model with cutting-edge features",
-          "product_metadata": {
-            "category": "electronics"
-          }
-        },
-        "score": 0.632409942
-      }
-    ]
-  }
+	"product": {
+		"name": "Tablet Pro",
+		"description": "Versatile tablet for work and play",
+		"product_metadata": {
+			"category": "computers"
+		}
+	},
+	"similarProducts": {
+		"count": 3,
+		"matches": [
+			{
+				"id": "prod_QGxFEgfmOmy5Ve",
+				"metadata": {
+					"name": "Ultra Notebook",
+					"description": "Lightweight and powerful notebook computer",
+					"product_metadata": {
+						"category": "computers"
+					}
+				},
+				"score": 0.724717327
+			},
+			{
+				"id": "prod_QGwkGYUcKU2UwH",
+				"metadata": {
+					"name": "demo product",
+					"description": "aaaa",
+					"product_metadata": {
+						"test": "hello"
+					}
+				},
+				"score": 0.635707003
+			},
+			{
+				"id": "prod_QGxFEafrNDG88p",
+				"metadata": {
+					"name": "Smartphone X",
+					"description": "Latest model with cutting-edge features",
+					"product_metadata": {
+						"category": "electronics"
+					}
+				},
+				"score": 0.632409942
+			}
+		]
+	}
 }
 ```
 
@@ -733,82 +735,83 @@ This API will implement the following processes:
 This method realizes a text generation mechanism called Retrieval Augmented Generation (RAG) using Cloudflare. The bindings and other preparations are already completed, so let's add the API.
 
 ```ts
-app.post('/ask', async (c) => {
-  const { question } = await c.req.json()
-  if (!question) {
-    return c.json({
-      message: 'Please tell me your question.'
-    })
-  }
-  /**
-   * Convert the question to the vector data
-   */
-  const embeddedQuestion = await c.env.AI.run(
-    '@cf/baai/bge-large-en-v1.5',
-    {
-      text: question,
-    }
-  )
+app.post("/ask", async (c) => {
+	const { question } = await c.req.json();
+	if (!question) {
+		return c.json({
+			message: "Please tell me your question.",
+		});
+	}
+	/**
+	 * Convert the question to the vector data
+	 */
+	const embeddedQuestion = await c.env.AI.run("@cf/baai/bge-large-en-v1.5", {
+		text: question,
+	});
 
-  /**
-   * Query similarity data from Vectorize index
-   */
-  const similarProducts = await c.env.VECTORIZE_INDEX.query(embeddedQuestion.data[0], {
-    topK: 3,
-    returnMetadata: true,
-  })
+	/**
+	 * Query similarity data from Vectorize index
+	 */
+	const similarProducts = await c.env.VECTORIZE_INDEX.query(
+		embeddedQuestion.data[0],
+		{
+			topK: 3,
+			returnMetadata: true,
+		},
+	);
 
-  /**
-   * Convert the JSON data to the Markdown text
-   **/
-  const contextData = similarProducts.matches.reduce((prev, current) => {
-    if (!current.metadata) return prev
-    const productTexts = Object.entries(current.metadata).map(([key, value]) => {
-      switch (key) {
-        case 'name':
-          return `## ${value}`
-        case 'product_metadata':
-          return `- ${key}: ${JSON.stringify(value)}`
-        default:
-          return `- ${key}: ${value}`
-      }
-    })
-    const productTextData = productTexts.join('\n')
-    return `${prev}\n${productTextData}`
-  }, "")
+	/**
+	 * Convert the JSON data to the Markdown text
+	 **/
+	const contextData = similarProducts.matches.reduce((prev, current) => {
+		if (!current.metadata) return prev;
+		const productTexts = Object.entries(current.metadata).map(
+			([key, value]) => {
+				switch (key) {
+					case "name":
+						return `## ${value}`;
+					case "product_metadata":
+						return `- ${key}: ${JSON.stringify(value)}`;
+					default:
+						return `- ${key}: ${value}`;
+				}
+			},
+		);
+		const productTextData = productTexts.join("\n");
+		return `${prev}\n${productTextData}`;
+	}, "");
 
-  /**
-   * Generate the answer
-   */
-  const response = await c.env.AI.run(
-    "@cf/meta/llama-3.1-8b-instruct",
-    {
-      messages: [{
-        role: 'system',
-        content: `You are an assistant for question-answering tasks. Use the following pieces of retrieved context to answer the question. If you don't know the answer, just say that you don't know.\n#Context: \n${contextData} `
-      }, {
-        role: 'user',
-        content: question
-      }]
-    }
-  )
+	/**
+	 * Generate the answer
+	 */
+	const response = await c.env.AI.run("@cf/meta/llama-3.1-8b-instruct", {
+		messages: [
+			{
+				role: "system",
+				content: `You are an assistant for question-answering tasks. Use the following pieces of retrieved context to answer the question. If you don't know the answer, just say that you don't know.\n#Context: \n${contextData} `,
+			},
+			{
+				role: "user",
+				content: question,
+			},
+		],
+	});
 
-  return c.json(response)
-})
-
+	return c.json(response);
+});
 ```
 
 Let's use the created API to consult on a product. You can send your question in the body of a POST request. For example, if you want to ask about getting a new PC, you can execute the following command:
 
 ```sh
-$ curl -X POST "http://localhost:8787/ask" -H "Content-Type: application/json" -d '{"question": "I want to get a new PC"}'
+curl -X POST "http://localhost:8787/ask" -H "Content-Type: application/json" -d '{"question": "I want to get a new PC"}'
 ```
 
 When the question is sent, a recommendation text will be generated as introduced earlier. In this example, the `Ultra Notebook` product was recommended. This is because it has a `notebook compucoter` description, which means it received a relatively high score in the Vectorize search.
 
 ```json
 {
-  "response": "Exciting! You're looking to get a new PC! Based on the context I retrieved, I'd recommend considering the \"Ultra Notebook\" since it's described as a lightweight and powerful notebook computer, which fits the category of \"computers\". Would you like to know more about its specifications or features?"
+	"response": "Exciting! You're looking to get a new PC! Based on the context I retrieved, I'd recommend considering the \"Ultra Notebook\" since it's described as a lightweight and powerful notebook computer, which fits the category of \"computers\". Would you like to know more about its specifications or features?"
 }
 ```
 

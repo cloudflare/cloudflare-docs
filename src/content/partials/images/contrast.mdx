@@ -1,0 +1,19 @@
+---
+{}
+---
+import { Tabs, TabItem } from "~/components"
+
+Increase contrast by a factor. A value of `1.0` equals no change, a value of `0.5` equals low contrast, and a value of `2.0` equals high contrast. `0` is ignored.
+
+<Tabs>
+  <TabItem label="URL format">
+    ```js 
+    contrast=0.5
+    ```
+  </TabItem>
+  <TabItem label="Workers">
+  ```js 
+  cf: {image: {contrast: 0.5}}
+  ```
+  </TabItem>
+</Tabs>

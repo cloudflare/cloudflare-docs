@@ -3,7 +3,6 @@ pcx_content_type: how-to
 title: Kubernetes
 sidebar:
   order: 6
-
 ---
 
 [Kubernetes](https://kubernetes.io/) is a container orchestration and management tool. Kubernetes is declarative, so you define the end state in a .yml file. A Kubernetes cluster has two components, the master, and the workers. The master is the control plane that the user interacts with to manage the containers. Worker nodes are where the containers are deployed and run. A Kubernetes cluster is connected internally through a private network. Cloudflare Tunnel can be used to expose services running inside the Kubernetes cluster to the public.
@@ -13,10 +12,10 @@ sidebar:
 This guide will use a Google managed Kubernetes GKE.
 To get started, perform the following steps:
 
-* Install the [gcloud CLI](https://cloud.google.com/sdk/docs/install) and [kubectl CLI](https://cloud.google.com/kubernetes-engine/docs/how-to/cluster-access-for-kubectl).
-* In the GCP console create a new Kubernetes cluster.
-* In order to connect to the cluster, select the three dots and then connect from the drop down.
-* Copy the command that appears and paste it into your local terminal.
+- Install the [gcloud CLI](https://cloud.google.com/sdk/docs/install) and [kubectl CLI](https://cloud.google.com/kubernetes-engine/docs/how-to/cluster-access-for-kubectl).
+- In the GCP console create a new Kubernetes cluster.
+- In order to connect to the cluster, select the three dots and then connect from the drop down.
+- Copy the command that appears and paste it into your local terminal.
 
 ## Creating the Pods
 
@@ -38,10 +37,10 @@ spec:
         app: httpbin
     spec:
       containers:
-      - name: httpbin
-        image: kennethreitz/httpbin:latest
-        ports:
-        - containerPort: 80
+        - name: httpbin
+          image: kennethreitz/httpbin:latest
+          ports:
+            - containerPort: 80
 ---
 apiVersion: v1
 kind: Service
@@ -58,13 +57,13 @@ spec:
 Using the following command the application will begin to run inside the cluster.
 
 ```sh
-$ kubectl create -f httpbin-app.yml
+kubectl create -f httpbin-app.yml
 ```
 
 The pods' status can be seen through the console or using the kubectl get pod command.
 
 ```sh
-$ kubectl get pods
+kubectl get pods
 ```
 
 ## Routing with Cloudflare Tunnel
@@ -91,34 +90,35 @@ spec:
         pod: cloudflared
     spec:
       containers:
-      - command:
-        - cloudflared
-        - tunnel
-        # In a k8s environment, the metrics server needs to listen outside the pod it runs on. 
-        # The address 0.0.0.0:2000 allows any pod in the namespace.
-        - --metrics
-        - 0.0.0.0:2000
-        - run
-        args:
-        - --token
-        - <token value>
-        image: cloudflare/cloudflared:latest
-        name: cloudflared
-        livenessProbe:
-          httpGet:
-          # Cloudflared has a /ready endpoint which returns 200 if and only if
-          # it has an active connection to the edge.
-            path: /ready
-            port: 2000
-          failureThreshold: 1
-          initialDelaySeconds: 10
-          periodSeconds: 10
+        - command:
+            - cloudflared
+            - tunnel
+            - --no-autoupdate
+            # In a k8s environment, the metrics server needs to listen outside the pod it runs on.
+            # The address 0.0.0.0:2000 allows any pod in the namespace.
+            - --metrics
+            - 0.0.0.0:2000
+            - run
+          args:
+            - --token
+            - <token value>
+          image: cloudflare/cloudflared:latest
+          name: cloudflared
+          livenessProbe:
+            httpGet:
+              # Cloudflared has a /ready endpoint which returns 200 if and only if
+              # it has an active connection to the edge.
+              path: /ready
+              port: 2000
+            failureThreshold: 1
+            initialDelaySeconds: 10
+            periodSeconds: 10
 ```
 
 This file will be deployed with the following command.
 
 ```sh
-$ kubectl create -f cloudflared-deployment.yml
+kubectl create -f cloudflared-deployment.yml
 ```
 
 The application within the cluster will now be accessible through the domain name as configured.

@@ -5,6 +5,10 @@ productLink: "/hyperdrive/"
 productArea: Developer platform
 productAreaLink: /workers/platform/changelog/platform/
 entries:
+  - publish_date: "2024-08-19"
+    title: Improved caching for Postgres.js
+    description: |-
+      Hyperdrive now better caches [Postgres.js](https://github.com/porsager/postgres) queries to reduce queries to the origin database.
   - publish_date: "2024-08-13"
     title: Hyperdrive audit logs now available in the Cloudflare Dashboard
     description: |-

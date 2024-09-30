@@ -6,7 +6,6 @@ sidebar:
 head:
   - tag: title
     content: Introduction to Terraform init
-
 ---
 
 This tutorial shows you how to get started with Terraform. The tutorial uses an example scenario where you have a web server for your domain, accessible on `203.0.113.10`, and you just signed up your domain (`example.com`) on Cloudflare to manage everything in Terraform.
@@ -21,11 +20,11 @@ Terraform will process any files with a `.tf` extension. As the configuration be
 
 :::caution
 
-To prevent accidentally exposing your Cloudflare credentials, do not save this file in your version control system. The [next tutorial](/terraform/tutorial/track-history/) will cover best practices for passing in your API token. 
+To prevent accidentally exposing your Cloudflare credentials, do not save this file in your version control system. The [next tutorial](/terraform/tutorial/track-history/) will cover best practices for passing in your API token.
 :::
 
 ```bash
-$ cat > cloudflare.tf <<'EOF'
+cat > cloudflare.tf <<'EOF'
 terraform {
   required_providers {
     cloudflare = {
@@ -66,7 +65,10 @@ EOF
 After creating your basic configuration in HCL, initialize Terraform and ask it to apply the configuration to Cloudflare.
 
 ```sh
-$ terraform init
+terraform init
+```
+
+```sh output
 
 Initializing provider plugins...
 - Checking for available provider plugins on https://releases.hashicorp.com...
@@ -96,7 +98,10 @@ commands will detect it and remind you to do so if necessary.
 When you run `terraform init`, any plugins required, such as the Cloudflare Terraform provider, are automatically downloaded and saved locally to a `.terraform` directory.
 
 ```sh
-$ find .terraform/
+find .terraform/
+```
+
+```sh output
 .terraform/
 .terraform/plugins
 .terraform/plugins/darwin_amd64
@@ -109,7 +114,10 @@ $ find .terraform/
 After installing the Cloudflare provider, review the proposed changes to your Cloudflare account so they match the configuration you previously defined.
 
 ```sh
-$ terraform plan
+terraform plan
+```
+
+```sh output
 
 Terraform used the selected providers to generate the following execution plan.
 Resource actions are indicated with the following symbols:
@@ -151,7 +159,10 @@ The `plan` command is important because it allows you to preview the changes for
 You can use `--auto-approve` on the command line for a briefer output. Without this flag, Terraform will display the output of the Terraform plan and then ask for confirmation before applying it.
 
 ```sh
-$ terraform apply --auto-approve
+terraform apply --auto-approve
+```
+
+```sh output
 
 Terraform used the selected providers to generate the following execution plan.
 Resource actions are indicated with the following symbols:
@@ -189,7 +200,10 @@ Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) and go to **DN
 To see the full results returned from the API call, including the default values that you did not specify but let Terraform compute, run `terraform show`.
 
 ```sh
-$ terraform show
+terraform show
+```
+
+```sh output
 # cloudflare_record.www:
 resource "cloudflare_record" "www" {
     id          = "c38d3103767284e7cd14d5dad3ab8668"
@@ -216,6 +230,9 @@ resource "cloudflare_record" "www" {
 ```
 
 ```sh
-$ curl https://www.example.com
+curl https://www.example.com
+```
+
+```sh output
 Hello, this is 203.0.113.10!
 ```

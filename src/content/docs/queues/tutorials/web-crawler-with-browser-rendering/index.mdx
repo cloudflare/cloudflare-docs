@@ -17,12 +17,9 @@ head:
   - tag: title
     content: Cloudflare Queues - Queues & Browser Rendering
 description: Example of how to use Queues and Browser Rendering to power a web crawler.
-
 ---
 
-
-
-import { Render } from "~/components"
+import { Render, PackageManagers } from "~/components";
 
 This tutorial explains how to build and deploy a web crawler with Queues, [Browser Rendering](/browser-rendering/), and [Puppeteer](/browser-rendering/platform/puppeteer/).
 
@@ -34,24 +31,30 @@ You can use Puppeteer to request all images on a page, save the colors used on a
 
 <Render file="prereqs" product="workers" />
 
-### Queues access
-
-Additionally, you will need access to Queues.
-
-<Render file="enable-queues" />
-
 ## 1. Create new Workers application
 
 To get started, create a Worker application using the [`create-cloudflare` CLI](https://github.com/cloudflare/workers-sdk/tree/main/packages/create-cloudflare). Open a terminal window and run the following command:
 
-<Render file="c3-run-command-with-directory" product="workers" params={{ one: "queues-web-crawler" }} />
+<PackageManagers
+	type="create"
+	pkg="cloudflare@latest"
+	args={"queues-web-crawler"}
+/>
 
-<Render file="c3-post-run-steps" product="workers" params={{ one: "Hello World example", two: "Hello World Worker", three: "TypeScript" }} />
+<Render
+	file="c3-post-run-steps"
+	product="workers"
+	params={{
+		category: "hello-world",
+		type: "Hello World Worker",
+		lang: "TypeScript",
+	}}
+/>
 
 Then, move into your newly created directory:
 
 ```sh
-$ cd queues-web-crawler
+cd queues-web-crawler
 ```
 
 ## 2. Create KV namespace
@@ -59,13 +62,11 @@ $ cd queues-web-crawler
 We need to create a KV store. This can be done through the Cloudflare dashboard or the Wrangler CLI. For this tutorial, we will use the Wrangler CLI.
 
 ```sh
-$ npx wrangler kv namespace create crawler_links
-$ npx wrangler kv namespace create crawler_screenshots
+npx wrangler kv namespace create crawler_links
+npx wrangler kv namespace create crawler_screenshots
 ```
 
-After running the `wrangler kv namespace create` subcommand, you will get the following output.
-
-```txt title="Output"
+```sh output
 🌀 Creating namespace with title "web-crawler-crawler-links"
 ✨ Success!
 Add the following to your configuration file in your kv_namespaces array:
@@ -99,8 +100,8 @@ Now, you need to set up your Worker for Browser Rendering.
 In your current directory, install Cloudflare’s [fork of Puppeteer](/browser-rendering/platform/puppeteer/) and also [robots-parser](https://www.npmjs.com/package/robots-parser):
 
 ```sh
-$ npm install @cloudflare/puppeteer --save-dev
-$ npm install robots-parser
+npm install @cloudflare/puppeteer --save-dev
+npm install robots-parser
 ```
 
 Then, add a Browser Rendering binding. Adding a Browser Rendering binding gives the Worker access to a headless Chromium instance you will control with Puppeteer.
@@ -114,7 +115,7 @@ browser = { binding = "CRAWLER_BROWSER" }
 Now, we need to set up the Queue.
 
 ```sh
-$ npx wrangler queues create queues-web-crawler
+npx wrangler queues create queues-web-crawler
 ```
 
 ```txt title="Output"
@@ -171,10 +172,10 @@ Add the bindings to the environment interface in `src/index.ts`, so TypeScript c
 import { BrowserWorker } from "@cloudflare/puppeteer";
 
 export interface Env {
-  CRAWLER_QUEUE: Queue<any>;
-  CRAWLER_SCREENSHOTS_KV: KVNamespace;
-  CRAWLER_LINKS_KV: KVNamespace;
-  CRAWLER_BROWSER: BrowserWorker;
+	CRAWLER_QUEUE: Queue<any>;
+	CRAWLER_SCREENSHOTS_KV: KVNamespace;
+	CRAWLER_LINKS_KV: KVNamespace;
+	CRAWLER_BROWSER: BrowserWorker;
 }
 ```
 
@@ -184,19 +185,19 @@ Add a `fetch()` handler to the Worker to submit links to crawl.
 
 ```ts
 type Message = {
-  url: string;
+	url: string;
 };
 
 export interface Env {
-  CRAWLER_QUEUE: Queue<Message>;
-  // ... etc.
+	CRAWLER_QUEUE: Queue<Message>;
+	// ... etc.
 }
 
 export default {
-  async fetch(req, env): Promise<Response> {
-    await env.CRAWLER_QUEUE.send({ url: await req.text() });
-    return new Response("Success!");
-  },
+	async fetch(req, env): Promise<Response> {
+		await env.CRAWLER_QUEUE.send({ url: await req.text() });
+		return new Response("Success!");
+	},
 } satisfies ExportedHandler<Env>;
 ```
 
@@ -250,39 +251,38 @@ The `puppeteer.launch()` is wrapped in a `try...catch` to allow the whole batch 
 
 ```ts
 type Result = {
-  numCloudflareLinks: number;
-  screenshot: ArrayBuffer;
+	numCloudflareLinks: number;
+	screenshot: ArrayBuffer;
 };
 
 const crawlPage = async (url: string): Promise<Result> => {
-  const page = await (browser as puppeteer.Browser).newPage();
+	const page = await (browser as puppeteer.Browser).newPage();
 
-  await page.goto(url, {
-    waitUntil: "load",
-  });
+	await page.goto(url, {
+		waitUntil: "load",
+	});
 
-  const numCloudflareLinks = await page.$$eval("a", (links) => {
-	links = links.filter((link) => {
-      try {
-        return new URL(link.href).hostname.includes("cloudflare.com");
-      } catch {
-        return false;
-      }
-    });
-    return links.length;
-  });
+	const numCloudflareLinks = await page.$$eval("a", (links) => {
+		links = links.filter((link) => {
+			try {
+				return new URL(link.href).hostname.includes("cloudflare.com");
+			} catch {
+				return false;
+			}
+		});
+		return links.length;
+	});
 
-  await page.setViewport({
-    width: 1920,
-    height: 1080,
-    deviceScaleFactor: 1,
-  });
+	await page.setViewport({
+		width: 1920,
+		height: 1080,
+		deviceScaleFactor: 1,
+	});
 
-  return {
-    numCloudflareLinks,
-    screenshot: ((await page.screenshot({ fullPage: true })) as Buffer)
-      .buffer,
-  };
+	return {
+		numCloudflareLinks,
+		screenshot: ((await page.screenshot({ fullPage: true })) as Buffer).buffer,
+	};
 };
 ```
 
@@ -296,16 +296,16 @@ To enable recursively crawling links, add a snippet after checking the number of
 // const numCloudflareLinks = await page.$$eval("a", (links) => { ...
 
 await page.$$eval("a", async (links) => {
-  const urls: MessageSendRequest<Message>[] = links.map((link) => {
-    return {
-      body: {
-        url: link.href,
-      },
-    };
-  });
-  try {
-    await env.CRAWLER_QUEUE.sendBatch(urls);
-  } catch {} // do nothing, likely hit subrequest limit
+	const urls: MessageSendRequest<Message>[] = links.map((link) => {
+		return {
+			body: {
+				url: link.href,
+			},
+		};
+	});
+	try {
+		await env.CRAWLER_QUEUE.sendBatch(urls);
+	} catch {} // do nothing, likely hit subrequest limit
 });
 
 // await page.setViewport({ ...
@@ -317,25 +317,23 @@ Then, in the `queue` handler, call `crawlPage` on the URL.
 // in the `queue` handler:
 // ...
 if (!isAllowed) {
-  message.ack();
-  continue;
+	message.ack();
+	continue;
 }
 
 try {
-  const { numCloudflareLinks, screenshot } = await crawlPage(url);
-  const timestamp = new Date().getTime();
-  const resultKey = `${encodeURIComponent(url)}-${timestamp}`;
-  await env.CRAWLER_LINKS_KV.put(
-    resultKey,
-    numCloudflareLinks.toString(),
-    { metadata: { date: timestamp } }
-  );
-  await env.CRAWLER_SCREENSHOTS_KV.put(resultKey, screenshot, {
-    metadata: { date: timestamp },
-  });
-  message.ack();
+	const { numCloudflareLinks, screenshot } = await crawlPage(url);
+	const timestamp = new Date().getTime();
+	const resultKey = `${encodeURIComponent(url)}-${timestamp}`;
+	await env.CRAWLER_LINKS_KV.put(resultKey, numCloudflareLinks.toString(), {
+		metadata: { date: timestamp },
+	});
+	await env.CRAWLER_SCREENSHOTS_KV.put(resultKey, screenshot, {
+		metadata: { date: timestamp },
+	});
+	message.ack();
 } catch {
-  message.retry();
+	message.retry();
 }
 
 // ...
@@ -383,52 +381,52 @@ import puppeteer, { BrowserWorker } from "@cloudflare/puppeteer";
 import robotsParser from "robots-parser";
 
 type Message = {
-  url: string;
+	url: string;
 };
 
 export interface Env {
-  CRAWLER_QUEUE: Queue<Message>;
-  CRAWLER_SCREENSHOTS_KV: KVNamespace;
-  CRAWLER_LINKS_KV: KVNamespace;
-  CRAWLER_BROWSER: BrowserWorker;
+	CRAWLER_QUEUE: Queue<Message>;
+	CRAWLER_SCREENSHOTS_KV: KVNamespace;
+	CRAWLER_LINKS_KV: KVNamespace;
+	CRAWLER_BROWSER: BrowserWorker;
 }
 
 type Result = {
-  numCloudflareLinks: number;
-  screenshot: ArrayBuffer;
+	numCloudflareLinks: number;
+	screenshot: ArrayBuffer;
 };
 
 type KeyMetadata = {
-  date: number;
+	date: number;
 };
 
 export default {
-  async fetch(req: Request, env: Env): Promise<Response> {
-    // util endpoint for testing purposes
-    await env.CRAWLER_QUEUE.send({ url: await req.text() });
-    return new Response("Success!");
-  },
-  async queue(batch: MessageBatch<Message>, env: Env): Promise<void> {
-    const crawlPage = async (url: string): Promise<Result> => {
-      const page = await (browser as puppeteer.Browser).newPage();
+	async fetch(req: Request, env: Env): Promise<Response> {
+		// util endpoint for testing purposes
+		await env.CRAWLER_QUEUE.send({ url: await req.text() });
+		return new Response("Success!");
+	},
+	async queue(batch: MessageBatch<Message>, env: Env): Promise<void> {
+		const crawlPage = async (url: string): Promise<Result> => {
+			const page = await (browser as puppeteer.Browser).newPage();
 
-      await page.goto(url, {
-        waitUntil: "load",
-      });
+			await page.goto(url, {
+				waitUntil: "load",
+			});
 
-      const numCloudflareLinks = await page.$$eval("a", (links) => {
-        links = links.filter((link) => {
-          try {
-            return new URL(link.href).hostname.includes("cloudflare.com");
-          } catch {
-            return false;
-          }
-        });
-        return links.length;
-      });
+			const numCloudflareLinks = await page.$$eval("a", (links) => {
+				links = links.filter((link) => {
+					try {
+						return new URL(link.href).hostname.includes("cloudflare.com");
+					} catch {
+						return false;
+					}
+				});
+				return links.length;
+			});
 
-      // to crawl recursively - uncomment this!
-      /*await page.$$eval("a", async (links) => {
+			// to crawl recursively - uncomment this!
+			/*await page.$$eval("a", async (links) => {
         const urls: MessageSendRequest<Message>[] = links.map((link) => {
           return {
             body: {
@@ -441,81 +439,81 @@ export default {
         } catch {} // do nothing, might've hit subrequest limit
       });*/
 
-      await page.setViewport({
-        width: 1920,
-        height: 1080,
-        deviceScaleFactor: 1,
-      });
+			await page.setViewport({
+				width: 1920,
+				height: 1080,
+				deviceScaleFactor: 1,
+			});
 
-      return {
-        numCloudflareLinks,
-        screenshot: ((await page.screenshot({ fullPage: true })) as Buffer)
-          .buffer,
-      };
-    };
+			return {
+				numCloudflareLinks,
+				screenshot: ((await page.screenshot({ fullPage: true })) as Buffer)
+					.buffer,
+			};
+		};
 
-    let browser: puppeteer.Browser | null = null;
-    try {
-      browser = await puppeteer.launch(env.CRAWLER_BROWSER);
-    } catch {
-      batch.retryAll();
-      return;
-    }
+		let browser: puppeteer.Browser | null = null;
+		try {
+			browser = await puppeteer.launch(env.CRAWLER_BROWSER);
+		} catch {
+			batch.retryAll();
+			return;
+		}
 
-    for (const message of batch.messages) {
-      const { url } = message.body;
-      const timestamp = new Date().getTime();
-      const resultKey = `${encodeURIComponent(url)}-${timestamp}`;
+		for (const message of batch.messages) {
+			const { url } = message.body;
+			const timestamp = new Date().getTime();
+			const resultKey = `${encodeURIComponent(url)}-${timestamp}`;
 
-      const sameUrlCrawls = await env.CRAWLER_LINKS_KV.list({
-        prefix: `${encodeURIComponent(url)}`,
-      });
+			const sameUrlCrawls = await env.CRAWLER_LINKS_KV.list({
+				prefix: `${encodeURIComponent(url)}`,
+			});
 
-      let shouldSkip = false;
-      for (const key of sameUrlCrawls.keys) {
-        if (timestamp - (key.metadata as KeyMetadata)?.date < 60 * 60 * 1000) {
-          // if crawled in last hour, skip
-          message.ack();
-          shouldSkip = true;
-          break;
-        }
-      }
-      if (shouldSkip) {
-        continue;
-      }
+			let shouldSkip = false;
+			for (const key of sameUrlCrawls.keys) {
+				if (timestamp - (key.metadata as KeyMetadata)?.date < 60 * 60 * 1000) {
+					// if crawled in last hour, skip
+					message.ack();
+					shouldSkip = true;
+					break;
+				}
+			}
+			if (shouldSkip) {
+				continue;
+			}
 
-      let isAllowed = true;
-      try {
-        const robotsTextPath = new URL(url).origin + "/robots.txt";
-        const response = await fetch(robotsTextPath);
+			let isAllowed = true;
+			try {
+				const robotsTextPath = new URL(url).origin + "/robots.txt";
+				const response = await fetch(robotsTextPath);
 
-        const robots = robotsParser(robotsTextPath, await response.text());
-        isAllowed = robots.isAllowed(url) ?? true; // respect robots.txt!
-      } catch {}
+				const robots = robotsParser(robotsTextPath, await response.text());
+				isAllowed = robots.isAllowed(url) ?? true; // respect robots.txt!
+			} catch {}
 
-      if (!isAllowed) {
-        message.ack();
-        continue;
-      }
+			if (!isAllowed) {
+				message.ack();
+				continue;
+			}
 
-      try {
-        const { numCloudflareLinks, screenshot } = await crawlPage(url);
-        await env.CRAWLER_LINKS_KV.put(
-          resultKey,
-          numCloudflareLinks.toString(),
-          { metadata: { date: timestamp } }
-        );
-        await env.CRAWLER_SCREENSHOTS_KV.put(resultKey, screenshot, {
-          metadata: { date: timestamp },
-        });
-        message.ack();
-      } catch {
-        message.retry();
-      }
-    }
+			try {
+				const { numCloudflareLinks, screenshot } = await crawlPage(url);
+				await env.CRAWLER_LINKS_KV.put(
+					resultKey,
+					numCloudflareLinks.toString(),
+					{ metadata: { date: timestamp } },
+				);
+				await env.CRAWLER_SCREENSHOTS_KV.put(resultKey, screenshot, {
+					metadata: { date: timestamp },
+				});
+				message.ack();
+			} catch {
+				message.retry();
+			}
+		}
 
-    await browser.close();
-  },
+		await browser.close();
+	},
 };
 ```
 
@@ -524,7 +522,7 @@ export default {
 To deploy your Worker, run the following command:
 
 ```sh
-$ npx wrangler deploy
+npx wrangler deploy
 ```
 
 You have successfully created a Worker which can submit URLs to a queue for crawling and save results to Workers KV.
@@ -542,7 +540,7 @@ Refer to the [GitHub repository for the complete tutorial](https://github.com/cl
 
 ## Related resources
 
-* [How Queues works](/queues/reference/how-queues-works/)
-* [Queues Batching and Retries](/queues/configuration/batching-retries/)
-* [Browser Rendering](/browser-rendering/)
-* [Puppeteer Examples](https://github.com/puppeteer/puppeteer/tree/main/examples)
+- [How Queues works](/queues/reference/how-queues-works/)
+- [Queues Batching and Retries](/queues/configuration/batching-retries/)
+- [Browser Rendering](/browser-rendering/)
+- [Puppeteer Examples](https://github.com/puppeteer/puppeteer/tree/main/examples)

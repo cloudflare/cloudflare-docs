@@ -1,12 +1,9 @@
 ---
 pcx_content_type: how-to
 title: Okta
-sidebar:
-  order: 17
-
 ---
 
-import { Render } from "~/components"
+import { Render } from "~/components";
 
 Okta provides cloud software that helps companies manage and secure user authentication to modern applications, and helps developers build identity controls into applications, website web services, and devices. You can integrate Okta with Cloudflare Zero Trust and build rules based on user identity and group membership. Cloudflare Zero Trust supports Okta integrations using either the OIDC (default) or [SAML](/cloudflare-one/identity/idp-integration/okta-saml/) protocol.
 
@@ -40,7 +37,11 @@ Additionally, you can configure Okta to use risk information from Zero Trust [us
 
    ![Configuring the Groups claim filter in Okta](~/assets/images/cloudflare-one/identity/okta/okta-2.png)
 
-9. Set the **Groups claim filter** to *Matches regex* and its value to `.*`.
+9. Set the **Groups claim filter** to _Matches regex_ and its value to `.*`.
+
+   :::note
+   Groups managed outside of Okta (for example, Microsoft Entra ID or Google groups) may require different regex values. For more information, refer to the [Okta documentation](https://support.okta.com/help/s/article/Why-isnt-my-Groups-claim-returning-Active-Directory-groups).
+   :::
 
 10. In the **General** tab, copy the **Client ID** and **Client secret**.
 
@@ -52,14 +53,15 @@ Additionally, you can configure Okta to use risk information from Zero Trust [us
 
 13. Fill in the following information:
 
-    * **Name**: Name your identity provider.
-    * **App ID**: Enter your Okta client ID.
-    * **Client secret**: Enter your Okta client secret.
-    * **Okta account URL**: Enter your [Okta domain](https://developer.okta.com/docs/guides/find-your-domain/main/), for example `https://my-company.okta.com`.
+    - **Name**: Name your identity provider.
+    - **App ID**: Enter your Okta client ID.
+    - **Client secret**: Enter your Okta client secret.
+    - **Okta account URL**: Enter your [Okta domain](https://developer.okta.com/docs/guides/find-your-domain/main/), for example `https://my-company.okta.com`.
 
 14. (Optional) Create an Okta API token and enter it in Zero Trust (the token can be read-only). This will prevent your Okta groups from failing if you have more than 100 groups.
 
 15. (Optional) To configure [custom OIDC claims](/cloudflare-one/identity/idp-integration/generic-oidc/#oidc-claims):
+
     1. In Okta, create a [custom authorization server](https://developer.okta.com/docs/guides/customize-authz-server/main/) and ensure that the `groups` scope is enabled.
     2. In Zero Trust, enter the **Authorization Server ID** obtained from Okta.
     3. Under **Optional configurations**, enter the claims that you wish to add to your users' identity. This information will be available in the [user identity endpoint](/cloudflare-one/identity/authorization-cookie/application-token/#user-identity)
@@ -72,12 +74,10 @@ To [test](/cloudflare-one/identity/idp-integration/#test-idps-in-zero-trust) tha
 
 :::note
 
-
 If you see the error `Failed to fetch user/group information from the identity`, double-check your Okta configuration:
 
-* If you have more than 100 Okta groups, ensure you include the API token.
-* The request may be blocked by the [ThreatInsights feature](https://help.okta.com/en/prod/Content/Topics/Security/threat-insight/ti-index.htm) within Okta.
-
+- If you have more than 100 Okta groups, ensure you include the API token.
+- The request may be blocked by the [ThreatInsights feature](https://help.okta.com/en/prod/Content/Topics/Security/threat-insight/ti-index.htm) within Okta.
 
 :::
 
@@ -85,12 +85,15 @@ If you see the error `Failed to fetch user/group information from the identity`,
 
 The Okta integration allows you to synchronize IdP groups and automatically deprovision users using [SCIM](/cloudflare-one/identity/users/scim/). To enable SCIM provisioning between Access and Okta, you need two separate app integrations in Okta:
 
-* The Okta OIDC connector you created when adding [Okta as an identity provider](/cloudflare-one/identity/idp-integration/okta/#set-up-okta-as-an-oidc-provider).
-* A second Okta application of type **SCIM 2.0 Test App (Header Auth)**. This is technically a SAML app but is responsible for sending user and group info via SCIM.
+- The Okta OIDC connector you created when adding [Okta as an identity provider](/cloudflare-one/identity/idp-integration/okta/#set-up-okta-as-an-oidc-provider).
+- A second Okta application of type **SCIM 2.0 Test App (Header Auth)**. This is technically a SAML app but is responsible for sending user and group info via SCIM.
 
 ### 1. Enable SCIM in Zero Trust
 
-<Render file="access/enable-scim-on-dashboard" params={{ one: "Enable SCIM "}} />
+<Render
+	file="access/enable-scim-on-dashboard"
+	params={{ one: "Enable SCIM " }}
+/>
 
 ### 2. Configure SCIM in Okta
 
@@ -120,9 +123,9 @@ The Okta integration allows you to synchronize IdP groups and automatically depr
 
 12. On the **Provisioning** tab, select **Edit** and enable:
 
-    * **Create Users**
-    * **Update User Attributes**
-    * **Deactivate Users**
+    - **Create Users**
+    - **Update User Attributes**
+    - **Deactivate Users**
 
     ![Configure provisioning settings in Okta](~/assets/images/cloudflare-one/identity/okta/enable-provisioning.png)
 
@@ -138,12 +141,12 @@ Provisioning will begin immediately. To verify the integration, select **View Lo
 
 ```json
 {
-  "config": {
-    "client_id": "<your client id>",
-    "client_secret": "<your client secret>",
-    "okta_account": "https://dev-abc123.oktapreview.com"
-  },
-  "type": "okta",
-  "name": "my example idp"
+	"config": {
+		"client_id": "<your client id>",
+		"client_secret": "<your client secret>",
+		"okta_account": "https://dev-abc123.oktapreview.com"
+	},
+	"type": "okta",
+	"name": "my example idp"
 }
 ```

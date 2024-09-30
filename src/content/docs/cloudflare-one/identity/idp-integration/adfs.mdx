@@ -1,12 +1,15 @@
 ---
 pcx_content_type: how-to
-title: Active Directory® (SAML)
-sidebar:
-  order: 3
-
+title: Active Directory (SAML)
 ---
 
-import { GlossaryTooltip } from "~/components"
+import { GlossaryTooltip } from "~/components";
+
+:::caution
+Microsoft recommends migrating your Active Directory Federation Service (AD FS) SSO to Microsoft Entra ID. For more information, refer to [Microsoft Learn](https://learn.microsoft.com/windows-server/identity/ad-fs/ad-fs-overview).
+
+To set up the Microsoft Entra ID IdP integration with Zero Trust, refer to [Microsoft Entra ID](/cloudflare-one/identity/idp-integration/entra-id/).
+:::
 
 Active Directory is a directory service developed by Microsoft for Windows domain networks. It is included in most Windows Server operating systems as a set of processes and services. Active Directory integrates with Cloudflare Access using Security Assertion Markup Language (<GlossaryTooltip term="SAML">SAML</GlossaryTooltip>).
 
@@ -14,14 +17,14 @@ Active Directory is a directory service developed by Microsoft for Windows domai
 
 To get started, you need:
 
-* An Active Directory Domain Controller where all users have an email attribute
-* Generic SAML enabled for your Access Identity Provider (IdP)
-* A Microsoft server running with Active Directory Federation Services (ADFS) installed. All screenshots in these instructions are for Server 2012R2. Similar steps will work for newer versions.
-* A browser safe certificate for Active Directory Federation Services (ADFS)
+- An Active Directory Domain Controller where all users have an email attribute
+- Generic SAML enabled for your Access Identity Provider (IdP)
+- A Microsoft server running with Active Directory Federation Services (AD FS) installed. All screenshots in these instructions are for Server 2012R2. Similar steps will work for newer versions.
+- A browser safe certificate for Active Directory Federation Services (AD FS)
 
-Once you fulfill the requirements above, you are ready to begin. Installation and basic configuration of Active Directory Federation Services (ADFS) is outside the scope of this guide. A detailed guide can be found in a [Microsoft KB](https://docs.microsoft.com/en-us/previous-versions/dynamicscrm-2016/deployment-administrators-guide/gg188612\(v=crm.8\)).
+Once you fulfill the requirements above, you are ready to begin. Installation and basic configuration of Active Directory Federation Services (AD FS) is outside the scope of this guide. A detailed guide can be found in a [Microsoft KB](<https://docs.microsoft.com/en-us/previous-versions/dynamicscrm-2016/deployment-administrators-guide/gg188612(v=crm.8)>).
 
-Then to begin the connection between Cloudflare Access and ADFS create a Relying Party Trust in ADFS.
+Then to begin the connection between Cloudflare Access and AD FS create a Relying Party Trust in AD FS.
 
 ## Create a Relying Party Trust
 
@@ -79,13 +82,13 @@ To create a Relying Party Trust:
 
 21. Review your settings.
 
-22. Select **Next**. Cloudflare now relies on ADFS for user-identity authorization.
+22. Select **Next**. Cloudflare now relies on AD FS for user-identity authorization.
 
 The **Edit Claim Rules for CF Login** screen automatically displays.
 
 ## Create claim rules
 
-Now create 2 Claim Rules so that ADFS can take information from Cloudflare and return it to create [Access policies](/cloudflare-one/policies/access/).
+Now create 2 Claim Rules so that AD FS can take information from Cloudflare and return it to create [Access policies](/cloudflare-one/policies/access/).
 
 If you closed the Add Relying Trust wizard, use Explorer to find the **Relying Party Trusts** folder, select the newly created RPT file, and select **Edit Claim Rules** in the **Action** sidebar.
 
@@ -125,11 +128,11 @@ Both Claim Rules are now available to export to your Cloudflare Access account.
 
 ## Export the certificate
 
-Now you’ll configure Cloudflare to recognize ADFS by extracting the *token-signing certificate* from ADFS.
+Now you'll configure Cloudflare to recognize AD FS by extracting the _token-signing certificate_ from AD FS.
 
 To export the certificate:
 
-1. Within the ADFS management console, select the **Service** under AD FS and choose the **Certificates** folder which contains the certificate to export.
+1. Within the AD FS management console, select the **Service** under AD FS and choose the **Certificates** folder which contains the certificate to export.
 
 2. In the **Certificates** card, right-click on the entry under **Token-signing**, and select **View certificate**. The **Certificates** window displays.
 
@@ -153,9 +156,9 @@ To export the certificate:
 
     Note the file path for later.
 
-## Configure ADFS to sign SAML responses
+## Configure AD FS to sign SAML responses
 
-To ensure that ADFS signs the full response when communicating with Cloudflare, open your local **PowerShell** and enter the following command:
+To ensure that AD FS signs the full response when communicating with Cloudflare, open your local **PowerShell** and enter the following command:
 
 ```bash
 Set-ADFSRelyingPartyTrust -TargetName "Name of RPT Display Name" -SamlResponseSignature "MessageAndAssertion"
@@ -163,7 +166,7 @@ Set-ADFSRelyingPartyTrust -TargetName "Name of RPT Display Name" -SamlResponseSi
 
 ## Configure Cloudflare Zero Trust
 
-To enable Cloudflare Zero Trust to accept the claims and assertions sent from ADFS, follow these steps:
+To enable Cloudflare Zero Trust to accept the claims and assertions sent from AD FS, follow these steps:
 
 1. In Zero Trust, go to **Settings** > **Authentication**.
 
@@ -179,7 +182,7 @@ To enable Cloudflare Zero Trust to accept the claims and assertions sent from AD
    https://hostnameOfADFS/adfs/ls/
    ```
 
-   This is the default location. You can find your federation service identifier in ADFS.
+   This is the default location. You can find your federation service identifier in AD FS.
 
 6. In the **IdP Entity ID or Issuer URL** field, enter your Zero Trust team domain and include this callback at the end of the path: `/cdn-cgi/access/callback`. For example:
 
@@ -217,15 +220,15 @@ To get your Cloudflare metadata file:
 
 ```json
 {
-  "config": {
-    "issuer_url": "https://<your-team-name>.cloudflareaccess.com/",
-    "sso_target_url": "https://adfs.example.com/adfs/ls/",
-    "attributes": ["email"],
-    "email_attribute_name": "",
-    "sign_request": false,
-    "idp_public_cert": "MIIDpDCCAoygAwIBAgIGAV2ka+55MA0GCSqGSIb3DQEBCwUAMIGSMQswCQYDVQQGEwJVUzETMBEG\nA1UEC.....GF/Q2/MHadws97cZg\nuTnQyuOqPuHbnN83d/2l1NSYKCbHt24o"
-  },
-  "type": "saml",
-  "name": "adfs saml example"
+	"config": {
+		"issuer_url": "https://<your-team-name>.cloudflareaccess.com/",
+		"sso_target_url": "https://adfs.example.com/adfs/ls/",
+		"attributes": ["email"],
+		"email_attribute_name": "",
+		"sign_request": false,
+		"idp_public_cert": "MIIDpDCCAoygAwIBAgIGAV2ka+55MA0GCSqGSIb3DQEBCwUAMIGSMQswCQYDVQQGEwJVUzETMBEG\nA1UEC.....GF/Q2/MHadws97cZg\nuTnQyuOqPuHbnN83d/2l1NSYKCbHt24o"
+	},
+	"type": "saml",
+	"name": "adfs saml example"
 }
 ```

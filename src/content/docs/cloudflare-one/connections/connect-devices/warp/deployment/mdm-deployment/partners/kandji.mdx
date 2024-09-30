@@ -3,14 +3,13 @@ pcx_content_type: how-to
 title: Kandji
 sidebar:
   order: 2
-
 ---
 
 Kandji deploys Cloudflare WARP as a custom app. For an overview of how Kandji deploys custom apps, refer to their [knowledge base article](https://support.kandji.io/custom-apps-overview).
 
 ## macOS
 
-For the simplest deployment, Kandji has created a downloadable configuration profile that enables Cloudflare WARP’s user notifications and configures its Privacy Preference Policy Control ([PPPC](https://support.kandji.io/create-a-privacy-preferences-policy-control-profile)) to have Full Disk Access.
+For the simplest deployment, Kandji has created a downloadable configuration profile that enables Cloudflare WARP's user notifications and configures its Privacy Preference Policy Control ([PPPC](https://support.kandji.io/create-a-privacy-preferences-policy-control-profile)) to have Full Disk Access.
 
 1. Download the [custom profile](https://github.com/kandji-inc/support/blob/master/Configuration%20Profiles/cloudflare_warp.mobileconfig).
 
@@ -23,7 +22,7 @@ For the simplest deployment, Kandji has created a downloadable configuration pro
 
    1. Enter a **Name** for the custom configuration profile.
    2. Assign your custom profile to a test Blueprint.
-   3. Set **Device Families** to *Mac*.
+   3. Set **Device Families** to _Mac_.
    4. Upload the `cloudflare_warp.mobileconfig` file you previously downloaded.
    5. Save the custom profile.
 
@@ -44,9 +43,9 @@ For the simplest deployment, Kandji has created a downloadable configuration pro
 
    4. Copy the **Audit and Enforce Script** [below](#audit-and-enforce-script) and paste it into the **Audit Script** text field.
 
-   5. To enforce a minimum app version, update the **ENFORCED\_VERSION** variable in the audit script with the version number the audit script should enforce (for example, `1.5.207.0`).
+   5. To enforce a minimum app version, update the **ENFORCED_VERSION** variable in the audit script with the version number the audit script should enforce (for example, `1.5.207.0`).
 
-      If **ENFORCED\_VERSION** is left blank (`""`), the audit script will not check for a version and will only check for the presence of the Cloudflare WARP app in the Applications folder or a subfolder within **Applications**. Refer to the script comments for more details.
+      If **ENFORCED_VERSION** is left blank (`""`), the audit script will not check for a version and will only check for the presence of the Cloudflare WARP app in the Applications folder or a subfolder within **Applications**. Refer to the script comments for more details.
 
    6. In the **Install Details** section, select **Installer Package**.
 

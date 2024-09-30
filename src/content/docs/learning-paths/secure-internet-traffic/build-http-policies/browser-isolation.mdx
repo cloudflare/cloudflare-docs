@@ -3,10 +3,9 @@ title: Configure Browser Isolation
 pcx_content_type: learning-unit
 sidebar:
   order: 4
-
 ---
 
-import { GlossaryDefinition, TabItem, Tabs } from "~/components"
+import { GlossaryDefinition, TabItem, Tabs } from "~/components";
 
 <GlossaryDefinition term="Cloudflare Browser Isolation" />
 
@@ -24,7 +23,7 @@ As you have begun deploying Cloudflare Zero Trust, you may have started to visua
 
 You can control potential risk and shape user behavior without applying heavy-handed block policies by applying policies to isolate user traffic to applications that match your defined categories. You can then set additional parameters in the policy, such as the ability to restrict copy/paste and upload/download. Users can still access information in the tools -- if not use the tools to a lesser extent -- while you minimize the risk of data loss.
 
-<Tabs> <TabItem label="Dashboard">
+<Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
 
 1. In [Zero Trust](https://one.dash.cloudflare.com/), go to **Gateway** > **Firewall Policies**.
 
@@ -36,12 +35,13 @@ You can control potential risk and shape user behavior without applying heavy-ha
 
    | Selector | Operator | Value       | Action  |
    | -------- | -------- | ----------- | ------- |
-   | Host     | in list  | *Shadow IT* | Isolate |
+   | Host     | in list  | _Shadow IT_ | Isolate |
 
 5. In **Configure policy settings**, turn on the following options:
-   * *Disable copy / paste*
-   * *Disable file downloads*
-   * *Disable file uploads*
+
+   - _Disable copy / paste_
+   - _Disable file downloads_
+   - _Disable file uploads_
 
 6. Select **Create policy**.
 
@@ -88,27 +88,27 @@ A common method for using Browser Isolation to protect against unknown or zero-d
 
 You can accomplish this by creating the following policies:
 
-* Explicit allow policies for all of your known applications and trusted websites using either Cloudflare application definitions or a list
-* Explicit block policies for all security risks, known malicious traffic, and against-acceptable-use intentional denies
-* A policy to isolate all other traffic in this middle
+- Explicit allow policies for all of your known applications and trusted websites using either Cloudflare application definitions or a list
+- Explicit block policies for all security risks, known malicious traffic, and against-acceptable-use intentional denies
+- A policy to isolate all other traffic in this middle
 
 In this context, if some traffic is unknown to your organization, Cloudflare will isolate it by default. Cloudflare will also prevent any malicious code from being executed client side, with additional controls available.
 
-<Tabs> <TabItem label="Dashboard">
+<Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
 
-* Allow known applications and websites:
+- Allow known applications and websites:
 
   | Selector | Operator | Value           | Action |
   | -------- | -------- | --------------- | ------ |
-  | Domain   | in list  | *Known Domains* | Allow  |
+  | Domain   | in list  | _Known Domains_ | Allow  |
 
-* Block security risks:
+- Block security risks:
 
   | Selector       | Operator | Value                | Action |
   | -------------- | -------- | -------------------- | ------ |
-  | Security Risks | in       | *All Security Risks* | Block  |
+  | Security Risks | in       | _All Security Risks_ | Block  |
 
-* Isolate all other traffic:
+- Isolate all other traffic:
 
   | Selector | Operator      | Value | Action  |
   | -------- | ------------- | ----- | ------- |

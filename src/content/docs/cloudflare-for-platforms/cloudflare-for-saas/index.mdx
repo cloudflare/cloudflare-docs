@@ -3,12 +3,11 @@ pcx_content_type: overview
 title: Cloudflare for SaaS
 sidebar:
   order: 6
-
 ---
 
-import { LinkButton, Render } from "~/components"
+import { LinkButton, Render } from "~/components";
 
-<Render file="ssl-for-saas-definition" /> <br/>
+<Render file="ssl-for-saas-definition" /> <br />
 
 As a SaaS provider, you may want to support subdomains under your own zone in addition to letting your customers use their own domain names with your services. For example, a customer may want to use their vanity domain `app.customer.com` to point to an application hosted on your Cloudflare zone `service.saas.com`. Cloudflare for SaaS allows you to increase security, performance, and reliability of your customers' domains.
 
@@ -18,21 +17,21 @@ As a SaaS provider, you may want to support subdomains under your own zone in ad
 
 When you use Cloudflare for SaaS, it helps you to:
 
-* Provide custom domain support.
-* Keep your customers' traffic encrypted.
-* Keep your customers online.
-* Facilitate fast load times of your customers' domains.
-* Gain insight through traffic analytics.
+- Provide custom domain support.
+- Keep your customers' traffic encrypted.
+- Keep your customers online.
+- Facilitate fast load times of your customers' domains.
+- Gain insight through traffic analytics.
 
 ## Limitations
 
 If your customers already have their applications on Cloudflare, they cannot control some Cloudflare features for hostnames managed by your Custom Hostnames configuration, including:
 
-* Argo
-* Early Hints
-* Page Shield
-* Spectrum
-* Wildcard DNS
+- Argo
+- Early Hints
+- Page Shield
+- Spectrum
+- Wildcard DNS
 
 ## How it works
 
@@ -62,4 +61,15 @@ Cloudflare for SaaS is bundled with non-Enterprise plans and available as an add
 
 ## Next steps
 
- <LinkButton variant="primary" href="start/getting-started/">Get started</LinkButton> <LinkButton variant="secondary" href="https://blog.cloudflare.com/introducing-ssl-for-saas/">Learn more</LinkButton>
+<LinkButton
+	variant="primary"
+	href="/cloudflare-for-platforms/cloudflare-for-saas/start/getting-started/"
+>
+	Get started
+</LinkButton>
+<LinkButton
+	variant="secondary"
+	href="https://blog.cloudflare.com/introducing-ssl-for-saas/"
+>
+	Learn more
+</LinkButton>

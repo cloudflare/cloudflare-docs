@@ -6,10 +6,9 @@ sidebar:
 head:
   - tag: title
     content: Use R2 from Workers
-
 ---
 
-import { Render } from "~/components"
+import { Render, PackageManagers } from "~/components";
 
 ## 1. Create a new application with C3
 
@@ -17,14 +16,22 @@ C3 (`create-cloudflare-cli`) is a command-line tool designed to help you set up 
 
 To get started, open a terminal window and run:
 
-<Render file="c3-run-command-with-directory" product="workers" params={{ one: "r2-worker" }} />
+<PackageManagers type="create" pkg="cloudflare@latest" args={"r2-worker"} />
 
-<Render file="c3-post-run-steps" product="workers" params={{ one: "Hello World example", two: "Hello World Worker", three: "JavaScript" }} />
+<Render
+	file="c3-post-run-steps"
+	product="workers"
+	params={{
+		category: "hello-world",
+		type: "Hello World Worker",
+		lang: "JavaScript",
+	}}
+/>
 
 Then, move into your newly created directory:
 
 ```sh
-$ cd r2-worker
+cd r2-worker
 ```
 
 ## 2. Create your bucket
@@ -32,13 +39,13 @@ $ cd r2-worker
 Create your bucket by running:
 
 ```sh
-$ wrangler r2 bucket create <YOUR_BUCKET_NAME>
+npx wrangler r2 bucket create <YOUR_BUCKET_NAME>
 ```
 
 To check that your bucket was created, run:
 
 ```sh
-$ wrangler r2 bucket list
+npx wrangler r2 bucket list
 ```
 
 After running the `list` command, you will see all bucket names, including the one you have just created.
@@ -49,11 +56,9 @@ You will need to bind your bucket to a Worker.
 
 :::note[Bindings]
 
-
 A binding is how your Worker interacts with external resources such as [KV Namespaces](/kv/concepts/kv-namespaces/), [Durable Objects](/durable-objects/), or [R2 Buckets](/r2/buckets/). A binding is a runtime variable that the Workers runtime provides to your code. You can declare a variable name in your `wrangler.toml` file that will be bound to these resources at runtime, and interact with them through this variable. Every binding's variable name and behavior is determined by you when deploying the Worker. Refer to the [Environment Variables](/workers/configuration/environment-variables/) documentation for more information.
 
 A binding is defined in the `wrangler.toml` file of your Worker project's directory.
-
 
 :::
 
@@ -73,10 +78,8 @@ Within your Worker code, your bucket is now available under the `MY_BUCKET` vari
 
 :::caution[Local Development mode in Wrangler]
 
-
 By default `wrangler dev` runs in local development mode. In this mode, all operations performed by your local worker will operate against local storage on your machine.
 Use `wrangler dev --remote` if you want R2 operations made during development to be performed against a real R2 bucket.
-
 
 :::
 
@@ -84,51 +87,49 @@ An R2 bucket is able to READ, LIST, WRITE, and DELETE objects. You can see an ex
 
 ```js
 export default {
-  async fetch(request, env) {
-    const url = new URL(request.url);
-    const key = url.pathname.slice(1);
+	async fetch(request, env) {
+		const url = new URL(request.url);
+		const key = url.pathname.slice(1);
 
-    switch (request.method) {
-      case 'PUT':
-        await env.MY_BUCKET.put(key, request.body);
-        return new Response(`Put ${key} successfully!`);
-      case 'GET':
-        const object = await env.MY_BUCKET.get(key);
+		switch (request.method) {
+			case "PUT":
+				await env.MY_BUCKET.put(key, request.body);
+				return new Response(`Put ${key} successfully!`);
+			case "GET":
+				const object = await env.MY_BUCKET.get(key);
 
-        if (object === null) {
-          return new Response('Object Not Found', { status: 404 });
-        }
+				if (object === null) {
+					return new Response("Object Not Found", { status: 404 });
+				}
 
-        const headers = new Headers();
-        object.writeHttpMetadata(headers);
-        headers.set('etag', object.httpEtag);
+				const headers = new Headers();
+				object.writeHttpMetadata(headers);
+				headers.set("etag", object.httpEtag);
 
-        return new Response(object.body, {
-          headers,
-        });
-      case 'DELETE':
-        await env.MY_BUCKET.delete(key);
-        return new Response('Deleted!');
+				return new Response(object.body, {
+					headers,
+				});
+			case "DELETE":
+				await env.MY_BUCKET.delete(key);
+				return new Response("Deleted!");
 
-      default:
-        return new Response('Method Not Allowed', {
-          status: 405,
-          headers: {
-            Allow: 'PUT, GET, DELETE',
-          },
-        });
-    }
-  },
+			default:
+				return new Response("Method Not Allowed", {
+					status: 405,
+					headers: {
+						Allow: "PUT, GET, DELETE",
+					},
+				});
+		}
+	},
 };
 ```
 
 :::caution[Prevent potential errors when accessing request.body]
 
-
 The body of a [Request](https://developer.mozilla.org/en-US/docs/Web/API/Request) can only be accessed once. If you previously used `request.formData()` in the same request, you may encounter a TypeError when attempting to access `request.body`.<br/><br/>
 To avoid errors, create a clone of the Request object with `request.clone()` for each subsequent attempt to access a Request's body.
 Keep in mind that Workers have a [memory limit of 128MB per Worker](https://developers.cloudflare.com/workers/platform/limits#worker-limits) and loading particularly large files into a Worker's memory multiple times may reach this limit. To ensure memory usage does not reach this limit, consider using [Streams](https://developers.cloudflare.com/workers/runtime-apis/streams/).
-
 
 :::
 
@@ -150,49 +151,52 @@ For `PUT` and `DELETE` requests, you will make use of a new `AUTH_KEY_SECRET` en
 For `GET` requests, you will ensure that only a specific file can be requested. All of this custom logic occurs inside of an `authorizeRequest` function, with the `hasValidHeader` function handling the custom header logic. If all validation passes, then the operation is allowed.
 
 ```js
-const ALLOW_LIST = ['cat-pic.jpg'];
+const ALLOW_LIST = ["cat-pic.jpg"];
 
 // Check requests for a pre-shared secret
 const hasValidHeader = (request, env) => {
-  return request.headers.get('X-Custom-Auth-Key') === env.AUTH_KEY_SECRET;
+	return request.headers.get("X-Custom-Auth-Key") === env.AUTH_KEY_SECRET;
 };
 
 function authorizeRequest(request, env, key) {
-  switch (request.method) {
-    case 'PUT':
-    case 'DELETE':
-      return hasValidHeader(request, env);
-    case 'GET':
-      return ALLOW_LIST.includes(key);
-    default:
-      return false;
-  }
+	switch (request.method) {
+		case "PUT":
+		case "DELETE":
+			return hasValidHeader(request, env);
+		case "GET":
+			return ALLOW_LIST.includes(key);
+		default:
+			return false;
+	}
 }
 
 export default {
-  async fetch(request, env, ctx) {
-    const url = new URL(request.url);
-    const key = url.pathname.slice(1);
+	async fetch(request, env, ctx) {
+		const url = new URL(request.url);
+		const key = url.pathname.slice(1);
 
-    if (!authorizeRequest(request, env, key)) {
-      return new Response('Forbidden', { status: 403 });
-    }
+		if (!authorizeRequest(request, env, key)) {
+			return new Response("Forbidden", { status: 403 });
+		}
 
-    // ...
-  }
+		// ...
+	},
 };
 ```
 
 For this to work, you need to create a secret via Wrangler:
 
 ```sh
-$ wrangler secret put AUTH_KEY_SECRET
+npx wrangler secret put AUTH_KEY_SECRET
 ```
 
 This command will prompt you to enter a secret in your terminal:
 
 ```sh
-$ wrangler secret put AUTH_KEY_SECRET
+npx wrangler secret put AUTH_KEY_SECRET
+```
+
+```sh output
 Enter the secret text you'd like assigned to the variable AUTH_KEY_SECRET on the script named <YOUR_WORKER_NAME>:
 *********
 🌀  Creating the secret for script name <YOUR_WORKER_NAME>
@@ -206,39 +210,39 @@ This secret is now available as `AUTH_KEY_SECRET` on the `env` parameter in your
 With your Worker and bucket set up, run the `npx wrangler deploy` [command](/workers/wrangler/commands/#deploy) to deploy to Cloudflare's global network:
 
 ```sh
-$ npx wrangler deploy
+npx wrangler deploy
 ```
 
 You can verify your authorization logic is working through the following commands, using your deployed Worker endpoint:
 
 :::caution
 
-When uploading files to R2 via `curl`, ensure you use **[`--data-binary`](https://everything.curl.dev/http/post/binary)** instead of `--data` or `-d`. Files will otherwise be truncated. 
+When uploading files to R2 via `curl`, ensure you use **[`--data-binary`](https://everything.curl.dev/http/post/binary)** instead of `--data` or `-d`. Files will otherwise be truncated.
 :::
 
 ```sh
 # Attempt to write an object without providing the "X-Custom-Auth-Key" header
-$ curl https://your-worker.dev/cat-pic.jpg -X PUT --data-binary 'test'
+curl https://your-worker.dev/cat-pic.jpg -X PUT --data-binary 'test'
 #=> Forbidden
 # Expected because header was missing
 
 # Attempt to write an object with the wrong "X-Custom-Auth-Key" header value
-$ curl https://your-worker.dev/cat-pic.jpg -X PUT --header "X-Custom-Auth-Key: hotdog" --data-binary 'test'
+curl https://your-worker.dev/cat-pic.jpg -X PUT --header "X-Custom-Auth-Key: hotdog" --data-binary 'test'
 #=> Forbidden
 # Expected because header value did not match the AUTH_KEY_SECRET value
 
 # Attempt to write an object with the correct "X-Custom-Auth-Key" header value
 # Note: Assume that "*********" is the value of your AUTH_KEY_SECRET Wrangler secret
-$ curl https://your-worker.dev/cat-pic.jpg -X PUT --header "X-Custom-Auth-Key: *********" --data-binary 'test'
+curl https://your-worker.dev/cat-pic.jpg -X PUT --header "X-Custom-Auth-Key: *********" --data-binary 'test'
 #=> Put cat-pic.jpg successfully!
 
 # Attempt to read object called "foo"
-$ curl https://your-worker.dev/foo
+curl https://your-worker.dev/foo
 #=> Forbidden
 # Expected because "foo" is not in the ALLOW_LIST
 
 # Attempt to read an object called "cat-pic.jpg"
-$ curl https://your-worker.dev/cat-pic.jpg
+curl https://your-worker.dev/cat-pic.jpg
 #=> test
 # Note: This is the value that was successfully PUT above
 ```

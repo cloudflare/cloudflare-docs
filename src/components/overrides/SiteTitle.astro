@@ -1,7 +1,8 @@
 ---
+/// <reference path="../../../node_modules/@astrojs/starlight/virtual.d.ts" />
 import { logos } from "virtual:starlight/user-images";
 import config from "virtual:starlight/user-config";
-import type { Props } from "../props";
+import type { Props } from "@astrojs/starlight/props";
 const { siteTitle, siteTitleHref } = Astro.props;
 ---
 
@@ -37,7 +38,7 @@ const { siteTitle, siteTitleHref } = Astro.props;
 <style>
 	.site-title {
 		align-items: center;
-		gap: var(--sl-nav-gap);
+		gap: calc(0.5 * var(--sl-nav-gap));
 		font-size: var(--sl-text-h4);
 		font-weight: 600;
 		color: var(--sl-color-white);
@@ -45,7 +46,7 @@ const { siteTitle, siteTitleHref } = Astro.props;
 		white-space: nowrap;
 	}
 	img {
-		height: calc(var(--sl-nav-height) - 2 * var(--sl-nav-pad-y));
+		height: calc(var(--sl-nav-height) - 3 * var(--sl-nav-pad-y));
 		width: auto;
 		max-width: 100%;
 		object-fit: contain;

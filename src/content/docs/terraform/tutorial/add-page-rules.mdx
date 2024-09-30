@@ -6,7 +6,6 @@ sidebar:
 head:
   - tag: title
     content: Add exceptions with Page Rules
-
 ---
 
 In the [Configure HTTPS settings](/terraform/tutorial/configure-https-settings/) tutorial, you configured zone settings that apply to all incoming requests for `example.com`. In this tutorial, you will add an exception to these settings using [Page Rules](/rules/page-rules/).
@@ -18,10 +17,16 @@ Specifically, you will increase the security level for a URL known to be expensi
 Create a new branch and append the configuration.
 
 ```bash
-$ git checkout -b step5-pagerule
-Switched to a new branch 'step5-pagerule'
+git checkout -b step5-pagerule
+```
 
-$ cat >> cloudflare.tf <<'EOF'
+```bash output
+Switched to a new branch 'step5-pagerule'
+```
+
+```sh
+
+cat >> cloudflare.tf <<'EOF'
 resource "cloudflare_page_rule" "increase-security-on-expensive-page" {
   zone_id  = var.zone_id
   target   = "www.${var.domain}/expensive-db-call"
@@ -52,7 +57,10 @@ EOF
 Preview the changes Terraform will make and then merge them into the `master` branch.
 
 ```sh
-$ terraform plan
+terraform plan
+```
+
+```sh output
 cloudflare_record.www-asia: Refreshing state... [id=fda39d8c9bf909132e82a36bab992864]
 cloudflare_record.www: Refreshing state... [id=c38d3103767284e7cd14d5dad3ab8669]
 cloudflare_zone_settings_override.example-com-settings: Refreshing state... [id=e2e6491340be87a3726f91fc4148b126]
@@ -112,17 +120,32 @@ Plan: 2 to add, 0 to change, 0 to destroy.
 
 Note: You didn't use the -out option to save this plan, so Terraform can't
 guarantee to take exactly these actions if you run "terraform apply" now.
+```
 
-$ git add cloudflare.tf
+```sh
 
-$ git commit -m "Step 5 - Add two Page Rules."
+git add cloudflare.tf
+git commit -m "Step 5 - Add two Page Rules."
+```
+
+```sh output
 [step5-pagerule d4fec16] Step 5 - Add two Page Rules.
  1 file changed, 23 insertions(+)
+```
 
-$ git checkout master
+```sh
+git checkout master
+```
+
+```sh output
 Switched to branch 'master'
+```
 
-$ git merge step5-pagerule
+```sh
+git merge step5-pagerule
+```
+
+```sh output
 Updating 7a2ac34..d4fec16
 Fast-forward
  cloudflare.tf | 23 +++++++++++++++++++++++
@@ -134,14 +157,20 @@ Fast-forward
 First, test request the (now missing) old location of the expensive-to-render page.
 
 ```sh
-$ curl -vso /dev/null https://www.example.com/old-location.php 2>&1 | grep "< HTTP\|Location"
+curl -vso /dev/null https://www.example.com/old-location.php 2>&1 | grep "< HTTP\|Location"
+```
+
+```sh output
 < HTTP/1.1 404 Not Found
 ```
 
 As expected, the location cannot be found. Apply the Page Rules, including the redirect that should fix this error.
 
 ```sh
-$ terraform apply --auto-approve
+terraform apply --auto-approve
+```
+
+```sh output
 cloudflare_record.www-asia: Refreshing state... [id=fda39d8c9bf909132e82a36bab992864]
 cloudflare_load_balancer_monitor.get-root-https: Refreshing state... [id=4238142473fcd48e89ef1964be72e3e0]
 cloudflare_zone_settings_override.example-com-settings: Refreshing state... [id=e2e6491340be87a3726f91fc4148b126]
@@ -206,11 +235,19 @@ Apply complete! Resources: 2 added, 0 changed, 0 destroyed.
 With the Page Rules in place, try that call again, along with a test for the I'm Under Attack mode:
 
 ```sh
-$ curl -vso /dev/null https://www.example.com/old-location.php 2>&1 | grep "< HTTP\|Location"
+curl -vso /dev/null https://www.example.com/old-location.php 2>&1 | grep "< HTTP\|Location"
+```
+
+```sh output
 < HTTP/1.1 301 Moved Permanently
 < Location: https://www.example.com/expensive-db-call
+```
 
-$ curl -vso /dev/null https://www.example.com/expensive-db-call 2>&1 | grep "< HTTP"
+```sh
+curl -vso /dev/null https://www.example.com/expensive-db-call 2>&1 | grep "< HTTP"
+```
+
+```sh output
 < HTTP/1.1 503 Service Temporarily Unavailable
 ```
 

@@ -14,8 +14,8 @@ The FortiGate configuration settings presented here support [bidirectional healt
 
 The FortiGate configuration was tested on two different FortiGate firewalls:
 
-* FortiGate Virtual Appliance version 7.0.8, running on VMware ESXi 6.5
-* FortiGate FG80F, version 7.0.12
+- FortiGate Virtual Appliance version 7.0.8, running on VMware ESXi 6.5
+- FortiGate FG80F, version 7.0.12
 
 ## Magic WAN configuration
 
@@ -32,9 +32,9 @@ Cloudflare recommends customers configure two Magic IPsec tunnels per firewall/r
 3. From the **Tunnels** tab, select **Create**.
 4. Select **IPsec tunnel** > **Next**.
 5. When creating your IPsec tunnels:
-   * **Health check type**: Change to *Request*.
-   * **Replay Protection**: Do not change from the default setting.
-   * Set up fields such as **Name**, **Description**, **Interface Address**, **Customer endpoint**, and **Cloudflare endpoint** with settings that work for you.  Refer to [Add tunnels](/magic-wan/configuration/manually/how-to/configure-tunnels/#add-tunnels) to learn more.
+   - **Health check type**: Change to _Request_.
+   - **Replay Protection**: Do not change from the default setting.
+   - Set up fields such as **Name**, **Description**, **Interface Address**, **Customer endpoint**, and **Cloudflare endpoint** with settings that work for you.  Refer to [Add tunnels](/magic-wan/configuration/manually/how-to/configure-tunnels/#add-tunnels) to learn more.
 
 ### Magic static routes
 
@@ -50,15 +50,15 @@ By default, the Magic static routes are defined with the priority set to `100`. 
 
 4. For the first route, ensure the following settings are defined (refer to [Configure static routes](/magic-wan/configuration/manually/how-to/configure-static-routes/) to learn about settings not mentioned here):
 
-   * **Prefix**: Specify the [RFC1918](https://datatracker.ietf.org/doc/html/rfc1918) subnet that exists behind the first Magic IPsec tunnel you have defined in the previous section.
-   * **Tunnel/Next hop**: Select your first tunnel (Tunnel 01 of 02).
+   - **Prefix**: Specify the [RFC1918](https://datatracker.ietf.org/doc/html/rfc1918) subnet that exists behind the first Magic IPsec tunnel you have defined in the previous section.
+   - **Tunnel/Next hop**: Select your first tunnel (Tunnel 01 of 02).
 
    ![The first static route should have the values mentioned above.](~/assets/images/magic-wan/third-party/fortinet/edit-static-route-01.png)
 
 5. For the second route, ensure the following settings are defined:
 
-   * **Prefix**: Specify the [RFC1918](https://datatracker.ietf.org/doc/html/rfc1918) subnet that exists behind the second Magic IPsec tunnel defined in the previous section.
-   * **Tunnel/Next hop**: Select your second tunnel (Tunnel 02 of 02).
+   - **Prefix**: Specify the [RFC1918](https://datatracker.ietf.org/doc/html/rfc1918) subnet that exists behind the second Magic IPsec tunnel defined in the previous section.
+   - **Tunnel/Next hop**: Select your second tunnel (Tunnel 02 of 02).
 
    ![The second static route should have the values mentioned above.](~/assets/images/magic-wan/third-party/fortinet/edit-static-route-02.png)
 
@@ -93,8 +93,7 @@ Magic IPsec tunnels leverage a route-based site-to-site VPN model. This model re
 Configure two IPsec tunnels using the `phase1-interface` and `phase2-interface` objects.
 
 :::note
-
-Refer to the Cloudflare Magic WAN dashboard to obtain the FQDN ID value when specifying the `localid` attribute/value pair in the `phase1-interface` configuration. To find this value, go to the [Cloudflare dashboard](https://dash.cloudflare.com/) > **Magic WAN** > **Manage Magic WAN configuration** > **Tunnels**. Then, find your IPsec tunnel and expand it to reveal all the information associated to it. 
+Refer to the Cloudflare Magic WAN dashboard to obtain the FQDN ID value when specifying the `localid` attribute/value pair in the `phase1-interface` configuration. To find this value, go to the [Cloudflare dashboard](https://dash.cloudflare.com/) > **Magic WAN** > **Manage Magic WAN configuration** > **Tunnels**. Then, find your IPsec tunnel and expand it to reveal all the information associated to it.
 :::
 
 The following examples assume `wan1` is the external/egress interface of the FortiGate firewall.
@@ -171,9 +170,9 @@ Configure the virtual tunnel interfaces that were automatically added when speci
 
 These are the only settings that should need to be added to the virtual tunnel interfaces:
 
-* `ip`: The local IP address (specify with a `/32` netmask — `255.255.255.255`).
-* `remote-ip`: The value associated with the interface address specified earlier in the Magic IPsec tunnels section (specify with a `/31` netmask — `255.255.255.254`).
-* `alias`: This value is optional.
+- `ip`: The local IP address (specify with a `/32` netmask — `255.255.255.255`).
+- `remote-ip`: The value associated with the interface address specified earlier in the Magic IPsec tunnels section (specify with a `/31` netmask — `255.255.255.254`).
+- `alias`: This value is optional.
 
 The following examples assume `wan1` is the external/egress interface of the FortiGate firewall.
 
@@ -208,7 +207,7 @@ Once the virtual tunnel interfaces have been configured, you should be able to p
 
 Below you have examples of a successful result from pinging across both of the virtual tunnel interfaces configured in the previous section:
 
-#### MWAN\_IPsec\_Tun1
+#### MWAN_IPsec_Tun1
 
 ```txt
 fortigate # execute ping 10.252.2.90
@@ -224,7 +223,7 @@ PING 10.252.2.90 (10.252.2.90): 56 data bytes
 round-trip min/avg/max = 5.7/5.7/5.8 ms
 ```
 
-#### MWAN\_IPsec\_Tun2
+#### MWAN_IPsec_Tun2
 
 ```txt
 fortigate # execute ping 10.252.2.92
@@ -244,9 +243,9 @@ round-trip min/avg/max = 6.0/6.0/6.1 ms
 
 This sample configuration assumes there are three zones configured on the FortiGate firewall. These zone objects are used in the policies referenced later in this document:
 
-* `Trust_Zone`: Contains the LAN interface(s).
-* `Untrust_Zone`: Contains the WAN interface.
-* `Cloudflare_Zone`: Contains both IPsec Tunnel interfaces.
+- `Trust_Zone`: Contains the LAN interface(s).
+- `Untrust_Zone`: Contains the WAN interface.
+- `Cloudflare_Zone`: Contains both IPsec Tunnel interfaces.
 
 ```txt
 fortigate # config system zone
@@ -474,8 +473,6 @@ fortigate # diagnose debug show flow show function-name enable
 fortigate # diagnose debug config-error-log timestamps enable
 fortigate # diagnose debug flow trace start 999
 fortigate # diagnose debug enable
-
-
 fortigate # 2023-08-01 09:27:26 id=20085 trace_id=2871 func=print_pkt_detail line=5844 msg="vd-root:0 received a packet(proto=1, 172.64.240.253:56968->172.70.121.28:0) tun_id=162.159.67.210 from MWAN_IPsec_Tun1. type=0, code=0, id=56968, seq=0."
 2023-08-01 09:27:26 id=20085 trace_id=2871 func=rpdb_srv_match_input line=1036 msg="Match policy routing id=1: to 10.252.2.90 via ifindex-34"
 2023-08-01 09:27:26 id=20085 trace_id=2871 func=vf_ip_route_input_common line=2605 msg="find a route: flag=00000000 gw-162.159.67.210 via MWAN_IPsec_Tun1"

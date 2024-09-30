@@ -1,0 +1,11 @@
+---
+link: "/bots/changelog/"
+productName: Bots
+productLink: "/bots/"
+productArea: Application security
+productAreaLink: /fundamentals/reference/changelog/security/
+entries:
+  - publish_date: "2024-08-19"
+    title: AI bots is now a managed rule
+    description: |-
+      [AI bots protection](/bots/concepts/bot/#ai-bots) has been upgraded from a custom rule to a managed rule.

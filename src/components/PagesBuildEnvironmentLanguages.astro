@@ -1,13 +1,13 @@
 ---
 import { getCollection } from "astro:content";
-import { Tabs, TabItem } from "~/components";
+import { Tabs, TabItem } from "@astrojs/starlight/components";
 
 const versions = await getCollection("pages-build-environment");
 ---
 
 <Tabs>
 	{
-		versions.map((version) => (
+		versions.reverse().map((version) => (
 			<TabItem label={version.id}>
 				<table>
 					<thead>

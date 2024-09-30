@@ -10,7 +10,7 @@ meta:
   title: Cloudflare Magic Firewall docs
   description: Magic Firewall a network-level firewall delivered through
     Cloudflare to secure your enterprise.
-  author: '@cloudflare'
+  author: "@cloudflare"
 
 resources:
   dashboard_link: https://dash.cloudflare.com/?to=/:account/rulesets/magic_firewall
@@ -19,12 +19,12 @@ resources:
 externals:
   - title: Magic Transit home
     url: https://www.cloudflare.com/magic-transit/
-  - title: 'Blog: Magic WAN & Magic Firewall'
+  - title: "Blog: Magic WAN & Magic Firewall"
     url: https://blog.cloudflare.com/introducing-magic-firewall/
   - title: Cloudflare homepage
     url: https://cloudflare.com
 
 algolia:
-  index: developers-cloudflare2
+  index: TEST - Re-dev docs
   apikey: 4edb0a6cef3338ff4bcfbc6b3d2db56b
   product: magic-firewall
