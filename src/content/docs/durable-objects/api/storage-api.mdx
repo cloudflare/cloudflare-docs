@@ -98,7 +98,7 @@ Each method is implicitly wrapped inside a transaction, such that its results ar
 
 ### deleteAll
 
-* `deleteAll(optionsObjectoptional)`: <Type text='Promise' />
+* <code>deleteAll(options <Type text='Object' /> <MetaInfo text='optional' />)</code>: <Type text='Promise' />
 
   * Deletes all keys and associated values, effectively deallocating all storage used by the Durable Object. In the event of a failure while the `deleteAll()` operation is still in flight, it may be that only a subset of the data is properly deleted. `deleteAll()` does not proactively delete [Alarms](/durable-objects/api/alarms/). Use [`deleteAlarm()`](/durable-objects/api/alarms/#deletealarm) to delete an alarm.
 
