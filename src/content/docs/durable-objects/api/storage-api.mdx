@@ -60,7 +60,7 @@ Each method is implicitly wrapped inside a transaction, such that its results ar
 
   * Retrieves the value associated with the given key. The type of the returned value will be whatever was previously written for the key, or undefined if the key does not exist.
 
-* `get(keysArray\<string>, optionsObjectoptional)`: <Type text = 'Promise<Map<string, any>>' />
+* <code>get(keysArray <Type text='string'/>, optionsObjectoptional)</code>: <Type text = 'Promise<Map<string, any>>' />
 
   * Retrieves the values associated with each of the provided keys. The type of each returned value in the [`Map`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Map) will be whatever was previously written for the corresponding key. Results in the `Map` will be sorted in increasing order of their UTF-8 encodings, with any requested keys that do not exist being omitted. Supports up to 128 keys at a time.
 
@@ -92,7 +92,7 @@ Each method is implicitly wrapped inside a transaction, such that its results ar
 
   * Deletes the key and associated value. Returns `true` if the key existed or `false` if it did not.
 
-* `delete(keysArray\<string>, optionsObjectoptional)`: <Type text='Promise<number>' />
+* <code>delete(keysArray <Type text='string'/>, optionsObjectoptional)</code>: <Type text='Promise<number>' />
 
   * Deletes the provided keys and their associated values. Supports up to 128 keys at a time. Returns a count of the number of key-value pairs deleted.
 
@@ -217,7 +217,7 @@ An issue was identified with [alarms](/durable-objects/api/alarms/) in [beta Dur
 
 ### setAlarm
 
-* `setAlarm(scheduledTimeDate | number, optionsObjectoptional)`: <Type text='Promise' />
+* <code>setAlarm(scheduledTimeDate | <Type text='number'/>, optionsObjectoptional)</code>: <Type text='Promise' />
 
   * Sets the current alarm time, accepting either a JavaScript `Date`, or integer milliseconds since epoch.
 
@@ -241,7 +241,7 @@ SQL API methods accessed with `ctx.storage.sql` are only allowed on [Durable Obj
 
 :::
 
-`ctx.storage.sql.exec(query: string, ...bindings: any[])`: <Type text='SqlStorageCursor' />
+<code>ctx.storage.sql.exec(query: <Type text='string'/>, ...bindings: <Type text='any[]'/>)</code>: <Type text='SqlStorageCursor' />
 
 #### Parameters
 * `query`: <Type text ='string' />
@@ -311,11 +311,11 @@ The PITR API represents points in times using "bookmarks". A bookmark is a mostl
 
   * Returns a bookmark representing the current point in time in the object's history.
 
-`ctx.storage.getBookmarkForTime(timestamp: number | Date)`: <Type text='Promise<string>' />
+<code>ctx.storage.getBookmarkForTime(timestamp: <Type text='number'/> | <Type text='Date'/>)</code>: <Type text='Promise<string>' />
 
   * Returns a bookmark representing approximately the given point in time, which must be within the last 30 days. If the timestamp is represented as a number, it is converted to a date as if using `new Date(timestamp)`.
 
-`ctx.storage.onNextSessionRestoreBookmark(bookmark: string)`: <Type text='Promise<string>' />
+<code>ctx.storage.onNextSessionRestoreBookmark(bookmark: <Type text='string'/>)</code>: <Type text='Promise<string>' />
 
   * Configure the Durable Object so that the next time it restarts, it should restore its storage to exactly match what the storage contained at the given bookmark. After calling this, the application should typically invoke `ctx.abort()` to restart the Durable Object, thus completing the point-in-time recovery.
 
