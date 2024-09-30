@@ -23,6 +23,7 @@ if (currentSection) {
 			Astro.props.entry.data.head.push({
 				tag: "meta",
 				attrs: { property: "og:title", content: title },
+				content: "",
 			});
 		}
 		if (product.data.product.title) {
@@ -58,6 +59,7 @@ if (currentSection) {
 }
 
 Astro.props.entry.data.description ??= await getPageDescription(
+	// @ts-expect-error TODO: improve types
 	Astro.props.entry,
 );
 
@@ -70,7 +72,7 @@ if (Astro.props.entry.data.pcx_content_type) {
 		tag: "meta",
 		attrs: {
 			name: "pcx_content_type",
-			content: Astro.props.entry.data.pcx_content_type,
+			content: contentType,
 		},
 		content: "",
 	});
@@ -78,7 +80,7 @@ if (Astro.props.entry.data.pcx_content_type) {
 		tag: "meta",
 		attrs: {
 			name: "algolia_content_type",
-			content: Astro.props.entry.data.pcx_content_type,
+			content: contentType,
 		},
 		content: "",
 	});
@@ -119,7 +121,7 @@ if (Astro.props.entry.data.updated) {
 		tag: "meta",
 		attrs: {
 			name: "pcx_last_reviewed",
-			content: daysBetween,
+			content: daysBetween.toString(),
 		},
 		content: "",
 	});
@@ -128,7 +130,7 @@ if (Astro.props.entry.data.updated) {
 // end metadata
 
 if (Astro.props.entry.data.pcx_content_type === "changelog") {
-	const href = new URL(Astro.site);
+	const href = new URL(Astro.site ?? "");
 	href.pathname = Astro.props.entry.slug.concat("/index.xml");
 
 	Astro.props.entry.data.head.push({
@@ -136,7 +138,7 @@ if (Astro.props.entry.data.pcx_content_type === "changelog") {
 		attrs: {
 			rel: "alternate",
 			type: "application/rss+xml",
-			href: href,
+			href: href.toString(),
 		},
 		content: "",
 	});
@@ -165,12 +167,10 @@ if (Astro.props.entry.data.external_link) {
 <script>
 	import littlefoot from "littlefoot";
 
-	document.addEventListener("DOMContentLoaded", () => {
-		littlefoot();
-		document
-			.querySelectorAll("span.littlefoot")
-			.forEach((x) => x.classList.add("not-content"));
-	});
+	littlefoot();
+	document
+		.querySelectorAll("span.littlefoot")
+		.forEach((x) => x.classList.add("not-content"));
 </script>
 <script>
 	import mermaid from "mermaid";

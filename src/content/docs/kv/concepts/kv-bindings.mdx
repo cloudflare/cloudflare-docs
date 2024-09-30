@@ -3,12 +3,11 @@ pcx_content_type: concept
 title: KV bindings
 sidebar:
   order: 7
-
 ---
 
 KV [bindings](/workers/runtime-apis/bindings/) allow for communication between a Worker and a KV namespace.
 
-Configure KV bindings in the [wrangler.toml file](/workers/wrangler/configuration/#configure-wranglertoml).
+Configure KV bindings in the [wrangler.toml file](/workers/wrangler/configuration/).
 
 ## Access KV from Workers
 
@@ -38,14 +37,14 @@ With this, the deployed Worker will have a `TODO` field in their environment obj
 
 ```js
 export default {
-  async fetch(request, env, ctx) {
-    // Get the value for the "to-do:123" key
-    // NOTE: Relies on the `TODO` KV binding that maps to the "My Tasks" namespace.
-    let value = await env.TODO.get("to-do:123");
+	async fetch(request, env, ctx) {
+		// Get the value for the "to-do:123" key
+		// NOTE: Relies on the `TODO` KV binding that maps to the "My Tasks" namespace.
+		let value = await env.TODO.get("to-do:123");
 
-    // Return the value, as is, for the Response
-    return new Response(value);
-  },
+		// Return the value, as is, for the Response
+		return new Response(value);
+	},
 };
 ```
 
@@ -73,14 +72,14 @@ An example might look like:
 
 ```js
 export class DurableObject {
-  constructor(state, env) {
-    this.state = state;
-    this.env = env;
-  }
+	constructor(state, env) {
+		this.state = state;
+		this.env = env;
+	}
 
-  async fetch(request) {
-    const valueFromKV = await this.env.NAMESPACE.get("someKey");
-    return new Response(valueFromKV);
-  }
+	async fetch(request) {
+		const valueFromKV = await this.env.NAMESPACE.get("someKey");
+		return new Response(valueFromKV);
+	}
 }
 ```

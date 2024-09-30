@@ -1,7 +1,8 @@
 ---
 {}
-
 ---
+
+import { AnchorHeading, Type, MetaInfo } from "~/components";
 
 ## `kv namespace`
 
@@ -17,7 +18,7 @@ The `kv ...` commands allow you to manage your Workers KV resources in the Cloud
 Since version 3.60.0, Wrangler supports the `kv ...` syntax. If you are using versions below 3.60.0, the command follows the `kv:...` syntax. Learn more about the deprecation of the `kv:...` syntax in the [Wrangler commands](/kv/reference/kv-commands/#deprecations) for KV page.
 :::
 
-### `create`
+<AnchorHeading title="`create`" slug="kv-namespace-create" depth={3} />
 
 Create a new namespace.
 
@@ -25,11 +26,11 @@ Create a new namespace.
 wrangler kv namespace create <NAMESPACE> [OPTIONS]
 ```
 
-- `NAMESPACE` <type>string</type> <prop-meta>required</prop-meta>
+- `NAMESPACE` <Type text="string" /> <MetaInfo text="required" />
   - The name of the new namespace.
-- `--env` <type>string</type> <prop-meta>optional</prop-meta>
+- `--env` <Type text="string" /> <MetaInfo text="optional" />
   - Perform on a specific environment.
-- `--preview` <type>boolean</type> <prop-meta>optional</prop-meta>
+- `--preview` <Type text="boolean" /> <MetaInfo text="optional" />
   - Interact with a preview namespace (the `preview_id` value).
 
 The following is an example of using the `create` command to create a KV namespace called `MY_KV`.
@@ -62,7 +63,7 @@ kv_namespaces = [
 ]
 ```
 
-### `list`
+<AnchorHeading title="`list`" slug="kv-namespace-list" depth={3} />
 
 List all KV namespaces associated with the current account ID.
 
@@ -89,7 +90,7 @@ npx wrangler kv namespace list | jq "."
 ]
 ```
 
-### `delete`
+<AnchorHeading title="`delete`" slug="kv-namespace-delete" depth={3} />
 
 Delete a given namespace.
 
@@ -102,13 +103,13 @@ wrangler kv namespace delete {--binding=<BINDING>|--namespace-id=<NAMESPACE_ID>}
 This command requires `--binding` or `--namespace-id`.
 :::
 
-- `--binding` string
+- `--binding` <Type text="string" />
   - The binding name of the namespace, as stored in the `wrangler.toml` file, to delete.
-- `--namespace-id` string
+- `--namespace-id` <Type text="string" />
   - The ID of the namespace to delete.
-- `--env` string optional
+- `--env` <Type text="string" /> <MetaInfo text="optional" />
   - Perform on a specific environment.
-- `--preview` boolean optional
+- `--preview` <Type text="boolean" /> <MetaInfo text="optional" />
   - Interact with a preview namespace instead of production.
 
 The following is an example of deleting a KV namespace called `MY_KV.`
@@ -151,7 +152,7 @@ The `kv ...` commands allow you to manage your Workers KV resources in the Cloud
 Since version 3.60.0, Wrangler supports the `kv ...` syntax. If you are using versions below 3.60.0, the command follows the `kv:...` syntax. Learn more about the deprecation of the `kv:...` syntax in the [Wrangler commands](/kv/reference/kv-commands/) for KV page.
 :::
 
-### `put`
+<AnchorHeading title="`put`" slug="kv-key-put" depth={3} />
 
 Write a single key-value pair to a particular namespace.
 
@@ -165,29 +166,29 @@ This command requires a `VALUE` or `--path`.<br/>
 This command requires a `--binding` or `--namespace-id` flag.
 :::
 
-- `KEY` string required
+- `KEY` <Type text="string" /> <MetaInfo text="required" />
   - The key to write to.
-- `VALUE` string optional
+- `VALUE` <Type text="string" /> <MetaInfo text="optional" />
   - The value to write.
-- `--path` optional
+- `--path` <MetaInfo text="optional" />
   - When defined, the value is loaded from the file at `--path` rather than reading it from the `VALUE` argument. This is ideal for security-sensitive operations because it avoids saving keys and values into your terminal history.
 - `--binding` string
   - The binding name of the namespace, as stored in the `wrangler.toml` file, to delete.
-- `--namespace-id` string
+- `--namespace-id` <Type text="string" />
   - The ID of the namespace to delete.
-- `--env` string optional
+- `--env` <Type text="string" /> <MetaInfo text="optional" />
   - Perform on a specific environment.
-- `--preview` boolean optional
+- `--preview` <Type text="boolean" /> <MetaInfo text="optional" />
   - Interact with a preview namespace instead of production.
-- `--ttl` number optional
+- `--ttl` <Type text="number" /> <MetaInfo text="optional" />
   - The lifetime (in number of seconds) that the key-value pair should exist before expiring. Must be at least `60` seconds. This option takes precedence over the `expiration` option.
-- `--expiration` number optional
+- `--expiration` <Type text="number" /> <MetaInfo text="optional" />
   - The timestamp, in UNIX seconds, indicating when the key-value pair should expire.
-- `--metadata` string optional
+- `--metadata` <Type text="string" /> <MetaInfo text="optional" />
   - Any (escaped) JSON serialized arbitrary object to a maximum of 1024 bytes.
-- `--local` boolean optional
+- `--local` <Type text="boolean" /> <MetaInfo text="optional" />
   - Interact with locally persisted data.
-- `--persist-to` string optional
+- `--persist-to` <Type text="string" /> <MetaInfo text="optional" />
   - Specify directory for locally persisted data.
 
 The following is an example that puts a key-value into the namespace with binding name of `MY_KV`.
@@ -230,7 +231,7 @@ npx wrangler kv key put --binding=MY_KV "my-key" --path=value.txt
 Writing the contents of value.txt to the key "my-key" on namespace f7b02e7fc70443149ac906dd81ec1791.
 ```
 
-### `list`
+<AnchorHeading title="`list`" slug="kv-key-list" depth={3} />
 
 Output a list of all keys in a given namespace.
 
@@ -243,19 +244,19 @@ wrangler kv key list {--binding=<BINDING>|--namespace-id=<NAMESPACE_ID>} [OPTION
 This command requires `--binding` or `--namespace-id`.
 :::
 
-- `--binding` string
+- `--binding` <Type text="string" />
   - The binding name of the namespace, as stored in the `wrangler.toml` file, to delete.
-- `--namespace-id` string
+- `--namespace-id` <Type text="string" />
   - The ID of the namespace to delete.
-- `--env` string optional
+- `--env` <Type text="string" /> <MetaInfo text="optional" />
   - Perform on a specific environment.
-- `--preview` boolean optional
+- `--preview` <Type text="boolean" /> <MetaInfo text="optional" />
   - Interact with a preview namespace instead of production.
-- `--prefix` string optional
+- `--prefix` <Type text="string" /> <MetaInfo text="optional" />
   - Only list keys that begin with the given prefix.
-- `--local` boolean optional
+- `--local` <Type text="boolean" /> <MetaInfo text="optional" />
   - Interact with locally persisted data.
-- `--persist-to` string optional
+- `--persist-to` <Type text="string" /> <MetaInfo text="optional" />
   - Specify directory for locally persisted data.
 
 Below is an example that passes the Wrangler command through the `jq` command:
@@ -276,7 +277,7 @@ npx wrangler kv key list --binding=MY_KV --prefix="public" | jq "."
 ]
 ```
 
-### `get`
+<AnchorHeading title="`get`" slug="kv-key-get" depth={3} />
 
 Read a single value by key from the given namespace.
 
@@ -289,21 +290,21 @@ wrangler kv key get <KEY> {--binding=<BINDING>|--namespace-id=<NAMESPACE_ID>} [O
 Exactly one of `--binding` or `--namespace-id` is required.
 :::
 
-- `KEY` string required
+- `KEY` <Type text="string" /> <MetaInfo text="required" />
   - The key value to get.
-- `--binding` string
+- `--binding` <Type text="string" />
   - The binding name of the namespace, as stored in the `wrangler.toml` file, to get from.
-- `--namespace-id` string
+- `--namespace-id` <Type text="string" />
   - The ID of the namespace to get from.
-- `--env` string optional
+- `--env` <Type text="string" /> <MetaInfo text="optional" />
   - Perform on a specific environment.
-- `--preview` boolean optional
+- `--preview` <Type text="boolean" /> <MetaInfo text="optional" />
   - Interact with a preview namespace instead of production.
-- `--text` boolean optional
+- `--text` <Type text="boolean" /> <MetaInfo text="optional" />
   - Decode the returned value as a UTF-8 string.
-- `--local` boolean optional
+- `--local` <Type text="boolean" /> <MetaInfo text="optional" />
   - Interact with locally persisted data.
-- `--persist-to` string optional
+- `--persist-to` <Type text="string" /> <MetaInfo text="optional" />
   - Specify directory for locally persisted data.
 
 The following is an example that gets the value of the `"my-key"` key from the KV namespace with binding name `MY_KV`.
@@ -316,7 +317,7 @@ npx wrangler kv key get --binding=MY_KV "my-key"
 value
 ```
 
-### `delete`
+<AnchorHeading title="`delete`" slug="kv-key-delete" depth={3} />
 
 Remove a single key value pair from the given namespace.
 
@@ -329,19 +330,19 @@ wrangler kv key delete <KEY> {--binding=<BINDING>|--namespace-id=<NAMESPACE_ID>}
 Exactly one of `--binding` or `--namespace-id` is required.
 :::
 
-- `KEY` string required
+- `KEY` <Type text="string" /> <MetaInfo text="required" />
   - The key value to get.
-- `--binding` string
+- `--binding` <Type text="string" />
   - The binding name of the namespace, as stored in the `wrangler.toml` file, to delete.
-- `--namespace-id` string
+- `--namespace-id` <Type text="string" />
   - The ID of the namespace to delete.
-- `--env` string optional
+- `--env` <Type text="string" /> <MetaInfo text="optional" />
   - Perform on a specific environment.
-- `--preview` boolean optional
+- `--preview` <Type text="boolean" /> <MetaInfo text="optional" />
   - Interact with a preview namespace instead of production.
-- `--local` boolean optional
+- `--local` <Type text="boolean" /> <MetaInfo text="optional" />
   - Interact with locally persisted data.
-- `--persist-to` string optional
+- `--persist-to` <Type text="string" /> <MetaInfo text="optional" />
   - Specify directory for locally persisted data.
 
 The following is an example that deletes the key-value pair with key `"my-key"` from the KV namespace with binding name `MY_KV`.
@@ -368,7 +369,7 @@ The `kv ...` commands allow you to manage your Workers KV resources in the Cloud
 Since version 3.60.0, Wrangler supports the `kv ...` syntax. If you are using versions below 3.60.0, the command follows the `kv:...` syntax. Learn more about the deprecation of the `kv:...` syntax in the [Wrangler commands](/kv/reference/kv-commands/) for KV page.
 :::
 
-### `put`
+<AnchorHeading title="`put`" slug="kv-bulk-put" depth={3} />
 
 Write a JSON file containing an array of key-value pairs to the given namespace.
 
@@ -381,19 +382,19 @@ wrangler kv bulk put <FILENAME> {--binding=<BINDING>|--namespace-id=<NAMESPACE_I
 This command requires `--binding` or `--namespace-id`.
 :::
 
-- `FILENAME` string required
+- `FILENAME` <Type text="string" /> <MetaInfo text="required" />
   - The JSON file containing an array of key-value pairs to write to the namespace.
-- `--binding` string
+- `--binding` <Type text="string" />
   - The binding name of the namespace, as stored in the `wrangler.toml` file, to delete.
-- `--namespace-id` string
+- `--namespace-id` <Type text="string" />
   - The ID of the namespace to delete.
-- `--env` string optional
+- `--env` <Type text="string" /> <MetaInfo text="optional" />
   - Perform on a specific environment.
-- `--preview` boolean optional
+- `--preview` <Type text="boolean" /> <MetaInfo text="optional" />
   - Interact with a preview namespace instead of production.
-- `--local` boolean optional
+- `--local` <Type text="boolean" /> <MetaInfo text="optional" />
   - Interact with locally persisted data.
-- `--persist-to` string optional
+- `--persist-to` <Type text="string" /> <MetaInfo text="optional" />
   - Specify directory for locally persisted data.
 
 This command takes a JSON file as an argument with a list of key-value pairs to upload. An example of JSON input:
@@ -422,17 +423,17 @@ KV namespace values can only store strings. In order to save complex a value, st
 
 Refer to the full schema for key-value entries uploaded via the bulk API:
 
-- `key` string required
+- `key` <Type text="string" /> <MetaInfo text="required" />
   - The key’s name. The name may be 512 bytes maximum. All printable, non-whitespace characters are valid.
-- `value` string required
+- `value` <Type text="string" /> <MetaInfo text="required" />
   - The UTF-8 encoded string to be stored, up to 25 MB in length.
-- `metadata` object optional
+- `metadata` <Type text="object" /> <MetaInfo text="optional" />
   - Any arbitrary object (must serialize to JSON) to a maximum of 1,024 bytes.
-- `expiration` number optional
+- `expiration` <Type text="number" /> <MetaInfo text="optional" />
   - The time, measured in number of seconds since the UNIX epoch, at which the key should expire.
-- `expiration_ttl` number optional
+- `expiration_ttl` <Type text="number" /> <MetaInfo text="optional" />
   - The number of seconds the document should exist before expiring. Must be at least `60` seconds.
-- `base64` boolean optional
+- `base64` <Type text="boolean" /> <MetaInfo text="optional" />
   - When true, the server will decode the value as base64 before storing it. This is useful for writing values that would otherwise be invalid JSON strings, such as images. Defaults to `false`.
 
 :::note
@@ -450,7 +451,7 @@ npx wrangler kv bulk put --binding=MY_KV allthethingsupload.json
 Success!
 ```
 
-### `delete`
+<AnchorHeading title="`delete`" slug="kv-bulk-delete" depth={3} />
 
 Delete all keys read from a JSON file within a given namespace.
 
@@ -463,19 +464,19 @@ wrangler kv bulk delete <FILENAME> {--binding=<BINDING>|--namespace-id=<NAMESPAC
 This command requires `--binding` or `--namespace-id`.
 :::
 
-- `FILENAME` string required
+- `FILENAME` <Type text="string" /> <MetaInfo text="required" />
   - The JSON file containing an array of keys to delete from the namespace.
-- `--binding` string
+- `--binding` <Type text="string" />
   - The binding name of the namespace, as stored in the `wrangler.toml` file, to delete.
-- `--namespace-id` string
+- `--namespace-id` <Type text="string" />
   - The ID of the namespace to delete.
-- `--env` string optional
+- `--env` <Type text="string" /> <MetaInfo text="optional" />
   - Perform on a specific environment.
-- `--preview` boolean optional
+- `--preview` <Type text="boolean" /> <MetaInfo text="optional" />
   - Interact with a preview namespace instead of production.
-- `--local` boolean optional
+- `--local` <Type text="boolean" /> <MetaInfo text="optional" />
   - Interact with locally persisted data.
-- `--persist-to` string optional
+- `--persist-to` <Type text="string" /> <MetaInfo text="optional" />
   - Specify directory for locally persisted data.
 
 This command takes a JSON file as an argument containing an array of keys to delete.

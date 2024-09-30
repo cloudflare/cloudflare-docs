@@ -1,17 +1,11 @@
 ---
 pcx_content_type: how-to
 title: Google Workspace
-sidebar:
-  order: 13
-head:
-  - tag: title
-    content: Google Workspace - IdP
-
 ---
 
 :::note
 
-The Google Workspace IdP integration is not supported if your Google Workspace account is protected by Access. 
+The Google Workspace IdP integration is not supported if your Google Workspace account is protected by Access.
 :::
 
 You can integrate a Google Workspace (formerly Google Suite) account with Cloudflare Access. Unlike the instructions for [generic Google authentication](/cloudflare-one/identity/idp-integration/google/), the steps below will allow you to pull group membership information from your Google Workspace account.
@@ -28,7 +22,7 @@ You do not need to be a Google Cloud Platform user to integrate Google Workspace
 
 3. Go to **APIs & Services** and select **+ Enable APIs and Services**. The API Library will load.
 
-4. In the API Library, search for `admin` and select *Admin SDK API*.
+4. In the API Library, search for `admin` and select _Admin SDK API_.
 
 5. **Enable** the Admin SDK API.
 
@@ -49,7 +43,7 @@ You do not need to be a Google Cloud Platform user to integrate Google Workspace
 
    ![Location of OAuth client ID settings on Google Cloud Platform credentials page.](~/assets/images/cloudflare-one/identity/google/create-oauth.png)
 
-10. Choose *Web application* as the Application type.
+10. Choose _Web application_ as the Application type.
 
 11. Under **Authorized JavaScript origins**, in the **URIs** field, enter your team domain:
 
@@ -94,12 +88,12 @@ To test that your connection is working, go to **Authentication** > **Login meth
 
 ```json
 {
-  "config": {
-    "client_id": "<your client id>",
-    "client_secret": "<your client secret>",
-    "apps_domain": "mycompany.com"
-  },
-  "type": "google-apps",
-  "name": "my example idp"
+	"config": {
+		"client_id": "<your client id>",
+		"client_secret": "<your client secret>",
+		"apps_domain": "mycompany.com"
+	},
+	"type": "google-apps",
+	"name": "my example idp"
 }
 ```

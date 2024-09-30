@@ -5,21 +5,23 @@ sidebar:
   order: 18
 ---
 
+import { Type } from "~/components";
+
 The available rate limiting rule parameters are described in the following sections.
 
 ## Parameter reference
 
 ### If incoming requests match
 
-- Data type: `String`.
-- Field name in the API: `expression` (rule field).
+- Data type: <Type text="String" />
+- Field name in the API: `expression` (rule field)
 
 Defines the criteria for the rate limiting rule to match a request.
 
 ### Also apply rate limiting to cached assets
 
-- Data type: `Boolean`.
-- Field name in the API: `requests_to_origin` (optional, with the opposite meaning of the Cloudflare dashboard option).
+- Data type: <Type text="Boolean" />
+- Field name in the API: `requests_to_origin` (optional, with the opposite meaning of the Cloudflare dashboard option)
 
 If this parameter is disabled (or when the `requests_to_origin` API field is set to `true`), only the requests going to the origin (that is, requests that are not cached) will be considered when determining the request rate.
 
@@ -27,8 +29,8 @@ In some cases, you cannot disable the **Also apply rate limiting to cached asset
 
 ### With the same characteristics
 
-- Data type: `Array<String>`.
-- Field name in the API: `characteristics`.
+- Data type: <Type text="Array<String>" />
+- Field name in the API: `characteristics`
 
 Set of parameters defining how Cloudflare tracks the request rate for the rule.
 
@@ -59,14 +61,13 @@ Use one or more of the following characteristics:
 The available characteristics depend on your Cloudflare plan. Refer to [Availability](/waf/rate-limiting-rules/#availability) for more information.
 
 :::caution
-
 For important details about these characteristics, refer to [Notes about rate limiting characteristics](#notes-about-rate-limiting-characteristics).
 :::
 
 ### Increment counter when
 
-- Data type: `String`.
-- Field name in the API: `counting_expression` (optional).
+- Data type: <Type text="String" />
+- Field name in the API: `counting_expression` (optional)
 
 Only available in the Cloudflare dashboard when you enable **Use custom counting expression**.
 
@@ -85,15 +86,15 @@ For example, you might want to perform rate limiting for clients sending more th
 
 ### When rate exceeds > Requests
 
-- Data type: `Integer`.
-- Field name in the API: `requests_per_period`.
+- Data type: <Type text="Integer" />
+- Field name in the API: `requests_per_period`
 
 The number of requests over the period of time that will trigger the rule.
 
 ### When rate exceeds > Period
 
-- Data type: `Integer`.
-- Field name in the API: `period`.
+- Data type: <Type text="Integer" />
+- Field name in the API: `period`
 
 The period of time to consider (in seconds) when evaluating the request rate. The available values [vary according to your Cloudflare plan](/waf/rate-limiting-rules/#availability).
 
@@ -101,8 +102,8 @@ The available API values are: `10`, `60` (one minute), `120` (two minutes), `300
 
 ### Then take action
 
-- Data type: `String`.
-- Field name in the API: `action` (rule field).
+- Data type: <Type text="String" />
+- Field name in the API: `action` (rule field)
 
 Action to perform when the rate specified in the rule is reached.
 
@@ -116,8 +117,8 @@ If you select the _Block_ action, you can define a custom response using the fol
 
 #### With response type (for _Block_ action)
 
-- Data type: `String`.
-- Field name in the API: `response` > `content_type` (optional).
+- Data type: <Type text="String" />
+- Field name in the API: `response` > `content_type` (optional)
 
 Defines the content type of a custom response when blocking a request due to rate limiting. Only available when you set the [rule action](#then-take-action) to _Block_.
 
@@ -125,8 +126,8 @@ Available API values: `application/json`, `text/html`, `text/xml`, or `text/plai
 
 #### With response code (for _Block_ action)
 
-- Data type: `Integer`.
-- Field name in the API: `response` > `status_code` (optional).
+- Data type: <Type text="Integer" />
+- Field name in the API: `response` > `status_code` (optional)
 
 Defines the HTTP status code returned to the visitor when blocking the request due to rate limiting. Only available when you set the [rule action](#then-take-action) to _Block_.
 
@@ -134,8 +135,8 @@ You must enter a value between `400` and `499`. The default value is `429` (`Too
 
 #### Response body (for _Block_ action)
 
-- Data type: `String`.
-- Field name in the API: `response` > `content` (optional).
+- Data type: <Type text="String" />
+- Field name in the API: `response` > `content` (optional)
 
 Defines the body of the returned HTTP response when the request is blocked due to rate limiting. Only available when you set the [rule action](#then-take-action) to _Block_.
 
@@ -143,8 +144,8 @@ The maximum field size is 30 KB.
 
 ### For duration
 
-- Data type: `Integer`.
-- Field name in the API: `mitigation_timeout`.
+- Data type: <Type text="Integer" />
+- Field name in the API: `mitigation_timeout`
 
 Once the rate is reached, the rate limiting rule applies the rule action to further requests for the period of time defined in this field (in seconds).
 
@@ -162,8 +163,8 @@ Enterprise customers can always configure a duration (or mitigation timeout), ev
 
 ### With the following behavior
 
-- Data type: `Integer`.
-- Field name in the API: `mitigation_timeout`.
+- Data type: <Type text="Integer" />
+- Field name in the API: `mitigation_timeout`
 
 Defines the exact behavior of the selected action.
 
@@ -172,6 +173,7 @@ Defines the exact behavior of the selected action.
 Only Enterprise customers can throttle requests using the _Block_ action.
 
 Other users can throttle requests using a challenge action, or perform the action during a period of time. Refer to [For duration](#for-duration) for details.
+
 :::
 
 The action behavior can be one of the following:

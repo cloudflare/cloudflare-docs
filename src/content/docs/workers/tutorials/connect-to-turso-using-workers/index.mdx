@@ -116,9 +116,9 @@ To create a new Workers project (named `worker-turso-ts`), run the following:
 	file="c3-post-run-steps"
 	product="workers"
 	params={{
-		one: "Hello World example",
-		two: "Hello World Worker",
-		three: "TypeScript",
+		category: "hello-world",
+		type: "Hello World Worker",
+		lang: "TypeScript",
 	}}
 />
 
@@ -236,7 +236,7 @@ export default {
 			env.router = buildRouter(env);
 		}
 
-		return env.router.handle(request);
+		return env.router.fetch(request);
 	},
 } satisfies ExportedHandler<Env>;
 

@@ -1,6 +1,5 @@
 ---
-import { Card } from "~/components";
-import { slug } from "github-slugger";
+import { Card } from "@astrojs/starlight/components";
 
 const configuration = Object.entries({
 	available_ports_per_host: {
@@ -64,7 +63,13 @@ const metrics = Object.entries({
 			<div>
 				<label for={key}>{value.title}</label>
 				<br />
-				<input type="number" id={key} name={key} value={value.default} data-tunnel-calculator />
+				<input
+					type="number"
+					id={key}
+					name={key}
+					value={value.default}
+					data-tunnel-calculator
+				/>
 			</div>
 		))
 	}
@@ -120,23 +125,25 @@ const metrics = Object.entries({
 	import { evaluate, round } from "mathjs";
 
 	function calculate() {
-		const non_dns_udp_req_per_sec = document.querySelector(
+		const non_dns_udp_req_per_sec = document.querySelector<HTMLInputElement>(
 			"#non_dns_udp_req_per_sec",
 		)?.value;
-		const avg_non_dns_udp_session_timeout = document.querySelector(
-			"#avg_non_dns_udp_session_timeout",
-		)?.value;
-		const private_dns_req_per_sec = document.querySelector(
+		const avg_non_dns_udp_session_timeout =
+			document.querySelector<HTMLInputElement>(
+				"#avg_non_dns_udp_session_timeout",
+			)?.value;
+		const private_dns_req_per_sec = document.querySelector<HTMLInputElement>(
 			"#private_dns_req_per_sec",
 		)?.value;
-		const dns_udp_timeout_in_sec = document.querySelector(
+		const dns_udp_timeout_in_sec = document.querySelector<HTMLInputElement>(
 			"#dns_udp_timeout_in_sec",
 		)?.value;
-		const tcp_per_sec = document.querySelector("#tcp_per_sec")?.value;
-		const available_ports_per_host = document.querySelector(
+		const tcp_per_sec =
+			document.querySelector<HTMLInputElement>("#tcp_per_sec")?.value;
+		const available_ports_per_host = document.querySelector<HTMLInputElement>(
 			"#available_ports_per_host",
 		)?.value;
-		const cloudflared_replicas = document.querySelector(
+		const cloudflared_replicas = document.querySelector<HTMLInputElement>(
 			"#cloudflared_replicas",
 		)?.value;
 
@@ -157,16 +164,32 @@ const metrics = Object.entries({
 			60`,
 		);
 
-		document.querySelector("#percent_capacity_per_replica").value = round(
-			percent_capacity_per_replica,
-			2,
+		const perceptCapacityPerReplicaInput =
+			document.querySelector<HTMLInputElement>("#percent_capacity_per_replica");
+		if (perceptCapacityPerReplicaInput) {
+			perceptCapacityPerReplicaInput.value = round(
+				percent_capacity_per_replica,
+				2,
+			);
+		}
+
+		const percentCapacityAcrossAllReplicasInput =
+			document.querySelector<HTMLInputElement>(
+				"#percent_capacity_across_all_replicas",
+			);
+		if (percentCapacityAcrossAllReplicasInput) {
+			percentCapacityAcrossAllReplicasInput.value = round(
+				percent_capacity_across_all_replicas,
+				2,
+			);
+		}
+
+		const maxDnsRequestPerMinInput = document.querySelector<HTMLInputElement>(
+			"#max_dns_request_per_min",
 		);
-		document.querySelector("#percent_capacity_across_all_replicas").value =
-			round(percent_capacity_across_all_replicas, 2);
-		document.querySelector("#max_dns_request_per_min").value = round(
-			max_dns_request_per_min,
-			2,
-		);
+		if (maxDnsRequestPerMinInput) {
+			maxDnsRequestPerMinInput.value = round(max_dns_request_per_min, 2);
+		}
 	}
 
 	document

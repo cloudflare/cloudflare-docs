@@ -1,5 +1,5 @@
 version: 2
 secret:
   ignored-paths:
-    - 'assets/search.ts'
-    - 'data/*.yml'
+    - "assets/search.ts"
+    - "data/*.yml"
