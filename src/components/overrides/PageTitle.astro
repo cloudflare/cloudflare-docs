@@ -36,6 +36,8 @@ const segments = slug.split("/");
 
 for (let i = 0; i < segments.length; i++) {
 	if (i === 0) {
+		if (segments[0] === "products") break;
+
 		const entry = await getEntry("products", segments[0]);
 
 		let title = segments[0];
