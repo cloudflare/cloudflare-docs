@@ -97,6 +97,7 @@
 /ai-gateway/get-started/configuring-settings/ /ai-gateway/get-started/ 301
 /ai-gateway/get-started/connecting-applications/ /ai-gateway/get-started/ 301
 /ai-gateway/get-started/creating-gateway/ /ai-gateway/get-started/ 301
+/ai-gateway/pricing/ /ai-gateway/reference/pricing/ 301
 
 # analytics
 /analytics/migration-guides/zone-analytics/ /analytics/graphql-api/migration-guides/zone-analytics/ 301
@@ -553,6 +554,7 @@
 /fundamentals/setup/allow-cloudflare-ip-addresses/ /fundamentals/concepts/cloudflare-ip-addresses/ 301
 /fundamentals/basic-tasks/login/ /fundamentals/setup/account/login/ 301
 /fundamentals/concepts/redirects/ /fundamentals/reference/redirects/ 301
+/fundamentals/reference/changelog/ /fundamentals/reference/ 302
 
 # gateway
 /gateway/about/ /cloudflare-one/policies/gateway/ 301

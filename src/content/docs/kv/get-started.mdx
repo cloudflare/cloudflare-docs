@@ -124,11 +124,11 @@ To create a KV namespace via Wrangler:
 	For this tutorial, use the binding name `BINDING_NAME`.
 
 	```sh
-	npx wrangler kv namespace create kv_binding_name
+	npx wrangler kv namespace create BINDING_NAME
 	```
 
 	```sh output
-	🌀  Creating namespace with title kv-tutorial-kv_binding_name
+	🌀  Creating namespace with title kv-tutorial-BINDING_NAME
 	✨  Success!
 	Add the following to your configuration file:
 	[[kv_namespaces]]
@@ -142,9 +142,6 @@ To create a KV namespace via Wrangler:
 
 <Steps>
 1. Go to [**Storage & Databases** > **KV**](https://dash.cloudflare.com/?to=/:account/workers/kv/namespaces).
-
-
-
 2. Select **Create a namespace**.
 3. Enter a name for your namespace. For this tutorial, use `kv_tutorial_namespace`.
 4. Select **Add**.
@@ -197,7 +194,7 @@ Refer to [Environment](/kv/reference/environments/) for more information.
 4. Scroll to **Bindings**, then select **Add**.
 5. Select **KV namespace**.
 6. Name your binding (`BINDING_NAME`) in **Variable name**, then select the KV namespace (`kv_tutorial_namespace`) you created in [step 2](/kv/get-started/#2-create-a-kv-namespace) from the dropdown menu.
-7. Select **Deploy** to deploy your binding. 
+7. Select **Deploy** to deploy your binding.
 </Steps>
 </TabItem></Tabs>
 
@@ -390,7 +387,7 @@ The browser should simply return the `VALUE` corresponding to the `KEY` you have
 1. Go to **Workers & Pages** > **Overview**.
 2. Go to the `kv-tutorial` Worker you created.
 3. Select **Edit Code**.
-4. Clear the contents of the `workers.js` file, then paste the following code. Replace the `BINDING_NAME` with your binding name.
+4. Clear the contents of the `workers.js` file, then paste the following code.
 
 	```js
 	export default {
@@ -411,8 +408,6 @@ The browser should simply return the `VALUE` corresponding to the `KEY` you have
 		},
 	};
 	```
-
-	For this tutorial, your `BINDING_NAME` should be `kv_binding_name`.
 
 	The code above:
 

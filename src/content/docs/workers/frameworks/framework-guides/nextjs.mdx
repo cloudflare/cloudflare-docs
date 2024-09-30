@@ -90,13 +90,13 @@ To enable caching, you must:
 
 ##### Create a KV namespace
 
-```
+```sh
 npx wrangler@latest kv namespace create NEXT_CACHE_WORKERS_KV
 ```
 
 ##### Add the KV namespace to your Worker
 
-```
+```toml
 [[kv_namespaces]]
 binding = "NEXT_CACHE_WORKERS_KV"
 id = "<YOUR_NAMESPACE_ID>"

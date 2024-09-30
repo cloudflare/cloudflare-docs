@@ -130,7 +130,7 @@ Refer to [this guide](/workers/configuration/compatibility-dates/) for more info
 
 If you have used [Workers](/workers), you may already be familiar with [`wrangler.toml`](/workers/wrangler/configuration/). There are a few key differences to be aware of when using `wrangler.toml` with your Pages Functions project:
 
-- The configuration fields **do not match exactly** between Pages Functions `wrangler.toml` file and the Workers equivalent. For example, configuration keys like `main`, which are Workers specific, do not apply to a Pages Function's `wrangler.toml`.
+- The configuration fields **do not match exactly** between Pages Functions `wrangler.toml` file and the Workers equivalent. For example, configuration keys like `main`, which are Workers specific, do not apply to a Pages Function's `wrangler.toml`. Some functionality supported by Workers, such as [module aliasing](/workers/wrangler/configuration/#module-aliasing) cannot yet be used by Cloudflare Pages projects.
 - The Pages `wrangler.toml` introduces a new key, `pages_build_output_dir`, which is only used for Pages projects.
 - The concept of [environments](/pages/functions/wrangler-configuration/#configure-environments) and configuration inheritance in this file **is not** the same as Workers.
 - This file becomes the [source of truth](/pages/functions/wrangler-configuration/#source-of-truth) when used, meaning that you **can not edit the same fields in the dashboard** once you are using this file.
