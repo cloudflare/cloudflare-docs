@@ -13,19 +13,25 @@ Cloudflare Zero Trust allows you to enforce custom device posture checks on your
 ```mermaid
 sequenceDiagram
     participant WARP
+		participant Cloudflare Access
     participant External API
-    WARP->>External API: Client ID and Secret
+    WARP->>Cloudflare Access: Client ID and Secret
+		Cloudflare Access->>External API: Application token
 		WARP->>External API: JSON with user and device identity
     External API-->>WARP: JSON with 0-100 result
 ```
 
 ## External API requirements
 
-The custom service provider integration works with any API service that meets the following request/response specifications. Sample code is available in our GitHub repository. To learn how to build a custom external API, refer to our [Create custom device posture checks with Workers](/cloudflare-one/tutorials/custom-device-posture-workers) tutorial.
+The custom service provider integration works with any API service that meets the following specifications. To get started with building a custom external API, refer to the sample code and our [Create custom device posture checks with Workers](/cloudflare-one/tutorials/custom-device-posture-workers) tutorial.
+
+### Authentication
+
+The WARP client authenticates to the external API through Cloudflare Access. The external API should [validate the application token](/cloudflare-one/identity/authorization-cookie/validating-json/) issued by Cloudflare Access to ensure that any requests which bypass Access (for example, due to a network misconfiguration) are rejected.
 
 ### Data passed to external API
 
-Cloudflare will pass the following parameters to the configured API endpoint. You can use this data to identify the device and assign a posture score. For some devices, not all identifying information will apply, in which case the field will be blank.
+Cloudflare will pass the following parameters to the configured API endpoint. You can use this data to identify the device and assign a posture score. For some devices, not all identifying information will apply, in which case the field will be blank. A maximum of 1000 devices will be sent per a request.
 
 | Field | Description |
 | ----- | ----------- |
