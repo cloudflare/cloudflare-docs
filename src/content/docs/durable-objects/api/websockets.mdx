@@ -71,11 +71,11 @@ To learn more about WebSocket Hibernation, refer to [Build a WebSocket server wi
 
 ### setWebSocketAutoResponse
 
-- <code>setWebSocketAutoResponse(webSocketRequestResponsePair Type='WebSocketRequestResponsePair' /> <MetaInfo text='optional' />)</code>: <Type text='void' />
+- <code>setWebSocketAutoResponse(webSocketRequestResponsePair <Type text='WebSocketRequestResponsePair' /> <MetaInfo text='optional' />)</code>: <Type text='void' />
 
   - Sets an application level auto response that does not wake hibernated WebSockets.
 
-  - `state.setWebSocketAutoResponse` receives `WebSocketRequestResponsePair(requeststring, responsestring)` as an argument, enabling any WebSocket that was accepted via `state.acceptWebSocket()` belonging to this Object to automatically reply with `response` when it receives the specified `request`.
+  - `state.setWebSocketAutoResponse` receives <code>WebSocketRequestResponsePair(request <Type text='string'/>, response <Type text='string'/>)</code> as an argument, enabling any WebSocket that was accepted via `state.acceptWebSocket()` belonging to this Object to automatically reply with `response` when it receives the specified `request`.
 
   - `state.setWebSocketAutoResponse()` is preferable to setting up a server for static ping/pong messages because `state.setWebSocketAutoResponse()` handles application level ping/pongs without waking the WebSocket from hibernation, preventing unnecessary duration charges.
 
@@ -87,13 +87,13 @@ To learn more about WebSocket Hibernation, refer to [Build a WebSocket server wi
 
 - `getWebSocketAutoResponse()`: <Type text='Object | null' />
 
-  - Gets the `WebSocketRequestResponsePair(requeststring, responsestring)` currently set, or `null` if there is none.
+  - Gets the <code>WebSocketRequestResponsePair(request <Type text='string'/>, response <Type text='string'/>)</code> currently set, or `null` if there is none.
 
-  - Each `WebSocketRequestResponsePair(requeststring, responsestring)` Object provides methods for `getRequest()` and  `getResponse()`.
+  - Each <code>WebSocketRequestResponsePair(request <Type text='string'/>, response <Type text='string'/>)</code> Object provides methods for `getRequest()` and  `getResponse()`.
 
 ### getWebSocketAutoResponseTimestamp
 
-- `getWebSocketAutoResponseTimestamp(wsWebSocket)`: <Type text= 'Date | null' />
+- <code>getWebSocketAutoResponseTimestamp(ws <Type text='WebSocket'/>)</code>: <Type text= 'Date | null' />
 
   - Gets the most recent `Date` when the WebSocket received an auto-response request, or `null` if the given WebSocket never received an auto-response request.
 

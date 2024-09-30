@@ -92,7 +92,7 @@ Each method is implicitly wrapped inside a transaction, such that its results ar
 
   * Deletes the key and associated value. Returns `true` if the key existed or `false` if it did not.
 
-* <code>delete(keys <Type text='Array<string>'/>, options <Type='Object' /> <MetaInfo text='optional' />)</code>: <Type text='Promise<number>' />
+* <code>delete(keys <Type text='Array<string>'/>, options <Type text='Object' /> <MetaInfo text='optional' />)</code>: <Type text='Promise<number>' />
 
   * Deletes the provided keys and their associated values. Supports up to 128 keys at a time. Returns a count of the number of key-value pairs deleted.
 
@@ -207,7 +207,7 @@ An issue was identified with [alarms](/durable-objects/api/alarms/) in [beta Dur
 
 ### getAlarm
 
-* <code>getAlarm(options <Type='Object' /> <MetaInfo text='optional' />)</code>: <Type text='Promise<Number | null>' />
+* <code>getAlarm(options <Type text='Object' /> <MetaInfo text='optional' />)</code>: <Type text='Promise<Number | null>' />
 
   * Retrieves the current alarm time (if set) as integer milliseconds since epoch. The alarm is considered to be set if it has not started, or if it has failed and any retry has not begun. If no alarm is set, `getAlarm()` returns `null`.
 
@@ -217,7 +217,7 @@ An issue was identified with [alarms](/durable-objects/api/alarms/) in [beta Dur
 
 ### setAlarm
 
-* <code>setAlarm(scheduledTime <Type text='Date | number' />, options <Type='Object' /> <MetaInfo text='optional' />)</code>: <Type text='Promise' />
+* <code>setAlarm(scheduledTime <Type text='Date | number' />, options <Type text='Object' /> <MetaInfo text='optional' />)</code>: <Type text='Promise' />
 
   * Sets the current alarm time, accepting either a JavaScript `Date`, or integer milliseconds since epoch.
 
