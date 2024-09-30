@@ -6,7 +6,7 @@ pcx_content_type: tutorial
 title: Send SSO attributes to Access-protected origins with Workers
 ---
 
-import { Render, GlossaryTooltip } from "~/components"
+import { Render, GlossaryTooltip, PackageManagers } from "~/components"
 
 This tutorial will walk you through extending the single-sign-on (SSO) capabilities of [Cloudflare Access](/cloudflare-one/policies/access/) with our serverless computing platform, [Cloudflare Workers](/workers/). Specifically, this guide will demonstrate how to modify requests sent to your secured origin to include additional information from the Cloudflare Access authentication event.
 
@@ -41,11 +41,21 @@ This approach allows you to:
 
 1. Create a new Workers project:
 
-    ```sh
-    npm create cloudflare@latest -- device-posture-worker
-    ```
+		<PackageManagers
+			type="create"
+			pkg="cloudflare@latest"
+			args={"device-posture-worker"}
+		/>
 
-    <Render file="c3-post-run-steps" product="workers" params={{ category: "Hello World example", type: "Hello World Worker", lang: "JavaScript" }} />
+		<Render
+			file="c3-post-run-steps"
+			product="workers"
+			params={{
+				category: "hello-world",
+				type: "Hello World Worker",
+				lang: "JavaScript",
+			}}
+		/>
 
 2. Change to the project directory:
 
