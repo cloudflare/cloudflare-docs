@@ -57,7 +57,7 @@ To learn more about WebSocket Hibernation, refer to [Build a WebSocket server wi
 
 ### getWebSockets
 
-- `getWebSockets(tagstringoptional)`: <Type text='Array<WebSocket>' />
+- <code>getWebSockets(tag <Type text='string' /> <MetaInfo text='optional' />)</code>: <Type text='Array<WebSocket>' />
 
   - Gets an array of accepted WebSockets matching the given tag. Disconnected WebSockets <sup>1</sup> are automatically removed from the list. Calling `state.getWebSockets()` with no `tag` argument will return all WebSockets.
 
