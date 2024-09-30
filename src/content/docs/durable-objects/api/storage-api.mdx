@@ -207,7 +207,7 @@ An issue was identified with [alarms](/durable-objects/api/alarms/) in [beta Dur
 
 ### getAlarm
 
-* `getAlarm(optionsObjectoptional)`: <Type text='Promise<Number | null>' />
+* <code>getAlarm(options <Type='Object' /> <MetaInfo text='optional' />)</code>: <Type text='Promise<Number | null>' />
 
   * Retrieves the current alarm time (if set) as integer milliseconds since epoch. The alarm is considered to be set if it has not started, or if it has failed and any retry has not begun. If no alarm is set, `getAlarm()` returns `null`.
 
