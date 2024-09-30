@@ -20,6 +20,8 @@ import { Tabs, TabItem, Badge, Render } from "~/components";
 
 2. In the **Private Networks** tab for the tunnel, enter the private IP address of your server (or a range that includes the server IP).
 
+<Render file="tunnel/warp-to-tunnel-route-ips" />
+
 ## 2. Set up the client
 
 To connect your devices to Cloudflare:
@@ -62,7 +64,7 @@ Next, configure your SSH server to trust the Cloudflare SSH CA. This allows Acce
 
 ## 8. Connect as a user
 
-Users can use any SSH client to connect to the target, as long as they are logged into the WARP client on their device. Users do not need to modify any SSH configs on their device. For example, to SSH from a terminal:
+Users can use any SSH client to connect to the target, as long as they are logged into the WARP client on their device. If the target is located within a particular virtual network, ensure that the WARP client is connected to that virtual network before initiating the connection. Users do not need to modify any SSH configs on their device. For example, to SSH from a terminal:
 
 ```sh
 ssh <username>@<target IP>
