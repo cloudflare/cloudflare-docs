@@ -6,6 +6,8 @@ sidebar:
 
 ---
 
+import { Type, MetaInfo } from "~/components";
+
 :::note[Alarms disabled for SQLite in Durable Objects Beta]
 
 An issue was identified with [alarms](/durable-objects/api/alarms/) in [beta Durable Object classes with a SQLite storage backend](/durable-objects/best-practices/access-durable-objects-storage/#sqlite-storage-backend). Alarms have been temporarily disabled for only SQLite-backed Durable Objects while a fix is implemented. Alarms in Durable Objects with default, key-value storage backend are unaffected and continue to operate.
@@ -40,7 +42,7 @@ Alarms can be used to build distributed primitives, like queues or batching of w
 
 
 
-* <code>getAlarm()</code> : number | null
+* `getAlarm()`: <Type text='number' /> | <Type text='null' />
 
   * If there is an alarm set, then return the currently set alarm time in number of milliseconds elapsed since the UNIX epoch. Otherwise, return `null`.
 
@@ -50,7 +52,7 @@ Alarms can be used to build distributed primitives, like queues or batching of w
 
 
 
-* <code>setAlarm(scheduledTimeMsnumber)</code> : void
+* `setAlarm(scheduledTimeMsnumber)`: <Type text='void' />
 
   * Set the time for the alarm to run at in number of milliseconds elapsed since the UNIX epoch.
 
@@ -60,7 +62,7 @@ Alarms can be used to build distributed primitives, like queues or batching of w
 
 
 
-* <code>deleteAlarm()</code> : void
+* `deleteAlarm()`: <Type text='void' />
 
   * Unset the alarm if there is a currently set alarm.
 
@@ -74,7 +76,7 @@ Alarms can be used to build distributed primitives, like queues or batching of w
 
 
 
-* <code>alarm()</code> : void
+* `alarm()`: <Type text='void' />
 
   * Called by the system when a scheduled alarm time is reached.
 
