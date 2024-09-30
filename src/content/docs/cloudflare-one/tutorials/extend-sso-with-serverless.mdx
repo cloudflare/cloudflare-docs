@@ -1,27 +1,26 @@
 ---
-updated: 2024-08-13
+updated: 2024-09-30
 category: 🔐 Zero Trust
 difficulty: Advanced
 pcx_content_type: tutorial
-content_type: 📝 Tutorial
-title: Augment Clouflare Access SSO capabilities with Cloudflare Workers
+title: Send SSO attributes to Access-protected origins with Workers
 ---
 
 import { Render, GlossaryTooltip } from "~/components"
 
-This tutorial will walk you through extending the single-sign-on (SSO) capabilities of [Cloudflare Access](/cloudflare-one/policies/access/) with Serverless using [Cloudflare Workers](/workers/). Specifically, this guide will demonstrate how to modify requests sent to your secured origin to include additional information from the Cloudflare Access authentication event.
+This tutorial will walk you through extending the single-sign-on (SSO) capabilities of [Cloudflare Access](/cloudflare-one/policies/access/) with our serverless computing platform, [Cloudflare Workers](/workers/). Specifically, this guide will demonstrate how to modify requests sent to your secured origin to include additional information from the Cloudflare Access authentication event.
 
-Time to complete: **45 minutes**
+**Time to complete:** 45 minutes
 
 ## Authentication flow
 
 [Cloudflare Access](/cloudflare-one/policies/access/) is an authentication proxy in charge of validating a user's identity before they connect to your application. As shown in the diagram below, Access inserts a [JWT](/cloudflare-one/identity/authorization-cookie/application-token/) into the request, which can then be [verified](/cloudflare-one/identity/authorization-cookie/validating-json/#validate-jwts) by the origin server.
 
-![extendedflow](~/assets/images/cloudflare-one/applications/access-standard-flow.png)
+![Standard authentication flow for a request to an Access application](~/assets/images/cloudflare-one/applications/access-standard-flow.png)
 
-You can extend this functionality by using a [Cloudflare Worker](/workers/) to insert additional HTTP headers into the request. In this example, we will add the [device posture attributes](/cloudflare-one/identity/devices/#enforce-device-posture) `firewall_activated` and `disk_encrypted`, but you can include any attributes that Cloudflare Access collects from the authentication event.
+You can extend this functionality by using a Cloudflare Worker to insert additional HTTP headers into the request. In this example, we will add the [device posture attributes](/cloudflare-one/identity/devices/#enforce-device-posture) `firewall_activated` and `disk_encrypted`, but you can include any attributes that Cloudflare Access collects from the authentication event.
 
-![standardflow](~/assets/images/cloudflare-one/applications/access-extended-flow-serverless.png)
+![Extended authentication flow uses a Worker to pass additional request headers to the origin](~/assets/images/cloudflare-one/applications/access-extended-flow-serverless.png)
 
 ## Benefits
 
@@ -42,65 +41,65 @@ This approach allows you to:
 
 1. Create a new Workers project:
 
-```sh
-npm create cloudflare@latest -- device-posture-worker
-```
+    ```sh
+    npm create cloudflare@latest -- device-posture-worker
+    ```
 
-<Render file="c3-post-run-steps" product="workers" params={{ one: "Hello World example", two: "Hello World Worker", three: "JavaScript" }} />
+    <Render file="c3-post-run-steps" product="workers" params={{ one: "Hello World example", two: "Hello World Worker", three: "JavaScript" }} />
 
 2. Change to the project directory:
 
-```sh
-$ cd device-posture-worker
-```
+    ```sh
+    $ cd device-posture-worker
+    ```
 
 3. Copy-paste the following code into `src/index.js`. Be sure to replace `<your-team-name>` with your Zero Trust <GlossaryTooltip term="team name">team name</GlossaryTooltip>.
 
-```js title="index.js"
+    ```js title="index.js"
 
-import { parse } from "cookie";
-export default {
-  async fetch(request, env, ctx) {
-    // The name of the cookie
-    const COOKIE_NAME = "CF_Authorization";
-	const CF_GET_IDENTITY = "https://<your-team-name>.cloudflareaccess.com>/cdn-cgi/access/get-identity";
-    const cookie = parse(request.headers.get("Cookie") || "");
-    if (cookie[COOKIE_NAME] != null) {
-	  try {
-		let id = await (await fetch(CF_GET_IDENTITY, request)).json()
-		let diskEncryptionStatus = false;
-		let firewallStatus = false;
+    import { parse } from "cookie";
+    export default {
+      async fetch(request, env, ctx) {
+        // The name of the cookie
+        const COOKIE_NAME = "CF_Authorization";
+      const CF_GET_IDENTITY = "https://<your-team-name>.cloudflareaccess.com>/cdn-cgi/access/get-identity";
+        const cookie = parse(request.headers.get("Cookie") || "");
+        if (cookie[COOKIE_NAME] != null) {
+        try {
+        let id = await (await fetch(CF_GET_IDENTITY, request)).json()
+        let diskEncryptionStatus = false;
+        let firewallStatus = false;
 
-		for (const checkId in id.devicePosture) {
-			const check = id.devicePosture[checkId];
-			if (check.type === "disk_encryption") {
-				console.log(check.type)
-				diskEncryptionStatus = check.success;
-			}
-			if (check.type === "firewall") {
-				console.log(check.type)
-				firewallStatus = check.success;
-				break;
-			}
-		}
-		//clone request (immutable otherwise) and insert posture values in new header set
-		let newRequest = await new Request(request)
-		newRequest.headers.set("Cf-Access-Firewall-Activated", firewallStatus)
-		newRequest.headers.set("Cf-Access-Disk-Encrypted", firewallStatus)
+        for (const checkId in id.devicePosture) {
+          const check = id.devicePosture[checkId];
+          if (check.type === "disk_encryption") {
+            console.log(check.type)
+            diskEncryptionStatus = check.success;
+          }
+          if (check.type === "firewall") {
+            console.log(check.type)
+            firewallStatus = check.success;
+            break;
+          }
+        }
+        //clone request (immutable otherwise) and insert posture values in new header set
+        let newRequest = await new Request(request)
+        newRequest.headers.set("Cf-Access-Firewall-Activated", firewallStatus)
+        newRequest.headers.set("Cf-Access-Disk-Encrypted", firewallStatus)
 
-		//sent modified request to origin
-		return await fetch(newRequest)
-		
-	  } catch (e) {
-		console.log(e)
-		return await fetch(request)
-	  }
-    }
-    return await fetch(request)
-  },
-};
+        //sent modified request to origin
+        return await fetch(newRequest)
 
-```
+        } catch (e) {
+        console.log(e)
+        return await fetch(request)
+        }
+        }
+        return await fetch(request)
+      },
+    };
+
+    ```
 
 ## 2. View the user's identity
 
@@ -177,6 +176,7 @@ Below is an example of a user identity that includes the `disk_encryption` and `
 ## 3. Route the Worker to your application
 
 In `wrangler.toml`, [set up a route](/workers/configuration/routing/routes/) that maps the Worker to your Access application domain:
+
 ```toml
 route = { pattern= "app.example.com/*", zone_name="example.com"}
 ```
