@@ -13,21 +13,21 @@ import { GlossaryDefinition, Render } from "~/components";
 
 Cloudflare's authoritative DNS offering covers a variety of [setups](/dns/zone-setups/).
 
-In the most common setup (full), you [add your domain](/fundamentals/setup/manage-domains/add-site/), we import your DNS records, and you [update your nameservers](/dns/nameservers/update-nameservers/) to make Cloudflare your primary DNS provider. Once the setup is completed:
+In the most common setup (full), you [add your domain](/fundamentals/setup/manage-domains/add-site/), import your [DNS records](/dns/manage-dns-records/), and [update your nameservers](/dns/nameservers/update-nameservers/) to make Cloudflare your primary authoritative DNS provider. Once the setup is completed:
 
 - You [manage DNS records](/dns/manage-dns-records/how-to/create-dns-records/) through the Cloudflare dashboard or API. This is how you control which resources are available on the apex domain (`example.com`) or specific subdomains (`blog.example.com`) of your website, as well as control other configurations.
 
 - Cloudflare [responds to all DNS queries](/fundamentals/concepts/how-cloudflare-works/#how-cloudflare-works-as-a-dns-provider) for your hostnames.
 
-- The DNS records file is cached across the [Cloudflare global network](https://www.cloudflare.com/network/), speeding up DNS resolution.
+- Your DNS records are cached across the [Cloudflare global network](https://www.cloudflare.com/network/), speeding up DNS resolution.
 
 The following links introduce important concepts and guide you through actions you may need to take while having your website or application on Cloudflare.
 
-- [DNS records](/dns/manage-dns-records/): DNS records communicate information about your domain to visitors and other web services.
+- [DNS records](/dns/manage-dns-records/): DNS records contain information about your domain and are used to make your website or application available to visitors and other web services.
 
 - [Nameservers](/dns/nameservers/): In the context of Cloudflare DNS, nameservers refer to authoritative nameservers. When a nameserver is authoritative for `example.com`, it means that DNS resolvers will consider responses from this nameserver when a user tries to access `example.com`.
 
-- [Proxy status](/dns/manage-dns-records/reference/proxied-dns-records/): Proxy status determines how Cloudflare treats incoming HTTP/S requests to A, AAAA, and CNAME records. When a record is proxied, Cloudflare speeds up and protects HTTP/S traffic with our [cache](/cache/)/[CDN](https://www.cloudflare.com/learning/cdn/what-is-a-cdn/), [DDoS protection](/ddos-protection/), [WAF](/waf/), and [more](/products/?product-group=Application+performance%2CApplication+security).
+- [Proxy status](/dns/manage-dns-records/reference/proxied-dns-records/): Proxy status affects how Cloudflare treats incoming HTTP/S requests to A, AAAA, and CNAME records. When a record is proxied, Cloudflare responds with [anycast IPs](/fundamentals/concepts/cloudflare-ip-addresses/), which speeds up and protects HTTP/S traffic with our [cache](/cache/)/[CDN](https://www.cloudflare.com/learning/cdn/what-is-a-cdn/), [DDoS protection](/ddos-protection/), [WAF](/waf/), and [more](/products/?product-group=Application+performance%2CApplication+security).
 
 - [How Cloudflare works](/fundamentals/concepts/how-cloudflare-works/): An overview of how Cloudflare works as a DNS provider and as a reverse proxy.
 
