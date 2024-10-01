@@ -13,7 +13,7 @@ import {
 	PackageManagers,
 } from "~/components";
 
-#### New apps
+## New apps
 
 To create a new Next.js app, pre-configured to run on Cloudflare using [`@opennextjs/cloudflare`](https://opennext.js.org/cloudflare), run:
 
@@ -32,7 +32,7 @@ To create a new Next.js app, pre-configured to run on Cloudflare using [`@openne
 	}}
 />
 
-#### Existing Next.js apps
+## Existing Next.js apps
 
 :::note[Minimum required Wrangler version: 3.78.10.]
 
@@ -40,7 +40,7 @@ Check your version by running `wrangler version`. To update Wrangler, refer to [
 
 :::
 
-##### 1. Install @opennextjs/cloudflare
+### 1. Install @opennextjs/cloudflare
 
 First, install [@opennextjs/cloudflare](https://www.npmjs.com/package/@opennextjs/cloudflare):
 
@@ -48,7 +48,7 @@ First, install [@opennextjs/cloudflare](https://www.npmjs.com/package/@opennextj
 npm install --save-dev @opennextjs/cloudflare
 ```
 
-##### 2. Add a `wrangler.toml` file
+### 2. Add a `wrangler.toml` file
 
 Then, add a [`wrangler.toml`](/workers/wrangler/configuration/) file to the root directory of your Next.js app:
 
@@ -66,7 +66,7 @@ As shown above, you must enable the [`nodejs_compat` compatibility flag](/worker
 
 `wrangler.toml` is where you configure your Worker and define what resources it can access via [bindings](/workers/runtime-apis/bindings/).
 
-##### 3. Update `package.json`
+### 3. Update `package.json`
 
 Add the following to the scripts field of your `package.json` file:
 
@@ -88,13 +88,13 @@ Add the following to the scripts field of your `package.json` file:
 
 To enable caching, you must:
 
-##### Create a KV namespace
+#### Create a KV namespace
 
 ```sh
 npx wrangler@latest kv namespace create NEXT_CACHE_WORKERS_KV
 ```
 
-##### Add the KV namespace to your Worker
+#### Add the KV namespace to your Worker
 
 ```toml
 [[kv_namespaces]]
@@ -106,13 +106,13 @@ id = "<YOUR_NAMESPACE_ID>"
 
 As shown above, the name of the binding that you configure for the KV namespace must be set to `NEXT_CACHE_WORKERS_KV`.
 
-##### 5. Develop locally
+### 5. Develop locally
 
 You can continue to run `next dev` when developing locally.
 
 In step 3, we also added the `npm run preview:worker`, which allows you to quickly preview your app running locally in the Workers runtime, rather than in Node.js. This allows you to test changes in the same runtime that your app runs in, when deployed to Cloudflare.
 
-##### 6. Deploy to Cloudflare Workers
+### 6. Deploy to Cloudflare Workers
 
 Either deploy via the command line:
 
