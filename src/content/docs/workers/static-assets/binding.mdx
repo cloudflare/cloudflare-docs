@@ -73,7 +73,7 @@ export default {
 			// TODO: Add your custom /api/* logic here.
 			return new Response("Ok");
 		}
-		// The asset binding invokes the behaviour set by `not_found_handling`.
+		// The asset binding invokes the behavior set by `not_found_handling`.
 		return env.ASSETS.fetch(request);
 	},
 };
