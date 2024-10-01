@@ -17,10 +17,12 @@ Follow the steps below to achieve this conversion.
 2. Go to **DNS** > **Settings** > **DNS Zone Transfers** and select **Manage linked peers**.
 3. Unlink the peer and select **Save**.
 
+At this point, your zone will be read-only, meaning you cannot make any edits.
+
 ## 2. Prepare for the conversion
 
 1. Plan for [DNSSEC settings](/dns/zone-setups/zone-transfers/cloudflare-as-secondary/dnssec-for-secondary/). If you were previously using [Pre-signed DNSSEC](/dns/zone-setups/zone-transfers/cloudflare-as-secondary/dnssec-for-secondary/#set-up-pre-signed-dnssec), consider disabling DNSSEC before starting the conversion.
-2. Make sure the [proxy status](/dns/manage-dns-records/reference/proxied-dns-records/) of your DNS records are consistently set:
+2. Make sure the [proxy statuses](/dns/manage-dns-records/reference/proxied-dns-records/) of your DNS records are consistently set:
 
     - If you have [Secondary DNS override](/dns/zone-setups/zone-transfers/cloudflare-as-secondary/proxy-traffic/), confirm each record has the appropriate setting (**Proxied** or **DNS only**).
     - If [Secondary DNS override](/dns/zone-setups/zone-transfers/cloudflare-as-secondary/proxy-traffic/) is disabled, make sure all of your DNS records are listed as **DNS only**.
