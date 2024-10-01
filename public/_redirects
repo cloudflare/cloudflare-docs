@@ -295,17 +295,24 @@
 # ddos-protection
 /ddos-protection/change-log/http/2022-09-19-emergency-emergency/ /ddos-protection/change-log/http/2022-09-19-emergency/
 /ddos-protection/change-log/http/2022-12-07-emergency-emergency/ /ddos-protection/change-log/http/2022-12-07-emergency/
-/ddos-protection/managed-rulesets/tcp-protection/ /ddos-protection/tcp-protection/ 301
 /ddos-protection/managed-rulesets/http/location-aware-protection/ /ddos-protection/managed-rulesets/adaptive-protection/ 301
 /ddos-protection/managed-rulesets/network/fields/ /ddos-protection/managed-rulesets/network/override-expressions/ 301
 /support/about-cloudflare/attack-preparation-and-response/responding-to-ddos-attacks/ /ddos-protection/best-practices/respond-to-ddos-attacks/ 301
 /support/about-cloudflare/attack-preparation-and-response/understanding-cloudflare-ddos-protection/ /ddos-protection/about/ 301
 /ddos-protection/change-log/global-changes/ /ddos-protection/change-log/general-updates/ 301
-# Redirect the following pages temporarily (using HTTP 307 Temporary redirect)
-/ddos-protection/dns-protection/rule-settings/ /ddos-protection/dns-protection/ 307
-/ddos-protection/dns-protection/api/ /ddos-protection/dns-protection/ 307
-/ddos-protection/dns-protection/api/examples/ /ddos-protection/dns-protection/ 307
-/ddos-protection/dns-protection/api/json-objects/ /ddos-protection/dns-protection/ 307
+/ddos-protection/tcp-protection/api/examples/ /ddos-protection/advanced-ddos-systems/api/tcp-protection/examples/ 301
+/ddos-protection/tcp-protection/api/json-objects/ /ddos-protection/advanced-ddos-systems/api/tcp-protection/json-objects/ 301
+/ddos-protection/tcp-protection/concepts/ /ddos-protection/advanced-ddos-systems/concepts/ 301
+/ddos-protection/tcp-protection/how-to/add-prefix-allowlist/ /ddos-protection/advanced-ddos-systems/how-to/add-prefix-allowlist/ 301
+/ddos-protection/tcp-protection/how-to/add-prefix/ /ddos-protection/advanced-ddos-systems/how-to/add-prefix/ 301
+/ddos-protection/tcp-protection/how-to/create-filter/ /ddos-protection/advanced-ddos-systems/how-to/create-filter/ 301
+/ddos-protection/tcp-protection/how-to/exclude-prefix/ /ddos-protection/advanced-ddos-systems/how-to/exclude-prefix/ 301
+/ddos-protection/tcp-protection/how-to/ /ddos-protection/advanced-ddos-systems/how-to/ 301
+/ddos-protection/tcp-protection/ /ddos-protection/advanced-ddos-systems/overview/advanced-tcp-protection/ 301
+/ddos-protection/tcp-protection/mitigation-reasons/ /ddos-protection/advanced-ddos-systems/overview/advanced-tcp-protection/mitigation-reasons/ 301
+/ddos-protection/tcp-protection/rule-settings/ /ddos-protection/advanced-ddos-systems/rule-settings/ 301
+/ddos-protection/dns-protection/ /ddos-protection/advanced-ddos-systems/overview/advanced-dns-protection/ 301
+/ddos-protection/tcp-protection/api/ /ddos-protection/advanced-ddos-systems/api/ 301
 
 # dmarc-management
 /dmarc-management/manage-sources/ /dmarc-management/ 301
