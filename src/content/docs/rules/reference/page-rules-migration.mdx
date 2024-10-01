@@ -137,20 +137,20 @@ You configured a Page Rule to perform an automatic redirect from HTTP to HTTPS f
 
 **How to migrate**:
 
-1. [Create a single redirect](/rules/url-forwarding/single-redirects/create-dashboard/) to always redirect HTTP requests to HTTPS for any hostname that contains `example.com`:
+1. [Create a single redirect](/rules/url-forwarding/single-redirects/create-dashboard/) to always redirect HTTP requests to HTTPS. You can select the **Redirect from HTTP to HTTPS** rule template or enter the following rule configuration:
 
     <div class="DocsMarkdown--example">
 
    - **When incoming requests match**: Custom filter expression
 
      - Using the Expression Builder:<br/>
-       `Hostname contains "example.com" AND SSL/HTTPS is off`
+       `URI Full wildcard "http://*"`
      - Using the Expression Editor:<br/>
-       `(http.host contains "example.com" and not ssl)`
+       `(http.request.full_uri wildcard "http://*")`
 
    - **Then**:
      - **Type**: _Dynamic_
-     - **Expression**: `concat("https://", http.host, http.request.uri.path)`
+     - **Expression**: `wildcard_replace(http.request.full_uri, "http://*", "https://${1}")`
      - **Status code**: _301_
 
     </div>
