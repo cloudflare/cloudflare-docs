@@ -17,6 +17,8 @@ Cloudflare Gateway can perform [SSL/TLS decryption](https://www.cloudflare.com/l
 
 When you enable TLS decryption, Gateway will decrypt all traffic sent over HTTPS, apply your HTTP policies, and then re-encrypt the request with a [user-side certificate](/cloudflare-one/connections/connect-devices/warp/user-side-certificates/). Gateway will decrypt and re-encrypt traffic regardless of HTTP policy action, including [Do Not Inspect](/cloudflare-one/policies/gateway/http-policies/#do-not-inspect).
 
+Cloudflare prevents interference by decrypting, inspecting, and re-encrypting HTTPS requests in its data centers in memory only. Gateway only stores eligible cache content at rest. All cache disks are encrypted at rest. You can configure where TLS decryption takes place with [Regional Services](/data-localization/regional-services/) in the [Cloudflare Data Localization Suite (DLS)](/data-localization/).
+
 ## Enable TLS decryption
 
 <Render file="gateway/enable-tls-decryption" product="cloudflare-one" />
