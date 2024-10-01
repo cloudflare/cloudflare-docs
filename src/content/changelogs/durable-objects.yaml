@@ -11,7 +11,7 @@ entries:
       An issue was identified with [alarms](/durable-objects/api/alarms/) in [beta Durable Object classes with a SQLite storage backend](/durable-objects/best-practices/access-durable-objects-storage/#sqlite-storage-backend). Alarms have been temporarily disabled for only SQLite-backed Durable Objects while a fix is implemented. Alarms in Durable Objects with default, key-value storage backend are unaffected and continue to operate.
 
   - publish_date: "2024-09-26"
-    title: (Beta) SQLite storage backend & SQL API availabe on new Durable Object classes 
+    title: (Beta) SQLite storage backend & SQL API available on new Durable Object classes
     description: |-
       The new beta version of Durable Objects is available where each Durable Object has a private, embedded SQLite database. When deploying a new Durable Object class, users can [opt-in to a SQLite storage backend](/durable-objects/best-practices/access-durable-objects-storage/#sqlite-storage-backend) in order to access new [SQL API](/durable-objects/api/storage-api/#sqlexec) and [point-in-time-recovery API](/durable-objects/api/storage-api/#point-in-time-recovery), part of Durable Objects Storage API.
 

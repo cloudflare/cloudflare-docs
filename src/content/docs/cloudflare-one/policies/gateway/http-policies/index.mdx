@@ -8,9 +8,7 @@ sidebar:
 import { Details, InlineBadge, Render } from "~/components";
 
 :::note
-
-Install the <a href="/cloudflare-one/connections/connect-devices/warp/user-side-certificates/">Cloudflare Root Certificate</a> before creating HTTP policies.
-
+To use HTTP policies, install the [Cloudflare root certificate](/cloudflare-one/connections/connect-devices/warp/user-side-certificates/).
 :::
 
 HTTP policies allow you to intercept all HTTP and HTTPS requests and either block, allow, or override specific elements such as websites, IP addresses, and file types. HTTP policies operate on Layer 7 for all TCP (and [optionally UDP](/cloudflare-one/policies/gateway/initial-setup/http/#1-connect-to-gateway)) traffic sent over ports 80 and 443.
@@ -90,9 +88,7 @@ The Allow action allows outbound traffic to reach destinations you specify withi
 #### Untrusted certificates
 
 :::note
-
 To use this feature, deploy a [custom root certificate](/cloudflare-one/connections/connect-devices/warp/user-side-certificates/custom-certificate/).
-
 :::
 
 The **Untrusted certificate action** determines how to handle insecure requests.
@@ -340,12 +336,61 @@ When an admin enables AV scanning for uploads and/or downloads, Gateway will sca
 
 When a Do Not Scan rule matches, nothing is scanned, regardless of file size or whether the file type is supported or not.
 
+### Quarantine
+
+API value: `quarantine`
+
+<Details header="Available selectors">
+
+**Traffic**
+
+- [Application](#application)
+- [Content Categories](#content-categories)
+- [Destination Continent IP Geolocation](#destination-continent)
+- [Destination Country IP Geolocation](#destination-country)
+- [Destination IP](#destination-ip)
+- [Domain](#domain)
+- [Host](#host)
+- [HTTP Method](#http-method)
+- [Proxy Endpoint](#proxy-endpoint)
+- [Security Risks](#security-risks)
+- [Source Continent IP Geolocation](#source-continent)
+- [Source Country IP Geolocation](#source-country)
+- [Source Internal IP](#source-internal-ip)
+- [Source IP](#source-ip)
+- [URL](#url)
+- [URL Path](#url-path)
+- [URL Path & Query](#url-path-and-query)
+- [URL Query](#url-query)
+- [Virtual Network](#virtual-network)
+
+**Identity**
+
+- [SAML Attributes](#users)
+- [User Email](#users)
+- [User Group Emails](#users)
+- [User Group IDs](#users)
+- [User Group Names](#users)
+- [User Name](#users)
+
+**Device Posture**
+
+- [Passed Device Posture Checks](#device-posture)
+
+</Details>
+
+The Quarantine action sends files in matching requests to a file sandbox to scan for malware. Gateway will only quarantine files not previously seen in the file sandbox. For more information on this action, refer to [File sandboxing](/cloudflare-one/policies/gateway/http-policies/file-sandboxing/).
+
+#### Sandbox file types
+
+In **Sandbox file types**, you can select which file types to quarantine with your policy. You must select at least one file type.
+
+<Render file="gateway/sandbox-file-types" />
+
 ## Selectors
 
 :::note
-
 Policies created using the URL selector are case-sensitive.
-
 :::
 
 Gateway matches HTTP traffic against the following selectors, or criteria:
@@ -371,7 +416,6 @@ For more information, refer to our list of [content categories](/cloudflare-one/
 ### Destination Continent
 
 :::note
-
 Only applies to traffic sent through the [WARP client](/cloudflare-one/connections/connect-devices/warp/set-up-warp/#gateway-with-warp-default).
 :::
 
@@ -383,7 +427,6 @@ Only applies to traffic sent through the [WARP client](/cloudflare-one/connectio
 ### Destination Country
 
 :::note
-
 Only applies to traffic sent through the [WARP client](/cloudflare-one/connections/connect-devices/warp/set-up-warp/#gateway-with-warp-default).
 :::
 
@@ -395,7 +438,6 @@ Only applies to traffic sent through the [WARP client](/cloudflare-one/connectio
 ### Destination IP
 
 :::note
-
 Only applies to traffic sent through the [WARP client](/cloudflare-one/connections/connect-devices/warp/set-up-warp/#gateway-with-warp-default).
 :::
 
@@ -409,7 +451,7 @@ Only applies to traffic sent through the [WARP client](/cloudflare-one/connectio
 
 ### Domain
 
-Use this selector to match against a domain and all subdomains — for example, if you want to block `example.com` and subdomains such as `www.example.com`.
+Use this selector to match against a domain and all subdomains -- for example, if you want to block `example.com` and subdomains such as `www.example.com`.
 
 | UI name | API example                                     |
 | ------- | ----------------------------------------------- |
@@ -451,16 +493,14 @@ Scans HTTP traffic for the presence of social security numbers and other PII. Yo
 
 ### Host
 
-Use this selector to match only the hostname specified — for example, if you want to block `test.example.com` but not `example.com` or `www.test.example.com`.
+Use this selector to match only the hostname specified -- for example, if you want to block `test.example.com` but not `example.com` or `www.test.example.com`.
 
 | UI name | API example                               |
 | ------- | ----------------------------------------- |
 | Host    | `http.request.host == "test.example.com"` |
 
 :::note
-
 Some hostnames (`example.com`) will invisibly redirect to the www subdomain (`www.example.com`). To match this type of website, use the [Domain](#domain) selector instead of the Host selector.
-
 :::
 
 ### HTTP Method
