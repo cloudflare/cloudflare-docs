@@ -99,6 +99,7 @@
 /ai-gateway/get-started/creating-gateway/ /ai-gateway/get-started/ 301
 /ai-gateway/pricing/ /ai-gateway/reference/pricing/ 301
 /ai-gateway/observability/evaluations/ /ai-gateway/evaluations/ 301
+ai-gateway/observability/evaluations/set-up-evaluations/ /ai-gateway/evaluations//set-up-evaluations/ 301
 
 # analytics
 /analytics/migration-guides/zone-analytics/ /analytics/graphql-api/migration-guides/zone-analytics/ 301
