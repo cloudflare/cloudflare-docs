@@ -10,9 +10,28 @@ D1 allows you to capture exceptions and log errors returned when querying a data
 
 ## Handle errors
 
-The D1 [client API](/d1/build-with-d1/d1-client-api/) returns detailed [error messages](/d1/build-with-d1/d1-client-api/#errors) within an `Error` object.
+The D1 [client API](/d1/build-with-d1/d1-client-api/) returns detailed [error messages](/d1/build-with-d1/d1-client-api/#errors).
 
-To ensure you are capturing the full error message, log or return `e.message` as follows:
+```sh
+npx wrangler d1 execute prod-d1-tutorial --remote --command="SELECT * FROM Employees"
+```
+
+```sh
+ ⛅️ wrangler 3.70.0 (update available 3.78.12)
+--------------------------------------------------------
+
+🌀 Executing on remote database prod-d1-tutorial <DATABASE_ID>:
+🌀 To execute on your local development database, remove the --remote flag from your wrangler command.
+
+✘ [ERROR] A request to the Cloudflare API (/accounts//d1/database/DATABASE_ID/query) failed.
+
+  no such table: Employees: SQLITE_ERROR [code: 7500]
+
+  If you think this is a bug, please open an issue at:
+  https://github.com/cloudflare/workers-sdk/issues/new/choose
+```
+
+You can also log or return `e.message` to capture the error message within an `Error` object, as shown below:
 
 ```ts
 try {
