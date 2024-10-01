@@ -179,11 +179,6 @@ wrangler generate [<NAME>] [TEMPLATE]
 
 Interact with Cloudflare's D1 service.
 
-:::note
-
-Report D1 bugs in [GitHub](https://github.com/cloudflare/workers-sdk/issues/new/choose).
-:::
-
 ### `create`
 
 Creates a new D1 database, and provides the binding and UUID that you will put in your `wrangler.toml` file.
@@ -271,13 +266,6 @@ You must provide either `--command` or `--file` for this command to run successf
   - Number of queries to send in a single batch.
 
 ### `export`
-
-:::caution
-
-This command does not work with databases created during D1's alpha period. You can check which version your database uses with `wrangler d1 info <DATABASE_NAME>`.
-
-Refer to the [Backups (Legacy)](/d1/reference/backups/) in the D1 documentation for more information on D1's backup approach during the alpha period. Also, please check the [Alpha version migration guide](/d1/platform/alpha-migration/) for more information on migrating your database to the current version.
-:::
 
 Export a D1 database or table's schema and/or content to a `.sql` file.
 
@@ -484,11 +472,6 @@ Manage [Hyperdrive](/hyperdrive/) database configurations.
 ---
 
 ## `vectorize`
-
-:::note
-
-Vectorize is currently in open beta. Report Vectorize bugs in [GitHub](https://github.com/cloudflare/workers-sdk/issues/new/choose).
-:::
 
 Interact with a [Vectorize](/vectorize/) vector database.
 
@@ -1520,11 +1503,6 @@ wrangler pages secret bulk [<FILENAME>] [OPTIONS]
 ---
 
 ## `queues`
-
-:::note
-
-Queues is currently in open beta. Report Queues bugs in [GitHub](https://github.com/cloudflare/workers-sdk/issues/new/choose).
-:::
 
 Manage your Workers [Queues](/queues/) configurations.
 

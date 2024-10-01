@@ -9,7 +9,7 @@ head:
 
 If you encounter issues [adding a domain](/fundamentals/setup/manage-domains/add-site/) to Cloudflare, follow these troubleshooting steps.
 
-## Step 1 - Disable DNSSEC
+## 1. Disable DNSSEC
 
 Cloudflare cannot provide authoritative DNS resolution for a domain — a [full setup domain](/dns/zone-setups/full-setup/) — when **DNSSEC** is enabled at your domain registrar.
 
@@ -23,7 +23,7 @@ If you experience these issues, refer to [Configuring DNSSEC](/dns/dnssec) and [
 
 ---
 
-## Step 2 - Register the domain
+## 2. Register the domain
 
 If the issue is with your registrar, you may receive the following error messages:
 
@@ -39,7 +39,7 @@ If you receive these error messages, make sure that:
 
 ---
 
-## Step 3 - Resolve DNS for apex domain
+## 3. Resolve DNS for apex domain
 
 Before a domain can be added to Cloudflare, the domain must return `NS` records for valid, working nameservers. `NS` records can be checked via third-party online tools such as [https://www.whatsmydns.net](https://www.whatsmydns.net/) or via a command-line terminal using a dig command:
 
@@ -69,7 +69,7 @@ ns3.cloudflare.com. dns.cloudflare.com. 2029202248 10000 2400 604800 300
 
 ---
 
-## Step 4 - Check if the domain is restricted at Cloudflare
+## 4. Check if the domain is restricted at Cloudflare
 
 If Cloudflare has temporary or permanent restrictions on a domain, you will receive the following errors:
 

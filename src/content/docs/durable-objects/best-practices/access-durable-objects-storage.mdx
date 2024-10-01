@@ -10,7 +10,7 @@ import { Render } from "~/components";
 
 Durable Objects are a powerful compute API that provides a compute with storage building block. Each Durable Object has its own private, transactional and strongly consistent storage. Durable Objects [Storage API](/durable-objects/api/storage-api/#methods) provides access to a Durable Object's attached storage.
 
-A Durable Object's [in-memory state](/durable-objects/reference/in-memory-state/) is preserved as long as the Durable Object is not evicted from memory. Inactive Durable Objects with no incoming request traffic can be evicted. There are normal operations like [code deployments](/workers/configuration/versions-and-deployments/) that trigger Durable Objects to restart and lose their in-memory state. For these reasons, you should use Storage API to persist state durably on disk that needs to survive eviction or restart of Durable Objects. 
+A Durable Object's [in-memory state](/durable-objects/reference/in-memory-state/) is preserved as long as the Durable Object is not evicted from memory. Inactive Durable Objects with no incoming request traffic can be evicted. There are normal operations like [code deployments](/workers/configuration/versions-and-deployments/) that trigger Durable Objects to restart and lose their in-memory state. For these reasons, you should use Storage API to persist state durably on disk that needs to survive eviction or restart of Durable Objects.
 
 ## Access storage
 

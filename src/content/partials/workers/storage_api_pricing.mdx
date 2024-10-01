@@ -7,7 +7,7 @@ The Durable Objects [Storage API](/durable-objects/api/storage-api) is only acce
 
 Durable Objects do not have to use the Storage API, but if your code does call methods on `ctx.storage`, it will incur additional charges.
 
-Pricing depends on whether a Durable Object class has default, key-value storage backend or opt-in [SQLite storage backend](/durable-objects/best-practices/access-durable-objects-storage/#sqlite-storage-backend). 
+Pricing depends on whether a Durable Object class has default, key-value storage backend or opt-in [SQLite storage backend](/durable-objects/best-practices/access-durable-objects-storage/#sqlite-storage-backend).
 
 ### Key-value storage backend
 
@@ -30,7 +30,7 @@ Pricing depends on whether a Durable Object class has default, key-value storage
 
 Requests that hit the [Durable Objects in-memory cache](/durable-objects/reference/in-memory-state/) or that use the [multi-key versions of `get()`/`put()`/`delete()` methods](/durable-objects/api/storage-api/) are billed the same as if they were a normal, individual request for each key.
 
-### SQLite storage backend 
+### SQLite storage backend
 
 :::note[SQLite in Durable Objects Beta]
 
@@ -50,7 +50,7 @@ For [Durable Objects classes with SQLite storage backend](/durable-objects/refer
 | Rows written <sup>1,2</sup> | First 50 million / month included + $1.00 / million rows |
 | SQL Stored data             | 5 GB-month, + $0.20/ GB-month |
 
-<sup>1</sup> Rows read and rows written included limits and rates match D1, Cloudflare's serverless SQL database, [pricing](/d1/platform/pricing/). 
+<sup>1</sup> Rows read and rows written included limits and rates match D1, Cloudflare's serverless SQL database, [pricing](/d1/platform/pricing/).
 
 <sup>2</sup> Key-value methods like `get()`, `put()`, `delete()`, or `list()` store and query data in a hidden SQLite table and are billed as rows read and rows written.
 

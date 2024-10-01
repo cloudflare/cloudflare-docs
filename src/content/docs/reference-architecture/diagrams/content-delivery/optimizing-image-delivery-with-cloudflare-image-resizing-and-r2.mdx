@@ -1,5 +1,5 @@
 ---
-title: Optimizing image delivery with Cloudflare mage resizing and R2
+title: Optimizing image delivery with Cloudflare image resizing and R2
 pcx_content_type: reference-architecture-diagram
 products:
   - Images
@@ -28,7 +28,7 @@ Optimizing image delivery for websites is crucial for enhancing user experience.
 1. **User Request**: The user sends an HTTP request for an image (image.jpg), specifying transformations like width and quality directly in the URL as a comma-separated list of options.
 2. **Cache Hit**: Cloudflare processes the request at the point of presence closest to the user. It first checks if the requested image transformation is already in Cloudflare’s Cache. If so, the image is immediately returned to the user, eliminating the need for further processing. If not, the request moves to the next step.
 3. [Transform Rules](/rules/transform/) (optional): If you’re migrating from another images solution it may be necessary to rewrite the URL path and query string with a rewrite so that you can avoid any complex refactoring at the application level to assist with the migration. Both Dynamic and Static rewrites are supported, with dynamic rewrites supporting complex expressions to support a multitude of URL rewrites.
-4. **Cache Miss - R2**: If the requested image is not available in Cloudflare’s Cache, then the request is sent to the origin, which in this scenario is [Cloudflare’s R2 Object Storage](/r2/) platform. Only the original images are stored in R2, no resized variants are stored in the R2 bucket, which makes operating R2 without object lifecycle rules less onerous.
+4. **Cache MISS - R2**: If the requested image is not available in Cloudflare’s Cache, then the request is sent to the origin, which in this scenario is [Cloudflare’s R2 Object Storage](/r2/) platform. Only the original images are stored in R2, no resized variants are stored in the R2 bucket, which makes operating R2 without object lifecycle rules less onerous.
 5. **Transform Image**: Based on the URL syntax sent in step 1 or transformed in step 3, [Cloudflare Images](/images/) transforms the image and sends it to the Cache before serving back to the end user with the requested image.
 
 ## Image Resizing URL Syntax Reference
