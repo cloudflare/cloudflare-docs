@@ -8,7 +8,7 @@ sidebar:
 ---
 
 
-import { GlossaryTooltip, Details } from "~/components";
+import { GlossaryTooltip, Details, Render } from "~/components";
 
 If you initially setup [incoming zone transfers (Cloudflare as secondary)](/dns/zone-setups/zone-transfers/cloudflare-as-secondary/setup/), you can later convert your zone to use a <GlossaryTooltip term="partial setup">partial setup</GlossaryTooltip>.
 
@@ -16,11 +16,7 @@ Follow the steps below to achieve this conversion.
 
 ## 1. Stop transferring the zone
 
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login) and select your account and zone.
-2. Go to **DNS** > **Settings** > **DNS Zone Transfers** and select **Manage linked peers**.
-3. Unlink the peer and select **Save**.
-
-At this point, your zone will be read-only, meaning you cannot make any edits.
+<Render file="secondary-conversion-unlink" />
 
 ## 2. Configure your authoritative DNS provider
 
