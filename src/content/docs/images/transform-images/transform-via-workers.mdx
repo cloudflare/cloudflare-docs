@@ -210,7 +210,7 @@ Assuming you [set up a Worker](/workers/get-started/guide/) on `https://example.
  * @param {Request} request
  */
 export default {
-  async function fetch(request) {
+  async fetch(request) {
     // Parse request URL to get access to query string
     let url = new URL(request.url)
 
