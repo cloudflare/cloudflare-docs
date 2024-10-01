@@ -13,13 +13,9 @@ import {
 	PackageManagers,
 } from "~/components";
 
-In this guide, you will create a new [Angular](https://angular.dev/) application and deploy to Cloudflare Workers (with the new [<InlineBadge preset="beta" /> Workers Assets](/workers/static-assets/)).
+#### New apps
 
-## 1. Set up a new project
-
-Use the [`create-cloudflare`](https://www.npmjs.com/package/create-cloudflare) CLI (C3) to set up a new project. C3 will create a new project directory, initiate Angular's official setup tool, and provide the option to deploy instantly.
-
-To use `create-cloudflare` to create a new Angular project with <InlineBadge preset="beta" /> Workers Assets, run the following command:
+To create a new Angular app, pre-configured to run on Cloudflare Workers with [<InlineBadge preset="beta" /> Workers Assets](/workers/static-assets/), run:
 
 <PackageManagers
 	type="create"
@@ -36,30 +32,180 @@ To use `create-cloudflare` to create a new Angular project with <InlineBadge pre
 	}}
 />
 
-After setting up your project, change your directory by running the following command:
+#### Existing Angular apps
+
+##### 1. Install Wrangler and `@cloudflare/workers-types`
+
+First, install [`wrangler`](/workers/wrangler/cli-reference/) and [`@cloudflare/workers-types`](https://www.npmjs.com/package/@cloudflare/workers-types) as development dependencies:
 
 ```sh
-cd my-angular-app
+npm install --save-dev wrangler @cloudflare/workers-types
 ```
 
-## 2. Develop locally
+##### 2. Uninstall unneeded dependencies
 
-After you have created your project, run the following command in the project directory to start a local server. This will allow you to preview your project locally during development.
+Uninstall `@angular/ssr`, `express`, and `@types/express`:
 
-<PackageManagers type="run" args={"dev"} />
+```sh
+npm uninstall @angular/ssr express @types/express
+```
 
-## 3. Deploy your Project
+##### 3. Update `app.config.ts`
 
-Your project can be deployed to a `*.workers.dev` subdomain or a [Custom Domain](/workers/configuration/routing/custom-domains/), from your own machine or from any CI/CD system, including [Cloudflare's own](/workers/ci-cd/builds/).
+Update your `app.config.ts` file to use the `withFetch()` option:
 
-The following command will build and deploy your project. If you're using CI, ensure you update your ["deploy command"](/workers/ci-cd/builds/configuration/#build-settings) configuration appropriately.
+```ts
+import { provideHttpClient, withFetch } from '@angular/common/http';
+// ...
+providers: [provideHttpClient(withFetch()), /* other providers */],
+```
 
-<PackageManagers type="run" args={"deploy"} />
+##### 4. Update `angular.json`
+
+Update your `angular.json` file to set the `outputPath` to `dist`:
+
+```json
+{
+  "projects": {
+    "<project-name>": {
+      "architect": {
+        "build": {
+          "options": {
+            "outputPath": "dist",
+            // ...
+          }
+        }
+      }
+    }
+  }
+}
+```
+
+##### 5. Add `server.ts`
+
+Create a `server.ts` file in your project's root directory with the following content:
+
+```ts
+import { renderApplication } from "@angular/platform-server";
+import bootstrap from "./src/main.server";
+
+interface Env {
+  ASSETS: { fetch: typeof fetch };
+}
+
+// Attach the Cloudflare `fetch()` handler to the global scope
+// to export it when processing the Angular output.
+async function workerFetchHandler(request: Request, env: Env) {
+  const url = new URL(request.url);
+  console.log("render SSR", url.href);
+
+  // Get the root `index.html` content.
+  const indexUrl = new URL("/index.html", url);
+  const indexResponse = await env.ASSETS.fetch(new Request(indexUrl));
+  const document = await indexResponse.text();
+
+  const content = await renderApplication(bootstrap, {
+    document,
+    url: url.pathname,
+  });
+
+  return new Response(content, indexResponse);
+}
+
+export default {
+  fetch: (request: Request, env: Env) =>
+    (globalThis as any)["__zone_symbol__Promise"].resolve(
+      workerFetchHandler(request, env),
+    ),
+};
+```
+
+##### 6. Add a `wrangler.toml` file
+
+Add a [`wrangler.toml`](/workers/wrangler/configuration/) file to the root directory of your Angular app:
+
+```toml
+name = "<project-name>"
+compatibility_date = "2024-10-01" # Replace with today's date
+main = "./dist/server/server.mjs"
+assets = { directory = "./dist/browser", binding = "ASSETS" }
+```
+
+`wrangler.toml` is where you configure your Worker and define what resources it can access via [bindings](/workers/runtime-apis/bindings/).
+
+##### 7. Add `tools/alter-polyfills.mjs`
+
+Create a file at `tools/alter-polyfills.mjs` with the following content:
+
+```js
+import fs from "node:fs";
+import { EOL } from "node:os";
+import { join } from "node:path";
+import path from "node:path";
+import { fileURLToPath } from "node:url";
+const dirname = path.dirname(fileURLToPath(import.meta.url));
+
+/**
+ * Split by lines and comment the banner
+ * ```
+ * import { createRequire } from 'node:module';
+ * globalThis['require'] ??= createRequire(import.meta.url);
+ * ```
+ */
+const serverPolyfillsFile = join(
+  dirname,
+  "../dist/server/polyfills.server.mjs"
+);
+const serverPolyfillsData = fs
+  .readFileSync(serverPolyfillsFile, "utf8")
+  .split(/\r?\n/);
+
+for (let index = 0; index < 2; index++) {
+  if (serverPolyfillsData[index].includes("createRequire")) {
+    serverPolyfillsData[index] = "// " + serverPolyfillsData[index];
+  }
+}
+
+// Add needed polyfills
+serverPolyfillsData.unshift(`globalThis['process'] = {};`);
+
+fs.writeFileSync(serverPolyfillsFile, serverPolyfillsData.join(EOL));
+```
+
+##### 8. Update `package.json` scripts
+
+Add the following scripts to the `scripts` section of your `package.json`:
+
+```json
+"scripts": {
+  "start": "npm run build && wrangler dev",
+  "build": "ng build && node ./tools/alter-polyfills.mjs",
+  "deploy": "npm run build && wrangler deploy"
+}
+```
+
+##### 9. Develop locally
+
+You can continue to run `ng serve` when developing locally.
+
+Alternatively, you can use `wrangler dev` to run your app locally in the [Workers runtime](https://github.com/cloudflare/workerd), allowing you to test changes in the same environment that your app runs in when deployed to Cloudflare.
+
+##### 10. Deploy to Cloudflare Workers
+
+Either deploy via the command line:
+
+```sh
+npm run deploy
+```
+
+Or [connect a GitHub or GitLab repository](/workers/ci-cd/), and Cloudflare will automatically build and deploy each pull request you merge to your production branch.
 
 ---
 
 ## Static assets
 
-You can serve static assets your Angular application by placing them in [the `./public/` directory](https://angular.dev/reference/configs/file-structure#workspace-configuration-files). This can be useful for resource files such as images, stylesheets, fonts, and manifests.
+You can serve static assets in your Angular application by placing them in [the `./public/` directory](https://angular.dev/reference/configs/file-structure#workspace-configuration-files). This can be useful for resource files such as images, stylesheets, fonts, and manifests.
 
 <Render file="workers-assets-routing-summary" />
+
+---
