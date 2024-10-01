@@ -43,7 +43,9 @@ export class Counter extends DurableObject {
 ```
 ### Removing a Durable Object's storage
 
-To effectively "delete" a Durable Object, you should first use [`deleteAll()`](/durable-objects/api/storage-api/#deleteall) to remove any attached storage for a Durable Object. Calling `deleteAll()` ensures that a Durable Object will not be [billed for Storage API usage](/durable-objects/platform/pricing/#storage-api-billing). Once storage is deleted and a Durable Object is no longer active due to incoming requests, then the Durable Object is effectively deleted.
+A Durable Object fully ceases to exist if, when it shuts down, its storage is empty. If you never write to a Durable Object's storage at all (including setting alarms), then storage remains empty, and so the Durable Object will no longer exist once it shuts down.
+
+However if you ever write using [Storage API](/durable-objects/api/storage-api/), including setting alarms, then you must explicitly call [`storage.deleteAll()`](/durable-objects/api/storage-api/#deleteall) to empty storage. It is not sufficient to simply delete the specific data that you wrote, such as deleting a key or dropping a table, as some metadata may remain. The only way to remove all storage is to call `deleteAll()`. Calling `deleteAll()` ensures that a Durable Object that ceases to exist will not be billed for storage.
 
 ## SQLite storage backend
 
