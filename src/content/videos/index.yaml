@@ -187,7 +187,7 @@ entries:
     description: Welcome to the Cloudflare Developers YouTube channel. We've got tutorials and working demos and everything you need to level up your projects. Whether you're working on your next big thing or just dorking around with some side projects, we've got you covered! So why don't you come hang out, subscribe to our developer channel and together we'll build something awesome. You're gonna love it.
     tags: [Workers, AI, Vectorize, RAG, Hono, D1, R2, AI Gateway]
     languages: [TypeScript, JavaScript, Python]
-    products: [Workers, Workers AI, Vectorize, RAG, Hono, KV, D1, R2, AI Gateway]
+    products: [Workers, Workers AI, Vectorize, RAG, Hono, D1, R2, AI Gateway]
     cloudflare: true
     stream_id: 0fe3acaf4dc09ba0285b75af6602c362
     author: craig

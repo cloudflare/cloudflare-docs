@@ -101,6 +101,7 @@
 /ai-gateway/observability/evaluations/ /ai-gateway/evaluations/ 301
 ai-gateway/observability/evaluations/set-up-evaluations/ /ai-gateway/evaluations//set-up-evaluations/ 301
 
+
 # analytics
 /analytics/migration-guides/zone-analytics/ /analytics/graphql-api/migration-guides/zone-analytics/ 301
 /analytics/web-analytics/about/ /web-analytics/about 301
