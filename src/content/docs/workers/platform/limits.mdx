@@ -300,9 +300,9 @@ When using Image Resizing with Workers, refer to [Image Resizing documentation](
 
 ## Log size
 
-You can emit a maximum of 128 KB of data (across `console.log()` statements, exceptions, request metadata and headers) to the console for a single request. After you exceed this limit, further context associated with the request will not be recorded in logs, appear when tailing logs of your Worker, or within a [Tail Worker](/workers/observability/logging/tail-workers/).
+You can emit a maximum of 128 KB of data (across `console.log()` statements, exceptions, request metadata and headers) to the console for a single request. After you exceed this limit, further context associated with the request will not be recorded in logs, appear when tailing logs of your Worker, or within a [Tail Worker](/workers/observability/logs/tail-workers/).
 
-Refer to the [Workers Trace Event Logpush documentation](/workers/observability/logging/logpush/#limits) for information on the maximum size of fields sent to logpush destinations.
+Refer to the [Workers Trace Event Logpush documentation](/workers/observability/logs/logpush/#limits) for information on the maximum size of fields sent to logpush destinations.
 
 ## Related resources
 

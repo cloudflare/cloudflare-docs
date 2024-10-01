@@ -39,7 +39,7 @@ To delete the ruleset, update or delete any rules that reference the ruleset and
 
 The following example request deletes an existing ruleset.
 
-```bash title="Request"
+```bash
 curl --request DELETE \
 https://api.cloudflare.com/client/v4/accounts/{account_id}/rulesets/{ruleset_id} \
 --header "Authorization: Bearer <API_TOKEN>"
@@ -75,7 +75,7 @@ To delete the ruleset version, update or delete any rules that reference the rul
 
 The following example request deletes a version of an existing ruleset.
 
-```bash title="Request"
+```bash
 curl --request DELETE \
 https://api.cloudflare.com/client/v4/accounts/{account_id}/rulesets/{ruleset_id}/versions/{version_number} \
 --header "Authorization: Bearer <API_TOKEN>"

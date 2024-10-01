@@ -7,7 +7,7 @@ head:
 description: Create, develop, and deploy your Cloudflare Workers with Wrangler commands.
 ---
 
-import { TabItem, Tabs, Render } from "~/components";
+import { TabItem, Tabs, Render, Type, MetaInfo } from "~/components";
 
 Wrangler offers a number of commands to manage your Cloudflare Workers.
 
@@ -45,13 +45,13 @@ Wrangler offers a number of commands to manage your Cloudflare Workers.
 
 The following global flags work on every command, with some exceptions for `pages` commands.
 
-- `--help` boolean
+- `--help` <Type text="boolean" />
   - Show help.
-- `--version` boolean
+- `--version` <Type text="boolean" />
   - Show version number.
-- `--config` string (not supported by Pages)
+- `--config` <Type text="string" /> (not supported by Pages)
   - Path to `.toml` configuration file.
-- `--experimental-json-config` boolean (not supported by Pages)
+- `--experimental-json-config` <Type text="boolean" /> (not supported by Pages)
   - ⚠️ This is an experimental command. Read configuration from a `wrangler.json` file, instead of `wrangler.toml`. `wrangler.json` is a [JSONC](https://code.visualstudio.com/docs/languages/json#_json-with-comments) file.
 
 :::
@@ -133,7 +133,7 @@ Open the Cloudflare developer documentation in your default browser.
 wrangler docs [<COMMAND>]
 ```
 
-- `COMMAND` string optional
+- `COMMAND` <Type text="string" /> <MetaInfo text="optional" />
   - The Wrangler command you want to learn more about. This opens your default browser to the section of the documentation that describes the command.
 
 ## `init`
@@ -144,11 +144,11 @@ Create a new project via the [create-cloudflare-cli (C3) tool](/workers/get-star
 wrangler init [<NAME>] [OPTIONS]
 ```
 
-- `NAME` string optional (default: name of working directory)
+- `NAME` <Type text="string" /> <MetaInfo text="optional (default: name of working directory)" />
   - The name of the Workers project. This is both the directory name and `name` property in the generated `wrangler.toml` [configuration](/workers/wrangler/configuration/) file.
-- `--yes` boolean optional
+- `--yes` <Type text="boolean" /> <MetaInfo text="optional" />
   - Answer yes to any prompts for new projects.
-- `--from-dash` string optional
+- `--from-dash` <Type text="string" /> <MetaInfo text="optional" />
   - Fetch a Worker initialized from the dashboard. This is done by passing the flag and the Worker name. `wrangler init --from-dash <WORKER_NAME>`.
   - The `--from-dash` command will not automatically sync changes made to the dashboard after the command is used. Therefore, it is recommended that you continue using the CLI.
 
@@ -168,9 +168,9 @@ Create a new project using an existing [Workers template](https://github.com/clo
 wrangler generate [<NAME>] [TEMPLATE]
 ```
 
-- `NAME` string optional (default: name of working directory)
+- `NAME` <Type text="string" /> <MetaInfo text="optional (default: name of working directory)" />
   - The name of the Workers project. This is both the directory name and `name` property in the generated `wrangler.toml` [configuration](/workers/wrangler/configuration/) file.
-- `TEMPLATE` string optional
+- `TEMPLATE` <Type text="string" /> <MetaInfo text="optional" />
   - The URL of a GitHub template, with a default [worker-template](https://github.com/cloudflare/worker-template). Browse a list of available templates on the [cloudflare/workers-sdk](https://github.com/cloudflare/workers-sdk/tree/main/templates#usage) repository.
 
 ---
@@ -178,11 +178,6 @@ wrangler generate [<NAME>] [TEMPLATE]
 ## `d1`
 
 Interact with Cloudflare's D1 service.
-
-:::note
-
-Report D1 bugs in [GitHub](https://github.com/cloudflare/workers-sdk/issues/new/choose).
-:::
 
 ### `create`
 
@@ -192,9 +187,9 @@ Creates a new D1 database, and provides the binding and UUID that you will put i
 wrangler d1 create <DATABASE_NAME> [OPTIONS]
 ```
 
-- `DATABASE_NAME` string required
+- `DATABASE_NAME` <Type text="string" /> <MetaInfo text="required" />
   - The name of the new D1 database.
-- `--location` string optional
+- `--location` <Type text="string" /> <MetaInfo text="optional" />
   - Provide an optional [location hint](/d1/configuration/data-location/) for your database leader.
   - Available options include `weur` (Western Europe), `eeur` (Eastern Europe), `apac` (Asia Pacific), `oc` (Oceania), `wnam` (Western North America), and `enam` (Eastern North America).
 
@@ -206,9 +201,9 @@ Get information about a D1 database, including the current database size and sta
 wrangler d1 info <DATABASE_NAME> [OPTIONS]
 ```
 
-- `DATABASE_NAME` string required
+- `DATABASE_NAME` <Type text="string" /> <MetaInfo text="required" />
   - The name of the D1 database to get information about.
-- `--json` boolean optional
+- `--json` <Type text="boolean" /> <MetaInfo text="optional" />
   - Return output as JSON rather than a table.
 
 ### `list`
@@ -219,7 +214,7 @@ List all D1 databases in your account.
 wrangler d1 list [OPTIONS]
 ```
 
-- `--json` boolean optional
+- `--json` <Type text="boolean" /> <MetaInfo text="optional" />
   - Return output as JSON rather than a table.
 
 ### `delete`
@@ -230,9 +225,9 @@ Delete a D1 database.
 wrangler d1 delete <DATABASE_NAME> [OPTIONS]
 ```
 
-- `DATABASE_NAME` string required
+- `DATABASE_NAME` <Type text="string" /> <MetaInfo text="required" />
   - The name of the D1 database to delete.
-- `-y, --skip-confirmation` boolean optional
+- `-y, --skip-confirmation` <Type text="boolean" /> <MetaInfo text="optional" />
   - Skip deletion confirmation prompt.
 
 ### `execute`
@@ -249,35 +244,28 @@ You must provide either `--command` or `--file` for this command to run successf
 
 :::
 
-- `DATABASE_NAME` string required
+- `DATABASE_NAME` <Type text="string" /> <MetaInfo text="required" />
   - The name of the D1 database to execute a query on.
-- `--command` string optional
+- `--command` <Type text="string" /> <MetaInfo text="optional" />
   - The SQL query you wish to execute.
-- `--file` string optional
+- `--file` <Type text="string" /> <MetaInfo text="optional" />
   - Path to the SQL file you wish to execute.
-- `-y, --yes` boolean optional
+- `-y, --yes` <Type text="boolean" /> <MetaInfo text="optional" />
   - Answer `yes` to any prompts.
-- `--local` boolean(default: true) optional
+- `--local` <Type text="boolean" /> <MetaInfo text="(default: true) optional" />
   - Execute commands/files against a local database for use with [wrangler dev](#dev).
-- `--remote` boolean (default: false) optional
+- `--remote` <Type text="boolean" /> <MetaInfo text="(default: false) optional" />
   - Execute commands/files against a remote D1 database for use with [wrangler dev --remote](#dev).
-- `--persist-to` string optional
+- `--persist-to` <Type text="string" /> <MetaInfo text="optional" />
   - Specify directory to use for local persistence (for use in combination with `--local`).
-- `--json` boolean optional
+- `--json` <Type text="boolean" /> <MetaInfo text="optional" />
   - Return output as JSON rather than a table.
-- `--preview` boolean optional
+- `--preview` <Type text="boolean" /> <MetaInfo text="optional" />
   - Execute commands/files against a preview D1 database (as defined by `preview_database_id` in [Wrangler.toml](/workers/wrangler/configuration/#d1-databases)).
-- `--batch-size` number optional
+- `--batch-size` <Type text="number" /> <MetaInfo text="optional" />
   - Number of queries to send in a single batch.
 
 ### `export`
-
-:::caution
-
-This command does not work with databases created during D1's alpha period. You can check which version your database uses with `wrangler d1 info <DATABASE_NAME>`.
-
-Refer to the [Backups (Legacy)](/d1/reference/backups/) in the D1 documentation for more information on D1's backup approach during the alpha period. Also, please check the [Alpha version migration guide](/d1/platform/alpha-migration/) for more information on migrating your database to the current version.
-:::
 
 Export a D1 database or table's schema and/or content to a `.sql` file.
 
@@ -285,17 +273,17 @@ Export a D1 database or table's schema and/or content to a `.sql` file.
 wrangler d1 export <DATABASE_NAME> [OPTIONS]
 ```
 
-- `DATABASE_NAME` string required
+- `DATABASE_NAME` <Type text="string" /> <MetaInfo text="required" />
   - The name of the D1 database to export.
-- `--remote` boolean (default: false) optional
+- `--remote` <Type text="boolean" /> <MetaInfo text="(default: false) optional" />
   - Execute commands/files against a remote D1 database for use with [wrangler dev --remote](#dev).
-- `--output` string optional
+- `--output` <Type text="string" /> <MetaInfo text="optional" />
   - Path to the SQL file for your export.
-- `--table` string optional
+- `--table` <Type text="string" /> <MetaInfo text="optional" />
   - The name of the table within a D1 database to export.
-- `--no-data` boolean (default: false) optional
+- `--no-data` <Type text="boolean" /> <MetaInfo text="(default: false) optional" />
   - Controls whether export SQL file contains database data. Note that `--no-data=true` is not recommended due to a known wrangler limitation that intreprets the value as false.
-- `--no-schema` boolean (default: false) optional
+- `--no-schema` <Type text="boolean" /> <MetaInfo text="(default: false) optional" />
   - Controls whether export SQL file contains database schema. Note that `--no-schema=true` is not recommended due to a known wrangler limitation that intreprets the value as false.
 
 ### `time-travel restore`
@@ -306,13 +294,13 @@ Restore a database to a specific point-in-time using [Time Travel](/d1/reference
 wrangler d1 time-travel restore <DATABASE_NAME> [OPTIONS]
 ```
 
-- `DATABASE_NAME` string required
+- `DATABASE_NAME` <Type text="string" /> <MetaInfo text="required" />
   - The name of the D1 database to execute a query on.
-- `--bookmark` string optional
+- `--bookmark` <Type text="string" /> <MetaInfo text="optional" />
   - A D1 bookmark representing the state of a database at a specific point in time.
-- `--timestamp` string optional
+- `--timestamp` <Type text="string" /> <MetaInfo text="optional" />
   - A UNIX timestamp or JavaScript date-time `string` within the last 30 days.
-- `--json` boolean optional
+- `--json` <Type text="boolean" /> <MetaInfo text="optional" />
   - Return output as JSON rather than a table.
 
 ### `time-travel info`
@@ -323,11 +311,11 @@ Inspect the current state of a database for a specific point-in-time using [Time
 wrangler d1 time-travel info <DATABASE_NAME> [OPTIONS]
 ```
 
-- `DATABASE_NAME` string required
+- `DATABASE_NAME` <Type text="string" /> <MetaInfo text="required" />
   - The name of the D1 database to execute a query on.
-- `--timestamp` string optional
+- `--timestamp` <Type text="string" /> <MetaInfo text="optional" />
   - A UNIX timestamp or JavaScript date-time `string` within the last 30 days.
-- `--json` boolean optional
+- `--json` b<Type text="boolean" /> <MetaInfo text="optional" />
   - Return output as JSON rather than a table.
 
 ### `backup create`
@@ -345,7 +333,7 @@ Initiate a D1 backup.
 wrangler d1 backup create <DATABASE_NAME>
 ```
 
-- `DATABASE_NAME` string required
+- `DATABASE_NAME` <Type text="string" /> <MetaInfo text="required" />
   - The name of the D1 database to backup.
 
 ### `backup list`
@@ -363,7 +351,7 @@ List all available backups.
 wrangler d1 backup list <DATABASE_NAME>
 ```
 
-- `DATABASE_NAME` string required
+- `DATABASE_NAME` <Type text="string" /> <MetaInfo text="required" />
   - The name of the D1 database to list the backups of.
 
 ### `backup restore`
@@ -381,9 +369,9 @@ Restore a backup into a D1 database.
 wrangler d1 backup restore <DATABASE_NAME> <BACKUP_ID>
 ```
 
-- `DATABASE_NAME` string required
+- `DATABASE_NAME` <Type text="string" /> <MetaInfo text="required" />
   - The name of the D1 database to restore the backup into.
-- `BACKUP_ID` string required
+- `BACKUP_ID` <Type text="string" /> <MetaInfo text="required" />
   - The ID of the backup you wish to restore.
 
 ### `backup download`
@@ -401,11 +389,11 @@ Download existing data to your local machine.
 wrangler d1 backup download <DATABASE_NAME> <BACKUP_ID>
 ```
 
-- `DATABASE_NAME` string required
+- `DATABASE_NAME` <Type text="string" /> <MetaInfo text="required" />
   - The name of the D1 database you wish to download the backup of.
-- `BACKUP_ID` string required
+- `BACKUP_ID` <Type text="string" /> <MetaInfo text="required" />
   - The ID of the backup you wish to download.
-- `--output` string optional
+- `--output` <Type text="string" /> <MetaInfo text="optional" />
   - The `.sqlite3` file to write to (defaults to `'<DB_NAME>.<SHORT_BACKUP_ID>.sqlite3'`).
 
 ### `migrations create`
@@ -422,9 +410,9 @@ The filename will include a version number and the migration name you specify be
 wrangler d1 migrations create <DATABASE_NAME> <MIGRATION_NAME>
 ```
 
-- `DATABASE_NAME` string required
+- `DATABASE_NAME` <Type text="string" /> <MetaInfo text="required" />
   - The name of the D1 database you wish to create a migration for.
-- `MIGRATION_NAME` string required
+- `MIGRATION_NAME` <Type text="string" /> <MetaInfo text="required" />
   - A descriptive name for the migration you wish to create.
 
 ### `migrations list`
@@ -435,13 +423,13 @@ View a list of unapplied migration files.
 wrangler d1 migrations list <DATABASE_NAME> [OPTIONS]
 ```
 
-- `DATABASE_NAME` string required
+- `DATABASE_NAME` <Type text="string" /> <MetaInfo text="required" />
   - The name of the D1 database you wish to list unapplied migrations for.
-- `--local` boolean optional
+- `--local` <Type text="boolean" /> <MetaInfo text="optional" />
   - Show the list of unapplied migration files on your locally persisted D1 database.
-- `--persist-to` string optional
+- `--persist-to` <Type text="string" /> <MetaInfo text="optional" />
   - Specify directory to use for local persistence (for use in combination with `--local`).
-- `--preview` boolean optional
+- `--preview` <Type text="boolean" /> <MetaInfo text="optional" />
   - Show the list of unapplied migration files on your preview D1 database (as defined by `preview_database_id` in [`wrangler.toml`](/workers/wrangler/configuration/#d1-databases)).
 
 ### `migrations apply`
@@ -460,17 +448,17 @@ If applying a migration results in an error, this migration will be rolled back,
 wrangler d1 migrations apply <DATABASE_NAME> [OPTIONS]
 ```
 
-- `DATABASE_NAME` string required
+- `DATABASE_NAME` <Type text="string" /> <MetaInfo text="required" />
   - The name of the D1 database you wish to apply your migrations on.
-- `--local` boolean (default: true)optional
+- `--local` <Type text="boolean" /> <MetaInfo text="(default: true) optional" />
   - Execute any unapplied migrations on your locally persisted D1 database.
-- `--remote` boolean (default: false) optional
+- `--remote` <Type text="boolean" /> <MetaInfo text="(default: false) optional" />
   - Execute any unapplied migrations on your remote D1 database.
-- `--persist-to` string optional
+- `--persist-to` <Type text="string" /> <MetaInfo text="optional" />
   - Specify directory to use for local persistence (for use in combination with `--local`).
-- `--preview` boolean optional
+- `--preview` <Type text="boolean" /> <MetaInfo text="optional" />
   - Execute any unapplied migrations on your preview D1 database (as defined by `preview_database_id` in [`wrangler.toml`](/workers/wrangler/configuration/#d1-databases)).
-- `--batch-size` number optional
+- `--batch-size` <Type text="number" /> <MetaInfo text="optional" />
   - Number of queries to send in a single batch.
 
 ---
@@ -485,11 +473,6 @@ Manage [Hyperdrive](/hyperdrive/) database configurations.
 
 ## `vectorize`
 
-:::note
-
-Vectorize is currently in open beta. Report Vectorize bugs in [GitHub](https://github.com/cloudflare/workers-sdk/issues/new/choose).
-:::
-
 Interact with a [Vectorize](/vectorize/) vector database.
 
 ### `create`
@@ -500,15 +483,15 @@ Creates a new vector index, and provides the binding and name that you will put 
 npx wrangler vectorize create <INDEX_NAME> [--dimensions=<NUM_DIMENSIONS>] [--metric=<DISTANCE_METRIC>] [--description=<DESCRIPTION>]
 ```
 
-- `INDEX_NAME` string required
+- `INDEX_NAME` <Type text="string" /> <MetaInfo text="required" />
   - The name of the new index to create. Must be unique for an account and cannot be changed after creation or reused after the deletion of an index.
-- `--dimensions` number required
+- `--dimensions` <Type text="number" /> <MetaInfo text="required" />
   - The vector dimension width to configure the index for. Cannot be changed after creation.
-- `--metric` string required
+- `--metric` <Type text="string" /> <MetaInfo text="required" />
   - The distance metric to use for calculating vector distance. Must be one of `cosine`, `euclidean`, or `dot-product`.
-- `--description` string optional
+- `--description` <Type text="string" /> <MetaInfo text="optional" />
   - A description for your index.
-- `--deprecated-v1` boolean optional
+- `--deprecated-v1` <Type text="boolean" /> <MetaInfo text="optional" />
   - Create a legacy Vectorize index. Please note that legacy Vectorize indexes are on a [deprecation path](/vectorize/reference/transition-vectorize-legacy).
 
 ### `list`
@@ -519,7 +502,7 @@ List all Vectorize indexes in your account, including the configured dimensions 
 npx wrangler vectorize list
 ```
 
-- `--deprecated-v1` boolean optional
+- `--deprecated-v1` <Type text="boolean" /> <MetaInfo text="optional" />
   - List legacy Vectorize indexes. Please note that legacy Vectorize indexes are on a [deprecation path](/vectorize/reference/transition-vectorize-legacy).
 
 ### `get`
@@ -530,9 +513,9 @@ Get details about an individual index, including its configuration.
 npx wrangler vectorize get <INDEX_NAME>
 ```
 
-- `INDEX_NAME` string required
+- `INDEX_NAME` <Type text="string" /> <MetaInfo text="required" />
   - The name of the index to fetch details for.
-- `--deprecated-v1` boolean optional
+- `--deprecated-v1` <Type text="boolean" /> <MetaInfo text="optional" />
   - Get a legacy Vectorize index. Please note that legacy Vectorize indexes are on a [deprecation path](/vectorize/reference/transition-vectorize-legacy).
 
 ### `info`
@@ -543,7 +526,7 @@ Get some additional information about an individual index, including the vector 
 npx wrangler vectorize info <INDEX_NAME>
 ```
 
-- `INDEX_NAME` string required
+- `INDEX_NAME` <Type text="string" /> <MetaInfo text="required" />
   - The name of the index to fetch details for.
 
 ### `delete`
@@ -554,11 +537,11 @@ Delete a Vectorize index.
 npx wrangler vectorize delete <INDEX_NAME> [OPTIONS]
 ```
 
-- `INDEX_NAME` string required
+- `INDEX_NAME` <Type text="string" /> <MetaInfo text="required" />
   - The name of the Vectorize index to delete.
-- `--force` boolean optional
+- `--force` <Type text="boolean" /> <MetaInfo text="optional" />
   - Skip confirmation when deleting the index (Note: This is not a recoverable operation).
-- `--deprecated-v1` boolean optional
+- `--deprecated-v1` <Type text="boolean" /> <MetaInfo text="optional" />
   - Delete a legacy Vectorize index. Please note that legacy Vectorize indexes are on a [deprecation path](/vectorize/reference/transition-vectorize-legacy).
 
 ### `insert`
@@ -569,13 +552,13 @@ Insert vectors into an index.
 npx wrangler vectorize insert <INDEX_NAME> [OPTIONS]
 ```
 
-- `INDEX_NAME` string required
+- `INDEX_NAME` <Type text="string" /> <MetaInfo text="required" />
   - The name of the Vectorize index to upsert vectors in.
-- `--file` string required
+- `--file` <Type text="string" /> <MetaInfo text="required" />
   - A file containing the vectors to insert in newline-delimited JSON (JSON) format.
-- `--batch-size` number optional
+- `--batch-size` <Type text="number" /> <MetaInfo text="optional" />
   - The number of vectors to insert at a time (default: `1000`).
-- `--deprecated-v1` boolean optional
+- `--deprecated-v1` <Type text="boolean" /> <MetaInfo text="optional" />
   - Insert into a legacy Vectorize index. Please note that legacy Vectorize indexes are on a [deprecation path](/vectorize/reference/transition-vectorize-legacy).
 
 ### `upsert`
@@ -586,11 +569,11 @@ Upsert vectors into an index. Existing vectors in the index would be overwritten
 npx wrangler vectorize upsert <INDEX_NAME> [OPTIONS]
 ```
 
-- `INDEX_NAME` string required
+- `INDEX_NAME` <Type text="string" /> <MetaInfo text="required" />
   - The name of the Vectorize index to upsert vectors in.
-- `--file` string required
+- `--file` <Type text="string" /> <MetaInfo text="required" />
   - A file containing the vectors to insert in newline-delimited JSON (JSON) format.
-- `--batch-size` number optional
+- `--batch-size` <Type text="number" /> <MetaInfo text="optional" />
   - The number of vectors to insert at a time (default: `5000`).
 
 ### `query`
@@ -601,19 +584,19 @@ Query a Vectorize index for similar vectors.
 npx wrangler vectorize query <INDEX_NAME> [OPTIONS]
 ```
 
-- `INDEX_NAME` string required
+- `INDEX_NAME` <Type text="string" /> <MetaInfo text="required" />
   - The name of the Vectorize index to query.
-- `--vector` array required
+- `--vector` <Type text="array" /> <MetaInfo text="required" />
   - Vector against which the Vectorize index is queried.
-- `--top-k` number optional
+- `--top-k` <Type text="number" /> <MetaInfo text="optional" />
   - The number of vectors to query (default: `5`).
-- `--return-values` boolean optional
+- `--return-values` <Type text="boolean" /> <MetaInfo text="optional" />
   - Enable to return vector values in the response (default: `false`).
-- `--return-metadata` string optional
+- `--return-metadata` <Type text="string" /> <MetaInfo text="optional" />
   - Enable to return vector metadata in the response. Must be one of `none`, `indexed`, or `all` (default: `none`).
-- `--namespace` string optional
+- `--namespace` <Type text="string" /> <MetaInfo text="optional" />
   - Query response to only include vectors from this namespace.
-- `--filter` string optional
+- `--filter` <Type text="string" /> <MetaInfo text="optional" />
   - Filter vectors based on this metadata filter. Example: `'{ 'p1': 'abc', 'p2': { '$ne': true }, 'p3': 10, 'p4': false, 'nested.p5': 'abcd' }'`
 
 ### `get-vectors`
@@ -624,9 +607,9 @@ Fetch vectors from a Vectorize index using the provided ids.
 npx wrangler vectorize get-vectors <INDEX_NAME> [OPTIONS]
 ```
 
-- `INDEX_NAME` string required
+- `INDEX_NAME` <Type text="string" /> <MetaInfo text="required" />
   - The name of the Vectorize index from which vectors need to be fetched.
-- `--ids` array required
+- `--ids` <Type text="array" /> <MetaInfo text="required" />
   - List of ids for which vectors must be fetched.
 
 ### `delete-vectors`
@@ -637,9 +620,9 @@ Delete vectors in a Vectorize index using the provided ids.
 npx wrangler vectorize delete-vectors <INDEX_NAME> [OPTIONS]
 ```
 
-- `INDEX_NAME` string required
+- `INDEX_NAME` <Type text="string" /> <MetaInfo text="required" />
   - The name of the Vectorize index from which vectors need to be deleted.
-- `--ids` array required
+- `--ids` <Type text="array" /> <MetaInfo text="required" />
   - List of ids corresponding to the vectors that must be deleted.
 
 ### `create-metadata-index`
@@ -650,11 +633,11 @@ Enable metadata filtering on the specified property.
 npx wrangler vectorize create-metadata-index <INDEX_NAME> [OPTIONS]
 ```
 
-- `INDEX_NAME` string required
+- `INDEX_NAME` <Type text="string" /> <MetaInfo text="required" />
   - The name of the Vectorize index for which metadata index needs to be created.
-- `--property-name` string required
+- `--property-name` <Type text="string" /> <MetaInfo text="required" />
   - Metadata property for which metadata filtering should be enabled.
-- `--type` string required
+- `--type` <Type text="string" /> <MetaInfo text="required" />
   - Data type of the property. Must be one of `string`, `number`, or `boolean`.
 
 ### `list-metadata-index`
@@ -665,7 +648,7 @@ List metadata properties on which metadata filtering is enabled.
 npx wrangler vectorize list-metadata-index <INDEX_NAME> [OPTIONS]
 ```
 
-- `INDEX_NAME` string required
+- `INDEX_NAME` <Type text="string" /> <MetaInfo text="required" />
   - The name of the Vectorize index for which metadata indexes needs to be fetched.
 
 ### `delete-metadata-index`
@@ -676,9 +659,9 @@ Disable metadata filtering on the specified property.
 npx wrangler vectorize delete-metadata-index <INDEX_NAME> [OPTIONS]
 ```
 
-- `INDEX_NAME` string required
+- `INDEX_NAME` <Type text="string" /> <MetaInfo text="required" />
   - The name of the Vectorize index for which metadata index needs to be disabled.
-- `--property-name` string required
+- `--property-name` <Type text="string" /> <MetaInfo text="required" />
   - Metadata property for which metadata filtering should be disabled.
 
 ---
@@ -703,78 +686,77 @@ As of Wrangler v3.2.0, `wrangler dev` is supported by any Linux distributions pr
 
 :::
 
-- `SCRIPT` string
+- `SCRIPT` <Type text="string" />
   - The path to an entry point for your Worker. Only required if your `wrangler.toml` does not include a `main` key (for example, `main = "index.js"`).
-- `--name` string optional
+- `--name` <Type text="string" /> <MetaInfo text="optional" />
   - Name of the Worker.
-- `--no-bundle` boolean (default: false) optional
+- `--no-bundle` <Type text="boolean" /> <MetaInfo text="(default: false) optional" />
   - Skip Wrangler's build steps. Particularly useful when using custom builds. Refer to [Bundling](https://developers.cloudflare.com/workers/wrangler/bundling/) for more information.
-- `--env` string optional
+- `--env` <Type text="string" /> <MetaInfo text="optional" />
   - Perform on a specific environment.
-- `--compatibility-date` string optional
+- `--compatibility-date` <Type text="string" /> <MetaInfo text="optional" />
   - A date in the form yyyy-mm-dd, which will be used to determine which version of the Workers runtime is used.
-- `--compatibility-flags`, `--compatibility-flag` string\[] optional
+- `--compatibility-flags`, `--compatibility-flag` <Type text="string[]" /> <MetaInfo text="optional" />
   - Flags to use for compatibility checks.
-- `--latest` boolean (default: true) optional
+- `--latest` <Type text="boolean" /> <MetaInfo text="(default: true) optional" />
   - Use the latest version of the Workers runtime.
-- `--ip` string optional
+- `--ip` <Type text="string" /> <MetaInfo text="optional" />
   - IP address to listen on, defaults to `localhost`.
-- `--port` number optional
+- `--port` <Type text="number" /> <MetaInfo text="optional" />
   - Port to listen on.
-- `--inspector-port` number optional
+- `--inspector-port` <Type text="number" /> <MetaInfo text="optional" />
   - Port for devtools to connect to.
-- `--routes`, `--route` string\[] optional
+- `--routes`, `--route` <Type text="string[]" /> <MetaInfo text="optional" />
   - Routes to upload.
   - For example: `--route example.com/*`.
-- `--host` string optional
+- `--host` <Type text="string" /> <MetaInfo text="optional" />
   - Host to forward requests to, defaults to the zone of project.
-- `--local-protocol` "http"|"https" (default: http) optional
+- `--local-protocol` <Type text="'http'|'https'" /> <MetaInfo text="(default: http) optional" />
   - Protocol to listen to requests on.
-- `--https-key-path` string optional
+- `--https-key-path` <Type text="string" /> <MetaInfo text="optional" />
   - Path to a custom certificate key.
-- `--https-cert-path` string optional
+- `--https-cert-path` <Type text="string" /> <MetaInfo text="optional" />
   - Path to a custom certificate.
-- `--local-upstream` string optional
+- `--local-upstream` <Type text="string" /> <MetaInfo text="optional" />
   - Host to act as origin in local mode, defaults to `dev.host` or route.
-- `--legacy-assets` string optional experimental
-  - Root folder of static assets to be served.
-  - Use in combination with `--name` and `--latest` for basic static file hosting. For example: `wrangler dev --name personal_blog --legacy-assets dist/ --latest`.
-- `--assets` string optional experimental
-  - Root folder of static assets to be served.
+- `--assets` <Type text="string" /> <MetaInfo text="optional beta" />
+  - Folder of static assets to be served. Replaces [Workers Sites](/workers/configuration/sites/). Visit [assets](/workers/static-assets/) for more information.
+- `--legacy-assets` <Type text="string" /> <MetaInfo text="optional deprecated, use `--assets`" />
+  - Folder of static assets to be served.
+- `--site` <Type text="string" /> <MetaInfo text="optional deprecated, use `--assets`" />
+  - Folder of static assets for Workers Sites.
     :::caution
-    This is an experimental feature and its behavior will be changing soon. Use `--legacy-assets` instead to ensure that you get consistent behavior when this option changes.
+    Workers Sites is deprecated. Please use [Workers Assets](/workers/static-assets/) or [Pages](/pages/).
     :::
-- `--site` string optional
-  - Root folder of static assets for Workers Sites.
-- `--site-include` string\[] optional
+- `--site-include` <Type text="string[]" /> <MetaInfo text="optional deprecated" />
   - Array of `.gitignore`-style patterns that match file or directory names from the sites directory. Only matched items will be uploaded.
-- `--site-exclude` string\[] optional
+- `--site-exclude` <Type text="string[]" /> <MetaInfo text="optional deprecated" />
   - Array of `.gitignore`-style patterns that match file or directory names from the sites directory. Matched items will not be uploaded.
-- `--upstream-protocol` "http"|"https" (default: https) optional
+- `--upstream-protocol` <Type text="'http'|'https'" /> <MetaInfo text="(default: https) optional" />
   - Protocol to forward requests to host on.
-- `--var` key:value\[] optional
+- `--var` <Type text="key:value\[]" /> <MetaInfo text="optional" />
   - Array of `key:value` pairs to inject as variables into your code. The value will always be passed as a string to your Worker.
   - For example, `--var git_hash:$(git rev-parse HEAD) test:123` makes the `git_hash` and `test` variables available in your Worker's `env`.
   - This flag is an alternative to defining [`vars`](/workers/wrangler/configuration/#non-inheritable-keys) in your `wrangler.toml`. If defined in both places, this flag's values will be used.
-- `--define` key:value\[] optional
+- `--define` <Type text="key:value\[]" /> <MetaInfo text="optional" />
   - Array of `key:value` pairs to replace global identifiers in your code.
   - For example, `--define GIT_HASH:$(git rev-parse HEAD)` will replace all uses of `GIT_HASH` with the actual value at build time.
   - This flag is an alternative to defining [`define`](/workers/wrangler/configuration/#non-inheritable-keys) in your `wrangler.toml`. If defined in both places, this flag's values will be used.
-- `--tsconfig` string optional
+- `--tsconfig` <Type text="string" /> <MetaInfo text="optional" />
   - Path to a custom `tsconfig.json` file.
-- `--minify` boolean optional
+- `--minify` <Type text="boolean" /> <MetaInfo text="optional" />
   - Minify the Worker.
-- `--node-compat` boolean optional
+- `--node-compat` <Type text="boolean" /> <MetaInfo text="optional" />
   - Enable Node.js compatibility.
-- `--persist-to` string optional
+- `--persist-to` <Type text="string" /> <MetaInfo text="optional" />
   - Specify directory to use for local persistence.
-- `--remote` boolean (default: false) optional
+- `--remote` <Type text="boolean" /> <MetaInfo text="(default: false) optional" />
   - Develop against remote resources and data stored on Cloudflare's network.
-- `--test-scheduled` boolean (default: false) optional
+- `--test-scheduled` <Type text="boolean" /> <MetaInfo text="(default: false) optional" />
   - Exposes a `/__scheduled` fetch route which will trigger a scheduled event (Cron Trigger) for testing during development. To simulate different cron patterns, a `cron` query parameter can be passed in: `/__scheduled?cron=*+*+*+*+*`.
-- `--log-level` "debug"|"info"|"log"|"warn"|"error"|"none" (default: log) optional
+- `--log-level` <Type text="'debug'|'info'|'log'|'warn'|'error|'none'" /> <MetaInfo text="(default: log) optional" />
   - Specify Wrangler's logging level.
-- `--show-interactive-dev-session` boolean (default: true if the terminal supports interactivity) optional
+- `--show-interactive-dev-session` <Type text="boolean" /> <MetaInfo text="(default: true if the terminal supports interactivity) optional" />
   - Show the interactive dev session.
 - `--alias` `Array<string>`
   - Specify modules to alias using [module aliasing](/workers/wrangler/configuration/#module-aliasing).
@@ -797,61 +779,60 @@ None of the options for this command are required. Also, many can be set in your
 
 :::
 
-- `SCRIPT` string
+- `SCRIPT` <Type text="string" />
   - The path to an entry point for your Worker. Only required if your `wrangler.toml` does not include a `main` key (for example, `main = "index.js"`).
-- `--name` string optional
+- `--name` <Type text="string" /> <MetaInfo text="optional" />
   - Name of the Worker.
-- `--no-bundle` boolean (default: false) optional
+- `--no-bundle` <Type text="boolean" /> <MetaInfo text="(default: false) optional" />
   - Skip Wrangler's build steps. Particularly useful when using custom builds. Refer to [Bundling](https://developers.cloudflare.com/workers/wrangler/bundling/) for more information.
-- `--env` string optional
+- `--env` <Type text="string" /> <MetaInfo text="optional" />
   - Perform on a specific environment.
-- `--outdir` string optional
+- `--outdir` <Type text="string" /> <MetaInfo text="optional" />
   - Path to directory where Wrangler will write the bundled Worker files.
-- `--compatibility-date` string optional
+- `--compatibility-date` <Type text="string" /> <MetaInfo text="optional" />
   - A date in the form yyyy-mm-dd, which will be used to determine which version of the Workers runtime is used.
-- `--compatibility-flags`, `--compatibility-flag` string\[] optional
+- `--compatibility-flags`, `--compatibility-flag` <Type text="string[]" /> <MetaInfo text="optional" />
   - Flags to use for compatibility checks.
-- `--latest` boolean (default: true) optional
+- `--latest` <Type text="boolean" /> <MetaInfo text="(default: true) optional" />
   - Use the latest version of the Workers runtime.
-- `--legacy-assets` string optional experimental
-  - Root folder of static assets to be served.
-  - Use in combination with `--name` and `--latest` for basic static file hosting. For example: `wrangler dev --name personal_blog --legacy-assets dist/ --latest`.
-- `--assets` string optional experimental
-  - Root folder of static assets to be served.
+- `--assets` <Type text="string" /> <MetaInfo text="optional beta" />
+  - Folder of static assets to be served. Replaces [Workers Sites](/workers/configuration/sites/). Visit [assets](/workers/static-assets/) for more information.
+- `--legacy-assets` <Type text="string" /> <MetaInfo text="optional deprecated, use `--assets`" />
+  - Folder of static assets to be served.
+- `--site` <Type text="string" /> <MetaInfo text="optional deprecated, use `--assets`" />
+  - Folder of static assets for Workers Sites.
     :::caution
-    This is an experimental feature and its behavior will be changing soon. Use `--legacy-assets` instead to ensure that you get consistent behavior when this option changes.
+    Workers Sites is deprecated. Please use [Workers Assets](/workers/static-assets/) or [Pages](/pages/).
     :::
-- `--site` string optional
-  - Root folder of static assets for Workers Sites.
-- `--site-include` string\[] optional
+- `--site-include` <Type text="string[]" /> <MetaInfo text="optional deprecated" />
   - Array of `.gitignore`-style patterns that match file or directory names from the sites directory. Only matched items will be uploaded.
-- `--site-exclude` string\[] optional
+- `--site-exclude` <Type text="string[]" /> <MetaInfo text="optional deprecated" />
   - Array of `.gitignore`-style patterns that match file or directory names from the sites directory. Matched items will not be uploaded.
-- `--var` key:value\[] optional
+- `--var` <Type text="key:value\[]" /> <MetaInfo text="optional" />
   - Array of `key:value` pairs to inject as variables into your code. The value will always be passed as a string to your Worker.
   - For example, `--var git_hash:$(git rev-parse HEAD) test:123` makes the `git_hash` and `test` variables available in your Worker's `env`.
   - This flag is an alternative to defining [`vars`](/workers/wrangler/configuration/#non-inheritable-keys) in your `wrangler.toml`. If defined in both places, this flag's values will be used.
-- `--define` key:value\[] optional
+- `--define` <Type text="key:value\[]" /> <MetaInfo text="optional" />
   - Array of `key:value` pairs to replace global identifiers in your code.
   - For example, `--define GIT_HASH:$(git rev-parse HEAD)` will replace all uses of `GIT_HASH` with the actual value at build time.
   - This flag is an alternative to defining [`define`](/workers/wrangler/configuration/#non-inheritable-keys) in your `wrangler.toml`. If defined in both places, this flag's values will be used.
-- `--triggers`, `--schedule`, `--schedules` string\[] optional
+- `--triggers`, `--schedule`, `--schedules` <Type text="string[]" /> <MetaInfo text="optional" />
   - Cron schedules to attach to the deployed Worker. Refer to [Cron Trigger Examples](/workers/configuration/cron-triggers/#examples).
 - `--routes`, `--route` string\[] optional
   - Routes where this Worker will be deployed.
   - For example: `--route example.com/*`.
-- `--tsconfig` string optional
+- `--tsconfig` <Type text="string" /> <MetaInfo text="optional" />
   - Path to a custom `tsconfig.json` file.
-- `--minify` boolean optional
+- `--minify` <Type text="boolean" /> <MetaInfo text="optional" />
   - Minify the bundled Worker before deploying.
-- `--node-compat` boolean optional
+- `--node-compat` <Type text="boolean" /> <MetaInfo text="optional" />
   - Enable node.js compatibility.
-- `--dry-run` boolean (default: false) optional
+- `--dry-run` <Type text="boolean" /> <MetaInfo text="(default: false) optional" />
   - Compile a project without actually deploying to live servers. Combined with `--outdir`, this is also useful for testing the output of `npx wrangler deploy`. It also gives developers a chance to upload our generated sourcemap to a service like Sentry, so that errors from the Worker can be mapped against source code, but before the service goes live.
-- `--keep-vars` boolean (default: false) optional
+- `--keep-vars` <Type text="boolean" /> <MetaInfo text="(default: false) optional" />
   - It is recommended best practice to treat your Wrangler developer environment as a source of truth for your Worker configuration, and avoid making changes via the Cloudflare dashboard.
   - If you change your environment variables or bindings in the Cloudflare dashboard, Wrangler will override them the next time you deploy. If you want to disable this behaviour set `keep-vars` to `true`.
-- `--dispatch-namespace` string optional
+- `--dispatch-namespace` <Type text="string" /> <MetaInfo text="optional" />
   - Specify the [Workers for Platforms dispatch namespace](/cloudflare-for-platforms/workers-for-platforms/get-started/configuration/#2-create-a-dispatch-namespace) to upload this Worker to.
 
 ---
@@ -880,13 +861,13 @@ Delete your Worker and all associated Cloudflare developer platform resources.
 wrangler delete [<SCRIPT>] [OPTIONS]
 ```
 
-- `SCRIPT` string
+- `SCRIPT` <Type text="string" />
   - The path to an entry point for your Worker. Only required if your `wrangler.toml` does not include a `main` key (for example, `main = "index.js"`).
-- `--name` string optional
+- `--name` <Type text="string" /> <MetaInfo text="optional" />
   - Name of the Worker.
-- `--env` string optional
+- `--env` <Type text="string" /> <MetaInfo text="optional" />
   - Perform on a specific environment.
-- `--dry-run` boolean (default: false) optional
+- `--dry-run` <Type text="boolean" /> <MetaInfo text="(default: false) optional" />
   - Do not actually delete the Worker. This is useful for testing the output of `wrangler delete`.
 
 <Render file="wrangler-commands/kv" product="workers" />
@@ -910,11 +891,11 @@ Create a new R2 bucket.
 wrangler r2 bucket create <NAME>
 ```
 
-- `NAME` string required
+- `NAME` <Type text="string" /> <MetaInfo text="required" />
   - The name of the new R2 bucket.
-- `--storage-class` "Standard"|"InfrequentAccess" optional
+- `--storage-class` <Type text="'Standard|InfrequentAccess'" /> <MetaInfo text="optional" />
   - The default storage class for objects uploaded to the bucket.
-- `--jurisdiction` string optional
+- `--jurisdiction` <Type text="string" /> <MetaInfo text="optional" />
   - The jurisdiction where the R2 bucket is created. Refer to [Jurisdictional Restrictions](/r2/reference/data-location/#jurisdictional-restrictions).
 
 ### `delete`
@@ -925,7 +906,7 @@ Delete an R2 bucket.
 wrangler r2 bucket delete <NAME>
 ```
 
-- `NAME` string required
+- `NAME` <Type text="string" /> <MetaInfo text="required" />
   - The name of the R2 bucket to delete.
 
 ### `list`
@@ -938,26 +919,21 @@ wrangler r2 bucket list
 
 ### `notification create`
 
-:::note
-
-Event notifications is currently in beta. To report bugs or request features, fill out the [Cloudflare R2 event notification feedback form](https://forms.gle/2HBKD9zG9PFiU4v79).
-:::
-
 Create an [event notification](/r2/buckets/event-notifications/) rule for an R2 bucket.
 
 ```txt
 wrangler r2 bucket notification create <NAME> [OPTIONS]
 ```
 
-- `NAME` string required
+- `NAME` <Type text="string" /> <MetaInfo text="required" />
   - The name of the R2 bucket to create an event notification rule for.
-- `--event-type` "object-create"|"object-delete"[] required
+- `--event-type` <Type text="'object-create'|'object-delete'[]" /> <MetaInfo text="required" />
   - The [type of event(s)](/r2/buckets/event-notifications/#event-types) that will trigger event notifications.
-- `--queue` string required
+- `--queue` <Type text="string" /> <MetaInfo text="required" />
   - The name of the queue that will receive event notification messages.
-- `--prefix` string optional
+- `--prefix` <Type text="string" /> <MetaInfo text="optional" />
   - The prefix that an object must match to emit event notifications (note: regular expressions are not supported).
-- `--suffix` string optional
+- `--suffix` <Type text="string" /> <MetaInfo text="optional" />
   - The suffix that an object must match to emit event notifications (note: regular expressions are not supported).
 
 ### `notification delete`
@@ -968,11 +944,11 @@ Remove an event notification rule from a bucket's [event notification](/r2/bucke
 wrangler r2 bucket notification delete <NAME> [OPTIONS]
 ```
 
-- `NAME` string required
+- `NAME` <Type text="string" /> <MetaInfo text="required" />
   - The name of the R2 bucket to delete an event notification rule for.
-- `--queue` string required
+- `--queue` <Type text="string" /> <MetaInfo text="required" />
   - The name of the queue that corresponds to the event notification rule. If no `rule` is provided, all event notification rules associated with the queue will be deleted.
-- `--rule` string optional
+- `--rule` <Type text="string" /> <MetaInfo text="optional" />
   - The ID of the event notification rule to delete.
 
 ### `notification list`
@@ -983,15 +959,10 @@ List the [event notification](/r2/buckets/event-notifications/) rules for a buck
 wrangler r2 bucket notification list <NAME>
 ```
 
-- `NAME` string required
+- `NAME` <Type text="string" /> <MetaInfo text="required" />
   - The name of the R2 bucket to get event notification rules for.
 
 ### `sippy enable`
-
-:::note
-
-Sippy is currently in beta. To report bugs or request features, fill out the [Cloudflare R2 incremental migration feedback form](https://forms.gle/7WuCsbu5LmWkQVu76).
-:::
 
 Enable [Sippy](/r2/data-migration/sippy/) incremental migration for a bucket.
 
@@ -999,31 +970,31 @@ Enable [Sippy](/r2/data-migration/sippy/) incremental migration for a bucket.
 wrangler r2 bucket sippy enable <NAME> [OPTIONS]
 ```
 
-- `NAME` string required
+- `NAME` <Type text="string" /> <MetaInfo text="required" />
   - The name of the R2 bucket to enable Sippy.
-- `--provider` "AWS"|"GCS" required
+- `--provider` <Type text="'AWS'|'GCS'" /> <MetaInfo text="required" />
   - The provider of your source object storage bucket.
-- `--bucket` string required
+- `--bucket` <Type text="string" /> <MetaInfo text="required" />
   - The name of your source object storage bucket.
-- `--r2-key-id` string required
+- `--r2-key-id` <Type text="string" /> <MetaInfo text="required" />
   - Your R2 Access Key ID. Requires read and write access.
-- `--r2-secret-access-key` string required
+- `--r2-secret-access-key` <Type text="string" /> <MetaInfo text="required" />
   - Your R2 Secret Access Key. Requires read and write access.
-- `--jurisdiction` string optional
+- `--jurisdiction` <Type text="string" /> <MetaInfo text="optional" />
   - The jurisdiction where this R2 bucket is located, if a jurisdiction has been specified. Refer to [Jurisdictional Restrictions](/r2/reference/data-location/#jurisdictional-restrictions).
 - **AWS S3 provider-specific options:**
-- `--key-id` string optional
+- `--key-id` <Type text="string" /> <MetaInfo text="optional" />
   - Your AWS Access Key ID. Requires [read and list access](/r2/data-migration/sippy/#amazon-s3).
-- `--secret-access-key` string optional
+- `--secret-access-key` <Type text="string" /> <MetaInfo text="optional" />
   - Your AWS Secret Access Key. Requires [read and list access](/r2/data-migration/sippy/#amazon-s3).
-- `--region` string optional
+- `--region` <Type text="string" /> <MetaInfo text="optional" />
   - The AWS region where your S3 bucket is located. For example: `us-west-2`.
 - **Google Cloud Storage provider-specific options:**
-- `--service-account-key-file` string optional
+- `--service-account-key-file` <Type text="string" /> <MetaInfo text="optional" />
   - The path to your Google Cloud service account key JSON file. This will read the service account key file and populate `client_email` and `private_key` options. Requires [read and list access](/r2/data-migration/sippy/#google-cloud-storage).
-- `--client-email` string optional
+- `--client-email` <Type text="string" /> <MetaInfo text="optional" />
   - The client email for your Google Cloud service account key. Requires [read and list access](/r2/data-migration/sippy/#google-cloud-storage).
-- `--private-key` string optional
+- `--private-key` <Type text="string" /> <MetaInfo text="optional" />
   - The private key for your Google Cloud service account key. Requires [read and list access](/r2/data-migration/sippy/#google-cloud-storage).
 - Note that you must provide either `service-account-key-file` or `client_email` and `private_key` for this command to run successfully.
 
@@ -1035,7 +1006,7 @@ Disable [Sippy](/r2/data-migration/sippy/) incremental migration for a bucket.
 wrangler r2 bucket sippy disable <NAME>
 ```
 
-- `NAME` string required
+- `NAME` <Type text="string" /> <MetaInfo text="required" />
   - The name of the R2 bucket to disable Sippy.
 
 ### `sippy get`
@@ -1046,7 +1017,7 @@ Get the status of [Sippy](/r2/data-migration/sippy/) incremental migration for a
 wrangler r2 bucket sippy get <NAME>
 ```
 
-- `NAME` string required
+- `NAME` <Type text="string" /> <MetaInfo text="required" />
   - The name of the R2 bucket to get the status of Sippy.
 
 ---
@@ -1068,11 +1039,11 @@ Fetch an object from an R2 bucket.
 wrangler r2 object get <OBJECT_PATH> [OPTIONS]
 ```
 
-- `OBJECT_PATH` string required
+- `OBJECT_PATH` <Type text="string" /> <MetaInfo text="required" />
   - The source object path in the form of `{bucket}/{key}`.
-- `--local` boolean optional
+- `--local` <Type text="boolean" /> <MetaInfo text="optional" />
   - Interact with locally persisted data.
-- `--persist-to` string optional
+- `--persist-to` <Type text="string" /> <MetaInfo text="optional" />
   - Specify directory for locally persisted data.
 
 ### `put`
@@ -1083,27 +1054,27 @@ Create an object in an R2 bucket.
 wrangler r2 object put <OBJECT_PATH> [OPTIONS]
 ```
 
-- `OBJECT_PATH` string required
+- `OBJECT_PATH` <Type text="string" /> <MetaInfo text="required" />
   - The destination object path in the form of `{bucket}/{key}`.
-- `--file` string optional
+- `--file` <Type text="string" /> <MetaInfo text="optional" />
   - The path of the file to upload. Note you must provide either `--file` or `--pipe`.
-- `--pipe` boolean optional
+- `--pipe` <Type text="boolean" /> <MetaInfo text="optional" />
   - Enables the file to be piped in, rather than specified with the `--file` option. Note you must provide either `--file` or `--pipe`.
-- `--content-type` string optional
+- `--content-type` <Type text="string" /> <MetaInfo text="optional" />
   - A standard MIME type describing the format of the object data.
-- `--content-disposition` string optional
+- `--content-disposition` <Type text="string" /> <MetaInfo text="optional" />
   - Specifies presentational information for the object.
-- `--content-encoding` string optional
+- `--content-encoding` <Type text="string" /> <MetaInfo text="optional" />
   - Specifies what content encodings have been applied to the object and thus what decoding mechanisms must be applied to obtain the media-type referenced by the `Content-Type` header field.
-- `--content-language` string optional
+- `--content-language` <Type text="string" /> <MetaInfo text="optional" />
   - The language the content is in.
-- `--cache-control` string optional
+- `--cache-control` <Type text="string" /> <MetaInfo text="optional" />
   - Specifies caching behavior along the request/reply chain.
-- `--expires` string optional
+- `--expires` <Type text="string" /> <MetaInfo text="optional" />
   - The date and time at which the object is no longer cacheable.
-- `--local` boolean optional
+- `--local` <Type text="boolean" /> <MetaInfo text="optional" />
   - Interact with locally persisted data.
-- `--persist-to` string optional
+- `--persist-to` <Type text="string" /> <MetaInfo text="optional" />
   - Specify directory for locally persisted data.
 
 ### `delete`
@@ -1114,11 +1085,11 @@ Delete an object in an R2 bucket.
 wrangler r2 object delete <OBJECT_PATH> [OPTIONS]
 ```
 
-- `OBJECT_PATH` string required
+- `OBJECT_PATH` <Type text="string" /> <MetaInfo text="required" />
   - The destination object path in the form of `{bucket}/{key}`.
-- `--local` boolean optional
+- `--local` <Type text="boolean" /> <MetaInfo text="optional" />
   - Interact with locally persisted data.
-- `--persist-to` string optional
+- `--persist-to` <Type text="string" /> <MetaInfo text="optional" />
   - Specify directory for locally persisted data.
 
 ---
@@ -1137,15 +1108,15 @@ Create or replace a secret for a Worker.
 wrangler secret put <KEY> [OPTIONS]
 ```
 
-- `KEY` string required
+- `KEY` <Type text="string" /> <MetaInfo text="required" />
 
   - The variable name for this secret to be accessed in the Worker.
 
-- `--name` string optional
+- `--name` <Type text="string" /> <MetaInfo text="optional" />
 
   - Perform on a specific Worker rather than inheriting from `wrangler.toml`.
 
-- `--env` string optional
+- `--env` <Type text="string" /> <MetaInfo text="optional" />
   - Perform on a specific environment.
 
 When running this command, you will be prompted to input the secret's value:
@@ -1174,15 +1145,15 @@ Delete a secret for a Worker.
 wrangler secret delete <KEY> [OPTIONS]
 ```
 
-- `KEY` string required
+- `KEY` <Type text="string" /> <MetaInfo text="required" />
 
   - The variable name for this secret to be accessed in the Worker.
 
-- `--name` string optional
+- `--name` <Type text="string" /> <MetaInfo text="optional" />
 
   - Perform on a specific Worker rather than inheriting from `wrangler.toml`.
 
-- `--env` string optional
+- `--env` <Type text="string" /> <MetaInfo text="optional" />
   - Perform on a specific environment.
 
 ### `list`
@@ -1193,11 +1164,11 @@ List the names of all the secrets for a Worker.
 wrangler secret list [OPTIONS]
 ```
 
-- `--name` string optional
+- `--name` <Type text="string" /> <MetaInfo text="optional" />
 
   - Perform on a specific Worker rather than inheriting from `wrangler.toml`.
 
-- `--env` string optional
+- `--env` <Type text="string" /> <MetaInfo text="optional" />
 
   - Perform on a specific environment
 
@@ -1226,16 +1197,16 @@ Upload multiple secrets for a Worker at once.
 wrangler secret:bulk [<FILENAME>] [OPTIONS]
 ```
 
-- `FILENAME` string optional
+- `FILENAME` <Type text="string" /> <MetaInfo text="optional" />
 
   - The JSON file containing key-value pairs to upload as secrets, in the form `{"SECRET_NAME": "secret value", ...}`.
   - If omitted, Wrangler expects to receive input from `stdin` rather than a file.
 
-- `--name` string optional
+- `--name` <Type text="string" /> <MetaInfo text="optional" />
 
   - Perform on a specific Worker rather than inheriting from `wrangler.toml`.
 
-- `--env` string optional
+- `--env` <Type text="string" /> <MetaInfo text="optional" />
   - Perform on a specific environment.
 
 The following is an example of uploading secrets from a JSON file redirected to `stdin`. When complete, the output summary will show the number of secrets uploaded and the number of secrets that failed to upload.
@@ -1271,23 +1242,23 @@ Start a session to livestream logs from a deployed Worker.
 wrangler tail <WORKER> [OPTIONS]
 ```
 
-- `WORKER` string required
+- `WORKER` <Type text="string" /> <MetaInfo text="required" />
   - The name of your Worker or the route the Worker is running on.
-- `--format` "json"|"pretty" optional
+- `--format` <Type text="'json'|'pretty'" /> <MetaInfo text="optional" />
   - The format of the log entries.
-- `--status` "ok"|"error"|"canceled" optional
+- `--status` <Type text="'ok'|'error'|'canceled'" /> <MetaInfo text="optional" />
   - Filter by invocation status.
-- `--header` string optional
+- `--header` <Type text="string" /> <MetaInfo text="optional" />
   - Filter by HTTP header.
-- `--method` string optional
+- `--method` <Type text="string" /> <MetaInfo text="optional" />
   - Filter by HTTP method.
-- `--sampling-rate` number optional
+- `--sampling-rate` <Type text="number" /> <MetaInfo text="optional" />
   - Add a fraction of requests to log sampling rate (between `0` and `1`).
-- `--search` string optional
+- `--search` <Type text="string" /> <MetaInfo text="optional" />
   - Filter by a text match in `console.log` messages.
-- `--ip` (string|"self")\[] optional
+- `--ip` <Type text="(string|'self')\[]" />" <MetaInfo text="optional" />
   - Filter by the IP address the request originates from. Use `"self"` to show only messages from your own IP.
-- `--version-id` string optional
+- `--version-id` <Type text="string" /> <MetaInfo text="optional" />
   - Filter by Worker version.
 
 After starting `wrangler tail`, you will receive a live feed of console and exception logs for each request your Worker receives.
@@ -1315,35 +1286,35 @@ Develop your full-stack Pages application locally.
 wrangler pages dev [<DIRECTORY>] [OPTIONS]
 ```
 
-- `DIRECTORY` string optional
+- `DIRECTORY` <Type text="string" /> <MetaInfo text="optional" />
   - The directory of static assets to serve.
-- `--local` boolean optional (default: true)
+- `--local` <Type text="boolean" /> <MetaInfo text="optional (default: true)" />
   - Run on your local machine.
-- `--ip` string optional
+- `--ip` <Type text="string" /> <MetaInfo text="optional" />
   - IP address to listen on, defaults to `localhost`.
-- `--port` number optional (default: 8788)
+- `--port` <Type text="number" /> <MetaInfo text="optional (default: 8788)" />
   - The port to listen on (serve from).
-- `--binding` string\[] optional
+- `--binding` <Type text="string[]" /> <MetaInfo text="optional" />
   - Bind an environment variable or secret (for example, `--binding <VARIABLE_NAME>=<VALUE>`).
-- `--kv` string\[] optional
+- `--kv` <Type text="string[]" /> optional
   - Binding name of [KV namespace](/kv/) to bind (for example, `--kv <BINDING_NAME>`).
-- `--r2` string\[] optional
+- `--r2` <Type text="string[]" /> <MetaInfo text="optional" />
   - Binding name of [R2 bucket](/pages/functions/bindings/#interact-with-your-r2-buckets-locally) to bind (for example, `--r2 <BINDING_NAME>`).
-- `--d1` string\[] optional
+- `--d1` <Type text="string[]" /> <MetaInfo text="optional" />
   - Binding name of [D1 database](/pages/functions/bindings/#interact-with-your-d1-databases-locally) to bind (for example, `--d1 <BINDING_NAME>`).
-- `--do` string\[] optional
+- `--do` <Type text="string[]" /> <MetaInfo text="optional" />
   - Binding name of Durable Object to bind (for example, `--do <BINDING_NAME>=<CLASS>`).
-- `--live-reload` boolean optional (default: false)
+- `--live-reload` <Type text="boolean" /> <MetaInfo text="optional (default: false)" />
   - Auto reload HTML pages when change is detected.
-- `--compatibility-flag` string\[] optional
+- `--compatibility-flag` <Type text="string[]" /> <MetaInfo text="optional" />
   - Runtime compatibility flags to apply.
-- `--compatibility-date` string optional
+- `--compatibility-date` <Type text="string" /> <MetaInfo text="optional" />
   - Runtime compatibility date to apply.
-- `--show-interactive-dev-session` boolean optional (default: true if the terminal supports interactivity)
+- `--show-interactive-dev-session` <Type text="boolean" /> <MetaInfo text="optional (default: true if the terminal supports interactivity)" />
   - Show the interactive dev session.
-- `--https-key-path` string optional
+- `--https-key-path` <Type text="string" /> <MetaInfo text="optional" />
   - Path to a custom certificate key.
-- `--https-cert-path` string optional
+- `--https-cert-path` <Type text="string" /> <MetaInfo text="optional" />
   - Path to a custom certificate.
 
 ### `project list`
@@ -1362,9 +1333,9 @@ Create a new Cloudflare Pages project.
 wrangler pages project create <PROJECT_NAME> [OPTIONS]
 ```
 
-- `PROJECT_NAME` string required
+- `PROJECT_NAME` <Type text="string" /> <MetaInfo text="required" />
   - The name of your Pages project.
-- `--production-branch` string optional
+- `--production-branch` <Type text="string" /> <MetaInfo text="optional" />
   - The name of the production branch of your project.
 
 ### `project delete`
@@ -1375,9 +1346,9 @@ Delete a Cloudflare Pages project.
 wrangler pages project delete <PROJECT_NAME> [OPTIONS]
 ```
 
-- `PROJECT_NAME` string required
+- `PROJECT_NAME` <Type text="string" /> <MetaInfo text="required" />
   - The name of the Pages project to delete.
-- `--yes` boolean optional
+- `--yes` <Type text="boolean" /> <MetaInfo text="optional" />
   - Answer `"yes"` to confirmation prompt.
 
 ### `deployment list`
@@ -1388,7 +1359,7 @@ List deployments in your Cloudflare Pages project.
 wrangler pages deployment list [--project-name <PROJECT_NAME>]
 ```
 
-- `--project-name` string optional
+- `--project-name` <Type text="string" /> <MetaInfo text="optional" />
   - The name of the project you would like to list deployments for.
 
 ### `deployment tail`
@@ -1399,25 +1370,25 @@ Start a session to livestream logs from your deployed Pages Functions.
 wrangler pages deployment tail [<DEPLOYMENT>] [OPTIONS]
 ```
 
-- `DEPLOYMENT` string optional
+- `DEPLOYMENT` <Type text="string" /> <MetaInfo text="optional" />
   - ID or URL of the deployment to tail. Specify by environment if deployment ID is unknown.
-- `--project-name` string optional
+- `--project-name` <Type text="string" /> <MetaInfo text="optional" />
   - The name of the project you would like to tail.
-- `--environment` "production"|"preview" optional
+- `--environment` <Type text="'production'|'preview'" /> <MetaInfo text="optional" />
   - When not providing a specific deployment ID, specifying environment will grab the latest production or preview deployment.
-- `--format` "json"|"pretty" optional
+- `--format` <Type text="'json'|'pretty'" /> <MetaInfo text="optional" />
   - The format of the log entries.
-- `--status` "ok"|"error"|"canceled" optional
+- `--status` <Type text="'ok'|'error'|'canceled'" /> <MetaInfo text="optional" />
   - Filter by invocation status.
-- `--header` string optional
+- `--header` <Type text="string" /> <MetaInfo text="optional" />
   - Filter by HTTP header.
-- `--method` string optional
+- `--method` <Type text="string" /> <MetaInfo text="optional" />
   - Filter by HTTP method.
-- `--sampling-rate` number optional
+- `--sampling-rate` <Type text="number" /> <MetaInfo text="optional" />
   - Add a percentage of requests to log sampling rate.
-- `--search` string optional
+- `--search` <Type text="string" /> <MetaInfo text="optional" />
   - Filter by a text match in `console.log` messages.
-- `--ip` (string|"self")\[] optional
+- `--ip` <Type text="(string|'self')\[]" /> <MetaInfo text="optional" />
   - Filter by the IP address the request originates from. Use `"self"` to show only messages from your own IP.
 
 :::note
@@ -1435,17 +1406,17 @@ Deploy a directory of static assets as a Pages deployment.
 wrangler pages deploy <BUILD_OUTPUT_DIRECTORY> [OPTIONS]
 ```
 
-- `BUILD_OUTPUT_DIRECTORY` string optional
+- `BUILD_OUTPUT_DIRECTORY` <Type text="string" /> <MetaInfo text="optional" />
   - The [directory](/pages/configuration/build-configuration/#framework-presets) of static files to upload. As of Wrangler 3.45.0, this is only required when your Pages project does not have a `wrangler.toml` file. Refer to the [Pages Functions configuration guide](/pages/functions/wrangler-configuration/) for more information.
-- `--project-name` string optional
+- `--project-name` <Type text="string" /> <MetaInfo text="optional" />
   - The name of the project you want to deploy to.
-- `--branch` string optional
+- `--branch` <Type text="string" /> <MetaInfo text="optional" />
   - The name of the branch you want to deploy to.
-- `--commit-hash` string optional
+- `--commit-hash` <Type text="string" /> <MetaInfo text="optional" />
   - The SHA to attach to this deployment.
-- `--commit-message` string optional
+- `--commit-message` <Type text="string" /> <MetaInfo text="optional" />
   - The commit message to attach to this deployment.
-- `--commit-dirty` boolean optional
+- `--commit-dirty` <Type text="boolean" /> <MetaInfo text="optional" />
   - Whether or not the workspace should be considered dirty for this deployment.
 
 :::note
@@ -1476,11 +1447,11 @@ Create or update a secret for a Pages project.
 wrangler pages secret put <KEY> [OPTIONS]
 ```
 
-- `KEY` string required
+- `KEY` <Type text="string" /> <MetaInfo text="required" />
 
   - The variable name for this secret to be accessed in the Pages project.
 
-- `--project-name` string optional
+- `--project-name` <Type text="string" /> <MetaInfo text="optional" />
 
   - The name of your Pages project.
 
@@ -1492,11 +1463,11 @@ Delete a secret from a Pages project.
 wrangler pages secret delete <KEY> [OPTIONS]
 ```
 
-- `KEY` string required
+- `KEY` <Type text="string" /> <MetaInfo text="required" />
 
   - The variable name for this secret to be accessed in the Pages project.
 
-- `--project-name` string optional
+- `--project-name` <Type text="string" /> <MetaInfo text="optional" />
 
   - The name of your Pages project.
 
@@ -1508,7 +1479,7 @@ List the names of all the secrets for a Pages project.
 wrangler pages secret list [OPTIONS]
 ```
 
-- `--project-name` string optional
+- `--project-name` <Type text="string" /> <MetaInfo text="optional" />
 
   - The name of your Pages project.
 
@@ -1520,23 +1491,18 @@ Upload multiple secrets for a Pages project at once.
 wrangler pages secret bulk [<FILENAME>] [OPTIONS]
 ```
 
-- `FILENAME` string optional
+- `FILENAME` <Type text="string" /> <MetaInfo text="optional" />
 
   - The JSON file containing key-value pairs to upload as secrets, in the form `{"SECRET_NAME": "secret value", ...}`.
   - If omitted, Wrangler expects to receive input from `stdin` rather than a file.
 
-- `--project-name` string optional
+- `--project-name` <Type text="string" /> <MetaInfo text="optional" />
 
   - The name of your Pages project.
 
 ---
 
 ## `queues`
-
-:::note
-
-Queues is currently in open beta. Report Queues bugs in [GitHub](https://github.com/cloudflare/workers-sdk/issues/new/choose).
-:::
 
 Manage your Workers [Queues](/queues/) configurations.
 
@@ -1548,9 +1514,9 @@ Create a new Queue.
 wrangler queues create <name> [OPTIONS]
 ```
 
-- `name` string required
+- `name` <Type text="string" /> <MetaInfo text="required" />
   - The name of the queue to create.
-- `--delivery-delay-secs` number optional
+- `--delivery-delay-secs` <Type text="number" /> <MetaInfo text="optional" />
   - How long a published message should be delayed for, in seconds. Must be a positive integer.
 
 ### `delete`
@@ -1561,7 +1527,7 @@ Delete an existing queue.
 wrangler queues delete <name> [OPTIONS]
 ```
 
-- `name` string required
+- `name` <Type text="string" /> <MetaInfo text="required" />
   - The name of the queue to delete.
 
 ### `list`
@@ -1584,19 +1550,19 @@ Add a Worker script as a [queue consumer](/queues/reference/how-queues-works/#co
 wrangler queues consumer add <queue-name> <script-name> [OPTIONS]
 ```
 
-- `queue-name` string required
+- `queue-name` <Type text="string" /> <MetaInfo text="required" />
   - The name of the queue to add the consumer to.
-- `script-name` string required
+- `script-name` <Type text="string" /> <MetaInfo text="required" />
   - The name of the Workers script to add as a consumer of the named queue.
-- `--batch-size` number optional
+- `--batch-size` <Type text="number" /> <MetaInfo text="optional" />
   - Maximum number of messages per batch. Must be a positive integer.
-- `--batch-timeout` number optional
+- `--batch-timeout` <Type text="number" /> <MetaInfo text="optional" />
   - Maximum number of seconds to wait to fill a batch with messages. Must be a positive integer.
-- `--message-retries` number optional
+- `--message-retries` <Type text="number" /> <MetaInfo text="optional" />
   - Maximum number of retries for each message. Must be a positive integer.
-- `--max-concurrency` number optional
+- `--max-concurrency` <Type text="number" /> <MetaInfo text="optional" />
   - The maximum number of concurrent consumer invocations that will be scaled up to handle incoming message volume. Must be a positive integer.
-- `--retry-delay-secs` number optional
+- `--retry-delay-secs` <Type text="number" /> <MetaInfo text="optional" />
   - How long a retried message should be delayed for, in seconds. Must be a positive integer.
 
 ### `consumer remove`
@@ -1607,9 +1573,9 @@ Remove a consumer from a queue.
 wrangler queues consumer remove <queue-name> <script-name>
 ```
 
-- `queue-name` string required
+- `queue-name` <Type text="string" /> <MetaInfo text="required" />
   - The name of the queue to remove the consumer from.
-- `script-name` string required
+- `script-name` <Type text="string" /> <MetaInfo text="required" />
   - The name of the Workers script to remove as the consumer.
 
 ---
@@ -1618,15 +1584,15 @@ wrangler queues consumer remove <queue-name> <script-name>
 
 Authorize Wrangler with your Cloudflare account using OAuth. Wrangler will attempt to automatically open your web browser to login with your Cloudflare account.
 
-If you prefer to use API tokens for authentication, such as in headless or continuous integration environments, refer to [Running Wrangler in CI/CD](/workers/wrangler/ci-cd/).
+If you prefer to use API tokens for authentication, such as in headless or continuous integration environments, refer to [Running Wrangler in CI/CD](/workers/ci-cd/).
 
 ```txt
 wrangler login [OPTIONS]
 ```
 
-- `--scopes-list` string optional
+- `--scopes-list` <Type text="string" /> <MetaInfo text="optional" />
   - List all the available OAuth scopes with descriptions.
-- `--scopes $SCOPES` string optional
+- `--scopes $SCOPES` <Type text="string" /> <MetaInfo text="optional" />
   - Allows to choose your set of OAuth scopes. The set of scopes must be entered in a whitespace-separated list,
     for example, `npx wrangler login --scopes account:read user:read`.
 
@@ -1705,11 +1671,11 @@ Upload a new [version](/workers/configuration/versions-and-deployments/#versions
 wrangler versions upload [OPTIONS]
 ```
 
-- `--tag` string optional
+- `--tag` <Type text="string" /> <MetaInfo text="optional" />
   - Add a version tag. Accepts empty string.
-- `--message` string optional
+- `--message` <Type text="string" /> <MetaInfo text="optional" />
   - Add a version message. Accepts empty string.
-- `--name` string optional
+- `--name` <Type text="string" /> <MetaInfo text="optional" />
   - Perform on a specific Worker rather than inheriting from `wrangler.toml`.
 
 ### `deploy`
@@ -1720,7 +1686,7 @@ Deploy a previously created [version](/workers/configuration/versions-and-deploy
 wrangler versions deploy [OPTIONS]
 ```
 
-- `--name` string optional
+- `--name` <Type text="string" /> <MetaInfo text="optional" />
   - Perform on a specific Worker rather than inheriting from `wrangler.toml`.
 
 :::note
@@ -1740,7 +1706,7 @@ Retrieve details for the 10 most recent versions. Details include `Version ID`, 
 wrangler versions list [OPTIONS]
 ```
 
-- `--name` string optional
+- `--name` <Type text="string" /> <MetaInfo text="optional" />
   - Perform on a specific Worker rather than inheriting from `wrangler.toml`.
 
 ### `secret put`
@@ -1751,11 +1717,11 @@ Create or replace a secret for a Worker. Creates a new [version](/workers/config
 wrangler versions secret put <KEY> [OPTIONS]
 ```
 
-- `KEY` string required
+- `KEY` <Type text="string" /> <MetaInfo text="required" />
   - The variable name for this secret to be accessed in the Worker.
-- `--name` string optional
+- `--name` <Type text="string" /> <MetaInfo text="optional" />
   - Perform on a specific Worker rather than inheriting from `wrangler.toml`.
-- `--env` string optional
+- `--env` <Type text="string" /> <MetaInfo text="optional" />
   - Perform on a specific environment.
 
 ### `secret delete`
@@ -1766,11 +1732,11 @@ Delete a secret for a Worker. Creates a new [version](/workers/configuration/ver
 wrangler versions delete <KEY> [OPTIONS]
 ```
 
-- `KEY` string required
+- `KEY` <Type text="string" /> <MetaInfo text="required" />
   - The variable name for this secret to be accessed in the Worker.
-- `--name` string optional
+- `--name` <Type text="string" /> <MetaInfo text="optional" />
   - Perform on a specific Worker rather than inheriting from `wrangler.toml`.
-- `--env` string optional
+- `--env` <Type text="string" /> <MetaInfo text="optional" />
   - Perform on a specific environment.
 
 ### `secret bulk`
@@ -1781,12 +1747,12 @@ Upload multiple secrets for a Worker at once. Creates a new [version](/workers/c
 wrangler versions secret bulk <FILENAME> [OPTIONS]
 ```
 
-- `FILENAME` string optional
+- `FILENAME` <Type text="string" /> <MetaInfo text="optional" />
   - The JSON file containing key-value pairs to upload as secrets, in the form `{"SECRET_NAME": "secret value", ...}`.
   - If omitted, Wrangler expects to receive input from `stdin` rather than a file.
-- `--name` string optional
+- `--name` <Type text="string" /> <MetaInfo text="optional" />
   - Perform on a specific Worker rather than inheriting from `wrangler.toml`.
-- `--env` string optional
+- `--env` <Type text="string" /> <MetaInfo text="optional" />
   - Perform on a specific environment.
 
 ---
@@ -1805,7 +1771,7 @@ Apply changes to triggers ([Routes or domains](/workers/configuration/routing/) 
 wrangler triggers deploy [OPTIONS]
 ```
 
-- `--name` string optional
+- `--name` <Type text="string" /> <MetaInfo text="optional" />
   - Perform on a specific Worker rather than inheriting from `wrangler.toml`.
 
 ---
@@ -1826,7 +1792,7 @@ Retrieve details for the 10 most recent [deployments](/workers/configuration/ver
 wrangler deployments list [OPTIONS]
 ```
 
-- `--name` string optional
+- `--name` <Type text="string" /> <MetaInfo text="optional" />
   - Perform on a specific Worker rather than inheriting from `wrangler.toml`.
 
 ### `status`
@@ -1837,7 +1803,7 @@ Retrieve details for the most recent deployment. Details include `Created on`, `
 wrangler deployments status
 ```
 
-- `--name` string optional
+- `--name` <Type text="string" /> <MetaInfo text="optional" />
   - Perform on a specific Worker rather than inheriting from `wrangler.toml`.
 
 ## `rollback`
@@ -1850,11 +1816,11 @@ A rollback will immediately create a new deployment with the specified version o
 wrangler rollback [<VERSION_ID>] [OPTIONS]
 ```
 
-- `VERSION_ID` string optional
+- `VERSION_ID` <Type text="string" /> <MetaInfo text="optional" />
   - The ID of the version you wish to roll back to. If not supplied, the `rollback` command defaults to the version uploaded before the latest version.
-- `--name` string optional
+- `--name` <Type text="string" /> <MetaInfo text="optional" />
   - Perform on a specific Worker rather than inheriting from `wrangler.toml`.
-- `--message` string optional
+- `--message` <Type text="string" /> <MetaInfo text="optional" />
   - Add message for rollback. Accepts empty string. When specified, interactive prompts for rollback confirmation and message are skipped.
 
 ---
@@ -1877,7 +1843,7 @@ Get information about a dispatch namespace.
 wrangler dispatch-namespace get <NAME>
 ```
 
-- `NAME` string required
+- `NAME` <Type text="string" /> <MetaInfo text="required" />
 
   - The name of the dispatch namespace to get details about.
 
@@ -1889,7 +1855,7 @@ Create a dispatch namespace.
 wrangler dispatch-namespace create <NAME>
 ```
 
-- `NAME` string required
+- `NAME` <Type text="string" /> <MetaInfo text="required" />
 
   - The name of the dispatch namespace to create.
 
@@ -1906,7 +1872,7 @@ wrangler dispatch-namespace get <NAME>
 You must delete all user Workers in the dispatch namespace before it can be deleted.
 :::
 
-- `NAME` string required
+- `NAME` <Type text="string" /> <MetaInfo text="required" />
 
   - The name of the dispatch namespace to delete.
 
@@ -1918,11 +1884,11 @@ Rename a dispatch namespace.
 wrangler dispatch-namespace get <OLD_NAME> <NEW_NAME>
 ```
 
-- `OLD_NAME` string required
+- `OLD_NAME` <Type text="string" /> <MetaInfo text="required" />
 
   - The previous name of the dispatch namespace.
 
-- `NEW_NAME` string required
+- `NEW_NAME` <Type text="string" /> <MetaInfo text="required" />
 
   - The new name of the dispatch namespace.
 
@@ -1942,11 +1908,11 @@ Upload a client certificate.
 wrangler mtls-certificate upload --cert <PATH> --key <PATH> [OPTIONS]
 ```
 
-- `--cert` string required
+- `--cert` <Type text="string" /> <MetaInfo text="required" />
   - A path to the TLS certificate to upload. Certificate chains are supported.
-- `--key` string required
+- `--key` <Type text="string" /> <MetaInfo text="required" />
   - A path to the private key to upload.
-- `--name` string optional
+- `--name` <Type text="string" /> <MetaInfo text="optional" />
   - The name assigned to the mTLS certificate at upload.
 
 The following is an example of using the `upload` command to upload an mTLS certificate.
@@ -2008,9 +1974,9 @@ Delete a client certificate.
 wrangler mtls-certificate delete {--id <ID|--name <NAME>}
 ```
 
-- `--id` string
+- `--id` <Type text="string" />
   - The ID of the mTLS certificate.
-- `--name` string
+- `--name` <Type text="string" />
   - The name assigned to the mTLS certificate at upload.
 
 The following is an example of using the `delete` command to delete an mTLS certificate.
@@ -2050,17 +2016,17 @@ The minimum required Wrangler version to use this command is 3.66.0.
 
 :::
 
-- `PATH` string (default: `./worker-configuration.d.ts`)
+- `PATH` <Type text="string" /> <MetaInfo text="(default: `./worker-configuration.d.ts`)" />
 
   - The path to where **the `Env` types** for your Worker will be written.
   - The path must have a `d.ts` extension.
 
-- `--env-interface` string (default: `Env`)
+- `--env-interface` <Type text="string" /> <MetaInfo text="(default: `Env`)" />
 
   - The name of the interface to generate for the environment object.
   - Not valid if the Worker uses the Service Worker syntax.
 
-- `--experimental-include-runtime` string optional (default: `./.wrangler/types/runtime.d.ts`)
+- `--experimental-include-runtime` <Type text="string" /> <MetaInfo text="optional (default: `./.wrangler/types/runtime.d.ts`)" />
   - The path to where the **runtime types** file will be written.
   - Leave the path blank to use the default option, e.g. `npx wrangler types --x-include-runtime`
   - A custom path must be relative to the project root, e.g. `./my-runtime-types.d.ts`

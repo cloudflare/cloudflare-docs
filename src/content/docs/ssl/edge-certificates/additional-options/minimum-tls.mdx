@@ -13,9 +13,7 @@ For example, if TLS 1.1 is selected, visitors attempting to connect using TLS 1.
 
 :::note
 
-If you are looking to restrict cipher suites, refer to [Customize cipher suites](/ssl/edge-certificates/additional-options/cipher-suites/customize-cipher-suites/).
-
-For guidance on which TLS version to use, refer to [TLS protocols](/ssl/reference/protocols/).
+If you are looking to restrict cipher suites, refer to [Customize cipher suites](/ssl/edge-certificates/additional-options/cipher-suites/customize-cipher-suites/). For guidance on which TLS version to use, refer to [TLS protocols](/ssl/reference/protocols/).
 
 :::
 
@@ -34,6 +32,10 @@ All users can apply this configuration to all hostnames in their zones following
 If you have an [Advanced Certificate Manager](/ssl/edge-certificates/advanced-certificate-manager/#advanced-certificate-manager) subscription, you also have the option to disable TLS 1.0 (or other versions) with a [per-hostname](#per-hostname) setup.
 
 ## Setup
+
+:::caution
+The Minimum TLS version that you set up following these steps does not apply to [R2](/r2/) custom domains. To control the TLS version for R2 custom domains, refer to the [custom domains documentation](/r2/buckets/public-buckets/#minimum-tls-version).
+:::
 
 ### Zone-level
 
