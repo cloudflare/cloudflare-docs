@@ -1,9 +1,16 @@
 ---
-title: Integrate with Microsoft 365
+title: Office 365 journaling setup
 pcx_content_type: how-to
 sidebar:
   order: 2
 ---
+
+import { GlossaryTooltip } from "~/components"
+
+When you an receive an incoming email, the email lands on your Microsoft O365 inbox, and then Email Security receives a copy of that email. The following email flow shows how this works:
+
+![Email flow when setting up Office 365 with Email Security.](~/assets/images/email-security/deployment/api-setup/journaling/Email_Security_MS365_Journaling_Diagram.png)
+
 
 To enable Microsoft 365 journaling deployment:
 
@@ -35,7 +42,7 @@ On the **Set up Email Security** page:
 
 1. **Connect domains**: Select at least one domain. Then, select **Continue**.
 2. (**Optional**) **Add manual domains**: Select **Add domain name** to manually enter additional domains. Then, select **Continue**.
-3. (**Optional**) **Adjust hop count**: Hops refer to the stops an email makes as it travels from the sender to the recipient. Enter the number of hops. Then, select **Continue**.
+3. (**Optional**) **Adjust hop count**: Enter the number of <GlossaryTooltip term="Hops">hops</GlossaryTooltip>. Then, select **Continue**.
 4. (**Optional**, select **Skip for now** to skip this step) **Move messages**: Refer to [Auto-moves](/cloudflare-one/email-security/auto-moves/) to configure auto-moves. Then, select **Continue**.
 5. **Configure service address with your third party email provider**: Copy and paste the service address below into your third party email provider to allow BCC/ Journaling: `<account tag>@CF-emailsecurity.com`.
 6. **Review details**: Review your connected domains. Then, select **Go to domains.** 
