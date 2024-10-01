@@ -43,10 +43,10 @@ By default, preview URLs are enabled and available publicly. You can use [Cloudf
 
 To limit your preview URLs to authorized emails only:
 
-1. Log in to the [Cloudflare Access dashboard](https://one.dash.cloudflare.com/?to=/:account/access/apps)
-2. Select your account
-3. Add an application
-4. Select "Self Hosted"
+1. Log in to the [Cloudflare Access dashboard](https://one.dash.cloudflare.com/?to=/:account/access/apps).
+2. Select your account.
+3. Add an application.
+4. Select **Self Hosted**.
 5. Name your application (for example, "my-worker") and add your `workers.dev` subdomain as the "Application domain".
 
 For example, if you want to secure preview URLs for a Worker running on `my-worker.my-subdomain.workers.dev`.
@@ -58,11 +58,11 @@ For example, if you want to secure preview URLs for a Worker running on `my-work
 You must press enter after you input your Application domain for it to save. You will see a "Zone is not associated with the current account" warning that you may ignore.
 :::
 
-6. Go to the next page
+6. Go to the next page.
 7. Add a name for your access policy (for example, "Allow employees access to preview URLs for my-worker")
 8. In the "Configure rules" section create a new rule with the "Emails" selector, or any other attributes which you wish to gate access to previews with. Enter the emails you want to authorize. View [access policies](/cloudflare-one/policies/access/#selectors) to learn about configuring alternate rules.
-9. Go to the next page
-10. Add application
+9. Go to the next page.
+10. Add application.
 
 ## Making Preview URLs inaccessible
 
