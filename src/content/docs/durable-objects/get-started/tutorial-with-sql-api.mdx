@@ -12,7 +12,7 @@ This guide will instruct you through:
 - Writing a JavaScript class that defines a Durable Object.
 - Using Durable Objects SQL API to query a Durable Object's private, embedded SQLite database.
 - Instantiating and communicating with a Durable Object from another Worker.
-- Deploying a Durable Object and a Worker that communicates with objects.
+- Deploying a Durable Object and a Worker that communicates with a Durable Object.
 
 :::note[SQLite in Durable Objects Beta]
 
@@ -32,7 +32,7 @@ To enable Durable Objects, you will need to purchase the Workers Paid plan:
 2. Go to **Workers & Pages** > **Plans**.
 3. Select **Purchase Workers Paid** and complete the payment process to enable Durable Objects.
 
-## 2. Create a Worker project
+## 2. Create a Worker project to access Durable Objects
 
 You will access your Durable Object from a [Worker](/workers/). Your Worker application is an interface to interact with your Durable Object.
 
@@ -127,8 +127,8 @@ export class MyDurableObject extends DurableObject {
 
 In the code above, you have:
 1. Defined a RPC method, `sayHello()`, that can be called by a Worker to communicate with a Durable Object.
-2. Accessed a Durable Object's attached storage, which is an private SQLite database only accesible to the object. [SQL API](/durable-objects/api/storage-api/#sqlexec) available on `ctx.storage` was called.
-3. Returned an object representing the single row query result using `one()`, which checks that query result has exactly one row. 
+2. Accessed a Durable Object's attached storage, which is a private SQLite database only accesible to the object, using [SQL API](/durable-objects/api/storage-api/#sqlexec) methods (`sql.exec()`) available on `ctx.storage` .
+3. Returned an object representing the single row query result using `one()`, which checks that the query result has exactly one row. 
 4. Return the `greeting` column from the row object result.
 
 ## 4. Instantiate and communicate with a Durable Object
@@ -139,7 +139,9 @@ Durable Objects do not receive requests directly from the Internet. Durable Obje
 This is achieved by configuring a binding in the calling Worker for each Durable Object class that you would like it to be able to talk to. These bindings must be configured at upload time. Methods exposed by the binding can be used to communicate with particular Durable Object instances.
 :::
 
-To communicate with a Durable Object, the Worker fetch handler should look like the following:
+A Worker is used to [access Durable Objects](/durable-objects/best-practices/create-durable-object-stubs-and-send-requests/).
+
+To communicate with a Durable Object, the Worker's fetch handler should look like the following:
 
 <Tabs> <TabItem label="JavaScript" icon="seti:javascript">
 
@@ -152,7 +154,7 @@ export default {
 
 		let greeting = await stub.sayHello();
 
-		return new Response(response);
+		return new Response(greeting);
 	},
 };
 ```
@@ -168,7 +170,7 @@ export default {
 
 		let greeting = await stub.sayHello();
 
-		return new Response(response);
+		return new Response(greeting);
 	},
 } satisfies ExportedHandler<Env>;
 ```
@@ -181,10 +183,10 @@ In the code above, you have:
 2. Passed `env` into the `fetch()` handler. Bindings are delivered as a property of the environment object passed as the second parameter when an event handler or class constructor is invoked. By calling the `idFromName()` function on the binding, you use a string-derived object ID. You can also ask the system to [generate random unique IDs](/durable-objects/best-practices/access-durable-objects-from-a-worker/#generate-ids-randomly). System-generated unique IDs have better performance characteristics, but require you to store the ID somewhere to access the Object again later.
 3. Derived an object ID from the URL path. `MY_DURABLE_OBJECT.idFromName()` always returns the same ID when given the same string as input (and called on the same class), but never the same ID for two different strings (or for different classes). In this case, you are creating a new object for each unique path.
 4. Constructed the stub for the Durable Object using the ID. A stub is a client object used to send messages to the Durable Object.
-5. Call a Durable Object by invoking a RPC method, `sayHello()`, on the Durable Object, which returns a `Hello, World!` string greeting.
+5. Called a Durable Object by invoking a RPC method, `sayHello()`, on the Durable Object, which returns a `Hello, World!` string greeting.
 6. Received an HTTP response back to the client by constructing a HTTP Response with `return new Response()`.
 
-Refer to [Access a Durable Object from a Worker](/durable-objects/best-practices/access-durable-objects-from-a-worker/) to learn more about communicating to a Durable Object.
+Refer to [Access a Durable Object from a Worker](/durable-objects/best-practices/create-durable-object-stubs-and-send-requests/) to learn more about communicating with a Durable Object.
 
 ## 5. Configure Durable Object bindings
 
