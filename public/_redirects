@@ -97,6 +97,10 @@
 /ai-gateway/get-started/configuring-settings/ /ai-gateway/get-started/ 301
 /ai-gateway/get-started/connecting-applications/ /ai-gateway/get-started/ 301
 /ai-gateway/get-started/creating-gateway/ /ai-gateway/get-started/ 301
+/ai-gateway/pricing/ /ai-gateway/reference/pricing/ 301
+/ai-gateway/observability/evaluations/ /ai-gateway/evaluations/ 301
+/ai-gateway/observability/evaluations/set-up-evaluations/ /ai-gateway/evaluations//set-up-evaluations/ 301
+
 
 # analytics
 /analytics/migration-guides/zone-analytics/ /analytics/graphql-api/migration-guides/zone-analytics/ 301
@@ -221,6 +225,9 @@
 /cache/troubleshooting/cache-everything-ignore-query-strings/ /cache/how-to/cache-rules/examples/cache-everything-ignore-query-strings/ 301
 /cache/troubleshooting/chunked-encoding-and-dynamic-content/ /cache/how-to/cache-rules/ 301
 /cache/how-to/edge-browser-cache-ttl/create-page-rules/ /cache/how-to/cache-rules/ 301
+
+# Cloudflare Calls
+/calls/turn/overview/ /calls/turn/ 301
 
 # china network
 /support/about-cloudflare/enterprise-documentation/understanding-and-configuring-an-icp-number/ /china-network/concepts/icp/ 301
@@ -553,6 +560,7 @@
 /fundamentals/setup/allow-cloudflare-ip-addresses/ /fundamentals/concepts/cloudflare-ip-addresses/ 301
 /fundamentals/basic-tasks/login/ /fundamentals/setup/account/login/ 301
 /fundamentals/concepts/redirects/ /fundamentals/reference/redirects/ 301
+/fundamentals/reference/changelog/ /fundamentals/reference/ 302
 
 # gateway
 /gateway/about/ /cloudflare-one/policies/gateway/ 301
@@ -1695,19 +1703,6 @@
 /access/configuring-identity-providers/* /cloudflare-one/identity/idp-integration/:splat 301
 /api-security/* /api-shield/:splat 301
 /api-shield/products/* /api-shield/security/:splat 301
-/cloudflare-one/connections/connect-networks/install-and-setup/tunnel-guide/local/as-a-service/* /cloudflare-one/connections/connect-networks/configure-tunnels/local-management/as-a-service/:splat 301
-/cloudflare-one/connections/connect-apps/install-and-setup/deployment-guides/* /cloudflare-one/connections/connect-networks/deploy-tunnels/deployment-guides/:splat 301
-/cloudflare-one/connections/connect-networks/deployment-guides/* /cloudflare-one/connections/connect-networks/deploy-tunnels/deployment-guides/:splat 301
-/cloudflare-one/analytics/logs/* /cloudflare-one/insights/logs/:splat 301
-/cloudflare-one/connections/connect-apps/use_cases/* /cloudflare-one/connections/connect-networks/use-cases/:splat 301
-/cloudflare-one/connections/connect-apps/* /cloudflare-one/connections/connect-networks/:splat 301
-/cloudflare-one/connections/connect-devices/warp/exclude-traffic/* /cloudflare-one/connections/connect-devices/warp/configure-warp/route-traffic/:splat 301
-/cloudflare-one/examples/* /cloudflare-one/api-terraform/access-api-examples/:splat 301
-/cloudflare-one/learning-paths/* /cloudflare-one/implementation-guides/:splat 301
-/cloudflare-one/policies/filtering/* /cloudflare-one/policies/gateway/:splat 301
-/cloudflare-one/policies/browser-isolation/agentless/* /cloudflare-one/policies/browser-isolation/setup/:splat 301
-/cloudflare-one/policies/filtering/http-policies/data-loss-prevention/* /cloudflare-one/policies/data-loss-prevention/ 301
-/cloudflare-one/policies/data-loss-prevention/configuration-guides/* /cloudflare-one/policies/data-loss-prevention/dlp-policies/common-policies/ 301
 /distributed-web/* /web3/:splat 301
 /dns/additional-options/custom-nameservers/* /dns/nameservers/custom-nameservers/:splat 301
 /docs-engine/* https://github.com/cloudflare/cloudflare-docs/blob/production/README.md 301
@@ -1737,6 +1732,22 @@
 /waf/security-events/* /waf/analytics/security-events/:splat 301
 /web3/polygon-gateway/* /web3/ 301
 /vectorize/configuration/* /vectorize/best-practices/:splat 301
+
+# Cloudflare One / Zero Trust
+/cloudflare-one/connections/connect-networks/install-and-setup/tunnel-guide/local/as-a-service/* /cloudflare-one/connections/connect-networks/configure-tunnels/local-management/as-a-service/:splat 301
+/cloudflare-one/connections/connect-apps/install-and-setup/deployment-guides/* /cloudflare-one/connections/connect-networks/deploy-tunnels/deployment-guides/:splat 301
+/cloudflare-one/connections/connect-networks/deployment-guides/* /cloudflare-one/connections/connect-networks/deploy-tunnels/deployment-guides/:splat 301
+/cloudflare-one/analytics/logs/* /cloudflare-one/insights/logs/:splat 301
+/cloudflare-one/connections/connect-apps/use_cases/* /cloudflare-one/connections/connect-networks/use-cases/:splat 301
+/cloudflare-one/connections/connect-apps/* /cloudflare-one/connections/connect-networks/:splat 301
+/cloudflare-one/connections/connect-devices/warp/exclude-traffic/* /cloudflare-one/connections/connect-devices/warp/configure-warp/route-traffic/:splat 301
+/cloudflare-one/examples/* /cloudflare-one/api-terraform/access-api-examples/:splat 301
+/cloudflare-one/faq/teams-* /cloudflare-one/faq/:splat 301
+/cloudflare-one/learning-paths/* /cloudflare-one/implementation-guides/:splat 301
+/cloudflare-one/policies/filtering/* /cloudflare-one/policies/gateway/:splat 301
+/cloudflare-one/policies/browser-isolation/agentless/* /cloudflare-one/policies/browser-isolation/setup/:splat 301
+/cloudflare-one/policies/filtering/http-policies/data-loss-prevention/* /cloudflare-one/policies/data-loss-prevention/ 301
+/cloudflare-one/policies/data-loss-prevention/configuration-guides/* /cloudflare-one/policies/data-loss-prevention/dlp-policies/common-policies/ 301
 
 # Learning paths
 /learning-paths/modules/cybersafe/cybersafe-account-creation/* /learning-paths/cybersafe/account-creation/:splat 301

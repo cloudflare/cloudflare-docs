@@ -18,7 +18,7 @@ entries:
   - publish_date: "2024-09-26"
     title: Pricing
     description: |-
-      * **Pricing**: Added [pricing](/ai-gateway/pricing/) for storing logs persistently.
+      * **Pricing**: Added [pricing](/ai-gateway/reference/pricing/) for storing logs persistently.
 
   - publish_date: "2024-09-26"
     title: Evaluations
