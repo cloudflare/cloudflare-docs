@@ -6,6 +6,7 @@ tags:
   - Headers
 languages:
   - JavaScript
+  - Rust
   - TypeScript
   - Python
 preview:
@@ -51,6 +52,16 @@ async def on_fetch(request):
     return Response.new('Hello world')
 ```
 
+</TabItem> <TabItem label="Rust" icon="seti:rust">
+```rs
+use worker::*;
+
+#[event(fetch)]
+async fn fetch(req: HttpRequest, _env: Env, _ctx: Context) -> Result<Response> {
+    console_log!("{:?}", req.headers());
+    Response::ok("hello world")
+}
+```
 </TabItem> </Tabs>
 
 ---
