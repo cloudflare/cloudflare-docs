@@ -345,8 +345,6 @@ import CursorLight from "~/assets/images/workers/ai/cursor-light.png";
 			} = JSON.parse(data);
 			completion += text;
 
-			//const isCompleted = completion.indexOf("SOURCES:") > -1;
-
 			const [answer, sourcesString] = completion.split("SOURCES:");
 
 			responseTextEl.innerHTML = DOMPurify.sanitize(
