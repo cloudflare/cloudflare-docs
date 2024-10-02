@@ -1,0 +1,15 @@
+---
+pcx_content_type: how-to
+title: Upload an image using a Worker
+
+---
+
+You can use a Worker to upload your image to Cloudflare Images.
+
+Refer to the example below or refer to the [Workers documentation](/workers/) for more information.
+
+```ts
+const image = await fetch("./myimage.png");
+const bytes = await image.bytes();
+formData.append('file', new File([bytes], 'myimage.png');
+```
