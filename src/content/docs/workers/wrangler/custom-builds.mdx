@@ -6,6 +6,8 @@ description: Customize how your code is compiled, before being processed by Wran
 
 ---
 
+import { Render, Type, MetaInfo } from "~/components"
+
 Custom builds are a way for you to customize how your code is compiled, before being processed by Wrangler.
 
 :::note
@@ -19,15 +21,15 @@ Custom builds are configured by adding a `[build]` section in your `wrangler.tom
 
 
 
-* `command` string optional
+* `command` <Type text="string" /> <MetaInfo text="optional" />
 
   * The command used to build your Worker. On Linux and macOS, the command is executed in the `sh` shell and the `cmd` shell for Windows. The `&&` and `||` shell operators may be used. This command will be run as part of `wrangler dev` and `npx wrangler deploy`.
 
-* `cwd` string optional
+* `cwd` <Type text="string" /> <MetaInfo text="optional" />
 
   * The directory in which the command is executed.
 
-* `watch_dir` string | string\[] optional
+* `watch_dir` <Type text="string | string\[]" /> <MetaInfo text="optional" />
 
   * The directory to watch for changes while using `wrangler dev`. Defaults to the current working directory.
 

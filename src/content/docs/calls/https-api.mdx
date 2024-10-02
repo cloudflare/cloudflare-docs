@@ -10,7 +10,7 @@ Cloudflare Calls simplifies the management of peer connections and media tracks 
 
 ## API Endpoints
 
-* **Create a New Session**: Initiates a new session on the Cloudflare Calls WebRTC server, establishing a PeerConnection on the client side.
+* **Create a New Session**: Initiates a new session on Cloudflare Calls, which can be modified with other endpoints below.
   * `POST /apps/{appId}/sessions/new`
 * **Add a New Track**: Adds a media track (audio or video) to an existing session.
   * `POST /apps/{appId}/sessions/{sessionId}/tracks/new`
@@ -42,5 +42,13 @@ This section provides an overview of the typical lifecycle of a simple session, 
 <div class="full-img">
 
 ![Example Lifecycle](~/assets/images/calls/lifecycle-of-a-session.png)
+
+</div>
+
+There is also a previously used, but now deprecated way to use the API illustrated below. If you are using this style please consider upgrading to the newer version illustrated above.
+
+<div class="full-img">
+
+![Deprecated Lifecycle](~/assets/images/calls/deprecated-lifecycle-of-a-session.png)
 
 </div>

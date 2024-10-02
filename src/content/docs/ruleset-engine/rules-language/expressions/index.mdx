@@ -6,10 +6,9 @@ sidebar:
 head:
   - tag: title
     content: Rule expressions
-
 ---
 
-import { Render } from "~/components"
+import { Render } from "~/components";
 
 The Rules language supports two kinds of expressions: simple and compound.
 
@@ -29,11 +28,11 @@ Simple expressions have the following syntax:
 
 Where:
 
-* [Fields](/ruleset-engine/rules-language/fields/) specify properties associated with an HTTP request.
+- [Fields](/ruleset-engine/rules-language/fields/) specify properties associated with an HTTP request.
 
-* [Comparison operators](/ruleset-engine/rules-language/operators/#comparison-operators) define how values must relate to actual request data for an expression to return `true`.
+- [Comparison operators](/ruleset-engine/rules-language/operators/#comparison-operators) define how values must relate to actual request data for an expression to return `true`.
 
-* [Values](/ruleset-engine/rules-language/values/) represent the data associated with fields. When evaluating a rule, Cloudflare compares these values with the actual data obtained from the request.
+- [Values](/ruleset-engine/rules-language/values/) represent the data associated with fields. When evaluating a rule, Cloudflare compares these values with the actual data obtained from the request.
 
 ## Compound expressions
 
@@ -55,7 +54,7 @@ Compound expressions allow you to generate sophisticated, highly targeted rules.
 
 ## Maximum rule expression length
 
-<Render file="max-expression-length" /> <br/>
+<Render file="max-expression-length" />
 
 This limit applies whether you use the visual [Expression Builder](/ruleset-engine/rules-language/expressions/edit-expressions/#expression-builder) to define your expression, or write the expression manually in the [Expression Editor](/ruleset-engine/rules-language/expressions/edit-expressions/#expression-editor).
 
@@ -63,6 +62,6 @@ This limit applies whether you use the visual [Expression Builder](/ruleset-engi
 
 You can also use the following Rules language features in your expressions:
 
-* [Grouping symbols](/ruleset-engine/rules-language/operators/#grouping-symbols) allow you to explicitly group expressions that should be evaluated together.
+- [Grouping symbols](/ruleset-engine/rules-language/operators/#grouping-symbols) allow you to explicitly group expressions that should be evaluated together.
 
-* [Functions](/ruleset-engine/rules-language/functions/) allow you to manipulate and validate values in expressions.
+- [Functions](/ruleset-engine/rules-language/functions/) allow you to manipulate and validate values in expressions.

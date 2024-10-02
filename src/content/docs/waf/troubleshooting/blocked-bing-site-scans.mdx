@@ -5,8 +5,9 @@ sidebar:
   order: 1
 head: []
 description: A WAF managed rule may block site scans performed by Bing Webmaster Tools.
-
 ---
+
+import { RuleID } from "~/components";
 
 Microsoft [Bing Webmaster Tools](https://www.bing.com/webmaster/tools) provides a Site Scan feature that crawls your website searching for possible SEO improvements.
 
@@ -16,20 +17,16 @@ To allow Site Scan to run on your website, Cloudflare recommends that you tempor
 
 The rule you should temporarily skip is the following:
 
-
-
-|                     | Name                                             | ID                               |
-| ------------------- | ------------------------------------------------ | -------------------------------- |
-| **Managed Ruleset** | Cloudflare Managed Ruleset                       | efb7b8c949ac4650a09736fc376e9aee |
-| **Rule**            | Anomaly:Header:User-Agent - Fake Bing or MSN Bot | ae20608d93b94e97988db1bbc12cf9c8 |
-
-
+|                     | Name                                             | ID                                               |
+| ------------------- | ------------------------------------------------ | ------------------------------------------------ |
+| **Managed Ruleset** | Cloudflare Managed Ruleset                       | <RuleID id="efb7b8c949ac4650a09736fc376e9aee" /> |
+| **Rule**            | Anomaly:Header:User-Agent - Fake Bing or MSN Bot | <RuleID id="ae20608d93b94e97988db1bbc12cf9c8" /> |
 
 The exception, shown as a rule with a **Skip** action, must appear in the rules list before the rule executing the Cloudflare Managed Ruleset, or else nothing will be skipped.
 
 To check the rule order, use one of the following methods:
 
-* When using the Cloudflare dashboard, the rules listed in **Security** > **WAF** > **Managed rules** run in order.
-* When using the Cloudflare API, the rules in the `rules` object obtained using the [Get a zone entry point ruleset](/api/operations/getZoneEntrypointRuleset) operation (for your zone and for the `http_request_firewall_managed` phase) run in order.
+- When using the Cloudflare dashboard, the rules listed in **Security** > **WAF** > **Managed rules** run in order.
+- When using the Cloudflare API, the rules in the `rules` object obtained using the [Get a zone entry point ruleset](/api/operations/getZoneEntrypointRuleset) operation (for your zone and for the `http_request_firewall_managed` phase) run in order.
 
 For more information on creating exceptions, refer to [Create exceptions](/waf/managed-rules/waf-exceptions/).

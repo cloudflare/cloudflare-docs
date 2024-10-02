@@ -9,7 +9,7 @@ head:
 description: Regardless of whether the browser-to-Cloudflare connection uses HTTP or HTTPS, Cloudflare always connects to the origin over HTTPS with certificate validation.
 ---
 
-import { Render } from "~/components";
+import { Render, Tabs, TabItem } from "~/components";
 
 :::note
 
@@ -40,6 +40,18 @@ The setup is generally the same as [**Full (strict)** mode](/ssl/origin-configur
 In addition to **Strict (SSL-Only Origin Pull)** encryption, you can also set up [Authenticated Origin Pulls](/ssl/origin-configuration/authenticated-origin-pull/) to ensure all requests to your origin are evaluated before receiving a response.
 
 :::
+
+### Process
+
+<Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
+
+<Render file="change-encryption-mode-dash" />
+
+</TabItem> <TabItem label="API">
+
+<Render file="change-encryption-mode-api" />
+
+</TabItem> </Tabs>
 
 ## Limitations
 

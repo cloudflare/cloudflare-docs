@@ -1,13 +1,7 @@
 # This is a test
 
-clouDflare is spellt wrong
+testing `worker-configuration.d.ts`.
 
-Test out Javascript.
+Then also, ‘this thing'
 
-Bad link at [this page](/test/).
-
-Build a better internet.
-
-Hyperdrive is a cool product.
-
-Tell me about namespaces.
+What about wrangler or Wrangler.

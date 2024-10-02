@@ -18,6 +18,7 @@ Once the migration finishes, the **Managed rules** tab in the Cloudflare dashboa
 **The previous version of WAF managed rules is now deprecated.** The [APIs for managing the previous version of WAF managed rules](#api-changes) will stop working on 2025-01-15. The same applies to [Terraform resources](#terraform-changes) related to the previous version of WAF managed rules. You must migrate before this date to avoid any issues.
 
 Refer to [Possible migration errors](#possible-migration-errors) if you are having issues migrating.
+
 :::
 
 ## Main benefits
@@ -106,7 +107,6 @@ Once the migration is complete, the APIs for interacting with WAF managed rules 
 - [WAF rules](/api/operations/waf-rules-list-waf-rules)
 
 :::caution
-
 If you have any integrations using the WAF managed rules APIs stated above, you must update them before migrating to the new WAF Managed Rules.
 :::
 
@@ -131,7 +131,6 @@ To manage the configuration of the new WAF Managed Rules using Terraform, you mu
 ### Phase 2 (since 2022-09-19)
 
 :::note[Update notice]
-
 On 2023-08-18, Cloudflare added support for migrating partner accounts to the new WAF Managed Rules.
 :::
 
@@ -201,7 +200,6 @@ If you are an Enterprise customer, after deploying your new WAF configuration bo
 When the migration finishes, the dashboard will only display the new WAF Managed Rules interface in **Security** > **WAF** > **Managed rules**. To check if the migration has finished, refresh the dashboard.
 
 :::note
-
 The update process can take up to an hour. During this period you may observe security events from both versions of WAF managed rules.
 :::
 
@@ -350,7 +348,6 @@ The returned configuration in the example above, which would match the existing 
 Once the provided configuration is saved and the new WAF Managed Rules are enabled, the previous version of the WAF managed rules will be automatically disabled, due to the presence of the `waf_migration=pending&phase_two=1` parameters. This will make sure that your zone stays protected by one of the WAF versions during the update process.
 
 :::note
-
 Pro and Business customers, which do not have access to the validation mode described in step 3, can update the rules (and overrides) in their zone entry point ruleset without triggering the migration by omitting the `waf_migration=pending&phase_two=1` parameters. However, all the rules in their configuration must be disabled (`"enabled": false`). Only Enterprise customers can configure (enabled) rules deploying Managed Rulesets without triggering the migration.
 :::
 
@@ -482,8 +479,7 @@ terraform import cloudflare_ruleset.terraform_managed_resource_3c0b456bc2aa44308
 
 5. Remove any state related to the previous version of WAF managed rules from your Terraform state:
 
-   :::caution[Important]
-
+   :::caution
    You must remove WAF packages, groups, and rules from Terraform state before deleting their configuration from `.tf` configuration files to prevent issues.
    :::
 

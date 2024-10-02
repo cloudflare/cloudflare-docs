@@ -42,9 +42,9 @@ Open a terminal window and run C3 to create your Worker project:
 	file="c3-post-run-steps"
 	product="workers"
 	params={{
-		one: "Hello World example",
-		two: "Hello World Worker",
-		three: "JavaScript",
+		category: "hello-world",
+		type: "Hello World Worker",
+		lang: "JavaScript",
 	}}
 />
 
@@ -265,8 +265,7 @@ By doing this, you will create a new vector representation of the note, which ca
 
 To complete your code, you can update the root path (`/`) to query Vectorize. You will convert the query into a vector, and then use the `vector-index` index to find the most similar vectors.
 
-The `topK` parameter limits the number of vectors returned by the function. For instance, providing a `topK` of 1 will only return the *most similar* vector based on the query. Setting `topK` to 5 will return the 5 most similar vectors.
-
+The `topK` parameter limits the number of vectors returned by the function. For instance, providing a `topK` of 1 will only return the _most similar_ vector based on the query. Setting `topK` to 5 will return the 5 most similar vectors.
 
 Given a list of similar vectors, you can retrieve the notes that match the record IDs stored alongside those vectors. In this case, we are only retrieving a single note - but you may customize this as needed.
 
@@ -315,27 +314,6 @@ app.get('/', async (c) => {
   )
 
   return c.text(answer);
-})
-
-
-	const contextMessage = notes.length
-		? `Context:\n${notes.map((note) => `- ${note}`).join("\n")}`
-		: "";
-
-	const systemPrompt = `When answering the question or responding, use the context provided, if it is provided and relevant.`;
-
-	const { response: answer } = await c.env.AI.run(
-		"@cf/meta/llama-3-8b-instruct",
-		{
-			messages: [
-				...(notes.length ? [{ role: "system", content: contextMessage }] : []),
-				{ role: "system", content: systemPrompt },
-				{ role: "user", content: question },
-			],
-		},
-	);
-
-	return c.text(answer);
 });
 
 app.onError((err, c) => {
@@ -350,16 +328,16 @@ export default app;
 If you no longer need a note, you can delete it from the database. Any time that you delete a note, you will also need to delete the corresponding vector from Vectorize. You can implement this by building a `DELETE /notes/:id` route in your `src/index.js` file:
 
 ```js
-app.delete('/notes/:id', async (c) => {
-  const { id } = c.req.param();
+app.delete("/notes/:id", async (c) => {
+	const { id } = c.req.param();
 
-  const query = `DELETE FROM notes WHERE id = ?`
-  await c.env.DATABASE.prepare(query).bind(id).run()
+	const query = `DELETE FROM notes WHERE id = ?`;
+	await c.env.DB.prepare(query).bind(id).run();
 
-  await c.env.VECTOR_INDEX.deleteByIds([id])
+	await c.env.VECTOR_INDEX.deleteByIds([id]);
 
-  return c.status(204)
-})
+	return c.status(204);
+});
 ```
 
 ## 8. Deploy your project
@@ -384,10 +362,10 @@ A full version of this codebase is available on GitHub. It includes a frontend U
 
 To do more:
 
-* Explore the reference diagram for a [Retrieval Augmented Generation (RAG) Architecture](/reference-architecture/diagrams/ai/ai-rag/).
-* Review Cloudflare's [AI documentation](/workers-ai).
-* Review [Tutorials](/workers/tutorials/) to build projects on Workers.
-* Explore [Examples](/workers/examples/) to experiment with copy and paste Worker code.
-* Understand how Workers works in [Reference](/workers/reference/).
-* Learn about Workers features and functionality in [Platform](/workers/platform/).
-* Set up [Wrangler](/workers/wrangler/install-and-update/) to programmatically create, test, and deploy your Worker projects.
+- Explore the reference diagram for a [Retrieval Augmented Generation (RAG) Architecture](/reference-architecture/diagrams/ai/ai-rag/).
+- Review Cloudflare's [AI documentation](/workers-ai).
+- Review [Tutorials](/workers/tutorials/) to build projects on Workers.
+- Explore [Examples](/workers/examples/) to experiment with copy and paste Worker code.
+- Understand how Workers works in [Reference](/workers/reference/).
+- Learn about Workers features and functionality in [Platform](/workers/platform/).
+- Set up [Wrangler](/workers/wrangler/install-and-update/) to programmatically create, test, and deploy your Worker projects.

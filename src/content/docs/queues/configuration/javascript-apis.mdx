@@ -13,7 +13,7 @@ Cloudflare Queues is integrated with [Cloudflare Workers](/workers). To send and
 
 A Worker that can send messages to a Queue is a producer Worker, while a Worker that can receive messages from a Queue is a consumer Worker. It is possible for the same Worker to be a producer and consumer, if desired.
 
-In the future, we expect to support other APIs, such as HTTP endpoints to send or receive messages. To report bugs or request features, go to the [Cloudflare Community Forums](https://community.cloudflare.com/c/developers/workers/40). To give feedback, go to the [`#queues-beta`](https://discord.cloudflare.com) Discord channel.
+In the future, we expect to support other APIs, such as HTTP endpoints to send or receive messages. To report bugs or request features, go to the [Cloudflare Community Forums](https://community.cloudflare.com/c/developers/workers/40). To give feedback, go to the [`#queues`](https://discord.cloudflare.com) Discord channel.
 
 ## Producer
 
@@ -245,6 +245,7 @@ interface Message<Body = unknown> {
   readonly id: string;
   readonly timestamp: Date;
   readonly body: Body;
+	readonly attempts: number;
   ack(): void;
   retry(options?: QueueRetryOptions): void;
 }
@@ -264,6 +265,10 @@ interface Message<Body = unknown> {
 
   * The body of the message.
   * The body can be any type supported by the [structured clone algorithm](https://developer.mozilla.org/en-US/docs/Web/API/Web_Workers_API/Structured_clone_algorithm#supported_types), as long as its size is less than 128 KB.
+
+* <code>attempts</code> number
+
+	* The number of times the consumer has attempted to process this message. Starts at 1.
 
 * <code>ack()</code> void
 

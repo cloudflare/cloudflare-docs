@@ -7,3 +7,9 @@ title: Check tunnel health in the dashboard
 import { Render } from "~/components"
 
 <Render file="tunnel-healthchecks-dash" params={{ one: "The dashboard shows the view of tunnel health as measured from each Cloudflare location where your traffic is likely to land.", two: "**Magic WAN** > **Tunnel health check**" }} />
+
+## Magic WAN Connector
+
+Magic WAN Connector also includes a heartbeat function, an additional way of communicating its health status which does not depend on successfully setting up any tunnels. The heartbeat function communicates periodically with Cloudflare via HTTPS and lets Cloudflare know that the Connector in question is connected to the Internet and reachable.
+
+Refer to [Heartbeat](/magic-wan/configuration/connector/maintenance/heartbeat/) to learn more.

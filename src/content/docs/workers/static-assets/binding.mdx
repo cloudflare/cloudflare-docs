@@ -1,0 +1,108 @@
+---
+pcx_content_type: concept
+title: Configuration and binding
+sidebar:
+  order: 7
+head: []
+description: Details on how to configure Workers static assets and its binding.
+---
+
+import {
+	Badge,
+	Description,
+	FileTree,
+	InlineBadge,
+	Render,
+	TabItem,
+	Tabs,
+} from "~/components";
+
+Configuring a Worker with assets requires specifying a [directory](/workers/static-assets/binding/#directory) and, optionally, an [assets binding](/workers/static-assets/binding/), in your Worker's `wrangler.toml` file. The [assets binding](/workers/static-assets/binding/) allows you to dynamically fetch assets from within your Worker script (e.g. `env.ASSETS.fetch()`), similarly to how you might with a make a `fetch()` call with a [Service binding](/workers/runtime-apis/bindings/service-bindings/http/).
+
+Only one collection of static assets can be configured in each Worker.
+
+## `directory`
+
+The folder of static assets to be served. For many frameworks, this is the `./public/`, `./dist/`, or `./build/` folder.
+
+```toml title="wrangler.toml"
+name = "my-worker"
+compatibility_date = "2024-09-19"
+assets = { directory = "./public/" }
+```
+
+## `binding`
+
+Configuring the optional [binding](/workers/runtime-apis/bindings) gives you access to the collection of assets from within your Worker script.
+
+```toml title="wrangler.toml"
+name = "my-worker"
+main = "./src/index.js"
+compatibility_date = "2024-09-19"
+
+assets = { directory = "./public/", binding = "ASSETS" }
+```
+
+In the example above, assets would be available through `env.ASSETS`.
+
+### Runtime API Reference
+
+#### `fetch()`
+
+**Parameters**
+
+- `request: Request` Pass a [Request object](/workers/runtime-apis/request/), URL string, or URL object. Requests made through this method have `html_handling` and `not_found_handling` configuration applied to them.
+
+**Response**
+
+- `Promise<Response>` Returns a static asset response for the given request.
+
+**Example**
+
+Your dynamic code can make new, or forward incoming, requests to your project's static assets using the assets binding.
+
+Take the following example that configures a Worker to return a response under all requests headed for `/api/`. Otherwise, the Worker will fallback to returning static assets.
+
+<Tabs> <TabItem label="JavaScript" icon="seti:javascript">
+
+```js
+export default {
+	async fetch(request, env) {
+		const url = new URL(request.url);
+		if (url.pathname.startsWith("/api/")) {
+			// TODO: Add your custom /api/* logic here.
+			return new Response("Ok");
+		}
+		// Otherwise, serve the static assets.
+		// Without this, the Worker will error and no assets will be served.
+		return env.ASSETS.fetch(request);
+	},
+};
+```
+
+</TabItem> <TabItem label="TypeScript" icon="seti:typescript">
+
+```ts
+interface Env {
+	ASSETS: Fetcher;
+}
+
+export default {
+	async fetch(request, env): Promise<Response> {
+		const url = new URL(request.url);
+		if (url.pathname.startsWith("/api/")) {
+			// TODO: Add your custom /api/* logic here.
+			return new Response("Ok");
+		}
+		// Otherwise, serve the static assets.
+		// Without this, the Worker will error and no assets will be served.
+		return env.ASSETS.fetch(request);
+	},
+} satisfies ExportedHandler<Env>;
+```
+
+</TabItem> </Tabs>
+
+## Routing configuration
+
+For the various static asset routing configuration options, refer to [Routing](/workers/static-assets/routing/).

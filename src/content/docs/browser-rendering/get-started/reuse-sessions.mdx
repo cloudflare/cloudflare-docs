@@ -27,9 +27,9 @@ Create a new Worker project named `browser-worker` by running:
 	file="c3-post-run-steps"
 	product="workers"
 	params={{
-		one: "Hello World example",
-		two: "Hello World Worker",
-		three: "TypeScript",
+		category: "hello-world",
+		type: "Hello World Worker",
+		lang: "TypeScript",
 	}}
 />
 
@@ -56,7 +56,7 @@ browser = { binding = "MYBROWSER" }
 
 The script below starts by fetching the current running sessions. If there are any that don't already have a worker connection, it picks a random session ID and attempts to connect (`puppeteer.connect(..)`) to it. If that fails or there were no running sessions to start with, it launches a new browser session (`puppeteer.launch(..)`). Then, it goes to the website and fetches the dom. Once that's done, it disconnects (`browser.disconnect()`), making the connection available to other workers.
 
-Take into account that if the browser is idle, i.e. does not get any command, for more than the current [limit](../../platform/limits/), it will close automatically, so you must have enough requests per minute to keep it alive.
+Take into account that if the browser is idle, i.e. does not get any command, for more than the current [limit](/browser-rendering/platform/limits/), it will close automatically, so you must have enough requests per minute to keep it alive.
 
 ```ts
 import puppeteer from "@cloudflare/puppeteer";
@@ -133,7 +133,7 @@ export default {
 };
 ```
 
-Besides `puppeteer.sessions()`, we've added other methods to facilitate session management - check them out [here](../../platform/puppeteer/#session-management).
+Besides `puppeteer.sessions()`, we've added other methods to facilitate [Session Management](/browser-rendering/platform/puppeteer/#session-management).
 
 ## 5. Test
 
