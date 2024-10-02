@@ -172,10 +172,5 @@ if (Astro.props.entry.data.external_link) {
 		.querySelectorAll("span.littlefoot")
 		.forEach((x) => x.classList.add("not-content"));
 </script>
-<script>
-	import mermaid from "mermaid";
-
-	mermaid.initialize({ startOnLoad: true, theme: "neutral" });
-</script>
 <script src="src/scripts/analytics.ts"></script>
 <Default {...Astro.props}><slot /></Default>

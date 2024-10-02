@@ -2,7 +2,15 @@
 title: Mermaid
 ---
 
-Mermaid diagrams are added with [`remark-mermaid`](https://github.com/remcohaszing/rehype-mermaid/) and [`mermaid`](https://www.npmjs.com/package/mermaid).
+Mermaid diagrams are added with [`rehype-mermaid`](https://github.com/remcohaszing/rehype-mermaid/).
+
+:::caution
+
+Diagrams are rendered at build time using [`mermaid-isomorphic`](https://github.com/remcohaszing/mermaid-isomorphic) which uses [`playwright`](https://playwright.dev/).
+
+This project has a dependency on [`@playwright/browser-chromium`](https://www.npmjs.com/package/@playwright/browser-chromium) to manage the browser dependency.
+
+:::
 
 ```mermaid
 flowchart LR
