@@ -4,24 +4,28 @@
 
 ---
 
-## What are Account Owned Tokens?
+Account Owned Tokens are the first step that Cloudflare is taking to represent service principals in our service, and it is currently being released in open beta.
 
-Account Owned Tokens are Cloudflare's first step to represent service principals in our service. Account Owned Tokens are currently in Open Beta.
-Cloudflare is working to enable all features to be compatible with Account Owned tokens, and a short compatibility list is provided below.
-If you are working with a product or feature that is not currently supported by Account Owned Tokens, continue to use the existing user tokens.
-User tokens will continue to work, and we do not have plans to deprecate them.
+Cloudflare is working to ensure that all features eventually become compatible with Account Owned Tokens. 
 
-Account Owned Tokens are visible for Super Administrators of accounts on the Cloudflare dashboard via **Manage Account** > **API Tokens**.
-The existing token creation UI is available and can also be accessed from the API at /accounts/:accountID/tokens.
+If you are working with a service that is not currently supported by Account Owned Tokens, it is recommended that you continue to use the existing user tokens.
+
+:::note
+User tokens will continue to work and we do not have plans to deprecate them.
+:::
+
+Account Owned Tokens will be visible for Super Administrators of accounts on the [Cloudflare dashboard](https://dash.cloudflare.com/) via **Manage Account** > **API Tokens**.
+
+You can still create tokens using the Cloudflare dashboard, and it can also be accessed via the API at `/accounts/<accountID>/tokens`.
 
 Try using Account Owned Tokens specifically in these scenarios:
 
-1. If you require business continuity when managing tokens as a team of super administrators
-2. If you need to restrict API access on your account and want to centralize visibility and management of these tokens
+- You require business continuity when managing tokens as a team of super administrators.
+- You need to restrict API access on your account and want to centralize visibility and management of these tokens.
 
-## Account Owned Tokens Compatibility Matrix
+## Compatibility matrix
 
-Account Owned Tokens are a new credential type that is in Open Beta. This is the list of currently supported products and their compatability status.
+Account Owned Tokens are a new credential type that is currently in open beta. Refer to the table below for products currently supported and their compatability status.
 
 | Product                         | Compatible              |
 | ------------------------------- | ----------------------- |
