@@ -3,7 +3,6 @@ pcx_content_type: concept
 title: Read key-value pairs
 sidebar:
   order: 4
-  
 ---
 
 To get the value for a given key, call the `get()` method of the [KV binding](/kv/concepts/kv-bindings/) on any [KV namespace](/kv/concepts/kv-namespaces/) you have bound to your Worker code:
@@ -14,30 +13,31 @@ env.NAMESPACE.get(key);
 
 The `get()` method returns a promise you can `await` on to get the value. If the key is not found, the promise will resolve with the literal value `null`.
 
-#### Example 
+#### Example
 
 An example of reading a key from within a Worker:
 
 ```js
 export default {
-  async fetch(request, env, ctx) {
-    try {
-      const value = await env.NAMESPACE.get("first-key");
+	async fetch(request, env, ctx) {
+		try {
+			const value = await env.NAMESPACE.get("first-key");
 
-      if (value === null) {
-        return new Response("Value not found", {status: 404});
-      }
-        return new Response(value);
-    } catch (e) {
-      return new Response(e.message, {status: 500});
-    }
-  },
+			if (value === null) {
+				return new Response("Value not found", { status: 404 });
+			}
+			return new Response(value);
+		} catch (e) {
+			return new Response(e.message, { status: 500 });
+		}
+	},
 };
 ```
 
 ## Reference
 
 The following methods are provided to read from KV:
+
 - [get()](#get-method)
 - [getWithMetadata()](#getwithmetadata-method)
 
@@ -53,26 +53,26 @@ The `get()` method returns a promise you can `await` on to get the value. If the
 
 #### Parameters
 
-* `key`: `string`
-  * The key of the KV pair.
-* `type`: `"text" | "json" | "arrayBuffer" | "stream"`
-  * Optional. The type of the value to be returned. `text` is the default.
-* `options`: `{
+- `key`: `string`
+  - The key of the KV pair.
+- `type`: `"text" | "json" | "arrayBuffer" | "stream"`
+  - Optional. The type of the value to be returned. `text` is the default.
+- `options`: `{
     cacheTtl: number,
     type: "text" | "json" | "arrayBuffer" | "stream"
 }`
-  * Optional. Object containing the `cacheTtl` and `type` properties. The `cacheTtl` property defines the length of time in seconds that a KV result is cached in the global network location it is accessed from (minimum: 60). The `type` property defines the type of the value to be returned. 
+  - Optional. Object containing the `cacheTtl` and `type` properties. The `cacheTtl` property defines the length of time in seconds that a KV result is cached in the global network location it is accessed from (minimum: 60). The `type` property defines the type of the value to be returned.
 
 #### Response
 
-* `response`: `Promise<string | Object | ArrayBuffer | ReadableStream | null>`
-  * The value for the requested KV pair. The response type will depend on the `type` parameter provided for the `get()` command as follows:
-    * `text`: A `string` (default).
-    * `json`: An object decoded from a JSON string.
-    * `arrayBuffer`: An [`ArrayBuffer`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/ArrayBuffer) instance.
-    * `stream`: A [`ReadableStream`](https://developer.mozilla.org/en-US/docs/Web/API/ReadableStream).
+- `response`: `Promise<string | Object | ArrayBuffer | ReadableStream | null>`
+  - The value for the requested KV pair. The response type will depend on the `type` parameter provided for the `get()` command as follows:
+    - `text`: A `string` (default).
+    - `json`: An object decoded from a JSON string.
+    - `arrayBuffer`: An [`ArrayBuffer`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/ArrayBuffer) instance.
+    - `stream`: A [`ReadableStream`](https://developer.mozilla.org/en-US/docs/Web/API/ReadableStream).
 
-The `get()` method may return stale values. If a given key has recently been read in a given location, writes or updates to the key made in other locations may take up to 60 seconds (or the duration of the `cacheTtl`) to display. 
+The `get()` method may return stale values. If a given key has recently been read in a given location, writes or updates to the key made in other locations may take up to 60 seconds (or the duration of the `cacheTtl`) to display.
 
 ### `getWithMetadata()` method
 
@@ -82,59 +82,56 @@ To get the value for a given key along with its metadata, call the `getWithMetad
 env.NAMESPACE.getWithMetadata(key, type?, options?);
 ```
 
-Metadata is a serializable value you append to each KV entry. 
-
+Metadata is a serializable value you append to each KV entry.
 
 #### Parameters
 
-* `key`: `string`
-  * The key of the KV pair.
-* `type`: `"text" | "json" | "arrayBuffer" | "stream"`
-  * Optional. The type of the value to be returned. `string` is the default.
-* `options`: `{
+- `key`: `string`
+  - The key of the KV pair.
+- `type`: `"text" | "json" | "arrayBuffer" | "stream"`
+  - Optional. The type of the value to be returned. `text` is the default.
+- `options`: `{
     cacheTtl: number,
     type: "text" | "json" | "arrayBuffer" | "stream"
 }`
-  * Optional. Object containing the `cacheTtl` and `type` properties. The `cacheTtl` property defines the length of time in seconds that a KV result is cached in the global network location it is accessed from (minimum: 60). The `type` property defines the type of the value to be returned. 
+  - Optional. Object containing the `cacheTtl` and `type` properties. The `cacheTtl` property defines the length of time in seconds that a KV result is cached in the global network location it is accessed from (minimum: 60). The `type` property defines the type of the value to be returned.
 
 #### Response
 
-* `response`: `Promise<{
-    value: string | Object | ArrayBuffer | ReadableStream | null,
-    metadata: string | null
-    }>`
+- `response`: `Promise<{
+value: string | Object | ArrayBuffer | ReadableStream | null,
+metadata: string | null
+}>`
 
-  * An object containing the value and the metadata for the requested KV pair. The type of the value attribute will depend on the `type` parameter provided for the `getWithMetadata()` command as follows:
-    * `text`: A `string` (default).
-    * `json`: An object decoded from a JSON string.
-    * `arrayBuffer`: An [`ArrayBuffer`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/ArrayBuffer) instance.
-    * `stream`: A [`ReadableStream`](https://developer.mozilla.org/en-US/docs/Web/API/ReadableStream).
+  - An object containing the value and the metadata for the requested KV pair. The type of the value attribute will depend on the `type` parameter provided for the `getWithMetadata()` command as follows:
+    - `text`: A `string` (default).
+    - `json`: An object decoded from a JSON string.
+    - `arrayBuffer`: An [`ArrayBuffer`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/ArrayBuffer) instance.
+    - `stream`: A [`ReadableStream`](https://developer.mozilla.org/en-US/docs/Web/API/ReadableStream).
 
 If there is no metadata associated with the requested key-value pair, `null` will be returned for metadata.
 
-The `getWithMetadata()` method may return stale values. If a given key has recently been read in a given location, writes or updates to the key made in other locations may take up to 60 seconds (or the duration of the `cacheTtl`) to display. 
+The `getWithMetadata()` method may return stale values. If a given key has recently been read in a given location, writes or updates to the key made in other locations may take up to 60 seconds (or the duration of the `cacheTtl`) to display.
 
-
-#### Example 
+#### Example
 
 An example of reading a key with metadata from within a Worker:
 
 ```js
 export default {
-  async fetch(request, env, ctx) {
-    try {
-      const { value, metadata } = await env.NAMESPACE.getWithMetadata("first-key");
+	async fetch(request, env, ctx) {
+		try {
+			const { value, metadata } =
+				await env.NAMESPACE.getWithMetadata("first-key");
 
-      if (value === null) {
-        return new Response("Value not found", {status: 404});
-      }
-      return new Response(value);
-    }
-    catch (e)
-    {
-      return new Response(e.message, {status: 500});
-    }
-  },
+			if (value === null) {
+				return new Response("Value not found", { status: 404 });
+			}
+			return new Response(value);
+		} catch (e) {
+			return new Response(e.message, { status: 500 });
+		}
+	},
 };
 ```
 
@@ -148,22 +145,22 @@ For large values, the choice of `type` can have a noticeable effect on latency a
 
 ### CacheTtl parameter
 
-`cacheTtl` is a parameter that defines the length of time in seconds that a KV result is cached in the global network location it is accessed from. 
+`cacheTtl` is a parameter that defines the length of time in seconds that a KV result is cached in the global network location it is accessed from.
 
-Defining the length of time in seconds is useful for reducing cold read latency on keys that are read relatively infrequently. `cacheTtl` is useful if your data is write-once or write-rarely. 
+Defining the length of time in seconds is useful for reducing cold read latency on keys that are read relatively infrequently. `cacheTtl` is useful if your data is write-once or write-rarely.
 
 :::note[Hot and cold read]
 
-A hot read means that the data is cached on Cloudflare's edge network using the [CDN](/cache/). A cold read means that the data is not cached, therefore you have to fetch the data from the storage provider. Both existing key-value pairs and non-existent key-value pairs (also known as negative lookups) are cached at the edge.
-
+A hot read means that the data is cached on Cloudflare's edge network using the [CDN](https://developers.cloudflare.com/cache/), whether it is in a local cache or a regional cache. A cold read means that the data is not cached, so the data must be fetched from the central stores. Both existing key-value pairs and non-existent key-value pairs (also known as negative lookups) are cached at the edge.
 :::
 
 `cacheTtl` is not recommended if your data is updated often and you need to see updates shortly after they are written, because writes that happen from other global network locations will not be visible until the cached value expires.
 
-The `cacheTtl` parameter must be an integer greater than or equal to `60`, which is the default. 
+The `cacheTtl` parameter must be an integer greater than or equal to `60`, which is the default.
 
 The effective `cacheTtl` of an already cached item can be reduced by getting it again with a lower `cacheTtl`. For example, if you did `NAMESPACE.get(key, {cacheTtl: 86400})` but later realized that caching for 24 hours was too long, you could `NAMESPACE.get(key, {cacheTtl: 300})` or even `NAMESPACE.get(key)` and it would check for newer data to respect the provided `cacheTtl`, which defaults to 60 seconds.
 
 ## Other methods to access KV
 
 You can [read key-value pairs from the command line with Wrangler](/kv/reference/kv-commands/#get) and [from the API](/api/operations/workers-kv-namespace-read-key-value-pair).
+

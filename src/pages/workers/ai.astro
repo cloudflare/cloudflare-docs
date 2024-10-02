@@ -145,38 +145,17 @@ import CursorLight from "~/assets/images/workers/ai/cursor-light.png";
 		margin: 0 0 32px 0;
 		max-width: 800px;
 	}
+
 	ul#messages li.prompt {
 		background-color: var(--sl-color-accent);
 		box-shadow: 0 0 10px 5px rgba(var(--sl-color-accent), 0.15);
 		color: white;
 		margin-left: auto;
 	}
+
 	ul#messages li.response {
 		background-color: var(--sl-color-bg-nav);
 		margin-right: auto;
-	}
-	ul#messages li.response p {
-		margin: 0;
-	}
-	ul#messages li.response ul {
-		list-style: none;
-		margin: 16px 0 0 0;
-		padding: 0;
-	}
-	ul#messages li.response ul li {
-		display: flex;
-		align-items: center;
-	}
-	ul#messages li.response ul li.source {
-		line-break: anywhere;
-	}
-	ul#messages li.response ul li img {
-		width: 24px;
-		margin-right: 8px;
-	}
-	ul#messages li.response ul li a {
-		text-decoration: underline;
-		color: var(--color);
 	}
 
 	form#ai-form {
@@ -282,108 +261,112 @@ import CursorLight from "~/assets/images/workers/ai/cursor-light.png";
 	}
 </style>
 
-<script is:inline>
-	window.addEventListener("DOMContentLoaded", () => {
-		const formEl = document.getElementById("ai-form");
-		const promptEl = document.getElementById("prompt");
-		const messagesEl = document.getElementById("messages");
+<script>
+	import { marked } from "marked";
+	import DOMPurify from "dompurify";
 
-		const sourceToUrl = (mdFilename) =>
-			`https://developers.cloudflare.com/${mdFilename
-				.replace(/_index\.md$/, "")
-				.replace(/\.md$/, "")}`;
+	const formEl = document.getElementById("ai-form") as HTMLFormElement;
+	const promptEl = document.getElementById("prompt") as HTMLInputElement;
+	const messagesEl = document.getElementById("messages") as HTMLUListElement;
 
-		formEl.addEventListener("submit", (e) => {
-			e.preventDefault();
-			e.stopPropagation();
+	const sourceToUrl = (mdFilename: string) =>
+		`https://developers.cloudflare.com/${mdFilename
+			.replace(/_index\.md$/, "")
+			.replace(/\.md$/, "")}`;
 
-			const prompt = promptEl.value;
+	formEl.addEventListener("submit", (e) => {
+		e.preventDefault();
+		e.stopPropagation();
 
-			if (prompt.length < 8 || prompt.length > 256) return;
+		const prompt = promptEl.value;
 
-			promptEl.value = "";
+		if (prompt.length < 8 || prompt.length > 256) return;
 
-			const messageEl = document.createElement("li");
-			messageEl.setAttribute("class", "prompt");
-			messageEl.innerText = prompt;
+		promptEl.value = "";
 
-			messagesEl.appendChild(messageEl);
+		const messageEl = document.createElement("li");
+		messageEl.setAttribute("class", "prompt");
+		messageEl.innerText = prompt;
 
-			const url = new URL("https://bot-api.developers.cloudflare.com/stream");
-			url.searchParams.set("question", prompt);
-			const source = new EventSource(url);
+		messagesEl.appendChild(messageEl);
 
-			let completion = "";
-			let sources = [];
+		const url = new URL("https://bot-api.developers.cloudflare.com/stream");
+		url.searchParams.set("question", prompt);
+		const source = new EventSource(url);
 
-			const responseEl = document.createElement("li");
-			responseEl.setAttribute("class", "response");
+		let completion = "";
+		let sources: string[] = [];
 
-			const responseTextEl = document.createElement("p");
-			responseEl.appendChild(responseTextEl);
-			const sourcesEl = document.createElement("ul");
-			sourcesEl.style.display = "none";
-			responseEl.appendChild(sourcesEl);
+		const responseEl = document.createElement("li");
+		responseEl.setAttribute("class", "response");
 
-			const loadingEl = document.createElement("div");
-			loadingEl.setAttribute("class", "loader");
-			loadingEl.innerHTML = '<div class="dot-flashing"></div>';
-			responseEl.appendChild(loadingEl);
+		const responseTextEl = document.createElement("p");
+		responseEl.appendChild(responseTextEl);
 
-			messagesEl.appendChild(responseEl);
+		const sourcesEl = document.createElement("p");
+		sourcesEl.style.display = "none";
+		responseEl.appendChild(sourcesEl);
 
-			promptEl.setAttribute("disabled", true);
+		const loadingEl = document.createElement("div");
+		loadingEl.setAttribute("class", "loader");
+		loadingEl.innerHTML = '<div class="dot-flashing"></div>';
+		responseEl.appendChild(loadingEl);
 
-			source.onerror = () => {
-				// Errors within an EventSource are indiscernible — this could occur due to rate limits or issues with a prompt.
-				// Let's fail gracefully and revert to default state.
+		messagesEl.appendChild(responseEl);
 
-				loadingEl.remove();
+		promptEl.setAttribute("disabled", "true");
+
+		source.onerror = () => {
+			// Errors within an EventSource are indiscernible — this could occur due to rate limits or issues with a prompt.
+			// Let's fail gracefully and revert to default state.
+
+			loadingEl.remove();
+			promptEl.removeAttribute("disabled");
+
+			responseTextEl.innerText =
+				"I'm currently unable to answer this question. Please try rephrasing, or ask again at a later date.";
+
+			source.close();
+		};
+
+		source.onmessage = ({ data }) => {
+			if (data === "[DONE]") {
+				source.close();
+
 				promptEl.removeAttribute("disabled");
 
-				responseTextEl.innerText =
-					"I'm currently unable to answer this question. Please try rephrasing, or ask again at a later date.";
+				return;
+			}
 
-				source.close();
-			};
+			loadingEl.remove();
 
-			source.onmessage = ({ data }) => {
-				if (data === "[DONE]") {
-					source.close();
+			const {
+				choices: [{ text }],
+			} = JSON.parse(data);
+			completion += text;
 
-					promptEl.removeAttribute("disabled");
+			const [answer, sourcesString] = completion.split("SOURCES:");
 
-					return;
-				}
+			responseTextEl.innerHTML = DOMPurify.sanitize(
+				marked.parse(answer.trim()) as string,
+			);
 
-				loadingEl.remove();
+			if (sourcesString) {
+				sourcesEl.style.display = "block";
+				sources = sourcesString
+					.trim()
+					.split(", ")
+					.map((s) => sourceToUrl(s))
+					.filter((url) => url !== "https://developers.cloudflare.com/N/A");
+			}
 
-				const {
-					choices: [{ text }],
-				} = JSON.parse(data);
-				completion += text;
-
-				//const isCompleted = completion.indexOf("SOURCES:") > -1;
-
-				const [answer, sourcesString] = completion.split("SOURCES:");
-
-				responseTextEl.innerText = answer.trim();
-
-				if (sourcesString) {
-					sourcesEl.style.display = "block";
-					sources = sourcesString
-						.trim()
-						.split(", ")
-						.map((s) => sourceToUrl(s))
-						.filter((url) => url !== "https://developers.cloudflare.com/N/A");
-				}
-
-				sourcesEl.innerHTML =
-					"<li>These sources might provide additional context:</li>" +
+			sourcesEl.innerHTML = DOMPurify.sanitize(
+				"These sources might provide additional context: <ul>" +
 					sources
 						.map((url) => `<li class="source"><a href="${url}">${url}</a></li>`)
-						.join("");
-			};
-		});
+						.join("") +
+					"</ul>",
+			);
+		};
 	});
 </script>
