@@ -43,7 +43,7 @@ export async function getChangelogs(opts?: {
 		});
 	});
 
-	const grouped = Object.entries(Object?.groupBy(mapped, (entry) => entry.date));
+	const grouped = Object.entries(Object.groupBy(mapped, (entry) => entry.date));
 	const entries = grouped.sort().reverse();
 
 	return { products, productAreas, changelogs: entries };
