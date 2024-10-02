@@ -6,13 +6,33 @@ sidebar:
 
 ---
 
+# Gateway DNS
+
 The descriptions below detail the fields available for `gateway_dns`.
+
+## AccountID
+
+Type: string
+
+Cloudflare account ID.
 
 ## ApplicationID
 
 Type: int
 
 ID of the application the domain belongs to (for example, 1, 2). Set to 0 when no ApplicationID is matched.
+
+## ApplicationName
+
+Type: string
+
+Name of the application the domain belongs to (for example, 'Cloudflare Dashboard').
+
+## AuthoritativeNameServerIPs
+
+Type: array\[string]
+
+The IPs of the authoritative nameservers that provided the answers, if any (for example \['203.0.113.1', '203.0.113.2']).
 
 ## CNAMECategoryIDs
 
@@ -25,6 +45,18 @@ ID or IDs of category that the intermediate cname domains belongs to (for exampl
 Type: array\[string]
 
 Name or names of category that the intermediate cname domains belongs to (for example, \['Photography', 'Weather']).
+
+## CNAMEs
+
+Type: array\[string]
+
+Resolved intermediate cname domains (for example, \['alias.example.com']).
+
+## CNAMEsReversed
+
+Type: array\[string]
+
+Resolved intermediate cname domains in reverse (for example, \['com.example.alias']).
 
 ## ColoCode
 
@@ -86,6 +118,18 @@ Type: string
 
 The name of the device where the HTTP request originated from (for example, 'Laptop MB810').
 
+## DoHSubdomain
+
+Type: string
+
+The destination DoH subdomain the DNS query was made to.
+
+## DoTSubdomain
+
+Type: string
+
+The destination DoT subdomain the DNS query was made to.
+
 ## DstIP
 
 Type: string
@@ -97,6 +141,12 @@ The destination IP address the DNS query was made to (for example, '104.16.132.2
 Type: int
 
 The destination port used at the edge. The port changes based on the protocol used by the DNS query (for example, 0).
+
+## EDEErrors
+
+Type: array\[int]
+
+List of returned Extended DNS Error Codes (for example, \[2, 3]).
 
 ## Email
 
@@ -158,7 +208,7 @@ Type: array\[string]
 
 Name or names of indicator feed(s) that the domain was matched with the policy (for example, \['Vendor Malware Feed', 'Vendor CoC Feed']).
 
-## Policy
+## Policy (deprecated)
 
 Type: string
 
@@ -169,6 +219,12 @@ Name of the policy that was applied (if any) (for example, '7bdc7a9c-81d3-4816-8
 Type: string
 
 ID of the policy/rule that was applied (if any).
+
+## PolicyName
+
+Type: string
+
+Name of the policy that was applied (if any).
 
 ## Protocol
 
@@ -187,6 +243,12 @@ Union of all categories; Initial categories + Resolved IP categories + Cname int
 Type: array\[string]
 
 Union of all category names; Initial categories + Resolved IP categories + Cname intermediate categories
+
+## QueryID
+
+Type: string
+
+Globally unique identifier of the query.
 
 ## QueryIndicatorFeedIDs
 
@@ -236,11 +298,11 @@ Type: int
 
 The return code sent back by the DNS resolver.
 
-## RData
+## RData (deprecated)
 
 Type: array\[object]
 
-The rdata objects (for example, `{"type":"5","data":"dns-packet-placeholder..."}`).
+The rdata objects (for example, `[{"type":"5","data":"dns-packet-placeholder..."}]`).
 
 ## ResolvedIPCategoryIDs
 
@@ -254,6 +316,18 @@ Type: array\[string]
 
 Name or names of category that the ips in the response belongs to (for example, \['Photography', 'Weather']).
 
+## ResolvedIPContinentCodes
+
+Type: array\[string]
+
+Continent code of each resolved IP, if any (for example \['NA', 'EU']).
+
+## ResolvedIPCountryCodes
+
+Type: array\[string]
+
+Country code of each resolved IP, if any (for example \['US', 'PT']).
+
 ## ResolvedIPs
 
 Type: array\[string]
@@ -266,11 +340,35 @@ Type: string
 
 Result of the DNS query (for example, 'overrideForSafeSearch').
 
+## ResourceRecords
+
+Type: array\[object]
+
+The rdata objects (for example, `[{"type":"5","data":"dns-packet-placeholder..."}]`).
+
+## ResourceRecordsJSON
+
+Type: string
+
+String that represents the JSON array with the returned resource records (for example, "\[\{\\"name\\": \\"example.com\\", \\"type\\": \\"CNAME\\", \\"class\\": \\"IN\\", \\"ttl\\": 3600, \\"rdata\\": \\"cname.example.com.\\"}]").
+
 ## SrcIP
 
 Type: string
 
 The source IP address making the DNS query (for example, '104.16.132.229').
+
+## SrcIPContinentCode
+
+Type: string
+
+Continent code of the source IP address making the DNS query (for example, 'NA').
+
+## SrcIPCountryCode
+
+Type: string
+
+Country code of the source IP address making the DNS query (for example, 'US').
 
 ## SrcPort
 
