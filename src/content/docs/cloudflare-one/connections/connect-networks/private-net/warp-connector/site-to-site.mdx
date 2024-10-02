@@ -6,7 +6,7 @@ sidebar:
   order: 3
 ---
 
-import { Details, GlossaryTooltip, TabItem, Tabs } from "~/components";
+import { Render, Details, GlossaryTooltip, TabItem, Tabs } from "~/components";
 
 This guide will cover how to connect two independent subnets with WARP Connector. Each subnet must run its own WARP Connector on a Linux host. Installing on your router is the simplest setup, but if you do not have access to the router, you may choose any other machine on the subnet.
 
@@ -55,20 +55,44 @@ WARP Connector hosts are registered to your Zero Trust organization with the ema
 | -------- | -------- | ----- |
 | User email | is | `warp_connector@<your-team-name>.cloudflareaccess.com` |
 
-## 4. Configure the device profile
+## 4. Route traffic from WARP Connector to subnet
 
-In your WARP Connector device profile, update [Split Tunnel settings](/cloudflare-one/connections/connect-devices/warp/configure-warp/route-traffic/split-tunnels/):
+In your WARP Connector device profile, [configure Split Tunnels](/cloudflare-one/connections/connect-devices/warp/configure-warp/route-traffic/split-tunnels/) so that traffic to your private network CIDR (`10.0.0.0/24`) routes through the WARP tunnel.
 
-1. Route your private network CIDR (`10.0.0.0/24`) through the WARP tunnel. For example, if you are using **Exclude** mode, delete `10.0.0.0/8` from the list and re-add the following IPs: `10.0.1.0/24`, `10.0.2.0/23`, `10.0.4.0/22`, `10.0.8.0/21`, `10.0.16.0/20`, `10.0.32.0/19`, `10.0.64.0/18`, `10.0.128.0/17`, `10.1.0.0/16`, `10.2.0.0/15`, `10.4.0.0/14`, `10.8.0.0/13`, `10.16.0.0/12`, `10.32.0.0/11`, `10.64.0.0/10`, `10.128.0.0/9`
-2. Route the CGNAT IP space (`100.96.0.0/12`) through the WARP tunnel. For example, if you are using **Exclude** mode, delete `100.64.0.0/10` from the list and re-add `100.64.0.0/11` and `100.112.0.0/12`.
+For example, if you are using **Exclude** mode, delete `10.0.0.0/8` from Split Tunnels and re-add the following IPs: `10.0.1.0/24`, `10.0.2.0/23`, `10.0.4.0/22`, `10.0.8.0/21`, `10.0.16.0/20`, `10.0.32.0/19`, `10.0.64.0/18`, `10.0.128.0/17`, `10.1.0.0/16`, `10.2.0.0/15`, `10.4.0.0/14`, `10.8.0.0/13`, `10.16.0.0/12`, `10.32.0.0/11`, `10.64.0.0/10`, `10.128.0.0/9`
 
-## 5. Install another WARP Connector
+The WARP Connector will now forward inbound requests to devices on the subnet.
 
-Repeat Steps 1, 2, and 4 above to install an additional WARP Connector on subnet `192.168.1.0/24`. The device profile created in Step 3 will apply to all WARP Connectors.
+```mermaid
+    flowchart LR
+      subgraph subnet1[Subnet 10.0.0.0/24]
+      router1["WARP Connector #1
+        10.0.0.1"]
+			device["Device
+        10.0.0.2"]
+      end
 
-## 6. Route traffic through WARP Connector
+      C((Cloudflare))--Requests to 10.0.0.2--> router1 --> device
 
-Depending on where you installed the WARP Connector, you may need to configure other devices on the subnet to route traffic through WARP Connector.
+```
+
+## 5. Route traffic from subnet to WARP Connector
+
+Depending on where you installed the WARP Connector, you may need to configure other devices on the subnet to route outbound requests through WARP Connector.
+
+```mermaid
+    flowchart LR
+      subgraph subnet1[Subnet 10.0.0.0/24]
+      router1["WARP Connector #1
+        10.0.0.1"]
+			device["Device
+        10.0.0.2"]
+      end
+
+      device --Requests to
+			192.168.1.0/24 --> router1 --> C((Cloudflare))
+
+```
 
 ### Option 1: Default gateway
 
@@ -90,12 +114,6 @@ For example, if you are on subnet `10.0.0.0/24` and want to reach applications b
 
 Ensure that your routing rules do not forward the [WARP ingress IP](/cloudflare-one/connections/connect-devices/warp/deployment/firewall/#warp-ingress-ip) back to the WARP Connector.
 :::
-
-#### Route from subnet to WARP clients
-
-`100.96.0.0/12` is the default CIDR for all user devices running the [WARP client](/cloudflare-one/connections/connect-devices/warp/). To connect from the subnet to user devices:
-- On your router, add a rule that routes the destination IP `100.96.0.0/12` to the WARP Connector host machine (`10.0.0.100` in the diagram above).
-- Ensure that CGNAT IP traffic routes through WARP on both the WARP Connector host and WARP client devices. In other words, delete `100.96.0.0/12` from the [Split Tunnel Exclude list](/cloudflare-one/connections/connect-devices/warp/configure-warp/route-traffic/split-tunnels/) in both device profiles.
 
 ### Option 3: Intermediate gateway
 
@@ -162,6 +180,24 @@ route /p add <DESTINATION-IP> mask 255.255.255.255 <WARP-CONNECTOR-IP>
 
 To validate subnet routing, [check your routing table](/cloudflare-one/connections/connect-devices/warp/configure-warp/route-traffic/warp-architecture/#routing-table) and ensure that traffic is routing through the `CloudflareWARP` [virtual interface](/cloudflare-one/connections/connect-devices/warp/configure-warp/route-traffic/warp-architecture/#virtual-interface).
 
+
+## 6. Install another WARP Connector
+
+Repeat steps 1, 2, 4, and 5 above to install an additional WARP Connector on subnet `192.168.1.0/24`. The device profile created in Step 3 will apply to all WARP Connectors.
+
+```mermaid
+    flowchart LR
+      subgraph subnet1[Subnet 10.0.0.0/24]
+      router1["WARP Connector #1
+        10.0.0.1"]
+      end
+      subgraph subnet2[Subnet 192.168.1.0/24]
+        router2["WARP Connector #2
+        192.168.1.97"]
+      end
+      router1<-->C((Cloudflare))<-->router2
+```
+
 ## 7. Test the WARP Connector
 
 You can now test the connection between the two subnets. For example, on the `10.0.0.2` device run `ping 192.168.1.100`.
@@ -171,13 +207,11 @@ You can now test the connection between the two subnets. For example, on the `10
       subgraph subnet1[Subnet 10.0.0.0/24]
         device1["Device
         10.0.0.2"]--"ping
-        192.168.1.100"-->router1["Device running
-        WARP Connector
+        192.168.1.100"-->router1["WARP Connector #1
         10.0.0.1"]
       end
       subgraph subnet2[Subnet 192.168.1.0/24]
-        router2["Device running
-        WARP Connector
+        router2["WARP Connector #2
         192.168.1.97"]-->device2["Device
         192.168.1.100"]
       end
