@@ -1,0 +1,22 @@
+---
+pcx_content_type: how-to
+title: Connect private network to Internet
+sidebar:
+  label: Site-to-Internet
+  order: 3
+---
+
+import { Details, GlossaryTooltip, TabItem, Tabs } from "~/components";
+
+Forward requests from the private network to the Internet.
+
+```mermaid
+    flowchart LR
+      subgraph subnet1[Subnet 10.0.0.0/24]
+      router1["WARP Connector
+        10.0.0.1"]
+      end
+      router1-->C((Cloudflare))-->I{Internet}
+```
+
+The `10.0.0.0/24` WARP Connector is now routing traffic from the host machine to Cloudflare.
