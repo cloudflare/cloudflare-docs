@@ -302,7 +302,8 @@ import CursorLight from "~/assets/images/workers/ai/cursor-light.png";
 
 		const responseTextEl = document.createElement("p");
 		responseEl.appendChild(responseTextEl);
-		const sourcesEl = document.createElement("ul");
+
+		const sourcesEl = document.createElement("p");
 		sourcesEl.style.display = "none";
 		responseEl.appendChild(sourcesEl);
 
@@ -362,10 +363,11 @@ import CursorLight from "~/assets/images/workers/ai/cursor-light.png";
 			}
 
 			sourcesEl.innerHTML = DOMPurify.sanitize(
-				"<li>These sources might provide additional context:</li>" +
+				"These sources might provide additional context: <ul>" +
 					sources
 						.map((url) => `<li class="source"><a href="${url}">${url}</a></li>`)
-						.join(""),
+						.join("") +
+					"</ul>",
 			);
 		};
 	});
