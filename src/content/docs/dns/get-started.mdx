@@ -11,15 +11,13 @@ head:
 
 import { GlossaryDefinition, Render } from "~/components";
 
-Cloudflare's authoritative DNS offering covers a variety of [setups](/dns/zone-setups/).
+You can use Cloudflare DNS with a variety of [setups](/dns/zone-setups/).
 
 In the most common setup (full), you [add your domain](/fundamentals/setup/manage-domains/add-site/), import your [DNS records](/dns/manage-dns-records/), and [update your nameservers](/dns/nameservers/update-nameservers/) to make Cloudflare your primary authoritative DNS provider. Once the setup is completed:
 
 - You [manage DNS records](/dns/manage-dns-records/how-to/create-dns-records/) through the Cloudflare dashboard or API. This is how you control which resources are available on the apex domain (`example.com`) or specific subdomains (`blog.example.com`) of your website, as well as control other configurations.
 
-- Cloudflare [responds to all DNS queries](/fundamentals/concepts/how-cloudflare-works/#how-cloudflare-works-as-a-dns-provider) for your hostnames.
-
-- Your DNS records are cached across the [Cloudflare global network](https://www.cloudflare.com/network/), speeding up DNS resolution.
+- Cloudflare [responds to all DNS queries](/fundamentals/concepts/how-cloudflare-works/#how-cloudflare-works-as-a-dns-provider) for your hostnames and your DNS records are cached across the [Cloudflare global network](https://www.cloudflare.com/network/), speeding up your domain.
 
 The following links introduce important concepts and guide you through actions you may need to take while having your website or application on Cloudflare.
 
