@@ -3,16 +3,16 @@ pcx_content_type: how-to
 title: Scan HTTP traffic
 sidebar:
   order: 1
-
+  label: Create DLP policies
 ---
 
 You can scan HTTP traffic for sensitive data through Secure Web Gateway policies. To perform DLP filtering, first configure a DLP profile with the data patterns you want to detect, and then build a Gateway HTTP policy to allow or block the sensitive data from leaving your organization. Gateway will parse and scan your HTTP traffic for strings matching the keywords or regular expressions (regexes) specified in the DLP profile.
 
 ## Prerequisites
 
-* Set up [Gateway HTTP filtering](/cloudflare-one/policies/gateway/initial-setup/http/).
-  * HTTP filtering requires turning on the [Gateway proxy](/cloudflare-one/policies/gateway/proxy/#enable-the-gateway-proxy) for TCP traffic.
-* Turn on [TLS decryption](/cloudflare-one/policies/gateway/http-policies/tls-decryption/#enable-tls-decryption).
+- Set up [Gateway HTTP filtering](/cloudflare-one/policies/gateway/initial-setup/http/).
+  - HTTP filtering requires turning on the [Gateway proxy](/cloudflare-one/policies/gateway/proxy/#enable-the-gateway-proxy) for TCP traffic.
+- Turn on [TLS decryption](/cloudflare-one/policies/gateway/http-policies/tls-decryption/#enable-tls-decryption).
 
 ## 1. Configure a DLP profile
 
@@ -20,7 +20,7 @@ Refer to [Configure a DLP profile](/cloudflare-one/policies/data-loss-prevention
 
 :::caution[Important]
 
-DLP scans will not start until you [create a DLP policy](#2-create-a-dlp-policy). 
+DLP scans will not start until you [create a DLP policy](#2-create-a-dlp-policy).
 :::
 
 ## 2. Create a DLP policy
@@ -59,8 +59,8 @@ Different sites will send requests in different ways. For example, some sites wi
 1. In [Zero Trust](https://one.dash.cloudflare.com/), go to **Logs** > **Gateway** > **HTTP**.
 2. Select **Filter**.
 3. Choose an item under one of the following filters:
-   * **DLP Profiles** shows the requests which matched a specific DLP profile.
-   * **Policy** shows the requests which matched a specific DLP policy.
+   - **DLP Profiles** shows the requests which matched a specific DLP profile.
+   - **Policy** shows the requests which matched a specific DLP policy.
 
 You can expand an individual row to view details about the request. To see the data that triggered the DLP policy, [configure payload logging](/cloudflare-one/policies/data-loss-prevention/dlp-policies/payload-logging/).
 

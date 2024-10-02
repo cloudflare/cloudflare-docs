@@ -1,0 +1,81 @@
+---
+
+[]
+
+---
+
+## What are Account Owned Tokens?
+
+Account Owned Tokens are Cloudflare's first step to represent service principals in our service. Account Owned Tokens are currently in Open Beta.
+Cloudflare is working to enable all features to be compatible with Account Owned tokens, and a short compatibility list is provided below.
+If you are working with a product or feature that is not currently supported by Account Owned Tokens, continue to use the existing user tokens.
+User tokens will continue to work, and we do not have plans to deprecate them.
+
+Account Owned Tokens are visible for Super Administrators of accounts on the Cloudflare dashboard via **Manage Account** > **API Tokens**.
+The existing token creation UI is available and can also be accessed from the API at /accounts/:accountID/tokens.
+
+Try using Account Owned Tokens specifically in these scenarios:
+
+1. If you require business continuity when managing tokens as a team of super administrators
+2. If you need to restrict API access on your account and want to centralize visibility and management of these tokens
+
+## Account Owned Tokens Compatibility Matrix
+
+Account Owned Tokens are a new credential type that is in Open Beta. This is the list of currently supported products and their compatability status.
+
+| Product                         | Compatible              |
+| ------------------------------- | ----------------------- |
+| Account Management              | ✅                     |
+| Account Analytics               | ❌                     |
+| Zero Trust Devices and Services | ✅                     |
+| Stream                          | ✅                     |
+| Pages                           | ✅                     |
+| Speed                           | ✅                     |
+| Images                          | ✅                     |
+| Zone/Domain Management          | ✅                     |
+| Workers                         | ✅                     |
+| Workers Queues                  | ✅                     |
+| Workers KV                      | ✅                     |
+| Workers AI                      | ❌                     |
+| Workers Observability           | ❌                     |
+| Durable Objects                 | ❌                     |
+| R2                              | ✅                     |
+| Tunnels                         | ✅                     |
+| Cache                           | ✅                     |
+| Rulesets                        | ✅                     |
+| Custom Pages                    | ✅                     |
+| Cloud Connector                 | ✅                     |
+| Trace                           | ✅                     |
+| Configuration Rules             | ✅                     |
+| DNS                             | Partial (Non-analytics) |
+| Access                          | ❌                      |
+| Magic WAN                       | ❌                      |
+| Magic Transit                   | ❌                      |
+| Magic Network Monitoring        | ❌                      |
+| Managed Rules                   | ❌                      |
+| Load Balancing                  | ❌                      |
+| Spectrum                        | ❌                      |
+| Pub/Sub                         | ❌                      |
+| Distributed Web                 | ❌                      |
+| Radar                           | ❌                      |
+| Data Loss Prevention            | ❌                      |
+| Network Error Logging           | ❌                      |
+| Super Bot Fight Mode            | ❌                      |
+| Page Shield                     | ❌                      |
+| AI Gateway                      | ❌                      |
+| Turnstile                       | ❌                      |
+| AMP                             | ❌                      |
+| API Shield                      | ❌                      |
+| Billing                         | ❌                      |
+| Digital Experience Monitoring   | ❌                      |
+| Intel Data Platform             | ❌                      |
+| Email Relay                     | ❌                      |
+| Gateway Filtering               | ❌                      |
+| Healthchecks                    | ❌                      |
+| Log Explorer                    | ❌                      |
+| Zero Trust Client Platform      | ❌                      |
+| Registrar                       | ❌                      |
+| Hyperdrive                      | ❌                      |
+| Vectorize                       | ❌                      |
+| Waiting Room                    | ❌                      |
+| Zaraz                           | ❌                      |

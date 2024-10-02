@@ -16,12 +16,12 @@ Previously, Logpush jobs could be customized by specifying the list of fields, s
 
 ```json
 {
-    "id": 146,
-    "dataset": "http_requests",
-    "enabled": false,
-    "name": "<DOMAIN_NAME>",
-    "logpull_options": "fields=ClientIP,EdgeStartTimestamp,RayID&sample=0.1&timestamps=rfc3339",
-    "destination_conf": "s3://<BUCKET_PATH>?region=us-west-2"
+  "id": <JOB_ID>,
+  "dataset": "http_requests",
+  "enabled": false,
+  "name": "<DOMAIN_NAME>",
+  "logpull_options": "fields=ClientIP,EdgeStartTimestamp,RayID&sample=0.1&timestamps=rfc3339",
+  "destination_conf": "s3://<BUCKET_PATH>?region=us-west-2"
 }
 ```
 
@@ -29,16 +29,16 @@ We have replaced this with **output\_options** as it is used for both Logpull an
 
 ```json
 {
-    "id": 146,
-    "dataset": "http_requests",
-    "enabled": false,
-    "name": "<DOMAIN_NAME>",
-    "output_options": {
-        "field_names": ["ClientIP", "EdgeStartTimestamp", "RayID"],
-        "sample_rate": 0.1,
-        "timestamp_format": "rfc3339"
-    },
-    "destination_conf": "s3://<BUCKET_PATH>?region=us-west-2"
+  "id": <JOB_ID>,
+  "dataset": "http_requests",
+  "enabled": false,
+  "name": "<DOMAIN_NAME>",
+  "output_options": {
+    "field_names": ["ClientIP", "EdgeStartTimestamp", "RayID"],
+    "sample_rate": 0.1,
+    "timestamp_format": "rfc3339"
+  },
+  "destination_conf": "s3://<BUCKET_PATH>?region=us-west-2"
 }
 ```
 
@@ -77,9 +77,9 @@ Specifying **field\_names** and **output\_type** will result in the remaining op
 
 ```json
 {
-    "record_prefix": "{",
-    "record_suffix": "}\n",
-    "field_delimiter": ","
+  "record_prefix": "{",
+  "record_suffix": "}\n",
+  "field_delimiter": ","
 }
 ```
 
@@ -91,8 +91,8 @@ Specifying **field\_names** and **output\_type** will result in the remaining op
 
 ```json
 "output_options": {
-    "field_names": ["ClientIP", "EdgeStartTimestamp", "RayID"],
-    "output_type": "ndjson"
+  "field_names": ["ClientIP", "EdgeStartTimestamp", "RayID"],
+  "output_type": "ndjson"
 }
 ```
 
@@ -118,9 +118,9 @@ Specifying **field\_names** and **output\_type** will result in the remaining op
 
 ```json
 "output_options": {
-    "field_names": ["ClientIP", "EdgeStartTimestamp", "RayID"],
-    "output_type": "ndjson",
-    "record_template": "\"client-ip\":{{.ClientIP}},\"timestamp\":{{.EdgeStartTimestamp}},\"ray-id\":{{.RayID}}"
+  "field_names": ["ClientIP", "EdgeStartTimestamp", "RayID"],
+  "output_type": "ndjson",
+  "record_template": "\"client-ip\":{{.ClientIP}},\"timestamp\":{{.EdgeStartTimestamp}},\"ray-id\":{{.RayID}}"
 }
 ```
 
@@ -148,8 +148,8 @@ Literal with double curly-braces `({{}})`, that is, `"double{{curly}}braces"`, c
 
 ```json
 {
-    "record_suffix": "\n",
-    "field_delimiter": ","
+  "record_suffix": "\n",
+  "field_delimiter": ","
 }
 ```
 
@@ -161,8 +161,8 @@ Literal with double curly-braces `({{}})`, that is, `"double{{curly}}braces"`, c
 
 ```json
 "output_options": {
-    "field_names": ["ClientIP", "EdgeStartTimestamp", "RayID"],
-    "output_type": "csv"
+  "field_names": ["ClientIP", "EdgeStartTimestamp", "RayID"],
+  "output_type": "csv"
 }
 ```
 
@@ -193,9 +193,9 @@ Based on above, other formats similar to csv or json are also supported:
 
 ```json
 "output_options": {
-    "field_names": ["ClientIP", "EdgeStartTimestamp", "RayID"],
-    "output_type": "csv",
-    "batch_prefix": "ClientIP,EdgeStartTimestamp,RayID\n"
+  "field_names": ["ClientIP", "EdgeStartTimestamp", "RayID"],
+  "output_type": "csv",
+  "batch_prefix": "ClientIP,EdgeStartTimestamp,RayID\n"
 }
 ```
 
@@ -222,10 +222,10 @@ ClientIP,EdgeStartTimestamp,RayID
 
 ```json
 "output_options": {
-    "field_names": ["ClientIP", "EdgeStartTimestamp", "RayID"],
-    "output_type": "csv",
-    "batch_prefix": "ClientIP\tEdgeStartTimestamp\tRayID\n",
-    "field_delimiter": "\t"
+  "field_names": ["ClientIP", "EdgeStartTimestamp", "RayID"],
+  "output_type": "csv",
+  "batch_prefix": "ClientIP\tEdgeStartTimestamp\tRayID\n",
+  "field_delimiter": "\t"
 }
 ```
 
@@ -252,13 +252,13 @@ ClientIP EdgeStartTimestamp  RayID
 
 ```json
 "output_options": {
-    "field_names": ["ClientIP", "EdgeStartTimestamp", "RayID"],
-    "output_type": "ndjson",
-    "batch_prefix": "{\"events\":[",
-    "batch_suffix": "\n]}\n",
-    "record_prefix": "\n  {\"info\":{",
-    "record_suffix": "}}",
-    "record_delimiter": ","
+  "field_names": ["ClientIP", "EdgeStartTimestamp", "RayID"],
+  "output_type": "ndjson",
+  "batch_prefix": "{\"events\":[",
+  "batch_suffix": "\n]}\n",
+  "record_prefix": "\n  {\"info\":{",
+  "record_suffix": "}}",
+  "record_delimiter": ","
 }
 ```
 
@@ -292,9 +292,9 @@ For example, if logpull\_options are `fields=ClientIP,EdgeStartTimestamp,RayID&s
 
 ```json
 "output_options": {
-    "field_names": ["ClientIP", "EdgeStartTimestamp", "RayID"],
-    "sample_rate": 0.1,
-    "timestamp_format": "rfc3339",
-    "CVE-2021-44228": true
+  "field_names": ["ClientIP", "EdgeStartTimestamp", "RayID"],
+  "sample_rate": 0.1,
+  "timestamp_format": "rfc3339",
+  "CVE-2021-44228": true
 }
 ```

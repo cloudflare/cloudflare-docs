@@ -1,0 +1,77 @@
+---
+pcx_content_type: how-to
+title: Logpush integration
+sidebar:
+  order: 8
+---
+
+:::note
+Only available on Enterprise plans.
+:::
+
+With Cloudflare's [Logpush](/logs/about/) service, you can configure the automatic export of Zero Trust logs to third-party storage destinations or to security information and event management (SIEM) tools. Once exported, your team can analyze and audit the data as needed.
+
+## Export Zero Trust logs with Logpush
+
+:::caution[Dashboard limitation]
+Zero Trust does not support configuring [Cloudflare R2](/logs/get-started/enable-destinations/r2/) as a Logpush destination in the dashboard. To use R2 as a destination for Zero Trust logs, configure your Logpush jobs [with the API](/logs/get-started/enable-destinations/r2/#manage-via-api).
+:::
+
+To enable Logpush for Zero Trust logs:
+
+1. In [Zero Trust](https://one.dash.cloudflare.com/), go to **Logs** > **Logpush**.
+2. Select **Add Logpush job**.
+3. Enter a **Job name**.
+4. From the drop-down menu, choose the [dataset](#zero-trust-datasets) to export.
+5. Next, select the data fields you want to include in the log.
+6. In **Advanced settings**, choose the timestamp format you prefer, and whether you want to enable logs sampling.
+7. Select **Next**.
+8. Select the service you want to export your logs to.
+9. Follow the service-specific instructions in Zero Trust to validate your destination.
+
+The setup of your Logpush integration is now complete. Logpush will send updated logs every five minutes to your selected destination.
+
+You can configure multiple destinations and add additional fields to your logs by returning to the **Logpush** page.
+
+## Zero Trust datasets
+
+Refer to the Logpush documentation for a list of available fields.
+
+| Dataset                                                                         | Description                                                    |
+| ------------------------------------------------------------------------------- | -------------------------------------------------------------- |
+| [Gateway DNS](/logs/reference/log-fields/account/gateway_dns/)                  | DNS queries inspected by Cloudflare Gateway                    |
+| [Gateway HTTP](/logs/reference/log-fields/account/gateway_http/)                | HTTP requests inspected by Cloudflare Gateway                  |
+| [Gateway Network](/logs/reference/log-fields/account/gateway_network/)          | Network packets inspected by Cloudflare Gateway                |
+| [Audit Logs](/logs/reference/log-fields/account/audit_logs/)                    | Authentication events through Cloudflare Access                |
+| [Access Requests](/logs/reference/log-fields/account/access_requests/)          | HTTP requests to sites protected by Cloudflare Access          |
+| [CASB Findings](/logs/reference/log-fields/account/casb_findings/)              | Security issues detected by Cloudflare CASB                    |
+| [Device Posture](/logs/reference/log-fields/account/device_posture_results/)    | Device posture status from the WARP client                     |
+| [Session Logs](/logs/reference/log-fields/account/zero_trust_network_sessions/) | Network session logs for traffic proxied by Cloudflare Gateway |
+
+## Parse DNS logs
+
+Logpush logs the following fields for each DNS query:
+
+- Query name
+- Query type
+- Query class
+- Response TTL
+- Response data
+
+DNS query resource records are available in [Base64-encoded binary format](https://datatracker.ietf.org/doc/html/rfc1035#section-4.1.3) and JSON. For example:
+
+```json
+{
+	"ResourceRecords": [
+		{
+			"type": "5",
+			"data": "d3d3LmV4YW1wbGUuY29tAAABAAUAAABleGFtcGxlLmNvbQ=="
+		},
+		{
+			"type": "1",
+			"data": "ZXhhbXBsZS5jb20AAAEAAQAAAQIDBAUGBwgJ"
+		}
+	],
+	"ResourceRecordsJSON": "[{\"name\":\"www.example.com\",\"type\":\"CNAME\",\"class\":\"IN\",\"ttl\":300,\"rdata\":\"example.com.\"},{\"name\":\"example.com\",\"type\":\"A\",\"class\":\"IN\",\"ttl\":300,\"rdata\":\"203.0.113.0\"}]"
+}
+```

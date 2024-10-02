@@ -1,7 +1,7 @@
 ---
 import type { Props } from "@astrojs/starlight/props";
 import Default from "@astrojs/starlight/components/Hero.astro";
-import { HomepageHero } from "~/components";
+import HomepageHero from "../HomepageHero.astro";
 
 const isHomepage =
 	Astro.props.siteTitleHref === "/" && Astro.props.id === ".md";

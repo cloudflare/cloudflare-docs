@@ -1,11 +1,11 @@
 ---
-title: Secure application delivery
+title: Securely deliver applications with Cloudflare
 pcx_content_type: design-guide
-weight: null
-head:
-  - tag: title
-    content: "Design guide: Securely deliver applications with Cloudflare"
-
+products:
+  - Network Interconnect
+sidebar:
+  label: Secure application delivery
+updated: 2023-12-18
 ---
 
 ## Overview and the Cloudflare advantage
@@ -218,12 +218,12 @@ Cloudflare WAF allows for granular policies that can leverage many different req
 
 Customers can use WAF to implement and use custom rules, rate limiting rules, and managed rules. A brief description of each is provided below.
 
-* WAF Custom Rules: provides ability to create custom rules based on different request attributes and header information to block any threat
-* WAF Rate Limiting Rules: prevents abuse, DDoS, brute force attempts, and provides for API-centric controls.
-* WAF Managed Rules
-  * Cloudflare Managed Ruleset: provides advanced zero-day vulnerability protection
-  * Cloudflare OWASP Core Ruleset: block common web application vulnerabilities, some of which are in OWASP top 10
-  * Cloudflare Leaked Credential Check: checks exposed credential database for popular content management system (CMS) applications
+- WAF Custom Rules: provides ability to create custom rules based on different request attributes and header information to block any threat
+- WAF Rate Limiting Rules: prevents abuse, DDoS, brute force attempts, and provides for API-centric controls.
+- WAF Managed Rules
+  - Cloudflare Managed Ruleset: provides advanced zero-day vulnerability protection
+  - Cloudflare OWASP Core Ruleset: block common web application vulnerabilities, some of which are in OWASP top 10
+  - Cloudflare Leaked Credential Check: checks exposed credential database for popular content management system (CMS) applications
 
 The same methodology applies for all other Cloudflare Application Performance and Security products (API Gateway, Bot Management, etc.): once configured to route traffic through the Cloudflare network, customers can start leveraging the Cloudflare services. Figure 31 displays Cloudflare’s Bot Analytics which categorizes the traffic based on bot score, shows the bot score distribution, and other bot analytics. All of the request data is captured inline and all enforcement based on defined policies is also done inline.
 

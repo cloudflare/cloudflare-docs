@@ -30,9 +30,9 @@ First, use the [`create-cloudflare` CLI](/pages/get-started/c3) to create a new 
 	file="c3-post-run-steps"
 	product="workers"
 	params={{
-		one: "Hello World example",
-		two: "Hello World Worker",
-		three: "JavaScript",
+		category: "hello-world",
+		type: "Hello World Worker",
+		lang: "JavaScript",
 	}}
 />
 
@@ -150,10 +150,10 @@ async function generateQRCode(request) {
 }
 ```
 
-The `qr-image` package you installed depends on Node.js APIs. For this to work, you need to set the `node_compat` flag in your Wrangler configuration file:
+The `qr-image` package you installed depends on Node.js APIs. For this to work, you need to set the ("nodejs_compat_v2" compatibility flag)(/workers/runtime-apis/nodejs/#enable-nodejs-with-workers) in your Wrangler configuration file:
 
 ```toml
-node_compat = true
+compatibility_flags = [ "nodejs_compat_v2"]
 ```
 
 ## 4. Test in an application UI

@@ -19,14 +19,15 @@ import { Details } from "~/components";
 | -------- | ------------ | -------------------- |
 | Windows  | ✅           | 2023.3.381.0         |
 | macOS    | ✅           | 2023.3.381.0         |
-| Linux    | ✅           | 2023.3.381.0         |
+| Linux <sup>*</sup>    | ✅           | 2023.3.381.0         |
 | iOS      | ❌           |                      |
 | Android  | ❌           |                      |
 | ChromeOS | ❌           |                      |
 
+<sup>*</sup> Only supported on Debian-based systems.
 </Details>
 
-The WARP client can automatically install the Cloudflare certificate (or a [custom root certificate](/cloudflare-one/connections/connect-devices/warp/user-side-certificates/custom-certificate/)) on Windows, macOS, and Linux devices enrolled in your Zero Trust organization. On mobile devices, you will need to [install the certificate manually](/cloudflare-one/connections/connect-devices/warp/user-side-certificates/install-cloudflare-cert/).
+The WARP client can automatically install the Cloudflare certificate (or a [custom root certificate](/cloudflare-one/connections/connect-devices/warp/user-side-certificates/custom-certificate/)) on Windows, macOS, and Debian/Ubuntu Linux devices. On mobile devices and Red Hat-based systems, you will need to [install the certificate manually](/cloudflare-one/connections/connect-devices/warp/user-side-certificates/install-cloudflare-cert/).
 
 The certificate is required if you want to [apply HTTP policies to encrypted websites](/cloudflare-one/policies/gateway/http-policies/tls-decryption/), display custom block pages, and more.
 

@@ -6,15 +6,10 @@ sidebar:
 head:
   - tag: title
     content: DELETE examples - Firewall rules
-
 ---
 
-:::note[Note]
-
-
+:::note
 The `DELETE` operation does not delete any filter related to the firewall rule. To delete the filter, use the [Filters API](/firewall/api/cf-filters/).
-
-
 :::
 
 ## Delete multiple rules
@@ -30,17 +25,17 @@ curl --request DELETE \
 
 ```json title="Response"
 {
-  "result": [
-    {
-      "id": "<RULE_ID_1>"
-    },
-    {
-      "id": "<RULE_ID_2>"
-    }
-  ],
-  "success": true,
-  "errors": [],
-  "messages": []
+	"result": [
+		{
+			"id": "<RULE_ID_1>"
+		},
+		{
+			"id": "<RULE_ID_2>"
+		}
+	],
+	"success": true,
+	"errors": [],
+	"messages": []
 }
 ```
 
@@ -57,13 +52,13 @@ curl --request DELETE \
 
 ```json title="Response"
 {
-  "result": [
-    {
-      "id": "<RULE_ID>"
-    }
-  ],
-  "success": true,
-  "errors": [],
-  "messages": []
+	"result": [
+		{
+			"id": "<RULE_ID>"
+		}
+	],
+	"success": true,
+	"errors": [],
+	"messages": []
 }
 ```

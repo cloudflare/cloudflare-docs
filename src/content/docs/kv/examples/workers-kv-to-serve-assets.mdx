@@ -10,13 +10,12 @@ sidebar:
 description: Example of how to use Workers KV to store static assets
 ---
 
-
 import { Render, PackageManagers } from "~/components";
 
 By storing static assets in Workers KV, you can retrieve these assets globally with low-latency and high throughput. You can then serve these assets directly, or use them to dynamically generate responses. This can be useful when serving files and images, or when generating dynamic HTML responses from static assets such as translations.
 
 :::note[Note]
-This example demonstrates how to access data and assets from KV and use them to generate static and dynamic responses. If you want to serve static assets of a frontend web application, consider using [Cloudflare Pages](/pages/) which provides a purpose-built experience for web applications with built-in environments, CI/CD, Pages Functions for dynamic responses, and more.
+This example demonstrates how to access data and assets from KV and use them to generate static and dynamic responses. If you want to serve static assets of a frontend web application, consider using [Cloudflare Pages](/pages/) or [Workers static assets](/workers/static-assets/) which provide a purpose-built experience for web applications with built-in environments, CI/CD, Workers/Pages Functions for dynamic responses, and more.
 :::
 
 <Render file="tutorials-before-you-start" product="workers" />
@@ -35,9 +34,9 @@ To get started, create a Worker application using the [`create-cloudflare` CLI](
 	file="c3-post-run-steps"
 	product="workers"
 	params={{
-		one: "Hello World example",
-		two: "Hello World Worker",
-		three: "TypeScript",
+		category: "hello-world",
+		type: "Hello World Worker",
+		lang: "TypeScript",
 	}}
 />
 
@@ -89,7 +88,7 @@ To create a KV store via Wrangler:
    id = "<GENERATED_NAMESPACE_ID>"
    ```
 
-   The [KV binding](/kv/reference/kv-bindings) `assets` is how your Worker will interact with the [KV namespace](/kv/reference/kv-namespaces/). This binding will be provided as a runtime variable within your Workers code by the Workers runtime.
+   The [KV binding](/kv/concepts/kv-bindings/) `assets` is how your Worker will interact with the [KV namespace](/kv/concepts/kv-namespaces/). This binding will be provided as a runtime variable within your Workers code by the Workers runtime.
 
    We'll also create a preview KV namespace. It is recommended to create a separate KV namespace when developing locally to avoid making changes to the production namespace. When developing locally against remote resources, the Wrangler CLI will only use the namespace specified by `preview_id` in the KV namespace configuration of the `wrangler.toml` file.
 
@@ -365,7 +364,7 @@ export default {
 This new code provides a specific endpoint, `/hello-world`, which will provide translated responses. When this URL is accessed, our Worker code will first retrieve the language that is requested by the client in the `Accept-Language` request header and the translations from our KV store for the `hello-world.json` key. It then gets the translated message and returns the generated HTML.
 
 ```sh
-npx wrangler dev
+npx wrangler dev --remote
 ```
 
 With the Worker code running, we can notice that our application is now returning the properly translated "Hello World" message. From your browser's developer console, change the locale language (on Chromium browsers, Run `Show Sensors` to get a dropdown selection for locales).
