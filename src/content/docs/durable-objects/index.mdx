@@ -34,6 +34,13 @@ The new beta version of Durable Objects is available where each Durable Object h
 Storage API billing is not enabled for Durable Object classes using SQLite storage backend. SQLite-backed Durable Objects will incur [charges for requests and duration](/durable-objects/platform/pricing/#billing-metrics). We plan to enable Storage API billing for Durable Objects using SQLite storage backend in the first half of 2025 after advance notice with the following [pricing](/durable-objects/platform/pricing/#sql-storage-billing).
 
 :::
+
+:::note[Alarms disabled for SQLite in Durable Objects Beta]
+
+An issue was identified with [alarms](/durable-objects/api/alarms/) in [beta Durable Object classes with a SQLite storage backend](/durable-objects/best-practices/access-durable-objects-storage/#sqlite-storage-backend). Alarms have been temporarily disabled for only SQLite-backed Durable Objects while a fix is implemented. Alarms in Durable Objects with default, key-value storage backend are unaffected and continue to operate.
+
+:::
+
 ***
 
 ## Features

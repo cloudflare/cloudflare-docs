@@ -11,7 +11,7 @@ head:
 
 If you initially set up a partial domain on Cloudflare, you can later migrate it to a [full setup](/dns/zone-setups/full-setup/).
 
-## Step 1 — Prepare Cloudflare SSL/TLS
+## 1. Prepare Cloudflare SSL/TLS
 
 In the Cloudflare dashboard, either order an [advanced certificate](/ssl/edge-certificates/advanced-certificate-manager/manage-certificates/) or [upload a custom SSL certificate](/ssl/edge-certificates/custom-certificates/uploading/) for your website or application.
 
@@ -30,7 +30,7 @@ It is possible to use [Universal SSL](/ssl/edge-certificates/universal-ssl/) ins
 
 :::
 
-## Step 2 — Update settings in authoritative DNS
+## 2. Update settings in authoritative DNS
 
 At least 24 hours prior to converting your zone, disable DNSSEC at your authoritative DNS provider.
 
@@ -42,7 +42,7 @@ As a best practice, you should also delete the previous [zone activation TXT rec
 
 :::
 
-## Step 3 — Convert to full setup
+## 3. Convert to full setup
 
 In the Cloudflare dashboard:
 
@@ -50,7 +50,7 @@ In the Cloudflare dashboard:
 2. Select **Convert to Primary DNS** (this will not affect how your traffic is proxied).
 3. Import your records into Cloudflare DNS and verify that they have been configured correctly. Usually, you will want to import [unproxied records](/dns/manage-dns-records/reference/proxied-dns-records/).
 
-## Step 4 — Activate full setup
+## 4. Activate full setup
 
 Get your assigned Cloudflare nameservers from **DNS** > **Records** and [update your nameservers](/dns/nameservers/update-nameservers/) at your registrar.
 
