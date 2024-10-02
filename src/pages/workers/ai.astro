@@ -284,6 +284,7 @@ import CursorLight from "~/assets/images/workers/ai/cursor-light.png";
 
 <script>
 	import { marked } from "marked";
+	import DOMPurify from "dompurify";
 
 	const formEl = document.getElementById("ai-form") as HTMLFormElement;
 	const promptEl = document.getElementById("prompt") as HTMLInputElement;
@@ -368,7 +369,9 @@ import CursorLight from "~/assets/images/workers/ai/cursor-light.png";
 
 			const [answer, sourcesString] = completion.split("SOURCES:");
 
-			responseTextEl.innerHTML = marked.parse(answer.trim()) as string;
+			responseTextEl.innerHTML = DOMPurify.sanitize(
+				marked.parse(answer.trim()) as string,
+			);
 
 			if (sourcesString) {
 				sourcesEl.style.display = "block";
