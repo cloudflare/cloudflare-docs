@@ -17,14 +17,11 @@ Client IP address restrictions control which IP addresses can make API requests 
 
 ![IP Address filtering options](~/assets/images/fundamentals/api/ip-filter.png)
 
-> [!NOTE]  
-> The client IP address filtering does not apply for the test command   
-> That is, this action can be performed from any client.
-> ```
-> curl -X GET "https://api.cloudflare.com/client/v4/user/tokens/verify" \
->      -H "Authorization: Bearer <your-token>" \
->      -H "Content-Type:application/json"
-> ```
+:::note
+
+Client IP address range filtering is not applied to the [Verify Token](https://developers.cloudflare.com/api/operations/user-api-tokens-verify-token) endpoint.
+
+:::
 
 
 ## Time to live (TTL) constraints
