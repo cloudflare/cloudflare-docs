@@ -382,11 +382,12 @@ import CursorLight from "~/assets/images/workers/ai/cursor-light.png";
 					.filter((url) => url !== "https://developers.cloudflare.com/N/A");
 			}
 
-			sourcesEl.innerHTML =
+			sourcesEl.innerHTML = DOMPurify.sanitize(
 				"<li>These sources might provide additional context:</li>" +
-				sources
-					.map((url) => `<li class="source"><a href="${url}">${url}</a></li>`)
-					.join("");
+					sources
+						.map((url) => `<li class="source"><a href="${url}">${url}</a></li>`)
+						.join(""),
+			);
 		};
 	});
 </script>
