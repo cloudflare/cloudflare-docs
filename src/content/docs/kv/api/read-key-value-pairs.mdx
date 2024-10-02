@@ -151,7 +151,7 @@ Defining the length of time in seconds is useful for reducing cold read latency 
 
 :::note[Hot and cold read]
 
-A hot read means that the data is cached on Cloudflare's edge network using the [CDN](https://developers.cloudflare.com/cache/), whether it is in a local cache or a regional cache. A cold read means that the data is not cached, so the data must be fetched from the central stores.
+A hot read means that the data is cached on Cloudflare's edge network using the [CDN](https://developers.cloudflare.com/cache/), whether it is in a local cache or a regional cache. A cold read means that the data is not cached, so the data must be fetched from the central stores. Both existing key-value pairs and non-existent key-value pairs (also known as negative lookups) are cached at the edge.
 :::
 
 `cacheTtl` is not recommended if your data is updated often and you need to see updates shortly after they are written, because writes that happen from other global network locations will not be visible until the cached value expires.
