@@ -5,208 +5,252 @@ productLink: "/cloudflare-one/connections/connect-devices/warp/"
 productArea: Cloudflare One
 productAreaLink: /cloudflare-one/changelog/
 entries:
+  - publish_date: "2024-09-26"
+    title: WARP client for macOS (version 2024.8.457.0)
+    description: |-
+      A new GA release for the macOS WARP client is now available in the [App Center](https://install.appcenter.ms/orgs/cloudflare/apps/1.1.1.1-macos-1/distribution_groups/release). This release contains minor fixes and improvements.
 
-- publish_date: '2024-08-26'
-  title: WARP client for macOS (version 2024.8.309.1)
-  description: |-
-    A new beta release for the macOS WARP client is now available in the [App Center](https://install.appcenter.ms/orgs/cloudflare/apps/1.1.1.1-macos/distribution_groups/beta). This release contains minor fixes and improvements.
+      Notable updates:
+        - Added the ability to customize PCAP options in `warp-cli`.
+        - Added a list of installed applications in `warp-diag`.
+        - Added a summary of `warp-dex` traceroute results in its JSON output.
+        - Improved the performance of firewall operations when enforcing Split Tunnels configuration.
+        - Fixed an issue where the DNS logs were not being cleared when the user switched configurations.
+        - Fixed an issue where clients using service tokens failed to retry after a network change.
+        - Fixed a known issue which required users to re-register when an older single configuration MDM file was deployed after deploying the newer, multiple configuration format.
+        - Fixed an issue which prevented the use of private IP ranges that overlapped with end users' home networks.
+        - Deprecated `warp-cli` commands have been removed. If you have any workflows that use the deprecated commands, update to the new commands where necessary.
 
-    Notable updates:
-      - Added the ability to customize PCAP options in `warp-cli`.
-      - Added a list of installed applications in `warp-diag`.
-      - Added a summary of `warp-dex` traceroute results in its JSON output.
-      - Improved the performance of firewall operations when enforcing Split Tunnels configuration.
-      - Fixed an issue where the DNS logs were not being cleared when the user switched configurations.
-      - Fixed a known issue which required users to re-register when an older single configuration MDM file was deployed after deploying the newer, multiple configuration format.
-      - Fixed an issue which prevented the use of private IP ranges that overlapped with end users' home networks.
-      - Deprecated `warp-cli` commands have been removed. If you have any workflows that use the deprecated commands, update to the new commands where necessary.
+      Known issues:
+        - Cloudflare is investigating temporary networking issues on macOS 15 (Sequoia) that seem to affect some users.
+        - Using MASQUE as the tunnel protocol may be incompatible if your organization has Regional Services is enabled.
 
-    Known issues:
-      - Using MASQUE as the tunnel protocol may be incompatible if your organization has either of the following conditions:
-        - Magic WAN is enabled but does not have the latest packet flow path for WARP traffic. To check the migration status, contact your account team.
-        - Regional Services is enabled.
+  - publish_date: "2024-09-26"
+    title: WARP client for Windows (version 2024.8.458.0)
+    description: |-
+      A new GA release for the Windows WARP client is now available in the [App Center](https://install.appcenter.ms/orgs/cloudflare/apps/1.1.1.1-windows-1/distribution_groups/release). This release contains minor fixes and improvements.
 
-- publish_date: '2024-08-26'
-  title: WARP client for Windows (version 2024.8.308.1)
-  description: |-
-    A new beta release for the Windows WARP client is now available in the [App Center](https://install.appcenter.ms/orgs/cloudflare/apps/1.1.1.1-windows/distribution_groups/beta). This release contains minor fixes and improvements.
+      Notable updates:
+        - Added the ability to customize PCAP options in `warp-cli`.
+        - Added a list of installed applications in `warp-diag`.
+        - Added a summary of `warp-dex` traceroute results in its JSON output.
+        - Improved the performance of firewall operations when enforcing Split Tunnels configuration.
+        - Reduced the time it takes for a WARP client update to complete.
+        - Fixed an issue where clients using service tokens failed to retry the initial connection when there is no network connectivity on startup.
+        - Fixed issues where incorrect DNS server addresses were being applied following reboots and network changes. Any incorrect static entries set by previous WARP versions must be manually reverted.
+        - Fixed a known issue which required users to re-register when an older single configuration MDM file was deployed after deploying the newer, multiple configuration format.
+        - Deprecated `warp-cli` commands have been removed. If you have any workflows that use the deprecated commands, update to the new commands where necessary.
 
-    Notable updates:
-      - Added the ability to customize PCAP options in `warp-cli`.
-      - Added a list of installed applications in `warp-diag`.
-      - Added a summary of `warp-dex` traceroute results in its JSON output.
-      - Improved the performance of firewall operations when enforcing Split Tunnels configuration.
-      - Reduced the time it takes for a WARP client update to complete.
-      - Fixed issues where incorrect DNS server addresses were being applied following reboots and network changes. Any incorrect static entries set by previous WARP versions must be manually reverted.
-      - Fixed a known issue which required users to re-register when an older single configuration MDM file was deployed after deploying the newer, multiple configuration format.
-      - Deprecated `warp-cli` commands have been removed. If you have any workflows that use the deprecated commands, update to the new commands where necessary.
+      Known issues:
+        - Using MASQUE as the tunnel protocol may be incompatible if your organization has Regional Services enabled.
+        - DNS resolution may be broken when all of the following conditions are true:
+          - WARP is in Secure Web Gateway without DNS filtering (tunnel-only) mode.
+          - A custom DNS server address is configured on the primary network adapter.
+          - The custom DNS server address on the primary network adapter is changed while WARP is connected.
 
-    Known issues:
-      - Using MASQUE as the tunnel protocol may be incompatible if your organization has either of the following conditions:
-        - Magic WAN is enabled but does not have the latest packet flow path for WARP traffic. To check the migration status, contact your account team.
-        - Regional Services is enabled.
-      - DNS resolution may be broken when all of the following conditions are true:
-        - WARP is in Secure Web Gateway without DNS filtering (tunnel-only) mode.
-        - A custom DNS server address is configured on the primary network adapter.
-        - The custom DNS server address on the primary network adapter is changed while WARP is connected.
+          To work around the DNS issue, reconnect the WARP client by toggling off and back on.
 
-        To work around the DNS issue, reconnect the WARP client by toggling off and back on.
+  - publish_date: "2024-08-26"
+    title: WARP client for macOS (version 2024.8.309.1)
+    description: |-
+      A new beta release for the macOS WARP client is now available in the [App Center](https://install.appcenter.ms/orgs/cloudflare/apps/1.1.1.1-macos/distribution_groups/beta). This release contains minor fixes and improvements.
 
-- publish_date: '2024-08-15'
-  title: WARP client for Linux (version 2024.6.497.0)
-  description: |-
-    A new GA release for the Linux WARP client is now available in the [package repository](https://pkg.cloudflareclient.com/). This release includes some exciting new features. It also includes additional fixes and minor improvements.
+      Notable updates:
+        - Added the ability to customize PCAP options in `warp-cli`.
+        - Added a list of installed applications in `warp-diag`.
+        - Added a summary of `warp-dex` traceroute results in its JSON output.
+        - Improved the performance of firewall operations when enforcing Split Tunnels configuration.
+        - Fixed an issue where the DNS logs were not being cleared when the user switched configurations.
+        - Fixed a known issue which required users to re-register when an older single configuration MDM file was deployed after deploying the newer, multiple configuration format.
+        - Fixed an issue which prevented the use of private IP ranges that overlapped with end users' home networks.
+        - Deprecated `warp-cli` commands have been removed. If you have any workflows that use the deprecated commands, update to the new commands where necessary.
 
-    New features:
-      - The WARP client now supports operation on Ubuntu 24.04.
-      - Admins can now elect to have ZT WARP clients connect using the MASQUE protocol; this setting is in Device Profiles. Note: before MASQUE can be used, the global setting for Override local interface IP must be enabled. For more detail, refer to [Device tunnel protocol](/cloudflare-one/connections/connect-devices/warp/configure-warp/warp-settings/#device-tunnel-protocol). This feature will be rolled out to customers in stages over approximately the next month.
-      - The Device Posture [client certificate check](/cloudflare-one/identity/devices/warp-client-checks/client-certificate/) has been substantially enhanced. The primary enhancement is the ability to check for client certificates that have unique common names, made unique by the inclusion of the device serial number or host name (for example, CN = `123456.mycompany`, where 123456 is the device serial number).
-      - TCP MSS clamping is now used where necessary to meet the MTU requirements of the tunnel interface. This will be especially helpful in Docker use cases.
+      Known issues:
+        - Using MASQUE as the tunnel protocol may be incompatible if your organization has either of the following conditions:
+          - Magic WAN is enabled but does not have the latest packet flow path for WARP traffic. To check the migration status, contact your account team.
+          - Regional Services is enabled.
 
-    Warning:
-      - Ubuntu 16.04 and 18.04 are not supported by this version of the client.
-      - This is the last GA release that will be supporting older, deprecated `warp-cli` commands. There are two methods to identify these commands. One, when used in this release, the command will work but will also return a deprecation warning. And two, the deprecated commands do not appear in the output of `warp-cli -h`.
+  - publish_date: "2024-08-26"
+    title: WARP client for Windows (version 2024.8.308.1)
+    description: |-
+      A new beta release for the Windows WARP client is now available in the [App Center](https://install.appcenter.ms/orgs/cloudflare/apps/1.1.1.1-windows/distribution_groups/beta). This release contains minor fixes and improvements.
 
-    Known issues:
-      - There are certain known limitations preventing the use of the MASQUE tunnel protocol in certain scenarios. Do not use the MASQUE tunnel protocol if:
-        - A Magic WAN integration is on the account and does not have the latest packet flow path for WARP traffic. To check the migration status, contact your account team.
-        - Your account has Regional Services enabled.
-      - The Linux client GUI does not yet support all GUI features found in the Windows and macOS clients. Future releases of the Linux client will be adding these GUI features.
-      - The Zero Trust team name is not visible in the GUI if you upgraded from the previous GA release using an MDM tool.
-      - Sometimes the WARP icon will remain gray (disconnected state) while in dark mode.
+      Notable updates:
+        - Added the ability to customize PCAP options in `warp-cli`.
+        - Added a list of installed applications in `warp-diag`.
+        - Added a summary of `warp-dex` traceroute results in its JSON output.
+        - Improved the performance of firewall operations when enforcing Split Tunnels configuration.
+        - Reduced the time it takes for a WARP client update to complete.
+        - Fixed issues where incorrect DNS server addresses were being applied following reboots and network changes. Any incorrect static entries set by previous WARP versions must be manually reverted.
+        - Fixed a known issue which required users to re-register when an older single configuration MDM file was deployed after deploying the newer, multiple configuration format.
+        - Deprecated `warp-cli` commands have been removed. If you have any workflows that use the deprecated commands, update to the new commands where necessary.
 
-- publish_date: '2024-07-30'
-  title: WARP client for macOS (version 2024.6.474.0)
-  description: |-
-    A new GA release for the macOS WARP client is now available in the [App Center](https://install.appcenter.ms/orgs/cloudflare/apps/1.1.1.1-macos-1/distribution_groups/release). This release contains fixes to improve the client; no new features are included.
+      Known issues:
+        - Using MASQUE as the tunnel protocol may be incompatible if your organization has either of the following conditions:
+          - Magic WAN is enabled but does not have the latest packet flow path for WARP traffic. To check the migration status, contact your account team.
+          - Regional Services is enabled.
+        - DNS resolution may be broken when all of the following conditions are true:
+          - WARP is in Secure Web Gateway without DNS filtering (tunnel-only) mode.
+          - A custom DNS server address is configured on the primary network adapter.
+          - The custom DNS server address on the primary network adapter is changed while WARP is connected.
 
-    Notable updates:
-      - Fixed an issue which caused alternate network detection to fail if the beacon host was using TLS 1.2 without TLS Extended Master Secret (EMS) enabled.
-      - Improved the stability of device profile switching based on alternate network detection.
+          To work around the DNS issue, reconnect the WARP client by toggling off and back on.
 
-    Known issues:
-      - If a user has an MDM file configured to support multiple profiles (for the [switch configurations](/cloudflare-one/connections/connect-devices/warp/deployment/mdm-deployment/switch-organizations/) feature), and then changes to an MDM file configured for a single profile, the WARP client may not connect. The workaround is to use the `warp-cli registration delete` command to clear the registration, and then re-register the client.
-      - There are certain known limitations preventing the use of the MASQUE tunnel protocol in certain scenarios. Do not use the MASQUE tunnel protocol if:
-        - A Magic WAN integration is on the account and does not have the latest packet flow path for WARP traffic. Please check migration status with your account team.
-        - Your account has Regional Services enabled.
+  - publish_date: "2024-08-15"
+    title: WARP client for Linux (version 2024.6.497.0)
+    description: |-
+      A new GA release for the Linux WARP client is now available in the [package repository](https://pkg.cloudflareclient.com/). This release includes some exciting new features. It also includes additional fixes and minor improvements.
 
-- publish_date: '2024-07-30'
-  title: WARP client for Windows (version 2024.6.473.0)
-  description: |-
-    A new GA release for the Windows WARP client is now available in the [App Center](https://install.appcenter.ms/orgs/cloudflare/apps/1.1.1.1-windows-1/distribution_groups/release). This release contains fixes to improve the client; no new features are included.
+      New features:
+        - The WARP client now supports operation on Ubuntu 24.04.
+        - Admins can now elect to have ZT WARP clients connect using the MASQUE protocol; this setting is in Device Profiles. Note: before MASQUE can be used, the global setting for Override local interface IP must be enabled. For more detail, refer to [Device tunnel protocol](/cloudflare-one/connections/connect-devices/warp/configure-warp/warp-settings/#device-tunnel-protocol). This feature will be rolled out to customers in stages over approximately the next month.
+        - The Device Posture [client certificate check](/cloudflare-one/identity/devices/warp-client-checks/client-certificate/) has been substantially enhanced. The primary enhancement is the ability to check for client certificates that have unique common names, made unique by the inclusion of the device serial number or host name (for example, CN = `123456.mycompany`, where 123456 is the device serial number).
+        - TCP MSS clamping is now used where necessary to meet the MTU requirements of the tunnel interface. This will be especially helpful in Docker use cases.
 
-    Notable updates:
-      - Fixed an issue which caused alternate network detection to fail if the beacon host was using TLS 1.2 without TLS Extended Master Secret (EMS) enabled.
-      - Improved the stability of device profile switching based on alternate network detection.
+      Warning:
+        - Ubuntu 16.04 and 18.04 are not supported by this version of the client.
+        - This is the last GA release that will be supporting older, deprecated `warp-cli` commands. There are two methods to identify these commands. One, when used in this release, the command will work but will also return a deprecation warning. And two, the deprecated commands do not appear in the output of `warp-cli -h`.
 
-    Known issues:
-      - If a user has an MDM file configured to support multiple profiles (for the [switch configurations](/cloudflare-one/connections/connect-devices/warp/deployment/mdm-deployment/switch-organizations/) feature), and then changes to an MDM file configured for a single profile, the WARP client may not connect. The workaround is to use the `warp-cli registration delete` command to clear the registration, and then re-register the client.
-      - There are certain known limitations preventing the use of the MASQUE tunnel protocol in certain scenarios. Do not use the MASQUE tunnel protocol if:
-        - A Magic WAN integration is on the account and does not have the latest packet flow path for WARP traffic. Please check migration status with your account team.
-        - Your account has Regional Services enabled.
+      Known issues:
+        - There are certain known limitations preventing the use of the MASQUE tunnel protocol in certain scenarios. Do not use the MASQUE tunnel protocol if:
+          - A Magic WAN integration is on the account and does not have the latest packet flow path for WARP traffic. To check the migration status, contact your account team.
+          - Your account has Regional Services enabled.
+        - The Linux client GUI does not yet support all GUI features found in the Windows and macOS clients. Future releases of the Linux client will be adding these GUI features.
+        - The Zero Trust team name is not visible in the GUI if you upgraded from the previous GA release using an MDM tool.
+        - Sometimes the WARP icon will remain gray (disconnected state) while in dark mode.
 
-- publish_date: '2024-06-28'
-  title: WARP client for macOS (version 2024.6.416.0)
-  description: |-
-    A new GA release for the macOS WARP client is now available in the [App Center](https://install.appcenter.ms/orgs/cloudflare/apps/1.1.1.1-macos-1/distribution_groups/release). This release includes some exciting new features. It also includes additional fixes and minor improvements.
+  - publish_date: "2024-07-30"
+    title: WARP client for macOS (version 2024.6.474.0)
+    description: |-
+      A new GA release for the macOS WARP client is now available in the [App Center](https://install.appcenter.ms/orgs/cloudflare/apps/1.1.1.1-macos-1/distribution_groups/release). This release contains fixes to improve the client; no new features are included.
 
-    New features:
-      - Admins can now elect to have ZT WARP clients connect using the MASQUE protocol; this setting is in Device Profiles. Note: before MASQUE can be used, the global setting for Override local interface IP must be enabled. For more detail, refer to [Device tunnel protocol](/cloudflare-one/connections/connect-devices/warp/configure-warp/warp-settings/#device-tunnel-protocol). This feature will be rolled out to customers in stages over approximately the next month.
-      - The Device Posture [client certificate check](/cloudflare-one/identity/devices/warp-client-checks/client-certificate/) has been substantially enhanced. The primary enhancement is the ability to check for client certificates that have unique common names, made unique by the inclusion of the device serial number or host name (for example, CN = `123456.mycompany`, where 123456 is the device serial number).
+      Notable updates:
+        - Fixed an issue which caused alternate network detection to fail if the beacon host was using TLS 1.2 without TLS Extended Master Secret (EMS) enabled.
+        - Improved the stability of device profile switching based on alternate network detection.
 
-    Additional changes and improvements:
-      - Fixed a known issue where the certificate was not always properly left behind in `/Library/Application Support/Cloudflare/installed_cert.pem`.
-      - Fixed an issue where re-auth notifications were not cleared from the UI when the user switched configurations.
-      - Fixed a macOS firewall rule that allowed all UDP traffic to go outside the tunnel. Relates to TunnelVision ([CVE-2024-3661](https://nvd.nist.gov/vuln/detail/CVE-2024-3661)).
-      - Fixed an issue that could cause the Cloudflare WARP menu bar application to disappear when switching configurations.
+      Known issues:
+        - If a user has an MDM file configured to support multiple profiles (for the [switch configurations](/cloudflare-one/connections/connect-devices/warp/deployment/mdm-deployment/switch-organizations/) feature), and then changes to an MDM file configured for a single profile, the WARP client may not connect. The workaround is to use the `warp-cli registration delete` command to clear the registration, and then re-register the client.
+        - There are certain known limitations preventing the use of the MASQUE tunnel protocol in certain scenarios. Do not use the MASQUE tunnel protocol if:
+          - A Magic WAN integration is on the account and does not have the latest packet flow path for WARP traffic. Please check migration status with your account team.
+          - Your account has Regional Services enabled.
 
-    Warning:
-      - This is the last GA release that will be supporting older, deprecated `warp-cli` commands. There are two methods to identify these commands. One, when used in this release, the command will work but will also return a deprecation warning. And two, the deprecated commands do not appear in the output of `warp-cli -h`.
+  - publish_date: "2024-07-30"
+    title: WARP client for Windows (version 2024.6.473.0)
+    description: |-
+      A new GA release for the Windows WARP client is now available in the [App Center](https://install.appcenter.ms/orgs/cloudflare/apps/1.1.1.1-windows-1/distribution_groups/release). This release contains fixes to improve the client; no new features are included.
 
-    Known issues:
-      - If a user has an MDM file configured to support multiple profiles (for the [switch configurations](/cloudflare-one/connections/connect-devices/warp/deployment/mdm-deployment/switch-organizations/) feature), and then changes to an MDM file configured for a single profile, the WARP client may not connect. The workaround is to use the `warp-cli registration delete` command to clear the registration, and then re-register the client.
-      - There are certain known limitations preventing the use of the MASQUE tunnel protocol in certain scenarios. Do not use the MASQUE tunnel protocol if:
-        - A Magic WAN integration is on the account and does not have the latest packet flow path for WARP traffic. Please check migration status with your account team.
-        - Your account has Regional Services enabled.
+      Notable updates:
+        - Fixed an issue which caused alternate network detection to fail if the beacon host was using TLS 1.2 without TLS Extended Master Secret (EMS) enabled.
+        - Improved the stability of device profile switching based on alternate network detection.
 
-- publish_date: '2024-06-28'
-  title: WARP client for Windows (version 2024.6.415.0)
-  description: |-
-    A new GA release for the Windows WARP client is now available in the [App Center](https://install.appcenter.ms/orgs/cloudflare/apps/1.1.1.1-windows-1/distribution_groups/release). This release includes some exciting new features. It also includes additional fixes and minor improvements.
+      Known issues:
+        - If a user has an MDM file configured to support multiple profiles (for the [switch configurations](/cloudflare-one/connections/connect-devices/warp/deployment/mdm-deployment/switch-organizations/) feature), and then changes to an MDM file configured for a single profile, the WARP client may not connect. The workaround is to use the `warp-cli registration delete` command to clear the registration, and then re-register the client.
+        - There are certain known limitations preventing the use of the MASQUE tunnel protocol in certain scenarios. Do not use the MASQUE tunnel protocol if:
+          - A Magic WAN integration is on the account and does not have the latest packet flow path for WARP traffic. Please check migration status with your account team.
+          - Your account has Regional Services enabled.
 
-    New features:
-      - Admins can now elect to have ZT WARP clients connect using the MASQUE protocol; this setting is in Device Profiles. Note: before MASQUE can be used, the global setting for Override local interface IP must be enabled. For more detail, refer to [Device tunnel protocol](/cloudflare-one/connections/connect-devices/warp/configure-warp/warp-settings/#device-tunnel-protocol). This feature will be rolled out to customers in stages over approximately the next month.
-      - The ZT WARP client on Windows devices can now connect before the user completes their Windows login. This [Windows pre-login capability](/cloudflare-one/connections/connect-devices/warp/deployment/mdm-deployment/windows-prelogin/) allows for connecting to on-premise Active Directory and/or similar resources necessary to complete the Windows login.
-      - The Device Posture [client certificate check](/cloudflare-one/identity/devices/warp-client-checks/client-certificate/) has been substantially enhanced. The primary enhancement is the ability to check for client certificates that have unique common names, made unique by the inclusion of the device serial number or host name (for example, CN = `123456.mycompany`, where 123456 is the device serial number).
+  - publish_date: "2024-06-28"
+    title: WARP client for macOS (version 2024.6.416.0)
+    description: |-
+      A new GA release for the macOS WARP client is now available in the [App Center](https://install.appcenter.ms/orgs/cloudflare/apps/1.1.1.1-macos-1/distribution_groups/release). This release includes some exciting new features. It also includes additional fixes and minor improvements.
 
-    Additional changes and improvements:
-      - Added a new [Unable to Connect message](/cloudflare-one/connections/connect-devices/warp/troubleshooting/client-errors/#cf_failed_read_system_dns_config) to the UI to help in troubleshooting.
-      - The upgrade window now uses international date formats.
-      - Made a change to ensure DEX tests are not running when the tunnel is not up due to the device going to or waking from sleep. This is specific to devices using the S3 power model.
-      - Fixed a known issue where the certificate was not always properly left behind in `%ProgramData%\Cloudflare\installed_cert.pem`.
-      - Fixed an issue where ICMPv6 Neighbor Solicitation messages were being incorrectly sent on the WARP tunnel.
-      - Fixed an issue where a silent upgrade was causing certain files to be deleted if the target upgrade version is the same as the current version.
+      New features:
+        - Admins can now elect to have ZT WARP clients connect using the MASQUE protocol; this setting is in Device Profiles. Note: before MASQUE can be used, the global setting for Override local interface IP must be enabled. For more detail, refer to [Device tunnel protocol](/cloudflare-one/connections/connect-devices/warp/configure-warp/warp-settings/#device-tunnel-protocol). This feature will be rolled out to customers in stages over approximately the next month.
+        - The Device Posture [client certificate check](/cloudflare-one/identity/devices/warp-client-checks/client-certificate/) has been substantially enhanced. The primary enhancement is the ability to check for client certificates that have unique common names, made unique by the inclusion of the device serial number or host name (for example, CN = `123456.mycompany`, where 123456 is the device serial number).
 
-    Warning:
-      - This is the last GA release that will be supporting older, deprecated `warp-cli` commands. There are two methods to identify these commands. One, when used in this release, the command will work but will also return a deprecation warning. And two, the deprecated commands do not appear in the output of `warp-cli -h`.
+      Additional changes and improvements:
+        - Fixed a known issue where the certificate was not always properly left behind in `/Library/Application Support/Cloudflare/installed_cert.pem`.
+        - Fixed an issue where re-auth notifications were not cleared from the UI when the user switched configurations.
+        - Fixed a macOS firewall rule that allowed all UDP traffic to go outside the tunnel. Relates to TunnelVision ([CVE-2024-3661](https://nvd.nist.gov/vuln/detail/CVE-2024-3661)).
+        - Fixed an issue that could cause the Cloudflare WARP menu bar application to disappear when switching configurations.
 
-    Known issues:
-      - If a user has an MDM file configured to support multiple profiles (for the [switch configurations](/cloudflare-one/connections/connect-devices/warp/deployment/mdm-deployment/switch-organizations/) feature), and then changes to an MDM file configured for a single profile, the WARP client may not connect. The workaround is to use the `warp-cli registration delete` command to clear the registration, and then re-register the client.
-      - There are certain known limitations preventing the use of the MASQUE tunnel protocol in certain scenarios. Do not use the MASQUE tunnel protocol if:
-        - A Magic WAN integration is on the account and does not have the latest packet flow path for WARP traffic. Please check migration status with your account team.
-        - Your account has Regional Services enabled.
+      Warning:
+        - This is the last GA release that will be supporting older, deprecated `warp-cli` commands. There are two methods to identify these commands. One, when used in this release, the command will work but will also return a deprecation warning. And two, the deprecated commands do not appear in the output of `warp-cli -h`.
 
-- publish_date: '2024-06-27'
-  title: Cloudflare One Agent for iOS (version 1.4)
-  description: |-
-    A new GA release for the iOS Cloudflare One Agent is now available in the [iOS App Store](https://apps.apple.com/us/app/cloudflare-one-agent/id6443476492).
+      Known issues:
+        - If a user has an MDM file configured to support multiple profiles (for the [switch configurations](/cloudflare-one/connections/connect-devices/warp/deployment/mdm-deployment/switch-organizations/) feature), and then changes to an MDM file configured for a single profile, the WARP client may not connect. The workaround is to use the `warp-cli registration delete` command to clear the registration, and then re-register the client.
+        - There are certain known limitations preventing the use of the MASQUE tunnel protocol in certain scenarios. Do not use the MASQUE tunnel protocol if:
+          - A Magic WAN integration is on the account and does not have the latest packet flow path for WARP traffic. Please check migration status with your account team.
+          - Your account has Regional Services enabled.
 
-    Notable updates:
-      - Fixed an issue with endpoint IP settings in MDM files
-      - Cleaned up some erroneous links
-      - Updated the Terms of Service
+  - publish_date: "2024-06-28"
+    title: WARP client for Windows (version 2024.6.415.0)
+    description: |-
+      A new GA release for the Windows WARP client is now available in the [App Center](https://install.appcenter.ms/orgs/cloudflare/apps/1.1.1.1-windows-1/distribution_groups/release). This release includes some exciting new features. It also includes additional fixes and minor improvements.
 
-- publish_date: '2024-05-22'
-  title: WARP client for Windows (version 2024.5.310.1)
-  description: |-
-    A new beta release for the Windows WARP client is now available in the [App Center](https://install.appcenter.ms/orgs/cloudflare/apps/1.1.1.1-windows/distribution_groups/beta).
+      New features:
+        - Admins can now elect to have ZT WARP clients connect using the MASQUE protocol; this setting is in Device Profiles. Note: before MASQUE can be used, the global setting for Override local interface IP must be enabled. For more detail, refer to [Device tunnel protocol](/cloudflare-one/connections/connect-devices/warp/configure-warp/warp-settings/#device-tunnel-protocol). This feature will be rolled out to customers in stages over approximately the next month.
+        - The ZT WARP client on Windows devices can now connect before the user completes their Windows login. This [Windows pre-login capability](/cloudflare-one/connections/connect-devices/warp/deployment/mdm-deployment/windows-prelogin/) allows for connecting to on-premise Active Directory and/or similar resources necessary to complete the Windows login.
+        - The Device Posture [client certificate check](/cloudflare-one/identity/devices/warp-client-checks/client-certificate/) has been substantially enhanced. The primary enhancement is the ability to check for client certificates that have unique common names, made unique by the inclusion of the device serial number or host name (for example, CN = `123456.mycompany`, where 123456 is the device serial number).
 
-    Notable updates:
-      - Added a new [Unable to Connect message](/cloudflare-one/connections/connect-devices/warp/troubleshooting/client-errors/#cf_failed_read_system_dns_config) to the UI to help in troubleshooting.
-      - In the upgrade window, a change was made to use international date formats to resolve an issue with localization.
-      - Made a change to ensure DEX tests are not running when the tunnel is not up due to the device going to or waking from sleep. This is specific to devices using the S3 power model.
-      - Fixed a known issue where the certificate was not always properly left behind in `%ProgramData%\Cloudflare\installed_cert.pem`.
-      - Fixed an issue where ICMPv6 Neighbor Solicitation messages were being incorrectly sent on the WARP tunnel.
+      Additional changes and improvements:
+        - Added a new [Unable to Connect message](/cloudflare-one/connections/connect-devices/warp/troubleshooting/client-errors/#cf_failed_read_system_dns_config) to the UI to help in troubleshooting.
+        - The upgrade window now uses international date formats.
+        - Made a change to ensure DEX tests are not running when the tunnel is not up due to the device going to or waking from sleep. This is specific to devices using the S3 power model.
+        - Fixed a known issue where the certificate was not always properly left behind in `%ProgramData%\Cloudflare\installed_cert.pem`.
+        - Fixed an issue where ICMPv6 Neighbor Solicitation messages were being incorrectly sent on the WARP tunnel.
+        - Fixed an issue where a silent upgrade was causing certain files to be deleted if the target upgrade version is the same as the current version.
+
+      Warning:
+        - This is the last GA release that will be supporting older, deprecated `warp-cli` commands. There are two methods to identify these commands. One, when used in this release, the command will work but will also return a deprecation warning. And two, the deprecated commands do not appear in the output of `warp-cli -h`.
+
+      Known issues:
+        - If a user has an MDM file configured to support multiple profiles (for the [switch configurations](/cloudflare-one/connections/connect-devices/warp/deployment/mdm-deployment/switch-organizations/) feature), and then changes to an MDM file configured for a single profile, the WARP client may not connect. The workaround is to use the `warp-cli registration delete` command to clear the registration, and then re-register the client.
+        - There are certain known limitations preventing the use of the MASQUE tunnel protocol in certain scenarios. Do not use the MASQUE tunnel protocol if:
+          - A Magic WAN integration is on the account and does not have the latest packet flow path for WARP traffic. Please check migration status with your account team.
+          - Your account has Regional Services enabled.
+
+  - publish_date: "2024-06-27"
+    title: Cloudflare One Agent for iOS (version 1.4)
+    description: |-
+      A new GA release for the iOS Cloudflare One Agent is now available in the [iOS App Store](https://apps.apple.com/us/app/cloudflare-one-agent/id6443476492).
+
+      Notable updates:
+        - Fixed an issue with endpoint IP settings in MDM files
+        - Cleaned up some erroneous links
+        - Updated the Terms of Service
+
+  - publish_date: "2024-05-22"
+    title: WARP client for Windows (version 2024.5.310.1)
+    description: |-
+      A new beta release for the Windows WARP client is now available in the [App Center](https://install.appcenter.ms/orgs/cloudflare/apps/1.1.1.1-windows/distribution_groups/beta).
+
+      Notable updates:
+        - Added a new [Unable to Connect message](/cloudflare-one/connections/connect-devices/warp/troubleshooting/client-errors/#cf_failed_read_system_dns_config) to the UI to help in troubleshooting.
+        - In the upgrade window, a change was made to use international date formats to resolve an issue with localization.
+        - Made a change to ensure DEX tests are not running when the tunnel is not up due to the device going to or waking from sleep. This is specific to devices using the S3 power model.
+        - Fixed a known issue where the certificate was not always properly left behind in `%ProgramData%\Cloudflare\installed_cert.pem`.
+        - Fixed an issue where ICMPv6 Neighbor Solicitation messages were being incorrectly sent on the WARP tunnel.
 
 
-    Known issues:
-      - If a user has an MDM file configured to support multiple profiles (for the switch configurations feature), and then changes to an MDM file configured for a single profile, the WARP client may not connect. The workaround is to use the `warp-cli registration delete` command to clear the registration, and then re-register the client.
+      Known issues:
+        - If a user has an MDM file configured to support multiple profiles (for the switch configurations feature), and then changes to an MDM file configured for a single profile, the WARP client may not connect. The workaround is to use the `warp-cli registration delete` command to clear the registration, and then re-register the client.
 
-- publish_date: '2024-05-21'
-  title: WARP client for macOS (version 2024.5.287.1)
-  description: |-
-    A new beta release for the macOS WARP client is now available in the [App Center](https://install.appcenter.ms/orgs/cloudflare/apps/1.1.1.1-macos/distribution_groups/beta)
+  - publish_date: "2024-05-21"
+    title: WARP client for macOS (version 2024.5.287.1)
+    description: |-
+      A new beta release for the macOS WARP client is now available in the [App Center](https://install.appcenter.ms/orgs/cloudflare/apps/1.1.1.1-macos/distribution_groups/beta)
 
-    Notable updates:
-      - Fixed a known issue where the certificate was not always properly left behind in `/Library/Application Support/Cloudflare/installed_cert.pem`.
-      - Fixed an issue so that the reauth notification is cleared from the UI when the user switches configurations.
-      - Fixed an issue by correcting the WARP client setting of macOS firewall rules. This relates to TunnelVision ([CVE-2024-3661](https://nvd.nist.gov/vuln/detail/CVE-2024-3661)).
-      - Fixed an issue that could cause the Cloudflare WARP menu bar application to disappear when switching configurations.
+      Notable updates:
+        - Fixed a known issue where the certificate was not always properly left behind in `/Library/Application Support/Cloudflare/installed_cert.pem`.
+        - Fixed an issue so that the reauth notification is cleared from the UI when the user switches configurations.
+        - Fixed an issue by correcting the WARP client setting of macOS firewall rules. This relates to TunnelVision ([CVE-2024-3661](https://nvd.nist.gov/vuln/detail/CVE-2024-3661)).
+        - Fixed an issue that could cause the Cloudflare WARP menu bar application to disappear when switching configurations.
 
-    Known issues:
-      - If a user has an MDM file configured to support multiple profiles (for the switch configurations feature), and then changes to an MDM file configured for a single profile, the WARP client may not connect. The workaround is to use the `warp-cli registration delete` command to clear the registration, and then re-register the client.
+      Known issues:
+        - If a user has an MDM file configured to support multiple profiles (for the switch configurations feature), and then changes to an MDM file configured for a single profile, the WARP client may not connect. The workaround is to use the `warp-cli registration delete` command to clear the registration, and then re-register the client.
 
-- publish_date: '2024-05-10'
-  title: Cloudflare One Agent for Android (version 1.7)
-  description: |-
-    A new GA release for the Android Cloudflare One Agent is now available in the [Google Play Store](https://play.google.com/store/apps/details?id=com.cloudflare.cloudflareoneagent). This release fixes an issue where the user was not prompted to select the client certificate in the browser during Access registration.
+  - publish_date: "2024-05-10"
+    title: Cloudflare One Agent for Android (version 1.7)
+    description: |-
+      A new GA release for the Android Cloudflare One Agent is now available in the [Google Play Store](https://play.google.com/store/apps/details?id=com.cloudflare.cloudflareoneagent). This release fixes an issue where the user was not prompted to select the client certificate in the browser during Access registration.
 
-- publish_date: '2024-05-09'
-  title: Crowdstrike posture checks for online status
-  description: |-
-    Two new Crowdstrike attributes, _Last Seen_ and _State_, are now available to be used as selectors in the [Crowdstrike service provider integration](/cloudflare-one/identity/devices/service-providers/crowdstrike/).
+  - publish_date: "2024-05-09"
+    title: Crowdstrike posture checks for online status
+    description: |-
+      Two new Crowdstrike attributes, _Last Seen_ and _State_, are now available to be used as selectors in the [Crowdstrike service provider integration](/cloudflare-one/identity/devices/service-providers/crowdstrike/).
 
-- publish_date: '2024-05-08'
-  title: WARP client for macOS (version 2024.3.444.0)
-  description: |-
-    A new GA release for the macOS WARP client is now available in the [App Center](https://install.appcenter.ms/orgs/cloudflare/apps/1.1.1.1-macos-1/distribution_groups/release). This releases fixes an issue with how the WARP client sets macOS firewall rules and addresses the TunnelVision ([CVE-2024-3661](https://nvd.nist.gov/vuln/detail/CVE-2024-3661)) vulnerability.
+  - publish_date: "2024-05-08"
+    title: WARP client for macOS (version 2024.3.444.0)
+    description: |-
+      A new GA release for the macOS WARP client is now available in the [App Center](https://install.appcenter.ms/orgs/cloudflare/apps/1.1.1.1-macos-1/distribution_groups/release). This releases fixes an issue with how the WARP client sets macOS firewall rules and addresses the TunnelVision ([CVE-2024-3661](https://nvd.nist.gov/vuln/detail/CVE-2024-3661)) vulnerability.

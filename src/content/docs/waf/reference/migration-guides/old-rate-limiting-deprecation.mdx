@@ -8,7 +8,6 @@ head:
     content: Rate limiting (previous version) deprecation notice
 description: Guide on the deprecation of rate limiting rules (previous version)
   and how to migrate to the new version.
-
 ---
 
 **The [previous version of rate limiting rules](/waf/reference/legacy/old-rate-limiting/) is now deprecated.** If you have rules in the previous version, the Cloudflare dashboard will show the configuration for both new (**A**) and old (**B**) rate limiting rules in **Security** > **WAF** > **Rate limiting rules**. The rate limiting rules interface for the previous version will only be available in the dashboard until 2025-01-15. After this date all remaining active rules will stop working.
@@ -27,22 +26,22 @@ To learn more about what you can do with the new rate limiting, refer to [Rate l
 
 ## Main differences
 
-* **Billing model:** The previous version of Rate Limiting was billed based on usage and it was available as an add-on on all plans, while the new version is included in Cloudflare plans. For Enterprise plans, Rate Limiting is priced based on total contracted HTTP traffic. The new rate limiting rules offer all the capabilities available on the previous version of rate limiting along with several additional features.
+- **Billing model:** The previous version of Rate Limiting was billed based on usage and it was available as an add-on on all plans, while the new version is included in Cloudflare plans. For Enterprise plans, Rate Limiting is priced based on total contracted HTTP traffic. The new rate limiting rules offer all the capabilities available on the previous version of rate limiting along with several additional features.
 
-* **Advanced scope expressions:** The previous version of Rate Limiting allowed you to scope the rules based on a single path and method of the request. In the new version, you can write rules similar to [WAF custom rules](/waf/custom-rules/), combining multiple parameters of the HTTP request.
+- **Advanced scope expressions:** The previous version of Rate Limiting allowed you to scope the rules based on a single path and method of the request. In the new version, you can write rules similar to [WAF custom rules](/waf/custom-rules/), combining multiple parameters of the HTTP request.
 
-* **Separate counting and mitigation expressions:** In the new version of Rate Limiting, counting and mitigation expressions are separate (for Business and Enterprise customers). The counting expression defines which requests are used to compute the rate. The mitigation expression defines which requests are mitigated once the threshold has been reached. Using these separate expressions, you can track the rate of requests on a specific path such as `/login` and, when an IP exceeds the threshold, block every request from the same IP addressed at your domain.
+- **Separate counting and mitigation expressions:** In the new version of Rate Limiting, counting and mitigation expressions are separate (for Business and Enterprise customers). The counting expression defines which requests are used to compute the rate. The mitigation expression defines which requests are mitigated once the threshold has been reached. Using these separate expressions, you can track the rate of requests on a specific path such as `/login` and, when an IP exceeds the threshold, block every request from the same IP addressed at your domain.
 
-* **Additional counting dimensions (Advanced Rate Limiting only):** Like in the previous version of Rate Limiting, customers with the new Rate Limiting get IP-based rate limiting, where Cloudflare counts requests based on the source IP address of incoming requests. In addition to IP-based rate limiting, customers with the new Rate Limiting who subscribe to Advanced Rate Limiting can group requests based on other characteristics, such as the value of API keys, cookies, session headers, ASN, query parameters, or a specific JSON body field. Refer to [Rate limiting best practices](/waf/rate-limiting-rules/best-practices/) for examples.
+- **Additional counting dimensions (Advanced Rate Limiting only):** Like in the previous version of Rate Limiting, customers with the new Rate Limiting get IP-based rate limiting, where Cloudflare counts requests based on the source IP address of incoming requests. In addition to IP-based rate limiting, customers with the new Rate Limiting who subscribe to Advanced Rate Limiting can group requests based on other characteristics, such as the value of API keys, cookies, session headers, ASN, query parameters, or a specific JSON body field. Refer to [Rate limiting best practices](/waf/rate-limiting-rules/best-practices/) for examples.
 
-* **Number of rules per plan**: Besides the exact features per Cloudflare plan, the number of rules per plan is different in the new version of Rate Limiting (for information on the new version limits, refer to [Rate limiting rules](/waf/rate-limiting-rules/#availability)):
+- **Number of rules per plan**: Besides the exact features per Cloudflare plan, the number of rules per plan is different in the new version of Rate Limiting (for information on the new version limits, refer to [Rate limiting rules](/waf/rate-limiting-rules/#availability)):
 
-    | Product | Free | Pro | Business | Enterprise with RL add-on,<br/> or equivalent plan |
-    |---|:---:|:---:|:---:|:---:|
-    | Rate Limiting (previous version) | 1 | 10 | 15 | 100 |
-    | Rate Limiting (new version)      | 1 | 2  | 5  | 100 |
+  | Product                          | Free | Pro | Business | Enterprise with RL add-on,<br/> or equivalent plan |
+  | -------------------------------- | :--: | :-: | :------: | :------------------------------------------------: |
+  | Rate Limiting (previous version) |  1   | 10  |    15    |                        100                         |
+  | Rate Limiting (new version)\*    |  1   |  2  |    5     |                        100                         |
 
-    Enterprise customers without Rate Limiting on their plan will not get any rate limiting rules.
+  \* Enterprise customers must have application security on their contract to get access to rate limiting rules.
 
 For more details on the differences between old and new rate limiting rules, refer to [our blog post](https://blog.cloudflare.com/unmetered-ratelimiting/).
 

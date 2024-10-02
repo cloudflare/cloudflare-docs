@@ -40,6 +40,22 @@ To adjust rule behavior, do one of the following:
 
 For more information on the available configuration parameters, refer to [Managed ruleset parameters](/ddos-protection/managed-rulesets/http/override-parameters/).
 
+## Origin Protect rules
+
+Cloudflare HTTP DDoS Protection can also initiate mitigation based on the origin health. Floods of requests that cause a high number of zone errors (default sensitivity level is 1,000 errors per second) can initiate mitigation to alleviate the strain on the zone.
+
+| Rule ID                            | Description                                           |
+| ---------------------------------- | ----------------------------------------------------- |
+| `dd42da7baabe4e518eaf11c393596a9d` | HTTP requests causing a high number of origin errors. |
+
+:::note
+This rule is available for zones on any plan.
+:::
+
+The rule is adaptive for zones on the Pro, Business, or Enterprise plan. It performs an additional check for better detection accuracy: the errors-per-second rate must also be at least five times the normal traffic levels.
+
+All HTTP errors in the 52x range (Internal Server Error) and all errors in the 53x range excluding [530](/support/troubleshooting/cloudflare-errors/troubleshooting-cloudflare-5xx-errors/#error-530) are considered when factoring in the error rate.
+
 ## Availability
 
 The HTTP DDoS Attack Protection managed ruleset protects Cloudflare customers on all plans for zones [onboarded to Cloudflare](/dns/zone-setups/full-setup/). All customers can customize the ruleset both at the zone level and at the account level.

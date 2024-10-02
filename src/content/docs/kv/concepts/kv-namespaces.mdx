@@ -5,6 +5,7 @@ sidebar:
   order: 7
 
 ---
+import { Type, MetaInfo } from "~/components";
 
 A KV namespace is a key-value database replicated to Cloudflare’s global network.
 
@@ -20,15 +21,15 @@ KV namespace IDs are public and bound to your account.
 
 To bind KV namespaces to your Worker, assign an array of the below object to the `kv_namespaces` key.
 
-* `binding` string required
+* `binding` <Type text="string" /> <MetaInfo text="required" />
 
   * The binding name used to refer to the KV namespace.
 
-* `id` string required
+* `id` <Type text="string" /> <MetaInfo text="required" />
 
   * The ID of the KV namespace.
 
-* `preview_id` string optional
+* `preview_id` <Type text="string" /> <MetaInfo text="optional" />
 
   * The ID of the KV namespace used during `wrangler dev`.
 

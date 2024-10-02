@@ -1,11 +1,12 @@
 ---
-import { z } from "astro:content";
-import { Code, Details } from "~/components";
+import { z } from "astro:schema";
+import { Code } from "@astrojs/starlight/components";
+import Details from "~/components/Details.astro";
 
 type Props = z.infer<typeof props>;
 
 const props = z.object({
-	name: z.string()
+	name: z.string(),
 });
 
 const { name } = props.parse(Astro.props);
@@ -35,8 +36,6 @@ export default {
 `;
 ---
 
-<h2>Code Examples</h2>
-<Details header="Workers - Typescript">
-  <Code code={worker} lang="ts" />
+<Details header="Workers - TypeScript">
+	<Code code={worker} lang="ts" />
 </Details>
-

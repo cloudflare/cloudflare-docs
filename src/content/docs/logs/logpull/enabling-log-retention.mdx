@@ -1,0 +1,61 @@
+---
+pcx_content_type: reference
+title: Enabling log retention
+sidebar:
+  order: 13
+---
+
+import { Render } from "~/components";
+
+By default, your HTTP request logs are not retained. When using the Logpull API for the first time, you will need to enable retention. You can also turn off retention at any time. Note that after retention is turned off, previously saved logs will be available until the retention period expires (refer to [Data retention period](/logs/logpull/understanding-the-basics/#data-retention-period)).
+
+## Endpoints
+
+There are two endpoints for managing log retention:
+
+- `GET /logs/control/retention/flag` - returns the current status of retention
+- `POST /logs/control/retention/flag` - turns retention on or off
+
+:::note[Note]
+
+In the Linux examples below we use the optional [jq](/logs/tutorials/parsing-json-log-data/) tool to help parse the response data.
+
+To make a `POST` call, you must have zone-scoped `edit` permissions, such as Super Administrator, Administrator, or Log Share. Refer to [Make API calls](/fundamentals/api/how-to/make-api-calls/) for more information.
+
+:::
+
+## Example API requests using cURL
+
+### Check log retention status
+
+<Render file="check-log-retention" />
+
+If the zone has log retention [enabled](/logs/logpull/enabling-log-retention/#enabled-response) you get the value `true`, whereas a value of `false` is returned when it is [disabled](/logs/logpull/enabling-log-retention/#disabled-response).
+
+### Turn on log retention
+
+<Render file="enable-log-retention" />
+
+#### Enabled response
+
+```json
+{
+  "flag": true
+}
+```
+
+### Turn off log retention
+
+<Render file="disable-log-retention" />
+
+#### Disabled response
+
+```json
+{
+  "flag": false
+}
+```
+
+## Audit
+
+Turning log retention on or off is recorded in [Cloudflare Audit Logs](/fundamentals/setup/account/account-security/review-audit-logs/#access-audit-logs).

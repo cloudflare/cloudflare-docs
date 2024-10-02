@@ -45,9 +45,7 @@ curl https://api.cloudflare.com/client/v4/accounts/{account_id}/magic/sites \
 }'
 ```
 
-If you created your site successfully, you should receive a message similar to the following:
-
-```json
+```json output
 {
 	"result": {
 		"site": {
@@ -73,12 +71,12 @@ Take note of the site `id` parameter, as you will need it to create WANs and LAN
 
 <Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
 
-1. In **WAN configuration**, select **Create**. You can create one or more [wide area networks (WANs)](https://www.cloudflare.com/learning/network-layer/what-is-a-wan/). Configuring multiple WANs will create multiple <GlossaryTooltip term="IPsec tunnel">IPsec</GlossaryTooltip> tunnels. This allows the Connector to failover between circuits according to their <GlossaryTooltip term="tunnel health-check" link="/magic-wan/reference/tunnel-health-checks/">health</GlossaryTooltip>.
+1. In **WAN configuration**, select **Create**. You can create one or more [wide area networks (WANs)](https://www.cloudflare.com/learning/network-layer/what-is-a-wan/). Configuring multiple WANs will create multiple <GlossaryTooltip term="IPsec tunnel">IPsec</GlossaryTooltip> tunnels (one IPsec tunnel per WAN port). This allows the Connector to failover between circuits according to their <GlossaryTooltip term="tunnel health-check" link="/magic-wan/reference/tunnel-health-checks/">health</GlossaryTooltip>.
 2. In **Interface name**, enter a descriptive name for your WAN.
 3. **Interface number** <Markdown text={props.one} />
 4. In **VLAN ID**, enter a number between `0` and `4094` to specify a [VLAN ID](/magic-wan/configuration/connector/reference/#vlan-id).
 5. In **Priority**, choose the priority for your WAN. Lower numbers have higher priority. Refer to <GlossaryTooltip term="traffic steering" link="/magic-wan/reference/traffic-steering/">Traffic steering</GlossaryTooltip> to learn more about how Cloudflare calculates priorities.
-6. **Addressing**: Specify whether the WAN IP is fetched from a DHCP server or if it is a static IP. If you choose a static IP, you also need to specify the static IP and gateway addresses.
+6. **Addressing**: If this is the first time you are setting up your Magic WAN Connector, select **DHCP**. After you activate your Connector, you can then choose to continue fetching the WAN IP address from a DHCP server, or change it to a static IP. If you choose a static IP, you also need to specify the static IP and gateway addresses.
 
   <div class="medium-img">
 
