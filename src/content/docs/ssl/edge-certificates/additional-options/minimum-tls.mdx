@@ -54,7 +54,7 @@ In the following example, the minimum TLS version for the zone will be set to `1
 
 ```bash
 curl --request PATCH \
-https://api.cloudflare.com/client/v4/zones/{zone_id}/settings/min_tls_version \
+"https://api.cloudflare.com/client/v4/zones/{zone_id}/settings/min_tls_version" \
 --header "Authorization: Bearer <API_TOKEN>" \
 --header "Content-Type: application/json" \
 --data '{
@@ -80,7 +80,7 @@ In the following example, the minimum TLS version for a specific hostname will b
 
 ```bash
 curl --request PUT \
-https://api.cloudflare.com/client/v4/zones/{zone_id}/hostnames/settings/min_tls_version/{hostname} \
+"https://api.cloudflare.com/client/v4/zones/{zone_id}/hostnames/settings/min_tls_version/{hostname}" \
 --header "Authorization: Bearer <API_TOKEN>" \
 --header "Content-Type: application/json" \
 --data '{
