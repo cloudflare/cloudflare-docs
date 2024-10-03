@@ -51,17 +51,22 @@ Depending on where you installed the WARP client, you may need to configure othe
 
 ### Option 1: Default gateway
 
-If you installed a WARP client on your router or machine collector (something you can use to collect flow information, such as a computer, virtual machine or server), no additional configuration is necessary. All traffic will use the router as the default gateway. All you need to do prior to this is configure your flow export to send flow data to IP address `162.159.65.1` and port `2055` for NetFlow, or `162.159.65.1` and port `6343` for sFlow.
+If you installed a WARP client on your router or machine collector (something you can use to collect flow information, such as a computer, virtual machine or server), no additional configuration is necessary. All traffic will use the router as the default gateway. All you need to do is configure your flow export to send flow data to IP address `162.159.65.1` and port `2055` for NetFlow, or `162.159.65.1` and port `6343` for sFlow.
 
 ### Option 2: Alternate gateway
 
-If you have access to the router but installed WARP on another machine, you can configure the router to export flow traffic to the machine running WARP. To do this, set the machine's IP address as the export destination on the router. Additionally, configure the export port on the router to match the listening port on the WARP machine. Then, you need to redirect traffic that arrives at your machine running WARP to Cloudflare's destination IP `162.59.65.1` and port 2055 for NetFlow, or IP `162.59.65.1` and port `6343` for sFlow.
+If you have access to the router but installed WARP on another machine, you can configure the router to export flow traffic to the machine running WARP. To do this:
 
-For example, if WARP is running on a machine in your network with the IP `10.10.10.10`, and you configured it to accept traffic on port `2055` or `6343`, you need to configure your flow export-capable router to send data to `10.10.10.10` and port `2055` or `6343`.
+1. Set the machine's IP address as the export destination on the router.
+2. Configure the export port on the router to match the listening port on the WARP machine.
+3. Redirect traffic that arrives at your machine running WARP as is to the following Cloudflare's destination IPs and ports:
+   - **For NetFlow**: IP address `162.59.65.1` and port `2055`.
+   - **For sFlow**: IP `162.59.65.1` and port `6343`. <br />
+     For example, if WARP is running on a machine in your network with the IP `10.10.10.10`, and you configured it to accept traffic on port `2055` or `6343`, you need to configure your flow export-capable router to send data to `10.10.10.10` and port `2055` or `6343`.
 
-In the machine running WARP, you would then redirect this traffic to Cloudflare as is, through the use of a proxy or redirect tool of your choice. Some options below:
+In the machine running WARP, you can redirect this traffic to Cloudflare through the use of a proxy or redirect tool of your choice. Some options below:
 
-- Using socat, you listen on the desired port for UDP traffic, and then proxy that to Magic Newtork's monitoring destination and port.
+- Using `socat`, listen on the desired port for UDP traffic. Then, proxy that traffic to Magic Newtork Monitoring's destination and port.
   - `socat UDP-LISTEN:2055,reuseaddr,fork UDP:162.159.65.1:2055`
   - `socat UDP-LISTEN:6343,reuseaddr,fork UDP:162.159.65.1:6343`
 - Using any other proxy or port forwarding tool, such as `netcat`, `uredir` or `iptables`.
