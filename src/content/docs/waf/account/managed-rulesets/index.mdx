@@ -1,0 +1,26 @@
+---
+title: Managed rulesets
+pcx_content_type: concept
+sidebar:
+  order: 4
+---
+
+import { Render } from "~/components";
+
+:::note
+This feature requires an Enterprise plan with a paid add-on.
+:::
+
+<Render file="waf-managed-rules-intro" />
+
+## Account-level deployment
+
+At the account level, you can deploy each [WAF managed ruleset](/waf/managed-rules/#managed-rulesets) more than once, applying the ruleset to different subsets of incoming traffic for the Enterprise zones in your account.
+
+<Render
+	file="managed-ruleset-config-options"
+	params={{
+		overridesUrl:
+			"/waf/account/managed-rulesets/deploy-dashboard/#configure-a-managed-ruleset",
+	}}
+/>
