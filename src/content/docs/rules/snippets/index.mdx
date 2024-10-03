@@ -3,8 +3,9 @@ pcx_content_type: concept
 title: Snippets
 sidebar:
   order: 3
-  badge:
-    text: Beta
+  group:
+    badge:
+      text: Beta
 head:
   - tag: title
     content: Cloudflare Snippets (beta)
@@ -34,7 +35,6 @@ For more information, refer to the [How it works](/rules/snippets/how-it-works/)
 <FeatureTable id="rules.snippets" />
 
 :::caution[Redirects will count as subrequests]
-
 Each <GlossaryTooltip term="Snippets subrequest" prepend="A subrequest is ">subrequest</GlossaryTooltip> in a redirect chain counts against the subrequest limit. This means that if a subrequest was redirected it would count as two subrequests. To avoid issues, ensure that you make a subrequest to the end location of the redirect chain.
 :::
 

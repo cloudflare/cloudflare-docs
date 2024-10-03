@@ -549,14 +549,6 @@
 					"pro": "No",
 					"biz": "No",
 					"ent": "Included with [Foundation DNS](/dns/foundation-dns/)"
-				},
-				"graphql_analytics": {
-					"title": "GraphQL DNS analytics",
-					"summary": "Advanced nameservers analytics are accessible by GraphQL",
-					"free": "No",
-					"pro": "No",
-					"biz": "No",
-					"ent": "Yes"
 				}
 			}
 		},
@@ -598,7 +590,7 @@
 		},
 		"dns_analytics": {
 			"title": "DNS analytics",
-			"link": "/analytics/account-and-zone-analytics/zone-analytics/",
+			"link": "/dns/additional-options/analytics/",
 			"properties": {
 				"availability": {
 					"title": "Availability",
@@ -608,13 +600,19 @@
 					"biz": "Yes",
 					"ent": "Yes"
 				},
+				"maximum_duration": {
+					"title": "Maximum time interval",
+					"free": "2 days",
+					"pro": "31 days",
+					"biz": "31 days",
+					"ent": "31 days"
+				},
 				"historical_data": {
-					"title": "Historical time",
-					"free": "6 hours",
-					"pro": "24 hours",
-					"pro_plus": "36 hours",
-					"biz": "7 days",
-					"ent": "30 days"
+					"title": "Historical data",
+					"free": "8 days",
+					"pro": "31 days",
+					"biz": "31 days",
+					"ent": "31 days"
 				}
 			}
 		},
@@ -1490,11 +1488,25 @@
 			"properties": {
 				"availability": {
 					"title": "Availability",
-					"summary": "Business and above",
-					"free": "No",
-					"pro": "No",
+					"summary": "Available on all plans",
+					"free": "Yes",
+					"pro": "Yes",
 					"biz": "Yes",
 					"ent": "Yes"
+				},
+				"retention": {
+					"title": "Retention",
+					"free": "7",
+					"pro": "31",
+					"biz": "31",
+					"ent": "90"
+				},
+				"query_window": {
+					"title": "Query window",
+					"free": "1",
+					"pro": "7",
+					"biz": "31",
+					"ent": "31"
 				}
 			}
 		},
@@ -1622,7 +1634,63 @@
 				}
 			}
 		},
-		"waf_b_custom_rules": {
+		"waf_b_detections": {
+			"title": "WAF detections",
+			"link": "/waf/detections/",
+			"properties": {
+				"availability": {
+					"title": "Availability",
+					"summary": "Available on all plans",
+					"free": "Yes",
+					"pro": "Yes",
+					"biz": "Yes",
+					"ent": "Yes"
+				},
+				"b_malicious_uploads": {
+					"title": "Malicious uploads detection",
+					"summary": "Enterprise with add-on",
+					"link": "/waf/detections/malicious-uploads/",
+					"free": "No",
+					"pro": "No",
+					"biz": "No",
+					"ent": "Paid add-on"
+				},
+				"c_leaked_creds": {
+					"title": "Leaked credentials detection",
+					"link": "/waf/detections/leaked-credentials/",
+					"free": "Yes",
+					"pro": "Yes",
+					"biz": "Yes",
+					"ent": "Yes"
+				},
+				"d_leaked_creds_fields": {
+					"title": "Leaked credentials fields",
+					"link": "/waf/detections/leaked-credentials/",
+					"free": "Password Leaked",
+					"pro": "Password Leaked, User and Password Leaked",
+					"biz": "Password Leaked, User and Password Leaked",
+					"ent": "All leaked credentials fields"
+				},
+				"e_leaked_creds_locations": {
+					"title": "Number of custom detection locations",
+					"summary": "Enterprise-only",
+					"free": "0",
+					"pro": "0",
+					"biz": "0",
+					"ent": "10"
+				},
+				"f_attack_score": {
+					"title": "Attack score",
+					"summary": "Business and Enterprise plans",
+					"link": "/waf/detections/attack-score/",
+					"free": "No",
+					"pro": "No",
+					"biz": "One field only",
+					"ent": "Yes"
+				}
+			}
+		},
+		"waf_c_custom_rules": {
 			"title": "WAF custom rules",
 			"link": "/waf/custom-rules/",
 			"properties": {
@@ -2186,9 +2254,9 @@
 				}
 			}
 		},
-		"speculation": {
-			"title": "Speculation",
-			"link": "/speed/optimization/content/speculation/",
+		"speed_brain": {
+			"title": "Speed Brain",
+			"link": "/speed/optimization/content/speed-brain/",
 			"properties": {
 				"availability": {
 					"title": "Availability",
@@ -2662,6 +2730,34 @@
 					"ent": "Yes"
 				}
 			}
+    },
+    "client_certificates": {
+      "title": "Client Certificates",
+      "link": "/ssl/client-certificates/",
+      "properties": {
+        "availability": {
+          "title": "Availability",
+          "summary": "Available on all plans.",
+          "free": "Yes",
+          "pro": "Yes",
+          "biz": "Yes",
+          "ent": "Yes"
+        },
+        "quantity": {
+          "title": "Client Certificates included, issued by a Cloudflare Managed CA",
+          "free": 100,
+          "pro": 100,
+          "biz": 100,
+          "ent": "100 (default), but can allocate more quota."
+        },
+        "byo_ca": {
+          "title": "[Bring your own CA](/ssl/client-certificates/byo-ca/)",
+          "free": "No",
+          "pro": "No",
+          "biz": "No",
+          "ent": "Yes"
+        }
+      }
 		}
 	},
 	"support": {

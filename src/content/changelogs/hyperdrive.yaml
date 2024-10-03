@@ -5,6 +5,12 @@ productLink: "/hyperdrive/"
 productArea: Developer platform
 productAreaLink: /workers/platform/changelog/platform/
 entries:
+  - publish_date: "2024-09-20"
+    title: The `node-postgres` (pg) driver is now supported for Pages applications using Hyperdrive.
+    description: |-
+      The popular `pg` ([node-postgres](https://github.com/brianc/node-postgres) driver no longer requires the legacy `node_compat` mode, and can now be used in both Workers and Pages for connecting to Hyperdrive. This uses the new (improved) Node.js compatibility in Workers and Pages. 
+
+      You can set [`compatibility_flags = ["nodejs_compat_v2"]`](/workers/runtime-apis/nodejs/) in your `wrangler.toml` or via the Pages dashboard to benefit from this change. Visit the [Hyperdrive documentation on supported drivers](/hyperdrive/configuration/connect-to-postgres/#supported-drivers) to learn more about the driver versions supported by Hyperdrive.
   - publish_date: "2024-08-19"
     title: Improved caching for Postgres.js
     description: |-

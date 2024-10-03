@@ -1,0 +1,19 @@
+---
+import { getCollection } from "astro:content";
+
+import StarlightPage from "@astrojs/starlight/components/StarlightPage.astro";
+import ModelCatalog from "~/components/ModelCatalog.jsx";
+
+const modelData = await getCollection("workers-ai-models");
+const models = modelData.map(({ data }) => data);
+---
+
+<StarlightPage frontmatter={{ title: "Models", tableOfContents: false }}>
+	<ModelCatalog models={models} client:load />
+</StarlightPage>
+
+<style>
+	:root {
+		--sl-content-width: 1350px !important;
+	}
+</style>

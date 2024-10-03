@@ -3,11 +3,9 @@ pcx_content_type: how-to
 title: Connect WARP before Windows login
 sidebar:
   order: 3
-
 ---
 
-
-import { Details, Render } from "~/components"
+import { Details, Render } from "~/components";
 
 <Details header="Feature availability">
 
@@ -17,13 +15,12 @@ import { Details, Render } from "~/components"
 
 | System   | Availability | Minimum WARP version |
 | -------- | ------------ | -------------------- |
-| Windows  | ✅            | 2024.6.415.0         |
-| macOS    | ❌            |                      |
-| Linux    | ❌            |                      |
-| iOS      | ❌            |                      |
-| Android  | ❌            |                      |
-| ChromeOS | ❌            |                      |
-
+| Windows  | ✅           | 2024.6.415.0         |
+| macOS    | ❌           |                      |
+| Linux    | ❌           |                      |
+| iOS      | ❌           |                      |
+| Android  | ❌           |                      |
+| ChromeOS | ❌           |                      |
 
 </Details>
 
@@ -31,7 +28,7 @@ With Cloudflare Zero Trust, you can use an on-premise Active Directory (or simil
 
 ## Prerequisites
 
-* Active Directory resources are [connected to Cloudflare](/cloudflare-one/connections/connect-networks/private-net/).
+- Active Directory resources are [connected to Cloudflare](/cloudflare-one/connections/connect-networks/private-net/).
 
 ## 1. Create a service token
 
@@ -49,7 +46,6 @@ In your [device enrollment permissions](/cloudflare-one/connections/connect-devi
 
 Devices enrolled via a service token are identified by the email address `non_identity@<team-name>.cloudflareaccess.com`. Using this email address, you can apply specific [device profile settings](/cloudflare-one/connections/connect-devices/warp/configure-warp/device-profiles/) and [Gateway network policies](/cloudflare-one/policies/gateway/network-policies/) during the pre-login state. For example, you could provide access to only those resources necessary to complete the Windows login and/or device management activities.
 
-
 <Details header="Example device profile rule">
 
 | Selector         | Operator | Value                                           | Logic |
@@ -57,9 +53,7 @@ Devices enrolled via a service token are identified by the email address `non_id
 | User email       | in       | `non_identity@<team-name>.cloudflareaccess.com` | And   |
 | Operating system | is       | Windows                                         |       |
 
-
 </Details>
-
 
 <Details header="Example Gateway network policy">
 
@@ -72,7 +66,6 @@ Devices enrolled via a service token are identified by the email address `non_id
 | Action |
 | ------ |
 | Allow  |
-
 
 </Details>
 

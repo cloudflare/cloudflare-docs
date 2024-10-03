@@ -4,10 +4,9 @@ type: overview
 title: CSP HTTP header format
 sidebar:
   order: 4
-
 ---
 
-import { GlossaryTooltip } from "~/components"
+import { GlossaryTooltip } from "~/components";
 
 The format of the <GlossaryTooltip term="content security policy (CSP)">Content Security Policy (CSP)</GlossaryTooltip> report-only HTTP header added by Page Shield is the following:
 
@@ -25,9 +24,10 @@ content-security-policy-report-only: script-src 'none'; connect-src 'none'; repo
 
 Cloudflare adds the CSP report-only HTTP header used to monitor webpages resources to a sample of sent responses.
 
-Configuring [log policies](/page-shield/policies/) will add other CSP report-only headers to responses. Cloudflare will not perform any sampling for these report-only headers related to customer-defined policies. 
+Configuring [log policies](/page-shield/policies/) will add other CSP report-only headers to responses. Cloudflare will not perform any sampling for these report-only headers related to customer-defined policies.
+
 :::
 
 ## Related resources
 
-* [Mozilla Developer Network's (MDN) documentation on Content-Security-Policy-Report-Only](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Security-Policy-Report-Only)
+- [Mozilla Developer Network's (MDN) documentation on Content-Security-Policy-Report-Only](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Security-Policy-Report-Only)

@@ -3,6 +3,7 @@ pcx_content_type: reference
 title: Tunnel with firewall
 sidebar:
   order: 1
+tableOfContents: false
 ---
 
 You can implement a positive security model with Cloudflare Tunnel by blocking all ingress traffic and allowing only egress traffic from `cloudflared`. Only the services specified in your tunnel configuration will be exposed to the outside world.
@@ -19,6 +20,7 @@ The parameters below can be configured for egress traffic inside of a firewall.
 | ------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---- | ------------------------ |
 | `region1.v2.argotunnel.com`     | `198.41.192.167`<br/> `198.41.192.67`<br/> `198.41.192.57`<br/> `198.41.192.107`<br/> `198.41.192.27`<br/> `198.41.192.7`<br/> `198.41.192.227`<br/> `198.41.192.47`<br/> `198.41.192.37`<br/> `198.41.192.77`  | `2606:4700:a0::1`<br/> `2606:4700:a0::2`<br/> `2606:4700:a0::3`<br/> `2606:4700:a0::4`<br/> `2606:4700:a0::5`<br/> `2606:4700:a0::6`<br/> `2606:4700:a0::7`<br/> `2606:4700:a0::8`<br/> `2606:4700:a0::9`<br/> `2606:4700:a0::10` | 7844 | TCP/UDP (`http2`/`quic`) |
 | `region2.v2.argotunnel.com`     | `198.41.200.13`<br/> `198.41.200.193`<br/> `198.41.200.33`<br/> `198.41.200.233`<br/> `198.41.200.53`<br/> `198.41.200.63`<br/> `198.41.200.113`<br/> `198.41.200.73`<br/> `198.41.200.43`<br/> `198.41.200.23` | `2606:4700:a8::1`<br/> `2606:4700:a8::2`<br/> `2606:4700:a8::3`<br/> `2606:4700:a8::4`<br/> `2606:4700:a8::5`<br/> `2606:4700:a8::6`<br/> `2606:4700:a8::7`<br/> `2606:4700:a8::8`<br/> `2606:4700:a8::9`<br/> `2606:4700:a8::10` | 7844 | TCP/UDP (`http2`/`quic`) |
+| `_v2-origintunneld._tcp.argotunnel.com`<sup>1</sup> | Not applicable                                                                                                                                                                                                  | Not applicable                                                                                                                                                                                                                    | 7844 | TCP (`http2`)             |
 | `cftunnel.com`<sup>1</sup>      | Not applicable                                                                                                                                                                                                  | Not applicable                                                                                                                                                                                                                    | 7844 | TCP/UDP (`http2`/`quic`) |
 | `h2.cftunnel.com`<sup>1</sup>   | Not applicable                                                                                                                                                                                                  | Not applicable                                                                                                                                                                                                                    | 7844 | TCP (`http2`)            |
 | `quic.cftunnel.com`<sup>1</sup> | Not applicable                                                                                                                                                                                                  | Not applicable                                                                                                                                                                                                                    | 7844 | UDP (`quic`)             |
@@ -182,8 +184,10 @@ On Windows, you can use PowerShell commands if `dig` is not available.
 To test DNS:
 
 ```powershell
-PS C:\Windows\system32> Resolve-DnsName -Name _v2-origintunneld._tcp.argotunnel.com SRV
+Resolve-DnsName -Name _v2-origintunneld._tcp.argotunnel.com SRV
+```
 
+```txt output
 Name                                     Type   TTL   Section    NameTarget                     Priority Weight Port
 ----                                     ----   ---   -------    ----------                     -------- ------ ----
 _v2-origintunneld._tcp.argotunnel.com       SRV    112   Answer     region2.v2.argotunnel.com         2        1      7844
@@ -193,8 +197,10 @@ _v2-origintunneld._tcp.argotunnel.com       SRV    112   Answer     region1.v2.a
 To test ports:
 
 ```powershell
-PS C:\Cloudflared\bin> tnc region1.v2.argotunnel.com -port 443
+tnc region1.v2.argotunnel.com -port 443
+```
 
+```txt output
 ComputerName     : region1.v2.argotunnel.com
 RemoteAddress    : 198.41.192.227
 RemotePort       : 443
@@ -204,8 +210,10 @@ TcpTestSucceeded : True
 ```
 
 ```powershell
-PS C:\Cloudflared\bin> tnc region1.v2.argotunnel.com -port 7844
+tnc region1.v2.argotunnel.com -port 7844
+```
 
+```txt output
 ComputerName     : region1.v2.argotunnel.com
 RemoteAddress    : 198.41.192.227
 RemotePort       : 7844

@@ -57,6 +57,10 @@ If your domain is on the Free plan, it will be deleted automatically if it is no
 
 For Enterprise zones, if you want to adjust settings before zone activation, Logpush for [DNS logs](/logs/reference/log-fields/zone/dns_logs/) and [DNS Zone Transfer](/dns/zone-setups/zone-transfers/) configuration work as expected in pending state.
 
+:::note
+If you have mistakenly added a zone to your account it will appear as pending. It can be safely [removed](/fundamentals/setup/manage-domains/remove-domain/).
+:::
+
 ### Causes
 
 * [Full setup](/dns/zone-setups/full-setup/): You have either not [changed your authoritative nameservers](/dns/nameservers/update-nameservers/) or your change has not yet been authenticated by Cloudflare.

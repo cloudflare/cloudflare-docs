@@ -5,6 +5,10 @@ productLink: "/cloudflare-one/policies/gateway/"
 productArea: Cloudflare One
 productAreaLink: /cloudflare-one/changelog/
 entries:
+  - publish_date: "2024-09-30"
+    title: File sandboxing
+    description: |-
+      Gateway users on Enterprise plans can create HTTP policies with [file sandboxing](/cloudflare-one/policies/gateway/http-policies/file-sandboxing/) to quarantine previously unseen files downloaded by your users and scan them for malware.
   - publish_date: "2024-07-30"
     title: UK NCSC indicator feed publicly available in Gateway
     description: |-
