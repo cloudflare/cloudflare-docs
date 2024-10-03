@@ -8,7 +8,7 @@ sidebar:
 
 import { Render, Details, GlossaryTooltip, TabItem, Tabs } from "~/components";
 
-This guide will cover how to connect two independent subnets with WARP Connector. Each subnet must run its own WARP Connector on a Linux host. Installing on your router is the simplest setup, but if you do not have access to the router, you may choose any other machine on the subnet.
+This guide covers how to connect two independent subnets with WARP Connector. Each subnet must run its own WARP Connector on a Linux host. Installing on your router is the simplest setup, but if you do not have access to the router, you may choose any other machine on the subnet.
 
 ```mermaid
     flowchart LR
@@ -32,17 +32,11 @@ In this example, we will create a WARP Connector for subnet `10.0.0.0/24` and in
 
 ## 1. Install a WARP Connector
 
-<Render file="tunnel/install-warp-connector" />
+<Render file="tunnel/warp-connector-install" />
 
 ## 2. (Recommended) Create a device profile
 
-A dedicated [device profile](/cloudflare-one/connections/connect-devices/warp/configure-warp/device-profiles/) allows you to manage the WARP Connector host machine separately from WARP client user devices.
-
-WARP Connector hosts are registered to your Zero Trust organization with the email address `warp_connector@<your-team-name>.cloudflareaccess.com`. To set up a device profile for WARP Connector, [create a new profile](/cloudflare-one/connections/connect-devices/warp/configure-warp/device-profiles/#create-a-new-profile) that matches on the following expression:
-
-| Selector | Operator | Value |
-| -------- | -------- | ----- |
-| User email | is | `warp_connector@<your-team-name>.cloudflareaccess.com` |
+<Render file="tunnel/warp-connector-device-profile" />
 
 ## 3. Route traffic from WARP Connector to subnet
 
@@ -91,19 +85,15 @@ Depending on where you installed the WARP Connector, you may need to configure o
 
 ### Option 1: Default gateway
 
-If you installed WARP Connector on your router, no additional configuration is necessary. All traffic will use the router as the default gateway.
-
-![Default gateway routing configuration](~/assets/images/cloudflare-one/connections/connect-apps/warp-connector/default-gateway.png)
+<Render file="tunnel/warp-connector-default-gateway" />
 
 ### Option 2: Alternate gateway
 
-If you have access to the router but installed WARP Connector on another machine, you can configure the router to forward traffic to the WARP Connector. This typically involves adding a static route for the destination IPs that you want to connect to through Cloudflare. Refer to your router's documentation for specific instructions on how to add an IP route.
-
-![Alternate gateway routing configuration](~/assets/images/cloudflare-one/connections/connect-apps/warp-connector/alternate-gateway.png)
+<Render file="tunnel/warp-connector-alternate-gateway" />
 
 #### Route from subnet to subnet
 
-For example, if you are on subnet `10.0.0.0/24` and want to reach applications behind subnet `192.168.1.0/24`, add a rule that routes `192.168.1.0/24` to the WARP Connector host machine (`10.0.0.100` in the diagram above). When a device sends a request to `192.168.1.0/24`, the router will first redirect the traffic to the WARP Connector host. WARP Connector encrypts the traffic, changes its destination IP to the [WARP ingress IP](/cloudflare-one/connections/connect-devices/warp/deployment/firewall/#warp-ingress-ip), and sends it back to the router. The router will now forward this encrypted traffic to Cloudflare.
+For example, for laptop `10.0.0.2` to reach applications behind subnet `192.168.1.0/24`, add a rule on the router that routes `192.168.1.0/24` to the WARP Connector host machine (`10.0.0.100`). When a device sends a request to `192.168.1.0/24`, the router will first redirect the traffic to the WARP Connector host. WARP Connector encrypts the traffic, changes its destination IP to the [WARP ingress IP](/cloudflare-one/connections/connect-devices/warp/deployment/firewall/#warp-ingress-ip), and sends it back to the router. The router will now forward this encrypted traffic to Cloudflare.
 
 :::note
 
@@ -112,37 +102,11 @@ Ensure that your routing rules do not forward the [WARP ingress IP](/cloudflare-
 
 ### Option 3: Intermediate gateway
 
-If you do not have access to the router, you will need to configure each device on the subnet to egress through the WARP Connector machine instead of the default gateway.
-
-![Intermediate gateway routing configuration](~/assets/images/cloudflare-one/connections/connect-apps/warp-connector/intermediate-gateway.png)
+<Render file="tunnel/warp-connector-intermediate-gateway" />
 
 #### Route all traffic
 
-You can configure all traffic on a device to egress through WARP Connector with its local source IP. All traffic will be filtered by your Gateway network policies.
-
-<Tabs> <TabItem label="Linux">
-
-```sh
-sudo ip route add default via <WARP-CONNECTOR-IP> dev eth0 metric 101
-```
-
-Ensure that the `metric` value is lower than other default gateways. To verify that WARP Connector is now the preferred default gateway, run `ip route get <DESTINATION-IP>`.
-
-</TabItem> <TabItem label="macOS">
-
-```sh
-sudo route -n change default <WARP-CONNECTOR-IP> -interface en0
-```
-
-</TabItem>
-
-<TabItem label="Windows">
-
-```bash
-route /p add 0.0.0.0 mask 0.0.0.0 <WARP-CONNECTOR-IP> metric 101
-```
-
-</TabItem> </Tabs>
+<Render file="tunnel/warp-connector-route-all-traffic" />
 
 #### Route specific IPs
 
@@ -173,8 +137,7 @@ route /p add <DESTINATION-IP> mask 255.255.255.255 <WARP-CONNECTOR-IP>
 
 #### Verify routes
 
-To validate subnet routing, [check your routing table](/cloudflare-one/connections/connect-devices/warp/configure-warp/route-traffic/warp-architecture/#routing-table) and ensure that traffic is routing through the `CloudflareWARP` [virtual interface](/cloudflare-one/connections/connect-devices/warp/configure-warp/route-traffic/warp-architecture/#virtual-interface).
-
+<Render file="tunnel/warp-connector-verify-routes" />
 
 ## 5. Install another WARP Connector
 
