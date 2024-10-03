@@ -19,7 +19,10 @@ Follow the instructions in the [Magic Network Monitoring API](/api/operations/ma
 
 The `warp_devices` array at the account level is a list of WARP devices through which you can send encrypted flows. Each WARP device must have:
 
-- The WARP client UUID (you can obtain the UUID in the UI or through the `warp-cli registration show` command).
+- The WARP client UUID. You can obtain the UUID in the UI or through the following command:
+  ```sh
+  warp-cli registration show
+  ```
 - A name.
 - A `router_ip` that belongs to one of your configured router IP addresses.
 
@@ -27,9 +30,10 @@ For example:
 
 ```bash
 curl --request PATCH \
-"https://api.cloudflare.com/client/v4/accounts/account_id/mnm/config" \
---header 'Content-Type: application/json' \
---header 'X-Auth-Email: ' \
+"https://api.cloudflare.com/client/v4/accounts/{account_id}/mnm/config" \
+--header "X-Auth-Email: <EMAIL>" \
+--header "X-Auth-Key: <API_KEY>" \
+--header "Content-Type: application/json" \
 --data '{
 	"warp_devices": [
 		{
@@ -57,7 +61,7 @@ For example, if WARP is running on a machine in your network with the IP `10.10.
 
 In the machine running WARP, you would then redirect this traffic to Cloudflare as is, through the use of a proxy or redirect tool of your choice. Some options below:
 
-- Using socat, you listen on the desired port for UDP traffic, and then proxy that to Magic Newtork’s monitoring destination and port.
+- Using socat, you listen on the desired port for UDP traffic, and then proxy that to Magic Newtork's monitoring destination and port.
   - `socat UDP-LISTEN:2055,reuseaddr,fork UDP:162.159.65.1:2055`
   - `socat UDP-LISTEN:6343,reuseaddr,fork UDP:162.159.65.1:6343`
 - Using any other proxy or port forwarding tool, such as `netcat`, `uredir` or `iptables`.
