@@ -51,10 +51,14 @@ will be thrown.
 ```mdx title="/src/content/partials/style-guide/hello.mdx"
 ---
 params:
-    - name
+    - name, foo, bar
 ---
 
 Hello, {props.name}!
+
+Hello, {props.foo}!
+
+Hello, {props.bar}!
 ```
 
 ### Params
