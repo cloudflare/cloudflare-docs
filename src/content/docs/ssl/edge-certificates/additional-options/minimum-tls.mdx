@@ -52,8 +52,8 @@ Use the [Edit zone setting](/api/operations/zone-settings-edit-single-setting) e
 
 ```bash
 curl --request PATCH \
-"https://api.cloudflare.com/client/v4/zones/{zone_id}/settings/min_tls_version" \
---header 'Authorization: Bearer <API_TOKEN>' \
+https://api.cloudflare.com/client/v4/zones/{zone_id}/settings/min_tls_version \
+--header "Authorization: Bearer <API_TOKEN>" \
 --header "Content-Type: application/json" \
 --data '{
     "id": "min_tls_version",
@@ -76,8 +76,8 @@ Cloudflare uses the [hostname priority logic](/ssl/reference/certificate-and-hos
 
 ```bash
 curl --request PUT \
-"https://api.cloudflare.com/client/v4/zones/{zone_id}/hostnames/settings/min_tls_version/{hostname}" \
---header 'Authorization: Bearer <API_TOKEN>' \
+https://api.cloudflare.com/client/v4/zones/{zone_id}/hostnames/settings/min_tls_version/{hostname} \
+--header "Authorization: Bearer <API_TOKEN>" \
 --header "Content-Type: application/json" \
 --data '{
     "value": "1.2"
