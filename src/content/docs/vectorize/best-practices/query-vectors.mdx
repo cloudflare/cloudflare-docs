@@ -17,7 +17,7 @@ A query vector is either an array of JavaScript numbers, 32-bit floating point o
 
 ```ts
 // query vector dimensions must match the Vectorize index dimension being queried
-let queryVector = [54.8, 5.5, 3.1, ...]; 
+let queryVector = [54.8, 5.5, 3.1, ...];
 let matches = await env.YOUR_INDEX.query(queryVector);
 ```
 
@@ -42,7 +42,7 @@ You can optionally change the number of results returned and/or whether results 
 
 ```ts
 // query vector dimensions must match the Vectorize index dimension being queried
-let queryVector = [54.8, 5.5, 3.1, ...]; 
+let queryVector = [54.8, 5.5, 3.1, ...];
 // topK defaults to 5; returnValues defaults to false; returnMetadata defaults to "none"
 let matches = await env.YOUR_INDEX.query(queryVector, {
 	topK: 1,
@@ -70,6 +70,13 @@ This would return a set of matches resembling the following, based on the distan
 ```
 
 Refer to [Vectorize API](/vectorize/reference/client-api/) for additional examples.
+
+## Control over scoring precision and query accuracy
+
+When querying vectors, you can specify to either use high-precision scoring, thereby increasing the precision of the query matches scores as well as the accuracy of the query results, or use approximate scoring for faster response times.
+Using approximate scoring, returned scores will be an approximation of the real distance/similarity between your query and the returned vectors.
+
+High-precision scoring is enabled by setting `returnValues: true` on your query; this tells Vectorize to fetch and use the original vector values for your matches, which enables the computation of exact scores of matches, increasing the accuracy of the results.
 
 ## Workers AI
 
