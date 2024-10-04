@@ -21,7 +21,7 @@ Cloudflare applies a layered detection approach to Bot Management with several d
 
 - **Bot Score:** A [bot score](/bots/concepts/cloudflare-bot-tags/) is a score from 1 to 99 that indicates how likely that request came from a bot. A score of 1 means Cloudflare is certain the request was automated.
 - **Bot Score Source:** Bot Score Source is the detection engine used for the bot score.
-- **Bot Detection ID:** [Detection IDs](/bots/concepts/cloudflare-bot-tags/) are static rules used to detect predictable bot behavior with no overlap with human traffic. Detection IDs cause a bot to receive a score source of heuristics with a score of 1\.
+- **Bot Detection ID:** [Detection IDs](/bots/concepts/detection-ids/) are static rules used to detect predictable bot behavior with no overlap with human traffic. Detection IDs cause a bot to receive a score source of heuristics with a score of 1.
 - **Bot Tag:** [Bot tags](/bots/concepts/cloudflare-bot-tags/) provide more detail about why Cloudflare assigned a [bot score](/bots/concepts/bot-score/) to a request.
 - **Verified Bots:** Cloudflare maintains [a list of "Verified" good bots](https://radar.cloudflare.com/traffic/verified-bots) which can be used in policies to insure good bots such as those associated with a search engine are not blocked.
 - **AI Bots:** [If the feature is enabled](/bots/concepts/bot/), Cloudflare will detect and block verified AI bots that respect robots.txt and crawl rate, and do not hide their behavior from your website. The rule has also been expanded to include more signatures of AI bots that do not follow the rules.
