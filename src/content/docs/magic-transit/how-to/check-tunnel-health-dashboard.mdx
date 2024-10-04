@@ -1,9 +1,16 @@
 ---
 pcx_content_type: how-to
 title: Check tunnel health in the dashboard
-
 ---
 
-import { Render } from "~/components"
+import { Render } from "~/components";
 
-<Render file="tunnel-healthchecks-dash" product="magic-wan" params={{ one: "The dashboard shows the global view of tunnel health as measured from all Cloudflare locations.", two: "**Magic Transit** > **Tunnel health**" }} />
+<Render
+	file="tunnel-healthchecks-dash"
+	product="magic-wan"
+	params={{
+		dashInfo:
+			"The dashboard shows the global view of tunnel health as measured from all Cloudflare locations.",
+		productPath: "**Magic Transit** > **Tunnel health**",
+	}}
+/>
