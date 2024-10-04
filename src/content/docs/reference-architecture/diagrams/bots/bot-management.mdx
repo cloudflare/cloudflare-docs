@@ -15,7 +15,7 @@ Cloudflare has bot management capabilities to help identify and mitigate automat
 
 With [Enterprise Bot Management](/bots/get-started/bm-subscription/) customers have the maximum protection and features/capability. A [bot score](/bots/concepts/bot-score/) is exposed for every request. Scores below 30 are commonly associated with bot traffic and customers can then take action on this score with [WAF custom rules](/waf/custom-rules/) or [Workers](/workers/runtime-apis/request/#incomingrequestcfproperties). Additionally, customers can view this score along with other bot specifics like bot score source, bot detection IDs, and bot detection tags in the Bots, Security Analytics, and Events dashboards; these fields can also be seen in more detailed logs in Log Explorer or, with Log Push, logs with these respective fields can be exported to 3rd party SIEMs/Analytics platforms.
 
-Cloudflare applies a layered detection approach to Bot Management with several detection engines that cumulatively can impact the bot score given to every request. A bot score is a score from 1 to 99 that indicates how likely that request came from a bot. This bot score can then be used in WAF custom rules or Workers; it’s also exposed in a variety of analytics dashboards and logs.
+Cloudflare applies a layered detection approach to Bot Management with several detection engines that cumulatively can impact the bot score given to every request. A bot score is a score from 1 to 99 that indicates how likely that request came from a bot. This bot score can then be used in WAF custom rules or Workers; it's also exposed in a variety of analytics dashboards and logs.
 
 ## Definitions
 
