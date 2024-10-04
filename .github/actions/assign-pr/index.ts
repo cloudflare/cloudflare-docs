@@ -80,7 +80,7 @@ async function list(
 			}
 
 			if (assignees.size === 0) {
-				assignees.add("kodster28");
+				assignees.add("haleycode");
 			}
 
 			// don't self-assign
