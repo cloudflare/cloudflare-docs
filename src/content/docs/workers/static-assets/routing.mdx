@@ -25,7 +25,9 @@ In this example, request to `example.com/blog` serves the `blog.html` file.
 
 ![A request to `example.com/blog` serves the `/blog.html` file. ](~/assets/images/workers/platform/assets/workers-assets-serve-asset.png)
 
-2. If there are no assets that match the current route requested then the Worker will be invoked. If there is no Worker, [`not_found_handling`](/workers/static-assets/routing/#2-not_found_handling) will be evaluated. By default, a null-body 404-status response will be served. To invoke `not_found_handling` behavior _with_ a Worker, you must use the [asset binding](/workers/static-assets/binding/#runtime-api-reference).
+2. If there is no Worker script, [`not_found_handling`](/workers/static-assets/routing/#2-not_found_handling) will be evaluated. By default, a null-body 404-status response will be served.
+
+If a Worker is configured, and there are no assets that match the current route requested, the Worker will be invoked. The Worker can then "fall back" to `not_found_handling` asset behavior, by passing the incoming request through to the [asset binding](/workers/static-assets/binding/#runtime-api-reference).
 
 In this example, request to `example.com/api` doesn't match a static asset so the Worker is invoked.
 
@@ -43,7 +45,7 @@ Forcing or dropping trailing slashes on request paths (e.g. `example.com/page/` 
 
 #### 2. `not_found_handling`
 
-`not_found_handling` determines how Cloudflare will construct a response if a request does not match a static asset, and there is no Worker script. If you do have a Worker script, this behavior **needs to be manually invoked** using the [assets binding](/workers/static-assets/binding/#runtime-api-reference).
+In the event a request does not match a static asset, and there is no Worker script (or that Worker script calls `fetch()` on [the assets binding](/workers/static-assets/binding/)), `not_found_handling` determines how Cloudflare will construct a response.
 
 It can be used to serve single-page applications (SPAs), or to serve custom 404 HTML pages.
 
