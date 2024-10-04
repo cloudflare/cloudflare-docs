@@ -1,6 +1,6 @@
 ---
 pcx_content_type: how-to
-title: Connect WARP clients to private network
+title: Connect private network to WARP clients
 sidebar:
   label: User-to-site
   order: 3
@@ -8,17 +8,109 @@ sidebar:
 
 import { Render, Details, GlossaryTooltip, TabItem, Tabs } from "~/components";
 
+This guide covers how to connect WARP client user devices to a private network behind WARP Connector. In this example, we will create a WARP Connector for subnet `10.0.0.0/24` and install it on `10.0.0.1`.
+
 ```mermaid
     flowchart LR
       subgraph subnet1[Subnet 10.0.0.0/24]
       router1["WARP Connector
         10.0.0.1"]
       end
-      router1<-->C((Cloudflare))<-->W[WARP client]
+      W[WARP clients]-->C((Cloudflare))-->router1
 ```
+
+:::note
+To connect a private network using `cloudflared`, refer to [Connect private networks](/cloudflare-one/connections/connect-networks/private-net/cloudflared/).
+:::
+
+## Prerequisites
+
+- A Linux host [^1] on the subnet
+- Verify that your firewall allows inbound/outbound traffic over the [WARP IP addresses, ports, and domains](/cloudflare-one/connections/connect-devices/warp/deployment/firewall/).
+
+## 1. Install a WARP Connector
+
+<Render file="tunnel/warp-connector-install" />
+
+## 2. (Recommended) Create a device profile
+
+<Render file="tunnel/warp-connector-device-profile" />
+
+## 3. Route CGNAT IPs through Cloudflare
+
+WARP clients and WARP Connectors are accessed using their  <GlossaryTooltip term="CGNAT IP">CGNAT IP</GlossaryTooltip>. Therefore, CGNAT IP traffic must route through Cloudflare on both the WARP Connector host and WARP client devices.
+
+1. In your WARP Connector device profile, delete `100.96.0.0/12` from the [Split Tunnel Exclude list](/cloudflare-one/connections/connect-devices/warp/configure-warp/route-traffic/split-tunnels/) (or add it to the Split Tunnel Include list).
+2. Repeat the previous step for all WARP client device profiles.
+
+## 4. Route traffic from subnet to WARP Connector
+
+Depending on where you installed the WARP Connector, you may need to configure other devices on the subnet to route requests through WARP Connector.
+
+### Option 1: Default gateway
+
+<Render file="tunnel/warp-connector-default-gateway" />
+
+### Option 2: Alternate gateway
+
+<Render file="tunnel/warp-connector-alternate-gateway" />
 
 #### Route from subnet to WARP clients
 
-`100.96.0.0/12` is the default CIDR for all user devices running the [WARP client](/cloudflare-one/connections/connect-devices/warp/). To connect from the subnet to user devices:
-- On your router, add a rule that routes the destination IP `100.96.0.0/12` to the WARP Connector host machine (`10.0.0.100` in the diagram above).
-- Ensure that CGNAT IP traffic routes through WARP on both the WARP Connector host and WARP client devices. In other words, delete `100.96.0.0/12` from the [Split Tunnel Exclude list](/cloudflare-one/connections/connect-devices/warp/configure-warp/route-traffic/split-tunnels/) in both device profiles.
+`100.96.0.0/12` is the default CIDR for all user devices running the [WARP client](/cloudflare-one/connections/connect-devices/warp/). On your router, add a rule that routes the destination IP `100.96.0.0/12` to the WARP Connector host machine (`10.0.0.100`).
+
+<Render file="tunnel/warp-connector-alternate-gateway-flow" />
+
+### Option 3: Intermediate gateway
+
+<Render file="tunnel/warp-connector-intermediate-gateway" />
+
+#### Route CGNAT IPs
+
+To route all <GlossaryTooltip term="CGNAT IP">CGNAT IP</GlossaryTooltip> traffic through WARP Connector:
+
+<Tabs> <TabItem label="Linux">
+
+```sh
+sudo ip route add 100.96.0.0/12 via <WARP-CONNECTOR-IP> dev eth0
+```
+
+</TabItem> <TabItem label="macOS">
+
+```sh
+sudo route -n add -net 100.96.0.0/12 <WARP-CONNECTOR-IP>
+```
+
+</TabItem>
+
+<TabItem label="Windows">
+
+```bash
+route /p add 100.96.0.0/12 mask 255.255.255.255 <WARP-CONNECTOR-IP>
+```
+
+</TabItem> </Tabs>
+
+#### Verify routes
+
+<Render file="tunnel/warp-connector-verify-routes" />
+
+## 4. Test the WARP Connector
+
+You can now send a request from a device behind WARP Connector to a WARP client user device.
+
+1. From **My Team** > **Devices**, determine the **Virtual IPv4** address of the WARP client device.
+2. From a device on the private network, run `ping <WARP-VIRTUAL-IPV4>`.
+
+```mermaid
+    flowchart LR
+      subgraph subnet1[Subnet 10.0.0.0/24]
+        device1["Device
+        10.0.0.2"]--ping 100.96.0.21-->router1["WARP Connector
+        10.0.0.1"]
+      end
+      router1-->C((Cloudflare))-->W["WARP client
+				100.96.0.21"]
+```
+
+[^1]: <Render file="tunnel/warp-connector-linux-packages" />

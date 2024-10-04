@@ -93,12 +93,9 @@ Depending on where you installed the WARP Connector, you may need to configure o
 
 #### Route from subnet to subnet
 
-For example, for laptop `10.0.0.2` to reach applications behind subnet `192.168.1.0/24`, add a rule on the router that routes `192.168.1.0/24` to the WARP Connector host machine (`10.0.0.100`). When a device sends a request to `192.168.1.0/24`, the router will first redirect the traffic to the WARP Connector host. WARP Connector encrypts the traffic, changes its destination IP to the [WARP ingress IP](/cloudflare-one/connections/connect-devices/warp/deployment/firewall/#warp-ingress-ip), and sends it back to the router. The router will now forward this encrypted traffic to Cloudflare.
+For example, for devices on subnet `10.0.0.0/24` to reach applications behind subnet `192.168.1.0/24`, add a rule on the router that routes `192.168.1.0/24` to the WARP Connector host machine (`10.0.0.100`).
 
-:::note
-
-Ensure that your routing rules do not forward the [WARP ingress IP](/cloudflare-one/connections/connect-devices/warp/deployment/firewall/#warp-ingress-ip) back to the WARP Connector.
-:::
+<Render file="tunnel/warp-connector-alternate-gateway-flow" />
 
 ### Option 3: Intermediate gateway
 
@@ -181,4 +178,4 @@ You can now test the connection between the two subnets. For example, on the `10
 If you are testing with curl using private hostnames, add the `--ipv4` flag to your curl commands.
 :::
 
-[^1]: Check the [system requirements](/cloudflare-one/connections/connect-devices/warp/download-warp/#linux). Package dependencies are the following: `curl`, `gpg`, `iptables`, `iptables-persistent`, `lsb-core`, and `sudo`.
+[^1]: <Render file="tunnel/warp-connector-linux-packages" />
