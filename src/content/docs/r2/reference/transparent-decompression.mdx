@@ -1,0 +1,12 @@
+---
+title: Transparent decompression
+pcx_content_type: concept
+---
+
+R2 supports transparent decompression, which allows users to store compressed versions of their files while serving an uncompressed files to users.
+
+When possible, Cloudflare will always request compressed content. Cloudflare supports gzip, Brotli (br), and no compression when requesting content from your origin server.
+
+Transparent decompression occurs when the file stored in R2 is compressed or when an object's metadata includes the `Content-Encoding` response header.
+
+If a compression type is not specified in the `Accept-Encoding` request header, the content is decompressed during the request.
