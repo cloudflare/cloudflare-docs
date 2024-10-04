@@ -17,10 +17,10 @@ Advanced TCP Protection protects the IP prefixes you select from sophisticated T
 
 Prefixes added to Advanced TCP Protection must be one of the following:
 
-* A prefix [onboarded to Magic Transit](/magic-transit/how-to/advertise-prefixes/).
-* A subset of a prefix [onboarded to Magic Transit](/magic-transit/how-to/advertise-prefixes/).
+- A prefix [onboarded to Magic Transit](/magic-transit/how-to/advertise-prefixes/).
+- A subset of a prefix [onboarded to Magic Transit](/magic-transit/how-to/advertise-prefixes/).
 
-You cannot add a prefix (or a subset of a prefix) that you have not onboarded to Magic Transit or whose status is still *Unapproved*. Contact your account team to get help with prefix approvals.
+You cannot add a prefix (or a subset of a prefix) that you have not onboarded to Magic Transit or whose status is still -Unapproved-. Contact your account team to get help with prefix approvals.
 
 ## Allowlist
 
@@ -42,9 +42,9 @@ Each system component (SYN flood protection and out-of-state TCP protection) has
 
 Each Advanced TCP Protection system component has its own filters. You can configure a filter for each execution mode:
 
-* **Mitigation Filter**: The system will drop packets matching the filter expression.
-* **Monitoring Filter**: The system will log packets matching the filter expression.
-* **Off Filter**: The system will ignore packets matching the filter expression.
+- **Mitigation Filter**: The system will drop packets matching the filter expression.
+- **Monitoring Filter**: The system will log packets matching the filter expression.
+- **Off Filter**: The system will ignore packets matching the filter expression.
 
 When there is a match, a filter will alter the execution mode for all configured rules in a given system component (SYN flood protection or out-of-state TCP protection), including disabled rules.
 
@@ -58,14 +58,13 @@ Your already onboarded prefixes can remain protected with one or more configured
 
 When onboarding a new prefix, you would configure a monitoring filter for this prefix and then add it to Advanced TCP Protection.
 
-***
+---
 
 ## Determining the execution mode
 
 When you have both rules and filters configured, the execution mode is determined according to the following:
 
 1. If there is a match for one of the configured filters, use the filter's execution mode. The filter evaluation order  is based on their mode, in the following order:
-
    1. Mitigation filter (filter with `enabled` mode)
    2. Monitoring filter (filter with `monitoring` mode)
    3. Off filter (filter with `disabled` mode)

@@ -3,10 +3,9 @@ title: Workers AI
 pcx_content_type: configuration
 sidebar:
   order: 2
-
 ---
 
-import { Render } from "~/components"
+import { Render } from "~/components";
 
 Use AI Gateway for analytics, caching, and security on requests to [Workers AI](/workers-ai/).
 
@@ -14,14 +13,14 @@ Use AI Gateway for analytics, caching, and security on requests to [Workers AI](
 
 To interact with a REST API, update the URL used for your request:
 
-* **Previous**: `https://api.cloudflare.com/client/v4/accounts/{account_id}/ai/run/{model_id}`
-* **New**: `https://gateway.ai.cloudflare.com/v1/{account_id}/{gateway_id}/workers-ai/{model_id}`
+- **Previous**: `https://api.cloudflare.com/client/v4/accounts/{account_id}/ai/run/{model_id}`
+- **New**: `https://gateway.ai.cloudflare.com/v1/{account_id}/{gateway_id}/workers-ai/{model_id}`
 
 For these parameters:
 
-* `{account_id}` is your Cloudflare [account ID](/workers-ai/get-started/rest-api/#1-get-api-token-and-account-id).
-* `{gateway_id}` refers to the name of your existing [AI Gateway](/ai-gateway/get-started/#create-gateway).
-* `{model_id}` refers to the model ID of the [Workers AI model](/workers-ai/models/).
+- `{account_id}` is your Cloudflare [account ID](/workers-ai/get-started/rest-api/#1-get-api-token-and-account-id).
+- `{gateway_id}` refers to the name of your existing [AI Gateway](/ai-gateway/get-started/#create-gateway).
+- `{model_id}` refers to the model ID of the [Workers AI model](/workers-ai/models/).
 
 ## Examples
 
@@ -43,7 +42,7 @@ curl https://gateway.ai.cloudflare.com/v1/{account_id}/{gateway_id}/workers-ai/@
 
 ### OpenAI compatible endpoints
 
-<Render file="openai-compatibility" product="workers-ai" /> <br/>
+<Render file="openai-compatibility" product="workers-ai" /> <br />
 
 ```bash title="Request to OpenAI compatible endpoint"
 curl https://gateway.ai.cloudflare.com/v1/{account_id}/{gateway_id}/workers-ai/v1/chat/completions \
@@ -67,37 +66,34 @@ To include an AI Gateway within your Worker, add the gateway as an object in you
 
 ```ts
 export interface Env {
-  AI: Ai;
+	AI: Ai;
 }
 
 export default {
-  async fetch(request: Request, env: Env): Promise<Response> {
-    const response = await env.AI.run(
-      "@cf/meta/llama-3.1-8b-instruct",
-      {
-        prompt: "Why should you use Cloudflare for your AI inference?"
-      },
-      {
-        gateway: {
-          id: "{gateway_id}",
-          skipCache: false,
-          cacheTtl: 3360
-        }
-      }
-    );
-    return new Response(JSON.stringify(response));
-  },
+	async fetch(request: Request, env: Env): Promise<Response> {
+		const response = await env.AI.run(
+			"@cf/meta/llama-3.1-8b-instruct",
+			{
+				prompt: "Why should you use Cloudflare for your AI inference?",
+			},
+			{
+				gateway: {
+					id: "{gateway_id}",
+					skipCache: false,
+					cacheTtl: 3360,
+				},
+			},
+		);
+		return new Response(JSON.stringify(response));
+	},
 } satisfies ExportedHandler<Env>;
 ```
 
 Workers AI supports the following parameters for AI gateways:
 
-
-
-* `id` string
-  * Name of your existing [AI Gateway](/ai-gateway/get-started/#create-gateway). Must be in the same account as your Worker.
-* `skipCache` boolean(default: false)
-  * Controls whether the request should [skip the cache](/ai-gateway/configuration/caching/#skip-cache-cf-skip-cache).
-* `cacheTtl` number
-  * Controls the [Cache TTL](/ai-gateway/configuration/caching/#cache-ttl-cf-cache-ttl).
-
+- `id` string
+  - Name of your existing [AI Gateway](/ai-gateway/get-started/#create-gateway). Must be in the same account as your Worker.
+- `skipCache` boolean(default: false)
+  - Controls whether the request should [skip the cache](/ai-gateway/configuration/caching/#skip-cache-cf-skip-cache).
+- `cacheTtl` number
+  - Controls the [Cache TTL](/ai-gateway/configuration/caching/#cache-ttl-cf-cache-ttl).

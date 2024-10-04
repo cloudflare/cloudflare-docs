@@ -3,16 +3,13 @@ pcx_content_type: reference
 title: Gateway activity logs
 sidebar:
   order: 3
-
 ---
 
-import { Render } from "~/components"
+import { Render, GlossaryTooltip } from "~/components";
 
-:::note
+:::note[Private source IP substitution]
 
-
-Gateway logs will only show the public Source IP address. Private IP addresses are NAT-ed behind a public IP address.
-
+Gateway logs will only show the public IP address for the **Source IP** field. Private IP addresses are substituted by a public IP address via network address translation (NAT).
 
 :::
 
@@ -34,83 +31,82 @@ These settings will only apply to logs displayed in Zero Trust. Logpush data is 
 
 #### Basic information
 
-
-
 | Field                 | Description                                                                                                                                                                                                                                                                                                                                                                                            |
 | --------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| **DNS**               | Name of the domain that was queried.                                                                                                                                                                                                                                                                                                                                                                   |
+| **Query name**        | Name of the domain that was queried.                                                                                                                                                                                                                                                                                                                                                                   |
+| **Query ID**          | UUID of the query assigned by Cloudflare.                                                                                                                                                                                                                                                                                                                                                              |
 | **Email**             | Email address of the user who registered the WARP client where traffic originated from. If a non-identity on-ramp (such as a [proxy endpoint](/cloudflare-one/connections/connect-devices/agentless/pac-files/)) or machine-level authentication (such as a [service token](/cloudflare-one/identity/service-tokens/)) was used, this value will be `non_identity@<team-domain>.cloudflareaccess.com`. |
 | **Action**            | The [Action](/cloudflare-one/policies/gateway/dns-policies/#actions) Gateway applied to the query (such as Allow or Block).                                                                                                                                                                                                                                                                            |
 | **Time**              | Date and time of the DNS query.                                                                                                                                                                                                                                                                                                                                                                        |
-| **Resolver Decision** | The reason why Gateway applied a particular **Action** to the request. Refer to the [list of resolver decisions](#resolver-decisions).                                                                                                                                                                                                                                                                 |
+| **Resolver decision** | The reason why Gateway applied a particular **Action** to the request. Refer to the [list of resolver decisions](#resolver-decisions).                                                                                                                                                                                                                                                                 |
+| **Resolved IPs**      | Resolved IP addresses in the response.                                                                                                                                                                                                                                                                                                                                                                 |
+| **CNAMEs**            | `CNAME` records in the query.                                                                                                                                                                                                                                                                                                                                                                          |
 
+#### Configuration information
 
-
-#### Matched policies
-
-
-
-| Field                  | Description                                          |
-| ---------------------- | ---------------------------------------------------- |
-| **Policy Name**        | Name of the matched policy (if there is one).        |
-| **Policy ID**          | ID of the matched policy (if there is one).          |
-| **Policy Description** | Description of the matched policy (if there is one). |
-
-
-
-#### Custom resolver
-
-
-
-| Field                      | Description                                                 |
-| -------------------------- | ----------------------------------------------------------- |
-| **Address**                | Address of your custom resolver.                            |
-| **Policy**                 | Name of the matched resolver policy.                        |
-| **Response**               | Status of the custom resolver response.                     |
-| **Time (in milliseconds)** | Duration of time it took for the custom resolver to respond |
-
-
+| Field                  | Description                                                                                                                         |
+| ---------------------- | ----------------------------------------------------------------------------------------------------------------------------------- |
+| **DNS location**       | [User-configured location](/cloudflare-one/connections/connect-devices/agentless/dns/locations/) from where the DNS query was made. |
+| **Policy name**        | Name of the matched policy.                                                                                                         |
+| **Policy ID**          | ID of the matched policy.                                                                                                           |
+| **Policy description** | Description of the matched policy.                                                                                                  |
+| **DoH subdomain**      | <GlossaryTooltip term="DoH subdomain">DoH subdomain</GlossaryTooltip> of the DNS location.                                          |
+| **Protocol**           | Protocol that was used to make the DNS query (such as `https`).                                                                     |
 
 #### Identities
-
-
 
 | Field                  | Description                                                                                                                                                                                                                                                    |
 | ---------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | **Email**              | Email address of the user who registered the WARP client where traffic originated from.                                                                                                                                                                        |
 | **User ID**            | UUID of the user. Each unique email address in your organization will have a UUID associated with it.                                                                                                                                                          |
-| **Device Name**        | Display name of the device returned by the operating system to the WARP client. Typically this is the hostname of a device. Not all devices will have a device name. Device names are not guaranteed to be unique.                                             |
+| **Device name**        | Display name of the device returned by the operating system to the WARP client. Typically this is the hostname of a device. Not all devices will have a device name. Device names are not guaranteed to be unique.                                             |
 | **Device ID**          | UUID of the device connected with the WARP client. Each unique device in your organization will have a UUID associated with it each time the device is registered for a particular email. The same physical device may have multiple UUIDs associated with it. |
 | **Last authenticated** | Date and time the user last authenticated their Zero Trust session.                                                                                                                                                                                            |
 
-
-
 #### DNS query details
 
+| Field                                      | Description                                                                                           |
+| ------------------------------------------ | ----------------------------------------------------------------------------------------------------- |
+| **Query ID**                               | UUID of the query assigned by Cloudflare.                                                             |
+| **Query type**                             | Type of [DNS query](https://en.wikipedia.org/wiki/List_of_DNS_record_types).                          |
+| **Initial query domain categories**        | [Content categories](/cloudflare-one/policies/gateway/domain-categories/) that the domain belongs to. |
+| **Matched categories**                     | Name of the Gateway policy category that match the domain.                                            |
+| **Matched indicator feed names**           | Name of the indicator feeds that matched a Gateway policy.                                            |
+| **Query indicator feed names**             | Name of the indicator feeds that a matched domain or IP belongs to.                                   |
+| **Resolved continent IP geolocation**      | Continent code of the resolved IP address.                                                            |
+| **Resolved country IP geolocation**        | Country code of the resolved IP address.                                                              |
+| **DoT subdomain**                          | DoT subdomain of the DNS location.                                                                    |
+| **Source IP**                              | Public source IP address of the DNS query.                                                            |
+| **Source IP continent**                    | Continent code of the source IP address.                                                              |
+| **Source IP country**                      | Country code of the source IP address.                                                                |
+| **Source internal IP**                     | Private IP address assigned by the user's local network.                                              |
+| **Application name**                       | Name of the application that matched the domain.                                                      |
+| **Resolver IP**                            | Public IP address of the DNS resolver.                                                                |
+| **Port**                                   | Port that was used to make the DNS query.                                                             |
+| **Location ID**                            | ID of the DNS location where the query originated.                                                    |
+| **Scheduling - Time zone**                 | Time zone of the DNS query source.                                                                    |
+| **Scheduling - Time zone inferred method** | Method used to determine the DNS query source's time zone.                                            |
 
+#### DNS response details
 
-| Field                           | Description                                                                                                                         |
-| ------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------- |
-| **Query Type**                  | Type of [DNS query](https://en.wikipedia.org/wiki/List_of_DNS_record_types).                                                        |
-| **Query Category**              | [Content categories](/cloudflare-one/policies/gateway/domain-categories/) that the domain belongs to.                               |
-| **Matched Categories**          | Name of the Gateway policy category that match the domain.                                                                          |
-| **Matched Indicator Feed Name** | Name of the indicator feeds that matched a Gateway policy (if any).                                                                 |
-| **Query Indicator Feed Name**   | Name of the indicator feeds that a matched domain or IP belongs to (if any).                                                        |
-| **Source IP**                   | Public source IP address of the DNS query.                                                                                          |
-| **Source IP Country**           | Country code of the DNS query.                                                                                                      |
-| **Source Internal IP**          | Private IP address assigned by the user's local network (if any).                                                                   |
-| **Resolver IP**                 | Public IP address of the DNS resolver.                                                                                              |
-| **Resolved IPs**                | Resolved IP addresses in the response (if any).                                                                                     |
-| **Port**                        | Port that was used to make the DNS query.                                                                                           |
-| **Protocol**                    | Protocol that was used to make the DNS query (such as `https`).                                                                     |
-| **DNS Location**                | [User-configured location](/cloudflare-one/connections/connect-devices/agentless/dns/locations/) from where the DNS query was made. |
-| **Location ID**                 | ID of the DNS location where the query originated.                                                                                  |
+| Field                           | Description                                                                              |
+| ------------------------------- | ---------------------------------------------------------------------------------------- |
+| **Resolved CNAME categories**   | Content categories associated with the resolved `CNAME` records in the response.         |
+| **Resolved IP categories**      | Content categories associated with the resolved IPs in the response.                     |
+| **Resolved IPs**                | Resolved IPs in the response.                                                            |
+| **Authoritative nameserver IP** | IP address of the authoritative nameserver answering the DNS query.                      |
+| **EDE errors**                  | [Extended DNS error codes](https://www.rfc-editor.org/rfc/rfc8914.html) in the response. |
 
+#### Custom resolver
 
+| Field                      | Description                                                  |
+| -------------------------- | ------------------------------------------------------------ |
+| **Address**                | Address of your custom resolver.                             |
+| **Policy**                 | Name of the matched resolver policy.                         |
+| **Response**               | Status of the custom resolver response.                      |
+| **Time (in milliseconds)** | Duration of time it took for the custom resolver to respond. |
 
 ### Resolver decisions
-
-
 
 | Name                     | Value | Description                                                 |
 | ------------------------ | ----- | ----------------------------------------------------------- |
@@ -123,15 +119,11 @@ These settings will only apply to logs displayed in Zero Trust. Logpush data is 
 | `blockedRule`            | `9`   | IP address in the response matched a Block policy.          |
 | `allowedRule`            | `10`  | IP address in the response matched an Allow policy.         |
 
-
-
 ## Network logs
 
 :::caution[Failed connection logs]
 
-
 Gateway will only log failed connections in [network session logs](/logs/reference/log-fields/account/zero_trust_network_sessions/). These logs are available for Enterprise users via [Logpush](/cloudflare-one/insights/logs/logpush/) or [GraphQL](/cloudflare-one/insights/analytics/gateway/#graphql-queries).
-
 
 :::
 
@@ -139,81 +131,61 @@ Gateway will only log failed connections in [network session logs](/logs/referen
 
 #### Basic information
 
-
-
 | Field                  | Description                                                                                                                                       |
 | ---------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------- |
 | **Source IP**          | IP address of the user sending the packet.                                                                                                        |
-| **Source Internal IP** | Private IP address assigned by the user's local network.                                                                                          |
-| **Destination IP**     | IP address of the packet’s target.                                                                                                                |
+| **Source internal IP** | Private IP address assigned by the user's local network.                                                                                          |
+| **Destination IP**     | IP address of the packet's target.                                                                                                                |
 | **Action**             | The Gateway [Action](/cloudflare-one/policies/gateway/dns-policies/#actions) taken based on the first rule that matched (such as Allow or Block). |
 | **Session ID**         | ID of the unique session.                                                                                                                         |
 | **Time**               | Date and time of the session.                                                                                                                     |
 
-
-
 #### Matched policies
-
-
 
 | Field                  | Description                                           |
 | ---------------------- | ----------------------------------------------------- |
-| **Policy Name**        | Name of the matched policy (if there is one).         |
+| **Policy name**        | Name of the matched policy.                           |
 | **Policy ID**          | ID of the policy enforcing the decision Gateway made. |
-| **Policy Description** | Description of the matched policy (if there is one).  |
-
-
+| **Policy description** | Description of the matched policy.                    |
 
 #### Identities
-
-
 
 | Field                  | Description                                                                         |
 | ---------------------- | ----------------------------------------------------------------------------------- |
 | **Email**              | Email address of the user sending the packet. This is generated by the WARP client. |
 | **User ID**            | ID of the user sending the packet. This is generated by the WARP client.            |
-| **Device Name**        | Name of the device that sent the packet.                                            |
+| **Device name**        | Name of the device that sent the packet.                                            |
 | **Device ID**          | ID of the device that sent the packet. This is generated by the WARP client.        |
-| **Last Authenticated** | Date and time the user last authenticated with Zero Trust.                          |
-
-
+| **Last authenticated** | Date and time the user last authenticated with Zero Trust.                          |
 
 #### Network query details
-
-
 
 | Field                   | Description                                                                                                                                       |
 | ----------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------- |
 | **Source IP**           | IP address of the user sending the packet.                                                                                                        |
-| **Source Port**         | Source port number for the packet.                                                                                                                |
-| **Source Country**      | Country code for the packet source.                                                                                                               |
-| **Destination IP**      | IP address of the packet’s target.                                                                                                                |
-| **Destination Port**    | Destination port number for the packet.                                                                                                           |
-| **Destination Country** | Destination port number for the packet.                                                                                                           |
+| **Source port**         | Source port number for the packet.                                                                                                                |
+| **Source country**      | Country code for the packet source.                                                                                                               |
+| **Destination IP**      | IP address of the packet's target.                                                                                                                |
+| **Destination port**    | Destination port number for the packet.                                                                                                           |
+| **Destination country** | Destination port number for the packet.                                                                                                           |
 | **Protocol**            | Protocol over which the packet was sent.                                                                                                          |
-| **Detected Protocol**   | The detected [network protocol](/cloudflare-one/policies/gateway/network-policies/protocol-detection/).                                           |
+| **Detected protocol**   | The detected [network protocol](/cloudflare-one/policies/gateway/network-policies/protocol-detection/).                                           |
 | **SNI**                 | Host whose Server Name Indication (SNI) header Gateway will filter traffic against.                                                               |
-| **Virtual Network**     | [Virtual network](/cloudflare-one/connections/connect-networks/private-net/cloudflared/tunnel-virtual-networks/) that the client is connected to. |
+| **Virtual network**     | [Virtual network](/cloudflare-one/connections/connect-networks/private-net/cloudflared/tunnel-virtual-networks/) that the client is connected to. |
 | **Category details**    | Category or categories associated with the packet.                                                                                                |
-| **Proxy PAC Endpoint**  | [PAC file proxy endpoint](/cloudflare-one/connections/connect-devices/agentless/pac-files/) Gateway forwarded traffic to, if applicable.          |
-
-
+| **Proxy PAC endpoint**  | [PAC file proxy endpoint](/cloudflare-one/connections/connect-devices/agentless/pac-files/) Gateway forwarded traffic to, if applicable.          |
 
 ## HTTP logs
 
 :::note
 
-
 When an HTTP request results in an error, Gateway logs the first 512 bytes of the request for 30 days for internal troubleshooting. Otherwise, Gateway does not log HTTP bodies.
-
 
 :::
 
 ### Explanation of the fields
 
 #### Basic information
-
-
 
 | Field                        | Description                                                                                                                                       |
 | ---------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -222,66 +194,50 @@ When an HTTP request results in an error, Gateway logs the first 512 bytes of th
 | **Action**                   | The Gateway [Action](/cloudflare-one/policies/gateway/dns-policies/#actions) taken based on the first rule that matched (such as Allow or Block). |
 | **Request ID**               | Unique ID of the request.                                                                                                                         |
 | **Time**                     | Date and time of the HTTP request.                                                                                                                |
-| **Source Internal IP**       | Private IP address assigned by the user's local network.                                                                                          |
-| **User Agent**               | User agent header sent in the request by the originating device.                                                                                  |
+| **Source internal IP**       | Private IP address assigned by the user's local network.                                                                                          |
+| **User agent**               | User agent header sent in the request by the originating device.                                                                                  |
 | **Policy details**           | Policy corresponding to the decision Gateway made based on the traffic criteria of the request.                                                   |
-| **DLP profiles**             | Name of the matched [DLP profile](/cloudflare-one/policies/data-loss-prevention/dlp-profiles/) (if there is one).                                 |
-| **DLP profile entries**      | Name of the matched entry within the DLP profile (if there is one).                                                                               |
+| **DLP profiles**             | Name of the matched [DLP profile](/cloudflare-one/policies/data-loss-prevention/dlp-profiles/).                                                   |
+| **DLP profile entries**      | Name of the matched entry within the DLP profile.                                                                                                 |
 | **Uploaded/downloaded file** | <Render file="gateway/uploaded-downloaded-file" />                                                                                                |
-
-
 
 #### Matched policies
 
-
-
-| Field                  | Description                                          |
-| ---------------------- | ---------------------------------------------------- |
-| **Policy Name**        | Name of the matched policy (if there is one).        |
-| **Policy ID**          | ID of the matched policy (if there is one).          |
-| **Policy Description** | Description of the matched policy (if there is one). |
-
-
+| Field                  | Description                        |
+| ---------------------- | ---------------------------------- |
+| **Policy name**        | Name of the matched policy.        |
+| **Policy ID**          | ID of the matched policy.          |
+| **Policy description** | Description of the matched policy. |
 
 #### Identities
-
-
 
 | Field                  | Description                                                                                                          |
 | ---------------------- | -------------------------------------------------------------------------------------------------------------------- |
 | **Email**              | Email address of the user who made the HTTP request. This is generated by the WARP client.                           |
 | **User ID**            | ID of the user who made the request. This is generated by the WARP client.                                           |
-| **Device Name**        | Name of the device that made the request.                                                                            |
+| **Device name**        | Name of the device that made the request.                                                                            |
 | **Device ID**          | ID of the device that made the request. This is generated by the WARP client on the device that created the request. |
-| **Last Authenticated** | Date and time the user last authenticated with Zero Trust.                                                           |
-
-
+| **Last authenticated** | Date and time the user last authenticated with Zero Trust.                                                           |
 
 #### HTTP query details
 
-
-
 | Field                      | Description                                                                                                 |
 | -------------------------- | ----------------------------------------------------------------------------------------------------------- |
-| **HTTP Version**           | HTTP version of the origin that Gateway connected to on behalf of the user.                                 |
-| **HTTP Method**            | HTTP method used for the request (such as `GET` or `POST`).                                                 |
-| **HTTP Status Code**       | [HTTP status code](/support/troubleshooting/http-status-codes/http-status-codes/) returned in the response. |
+| **HTTP version**           | HTTP version of the origin that Gateway connected to on behalf of the user.                                 |
+| **HTTP method**            | HTTP method used for the request (such as `GET` or `POST`).                                                 |
+| **HTTP status code**       | [HTTP status code](/support/troubleshooting/http-status-codes/http-status-codes/) returned in the response. |
 | **URL**                    | Full URL of the HTTP request.                                                                               |
 | **Referer**                | Referer request header containing the address of the page making the request.                               |
 | **Source IP**              | Public source IP address of the HTTP request.                                                               |
-| **Source Port**            | Port that was used to make the HTTP request.                                                                |
-| **Source IP Country**      | Country code of the HTTP request.                                                                           |
+| **Source port**            | Port that was used to make the HTTP request.                                                                |
+| **Source IP country**      | Country code of the HTTP request.                                                                           |
 | **Destination IP**         | Public IP address of the destination requested.                                                             |
-| **Destination Port**       | Port of the destination requested.                                                                          |
-| **Destination IP Country** | Country code of the destination requested.                                                                  |
+| **Destination port**       | Port of the destination requested.                                                                          |
+| **Destination IP country** | Country code of the destination requested.                                                                  |
 | **Blocked file reason**    | Reason why the file was blocked if a file transfer occurred or was attempted.                               |
 | **Category details**       | Category the blocked file belongs to.                                                                       |
 
-
-
 #### File detection details
-
-
 
 | Field            | Description                                        |
 | ---------------- | -------------------------------------------------- |
@@ -292,8 +248,6 @@ When an HTTP request results in an error, Gateway logs the first 512 bytes of th
 | **Content type** | MIME type of the detected file.                    |
 | **Direction**    | Upload or download direction of the detected file. |
 | **Action**       | The Action Gateway applied to the request.         |
-
-
 
 ### Enhanced file detection
 
@@ -308,3 +262,7 @@ To turn on enhanced file detection:
 ### Isolate requests
 
 When a user creates an [isolation policy](/cloudflare-one/policies/browser-isolation/isolation-policies/), Gateway logs the initial request that triggers isolation as an Isolate action. Because this request is not isolated yet, the `is_isolated` field will return `false`. Zero Trust then securely returns the result to the user in an isolated browser. Gateway will log all subsequent requests in the isolated browser with the action (such as Allow or Block), and the `is_isolated` field will return `true`.
+
+## Limitations
+
+Gateway activity logs are not available in the dashboard if you turn on the [Customer Metadata Boundary](/data-localization/metadata-boundary/) within Cloudflare Data Localization Suite (DLS). Enterprise users using CMB can still export logs via [Logpush](/cloudflare-one/insights/logs/logpush/). For more information, refer to [DLS product compatibility](/data-localization/compatibility/#zero-trust).

@@ -3,17 +3,16 @@ pcx_content_type: concept
 title: Dedicated egress IPs
 sidebar:
   order: 1
-
 ---
 
-import { Details } from "~/components"
+import { Details } from "~/components";
 
 :::note
 
-Only available as an add-on to Zero Trust Enterprise plans. 
+Only available as an add-on to Zero Trust Enterprise plans.
 :::
 
-Dedicated egress IPs are static IP addresses that can be used to allowlist traffic from your organization. These IPs are unique to your account and are not used by any other customers routing traffic through Cloudflare’s network. Each dedicated egress IP consists of an IPv4 address and an IPv6 range that are assigned to a specific Cloudflare data center. At minimum, Cloudflare will provision your account with two dedicated egress IPs corresponding to data centers in two different cities.
+Dedicated egress IPs are static IP addresses that can be used to allowlist traffic from your organization. These IPs are unique to your account and are not used by any other customers routing traffic through Cloudflare's network. Each dedicated egress IP consists of an IPv4 address and an IPv6 range that are assigned to a specific Cloudflare data center. At minimum, Cloudflare will provision your account with two dedicated egress IPs corresponding to data centers in two different cities.
 
 An account can have any number of additional dedicated egress IPs. To request additional dedicated egress IPs, contact your account team to schedule a service window.
 
@@ -49,10 +48,10 @@ Each dedicated egress IP assigned to your organization supports 40,000 concurren
 
 Dedicated egress IPs do not apply to:
 
-* DNS queries resolved through Gateway
-* Private networks connected to Zero Trust via Cloudflare Tunnel
-* Traffic destined for private networks connected to Zero Trust via [Magic WAN](/magic-wan/)
-* ICMP traffic (such as `ping`)
+- DNS queries resolved through Gateway
+- Private networks connected to Zero Trust via Cloudflare Tunnel
+- Traffic destined for private networks connected to Zero Trust via [Magic WAN](/magic-wan/)
+- ICMP traffic (such as `ping`)
 
 These origins will see the default shared IPs instead of the dedicated egress IPs. This is because Cloudflare can filter traffic to these origins by identifiers other than source IP.
 
@@ -60,13 +59,13 @@ These origins will see the default shared IPs instead of the dedicated egress IP
 
 To improve traffic resilience, assign your dedicated egress IPs to different Cloudflare data center locations. If you have multiple IPs in the same city, choose different data centers within that city. For more information, contact your account team.
 
-When creating egress policies with dedicated egress IPs, set your secondary IPv4 address to either *Default Cloudflare egress* or a Cloudflare location different from your primary IPv4 address. If the physical location of your primary IPv4 address is not available, traffic will be routed to either the location closest to the user (*Default Cloudflare egress* option) or another location of your choice.
+When creating egress policies with dedicated egress IPs, set your secondary IPv4 address to either _Default Cloudflare egress_ or a Cloudflare location different from your primary IPv4 address. If the physical location of your primary IPv4 address is not available, traffic will be routed to either the location closest to the user (_Default Cloudflare egress_ option) or another location of your choice.
 
 ### IP geolocation
 
 :::note
 
-IP geolocation will take at least six weeks to update across databases. 
+IP geolocation will take at least six weeks to update across databases.
 :::
 
 Your egress traffic will geolocate to the city selected in your [egress policies](/cloudflare-one/policies/gateway/egress-policies/). If the traffic does not match an egress policy, IP geolocation defaults to the closest dedicated egress location to the user. We recommend you create a [catch-all egress policy](/cloudflare-one/policies/gateway/egress-policies/#catch-all-policy) before dedicated egress IPs are assigned to your account. This will prevent incorrect geolocation for your users' traffic while geolocation databases update.
@@ -75,25 +74,23 @@ When you turn on dedicated egress IPs, Gateway will update third-party IP geoloc
 
 To verify that the IP geolocation has updated, check your dedicated egress IP in one of the supported databases:
 
-
 <Details header="Supported IP geolocation databases">
 
-* [Google](https://developers.google.com/maps/documentation/geolocation/overview)
-* [MaxMind GeoIP](https://www.maxmind.com/en/geoip-databases)
-* [TransUnion Neustar TruValidate IP Intelligence](https://www.transunion.com/solution/truvalidate/digital-insights/ip-intelligence)
-* [Abstract IP Geolocation API](https://www.abstractapi.com/ip-geolocation-api)
-* [DB-IP](https://db-ip.com/)
-* [Digital Element](https://www.digitalelement.com/)
-* [Geo Targetly](https://geotargetly.com/)
-* [IP-API.com](https://ip-api.com/)
-* [IP2Location](https://lite.ip2location.com/)
-* [IPinfo.io](https://ipinfo.io/)
-* [ip2c.org](https://ip2c.org/)
-* [ipapi](https://ipapi.com/)
-* [ipgeolocation.io](https://ipgeolocation.io/)
-* [ipify](https://www.ipify.org/)
-* [Ipstack](https://ipstack.com/)
-
+- [Google](https://developers.google.com/maps/documentation/geolocation/overview)
+- [MaxMind GeoIP](https://www.maxmind.com/en/geoip-databases)
+- [TransUnion Neustar TruValidate IP Intelligence](https://www.transunion.com/solution/truvalidate/digital-insights/ip-intelligence)
+- [Abstract IP Geolocation API](https://www.abstractapi.com/ip-geolocation-api)
+- [DB-IP](https://db-ip.com/)
+- [Digital Element](https://www.digitalelement.com/)
+- [Geo Targetly](https://geotargetly.com/)
+- [IP-API.com](https://ip-api.com/)
+- [IP2Location](https://lite.ip2location.com/)
+- [IPinfo.io](https://ipinfo.io/)
+- [ip2c.org](https://ip2c.org/)
+- [ipapi](https://ipapi.com/)
+- [ipgeolocation.io](https://ipgeolocation.io/)
+- [ipify](https://www.ipify.org/)
+- [Ipstack](https://ipstack.com/)
 
 </Details>
 

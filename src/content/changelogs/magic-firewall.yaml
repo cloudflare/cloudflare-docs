@@ -1,0 +1,19 @@
+---
+link: "/magic-firewall/changelog/"
+productName: Magic Firewall
+productLink: "/magic-firewall/"
+productArea: Cloudflare One
+productAreaLink: /cloudflare-one/changelog/
+entries:
+  - publish_date: "2024-08-16"
+    title: Magic Firewall Analytics Rule Log Enhancement
+    description: |-
+      Customers who create a rule in a disabled mode will see the rule as **Log (rule disabled)**.
+  - publish_date: "2024-09-12"
+    title: New UI improvements
+    description: |-
+      The dashboard now displays the order number of custom rules, and improved drag and drop functionality. You can also preview rules on a side panel without leaving the current page.
+  - publish_date: "2024-10-02"
+    title: New UI improvements
+    description: |-
+      The dashboard now allows you to search custom rules using the rule name and/or ID. Additionally, the rule ID URL link has been added to Network Analytics. Go to **Analytics & Logs** > **Network Analytics** > **Magic Firewall** > **Packet sample log** > Search for **Rule ID**.

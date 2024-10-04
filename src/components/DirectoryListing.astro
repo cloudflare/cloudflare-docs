@@ -1,5 +1,6 @@
 ---
-import { getCollection, z } from "astro:content";
+import { z } from "astro:schema";
+import { getCollection } from "astro:content";
 import { sortBySidebarOrder } from "~/util/sidebar";
 import { marked } from "marked";
 
@@ -26,17 +27,21 @@ pages.sort(sortBySidebarOrder);
 ---
 
 <ul>
-    {
-        pages.map((page) => {
-            const description = descriptions && page.data.description;
-            return (
-                <li>
-                    <a href={`/${page.slug}/`}>{page.data.title}</a>{description && 
-                        <span>: </span>
-                        <Fragment set:html={marked.parseInline(description)} />
-                    }
-                </li>
-            );
-        })
-    }
+	{
+		pages.map((page) => {
+			const description = descriptions && page.data.description;
+			const href = page.data.external_link ?? "/" + page.slug + "/";
+			return (
+				<li>
+					<a href={href}>{page.data.title}</a>
+					{description && (
+						<>
+							<span>: </span>
+							<Fragment set:html={marked.parseInline(description)} />
+						</>
+					)}
+				</li>
+			);
+		})
+	}
 </ul>

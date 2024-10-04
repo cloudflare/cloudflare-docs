@@ -3,14 +3,13 @@ pcx_content_type: concept
 title: KV bindings
 sidebar:
   order: 7
-
 ---
 
 KV [bindings](/workers/runtime-apis/bindings/) allow for communication between a Worker and a KV namespace.
 
-Configure KV bindings in the [wrangler.toml file](/workers/wrangler/configuration/#configure-wranglertoml).
+Configure KV bindings in the [wrangler.toml file](/workers/wrangler/configuration/).
 
-## Reference KV from Workers
+## Access KV from Workers
 
 A [KV namespace](/kv/concepts/kv-namespaces/) is a key-value database replicated to Cloudflare's global network.
 
@@ -38,18 +37,34 @@ With this, the deployed Worker will have a `TODO` field in their environment obj
 
 ```js
 export default {
-  async fetch(request, env, ctx) {
-    // Get the value for the "to-do:123" key
-    // NOTE: Relies on the `TODO` KV binding that maps to the "My Tasks" namespace.
-    let value = await env.TODO.get("to-do:123");
+	async fetch(request, env, ctx) {
+		// Get the value for the "to-do:123" key
+		// NOTE: Relies on the `TODO` KV binding that maps to the "My Tasks" namespace.
+		let value = await env.TODO.get("to-do:123");
 
-    // Return the value, as is, for the Response
-    return new Response(value);
-  },
+		// Return the value, as is, for the Response
+		return new Response(value);
+	},
 };
 ```
 
-## Reference KV from Durable Objects and Workers using ES modules format
+## Use KV bindings when developing locally
+
+When you use Wrangler to develop locally with the `wrangler dev` command, Wrangler will default to using a local version of KV to avoid interfering with any of your live production data in KV. This means that reading keys that you have not written locally will return `null`.
+
+To have `wrangler dev` connect to your Workers KV namespace running on Cloudflare's global network, call `wrangler dev --remote` instead. This will use the `preview_id` of the KV binding configuration in the `wrangler.toml` file. This is how a `wrangler.toml` file looks with the `preview_id` specified.
+
+```toml title="wrangler.toml"
+name = "worker"
+
+# ...
+
+kv_namespaces = [
+  { binding = "TODO", id = "06779da6940b431db6e566b4846d64db", preview_id="06779da6940b431db6e566b484a6a769a7a" }
+]
+```
+
+## Access KV from Durable Objects and Workers using ES modules format
 
 [Durable Objects](/durable-objects/) use ES modules format. Instead of a global variable, bindings are available as properties of the `env` parameter [passed to the constructor](/durable-objects/get-started/#3-write-a-class-to-define-a-durable-object).
 
@@ -57,14 +72,14 @@ An example might look like:
 
 ```js
 export class DurableObject {
-  constructor(state, env) {
-    this.state = state;
-    this.env = env;
-  }
+	constructor(state, env) {
+		this.state = state;
+		this.env = env;
+	}
 
-  async fetch(request) {
-    const valueFromKV = await this.env.NAMESPACE.get("someKey");
-    return new Response(valueFromKV);
-  }
+	async fetch(request) {
+		const valueFromKV = await this.env.NAMESPACE.get("someKey");
+		return new Response(valueFromKV);
+	}
 }
 ```

@@ -17,15 +17,90 @@ If possible, Cloudflare strongly recommends using [**Full**](/ssl/origin-configu
 
 For more details on how encryption modes fit into the bigger picture of Cloudflare SSL/TLS protection, refer to [Concepts](/ssl/concepts/#ssltls-certificate).
 
-:::note[Tip:]
-
-If you are not sure which encryption mode to use, enable the [SSL/TLS Recommender](/ssl/origin-configuration/ssl-tls-recommender/).
-
-:::
-
 ## Available encryption modes
 
-<DirectoryListing />
+[Automatic SSL/TLS](#automatic-ssltls-default) uses the SSL/TLS Recommender to make the determination as to what encryption mode is the most secure and safest for a website to be set to. If there is a more secure option for your website (based on your origin certification or capabilities), Automatic SSL/TLS will find it and apply it for your domain. The other option, [Custom SSL/TLS](#custom-ssltls), will work exactly like the setting the encryption mode does today.
+
+:::note
+We are gradually rolling out the new [Automated SSL/TLS feature](#automatic-ssltls-default).
+
+If your zone has not been migrated yet, you will only have [Custom SSL/TLS](#custom-ssltls) options in your dashboard.
+:::
+
+To understand how the various encryption modes affect your cache, refer to the section on [Impact of SSL setting on cache behavior](/cache/how-to/cache-keys/#impact-of-ssl-settings-on-cache-behavior).
+
+### Automatic SSL/TLS (default)
+
+Automatic SSL/TLS uses the [SSL/TLS Recommender](/ssl/origin-configuration/ssl-tls-recommender/) to identify and apply the most secure encryption mode for your website. It continuously assesses your traffic to determine if a more secure option is needed based on your origin certification or capabilities, and updates your settings automatically to ensure the highest level of security for your domain.
+
+:::note
+Automatic SSL/TLS will not change your setting to a less secure encryption mode. For example, if your origin certificate expires, the encryption mode will not change from **Full (strict)** to **Full**. You must ensure the validity of your origin SSL configuration at all times.
+:::
+
+Cloudflare is enabling Automatic SSL/TLS on the following dates:
+
+| Plan           | Using SSL/TLS recommender? | Grace period ends |
+| -------------- | -------------------------- | ----------------- |
+| Non-Enterprise | Yes                        | September 9th, 2024 |
+| Enterprise     | Yes                        | October 7th, 2024   |
+| All plans      | No                         | October 21st, 2024  |
+
+#### Opt out single zone
+
+If you want to opt a zone out via the API, you can make this API call on or before the grace period expiration date.
+
+```bash
+ curl --request PATCH \
+  --url https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/settings/ssl_automatic_mode \
+  --header 'Authorization: Bearer <CF_API_TOKEN>' \
+  --header 'Content-Type: application/json' \
+  --data '{"value":"custom"}'
+```
+
+#### Opt out multiple zones
+
+If you wanted to opt out multiple zones:
+
+1. Create an API token with the following permissions:
+   - `Zone - Zone - Read`
+   - `Zone - Zone Settings - Read`
+   - `Zone - Zone Settings - Edit`
+2. Make a [`GET` request](/api/operations/zones-get) to get a list of zones (you can filter this list by `account.id`).
+
+   ```bash "account.id=<ACCOUNT_ID>"
+   curl 'https://api.cloudflare.com/client/v4/zones?account.id=<ACCOUNT_ID>' \
+   --header 'Authorization: Bearer <CF_API_TOKEN>' \
+   --header 'Content-Type: application/json'
+   ```
+
+3. Create a list of zone IDs you want to opt-out with each zone ID on a separate line (newline separate), stored in a file such as `zones.txt`.
+4. Create a bash script for `opt-out-multiple-zones.sh` and add the following. Add `zones.txt` to the same directory or update the path accordingly.
+
+   ```bash title="opt-out-multiple-zones.sh"
+   for zoneID in $(cat zone.txt); do
+     printf "Opting out ${zoneID}:\n"
+
+     curl --request PATCH \
+   		--url https://api.cloudflare.com/client/v4/zones/$zoneID/settings/ssl_automatic_mode \
+   		--header 'Authorization: Bearer <CF_API_TOKEN>' \
+   		--header 'Content-Type: application/json' \
+   		--data '{"value":"custom"}'
+
+     printf "\n\n"
+   done
+   ```
+
+5. Open your command line and run:
+
+   ```bash
+   bash opt-out-multiple-zones.sh
+   ```
+
+### Custom SSL/TLS
+
+To use Custom SSL/TLS, select the custom option (if you prefer to manually set the encryption mode instead of using [Automatic SSL/TLS](#automatic-ssltls-default)):
+
+<DirectoryListing descriptions />
 
 ## Update your encryption mode
 

@@ -1,12 +1,9 @@
 ---
 pcx_content_type: how-to
 title: Jumpcloud (SAML)
-sidebar:
-  order: 14
-
 ---
 
-JumpCloud provides [Directory-as-a-Service®](https://jumpcloud.com/daas-product/) to securely connect user identities to systems, apps, files, and networks. Cloudflare Access integrates with JumpCloud using the SAML protocol. [This documentation from JumpCloud](https://support.jumpcloud.com/s/article/getting-started-applications-saml-sso2) can help you configure applications within your JumpCloud deployment.
+JumpCloud provides [Directory-as-a-Service](https://jumpcloud.com/daas-product/) to securely connect user identities to systems, apps, files, and networks. Cloudflare Access integrates with JumpCloud using the SAML protocol. [This documentation from JumpCloud](https://support.jumpcloud.com/s/article/getting-started-applications-saml-sso2) can help you configure applications within your JumpCloud deployment.
 
 These steps focus on requirements specific to Cloudflare Zero Trust.
 
@@ -21,7 +18,10 @@ To set up JumpCloud SAML as your identity provider:
    If you do not have a certificate, this command generates one using OpenSSL:
 
    ```sh
-   $ openssl genrsa -out samlidp.key 2048 ; openssl req -new -x509 -sha256 -key samlidp.key -out samlidp.crt -days 1095
+   openssl genrsa -out samlidp.key 2048 ; openssl req -new -x509 -sha256 -key samlidp.key -out samlidp.crt -days 1095
+   ```
+
+   ```sh output
    Generating RSA private key, 2048 bit long modulus
    .................................................................................+++++
    ......................+++++
@@ -93,15 +93,15 @@ To test that your connection is working, go to **Authentication** > **Login meth
 
 ```json
 {
-  "config": {
-    "issuer_url": "jumpcloud",
-    "sso_target_url": "https://sso.myexample.jumpcloud.com/saml2/cloudflareaccess",
-    "attributes": ["email", "name", "username"],
-    "email_attribute_name": "",
-    "sign_request": false,
-    "idp_public_cert": "MIIDpDCCAoygAwIBAgIGAV2ka+55MA0GCSqGSIb3DQEBCwUAMIGSMQswCQYDVQQGEwJVUzETMBEG\nA1UEC.....GF/Q2/MHadws97cZg\nuTnQyuOqPuHbnN83d/2l1NSYKCbHt24o"
-  },
-  "type": "saml",
-  "name": "jumpcloud saml example"
+	"config": {
+		"issuer_url": "jumpcloud",
+		"sso_target_url": "https://sso.myexample.jumpcloud.com/saml2/cloudflareaccess",
+		"attributes": ["email", "name", "username"],
+		"email_attribute_name": "",
+		"sign_request": false,
+		"idp_public_cert": "MIIDpDCCAoygAwIBAgIGAV2ka+55MA0GCSqGSIb3DQEBCwUAMIGSMQswCQYDVQQGEwJVUzETMBEG\nA1UEC.....GF/Q2/MHadws97cZg\nuTnQyuOqPuHbnN83d/2l1NSYKCbHt24o"
+	},
+	"type": "saml",
+	"name": "jumpcloud saml example"
 }
 ```

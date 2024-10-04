@@ -3,10 +3,9 @@ pcx_content_type: how-to
 title: Ansible
 sidebar:
   order: 1
-
 ---
 
-import { Render } from "~/components"
+import { Render } from "~/components";
 
 Ansible is a software tool that enables at scale management of infrastructure. Ansible is agentless — all it needs to function is the ability to SSH to the target and Python installed on the target.
 
@@ -16,10 +15,10 @@ Ansible works alongside Terraform to streamline the Cloudflare Tunnel setup proc
 
 To complete the steps in this guide, you will need:
 
-* [A Google Cloud Project](https://cloud.google.com/resource-manager/docs/creating-managing-projects#creating_a_project) and [GCP CLI installed and authenticated](https://cloud.google.com/sdk/docs/install).
-* [Basic knowledge of Terraform](/cloudflare-one/connections/connect-networks/deploy-tunnels/deployment-guides/terraform/) and[Terraform installed](https://developer.hashicorp.com/terraform/tutorials/certification-associate-tutorials/install-cli).
-* [A zone on Cloudflare](/fundamentals/setup/manage-domains/add-site/).
-* [A Cloudflare API token](/fundamentals/api/get-started/create-token/) with `Cloudflare Tunnel` and `DNS` permissions.
+- [A Google Cloud Project](https://cloud.google.com/resource-manager/docs/creating-managing-projects#creating_a_project) and [GCP CLI installed and authenticated](https://cloud.google.com/sdk/docs/install).
+- [Basic knowledge of Terraform](/cloudflare-one/connections/connect-networks/deploy-tunnels/deployment-guides/terraform/) and[Terraform installed](https://developer.hashicorp.com/terraform/tutorials/certification-associate-tutorials/install-cli).
+- [A zone on Cloudflare](/fundamentals/setup/manage-domains/add-site/).
+- [A Cloudflare API token](/fundamentals/api/get-started/create-token/) with `Cloudflare Tunnel` and `DNS` permissions.
 
 ## 1. Install Ansible
 
@@ -32,7 +31,7 @@ Terraform and Ansible require an unencrypted SSH key to connect to the GCP serve
 1. Open a terminal and type the following command:
 
    ```sh
-   $ ssh-keygen -t rsa -f ~/.ssh/gcp_ssh -C <username in GCP>
+   ssh-keygen -t rsa -f ~/.ssh/gcp_ssh -C <username in GCP>
    ```
 
 2. When prompted for a passphrase, press <kbd>Enter</kbd> twice to leave it blank. Terraform cannot decode encrypted private keys.
@@ -44,13 +43,13 @@ Two files will be generated: `gcp_ssh` which contains the private key, and `gcp_
 1. Create a folder for your Terraform and Ansible configuration files:
 
    ```sh
-   $ mkdir ansible-tunnel
+   mkdir ansible-tunnel
    ```
 
 2. Change to the new directory:
 
    ```sh
-   $ cd ansible-tunnel
+   cd ansible-tunnel
    ```
 
 ## 4. Create Terraform configuration files
@@ -70,7 +69,7 @@ You will need to declare the [providers](https://registry.terraform.io/browse/pr
 1. In your configuration directory, create a `.tf` file:
 
    ```sh
-   $ touch providers.tf
+   touch providers.tf
    ```
 
 2. Add the following providers to `providers.tf`. The `random` provider is used to generate a tunnel secret.
@@ -109,7 +108,7 @@ The following configuration will modify settings in your Cloudflare account.
 1. In your configuration directory, create a `.tf` file:
 
    ```sh
-   $ touch Cloudflare-config.tf
+   touch Cloudflare-config.tf
    ```
 
 2. Add the following resources to `Cloudflare-config.tf`:
@@ -146,7 +145,7 @@ The following configuration defines the specifications for the GCP virtual machi
 1. In your configuration directory, create a `.tf` file:
 
    ```sh
-   $ touch GCP-config.tf
+   touch GCP-config.tf
    ```
 
 2. Open the file in a text editor and copy and paste the following example. Be sure to insert your own GCP username and SSH key pair.
@@ -215,7 +214,7 @@ The following Terraform resource exports the tunnel ID and other variables to `t
 1. In your configuration directory, create a new `tf` file:
 
    ```sh
-   $ touch export.tf
+   touch export.tf
    ```
 
 2. Copy and paste the following content into `export.tf`:
@@ -242,7 +241,7 @@ Ansible playbooks are YAML files that declare the configuration Ansible will dep
 1. Create a new `.yml` file:
 
    ```sh
-   $ touch playbook.yml
+   touch playbook.yml
    ```
 
 2. Open the file in a text editor and copy and paste the following content:
@@ -305,19 +304,19 @@ Once you have created the configuration files, you can deploy them through Terra
 1. Initialize your configuration directory:
 
    ```sh
-   $ terraform init
+   terraform init
    ```
 
 2. (Optional) Preview everything that will be created:
 
    ```sh
-   $ terraform plan
+   terraform plan
    ```
 
 3. Deploy the configuration:
 
    ```sh
-   $ terraform apply
+   terraform apply
    ```
 
 It may take several minutes for the GCP instance and tunnel to come online. You can view your new tunnel in [Zero Trust](https://one.dash.cloudflare.com) under **Networks** > **Tunnels**.

@@ -6,7 +6,6 @@ sidebar:
 head:
   - tag: title
     content: URI argument and value fields | Fields reference
-
 ---
 
 The Cloudflare Rules language includes URI argument and value fields associated with HTTP requests. Many of these fields return [arrays](/ruleset-engine/rules-language/values/#arrays) containing the respective values.
@@ -26,10 +25,12 @@ The values are not pre-processed and retain the original case used in the reques
 - **Decoding:** no decoding performed
 - **Non-ASCII:** preserved
 
-Example:  
+Example:
+
 `any(http.request.uri.args["search"][*] == "red+apples")`
 
-Example value:  
+Example value:
+
 `{"search": ["red+apples"]}`
 
 ## `http.request.uri.args.names`
@@ -43,10 +44,12 @@ When a name repeats, the array contains multiple items in the order that they ap
 - **Decoding:** no decoding performed
 - **Non-ASCII:** preserved
 
-Example:  
+Example:
+
 `any(http.request.uri.args.names[*] == "search")`
 
-Example value:  
+Example value:
+
 `["search"]`
 
 ## `http.request.uri.args.values`
@@ -60,30 +63,28 @@ Duplicated values are listed multiple times.
 - **Decoding:** no decoding performed
 - **Non-ASCII:** preserved
 
-Example:  
+Example:
+
 `any(http.request.uri.args.values[*] == "red+apples")`
 
-Example value:  
+Example value:
+
 `["red+apples"]`
 
 ## `raw.http.request.uri.args`
 
 `raw.http.request.uri.args` `Map<Array<String>>`
 
-Contains the same field values as [`http.request.uri.args`](#field-http-request-uri-args).
+Contains the same field values as [`http.request.uri.args`](#httprequesturiargs).
 
 ## `raw.http.request.uri.args.names`
 
 `raw.http.request.uri.args.names` `Array<String>`
 
-Contains the same field values as [`http.request.uri.args.names`](#field-http-request-uri-args-names).
+Contains the same field values as [`http.request.uri.args.names`](#httprequesturiargsnames).
 
 ## `raw.http.request.uri.args.values`
 
 `raw.http.request.uri.args.values` `Array<String>`
 
-Contains the same field values as [`http.request.uri.args.values`](#field-http-request-uri-args-values).
-
-***
-
-*GeoIP is the registered trademark of MaxMind, Inc.*
+Contains the same field values as [`http.request.uri.args.values`](#httprequesturiargsvalues).

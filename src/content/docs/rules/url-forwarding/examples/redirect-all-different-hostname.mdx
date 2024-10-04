@@ -3,36 +3,30 @@ pcx_content_type: example
 summary: Create a redirect rule to redirect all requests for
   `smallshop.example.com` to a different hostname using HTTPS, keeping the
   original path and query string.
-product:
+products:
   - Redirect Rules
 title: Redirect requests to a different hostname
 description: Create a redirect rule to redirect all requests for
   `smallshop.example.com` to a different hostname using HTTPS, keeping the
   original path and query string.
-
 ---
 
-import { Example } from "~/components"
+import { Example } from "~/components";
 
-This example dynamic redirect will redirect all requests for `smallshop.example.com` to a different hostname using HTTPS, keeping the original path and query string.
+This example single redirect will redirect all requests for `smallshop.example.com` to a different hostname `globalstore.example.net` using HTTPS, keeping the original path and query string.
 
 <Example>
 
 **When incoming requests match**
 
-* **Field:** *Hostname*
-* **Operator:** *equals*
-* **Value:** `smallshop.example.com`
-
-If you are using the Expression Editor, enter the following expression:<br/>
-`(http.host eq "smallshop.example.com")`
+- **Wildcard pattern**
+  - **Request URL**: `http*://smallshop.example.com/*`
 
 **Then**
 
-* **Type:** *Dynamic*
-* **Expression:** `concat("https://globalstore.example.net", http.request.uri.path)`
-* **Status code:** *301*
-* **Preserve query string:** Enabled
+- **Target URL**: `https://globalstore.example.net/${2}`
+- **Status code:** _301_
+- **Preserve query string:** Enabled
 
 </Example>
 

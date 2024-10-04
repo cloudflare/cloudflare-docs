@@ -3,10 +3,16 @@ pcx_content_type: how-to
 title: Hono
 tags:
   - Hono
-
 ---
 
-import { ResourcesBySelector, ExternalResources, Render, TabItem, Tabs } from "~/components"
+import {
+	ResourcesBySelector,
+	ExternalResources,
+	Render,
+	TabItem,
+	Tabs,
+	PackageManagers,
+} from "~/components";
 
 [Hono](https://honojs.dev/) is a small, simple, and ultrafast web framework for Cloudflare Pages and Workers, Deno, and Bun. In this guide, you will create a new Hono application and deploy it using Cloudflare Pages.
 
@@ -16,9 +22,11 @@ Use the [`create-cloudflare`](https://www.npmjs.com/package/create-cloudflare) C
 
 To use `create-cloudflare` to create a new Hono project, run the following command:
 
-```sh
-$ npm create cloudflare@latest my-hono-app -- --framework=hono
-```
+<PackageManagers
+	type="create"
+	pkg="cloudflare@latest"
+	args="my-hono-app --framework=hono"
+/>
 
 Open your project and create a `src/server.js` file (or `src/server.ts` if you are using TypeScript). Add the following content to your file:
 
@@ -35,7 +43,7 @@ To serve static files like CSS, image or JavaScript files, add the following to 
 
 ```javascript
 app.get("/public/*", async (ctx) => {
-  return await ctx.env.ASSETS.fetch(ctx.req.raw);
+	return await ctx.env.ASSETS.fetch(ctx.req.raw);
 });
 ```
 
@@ -43,11 +51,9 @@ This will cause all the files in the `public` folder within `dist` to be served 
 
 :::note
 
-
 The `dist` directory is created and used during the bundling process. You will need to create a `public` directory in the `dist` directory. Having `public` inside `dist` is not generally wanted as `dist` is not a directory to commit to your repository whilst `public` is.
 
 There are different alternatives to fix this issue. For example, you can configure your `.gitignore` file to include the `dist` directory, but ignore all its context except the `public` directory. Alternatively, you can create a `public` directory somewhere else and copy it inside `dist` as part of the bundling process.
-
 
 :::
 
@@ -82,7 +88,7 @@ Open your `package.json` file and update the `scripts` section:
 Then, run the following command.
 
 ```sh
-$ npm install npm-run-all --save-dev
+npm install npm-run-all --save-dev
 ```
 
 Installing `npm-run-all` enables you to use a single command (`npm run dev`) to run `npm run dev:wrangler` and `npm run dev:esbuild` simultaneously in watch mode.
@@ -92,7 +98,7 @@ Installing `npm-run-all` enables you to use a single command (`npm run dev`) to 
 Start your dev workflow by running:
 
 ```sh
-$ npm run dev
+npm run dev
 ```
 
 You should be able to review your generated web application at `http://localhost:8788`.
@@ -103,7 +109,7 @@ You should be able to review your generated web application at `http://localhost
 
 ## Deploy with Cloudflare Pages
 
-<Render file="deploy-via-c3" params={{ one: "Hono" }} />
+<Render file="deploy-via-c3" params={{ name: "Hono" }} />
 
 ### Deploy via the Cloudflare dashboard
 
@@ -125,9 +131,7 @@ After configuring your site, you can begin your first deploy. You should see Clo
 
 :::note
 
-
 For the complete guide to deploying your first site to Cloudflare Pages, refer to the [Get started guide](/pages/get-started/).
-
 
 :::
 
@@ -138,13 +142,16 @@ Every time you commit new code to your Hono site, Cloudflare Pages will automati
 
 ### Tutorials
 
-For more tutorials involving Hono, refer to the following resources:
+For more tutorials involving Hono and Cloudflare Pages, refer to the following resources:
 
-<ResourcesBySelector tags={["Hono"]} types={["tutorial"]} />
-
+<ResourcesBySelector
+	tags={["Hono"]}
+	types={["tutorial"]}
+	products={["Pages"]}
+/>
 
 ### Demo apps
 
-For demo applications using Hono, refer to the following resources:
+For demo applications using Hono and Cloudflare Pages, refer to the following resources:
 
-<ExternalResources tags={["Hono"]} type="apps" />
+<ExternalResources tags={["Hono"]} type="apps" products={["Pages"]} />

@@ -6,24 +6,21 @@ pcx_content_type: tutorial
 title: GitHub SMS notifications using Twilio
 languages:
   - JavaScript
-
 ---
 
-
-
-import { Render, PackageManagers } from "~/components"
+import { Render, PackageManagers } from "~/components";
 
 In this tutorial, you will learn to build an SMS notification system on Workers to receive updates on a GitHub repository. Your Worker will send you a text update using Twilio when there is new activity on your repository.
 
 You will learn how to:
 
-* Build webhooks using Workers.
-* Integrate Workers with GitHub and Twilio.
-* Use Worker secrets with Wrangler.
+- Build webhooks using Workers.
+- Integrate Workers with GitHub and Twilio.
+- Use Worker secrets with Wrangler.
 
 ![Animated gif of receiving a text message on your phone after pushing changes to a repository](/images/workers/tutorials/github-sms/video-of-receiving-a-text-after-pushing-to-a-repo.gif)
 
-***
+---
 
 <Render file="tutorials-before-you-start" />
 
@@ -31,14 +28,26 @@ You will learn how to:
 
 Start by using `npm create cloudflare@latest` to create a Worker project in the command line:
 
-<PackageManagers type="create" pkg="cloudflare@latest" args={'github-twilio-notifications'} />
+<PackageManagers
+	type="create"
+	pkg="cloudflare@latest"
+	args={"github-twilio-notifications"}
+/>
 
-<Render file="c3-post-run-steps" product="workers" params={{ one: "Hello World example", two: "Hello World Worker", three: "JavaScript" }} />
+<Render
+	file="c3-post-run-steps"
+	product="workers"
+	params={{
+		category: "hello-world",
+		type: "Hello World Worker",
+		lang: "JavaScript",
+	}}
+/>
 
 Make note of the URL that your application was deployed to. You will be using it when you configure your GitHub webhook.
 
 ```sh
-$ cd github-twilio-notifications
+cd github-twilio-notifications
 ```
 
 Inside of your new `github-sms-notifications` directory, `src/index.js` represents the entry point to your Cloudflare Workers application. You will configure this file for most of the tutorial.
@@ -49,7 +58,7 @@ First, create a webhook for your repository to post updates to your Worker. Insi
 
 You can reference the finished code at this [GitHub repository](https://github.com/rickyrobinett/workers-sdk/tree/main/templates/examples/github-sms-notifications-using-twilio).
 
-***
+---
 
 ## Configure GitHub
 
@@ -59,7 +68,7 @@ To start, configure a GitHub webhook to post to your Worker when there is an upd
 
 2. Set the Payload URL to the `/webhook` path on the Worker URL that you made note of when your application was first deployed.
 
-3. In the **Content type** dropdown, select *application/json*.
+3. In the **Content type** dropdown, select _application/json_.
 
 4. In the **Secret** field, input a secret key of your choice.
 
@@ -69,7 +78,7 @@ To start, configure a GitHub webhook to post to your Worker when there is an upd
 
 ![Following instructions to set up your webhook in the GitHub webhooks settings dashboard](~/assets/images/workers/tutorials/github-sms/github-config-screenshot.png)
 
-***
+---
 
 ## Parsing the response
 
@@ -79,9 +88,9 @@ Initially, your generated `index.js` should look like this:
 
 ```js
 export default {
-  async fetch(request, env, ctx) {
-    return new Response('Hello World!');
-  },
+	async fetch(request, env, ctx) {
+		return new Response("Hello World!");
+	},
 };
 ```
 
@@ -89,11 +98,11 @@ Use the `request.method` property of [`Request`](/workers/runtime-apis/request/)
 
 ```js
 export default {
-  async fetch(request, env, ctx) {
-    if(request.method !== 'POST') {
-      return new Response('Please send a POST request!');
-    }
-  },
+	async fetch(request, env, ctx) {
+		if (request.method !== "POST") {
+			return new Response("Please send a POST request!");
+		}
+	},
 };
 ```
 
@@ -119,36 +128,38 @@ async fetch(request, env, ctx) {
 The `checkSignature` function will use the Node.js crypto library to hash the received payload with your known secret key to ensure it matches the request hash. GitHub uses an HMAC hexdigest to compute the hash in the SHA-256 format. You will place this function at the top of your `index.js` file, before your export.
 
 ```js
-import { createHmac, timingSafeEqual } from 'node:crypto';
-import { Buffer } from 'node:buffer';
+import { createHmac, timingSafeEqual } from "node:crypto";
+import { Buffer } from "node:buffer";
 
 function checkSignature(text, headers, githubSecretToken) {
-  const hmac = createHmac('sha256', githubSecretToken);
-  hmac.update(text);
-  const expectedSignature = hmac.digest('hex');
-  const actualSignature = headers.get('x-hub-signature-256');
+	const hmac = createHmac("sha256", githubSecretToken);
+	hmac.update(text);
+	const expectedSignature = hmac.digest("hex");
+	const actualSignature = headers.get("x-hub-signature-256");
 
-  const trusted = Buffer.from(`sha256=${expectedSignature}`, 'ascii');
-  const untrusted =  Buffer.from(actualSignature, 'ascii');
+	const trusted = Buffer.from(`sha256=${expectedSignature}`, "ascii");
+	const untrusted = Buffer.from(actualSignature, "ascii");
 
-  return trusted.byteLength == untrusted.byteLength
-    && timingSafeEqual(trusted, untrusted);
-};
+	return (
+		trusted.byteLength == untrusted.byteLength &&
+		timingSafeEqual(trusted, untrusted)
+	);
+}
 ```
 
 To make this work, you need to use [`wrangler secret put`](/workers/wrangler/commands/#put-3) to set your `GITHUB_SECRET_TOKEN`. This token is the secret you picked earlier when configuring you GitHub webhook:
 
 ```sh
-$ npx wrangler secret put GITHUB_SECRET_TOKEN
+npx wrangler secret put GITHUB_SECRET_TOKEN
 ```
 
-Add the nodejs\_compat flag to your `wrangler.toml` file:
+Add the nodejs_compat flag to your `wrangler.toml` file:
 
 ```toml
 compatibility_flags = ["nodejs_compat"]
 ```
 
-***
+---
 
 ## Sending a text with Twilio
 
@@ -160,37 +171,37 @@ Create a new function called `sendText()` that will handle making the request to
 
 ```js
 async function sendText(accountSid, authToken, message) {
-  const endpoint = `https://api.twilio.com/2010-04-01/Accounts/${accountSid}/Messages.json`;
+	const endpoint = `https://api.twilio.com/2010-04-01/Accounts/${accountSid}/Messages.json`;
 
-  const encoded = new URLSearchParams({
-    'To': '%YOUR_PHONE_NUMBER%',
-    'From': '%YOUR_TWILIO_NUMBER%',
-    'Body': message
-  });
+	const encoded = new URLSearchParams({
+		To: "%YOUR_PHONE_NUMBER%",
+		From: "%YOUR_TWILIO_NUMBER%",
+		Body: message,
+	});
 
-  const token = btoa(`${accountSid}:${authToken}`);
+	const token = btoa(`${accountSid}:${authToken}`);
 
-  const request = {
-    body: encoded,
-    method: 'POST',
-    headers: {
-      'Authorization': `Basic ${token}`,
-      'Content-Type': 'application/x-www-form-urlencoded',
-    }
-  };
+	const request = {
+		body: encoded,
+		method: "POST",
+		headers: {
+			Authorization: `Basic ${token}`,
+			"Content-Type": "application/x-www-form-urlencoded",
+		},
+	};
 
-  const response = await fetch(endpoint, request);
-  const result = await response.json();
+	const response = await fetch(endpoint, request);
+	const result = await response.json();
 
-  return Response.json(result);
-};
+	return Response.json(result);
+}
 ```
 
 To make this work, you need to set some secrets to hide your `ACCOUNT_SID` and `AUTH_TOKEN` from the source code. You can set secrets with [`wrangler secret put`](/workers/wrangler/commands/#put-3) in your command line.
 
 ```sh
-$ npx wrangler secret put TWILIO_ACCOUNT_SID
-$ npx wrangler secret put TWILIO_AUTH_TOKEN
+npx wrangler secret put TWILIO_ACCOUNT_SID
+npx wrangler secret put TWILIO_AUTH_TOKEN
 ```
 
 Modify your `githubWebhookHandler` to send a text message using the `sendText` function you just made.
@@ -225,7 +236,7 @@ async fetch(request, env, ctx) {
 Run the `npx wrangler publish` command to redeploy your Worker project:
 
 ```sh
-$ npx wrangler deploy
+npx wrangler deploy
 ```
 
 ![Video of receiving a text after pushing to a repo](/images/workers/tutorials/github-sms/video-of-receiving-a-text-after-pushing-to-a-repo.gif)
@@ -240,5 +251,5 @@ By completing this tutorial, you have learned how to build webhooks using Worker
 
 {/* <!-- - [Authorize users with Auth0](/workers/tutorials/authorize-users-with-auth0/) --> */}
 
-* [Build a JAMStack app](/workers/tutorials/build-a-jamstack-app/)
-* [Build a QR code generator](/workers/tutorials/build-a-qr-code-generator/)
+- [Build a JAMStack app](/workers/tutorials/build-a-jamstack-app/)
+- [Build a QR code generator](/workers/tutorials/build-a-qr-code-generator/)

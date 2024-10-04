@@ -6,14 +6,19 @@ sidebar:
 
 ---
 
-When Cloudflare detects that a challenge has failed or the user cannot be verified on a page with Turnstile, users may be asked to send feedback on the issue that they have encountered by choosing one of the options listed.
+When Cloudflare detects that a challenge has failed or the user cannot be verified on a page with Turnstile, the user will encounter an [error](/turnstile/concepts/widget/#error-states) on the widget and may be asked to send feedback on the issue that they have encountered by choosing one of the options listed.
+
+:::note
+
+Currently, feedback submitted via the feedback form is sent directly to Cloudflare and used for improvements on the Turnstile user experience.
+:::
 
 Available options include:
 
-* The widget always fails
-* The widget sometimes fails
-* The widget is too slow
-* The widget keeps looping
-* Other
+- The widget always fails
+- The widget sometimes fails
+- The widget is too slow
+- The widget keeps looping
+- Other
 
 Users can provide additional data in the text field and then select **Submit**.

@@ -113,10 +113,9 @@ For [Splunk](https://docs.splunk.com/Documentation/Splunk/latest/Data/UsetheHTTP
 - **Secret**: The secret is required and has to be entered by the user. This is what Splunk refers to as `token`. Refer to [Splunk’s documentation](https://docs.splunk.com/Documentation/Splunk/latest/Data/UsetheHTTPEventCollector#How_the_Splunk_platform_uses_HTTP_Event_Collector_tokens_to_get_data_in) for details.
 - **URL**: 
    1. We only support three Splunk endpoints: services/collector, services/collector/raw, and services/collector/event.
-
    2. If SSL is enabled on the token, the port must be 443. If SSL is not enabled on the token, the port must be 8088.
-
    3. SSL must be enabled on the server.
+   4. **Enable indexer acknowledgement** must be disabled on the Splunk HTTP Event Collector.
 
 ### Feishu
 

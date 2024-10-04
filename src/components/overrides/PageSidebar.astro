@@ -1,73 +1,79 @@
 ---
 import type { Props } from "@astrojs/starlight/props";
 import Default from "@astrojs/starlight/components/PageSidebar.astro";
-import { slug } from "github-slugger"
-import { getChangelogs } from "~/util/changelogs";
+import type { CollectionEntry } from "astro:content";
+import { entryToString } from "~/util/container";
+import { parse } from "node-html-parser";
+import he from "he";
 
-if (Astro.props.slug === "workers-ai/models") {
-    const headings = [
-        "Automatic Speech Recognition",
-        "Image Classification",
-        "Image-to-Text",
-        "Object Detection",
-        "Summarization",
-        "Text Classification",
-        "Text Embeddings",
-        "Text Generation",
-        "Text-to-Image",
-        "Translation"
-    ];
+let rangeBetween = (x: number, y: number) =>
+	Array.from({ length: y - x + 1 }, (_, i) => i + x);
 
-    for (const heading of headings) {
-        Astro.props.toc?.items.push({
-            text: heading,
-            slug: slug(heading),
-            depth: 2,
-            children: []
-        })
-    }
+if (Astro.props.toc) {
+	const text = await entryToString(
+		Astro.props.entry as CollectionEntry<"docs">,
+	);
+
+	if (text) {
+		const html = parse(text);
+
+		// Currently unsupported to have maxHeadingLevel > 3.
+		if (Astro.props.toc.maxHeadingLevel > 3) {
+			throw new Error(
+				`[PageSidebar] A tableOfContents.maxHeadingLevel higher than 3 is currently unsupported.`,
+			);
+		}
+
+		const levels = rangeBetween(
+			Astro.props.toc.minHeadingLevel,
+			Astro.props.toc.maxHeadingLevel,
+		).map((level) => `h${level}[id]`);
+		const selector = levels.join();
+
+		const headers = html.querySelectorAll(selector);
+
+		if (headers) {
+			function headerDepth(header: any) {
+				return Number(header.rawTagName.slice(1));
+			}
+
+			Astro.props.toc.items = [
+				{
+					text: "Overview",
+					slug: "_top",
+					depth: 1,
+					children: [],
+				},
+			];
+
+			for (const header of headers) {
+				const depth = headerDepth(header);
+
+				const title = he.decode(header.innerText);
+
+				if (depth === 2) {
+					Astro.props.toc.items.push({
+						text: title,
+						slug: header.id,
+						depth,
+						children: [],
+					});
+
+					continue;
+				}
+
+				Astro.props.toc.items.at(-1)?.children.push({
+					text: title,
+					slug: header.id,
+					depth,
+					children: [],
+				});
+			}
+		}
+	}
 }
-
-if (Astro.props.entry.data.changelog_file_name || Astro.props.entry.data.changelog_product_area_name) {
-    if (Astro.props.entry.data.changelog_product_area_name) {
-        const name = Astro.props.entry.data.changelog_product_area_name;
-        const opts = {
-            filter: (entry) => { return entry.data.productArea === name}
-        }
-        const { changelogs } = await getChangelogs(opts);
-
-        const headings = Object.keys(Object.fromEntries(changelogs));
-
-        for (const heading of headings) {
-            Astro.props.toc?.items.push({
-                text: heading,
-                slug: slug(heading),
-                depth: 2,
-                children: []
-            })
-        }
-    } else if (Astro.props.entry.data.changelog_file_name.length === 1) {
-        const name = Astro.props.entry.data.changelog_file_name[0];
-        const opts = {
-            filter: (entry) => { return entry.id === name}
-        }
-        const { changelogs } = await getChangelogs(opts);
-
-        const headings = Object.keys(Object.fromEntries(changelogs));
-
-        for (const heading of headings) {
-            Astro.props.toc?.items.push({
-                text: heading,
-                slug: slug(heading),
-                depth: 2,
-                children: []
-            })
-        }
-    }
-}
-
 ---
 
 <Default {...Astro.props}>
-    <slot />
+	<slot />
 </Default>

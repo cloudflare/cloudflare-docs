@@ -63,7 +63,7 @@ curl https://api.cloudflare.com/client/v4/accounts/{account_id}/pcaps/ownership 
 }'
 ```
 
-The response shows the filename of the ownership-challenge text file placed within the bucket. Find the file in your bucket and copy the contents of the file.
+The response has a `"filename"` parameter which contains the content of the `ownership-challenge` text. Find the file in your bucket and copy the contents of the file.
 
 ```json title="Ownership challenge response example"
 {

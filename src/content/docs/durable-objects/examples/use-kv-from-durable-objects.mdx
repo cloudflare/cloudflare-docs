@@ -1,7 +1,7 @@
 ---
 title: Use KV from Durable Objects
 summary: Read and write to/from KV within a Durable Object
-pcx_content_type: configuration
+pcx_content_type: example
 sidebar:
   order: 20
 head:
@@ -35,6 +35,8 @@ bindings = [
 ```
 
 ```ts
+import { DurableObject } from 'cloudflare:workers';
+
 interface Env {
   YOUR_KV_NAMESPACE: KVNamespace;
   YOUR_DO_CLASS: DurableObjectNamespace;
@@ -68,7 +70,7 @@ export default {
   }
 }
 
-export class YourDurableObject implements DurableObject {
+export class YourDurableObject extends DurableObject {
   constructor(public state: DurableObjectState, env: Env) {
     this.state = state;
     // Ensure you pass your bindings and environmental variables into

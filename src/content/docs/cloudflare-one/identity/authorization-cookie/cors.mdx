@@ -3,26 +3,23 @@ pcx_content_type: how-to
 title: CORS
 sidebar:
   order: 4
-
 ---
 
-import { Render, PackageManagers } from "~/components"
+import { Render, PackageManagers } from "~/components";
 
 Cross-Origin Resource Sharing ([CORS](https://developer.mozilla.org/en-US/docs/Web/HTTP/CORS)) is a mechanism that uses HTTP headers to grant a web application running on one origin permission to reach selected resources in a different origin. The web application executes a cross-origin HTTP request when it requests a resource that has a different origin from its own, including domain, protocol, or port.
 
 For a CORS request to reach a site protected by Access, the request must include a valid `CF-Authorization` cookie. This may require additional configuration depending on the type of request:
 
-* [Simple requests](https://developer.mozilla.org/en-US/docs/Web/HTTP/CORS#simple_requests) are sent directly to the origin, without triggering a preflight request. For configuration instructions, refer to [Allow simple requests](#allow-simple-requests).
+- [Simple requests](https://developer.mozilla.org/en-US/docs/Web/HTTP/CORS#simple_requests) are sent directly to the origin, without triggering a preflight request. For configuration instructions, refer to [Allow simple requests](#allow-simple-requests).
 
-* [Preflighted requests](https://developer.mozilla.org/en-US/docs/Web/HTTP/CORS#preflighted_requests) cause the browser to send an OPTIONS request before sending the actual request. The OPTIONS request checks which methods and headers are allowed by the origin. For configuration instructions, refer to [Allow preflighted requests](#allow-preflighted-requests).
+- [Preflighted requests](https://developer.mozilla.org/en-US/docs/Web/HTTP/CORS#preflighted_requests) cause the browser to send an OPTIONS request before sending the actual request. The OPTIONS request checks which methods and headers are allowed by the origin. For configuration instructions, refer to [Allow preflighted requests](#allow-preflighted-requests).
 
 :::caution[Important]
 
+- Do not troubleshoot CORS in Incognito mode, as this will cause disruptions with Access due to `CF-Authorization` being blocked as a third-party cookie on cross origin requests.
 
-* Do not troubleshoot CORS in Incognito mode, as this will cause disruptions with Access due to `CF-Authorization` being blocked as a third-party cookie on cross origin requests.
-
-* Safari, in particular Safari 13.1, handles cookies in a unique format. In some cases, this can cause CORS to fail. This will be dependent on Apple releasing a patch for handling cookies. This is known to impact macOS 10.15.4 when running Safari 13.1 (15609.1.20.111.8).
-
+- Safari, in particular Safari 13.1, handles cookies in a unique format. In some cases, this can cause CORS to fail. This will be dependent on Apple releasing a patch for handling cookies. This is known to impact macOS 10.15.4 when running Safari 13.1 (15609.1.20.111.8).
 
 :::
 
@@ -30,8 +27,8 @@ For a CORS request to reach a site protected by Access, the request must include
 
 If you make a simple CORS request to an Access-protected domain and have not yet logged in, the request will return a `CORS error`. There are two ways you can resolve this error:
 
-* **Option 1** — [Log in and refresh the page](#authenticate-manually).
-* **Option 2** — [Create a Cloudflare Worker which automatically sends an authentication token](#send-authentication-token-with-cloudflare-worker). This method only works if both sites involved in the CORS exchange are behind Access.
+- **Option 1** — [Log in and refresh the page](#authenticate-manually).
+- **Option 2** — [Create a Cloudflare Worker which automatically sends an authentication token](#send-authentication-token-with-cloudflare-worker). This method only works if both sites involved in the CORS exchange are behind Access.
 
 ### Authenticate manually
 
@@ -45,9 +42,9 @@ If you make a preflighted cross-origin request to an Access-protected domain, th
 
 There are three ways you can resolve this error:
 
-* **Option 1** — [Bypass OPTIONS requests to origin](#bypass-options-requests-to-origin).
-* **Option 2** - [Configure Cloudflare to respond to the OPTIONS request](#configure-response-to-preflight-requests).
-* **Option 3** — [Create a Cloudflare Worker which automatically sends an authentication token](#send-authentication-token-with-cloudflare-worker). This method only works if both sites involved in the CORS exchange are behind Access.
+- **Option 1** — [Bypass OPTIONS requests to origin](#bypass-options-requests-to-origin).
+- **Option 2** - [Configure Cloudflare to respond to the OPTIONS request](#configure-response-to-preflight-requests).
+- **Option 3** — [Create a Cloudflare Worker which automatically sends an authentication token](#send-authentication-token-with-cloudflare-worker). This method only works if both sites involved in the CORS exchange are behind Access.
 
 ### Bypass OPTIONS requests to origin
 
@@ -123,9 +120,9 @@ To avoid having to log in twice, you can create a Cloudflare Worker that automat
 
 ### Prerequisites
 
-* [Workers account](/workers/get-started/guide/)
-* `wrangler` installation
-* `example.com` and `api.mysite.com` domains [protected by Access](/cloudflare-one/applications/configure-apps/)
+- [Workers account](/workers/get-started/guide/)
+- `wrangler` installation
+- `example.com` and `api.mysite.com` domains [protected by Access](/cloudflare-one/applications/configure-apps/)
 
 ### 1. Generate a service token
 
@@ -140,24 +137,36 @@ Follow [these instructions](/cloudflare-one/identity/service-tokens/) to generat
 3. Select the **Policies** tab.
 
 4. Add the following policy:
-   | Action       | Rule type | Selector      |
+   | Action | Rule type | Selector |
    | ------------ | --------- | ------------- |
-   | Service Auth | Include   | Service Token |
+   | Service Auth | Include | Service Token |
 
 ### 3. Create a new Worker
 
 Open a terminal and run the following command:
 
-<PackageManagers type="create" pkg="cloudflare@latest" args={'authentication-worker'} />
+<PackageManagers
+	type="create"
+	pkg="cloudflare@latest"
+	args={"authentication-worker"}
+/>
 
 This will prompt you to install the [`create-cloudflare`](https://www.npmjs.com/package/create-cloudflare) package and lead you through setup.
 
-<Render file="c3-post-run-steps" product="workers" params={{ one: "Hello World example", two: "Hello World Worker", three: "JavaScript" }} />
+<Render
+	file="c3-post-run-steps"
+	product="workers"
+	params={{
+		category: "hello-world",
+		type: "Hello World Worker",
+		lang: "JavaScript",
+	}}
+/>
 
 Go to your project directory.
 
 ```sh
-$ cd authentication-worker
+cd authentication-worker
 ```
 
 Open `/src/index.js` and delete the existing code and paste in the following example:
@@ -167,46 +176,46 @@ Open `/src/index.js` and delete the existing code and paste in the following exa
 const originalAPIHostname = "api.mysite.com";
 
 export default {
-  async fetch(request) {
-    // Change just the host. If the request comes in on example.com/api/name, the new URL is api.mysite.com/api/name
-    const url = new URL(request.url);
-    url.hostname = originalAPIHostname;
+	async fetch(request) {
+		// Change just the host. If the request comes in on example.com/api/name, the new URL is api.mysite.com/api/name
+		const url = new URL(request.url);
+		url.hostname = originalAPIHostname;
 
-    // If your API is located on api.mysite.com/anyname (without "api/" in the path),
-    // remove the "api/" part of example.com/api/name
+		// If your API is located on api.mysite.com/anyname (without "api/" in the path),
+		// remove the "api/" part of example.com/api/name
 
-    // url.pathname = url.pathname.substring(4)
+		// url.pathname = url.pathname.substring(4)
 
-    // Best practice is to always use the original request to construct the new request
-    // to clone all the attributes. Applying the URL also requires a constructor
-    // since once a Request has been constructed, its URL is immutable.
-    const newRequest = new Request(url.toString(), request);
+		// Best practice is to always use the original request to construct the new request
+		// to clone all the attributes. Applying the URL also requires a constructor
+		// since once a Request has been constructed, its URL is immutable.
+		const newRequest = new Request(url.toString(), request);
 
-    newRequest.headers.set("cf-access-client-id", CF_ACCESS_CLIENT_ID);
-    newRequest.headers.set("cf-access-client-secret", CF_ACCESS_CLIENT_SECRET);
-    try {
-      const response = await fetch(newRequest);
+		newRequest.headers.set("cf-access-client-id", CF_ACCESS_CLIENT_ID);
+		newRequest.headers.set("cf-access-client-secret", CF_ACCESS_CLIENT_SECRET);
+		try {
+			const response = await fetch(newRequest);
 
-      // Copy over the response
-      const modifiedResponse = new Response(response.body, response);
+			// Copy over the response
+			const modifiedResponse = new Response(response.body, response);
 
-      // Delete the set-cookie from the response so it doesn't override existing cookies
-      modifiedResponse.headers.delete("set-cookie");
+			// Delete the set-cookie from the response so it doesn't override existing cookies
+			modifiedResponse.headers.delete("set-cookie");
 
-      return modifiedResponse;
-    } catch (e) {
-      return new Response(JSON.stringify({ error: e.message }), {
-        status: 500,
-      });
-    }
-  },
+			return modifiedResponse;
+		} catch (e) {
+			return new Response(JSON.stringify({ error: e.message }), {
+				status: 500,
+			});
+		}
+	},
 };
 ```
 
 Then, deploy the Worker to your Cloudflare account:
 
 ```sh
-$ npx wrangler deploy
+npx wrangler deploy
 ```
 
 ### 4. Configure the Worker
@@ -220,8 +229,8 @@ $ npx wrangler deploy
 4. In the **Settings** tab, select **Variables**.
 
 5. Under **Environment Variables**, add the following [secret variables](/workers/configuration/environment-variables/#add-environment-variables-via-the-dashboard):
-   * `CF_ACCESS_CLIENT_ID` = `<service token Client ID>`
-   * `CF_ACCESS_CLIENT_SECRET` = `<service token Client Secret>`
+   - `CF_ACCESS_CLIENT_ID` = `<service token Client ID>`
+   - `CF_ACCESS_CLIENT_SECRET` = `<service token Client Secret>`
 
 The Client ID and Client Secret are copied from your [service token](#1-generate-a-service-token).
 

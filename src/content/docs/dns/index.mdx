@@ -1,6 +1,6 @@
 ---
 pcx_content_type: overview
-title: Overview
+title: Cloudflare DNS
 sidebar:
   order: 2
 
@@ -10,7 +10,7 @@ import { Description, Feature, Plan, RelatedProduct } from "~/components"
 
 <Description>
 
-Leverage Cloudflare’s global network to deliver excellent performance and reliability to your domain. 
+Leverage Cloudflare's global network to deliver excellent performance and reliability to your domain.
 </Description>
 
 <Plan type="all" />
@@ -21,14 +21,18 @@ Cloudflare DNS is a fast, resilient and easy-to-manage authoritative DNS service
 
 ## Features
 
+<Feature header="DNS records" href="/dns/manage-dns-records/how-to/create-dns-records/">
+DNS records make resources available on your domain, and allow you to configure services such as email.
+</ Feature>
+
 <Feature header="DNSSEC" href="/dns/dnssec/">
 DNS Security Extensions (DNSSEC) adds cryptographic signatures to your DNS records, preventing anyone else from redirecting traffic intended for your domain.
 
-Cloudflare also supports [Multi-signer DNSSEC](/dns/dnssec/multi-signer-dnssec/). 
+Cloudflare also supports [Multi-signer DNSSEC](/dns/dnssec/multi-signer-dnssec/).
 </Feature>
 
 <Feature header="CNAME flattening" href="/dns/cname-flattening/">
-CNAME flattening delivers better performance and allows you to add a CNAME record at your apex domain (`example.com`). Paid accounts can choose to flatten all CNAME records on their domain. 
+CNAME flattening delivers better performance and allows you to add a CNAME record at your apex domain (`example.com`). Paid accounts can choose to flatten all CNAME records on their domain.
 </Feature>
 
 <br />
@@ -40,9 +44,9 @@ Refer to [DNS features and availability](/dns/reference/all-features/) for a com
 ## Related products
 
 <RelatedProduct header="Registrar" href="/registrar/" product="registrar">
-Before you can start using Cloudflare DNS you must first have a domain. Buy and renew your domain at cost with Cloudflare Registrar. 
+Before you can start using Cloudflare DNS you must first have a domain. Buy and renew your domain at cost with Cloudflare Registrar.
 </RelatedProduct>
 
 <RelatedProduct header="DNS Resolver" href="/1.1.1.1/" product="1.1.1.1">
-Cloudflare DNS focuses on businesses and their domain administration. If you are a consumer and want a more private way to browse the Internet, check out 1.1.1.1, Cloudflare's public DNS Resolver. 
+Cloudflare DNS focuses on businesses and their domain administration. If you are a consumer and want a more private way to browse the Internet, check out 1.1.1.1, Cloudflare's public DNS Resolver.
 </RelatedProduct>

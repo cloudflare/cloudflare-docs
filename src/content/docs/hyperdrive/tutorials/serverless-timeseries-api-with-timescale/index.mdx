@@ -11,12 +11,9 @@ tags:
 languages:
   - TypeScript
   - SQL
-
 ---
 
-
-
-import { Render, PackageManagers } from "~/components"
+import { Render, PackageManagers } from "~/components";
 
 In this tutorial, you will learn to build an API on Workers which will ingest and query time-series data stored in [Timescale](https://www.timescale.com/) (they make PostgreSQL faster in the cloud).
 
@@ -24,30 +21,38 @@ You will create and deploy a Worker function that exposes API routes for ingesti
 
 You will learn how to:
 
-* Build and deploy a Cloudflare Worker.
-* Use Worker secrets with the Wrangler CLI.
-* Deploy a Timescale database service.
-* Connect your Worker to your Timescale database service with Hyperdrive.
-* Query your new API.
+- Build and deploy a Cloudflare Worker.
+- Use Worker secrets with the Wrangler CLI.
+- Deploy a Timescale database service.
+- Connect your Worker to your Timescale database service with Hyperdrive.
+- Query your new API.
 
 You can learn more about Timescale by reading their [documentation](https://docs.timescale.com/getting-started/latest/services/).
 
-***
+---
 
 ## 1. Create a Worker project
 
 Run the following command to create a Worker project from the command line:
 
-<PackageManagers type="create" pkg="cloudflare@latest" args={'timescale-api'} />
+<PackageManagers type="create" pkg="cloudflare@latest" args={"timescale-api"} />
 
-<Render file="c3-post-run-steps" product="workers" params={{ one: "Hello World example", two: "Hello World Worker", three: "TypeScript" }} />
+<Render
+	file="c3-post-run-steps"
+	product="workers"
+	params={{
+		category: "hello-world",
+		type: "Hello World Worker",
+		lang: "TypeScript",
+	}}
+/>
 
 Make note of the URL that your application was deployed to. You will be using it when you configure your GitHub webhook.
 
 Change into the directory you just created for your Worker project:
 
 ```sh
-$ cd timescale-api
+cd timescale-api
 ```
 
 ## 2. Prepare your Timescale Service
@@ -98,7 +103,7 @@ Connect to your Timescale database using the Service URL you copied in the last 
 If you are using the default PostgreSQL CLI tool [**psql**](https://www.timescale.com/blog/how-to-install-psql-on-mac-ubuntu-debian-windows/) to connect, you would run psql like below (substituting your **Service URL** from the previous step). You could also connect using a graphical tool like [PgAdmin](https://www.pgadmin.org/).
 
 ```sh
-$ psql <SERVICEURL>
+psql <SERVICEURL>
 ```
 
 Once you are connected, create your table by pasting the following SQL:
@@ -120,20 +125,18 @@ Timescale will manage the rest for you as you ingest and query data.
 
 To create a new Hyperdrive instance you will need:
 
-* Your **SERVICEURL** from [step 2](/hyperdrive/tutorials/serverless-timeseries-api-with-timescale/#2-prepare-your-timescale-service).
-* A name for your Hyperdrive service. For this tutorial, you will use **hyperdrive**.
+- Your **SERVICEURL** from [step 2](/hyperdrive/tutorials/serverless-timeseries-api-with-timescale/#2-prepare-your-timescale-service).
+- A name for your Hyperdrive service. For this tutorial, you will use **hyperdrive**.
 
 Hyperdrive uses the `create` command with the `--connection-string` argument to pass this information. Run it as follows:
 
 ```sh
-$ npx wrangler hyperdrive create hyperdrive --connection-string="SERVICEURL"
+npx wrangler hyperdrive create hyperdrive --connection-string="SERVICEURL"
 ```
 
 :::note
 
-
 Hyperdrive will attempt to connect to your database with the provided credentials to verify they are correct before creating a configuration. If you encounter an error when attempting to connect, refer to Hyperdrive's [troubleshooting documentation](/hyperdrive/observability/troubleshooting/) to debug possible causes.
-
 
 :::
 
@@ -142,9 +145,8 @@ This command outputs your Hyperdrive ID. You can now bind your Hyperdrive config
 ```toml
 name = "timescale-api"
 main = "src/index.ts"
-compatibility_date = "2023-10-30"
-
-node_compat = true
+compatibility_date = "2024-08-21"
+compatibility_flags = [ "nodejs_compat_v2"]
 
 [[hyperdrive]]
 binding = "HYPERDRIVE"
@@ -154,8 +156,7 @@ id = "your-id-here"
 Install the Postgres driver into your Worker project:
 
 ```sh
-$ npm install pg
-
+npm install pg
 ```
 
 Now copy the below Worker code, and replace the current code in `./src/index.ts`. The code below:
@@ -165,67 +166,65 @@ Now copy the below Worker code, and replace the current code in `./src/index.ts`
 3. Creates a `GET` route which takes a `limit` parameter and returns the most recent readings. This could be adapted to filter by ID or by timestamp.
 
 ```ts
-import { Client } from 'pg';
+import { Client } from "pg";
 
 export interface Env {
-    HYPERDRIVE: Hyperdrive;
+	HYPERDRIVE: Hyperdrive;
 }
 
 export default {
-    async fetch(
-        request,
-        env,
-        ctx
-    ): Promise<Response> {
-        const client = new Client({connectionString:env.HYPERDRIVE.connectionString});
-        await client.connect();
+	async fetch(request, env, ctx): Promise<Response> {
+		const client = new Client({
+			connectionString: env.HYPERDRIVE.connectionString,
+		});
+		await client.connect();
 
-        const url = new URL(request.url);
-        // Create a route for inserting JSON as readings
-        if (request.method === 'POST' && url.pathname === '/readings') {
-            // Parse the request's JSON payload
-            const productData = await request.json();
+		const url = new URL(request.url);
+		// Create a route for inserting JSON as readings
+		if (request.method === "POST" && url.pathname === "/readings") {
+			// Parse the request's JSON payload
+			const productData = await request.json();
 
-            // Write the raw query. You are using jsonb_to_recordset to expand the JSON
-            // to PG INSERT format to insert all items at once, and using coalesce to
-            // insert with the current timestamp if no ts field exists
-            const insertQuery = `
+			// Write the raw query. You are using jsonb_to_recordset to expand the JSON
+			// to PG INSERT format to insert all items at once, and using coalesce to
+			// insert with the current timestamp if no ts field exists
+			const insertQuery = `
       INSERT INTO readings (ts, sensor, metadata, value)
       SELECT coalesce(ts, now()), sensor, metadata, value FROM jsonb_to_recordset($1::jsonb)
       AS t(ts timestamptz, sensor UUID, metadata jsonb, value numeric)
   `;
 
-            const insertResult = await client.query(insertQuery, [
-                JSON.stringify(productData)
-            ]);
+			const insertResult = await client.query(insertQuery, [
+				JSON.stringify(productData),
+			]);
 
-            // Collect the raw row count inserted to return
-            const resp = new Response(JSON.stringify(insertResult.rowCount), {
-                headers: { 'Content-Type': 'application/json' }
-            });
+			// Collect the raw row count inserted to return
+			const resp = new Response(JSON.stringify(insertResult.rowCount), {
+				headers: { "Content-Type": "application/json" },
+			});
 
-            ctx.waitUntil(client.end());
-            return resp;
+			ctx.waitUntil(client.end());
+			return resp;
 
-	    // Create a route for querying within a time-frame
-        } else if (request.method === 'GET' && url.pathname === '/readings') {
-            const limit = url.searchParams.get('limit');
+			// Create a route for querying within a time-frame
+		} else if (request.method === "GET" && url.pathname === "/readings") {
+			const limit = url.searchParams.get("limit");
 
-            // Query the readings table using the limit param passed
-            const result = await client.query(
-                'SELECT * FROM readings ORDER BY ts DESC LIMIT $1',
-                [limit]
-            );
+			// Query the readings table using the limit param passed
+			const result = await client.query(
+				"SELECT * FROM readings ORDER BY ts DESC LIMIT $1",
+				[limit],
+			);
 
-            // Return the result as JSON
-            const resp = new Response(JSON.stringify(result.rows), {
-                headers: { 'Content-Type': 'application/json' }
-            });
+			// Return the result as JSON
+			const resp = new Response(JSON.stringify(result.rows), {
+				headers: { "Content-Type": "application/json" },
+			});
 
-            ctx.waitUntil(client.end());
-            return resp;
-        }
-    }
+			ctx.waitUntil(client.end());
+			return resp;
+		}
+	},
 } satisfies ExportedHandler<Env>;
 ```
 
@@ -234,7 +233,7 @@ export default {
 Run the following command to redeploy your Worker:
 
 ```sh
-$ npx wrangler deploy
+npx wrangler deploy
 ```
 
 Your application is now live and accessible at `timescale-api.<YOUR_SUBDOMAIN>.workers.dev`. The exact URI will be shown in the output of the wrangler command you just ran.
@@ -245,13 +244,13 @@ You can now use your Cloudflare Worker to insert new rows into the `readings` ta
 
 ```json
 [
-  { "sensor": "6f3e43a4-d1c1-4cb6-b928-0ac0efaf84a5", "value": 0.3 },
-  { "sensor": "d538f9fa-f6de-46e5-9fa2-d7ee9a0f0a68", "value": 10.8 },
-  { "sensor": "5cb674a0-460d-4c80-8113-28927f658f5f", "value": 18.8 },
-  { "sensor": "03307bae-d5b8-42ad-8f17-1c810e0fbe63", "value": 20.0 },
-  { "sensor": "64494acc-4aa5-413c-bd09-2e5b3ece8ad7", "value": 13.1 },
-  { "sensor": "0a361f03-d7ec-4e61-822f-2857b52b74b3", "value": 1.1 },
-  { "sensor": "50f91cdc-fd19-40d2-b2b0-c90db3394981", "value": 10.3 }
+	{ "sensor": "6f3e43a4-d1c1-4cb6-b928-0ac0efaf84a5", "value": 0.3 },
+	{ "sensor": "d538f9fa-f6de-46e5-9fa2-d7ee9a0f0a68", "value": 10.8 },
+	{ "sensor": "5cb674a0-460d-4c80-8113-28927f658f5f", "value": 18.8 },
+	{ "sensor": "03307bae-d5b8-42ad-8f17-1c810e0fbe63", "value": 20.0 },
+	{ "sensor": "64494acc-4aa5-413c-bd09-2e5b3ece8ad7", "value": 13.1 },
+	{ "sensor": "0a361f03-d7ec-4e61-822f-2857b52b74b3", "value": 1.1 },
+	{ "sensor": "50f91cdc-fd19-40d2-b2b0-c90db3394981", "value": 10.3 }
 ]
 ```
 
@@ -276,13 +275,13 @@ EOF
 ```
 
 ```sh title="Query some data"
-$ curl "https://timescale-api.<YOUR_SUBDOMAIN>.workers.dev/readings?limit=10"
+curl "https://timescale-api.<YOUR_SUBDOMAIN>.workers.dev/readings?limit=10"
 ```
 
 In this tutorial, you have learned how to create a working example to ingest and query readings from the edge with Timescale, Workers, Hyperdrive, and TypeScript.
 
 ## Next steps
 
-* Learn more about [How Hyperdrive Works](/hyperdrive/configuration/how-hyperdrive-works/).
-* Learn more about [Timescale](https://timescale.com).
-* Refer to the [troubleshooting guide](/hyperdrive/observability/troubleshooting/) to debug common issues.
+- Learn more about [How Hyperdrive Works](/hyperdrive/configuration/how-hyperdrive-works/).
+- Learn more about [Timescale](https://timescale.com).
+- Refer to the [troubleshooting guide](/hyperdrive/observability/troubleshooting/) to debug common issues.

@@ -1,7 +1,6 @@
 ---
 pcx_content_type: integration-guide
 title: strongSwan
-
 ---
 
 This tutorial explains how to set up strongSwan along with Magic WAN. You will learn how to configure strongSwan, configure an IPsec tunnel and create a Policy Based Routing.
@@ -33,7 +32,7 @@ https://api.cloudflare.com/client/v4/accounts/{account_id}/magic/ipsec_tunnels/{
 1. Start by [installing StrongSwan](https://docs.strongswan.org/docs/5.9/install/install.html). For example, open the console and run:
 
 ```sh
-$ sudo apt-get install strongswan -y
+sudo apt-get install strongswan -y
 ```
 
 2. After StrongSwan finishes installing, go to `/etc/strongswan.conf` to edit the configuration file and add the following settings:
@@ -156,19 +155,22 @@ To accomplish this, the tutorial uses [iproute2](https://en.wikipedia.org/wiki/I
 3. Open the console and add a rule to match the routing table just created. This rule instructs the system to use routing table `viatunicmp` if the packet's source address is `172.64.240.252`:
 
 ```sh
-$ ip rule add from 172.64.240.252 lookup viatunicmp
+ip rule add from 172.64.240.252 lookup viatunicmp
 ```
 
-4. Add a route to the newly created routing table `viatunicmp`. This is the default route via the interface `vti0`  in the `viatunicmp` table.
+4. Add a route to the newly created routing table `viatunicmp`. This is the default route via the interface `vti0` in the `viatunicmp` table.
 
 ```sh
-$ ip route add default dev vti0 table viatunicmp
+ip route add default dev vti0 table viatunicmp
 ```
 
 5. Now, you can `start` IPsec. You can also `stop`, `restart` and show the `status` for the IPsec connection:
 
 ```bash
-$ ipsec start
+ipsec start
+```
+
+```bash output
 Security Associations (1 up, 0 connecting):
 cloudflare-ipsec[1]: ESTABLISHED 96 minutes ago, <IPSEC_TUNNEL_IDENTIFIER>.ipsec.cloudflare.com]...162.159.67.88[162.159.67.88]
 cloudflare-ipsec{4}:  INSTALLED, TUNNEL, reqid 1, ESP SPIs: c4e20a95_i c5373d00_o
@@ -180,7 +182,7 @@ cloudflare-ipsec{4}:   0.0.0.0/0 === 0.0.0.0/0
 After you finish configuring StrongSwan with Magic WAN, you can use tcpdump to investigate the status of health checks originated from Cloudflare.
 
 ```sh
-$ sudo tcpdump -i <OUTGOING_INTERFACE> esp and host <TUNNEL_CLOUDFLARE_ENDPOINT_IP>
+sudo tcpdump -i <OUTGOING_INTERFACE> esp and host <TUNNEL_CLOUDFLARE_ENDPOINT_IP>
 ```
 
 In this example, the outgoing Internet interface shows that the IPsec encrypted packets (ESP) from Cloudflare's health check probes (both the request and response) are going through the IPsec tunnel we configured.
@@ -190,7 +192,7 @@ In this example, the outgoing Internet interface shows that the IPsec encrypted 
 You can also run tcpdump on `vti0` to check the decrypted packets.
 
 ```sh
-$ sudo tcpdump -i vti0 host 172.64.240.252
+sudo tcpdump -i vti0 host 172.64.240.252
 ```
 
 ![If you run tcpdump on vti0 you can check for decrypted packets](~/assets/images/magic-wan/third-party/strongswan/tcpdump.png)
