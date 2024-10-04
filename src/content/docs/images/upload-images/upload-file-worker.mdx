@@ -29,7 +29,7 @@ const response = await fetch(API_URL, {
 
 ## Upload from AI generated images
 
-To upload an AI generated image, refer to the example below.
+You can use an AI Worker to generate an image and then upload that image to store it in Cloudflare Images. For more information about using Workers AI to generate an image, refer to the [SDXL-Lightning Model](https://developers.cloudflare.com/workers-ai/models/stable-diffusion-xl-lightning).
 
 ```ts
 const API_URL = "https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/images/v1";
