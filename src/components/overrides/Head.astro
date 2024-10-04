@@ -175,7 +175,45 @@ if (Astro.props.entry.data.external_link) {
 <script>
 	import mermaid from "mermaid";
 
-	mermaid.initialize({ startOnLoad: true, theme: "neutral" });
+	const diagrams = document.querySelectorAll<HTMLPreElement>("pre.mermaid");
+
+	diagrams.forEach((diagram) =>
+		diagram.setAttribute("data-diagram", diagram.textContent as string),
+	);
+
+	async function render() {
+		if (diagrams) {
+			const theme =
+				document.documentElement.getAttribute("data-theme") === "light"
+					? "neutral"
+					: "dark";
+
+			for (const diagram of diagrams) {
+				const def = diagram.getAttribute("data-diagram") as string;
+
+				mermaid.initialize({ startOnLoad: false, theme });
+				await mermaid
+					.render(`mermaid-${crypto.randomUUID()}`, def)
+					.then(({ svg }) => (diagram.innerHTML = svg));
+
+				diagram.setAttribute("data-processed", "true");
+
+				const { height, width } = diagram.getBoundingClientRect();
+
+				diagram.setAttribute(
+					"style",
+					`height: ${height}px; width: ${width}px;`,
+				);
+			}
+		}
+	}
+
+	const obs = new MutationObserver(() => render());
+
+	obs.observe(document.documentElement, {
+		attributes: true,
+		attributeFilter: ["data-theme"],
+	});
 </script>
 <script src="src/scripts/analytics.ts"></script>
 <Default {...Astro.props}><slot /></Default>
