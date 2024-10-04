@@ -197,13 +197,6 @@ if (Astro.props.entry.data.external_link) {
 					.then(({ svg }) => (diagram.innerHTML = svg));
 
 				diagram.setAttribute("data-processed", "true");
-
-				const { height, width } = diagram.getBoundingClientRect();
-
-				diagram.setAttribute(
-					"style",
-					`height: ${height}px; width: ${width}px;`,
-				);
 			}
 		}
 	}
