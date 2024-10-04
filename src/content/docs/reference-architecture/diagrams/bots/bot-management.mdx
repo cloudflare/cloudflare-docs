@@ -53,7 +53,7 @@ Cloudflare bot score and bot traffic analysis is available in several locations.
 ![Figure 1: How Cloudflare identifies, scores and processes traffic from bots.](~/assets/images/reference-architecture/bot-management/bot-management-ra-diagram.svg "Figure 1: How Cloudflare identifies, scores and processes traffic from bots.")
 
 1. Client request is sent to the closest Cloudflare Data Center via anycast ensuring low latency.
-2. Cloudflare applies a layered approach for bot detection; each detection mechanism impacts the bot score assigned by Cloudflare to every request. Every request is assigned a bot score between 1 \- 99 inclusive.
+2. Cloudflare applies a layered approach for bot detection; each detection mechanism impacts the bot score assigned by Cloudflare to every request. Every request is assigned a bot score between 1-99 inclusive.
 3. Once the client request has been processed by all of Cloudflare's detection engines and assigned a bot score, defined security policies will be executed, some of which may also be leveraging bot score. Various actions can be taken based on the assigned bot score including the block, allow, rate limit, NoCAPTCHA Challenge.
 4. Cloudflare provides analytics and insights into traffic/requests traversing the Cloudflare network. Customers can use the Bots, Security Analytics, Events, and Log Explorer dashboards to understand the overall traffic and bots activity across their site. Customers can also export logs to 3rd party SIEM and Analytics Platforms.
 
