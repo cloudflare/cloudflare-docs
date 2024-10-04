@@ -3,7 +3,6 @@ pcx_content_type: how-to
 title: Log the payload of matched rules
 sidebar:
   order: 2
-
 ---
 
 Data Loss Prevention allows you to log the data that triggered a specific DLP policy. This data is stored in the portion of the HTTP request known as the payload. Payload logging is especially useful when diagnosing the behavior of DLP rules. Since the values that triggered a rule may contain sensitive data, they are encrypted with a customer-provided public key so that only you can examine them later. The stored data will include a redacted version of the match, plus 20 bytes of additional context on both sides of the match.
@@ -22,14 +21,14 @@ Follow [these instructions](/waf/managed-rules/payload-logging/command-line/gene
 
 :::note
 
-The matching private key is required to view logs. If you lose your private key, you will need to [generate](#1-generate-a-key-pair) and [upload](#2-upload-the-public-key-to-cloudflare) a new public key. The payload of new requests will be encrypted with the new public key. 
+The matching private key is required to view logs. If you lose your private key, you will need to [generate](#1-generate-a-key-pair) and [upload](#2-upload-the-public-key-to-cloudflare) a new public key. The payload of new requests will be encrypted with the new public key.
 :::
 
 ## 3. Enable payload logging for a DLP policy
 
 You can enable payload logging for any Allow or Block HTTP policy that uses the [DLP Profile](/cloudflare-one/policies/gateway/http-policies/#dlp-profile) selector.
 
-1. Go to **Gateway** > **Firewall Policies** > **HTTP**.
+1. Go to **Gateway** > **Firewall policies** > **HTTP**.
 
 2. Edit an existing Allow or Block DLP policy, or [create a new policy](/cloudflare-one/policies/data-loss-prevention/dlp-policies/#2-create-a-dlp-policy).
 
@@ -53,15 +52,15 @@ You will see the [ID of the matched DLP Profile](/api/operations/dlp-profiles-li
 
 :::note
 
-Neither the key nor the decrypted payload will be stored by Cloudflare. 
+Neither the key nor the decrypted payload will be stored by Cloudflare.
 :::
 
 ## Data privacy
 
-* All Cloudflare logs are encrypted at rest. Encrypting the payload content adds a second layer of encryption for the matched values that triggered a DLP rule.
+- All Cloudflare logs are encrypted at rest. Encrypting the payload content adds a second layer of encryption for the matched values that triggered a DLP rule.
 
-* Cloudflare cannot decrypt encrypted payloads, since this operation requires your private key. Cloudflare staff will never ask for the private key.
+- Cloudflare cannot decrypt encrypted payloads, since this operation requires your private key. Cloudflare staff will never ask for the private key.
 
-* DLP will redact all predefined alphanumeric characters in the log. For example, `123-45-6789` will become `XXX-XX-XXXX`.
+- DLP will redact all predefined alphanumeric characters in the log. For example, `123-45-6789` will become `XXX-XX-XXXX`.
 
-  * You can define sensitive data with [Exact Data Match (EDM)](/cloudflare-one/policies/data-loss-prevention/datasets/#exact-data-match). EDM match logs will redact your defined strings.
+  - You can define sensitive data with [Exact Data Match (EDM)](/cloudflare-one/policies/data-loss-prevention/datasets/#exact-data-match). EDM match logs will redact your defined strings.
