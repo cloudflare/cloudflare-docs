@@ -50,7 +50,7 @@
 		"littlefoot": "^4.1.1",
 		"lz-string": "^1.5.0",
 		"marked": "^14.1.1",
-		"mermaid": "^11.2.1",
+		"mermaid": "^11.3.0",
 		"node-html-parser": "^6.1.13",
 		"patch-package": "^8.0.0",
 		"prettier": "^3.3.3",
