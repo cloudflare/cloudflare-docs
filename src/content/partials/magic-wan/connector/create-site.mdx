@@ -1,5 +1,8 @@
 ---
-inputParameters: wan;;lan;;noConnectorShows
+params:
+  - wan
+  - lan
+  - noConnectorShows
 ---
 
 import { GlossaryTooltip, Markdown, Render, TabItem, Tabs } from "~/components";
@@ -19,7 +22,7 @@ To add a site:
 3. Select **Create** to create a new site and start the configuration wizard.
 4. Add a name and description for your new site.
 5. (Optional) In **Site location**, you can add the geographical coordinates for your site. If you add geographical coordinates, your site will show up in the [Site Analytics overview map](/magic-wan/analytics/site-analytics/).
-6. Under **Connector**, select **Add Connector**. This will show you a list of Magic WAN Connector devices associated with your account. <Markdown text={props.three} />
+6. Under **Connector**, select **Add Connector**. This will show you a list of Magic WAN Connector devices associated with your account. <Markdown text={props.noConnectorShows} />
 7. If you have more than one Connector, choose the one that corresponds to the site you are creating. Connectors are identified by a serial number, also known as a service tag. Use this information to choose the right Connector. Select **Add Connector** when you are ready to proceed.
 8. The Connector will be added to your site with an **Interrupt window** defined. The interrupt window is the time period when the Magic WAN Connector software can update, which may result in interruption to existing connections. You can change this later. Refer to [Interrupt window](/magic-wan/configuration/connector/maintenance/interrupt-service-window/) for more details on how to define when the Connector can update its systems.
 9. Select **Next** to proceed to creating your WAN and LAN networks.
@@ -73,7 +76,7 @@ Take note of the site `id` parameter, as you will need it to create WANs and LAN
 
 1. In **WAN configuration**, select **Create**. You can create one or more [wide area networks (WANs)](https://www.cloudflare.com/learning/network-layer/what-is-a-wan/). Configuring multiple WANs will create multiple <GlossaryTooltip term="IPsec tunnel">IPsec</GlossaryTooltip> tunnels (one IPsec tunnel per WAN port). This allows the Connector to failover between circuits according to their <GlossaryTooltip term="tunnel health-check" link="/magic-wan/reference/tunnel-health-checks/">health</GlossaryTooltip>.
 2. In **Interface name**, enter a descriptive name for your WAN.
-3. **Interface number** <Markdown text={props.one} />
+3. **Interface number** <Markdown text={props.wan} />
 4. In **VLAN ID**, enter a number between `0` and `4094` to specify a [VLAN ID](/magic-wan/configuration/connector/reference/#vlan-id).
 5. In **Priority**, choose the priority for your WAN. Lower numbers have higher priority. Refer to <GlossaryTooltip term="traffic steering" link="/magic-wan/reference/traffic-steering/">Traffic steering</GlossaryTooltip> to learn more about how Cloudflare calculates priorities.
 6. **Addressing**: If this is the first time you are setting up your Magic WAN Connector, select **DHCP**. After you activate your Connector, you can then choose to continue fetching the WAN IP address from a DHCP server, or change it to a static IP. If you choose a static IP, you also need to specify the static IP and gateway addresses.
@@ -121,7 +124,7 @@ curl https://api.cloudflare.com/client/v4/accounts/{account_id}/magic/sites/{sit
 
 2. Enter a descriptive name for your LAN in **Interface name**.
 
-3. **Interface number** <Markdown text={props.two} />
+3. **Interface number** <Markdown text={props.lan} />
 
 4. In **VLAN ID**, specify a [VLAN ID](/magic-wan/configuration/connector/reference/#vlan-id) to create virtual LANs.
 
