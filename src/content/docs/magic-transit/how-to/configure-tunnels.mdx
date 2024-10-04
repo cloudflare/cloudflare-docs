@@ -67,7 +67,9 @@ import { GlossaryTooltip, Render } from "~/components";
 
 <Render
 	file="tunnel-endpoints/bi-uni-health-checks"
-	params={{ one: "/magic-transit/reference/tunnel-health-checks/" }}
+	params={{
+		productPathProbe: "/magic-transit/reference/tunnel-health-checks/",
+	}}
 />
 
 <Render file="tunnel-endpoints/mt-egress" />
