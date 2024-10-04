@@ -1,10 +1,12 @@
 ---
 params:
-	- productName, anycastURL, trafficSteering, magicWANecmp
-
+  - productName
+  - anycastURL
+  - trafficSteering
+  - magicWANecmp
 ---
 
-import { GlossaryTooltip, Markdown } from "~/components"
+import { GlossaryTooltip, Markdown } from "~/components";
 
 {props.productName} uses a static configuration to route your traffic through <GlossaryTooltip term="anycast" link={props.anycastURL}>anycast tunnels</GlossaryTooltip> from Cloudflare’s global network to your locations.
 
