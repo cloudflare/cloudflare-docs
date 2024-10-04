@@ -30,7 +30,7 @@ Do not use the following terms: change log (two words), release notes, what's ne
 
 ## Structure (single-page)
 
-When creating a changelog, you need a Markdown page file and a corresponding YAML file in the [`src/content/changelogs` folder](https://github.com/cloudflare/cloudflare-docs/tree/production/src/content/changelogs).
+When creating a changelog, you need an MDX page file and a corresponding YAML file in the [`src/content/changelogs` folder](https://github.com/cloudflare/cloudflare-docs/tree/production/src/content/changelogs).
 
 The combination of these files allows us to:
 
@@ -42,7 +42,7 @@ The combination of these files allows us to:
 
 Your Markdown file needs to have several special values to pull in the changelog information. These values are highlighted in the sample page.
 
-```mdx title="src/content/queues/platform/changelog.mdx"
+```mdx title="/src/content/docs/queues/platform/changelog.mdx"
 ---
 pcx_content_type: changelog
 title: Changelog
@@ -54,14 +54,14 @@ sidebar:
 
 import { ProductChangelog } from "~/components";
 
-{/* <!-- Actual content lives in /data/changelogs/queues.yaml. Update the file there for new entries to appear here. For more details, refer to https://developers.cloudflare.com/style-guide/documentation-content-strategy/content-types/changelog/#yaml-file --> */}
+{/* <!-- Actual content lives in /src/content/changelogs/queues.yaml. Update the file there for new entries to appear here. For more details, refer to https://developers.cloudflare.com/style-guide/documentation-content-strategy/content-types/changelog/#yaml-file --> */}
 
 <ProductChangelog />
 ```
 
 ### YAML file
 
-The `product-changelog` component renders data that lives in a file within the [`/data/changelogs` folder](https://github.com/cloudflare/cloudflare-docs/tree/production/data/changelogs).
+The `<ProductChangelog>` component renders data that lives in a file within the [`/src/content/changelogs` folder](https://github.com/cloudflare/cloudflare-docs/tree/production/src/content/changelogs).
 
 - `link` string required
 
@@ -97,7 +97,7 @@ The `product-changelog` component renders data that lives in a file within the [
 
     - Markdown string that also follows YAML conventions. For multi-line strings, start the entry with `|-` and then type on an indented new line.
 
-```yml title="/data/changelogs/queues.yaml"
+```yml title="/src/content/changelogs/queues.yaml"
 ---
 link: "/queues/changelog/"
 productName: Queues
@@ -164,7 +164,7 @@ For each entry page, create a regular markdown page. These do not require a sepa
 
 Each individual entry needs an abbreviated entry in the changelog `.yaml` file.
 
-```yml title="/data/changelogs/waf.yaml"
+```yml title="/src/content/changelogs/waf.yaml"
 ---
 link: "/waf/change-log/"
 productName: WAF
