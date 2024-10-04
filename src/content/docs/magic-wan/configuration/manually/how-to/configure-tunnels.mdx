@@ -17,7 +17,9 @@ import { GlossaryTooltip, Render } from "~/components";
 	params={{ one: "(this address space is also a link-local address)" }}
 />
 
-## GRE and IPsec tunnels
+## Ways to onboard traffic to Cloudflare
+
+### GRE and IPsec tunnels
 
 <Render
 	file="tunnel-endpoints/gre-ipsec"
@@ -29,7 +31,7 @@ import { GlossaryTooltip, Render } from "~/components";
 	}}
 />
 
-### Anti-replay protection
+#### Anti-replay protection
 
 <Render
 	file="tunnel-endpoints/anti-replay"
@@ -37,6 +39,18 @@ import { GlossaryTooltip, Render } from "~/components";
 	params={{
 		productName: "Magic WAN",
 		antiReplayPagePath: "/magic-wan/reference/anti-replay-protection/",
+	}}
+/>
+
+### Network Interconnect (CNI)
+
+<Render
+	file="tunnel-endpoints/cni"
+	product="magic-transit"
+	params={{
+		magicName: "Magic WAN",
+		cniPath: "Network Interconnect (CNI)",
+		productLink: "/magic-wan/network-interconnect/",
 	}}
 />
 
