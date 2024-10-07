@@ -10,6 +10,24 @@ sidebar:
 
 import { Badge, Details, Tabs, TabItem, Render } from "~/components";
 
+<Details header="Feature availability">
+
+| [WARP modes](/cloudflare-one/connections/connect-devices/warp/configure-warp/warp-modes/) | [Zero Trust plans](https://www.cloudflare.com/teams-pricing/) |
+| ----------------------------------------------------------------------------------------- | ------------------------------------------------------------- |
+| <ul><li> Gateway with WARP</li><li> Secure Web Gateway without DNS filtering </li></ul>   | All plans                                                     |
+
+| System   | Availability | Minimum WARP version |
+| -------- | ------------ | -------------------- |
+| Windows  | ✅            | 2024.9.346.0        |
+| macOS    | ✅            | 2024.9.346.0        |
+| Linux    | ✅            | 2024.9.346.0        |
+| iOS      | ❌            |                     |
+| Android  | ❌            |                     |
+| ChromeOS | ❌            |                     |
+
+
+</Details>
+
 Access for Infrastructure allows you to have granular control over how users access individual servers, clusters, or databases in your private network. By adding an infrastructure application to Cloudflare Access, you can configure how users authenticate to the resource as well as control and authorize the ports, protocols, and usernames that they can connect with. Access and command logs ensure regulatory compliance and allow for auditing of user activity in case of a security breach.
 
 :::note
@@ -63,6 +81,28 @@ To connect to targets that are in different VNETS, users will need to [switch th
 :::note
 If a user is connected to a target in VNET-A and needs to connect to a target in VNET-B, switching their VNET will not break any existing connections to targets within VNET-A. At present, connections are maintained between VNETs.
 :::
+
+### Display available targets
+
+Users can use `warp-cli` to display a list of targets they can access. On the WARP device, open a terminal and run the following command:
+
+```sh
+warp-cli target list
+```
+
+```sh output
+╭──────────────────────────────────────┬──────────┬──────┬────────────────────────────────┬───────────────────────────────────────────────────────────────────┬─────────────╮
+│ Target ID │ Protocol │ Port │ Attributes │ IP (Virtual Network) │ Usernames │
+├──────────────────────────────────────┼──────────┼──────┼────────────────────────────────┼───────────────────────────────────────────────────────────────────┼─────────────┤
+│ d97525c8-3941-40e8-876a-227ebdfb9102 │ ssh │ 22 │ env: dev, staging │ 10.0.0.1 (f3399768-d320-11ec-9d64-0242ac120012) │ root, admin │
+│ │ │ │ hostname: vault 420, vault 421 │ │ │
+├──────────────────────────────────────┼──────────┼──────┼────────────────────────────────┼───────────────────────────────────────────────────────────────────┼─────────────┤
+│ 46c2d5d1-dab0-4342-bbcb-3a270cde2ad8 │ ssh │ 23 │ color: blue, red │ 10.0.0.2 (f3399768-d320-11ec-9d64-0242ac120011) │ root, user │
+│ │ │ │ env: production │ 2001:0:130f::9c0:876a:130b (f3499768-d320-11ec-9d64-0242ac120011) │ │
+│ │ │ │ hostname: vault 420, vault 424 │ │ │
+╰──────────────────────────────────────┴──────────┴──────┴────────────────────────────────┴───────────────────────────────────────────────────────────────────┴─────────────╯
+
+```
 
 ## Revoke a user's session
 
