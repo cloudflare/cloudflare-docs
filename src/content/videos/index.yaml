@@ -197,7 +197,7 @@ entries:
     pcx_content_type: tutorial
   - link: https://youtu.be/10-kiyJNr8s
     title: Build a private AI chatbot using Meta's Llama 3.1
-    description: In this video, you will learn how to tet up a private AI chat powered by Llama 3.1 for secure, fast interactions, deploy the model on Cloudflare Workers for serverless, scalable performance and use Cloudflare's Workers AI for seamless integration and edge computing benefits.
+    description: In this video, you will learn how to set up a private AI chat powered by Llama 3.1 for secure, fast interactions, deploy the model on Cloudflare Workers for serverless, scalable performance and use Cloudflare's Workers AI for seamless integration and edge computing benefits.
     tags: [Workers, AI]
     languages: [TypeScript]
     products: [Workers, Workers AI]
