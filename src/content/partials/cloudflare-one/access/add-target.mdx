@@ -13,14 +13,14 @@ To create a new target:
 <TabItem label="Dashboard">
 1. In [Zero Trust](https://one.dash.cloudflare.com/), go to **Network** > **Targets**.
 2. Select **Add a target**.
-3. In **Target hostname**, enter a user-friendly name for the target resource. We recommend using the server hostname, for example `production-server`. The hostname does not need to be unique and can be reused for multiple targets.
+3. In **Target hostname**, enter a user-friendly name for the target resource. We recommend using the server hostname, for example `production-server`. The hostname does not need to be unique and can be reused for multiple targets. Hostnames are used to define the subset of targets included in an infrastructure application and are not used in DNS address resolution.
 	<Details header="Format restrictions">
 			- Case insensitive
 			- Contain no more than 255 characters
 			- Contain only alphanumeric characters, `-`, or `.` (no spaces allowed)
 			- Start and end with an alphanumeric character
 	</Details>
-4. In **IP addresses**, enter the private IPv4 and/or IPv6 address of the target resource. If the IP address overlaps across multiple private networks, select the [virtual network](/cloudflare-one/connections/connect-networks/private-net/cloudflared/tunnel-virtual-networks/) where the resource is located.
+4. In **IP addresses**, enter the private IPv4 and/or IPv6 address of the target resource. If the IP address overlaps across multiple private networks, select the [virtual network](/cloudflare-one/connections/connect-networks/private-net/cloudflared/tunnel-virtual-networks/) where the resource is located. This IP address and virtual network pairing is now assigned to this target and cannot be reused in another target by design.
 :::note[IP address requirements]
 - Public IPs are not currently supported.
 - The IP address must be reachable through Cloudflare Tunnel.

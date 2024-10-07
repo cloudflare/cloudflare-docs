@@ -1,10 +1,11 @@
 ---
-inputParameters: productName;;antiReplayPagePath
-
+params:
+  - productName
+  - antiReplayPagePath
 ---
 
-import { GlossaryTooltip, Markdown } from "~/components"
+import { GlossaryTooltip, Markdown } from "~/components";
 
-If you use {props.one} and <GlossaryTooltip term="anycast">anycast</GlossaryTooltip> IPsec tunnels, we recommend disabling anti-replay protection. This setting is disabled on Cloudflare’s side by default. However, it can be enabled via the API or the Cloudflare dashboard for devices that do not support disabling it, including Cisco Meraki, Velocloud, and AWS VPN Gateway.
+If you use {props.productName} and <GlossaryTooltip term="anycast">anycast</GlossaryTooltip> IPsec tunnels, we recommend disabling anti-replay protection. This setting is disabled on Cloudflare’s side by default. However, it can be enabled via the API or the Cloudflare dashboard for devices that do not support disabling it, including Cisco Meraki, Velocloud, and AWS VPN Gateway.
 
-Refer to <a href={props.two}>Anti-replay protection</a> for more information on this topic, or [Add IPsec tunnels](#add-tunnels) below to learn how to enable this feature.
+Refer to <a href={props.antiReplayPagePath}>Anti-replay protection</a> for more information on this topic, or [Add IPsec tunnels](#add-tunnels) below to learn how to enable this feature.

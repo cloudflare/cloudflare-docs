@@ -1,5 +1,6 @@
 ---
-inputParameters: finalInstructions
+params:
+  - finalInstructions
 ---
 
 import { Markdown } from "~/components";
@@ -42,4 +43,4 @@ To set up a high availability configuration:
 11. In **Virtual static address**, enter the IP that the LAN south of the Connector will forward traffic to. For example, `192.168.10.3/24`.
 12. Select **Save**.
 13. From the **High availability probing link** drop-down menu, select the port that should be used to monitor the node's health. Cloudflare recommends you choose a reliable interface as the HA probing link. The primary and secondary node's probing link should be connected over a switch, and cannot be a direct connection.
-14. <Markdown text={props.one} />
+14. <Markdown text={props.finalInstructions} />

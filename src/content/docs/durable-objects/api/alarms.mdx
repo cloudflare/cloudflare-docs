@@ -95,6 +95,8 @@ This example shows how to both set alarms with the `setAlarm(timestamp)` method 
 * Following a short delay, the `alarm()` handler will run from the beginning on the other machine.
 
 ```js
+import { DurableObject } from 'cloudflare:workers';
+
 export default {
   async fetch(request, env) {
     let id = env.ALARM_EXAMPLE.idFromName("foo");
@@ -104,7 +106,7 @@ export default {
 
 const SECONDS = 1000;
 
-export class AlarmExample {
+export class AlarmExample extends DurableObject {
   constructor(ctx, env) {
     this.ctx = ctx;
     this.storage = ctx.storage;

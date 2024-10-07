@@ -6,7 +6,9 @@ import starlightImageZoom from "starlight-image-zoom";
 import liveCode from "astro-live-code";
 import rehypeSlug from "rehype-slug";
 import rehypeMermaid from "rehype-mermaid";
-import rehypeAutolinkHeadings from "rehype-autolink-headings";
+import rehypeAutolinkHeadings, {
+	type Options as rehypeAutolinkHeadingsOptions,
+} from "rehype-autolink-headings";
 import rehypeExternalLinks from "rehype-external-links";
 import starlightLinksValidator from "starlight-links-validator";
 import { h } from "hastscript";
@@ -55,7 +57,7 @@ const AnchorLinkIcon = h(
 		}),
 	),
 );
-const autolinkConfig = {
+const autolinkConfig: rehypeAutolinkHeadingsOptions = {
 	properties: {
 		class: "anchor-link",
 	},
@@ -95,6 +97,7 @@ export default defineConfig({
 			],
 			rehypeSlug,
 			[rehypeAutolinkHeadings, autolinkConfig],
+			// @ts-expect-error TODO: fix types
 			rehypeTitleFigure,
 		],
 	},
@@ -214,7 +217,7 @@ export default defineConfig({
 		icon(),
 		sitemap({
 			serialize(item) {
-				item.lastmod = new Date();
+				item.lastmod = new Date().toISOString();
 				return item;
 			},
 		}),
