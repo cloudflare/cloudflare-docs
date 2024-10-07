@@ -8,12 +8,6 @@ sidebar:
 
 import { Type } from "~/components";
 
-:::note[Alarms disabled for SQLite in Durable Objects Beta]
-
-An issue was identified with [alarms](/durable-objects/api/alarms/) in [beta Durable Object classes with a SQLite storage backend](/durable-objects/best-practices/access-durable-objects-storage/#sqlite-storage-backend). Alarms have been temporarily disabled for only SQLite-backed Durable Objects while a fix is implemented. Alarms in Durable Objects with default, key-value storage backend are unaffected and continue to operate.
-
-:::
-
 ## Background
 
 Durable Objects alarms allow you to schedule the Durable Object to be woken up at a time in the future. When the alarm's scheduled time comes, the `alarm()` handler method will be called. Alarms are modified using the [Storage API](/durable-objects/api/storage-api/), and alarm operations follow the same rules as other storage operations.
