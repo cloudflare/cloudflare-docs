@@ -339,5 +339,5 @@ entries:
     tags: [Nuxt]
     products: [Pages, Workers AI, R2]
     languages: [TypeScript]
-    cloudflare: true
+    cloudflare: false
     updated: 2024-10-07
