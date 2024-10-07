@@ -6,12 +6,21 @@ description: Magic WAN uses a static configuration to route traffic through
   anycast tunnels using the Generic Routing Encapsulation (GRE) and Internet
   Protocol Security (IPsec) protocols from Cloudflare’s global network to your
   network.
-
 ---
 
-import { Render } from "~/components"
+import { Render } from "~/components";
 
-<Render file="traffic-steering" product="magic-transit" params={{ one: "Magic WAN", two: "/magic-wan/reference/tunnels/", three: "/magic-wan/configuration/manually/how-to/configure-static-routes/", four: "/magic-wan/reference/tunnels/#ipsec-tunnels" }} />
+<Render
+	file="traffic-steering"
+	product="magic-transit"
+	params={{
+		productName: "Magic WAN",
+		greURL: "/magic-wan/reference/tunnels/",
+		staticRoutesURL:
+			"/magic-wan/configuration/manually/how-to/configure-static-routes/",
+		ipsecURL: "/magic-wan/reference/tunnels/#ipsec-tunnels",
+	}}
+/>
 
 ## Application-aware policies
 

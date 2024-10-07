@@ -43,7 +43,7 @@ You need to configure Breakout traffic for each of your existing sites, as it is
 
 <Render
 	file="connector/app-aware-policies/add-app"
-	params={{ one: "Breakout traffic" }}
+	params={{ featureName: "Breakout traffic" }}
 />
 
 6. Select one or more applications that should bypass Cloudflare filtering from the list. You can also use the search box.
@@ -120,7 +120,7 @@ The traffic for that application will now go directly to the Internet and bypass
 
 <Render
 	file="connector/app-aware-policies/delete-app"
-	params={{ one: "Breakout traffic" }}
+	params={{ featureName: "Breakout traffic" }}
 />
 
 </TabItem> <TabItem label="API">
