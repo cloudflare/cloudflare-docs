@@ -13,9 +13,11 @@ import {
 	PackageManagers,
 } from "~/components";
 
-In this guide, you will create a new [Remix](https://remix.run/) application and deploy to Cloudflare Workers (with the new [<InlineBadge preset="beta" /> Workers Assets](/workers/static-assets/)).
+In this guide, you can [create a new](/workers/frameworks/framework-guides/remix/#create-a-new-application) or [deploy an existing](/workers/frameworks/framework-guides/remix/#deploy-an-existing-remix-application) [Remix](https://remix.run/) application to Cloudflare Workers with the new [<InlineBadge preset="beta" /> Workers Assets](/workers/static-assets/) feature.
 
-## 1. Set up a new project
+## Create a new application
+
+### 1. Set up a new project
 
 Use the [`create-cloudflare`](https://www.npmjs.com/package/create-cloudflare) CLI (C3) to set up a new project. C3 will create a new project directory, initiate Remix's official setup tool, and provide the option to deploy instantly.
 
@@ -42,13 +44,216 @@ After setting up your project, change your directory by running the following co
 cd my-remix-app
 ```
 
-## 2. Develop locally
+### 2. Develop locally
 
 After you have created your project, run the following command in the project directory to start a local server. This will allow you to preview your project locally during development.
 
 <PackageManagers type="run" args={"dev"} />
 
-## 3. Deploy your Project
+### 3. Deploy your Project
+
+Your project can be deployed to a `*.workers.dev` subdomain or a [Custom Domain](/workers/configuration/routing/custom-domains/), from your own machine or from any CI/CD system, including [Cloudflare's own](/workers/ci-cd/builds/).
+
+The following command will build and deploy your project. If you're using CI, ensure you update your ["deploy command"](/workers/ci-cd/builds/configuration/#build-settings) configuration appropriately.
+
+<PackageManagers type="run" args={"deploy"} />
+
+---
+
+## Deploy an existing Remix application
+
+Deploy an existing Remix application (for example, if you created an application with the [create-remix CLI](https://remix.run/docs/en/main/other-api/create-remix)) to Cloudflare Workers.
+
+### 1. Manage dependencies
+
+a. Install [Cloudflare's Wrangler CLI tool](/workers/wrangler/) and [`@cloudflare/workers-types`](/@cloudflare/workers-types).
+
+```sh
+npm install --save-dev wrangler @cloudflare/workers-types
+```
+
+b. Install the Cloudflare Remix adapter.
+
+```sh
+npm install --save @remix-run/cloudflare
+```
+
+c. Uninstall the Node.js Remix package.
+
+```sh
+npm uninstall @remix-run/node
+```
+
+### 2. Generate entry files
+
+a. Remove the existing entry files that are tailored for Node.js.
+
+```sh
+rm -rf ./app/entry.*.tsx
+```
+
+b. Regenerate entry files compatible with Cloudflare.
+
+```sh
+npx remix reveal
+```
+
+### 3. Create `server.ts`
+
+Create a `server.ts` file in the root directory. This file configures Remix for the Workers runtime and allows you to interact with Cloudflare-specific features like [`ctx`](/workers/runtime-apis/context/) and [Workers bindings](/workers/runtime-apis/bindings/).
+
+```js title="server.ts"
+import { createRequestHandler, logDevReady } from "@remix-run/cloudflare";
+import * as build from "@remix-run/dev/server-build";
+
+const handleRemixRequest = createRequestHandler(build, process.env.NODE_ENV);
+
+if (process.env.NODE_ENV === "development") {
+  logDevReady(build);
+}
+export default {
+    async fetch(request, env, ctx) {
+
+        try {
+            const loadContext = {
+                cloudflare: {
+                    // This object matches the return value from Wrangler's
+                    // `getPlatformProxy` used during development via Remix's
+                    // `cloudflareDevProxyVitePlugin`:
+                    // https://developers.cloudflare.com/workers/wrangler/api/#getplatformproxy
+                    cf: request.cf,
+                    ctx: {
+                        waitUntil: ctx.waitUntil.bind(ctx),
+                        passThroughOnException: ctx.passThroughOnException.bind(ctx),
+                      },
+                    caches,
+                    env,
+                },
+            };
+            return await handleRemixRequest(request, loadContext);
+        } catch (error) {
+            console.log(error);
+            return new Response("An unexpected error occurred", { status: 500 });
+        }
+    },
+} satisfies ExportedHandler<Env>;
+```
+
+### 4. Create `wrangler.toml`
+
+Create a `wrangler.toml` file with your project details.
+
+```toml
+name = "my-worker"
+compatibility_date = "2024-10-03"
+main = "./build/index.js"
+
+[assets]
+directory = "./public"
+```
+
+### 5. Generate wrangler types
+
+Generates TypeScript definitions for Cloudflare Workers.
+
+```sh
+npx wrangler types
+```
+
+### 6. Update `tsconfig.json`
+
+Update `tsconfig.json` to recognize Cloudflare types.
+
+```json
+{
+	"compilerOptions": {
+		"types": ["@remix-run/cloudflare", "@cloudflare/workers-types"]
+		// ...other compiler options
+	}
+	// ...other configurations
+}
+```
+
+### 7. Update import statements
+
+Update the `./app/root.tsx` and `./app/routes/_index.tsx` files, by changing imports from `@remix-run/node` to `@remix-run/cloudflare`:
+
+```js
+import { ... } from "@remix-run/cloudflare";
+```
+
+### 8. Create `remix.config.js`
+
+Create a `remix.config.js` file in the root directory. This file to defines various settings for how your application is built and behaves during development and deployment.
+
+:::note
+
+This uses the "Classic" Remix compiler, since Vite does not work with all Workers resources yet (for example, [Durable Objects](/durable-objects/), [Hyperdrive](/hyperdrive/), etc). We are currently working on supporting the Vite Environment for workerd. Once complete, this guide will be updated. Using Vite will not require any changes in your actual code, simply in configuration (for example `remix.config.js` will get replaced by `vite.config.js`).
+
+:::
+
+```js title="server.ts"
+/** @type {import('@remix-run/dev').AppConfig} */
+export default {
+	ignoredRouteFiles: ["**/*.css"],
+	server: "./server.ts",
+	serverConditions: ["workerd", "worker", "browser"],
+	serverMainFields: ["workerd", "browser", "module", "main"],
+	// eslint-disable-next-line no-undef
+	serverDependenciesToBundle: [
+		// bundle everything except the external cloudflare:workers package
+		/^(?!.*\bcloudflare:workers\b).*$/,
+	],
+	serverMainFields: ["browser", "module", "main"],
+	serverMinify: true,
+	serverModuleFormat: "esm",
+	serverPlatform: "neutral",
+	// appDirectory: "app",
+	assetsBuildDirectory: "public/build",
+	publicPath: "/build/",
+	serverBuildPath: "build/index.js",
+};
+```
+
+### 9. Update styling
+
+a. Replace the Tailwind CSS import: Replace `import "./tailwind.css";` with `import styles from "./styles.css";`.
+
+```js
+import styles from "./styles.css";
+```
+
+b. Add the `styles.css` stylesheet
+
+```js
+export const links: LinksFunction = () => [
+  { rel: "stylesheet", href: styles },
+  { rel: "preconnect", href: "https://fonts.googleapis.com" },
+  // ... other stylesheets or pre-connect resources
+
+]
+```
+
+### 10. Update `package.json`
+
+Update `package.json` scripts to add wrangler commands and remove Vite.
+
+```json
+"scripts": {
+    "build": "remix build",
+    "dev": "remix dev --manual -c \"wrangler dev\"",
+    "deploy": "npm run build && wrangler deploy",
+    // ...other scripts
+  },
+```
+
+### 9. Develop locally
+
+After you have created your project, run the following command in the project directory to start a local server. This will allow you to preview your project locally during development.
+
+<PackageManagers type="run" args={"dev"} />
+
+### 10. Deploy your Project
 
 Your project can be deployed to a `*.workers.dev` subdomain or a [Custom Domain](/workers/configuration/routing/custom-domains/), from your own machine or from any CI/CD system, including [Cloudflare's own](/workers/ci-cd/builds/).
 
