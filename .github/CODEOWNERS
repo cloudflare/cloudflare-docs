@@ -75,7 +75,7 @@
 /src/content/docs/fundamentals/account-and-billing/ @patriciasantaana @cloudflare/pcx-technical-writing
 /src/content/docs/learning-paths/ @cloudflare/pcx-technical-writing
 /src/content/docs/network-error-logging/ @dcpena @cloudflare/pcx-technical-writing
-/src/content/docs/network-interconnect/ @dcpena @cloudflare/pcx-technical-writing
+/src/content/docs/network-interconnect/ @marciocloudflare @cloudflare/pcx-technical-writing
 /src/content/docs/notifications/ @patriciasantaana @cloudflare/pcx-technical-writing
 /src/content/docs/registrar/ @jason-cf @cloudflare/pcx-technical-writing
 /src/content/docs/rules/ @pedrosousa @cloudflare/pcx-technical-writing
