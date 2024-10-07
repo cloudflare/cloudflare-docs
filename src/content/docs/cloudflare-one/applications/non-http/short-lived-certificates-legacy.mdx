@@ -14,8 +14,10 @@ import { Render } from "~/components";
 Cloudflare recommends configuring short-lived certificates through our new [Access for Infrastructure](/cloudflare-one/connections/connect-networks/use-cases/ssh/ssh-infrastructure-access/) workflow. Access for Infrastructure supports differing SSH aliases out-of-the-box, removes the need for client SSH configuration, and allows for more granular security policies.
 :::
 
-<Render file="access/short-lived-certs-intro" params={{ intro: "Cloudflare Access can replace" }} />
-
+<Render
+	file="access/short-lived-certs-intro"
+	params={{ intro: "Cloudflare Access can replace" }}
+/>
 
 ## 1. Secure the server behind Cloudflare Access
 
@@ -38,7 +40,7 @@ Cloudflare Access will take the identity from a token and, using short-lived cer
 
 ## 3. Generate a short-lived certificate public key
 
-1. In Zero Trust, go to **Access** > **Service Auth** > **SSH**.
+1. In Zero Trust, go to **Access** > **Service auth** > **SSH**.
 
 2. In the **Application** dropdown, choose the Access application that represents your SSH server.
 

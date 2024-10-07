@@ -7,7 +7,6 @@ sidebar:
 
 import { Render } from "~/components";
 
-
 :::note
 Cloudflare recommends configuring SSH command logs through our new [Access for Infrastructure](/cloudflare-one/connections/connect-networks/use-cases/ssh/ssh-infrastructure-access/) workflow. Access for Infrastructure supports differing SSH aliases out-of-the-box, custom SSH ports, and Logpush integrations.
 :::
@@ -59,7 +58,7 @@ cat /etc/ssh/sshd_config
 
 ## 7. Create an Audit SSH policy
 
-1. In [Zero Trust](https://one.dash.cloudflare.com), go to **Gateway** > **Firewall Policies**.
+1. In [Zero Trust](https://one.dash.cloudflare.com), go to **Gateway** > **Firewall policies**.
 
 2. In the **Network** tab, create a new network policy.
 
@@ -97,7 +96,12 @@ ssh-keygen -R <targetIP or hostname>
 
 ## (Optional) Configure SSH Command Logging
 
-<Render file="ssh/upload-ssh-key" params={{ note: "Note that this a different public key from the `ca.pub` file you used to configure the SSH server." }} />
+<Render
+	file="ssh/upload-ssh-key"
+	params={{
+		note: "Note that this a different public key from the `ca.pub` file you used to configure the SSH server.",
+	}}
+/>
 
 ## View SSH Logs
 
