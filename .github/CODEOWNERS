@@ -124,10 +124,12 @@
 /src/content/docs/workers/reference/security-model/ @irvinebroque @GregBrimble @cloudflare/pcx-technical-writing
 /src/content/compatibility-dates/ @irvinebroque @kflansburg @mikenomitch @GregBrimble @cloudflare/pcx-technical-writing
 /src/content/docs/workers/wrangler/ @penalosa @petebacondarwin @dario-piotrowicz @irvinebroque @GregBrimble @cloudflare/pcx-technical-writing
-/src/content/docs/pages/framework-guides/ @igorminar @dario-piotrowicz @jculvey @aninibread @GregBrimble @cloudflare/pcx-technical-writing
+/src/content/docs/workers/frameworks/ @igorminar @dario-piotrowicz @jculvey @aninibread @GregBrimble @cloudflare/pcx-technical-writing
+/src/content/docs/pages/framework-guides/ @igorminar @dario-piotrowicz @jculvey @aninibread @GregBrimble @tanushree-sharma @cloudflare/pcx-technical-writing
 /src/content/docs/analytics/analytics-engine/ @irvinebroque @elithrar @cloudflare/pcx-technical-writing
 /cloudflare-for-platforms/workers-for-platforms/ @irvinebroque @tanushree-sharma @angelampcosta @GregBrimble @cloudflare/pcx-technical-writing
 /src/content/docs/workers/observability/ @irvinebroque @mikenomitch @rohinlohe @cloudflare/pcx-technical-writing
+/src/content/docs/workers/static-assets @irvinebroque @tanushree-sharma @GregBrimble @WalshyDev @cloudflare/pcx-technical-writing
 
 # DDoS Protection
 
