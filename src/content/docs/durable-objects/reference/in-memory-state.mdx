@@ -10,7 +10,7 @@ In-memory state means that each Durable Object has one active instance at any pa
 
 Variables in a Durable Object will maintain state as long as your Durable Object is not evicted from memory.
 
-A common pattern is to initialize a Durable Object from [persistent storage](/durable-objects/api/transactional-storage-api/) and set instance variables the first time it is accessed. Since future accesses are routed to the same Durable Object, it is then possible to return any initialized values without making further calls to persistent storage.
+A common pattern is to initialize a Durable Object from [persistent storage](/durable-objects/api/storage-api/) and set instance variables the first time it is accessed. Since future accesses are routed to the same Durable Object, it is then possible to return any initialized values without making further calls to persistent storage.
 
 ```js
 export class Counter {
@@ -41,7 +41,7 @@ In the example above, using a global variable `value` instead of the instance va
 
 The Durable Object's storage has a built-in in-memory cache of its own. If you use `get()` to retrieve a value that was read or written recently, the result will be instantly returned from cache. Instead of writing initialization code like above, you could use `get("value")` whenever you need it, and rely on the built-in cache to make this fast. Refer to the [Build a counter example](/durable-objects/examples/build-a-counter/) to learn more about this approach.
 
-However, in applications with more complex state, explicitly storing state in your Object may be easier than making transactional storage API calls on every access. Depending on the configuration of your project, write your code in the way that is easiest for you.
+However, in applications with more complex state, explicitly storing state in your Object may be easier than making Storage API calls on every access. Depending on the configuration of your project, write your code in the way that is easiest for you.
 
 
 :::
@@ -62,6 +62,6 @@ If the callback throws an exception, the object will be terminated and reset. Th
 
 `state.blockConcurrencyWhile()` takes effect right away, pausing everything else, other than the currently executing event and any I/O started from within the `state.blockConcurrencyWhile()` callback. The value returned by the callback becomes the value returned by `state.blockConcurrencyWhile()` itself.
 
-To simulate eviction, use `state.blockConcurrencyWhile()`. Inside the callback, throw an exception. Throwing an exception causes the system to recreate the in-memory object, without affecting the durable storage. Uncaught exceptions inside the `state.blockConcurrencyWhile()` will break the actor.
+To simulate eviction, use `state.blockConcurrencyWhile()`. Inside the callback, throw an exception. Throwing an exception causes the system to recreate the in-memory object, without affecting the durable storage. Uncaught exceptions inside the `state.blockConcurrencyWhile()` will break the object.
 
 To help prevent deadlocks in your critical section, there is a 30s timeout on the callback passed into `state.blockConcurrencyWhile`. When this timeout is exceeded, your Durable Object will be reset. It is generally good practice to have your critical section in `blockConcurrencyWhile()` be as brief as possible.

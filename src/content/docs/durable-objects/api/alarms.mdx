@@ -6,9 +6,17 @@ sidebar:
 
 ---
 
+import { Type } from "~/components";
+
+:::note[Alarms disabled for SQLite in Durable Objects Beta]
+
+An issue was identified with [alarms](/durable-objects/api/alarms/) in [beta Durable Object classes with a SQLite storage backend](/durable-objects/best-practices/access-durable-objects-storage/#sqlite-storage-backend). Alarms have been temporarily disabled for only SQLite-backed Durable Objects while a fix is implemented. Alarms in Durable Objects with default, key-value storage backend are unaffected and continue to operate.
+
+:::
+
 ## Background
 
-Durable Objects alarms allow you to schedule the Durable Object to be woken up at a time in the future. When the alarm's scheduled time comes, the `alarm()` handler method will be called. Alarms are modified using the [Transactional Storage API](/durable-objects/api/transactional-storage-api/), and alarm operations follow the same rules as other storage operations.
+Durable Objects alarms allow you to schedule the Durable Object to be woken up at a time in the future. When the alarm's scheduled time comes, the `alarm()` handler method will be called. Alarms are modified using the [Storage API](/durable-objects/api/storage-api/), and alarm operations follow the same rules as other storage operations.
 
 Notably:
 
@@ -28,13 +36,13 @@ Alarms are directly scheduled from within your Durable Object. Cron Triggers, on
 
 Alarms can be used to build distributed primitives, like queues or batching of work atop Durable Objects. Alarms also provide a mechanism to guarantee that operations within a Durable Object will complete without relying on incoming requests to keep the Durable Object alive. For a complete example, refer to [Use the Alarms API](/durable-objects/examples/alarms-api/).
 
-## Transactional Storage methods
+## Storage methods
 
 ### getAlarm
 
 
 
-* <code>getAlarm()</code> : number | null
+* `getAlarm()`: <Type text ='number | null' />
 
   * If there is an alarm set, then return the currently set alarm time in number of milliseconds elapsed since the UNIX epoch. Otherwise, return `null`.
 
@@ -44,7 +52,7 @@ Alarms can be used to build distributed primitives, like queues or batching of w
 
 
 
-* <code>setAlarm(scheduledTimeMsnumber)</code> : void
+* <code>setAlarm(scheduledTimeMs <Type text='number'/>)</code>: <Type text='void' />
 
   * Set the time for the alarm to run at in number of milliseconds elapsed since the UNIX epoch.
 
@@ -54,7 +62,7 @@ Alarms can be used to build distributed primitives, like queues or batching of w
 
 
 
-* <code>deleteAlarm()</code> : void
+* `deleteAlarm()`: <Type text='void' />
 
   * Unset the alarm if there is a currently set alarm.
 
@@ -68,7 +76,7 @@ Alarms can be used to build distributed primitives, like queues or batching of w
 
 
 
-* <code>alarm()</code> : void
+* `alarm()`: <Type text='void' />
 
   * Called by the system when a scheduled alarm time is reached.
 
@@ -87,6 +95,8 @@ This example shows how to both set alarms with the `setAlarm(timestamp)` method 
 * Following a short delay, the `alarm()` handler will run from the beginning on the other machine.
 
 ```js
+import { DurableObject } from 'cloudflare:workers';
+
 export default {
   async fetch(request, env) {
     let id = env.ALARM_EXAMPLE.idFromName("foo");
@@ -96,7 +106,7 @@ export default {
 
 const SECONDS = 1000;
 
-export class AlarmExample {
+export class AlarmExample extends DurableObject {
   constructor(ctx, env) {
     this.ctx = ctx;
     this.storage = ctx.storage;
@@ -110,7 +120,7 @@ export class AlarmExample {
   }
   async alarm() {
     // The alarm handler will be invoked whenever an alarm fires.
-    // You can use this to do work, read from the Transactional Storage API, make HTTP calls
+    // You can use this to do work, read from the Storage API, make HTTP calls
     // and set future alarms to run using this.storage.setAlarm() from within this handler.
   }
 }
@@ -120,4 +130,4 @@ export class AlarmExample {
 
 * Understand how to [use the Alarms API](/durable-objects/examples/alarms-api/) in an end-to-end example.
 * Read the [Durable Objects alarms announcement blog post](https://blog.cloudflare.com/durable-objects-alarms/).
-* Review the [Transactional Storage API](/durable-objects/api/transactional-storage-api/) documentation for Durable Objects.
+* Review the [Storage API](/durable-objects/api/storage-api/) documentation for Durable Objects.
