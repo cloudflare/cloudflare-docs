@@ -134,7 +134,7 @@ Gateway will only log failed connections in [network session logs](/logs/referen
 | Field                  | Description                                                                                                                                       |
 | ---------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------- |
 | **Source IP**          | IP address of the user sending the packet.                                                                                                        |
-| **Source internal IP** | Private IP address assigned by the user's local network.                                                                                          |
+| **Source Internal IP** | Private IP address assigned by the user's local network.                                                                                          |
 | **Destination IP**     | IP address of the packet's target.                                                                                                                |
 | **Action**             | The Gateway [Action](/cloudflare-one/policies/gateway/dns-policies/#actions) taken based on the first rule that matched (such as Allow or Block). |
 | **Session ID**         | ID of the unique session.                                                                                                                         |
@@ -142,11 +142,12 @@ Gateway will only log failed connections in [network session logs](/logs/referen
 
 #### Matched policies
 
-| Field                  | Description                                           |
-| ---------------------- | ----------------------------------------------------- |
-| **Policy name**        | Name of the matched policy.                           |
-| **Policy ID**          | ID of the policy enforcing the decision Gateway made. |
-| **Policy description** | Description of the matched policy.                    |
+| Field                  | Description                                                                                                                         |
+| ---------------------- | ----------------------------------------------------------------------------------------------------------------------------------- |
+| **DNS location**       | [User-configured location](/cloudflare-one/connections/connect-devices/agentless/dns/locations/) from where the DNS query was made. |
+| **Policy name**        | Name of the matched policy.                                                                                                         |
+| **Policy ID**          | ID of the policy enforcing the decision Gateway made.                                                                               |
+| **Policy description** | Description of the matched policy.                                                                                                  |
 
 #### Identities
 
@@ -168,12 +169,13 @@ Gateway will only log failed connections in [network session logs](/logs/referen
 | **Destination IP**      | IP address of the packet's target.                                                                                                                |
 | **Destination port**    | Destination port number for the packet.                                                                                                           |
 | **Destination country** | Destination port number for the packet.                                                                                                           |
-| **Protocol**            | Protocol over which the packet was sent.                                                                                                          |
-| **Detected protocol**   | The detected [network protocol](/cloudflare-one/policies/gateway/network-policies/protocol-detection/).                                           |
+| **Transport protocol**  | Protocol over which the packet was sent.                                                                                                          |
+| **Detected Protocol**   | The detected [network protocol](/cloudflare-one/policies/gateway/network-policies/protocol-detection/).                                           |
 | **SNI**                 | Host whose Server Name Indication (SNI) header Gateway will filter traffic against.                                                               |
-| **Virtual network**     | [Virtual network](/cloudflare-one/connections/connect-networks/private-net/cloudflared/tunnel-virtual-networks/) that the client is connected to. |
+| **Virtual Network**     | [Virtual network](/cloudflare-one/connections/connect-networks/private-net/cloudflared/tunnel-virtual-networks/) that the client is connected to. |
 | **Category details**    | Category or categories associated with the packet.                                                                                                |
-| **Proxy PAC endpoint**  | [PAC file proxy endpoint](/cloudflare-one/connections/connect-devices/agentless/pac-files/) Gateway forwarded traffic to, if applicable.          |
+| **Proxy endpoint**      | [PAC file proxy endpoint](/cloudflare-one/connections/connect-devices/agentless/pac-files/) Gateway forwarded traffic to, if applicable.          |
+| **Application name**    | Name of the application that matched the domain.                                                                                                  |
 
 ## HTTP logs
 
