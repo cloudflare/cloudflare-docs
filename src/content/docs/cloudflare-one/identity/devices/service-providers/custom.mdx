@@ -111,7 +111,7 @@ To create a custom service-to-service integration:
 5. In **Access client ID** and **Access client secret**, enter the Access service token used to authenticate to your external API.
 6. In **Rest API URL**, enter the external API endpoint that Cloudflare will query for posture information (for example, `https://api.example.com`). For more information, refer to [External API requirements](#external-api-requirements).
 7. In **Polling frequency**, choose how often Cloudflare Zero Trust should query the external API for information.
-8. Select **Test and save**.
+8. Select **Test and save**. The test checks if Cloudflare can authenticate to the API URL using the provided Access credentials.
 
 Next, [configure a device posture check](#configure-the-posture-check) to determine if a given posture score constitutes a pass or fail.
 
