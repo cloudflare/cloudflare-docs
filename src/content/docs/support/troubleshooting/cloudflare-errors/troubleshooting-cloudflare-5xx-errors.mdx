@@ -258,6 +258,7 @@ Here are the options we'd suggest to work around this issue:
 - [Contact your hosting provider](#required-error-details-for-hosting-provider) to exclude the following common causes at your origin web server:
   - A long-running process on the origin web server.
   - An overloaded origin web server.
+- If SSL mode is [Flexible](/ssl/origin-configuration/ssl-modes/flexible/) and the origin doesn't have port 80 open, a timeout can occur. Change SSL mode to one your origin accepts.
 
 :::note
 
