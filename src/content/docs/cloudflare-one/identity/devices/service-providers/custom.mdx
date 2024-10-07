@@ -1,6 +1,7 @@
 ---
 pcx_content_type: how-to
 title: Custom service provider
+hidden: true
 sidebar:
   order: 1
 
@@ -23,7 +24,7 @@ sequenceDiagram
 
 ## External API requirements
 
-The custom service provider integration works with any API service that meets the following specifications. To get started with building a custom external API, refer to the sample code and our [Create custom device posture checks with Workers](/cloudflare-one/tutorials/custom-device-posture-workers) tutorial.
+The custom service provider integration works with any API service that meets the following specifications.
 
 ### Authentication
 
@@ -64,7 +65,7 @@ Example request body:
 
 ### Expected response from external API
 
-For each Cloudflare `device_id`, The API service is expected to return a posture score and optionally a third-party device ID.
+For each Cloudflare `device_id`, the API service is expected to return a posture score and optionally a third-party device ID.
 
 | Field | Description |
 | ----- | ----------- |
