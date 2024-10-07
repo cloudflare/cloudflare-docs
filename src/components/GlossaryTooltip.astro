@@ -30,6 +30,7 @@ definition = definition.split(/\r?\n/)[0];
 	data-tooltip
 	data-content={marked.parse(definition)}
 	class="border-b-2 border-dashed border-accent-600"
+	tabindex="0"
 	>{
 		link ? (
 			<a href={link}><slot /></a>

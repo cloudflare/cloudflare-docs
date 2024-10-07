@@ -16,6 +16,8 @@ if (footnotes) {
 			addTooltip(fnref, content.innerHTML);
 
 			fnref.classList.add("footnote");
+
+			fnref.setAttribute("tabindex", "0");
 			fnref.removeAttribute("href");
 		}
 	}
