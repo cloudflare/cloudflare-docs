@@ -1,14 +1,13 @@
 ---
 pcx_content_type: concept
 title: Build caching
-
 ---
 
 Improve Pages build times by turning on build caching to restore dependencies and build output between builds. The first build to occur after enabling build caching on your Pages project will save to cache. Every subsequent build will restore from cache unless configured otherwise.
 
 ## Requirements
 
-Build caching requires the [V2 build system](/pages/configuration/language-support-and-tools/) or later. To update from V1, refer to the [V2 build system migration instructions](/pages/configuration/language-support-and-tools/#v2-build-system).
+Build caching requires the [V2 build system](/pages/configuration/build-image/#v2-build-system) or later. To update from V1, refer to the [V2 build system migration instructions](/pages/configuration/build-image/#v1-to-v2-migration).
 
 ## Configuration
 
@@ -39,10 +38,10 @@ When enabled, the build cache will automatically detect and cache data from each
 
 Package manager caches are automatically saved to the build cache to speed up dependency installation. Pages will cache the global cache directories of the following package managers:
 
-* [yarn 1](https://yarnpkg.com/)
-* [npm](https://www.npmjs.com/)
-* [pnpm](https://pnpm.io/)
-* [bun](https://bun.sh/)
+- [yarn 1](https://yarnpkg.com/)
+- [npm](https://www.npmjs.com/)
+- [pnpm](https://pnpm.io/)
+- [bun](https://bun.sh/)
 
 ### Frameworks
 
@@ -61,8 +60,8 @@ Caching the build output from frameworks can speed up subsequent build times. Th
 
 During this beta period, the following limits are imposed:
 
-* **Retention**: Cache is purged seven days after its last read date. Unread cache artifacts are purged seven days after creation.
-* **Storage**: Every project is allocated 10 GB. If the project cache exceeds this limit, the project will automatically start deleting artifacts that were read least recently.
+- **Retention**: Cache is purged seven days after its last read date. Unread cache artifacts are purged seven days after creation.
+- **Storage**: Every project is allocated 10 GB. If the project cache exceeds this limit, the project will automatically start deleting artifacts that were read least recently.
 
 ## Feedback
 

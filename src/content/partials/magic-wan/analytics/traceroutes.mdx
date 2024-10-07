@@ -1,16 +1,16 @@
 ---
-inputParameters: productName
-
+params:
+  - productName
 ---
 
-import { Markdown } from "~/components"
+import { Markdown } from "~/components";
 
-Magic {props.one} customers can run traceroutes to understand the hop by hop Internet path and latencies from Cloudflare’s network to their own network.
+Magic {props.productName} customers can run traceroutes to understand the hop by hop Internet path and latencies from Cloudflare's network to their own network.
 
 To run a traceroute from a specific Cloudflare data center to your network:
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/) and select your account.
-2. Go to **Magic {props.one}** > **Tunnel Health**.
+2. Go to **Magic {props.productName}** > **Tunnel Health**.
 3. Expand a Magic Tunnel, and find the Cloudflare data center where the traceroute will be run from.
 4. Select **Traceroute for details**.
 

@@ -1,7 +1,7 @@
 ---
-updated: 2022-11-23
+updated: 2024-10-01
 difficulty: Intermediate
-content_type: 📝 Tutorial
+content_type: 🎥 Video
 pcx_content_type: tutorial
 title: Build a Comments API
 products:
@@ -13,7 +13,7 @@ languages:
   - SQL
 ---
 
-import { Render, PackageManagers } from "~/components";
+import { Render, PackageManagers, Stream } from "~/components";
 
 In this tutorial, you will learn how to use D1 to add comments to a static blog site. To do this, you will construct a new D1 database, and build a JSON API that allows the creation and retrieval of comments.
 
@@ -27,9 +27,9 @@ Use [C3](https://developers.cloudflare.com/learning-paths/workers/get-started/c3
 	file="c3-post-run-steps"
 	product="workers"
 	params={{
-		one: "Hello World example",
-		two: "Hello World Worker",
-		three: "JavaScript",
+		category: "hello-world",
+		type: "Hello World Worker",
+		lang: "JavaScript",
 	}}
 />
 
@@ -38,6 +38,14 @@ To start developing your Worker, `cd` into your new project directory:
 ```sh
 cd d1-example
 ```
+
+## Video Tutorial
+
+<Stream
+	videoId="8d20dd6cf5679f3272ca44a9fa01728c"
+	videoTitle="Build a Comments API with D1"
+	thumbnailStartTime="22s"
+/>
 
 ## 1. Install Hono
 

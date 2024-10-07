@@ -3,7 +3,6 @@ pcx_content_type: how-to
 title: Tanium
 sidebar:
   order: 4
-  hidden: true
 head:
   - tag: title
     content: Tanium - Posture checks
@@ -54,6 +53,10 @@ To retrieve those values:
 
 ## Device posture attributes
 
-| Selector    | Description                                                                                                                                                          |
-| ----------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Total score | `totalScore` of the device from [Tanium's EndpointRisk assessment](https://developer.tanium.com/site/global/apis/graphql/spectaql/index.gsp#definition-EndpointRisk) |
+Device posture data is gathered from [Tanium's EndpointRisk API](https://developer.tanium.com/site/global/apis/graphql/spectaql/index.gsp#definition-EndpointRisk). To learn more about how scores are calculated, refer to the [Tanium risk score documentation](https://help.tanium.com/bundle/ug_benchmark_cloud/page/benchmark/risk_score.html).
+
+| Selector    | Description   | Value |
+| ----------- | ------ | --- |
+| Total score | `totalScore` of the device. |  `1` to `1000` |
+| Risk level | `riskLevel` of the device. | Low, medium, high, or critical |
+| EID last seen | Elapsed time since the device was last seen, based on its `datetime` attribute. | In the last 1 hour, 3 hours, 6 hours, 12 hours, 24 hours, 7 days, 30 days, or more than 30 days |

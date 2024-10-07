@@ -11,6 +11,6 @@ description: Magic WAN uses a static configuration to route your traffic through
 
 import { Render } from "~/components"
 
-<Render file="static-routes/static-routes1" product="magic-transit" params={{ one: "Magic WAN", two: "/magic-wan/reference/tunnels/", three: "/magic-wan/reference/traffic-steering/", four: "The maximum number of routes you can have with the same priority is 64." }} />
+<Render file="static-routes/static-routes1" product="magic-transit" params={{ productName: "Magic WAN", anycastURL: "/magic-wan/reference/tunnels/", trafficSteering: "/magic-wan/reference/traffic-steering/", magicWANecmp: "The maximum number of routes you can have with the same priority is 64." }} />
 
-<Render file="static-routes/static-routes3" product="magic-transit" params={{ one: "Magic WAN > Configuration", two: "/magic-wan/configuration/manually/how-to/configure-tunnels/", three: "<br /> When using Magic WAN and Cloudflare Tunnel together, remember to consider the IP ranges utilized in the static routes of Cloudflare Tunnel when selecting static routes for Magic WAN. For more information, refer to [Cloudflare Tunnel](/magic-wan/zero-trust/cloudflare-tunnel/).<br>" }} />
+<Render file="static-routes/static-routes3" product="magic-transit" params={{ createPath: "Magic WAN > Configuration", tunnelEndpoints: "/magic-wan/configuration/manually/how-to/configure-tunnels/", ipRanges: "<br /> When using Magic WAN and Cloudflare Tunnel together, remember to consider the IP ranges utilized in the static routes of Cloudflare Tunnel when selecting static routes for Magic WAN. For more information, refer to [Cloudflare Tunnel](/magic-wan/zero-trust/cloudflare-tunnel/).<br>" }} />

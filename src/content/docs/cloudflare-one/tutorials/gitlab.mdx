@@ -134,7 +134,7 @@ When a user makes a request to a site protected by Access, that request hits Clo
 
 ![GitLab Services](~/assets/images/cloudflare-one/zero-trust-security/gitlab/teams-diagram.png)
 
-To determine who can reach the application, Cloudflare Access relies on integration with identity providers like Okta or AzureAD or Google to issue the identity cards that get checked at the door. While a VPN allows users free range on a private network unless someone builds an active rule to stop them, Access enforces that identity check on every request (and at any granularity configured).
+To determine who can reach the application, Cloudflare Access relies on integration with identity providers like Okta, Microsoft Entra ID, or Google to issue the identity cards that get checked at the door. While a VPN allows users free range on a private network unless someone builds an active rule to stop them, Access enforces that identity check on every request (and at any granularity configured).
 
 For GitLab, start by building two policies. Users will connect to GitLab in a couple of methods: in the web app and over SSH. Create policies to secure a subdomain for each. First, the web app.
 

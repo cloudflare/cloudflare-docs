@@ -81,7 +81,7 @@ All WARP Connector and WARP client devices in your Zero Trust organization have 
 2. Enable **Proxy**.
 3. Enable **Warp to Warp**. This allows Cloudflare to route traffic to the CGNAT IP space.
 4. Next, go to **Settings** > **WARP Client**.
-5. Enable [**Override local interface IP**](/cloudflare-one/connections/connect-devices/warp/configure-warp/warp-settings/#override-local-interface-ip).
+5. Enable [**Override local interface IP**](/cloudflare-one/connections/connect-devices/warp/configure-warp/warp-settings/#override-local-interface-ip-).
 6. [Check your Split Tunnel configuration](/cloudflare-one/connections/connect-networks/private-net/cloudflared/#3-route-private-network-ips-through-warp) and ensure that the CGNAT IP space (`100.96.0.0/12`) routes through WARP.
 
    For example, if you are using **Exclude** mode, delete `100.64.0.0/10` from the list and re-add `100.64.0.0/11` and `100.112.0.0/12`.
@@ -158,8 +158,9 @@ In this example, we will create a WARP Connector for subnet `10.0.0.0/24` and in
 
     ```sh
     warp-cli status
+    ```
 
-    	```sh output
+    ```sh output
     Status update: Connected
     Success
     ```

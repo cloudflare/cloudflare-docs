@@ -6,7 +6,6 @@ sidebar:
 head:
   - tag: title
     content: PUT examples - Firewall rules
-
 ---
 
 ## Update multiple rules
@@ -38,36 +37,34 @@ curl --request PUT \
 ]'
 ```
 
-:::note[Note]
-
+:::note
 
 `PUT` does not update the filter specified. It only looks at the filter ID (`<FILTER_ID>`) to update the rule with a new filter.
 
 To update the filter, use the [Filters API](/firewall/api/cf-filters/).
 
-
 :::
 
 ```json title="Response"
 {
-  "result": [
-    {
-      "id": "<RULE_ID>",
-      "paused": false,
-      "description": "Challenge site",
-      "action": "challenge",
-      "priority": null,
-      "filter": {
-        "id": "<FILTER_ID>",
-        "expression": "not http.request.uri.path matches \"^/api/.*$\"",
-        "paused": false,
-        "description": "not /api"
-      }
-    }
-  ],
-  "success": true,
-  "errors": [],
-  "messages": []
+	"result": [
+		{
+			"id": "<RULE_ID>",
+			"paused": false,
+			"description": "Challenge site",
+			"action": "challenge",
+			"priority": null,
+			"filter": {
+				"id": "<FILTER_ID>",
+				"expression": "not http.request.uri.path matches \"^/api/.*$\"",
+				"paused": false,
+				"description": "not /api"
+			}
+		}
+	],
+	"success": true,
+	"errors": [],
+	"messages": []
 }
 ```
 
@@ -77,9 +74,9 @@ This example updates the firewall rule with ID `{rule_id}`.
 
 You must include the following fields in the request body:
 
-* `id`
-* `action`
-* `filter.id`
+- `id`
+- `action`
+- `filter.id`
 
 All other fields are optional.
 
@@ -106,33 +103,31 @@ curl --request PUT \
 
 ```json title="Response"
 {
-  "result": {
-    "id": "<RULE_ID>",
-    "paused": false,
-    "description": "Do not challenge login from office IPv6",
-    "action": "allow",
-    "priority": null,
-    "filter": {
-      "id": "<FILTER_ID>",
-      "expression": "ip.src in {2400:cb00::/32 2803:f800::/32 2c0f:f248::/32 2a06:98c0::/29} and (http.request.uri.path ~ \"^.*/wp-login.php$\" or http.request.uri.path ~ \"^.*/xmlrpc.php$\")",
-      "paused": false,
-      "description": "Login from office"
-    }
-  },
-  "success": true,
-  "errors": [],
-  "messages": []
+	"result": {
+		"id": "<RULE_ID>",
+		"paused": false,
+		"description": "Do not challenge login from office IPv6",
+		"action": "allow",
+		"priority": null,
+		"filter": {
+			"id": "<FILTER_ID>",
+			"expression": "ip.src in {2400:cb00::/32 2803:f800::/32 2c0f:f248::/32 2a06:98c0::/29} and (http.request.uri.path ~ \"^.*/wp-login.php$\" or http.request.uri.path ~ \"^.*/xmlrpc.php$\")",
+			"paused": false,
+			"description": "Login from office"
+		}
+	},
+	"success": true,
+	"errors": [],
+	"messages": []
 }
 ```
 
-:::note[Note]
-
+:::note
 
 `PUT` overwrites fields that are not explicitly passed in the request.
 
 For example, if the request omits `description`, any previously existing `description` value will be erased.
 
 To preserve existing values, issue a `GET` request and based on the response, determine which fields (and respective values) to include in your `PUT` request.
-
 
 :::

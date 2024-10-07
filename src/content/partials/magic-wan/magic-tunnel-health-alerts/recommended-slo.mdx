@@ -1,0 +1,32 @@
+---
+params:
+  - backgroundInfoPath
+  - networkAnalyticsPath
+  - healthChecks
+---
+
+## Recommended SLO thresholds
+
+Currently, there are three SLO threshold values that are supported by the API. The SLO threshold for Magic Tunnel health alerts can be defined as the percentage of health checks that must be successful for each of the Magic Tunnel(s) included in the alert:
+
+| Alert Sensitivity Level | Recommended SLO threshold |
+| ----------------------- | ------------------------- |
+| High                    | 99.0                      |
+| Medium                  | 98.0                      |
+| Low                     | 97.0                      |
+
+With these settings, at 100% failure Cloudflare will send alerts at the following time frames, after a problem is detected:
+
+- **High sensitivity**: First alert within 10 minutes.
+- **Medium sensitivity**: First alert within 20 minutes.
+- **Low sensitivity**: First alert within 30 minutes.
+
+Refer to the <a href={props.backgroundInfoPath}>Magic tunnels background information page</a> for more information on this topic.
+
+## Test SLOs
+
+To test whether a specific alert sensitivity level works for your use case:
+
+1. [Create an alert](#set-up-magic-tunnel-health-alerts) with a specific sensitivity level for a tunnel with active traffic within the past six hours. If you are not sure of what tunnels to choose, refer to <a href={props.networkAnalyticsPath}>Network Analytics</a> to learn how you can view real-time and historical data about your network.
+2. Disable the tunnel you are testing, so there is 100% <a href={props.healthChecks}>health check failure</a>.
+3. The time it takes for Cloudflare to send you an alert will depend on the sensitivity you chose for your alerts (High, Medium or Low).

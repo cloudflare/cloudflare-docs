@@ -1,0 +1,214 @@
+---
+pcx_content_type: concept
+title: Routing
+sidebar:
+  order: 7
+head: []
+description: How Workers assets' routing and its configuration works.
+---
+
+import {
+	Badge,
+	Description,
+	FileTree,
+	InlineBadge,
+	Render,
+	TabItem,
+	Tabs,
+} from "~/components";
+
+Assets are served by attempting to match up the incoming request's pathname to a static asset. The structure and organization of files in your static asset directory, along with any routing configuration, determine the routing paths for your application. When a request invokes a Worker with assets:
+
+1. If a request is found with a matching path to the current route requested then that asset will always be served.
+
+In this example, request to `example.com/blog` serves the `blog.html` file.
+
+![A request to `example.com/blog` serves the `/blog.html` file. ](~/assets/images/workers/platform/assets/workers-assets-serve-asset.png)
+
+2. If there is no Worker script, [`not_found_handling`](/workers/static-assets/routing/#2-not_found_handling) will be evaluated. By default, a null-body 404-status response will be served.
+
+If a Worker is configured, and there are no assets that match the current route requested, the Worker will be invoked. The Worker can then "fall back" to `not_found_handling` asset behavior, by passing the incoming request through to the [asset binding](/workers/static-assets/binding/#runtime-api-reference).
+
+In this example, request to `example.com/api` doesn't match a static asset so the Worker is invoked.
+
+![A request to `example.com/blog` runs the Worker.](~/assets/images/workers/platform/assets/workers-assets-invoke-worker.png)
+
+## Routing configuration
+
+There are two options for asset serving that can be [configured in `wrangler.toml`](/workers/wrangler/configuration/#assets):
+
+#### 1. `html_handling`
+
+Forcing or dropping trailing slashes on request paths (e.g. `example.com/page/` vs. `example.com/page`) is often something that developers wish to control for cosmetic reasons. Additionally, it can SEO impact because search engines often treat URLs with and without trailing slashes as different, separate pages. This distinction can lead to duplicate content issues, indexing problems, and overall confusion about the correct canonical version of a page.
+
+`html_handling` configuration determines the redirects and rewrites of requests for HTML content. It is used to specify the pattern for canonical URLs, thus where Cloudflare serves HTML content from, and additionally, where Cloudflare redirects non-canonical URLs to.
+
+#### 2. `not_found_handling`
+
+In the event a request does not match a static asset, and there is no Worker script (or that Worker script calls `fetch()` on [the assets binding](/workers/static-assets/binding/)), `not_found_handling` determines how Cloudflare will construct a response.
+
+It can be used to serve single-page applications (SPAs), or to serve custom 404 HTML pages.
+
+If creating a SPA, place an `/index.html` in your asset directory. When `not_found_handling` is configured to `"single-page-application"`, this page will be served with a 200 response.
+
+If you have custom 404 HTML pages, and configure `not_found_handling` to `"404-page"`, Cloudflare will recursively navigate up by pathname segment to serve the nearest `404.html` file. For example, you can have a `/404.html` and `/blog/404.html` file, and Cloudflare will serve the `/blog/404.html` file for requests to `/blog/not-found` and the `/404.html` file for requests to `/foo/bar`.
+
+### Default configuration
+
+#### 1. `html_handling`
+
+`"auto-trailing-slash"` is the default mode if `html_handling` is not explicitly specified.
+
+Take the following directory structure:
+
+```
+|---- file.html
+|---- folder
+      |___ index.html
+```
+
+Based on the incoming requests, the following assets would be served:
+
+| Incoming Request   | Response        | Asset Served       |
+| ------------------ | --------------- | ------------------ |
+| /file              | 200             | /file.html served  |
+| /file.html         | 307 to /file    | -                  |
+| /file/             | 307 to /file    | -                  |
+| /file/index        | 307 to /file    | -                  |
+| /file/index.html   | 307 to /file    | -                  |
+| /folder            | 307 to /folder/ | -                  |
+| /folder.html       | 307 to /folder/ | -                  |
+| /folder/           | 200             | /folder/index.html |
+| /folder/index      | 307 /folder/    | -                  |
+| /folder/index.html | 307 /folder/    | -                  |
+
+#### 2. `not_found_handling`
+
+`"none"` is the default mode if `not_found_handling` is not explicitly specified.
+
+For all non-matching requests, Cloudflare will return a null-body 404-status response.
+
+```
+/not-found -> 404
+/foo/path/doesnt/exist -> 404
+```
+
+### Alternate configuration options
+
+Alternate configuration options are outlined on this page and can be specified in your project's [`wrangler.toml`](/workers/wrangler/configuration/#assets) file. If you're deploying using a [framework](/workers/frameworks/), these options will be defined by the framework provider.
+
+Example `wrangler.toml` configuration:
+
+```toml title="wrangler.toml"
+assets = { directory = "./public", binding = "ASSETS", html_handling = "force-trailing-slash", not_found_handling = "404-page" }
+```
+
+#### `html_handling = "auto-trailing-slash" | "force-trailing-slash" | "drop-trailing-slash" | "none"`
+
+Take the following directory structure:
+
+```
+|---- file.html
+|---- folder
+      |___ index.html
+```
+
+**`html_handling: "auto-trailing-slash"`**
+
+Based on the incoming requests, the following assets would be served:
+
+| Incoming Request   | Response       | Asset Served       |
+| ------------------ | -------------- | ------------------ |
+| /file              | 200            | /file.html         |
+| /file.html         | 307 to /file   | -                  |
+| /file/             | 307 to /file   | -                  |
+| /file/index        | 307 to /file   | -                  |
+| /file/index.html   | 307 to /file   | -                  |
+| /folder            | 307 to /folder | -                  |
+| /folder.html       | 307 to /folder | -                  |
+| /folder/           | 200            | /folder/index.html |
+| /folder/index      | 307 /folder    | -                  |
+| /folder/index.html | 307 /folder    | -                  |
+
+**`html_handling: "force-trailing-slash"`**
+
+Based on the incoming requests, the following assets would be served:
+
+| Incoming Request   | Response        | Asset Served       |
+| ------------------ | --------------- | ------------------ |
+| /file              | 307 to /file/   | -                  |
+| /file.html         | 307 to /file/   | -                  |
+| /file/             | 200             | /file.html         |
+| /file/index        | 307 to /file/   | -                  |
+| /file/index.html   | 307 to /file/   | -                  |
+| /folder            | 307 to /folder/ | -                  |
+| /folder.html       | 307 to /folder/ | -                  |
+| /folder/           | 200             | /folder/index.html |
+| /folder/index      | 307 /folder/    | -                  |
+| /folder/index.html | 307 /folder/    | -                  |
+
+**`html_handling: "drop-trailing-slash"`**
+
+Based on the incoming requests, the following assets would be served:
+
+| Incoming Request   | Response       | Asset Served       |
+| ------------------ | -------------- | ------------------ |
+| /file              | 200            | /file.html         |
+| /file.html         | 307 to /file   | -                  |
+| /file/             | 307 to /file   | -                  |
+| /file/index        | 307 to /file   | -                  |
+| /file/index.html   | 307 to /file   | -                  |
+| /folder            | 200            | /folder/index.html |
+| /folder.html       | 307 to /folder | -                  |
+| /folder/           | 307 to /folder | -                  |
+| /folder/index      | 307 /folder    | -                  |
+| /folder/index.html | 307 /folder    | -                  |
+
+**`html_handling: "none"`**
+
+Based on the incoming requests, the following assets would be served:
+
+| Incoming Request   | Response                        | Asset Served                    |
+| ------------------ | ------------------------------- | ------------------------------- |
+| /file              | Depends on `not_found_handling` | Depends on `not_found_handling` |
+| /file.html         | 200                             | /file.html                      |
+| /file/             | Depends on `not_found_handling` | Depends on `not_found_handling` |
+| /file/index        | Depends on `not_found_handling` | Depends on `not_found_handling` |
+| /file/index.html   | Depends on `not_found_handling` | Depends on `not_found_handling` |
+| /folder            | Depends on `not_found_handling` | Depends on `not_found_handling` |
+| /folder.html       | Depends on `not_found_handling` | Depends on `not_found_handling` |
+| /folder/           | Depends on `not_found_handling` | Depends on `not_found_handling` |
+| /folder/index      | Depends on `not_found_handling` | Depends on `not_found_handling` |
+| /folder/index.html | 200                             | /folder/index.html              |
+
+#### `not_found_handling = "404-page" | "single-page-application" | "none"`
+
+Take the following directory structure:
+
+```
+|---- 404.html
+|---- index.html
+|---- folder
+      |___ 404.html
+```
+
+**`not_found_handling: "none"`**
+
+```
+/not-found -> 404
+/folder/doesnt/exist -> 404
+```
+
+**`not_found_handling: "404-page"`**
+
+```
+/not-found -> 404 /404.html
+/folder/doesnt/exist -> 404 /folder/404.html
+```
+
+**`not_found_handling: "single-page-application"`**
+
+```
+/not-found -> 200 /index.html
+/folder/doesnt/exist -> 200 /index.html
+```

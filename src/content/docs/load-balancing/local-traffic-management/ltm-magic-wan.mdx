@@ -51,7 +51,7 @@ curl https://api.cloudflare.com/client/v4/accounts/{account_id}/teamnet/routes \
 --header "Content-Type: application/json" \
 --data '{
 "comment": "Example comment - account load balancing",
-  "network": "<DEFAULT_VNET>,
+  "network": "<LTM_PRIVATE_IP/CIDR_MASK>,
   "tunnel_id": "<TUNNEL_ID>"
 }'
 ```
