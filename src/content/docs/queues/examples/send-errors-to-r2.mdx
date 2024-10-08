@@ -8,10 +8,13 @@ head:
   - tag: title
     content: Cloudflare Queues - Queues & R2
 description: Example of how to use Queues to batch data and store it in an R2 bucket.
-
 ---
 
 The following Worker will catch JavaScript errors and send them to a queue. The same Worker will receive those errors in batches and store them to a log file in an R2 bucket.
+
+import { WranglerConfig } from "~/components";
+
+<WranglerConfig>
 
 ```toml
 name = "my-worker"
@@ -30,6 +33,8 @@ name = "my-worker"
   binding = "ERROR_BUCKET"
 ```
 
+</WranglerConfig>
+
 ```ts
 type Environment = {
 	readonly ERROR_QUEUE: Queue<Error>;
@@ -37,29 +42,29 @@ type Environment = {
 };
 
 export default {
-  async fetch(req, env): Promise<Response> {
-    try {
-      return doRequest(req);
-    } catch (error) {
-      await env.ERROR_QUEUE.send(error);
-      return new Response(error.message, { status: 500 });
-    }
-  },
-  async queue(batch, env): Promise<void> {
-    let file = '';
-    for (const message of batch.messages) {
-      const error = message.body;
-      file += error.stack || error.message || String(error);
-      file += '\r\n';
-    }
-    await env.ERROR_BUCKET.put(`errors/${Date.now()}.log`, file);
-  },
+	async fetch(req, env): Promise<Response> {
+		try {
+			return doRequest(req);
+		} catch (error) {
+			await env.ERROR_QUEUE.send(error);
+			return new Response(error.message, { status: 500 });
+		}
+	},
+	async queue(batch, env): Promise<void> {
+		let file = "";
+		for (const message of batch.messages) {
+			const error = message.body;
+			file += error.stack || error.message || String(error);
+			file += "\r\n";
+		}
+		await env.ERROR_BUCKET.put(`errors/${Date.now()}.log`, file);
+	},
 } satisfies ExportedHandler<Environment, Error>;
 
 function doRequest(request: Request): Promise<Response> {
-  if (Math.random() > 0.5) {
-    return new Response('Success!');
-  }
-  throw new Error('Failed!');
+	if (Math.random() > 0.5) {
+		return new Response("Success!");
+	}
+	throw new Error("Failed!");
 }
 ```

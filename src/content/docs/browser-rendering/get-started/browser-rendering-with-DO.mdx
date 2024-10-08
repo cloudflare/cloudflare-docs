@@ -75,6 +75,10 @@ Configure your `browser-worker` project's configuration file by adding a browser
 
 Update your [Wrangler configuration](/workers/wrangler/configuration) file with the Browser Rendering API binding, the R2 bucket you created and a Durable Object:
 
+import { WranglerConfig } from "~/components";
+
+<WranglerConfig>
+
 ```toml
 name = "rendering-api-demo"
 main = "src/index.js"
@@ -102,6 +106,8 @@ tag = "v1" # Should be unique for each entry
 new_classes = ["Browser"] # Array of new classes
 
 ```
+
+</WranglerConfig>
 
 ## 6. Code
 

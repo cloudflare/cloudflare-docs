@@ -31,6 +31,10 @@ Hyperdrive will attempt to connect to your database with the provided credential
 
 This command outputs a binding for [Wrangler configuration](/workers/wrangler/configuration) file:
 
+import { WranglerConfig } from "~/components";
+
+<WranglerConfig>
+
 ```toml
 name = "hyperdrive-example"
 main = "src/index.ts"
@@ -42,6 +46,8 @@ compatibility_flags = ["nodejs_compat"]
 binding = "HYPERDRIVE"
 id = "<ID OF THE CREATED HYPERDRIVE CONFIGURATION>"
 ```
+
+</WranglerConfig>
 
 Install the driver:
 

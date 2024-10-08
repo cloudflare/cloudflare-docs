@@ -24,6 +24,10 @@ The top-level configuration is the collection of values you specify at the top o
 
 The layout of a top-level configuration in a [Wrangler configuration](/workers/wrangler/configuration) file is displayed below:
 
+import { WranglerConfig } from "~/components";
+
+<WranglerConfig>
+
 ```toml
 name = "your-worker"
 type = "javascript"
@@ -41,6 +45,8 @@ zone_id = "your-zone-id"
 routes = ["example.com/*"]
 ```
 
+</WranglerConfig>
+
 Environment configuration (optional): the configuration values you specify under an `[env.name]` in your [Wrangler configuration](/workers/wrangler/configuration) file.
 
 Environments allow you to deploy the same project to multiple places under multiple names. These environments are utilized with the `--env` or `-e` flag on the [commands](/workers/wrangler/migration/v1-to-v2/wrangler-legacy/commands/) that are deploying live Workers:
@@ -54,6 +60,8 @@ Environments allow you to deploy the same project to multiple places under multi
 Some environment properties can be [_inherited_](#keys) from the top-level configuration, but if new values are configured in an environment, they will always override those at the top level.
 
 An example of an `[env.name]` configuration looks like this:
+
+<WranglerConfig>
 
 ```toml
 type = "javascript"
@@ -85,6 +93,8 @@ kv_namespaces = [
   { binding = "FOO", id = "888...", preview_id = "999..." }
 ]
 ```
+
+</WranglerConfig>
 
 To deploy this example Worker to the `helloworld` environment, you would run `wrangler publish --env helloworld`.
 
@@ -172,11 +182,15 @@ The `vars` key defines a table of [environment variables](/workers/configuration
 
 Usage:
 
+<WranglerConfig>
+
 ```toml
 [vars]
 FOO = "some value"
 BAR = "some other string"
 ```
+
+</WranglerConfig>
 
 The table keys are available to your Worker as global variables, which will contain their associated values.
 
@@ -191,9 +205,13 @@ console.log(BAR);
 
 Alternatively, you can define `vars` using an inline table format. This style should not include any new lines to be considered a valid TOML configuration:
 
+<WranglerConfig>
+
 ```toml
 vars = { FOO = "some value", BAR = "some other string" }
 ```
+
+</WranglerConfig>
 
 :::note
 
@@ -207,6 +225,8 @@ Secrets should be handled using the [`wrangler secret`](/workers/wrangler/comman
 
 Usage:
 
+<WranglerConfig>
+
 ```toml
 kv_namespaces = [
   { binding = "FOO", id = "0f2ac74b498b48028cb68387c421e279", preview_id = "6a1ddb03f3ec250963f0a1e46820076f" },
@@ -214,7 +234,11 @@ kv_namespaces = [
 ]
 ```
 
+</WranglerConfig>
+
 Alternatively, you can define `kv namespaces` like so:
+
+<WranglerConfig>
 
 ```toml
 [[kv_namespaces]]
@@ -227,6 +251,8 @@ binding = "BAR"
 preview_id = "xyz456"
 id = "xyz123"
 ```
+
+</WranglerConfig>
 
 Much like environment variables and secrets, the `binding` names are available to your Worker as global variables.
 
@@ -265,11 +291,15 @@ A [Workers Site](/workers/configuration/sites/start-from-scratch) generated with
 
 Usage:
 
+<WranglerConfig>
+
 ```toml
 [site]
 bucket = "./public"
 entry-point = "workers-site"
 ```
+
+</WranglerConfig>
 
 - `bucket` required
 
@@ -298,12 +328,16 @@ For exceptionally large pages, Workers Sites may not be ideal. There is a 25 MiB
 If you want to include only a certain set of files or directories in your `bucket`, add an `include` field to your
 `[site]` section of your [Wrangler configuration](/workers/wrangler/configuration) file:
 
+<WranglerConfig>
+
 ```toml
 [site]
 bucket = "./public"
 entry-point = "workers-site"
 include = ["included_dir"] # must be an array.
 ```
+
+</WranglerConfig>
 
 Wrangler will only upload files or directories matching the patterns in the `include` array.
 
@@ -317,6 +351,8 @@ bucket = "./public"
 entry-point = "workers-site"
 exclude = ["excluded_dir"] # must be an array.
 ```
+
+</WranglerConfig>
 
 Wrangler will ignore files or directories matching the patterns in the `exclude` array when uploading assets to Workers KV.
 
@@ -348,10 +384,9 @@ A set of cron triggers used to call a Worker on a schedule.
 
 Usage:
 
-```toml
-[triggers]
-crons = ["0 0 * JAN-JUN FRI", "0 0 LW JUL-DEC *"]
 ```
+
+</WranglerConfig>
 
 - `crons` optional
   - A set of [cron expressions](https://crontab.guru/), where each expression is a separate schedule to run the Worker on.
@@ -362,11 +397,17 @@ Arguments for `wrangler dev` can be configured here so you do not have to repeat
 
 Usage:
 
-```toml
+
+
+<WranglerConfig>
+
+
 [dev]
 port = 9000
 local_protocol = "https"
 ```
+
+</WranglerConfig>
 
 - `ip` optional
 
@@ -400,13 +441,17 @@ addEventListener("fetch", (event) => {
 
 Usage:
 
-```toml
+<WranglerConfig>
+
 [build]
 command = "npm install && npm run build"
 
 [build.upload]
 format = "service-worker"
-```
+
+````
+
+</WranglerConfig>
 
 ##### `[build]`
 
@@ -463,18 +508,22 @@ export default {
 		return new Response(html, { headers });
 	},
 };
-```
+````
 
 To create a Workers project using Wrangler and Modules, add a `[build]` section:
 
-```toml
+<WranglerConfig>
+
 [build]
 command = "npm install && npm run build"
 
 [build.upload]
 format = "modules"
 main = "./worker.mjs"
-```
+
+````
+
+</WranglerConfig>
 
 ##### `[build]`
 
@@ -518,6 +567,10 @@ If your project is written using CommonJS modules, you will need to re-export yo
 
 Defaults:
 
+
+
+<WranglerConfig>
+
 ```toml
 [build.upload]
 format = "modules"
@@ -533,7 +586,9 @@ globs = ["**/*.mjs"]
 [[build.upload.rules]]
 type = "CommonJS"
 globs = ["**/*.js", "**/*.cjs"]
-```
+````
+
+</WranglerConfig>
 
 - `type` required
 
@@ -552,6 +607,8 @@ globs = ["**/*.js", "**/*.cjs"]
 ## Example
 
 To illustrate how these levels are applied, here is a [Wrangler configuration](/workers/wrangler/configuration) file using multiple environments:
+
+<WranglerConfig>
 
 ```toml
 # top level configuration
@@ -598,3 +655,5 @@ kv_namespaces = [
   { binding = "BAR", id = "0d8c101e168d03c65bddf4ba75150f33" }
 ]
 ```
+
+</WranglerConfig>

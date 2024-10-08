@@ -58,11 +58,17 @@ The new beta version of Durable Objects is available where each Durable Object h
 
 To allow a new Durable Object class to use SQLite storage backend, use `new_sqlite_classes` on the migration in your Worker's [Wrangler configuration](/workers/wrangler/configuration) file:
 
+import { WranglerConfig } from "~/components";
+
+<WranglerConfig>
+
 ```toml
 [[migrations]]
 tag = "v1" # Should be unique for each entry
 new_sqlite_classes = ["MyDurableObject"] # Array of new classes
 ```
+
+</WranglerConfig>
 
 [SQL API](/durable-objects/api/storage-api/#sqlexec) is available on `ctx.storage.sql` parameter passed to the Durable Object constructor.
 

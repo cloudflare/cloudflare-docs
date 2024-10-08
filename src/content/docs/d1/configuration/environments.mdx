@@ -9,6 +9,10 @@ sidebar:
 
 To specify different D1 databases for different environments, use the following syntax in your [Wrangler configuration](/workers/wrangler/configuration) file:
 
+import { WranglerConfig } from "~/components";
+
+<WranglerConfig>
+
 ```toml
 # This is a staging environment
 [env.staging]
@@ -22,5 +26,7 @@ d1_databases = [
     { binding = "<BINDING_NAME_2>", database_name = "<DATABASE_NAME_2>", database_id = "<UUID2>" },
 ]
 ```
+
+</WranglerConfig>
 
 In the code above, the `staging` environment is using a different database (`DATABASE_NAME_1`) than the `production` environment (`DATABASE_NAME_2`).

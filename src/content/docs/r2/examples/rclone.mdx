@@ -32,6 +32,10 @@ rclone config file
 
 Then use an editor (`nano` or `vim`, for example) to add or edit the new provider. This example assumes you are adding a new `r2demo` provider:
 
+import { WranglerConfig } from "~/components";
+
+<WranglerConfig>
+
 ```toml
 [r2demo]
 type = s3
@@ -41,6 +45,8 @@ secret_access_key = xyz456
 endpoint = https://<accountid>.r2.cloudflarestorage.com
 acl = private
 ```
+
+</WranglerConfig>
 
 :::note
 

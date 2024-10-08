@@ -4,6 +4,10 @@
 
 You can add one or more types of bindings to your [Wrangler configuration](/workers/wrangler/configuration) file. However, each attribute must be on its own line:
 
+import { WranglerConfig } from "~/components";
+
+<WranglerConfig>
+
 ```toml
 send_email = [
     {name = "<NAME_FOR_BINDING1>"},
@@ -11,3 +15,5 @@ send_email = [
    	{name = "<NAME_FOR_BINDING3>", allowed_destination_addresses = ["<YOUR_EMAIL>@example.com", "<YOUR_EMAIL2>@example.com"]},
 ]
 ```
+
+</WranglerConfig>

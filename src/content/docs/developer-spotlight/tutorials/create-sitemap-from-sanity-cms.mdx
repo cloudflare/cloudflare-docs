@@ -98,6 +98,10 @@ The [Wrangler configuration](/workers/wrangler/configuration) file is a configur
 
 For this tutorial your [Wrangler configuration](/workers/wrangler/configuration) file should be similar to the following:
 
+import { WranglerConfig } from "~/components";
+
+<WranglerConfig>
+
 ```toml
 name = "cms-sitemap"
 main = "src/index.ts"
@@ -111,6 +115,8 @@ SITEMAP_BASE = "https://example.com"
 SANITY_PROJECT_ID = "5z5j5z5j"
 SANITY_DATASET = "production"
 ```
+
+</WranglerConfig>
 
 You must update the `[vars]` section to match your needs. See the inline comments to understand the purpose of each entry.
 

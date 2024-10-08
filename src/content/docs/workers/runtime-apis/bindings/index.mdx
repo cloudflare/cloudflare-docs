@@ -3,10 +3,9 @@ pcx_content_type: concept
 title: Bindings (env)
 head: []
 description: Worker Bindings that allow for interaction with other Cloudflare Resources.
-
 ---
 
-import { DirectoryListing } from "~/components"
+import { DirectoryListing } from "~/components";
 
 Bindings allow your Worker to interact with resources on the Cloudflare Developer Platform.
 
@@ -18,6 +17,10 @@ The following bindings available today:
 
 When you declare a binding on your Worker, you grant it a specific capability, such as being able to read and write files to an [R2](/r2/) bucket. For example:
 
+import { WranglerConfig } from "~/components";
+
+<WranglerConfig>
+
 ```toml
 main = "./src/index.js"
 r2_buckets = [
@@ -25,14 +28,16 @@ r2_buckets = [
 ]
 ```
 
+</WranglerConfig>
+
 ```js
 export default {
-  async fetch(request, env) {
-    const key = url.pathname.slice(1);
-    await env.MY_BUCKET.put(key, request.body);
-    return new Response(`Put ${key} successfully!`);
-  }
-}
+	async fetch(request, env) {
+		const key = url.pathname.slice(1);
+		await env.MY_BUCKET.put(key, request.body);
+		return new Response(`Put ${key} successfully!`);
+	},
+};
 ```
 
 You can think of a binding as a permission and an API in one piece. With bindings, you never have to add secret keys or tokens to your Worker in order to access resources on your Cloudflare account — the permission is embedded within the API itself. The underlying secret is never exposed to your Worker's code, and therefore can't be accidentally leaked.
@@ -47,12 +52,12 @@ The following is a good approach:
 
 ```ts
 export default {
-  fetch(request, env) {
-    let client = new Client(env.MY_SECRET); // `client` is guaranteed to be up-to-date with the latest value of `env.MY_SECRET` since a new instance is constructed with every incoming request
+	fetch(request, env) {
+		let client = new Client(env.MY_SECRET); // `client` is guaranteed to be up-to-date with the latest value of `env.MY_SECRET` since a new instance is constructed with every incoming request
 
-    // ... do things with `client`
-  }
-}
+		// ... do things with `client`
+	},
+};
 ```
 
 Compared to this alternative, which might have surprising and unwanted behavior:
@@ -61,12 +66,12 @@ Compared to this alternative, which might have surprising and unwanted behavior:
 let client = undefined;
 
 export default {
-  fetch(request, env) {
-    client ??= new Client(env.MY_SECRET); // `client` here might not be updated when `env.MY_SECRET` changes, since it may already exist in global scope
+	fetch(request, env) {
+		client ??= new Client(env.MY_SECRET); // `client` here might not be updated when `env.MY_SECRET` changes, since it may already exist in global scope
 
-    // ... do things with `client`
-  }
-}
+		// ... do things with `client`
+	},
+};
 ```
 
 If you have more advanced needs, explore the [AsyncLocalStorage API](/workers/runtime-apis/nodejs/asynclocalstorage/), which provides a mechanism for exposing values down to child execution handlers.

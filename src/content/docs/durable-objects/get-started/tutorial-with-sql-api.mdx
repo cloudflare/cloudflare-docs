@@ -197,6 +197,10 @@ Refer to [Access a Durable Object from a Worker](/durable-objects/best-practices
 
 [Bindings](/workers/runtime-apis/bindings/) allow your Workers to interact with resources on the Cloudflare developer platform. The Durable Object bindings in your Worker project's [Wrangler configuration](/workers/wrangler/configuration) file will include a binding name (for this guide, use `MY_DURABLE_OBJECT`) and the class name (`MyDurableObject`).
 
+import { WranglerConfig } from "~/components";
+
+<WranglerConfig>
+
 ```toml
 [[durable_objects.bindings]]
 name = "MY_DURABLE_OBJECT"
@@ -209,6 +213,8 @@ bindings = [
   { name = "MY_DURABLE_OBJECT", class_name = "MyDurableObject" }
 ]
 ```
+
+</WranglerConfig>
 
 The `[[durable_objects.bindings]]` section contains the following fields:
 
@@ -224,11 +230,15 @@ Migrations are performed through the `[[migrations]]` configurations key in your
 
 The Durable Object migration to create a new Durable Object class with SQLite storage backend will look like the following in your Worker's [Wrangler configuration](/workers/wrangler/configuration) file:
 
+<WranglerConfig>
+
 ```toml
 [[migrations]]
 tag = "v1" # Should be unique for each entry
 new_sqlite_classes = ["MyDurableObject"] # Array of new classes
 ```
+
+</WranglerConfig>
 
 Refer to [Durable Objects migrations](/durable-objects/reference/durable-objects-migrations/) to learn more about the migration process.
 

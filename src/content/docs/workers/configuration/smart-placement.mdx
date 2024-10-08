@@ -62,10 +62,18 @@ To enable Smart Placement via Wrangler:
 
 2. Add the following to your Worker project's [Wrangler configuration](/workers/wrangler/configuration) file:
 
-   ```toml
+   import { WranglerConfig } from "~/components";
+
+   ;
+
+<WranglerConfig>
+
+```toml
    [placement]
    mode = "smart"
-   ```
+```
+
+</WranglerConfig>
 
 3. Send some initial traffic (approximately 20-30 requests) to your Worker. It takes a few minutes after you have sent traffic to your Worker for Smart Placement to take effect.
 

@@ -40,6 +40,10 @@ You can enable HTTP pull or change a queue from push-based to pull-based via [Wr
 
 A HTTP consumer can be configured in [Wrangler's configuration](/workers/wrangler/configuration) file by setting `type = "http_pull"` in the consumer configuration:
 
+import { WranglerConfig } from "~/components";
+
+<WranglerConfig>
+
 ```toml
 [[queues.consumers]]
 # Required
@@ -50,6 +54,8 @@ visibility_timeout_ms = 5000
 max_retries = 5
 dead_letter_queue = "SOME-OTHER-QUEUE"
 ```
+
+</WranglerConfig>
 
 Omitting the `type` property will default the queue to push-based.
 

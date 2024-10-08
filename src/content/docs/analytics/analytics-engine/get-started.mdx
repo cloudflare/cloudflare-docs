@@ -14,11 +14,17 @@ import { DirectoryListing } from "~/components";
 
 Add the following to your [Wrangler configuration](/workers/wrangler/configuration) file to create a [binding](/workers/runtime-apis/bindings/) to a Workers Analytics Engine dataset. A dataset is like a table in SQL: the rows and columns should have consistent meaning.
 
+import { WranglerConfig } from "~/components";
+
+<WranglerConfig>
+
 ```toml
 [[analytics_engine_datasets]]
 binding = "<BINDING_NAME>"
 dataset = "<DATASET_NAME>"
 ```
+
+</WranglerConfig>
 
 ## 2. Write data points from your Worker
 

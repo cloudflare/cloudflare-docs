@@ -32,9 +32,15 @@ Custom builds are configured by adding a `[build]` section in your [Wrangler con
 
 Example:
 
+import { WranglerConfig } from "~/components";
+
+<WranglerConfig>
+
 ```toml title="wrangler.toml"
 [build]
 command = "npm run build"
 cwd = "build_cwd"
 watch_dir = "build_watch_dir"
 ```
+
+</WranglerConfig>

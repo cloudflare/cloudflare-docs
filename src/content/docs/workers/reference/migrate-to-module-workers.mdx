@@ -64,11 +64,17 @@ To understand bindings, refer the following `TODO` KV namespace binding example.
 2. Create a Worker.
 3. Find your Worker's [Wrangler configuration](/workers/wrangler/configuration) file and add a KV namespace binding:
 
+import { WranglerConfig } from "~/components";
+
+<WranglerConfig>
+
 ```toml
 kv_namespaces = [
   { binding = "TODO", id = "<ID>" }
 ]
 ```
+
+</WranglerConfig>
 
 In the following sections, you will use your binding in Service Worker and ES modules format.
 
@@ -134,6 +140,8 @@ export { getTodos };
 
 Review the following example environment variable configuration in [Wrangler's configuration](/workers/wrangler/configuration) file:
 
+<WranglerConfig>
+
 ```toml
 name = "my-worker-dev"
 
@@ -143,6 +151,8 @@ name = "my-worker-dev"
 [vars]
 API_ACCOUNT_ID = "<EXAMPLE-ACCOUNT-ID>"
 ```
+
+</WranglerConfig>
 
 ### Environment variables in Service Worker format
 

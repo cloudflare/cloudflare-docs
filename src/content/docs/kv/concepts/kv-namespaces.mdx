@@ -3,8 +3,8 @@ pcx_content_type: concept
 title: KV namespaces
 sidebar:
   order: 7
-
 ---
+
 import { Type, MetaInfo } from "~/components";
 
 A KV namespace is a key-value database replicated to Cloudflare’s global network.
@@ -21,25 +21,31 @@ KV namespace IDs are public and bound to your account.
 
 To bind KV namespaces to your Worker, assign an array of the below object to the `kv_namespaces` key.
 
-* `binding` <Type text="string" /> <MetaInfo text="required" />
+- `binding` <Type text="string" /> <MetaInfo text="required" />
 
-  * The binding name used to refer to the KV namespace.
+  - The binding name used to refer to the KV namespace.
 
-* `id` <Type text="string" /> <MetaInfo text="required" />
+- `id` <Type text="string" /> <MetaInfo text="required" />
 
-  * The ID of the KV namespace.
+  - The ID of the KV namespace.
 
-* `preview_id` <Type text="string" /> <MetaInfo text="optional" />
+- `preview_id` <Type text="string" /> <MetaInfo text="optional" />
 
-  * The ID of the KV namespace used during `wrangler dev`.
+  - The ID of the KV namespace used during `wrangler dev`.
 
 Example:
+
+import { WranglerConfig } from "~/components";
+
+<WranglerConfig>
 
 ```toml title="wrangler.toml"
 kv_namespaces = [
   { binding = "<TEST_NAMESPACE>", id = "<TEST_ID>" }
 ]
 ```
+
+</WranglerConfig>
 
 ## Bind your KV namespace via the dashboard
 
