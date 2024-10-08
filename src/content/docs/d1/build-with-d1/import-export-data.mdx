@@ -176,21 +176,28 @@ Before:
 ```sql
 INSERT INTO users (id, full_name, created_on)
 VALUES
-  ('01GREFXCN9519NRVXWTPG0V0BF', 'Catlaina Harbar', '2022-08-20 05:39:52'),
-  ('01GREFXCNBYBGX2GC6ZGY9FMP4', 'Hube Bilverstone', '2022-12-15 21:56:13'),
+  ('1', 'Jacquelin Elara', '2022-08-20 05:39:52'),
+  ('2', 'Hubert Simmons', '2022-12-15 21:56:13'),
   ...
-  ('01GREFXCNF67KV7FPPSEJVJMEW', 'Riane Zamora', '2022-12-24 06:49:04');
+  ('1000', 'Boris Pewter', '2022-12-24 07:59:54');
 ```
+
+Break into multiple `INSERT` statements.
 
 After:
 
 ```sql
 INSERT INTO users (id, full_name, created_on)
 VALUES
-('01GREFXCN9519NRVXWTPG0V0BF', 'Catlaina Harbar', '2022-08-20 05:39:52');
+  ('1', 'Jacquelin Elara', '2022-08-20 05:39:52'),
+  ...
+  ('100', 'Eddy Orelo', '2022-12-15 22:16:15');
+...
 INSERT INTO users (id, full_name, created_on)
 VALUES
-('01GREFXCNBYBGX2GC6ZGY9FMP4', 'Hube Bilverstone', '2022-12-15 21:56:13');
+  ('901', 'Roran Eroi', '2022-08-20 05:39:52'),
+  ...
+  ('1000', 'Boris Pewter', '2022-12-15 22:16:15');
 ```
 
 ## Next Steps
