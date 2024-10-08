@@ -126,7 +126,7 @@ The following configuration will modify settings in your Cloudflare account.
    }
 
    # Creates a new locally-managed tunnel for the GCP VM.
-   resource "cloudflare_tunnel" "auto_tunnel" {
+   resource "cloudflare_zero_trust_tunnel_cloudflared" "auto_tunnel" {
      account_id = var.cloudflare_account_id
      name       = "Terraform GCP tunnel"
      secret     = base64sha256(random_password.tunnel_secret.result)
@@ -136,14 +136,14 @@ The following configuration will modify settings in your Cloudflare account.
    resource "cloudflare_record" "http_app" {
      zone_id = var.cloudflare_zone_id
      name    = "http_app"
-     content   = "${cloudflare_tunnel.auto_tunnel.cname}"
+     content   = "${cloudflare_zero_trust_tunnel_cloudflared.auto_tunnel.cname}"
      type    = "CNAME"
      proxied = true
    }
 
    # Creates the configuration for the tunnel.
-   resource "cloudflare_tunnel_config" "auto_tunnel" {
-     tunnel_id = cloudflare_tunnel.auto_tunnel.id
+   resource "cloudflare_zero_trust_tunnel_cloudflared_config" "auto_tunnel" {
+     tunnel_id = cloudflare_zero_trust_tunnel_cloudflared.auto_tunnel.id
      account_id = var.cloudflare_account_id
      config {
       ingress_rule {
@@ -232,7 +232,7 @@ The following configuration defines the specifications for the GCP virtual machi
      // Configures the VM to run a startup script that takes in the Terraform variables.
      metadata_startup_script = templatefile("./install-tunnel.tpl",
        {
-         tunnel_token = cloudflare_tunnel.auto_tunnel.tunnel_token
+         tunnel_token = cloudflare_zero_trust_tunnel_cloudflared.auto_tunnel.tunnel_token
        })
    }
    ```
