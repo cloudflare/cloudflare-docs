@@ -62,17 +62,31 @@ Configure your `browser-worker` project's configuration file by adding a browser
 
 Update your [Wrangler configuration](/workers/wrangler/configuration) file with the Browser Rendering API binding and the KV namespaces you created:
 
-```toml
-name = "browser-worker"
-main = "src/index.js"
-compatibility_date = "2023-03-14"
-compatibility_flags = [ "nodejs_compat" ]
+import { WranglerConfig } from "~/components";
 
-browser = { binding = "MYBROWSER" }
-kv_namespaces = [
-  { binding = "BROWSER_KV_DEMO", id = "22cf855786094a88a6906f8edac425cd", preview_id = "e1f8b68b68d24381b57071445f96e623" }
-]
+<WranglerConfig>
+
+```json
+{
+	"name": "browser-worker",
+	"main": "src/index.js",
+	"compatibility_date": "2023-03-14",
+	"compatibility_flags": ["nodejs_compat"],
+	"browser": {
+		"binding": "MYBROWSER"
+	},
+	// hello world
+	"kv_namespaces": [
+		{
+			"binding": "BROWSER_KV_DEMO",
+			"id": "22cf855786094a88a6906f8edac425cd",
+			"preview_id": "e1f8b68b68d24381b57071445f96e623"
+		}
+	]
+}
 ```
+
+</WranglerConfig>
 
 ## 5. Code
 
