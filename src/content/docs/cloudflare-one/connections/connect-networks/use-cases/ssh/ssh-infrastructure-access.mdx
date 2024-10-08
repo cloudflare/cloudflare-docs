@@ -63,6 +63,10 @@ To generate a Cloudflare SSH CA and get its public key:
 ### Modify your SSHD config
 <Render file="ssh/modify-sshd" />
 
+:::note
+For certain distributions, such as Amazon Linux 1 (based on RHEL), the certificate file permissions must be set to 600 in order for the configuration to work. "
+:::
+
 ### Restart your SSH server
 <Render file="ssh/restart-server" />
 
