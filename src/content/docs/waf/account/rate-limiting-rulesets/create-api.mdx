@@ -21,10 +21,10 @@ Each rate limiting rule contains a `ratelimit` object with the rate limiting con
 
 ## Procedure
 
-To deploy a rate limiting ruleset, do the following:
+To deploy a rate limiting ruleset in your account, follow these general steps:
 
-1. Create a rate limiting ruleset (that is, a custom ruleset in the `http_ratelimit` phase with one or more rate limiting rules).
-2. Deploy the ruleset to the `http_ratelimit` [phase entry point ruleset](/ruleset-engine/about/rulesets/#entry-point-ruleset).
+1. Create a rate limiting ruleset (that is, a custom ruleset in the `http_ratelimit` phase ) with one or more rate limiting rules.
+2. Deploy the ruleset to the [entry point ruleset](/ruleset-engine/about/rulesets/#entry-point-ruleset) of the `http_ratelimit` phase at the account level.
 
 ### 1. Create a rate limiting ruleset
 
@@ -64,13 +64,11 @@ curl "https://api.cloudflare.com/api/v4/accounts/{account_id}/rulesets" \
 }'
 ```
 
-For more information on the different rate limiting parameters (`ratelimit` object), refer to [Rate limiting parameters](/waf/rate-limiting-rules/parameters/).
+Save the ruleset ID in the response for the next step.
 
 ### 2. Deploy the rate limiting ruleset
 
 To deploy the rate limiting ruleset, add a rule with `"action": "execute"` to the `http_ratelimit` phase entry point ruleset at the account level.
-
-The recommended workflow is the following:
 
 1.  Invoke the [Get an account entry point ruleset](/api/operations/getAccountEntrypointRuleset) operation to obtain the definition of the entry point ruleset for the `http_ratelimit` phase. You will need the [account ID](/fundamentals/setup/find-account-and-zone-ids/) for this task.
 
@@ -102,10 +100,10 @@ The recommended workflow is the following:
 
 2.  If the entry point ruleset already exists (that is, if you received a `200 OK` status code and the ruleset definition), take note of the ruleset ID in the response. Then, invoke the [Create an account ruleset rule](/api/operations/createAccountRulesetRule) operation to add an `execute` rule to the existing ruleset deploying the rate limiting ruleset. By default, the rule will be added at the end of the list of rules already in the ruleset.
 
-    The following request deploys the rate limiting ruleset with ID `<RATE_LIMITING_RULESET_ID>` to all Enterprise zones in the account:
+    The following request creates a rule that executes the rate limiting ruleset with ID `<RATE_LIMITING_RULESET_ID>` for all Enterprise zones in the account:
 
     ```bash
-    curl "https://dash.cloudflare.com/api/v4/accounts/{account_id}/ rulesets/{ruleset_id}/rules" \
+    curl "https://dash.cloudflare.com/api/v4/accounts/{account_id}/rulesets/{ruleset_id}/rules" \
     --header "Authorization: Bearer <API_TOKEN>" \
     --header "Content-Type: application/json" \
     --data '{
@@ -122,12 +120,13 @@ The recommended workflow is the following:
     <Render file="account-enterprise-zones-only-api" />
 
 3.  If the entry point ruleset does not exist (that is, if you received a `404 Not Found` status code in step 1), create it using the [Create an account ruleset](/api/operations/createAccountRuleset) operation. Include a single rule in the `rules` array that executes the rate limiting ruleset.
+
     ```bash
-    curl "https://api.cloudflare.com/client/v4/accounts/{account_id}/ rulesets" \
+    curl "https://api.cloudflare.com/client/v4/accounts/{account_id}/rulesets" \
     --header "Authorization: Bearer <API_TOKEN>" \
     --header "Content-Type: application/json" \
     --data '{
-      "description": "This ruleset executes a rate limiting ruleset.",
+      "description": "",
       "kind": "root",
       "name": "Account-level phase entry point",
       "rules": [
@@ -166,3 +165,7 @@ Use the different operations in the [Rulesets API](/ruleset-engine/rulesets-api/
 [6]: /ruleset-engine/rulesets-api/update-rule/
 [7]: /api/operations/deleteAccountRulesetRule
 [8]: /ruleset-engine/rulesets-api/delete-rule/
+
+## More resources
+
+For more information on the different rate limiting parameters you can configure in your rate limiting rules, refer to [Rate limiting parameters](/waf/rate-limiting-rules/parameters/).
