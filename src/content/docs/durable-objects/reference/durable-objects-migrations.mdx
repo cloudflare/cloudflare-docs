@@ -35,7 +35,7 @@ The destination class (the class that stored Durable Objects are being transferr
 
 After a rename or transfer migration, requests to the destination Durable Object class will have access to the source Durable Object's stored data.
 
-After a migration, any existing bindings to the original Durable Object class (for example, from other Workers) will automatically forward to the updated destination class. However, any Workers bound to the updated Durable Object class must update their Durable Object binding configuration in the `wrangler.toml` file for their next deployment.
+After a migration, any existing bindings to the original Durable Object class (for example, from other Workers) will automatically forward to the updated destination class. However, any Workers bound to the updated Durable Object class must update their Durable Object binding configuration in the [Wrangler configuration](/workers/wrangler/configuration) file for their next deployment.
 
 :::
 
@@ -94,7 +94,7 @@ The new beta version of Durable Objects is available where each Durable Object h
 
 :::
 
-To allow a new Durable Object class to use a SQLite storage backend, use `new_sqlite_classes` on the migration in your Worker's `wrangler.toml` file:
+To allow a new Durable Object class to use a SQLite storage backend, use `new_sqlite_classes` on the migration in your Worker's [Wrangler configuration](/workers/wrangler/configuration) file:
 
 ```toml
 [[migrations]]

@@ -111,7 +111,7 @@ entries:
 
   - term: version
     general_definition: |-
-      A [version](/workers/configuration/versions-and-deployments/#versions) is defined by the state of code as well as the state of configuration in a Worker's `wrangler.toml` file.
+      A [version](/workers/configuration/versions-and-deployments/#versions) is defined by the state of code as well as the state of configuration in a Worker's [Wrangler configuration](/workers/wrangler/configuration) file.
 
   - term: V8
     general_definition: |-

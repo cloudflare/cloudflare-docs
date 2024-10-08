@@ -139,7 +139,7 @@ binding = "CRAWLER_QUEUE"
 
 Adding the `max_batch_timeout` of 60 seconds to the consumer queue is important because Browser Rendering has a limit of two new browsers per minute per account. This timeout waits up to a minute before collecting queue messages into a batch. The Worker will then remain under this browser invocation limit.
 
-Your final `wrangler.toml` file should look similar to the one below.
+Your final [Wrangler configuration](/workers/wrangler/configuration) file should look similar to the one below.
 
 ```toml
 #:schema node_modules/wrangler/config-schema.json

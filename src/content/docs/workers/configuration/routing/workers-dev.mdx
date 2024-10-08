@@ -21,7 +21,7 @@ All Workers are assigned a `workers.dev` route when they are created or renamed 
 
 Review your `workers.dev` route in your Worker > **Settings** > **Domains & Routes**.
 
-To disable the `workers.dev` route for a Worker, include the following in your Worker's `wrangler.toml` file:
+To disable the `workers.dev` route for a Worker, include the following in your Worker's [Wrangler configuration](/workers/wrangler/configuration) file:
 
 ```toml
 workers_dev = false
@@ -33,7 +33,7 @@ If you do not specify `workers_dev = false` but add a [`routes` component](/work
 
 :::caution
 
-If you disable your `workers.dev` route in the Cloudflare dashboard but do not update your Worker's `wrangler.toml` file with `workers_dev = false`, the `workers.dev` route will re-enable the next time you publish your Worker.
+If you disable your `workers.dev` route in the Cloudflare dashboard but do not update your Worker's [Wrangler configuration](/workers/wrangler/configuration) file with `workers_dev = false`, the `workers.dev` route will re-enable the next time you publish your Worker.
 :::
 
 ## Limitations

@@ -102,7 +102,7 @@ export default defineNitroPlugin((nitroApp: NitroApp) => {
 });
 ```
 
-In the code above, the `getPlatformProxy` helper function will automatically detect any bindings defined in your project's `wrangler.toml` file and emulate those bindings in local development. Review [Wrangler configuration information on bindings](/workers/wrangler/configuration/#bindings) for more information on how to configure bindings in `wrangler.toml`.
+In the code above, the `getPlatformProxy` helper function will automatically detect any bindings defined in your project's [Wrangler configuration](/workers/wrangler/configuration) file and emulate those bindings in local development. Review [Wrangler configuration information on bindings](/workers/wrangler/configuration/#bindings) for more information on how to configure bindings in `wrangler.toml`.
 
 A new type definition for the `Env` type (used by `context.cloudflare.env`) can be generated from `wrangler.toml` with the following command:
 

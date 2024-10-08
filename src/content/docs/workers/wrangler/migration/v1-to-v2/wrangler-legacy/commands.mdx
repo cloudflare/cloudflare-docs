@@ -437,7 +437,7 @@ wrangler secret list --env ENVIRONMENT_NAME
 
 The `kv` subcommand allows you to store application data in the Cloudflare network to be accessed from Workers using [Workers KV](https://www.cloudflare.com/products/workers-kv/). KV operations are scoped to your account, so in order to use any of these commands, you:
 
-- must configure an `account_id` in your project's `wrangler.toml` file.
+- must configure an `account_id` in your project's [Wrangler configuration](/workers/wrangler/configuration) file.
 - run all `wrangler kv:<command>` operations in your terminal from the project's root directory.
 
 ### Getting started
@@ -490,7 +490,7 @@ Additionally, KV namespaces can be used with environments. This is useful for wh
 a KV binding like `MY_KV`, and you want to be able to have these bindings point to different namespaces (like
 one for staging and one for production).
 
-A `wrangler.toml` file with two environments:
+A [Wrangler configuration](/workers/wrangler/configuration) file with two environments:
 
 ```toml
 [env.staging]
@@ -554,7 +554,7 @@ kv_namespaces = [
 ]
 ```
 
-With the `wrangler.toml` file above, you can specify `--env production` when you want to perform a KV action on the namespace `MY_KV` under `env.production`. For example, with the `wrangler.toml` file above, you can get a value out of a production KV instance with:
+With the [Wrangler configuration](/workers/wrangler/configuration) file above, you can specify `--env production` when you want to perform a KV action on the namespace `MY_KV` under `env.production`. For example, with the [Wrangler configuration](/workers/wrangler/configuration) file above, you can get a value out of a production KV instance with:
 
 ```sh
 wrangler kv:key get --binding "MY_KV" --env=production "my key"
@@ -704,7 +704,7 @@ wrangler kv:key put --binding= [--namespace-id=] $KEY $VALUE
 
 - `--preview` optional
 
-  - Interact with a preview namespace instead of production. Pass this to the `wrangler.toml` file’s `kv_namespaces.preview_id` instead of `kv_namespaces.id`.
+  - Interact with a preview namespace instead of production. Pass this to the [Wrangler configuration](/workers/wrangler/configuration) file’s `kv_namespaces.preview_id` instead of `kv_namespaces.id`.
 
 - `--ttl` optional
 

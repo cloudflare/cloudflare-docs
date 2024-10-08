@@ -70,7 +70,7 @@ npx wrangler d1 create staff-directory
 
 After creating your database, you will need to set up a [binding](/workers/runtime-apis/bindings/) in the Wrangler configuration file to integrate your database with your application.
 
-This binding enables your application to interact with Cloudflare resources such as D1 databases, KV namespaces, and R2 buckets. To configure this, create a `wrangler.toml` file in your project's root directory and input the basic setup information:
+This binding enables your application to interact with Cloudflare resources such as D1 databases, KV namespaces, and R2 buckets. To configure this, create a [Wrangler configuration](/workers/wrangler/configuration) file in your project's root directory and input the basic setup information:
 
 ```toml
 name = "staff-directory"
@@ -161,7 +161,7 @@ To execute the schema locally and seed data into your local directory, pass the 
 
 ## 5. Create SQL statements
 
-After setting up your D1 database and configuring the `wrangler.toml` file as outlined in previous steps, your database is accessible in your code through the `DB` binding. This allows you to directly interact with the database by preparing and executing SQL statements. In the following step, you will learn how to use this binding to perform common database operations such as retrieving data and inserting new records.
+After setting up your D1 database and configuring the [Wrangler configuration](/workers/wrangler/configuration) file as outlined in previous steps, your database is accessible in your code through the `DB` binding. This allows you to directly interact with the database by preparing and executing SQL statements. In the following step, you will learn how to use this binding to perform common database operations such as retrieving data and inserting new records.
 
 ### Retrieve data from database
 

@@ -219,7 +219,7 @@ A migration is a mapping process from a class name to a runtime state. You perfo
 
 Migrations are performed through the `[[migrations]]` configurations key in your [Wrangler configuration](/workers/wrangler/configuration) file.
 
-The Durable Object migration to create a new Durable Object class will look like the following in your Worker's `wrangler.toml` file:
+The Durable Object migration to create a new Durable Object class will look like the following in your Worker's [Wrangler configuration](/workers/wrangler/configuration) file:
 
 ```toml
 [[migrations]]
@@ -237,7 +237,7 @@ New beta version of Durable Objects is available where each Durable Object has a
 
 A Durable Object class can only have a single storage type, which cannot be changed after the Durable Object class is created.
 
-To configure SQL storage and API, replace `new_classes` with `new_sqlite_classes` in your Worker's `wrangler.toml` file:
+To configure SQL storage and API, replace `new_classes` with `new_sqlite_classes` in your Worker's [Wrangler configuration](/workers/wrangler/configuration) file:
 
 ```toml
 [[migrations]]

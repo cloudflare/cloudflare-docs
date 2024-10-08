@@ -14,7 +14,7 @@ import { Render } from "~/components";
 
 ## Background
 
-Your project will need some configuration before you can publish your Worker. Configuration is done through changes to keys and values stored in a `wrangler.toml` file located in the root of your project directory. You must manually edit this file to edit your keys and values before you can publish.
+Your project will need some configuration before you can publish your Worker. Configuration is done through changes to keys and values stored in a [Wrangler configuration](/workers/wrangler/configuration) file located in the root of your project directory. You must manually edit this file to edit your keys and values before you can publish.
 
 ---
 
@@ -22,7 +22,7 @@ Your project will need some configuration before you can publish your Worker. Co
 
 The top-level configuration is the collection of values you specify at the top of your [Wrangler configuration](/workers/wrangler/configuration) file. These values will be inherited by all environments, unless otherwise defined in the environment.
 
-The layout of a top-level configuration in a `wrangler.toml` file is displayed below:
+The layout of a top-level configuration in a [Wrangler configuration](/workers/wrangler/configuration) file is displayed below:
 
 ```toml
 name = "your-worker"
@@ -92,7 +92,7 @@ To deploy this example Worker to the `helloworld` environment, you would run `wr
 
 ## Keys
 
-There are three types of keys in a `wrangler.toml` file:
+There are three types of keys in a [Wrangler configuration](/workers/wrangler/configuration) file:
 
 - Top level only keys are required to be configured at the top level of your [Wrangler configuration](/workers/wrangler/configuration) file only; multiple environments on the same project must share this key's value.
 
@@ -551,7 +551,7 @@ globs = ["**/*.js", "**/*.cjs"]
 
 ## Example
 
-To illustrate how these levels are applied, here is a `wrangler.toml` file using multiple environments:
+To illustrate how these levels are applied, here is a [Wrangler configuration](/workers/wrangler/configuration) file using multiple environments:
 
 ```toml
 # top level configuration

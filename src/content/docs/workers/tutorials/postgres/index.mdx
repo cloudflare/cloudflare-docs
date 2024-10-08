@@ -113,7 +113,7 @@ DB_URL="<ENTER YOUR POSTGRESQL CONNECTION STRING>"
 
 ### Set explicit parameters
 
-Configure each database parameter as an [environment variable](/workers/configuration/environment-variables/) via the [Cloudflare dashboard](/workers/configuration/environment-variables/#add-environment-variables-via-the-dashboard) or in your [Wrangler configuration](/workers/wrangler/configuration) file. Refer to an example of a`wrangler.toml` file configuration:
+Configure each database parameter as an [environment variable](/workers/configuration/environment-variables/) via the [Cloudflare dashboard](/workers/configuration/environment-variables/#add-environment-variables-via-the-dashboard) or in your [Wrangler configuration](/workers/wrangler/configuration) file. Refer to an example of a[Wrangler configuration](/workers/wrangler/configuration) file configuration:
 
 ```toml
 [vars]
@@ -310,7 +310,7 @@ npx wrangler hyperdrive create <NAME_OF_HYPERDRIVE_CONFIG> --connection-string="
 
 You can also use explicit parameters by following the [wrangler documentation for Hyperdrive](/workers/wrangler/commands/#create-1).
 
-This command outputs the Hyperdrive configuration `id` that will be used for your Hyperdrive [binding](/workers/runtime-apis/bindings/). Set up your binding by specifying the `id` in the `wrangler.toml` file.
+This command outputs the Hyperdrive configuration `id` that will be used for your Hyperdrive [binding](/workers/runtime-apis/bindings/). Set up your binding by specifying the `id` in the [Wrangler configuration](/workers/wrangler/configuration) file.
 
 ```toml {7-9}
 name = "hyperdrive-example"
