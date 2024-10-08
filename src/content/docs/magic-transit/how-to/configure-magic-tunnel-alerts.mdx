@@ -11,10 +11,8 @@ import { Render, Tabs, TabItem } from "~/components";
 	file="magic-tunnel-health-alerts/magic-tunnel-health-alerts"
 	product="magic-wan"
 	params={{
-		one: "Magic Transit",
-		two: "/magic-transit/reference/magic-tunnels/",
-		three: "/magic-transit/analytics/network-analytics/",
-		four: "/magic-transit/reference/tunnel-health-checks/",
+		productName: "Magic Transit",
+		backgroundInfoPath: "/magic-transit/reference/magic-tunnels/",
 	}}
 />
 
@@ -22,14 +20,13 @@ import { Render, Tabs, TabItem } from "~/components";
 
 <Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
 
-1. Log in to your [Cloudflare dashboard](https://dash.cloudflare.com/login), and select your account.
-2. Select **Notifications** > **Add**.
-3. Select **{props.one}** > **Magic Tunnel Health Check Alert** > **Select** to add a notification.
-4. Enter a name and description for the notification.
-5. Add webhooks or an email address for the person who should receive the notification, and select **Next**.
-6. Choose the tunnels you want to receive alerts for.
-7. Select the **Alert Sensitivity Level** threshold. It is predefined for _Medium_, but you can choose between _High_, _Medium_, and _Low_. If you need more than three sensitivity levels, use the API.
-8. Select **Create** when you are done.
+<Render
+	file="magic-tunnel-health-alerts/setup-magic-tunnels-dash"
+	product="magic-wan"
+	params={{
+		productName: "Magic Transit",
+	}}
+/>
 
 </TabItem> <TabItem label="API">
 
@@ -113,8 +110,8 @@ curl https://api.cloudflare.com/client/v4/accounts/account_id/alerting/v3/polici
 	file="magic-tunnel-health-alerts/recommended-slo"
 	product="magic-wan"
 	params={{
-		one: "/magic-transit/reference/magic-tunnels/",
-		two: "/magic-transit/analytics/network-analytics/",
-		three: "/magic-transit/reference/tunnel-health-checks/",
+		backgroundInfoPath: "/magic-transit/reference/magic-tunnels/",
+		networkAnalyticsPath: "/magic-transit/analytics/network-analytics/",
+		healthChecks: "/magic-transit/reference/tunnel-health-checks/",
 	}}
 />

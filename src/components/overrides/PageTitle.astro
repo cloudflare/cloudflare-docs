@@ -19,6 +19,10 @@ const updated = Astro.props.entry.data.updated;
 const badge = Astro.props.entry.data.sidebar?.badge;
 const summary = Astro.props.entry.data.summary;
 
+const slug = Astro.props.entry.slug;
+
+const showBreadcrumbs = !["products"].includes(slug);
+
 const breadcrumbProps: Record<string, any> = {
 	crumbs: [
 		{
@@ -29,8 +33,6 @@ const breadcrumbProps: Record<string, any> = {
 	truncated: true,
 	id: "breadcrumbs",
 };
-
-const slug = Astro.props.entry.slug;
 
 const segments = slug.split("/");
 
@@ -73,21 +75,27 @@ for (let i = 0; i < segments.length; i++) {
 const hideTitle = Astro.props.hideTitle;
 ---
 
-<Breadcrumbs {...breadcrumbProps}>
-	<svg
-		slot="separator"
-		xmlns="http://www.w3.org/2000/svg"
-		width="24"
-		height="24"
-		viewBox="0 0 24 24"
-		fill="none"
-		stroke="currentColor"
-		stroke-width="2"
-		stroke-linecap="round"
-		stroke-linejoin="round"
-		><polyline points="9 18 15 12 9 6"></polyline>
-	</svg>
-</Breadcrumbs>
+{
+	showBreadcrumbs && (
+		<Breadcrumbs {...breadcrumbProps}>
+			<svg
+				slot="separator"
+				xmlns="http://www.w3.org/2000/svg"
+				width="24"
+				height="24"
+				viewBox="0 0 24 24"
+				fill="none"
+				stroke="currentColor"
+				stroke-width="2"
+				stroke-linecap="round"
+				stroke-linejoin="round"
+			>
+				<polyline points="9 18 15 12 9 6" />
+			</svg>
+		</Breadcrumbs>
+	)
+}
+
 {!hideTitle && <Default {...Astro.props} />}
 
 {badge && <Badge variant={badge.variant} text={badge.text} />}

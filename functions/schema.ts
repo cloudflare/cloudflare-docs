@@ -1,5 +1,9 @@
-export async function onRequestGet(context) {
-	const cachedSchema = await context.env.API_DOCS_KV.get("schema", "json");
+interface Environment {
+	API_DOCS_KV: KVNamespace;
+}
+
+export const onRequestGet: PagesFunction<Environment> = async (context) => {
+	const cachedSchema = await context.env.API_DOCS_KV?.get("schema", "json");
 	if (cachedSchema) {
 		return new Response(JSON.stringify(cachedSchema), {
 			headers: { "Content-type": "application/json" },
@@ -17,16 +21,16 @@ export async function onRequestGet(context) {
 	try {
 		if (!response) {
 			response = await fetch(req);
-			let schema = await response.json();
+			const schema = await response.json<any>();
 
-			const pathsByTag = {};
+			const pathsByTag: Record<string, any> = {};
 
 			Object.keys(schema.paths).forEach((key) => {
 				const path = schema.paths[key];
-				const tag = Object.values(path).find((endpoint) => {
+				const tag = Object.values(path).find((endpoint: any) => {
 					const tags = endpoint.tags;
 					return tags && tags.length && tags[0];
-				});
+				}) as string;
 				if (tag) {
 					if (!pathsByTag[tag]) pathsByTag[tag] = [];
 					pathsByTag[tag].push({ path, key });
@@ -67,17 +71,17 @@ export async function onRequestGet(context) {
 					return obj;
 				}, {});
 
-			let sortedSchema = Object.assign({}, schema, { paths: sortedPaths });
+			const sortedSchema = Object.assign({}, schema, { paths: sortedPaths });
 
 			response = new Response(JSON.stringify(sortedSchema), {
 				headers: { "Content-type": "application/json" },
 			});
 
 			const expirationTtl = 60 * 60;
-			await context.env.API_DOCS_KV.put(
-				"schema",
-				JSON.stringify(sortedSchema),
-				{ expirationTtl },
+			context.waitUntil(
+				context.env.API_DOCS_KV.put("schema", JSON.stringify(sortedSchema), {
+					expirationTtl,
+				}),
 			);
 		}
 
@@ -86,4 +90,4 @@ export async function onRequestGet(context) {
 		console.log(err);
 		return fetch(req);
 	}
-}
+};

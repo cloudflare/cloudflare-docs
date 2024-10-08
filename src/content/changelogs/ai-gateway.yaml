@@ -23,7 +23,7 @@ entries:
   - publish_date: "2024-09-26"
     title: Evaluations
     description: |-
-      * **Configurations**: Use AI Gateway’s [Evaluations](/ai-gateway/observability/evaluations/index.mdx) to make informed decisions on how to optimize your AI application.
+      * **Configurations**: Use AI Gateway’s [Evaluations](/ai-gateway/evaluations) to make informed decisions on how to optimize your AI application.
 
   - publish_date: "2024-09-10"
     title: Custom costs

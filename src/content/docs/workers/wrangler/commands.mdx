@@ -138,6 +138,14 @@ wrangler docs [<COMMAND>]
 
 ## `init`
 
+:::note 
+
+
+The `init` command will be removed in a future version. Please use `npm create cloudflare\@2.5.0` instead. 
+
+
+:::
+
 Create a new project via the [create-cloudflare-cli (C3) tool](/workers/get-started/guide/#1-create-a-new-worker-project). A variety of web frameworks are available to choose from as well as templates. Dependencies are installed by default, with the option to deploy your project immediately.
 
 ```txt
@@ -178,11 +186,6 @@ wrangler generate [<NAME>] [TEMPLATE]
 ## `d1`
 
 Interact with Cloudflare's D1 service.
-
-:::note
-
-Report D1 bugs in [GitHub](https://github.com/cloudflare/workers-sdk/issues/new/choose).
-:::
 
 ### `create`
 
@@ -271,13 +274,6 @@ You must provide either `--command` or `--file` for this command to run successf
   - Number of queries to send in a single batch.
 
 ### `export`
-
-:::caution
-
-This command does not work with databases created during D1's alpha period. You can check which version your database uses with `wrangler d1 info <DATABASE_NAME>`.
-
-Refer to the [Backups (Legacy)](/d1/reference/backups/) in the D1 documentation for more information on D1's backup approach during the alpha period. Also, please check the [Alpha version migration guide](/d1/platform/alpha-migration/) for more information on migrating your database to the current version.
-:::
 
 Export a D1 database or table's schema and/or content to a `.sql` file.
 
@@ -484,11 +480,6 @@ Manage [Hyperdrive](/hyperdrive/) database configurations.
 ---
 
 ## `vectorize`
-
-:::note
-
-Vectorize is currently in open beta. Report Vectorize bugs in [GitHub](https://github.com/cloudflare/workers-sdk/issues/new/choose).
-:::
 
 Interact with a [Vectorize](/vectorize/) vector database.
 
@@ -1334,6 +1325,14 @@ wrangler pages dev [<DIRECTORY>] [OPTIONS]
 - `--https-cert-path` <Type text="string" /> <MetaInfo text="optional" />
   - Path to a custom certificate.
 
+### `download config`
+
+Download your Pages project config as a wrangler.toml file.
+
+```txt
+wrangler pages download config <PROJECT_NAME>
+```
+
 ### `project list`
 
 List your Pages projects.
@@ -1520,11 +1519,6 @@ wrangler pages secret bulk [<FILENAME>] [OPTIONS]
 ---
 
 ## `queues`
-
-:::note
-
-Queues is currently in open beta. Report Queues bugs in [GitHub](https://github.com/cloudflare/workers-sdk/issues/new/choose).
-:::
 
 Manage your Workers [Queues](/queues/) configurations.
 

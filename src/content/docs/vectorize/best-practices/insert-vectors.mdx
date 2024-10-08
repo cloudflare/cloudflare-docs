@@ -13,7 +13,7 @@ Vectorize indexes allow you to insert vectors at any point: Vectorize will optim
 
 If the same vector id is _inserted_ twice in a Vectorize index, the index would reflect the vector that was added first.
 
-If the same vector id is _upserted_ twice in a Vectorize index, the index would reflect the vector that was added second.
+If the same vector id is _upserted_ twice in a Vectorize index, the index would reflect the vector that was added last.
 
 Use the upsert operation if you want to overwrite the vector value for a vector id that already exists in an index.
 
@@ -38,8 +38,8 @@ Metadata keys cannot be empty, contain the dot character (`.`), contain the doub
 Metadata can be used to:
 
 - Include the object storage key, database UUID or other identifier to look up the content the vector embedding represents.
-- The raw content (up to the [metadata limits](/vectorize/platform/limits/)), which can allow you to skip additional lookups for smaller content.
-- Dates, timestamps, or other metadata that describes when the vector embedding was generated or how it was generated.
+- Store JSON data (up to the [metadata limits](/vectorize/platform/limits/)), which can allow you to skip additional lookups for smaller content.
+- Keep track of dates, timestamps, or other metadata that describes when the vector embedding was generated or how it was generated.
 
 For example, a vector embedding representing an image could include the path to the [R2 object](/r2/) it was generated from, the format, and a category lookup:
 
@@ -55,7 +55,7 @@ To associate vectors with a namespace, you can optionally provide a `namespace: 
 
 A namespace can be up to 64 characters (bytes) in length and you can have up to 1,000 namespaces per index. Refer to the [Limits](/vectorize/platform/limits/) documentation for more details.
 
-When a namespace is specified in a query operation, only vectors within that namespace are used for the search. Namespace filtering is applied before vector search, not after.
+When a namespace is specified in a query operation, only vectors within that namespace are used for the search. Namespace filtering is applied before vector search, increasing the precision of the matched results.
 
 To insert vectors with a namespace:
 
