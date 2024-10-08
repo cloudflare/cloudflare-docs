@@ -72,30 +72,76 @@ To deploy the rate limiting ruleset, add a rule with `"action": "execute"` to th
 
 The recommended workflow is the following:
 
-1. Invoke the [Get an account entry point ruleset](/api/operations/getAccountEntrypointRuleset) method to obtain the definition of the entry point ruleset for the `http_ratelimit` phase. You will need the [account ID](/fundamentals/setup/find-account-and-zone-ids/) for this operation.
+1.  Invoke the [Get an account entry point ruleset](/api/operations/getAccountEntrypointRuleset) operation to obtain the definition of the entry point ruleset for the `http_ratelimit` phase. You will need the [account ID](/fundamentals/setup/find-account-and-zone-ids/) for this task.
 
-2. If the entry point ruleset already exists (that is, if you receive a `200 OK` status code and the ruleset definition), take note of the ruleset ID in the response. Then, invoke the [Create an account ruleset rule](/api/operations/createAccountRulesetRule) operation to add an `execute` rule to the existing ruleset. By default, the rule will be added at the end of the list of rules already in the ruleset.
+    ```bash
+    curl "https://api.cloudflare.com/client/v4/accounts/{account_id}/rulesets/phases/http_ratelimit/entrypoint" \
+    --header "Authorization: Bearer <API_TOKEN>"
+    ```
 
-   The following example `POST` request adds a new `execute` rule to the phase entry point ruleset deploying the rate limiting ruleset with ID `<RATE_LIMITING_RULESET_ID>` to all Enterprise zones in the account:
+    ```json output {4}
+    {
+    	"result": {
+    		"description": "Account-level phase entry point",
+    		"id": "<RULESET_ID>",
+    		"kind": "root",
+    		"last_updated": "2024-03-16T15:40:08.202335Z",
+    		"name": "root",
+    		"phase": "http_ratelimit",
+    		"rules": [
+    			// ...
+    		],
+    		"source": "firewall_managed",
+    		"version": "10"
+    	},
+    	"success": true,
+    	"errors": [],
+    	"messages": []
+    }
+    ```
 
-   ```bash
-   curl "https://dash.cloudflare.com/api/v4/accounts/{account_id}/rulesets/{ruleset_id}/rules" \
-   --header "Authorization: Bearer <API_TOKEN>" \
-   --header "Content-Type: application/json" \
-   --data '{
-     "description": "Execute rate limiting ruleset",
-     "expression": "(cf.zone.plan eq \"ENT\")",
-     "action": "execute",
-     "action_parameters": {
-       "id": "<RATE_LIMITING_RULESET_ID>"
-     },
-     "enabled": true
-   }'
-   ```
+2.  If the entry point ruleset already exists (that is, if you received a `200 OK` status code and the ruleset definition), take note of the ruleset ID in the response. Then, invoke the [Create an account ruleset rule](/api/operations/createAccountRulesetRule) operation to add an `execute` rule to the existing ruleset deploying the rate limiting ruleset. By default, the rule will be added at the end of the list of rules already in the ruleset.
 
-   <Render file="account-enterprise-zones-only-api" />
+    The following request deploys the rate limiting ruleset with ID `<RATE_LIMITING_RULESET_ID>` to all Enterprise zones in the account:
 
-   If the entry point ruleset does not exist (that is, if you receive a `404 Not Found` status code), invoke the [Create an account ruleset](/api/operations/createAccountRuleset) operation to create the entry point ruleset with the new rule executing the rate limiting ruleset. Refer to [Create ruleset](/ruleset-engine/rulesets-api/create/#example---create-an-account-level-phase-entry-point-ruleset) for an example.
+    ```bash
+    curl "https://dash.cloudflare.com/api/v4/accounts/{account_id}/ rulesets/{ruleset_id}/rules" \
+    --header "Authorization: Bearer <API_TOKEN>" \
+    --header "Content-Type: application/json" \
+    --data '{
+      "description": "Execute rate limiting ruleset",
+      "expression": "(cf.zone.plan eq \"ENT\")",
+      "action": "execute",
+      "action_parameters": {
+        "id": "<RATE_LIMITING_RULESET_ID>"
+      },
+      "enabled": true
+    }'
+    ```
+
+    <Render file="account-enterprise-zones-only-api" />
+
+3.  If the entry point ruleset does not exist (that is, if you received a `404 Not Found` status code in step 1), create it using the [Create an account ruleset](/api/operations/createAccountRuleset) operation. Include a single rule in the `rules` array that executes the rate limiting ruleset.
+    ```bash
+    curl "https://api.cloudflare.com/client/v4/accounts/{account_id}/ rulesets" \
+    --header "Authorization: Bearer <API_TOKEN>" \
+    --header "Content-Type: application/json" \
+    --data '{
+      "description": "This ruleset executes a rate limiting ruleset.",
+      "kind": "root",
+      "name": "Account-level phase entry point",
+      "rules": [
+        {
+          "action": "execute",
+          "expression": "(cf.zone.plan eq \"ENT\")",
+          "action_parameters": {
+            "id": "<RATE_LIMITING_RULESET_ID>"
+          }
+        }
+      ],
+      "phase": "http_ratelimit"
+    }'
+    ```
 
 For examples of rate limiting rule definitions for the API, refer to the [zone-level API documentation](/waf/rate-limiting-rules/create-api/).
 
