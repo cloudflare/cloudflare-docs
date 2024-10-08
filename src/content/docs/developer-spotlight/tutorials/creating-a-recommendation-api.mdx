@@ -179,7 +179,7 @@ This API requires the use of Workers AI and Vectorize. To use these resources fr
 npx wrangler vectorize create stripe-products --dimensions=1024 --metric=cosine
 ```
 
-When this command executes successfully, you will see a message like the following. It provides the items you need to add to `wrangler.toml` to bind the Vectorize index with your Worker application. Copy the three lines starting with `[[vectorize]]`.
+When this command executes successfully, you will see a message like the following. It provides the items you need to add to [Wrangler configuration](/workers/wrangler/configuration) file to bind the Vectorize index with your Worker application. Copy the three lines starting with `[[vectorize]]`.
 
 ```sh
 ✅ Successfully created a new Vectorize index: 'stripe-products'
@@ -190,7 +190,7 @@ binding = "VECTORIZE_INDEX"
 index_name = "stripe-products"
 ```
 
-To use the created Vectorize index from your Worker, let's add the binding. Open `wrangler.toml` and add the copied lines.
+To use the created Vectorize index from your Worker, let's add the binding. Open [Wrangler configuration](/workers/wrangler/configuration) file and add the copied lines.
 
 ```toml null {5,6,7}
 name = "cross-sell-api"
@@ -202,7 +202,7 @@ binding = "VECTORIZE_INDEX"
 index_name = "stripe-products"
 ```
 
-Additionally, let's add the configuration to use Workers AI in `wrangler.toml`.
+Additionally, let's add the configuration to use Workers AI in [Wrangler's configuration](/workers/wrangler/configuration) file.
 
 ```toml null {9,10}
 name = "cross-sell-api"

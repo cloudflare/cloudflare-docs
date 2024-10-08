@@ -53,7 +53,7 @@ You can set up External Evaluation rules using any API service, but to get start
       id = "YOUR_KV_NAMESPACE_ID"
    ```
 
-4. Open `wrangler.toml` in a text editor and insert the following:
+4. Open [Wrangler's configuration](/workers/wrangler/configuration) file in a text editor and insert the following:
 
    - `[[kv_namespaces]]`: Add the output generated in the previous step.
    - `<TEAM_NAME>`: your Cloudflare Zero Trust <GlossaryTooltip term="team name">team name</GlossaryTooltip>.
@@ -130,7 +130,7 @@ To debug your External Evaluation rule:
    cd my-worker
    ```
 
-2. Open `wrangler.toml` in a text editor and set the `debug` variable to `TRUE`.
+2. Open [Wrangler's configuration](/workers/wrangler/configuration) file in a text editor and set the `debug` variable to `TRUE`.
 
 3. Deploy your changes.
 

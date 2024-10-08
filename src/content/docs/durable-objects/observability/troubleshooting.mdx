@@ -21,7 +21,7 @@ In your [Wrangler configuration](/workers/wrangler/configuration) file, make sur
 
 ### Cannot apply `--delete-class` migration to class.
 
-When deleting a migration using `npx wrangler deploy --delete-class <ClassName>`, you may encounter this error: `"Cannot apply --delete-class migration to class <ClassName> without also removing the binding that references it"`. You should remove the corresponding binding under `[durable_objects]` in `wrangler.toml` before attempting to apply `--delete-class` again.
+When deleting a migration using `npx wrangler deploy --delete-class <ClassName>`, you may encounter this error: `"Cannot apply --delete-class migration to class <ClassName> without also removing the binding that references it"`. You should remove the corresponding binding under `[durable_objects]` in [Wrangler's configuration](/workers/wrangler/configuration) file before attempting to apply `--delete-class` again.
 
 ### Durable Object is overloaded.
 

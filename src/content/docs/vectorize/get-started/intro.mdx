@@ -62,7 +62,7 @@ Create a new project named `vectorize-tutorial` by running:
 This will create a new `vectorize-tutorial` directory. Your new `vectorize-tutorial` directory will include:
 
 - A `"Hello World"` [Worker](/workers/get-started/guide/#3-write-code) at `src/index.ts`.
-- A [`wrangler.toml`](/workers/wrangler/configuration/) configuration file. `wrangler.toml` is how your `vectorize-tutorial` Worker will access your index.
+- A [[Wrangler configuration](/workers/wrangler/configuration) file](/workers/wrangler/configuration/) configuration file. [Wrangler configuration](/workers/wrangler/configuration) file is how your `vectorize-tutorial` Worker will access your index.
 
 :::note
 
@@ -268,7 +268,7 @@ export default {
 
 In the code above, you:
 
-1. Define a binding to your Vectorize index from your Workers code. This binding matches the `binding` value you set in `wrangler.toml` under `[[vectorize]]`.
+1. Define a binding to your Vectorize index from your Workers code. This binding matches the `binding` value you set in [Wrangler's configuration](/workers/wrangler/configuration) file under `[[vectorize]]`.
 2. Specify a set of example vectors that you will query against in the next step.
 3. Insert those vectors into the index and confirm it was successful.
 

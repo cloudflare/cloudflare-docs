@@ -28,7 +28,7 @@ Default values indicated by =value.
 
 - `$NAME` =worker optional
 
-  - The name of the Workers project. This is both the directory name and `name` property in the generated `wrangler.toml` [configuration](/workers/wrangler/migration/v1-to-v2/wrangler-legacy/configuration/) file.
+  - The name of the Workers project. This is both the directory name and `name` property in the generated [Wrangler configuration](/workers/wrangler/configuration) file [configuration](/workers/wrangler/migration/v1-to-v2/wrangler-legacy/configuration/) file.
 
 - `$TEMPLATE` =[https://github.com/cloudflare/worker-template](https://github.com/cloudflare/worker-template) optional
 
@@ -45,7 +45,7 @@ Default values indicated by =value.
 
 ## init
 
-Create a skeleton `wrangler.toml` in an existing directory. This command can be used as an alternative to `generate` if you prefer to clone a template repository yourself or you already have a JavaScript project and would like to use Wrangler.
+Create a skeleton [Wrangler configuration](/workers/wrangler/configuration) file in an existing directory. This command can be used as an alternative to `generate` if you prefer to clone a template repository yourself or you already have a JavaScript project and would like to use Wrangler.
 
 ```sh
 wrangler init [$NAME] [--type=$TYPE] [--site]
@@ -55,7 +55,7 @@ Default values indicated by =value.
 
 - `$NAME` =(Name of working directory) optional
 
-  - The name of the Workers project. This is both the directory name and `name` property in the generated `wrangler.toml` [configuration](/workers/wrangler/migration/v1-to-v2/wrangler-legacy/configuration/) file.
+  - The name of the Workers project. This is both the directory name and `name` property in the generated [Wrangler configuration](/workers/wrangler/configuration) file [configuration](/workers/wrangler/migration/v1-to-v2/wrangler-legacy/configuration/) file.
 
 - `--type=$TYPE` =webpack optional
 
@@ -145,7 +145,7 @@ To use this command, the following fields are required in your [Wrangler configu
 
 - `name` string
 
-  - The name of the Workers project. This is both the directory name and `name` property in the generated `wrangler.toml` [configuration](/workers/wrangler/migration/v1-to-v2/wrangler-legacy/configuration/) file.
+  - The name of the Workers project. This is both the directory name and `name` property in the generated [Wrangler configuration](/workers/wrangler/configuration) file [configuration](/workers/wrangler/migration/v1-to-v2/wrangler-legacy/configuration/) file.
 
 - `type` string
 
@@ -997,7 +997,7 @@ y
 
 ## Environment variables
 
-Wrangler supports any `wrangler.toml` keys passed in as environment variables. This works by passing in `CF_` + any uppercased TOML key. For example:
+Wrangler supports any [Wrangler configuration](/workers/wrangler/configuration) file keys passed in as environment variables. This works by passing in `CF_` + any uppercased TOML key. For example:
 
 `CF_NAME=my-worker CF_ACCOUNT_ID=1234 wrangler dev`
 

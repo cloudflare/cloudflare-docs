@@ -92,7 +92,7 @@ yarn add @sanity/client
 
 ## Configure wrangler.toml
 
-A default `wrangler.toml` was generated in the previous step.
+A default [Wrangler configuration](/workers/wrangler/configuration) file was generated in the previous step.
 
 The [Wrangler configuration](/workers/wrangler/configuration) file is a configuration file used to specify project settings and deployment configurations in a structured format.
 
@@ -116,7 +116,7 @@ You must update the `[vars]` section to match your needs. See the inline comment
 
 :::caution
 
-Secrets do not belong in `wrangler.toml`. If you need to add secrets, use `.dev.vars` for local secrets and the `wranger secret put` command for deploying secrets. For more information, refer to [Secrets](/workers/configuration/secrets/).
+Secrets do not belong in [Wrangler's configuration](/workers/wrangler/configuration) file. If you need to add secrets, use `.dev.vars` for local secrets and the `wranger secret put` command for deploying secrets. For more information, refer to [Secrets](/workers/configuration/secrets/).
 
 :::
 
@@ -139,7 +139,7 @@ Paste the following code into the existing `index.ts|js` file:
  * - Open a browser tab at http://localhost:8787/ to see your worker in action
  * - Run `npm run deploy` to publish your worker
  *
- * Bind resources to your worker in `wrangler.toml`. After adding bindings, a type definition for the
+ * Bind resources to your worker in [Wrangler's configuration](/workers/wrangler/configuration) file. After adding bindings, a type definition for the
  * `Env` object can be regenerated with `npm run cf-typegen`.
  *
  * Learn more at https://developers.cloudflare.com/workers/

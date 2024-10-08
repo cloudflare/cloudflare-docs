@@ -26,7 +26,7 @@ By migrating to Cloudflare Pages, you will be able to access features like [prev
 Workers Sites projects consist of the following pieces:
 
 1. An application built with a [static site tool](/pages/how-to/) or a static collection of HTML, CSS and JavaScript files.
-2. If using a static site tool, a build directory (called `bucket` in `wrangler.toml`) where the static project builds your HTML, CSS, and JavaScript files.
+2. If using a static site tool, a build directory (called `bucket` in [Wrangler's configuration](/workers/wrangler/configuration) file) where the static project builds your HTML, CSS, and JavaScript files.
 3. A Worker application for serving that build directory. For most projects, this is likely to be the `workers-site` directory.
 
 When moving to Cloudflare Pages, remove the Workers application and any associated [Wrangler configuration](/workers/wrangler/configuration) files or build output. Instead, note and record your `build` command (if you have one), and the `bucket` field, or build directory, from the [Wrangler configuration](/workers/wrangler/configuration) file in your project's directory.

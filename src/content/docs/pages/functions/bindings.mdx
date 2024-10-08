@@ -21,7 +21,7 @@ Pages Functions only support a subset of all [bindings](/workers/runtime-apis/bi
 
 [Workers KV](/kv/concepts/kv-namespaces/) is Cloudflare's key-value storage solution.
 
-To bind your KV namespace to your Pages Function, you can configure a KV namespace binding in [`wrangler.toml`](/pages/functions/wrangler-configuration/#kv-namespaces) or the Cloudflare dashboard.
+To bind your KV namespace to your Pages Function, you can configure a KV namespace binding in [[Wrangler configuration](/workers/wrangler/configuration) file](/pages/functions/wrangler-configuration/#kv-namespaces) or the Cloudflare dashboard.
 
 To configure a KV namespace binding via the Cloudflare dashboard:
 
@@ -80,7 +80,7 @@ npx wrangler pages dev <OUTPUT_DIR> --kv=TODO_LIST
 
 <Render file="do-note" product="pages" />
 
-To bind your Durable Object to your Pages Function, you can configure a Durable Object binding in [`wrangler.toml`](/pages/functions/wrangler-configuration/#kv-namespaces) or the Cloudflare dashboard.
+To bind your Durable Object to your Pages Function, you can configure a Durable Object binding in [[Wrangler configuration](/workers/wrangler/configuration) file](/pages/functions/wrangler-configuration/#kv-namespaces) or the Cloudflare dashboard.
 
 To configure a Durable Object binding via the Cloudflare dashboard:
 
@@ -143,7 +143,7 @@ For example, if your Worker is called `do-worker` and it declares a Durable Obje
 
 [R2](/r2/) is Cloudflare's blob storage solution that allows developers to store large amounts of unstructured data without the egress fees.
 
-To bind your R2 bucket to your Pages Function, you can configure a R2 bucket binding in [`wrangler.toml`](/pages/functions/wrangler-configuration/#r2-buckets) or the Cloudflare dashboard.
+To bind your R2 bucket to your Pages Function, you can configure a R2 bucket binding in [[Wrangler configuration](/workers/wrangler/configuration) file](/pages/functions/wrangler-configuration/#r2-buckets) or the Cloudflare dashboard.
 
 To configure a R2 bucket binding via the Cloudflare dashboard:
 
@@ -214,7 +214,7 @@ Interact with this binding by using `context.env` (for example, `context.env.BUC
 
 [D1](/d1/) is Cloudflare’s native serverless database.
 
-To bind your D1 database to your Pages Function, you can configure a D1 database binding in [`wrangler.toml`](/pages/functions/wrangler-configuration/#d1-databases) or the Cloudflare dashboard.
+To bind your D1 database to your Pages Function, you can configure a D1 database binding in [[Wrangler configuration](/workers/wrangler/configuration) file](/pages/functions/wrangler-configuration/#d1-databases) or the Cloudflare dashboard.
 
 To configure a D1 database binding via the Cloudflare dashboard:
 
@@ -289,7 +289,7 @@ Refer to the [D1 client API documentation](/d1/build-with-d1/d1-client-api/) for
 
 [Vectorize](/vectorize/) is Cloudflare’s native vector database.
 
-To bind your Vectorize index to your Pages Function, you can configure a Vectorize index binding in [`wrangler.toml`](/pages/functions/wrangler-configuration/#vectorize-indexes) or the Cloudflare dashboard.
+To bind your Vectorize index to your Pages Function, you can configure a Vectorize index binding in [[Wrangler configuration](/workers/wrangler/configuration) file](/pages/functions/wrangler-configuration/#vectorize-indexes) or the Cloudflare dashboard.
 
 To configure a Vectorize index binding via the Cloudflare dashboard:
 
@@ -425,7 +425,7 @@ export const onRequest: PagesFunction<Env> = async (context) => {
 
 [Workers AI](/workers-ai/) allows you to run machine learning models, powered by serverless GPUs, on Cloudflare’s global network.
 
-To bind Workers AI to your Pages Function, you can configure a Workers AI binding in [`wrangler.toml`](/pages/functions/wrangler-configuration/#workers-ai) or the Cloudflare dashboard.
+To bind Workers AI to your Pages Function, you can configure a Workers AI binding in [[Wrangler configuration](/workers/wrangler/configuration) file](/pages/functions/wrangler-configuration/#workers-ai) or the Cloudflare dashboard.
 
 When developing locally using Wrangler, you can define an AI binding using the `--ai` flag. Start Wrangler in development mode by running [`wrangler pages dev --ai AI`](/workers/wrangler/commands/#dev) to expose the `context.env.AI` binding.
 
@@ -499,7 +499,7 @@ npx wrangler pages dev --ai=<BINDING_NAME>
 
 [Service bindings](/workers/runtime-apis/bindings/service-bindings/) enable you to call a Worker from within your Pages Function.
 
-To bind your Pages Function to a Worker, configure a Service binding in your Pages Function using [`wrangler.toml`](/pages/functions/wrangler-configuration/#service-bindings) or the Cloudflare dashboard.
+To bind your Pages Function to a Worker, configure a Service binding in your Pages Function using [[Wrangler configuration](/workers/wrangler/configuration) file](/pages/functions/wrangler-configuration/#service-bindings) or the Cloudflare dashboard.
 
 To configure a Service binding via the Cloudflare dashboard:
 
@@ -554,7 +554,7 @@ For example, to develop locally, if your Worker is called `my-worker`, run `npx 
 
 [Queue Producers](/queues/configuration/javascript-apis/#producer) enable you to send messages into a queue within your Pages Function.
 
-To bind a queue to your Pages Function, configure a queue producer binding in your Pages Function using [`wrangler.toml`](/pages/functions/wrangler-configuration/#queues-producers) or the Cloudflare dashboard:
+To bind a queue to your Pages Function, configure a queue producer binding in your Pages Function using [[Wrangler configuration](/workers/wrangler/configuration) file](/pages/functions/wrangler-configuration/#queues-producers) or the Cloudflare dashboard:
 
 To configure a queue producer binding via the Cloudflare dashboard:
 
@@ -610,7 +610,7 @@ If using a queue producer binding with a Pages Function, you will be able to sen
 
 The [Analytics Engine](/analytics/analytics-engine/) binding enables you to write analytics within your Pages Function.
 
-To bind an Analytics Engine dataset to your Pages Function, you must configure an Analytics Engine binding using [`wrangler.toml`](/pages/functions/wrangler-configuration/#analytics-engine-datasets) or the Cloudflare dashboard:
+To bind an Analytics Engine dataset to your Pages Function, you must configure an Analytics Engine binding using [[Wrangler configuration](/workers/wrangler/configuration) file](/pages/functions/wrangler-configuration/#analytics-engine-datasets) or the Cloudflare dashboard:
 
 To configure an Analytics Engine binding via the Cloudflare dashboard:
 
@@ -670,7 +670,7 @@ You cannot use an Analytics Engine binding locally.
 
 An [environment variable](/workers/configuration/environment-variables/) is an injected value that can be accessed by your Functions. Environment variables are a type of binding that allow you to attach text strings or JSON values to your Pages Function. It is stored as plain text. Set your environment variables directly within the Cloudflare dashboard for both your production and preview environments at runtime and build-time.
 
-To add environment variables to your Pages project, you can use [`wrangler.toml`](/pages/functions/wrangler-configuration/#environment-variables) or the Cloudflare dashboard.
+To add environment variables to your Pages project, you can use [[Wrangler configuration](/workers/wrangler/configuration) file](/pages/functions/wrangler-configuration/#environment-variables) or the Cloudflare dashboard.
 
 To configure an environment variable via the Cloudflare dashboard:
 

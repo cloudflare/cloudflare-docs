@@ -16,10 +16,10 @@ Wrangler optionally uses a [Wrangler configuration](/workers/wrangler/configurat
 
 :::caution
 
-Wrangler currently supports an `--experimental-json-config` flag, which will read your configuration from a `wrangler.json` file, rather than `wrangler.toml`. The format of this file is exactly the same as the [Wrangler configuration](/workers/wrangler/configuration) file, except that the syntax is `JSON` rather than `TOML`. This is experimental, and is not recommended for production use.
+Wrangler currently supports an `--experimental-json-config` flag, which will read your configuration from a `wrangler.json` file, rather than [Wrangler configuration](/workers/wrangler/configuration) file. The format of this file is exactly the same as the [Wrangler configuration](/workers/wrangler/configuration) file, except that the syntax is `JSON` rather than `TOML`. This is experimental, and is not recommended for production use.
 :::
 
-It is best practice to treat `wrangler.toml` as the [source of truth](#source-of-truth) for configuring a Worker.
+It is best practice to treat [Wrangler configuration](/workers/wrangler/configuration) file as the [source of truth](#source-of-truth) for configuring a Worker.
 
 ## Sample [Wrangler configuration](/workers/wrangler/configuration)
 
@@ -166,7 +166,7 @@ At a minimum, the `name`, `main` and `compatibility_date` keys are required to d
 
 ### Usage model
 
-As of March 1, 2024 the [usage model](/workers/platform/pricing/#workers) configured in your Worker's `wrangler.toml` will be ignored. The [Standard](/workers/platform/pricing/#example-pricing-standard-usage-model) usage model applies.
+As of March 1, 2024 the [usage model](/workers/platform/pricing/#workers) configured in your Worker's [Wrangler configuration](/workers/wrangler/configuration) file will be ignored. The [Standard](/workers/platform/pricing/#example-pricing-standard-usage-model) usage model applies.
 
 Some Workers Enterprise customers maintain the ability to change usage models. Your usage model must be configured through the Cloudflare dashboard by going to **Workers & Pages** > select your Worker > **Settings** > **Usage Model**.
 

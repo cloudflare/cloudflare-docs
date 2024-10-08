@@ -252,7 +252,7 @@ const platform = await getPlatformProxy(options);
 
       The path to the config file to use.
 
-      If no path is specified the default behavior is to search from the current directory up the filesystem for a `wrangler.toml` to use.
+      If no path is specified the default behavior is to search from the current directory up the filesystem for a [Wrangler configuration](/workers/wrangler/configuration) file to use.
 
       **Note:** this field is optional but if a path is specified it must point to a valid file on the filesystem.
 
@@ -295,7 +295,7 @@ const platform = await getPlatformProxy(options);
 
 ### Usage
 
-The `getPlatformProxy` function uses bindings found in `wrangler.toml`. For example, if you have an [environment variable](/workers/configuration/environment-variables/#add-environment-variables-via-wrangler) configuration set up in `wrangler.toml`:
+The `getPlatformProxy` function uses bindings found in [Wrangler's configuration](/workers/wrangler/configuration) file. For example, if you have an [environment variable](/workers/configuration/environment-variables/#add-environment-variables-via-wrangler) configuration set up in [Wrangler's configuration](/workers/wrangler/configuration) file:
 
 ```toml
 [vars]

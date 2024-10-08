@@ -3,12 +3,11 @@ title: Access a Durable Object from a Worker
 pcx_content_type: concept
 sidebar:
   order: 1
-
 ---
 
 import { Type } from "~/components";
 
-To access a Durable Object from a Worker, you must first create a [Durable Object binding](/workers/runtime-apis/bindings/) in your Worker project's [`wrangler.toml`](/workers/wrangler/configuration/#durable-objects) file. The binding is configured to use a particular class and controls access to instances of that class.
+To access a Durable Object from a Worker, you must first create a [Durable Object binding](/workers/runtime-apis/bindings/) in your Worker project's [[Wrangler configuration](/workers/wrangler/configuration) file](/workers/wrangler/configuration/#durable-objects) file. The binding is configured to use a particular class and controls access to instances of that class.
 
 Durable Object bindings allow for communication between a Worker and a Durable Object.
 
@@ -20,9 +19,9 @@ A Durable Object ID is a 64-digit hexadecimal number used to identify the Durabl
 
 To create a Durable Object ID, you can choose to:
 
-* Generate IDs randomly.
-* Derive IDs from names (these names are string data types).
-* Parse previously-created IDs from strings.
+- Generate IDs randomly.
+- Derive IDs from names (these names are string data types).
+- Parse previously-created IDs from strings.
 
 All three methods will allow you to create Durable Object IDs.
 
@@ -62,8 +61,8 @@ let id = OBJECT_NAMESPACE.idFromName(name);
 
 #### Parameters
 
-* `name` <Type text='string' />
-  * The Object name, an arbitrary string from which the ID is derived.
+- `name` <Type text='string' />
+  - The Object name, an arbitrary string from which the ID is derived.
 
 This method derives a unique Durable Object ID from the given name string. It will always return the same ID when given the same name as input.
 
@@ -82,8 +81,8 @@ let id = OBJECT_NAMESPACE.idFromString(hexId);
 
 #### Parameters
 
-* `hexId` <Type text='string' />
-  * An ID string constructed by calling the `toString()` method of an existing ID.
+- `hexId` <Type text='string' />
+  - An ID string constructed by calling the `toString()` method of an existing ID.
 
 This method parses an ID that was previously stringified. This is useful with IDs created using `newUniqueId()`, as these IDs need to be stored somewhere as a string.
 

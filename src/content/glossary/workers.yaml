@@ -43,7 +43,7 @@ entries:
 
   - term: environment
     general_definition: |-
-      [Environments](/workers/wrangler/environments/) allow you to deploy the same Worker application with different configuration for each environment. Only available for use with `wrangler.toml`.
+      [Environments](/workers/wrangler/environments/) allow you to deploy the same Worker application with different configuration for each environment. Only available for use with [Wrangler configuration](/workers/wrangler/configuration) file.
 
   - term: environment variable
     general_definition: |-

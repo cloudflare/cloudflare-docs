@@ -130,12 +130,12 @@ cd worker-turso-ts
 
 In your project directory, you now have the following files:
 
-- `wrangler.toml`: Your Wrangler configuration file.
+- [Wrangler configuration](/workers/wrangler/configuration) file: Your Wrangler configuration file.
 - `src/index.ts`: A minimal Hello World Worker written in TypeScript
 - `package.json`: A minimal Node dependencies configuration file.
 - `tsconfig.json`: TypeScript configuration that includes Workers types. Only generated if indicated.
 
-For this tutorial, only the `wrangler.toml` and `src/index.ts` files are relevant. You will not need to edit the other files, and they should be left as is.
+For this tutorial, only the [Wrangler configuration](/workers/wrangler/configuration) file and `src/index.ts` files are relevant. You will not need to edit the other files, and they should be left as is.
 
 ## Configure your Worker for your Turso database
 
@@ -154,14 +154,14 @@ turso db show my-db --url
 libsql://my-db-<your-github-username>.turso.io
 ```
 
-Open `wrangler.toml` in your editor and at the bottom of the file, create a new `[vars]` section representing the [environment variables](/workers/configuration/environment-variables/) for your project:
+Open [Wrangler configuration](/workers/wrangler/configuration) file in your editor and at the bottom of the file, create a new `[vars]` section representing the [environment variables](/workers/configuration/environment-variables/) for your project:
 
 ```toml
 [vars]
 LIBSQL_DB_URL = "paste-your-url-here"
 ```
 
-Save the changes to `wrangler.toml`.
+Save the changes to [Wrangler configuration](/workers/wrangler/configuration) file.
 
 Next, create a long-lived authentication token for your Worker to use when connecting to your database. Run the following Turso CLI command, and copy the output to your clipboard:
 
@@ -353,7 +353,7 @@ You should see JSON similar to the following containing the data from the `examp
 
 If you see an error instead of a list of users, double check that:
 
-- You have entered the correct value for your `LIBSQL_DB_URL` in `wrangler.toml`.
+- You have entered the correct value for your `LIBSQL_DB_URL` in [Wrangler's configuration](/workers/wrangler/configuration) file.
 - You have set a secret called `LIBSQL_DB_AUTH_TOKEN` with your database authentication token.
 
 Both of these need to be present and match the variable names in your Worker's code.

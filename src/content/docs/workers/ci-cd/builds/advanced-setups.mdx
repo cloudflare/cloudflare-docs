@@ -50,7 +50,7 @@ When a new commit is detected in the repository, a new build/deploy will trigger
 
 ### Example
 
-Imagine you have a Worker named `my-worker`, and you want to set up two environments `staging` and `production` set in the `wrangler.toml`. If you haven't already, you can deploy `my-worker` for each environment using the commands `wrangler deploy --env staging` and `wrangler deploy --env production`.
+Imagine you have a Worker named `my-worker`, and you want to set up two environments `staging` and `production` set in the [Wrangler configuration](/workers/wrangler/configuration) file. If you haven't already, you can deploy `my-worker` for each environment using the commands `wrangler deploy --env staging` and `wrangler deploy --env production`.
 
 In your Cloudflare Dashboard, you should find two Workers `my-worker-staging` and `my-worker-production`. A git connection to a `my-worker` git repository should be added to both of the environment Workers. In the build configurations of each environment Worker, edit the deploy commands to be `npx wrangler deploy --env staging` and `npx wrangler deploy --env production` respectively.
 

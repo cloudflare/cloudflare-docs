@@ -6,24 +6,21 @@ description: Adding source maps and generating stack traces for Workers.
 sidebar:
   badge:
     text: Beta
-
 ---
 
-import { Render } from "~/components"
+import { Render } from "~/components";
 
 <Render file="source-maps" product="workers" />
 
 :::caution
 
-
 Support for uploading source maps is available now in open beta. Minimum required Wrangler version: 3.46.0.
-
 
 :::
 
 ## Source Maps
 
-To enable source maps, add the following to your Worker's [`wrangler.toml`](/workers/wrangler/configuration/) file:
+To enable source maps, add the following to your Worker's [[Wrangler configuration](/workers/wrangler/configuration) file](/workers/wrangler/configuration/) file:
 
 ```toml
 upload_source_maps = true
@@ -34,9 +31,7 @@ When `upload_source_maps` is set to `true`, Wrangler will automatically generate
 
 :::note
 
-
 Miniflare can also [output source maps](https://miniflare.dev/developing/source-maps) for use in local development or [testing](/workers/testing/integration-testing/#miniflares-api).
-
 
 :::
 
@@ -49,9 +44,7 @@ You can then view the stack trace in when streaming [real-time logs](/workers/ob
 
 :::note
 
-
 The source map is retrieved after your Worker invocation completes — it's an asynchronous process that does not impact your Worker's CPU utilization or performance. Source maps are not accessible inside the Worker at runtime, if you `console.log()` the [stack property](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Error/stack) within a Worker, you will not get a deobfuscated stack trace.
-
 
 :::
 
@@ -59,5 +52,5 @@ When Cloudflare attempts to remap a stack trace to the Worker's source map, it d
 
 ## Related resources
 
-* [Tail Workers](/workers/observability/logs/logpush/) - Learn how to attach Tail Workers to transform your logs and send them to HTTP endpoints.
-* [Real-time logs](/workers/observability/logs/real-time-logs/) - Learn how to capture Workers logs in real-time.
+- [Tail Workers](/workers/observability/logs/logpush/) - Learn how to attach Tail Workers to transform your logs and send them to HTTP endpoints.
+- [Real-time logs](/workers/observability/logs/real-time-logs/) - Learn how to capture Workers logs in real-time.

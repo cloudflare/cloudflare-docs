@@ -52,7 +52,7 @@ The following global flags work on every command, with some exceptions for `page
 - `--config` <Type text="string" /> (not supported by Pages)
   - Path to `.toml` configuration file.
 - `--experimental-json-config` <Type text="boolean" /> (not supported by Pages)
-  - ⚠️ This is an experimental command. Read configuration from a `wrangler.json` file, instead of `wrangler.toml`. `wrangler.json` is a [JSONC](https://code.visualstudio.com/docs/languages/json#_json-with-comments) file.
+  - ⚠️ This is an experimental command. Read configuration from a `wrangler.json` file, instead of [Wrangler configuration](/workers/wrangler/configuration) file. `wrangler.json` is a [JSONC](https://code.visualstudio.com/docs/languages/json#_json-with-comments) file.
 
 :::
 
@@ -151,7 +151,7 @@ wrangler init [<NAME>] [OPTIONS]
 ```
 
 - `NAME` <Type text="string" /> <MetaInfo text="optional (default: name of working directory)" />
-  - The name of the Workers project. This is both the directory name and `name` property in the generated `wrangler.toml` [configuration](/workers/wrangler/configuration/) file.
+  - The name of the Workers project. This is both the directory name and `name` property in the generated [Wrangler configuration](/workers/wrangler/configuration) file [configuration](/workers/wrangler/configuration/) file.
 - `--yes` <Type text="boolean" /> <MetaInfo text="optional" />
   - Answer yes to any prompts for new projects.
 - `--from-dash` <Type text="string" /> <MetaInfo text="optional" />
@@ -175,7 +175,7 @@ wrangler generate [<NAME>] [TEMPLATE]
 ```
 
 - `NAME` <Type text="string" /> <MetaInfo text="optional (default: name of working directory)" />
-  - The name of the Workers project. This is both the directory name and `name` property in the generated `wrangler.toml` [configuration](/workers/wrangler/configuration/) file.
+  - The name of the Workers project. This is both the directory name and `name` property in the generated [Wrangler configuration](/workers/wrangler/configuration) file [configuration](/workers/wrangler/configuration/) file.
 - `TEMPLATE` <Type text="string" /> <MetaInfo text="optional" />
   - The URL of a GitHub template, with a default [worker-template](https://github.com/cloudflare/worker-template). Browse a list of available templates on the [cloudflare/workers-sdk](https://github.com/cloudflare/workers-sdk/tree/main/templates#usage) repository.
 
@@ -438,7 +438,7 @@ wrangler d1 migrations list <DATABASE_NAME> [OPTIONS]
 - `--persist-to` <Type text="string" /> <MetaInfo text="optional" />
   - Specify directory to use for local persistence (for use in combination with `--local`).
 - `--preview` <Type text="boolean" /> <MetaInfo text="optional" />
-  - Show the list of unapplied migration files on your preview D1 database (as defined by `preview_database_id` in [`wrangler.toml`](/workers/wrangler/configuration/#d1-databases)).
+  - Show the list of unapplied migration files on your preview D1 database (as defined by `preview_database_id` in [[Wrangler configuration](/workers/wrangler/configuration) file](/workers/wrangler/configuration/#d1-databases)).
 
 ### `migrations apply`
 
@@ -465,7 +465,7 @@ wrangler d1 migrations apply <DATABASE_NAME> [OPTIONS]
 - `--persist-to` <Type text="string" /> <MetaInfo text="optional" />
   - Specify directory to use for local persistence (for use in combination with `--local`).
 - `--preview` <Type text="boolean" /> <MetaInfo text="optional" />
-  - Execute any unapplied migrations on your preview D1 database (as defined by `preview_database_id` in [`wrangler.toml`](/workers/wrangler/configuration/#d1-databases)).
+  - Execute any unapplied migrations on your preview D1 database (as defined by `preview_database_id` in [[Wrangler configuration](/workers/wrangler/configuration) file](/workers/wrangler/configuration/#d1-databases)).
 - `--batch-size` <Type text="number" /> <MetaInfo text="optional" />
   - Number of queries to send in a single batch.
 
@@ -1122,7 +1122,7 @@ wrangler secret put <KEY> [OPTIONS]
 
 - `--name` <Type text="string" /> <MetaInfo text="optional" />
 
-  - Perform on a specific Worker rather than inheriting from `wrangler.toml`.
+  - Perform on a specific Worker rather than inheriting from [Wrangler configuration](/workers/wrangler/configuration) file.
 
 - `--env` <Type text="string" /> <MetaInfo text="optional" />
   - Perform on a specific environment.
@@ -1159,7 +1159,7 @@ wrangler secret delete <KEY> [OPTIONS]
 
 - `--name` <Type text="string" /> <MetaInfo text="optional" />
 
-  - Perform on a specific Worker rather than inheriting from `wrangler.toml`.
+  - Perform on a specific Worker rather than inheriting from [Wrangler configuration](/workers/wrangler/configuration) file.
 
 - `--env` <Type text="string" /> <MetaInfo text="optional" />
   - Perform on a specific environment.
@@ -1174,7 +1174,7 @@ wrangler secret list [OPTIONS]
 
 - `--name` <Type text="string" /> <MetaInfo text="optional" />
 
-  - Perform on a specific Worker rather than inheriting from `wrangler.toml`.
+  - Perform on a specific Worker rather than inheriting from [Wrangler configuration](/workers/wrangler/configuration) file.
 
 - `--env` <Type text="string" /> <MetaInfo text="optional" />
 
@@ -1212,7 +1212,7 @@ wrangler secret:bulk [<FILENAME>] [OPTIONS]
 
 - `--name` <Type text="string" /> <MetaInfo text="optional" />
 
-  - Perform on a specific Worker rather than inheriting from `wrangler.toml`.
+  - Perform on a specific Worker rather than inheriting from [Wrangler configuration](/workers/wrangler/configuration) file.
 
 - `--env` <Type text="string" /> <MetaInfo text="optional" />
   - Perform on a specific environment.
@@ -1692,7 +1692,7 @@ wrangler versions upload [OPTIONS]
 - `--message` <Type text="string" /> <MetaInfo text="optional" />
   - Add a version message. Accepts empty string.
 - `--name` <Type text="string" /> <MetaInfo text="optional" />
-  - Perform on a specific Worker rather than inheriting from `wrangler.toml`.
+  - Perform on a specific Worker rather than inheriting from [Wrangler configuration](/workers/wrangler/configuration) file.
 
 ### `deploy`
 
@@ -1703,7 +1703,7 @@ wrangler versions deploy [OPTIONS]
 ```
 
 - `--name` <Type text="string" /> <MetaInfo text="optional" />
-  - Perform on a specific Worker rather than inheriting from `wrangler.toml`.
+  - Perform on a specific Worker rather than inheriting from [Wrangler configuration](/workers/wrangler/configuration) file.
 
 :::note
 
@@ -1723,7 +1723,7 @@ wrangler versions list [OPTIONS]
 ```
 
 - `--name` <Type text="string" /> <MetaInfo text="optional" />
-  - Perform on a specific Worker rather than inheriting from `wrangler.toml`.
+  - Perform on a specific Worker rather than inheriting from [Wrangler configuration](/workers/wrangler/configuration) file.
 
 ### `secret put`
 
@@ -1736,7 +1736,7 @@ wrangler versions secret put <KEY> [OPTIONS]
 - `KEY` <Type text="string" /> <MetaInfo text="required" />
   - The variable name for this secret to be accessed in the Worker.
 - `--name` <Type text="string" /> <MetaInfo text="optional" />
-  - Perform on a specific Worker rather than inheriting from `wrangler.toml`.
+  - Perform on a specific Worker rather than inheriting from [Wrangler configuration](/workers/wrangler/configuration) file.
 - `--env` <Type text="string" /> <MetaInfo text="optional" />
   - Perform on a specific environment.
 
@@ -1751,7 +1751,7 @@ wrangler versions delete <KEY> [OPTIONS]
 - `KEY` <Type text="string" /> <MetaInfo text="required" />
   - The variable name for this secret to be accessed in the Worker.
 - `--name` <Type text="string" /> <MetaInfo text="optional" />
-  - Perform on a specific Worker rather than inheriting from `wrangler.toml`.
+  - Perform on a specific Worker rather than inheriting from [Wrangler configuration](/workers/wrangler/configuration) file.
 - `--env` <Type text="string" /> <MetaInfo text="optional" />
   - Perform on a specific environment.
 
@@ -1767,7 +1767,7 @@ wrangler versions secret bulk <FILENAME> [OPTIONS]
   - The JSON file containing key-value pairs to upload as secrets, in the form `{"SECRET_NAME": "secret value", ...}`.
   - If omitted, Wrangler expects to receive input from `stdin` rather than a file.
 - `--name` <Type text="string" /> <MetaInfo text="optional" />
-  - Perform on a specific Worker rather than inheriting from `wrangler.toml`.
+  - Perform on a specific Worker rather than inheriting from [Wrangler configuration](/workers/wrangler/configuration) file.
 - `--env` <Type text="string" /> <MetaInfo text="optional" />
   - Perform on a specific environment.
 
@@ -1788,7 +1788,7 @@ wrangler triggers deploy [OPTIONS]
 ```
 
 - `--name` <Type text="string" /> <MetaInfo text="optional" />
-  - Perform on a specific Worker rather than inheriting from `wrangler.toml`.
+  - Perform on a specific Worker rather than inheriting from [Wrangler configuration](/workers/wrangler/configuration) file.
 
 ---
 
@@ -1809,7 +1809,7 @@ wrangler deployments list [OPTIONS]
 ```
 
 - `--name` <Type text="string" /> <MetaInfo text="optional" />
-  - Perform on a specific Worker rather than inheriting from `wrangler.toml`.
+  - Perform on a specific Worker rather than inheriting from [Wrangler configuration](/workers/wrangler/configuration) file.
 
 ### `status`
 
@@ -1820,7 +1820,7 @@ wrangler deployments status
 ```
 
 - `--name` <Type text="string" /> <MetaInfo text="optional" />
-  - Perform on a specific Worker rather than inheriting from `wrangler.toml`.
+  - Perform on a specific Worker rather than inheriting from [Wrangler configuration](/workers/wrangler/configuration) file.
 
 ## `rollback`
 
@@ -1835,7 +1835,7 @@ wrangler rollback [<VERSION_ID>] [OPTIONS]
 - `VERSION_ID` <Type text="string" /> <MetaInfo text="optional" />
   - The ID of the version you wish to roll back to. If not supplied, the `rollback` command defaults to the version uploaded before the latest version.
 - `--name` <Type text="string" /> <MetaInfo text="optional" />
-  - Perform on a specific Worker rather than inheriting from `wrangler.toml`.
+  - Perform on a specific Worker rather than inheriting from [Wrangler configuration](/workers/wrangler/configuration) file.
 - `--message` <Type text="string" /> <MetaInfo text="optional" />
   - Add message for rollback. Accepts empty string. When specified, interactive prompts for rollback confirmation and message are skipped.
 
