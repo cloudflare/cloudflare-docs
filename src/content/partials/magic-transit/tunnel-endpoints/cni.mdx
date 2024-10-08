@@ -1,8 +1,10 @@
 ---
-inputParameters: productName;;productPath;;productLink
-
+params:
+  - magicName
+  - cniPath
+  - productLink
 ---
 
-import { Markdown } from "~/components"
+import { Markdown } from "~/components";
 
-Beyond GRE and IPsec tunnels, you can also use Network Interconnect (CNI) to onboard your traffic to {props.one}. Refer to <a href={props.three}>{props.two}</a> for more information.
+Beyond GRE and IPsec tunnels, you can also use Network Interconnect (CNI) to onboard your traffic to {props.magicName}. Refer to <a href={props.productLink}>{props.cniPath}</a> for more information.
