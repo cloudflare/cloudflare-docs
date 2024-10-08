@@ -25,7 +25,7 @@ However, even though you do not need to update the `compatibility_date` field, i
 
 #### Via Wrangler
 
-The compatibility date can be set in a Worker's [[Wrangler configuration](/workers/wrangler/configuration) file](/workers/wrangler/configuration/) file.
+The compatibility date can be set in a Worker's [Wrangler configuration](/workers/wrangler/configuration) file.
 
 import { WranglerConfig } from "~/components";
 
@@ -106,6 +106,8 @@ compatibility_flags = [ "nodejs_compat" ]
 As additional Node.js APIs are added, they will be made available under the `nodejs_compat` compatibility flag. Unlike most other compatibility flags, we do not expect the `nodejs_compat` to become active by default at a future date.
 
 The Node.js `AsyncLocalStorage` API is a particularly useful feature for Workers. To enable only the `AsyncLocalStorage` API, use the `nodejs_als` compatibility flag.
+
+<WranglerConfig>
 
 ```toml title="wrangler.toml"
 compatibility_flags = [ "nodejs_als" ]

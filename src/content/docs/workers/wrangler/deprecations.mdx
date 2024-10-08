@@ -108,7 +108,7 @@ These are new fields that can be added to your [Wrangler configuration](/workers
 
   The `rules` field is an array of mappings between module types and file patterns. It instructs Wrangler to interpret specific files differently than JavaScript. For example, this is useful for reading text-like content as text files, or compiled WASM as ready to instantiate and execute. These rules can apply to Workers of both the established service worker format, and the newer modules format. This field replaces the legacy `build.upload.rules` field (which only applied to modules format Workers).
 
-{/\* <!-- - **`legacy_env`**: _boolean_, optional. default: `true`
+{/* <!-- - **`legacy_env`**: _boolean_, optional. default: `true`
 
 The `legacy_env` field toggles how environments are handled by `wrangler`.
 
@@ -116,7 +116,7 @@ The `legacy_env` field toggles how environments are handled by `wrangler`.
 - When `legacy_env` is `false`, it uses the newer service environments, where scripts for a given Worker are grouped under the same script name in the Cloudflare Workers dashboard, and environments are subdomains for a given published script (when `workers_dev = true`).
   Read more at (ref:)[] --> \*/}
 
-{/\* <!-- - **`services`**: TODO
+{/* <!-- - **`services`**: TODO
 
 - **`node-compat`**: TODO
 

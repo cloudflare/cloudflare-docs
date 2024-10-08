@@ -345,6 +345,8 @@ Wrangler will only upload files or directories matching the patterns in the `inc
 
 If you want to exclude files or directories in your `bucket`, add an `exclude` field to your `[site]` section of your [Wrangler configuration](/workers/wrangler/configuration) file:
 
+<WranglerConfig>
+
 ```toml
 [site]
 bucket = "./public"
@@ -384,6 +386,11 @@ A set of cron triggers used to call a Worker on a schedule.
 
 Usage:
 
+<WranglerConfig>
+
+```toml
+[triggers]
+crons = ["0 0 * JAN-JUN FRI", "0 0 LW JUL-DEC *"]
 ```
 
 </WranglerConfig>
@@ -397,11 +404,9 @@ Arguments for `wrangler dev` can be configured here so you do not have to repeat
 
 Usage:
 
-
-
 <WranglerConfig>
 
-
+```toml
 [dev]
 port = 9000
 local_protocol = "https"
@@ -443,13 +448,13 @@ Usage:
 
 <WranglerConfig>
 
+```toml
 [build]
 command = "npm install && npm run build"
 
 [build.upload]
 format = "service-worker"
-
-````
+```
 
 </WranglerConfig>
 
@@ -508,20 +513,20 @@ export default {
 		return new Response(html, { headers });
 	},
 };
-````
+```
 
 To create a Workers project using Wrangler and Modules, add a `[build]` section:
 
 <WranglerConfig>
 
+```toml
 [build]
 command = "npm install && npm run build"
 
 [build.upload]
 format = "modules"
 main = "./worker.mjs"
-
-````
+```
 
 </WranglerConfig>
 
@@ -567,8 +572,6 @@ If your project is written using CommonJS modules, you will need to re-export yo
 
 Defaults:
 
-
-
 <WranglerConfig>
 
 ```toml
@@ -586,7 +589,7 @@ globs = ["**/*.mjs"]
 [[build.upload.rules]]
 type = "CommonJS"
 globs = ["**/*.js", "**/*.cjs"]
-````
+```
 
 </WranglerConfig>
 
