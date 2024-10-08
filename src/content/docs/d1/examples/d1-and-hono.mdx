@@ -24,7 +24,7 @@ When using Workers:
 If you are using [Pages Functions](/pages/functions/):
 
 1. Bind a D1 database to your [Pages Function](/pages/functions/bindings/#d1-databases).
-2. Pass the `--d1 BINDING_NAME=DATABASE_ID` flag to `wrangler dev` when developing locally. `BINDING_NAME` should match what call in your code, and `DATABASE_ID` should match the `database_id` defined in your wrangler.toml: for example, `--d1 DB=xxxx-xxxx-xxxx-xxxx-xxxx`.
+2. Pass the `--d1 BINDING_NAME=DATABASE_ID` flag to `wrangler dev` when developing locally. `BINDING_NAME` should match what call in your code, and `DATABASE_ID` should match the `database_id` defined in your [Wrangler configuration](/workers/wrangler/configuration) file: for example, `--d1 DB=xxxx-xxxx-xxxx-xxxx-xxxx`.
 3. Refer to the Hono guide for [Cloudflare Pages](https://hono.dev/getting-started/cloudflare-pages).
 
 The following examples show how to access a D1 database bound to `DB` from both a Workers script and a Pages Function:

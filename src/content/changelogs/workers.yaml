@@ -11,7 +11,7 @@ entries:
   - publish_date: "2024-09-19"
     description: |-
       -  Revamped Workers and Pages UI settings to simplify the creation and management of project configurations. For bugs and general feedback, please submit this [form](https://forms.gle/XXqhRGbZmuzninuN9).
-  - publish_date: '2024-09-16'
+  - publish_date: "2024-09-16"
     description: |-
       - Updated v8 to version 12.9.
   - publish_date: "2024-08-19"
@@ -130,7 +130,7 @@ entries:
   - publish_date: "2023-10-30"
     description: |-
       - A new usage model called [Workers Standard](/workers/platform/pricing/#workers) is available for Workers and Pages Functions pricing. This is now the default usage model for accounts that are first upgraded to the Workers Paid plan. Read the [blog post](https://blog.cloudflare.com/workers-pricing-scale-to-zero/) for more information.
-      - The usage model set in a script's wrangler.toml will be ignored after an account has opted-in to [Workers Standard](/workers/platform/pricing/#workers) pricing. It must be configured through the dashboard (Workers & Pages > Select your Worker > Settings > Usage Model).
+      - The usage model set in a Worker's [Wrangler configuration](/workers/wrangler/configuration) file will be ignored after an account has opted-in to [Workers Standard](/workers/platform/pricing/#workers) pricing. It must be configured through the dashboard (Workers & Pages > Select your Worker > Settings > Usage Model).
       - Workers and Pages Functions on the Standard usage model can set custom [CPU limits](/workers/wrangler/configuration/#limits) for their Workers
   - publish_date: "2023-10-20"
     description: |-

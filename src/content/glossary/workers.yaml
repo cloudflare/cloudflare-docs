@@ -132,3 +132,7 @@ entries:
   - term: wrangler.toml
     general_definition: |-
       The [configuration](/workers/wrangler/configuration/) file used to customize the development and deployment setup for a Worker or a Pages Function.
+
+  - term: Wrangler configuration file
+    general_definition: |-
+      The [configuration](/workers/wrangler/configuration/) file used to customize the development and deployment setup for a Worker or a Pages Function.

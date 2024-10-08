@@ -210,7 +210,7 @@ compatibility_date = "2023-04-27"
 crons = [ "*/5 * * * *" ]
 ```
 
-In this example, we will also need to use Cloudflare KV to save the latest checked event IDs which allows us to know what events are new. Once you have created a KV, you can head back to the `wranglers.toml` file and add the following sections:
+In this example, we will also need to use Cloudflare KV to save the latest checked event IDs which allows us to know what events are new. Once you have created a KV, you can head back to the [Wrangler configuration](/workers/wrangler/configuration) file and add the following sections:
 
 ```toml
 [[kv_namespaces]]
