@@ -77,7 +77,7 @@ This example deploys the Cloudflare Sensitive Data Detection managed ruleset to 
     }
     ```
 
-2.  If the entry point ruleset does not exist (the previous command returned a `404 Not Found` status code), create it using the [Create a zone ruleset](/api/operations/createZoneRuleset) operation. Include a single rule in the `rules` array that executes the [Cloudflare Sensitive Data Detection managed ruleset](/waf/managed-rules/reference/cloudflare-managed-ruleset/) (with ID <RuleID id="e22d83c647c64a3eae91b71b499d988e" />) for all incoming requests in the zone.
+2.  If the entry point ruleset does not exist, create it using the [Create a zone ruleset](/api/operations/createZoneRuleset) operation. Include a single rule in the `rules` array that executes the [Cloudflare Sensitive Data Detection managed ruleset](/waf/managed-rules/reference/cloudflare-managed-ruleset/) (with ID <RuleID id="e22d83c647c64a3eae91b71b499d988e" />) for all incoming requests in the zone.
 
     ```bash
     curl "https://api.cloudflare.com/client/v4/zones/{zone_id}/rulesets" \
