@@ -1,0 +1,116 @@
+---
+{}
+---
+
+import { RuleID } from "~/components";
+
+The following example deploys a [WAF managed ruleset](/waf/managed-rules/#managed-rulesets) to the `http_request_firewall_managed` phase of a given account (`{account_id}`) by creating a rule that executes the managed ruleset. The rules in the managed ruleset are executed when the zone name matches one of `example.com` or `anotherexample.com`.
+
+1.  Search for an existing [entry point ruleset](/ruleset-engine/about/rulesets/#entry-point-ruleset) for the `http_request_firewall_managed` phase using the [List account rulesets](/api/operations/listAccountRulesets) operation and take note of the ruleset ID. This ruleset, if it exists, has the following properties: `"kind": "root"` and `"phase": "http_request_firewall_managed"`.
+
+    ```bash
+    curl "https://api.cloudflare.com/client/v4/account/{account_id}/rulesets" \
+    --header "Authorization: Bearer <API_TOKEN>"
+    ```
+
+    ```json output {5,9,12}
+    {
+    	"result": [
+    		// ...
+    		{
+    			"id": "<RULESET_ID>",
+    			"name": "default",
+    			"description": "",
+    			"source": "firewall_managed",
+    			"kind": "root",
+    			"version": "5",
+    			"last_updated": "2024-07-22T16:04:19.788697Z",
+    			"phase": "http_request_firewall_managed"
+    		}
+    		// ...
+    	],
+    	"success": true,
+    	"errors": [],
+    	"messages": []
+    }
+    ```
+
+2.  If the entry point ruleset does not exist (the previous command returned a `404 Not Found` status code), create it using the [Create an account ruleset](/api/operations/createAccountRuleset) operation. Include a single rule in the `rules` array that executes the [Cloudflare Managed Ruleset](/waf/managed-rules/reference/cloudflare-managed-ruleset/) (with ID <RuleID id="efb7b8c949ac4650a09736fc376e9aee" />) for all incoming requests where the zone name matches one of `example.com` or `anotherexample.com`.
+
+    ```bash
+    curl --request PUT \
+    "https://api.cloudflare.com/client/v4/accounts/{account_id}/rulesets" \
+    --header "Authorization: Bearer <API_TOKEN>" \
+    --header "Content-Type: application/json" \
+    --data '{
+      "name": "My ruleset",
+      "description": "Entry point ruleset for WAF managed rulesets",
+      "kind": "root",
+      "phase": "http_request_firewall_managed",
+      "rules": [
+        {
+          "action": "execute",
+          "action_parameters": {
+            "id": "efb7b8c949ac4650a09736fc376e9aee"
+          },
+          "expression": "(cf.zone.name in {\"example.com\" \"anotherexample.com\"}) and cf.zone.plan eq \"ENT\"",
+          "description": "Execute Cloudflare Managed Ruleset"
+        }
+      ]
+    }'
+    ```
+
+        If the entry point ruleset already exists, add a rule to this ruleset (with ID `{ruleset_id}`) using the [Create an account ruleset rule](/api/operations/createAccountRulesetRule) operation. This rule executes the Cloudflare Managed Ruleset (with ID <RuleID id="efb7b8c949ac4650a09736fc376e9aee" />) for all incoming requests where the zone name matches one of `example.com` or `anotherexample.com`.
+
+    ```bash
+    curl --request PUT \
+    "https://api.cloudflare.com/client/v4/accounts/{account_id}/rulesets/{ruleset_id}/rules" \
+    --header "Authorization: Bearer <API_TOKEN>" \
+    --header "Content-Type: application/json" \
+    --data '{
+    	"action": "execute",
+    	"action_parameters": {
+    		"id": "efb7b8c949ac4650a09736fc376e9aee"
+    	},
+    	"expression": "true",
+    	"description": "Execute the Cloudflare Managed Ruleset"
+    }'
+    ```
+
+    ```json output
+    {
+    	"result": {
+    		"id": "<RULESET_ID>",
+    		"name": "Account-level phase entry point",
+    		"description": "",
+    		"kind": "root",
+    		"version": "3",
+    		"rules": [
+    			// ... any existing rules
+    			{
+    				"id": "<RULE_ID>",
+    				"version": "1",
+    				"action": "execute",
+    				"action_parameters": {
+    					"id": "efb7b8c949ac4650a09736fc376e9aee",
+    					"version": "latest"
+    				},
+    				"expression": "(cf.zone.name in {\"example.com\" \"anotherexample.com\"}) and cf.zone.plan eq \"ENT\"",
+    				"description": "Execute Cloudflare Managed Ruleset",
+    				"last_updated": "2024-03-18T18:30:08.122758Z",
+    				"ref": "<RULE_REF>",
+    				"enabled": true
+    			}
+    		],
+    		"last_updated": "2024-03-18T18:30:08.122758Z",
+    		"phase": "http_request_firewall_managed"
+    	},
+    	"success": true,
+    	"errors": [],
+    	"messages": []
+    }
+    ```
+
+    :::caution
+    Managed rulesets deployed at the account level will only apply to incoming traffic of zones on an Enterprise plan. The expression of your `execute` rule must end with `and cf.zone.plan eq "ENT"` or else the API operation will fail.
+    :::

@@ -9,13 +9,19 @@ head:
     content: Deploy a WAF managed ruleset via API for a zone
 ---
 
+import { Render } from "~/components";
+
 Use the [Rulesets API](/ruleset-engine/rulesets-api/) to deploy a managed ruleset at the account level or at the zone level.
 
 Deploy WAF managed rulesets to the `http_request_firewall_managed` phase. Other managed rulesets, like DDoS Attack Protection managed rulesets, must be deployed to a different phase. Refer to the specific managed ruleset documentation for details.
 
 The [WAF Managed Rules](/waf/managed-rules/#managed-rulesets) page includes the IDs of the different WAF managed rulesets. You will need this information when deploying the rulesets via API.
 
-Refer to [Deploy a managed ruleset](/ruleset-engine/managed-rulesets/deploy-managed-ruleset/) for instructions on deploying a managed ruleset via API.
+## Example
+
+<Render file="api-managed-rules-zone-example" />
+
+Refer to [Deploy a managed ruleset](/ruleset-engine/managed-rulesets/deploy-managed-ruleset/) for additional information on deploying a managed ruleset via API.
 
 ## Next steps
 
@@ -24,3 +30,7 @@ To customize the behavior of the rules included in a managed ruleset, [create an
 To skip the execution of WAF managed rulesets or some of their rules, [create an exception](/waf/managed-rules/waf-exceptions/define-api/) (also called a skip rule).
 
 Exceptions have priority over overrides.
+
+## More resources
+
+For more information on working with managed rulesets via API, refer to [Work with managed rulesets](/ruleset-engine/managed-rulesets/) in the Ruleset Engine documentation.
