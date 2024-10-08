@@ -143,7 +143,7 @@ npx wrangler d1 execute d1-example --remote --file schemas/schema.sql
 
 ## 5. Execute SQL
 
-In earlier steps, you created a SQL database and populated it with initial data. Now, you will add a route to your Workers function to retrieve data from that database. Based on your `wrangler.toml` configuration in previous steps, your D1 database is now accessible via the `DB` binding. In your code, use the binding to prepare SQL statements and execute them, for example, to retrieve comments:
+In earlier steps, you created a SQL database and populated it with initial data. Now, you will add a route to your Workers function to retrieve data from that database. Based on your [Wrangler configuration](/workers/wrangler/configuration) file in previous steps, your D1 database is now accessible via the `DB` binding. In your code, use the binding to prepare SQL statements and execute them, for example, to retrieve comments:
 
 ```js
 app.get("/api/posts/:slug/comments", async (c) => {
