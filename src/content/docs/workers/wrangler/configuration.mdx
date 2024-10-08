@@ -400,9 +400,9 @@ To bind D1 databases to your Worker, assign an array of the below object to the 
 
   - The ID of the database. The database ID is available when you first use `wrangler d1 create` or when you call `wrangler d1 list`, and uniquely identifies your database.
 
-- `migration_dir` <Type text="string" /> <MetaInfo text="optional" />
+- `migrations_dir` <Type text="string" /> <MetaInfo text="optional" />
 
-  - The migration directory containing the migration files. By default, `wrangler d1 migrations create` creates a folder named `migrations`. You can use `migration_dir` to specify a different folder containing the migration files. For more information, refer to [D1 Wrangler `migration` commands](/workers/wrangler/commands/#migrations-create) and [D1 migrations](/d1/reference/migrations/).
+  - The migration directory containing the migration files. By default, `wrangler d1 migrations create` creates a folder named `migrations`. You can use `migrations_dir` to specify a different folder containing the migration files. For more information, refer to [D1 Wrangler `migration` commands](/workers/wrangler/commands/#migrations-create) and [D1 migrations](/d1/reference/migrations/).
 
 :::note
 
