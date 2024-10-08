@@ -108,7 +108,7 @@ Next, secure the external API behind Cloudflare Access so that WARP can authenti
 
 To create a custom service-to-service integration:
 
-<Render file="posture/add-service-provider" params={{ one: "Custom service provider" }} />
+<Render file="posture/add-service-provider" params={{ provider: "Custom service provider" }} />
 5. In **Access client ID** and **Access client secret**, enter the Access service token used to authenticate to your external API.
 6. In **Rest API URL**, enter the external API endpoint that Cloudflare will query for posture information (for example, `https://api.example.com`). For more information, refer to [External API requirements](#external-api-requirements).
 7. In **Polling frequency**, choose how often Cloudflare Zero Trust should query the external API for information.
