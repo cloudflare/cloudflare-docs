@@ -87,13 +87,19 @@ To get started with KV, set up a namespace. All of your cached data will be stor
 npx wrangler kv:namespace create "TODOS" --preview
 ```
 
-The associated namespace can be combined with a `--preview` flag to interact with a preview namespace instead of a production namespace. Namespaces can be added to your application by defining them inside your Wrangler configuration. Copy your newly created namespace ID, and in your `wrangler.toml`, define a `kv_namespaces` key to set up your namespace:
+The associated namespace can be combined with a `--preview` flag to interact with a preview namespace instead of a production namespace. Namespaces can be added to your application by defining them inside your Wrangler configuration. Copy your newly created namespace ID, and in your [Wrangler configuration](/workers/wrangler/configuration) file, define a `kv_namespaces` key to set up your namespace:
+
+import { WranglerConfig } from "~/components";
+
+<WranglerConfig>
 
 ```toml
 kv_namespaces = [
   {binding = "TODOS", id = "<YOUR_ID>", preview_id = "<YOUR_PREVIEW_ID>"}
 ]
 ```
+
+</WranglerConfig>
 
 The defined namespace, `TODOS`, will now be available inside of your codebase. With that, it is time to understand the [KV API](/kv/api/). A KV namespace has three primary methods you can use to interface with your cache: `get`, `put`, and `delete`.
 

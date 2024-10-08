@@ -52,7 +52,7 @@ The following global flags work on every command, with some exceptions for `page
 - `--config` <Type text="string" /> (not supported by Pages)
   - Path to `.toml` configuration file.
 - `--experimental-json-config` <Type text="boolean" /> (not supported by Pages)
-  - ⚠️ This is an experimental command. Read configuration from a `wrangler.json` file, instead of `wrangler.toml`. `wrangler.json` is a [JSONC](https://code.visualstudio.com/docs/languages/json#_json-with-comments) file.
+  - ⚠️ This is an experimental command. Read configuration from a `wrangler.json` file, instead of [Wrangler configuration](/workers/wrangler/configuration) file. `wrangler.json` is a [JSONC](https://code.visualstudio.com/docs/languages/json#_json-with-comments) file.
 
 :::
 
@@ -138,11 +138,9 @@ wrangler docs [<COMMAND>]
 
 ## `init`
 
-:::note 
+:::note
 
-
-The `init` command will be removed in a future version. Please use `npm create cloudflare\@2.5.0` instead. 
-
+The `init` command will be removed in a future version. Please use `npm create cloudflare\@2.5.0` instead.
 
 :::
 
@@ -153,7 +151,7 @@ wrangler init [<NAME>] [OPTIONS]
 ```
 
 - `NAME` <Type text="string" /> <MetaInfo text="optional (default: name of working directory)" />
-  - The name of the Workers project. This is both the directory name and `name` property in the generated `wrangler.toml` [configuration](/workers/wrangler/configuration/) file.
+  - The name of the Workers project. This is both the directory name and `name` property in the generated [Wrangler configuration](/workers/wrangler/configuration) file [configuration](/workers/wrangler/configuration/) file.
 - `--yes` <Type text="boolean" /> <MetaInfo text="optional" />
   - Answer yes to any prompts for new projects.
 - `--from-dash` <Type text="string" /> <MetaInfo text="optional" />
@@ -177,7 +175,7 @@ wrangler generate [<NAME>] [TEMPLATE]
 ```
 
 - `NAME` <Type text="string" /> <MetaInfo text="optional (default: name of working directory)" />
-  - The name of the Workers project. This is both the directory name and `name` property in the generated `wrangler.toml` [configuration](/workers/wrangler/configuration/) file.
+  - The name of the Workers project. This is both the directory name and `name` property in the generated [Wrangler configuration](/workers/wrangler/configuration) file [configuration](/workers/wrangler/configuration/) file.
 - `TEMPLATE` <Type text="string" /> <MetaInfo text="optional" />
   - The URL of a GitHub template, with a default [worker-template](https://github.com/cloudflare/worker-template). Browse a list of available templates on the [cloudflare/workers-sdk](https://github.com/cloudflare/workers-sdk/tree/main/templates#usage) repository.
 
@@ -189,7 +187,7 @@ Interact with Cloudflare's D1 service.
 
 ### `create`
 
-Creates a new D1 database, and provides the binding and UUID that you will put in your `wrangler.toml` file.
+Creates a new D1 database, and provides the binding and UUID that you will put in your [Wrangler configuration](/workers/wrangler/configuration) file.
 
 ```txt
 wrangler d1 create <DATABASE_NAME> [OPTIONS]
@@ -440,7 +438,7 @@ wrangler d1 migrations list <DATABASE_NAME> [OPTIONS]
 - `--persist-to` <Type text="string" /> <MetaInfo text="optional" />
   - Specify directory to use for local persistence (for use in combination with `--local`).
 - `--preview` <Type text="boolean" /> <MetaInfo text="optional" />
-  - Show the list of unapplied migration files on your preview D1 database (as defined by `preview_database_id` in [`wrangler.toml`](/workers/wrangler/configuration/#d1-databases)).
+  - Show the list of unapplied migration files on your preview D1 database (as defined by `preview_database_id` in [[Wrangler configuration](/workers/wrangler/configuration) file](/workers/wrangler/configuration/#d1-databases)).
 
 ### `migrations apply`
 
@@ -467,7 +465,7 @@ wrangler d1 migrations apply <DATABASE_NAME> [OPTIONS]
 - `--persist-to` <Type text="string" /> <MetaInfo text="optional" />
   - Specify directory to use for local persistence (for use in combination with `--local`).
 - `--preview` <Type text="boolean" /> <MetaInfo text="optional" />
-  - Execute any unapplied migrations on your preview D1 database (as defined by `preview_database_id` in [`wrangler.toml`](/workers/wrangler/configuration/#d1-databases)).
+  - Execute any unapplied migrations on your preview D1 database (as defined by `preview_database_id` in [[Wrangler configuration](/workers/wrangler/configuration) file](/workers/wrangler/configuration/#d1-databases)).
 - `--batch-size` <Type text="number" /> <MetaInfo text="optional" />
   - Number of queries to send in a single batch.
 
@@ -487,7 +485,7 @@ Interact with a [Vectorize](/vectorize/) vector database.
 
 ### `create`
 
-Creates a new vector index, and provides the binding and name that you will put in your `wrangler.toml` file.
+Creates a new vector index, and provides the binding and name that you will put in your [Wrangler configuration](/workers/wrangler/configuration) file.
 
 ```sh
 npx wrangler vectorize create <INDEX_NAME> [--dimensions=<NUM_DIMENSIONS>] [--metric=<DISTANCE_METRIC>] [--description=<DESCRIPTION>]
@@ -686,7 +684,7 @@ wrangler dev [<SCRIPT>] [OPTIONS]
 
 :::note
 
-None of the options for this command are required. Many of these options can be set in your `wrangler.toml` file. Refer to the [`wrangler.toml` configuration](/workers/wrangler/configuration) documentation for more information.
+None of the options for this command are required. Many of these options can be set in your [Wrangler configuration](/workers/wrangler/configuration) file. Refer to the [[Wrangler configuration](/workers/wrangler/configuration)](/workers/wrangler/configuration) documentation for more information.
 
 :::
 
@@ -697,7 +695,7 @@ As of Wrangler v3.2.0, `wrangler dev` is supported by any Linux distributions pr
 :::
 
 - `SCRIPT` <Type text="string" />
-  - The path to an entry point for your Worker. Only required if your `wrangler.toml` does not include a `main` key (for example, `main = "index.js"`).
+  - The path to an entry point for your Worker. Only required if your [Wrangler configuration](/workers/wrangler/configuration) file does not include a `main` key (for example, `main = "index.js"`).
 - `--name` <Type text="string" /> <MetaInfo text="optional" />
   - Name of the Worker.
 - `--no-bundle` <Type text="boolean" /> <MetaInfo text="(default: false) optional" />
@@ -747,11 +745,11 @@ As of Wrangler v3.2.0, `wrangler dev` is supported by any Linux distributions pr
 - `--var` <Type text="key:value\[]" /> <MetaInfo text="optional" />
   - Array of `key:value` pairs to inject as variables into your code. The value will always be passed as a string to your Worker.
   - For example, `--var git_hash:$(git rev-parse HEAD) test:123` makes the `git_hash` and `test` variables available in your Worker's `env`.
-  - This flag is an alternative to defining [`vars`](/workers/wrangler/configuration/#non-inheritable-keys) in your `wrangler.toml`. If defined in both places, this flag's values will be used.
+  - This flag is an alternative to defining [`vars`](/workers/wrangler/configuration/#non-inheritable-keys) in your [Wrangler configuration](/workers/wrangler/configuration) file. If defined in both places, this flag's values will be used.
 - `--define` <Type text="key:value\[]" /> <MetaInfo text="optional" />
   - Array of `key:value` pairs to replace global identifiers in your code.
   - For example, `--define GIT_HASH:$(git rev-parse HEAD)` will replace all uses of `GIT_HASH` with the actual value at build time.
-  - This flag is an alternative to defining [`define`](/workers/wrangler/configuration/#non-inheritable-keys) in your `wrangler.toml`. If defined in both places, this flag's values will be used.
+  - This flag is an alternative to defining [`define`](/workers/wrangler/configuration/#non-inheritable-keys) in your [Wrangler configuration](/workers/wrangler/configuration) file. If defined in both places, this flag's values will be used.
 - `--tsconfig` <Type text="string" /> <MetaInfo text="optional" />
   - Path to a custom `tsconfig.json` file.
 - `--minify` <Type text="boolean" /> <MetaInfo text="optional" />
@@ -785,12 +783,12 @@ wrangler deploy [<SCRIPT>] [OPTIONS]
 
 :::note
 
-None of the options for this command are required. Also, many can be set in your `wrangler.toml` file. Refer to the [`wrangler.toml` configuration](/workers/wrangler/configuration/) documentation for more information.
+None of the options for this command are required. Also, many can be set in your [Wrangler configuration](/workers/wrangler/configuration) file. Refer to the [[Wrangler configuration](/workers/wrangler/configuration)](/workers/wrangler/configuration/) documentation for more information.
 
 :::
 
 - `SCRIPT` <Type text="string" />
-  - The path to an entry point for your Worker. Only required if your `wrangler.toml` does not include a `main` key (for example, `main = "index.js"`).
+  - The path to an entry point for your Worker. Only required if your [Wrangler configuration](/workers/wrangler/configuration) file does not include a `main` key (for example, `main = "index.js"`).
 - `--name` <Type text="string" /> <MetaInfo text="optional" />
   - Name of the Worker.
 - `--no-bundle` <Type text="boolean" /> <MetaInfo text="(default: false) optional" />
@@ -821,11 +819,11 @@ None of the options for this command are required. Also, many can be set in your
 - `--var` <Type text="key:value\[]" /> <MetaInfo text="optional" />
   - Array of `key:value` pairs to inject as variables into your code. The value will always be passed as a string to your Worker.
   - For example, `--var git_hash:$(git rev-parse HEAD) test:123` makes the `git_hash` and `test` variables available in your Worker's `env`.
-  - This flag is an alternative to defining [`vars`](/workers/wrangler/configuration/#non-inheritable-keys) in your `wrangler.toml`. If defined in both places, this flag's values will be used.
+  - This flag is an alternative to defining [`vars`](/workers/wrangler/configuration/#non-inheritable-keys) in your [Wrangler configuration](/workers/wrangler/configuration) file. If defined in both places, this flag's values will be used.
 - `--define` <Type text="key:value\[]" /> <MetaInfo text="optional" />
   - Array of `key:value` pairs to replace global identifiers in your code.
   - For example, `--define GIT_HASH:$(git rev-parse HEAD)` will replace all uses of `GIT_HASH` with the actual value at build time.
-  - This flag is an alternative to defining [`define`](/workers/wrangler/configuration/#non-inheritable-keys) in your `wrangler.toml`. If defined in both places, this flag's values will be used.
+  - This flag is an alternative to defining [`define`](/workers/wrangler/configuration/#non-inheritable-keys) in your [Wrangler configuration](/workers/wrangler/configuration) file. If defined in both places, this flag's values will be used.
 - `--triggers`, `--schedule`, `--schedules` <Type text="string[]" /> <MetaInfo text="optional" />
   - Cron schedules to attach to the deployed Worker. Refer to [Cron Trigger Examples](/workers/configuration/cron-triggers/#examples).
 - `--routes`, `--route` string\[] optional
@@ -872,7 +870,7 @@ wrangler delete [<SCRIPT>] [OPTIONS]
 ```
 
 - `SCRIPT` <Type text="string" />
-  - The path to an entry point for your Worker. Only required if your `wrangler.toml` does not include a `main` key (for example, `main = "index.js"`).
+  - The path to an entry point for your Worker. Only required if your [Wrangler configuration](/workers/wrangler/configuration) file does not include a `main` key (for example, `main = "index.js"`).
 - `--name` <Type text="string" /> <MetaInfo text="optional" />
   - Name of the Worker.
 - `--env` <Type text="string" /> <MetaInfo text="optional" />
@@ -1124,7 +1122,7 @@ wrangler secret put <KEY> [OPTIONS]
 
 - `--name` <Type text="string" /> <MetaInfo text="optional" />
 
-  - Perform on a specific Worker rather than inheriting from `wrangler.toml`.
+  - Perform on a specific Worker rather than inheriting from [Wrangler configuration](/workers/wrangler/configuration) file.
 
 - `--env` <Type text="string" /> <MetaInfo text="optional" />
   - Perform on a specific environment.
@@ -1161,7 +1159,7 @@ wrangler secret delete <KEY> [OPTIONS]
 
 - `--name` <Type text="string" /> <MetaInfo text="optional" />
 
-  - Perform on a specific Worker rather than inheriting from `wrangler.toml`.
+  - Perform on a specific Worker rather than inheriting from [Wrangler configuration](/workers/wrangler/configuration) file.
 
 - `--env` <Type text="string" /> <MetaInfo text="optional" />
   - Perform on a specific environment.
@@ -1176,7 +1174,7 @@ wrangler secret list [OPTIONS]
 
 - `--name` <Type text="string" /> <MetaInfo text="optional" />
 
-  - Perform on a specific Worker rather than inheriting from `wrangler.toml`.
+  - Perform on a specific Worker rather than inheriting from [Wrangler configuration](/workers/wrangler/configuration) file.
 
 - `--env` <Type text="string" /> <MetaInfo text="optional" />
 
@@ -1214,7 +1212,7 @@ wrangler secret:bulk [<FILENAME>] [OPTIONS]
 
 - `--name` <Type text="string" /> <MetaInfo text="optional" />
 
-  - Perform on a specific Worker rather than inheriting from `wrangler.toml`.
+  - Perform on a specific Worker rather than inheriting from [Wrangler configuration](/workers/wrangler/configuration) file.
 
 - `--env` <Type text="string" /> <MetaInfo text="optional" />
   - Perform on a specific environment.
@@ -1425,7 +1423,7 @@ wrangler pages deploy <BUILD_OUTPUT_DIRECTORY> [OPTIONS]
 ```
 
 - `BUILD_OUTPUT_DIRECTORY` <Type text="string" /> <MetaInfo text="optional" />
-  - The [directory](/pages/configuration/build-configuration/#framework-presets) of static files to upload. As of Wrangler 3.45.0, this is only required when your Pages project does not have a `wrangler.toml` file. Refer to the [Pages Functions configuration guide](/pages/functions/wrangler-configuration/) for more information.
+  - The [directory](/pages/configuration/build-configuration/#framework-presets) of static files to upload. As of Wrangler 3.45.0, this is only required when your Pages project does not have a [Wrangler configuration](/workers/wrangler/configuration) file. Refer to the [Pages Functions configuration guide](/pages/functions/wrangler-configuration/) for more information.
 - `--project-name` <Type text="string" /> <MetaInfo text="optional" />
   - The name of the project you want to deploy to.
 - `--branch` <Type text="string" /> <MetaInfo text="optional" />
@@ -1694,7 +1692,7 @@ wrangler versions upload [OPTIONS]
 - `--message` <Type text="string" /> <MetaInfo text="optional" />
   - Add a version message. Accepts empty string.
 - `--name` <Type text="string" /> <MetaInfo text="optional" />
-  - Perform on a specific Worker rather than inheriting from `wrangler.toml`.
+  - Perform on a specific Worker rather than inheriting from [Wrangler configuration](/workers/wrangler/configuration) file.
 
 ### `deploy`
 
@@ -1705,7 +1703,7 @@ wrangler versions deploy [OPTIONS]
 ```
 
 - `--name` <Type text="string" /> <MetaInfo text="optional" />
-  - Perform on a specific Worker rather than inheriting from `wrangler.toml`.
+  - Perform on a specific Worker rather than inheriting from [Wrangler configuration](/workers/wrangler/configuration) file.
 
 :::note
 
@@ -1725,7 +1723,7 @@ wrangler versions list [OPTIONS]
 ```
 
 - `--name` <Type text="string" /> <MetaInfo text="optional" />
-  - Perform on a specific Worker rather than inheriting from `wrangler.toml`.
+  - Perform on a specific Worker rather than inheriting from [Wrangler configuration](/workers/wrangler/configuration) file.
 
 ### `secret put`
 
@@ -1738,7 +1736,7 @@ wrangler versions secret put <KEY> [OPTIONS]
 - `KEY` <Type text="string" /> <MetaInfo text="required" />
   - The variable name for this secret to be accessed in the Worker.
 - `--name` <Type text="string" /> <MetaInfo text="optional" />
-  - Perform on a specific Worker rather than inheriting from `wrangler.toml`.
+  - Perform on a specific Worker rather than inheriting from [Wrangler configuration](/workers/wrangler/configuration) file.
 - `--env` <Type text="string" /> <MetaInfo text="optional" />
   - Perform on a specific environment.
 
@@ -1753,7 +1751,7 @@ wrangler versions delete <KEY> [OPTIONS]
 - `KEY` <Type text="string" /> <MetaInfo text="required" />
   - The variable name for this secret to be accessed in the Worker.
 - `--name` <Type text="string" /> <MetaInfo text="optional" />
-  - Perform on a specific Worker rather than inheriting from `wrangler.toml`.
+  - Perform on a specific Worker rather than inheriting from [Wrangler configuration](/workers/wrangler/configuration) file.
 - `--env` <Type text="string" /> <MetaInfo text="optional" />
   - Perform on a specific environment.
 
@@ -1769,7 +1767,7 @@ wrangler versions secret bulk <FILENAME> [OPTIONS]
   - The JSON file containing key-value pairs to upload as secrets, in the form `{"SECRET_NAME": "secret value", ...}`.
   - If omitted, Wrangler expects to receive input from `stdin` rather than a file.
 - `--name` <Type text="string" /> <MetaInfo text="optional" />
-  - Perform on a specific Worker rather than inheriting from `wrangler.toml`.
+  - Perform on a specific Worker rather than inheriting from [Wrangler configuration](/workers/wrangler/configuration) file.
 - `--env` <Type text="string" /> <MetaInfo text="optional" />
   - Perform on a specific environment.
 
@@ -1790,7 +1788,7 @@ wrangler triggers deploy [OPTIONS]
 ```
 
 - `--name` <Type text="string" /> <MetaInfo text="optional" />
-  - Perform on a specific Worker rather than inheriting from `wrangler.toml`.
+  - Perform on a specific Worker rather than inheriting from [Wrangler configuration](/workers/wrangler/configuration) file.
 
 ---
 
@@ -1811,7 +1809,7 @@ wrangler deployments list [OPTIONS]
 ```
 
 - `--name` <Type text="string" /> <MetaInfo text="optional" />
-  - Perform on a specific Worker rather than inheriting from `wrangler.toml`.
+  - Perform on a specific Worker rather than inheriting from [Wrangler configuration](/workers/wrangler/configuration) file.
 
 ### `status`
 
@@ -1822,7 +1820,7 @@ wrangler deployments status
 ```
 
 - `--name` <Type text="string" /> <MetaInfo text="optional" />
-  - Perform on a specific Worker rather than inheriting from `wrangler.toml`.
+  - Perform on a specific Worker rather than inheriting from [Wrangler configuration](/workers/wrangler/configuration) file.
 
 ## `rollback`
 
@@ -1837,7 +1835,7 @@ wrangler rollback [<VERSION_ID>] [OPTIONS]
 - `VERSION_ID` <Type text="string" /> <MetaInfo text="optional" />
   - The ID of the version you wish to roll back to. If not supplied, the `rollback` command defaults to the version uploaded before the latest version.
 - `--name` <Type text="string" /> <MetaInfo text="optional" />
-  - Perform on a specific Worker rather than inheriting from `wrangler.toml`.
+  - Perform on a specific Worker rather than inheriting from [Wrangler configuration](/workers/wrangler/configuration) file.
 - `--message` <Type text="string" /> <MetaInfo text="optional" />
   - Add message for rollback. Accepts empty string. When specified, interactive prompts for rollback confirmation and message are skipped.
 
@@ -1947,13 +1945,19 @@ Issuer: CN=my-secured-origin.com,OU=my-team,O=my-org,L=San Francisco,ST=Californ
 Expires: 1/01/2025
 ```
 
-You can then add this certificate as a [binding](/workers/runtime-apis/bindings/) in your `wrangler.toml`:
+You can then add this certificate as a [binding](/workers/runtime-apis/bindings/) in your [Wrangler configuration](/workers/wrangler/configuration) file:
+
+import { WranglerConfig } from "~/components";
+
+<WranglerConfig>
 
 ```toml
 mtls_certificates = [
   { binding = "MY_CERT", certificate_id = "99f5fef1-6cc1-46b8-bd79-44a0d5082b8d" }
 ]
 ```
+
+</WranglerConfig>
 
 Note that the certificate and private keys must be in separate (typically `.pem`) files when uploading.
 

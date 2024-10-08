@@ -35,7 +35,7 @@ In this example, request to `example.com/api` doesn't match a static asset so th
 
 ## Routing configuration
 
-There are two options for asset serving that can be [configured in `wrangler.toml`](/workers/wrangler/configuration/#assets):
+There are two options for asset serving that can be [configured in [Wrangler's configuration](/workers/wrangler/configuration) file](/workers/wrangler/configuration/#assets):
 
 #### 1. `html_handling`
 
@@ -95,13 +95,19 @@ For all non-matching requests, Cloudflare will return a null-body 404-status res
 
 ### Alternate configuration options
 
-Alternate configuration options are outlined on this page and can be specified in your project's [`wrangler.toml`](/workers/wrangler/configuration/#assets) file. If you're deploying using a [framework](/workers/frameworks/), these options will be defined by the framework provider.
+Alternate configuration options are outlined on this page and can be specified in your project's [[Wrangler configuration](/workers/wrangler/configuration) file](/workers/wrangler/configuration/#assets) file. If you're deploying using a [framework](/workers/frameworks/), these options will be defined by the framework provider.
 
-Example `wrangler.toml` configuration:
+Example [Wrangler configuration](/workers/wrangler/configuration):
+
+import { WranglerConfig } from "~/components";
+
+<WranglerConfig>
 
 ```toml title="wrangler.toml"
 assets = { directory = "./public", binding = "ASSETS", html_handling = "force-trailing-slash", not_found_handling = "404-page" }
 ```
+
+</WranglerConfig>
 
 #### `html_handling = "auto-trailing-slash" | "force-trailing-slash" | "drop-trailing-slash" | "none"`
 

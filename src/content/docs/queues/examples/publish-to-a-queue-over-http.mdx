@@ -17,9 +17,13 @@ This allows you to write to a Queue from any service or programming language tha
 ### Prerequisites
 
 - A [queue created](/queues/get-started/#3-create-a-queue) via the [Cloudflare dashboard](https://dash.cloudflare.com) or the [wrangler CLI](/workers/wrangler/install-and-update/).
-- A [configured **producer** binding](/queues/configuration/configure-queues/#producer) in the Cloudflare dashboard or `wrangler.toml` file.
+- A [configured **producer** binding](/queues/configuration/configure-queues/#producer) in the Cloudflare dashboard or [Wrangler configuration](/workers/wrangler/configuration) file.
 
-Configure your `wrangler.toml` file as follows:
+Configure your [Wrangler configuration](/workers/wrangler/configuration) file as follows:
+
+import { WranglerConfig } from "~/components";
+
+<WranglerConfig>
 
 ```toml
 name = "my-worker"
@@ -29,6 +33,8 @@ name = "my-worker"
   binding = "YOUR_QUEUE"
 
 ```
+
+</WranglerConfig>
 
 ### 1. Create a shared secret
 

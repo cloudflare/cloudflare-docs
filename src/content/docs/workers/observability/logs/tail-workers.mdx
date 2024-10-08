@@ -8,7 +8,6 @@ sidebar:
   order: 4
   badge:
     text: Beta
-
 ---
 
 A Tail Worker receives information about the execution of other Workers (known as producer Workers), such as HTTP statuses, data passed to `console.log()` or uncaught exceptions. Tail Workers can process logs for alerts, debugging, or analytics.
@@ -28,66 +27,72 @@ To configure a Tail Worker:
 
 ```js
 export default {
-  async tail(events) {
-    fetch("https://example.com/endpoint", {
-      method: "POST",
-      body: JSON.stringify(events),
-    })
-  }
-}
+	async tail(events) {
+		fetch("https://example.com/endpoint", {
+			method: "POST",
+			body: JSON.stringify(events),
+		});
+	},
+};
 ```
 
 The following Worker code is an example of what the `events` object may look like:
 
 ```json
 [
-  {
-    "scriptName": "Example script",
-    "outcome": "exception",
-    "eventTimestamp": 1587058642005,
-    "event": {
-      "request": {
-        "url": "https://example.com/some/requested/url",
-        "method": "GET",
-        "headers": {
-          "cf-ray": "57d55f210d7b95f3",
-          "x-custom-header-name": "my-header-value"
-        },
-        "cf": {
-          "colo": "SJC"
-        }
-      }
-    },
-    "logs": [
-      {
-        "message": ["string passed to console.log()"],
-        "level": "log",
-        "timestamp": 1587058642005
-      }
-    ],
-    "exceptions": [
-      {
-        "name": "Error",
-        "message": "Threw a sample exception",
-        "timestamp": 1587058642005
-      }
-    ],
-    "diagnosticsChannelEvents": [
-      {
-        "channel": "foo",
-        "message": "The diagnostic channel message",
-        "timestamp": 1587058642005
-      }
-    ]
-  }
+	{
+		"scriptName": "Example script",
+		"outcome": "exception",
+		"eventTimestamp": 1587058642005,
+		"event": {
+			"request": {
+				"url": "https://example.com/some/requested/url",
+				"method": "GET",
+				"headers": {
+					"cf-ray": "57d55f210d7b95f3",
+					"x-custom-header-name": "my-header-value"
+				},
+				"cf": {
+					"colo": "SJC"
+				}
+			}
+		},
+		"logs": [
+			{
+				"message": ["string passed to console.log()"],
+				"level": "log",
+				"timestamp": 1587058642005
+			}
+		],
+		"exceptions": [
+			{
+				"name": "Error",
+				"message": "Threw a sample exception",
+				"timestamp": 1587058642005
+			}
+		],
+		"diagnosticsChannelEvents": [
+			{
+				"channel": "foo",
+				"message": "The diagnostic channel message",
+				"timestamp": 1587058642005
+			}
+		]
+	}
 ]
 ```
 
-3. Add the following to the `wrangler.toml` file of the producer Worker:
+3. Add the following to the [Wrangler configuration](/workers/wrangler/configuration) file of the producer Worker:
+
+import { WranglerConfig } from "~/components";
+
+<WranglerConfig>
 
 ```toml
 tail_consumers = [{service = "<TAIL_WORKER_NAME>"}]
 ```
+
+</WranglerConfig>
 
 :::note
 
@@ -96,8 +101,8 @@ The Worker that you add a `tail_consumers` binding to must have a `tail()` handl
 
 ## Related resources
 
-* [`tail()`](/workers/runtime-apis/handlers/tail/) Handler API docs - Learn how to set up a `tail()` handler in your Worker.
+- [`tail()`](/workers/runtime-apis/handlers/tail/) Handler API docs - Learn how to set up a `tail()` handler in your Worker.
 
-- [Errors and exceptions](/workers/observability/errors/) - Review common Workers errors.
-- [Local development and testing](/workers/testing/local-development/) - Develop and test you Workers locally.
-- [Source maps and stack traces](/workers/observability/source-maps) - Learn how to enable source maps and generate stack traces for Workers.
+* [Errors and exceptions](/workers/observability/errors/) - Review common Workers errors.
+* [Local development and testing](/workers/testing/local-development/) - Develop and test you Workers locally.
+* [Source maps and stack traces](/workers/observability/source-maps) - Learn how to enable source maps and generate stack traces for Workers.

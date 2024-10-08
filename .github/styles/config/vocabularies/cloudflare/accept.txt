@@ -37,7 +37,6 @@ WordPress
 Worker
 Workers
 [wW]rangler
-wrangler.toml
 VMware
 VPN
 YubiKey

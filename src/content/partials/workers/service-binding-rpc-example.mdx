@@ -1,26 +1,37 @@
 ---
 {}
-
 ---
 
 For example, if Worker B implements the public method `add(a, b)`:
+
+import { WranglerConfig } from "~/components";
+
+<WranglerConfig>
 
 ```toml
 name = "worker_b"
 main = "./src/workerB.js"
 ```
 
+</WranglerConfig>
+
 ```js
 import { WorkerEntrypoint } from "cloudflare:workers";
 
 export default class extends WorkerEntrypoint {
-  async fetch() { return new Response("Hello from Worker B"); }
-  
-  add(a, b) { return a + b; } 
+	async fetch() {
+		return new Response("Hello from Worker B");
+	}
+
+	add(a, b) {
+		return a + b;
+	}
 }
 ```
 
 Worker A can declare a [binding](/workers/runtime-apis/bindings) to Worker B:
+
+<WranglerConfig>
 
 ```toml
 name = "worker_a"
@@ -30,13 +41,15 @@ services = [
 ]
 ```
 
+</WranglerConfig>
+
 Making it possible for Worker A to call the `add()` method from Worker B:
 
 ```js
 export default {
-  async fetch(request, env) {
-    const result = await env.WORKER_B.add(1, 2);
-    return new Response(result);
-  }
-}
+	async fetch(request, env) {
+		const result = await env.WORKER_B.add(1, 2);
+		return new Response(result);
+	},
+};
 ```

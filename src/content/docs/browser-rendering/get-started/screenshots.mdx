@@ -56,23 +56,37 @@ npx wrangler kv:namespace create BROWSER_KV_DEMO --preview
 
 Take note of the IDs for the next step.
 
-## 4. Configure `wrangler.toml`
+## 4. Configure [Wrangler's configuration](/workers/wrangler/configuration) file
 
-Configure your `browser-worker` project's [`wrangler.toml`](/workers/wrangler/configuration/) file by adding a browser [binding](/workers/runtime-apis/bindings/) and a [Node.js compatibility flag](/workers/configuration/compatibility-dates/#nodejs-compatibility-flag). Bindings allow your Workers to interact with resources on the Cloudflare developer platform. Your browser `binding` name is set by you, this guide uses the name `MYBROWSER`. Browser bindings allow for communication between a Worker and a headless browser which allows you to do actions such as taking a screenshot, generating a PDF and more.
+Configure your `browser-worker` project's configuration file by adding a browser [binding](/workers/runtime-apis/bindings/) and a [Node.js compatibility flag](/workers/configuration/compatibility-dates/#nodejs-compatibility-flag). Bindings allow your Workers to interact with resources on the Cloudflare developer platform. Your browser `binding` name is set by you, this guide uses the name `MYBROWSER`. Browser bindings allow for communication between a Worker and a headless browser which allows you to do actions such as taking a screenshot, generating a PDF and more.
 
-Update your `wrangler.toml` configuration file with the Browser Rendering API binding and the KV namespaces you created:
+Update your [Wrangler configuration](/workers/wrangler/configuration) file with the Browser Rendering API binding and the KV namespaces you created:
 
-```toml
-name = "browser-worker"
-main = "src/index.js"
-compatibility_date = "2023-03-14"
-compatibility_flags = [ "nodejs_compat" ]
+import { WranglerConfig } from "~/components";
 
-browser = { binding = "MYBROWSER" }
-kv_namespaces = [
-  { binding = "BROWSER_KV_DEMO", id = "22cf855786094a88a6906f8edac425cd", preview_id = "e1f8b68b68d24381b57071445f96e623" }
-]
+<WranglerConfig>
+
+```json
+{
+	"name": "browser-worker",
+	"main": "src/index.js",
+	"compatibility_date": "2023-03-14",
+	"compatibility_flags": ["nodejs_compat"],
+	"browser": {
+		"binding": "MYBROWSER"
+	},
+	// hello world
+	"kv_namespaces": [
+		{
+			"binding": "BROWSER_KV_DEMO",
+			"id": "22cf855786094a88a6906f8edac425cd",
+			"preview_id": "e1f8b68b68d24381b57071445f96e623"
+		}
+	]
+}
 ```
+
+</WranglerConfig>
 
 ## 5. Code
 

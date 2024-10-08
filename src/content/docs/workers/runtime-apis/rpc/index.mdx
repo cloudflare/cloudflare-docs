@@ -4,15 +4,14 @@ title: Remote-procedure call (RPC)
 head: []
 description: The built-in, JavaScript-native RPC system built into Workers and
   Durable Objects.
-
 ---
 
-import { DirectoryListing, Render } from "~/components"
+import { DirectoryListing, Render } from "~/components";
 
 Workers provide a built-in, JavaScript-native [RPC (Remote Procedure Call)](https://en.wikipedia.org/wiki/Remote_procedure_call) system, allowing you to:
 
-* Define public methods on your Worker that can be called by other Workers on the same Cloudflare account, via [Service Bindings](/workers/runtime-apis/bindings/service-bindings/rpc)
-* Define public methods on [Durable Objects](/durable-objects) that can be called by other workers on the same Cloudflare account that declare a binding to it.
+- Define public methods on your Worker that can be called by other Workers on the same Cloudflare account, via [Service Bindings](/workers/runtime-apis/bindings/service-bindings/rpc)
+- Define public methods on [Durable Objects](/durable-objects) that can be called by other workers on the same Cloudflare account that declare a binding to it.
 
 The RPC system is designed to feel as similar as possible to calling a JavaScript function in the same Worker. In most cases, you should be able to write code in the same way you would if everything was in a single Worker.
 
@@ -38,11 +37,11 @@ As an exception to Structured Clone, application-defined classes (or objects wit
 
 The RPC system also supports a number of types that are not Structured Cloneable, including:
 
-* Functions, which are replaced by stubs that call back to the sender.
-* Application-defined classes that extend `RpcTarget`, which are similarly replaced by stubs.
-* [ReadableStream](/workers/runtime-apis/streams/readablestream/) and [WriteableStream](/workers/runtime-apis/streams/writablestream/), with automatic streaming flow control.
-* [Request](/workers/runtime-apis/request/) and [Response](/workers/runtime-apis/response/), for conveniently representing HTTP messages.
-* RPC stubs themselves, even if the stub was received from a third Worker.
+- Functions, which are replaced by stubs that call back to the sender.
+- Application-defined classes that extend `RpcTarget`, which are similarly replaced by stubs.
+- [ReadableStream](/workers/runtime-apis/streams/readablestream/) and [WriteableStream](/workers/runtime-apis/streams/writablestream/), with automatic streaming flow control.
+- [Request](/workers/runtime-apis/request/) and [Response](/workers/runtime-apis/response/), for conveniently representing HTTP messages.
+- RPC stubs themselves, even if the stub was received from a third Worker.
 
 ## Functions
 
@@ -64,41 +63,49 @@ To use an instance of a class that you define as a parameter or return value of 
 
 Consider the following example:
 
+import { WranglerConfig } from "~/components";
+
+<WranglerConfig>
+
 ```toml
 name = "counter"
 main = "./src/counter.js"
 ```
 
+</WranglerConfig>
+
 ```js
 import { WorkerEntrypoint, RpcTarget } from "cloudflare:workers";
 
 class Counter extends RpcTarget {
-  #value = 0;
+	#value = 0;
 
-  increment(amount) {
-    this.#value += amount;
-    return this.#value;
-  }
+	increment(amount) {
+		this.#value += amount;
+		return this.#value;
+	}
 
-  get value() {
-    return this.#value;
-  }
+	get value() {
+		return this.#value;
+	}
 }
 
 export class CounterService extends WorkerEntrypoint {
-  async newCounter() {
-    return new Counter();
-  }
+	async newCounter() {
+		return new Counter();
+	}
 }
 
 export default {
-  fetch() {
-    return new Response("ok")
-  }
-}
+	fetch() {
+		return new Response("ok");
+	},
+};
 ```
 
 The method `increment` can be called directly by the client, as can the public property `value`:
+
+<WranglerConfig>
 
 ```toml
 name = "client-worker"
@@ -108,25 +115,27 @@ services = [
 ]
 ```
 
+</WranglerConfig>
+
 ```js
 export default {
-  async fetch(request, env) {
-    using counter = await env.COUNTER_SERVICE.newCounter();
+	async fetch(request, env) {
+		using counter = await env.COUNTER_SERVICE.newCounter();
 
-    await counter.increment(2);   // returns 2
-    await counter.increment(1);   // returns 3
-    await counter.increment(-5);  // returns -2
+		await counter.increment(2); // returns 2
+		await counter.increment(1); // returns 3
+		await counter.increment(-5); // returns -2
 
-    const count = await counter.value;  // returns -2
+		const count = await counter.value; // returns -2
 
-    return new Response(count);
-  }
-}
+		return new Response(count);
+	},
+};
 ```
 
 :::note
 
-Refer to [Explicit Resource Management](/workers/runtime-apis/rpc/lifecycle) to learn more about the `using` declaration shown in the example above. 
+Refer to [Explicit Resource Management](/workers/runtime-apis/rpc/lifecycle) to learn more about the `using` declaration shown in the example above.
 :::
 
 Classes that extend `RpcTarget` work a lot like functions: the object itself is not serialized, but is instead replaced by a stub. In this case, the stub itself is not callable, but its methods are. Calling any method on the stub actually makes an RPC back to the original object, where it was created.
@@ -135,12 +144,12 @@ As shown above, you can also access properties of classes. Properties behave lik
 
 :::note
 
-While it's possible to define a similar interface to the caller using an object that contains many functions, this is less efficient. If you return an object that contains five functions, then you are creating five stubs. If you return a class instance, where the class declares five methods, you are only returning a single stub. Returning a single stub is often more efficient and easier to reason about. Moreover, when returning a plain object (not a class), non-function properties of the object will be transmitted at the time the object itself is transmitted; they cannot be fetched asynchronously on-demand. 
+While it's possible to define a similar interface to the caller using an object that contains many functions, this is less efficient. If you return an object that contains five functions, then you are creating five stubs. If you return a class instance, where the class declares five methods, you are only returning a single stub. Returning a single stub is often more efficient and easier to reason about. Moreover, when returning a plain object (not a class), non-function properties of the object will be transmitted at the time the object itself is transmitted; they cannot be fetched asynchronously on-demand.
 :::
 
 :::note
 
-Classes which do not inherit `RpcTarget` cannot be sent over RPC at all. This differs from Structured Clone, which defines application-defined classes as clonable. Why the difference? By default, the Structured Clone algorithm simply ignores an object's class entirely. So, the recipient receives a plain object, containing the original object's instance properties but entirely missing its original type. This behavior is rarely useful in practice, and could be confusing if the developer had intended the class to be treated as an `RpcTarget`. So, Workers RPC has chosen to disallow classes that are not `RpcTarget`s, to avoid any confusion. 
+Classes which do not inherit `RpcTarget` cannot be sent over RPC at all. This differs from Structured Clone, which defines application-defined classes as clonable. Why the difference? By default, the Structured Clone algorithm simply ignores an object's class entirely. So, the recipient receives a plain object, containing the original object's instance properties but entirely missing its original type. This behavior is rarely useful in practice, and could be confusing if the developer had intended the class to be treated as an `RpcTarget`. So, Workers RPC has chosen to disallow classes that are not `RpcTarget`s, to avoid any confusion.
 :::
 
 ### Promise pipelining
@@ -175,24 +184,24 @@ This works when calling properties of objects returned by RPC methods as well. F
 import { WorkerEntrypoint } from "cloudflare:workers";
 
 export class MyService extends WorkerEntrypoint {
-  async foo() {
-    return {
-      bar: {
-        baz: () => "qux"
-      }
-    }
-  }
+	async foo() {
+		return {
+			bar: {
+				baz: () => "qux",
+			},
+		};
+	}
 }
 ```
 
 ```js
 export default {
-  async fetch(request, env) {
-    using foo = env.MY_SERVICE.foo();
-    let baz = await foo.bar.baz();
-    return new Response(baz);
-  }
-}
+	async fetch(request, env) {
+		using foo = env.MY_SERVICE.foo();
+		let baz = await foo.bar.baz();
+		return new Response(baz);
+	},
+};
 ```
 
 If the initial RPC ends up throwing an exception, then any pipelined calls will also fail with the same exception
@@ -232,4 +241,4 @@ Currently, this proxying only lasts until the end of the Workers' execution cont
 
 ## Limitations
 
-* [Smart Placement](/workers/configuration/smart-placement/) is currently ignored when making RPC calls. If Smart Placement is enabled for Worker A, and Worker B declares a [Service Binding](/workers/runtime-apis/bindings) to it, when Worker B calls Worker A via RPC, Worker A will run locally, on the same machine.
+- [Smart Placement](/workers/configuration/smart-placement/) is currently ignored when making RPC calls. If Smart Placement is enabled for Worker A, and Worker B declares a [Service Binding](/workers/runtime-apis/bindings) to it, when Worker B calls Worker A via RPC, Worker A will run locally, on the same machine.

@@ -64,7 +64,11 @@ cd custom-headers-example
 npm install
 ```
 
-To operate your Workers function alongside your Pages application, deploy it to the same custom domain as your Pages application. To do this, update the `wrangler.toml` file in your project with your account and zone details:
+To operate your Workers function alongside your Pages application, deploy it to the same custom domain as your Pages application. To do this, update the [Wrangler configuration](/workers/wrangler/configuration) file in your project with your account and zone details:
+
+import { WranglerConfig } from "~/components";
+
+<WranglerConfig>
 
 ```toml null {4,6,7}
 name = "custom-headers-example"
@@ -75,9 +79,11 @@ route = "FILL-IN-YOUR-WEBSITE.com/*"
 zone_id = "FILL-IN-YOUR-ZONE-ID"
 ```
 
+</WranglerConfig>
+
 If you do not know how to find your Account ID and Zone ID, refer to [our guide](/fundamentals/setup/find-account-and-zone-ids/).
 
-Once you have configured your `wrangler.toml`, run `npx wrangler deploy` in your terminal to deploy your Worker:
+Once you have configured your [Wrangler configuration](/workers/wrangler/configuration) file, run `npx wrangler deploy` in your terminal to deploy your Worker:
 
 ```sh
 npx wrangler deploy

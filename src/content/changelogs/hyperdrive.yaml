@@ -8,9 +8,9 @@ entries:
   - publish_date: "2024-09-20"
     title: The `node-postgres` (pg) driver is now supported for Pages applications using Hyperdrive.
     description: |-
-      The popular `pg` ([node-postgres](https://github.com/brianc/node-postgres) driver no longer requires the legacy `node_compat` mode, and can now be used in both Workers and Pages for connecting to Hyperdrive. This uses the new (improved) Node.js compatibility in Workers and Pages. 
+      The popular `pg` ([node-postgres](https://github.com/brianc/node-postgres) driver no longer requires the legacy `node_compat` mode, and can now be used in both Workers and Pages for connecting to Hyperdrive. This uses the new (improved) Node.js compatibility in Workers and Pages.
 
-      You can set [`compatibility_flags = ["nodejs_compat_v2"]`](/workers/runtime-apis/nodejs/) in your `wrangler.toml` or via the Pages dashboard to benefit from this change. Visit the [Hyperdrive documentation on supported drivers](/hyperdrive/configuration/connect-to-postgres/#supported-drivers) to learn more about the driver versions supported by Hyperdrive.
+      You can set [`compatibility_flags = ["nodejs_compat_v2"]`](/workers/runtime-apis/nodejs/) in your [Wrangler configuration](/workers/wrangler/configuration) file or via the Pages dashboard to benefit from this change. Visit the [Hyperdrive documentation on supported drivers](/hyperdrive/configuration/connect-to-postgres/#supported-drivers) to learn more about the driver versions supported by Hyperdrive.
   - publish_date: "2024-08-19"
     title: Improved caching for Postgres.js
     description: |-
@@ -42,7 +42,7 @@ entries:
   - publish_date: "2024-03-19"
     title: Improved local development configuration
     description: |-
-      Hyperdrive now supports a `WRANGLER_HYPERDRIVE_LOCAL_CONNECTION_STRING_<BINDING_NAME>` environmental variable for configuring local development to use a test/non-production database, in addition to the `localConnectionString` configuration in `wrangler.toml`.
+      Hyperdrive now supports a `WRANGLER_HYPERDRIVE_LOCAL_CONNECTION_STRING_<BINDING_NAME>` environmental variable for configuring local development to use a test/non-production database, in addition to the `localConnectionString` configuration in  [Wrangler's configuration](/workers/wrangler/configuration) file.
 
       Refer to [Local development](/hyperdrive/configuration/local-development/) for instructions on how to configure Hyperdrive locally.
   - publish_date: "2023-09-28"

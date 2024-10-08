@@ -52,7 +52,11 @@ To start a local development session:
    [b] open a browser, [d] open Devtools, [l] turn off local mode, [c] clear console, [x] to exit
    ```
 
-In this example, the Worker has access to local-only D1 database. The corresponding D1 binding in your `wrangler.toml` configuration file would resemble the following:
+In this example, the Worker has access to local-only D1 database. The corresponding D1 binding in your [Wrangler configuration](/workers/wrangler/configuration) file would resemble the following:
+
+import { WranglerConfig } from "~/components";
+
+<WranglerConfig>
 
 ```toml title="wrangler.toml"
 [[d1_databases]]
@@ -61,20 +65,24 @@ database_name = "test-db"
 database_id = "c020574a-5623-407b-be0c-cd192bab9545"
 ```
 
+</WranglerConfig>
+
 Note that `wrangler dev` separates local and production (remote) data. A local session does not have access to your production data by default. To access your production (remote) database, pass the `--remote` flag when calling `wrangler dev`. Any changes you make when running in `--remote` mode cannot be undone.
 
 Refer to the [`wrangler dev` documentation](/workers/wrangler/commands/#dev) to learn more about how to configure a local development session.
 
 ## Develop locally with Pages
 
-You can only develop against a _local_ D1 database when using [Cloudflare Pages](/pages/) by creating a minimal `wrangler.toml` in the root of your Pages project. This can be useful when creating schemas, seeding data or otherwise managing a D1 database directly, without adding to your application logic.
+You can only develop against a _local_ D1 database when using [Cloudflare Pages](/pages/) by creating a minimal [Wrangler configuration](/workers/wrangler/configuration) file in the root of your Pages project. This can be useful when creating schemas, seeding data or otherwise managing a D1 database directly, without adding to your application logic.
 
 :::caution[Local development for remote databases]
 
 It is currently not possible to develop against a _remote_ D1 database when using [Cloudflare Pages](/pages/).
 :::
 
-Your `wrangler.toml` should resemble the following:
+Your [Wrangler configuration](/workers/wrangler/configuration) file should resemble the following:
+
+<WranglerConfig>
 
 ```toml
 # If you are only using Pages + D1, you only need the below in your wrangler.toml to interact with D1 locally.
@@ -84,6 +92,8 @@ database_name = "YOUR_DATABASE_NAME"
 database_id = "the-id-of-your-D1-database-goes-here" # wrangler d1 info YOUR_DATABASE_NAME
 preview_database_id = "DB" # Required for Pages local development
 ```
+
+</WranglerConfig>
 
 You can then execute queries and/or run migrations against a local database as part of your local development process by passing the `--local` flag to wrangler:
 
@@ -114,12 +124,16 @@ Users of wrangler `2.x` must use the `--persist` flag: previous versions of wran
 
 You can use Miniflare's [support for D1](https://miniflare.dev/storage/d1) to create D1 databases you can use for testing:
 
+<WranglerConfig>
+
 ```toml
 [[d1_databases]]
 binding = "DB"
 database_name = "test-db"
 database_id = "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx"
 ```
+
+</WranglerConfig>
 
 ```js
 const mf = new Miniflare({
@@ -142,9 +156,11 @@ console.log(results);
 
 ### `unstable_dev`
 
-Wrangler exposes an [`unstable_dev()`](/workers/wrangler/api/) that allows you to run a local HTTP server for testing Workers and D1. Run [migrations](/d1/reference/migrations/) against a local database by setting a `preview_database_id` in your `wrangler.toml` configuration.
+Wrangler exposes an [`unstable_dev()`](/workers/wrangler/api/) that allows you to run a local HTTP server for testing Workers and D1. Run [migrations](/d1/reference/migrations/) against a local database by setting a `preview_database_id` in your [Wrangler configuration](/workers/wrangler/configuration) file.
 
-Given the below `wrangler.toml` configuration:
+Given the below [Wrangler configuration](/workers/wrangler/configuration):
+
+<WranglerConfig>
 
 ```toml
 [[ d1_databases ]]
@@ -153,6 +169,8 @@ database_name = "your-database" # the name of your D1 database, set when created
 database_id = "<UUID>" # The unique ID of your D1 database, returned when you create your database or run `
 preview_database_id = "local-test-db" # A user-defined ID for your local test database.
 ```
+
+</WranglerConfig>
 
 Migrations can be run locally as part of your CI/CD setup by passing the `--local` flag to `wrangler`:
 

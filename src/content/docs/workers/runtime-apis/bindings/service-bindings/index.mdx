@@ -5,7 +5,6 @@ head:
   - tag: title
     content: Service bindings - Runtime APIs
 description: Facilitate Worker-to-Worker communication.
-
 ---
 
 ## About Service bindings
@@ -22,15 +21,19 @@ Service bindings provide the separation of concerns that microservice or service
 
 Service bindings are commonly used to:
 
-* **Provide a shared internal service to multiple Workers.** For example, you can deploy an authentication service as its own Worker, and then have any number of separate Workers communicate with it via Service bindings.
-* **Isolate services from the public Internet.** You can deploy a Worker that is not reachable via the public Internet, and can only be reached via an explicit Service binding that another Worker declares.
-* **Allow teams to deploy code independently.** Team A can deploy their Worker on their own release schedule, and Team B can deploy their Worker separately.
+- **Provide a shared internal service to multiple Workers.** For example, you can deploy an authentication service as its own Worker, and then have any number of separate Workers communicate with it via Service bindings.
+- **Isolate services from the public Internet.** You can deploy a Worker that is not reachable via the public Internet, and can only be reached via an explicit Service binding that another Worker declares.
+- **Allow teams to deploy code independently.** Team A can deploy their Worker on their own release schedule, and Team B can deploy their Worker separately.
 
 ## Configuration
 
-You add a Service binding by modifying the `wrangler.toml` of the caller — the Worker that you want to be able to initiate requests.
+You add a Service binding by modifying the [Wrangler configuration](/workers/wrangler/configuration) file of the caller — the Worker that you want to be able to initiate requests.
 
-For example, if you want Worker A to be able to call Worker B — you'd add the following to the `wrangler.toml` for Worker A:
+For example, if you want Worker A to be able to call Worker B — you'd add the following to the [Wrangler configuration](/workers/wrangler/configuration) file for Worker A:
+
+import { WranglerConfig } from "~/components";
+
+<WranglerConfig>
 
 ```toml
 services = [
@@ -38,8 +41,10 @@ services = [
 ]
 ```
 
-* `binding`: The name of the key you want to expose on the `env` object.
-* `service`: The name of the target Worker you would like to communicate with. This Worker must be on your Cloudflare account.
+</WranglerConfig>
+
+- `binding`: The name of the key you want to expose on the `env` object.
+- `service`: The name of the target Worker you would like to communicate with. This Worker must be on your Cloudflare account.
 
 ## Interfaces
 
@@ -52,20 +57,28 @@ Worker A that declares a Service binding to Worker B can call Worker B in two di
 
 First, create the Worker that you want to communicate with. Let's call this "Worker B". Worker B exposes the public method, `add(a, b)`:
 
+<WranglerConfig>
+
 ```toml
 name = "worker_b"
 main = "./src/workerB.js"
 ```
 
+</WranglerConfig>
+
 ```js
 import { WorkerEntrypoint } from "cloudflare:workers";
 
 export class WorkerB extends WorkerEntrypoint {
-  async add(a, b) { return a + b; }
+	async add(a, b) {
+		return a + b;
+	}
 }
 ```
 
 Next, create the Worker that will call Worker B. Let's call this "Worker A". Worker A declares a binding to Worker B. This is what gives it permission to call public methods on Worker B.
+
+<WranglerConfig>
 
 ```toml
 name = "worker_a"
@@ -75,13 +88,15 @@ services = [
 ]
 ```
 
+</WranglerConfig>
+
 ```js
 export default {
-  async fetch(request, env) {
-    const result = await env.WORKER_B.add(1, 2);
-    return new Response(result);
-  }
-}
+	async fetch(request, env) {
+		const result = await env.WORKER_B.add(1, 2);
+		return new Response(result);
+	},
+};
 ```
 
 To run both Worker A and Worker B in local development, you must run two instances of [Wrangler](/workers/wrangler) in your terminal. For each Worker, open a new terminal and run [`npx wrangler@latest dev`](/workers/wrangler/commands#dev).
@@ -106,9 +121,9 @@ When getting started and deploying for the first time, this means that the targe
 
 When making changes to existing Workers, in most cases you should:
 
-* Deploy changes to Worker B first, in a way that is compatible with the existing Worker A. For example, add a new method to Worker B.
-* Next, deploy changes to Worker A. For example, call the new method on Worker B, from Worker A.
-* Finally, remove any unused code. For example, delete the previously used method on Worker B.
+- Deploy changes to Worker B first, in a way that is compatible with the existing Worker A. For example, add a new method to Worker B.
+- Next, deploy changes to Worker A. For example, call the new method on Worker B, from Worker A.
+- Finally, remove any unused code. For example, delete the previously used method on Worker B.
 
 ## Smart Placement
 
@@ -124,6 +139,6 @@ Refer to the [docs on Smart Placement](/workers/configuration/smart-placement/#b
 
 Service bindings have the following limits:
 
-* Each request to a Worker via a Service binding counts toward your [subrequest limit](/workers/platform/limits/#subrequests).
-* A single request has a maximum of 32 Worker invocations, and each call to a Service binding counts towards this limit. Subsequent calls will throw an exception.
-* Calling a service binding does not count towards [simultaneous open connection limits](/workers/platform/limits/#simultaneous-open-connections)
+- Each request to a Worker via a Service binding counts toward your [subrequest limit](/workers/platform/limits/#subrequests).
+- A single request has a maximum of 32 Worker invocations, and each call to a Service binding counts towards this limit. Subsequent calls will throw an exception.
+- Calling a service binding does not count towards [simultaneous open connection limits](/workers/platform/limits/#simultaneous-open-connections)

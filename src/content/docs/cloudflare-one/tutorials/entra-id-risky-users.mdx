@@ -77,13 +77,19 @@ To get started quickly, deploy our example Cloudflare Workers script by followin
    cd risky-users
    ```
 
-3. Modify `wrangler.toml` to include the following values:
+3. Modify [Wrangler's configuration](/workers/wrangler/configuration) file to include the following values:
 
    - `<ACCOUNT_ID>`: your Cloudflare [account ID](/fundamentals/setup/find-account-and-zone-ids/).
    - `<TENANT_ID>`: your Entra ID **Directory (tenant) ID**, obtained when [setting up Entra ID as an identity provider](#1-set-up-entra-id-as-an-identity-provider).
    - `<CLIENT_ID>`: your Entra ID **Application (client) ID**, obtained when [setting up Entra ID as an identity provider](#1-set-up-entra-id-as-an-identity-provider).
 
-   ```toml
+   import { WranglerConfig } from "~/components";
+
+   ;
+
+<WranglerConfig>
+
+```toml
    name = "risky-users"
    compatibility_date = "2023-01-04"
    main = "src/index.js"
@@ -97,7 +103,9 @@ To get started quickly, deploy our example Cloudflare Workers script by followin
 
    [triggers]
    crons = ["* * * * *"]
-   ```
+```
+
+</WranglerConfig>
 
 :::note
 

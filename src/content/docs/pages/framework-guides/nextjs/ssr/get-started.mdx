@@ -43,9 +43,13 @@ First, install [@cloudflare/next-on-pages](https://github.com/cloudflare/next-on
 npm install --save-dev @cloudflare/next-on-pages
 ```
 
-### 2. Add `wrangler.toml` file
+### 2. Add [Wrangler configuration](/workers/wrangler/configuration) file
 
-Then, add a [`wrangler.toml`](/pages/functions/wrangler-configuration/) file to the root directory of your Next.js app:
+Then, add a [[Wrangler configuration](/workers/wrangler/configuration) file](/pages/functions/wrangler-configuration/) file to the root directory of your Next.js app:
+
+import { WranglerConfig } from "~/components";
+
+<WranglerConfig>
 
 ```toml
 name = "my-app"
@@ -53,6 +57,8 @@ compatibility_date = "2024-07-29"
 compatibility_flags = ["nodejs_compat"]
 pages_build_output_dir = ".vercel/output/static"
 ```
+
+</WranglerConfig>
 
 This is where you configure your Pages project and define what resources it can access via [bindings](/workers/runtime-apis/bindings/).
 

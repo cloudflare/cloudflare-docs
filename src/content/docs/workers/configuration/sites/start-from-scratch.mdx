@@ -42,33 +42,53 @@ The template project contains the following files and directories:
 
 - `public`: The static assets for your project. By default it contains an `index.html` and a `favicon.ico`.
 - `src`: The Worker configured for serving your assets. You do not need to edit this but if you want to see how it works or add more functionality to your Worker, you can edit `src/index.ts`.
-- `wrangler.toml`: The file containing project configuration.
+- [Wrangler configuration](/workers/wrangler/configuration) file: The file containing project configuration.
   The `bucket` property tells Wrangler where to find the static assets (e.g. `site = { bucket = "./public" }`).
 - `package.json`/`package-lock.json`: define the required Node.js dependencies.
 
-## Customize `wrangler.toml`:
+## Customize [Wrangler configuration](/workers/wrangler/configuration) file:
 
 - Change the `name` property to the name of your project:
 
-  ```toml
+  import { WranglerConfig } from "~/components";
+
+  ;
+
+<WranglerConfig>
+
+```toml
   name = "my-site"
-  ```
+```
+
+</WranglerConfig>
 
 - Consider updating`compatibility_date` to today's date to get access to the most recent Workers features:
 
-  ```toml
+  ;
+
+<WranglerConfig>
+
+```toml
   compatibility_date = "yyyy-mm-dd"
-  ```
+```
+
+</WranglerConfig>
 
 - Deploy your site to a [custom domain](/workers/configuration/routing/custom-domains/) that you own and have already attached as a Cloudflare zone:
 
-  ```toml
+  ;
+
+<WranglerConfig>
+
+```toml
   route = "https://example.com/*"
-  ```
+```
 
-  :::note
+</WranglerConfig>
 
-  Refer to the documentation on [Routes](/workers/configuration/routing/routes/) to configure a `route` properly.
-  :::
+:::note
+
+Refer to the documentation on [Routes](/workers/configuration/routing/routes/) to configure a `route` properly.
+:::
 
 Learn more about [configuring your project](/workers/wrangler/configuration/).

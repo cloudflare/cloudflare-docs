@@ -52,13 +52,19 @@ export default {
 };
 ```
 
-Update the `wrangler.toml` file for customer-worker-1 and add the dispatch namespace:
+Update the [Wrangler configuration](/workers/wrangler/configuration) file for customer-worker-1 and add the dispatch namespace:
+
+import { WranglerConfig } from "~/components";
+
+<WranglerConfig>
 
 ```toml
 # ... other content above ...
 
 dispatch_namespace = "my-namespace"
 ```
+
+</WranglerConfig>
 
 ## 2. Create a dispatch worker
 
@@ -105,7 +111,9 @@ export default {
 };
 ```
 
-Update the `wrangler.toml` file for dispatch-worker and add the dispatch namespace binding:
+Update the [Wrangler configuration](/workers/wrangler/configuration) file for dispatch-worker and add the dispatch namespace binding:
+
+<WranglerConfig>
 
 ```toml
 # ... other content above ...
@@ -115,6 +123,8 @@ binding = "DISPATCH_NAMESPACE"
 namespace = "my-namespace"
 outbound = { service = "outbound-worker", parameters = ["paramCustomerName"] }
 ```
+
+</WranglerConfig>
 
 ## 3. Create an Outbound Worker
 

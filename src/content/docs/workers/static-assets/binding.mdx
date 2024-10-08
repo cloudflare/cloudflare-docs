@@ -17,7 +17,7 @@ import {
 	Tabs,
 } from "~/components";
 
-Configuring a Worker with assets requires specifying a [directory](/workers/static-assets/binding/#directory) and, optionally, an [assets binding](/workers/static-assets/binding/), in your Worker's `wrangler.toml` file. The [assets binding](/workers/static-assets/binding/) allows you to dynamically fetch assets from within your Worker script (e.g. `env.ASSETS.fetch()`), similarly to how you might with a make a `fetch()` call with a [Service binding](/workers/runtime-apis/bindings/service-bindings/http/).
+Configuring a Worker with assets requires specifying a [directory](/workers/static-assets/binding/#directory) and, optionally, an [assets binding](/workers/static-assets/binding/), in your Worker's [Wrangler configuration](/workers/wrangler/configuration) file. The [assets binding](/workers/static-assets/binding/) allows you to dynamically fetch assets from within your Worker script (e.g. `env.ASSETS.fetch()`), similarly to how you might with a make a `fetch()` call with a [Service binding](/workers/runtime-apis/bindings/service-bindings/http/).
 
 Only one collection of static assets can be configured in each Worker.
 
@@ -25,15 +25,23 @@ Only one collection of static assets can be configured in each Worker.
 
 The folder of static assets to be served. For many frameworks, this is the `./public/`, `./dist/`, or `./build/` folder.
 
+import { WranglerConfig } from "~/components";
+
+<WranglerConfig>
+
 ```toml title="wrangler.toml"
 name = "my-worker"
 compatibility_date = "2024-09-19"
 assets = { directory = "./public/" }
 ```
 
+</WranglerConfig>
+
 ## `binding`
 
 Configuring the optional [binding](/workers/runtime-apis/bindings) gives you access to the collection of assets from within your Worker script.
+
+<WranglerConfig>
 
 ```toml title="wrangler.toml"
 name = "my-worker"
@@ -42,6 +50,8 @@ compatibility_date = "2024-09-19"
 
 assets = { directory = "./public/", binding = "ASSETS" }
 ```
+
+</WranglerConfig>
 
 In the example above, assets would be available through `env.ASSETS`.
 

@@ -6,16 +6,13 @@ description: Send Workers Trace Event Logs to a supported third party, such as a
   storage or logging provider.
 sidebar:
   order: 5
-
 ---
 
 [Cloudflare Logpush](/logs/about/) supports the ability to send [Workers Trace Event Logs](/logs/reference/log-fields/account/workers_trace_events/) to a [supported destination](/logs/get-started/enable-destinations/). Worker’s Trace Events Logpush includes metadata about requests and responses, unstructured `console.log()` messages and any uncaught exceptions. This product is available on the Workers Paid plan. For pricing information, refer to [Pricing](/workers/platform/pricing/#workers-trace-events-logpush).
 
 :::caution
 
-
 Workers Trace Events Logpush is not available for zones on the [Cloudflare China Network](/china-network/).
-
 
 :::
 
@@ -73,7 +70,11 @@ In Logpush, you can configure [filters](/logs/reference/filters/) and a [samplin
 
 ## Enable logging on your Worker
 
-Enable logging on your Worker by adding a new property, `logpush = true`, to your `wrangler.toml` file. This can be added either in the top-level configuration or under an [environment](/workers/wrangler/environments/). Any new Workers with this property will automatically get picked up by the Logpush job.
+Enable logging on your Worker by adding a new property, `logpush = true`, to your [Wrangler configuration](/workers/wrangler/configuration) file. This can be added either in the top-level configuration or under an [environment](/workers/wrangler/environments/). Any new Workers with this property will automatically get picked up by the Logpush job.
+
+import { WranglerConfig } from "~/components";
+
+<WranglerConfig>
 
 ```toml
 # Top-level configuration
@@ -86,6 +87,8 @@ workers_dev = false
 logpush = true
 route = { pattern = "example.org/*", zone_name = "example.org" }
 ```
+
+</WranglerConfig>
 
 Configure via multipart script upload API:
 
@@ -119,30 +122,30 @@ To illustrate this, suppose our Logpush event looks like the JSON below and the 
 
 ```json
 {
-  "Exceptions": [
-    {
-      "Name": "SampleError",
-      "Message": "something went wrong",
-      "TimestampMs": 0
-    },
-    {
-      "Name": "AuthError",
-      "Message": "unable to process request authentication from client",
-      "TimestampMs": 1
-    },
-  ],
-  "Logs": [
-    {
-      "Level": "log",
-      "Message": ["Hello "],
-      "TimestampMs": 0
-    },
-    {
-      "Level": "log",
-      "Message": ["World!"],
-      "TimestampMs": 0
-    }
-  ]
+	"Exceptions": [
+		{
+			"Name": "SampleError",
+			"Message": "something went wrong",
+			"TimestampMs": 0
+		},
+		{
+			"Name": "AuthError",
+			"Message": "unable to process request authentication from client",
+			"TimestampMs": 1
+		}
+	],
+	"Logs": [
+		{
+			"Level": "log",
+			"Message": ["Hello "],
+			"TimestampMs": 0
+		},
+		{
+			"Level": "log",
+			"Message": ["World!"],
+			"TimestampMs": 0
+		}
+	]
 }
 ```
 
@@ -150,24 +153,24 @@ To illustrate this, suppose our Logpush event looks like the JSON below and the 
 
 ```json
 {
-  "Exceptions": [
-    {
-      "name": "SampleError",
-      "message": "something went wrong",
-      "TimestampMs": 0
-    },
-    {
-      "name": "AuthError",
-      "message": "unable to <<<Logpush: exception messages truncated>>>",
-      "TimestampMs": 1
-    },
-  ],
-  "Logs": [
-    {
-      "Level": "log",
-      "Message": ["<<<Logpush: messages truncated>>>"],
-      "TimestampMs": 0
-    }
-  ]
+	"Exceptions": [
+		{
+			"name": "SampleError",
+			"message": "something went wrong",
+			"TimestampMs": 0
+		},
+		{
+			"name": "AuthError",
+			"message": "unable to <<<Logpush: exception messages truncated>>>",
+			"TimestampMs": 1
+		}
+	],
+	"Logs": [
+		{
+			"Level": "log",
+			"Message": ["<<<Logpush: messages truncated>>>"],
+			"TimestampMs": 0
+		}
+	]
 }
 ```

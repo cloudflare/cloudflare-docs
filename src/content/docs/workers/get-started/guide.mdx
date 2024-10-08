@@ -48,11 +48,11 @@ cd my-first-worker
 
 In your project directory, C3 will have generated the following:
 
-* `wrangler.toml`: Your [Wrangler](/workers/wrangler/configuration/#sample-wranglertoml-configuration) configuration file.
-* `index.js` (in `/src`): A minimal `'Hello World!'` Worker written in [ES module](/workers/reference/migrate-to-module-workers/) syntax.
-* `package.json`: A minimal Node dependencies configuration file.
-* `package-lock.json`: Refer to [`npm` documentation on `package-lock.json`](https://docs.npmjs.com/cli/v9/configuring-npm/package-lock-json).
-* `node_modules`: Refer to [`npm` documentation `node_modules`](https://docs.npmjs.com/cli/v7/configuring-npm/folders#node-modules).
+- [Wrangler configuration](/workers/wrangler/configuration) file: Your [Wrangler](/workers/wrangler/configuration/#sample-wranglertoml-configuration) configuration file.
+- `index.js` (in `/src`): A minimal `'Hello World!'` Worker written in [ES module](/workers/reference/migrate-to-module-workers/) syntax.
+- `package.json`: A minimal Node dependencies configuration file.
+- `package-lock.json`: Refer to [`npm` documentation on `package-lock.json`](https://docs.npmjs.com/cli/v9/configuring-npm/package-lock-json).
+- `node_modules`: Refer to [`npm` documentation `node_modules`](https://docs.npmjs.com/cli/v7/configuring-npm/folders#node-modules).
 
 </Details>
 
@@ -78,8 +78,8 @@ npm create cloudflare@latest -- --template <SOURCE>
 At a minimum, template folders must contain the following:
 
 - `package.json`
-- `wrangler.toml`
-- `src/` containing a worker script referenced from `wrangler.toml`
+- [Wrangler configuration](/workers/wrangler/configuration) file
+- `src/` containing a worker script referenced from [Wrangler configuration](/workers/wrangler/configuration) file
 
 </Details>
 
@@ -191,7 +191,7 @@ Preview your Worker at `<YOUR_WORKER>.<YOUR_SUBDOMAIN>.workers.dev`.
 
 <Details header="Seeing 523 errors?">
 
-If you see [`523` errors](/support/troubleshooting/cloudflare-errors/troubleshooting-cloudflare-5xx-errors/#error-523-origin-is-unreachable) when pushing your  `*.workers.dev` subdomain for the first time, wait a minute or so and the errors will resolve themselves.
+If you see [`523` errors](/support/troubleshooting/cloudflare-errors/troubleshooting-cloudflare-5xx-errors/#error-523-origin-is-unreachable) when pushing your `*.workers.dev` subdomain for the first time, wait a minute or so and the errors will resolve themselves.
 
 </Details>
 

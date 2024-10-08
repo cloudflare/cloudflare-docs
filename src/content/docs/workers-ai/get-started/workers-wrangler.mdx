@@ -38,7 +38,7 @@ Running `npm create cloudflare@latest` will prompt you to install the [`create-c
 This will create a new `hello-ai` directory. Your new `hello-ai` directory will include:
 
 - A `"Hello World"` [Worker](/workers/get-started/guide/#3-write-code) at `src/index.ts`.
-- A [`wrangler.toml`](/workers/wrangler/configuration/) configuration file.
+- A [[Wrangler configuration](/workers/wrangler/configuration) file](/workers/wrangler/configuration/) configuration file.
 
 Go to your application directory:
 
@@ -50,12 +50,18 @@ cd hello-ai
 
 You must create an AI binding for your Worker to connect to Workers AI. [Bindings](/workers/runtime-apis/bindings/) allow your Workers to interact with resources, like Workers AI, on the Cloudflare Developer Platform.
 
-To bind Workers AI to your Worker, add the following to the end of your `wrangler.toml` file:
+To bind Workers AI to your Worker, add the following to the end of your [Wrangler configuration](/workers/wrangler/configuration) file:
+
+import { WranglerConfig } from "~/components";
+
+<WranglerConfig>
 
 ```toml title="wrangler.toml"
 [ai]
 binding = "AI"
 ```
+
+</WranglerConfig>
 
 Your binding is [available in your Worker code](/workers/reference/migrate-to-module-workers/#bindings-in-es-modules-format) on [`env.AI`](/workers/runtime-apis/handlers/fetch/).
 

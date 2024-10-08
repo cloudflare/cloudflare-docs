@@ -3,7 +3,6 @@ title: How Queues Works
 pcx_content_type: concept
 sidebar:
   order: 1
-
 ---
 
 Cloudflare Queues is a flexible messaging queue that allows you to queue messages for asynchronous processing. Message queues are great at decoupling components of applications, like the checkout and order fulfillment services for an e-commerce site. Decoupled services are easier to reason about, deploy, and implement, allowing you to ship features that delight your customers without worrying about synchronizing complex deployments. Queues also allow you to batch and buffer calls to downstream services and APIs.
@@ -25,9 +24,9 @@ Queues does not guarantee that messages will be delivered to a consumer in the s
 
 Developers can create multiple queues. Creating multiple queues can be useful to:
 
-* Separate different use-cases and processing requirements: for example, a logging queue vs. a password reset queue.
-* Horizontally scale your overall throughput (messages per second) by using multiple queues to scale out.
-* Configure different batching strategies for each consumer connected to a queue.
+- Separate different use-cases and processing requirements: for example, a logging queue vs. a password reset queue.
+- Horizontally scale your overall throughput (messages per second) by using multiple queues to scale out.
+- Configure different batching strategies for each consumer connected to a queue.
 
 For most applications, a single producer Worker per queue, with a single consumer Worker consuming messages from that queue allows you to logically separate the processing for each of your queues.
 
@@ -39,29 +38,27 @@ For example, if we bound a queue named `my-first-queue` to a binding of `MY_FIRS
 
 ```ts
 type Environment = {
-  readonly MY_FIRST_QUEUE: Queue;
+	readonly MY_FIRST_QUEUE: Queue;
 };
 
 export default {
-  async fetch(req, env, context): Promise<Response> {
-    let message = {
-      url: req.url,
-      method: req.method,
-      headers: Object.fromEntries(req.headers),
-    };
+	async fetch(req, env, context): Promise<Response> {
+		let message = {
+			url: req.url,
+			method: req.method,
+			headers: Object.fromEntries(req.headers),
+		};
 
-    await env.MY_FIRST_QUEUE.send(message); // This will throw an exception if the send fails for any reason
-  },
+		await env.MY_FIRST_QUEUE.send(message); // This will throw an exception if the send fails for any reason
+	},
 } satisfies ExportedHandler<Environment>;
 ```
 
 :::note
 
-
 You can also use [`context.waitUntil()`](/workers/runtime-apis/context/#waituntil) to send the message without blocking the response.
 
 Note that because `waitUntil()` is non-blocking, any errors raised from the `send()` or `sendBatch()` methods on a queue will be implicitly ignored.
-
 
 :::
 
@@ -77,24 +74,24 @@ To explicitly set the content type or specify an alternative content type, pass 
 
 ```ts
 type Environment = {
-  readonly MY_FIRST_QUEUE: Queue;
+	readonly MY_FIRST_QUEUE: Queue;
 };
 
 export default {
-  async fetch(req, env): Promise<Response> {
-    let message = {
-      url: req.url,
-      method: req.method,
-      headers: Object.fromEntries(req.headers),
-    };
-    try {
-      await env.MY_FIRST_QUEUE.send(message, { contentType: "json" }); // "json" is the default
-    } catch (e) {
-      // Catch cases where send fails, including due to a mismatched content type
-      console.log(e)
-      return Response.json({"msg": e}, { status: 500 })
-    }
-  },
+	async fetch(req, env): Promise<Response> {
+		let message = {
+			url: req.url,
+			method: req.method,
+			headers: Object.fromEntries(req.headers),
+		};
+		try {
+			await env.MY_FIRST_QUEUE.send(message, { contentType: "json" }); // "json" is the default
+		} catch (e) {
+			// Catch cases where send fails, including due to a mismatched content type
+			console.log(e);
+			return Response.json({ msg: e }, { status: 500 });
+		}
+	},
 } satisfies ExportedHandler<Environment>;
 ```
 
@@ -123,19 +120,23 @@ A queue can only have one type of consumer configured.
 
 ### Create a consumer Worker
 
-A consumer is the term for a client that is subscribing to or *consuming* messages from a queue. In its most basic form, a consumer is defined by creating a `queue` handler in a Worker:
+A consumer is the term for a client that is subscribing to or _consuming_ messages from a queue. In its most basic form, a consumer is defined by creating a `queue` handler in a Worker:
 
 ```ts
 export default {
-  async queue(batch: MessageBatch<Error>, env: Environment): Promise<void> {
-    // Do something with messages in the batch
-    // i.e. write to R2 storage, D1 database, or POST to an external API
-    // You can also iterate over each message in the batch by looping over batch.messages
-  },
+	async queue(batch: MessageBatch<Error>, env: Environment): Promise<void> {
+		// Do something with messages in the batch
+		// i.e. write to R2 storage, D1 database, or POST to an external API
+		// You can also iterate over each message in the batch by looping over batch.messages
+	},
 };
 ```
 
-You then connect that consumer to a queue with `wrangler queues consumer <queue-name> <worker-script-name>` or by defining a `[[queues.consumers]]` configuration in your `wrangler.toml` manually:
+You then connect that consumer to a queue with `wrangler queues consumer <queue-name> <worker-script-name>` or by defining a `[[queues.consumers]]` configuration in your [Wrangler configuration](/workers/wrangler/configuration) file manually:
+
+import { WranglerConfig } from "~/components";
+
+<WranglerConfig>
 
 ```toml
 [[queues.consumers]]
@@ -144,47 +145,47 @@ You then connect that consumer to a queue with `wrangler queues consumer <queue-
   max_batch_timeout = 30 # optional
 ```
 
+</WranglerConfig>
+
 Importantly, each queue can only have one active consumer. This allows Cloudflare Queues to achieve at least once delivery and minimize the risk of duplicate messages beyond that.
 
 :::note[Best practice]
 
-
 Configure a single consumer per queue. This both logically separates your queues, and ensures that errors (failures) in processing messages from one queue do not impact your other queues.
-
 
 :::
 
 Notably, you can use the same consumer with multiple queues. The queue handler that defines your consumer Worker will be invoked by the queues it is connected to.
 
-* The `MessageBatch` that is passed to your `queue` handler includes a `queue` property with the name of the queue the batch was read from.
-* This can reduce the amount of code you need to write, and allow you to process messages based on the name of your queues.
+- The `MessageBatch` that is passed to your `queue` handler includes a `queue` property with the name of the queue the batch was read from.
+- This can reduce the amount of code you need to write, and allow you to process messages based on the name of your queues.
 
 For example, a consumer configured to consume messages from multiple queues would resemble the following:
 
 ```ts
 export default {
-  async queue(batch: MessageBatch<Error>, env: Environment): Promise<void> {
-    // MessageBatch has a `queue` property we can switch on
-    switch (batch.queue) {
-      case 'log-queue':
-        // Write the batch to R2
-        break;
-      case 'debug-queue':
-        // Write the message to the console or to another queue
-        break;
-      case 'email-reset':
-        // Trigger a password reset email via an external API
-        break;
-      default:
-      // Handle messages we haven't mentioned explicitly (write a log, push to a DLQ)
-    }
-  },
+	async queue(batch: MessageBatch<Error>, env: Environment): Promise<void> {
+		// MessageBatch has a `queue` property we can switch on
+		switch (batch.queue) {
+			case "log-queue":
+				// Write the batch to R2
+				break;
+			case "debug-queue":
+				// Write the message to the console or to another queue
+				break;
+			case "email-reset":
+				// Trigger a password reset email via an external API
+				break;
+			default:
+			// Handle messages we haven't mentioned explicitly (write a log, push to a DLQ)
+		}
+	},
 };
 ```
 
 ### Remove a consumer
 
-To remove a queue from your project, run `wrangler queues consumer remove <queue-name> <script-name>` and then remove the desired queue below the `[[queues.consumers]]` in `wrangler.toml` file.
+To remove a queue from your project, run `wrangler queues consumer remove <queue-name> <script-name>` and then remove the desired queue below the `[[queues.consumers]]` in [Wrangler configuration](/workers/wrangler/configuration) file.
 
 ### Pull consumers
 

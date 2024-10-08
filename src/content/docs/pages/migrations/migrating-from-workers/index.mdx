@@ -3,7 +3,6 @@ updated: 2020-08-13
 difficulty: Beginner
 pcx_content_type: tutorial
 title: Migrating from Workers Sites to Pages
-
 ---
 
 In this tutorial, you will learn how to migrate an existing [Cloudflare Workers Sites](/workers/configuration/sites/) application to Cloudflare Pages.
@@ -16,9 +15,7 @@ You may already have a reasonably complex Worker and/or it would be tedious to s
 
 :::note
 
-
 When using a `_worker.js` file, the entire `/functions` directory is ignored – this includes its routing and middleware characteristics. Instead, the `_worker.js` file is deployed as is and must be written using the [Module Worker syntax](/workers/reference/migrate-to-module-workers/).
-
 
 :::
 
@@ -29,10 +26,10 @@ By migrating to Cloudflare Pages, you will be able to access features like [prev
 Workers Sites projects consist of the following pieces:
 
 1. An application built with a [static site tool](/pages/how-to/) or a static collection of HTML, CSS and JavaScript files.
-2. If using a static site tool, a build directory (called `bucket` in `wrangler.toml`) where the static project builds your HTML, CSS, and JavaScript files.
+2. If using a static site tool, a build directory (called `bucket` in [Wrangler's configuration](/workers/wrangler/configuration) file) where the static project builds your HTML, CSS, and JavaScript files.
 3. A Worker application for serving that build directory. For most projects, this is likely to be the `workers-site` directory.
 
-When moving to Cloudflare Pages, remove the Workers application and any associated `wrangler.toml` configuration files or build output. Instead, note and record your `build` command (if you have one), and the `bucket` field, or build directory, from the `wrangler.toml` file in your project's directory.
+When moving to Cloudflare Pages, remove the Workers application and any associated [Wrangler configuration](/workers/wrangler/configuration) files or build output. Instead, note and record your `build` command (if you have one), and the `bucket` field, or build directory, from the [Wrangler configuration](/workers/wrangler/configuration) file in your project's directory.
 
 ## Migrate headers and redirects
 
@@ -40,11 +37,9 @@ You can migrate your redirects to Pages, by creating a `_redirects` file in your
 
 :::note
 
-
 A project is limited to 2,000 static redirects and 100 dynamic redirects, for a combined total of 2,100 redirects. Each redirect declaration has a 1,000-character limit. Malformed definitions are ignored. If there are multiple redirects for the same source path, the topmost redirect is applied.
 
 Make sure that static redirects are before dynamic redirects in your `_redirects` file.
-
 
 :::
 
@@ -62,9 +57,7 @@ If you choose to use a custom domain for your Pages project, you can set it to t
 
 :::note
 
-
 Before you deploy, you will need to delete your old Workers routes to start sending requests to Cloudflare Pages.
-
 
 :::
 

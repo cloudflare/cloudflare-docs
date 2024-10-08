@@ -34,11 +34,15 @@ To configure a pull-based consumer and receive messages from a queue, you need t
 
 ## 1. Enable HTTP pull
 
-You can enable HTTP pull or change a queue from push-based to pull-based via `wrangler.toml`, the `wrangler` CLI, or via the [Cloudflare dashboard](https://dash.cloudflare.com/).
+You can enable HTTP pull or change a queue from push-based to pull-based via [Wrangler configuration](/workers/wrangler/configuration) file, the `wrangler` CLI, or via the [Cloudflare dashboard](https://dash.cloudflare.com/).
 
 ### wrangler.toml
 
-A HTTP consumer can be configured in `wrangler.toml` by setting `type = "http_pull"` in the consumer configuration:
+A HTTP consumer can be configured in [Wrangler's configuration](/workers/wrangler/configuration) file by setting `type = "http_pull"` in the consumer configuration:
+
+import { WranglerConfig } from "~/components";
+
+<WranglerConfig>
 
 ```toml
 [[queues.consumers]]
@@ -50,6 +54,8 @@ visibility_timeout_ms = 5000
 max_retries = 5
 dead_letter_queue = "SOME-OTHER-QUEUE"
 ```
+
+</WranglerConfig>
 
 Omitting the `type` property will default the queue to push-based.
 
@@ -69,7 +75,7 @@ wrangler queues consumer worker remove $QUEUE-NAME $SCRIPT_NAME
 
 :::note
 
-If you remove the Worker consumer with `wrangler` but do not delete the `[[queues.consumer]]` configuration from `wrangler.toml`, subsequent deployments of your Worker will fail when they attempt to add a conflicting consumer configuration.
+If you remove the Worker consumer with `wrangler` but do not delete the `[[queues.consumer]]` configuration from [Wrangler configuration](/workers/wrangler/configuration) file, subsequent deployments of your Worker will fail when they attempt to add a conflicting consumer configuration.
 
 Ensure you remove the consumer configuration first.
 
@@ -140,10 +146,10 @@ This will return an array of messages (up to the specified `batch_size`) in the 
 				"id": "1ad27d24c83de78953da635dc2ea208f",
 				"timestamp_ms": 1689615013586,
 				"attempts": 2,
-				"metadata":{
-					"CF-sourceMessageSource":"dash",
-					"CF-Content-Type":"json"
-        },
+				"metadata": {
+					"CF-sourceMessageSource": "dash",
+					"CF-Content-Type": "json"
+				},
 				"lease_id": "eyJhbGciOiJkaXIiLCJlbmMiOiJBMjU2Q0JDLUhTNTEyIn0..NXmbr8h6tnKLsxJ_AuexHQ.cDt8oBb_XTSoKUkVKRD_Jshz3PFXGIyu7H1psTO5UwI.smxSvQ8Ue3-ymfkV6cHp5Va7cyUFPIHuxFJA07i17sc"
 			},
 			{
@@ -151,10 +157,10 @@ This will return an array of messages (up to the specified `batch_size`) in the 
 				"id": "95494c37bb89ba8987af80b5966b71a7",
 				"timestamp_ms": 1689615013586,
 				"attempts": 2,
-				"metadata":{
-					"CF-sourceMessageSource":"dash",
-					"CF-Content-Type":"json"
-        },
+				"metadata": {
+					"CF-sourceMessageSource": "dash",
+					"CF-Content-Type": "json"
+				},
 				"lease_id": "eyJhbGciOiJkaXIiLCJlbmMiOiJBMjU2Q0JDLUhTNTEyIn0..QXPgHfzETsxYQ1Vd-H0hNA.mFALS3lyouNtgJmGSkTzEo_imlur95EkSiH7fIRIn2U.PlwBk14CY_EWtzYB-_5CR1k30bGuPFPUx1Nk5WIipFU"
 			}
 		]
