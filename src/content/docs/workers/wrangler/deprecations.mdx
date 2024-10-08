@@ -92,7 +92,7 @@ Refer to the following list for common fields that are no longer required.
   Here are the Wrangler v1 commands that are no longer supported:
 - `wrangler preview` - Use the `wrangler dev` command, for running your worker in your local environment.
 - `wrangler generate` - If you want to use a starter template, clone its GitHub repository and manually initialize it.
-- `wrangler route` - Routes are defined in the `wrangler.toml` configuration file.
+- `wrangler route` - Routes are defined in the [Wrangler configuration](/workers/wrangler/configuration) file.
 - `wrangler report` - If you find a bug, report it at [Wrangler issues](https://github.com/cloudflare/workers-sdk/issues/new/choose).
 - `wrangler build` - If you wish to access the output from bundling your Worker, use `wrangler publish --outdir=path/to/output`.
 
@@ -200,7 +200,7 @@ Create the `workers.dev` subdomain in **Workers & Pages** > select your Worker >
 
 The `wrangler route` command is no longer available to configure a route for a Worker.
 
-Routes are specified in the `wrangler.toml` configuration file.
+Routes are specified in the [Wrangler configuration](/workers/wrangler/configuration) file.
 
 ### Other deprecated behavior
 

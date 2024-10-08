@@ -97,7 +97,7 @@ For all non-matching requests, Cloudflare will return a null-body 404-status res
 
 Alternate configuration options are outlined on this page and can be specified in your project's [`wrangler.toml`](/workers/wrangler/configuration/#assets) file. If you're deploying using a [framework](/workers/frameworks/), these options will be defined by the framework provider.
 
-Example `wrangler.toml` configuration:
+Example [Wrangler configuration](/workers/wrangler/configuration):
 
 ```toml title="wrangler.toml"
 assets = { directory = "./public", binding = "ASSETS", html_handling = "force-trailing-slash", not_found_handling = "404-page" }

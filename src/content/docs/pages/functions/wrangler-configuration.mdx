@@ -80,7 +80,7 @@ id = "<NAMESPACE_ID>"
 If you would like to use your existing `wrangler.toml` file for your Pages project configuration, you must:
 
 1. Add the `pages_build_output_dir` key with the appropriate value of your [build output directory](/pages/configuration/build-configuration/#build-commands-and-directories) (for example, `pages_build_output_dir = "./dist"`.)
-2. Review your existing `wrangler.toml` configuration carefully to make sure it aligns with your desired project configuration before deploying.
+2. Review your existing [Wrangler configuration](/workers/wrangler/configuration) carefully to make sure it aligns with your desired project configuration before deploying.
 
 If you add the `pages_build_output_dir` key to `wrangler.toml` and deploy your Pages project, Pages will use whatever configuration was defined for local use, which is very likely to be non-production. Do not deploy until you are confident that your `wrangler.toml` is ready for production use.
 
@@ -154,7 +154,7 @@ binding = "KV"
 id = "<NAMESPACE_ID>"
 ```
 
-This `wrangler.toml` configuration file adds the `nodejs_compat` compatibility flag and a KV namespace binding to your Pages project. Running `wrangler pages dev` in a Pages project directory with this `wrangler.toml` configuration file will apply the `nodejs_compat` compatibility flag locally, and expose the `KV` binding in your Pages Function code at `context.env.KV`.
+This [Wrangler configuration](/workers/wrangler/configuration) file adds the `nodejs_compat` compatibility flag and a KV namespace binding to your Pages project. Running `wrangler pages dev` in a Pages project directory with this [Wrangler configuration](/workers/wrangler/configuration) file will apply the `nodejs_compat` compatibility flag locally, and expose the `KV` binding in your Pages Function code at `context.env.KV`.
 
 :::note
 
@@ -202,7 +202,7 @@ Unlike [Workers Environments](/workers/wrangler/configuration/#environments), `p
 
 :::
 
-Refer to the following `wrangler.toml` configuration file for an example of how to override preview deployment configuration:
+Refer to the following [Wrangler configuration](/workers/wrangler/configuration) file for an example of how to override preview deployment configuration:
 
 ```toml
 name = "my-pages-site"

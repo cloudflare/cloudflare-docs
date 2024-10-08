@@ -4,23 +4,24 @@ title: Configuration
 head:
   - tag: title
     content: Configuration - Wrangler
-description: Use a `wrangler.toml` configuration file to customize the
+description:
+  Use a [Wrangler configuration](/workers/wrangler/configuration) file to customize the
   development and deployment setup for your Worker project and other Developer
   Platform products.
 ---
 
 import { Render, Type, MetaInfo } from "~/components";
 
-Wrangler optionally uses a `wrangler.toml` configuration file to customize the development and deployment setup for a Worker.
+Wrangler optionally uses a [Wrangler configuration](/workers/wrangler/configuration) file to customize the development and deployment setup for a Worker.
 
 :::caution
 
-Wrangler currently supports an `--experimental-json-config` flag, which will read your configuration from a `wrangler.json` file, rather than `wrangler.toml`. The format of this file is exactly the same as the `wrangler.toml` configuration file, except that the syntax is `JSON` rather than `TOML`. This is experimental, and is not recommended for production use.
+Wrangler currently supports an `--experimental-json-config` flag, which will read your configuration from a `wrangler.json` file, rather than `wrangler.toml`. The format of this file is exactly the same as the [Wrangler configuration](/workers/wrangler/configuration) file, except that the syntax is `JSON` rather than `TOML`. This is experimental, and is not recommended for production use.
 :::
 
 It is best practice to treat `wrangler.toml` as the [source of truth](#source-of-truth) for configuring a Worker.
 
-## Sample `wrangler.toml` configuration
+## Sample [Wrangler configuration](/workers/wrangler/configuration)
 
 ```toml
 # Top-level configuration
@@ -865,7 +866,7 @@ To create a [binding](/workers/runtime-apis/bindings/) to an mTLS certificate fo
 
   - The ID of the certificate. Wrangler displays this via the `mtls-certificate upload` and `mtls-certificate list` commands.
 
-Example of a `wrangler.toml` configuration that includes an mTLS certificate binding:
+Example of a [Wrangler configuration](/workers/wrangler/configuration) that includes an mTLS certificate binding:
 
 ```toml title="wrangler.toml"
 mtls_certificates = [

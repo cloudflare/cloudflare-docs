@@ -13,7 +13,7 @@ Wrangler allows you to deploy the same Worker application with different configu
 Review the following environments flow:
 
 1. You have created a Worker application named `my-worker`.
-2. You create an environment, for example, `dev`, in the Worker's `wrangler.toml` configuration file.
+2. You create an environment, for example, `dev`, in the Worker's [Wrangler configuration](/workers/wrangler/configuration) file.
 3. In `wrangler.toml`, you configure the `dev` environment by [adding bindings](/workers/runtime-apis/bindings/) and/or [routes](/workers/configuration/routing/routes/).
 4. You deploy the Worker using `npx wrangler deploy -e dev`.
 5. In the background, Wrangler creates a new Worker named `my-worker-dev`.

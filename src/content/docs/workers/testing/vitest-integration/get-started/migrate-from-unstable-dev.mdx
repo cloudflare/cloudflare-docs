@@ -7,7 +7,6 @@ head: []
 description: Migrate from the
   [`unstable_dev`](/workers/wrangler/api/#unstable_dev) API to writing tests
   with the Workers Vitest integration.
-
 ---
 
 The [`unstable_dev`](/workers/wrangler/api/#unstable_dev) API has been a recommended approach to run integration tests. The `@cloudflare/vitest-pool-workers` package integrates directly with Vitest for fast re-runs, supports both unit and integration tests, all whilst providing isolated per-test storage.
@@ -46,11 +45,11 @@ With the Workers Vitest integration, there is no need to stop a Worker via `work
 
 ## Import Wrangler configuration
 
-Via the `unstable_dev` API, you can reference a `wrangler.toml` configuration file by adding it as an option:
+Via the `unstable_dev` API, you can reference a [Wrangler configuration](/workers/wrangler/configuration) file by adding it as an option:
 
 ```js
 await unstable_dev("src/index.ts", {
-  config: "wrangler.toml",
+	config: "wrangler.toml",
 });
 ```
 
@@ -92,4 +91,4 @@ You can remove `UnstableDevWorker` imports from your code. Instead, follow the [
 
 ## Related resources
 
-* [Write your first test](/workers/testing/vitest-integration/get-started/write-your-first-test/#define-types) - Write unit tests against Workers.
+- [Write your first test](/workers/testing/vitest-integration/get-started/write-your-first-test/#define-types) - Write unit tests against Workers.
