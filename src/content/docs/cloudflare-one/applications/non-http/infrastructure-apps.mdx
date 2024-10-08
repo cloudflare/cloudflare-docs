@@ -56,6 +56,8 @@ Certain protocols require configuring the server to trust connections through Ac
 
 Users connect to the target's IP address as if they were on your private network, using their preferred client software. The user must be logged into WARP on their device, but no other system configuration is required. You can optionally configure a [private DNS resolver](/cloudflare-one/policies/gateway/resolver-policies/) to allow connections to the target's private hostname.
 
+SSH with Access for Infrastructure also supports `scp` and `rsync` functions. At this time, `sftp` is not supported.
+
 ### Connect to different VNET
 
 To connect to targets that are in different VNETS, users will need to [switch their connected virtual network](/cloudflare-one/connections/connect-networks/private-net/cloudflared/tunnel-virtual-networks/#connect-to-a-virtual-network) in the WARP client.
