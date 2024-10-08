@@ -84,6 +84,10 @@ The following example deploys a [WAF managed ruleset](/waf/managed-rules/#manage
     }
     ```
 
+    :::caution
+    Managed rulesets deployed at the account level will only apply to incoming traffic of zones on an Enterprise plan. The expression of your `execute` rule must end with `and cf.zone.plan eq "ENT"` or else the API operation will fail.
+    :::
+
 3.  If the entry point ruleset does not exist (that is, if you received a `404 Not Found` status code in step 1), create the ruleset using the [Create an account ruleset](/api/operations/createAccountRuleset) operation. Include a single rule in the `rules` array that executes the Cloudflare Managed Ruleset (with ID <RuleID id="efb7b8c949ac4650a09736fc376e9aee" />) for all incoming requests where the zone name matches one of `example.com` or `anotherexample.com`.
 
     ```bash
@@ -107,7 +111,3 @@ The following example deploys a [WAF managed ruleset](/waf/managed-rules/#manage
       ]
     }'
     ```
-
-    :::caution
-    Managed rulesets deployed at the account level will only apply to incoming traffic of zones on an Enterprise plan. The expression of your `execute` rule must end with `and cf.zone.plan eq "ENT"` or else the API operation will fail.
-    :::
