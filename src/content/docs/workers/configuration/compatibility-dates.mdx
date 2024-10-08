@@ -83,7 +83,7 @@ On September 23, 2024, `nodejs_compat` will use the improved Node.js compatibili
 compatability_date to 2024-09-23 or later.
 :::
 
-A [growing subset](/workers/runtime-apis/nodejs/) of Node.js APIs are available directly as [Runtime APIs](/workers/runtime-apis/nodejs), with no need to add polyfills to your own code. To enable these APIs in your Worker, add the `nodejs_compat` compatibility flag to your `wrangler.toml`:
+A [growing subset](/workers/runtime-apis/nodejs/) of Node.js APIs are available directly as [Runtime APIs](/workers/runtime-apis/nodejs), with no need to add polyfills to your own code. To enable these APIs in your Worker, add the `nodejs_compat` compatibility flag to your [Wrangler configuration](/workers/wrangler/configuration) file:
 
 ```toml title="wrangler.toml"
 compatibility_flags = [ "nodejs_compat" ]

@@ -113,8 +113,8 @@ Your Worker will be available at `https://python-and-d1.YOUR_SUBDOMAIN.workers.d
 
 If you receive an error deploying:
 
-- Make sure you have configured your `wrangler.toml` with the `database_id` and `database_name` of a valid D1 database.
-- Ensure `compatibility_flags = ["python_workers"]` is set in your `wrangler.toml`, which is required for Python.
+- Make sure you have configured your [Wrangler configuration](/workers/wrangler/configuration) file with the `database_id` and `database_name` of a valid D1 database.
+- Ensure `compatibility_flags = ["python_workers"]` is set in your [Wrangler configuration](/workers/wrangler/configuration) file, which is required for Python.
 - Review the [list of error codes](/workers/observability/errors/), and ensure your code does not throw an uncaught exception.
 
 ## Next steps

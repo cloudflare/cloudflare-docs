@@ -50,7 +50,7 @@ To deploy your application to a custom domain within the Cloudflare dashboard, g
 
 To deploy your application to a custom domain using Wrangler, open your project's `wrangler.toml`.
 
-To configure a route in your `wrangler.toml`, add the following to your environment:
+To configure a route in your [Wrangler configuration](/workers/wrangler/configuration) file, add the following to your environment:
 
 ```toml
 routes = [
@@ -58,9 +58,9 @@ routes = [
 ]
 ```
 
-If you have specified your zone ID in the environment of your `wrangler.toml`, you will not need to write it again in object form.
+If you have specified your zone ID in the environment of your [Wrangler configuration](/workers/wrangler/configuration) file, you will not need to write it again in object form.
 
-To configure a subdomain in your `wrangler.toml`, add the following to your environment:
+To configure a subdomain in your [Wrangler configuration](/workers/wrangler/configuration) file, add the following to your environment:
 
 ```toml
 routes = [

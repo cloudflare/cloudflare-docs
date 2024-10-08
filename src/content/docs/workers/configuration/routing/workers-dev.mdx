@@ -29,7 +29,7 @@ workers_dev = false
 
 When you redeploy your Worker with this change, the `workers.dev` route will be disabled. Disabling your `workers.dev` subdomain will also make [preview URLs](/workers/configuration/previews) inaccessible.
 
-If you do not specify `workers_dev = false` but add a [`routes` component](/workers/wrangler/configuration/#routes) to your `wrangler.toml`, the value of `workers_dev` will be inferred as `false` on the next deploy.
+If you do not specify `workers_dev = false` but add a [`routes` component](/workers/wrangler/configuration/#routes) to your [Wrangler configuration](/workers/wrangler/configuration) file, the value of `workers_dev` will be inferred as `false` on the next deploy.
 
 :::caution
 

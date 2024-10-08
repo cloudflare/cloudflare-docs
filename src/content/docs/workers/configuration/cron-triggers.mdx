@@ -43,7 +43,7 @@ Refer to the example below for a sample `wrangler.toml` Cron Triggers configurat
 crons = [ "*/3 * * * *", "0 15 1 * *", "59 23 LW * *" ]
 ```
 
-You also can set a different Cron Trigger for each [environment](/workers/wrangler/environments/) in your `wrangler.toml`. You need to put the `[triggers]` table under your chosen environment. For example:
+You also can set a different Cron Trigger for each [environment](/workers/wrangler/environments/) in your [Wrangler configuration](/workers/wrangler/configuration) file. You need to put the `[triggers]` table under your chosen environment. For example:
 
 ```toml
 [env.dev.triggers]

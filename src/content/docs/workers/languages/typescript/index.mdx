@@ -24,7 +24,7 @@ This means the correct TypeScript types for your Worker depend on:
 1. Your Worker's [Compatibility Date](/workers/configuration/compatibility-dates/).
 2. Your Worker's [Compatibility Flags](/workers/configuration/compatibility-dates/#compatibility-flags).
 
-For example, if you have `compatibility_flags = ["nodejs_als"]` in your `wrangler.toml`, then the runtime will allow you to use the [`AsyncLocalStorage`](https://nodejs.org/api/async_context.html#class-asynclocalstorage) class in your worker code, but you will not see this reflected in the type definitions in `@cloudflare/workers-types`.
+For example, if you have `compatibility_flags = ["nodejs_als"]` in your [Wrangler configuration](/workers/wrangler/configuration) file, then the runtime will allow you to use the [`AsyncLocalStorage`](https://nodejs.org/api/async_context.html#class-asynclocalstorage) class in your worker code, but you will not see this reflected in the type definitions in `@cloudflare/workers-types`.
 
 In order to solve this issue, and to ensure that your type definitions are always up-to-date with your compatibility settings, you can dynamically generate the runtime types (as of `wrangler 3.66.0`):
 

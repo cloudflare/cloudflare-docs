@@ -17,7 +17,7 @@ Pages Functions can be configured two ways, either via the [Cloudflare dashboard
 
 This page serves as a reference on how to configure your Pages project via `wrangler.toml`.
 
-If using `wrangler.toml`, you must treat your `wrangler.toml` as the [source of truth](/pages/functions/wrangler-configuration/#source-of-truth) for your Pages project configuration.
+If using `wrangler.toml`, you must treat your [Wrangler configuration](/workers/wrangler/configuration) file as the [source of truth](/pages/functions/wrangler-configuration/#source-of-truth) for your Pages project configuration.
 
 :::note[Configuration via `wrangler.toml` is in open beta.]
 
@@ -82,7 +82,7 @@ If you would like to use your existing [Wrangler configuration](/workers/wrangle
 1. Add the `pages_build_output_dir` key with the appropriate value of your [build output directory](/pages/configuration/build-configuration/#build-commands-and-directories) (for example, `pages_build_output_dir = "./dist"`.)
 2. Review your existing [Wrangler configuration](/workers/wrangler/configuration) carefully to make sure it aligns with your desired project configuration before deploying.
 
-If you add the `pages_build_output_dir` key to `wrangler.toml` and deploy your Pages project, Pages will use whatever configuration was defined for local use, which is very likely to be non-production. Do not deploy until you are confident that your `wrangler.toml` is ready for production use.
+If you add the `pages_build_output_dir` key to `wrangler.toml` and deploy your Pages project, Pages will use whatever configuration was defined for local use, which is very likely to be non-production. Do not deploy until you are confident that your [Wrangler configuration](/workers/wrangler/configuration) file is ready for production use.
 
 :::caution[Overwriting configuration]
 
@@ -122,7 +122,7 @@ Review your generated [Wrangler configuration](/workers/wrangler/configuration) 
 
 In the Cloudflare dashboard, you can set compatibility dates for preview deployments to "Latest". This will ensure your project is always using the latest compatibility date without the need to explicitly set it yourself.
 
-If you download a `wrangler.toml` from a project configured with "Latest" using the `wrangler pages download` command, your `wrangler.toml` will have the latest compatibility date available at the time you downloaded the configuration file. Wrangler does not support the "Latest" functionality like the dashboard. Compatibility dates must be explicitly set when using `wrangler.toml`.
+If you download a `wrangler.toml` from a project configured with "Latest" using the `wrangler pages download` command, your [Wrangler configuration](/workers/wrangler/configuration) file will have the latest compatibility date available at the time you downloaded the configuration file. Wrangler does not support the "Latest" functionality like the dashboard. Compatibility dates must be explicitly set when using `wrangler.toml`.
 
 Refer to [this guide](/workers/configuration/compatibility-dates/) for more information on what compatibility dates are and how they work.
 

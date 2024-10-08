@@ -98,7 +98,7 @@ Refer to the following list for common fields that are no longer required.
 
 #### New fields
 
-These are new fields that can be added to your `wrangler.toml`.
+These are new fields that can be added to your [Wrangler configuration](/workers/wrangler/configuration) file.
 
 - **`main`**: `string`, optional
 
@@ -204,7 +204,7 @@ Routes are specified in the [Wrangler configuration](/workers/wrangler/configura
 
 ### Other deprecated behavior
 
-- Cloudflare dashboard-defined routes will not be added alongside Wrangler-defined routes. Wrangler-defined routes are the `route` or `routes` key in your `wrangler.toml`. If both are defined, only routes defined in `wrangler.toml` will be valid. To manage routes via the Cloudflare dashboard only, remove any `route` and `routes` keys from and add `workers_dev = false` to your [Wrangler configuration](/workers/wrangler/configuration) file.
+- Cloudflare dashboard-defined routes will not be added alongside Wrangler-defined routes. Wrangler-defined routes are the `route` or `routes` key in your [Wrangler configuration](/workers/wrangler/configuration) file. If both are defined, only routes defined in `wrangler.toml` will be valid. To manage routes via the Cloudflare dashboard only, remove any `route` and `routes` keys from and add `workers_dev = false` to your [Wrangler configuration](/workers/wrangler/configuration) file.
 
 - Wrangler will no longer use `index.js` in the directory where `wrangler dev` is called as the entry point to a Worker. Use the `main` configuration field, or explicitly pass it as a command line argument, for example: `wrangler dev index.js`.
 

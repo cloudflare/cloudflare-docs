@@ -59,7 +59,7 @@ cd postgres-tutorial
 ### Enable Node.js compatibility
 
 When creating your Worker application, [enable Node.js APIs](/workers/runtime-apis/nodejs/#enable-nodejs-with-workers) by including the
-"nodejs_compat_v2" compatibility flag to your `wrangler.toml`. This will be needed to use the library to connect to your PostgreSQL database.
+"nodejs_compat_v2" compatibility flag to your [Wrangler configuration](/workers/wrangler/configuration) file. This will be needed to use the library to connect to your PostgreSQL database.
 
 ```toml title="wrangler.toml"
 compatibility_flags = ["nodejs_compat_v2"]

@@ -102,7 +102,7 @@ export default {
 } satisfies ExportedHandler<Env>;
 ```
 
-Replace `MY_QUEUE` with the name you have set for your binding from your `wrangler.toml`.
+Replace `MY_QUEUE` with the name you have set for your binding from your [Wrangler configuration](/workers/wrangler/configuration) file.
 
 Also add the queue to `Env` interface in `index.ts`.
 
@@ -168,7 +168,7 @@ export default {
 } satisfies ExportedHandler<Env>;
 ```
 
-Replace `MY_QUEUE` with the name you have set for your binding from your `wrangler.toml`.
+Replace `MY_QUEUE` with the name you have set for your binding from your [Wrangler configuration](/workers/wrangler/configuration) file.
 
 Every time messages are published to the queue, your consumer Worker's `queue` handler (`async queue`) is called and it is passed one or more messages.
 
