@@ -246,6 +246,10 @@ This rule can also be used to specify Cache Reserve eligibility for website reso
 Cloudflare will still enforce the plan-based [cacheable file limits](/cache/concepts/default-cache-behavior/#customization-options-and-limits) when using this configuration. 
 :::
 
+:::note
+
+If `minimum_file_size` is omitted and `eligible` is true, Cloudflare will use 0 bytes by default.
+:::
 
 <Details header="API information">
 
