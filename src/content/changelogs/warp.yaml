@@ -11,7 +11,7 @@ entries:
       A new GA release for the Linux WARP client is now available in the [package repository](https://pkg.cloudflareclient.com/). This release contains minor fixes and minor improvements.
 
       Notable updates:
-        - Added `list targets` to the `warp-cli` to enhance the user experience with the [Access for Infrastructure SSH](/cloudflare-one/connections/connect-networks/use-cases/ssh/ssh-infrastructure-access/) solution.
+        - Added `target list` to the `warp-cli` to enhance the user experience with the [Access for Infrastructure SSH](/cloudflare-one/connections/connect-networks/use-cases/ssh/ssh-infrastructure-access/) solution.
         - Added the ability to customize PCAP options in the `warp-cli`.
         - Added a list of installed applications in `warp-diag`.
         - Added a `tunnel reset mtu` subcommand to the `warp-cli`.
@@ -36,7 +36,7 @@ entries:
       A new GA release for the Windows WARP client is now available in the [App Center](https://install.appcenter.ms/orgs/cloudflare/apps/1.1.1.1-windows-1/distribution_groups/release). This release contains minor fixes and improvements.
 
       Notable updates:
-        - Added `list targets` to the `warp-cli` to enhance the user experience with the [Access for Infrastructure SSH](/cloudflare-one/connections/connect-networks/use-cases/ssh/ssh-infrastructure-access/) solution.
+        - Added `target list` to the `warp-cli` to enhance the user experience with the [Access for Infrastructure SSH](/cloudflare-one/connections/connect-networks/use-cases/ssh/ssh-infrastructure-access/) solution.
         - Added [pre-login](/cloudflare-one/connections/connect-devices/warp/deployment/mdm-deployment/windows-prelogin/) configuration details to the `warp-diag` output.
         - Added a `tunnel reset mtu` subcommand to the `warp-cli`.
         - Added a JSON output option to the `warp-cli`.
@@ -57,7 +57,7 @@ entries:
       All customers running macOS Ventura 13.0 and above (including Sequoia) are advised to upgrade to this release. This release fixes an incompatibility with the firewall found on macOS Sonoma 14.4 and above that could result in the firewall being disabled.
 
       Notable updates:
-        - Added `list targets` to the `warp-cli` to enhance the user experience with the [Access for Infrastructure SSH](/cloudflare-one/connections/connect-networks/use-cases/ssh/ssh-infrastructure-access/) solution.
+        - Added `target list` to the `warp-cli` to enhance the user experience with the [Access for Infrastructure SSH](/cloudflare-one/connections/connect-networks/use-cases/ssh/ssh-infrastructure-access/) solution.
         - Added a `tunnel reset mtu` subcommand to the `warp-cli`.
         - Added the ability for `warp-cli` to use the team name provided in the MDM file for initial registration.
         - Added a JSON output option to the `warp-cli`.
