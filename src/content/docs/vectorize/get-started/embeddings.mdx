@@ -107,9 +107,9 @@ This will create a new vector database, and output the [binding](/workers/runtim
 
 ## 3. Bind your Worker to your index
 
-You must create a binding for your Worker to connect to your Vectorize index. [Bindings](/workers/runtime-apis/bindings/) allow your Workers to access resources, like Vectorize or R2, from Cloudflare Workers. You create bindings by updating your `wrangler.toml` file.
+You must create a binding for your Worker to connect to your Vectorize index. [Bindings](/workers/runtime-apis/bindings/) allow your Workers to access resources, like Vectorize or R2, from Cloudflare Workers. You create bindings by updating your [Wrangler configuration](/workers/wrangler/configuration) file.
 
-To bind your index to your Worker, add the following to the end of your `wrangler.toml` file:
+To bind your index to your Worker, add the following to the end of your [Wrangler configuration](/workers/wrangler/configuration) file:
 
 ```toml
 [[vectorize]]
@@ -127,7 +127,7 @@ Specifically:
 
 Before you deploy your embedding example, ensure your Worker uses your model catalog, including the [text embedding model](/workers-ai/models/#text-embeddings) built-in.
 
-From within the `embeddings-tutorial` directory, open your `wrangler.toml` file in your editor and add the new `[[ai]]` binding to make Workers AI's models available in your Worker:
+From within the `embeddings-tutorial` directory, open your [Wrangler configuration](/workers/wrangler/configuration) file in your editor and add the new `[[ai]]` binding to make Workers AI's models available in your Worker:
 
 ```toml
 [[vectorize]]

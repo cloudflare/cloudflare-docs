@@ -267,7 +267,7 @@ You can interact with your D1 database bindings locally in one of two ways:
 
 To interact with a D1 database via the Wrangler CLI while [developing locally](/d1/build-with-d1/local-development/#develop-locally-with-pages), add `--d1 <BINDING_NAME>=<DATABASE_ID>` to the `wrangler pages dev` command.
 
-If your D1 database is bound to your Pages Function via the `NORTHWIND_DB` binding and the `database_id` in your `wrangler.toml` file is `xxxx-xxxx-xxxx-xxxx-xxxx`, access this database in local development by running:
+If your D1 database is bound to your Pages Function via the `NORTHWIND_DB` binding and the `database_id` in your [Wrangler configuration](/workers/wrangler/configuration) file is `xxxx-xxxx-xxxx-xxxx-xxxx`, access this database in local development by running:
 
 ```sh
 npx wrangler pages dev <OUTPUT_DIR> --d1 NORTHWIND_DB=xxxx-xxxx-xxxx-xxxx-xxxx

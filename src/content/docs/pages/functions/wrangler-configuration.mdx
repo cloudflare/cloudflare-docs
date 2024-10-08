@@ -9,7 +9,7 @@ import { Render, TabItem, Tabs, Type, MetaInfo } from "~/components";
 
 :::caution
 
-If your project contains an existing `wrangler.toml` file that you [previously used for local development](/pages/functions/local-development/), make sure you verify that it matches your project settings in the Cloudflare dashboard before opting-in to deploy your Pages project with `wrangler.toml`. Instead of writing your `wrangler.toml` file by hand, Cloudflare recommends using `npx wrangler pages download config` to download your current project settings into a `wrangler.toml` file.
+If your project contains an existing `wrangler.toml` file that you [previously used for local development](/pages/functions/local-development/), make sure you verify that it matches your project settings in the Cloudflare dashboard before opting-in to deploy your Pages project with `wrangler.toml`. Instead of writing your [Wrangler configuration](/workers/wrangler/configuration) file by hand, Cloudflare recommends using `npx wrangler pages download config` to download your current project settings into a `wrangler.toml` file.
 
 :::
 
@@ -90,7 +90,7 @@ Running [`wrangler pages download config`](/pages/functions/wrangler-configurati
 
 :::
 
-You can continue to use your `wrangler.toml` file for local development without migrating it for production use by not adding a `pages_build_output_dir` key. If you do not add a `pages_build_output_dir` key and run `wrangler pages deploy`, you will see a warning message telling you that fields are missing and that the file will continue to be used for local development only.
+You can continue to use your [Wrangler configuration](/workers/wrangler/configuration) file for local development without migrating it for production use by not adding a `pages_build_output_dir` key. If you do not add a `pages_build_output_dir` key and run `wrangler pages deploy`, you will see a warning message telling you that fields are missing and that the file will continue to be used for local development only.
 
 ### Projects without existing `wrangler.toml` file
 
@@ -505,6 +505,6 @@ The local development settings that you can configure are the same for Pages Fun
 
 ## Source of truth
 
-When used in your Pages Functions projects, your `wrangler.toml` file is the source of truth. You will be able to see, but not edit, the same fields when you log into the Cloudflare dashboard.
+When used in your Pages Functions projects, your [Wrangler configuration](/workers/wrangler/configuration) file is the source of truth. You will be able to see, but not edit, the same fields when you log into the Cloudflare dashboard.
 
 If you decide that you don't want to use `wrangler.toml` for configuration, you can safely delete it and create a new deployment. Configuration values from your last deployment will still apply and you will be able to edit them from the dashboard.

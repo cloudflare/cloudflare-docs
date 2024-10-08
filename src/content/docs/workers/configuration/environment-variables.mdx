@@ -3,10 +3,9 @@ pcx_content_type: configuration
 title: Environment variables
 head: []
 description: Environment variables are a type of binding that allow you to attach text strings or JSON values to your Worker
-
 ---
 
-import { Render, TabItem, Tabs } from "~/components"
+import { Render, TabItem, Tabs } from "~/components";
 
 ## Background
 
@@ -16,7 +15,7 @@ Text strings and JSON values are not encrypted and are useful for storing applic
 
 ## Add environment variables via Wrangler
 
-Text and JSON values are defined via the `[vars]` configuration in your `wrangler.toml` file. In the following example, `API_HOST` and `API_ACCOUNT_ID` are text values and `SERVICE_X_DATA` is a JSON value.
+Text and JSON values are defined via the `[vars]` configuration in your [Wrangler configuration](/workers/wrangler/configuration) file. In the following example, `API_HOST` and `API_ACCOUNT_ID` are text values and `SERVICE_X_DATA` is a JSON value.
 
 <Render file="envvar-example" />
 
@@ -26,23 +25,23 @@ Refer to the following example on how to access the `API_HOST` environment varia
 
 ```js
 export default {
-  async fetch(request, env, ctx) {
-    return new Response(`API host: ${env.API_HOST}`);
-  }
-}
+	async fetch(request, env, ctx) {
+		return new Response(`API host: ${env.API_HOST}`);
+	},
+};
 ```
 
 </TabItem> <TabItem label="TypeScript" icon="seti:typescript">
 
 ```ts
 export interface Env {
-  API_HOST: string;
+	API_HOST: string;
 }
 
 export default {
-  async fetch(request, env, ctx): Promise<Response> {
-    return new Response(`API host: ${env.API_HOST}`);
-  }
+	async fetch(request, env, ctx): Promise<Response> {
+		return new Response(`API host: ${env.API_HOST}`);
+	},
 } satisfies ExportedHandler<Env>;
 ```
 
@@ -91,9 +90,7 @@ To add environment variables via the dashboard:
 
 :::caution[Plaintext strings and secrets]
 
-
 Only select **Encrypt** if your environment variable is a [secret](/workers/configuration/secrets/).
-
 
 :::
 
@@ -101,4 +98,4 @@ Only select **Encrypt** if your environment variable is a [secret](/workers/conf
 
 ## Related resources
 
-* Learn how to access environment variables in [ES modules syntax](/workers/reference/migrate-to-module-workers/) for an optimized experience.
+- Learn how to access environment variables in [ES modules syntax](/workers/reference/migrate-to-module-workers/) for an optimized experience.

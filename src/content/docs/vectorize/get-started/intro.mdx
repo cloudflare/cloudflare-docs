@@ -116,7 +116,7 @@ The command above will create a new vector database, and output the [binding](/w
 
 You must create a binding for your Worker to connect to your Vectorize index. [Bindings](/workers/runtime-apis/bindings/) allow your Workers to access resources, like Vectorize or R2, from Cloudflare Workers. You create bindings by updating the worker's `wrangler.toml` file.
 
-To bind your index to your Worker, add the following to the end of your `wrangler.toml` file:
+To bind your index to your Worker, add the following to the end of your [Wrangler configuration](/workers/wrangler/configuration) file:
 
 ```toml
 [[vectorize]]

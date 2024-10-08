@@ -3,7 +3,6 @@ title: Troubleshooting
 pcx_content_type: concept
 sidebar:
   order: 5
-
 ---
 
 ## Debugging
@@ -18,7 +17,7 @@ The `wrangler dev` command opens a tunnel from your local development environmen
 
 ### No event handlers were registered. This script does nothing.
 
-In your `wrangler.toml` file, make sure the `dir` and `main` entries point to the correct file containing your Worker code, and that the file extension is `.mjs` instead of `.js` if using ES modules syntax.
+In your [Wrangler configuration](/workers/wrangler/configuration) file, make sure the `dir` and `main` entries point to the correct file containing your Worker code, and that the file extension is `.mjs` instead of `.js` if using ES modules syntax.
 
 ### Cannot apply `--delete-class` migration to class.
 

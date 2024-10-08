@@ -80,7 +80,7 @@ To create a KV store via Wrangler:
    id = "<GENERATED_NAMESPACE_ID>"
    ```
 
-2. In your `wrangler.toml` file, add the following with the values generated in the terminal:
+2. In your [Wrangler configuration](/workers/wrangler/configuration) file, add the following with the values generated in the terminal:
 
    ```bash {3} title="wrangler.toml"
    [[kv_namespaces]]
@@ -113,7 +113,7 @@ To create a KV store via Wrangler:
    preview_id = "<GENERATED_PREVIEW_NAMESPACE_ID>"
    ```
 
-4. In your `wrangler.toml` file, add the additional preview_id below kv_namespaces with the values generated in the terminal:
+4. In your [Wrangler configuration](/workers/wrangler/configuration) file, add the additional preview_id below kv_namespaces with the values generated in the terminal:
 
    ```bash {4} title="wrangler.toml"
    [[kv_namespaces]]
@@ -141,7 +141,7 @@ npx wrangler kv key put index.html --path index.html --binding assets --preview 
 npx wrangler kv key put index.html --path index.html --binding assets --preview
 ```
 
-This will create a KV pair with the filename as key and the file content as value, within the our production and preview namespaces specified by your binding in your `wrangler.toml` file.
+This will create a KV pair with the filename as key and the file content as value, within the our production and preview namespaces specified by your binding in your [Wrangler configuration](/workers/wrangler/configuration) file.
 
 ## 4. Serve static assets from KV from your Worker application
 

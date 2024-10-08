@@ -77,7 +77,7 @@ name = "staff-directory"
 compatibility_date = "2023-12-01"
 ```
 
-Next, add the database binding details to your `wrangler.toml` file. This involves specifying a binding name (in this case, `DB`), which will be used to reference the database within your application, along with the `database_name` and `database_id` provided when you created the database:
+Next, add the database binding details to your [Wrangler configuration](/workers/wrangler/configuration) file. This involves specifying a binding name (in this case, `DB`), which will be used to reference the database within your application, along with the `database_name` and `database_id` provided when you created the database:
 
 ```toml
 [[d1_databases]]
@@ -365,7 +365,7 @@ Use the `wrangler r2 bucket create` command to create a bucket:
 wrangler r2 bucket create employee-avatars
 ```
 
-Once the bucket is created, add the R2 bucket binding to your `wrangler.toml` file:
+Once the bucket is created, add the R2 bucket binding to your [Wrangler configuration](/workers/wrangler/configuration) file:
 
 ```toml
 [[r2_buckets]]
@@ -410,7 +410,7 @@ if (imageFile instanceof File) {
 
 With your application ready for deployment, you can use Wrangler to build and deploy your project to the Cloudflare Network. Ensure you are logged in to your Cloudflare account by running the `wrangler whoami` command. If you are not logged in, Wrangler will prompt you to login by creating an API key that you can use to make authenticated requests automatically from your computer.
 
-After successful login, confirm that your `wrangler.toml` file is configured similarly to the code block below:
+After successful login, confirm that your [Wrangler configuration](/workers/wrangler/configuration) file is configured similarly to the code block below:
 
 ```toml
 name = "staff-directory"

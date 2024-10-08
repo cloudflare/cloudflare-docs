@@ -1102,7 +1102,7 @@ Consider using [Cloudflare Pages](/pages/) for hosting static applications inste
 
 - `bucket` <Type text="string" /> <MetaInfo text="required" />
 
-  - The directory containing your static assets. It must be a path relative to your `wrangler.toml` file.
+  - The directory containing your static assets. It must be a path relative to your [Wrangler configuration](/workers/wrangler/configuration) file.
 
 - `include` <Type text="string[]" /> <MetaInfo text="optional" />
 
@@ -1144,12 +1144,12 @@ For example, if both `https_proxy` and `http_proxy` are set, Wrangler will only 
 
 ## Source of truth
 
-We recommend treating your `wrangler.toml` file as the source of truth for your Worker configuration, and to avoid making changes to your Worker via the Cloudflare dashboard if you are using Wrangler.
+We recommend treating your [Wrangler configuration](/workers/wrangler/configuration) file as the source of truth for your Worker configuration, and to avoid making changes to your Worker via the Cloudflare dashboard if you are using Wrangler.
 
-If you need to make changes to your Worker from the Cloudflare dashboard, the dashboard will generate a TOML snippet for you to copy into your `wrangler.toml` file, which will help ensure your `wrangler.toml` file is always up to date.
+If you need to make changes to your Worker from the Cloudflare dashboard, the dashboard will generate a TOML snippet for you to copy into your [Wrangler configuration](/workers/wrangler/configuration) file, which will help ensure your [Wrangler configuration](/workers/wrangler/configuration) file is always up to date.
 
 If you change your environment variables in the Cloudflare dashboard, Wrangler will override them the next time you deploy. If you want to disable this behavior, add `keep_vars = true` to your `wrangler.toml`.
 
-If you change your routes in the dashboard, Wrangler will override them in the next deploy with the routes you have set in your `wrangler.toml`. To manage routes via the Cloudflare dashboard only, remove any route and routes keys from your `wrangler.toml` file. Then add `workers_dev = false` to your `wrangler.toml` file. For more information, refer to [Deprecations](/workers/wrangler/deprecations/#other-deprecated-behavior).
+If you change your routes in the dashboard, Wrangler will override them in the next deploy with the routes you have set in your `wrangler.toml`. To manage routes via the Cloudflare dashboard only, remove any route and routes keys from your [Wrangler configuration](/workers/wrangler/configuration) file. Then add `workers_dev = false` to your [Wrangler configuration](/workers/wrangler/configuration) file. For more information, refer to [Deprecations](/workers/wrangler/deprecations/#other-deprecated-behavior).
 
 Wrangler will not delete your secrets (encrypted environment variables) unless you run `wrangler secret delete <key>`.

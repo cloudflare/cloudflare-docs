@@ -3,10 +3,9 @@ pcx_content_type: configuration
 title: Webpack
 sidebar:
   order: 5
-
 ---
 
-import { Render } from "~/components"
+import { Render } from "~/components";
 
 <Render file="wrangler-v1-deprecation" />
 
@@ -14,11 +13,9 @@ Wrangler allows you to develop modern ES6 applications with support for modules.
 
 :::note[Configuration and webpack version]
 
+Wrangler includes `webpack@4`. If you want to use `webpack@5`, or another bundler like esbuild or Rollup, you must set up [custom builds](/workers/wrangler/migration/v1-to-v2/wrangler-legacy/configuration/#build) in your [Wrangler configuration](/workers/wrangler/configuration) file.
 
-Wrangler includes `webpack@4`. If you want to use `webpack@5`, or another bundler like esbuild or Rollup, you must set up [custom builds](/workers/wrangler/migration/v1-to-v2/wrangler-legacy/configuration/#build) in your `wrangler.toml` file.
-
-You must set `type = "webpack"` in your `wrangler.toml` file to use Wrangler's webpack integration. If you are encountering warnings about specifying `webpack_config`, refer to [backwards compatibility](#backwards-compatibility).
-
+You must set `type = "webpack"` in your [Wrangler configuration](/workers/wrangler/configuration) file to use Wrangler's webpack integration. If you are encountering warnings about specifying `webpack_config`, refer to [backwards compatibility](#backwards-compatibility).
 
 :::
 
@@ -28,8 +25,8 @@ This is the default webpack configuration that Wrangler uses to build your Worke
 
 ```js
 module.exports = {
-  target: "webworker",
-  entry: "./index.js", // inferred from "main" in package.json
+	target: "webworker",
+	entry: "./index.js", // inferred from "main" in package.json
 };
 ```
 
@@ -39,15 +36,15 @@ The default configuration sets `target` to `webworker`. This is the correct valu
 
 ## Bring your own configuration
 
-You can tell Wrangler to use a custom webpack configuration file by setting `webpack_config` in your `wrangler.toml` file. Always set `target` to `webworker`.
+You can tell Wrangler to use a custom webpack configuration file by setting `webpack_config` in your [Wrangler configuration](/workers/wrangler/configuration) file. Always set `target` to `webworker`.
 
 ### Example
 
 ```js
 module.exports = {
-  target: 'webworker',
-  entry: './index.js',
-  mode: 'production',
+	target: "webworker",
+	entry: "./index.js",
+	mode: "production",
 };
 ```
 
@@ -81,18 +78,18 @@ webpack_config = "webpack.production.js"
 
 ```js
 module.exports = {
-  target: 'webworker',
-  devtool: 'cheap-module-source-map', // avoid "eval": Workers environment doesn’t allow it
-  entry: './index.js',
-  mode: 'development',
+	target: "webworker",
+	devtool: "cheap-module-source-map", // avoid "eval": Workers environment doesn’t allow it
+	entry: "./index.js",
+	mode: "development",
 };
 ```
 
 ```js
 module.exports = {
-  target: 'webworker',
-  entry: './index.js',
-  mode: 'production',
+	target: "webworker",
+	entry: "./index.js",
+	mode: "production",
 };
 ```
 
@@ -117,10 +114,10 @@ The corresponding `webpack.config.js` file should look like this:
 
 ```js
 module.exports = {
-  context: __dirname,
-  target: 'webworker',
-  entry: './index.js',
-  mode: 'production',
+	context: __dirname,
+	target: "webworker",
+	entry: "./index.js",
+	mode: "production",
 };
 ```
 
@@ -133,22 +130,22 @@ For example, you may want to replace the `URL` global class with the `url-polyfi
 ### Example with webpack plugin
 
 ```js null {1,7,8,9,10,11}
-const webpack = require('webpack');
+const webpack = require("webpack");
 
 module.exports = {
-  target: 'webworker',
-  entry: './index.js',
-  mode: 'production',
-  plugins: [
-    new webpack.ProvidePlugin({
-      URL: 'url-polyfill',
-    }),
-  ],
+	target: "webworker",
+	entry: "./index.js",
+	mode: "production",
+	plugins: [
+		new webpack.ProvidePlugin({
+			URL: "url-polyfill",
+		}),
+	],
 };
 ```
 
 ## Backwards compatibility
 
-If you are using `wrangler@1.6.0` or earlier, a `webpack.config.js` file at the root of your project is loaded automatically. This is not always obvious, which is why versions of Wrangler after `wrangler@1.6.0` require you to specify a `webpack_config` value in your `wrangler.toml` file.
+If you are using `wrangler@1.6.0` or earlier, a `webpack.config.js` file at the root of your project is loaded automatically. This is not always obvious, which is why versions of Wrangler after `wrangler@1.6.0` require you to specify a `webpack_config` value in your [Wrangler configuration](/workers/wrangler/configuration) file.
 
-When [upgrading from `wrangler@1.6.0`](/workers/wrangler/migration/v1-to-v2/wrangler-legacy/install-update/), you may encounter webpack configuration warnings. To resolve this, add `webpack_config = "webpack.config.js"` to your `wrangler.toml` file.
+When [upgrading from `wrangler@1.6.0`](/workers/wrangler/migration/v1-to-v2/wrangler-legacy/install-update/), you may encounter webpack configuration warnings. To resolve this, add `webpack_config = "webpack.config.js"` to your [Wrangler configuration](/workers/wrangler/configuration) file.

@@ -3,7 +3,6 @@ pcx_content_type: how-to
 title: 1. Migrate webpack projects
 sidebar:
   order: 2
-
 ---
 
 This guide describes the steps to migrate a webpack project from Wrangler v1 to Wrangler v2. After completing this guide, [update your Wrangler version](/workers/wrangler/migration/v1-to-v2/update-v1-to-v2/).
@@ -28,7 +27,7 @@ Wrangler v2 supports the `[build]` key, so your Workers will continue to build u
 
 ### I use `type = webpack`, but do not provide my own configuration and let Wrangler take care of it.
 
-Wrangler will continue to take care of it. Remove `type = webpack` from your `wrangler.toml` file.
+Wrangler will continue to take care of it. Remove `type = webpack` from your [Wrangler configuration](/workers/wrangler/configuration) file.
 
 ### I use `type = webpack` and `webpack_config = <path/to/webpack.config.js>` to handle JSX, TypeScript, WebAssembly, HTML files, and other non-standard filetypes.
 
@@ -36,7 +35,7 @@ As of Wrangler v2, Wrangler has built-in support for this use case. Refer to [Bu
 
 The Workers runtime handles JSX and TypeScript. You can `import` any modules you need into your code and the Workers runtime includes them in the built Worker automatically.
 
-You should remove the `type` and `webpack_config` keys from your `wrangler.toml` file.
+You should remove the `type` and `webpack_config` keys from your [Wrangler configuration](/workers/wrangler/configuration) file.
 
 ### I use `type = webpack` and `webpack_config = <path/to/webpack.config.js>` to perform code-transforms and/or other code-modifying functionality.
 
@@ -58,15 +57,15 @@ You should see this reflected in your `package.json` file:
 
 ```json
 {
-  "name": "my-worker",
-  "version": "x.y.z",
-  // ...
-  "devDependencies": {
-    // ...
-    "wranglerjs-compat-webpack-plugin": "^x.y.z",
-    "webpack": "^4.46.0",
-    "webpack-cli": "^x.y.z"
-  }
+	"name": "my-worker",
+	"version": "x.y.z",
+	// ...
+	"devDependencies": {
+		// ...
+		"wranglerjs-compat-webpack-plugin": "^x.y.z",
+		"webpack": "^4.46.0",
+		"webpack-cli": "^x.y.z"
+	}
 }
 ```
 
@@ -76,12 +75,12 @@ Modify your `webpack.config.js` file to include the plugin you just installed.
 
 ```js
 const {
-  WranglerJsCompatWebpackPlugin,
+	WranglerJsCompatWebpackPlugin,
 } = require("wranglerjs-compat-webpack-plugin");
 
 module.exports = {
-  // ...
-  plugins: [new WranglerJsCompatWebpackPlugin()],
+	// ...
+	plugins: [new WranglerJsCompatWebpackPlugin()],
 };
 ```
 
@@ -89,19 +88,19 @@ module.exports = {
 
 ```json
 {
-  "name": "my-worker",
-  "version": "2.0.0",
-  // ...
-  "scripts": {
-    "build": "webpack" // <-- Add this line!
-    // ...
-  }
+	"name": "my-worker",
+	"version": "2.0.0",
+	// ...
+	"scripts": {
+		"build": "webpack" // <-- Add this line!
+		// ...
+	}
 }
 ```
 
 4. Remove unsupported entries from your `wrangler.toml`.
 
-Remove the `type` and `webpack_config` keys from your `wrangler.toml` file, as they are not supported anymore.
+Remove the `type` and `webpack_config` keys from your [Wrangler configuration](/workers/wrangler/configuration) file, as they are not supported anymore.
 
 ```toml
 # Remove these!

@@ -55,7 +55,7 @@ npx wrangler d1 info some-existing-db
 
 ### 1. Configure bindings
 
-In your `wrangler.toml` file, create a new `[[d1_databases]]` configuration block and set `database_name` and `database_id` to the name and id (respectively) of the D1 database you want to query:
+In your [Wrangler configuration](/workers/wrangler/configuration) file, create a new `[[d1_databases]]` configuration block and set `database_name` and `database_id` to the name and id (respectively) of the D1 database you want to query:
 
 ```toml
 name = "python-and-d1"
@@ -73,7 +73,7 @@ The value of `binding` is how you will refer to your database from within your W
 
 ### 2. Create your Python Worker
 
-To create a Python Worker, create an empty file at `src/entry.py`, matching the value of `main` in your `wrangler.toml` file with the contents below:
+To create a Python Worker, create an empty file at `src/entry.py`, matching the value of `main` in your [Wrangler configuration](/workers/wrangler/configuration) file with the contents below:
 
 ```python
 from js import Response
@@ -88,7 +88,7 @@ async def on_fetch(request, env):
 
 ```
 
-The value of `binding` in your `wrangler.toml` file exactly must match the name of the variable in your Python code. This example refers to the database via a `DB` binding, and query this binding via `await env.DB.prepare(...)`.
+The value of `binding` in your [Wrangler configuration](/workers/wrangler/configuration) file exactly must match the name of the variable in your Python code. This example refers to the database via a `DB` binding, and query this binding via `await env.DB.prepare(...)`.
 
 You can then deploy your Python Worker directly:
 

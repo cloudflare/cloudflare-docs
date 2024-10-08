@@ -234,9 +234,9 @@ async function createAirtableRecord(env, body) {
 // export default ...
 ```
 
-To make an authenticated request to Airtable, you need to provide four constants that represent data about your Airtable account, base, and table name. You have already set `AIRTABLE_ACCESS_TOKEN` using `wrangler secret`, since it is a value that should be encrypted. The **Airtable base ID** and **table name**, and `FORM_URL` are values that can be publicly shared in places like GitHub. Use Wrangler's [`vars`](/workers/wrangler/migration/v1-to-v2/wrangler-legacy/configuration/#vars) feature to pass public environment variables from your `wrangler.toml` file.
+To make an authenticated request to Airtable, you need to provide four constants that represent data about your Airtable account, base, and table name. You have already set `AIRTABLE_ACCESS_TOKEN` using `wrangler secret`, since it is a value that should be encrypted. The **Airtable base ID** and **table name**, and `FORM_URL` are values that can be publicly shared in places like GitHub. Use Wrangler's [`vars`](/workers/wrangler/migration/v1-to-v2/wrangler-legacy/configuration/#vars) feature to pass public environment variables from your [Wrangler configuration](/workers/wrangler/configuration) file.
 
-Add a `vars` table at the end of your `wrangler.toml` file:
+Add a `vars` table at the end of your [Wrangler configuration](/workers/wrangler/configuration) file:
 
 ```toml null {7}
 name = "workers-airtable-form"

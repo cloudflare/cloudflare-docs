@@ -138,11 +138,9 @@ wrangler docs [<COMMAND>]
 
 ## `init`
 
-:::note 
+:::note
 
-
-The `init` command will be removed in a future version. Please use `npm create cloudflare\@2.5.0` instead. 
-
+The `init` command will be removed in a future version. Please use `npm create cloudflare\@2.5.0` instead.
 
 :::
 
@@ -189,7 +187,7 @@ Interact with Cloudflare's D1 service.
 
 ### `create`
 
-Creates a new D1 database, and provides the binding and UUID that you will put in your `wrangler.toml` file.
+Creates a new D1 database, and provides the binding and UUID that you will put in your [Wrangler configuration](/workers/wrangler/configuration) file.
 
 ```txt
 wrangler d1 create <DATABASE_NAME> [OPTIONS]
@@ -487,7 +485,7 @@ Interact with a [Vectorize](/vectorize/) vector database.
 
 ### `create`
 
-Creates a new vector index, and provides the binding and name that you will put in your `wrangler.toml` file.
+Creates a new vector index, and provides the binding and name that you will put in your [Wrangler configuration](/workers/wrangler/configuration) file.
 
 ```sh
 npx wrangler vectorize create <INDEX_NAME> [--dimensions=<NUM_DIMENSIONS>] [--metric=<DISTANCE_METRIC>] [--description=<DESCRIPTION>]
@@ -686,7 +684,7 @@ wrangler dev [<SCRIPT>] [OPTIONS]
 
 :::note
 
-None of the options for this command are required. Many of these options can be set in your `wrangler.toml` file. Refer to the [`wrangler.toml` configuration](/workers/wrangler/configuration) documentation for more information.
+None of the options for this command are required. Many of these options can be set in your [Wrangler configuration](/workers/wrangler/configuration) file. Refer to the [`wrangler.toml` configuration](/workers/wrangler/configuration) documentation for more information.
 
 :::
 
@@ -785,7 +783,7 @@ wrangler deploy [<SCRIPT>] [OPTIONS]
 
 :::note
 
-None of the options for this command are required. Also, many can be set in your `wrangler.toml` file. Refer to the [`wrangler.toml` configuration](/workers/wrangler/configuration/) documentation for more information.
+None of the options for this command are required. Also, many can be set in your [Wrangler configuration](/workers/wrangler/configuration) file. Refer to the [`wrangler.toml` configuration](/workers/wrangler/configuration/) documentation for more information.
 
 :::
 
