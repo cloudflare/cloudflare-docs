@@ -1,0 +1,114 @@
+---
+title: Durable Object Stub
+pcx_content_type: concept
+sidebar:
+  order: 3
+---
+
+import { Tabs, TabItem } from "~/components";
+
+## Description
+
+The `DurableObjectStub` interface is used to obtain a reference a Durable Object instance and invoke methods on that instance. The type of `DurableObjectStub` is generic to allow for RPC methods to be invoked on the stub.
+
+<Tabs> <TabItem label="JavaScript" icon="seti:javascript">
+
+```js
+import { DurableObject } from "cloudflare:workers";
+
+// Durable Object
+export class MyDurableObject extends DurableObject {
+	constructor(ctx, env) {
+		super(ctx, env);
+	}
+
+	sayHello() {
+		return "Hello, World!";
+	}
+}
+
+// Worker
+export default {
+	async fetch(request, env) {
+		// Every unique ID refers to an individual instance of the Durable Object class
+		const id = env.MY_DURABLE_OBJECT.idFromName("foo");
+
+		// A stub is a client used to invoke methods on the Durable Object instance
+		const stub = env.MY_DURABLE_OBJECT.get(id);
+
+		// Methods on the Durable Object are invoked via the stub
+		const rpcResponse = stub.sayHello();
+
+		return new Response(rpcResponse);
+	},
+};
+```
+
+</TabItem> <TabItem label="TypeScript" icon="seti:typescript">
+
+```ts
+import { DurableObject } from "cloudflare:workers";
+
+export interface Env {
+	MY_DURABLE_OBJECT: DurableObjectNamespace<MyDurableObject>;
+}
+
+// Durable Object
+export class MyDurableObject extends DurableObject {
+	constructor(ctx: DurableObjectState, env: Env) {
+		super(ctx, env);
+	}
+
+	sayHello(): String {
+		return "Hello, World!";
+	}
+}
+
+// Worker
+export default {
+	async fetch(request, env) {
+		// Every unique ID refers to an individual instance of the Durable Object class
+		const id = env.MY_DURABLE_OBJECT.idFromName("foo");
+
+		// A stub is a client used to invoke methods on the Durable Object instance
+		const stub = env.MY_DURABLE_OBJECT.get(id);
+
+		// Methods on the Durable Object are invoked via the stub
+		const rpcResponse = stub.sayHello();
+
+		return new Response(rpcResponse);
+	},
+} satisfies ExportedHandler<Env>;
+```
+
+</TabItem> </Tabs>
+
+## Properties
+
+### `id`
+
+#### Description
+
+`id` is a property of the `DurableObjectStub` corresponding to the [`DurableObjectId`](../id) used to create the stub.
+
+```js
+const id = env.MY_DURABLE_OBJECT.newUniqueId();
+const stub = env.MY_DURABLE_OBJECT.get(id);
+console.assert(id.equals(stub.id), "This should always be true");
+```
+
+### `name`
+
+#### Description
+
+`name` is an optional property of a `DurableObjectStub`, which returns the name that was used to create the [`DurableObjectId`](../id) via [`DurableObjectNamespace::idFromName`](../namespace/#idfromname) which was then used to create the `DurableObjectStub`. This value is undefined if the [`DurableObjectId`](../id) used to create the `DurableObjectStub` was constructed using [`DurableObjectNamespace::newUniqueId`](../namespace/#newuniqueid).
+
+```js
+const id = env.MY_DURABLE_OBJECT.idFromName("foo");
+const stub = env.MY_DURABLE_OBJECT.get(id);
+console.assert(stub.name === "foo", "This should always be true");
+```
+
+## Related resources
+
+- [Durable Objects: Easy, Fast, Correct – Choose Three](https://blog.cloudflare.com/durable-objects-easy-fast-correct-choose-three/).

@@ -1,0 +1,178 @@
+---
+title: Durable Object Namespace
+pcx_content_type: concept
+sidebar:
+  order: 1
+---
+
+import { Tabs, TabItem } from "~/components";
+
+## Description
+
+The `DurableObjectNamespace` interface is used to obtain a reference to a new or existing Durable Object instance. The interface is accessible from the fetch handler on a Cloudflare Worker via the `env` parameter, which is the standard interface for reference bindings declared in `wrangler.toml`.
+
+There are several functions of this interface that can be used to create an ID for a Durable Object instance. Note that creating an ID for a Durable Object instance does not invoke the constructor of the Durable Object. This is done lazily when calling [`DurableObjectNamespace::get`](../namespace/#get) to create a [`DurableObjectStub`](../stub) from a `DurableObjectId`. This ensures that objects are not constructed unless their methods can be directly invoked.
+
+<Tabs> <TabItem label="JavaScript" icon="seti:javascript">
+
+```js
+import { DurableObject } from "cloudflare:workers";
+
+// Durable Object
+export class MyDurableObject extends DurableObject {
+  ...
+}
+
+// Worker
+export default {
+  async fetch(request, env) {
+    // Every unique ID refers to an individual instance of the Durable Object class
+    const id = env.MY_DURABLE_OBJECT.idFromName("foo");
+
+    // A stub is a client Object used to invoke methods on the Durable Object instance.
+    const stub = env.MY_DURABLE_OBJECT.get(id);
+    ...
+  }
+}
+```
+
+</TabItem> <TabItem label="TypeScript" icon="seti:typescript">
+
+```ts
+import { DurableObject } from "cloudflare:workers";
+
+export interface Env {
+  MY_DURABLE_OBJECT: DurableObjectNamespace<MyDurableObject>;
+}
+
+// Durable Object
+export class MyDurableObject extends DurableObject {
+  ...
+}
+
+// Worker
+export default {
+  async fetch(request, env) {
+    // Every unique ID refers to an individual instance of the Durable Object class
+    const id = env.MY_DURABLE_OBJECT.idFromName("foo");
+
+    // A stub is a client used to invoke methods on the Durable Object instance.
+    const stub = env.MY_DURABLE_OBJECT.get(id);
+    ...
+  }
+} satisfies ExportedHandler<Env>;
+```
+
+</TabItem> </Tabs>
+
+## Methods
+
+### `idFromName`
+
+#### Description
+
+`idFromName` creates a [`DurableObjectId`](../id) which refers to an individual instance of the Durable Object class from a particular name.
+
+```js
+const fooId = env.MY_DURABLE_OBJECT.idFromName("foo");
+const barId = env.MY_DURABLE_OBJECT.idFromName("bar");
+```
+
+#### Parameters
+
+The string to be used to generate a [`DurableObjectId`](../id) corresponding to the name of a Durable Object instance.
+
+#### Return value
+
+A [`DurableObjectId`](../id) refering to an instance of a Durable Object class.
+
+### `newUniqueId`
+
+#### Description
+
+creates a `DurableObjectId` which refers to an individual instance of the
+Durable Object class.
+
+```js
+const id = env.MY_DURABLE_OBJECT.newUniqueId();
+const euId = env.MY_DURABLE_OBJECT.newUniqueId({ jurisdiction: "eu" });
+```
+
+:::note[`newUniqueId`]
+
+IDs created by `newUniqueId` will result in lower latencies when getting a [`DurableObjectStub`](../stub) relative to [`idFromName`](../namespace/#idFromName).
+
+:::
+
+#### Parameters
+
+An optional object with the key `jurisdiction` and value of a [jurisdiction](../../reference/data-location/#restrict-durable-objects-to-a-jurisdiction) string.
+
+#### Return value
+
+A [`DurableObjectId`](../id) refering to an instance of the Durable Object class.
+
+### `idFromString`
+
+#### Description
+
+`idFromString` creates a [`DurableObjectId`](../id) based on a previously generated ID which has been converted to a string. This method ensures the validity of the ID, e.g. that it is 64 hex digits.
+
+```js
+// Create a new unique ID
+const id = env.MY_DURABLE_OBJECT.newUniqueId();
+// Save the unique ID elsewhere, e.g. a session cookie via id.toString()
+...
+// Recreate the ID from the string
+const id = env.MY_DURABLE_OBJECT.idFromString(session_id);
+```
+
+#### Parameters
+
+The string corresponding to a [`DurableObjectId`](../id) previously generated either by `newUniqueId` or `idFromName`.
+
+#### Return value
+
+A [`DurableObjectId`](../id) refering to an instance of a Durable Object class.
+
+### `get`
+
+#### Description
+
+`get` obtains a [`DurableObjectStub`](../stub) from a [`DurableObjectId`](../id) which can be used to invoke methods on a Durable Object instance.
+
+```js
+const id = env.MY_DURABLE_OBJECT.newUniqueId();
+const stub = env.MY_DURABLE_OBJECT.get(id);
+```
+
+#### Parameters
+
+A required [`DurableObjectId`](../id) and an optional object with the key `locationHint` and value of a [locationHint](../../reference/data-location/#provide-a-location-hint) string.
+
+#### Return value
+
+A [`DurableObjectStub`](../stub) refering to an instance of a Durable Object class.
+
+### `jurisdiction`
+
+#### Description
+
+`jurisdiction` creates a subnamespace from a namespace where all Durable Object instance IDs and references created from that subnamespace will be restricted to the specified [jurisdiction](../../reference/data-location/#restrict-durable-objects-to-a-jurisdiction).
+
+```js
+const subnamespace = env.MY_DURABLE_OBJECT.jurisdiction("foo");
+const euId = subnamespace.idFromName("foo");
+```
+
+#### Parameters
+
+A required [jurisdiction](../../reference/data-location/#restrict-durable-objects-to-a-jurisdiction) string.
+
+#### Return value
+
+A `DurableObjectNamespace` scoped to a particular geographic jurisdiction.
+
+## Related resources
+
+- [Durable Objects: Easy, Fast, Correct – Choose Three](https://blog.cloudflare.com/durable-objects-easy-fast-correct-choose-three/).
