@@ -5,9 +5,9 @@ content_type: 📝 Tutorial
 pcx_content_type: tutorial
 title: Tutorial title. Second-person imperative verb phrase that reflects user goal or job-to-be-done. For example, 'Create a Worker' or 'Build a Pages application'.
 products:
- - Workers
+  - Workers
 languages:
- - TypeScript
+  - TypeScript
 ---
 
 import { Render, PackageManagers } from "~/components";
@@ -34,13 +34,9 @@ In this tutorial, you will learn how to run serverless script on the web by crea
 
 First, use the `c3` CLI to create a new Cloudflare Workers project.
 
-<PackageManagers
-	type="create"
-	pkg="cloudflare@latest"
-	args={"<PROJECT_NAME>"}
-/>
+<PackageManagers type="create" pkg="cloudflare@latest" args={"<WORKER_NAME>"} />
 
-Replace `<PROJECT_NAME>` with your desired project name.
+Replace `<WORKER_NAME>` with your desired Worker name.
 
 ## 2. Tets run your Worker on a local server
 
@@ -49,8 +45,9 @@ Replace `<PROJECT_NAME>` with your desired project name.
 Next, change into the newly created Worker's directory.
 
 ```sh title="Change directory into worker"
-cd <PROJECT_NAME>
+cd <WORKER_NAME>
 ```
+
 Now we can run our Worker locally to test that it works.
 
 ```sh title="Run Worker on a local development server"
@@ -81,7 +78,7 @@ export default {
 
 ```toml title="wrangler.toml"
 #:schema node_modules/wrangler/config-schema.json
-name = "<PROJECT_NAME>"
+name = "<WORKER_NAME>"
 main = "src/index.ts"
 compatibility_date = "YYYY-MM-DD"
 compatibility_flags = ["nodejs_compat"]
@@ -93,11 +90,11 @@ compatibility_flags = ["nodejs_compat"]
 (Aside examples. For more details read our [style guide documentation on Notes/tips/warnings](/style-guide/documentation-content-strategy/component-attributes/notes-tips-warnings/#recommendations).)
 
 :::note[Aside example]
-An aside is a colored info box or aside with content (text, images, lists, code blocks) that adds relevant notes that do not fit the main text 
+An aside is a colored info box or aside with content (text, images, lists, code blocks) that adds relevant notes that do not fit the main text
 :::
 
 :::caution[Aside example]
-A caution warns users of specific behavior that can break functionality or impact security. 
+A caution warns users of specific behavior that can break functionality or impact security.
 :::
 
 (At the end of the tutorial's steps, summarize what has been successfully achieved by the reader through completing this tutorial)
