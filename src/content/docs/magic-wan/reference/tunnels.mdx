@@ -5,9 +5,18 @@ head: []
 description: Magic WAN uses Generic Routing Encapsulation (GRE) and IPsec
   tunnels to transmit packets from Cloudflare’s global network to your origin
   network.
-
 ---
 
-import { Render } from "~/components"
+import { Render } from "~/components";
 
-<Render file="tunnels-reference/tunnels-encapsulation-opening" product="magic-transit" params={{ one: "Magic WAN", two: "/magic-wan/get-started/#set-maximum-segment-size", three: "/magic-wan/reference/anti-replay-protection/", four: "/magic-wan/configuration/manually/how-to/configure-tunnels/" }} />
+<Render
+	file="tunnels-reference/tunnels-encapsulation-opening"
+	product="magic-transit"
+	params={{
+		productName: "Magic WAN",
+		mssURL: "/magic-wan/get-started/#set-maximum-segment-size",
+		productURL: "/magic-wan/reference/anti-replay-protection/",
+		tunnelEndpoints:
+			"/magic-wan/configuration/manually/how-to/configure-tunnels/",
+	}}
+/>

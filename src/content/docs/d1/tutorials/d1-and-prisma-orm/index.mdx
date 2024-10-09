@@ -166,7 +166,7 @@ model User {
 Now, run the following command in your terminal to generate the SQL statement that creates a `User` table equivalent to the `User` model above:
 
 ```sh
-npx prisma migrate diff --from-empty --to-schema-datamodel ./prisma/schema.prisma --script > migrations/0001_create_user_table.sql
+npx prisma migrate diff --from-empty --to-schema-datamodel ./prisma/schema.prisma --script --output migrations/0001_create_user_table.sql
 ```
 
 This stores a SQL statement to create a new `User` table in your migration file from before, here is what it looks like:

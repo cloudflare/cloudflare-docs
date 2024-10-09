@@ -4,6 +4,7 @@ import Default from "@astrojs/starlight/components/PageSidebar.astro";
 import type { CollectionEntry } from "astro:content";
 import { entryToString } from "~/util/container";
 import { parse } from "node-html-parser";
+import he from "he";
 
 let rangeBetween = (x: number, y: number) =>
 	Array.from({ length: y - x + 1 }, (_, i) => i + x);
@@ -46,11 +47,15 @@ if (Astro.props.toc) {
 			];
 
 			for (const header of headers) {
+				if (header.id === "footnote-label") continue;
+
 				const depth = headerDepth(header);
+
+				const title = he.decode(header.innerText);
 
 				if (depth === 2) {
 					Astro.props.toc.items.push({
-						text: header.innerText,
+						text: title,
 						slug: header.id,
 						depth,
 						children: [],
@@ -60,7 +65,7 @@ if (Astro.props.toc) {
 				}
 
 				Astro.props.toc.items.at(-1)?.children.push({
-					text: header.innerText,
+					text: title,
 					slug: header.id,
 					depth,
 					children: [],

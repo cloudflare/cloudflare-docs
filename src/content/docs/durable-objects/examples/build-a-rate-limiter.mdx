@@ -205,6 +205,8 @@ While the token bucket algorithm is popular for implementing rate limiting and u
 <TabItem label="JavaScript" icon="seti:javascript">
 
 ```js
+import { DurableObject } from "cloudflare:workers";
+
 // Durable Object
 export class RateLimiter extends DurableObject {
   static milliseconds_per_request = 1;
@@ -232,6 +234,8 @@ export class RateLimiter extends DurableObject {
 <TabItem label="TypeScript" icon="seti:typescript">
 
 ```ts title="index.ts"
+import { DurableObject } from "cloudflare:workers";
+
 // Durable Object
 export class RateLimiter extends DurableObject {
   static milliseconds_per_request = 1;
