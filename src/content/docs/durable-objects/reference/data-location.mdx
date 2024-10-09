@@ -13,11 +13,11 @@ Workers may still access Durable Objects constrained to a jurisdiction from anyw
 
 :::note[Logging]
 
-A [`DurableObjectId`](../../api/id) will be logged outside of the specified jurisdiction for billing and debugging purposes.
+A [`DurableObjectId`](/durable-objects/api/id) will be logged outside of the specified jurisdiction for billing and debugging purposes.
 
 :::
 
-Durable Object instances can be restricted to a specific jurisdiction either by creating a [`DurableObjectNamespace`](../../api/namespace/) restricted to a jurisdiction, or by creating an individual [`DurableObjectId`](../../api/id) restricted to a jurisdiction:
+Durable Object instances can be restricted to a specific jurisdiction either by creating a [`DurableObjectNamespace`](/durable-objects/api/namespace/) restricted to a jurisdiction, or by creating an individual [`DurableObjectId`](/durable-objects/api/id) restricted to a jurisdiction:
 
 ```js
 const euSubnamespace = env.MY_DURABLE_OBJECT.jurisdiction("eu");
@@ -26,7 +26,7 @@ const euId = euSubnamespace.newUniqueId();
 const euId = env.MY_DURABLE_OBJECT.newUniqueId({ jurisdiction: "eu" });
 ```
 
-Methods on a [`DurableObjectNamespace`](../../api/namespace/) that take a [`DurableObjectId`](../../api/id) as a parameter will throw an exception if the parameter is associated with a different jurisdiction. To achieve this, a [`DurableObjectId`](../../api/id) encodes its jurisdiction. As a consequence, it is possible to have the same name represent different IDs in different jurisdictions.
+Methods on a [`DurableObjectNamespace`](/durable-objects/api/namespace/) that take a [`DurableObjectId`](/durable-objects/api/id) as a parameter will throw an exception if the parameter is associated with a different jurisdiction. To achieve this, a [`DurableObjectId`](/durable-objects/api/id) encodes its jurisdiction. As a consequence, it is possible to have the same name represent different IDs in different jurisdictions.
 
 ```js
 const euId1 = env.MY_DURABLE_OBJECT.idFromName("my-name");
@@ -34,7 +34,7 @@ const euId2 = env.MY_DURABLE_OBJECT.jurisdiction("eu").idFromName("my-name");
 console.assert(!euId1.equal(euId2), "This should always be true");
 ```
 
-Methods on a [`DurableObjectNamespace`](../../api/namespace/) that take a [`DurableObjectId`](../../api/id) as a parameter will throw an exception if the parameter is associated with a different jurisdiction. However, these methods will not throw an exception if the [`DurableObjectNamespace`](../../api/namespace/) is not associated with a jurisdiction. The common case is that any valid [`DurableObjectId`](../../api/id) can be used in the top-level namespace's methods.
+Methods on a [`DurableObjectNamespace`](/durable-objects/api/namespace/) that take a [`DurableObjectId`](/durable-objects/api/id) as a parameter will throw an exception if the parameter is associated with a different jurisdiction. However, these methods will not throw an exception if the [`DurableObjectNamespace`](/durable-objects/api/namespace/) is not associated with a jurisdiction. The common case is that any valid [`DurableObjectId`](/durable-objects/api/id) can be used in the top-level namespace's methods.
 
 ```js
 const euSubnamespace = env.MY_DURABLE_OBJECT.jurisdiction("eu");

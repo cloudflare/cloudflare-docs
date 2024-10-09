@@ -105,7 +105,7 @@ IDs created by `newUniqueId` will result in lower latencies when getting a [`Dur
 
 #### Parameters
 
-An optional object with the key `jurisdiction` and value of a [jurisdiction](durable-objects/reference/data-location/#restrict-durable-objects-to-a-jurisdiction) string.
+An optional object with the key `jurisdiction` and value of a [jurisdiction](/durable-objects/reference/data-location/#restrict-durable-objects-to-a-jurisdiction) string.
 
 #### Return value
 
@@ -147,7 +147,7 @@ const stub = env.MY_DURABLE_OBJECT.get(id);
 
 #### Parameters
 
-A required [`DurableObjectId`](/durable-objects/api/id) and an optional object with the key `locationHint` and value of a [locationHint](durable-objects/reference/data-location/#provide-a-location-hint) string.
+A required [`DurableObjectId`](/durable-objects/api/id) and an optional object with the key `locationHint` and value of a [locationHint](/durable-objects/reference/data-location/#provide-a-location-hint) string.
 
 #### Return value
 
@@ -157,7 +157,7 @@ A [`DurableObjectStub`](/durable-objects/api/stub) referring to an instance of a
 
 #### Description
 
-`jurisdiction` creates a subnamespace from a namespace where all Durable Object instance IDs and references created from that subnamespace will be restricted to the specified [jurisdiction](durable-objects/reference/data-location/#restrict-durable-objects-to-a-jurisdiction).
+`jurisdiction` creates a subnamespace from a namespace where all Durable Object instance IDs and references created from that subnamespace will be restricted to the specified [jurisdiction](/durable-objects/reference/data-location/#restrict-durable-objects-to-a-jurisdiction).
 
 ```js
 const subnamespace = env.MY_DURABLE_OBJECT.jurisdiction("foo");
@@ -166,7 +166,7 @@ const euId = subnamespace.idFromName("foo");
 
 #### Parameters
 
-A required [jurisdiction](durable-objects/reference/data-location/#restrict-durable-objects-to-a-jurisdiction) string.
+A required [jurisdiction](/durable-objects/reference/data-location/#restrict-durable-objects-to-a-jurisdiction) string.
 
 #### Return value
 
