@@ -18,7 +18,14 @@ You must deploy custom rules to the `http_request_firewall_custom` [phase entry 
 
 ## Create a custom rule
 
-<Render file="api-generic-create-rule-procedure" params={{ one: "custom rule", two: "", three: "http_request_firewall_custom" }} />
+<Render
+	file="api-generic-create-rule-procedure"
+	params={{
+		ruleType: "custom rule",
+		extraObject: "",
+		phaseName: "http_request_firewall_custom",
+	}}
+/>
 
 ### Example A
 
