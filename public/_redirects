@@ -1158,6 +1158,7 @@
 /r2/examples/mastodon/ /r2/tutorials/mastodon/ 301
 /r2/examples/postman/ /r2/tutorials/postman/ 301
 /r2/examples/cloudflare-access/ /r2/tutorials/cloudflare-access/ 301
+/r2/examples/upload-logs-event-notifications/ /r2/tutorials/upload-logs-event-notifications/ 301
 
 # style-guide
 /style-guide/formatting/symbols-in-ui-element-names/ /style-guide/formatting/ui-elements/ 301
