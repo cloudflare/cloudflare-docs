@@ -11,7 +11,7 @@ import { Tabs, TabItem } from "~/components";
 
 The `DurableObjectNamespace` interface is used to obtain a reference to a new or existing Durable Object instance. The interface is accessible from the fetch handler on a Cloudflare Worker via the `env` parameter, which is the standard interface when referencing bindings declared in `wrangler.toml`.
 
-This interface defines several [methods](/durable-objects/api/namespace/#methods) that can be used to create an ID for a Durable Object instance. Note that creating an ID for a Durable Object instance does not invoke the constructor of the Durable Object. This is done lazily when calling [`DurableObjectNamespace::get`](/durable-objects/api/namespace/#get) to create a [`DurableObjectStub`](/durable-objects/api/stub) from a `DurableObjectId`. This ensures that objects are not constructed unless their methods can be directly invoked.
+This interface defines several [methods](/durable-objects/api/namespace/#methods) that can be used to create an ID for a Durable Object instance. Note that creating an ID for a Durable Object instance does not create the Durable Object. The Durable Object is created lazily after calling [`DurableObjectNamespace::get`](/durable-objects/api/namespace/#get) to create a [`DurableObjectStub`](/durable-objects/api/stub) from a `DurableObjectId`. This ensures that objects are not constructed until they are actually accessed.
 
 <Tabs> <TabItem label="JavaScript" icon="seti:javascript">
 
