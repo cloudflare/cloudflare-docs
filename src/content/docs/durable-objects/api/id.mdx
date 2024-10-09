@@ -73,10 +73,10 @@ A boolean. True if equal and false otherwise.
 `name` is an optional property of a `DurableObjectId`, which returns the name that was used to create the `DurableObjectId` via [`DurableObjectNamespace::idFromName`](/durable-objects/api/namespace/#idfromname). This value is undefined if the `DurableObjectId` was constructed using [`DurableObjectNamespace::newUniqueId`](/durable-objects/api/namespace/#newuniqueid).
 
 ```js
-const id1 = env.MY_DURABLE_OBJECT.newUniqueId();
-const id2 = env.MY_DURABLE_OBJECT.idFromName("foo");
-console.assert(id1.name === undefined, "unique ids have no name");
-console.assert(id2.name === "foo", "name matches parameter to idFromName");
+const uniqueId = env.MY_DURABLE_OBJECT.newUniqueId();
+const fromNameId = env.MY_DURABLE_OBJECT.idFromName("foo");
+console.assert(uniqueId.name === undefined, "unique ids have no name");
+console.assert(fromNameId.name === "foo", "name matches parameter to idFromName");
 ```
 
 ## Related resources
