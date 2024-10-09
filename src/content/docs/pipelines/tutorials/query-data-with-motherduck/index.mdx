@@ -25,7 +25,7 @@ In this tutorial, you will learn how to ingest clickstream data to a R2 bucket u
 
 To create a new pipeline and connect it to your R2 bucket, you need the `Access Key ID` and the `Secret Access Key` of your R2 bucket. Follow the [R2 documentation](/r2/api/s3/tokens/) to get these keys. Make a note of these keys. You will need them in the next step.
 
-Create a new pipeline `clickstream-pipeline` using the [wrangler CLI](/workers/wrangler/):
+Create a new pipeline `clickstream-pipeline` using the [Wrangler CLI](/workers/wrangler/):
 
 ```sh
 npx wrangler pipelines create clickstream-pipeline --r2 <BUCKET_NAME> --access-key-id <ACCESS_KEY_ID> --secret-access-key <SECRET_ACCESS_KEY>
