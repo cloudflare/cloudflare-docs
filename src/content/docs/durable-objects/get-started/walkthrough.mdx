@@ -174,7 +174,7 @@ export default {
 
 ## 5. Configure Durable Object bindings
 
-[Bindings](/workers/runtime-apis/bindings/) allow your Workers to interact with resources on the Cloudflare developer platform. The Durable Object bindings in your Worker project's `wrangler.toml` will include a binding name (for this guide, use `MY_DURABLE_OBJECT`) and the class name (`MyDurableObject`). Refer to [Wrangler Configuration](/workers/wrangler/configuration/#durable-objects) for more detail.
+To allow a Worker to invoke methods on a Durable Object instance the Worker must have a [Durable Object binding](/workers/runtime-apis/bindings/) in the project's [`wrangler.toml`](/workers/wrangler/configuration/#durable-objects) file. The binding is configured to use a particular Durable Object class.
 
 ```toml
 [[durable_objects.bindings]]
@@ -195,6 +195,8 @@ The `[[durable_objects.bindings]]` section contains the following fields:
 - `class_name` - Required. The class name you wish to bind to.
 - `script_name` - Optional. The name of the Worker if the Durable Object is external to this Worker.
 - `environment` - Optional. The environment of the `script_name` to bind to.
+
+Refer to [Wrangler Configuration](/workers/wrangler/configuration/#durable-objects) for more detail.
 
 ## 6. Configure Durable Object classes with migrations
 
