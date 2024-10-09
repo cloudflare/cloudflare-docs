@@ -17,10 +17,10 @@ You can modify the Cloudflare Tunnel service with one or more [general-purpose t
 
 On Linux, Cloudflare Tunnel installs itself as a system service using `systemctl`. By default, the service will be named `cloudflared.service`. To configure your tunnel on Linux:
 
-1. Create `cloudflared.service`.
+1. Open `cloudflared.service`.
 
    ```sh
-   sudo systemctl edit --force --full cloudflared.service
+   sudo systemctl edit --full cloudflared.service
    ```
 
 2. Modify the `cloudflared tunnel run` command with the desired configuration flag. For example,
@@ -41,22 +41,28 @@ On Linux, Cloudflare Tunnel installs itself as a system service using `systemctl
    WantedBy=multi-user.target
    ```
 
-3. Enable `cloudflared.service` to start when system starts. For example,
+3. Restart `cloudflared.service`:
 
    ```sh
-   # restart systemctl
-   sudo systemctl daemon-reload
-   
-   # enable and start service
-   sudo systemctl enable cloudflared
-   sudo systemctl start cloudflared
-   
-   # check service status
-   sudo systemctl status cloudflared
-   
-   # view system logs if any issues
-   journalctl -u cloudflared
+   sudo systemctl restart cloudflared
    ```
+
+4. To verify the new configuration, check the service status:
+
+	```sh
+	sudo systemctl status cloudflared
+	```
+	```sh output
+	● cloudflared.service - cloudflared
+     Loaded: loaded (/etc/systemd/system/cloudflared.service; enabled; preset: enabled)
+     Active: active (running) since Wed 2024-10-09 20:02:59 UTC; 2s ago
+   Main PID: 2157 (cloudflared)
+      Tasks: 8 (limit: 1136)
+     Memory: 16.3M
+        CPU: 136ms
+     CGroup: /system.slice/cloudflared.service
+             └─2157 /usr/bin/cloudflared tunnel --loglevel debug --logfile /var/log/cloudflared/cloudflared.log run --token eyJhIjoi...
+	```
 
 </TabItem> <TabItem label="macOS">
 
