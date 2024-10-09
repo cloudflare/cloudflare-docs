@@ -21,7 +21,7 @@ Notably:
 
 - Each Durable Object instance is able to schedule a single alarm at a time by calling `setAlarm()`.
 - Alarms have guaranteed at-least-once execution and are retried automatically when the `alarm()` handler throws.
-- Retries are performed using exponential backoff starting at a two second delay from the first failure with up to six retries allowed.
+- Retries are performed using exponential backoff starting at a 2 second delay from the first failure with up to 6 retries allowed.
 
 :::note[How are alarms different from Cron Triggers?]
 
@@ -63,7 +63,7 @@ Alarms can be used to build distributed primitives, like queues or batching of w
 
   - Called by the system when a scheduled alarm time is reached.
 
-  - The `alarm()` handler has guaranteed at-least-once execution and will be retried upon failure using exponential backoff, starting at two second delays for up to six retries. Retries will be performed if the method fails with an uncaught exception.
+  - The `alarm()` handler has guaranteed at-least-once execution and will be retried upon failure using exponential backoff, starting at 2 second delays for up to 6 retries. Retries will be performed if the method fails with an uncaught exception.
 
   - This method can be `async`.
 
