@@ -169,6 +169,7 @@ export default defineConfig({
 				"./src/mermaid.css",
 				"./src/table.css",
 				"./src/tailwind.css",
+				"./src/tooltips.css",
 			],
 			pagination: false,
 			plugins: runLinkCheck
