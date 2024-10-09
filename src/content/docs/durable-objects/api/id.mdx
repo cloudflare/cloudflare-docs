@@ -11,7 +11,7 @@ import { Tabs, TabItem } from "~/components";
 
 The `DurableObjectId` interface refers to a new or existing Durable Object instance. This interface is most frequently used by [`DurableObjectNamespace::get`](/durable-objects/api/namespace/#get) to obtain a stub for submitting requests to the Durable Object class.
 
-Note that creating an ID for a Durable Object instance does not invoke the constructor of the Durable Object. This is done lazily when calling [`DurableObjectNamespace::get`](/durable-objects/api/namespace/#get) to create a [`DurableObjectStub`](/durable-objects/api/stub) from a `DurableObjectId`. This ensures that objects are not constructed unless their methods can be directly invoked.
+Note that creating an ID for a Durable Object instance does not create the Durable Object. The Durable Object is created lazily after calling [`DurableObjectNamespace::get`](/durable-objects/api/namespace/#get) to create a [`DurableObjectStub`](/durable-objects/api/stub) from a `DurableObjectId`. This ensures that objects are not constructed until they are actually accessed.
 
 :::note[`DurableObjectId`]
 
@@ -53,7 +53,7 @@ A 64 digit hex string.
 ```js
 const id1 = env.MY_DURABLE_OBJECT.newUniqueId();
 const id2 = env.MY_DURABLE_OBJECT.newUniqueId();
-console.assert(!id1.equals(id2), "This should always be true");
+console.assert(!id1.equals(id2), "Different unique ids should never be equal.");
 ```
 
 #### Parameters
@@ -75,8 +75,8 @@ A boolean. True if equal and false otherwise.
 ```js
 const id1 = env.MY_DURABLE_OBJECT.newUniqueId();
 const id2 = env.MY_DURABLE_OBJECT.idFromName("foo");
-console.assert(id1.name === undefined, "This should always be true");
-console.assert(id2.name === "foo", "This should always be true");
+console.assert(id1.name === undefined, "unique ids have no name");
+console.assert(id2.name === "foo", "name matches parameter to idFromName");
 ```
 
 ## Related resources
