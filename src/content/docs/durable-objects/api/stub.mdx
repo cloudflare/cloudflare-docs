@@ -89,7 +89,7 @@ export default {
 
 #### Description
 
-`id` is a property of the `DurableObjectStub` corresponding to the [`DurableObjectId`](../id) used to create the stub.
+`id` is a property of the `DurableObjectStub` corresponding to the [`DurableObjectId`](/durable-objects/api/id) used to create the stub.
 
 ```js
 const id = env.MY_DURABLE_OBJECT.newUniqueId();
@@ -101,7 +101,7 @@ console.assert(id.equals(stub.id), "This should always be true");
 
 #### Description
 
-`name` is an optional property of a `DurableObjectStub`, which returns the name that was used to create the [`DurableObjectId`](../id) via [`DurableObjectNamespace::idFromName`](../namespace/#idfromname) which was then used to create the `DurableObjectStub`. This value is undefined if the [`DurableObjectId`](../id) used to create the `DurableObjectStub` was constructed using [`DurableObjectNamespace::newUniqueId`](../namespace/#newuniqueid).
+`name` is an optional property of a `DurableObjectStub`, which returns the name that was used to create the [`DurableObjectId`](/durable-objects/api/id) via [`DurableObjectNamespace::idFromName`](/durable-objects/api/namespace/#idfromname) which was then used to create the `DurableObjectStub`. This value is undefined if the [`DurableObjectId`](/durable-objects/api/id) used to create the `DurableObjectStub` was constructed using [`DurableObjectNamespace::newUniqueId`](/durable-objects/api/namespace/#newuniqueid).
 
 ```js
 const id = env.MY_DURABLE_OBJECT.idFromName("foo");

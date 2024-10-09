@@ -11,7 +11,7 @@ import { Tabs, TabItem } from "~/components";
 
 The `DurableObjectNamespace` interface is used to obtain a reference to a new or existing Durable Object instance. The interface is accessible from the fetch handler on a Cloudflare Worker via the `env` parameter, which is the standard interface when referencing bindings declared in `wrangler.toml`.
 
-This interface defines several [methods](../namespace/#methods) that can be used to create an ID for a Durable Object instance. Note that creating an ID for a Durable Object instance does not invoke the constructor of the Durable Object. This is done lazily when calling [`DurableObjectNamespace::get`](../namespace/#get) to create a [`DurableObjectStub`](../stub) from a `DurableObjectId`. This ensures that objects are not constructed unless their methods can be directly invoked.
+This interface defines several [methods](/durable-objects/api/namespace/#methods) that can be used to create an ID for a Durable Object instance. Note that creating an ID for a Durable Object instance does not invoke the constructor of the Durable Object. This is done lazily when calling [`DurableObjectNamespace::get`](/durable-objects/api/namespace/#get) to create a [`DurableObjectStub`](/durable-objects/api/stub) from a `DurableObjectId`. This ensures that objects are not constructed unless their methods can be directly invoked.
 
 <Tabs> <TabItem label="JavaScript" icon="seti:javascript">
 
@@ -71,7 +71,7 @@ export default {
 
 #### Description
 
-`idFromName` creates a [`DurableObjectId`](../id) which refers to an individual instance of the Durable Object class from a particular name.
+`idFromName` creates a [`DurableObjectId`](/durable-objects/api/id) which refers to an individual instance of the Durable Object class from a particular name.
 
 ```js
 const fooId = env.MY_DURABLE_OBJECT.idFromName("foo");
@@ -80,11 +80,11 @@ const barId = env.MY_DURABLE_OBJECT.idFromName("bar");
 
 #### Parameters
 
-The string to be used to generate a [`DurableObjectId`](../id) corresponding to the name of a Durable Object instance.
+The string to be used to generate a [`DurableObjectId`](/durable-objects/api/id) corresponding to the name of a Durable Object instance.
 
 #### Return value
 
-A [`DurableObjectId`](../id) referring to an instance of a Durable Object class.
+A [`DurableObjectId`](/durable-objects/api/id) referring to an instance of a Durable Object class.
 
 ### `newUniqueId`
 
@@ -99,23 +99,23 @@ const euId = env.MY_DURABLE_OBJECT.newUniqueId({ jurisdiction: "eu" });
 
 :::note[`newUniqueId`]
 
-IDs created by `newUniqueId` will result in lower latencies when getting a [`DurableObjectStub`](../stub) relative to [`idFromName`](../namespace/#idFromName).
+IDs created by `newUniqueId` will result in lower latencies when getting a [`DurableObjectStub`](/durable-objects/api/stub) relative to [`idFromName`](/durable-objects/api/namespace/#idfromname).
 
 :::
 
 #### Parameters
 
-An optional object with the key `jurisdiction` and value of a [jurisdiction](../../reference/data-location/#restrict-durable-objects-to-a-jurisdiction) string.
+An optional object with the key `jurisdiction` and value of a [jurisdiction](durable-objects/reference/data-location/#restrict-durable-objects-to-a-jurisdiction) string.
 
 #### Return value
 
-A [`DurableObjectId`](../id) referring to an instance of the Durable Object class.
+A [`DurableObjectId`](/durable-objects/api/id) referring to an instance of the Durable Object class.
 
 ### `idFromString`
 
 #### Description
 
-`idFromString` creates a [`DurableObjectId`](../id) from a previously generated ID that has been converted to a string. This method ensures the ID is valid, for example, it checks that the ID consists of 64 hex digits.
+`idFromString` creates a [`DurableObjectId`](/durable-objects/api/id) from a previously generated ID that has been converted to a string. This method ensures the ID is valid, for example, it checks that the ID consists of 64 hex digits.
 
 ```js
 // Create a new unique ID
@@ -128,17 +128,17 @@ const id = env.MY_DURABLE_OBJECT.idFromString(session_id);
 
 #### Parameters
 
-The string corresponding to a [`DurableObjectId`](../id) previously generated either by `newUniqueId` or `idFromName`.
+The string corresponding to a [`DurableObjectId`](/durable-objects/api/id) previously generated either by `newUniqueId` or `idFromName`.
 
 #### Return value
 
-A [`DurableObjectId`](../id) referring to an instance of a Durable Object class.
+A [`DurableObjectId`](/durable-objects/api/id) referring to an instance of a Durable Object class.
 
 ### `get`
 
 #### Description
 
-`get` obtains a [`DurableObjectStub`](../stub) from a [`DurableObjectId`](../id) which can be used to invoke methods on a Durable Object instance.
+`get` obtains a [`DurableObjectStub`](/durable-objects/api/stub) from a [`DurableObjectId`](/durable-objects/api/id) which can be used to invoke methods on a Durable Object instance.
 
 ```js
 const id = env.MY_DURABLE_OBJECT.newUniqueId();
@@ -147,17 +147,17 @@ const stub = env.MY_DURABLE_OBJECT.get(id);
 
 #### Parameters
 
-A required [`DurableObjectId`](../id) and an optional object with the key `locationHint` and value of a [locationHint](../../reference/data-location/#provide-a-location-hint) string.
+A required [`DurableObjectId`](/durable-objects/api/id) and an optional object with the key `locationHint` and value of a [locationHint](durable-objects/reference/data-location/#provide-a-location-hint) string.
 
 #### Return value
 
-A [`DurableObjectStub`](../stub) referring to an instance of a Durable Object class.
+A [`DurableObjectStub`](/durable-objects/api/stub) referring to an instance of a Durable Object class.
 
 ### `jurisdiction`
 
 #### Description
 
-`jurisdiction` creates a subnamespace from a namespace where all Durable Object instance IDs and references created from that subnamespace will be restricted to the specified [jurisdiction](../../reference/data-location/#restrict-durable-objects-to-a-jurisdiction).
+`jurisdiction` creates a subnamespace from a namespace where all Durable Object instance IDs and references created from that subnamespace will be restricted to the specified [jurisdiction](durable-objects/reference/data-location/#restrict-durable-objects-to-a-jurisdiction).
 
 ```js
 const subnamespace = env.MY_DURABLE_OBJECT.jurisdiction("foo");
@@ -166,7 +166,7 @@ const euId = subnamespace.idFromName("foo");
 
 #### Parameters
 
-A required [jurisdiction](../../reference/data-location/#restrict-durable-objects-to-a-jurisdiction) string.
+A required [jurisdiction](durable-objects/reference/data-location/#restrict-durable-objects-to-a-jurisdiction) string.
 
 #### Return value
 

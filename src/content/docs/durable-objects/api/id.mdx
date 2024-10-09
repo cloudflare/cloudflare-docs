@@ -9,9 +9,9 @@ import { Tabs, TabItem } from "~/components";
 
 ## Description
 
-The `DurableObjectId` interface refers to a new or existing Durable Object instance. This interface is most frequently used by [`DurableObjectNamespace::get`](./namespace.mdx) to obtain a stub for submitting requests to the Durable Object class.
+The `DurableObjectId` interface refers to a new or existing Durable Object instance. This interface is most frequently used by [`DurableObjectNamespace::get`](/durable-objects/api/namespace/#get) to obtain a stub for submitting requests to the Durable Object class.
 
-Note that creating an ID for a Durable Object instance does not invoke the constructor of the Durable Object. This is done lazily when calling [`DurableObjectNamespace::get`](../namespace/#get) to create a [`DurableObjectStub`](../stub) from a `DurableObjectId`. This ensures that objects are not constructed unless their methods can be directly invoked.
+Note that creating an ID for a Durable Object instance does not invoke the constructor of the Durable Object. This is done lazily when calling [`DurableObjectNamespace::get`](/durable-objects/api/namespace/#get) to create a [`DurableObjectStub`](/durable-objects/api/stub) from a `DurableObjectId`. This ensures that objects are not constructed unless their methods can be directly invoked.
 
 :::note[`DurableObjectId`]
 
@@ -70,7 +70,7 @@ A boolean. True if equal and false otherwise.
 
 #### Description
 
-`name` is an optional property of a `DurableObjectId`, which returns the name that was used to create the `DurableObjectId` via [`DurableObjectNamespace::idFromName`](../namespace/#idfromname). This value is undefined if the `DurableObjectId` was constructed using [`DurableObjectNamespace::newUniqueId`](../namespace/#newuniqueid).
+`name` is an optional property of a `DurableObjectId`, which returns the name that was used to create the `DurableObjectId` via [`DurableObjectNamespace::idFromName`](/durable-objects/api/namespace/#idfromname). This value is undefined if the `DurableObjectId` was constructed using [`DurableObjectNamespace::newUniqueId`](/durable-objects/api/namespace/#newuniqueid).
 
 ```js
 const id1 = env.MY_DURABLE_OBJECT.newUniqueId();
