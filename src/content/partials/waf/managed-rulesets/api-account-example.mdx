@@ -8,6 +8,7 @@ The following example deploys a [WAF managed ruleset](/waf/managed-rules/#manage
 
 1.  <Render
     	file="rulesets/api-account/step1-get-entrypoint"
+    	product="waf"
     	params={{ phaseName: "http_request_firewall_managed" }}
     />
 
@@ -39,6 +40,7 @@ The following example deploys a [WAF managed ruleset](/waf/managed-rules/#manage
 
 2.  <Render
     	file="rulesets/api-account/step2-create-rule"
+    	product="waf"
     	params={{
     		deploymentItem:
     			"[Cloudflare Managed Ruleset](/waf/managed-rules/reference/cloudflare-managed-ruleset/) (with ID `efb7b8c949ac4650a09736fc376e9aee`)",
@@ -99,6 +101,7 @@ The following example deploys a [WAF managed ruleset](/waf/managed-rules/#manage
 
 3.  <Render
     	file="rulesets/api-account/step3-create-ruleset"
+    	product="waf"
     	params={{
     		deploymentItem:
     			"Cloudflare Managed Ruleset (with ID `efb7b8c949ac4650a09736fc376e9aee`)",
