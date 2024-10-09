@@ -5,7 +5,7 @@ sidebar:
   order: 2
 ---
 
-import { Tabs, TabItem } from "~/components";
+import { Render, Tabs, TabItem } from "~/components";
 
 ## Description
 
@@ -25,16 +25,7 @@ If you are experiencing an issue with a particular Durable Object instance, you 
 
 `toString` converts a `DurableObjectId` to a 64 digit hex string. This string is useful for logging purposes or storing the `DurableObjectId` elsewhere, for example, in a session cookie. This string can be used to reconstruct a `DurableObjectId` via `DurableObjectNamespace::idFromString`.
 
-```js
-// Create a new unique ID
-const id = env.MY_DURABLE_OBJECT.newUniqueId();
-// Convert the ID to a string to be saved elsewhere, e.g. a session cookie
-const session_id = id.toString();
-
-...
-// Recreate the ID from the string
-const id = env.MY_DURABLE_OBJECT.idFromString(session_id);
-```
+<Render file="example-id-from-string" />
 
 #### Parameters
 
