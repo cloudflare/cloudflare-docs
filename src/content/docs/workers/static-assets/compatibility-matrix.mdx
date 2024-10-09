@@ -28,13 +28,13 @@ We plan to bridge the gaps between Workers and Pages and provide ways to migrate
 | [Rollbacks](/workers/configuration/versions-and-deployments/rollbacks/)             | ✅                       | ✅    |
 | [Gradual Deployments](/workers/configuration/versions-and-deployments/)             | ✅                       | ❌    |
 | [Preview URLs](/workers/configuration/previews)                                     | ✅                       | ✅    |
-| [Testing](/workers/testing)                                                         | ✅                       | ✅    |
+| [Testing tools](/workers/testing)                                                         | ✅                       | ✅    |
 | [Local Development](/workers/testing/local-development/)                            | ✅                       | ✅    |  
 | [Remote Development (`--remote`)](/workers/wrangler/commands/)                      | ✅ <sup>1</sup>          | ❌    | 
 | [Quick Editor in Dashboard](https://blog.cloudflare.com/improved-quick-edit)        | ✅                       | ❌    |
 | **Static Assets**                                                                   |                          |       |
 | [Early Hints](/pages/configuration/early-hints/)                                    | ❌                       | ✅    |
-| [Customize HTTP headers of static assets](/pages/configuration/headers/)            | 🟡 <sup>2</sup>          | ✅    |
+| [Custom HTTP headers for static assets](/pages/configuration/headers/)            | 🟡 <sup>2</sup>          | ✅    |
 | [Middleware](/pages/functions/middleware/)                                          | 🟡 <sup>3</sup>          | ✅    |
 | [Redirects](/pages/configuration/redirects/)                                        | 🟡 <sup>4</sup>          | ✅    |
 | [Smart Placement](/workers/configuration/smart-placement/)                          | ⏳ <sup>5</sup>          | ✅    |
@@ -76,7 +76,7 @@ We plan to bridge the gaps between Workers and Pages and provide ways to migrate
 | [Pages Plugins](/pages/functions/plugins/)                                          | ❌ <sup>9</sup>          | ✅    |
 
 
-<sup>1</sup> For more details on which bindings are supported in remote development, [refer to the docs]((/workers/testing/local-development/#supported-resource-bindings-in-different-environments)
+<sup>1</sup> For more details on which bindings are supported in remote development, [refer to the docs](/workers/testing/local-development/#supported-resource-bindings-in-different-environments)
 
 <sup>2</sup> Similar to <sup>1</sup>, to customize the HTTP headers that
 are returned by static assets, you can use [Service
