@@ -1,0 +1,210 @@
+---
+updated: 2024-10-09
+difficulty: Intermediate
+content_type: 📝 Tutorial
+pcx_content_type: tutorial
+title: Query R2 data with MotherDuck
+products:
+  - R2
+tags:
+  - MotherDuck
+languages:
+  - SQL
+---
+
+import { Render, PackageManagers } from "~/components";
+
+In this tutorial, you will learn how to ingest clickstream data to a R2 bucket using Pipelines. You will also learn how to connect the bucket to MotherDuck. You will then query the data using MotherDuck.
+
+## Prerequisites
+
+1. Create a [R2 bucket](/r2/buckets/create-buckets/) in your Cloudflare account.
+2. A [MotherDuck](https://motherduck.com/) account.
+
+## 1. Create a pipeline
+
+To create a new pipeline and connect it to your R2 bucket, you need the `Access Key ID` and the `Secret Access Key` of your R2 bucket. Follow the [R2 documentation](/r2/api/s3/tokens/) to get these keys. Make a note of these keys. You will need them in the next step.
+
+Create a new pipeline `clickstream-pipeline` using the [wrangler CLI](/workers/wrangler/):
+
+```sh
+npx wrangler pipelines create clickstream-pipeline --r2 <BUCKET_NAME> --access-key-id <ACCESS_KEY_ID> --secret-access-key <SECRET_ACCESS_KEY>
+```
+
+Replace `<BUCKET_NAME>` with the name of your R2 bucket. Replace `<ACCESS_KEY_ID>` and `<SECRET_ACCESS_KEY>` with the keys you created in the previous step.
+
+```output
+🌀 Authorizing R2 bucket <BUCKET_NAME>
+🌀 Creating pipeline named "clickstream-pipeline"
+✅ Successfully created pipeline "clickstream-pipeline" with id <PIPELINE_ID>
+🎉 You can now send data to your pipeline!
+Example: curl "https://<PIPELINE_ID>.pipelines.cloudflare.com" -d '[{"foo": "bar"}]'
+```
+
+Make a note of the URL of your pipeline. You will need it in the next step.
+
+## 2. Ingest data to R2
+
+In this step, you will ingest data to your R2 bucket using `curl`. You will ingest the following JSON data to your R2 bucket:
+
+<details>
+<summary>
+Click to view the JSON data
+</summary>
+```json
+[
+  {
+    "session_id": "1234567890abcdef",
+    "user_id": "user123",
+    "timestamp": "2024-10-08T14:30:15.123Z",
+    "events": [
+      {
+        "event_id": "evt001",
+        "event_type": "page_view",
+        "page_url": "https://example.com/products",
+        "timestamp": "2024-10-08T14:30:15.123Z",
+        "user_agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36",
+        "ip_address": "192.168.1.1"
+      },
+      {
+        "event_id": "evt002",
+        "event_type": "product_view",
+        "product_id": "prod456",
+        "page_url": "https://example.com/products/prod456",
+        "timestamp": "2024-10-08T14:31:20.456Z"
+      },
+      {
+        "event_id": "evt003",
+        "event_type": "add_to_cart",
+        "product_id": "prod456",
+        "quantity": 1,
+        "page_url": "https://example.com/products/prod456",
+        "timestamp": "2024-10-08T14:32:05.789Z"
+      }
+    ],
+    "device_info": {
+      "device_type": "desktop",
+      "operating_system": "Windows 10",
+      "browser": "Chrome"
+    },
+    "referrer": "https://google.com"
+  },
+  {
+    "session_id": "abcdef1234567890",
+    "user_id": "user456",
+    "timestamp": "2024-10-08T15:45:30.987Z",
+    "events": [
+      {
+        "event_id": "evt004",
+        "event_type": "page_view",
+        "page_url": "https://example.com/blog",
+        "timestamp": "2024-10-08T15:45:30.987Z",
+        "user_agent": "Mozilla/5.0 (iPhone; CPU iPhone OS 14_4 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/14.0.3 Mobile/15E148 Safari/604.1",
+        "ip_address": "203.0.113.1"
+      },
+      {
+        "event_id": "evt005",
+        "event_type": "scroll",
+        "scroll_depth": "75%",
+        "page_url": "https://example.com/blog/article1",
+        "timestamp": "2024-10-08T15:47:12.345Z"
+      },
+      {
+        "event_id": "evt006",
+        "event_type": "social_share",
+        "platform": "twitter",
+        "content_id": "article1",
+        "page_url": "https://example.com/blog/article1",
+        "timestamp": "2024-10-08T15:48:55.678Z"
+      }
+    ],
+    "device_info": {
+      "device_type": "mobile",
+      "operating_system": "iOS 14.4",
+      "browser": "Safari"
+    },
+    "referrer": "https://t.co/abcd123"
+  },
+  {
+    "session_id": "9876543210fedcba",
+    "user_id": "user789",
+    "timestamp": "2024-10-08T18:20:00.111Z",
+    "events": [
+      {
+        "event_id": "evt007",
+        "event_type": "page_view",
+        "page_url": "https://example.com/login",
+        "timestamp": "2024-10-08T18:20:00.111Z",
+        "user_agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.114 Safari/537.36",
+        "ip_address": "198.51.100.1"
+      },
+      {
+        "event_id": "evt008",
+        "event_type": "form_submission",
+        "form_id": "login-form",
+        "page_url": "https://example.com/login",
+        "timestamp": "2024-10-08T18:20:45.222Z"
+      },
+      {
+        "event_id": "evt009",
+        "event_type": "page_view",
+        "page_url": "https://example.com/dashboard",
+        "timestamp": "2024-10-08T18:20:50.333Z"
+      },
+      {
+        "event_id": "evt010",
+        "event_type": "feature_usage",
+        "feature_id": "data_export",
+        "page_url": "https://example.com/dashboard",
+        "timestamp": "2024-10-08T18:22:30.444Z"
+      }
+    ],
+    "device_info": {
+      "device_type": "desktop",
+      "operating_system": "macOS 10.15",
+      "browser": "Chrome"
+    },
+    "referrer": "https://example.com/home"
+  }
+]
+```
+</details>
+
+Run the following command to ingest the data to your R2 bucket using the pipeline you created in the previous step:
+
+```sh
+curl -X POST 'https://<PIPELINE_ID>.pipelines.cloudflare.com' -d '<JSON_DATA>'
+```
+
+Replace `<PIPELINE_ID>` with the ID of the pipeline you created in the previous step. Also, replace `<JSON_DATA>` with the JSON data provided above.
+
+## 3. Connnect the R2 bucket to MotherDuck
+
+In this step, you will connect the R2 bucket to MotherDuck. You can connect the bucket to MotherDuck in several ways. You can learn about these different approaches in the [MotherDuck documentation](https://motherduck.com/docs/integrations/cloud-storage/cloudflare-r2/). In this tutorial, you will connect the bucket to MotherDuck using the MotherDuck dashboard.
+
+Login to the MotherDuck dashboard and click on your profile. Navigate to the **Secrets** page. Click on the **Add Secret** button and enter the following information:
+
+- **Secret Name**: `Clickstream pipeline`
+- **Secret Type**: `Cloudflare R2`
+- **Access Key ID**: `ACCESS_KEY_ID` (replace with the Access Key ID you obtained in the previous step)
+- **Secret Access Key**: `SECRET_ACCESS_KEY` (replace with the Secret Access Key you obtained in the previous step)
+
+Click on the **Add Secret** button to save the secret.
+
+## 4. Query the data
+
+In this step, you will query the data stored in the R2 bucket using MotherDuck. Navigate back to the MotherDuck dashboard and click on the **+** icon to add a new Notebook. Click on the **Add Cell** button to add a new cell to the notebook.
+
+In the cell, enter the following query and click on the **Run** button to execute the query:
+
+```sql
+SELECT * FROM `r2://<BUCKET_NAME>/<PATH_TO_FILE>`;
+```
+
+Replace the `<BUCKET_NAME>` placeholder with the name of the R2 bucket you created in the previous step. Replace the `<PATH_TO_FILE>` placeholder with the path to the file you uploaded in the previous step. You can find the path to the file by navigating to the object in the Cloudflare dashboard.
+
+The query will return the data stored in the R2 bucket.
+
+## Conclusion
+
+In this tutorial, you learned to create a pipeline and ingest data into a R2 bucket. You also learned how to connect the bucket with MotherDuck and query the data stored in the bucket. You can use this tutorial as a starting point to ingest data into an R2 bucket, and use MotherDuck to query the data stored in the bucket.
