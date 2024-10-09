@@ -11,13 +11,13 @@ Jurisdictions are used to create Durable Object instances that only run and stor
 
 Workers may still access Durable Objects constrained to a jurisdiction from anywhere in the world. The jurisdiction constraint only controls where the Durable Object itself runs and persists data. Consider using [Regional Services](/data-localization/regional-services/) to control the regions from which Cloudflare responds to requests.
 
-:::note[logging]
+:::note[Logging]
 
 A [`DurableObjectId`](../../api/id) will be logged outside of the specified jurisdiction for billing and debugging purposes.
 
 :::
 
-Durable Object instances can be restricted to a specific jurisdiction either by creating a [`DurableObjectNamespace`](../../api/namespace/) restricted to a jurisdiction or by creating an individual [`DurableObjectId`](../../api/id) restricted to a jurisdiction:
+Durable Object instances can be restricted to a specific jurisdiction either by creating a [`DurableObjectNamespace`](../../api/namespace/) restricted to a jurisdiction, or by creating an individual [`DurableObjectId`](../../api/id) restricted to a jurisdiction:
 
 ```js
 const euSubnamespace = env.MY_DURABLE_OBJECT.jurisdiction("eu");
@@ -34,7 +34,7 @@ const euId2 = env.MY_DURABLE_OBJECT.jurisdiction("eu").idFromName("my-name");
 console.assert(!euId1.equal(euId2), "This should always be true");
 ```
 
-While methods on a [`DurableObjectNamespace`](../../api/namespace/) that take a [`DurableObjectId`](../../api/id) as a parameter will throw an exception if the parameter is associated with a different jurisdiction, these methods will not throw an exception if the [`DurableObjectNamespace`](../../api/namespace/) is not associated with a jurisdiction. The common case is that any valid [`DurableObjectId`](../../api/id) can be used in the top-level namespace's methods.
+Methods on a [`DurableObjectNamespace`](../../api/namespace/) that take a [`DurableObjectId`](../../api/id) as a parameter will throw an exception if the parameter is associated with a different jurisdiction. However, these methods will not throw an exception if the [`DurableObjectNamespace`](../../api/namespace/) is not associated with a jurisdiction. The common case is that any valid [`DurableObjectId`](../../api/id) can be used in the top-level namespace's methods.
 
 ```js
 const euSubnamespace = env.MY_DURABLE_OBJECT.jurisdiction("eu");

@@ -9,13 +9,13 @@ import { Tabs, TabItem } from "~/components";
 
 ## Description
 
-The `DurableObjectId` interface refers to a new or existing Durable Object instance. This interface is most frequently used to by [`DurableObjectNamespace::get`](./namespace.mdx) to obtain a stub for submitting requests to the Durable Object class.
+The `DurableObjectId` interface refers to a new or existing Durable Object instance. This interface is most frequently used by [`DurableObjectNamespace::get`](./namespace.mdx) to obtain a stub for submitting requests to the Durable Object class.
 
 Note that creating an ID for a Durable Object instance does not invoke the constructor of the Durable Object. This is done lazily when calling [`DurableObjectNamespace::get`](../namespace/#get) to create a [`DurableObjectStub`](../stub) from a `DurableObjectId`. This ensures that objects are not constructed unless their methods can be directly invoked.
 
 :::note[`DurableObjectId`]
 
-If you are experiencing an issue with a particular Durable Object instance the `DurableObjectId` corresponding to this particular instance is very helpful for obtaining a resolution through Cloudflare support. It is advisable to log a `DurableObjectId` from a Worker and include it in support requests where applicable.
+If you are experiencing an issue with a particular Durable Object instance, you may wish to log the `DurableObjectId` from your Worker and include it in your Cloudflare support request.
 
 :::
 

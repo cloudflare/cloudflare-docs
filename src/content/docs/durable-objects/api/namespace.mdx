@@ -9,9 +9,9 @@ import { Tabs, TabItem } from "~/components";
 
 ## Description
 
-The `DurableObjectNamespace` interface is used to obtain a reference to a new or existing Durable Object instance. The interface is accessible from the fetch handler on a Cloudflare Worker via the `env` parameter, which is the standard interface for reference bindings declared in `wrangler.toml`.
+The `DurableObjectNamespace` interface is used to obtain a reference to a new or existing Durable Object instance. The interface is accessible from the fetch handler on a Cloudflare Worker via the `env` parameter, which is the standard interface when referencing bindings declared in `wrangler.toml`.
 
-There are several functions of this interface that can be used to create an ID for a Durable Object instance. Note that creating an ID for a Durable Object instance does not invoke the constructor of the Durable Object. This is done lazily when calling [`DurableObjectNamespace::get`](../namespace/#get) to create a [`DurableObjectStub`](../stub) from a `DurableObjectId`. This ensures that objects are not constructed unless their methods can be directly invoked.
+This interface defines several [methods](../namespace/#methods) that can be used to create an ID for a Durable Object instance. Note that creating an ID for a Durable Object instance does not invoke the constructor of the Durable Object. This is done lazily when calling [`DurableObjectNamespace::get`](../namespace/#get) to create a [`DurableObjectStub`](../stub) from a `DurableObjectId`. This ensures that objects are not constructed unless their methods can be directly invoked.
 
 <Tabs> <TabItem label="JavaScript" icon="seti:javascript">
 
@@ -84,14 +84,13 @@ The string to be used to generate a [`DurableObjectId`](../id) corresponding to 
 
 #### Return value
 
-A [`DurableObjectId`](../id) refering to an instance of a Durable Object class.
+A [`DurableObjectId`](../id) referring to an instance of a Durable Object class.
 
 ### `newUniqueId`
 
 #### Description
 
-creates a `DurableObjectId` which refers to an individual instance of the
-Durable Object class.
+`newUniqueId` creates a `DurableObjectId` which refers to an individual instance of the Durable Object class.
 
 ```js
 const id = env.MY_DURABLE_OBJECT.newUniqueId();
@@ -110,7 +109,7 @@ An optional object with the key `jurisdiction` and value of a [jurisdiction](../
 
 #### Return value
 
-A [`DurableObjectId`](../id) refering to an instance of the Durable Object class.
+A [`DurableObjectId`](../id) referring to an instance of the Durable Object class.
 
 ### `idFromString`
 
@@ -133,7 +132,7 @@ The string corresponding to a [`DurableObjectId`](../id) previously generated ei
 
 #### Return value
 
-A [`DurableObjectId`](../id) refering to an instance of a Durable Object class.
+A [`DurableObjectId`](../id) referring to an instance of a Durable Object class.
 
 ### `get`
 
@@ -152,7 +151,7 @@ A required [`DurableObjectId`](../id) and an optional object with the key `locat
 
 #### Return value
 
-A [`DurableObjectStub`](../stub) refering to an instance of a Durable Object class.
+A [`DurableObjectStub`](../stub) referring to an instance of a Durable Object class.
 
 ### `jurisdiction`
 

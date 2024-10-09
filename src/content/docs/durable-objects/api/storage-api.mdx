@@ -2,7 +2,7 @@
 title: Storage API
 pcx_content_type: concept
 sidebar:
-  order: 2
+  order: 4
 
 ---
 
@@ -100,7 +100,7 @@ Each method is implicitly wrapped inside a transaction, such that its results ar
 
 * <code>deleteAll(options <Type text='Object' /> <MetaInfo text='optional' />)</code>: <Type text='Promise' />
 
-  * Deletes all stored data, effectively deallocating all storage used by the Durable Object. For Durable Objects with a key-value storage backend, `deleteAll()` removes all keys and associated values for an individual Durable Object. For Durable Objects with a [SQLite storage backend](/durable-objects/best-practices/access-durable-objects-storage/#sqlite-storage-backend), `deleteAll()` removes the entire contents of a Durable Object's private SQLite database.  
+  * Deletes all stored data, effectively deallocating all storage used by the Durable Object. For Durable Objects with a key-value storage backend, `deleteAll()` removes all keys and associated values for an individual Durable Object. For Durable Objects with a [SQLite storage backend](/durable-objects/best-practices/access-durable-objects-storage/#sqlite-storage-backend), `deleteAll()` removes the entire contents of a Durable Object's private SQLite database.
   * For Durable Objects with a key-value storage backend, an in-progress `deleteAll()` operation can fail, which may leave a subset of data undeleted. Durable Objects with a SQLite storage backend do not have a partial `deleteAll()` issue because `deleteAll()` operations are atomic (all or nothing).
   * `deleteAll()` does not proactively delete [Alarms](/durable-objects/api/alarms/). Use [`deleteAlarm()`](/durable-objects/api/alarms/#deletealarm) to delete an alarm.
 
