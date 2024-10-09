@@ -23,14 +23,14 @@ If you are experiencing an issue with a particular Durable Object instance, you 
 
 ### `toString`
 
-#### Description
-
 `toString` converts a `DurableObjectId` to a 64 digit hex string. This string is useful for logging purposes or storing the `DurableObjectId` elsewhere, for example, in a session cookie. This string can be used to reconstruct a `DurableObjectId` via `DurableObjectNamespace::idFromString`.
 
 ```js
 // Create a new unique ID
 const id = env.MY_DURABLE_OBJECT.newUniqueId();
-// Save the unique ID elsewhere, e.g. a session cookie via id.toString()
+// Convert the ID to a string to be saved elsewhere, e.g. a session cookie
+const session_id = id.toString();
+
 ...
 // Recreate the ID from the string
 const id = env.MY_DURABLE_OBJECT.idFromString(session_id);
@@ -38,15 +38,13 @@ const id = env.MY_DURABLE_OBJECT.idFromString(session_id);
 
 #### Parameters
 
-None.
+- None.
 
-#### Return value
+#### Return values
 
-A 64 digit hex string.
+- A 64 digit hex string.
 
 ### `equals`
-
-#### Description
 
 `equals` is used to compare equality between two instances of `DurableObjectId`.
 
@@ -58,17 +56,15 @@ console.assert(!id1.equals(id2), "Different unique ids should never be equal.");
 
 #### Parameters
 
-A required `DurableObjectId` to compare against.
+- A required `DurableObjectId` to compare against.
 
-#### Return value
+#### Return values
 
-A boolean. True if equal and false otherwise.
+- A boolean. True if equal and false otherwise.
 
 ## Properties
 
 ### `name`
-
-#### Description
 
 `name` is an optional property of a `DurableObjectId`, which returns the name that was used to create the `DurableObjectId` via [`DurableObjectNamespace::idFromName`](/durable-objects/api/namespace/#idfromname). This value is undefined if the `DurableObjectId` was constructed using [`DurableObjectNamespace::newUniqueId`](/durable-objects/api/namespace/#newuniqueid).
 
@@ -76,7 +72,10 @@ A boolean. True if equal and false otherwise.
 const uniqueId = env.MY_DURABLE_OBJECT.newUniqueId();
 const fromNameId = env.MY_DURABLE_OBJECT.idFromName("foo");
 console.assert(uniqueId.name === undefined, "unique ids have no name");
-console.assert(fromNameId.name === "foo", "name matches parameter to idFromName");
+console.assert(
+	fromNameId.name === "foo",
+	"name matches parameter to idFromName",
+);
 ```
 
 ## Related resources

@@ -59,7 +59,7 @@ export class MyDurableObject extends DurableObject {
 		super(ctx, env);
 	}
 
-	sayHello(): String {
+	async sayHello(): String {
 		return "Hello, World!";
 	}
 }
@@ -74,7 +74,7 @@ export default {
 		const stub = env.MY_DURABLE_OBJECT.get(id);
 
 		// Methods on the Durable Object are invoked via the stub
-		const rpcResponse = stub.sayHello();
+		const rpcResponse = await stub.sayHello();
 
 		return new Response(rpcResponse);
 	},
@@ -87,8 +87,6 @@ export default {
 
 ### `id`
 
-#### Description
-
 `id` is a property of the `DurableObjectStub` corresponding to the [`DurableObjectId`](/durable-objects/api/id) used to create the stub.
 
 ```js
@@ -98,8 +96,6 @@ console.assert(id.equals(stub.id), "This should always be true");
 ```
 
 ### `name`
-
-#### Description
 
 `name` is an optional property of a `DurableObjectStub`, which returns the name that was used to create the [`DurableObjectId`](/durable-objects/api/id) via [`DurableObjectNamespace::idFromName`](/durable-objects/api/namespace/#idfromname) which was then used to create the `DurableObjectStub`. This value is undefined if the [`DurableObjectId`](/durable-objects/api/id) used to create the `DurableObjectStub` was constructed using [`DurableObjectNamespace::newUniqueId`](/durable-objects/api/namespace/#newuniqueid).
 

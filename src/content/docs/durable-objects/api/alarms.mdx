@@ -37,15 +37,19 @@ Alarms can be used to build distributed primitives, like queues or batching of w
 
 ### getAlarm
 
-- <code>getAlarm()</code>: <Type text ='number | null' />
+- <code>getAlarm()</code>: <Type text="number | null" />
 
   - If there is an alarm set, then return the currently set alarm time as the number of milliseconds elapsed since the UNIX epoch. Otherwise, return `null`.
 
 ### setAlarm
 
-- <code> setAlarm(scheduledTimeMs <Type text="number" />)</code>: <Type text="void" />
+- <code>
+  	{" "}
+  	setAlarm(scheduledTimeMs <Type text="number" />)
+  </code>
+  : <Type text="void" />
 
-  - Set the time for the alarm to run.  Specify the time as the number of milliseconds elapsed since the UNIX epoch.
+  - Set the time for the alarm to run. Specify the time as the number of milliseconds elapsed since the UNIX epoch.
 
 ### deleteAlarm
 
@@ -72,7 +76,7 @@ Alarms can be used to build distributed primitives, like queues or batching of w
 This example shows how to both set alarms with the `setAlarm(timestamp)` method and handle alarms with the `alarm()` handler within your Durable Object.
 
 - The `alarm()` handler will be called once every time an alarm fires.
-- If an unexpected error terminates the Durable Object, the `alarm()` handler will be re-instantiated on another machine.
+- If an unexpected error terminates the Durable Object, the `alarm()` handler may be re-instantiated on another machine.
 - Following a short delay, the `alarm()` handler will run from the beginning on the other machine.
 
 ```js
