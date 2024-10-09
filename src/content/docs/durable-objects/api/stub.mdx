@@ -22,7 +22,7 @@ export class MyDurableObject extends DurableObject {
 		super(ctx, env);
 	}
 
-	sayHello() {
+	async sayHello() {
 		return "Hello, World!";
 	}
 }
@@ -37,7 +37,7 @@ export default {
 		const stub = env.MY_DURABLE_OBJECT.get(id);
 
 		// Methods on the Durable Object are invoked via the stub
-		const rpcResponse = stub.sayHello();
+		const rpcResponse = await stub.sayHello();
 
 		return new Response(rpcResponse);
 	},
@@ -59,7 +59,7 @@ export class MyDurableObject extends DurableObject {
 		super(ctx, env);
 	}
 
-	async sayHello(): String {
+	async sayHello(): Promise<string> {
 		return "Hello, World!";
 	}
 }
