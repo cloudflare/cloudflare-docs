@@ -104,6 +104,7 @@ export default defineConfig({
 	experimental: {
 		contentIntellisense: true,
 		contentLayer: true,
+		directRenderScript: true,
 	},
 	server: {
 		port: 1111,
@@ -223,13 +224,4 @@ export default defineConfig({
 		}),
 		react(),
 	],
-	vite: {
-		build: {
-			rollupOptions: {
-				output: {
-					entryFileNames: "_astro/[name].js",
-				},
-			},
-		},
-	},
 });
