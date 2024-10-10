@@ -39,7 +39,7 @@ This document outlines how to combine both solutions to enhance Cloudflare Acces
 ## Use-cases
 
 - **Custom authorization logic**: Access External evaluation using Workers as a backend (for example, using your own implementation of [Open Policy Agent aka OPA](https://www.openpolicyagent.org/integrations/cloudflare-worker/)])
-- **Augmented [JSON Web Token (JWT)](https://developers.cloudflare.com/cloudflare-one/identity/authorization-cookie/validating-json/)**: Using Cloudflare’s own authentication JWT material, for example, adding posture details as part of an incoming request.
+- **Augmented [JSON Web Token (JWT)](https://developers.cloudflare.com/cloudflare-one/identity/authorization-cookie/validating-json/)**: Using Cloudflare's own authentication JWT material, for example, adding posture details as part of an incoming request.
 - **Serverless augmented apps protected with Zero-trust**: Allowing anyone building serverless applications to benefit from native ZTNA features
 
 
@@ -52,9 +52,9 @@ The following outlines how organizations can run their own custom business logic
 
 ### 1. Custom authorization process using your own rules
 
-During policy evaluation, the [external evaluation](https://developers.cloudflare.com/cloudflare-one/policies/access/external-evaluation/) rule allows for executing your own code during access policy evaluation. In this example an API exposed by Cloudflare Workers receives data about the user making the request, the important part being their username. 
+During policy evaluation, the [external evaluation](/cloudflare-one/policies/access/external-evaluation/) rule allows for executing your own code during access policy evaluation. In this example an API exposed by Cloudflare Workers receives data about the user making the request, the important part being their username.
 
-The code typically makes  calls to either a [database](https://developers.cloudflare.com/d1/) or another API to evaluate if the passed username has access to the application. The external evaluation rule requires that the call returns either a True or False, and this is combined with the policy to determine access.
+The code typically makes calls to either a [database](/d1/) or another API to evaluate if the passed username has access to the application. The external evaluation rule requires that the call returns either a True or False, and this is combined with the policy to determine access.
 
 <LinkCard
     title="Learn more"
@@ -66,7 +66,7 @@ The code typically makes  calls to either a [database](https://developers.cloudf
 
 When a user successfully authenticates and is authorized to access a protected application, Cloudflare inserts a [JSON Web Token (JWT)](https://developers.cloudflare.com/cloudflare-one/identity/authorization-cookie/validating-json/) into the HTTP traffic sent to the origin. This token serves as a valuable asset for expanding custom business logic through secure processing. The format for that JWT is deterministic and rather lightweight to avoid overloading the requests towards origin unnecessarily. 
 
-Here is an example of a JWT send to an origin (use [jwt.io](http://jwt.io) to read the contents of a JWT)
+Here is an example of a JWT sent to an origin (use [JWT.io](http://jwt.io) to read the contents of a JWT)
 
 
 ```json title="JWT content"
@@ -87,9 +87,9 @@ Here is an example of a JWT send to an origin (use [jwt.io](http://jwt.io) to re
 }
 ```
 
-Cloudflare exposes a specific [endpoint](https://developers.cloudflare.com/cloudflare-one/identity/authorization-cookie/validating-json/#_top) to allow anyone to validate and expand a Cloudflare signed JWT. 
+Cloudflare exposes a specific [endpoint](/cloudflare-one/identity/authorization-cookie/validating-json/#_top) to allow anyone to validate and expand a Cloudflare signed JWT.
 
-Cloudflare’s Workers are a great candidate for interacting with incoming JSON Web Tokens (JWTs), enabling additional processing directly within the serverless platform without introducing any added latency.
+Cloudflare's Workers are a great candidate for interacting with incoming JSON Web Tokens (JWTs), enabling additional processing directly within the serverless platform without introducing any added latency.
 
 
 <LinkCard
@@ -100,7 +100,7 @@ Cloudflare’s Workers are a great candidate for interacting with incoming JSON 
 
 ### 3. Augment the authentication material (JWT) with extra authentication details
 
-In some situations, it is beneficial to elaborate on this JWT in order to execute additional processing on the protected destination application (for example, adding device [posture details](https://developers.cloudflare.com/cloudflare-one/identity/devices/) as part of an incoming request).
+In some situations, it is beneficial to elaborate on this JWT in order to execute additional processing on the protected destination application (for example, adding device [posture details](/cloudflare-one/identity/devices/) as part of an incoming request).
 
 In the following example, we want to make sure the exposed application is aware of the  status of the device's firewall and disk encryption (Note that the WARP client needs to be installed on the client machine for these signals to be collected).
 
@@ -184,7 +184,7 @@ Using the details in the JWT, you can use a Worker to extract the details of the
 
 ## Related Resources
 
-- [External Evaluation rules](https://developers.cloudflare.com/cloudflare-one/policies/access/external-evaluation/)
-- [SASE reference architecture](https://developers.cloudflare.com/reference-architecture/architectures/sase/)
-- [External Evaluation rules Developer Documentation](https://developers.cloudflare.com/cloudflare-one/policies/access/external-evaluation/)
+- [External Evaluation rules](/cloudflare-one/policies/access/external-evaluation/)
+- [SASE reference architecture](/reference-architecture/architectures/sase/)
+- [External Evaluation rules Developer Documentation](/cloudflare-one/policies/access/external-evaluation/)
 - [External Evaluation blog post](https://blog.cloudflare.com/access-external-validation-rules/)
