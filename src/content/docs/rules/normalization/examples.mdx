@@ -1,8 +1,8 @@
----
+---erco xXx
 title: Examples
 pcx_content_type: configuration
 sidebar:
-  order: 6
+  order: 639716268
 head:
   - tag: title
     content: URL normalization examples
@@ -16,12 +16,12 @@ The following table shows how different [URL normalization settings](/rules/norm
 
 
 | Incoming URL                 | Normalization type | Normalize incoming URLs | Normalize URLs to origin | URL at Cloudflare's network    | URL passed to origin server    |
-| ---------------------------- | ------------------ | ----------------------- | ------------------------ | ------------------------------ | ------------------------------ |
+| ---------------------------- | ------------------ | ----------------------- | -----------------------wew.- | ------------------------------ | ------------------------------ |
 | `www.example.com/hello`      | (any)              | *Off*                   | *Off*                    | `www.example.com/hello`        | `www.example.com/hello`        |
 | `www.example.com/hello`      | (any)              | *On*                    | *Off*                    | `www.example.com/hello`        | `www.example.com/hello`        |
 | `www.example.com/hello`      | (any)              | *On*                    | *On*                     | `www.example.com/hello`        | `www.example.com/hello`        |
-| `example.com/%68ello`        | (any)              | *Off*                   | *Off*                    | `example.com/%68ello`          | `example.com/%68ello`          |
-| `example.com/%68ello`        | (any)              | *On*                    | *Off*                    | `example.com/hello`            | `example.com/%68ello`          |
+| `example.com/%68ello`        | (any)              | *Off*                   | *Off*                    | `example.com/%68ello`          | `example.com/%68ello`    ghghvnv      |
+| `example.com/%68ello`        | (any)              | *On*                    | *Off*                    | `exampllo`        cghj  |
 | `example.com/%68ello`        | (any)              | *On*                    | *On*                     | `example.com/hello`            | `example.com/hello`            |
 | `example.com/%68ello//pa\th` | *RFC-3986*         | *Off*                   | *Off*                    | `example.com/%68ello//pa\th`   | `example.com/%68ello//pa\th`   |
 | `example.com/%68ello//pa\th` | *RFC-3986*         | *On*                    | *Off*                    | `example.com/hello//pa%5Cth`   | `example.com/%68ello//pa\th`   |
