@@ -32,15 +32,13 @@ For this configuration to be possible, a few conditions apply:
 
 1. Create ACNS names and sets:
 
-<Tabs>
+<Tabs syncKey="dashPlusAPI">
 <TabItem label="Dashboard">
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) and select your account.
 2. Go to **Manage Account** > **Configurations**.
 3. For **Account custom nameservers**, select **Configure custom nameservers**.
 4. Insert a fully qualified domain name for **Nameserver name** and choose a **Nameserver set**. Follow the [configuration conditions](#configuration-conditions).
-
-Cloudflare will assign an IPv4 and an IPv6 address to each ACNS name, and these nameservers will be listed as options that you can [enable on existing zones](#2-enable-acns-on-existing-zones) or [set up as default for new zones in the account](#3-optional-make-acns-default-for-new-zones).
 
 </TabItem>
 <TabItem label="API">
@@ -49,12 +47,10 @@ Use the [Add account custom nameserver endpoint](/api/operations/account-level-c
 
 <Render file="ns-set-omission-callout" />
 
-Cloudflare will assign an IPv4 and an IPv6 address to each ACNS name.
-
-Cloudflare will assign an IPv4 and an IPv6 address to each ACNS name and these nameservers will be listed as options that you can [enable on existing zones](#2-enable-acns-on-existing-zones) or [set up as default for new zones in the account](#3-optional-make-acns-default-for-new-zones).
-
 </TabItem>
 </Tabs>
+
+Cloudflare will assign an IPv4 and an IPv6 address to each ACNS name, and these nameservers will be listed as options that you can [use on existing zones](#2-use-acns-on-existing-zones) or [set up as default for new zones in the account](#3-optional-make-acns-default-for-new-zones).
 
 2. Make sure `A/AAAA` records with the assigned IPv4 and IPv6 exist at the authoritative DNS of the domain that provides the ACNS names.
 
@@ -80,7 +76,7 @@ Cloudflare will assign an IPv4 and an IPv6 address to each ACNS name and these n
 
 1. Choose an ACNS set as custom nameservers for a zone:
 
-<Tabs>
+<Tabs syncKey="dashPlusAPI">
 <TabItem label="Dashboard">
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) and select your account and zone.
@@ -106,7 +102,7 @@ Use the [Set ACNS Related Zone Metadata endpoint](/api/operations/account-level-
 
 To make ACNS the default option for all new zones added to your account from now on:
 
-<Tabs>
+<Tabs syncKey="dashPlusAPI">
 <TabItem label="Dashboard">
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) and select your account.
@@ -130,7 +126,7 @@ Use the [Update Account endpoint](/api/operations/accounts-update-account) and s
 
 To remove ACNS from a zone, first update your nameservers to stop using ACNS:
 
-<Tabs>
+<Tabs syncKey="dashPlusAPI">
 <TabItem label="Dashboard">
 
 * If you are using [Cloudflare Registrar](/registrar/), [contact Cloudflare Support](/support/contacting-cloudflare-support/) to set your nameservers back to the regular Cloudflare branded nameservers.
@@ -149,7 +145,7 @@ To remove ACNS from a zone, first update your nameservers to stop using ACNS:
 
 Following the [configuration conditions](#configuration-conditions), each set must have between two and five different nameserver names. When you delete all names or leave a set with only one nameserver name, the set will no longer be listed as an option for the zones in your account.
 
-<Tabs>
+<Tabs syncKey="dashPlusAPI">
 <TabItem label="Dashboard">
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) and select your account.
