@@ -6,14 +6,14 @@ sidebar:
     text: Beta
 ---
 
-import { Render } from "~/components";
+import { Render, Tabs, TabItem } from "~/components";
 
 AI Gateway allows you to securely export logs to an external storage location, where you can decrypt and process them.
 You can toggle Logpush on and off in the [Cloudflare dashboard](https://dash.cloudflare.com) settings.
 
 This guide explains how to set up Logpush for AI Gateway, generate an RSA key pair for encryption, and decrypt the logs once they are received.
 
-You can store up to 10 million logs per gateway. If your limit is reached, new logs will stop being saved and will not be exported through Logpush. To continue saving and exporting logs, you must delete older logs to free up space for new logs. Logpush has a limit of 4 jobs. 
+You can store up to 10 million logs per gateway. If your limit is reached, new logs will stop being saved and will not be exported through Logpush. To continue saving and exporting logs, you must delete older logs to free up space for new logs. Logpush has a limit of 4 jobs.
 
 :::note[Note]
 
@@ -27,9 +27,14 @@ To configure Logpush for AI Gateway, follow these steps:
 
 ## 1. Generate an RSA key pair locally
 
-You need to generate a key pair to encrypt and decrypt the logs. This script will output your RSA privateKey and publicKey. Keep the private key secure, as it will be used to decrypt the logs. Below is a sample script to generate the keys using Node.js.
+You need to generate a key pair to encrypt and decrypt the logs. This script
+will output your RSA privateKey and publicKey. Keep the private key secure, as
+it will be used to decrypt the logs. Below is a sample script to generate the
+keys using Node.js.
 
-```js title="JavaScript"
+<Tabs syncKey="JSPlusSSL"> <TabItem label="Javascript">
+
+```js
 const crypto = require("crypto");
 
 const { privateKey, publicKey } = crypto.generateKeyPairSync("rsa", {
@@ -54,10 +59,42 @@ Run the script by executing the below code on your terminal. Replace `file name`
 node {file name}
 ```
 
+</TabItem> <TabItem label="OpenSSL">
+
+1. Generate Private Key:
+   Use the following command to generate a RSA private key:
+
+   ```bash
+   openssl genpkey -algorithm RSA -out private_key.pem -pkeyopt rsa_keygen_bits:4096
+   ```
+
+2. Generate Public Key:
+   After generating the private key, you can extract the corresponding public key using:
+
+   ```bash
+   openssl rsa -pubout -in private_key.pem -out public_key.pem
+   ```
+
+3. View Private and Public Keys:
+   You can verify the contents of the generated keys by using the following commands:
+
+   - To view the private key:
+
+     ```bash
+     cat private_key.pem
+     ```
+
+   - To view the public key:
+
+     ```bash
+     cat public_key.pem
+     ```
+
+</TabItem> </Tabs>
 
 ## 2. Upload public key to gateway settings
 
-Once you have generated the key pair, upload the public key to your AI Gateway settings. This key will be used to encrypt your logs. In order to enable Logpush, you will need logs enabled for that gateway. 
+Once you have generated the key pair, upload the public key to your AI Gateway settings. This key will be used to encrypt your logs. In order to enable Logpush, you will need logs enabled for that gateway.
 
 ## 3. Set up Logpush
 
