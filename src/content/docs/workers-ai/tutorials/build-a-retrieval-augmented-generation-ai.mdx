@@ -287,7 +287,12 @@ app.get('/', async (c) => {
   const vectors = embeddings.data[0]
 
   const vectorQuery = await c.env.VECTOR_INDEX.query(vectors, { topK: 1 });
-  const vecId = vectorQuery.matches[0].id
+  let vecId;
+  if (vectorQuery.matches && vectorQuery.matches.length > 0 && vectorQuery.matches[0]) {
+    vecId = vectorQuery.matches[0].id;
+  } else {
+    console.log("No matching vector found or vectorQuery.matches is empty");
+  }
 
   let notes = []
   if (vecId) {
