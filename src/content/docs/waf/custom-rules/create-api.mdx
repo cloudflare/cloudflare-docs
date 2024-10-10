@@ -1,16 +1,16 @@
 ---
 pcx_content_type: how-to
 type: overview
-title: Create via API
+title: Create a custom rule via API
 sidebar:
   order: 3
+  label: Create via API
 head:
   - tag: title
     content: Create a custom rule via API
-
 ---
 
-import { GlossaryTooltip, Render } from "~/components"
+import { GlossaryTooltip, Render } from "~/components";
 
 Use the [Rulesets API](/ruleset-engine/rulesets-api/) to create a custom rule via API.
 
@@ -18,11 +18,18 @@ You must deploy custom rules to the `http_request_firewall_custom` [phase entry 
 
 ## Create a custom rule
 
-<Render file="api-generic-create-rule-procedure" params={{ one: "custom rule", two: "", three: "http_request_firewall_custom" }} />
+<Render
+	file="api-generic-create-rule-procedure"
+	params={{
+		ruleType: "custom rule",
+		extraObject: "",
+		phaseName: "http_request_firewall_custom",
+	}}
+/>
 
 ### Example A
 
-This example request, which covers step 3 in the rule creation procedure, adds a rule to the `http_request_firewall_custom` phase entry point ruleset for the zone with ID `{zone_id}`. The entry point ruleset already exists, with ID `{ruleset_id}`.
+This example request adds a rule to the `http_request_firewall_custom` phase entry point ruleset for the zone with ID `{zone_id}`. The entry point ruleset already exists, with ID `{ruleset_id}`.
 
 The new rule, which will be the last rule in the ruleset, will challenge requests from the United Kingdom or France with a <GlossaryTooltip term="threat score">threat score</GlossaryTooltip> greater than `10`:
 
@@ -41,7 +48,7 @@ curl https://api.cloudflare.com/client/v4/zones/{zone_id}/rulesets/{ruleset_id}/
 
 ### Example B
 
-This example request, which covers step 3 in the rule creation procedure, adds a rule to the `http_request_firewall_custom` phase entry point ruleset for the zone with ID `{zone_id}`. The entry point ruleset already exists, with ID `{ruleset_id}`.
+This example request adds a rule to the `http_request_firewall_custom` phase entry point ruleset for the zone with ID `{zone_id}`. The entry point ruleset already exists, with ID `{ruleset_id}`.
 
 The new rule, which will be the last rule in the ruleset, includes the definition of a [custom response](/waf/custom-rules/create-dashboard/#configure-a-custom-response-for-blocked-requests) for blocked requests:
 
@@ -65,10 +72,16 @@ curl https://api.cloudflare.com/client/v4/zones/{zone_id}/rulesets/{ruleset_id}/
 
 <Render file="api-create-ruleset-with-rule" />
 
-***
+---
 
 ## Next steps
 
 Use the different operations in the [Rulesets API](/ruleset-engine/rulesets-api/) to work with the rule you just created. The following table has a list of common tasks:
 
-<Render file="rules-next-steps-table" params={{ one: "custom rules", two: "http_request_firewall_custom" }} />
+<Render
+	file="rules-next-steps-table"
+	params={{
+		rulesType: "custom rules",
+		phaseName: "http_request_firewall_custom",
+	}}
+/>
