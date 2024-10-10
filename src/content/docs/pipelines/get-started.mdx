@@ -34,11 +34,11 @@ To use Pipelines, you will need:
 ### 1. Enable Pipelines
 TODO
 
-## 1. Set up an R2 bucket to use as a destination
+## 1. Set up an R2 bucket and get your API tokens.
 
-Pipelines are built to ingest data and store it in an R2 bucket. Create a bucket by following the [get started guide for R2](r2/get-started/).
+Pipelines are built to ingest data and store it in an R2 bucket. Create a bucket by following the [get started guide for R2](r2/get-started/). Save the bucket name for the next step.
 
-Save the bucket name for the next step.
+Secondly, make sure to get your R2 API tokens to use in the next step. Follow the guide linked [here](r2/api/s3/tokens/), and make sure to save your Secret Access Key and Access Key IDs.
 
 ## 2. Create a Pipeline
 
@@ -46,9 +46,10 @@ To create a Pipeline using Wrangler, run the following command in a the terminal
 
 - The name of your Pipeline
 - The name of the R2 bucket you created in step 1
+- The R2 API credentials from Step 1
 
 ```sh
-npx wrangler pipelines create [PIPELINE-NAME] --r2 [R2-BUCKET-NAME]
+npx wrangler pipelines create [PIPELINE-NAME] --r2 [R2-BUCKET-NAME] --access-key-id [ACCESS-KEY-ID] --secret-access-key [SECRET-ACCESS-KEY]
 ```
 
 When choosing a name for your Pipeline:
