@@ -670,6 +670,21 @@ export const onRequest: PagesFunction<Env> = async (context) => {
 
 </TabItem> </Tabs>
 
+### Interact with your Hyperdrive configs locally
+
+You can interact with your Hyperdrive config bindings locally in one of two ways:
+
+- Give you Hyperdrive binding a `localConnectionString` value in your Pages project's `wrangler.toml` file.
+- **Recommended** Export the `WRANGLER_HYPERDRIVE_LOCAL_CONNECTION_STRING_<BINDING_NAME>` environment variable with the connection string to your database.
+
+The local runtime will attempt to connect to your database using the connection string you provide with one of the two options above.
+
+:::note
+
+For more information about using Hyperdrive locally, see [this page](/hyperdrive/configuration/local-development/).
+
+:::
+
 ## Analytics Engine
 
 The [Analytics Engine](/analytics/analytics-engine/) binding enables you to write analytics within your Pages Function.
