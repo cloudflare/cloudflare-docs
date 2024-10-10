@@ -9,22 +9,29 @@ head:
 
 ---
 
-import { CardGrid, Description, Feature, LinkTitleCard } from "~/components"
+import { CardGrid, Description, Feature, LinkTitleCard, Plan } from "~/components"
 
 <Description>
 
 Store, transform, optimize, and deliver images at scale 
 </Description>
 
-Cloudflare Images provides an end-to-end solution to build and maintain your image infrastructure from one API.
+<Plan type="all" />
 
-Images runs on [Cloudflare’s global network](https://www.cloudflare.com/network/).
+Cloudflare Images provides an end-to-end solution designed to help you streamline your image infrastructure from a single API and runs on [Cloudflare's global network](https://www.cloudflare.com/network/).
+
+There are two different ways to use Images:
+
+- **Efficiently store and deliver images.** You can upload images into Cloudflare Images and dynamically deliver multiple variants of the same original image.
+- **Optimize images that are stored outside of Images** You can make transformation requests to optimize any publicly available image on the Internet.
+
+Cloudflare Images is available on both [Free and Paid plans](/images/pricing/). By default, all users have access to the Images Free plan, which includes limited usage of the transformations feature to optimize images in remote sources.
 
 :::note[Image Resizing is now available as transformations]
 
-All Image Resizing features are now available as part of the Cloudflare Images product. You can optimize and transform any publicly available image on the Internet. With our new pricing model, you will be billed only once per 30 days for each unique transformation. Read our [Birthday Week 2023 announcement](https://blog.cloudflare.com/merging-images-and-image-resizing/) to learn more about why we made these changes.
+All Image Resizing features are available as transformations with Images. Each unique transformation is billed only once per 30 days. 
 
-If you are using a legacy plan with Image Resizing, visit the [dashboard](https://dash.cloudflare.com/) to switch to the new plan.
+If you are using a legacy plan with Image Resizing, visit the [dashboard](https://dash.cloudflare.com/) to switch to an Imagesplan.
 
 
 :::

@@ -3,22 +3,23 @@ pcx_content_type: reference
 title: Routing
 sidebar:
   order: 2
-
 ---
+
+import { FileTree } from "~/components";
 
 Functions utilize file-based routing. Your `/functions` directory structure determines the designated routes that your Functions will run on. You can create a `/functions` directory with as many levels as needed for your project's use case. Review the following directory:
 
-```
-|---- …
-|---- functions
-      |___ index.js
-      |___ helloworld.js
-      |___ howdyworld.js
-      |___ fruits
-            |___ index.js
-            |___ apple.js
-            |___ banana.js
-```
+<FileTree>
+- ...
+- functions
+	- index.js
+	- helloworld.js
+	- howdyworld.js
+	- fruits
+		- index.js
+		- apple.js
+		- banana.js
+</FileTree>
 
 The following routes will be generated based on the above file structure. These routes map the URL pattern to the `/functions` file that will be invoked when a visitor goes to the URL:
 
@@ -33,9 +34,7 @@ The following routes will be generated based on the above file structure. These 
 
 :::note[Trailing slash]
 
-
 Trailing slash is optional. Both `/foo` and `/foo/` will be routed to `/functions/foo.js` or `/functions/foo/index.js`. If your project has both a `/functions/foo.js` and `/functions/foo/index.js` file, `/foo` and `/foo/` would route to `/functions/foo/index.js`.
-
 
 :::
 
@@ -72,9 +71,7 @@ By placing two sets of brackets around your filename – for example, `/users/[[
 
 :::note[Route specificity]
 
-
 More specific routes (routes with fewer wildcards) take precedence over less specific routes.
-
 
 :::
 
@@ -82,15 +79,15 @@ More specific routes (routes with fewer wildcards) take precedence over less spe
 
 Review the following `/functions/` directory structure:
 
-```
-|---- …
-|---- functions
-      |___ date.js
-      |___ users/
-            |___ special.js
-            |___ [user].js
-            |___ [[catchall]].js
-```
+<FileTree>
+- ...
+- functions
+	- date.js
+	- users
+		- special.js
+		- [user].js
+		- [[catchall]].js
+</FileTree>
 
 The following requests will match the following files:
 
@@ -131,9 +128,7 @@ On a purely static project, Pages offers unlimited free requests. However, once 
 
 :::note
 
-
 Some frameworks (such as Remix, SvelteKit) will also automatically generate a `_routes.json` file. However, if your preferred framework does not, create an issue on their framework repository with a link to this page or let us know on [Discord](https://discord.cloudflare.com). Refer to the [Framework guide](/pages/framework-guides/) for more information on full-stack frameworks.
-
 
 :::
 
@@ -149,9 +144,7 @@ This file will include three different properties:
 
 :::note
 
-
 Wildcards match any number of path segments (slashes). For example, `/users/*` will match everything after the`/users/` path.
-
 
 :::
 

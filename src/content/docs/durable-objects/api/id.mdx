@@ -1,0 +1,83 @@
+---
+title: Durable Object ID
+pcx_content_type: concept
+sidebar:
+  order: 2
+---
+
+import { Tabs, TabItem } from "~/components";
+
+## Description
+
+The `DurableObjectId` interface refers to a new or existing Durable Object instance. This interface is most frequently used by [`DurableObjectNamespace::get`](/durable-objects/api/namespace/#get) to obtain a stub for submitting requests to a Durable Object instance.
+
+Note that creating an ID for a Durable Object instance does not create the Durable Object. The Durable Object is created lazily after calling [`DurableObjectNamespace::get`](/durable-objects/api/namespace/#get) to create a [`DurableObjectStub`](/durable-objects/api/stub) from a `DurableObjectId`. This ensures that objects are not constructed until they are actually accessed.
+
+:::note[`DurableObjectId`]
+
+If you are experiencing an issue with a particular Durable Object instance, you may wish to log the `DurableObjectId` from your Worker and include it in your Cloudflare support request.
+
+:::
+
+## Methods
+
+### `toString`
+
+`toString` converts a `DurableObjectId` to a 64 digit hex string. This string is useful for logging purposes or storing the `DurableObjectId` elsewhere, for example, in a session cookie. This string can be used to reconstruct a `DurableObjectId` via `DurableObjectNamespace::idFromString`.
+
+```js
+// Create a new unique ID
+const id = env.MY_DURABLE_OBJECT.newUniqueId();
+// Convert the ID to a string to be saved elsewhere, e.g. a session cookie
+const session_id = id.toString();
+
+...
+// Recreate the ID from the string
+const id = env.MY_DURABLE_OBJECT.idFromString(session_id);
+```
+
+#### Parameters
+
+- None.
+
+#### Return values
+
+- A 64 digit hex string.
+
+### `equals`
+
+`equals` is used to compare equality between two instances of `DurableObjectId`.
+
+```js
+const id1 = env.MY_DURABLE_OBJECT.newUniqueId();
+const id2 = env.MY_DURABLE_OBJECT.newUniqueId();
+console.assert(!id1.equals(id2), "Different unique ids should never be equal.");
+```
+
+#### Parameters
+
+- A required `DurableObjectId` to compare against.
+
+#### Return values
+
+- A boolean. True if equal and false otherwise.
+
+## Properties
+
+### `name`
+
+`name` is an optional property of a `DurableObjectId`, which returns the name that was used to create the `DurableObjectId` via [`DurableObjectNamespace::idFromName`](/durable-objects/api/namespace/#idfromname). This value is undefined if the `DurableObjectId` was constructed using [`DurableObjectNamespace::newUniqueId`](/durable-objects/api/namespace/#newuniqueid).
+
+```js
+const uniqueId = env.MY_DURABLE_OBJECT.newUniqueId();
+const fromNameId = env.MY_DURABLE_OBJECT.idFromName("foo");
+console.assert(uniqueId.name === undefined, "unique ids have no name");
+console.assert(
+	fromNameId.name === "foo",
+	"name matches parameter to idFromName",
+);
+```
+
+## Related resources
+
+- [Durable Objects: Easy, Fast, Correct – Choose Three](https://blog.cloudflare.com/durable-objects-easy-fast-correct-choose-three/).

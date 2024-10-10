@@ -52,6 +52,16 @@ When an [individual endpoint becomes unhealthy](#how-an-endpoint-becomes-unhealt
 * **Health unknown**: There are either no monitors attached to pool endpoints or the monitors have not yet determined endpoint health.
 * **No health**: Reserved for your load balancer's [**Fallback Pool**](#fallback-pools).
 
+:::note
+
+
+1) When no monitor is attached to a pool, the health status is not considered during steering.
+2) Origins are considered down when monitoring is enabled, but the health status is still unknown.
+3) If there are no monitors, a fallback pool is still required, but it will only be used if all the default pools have origins with FQDN addresses that cannot be resolved.
+
+
+:::
+
 ### Traffic distribution
 
 <Render file="unhealthy-pool-traffic-distribution" />

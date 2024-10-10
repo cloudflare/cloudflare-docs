@@ -7,34 +7,70 @@ head: []
 description: Cloudflare recommends two tunnels for each ISP and network location
   router combination, one per Cloudflare endpoint. Learn how to configure IPsec
   or GRE tunnels.
-
 ---
 
-import { GlossaryTooltip, Render } from "~/components"
+import { GlossaryTooltip, Render } from "~/components";
 
-<Render file="tunnel-endpoints/tunnel-endpoints" params={{ one: " " }} />
+<Render file="tunnel-endpoints/tunnel-endpoints" params={{ ipRange: " " }} />
 
 ## Ways to onboard traffic to Cloudflare
 
 ### GRE and IPsec tunnels
 
-<Render file="tunnel-endpoints/gre-ipsec" params={{ one: "Magic Transit", two: "/magic-transit/reference/tunnels/", three: "/magic-transit/reference/tunnels/#supported-configuration-parameters" }} />
+<Render
+	file="tunnel-endpoints/gre-ipsec"
+	params={{
+		productName: "Magic Transit",
+		tunnelsPath: "/magic-transit/reference/tunnels/",
+		ciphersPath:
+			"/magic-transit/reference/tunnels/#supported-configuration-parameters",
+	}}
+/>
 
 #### Anti-replay protection
 
-<Render file="tunnel-endpoints/anti-replay" params={{ one: "Magic Transit", two: "/magic-transit/reference/anti-replay-protection/" }} />
+<Render
+	file="tunnel-endpoints/anti-replay"
+	params={{
+		productName: "Magic Transit",
+		antiReplayPagePath: "/magic-transit/reference/anti-replay-protection/",
+	}}
+/>
 
 ### Network Interconnect (CNI)
 
-<Render file="tunnel-endpoints/cni" params={{ one: "Magic Transit", two: "Network Interconnect and Magic Transit", three: "/magic-transit/network-interconnect/" }} />
+<Render
+	file="tunnel-endpoints/cni"
+	params={{
+		magicName: "Magic Transit",
+		cniPath: "Network Interconnect and Magic Transit",
+		productLink: "/magic-transit/network-interconnect/",
+	}}
+/>
 
 ## Add tunnels
 
-<Render file="tunnel-endpoints/add-tunnels" params={{ one: "Magic Transit", two: "Magic Transit > Configuration", three: "/magic-transit/how-to/tunnel-health-checks/", four: "/magic-transit/reference/tunnel-health-checks/", five: "/magic-transit/reference/anti-replay-protection/", six: "unidirectional", seven: "/magic-transit/how-to/check-tunnel-health-dashboard/" }} />
+<Render
+	file="tunnel-endpoints/add-tunnels"
+	params={{
+		productName: "Magic Transit",
+		productPathDash: "Magic Transit > Configuration",
+		healthCheck: "/magic-transit/how-to/tunnel-health-checks/",
+		productPathProbe: "/magic-transit/reference/tunnel-health-checks/",
+		antiReplayPagePath: "/magic-transit/reference/anti-replay-protection/",
+		BiVsUniHealthCheck: "unidirectional",
+		tunnelHealthDash: "/magic-transit/how-to/check-tunnel-health-dashboard/",
+	}}
+/>
 
 ## Bidirectional vs unidirectional health checks
 
-<Render file="tunnel-endpoints/bi-uni-health-checks" params={{ one: "/magic-transit/reference/tunnel-health-checks/" }} />
+<Render
+	file="tunnel-endpoints/bi-uni-health-checks"
+	params={{
+		productPathProbe: "/magic-transit/reference/tunnel-health-checks/",
+	}}
+/>
 
 <Render file="tunnel-endpoints/mt-egress" />
 

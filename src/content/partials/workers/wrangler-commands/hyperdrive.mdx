@@ -2,7 +2,7 @@
 {}
 ---
 
-import { AnchorHeading } from "~/components";
+import { AnchorHeading, Type, MetaInfo } from "~/components";
 
 <AnchorHeading title="`create`" slug="hyperdrive-create" depth={3} />
 
@@ -12,31 +12,31 @@ Create a new Hyperdrive configuration.
 wrangler hyperdrive create <CONFIG_NAME> [OPTIONS]
 ```
 
-- `CONFIG_NAME` string required
+- `CONFIG_NAME` <Type text="string" /> <MetaInfo text="required" />
   - The name of the Hyperdrive configuration to create.
-- `--connection-string` string optional
+- `--connection-string` <Type text="string" /> <MetaInfo text="optional" />
   - The database connection string in the form `postgres://user:password@hostname:port/database`.
-- `--host` string optional
+- `--host` <Type text="string" /> <MetaInfo text="optional" />
   - The hostname or IP address Hyperdrive should connect to.
-- `--port` number optional
+- `--port` <Type text="number" /> <MetaInfo text="optional" />
   - The database port to connect to.
-- `--scheme` string optional
+- `--scheme` <Type text="string" /> <MetaInfo text="optional" />
   - The scheme used to connect to the origin database, for example, postgresql or postgres.
-- `--database` string optional
+- `--database` <Type text="string" /> <MetaInfo text="optional" />
   - The database (name) to connect to. For example, Postgres or defaultdb.
-- `--user` string optional
+- `--user` <Type text="string" /> <MetaInfo text="optional" />
   - The username used to authenticate to the database.
-- `--password` string optional
+- `--password` <Type text="string" /> <MetaInfo text="optional" />
   - The password used to authenticate to the database.
-- `--access-client-id` string optional
+- `--access-client-id` <Type text="string" /> <MetaInfo text="optional" />
   - The Client ID of the Access token to use when connecting to the origin database, must be set with a Client Access Secret. Mutually exclusive with `port`.
-- `--access-client-secret` string optional
+- `--access-client-secret` <Type text="string" /> <MetaInfo text="optional" />
   - The Client Secret of the Access token to use when connecting to the origin database, must be set with a Client Access ID. Mutually exclusive with `port`.
-- `--caching-disabled` boolean optional
+- `--caching-disabled` <Type text="boolean" /> <MetaInfo text="optional" />
   - Disables the caching of SQL responses.
-- `--max-age` number optional
+- `--max-age` <Type text="number" /> <MetaInfo text="optional" />
   - Specifies max duration for which items should persist in the cache, cannot be set when caching is disabled.
-- `--swr` number optional
+- `--swr` <Type text="number" /> <MetaInfo text="optional" />
   - Stale While Revalidate - Indicates the number of seconds cache may serve the response after it becomes stale, cannot be set when caching is disabled.
 
 <AnchorHeading title="`update`" slug="hyperdrive-update" depth={3} />
@@ -47,29 +47,29 @@ Update an existing Hyperdrive configuration.
 wrangler hyperdrive update <ID> [OPTIONS]
 ```
 
-- `ID` string required
+- `ID` <Type text="string" /> <MetaInfo text="required" />
   - The ID of the Hyperdrive configuration to update.
-- `--name` string optional
+- `--name` <Type text="string" /> <MetaInfo text="optional" />
   - The new name of the Hyperdrive configuration.
-- `--origin-host` string optional
+- `--origin-host` <Type text="string" /> <MetaInfo text="optional" />
   - The new database hostname or IP address Hyperdrive should connect to.
-- `--origin-port` string optional
+- `--origin-port` <Type text="string" /> <MetaInfo text="optional" />
   - The new database port to connect to.
-- `--database` string optional
+- `--database` <Type text="string" /> <MetaInfo text="optional" />
   - The new database (name) to connect to. For example, Postgres or defaultdb.
-- `--origin-user` string optional
+- `--origin-user` <Type text="string" /> <MetaInfo text="optional" />
   - The new username used to authenticate to the database.
-- `--origin-password` string optional
+- `--origin-password` <Type text="string" /> <MetaInfo text="optional" />
   - The new password used to authenticate to the database.
-- `--access-client-id` string optional
+- `--access-client-id` <Type text="string" /> <MetaInfo text="optional" />
   - The Client ID of the Access token to use when connecting to the origin database, must be set with a Client Access Secret. Mutually exclusive with `origin-port`.
-- `--access-client-secret` string optional
+- `--access-client-secret` <Type text="string" /> <MetaInfo text="optional" />
   - The Client Secret of the Access token to use when connecting to the origin database, must be set with a Client Access ID. Mutually exclusive with `origin-port`.
-- `--caching-disabled` boolean optional
+- `--caching-disabled` <Type text="boolean" /> <MetaInfo text="optional" />
   - Disables the caching of SQL responses.
-- `--max-age` number optional
+- `--max-age` <Type text="number" /> <MetaInfo text="optional" />
   - Specifies max duration for which items should persist in the cache, cannot be set when caching is disabled.
-- `--swr` number optional
+- `--swr` <Type text="number" /> <MetaInfo text="optional" />
   - Stale While Revalidate - Indicates the number of seconds cache may serve the response after it becomes stale, cannot be set when caching is disabled.
 
 <AnchorHeading title="`list`" slug="hyperdrive-list" depth={3} />
@@ -88,7 +88,7 @@ Delete an existing Hyperdrive configuration.
 wrangler hyperdrive delete <ID>
 ```
 
-- `ID` string required
+- `ID` <Type text="string" /> <MetaInfo text="required" />
   - The name of the Hyperdrive configuration to delete.
 
 <AnchorHeading title="`get`" slug="hyperdrive-get" depth={3} />
@@ -99,5 +99,5 @@ Get an existing Hyperdrive configuration.
 wrangler hyperdrive get <ID>
 ```
 
-- `ID` string required
+- `ID` <Type text="string" /> <MetaInfo text="required" />
   - The name of the Hyperdrive configuration to get.

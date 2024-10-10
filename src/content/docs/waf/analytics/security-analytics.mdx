@@ -14,7 +14,7 @@ Use the Security Analytics dashboard to:
 - View the traffic distribution for your domain.
 - Understand which traffic is being mitigated by Cloudflare security products, and where non-mitigated traffic is being served from (Cloudflare global network or origin server).
 - Analyze suspicious traffic and create tailored WAF custom rules based on applied filters.
-- Learn more about Cloudflare's security scores (<GlossaryTooltip term="attack score" link="/waf/about/waf-attack-score/">attack score</GlossaryTooltip>, [bot score](/bots/concepts/bot-score/), [malicious uploads](/waf/detections/malicious-uploads/), and [leaked credentials](/waf/detections/leaked-credentials/) results) with real data.
+- Learn more about Cloudflare's security scores (<GlossaryTooltip term="attack score" link="/waf/detections/attack-score/">attack score</GlossaryTooltip>, [bot score](/bots/concepts/bot-score/), [malicious uploads](/waf/detections/malicious-uploads/), and [leaked credentials](/waf/detections/leaked-credentials/) results) with real data.
 - [Find an appropriate rate limit](/waf/rate-limiting-rules/find-rate-limit/) for incoming traffic.
 
 If you need to modify existing security-related rules you already configured, consider also using the [Security Events](/waf/analytics/security-events/) dashboard. This dashboard displays information about requests affected by Cloudflare security products.
@@ -124,7 +124,7 @@ By default, Security Analytics uses sampled logs for the logs table. If you are 
 
 #### Sampled logs
 
-This section contains detailed log information for individual ([sampled](#final-remarks)) requests in the selected time frame.
+This section contains detailed log information for individual ([sampled](#sampling)) requests in the selected time frame.
 
 ![The Sampled logs section of Security Analytics showing an expanded log entry with additional details.](~/assets/images/waf/security-analytics/security-analytics-sampled-logs.png)
 

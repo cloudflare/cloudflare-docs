@@ -8,10 +8,6 @@ import { FeatureTable, TabItem, Tabs } from "~/components";
 
 Cloudflare supports proxied WebSocket connections without additional configuration.
 
-## Availability
-
-<FeatureTable id="network.websockets" />
-
 ## Background
 
 WebSockets are open connections sustained between the client and the origin server. Inside a WebSockets connection, the client and the origin can pass data back and forth without having to reestablish sessions. This makes exchanging data within a WebSockets connection fast. WebSockets are often used for real-time applications such as live chat and gaming.
@@ -46,13 +42,9 @@ Cloudflare also supports [ASP.NET SignalR](http://signalr.net/), which helps neg
 
 :::
 
-## What happens if my site exceeds the number of concurrent WebSockets connections that Cloudflare expects?
+## Availability
 
-Immediately, nothing. Cloudflare will allow occasional spikes in usage beyond our guidelines and we will not apply unnecessary limits.
-
-Repeated spikes or high continued usage will prompt a dialogue. Cloudflare will reach out to learn more about your application. We will not impose limit errors for any application without contacting the customer unless we suspect that abuse or an attack is involved.
-
-Customers whose usage claims a disproportionate percentage of resources for their current plan level may be asked to upgrade to the plan level that matches their needs.
+WebSockets are supported on all Cloudflare plans.
 
 ## Technical note
 
