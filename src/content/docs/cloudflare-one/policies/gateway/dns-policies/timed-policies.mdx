@@ -16,16 +16,24 @@ To set a duration for a DNS policy:
 1. In [Zero Trust](https://one.dash.cloudflare.com), go to **Gateway** > **Firewall policies** > **DNS**.
 2. Create a new DNS policy or choose an existing policy and select **Edit**.
 3. In **Configure policy settings**, turn on **Set a policy duration**.
-4. Choose _Duration_ and enter a specific amount of time until the policy turns off or choose _Exact end time_ and enter a specific date and time in your account's time zone for the policy to turn off.
+4. In **Input method**, choose _Duration_ and enter a specific amount of time until the policy turns off or choose \_Exact end date and enter a specific date and time in your account's time zone for the policy to turn off.
 5. Select **Save policy**.
 
 When a policy turns off, it will remain off until you turn it back on.
 
-### Edit policy duration
-
-You can reset the policy duration, which will turn the policy back on for the set time duration. To reset a policy's duration, select the policy and choose **Reset policy duration**.
-
 Policies with a set duration will retain their duration when turned off or on. For example, you can create a policy at 12:00 PM and set it to turn off after six hours. If you turn the policy off at 3:00 PM and turn it back on 4:00 PM, the policy will still turn off at 6:00 PM, six hours after the original time.
+
+### Reset a policy duration
+
+When a policy's time duration expires, you can turn the policy back on for the duration you originally configured. To reset a policy's duration, select the policy and choose **Reset policy duration**.
+
+For policies with an exact end time, you can change the time before the policy turns off. Once the policy reaches its exact end time, you will need to edit the policy and set a new end time. To set a new exact end time:
+
+1. Select the policy.
+2. Choose **Edit**.
+3. Turn on **Set a policy duration**.
+4. In **Input method**, choose _Exact end date_. In **Date and time**, enter a new date and time for the policy to turn off.
+5. Select **Save policy**.
 
 ## Scheduled policies
 
