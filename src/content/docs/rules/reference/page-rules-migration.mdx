@@ -139,21 +139,17 @@ You configured a Page Rule to perform an automatic redirect from HTTP to HTTPS f
 
 1. [Create a single redirect](/rules/url-forwarding/single-redirects/create-dashboard/) to always redirect HTTP requests to HTTPS. You can select the **Redirect from HTTP to HTTPS** rule template or enter the following rule configuration:
 
-    <div class="DocsMarkdown--example">
+   <div class="DocsMarkdown--example">
 
-   - **When incoming requests match**: Custom filter expression
+   - **If incoming requests match**: Wildcard pattern
 
-     - Using the Expression Builder:<br/>
-       `URI Full wildcard "http://*"`
-     - Using the Expression Editor:<br/>
-       `(http.request.full_uri wildcard "http://*")`
+     - Request URL: `http://*`
 
    - **Then**:
-     - **Type**: _Dynamic_
-     - **Expression**: `wildcard_replace(http.request.full_uri, "http://*", "https://${1}")`
-     - **Status code**: _301_
+     - **Target URL:** `https://${1}`
+     - **Status code:** _301_
 
-    </div>
+   </div>
 
 2. Turn off your existing Page Rule and validate the behavior of the redirect you created.
 
