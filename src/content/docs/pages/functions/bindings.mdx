@@ -11,7 +11,7 @@ A [binding](/workers/runtime-apis/bindings/) enables your Pages Functions to int
 
 This guide will instruct you on configuring a binding for your Pages Function. You must already have a Cloudflare Developer Platform resource set up to continue.
 
-:::undefined
+:::note
 
 Pages Functions only support a subset of all [bindings](/workers/runtime-apis/bindings/), which are listed on this page.
 
@@ -605,6 +605,70 @@ export const onRequest: PagesFunction<Env> = async (context) => {
 ### Interact with your Queue Producer binding locally
 
 If using a queue producer binding with a Pages Function, you will be able to send events to a queue locally. However, it is not possible to consume events from a queue with a Pages Function. You will have to create a [separate consumer Worker](/queues/get-started/#5-create-your-consumer-worker) with a [queue consumer handler](/queues/configuration/javascript-apis/#consumer) to consume events from the queue. Wrangler does not yet support running separate producer Functions and consumer Workers bound to the same queue locally.
+
+## Hyperdrive configs
+
+:::note
+
+PostgreSQL drivers like [`Postgres.js`](https://github.com/porsager/postgres) depend on Node.js APIs and as such Functions with Hyperdrive config bindings must be [deployed with Node.js compatibility](/workers/runtime-apis/nodejs).
+
+:::
+
+[Hyperdrive](/hyperdrive/) is a service for connecting to your existing databases from Cloudflare Workers and Pages Functions.
+
+To bind your Hyperdrive config to your Pages Function, you can configure a Hyperdrive binding in [`wrangler.toml`](/pages/functions/wrangler-configuration/#hyperdrive) or the Cloudflare dashboard.
+
+Below is an example of how to use Hyperdrive in your Function. In the following example, your Hyperdrive config is named `HYPERDRIVE` and you can access the binding in your Function code on `context.env`:
+
+<Tabs> <TabItem label="JavaScript" icon="seti:javascript">
+
+```js
+import postgres from "postgres";
+
+export async function onRequest(context) {
+	// create connection to postgres database
+	const sql = postgres(context.env.HYPERDRIVE.connectionString);
+
+	try {
+		const result = await sql`SELECT id, name, value FROM records`;
+
+		return Response.json({result: result})
+	} catch (e) {
+		return Response.json({error: e.message, {status: 500}});
+	}
+}
+```
+
+</TabItem> <TabItem label="TypeScript" icon="seti:typescript">
+
+```ts
+import postgres from "postgres";
+
+interface Env {
+	HYPERDRIVE: Hyperdrive;
+}
+
+type MyRecord = {
+	id: number;
+	name: string;
+	value: string;
+};
+
+export const onRequest: PagesFunction<Env> = async (context) => {
+	// create connection to postgres database
+	const sql = postgres(context.env.HYPERDRIVE.connectionString);
+
+	try {
+		const result = await sql<MyRecord[]>`SELECT id, name, value FROM records`;
+
+		return Response.json({result: result})
+	} catch (e) {
+		return Response.json({error: e.message, {status: 500}});
+	}
+};
+```
+
+</TabItem> </Tabs>
 
 ## Analytics Engine
 

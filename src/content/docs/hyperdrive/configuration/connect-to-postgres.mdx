@@ -5,7 +5,7 @@ sidebar:
   order: 3
 ---
 
-import { TabItem, Tabs } from "~/components";
+import { TabItem, Tabs, Render } from "~/components";
 
 Hyperdrive supports PostgreSQL and PostgreSQL-compatible databases, [popular drivers](#supported-drivers) and Object Relational Mapper (ORM) libraries that use those drivers.
 
@@ -48,9 +48,10 @@ Hyperdrive uses Workers [TCP socket support](/workers/runtime-apis/tcp-sockets/#
 | Driver                        | Documentation                                                                | Minimum Version Required | Notes                                                                                                                                                                                                        |
 | ----------------------------- | ---------------------------------------------------------------------------- | ------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
 | Postgres.js (**recommended**) | [https://github.com/porsager/postgres](https://github.com/porsager/postgres) | `postgres@3.4.4`         | Supported in both Workers & Pages.                                                                                                                                                                           |
-| node-postgres - `pg`          | [https://node-postgres.com/](https://node-postgres.com/)                     | `pg@8.11.0`              | `8.11.4` introduced a bug with URL parsing and will not work. `8.11.5` fixes this. Requires the [`node_compat`](/workers/wrangler/configuration/#add-polyfills-using-wrangler) compatibility flag to be set. |
+| node-postgres - `pg`          | [https://node-postgres.com/](https://node-postgres.com/)                     | `pg@8.13.0`              | `8.11.4` introduced a bug with URL parsing and will not work. `8.11.5` fixes this. Requires the [`nodejs_compat_v2`](/workers/runtime-apis/nodejs/) compatibility flag to be set. Requires wrangler `3.78.7` or later. |
 | Drizzle                       | [https://orm.drizzle.team/](https://orm.drizzle.team/)                       | `0.26.2`^                |                                                                                                                                                                                                              |
 | Kysely                        | [https://kysely.dev/](https://kysely.dev/)                                   | `0.26.3`^                |                                                                                                                                                                                                              |
+| [rust-postgres](https://github.com/sfackler/rust-postgres) | [https://docs.rs/postgres/latest/postgres/](https://docs.rs/postgres/latest/postgres/) | `v0.19.8` | Use the [`query_typed`](https://docs.rs/postgres/latest/postgres/struct.Client.html#method.query_typed) method for best performance. |
 
 ^ _The marked libraries use `node-postgres` as a dependency._
 
@@ -86,50 +87,7 @@ The following examples show you how to:
 
 The following Workers code shows you how to use [Postgres.js](https://github.com/porsager/postgres) with Hyperdrive.
 
-Install the Postgres.js driver:
-
-```sh
-npm install postgres
-```
-
-Create a new `sql` instance and pass the Hyperdrive parameters:
-
-<Tabs> <TabItem label="postgres-js">
-
-```ts
-import postgres from "postgres";
-
-export interface Env {
-	// If you set another name in wrangler.toml as the value for 'binding',
-	// replace "HYPERDRIVE" with the variable name you defined.
-	HYPERDRIVE: Hyperdrive;
-}
-
-export default {
-	async fetch(request: Request, env: Env, ctx: ExecutionContext) {
-		// NOTE: if `prepare: false` is passed when connecting, performance will
-		// be slower but still correctly supported.
-		const sql = postgres(env.HYPERDRIVE.connectionString);
-
-		try {
-			// A very simple test query
-			const result = await sql`select * from pg_tables`;
-
-			// Clean up the client, ensuring we don't kill the worker before that is
-			// completed.
-			ctx.waitUntil(sql.end());
-
-			// Return result rows as JSON
-			return Response.json({ result: result });
-		} catch (e) {
-			console.log(e);
-			return Response.json({ error: e.message }, { status: 500 });
-		}
-	},
-} satisfies ExportedHandler<Env>;
-```
-
-</TabItem> </Tabs>
+<Render file="use-postgresjs-to-make-query" product="hyperdrive" />
 
 ### node-postgres / pg
 
@@ -139,17 +97,16 @@ Install the `node-postgres` driver:
 npm install pg
 ```
 
-Ensure you have `node_compat = true` set in your `wrangler.toml` configuration file:
+**Ensure you have `compatibility_flags = ["nodejs_compat_v2"]` set in your `wrangler.toml` configuration file**:
 
 ```toml
 # other fields elided
-# required for node-postgres to work
-node_compat = true
+#
+# Required for node-postgres to work
+compatibility_flags = ["nodejs_compat_v2"]
 ```
 
 Create a new `Client` instance and pass the Hyperdrive parameters:
-
-<Tabs> <TabItem label="node-postgres">
 
 ```ts
 import { Client } from "pg";
@@ -186,8 +143,6 @@ export default {
 	},
 } satisfies ExportedHandler<Env>;
 ```
-
-</TabItem> </Tabs>
 
 ## Identify connections from Hyperdrive
 

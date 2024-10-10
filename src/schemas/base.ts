@@ -1,4 +1,5 @@
 import { z } from "astro:schema";
+import { BadgeConfigSchema } from "./types/badge";
 
 const spotlightAuthorDetails = z
 	.object({
@@ -75,6 +76,7 @@ export const baseSchema = z.object({
 	sidebar: z
 		.object({
 			order: z.number().optional(),
+			label: z.string().optional(),
 			group: z
 				.object({
 					label: z
@@ -89,6 +91,7 @@ export const baseSchema = z.object({
 						.describe(
 							"Hides the index page from the sidebar. Refer to https://developers.cloudflare.com/style-guide/frontmatter/sidebar/.",
 						),
+					badge: BadgeConfigSchema(),
 				})
 				.optional(),
 		})

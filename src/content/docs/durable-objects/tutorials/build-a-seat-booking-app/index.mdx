@@ -1,0 +1,662 @@
+---
+updated: 2024-09-24
+difficulty: Intermediate
+content_type: 📝 Tutorial
+pcx_content_type: tutorial
+title: Build a seat booking app with SQLite in Durable Objects
+products:
+  - Durable Objects
+languages:
+  - TypeScript
+  - SQL
+---
+
+import { Render, PackageManagers, Details } from "~/components";
+
+In this tutorial, you will learn how to build a seat reservation app using Durable Objects. This app will allow users to book a seat for a flight. The app will be written in TypeScript and will use the new [SQLite storage backend in Durable Object](/durable-objects/best-practices/access-durable-objects-storage/#sqlite-storage-backend) to store the data.
+
+Using Durable Objects, you can write reusable code that can handle coordination and state management for multiple clients. Moreover, writing data to SQLite in Durable Objects is synchronous and uses local disks, therefore all queries are executed with great performance. You can learn more about SQLite storage in Durable Objects in the [SQLite in Durable Objects blog post](https://blog.cloudflare.com/sqlite-in-durable-objects).
+
+:::note[SQLite in Durable Objects]
+
+SQLite in Durable Objects is currently in beta. You can learn more about the limitations of SQLite in Durable Objects in the [SQLite in Durable Objects documentation](/durable-objects/best-practices/access-durable-objects-storage/#sql-storage).
+
+:::
+
+The application will function as follows:
+
+- A user navigates to the application with a flight number passed as a query parameter.
+- The application will create a new Durable Object for the flight number, if it does not already exist.
+- If the Durable Object already exists, the application will retrieve the seats information from the SQLite database.
+- If the Durable Object does not exist, the application will create a new Durable Object and initialize the SQLite database with the seats information. For the purpose of this tutorial, the seats information is hard-coded in the application.
+- When a user selects a seat, the application asks for their name. The application will then reserve the seat and store the name in the SQLite database.
+- The application also broadcasts any changes to the seats to all clients.
+
+Let's get started!
+
+## Prerequisites
+
+1. Sign up for a [Cloudflare account](https://dash.cloudflare.com/sign-up/workers-and-pages).
+2. Install [`Node.js`](https://docs.npmjs.com/downloading-and-installing-node-js-and-npm).
+
+<Details header="Node.js version manager">
+	Use a Node version manager like [Volta](https://volta.sh/) or
+	[nvm](https://github.com/nvm-sh/nvm) to avoid permission issues and change
+	Node.js versions. [Wrangler](/workers/wrangler/install-and-update/), discussed
+	later in this guide, requires a Node version of `16.17.0` or later.
+</Details>
+
+## 1. Create a new project
+
+Create a new Worker project to create and deploy your app.
+
+1.  Create a Worker named `seat-booking` by running:
+
+    <PackageManagers
+    	type="create"
+    	pkg="cloudflare@latest"
+    	args={"seat-booking"}
+    />
+
+    <Render
+    	file="c3-post-run-steps"
+    	product="workers"
+    	params={{
+    		category: "hello-world",
+    		type: "Hello World Worker Using Durable Objects",
+    		lang: "TypeScript",
+    	}}
+    />
+
+2.  Change into your new project directory to start developing:
+
+```sh frame="none"
+cd seat-booking
+```
+
+## 2. Create the frontend
+
+The frontend of the application is a simple HTML page that allows users to select a seat and enter their name. The application uses [Workers Static Assets](/workers/static-assets/binding/) to serve the frontend.
+
+1. Create a new directory named `public` in the project root.
+
+2. Create a new file named `index.html` in the `public` directory.
+
+3. Add the following HTML code to the `index.html` file:
+
+<Details header="public/index.html">
+```html title="public/index.html"
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Flight Seat Booking</title>
+		<style>
+			body {
+				font-family: Arial, sans-serif;
+				display: flex;
+				justify-content: center;
+				align-items: center;
+				height: 100vh;
+				margin: 0;
+				background-color: #f0f0f0;
+			}
+			.booking-container {
+				background-color: white;
+				padding: 20px;
+				border-radius: 8px;
+				box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+			}
+			.seat-grid {
+				display: grid;
+				grid-template-columns: repeat(7, 1fr);
+				gap: 10px;
+				margin-top: 20px;
+			}
+			.aisle {
+				grid-column: 4;
+			}
+			.seat {
+				width: 40px;
+				height: 40px;
+				display: flex;
+				justify-content: center;
+				align-items: center;
+				border: 1px solid #ccc;
+				cursor: pointer;
+			}
+			.seat.available {
+				background-color: #5dbf61ba;
+				color: white;
+			}
+			.seat.unavailable {
+				background-color: #f4433673;
+				color: white;
+				cursor: not-allowed;
+			}
+			.airplane {
+				display: flex;
+				flex-direction: column;
+				align-items: center;
+				background-color: #f0f0f0;
+				padding: 20px;
+				border-radius: 20px;
+			}
+		</style>
+	</head>
+	<body>
+		<div class="booking-container">
+			<h2 id="title"></h2>
+			<div class="airplane">
+				<div id="seatGrid" class="seat-grid"></div>
+			</div>
+		</div>
+
+    	<script>
+    		const seatGrid = document.getElementById("seatGrid");
+    		const title = document.getElementById("title");
+
+    		const flightId = window.location.search.split("=")[1];
+
+        const hostname = window.location.hostname;
+
+    		if (flightId === undefined) {
+    			title.textContent = "No Flight ID provided";
+    			seatGrid.innerHTML = "<p>Add `flightId` to the query string</p>";
+    		} else {
+    			handleBooking();
+    		}
+
+    		function handleBooking() {
+    			let ws;
+    			if (hostname === 'localhost') {
+            const port = window.location.port;
+    				ws = new WebSocket(`ws://${hostname}:${port}/ws?flightId=${flightId}`);
+    			} else {
+    				ws = new WebSocket(`wss://${hostname}/ws?flightId=${flightId}`);
+    			}
+
+    			title.textContent = `Book seat for flight ${flightId}`;
+
+    			ws.onopen = () => {
+    				console.log("Connected to WebSocket server");
+    			};
+
+    			function createSeatGrid(seats) {
+    				seatGrid.innerHTML = "";
+    				for (let row = 1; row <= 10; row++) {
+    					for (let col = 0; col < 6; col++) {
+    						if (col === 3) {
+    							const aisle = document.createElement("div");
+    							aisle.className = "aisle";
+    							seatGrid.appendChild(aisle);
+    						}
+
+    						const seatNumber = `${row}${String.fromCharCode(65 + col)}`;
+    						const seat = seats.find((s) => s.seatNumber === seatNumber);
+    						const seatElement = document.createElement("div");
+    						seatElement.className = `seat ${seat && seat.occupant ? "unavailable" : "available"}`;
+    						seatElement.textContent = seatNumber;
+    						seatElement.onclick = () => bookSeat(seatNumber);
+    						seatGrid.appendChild(seatElement);
+    					}
+    				}
+    			}
+
+    			async function fetchSeats() {
+    				const response = await fetch(`/seats?flightId=${flightId}`);
+    				const seats = await response.json();
+    				createSeatGrid(seats);
+    			}
+
+    			async function bookSeat(seatNumber) {
+    				const name = prompt("Please enter your name:");
+    				if (!name) {
+    					return; // User canceled the prompt
+    				}
+
+    				const response = await fetch(`book-seat?flightId=${flightId}`, {
+    					method: "POST",
+    					headers: { "Content-Type": "application/json" },
+    					body: JSON.stringify({ seatNumber, name }),
+    				});
+    				const result = await response.text();
+    				fetchSeats();
+    			}
+
+    			ws.onmessage = (event) => {
+    				try {
+    					const seats = JSON.parse(event.data);
+    					createSeatGrid(seats);
+    				} catch (error) {
+    					console.error("Error parsing WebSocket message:", error);
+    				}
+    			};
+
+    			ws.onerror = (error) => {
+    				console.error("WebSocket error:", error);
+    			};
+
+    			ws.onclose = (event) => {
+    				console.log("WebSocket connection closed:", event);
+    			};
+
+    			fetchSeats();
+    		}
+    	</script>
+    </body>
+
+</html>
+```
+
+</Details>
+
+- The frontend makes an HTTP `GET` request to the `/seats` endpoint to retrieve the available seats for the flight.
+- It also uses a WebSocket connection to receive updates about the available seats.
+- When a user clicks on a seat, the `bookSeat()` function is called that prompts the user to enter their name and then makes a `POST` request to the `/book-seat` endpoint.
+
+4. Update the bindings in `wrangler.toml` to configure `assets` to serve the `public` directory.
+
+```toml title="wrangler.toml"
+[assets]
+directory = "public"
+```
+
+5. If you start the development server using the following command, the frontend will be served at `http://localhost:8787`. However, it will not work because the backend is not yet implemented.
+
+```bash frame=none
+npm run dev
+```
+
+:::note[Workers Static Assets]
+
+[Workers Static Assets](/workers/static-assets/binding/) is currently in beta. You can also use Cloudflare Pages to serve the frontend. However, you will need a separate Worker for the backend.
+
+:::
+
+## 3. Create table for each flight
+
+The application already has the binding for the Durable Objects class configured in `wrangler.toml`. If you update the name of the Durable Objects class in `src/index.ts`, make sure to also update the binding in `wrangler.toml`.
+
+1. Update the binding to use the SQLite storage in Durable Objects. In `wrangler.toml`, replace `new_classes=["Flight"]` with `new_sqlite_classes=["Flight"]`, `name = "FLIGHT"` with `name = "FLIGHT"`, and `class_name = "MyDurableObject"` with `class_name = "Flight"`. Your `wrangler.toml` should look like this:
+
+```toml {9} title="wrangler.toml"
+[[durable_objects.bindings]]
+name = "FLIGHT"
+class_name = "Flight"
+
+# Durable Object migrations.
+# Docs: https://developers.cloudflare.com/workers/wrangler/configuration/#migrations
+[[migrations]]
+tag = "v1"
+new_sqlite_classes = ["Flight"]
+```
+
+Your application can now use the SQLite storage in Durable Objects.
+
+2. Add the `initializeSeats()` function to the `Flight` class. This function will be called when the Durable Object is initialized. It will check if the table exists, and if not, it will create it. It will also insert seats information in the table.
+
+For this tutorial, the function creates an identical seating plan for all the flights. However, in production, you would want to update this function to insert seats based on the flight type.
+
+Replace the `Flight` class with the following code:
+
+```ts title="src/index.ts"
+import { DurableObject } from "cloudflare:workers";
+
+export class Flight extends DurableObject {
+	sql = this.ctx.storage.sql;
+
+	constructor(ctx: DurableObjectState, env: Env) {
+		super(ctx, env);
+		this.initializeSeats();
+	}
+
+	private initializeSeats() {
+		const cursor = this.sql.exec(`PRAGMA table_list`);
+
+		// Check if a table exists.
+		if ([...cursor].find((t) => t.name === "seats")) {
+			console.log("Table already exists");
+			return;
+		}
+
+		this.sql.exec(`
+				  CREATE TABLE IF NOT EXISTS seats (
+					seatId TEXT PRIMARY KEY,
+					occupant TEXT
+				  )
+				`);
+
+		// For this demo, we populate the table with 60 seats.
+		// Since SQLite in DOs is fast, we can do a query per INSERT instead of batching them in a transaction.
+		for (let row = 1; row <= 10; row++) {
+			for (let col = 0; col < 6; col++) {
+				const seatNumber = `${row}${String.fromCharCode(65 + col)}`;
+				this.sql.exec(`INSERT INTO seats VALUES (?, null)`, seatNumber);
+			}
+		}
+	}
+}
+```
+
+3. Add a `fetch` handler to the `Flight` class. This handler will return a text response. In [Step 5](#5-handle-websocket-connections) You will update the `fetch` handler to handle the WebSocket connection.
+
+```ts title="src/index.ts" {3-5}
+import { DurableObject } from "cloudflare:workers";
+
+export class Flight extends DurableObject {
+  ...
+  async fetch(request: Request): Promise<Response> {
+    return new Response("Hello from Durable Object!", { status: 200 });
+  }
+}
+```
+
+4. Next, update the Worker's fetch handler to create a unique Durable Object for each flight.
+
+```ts title="src/index.ts"
+export default {
+	async fetch(request, env, ctx): Promise<Response> {
+		// Get flight id from the query parameter
+		const url = new URL(request.url);
+		const flightId = url.searchParams.get("flightId");
+
+		if (!flightId) {
+			return new Response(
+				"Flight ID not found. Provide flightId in the query parameter",
+				{ status: 404 },
+			);
+		}
+
+		const id = env.FLIGHT.idFromName(flightId);
+		const stub = env.FLIGHT.get(id);
+		return stub.fetch(request);
+	},
+} satisfies ExportedHandler<Env>;
+```
+
+Using the flight ID, from the query parameter, a unique Durable Object is created. This Durable Object is initialized with a table if it does not exist.
+
+## 4. Add methods to the Durable Object
+
+1. Add the `getSeats()` function to the `Flight` class. This function returns all the seats in the table.
+
+```ts title="src/index.ts" {8-22}
+import { DurableObject } from "cloudflare:workers";
+
+export class Flight extends DurableObject {
+    ...
+
+	private initializeSeats() {
+		...
+	}
+
+	// Get all seats.
+	getSeats() {
+		let results = [];
+
+		// Query returns a cursor.
+		let cursor = this.sql.exec(`SELECT seatId, occupant FROM seats`);
+
+		// Cursors are iterable.
+		for (let row of cursor) {
+			// Each row is an object with a property for each column.
+			results.push({ seatNumber: row.seatId, occupant: row.occupant });
+		}
+
+		return results;
+	}
+}
+```
+
+2. Add the `assignSeat()` function to the `Flight` class. This function will assign a seat to a passenger. It takes the seat number and the passenger name as parameters.
+
+```ts title="src/index.ts" {13-48}
+import { DurableObject } from "cloudflare:workers";
+
+export class Flight extends DurableObject {
+	...
+
+	private initializeSeats() {
+		...
+	}
+
+	// Get all seats.
+	getSeats() {
+		...
+	}
+
+	// Assign a seat to a passenger.
+	assignSeat(seatId: string, occupant: string) {
+		// Check that seat isn't occupied.
+		let cursor = this.sql.exec(
+			`SELECT occupant FROM seats WHERE seatId = ?`,
+			seatId,
+		);
+		let result = cursor.toArray()[0]; // Get the first result from the cursor.
+
+		if (!result) {
+			return {message: 'Seat not available',  status: 400 };
+		}
+		if (result.occupant !== null) {
+			return {message: 'Seat not available',  status: 400 };
+		}
+
+		// If the occupant is already in a different seat, remove them.
+		this.sql.exec(
+			`UPDATE seats SET occupant = null WHERE occupant = ?`,
+			occupant,
+		);
+
+		// Assign the seat. Note: We don't have to worry that a concurrent request may
+		// have grabbed the seat between the two queries, because the code is synchronous
+		// (no `await`s) and the database is private to this Durable Object. Nothing else
+		// could have changed since we checked that the seat was available earlier!
+		this.sql.exec(
+			`UPDATE seats SET occupant = ? WHERE seatId = ?`,
+			occupant,
+			seatId,
+		);
+
+		// Broadcast the updated seats.
+		this.broadcastSeats();
+		return {message: `Seat ${seatId} booked successfully`, status: 200 };
+	}
+}
+```
+
+The above function uses the `broadcastSeats()` function to broadcast the updated seats to all the connected clients. In the next section, we will add the `broadcastSeats()` function.
+
+## 5. Handle WebSocket connections
+
+All the clients will connect to the Durable Object using WebSockets. The Durable Object will broadcast the updated seats to all the connected clients. This allows the clients to update the UI in real time.
+
+1. Add the `handleWebSocket()` function to the `Flight` class. This function handles the WebSocket connections.
+
+```ts title="src/index.ts" {18-26}
+import { DurableObject } from "cloudflare:workers";
+
+export class Flight extends DurableObject {
+	...
+
+	private initializeSeats() {
+		...
+	}
+
+	// Get all seats.
+	getSeats() {
+		...
+	}
+
+	// Assign a seat to a passenger.
+	assignSeat(seatId: string, occupant: string) {
+		...
+	}
+
+  private handleWebSocket(request: Request) {
+		console.log('WebSocket connection requested');
+		const [client, server] = Object.values(new WebSocketPair());
+
+		this.ctx.acceptWebSocket(server);
+		console.log('WebSocket connection established');
+
+		return new Response(null, { status: 101, webSocket: client });
+	}
+}
+```
+
+2. Add the `broadcastSeats()` function to the `Flight` class. This function will broadcast the updated seats to all the connected clients.
+
+```ts title="src/index.ts" {22-24}
+import { DurableObject } from "cloudflare:workers";
+
+export class Flight extends DurableObject {
+	...
+
+	private initializeSeats() {
+		...
+	}
+
+	// Get all seats.
+	getSeats() {
+		...
+	}
+
+	// Assign a seat to a passenger.
+	assignSeat(seatId: string, occupant: string) {
+		...
+	}
+
+  private handleWebSocket(request: Request) {
+		...
+	}
+
+  private broadcastSeats() {
+		this.ctx.getWebSockets().forEach((ws) => ws.send(this.getSeats()));
+	}
+}
+```
+
+3. Next, update the `fetch` handler in the `Flight` class. This handler will handle all the incoming requests from the Worker and handle the WebSocket connections using the `handleWebSocket()` method.
+
+```ts title="src/index.ts" {26-28}
+import { DurableObject } from "cloudflare:workers";
+
+export class Flight extends DurableObject {
+	...
+
+	private initializeSeats() {
+		...
+	}
+
+	// Get all seats.
+	getSeats() {
+		...
+	}
+
+	// Assign a seat to a passenger.
+	assignSeat(seatId: string, occupant: string) {
+		...
+	}
+
+  private handleWebSocket(request: Request) {
+		...
+	}
+
+  private broadcastSeats() {
+		...
+	}
+
+  async fetch(request: Request) {
+		return this.handleWebSocket(request);
+	}
+}
+```
+
+4. Finally, update the `fetch` handler of the Worker.
+
+```ts title="src/index.ts" {8-23}
+export default {
+	...
+
+	async fetch(request, env, ctx): Promise<Response> {
+		// Get flight id from the query parameter
+		...
+
+		if (request.method === "GET" && url.pathname === "/seats") {
+			return new Response(JSON.stringify(await stub.getSeats()), {
+				headers: { 'Content-Type': 'application/json' },
+			});
+		} else if (request.method === "POST" && url.pathname === "/book-seat") {
+			const { seatNumber, name } = (await request.json()) as {
+				seatNumber: string;
+				name: string;
+			};
+			const result = await stub.assignSeat(seatNumber, name);
+			return new Response(JSON.stringify(result));
+		} else if (request.headers.get("Upgrade") === "websocket") {
+			return stub.fetch(request);
+		}
+
+		return new Response("Not found", { status: 404 });
+	},
+} satisfies ExportedHandler<Env>;
+```
+
+The `fetch` handler in the Worker now calls appropriate Durable Object function to handle the incoming request. If the request is a `GET` request to `/seats`, the Worker returns the seats from the Durable Object. If the request is a `POST` request to `/book-seat`, the Worker calls the `bookSeat` method of the Durable Object to assign the seat to the passenger. If the request is a WebSocket connection, the Durable Object handles the WebSocket connection.
+
+## 6. Test the application
+
+You can test the application locally by running the following command:
+
+```sh frame="none"
+npm run dev
+```
+
+This starts a local development server that runs the application. The application is served at `http://localhost:8787`.
+
+Navigate to the application at `http://localhost:8787` in your browser. Since the flight ID is not specified, the application displays an error message.
+
+Update the URL with the flight ID as `http://localhost:8787?flightId=1234`. The application displays the seats for the flight with the ID `1234`.
+
+## 7. Deploy the application
+
+To deploy the application, run the following command:
+
+```sh frame="none"
+npm run deploy
+```
+
+```sh output
+ ⛅️ wrangler 3.78.8
+-------------------
+
+🌀 Building list of assets...
+🌀 Starting asset upload...
+🌀 Found 1 new or modified file to upload. Proceeding with upload...
++ /index.html
+Uploaded 1 of 1 assets
+✨ Success! Uploaded 1 file (1.93 sec)
+
+Total Upload: 3.45 KiB / gzip: 1.39 KiB
+Your worker has access to the following bindings:
+- Durable Objects:
+  - FLIGHT: Flight
+Uploaded seat-book (12.12 sec)
+Deployed seat-book triggers (5.54 sec)
+  [DEPLOYED_APP_LINK]
+Current Version ID: [BINDING_ID]
+```
+
+Navigate to the `[DEPLOYED_APP_LINK]` to see the application. Again, remember to pass the flight ID as a query string parameter.
+
+## Summary
+
+In this tutorial, you have:
+
+- used the SQLite storage backend in Durable Objects to store the seats for a flight.
+- created a Durable Object class to manage the seat booking.
+- deployed the application to Cloudflare Workers!
+
+The full code for this tutorial is available on [GitHub](https://github.com/harshil1712/seat-booking-app).

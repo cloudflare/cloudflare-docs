@@ -2,7 +2,7 @@
 title: Render
 ---
 
-import { Steps } from "~/components"
+import { Steps } from "~/components";
 
 The `Render` component allows us to include a "partial", a reusable Markdown snippet, onto a page.
 
@@ -12,7 +12,7 @@ which needs slight differences between usages can be turned into a partial.
 ## Component
 
 ```mdx live
-import { Render } from "~/components"
+import { Render } from "~/components";
 
 <Render file="hello" params={{
     name: "world",
@@ -34,13 +34,13 @@ Hello <code>{props.name}</code>
 ### Inputs
 
 **file** `string`: This should be the name of the partial, without the containing directory or file extension.
-                   For example, `/partials/style-guide/hello.mdx` would be `file="hello"`.
+For example, `/partials/style-guide/hello.mdx` would be `file="hello"`.
 
 **product** `string` (optional): By default, it will look for partials in the same product folder as the current page.
-                        You can use this to specify a different product.
+You can use this to specify a different product.
 
 **params** `object` (optional): If you wish to substitute values inside your partial, you can use pass params which can be
-                                referenced in your partial. Refer to [params](#params).
+referenced in your partial. Refer to [params](#params).
 
 ## Partials
 
@@ -51,10 +51,16 @@ will be thrown.
 ```mdx title="/src/content/partials/style-guide/hello.mdx"
 ---
 params:
-    - name
+  - name
+  - foo
+  - bar
 ---
 
 Hello, {props.name}!
+
+Hello, {props.foo}!
+
+Hello, {props.bar}!
 ```
 
 ### Params
@@ -62,9 +68,11 @@ Hello, {props.name}!
 In the above example, you will notice there is:
 
 <Steps>
-1. A `params` input on the `Render` component
-2. A `params` property in the frontmatter.
+
+1. A `params` input on the `Render` component.
+2. A `params` property in the frontmatter. 
 3. A reference to `props.name`.
+
 </Steps>
 
 #### Input

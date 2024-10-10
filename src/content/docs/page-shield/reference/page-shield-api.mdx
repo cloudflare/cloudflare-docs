@@ -12,7 +12,6 @@ You can enable and disable Page Shield, configure its settings, and fetch inform
 To authenticate API requests you need an [API token](/fundamentals/api/get-started/create-token/). For more information on the required API token permissions, refer to [Roles and permissions](/page-shield/reference/roles-and-permissions/).
 
 :::note
-
 Refer to [API deprecations](/fundamentals/api/reference/deprecations/) for details on Page Shield API changes.
 :::
 
@@ -64,9 +63,7 @@ The following table summarizes the available operations:
 
 ## API notes
 
-- The malicious script classification (`Malicious` or `Not malicious`) is not directly available in the API. To determine this classification, compare the script's `js_integrity_score` value with the classification threshold, which is currently set to 50. Scripts with a score value lower than the threshold are considered malicious.
-
-- The API provides two separate properties for malicious script/connection categories: `malicious_domain_categories` and `malicious_url_categories`, related to the `domain_reported_malicious` and `url_reported_malicious` properties, respectively. The Cloudflare dashboard displays all the categories in a single **Malicious category** field. For more information, refer to [Malicious script and connection categories](/page-shield/how-it-works/malicious-script-detection/#malicious-script-and-connection-categories).
+The malicious script classification (`Malicious` or `Not malicious`) is not directly available in the API. To determine this classification, compare the script's `js_integrity_score` value with the classification threshold, which is currently set to 10. Scripts with a score value lower than the threshold are considered malicious.
 
 ## Common API calls
 
@@ -148,6 +145,9 @@ curl "https://api.cloudflare.com/api/v4/zones/{zone_id}/page_shield/scripts?host
 			"js_integrity_score": 10,
 			"obfuscation_score": 10,
 			"dataflow_score": 8,
+			"malware_score": 8,
+			"cryptomining_score": 9,
+			"magecart_score": 8,
 			"fetched_at": "2023-05-21T16:58:07Z"
 		}
 		// (...)
@@ -197,6 +197,9 @@ curl "https://api.cloudflare.com/api/v4/zones/{zone_id}/page_shield/scripts?stat
 			"js_integrity_score": 48,
 			"obfuscation_score": 49,
 			"dataflow_score": 45,
+			"malware_score": 45,
+			"cryptomining_score": 37,
+			"magecart_score": 49,
 			"fetched_at": "2023-05-18T03:58:07Z"
 		}
 		// (...)
@@ -246,6 +249,9 @@ curl "https://api.cloudflare.com/api/v4/zones/{zone_id}/page_shield/scripts/8337
 		"js_integrity_score": 48,
 		"obfuscation_score": 49,
 		"dataflow_score": 45,
+		"malware_score": 42,
+		"cryptomining_score": 32,
+		"magecart_score": 44,
 		"fetched_at": "2023-05-21T16:58:07Z",
 		"page_urls": [
 			"http://malicious.example.com/page_two.html",
@@ -255,7 +261,12 @@ curl "https://api.cloudflare.com/api/v4/zones/{zone_id}/page_shield/scripts/8337
 		"versions": [
 			{
 				"hash": "9245aad577e846dd9b990b1b32425a3fae4aad8b8a28441a8b80084b6bb75a45",
-				"js_integrity_score": 50,
+				"js_integrity_score": 48,
+				"obfuscation_score": 49,
+				"dataflow_score": 45,
+				"malware_score": 42,
+				"cryptomining_score": 32,
+				"magecart_score": 44,
 				"fetched_at": "2023-05-21T16:58:07Z"
 			}
 		]

@@ -28,9 +28,10 @@ When deleting a migration using `npx wrangler deploy --delete-class <ClassName>`
 
 A single instance of a Durable Object cannot do more work than is possible on a single thread. These errors mean the Durable Object has too much work to keep up with incoming requests:
 
-* `Error: Durable Object is overloaded. Too many requests queued.` The total count of queued requests is too high.
-* `Error: Durable Object is overloaded. Too much data queued.` The total size of data in queued requests is too high.
-* `Error: Durable Object is overloaded. Requests queued for too long.` The oldest request has been in the queue too long.
+- `Error: Durable Object is overloaded. Too many requests queued.` The total count of queued requests is too high.
+- `Error: Durable Object is overloaded. Too much data queued.` The total size of data in queued requests is too high.
+- `Error: Durable Object is overloaded. Requests queued for too long.` The oldest request has been in the queue too long.
+- `Error: Durable Object is overloaded. Too many requests for the same object within a 10 second window.` The number of requests for a Durable Object is too high within a short span of time (10 seconds). This error indicates a more extreme level of overload.
 
 To solve this error, you can either do less work per request, or send fewer requests. For example, you can split the requests among more instances of the Durable Object.
 

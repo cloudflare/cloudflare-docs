@@ -20,7 +20,8 @@ if (prepend) {
 	general_definition = prepend.concat(general_definition);
 }
 
-general_definition = general_definition.charAt(0).toUpperCase() + general_definition.slice(1);
+general_definition =
+	general_definition.charAt(0).toUpperCase() + general_definition.slice(1);
 ---
 
 <Fragment set:html={marked.parse(general_definition)} />
