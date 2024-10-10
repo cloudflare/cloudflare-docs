@@ -25,7 +25,7 @@ Policies with a set duration will retain their duration through activation. For 
 
 ## Scheduled policies
 
-You can use the [Gateway Rules API](/api/operations/zero-trust-gateway-rules-create-zero-trust-gateway-rule) to create a new DNS policy with a schedule or add a schedule to an existing policy. To schedule a policy, send a [`POST`](/api/operations/zero-trust-gateway-rules-create-zero-trust-gateway-rule) or [`PUT`](/api/operations/zero-trust-gateway-rules-update-zero-trust-gateway-rule) request with the `schedule` parameter set to your desired days of the week, times of day, and an optional time zone. The schedule will appear in Zero Trust under **Gateway** > **Firewall policies** > **DNS** when you expand the row for the policy.
+You can use the Gateway API to create a new DNS policy with a schedule or add a schedule to an existing policy. To schedule a policy, use the [Create a Zero Trust Gateway rule endpoint](/api/operations/zero-trust-gateway-rules-create-zero-trust-gateway-rule) or [Update a Zero Trust Gateway rule endpoint](/api/operations/zero-trust-gateway-rules-update-zero-trust-gateway-rule) with the `schedule` parameter set to your desired days of the week, times of day, and an optional time zone. The schedule will appear in Zero Trust under **Gateway** > **Firewall policies** > **DNS** when you select the policy.
 
 ### How Gateway determines time zone
 
@@ -58,11 +58,11 @@ curl "https://api.cloudflare.com/client/v4/accounts/{account_id}/gateway/rules" 
 }'
 ```
 
-Refer to [this table](https://en.wikipedia.org/wiki/List_of_tz_database_time_zones#List) for a list of all time zones.
+Refer to [this table](https://en.wikipedia.org/wiki/List_of_tz_database_time_zones#List) for a list of all time zone identifiers.
 
 #### Example: User's time zone
 
-The following command creates a DNS policy to block `clockin.com` only on weekends, in the time zone where the user is currently located.
+The following command creates a DNS policy to block `clockin.com` only on weekends in the time zone where the user is currently located.
 
 ```bash
 curl "https://api.cloudflare.com/client/v4/accounts/{account_id}/gateway/rules" \
@@ -82,6 +82,5 @@ curl "https://api.cloudflare.com/client/v4/accounts/{account_id}/gateway/rules" 
 ```
 
 :::note
-
 Gateway will not change the policy's `enabled` status when inside or outside of the time period specified. When enabled, Gateway activates or deactivates the policy according to its schedule. When disabled, the policy is always deactivated.
 :::
