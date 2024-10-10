@@ -5,11 +5,18 @@ head: []
 description: Magic Transit uses Generic Routing Encapsulation (GRE) and IPsec
   tunnels to transmit packets from Cloudflare’s global network to your origin
   network.
-
 ---
 
-import { Render } from "~/components"
+import { Render } from "~/components";
 
-<Render file="tunnels-reference/tunnels-encapsulation-opening" params={{ one: "Magic Transit", two: "/magic-transit/get-started/#set-maximum-segment-size", three: "/magic-transit/reference/anti-replay-protection/", four: "/magic-transit/how-to/configure-tunnels/" }} />
+<Render
+	file="tunnels-reference/tunnels-encapsulation-opening"
+	params={{
+		productName: "Magic Transit",
+		mssURL: "/magic-transit/get-started/#set-maximum-segment-size",
+		productURL: "/magic-transit/reference/anti-replay-protection/",
+		tunnelEndpoints: "/magic-transit/how-to/configure-tunnels/",
+	}}
+/>
 
 <Render file="tunnels-reference/tunnels-encapsulation-mt-network-analytics" />

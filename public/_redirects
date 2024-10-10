@@ -132,7 +132,7 @@
 /support/analytics/learn-more/what-are-the-types-of-threats/ /analytics/account-and-zone-analytics/threat-types/ 301
 /analytics/graphql-api/tutorials/build-your-own-analytics/ /analytics/graphql-api/tutorials/ 301
 
-# area1
+# email-security
 /email-security/reporting/search/unified-search/ /email-security/reporting/search/ 301
 /email-security/reporting/search/detection-search/ /email-security/reporting/search/ 301
 /email-security/reporting/search/detection-search/available-parameters/ /email-security/reporting/search/available-parameters/ 301
@@ -370,6 +370,10 @@
 /email-routing/email-routing-options/ /email-routing/setup/ 301
 /email-routing/get-started/email-addresses/ /email-routing/setup/email-routing-addresses/ 301
 /email-routing/known-limitations/ /email-routing/postmaster/ 301
+
+# email-security
+/email-security/setup/api-deployment/ /email-security/setup/post-delivery-deployment/api/ 301
+/email-security/setup/api-deployment/office365-api/ /email-security/setup/post-delivery-deployment/api/office365-api/ 301
 
 # firewall
 /firewall/api/cf-lists/ /waf/tools/lists/lists-api/ 301
@@ -1155,6 +1159,10 @@
 /r2/reference/changelog/index.xml /r2/platform/changelog/index.xml 301
 /r2/reference/limits/ /r2/platform/limits/ 301
 /r2/reference/metrics-analytics/ /r2/platform/metrics-analytics/ 301
+/r2/examples/mastodon/ /r2/tutorials/mastodon/ 301
+/r2/examples/postman/ /r2/tutorials/postman/ 301
+/r2/examples/cloudflare-access/ /r2/tutorials/cloudflare-access/ 301
+/r2/examples/upload-logs-event-notifications/ /r2/tutorials/upload-logs-event-notifications/ 301
 
 # style-guide
 /style-guide/formatting/symbols-in-ui-element-names/ /style-guide/formatting/ui-elements/ 301
@@ -1225,6 +1233,8 @@
 /waf/security-analytics/ /waf/analytics/security-analytics/ 301
 /waf/custom-rules/use-cases/require-valid-hmac-token/ /waf/custom-rules/use-cases/configure-token-authentication/ 301
 /waf/tools/scrape-shield/server-side-excludes/ /waf/tools/scrape-shield/ 301
+/waf/rate-limiting-rules/create-account-dashboard/ /waf/account/rate-limiting-rulesets/create-dashboard/ 301
+/waf/managed-rules/deploy-account-dashboard/ /waf/account/managed-rulesets/deploy-dashboard/ 301
 
 # waiting-room
 /waiting-room/how-to/mobile-traffic/ /waiting-room/how-to/json-response/ 301
@@ -1728,7 +1738,8 @@
 /waf/managed-rulesets/* /waf/managed-rules/:splat 301
 /firewall/recipes/* /waf/custom-rules/use-cases/:splat 301
 /workers/wrangler-legacy/* /workers/wrangler/migration/v1-to-v2/wrangler-legacy/:splat 301
-/waf/custom-rulesets/* /waf/custom-rules/custom-rulesets/:splat 301
+/waf/custom-rulesets/* /waf/account/custom-rulesets/:splat 301
+/waf/custom-rules/custom-rulesets/* /waf/account/custom-rulesets/:splat 301
 /waf/exposed-credentials-check/* /waf/managed-rules/check-for-exposed-credentials/:splat 301
 /waf/security-events/* /waf/analytics/security-events/:splat 301
 /web3/polygon-gateway/* /web3/ 301

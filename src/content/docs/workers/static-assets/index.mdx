@@ -77,7 +77,6 @@ The following limitations apply for Workers with static assets:
 - You cannot upload static assets to [Workers for Platforms](/cloudflare-for-platforms/workers-for-platforms/) [user workers](/cloudflare-for-platforms/workers-for-platforms/reference/how-workers-for-platforms-works/). This is a temporary limitation, we are working to remove it.
 - In local development, you cannot make [Service Binding RPC calls](/workers/runtime-apis/bindings/service-bindings/rpc/) to a Worker with static assets. This is a temporary limitation, we are working to remove it.
 - Workers with assets cannot run on a [route or domain](/workers/configuration/routing/) with a path component. For example, `example.com/*` is an acceptable route, but `example.com/foo/*` is not. Wrangler and the Cloudflare dashboard will throw an error when you try and add a route with a path component.
-- Workers' [Vitest integration](/workers/testing/vitest-integration/) does not currently handle static assets. All requests will reach your Worker script, which can otherwise be tested as usual. This is a temporary limitation — we are working to remove it.
 
 :::note
 

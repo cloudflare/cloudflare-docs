@@ -14,8 +14,10 @@ Labels are controlled by frontmatter properties on a given page, which vary depe
 In order of precedence:
 
 <Steps>
+
 1. `sidebar.label`
 2. `title`
+
 </Steps>
 
 #### On an index page
@@ -29,15 +31,17 @@ Index page labels default to `Overview` if `sidebar.label` is not defined.
 In order of precedence:
 
 <Steps>
+
 1. `sidebar.group.label`
 2. `title`
+
 </Steps>
 
 ### Example
 
 For example, given the following pages:
 
-```mdx title="src/content/docs/foo/bar/index.mdx"
+```mdx title="/src/content/docs/foo/bar/index.mdx"
 ---
 title: Bar
 sidebar:
@@ -47,7 +51,7 @@ sidebar:
 ---
 ```
 
-```mdx title="src/content/docs/foo/bar/baz.mdx"
+```mdx title="/src/content/docs/foo/bar/baz.mdx"
 ---
 title: Baz
 sidebar:
@@ -58,17 +62,21 @@ sidebar:
 The sidebar structure will look like:
 
 <FileTree>
+
 - GroupTitle
   - IndexTitle
   - PageTitle
+
 </FileTree>
 
 If we remove the `sidebar` property from both, it will now look like this:
 
 <FileTree>
+
 - Bar
   - Overview
   - Baz
+
 </FileTree>
 
 ## Ordering
@@ -79,7 +87,7 @@ If `sidebar.order` is not specified, it will fallback to alphabetical ordering.
 
 For example, given the following pages:
 
-```mdx title="src/content/docs/foo/alpha/index.mdx"
+```mdx title="/src/content/docs/foo/alpha/index.mdx"
 ---
 title: Alpha
 sidebar:
@@ -87,7 +95,7 @@ sidebar:
 ---
 ```
 
-```mdx title="src/content/docs/foo/beta/index.mdx"
+```mdx title="/src/content/docs/foo/beta/index.mdx"
 ---
 title: Beta
 sidebar:
@@ -98,19 +106,23 @@ sidebar:
 The sidebar structure will look like:
 
 <FileTree>
+
 - Beta
   - ...
 - Alpha
   - ...
+
 </FileTree>
 
 If we remove the `sidebar` property from both, it will now look like this:
 
 <FileTree>
+
 - Alpha
   - ...
 - Beta
   - ...
+
 </FileTree>
 
 ## Hiding pages
@@ -173,8 +185,10 @@ sidebar:
 ```
 
 <FileTree>
+
 - Examples
   - Example [New!]
+
 </FileTree>
 
 ### Groups
@@ -191,6 +205,8 @@ sidebar:
 ```
 
 <FileTree>
+
 - Examples [New!]
   - Example
+
 </FileTree>

@@ -67,7 +67,10 @@ import * as codeOwnersUtils from "codeowners-utils";
 		console.log(assignees);
 
 		if (assignees.size === 0) {
-			assignees.add("kodster28");
+			// assign folks which will manually reassign
+			["haleycode", "pedrosousa", "dcpena", "patriciasantaana"].forEach(
+				(username) => assignees.add(username),
+			);
 		}
 
 		const client = github.getOctokit(token);

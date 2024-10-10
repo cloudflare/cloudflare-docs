@@ -2,7 +2,7 @@
 title: Storage API
 pcx_content_type: concept
 sidebar:
-  order: 2
+  order: 4
 
 ---
 
@@ -100,7 +100,9 @@ Each method is implicitly wrapped inside a transaction, such that its results ar
 
 * <code>deleteAll(options <Type text='Object' /> <MetaInfo text='optional' />)</code>: <Type text='Promise' />
 
-  * Deletes all keys and associated values, effectively deallocating all storage used by the Durable Object. In the event of a failure while the `deleteAll()` operation is still in flight, it may be that only a subset of the data is properly deleted. `deleteAll()` does not proactively delete [Alarms](/durable-objects/api/alarms/). Use [`deleteAlarm()`](/durable-objects/api/alarms/#deletealarm) to delete an alarm.
+  * Deletes all stored data, effectively deallocating all storage used by the Durable Object. For Durable Objects with a key-value storage backend, `deleteAll()` removes all keys and associated values for an individual Durable Object. For Durable Objects with a [SQLite storage backend](/durable-objects/best-practices/access-durable-objects-storage/#sqlite-storage-backend), `deleteAll()` removes the entire contents of a Durable Object's private SQLite database, including both SQL data and key-value data.
+  * For Durable Objects with a key-value storage backend, an in-progress `deleteAll()` operation can fail, which may leave a subset of data undeleted. Durable Objects with a SQLite storage backend do not have a partial `deleteAll()` issue because `deleteAll()` operations are atomic (all or nothing).
+  * `deleteAll()` does not proactively delete [Alarms](/durable-objects/api/alarms/). Use [`deleteAlarm()`](/durable-objects/api/alarms/#deletealarm) to delete an alarm.
 
 #### Supported options
 
@@ -199,12 +201,6 @@ The `put()` method returns a `Promise`, but most applications can discard this p
 
   * This is similar to normal behavior from automatic write coalescing. If there are any pending writes in the write buffer (including those submitted with [the `allowUnconfirmed` option](/durable-objects/api/storage-api/#supported-options-1)), the returned promise will resolve when they complete. If there are no pending writes, the returned promise will be already resolved.
 
-:::note[Alarms disabled for SQLite in Durable Objects Beta]
-
-An issue was identified with [alarms](/durable-objects/api/alarms/) in [beta Durable Object classes with a SQLite storage backend](/durable-objects/best-practices/access-durable-objects-storage/#sqlite-storage-backend). Alarms have been temporarily disabled for only SQLite-backed Durable Objects while a fix is implemented. Alarms in Durable Objects with default, key-value storage backend are unaffected and continue to operate.
-
-:::
-
 ### getAlarm
 
 * <code>getAlarm(options <Type text='Object' /> <MetaInfo text='optional' />)</code>: <Type text='Promise<Number | null>' />
@@ -245,7 +241,7 @@ SQL API methods accessed with `ctx.storage.sql` are only allowed on [Durable Obj
 
 #### Parameters
 * `query`: <Type text ='string' />
-  * The SQL query string to be executed. `query` can contain `?` placeholders for parameter bindings.
+  * The SQL query string to be executed. `query` can contain `?` placeholders for parameter bindings. Multiple SQL statements, separated with a semicolon, can be executed in the `query`. With multiple SQL statements, any parameter bindings are applied to the last SQL statement in the `query`, and the returned cursor is only for the last SQL statement.
 * `bindings`: <Type text='any[]' /> <MetaInfo text='Optional' />
   * Optional variable number of arguments that correspond to the `?` placeholders in `query`.
 

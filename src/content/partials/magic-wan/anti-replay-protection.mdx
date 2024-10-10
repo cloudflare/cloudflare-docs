@@ -1,13 +1,14 @@
 ---
-inputParameters: productName;;productPath
-
+params:
+  - productName
+  - productPath
 ---
 
-import { GlossaryTooltip, Markdown } from "~/components"
+import { GlossaryTooltip, Markdown } from "~/components";
 
-If you use {props.one} and <GlossaryTooltip term="anycast">anycast</GlossaryTooltip> <GlossaryTooltip term="IPsec tunnel">IPsec</GlossaryTooltip> tunnels, we recommend disabling anti-replay protection. This setting is disabled on Cloudflare’s side by default. However, it can be enabled via the API or the Cloudflare dashboard for devices that do not support disabling it, including Cisco Meraki, Velocloud, and AWS VPN Gateway.
+If you use {props.productName} and <GlossaryTooltip term="anycast">anycast</GlossaryTooltip> <GlossaryTooltip term="IPsec tunnel">IPsec</GlossaryTooltip> tunnels, we recommend disabling anti-replay protection. This setting is disabled on Cloudflare’s side by default. However, it can be enabled via the API or the Cloudflare dashboard for devices that do not support disabling it, including Cisco Meraki, Velocloud, and AWS VPN Gateway.
 
-Refer to <a href={props.two}>Add tunnels</a> to learn how to set up replay protection. Review the information below to learn about replay attacks, why we recommend disabling IPsec anti-replay, and related considerations.
+Refer to <a href={props.productPath}>Add tunnels</a> to learn how to set up replay protection. Review the information below to learn about replay attacks, why we recommend disabling IPsec anti-replay, and related considerations.
 
 ## ​​Replay attacks
 
@@ -25,15 +26,15 @@ To prevent this replay attack, a user could add a packet number to each command 
 
 IPsec anti-replay protection works similarly to the prevention example in the scenario above. Each IPsec packet sent is assigned a sequence number by the sender. The receiver tracks which sequence numbers it has already seen and only accepts packets in a small window around the highest value the receiver has seen, and the window is typically 64-1024 packets. A window is used instead of strict sequencing because sometimes packets are reordered or lost on the Internet - having a range of acceptable packet sequence numbers helps absorb these issues.
 
-## {props.one} and anti-replay protection
+## {props.productName} and anti-replay protection
 
-Cloudflare’s global anycast network consists of thousands of servers in hundreds of data centers around the world. Similar to Cloudflare’s anycast <GlossaryTooltip term="GRE tunnel">GRE</GlossaryTooltip> tunnel implementation, Cloudflare’s IPsec implementation is also anycast, which enables users to enjoy all the benefits of Cloudflare’s anycast network architecture. These benefits include unparalleled performance and low latency, greatly simplified configuration and management, and native network resiliency with automatic failover. By default, any packet for {props.one} may go through any one of these servers where it will be encrypted and encapsulated with IPsec and sent to our user’s router.
+Cloudflare’s global anycast network consists of thousands of servers in hundreds of data centers around the world. Similar to Cloudflare’s anycast <GlossaryTooltip term="GRE tunnel">GRE</GlossaryTooltip> tunnel implementation, Cloudflare’s IPsec implementation is also anycast, which enables users to enjoy all the benefits of Cloudflare’s anycast network architecture. These benefits include unparalleled performance and low latency, greatly simplified configuration and management, and native network resiliency with automatic failover. By default, any packet for {props.productName} may go through any one of these servers where it will be encrypted and encapsulated with IPsec and sent to our user’s router.
 
-IPsec anti-replay protection was not designed for such a distributed scenario — the protection scheme is designed for a single sender and single receiver. For a single sender, keeping track of the sequence number is trivial, and the sequence number is stored in memory and incremented for every packet sent. If replay protection is enabled for {props.one} IPsec tunnels, packets for a single tunnel are routed to one server that keeps track of the sequence number. This means the replay protection mechanism will work correctly, but users lose the benefits of automatically distributing traffic across Cloudflare’s global servers. It also will only be actioned in one direction (Cloudflare to customer network) — packets from the customer network to Cloudflare will not be routed to a single server, and will not have replay protection applied.
+IPsec anti-replay protection was not designed for such a distributed scenario — the protection scheme is designed for a single sender and single receiver. For a single sender, keeping track of the sequence number is trivial, and the sequence number is stored in memory and incremented for every packet sent. If replay protection is enabled for {props.productName} IPsec tunnels, packets for a single tunnel are routed to one server that keeps track of the sequence number. This means the replay protection mechanism will work correctly, but users lose the benefits of automatically distributing traffic across Cloudflare’s global servers. It also will only be actioned in one direction (Cloudflare to customer network) — packets from the customer network to Cloudflare will not be routed to a single server, and will not have replay protection applied.
 
 ## ​​Additional considerations
 
-IPsec anti-replay protection is extremely important for transport mode — host-to-host or even app-to-app IPsec. In transport mode, an attacker has a relatively easy time identifying the encrypted protocol and identifying which packets to replay if the protocol is even subject to replay attacks. {props.one}, however, uses tunnel mode, which is inherently much harder to successfully manage a replay attack.
+IPsec anti-replay protection is extremely important for transport mode — host-to-host or even app-to-app IPsec. In transport mode, an attacker has a relatively easy time identifying the encrypted protocol and identifying which packets to replay if the protocol is even subject to replay attacks. {props.productName}, however, uses tunnel mode, which is inherently much harder to successfully manage a replay attack.
 
 There are several reasons that make replay attacks difficult with tunnel mode:
 
