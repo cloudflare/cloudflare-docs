@@ -1,0 +1,112 @@
+---
+updated: YYYY-MM-DD
+difficulty: Beginner | Intermediate | Expert
+content_type: 📝 Tutorial
+pcx_content_type: tutorial
+title: Tutorial title. Second-person imperative verb phrase that reflects user goal or job-to-be-done. For example, 'Create a Worker' or 'Build a Pages application'.
+products:
+  - Workers
+languages:
+  - TypeScript
+---
+
+import { Render, PackageManagers } from "~/components";
+
+(Introduce the purpose of this tutorial here. Describe the application which will be built by the end of this tutorial and the tools that will be used to achieve this. You can also optionally describe the intended audience, include a [GitHub link](https://github.com/) to completed code, and even outline a summary of the steps that the reader will be performing throughout this tutorial.
+
+In this tutorial, you will learn how to run serverless script on the web by creating a Worker using Cloudflare's CLI tools C3 and Wrangler.
+
+## Prerequisites
+
+(List out any required prerequisites before the reader can begin following this tutorial. If your tutorial requires Workers, you can load pre-written Workers prerequisites by including the render below))
+
+<Render file="prereqs" product="workers" />
+
+(Additional prerequisites will need to be manually added like below)
+
+- Prerequisite 3
+- Prerequisite 4
+- Prerequisite 5
+
+## 1. Create a Worker. (The step title should describe what is being achieved within the step. If a step is becoming too large, see if it can be broken down into smaller steps.)
+
+(To include a CLI command with tabs to select between npm, yarn or pnpm, use the example below.)
+
+First, use the `c3` CLI to create a new Cloudflare Workers project.
+
+<PackageManagers type="create" pkg="cloudflare@latest" args={"<WORKER_NAME>"} />
+
+Replace `<WORKER_NAME>` with your desired Worker name.
+
+## 2. Tets run your Worker on a local server
+
+(To include a shell command, use the examples below [For code block guidelines read our style guide](/style-guide/formatting/code-block-guidelines/).)
+
+Next, change into the newly created Worker's directory.
+
+```sh title="Change directory into worker"
+cd <WORKER_NAME>
+```
+
+Now we can run our Worker locally to test that it works.
+
+```sh title="Run Worker on a local development server"
+npx wrangler dev
+```
+
+(To include a number list such as for following numbered steps, use the example below.)
+
+1. Step 1
+2. Step 2
+
+## 3. (Additional tutorial tips)
+
+(JavaScript example.)
+
+```js
+---
+filename: src/index.js
+---
+export default {
+  async fetch(request, env, ctx) {
+    return new Response("Hello World!");
+  },
+};
+```
+
+(Wrangler toml file example.)
+
+```toml title="wrangler.toml"
+#:schema node_modules/wrangler/config-schema.json
+name = "<WORKER_NAME>"
+main = "src/index.ts"
+compatibility_date = "YYYY-MM-DD"
+compatibility_flags = ["nodejs_compat"]
+
+ [ai]
+ binding = "AI"
+```
+
+(Aside examples. For more details read our [style guide documentation on Notes/tips/warnings](/style-guide/documentation-content-strategy/component-attributes/notes-tips-warnings/#recommendations).)
+
+:::note[Aside example]
+An aside is a colored info box or aside with content (text, images, lists, code blocks) that adds relevant notes that do not fit the main text
+:::
+
+:::caution[Aside example]
+A caution warns users of specific behavior that can break functionality or impact security.
+:::
+
+(At the end of the tutorial's steps, summarize what has been successfully achieved by the reader through completing this tutorial)
+
+You have successfully created, tested and deployed a Worker.
+
+## Related resources
+
+(Cloudflare docs link example)
+
+To build more with Workers, refer to [Tutorials](/workers/tutorials/).
+
+(External link example)
+
+If you have any questions, need assistance, or would like to share your project, join the Cloudflare Developer community on [Discord](https://discord.cloudflare.com) to connect with other developers and the Cloudflare team.

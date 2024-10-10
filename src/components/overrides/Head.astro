@@ -2,7 +2,7 @@
 import type { Props } from "@astrojs/starlight/props";
 import Default from "@astrojs/starlight/components/Head.astro";
 import { differenceInCalendarDays } from "date-fns";
-import "littlefoot/dist/littlefoot.css";
+import "tippy.js/dist/tippy.css";
 
 import { getEntry } from "astro:content";
 import { getPageDescription } from "~/util/description";
@@ -164,18 +164,7 @@ if (Astro.props.entry.data.external_link) {
 }
 ---
 
-<script>
-	import littlefoot from "littlefoot";
-
-	littlefoot();
-	document
-		.querySelectorAll("span.littlefoot")
-		.forEach((x) => x.classList.add("not-content"));
-</script>
-<script>
-	import mermaid from "mermaid";
-
-	mermaid.initialize({ startOnLoad: true, theme: "neutral" });
-</script>
+<script src="src/scripts/footnotes.ts"></script>
+<script src="src/scripts/mermaid.ts"></script>
 <script src="src/scripts/analytics.ts"></script>
 <Default {...Astro.props}><slot /></Default>

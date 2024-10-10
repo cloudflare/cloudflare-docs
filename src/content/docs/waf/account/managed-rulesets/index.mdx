@@ -1,0 +1,28 @@
+---
+title: Managed rulesets
+pcx_content_type: concept
+sidebar:
+  order: 4
+---
+
+import { Render } from "~/components";
+
+:::note
+This feature requires an Enterprise plan with a paid add-on.
+:::
+
+<Render file="waf-managed-rules-intro" />
+
+## Account-level deployment
+
+At the account level, you can deploy each [WAF managed ruleset](/waf/managed-rules/#managed-rulesets) more than once. This means that you can apply the same managed ruleset with different configurations to different subsets of incoming traffic for the Enterprise zones in your account.
+
+For example, you could deploy the [Cloudflare OWASP Core Ruleset](/waf/managed-rules/reference/owasp-core-ruleset/) multiple times with different paranoia levels and a different action (_Log_ action for PL4 and _Block_ action for PL2).
+
+<Render
+	file="managed-ruleset-config-options"
+	params={{
+		overridesUrl:
+			"/waf/account/managed-rulesets/deploy-dashboard/#configure-a-managed-ruleset",
+	}}
+/>
