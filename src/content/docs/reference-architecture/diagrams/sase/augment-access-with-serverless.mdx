@@ -22,7 +22,7 @@ For example, you might have a policy which states all members of the group "Engi
 
 Additionally, once authentication and the policy checks are successful Cloudflare passes traffic to the protected origin. It is important to note that the origin should, too, verify that the incoming requests are authenticated by Cloudflare in order to avoid any illegitimate access. Cloudflare inserts a JWT token in the traffic destined to the origin to prove cryptographically that the request was successfully authenticated, and the origin can use this data as part of its authorization logic.
 
-To help integrate these types of use cases, Cloudflare has an [entire development platform](https://developers.cloudflare.com/workers/) on which you can design and run your own business logic. This means you spend less time trying to piece a solution together and more time getting the integration done.
+To help integrate these types of use cases, Cloudflare has an [entire development platform](/workers/) on which you can design and run your own business logic. This means you spend less time trying to piece a solution together and more time getting the integration done.
 
 This document outlines how to combine both solutions to enhance Cloudflare Access capabilities in terms of [authorization and authentication](https://www.cloudflare.com/learning/access-management/what-is-access-control/).
 
