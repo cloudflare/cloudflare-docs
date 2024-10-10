@@ -64,7 +64,7 @@ The code typically makes calls to either a [database](/d1/) or another API to ev
 
 ### 2. Analyze and validate the authentication material (JWT)
 
-When a user successfully authenticates and is authorized to access a protected application, Cloudflare inserts a [JSON Web Token (JWT)](https://developers.cloudflare.com/cloudflare-one/identity/authorization-cookie/validating-json/) into the HTTP traffic sent to the origin. This token serves as a valuable asset for expanding custom business logic through secure processing. The format for that JWT is deterministic and rather lightweight to avoid overloading the requests towards origin unnecessarily. 
+When a user successfully authenticates and is authorized to access a protected application, Cloudflare inserts a [JSON Web Token (JWT)](/cloudflare-one/identity/authorization-cookie/validating-json/) into the HTTP traffic sent to the origin. This token serves as a valuable asset for expanding custom business logic through secure processing. The format for that JWT is deterministic and rather lightweight to avoid overloading the requests towards origin unnecessarily. 
 
 Here is an example of a JWT sent to an origin (use [JWT.io](http://jwt.io) to read the contents of a JWT)
 
