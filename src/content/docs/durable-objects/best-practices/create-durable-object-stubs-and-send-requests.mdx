@@ -29,7 +29,7 @@ Refer to [Build a Counter](/durable-objects/examples/build-a-counter/) for a com
 
 ### Invoking the `fetch` handler
 
-If your project is stuck on a compatibility date before [`2024-04-03`](/workers/configuration/compatibility-dates/#durable-object-stubs-and-service-bindings-support-rpc) or has the need to send a [`Request`](/workers/runtime-apis/request/) object and return a `Response` object then you should send requests to a Durable Object via the fetch handler.
+If your project is stuck on a compatibility date before [`2024-04-03`](/workers/configuration/compatibility-dates/#durable-object-stubs-and-service-bindings-support-rpc), or has the need to send a [`Request`](/workers/runtime-apis/request/) object and return a `Response` object, then you should send requests to a Durable Object via the fetch handler.
 
 <Tabs> <TabItem label="JavaScript" icon="seti:javascript">
 
@@ -105,7 +105,7 @@ export default {
 
 The `URL` associated with the [`Request`](/workers/runtime-apis/request/) object passed to the `fetch()` handler of your Durable Object must be a well-formed URL, but does not have to be a publicly-resolvable hostname.
 
-Without RPC customers frequently construct requests which corresponded to private methods on the Durable Object and dispatch requests from the `fetch` handler. RPC is obviously more ergonomic in this example.
+Without RPC, customers frequently construct requests which corresponded to private methods on the Durable Object and dispatch requests from the `fetch` handler. RPC is obviously more ergonomic in this example.
 
 <Tabs> <TabItem label="JavaScript" icon="seti:javascript">
 
