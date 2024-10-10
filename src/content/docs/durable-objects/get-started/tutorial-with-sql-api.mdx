@@ -185,7 +185,7 @@ export default {
 In the code above, you have:
 
 1. Exported your Worker's main event handlers, such as the `fetch()` handler for receiving HTTP requests.
-2. Passed `env` into the `fetch()` handler. Bindings are delivered as a property of the environment object passed as the second parameter when an event handler or class constructor is invoked. By calling the `idFromName()` function on the binding, you use a string-derived object ID. You can also ask the system to [generate random unique IDs](/durable-objects/best-practices/access-durable-objects-from-a-worker/#generate-ids-randomly). System-generated unique IDs have better performance characteristics, but require you to store the ID somewhere to access the Object again later.
+2. Passed `env` into the `fetch()` handler. Bindings are delivered as a property of the environment object passed as the second parameter when an event handler or class constructor is invoked. By calling the `idFromName()` function on the binding, you use a string-derived object ID. You can also ask the system to [generate random unique IDs](/durable-objects/api/namespace/#newuniqueid). System-generated unique IDs have better performance characteristics, but require you to store the ID somewhere to access the Object again later.
 3. Derived an object ID from the URL path. `MY_DURABLE_OBJECT.idFromName()` always returns the same ID when given the same string as input (and called on the same class), but never the same ID for two different strings (or for different classes). In this case, you are creating a new object for each unique path.
 4. Constructed the stub for the Durable Object using the ID. A stub is a client object used to send messages to the Durable Object.
 5. Called a Durable Object by invoking a RPC method, `sayHello()`, on the Durable Object, which returns a `Hello, World!` string greeting.
@@ -258,7 +258,6 @@ By finishing this tutorial, you have successfully created, tested and deployed a
 
 ### Related resources
 
-- [Access a Durable Object from a Worker](/durable-objects/best-practices/access-durable-objects-from-a-worker/)
 - [Create Durable Object stubs](/durable-objects/best-practices/create-durable-object-stubs-and-send-requests/)
 - [Access Durable Objects Storage](/durable-objects/best-practices/access-durable-objects-storage/)
 - [Miniflare](https://github.com/cloudflare/workers-sdk/tree/main/packages/miniflare) - Helpful tools for mocking and testing your Durable Objects.

@@ -71,7 +71,7 @@ export default {
 
 ### `idFromName`
 
-`idFromName` creates a [`DurableObjectId`](/durable-objects/api/id) which refers to an individual instance of the Durable Object class from a particular name.
+`idFromName` creates a unique [`DurableObjectId`](/durable-objects/api/id) which refers to an individual instance of the Durable Object class. Named Durable Object instances are the most common method of referring to Durable Object instances.
 
 ```js
 const fooId = env.MY_DURABLE_OBJECT.idFromName("foo");
@@ -88,7 +88,7 @@ const barId = env.MY_DURABLE_OBJECT.idFromName("bar");
 
 ### `newUniqueId`
 
-`newUniqueId` creates a `DurableObjectId` which refers to an individual instance of the Durable Object class. When using `newUniqueId`, you need to store the ID as a string in order to refer to the same Durable Object again in the future. For example, the ID can be stored in Workers KV, another Durable Object instance, or in a cookie in the user's browser.
+`newUniqueId` creates a randomly generated and unique [`DurableObjectId`](/durable-objects/api/id) which refers to an individual instance of the Durable Object class. IDs created using `newUniqueId`, will need to be stored as a string in order to refer to the same Durable Object again in the future. For example, the ID can be stored in Workers KV, another Durable Object instance, or in a cookie in the user's browser.
 
 ```js
 const id = env.MY_DURABLE_OBJECT.newUniqueId();
@@ -165,4 +165,3 @@ const euId = subnamespace.idFromName("foo");
 ## Related resources
 
 - [Durable Objects: Easy, Fast, Correct – Choose Three](https://blog.cloudflare.com/durable-objects-easy-fast-correct-choose-three/).
-- [Durable Objects best practices](/durable-objects/best-practices/access-durable-objects-from-a-worker/).
