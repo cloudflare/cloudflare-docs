@@ -9,19 +9,23 @@ By default, Cloudflare Gateway policies apply at all times when turned on. Gatew
 
 ## Time-based policy duration
 
-You can use a time-based policy duration to set a specific time frame for the policy to be active or configure a specific time for the policy to expire.
+You can use a time-based policy duration to set a specific time frame for the policy to turn on or configure an exact time for the policy to turn off.
 
 To set a duration for a DNS policy:
 
 1. In [Zero Trust](https://one.dash.cloudflare.com), go to **Gateway** > **Firewall policies** > **DNS**.
 2. Create a new DNS policy or choose an existing policy and select **Edit**.
 3. In **Configure policy settings**, turn on **Set a policy duration**.
-4. Choose _Duration_ and enter a specific amount of time until the policy expires or choose _Exact end time_ and enter a specific date and time in your account's time zone for the policy to expire.
+4. Choose _Duration_ and enter a specific amount of time until the policy turns off or choose _Exact end time_ and enter a specific date and time in your account's time zone for the policy to turn off.
 5. Select **Save policy**.
 
-When a policy expires, it will remain inactive until you turn it back on. You can reset the policy duration, which will turn the policy back on for the set time duration. To reset a policy's duration, select the policy and choose **Reset policy duration**.
+When a policy turns off, it will remain off until you turn it back on.
 
-Policies with a set duration will retain their duration through activation. For example, you can create a policy at 12:00 PM and set it to expire after six hours. If you turn the policy off at 3:00 PM and turn it back on 4:00 PM, the policy will still expire at 6:00 PM, six hours after the original time.
+### Edit policy duration
+
+You can reset the policy duration, which will turn the policy back on for the set time duration. To reset a policy's duration, select the policy and choose **Reset policy duration**.
+
+Policies with a set duration will retain their duration when turned off or on. For example, you can create a policy at 12:00 PM and set it to turn off after six hours. If you turn the policy off at 3:00 PM and turn it back on 4:00 PM, the policy will still turn off at 6:00 PM, six hours after the original time.
 
 ## Scheduled policies
 
