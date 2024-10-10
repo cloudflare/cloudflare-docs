@@ -302,6 +302,8 @@ For this tutorial, the function creates an identical seating plan for all the fl
 Replace the `Flight` class with the following code:
 
 ```ts title="src/index.ts"
+import { DurableObject } from "cloudflare:workers";
+
 export class Flight extends DurableObject {
 	sql = this.ctx.storage.sql;
 
@@ -341,6 +343,8 @@ export class Flight extends DurableObject {
 3. Add a `fetch` handler to the `Flight` class. This handler will return a text response. In [Step 5](#5-handle-websocket-connections) You will update the `fetch` handler to handle the WebSocket connection.
 
 ```ts title="src/index.ts" {3-5}
+import { DurableObject } from "cloudflare:workers";
+
 export class Flight extends DurableObject {
   ...
   async fetch(request: Request): Promise<Response> {
@@ -379,6 +383,8 @@ Using the flight ID, from the query parameter, a unique Durable Object is create
 1. Add the `getSeats()` function to the `Flight` class. This function returns all the seats in the table.
 
 ```ts title="src/index.ts" {8-22}
+import { DurableObject } from "cloudflare:workers";
+
 export class Flight extends DurableObject {
     ...
 
@@ -407,6 +413,8 @@ export class Flight extends DurableObject {
 2. Add the `assignSeat()` function to the `Flight` class. This function will assign a seat to a passenger. It takes the seat number and the passenger name as parameters.
 
 ```ts title="src/index.ts" {13-48}
+import { DurableObject } from "cloudflare:workers";
+
 export class Flight extends DurableObject {
 	...
 
@@ -467,6 +475,8 @@ All the clients will connect to the Durable Object using WebSockets. The Durable
 1. Add the `handleWebSocket()` function to the `Flight` class. This function handles the WebSocket connections.
 
 ```ts title="src/index.ts" {18-26}
+import { DurableObject } from "cloudflare:workers";
+
 export class Flight extends DurableObject {
 	...
 
@@ -499,6 +509,8 @@ export class Flight extends DurableObject {
 2. Add the `broadcastSeats()` function to the `Flight` class. This function will broadcast the updated seats to all the connected clients.
 
 ```ts title="src/index.ts" {22-24}
+import { DurableObject } from "cloudflare:workers";
+
 export class Flight extends DurableObject {
 	...
 
@@ -529,6 +541,8 @@ export class Flight extends DurableObject {
 3. Next, update the `fetch` handler in the `Flight` class. This handler will handle all the incoming requests from the Worker and handle the WebSocket connections using the `handleWebSocket()` method.
 
 ```ts title="src/index.ts" {26-28}
+import { DurableObject } from "cloudflare:workers";
+
 export class Flight extends DurableObject {
 	...
 

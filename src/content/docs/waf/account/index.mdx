@@ -1,0 +1,22 @@
+---
+title: Account-level WAF configuration
+pcx_content_type: concept
+sidebar:
+  order: 9
+  group:
+    label: Account-level configuration
+---
+
+:::note
+This feature requires an Enterprise plan with a paid add-on.
+:::
+
+The account-level Web Application Firewall (WAF) configuration allows you to define a configuration once and apply it to multiple Enterprise zones in your account.
+
+Configure and deploy custom rulesets, rate limiting rulesets, and managed rulesets to multiple Enterprise zones, affecting all incoming traffic or only a subset (for example, all traffic to `/admin/*` URI paths in both `example.com` and `example.net`).
+
+At the account level, WAF rules are grouped into rulesets. You can perform the following operations:
+
+- Create and deploy [custom rulesets](/waf/account/custom-rulesets/)
+- Create and deploy [rate limiting rulesets](/waf/account/rate-limiting-rulesets/)
+- Deploy [managed rulesets](/waf/account/managed-rulesets/)

@@ -3,12 +3,11 @@ pcx_content_type: reference
 title: Scheduled DNS policies
 sidebar:
   order: 3
-
 ---
 
 Cloudflare Gateway allows you to configure any DNS policy to activate or deactivate on a regular time interval.
 
-By default, Gateway policies are unscheduled and apply at all times. You can use the [Gateway Rules API](/api/operations/zero-trust-gateway-rules-create-zero-trust-gateway-rule) to create a new DNS policy with a schedule or add a schedule to an existing policy. To schedule a policy, send a [`POST`](/api/operations/zero-trust-gateway-rules-create-zero-trust-gateway-rule) or [`PUT`](/api/operations/zero-trust-gateway-rules-update-zero-trust-gateway-rule) request with the `schedule` parameter set to your desired days of the week, times of day, and an optional time zone. The schedule will appear in Zero Trust under **Gateway** > **Firewall Policies** > **DNS** when you expand the row for the policy.
+By default, Gateway policies are unscheduled and apply at all times. You can use the [Gateway Rules API](/api/operations/zero-trust-gateway-rules-create-zero-trust-gateway-rule) to create a new DNS policy with a schedule or add a schedule to an existing policy. To schedule a policy, send a [`POST`](/api/operations/zero-trust-gateway-rules-create-zero-trust-gateway-rule) or [`PUT`](/api/operations/zero-trust-gateway-rules-update-zero-trust-gateway-rule) request with the `schedule` parameter set to your desired days of the week, times of day, and an optional time zone. The schedule will appear in Zero Trust under **Gateway** > **Firewall policies** > **DNS** when you expand the row for the policy.
 
 ## How Gateway determines time zone
 
@@ -66,5 +65,5 @@ curl "https://api.cloudflare.com/client/v4/accounts/{account_id}/gateway/rules" 
 
 :::note
 
-Gateway will not change the policy's `enabled` status when inside or outside of the time period specified. When enabled, Gateway activates or deactivates the policy according to its schedule. When disabled, the policy is always deactivated. 
+Gateway will not change the policy's `enabled` status when inside or outside of the time period specified. When enabled, Gateway activates or deactivates the policy according to its schedule. When disabled, the policy is always deactivated.
 :::

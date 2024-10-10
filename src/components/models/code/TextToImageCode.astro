@@ -23,14 +23,14 @@ export default {
       prompt: "cyberpunk cat",
     };
 
-    const response = await env.AI.run(
+    const stream = await env.AI.run(
       "${name}",
       inputs
     );
 
     return new Response(response, {
       headers: {
-        "content-type": "image/png",
+        "content-type": "image/jpg",
       },
     });
   },

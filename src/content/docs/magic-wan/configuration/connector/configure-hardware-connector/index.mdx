@@ -37,9 +37,9 @@ Refer to [SFP+ port information](/magic-wan/configuration/connector/configure-ha
 <Render
 	file="connector/create-site"
 	params={{
-		one: "refers to the physical Magic WAN Connector Ethernet port that you are using for your WAN. The ports are labeled `GE1`, `GE2`, `GE3`, `GE4`, `GE5`, and `GE6`. Choose the number corresponding to the port that you are using in Connector. <br> If you need a throughput higher than 1 Gbps, you can use one of the SFP+ ports. Refer to [SFP+ port information](/magic-wan/configuration/connector/configure-hardware-connector/sfp-port-information/) for more information on the hardware supported.",
-		two: "refers to the physical Magic WAN Connector Ethernet port that you are using for your LAN. The ports are labeled `GE1`, `GE2`, `GE3`, `GE4`, `GE5`, and `GE6`. Choose a number corresponding to the port that you are using in Connector. <br> If you need a throughput higher than 1 Gbps, you can use one of the SFP+ ports. Refer to [SFP+ port information](/magic-wan/configuration/connector/configure-hardware-connector/sfp-port-information/) for more information on the hardware supported.",
-		three:
+		wan: "refers to the physical Magic WAN Connector Ethernet port that you are using for your WAN. The ports are labeled `GE1`, `GE2`, `GE3`, `GE4`, `GE5`, and `GE6`. Choose the number corresponding to the port that you are using in Connector. <br> If you need a throughput higher than 1 Gbps, you can use one of the SFP+ ports. Refer to [SFP+ port information](/magic-wan/configuration/connector/configure-hardware-connector/sfp-port-information/) for more information on the hardware supported.",
+		lan: "refers to the physical Magic WAN Connector Ethernet port that you are using for your LAN. The ports are labeled `GE1`, `GE2`, `GE3`, `GE4`, `GE5`, and `GE6`. Choose a number corresponding to the port that you are using in Connector. <br> If you need a throughput higher than 1 Gbps, you can use one of the SFP+ ports. Refer to [SFP+ port information](/magic-wan/configuration/connector/configure-hardware-connector/sfp-port-information/) for more information on the hardware supported.",
+		noConnectorShows:
 			"You need to have bought a Connector already for it to show up here. Refer to [Prerequisites](#prerequisites) if no Connector shows up in this list.",
 	}}
 />
@@ -106,7 +106,9 @@ If there is a firewall deployed upstream of the Magic WAN Connector, configure t
 
 <Render
 	file="connector/activate-connector"
-	params={{ one: "The Magic WAN Connector is shipped to you deactivated" }}
+	params={{
+		shippedLanguage: "The Magic WAN Connector is shipped to you deactivated",
+	}}
 />
 
 ### WAN with a static IP address
@@ -125,7 +127,8 @@ To use your Connector on a network configuration with a static IP:
 <Render
 	file="connector/ha-configs"
 	params={{
-		one: "Follow the instructions in [Set up your Magic WAN Connector](#set-up-your-magic-wan-connector) and [Activate connector](#activate-connector) to finish setting up your Connectors.",
+		finalInstructions:
+			"Follow the instructions in [Set up your Magic WAN Connector](#set-up-your-magic-wan-connector) and [Activate connector](#activate-connector) to finish setting up your Connectors.",
 	}}
 />
 
