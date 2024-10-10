@@ -18,7 +18,7 @@ Create and manage [Load Balancing rules](/load-balancing/additional-options/load
 
 ***
 
-## Workflow
+## Example Workflow
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) and select an account and application.
 2. Go to **Traffic** > **Load Balancing**.
@@ -39,6 +39,15 @@ Create and manage [Load Balancing rules](/load-balancing/additional-options/load
 
 
 To save a new load balancer rule, make sure to save both the rule **and** the overall load balancer configuration.
+
+
+:::
+
+:::note
+
+In general, for non-terminating actions, the last change made by rules within the same [phase](/ruleset-engine/about/phases/) will win (later rules can overwrite changes made by previous ones). However, for [terminating actions](/ruleset-engine/rules-language/actions/), such as Block, Redirect, or any of the challenge actions, rule evaluation will stop and the action is executed immediately.
+
+Load Balancer Custom Rules override the default Load Balancer settings, including pool and origin selection. These are non-terminating actions, so the last rule applied will override any prior rules.
 
 
 :::
