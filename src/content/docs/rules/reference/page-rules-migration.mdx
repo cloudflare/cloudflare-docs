@@ -143,11 +143,13 @@ You configured a Page Rule to perform an automatic redirect from HTTP to HTTPS f
 
    - **If incoming requests match**: Wildcard pattern
 
-     - Request URL: `http://*`
+     - **Request URL**: `http://*`
 
    - **Then**:
-     - **Target URL:** `https://${1}`
-     - **Status code:** _301_
+
+     - **Target URL**: `https://${1}`
+     - **Status code**: _301_
+     - **Preserve query string**: Enabled
 
    </div>
 
