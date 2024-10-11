@@ -5,15 +5,15 @@ sidebar:
   order: 2
 ---
 
-import { Tabs, TabItem } from "~/components";
+import { Render, Tabs, TabItem } from "~/components";
 
 ## Description
 
-The `DurableObjectId` interface refers to a new or existing Durable Object instance. This interface is most frequently used by [`DurableObjectNamespace::get`](/durable-objects/api/namespace/#get) to obtain a stub for submitting requests to a Durable Object instance.
+A Durable Object ID is a 64-digit hexadecimal number used to identify a Durable Object instance. Not all 64-digit hex numbers are valid IDs. Durable Object IDs are constructed indirectly via the [`DurableObjectNamespace`](/durable-objects/api/namespace) interface.
 
-Note that creating an ID for a Durable Object instance does not create the Durable Object. The Durable Object is created lazily after calling [`DurableObjectNamespace::get`](/durable-objects/api/namespace/#get) to create a [`DurableObjectStub`](/durable-objects/api/stub) from a `DurableObjectId`. This ensures that objects are not constructed until they are actually accessed.
+The `DurableObjectId` interface refers to a new or existing Durable Object instance. This interface is most frequently used by [`DurableObjectNamespace::get`](/durable-objects/api/namespace/#get) to obtain a [`DurableObjectStub`](/durable-objects/api/stub) for submitting requests to a Durable Object instance. Note that creating an ID for a Durable Object instance does not create the Durable Object. The Durable Object is created lazily after creating a stub from a `DurableObjectId`. This ensures that objects are not constructed until they are actually accessed.
 
-:::note[`DurableObjectId`]
+:::note[Logging]
 
 If you are experiencing an issue with a particular Durable Object instance, you may wish to log the `DurableObjectId` from your Worker and include it in your Cloudflare support request.
 
@@ -25,16 +25,7 @@ If you are experiencing an issue with a particular Durable Object instance, you 
 
 `toString` converts a `DurableObjectId` to a 64 digit hex string. This string is useful for logging purposes or storing the `DurableObjectId` elsewhere, for example, in a session cookie. This string can be used to reconstruct a `DurableObjectId` via `DurableObjectNamespace::idFromString`.
 
-```js
-// Create a new unique ID
-const id = env.MY_DURABLE_OBJECT.newUniqueId();
-// Convert the ID to a string to be saved elsewhere, e.g. a session cookie
-const session_id = id.toString();
-
-...
-// Recreate the ID from the string
-const id = env.MY_DURABLE_OBJECT.idFromString(session_id);
-```
+<Render file="example-id-from-string" />
 
 #### Parameters
 
