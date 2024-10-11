@@ -33,7 +33,7 @@ Hibernation is only supported when a Durable Object acts as a WebSocket server. 
 
 :::
 
-A Durable Object with WebSockets created via the Hibernation API will not incur billable [Duration (GB-s) charges](/durable-objects/platform/pricing/) during periods of inactivity, unlike Durable Objects using the [regular WebSockets API](/workers/runtime-apis/websockets/).
+A Durable Object with WebSockets created via the Hibernation API will not incur billable [Duration (GB-s) charges](/durable-objects/platform/pricing/) during periods of inactivity, unlike Durable Objects using the [regular WebSockets API](/workers/runtime-apis/websockets/). Note that other events, for example [alarms](/durable-objects/api/alarms/), can prevent a Durable Object from being inactive and therefore prevent this cost savings.
 
 The WebSocket Hibernation API includes:
 

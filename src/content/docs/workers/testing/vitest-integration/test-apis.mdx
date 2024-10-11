@@ -180,11 +180,11 @@ The Workers Vitest integration provides runtime helpers for writing tests in the
 
 * <code>runInDurableObject\<O extends DurableObject, R>(stub:DurableObjectStub, callback:(instance: O, state: DurableObjectState) => R | Promise\<R>)</code>: Promise\<R>
 
-  * Runs the provided `callback` inside the Durable Object instance that corresponds to the provided `stub`.
+  * Runs the provided `callback` inside the Durable Object that corresponds to the provided `stub`.
 
     <br/>
 
-    This temporarily replaces your Durable Object's `fetch()` handler with `callback`, then sends a request to it, returning the result. This can be used to call/spy-on Durable Object instance methods or seed/get persisted data. Note this can only be used with `stub`s pointing to Durable Objects defined in the `main` Worker.
+    This temporarily replaces your Durable Object's `fetch()` handler with `callback`, then sends a request to it, returning the result. This can be used to call/spy-on Durable Object methods or seed/get persisted data. Note this can only be used with `stub`s pointing to Durable Objects defined in the `main` Worker.
 
     <br/>
 
