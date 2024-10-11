@@ -66,4 +66,4 @@ entries:
 
 - term: "event context"
   general_definition: |-
-    The duration of time that a Durable Object is processing an event, such as a remote procedure call. Compute duration charges are incurred for the duration of the event context.
+    The duration of time that a Durable Object is processing an event, such as a remote procedure call. [Compute duration charges](/durable-objects/platform/pricing) are incurred for the duration of the event context.
