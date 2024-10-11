@@ -27,10 +27,7 @@ To learn more about WebSocket Hibernation, refer to [Build a WebSocket server wi
 
 ### serializeAttachment
 
-- <code>
-  	serializeAttachment(value <Type text="any" />)
-  </code>
-  : <Type text="void" />
+- <code> serializeAttachment(value <Type text="any" />)</code>: <Type text="void" />
 
   - Keeps a copy of `value` in memory (not on disk) to survive hibernation. The value can be any type supported by the [structured clone algorithm](https://developer.mozilla.org/en-US/docs/Web/API/Web_Workers_API/Structured_clone_algorithm), which is true of most types.
 
@@ -46,11 +43,7 @@ To learn more about WebSocket Hibernation, refer to [Build a WebSocket server wi
 
 ### acceptWebSocket
 
-- <code>
-  	acceptWebSocket(ws <Type text="WebSocket" />, tags{" "}
-  	<Type text="Array<string>" /> <MetaInfo text="optional" />)
-  </code>
-  : <Type text="void" />
+- <code>acceptWebSocket(ws <Type text="WebSocket" />, tags{" "}<Type text="Array<string>" /> <MetaInfo text="optional" />)</code>: <Type text="void" />
 
   - Adds a WebSocket to the set attached to this Durable Object. `ws.accept()` must not have been called separately. Once called, any incoming messages will be delivered by calling the Durable Object's `webSocketMessage()` handler, and `webSocketClose()` will be invoked upon disconnect.
 
@@ -62,10 +55,7 @@ To learn more about WebSocket Hibernation, refer to [Build a WebSocket server wi
 
 ### getWebSockets
 
-- <code>
-  	getWebSockets(tag <Type text="string" /> <MetaInfo text="optional" />)
-  </code>
-  : <Type text="Array<WebSocket>" />
+- <code>getWebSockets(tag <Type text="string" /> <MetaInfo text="optional" />)</code>: <Type text="Array<WebSocket>" />
 
   - Gets an array of accepted WebSockets matching the given tag. Disconnected WebSockets <sup>1</sup> are automatically removed from the list. Calling `state.getWebSockets()` with no `tag` argument will return all WebSockets.
 
@@ -78,20 +68,13 @@ To learn more about WebSocket Hibernation, refer to [Build a WebSocket server wi
 
 ### getTags
 
-- <code>
-  	getTags(ws <Type text="WebSocket" />)
-  </code>
-  : <Type text="Array<string>" />
+- <code>getTags(ws <Type text="WebSocket" />)</code>: <Type text="Array<string>" />
 
   - Returns an Array of tags associated with the given WebSocket. Throws an error if you have not called `state.acceptWebSocket()` on the given WebSocket.
 
 ### setWebSocketAutoResponse
 
-- <code>
-  	setWebSocketAutoResponse(webSocketRequestResponsePair{" "}
-  	<Type text="WebSocketRequestResponsePair" /> <MetaInfo text="optional" />)
-  </code>
-  : <Type text="void" />
+- <code>setWebSocketAutoResponse(webSocketRequestResponsePair{" "}<Type text="WebSocketRequestResponsePair" /> <MetaInfo text="optional" />)</code>: <Type text="void" />
 
   - Sets an application level auto response that does not wake hibernated WebSockets.
 
@@ -113,20 +96,13 @@ To learn more about WebSocket Hibernation, refer to [Build a WebSocket server wi
 
 ### getWebSocketAutoResponseTimestamp
 
-- <code>
-  	getWebSocketAutoResponseTimestamp(ws <Type text="WebSocket" />)
-  </code>
-  : <Type text="Date | null" />
+- <code>getWebSocketAutoResponseTimestamp(ws <Type text="WebSocket" />)</code>: <Type text="Date | null" />
 
   - Gets the most recent `Date` when the WebSocket received an auto-response request, or `null` if the given WebSocket never received an auto-response request.
 
 ### setHibernatableWebSocketEventTimeout
 
-- <code>
-  	setHibernatableWebSocketEventTimeout(timeout <Type text="number" />{" "}
-  	<MetaInfo text="optional" />)
-  </code>
-  : <Type text="void" />
+- <code>setHibernatableWebSocketEventTimeout(timeout <Type text="number" />{" "}<MetaInfo text="optional" />)</code>: <Type text="void" />
 
   - Sets the maximum amount of milliseconds a WebSocket event (refer to the handler methods below) can run for.
 
