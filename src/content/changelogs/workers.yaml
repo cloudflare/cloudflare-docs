@@ -206,7 +206,7 @@ entries:
   - publish_date: "2023-05-05"
     description: |-
       - The new `nodeJsCompatModule` type can be used with a Worker bundle to emulate a Node.js environment. Common Node.js globals such as `process` and `Buffer` will be present, and `require('...')` can be used to load Node.js built-ins without the `node:` specifier prefix.
-      - Fixed an issue where websocket connections would be disconnected when updating workers. Now, only websockets connected to Durable Object instances are disconnected by updates to that Durable Object’s code.
+      - Fixed an issue where websocket connections would be disconnected when updating workers. Now, only WebSockets connected to Durable Objects are disconnected by updates to that Durable Object’s code.
   - publish_date: "2023-04-28"
     description: |-
       - The Web Crypto API now supports curves Ed25519 and X25519 defined in the Secure Curves specification.

@@ -9,7 +9,7 @@ import { Tabs, TabItem, GlossaryTooltip } from "~/components";
 
 ## Description
 
-The `DurableObjectState` interface is accessible as an instance property on the Durable Objects class. This interface encapsulates methods that modify the state of a Durable Object, for example which WebSockets are attached to a Durable Object instance or how the runtime should handle concurrent Durable Object requests.
+The `DurableObjectState` interface is accessible as an instance property on the Durable Objects class. This interface encapsulates methods that modify the state of a Durable Object, for example which WebSockets are attached to a Durable Object or how the runtime should handle concurrent Durable Object requests.
 
 The `DurableObjectState` interface is different from the [Storage API](/durable-objects/api/storage-api) in that it does not have top-level methods which manipulate persistent application data. These methods are instead encapsulated in the [`DurableObjectStorage`](/durable-objects/api/storage-api) interface and accessed by [`DurableObjectState::storage`](/durable-objects/api/state/#storage).
 
@@ -71,13 +71,13 @@ The event context for a Durable Objects extends at least 60 seconds after the la
 
 ### `blockConcurrencyWhile`
 
-`blockConcurrencyWhile` executes an async callback while blocking any other events from being delivered to the Durable Object instance until the callback completes. This method guarantees ordering and prevents concurrent requests. All events that were not explicitly initiated as part of the callback itself will be blocked. Once the callback completes, all other events will be delivered.
+`blockConcurrencyWhile` executes an async callback while blocking any other events from being delivered to the Durable Object until the callback completes. This method guarantees ordering and prevents concurrent requests. All events that were not explicitly initiated as part of the callback itself will be blocked. Once the callback completes, all other events will be delivered.
 
-`blockConcurrencyWhile` is commonly used within the constructor of the Durable Object class to enforce initialization to occur before any requests are delivered. Another use case is executing `async` operations based on the current state of the Durable Object instance and using `blockConcurrencyWhile` to prevent that state from changing while yielding the event loop.
+`blockConcurrencyWhile` is commonly used within the constructor of the Durable Object class to enforce initialization to occur before any requests are delivered. Another use case is executing `async` operations based on the current state of the Durable Object and using `blockConcurrencyWhile` to prevent that state from changing while yielding the event loop.
 
 If the callback throws an exception, the object will be terminated and reset. This ensures that the object cannot be left stuck in an uninitialized state if something fails unexpectedly. To avoid this behavior, enclose the body of your callback in a `try...catch` block to ensure it cannot throw an exception.
 
-To help mitigate deadlocks there is a 30 second timeout applied when executing the callback. If this timeout is exceeded, the Durable Object instance will be reset. It is best practice to have the callback do as little work as possible to improve overall request throughput to the Durable Object instance.
+To help mitigate deadlocks there is a 30 second timeout applied when executing the callback. If this timeout is exceeded, the Durable Object will be reset. It is best practice to have the callback do as little work as possible to improve overall request throughput to the Durable Object.
 
 ```js
 // Durable Object
@@ -106,13 +106,13 @@ export class MyDurableObject extends DurableObject {
 
 ### `acceptWebSocket`
 
-`acceptWebSocket` is part of the [WebSocket Hibernation API](/durable-objects/reference/websockets/#websocket-hibernation), which allows a Durable Object instance to be removed from memory to save costs while keeping its WebSockets connected.
+`acceptWebSocket` is part of the [WebSocket Hibernation API](/durable-objects/reference/websockets/#websocket-hibernation), which allows a Durable Object to be removed from memory to save costs while keeping its WebSockets connected.
 
-`acceptWebSocket` adds a WebSocket to the set of WebSockets attached to the Durable Object instance. Once called, any incoming messages will be delivered by calling the Durable Object's `webSocketMessage` handler, and `webSocketClose` will be invoked upon disconnect. After calling `acceptWebSocket`, the WebSocket is accepted and its `send` and `close` methods can be used.
+`acceptWebSocket` adds a WebSocket to the set of WebSockets attached to the Durable Object. Once called, any incoming messages will be delivered by calling the Durable Object's `webSocketMessage` handler, and `webSocketClose` will be invoked upon disconnect. After calling `acceptWebSocket`, the WebSocket is accepted and its `send` and `close` methods can be used.
 
 The [WebSocket Hibernation API](/durable-objects/reference/websockets/#websocket-hibernation) takes the place of the standard [WebSockets API](/workers/runtime-apis/websockets/). Therefore, `ws.accept` must not have been called separately and `ws.addEventListener` method will not receive events as they will instead be delivered to the Durable Object.
 
-The WebSocket Hibernation API permits a maximum of 32,768 WebSocket connections per Durable Object instance, but the CPU and memory usage of a given workload may further limit the practical number of simultaneous connections.
+The WebSocket Hibernation API permits a maximum of 32,768 WebSocket connections per Durable Object, but the CPU and memory usage of a given workload may further limit the practical number of simultaneous connections.
 
 #### Parameters
 
@@ -125,9 +125,9 @@ The WebSocket Hibernation API permits a maximum of 32,768 WebSocket connections 
 
 ### `getWebSockets`
 
-`getWebSockets` is part of the [WebSocket Hibernation API](/durable-objects/reference/websockets/#websocket-hibernation), which allows a Durable Object instance to be removed from memory to save costs while keeping its WebSockets connected.
+`getWebSockets` is part of the [WebSocket Hibernation API](/durable-objects/reference/websockets/#websocket-hibernation), which allows a Durable Object to be removed from memory to save costs while keeping its WebSockets connected.
 
-`getWebSockets` returns an `Array<WebSocket>` which is the set of WebSockets attached to the Durable Object instance. An optional tag argument can be used to filter the list according to tags supplied when calling [`DurableObjectState::acceptWebSocket`](/durable-objects/api/state/#acceptwebsocket).
+`getWebSockets` returns an `Array<WebSocket>` which is the set of WebSockets attached to the Durable Object. An optional tag argument can be used to filter the list according to tags supplied when calling [`DurableObjectState::acceptWebSocket`](/durable-objects/api/state/#acceptwebsocket).
 
 :::note[`waitUntil` is not necessary]
 
@@ -145,9 +145,9 @@ Disconnected WebSockets are not returned by this method, but `getWebSockets` may
 
 ### `setWebSocketAutoResponse`
 
-`setWebSocketAutoResponse` is part of the [WebSocket Hibernation API](/durable-objects/reference/websockets/#websocket-hibernation), which allows a Durable Object instance to be removed from memory to save costs while keeping its WebSockets connected.
+`setWebSocketAutoResponse` is part of the [WebSocket Hibernation API](/durable-objects/reference/websockets/#websocket-hibernation), which allows a Durable Object to be removed from memory to save costs while keeping its WebSockets connected.
 
-`setWebSocketAutoResponse` sets an automatic response, auto-response, for the request provided for all WebSockets attached to the Durable Object instance. If a request is received matching the provided request then the auto-response will be returned without waking WebSockets in hibernation and incurring billable duration charges.
+`setWebSocketAutoResponse` sets an automatic response, auto-response, for the request provided for all WebSockets attached to the Durable Object. If a request is received matching the provided request then the auto-response will be returned without waking WebSockets in hibernation and incurring billable duration charges.
 
 `setWebSocketAutoResponse` is a common alternative to setting up a server for static ping/pong messages because this can be handled without waking hibernating WebSockets.
 
@@ -179,7 +179,7 @@ Disconnected WebSockets are not returned by this method, but `getWebSockets` may
 
 ### `getWebSocketAutoResponseTimestamp`
 
-`getWebSocketAutoResponseTimestamp` is part of the [WebSocket Hibernation API](/durable-objects/reference/websockets/#websocket-hibernation), which allows a Durable Object instance to be removed from memory to save costs while keeping its WebSockets connected.
+`getWebSocketAutoResponseTimestamp` is part of the [WebSocket Hibernation API](/durable-objects/reference/websockets/#websocket-hibernation), which allows a Durable Object to be removed from memory to save costs while keeping its WebSockets connected.
 
 `getWebSocketAutoResponseTimestamp` gets the most recent `Date` on which the given WebSocket sent an auto-response, or null if the given WebSocket never sent an auto-response.
 
@@ -193,7 +193,7 @@ Disconnected WebSockets are not returned by this method, but `getWebSockets` may
 
 ### `setHibernatableWebSocketEventTimeout`
 
-`setHibernatableWebSocketEventTimeout` is part of the [WebSocket Hibernation API](/durable-objects/reference/websockets/#websocket-hibernation), which allows a Durable Object instance to be removed from memory to save costs while keeping its WebSockets connected.
+`setHibernatableWebSocketEventTimeout` is part of the [WebSocket Hibernation API](/durable-objects/reference/websockets/#websocket-hibernation), which allows a Durable Object to be removed from memory to save costs while keeping its WebSockets connected.
 
 `setHibernatableWebSocketEventTimeout` sets the maximum amount of time in milliseconds that a WebSocket event can run for.
 
@@ -209,7 +209,7 @@ If no parameter or a parameter of `0` is provided and a timeout has been previou
 
 ### `getHibernatableWebSocketEventTimeout`
 
-`getHibernatableWebSocketEventTimeout` is part of the [WebSocket Hibernation API](/durable-objects/reference/websockets/#websocket-hibernation), which allows a Durable Object instance to be removed from memory to save costs while keeping its WebSockets connected.
+`getHibernatableWebSocketEventTimeout` is part of the [WebSocket Hibernation API](/durable-objects/reference/websockets/#websocket-hibernation), which allows a Durable Object to be removed from memory to save costs while keeping its WebSockets connected.
 
 `getHibernatableWebSocketEventTimeout` gets the currently set hibernatable WebSocket event timeout if one has been set via [`DurableObjectState::setHibernatableWebSocketEventTimeout`](/durable-objects/api/state/#sethibernatablewebsocketeventtimeout).
 
@@ -223,9 +223,9 @@ If no parameter or a parameter of `0` is provided and a timeout has been previou
 
 ### `getTags`
 
-`getTags` is part of the [WebSocket Hibernation API](/durable-objects/reference/websockets/#websocket-hibernation), which allows a Durable Object instance to be removed from memory to save costs while keeping its WebSockets connected.
+`getTags` is part of the [WebSocket Hibernation API](/durable-objects/reference/websockets/#websocket-hibernation), which allows a Durable Object to be removed from memory to save costs while keeping its WebSockets connected.
 
-`getTags` returns tags associated with a given WebSocket. This method throws an exception if the WebSocket has not been associated with the Durable Object instance via [`DurableObjectState::acceptWebSocket`](/durable-objects/api/state/#acceptwebsocket).
+`getTags` returns tags associated with a given WebSocket. This method throws an exception if the WebSocket has not been associated with the Durable Object via [`DurableObjectState::acceptWebSocket`](/durable-objects/api/state/#acceptwebsocket).
 
 #### Parameters
 
@@ -237,7 +237,7 @@ If no parameter or a parameter of `0` is provided and a timeout has been previou
 
 ### `abort`
 
-`abort` is used to forcibly reset a Durable Object instance. A JavaScript `Error` with the message passed as a parameter will be logged. This error is not able to be caught within the application code.
+`abort` is used to forcibly reset a Durable Object. A JavaScript `Error` with the message passed as a parameter will be logged. This error is not able to be caught within the application code.
 
 ```js
 // Durable Object
@@ -271,7 +271,7 @@ export class MyDurableObject extends DurableObject {
 
 ### `id`
 
-`id` is a readonly property of type `DurableObjectId` corresponding to the [`DurableObjectId`](/durable-objects/api/id) of the Durable Object instance.
+`id` is a readonly property of type `DurableObjectId` corresponding to the [`DurableObjectId`](/durable-objects/api/id) of the Durable Object.
 
 ### `storage`
 

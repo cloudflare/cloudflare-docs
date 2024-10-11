@@ -3,7 +3,7 @@ productName: Durable Objects
 entries:
 - term: "Durable Objects"
   general_definition: |-
-    The product name, or the collective noun referring to more than one Durable Object instance.
+    The product name, or the collective noun referring to more than one Durable Object.
 
 - term: "namespace"
   general_definition: |-
@@ -35,7 +35,7 @@ entries:
 
 - term: "Storage API"
   general_definition: |-
-    The transactional and strongly consistent (serializable) [Storage API](/durable-objects/api/storage-api/) for persisting data within each Durable Object instance. State stored within a unique DO instance is "private" to that Durable Object, and not accessible from other Durable Objects.
+    The transactional and strongly consistent (serializable) [Storage API](/durable-objects/api/storage-api/) for persisting data within each Durable Object. State stored within a unique Durable Object is "private" to that Durable Object, and not accessible from other Durable Objects.
 
     Storage API includes key-value (KV) API, SQL API, and point-in-time-recovery (PITR) API.
 
@@ -66,4 +66,4 @@ entries:
 
 - term: "event context"
   general_definition: |-
-    The duration of time that a Durable Object instance is processing an event, such as a remote procedure call. Compute duration charges are incurred for the duration of the event context.
+    The duration of time that a Durable Object is processing an event, such as a remote procedure call. Compute duration charges are incurred for the duration of the event context.
