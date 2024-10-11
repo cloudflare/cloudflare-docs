@@ -10,11 +10,11 @@ sidebar:
 
 API Shield's labeling service will help you organize your endpoints and address vulnerabilities in your API. The labeling service comes with managed and user-defined labels.
 
-Today, managed labels are useful for organizing endpoints by use case. In a future release, managed labels will automatically be added to endpoints with informative or security risks, alerting you on endpoints that need attention.
+Today, managed labels are useful for organizing endpoints by use case. In a future release, managed labels will automatically label endpoints by use case and those with informative or security risks, alerting you on endpoints that need attention.
 
 User-defined labels can also be added to endpoints in API Shield by creating a label and adding it to an individual endpoint or multiple endpoints. User-defined labels will be useful for organizing your endpoints by owner, version, or type.
 
-You can sort and filter your endpoints based on the labels. 
+You can filter your endpoints based on the labels. 
 
 ## Managed labels
 
@@ -47,7 +47,7 @@ You can sort and filter your endpoints based on the labels.
 | Description | 4xx, 5xx responses | 2xx responses |
 | --- | --- | --- | 
 | If _all_ requests are missing authentication, Cloudflare will apply the label: | (no label) | `cf-missing-auth` |
-| If only _some_ requests missing authentication, Cloudflare will apply the label: | (no label) | `cf-mixed-auth` |
+| If only _some_ requests are missing authentication, Cloudflare will apply the label: | (no label) | `cf-mixed-auth` |
 
 ## Create a label
 
