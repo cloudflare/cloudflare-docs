@@ -9,9 +9,9 @@ import { Tabs, TabItem } from "~/components";
 
 ## Description
 
-The `DurableObjectNamespace` interface is used to obtain a reference to a new or existing Durable Object. The interface is accessible from the fetch handler on a Cloudflare Worker via the `env` parameter, which is the standard interface when referencing bindings declared in `wrangler.toml`.
+The `DurableObjectNamespace` interface is used to obtain a reference to a new or existing Durable Object instance. The interface is accessible from the fetch handler on a Cloudflare Worker via the `env` parameter, which is the standard interface when referencing bindings declared in `wrangler.toml`.
 
-This interface defines several [methods](/durable-objects/api/namespace/#methods) that can be used to create an ID for a Durable Object. Note that creating an ID for a Durable Object does not create the Durable Object. The Durable Object is created lazily after calling [`DurableObjectNamespace::get`](/durable-objects/api/namespace/#get) to create a [`DurableObjectStub`](/durable-objects/api/stub) from a `DurableObjectId`. This ensures that objects are not constructed until they are actually accessed.
+This interface defines several [methods](/durable-objects/api/namespace/#methods) that can be used to create an ID for a Durable Object instance. Note that creating an ID for a Durable Object instance does not create the Durable Object. The Durable Object is created lazily after calling [`DurableObjectNamespace::get`](/durable-objects/api/namespace/#get) to create a [`DurableObjectStub`](/durable-objects/api/stub) from a `DurableObjectId`. This ensures that objects are not constructed until they are actually accessed.
 
 <Tabs> <TabItem label="JavaScript" icon="seti:javascript">
 
@@ -29,7 +29,7 @@ export default {
     // Every unique ID refers to an individual instance of the Durable Object class
     const id = env.MY_DURABLE_OBJECT.idFromName("foo");
 
-    // A stub is a client Object used to invoke methods defined by the Durable Object
+    // A stub is a client Object used to invoke methods defined by the Durable Object instance
     const stub = env.MY_DURABLE_OBJECT.get(id);
     ...
   }
@@ -56,7 +56,7 @@ export default {
     // Every unique ID refers to an individual instance of the Durable Object class
     const id = env.MY_DURABLE_OBJECT.idFromName("foo");
 
-    // A stub is a client Object used to invoke methods defined by the Durable Object
+    // A stub is a client Object used to invoke methods defined by the Durable Object instance
     const stub = env.MY_DURABLE_OBJECT.get(id);
     ...
   }
@@ -78,7 +78,7 @@ const barId = env.MY_DURABLE_OBJECT.idFromName("bar");
 
 #### Parameters
 
-- A required string to be used to generate a [`DurableObjectId`](/durable-objects/api/id) corresponding to the name of a Durable Object.
+- A required string to be used to generate a [`DurableObjectId`](/durable-objects/api/id) corresponding to the name of a Durable Object instance.
 
 #### Return values
 
@@ -130,7 +130,7 @@ const id = env.MY_DURABLE_OBJECT.idFromString(session_id);
 
 ### `get`
 
-`get` obtains a [`DurableObjectStub`](/durable-objects/api/stub) from a [`DurableObjectId`](/durable-objects/api/id) which can be used to invoke methods on a Durable Object.
+`get` obtains a [`DurableObjectStub`](/durable-objects/api/stub) from a [`DurableObjectId`](/durable-objects/api/id) which can be used to invoke methods on a Durable Object instance.
 
 ```js
 const id = env.MY_DURABLE_OBJECT.newUniqueId();
@@ -147,7 +147,7 @@ const stub = env.MY_DURABLE_OBJECT.get(id);
 
 ### `jurisdiction`
 
-`jurisdiction` creates a subnamespace from a namespace where all Durable Object IDs and references created from that subnamespace will be restricted to the specified [jurisdiction](/durable-objects/reference/data-location/#restrict-durable-objects-to-a-jurisdiction).
+`jurisdiction` creates a subnamespace from a namespace where all Durable Object instance IDs and references created from that subnamespace will be restricted to the specified [jurisdiction](/durable-objects/reference/data-location/#restrict-durable-objects-to-a-jurisdiction).
 
 ```js
 const subnamespace = env.MY_DURABLE_OBJECT.jurisdiction("foo");
