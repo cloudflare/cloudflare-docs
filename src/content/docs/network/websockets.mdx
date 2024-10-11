@@ -47,15 +47,15 @@ Cloudflare also supports [ASP.NET SignalR](http://signalr.net/), which helps neg
 WebSockets are supported on all Cloudflare plans.
 
 ## Requests and Bandwidth measurement
-Based on the understanding of WebSocket nature of connections, you may be aware that it looks a bit different from the usual HTTP traffic in terms of requests and bandwidth. If you’re the Enterprise customer, you will have to take how Cloudflare measures its usage as the requests and bandwidth into account to estimate your usage correctly.
+Given the nature of WebSocket connections, you may notice they differ from typical HTTP traffic in terms of requests and bandwidth usage. If you are an Enterprise customer, it is important to consider how Cloudflare measures requests and bandwidth to accurately estimate your usage.
 
-Cloudflare measures a single WebSocket connection as your usage in the following way:
+Cloudflare measures a single WebSocket connection in the following way:
 
-- **Requests**: Cloudflare recognize only the initial upgrade request per WebSocket connection as a HTTP request. Even though you can send the bidirectional message stream through the established WebSocket connection, it’ll be recognized as the single long-lived HTTP request.
+- **Requests**: Cloudflare recognizes only the initial upgrade request per WebSocket connection as an HTTP request. Even though you can send a bidirectional message stream through the established WebSocket connection, it will be counted as a single long-lived HTTP request.
 
-- **Bandwidth**: Cloudflare measures the data transfer sent from Cloudflare to the eyeball. This usually means that the message from WebSocket server behind Cloudflare to WebSocket client is subject to be measured as bandwidth.
+- **Bandwidth**: Cloudflare measures data transfer sent from Cloudflare to the client. This typically means that messages from the WebSocket server behind Cloudflare to the WebSocket client are counted towards bandwidth usage.
 
-Once each WebSocket connection is closed, you can see your aggregated usage about WebSocket via [Traffic Analytics](/analytics/account-and-zone-analytics/zone-analytics//#traffic), [GraphQL Analytics API](/analytics/graphql-api/) and [HTTP requests logs](/logs/reference/log-fields/zone/http_requests/).
+Once a WebSocket connection is closed, you can view your aggregated WebSocket usage through [Traffic Analytics](/analytics/account-and-zone-analytics/zone-analytics//#traffic), the [GraphQL Analytics API](/analytics/graphql-api/), and [HTTP requests logs](/logs/reference/log-fields/zone/http_requests/).
 
 ## Technical note
 
