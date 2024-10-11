@@ -82,7 +82,7 @@ You will need to declare the [providers](https://registry.terraform.io/browse/pr
      required_providers {
        cloudflare = {
          source = "cloudflare/cloudflare"
-         version = ">= 4.39.0"
+         version = ">= 4.40.0"
        }
        google = {
          source = "hashicorp/google"
@@ -91,7 +91,7 @@ You will need to declare the [providers](https://registry.terraform.io/browse/pr
          source = "hashicorp/random"
        }
      }
-     required_version = ">= 0.13"
+     required_version = ">= 1.2"
    }
 
    # Providers
@@ -165,7 +165,7 @@ The following configuration will modify settings in your Cloudflare account.
    }
 
    # Creates an Access application to control who can connect.
-   resource "cloudflare_access_application" "http_app" {
+   resource "cloudflare_zero_trust_access_application" "http_app" {
      zone_id          = var.cloudflare_zone_id
      name             = "Access application for http_app.${var.cloudflare_zone}"
      domain           = "http_app.${var.cloudflare_zone}"
@@ -173,8 +173,8 @@ The following configuration will modify settings in your Cloudflare account.
    }
 
    # Creates an Access policy for the application.
-   resource "cloudflare_access_policy" "http_policy" {
-     application_id = cloudflare_access_application.http_app.id
+   resource "cloudflare_zero_trust_access_policy" "http_policy" {
+     application_id = cloudflare_zero_trust_access_application.http_app.id
      zone_id        = var.cloudflare_zone_id
      name           = "Example policy for http_app.${var.cloudflare_zone}"
      precedence     = "1"
