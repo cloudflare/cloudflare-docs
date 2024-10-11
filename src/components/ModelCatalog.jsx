@@ -185,7 +185,7 @@ const ModelCatalog = ({ models }) => {
 			</div>
 			<div className="flex md:w-3/4 w-full gap-[1%] items-stretch self-start flex-wrap !mt-0">
 				{modelList.length === 0 && (
-					<div className="border bg-gray-50 rounded-md w-full flex-col flex align-middle justify-center text-center py-6">
+					<div className="border bg-gray-50 dark:bg-gray-800 dark:border-gray-500 rounded-md w-full flex-col flex align-middle justify-center text-center py-6">
 						<span className="text-lg !font-bold">No models found</span>
 						<p>
 							Try a different search term, or broaden your search by removing
