@@ -6,10 +6,9 @@ sidebar:
 head:
   - tag: title
     content: Common HTTP policies
-
 ---
 
-import { Render } from "~/components"
+import { Render } from "~/components";
 
 The following policies are commonly used to secure HTTP traffic.
 
@@ -53,7 +52,7 @@ Gateway [evaluates Do Not Inspect policies first](/cloudflare-one/policies/gatew
 
 :::note
 
-You can select either individual applications or the entire Do Not Inspect set, which will update as new applications are added. 
+You can select either individual applications or the entire Do Not Inspect set, which will update as new applications are added.
 :::
 
 ## Check device posture
@@ -105,10 +104,11 @@ To enable Gateway inspection for Google Drive traffic, you must [add the Cloudfl
 
 Block file uploads to Google Drive.
 
-| Selector         | Operator      | Value        | Logic | Action |
-| ---------------- | ------------- | ------------ | ----- | ------ |
-| Application      | in            | Google Drive | And   | Block  |
-| Upload Mime Type | matches regex | `.*`         |       |        |
+| Selector         | Operator      | Value                                  | Logic | Action |
+| ---------------- | ------------- | -------------------------------------- | ----- | ------ |
+| Application      | in            | Google Drive                           | And   | Block  |
+| Upload Mime Type | matches regex | `.*`                                   | And   |        |
+| Host             | is not        | `drivefrontend-pa.clients6.google.com` |       |        |
 
 ### Block Google Drive downloads
 
