@@ -17,13 +17,9 @@ entries:
   general_definition: |-
     An object that refers to a unique Durable Object within a namespace and allows you to call into that Durable Object via RPC methods or the `fetch` API. For example, `let stub = env.MY_DURABLE_OBJECT.get(id)`
 
-- term: "actor"
-  general_definition: |-
-    A term referring to a unique Durable Object. See "Durable Object".
-
 - term: "instance"
   general_definition: |-
-    See "actor".
+    See "Durable Object".
 
 - term: "Durable Object class"
   general_definition: |-
