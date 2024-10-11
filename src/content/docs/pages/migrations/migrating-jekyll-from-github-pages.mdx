@@ -49,6 +49,13 @@ Your existing Jekyll-based repository must specify a `Gemfile` (Ruby's dependenc
 
 Specifically, you will need to create a `Gemfile` and install the `github-pages` gem, which includes all of the dependencies that the GitHub Pages environment assumes.
 
+[Version 2 of the Pages build environment](/pages/configuration/build-image/#languages-and-runtime) will use Ruby 3.2.2 for the default Jekyll build.  Please make sure your local development environment is compatible.
+
+```sh title="Set Ruby Version"
+brew install ruby@3.2
+export PATH="/usr/local/opt/ruby@3.2/bin:$PATH"
+```
+
 ```sh title="Create a Gemfile"
 cd my-github-pages-repo
 bundle init
@@ -57,7 +64,7 @@ bundle init
 Open the `Gemfile` that was created for you, and add the following line to the bottom of the file:
 
 ```ruby title="Specifying the github-pages version"
-gem "github-pages", "~> 215", group: :jekyll_plugins
+gem "github-pages", group: :jekyll_plugins
 ```
 
 Your `Gemfile` should resemble the below:
@@ -70,7 +77,7 @@ source "https://rubygems.org"
 git_source(:github) { |repo_name| "https://github.com/#{repo_name}" }
 
 # gem "rails"
-gem "github-pages", "~> 215", group: :jekyll_plugins
+gem "github-pages", group: :jekyll_plugins
 ```
 
 Run `bundle update`, which will install the `github-pages` gem for you, and create a `Gemfile.lock` file with the resolved dependency versions.
