@@ -66,4 +66,4 @@ entries:
 
 - term: "event context"
   general_definition: |-
-    The duration for which a Durable Object is kept in memory.
+    The duration of time that a Durable Object instance is processing an event, such as a remote procedure call. Compute duration charges are incurred for the duration of the event context.
