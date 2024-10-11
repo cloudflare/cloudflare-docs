@@ -5,7 +5,7 @@ sidebar:
   order: 4
 ---
 
-import { Tabs, TabItem } from "~/components";
+import { Tabs, TabItem, GlossaryTooltip } from "~/components";
 
 ## Description
 
@@ -53,7 +53,7 @@ export class MyDurableObject extends DurableObject {
 
 ### `waitUntil`
 
-`waitUntil` waits until the promise which is passed as a parameter resolves and can extends an event context up to 30 seconds after the last client disconnects.
+`waitUntil` waits until the promise which is passed as a parameter resolves and can extends an <GlossaryTooltip term= "event context">event context</GlossaryTooltip> up to 30 seconds after the last client disconnects.
 
 :::note[`waitUntil` is not necessary]
 
@@ -71,13 +71,13 @@ The event context for a Durable Objects extends at least 60 seconds after the la
 
 ### `blockConcurrencyWhile`
 
-`blockConcurrencyWhile` executes an async callback while blocking any other events from being delivered to the Durable Object instance until the callback completes. This method guarantees ordering and prevents concurrent requests. All events that were not explicitly initiated as part of the callback itself will be blocked. Once the callback completes, All other events will be delivered.
+`blockConcurrencyWhile` executes an async callback while blocking any other events from being delivered to the Durable Object instance until the callback completes. This method guarantees ordering and prevents concurrent requests. All events that were not explicitly initiated as part of the callback itself will be blocked. Once the callback completes, all other events will be delivered.
 
-`blockConcurrencyWhile` is commonly used within the constructor of the Durable Object class to enforce that initialization must occur before any requests are delivered. Another use case is executing `async` operations based on the current state of the Durable Object instance and using `blockConcurrencyWhile` to prevent that state from changing while yeilding the event loop.
+`blockConcurrencyWhile` is commonly used within the constructor of the Durable Object class to enforce initialization to occur before any requests are delivered. Another use case is executing `async` operations based on the current state of the Durable Object instance and using `blockConcurrencyWhile` to prevent that state from changing while yielding the event loop.
 
 If the callback throws an exception, the object will be terminated and reset. This ensures that the object cannot be left stuck in an uninitialized state if something fails unexpectedly. To avoid this behavior, enclose the body of your callback in a `try...catch` block to ensure it cannot throw an exception.
 
-To help mitigate deadlocks there is a 30s timeout applied when executing the callback. If this timeout is exceeded the Durable Object instance will be reset. It is best practice to have the callback do as little work as possible to improve overall request throughput to the Durable Object instance.
+To help mitigate deadlocks there is a 30 second timeout applied when executing the callback. If this timeout is exceeded, the Durable Object instance will be reset. It is best practice to have the callback do as little work as possible to improve overall request throughput to the Durable Object instance.
 
 ```js
 // Durable Object
@@ -131,7 +131,7 @@ The WebSocket Hibernation API permits a maximum of 32,768 WebSocket connections 
 
 :::note[`waitUntil` is not necessary]
 
-Disconnected WebSockets are not returned by this method, but `getWebSockets` may still return websockets even after `ws.close` has been called. For example, if the server-side WebSocket sends a close, but does not receive one back (and has not detected a disconnect from the client), then the connection is in the CLOSING 'readyState'. The client might send more messages, so the WebSocket is technically not disconnected.
+Disconnected WebSockets are not returned by this method, but `getWebSockets` may still return WebSockets even after `ws.close` has been called. For example, if the server-side WebSocket sends a close, but does not receive one back (and has not detected a disconnect from the client), then the connection is in the CLOSING 'readyState'. The client might send more messages, so the WebSocket is technically not disconnected.
 
 :::
 
@@ -141,7 +141,7 @@ Disconnected WebSockets are not returned by this method, but `getWebSockets` may
 
 #### Return values
 
-- An `Array<WebSocket>`
+- An `Array<WebSocket>`.
 
 ### `setWebSocketAutoResponse`
 
@@ -153,7 +153,7 @@ Disconnected WebSockets are not returned by this method, but `getWebSockets` may
 
 #### Parameters
 
-- An optional `WebSocketRequestResponsePair(request string, response string)` enabling any WebSocket accepted via [`DurableObjectState::acceptWebSocket`](/durable-objects/api/state/#acceptwebsocket) to automatically reply to the provided response when it receives the provided request. Both request and response are limited to 2,048 characters each. If the parameter is omitted any previously set auto-response configuration will be removed. [`DurableObjectState::getWebSocketAutoResponseTimestamp`](/durable-objects/api/state/#getwebsocketautoresponsetimestamp) will still reflect the last timestamp that an auto-response was sent.
+- An optional `WebSocketRequestResponsePair(request string, response string)` enabling any WebSocket accepted via [`DurableObjectState::acceptWebSocket`](/durable-objects/api/state/#acceptwebsocket) to automatically reply to the provided response when it receives the provided request. Both request and response are limited to 2,048 characters each. If the parameter is omitted, any previously set auto-response configuration will be removed. [`DurableObjectState::getWebSocketAutoResponseTimestamp`](/durable-objects/api/state/#getwebsocketautoresponsetimestamp) will still reflect the last timestamp that an auto-response was sent.
 
 #### Return values
 
@@ -175,7 +175,7 @@ Disconnected WebSockets are not returned by this method, but `getWebSockets` may
 
 #### Return values
 
-- A `WebSocketRequestResponsePair` or null
+- A `WebSocketRequestResponsePair` or null.
 
 ### `getWebSocketAutoResponseTimestamp`
 
@@ -219,7 +219,7 @@ If no parameter or a parameter of `0` is provided and a timeout has been previou
 
 #### Return values
 
-- A number or null if the timeout has not been set.
+- A number, or null if the timeout has not been set.
 
 ### `getTags`
 
