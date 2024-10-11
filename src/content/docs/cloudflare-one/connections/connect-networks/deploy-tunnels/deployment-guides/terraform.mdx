@@ -154,7 +154,7 @@ The following configuration will modify settings in your Cloudflare account.
           access {
             required  = true
             team_name = "myteam"
-            aud_tag   = [cloudflare_access_application.http_app.aud]
+            aud_tag   = [cloudflare_zero_trust_access_application.http_app.aud]
           }
         }
       }
