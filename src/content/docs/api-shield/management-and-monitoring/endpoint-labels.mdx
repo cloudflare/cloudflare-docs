@@ -16,6 +16,39 @@ User-defined labels can also be added to endpoints in API Shield by creating a l
 
 You can sort and filter your endpoints based on the labels. 
 
+## Managed labels
+
+`cf-log-in`: Add this label to endpoints that accept user credentials. You may have multiple endpoints if you accept username, password, and MFA across multiple endpoints or requests.
+
+`cf-sign-up`: Add this label to endpoints that are the final step in creating user accounts for your site or application.
+
+`cf-content`: Add this label to endpoints that provide unique content, such as product details, user reviews, pricing or other unique information.
+
+`cf-purchase`: Add this label to endpoints that are the final step in purchasing goods or services online.
+
+`cf-password-reset`: Add this label to endpoints that participate in the user password reset process. This includes initial password reset requests and final password reset submissions.
+
+`cf-add-cart`: Add this label to endpoints that add items to a user’s shopping cart or verify item availability.
+
+`cf-add-payment`: Add this label to endpoints that accept credit card or bank account details where fraudsters may iterate through account numbers to guess valid combinations of payment information. 
+
+`cf-check-value`: Add this label to endpoints that check the balance of rewards points, in-game currency, or other stored value products that can be earned, transferred, and redeemed for cash or physical goods.
+
+`cf-add-post`: Add this label to endpoints that post messages in a communication forum or product/merchant review.
+
+`cf-account-update`: Add this label to endpoints that participate in user account/profile updates.
+
+`cf-missing-auth`: Cloudflare will automatically add this label to endpoints where all successful responses are sent back to requests made by unauthenticated users without a session identifier. Refer to the table below for more information.
+
+`cf-mixed-auth`: Cloudflare will automatically add this label to endpoints that respond successfully to requests sent by users who are not required to be authenticated, both with and without session identifiers. Refer to the table below for more information. 
+
+`cf-sensitive`: Cloudflare will automatically add this label to endpoints when HTTP responses match the WAF’s [Sensitive Data Detection](/api-shield/management-and-monitoring/#sensitive-data-detection) ruleset.
+
+| Description | 4xx, 5xx responses | 2xx responses |
+| --- | --- | --- | 
+| If _all_ requests are missing authentication, Cloudflare will apply the label: | (no label) | `cf-missing-auth` |
+| If only _some_ requests missing authentication, Cloudflare will apply the label: | (no label) | `cf-mixed-auth` |
+
 ## Create a label
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/) and select your account and domain. 
