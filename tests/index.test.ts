@@ -1,17 +1,34 @@
-import {
-	env,
-	createExecutionContext,
-	waitOnExecutionContext,
-	fetchMock,
-	SELF,
-} from "cloudflare:test";
+import { fetchMock, SELF } from "cloudflare:test";
 import { describe, it, expect, beforeAll, afterEach } from "vitest";
 import openAPISchema from "./fixtures/openapi.json";
+import puppeteer, { Browser, HTTPRequest } from "@cloudflare/puppeteer";
+import { inject } from "vitest";
+
+const interceptRequest = async (request: HTTPRequest) => {
+	const miniflareRequest = new Request(request.url(), {
+		method: request.method(),
+		body: request.postData(),
+	});
+	const response = await SELF.fetch(miniflareRequest);
+	const arrayBuffer = await response.arrayBuffer();
+
+	await request.respond({
+		body: Buffer.from(arrayBuffer),
+		headers: Object.fromEntries(response.headers.entries()),
+		status: response.status,
+	});
+};
 
 describe("Cloudflare Docs", () => {
+	let browser: Browser;
+
 	beforeAll(async () => {
 		fetchMock.activate();
 		fetchMock.disableNetConnect();
+
+		browser = await puppeteer.connect({
+			browserWSEndpoint: inject("browserWSEndpoint"),
+		});
 	});
 
 	afterEach(() => {
@@ -52,6 +69,19 @@ describe("Cloudflare Docs", () => {
 		const response = await SELF.fetch(request);
 		expect(response.status).toBe(404);
 		expect(await response.text()).toContain("Page not found.");
+	});
+
+	it("works in Chrome", async () => {
+		const page = await browser.newPage();
+
+		page.setRequestInterception(true);
+		page.on("request", interceptRequest);
+
+		await page.goto("http://developers.cloudflare.com/workers");
+
+		const textSelector = await page.locator("text/Cloudflare").waitHandle();
+		const fullTitle = await textSelector?.evaluate((el) => el.textContent);
+		expect(fullTitle).toContain("Cloudflare Docs");
 	});
 
 	it("responds with API schema at `/schema`", async () => {
