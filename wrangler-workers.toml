@@ -1,7 +1,11 @@
+#:schema ./node_modules/wrangler/config-schema.json
 name = "cloudflare-docs"
 account_id = "b54f07a6c269ecca2fa60f1ae4920c99"
 compatibility_date = "2022-09-27"
 main = "./worker/index.ts"
+
+workers_dev = true
+route = { pattern = "developers.cloudflare.com/*", zone_name = "developers.cloudflare.com"}
 
 rules = [
 	{ type = "Text", globs = ["**/_redirects"], fallthrough = true },
