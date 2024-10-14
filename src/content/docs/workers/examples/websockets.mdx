@@ -1,19 +1,19 @@
 ---
 type: example
-summary: Use the WebSockets API to communicate in real time with your Cloudflare
-  Workers.
+summary: Use the WebSockets API to communicate in real time with your Cloudflare Workers.
 tags:
   - WebSockets
 languages:
   - JavaScript
+  - Rust
 pcx_content_type: example
 title: Using the WebSockets API
 sidebar:
   order: 10000
-description: Use the WebSockets API to communicate in real time with your
-  Cloudflare Workers.
-
+description: Use the WebSockets API to communicate in real time with your Cloudflare Workers.
 ---
+
+import { TabItem, Tabs } from "~/components";
 
 WebSockets allow you to communicate in real time with your Cloudflare Workers serverless functions. In this guide, you will learn the basics of WebSockets on Cloudflare Workers, both from the perspective of writing WebSocket servers in your Workers functions, as well as connecting to and working with those WebSocket servers as a client.
 
@@ -56,6 +56,7 @@ For more details about creating and working with WebSockets in the client, refer
 
 When an incoming WebSocket request reaches the Workers function, it will contain an `Upgrade` header, set to the string value `websocket`. Check for this header before continuing to instantiate a WebSocket:
 
+<Tabs syncKey="workersExamples"> <TabItem label="JavaScript" icon="seti:javascript">
 ```js
 async function handleRequest(request) {
   const upgradeHeader = request.headers.get('Upgrade');
@@ -64,9 +65,27 @@ async function handleRequest(request) {
   }
 }
 ```
+</TabItem> <TabItem label="Rust" icon="seti:rust">
+```rs
 
+use worker::*;
+
+#[event(fetch)]
+async fn fetch(req: HttpRequest, _env: Env, _ctx: Context) -> Result<worker::Response> {
+    let upgrade_header = match req.headers().get("Upgrade") {
+        Some(h) => h.to_str().unwrap(),
+        None => "",
+    };
+    if upgrade_header != "websocket" {
+        return worker::Response::error("Expected Upgrade: websocket", 426);
+    }
+}
+```
+</TabItem> </Tabs>
 After you have appropriately checked for the `Upgrade` header, you can create a new instance of `WebSocketPair`, which contains server and client WebSockets. One of these WebSockets should be handled by the Workers function and the other should be returned as part of a `Response` with the [`101` status code](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/101), indicating the request is switching protocols:
 
+
+<Tabs syncKey="workersExamples"> <TabItem label="JavaScript" icon="seti:javascript">
 ```js
 async function handleRequest(request) {
   const upgradeHeader = request.headers.get('Upgrade');
@@ -84,11 +103,37 @@ async function handleRequest(request) {
   });
 }
 ```
+</TabItem> <TabItem label="Rust" icon="seti:rust">
+```rs
+use worker::*;
+
+#[event(fetch)]
+async fn fetch(req: HttpRequest, _env: Env, _ctx: Context) -> Result<worker::Response> {
+    let upgrade_header = match req.headers().get("Upgrade") {
+        Some(h) => h.to_str().unwrap(),
+        None => "",
+    };
+    if upgrade_header != "websocket" {
+        return worker::Response::error("Expected Upgrade: websocket", 426);
+    }
+
+    let ws = WebSocketPair::new()?;
+    let client = ws.client;
+    let server = ws.server;
+    server.accept()?;
+
+    worker::Response::from_websocket(client)
+}
+
+```
+</TabItem> </Tabs>
 
 The `WebSocketPair` constructor returns an Object, with the `0` and `1` keys each holding a `WebSocket` instance as its value. It is common to grab the two WebSockets from this pair using [`Object.values`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_objects/Object/values) and [ES6 destructuring](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Destructuring_assignment), as seen in the below example.
 
 In order to begin communicating with the `client` WebSocket in your Worker, call `accept` on the `server` WebSocket. This will tell the Workers runtime that it should listen for WebSocket data and keep the connection open with your `client` WebSocket:
 
+
+<Tabs syncKey="workersExamples"> <TabItem label="JavaScript" icon="seti:javascript">
 ```js
 async function handleRequest(request) {
   const upgradeHeader = request.headers.get('Upgrade');
@@ -107,9 +152,34 @@ async function handleRequest(request) {
   });
 }
 ```
+</TabItem> <TabItem label="Rust" icon="seti:rust">
+```rs
+use worker::*;
+
+#[event(fetch)]
+async fn fetch(req: HttpRequest, _env: Env, _ctx: Context) -> Result<worker::Response> {
+    let upgrade_header = match req.headers().get("Upgrade") {
+        Some(h) => h.to_str().unwrap(),
+        None => "",
+    };
+    if upgrade_header != "websocket" {
+        return worker::Response::error("Expected Upgrade: websocket", 426);
+    }
+
+    let ws = WebSocketPair::new()?;
+    let client = ws.client;
+    let server = ws.server;
+    server.accept()?;
+
+    worker::Response::from_websocket(client)
+}
+
+```
+</TabItem> </Tabs>
 
 WebSockets emit a number of [Events](/workers/runtime-apis/websockets/#events) that can be connected to using `addEventListener`. The below example hooks into the `message` event and emits a `console.log` with the data from it:
 
+<Tabs syncKey="workersExamples"> <TabItem label="JavaScript" icon="seti:javascript">
 ```js
 async function handleRequest(request) {
   const upgradeHeader = request.headers.get('Upgrade');
@@ -131,6 +201,40 @@ async function handleRequest(request) {
   });
 }
 ```
+</TabItem> <TabItem label="Rust" icon="seti:rust">
+```rs
+use futures::StreamExt;
+use worker::*;
+
+#[event(fetch)]
+async fn fetch(req: HttpRequest, _env: Env, _ctx: Context) -> Result<worker::Response> {
+    let upgrade_header = match req.headers().get("Upgrade") {
+        Some(h) => h.to_str().unwrap(),
+        None => "",
+    };
+    if upgrade_header != "websocket" {
+        return worker::Response::error("Expected Upgrade: websocket", 426);
+    }
+
+    let ws = WebSocketPair::new()?;
+    let client = ws.client;
+    let server = ws.server;
+    server.accept()?;
+
+    wasm_bindgen_futures::spawn_local(async move {
+        let mut event_stream = server.events().expect("could not open stream");
+        while let Some(event) = event_stream.next().await {
+            match event.expect("received error in websocket") {
+                WebsocketEvent::Message(msg) => server.send(&msg.text()).unwrap(),
+                WebsocketEvent::Close(event) => console_log!("{:?}", event),
+            }
+        }
+    });
+    worker::Response::from_websocket(client)
+}
+
+```
+</TabItem> </Tabs>
 
 ### Connect to the WebSocket server from a client
 
