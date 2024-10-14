@@ -7,7 +7,7 @@ sidebar:
 
 import { Aside } from "~/components";
 
-As seen in the [Getting Started guide](/browser-rendering/get-started/screenshots/), Browser Rendering can be used to generate screenshots for any given URL. Alongside screenshots, we can also generate full PDF documents for a given webpage, and can also provide the webpage markup and style ourselves.
+As seen in the [Getting Started guide](/browser-rendering/get-started/screenshots/), Browser Rendering can be used to generate screenshots for any given URL. Alongside screenshots, you can also generate full PDF documents for a given webpage, and can also provide the webpage markup and style ourselves.
 
 ## Prerequisites
 
@@ -23,7 +23,7 @@ npm create cloudflare@latest -- browser-worker
 npm install @cloudflare/puppeteer --save-dev
 ```
 
-3. Add our Browser Rendering binding to your new `wrangler.toml` configuration:
+3. Add your Browser Rendering binding to your new `wrangler.toml` configuration:
 
 ```yaml
 browser = { binding = "BROWSER" }
@@ -74,7 +74,7 @@ you'd like. For now we're using string interpolation, but this method is
 
 For this example, we're going to take in user-provided content (via a '?name=' parameter), and have that name output in the final PDF document.
 
-To start, let's fill out our 'generateDocument' function with the following:
+To start, let's fill out your 'generateDocument' function with the following:
 
 ```ts
 const generateDocument = (name: string) => {
@@ -144,7 +144,7 @@ const browser = await puppeteer.launch(env.BROWSER);
 const page = await browser.newPage();
 ```
 
-The [`page.setContent()`](https://github.com/cloudflare/puppeteer/blob/main/docs/api/puppeteer.page.setcontent.md) function can then be used to set the page's HTML contents from a string, so we pass in our created document directly like so:
+The [`page.setContent()`](https://github.com/cloudflare/puppeteer/blob/main/docs/api/puppeteer.page.setcontent.md) function can then be used to set the page's HTML contents from a string, so you can pass in your created document directly like so:
 
 ```ts
 await page.setContent(document);
@@ -152,7 +152,7 @@ await page.setContent(document);
 
 ## 3. Generate and Return PDF
 
-With your Browser Rendering instance now rendering our provided HTML and CSS, you can use the [`page.pdf()`](https://github.com/cloudflare/puppeteer/blob/main/docs/api/puppeteer.page.pdf.md) command to generate a PDF file and return it to the client.
+With your Browser Rendering instance now rendering your provided HTML and CSS, you can use the [`page.pdf()`](https://github.com/cloudflare/puppeteer/blob/main/docs/api/puppeteer.page.pdf.md) command to generate a PDF file and return it to the client.
 
 ```ts
 let pdf = page.pdf({ printBackground: true });
