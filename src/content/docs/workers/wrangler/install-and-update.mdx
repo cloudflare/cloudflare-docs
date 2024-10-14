@@ -21,9 +21,9 @@ Wrangler is installed locally into each of your projects. This allows you and yo
 
 <Details header="Wrangler System Requirements">
 
-Wrangler supports the [Current, Active, and Maintenance](https://nodejs.org/en/about/previous-releases) versions of Node.js. We aim not to break older versions of Node.js, but occasionally will due to features that are unavailable in older version of Node.js or security patches.
+We support running the Wrangler CLI with the [Current, Active, and Maintenance](https://nodejs.org/en/about/previous-releases) versions of Node.js. Your Worker will always be executed in `workerd`, the open source Cloudflare Workers runtime.
 
-For most Wrangler features to work, your operating system needs to support `workerd`, the open source Cloudflare Workers runtime. `workerd`'s OS support policy is listed in it's [GitHub README](https://github.com/cloudflare/workerd?tab=readme-ov-file#running-workerd).
+Wrangler is only supported on macOS 13.5+, Windows 11, and Linux distros that support glib 2.31. This follows [`workerd`'s OS support policy](https://github.com/cloudflare/workerd?tab=readme-ov-file#running-workerd).
 
 </Details>
 
