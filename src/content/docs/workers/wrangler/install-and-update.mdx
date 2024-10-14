@@ -18,6 +18,16 @@ To install [Wrangler](https://github.com/cloudflare/workers-sdk/tree/main/packag
 
 Wrangler is installed locally into each of your projects. This allows you and your team to use the same Wrangler version, control Wrangler versions for each project, and roll back to an earlier version of Wrangler, if needed.
 
+
+<Details header="Wrangler System Requirements">
+
+Wrangler supports the [Current, Active, and Maintenance](https://nodejs.org/en/about/previous-releases) versions of Node.js. We aim not to break older versions of Node.js, but occasionally will due to features that are unavailable in older version of Node.js or security patches.
+
+For most Wrangler features to work, your operating system needs to support `workerd`, the open source Cloudflare Workers runtime. `workerd`'s OS support policy is listed in it's [GitHub README](https://github.com/cloudflare/workerd?tab=readme-ov-file#running-workerd).
+
+</Details>
+
+
 To install Wrangler within your Worker project, run:
 
 <Render file="install_wrangler" />
