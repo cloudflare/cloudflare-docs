@@ -15,7 +15,7 @@ The [Streams API](https://developer.mozilla.org/en-US/docs/Web/API/Streams_API) 
 
 <DirectoryListing />
 
-Workers do not need to prepare an entire response body before delivering it to `event.respondWith()`. You can use [`TransformStream`](/workers/runtime-apis/streams/transformstream/) to stream a response body after sending the front matter (that is, HTTP status line and headers). This allows you to minimize:
+Workers do not need to prepare an entire response body before returning a `Response`. You can use a [`ReadableStream`](/workers/runtime-apis/streams/readablestream/) to stream a response body after sending the front matter (that is, HTTP status line and headers). This allows you to minimize:
 
 * The visitor’s time-to-first-byte.
 * The buffering done in the Worker.
@@ -39,7 +39,7 @@ The worker can create a `Response` object using a `ReadableStream` as the body. 
 export default {
   async fetch(request, env, ctx) {
     // Fetch from origin server.
-    let response = await fetch(request);
+    const response = await fetch(request);
 
     // ... and deliver our Response while that’s running.
     return new Response(response.body, response);
@@ -56,7 +56,7 @@ addEventListener('fetch', event => {
 
 async function fetchAndStream(request) {
   // Fetch from origin server.
-  let response = await fetch(request);
+  const response = await fetch(request);
 
   // ... and deliver our Response while that’s running.
   return new Response(readable.body, response);
@@ -73,9 +73,9 @@ A [`TransformStream`](/workers/runtime-apis/streams/transformstream/) and the [`
 export default {
   async fetch(request, env, ctx) {
     // Fetch from origin server.
-    let response = await fetch(request);
+    const response = await fetch(request);
 
-    let { readable, writable } = new TransformStream({
+    const { readable, writable } = new TransformStream({
       transform(chunk, controller) {
         controller.enqueue(modifyChunkSomehow(chunk));
       }
@@ -99,9 +99,9 @@ addEventListener('fetch', event => {
 
 async function fetchAndStream(request) {
   // Fetch from origin server.
-  let response = await fetch(request);
+  const response = await fetch(request);
 
-  let { readable, writable } = new TransformStream({
+  const { readable, writable } = new TransformStream({
     transform(chunk, controller) {
       controller.enqueue(modifyChunkSomehow(chunk));
     }
