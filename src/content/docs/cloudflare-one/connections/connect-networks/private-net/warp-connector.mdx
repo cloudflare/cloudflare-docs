@@ -126,7 +126,7 @@ In this example, we will create a WARP Connector for subnet `10.0.0.0/24` and in
     3. Verify the registration:
 
     ```sh
-    warp-cli account
+    warp-cli registration show
     ```
 
     ```sh output
@@ -148,7 +148,7 @@ In this example, we will create a WARP Connector for subnet `10.0.0.0/24` and in
       ```
     - Clear an old registration and trigger WARP to re-register:
       ```sh
-      sudo warp-cli delete
+      sudo warp-cli registration delete
       ```
     - Review your [WARP daemon logs](/cloudflare-one/connections/connect-devices/warp/troubleshooting/warp-logs/) for information about why the registration is failing.
 
@@ -162,7 +162,6 @@ In this example, we will create a WARP Connector for subnet `10.0.0.0/24` and in
 
     ```sh output
     Status update: Connected
-    Success
     ```
 
     <Details header="Troubleshoot connection">
