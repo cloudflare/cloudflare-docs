@@ -3,7 +3,10 @@ pcx_content_type: tutorial
 title: Fortanix Data Security Manager
 sidebar:
   order: 3
+  label: Fortanix DSM
 ---
+
+import { Example } from "~/components";
 
 This tutorial uses [Fortanix Data Security Manager (DSM)](https://www.fortanix.com/platform/data-security-manager) — a FIPS 140-2 Level 3 certified implementation.
 
@@ -14,4 +17,55 @@ Make sure you have:
 - [Created a group and an application](https://support.fortanix.com/docs/fortanix-data-security-manager-with-cloudflare-integration#53-creating-a-group) assigned to it.
 - Selected API key as the application authentication method and copied the API key. The API key will be used in this tutorial.
 
-## 1.
+## 1. Deploy a Cloudflare key server
+
+Refer to [Get started](/ssl/keyless-ssl/configuration/) for available setups and more information. This guide is based on the [Public DNS](ssl/keyless-ssl/configuration/public-dns/) option. It has been tested using a virtual machine (VM) deployed to Azure running Ubuntu 22.04.3 LTS.
+
+1. Generate a long random string to create a hostname such as `<RANDOM_STRING>.example.com`. Copy it for use in the next step.
+
+```bash
+openssl rand -hex 12
+```
+
+<Example>
+Example:
+```txt
+d63de826d549ebef337bad80.test-cloudflare-fortanix.us
+```
+
+</Example>
+
+2. Create a configuration file for the certificate signing request (CSR).
+
+```bash
+nano cloudflare.conf
+```
+
+<Example>
+Below is an example of how to fill in the configuration file:
+
+```txt
+[ req ]
+default_bits       = 2048
+distinguished_name = req_distinguished_name
+req_extensions     = req_ext
+prompt = no
+[ req_distinguished_name ]
+countryName                = GB
+stateOrProvinceName        = England
+localityName               = London
+organizationName           = Fortanix
+commonName                 = d63de826d549ebef337bad80.test-cloudflare-fortanix.us
+[ req_ext ]
+subjectAltName = @alt_names
+[alt_names]
+DNS.1   = d63de826d549ebef337bad80.test-cloudflare-fortanix.us
+```
+</Example>
+
+3. Create a CSR with the configuration file from the previous step.
+
+```bash
+sudo openssl req -out keyserver.csr -newkey rsa:2048 -nodes -keyout keyserver.key -config cloudflare.conf
+```
+
