@@ -62,4 +62,7 @@ Follow the steps below to achieve this conversion.
 
 ## 4. Update nameservers
 
-1. At your domain registrar (or parent zone), [update the nameservers](/dns/nameservers/update-nameservers/). In a partial (CNAME) setup, only the nameservers of your external DNS provider should be listed. Remove any `secondary.cloudflare.com` nameservers if you used to have them.
+At your domain registrar (or parent zone), [update the nameservers](/dns/nameservers/update-nameservers/). In a partial (CNAME) setup, only the nameservers of your external DNS provider should be listed.
+
+    - Remove any `secondary.cloudflare.com` nameservers if you used to have them.
+    - If you are also migrating to a new authoritative DNS provider, add your new nameservers.
