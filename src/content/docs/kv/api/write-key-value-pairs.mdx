@@ -48,7 +48,7 @@ env.NAMESPACE.put(key, value, options?);
 #### Parameters
 
 - `key`: `string`
-  - The key to associate with the value. A key cannot be empty, have a `.` or `..`. All other keys are valid. Keys have a maximum length of 512 bytes.
+  - The key to associate with the value. A key cannot be empty or be exactly equal to `.` or `..`. All other keys are valid. Keys have a maximum length of 512 bytes.
 - `value`: `string` | `ReadableStream` | `ArrayBuffer`
 
   - The value to store. The type is inferred. The maximum size of a value is 25 MiB.
