@@ -46,6 +46,18 @@ Cloudflare also supports [ASP.NET SignalR](http://signalr.net/), which helps neg
 
 WebSockets are supported on all Cloudflare plans.
 
+## Requests and Bandwidth measurement
+
+Given the nature of WebSocket connections, you may notice they differ from typical HTTP traffic in terms of requests and bandwidth usage. If you are an Enterprise customer, it is important to consider how Cloudflare measures requests and bandwidth to accurately estimate your usage.
+
+Cloudflare measures a single WebSocket connection in the following way:
+
+- **Requests**: Cloudflare recognizes only the initial upgrade request per WebSocket connection as an HTTP request. Even though you can send a bidirectional message stream through the established WebSocket connection, it will be counted as a single long-lived HTTP request.
+
+- **Bandwidth**: Cloudflare measures data transfer sent from Cloudflare to the client. This typically means that messages from the WebSocket server behind Cloudflare to the WebSocket client are counted towards bandwidth usage.
+
+Once a WebSocket connection is closed, you can view your aggregated WebSocket usage through [Traffic Analytics](/analytics/account-and-zone-analytics/zone-analytics/#traffic), the [GraphQL Analytics API](/analytics/graphql-api/), and [HTTP requests logs](/logs/reference/log-fields/zone/http_requests/).
+
 ## Technical note
 
 When Cloudflare releases new code to its global network, we may restart servers, which terminates WebSockets connections.

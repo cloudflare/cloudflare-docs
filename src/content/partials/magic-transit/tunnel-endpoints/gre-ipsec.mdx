@@ -1,11 +1,13 @@
 ---
-inputParameters: productName;;tunnelsPath;;ciphersPath
-
+params:
+  - productName
+  - tunnelsPath
+  - ciphersPath
 ---
 
-import { Markdown } from "~/components"
+import { Markdown } from "~/components";
 
-You can use GRE or IPsec tunnels to onboard your traffic to {props.one}, and set them up via the Cloudflare dashboard or the API. However, if you want to use the API, be sure to have your [account ID](/fundamentals/setup/find-account-and-zone-ids/) and [API key](/fundamentals/api/get-started/keys/#view-your-global-api-key) ready before you begin.
+You can use GRE or IPsec tunnels to onboard your traffic to {props.productName}, and set them up via the Cloudflare dashboard or the API. However, if you want to use the API, be sure to have your [account ID](/fundamentals/setup/find-account-and-zone-ids/) and [API key](/fundamentals/api/get-started/keys/#view-your-global-api-key) ready before you begin.
 
 :::note[Note]
 IPsec tunnels only support Internet Key Exchange version 2 (IKEv2).
@@ -13,4 +15,4 @@ IPsec tunnels only support Internet Key Exchange version 2 (IKEv2).
 
 #### IPsec supported ciphers
 
-Refer to <a href={props.two}>Tunnels and encapsulation</a> to learn more about the technical requirements for GRE and IPsec tunnels used in {props.one}. In this page, you can also find the <a href={props.three}>supported ciphers for IPsec</a>.
+Refer to <a href={props.tunnelsPath}>Tunnels and encapsulation</a> to learn more about the technical requirements for GRE and IPsec tunnels used in {props.productName}. In this page, you can also find the <a href={props.ciphersPath}>supported ciphers for IPsec</a>.

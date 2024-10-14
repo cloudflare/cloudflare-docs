@@ -27,10 +27,10 @@ To configure a KV namespace binding via the Cloudflare dashboard:
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) and select your account.
 2. In **Account Home**, select **Workers & Pages**.
-3. Select your Pages project > **Settings** > **Functions** > **KV namespace bindings** > **Add binding**.
-4. Choose whether you would like to set up the binding in your **Production** or **Preview** environment.
+3. Select your Pages project > **Settings**.
+4. Select your Pages environment > **Bindings** > **Add** > **KV namespace**.
 5. Give your binding a name under **Variable name**.
-6. Under **KV namespace**, select your desired namespace. You must repeat steps 5 and 6 for both the **Production** and **Preview** environments.
+6. Under **KV namespace**, select your desired namespace.
 7. Redeploy your project for the binding to take effect.
 
 Below is an example of how to use KV in your Function. In the following example, your KV namespace binding is called `TODO_LIST` and you can access the binding in your Function code on `context.env`:
@@ -86,10 +86,10 @@ To configure a Durable Object binding via the Cloudflare dashboard:
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) and select your account.
 2. In **Account Home**, select **Workers & Pages**.
-3. Select your Pages project > **Settings** > **Functions** > **Durable Object bindings** > **Add binding**.
-4. Choose whether you would like to set up the binding in your **Production** or **Preview** environment.
+3. Select your Pages project > **Settings**.
+4. Select your Pages environment > **Bindings** > **Add** > **Durable Object**.
 5. Give your binding a name under **Variable name**.
-6. Under **Durable Object namespace**, select your desired namespace. You must repeat steps 5 and 6 for both the **Production** and **Preview** environments.
+6. Under **Durable Object namespace**, select your desired namespace.
 7. Redeploy your project for the binding to take effect.
 
 Below is an example of how to use Durable Objects in your Function. In the following example, your DO binding is called `DURABLE_OBJECT` and you can access the binding in your Function code on `context.env`:
@@ -149,10 +149,10 @@ To configure a R2 bucket binding via the Cloudflare dashboard:
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) and select your account.
 2. In **Account Home**, select **Workers & Pages**.
-3. Select your Pages project > **Settings** > **Functions** > **R2 bucket bindings** > **Add binding**.
-4. Choose whether you would like to set up the binding in your **Production** or **Preview** environment.
+3. Select your Pages project > **Settings**.
+4. Select your Pages environment > **Bindings** > **Add** > **R2 bucket**.
 5. Give your binding a name under **Variable name**.
-6. Under **R2 bucket**, select your desired R2 bucket. You must repeat steps 5 and 6 for both the **Production** and **Preview** environments.
+6. Under **R2 bucket**, select your desired R2 bucket.
 7. Redeploy your project for the binding to take effect.
 
 Below is an example of how to use R2 buckets in your Function. In the following example, your R2 bucket binding is called `BUCKET` and you can access the binding in your Function code on `context.env`:
@@ -220,10 +220,10 @@ To configure a D1 database binding via the Cloudflare dashboard:
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) and select your account.
 2. In **Account Home**, select **Workers & Pages**.
-3. Select your Pages project > **Settings** > **Functions** > **D1 database bindings** > **Add binding**.
-4. Choose whether you would like to set up the binding in your **Production** or **Preview** environment.
+3. Select your Pages project > **Settings**.
+4. Select your Pages environment > **Bindings** > **Add**> **D1 database bindings**.
 5. Give your binding a name under **Variable name**.
-6. Under **D1 database**, select your desired D1 database. You must repeat steps 5 and 6 for both the **Production** and **Preview** environments.
+6. Under **D1 database**, select your desired D1 database.
 7. Redeploy your project for the binding to take effect.
 
 Below is an example of how to use D1 in your Function. In the following example, your D1 database binding is `NORTHWIND_DB` and you can access the binding in your Function code on `context.env`:
@@ -296,10 +296,11 @@ To configure a Vectorize index binding via the Cloudflare dashboard:
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) and select your account.
 2. In **Account Home**, select **Workers & Pages**.
 3. Choose whether you would like to set up the binding in your **Production** or **Preview** environment.
-4. Select your Pages project > **Settings** > **Functions** > **Vectorize index bindings** > **Add binding**.
-5. Give your binding a name under **Variable name**.
-6. Under **Vectorize index**, select your desired Vectorize index. You must repeat steps 5 and 6 for both the **Production** and **Preview** environments.
-7. Redeploy your project for the binding to take effect.
+4. Select your Pages project > **Settings**.
+5. Select your Pages environment > **Bindings** > **Add** > **Vectorize index**.
+6. Give your binding a name under **Variable name**.
+7. Under **Vectorize index**, select your desired Vectorize index.
+8. Redeploy your project for the binding to take effect.
 
 ### Use Vectorize index bindings
 
@@ -433,8 +434,8 @@ To configure a Workers AI binding via the Cloudflare dashboard:
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) and select your account.
 2. In **Account Home**, select **Workers & Pages**.
-3. Select your Pages project > **Settings** > **Functions** > **Workers AI bindings** > **Add binding**.
-4. Choose whether you would like to set up the binding in your **Production** or **Preview** environment.
+3. Select your Pages project > **Settings**.
+4. Select your Pages environment > **Bindings** > **Add** > **Workers AI**.
 5. Give your binding a name under **Variable name**.
 6. Redeploy your project for the binding to take effect.
 
@@ -505,10 +506,10 @@ To configure a Service binding via the Cloudflare dashboard:
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) and select your account.
 2. In **Account Home**, select **Workers & Pages**.
-3. Select your Pages project > **Settings** > **Functions** > **Service bindings** > **Add binding**.
-4. Choose whether you would like to set up the binding in your **Production** or **Preview** environment.
+3. Select your Pages project > **Settings**.
+4. Select your Pages environment > **Bindings** > **Add** > **Service binding**.
 5. Give your binding a name under **Variable name**.
-6. Under **Service**, select your desired Worker. You must repeat steps 5 and 6 for both the **Production** and **Preview** environments.
+6. Under **Service**, select your desired Worker.
 7. Redeploy your project for the binding to take effect.
 
 Below is an example of how to use Service bindings in your Function. In the following example, your Service binding is called `SERVICE` and you can access the binding in your Function code on `context.env`:
@@ -560,10 +561,10 @@ To configure a queue producer binding via the Cloudflare dashboard:
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) and select your account.
 2. In **Account Home**, select **Workers & Pages**.
-3. Select your Pages project > **Settings** > **Functions** > **Queue Producers bindings** > **Add binding**.
-4. Choose whether you would like to set up the binding in your **Production** or **Preview** environment.
+3. Select your Pages project > **Settings**.
+4. Select your Pages environment > **Functions** > **Add** > **Queue**.
 5. Give your binding a name under **Variable name**.
-6. Under **Dataset**, input your desired dataset. You must repeat steps 5 and 6 for both the **Production** and **Preview** environments.
+6. Under **Queue**, select your desired queue.
 7. Redeploy your project for the binding to take effect.
 
 Below is an example of how to use a queue producer binding in your Function. In this example, the binding is named `MY_QUEUE` and you can access the binding in your Function code on `context.env`::
@@ -606,6 +607,88 @@ export const onRequest: PagesFunction<Env> = async (context) => {
 
 If using a queue producer binding with a Pages Function, you will be able to send events to a queue locally. However, it is not possible to consume events from a queue with a Pages Function. You will have to create a [separate consumer Worker](/queues/get-started/#5-create-your-consumer-worker) with a [queue consumer handler](/queues/configuration/javascript-apis/#consumer) to consume events from the queue. Wrangler does not yet support running separate producer Functions and consumer Workers bound to the same queue locally.
 
+## Hyperdrive configs
+
+:::note
+
+PostgreSQL drivers like [`Postgres.js`](https://github.com/porsager/postgres) depend on Node.js APIs. Pages Functions with Hyperdrive bindings must be [deployed with Node.js compatibility](/workers/runtime-apis/nodejs).
+
+```toml title="wrangler.toml"
+compatibility_flags = [ "nodejs_compat" ]
+compatibility_date = "2024-09-23"
+```
+
+:::
+
+[Hyperdrive](/hyperdrive/) is a service for connecting to your existing databases from Cloudflare Workers and Pages Functions.
+
+To bind your Hyperdrive config to your Pages Function, you can configure a Hyperdrive binding in [`wrangler.toml`](/pages/functions/wrangler-configuration/#hyperdrive) or the Cloudflare dashboard.
+
+To configure a Hyperdrive binding via the Cloudflare dashboard:
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) and select your account.
+2. In **Account Home**, select **Workers & Pages**.
+3. Select your Pages project > **Settings**.
+4. Select your Pages environment > **Bindings** > **Add** > **Hyperdrive**.
+5. Give your binding a name under **Variable name**.
+6. Under **Hyperdrive configuration**, select your desired configuration.
+7. Redeploy your project for the binding to take effect.
+
+Below is an example of how to use Hyperdrive in your Function. In the following example, your Hyperdrive config is named `HYPERDRIVE` and you can access the binding in your Function code on `context.env`:
+
+<Tabs> <TabItem label="JavaScript" icon="seti:javascript">
+
+```js
+import postgres from "postgres";
+
+export async function onRequest(context) {
+	// create connection to postgres database
+	const sql = postgres(context.env.HYPERDRIVE.connectionString);
+
+	try {
+		const result = await sql`SELECT id, name, value FROM records`;
+
+		return Response.json({result: result})
+	} catch (e) {
+		return Response.json({error: e.message, {status: 500}});
+	}
+}
+```
+
+</TabItem> <TabItem label="TypeScript" icon="seti:typescript">
+
+```ts
+import postgres from "postgres";
+
+interface Env {
+	HYPERDRIVE: Hyperdrive;
+}
+
+type MyRecord = {
+	id: number;
+	name: string;
+	value: string;
+};
+
+export const onRequest: PagesFunction<Env> = async (context) => {
+	// create connection to postgres database
+	const sql = postgres(context.env.HYPERDRIVE.connectionString);
+
+	try {
+		const result = await sql<MyRecord[]>`SELECT id, name, value FROM records`;
+
+		return Response.json({result: result})
+	} catch (e) {
+		return Response.json({error: e.message, {status: 500}});
+	}
+};
+```
+
+</TabItem> </Tabs> 
+
+### Interact with your Hyperdrive binding locally
+
+To interact with your Hyperdrive binding locally, you must provide a local connection string to your database that your Pages project will connect to directly. You can set an environment variable `WRANGLER_HYPERDRIVE_LOCAL_CONNECTION_STRING_<BINDING_NAME>` with the connection string of the database, or use the `wrangler.toml` file to configure your Hyperdrive binding with a `localConnectionString` as specified in [Hyperdrive documentation for local development](/hyperdrive/configuration/local-development/). Then, run [`npx wrangler pages dev <OUTPUT_DIR>`](/workers/wrangler/commands/#dev-1).
+
 ## Analytics Engine
 
 The [Analytics Engine](/analytics/analytics-engine/) binding enables you to write analytics within your Pages Function.
@@ -616,10 +699,10 @@ To configure an Analytics Engine binding via the Cloudflare dashboard:
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) and select your account.
 2. In **Account Home**, select **Workers & Pages**.
-3. Select your Pages project > **Settings** > **Functions** > **Analytics Engine bindings** > **Add binding**.
-4. Choose whether you would like to set up the binding in your **Production** or **Preview** environment.
+3. Select your Pages project > **Settings**.
+4. Select your Pages environment > **Bindings** > **Add** > **Analytics engine**.
 5. Give your binding a name under **Variable name**.
-6. Under **Dataset**, input your desired dataset. You must repeat steps 5 and 6 for both the **Production** and **Preview** environments.
+6. Under **Dataset**, input your desired dataset.
 7. Redeploy your project for the binding to take effect.
 
 Below is an example of how to use an Analytics Engine binding in your Function. In the following example, the binding is called `ANALYTICS_ENGINE` and you can access the binding in your Function code on `context.env`:
@@ -676,8 +759,8 @@ To configure an environment variable via the Cloudflare dashboard:
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) and select your account.
 2. In **Account Home**, select **Workers & Pages**.
-3. Select your Pages project > **Settings** > **Environment variables**.
-4. Selecting **Add variables** under **Production** and/or **Preview**.
+3. Select your Pages project > **Settings**.
+4. Select your Pages environment > **Variables and Secrets** > **Add** .
 5. After setting a variable name and value, select **Save**.
 
 Below is an example of how to use environment variables in your Function. The environment variable in this example is `ENVIRONMENT` and you can access the environment variable on `context.env`:
@@ -733,10 +816,11 @@ To add secrets to your Pages project:
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) and select your account.
 2. In **Account Home**, select **Workers & Pages**.
-3. Select your Pages project > select **Settings** > **Environment variables**.
-4. Selecting **Add variables** under **Production** and/or **Preview**.
-5. Select **Encrypt** to create your secret.
-6. Select **Save**.
+3. Select your Pages project > select **Settings**.
+4. Select your Pages environment > **Variables and Secrets** > **Add**.
+5. Set a variable name and value.
+6. Select **Encrypt** to create your secret.
+7. Select **Save**.
 
 You use secrets the same way as environment variables. When setting secrets with Wrangler or in the Cloudflare dashboard, it needs to be done before a deployment that uses those secrets. For more guidance, refer to [Environment variables](#environment-variables).
 

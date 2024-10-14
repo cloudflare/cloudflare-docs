@@ -199,13 +199,13 @@ curl -s https://example.com -H 'Cloudflare-Workers-Version-Overrides: my-worker-
 
 Due to [global uniqueness](/durable-objects/platform/known-issues/#global-uniqueness), only one version of each [Durable Object](/durable-objects/) can run at a time. This means that gradual deployments work slightly differently for Durable Objects.
 
-When you create a new gradual deployment for a Durable Object Worker, each Durable Object instance is assigned a Worker version based on the percentages you configured in your [deployment](/workers/configuration/versions-and-deployments/#deployments). This version will not change until you create a new deployment.
+When you create a new gradual deployment for a Durable Object Worker, each Durable Object is assigned a Worker version based on the percentages you configured in your [deployment](/workers/configuration/versions-and-deployments/#deployments). This version will not change until you create a new deployment.
 
 ![Gradual Deployments Durable Objects](~/assets/images/workers/platform/versions-and-deployments/durable-objects.png)
 
 ### Example
 
-This example assumes that you have previously created 3 Durable Objects and [derived their IDs from the names](/durable-objects/best-practices/access-durable-objects-from-a-worker/#derive-ids-from-names) "foo", "bar" and "baz".
+This example assumes that you have previously created 3 Durable Objects and [derived their IDs from the names](/durable-objects/api/namespace/#idfromname) "foo", "bar" and "baz".
 
 Your Worker is currently on a version that we will call version "A" and you want to gradually deploy a new version "B" of your Worker.
 

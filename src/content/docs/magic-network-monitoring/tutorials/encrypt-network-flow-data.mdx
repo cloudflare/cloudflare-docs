@@ -1,7 +1,7 @@
 ---
 title: Encrypt network flow data
 pcx_content_type: tutorial
-updated: 2024-09-23
+updated: 2024-10-03
 sidebar:
   order: 1
 head:
@@ -12,3 +12,65 @@ head:
 Customers can encrypt the network flow data sent from their router to Cloudflare by routing their network flow traffic through a device running the WARP client. Then, encrypted network flow traffic can be forwarded from the WARP enabled device to Cloudflare's network flow endpoints.
 
 To learn more about the WARP client, and to install the WARP client on Linux, macOS, or Windows, you can visit the [WARP client documentation](/cloudflare-one/connections/connect-devices/warp/).
+
+## 1. Configure your WARP devices
+
+Follow the instructions in the [Magic Network Monitoring API](/api/operations/magic-network-monitoring-configuration-update-account-configuration-fields) to configure your WARP devices.
+
+The `warp_devices` array at the account level is a list of WARP devices through which you can send encrypted flows. Each WARP device must have:
+
+- The WARP client UUID. You can obtain the UUID in the UI or through the following command:
+  ```sh
+  warp-cli registration show
+  ```
+- A name.
+- A `router_ip` that belongs to one of your configured router IP addresses.
+
+For example:
+
+```bash
+curl --request PATCH \
+"https://api.cloudflare.com/client/v4/accounts/{account_id}/mnm/config" \
+--header "X-Auth-Email: <EMAIL>" \
+--header "X-Auth-Key: <API_KEY>" \
+--header "Content-Type: application/json" \
+--data '{
+	"warp_devices": [
+		{
+			"id": "5360368d-b351-4791-abe1-93550dabd351",
+			"name": "My warp device",
+			"router_ip": "203.0.113.1"
+		}
+	]
+}'
+```
+
+## 2. Route Magic Network Monitoring traffic through WARP
+
+Depending on where you installed the WARP client, you may need to configure other devices on the subnet to route traffic through WARP. If you have access to your router and it runs a version/OS supported by the WARP client, we recommend using [option one](#option-1-default-gateway) below. The same recommendation applies to users who have a software-based flow exporter, such as `softflowd`, and are not using a physical router to collect and export flows to Cloudflare.
+
+### Option 1: Default gateway
+
+If you installed a WARP client on your router or machine collector (something you can use to collect flow information, such as a computer, virtual machine or server), no additional configuration is necessary. All traffic will use the router as the default gateway. All you need to do is configure your flow export to send flow data to IP address `162.159.65.1` and port `2055` for NetFlow, or `162.159.65.1` and port `6343` for sFlow.
+
+### Option 2: Alternate gateway
+
+If you have access to the router but installed WARP on another machine, you can configure the router to export flow traffic to the machine running WARP. To do this:
+
+1. Set the machine's IP address as the export destination on the router.
+2. Configure the export port on the router to match the listening port on the WARP machine.
+3. Redirect traffic that arrives at your machine running WARP to the following Cloudflare's destination IPs and ports:
+   - **For NetFlow**: IP address `162.59.65.1` and port `2055`.
+   - **For sFlow**: IP `162.59.65.1` and port `6343`. <br />
+     For example, if WARP is running on a machine in your network with the IP `10.10.10.10`, and you configured it to accept traffic on port `2055` or `6343`, you need to configure your flow export-capable router to send data to `10.10.10.10` and port `2055` or `6343`.
+
+In the machine running WARP, you can redirect this traffic to Cloudflare through the use of a proxy or redirect tool of your choice. Some options below:
+
+- Using `socat`, listen on the desired port for UDP traffic. Then, proxy that traffic to Magic Newtork Monitoring's destination and port.
+  - `socat UDP-LISTEN:2055,reuseaddr,fork UDP:162.159.65.1:2055`
+  - `socat UDP-LISTEN:6343,reuseaddr,fork UDP:162.159.65.1:6343`
+- Using any other proxy or port forwarding tool, such as `netcat`, `uredir` or `iptables`.
+
+## 3. (Optional) Configure split tunnels
+
+If you do not want all the traffic in your device to be WARP-enabled, [configure split tunnels/prox mode](/cloudflare-one/connections/connect-devices/warp/configure-warp/route-traffic/split-tunnels/) to either only allow MNM traffic towards `162.159.65.1` or exclude everything else.

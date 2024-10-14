@@ -39,7 +39,7 @@ export default {
         return new Response('Durable Object expected Upgrade: websocket', { status: 426 });
       }
 
-      // This example will refer to the same Durable Object instance,
+      // This example will refer to the same Durable Object,
       // since the name "foo" is hardcoded.
       let id = env.WEBSOCKET_SERVER.idFromName("foo");
       let stub = env.WEBSOCKET_SERVER.get(id);
@@ -122,7 +122,7 @@ export default {
         return new Response('Durable Object expected Upgrade: websocket', { status: 426 });
       }
 
-      // This example will refer to the same Durable Object instance,
+      // This example will refer to the same Durable Object,
       // since the name "foo" is hardcoded.
       let id = env.WEBSOCKET_SERVER.idFromName("foo");
       let stub = env.WEBSOCKET_SERVER.get(id);
@@ -189,7 +189,7 @@ export class WebSocketServer extends DurableObject {
 
 Finally, configure your `wrangler.toml` file to include a Durable Object [binding](/durable-objects/get-started/#5-configure-durable-object-bindings) and [migration](/durable-objects/reference/durable-objects-migrations/) based on the namespace and class name chosen previously.
 
-```toml
+```toml title="wrangler.toml"
 name = "websocket-server"
 
 [[durable_objects.bindings]]

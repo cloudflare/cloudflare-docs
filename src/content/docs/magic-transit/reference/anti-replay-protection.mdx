@@ -4,9 +4,15 @@ title: Anti-replay protection
 head: []
 description: If you use Magic Transit and anycast IPsec tunnels, you will need
   to disable anti-replay protection. Review the information here to learn more.
-
 ---
 
-import { Render } from "~/components"
+import { Render } from "~/components";
 
-<Render file="anti-replay-protection" product="magic-wan" params={{ one: "Magic Transit", two: "/magic-transit/how-to/configure-tunnels/#add-tunnels" }} />
+<Render
+	file="anti-replay-protection"
+	product="magic-wan"
+	params={{
+		productName: "Magic Transit",
+		productPath: "/magic-transit/how-to/configure-tunnels/#add-tunnels",
+	}}
+/>

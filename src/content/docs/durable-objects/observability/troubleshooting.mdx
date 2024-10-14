@@ -3,7 +3,6 @@ title: Troubleshooting
 pcx_content_type: concept
 sidebar:
   order: 5
-
 ---
 
 ## Debugging
@@ -28,9 +27,10 @@ When deleting a migration using `npx wrangler deploy --delete-class <ClassName>`
 
 A single instance of a Durable Object cannot do more work than is possible on a single thread. These errors mean the Durable Object has too much work to keep up with incoming requests:
 
-* `Error: Durable Object is overloaded. Too many requests queued.` The total count of queued requests is too high.
-* `Error: Durable Object is overloaded. Too much data queued.` The total size of data in queued requests is too high.
-* `Error: Durable Object is overloaded. Requests queued for too long.` The oldest request has been in the queue too long.
+- `Error: Durable Object is overloaded. Too many requests queued.` The total count of queued requests is too high.
+- `Error: Durable Object is overloaded. Too much data queued.` The total size of data in queued requests is too high.
+- `Error: Durable Object is overloaded. Requests queued for too long.` The oldest request has been in the queue too long.
+- `Error: Durable Object is overloaded. Too many requests for the same object within a 10 second window.` The number of requests for a Durable Object is too high within a short span of time (10 seconds). This error indicates a more extreme level of overload.
 
 To solve this error, you can either do less work per request, or send fewer requests. For example, you can split the requests among more instances of the Durable Object.
 
@@ -38,7 +38,7 @@ These errors and others that are due to overload will have an [`.overloaded` pro
 
 ### Your account is generating too much load on Durable Objects. Please back off and try again later.
 
-There is a limit on how quickly you can [create new Durable Objects or lookup different existing Durable Objects](/durable-objects/best-practices/create-durable-object-stubs-and-send-requests/). Those lookups are usually cached, meaning attempts for the same set of recently accessed Durable Objects should be successful, so catching this error and retrying after a short wait is safe. If possible, also consider spreading those lookups across multiple requests.
+There is a limit on how quickly you can create new [stubs](/durable-objects/api/stub) for new or existing Durable Objects. Those lookups are usually cached, meaning attempts for the same set of recently accessed Durable Objects should be successful, so catching this error and retrying after a short wait is safe. If possible, also consider spreading those lookups across multiple requests.
 
 ### Durable Object reset because its code was updated.
 

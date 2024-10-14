@@ -11,6 +11,8 @@ const { product } = Astro.props;
 
 let terms = await getGlossaryEntries(product);
 
+terms = terms.sort((a, b) => a.term.localeCompare(b.term));
+
 const INITIAL_VISIBLE_ROWS = 20;
 ---
 

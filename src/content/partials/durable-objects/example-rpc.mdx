@@ -1,0 +1,77 @@
+---
+{}
+---
+
+import { Tabs, TabItem } from "~/components";
+
+<Tabs> <TabItem label="JavaScript" icon="seti:javascript">
+
+```js
+import { DurableObject } from "cloudflare:workers";
+
+// Durable Object
+export class MyDurableObject extends DurableObject {
+	constructor(ctx, env) {
+		super(ctx, env);
+	}
+
+	async sayHello() {
+		return "Hello, World!";
+	}
+}
+
+// Worker
+export default {
+	async fetch(request, env) {
+		// Every unique ID refers to an individual instance of the Durable Object class
+		const id = env.MY_DURABLE_OBJECT.idFromName("foo");
+
+		// A stub is a client used to invoke methods on the Durable Object
+		const stub = env.MY_DURABLE_OBJECT.get(id);
+
+		// Methods on the Durable Object are invoked via the stub
+		const rpcResponse = await stub.sayHello();
+
+		return new Response(rpcResponse);
+	},
+};
+```
+
+</TabItem> <TabItem label="TypeScript" icon="seti:typescript">
+
+```ts
+import { DurableObject } from "cloudflare:workers";
+
+export interface Env {
+	MY_DURABLE_OBJECT: DurableObjectNamespace<MyDurableObject>;
+}
+
+// Durable Object
+export class MyDurableObject extends DurableObject {
+	constructor(ctx: DurableObjectState, env: Env) {
+		super(ctx, env);
+	}
+
+	async sayHello(): Promise<string> {
+		return "Hello, World!";
+	}
+}
+
+// Worker
+export default {
+	async fetch(request, env) {
+		// Every unique ID refers to an individual instance of the Durable Object class
+		const id = env.MY_DURABLE_OBJECT.idFromName("foo");
+
+		// A stub is a client used to invoke methods on the Durable Object
+		const stub = env.MY_DURABLE_OBJECT.get(id);
+
+		// Methods on the Durable Object are invoked via the stub
+		const rpcResponse = await stub.sayHello();
+
+		return new Response(rpcResponse);
+	},
+} satisfies ExportedHandler<Env>;
+```
+
+</TabItem> </Tabs>

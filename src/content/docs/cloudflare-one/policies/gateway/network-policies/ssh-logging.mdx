@@ -7,7 +7,6 @@ sidebar:
 
 import { Render } from "~/components";
 
-
 :::note
 Cloudflare recommends configuring SSH command logs through our new [Access for Infrastructure](/cloudflare-one/connections/connect-networks/use-cases/ssh/ssh-infrastructure-access/) workflow. Access for Infrastructure supports differing SSH aliases out-of-the-box, custom SSH ports, and Logpush integrations.
 :::
@@ -31,10 +30,7 @@ Cloudflare Gateway will take the identity from a token and, using short-lived ce
 
 Instead of traditional SSH keys, Gateway uses short-lived certificates to authenticate traffic between Cloudflare and your origin.
 
-:::note
-
-Other short-lived CAs, such as those used to [secure SSH servers behind Cloudflare Access](/cloudflare-one/applications/non-http/short-lived-certificates-legacy/), are incompatible with the Gateway SSH proxy. For SSH logging to work, you must create a new CA using the `gateway_ca` API endpoint.
-:::
+<Render file="ssh/ssh-proxy-ca-note" />
 
 To generate a Gateway SSH proxy CA and get its public key:
 
@@ -62,7 +58,7 @@ cat /etc/ssh/sshd_config
 
 ## 7. Create an Audit SSH policy
 
-1. In [Zero Trust](https://one.dash.cloudflare.com), go to **Gateway** > **Firewall Policies**.
+1. In [Zero Trust](https://one.dash.cloudflare.com), go to **Gateway** > **Firewall policies**.
 
 2. In the **Network** tab, create a new network policy.
 
@@ -100,7 +96,12 @@ ssh-keygen -R <targetIP or hostname>
 
 ## (Optional) Configure SSH Command Logging
 
-<Render file="ssh/upload-ssh-key" params={{ note: "Note that this a different public key from the `ca.pub` file you used to configure the SSH server." }} />
+<Render
+	file="ssh/upload-ssh-key"
+	params={{
+		note: "Note that this a different public key from the `ca.pub` file you used to configure the SSH server.",
+	}}
+/>
 
 ## View SSH Logs
 

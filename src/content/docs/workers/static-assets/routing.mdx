@@ -25,7 +25,9 @@ In this example, request to `example.com/blog` serves the `blog.html` file.
 
 ![A request to `example.com/blog` serves the `/blog.html` file. ](~/assets/images/workers/platform/assets/workers-assets-serve-asset.png)
 
-2. If there are no assets that match the current route requested then the Worker will be invoked. If there is no Worker, [`not_found_handling`](/workers/static-assets/routing/#2-not_found_handling) will be evaluated. By default, a null-body 404-status response will be served.
+2. If there is no Worker script, [`not_found_handling`](/workers/static-assets/routing/#2-not_found_handling) will be evaluated. By default, a null-body 404-status response will be served.
+
+If a Worker is configured, and there are no assets that match the current route requested, the Worker will be invoked. The Worker can then "fall back" to `not_found_handling` asset behavior, by passing the incoming request through to the [asset binding](/workers/static-assets/binding/#runtime-api-reference).
 
 In this example, request to `example.com/api` doesn't match a static asset so the Worker is invoked.
 
@@ -37,7 +39,7 @@ There are two options for asset serving that can be [configured in `wrangler.tom
 
 #### 1. `html_handling`
 
-Forcing or dropping trailing slashes on request paths (e.g. `example.com/page/` vs. `example.com/page`) is often something that developers wish to control for cosmetic reasons. Additionally, it can SEO impact because search engines often treat URLs with and without trailing slashes as different, separate pages. This distinction can lead to duplicate content issues, indexing problems, and overall confusion about the correct canonical version of a page.
+Forcing or dropping trailing slashes on request paths (for example, `example.com/page/` vs. `example.com/page`) is often something that developers wish to control for cosmetic reasons. Additionally, it can impact SEO because search engines often treat URLs with and without trailing slashes as different, separate pages. This distinction can lead to duplicate content issues, indexing problems, and overall confusion about the correct canonical version of a page.
 
 `html_handling` configuration determines the redirects and rewrites of requests for HTML content. It is used to specify the pattern for canonical URLs, thus where Cloudflare serves HTML content from, and additionally, where Cloudflare redirects non-canonical URLs to.
 
