@@ -15,7 +15,8 @@
 		"preview": "npx astro preview",
 		"script:optimize-svgs": "npx tsx scripts/optimize-svgs.ts",
 		"start": "npx astro dev",
-		"sync": "npx astro sync"
+		"sync": "npx astro sync",
+		"test": "npx vitest"
 	},
 	"devDependencies": {
 		"@astro-community/astro-embed-youtube": "^0.5.3",
@@ -27,6 +28,7 @@
 		"@astrojs/starlight-docsearch": "^0.2.0",
 		"@astrojs/starlight-tailwind": "^2.0.3",
 		"@astrojs/tailwind": "^5.1.1",
+		"@cloudflare/vitest-pool-workers": "^0.5.18",
 		"@cloudflare/workers-types": "^4.20240903.0",
 		"@codingheads/sticky-header": "^1.0.2",
 		"@stoplight/json-schema-tree": "^4.0.0",
@@ -76,6 +78,7 @@
 		"tippy.js": "^6.3.7",
 		"tsx": "^4.19.1",
 		"typescript": "^5.5.4",
+		"vitest": "2.0.5",
 		"wrangler": "^3.78.10",
 		"yaml": "^2.5.1"
 	},
