@@ -60,13 +60,13 @@ Both [namespaces](/vectorize/best-practices/insert-vectors/#namespaces) and meta
 #### Explicit operator
 
 ```json
-{ "someKey": { "$ne": true } }
+{ "someKey": { "$ne": "hbo" } }
 ```
 
 #### Implicit logical `AND` with multiple keys
 
 ```json
-{ "pandas.nice": 42, "someKey": { "$ne": true } }
+{ "pandas.nice": 42, "someKey": { "$ne": "someValue" } }
 ```
 
 #### Keys define nesting with `.` (dot)
