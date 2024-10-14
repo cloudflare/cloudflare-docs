@@ -30,7 +30,7 @@ To configure Logpush for AI Gateway, follow these steps:
 You need to generate a key pair to encrypt and decrypt the logs. This script
 will output your RSA privateKey and publicKey. Keep the private key secure, as
 it will be used to decrypt the logs. Below is a sample script to generate the
-keys using Node.js.
+keys using Node.js. and OpenSSL.
 
 <Tabs syncKey="JSPlusSSL"> <TabItem label="Javascript">
 
@@ -75,21 +75,6 @@ node {file name}
    openssl rsa -pubout -in private_key.pem -out public_key.pem
    ```
 
-3. View Private and Public Keys:
-   You can verify the contents of the generated keys by using the following commands:
-
-   - To view the private key:
-
-     ```bash
-     cat private_key.pem
-     ```
-
-   - To view the public key:
-
-     ```bash
-     cat public_key.pem
-     ```
-
 </TabItem> </Tabs>
 
 ## 2. Upload public key to gateway settings
@@ -106,7 +91,9 @@ After configuring Logpush, logs will be sent encrypted using the public key you 
 
 ## 5. Decrypt logs
 
-To decrypt the encrypted log bodies and metadata from AI Gateway, you can use the following Node.js script:
+To decrypt the encrypted log bodies and metadata from AI Gateway, you can use the following Node.js script or OpenSSL:
+
+<Tabs syncKey="JSPlusSSL"> <TabItem label="Javascript">
 
 ```js title="JavaScript"
 const privateKey = `-----BEGIN RSA PRIVATE KEY-----
@@ -161,3 +148,21 @@ node {file name}
 
 The script reads the encrypted log file `(my_log.log.gz)`, decrypts the metadata, request body, and response body, and prints the decrypted data.
 Ensure you replace the `privateKey` variable with your actual private RSA key that you generated in step 1.
+
+</TabItem> <TabItem label="OpenSSL">
+
+You can verify the contents of the generated keys by using the following commands:
+
+- To view the private key:
+
+  ```bash
+  cat private_key.pem
+  ```
+
+- To view the public key:
+
+  ```bash
+  cat public_key.pem
+  ```
+
+</TabItem> </Tabs>
