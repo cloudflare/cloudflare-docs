@@ -36,7 +36,7 @@ jobs:
 
       - run: npm ci
 
-      - run: npx astro build
+      - run: npm run build
         env:
           NODE_OPTIONS: "--max-old-space-size=4192"
 
