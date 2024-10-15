@@ -32,6 +32,25 @@ export default class extends WorkerEntrypoint<Env> {
 			}
 
 			try {
+				const forceTrailingSlashURL = new URL(
+					request.url.replace(/([^/])$/, "$1/"),
+					request.url,
+				);
+				const redirect = await redirectsEvaluator(
+					new Request(forceTrailingSlashURL, request),
+					this.env.ASSETS,
+				);
+				if (redirect) {
+					return redirect;
+				}
+			} catch (error) {
+				console.error(
+					"Could not evaluate redirects with a forced trailing slash",
+					error,
+				);
+			}
+
+			try {
 				return await functions.fetch(request, this.env, this.ctx);
 			} catch (error) {
 				console.error("Could not evaluate functions", error);
