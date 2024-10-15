@@ -6,7 +6,7 @@ import { Details, GlossaryTooltip } from "~/components";
 
 To install WARP Connector on a host machine:
 
-1. In [Zero Trust](https://one.dash.cloudflare.com), go to **Network** > **Tunnels**.
+1. In [Zero Trust](https://one.dash.cloudflare.com), go to **Networks** > **Tunnels**.
 2. Select **Create a tunnel**.
 3. For the tunnel type, select **WARP Connector**.
 4. You will be prompted to turn on **Warp to Warp** and [**Override local interface IP**](/cloudflare-one/connections/connect-devices/warp/configure-warp/warp-settings/#override-local-interface-ip) if they are currently turned off. These settings allow Cloudflare to assign a unique <GlossaryTooltip term="CGNAT IP">CGNAT IP</GlossaryTooltip> to each WARP device and route traffic between them.
@@ -44,7 +44,6 @@ To install WARP Connector on a host machine:
     ```sh
     $ warp-cli status
     Status update: Connected
-    Success
     ```
 
     <Details header="Troubleshoot connection">

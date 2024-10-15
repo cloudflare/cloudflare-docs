@@ -13,15 +13,12 @@ This guide covers how to connect a private network to the Internet using WARP Co
 ```mermaid
     flowchart LR
       subgraph subnet1[Subnet 10.0.0.0/24]
-      router1["WARP Connector
+        device1["Device
+        10.0.0.2"]-->router1["WARP Connector
         10.0.0.1"]
       end
       router1-->C((Cloudflare))-->I{Internet}
 ```
-
-:::note
-To connect a private network using `cloudflared`, refer to [Connect private networks](/cloudflare-one/connections/connect-networks/private-net/cloudflared/).
-:::
 
 ## Prerequisites
 
@@ -48,7 +45,7 @@ Depending on where you installed the WARP Connector, you may need to configure o
 
 <Render file="tunnel/warp-connector-alternate-gateway" />
 
-#### Route from subnet to Internet
+#### Add route to router
 
 For example, for all traffic from the subnet to egress through WARP Connector, add a rule on the router that routes `0.0.0.0` to the WARP Connector host machine (`10.0.0.100`).
 
@@ -58,7 +55,7 @@ For example, for all traffic from the subnet to egress through WARP Connector, a
 
 <Render file="tunnel/warp-connector-intermediate-gateway" />
 
-#### Route all traffic
+#### Add route to devices
 
 <Render file="tunnel/warp-connector-route-all-traffic" />
 

@@ -91,7 +91,7 @@ Depending on where you installed the WARP Connector, you may need to configure o
 
 <Render file="tunnel/warp-connector-alternate-gateway" />
 
-#### Route from subnet to subnet
+#### Add route to router
 
 For example, for devices on subnet `10.0.0.0/24` to reach applications behind subnet `192.168.1.0/24`, add a rule on the router that routes `192.168.1.0/24` to the WARP Connector host machine (`10.0.0.100`).
 
@@ -101,13 +101,11 @@ For example, for devices on subnet `10.0.0.0/24` to reach applications behind su
 
 <Render file="tunnel/warp-connector-intermediate-gateway" />
 
-#### Route all traffic
+#### Add route to devices
 
 <Render file="tunnel/warp-connector-route-all-traffic" />
 
-#### Route specific IPs
-
-You can configure only certain routes to egress through WARP Connector. For example, you may only want to filter traffic destined to internal applications and devices, but allow public Internet traffic to bypass Cloudflare.
+Alternatively, you can configure only certain routes to egress through WARP Connector. For example, you may only want to filter traffic destined to internal applications and devices, but allow public Internet traffic to bypass Cloudflare.
 
 <Tabs> <TabItem label="Linux">
 
