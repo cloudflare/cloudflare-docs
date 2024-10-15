@@ -1,8 +1,10 @@
 ---
 pcx_content_type: concept
-title: Managed rules
+title: WAF Managed Rules
 sidebar:
   order: 7
+  group:
+    label: Managed rules
 head:
   - tag: title
     content: WAF Managed Rules
@@ -34,14 +36,17 @@ The managed rulesets you can deploy depend on your Cloudflare plan.
 
 <FeatureTable id="security.waf_a_managed_rules" />
 
-## Customize the behavior of managed rulesets
+<Render
+	file="managed-ruleset-config-options"
+	params={{
+		overridesUrl:
+			"/waf/managed-rules/deploy-zone-dashboard/#configure-a-managed-ruleset",
+	}}
+/>
 
-To customize the behavior of managed rulesets, do one of the following:
+## Zone-level deployment
 
-- [Create exceptions](/waf/managed-rules/waf-exceptions/) to skip the execution of WAF managed rulesets or some of their rules under certain conditions.
-- [Configure overrides](/waf/managed-rules/deploy-zone-dashboard/#configure-a-managed-ruleset) to override the default rule action or disable one or more rules of managed rulesets. Overrides can affect an entire managed ruleset, specific tags, or specific rules in the managed ruleset.
-
-Exceptions have priority over overrides.
+At the zone level, you can only deploy each WAF managed ruleset once. At the [account level](/waf/account/managed-rulesets/) you can deploy each managed ruleset multiple times.
 
 ## Important remarks
 

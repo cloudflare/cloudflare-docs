@@ -12,7 +12,7 @@ import { Render } from "~/components";
 
 Preview URLs allow you to preview new versions of your Worker without deploying it to production.
 
-Every time you create a new [version](/workers/configuration/versions-and-deployments/#versions) of your Worker a unique preview URL is generated. New [versions](/workers/configuration/versions-and-deployments/#versions) of a Worker are created on [`wrangler deploy`](/workers/wrangler/commands/#deploy), [`wrangler versions upload`](/workers/wrangler/commands/#upload) or when you make edits on the Cloudflare dashboard. By default, preview URLs are enabled and available publicly.
+Every time you create a new [version](/workers/configuration/versions-and-deployments/#versions) of your Worker a unique preview URL is generated. Preview URLs take the format: `<VERSION_PREFIX>-<WORKER_NAME>.<SUBDOMAIN>.workers.dev`. New [versions](/workers/configuration/versions-and-deployments/#versions) of a Worker are created on [`wrangler deploy`](/workers/wrangler/commands/#deploy), [`wrangler versions upload`](/workers/wrangler/commands/#upload) or when you make edits on the Cloudflare dashboard. By default, preview URLs are enabled and available publicly.
 
 Preview URLs can be:
 
@@ -24,6 +24,8 @@ When testing zone level performance or security featues for a version, we recomm
 
 :::note
 Preview URLs are only available for Worker versions uploaded after 2024-09-25.
+
+Minimum required Wrangler version: 3.74.0. Check your version by running `wrangler --version`. To update Wrangler, refer to [Install/Update Wrangler](/workers/wrangler/install-and-update/).
 :::
 
 ## View preview URLs using wrangler
@@ -35,6 +37,34 @@ The [`wrangler versions upload`](/workers/wrangler/commands/#upload) command upl
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/?to=/:account/workers) and select your project.
 2. Head to the "Deployments" tab find the version you would like to view.
 
+## Manage access to Preview URLs
+
+By default, preview URLs are enabled and available publicly. You can use [Cloudflare Access](/cloudflare-one/policies/access/) to require visitors to authenticate before accessing preview URLs. You can limit access to yourself, your teammates, your organization, or anyone else you specify in your [access policy](/cloudflare-one/policies/access).
+
+To limit your preview URLs to authorized emails only:
+
+1. Log in to the [Cloudflare Access dashboard](https://one.dash.cloudflare.com/?to=/:account/access/apps).
+2. Select your account.
+3. Add an application.
+4. Select **Self Hosted**.
+5. Name your application (for example, "my-worker") and add your `workers.dev` subdomain as the **Application domain**.
+
+For example, if you want to secure preview URLs for a Worker running on `my-worker.my-subdomain.workers.dev`.
+
+- Subdomain: `*-my-worker`
+- Domain: `my-subdomain.workers.dev`
+
+:::note
+You must press enter after you input your Application domain for it to save. You will see a "Zone is not associated with the current account" warning that you may ignore.
+:::
+
+6. Go to the next page.
+7. Add a name for your access policy (for example, "Allow employees access to preview URLs for my-worker").
+8. In the **Configure rules** section create a new rule with the **Emails** selector, or any other attributes which you wish to gate access to previews with. 
+9. Enter the emails you want to authorize. View [access policies](/cloudflare-one/policies/access/#selectors) to learn about configuring alternate rules.
+10. Go to the next page.
+11. Add application.
+
 ## Making Preview URLs inaccessible
 
 Preview URLs run on your [`workers.dev` subdomain](/workers/configuration/routing/workers-dev/). To make preview URLs inaccessible, you must disable your Workers `workers.dev` subdomain. Learn how to [disable your Workers `workers.dev` subdomain](/workers/configuration/routing/workers-dev/#disabling-workersdev).
@@ -43,4 +73,3 @@ Preview URLs run on your [`workers.dev` subdomain](/workers/configuration/routin
 
 - Preview URLs are not generated for Workers that implement a [Durable Object](/durable-objects/).
 - Preview URLs are not currently generated for [Workers for Platforms](/cloudflare-for-platforms/workers-for-platforms/) [user Workers](/cloudflare-for-platforms/workers-for-platforms/reference/how-workers-for-platforms-works/#user-workers). This is a temporary limitation, we are working to remove it.
-- You cannot currently secure `workers.dev` URLs behind [Cloudflare Access](/cloudflare-one/policies/access/). This is a temporary limitation, we are working to remove it.

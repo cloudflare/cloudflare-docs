@@ -9,8 +9,8 @@ import { Render, TabItem, Tabs, PackageManagers } from "~/components";
 
 This guide will instruct you through:
 
-- Writing a class that defines a Durable Object.
-- Instantiating and communicating with a Durable Object from another Worker via the `Fetch` API.
+- Writing a Durable Object class.
+- Writing a Worker which invokes methods on a Durable Object.
 - Deploying a Durable Object.
 
 ## Prerequisites
@@ -27,7 +27,7 @@ To enable Durable Objects, you will need to purchase the Workers Paid plan:
 
 ## 2. Create a Worker project
 
-You will access your Durable Object from a [Worker](/workers/). Your Worker application is an interface to interact with your Durable Object.
+Durable Objects are accessed from a [Worker](/workers/).
 
 To create a Worker project, run:
 
@@ -57,9 +57,9 @@ Move into your new directory:
 cd durable-object-starter
 ```
 
-## 3. Write a class to define a Durable Object
+## 3. Write a Durable Object class
 
-Before you create and access a Durable Object, its behavior must be defined by an ordinary exported JavaScript class.
+Durable Objects are defined by a exporting a standard JavaScript class which extends from the `DurableObject` base class.
 
 :::note
 
@@ -71,7 +71,9 @@ Your `MyDurableObject` class will have a constructor with two parameters. The fi
 <Tabs> <TabItem label="JavaScript" icon="seti:javascript">
 
 ```js
-export class MyDurableObject extends DurableObject{
+import { DurableObject } from "cloudflare:workers";
+
+export class MyDurableObject extends DurableObject {
 	constructor(state, env) {}
 }
 ```
@@ -79,25 +81,29 @@ export class MyDurableObject extends DurableObject{
 </TabItem> <TabItem label="TypeScript" icon="seti:typescript">
 
 ```ts
-export class MyDurableObject extends DurableObject{
+import { DurableObject } from "cloudflare:workers";
+
+export class MyDurableObject extends DurableObject {
 	constructor(state: DurableObjectState, env: Env) {}
 }
 ```
 
 </TabItem> </Tabs>
 
-Workers communicate with a Durable Object via the fetch API. Like a Worker, a Durable Object listens for incoming fetch events by registering an event handler. For a Durable Object, the fetch handler is defined as a method on the class.
+Workers can invoke public methods defined on a Durable Object via Remote Procedure Call (RPC).
 
-Your file should now look like:
+The `sayHello` method demonstrates this capability:
 
 <Tabs> <TabItem label="JavaScript" icon="seti:javascript">
 
 ```js
-export class MyDurableObject extends DurableObject{
+import { DurableObject } from "cloudflare:workers";
+
+export class MyDurableObject extends DurableObject {
 	constructor(state, env) {}
 
-	async fetch(request) {
-		return new Response("Hello World");
+	async sayHello() {
+		return "Hello, World!";
 	}
 }
 ```
@@ -105,49 +111,41 @@ export class MyDurableObject extends DurableObject{
 </TabItem> <TabItem label="TypeScript" icon="seti:typescript">
 
 ```ts
-export class MyDurableObject extends DurableObject{
+import { DurableObject } from "cloudflare:workers";
+
+export class MyDurableObject extends DurableObject {
 	constructor(state: DurableObjectState, env: Env) {}
 
-	async fetch(request: Request) {
-		return new Response("Hello World");
+	async sayHello(): Promise<string> {
+		return "Hello, World!";
 	}
 }
 ```
 
 </TabItem> </Tabs>
 
-A Worker can pass information to a Durable Object via headers, the HTTP method, the Request body, or the Request URI.
+## 4. Invoke methods on a Durable Object class
 
-:::note
+As mentioned previously, methods on a Durable Object class are invoked by a Worker. This is done by creating an ID refering to an instance of the Durable Object class, getting a stub that refers to a particular instance of a Durable Object class, and invoking methods on that stub.
 
-HTTP requests received by a Durable Object do not come directly from the Internet. HTTP requests come from other Workers and other Durable Objects. Durable Objects use HTTP for familiarity, but plan to introduce other protocols in the future.
-
-:::
-
-## 4. Instantiate and communicate with a Durable Object
-
-The `fetch()` handler allows you to instantiate and communicate to a Durable Object from a Worker.
-
-:::note
-
-Durable Objects do not receive requests directly from the Internet. Durable Objects receive requests from Workers or other Durable Objects.
-This is achieved by configuring a binding in the calling Worker for each Durable Object class that you would like it to be able to talk to. These bindings must be configured at upload time. Methods exposed by the binding can be used to communicate with particular Durable Object instances.
-:::
-
-To communicate with a Durable Object, the fetch handler should look like the following:
+The fetch handler should look like the following:
 
 <Tabs> <TabItem label="JavaScript" icon="seti:javascript">
 
 ```js
+// Worker
 export default {
 	async fetch(request, env) {
-		let id = env.MY_DURABLE_OBJECT.idFromName(new URL(request.url).pathname);
+		// Every unique ID refers to an individual instance of the Durable Object class
+		const id = env.MY_DURABLE_OBJECT.idFromName("foo");
 
-		let stub = env.MY_DURABLE_OBJECT.get(id);
+		// A stub is a client used to invoke methods on the Durable Object
+		const stub = env.MY_DURABLE_OBJECT.get(id);
 
-		let response = await stub.fetch(request);
+		// Methods on the Durable Object are invoked via the stub
+		const rpcResponse = await stub.sayHello();
 
-		return response;
+		return new Response(rpcResponse);
 	},
 };
 ```
@@ -155,35 +153,28 @@ export default {
 </TabItem> <TabItem label="TypeScript" icon="seti:typescript">
 
 ```ts
+// Worker
 export default {
 	async fetch(request, env, ctx): Promise<Response> {
-		let id = env.MY_DURABLE_OBJECT.idFromName(new URL(request.url).pathname);
+		// Every unique ID refers to an individual instance of the Durable Object class
+		const id = env.MY_DURABLE_OBJECT.idFromName("foo");
 
-		let stub = env.MY_DURABLE_OBJECT.get(id);
+		// A stub is a client used to invoke methods on the Durable Object
+		const stub = env.MY_DURABLE_OBJECT.get(id);
 
-		let response = await stub.fetch(request);
+		// Methods on the Durable Object are invoked via the stub
+		const rpcResponse = await stub.sayHello();
 
-		return response;
+		return new Response(rpcResponse);
 	},
 } satisfies ExportedHandler<Env>;
 ```
 
 </TabItem> </Tabs>
 
-In the code above, you have:
-
-1. Exported your Worker's main event handlers, such as the `fetch()` handler for receiving HTTP requests.
-2. Passed `env` into the `fetch()` handler. Bindings are delivered as a property of the environment object passed as the second parameter when an event handler or class constructor is invoked. By calling the `idFromName()` function on the binding, you use a string-derived object ID. You can also ask the system to [generate random unique IDs](/durable-objects/best-practices/access-durable-objects-from-a-worker/#generate-ids-randomly). System-generated unique IDs have better performance characteristics, but require you to store the ID somewhere to access the Object again later.
-3. Derived an object ID from the URL path. `MY_DURABLE_OBJECT.idFromName()` always returns the same ID when given the same string as input (and called on the same class), but never the same ID for two different strings (or for different classes). In this case, you are creating a new object for each unique path.
-4. Constructed the stub for the Durable Object using the ID. A stub is a client object used to send messages to the Durable Object.
-5. Forwarded the request to the Durable Object. `stub.fetch()` has the same signature as the global `fetch()` function, except that the request is always sent to the object, regardless of the request's URL. The first time you send a request to a new object, the object will be created for us. If you do not store durable state in the object, it will automatically be deleted later (and recreated if you request it again). If you store durable state, then the object may be evicted from memory but its durable state will be kept permanently.
-6. Received an HTTP response back to the client with `return response`.
-
-Refer to [Access a Durable Object from a Worker](/durable-objects/best-practices/access-durable-objects-from-a-worker/) to learn more about communicating to a Durable Object.
-
 ## 5. Configure Durable Object bindings
 
-[Bindings](/workers/runtime-apis/bindings/) allow your Workers to interact with resources on the Cloudflare developer platform. The Durable Object bindings in your Worker project's `wrangler.toml` will include a binding name (for this guide, use `MY_DURABLE_OBJECT`) and the class name (`MyDurableObject`).
+To allow a Worker to invoke methods on a Durable Object, the Worker must have a [Durable Object binding](/workers/runtime-apis/bindings/) in the project's [`wrangler.toml`](/workers/wrangler/configuration/#durable-objects) file. The binding is configured to use a particular Durable Object class.
 
 ```toml
 [[durable_objects.bindings]]
@@ -202,7 +193,10 @@ The `[[durable_objects.bindings]]` section contains the following fields:
 
 - `name` - Required. The binding name to use within your Worker.
 - `class_name` - Required. The class name you wish to bind to.
-- `script_name` - Optional. Defaults to the current [environment's](/durable-objects/reference/environments/) Worker code.
+- `script_name` - Optional. The name of the Worker if the Durable Object is external to this Worker.
+- `environment` - Optional. The environment of the `script_name` to bind to.
+
+Refer to [Wrangler Configuration](/workers/wrangler/configuration/#durable-objects) for more detail.
 
 ## 6. Configure Durable Object classes with migrations
 
@@ -222,7 +216,7 @@ new_classes = ["MyDurableObject"] # Array of new classes
 
 :::note[SQLite in Durable Objects Beta]
 
-New beta version of Durable Objects is available where each Durable Object has a private, embedded SQLite database. SQL storage is opt-in during beta; otherwise, a Durable Object class has the standard, private key-value storage. Objects can access long-lived durable storage with the [Storage API](/durable-objects/api/storage-api/). 
+New beta version of Durable Objects is available where each Durable Object has a private, embedded SQLite database. SQL storage is opt-in during beta; otherwise, a Durable Object class has the standard, private key-value storage. Objects can access long-lived durable storage with the [Storage API](/durable-objects/api/storage-api/).
 
 :::
 
@@ -264,6 +258,5 @@ By finishing this tutorial, you have successfully created, tested and deployed a
 
 ### Related resources
 
-- [Access a Durable Object from a Worker](/durable-objects/best-practices/access-durable-objects-from-a-worker/)
-- [Create Durable Object stubs](/durable-objects/best-practices/create-durable-object-stubs-and-send-requests/)
+- [Send requests to Durable Objects](/durable-objects/best-practices/create-durable-object-stubs-and-send-requests/)
 - [Miniflare](https://github.com/cloudflare/workers-sdk/tree/main/packages/miniflare) - Helpful tools for mocking and testing your Durable Objects.

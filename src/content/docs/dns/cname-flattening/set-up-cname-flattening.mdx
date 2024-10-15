@@ -25,12 +25,24 @@ If the `CNAME` target is on the same zone as the `CNAME` record, Cloudflare proc
 
 ## For all CNAME records
 
-Accounts on paid plans can also choose to flatten all `CNAME` records on their domain. This option is useful for DNS-only (unproxied) `CNAME` records since proxied records are flattened by default (as they return Cloudflare IPv4 and IPv6 addresses).
+Accounts on paid plans can choose to flatten all `CNAME` records on their domain. This option is useful for DNS-only (unproxied) `CNAME` records since proxied records are flattened by default (as they return Cloudflare IPv4 and IPv6 addresses).
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login) and select your account and domain.
-2. Navigate to **DNS** > **Settings**.
+2. Go to **DNS** > **Settings**.
 3. For **CNAME Flattening**, select **Flatten all CNAMEs**.
 
 :::caution
- <Render file="cname-flattening-callout" /> 
+ <Render file="cname-flattening-callout" />
 :::
+
+## Per record
+
+Accounts on paid plans also have the option to flatten specific `CNAME` records. This operation is currently only supported via API.
+
+With the available [API endpoints](/api/operations/dns-records-for-a-zone-create-dns-record), specify the following for each `CNAME` record in the request body:
+
+```txt
+"settings": {
+  "flatten_cname": true
+}
+```

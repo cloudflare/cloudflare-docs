@@ -6,7 +6,7 @@ sidebar:
   order: 5
 ---
 
-import { Description, Type } from "~/components";
+import { Description, Type, Render } from "~/components";
 
 Creates a ruleset of a given kind in the specified phase. Allows you to create phase entry point rulesets.
 
@@ -42,7 +42,7 @@ Use the `rules` parameter to supply a list of rules for the ruleset. For an obje
 
 ## Example - Create a custom ruleset
 
-The following example request creates a custom ruleset in the `http_request_firewall_custom` phase containing a single rule.
+The following `POST` request creates a custom ruleset in the `http_request_firewall_custom` phase containing a single rule.
 
 ```bash
 curl https://api.cloudflare.com/client/v4/accounts/{account_id}/rulesets \
@@ -111,7 +111,7 @@ curl https://api.cloudflare.com/client/v4/accounts/{account_id}/rulesets \
 
 ## Example - Create a zone-level phase entry point ruleset
 
-The following example request creates a zone-level phase entry point ruleset at the `http_request_firewall_managed` phase with a single rule that executes a managed ruleset.
+The following `POST` request creates a zone-level phase entry point ruleset at the `http_request_firewall_managed` phase with a single rule that executes a managed ruleset.
 
 :::note
 
@@ -168,3 +168,63 @@ curl https://api.cloudflare.com/client/v4/zones/{zone_id}/rulesets \
 	"messages": []
 }
 ```
+
+## Example - Create an account-level phase entry point ruleset
+
+The following `POST` request creates an account-level phase entry point ruleset for the `http_ratelimit` phase with a single rule that executes a rate limiting ruleset for all Enterprise zones in the account.
+
+:::note
+You do not have to use this method to create a phase entry point ruleset — Cloudflare automatically creates the entry point ruleset when you add a rule to it, if it does not exist. Refer to [Add rules to phase entry point rulesets](/ruleset-engine/basic-operations/add-rule-phase-rulesets/) for more information.
+:::
+
+```bash
+curl https://api.cloudflare.com/client/v4/accounts/{account_id}/rulesets \
+--header "Authorization: Bearer <API_TOKEN>" \
+--header "Content-Type: application/json" \
+--data '{
+  "name": "Account-level phase entry point",
+  "kind": "root",
+  "description": "This ruleset executes a rate limiting ruleset.",
+  "rules": [
+    {
+      "action": "execute",
+      "expression": "(cf.zone.plan eq \"ENT\")",
+      "action_parameters": {
+        "id": "<RATE_LIMITING_RULESET_ID>"
+      }
+    }
+  ],
+  "phase": "http_ratelimit"
+}'
+```
+
+```json output
+{
+	"result": {
+		"id": "<RULESET_ID>",
+		"name": "Account-level phase entry point",
+		"description": "This ruleset executes a rate limiting ruleset.",
+		"kind": "root",
+		"version": "1",
+		"rules": [
+			{
+				"id": "<RULE_ID>",
+				"version": "1",
+				"action": "execute",
+				"expression": "(cf.zone.plan eq \"ENT\")",
+				"action_parameters": {
+					"id": "<RATE_LIMITING_RULESET_ID>"
+				},
+				"last_updated": "2024-09-17T15:42:37.917815Z"
+			}
+		],
+		"last_updated": "2024-09-17T15:42:37.917815Z",
+		"phase": "http_ratelimit"
+	},
+	"success": true,
+	"errors": [],
+	"messages": []
+}
+```
+
+<Render file="account-enterprise-zones-only-api" product="waf" />

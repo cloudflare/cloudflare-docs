@@ -91,3 +91,49 @@ export default {
 };
 ```
 ````
+
+## TypeScript examples
+
+The `TypeScriptExample` component uses [`detype`](https://www.npmjs.com/package/detype) to remove TypeScript-specific syntax from your example and provide a JavaScript tab. This reduces maintenance burden by only having a single example to maintain.
+
+### Input
+
+* `filename` `string | { js: string, ts: string }` (optional)
+  * If a single TypeScript filename is passed, this will be used for JavaScript but with a `.js` file extension.
+    * `<TypeScriptExample filename="example.ts">`
+  * To specify different filenames for the two languages, pass an object with a `js` and `ts` filename including extensions.
+    * `<TypeScriptExample filename={{ js: "foo.js", ts: "bar.ts" }}>`
+* `tabsWrapper` `boolean` (optional)
+  * When set to `false`, this component will not render `<Tabs>` components.
+    * This allows you to include the JS/TS tabs in your own `<Tabs>` and add `<TabItem>`s before/after, i.e for Python examples.
+* `playground` `boolean` (optional)
+  * When set to `true`, a "Open Worker in Playground" link will render on the JavaScript codeblock.
+
+````mdx live
+import { TypeScriptExample } from "~/components";
+
+<TypeScriptExample filename="index.ts">
+```ts
+interface Environment {
+  KV: KVNamespace;
+}
+
+export default {
+  async fetch(req, env, ctx): Promise<Response> {
+    if (req !== "POST") {
+        return new Response("Method Not Allowed", {
+            status: 405,
+            headers: {
+                "Allow": "POST"
+            }
+        });
+    }
+
+    await env.KV.put("foo", "bar");
+
+    return new Response();
+  }
+} satisfies ExportedHandler<Environment>
+```
+</TypeScriptExample>
+````

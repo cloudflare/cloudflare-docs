@@ -15,7 +15,7 @@ The Cloudflare Rules language provides functions for manipulating and validating
 
 ## Transformation functions
 
-The Rules language supports several functions that transform values extracted from HTTP requests. A common use case for transformation functions is the conversion of a string of characters to uppercase or lowercase, since by default, string evaluation is case sensitive.
+The Rules language supports several functions that transform values extracted from HTTP requests. A common use case for transformation functions is the conversion of a string of characters to uppercase or lowercase, since by default, string evaluation is case-sensitive.
 
 For example, the `lower()` function converts all uppercase characters in a string to lowercase.
 
@@ -219,7 +219,7 @@ Examples:
 - If there is no match, the input string does not change:<br/>
   `regex_replace("/x", "^/y$", "/mumble") == "/x"`
 
-- Match is case sensitive by default:<br/>
+- Match is case-sensitive by default:<br/>
   `regex_replace("/foo", "^/FOO$", "/x") == "/foo"`
 
 - When there are multiple matches, only one replacement occurs (the first one):<br/>

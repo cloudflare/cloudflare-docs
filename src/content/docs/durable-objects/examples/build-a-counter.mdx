@@ -172,7 +172,7 @@ export class Counter extends DurableObject {
 
 Finally, configure your `wrangler.toml` file to include a Durable Object [binding](/durable-objects/get-started/#5-configure-durable-object-bindings) and [migration](/durable-objects/reference/durable-objects-migrations/) based on the namespace and class name chosen previously.
 
-```toml
+```toml title="wrangler.toml"
 name = "my-counter"
 
 [[durable_objects.bindings]]

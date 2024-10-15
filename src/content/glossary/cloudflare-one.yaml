@@ -254,3 +254,7 @@ entries:
   - term: Zero Trust Security
     general_definition: |-
       Zero Trust Security is an IT security model that requires strict identity verification for every person and device accessing resources on a network.
+
+  - term: Hops
+    general_definition: |-
+      Hops refer to the stops an email makes as it travels from the sender to the recipient.
