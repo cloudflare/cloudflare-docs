@@ -18,7 +18,7 @@
 		"sync": "npx astro sync"
 	},
 	"devDependencies": {
-		"@astro-community/astro-embed-youtube": "^0.5.3",
+		"@astro-community/astro-embed-youtube": "^0.5.5",
 		"@astrojs/check": "^0.9.3",
 		"@astrojs/react": "^3.6.2",
 		"@astrojs/rss": "^4.0.7",
