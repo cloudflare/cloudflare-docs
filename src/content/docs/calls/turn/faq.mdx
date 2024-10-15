@@ -165,6 +165,11 @@ Packet loss is normal in UDP and can happen occasionally even on reliable connec
 There is no defined limit for credential issuance. Start at 500 credentials/sec and scale up linearly. Ensure you use more than 50% of the issued credentials.
 
 
+### What is the maximum value I can use for TURN credential expiry time?
+
+
+You can set a expiration time for a credential up to 48 hours in the future. If you need your TURN allocation to last longer than this, you will need to [update](https://developer.mozilla.org/en-US/docs/Web/API/RTCPeerConnection/setConfiguration) the TURN credentials.
+
 
 
 ### Does Calls TURN support IPv6?
@@ -219,3 +224,7 @@ Cloudflare Calls denies CreatePermission or ChannelBind requests if private IP r
 If you are a Cloudflare BYOIP customer and wish to connect to your BYOIP ranges with Calls TURN, please reach out to your account manager for further details.
 
 
+
+### What will happen if TURN credentials expire while the TURN allocation is in use?
+
+Cloudflare Calls will immediately stop billing and recording usage for analytics. After a short delay, the connection will be disconnected.
