@@ -54,4 +54,6 @@ Cloudflare Calls TURN service places limits on:
 * Packet rate outbound and inbound to the relay allocation (>5-10 kpps)
 * Data rate outbound and inbound to the relay allocation (>50-100 Mbps)
 
+A relay allocation often represents a single TURN client connection with the TURN server, not all connections for a single customer.
+
 These limits are suitable for high-demand applications and also have burst rates higher than those documented above. Hitting these limits will result in packet drops.
