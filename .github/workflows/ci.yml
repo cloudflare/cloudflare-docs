@@ -46,3 +46,6 @@ jobs:
 
       - name: Check - Validate redirects (infinite loops, sources with fragment)
         run: npx tsm bin/validate-redirects.ts
+
+      - name: Tests
+        run: npm run test
