@@ -10,7 +10,7 @@ head:
 
 import { TabItem, Tabs } from "~/components";
 
-The following example deploys the Cloudflare OWASP Core Ruleset multiple times at the account level through the following execute rules:
+The following example deploys the [Cloudflare OWASP Core Ruleset](/waf/managed-rules/reference/owasp-core-ruleset/) multiple times at the account level through the following execute rules:
 
 - First execute rule: Enable OWASP rules up to paranoia level 3 (PL3) and set the action to _Managed Challenge_.
 - Second execute rule: Enable OWASP rules up to PL4 and set the action to _Log_.
@@ -106,7 +106,3 @@ curl "https://api.cloudflare.com/client/v4/accounts/{account_id}/rulesets" \
 ```
 
 </TabItem> </Tabs>
-
-## More resources
-
-- [Cloudflare OWASP Core Ruleset](/waf/managed-rules/reference/owasp-core-ruleset/)
