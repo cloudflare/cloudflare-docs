@@ -24,8 +24,7 @@ jobs:
       - uses: actions/cache/restore@v4
         with:
           path: |
-            node_modules/.astro/_astro
-            node_modules/.astro/assets
+            node_modules/.astro
           key: static
 
       - run: npm ci
@@ -41,8 +40,7 @@ jobs:
       - uses: actions/cache/save@v4
         with:
           path: |
-            node_modules/.astro/_astro
-            node_modules/.astro/assets
+            node_modules/.astro
           key: static
 
       - name: Check - Validate redirects (infinite loops, sources with fragment)
