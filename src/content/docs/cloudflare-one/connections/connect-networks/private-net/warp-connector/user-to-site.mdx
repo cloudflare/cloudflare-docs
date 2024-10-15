@@ -97,10 +97,7 @@ route /p add 100.96.0.0/12 mask 255.255.255.255 <WARP-CONNECTOR-IP>
 
 ## 4. Test the WARP Connector
 
-You can now send a request from a device behind WARP Connector to a WARP client user device.
-
-1. From **My Team** > **Devices**, determine the **Virtual IPv4** address of the WARP client device.
-2. From a device on the private network, run `ping <WARP-VIRTUAL-IPV4>`.
+You can now send a request from a WARP client user device to a device behind WARP connector. For example, on the WARP client device run `ping 10.0.0.2`.
 
 ```mermaid
     flowchart LR
