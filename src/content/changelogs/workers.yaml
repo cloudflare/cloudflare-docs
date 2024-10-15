@@ -11,6 +11,9 @@ entries:
   - publish_date: "2024-09-19"
     description: |-
       -  Revamped Workers and Pages UI settings to simplify the creation and management of project configurations. For bugs and general feedback, please submit this [form](https://forms.gle/XXqhRGbZmuzninuN9).
+  - publish_date: '2024-09-16'
+    description: |-
+      - Updated v8 to version 12.9.
   - publish_date: "2024-08-19"
     description: |-
       -  Workers now support the [`allow_custom_ports` compatibility flag](/workers/configuration/compatibility-dates/#allow-specifying-a-custom-port-when-making-a-subrequest-with-the-fetch-api) which enables using the `fetch()` calls to custom ports.
@@ -203,7 +206,7 @@ entries:
   - publish_date: "2023-05-05"
     description: |-
       - The new `nodeJsCompatModule` type can be used with a Worker bundle to emulate a Node.js environment. Common Node.js globals such as `process` and `Buffer` will be present, and `require('...')` can be used to load Node.js built-ins without the `node:` specifier prefix.
-      - Fixed an issue where websocket connections would be disconnected when updating workers. Now, only websockets connected to Durable Object instances are disconnected by updates to that Durable Object’s code.
+      - Fixed an issue where websocket connections would be disconnected when updating workers. Now, only WebSockets connected to Durable Objects are disconnected by updates to that Durable Object’s code.
   - publish_date: "2023-04-28"
     description: |-
       - The Web Crypto API now supports curves Ed25519 and X25519 defined in the Secure Curves specification.

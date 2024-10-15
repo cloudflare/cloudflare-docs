@@ -13,13 +13,13 @@ The Web Application Firewall provides the following [phases](/ruleset-engine/abo
 
 These phases exist both at the account level and at the zone level. Considering the available phases and the two different levels, rules will be evaluated in the following order:
 
-| WAF feature                                                | Scope   | Phase                           | Ruleset kind                          | Location in the dashboard                                    |
-| ---------------------------------------------------------- | ------- | ------------------------------- | ------------------------------------- | ------------------------------------------------------------ |
-| [Custom rulesets](/waf/custom-rules/custom-rulesets/)<br/> | Account | `http_request_firewall_custom`  | `custom` (create)<br/>`root` (deploy) | Account Home > **WAF** > **Custom rulesets**                 |
-| [Custom rules](/waf/custom-rules/)                         | Zone    | `http_request_firewall_custom`  | `zone`                                | Your zone > **Security** > **WAF** > **Custom rules**        |
-| [Rate limiting rules](/waf/rate-limiting-rules/)           | Account | `http_ratelimit`                | `root`                                | Account Home > **WAF** > **Rate limiting rulesets**          |
-| [Rate limiting rules](/waf/rate-limiting-rules/)           | Zone    | `http_ratelimit`                | `zone`                                | Your zone > **Security** > **WAF** > **Rate limiting rules** |
-| [WAF Managed Rules](/waf/managed-rules/)                   | Account | `http_request_firewall_managed` | `root`                                | Account Home > **WAF** > **Managed rulesets**                |
-| [WAF Managed Rules](/waf/managed-rules/)                   | Zone    | `http_request_firewall_managed` | `zone`                                | Your zone > **Security** > **WAF** > **Managed rules**       |
+| WAF feature                                                    | Scope   | Phase                           | Ruleset kind                          | Location in the dashboard                                    |
+| -------------------------------------------------------------- | ------- | ------------------------------- | ------------------------------------- | ------------------------------------------------------------ |
+| [Custom rulesets](/waf/account/custom-rulesets/)<br/>          | Account | `http_request_firewall_custom`  | `custom` (create)<br/>`root` (deploy) | Account Home > **WAF** > **Custom rulesets**                 |
+| [Custom rules](/waf/custom-rules/)                             | Zone    | `http_request_firewall_custom`  | `zone`                                | Your zone > **Security** > **WAF** > **Custom rules**        |
+| [Rate limiting rulesets](/waf/account/rate-limiting-rulesets/) | Account | `http_ratelimit`                | `root`                                | Account Home > **WAF** > **Rate limiting rulesets**          |
+| [Rate limiting rules](/waf/rate-limiting-rules/)               | Zone    | `http_ratelimit`                | `zone`                                | Your zone > **Security** > **WAF** > **Rate limiting rules** |
+| [WAF managed rulesets](/waf/account/managed-rulesets/)         | Account | `http_request_firewall_managed` | `root`                                | Account Home > **WAF** > **Managed rulesets**                |
+| [WAF Managed Rules](/waf/managed-rules/)                       | Zone    | `http_request_firewall_managed` | `zone`                                | Your zone > **Security** > **WAF** > **Managed rules**       |
 
 To learn more about phases, refer to [Phases](/ruleset-engine/about/phases/) in the Ruleset Engine documentation.

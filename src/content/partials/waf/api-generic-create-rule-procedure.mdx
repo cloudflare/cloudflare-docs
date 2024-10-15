@@ -1,16 +1,16 @@
 ---
-inputParameters: ruleName;;extraObject;;phase
-
+params:
+  - ruleType
+  - extraObject
+  - phaseName
 ---
 
-import { Markdown } from "~/components"
+import { Markdown } from "~/components";
 
-To create a {props.one} for a zone, add a rule {props.two} to the <code>{props.three}</code> phase entry point ruleset.
+To create a {props.ruleType} for a zone, add a rule <Markdown text={props.extraObject} /> to the <code>{props.phaseName}</code> phase entry point ruleset.
 
-1. Invoke the [List zone rulesets](/api/operations/listZoneRulesets) method to obtain the list of rulesets in your zone. You will need the [zone ID](/fundamentals/setup/find-account-and-zone-ids/) for this operation.
+1. Invoke the [Get a zone entry point ruleset](/api/operations/getZoneEntrypointRuleset) operation to obtain the definition of the entry point ruleset for the <code>{props.phaseName}</code> phase. You will need the [zone ID](/fundamentals/setup/find-account-and-zone-ids/) for this task.
 
-2. Search for an entry point ruleset for the <code>{props.three}</code> phase in the response. Such a ruleset would have the following properties: `"kind": "zone"` and <code>"phase": "{props.three}"</code>. If you find the ruleset, take note of its ID for the next step.
+2. If the entry point ruleset already exists (that is, if you received a `200 OK` status code and the ruleset definition), take note of the ruleset ID in the response. Then, invoke the [Create a zone ruleset rule](/api/operations/createZoneRulesetRule) operation to add a {props.ruleType} to the existing ruleset. Refer to the examples below for details.
 
-3. If the entry point ruleset already exists, invoke the [Create a zone ruleset rule](/api/operations/createZoneRulesetRule) operation to add a {props.one} to the existing ruleset. By default, the rule will be added at the end of the list of rules already in the ruleset. Refer to the examples below for details.
-
-   If the entry point ruleset does not exist, invoke the [Create a zone ruleset](/api/operations/createZoneRuleset) operation to create the entry point ruleset with the new {props.one}. Refer to [Create ruleset](/ruleset-engine/rulesets-api/create/#example---create-a-zone-level-phase-entry-point-ruleset) for an example.
+3. If the entry point ruleset does not exist (that is, if you received a `404 Not Found` status code in step 1), create it using the [Create a zone ruleset](/api/operations/createZoneRuleset) operation. Include your {props.ruleType} in the `rules` array. Refer to [Create ruleset](/ruleset-engine/rulesets-api/create/#example---create-a-zone-level-phase-entry-point-ruleset) for an example.

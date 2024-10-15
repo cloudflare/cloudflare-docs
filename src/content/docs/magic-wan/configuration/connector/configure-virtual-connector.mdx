@@ -104,9 +104,9 @@ You cannot use the same license key twice, or reuse a key once the virtual machi
 <Render
 	file="connector/create-site"
 	params={{
-		one: "needs to correspond to the virtual network interface on the Virtual Connector instance you have set up in VMware. Following our example from the previous steps, you need to choose port `1` since that is what corresponds to the `eno1` port we set up in VMware.",
-		two: "needs to correspond to the virtual LAN interface on the Virtual Connector instance you have set up in VMware. Following our example from the previous steps, you need to choose port `2` since that is what corresponds to the `eno2` port we set up in VMware.",
-		three:
+		wan: "needs to correspond to the virtual network interface on the Virtual Connector instance you have set up in VMware. Following our example from the previous steps, you need to choose port `1` since that is what corresponds to the `eno1` port we set up in VMware.",
+		lan: "needs to correspond to the virtual LAN interface on the Virtual Connector instance you have set up in VMware. Following our example from the previous steps, you need to choose port `2` since that is what corresponds to the `eno2` port we set up in VMware.",
+		noConnectorShows:
 			"For a Virtual Connector to show up you need to have already obtained your [OVA package and licence keys](#obtain-the-virtual-connector-image).",
 	}}
 />
@@ -116,7 +116,8 @@ You cannot use the same license key twice, or reuse a key once the virtual machi
 <Render
 	file="connector/activate-connector"
 	params={{
-		one: "Virtual Magic WAN Connector is deactivated after you install it",
+		shippedLanguage:
+			"Virtual Magic WAN Connector is deactivated after you install it",
 	}}
 />
 
@@ -144,7 +145,8 @@ To use your Virtual Connector on a network configuration with a static IP:
 <Render
 	file="connector/ha-configs"
 	params={{
-		one: "Follow the instructions in [Activate connector](#activate-connector) to finish setting up your Connectors.",
+		finalInstructions:
+			"Follow the instructions in [Activate connector](#activate-connector) to finish setting up your Connectors.",
 	}}
 />
 

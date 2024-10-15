@@ -8,16 +8,16 @@ const props = z.object({
 	type: z.enum(["apps", "videos"]),
 	tags: z.string().array().optional(),
 	products: z.string().array().optional(),
-	cloudflare: z.boolean().default(true),
+	cloudflareOnly: z.boolean().default(true),
 });
 
-const { type, tags, products, cloudflare } = props.parse(Astro.props);
+const { type, tags, products, cloudflareOnly } = props.parse(Astro.props);
 
 const resources = await getEntry(type, "index");
 
 const filtered = resources.data.entries.filter((entry) => {
 	return (
-		(cloudflare ? entry.cloudflare : false) &&
+		(cloudflareOnly ? entry.cloudflare : true) &&
 		(tags ? entry.tags?.some((v: string) => tags.includes(v)) : true) &&
 		(products
 			? entry.products?.some((v: string) => products.includes(v))
@@ -35,8 +35,8 @@ filtered.sort((a, b) => Number(b.updated) - Number(a.updated));
 			return (
 				<li>
 					<>
-						<a href={entry.link}>{title}</a>
-						<span>: {entry.description}</span>
+						<a href={entry.link}>{title}:</a>
+						<span>{entry.description}</span>
 					</>
 				</li>
 			);

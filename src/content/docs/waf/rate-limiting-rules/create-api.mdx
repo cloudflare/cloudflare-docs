@@ -1,16 +1,15 @@
 ---
 pcx_content_type: how-to
-type: overview
-title: Create via API
+title: Create a rate limiting rule via API
 sidebar:
   order: 16
+  label: Create via API
 head:
   - tag: title
     content: Create a rate limiting rule via API
-
 ---
 
-import { Render } from "~/components"
+import { Render } from "~/components";
 
 Use the [Rulesets API](/ruleset-engine/rulesets-api/) to create a rate limiting rule via API.
 
@@ -22,7 +21,14 @@ Rate limiting rules must appear at the end of the rules list.
 
 ## Create a rate limiting rule
 
-<Render file="api-generic-create-rule-procedure" params={{ one: "rate limiting rule", two: "with a `ratelimit` object", three: "http_ratelimit" }} />
+<Render
+	file="api-generic-create-rule-procedure"
+	params={{
+		ruleType: "rate limiting rule",
+		extraObject: "with a `ratelimit` object",
+		phaseName: "http_ratelimit",
+	}}
+/>
 
 ### Example A - Rate limiting based on request properties
 
@@ -121,7 +127,7 @@ curl https://api.cloudflare.com/client/v4/zones/{zone_id}/rulesets/{ruleset_id}/
 
 :::note
 
-[Complexity-based rate limiting](/waf/rate-limiting-rules/request-rate/#complexity-based-rate-limiting) is available in beta and can only be configured via API. 
+[Complexity-based rate limiting](/waf/rate-limiting-rules/request-rate/#complexity-based-rate-limiting) is available in beta and can only be configured via API.
 :::
 
 This example adds a rate limiting rule to the `http_ratelimit` phase entry point ruleset for the zone with ID `{zone_id}`. The phase entry point ruleset already exists, with ID `{ruleset_id}`.
@@ -152,10 +158,13 @@ curl https://api.cloudflare.com/client/v4/zones/{zone_id}/rulesets/{ruleset_id}/
 
 <Render file="api-create-ruleset-with-rule" />
 
-***
+---
 
 ## Next steps
 
 Use the different operations in the [Rulesets API](/ruleset-engine/rulesets-api/) to work with the rule you just created. The following table has a list of common tasks for working with rate limiting rules at the zone level:
 
-<Render file="rules-next-steps-table" params={{ one: "rate limiting rules", two: "http_ratelimit" }} />
+<Render
+	file="rules-next-steps-table"
+	params={{ rulesType: "rate limiting rules", phaseName: "http_ratelimit" }}
+/>

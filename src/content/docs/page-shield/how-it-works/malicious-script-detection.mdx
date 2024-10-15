@@ -56,16 +56,6 @@ Page Shield will also check the target domains of connections made by scripts in
 
 You can configure [Malicious Domain Alerts](/page-shield/reference/alerts/) to receive an alert notification as soon as Cloudflare detects a malicious script loaded from a known malicious domain in your domain.
 
-## Malicious script detection
-
-In this type of detection, Page Shield will download the script file and run it through a classifier. The classifier will perform several operations — deobfuscation, normalization, and decoding — before looking for correlations between form field fetches and data exfiltration calls. The stronger the correlation, the more likely the script is performing malicious operations like [Magecart-type attacks](https://sansec.io/what-is-magecart).
-
-The script classifier will output a probability score for the script (also called the JS integrity score) between 1 and 99, where 1 means definitely malicious and 99 means definitely not malicious. This score, together with a threshold value, will determine if the malicious script detection system will classify the script as malicious or not.
-
-The score threshold for considering a script as malicious is currently set to 50. If the script classification score is below this value, the Page Shield dashboards will display the script as being malicious.
-
-You can configure [Malicious Script Alerts](/page-shield/reference/alerts/). You will receive an alert notification as soon as Cloudflare detects JavaScript code classified as malicious in your domain.
-
 ---
 
 ## Malicious script and connection categories
