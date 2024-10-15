@@ -76,7 +76,7 @@
 /content/ruleset-engine/ @pedrosousa @cloudflare/pcx-technical-writing
 
 # Developer Platform
-/content/calls/ @cloudflare/pcx-technical-writing @cloudflare/calls
+/content/calls/ @cloudflare/pcx-technical-writing @astroza @renandincer @nils-ohlmeier @third774 @rcccf 
 /assets/images/calls/ @cloudflare/pcx-technical-writing @cloudflare/calls
 /content/d1/ @elithrar @rozenmd @vy-ton @joshthoward @kodster28 @cloudflare/pcx-technical-writing
 /data/changelogs/d1.yaml @elithrar @rozenmd @vy-ton @joshthoward @kodster28 @cloudflare/pcx-technical-writing

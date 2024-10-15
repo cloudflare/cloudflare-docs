@@ -161,6 +161,17 @@ There is no defined limit for credential issuance. Start at 500 credentials/sec 
 {{</faq-item>}}
 
 {{<faq-item>}}
+{{<faq-question level=2 text="What is the maximum value I can use for TURN credential expiry time?" >}}
+
+{{<faq-answer>}}
+
+You can set a expiration time for a credential up to 48 hours in the future. If you need your TURN allocation to last longer than this, you will need to [update](https://developer.mozilla.org/en-US/docs/Web/API/RTCPeerConnection/setConfiguration) the TURN credentials.
+
+{{</faq-answer>}}
+{{</faq-item>}}
+
+
+{{<faq-item>}}
 {{<faq-question level=2 text="Does Calls TURN support IPv6?" >}}
 
 {{<faq-answer>}}
@@ -210,6 +221,16 @@ If you are a Cloudflare BYOIP customer and wish to connect to your BYOIP ranges 
 Cloudflare Calls denies CreatePermission or ChannelBind requests if private IP ranges (e.g loopback addresses, linklocal unicast or multicast blocks) or IP addresses that are part of [BYOIP](/byoip/) are used.
 
 If you are a Cloudflare BYOIP customer and wish to connect to your BYOIP ranges with Calls TURN, please reach out to your account manager for further details.
+
+{{</faq-answer>}}
+{{</faq-item>}}
+
+{{<faq-item>}}
+{{<faq-question level=2 text="What will happen if TURN credentials expire while the TURN allocation is in use?" >}}
+
+{{<faq-answer>}}
+
+Cloudflare Calls will immediately stop billing and recording usage for analytics. After a short delay, the connection will be disconnected.
 
 {{</faq-answer>}}
 {{</faq-item>}}
