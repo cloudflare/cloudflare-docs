@@ -1,29 +1,359 @@
 ---
-updated: 2024-10-09
+updated: 2024-10-15
 difficulty: Intermediate
 content_type: 📝 Tutorial
 pcx_content_type: tutorial
-title: Query R2 data with MotherDuck
+title: Analyzing Clickstream Data with MotherDuck and Cloudflare R2
 products:
   - R2
+  - Workers
 tags:
   - MotherDuck
 languages:
   - SQL
 ---
 
-import { Render, PackageManagers } from "~/components";
+import { Render, PackageManagers, Details } from "~/components";
 
 In this tutorial, you will learn how to ingest clickstream data to a R2 bucket using Pipelines. You will also learn how to connect the bucket to MotherDuck. You will then query the data using MotherDuck.
+
+For this tutorial, you will build a landing page of an e-commerce website. The page will list the products available for sale. A user can click on the view button to view the product details or click on the add to cart button to add the product to their cart. The focus of this tutorial is to show how to ingest the data to R2 and query it using MotherDuck. Hence, the landing page will be a simple HTML page with no functionality.
 
 ## Prerequisites
 
 1. Create a [R2 bucket](/r2/buckets/create-buckets/) in your Cloudflare account.
 2. A [MotherDuck](https://motherduck.com/) account.
+3. Install [`Node.js`](https://docs.npmjs.com/downloading-and-installing-node-js-and-npm).
 
-## 1. Create a pipeline
+<Details header="Node.js version manager">
+	Use a Node version manager like [Volta](https://volta.sh/) or
+	[nvm](https://github.com/nvm-sh/nvm) to avoid permission issues and change
+	Node.js versions. [Wrangler](/workers/wrangler/install-and-update/), discussed
+	later in this guide, requires a Node version of `16.17.0` or later.
+</Details>
 
-To create a new pipeline and connect it to your R2 bucket, you need the `Access Key ID` and the `Secret Access Key` of your R2 bucket. Follow the [R2 documentation](/r2/api/s3/tokens/) to get these keys. Make a note of these keys. You will need them in the next step.
+## 1. Create a new project
+
+You will create a new Worker project that will use [Static Assets](/workers/static-assets/) to serve the HTML file.
+
+Create a new Worker project by running the following commands:
+
+<PackageManagers
+	type="create"
+	pkg="cloudflare@latest"
+	args={"e-commerce-pipelines"}
+/>
+
+    <Render
+    	file="c3-post-run-steps"
+    	product="workers"
+    	params={{
+    	category: "hello-world",
+    	type: "Hello World Worker",
+    	lang: "TypeScript",
+    	}}
+    />
+
+Navigate to the `e-commerce-pipelines` directory:
+
+```sh frame="none"
+cd e-commerce-pipelines
+```
+
+## 2. Create the front-end
+
+Using Static Assets, you can serve the frontend of your application from your Worker. To use Static Assets, you need to add the required bindings to your `wrangler.toml` file.
+
+```toml
+[assets]
+directory = "public"
+```
+
+Next, create a `public` directory and add an `index.html` file. The `index.html` file should contain the following HTML code:
+
+<details>
+	<summary>Select to view the HTML code</summary>
+```html 
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<title>E-commerce Store</title>
+		<script src="https://cdn.tailwindcss.com"></script>
+	</head>
+	<body>
+		<nav class="bg-gray-800 text-white p-4">
+			<div class="container mx-auto flex justify-between items-center">
+				<a href="/" class="text-xl font-bold"> E-Commerce Demo </a>
+				<div class="space-x-4 text-gray-800">
+					<a href="#">
+						<button class="border border-input bg-white h-10 px-4 py-2 rounded-md">Cart</button>
+					</a>
+					<a href="#">
+						<button class="border border-input bg-white h-10 px-4 py-2 rounded-md">Login</button>
+					</a>
+					<a href="#">
+						<button class="border border-input bg-white h-10 px-4 py-2 rounded-md">Signup</button>
+					</a>
+				</div>
+			</div>
+		</nav>
+		<div class="container mx-auto px-4 py-8">
+			<h1 class="text-3xl font-bold mb-6">Our Products</h1>
+			<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" id="products">
+				<!-- This section repeats for each product -->
+
+    			<!-- End of product section -->
+    		</div>
+    	</div>
+
+    	<script>
+    		// demo products
+    		const products = [
+    			{
+    				id: 1,
+    				name: 'Smartphone X',
+    				desc: 'Latest model with advanced features',
+    				cost: 799,
+    			},
+    			{
+    				id: 2,
+    				name: 'Laptop Pro',
+    				desc: 'High-performance laptop for professionals',
+    				cost: 1299,
+    			},
+    			{
+    				id: 3,
+    				name: 'Wireless Earbuds',
+    				desc: 'True wireless earbuds with noise cancellation',
+    				cost: 149,
+    			},
+    			{
+    				id: 4,
+    				name: 'Smart Watch',
+    				desc: 'Fitness tracker and smartwatch combo',
+    				cost: 199,
+    			},
+    			{
+    				id: 5,
+    				name: '4K TV',
+    				desc: 'Ultra HD smart TV with HDR',
+    				cost: 599,
+    			},
+    			{
+    				id: 6,
+    				name: 'Gaming Console',
+    				desc: 'Next-gen gaming system',
+    				cost: 499,
+    			},
+    		];
+
+    		// function to render products
+    		function renderProducts() {
+    			console.log('Rendering products...');
+    			const productContainer = document.getElementById('products');
+    			productContainer.innerHTML = ''; // Clear existing content
+    			products.forEach((product) => {
+    				const productElement = document.createElement('div');
+    				productElement.classList.add('rounded-lg', 'border', 'bg-card', 'text-card-foreground', 'shadow-sm');
+    				productElement.innerHTML = `
+            <div class="flex flex-col space-y-1.5 p-6">
+              <h2 class="text-2xl font-semibold leading-none tracking-tight">${product.name}</h2>
+            </div>
+            <div class="p-6 pt-0">
+              <p>${product.desc}</p>
+              <p class="font-bold mt-2">$${product.cost}</p>
+            </div>
+            <div class="flex items-center p-6 pt-0 flex justify-between">
+              <button class="border px-4 py-2 rounded-md" onclick="handleClick('product_view', ${product.id})" name="">View Details</button>
+              <button class="border px-4 py-2 rounded-md" onclick="handleClick('add_to_cart', ${product.id})">Add to Cart</button>
+            </div>
+          `;
+    				productContainer.appendChild(productElement);
+    			});
+    		}
+    		renderProducts();
+
+    		// function to handle click events
+    		async function handleClick(action, id) {
+    			console.log(`Clicked ${action} for product with id ${id}`);
+    		}
+    	</script>
+    </body>
+
+</html>
+  
+```
+</details>
+
+The above code does the following:
+
+- Uses Tailwind CSS to style the page.
+- Renders a list of products.
+- Adds a button to view the details of a product.
+- Adds a button to add a product to the cart.
+- Contains a `handleClick` function to handle the click events. This function logs the action and the product ID. In the next steps, you will add the logic to send the click events to your pipeline.
+
+## 3. Generate clickstream data
+
+You need to send clickstream data like the `timestamp`, `user_id`, `session_id`, and `device_info` to your pipeline. You can generate this data on the client side. Add the following function in the `<script>` tag in your `public/index.html`. This function gets the device information:
+
+```js title="public/index.html"
+function extractDeviceInfo(userAgent) {
+	let browser = "Unknown";
+	let os = "Unknown";
+	let device = "Unknown";
+
+	// Extract browser
+	if (userAgent.includes("Firefox")) {
+		browser = "Firefox";
+	} else if (userAgent.includes("Chrome")) {
+		browser = "Chrome";
+	} else if (userAgent.includes("Safari")) {
+		browser = "Safari";
+	} else if (userAgent.includes("Opera") || userAgent.includes("OPR")) {
+		browser = "Opera";
+	} else if (userAgent.includes("Edge")) {
+		browser = "Edge";
+	} else if (userAgent.includes("MSIE") || userAgent.includes("Trident/")) {
+		browser = "Internet Explorer";
+	}
+
+	// Extract OS
+	if (userAgent.includes("Win")) {
+		os = "Windows";
+	} else if (userAgent.includes("Mac")) {
+		os = "MacOS";
+	} else if (userAgent.includes("Linux")) {
+		os = "Linux";
+	} else if (userAgent.includes("Android")) {
+		os = "Android";
+	} else if (userAgent.includes("iOS")) {
+		os = "iOS";
+	}
+
+	// Extract device
+	const mobileKeywords = [
+		"Android",
+		"webOS",
+		"iPhone",
+		"iPad",
+		"iPod",
+		"BlackBerry",
+		"Windows Phone",
+	];
+	device = mobileKeywords.some((keyword) => userAgent.includes(keyword))
+		? "Mobile"
+		: "Desktop";
+
+	return { browser, os, device };
+}
+```
+
+Next, update the `handleClick` function to make a `POST` request to the `/api/clickstream` endpoint with the data:
+
+```js title="public/index.html" ins={3-40}
+async function handleClick(action, id) {
+	console.log(`Clicked ${action} for product with id ${id}`);
+
+	const userAgent = window.navigator.userAgent;
+	const timestamp = new Date().toISOString();
+	const { browser, os, device } = extractDeviceInfo(userAgent);
+
+	const data = {
+		timestamp,
+		session_id: "1234567890abcdef", // For production use a unique session ID
+		user_id: "user" + Math.floor(Math.random() * 1000), // For production use a unique user ID
+		event_data: {
+			event_id: Math.floor(Math.random() * 1000),
+			event_type: action,
+			page_url: window.location.href,
+			timestamp,
+			product_id: id,
+		},
+		device_info: {
+			browser,
+			os,
+			device,
+			userAgent,
+		},
+		referrer: document.referrer,
+	};
+	try {
+		const response = await fetch("/api/clickstream", {
+			method: "POST",
+			headers: {
+				"Content-Type": "application/json",
+			},
+			body: JSON.stringify({ data }),
+		});
+		if (!response.ok) {
+			throw new Error("Failed to send data to pipeline");
+		}
+	} catch (error) {
+		console.error("Error sending data to pipeline:", error);
+	}
+}
+```
+
+The `handleClick` function does the following:
+
+- Gets the device information using the `extractDeviceInfo` function.
+- Creates a `POST` request to the `/api/clickstream` endpoint with the data.
+- Logs any errors that occur.
+
+## 4. Send clickstream data to your pipeline
+
+The front-end of the application makes a call to the `/api/clickstream` endpoint to send the clickstream data to your pipeline. The `/api/clickstream` endpoint is handled by a Worker in the `src/index.ts` file.
+
+Update the `src/index.ts` file to handle the `POST` request:
+
+```ts title="src/index.ts"
+export default {
+	async fetch(request, env, ctx): Promise<Response> {
+		const pathname = new URL(request.url).pathname;
+		const method = request.method;
+		if (pathname === "/api/clickstream" && method === "POST") {
+			const body = (await request.json()) as { data: any };
+			try {
+				const response = await fetch(
+					`https://${env.PIPELINES_ID}.pipelines.cloudflare.com`,
+					{
+						method: "POST",
+						headers: {
+							"Content-Type": "application/json",
+						},
+						body: JSON.stringify([body.data]),
+					},
+				);
+				if (!response.ok) {
+					throw new Error(`HTTP error! status: ${response.status}`);
+				}
+				return new Response("OK", { status: 200 });
+			} catch (error) {
+				console.error(error);
+				return new Response("Internal Server Error", { status: 500 });
+			}
+		}
+		return new Response("Hello World!");
+	},
+} satisfies ExportedHandler<Env>;
+```
+
+The `src/index.ts` file does the following:
+
+- Checks if the request is a `POST` request to the `/api/clickstream` endpoint.
+- Extracts the data from the request body.
+- Sends the data to your Pipeline.
+- Returns a response to the client.
+
+You now have a working application that sends clickstream data to your pipeline. In the next step, you will create a pipeline to receive the data.
+
+## 5. Create a pipeline
+
+You need the ID of your Pipeline to make `POST` requests to send the clickstream data. To get the ID of your pipeline, you need to create a new pipeline and connect it to your R2 bucket.
+
+To create a new pipeline and connect it to your R2 bucket, you need the `Access Key ID` and the `Secret Access Key` of your R2 bucket. Follow the [R2 documentation](/r2/api/s3/tokens/) to get these keys. Make a note of these keys because you will need them in the next step.
 
 Create a new pipeline `clickstream-pipeline` using the [Wrangler CLI](/workers/wrangler/):
 
@@ -36,175 +366,126 @@ Replace `<BUCKET_NAME>` with the name of your R2 bucket. Replace `<ACCESS_KEY_ID
 ```output
 🌀 Authorizing R2 bucket <BUCKET_NAME>
 🌀 Creating pipeline named "clickstream-pipeline"
-✅ Successfully created pipeline "clickstream-pipeline" with id <PIPELINE_ID>
+✅ Successfully created pipeline "clickstream-pipeline" with id <PIPELINES_ID>
 🎉 You can now send data to your pipeline!
-Example: curl "https://<PIPELINE_ID>.pipelines.cloudflare.com" -d '[{"foo": "bar"}]'
+Example: curl "https://<PIPELINES_ID>.pipelines.cloudflare.com" -d '[{"foo": "bar"}]'
 ```
 
-Make a note of the URL of your pipeline. You will need it in the next step.
+Make a note of the `<PIPELINES_ID>` of your pipeline because you will need it in the next step.
 
-## 2. Ingest data to R2
+## 6. Ingest data to R2
 
-In this step, you will ingest data to your R2 bucket using `curl`. You will ingest the following JSON data to your R2 bucket:
+In this step, you will add the `Pipeline ID` as a secret to your project.
 
-<details>
-<summary>
-Click to view the JSON data
-</summary>
-```json
-[
-  {
-    "session_id": "1234567890abcdef",
-    "user_id": "user123",
-    "timestamp": "2024-10-08T14:30:15.123Z",
-    "events": [
-      {
-        "event_id": "evt001",
-        "event_type": "page_view",
-        "page_url": "https://example.com/products",
-        "timestamp": "2024-10-08T14:30:15.123Z",
-        "user_agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36",
-        "ip_address": "192.168.1.1"
-      },
-      {
-        "event_id": "evt002",
-        "event_type": "product_view",
-        "product_id": "prod456",
-        "page_url": "https://example.com/products/prod456",
-        "timestamp": "2024-10-08T14:31:20.456Z"
-      },
-      {
-        "event_id": "evt003",
-        "event_type": "add_to_cart",
-        "product_id": "prod456",
-        "quantity": 1,
-        "page_url": "https://example.com/products/prod456",
-        "timestamp": "2024-10-08T14:32:05.789Z"
-      }
-    ],
-    "device_info": {
-      "device_type": "desktop",
-      "operating_system": "Windows 10",
-      "browser": "Chrome"
-    },
-    "referrer": "https://google.com"
-  },
-  {
-    "session_id": "abcdef1234567890",
-    "user_id": "user456",
-    "timestamp": "2024-10-08T15:45:30.987Z",
-    "events": [
-      {
-        "event_id": "evt004",
-        "event_type": "page_view",
-        "page_url": "https://example.com/blog",
-        "timestamp": "2024-10-08T15:45:30.987Z",
-        "user_agent": "Mozilla/5.0 (iPhone; CPU iPhone OS 14_4 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/14.0.3 Mobile/15E148 Safari/604.1",
-        "ip_address": "203.0.113.1"
-      },
-      {
-        "event_id": "evt005",
-        "event_type": "scroll",
-        "scroll_depth": "75%",
-        "page_url": "https://example.com/blog/article1",
-        "timestamp": "2024-10-08T15:47:12.345Z"
-      },
-      {
-        "event_id": "evt006",
-        "event_type": "social_share",
-        "platform": "twitter",
-        "content_id": "article1",
-        "page_url": "https://example.com/blog/article1",
-        "timestamp": "2024-10-08T15:48:55.678Z"
-      }
-    ],
-    "device_info": {
-      "device_type": "mobile",
-      "operating_system": "iOS 14.4",
-      "browser": "Safari"
-    },
-    "referrer": "https://t.co/abcd123"
-  },
-  {
-    "session_id": "9876543210fedcba",
-    "user_id": "user789",
-    "timestamp": "2024-10-08T18:20:00.111Z",
-    "events": [
-      {
-        "event_id": "evt007",
-        "event_type": "page_view",
-        "page_url": "https://example.com/login",
-        "timestamp": "2024-10-08T18:20:00.111Z",
-        "user_agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.114 Safari/537.36",
-        "ip_address": "198.51.100.1"
-      },
-      {
-        "event_id": "evt008",
-        "event_type": "form_submission",
-        "form_id": "login-form",
-        "page_url": "https://example.com/login",
-        "timestamp": "2024-10-08T18:20:45.222Z"
-      },
-      {
-        "event_id": "evt009",
-        "event_type": "page_view",
-        "page_url": "https://example.com/dashboard",
-        "timestamp": "2024-10-08T18:20:50.333Z"
-      },
-      {
-        "event_id": "evt010",
-        "event_type": "feature_usage",
-        "feature_id": "data_export",
-        "page_url": "https://example.com/dashboard",
-        "timestamp": "2024-10-08T18:22:30.444Z"
-      }
-    ],
-    "device_info": {
-      "device_type": "desktop",
-      "operating_system": "macOS 10.15",
-      "browser": "Chrome"
-    },
-    "referrer": "https://example.com/home"
-  }
-]
+Create a `.dev.vars` file in the root of your project and add the following environment variables:
+
+```text title=".dev.vars"
+PIPELINES_ID=<PIPELINES_ID>
 ```
-</details>
 
-Run the following command to ingest the data to your R2 bucket using the pipeline you created in the previous step:
+Replace `<PIPELINES_ID>` with the ID of your pipeline from the previous step.
+
+Next, update the types in the `worker-configuration.d.ts` file:
+
+```ts title="worker-configuration.d.ts"
+interface Env {
+	PIPELINES_ID: string;
+}
+```
+
+The `fetch` handler in the `src/index.ts` file uses the `PIPELINES_ID` environment variable to send the clickstream data to your pipeline.
+
+## 7. Test the application
+
+Start the development server and navigate to the URL:
 
 ```sh
-curl -X POST 'https://<PIPELINE_ID>.pipelines.cloudflare.com' -d '<JSON_DATA>'
+npm run dev
 ```
 
-Replace `<PIPELINE_ID>` with the ID of the pipeline you created in the previous step. Also, replace `<JSON_DATA>` with the JSON data provided above.
+When you click on the `View Details` or the `Add to Cart` button, the `handleClick` function calls the `/api/clickstream` endpoint to send the clickstream data to your pipeline.
 
-## 3. Connnect the R2 bucket to MotherDuck
+## 8. Connect the R2 bucket to MotherDuck
 
-In this step, you will connect the R2 bucket to MotherDuck. You can connect the bucket to MotherDuck in several ways. You can learn about these different approaches in the [MotherDuck documentation](https://motherduck.com/docs/integrations/cloud-storage/cloudflare-r2/). In this tutorial, you will connect the bucket to MotherDuck using the MotherDuck dashboard.
+Your application sends clickstream data to the R2 bucket using pipelines. In this step, you will connect the R2 bucket to MotherDuck.
 
-Login to the MotherDuck dashboard and click on your profile. Navigate to the **Secrets** page. Click on the **Add Secret** button and enter the following information:
+You can connect the bucket to MotherDuck in several ways, which you can learn about from the [MotherDuck documentation](https://motherduck.com/docs/integrations/cloud-storage/cloudflare-r2/). In this tutorial, you will connect the bucket to MotherDuck using the MotherDuck dashboard.
 
-- **Secret Name**: `Clickstream pipeline`
-- **Secret Type**: `Cloudflare R2`
-- **Access Key ID**: `ACCESS_KEY_ID` (replace with the Access Key ID you obtained in the previous step)
-- **Secret Access Key**: `SECRET_ACCESS_KEY` (replace with the Secret Access Key you obtained in the previous step)
+1. Log in to the MotherDuck dashboard and select your profile.
+2. Navigate to the **Secrets** page.
+3. Select the **Add Secret** button and enter the following information:
 
-Click on the **Add Secret** button to save the secret.
+   - **Secret Name**: `Clickstream pipeline`
+   - **Secret Type**: `Cloudflare R2`
+   - **Access Key ID**: `ACCESS_KEY_ID` (replace with the Access Key ID you obtained in the previous step)
+   - **Secret Access Key**: `SECRET_ACCESS_KEY` (replace with the Secret Access Key you obtained in the previous step)
 
-## 4. Query the data
+4. Select the **Add Secret** button to save the secret.
 
-In this step, you will query the data stored in the R2 bucket using MotherDuck. Navigate back to the MotherDuck dashboard and click on the **+** icon to add a new Notebook. Click on the **Add Cell** button to add a new cell to the notebook.
+## 9. Query the data
 
-In the cell, enter the following query and click on the **Run** button to execute the query:
+In this step, you will query the data stored in the R2 bucket using MotherDuck.
+
+1. Navigate back to the MotherDuck dashboard and select the **+** icon to add a new Notebook.
+2. Select the **Add Cell** button to add a new cell to the notebook.
+
+3. In the cell, enter the following query and select the **Run** button to execute the query:
 
 ```sql
-SELECT * FROM `r2://<BUCKET_NAME>/<PATH_TO_FILE>`;
+SELECT * FROM read_json_auto('r2://<BUCKET_NAME>/**/*');
 ```
 
-Replace the `<BUCKET_NAME>` placeholder with the name of the R2 bucket you created in the previous step. Replace the `<PATH_TO_FILE>` placeholder with the path to the file you uploaded in the previous step. You can find the path to the file by navigating to the object in the Cloudflare dashboard.
+Replace the `<BUCKET_NAME>` placeholder with the name of the R2 bucket.
 
 The query will return the data stored in the R2 bucket.
 
+## 10. Deploy the application
+
+To deploy the application, run the following command:
+
+```sh
+npm run deploy
+```
+
+This will deploy the application to the Cloudflare Workers platform.
+
+```output
+🌀 Building list of assets...
+🌀 Starting asset upload...
+🌀 Found 1 new or modified static asset to upload. Proceeding with upload...
++ /index.html
+Uploaded 1 of 1 assets
+✨ Success! Uploaded 1 file (2.37 sec)
+
+Total Upload: 25.73 KiB / gzip: 6.17 KiB
+Worker Startup Time: 15 ms
+Uploaded e-commerce-clickstream (11.79 sec)
+Deployed e-commerce-clickstream triggers (7.60 sec)
+  https://<URL>.workers.dev
+Current Version ID: <VERSION_ID>
+```
+
+Next, add the `PIPELINES_ID` secret to the project:
+
+```sh
+npx wrangler secret put PIPELINES_ID
+```
+
+Enter the `PIPELINES_ID` value when prompted.
+
+You can access the application at the URL provided in the output of the command.
+
 ## Conclusion
 
-In this tutorial, you learned to create a pipeline and ingest data into a R2 bucket. You also learned how to connect the bucket with MotherDuck and query the data stored in the bucket. You can use this tutorial as a starting point to ingest data into an R2 bucket, and use MotherDuck to query the data stored in the bucket.
+You have successfully built an e-commerce application that leverages Cloudflare's Pipelines, R2, and Workers. Through this tutorial, you've gained hands-on experience in:
+
+1. Creating a Workers project with a static frontend
+2. Generating and capturing clickstream data
+3. Setting up a Cloudflare Pipelines to ingest data into R2
+4. Connecting your R2 bucket to MotherDuck for advanced querying capabilities
+
+This project serves as a foundation for building scalable, data-driven applications. You can now expand on this knowledge to create more complex e-commerce features, implement advanced analytics, or explore other Cloudflare products to enhance your application further.
+
+For your next steps, consider exploring more advanced querying techniques with MotherDuck, implementing real-time analytics, or integrating additional Cloudflare services to further optimize your application's performance and security.
+
+You can find the source code of the application in the [GitHub repository](https://github.com/harshil1712/e-commerce-clickstream).
