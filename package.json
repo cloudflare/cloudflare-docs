@@ -5,6 +5,7 @@
 	"scripts": {
 		"astro": "npx astro",
 		"build": "npx astro build",
+		"postbuild": "npm run build:worker",
 		"build:worker": "npx wrangler types -c wrangler-workers.toml --experimental-include-runtime && npx wrangler pages functions build --outdir worker/functions",
 		"check": "npm run check:functions && npm run check:astro",
 		"check:astro": "npm run sync && astro check",
