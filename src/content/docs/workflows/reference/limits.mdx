@@ -18,7 +18,7 @@ Many limits are inherited from those applied to Workers scripts and as documente
 | Total scripts per account                 | 100 | 500 (shared with [Worker script limits](/workers/platform/limits/#account-plan-limits) |
 | Compute time per Workflow                 | 10 seconds | 30 seconds of [active CPU time](/workers/platform/limits/#cpu-time) |
 | Duration (wall clock) per `step`          | Unlimited | Unlimited - e.g. waiting on network I/O calls or querying a database |
-| Maximum persisted state per step          | 1MB (1e6 bytes) | 1MB (1e6 bytes) | 
+| Maximum persisted state per step          | 1MiB (2^20 bytes) | 1MiB (2^20 bytes) | 
 | Maximum state that can be persisted per Workflow instance | 100MB | 1GB | 
 | Maximum `step.sleep` duration             | 365 days (1 year) <beta>beta</beta> |
 | Maximum steps per Workflow                | 256 <beta>beta</beta> |
