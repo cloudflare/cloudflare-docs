@@ -6,10 +6,9 @@ sidebar:
 head:
   - tag: title
     content: Common DLP policies
-
 ---
 
-import { GlossaryTooltip, Render } from "~/components"
+import { GlossaryTooltip, Render } from "~/components";
 
 The following in-line DLP policies are commonly used to secure data in uploaded and downloaded files.
 
@@ -23,6 +22,8 @@ The **Allow** action functions as an implicit logger, providing visibility into 
 | Content Category | in       | `File Sharing`          |       |        |
 
 <Render file="gateway/policies/block-file-types" />
+
+For more information on what file formats DLP can scan, refer to [Supported file types](/cloudflare-one/policies/data-loss-prevention/#supported-file-types).
 
 ## Block uploads/downloads for specific users
 
