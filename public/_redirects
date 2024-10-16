@@ -1713,6 +1713,7 @@
 /cloudflare-one/tutorials/zsh-env-var/ /cloudflare-one/tutorials/cli/ 301
 
 ### DYNAMIC REDIRECTS ###
+/*/sitemap.xml /sitemap-index.xml 301
 /access/configuring-identity-providers/* /cloudflare-one/identity/idp-integration/:splat 301
 /api-security/* /api-shield/:splat 301
 /api-shield/products/* /api-shield/security/:splat 301
