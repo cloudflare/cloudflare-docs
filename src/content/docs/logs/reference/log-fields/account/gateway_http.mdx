@@ -20,6 +20,18 @@ Type: string
 
 Action performed by gateway on the HTTP request.
 
+## ApplicationIDs
+
+Type: array\[int]
+
+IDs of the applications that matched the HTTP request parameters.
+
+## ApplicationNames
+
+Type: array\[string]
+
+Names of the applications that matched the HTTP request parameters.
+
 ## BlockedFileHash
 
 Type: string
@@ -50,6 +62,18 @@ Type: string
 
 File type blocked in the response eg. exe, bin, if any.
 
+## CategoryIDs
+
+Type: array\[int]
+
+IDs of the categories that matched the HTTP request parameters.
+
+## CategoryNames
+
+Type: array\[string]
+
+Names of the categories that matched the HTTP request parameters.
+
 ## Datetime
 
 Type: int or string
@@ -61,6 +85,18 @@ The date and time the corresponding HTTP request was made.
 Type: string
 
 Destination ip of the request.
+
+## DestinationIPContinentCode
+
+Type: string
+
+Continent code of the destination IP of the HTTP request (for example, 'NA').
+
+## DestinationIPCountryCode
+
+Type: string
+
+Country code of the destination IP of the HTTP request (for example, 'US').
 
 ## DestinationPort
 
@@ -108,7 +144,55 @@ Email used to authenticate the client.
 
 Type: object
 
-Information about files detected within the HTTP request.
+Information about files detected within the HTTP request. The following data is available for each file.
+
+### action
+
+Type: string
+
+Action taken. Possible values are <em>none</em>, <em>allow</em> and <em>block</em>.
+
+### content_type
+
+Type: string
+
+The file's content type (as read from headers), if applicable.
+
+### direction
+
+Type: string
+
+Possible values are <em>upload</em> and <em>download</em>.
+
+### file_name
+
+Type: string
+
+The file's name, if known.
+
+### file_hash
+
+Type: string
+
+The file's sha256 hash as a hex string, if known.
+
+### file_size
+
+Type: int
+
+The file's size, in bytes.
+
+### file_type
+
+Type: string
+
+The file's type (as detected by signatures), if known.
+
+## ForensicCopyStatus
+
+Type: string
+
+Status of any associated forensic copies that may have been captured during the request.
 
 ## HTTPHost
 
@@ -152,6 +236,24 @@ Type: string
 
 The name of the gateway policy applied to the request, if any.
 
+## PrivateAppAUD
+
+Type: string
+
+The private app AUD, if any.
+
+## ProxyEndpoint
+
+Type: string
+
+The proxy endpoint used on the HTTP request, if any.
+
+## Quarantined
+
+Type: bool
+
+If the request content was quarantined.
+
 ## Referer
 
 Type: string
@@ -175,6 +277,18 @@ Network session ID.
 Type: string
 
 Source ip of the request.
+
+## SourceIPContinentCode
+
+Type: string
+
+Continent code of the source IP of the request (for example, 'NA').
+
+## SourceIPCountryCode
+
+Type: string
+
+Country code of the source IP of the request (for example, 'US').
 
 ## SourceInternalIP
 
@@ -229,3 +343,15 @@ Contents of the user agent header in the HTTP request.
 Type: string
 
 User identity where the HTTP request originated from.
+
+## VirtualNetworkID
+
+Type: string
+
+The identifier of the virtual network the device was connected to, if any.
+
+## VirtualNetworkName
+
+Type: string
+
+The name of the virtual network the device was connected to, if any.

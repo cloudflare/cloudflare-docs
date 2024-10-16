@@ -13,7 +13,7 @@ Durable Objects alarms allow you to schedule the Durable Object to be woken up a
 
 Notably:
 
-- Each Durable Object instance is able to schedule a single alarm at a time by calling `setAlarm()`.
+- Each Durable Object is able to schedule a single alarm at a time by calling `setAlarm()`.
 - Alarms have guaranteed at-least-once execution and are retried automatically when the `alarm()` handler throws.
 - Retries are performed using exponential backoff starting at a 2 second delay from the first failure with up to 6 retries allowed.
 

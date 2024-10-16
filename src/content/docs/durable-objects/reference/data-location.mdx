@@ -7,7 +7,7 @@ sidebar:
 
 ## Restrict Durable Objects to a jurisdiction
 
-Jurisdictions are used to create Durable Object instances that only run and store data within a region to comply with local regulations such as the [GDPR](https://gdpr-info.eu/) or [FedRAMP](https://blog.cloudflare.com/cloudflare-achieves-fedramp-authorization/).
+Jurisdictions are used to create Durable Objects that only run and store data within a region to comply with local regulations such as the [GDPR](https://gdpr-info.eu/) or [FedRAMP](https://blog.cloudflare.com/cloudflare-achieves-fedramp-authorization/).
 
 Workers may still access Durable Objects constrained to a jurisdiction from anywhere in the world. The jurisdiction constraint only controls where the Durable Object itself runs and persists data. Consider using [Regional Services](/data-localization/regional-services/) to control the regions from which Cloudflare responds to requests.
 
@@ -17,7 +17,7 @@ A [`DurableObjectId`](/durable-objects/api/id) will be logged outside of the spe
 
 :::
 
-Durable Object instances can be restricted to a specific jurisdiction either by creating a [`DurableObjectNamespace`](/durable-objects/api/namespace/) restricted to a jurisdiction, or by creating an individual [`DurableObjectId`](/durable-objects/api/id) restricted to a jurisdiction:
+Durable Objects can be restricted to a specific jurisdiction either by creating a [`DurableObjectNamespace`](/durable-objects/api/namespace/) restricted to a jurisdiction, or by creating an individual [`DurableObjectId`](/durable-objects/api/id) restricted to a jurisdiction:
 
 ```js
 const euSubnamespace = env.MY_DURABLE_OBJECT.jurisdiction("eu");

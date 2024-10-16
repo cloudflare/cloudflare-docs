@@ -149,7 +149,7 @@ The `getMiniflareFetchMock()` function has been replaced with the new `fetchMock
 
 ## Use Durable Object helpers
 
-The `getMiniflareDurableObjectStorage()`, `getMiniflareDurableObjectState()`, `getMiniflareDurableObjectInstance()`, and `runWithMiniflareDurableObjectGates()` functions have all been replaced with a single `runInDurableObject()` function from the `cloudflare:test` module. The `runInDurableObject()` function accepts a `DurableObjectStub` with a callback accepting the Durable Object instance and corresponding `DurableObjectState` as arguments. Consolidating these functions into a single function simplifies the API surface, and ensures instances are accessed with the correct request context and [gating behavior](https://blog.cloudflare.com/durable-objects-easy-fast-correct-choose-three/). Refer to the [Test APIs page](/workers/testing/vitest-integration/test-apis/) for more details.
+The `getMiniflareDurableObjectStorage()`, `getMiniflareDurableObjectState()`, `getMiniflareDurableObjectInstance()`, and `runWithMiniflareDurableObjectGates()` functions have all been replaced with a single `runInDurableObject()` function from the `cloudflare:test` module. The `runInDurableObject()` function accepts a `DurableObjectStub` with a callback accepting the Durable Object and corresponding `DurableObjectState` as arguments. Consolidating these functions into a single function simplifies the API surface, and ensures instances are accessed with the correct request context and [gating behavior](https://blog.cloudflare.com/durable-objects-easy-fast-correct-choose-three/). Refer to the [Test APIs page](/workers/testing/vitest-integration/test-apis/) for more details.
 
 ```diff
 + import { env, runInDurableObject } from "cloudflare:test";
