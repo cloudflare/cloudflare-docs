@@ -26,7 +26,7 @@ Durable Objects are only available on the [Workers Paid plan](/workers/platform/
 
 [^2]: Durable Objects both bills and measures storage based on a gigabyte <br/> (1 GB = 1,000,000,000 bytes) and not a gibibyte (GiB). <br/>
 
-[^3]: Will be raised to 10GB for general availability.
+[^3]: Will be raised to 10 GB for general availability.
 
 [^4]: Each incoming HTTP request or WebSocket *message* resets the remaining available CPU time to 30 seconds. This allows the Durable Object to consume up to 30 seconds of compute after each incoming network request, with each new network request resetting the timer. If you consume more than 30 seconds of compute between incoming network requests, there is a heightened chance that the individual Durable Object is evicted and reset.
 
