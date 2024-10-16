@@ -9,7 +9,7 @@ head:
 
 ---
 
-import { Details, Render } from "~/components";
+import { Details, Render, GlossaryTooltip } from "~/components";
 
 <Render file="partial-setup-definition" />
 
@@ -19,11 +19,20 @@ A partial setup is only available to customers on a Business or Enterprise plan.
 
 ***
 
-## Add your domain to Cloudflare
+## Before you begin
 
 1. Create a Cloudflare account and add your domain.
-2. For your **Plan**, choose **Business** or **Enterprise**.
-3. Continue through the onboarding steps, ignoring the instructions to change your nameservers.
+2. Choose **Business** or **Enterprise** as your plan.
+3. If you are onboarding a new domain to Cloudflare, ignore the instructions to change your nameservers.
+
+### (Optional) Plan for SSL/TLS certificates
+
+If you are only using [Universal SSL](/ssl/edge-certificates/universal-ssl/) prior to converting your zone, a certificate will be provisioned for your subdomains only after each of the respective DNS records are [proxied](/dns/manage-dns-records/reference/proxied-dns-records/). Refer to [Enable universal SSL](/ssl/edge-certificates/universal-ssl/enable-universal-ssl/#partial-dns-setup) for details.
+
+If your domain is sensitive to downtime, instead of using Universal SSL, consider using an [advanced certificate](/ssl/edge-certificates/advanced-certificate-manager/) with [delegated DCV](/ssl/edge-certificates/changing-dcv-method/methods/delegated-dcv//#setup).
+
+## Add your domain to Cloudflare
+
 4. On the **Overview** page, select **Convert to CNAME DNS Setup**.
 5. Select **Convert** to confirm.
 6. Save the information from the **Verification TXT Record**. If you lose the information, you can also access it by going to **DNS** > **Records** > **Verification TXT Record**.
@@ -47,12 +56,6 @@ After creating the record, you can use this [Dig Web Interface link](https://dig
 :::
 
 That record must remain in place for as long as your domain is active on the partial setup on Cloudflare.
-
-## Optional - Provision an SSL certificate
-
-To provision a Universal SSL certificate through Cloudflare, follow [these instructions](/ssl/edge-certificates/universal-ssl/enable-universal-ssl/#partial-dns-setup).
-
-If your domain is already live with a partial (CNAME) setup — with Cloudflare or another DNS provider — you cannot use a TXT record for [Domain Control Validation](/ssl/edge-certificates/changing-dcv-method/methods/txt/). That domain's TXT record needs to be reserved for forwarding traffic to Cloudflare.
 
 ## Add DNS records
 
