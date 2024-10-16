@@ -16,10 +16,10 @@ To use Cloudflare AI Gateway inside of the AI SDK, you can configure a custom "G
 If you're using the `openai` provider in AI SDK, you can create a customized setup with `createOpenAI`, passing your OpenAI-compatible AI Gateway URL:
 
 ```typescript
-import { createOpenAI } from '@ai-sdk/openai';
+import { createOpenAI } from "@ai-sdk/openai";
 
 const openai = createOpenAI({
-  baseURL: `https://gateway.ai.cloudflare.com/v1/{account_id}/{gateway_id}/openai`
+	baseURL: `https://gateway.ai.cloudflare.com/v1/{account_id}/{gateway_id}/openai`,
 });
 ```
 
@@ -28,10 +28,10 @@ const openai = createOpenAI({
 If you're using the `anthropic` provider in AI SDK, you can create a customized setup with `createAnthropic`, passing your Anthropic-compatible AI Gateway URL:
 
 ```typescript
-import { createAnthropic } from '@ai-sdk/anthropic';
+import { createAnthropic } from "@ai-sdk/anthropic";
 
 const anthropic = createAnthropic({
-  baseURL: `https://gateway.ai.cloudflare.com/v1/{account_id}/{gateway_id}/anthropic`
+	baseURL: `https://gateway.ai.cloudflare.com/v1/{account_id}/{gateway_id}/anthropic`,
 });
 ```
 
