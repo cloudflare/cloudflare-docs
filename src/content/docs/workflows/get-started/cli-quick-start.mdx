@@ -23,11 +23,11 @@ You can build Workflows to post-process file uploads to [R2 object storage](/r2/
 
 ## Prerequisites
 
-:::note
+:::caution
 
 This guide is for users who are already familiar with Cloudflare Workers and [durable execution](/workflows/reference/how-workflows-works/) programming models.
 
-If you're new to either, we recommend the [introduction to Workflows](/workflows/get-started/guide/) guide, which steps through how a Workflow is defined, how to persist state, deploy and manage Workflows.
+If you're new to either, we recommend the [introduction to Workflows](/workflows/get-started/guide/) guide, which steps through how a Workflow is defined, how to persist state, and how to deploy and run your first Workflow.
 
 :::
 
@@ -44,7 +44,7 @@ Workflows are defined as part of a Worker script.
 To create a Workflow, use the `create cloudflare` (C3) CLI tool, specifying the Workflows starter template:
 
 ```sh
-npm create cloudflare@latest workflows-tutorial -- --template "cloudflare:workflows-tutorial"
+npm create cloudflare@latest workflows-starter -- --template "cloudflare:workflows-starter"
 ```
 
 This will create a new folder called `workflows-tutorial`, which contains two files:
@@ -56,20 +56,28 @@ Open the `src/index.ts` file in your text editor. This file contains the followi
 
 ```ts title="src/index.ts"
 // Import the Workflow definition
-import { Workflow, WorkflowEvent, WorkflowStep } from "cloudflare:workflows"
+import { WorkflowEntrypoint, WorkflowEvent, WorkflowStep } from "cloudflare:workflows"
 
 // Create your own class that implements a Workflow
-export class MyFirstWorkflow implements Workflow {
+export class MyWorkflow implements WorkflowEntrypoint {
     // Define a run() method
     async run(event: WorkflowEvent, step: WorkflowStep) {
         // Define one or more steps that optionally return state.
-        let state = step.do("my first step", async () => {
-          
-        })
+      	const state = await step.do('my first step', async () => {
+            return {}
+		});
 
-        step.do("my second step", async () => {
+		await step.sleep('wait on something', '1 minute');
 
-        })
+		await step.do(
+			'make a call to write that could maybe, just might, fail',
+			async () => {
+				// Do stuff here, with access to 'state' from the previous step
+				if (Math.random() > 0.5) {
+					throw new Error('API call to $STORAGE_SYSTEM failed');
+				}
+			}
+		);
     }
 }
 ```
@@ -81,7 +89,7 @@ Specifically:
 3. TODO - how state is persisted
 4. TODO - retries and config
 5. TODO - triggering from a fetch handler
- 
+
 ```ts title="src/index.ts"
 
 

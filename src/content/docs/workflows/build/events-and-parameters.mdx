@@ -10,7 +10,7 @@ When a Workflow is triggered, it can receive an optional event. This event can i
 
 Events are a powerful part of a Workflow, as you often want a Workflow to act on data. Because a given Workflow instance executes durably, events are a useful way to provide a Workflow with data that should be immutable (not changing) and/or represents data the Workflow needs to operate on at that point in time.
 
-## Passing parameters
+## Passing parameters to a Workflow
 
 You can pass parameters to a Workflow in two ways:
 
@@ -55,7 +55,7 @@ npx wrangler@latest workflows trigger workflows-starter '{"some":"data"}'
 🚀 Workflow instance "57c7913b-8e1d-4a78-a0dd-dce5a0b7aa30" has been queued successfully
 ```
 
-## TypeScript and typing events
+## TypeScript and type parameters
 
 By default, the `WorkflowEvent` passed to the `run` method of your Workflow definition has a type that conforms to the following, with `payload` (your data) and `timestamp` properties:
 
