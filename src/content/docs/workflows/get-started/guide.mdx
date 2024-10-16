@@ -42,10 +42,10 @@ To continue:
 To create your first Workflow, use the `create cloudflare` (C3) CLI tool, specifying the Workflows starter template:
 
 ```sh
-npx create cloudflare@latest workflows-tutorial -- --template "cloudflare:workflows-tutorial"
+npx create cloudflare@latest workflows-starter -- --template "cloudflare:workflows-starter"
 ```
 
-This will create a new folder called `workflows-tutorial`.
+This will create a new folder called `workflows-starter`.
 
 Open the `src/index.ts` file in your text editor. This file contains the following code, which is the most basic instance of a Workflow definition:
 
@@ -148,25 +148,24 @@ The term "Durable Execution" is widely used to describe this programming model.
 
 Before you can deploy a Workflow, you need to configure it.
 
-Open the `wrangler.toml` file at the root of your `workflows-tutorial` folder, which contains the following `[[workflows]]` configuration:
+Open the `wrangler.toml` file at the root of your `workflows-starter` folder, which contains the following `[[workflows]]` configuration:
 
 ```toml title="wrangler.toml"
-name = "workflows-tutorial"
+#:schema node_modules/wrangler/config-schema.json
+name = "workflows-starter"
 main = "src/index.ts"
-compatibility_date = "2024-08-20"
+compatibility_date = "2024-10-16"
 
 [[workflows]]
-# The name of the Workflow
-name = "workflows-tutorial"
-# The binding name, which must be a valid JavaScript variable name.  This will
-# be how you call (run) your Workflow from your other Workers handlers or
-# scripts.
+# name of your workflow
+name = "workflows-starter"
+# binding name env.MYWORKFLOW
 binding = "MY_WORKFLOW"
- # script_name is required during for the beta.
- # Must match the "name" of your Worker at the top of wrangler.toml
-script_name = "workflows-tutorial"
-# Must match the class defined in your code that extends the Workflow class
+# this is class that extends the Workflow class in src/index.ts
 class_name = "MyWorkflow"
+# script_name is required during for the beta.
+ # Must match the "name" of your Worker at the top of wrangler.toml
+script_name = "workflows-starter" 
 ```
 
 :::note
@@ -269,7 +268,7 @@ Because Workflows can be long running, it's possible to have running instances t
 To trigger our Workflow, we will use the `wrangler` CLI and pass in an optional `--payload`. The `payload` will be passed to your Workflow's `run` method handler as an `Event`
 
 ```sh
-npx wrangler workflows trigger my-workflow '{"hello":"world"}'
+npx wrangler workflows trigger workflows-starter '{"hello":"world"}'
 ```
 ```sh output
 # Workflow instance "12dc179f-9f77-4a37-b973-709dca4189ba" has been queued successfully
@@ -278,12 +277,12 @@ npx wrangler workflows trigger my-workflow '{"hello":"world"}'
 To inspect the current status of the Workflow instance we just triggered, we can either reference it by ID or by using the keyword `latest`:
 
 ```sh
-npx wrangler@workflows workflows instances describe my-workflow latest
+npx wrangler@workflows workflows instances describe workflows-starter latest
 # Or by ID:
-# npx wrangler@workflows workflows instances describe my-workflow 12dc179f-9f77-4a37-b973-709dca4189ba
+# npx wrangler@workflows workflows instances describe workflows-starter 12dc179f-9f77-4a37-b973-709dca4189ba
 ```
 ```sh output
-Workflow Name:         my-workflow
+Workflow Name:         workflows-starter
 Instance Id:           f72c1648-dfa3-45ea-be66-b43d11d216f8
 Version Id:            cedc33a0-11fa-4c26-8a8e-7d28d381a291
 Status:                ✅ Completed
@@ -363,7 +362,7 @@ In the previous step, we also bound a Workers script to our Workflow. You can tr
 
 ```sh
 # This must match the URL provided in step 6
-curl -s https://workflows-tutorial.YOUR_WORKERS_SUBDOMAIN.workers.dev/
+curl -s https://workflows-starter.YOUR_WORKERS_SUBDOMAIN.workers.dev/
 ```
 ```sh output
 {"id":"16ac31e5-db9d-48ae-a58f-95b95422d0fa","details":{"status":"queued","error":null,"output":null}}
