@@ -1,0 +1,59 @@
+---
+title: Workers API
+pcx_content_type: concept
+sidebar:
+  order: 2
+
+---
+
+TODO
+
+
+## Interacting with Workflows
+
+* Running a Workflow with the `run()` method
+* `StepConfig`
+* `NonRetriableError`
+* TODO on TypeScript type params
+
+## Workflow
+
+* <code>run(events: WorkflowEvent&lt;T&gt;[], step: WorkflowStep): Promise&lt;T&gt;</code>
+
+TODO
+
+```ts
+export class MyWorkflow extends Workflow<Env, Params> {
+	async run(events: WorkflowEvent[], step: WorkflowStep) {
+    // TODO
+  }
+}
+```
+
+
+## WorkflowStep
+
+### step
+
+TODO - into to steps
+
+* <code>step.do(name: string, callback: (): RpcSerializable, config?: StepConfig): Promise&lt;T&gt;</code>
+
+  * TODO - describe each param
+  * TODO - 
+
+TODO - show an example
+TODO - show an example of dynamically creating a step
+
+* <code>step.sleep(name: string, duration: WorkflowDuration): Promise&lt;void&gt;</code>
+
+  * TODO - 
+
+TODO - show an example
+
+
+## StepConfig
+
+TODO
+
+## NonRetriableError

@@ -1,0 +1,124 @@
+---
+title: CLI quick start
+pcx_content_type: get-started
+updated: 2038-01-19
+sidebar:
+  order: 3
+
+---
+
+import { Render, PackageManagers } from "~/components"
+
+:::note
+
+Workflows is in **public beta**, and any developer with a [free or paid Workers plan](/workers/platform/pricing/#workers) can start using Workflows immediately.
+
+To learn more about Workflows, read [the beta announcement blog](https://blog.cloudflare.com/THE-BLOG-SLUG-WILL-GO-HERE) and the [How Workflows Works](/workflows/build/how-workflows-works/) developer documentation.
+
+:::
+
+Workflows allow you to build durable, multi-step applications using the Workers platform. A Workflow can automatically retry, persist state, run for hours or days, and coordinate between third-party APIs.
+
+You can build Workflows to post-process file uploads to [R2 object storage](/r2/), automate generation of [Workers AI](/workers-ai/) embeddings into a [Vectorize](/vectorize/) vector database, or to trigger [user lifecycle emails](TODO) using your favorite email API.
+
+## Prerequisites
+
+:::note
+
+This guide is for users who are already familiar with Cloudflare Workers and [durable execution](/workflows/how-workflows-works/) programming models.
+
+If you're new to either, we recommend the [introduction to Workflows](/workflows/get-started/guide/) guide, which steps through how a Workflow is defined, how to persist state, deploy and manage Workflows.
+
+:::
+
+Before you continue, ensure you:
+
+1. Sign up for a [Cloudflare account](https://dash.cloudflare.com/sign-up/workers-and-pages) if you have not already.
+2. Install [`npm`](https://docs.npmjs.com/getting-started).
+3. Install [`Node.js`](https://nodejs.org/en/). Use a Node version manager like [Volta](https://volta.sh/) or [nvm](https://github.com/nvm-sh/nvm) to avoid permission issues and change Node.js versions. [Wrangler](/workers/wrangler/install-and-update/) requires a Node version of `16.17.0` or later.
+
+## 1. Create a Workflow
+
+Workflows are defined as part of a Worker script.
+
+To create a Workflow, use the `create cloudflare` (C3) CLI tool, specifying the Workflows starter template:
+
+```sh
+npm create cloudflare@latest workflows-tutorial -- --template "cloudflare:workflows-tutorial"
+```
+
+This will create a new folder called `workflows-tutorial`, which contains two files:
+
+* `src/index.ts` - this is where your Worker script, including your Workflows definition, is defined.
+* `wrangler.toml` - the configuration for your Workers project and your Workflow.
+
+Open the `src/index.ts` file in your text editor. This file contains the following code, which is the most basic instance of a Workflow definition:
+
+```ts title="src/index.ts"
+// Import the Workflow definition
+import { Workflow, WorkflowEvent, WorkflowStep } from "cloudflare:workflows"
+
+// Create your own class that implements a Workflow
+export class MyFirstWorkflow implements Workflow {
+    // Define a run() method
+    async run(event: WorkflowEvent, step: WorkflowStep) {
+        // Define one or more steps that optionally return state.
+        let state = step.do("my first step", async () => {
+          
+        })
+
+        step.do("my second step", async () => {
+
+        })
+    }
+}
+```
+
+Specifically:
+
+1. TODO - describe the Workflow class
+2. TODO - how params are injected
+3. TODO - how state is persisted
+4. TODO - retries and config
+5. TODO - triggering from a fetch handler
+ 
+```ts title="src/index.ts"
+
+
+```
+
+## 2. Deploy a Workflow
+
+Workflows are deployed via [`wrangler](/workers/wrangler/install-and-update/), which is installed when you first ran `npm create cloudflare`, above. Workflows are Workers scripts, and deployed the same way.
+
+```sh
+npx wrangler@latest deploy
+```
+```sh output
+TODO
+```
+
+## 3. Running a Workflow
+
+TODO - basic trigger steps
+```sh
+npx wrangler@latest workflows trigger workflows-tutorial --params={"hello":"world"}
+```
+
+TODO - trigger from a Worker
+
+## 4. Managing Workflows
+
+TODO - managing via the CLI
+
+* Listing
+* Showing running instances
+* Inspecting an instances state
+
+## Next steps
+
+* TODO
+* ALSO TODO
+* ALSO ALSO TODO
+
+If you have any feature requests or notice any bugs, share your feedback directly with the Cloudflare team by joining the [Cloudflare Developers community on Discord](https://discord.cloudflare.com).

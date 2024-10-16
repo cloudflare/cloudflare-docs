@@ -1,0 +1,86 @@
+---
+title: Trigger Workflows
+pcx_content_type: concept
+sidebar:
+  order: 3
+
+---
+
+TODO - intro
+
+## Workers API (Bindings)
+
+You can interact with Workflows programmatically from any Worker script by creating a binding to a Workflow. A Worker can bind to multiple Workflows, including Workflows defined in other Workers projects (scripts) within your account.
+
+You can interact with a Workflow:
+
+* Directly over HTTP via the [`fetch`](/workers/runtime-apis/handlers/fetch/) handler
+* From a [Queue consumer](/queues/configuration/javascript-apis/#consumer) inside a `queue` handler
+* From a [Cron Trigger](/workers/configuration/cron-triggers/) inside a `scheduled` handler
+* Within a [Durable Object](/durable-objects/).
+
+:::note
+
+New to Workflows? Start with the [Workflows tutorial](/workflows/get-started/guide/) to deploy your first Workflow and familiarize yourself with Workflows concepts.
+
+:::
+
+To bind to a Workflow from your Workers code, you need to define a [binding](/workers/wrangler/configuration/) to a specific Workflow. For example, to bind to the Workflow defined in the [get started guide](/workflows/get-started/guide/), you would configure a `wrangler.toml` with the below:
+
+```toml title="wrangler.toml"
+name = "workflows-tutorial"
+main = "src/index.ts"
+compatibility_date = "2024-10-15"
+
+[[workflows]]
+# The name of the Workflow
+name = "workflows-tutorial"
+# The binding name, which must be a valid JavaScript variable name.  This will
+# be how you call (run) your Workflow from your other Workers handlers or
+# scripts.
+binding = "MY_WORKFLOW"
+ # script_name is required during for the beta.
+ # Must match the "name" of your Worker at the top of wrangler.toml
+script_name = "workflows-tutorial"
+# Must match the class defined in your code that extends the Workflow class
+class_name = "MyWorkflow"
+```
+
+The `binding = "MY_WORKFLOW"` line defines the JavaScript variable that our Workflow methods are accessible on, including `create` (which triggers a new instance) or `get` (which returns the status of an existing instance).
+
+```ts title="src/index.ts"
+interface Env {
+	MY_WORKFLOW: Workflow;
+}
+
+export default {
+	async fetch(req: Request, env: Env) {
+        // 
+        const instanceId = new URL(req.url).searchParams.get("instanceId")
+
+        // If an ?instanceId=<id> query parameter is provided, fetch the status
+        // of an existing Workflow by its ID.
+        if (instanceId) {
+            let instance = await env.MY_WORKFLOW.get(id);
+			return Response.json({
+				status: await instance.status(),
+			});
+        }
+
+        // Else, create a new instance of our Workflow, passing in any (optional) params
+        // and return the ID.
+		const newId = await crypto.randomUUID();
+		let instance = await env.MY_WORKFLOW.create(newId, {});
+		return Response.json({
+			id: instance.id,
+			details: await instance.status(),
+		});
+
+		return Response.json({ result });
+	},
+};
+```
+
+## REST API (HTTP)
+
+TODO

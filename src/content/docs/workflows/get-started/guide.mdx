@@ -1,0 +1,384 @@
+---
+title: Guide
+pcx_content_type: get-started
+updated: 2038-01-19
+sidebar:
+  order: 1
+
+---
+
+import { Render, PackageManagers } from "~/components"
+
+:::note
+
+Workflows is in **public beta**, and any developer with a [free or paid Workers plan](/workers/platform/pricing/#workers) can start using Workflows immediately.
+
+To learn more about Workflows, read [the beta announcement blog](https://blog.cloudflare.com/THE-BLOG-SLUG-WILL-GO-HERE) and the [How Workflows Works](/workflows/build/how-workflows-works/) developer documentation.
+
+:::
+
+Workflows allow you to build durable, multi-step applications using the Workers platform. A Workflow can automatically retry, persist state, run for hours or days, and coordinate between third-party APIs.
+
+You can build Workflows to post-process file uploads to [R2 object storage](/r2/), automate generation of [Workers AI](/workers-ai/) embeddings into a [Vectorize](/vectorize/) vector database, or to trigger [user lifecycle emails](TODO) using your favorite email API.
+
+This guide will instruct you through:
+
+* Defining your first Workflow and publishing it
+* Deploying the Workflow to your Cloudflare account
+* Running (triggering) your Workflow and observing its output
+
+At the end of this guide, you should be able to author, deploy and debug your own Workflows applications.
+
+## Prerequisites
+
+To continue:
+
+1. Sign up for a [Cloudflare account](https://dash.cloudflare.com/sign-up/workers-and-pages) if you have not already.
+2. Install [`npm`](https://docs.npmjs.com/getting-started).
+3. Install [`Node.js`](https://nodejs.org/en/). Use a Node version manager like [Volta](https://volta.sh/) or [nvm](https://github.com/nvm-sh/nvm) to avoid permission issues and change Node.js versions. [Wrangler](/workers/wrangler/install-and-update/) requires a Node version of `16.17.0` or later.
+
+## 1. Define your Workflow
+
+To create your first Workflow, use the `create cloudflare` (C3) CLI tool, specifying the Workflows starter template:
+
+```sh
+npx create cloudflare@latest workflows-tutorial -- --template "cloudflare:workflows-tutorial"
+```
+
+This will create a new folder called `workflows-tutorial`.
+
+Open the `src/index.ts` file in your text editor. This file contains the following code, which is the most basic instance of a Workflow definition:
+
+```ts title="src/index.ts"
+// Import the Workflow definition
+import { WorkflowEntrypoint, WorkflowEvent, WorkflowStep } from "cloudflare:workflows"
+
+// Create your own class that implements a Workflow
+export class MyWorkflow implements WorkflowEntrypoint {
+    // Define a run() method
+    async run(event: WorkflowEvent, step: WorkflowStep) {
+        // Define one or more steps that optionally return state.
+      	const state = await step.do('my first step', async () => {
+            return {}
+		});
+
+		await step.sleep('wait on something', '1 minute');
+
+		await step.do(
+			'make a call to write that could maybe, just might, fail',
+			async () => {
+				// Do stuff here, with access to 'state' from the previous step
+				if (Math.random() > 0.5) {
+					throw new Error('API call to $STORAGE_SYSTEM failed');
+				}
+			}
+		);
+    }
+}
+```
+
+A Workflow definition:
+
+1. Defines a `run` method that contains the primary logic for your workflow.
+2. Has at least one or more calls to `step.do` that encapsulates the logic of your Workflow.
+3. Allows steps to return (optional) state, allowing a Workflow to continue execution even if subsequent steps fail, without having to re-run all previous steps.
+
+A single Worker application can contain multiple Workflow definitions, as long as each Workflow has a unique class name. This can be useful for code re-use or to define Workflows are related to each other conceptually.
+
+Each Workflow is otherwise entirely independent: a Worker that defines multiple Workflows is no different from a set of Workers that define one Workflow each.
+
+## 2. Create your Workflows steps
+
+Each `step` in a Workflow is an independently retriable function.
+
+A `step` is what makes a Workflow powerful, as you can encapsulate errors and persist state as your Workflow progresses from step to step, avoiding your application from having to start from scratch on failure and ultimately build more reliable applications. 
+
+* A step can execute code (`step.do`) or sleep a Workflow (`step.sleep`)
+* If a step fails (throws an exception), it will be automatically be retried based on your retry logic.
+* Ia step succeeds, any state it returns will be persisted within the Workflow.
+
+At it's most basic, a step looks like this:
+
+```ts title="src/index.ts"
+// Import the Workflow definition
+import { WorkflowEntrypoint, WorkflowEvent, WorkflowStep } from "cloudflare:workflows"
+
+// Create your own class that implements a Workflow
+export class MyWorkflow implements WorkflowEntrypoint {
+    // Define a run() method
+    async run(event: WorkflowEvent, step: WorkflowStep) {
+        // Define one or more steps that optionally return state.
+        let state = step.do("my first step", async () => {
+
+        })
+
+        step.do("my second step", async () => {
+
+        })
+    }
+}
+```
+
+Each call to `step.do` accepts three arguments:
+
+1. (Required) A step name, which identifies the step in logs and telemetry
+2. (Required) A callback function that contains the code to run for your step, and any state you want the Workflow to persist
+3. (Optional) A `StepConfig` that defines the retry configuration (max retries, delay, and backoff algorithm) for the step.
+
+When trying to decide whether to break code up into more than one step, a good rule of thumb is to ask "do I want _all_ of this code to run again if just one part of it fails?". In many cases, you do _not_ want to repeatedly call an API if the following data processing stage fails, or if you get an error when attempting to send a completion or welcome email.
+
+For example, each of the below tasks is ideally encapsulated in its own step, so that any failure — such as a file not existing, a third-party API being down or rate limited — does not cause your entire program to fail.
+
+* Reading or writing files from R2
+* Running an AI task using [Workers AI](/workers-ai/)
+* Querying a D1 database or a database via [Hyperdrive](/hyperdrive/)
+* Calling a third-party API
+
+If a subsequent step fails, your Workflow can retry from that step, using any state returned from a previous step. This can also help you avoid unnecessarily querying a database or calling an paid API repeatedly for data you've already fetched.
+
+:::note
+
+The term "Durable Execution" is widely used to describe this programming model.
+
+"Durable" describes the ability of the program (application) to implicitly persist state without you having to write to an external store or serialize program state manual
+
+:::
+
+## 3. Configure your Workflow
+
+Before you can deploy a Workflow, you need to configure it.
+
+Open the `wrangler.toml` file at the root of your `workflows-tutorial` folder, which contains the following `[[workflows]]` configuration:
+
+```toml title="wrangler.toml"
+name = "workflows-tutorial"
+main = "src/index.ts"
+compatibility_date = "2024-08-20"
+
+[[workflows]]
+# The name of the Workflow
+name = "workflows-tutorial"
+# The binding name, which must be a valid JavaScript variable name.  This will
+# be how you call (run) your Workflow from your other Workers handlers or
+# scripts.
+binding = "MY_WORKFLOW"
+ # script_name is required during for the beta.
+ # Must match the "name" of your Worker at the top of wrangler.toml
+script_name = "workflows-tutorial"
+# Must match the class defined in your code that extends the Workflow class
+class_name = "MyWorkflow"
+```
+
+:::note
+
+If you have changed the name of the Workflow in your wrangler commands, the JavaScript class name, or the name of the project you created, ensure that you update the values above to match.
+
+:::
+
+This configuration tells the Workers platform which JavaScript class represents your Workflow, and sets a `binding` name that allows you to run the Workflow from other handlers or to call into Workflows from other Workers scripts.
+
+## 4. Bind to your Workflow
+
+We have a very basic Workflow definition, but now need to provide a way to call it from within our code. A Workflow can be triggered by:
+
+1. External HTTP requests via a `fetch()` handler
+2. Messages from a [Queue](/queues/)
+3. A schedule via [Cron Trigger](/workers/configuration/cron-triggers/)
+4. Via the [Workflows REST API](TODO) or [wrangler CLI](/workers/wrangler/commands/#workflows)
+
+Return to the `src/index.ts` file we created in the previous step and add a `fetch` handler that _binds_ to our Workflow. This binding allows us to create new Workflow instances, fetch the status of an existing Workflow, pause and/or terminate a Workflow.
+
+```ts title="src/index.ts"
+// This can be in the same file as our Workflow definition
+
+export default {
+	async fetch(req: Request, env: Env) {
+        // 
+        const instanceId = new URL(req.url).searchParams.get("instanceId")
+
+        // If an ?instanceId=<id> query parameter is provided, fetch the status
+        // of an existing Workflow by its ID.
+        if (instanceId) {
+            let instance = await env.MYWORKFLOW.get(id);
+			return Response.json({
+				status: await instance.status(),
+			});
+        }
+
+        // Else, create a new instance of our Workflow, passing in any (optional) params
+        // and return the ID.
+		const newId = await crypto.randomUUID();
+		let instance = await env.MYWORKFLOW.create(newId, {});
+		return Response.json({
+			id: instance.id,
+			details: await instance.status(),
+		});
+
+		return Response.json({ result });
+	},
+};
+```
+
+The code here exposes a HTTP endpoint that generates a random ID and runs the Workflow, returning the ID and the Workflow status. It also accepts an optional `instanceId` query parameter that retrieves the status of a Workflow instance by its ID.
+
+:::note
+
+In a production application, you might choose to put authentication in front of your endpoint so that only authorized users can run a Workflow. Alternatively, you could pass messages to a Workflow [from a Queue consumer](/queues/reference/how-queues-works/#consumers) in order to allow for long-running tasks.
+
+:::
+
+## 6. Deploy your Workflow
+
+Deploying a Workflow is identical to deploying a Worker.
+
+```sh
+npx wrangler deploy
+```
+```sh output
+TODO
+```
+
+A Worker with a valid Workflow definition will be automatically registered by Workflows. You can list your current Workflows using wrangler:
+
+```sh
+npx wrangler workflows list
+```
+```sh output
+TODO
+```
+
+TODO - describe the output, Workflows, instances, etc.
+
+
+## 6. Run and observe your Workflow
+
+With your Workflow deployed, you can now run it.
+
+1. A Workflow can run in parallel: each unique invocation of a Workflow is an _instance_ of that Workflow.
+2. An instance will run to completion (success or failure)
+3. Deploying newer versions of a Workflow will cause all instances after that point to run the newest Workflow code.
+
+:::note
+
+Because Workflows can be long running, it's possible to have running instances that represent different versions of your Workflow code over time.
+
+:::
+
+
+
+To trigger our Workflow, we will use the `wrangler` CLI and pass in an optional `--payload`. The `payload` will be passed to your Workflow's `run` method handler as an `Event`
+
+```sh
+npx wrangler workflows trigger my-workflow '{"hello":"world"}'
+```
+```sh output
+# Workflow instance "12dc179f-9f77-4a37-b973-709dca4189ba" has been queued successfully
+```
+
+To inspect the current status of the Workflow instance we just triggered, we can either reference it by ID or by using the keyword `latest`:
+
+```sh
+npx wrangler@workflows workflows instances describe my-workflow latest
+# Or by ID:
+# npx wrangler@workflows workflows instances describe my-workflow 12dc179f-9f77-4a37-b973-709dca4189ba
+```
+```sh output
+Workflow Name:         my-workflow
+Instance Id:           f72c1648-dfa3-45ea-be66-b43d11d216f8
+Version Id:            cedc33a0-11fa-4c26-8a8e-7d28d381a291
+Status:                ✅ Completed
+Trigger:               🌎 API
+Queued:                10/15/2024, 1:55:31 PM
+Success:               ✅ Yes
+Start:                 10/15/2024, 1:55:31 PM
+End:                   10/15/2024, 1:56:32 PM
+Duration:              1 minute
+Last Successful Step:  make a call to write that could maybe, just might, fail-1
+Steps:
+
+  Name:      my first step-1
+  Type:      🎯 Step
+  Start:     10/15/2024, 1:55:31 PM
+  End:       10/15/2024, 1:55:31 PM
+  Duration:  0 seconds
+  Success:   ✅ Yes
+  Output:    "{\"inputParams\":[{\"timestamp\":\"2024-10-15T13:55:29.363Z\",\"payload\":{\"hello\":\"world\"}}],\"files\":[\"doc_7392_rev3.pdf\",\"report_x29_final.pdf\",\"memo_2024_05_12.pdf\",\"file_089_update.pdf\",\"proj_alpha_v2.pdf\",\"data_analysis_q2.pdf\",\"notes_meeting_52.pdf\",\"summary_fy24_draft.pdf\",\"plan_2025_outline.pdf\"]}"
+┌────────────────────────┬────────────────────────┬───────────┬────────────┐
+│ Start                  │ End                    │ Duration  │ State      │
+├────────────────────────┼────────────────────────┼───────────┼────────────┤
+│ 10/15/2024, 1:55:31 PM │ 10/15/2024, 1:55:31 PM │ 0 seconds │ ✅ Success │
+└────────────────────────┴────────────────────────┴───────────┴────────────┘
+
+  Name:      some other step-1
+  Type:      🎯 Step
+  Start:     10/15/2024, 1:55:31 PM
+  End:       10/15/2024, 1:55:31 PM
+  Duration:  0 seconds
+  Success:   ✅ Yes
+  Output:    "{\"result\":{\"ipv4_cidrs\":[\"173.245.48.0/20\",\"103.21.244.0/22\",\"103.22.200.0/22\",\"103.31.4.0/22\",\"141.101.64.0/18\",\"108.162.192.0/18\",\"190.93.240.0/20\",\"188.114.96.0/20\",\"197.234.240.0/22\",\"198.41.128.0/17\",\"162.158.0.0/15\",\"104.16.0.0/13\",\"104.24.0.0/14\",\"172.64.0.0/13\",\"131.0.72.0/22\"],\"ipv6_cidrs\":[\"2400:cb00::/32\",\"2606:4700::/32\",\"2803:f800::/32\",\"2405:b500::/32\",\"2405:8100::/32\",\"2a06:98c0::/29\",\"2c0f:f248::/32\"],\"etag\":\"38f79d050aa027e3be3865e495dcc9bc\"},\"success\":true,\"errors\":[],\"messages\":[]}"
+┌────────────────────────┬────────────────────────┬───────────┬────────────┐
+│ Start                  │ End                    │ Duration  │ State      │
+├────────────────────────┼────────────────────────┼───────────┼────────────┤
+│ 10/15/2024, 1:55:31 PM │ 10/15/2024, 1:55:31 PM │ 0 seconds │ ✅ Success │
+└────────────────────────┴────────────────────────┴───────────┴────────────┘
+
+  Name:      wait on something-1
+  Type:      💤 Sleeping
+  Start:     10/15/2024, 1:55:31 PM
+  End:       10/15/2024, 1:56:31 PM
+  Duration:  1 minute
+
+  Name:      make a call to write that could maybe, just might, fail-1
+  Type:      🎯 Step
+  Start:     10/15/2024, 1:56:31 PM
+  End:       10/15/2024, 1:56:32 PM
+  Duration:  1 second
+  Success:   ✅ Yes
+  Output:    null
+┌────────────────────────┬────────────────────────┬───────────┬────────────┬───────────────────────────────────────────┐
+│ Start                  │ End                    │ Duration  │ State      │ Error                                     │
+├────────────────────────┼────────────────────────┼───────────┼────────────┼───────────────────────────────────────────┤
+│ 10/15/2024, 1:56:31 PM │ 10/15/2024, 1:56:31 PM │ 0 seconds │ ❌ Error   │ Error: API call to $STORAGE_SYSTEM failed │
+├────────────────────────┼────────────────────────┼───────────┼────────────┼───────────────────────────────────────────┤
+│ 10/15/2024, 1:56:32 PM │ 10/15/2024, 1:56:32 PM │ 0 seconds │ ✅ Success │                                           │
+└────────────────────────┴────────────────────────┴───────────┴────────────┴───────────────────────────────────────────┘
+```
+
+From the output above, we can inspect: 
+
+* The status (success, failure, running) of each step
+* Any state emitted by the step
+* Any `sleep` state, including when the Workflow will wake up
+* Retries associated with each step.
+* Errors, including exception messages
+
+:::note
+
+You do not have to wait for a Workflow instance to finish executing to inspect its current status. The `wrangler workflows instances describe` sub-command will show the status of an in-progress instance, including any persisted state, if it is sleeping, and any errors or retries. This can be especially useful when debugging a Workflow during development.
+
+:::
+
+
+In the previous step, we also bound a Workers script to our Workflow. You can trigger a Workflow by visiting the (deployed) Workers script in a browser or with any HTTP client.
+
+```sh
+# This must match the URL provided in step 6
+curl -s https://workflows-tutorial.YOUR_WORKERS_SUBDOMAIN.workers.dev/
+```
+```sh output
+{"id":"16ac31e5-db9d-48ae-a58f-95b95422d0fa","details":{"status":"queued","error":null,"output":null}}
+```
+
+## 7. (Optional) Clean up
+
+TODO - delete the Workflow.
+
+---
+
+## Next steps
+
+- learn more
+- observability
+- trigger workflows on a schedule or from a Queue
+
+If you have any feature requests or notice any bugs, share your feedback directly with the Cloudflare team by joining the [Cloudflare Developers community on Discord](https://discord.cloudflare.com).
