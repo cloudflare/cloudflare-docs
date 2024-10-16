@@ -42,7 +42,7 @@ To continue:
 To create your first Workflow, use the `create cloudflare` (C3) CLI tool, specifying the Workflows starter template:
 
 ```sh
-npx create cloudflare@latest workflows-starter -- --template "cloudflare:workflows-starter"
+npm create cloudflare@latest workflows-starter -- --template "cloudflare:workflows-starter"
 ```
 
 This will create a new folder called `workflows-starter`.
@@ -91,7 +91,7 @@ Each Workflow is otherwise entirely independent: a Worker that defines multiple 
 
 Each `step` in a Workflow is an independently retriable function.
 
-A `step` is what makes a Workflow powerful, as you can encapsulate errors and persist state as your Workflow progresses from step to step, avoiding your application from having to start from scratch on failure and ultimately build more reliable applications. 
+A `step` is what makes a Workflow powerful, as you can encapsulate errors and persist state as your Workflow progresses from step to step, avoiding your application from having to start from scratch on failure and ultimately build more reliable applications.
 
 * A step can execute code (`step.do`) or sleep a Workflow (`step.sleep`)
 * If a step fails (throws an exception), it will be automatically be retried based on your retry logic.
@@ -165,7 +165,7 @@ binding = "MY_WORKFLOW"
 class_name = "MyWorkflow"
 # script_name is required during for the beta.
  # Must match the "name" of your Worker at the top of wrangler.toml
-script_name = "workflows-starter" 
+script_name = "workflows-starter"
 ```
 
 :::note
@@ -192,7 +192,7 @@ Return to the `src/index.ts` file we created in the previous step and add a `fet
 
 export default {
 	async fetch(req: Request, env: Env) {
-        // 
+        //
         const instanceId = new URL(req.url).searchParams.get("instanceId")
 
         // If an ?instanceId=<id> query parameter is provided, fetch the status
@@ -343,7 +343,7 @@ Steps:
 └────────────────────────┴────────────────────────┴───────────┴────────────┴───────────────────────────────────────────┘
 ```
 
-From the output above, we can inspect: 
+From the output above, we can inspect:
 
 * The status (success, failure, running) of each step
 * Any state emitted by the step
