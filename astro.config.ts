@@ -4,7 +4,6 @@ import tailwind from "@astrojs/tailwind";
 import starlightDocSearch from "@astrojs/starlight-docsearch";
 import starlightImageZoom from "starlight-image-zoom";
 import liveCode from "astro-live-code";
-import rehypeSlug from "rehype-slug";
 import rehypeMermaid from "rehype-mermaid";
 import rehypeAutolinkHeadings, {
 	type Options as rehypeAutolinkHeadingsOptions,
@@ -17,7 +16,7 @@ import icon from "astro-icon";
 import sitemap from "@astrojs/sitemap";
 import react from "@astrojs/react";
 import rehypeTitleFigure from "rehype-title-figure";
-import { visit } from "unist-util-visit";
+import rehypeHeadingSlugs from "./plugins/rehype/heading-slugs";
 
 const runLinkCheck = process.env.RUN_LINK_CHECK || false;
 
@@ -71,30 +70,6 @@ const autolinkConfig: rehypeAutolinkHeadingsOptions = {
 	content: () => [AnchorLinkIcon],
 };
 
-// # foo {/*bar*/} = <a id="bar">foo</a>
-function rehypeCustomHeadingId() {
-	return function (tree: any) {
-		visit(tree, "element", function (element: any) {
-			if (/^h[1-6]$/.test(element.tagName)) {
-				const last = element.children.at(-1);
-
-				if (
-					last.type === "mdxTextExpression" &&
-					last.value.startsWith("/*") &&
-					last.value.endsWith("*/")
-				) {
-					const id = last.value.slice(2, -2).trim();
-					element.properties.id = id;
-
-					const text = element.children.at(-2);
-					text.value = text.value.trimEnd();
-					element.children.with(-2, text);
-				}
-			}
-		});
-	};
-}
-
 // https://astro.build/config
 export default defineConfig({
 	site: "https://developers.cloudflare.com",
@@ -120,8 +95,7 @@ export default defineConfig({
 					rel: ["noopener"],
 				},
 			],
-			rehypeCustomHeadingId,
-			rehypeSlug,
+			rehypeHeadingSlugs,
 			[rehypeAutolinkHeadings, autolinkConfig],
 			// @ts-expect-error TODO: fix types
 			rehypeTitleFigure,
