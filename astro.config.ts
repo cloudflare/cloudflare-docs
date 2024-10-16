@@ -4,7 +4,6 @@ import tailwind from "@astrojs/tailwind";
 import starlightDocSearch from "@astrojs/starlight-docsearch";
 import starlightImageZoom from "starlight-image-zoom";
 import liveCode from "astro-live-code";
-import rehypeSlug from "rehype-slug";
 import rehypeMermaid from "rehype-mermaid";
 import rehypeAutolinkHeadings, {
 	type Options as rehypeAutolinkHeadingsOptions,
@@ -17,6 +16,7 @@ import icon from "astro-icon";
 import sitemap from "@astrojs/sitemap";
 import react from "@astrojs/react";
 import rehypeTitleFigure from "rehype-title-figure";
+import rehypeHeadingSlugs from "./plugins/rehype/heading-slugs";
 
 const runLinkCheck = process.env.RUN_LINK_CHECK || false;
 
@@ -95,7 +95,7 @@ export default defineConfig({
 					rel: ["noopener"],
 				},
 			],
-			rehypeSlug,
+			rehypeHeadingSlugs,
 			[rehypeAutolinkHeadings, autolinkConfig],
 			// @ts-expect-error TODO: fix types
 			rehypeTitleFigure,
