@@ -9,7 +9,7 @@ if (footnotes) {
 		const content = note.querySelector("p") as HTMLParagraphElement;
 
 		const fnrefs = document.querySelectorAll<HTMLAnchorElement>(
-			`#${note.id.replace("fn", "fnref")}`,
+			`a[id^='${note.id.replace("fn", "fnref")}']`,
 		);
 
 		for (const fnref of fnrefs) {
