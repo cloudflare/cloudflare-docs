@@ -21,7 +21,8 @@ jobs:
           path: |
             node_modules/.astro
           key: static
-      - run: npx astro build
+      - run: npm run build
+        name: Build
         env:
           NODE_OPTIONS: --max-old-space-size=4096
       - run: npx wrangler pages deploy --project-name cloudflare-docs dist
