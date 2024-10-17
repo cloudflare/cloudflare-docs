@@ -44,7 +44,7 @@ Workflows are defined as part of a Worker script.
 To create a Workflow, use the `create cloudflare` (C3) CLI tool, specifying the Workflows starter template:
 
 ```sh
-npm create cloudflare@latest workflows-starter -- --template "cloudflare:workflows-starter"
+npm create cloudflare@latest workflows-starter -- --template "cloudflare/workflows-starter"
 ```
 
 This will create a new folder called `workflows-tutorial`, which contains two files:
@@ -109,11 +109,17 @@ TODO
 ## 3. Running a Workflow
 
 TODO - basic trigger steps
+
+### CLI
+
 ```sh
 npx wrangler@latest workflows trigger workflows-tutorial --params={"hello":"world"}
 ```
 
+### Worker binding
+
 TODO - trigger from a Worker
+
 
 ## 4. Managing Workflows
 
