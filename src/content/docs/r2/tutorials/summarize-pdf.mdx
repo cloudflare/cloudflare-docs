@@ -74,114 +74,134 @@ Next, create a `public` directory and add an `index.html` file. The `index.html`
 <summary>
 Select to view the HTML code
 </summary>
+
 ```html
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PDF Summarizer</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            display: flex;
-            flex-direction: column;
-            min-height: 100vh;
-            margin: 0;
-            background-color: #f0f0f0;
-        }
-        .content {
-            flex: 1;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-        .upload-container {
-            background-color: white;
-            padding: 20px;
-            border-radius: 8px;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-        }
-        .upload-button {
-            background-color: #4CAF50;
-            color: white;
-            padding: 10px 15px;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-            font-size: 16px;
-        }
-        .upload-button:hover {
-            background-color: #45a049;
-        }
-        footer {
-            background-color: #333;
-            color: white;
-            text-align: center;
-            padding: 10px;
-            width: 100%;
-        }
-        footer a {
-            color: #4CAF50;
-            text-decoration: none;
-            margin: 0 10px;
-        }
-        footer a:hover {
-            text-decoration: underline;
-        }
-    </style>
-</head>
-<body>
-    <div class="content">
-        <div class="upload-container">
-            <h2>Upload PDF File</h2>
-            <form id="uploadForm" onsubmit="return handleSubmit(event)">
-                <input type="file" id="pdfFile" name="pdfFile" accept=".pdf" required>
-                <button type="submit" id="uploadButton" class="upload-button">Upload</button>
-            </form>
-        </div>
-    </div>
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>PDF Summarizer</title>
+		<style>
+			body {
+				font-family: Arial, sans-serif;
+				display: flex;
+				flex-direction: column;
+				min-height: 100vh;
+				margin: 0;
+				background-color: #fefefe;
+			}
+			.content {
+				flex: 1;
+				display: flex;
+				justify-content: center;
+				align-items: center;
+			}
+			.upload-container {
+				background-color: #f0f0f0;
+				padding: 20px;
+				border-radius: 8px;
+				box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+			}
+			.upload-button {
+				background-color: #4caf50;
+				color: white;
+				padding: 10px 15px;
+				border: none;
+				border-radius: 4px;
+				cursor: pointer;
+				font-size: 16px;
+			}
+			.upload-button:hover {
+				background-color: #45a049;
+			}
+			footer {
+				background-color: #f0f0f0;
+				color: white;
+				text-align: center;
+				padding: 10px;
+				width: 100%;
+			}
+			footer a {
+				color: #333;
+				text-decoration: none;
+				margin: 0 10px;
+			}
+			footer a:hover {
+				text-decoration: underline;
+			}
+		</style>
+	</head>
+	<body>
+		<div class="content">
+			<div class="upload-container">
+				<h2>Upload PDF File</h2>
+				<form id="uploadForm" onsubmit="return handleSubmit(event)">
+					<input
+						type="file"
+						id="pdfFile"
+						name="pdfFile"
+						accept=".pdf"
+						required
+					/>
+					<button type="submit" id="uploadButton" class="upload-button">
+						Upload
+					</button>
+				</form>
+			</div>
+		</div>
 
-    <footer>
-        <a href="https://github.com/yourusername/your-repo" target="_blank">GitHub Repo</a>
-        <a href="https://example.com/docs" target="_blank">Documentation</a>
-        <a href="https://example.com/api" target="_blank">API Reference</a>
-        <a href="https://example.com/community" target="_blank">Community</a>
-    </footer>
+		<footer>
+			<a
+				href="https://developers.cloudflare.com/r2/buckets/event-notifications/"
+				target="_blank"
+				>R2 Event Notification</a
+			>
+			<a
+				href="https://developers.cloudflare.com/queues/get-started/#3-create-a-queue"
+				target="_blank"
+				>Cloudflare Queues</a
+			>
+			<a href="https://developers.cloudflare.com/workers-ai/" target="_blank"
+				>Workers AI</a
+			>
+			<a
+				href="https://github.com/harshil1712/pdf-summarizer-r2-event-notification"
+				target="_blank"
+				>GitHub Repo</a
+			>
+		</footer>
 
-    <script>
-      handleSubmit = async (event) => {
-        event.preventDefault();
+		<script>
+			handleSubmit = async (event) => {
+				event.preventDefault();
 
-        // Disable the upload button and show a loading message
-        const uploadButton = document.getElementById('uploadButton');
-        uploadButton.disabled = true;
-        uploadButton.textContent = 'Uploading...';
+				// Disable the upload button and show a loading message
+				const uploadButton = document.getElementById("uploadButton");
+				uploadButton.disabled = true;
+				uploadButton.textContent = "Uploading...";
 
-        // get form data
-        const formData = new FormData(event.target);
-        const file = formData.get('pdfFile');
+				// get form data
+				const formData = new FormData(event.target);
+				const file = formData.get("pdfFile");
 
-        if (file) {
-            // call /api/upload endpoint and send the file
-            await fetch('/api/upload', {
-                method: 'POST',
-                body: formData
-            })
+				if (file) {
+					// call /api/upload endpoint and send the file
+					await fetch("/api/upload", {
+						method: "POST",
+						body: formData,
+					});
 
-            event.target.reset();
-
-        } else {
-            console.log('No file selected');
-        }
-        uploadButton.disabled = false;
-            uploadButton.textContent = 'Upload';
-      }
-    </script>
-
-</body>
+					event.target.reset();
+				} else {
+					console.log("No file selected");
+				}
+				uploadButton.disabled = false;
+				uploadButton.textContent = "Upload";
+			};
+		</script>
+	</body>
 </html>
-
 ```
 
 </details>
@@ -190,7 +210,7 @@ To view the front-end of your application, run the following command and navigat
 
 ```sh
 npm run dev
-````
+```
 
 ```output
  ⛅️ wrangler 3.80.2
