@@ -1499,7 +1499,7 @@
 /workers-ai/platform/storage-options/ /workers/platform/storage-options/ 301
 /workers-ai/configuration/workers-ai-sdk/ /workers-ai/configuration/bindings/ 301
 /workers-ai/tutorials/creating-a-recommendation-api/ /developer-spotlight/tutorials/creating-a-recommendation-api/ 301
-/workers/observability/baselime-integration/ /workers/observability/logs/workers-logs/ 301
+/workers/observability/baselime-integration/ /workers/observability/integrations/baselime-integration/ 301
 
 # workers KV
 /kv/platform/environments/ /kv/reference/environments/ 301
