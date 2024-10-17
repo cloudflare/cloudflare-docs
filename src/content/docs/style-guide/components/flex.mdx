@@ -1,0 +1,37 @@
+---
+title: Flex container
+---
+
+The `<Flex>` component is intended for showing multiple images in a responsive layout.
+
+A row layout is used on medium-large viewports (i.e laptops or desktops), and a column on small viewports (i.e mobile devices).
+
+## Import
+
+```mdx
+import { Flex } from "~/components";
+```
+
+## Example
+
+```mdx live
+import { Flex } from "~/components";
+
+{/* Make sure there is a newline between images, or Markdown groups them inside one <p> element. */}
+
+<Flex>
+![Turnstile Overview](~/assets/images/turnstile/turnstile-overview.png)
+
+![Turnstile Overview](~/assets/images/turnstile/turnstile-overview.png)
+</Flex>
+
+<br />
+
+<Flex>
+![Turnstile Overview](~/assets/images/turnstile/turnstile-overview.png)
+
+![Turnstile Overview](~/assets/images/turnstile/turnstile-overview.png)
+
+![Turnstile Overview](~/assets/images/turnstile/turnstile-overview.png)
+</Flex>
+```
