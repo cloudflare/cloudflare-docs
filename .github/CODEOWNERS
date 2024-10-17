@@ -18,13 +18,13 @@
 
 # AI
 
-/src/content/docs/ai-gateway/ @kathayl @G4brym @mchenco @pdwittig @daisyfaithauma @cloudflare/pcx-technical-writing
-/src/content/docs/workers-ai/ @rita3ko @pdwittig @craigsdennis @markdembo @mchenco @daisyfaithauma @cloudflare/pcx-technical-writing
+/src/content/docs/ai-gateway/ @kathayl @G4brym @mchenco @daisyfaithauma @cloudflare/pcx-technical-writing
+/src/content/docs/workers-ai/ @rita3ko @craigsdennis @markdembo @mchenco @daisyfaithauma @cloudflare/pcx-technical-writing
 /src/content/docs/workers-ai/static @mchenco @craigsdennis @cloudflare/pcx-technical-writing
-/src/content/docs/vectorize/ @elithrar @vy-ton @pdwittig @sejoker @cloudflare/pcx-technical-writing
-/src/content/changelogs/workers-ai.yaml @kathayl @G4brym @mchenco @pdwittig @daisyfaithauma @cloudflare/pcx-technical-writing
-/src/content/changelogs/ai-gateway.yaml @kathayl @G4brym @mchenco @pdwittig @daisyfaithauma @cloudflare/pcx-technical-writing
-/src/content/changelogs/vectorize.yaml @elithrar @pdwittig @sejoker @cloudflare/pcx-technical-writing
+/src/content/docs/vectorize/ @elithrar @vy-ton @sejoker @cloudflare/pcx-technical-writing
+/src/content/changelogs/workers-ai.yaml @kathayl @G4brym @mchenco @daisyfaithauma @cloudflare/pcx-technical-writing
+/src/content/changelogs/ai-gateway.yaml @kathayl @G4brym @mchenco @daisyfaithauma @cloudflare/pcx-technical-writing
+/src/content/changelogs/vectorize.yaml @elithrar @sejoker @cloudflare/pcx-technical-writing
 
 # Analytics & Logs
 
