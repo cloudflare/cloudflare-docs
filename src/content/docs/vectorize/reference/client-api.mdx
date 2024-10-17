@@ -83,6 +83,24 @@ For legacy Vectorize (V1) indexes, `topK` is limited to 20, and the `returnMetad
 
 :::
 
+### Query vectors by ID
+
+```ts
+let matches = await env.YOUR_INDEX.queryById("some-vector-id");
+```
+
+Query an index using a vector that is already present in the index.
+
+Query options remain the same as the query operation described above.
+
+```ts
+let matches = await env.YOUR_INDEX.queryById("some-vector-id", {
+	topK: 5,
+	returnValues: true,
+	returnMetadata: "all",
+});
+```
+
 ### Get vectors by ID
 
 ```ts
