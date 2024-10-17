@@ -49,6 +49,11 @@ To connect your devices to Cloudflare:
 Next, configure your SSH server to trust the Cloudflare SSH CA. This allows Access to authenticate using short-lived certificates instead of traditional SSH keys.
 
 ### Generate a Cloudflare SSH CA
+
+<Render file="ssh/ssh-proxy-ca-note" />
+
+To generate a Cloudflare SSH CA and get its public key:
+
 <Render file="ssh/ssh-proxy-ca" />
 
 ### Save the public key
@@ -62,7 +67,7 @@ Next, configure your SSH server to trust the Cloudflare SSH CA. This allows Acce
 
 ## 8. Connect as a user
 
-Users can use any SSH client to connect to the target, as long as they are logged into the WARP client on their device. Users do not need to modify any SSH configs on their device. For example, to SSH from a terminal:
+Users can use any SSH client to connect to the target, as long as they are logged into the WARP client on their device. If the target is located within a particular virtual network, ensure that the WARP client is [connected to that virtual network](/cloudflare-one/connections/connect-networks/private-net/cloudflared/tunnel-virtual-networks/#connect-to-a-virtual-network) before initiating the connection. Users do not need to modify any SSH configs on their device. For example, to SSH from a terminal:
 
 ```sh
 ssh <username>@<target IP>
@@ -119,5 +124,3 @@ To manually retrieve logs:
 2. Select a user who was allowed to access the target.
 3. Select **Download** to download the session's command log.
 4. <Render file="ssh/decrypt-ssh-log" />
-
-Enterprise customers can also export command logs using [Logpush](/cloudflare-one/insights/logs/logpush/).

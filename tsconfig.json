@@ -6,5 +6,5 @@
 			"~/*": ["src/*"]
 		}
 	},
-	"exclude": ["dist", "functions", "./worker"]
+	"exclude": ["dist", "functions", "./worker", "tests"]
 }

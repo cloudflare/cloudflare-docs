@@ -1,7 +1,6 @@
 ---
 import { z } from "astro:schema";
 import { getGlossaryEntry } from "~/util/glossary";
-import "tippy.js/dist/tippy.css";
 import { marked } from "marked";
 
 type Props = z.infer<typeof props>;
@@ -31,6 +30,7 @@ definition = definition.split(/\r?\n/)[0];
 	data-tooltip
 	data-content={marked.parse(definition)}
 	class="border-b-2 border-dashed border-accent-600"
+	tabindex="0"
 	>{
 		link ? (
 			<a href={link}><slot /></a>
@@ -38,24 +38,11 @@ definition = definition.split(/\r?\n/)[0];
 			<slot />
 		)
 	}</span><script>
-	import tippy from "tippy.js";
+	import { addTooltip } from "~/util/tippy";
 
 	const tooltips = document.querySelectorAll<HTMLSpanElement>("[data-tooltip]");
 
 	for (const tooltip of tooltips) {
-		tippy(`#${CSS.escape(tooltip.id)}`, {
-			content: tooltip.dataset.content,
-			allowHTML: true,
-			interactive: true,
-			placement: "auto",
-			arrow: false,
-		});
+		addTooltip(tooltip, tooltip.dataset.content as string);
 	}
-</script><style is:global>
-	.tippy-box {
-		background-color: var(--sl-color-bg-nav);
-		border-color: var(--sl-color-text);
-		border: 0.1em solid;
-		color: var(--sl-color-white);
-	}
-</style>
+</script>

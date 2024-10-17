@@ -165,6 +165,39 @@ If you receive an error when trying to import an existing schema and/or dataset 
 - If you have foreign key relationships between tables, ensure you are importing the tables in the right order. You cannot refer to a table that does not yet exist.
 - If you receive a `"cannot start a transaction within a transaction"` error, make sure you have removed `BEGIN TRANSACTION` and `COMMIT` from your dumped SQL statements.
 
+### Resolve `Statement too long` error
+
+If you encounter a `Statement too long` error when trying to import a large SQL file into D1, it means that one of the SQL statements in your file exceeds the maximum allowed length.
+
+To resolve this issue, convert the single large `INSERT` statement into multiple smaller `INSERT` statements. For example, instead of inserting 1,000 rows in one statement, split it into four groups of 250 rows, as illustrated in the code below.
+
+Before:
+
+```sql
+INSERT INTO users (id, full_name, created_on)
+VALUES
+  ('1', 'Jacquelin Elara', '2022-08-20 05:39:52'),
+  ('2', 'Hubert Simmons', '2022-12-15 21:56:13'),
+  ...
+  ('1000', 'Boris Pewter', '2022-12-24 07:59:54');
+```
+
+After:
+
+```sql
+INSERT INTO users (id, full_name, created_on)
+VALUES
+  ('1', 'Jacquelin Elara', '2022-08-20 05:39:52'),
+  ...
+  ('100', 'Eddy Orelo', '2022-12-15 22:16:15');
+...
+INSERT INTO users (id, full_name, created_on)
+VALUES
+  ('901', 'Roran Eroi', '2022-08-20 05:39:52'),
+  ...
+  ('1000', 'Boris Pewter', '2022-12-15 22:16:15');
+```
+
 ## Next Steps
 
 - Read the SQLite [`CREATE TABLE`](https://www.sqlite.org/lang_createtable.html) documentation.

@@ -7,7 +7,9 @@ import { Details } from "~/components"
 [SQL API](/durable-objects/api/storage-api/#sqlexec) examples below use the following SQL schema:
 
 ```ts
-export class MyDurableObject extends DurableObject{
+import { DurableObject } from "cloudflare:workers";
+
+export class MyDurableObject extends DurableObject {
   sql: SqlStorage
   constructor(ctx: DurableObjectState, env: Env) {
     super(ctx, env);

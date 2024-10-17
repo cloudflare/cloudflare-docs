@@ -16,7 +16,7 @@ Service bindings provide the separation of concerns that microservice or service
 
 - **Service bindings are fast.** When you use Service Bindings, there is zero overhead or added latency. By default, both Workers run on the same thread of the same Cloudflare server. And when you enable [Smart Placement](/workers/configuration/smart-placement/), each Worker runs in the optimal location for overall performance.
 - **Service bindings are not just HTTP.** Worker A can expose methods that can be directly called by Worker B. Communicating between services only requires writing JavaScript methods and classes.
-- **Service bindings dont increase costs.** You can split apart functionality into multiple Workers, without incurring additional costs. Learn more about [pricing for Service Bindings](/workers/platform/pricing/#service-bindings).
+- **Service bindings don't increase costs.** You can split apart functionality into multiple Workers, without incurring additional costs. Learn more about [pricing for Service Bindings](/workers/platform/pricing/#service-bindings).
 
 ![Service bindings are a zero-cost abstraction](~/assets/images/workers/platform/bindings/service-bindings-comparison.png)
 
@@ -61,6 +61,9 @@ main = "./src/workerB.js"
 import { WorkerEntrypoint } from "cloudflare:workers";
 
 export class WorkerB extends WorkerEntrypoint {
+  // Currently, entrypoints without a named handler are not supported
+  async fetch() { return new Response(null, {status: 404}); }
+
   async add(a, b) { return a + b; }
 }
 ```

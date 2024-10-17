@@ -195,3 +195,28 @@ entries:
     difficulty: Beginner
     content_type: 🎥 Video
     pcx_content_type: tutorial
+  - link: https://youtu.be/10-kiyJNr8s
+    title: Build a private AI chatbot using Meta's Llama 3.1
+    description: In this video, you will learn how to set up a private AI chat powered by Llama 3.1 for secure, fast interactions, deploy the model on Cloudflare Workers for serverless, scalable performance and use Cloudflare's Workers AI for seamless integration and edge computing benefits.
+    tags: [Workers, AI]
+    languages: [TypeScript]
+    products: [Workers, Workers AI]
+    cloudflare: true
+    # stream_id: 
+    author: confidence
+    updated: 2024-10-07
+    difficulty: Beginner
+    content_type: 🎥 Video
+    pcx_content_type: tutorial    
+  - link: http://localhost:1111/pages/framework-guides/deploy-a-hono-site/#creator-interview
+    title: DevTalk | Episode 01 - Yusuke Wada, creator of Hono Framework
+    description: In this interview, Yusuke Wada reflects on his journey in developing Hono.
+    tags: [Pages, Workers]
+    languages: [TypeScript]
+    products: [Pages, Workers, Workers AI]
+    cloudflare: true
+    author: yusuke
+    updated: 2024-10-08
+    difficulty: Beginner
+    content_type: 🎥 Video
+    pcx_content_type: interview    

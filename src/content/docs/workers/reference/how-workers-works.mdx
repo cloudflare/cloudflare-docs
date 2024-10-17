@@ -7,7 +7,7 @@ description: The difference between the Workers runtime versus traditional
 
 ---
 
-import { Render, NetworkMap, WorkersArchitectureDiagram } from "~/components"
+import { Render, NetworkMap, WorkersIsolateDiagram } from "~/components"
 
 Though Cloudflare Workers behave similarly to [JavaScript](https://www.cloudflare.com/learning/serverless/serverless-javascript/) in the browser or in Node.js, there are a few differences in how you have to think about your code. Under the hood, the Workers runtime uses the [V8 engine](https://www.cloudflare.com/learning/serverless/glossary/what-is-chrome-v8/) — the same engine used by Chromium and Node.js. The Workers runtime also implements many of the standard [APIs](/workers/runtime-apis/) available in most modern browsers.
 
@@ -27,7 +27,7 @@ The three largest differences are: Isolates, Compute per Request, and Distribute
 
 <Render file="isolate-description" />
 
-<WorkersArchitectureDiagram/>
+<WorkersIsolateDiagram/>
 
 A given isolate has its own scope, but isolates are not necessarily long-lived. An isolate may be spun down and evicted for a number of reasons:
 
