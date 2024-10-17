@@ -106,10 +106,11 @@ To enable Gateway inspection for Google Drive traffic, you must [add the Cloudfl
 
 Block file uploads to Google Drive.
 
-| Selector         | Operator      | Value        | Logic | Action |
-| ---------------- | ------------- | ------------ | ----- | ------ |
-| Application      | in            | Google Drive | And   | Block  |
-| Upload Mime Type | matches regex | `.*`         |       |        |
+| Selector         | Operator      | Value                                  | Logic | Action |
+| ---------------- | ------------- | -------------------------------------- | ----- | ------ |
+| Application      | in            | Google Drive                           | And   | Block  |
+| Upload Mime Type | matches regex | `.*`                                   | And   |        |
+| Host             | is not        | `drivefrontend-pa.clients6.google.com` |       |        |
 
 ### Block Google Drive downloads
 
