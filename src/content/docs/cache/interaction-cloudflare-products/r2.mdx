@@ -1,0 +1,25 @@
+---
+pcx_content_type: how-to
+title: Enable cache in an R2 bucket
+sidebar:
+  order: 2
+head:
+  - tag: title
+    content: Enable cache in an R2 bucket
+
+---
+
+To enable edge caching for a [Cloudflare R2](/r2/) bucket, make sure your bucket is public and accessible by the Cache. This can be done by creating a [Custom Domain](/r2/buckets/public-buckets/#custom-domains). Follow these steps to set up a Custom Domain for your bucket:
+
+1. Go to **R2** and select your bucket.
+2. On the bucket page, select **Settings**.
+3. Under **Public access** > **Custom Domains**, select **Connect Domain**.
+4. Enter the domain name you want to connect to and select **Continue**.
+5. Review the new record that will be added to the DNS table and select **Connect Domain**.
+
+This will generate a publicly available CNAME in the format `[name].domain.com`.
+
+## Additional considerations
+
+- Apply access controls to your newly public bucket. Refer to [Control cache access with WAF and Snippets](/cache/interaction-cloudflare-products/waf-snippets/) for more information.
+- Be aware of the [cacheable size limits](/cache/concepts/default-cache-behavior/#cacheable-size-limits) for files.
