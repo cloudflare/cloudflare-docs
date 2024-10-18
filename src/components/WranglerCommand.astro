@@ -61,7 +61,6 @@ if (!command) {
 						<Fragment
 							set:html={marked.parse(x.description, { breaks: true })}
 						/>
-						{x.meta && <MetaInfo text={x.meta} />}
 					</li>
 				))}
 			</ul>
