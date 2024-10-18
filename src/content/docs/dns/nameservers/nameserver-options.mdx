@@ -10,9 +10,25 @@ import { Example } from "~/components"
 
 Refer to the sections below to learn about different nameserver options.
 
+## Assignment method
+
+When you add a domain on a full or secondary setup, Cloudflare automatically assigns your nameservers.
+
+The [default assignment method](/dns/zone-setups/reference/nameserver-assignment/) is to use standard nameservers and favor consistent nameserver names across all zones within an account. Nonetheless, in case there are conflicts - for example, if someone else has already added the same zone to a different account - you may get different nameserver names.
+
+To have control over what nameservers are assigned for different zones within an account, you can use [account custom nameservers](/dns/nameservers/custom-nameservers/account-custom-nameservers/).
+
+### DNS zone defaults
+
+If you have an Enterprise account, you also have the option to [configure your own DNS zone defaults](/dns/additional-options/dns-zone-defaults/) and change how Cloudflare handles nameserver assignment when you add a new zone to your account:
+
+- **Standard nameservers randomized**: instead of attempting consistency, Cloudflare assigns random pairs of nameserver names every time you add a new domain to your account.
+- **Advanced nameservers**: Cloudflare uses the same method as the default - trying to keep nameserver names consistent for different zones within an account - but uses the specific [Foundation DNS nameservers](/dns/foundation-dns/advanced-nameservers/).
+- **Account custom nameservers**: Cloudflare automatically assigns a set of [account custom nameservers](/dns/nameservers/custom-nameservers/account-custom-nameservers/) that you have previously configured for your account. In this method, **Set 1** will be attempted first and, in case of any conflicts, Cloudflare will cycle through the other nameserver sets, in ascending order.
+
 ## Multi-provider DNS
 
-Multi-provider DNS is an optional setting for zones using [full setup](/dns/zone-setups/full-setup/) and is an enforced default behaviour for zones using [secondary setup](/dns/zone-setups/zone-transfers/cloudflare-as-secondary/).
+Multi-provider DNS is an optional setting for zones using [full setup](/dns/zone-setups/full-setup/) and is an enforced default behavior for zones using [secondary setup](/dns/zone-setups/zone-transfers/cloudflare-as-secondary/).
 
 When you enable multi-provider DNS on a primary (full setup) zone:
 
@@ -32,6 +48,14 @@ This means that responses to DNS queries made to the zone apex and requesting `N
 
 :::caution
 
-If you choose this option, you should also make sure to set up [multi-signer DNSSEC](/dns/dnssec/multi-signer-dnssec/). 
+If you choose this option and you also want to use DNSSEC on your zone, make sure to set up [multi-signer DNSSEC](/dns/dnssec/multi-signer-dnssec/).
 
 :::
+
+## Nameserver TTL
+
+For both Cloudflare nameservers (standard or advanced) and custom nameservers, the `NS` record time-to-live (TTL) is controlled by the specific setting in **DNS** > **Records** > **DNS record options**.
+
+The default TTL is 24 hours (or 86,400 seconds), but you have the option to lower this value depending on your needs. For example, shorter TTLs can be useful when you are changing nameservers or migrating a zone. Accepted values range from 30 to 86,400 seconds.
+
+This setting can also be configured as a [DNS zone default](/dns/additional-options/dns-zone-defaults/), meaning new zones created in your account will automatically start with the value you define.
