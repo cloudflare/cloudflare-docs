@@ -38,6 +38,44 @@ Cloud Connector supports both subdomain and URI path-style URLs:
 
 For more information, refer to the [Amazon S3 documentation](https://docs.aws.amazon.com/AmazonS3/latest/userguide/EnableWebsiteHosting.html).
 
+### Configure bucket policies to allow Cloudflare IP addresses
+
+Now that you’ve created your buckets and enabled hosting for static content, you can set up permissions to allow Cloudflare to access your bucket. 
+This ensures that your site only responds to requests coming from the Cloudflare proxy. This is the [current list of IP address ranges](https://www.cloudflare.com/ips/) used by the Cloudflare proxy.
+
+To set up your policy:
+
+1. Follow these instructions from Amazon to [Add an S3 Bucket Policy](https://docs.aws.amazon.com/AmazonS3/latest/user-guide/add-bucket-policy.html).
+2. For the step where you enter the policy in the **Bucket policy editor**, use this sample to fill out the needed JSON code, making sure to replace:
+- `www.example.com` (appearing in `"Resource": "arn:aws:s3:www.example.com/*"`) with the S3 bucket name for your subdomain URL.
+- The placeholder IP addresses with the [current list of IP address ranges](https://www.cloudflare.com/ips/)
+
+```json
+{
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Sid": "AllowCloudflareIPs",
+            "Effect": "Allow",
+            "Principal": "*",
+            "Action": "s3:GetObject",
+            "Resource": "arn:aws:s3:::www.example.com/*",
+            "Condition": {
+                "IpAddress": {
+                    "aws:SourceIp": [
+                        "192.2.0.1/32" (example IPv4 address),
+                        "192.2.1.0/24" (example IPv4 range),
+                        "2001:db8::1111:1111" (example IPv6 address),
+                        "2001:db8::/32" (example IPv6 range),
+                        (add all IPs ranges at https://www.cloudflare.com/ips)
+                    ]
+                }
+            }
+        }
+    ]
+}
+```
+
 ## Google Cloud Platform - Cloud Storage
 
 The hostname of your Cloud Storage bucket URL must be the following (where `*` is a wildcard character):
