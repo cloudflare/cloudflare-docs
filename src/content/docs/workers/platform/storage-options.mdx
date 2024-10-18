@@ -213,13 +213,13 @@ The new beta version of Durable Objects is available where each Durable Object h
 
 D1 is a standalone, serverless database that provides a SQL API, using SQLite's SQL semantics, to store and access your relational data.
 
-Hyperdrive is a service that lets you connect your existing, regional PostgreSQL databases and improves database performance by optimizing them for global data access from Workers.
+Hyperdrive is a service that lets you connect to your existing, regional PostgreSQL databases and improves database performance by optimizing them for global, scalable data access from Workers.
 
 - If you are building a new project on Workers or are considering migrating your data, use D1.
 - If you are building a Workers project with an existing PostgreSQL database, use Hyperdrive.
 - If your working data size exceeds 10 GB (the maximum size for a D1 database), consider splitting the database to multiple, smaller D1 databases.
 
-:::caution
+:::note
 
 You cannot use D1 with Hyperdrive.
 
