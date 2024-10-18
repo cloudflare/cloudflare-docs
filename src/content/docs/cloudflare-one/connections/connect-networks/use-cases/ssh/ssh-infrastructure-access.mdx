@@ -40,11 +40,7 @@ To connect your devices to Cloudflare:
 
 <Render file="access/add-infrastructure-app" />
 
-## 6. Add a policy
-
-<Render file="access/add-infrastructure-policy" />
-
-## 7. Configure SSH server
+## 6. Configure SSH server
 
 Next, configure your SSH server to trust the Cloudflare SSH CA. This allows Access to authenticate using short-lived certificates instead of traditional SSH keys.
 
@@ -65,7 +61,7 @@ To generate a Cloudflare SSH CA and get its public key:
 ### Restart your SSH server
 <Render file="ssh/restart-server" />
 
-## 8. Connect as a user
+## 7. Connect as a user
 
 Users can use any SSH client to connect to the target, as long as they are logged into the WARP client on their device. If the target is located within a particular virtual network, ensure that the WARP client is [connected to that virtual network](/cloudflare-one/connections/connect-networks/private-net/cloudflared/tunnel-virtual-networks/#connect-to-a-virtual-network) before initiating the connection. Users do not need to modify any SSH configs on their device. For example, to SSH from a terminal:
 
