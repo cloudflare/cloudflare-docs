@@ -44,7 +44,7 @@
 		"astro-breadcrumbs": "^3.2.0",
 		"astro-icon": "^1.1.1",
 		"astro-live-code": "^0.0.3",
-		"date-fns": "^3.6.0",
+		"date-fns": "^4.1.0",
 		"detype": "1.0.12",
 		"dompurify": "3.1.6",
 		"dot-prop": "^9.0.0",
