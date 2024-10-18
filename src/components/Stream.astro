@@ -16,14 +16,16 @@ url.searchParams.set("letterboxColor", "transparent");
 
 
 // full url option
-if (!thumbnailTimeOrURL.startsWith("http")) {
-	const thumbnailUrl = new URL(`${videoId}/thumbnails/thumbnail.jpg`, baseUrl);
-	thumbnailUrl.searchParams.set("fit", "crop");
-	thumbnailUrl.searchParams.set("time", thumbnailTimeOrURL);
+if (thumbnailTimeOrURL !== undefined) {
+	if (!thumbnailTimeOrURL.startsWith("http")) {
+		const thumbnailUrl = new URL(`${videoId}/thumbnails/thumbnail.jpg`, baseUrl);
+		thumbnailUrl.searchParams.set("fit", "crop");
+		thumbnailUrl.searchParams.set("time", thumbnailTimeOrURL);
 
-	url.searchParams.set("poster", encodeURI(thumbnailUrl.toString()));
-} else {
-	url.searchParams.set("poster", thumbnailTimeOrURL);
+		url.searchParams.set("poster", encodeURI(thumbnailUrl.toString()));
+	} else {
+		url.searchParams.set("poster", thumbnailTimeOrURL);
+	}
 }
 
 ---
