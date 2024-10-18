@@ -5,6 +5,18 @@ productLink: "/cloudflare-one/policies/gateway/"
 productArea: Cloudflare One
 productAreaLink: /cloudflare-one/changelog/
 entries:
+  - publish_date: "2024-10-10"
+    title: Time-based policy duration
+    description: |-
+      Gateway now offers [time-based DNS policy duration](/cloudflare-one/policies/gateway/dns-policies/timed-policies/#time-based-policy-duration). With policy duration, you can configure a duration of time for a policy to turn on or set an exact date and time to turn a policy off.
+  - publish_date: "2024-10-04"
+    title: Expanded Gateway log fields
+    description: |-
+      Gateway now offers new fields in [activity logs](/cloudflare-one/insights/logs/gateway-logs/) for DNS, network, and HTTP policies to provide greater insight into your users' traffic routed through Gateway.
+  - publish_date: "2024-09-30"
+    title: File sandboxing
+    description: |-
+      Gateway users on Enterprise plans can create HTTP policies with [file sandboxing](/cloudflare-one/policies/gateway/http-policies/file-sandboxing/) to quarantine previously unseen files downloaded by your users and scan them for malware.
   - publish_date: "2024-07-30"
     title: UK NCSC indicator feed publicly available in Gateway
     description: |-

@@ -21,7 +21,7 @@ Once the CSR has been generated, provide it to your customer. Your customer will
 
 ## Generate the private key and CSR
 
-### Step 1 — Build the CSR payload
+### 1. Build the CSR payload
 
 All fields except for organizational\_unit and key\_type are required. If you do not specify a `key_type`, the default of `rsa2048` (RSA 2048 bit) will be used; the other option is `p256v1` (NIST P-256).
 
@@ -48,7 +48,7 @@ EOF
 ))
 ```
 
-### Step 2 — Generate a CSR
+### 2. Generate a CSR
 
 Now, you want to generate a CSR that you can provide to your customer.
 
@@ -92,11 +92,11 @@ curl https://api.cloudflare.com/client/v4/zones/{zone_id}/custom_csrs \
 --data "$request_body" | jq .result.csr | perl -npe s'/\\n/\n/g; s/"//g' > csr.txt
 ```
 
-### Step 3 — Customer obtains certificate
+### 3. Customer obtains certificate
 
 Your customer will take the provided CSR and work with their CA to obtain a signed, publicly trusted certificate.
 
-### Step 4 — Upload the certificate
+### 4. Upload the certificate
 
 Upload the certificate and reference the ID that was provided when you generated the CSR.
 

@@ -41,10 +41,7 @@ To retrieve those values:
 
 ### 2. Add SentinelOne as a service provider
 
-1. In [Zero Trust](https://one.dash.cloudflare.com), go to **Settings** > **WARP Client**.
-2. Scroll down to **Device posture providers** and select **Add new**.
-3. Select **SentinelOne**.
-4. Enter any name for the provider. This name will be used throughout the dashboard to reference this connection.
+<Render file="posture/add-service-provider" params={{ provider: "SentinelOne" }} />
 5. In **Client Secret**, enter your **API Token**.
 6. In **Rest API URL**, enter `https://<S1-DOMAIN>.sentinelone.net`.
 7. Choose a **Polling frequency** for how often Cloudflare Zero Trust should query SentinelOne for information.

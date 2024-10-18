@@ -50,4 +50,4 @@ jobs:
           curl --silent -X POST -H "Authorization: Bearer ${{ secrets.GITHUB_TOKEN }}" \
             -H "Accept: application/vnd.github+json" \
             "https://api.github.com/repos/cloudflare/cloudflare-docs/issues" \
-            -d "{\"title\": \"Broken API docs links\", \"body\": \"The following API doc links are broken: ${EXPORTED_VARIABLE}\", \"assignees\": [\"kodster28\", \"haleycode\"]}"
+            -d "{\"title\": \"Broken API docs links\", \"body\": \"The following API doc links are broken: ${EXPORTED_VARIABLE}\", \"assignees\": [\"haleycode\"]}"

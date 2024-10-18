@@ -15,9 +15,15 @@ Match count refers to the number of times that any enabled entry in the profile 
 
 ## Context analysis
 
-Context analysis restricts DLP detections based on proximity keywords. Additional proximity keywords must be detected within a distance of 1000 bytes (\~1000 characters) from the original detection to trigger an action. For example, the string `123-45-6789` will only count as a detection if in proximity to keywords such as `ssn`.
+Context analysis restricts detections based on proximity keywords to prevent false positives. Proximity keywords must be detected within a distance of 1000 bytes (~1000 characters) from the original detection to trigger an context-aware detection. For example, the string `123-45-6789` will only count as a detection if in proximity to keywords such as `ssn`.
 
-Additionally, you can control context analysis for scans within files. When files are excluded from the context filter, DLP only evaluates uploaded and downloaded files based on regular expression and validation checks. Additional keywords within the file are not required.
+DLP will apply context analysis to traffic and the content of [supported files](/cloudflare-one/policies/data-loss-prevention/#supported-file-types). Supported detections include the [Financial Information](/cloudflare-one/policies/data-loss-prevention/dlp-profiles/predefined-profiles/#financial-information) and [Social Security, Insurance, Tax, and Identifier Numbers](/cloudflare-one/policies/data-loss-prevention/dlp-profiles/predefined-profiles/#social-security-insurance-tax-and-identifier-numbers) predefined profiles.
+
+### Exclude files from context analysis
+
+You can exclude the content of files from context analysis while still applying context analysis to traffic. For example, if you send an email containing the string `123-45-6789`, DLP will only count a detection if the string is in proximity to keywords such as `ssn`. If you include a file in an email containing the string `123-45-6789`, DLP will match a detection regardless of keywords.
+
+To exclude file content from context analysis, in **Exclude content type**, choose _Files_.
 
 ## Optical Character Recognition (OCR) <Badge text="Beta" variant="caution" size="small" />
 

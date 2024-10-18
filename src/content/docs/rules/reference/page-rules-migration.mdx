@@ -137,23 +137,21 @@ You configured a Page Rule to perform an automatic redirect from HTTP to HTTPS f
 
 **How to migrate**:
 
-1. [Create a single redirect](/rules/url-forwarding/single-redirects/create-dashboard/) to always redirect HTTP requests to HTTPS for any hostname that contains `example.com`:
+1. [Create a single redirect](/rules/url-forwarding/single-redirects/create-dashboard/) to always redirect HTTP requests to HTTPS. You can select the **Redirect from HTTP to HTTPS** rule template or enter the following rule configuration:
 
-    <div class="DocsMarkdown--example">
+   <div class="DocsMarkdown--example">
 
-   - **When incoming requests match**: Custom filter expression
+   - **If incoming requests match**: Wildcard pattern
 
-     - Using the Expression Builder:<br/>
-       `Hostname contains "example.com" AND SSL/HTTPS is off`
-     - Using the Expression Editor:<br/>
-       `(http.host contains "example.com" and not ssl)`
+     - **Request URL**: `http://*`
 
    - **Then**:
-     - **Type**: _Dynamic_
-     - **Expression**: `concat("https://", http.host, http.request.uri.path)`
-     - **Status code**: _301_
 
-    </div>
+     - **Target URL**: `https://${1}`
+     - **Status code**: _301_
+     - **Preserve query string**: Enabled
+
+   </div>
 
 2. Turn off your existing Page Rule and validate the behavior of the redirect you created.
 
@@ -896,27 +894,33 @@ You configured a Page Rule permanently redirecting `www.example.com` to `example
 
 **How to migrate**:
 
-1. [Create a single redirect](/rules/url-forwarding/single-redirects/create-dashboard/) to permanently redirect requests from `www.example.com` to `example.com`:
+1. [Create a single redirect](/rules/url-forwarding/single-redirects/create-dashboard/) to permanently redirect requests from `https://www.example.com` to `https://example.com`. You can select the **Redirect from WWW to Root** rule template or enter the following rule configuration:
 
-    <div class="DocsMarkdown--example">
+   <div class="DocsMarkdown--example">
 
-   - **When incoming requests match**: Custom filter expression
+   - **If incoming requests match**: Wildcard pattern
 
-     - Using the Expression Builder:<br/>
-       `Hostname equals "www.example.com"`
-     - Using the Expression Editor:<br/>
-       `(http.host eq "www.example.com")`
+     - **Request URL**: `https://www.example.com/*`
 
    - **Then**:
-     - **Type**: _Dynamic_
-     - **Expression**: `concat("https://example.com", http.request.uri.path)`
-     - **Status code**: _301_
 
-    </div>
+     - **Target URL**: `https://example.com/${1}`
+     - **Status code**: _301_
+     - **Preserve query string**: Enabled
+
+   </div>
 
 2. Turn off your existing Page Rule and validate the behavior of the redirect you created.
 
 3. If your tests succeed, delete the existing Page Rule.
+
+<Render
+	file="page-rules-migration-wildcard-notice"
+	params={{
+		requestUrl: "http*://www.example.com/*",
+		targetUrl: "https://example.com/${2}",
+	}}
+/>
 
 </TabItem> <TabItem label="visual guide">
 
@@ -943,26 +947,31 @@ You configured a Page Rule permanently redirecting `example.com/old-path` to `ex
 
 1. [Create a single redirect](/rules/url-forwarding/single-redirects/create-dashboard/) to permanently redirect requests for `example.com/old-path` to `example.com/new-path`:
 
-    <div class="DocsMarkdown--example">
+   <div class="DocsMarkdown--example">
 
-   - **When incoming requests match**: Custom filter expression
+   - **If incoming requests match**: Wildcard pattern
 
-     - Using the Expression Builder:<br/>
-       `Hostname equals "example.com" AND URI Path starts with "/old-path/"`
-     - Using the Expression Editor:<br/>
-       `(http.host eq "example.com" and starts_with(http.request.uri.path, "/old-path/"))`
+     - **Request URL**: `https://example.com/old-path/*`
 
    - **Then**:
-     - **Type**: _Dynamic_
-     - **Expression**: `concat("/new-path/", substring(http.request.uri.path, 10))`<br/>
-       (where `10` (start byte value) is the length of `/old-path/`)
-     - **Status code**: _301_
 
-    </div>
+     - **Target URL**: `https://example.com/new-path/${1}`
+     - **Status code**: _301_
+     - **Preserve query string**: Enabled
+
+   </div>
 
 2. Turn off your existing Page Rule and validate the behavior of the redirect you created.
 
 3. If your tests succeed, delete the existing Page Rule.
+
+<Render
+	file="page-rules-migration-wildcard-notice"
+	params={{
+		requestUrl: "http*://example.com/old-path/*",
+		targetUrl: "https://example.com/new-path/${2}",
+	}}
+/>
 
 </TabItem> <TabItem label="visual guide">
 

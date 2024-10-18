@@ -20,6 +20,18 @@ Type: string
 
 Action performed by gateway on the session.
 
+## ApplicationIDs
+
+Type: array\[int]
+
+IDs of the applications that matched the session parameters.
+
+## ApplicationNames
+
+Type: array\[string]
+
+Names of the applications that matched the session parameters.
+
 ## Datetime
 
 Type: int or string
@@ -31,6 +43,18 @@ The date and time the corresponding network session was made (for example, '2021
 Type: string
 
 Destination IP of the network session.
+
+## DestinationIPContinentCode
+
+Type: string
+
+Continent code of the destination IP of the network session (for example, 'NA').
+
+## DestinationIPCountryCode
+
+Type: string
+
+Country code of the destination IP of the network session (for example, 'US').
 
 ## DestinationPort
 
@@ -86,6 +110,12 @@ Type: string
 
 The name of the gateway policy applied to the request, if any.
 
+## ProxyEndpoint
+
+Type: string
+
+The proxy endpoint used on this network session, if any.
+
 ## SNI
 
 Type: string
@@ -104,6 +134,18 @@ Type: string
 
 Source IP of the network session.
 
+## SourceIPContinentCode
+
+Type: string
+
+Continent code of the source IP of the network session (for example, 'NA').
+
+## SourceIPCountryCode
+
+Type: string
+
+Country code of the source IP of the network session (for example, 'US').
+
 ## SourceInternalIP
 
 Type: string
@@ -116,14 +158,32 @@ Type: int
 
 Source port of the network session.
 
-## Transport
+## Transport (deprecated)
 
 Type: string
 
-Transport protocol used for this session. <br />Possible values are <em>tcp</em> | <em>quic</em> | <em>udp</em>.
+Transport protocol used for this session. <br />Possible values are <em>tcp</em> \| <em>quic</em> \| <em>udp</em>. Deprecated, please use TransportProtocol instead.
+
+## TransportProtocol
+
+Type: string
+
+Transport protocol used for this session. <br />Possible values are <em>tcp</em> \| <em>quic</em> \| <em>udp</em>.
 
 ## UserID
 
 Type: string
 
 User identity where the network session originated from.
+
+## VirtualNetworkID
+
+Type: string
+
+The identifier of the virtual network the device was connected to, if any.
+
+## VirtualNetworkName
+
+Type: string
+
+The name of the virtual network the device was connected to, if any.

@@ -15,7 +15,7 @@ import { Render, PackageManagers } from "~/components";
 By storing static assets in Workers KV, you can retrieve these assets globally with low-latency and high throughput. You can then serve these assets directly, or use them to dynamically generate responses. This can be useful when serving files and images, or when generating dynamic HTML responses from static assets such as translations.
 
 :::note[Note]
-This example demonstrates how to access data and assets from KV and use them to generate static and dynamic responses. If you want to serve static assets of a frontend web application, consider using [Cloudflare Pages](/pages/) or [Workers static assets](/workers/static-assets/) which provide a purpose-built experience for web applications with built-in environments, CI/CD, Workers/Pages Functions for dynamic responses, and more.
+With [Workers KV](/kv), you can access, edit and store assets directly from your [Worker](/workers). If you need to serve assets as part of a front-end or full-stack web application, consider using [Cloudflare Pages](/pages/) or [Workers static assets](/workers/static-assets/), which provide a purpose-built deployment experience for web applications and their assets.
 :::
 
 <Render file="tutorials-before-you-start" product="workers" />

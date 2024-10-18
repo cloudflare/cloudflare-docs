@@ -17,6 +17,13 @@ Client IP address restrictions control which IP addresses can make API requests 
 
 ![IP Address filtering options](~/assets/images/fundamentals/api/ip-filter.png)
 
+:::note
+
+Client IP address range filtering is not applied to the [Verify Token](https://developers.cloudflare.com/api/operations/user-api-tokens-verify-token) endpoint.
+
+:::
+
+
 ## Time to live (TTL) constraints
 
 By default, tokens do not expire and are long lived. Defining a TTL sets when a token starts being valid and when a token is no longer valid. This is often referred to as `notBefore` and `notAfter`. Setting these timestamps limits the lifetime of the token to the defined period. Not setting the start date or `notBefore` means the token is active as soon as it is created. Not setting the end date or `notAfter` means the token does not expire.

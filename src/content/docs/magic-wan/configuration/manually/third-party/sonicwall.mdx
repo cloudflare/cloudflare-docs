@@ -1,10 +1,9 @@
 ---
 title: SonicWall
 pcx_content_type: integration-guide
-
 ---
 
-import { Render } from "~/components"
+import { Render } from "~/components";
 
 This tutorial shows you how to use Magic WAN with the following versions of the SonicWall appliances:
 
@@ -25,6 +24,7 @@ The following instructions show how to setup an IPsec connection on your SonicWa
 ## 1. Create an IPsec tunnel on your Cloudflare account
 
 1. Start by [creating your IPsec tunnels](/magic-wan/configuration/manually/how-to/configure-tunnels/#add-tunnels) on Cloudflare. Name and describe the tunnels as needed, and add the following settings:
+
    - **Interface address**: Enter the internal tunnel IP on the Cloudflare side of the IPsec tunnel. In this example, it is `10.200.1.0/31`.
    - **Customer endpoint**: Enter the WAN IP address of your SonicWall device. In our example, this is `198.51.100.2`.
    - **Cloudflare endpoint**: Enter the IP address provided by Cloudflare. In our example, this is `1.2.3.4`.
@@ -49,6 +49,7 @@ The interface address on the Cloudflare side of the tunnel is `10.200.1.0/31`. Y
 Static routes are required for any networks that will be reached via the IPsec tunnel. In our example, there are two networks: `172.31.3.0/24` and the tunnel network `10.200.1.0/31`.
 
 1. [Create your static routes](/magic-wan/configuration/manually/how-to/configure-static-routes/#create-a-static-route). Name and describe them as needed, and add the following settings:
+
    - **First tunnel**: Following our example, add `10.200.1.0/31` as the **Prefix** and `10.200.1.1` for the **Tunnel/Next hop**.
    - **Second tunnel**: Following our example, add `172.31.3.0/24` as the **Prefix** and `10.200.1.1` for the **Tunnel/Next hop**.
 
@@ -205,4 +206,12 @@ Health checks might take some time to stabilize after the configuration is chang
 
 ## 9. Verify tunnel status on Cloudflare dashboard
 
-<Render file="tunnel-healthchecks-dash" product="magic-wan" params={{ one: "The dashboard shows the view of tunnel health as measured from each Cloudflare location where your traffic is likely to land.", two: "**Magic WAN** > **Tunnel health**" }} />
+<Render
+	file="tunnel-healthchecks-dash"
+	product="magic-wan"
+	params={{
+		dashInfo:
+			"The dashboard shows the view of tunnel health as measured from each Cloudflare location where your traffic is likely to land.",
+		productPath: "**Magic WAN** > **Tunnel health**",
+	}}
+/>

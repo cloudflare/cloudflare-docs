@@ -3,28 +3,25 @@ title: Test a policy
 pcx_content_type: learning-unit
 sidebar:
   order: 5
-
 ---
 
-import { Render } from "~/components"
+import { Render } from "~/components";
 
 It is common for a misconfigured Gateway policy to accidentally block traffic to benign sites. To ensure a smooth deployment, we recommend testing a simple policy before deploying DNS filtering to your organization.
 
 ## Test a policy in the browser
 
-1. Go to **Gateway** > **Firewall Policies**.
+1. Go to **Gateway** > **Firewall policies**.
 2. Turn off all existing DNS policies.
 3. Turn on any existing security policies or create a policy to block all security categories: <Render file="gateway/policies/block-security-categories" product="cloudflare-one" />
 4. Ensure that your browser is not configured to use an alternate DNS resolver. For example, Chrome has a **Use secure DNS** setting that will cause the browser to send requests to 1.1.1.1 and bypass your DNS policies.
 5. In the browser, go to `malware.testcategory.com`. Your browser will display:
-   * The Gateway block page, if your device is connected via the WARP client in Gateway with WARP mode.
-   * A generic error page, if your device is connected via another method, such as Gateway with DoH mode.
+   - The Gateway block page, if your device is connected through the WARP client in Gateway with WARP mode.
+   - A generic error page, if your device is connected through another method, such as Gateway with DoH mode.
 
 :::note
 
-
-[Custom block pages](/cloudflare-one/policies/gateway/configuring-block-page/) require you to install a root certificate on the device.
-
+[Custom block pages](/cloudflare-one/policies/gateway/block-page/) require you to install a root certificate on the device.
 
 :::
 

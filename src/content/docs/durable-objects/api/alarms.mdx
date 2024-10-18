@@ -2,15 +2,10 @@
 title: Alarms
 pcx_content_type: concept
 sidebar:
-  order: 1
-
+  order: 6
 ---
 
-:::note[Alarms disabled for SQLite in Durable Objects Beta]
-
-An issue was identified with [alarms](/durable-objects/api/alarms/) in [beta Durable Object classes with a SQLite storage backend](/durable-objects/best-practices/access-durable-objects-storage/#sqlite-storage-backend). Alarms have been temporarily disabled for only SQLite-backed Durable Objects while a fix is implemented. Alarms in Durable Objects with default, key-value storage backend are unaffected and continue to operate.
-
-:::
+import { Type } from "~/components";
 
 ## Background
 
@@ -18,17 +13,15 @@ Durable Objects alarms allow you to schedule the Durable Object to be woken up a
 
 Notably:
 
-* Each Durable Object instance is able to schedule a single alarm at a time by calling `setAlarm()`.
-* Alarms have guaranteed at-least-once execution and are retried automatically when the `alarm()` handler throws.
-* Retries are performed using exponential backoff starting at a two second delay from the first failure with up to six retries allowed.
+- Each Durable Object is able to schedule a single alarm at a time by calling `setAlarm()`.
+- Alarms have guaranteed at-least-once execution and are retried automatically when the `alarm()` handler throws.
+- Retries are performed using exponential backoff starting at a 2 second delay from the first failure with up to 6 retries allowed.
 
 :::note[How are alarms different from Cron Triggers?]
-
 
 Alarms are more fine grained than [Cron Triggers](/workers/configuration/cron-triggers/#cron-triggers). A Worker can have up to three Cron Triggers configured at once, but it can have an unlimited amount of Durable Objects, each of which can have an alarm set.
 
 Alarms are directly scheduled from within your Durable Object. Cron Triggers, on the other hand, are not programmatic. [Cron Triggers](/workers/configuration/cron-triggers/#cron-triggers) execute based on their schedules, which have to be configured through the Cloudflare dashboard or API.
-
 
 :::
 
@@ -38,92 +31,82 @@ Alarms can be used to build distributed primitives, like queues or batching of w
 
 ### getAlarm
 
+- <code>getAlarm()</code>: <Type text="number | null" />
 
-
-* <code>getAlarm()</code> : number | null
-
-  * If there is an alarm set, then return the currently set alarm time in number of milliseconds elapsed since the UNIX epoch. Otherwise, return `null`.
-
-
+  - If there is an alarm set, then return the currently set alarm time as the number of milliseconds elapsed since the UNIX epoch. Otherwise, return `null`.
 
 ### setAlarm
 
+- <code>
+  	{" "}
+  	setAlarm(scheduledTimeMs <Type text="number" />)
+  </code>
+  : <Type text="void" />
 
-
-* <code>setAlarm(scheduledTimeMsnumber)</code> : void
-
-  * Set the time for the alarm to run at in number of milliseconds elapsed since the UNIX epoch.
-
-
+  - Set the time for the alarm to run. Specify the time as the number of milliseconds elapsed since the UNIX epoch.
 
 ### deleteAlarm
 
+- `deleteAlarm()`: <Type text='void' />
 
+  - Unset the alarm if there is a currently set alarm.
 
-* <code>deleteAlarm()</code> : void
-
-  * Unset the alarm if there is a currently set alarm.
-
-  * Calling `deleteAlarm()` inside the `alarm()` handler may prevent retries on a best-effort basis, but is not guaranteed.
-
-
+  - Calling `deleteAlarm()` inside the `alarm()` handler may prevent retries on a best-effort basis, but is not guaranteed.
 
 ## Handler methods
 
 ### alarm
 
+- `alarm()`: <Type text='void' />
 
+  - Called by the system when a scheduled alarm time is reached.
 
-* <code>alarm()</code> : void
+  - The `alarm()` handler has guaranteed at-least-once execution and will be retried upon failure using exponential backoff, starting at 2 second delays for up to 6 retries. Retries will be performed if the method fails with an uncaught exception.
 
-  * Called by the system when a scheduled alarm time is reached.
-
-  * The `alarm()` handler has guaranteed at-least-once execution and will be retried upon failure using exponential backoff, starting at two second delays for up to six retries. Retries will be performed if the method fails with an uncaught exception.
-
-  * This method can be `async`.
-
-
+  - This method can be `async`.
 
 ## Example
 
 This example shows how to both set alarms with the `setAlarm(timestamp)` method and handle alarms with the `alarm()` handler within your Durable Object.
 
-* The `alarm()` handler will be called once every time an alarm fires.
-* If an unexpected error terminates the Durable Object, the `alarm()` handler will be re-instantiated on another machine.
-* Following a short delay, the `alarm()` handler will run from the beginning on the other machine.
+- The `alarm()` handler will be called once every time an alarm fires.
+- If an unexpected error terminates the Durable Object, the `alarm()` handler may be re-instantiated on another machine.
+- Following a short delay, the `alarm()` handler will run from the beginning on the other machine.
 
 ```js
+import { DurableObject } from "cloudflare:workers";
+
 export default {
-  async fetch(request, env) {
-    let id = env.ALARM_EXAMPLE.idFromName("foo");
-    return await env.ALARM_EXAMPLE.get(id).fetch(request);
-  },
+	async fetch(request, env) {
+		let id = env.ALARM_EXAMPLE.idFromName("foo");
+		return await env.ALARM_EXAMPLE.get(id).fetch(request);
+	},
 };
 
 const SECONDS = 1000;
 
-export class AlarmExample {
-  constructor(ctx, env) {
-    this.ctx = ctx;
-    this.storage = ctx.storage;
-  }
-  async fetch(request) {
-    // If there is no alarm currently set, set one for 10 seconds from now
-    let currentAlarm = await this.storage.getAlarm();
-    if (currentAlarm == null) {
-      this.storage.setAlarm(Date.now() + 10 * SECONDS);
-    }
-  }
-  async alarm() {
-    // The alarm handler will be invoked whenever an alarm fires.
-    // You can use this to do work, read from the Storage API, make HTTP calls
-    // and set future alarms to run using this.storage.setAlarm() from within this handler.
-  }
+export class AlarmExample extends DurableObject {
+	constructor(ctx, env) {
+		this.ctx = ctx;
+		this.storage = ctx.storage;
+	}
+	async fetch(request) {
+		// If there is no alarm currently set, set one for 10 seconds from now
+		let currentAlarm = await this.storage.getAlarm();
+		if (currentAlarm == null) {
+			this.storage.setAlarm(Date.now() + 10 * SECONDS);
+		}
+	}
+	async alarm() {
+		// The alarm handler will be invoked whenever an alarm fires.
+		// You can use this to do work, read from the Storage API, make HTTP calls
+		// and set future alarms to run using this.storage.setAlarm() from within this handler.
+	}
 }
 ```
 
 ## Related resources
 
-* Understand how to [use the Alarms API](/durable-objects/examples/alarms-api/) in an end-to-end example.
-* Read the [Durable Objects alarms announcement blog post](https://blog.cloudflare.com/durable-objects-alarms/).
-* Review the [Storage API](/durable-objects/api/storage-api/) documentation for Durable Objects.
+- Understand how to [use the Alarms API](/durable-objects/examples/alarms-api/) in an end-to-end example.
+- Read the [Durable Objects alarms announcement blog post](https://blog.cloudflare.com/durable-objects-alarms/).
+- Review the [Storage API](/durable-objects/api/storage-api/) documentation for Durable Objects.

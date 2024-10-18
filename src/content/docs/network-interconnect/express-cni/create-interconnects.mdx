@@ -1,29 +1,29 @@
 ---
 title: Create interconnects
 pcx_content_type: how-to
-
 ---
 
 1. Log in to the [Cloudflare dashboard](https://developers.cloudflare.com/), and select your account.
-
 2. Select **Interconnects** > **Create New**.
-
 3. In **Direct CNI**, select **Create new**.
-
 4. From the list, choose a location that suits you with **Select location**, or search for a location in the search box.
-
    :::note
-   If your location is not listed it means that Express CNI is not available in your location yet. Refer to [Classic CNI](/network-interconnect/classic-cni/) to learn how you can use the classic version of Cloudflare Network Interconnect to connect your location to Cloudflare.
+   If your location is not listed it means that Direct CNI is not available in your location yet. Refer to [Classic CNI](/network-interconnect/classic-cni/) to learn how you can use the classic version of Cloudflare Network Interconnect to connect your location to Cloudflare.
    :::
-
-5. In **Choose your interconnect speed**, select either **1 Gigabit** or **10 Gigabit**. Then, give your interface a name and select **Continue**.
-
+5. Your interface is automatically assigned a speed of 10G. Give it a name, and select **Continue**.
    :::note
    Contact your account team if you need 100 Gigabit connections.
    :::
-
 6. Review the options you have chosen, and select **Confirm order**.
-
 7. Download the Letter of Authorization that Cloudflare created with your settings. You will need this document to contact your data center and provide them the IP addresses for the CNI connection.
-
 8. Select **View Interconnects** to review the CNIs you have ordered.
+
+## Review interconnects
+
+The Cloudflare dashboard shows a list of all previously created interconnects, as well as useful information such as IP addresses, speed, type of interconnect, and status.
+
+Direct CNI connections are LACP (Link Aggregation Control Protocol) enabled and use LACP packets to negotiate with other ports. The [Status column](https://dash.cloudflare.com/?to=/:account/interconnects/all) in the dashboard shows three different status:
+
+- **Pending**: Pending shows up in new interconnects that are not yet active. This is expected and can occur for several reasons: the customer has not received their interconnect, the device is unresponsive, or physical adjustments may be required, such as swapping RX/TX fibers. The `Pending` status will go away after the customer completes the cross-connect.
+- **Active**: The interconnect port on the Customer Connectivity Router (CCR) has established a LACP session with the connected port on the customer device.
+- **Unhealthy**: The interconnect port on the CCR has lost a previously established LACP session with the connected port on the customer device. You can take general troubleshooting steps to solve the issue (such as checking cables and status lights for connectivity issues). If you are unable to solve the issue in this way, contact your account team.

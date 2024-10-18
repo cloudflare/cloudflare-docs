@@ -2,17 +2,17 @@
 title: Storage API
 pcx_content_type: concept
 sidebar:
-  order: 2
+  order: 4
 
 ---
 
-import { Render } from "~/components";
+import { Render, Type, MetaInfo } from "~/components";
 
 The Storage API allows Durable Objects to access transactional and strongly consistent storage. A Durable Object's attached storage is private to its unique instance and cannot be accessed by other objects.
 
 Durable Objects gain access to a persistent Storage API via `ctx.storage`, on the `ctx` parameter passed to the Durable Object constructor.
 
-While access to a Durable Object instance is single-threaded, request executions can still interleave with each other when they wait on I/O, such as when waiting on the promises returned by persistent storage methods or `fetch()` requests.
+While access to a Durable Object is single-threaded, request executions can still interleave with each other when they wait on I/O, such as when waiting on the promises returned by persistent storage methods or `fetch()` requests.
 
 The following code snippet shows you how to store and retrieve data using the Storage API.
 
@@ -56,31 +56,31 @@ Each method is implicitly wrapped inside a transaction, such that its results ar
 
 ### get
 
-* <code>get(keystring, optionsObjectoptional)</code> : Promise\<any>
+* <code>get(key <Type text='string' />, options <Type text='Object' /> <MetaInfo text='optional' />)</code>: <Type text='Promise<any>' />
 
   * Retrieves the value associated with the given key. The type of the returned value will be whatever was previously written for the key, or undefined if the key does not exist.
 
-* <code>get(keysArray\<string>, optionsObjectoptional)</code> : Promise\<Map\<string, any>>
+* <code>get(keys <Type text='Array<string>'/>, options <Type text='Object' /> <MetaInfo text='optional' />)</code>: <Type text = 'Promise<Map<string, any>>' />
 
   * Retrieves the values associated with each of the provided keys. The type of each returned value in the [`Map`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Map) will be whatever was previously written for the corresponding key. Results in the `Map` will be sorted in increasing order of their UTF-8 encodings, with any requested keys that do not exist being omitted. Supports up to 128 keys at a time.
 
 #### Supported options
 
-* <code>allowConcurrency</code>boolean
+* `allowConcurrency`: <Type text='boolean' />
 
   * By default, the system will pause delivery of I/O events to the Object while a storage operation is in progress, in order to avoid unexpected race conditions. Pass `allowConcurrency: true` to opt out of this behavior and allow concurrent events to be delivered.
 
-* <code>noCache</code>boolean
+* `noCache`: <Type text='boolean'/>
 
   * If true, then the key/value will not be inserted into the in-memory cache. If the key is already in the cache, the cached value will be returned, but its last-used time will not be updated. Use this when you expect this key will not be used again in the near future. This flag is only a hint. This flag will never change the semantics of your code, but it may affect performance.
 
 ### put
 
-* <code>put(keystring, valueany, optionsObjectoptional)</code> : Promise
+* <code>put(key <Type text='string' />, value <Type text='any' />, options <Type text='Object' /> <MetaInfo text='optional' />)</code>: <Type text='Promise' />
 
   * Stores the value and associates it with the given key. The value can be any type supported by the [structured clone algorithm](https://developer.mozilla.org/en-US/docs/Web/API/Web_Workers_API/Structured_clone_algorithm), which is true of most types. Keys are limited to a max size of 2,048 bytes and values are limited to 128 KiB (131,072 bytes).<br/><br/>
 
-* <code>put(entriesObject, optionsObjectoptional)</code> : Promise
+* <code>put(entries <Type text='Object' />, options <Type text='Object' /> <MetaInfo text='optional' />)</code>: <Type text='Promise' />
 
   * Takes an Object and stores each of its keys and values to storage.
   * Each value can be any type supported by the [structured clone algorithm](https://developer.mozilla.org/en-US/docs/Web/API/Web_Workers_API/Structured_clone_algorithm), which is true of most types.
@@ -88,25 +88,27 @@ Each method is implicitly wrapped inside a transaction, such that its results ar
 
 ### delete
 
-* <code>delete(keystring, optionsObjectoptional)</code> : Promise\<boolean>
+* <code>delete(key <Type text='string' />, options <Type text='Object' /> <MetaInfo text='optional' />)</code>: <Type text='Promise<boolean>' />
 
   * Deletes the key and associated value. Returns `true` if the key existed or `false` if it did not.
 
-* <code>delete(keysArray\<string>, optionsObjectoptional)</code> : Promise\<number>
+* <code>delete(keys <Type text='Array<string>'/>, options <Type text='Object' /> <MetaInfo text='optional' />)</code>: <Type text='Promise<number>' />
 
   * Deletes the provided keys and their associated values. Supports up to 128 keys at a time. Returns a count of the number of key-value pairs deleted.
 
 ### deleteAll
 
-* <code>deleteAll</code>(optionsObjectoptional) : Promise
+* <code>deleteAll(options <Type text='Object' /> <MetaInfo text='optional' />)</code>: <Type text='Promise' />
 
-  * Deletes all keys and associated values, effectively deallocating all storage used by the Durable Object. In the event of a failure while the `deleteAll()` operation is still in flight, it may be that only a subset of the data is properly deleted. `deleteAll()` does not proactively delete [Alarms](/durable-objects/api/alarms/). Use [`deleteAlarm()`](/durable-objects/api/alarms/#deletealarm) to delete an alarm.
+  * Deletes all stored data, effectively deallocating all storage used by the Durable Object. For Durable Objects with a key-value storage backend, `deleteAll()` removes all keys and associated values for an individual Durable Object. For Durable Objects with a [SQLite storage backend](/durable-objects/best-practices/access-durable-objects-storage/#sqlite-storage-backend), `deleteAll()` removes the entire contents of a Durable Object's private SQLite database, including both SQL data and key-value data.
+  * For Durable Objects with a key-value storage backend, an in-progress `deleteAll()` operation can fail, which may leave a subset of data undeleted. Durable Objects with a SQLite storage backend do not have a partial `deleteAll()` issue because `deleteAll()` operations are atomic (all or nothing).
+  * `deleteAll()` does not proactively delete [Alarms](/durable-objects/api/alarms/). Use [`deleteAlarm()`](/durable-objects/api/alarms/#deletealarm) to delete an alarm.
 
 #### Supported options
 
 * `put()`, `delete()` and `deleteAll()` support the following options:
 
-* <code>allowUnconfirmed</code>boolean
+* `allowUnconfirmed` <Type text ='boolean' />
 
   * By default, the system will pause outgoing network messages from the Durable Object until all previous writes have been confirmed flushed to disk. If the write fails, the system will reset the Object, discard all outgoing messages, and respond to any clients with errors instead.
 
@@ -116,7 +118,7 @@ Each method is implicitly wrapped inside a transaction, such that its results ar
 
   * If you want to allow some outgoing network messages to proceed immediately but not others, you can use the allowUnconfirmed option to avoid blocking the messages that you want to proceed and then separately call the [`sync()`](/durable-objects/api/storage-api/#sync) method, which returns a promise that only resolves once all previous writes have successfully been persisted to disk.
 
-* <code>noCache</code>boolean
+* `noCache` <Type text ='boolean' />
 
   * If true, then the key/value will be discarded from memory as soon as it has completed writing to disk.
 
@@ -136,7 +138,7 @@ The `put()` method returns a `Promise`, but most applications can discard this p
 
 ### list
 
-* <code>list(optionsObjectoptional)</code> : Promise\<Map\<string, any>>
+* <code>list(options <Type text='Object' /> <MetaInfo text='optional' />)</code>: <Type text= 'Promise<Map<string, any>>' />
 
   * Returns all keys and values associated with the current Durable Object in ascending sorted order based on the keys' UTF-8 encodings.
 
@@ -146,68 +148,62 @@ The `put()` method returns a `Promise`, but most applications can discard this p
 
 #### Supported options
 
-* <code>start</code>string
+* `start` <Type text ='string' />
 
   * Key at which the list results should start, inclusive.
 
-* <code>startAfter</code>string
+* `startAfter` <Type text ='string' />
 
   * Key after which the list results should start, exclusive. Cannot be used simultaneously with `start`.
 
-* <code>end</code>string
+* `end` <Type text ='string' />
 
   * Key at which the list results should end, exclusive.
 
-* <code>prefix</code>string
+* `prefix` <Type text ='string' />
 
   * Restricts results to only include key-value pairs whose keys begin with the prefix.
 
-* <code>reverse</code>boolean
+* `reverse` <Type text='boolean' />
 
   * If true, return results in descending order instead of the default ascending order.
   * Enabling `reverse` does not change the meaning of `start`, `startKey`, or `endKey`. `start` still defines the smallest key in lexicographic order that can be returned (inclusive), effectively serving as the endpoint for a reverse-order list. `end` still defines the largest key in lexicographic order that the list should consider (exclusive), effectively serving as the starting point for a reverse-order list.
 
-* <code>limit</code>number
+* `limit` <Type text ='number' />
 
   * Maximum number of key-value pairs to return.
 
-* <code>allowConcurrency</code>boolean
+* `allowConcurrency` <Type text ='boolean' />
 
   * Same as the option to `get()`, above.
 
-* <code>noCache</code>boolean
+* `noCache` <Type text ='boolean' />
 
   * Same as the option to `get()`, above.
 
 ### transaction
 
-* <code>transaction(closureFunction(txn))</code> : Promise
+* `transaction(closureFunction(txn))`: <Type text='Promise' />
 
   * Runs the sequence of storage operations called on `txn` in a single transaction that either commits successfully or aborts.
 
   * Explicit transactions are no longer necessary. Any series of write operations with no intervening `await` will automatically be submitted atomically, and the system will prevent concurrent events from executing while `await` a read operation (unless you use `allowConcurrency: true`). Therefore, a series of reads followed by a series of writes (with no other intervening I/O) are automatically atomic and behave like a transaction.
 
-* <code>txn</code>
+* `txn`
 
   * Provides access to the `put()`, `get()`, `delete()` and `list()` methods documented above to run in the current transaction context. In order to get transactional behavior within a transaction closure, you must call the methods on the `txn` Object instead of on the top-level `state.storage` Object.<br/><br/>Also supports a `rollback()` function that ensures any changes made during the transaction will be rolled back rather than committed. After `rollback()` is called, any subsequent operations on the `txn` Object will fail with an exception. `rollback()` takes no parameters and returns nothing to the caller.
 
 ### sync
 
-* <code>sync()</code> : Promise
+* `sync()` : <Type text='Promise' />
 
   * Synchronizes any pending writes to disk.
 
   * This is similar to normal behavior from automatic write coalescing. If there are any pending writes in the write buffer (including those submitted with [the `allowUnconfirmed` option](/durable-objects/api/storage-api/#supported-options-1)), the returned promise will resolve when they complete. If there are no pending writes, the returned promise will be already resolved.
 
-:::note[Alarms disabled for SQLite in Durable Objects Beta]
-
-An issue was identified with [alarms](/durable-objects/api/alarms/) in [beta Durable Object classes with a SQLite storage backend](/durable-objects/best-practices/access-durable-objects-storage/#sqlite-storage-backend). Alarms have been temporarily disabled for only SQLite-backed Durable Objects while a fix is implemented. Alarms in Durable Objects with default, key-value storage backend are unaffected and continue to operate.
-
-:::
-
 ### getAlarm
 
-* <code>getAlarm(optionsObjectoptional)</code> : Promise\<Number | null>
+* <code>getAlarm(options <Type text='Object' /> <MetaInfo text='optional' />)</code>: <Type text='Promise<Number | null>' />
 
   * Retrieves the current alarm time (if set) as integer milliseconds since epoch. The alarm is considered to be set if it has not started, or if it has failed and any retry has not begun. If no alarm is set, `getAlarm()` returns `null`.
 
@@ -217,7 +213,7 @@ An issue was identified with [alarms](/durable-objects/api/alarms/) in [beta Dur
 
 ### setAlarm
 
-* <code>setAlarm(scheduledTimeDate | number, optionsObjectoptional)</code>  : Promise
+* <code>setAlarm(scheduledTime <Type text='Date | number' />, options <Type text='Object' /> <MetaInfo text='optional' />)</code>: <Type text='Promise' />
 
   * Sets the current alarm time, accepting either a JavaScript `Date`, or integer milliseconds since epoch.
 
@@ -225,7 +221,7 @@ An issue was identified with [alarms](/durable-objects/api/alarms/) in [beta Dur
 
 ### deleteAlarm
 
-* <code>deleteAlarm(optionsObjectoptional)</code> : Promise
+* <code>deleteAlarm(options <Type text='Object' /> <MetaInfo text='optional' />)</code>: <Type text ='Promise' />
 
   * Deletes the alarm if one exists. Does not cancel the alarm handler if it is currently executing.
 
@@ -241,12 +237,12 @@ SQL API methods accessed with `ctx.storage.sql` are only allowed on [Durable Obj
 
 :::
 
-<code>ctx.storage.sql.exec(query: string, ...bindings: any[])</code> : SqlStorageCursor
+<code>ctx.storage.sql.exec(query: <Type text='string'/>, ...bindings: <Type text='any[]'/>)</code>: <Type text='SqlStorageCursor' />
 
 #### Parameters
-* `query`: string
-  * The SQL query string to be executed. `query` can contain `?` placeholders for parameter bindings.
-* `bindings`: any[] Optional
+* `query`: <Type text ='string' />
+  * The SQL query string to be executed. `query` can contain `?` placeholders for parameter bindings. Multiple SQL statements, separated with a semicolon, can be executed in the `query`. With multiple SQL statements, any parameter bindings are applied to the last SQL statement in the `query`, and the returned cursor is only for the last SQL statement.
+* `bindings`: <Type text='any[]' /> <MetaInfo text='Optional' />
   * Optional variable number of arguments that correspond to the `?` placeholders in `query`.
 
 #### Returns
@@ -260,7 +256,7 @@ A cursor (`SqlStorageCursor`) to iterate over query row results as objects. `Sql
   * Iterates through remaining cursor value(s) and returns an array of returned row objects.
 * `one()`
   * Returns a row object if query result has exactly one row. If query result has zero rows or more than one row, `one()` throws an exception.
-* `raw()`: Iterator
+* `raw()`: <Type text='Iterator' />
   * Returns an Iterator over the same query results, with each row as an array of column values (with no column names) rather than an object.
   * Returned Iterator supports `next()`, `toArray()`, and `one()` methods above.
   * Returned cursor and `raw()` iterator iterate over the same query results and can be combined. For example:
@@ -279,11 +275,11 @@ A cursor (`SqlStorageCursor`) to iterate over query row results as objects. `Sql
 ```
 `SqlStorageCursor` had the following properties:
 
-* `columnNames`: string[]
+* `columnNames`: <Type text='string[]' />
   * The column names of the query in the order they appear in each row array returned by the `raw` iterator.
-*  `rowsRead`: number
+*  `rowsRead`: <Type text='number' />
   * The number of rows read so far as part of this SQL `query`. This may increase as you iterate the cursor. The final value is used for [SQL billing](/durable-objects/platform/pricing/#sqlite-storage-backend).
-*  `rowsWritten`: number
+*  `rowsWritten`: <Type text='number' />
   * The number of rows written so far as part of this SQL `query`. This may increase as you iterate the cursor. The final value is used for [SQL billing](/durable-objects/platform/pricing/#sqlite-storage-backend).
 
 #### Examples
@@ -292,7 +288,7 @@ A cursor (`SqlStorageCursor`) to iterate over query row results as objects. `Sql
 
 ### sql.databaseSize
 
-<code>ctx.storage.sql.databaseSize</code> : number
+`ctx.storage.sql.databaseSize`: <Type text ='number' />
 
 #### Returns
 The current SQLite database size in bytes.
@@ -307,15 +303,15 @@ For [Durable Objects classes with SQL storage](/durable-objects/reference/durabl
 
 The PITR API represents points in times using "bookmarks". A bookmark is a mostly alphanumeric string like `0000007b-0000b26e-00001538-0c3e87bb37b3db5cc52eedb93cd3b96b`. Bookmarks are designed to be lexically comparable: a bookmark representing an earlier point in time compares less than one representing a later point, using regular string comparison.
 
-<code>ctx.storage.getCurrentBookmark()</code> : Promise\<string>
+`ctx.storage.getCurrentBookmark()`: <Type text='Promise<string>' />
 
   * Returns a bookmark representing the current point in time in the object's history.
 
-<code>ctx.storage.getBookmarkForTime(timestamp: number | Date)</code>: Promise\<string>
+<code>ctx.storage.getBookmarkForTime(timestamp: <Type text='number'/> | <Type text='Date'/>)</code>: <Type text='Promise<string>' />
 
   * Returns a bookmark representing approximately the given point in time, which must be within the last 30 days. If the timestamp is represented as a number, it is converted to a date as if using `new Date(timestamp)`.
 
-<code>ctx.storage.onNextSessionRestoreBookmark(bookmark: string)</code>: Promise\<string>
+<code>ctx.storage.onNextSessionRestoreBookmark(bookmark: <Type text='string'/>)</code>: <Type text='Promise<string>' />
 
   * Configure the Durable Object so that the next time it restarts, it should restore its storage to exactly match what the storage contained at the given bookmark. After calling this, the application should typically invoke `ctx.abort()` to restart the Durable Object, thus completing the point-in-time recovery.
 
