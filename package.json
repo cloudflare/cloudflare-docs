@@ -40,7 +40,7 @@
 		"@types/react": "^18.3.11",
 		"@types/react-dom": "^18.3.0",
 		"algoliasearch": "^5.8.1",
-		"astro": "^4.16.4",
+		"astro": "^4.16.6",
 		"astro-breadcrumbs": "^3.2.0",
 		"astro-icon": "^1.1.1",
 		"astro-live-code": "^0.0.3",
