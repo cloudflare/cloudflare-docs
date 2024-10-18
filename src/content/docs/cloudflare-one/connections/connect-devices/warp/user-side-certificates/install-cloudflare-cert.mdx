@@ -407,11 +407,11 @@ git config --global http.sslcainfo [PATH_TO_CLOUDFLARE_CERT]
 
 ### npm
 
-The command below will set the `cafile` configuration to use the Cloudflare certificate. Make sure to use the certificate in the [`.pem`](/cloudflare-one/static/Cloudflare_CA.pem) file type.
-
-```sh
-npm config set cafile [PATH_TO_CLOUDFLARE_CERT.pem]
-```
+1. [Download the Cloudflare certificate](#download-the-cloudflare-root-certificate) in `.pem` format.
+2. Set the `cafile` configuration to use the Cloudflare certificate:
+   ```sh
+   npm config set cafile [PATH_TO_CLOUDFLARE_CERT.pem]
+   ```
 
 On some systems you may need to set the following in your path/export list:
 
@@ -431,12 +431,7 @@ The commands below will set the Google Cloud SDK to use the Cloudflare certifica
    curl --remote-name https://curl.se/ca/cacert.pem
    ```
 
-2. Get the Cloudflare CA.
-
-   ```sh
-   curl --remote-name https://developers.cloudflare.com/cloudflare-one/static/Cloudflare_CA.pem
-   ```
-
+2. [Download the Cloudflare certificate](#download-the-cloudflare-root-certificate) in `.pem` format.
 3. Combine the certs into a single `.pem` file.
 
    ```sh
@@ -568,7 +563,7 @@ To install the Cloudflare root certificate on Eclipse IDE for Java Developers, y
 
    4. Copy the full path after `java.home=`.
 
-3. Add the Cloudflare certificate to Eclipse's JVM.
+3. Add the Cloudflare certificate to Eclipse's JVM:
 
 <Details header="macOS and Linux">
 
