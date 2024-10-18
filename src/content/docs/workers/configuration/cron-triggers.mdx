@@ -11,6 +11,12 @@ Cron Triggers allow users to map a cron expression to a Worker using a [`schedul
 
 Cron Triggers are ideal for running periodic jobs, such as for maintenance or calling third-party APIs to collect up-to-date data. Workers scheduled by Cron Triggers will run on underutilized machines to make the best use of Cloudflare's capacity and route traffic efficiently.
 
+:::note
+
+Cron Triggers can also be combined with [Workflows](/workflows/) to trigger multi-step, long-running tasks. You can [bind to a Workflow](/workflows/build/workers-api/) from directly from your Cron Trigger to execute a Workflow on a schedule.
+
+:::
+
 Cron Triggers execute on UTC time.
 
 ## Add a Cron Trigger

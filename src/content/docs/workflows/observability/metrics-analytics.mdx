@@ -1,0 +1,68 @@
+---
+pcx_content_type: concept
+title: Metrics and analytics
+sidebar:
+  order: 10
+
+---
+
+Workflows exposes metrics that allow you to inspect and measure Workflow execution, error rates, steps and total duration across each (and all) of your Workflows.
+
+The metrics displayed in the [Cloudflare dashboard](https://dash.cloudflare.com/) charts are queried from Cloudflare’s [GraphQL Analytics API](/analytics/graphql-api/). You can access the metrics [programmatically](#query-via-the-graphql-api) via GraphQL or HTTP client.
+
+## Metrics
+
+Workflows currently exports the below metrics:
+
+| Metric                 | GraphQL Field Name        | Description                                                                                                                           |
+| ---------------------- | ------------------------- | ------------------------------------------------------------------------------------------------------------------------------------- |
+| Read Queries (qps)     | `readQueries`             | The number of read queries issued against a database. This is the raw number of read queries, and is not used for billing.            |
+
+Metrics can be queried (and are retained) for the past 31 days.
+
+## View metrics in the dashboard
+
+Per-Workflow and instance analytics for Workflows are available in the Cloudflare dashboard. To view current and historical metrics for a database:
+
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) and select your account.
+2. Go to [**Workers & Pages** > **Workflows**](https://dash.cloudflare.com/?to=/:account/workers/workflows).
+3. Select a Workflow to view its metrics.
+
+You can optionally select a time window to query. This defaults to the last 24 hours.
+
+## Query via the GraphQL API
+
+You can programmatically query analytics for your Workflows via the [GraphQL Analytics API](/analytics/graphql-api/). This API queries the same datasets as the Cloudflare dashboard, and supports GraphQL [introspection](/analytics/graphql-api/features/discovery/introspection/).
+
+Workflows GraphQL datasets require an `accountTag` filter with your Cloudflare account ID and includes the `workflowsAdaptive`  and `workflowsAdaptiveGroups` datasets.
+
+### Examples
+
+To query the sum of `readQueries`, `writeQueries` for a given `$databaseId`, grouping by `databaseId` and `date`:
+
+```graphql
+query {
+	viewer {
+		accounts(filter: { accountTag: $accountId }) {
+			d1AnalyticsAdaptiveGroups(
+				limit: 10000
+				filter: {
+					date_geq: $startDate
+					date_leq: $endDate
+					databaseId: $databaseId
+				}
+				orderBy: [date_DESC]
+			) {
+				sum {
+					readQueries
+					writeQueries
+				}
+				dimensions {
+					date
+					databaseId
+				}
+			}
+		}
+	}
+}
+```
