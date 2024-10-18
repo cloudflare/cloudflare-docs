@@ -1,0 +1,3583 @@
+{
+	"wrangler docs": {
+		"example": "wrangler docs [search..]",
+		"description": "📚 Open Wrangler's command documentation in your browser",
+		"positionals": [
+			{
+				"name": "search",
+				"description": "Enter search terms (e.g. the wrangler command) you want to know more about",
+				"type": "[array] [default: []]"
+			}
+		],
+		"options": [
+			{
+				"flags": "-y, --yes",
+				"description": "Takes you to the docs, even if search fails\n",
+				"type": "[boolean]"
+			}
+		]
+	},
+	"wrangler init": {
+		"example": "wrangler init [name]",
+		"description": "📥 Initialize a basic Worker",
+		"positionals": [
+			{
+				"name": "name",
+				"description": "The name of your worker",
+				"type": "[string]"
+			}
+		],
+		"options": [
+			{
+				"flags": "-y, --yes",
+				"description": "Answer \"yes\" to any prompts for new projects\n",
+				"type": "[boolean]"
+			},
+			{
+				"flags": "--from-dash",
+				"description": "The name of the Worker you wish to download from the Cloudflare dashboard for local development.\n",
+				"type": "[string]"
+			}
+		]
+	},
+	"wrangler dev": {
+		"example": "wrangler dev [script]",
+		"description": "👂 Start a local server for developing your Worker",
+		"positionals": [
+			{
+				"name": "script",
+				"description": "The path to an entry point for your worker",
+				"type": "[string]"
+			}
+		],
+		"options": [
+			{
+				"flags": "--name",
+				"description": "Name of the worker\n",
+				"type": "[string]"
+			},
+			{
+				"flags": "--compatibility-date",
+				"description": "Date to use for compatibility checks\n",
+				"type": "[string]"
+			},
+			{
+				"flags": "--compatibility-flags, --compatibility-flag",
+				"description": "Flags to use for compatibility checks\n",
+				"type": "[array]"
+			},
+			{
+				"flags": "--latest",
+				"description": "Use the latest version of the worker runtime\n",
+				"type": "[boolean] [default: true]"
+			},
+			{
+				"flags": "--assets",
+				"description": "Static assets to be served. Replaces Workers Sites.\n",
+				"type": "[string]"
+			},
+			{
+				"flags": "--no-bundle",
+				"description": "Skip internal build steps and directly deploy script\n",
+				"type": "[boolean] [default: false]"
+			},
+			{
+				"flags": "--ip",
+				"description": "IP address to listen on\n",
+				"type": "[string]"
+			},
+			{
+				"flags": "--port",
+				"description": "Port to listen on\n",
+				"type": "[number]"
+			},
+			{
+				"flags": "--inspector-port",
+				"description": "Port for devtools to connect to\n",
+				"type": "[number]"
+			},
+			{
+				"flags": "--routes, --route",
+				"description": "Routes to upload\n",
+				"type": "[array]"
+			},
+			{
+				"flags": "--host",
+				"description": "Host to forward requests to, defaults to the zone of project\n",
+				"type": "[string]"
+			},
+			{
+				"flags": "--local-protocol",
+				"description": "Protocol to listen to requests on, defaults to http.\n",
+				"type": "[choices: \"http\", \"https\"]"
+			},
+			{
+				"flags": "--https-key-path",
+				"description": "Path to a custom certificate key\n",
+				"type": "[string]"
+			},
+			{
+				"flags": "--https-cert-path",
+				"description": "Path to a custom certificate\n",
+				"type": "[string]"
+			},
+			{
+				"flags": "--local-upstream",
+				"description": "Host to act as origin in local mode, defaults to dev.host or route\n",
+				"type": "[string]"
+			},
+			{
+				"flags": "--upstream-protocol",
+				"description": "Protocol to forward requests to host on, defaults to https.\n",
+				"type": "[choices: \"http\", \"https\"]"
+			},
+			{
+				"flags": "--var",
+				"description": "A key-value pair to be injected into the script as a variable\n",
+				"type": "[array]"
+			},
+			{
+				"flags": "--define",
+				"description": "A key-value pair to be substituted in the script\n",
+				"type": "[array]"
+			},
+			{
+				"flags": "--alias",
+				"description": "A module pair to be substituted in the script\n",
+				"type": "[array]"
+			},
+			{
+				"flags": "--jsx-factory",
+				"description": "The function that is called for each JSX element\n",
+				"type": "[string]"
+			},
+			{
+				"flags": "--jsx-fragment",
+				"description": "The function that is called for each JSX fragment\n",
+				"type": "[string]"
+			},
+			{
+				"flags": "--tsconfig",
+				"description": "Path to a custom tsconfig.json file\n",
+				"type": "[string]"
+			},
+			{
+				"flags": "-r, --remote",
+				"description": "Run on the global Cloudflare network with access to production resources\n",
+				"type": "[boolean] [default: false]"
+			},
+			{
+				"flags": "--minify",
+				"description": "Minify the script\n",
+				"type": "[boolean]"
+			},
+			{
+				"flags": "--node-compat",
+				"description": "Enable Node.js compatibility\n",
+				"type": "[boolean]"
+			},
+			{
+				"flags": "--persist-to",
+				"description": "Specify directory to use for local persistence (defaults to .wrangler/state)\n",
+				"type": "[string]"
+			},
+			{
+				"flags": "--live-reload",
+				"description": "Auto reload HTML pages when change is detected in local mode\n",
+				"type": "[boolean]"
+			},
+			{
+				"flags": "--test-scheduled",
+				"description": "Test scheduled events by visiting /__scheduled in browser\n",
+				"type": "[boolean] [default: false]"
+			},
+			{
+				"flags": "--log-level",
+				"description": "Specify logging level\n",
+				"type": "[choices: \"debug\", \"info\", \"log\", \"warn\", \"error\", \"none\"] [default: \"log\"]"
+			},
+			{
+				"flags": "--show-interactive-dev-session",
+				"description": "Show interactive dev session\n(defaults to true if the terminal supports interactivity)\n",
+				"type": "[boolean]"
+			},
+			{
+				"flags": "--experimental-dev-env, --x-dev-env",
+				"description": "Use the experimental DevEnv instantiation (unified across wrangler dev and unstable_dev)\n",
+				"type": "[boolean] [default: true]"
+			},
+			{
+				"flags": "--experimental-registry, --x-registry",
+				"description": "Use the experimental file based dev registry for multi-worker development\n",
+				"type": "[boolean] [default: false]"
+			}
+		]
+	},
+	"wrangler deploy": {
+		"example": "wrangler deploy [script]",
+		"description": "🆙 Deploy a Worker to Cloudflare",
+		"positionals": [
+			{
+				"name": "script",
+				"description": "The path to an entry point for your worker",
+				"type": "[string]"
+			}
+		],
+		"options": [
+			{
+				"flags": "--name",
+				"description": "Name of the worker\n",
+				"type": "[string]"
+			},
+			{
+				"flags": "--no-bundle",
+				"description": "Skip internal build steps and directly deploy Worker\n",
+				"type": "[boolean] [default: false]"
+			},
+			{
+				"flags": "--outdir",
+				"description": "Output directory for the bundled worker\n",
+				"type": "[string]"
+			},
+			{
+				"flags": "--compatibility-date",
+				"description": "Date to use for compatibility checks\n",
+				"type": "[string]"
+			},
+			{
+				"flags": "--compatibility-flags, --compatibility-flag",
+				"description": "Flags to use for compatibility checks\n",
+				"type": "[array]"
+			},
+			{
+				"flags": "--latest",
+				"description": "Use the latest version of the worker runtime\n",
+				"type": "[boolean] [default: false]"
+			},
+			{
+				"flags": "--assets",
+				"description": "Static assets to be served. Replaces Workers Sites.\n",
+				"type": "[string]"
+			},
+			{
+				"flags": "--var",
+				"description": "A key-value pair to be injected into the script as a variable\n",
+				"type": "[array]"
+			},
+			{
+				"flags": "--define",
+				"description": "A key-value pair to be substituted in the script\n",
+				"type": "[array]"
+			},
+			{
+				"flags": "--alias",
+				"description": "A module pair to be substituted in the script\n",
+				"type": "[array]"
+			},
+			{
+				"flags": "--triggers, --schedule, --schedules",
+				"description": "cron schedules to attach\n",
+				"type": "[array]"
+			},
+			{
+				"flags": "--routes, --route",
+				"description": "Routes to upload\n",
+				"type": "[array]"
+			},
+			{
+				"flags": "--jsx-factory",
+				"description": "The function that is called for each JSX element\n",
+				"type": "[string]"
+			},
+			{
+				"flags": "--jsx-fragment",
+				"description": "The function that is called for each JSX fragment\n",
+				"type": "[string]"
+			},
+			{
+				"flags": "--tsconfig",
+				"description": "Path to a custom tsconfig.json file\n",
+				"type": "[string]"
+			},
+			{
+				"flags": "--minify",
+				"description": "Minify the Worker\n",
+				"type": "[boolean]"
+			},
+			{
+				"flags": "--node-compat",
+				"description": "Enable Node.js compatibility\n",
+				"type": "[boolean]"
+			},
+			{
+				"flags": "--dry-run",
+				"description": "Don't actually deploy\n",
+				"type": "[boolean]"
+			},
+			{
+				"flags": "--upload-source-maps",
+				"description": "Include source maps when uploading this worker.\n",
+				"type": "[boolean]"
+			},
+			{
+				"flags": "--old-asset-ttl",
+				"description": "Expire old assets in given seconds rather than immediate deletion.\n",
+				"type": "[number]"
+			},
+			{
+				"flags": "--keep-vars",
+				"description": "Stop wrangler from deleting vars that are not present in the wrangler.toml\nBy default Wrangler will remove all vars and replace them with those found in the wrangler.toml configuration.\nIf your development approach is to modify vars after deployment via the dashboard you may wish to set this flag.\n\n--logpush\nSend Trace Events from this worker to Workers Logpush.\nThis will not configure a corresponding Logpush job automatically.\n[boolean]\n--dispatch-namespace\nName of a dispatch namespace to deploy the Worker to (Workers for Platforms)\n[string]",
+				"type": "[boolean] [default: false]"
+			}
+		]
+	},
+	"wrangler deployments list": {
+		"example": "wrangler deployments list",
+		"description": "Displays the 10 most recent deployments of your Worker",
+		"options": [
+			{
+				"flags": "--name",
+				"description": "Name of the worker\n",
+				"type": "[string]"
+			},
+			{
+				"flags": "--json",
+				"description": "Display output as clean JSON\n",
+				"type": "[boolean] [default: false]"
+			}
+		]
+	},
+	"wrangler deployments status": {
+		"example": "wrangler deployments status",
+		"description": "View the current state of your production",
+		"options": [
+			{
+				"flags": "--name",
+				"description": "Name of the worker\n",
+				"type": "[string]"
+			},
+			{
+				"flags": "--json",
+				"description": "Display output as clean JSON\n",
+				"type": "[boolean] [default: false]"
+			}
+		]
+	},
+	"wrangler rollback": {
+		"example": "wrangler rollback [version-id]",
+		"description": "🔙 Rollback a deployment for a Worker",
+		"positionals": [
+			{
+				"name": "version-id",
+				"description": "The ID of the Worker Version to rollback to",
+				"type": "[string]"
+			}
+		],
+		"options": [
+			{
+				"flags": "--name",
+				"description": "The name of your worker\n",
+				"type": "[string]"
+			},
+			{
+				"flags": "-m, --message",
+				"description": "The reason for this rollback\n",
+				"type": "[string]"
+			},
+			{
+				"flags": "-y, --yes",
+				"description": "Automatically accept defaults to prompts\n",
+				"type": "[boolean] [default: false]"
+			}
+		]
+	},
+	"wrangler versions view": {
+		"example": "wrangler versions view <version-id>",
+		"description": "View the details of a specific version of your Worker [beta]",
+		"positionals": [
+			{
+				"name": "version-id",
+				"description": "The Worker Version ID to view",
+				"type": "[string] [required]"
+			}
+		],
+		"options": [
+			{
+				"flags": "--name",
+				"description": "Name of the worker\n",
+				"type": "[string]"
+			},
+			{
+				"flags": "--json",
+				"description": "Display output as clean JSON\n",
+				"type": "[boolean] [default: false]"
+			}
+		]
+	},
+	"wrangler versions list": {
+		"example": "wrangler versions list",
+		"description": "List the 10 most recent Versions of your Worker [beta]",
+		"options": [
+			{
+				"flags": "--name",
+				"description": "Name of the worker\n",
+				"type": "[string]"
+			},
+			{
+				"flags": "--json",
+				"description": "Display output as clean JSON\n",
+				"type": "[boolean] [default: false]"
+			}
+		]
+	},
+	"wrangler versions upload": {
+		"example": "wrangler versions upload",
+		"description": "Uploads your Worker code and config as a new Version [beta]",
+		"positionals": [
+			{
+				"name": "script",
+				"description": "The path to an entry point for your worker",
+				"type": "[string]"
+			}
+		],
+		"options": [
+			{
+				"flags": "--name",
+				"description": "Name of the worker\n",
+				"type": "[string]"
+			},
+			{
+				"flags": "--no-bundle",
+				"description": "Skip internal build steps and directly deploy Worker\n",
+				"type": "[boolean] [default: false]"
+			},
+			{
+				"flags": "--outdir",
+				"description": "Output directory for the bundled worker\n",
+				"type": "[string]"
+			},
+			{
+				"flags": "--compatibility-date",
+				"description": "Date to use for compatibility checks\n",
+				"type": "[string]"
+			},
+			{
+				"flags": "--compatibility-flags, --compatibility-flag",
+				"description": "Flags to use for compatibility checks\n",
+				"type": "[array]"
+			},
+			{
+				"flags": "--latest",
+				"description": "Use the latest version of the worker runtime\n",
+				"type": "[boolean] [default: false]"
+			},
+			{
+				"flags": "--assets",
+				"description": "Static assets to be served. Replaces Workers Sites.\n",
+				"type": "[string]"
+			},
+			{
+				"flags": "--var",
+				"description": "A key-value pair to be injected into the script as a variable\n",
+				"type": "[array]"
+			},
+			{
+				"flags": "--define",
+				"description": "A key-value pair to be substituted in the script\n",
+				"type": "[array]"
+			},
+			{
+				"flags": "--alias",
+				"description": "A module pair to be substituted in the script\n",
+				"type": "[array]"
+			},
+			{
+				"flags": "--jsx-factory",
+				"description": "The function that is called for each JSX element\n",
+				"type": "[string]"
+			},
+			{
+				"flags": "--jsx-fragment",
+				"description": "The function that is called for each JSX fragment\n",
+				"type": "[string]"
+			},
+			{
+				"flags": "--tsconfig",
+				"description": "Path to a custom tsconfig.json file\n",
+				"type": "[string]"
+			},
+			{
+				"flags": "--minify",
+				"description": "Minify the Worker\n",
+				"type": "[boolean]"
+			},
+			{
+				"flags": "--upload-source-maps",
+				"description": "Include source maps when uploading this Worker Gradual Rollouts Version.\n",
+				"type": "[boolean]"
+			},
+			{
+				"flags": "--node-compat",
+				"description": "Enable Node.js compatibility\n",
+				"type": "[boolean]"
+			},
+			{
+				"flags": "--dry-run",
+				"description": "Don't actually deploy\n",
+				"type": "[boolean]"
+			},
+			{
+				"flags": "--tag",
+				"description": "A tag for this Worker Gradual Rollouts Version\n",
+				"type": "[string]"
+			},
+			{
+				"flags": "--message",
+				"description": "A descriptive message for this Worker Gradual Rollouts Version\n",
+				"type": "[string]"
+			}
+		]
+	},
+	"wrangler versions deploy": {
+		"example": "wrangler versions deploy [version-specs..]",
+		"description": "Safely roll out new Versions of your Worker by splitting traffic between multiple Versions [beta]",
+		"positionals": [
+			{
+				"name": "version-specs",
+				"description": "Shorthand notation to deploy Worker Version(s) [<version-id>@<percentage>..]",
+				"type": "[array] [default: []]"
+			}
+		],
+		"options": [
+			{
+				"flags": "--name",
+				"description": "Name of the worker\n",
+				"type": "[string]"
+			},
+			{
+				"flags": "--version-id",
+				"description": "Worker Version ID(s) to deploy\n",
+				"type": "[array]"
+			},
+			{
+				"flags": "--percentage",
+				"description": "Percentage of traffic to split between Worker Version(s) (0-100)\n",
+				"type": "[number]"
+			},
+			{
+				"flags": "--message",
+				"description": "Description of this deployment (optional)\n",
+				"type": "[string]"
+			},
+			{
+				"flags": "-y, --yes",
+				"description": "Automatically accept defaults to prompts\n",
+				"type": "[boolean] [default: false]"
+			},
+			{
+				"flags": "--dry-run",
+				"description": "Don't actually deploy\n",
+				"type": "[boolean] [default: false]"
+			}
+		]
+	},
+	"wrangler versions secret put": {
+		"example": "wrangler versions secret put <key>",
+		"description": "Create or update a secret variable for a Worker",
+		"positionals": [
+			{
+				"name": "key",
+				"description": "The variable name to be accessible in the Worker",
+				"type": "[string] [required]"
+			}
+		],
+		"options": [
+			{
+				"flags": "--name",
+				"description": "Name of the Worker\n",
+				"type": "[string]"
+			},
+			{
+				"flags": "--message",
+				"description": "Description of this deployment\n",
+				"type": "[string]"
+			},
+			{
+				"flags": "--tag",
+				"description": "A tag for this version\n",
+				"type": "[string]"
+			}
+		]
+	},
+	"wrangler versions secret bulk": {
+		"example": "wrangler versions secret bulk [json]",
+		"description": "Create or update a secret variable for a Worker",
+		"positionals": [
+			{
+				"name": "json",
+				"description": "The JSON file of key-value pairs to upload, in form {\"key\": value, ...}",
+				"type": "[string]"
+			}
+		],
+		"options": [
+			{
+				"flags": "--name",
+				"description": "Name of the Worker\n",
+				"type": "[string]"
+			},
+			{
+				"flags": "--message",
+				"description": "Description of this deployment\n",
+				"type": "[string]"
+			},
+			{
+				"flags": "--tag",
+				"description": "A tag for this version\n",
+				"type": "[string]"
+			}
+		]
+	},
+	"wrangler versions secret delete": {
+		"example": "wrangler versions secret delete <key>",
+		"description": "Delete a secret variable from a Worker",
+		"positionals": [
+			{
+				"name": "key",
+				"description": "The variable name to be accessible in the Worker",
+				"type": "[string] [required]"
+			}
+		],
+		"options": [
+			{
+				"flags": "--name",
+				"description": "Name of the Worker\n",
+				"type": "[string]"
+			},
+			{
+				"flags": "--message",
+				"description": "Description of this deployment\n",
+				"type": "[string]"
+			},
+			{
+				"flags": "--tag",
+				"description": "A tag for this version\n",
+				"type": "[string]"
+			}
+		]
+	},
+	"wrangler versions secret list": {
+		"example": "wrangler versions secret list",
+		"description": "List the secrets currently deployed",
+		"options": [
+			{
+				"flags": "--name",
+				"description": "Name of the Worker\n",
+				"type": "[string]"
+			},
+			{
+				"flags": "--latest-version",
+				"description": "Only show the latest version\n",
+				"type": "[boolean] [default: false]"
+			}
+		]
+	},
+	"wrangler triggers deploy": {
+		"example": "wrangler triggers deploy",
+		"description": "Updates the triggers of your current deployment [beta]",
+		"options": [
+			{
+				"flags": "--name",
+				"description": "Name of the worker\n",
+				"type": "[string]"
+			},
+			{
+				"flags": "--triggers, --schedule, --schedules",
+				"description": "cron schedules to attach\n",
+				"type": "[array]"
+			},
+			{
+				"flags": "--routes, --route",
+				"description": "Routes to upload\n",
+				"type": "[array]"
+			},
+			{
+				"flags": "--dry-run",
+				"description": "Don't actually deploy\n",
+				"type": "[boolean]"
+			}
+		]
+	},
+	"wrangler delete": {
+		"example": "wrangler delete [script]",
+		"description": "🗑  Delete a Worker from Cloudflare",
+		"positionals": [
+			{
+				"name": "script",
+				"description": "The path to an entry point for your worker",
+				"type": "[string]"
+			}
+		],
+		"options": [
+			{
+				"flags": "--name",
+				"description": "Name of the worker\n",
+				"type": "[string]"
+			},
+			{
+				"flags": "--dry-run",
+				"description": "Don't actually delete\n",
+				"type": "[boolean]"
+			},
+			{
+				"flags": "--force",
+				"description": "Delete even if doing so will break other Workers that depend on this one\n",
+				"type": "[boolean]"
+			}
+		]
+	},
+	"wrangler tail": {
+		"example": "wrangler tail [worker]",
+		"description": "🦚 Start a log tailing session for a Worker",
+		"positionals": [
+			{
+				"name": "worker",
+				"description": "Name or route of the worker to tail",
+				"type": "[string]"
+			}
+		],
+		"options": [
+			{
+				"flags": "--format",
+				"description": "The format of log entries\n",
+				"type": "[choices: \"json\", \"pretty\"] [default: \"json\"]"
+			},
+			{
+				"flags": "--status",
+				"description": "Filter by invocation status\n",
+				"type": "[array] [choices: \"ok\", \"error\", \"canceled\"]"
+			},
+			{
+				"flags": "--header",
+				"description": "Filter by HTTP header\n",
+				"type": "[string]"
+			},
+			{
+				"flags": "--method",
+				"description": "Filter by HTTP method\n",
+				"type": "[array]"
+			},
+			{
+				"flags": "--sampling-rate",
+				"description": "Adds a percentage of requests to log sampling rate\n",
+				"type": "[number]"
+			},
+			{
+				"flags": "--search",
+				"description": "Filter by a text match in console.log messages\n",
+				"type": "[string]"
+			},
+			{
+				"flags": "--ip",
+				"description": "Filter by the IP address the request originates from. Use \"self\" to filter for your own IP\n",
+				"type": "[array]"
+			},
+			{
+				"flags": "--version-id",
+				"description": "Filter by Worker version\n",
+				"type": "[string]"
+			}
+		]
+	},
+	"wrangler secret put": {
+		"example": "wrangler secret put <key>",
+		"description": "Create or update a secret variable for a Worker",
+		"positionals": [
+			{
+				"name": "key",
+				"description": "The variable name to be accessible in the Worker",
+				"type": "[string] [required]"
+			}
+		],
+		"options": [
+			{
+				"flags": "--name",
+				"description": "Name of the Worker\n",
+				"type": "[string]"
+			}
+		]
+	},
+	"": {
+		"example": "",
+		"description": "---------------------------------------------",
+		"positionals": [
+			{
+				"name": "key",
+				"description": "The variable name to be accessible in the Worker",
+				"type": "[string] [required]"
+			}
+		],
+		"options": [
+			{
+				"flags": "--name",
+				"description": "Name of the Worker\n",
+				"type": "[string]"
+			}
+		]
+	},
+	"wrangler secret list": {
+		"example": "wrangler secret list",
+		"description": "List all secrets for a Worker",
+		"options": [
+			{
+				"flags": "--name",
+				"description": "Name of the Worker\n",
+				"type": "[string]"
+			},
+			{
+				"flags": "--format",
+				"description": "The format to print the secrets in\n",
+				"type": "[choices: \"json\", \"pretty\"] [default: \"json\"]"
+			}
+		]
+	},
+	"wrangler secret bulk": {
+		"example": "wrangler secret bulk [json]",
+		"description": "Bulk upload secrets for a Worker",
+		"positionals": [
+			{
+				"name": "json",
+				"description": "The JSON file of key-value pairs to upload, in form {\"key\": value, ...}",
+				"type": "[string]"
+			}
+		],
+		"options": [
+			{
+				"flags": "--name",
+				"description": "Name of the Worker\n",
+				"type": "[string]"
+			}
+		]
+	},
+	"wrangler types": {
+		"example": "wrangler types [path]",
+		"description": "📝 Generate types from bindings and module rules in configuration",
+		"positionals": [
+			{
+				"name": "path",
+				"description": "The path to the declaration file to generate",
+				"type": "[string] [default: \"worker-configuration.d.ts\"]"
+			}
+		],
+		"options": [
+			{
+				"flags": "--env-interface",
+				"description": "The name of the generated environment interface\n",
+				"type": "[string] [default: \"Env\"]"
+			},
+			{
+				"flags": "--experimental-include-runtime, --x-include-runtime",
+				"description": "The path of the generated runtime types file\n",
+				"type": "[string]"
+			}
+		]
+	},
+	"wrangler kv namespace create": {
+		"example": "wrangler kv namespace create <namespace>",
+		"description": "Create a new namespace",
+		"positionals": [
+			{
+				"name": "namespace",
+				"description": "The name of the new namespace",
+				"type": "[string] [required]"
+			}
+		],
+		"options": [
+			{
+				"flags": "--preview",
+				"description": "Interact with a preview namespace\n",
+				"type": "[boolean]"
+			}
+		]
+	},
+	"wrangler kv namespace list": {
+		"example": "wrangler kv namespace list",
+		"description": "Output a list of all KV namespaces associated with your account id"
+	},
+	"wrangler kv namespace delete": {
+		"example": "wrangler kv namespace delete",
+		"description": "Delete a given namespace.",
+		"options": [
+			{
+				"flags": "--binding",
+				"description": "The name of the namespace to delete\n",
+				"type": "[string]"
+			},
+			{
+				"flags": "--namespace-id",
+				"description": "The id of the namespace to delete\n",
+				"type": "[string]"
+			},
+			{
+				"flags": "--preview",
+				"description": "Interact with a preview namespace\n",
+				"type": "[boolean]"
+			}
+		]
+	},
+	"wrangler kv key put": {
+		"example": "wrangler kv key put <key> [value]",
+		"description": "Write a single key/value pair to the given namespace",
+		"positionals": [
+			{
+				"name": "key",
+				"description": "The key to write to",
+				"type": "[string] [required]"
+			},
+			{
+				"name": "value",
+				"description": "The value to write",
+				"type": "[string]"
+			}
+		],
+		"options": [
+			{
+				"flags": "--binding",
+				"description": "The binding of the namespace to write to\n",
+				"type": "[string]"
+			},
+			{
+				"flags": "--namespace-id",
+				"description": "The id of the namespace to write to\n",
+				"type": "[string]"
+			},
+			{
+				"flags": "--preview",
+				"description": "Interact with a preview namespace\n",
+				"type": "[boolean]"
+			},
+			{
+				"flags": "--ttl",
+				"description": "Time for which the entries should be visible\n",
+				"type": "[number]"
+			},
+			{
+				"flags": "--expiration",
+				"description": "Time since the UNIX epoch after which the entry expires\n",
+				"type": "[number]"
+			},
+			{
+				"flags": "--metadata",
+				"description": "Arbitrary JSON that is associated with a key\n",
+				"type": "[string]"
+			},
+			{
+				"flags": "--path",
+				"description": "Read value from the file at a given path\n",
+				"type": "[string]"
+			},
+			{
+				"flags": "--local",
+				"description": "Interact with local storage\n",
+				"type": "[boolean]"
+			},
+			{
+				"flags": "--persist-to",
+				"description": "Directory for local persistence\n",
+				"type": "[string]"
+			}
+		]
+	},
+	"wrangler kv key list": {
+		"example": "wrangler kv key list",
+		"description": "Output a list of all keys in a given namespace",
+		"options": [
+			{
+				"flags": "--binding",
+				"description": "The name of the namespace to list\n",
+				"type": "[string]"
+			},
+			{
+				"flags": "--namespace-id",
+				"description": "The id of the namespace to list\n",
+				"type": "[string]"
+			},
+			{
+				"flags": "--preview",
+				"description": "Interact with a preview namespace\n",
+				"type": "[boolean] [default: false]"
+			},
+			{
+				"flags": "--prefix",
+				"description": "A prefix to filter listed keys\n",
+				"type": "[string]"
+			},
+			{
+				"flags": "--local",
+				"description": "Interact with local storage\n",
+				"type": "[boolean]"
+			},
+			{
+				"flags": "--persist-to",
+				"description": "Directory for local persistence\n",
+				"type": "[string]"
+			}
+		]
+	},
+	"wrangler kv key get": {
+		"example": "wrangler kv key get <key>",
+		"description": "Read a single value by key from the given namespace",
+		"positionals": [
+			{
+				"name": "key",
+				"description": "The key value to get.",
+				"type": "[string] [required]"
+			}
+		],
+		"options": [
+			{
+				"flags": "--binding",
+				"description": "The name of the namespace to get from\n",
+				"type": "[string]"
+			},
+			{
+				"flags": "--namespace-id",
+				"description": "The id of the namespace to get from\n",
+				"type": "[string]"
+			},
+			{
+				"flags": "--preview",
+				"description": "Interact with a preview namespace\n",
+				"type": "[boolean] [default: false]"
+			},
+			{
+				"flags": "--text",
+				"description": "Decode the returned value as a utf8 string\n",
+				"type": "[boolean] [default: false]"
+			},
+			{
+				"flags": "--local",
+				"description": "Interact with local storage\n",
+				"type": "[boolean]"
+			},
+			{
+				"flags": "--persist-to",
+				"description": "Directory for local persistence\n",
+				"type": "[string]"
+			}
+		]
+	},
+	"wrangler kv key delete": {
+		"example": "wrangler kv key delete <key>",
+		"description": "Remove a single key value pair from the given namespace",
+		"positionals": [
+			{
+				"name": "key",
+				"description": "The key value to delete",
+				"type": "[string] [required]"
+			}
+		],
+		"options": [
+			{
+				"flags": "--binding",
+				"description": "The name of the namespace to delete from\n",
+				"type": "[string]"
+			},
+			{
+				"flags": "--namespace-id",
+				"description": "The id of the namespace to delete from\n",
+				"type": "[string]"
+			},
+			{
+				"flags": "--preview",
+				"description": "Interact with a preview namespace\n",
+				"type": "[boolean]"
+			},
+			{
+				"flags": "--local",
+				"description": "Interact with local storage\n",
+				"type": "[boolean]"
+			},
+			{
+				"flags": "--persist-to",
+				"description": "Directory for local persistence\n",
+				"type": "[string]"
+			}
+		]
+	},
+	"wrangler kv bulk put": {
+		"example": "wrangler kv bulk put <filename>",
+		"description": "Upload multiple key-value pairs to a namespace",
+		"positionals": [
+			{
+				"name": "filename",
+				"description": "The JSON file of key-value pairs to upload, in form [{\"key\":..., \"value\":...}\"...]",
+				"type": "[string] [required]"
+			}
+		],
+		"options": [
+			{
+				"flags": "--binding",
+				"description": "The name of the namespace to insert values into\n",
+				"type": "[string]"
+			},
+			{
+				"flags": "--namespace-id",
+				"description": "The id of the namespace to insert values into\n",
+				"type": "[string]"
+			},
+			{
+				"flags": "--preview",
+				"description": "Interact with a preview namespace\n",
+				"type": "[boolean]"
+			},
+			{
+				"flags": "--local",
+				"description": "Interact with local storage\n",
+				"type": "[boolean]"
+			},
+			{
+				"flags": "--persist-to",
+				"description": "Directory for local persistence\n",
+				"type": "[string]"
+			}
+		]
+	},
+	"wrangler kv bulk delete": {
+		"example": "wrangler kv bulk delete <filename>",
+		"description": "Delete multiple key-value pairs from a namespace",
+		"positionals": [
+			{
+				"name": "filename",
+				"description": "The JSON file of keys to delete, in the form [\"key1\", \"key2\", ...]",
+				"type": "[string] [required]"
+			}
+		],
+		"options": [
+			{
+				"flags": "--binding",
+				"description": "The name of the namespace to delete from\n",
+				"type": "[string]"
+			},
+			{
+				"flags": "--namespace-id",
+				"description": "The id of the namespace to delete from\n",
+				"type": "[string]"
+			},
+			{
+				"flags": "--preview",
+				"description": "Interact with a preview namespace\n",
+				"type": "[boolean]"
+			},
+			{
+				"flags": "-f, --force",
+				"description": "Do not ask for confirmation before deleting\n",
+				"type": "[boolean]"
+			},
+			{
+				"flags": "--local",
+				"description": "Interact with local storage\n",
+				"type": "[boolean]"
+			},
+			{
+				"flags": "--persist-to",
+				"description": "Directory for local persistence\n",
+				"type": "[string]"
+			}
+		]
+	},
+	"wrangler queues list": {
+		"example": "wrangler queues list",
+		"description": "List Queues",
+		"options": [
+			{
+				"flags": "--page",
+				"description": "Page number for pagination\n",
+				"type": "[number]"
+			}
+		]
+	},
+	"wrangler queues create": {
+		"example": "wrangler queues create <name>",
+		"description": "Create a Queue",
+		"positionals": [
+			{
+				"name": "name",
+				"description": "The name of the queue",
+				"type": "[string] [required]"
+			}
+		],
+		"options": [
+			{
+				"flags": "--delivery-delay-secs",
+				"description": "How long a published message should be delayed for, in seconds. Must be a positive integer\n",
+				"type": "[number]"
+			}
+		]
+	},
+	"wrangler queues delete": {
+		"example": "wrangler queues delete <name>",
+		"description": "Delete a Queue",
+		"positionals": [
+			{
+				"name": "name",
+				"description": "The name of the queue",
+				"type": "[string] [required]"
+			}
+		]
+	},
+	"wrangler queues consumer add": {
+		"example": "wrangler queues consumer add <queue-name> <script-name>",
+		"description": "Add a Queue Worker Consumer",
+		"positionals": [
+			{
+				"name": "queue-name",
+				"description": "Name of the queue to configure",
+				"type": "[string] [required]"
+			},
+			{
+				"name": "script-name",
+				"description": "Name of the consumer script",
+				"type": "[string] [required]"
+			}
+		],
+		"options": [
+			{
+				"flags": "--batch-size",
+				"description": "Maximum number of messages per batch\n",
+				"type": "[number]"
+			},
+			{
+				"flags": "--batch-timeout",
+				"description": "Maximum number of seconds to wait to fill a batch with messages\n",
+				"type": "[number]"
+			},
+			{
+				"flags": "--message-retries",
+				"description": "Maximum number of retries for each message\n",
+				"type": "[number]"
+			},
+			{
+				"flags": "--dead-letter-queue",
+				"description": "Queue to send messages that failed to be consumed\n",
+				"type": "[string]"
+			},
+			{
+				"flags": "--max-concurrency",
+				"description": "The maximum number of concurrent consumer Worker invocations. Must be a positive integer\n",
+				"type": "[number]"
+			},
+			{
+				"flags": "--retry-delay-secs",
+				"description": "The number of seconds to wait before retrying a message\n",
+				"type": "[number]"
+			}
+		]
+	},
+	"wrangler queues consumer remove": {
+		"example": "wrangler queues consumer remove <queue-name> <script-name>",
+		"description": "Remove a Queue Worker Consumer",
+		"positionals": [
+			{
+				"name": "queue-name",
+				"description": "Name of the queue to configure",
+				"type": "[string] [required]"
+			},
+			{
+				"name": "script-name",
+				"description": "Name of the consumer script",
+				"type": "[string] [required]"
+			}
+		]
+	},
+	"wrangler queues consumer http add": {
+		"example": "wrangler queues consumer http add <queue-name>",
+		"description": "Add a Queue HTTP Pull Consumer",
+		"positionals": [
+			{
+				"name": "queue-name",
+				"description": "Name of the queue for the consumer",
+				"type": "[string] [required]"
+			}
+		],
+		"options": [
+			{
+				"flags": "--batch-size",
+				"description": "Maximum number of messages per batch\n",
+				"type": "[number]"
+			},
+			{
+				"flags": "--message-retries",
+				"description": "Maximum number of retries for each message\n",
+				"type": "[number]"
+			},
+			{
+				"flags": "--dead-letter-queue",
+				"description": "Queue to send messages that failed to be consumed\n",
+				"type": "[string]"
+			},
+			{
+				"flags": "--visibility-timeout-secs",
+				"description": "The number of seconds a message will wait for an acknowledgement before being returned to the queue.\n",
+				"type": "[number]"
+			},
+			{
+				"flags": "--retry-delay-secs",
+				"description": "The number of seconds to wait before retrying a message\n",
+				"type": "[number]"
+			}
+		]
+	},
+	"wrangler queues consumer http remove": {
+		"example": "wrangler queues consumer http remove <queue-name>",
+		"description": "Remove a Queue HTTP Pull Consumer",
+		"positionals": [
+			{
+				"name": "queue-name",
+				"description": "Name of the queue for the consumer",
+				"type": "[string] [required]"
+			}
+		]
+	},
+	"wrangler queues consumer worker add": {
+		"example": "wrangler queues consumer worker add <queue-name> <script-name>",
+		"description": "Add a Queue Worker Consumer",
+		"positionals": [
+			{
+				"name": "queue-name",
+				"description": "Name of the queue to configure",
+				"type": "[string] [required]"
+			},
+			{
+				"name": "script-name",
+				"description": "Name of the consumer script",
+				"type": "[string] [required]"
+			}
+		],
+		"options": [
+			{
+				"flags": "--batch-size",
+				"description": "Maximum number of messages per batch\n",
+				"type": "[number]"
+			},
+			{
+				"flags": "--batch-timeout",
+				"description": "Maximum number of seconds to wait to fill a batch with messages\n",
+				"type": "[number]"
+			},
+			{
+				"flags": "--message-retries",
+				"description": "Maximum number of retries for each message\n",
+				"type": "[number]"
+			},
+			{
+				"flags": "--dead-letter-queue",
+				"description": "Queue to send messages that failed to be consumed\n",
+				"type": "[string]"
+			},
+			{
+				"flags": "--max-concurrency",
+				"description": "The maximum number of concurrent consumer Worker invocations. Must be a positive integer\n",
+				"type": "[number]"
+			},
+			{
+				"flags": "--retry-delay-secs",
+				"description": "The number of seconds to wait before retrying a message\n",
+				"type": "[number]"
+			}
+		]
+	},
+	"wrangler queues consumer worker remove": {
+		"example": "wrangler queues consumer worker remove <queue-name> <script-name>",
+		"description": "Remove a Queue Worker Consumer",
+		"positionals": [
+			{
+				"name": "queue-name",
+				"description": "Name of the queue to configure",
+				"type": "[string] [required]"
+			},
+			{
+				"name": "script-name",
+				"description": "Name of the consumer script",
+				"type": "[string] [required]"
+			}
+		]
+	},
+	"wrangler r2 object get": {
+		"example": "wrangler r2 object get <objectPath>",
+		"description": "Fetch an object from an R2 bucket",
+		"positionals": [
+			{
+				"name": "objectPath",
+				"description": "The source object path in the form of {bucket}/{key}",
+				"type": "[string] [required]"
+			}
+		],
+		"options": [
+			{
+				"flags": "-f, --file",
+				"description": "The destination file to create\n",
+				"type": "[string]"
+			},
+			{
+				"flags": "-p, --pipe",
+				"description": "Enables the file to be piped to a destination, rather than specified with the --file option\n",
+				"type": "[boolean]"
+			},
+			{
+				"flags": "--local",
+				"description": "Interact with local storage\n",
+				"type": "[boolean]"
+			},
+			{
+				"flags": "--persist-to",
+				"description": "Directory for local persistence\n",
+				"type": "[string]"
+			},
+			{
+				"flags": "-J, --jurisdiction",
+				"description": "The jurisdiction where the object exists\n",
+				"type": "[string]"
+			}
+		]
+	},
+	"wrangler r2 object put": {
+		"example": "wrangler r2 object put <objectPath>",
+		"description": "Create an object in an R2 bucket",
+		"positionals": [
+			{
+				"name": "objectPath",
+				"description": "The destination object path in the form of {bucket}/{key}",
+				"type": "[string] [required]"
+			}
+		],
+		"options": [
+			{
+				"flags": "-f, --file",
+				"description": "The path of the file to upload\n",
+				"type": "[string]"
+			},
+			{
+				"flags": "-p, --pipe",
+				"description": "Enables the file to be piped in, rather than specified with the --file option\n",
+				"type": "[boolean]"
+			},
+			{
+				"flags": "--content-type, --ct",
+				"description": "A standard MIME type describing the format of the object data\n",
+				"type": "[string]"
+			},
+			{
+				"flags": "--content-disposition, --cd",
+				"description": "Specifies presentational information for the object\n",
+				"type": "[string]"
+			},
+			{
+				"flags": "--content-encoding, --ce",
+				"description": "Specifies what content encodings have been applied to the object and thus what decoding mechanisms must be applied to obtain the media-type referenced by the Content-Type header field\n",
+				"type": "[string]"
+			},
+			{
+				"flags": "--content-language, --cl",
+				"description": "The language the content is in\n",
+				"type": "[string]"
+			},
+			{
+				"flags": "--cache-control, --cc",
+				"description": "Specifies caching behavior along the request/reply chain\n",
+				"type": "[string]"
+			},
+			{
+				"flags": "-e, --expires",
+				"description": "The date and time at which the object is no longer cacheable\n",
+				"type": "[string]"
+			},
+			{
+				"flags": "--local",
+				"description": "Interact with local storage\n",
+				"type": "[boolean]"
+			},
+			{
+				"flags": "--persist-to",
+				"description": "Directory for local persistence\n",
+				"type": "[string]"
+			},
+			{
+				"flags": "-J, --jurisdiction",
+				"description": "The jurisdiction where the object will be created\n",
+				"type": "[string]"
+			},
+			{
+				"flags": "-s, --storage-class",
+				"description": "The storage class of the object to be created\n",
+				"type": "[string]"
+			}
+		]
+	},
+	"wrangler r2 object delete": {
+		"example": "wrangler r2 object delete <objectPath>",
+		"description": "Delete an object in an R2 bucket",
+		"positionals": [
+			{
+				"name": "objectPath",
+				"description": "The destination object path in the form of {bucket}/{key}",
+				"type": "[string] [required]"
+			}
+		],
+		"options": [
+			{
+				"flags": "--local",
+				"description": "Interact with local storage\n",
+				"type": "[boolean]"
+			},
+			{
+				"flags": "--persist-to",
+				"description": "Directory for local persistence\n",
+				"type": "[string]"
+			},
+			{
+				"flags": "-J, --jurisdiction",
+				"description": "The jurisdiction where the object exists\n",
+				"type": "[string]"
+			}
+		]
+	},
+	"wrangler r2 bucket create": {
+		"example": "wrangler r2 bucket create <name>",
+		"description": "Create a new R2 bucket",
+		"positionals": [
+			{
+				"name": "name",
+				"description": "The name of the new bucket",
+				"type": "[string] [required]"
+			}
+		],
+		"options": [
+			{
+				"flags": "-J, --jurisdiction",
+				"description": "The jurisdiction where the new bucket will be created\n",
+				"type": "[string]"
+			},
+			{
+				"flags": "-s, --storage-class",
+				"description": "The default storage class for objects uploaded to this bucket\n",
+				"type": "[string]"
+			}
+		]
+	},
+	"wrangler r2 bucket update storage-class": {
+		"example": "wrangler r2 bucket update storage-class <name>",
+		"description": "Update the default storage class of an existing R2 bucket",
+		"positionals": [
+			{
+				"name": "name",
+				"description": "The name of the existing bucket",
+				"type": "[string] [required]"
+			}
+		],
+		"options": [
+			{
+				"flags": "-J, --jurisdiction",
+				"description": "The jurisdiction of the bucket to be updated\n",
+				"type": "[string]"
+			},
+			{
+				"flags": "-s, --storage-class",
+				"description": "The new default storage class for this bucket\n",
+				"type": "[string] [required]"
+			}
+		]
+	},
+	"wrangler r2 bucket list": {
+		"example": "wrangler r2 bucket list",
+		"description": "List R2 buckets",
+		"options": [
+			{
+				"flags": "-J, --jurisdiction",
+				"description": "The jurisdiction to list\n",
+				"type": "[string]"
+			}
+		]
+	},
+	"wrangler r2 bucket delete": {
+		"example": "wrangler r2 bucket delete <name>",
+		"description": "Delete an R2 bucket",
+		"positionals": [
+			{
+				"name": "name",
+				"description": "The name of the bucket to delete",
+				"type": "[string] [required]"
+			}
+		],
+		"options": [
+			{
+				"flags": "-J, --jurisdiction",
+				"description": "The jurisdiction where the bucket exists\n",
+				"type": "[string]"
+			}
+		]
+	},
+	"wrangler r2 bucket sippy enable": {
+		"example": "wrangler r2 bucket sippy enable <name>",
+		"description": "Enable Sippy on an R2 bucket",
+		"positionals": [
+			{
+				"name": "name",
+				"description": "The name of the bucket",
+				"type": "[string] [required]"
+			}
+		],
+		"options": [
+			{
+				"flags": "-J, --jurisdiction",
+				"description": "The jurisdiction where the bucket exists\n",
+				"type": "[string]"
+			},
+			{
+				"flags": "--provider",
+				"description": "",
+				"type": "[choices: \"AWS\", \"GCS\"]"
+			},
+			{
+				"flags": "--bucket",
+				"description": "The name of the upstream bucket\n",
+				"type": "[string]"
+			},
+			{
+				"flags": "--region",
+				"description": "(AWS provider only) The region of the upstream bucket\n",
+				"type": "[string]"
+			},
+			{
+				"flags": "--access-key-id",
+				"description": "(AWS provider only) The secret access key id for the upstream bucket\n",
+				"type": "[string]"
+			},
+			{
+				"flags": "--secret-access-key",
+				"description": "(AWS provider only) The secret access key for the upstream bucket\n",
+				"type": "[string]"
+			},
+			{
+				"flags": "--service-account-key-file",
+				"description": "(GCS provider only) The path to your Google Cloud service account key JSON file\n",
+				"type": "[string]"
+			},
+			{
+				"flags": "--client-email",
+				"description": "(GCS provider only) The client email for your Google Cloud service account key\n",
+				"type": "[string]"
+			},
+			{
+				"flags": "--private-key",
+				"description": "(GCS provider only) The private key for your Google Cloud service account key\n",
+				"type": "[string]"
+			},
+			{
+				"flags": "--r2-access-key-id",
+				"description": "The secret access key id for this R2 bucket\n",
+				"type": "[string]"
+			},
+			{
+				"flags": "--r2-secret-access-key",
+				"description": "The secret access key for this R2 bucket\n",
+				"type": "[string]"
+			}
+		]
+	},
+	"wrangler r2 bucket sippy disable": {
+		"example": "wrangler r2 bucket sippy disable <name>",
+		"description": "Disable Sippy on an R2 bucket",
+		"positionals": [
+			{
+				"name": "name",
+				"description": "The name of the bucket",
+				"type": "[string] [required]"
+			}
+		],
+		"options": [
+			{
+				"flags": "-J, --jurisdiction",
+				"description": "The jurisdiction where the bucket exists\n",
+				"type": "[string]"
+			}
+		]
+	},
+	"wrangler r2 bucket sippy get": {
+		"example": "wrangler r2 bucket sippy get <name>",
+		"description": "Check the status of Sippy on an R2 bucket",
+		"positionals": [
+			{
+				"name": "name",
+				"description": "The name of the bucket",
+				"type": "[string] [required]"
+			}
+		],
+		"options": [
+			{
+				"flags": "-J, --jurisdiction",
+				"description": "The jurisdiction where the bucket exists\n",
+				"type": "[string]"
+			}
+		]
+	},
+	"wrangler r2 bucket notification list": {
+		"example": "wrangler r2 bucket notification list <bucket>",
+		"description": "List event notification rules for a bucket",
+		"positionals": [
+			{
+				"name": "bucket",
+				"description": "The name of the R2 bucket to get event notification rules for",
+				"type": "[string] [required]"
+			}
+		]
+	},
+	"wrangler r2 bucket notification create": {
+		"example": "wrangler r2 bucket notification create <bucket>",
+		"description": "Create an event notification rule for an R2 bucket",
+		"positionals": [
+			{
+				"name": "bucket",
+				"description": "The name of the R2 bucket to create an event notification rule for",
+				"type": "[string] [required]"
+			}
+		],
+		"options": [
+			{
+				"flags": "--event-types, --event-type",
+				"description": "The type of event(s) that will emit event notifications\n",
+				"type": "[array] [required] [choices: \"object-create\", \"object-delete\"]"
+			},
+			{
+				"flags": "--prefix",
+				"description": "The prefix that an object must match to emit event notifications (note: regular expressions not supported)\n",
+				"type": "[string]"
+			},
+			{
+				"flags": "--suffix",
+				"description": "The suffix that an object must match to emit event notifications (note: regular expressions not supported)\n",
+				"type": "[string]"
+			},
+			{
+				"flags": "--queue",
+				"description": "The name of the queue that will receive event notification messages\n",
+				"type": "[string] [required]"
+			}
+		]
+	},
+	"wrangler r2 bucket notification delete": {
+		"example": "wrangler r2 bucket notification delete <bucket>",
+		"description": "Delete an event notification rule from an R2 bucket",
+		"positionals": [
+			{
+				"name": "bucket",
+				"description": "The name of the R2 bucket to delete an event notification rule for",
+				"type": "[string] [required]"
+			}
+		],
+		"options": [
+			{
+				"flags": "--queue",
+				"description": "The name of the queue that corresponds to the event notification rule. If no rule is provided, all event notification rules associated with the bucket and queue will be deleted\n",
+				"type": "[string] [required]"
+			},
+			{
+				"flags": "--rule",
+				"description": "The ID of the event notification rule to delete\n",
+				"type": "[string]"
+			}
+		]
+	},
+	"wrangler d1 list": {
+		"example": "wrangler d1 list",
+		"description": "List D1 databases",
+		"options": [
+			{
+				"flags": "--json",
+				"description": "return output as clean JSON\n",
+				"type": "[boolean] [default: false]"
+			}
+		]
+	},
+	"wrangler d1 info": {
+		"example": "wrangler d1 info <name>",
+		"description": "Get information about a D1 database, including the current database size and state",
+		"positionals": [
+			{
+				"name": "name",
+				"description": "The name of the DB",
+				"type": "[string] [required]"
+			}
+		],
+		"options": [
+			{
+				"flags": "--json",
+				"description": "return output as clean JSON\n",
+				"type": "[boolean] [default: false]"
+			}
+		]
+	},
+	"wrangler d1 insights": {
+		"example": "wrangler d1 insights <name>",
+		"description": "Experimental command. Get information about the queries run on a D1 database.",
+		"positionals": [
+			{
+				"name": "name",
+				"description": "The name of the DB",
+				"type": "[string] [required]"
+			}
+		],
+		"options": [
+			{
+				"flags": "--timePeriod",
+				"description": "Fetch data from now to the provided time period\n",
+				"type": "[default: \"1d\"]"
+			},
+			{
+				"flags": "--sort-type",
+				"description": "Choose the operation you want to sort insights by\n",
+				"type": "[choices: \"sum\", \"avg\"] [default: \"sum\"]"
+			},
+			{
+				"flags": "--sort-by",
+				"description": "Choose the field you want to sort insights by\n",
+				"type": "[choices: \"time\", \"reads\", \"writes\", \"count\"] [default: \"time\"]"
+			},
+			{
+				"flags": "--sort-direction",
+				"description": "Choose a sort direction\n",
+				"type": "[choices: \"ASC\", \"DESC\"] [default: \"DESC\"]"
+			},
+			{
+				"flags": "--json",
+				"description": "return output as clean JSON\n",
+				"type": "[boolean] [default: false]"
+			},
+			{
+				"flags": "--count, --limit",
+				"description": "fetch insights about the first X queries\n",
+				"type": "[number]"
+			}
+		]
+	},
+	"wrangler d1 create": {
+		"example": "wrangler d1 create <name>",
+		"description": "Create D1 database",
+		"positionals": [
+			{
+				"name": "name",
+				"description": "The name of the new DB",
+				"type": "[string] [required]"
+			}
+		],
+		"options": [
+			{
+				"flags": "--location",
+				"description": "A hint for the primary location of the new DB. Options:\nweur: Western Europe\neeur: Eastern Europe\napac: Asia Pacific\noc: Oceania\nwnam: Western North America\nenam: Eastern North America\n",
+				"type": "[string]"
+			}
+		]
+	},
+	"wrangler d1 delete": {
+		"example": "wrangler d1 delete <name>",
+		"description": "Delete D1 database",
+		"positionals": [
+			{
+				"name": "name",
+				"description": "The name or binding of the DB",
+				"type": "[string] [required]"
+			}
+		],
+		"options": [
+			{
+				"flags": "-y, --skip-confirmation",
+				"description": "Skip confirmation\n",
+				"type": "[boolean] [default: false]"
+			}
+		]
+	},
+	"wrangler d1 backup list": {
+		"example": "wrangler d1 backup list <name>",
+		"description": "List your D1 backups",
+		"positionals": [
+			{
+				"name": "name",
+				"description": "The name or binding of the DB",
+				"type": "[string] [required]"
+			}
+		]
+	},
+	"wrangler d1 backup create": {
+		"example": "wrangler d1 backup create <name>",
+		"description": "Create a new D1 backup",
+		"positionals": [
+			{
+				"name": "name",
+				"description": "The name or binding of the DB",
+				"type": "[string] [required]"
+			}
+		]
+	},
+	"wrangler d1 backup restore": {
+		"example": "wrangler d1 backup restore <name> <backup-id>",
+		"description": "Restore a DB backup",
+		"positionals": [
+			{
+				"name": "name",
+				"description": "The name or binding of the DB",
+				"type": "[string] [required]"
+			},
+			{
+				"name": "backup-id",
+				"description": "The Backup ID to restore",
+				"type": "[string] [required]"
+			}
+		]
+	},
+	"wrangler d1 backup download": {
+		"example": "wrangler d1 backup download <name> <backup-id>",
+		"description": "Download a DB backup",
+		"positionals": [
+			{
+				"name": "name",
+				"description": "The name or binding of the DB",
+				"type": "[string] [required]"
+			},
+			{
+				"name": "backup-id",
+				"description": "The Backup ID to download",
+				"type": "[string] [required]"
+			}
+		],
+		"options": [
+			{
+				"flags": "--output",
+				"description": "The .sqlite3 file to write to (defaults to '<db-name>.<short-backup-id>.sqlite3'\n",
+				"type": "[string]"
+			}
+		]
+	},
+	"wrangler d1 execute": {
+		"example": "wrangler d1 execute <database>",
+		"description": "Execute a command or SQL file",
+		"positionals": [
+			{
+				"name": "database",
+				"description": "The name or binding of the DB",
+				"type": "[string] [required]"
+			}
+		],
+		"options": [
+			{
+				"flags": "-y, --yes",
+				"description": "Answer \"yes\" to any prompts\n",
+				"type": "[boolean]"
+			},
+			{
+				"flags": "--local",
+				"description": "Execute commands/files against a local DB for use with wrangler dev\n",
+				"type": "[boolean]"
+			},
+			{
+				"flags": "--remote",
+				"description": "Execute commands/files against a remote DB for use with wrangler dev\n",
+				"type": "[boolean]"
+			},
+			{
+				"flags": "--file",
+				"description": "A .sql file to ingest\n",
+				"type": "[string]"
+			},
+			{
+				"flags": "--command",
+				"description": "A single SQL statement to execute\n",
+				"type": "[string]"
+			},
+			{
+				"flags": "--persist-to",
+				"description": "Specify directory to use for local persistence (for --local)\n",
+				"type": "[string]"
+			},
+			{
+				"flags": "--json",
+				"description": "Return output as clean JSON\n",
+				"type": "[boolean] [default: false]"
+			},
+			{
+				"flags": "--preview",
+				"description": "Execute commands/files against a preview D1 DB\n",
+				"type": "[boolean] [default: false]"
+			}
+		]
+	},
+	"wrangler d1 export": {
+		"example": "wrangler d1 export <name>",
+		"description": "Export the contents or schema of your database as a .sql file",
+		"positionals": [
+			{
+				"name": "name",
+				"description": "The name or binding of the DB",
+				"type": "[string] [required]"
+			}
+		],
+		"options": [
+			{
+				"flags": "--local",
+				"description": "Export from your local DB you use with wrangler dev\n",
+				"type": "[boolean]"
+			},
+			{
+				"flags": "--remote",
+				"description": "Export from your live D1\n",
+				"type": "[boolean]"
+			},
+			{
+				"flags": "--no-schema",
+				"description": "Only output table contents, not the DB schema\n",
+				"type": "[boolean]"
+			},
+			{
+				"flags": "--no-data",
+				"description": "Only output table schema, not the contents of the DBs themselves\n",
+				"type": "[boolean]"
+			},
+			{
+				"flags": "--table",
+				"description": "Specify which tables to include in export\n",
+				"type": "[string]"
+			},
+			{
+				"flags": "--output",
+				"description": "Which .sql file to output to\n",
+				"type": "[string] [required]"
+			}
+		]
+	},
+	"wrangler d1 time-travel info": {
+		"example": "wrangler d1 time-travel info <database>",
+		"description": "Retrieve information about a database at a specific point-in-time using Time Travel",
+		"positionals": [
+			{
+				"name": "database",
+				"description": "The name or binding of the DB",
+				"type": "[string] [required]"
+			}
+		],
+		"options": [
+			{
+				"flags": "--timestamp",
+				"description": "accepts a Unix (seconds from epoch) or RFC3339 timestamp (e.g. 2023-07-13T08:46:42.228Z) to retrieve a bookmark for\n",
+				"type": "[string]"
+			},
+			{
+				"flags": "--json",
+				"description": "return output as clean JSON\n",
+				"type": "[boolean] [default: false]"
+			}
+		]
+	},
+	"wrangler d1 time-travel restore": {
+		"example": "wrangler d1 time-travel restore <database>",
+		"description": "Restore a database back to a specific point-in-time",
+		"positionals": [
+			{
+				"name": "database",
+				"description": "The name or binding of the DB",
+				"type": "[string] [required]"
+			}
+		],
+		"options": [
+			{
+				"flags": "--bookmark",
+				"description": "Bookmark to use for time travel\n",
+				"type": "[string]"
+			},
+			{
+				"flags": "--timestamp",
+				"description": "accepts a Unix (seconds from epoch) or RFC3339 timestamp (e.g. 2023-07-13T08:46:42.228Z) to retrieve a bookmark for\n",
+				"type": "[string]"
+			},
+			{
+				"flags": "--json",
+				"description": "return output as clean JSON\n",
+				"type": "[boolean] [default: false]"
+			}
+		]
+	},
+	"wrangler d1 migrations list": {
+		"example": "wrangler d1 migrations list <database>",
+		"description": "List your D1 migrations",
+		"positionals": [
+			{
+				"name": "database",
+				"description": "The name or binding of the DB",
+				"type": "[string] [required]"
+			}
+		],
+		"options": [
+			{
+				"flags": "--local",
+				"description": "Execute commands/files against a local DB for use with wrangler dev\n",
+				"type": "[boolean]"
+			},
+			{
+				"flags": "--remote",
+				"description": "Execute commands/files against a remote DB for use with wrangler dev --remote\n",
+				"type": "[boolean]"
+			},
+			{
+				"flags": "--preview",
+				"description": "Execute commands/files against a preview D1 DB\n",
+				"type": "[boolean] [default: false]"
+			},
+			{
+				"flags": "--persist-to",
+				"description": "Specify directory to use for local persistence (you must use --local with this flag)\n",
+				"type": "[string]"
+			}
+		]
+	},
+	"wrangler d1 migrations create": {
+		"example": "wrangler d1 migrations create <database> <message>",
+		"description": "Create a new migration",
+		"positionals": [
+			{
+				"name": "database",
+				"description": "The name or binding of the DB",
+				"type": "[string] [required]"
+			},
+			{
+				"name": "message",
+				"description": "The Migration message",
+				"type": "[string] [required]"
+			}
+		]
+	},
+	"wrangler d1 migrations apply": {
+		"example": "wrangler d1 migrations apply <database>",
+		"description": "Apply D1 migrations",
+		"positionals": [
+			{
+				"name": "database",
+				"description": "The name or binding of the DB",
+				"type": "[string] [required]"
+			}
+		],
+		"options": [
+			{
+				"flags": "--local",
+				"description": "Execute commands/files against a local DB for use with wrangler dev\n",
+				"type": "[boolean]"
+			},
+			{
+				"flags": "--remote",
+				"description": "Execute commands/files against a remote DB for use with wrangler dev --remote\n",
+				"type": "[boolean]"
+			},
+			{
+				"flags": "--preview",
+				"description": "Execute commands/files against a preview D1 DB\n",
+				"type": "[boolean] [default: false]"
+			},
+			{
+				"flags": "--persist-to",
+				"description": "Specify directory to use for local persistence (you must use --local with this flag)\n",
+				"type": "[string]"
+			},
+			{
+				"flags": "--batch-size",
+				"description": "Number of queries to send in a single batch\n",
+				"type": "[deprecated] [number]"
+			}
+		]
+	},
+	"wrangler vectorize create": {
+		"example": "wrangler vectorize create <name>",
+		"description": "Create a Vectorize index",
+		"positionals": [
+			{
+				"name": "name",
+				"description": "The name of the Vectorize index to create (must be unique).",
+				"type": "[string] [required]"
+			}
+		],
+		"options": [
+			{
+				"flags": "--dimensions",
+				"description": "The dimension size to configure this index for, based on the output dimensions of your ML model.\n",
+				"type": "[number]"
+			},
+			{
+				"flags": "--metric",
+				"description": "The distance metric to use for searching within the index.\n",
+				"type": "[string] [choices: \"euclidean\", \"cosine\", \"dot-product\"]"
+			},
+			{
+				"flags": "--preset",
+				"description": "The name of an preset representing an embeddings model: Vectorize will configure the dimensions and distance metric for you when provided.\n",
+				"type": "[string] [choices: \"@cf/baai/bge-small-en-v1.5\", \"@cf/baai/bge-base-en-v1.5\", \"@cf/baai/bge-large-en-v1.5\", \"openai/text-embedding-ada-002\", \"cohere/embed-multilingual-v2.0\"]"
+			},
+			{
+				"flags": "--description",
+				"description": "An optional description for this index.\n",
+				"type": "[string]"
+			},
+			{
+				"flags": "--json",
+				"description": "return output as clean JSON\n",
+				"type": "[boolean] [default: false]"
+			},
+			{
+				"flags": "--deprecated-v1",
+				"description": "Create a deprecated Vectorize V1 index. This is not recommended and indexes created with this option need all other Vectorize operations to have this option enabled.\n",
+				"type": "[boolean] [default: false]"
+			}
+		]
+	},
+	"wrangler vectorize delete": {
+		"example": "wrangler vectorize delete <name>",
+		"description": "Delete a Vectorize index",
+		"positionals": [
+			{
+				"name": "name",
+				"description": "The name of the Vectorize index",
+				"type": "[string] [required]"
+			}
+		],
+		"options": [
+			{
+				"flags": "-y, --force",
+				"description": "Skip confirmation\n",
+				"type": "[boolean] [default: false]"
+			},
+			{
+				"flags": "--deprecated-v1",
+				"description": "Delete a deprecated Vectorize V1 index.\n",
+				"type": "[boolean] [default: false]"
+			}
+		]
+	},
+	"wrangler vectorize get": {
+		"example": "wrangler vectorize get <name>",
+		"description": "Get a Vectorize index by name",
+		"positionals": [
+			{
+				"name": "name",
+				"description": "The name of the Vectorize index.",
+				"type": "[string] [required]"
+			}
+		],
+		"options": [
+			{
+				"flags": "--json",
+				"description": "return output as clean JSON\n",
+				"type": "[boolean] [default: false]"
+			},
+			{
+				"flags": "--deprecated-v1",
+				"description": "Fetch a deprecated V1 Vectorize index. This must be enabled if the index was created with V1 option.\n",
+				"type": "[boolean] [default: false]"
+			}
+		]
+	},
+	"wrangler vectorize list": {
+		"example": "wrangler vectorize list",
+		"description": "List your Vectorize indexes",
+		"options": [
+			{
+				"flags": "--json",
+				"description": "return output as clean JSON\n",
+				"type": "[boolean] [default: false]"
+			},
+			{
+				"flags": "--deprecated-v1",
+				"description": "List deprecated Vectorize V1 indexes for your account.\n",
+				"type": "[boolean] [default: false]"
+			}
+		]
+	},
+	"wrangler vectorize query": {
+		"example": "wrangler vectorize query <name>",
+		"description": "Query a Vectorize index",
+		"positionals": [
+			{
+				"name": "name",
+				"description": "The name of the Vectorize index",
+				"type": "[string] [required]"
+			}
+		],
+		"options": [
+			{
+				"flags": "--vector",
+				"description": "Vector to query the Vectorize Index\n",
+				"type": "[array] [required]"
+			},
+			{
+				"flags": "--top-k",
+				"description": "The number of results (nearest neighbors) to return\n",
+				"type": "[number] [default: 5]"
+			},
+			{
+				"flags": "--return-values",
+				"description": "Specify if the vector values should be included in the results\n",
+				"type": "[boolean] [default: false]"
+			},
+			{
+				"flags": "--return-metadata",
+				"description": "Specify if the vector metadata should be included in the results\n",
+				"type": "[string] [choices: \"all\", \"indexed\", \"none\"] [default: \"none\"]"
+			},
+			{
+				"flags": "--namespace",
+				"description": "Filter the query results based on this namespace\n",
+				"type": "[string]"
+			},
+			{
+				"flags": "--filter",
+				"description": "Filter the query results based on this metadata filter.\n",
+				"type": "[string]"
+			}
+		]
+	},
+	"wrangler vectorize insert": {
+		"example": "wrangler vectorize insert <name>",
+		"description": "Insert vectors into a Vectorize index",
+		"positionals": [
+			{
+				"name": "name",
+				"description": "The name of the Vectorize index.",
+				"type": "[string] [required]"
+			}
+		],
+		"options": [
+			{
+				"flags": "--file",
+				"description": "A file containing line separated json (ndjson) vector objects.\n",
+				"type": "[string] [required]"
+			},
+			{
+				"flags": "--batch-size",
+				"description": "Number of vector records to include when sending to the Cloudflare API.\n",
+				"type": "[number] [default: 1000]"
+			},
+			{
+				"flags": "--json",
+				"description": "return output as clean JSON\n",
+				"type": "[boolean] [default: false]"
+			},
+			{
+				"flags": "--deprecated-v1",
+				"description": "Insert into a deprecated V1 Vectorize index. This must be enabled if the index was created with the V1 option.\n",
+				"type": "[boolean] [default: false]"
+			}
+		]
+	},
+	"wrangler vectorize upsert": {
+		"example": "wrangler vectorize upsert <name>",
+		"description": "Upsert vectors into a Vectorize index",
+		"positionals": [
+			{
+				"name": "name",
+				"description": "The name of the Vectorize index.",
+				"type": "[string] [required]"
+			}
+		],
+		"options": [
+			{
+				"flags": "--file",
+				"description": "A file containing line separated json (ndjson) vector objects.\n",
+				"type": "[string] [required]"
+			},
+			{
+				"flags": "--batch-size",
+				"description": "Number of vector records to include in a single upsert batch when sending to the Cloudflare API.\n",
+				"type": "[number] [default: 5000]"
+			},
+			{
+				"flags": "--json",
+				"description": "return output as clean JSON\n",
+				"type": "[boolean] [default: false]"
+			}
+		]
+	},
+	"wrangler vectorize get-vectors": {
+		"example": "wrangler vectorize get-vectors <name>",
+		"description": "Get vectors from a Vectorize index",
+		"positionals": [
+			{
+				"name": "name",
+				"description": "The name of the Vectorize index.",
+				"type": "[string] [required]"
+			}
+		],
+		"options": [
+			{
+				"flags": "--ids",
+				"description": "Vector identifiers to be fetched from the Vectorize Index. Example: `--ids a 'b' 1 '2'`\n",
+				"type": "[array] [required]"
+			}
+		]
+	},
+	"wrangler vectorize delete-vectors": {
+		"example": "wrangler vectorize delete-vectors <name>",
+		"description": "Delete vectors in a Vectorize index",
+		"positionals": [
+			{
+				"name": "name",
+				"description": "The name of the Vectorize index.",
+				"type": "[string] [required]"
+			}
+		],
+		"options": [
+			{
+				"flags": "--ids",
+				"description": "Vector identifiers to be deleted from the Vectorize Index.\nExample: `--ids a 'b' 1 '2'`\n",
+				"type": "[array] [required]"
+			}
+		]
+	},
+	"wrangler vectorize info": {
+		"example": "wrangler vectorize info <name>",
+		"description": "Get additional details about the index",
+		"positionals": [
+			{
+				"name": "name",
+				"description": "The name of the Vectorize index.",
+				"type": "[string] [required]"
+			}
+		],
+		"options": [
+			{
+				"flags": "--json",
+				"description": "return output as clean JSON\n",
+				"type": "[boolean] [default: false]"
+			}
+		]
+	},
+	"wrangler vectorize create-metadata-index": {
+		"example": "wrangler vectorize create-metadata-index <name>",
+		"description": "Enable metadata filtering on the specified property",
+		"positionals": [
+			{
+				"name": "name",
+				"description": "The name of the Vectorize index.",
+				"type": "[string] [required]"
+			},
+			{
+				"name": "property-name",
+				"description": "The name of the metadata property to index.",
+				"type": "[string]"
+			},
+			{
+				"name": "type",
+				"description": "The type of metadata property to index. Valid types are 'string', 'number' and 'boolean'.",
+				"type": "[string] [choices: \"string\", \"number\", \"boolean\"]"
+			}
+		]
+	},
+	"wrangler vectorize list-metadata-index": {
+		"example": "wrangler vectorize list-metadata-index <name>",
+		"description": "List metadata properties on which metadata filtering is enabled",
+		"positionals": [
+			{
+				"name": "name",
+				"description": "The name of the Vectorize index.",
+				"type": "[string] [required]"
+			}
+		],
+		"options": [
+			{
+				"flags": "--json",
+				"description": "return output as clean JSON\n",
+				"type": "[boolean] [default: false]"
+			}
+		]
+	},
+	"wrangler vectorize delete-metadata-index": {
+		"example": "wrangler vectorize delete-metadata-index <name>",
+		"description": "Delete metadata indexes",
+		"positionals": [
+			{
+				"name": "name",
+				"description": "The name of the Vectorize index.",
+				"type": "[string] [required]"
+			},
+			{
+				"name": "property-name",
+				"description": "The name of the metadata property to index.",
+				"type": "[string]"
+			}
+		]
+	},
+	"wrangler hyperdrive create": {
+		"example": "wrangler hyperdrive create <name>",
+		"description": "Create a Hyperdrive config",
+		"positionals": [
+			{
+				"name": "name",
+				"description": "The name of the Hyperdrive config",
+				"type": "[string] [required]"
+			}
+		],
+		"options": [
+			{
+				"flags": "--connection-string",
+				"description": "The connection string for the database you want Hyperdrive to connect to - ex: protocol://user:password@host:port/database\n",
+				"type": "[string]"
+			},
+			{
+				"flags": "--host",
+				"description": "The host of the origin database\n",
+				"type": "[string]"
+			},
+			{
+				"flags": "--port",
+				"description": "The port number of the origin database\n",
+				"type": "[number]"
+			},
+			{
+				"flags": "--scheme",
+				"description": "The scheme used to connect to the origin database - e.g. postgresql or postgres\n",
+				"type": "[string] [default: \"postgresql\"]"
+			},
+			{
+				"flags": "--database",
+				"description": "The name of the database within the origin database\n",
+				"type": "[string]"
+			},
+			{
+				"flags": "--user",
+				"description": "The username used to connect to the origin database\n",
+				"type": "[string]"
+			},
+			{
+				"flags": "--password",
+				"description": "The password used to connect to the origin database\n",
+				"type": "[string]"
+			},
+			{
+				"flags": "--access-client-id",
+				"description": "The Client ID of the Access token to use when connecting to the origin database, must be set with a Client Access Secret\n",
+				"type": "[string]"
+			},
+			{
+				"flags": "--access-client-secret",
+				"description": "The Client Secret of the Access token to use when connecting to the origin database, must be set with a Client Access ID\n",
+				"type": "[string]"
+			},
+			{
+				"flags": "--caching-disabled",
+				"description": "Disables the caching of SQL responses\n",
+				"type": "[boolean] [default: false]"
+			},
+			{
+				"flags": "--max-age",
+				"description": "Specifies max duration for which items should persist in the cache, cannot be set when caching is disabled\n",
+				"type": "[number]"
+			},
+			{
+				"flags": "--swr",
+				"description": "Indicates the number of seconds cache may serve the response after it becomes stale, cannot be set when caching is disabled\n",
+				"type": "[number]"
+			}
+		]
+	},
+	"wrangler hyperdrive delete": {
+		"example": "wrangler hyperdrive delete <id>",
+		"description": "Delete a Hyperdrive config",
+		"positionals": [
+			{
+				"name": "id",
+				"description": "The ID of the Hyperdrive config",
+				"type": "[string] [required]"
+			}
+		]
+	},
+	"wrangler hyperdrive get": {
+		"example": "wrangler hyperdrive get <id>",
+		"description": "Get a Hyperdrive config",
+		"positionals": [
+			{
+				"name": "id",
+				"description": "The ID of the Hyperdrive config",
+				"type": "[string] [required]"
+			}
+		]
+	},
+	"wrangler hyperdrive list": {
+		"example": "wrangler hyperdrive list",
+		"description": "List Hyperdrive configs"
+	},
+	"wrangler hyperdrive update": {
+		"example": "wrangler hyperdrive update <id>",
+		"description": "Update a Hyperdrive config",
+		"positionals": [
+			{
+				"name": "id",
+				"description": "The ID of the Hyperdrive config",
+				"type": "[string] [required]"
+			}
+		],
+		"options": [
+			{
+				"flags": "--name",
+				"description": "Give your config a new name\n",
+				"type": "[string]"
+			},
+			{
+				"flags": "--origin-host",
+				"description": "The host of the origin database\n",
+				"type": "[string]"
+			},
+			{
+				"flags": "--origin-port",
+				"description": "The port number of the origin database\n",
+				"type": "[number]"
+			},
+			{
+				"flags": "--origin-scheme",
+				"description": "The scheme used to connect to the origin database - e.g. postgresql or postgres\n",
+				"type": "[string]"
+			},
+			{
+				"flags": "--database",
+				"description": "The name of the database within the origin database\n",
+				"type": "[string]"
+			},
+			{
+				"flags": "--origin-user",
+				"description": "The username used to connect to the origin database\n",
+				"type": "[string]"
+			},
+			{
+				"flags": "--origin-password",
+				"description": "The password used to connect to the origin database\n",
+				"type": "[string]"
+			},
+			{
+				"flags": "--access-client-id",
+				"description": "The Client ID of the Access token to use when connecting to the origin database\n",
+				"type": "[string]"
+			},
+			{
+				"flags": "--access-client-secret",
+				"description": "The Client Secret of the Access token to use when connecting to the origin database\n",
+				"type": "[string]"
+			},
+			{
+				"flags": "--caching-disabled",
+				"description": "Disables the caching of SQL responses\n",
+				"type": "[boolean] [default: false]"
+			},
+			{
+				"flags": "--max-age",
+				"description": "Specifies max duration for which items should persist in the cache, cannot be set when caching is disabled\n",
+				"type": "[number]"
+			},
+			{
+				"flags": "--swr",
+				"description": "Indicates the number of seconds cache may serve the response after it becomes stale, cannot be set when caching is disabled\n",
+				"type": "[number]"
+			}
+		]
+	},
+	"wrangler pages dev": {
+		"example": "wrangler pages dev [directory] [-- command..]",
+		"description": "Develop your full-stack Pages application locally",
+		"positionals": [
+			{
+				"name": "directory",
+				"description": "The directory of static assets to serve",
+				"type": "[string]"
+			},
+			{
+				"name": "command",
+				"description": "The proxy command to run",
+				"type": "[deprecated]"
+			}
+		],
+		"options": [
+			{
+				"flags": "--compatibility-date",
+				"description": "Date to use for compatibility checks\n",
+				"type": "[string]"
+			},
+			{
+				"flags": "--compatibility-flags, --compatibility-flag",
+				"description": "Flags to use for compatibility checks\n",
+				"type": "[array]"
+			},
+			{
+				"flags": "--ip",
+				"description": "The IP address to listen on\n",
+				"type": "[string]"
+			},
+			{
+				"flags": "--port",
+				"description": "The port to listen on (serve from)\n",
+				"type": "[number]"
+			},
+			{
+				"flags": "--inspector-port",
+				"description": "Port for devtools to connect to\n",
+				"type": "[number]"
+			},
+			{
+				"flags": "--proxy",
+				"description": "The port to proxy (where the static assets are served)\n",
+				"type": "[deprecated] [number]"
+			},
+			{
+				"flags": "--script-path",
+				"description": "The location of the single Worker script if not using functions\n\n[deprecated] [string]",
+				"type": "[default: _worker.js]"
+			},
+			{
+				"flags": "--no-bundle",
+				"description": "Whether to run bundling on `_worker.js`\n",
+				"type": "[boolean] [default: false]"
+			},
+			{
+				"flags": "-b, --binding",
+				"description": "Bind variable/secret (KEY=VALUE)\n",
+				"type": "[array]"
+			},
+			{
+				"flags": "-k, --kv",
+				"description": "KV namespace to bind (--kv KV_BINDING)\n",
+				"type": "[array]"
+			},
+			{
+				"flags": "--d1",
+				"description": "D1 database to bind (--d1 D1_BINDING)\n",
+				"type": "[array]"
+			},
+			{
+				"flags": "-o, --do",
+				"description": "Durable Object to bind (--do DO_BINDING=CLASS_NAME@SCRIPT_NAME)\n",
+				"type": "[array]"
+			},
+			{
+				"flags": "--r2",
+				"description": "R2 bucket to bind (--r2 R2_BINDING)\n",
+				"type": "[array]"
+			},
+			{
+				"flags": "--ai",
+				"description": "AI to bind (--ai AI_BINDING)\n",
+				"type": "[string]"
+			},
+			{
+				"flags": "--version-metadata",
+				"description": "Worker Version metadata (--version-metadata VERSION_METADATA_BINDING)\n",
+				"type": "[string]"
+			},
+			{
+				"flags": "--service",
+				"description": "Service to bind (--service SERVICE=SCRIPT_NAME)\n",
+				"type": "[array]"
+			},
+			{
+				"flags": "--live-reload",
+				"description": "Auto reload HTML pages when change is detected\n",
+				"type": "[boolean] [default: false]"
+			},
+			{
+				"flags": "--local-protocol",
+				"description": "Protocol to listen to requests on, defaults to http.\n",
+				"type": "[choices: \"http\", \"https\"]"
+			},
+			{
+				"flags": "--https-key-path",
+				"description": "Path to a custom certificate key\n",
+				"type": "[string]"
+			},
+			{
+				"flags": "--https-cert-path",
+				"description": "Path to a custom certificate\n",
+				"type": "[string]"
+			},
+			{
+				"flags": "--persist-to",
+				"description": "Specify directory to use for local persistence (defaults to .wrangler/state)\n",
+				"type": "[string]"
+			},
+			{
+				"flags": "--log-level",
+				"description": "Specify logging level\n",
+				"type": "[choices: \"debug\", \"info\", \"log\", \"warn\", \"error\", \"none\"]"
+			},
+			{
+				"flags": "--show-interactive-dev-session",
+				"description": "Show interactive dev session (defaults to true if the terminal supports interactivity)\n",
+				"type": "[boolean]"
+			},
+			{
+				"flags": "--experimental-dev-env, --x-dev-env",
+				"description": "Use the experimental DevEnv instantiation (unified across wrangler dev and unstable_dev)\n",
+				"type": "[boolean] [default: false]"
+			},
+			{
+				"flags": "--experimental-registry, --x-registry",
+				"description": "Use the experimental file based dev registry for multi-worker development\n",
+				"type": "[boolean] [default: false]"
+			}
+		]
+	},
+	"wrangler pages project list": {
+		"example": "wrangler pages project list",
+		"description": "List your Cloudflare Pages projects"
+	},
+	"wrangler pages project create": {
+		"example": "wrangler pages project create [project-name]",
+		"description": "Create a new Cloudflare Pages project",
+		"positionals": [
+			{
+				"name": "project-name",
+				"description": "The name of your Pages project",
+				"type": "[string]"
+			}
+		],
+		"options": [
+			{
+				"flags": "--production-branch",
+				"description": "The name of the production branch of your project\n",
+				"type": "[string]"
+			},
+			{
+				"flags": "--compatibility-flags, --compatibility-flag",
+				"description": "Flags to use for compatibility checks\n",
+				"type": "[array]"
+			},
+			{
+				"flags": "--compatibility-date",
+				"description": "Date to use for compatibility checks\n",
+				"type": "[string]"
+			}
+		]
+	},
+	"wrangler pages project delete": {
+		"example": "wrangler pages project delete [project-name]",
+		"description": "Delete a Cloudflare Pages project",
+		"positionals": [
+			{
+				"name": "project-name",
+				"description": "The name of your Pages project",
+				"type": "[string] [required]"
+			}
+		],
+		"options": [
+			{
+				"flags": "-y, --yes",
+				"description": "Answer \"yes\" to confirm project deletion\n",
+				"type": "[boolean]"
+			}
+		]
+	},
+	"wrangler pages deployment list": {
+		"example": "wrangler pages deployment list",
+		"description": "List deployments in your Cloudflare Pages project",
+		"options": [
+			{
+				"flags": "--project-name",
+				"description": "The name of the project you would like to list deployments for\n",
+				"type": "[string]"
+			}
+		]
+	},
+	"wrangler pages deployment create": {
+		"example": "wrangler pages deployment create [directory]",
+		"description": "Publish a directory of static assets as a Pages deployment",
+		"positionals": [
+			{
+				"name": "directory",
+				"description": "The directory of static files to upload",
+				"type": "[string]"
+			}
+		],
+		"options": [
+			{
+				"flags": "--project-name",
+				"description": "The name of the project you want to deploy to\n",
+				"type": "[string]"
+			},
+			{
+				"flags": "--branch",
+				"description": "The name of the branch you want to deploy to\n",
+				"type": "[string]"
+			},
+			{
+				"flags": "--commit-hash",
+				"description": "The SHA to attach to this deployment\n",
+				"type": "[string]"
+			},
+			{
+				"flags": "--commit-message",
+				"description": "The commit message to attach to this deployment\n",
+				"type": "[string]"
+			},
+			{
+				"flags": "--commit-dirty",
+				"description": "Whether or not the workspace should be considered dirty for this deployment\n",
+				"type": "[boolean]"
+			},
+			{
+				"flags": "--skip-caching",
+				"description": "Skip asset caching which speeds up builds\n",
+				"type": "[boolean]"
+			},
+			{
+				"flags": "--no-bundle",
+				"description": "Whether to run bundling on `_worker.js` before deploying\n",
+				"type": "[boolean] [default: false]"
+			},
+			{
+				"flags": "--upload-source-maps",
+				"description": "Whether to upload any server-side sourcemaps with this deployment\n",
+				"type": "[boolean] [default: false]"
+			}
+		]
+	},
+	"wrangler pages deployment tail": {
+		"example": "wrangler pages deployment tail [deployment]",
+		"description": "Start a tailing session for a project's deployment and livestream logs from your Functions",
+		"positionals": [
+			{
+				"name": "deployment",
+				"description": "(Optional) ID or URL of the deployment to tail. Specify by environment if deployment ID is unknown.",
+				"type": "[string]"
+			}
+		],
+		"options": [
+			{
+				"flags": "--project-name",
+				"description": "The name of the project you would like to tail\n",
+				"type": "[string]"
+			},
+			{
+				"flags": "--environment",
+				"description": "When not providing a specific deployment ID, specifying environment will grab the latest production or preview deployment\n",
+				"type": "[string] [choices: \"production\", \"preview\"] [default: \"production\"]"
+			},
+			{
+				"flags": "--format",
+				"description": "The format of log entries\n",
+				"type": "[choices: \"json\", \"pretty\"] [default: \"json\"]"
+			},
+			{
+				"flags": "--status",
+				"description": "Filter by invocation status\n",
+				"type": "[array] [choices: \"ok\", \"error\", \"canceled\"]"
+			},
+			{
+				"flags": "--header",
+				"description": "Filter by HTTP header\n",
+				"type": "[string]"
+			},
+			{
+				"flags": "--method",
+				"description": "Filter by HTTP method\n",
+				"type": "[array]"
+			},
+			{
+				"flags": "--search",
+				"description": "Filter by a text match in console.log messages\n",
+				"type": "[string]"
+			},
+			{
+				"flags": "--sampling-rate",
+				"description": "Adds a percentage of requests to log sampling rate\n",
+				"type": "[number]"
+			},
+			{
+				"flags": "--ip",
+				"description": "Filter by the IP address the request originates from. Use \"self\" to filter for your own IP\n",
+				"type": "[array]"
+			}
+		]
+	},
+	"wrangler pages deploy": {
+		"example": "wrangler pages deploy [directory]",
+		"description": "Deploy a directory of static assets as a Pages deployment",
+		"positionals": [
+			{
+				"name": "directory",
+				"description": "The directory of static files to upload",
+				"type": "[string]"
+			}
+		],
+		"options": [
+			{
+				"flags": "--project-name",
+				"description": "The name of the project you want to deploy to\n",
+				"type": "[string]"
+			},
+			{
+				"flags": "--branch",
+				"description": "The name of the branch you want to deploy to\n",
+				"type": "[string]"
+			},
+			{
+				"flags": "--commit-hash",
+				"description": "The SHA to attach to this deployment\n",
+				"type": "[string]"
+			},
+			{
+				"flags": "--commit-message",
+				"description": "The commit message to attach to this deployment\n",
+				"type": "[string]"
+			},
+			{
+				"flags": "--commit-dirty",
+				"description": "Whether or not the workspace should be considered dirty for this deployment\n",
+				"type": "[boolean]"
+			},
+			{
+				"flags": "--skip-caching",
+				"description": "Skip asset caching which speeds up builds\n",
+				"type": "[boolean]"
+			},
+			{
+				"flags": "--no-bundle",
+				"description": "Whether to run bundling on `_worker.js` before deploying\n",
+				"type": "[boolean] [default: false]"
+			},
+			{
+				"flags": "--upload-source-maps",
+				"description": "Whether to upload any server-side sourcemaps with this deployment\n",
+				"type": "[boolean] [default: false]"
+			}
+		]
+	},
+	"wrangler pages secret put": {
+		"example": "wrangler pages secret put <key>",
+		"description": "Create or update a secret variable for a Pages project",
+		"positionals": [
+			{
+				"name": "key",
+				"description": "The variable name to be accessible in the Pages project",
+				"type": "[string] [required]"
+			}
+		],
+		"options": [
+			{
+				"flags": "--project-name, --project",
+				"description": "The name of your Pages project\n",
+				"type": "[string]"
+			}
+		]
+	},
+	"wrangler pages secret bulk": {
+		"example": "wrangler pages secret bulk [json]",
+		"description": "Bulk upload secrets for a Pages project",
+		"positionals": [
+			{
+				"name": "json",
+				"description": "The JSON file of key-value pairs to upload, in form {\"key\": value, ...}",
+				"type": "[string]"
+			}
+		],
+		"options": [
+			{
+				"flags": "--project-name, --project",
+				"description": "The name of your Pages project\n",
+				"type": "[string]"
+			}
+		]
+	},
+	"wrangler pages secret delete": {
+		"example": "wrangler pages secret delete <key>",
+		"description": "Delete a secret variable from a Pages project",
+		"positionals": [
+			{
+				"name": "key",
+				"description": "The variable name to be accessible in the Pages project",
+				"type": "[string] [required]"
+			}
+		],
+		"options": [
+			{
+				"flags": "--project-name, --project",
+				"description": "The name of your Pages project\n",
+				"type": "[string]"
+			}
+		]
+	},
+	"wrangler pages secret list": {
+		"example": "wrangler pages secret list",
+		"description": "List all secrets for a Pages project",
+		"options": [
+			{
+				"flags": "--project-name, --project",
+				"description": "The name of your Pages project\n",
+				"type": "[string]"
+			}
+		]
+	},
+	"wrangler pages download config": {
+		"example": "wrangler pages download config [projectName]",
+		"description": "Experimental: Download your Pages project config as a wrangler.toml file",
+		"positionals": [
+			{
+				"name": "projectName",
+				"description": "The Pages project to download",
+				"type": "[string]"
+			}
+		],
+		"options": [
+			{
+				"flags": "--force",
+				"description": "Overwrite an existing `wrangler.toml` file without prompting\n",
+				"type": "[boolean]"
+			}
+		]
+	},
+	"wrangler mtls-certificate upload": {
+		"example": "wrangler mtls-certificate upload",
+		"description": "Upload an mTLS certificate",
+		"options": [
+			{
+				"flags": "--cert",
+				"description": "The path to a certificate file (.pem) containing a chain of certificates to upload\n",
+				"type": "[string] [required]"
+			},
+			{
+				"flags": "--key",
+				"description": "The path to a file containing the private key for your leaf certificate\n",
+				"type": "[string] [required]"
+			},
+			{
+				"flags": "--name",
+				"description": "The name for the certificate\n",
+				"type": "[string]"
+			}
+		]
+	},
+	"wrangler mtls-certificate list": {
+		"example": "wrangler mtls-certificate list",
+		"description": "List uploaded mTLS certificates"
+	},
+	"wrangler mtls-certificate delete": {
+		"example": "wrangler mtls-certificate delete",
+		"description": "Delete an mTLS certificate",
+		"options": [
+			{
+				"flags": "--id",
+				"description": "The id of the mTLS certificate to delete\n",
+				"type": "[string]"
+			},
+			{
+				"flags": "--name",
+				"description": "The name of the mTLS certificate record to delete\n",
+				"type": "[string]"
+			}
+		]
+	},
+	"wrangler pubsub namespace create": {
+		"example": "wrangler pubsub namespace create <name>",
+		"description": "Create a new Pub/Sub Namespace",
+		"positionals": [
+			{
+				"name": "name",
+				"description": "The name of the new Namespace. This name will form part of the public endpoint, in the form <broker>.<namespace>.cloudflarepubsub.com",
+				"type": "[string] [required]"
+			}
+		],
+		"options": [
+			{
+				"flags": "--description",
+				"description": "Textual description of Namespace\n\n👷🏽 'wrangler pubsub ...' commands are currently in private beta. If your account isn't authorized, commands will fail. Visit the Pub/Sub docs for more info: https://developers.cloudflare.com/pub-sub/",
+				"type": "[string]"
+			}
+		]
+	},
+	"wrangler pubsub namespace list": {
+		"example": "wrangler pubsub namespace list",
+		"description": "List your existing Pub/Sub Namespaces"
+	},
+	"wrangler pubsub namespace delete": {
+		"example": "wrangler pubsub namespace delete <name>",
+		"description": "Delete a Pub/Sub Namespace",
+		"positionals": [
+			{
+				"name": "name",
+				"description": "The name of the namespace to delete",
+				"type": "[string] [required]"
+			}
+		]
+	},
+	"wrangler pubsub namespace describe": {
+		"example": "wrangler pubsub namespace describe <name>",
+		"description": "Describe a Pub/Sub Namespace",
+		"positionals": [
+			{
+				"name": "name",
+				"description": "The name of the namespace to describe.",
+				"type": "[string] [required]"
+			}
+		]
+	},
+	"wrangler pubsub broker create": {
+		"example": "wrangler pubsub broker create <name>",
+		"description": "Create a new Pub/Sub Broker",
+		"positionals": [
+			{
+				"name": "name",
+				"description": "The name of the Pub/Sub Broker. This name will form part of the public endpoint, in the form <broker>.<namespace>.cloudflarepubsub.com",
+				"type": "[string] [required]"
+			}
+		],
+		"options": [
+			{
+				"flags": "--namespace, --ns",
+				"description": "An existing Namespace to associate the Broker with. This name will form part of the public endpoint, in the form <broker>.<namespace>.cloudflarepubsub.com\n",
+				"type": "[string] [required]"
+			},
+			{
+				"flags": "--description",
+				"description": "Longer description for the broker\n",
+				"type": "[string]"
+			},
+			{
+				"flags": "--expiration",
+				"description": "Time to allow token validity (can use seconds, hours, months, weeks, years)\n",
+				"type": "[string]"
+			},
+			{
+				"flags": "--on-publish-url",
+				"description": "A (HTTPS) Cloudflare Worker (or webhook) URL that messages will be sent to on-publish.\n\n👷🏽 'wrangler pubsub ...' commands are currently in private beta. If your account isn't authorized, commands will fail. Visit the Pub/Sub docs for more info: https://developers.cloudflare.com/pub-sub/",
+				"type": "[string]"
+			}
+		]
+	},
+	"wrangler pubsub broker update": {
+		"example": "wrangler pubsub broker update <name>",
+		"description": "Update an existing Pub/Sub Broker's configuration.",
+		"positionals": [
+			{
+				"name": "name",
+				"description": "The name of an existing Pub/Sub Broker",
+				"type": "[string] [required]"
+			}
+		],
+		"options": [
+			{
+				"flags": "--namespace, --ns",
+				"description": "The Namespace the Broker is associated with\n",
+				"type": "[string] [required]"
+			},
+			{
+				"flags": "--description",
+				"description": "A optional description of the Broker.\n",
+				"type": "[string]"
+			},
+			{
+				"flags": "--expiration",
+				"description": "The expiration date for all client credentials issued by the Broker (can use seconds, hours, months, weeks, years)\n",
+				"type": "[string]"
+			},
+			{
+				"flags": "--on-publish-url",
+				"description": "A (HTTPS) Cloudflare Worker (or webhook) URL that messages will be sent to on-publish.\n\n👷🏽 'wrangler pubsub ...' commands are currently in private beta. If your account isn't authorized, commands will fail. Visit the Pub/Sub docs for more info: https://developers.cloudflare.com/pub-sub/",
+				"type": "[string]"
+			}
+		]
+	},
+	"wrangler pubsub broker list": {
+		"example": "wrangler pubsub broker list",
+		"description": "List the Pub/Sub Brokers within a Namespace",
+		"options": [
+			{
+				"flags": "--namespace, --ns",
+				"description": "The Namespace the Brokers are associated with.\n\n👷🏽 'wrangler pubsub ...' commands are currently in private beta. If your account isn't authorized, commands will fail. Visit the Pub/Sub docs for more info: https://developers.cloudflare.com/pub-sub/",
+				"type": "[string] [required]"
+			}
+		]
+	},
+	"wrangler pubsub broker delete": {
+		"example": "wrangler pubsub broker delete <name>",
+		"description": "Delete an existing Pub/Sub Broker",
+		"positionals": [
+			{
+				"name": "name",
+				"description": "The name of the Broker to delete",
+				"type": "[string] [required]"
+			}
+		],
+		"options": [
+			{
+				"flags": "--namespace, --ns",
+				"description": "The Namespace the Broker is associated with.\n\n👷🏽 'wrangler pubsub ...' commands are currently in private beta. If your account isn't authorized, commands will fail. Visit the Pub/Sub docs for more info: https://developers.cloudflare.com/pub-sub/",
+				"type": "[string] [required]"
+			}
+		]
+	},
+	"wrangler pubsub broker describe": {
+		"example": "wrangler pubsub broker describe <name>",
+		"description": "Describe an existing Pub/Sub Broker.",
+		"positionals": [
+			{
+				"name": "name",
+				"description": "The name of the Broker to describe.",
+				"type": "[string] [required]"
+			}
+		],
+		"options": [
+			{
+				"flags": "--namespace, --ns",
+				"description": "The Namespace the Broker is associated with.\n\n👷🏽 'wrangler pubsub ...' commands are currently in private beta. If your account isn't authorized, commands will fail. Visit the Pub/Sub docs for more info: https://developers.cloudflare.com/pub-sub/",
+				"type": "[string] [required]"
+			}
+		]
+	},
+	"wrangler pubsub broker issue": {
+		"example": "wrangler pubsub broker issue <name>",
+		"description": "Issue new client credentials for a specific Pub/Sub Broker.",
+		"positionals": [
+			{
+				"name": "name",
+				"description": "The name of the Broker to issue credentials for.",
+				"type": "[string] [required]"
+			}
+		],
+		"options": [
+			{
+				"flags": "--namespace, --ns",
+				"description": "The Namespace the Broker is associated with.\n",
+				"type": "[string] [required]"
+			},
+			{
+				"flags": "-n, --number",
+				"description": "The number of credentials to generate.\n",
+				"type": "[number] [default: 1]"
+			},
+			{
+				"flags": "--type",
+				"description": "The type of credential to generate.\n",
+				"type": "[string] [default: \"TOKEN\"]"
+			},
+			{
+				"flags": "--expiration, --exp",
+				"description": "The expiration to set on the issued credentials. This overrides any Broker-level expiration that is set.\n",
+				"type": "[string]"
+			},
+			{
+				"flags": "--client-id, --jti",
+				"description": "A list of existing clientIds to generate tokens for. By default, clientIds are randomly generated.\n\n👷🏽 'wrangler pubsub ...' commands are currently in private beta. If your account isn't authorized, commands will fail. Visit the Pub/Sub docs for more info: https://developers.cloudflare.com/pub-sub/",
+				"type": "[array]"
+			}
+		]
+	},
+	"wrangler pubsub broker revoke": {
+		"example": "wrangler pubsub broker revoke <name>",
+		"description": "Revoke a set of active client credentials associated with the given Broker",
+		"positionals": [
+			{
+				"name": "name",
+				"description": "The name of the Broker to revoke credentials against.",
+				"type": "[string] [required]"
+			}
+		],
+		"options": [
+			{
+				"flags": "--namespace, --ns",
+				"description": "The Namespace the Broker is associated with.\n",
+				"type": "[string] [required]"
+			},
+			{
+				"flags": "--jti",
+				"description": "Tokens to revoke\n\n👷🏽 'wrangler pubsub ...' commands are currently in private beta. If your account isn't authorized, commands will fail. Visit the Pub/Sub docs for more info: https://developers.cloudflare.com/pub-sub/",
+				"type": "[array] [required]"
+			}
+		]
+	},
+	"wrangler pubsub broker unrevoke": {
+		"example": "wrangler pubsub broker unrevoke <name>",
+		"description": "Restore access to a set of previously revoked client credentials.",
+		"positionals": [
+			{
+				"name": "name",
+				"description": "The name of the Broker to revoke credentials against.",
+				"type": "[string] [required]"
+			}
+		],
+		"options": [
+			{
+				"flags": "--namespace, --ns",
+				"description": "The Namespace the Broker is associated with.\n",
+				"type": "[string] [required]"
+			},
+			{
+				"flags": "--jti",
+				"description": "Tokens to revoke\n\n👷🏽 'wrangler pubsub ...' commands are currently in private beta. If your account isn't authorized, commands will fail. Visit the Pub/Sub docs for more info: https://developers.cloudflare.com/pub-sub/",
+				"type": "[array] [required]"
+			}
+		]
+	},
+	"wrangler pubsub broker show-revocations": {
+		"example": "wrangler pubsub broker show-revocations <name>",
+		"description": "Show all previously revoked client credentials.",
+		"positionals": [
+			{
+				"name": "name",
+				"description": "The name of the Broker to revoke credentials against.",
+				"type": "[string] [required]"
+			}
+		],
+		"options": [
+			{
+				"flags": "--namespace, --ns",
+				"description": "The Namespace the Broker is associated with.\n\n👷🏽 'wrangler pubsub ...' commands are currently in private beta. If your account isn't authorized, commands will fail. Visit the Pub/Sub docs for more info: https://developers.cloudflare.com/pub-sub/",
+				"type": "[string] [required]"
+			}
+		]
+	},
+	"wrangler pubsub broker public-keys": {
+		"example": "wrangler pubsub broker public-keys <name>",
+		"description": "Show the public keys used for verifying on-publish hooks and credentials for a Broker.",
+		"positionals": [
+			{
+				"name": "name",
+				"description": "The name of the Broker to revoke credentials against.",
+				"type": "[string] [required]"
+			}
+		],
+		"options": [
+			{
+				"flags": "--namespace, --ns",
+				"description": "The Namespace the Broker is associated with.\n\n👷🏽 'wrangler pubsub ...' commands are currently in private beta. If your account isn't authorized, commands will fail. Visit the Pub/Sub docs for more info: https://developers.cloudflare.com/pub-sub/",
+				"type": "[string] [required]"
+			}
+		]
+	},
+	"wrangler dispatch-namespace list": {
+		"example": "wrangler dispatch-namespace list",
+		"description": "List all dispatch namespaces"
+	},
+	"wrangler dispatch-namespace get": {
+		"example": "wrangler dispatch-namespace get <name>",
+		"description": "Get information about a dispatch namespace",
+		"positionals": [
+			{
+				"name": "name",
+				"description": "Name of the dispatch namespace",
+				"type": "[string] [required]"
+			}
+		]
+	},
+	"wrangler dispatch-namespace create": {
+		"example": "wrangler dispatch-namespace create <name>",
+		"description": "Create a dispatch namespace",
+		"positionals": [
+			{
+				"name": "name",
+				"description": "Name of the dispatch namespace",
+				"type": "[string] [required]"
+			}
+		]
+	},
+	"wrangler dispatch-namespace delete": {
+		"example": "wrangler dispatch-namespace delete <name>",
+		"description": "Delete a dispatch namespace",
+		"positionals": [
+			{
+				"name": "name",
+				"description": "Name of the dispatch namespace",
+				"type": "[string] [required]"
+			}
+		]
+	},
+	"wrangler dispatch-namespace rename": {
+		"example": "wrangler dispatch-namespace rename <old-name> <new-name>",
+		"description": "Rename a dispatch namespace",
+		"positionals": [
+			{
+				"name": "old-name",
+				"description": "Name of the dispatch namespace",
+				"type": "[string] [required]"
+			},
+			{
+				"name": "new-name",
+				"description": "New name of the dispatch namespace",
+				"type": "[string] [required]"
+			}
+		]
+	},
+	"wrangler ai models": {
+		"example": "wrangler ai models",
+		"description": "List catalog models",
+		"options": [
+			{
+				"flags": "--json",
+				"description": "Return output as clean JSON\n",
+				"type": "[boolean] [default: false]"
+			}
+		]
+	},
+	"wrangler ai finetune list": {
+		"example": "wrangler ai finetune list",
+		"description": "List your finetune files",
+		"options": [
+			{
+				"flags": "--json",
+				"description": "Return output as clean JSON\n",
+				"type": "[boolean] [default: false]"
+			}
+		]
+	},
+	"wrangler ai finetune create": {
+		"example": "wrangler ai finetune create <model_name> <finetune_name> <folder_path>",
+		"description": "Create finetune and upload assets",
+		"positionals": [
+			{
+				"name": "model_name",
+				"description": "The catalog model name",
+				"type": "[string] [required]"
+			},
+			{
+				"name": "finetune_name",
+				"description": "The finetune name",
+				"type": "[string] [required]"
+			},
+			{
+				"name": "folder_path",
+				"description": "The folder path containing the finetune assets",
+				"type": "[string] [required]"
+			}
+		]
+	},
+	"wrangler login": {
+		"example": "wrangler login",
+		"description": "🔓 Login to Cloudflare",
+		"options": [
+			{
+				"flags": "--scopes-list",
+				"description": "List all the available OAuth scopes with descriptions"
+			},
+			{
+				"flags": "--browser",
+				"description": "Automatically open the OAuth link in a browser\n",
+				"type": "[boolean] [default: true]"
+			},
+			{
+				"flags": "--scopes",
+				"description": "Pick the set of applicable OAuth scopes when logging in\n",
+				"type": "[array]"
+			}
+		]
+	},
+	"wrangler logout": {
+		"example": "wrangler logout",
+		"description": "🚪 Logout from Cloudflare"
+	},
+	"wrangler whoami": {
+		"example": "wrangler whoami",
+		"description": "🕵️  Retrieve your user information",
+		"options": [
+			{
+				"flags": "--account",
+				"description": "Show membership information for the given account (id or name).\n",
+				"type": "[string]"
+			}
+		]
+	}
+}
