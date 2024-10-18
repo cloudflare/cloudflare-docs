@@ -1,5 +1,5 @@
 ---
-title: Add AI Gateway to Workers AI Binding
+title: Workers AI
 pcx_content_type: tutorial
 updated: 2024-10-17
 ---
@@ -56,9 +56,11 @@ binding = "AI"
 
 Your binding is [available in your Worker code](/workers/reference/migrate-to-module-workers/#bindings-in-es-modules-format) on [`env.AI`](/workers/runtime-apis/handlers/fetch/).
 
+You will need to have your `gateway id` for the next step. You can learn [how to create an AI Gateway in this tutorial](/ai-gateway/get-started/).
+
 ## 3. Run an inference task containing AI Gateway in your Worker
 
-You are now ready to run an inference task in your Worker. In this case, you will use an LLM, [`llama-3.1-8b-instruct-fast`](/workers-ai/models/llama-3.1-8b-instruct-fast/), to answer a question.
+You are now ready to run an inference task in your Worker. In this case, you will use an LLM, [`llama-3.1-8b-instruct-fast`](/workers-ai/models/llama-3.1-8b-instruct-fast/), to answer a question. Your gateway ID is found on the dashboard.
 
 Update the `index.ts` file in your `hello-ai` application directory with the following code:
 
