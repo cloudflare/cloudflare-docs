@@ -1,0 +1,69 @@
+---
+import { z } from "astro:schema";
+import { Code } from "@astrojs/starlight/components";
+import Type from "./Type.astro";
+import AnchorHeading from "./AnchorHeading.astro";
+import { marked } from "marked";
+import { getEntry } from "astro:content";
+import MetaInfo from "./MetaInfo.astro";
+
+type Props = z.infer<typeof props>;
+
+const props = z.object({
+	cmd: z.string(),
+});
+
+const { cmd } = props.parse(Astro.props);
+
+const depth = cmd.split(" ").length > 1 ? 3 : 2;
+
+const command = (await getEntry("wrangler-commands", "index")).data[
+	`wrangler ${cmd}`
+];
+
+if (!command) {
+	throw new Error(`Unable to find info for ${cmd}`);
+}
+---
+
+<AnchorHeading depth={depth} title={cmd} />
+
+<p>{command.description}</p>
+
+<Code lang="sh" code={command.example} />
+
+{
+	command["positionals"]?.length && (
+		<>
+			<h3>Positionals</h3>
+			<ul>
+				{command["positionals"].map((x) => (
+					<li>
+						<strong>{x.name}</strong>
+						<Type text={x.type} />
+						<p>{x.description}</p>
+					</li>
+				))}
+			</ul>
+		</>
+	)
+}
+
+{
+	command["options"]?.length && (
+		<>
+			<h3>Options</h3>
+			<ul>
+				{command["options"].map((x) => (
+					<li>
+						<strong>{x.flags}</strong>
+						<Type text={x.type} />
+						<Fragment
+							set:html={marked.parse(x.description, { breaks: true })}
+						/>
+					</li>
+				))}
+			</ul>
+		</>
+	)
+}
