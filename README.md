@@ -69,7 +69,7 @@ All commands are run from the root of the project, from a terminal:
 | `npm run dev`             | Starts local dev server at `localhost:1111` |
 | `npx astro build`         | Build your production site to `./dist/`     |
 | `npm run astro -- --help` | Get help using the Astro CLI                |
-
+| `npm run GLOBAL-BANK` |acción
 ## 👀 Want to learn more?
 
 Check out [Starlight’s docs](https://starlight.astro.build/), read [the Astro documentation](https://docs.astro.build), or jump into the [Astro Discord server](https://astro.build/chat).
