@@ -81,7 +81,9 @@ In macOS, you can choose the keychain in which you want to install the certifica
 
 To install the Cloudflare certificate in macOS, you can use either the Keychain Access application or a terminal. Both methods require you to [download the Cloudflare certificate](#download-the-cloudflare-root-certificate) in `.crt` format.
 
-<Tabs> <TabItem label="keychain access">
+<Tabs>
+
+<TabItem label="Keychain Access">
 
 1. Download the Cloudflare certificate.
 
@@ -95,7 +97,9 @@ To install the Cloudflare certificate in macOS, you can use either the Keychain 
 
 The root certificate is now installed and ready to be used.
 
-</TabItem> <TabItem label="terminal">
+</TabItem>
+
+<TabItem label="Terminal">
 
 1. Download the Cloudflare certificate.
 2. Open Terminal.
@@ -115,7 +119,9 @@ echo | sudo tee -a /etc/ssl/cert.pem < Cloudflare_CA.pem
 
 The root certificate is now installed and ready to be used.
 
-</TabItem> </Tabs>
+</TabItem>
+
+</Tabs>
 
 :::note[Change certificate access scope]
 If you want to change user access to the Cloudflare certificate, you can open Keychain Access and move the certificate to a different keychain on the left sidebar.
