@@ -51,7 +51,7 @@ Here are some mitigations you can employ:
 
 ### Monitor Concurrent Requests
 
-Track the number of concurrent requests to your bucket. If a worker encounters a 5XX error, ensure that it retries the operation and communicates with other workers.  By coordinating, workers can collectively slow down, reducing the request rate and maintaining a more stable flow of successful operations.
+Track the number of concurrent requests to your bucket. If a client encounters a 5XX error, ensure that it retries the operation and communicates with other clients. By coordinating, clients can collectively slow down, reducing the request rate and maintaining a more stable flow of successful operations.
 
 If your users are directly uploading to the bucket (for example, using the S3 or Workers API), you may not be able to monitor or enforce a concurrency limit. In that case, we recommend Bucket Sharding:
 
