@@ -75,10 +75,10 @@ npm create cloudflare@latest -- --template <SOURCE>
 - `bitbucket:user/repo` (Bitbucket)
 - `gitlab:user/repo` (GitLab)
 
-At a minimum, template folders must contain the following:
+It's likely that you have an existing project that isn't configured as a Cloudflare template. Before your project can qualify as a valid template, the folder must contain the following files at least:
 
 - `package.json`
-- `wrangler.toml`
+- `wrangler.toml` [See this](/workers/wrangler/configuration/#sample-wranglertoml-configuration) for an example of a Wrangler configuration file
 - `src/` containing a worker script referenced from `wrangler.toml`
 
 </Details>
