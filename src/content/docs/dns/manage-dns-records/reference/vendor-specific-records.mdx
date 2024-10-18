@@ -27,7 +27,7 @@ If you want to customize the service addresses URLs associated with Google Works
 :::caution
 
 Google enforces HTTPS on its services. If you see errors about redirect
-loops when browsing to your site through Cloudflare, use Cloudflare's [Full encryption mode](/ssl/origin-configuration/ssl-modes/full/). 
+loops when browsing to your site through Cloudflare, use Cloudflare's [Full encryption mode](/ssl/origin-configuration/ssl-modes/full/).
 :::
 
 ### Google site verification
@@ -120,7 +120,7 @@ Refer to Rackspace CloudFiles's documentation to [get a `CNAME` value](https://d
 :::caution
 
 The `CNAME` record needs to be [DNS-only (unproxied)](/dns/manage-dns-records/reference/proxied-dns-records/#dns-only-records) since rackcdn.com is
-not compatible with Cloudflare. 
+not compatible with Cloudflare.
 :::
 
 ### SendGrid
@@ -173,7 +173,7 @@ Refer to Unbounce's documentation to [get a `CNAME` value](https://documentation
 
 :::caution
 
-If Cloudflare is activated via one of our hosting partners, your `CNAME` record should be [DNS-only (unproxied)](/dns/manage-dns-records/reference/proxied-dns-records/#dns-only-records). 
+If Cloudflare is activated via one of our hosting partners, your `CNAME` record should be [DNS-only (unproxied)](/dns/manage-dns-records/reference/proxied-dns-records/#dns-only-records).
 :::
 
 ### Vercel
@@ -187,6 +187,12 @@ You can use Cloudflare with [Wix websites](https://www.wix.com/), though your se
 
 This is because Wix [does not support](https://support.wix.com/en/article/request-cloudflare-support) using Cloudflare nameservers (which is the normal part of a [full setup](/dns/zone-setups/full-setup/) or with domains bought through [Cloudflare Registrar](/registrar/)).
 
+#### Using domain pointing
+
+If you want to manage your DNS through Cloudflare or you bought a domain through [Cloudflare Registrar](/registrar/), you can connect that domain to Wix through [domain pointing](https://support.wix.com/en/article/connecting-a-domain-to-wix-using-the-pointing-method).
+
+This method means your website is using Cloudflare for DNS only, so all your DNS records should be [DNS-only (unproxied)](/dns/manage-dns-records/reference/proxied-dns-records/#dns-only-records).
+
 ### WPEngine
 
 For help configuring WPEngine sites, refer to:
@@ -197,9 +203,3 @@ For help configuring WPEngine sites, refer to:
 ### Zoho
 
 To use Cloudflare with Zoho, refer to [Zoho configuration with Cloudflare](https://www.zoho.com/mail/help/adminconsole/cloudflare.html).
-
-#### Using domain pointing
-
-If you want to manage your DNS through Cloudflare or you bought a domain through [Cloudflare Registrar](/registrar/), you can connect that domain to Wix through [domain pointing](https://support.wix.com/en/article/connecting-a-domain-to-wix-using-the-pointing-method).
-
-This method means your website is using Cloudflare for DNS only, so all your DNS records should be [DNS-only (unproxied)](/dns/manage-dns-records/reference/proxied-dns-records/#dns-only-records).
