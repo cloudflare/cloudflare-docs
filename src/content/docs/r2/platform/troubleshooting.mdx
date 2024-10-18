@@ -6,10 +6,9 @@ title: Troubleshooting
 
 ## Troubleshooting 403 / CORS issues with R2
 
-So, your assets aren't loading because you are getting a CORS error despite having setup everything correctly?
-Let's try troubleshooting.
+If you are encountering a CORS error despite setting up everything correctly, you may follow this troubleshooting guide to help you.
 
-In your browser console, do you see a 401/403 error right above the CORS error? If yes, then you aren't actually dealing with a CORS issue! If you do have a CORS issue, head to the last section.
+In your browser console, do you see a 401/403 error right above the CORS error? If yes, then you aren't actually dealing with a CORS issue! If you do have a CORS issue, head to [here](#if-its-actually-cors).
 
 ### If you are using a Custom domain
 
@@ -20,18 +19,19 @@ You need to check the response headers for the following two headers:
 
 #### If you have a `cf-mitigated` header
 
-Your request was blocked by one of your WAF rules. Go to [Security Events](https://dash.cloudflare.com/?to=/:account/:zone/security/events) and look for what service blocked your request.
+Your request was blocked by one of your WAF rules. Inspect your [Security Events](/waf/analytics/security-events/) to identify the cause of the block.
 
 #### If you don't have a `cf-cache-status` header
 
-Your request was blocked by Hotlink Protection.
-Go to [your dashboard](https://dash.cloudflare.com/?to=/:account/:zone/content-protection) and disable it or write a [configuration rule](https://dash.cloudflare.com/?to=/:account/:zone/rules/configuration) to only disable on your Custom domain
+Your request was blocked by [Hotlink Protection](/waf/tools/scrape-shield/hotlink-protection/).
+You need to tweak your Hotlink Protection settings using a [Configuration Rule](/rules/configuration-rules/) or you can disable it completely.
 
 ### If you are using the S3 API
 
 Your request is very likely incorrectly signed.
-Try executing the request via curl to inspect the real response returned by the S3 api and then tackle that issue.
-Once your request is correctly signed, you'll receive the proper CORS headers.
+You may see a better error message by trying the request over curl.
+
+You can find working S3 signing examples on the [Examples](/r2/examples/aws/) page.
 
 ### If it's actually CORS
 
@@ -51,7 +51,7 @@ Here are some mitigations you can employ:
 
 ### Monitor Concurrent Requests
 
-Track the number of concurrent requests to your bucket.  If a worker encounters a 5XX error, ensure that it retries the operation and communicates with other workers.  By coordinating, workers can collectively slow down, reducing the request rate and maintaining a more stable flow of successful operations.
+Track the number of concurrent requests to your bucket. If a worker encounters a 5XX error, ensure that it retries the operation and communicates with other workers.  By coordinating, workers can collectively slow down, reducing the request rate and maintaining a more stable flow of successful operations.
 
 If your users are directly uploading to the bucket (eg. using the S3 or workers API), you may not be able to monitor or enforce an concurrency limit. In that case we recommend Bucket Sharding:
 
