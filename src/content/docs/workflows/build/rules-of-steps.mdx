@@ -1,11 +1,11 @@
 ---
-title: Rules of Steps
+title: Rules of Workflows
 pcx_content_type: concept
 sidebar:
   order: 10
 ---
 
-A Workflow step is self-contained, individually retriable component of a Workflow. Steps may emit (optional) state that allows a Workflow to persist and continue from that step, even if a Workflow fails due to a network or infrastructure issue. A Workflow is comprised of one or more steps.
+A Workflow contains one or more steps. Each step is a self-contained, individually retriable component of a Workflow. Steps may emit (optional) state that allows a Workflow to persist and continue from that step, even if a Workflow fails due to a network or infrastructure issue. A Workflow is comprised of one or more steps.
 
 This is a small guidebook on how to build more resilient and correct Workflows.
 
@@ -18,8 +18,8 @@ As an example, let's assume you have a Workflow that charges your customers and 
 check if they were already charged:
 
 ```ts
-export class MyWorkflow extends Workflow<Env, Params> {
-	async run(events: WorkflowEvent[], step: WorkflowStep) {
+export class MyWorkflow extends WorkflowEntrypoint {
+	async run(event: WorkflowEvent, step: WorkflowStep) {
 		const customer_id = 123456;
 		// ✅ Good: Non-idempotent API/Binding calls are always done **after** checking if the operation is
 		// still needed.
@@ -55,20 +55,21 @@ export class MyWorkflow extends Workflow<Env, Params> {
 
 :::note
 
-Guaranteeing idempotency might be optional in your specific use-case and implementaion, although we recommend it to always try to guarantee it.
+Guaranteeing idempotency might be optional in your specific use-case and implementation, although we recommend it to always try to guarantee it.
 
 :::
 
 ### Make your steps granular
 
 Steps should be as self-contained as possible, this allows your own logic to be more durable in case of failures in third-party APIs, network errors, and so on.
+
 You can also think of it as a transaction, or a unit of work.
 
 - ✅ Minimize the number of API/binding calls per step (unless you need multiple calls to prove idempotency).
 
 ```ts
-export class MyWorkflow extends Workflow<Env, Params> {
-	async run(events: WorkflowEvent[], step: WorkflowStep) {
+export class MyWorkflow extends WorkflowEntrypoint {
+	async run(event: WorkflowEvent, step: WorkflowStep) {
 		// ✅ Good: Unrelated API/Binding calls are self-contained, so that in case one of them fails
 		// it can retry them individually. It also has an extra advantage: you can control retry or
 		// timeout policies for each granular step - you might not to want to overload http.cat in
@@ -92,8 +93,8 @@ Otherwise your entire workflow might not be as durable as you might think, and e
 - 🔴 Do not do too much CPU-intensive work inside of a single step - sometimes engine might have to restart and it will start over from that step.
 
 ```ts
-export class MyWorkflow extends Workflow<Env, Params> {
-	async run(events: WorkflowEvent[], step: WorkflowStep) {
+export class MyWorkflow extends WorkflowEntrypoint {
+	async run(event: WorkflowEvent, step: WorkflowStep) {
 		// 🔴 Bad: you're calling two seperate services from within the same step. This might cause
 		// some extra calls to the first service in case the second one fails, and in some cases, makes
 		// the step non-idempotent altogether
@@ -107,8 +108,9 @@ export class MyWorkflow extends Workflow<Env, Params> {
 
 ### Don't rely on state outside of a step
 
-Sometimes, our Engine will hibernate and lose all in-memory state - this will happen when engine detects that there's no pending work and can hibernate
-until it needs to wake-up (because of a sleep, retry or event). This means that you can't do something like this:
+Workflows may hibernate and lose all in-memory state. This will happen when engine detects that there's no pending work and can hibernate until it needs to wake-up (because of a sleep, retry or event).
+
+This means that you should not store state outside of a step:
 
 ```ts
 function getRandomInt(min, max) {
@@ -117,8 +119,8 @@ function getRandomInt(min, max) {
 	return Math.floor(Math.random() * (maxFloored - minCeiled) + minCeiled); // The maximum is exclusive and the minimum is inclusive
 }
 
-export class MyWorkflow extends Workflow<Env, Params> {
-	async run(events: WorkflowEvent[], step: WorkflowStep) {
+export class MyWorkflow extends WorkflowEntrypoint {
+	async run(event: WorkflowEvent, step: WorkflowStep) {
 		// 🔴 Bad: `imageList` will be not persisted across engine's lifetimes. Which means that after hibernation,
 		// `imageList` will be empty again, even though the following two steps have already ran.
 		const imageList: string[] = [];
@@ -160,8 +162,8 @@ function getRandomInt(min, max) {
 	return Math.floor(Math.random() * (maxFloored - minCeiled) + minCeiled); // The maximum is exclusive and the minimum is inclusive
 }
 
-export class MyWorkflow extends Workflow<Env, Params> {
-	async run(events: WorkflowEvent[], step: WorkflowStep) {
+export class MyWorkflow extends WorkflowEntrypoint {
+	async run(event: WorkflowEvent, step: WorkflowStep) {
 		// ✅ Good: imageList state is exclusively comprised of step returns - this means that in the event of
 		// multiple engine lifetimes, imageList will be built accordingly
 		const imageList: string[] = await Promise.all([
@@ -200,3 +202,5 @@ TODO
 TODO
 
 ### Don't mutate your incoming events
+
+TODO
