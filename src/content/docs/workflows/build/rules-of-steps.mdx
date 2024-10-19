@@ -3,22 +3,193 @@ title: Rules of Steps
 pcx_content_type: concept
 sidebar:
   order: 10
-
 ---
 
 A Workflow step is self-contained, individually retriable component of a Workflow. Steps may emit (optional) state that allows a Workflow to persist and continue from that step, even if a Workflow fails due to a network or infrastructure issue. A Workflow is comprised of one or more steps.
 
+This is a small guidebook on how to build more resilient and correct Workflows.
+
+### Ensure API/Binding calls are idempotent
+
+Because a step might be retried multiple times, your steps should (ideally) be idempotent. For context, idempotency is a logical property where the operation (in this case a step),
+can be applied multiple times without changing the result beyond the intial application.
+
+As an example, let's assume you have a Workflow that charges your customers and you really don't want to charge them twice by accident, before charging them, you should
+check if they were already charged:
+
+```ts
+export class MyWorkflow extends Workflow<Env, Params> {
+	async run(events: WorkflowEvent[], step: WorkflowStep) {
+		const customer_id = 123456;
+		// ✅ Good: Non-idempotent API/Binding calls are always done **after** checking if the operation is
+		// still needed.
+		await step.do(
+			`charge ${customer_id} for it's montly subscription`,
+			async () => {
+				// API call to check if customer was already charged
+				const subscription = await fetch(
+					`https://payment.processor/subscriptions/${customer_id}`,
+				).then((res) => res.json());
+
+				// return early if the customer was already charged, this can happen if the destination service dies
+				// in the middle of the request but still commits it, or if the Workflows Engine restarts.
+				if (subscription.charged) {
+					return;
+				}
+
+				// non-idempotent call, this operation can fail and retry but still commit in the payment
+				// processor - which means that, on retry, it would mischarge the customer again if the above checks
+				// were not in place.
+				return await fetch(
+					`https://payment.processor/subscriptions/${customer_id}`,
+					{
+						method: "POST",
+						body: JSON.stringify({ amount: 10.0 }),
+					},
+				);
+			},
+		);
+	}
+}
+```
+
+:::note
+
+Guaranteeing idempotency might be optional in your specific use-case and implementaion, although we recommend it to always try to guarantee it.
+
+:::
+
 ### Make your steps granular
 
-TODO - step is a transaction, should be a self-contained logic. If you have multiple API calls, seperate them into their own steps.
+Steps should be as self-contained as possible, this allows your own logic to be more durable in case of failures in third-party APIs, network errors, and so on.
+You can also think of it as a transaction, or a unit of work.
 
-### Ensure API calls are idempotent
+- ✅ Minimize the number of API/binding calls per step (unless you need multiple calls to prove idempotency).
 
-TODO
+```ts
+export class MyWorkflow extends Workflow<Env, Params> {
+	async run(events: WorkflowEvent[], step: WorkflowStep) {
+		// ✅ Good: Unrelated API/Binding calls are self-contained, so that in case one of them fails
+		// it can retry them individually. It also has an extra advantage: you can control retry or
+		// timeout policies for each granular step - you might not to want to overload http.cat in
+		// case of it being down.
+		const httpCat = await step.do("get cutest cat from KV", async () => {
+			return await env.KV.get("cutest-http-cat");
+		});
+
+		const image = await step.do("fetch cat image from http.cat", async () => {
+			return await fetch(`https://http.cat/${httpCat}`);
+		});
+	}
+}
+```
+
+Otherwise your entire workflow might not be as durable as you might think, and encounter into some undefined behaviour and you can avoid them by:
+
+- 🔴 Do not encapsulate your entire logic in one single step.
+- 🔴 Do not call seperate services in the same step (unless you need it to prove idempotency)
+- 🔴 Do not make too many service calls in the same step (unless you need it to prove idempotency)
+- 🔴 Do not do too much CPU-intensive work inside of a single step - sometimes engine might have to restart and it will start over from that step.
+
+```ts
+export class MyWorkflow extends Workflow<Env, Params> {
+	async run(events: WorkflowEvent[], step: WorkflowStep) {
+		// 🔴 Bad: you're calling two seperate services from within the same step. This might cause
+		// some extra calls to the first service in case the second one fails, and in some cases, makes
+		// the step non-idempotent altogether
+		const image = await step.do("get cutest cat from KV", async () => {
+			const httpCat = await env.KV.get("cutest-http-cat");
+			return fetch(`https://http.cat/${httpCat}`);
+		});
+	}
+}
+```
 
 ### Don't rely on state outside of a step
 
-TODO
+Sometimes, our Engine will hibernate and lose all in-memory state - this will happen when engine detects that there's no pending work and can hibernate
+until it needs to wake-up (because of a sleep, retry or event). This means that you can't do something like this:
+
+```ts
+function getRandomInt(min, max) {
+	const minCeiled = Math.ceil(min);
+	const maxFloored = Math.floor(max);
+	return Math.floor(Math.random() * (maxFloored - minCeiled) + minCeiled); // The maximum is exclusive and the minimum is inclusive
+}
+
+export class MyWorkflow extends Workflow<Env, Params> {
+	async run(events: WorkflowEvent[], step: WorkflowStep) {
+		// 🔴 Bad: `imageList` will be not persisted across engine's lifetimes. Which means that after hibernation,
+		// `imageList` will be empty again, even though the following two steps have already ran.
+		const imageList: string[] = [];
+
+		await step.do("get first cutest cat from KV", async () => {
+			const httpCat = await env.KV.get("cutest-http-cat-1");
+
+			imageList.append(httpCat);
+		});
+
+		await step.do("get second cutest cat from KV", async () => {
+			const httpCat = await env.KV.get("cutest-http-cat-2");
+
+			imageList.append(httpCat);
+		});
+
+		// A long sleep can (and probably will) hibernate the engine which means that the first engine lifetime ends here
+		await step.sleep("💤💤💤💤", "3 hours");
+
+		// When this runs, it will be on the second engine lifetime - which means `imageList` will be empty.
+		await step.do(
+			"choose a random cat from the list and download it",
+			async () => {
+				const randomCat = imageList.at(getRandomInt(0, imageList.length));
+				// this will fail since `randomCat` is undefined because `imageList` is empty
+				return await fetch(`https://http.cat/${randomCat}`);
+			},
+		);
+	}
+}
+```
+
+Instead, you should build top-level state exclusively comprised of `step.do` returns:
+
+```ts
+function getRandomInt(min, max) {
+	const minCeiled = Math.ceil(min);
+	const maxFloored = Math.floor(max);
+	return Math.floor(Math.random() * (maxFloored - minCeiled) + minCeiled); // The maximum is exclusive and the minimum is inclusive
+}
+
+export class MyWorkflow extends Workflow<Env, Params> {
+	async run(events: WorkflowEvent[], step: WorkflowStep) {
+		// ✅ Good: imageList state is exclusively comprised of step returns - this means that in the event of
+		// multiple engine lifetimes, imageList will be built accordingly
+		const imageList: string[] = await Promise.all([
+			step.do("get first cutest cat from KV", async () => {
+				return await env.KV.get("cutest-http-cat-1");
+			}),
+
+			step.do("get second cutest cat from KV", async () => {
+				return await env.KV.get("cutest-http-cat-2");
+			}),
+		]);
+
+		// A long sleep can (and probably will) hibernate the engine which means that the first engine lifetime ends here
+		await step.sleep("💤💤💤💤", "3 hours");
+
+		// When this runs, it will be on the second engine lifetime - but this time, imageList will contain
+		// the two most cutest cats
+		await step.do(
+			"choose a random cat from the list and download it",
+			async () => {
+				const randomCat = imageList.at(getRandomInt(0, imageList.length));
+				// this will eventually succeed since `randomCat` is defined
+				return await fetch(`https://http.cat/${randomCat}`);
+			},
+		);
+	}
+}
+```
 
 ### Set sensible retry parameters
 

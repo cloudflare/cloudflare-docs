@@ -113,13 +113,75 @@ TODO - basic trigger steps
 ### CLI
 
 ```sh
+# Trigger a Workflow from the CLI, and pass (optional) parameters as an event to the Workflow.
 npx wrangler@latest workflows trigger workflows-tutorial --params={"hello":"world"}
 ```
+
+Refer to the [events and parameters documentation](/workflows/build/events-and-parameters/) to understand how events are passed to Workflows.
 
 ### Worker binding
 
 TODO - trigger from a Worker
 
+```toml title="wrangler.toml"
+[[workflows]]
+# name of your workflow
+name = "workflows-starter"
+# binding name env.MYWORKFLOW
+binding = "MY_WORKFLOW"
+# this is class that extends the Workflow class in src/index.ts
+class_name = "MyWorkflow"
+# script_name is required during for the beta.
+# Must match the "name" of your Worker at the top of wrangler.toml
+script_name = "workflows-starter"
+```
+
+You can then invoke the methods on this binding directly from your Worker script. The `Workflow` type has methods for:
+
+* `create(newId, params)` - creating (triggering) a new instance of the Workflow, with optional
+* `get(id)`- retrieve a Workflow instance by ID
+* `status()` - get the current status of a unique Workflow instance.
+
+For example, the following Worker will fetch the status of an existing Workflow instance by ID (if supplied), else it will create a new Workflow instance and return its ID:
+
+```ts title="src/index.ts"
+// Import the Workflow definition
+import { WorkflowEntrypoint, WorkflowEvent, WorkflowStep } from "cloudflare:workflows"
+
+interface Env {
+  // Matches the binding definition in your wrangler.toml
+  MY_WORKFLOW: Workflow;
+}
+
+export default {
+	async fetch(req: Request, env: Env) {
+        //
+        const instanceId = new URL(req.url).searchParams.get("instanceId")
+
+        // If an ?instanceId=<id> query parameter is provided, fetch the status
+        // of an existing Workflow by its ID.
+        if (instanceId) {
+            let instance = await env.MYWORKFLOW.get(id);
+			return Response.json({
+				status: await instance.status(),
+			});
+        }
+
+        // Else, create a new instance of our Workflow, passing in any (optional) params
+        // and return the ID.
+		const newId = await crypto.randomUUID();
+		let instance = await env.MYWORKFLOW.create(newId, {});
+		return Response.json({
+			id: instance.id,
+			details: await instance.status(),
+		});
+
+		return Response.json({ result });
+	},
+};
+```
+
+Refer to the [triggering Workflows] documentation for how to trigger a Workflow from other Workers handler functions.
 
 ## 4. Managing Workflows
 

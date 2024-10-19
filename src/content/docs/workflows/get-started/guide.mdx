@@ -164,7 +164,7 @@ binding = "MY_WORKFLOW"
 # this is class that extends the Workflow class in src/index.ts
 class_name = "MyWorkflow"
 # script_name is required during for the beta.
- # Must match the "name" of your Worker at the top of wrangler.toml
+# Must match the "name" of your Worker at the top of wrangler.toml
 script_name = "workflows-starter"
 ```
 
@@ -228,9 +228,15 @@ In a production application, you might choose to put authentication in front of 
 
 ### Review your Workflow code
 
+:::note
+
+This is the full contents of the `src/index.ts` file pulled down when you used the `cloudflare/workflows-starter` template at the beginning of this guide.
+
+:::
+
 Before you deploy, you can review the full Workflows code and the `fetch` handler that will allow you to trigger your Workflow over HTTP:
 
-```ts
+```ts title="src/index.ts"
 import { WorkflowEntrypoint, WorkflowStep, WorkflowEvent } from 'cloudflare:workers';
 
 type Env = {
