@@ -40,13 +40,11 @@ To retrieve those values:
 
 ## 2. Add Workspace ONE as a service provider
 
-1. Go to **Settings** > **Devices** > **Device posture providers** and select **Add new**.
-2. Select **Workspace ONE**.
-3. Give your provider a name. This name will be used throughout the dashboard to reference this connection.
-4. Enter the **Client ID** and **Client secret** you noted down above.
-5. Select a **Polling frequency** for how often Cloudflare Zero Trust should query Workspace ONE for information.
-6. Enter the **Region-specific token URL** and **REST API URL** you noted down above.
-7. Select **Save**.
+<Render file="posture/add-service-provider" params={{ provider: "Workspace ONE" }} />
+5. Enter the **Client ID** and **Client secret** you noted down above.
+6. Select a **Polling frequency** for how often Cloudflare Zero Trust should query Workspace ONE for information.
+7. Enter the **Region-specific token URL** and **REST API URL** you noted down above.
+8. Select **Save**.
 
 <Render file="posture/test-posture-provider" />
 

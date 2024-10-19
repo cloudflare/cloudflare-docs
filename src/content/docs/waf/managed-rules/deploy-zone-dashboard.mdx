@@ -1,19 +1,19 @@
 ---
-title: Deploy in the dashboard for a zone
+title: Deploy a WAF managed ruleset in the dashboard
 pcx_content_type: how-to
 sidebar:
   order: 1
+  label: Deploy in the dashboard
 head:
   - tag: title
-    content: Deploy a managed ruleset in the dashboard for a zone
-
+    content: Deploy a WAF managed ruleset in the dashboard
 ---
 
-import { Render } from "~/components"
+import { Render } from "~/components";
 
 You can deploy and configure managed rulesets for a zone in **Security** > **WAF** > **Managed rules**.
 
-To deploy a managed ruleset for several Enterprise domains in your account, refer to [Deploy a managed ruleset in the dashboard for an account](/waf/managed-rules/deploy-account-dashboard/).
+To deploy a managed ruleset for several Enterprise domains in your account, refer to [Deploy a managed ruleset in the dashboard for an account](/waf/account/managed-rulesets/deploy-dashboard/).
 
 ![Example WAF Managed Rules configuration in the Managed rules tab under Security > WAF. There are two managed rulesets already deployed, and one managed ruleset available for deployment.](~/assets/images/waf/waf-managed-rules-tab.png)
 
@@ -27,7 +27,7 @@ To deploy a managed ruleset with the default configuration:
 
 3. Under **Managed Rulesets**, select **Deploy** next to a managed ruleset.
 
-This operation will deploy the managed ruleset for the current zone, creating a new rule with the *Execute* action.
+This operation will deploy the managed ruleset for the current zone, creating a new rule with the _Execute_ action.
 
 ## Turn on or off a managed ruleset
 
@@ -37,14 +37,14 @@ Select the **Enabled** toggle next to a managed ruleset to turn it on or off.
 
 Configure a managed ruleset to:
 
-* Specify a custom filter expression to apply the rules in the ruleset to a subset of incoming requests.
-* Define specific field values for one or more rules (for example, configure a rule with an action different from the action configured by Cloudflare), or turn off those rules.
+- Specify a custom filter expression to apply the rules in the ruleset to a subset of incoming requests.
+- Define specific field values for one or more rules (for example, configure a rule with an action different from the action configured by Cloudflare), or turn off those rules.
 
 To skip one or more rules — or even entire WAF managed rulesets — for specific incoming requests, [add an exception](/waf/managed-rules/waf-exceptions/).
 
 :::note
 
-Some managed rulesets may not allow custom configuration, depending on your Cloudflare plan. 
+Some managed rulesets may not allow custom configuration, depending on your Cloudflare plan.
 :::
 
 ### Configure field values for all the rules
@@ -55,7 +55,7 @@ To configure rule field values for all the rules in a managed ruleset:
 
 2. Go to **Security** > **WAF** > **Managed rules**.
 
-3. Next to the *Execute* rule deploying the managed ruleset you want to configure, select the managed ruleset name.<br/> If you have not deployed the managed ruleset yet, select the managed ruleset name under **Managed Rulesets**.
+3. Next to the _Execute_ rule deploying the managed ruleset you want to configure, select the managed ruleset name.<br/> If you have not deployed the managed ruleset yet, select the managed ruleset name under **Managed Rulesets**.
 
 4. (Optional) To execute the managed ruleset for a subset of incoming requests, select **Edit scope** and [configure the expression](/ruleset-engine/rules-language/expressions/edit-expressions/) that will determine the scope of the current rule deploying the managed ruleset.
 

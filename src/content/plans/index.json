@@ -1728,7 +1728,7 @@
 				},
 				"z_custom_rulesets": {
 					"title": "Custom rulesets",
-					"link": "/waf/custom-rules/custom-rulesets/",
+					"link": "/waf/account/custom-rulesets/",
 					"summary": "Enterprise with add-on",
 					"free": "No",
 					"pro": "No",

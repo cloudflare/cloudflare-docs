@@ -47,6 +47,8 @@ if (Astro.props.toc) {
 			];
 
 			for (const header of headers) {
+				if (header.id === "footnote-label") continue;
+
 				const depth = headerDepth(header);
 
 				const title = he.decode(header.innerText);

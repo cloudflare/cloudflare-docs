@@ -9,10 +9,10 @@ import { Render } from "~/components";
 
 <Render file="vectorize-ga" />
 
-Vectorize bills based on:
+Vectorize bills are based on:
 
-- **Queried Vector Dimensions**: The total number of vector dimensions queried. If you have 10,000 vectors with 384-dimensions in an index, and make 100 queries against that index, your total queried vector dimensions would sum to (`(10000 + 100) * 384`) 3.878 million.
-- **Stored Vector Dimensions**: The total number of vector dimensions stored. If you have 1,000 vectors with 1536-dimensions in an index, your stored vector dimensions sum to 1.56 million.
+- **Queried Vector Dimensions**: The total number of vector dimensions queried. If you have 10,000 vectors with 384-dimensions in an index, and make 100 queries against that index, your total queried vector dimensions would sum to 3.878 million (`(10000 + 100) * 384`).
+- **Stored Vector Dimensions**: The total number of vector dimensions stored. If you have 1,000 vectors with 1536-dimensions in an index, your stored vector dimensions would sum to 1.536 million (`1000 * 1536`).
 
 You are not billed for CPU, memory, "active index hours", or the number of indexes you create. If you are not issuing queries against your indexes, you are not billed for queried vector dimensions.
 
@@ -24,13 +24,13 @@ You are not billed for CPU, memory, "active index hours", or the number of index
 
 The following table defines a number of example use-cases and the estimated monthly cost for querying a Vectorize index. These estimates do not include the Vectorize usage that is part of the Workers Free and Paid plans.
 
-| Workload   | Dimensions per vector | Stored dimensions | Queries per month | Calculation                                                      | Estimated total                |
-| ---------- | --------------------- | ----------------- | ----------------- | ---------------------------------------------------------------- | ------------------------------ |
-| Experiment | 384                   | 5,000 vectors     | 10,000            | `(10000*384*(0.01/1000000))    + (5000*384*(0.05/100000000))`    | $0.04 / mo <sup>included</sup> |
-| Scaling    | 768                   | 25,000 vectors    | 50,000            | `(50000*768*(0.01/1000000))    + (25000*768*(0.05/100000000))`   | $0.39 / mo <sup>partial</sup>  |
-| Production | 768                   | 50,000 vectors    | 200,000           | `(200000*768*(0.01/1000000))   + (50000*768*(0.05/100000000))`   | $1.56 / mo                     |
-| Large      | 768                   | 250,000 vectors   | 500,000           | `(500000*768*(0.01/1000000))   + (250000*768*(0.05/100000000))`  | $3.94 / mo                     |
-| XL         | 1536                  | 500,000 vectors   | 1,000,000         | `(1000000*1536*(0.01/1000000)) + (500000*1536*(0.05/100000000))` | $15.74 / mo                    |
+| Workload   | Dimensions per vector | Stored dimensions | Queries per month | Calculation                                                               | Estimated total                |
+| ---------- | --------------------- | ----------------- | ----------------- | ------------------------------------------------------------------------- | ------------------------------ |
+| Experiment | 384                   | 5,000 vectors     | 10,000            | `((10000+5000)*384*(0.01/1000000))      + (5000*384*(0.05/100000000))`    | $0.06 / mo <sup>included</sup> |
+| Scaling    | 768                   | 25,000 vectors    | 50,000            | `((50000+25000)*768*(0.01/1000000))     + (25000*768*(0.05/100000000))`   | $0.59 / mo <sup>most</sup>     |
+| Production | 768                   | 50,000 vectors    | 200,000           | `((200000+50000)*768*(0.01/1000000))    + (50000*768*(0.05/100000000))`   | $1.94 / mo                     |
+| Large      | 768                   | 250,000 vectors   | 500,000           | `((500000+250000)*768*(0.01/1000000))   + (250000*768*(0.05/100000000))`  | $5.86 / mo                     |
+| XL         | 1536                  | 500,000 vectors   | 1,000,000         | `((1000000+500000)*1536*(0.01/1000000)) + (500000*1536*(0.05/100000000))` | $23.42 / mo                    |
 
 <sup>included</sup> All of this usage would fall into the Vectorize usage
 included in the Workers Free or Paid plan.

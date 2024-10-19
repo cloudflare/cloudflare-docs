@@ -1,12 +1,9 @@
+
 on:
   pull_request: {}
   workflow_dispatch: {}
-  push:
-    branches:
-      - main
-      - master
   schedule:
-    - cron: "0 0 * * *"
+    - cron: '0 4 * * *'
 name: Semgrep config
 jobs:
   semgrep:

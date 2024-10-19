@@ -1,0 +1,117 @@
+---
+title: Managed rulesets
+pcx_content_type: concept
+sidebar:
+  order: 4
+---
+
+import { Render, Tabs, TabItem, Details } from "~/components";
+
+:::note
+This feature requires an Enterprise plan with a paid add-on.
+:::
+
+<Render file="waf-managed-rules-intro" />
+
+## Account-level deployment
+
+At the account level, you can deploy each [WAF managed ruleset](/waf/managed-rules/#managed-rulesets) more than once. This means that you can apply the same managed ruleset with different configurations to different subsets of incoming traffic for the Enterprise zones in your account.
+
+For example, you could deploy the [Cloudflare OWASP Core Ruleset](/waf/managed-rules/reference/owasp-core-ruleset/) multiple times with different paranoia levels and a different action (_Managed Challenge_ action for PL3 and _Log_ action for PL4).
+
+<Details header="Example: Deploy OWASP with two different configurations">
+
+The following example deploys the [Cloudflare OWASP Core Ruleset](/waf/managed-rules/reference/owasp-core-ruleset/) multiple times at the account level through the following execute rules:
+
+- First execute rule: Enable OWASP rules up to paranoia level 3 (PL3) and set the action to _Managed Challenge_.
+- Second execute rule: Enable OWASP rules up to PL4 and set the action to _Log_.
+
+This configuration gives you additional protection by enabling PL3 rules, but without blocking the requests, since higher paranoia levels are more prone to false positives.
+
+The second rule logs any matches for PL4 rules, the most strict set of rules in the ruleset, so that it does not affect live traffic. You could use this configuration to understand which traffic would be affected by PL4 rules.
+
+<Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
+
+1. Deploy the Cloudflare OWASP Core Ruleset by following the [dashboard instructions](/waf/account/managed-rulesets/deploy-dashboard/#deploy-a-managed-ruleset), customizing the ruleset behavior using these settings:
+
+   - **OWASP Anomaly Score Threshold**: _Medium - 40 and higher_
+   - **OWASP Paranoia Level**: _PL3_
+   - **OWASP Action**: _Managed Challenge_
+
+2. Select **Deploy**.
+
+3. Repeat the deployment procedure for the OWASP ruleset, but with following ruleset configuration:
+
+   - **OWASP Anomaly Score Threshold**: _Medium - 40 and higher_
+   - **OWASP Paranoia Level**: _PL4_
+   - **OWASP Action**: _Log_
+
+Once you finish your configuration, the **Deployed managed rulesets** list will show two _Execute_ rules for the Cloudflare OWASP Core Ruleset.
+
+</TabItem> <TabItem label="API">
+
+The following `POST` request for the [Create an account ruleset](/api/operations/createAccountRuleset) operation creates an [entry point ruleset](/ruleset-engine/about/rulesets/#entry-point-ruleset) for the `http_request_firewall_managed` phase at the account level. The ruleset includes two rules deploying the Cloudflare OWASP Core Ruleset twice with different configurations.
+
+```bash
+curl "https://api.cloudflare.com/client/v4/accounts/{account_id}/rulesets" \
+--header "Authorization: Bearer <API_TOKEN>" \
+--header "Content-Type: application/json" \
+--data '{
+  "name": "My ruleset",
+  "description": "Entry point ruleset for WAF managed rulesets (account)",
+  "kind": "root",
+  "phase": "http_request_firewall_managed",
+  "rules": [
+    {
+      "action": "execute",
+      "action_parameters": {
+        "id": "4814384a9e5d4991b9815dcfc25d2f1f",
+        "overrides": {
+          "categories": [
+            {
+              "category": "paranoia-level-4",
+              "enabled": false
+            }
+          ],
+          "rules": [
+            {
+              "id": "6179ae15870a4bb7b2d480d4843b323c",
+              "action": "managed_challenge"
+            }
+          ]
+        }
+      },
+      "expression": "cf.zone.plan eq \"ENT\"",
+      "description": "Execute OWASP ruleset at PL3 with Managed Challenge action"
+    },
+    {
+      "action": "execute",
+      "action_parameters": {
+        "id": "4814384a9e5d4991b9815dcfc25d2f1f",
+        "overrides": {
+          "rules": [
+            {
+              "id": "6179ae15870a4bb7b2d480d4843b323c",
+              "action": "log"
+            }
+          ]
+        }
+      },
+      "expression": "cf.zone.plan eq \"ENT\"",
+      "description": "Execute OWASP ruleset at PL4 with Log action"
+    }
+  ]
+}'
+```
+
+</TabItem> </Tabs>
+
+</Details>
+
+<Render
+	file="managed-ruleset-config-options"
+	params={{
+		overridesUrl:
+			"/waf/account/managed-rulesets/deploy-dashboard/#configure-a-managed-ruleset",
+	}}
+/>

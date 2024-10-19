@@ -15,14 +15,14 @@ import { Details } from "~/components";
 | ----------------------------------------------------------------------------------------- | ------------------------------------------------------------- |
 | All modes                                                                                 | All plans                                                     |
 
-| System   | Availability | Minimum WARP version |
-| -------- | ------------ | -------------------- |
-| Windows  | ✅           | 2023.3.381.0         |
-| macOS    | ✅           | 2023.3.381.0         |
-| Linux <sup>*</sup>    | ✅           | 2023.3.381.0         |
-| iOS      | ❌           |                      |
-| Android  | ❌           |                      |
-| ChromeOS | ❌           |                      |
+| System              | Availability | Minimum WARP version |
+| ------------------- | ------------ | -------------------- |
+| Windows             | ✅           | 2023.3.381.0         |
+| macOS               | ✅           | 2023.3.381.0         |
+| Linux <sup>\*</sup> | ✅           | 2023.3.381.0         |
+| iOS                 | ❌           |                      |
+| Android             | ❌           |                      |
+| ChromeOS            | ❌           |                      |
 
 <sup>*</sup> Only supported on Debian-based systems.
 </Details>
@@ -41,17 +41,17 @@ The certificate is required if you want to [apply HTTP policies to encrypted web
 
 If a custom certificate is not provided, WARP will install the default [Cloudflare certificate](/cloudflare-one/connections/connect-devices/warp/user-side-certificates/install-cloudflare-cert/#download-the-cloudflare-root-certificate) in the system keychain for all users. If you uploaded a custom certificate, the WARP client will deploy your custom certificate instead of the Cloudflare certificate.
 
-Next, [verify](#view-the-installed-certificate) that the certificate was successfully installed.
+Next, [verify](#access-the-installed-certificate) that the certificate was successfully installed.
 
 :::note[Important]
-
 WARP only installs the system certificate — it does not install the certificate on individual applications. You will need to [manually add the certificate](/cloudflare-one/connections/connect-devices/warp/user-side-certificates/install-cloudflare-cert/#add-the-certificate-to-applications) to applications that rely on their own certificate store.
-
 :::
 
-## View the installed certificate
+## Access the installed certificate
 
 ### Windows
+
+To access the installed certificate in Windows:
 
 1. Open the Start menu and select **Run**.
 2. Enter `certlm.msc`.
@@ -63,18 +63,21 @@ The certificate is also placed in `%ProgramData%\Cloudflare\installed_cert.pem` 
 
 ### macOS
 
-1. Open **Keychain Access**.
-2. Go to **System** > **Certificates**.
-3. Double-click your certificate. (The default Cloudflare certificate is named **Cloudflare for Teams ECC Certificate Authority**.)
-4. You should see **This certificate is marked as trusted for all users**.
+To access the installed certificate in Windows:
+
+1. Open Keychain Access.
+2. In **System Keychains**, go to **System** > **Certificates**.
+3. Open your certificate. The default Cloudflare certificate is named **Cloudflare for Teams ECC Certificate Authority**.
+4. If the certificate is trusted by all users, Keychain Access will display **This certificate is marked as trusted for all users**.
 
 :::note
-
-Certain macOS versions (`13.5` for example) do not allow WARP to automatically trust the certificate. To manually trust the certificate:
+Certain macOS versions (such as macOS Ventura `13.5`) do not allow WARP to automatically trust the certificate. To manually trust the certificate:
 
 1. Select **Trust**.
 2. Set **When using this certificate** to _Always Trust_.
-   :::
+
+Alternatively, you can configure your mobile device management (MDM) to automatically trust the certificate on all of your organization's devices.
+:::
 
 The certificate is also placed in `/Library/Application Support/Cloudflare/installed_cert.pem` for reference by scripts or tools.
 
@@ -82,7 +85,7 @@ The certificate is also placed in `/Library/Application Support/Cloudflare/insta
 
 On Linux, the certificate is stored in `/usr/local/share/ca-certificates`. The default Cloudflare certificate is named `managed-warp.pem`.
 
-If you do not see the certificate, run the following commands to update the system store:
+If you cannot find the certificate, run the following commands to update the system store:
 
 1. Go to the system certificate store.
 

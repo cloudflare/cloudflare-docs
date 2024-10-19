@@ -9,7 +9,7 @@ A target represents a single resource in your infrastructure (such as a server, 
 
 To create a new target:
 
-<Tabs>
+<Tabs syncKey="dashPlusAPI">
 <TabItem label="Dashboard">
 1. In [Zero Trust](https://one.dash.cloudflare.com/), go to **Network** > **Targets**.
 2. Select **Add a target**.
@@ -30,22 +30,51 @@ To create a new target:
 </TabItem>
 <TabItem label="API">
 
-```sh
-curl https://api.cloudflare.com/client/v4/accounts/{account_id}/infrastructure/targets \
---header "Authorization: Bearer <API_TOKEN>" \
---data '{
-  "hostname": "infra-access-target",
-  "ip": {
-    "ipv4": {
-      "ip_addr": "187.26.29.249",
-      "virtual_network_id": "c77b744e-acc8-428f-9257-6878c046ed55"
-    },
-    "ipv6": {
-      "ip_addr": "64c0:64e8:f0b4:8dbf:7104:72b0:ec8f:f5e0",
-      "virtual_network_id": "c77b744e-acc8-428f-9257-6878c046ed55"
+1. [Create an API token](/fundamentals/api/get-started/create-token/) with the following permissions:
+		| Type    | Item             | Permission |
+		| ------- | ---------------- | ---------- |
+		| Account | Zero Trust       | Edit       |
+
+2. Make a `POST` request to the [Infrastructure Access Targets](/api/operations/infra-targets-post) endpoint:
+
+		```sh
+		curl https://api.cloudflare.com/client/v4/accounts/{account_id}/infrastructure/targets \
+		--header "Authorization: Bearer <API_TOKEN>" \
+		--data '{
+			"hostname": "infra-access-target",
+			"ip": {
+				"ipv4": {
+					"ip_addr": "187.26.29.249",
+					"virtual_network_id": "c77b744e-acc8-428f-9257-6878c046ed55"
+				},
+				"ipv6": {
+					"ip_addr": "64c0:64e8:f0b4:8dbf:7104:72b0:ec8f:f5e0",
+					"virtual_network_id": "c77b744e-acc8-428f-9257-6878c046ed55"
+				}
+			}
+		}'
+		```
+
+</TabItem>
+<TabItem label="Terraform">
+
+Configure the [`cloudflare_infrastructure_access_target`](https://registry.terraform.io/providers/cloudflare/cloudflare/4.44.0/docs/resources/infrastructure_access_target) resource:
+
+```tf
+resource "cloudflare_infrastructure_access_target" "infra-ssh-target" {
+  account_id = "f037e56e89293a057740de681ac9abbe"
+    hostname   = "infra-access-target"
+    ip = {
+			ipv4 = {
+         ip_addr = "187.26.29.249"
+         virtual_network_id = "c77b744e-acc8-428f-9257-6878c046ed55"
+       }
+			ipv6 = {
+				ip_addr = "64c0:64e8:f0b4:8dbf:7104:72b0:ec8f:f5e0"
+				virtual_network_id = "c77b744e-acc8-428f-9257-6878c046ed55"
+			}
     }
-  }
-}'
+}
 ```
 
 </TabItem>
