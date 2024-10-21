@@ -472,7 +472,7 @@ To trust the Cloudflare root certificate in the Google Drive desktop application
 4. Apply the newly created root certificate to your Google Drive application.
 
    ```sh
-   sudo defaults write /Library/Preferences/com.google.drivefs.settings TrustedRootsCertsFile -string "path/to/root.pem"
+   sudo defaults write /Library/Preferences/com.google.drivefs.settings TrustedRootCertsFile -string "path/to/roots.pem"
    ```
 
 You can verify the update with the following command.
