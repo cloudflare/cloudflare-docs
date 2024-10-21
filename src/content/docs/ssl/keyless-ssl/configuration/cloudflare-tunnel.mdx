@@ -19,13 +19,13 @@ Through an integration with [Cloudflare Tunnel](/cloudflare-one/connections/conn
 
 ***
 
-## Step 1 - Install `cloudflared` on key server
+## 1. Install `cloudflared` on key server
 
 First, install `cloudflared` on your key server.
 
 <Render file="keyless-tunnel-setup" /> <br/>
 
-## Step 2 - Create a Tunnel
+## 2. Create a Tunnel
 
 Then, create a Cloudflare Tunnel.
 
@@ -38,7 +38,7 @@ After you create the Tunnel, use the Cloudflare API to [List tunnel routes](/api
 * `"virtual_network_id"`
 * `"network"`
 
-## Step 3 - Upload Keyless SSL Certificates
+## 3. Upload Keyless SSL Certificates
 
 <Render file="keyless-upload-preamble" />
 
@@ -59,6 +59,6 @@ When you receive the `network` value from the Tunnel route API, it will include 
 
 :::
 
-## Step 4 - Set up and activate key server
+## 4. Set up and activate key server
 
 <Render file="keyless-key-server-setup" params={{ one: "keyserver.keyless.example.com" }} />

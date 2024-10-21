@@ -23,7 +23,7 @@ entries:
 
   - term: CGNAT IP
     general_definition: |-
-      a unique, virtual IP address assigned to each WARP device from the `100.96.0.0/12` range. You can view the CGNAT IP for a device on its **My Team** > **Devices** page.
+      a unique, virtual IP address assigned to each WARP device from the `100.96.0.0/12` range. You can view the CGNAT IP for a device in **My Team** > **Devices** > **Virtual IPv4/IPv6**.
 
   - term: cloudflared
     general_definition: |-
@@ -239,6 +239,10 @@ entries:
     general_definition: |-
       a software abstraction that allows you to logically segregate resources on a private network. Virtual networks are especially useful for exposing resources which have overlapping IP routes.
 
+  - term: Virtual Private Cloud (VPC)
+    general_definition: |-
+      a secure, isolated private network hosted on public cloud infrastructure. Examples of public cloud providers include Google Cloud, AWS, and Microsoft Azure.
+
   - term: Virtual Private Network (VPN)
     general_definition: |-
       a tool that allows users to send and receive data across shared or public networks as if their devices were directly connected to the private network. For example, employees working from home can use a VPN to access files on the corporate network.
@@ -254,3 +258,7 @@ entries:
   - term: Zero Trust Security
     general_definition: |-
       Zero Trust Security is an IT security model that requires strict identity verification for every person and device accessing resources on a network.
+
+  - term: Hops
+    general_definition: |-
+      Hops refer to the stops an email makes as it travels from the sender to the recipient.

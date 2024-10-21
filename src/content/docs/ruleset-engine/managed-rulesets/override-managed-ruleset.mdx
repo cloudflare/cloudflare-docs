@@ -5,7 +5,7 @@ sidebar:
   order: 3
 ---
 
-import { Details } from "~/components";
+import { Render, Details } from "~/components";
 
 To customize the behavior of a managed ruleset, override the ruleset at deployment. When you override a ruleset you specify changes to be executed on top of the default configuration. These changes take precedence over the ruleset's default behavior.
 
@@ -23,9 +23,7 @@ You can override a ruleset at three levels:
 
 Specific overrides take precedence over more general ones, and rule overrides take precedence over tag overrides, which take precedence over ruleset overrides.
 
-:::caution
-Ruleset overrides and tag overrides apply to both existing and **future** rules in the managed ruleset. If you wish to override existing rules only, you must use rule overrides.
-:::
+<Render file="managed-ruleset-override-warning" product="waf" />
 
 To apply an override for a managed ruleset:
 

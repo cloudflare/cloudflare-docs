@@ -1,10 +1,23 @@
 ---
 pcx_content_type: concept
 title: Links
-
 ---
 
 Follow these guidelines for link text.
+
+## Create links
+
+Use the path to the product when creating a link.
+
+- **Do**:
+  - `This is a link for Magic WAN's [Get started](/magic-wan/get-started/)`
+- **Don't:**
+  - `This is a link for Magic WAN's [Get started](https://developers.cloudflare.com/magic-wan/get-started/)`
+
+**Also not supported:**
+
+- Relative links: ``A link to [`DurableObjectNamespace::get`](./namespace)``
+- Using the file extension in links: `This is a link for Magic WAN's [Get started](/magic-wan/get-started.mdx/)`
 
 ## Standard text
 
@@ -43,4 +56,3 @@ When directing users to the Cloudflare dashboard, use the following convention:
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login) and select your account and domain.
 2. Go to **DNS** > **Records**.
 ```
-
