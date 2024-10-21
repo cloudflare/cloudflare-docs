@@ -12,7 +12,7 @@ import { Details } from "~/components"
 1.1.1.1 works directly inside Google Sheets. To get started, create a [Google Function](https://developers.google.com/apps-script/guides/sheets/functions) with the following code:
 
 ```js
-function NSLookup(type, domain) {
+function NSLookup(type, domain, usecache = false, cachettl = 30) {
 
   if (typeof type == 'undefined') {
     throw new Error('Missing parameter 1 dns type');
@@ -22,10 +22,31 @@ function NSLookup(type, domain) {
     throw new Error('Missing parameter 2 domain name');
   }
 
+  if (typeof usecache != "boolean") {
+    throw new Error('Only boolean values allowed in 3 use cache');
+  }
+
+  if (typeof cachettl != "number") {
+    throw new Error('Only numeric values allowed in 4 cache ttl');
+  }
+
   type = type.toUpperCase();
+  domain = domain.toLowerCase();
+
+  if (usecache) {
+    // Cache key and hash
+    cacheKey = domain + "@" + type;
+    cacheHash = Utilities.base64Encode(cacheKey);
+    cacheBinKey = "nslookup-result-" + cacheHash;
+
+    var cache = CacheService.getScriptCache();
+    var cachedResult = cache.get(cacheBinKey);
+    if (cachedResult != null) {
+      return cachedResult;
+    }
+  }
 
   var url = 'https://cloudflare-dns.com/dns-query?name=' + encodeURIComponent(domain) + '&type=' + encodeURIComponent(type);
-
   var options = {
     muteHttpExceptions: true,
     headers: {
@@ -61,12 +82,18 @@ function NSLookup(type, domain) {
   }
 
   var outputData = [];
+  var minCacheTTL = cachettl;
 
   for (var i in response.Answer) {
     outputData.push(response.Answer[i].data);
+    minCacheTTL = Math.max(minCacheTTL, response.Answer[i].TTL);
   }
 
   var outputString = outputData.join(',');
+
+  if (usecache) {
+    cache.put(cacheBinKey, outputString, minCacheTTL);
+  }
 
   return outputString;
 }
@@ -76,6 +103,7 @@ function NSLookup(type, domain) {
 
 When you feed the function `NSLookup` a record type and a domain, you will get a DNS record value in the cell you called `NSLookup`.
 
+To limit the number of DNS lookups and speed up the results (especially in larger Google Sheets), you can cache the returned DNS record value for 1800 seconds. Both the cache usage and the cache TTL can be controlled in arguments 3 and 4, respectively.
 
 <Details header="Supported DNS record types">
 
