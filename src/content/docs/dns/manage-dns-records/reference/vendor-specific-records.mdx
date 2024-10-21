@@ -26,8 +26,8 @@ If you want to customize the service addresses URLs associated with Google Works
 
 :::caution
 
-Google enforces HTTPS on its services. If you see errors about redirect
-loops when browsing to your site through Cloudflare, use Cloudflare's [Full encryption mode](/ssl/origin-configuration/ssl-modes/full/). 
+Google enforces HTTPS on its services. If you find errors about redirect
+loops when browsing to your site through Cloudflare, use Cloudflare's [Full encryption mode](/ssl/origin-configuration/ssl-modes/full/).
 :::
 
 ### Google site verification
@@ -84,6 +84,13 @@ Then, add Azure’s required records to [Cloudflare DNS](/dns/manage-dns-records
 
 ## Miscellaneous vendors
 
+### ClickFunnels
+
+You can configure Cloudflare to work with ClickFunnels. The process requires updating your Cloudflare DNS settings.
+
+* [Adding a Cloudflare subdomain](https://help.clickfunnels.com/hc/en-us/articles/360005906774-Adding-A-Cloudflare-Subdomain-)
+* [Adding a Cloudflare domain](https://help.clickfunnels.com/hc/en-us/articles/360005906094-Cloudflare-CNAME-Record)
+
 ### Discourse
 
 To use Discourse with Cloudflare, refer to [Using Discourse with Cloudflare: Best Practices](https://community.cloudflare.com/t/using-discourse-with-cloudflare-best-practices/602890).
@@ -92,24 +99,28 @@ To use Discourse with Cloudflare, refer to [Using Discourse with Cloudflare: Bes
 
 To use Cloudflare with Forward Email, refer to [Forward Email configuration with Cloudflare](https://forwardemail.net/guides/cloudflare).
 
-### ClickFunnels
+### Mailchimp
 
-You can configure Cloudflare to work with ClickFunnels. The process requires updating your Cloudflare DNS settings.
+For help with Mailchimp, refer to [Use a custom domain with Mailchimp](https://mailchimp.com/help/connect-domain/).
 
-* [Adding a Cloudflare subdomain](https://help.clickfunnels.com/hc/en-us/articles/360005906774-Adding-A-Cloudflare-Subdomain-)
-* [Adding a Cloudflare domain](https://help.clickfunnels.com/hc/en-us/articles/360005906094-Cloudflare-CNAME-Record)
+<Render file="third-party-caveat" params={{ one: "Mailchimp" }} />
 
-### Zoho
+### Ning custom domain
 
-To use Cloudflare with Zoho, refer to [Zoho configuration with Cloudflare](https://www.zoho.com/mail/help/adminconsole/cloudflare.html).
+For help with Ning, refer to [Use a custom domain with Ning](https://www.ning.com/help/use-your-own-domain-e-g-example-com-for-your-ning-network/).
 
-### Unbounce
+<Render file="third-party-caveat" params={{ one: "Ning" }} />
 
-Refer to Unbounce's documentation to [get a `CNAME` value](https://documentation.unbounce.com/hc/en-us/articles/204011950), then [add that record within Cloudflare](/dns/manage-dns-records/how-to/create-dns-records/).
+### Rackspace CloudFiles
+
+Configure Rackspace CloudFiles via *CNAME record*. Consult the [Rackspace documentation](https://docs.rackspace.com/support/how-to/using-cnames-with-cloud-files-containers/).
+
+Refer to Rackspace CloudFiles's documentation to [get a `CNAME` value](https://docs.rackspace.com/support/how-to/using-cnames-with-cloud-files-containers/), then [add that record within Cloudflare](/dns/manage-dns-records/how-to/create-dns-records/).
 
 :::caution
 
-If Cloudflare is activated via one of our hosting partners, your `CNAME` record should be [DNS-only (unproxied)](/dns/manage-dns-records/reference/proxied-dns-records/#dns-only-records). 
+The `CNAME` record needs to be [DNS-only (unproxied)](/dns/manage-dns-records/reference/proxied-dns-records/#dns-only-records) since rackcdn.com is
+not compatible with Cloudflare.
 :::
 
 ### SendGrid
@@ -121,45 +132,13 @@ Refer to SendGrid's documentation for how to [make SendGrid compatible with Clou
 
 You may need to refer to Cloudflare's documentation for updated navigation instructions regarding [adding DNS records](/dns/manage-dns-records/how-to/create-dns-records/) and creating [Configuration rules](/rules/configuration-rules/create-dashboard/).
 
-
 :::
-
-### WPEngine
-
-For help configuring WPEngine sites, refer to:
-
-* [Configuring DNS with WPEngine](https://wpengine.com/support/wordpress-best-practice-configuring-dns-for-wp-engine/)
-* [Cloudflare best practices](https://wpengine.com/support/cloudflare-best-practices/)
-
-### Ning custom domain
-
-For help with Ning, refer to [Use a custom domain with Ning](https://www.ning.com/help/use-your-own-domain-e-g-example-com-for-your-ning-network/).
-
-<Render file="third-party-caveat" params={{ one: "Ning" }} />
 
 ### SmugMug
 
 For help with SmugMug, refer to [Use a custom domain with SmugMug](https://www.smugmughelp.com/en/articles/363-use-a-custom-domain).
 
 <Render file="third-party-caveat" params={{ one: "SmugMug" }} />
-
-### Mailchimp
-
-For help with Mailchimp, refer to [Use a custom domain with Mailchimp](https://mailchimp.com/help/connect-domain/).
-
-<Render file="third-party-caveat" params={{ one: "Mailchimp" }} />
-
-### Rackspace CloudFiles
-
-Configure Rackspace CloudFiles via *CNAME record*. Consult the [Rackspace documentation](https://docs.rackspace.com/support/how-to/using-cnames-with-cloud-files-containers/).
-
-Refer to Rackspace CloudFiles's documentation to [get a `CNAME` value](https://docs.rackspace.com/support/how-to/using-cnames-with-cloud-files-containers/), then [add that record within Cloudflare](/dns/manage-dns-records/how-to/create-dns-records/).
-
-:::caution
-
-The `CNAME` record needs to be [DNS-only (unproxied)](/dns/manage-dns-records/reference/proxied-dns-records/#dns-only-records) since rackcdn.com is
-not compatible with Cloudflare. 
-:::
 
 ### Squarespace
 
@@ -188,6 +167,20 @@ Refer to Tumblr's documentation to [get DNS record values](https://help.tumblr.c
 
 <Render file="third-party-caveat" params={{ one: "Tumblr" }} />
 
+### Unbounce
+
+Refer to Unbounce's documentation to [get a `CNAME` value](https://documentation.unbounce.com/hc/en-us/articles/204011950), then [add that record within Cloudflare](/dns/manage-dns-records/how-to/create-dns-records/).
+
+:::caution
+
+If Cloudflare is activated via one of our hosting partners, your `CNAME` record should be [DNS-only (unproxied)](/dns/manage-dns-records/reference/proxied-dns-records/#dns-only-records).
+:::
+
+### Vercel
+
+For help using Cloudflare with Vercel, refer to [Vercel and Cloudflare Integration](https://vercel.com/docs/integrations/external-platforms/cloudflare#using-cloudflare-as-a-reverse-proxy)
+
+
 ### Wix
 
 You can use Cloudflare with [Wix websites](https://www.wix.com/), though your setup needs to be different than with most website builders.
@@ -199,3 +192,14 @@ This is because Wix [does not support](https://support.wix.com/en/article/reques
 If you want to manage your DNS through Cloudflare or you bought a domain through [Cloudflare Registrar](/registrar/), you can connect that domain to Wix through [domain pointing](https://support.wix.com/en/article/connecting-a-domain-to-wix-using-the-pointing-method).
 
 This method means your website is using Cloudflare for DNS only, so all your DNS records should be [DNS-only (unproxied)](/dns/manage-dns-records/reference/proxied-dns-records/#dns-only-records).
+
+### WPEngine
+
+For help configuring WPEngine sites, refer to:
+
+* [Configuring DNS with WPEngine](https://wpengine.com/support/wordpress-best-practice-configuring-dns-for-wp-engine/)
+* [Cloudflare best practices](https://wpengine.com/support/cloudflare-best-practices/)
+
+### Zoho
+
+To use Cloudflare with Zoho, refer to [Zoho configuration with Cloudflare](https://www.zoho.com/mail/help/adminconsole/cloudflare.html).

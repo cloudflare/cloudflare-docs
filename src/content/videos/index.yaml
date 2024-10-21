@@ -202,13 +202,13 @@ entries:
     languages: [TypeScript]
     products: [Workers, Workers AI]
     cloudflare: true
-    # stream_id: 
+    # stream_id:
     author: confidence
     updated: 2024-10-07
     difficulty: Beginner
     content_type: 🎥 Video
-    pcx_content_type: tutorial    
-  - link: http://localhost:1111/pages/framework-guides/deploy-a-hono-site/#creator-interview
+    pcx_content_type: tutorial
+  - link: https://developers.cloudflare.com/pages/framework-guides/deploy-a-hono-site/#creator-interview
     title: DevTalk | Episode 01 - Yusuke Wada, creator of Hono Framework
     description: In this interview, Yusuke Wada reflects on his journey in developing Hono.
     tags: [Pages, Workers]
@@ -219,4 +219,4 @@ entries:
     updated: 2024-10-08
     difficulty: Beginner
     content_type: 🎥 Video
-    pcx_content_type: interview    
+    pcx_content_type: interview
