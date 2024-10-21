@@ -460,6 +460,8 @@ wrangler d1 migrations apply <DATABASE_NAME> [OPTIONS]
 
 - `DATABASE_NAME` <Type text="string" /> <MetaInfo text="required" />
   - The name of the D1 database you wish to apply your migrations on.
+- `--env` <Type text="string" /> <MetaInfo text="optional" />
+  - Specify which environment configuration to use for d1 dinding
 - `--local` <Type text="boolean" /> <MetaInfo text="(default: true) optional" />
   - Execute any unapplied migrations on your locally persisted D1 database.
 - `--remote` <Type text="boolean" /> <MetaInfo text="(default: false) optional" />
