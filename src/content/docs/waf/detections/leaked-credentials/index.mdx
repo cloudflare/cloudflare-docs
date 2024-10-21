@@ -71,10 +71,11 @@ When specifying a custom detection location, only the location of the username f
 Expressions used to specify custom detection locations can include the following fields and functions:
 
 - Fields:
+  - [`http.request.body.form`](/ruleset-engine/rules-language/fields/http-request-body/#httprequestbodyform)
   - [`http.request.body.raw`](/ruleset-engine/rules-language/fields/http-request-body/#httprequestbodyraw)
 - Functions:
   - [`lookup_json_string()`](/ruleset-engine/rules-language/functions/#lookup_json_string)
-  - [`lower()`](/ruleset-engine/rules-language/functions/#lower)
+  - [`url_decode()`](/ruleset-engine/rules-language/functions/#url_decode)
 
 For instructions on configuring a custom detection location, refer to [Get started](/waf/detections/leaked-credentials/get-started/#4-optional-configure-a-custom-detection-location).
 

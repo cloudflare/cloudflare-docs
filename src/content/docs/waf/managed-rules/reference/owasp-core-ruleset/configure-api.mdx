@@ -115,7 +115,6 @@ This example sets the Cloudflare OWASP Core Ruleset's paranoia level for a zone 
     	"action": "execute",
     	"action_parameters": {
     		"id": "4814384a9e5d4991b9815dcfc25d2f1f",
-    		"version": "latest",
     		"overrides": {
     			"categories": [
     				{
@@ -260,7 +259,7 @@ This example configures the managed ruleset score threshold and the performed ac
    - `"score_threshold": 60`
    - `"action": "managed_challenge"`
 
-   ```bash null {10-18}
+   ```bash null {9-17}
    curl --request PATCH \
    "https://api.cloudflare.com/client/v4/zones/{zone_id}/rulesets/{entry_point_ruleset_id}/rules/{execute_rule_id}" \
    --header "Authorization: Bearer <API_TOKEN>" \
@@ -269,7 +268,6 @@ This example configures the managed ruleset score threshold and the performed ac
    	"action": "execute",
    	"action_parameters": {
    		"id": "4814384a9e5d4991b9815dcfc25d2f1f",
-   		"version": "latest",
    		"overrides": {
    			"rules": [
    				{
