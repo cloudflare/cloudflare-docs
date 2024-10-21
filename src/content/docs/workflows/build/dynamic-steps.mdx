@@ -1,0 +1,35 @@
+---
+title: Dynamic steps
+pcx_content_type: concept
+sidebar:
+  order: 5
+
+---
+
+A Workflow does not have to define all of its steps statically: steps can be created programmatically and/or conditionally.
+
+This allows you to not only trigger steps based on specific input parameters, but to also name steps dynamically, set the retry configuration for a step 
+
+
+## Example
+
+Steps can be created on-the-fly, allowing you create a step for each parameter passed to your Workflow, for each file you want to read from storage, or for calls to third-party APIs.
+
+For example, you can loop over each event, label the step dynamically, and have the step operate only over that `event`:
+
+```ts
+export class MyWorkflow extends Workflow<Env, Params> {
+	async run(events: WorkflowEvent[], step: WorkflowStep) {
+    // Dynamically create a step for each event passed to our workflow
+    // ... or for every file we want to read from R2 storage
+    // ... or each API call we need to make based on an incoming request
+		for (const event of events) {
+			await step.do(`processing ${event.id}`, async () => {
+				// Step logic for one event goes here
+				// You can also specify a StepConfig for each step, just as you
+				// would for any other step
+			})
+		}
+  }
+}
+```
