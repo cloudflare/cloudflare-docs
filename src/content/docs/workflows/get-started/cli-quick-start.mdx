@@ -19,7 +19,7 @@ To learn more about Workflows, read [the beta announcement blog](https://blog.cl
 
 Workflows allow you to build durable, multi-step applications using the Workers platform. A Workflow can automatically retry, persist state, run for hours or days, and coordinate between third-party APIs.
 
-You can build Workflows to post-process file uploads to [R2 object storage](/r2/), automate generation of [Workers AI](/workers-ai/) embeddings into a [Vectorize](/vectorize/) vector database, or to trigger [user lifecycle emails](TODO) using your favorite email API.
+You can build Workflows to post-process file uploads to [R2 object storage](/r2/), automate generation of [Workers AI](/workers-ai/) embeddings into a [Vectorize](/vectorize/) vector database, or to trigger user lifecycle emails using your favorite email API.
 
 ## Prerequisites
 
@@ -150,13 +150,10 @@ Specifically, the code above:
 
 ## 2. Deploy a Workflow
 
-Workflows are deployed via [`wrangler](/workers/wrangler/install-and-update/), which is installed when you first ran `npm create cloudflare`, above. Workflows are Workers scripts, and deployed the same way.
+Workflows are deployed via [`wrangler](/workers/wrangler/install-and-update/), which is installed when you first ran `npm create cloudflare`, above. Workflows are Workers scripts, and deployed the same way:
 
 ```sh
 npx wrangler@latest deploy
-```
-```sh output
-TODO
 ```
 
 ## 3. Running a Workflow
@@ -174,7 +171,9 @@ Refer to the [events and parameters documentation](/workflows/build/events-and-p
 
 ### Worker binding
 
-TODO - trigger from a Worker
+You can [bind to a Workflow](/workers/runtime-apis/bindings/#what-is-a-binding) from any handler in a Workers script, allowing you to programatically trigger and pass parameters to a Workflow instance from your own application code.
+
+To bind a Workflow to a Worker, you need to define a `[[workflows]]` binding in your `wrangler.toml` configuration:
 
 ```toml title="wrangler.toml"
 [[workflows]]
@@ -189,10 +188,10 @@ class_name = "MyWorkflow"
 script_name = "workflows-starter"
 ```
 
-You can then invoke the methods on this binding directly from your Worker script. The `Workflow` type has methods for:
+You can then invoke the methods on this binding directly from your Worker script's `env` parameter. The `Workflow` type has methods for:
 
 * `create()` - creating (triggering) a new instance of the Workflow, returning the ID.
-* `get(id)`- retrieve a Workflow instance by ID
+* `getByName()`- retrieve a Workflow instance by name (or `getById` by ID)
 * `status()` - get the current status of a unique Workflow instance.
 
 For example, the following Worker will fetch the status of an existing Workflow instance by ID (if supplied), else it will create a new Workflow instance and return its ID:
