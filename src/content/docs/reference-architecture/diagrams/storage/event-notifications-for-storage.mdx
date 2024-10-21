@@ -6,12 +6,14 @@ products:
 sidebar:
   order: 1
   label: Event notifications for storage
-updated: 2024-10-18
+updated: 2024-10-21
 ---
 
 ## Introduction
 
 Cloudflare [R2](/r2/) Storage allows developers to store large amounts of unstructured data without the costly egress bandwidth fees associated with typical cloud storage services. The lifecycle of data in object storage often extends beyond uploading, modifying, or deleting the data. There may be a requirement to transform, analyze, or perform post-processing on the data. R2 provides [event notifications](/r2/buckets/event-notifications/) to manage these event-driven workflows.
+
+This document walks through how to use our built in serverless [Cloudflare Workers](/workers/) or an external service to monitor for notifications about data changes and then handle them appropriately.
 
 ## Push-based consumer Worker
 
@@ -30,7 +32,7 @@ Consider the example below of push-based post-processing: when a user uploads a 
 
 ## Pull-based HTTP consumer
 
-Alternatively, you can establish a [pull-based consumer](/queues/configuration/pull-consumers/), where you pull from a queue over HTTP from any environment. Use a pull-based consumer if you need to consume messages from existing infrastructure outside of Cloudflare Workers, and/or where you need to carefully control how fast messages are consumed.
+Alternatively, you can establish a [pull-based consumer](/queues/configuration/pull-consumers/), where you pull from a queue over HTTP from any environment. Use a pull-based consumer if you need to consume messages from existing infrastructure outside of Cloudflare where you need to carefully control how fast messages are consumed.
 
 A pull-based consumer must explicitly make a call to pull (and then acknowledge) messages from the queue, only when it is ready to do so.
 
@@ -40,13 +42,15 @@ Consider the scenario below: A user initiates a delete from R2. An external serv
 
 1. A user initiates a delete from R2
 2. An event notification is sent to the queue.
-3. The external service, when ready, makes an HTTP POST request to the queue to pull the message
-4. The queue sends the message
+3. The external service, when ready to process the request, makes an HTTP POST request to the queue to pull the message
+4. The queue sends the message in response to the POST request from step 3.
 5. The external service must acknowledge that the message has been received
 
-## Additional Example Use Cases:
+You can follow the steps here to [configure a pull-based consumer](/queues/configuration/pull-consumers/#1-enable-http-pull).
 
-- Send an email to an administrator anytime objects are deleted from R2
+## Additional Example Use Cases
+
+- Send an email to an administrator anytime objects are deleted from R2.
 - When a video or podcast is uploaded to R2, it automatically processes the content using one of Cloudflare's Automatic Speech Recognition (ASR) AI models to generate subtitles or even translate the content.
 - Remove related database entries if an object in R2 is deleted.
 
