@@ -150,7 +150,7 @@ Specifically, the code above:
 
 ## 2. Deploy a Workflow
 
-Workflows are deployed via [`wrangler](/workers/wrangler/install-and-update/), which is installed when you first ran `npm create cloudflare`, above. Workflows are Workers scripts, and deployed the same way:
+Workflows are deployed via [`wrangler`](/workers/wrangler/install-and-update/), which is installed when you first ran `npm create cloudflare`, above. Workflows are Workers scripts, and deployed the same way:
 
 ```sh
 npx wrangler@latest deploy
@@ -311,6 +311,20 @@ Steps:
 │ 10/15/2024, 1:56:32 PM │ 10/15/2024, 1:56:32 PM │ 0 seconds │ ✅ Success │                                           │
 └────────────────────────┴────────────────────────┴───────────┴────────────┴───────────────────────────────────────────┘
 ```
+
+From the output above, we can inspect:
+
+* The status (success, failure, running) of each step
+* Any state emitted by the step
+* Any `sleep` state, including when the Workflow will wake up
+* Retries associated with each step.
+* Errors, including exception messages
+
+:::note
+
+You do not have to wait for a Workflow instance to finish executing to inspect its current status. The `wrangler workflows instances describe` sub-command will show the status of an in-progress instance, including any persisted state, if it is sleeping, and any errors or retries. This can be especially useful when debugging a Workflow during development.
+
+:::
 
 ## Next steps
 
