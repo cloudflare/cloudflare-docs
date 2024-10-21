@@ -191,31 +191,26 @@ Return to the `src/index.ts` file we created in the previous step and add a `fet
 // This can be in the same file as our Workflow definition
 
 export default {
-	async fetch(req: Request, env: Env) {
-        //
-        const instanceId = new URL(req.url).searchParams.get("instanceId")
+	async fetch(req: Request, env: Env): Promise<Response> {
+		let id = new URL(req.url).searchParams.get('instanceId');
 
-        // If an ?instanceId=<id> query parameter is provided, fetch the status
-        // of an existing Workflow by its ID.
-        if (instanceId) {
-            let instance = await env.MYWORKFLOW.get(id);
+		// Get the status of an existing instance, if provided
+		if (id) {
+			let instance = await env.MY_WORKFLOW.get(id);
 			return Response.json({
 				status: await instance.status(),
 			});
-        }
+		}
 
-        // Else, create a new instance of our Workflow, passing in any (optional) params
-        // and return the ID.
-		const newId = await crypto.randomUUID();
-		let instance = await env.MYWORKFLOW.create(newId, {});
+		// Spawn a new instance and return the ID and status
+		let instance = await env.MY_WORKFLOW.create();
 		return Response.json({
 			id: instance.id,
 			details: await instance.status(),
 		});
-
-		return Response.json({ result });
 	},
 };
+;
 ```
 
 The code here exposes a HTTP endpoint that generates a random ID and runs the Workflow, returning the ID and the Workflow status. It also accepts an optional `instanceId` query parameter that retrieves the status of a Workflow instance by its ID.
@@ -240,7 +235,7 @@ Before you deploy, you can review the full Workflows code and the `fetch` handle
 import { WorkflowEntrypoint, WorkflowStep, WorkflowEvent } from 'cloudflare:workers';
 
 type Env = {
-	// Add your bindings here, e.g. KV, D1, AI, etc.
+	// Add your bindings here, e.g. Workers KV, D1, Workers AI, etc.
 	MY_WORKFLOW: Workflow;
 };
 
@@ -281,20 +276,21 @@ export class MyWorkflow extends WorkflowEntrypoint<Env, Params> {
 
 		await step.do(
 			'make a call to write that could maybe, just might, fail',
-			// {
-			// 	retries: {
-			// 		limit: 5,
-			// 		delay: '5 second',
-			// 		backoff: 'exponential',
-			// 	},
-			// 	timeout: '15 minutes',
-			// },
+			// Define a retry strategy
+			{
+				retries: {
+					limit: 5,
+					delay: '5 second',
+					backoff: 'exponential',
+				},
+				timeout: '15 minutes',
+			},
 			async () => {
-				// Do stuff here, with access to my_value!
+				// Do stuff here, with access to the state from our previous steps
 				if (Math.random() > 0.5) {
 					throw new Error('API call to $STORAGE_SYSTEM failed');
 				}
-			}
+			},
 		);
 	}
 }
@@ -305,15 +301,14 @@ export default {
 
 		// Get the status of an existing instance, if provided
 		if (id) {
-			let instance = await env.MYWORKFLOW.get(id);
+			let instance = await env.MY_WORKFLOW.get(id);
 			return Response.json({
 				status: await instance.status(),
 			});
 		}
 
 		// Spawn a new instance and return the ID and status
-		const newId = await crypto.randomUUID();
-		let instance = await env.MYWORKFLOW.create(newId, {});
+		let instance = await env.MY_WORKFLOW.create();
 		return Response.json({
 			id: instance.id,
 			details: await instance.status(),
@@ -358,8 +353,6 @@ With your Workflow deployed, you can now run it.
 Because Workflows can be long running, it's possible to have running instances that represent different versions of your Workflow code over time.
 
 :::
-
-
 
 To trigger our Workflow, we will use the `wrangler` CLI and pass in an optional `--payload`. The `payload` will be passed to your Workflow's `run` method handler as an `Event`
 
@@ -453,7 +446,6 @@ You do not have to wait for a Workflow instance to finish executing to inspect i
 
 :::
 
-
 In the previous step, we also bound a Workers script to our Workflow. You can trigger a Workflow by visiting the (deployed) Workers script in a browser or with any HTTP client.
 
 ```sh
@@ -468,12 +460,20 @@ curl -s https://workflows-starter.YOUR_WORKERS_SUBDOMAIN.workers.dev/
 
 TODO - delete the Workflow.
 
+You can optionally delete the Workflow, which will prevent the creation of any (all) instances by using `wrangler`:
+
+```sh
+npx wrangler workflows delete my-workflow
+```
+
+Re-deploying the Workers script containing your Workflow code will re-create the Workflow.
+
 ---
 
 ## Next steps
 
-- learn more
-- observability
-- trigger workflows on a schedule or from a Queue
+* Learn more about [how events are passed to a Workflow](/workflows/build/events-and-parameters/)
+* Binding to and triggering Workflow instances using the [Workers API](/workflows/build/workers-api/)
+* The [Rules of Workflows](/workflows/build/rules-of-workflows/) and best practices for building applications using Workflows.
 
 If you have any feature requests or notice any bugs, share your feedback directly with the Cloudflare team by joining the [Cloudflare Developers community on Discord](https://discord.cloudflare.com).

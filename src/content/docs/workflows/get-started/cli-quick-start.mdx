@@ -55,45 +55,98 @@ This will create a new folder called `workflows-tutorial`, which contains two fi
 Open the `src/index.ts` file in your text editor. This file contains the following code, which is the most basic instance of a Workflow definition:
 
 ```ts title="src/index.ts"
-// Import the Workflow definition
-import { WorkflowEntrypoint, WorkflowEvent, WorkflowStep } from "cloudflare:workflows"
+import { WorkflowEntrypoint, WorkflowStep, WorkflowEvent } from 'cloudflare:workers';
 
-// Create your own class that implements a Workflow
-export class MyWorkflow implements WorkflowEntrypoint {
-    // Define a run() method
-    async run(event: WorkflowEvent, step: WorkflowStep) {
-        // Define one or more steps that optionally return state.
-      	const state = await step.do('my first step', async () => {
-            return {}
+type Env = {
+	// Add your bindings here, e.g. Workers KV, D1, Workers AI, etc.
+	MY_WORKFLOW: Workflow;
+};
+
+// User-defined params passed to your workflow
+type Params = {
+	email: string;
+	metadata: Record<string, string>;
+};
+
+export class MyWorkflow extends WorkflowEntrypoint<Env, Params> {
+	async run(event: WorkflowEvent<Params>, step: WorkflowStep) {
+		// Can access bindings on `this.env`
+		// Can access params on `event.params`
+
+		const files = await step.do('my first step', async () => {
+			// Fetch a list of files from $SOME_SERVICE
+			return {
+				inputParams: event,
+				files: [
+					'doc_7392_rev3.pdf',
+					'report_x29_final.pdf',
+					'memo_2024_05_12.pdf',
+					'file_089_update.pdf',
+					'proj_alpha_v2.pdf',
+					'data_analysis_q2.pdf',
+					'notes_meeting_52.pdf',
+					'summary_fy24_draft.pdf',
+				],
+			};
+		});
+
+		const apiResponse = await step.do('some other step', async () => {
+			let resp = await fetch('https://api.cloudflare.com/client/v4/ips');
+			return await resp.json<any>();
 		});
 
 		await step.sleep('wait on something', '1 minute');
 
 		await step.do(
 			'make a call to write that could maybe, just might, fail',
+			// Define a retry strategy
+			{
+				retries: {
+					limit: 5,
+					delay: '5 second',
+					backoff: 'exponential',
+				},
+				timeout: '15 minutes',
+			},
 			async () => {
-				// Do stuff here, with access to 'state' from the previous step
+				// Do stuff here, with access to the state from our previous steps
 				if (Math.random() > 0.5) {
 					throw new Error('API call to $STORAGE_SYSTEM failed');
 				}
-			}
+			},
 		);
-    }
+	}
 }
+
+export default {
+	async fetch(req: Request, env: Env): Promise<Response> {
+		let id = new URL(req.url).searchParams.get('instanceId');
+
+		// Get the status of an existing instance, if provided
+		if (id) {
+			let instance = await env.MY_WORKFLOW.get(id);
+			return Response.json({
+				status: await instance.status(),
+			});
+		}
+
+		// Spawn a new instance and return the ID and status
+		let instance = await env.MY_WORKFLOW.create();
+		return Response.json({
+			id: instance.id,
+			details: await instance.status(),
+		});
+	},
+};
 ```
 
-Specifically:
+Specifically, the code above:
 
-1. TODO - describe the Workflow class
-2. TODO - how params are injected
-3. TODO - how state is persisted
-4. TODO - retries and config
-5. TODO - triggering from a fetch handler
-
-```ts title="src/index.ts"
-
-
-```
+1. Extends the Workflows base class (`WorkflowsEntrypoint`) and defines a `run` method for our Workflow.
+2. Passes in our `Params` type as a [type parameter](/workflows/build/events-and-parameters/) so that events that trigger our Workflow are typed.
+3. Defines several steps that return state.
+4. Defines a custom retry configuration for a step.
+5. Binds to the Workflow from a Worker's `fetch` handler so that we can create (trigger) instances of our Workflow via a HTTP call.
 
 ## 2. Deploy a Workflow
 
@@ -108,7 +161,7 @@ TODO
 
 ## 3. Running a Workflow
 
-TODO - basic trigger steps
+You can run a Workflow via the `wrangler` CLI, via a Worker binding, or via the Workflows [REST API]().
 
 ### CLI
 
@@ -138,7 +191,7 @@ script_name = "workflows-starter"
 
 You can then invoke the methods on this binding directly from your Worker script. The `Workflow` type has methods for:
 
-* `create(newId, params)` - creating (triggering) a new instance of the Workflow, with optional
+* `create()` - creating (triggering) a new instance of the Workflow, returning the ID.
 * `get(id)`- retrieve a Workflow instance by ID
 * `status()` - get the current status of a unique Workflow instance.
 
@@ -154,47 +207,116 @@ interface Env {
 }
 
 export default {
-	async fetch(req: Request, env: Env) {
-        //
-        const instanceId = new URL(req.url).searchParams.get("instanceId")
+	async fetch(req: Request, env: Env): Promise<Response> {
+		let id = new URL(req.url).searchParams.get('instanceId');
 
-        // If an ?instanceId=<id> query parameter is provided, fetch the status
-        // of an existing Workflow by its ID.
-        if (instanceId) {
-            let instance = await env.MYWORKFLOW.get(id);
+		// Get the status of an existing instance, if provided
+		if (id) {
+			let instance = await env.MY_WORKFLOW.get(id);
 			return Response.json({
 				status: await instance.status(),
 			});
-        }
+		}
 
-        // Else, create a new instance of our Workflow, passing in any (optional) params
-        // and return the ID.
-		const newId = await crypto.randomUUID();
-		let instance = await env.MYWORKFLOW.create(newId, {});
+		// Spawn a new instance and return the ID and status
+		let instance = await env.MY_WORKFLOW.create();
 		return Response.json({
 			id: instance.id,
 			details: await instance.status(),
 		});
-
-		return Response.json({ result });
 	},
 };
 ```
 
-Refer to the [triggering Workflows] documentation for how to trigger a Workflow from other Workers handler functions.
+Refer to the [triggering Workflows](/workflows/build/trigger-workflows/) documentation for how to trigger a Workflow from other Workers handler functions.
 
 ## 4. Managing Workflows
 
-TODO - managing via the CLI
+:::note
 
-* Listing
-* Showing running instances
-* Inspecting an instances state
+The `wrangler workflows` command requires wrangler version `3.82.0` or greater. Use `npx wrangler@latest` to always use the latest wrangler version when invoking commands.
+
+:::
+
+The `wrangler workflows` command group has several sub-commands for managing and inspecting Workflows and their instances:
+
+* List Workflows: `wrangler workflows list`
+* Inspect the instances of a Workflow: `wrangler workflows instances list YOUR_WORKFLOW_NAME`
+* View the state of a running Workflow instance by its ID: `wrangler workflows instances describe YOUR_WORKFLOW_NAME WORKFLOW_ID`
+
+You can also view the state of the latest instance of a Workflow by using the `latest` keyword instead of an ID:
+
+```sh
+npx wrangler@workflows workflows instances describe workflows-starter latest
+# Or by ID:
+# npx wrangler@workflows workflows instances describe workflows-starter 12dc179f-9f77-4a37-b973-709dca4189ba
+```
+```sh output
+Workflow Name:         workflows-starter
+Instance Id:           f72c1648-dfa3-45ea-be66-b43d11d216f8
+Version Id:            cedc33a0-11fa-4c26-8a8e-7d28d381a291
+Status:                ✅ Completed
+Trigger:               🌎 API
+Queued:                10/15/2024, 1:55:31 PM
+Success:               ✅ Yes
+Start:                 10/15/2024, 1:55:31 PM
+End:                   10/15/2024, 1:56:32 PM
+Duration:              1 minute
+Last Successful Step:  make a call to write that could maybe, just might, fail-1
+Steps:
+
+  Name:      my first step-1
+  Type:      🎯 Step
+  Start:     10/15/2024, 1:55:31 PM
+  End:       10/15/2024, 1:55:31 PM
+  Duration:  0 seconds
+  Success:   ✅ Yes
+  Output:    "{\"inputParams\":[{\"timestamp\":\"2024-10-15T13:55:29.363Z\",\"payload\":{\"hello\":\"world\"}}],\"files\":[\"doc_7392_rev3.pdf\",\"report_x29_final.pdf\",\"memo_2024_05_12.pdf\",\"file_089_update.pdf\",\"proj_alpha_v2.pdf\",\"data_analysis_q2.pdf\",\"notes_meeting_52.pdf\",\"summary_fy24_draft.pdf\",\"plan_2025_outline.pdf\"]}"
+┌────────────────────────┬────────────────────────┬───────────┬────────────┐
+│ Start                  │ End                    │ Duration  │ State      │
+├────────────────────────┼────────────────────────┼───────────┼────────────┤
+│ 10/15/2024, 1:55:31 PM │ 10/15/2024, 1:55:31 PM │ 0 seconds │ ✅ Success │
+└────────────────────────┴────────────────────────┴───────────┴────────────┘
+
+  Name:      some other step-1
+  Type:      🎯 Step
+  Start:     10/15/2024, 1:55:31 PM
+  End:       10/15/2024, 1:55:31 PM
+  Duration:  0 seconds
+  Success:   ✅ Yes
+  Output:    "{\"result\":{\"ipv4_cidrs\":[\"173.245.48.0/20\",\"103.21.244.0/22\",\"103.22.200.0/22\",\"103.31.4.0/22\",\"141.101.64.0/18\",\"108.162.192.0/18\",\"190.93.240.0/20\",\"188.114.96.0/20\",\"197.234.240.0/22\",\"198.41.128.0/17\",\"162.158.0.0/15\",\"104.16.0.0/13\",\"104.24.0.0/14\",\"172.64.0.0/13\",\"131.0.72.0/22\"],\"ipv6_cidrs\":[\"2400:cb00::/32\",\"2606:4700::/32\",\"2803:f800::/32\",\"2405:b500::/32\",\"2405:8100::/32\",\"2a06:98c0::/29\",\"2c0f:f248::/32\"],\"etag\":\"38f79d050aa027e3be3865e495dcc9bc\"},\"success\":true,\"errors\":[],\"messages\":[]}"
+┌────────────────────────┬────────────────────────┬───────────┬────────────┐
+│ Start                  │ End                    │ Duration  │ State      │
+├────────────────────────┼────────────────────────┼───────────┼────────────┤
+│ 10/15/2024, 1:55:31 PM │ 10/15/2024, 1:55:31 PM │ 0 seconds │ ✅ Success │
+└────────────────────────┴────────────────────────┴───────────┴────────────┘
+
+  Name:      wait on something-1
+  Type:      💤 Sleeping
+  Start:     10/15/2024, 1:55:31 PM
+  End:       10/15/2024, 1:56:31 PM
+  Duration:  1 minute
+
+  Name:      make a call to write that could maybe, just might, fail-1
+  Type:      🎯 Step
+  Start:     10/15/2024, 1:56:31 PM
+  End:       10/15/2024, 1:56:32 PM
+  Duration:  1 second
+  Success:   ✅ Yes
+  Output:    null
+┌────────────────────────┬────────────────────────┬───────────┬────────────┬───────────────────────────────────────────┐
+│ Start                  │ End                    │ Duration  │ State      │ Error                                     │
+├────────────────────────┼────────────────────────┼───────────┼────────────┼───────────────────────────────────────────┤
+│ 10/15/2024, 1:56:31 PM │ 10/15/2024, 1:56:31 PM │ 0 seconds │ ❌ Error   │ Error: API call to $STORAGE_SYSTEM failed │
+├────────────────────────┼────────────────────────┼───────────┼────────────┼───────────────────────────────────────────┤
+│ 10/15/2024, 1:56:32 PM │ 10/15/2024, 1:56:32 PM │ 0 seconds │ ✅ Success │                                           │
+└────────────────────────┴────────────────────────┴───────────┴────────────┴───────────────────────────────────────────┘
+```
 
 ## Next steps
 
-* TODO
-* ALSO TODO
-* ALSO ALSO TODO
+* Learn more about [how events are passed to a Workflow](/workflows/build/events-and-parameters/)
+* Binding to and triggering Workflow instances using the [Workers API](/workflows/build/workers-api/)
+* The [Rules of Workflows](/workflows/build/rules-of-workflows/) and best practices for building applications using Workflows.
 
 If you have any feature requests or notice any bugs, share your feedback directly with the Cloudflare team by joining the [Cloudflare Developers community on Discord](https://discord.cloudflare.com).
