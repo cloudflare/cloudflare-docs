@@ -10,8 +10,7 @@ product:
 
 meta:
   title: Cloudflare Images docs
-  description:
-    Store, transform, optimize, and deliver images at scale.
+  description: Store, transform, optimize, and deliver images at scale.
   author: "@cloudflare"
 
 resources:
