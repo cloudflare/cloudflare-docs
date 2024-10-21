@@ -7,7 +7,7 @@ sidebar:
   order: 1
 head:
   - tag: title
-    content: Cloudflare D1
+    content: Cloudflare Workflows
 
 ---
 
@@ -15,40 +15,35 @@ import { CardGrid, Description, Feature, LinkTitleCard, Plan, RelatedProduct } f
 
 <Description>
 
-
-Create new serverless SQL databases to query from your Workers and Pages projects.
-
+Build durable multi-step applications on Cloudflare Workers with Workflows.
 
 </Description>
 
 <Plan type="workers-all" />
 
-D1 is Cloudflare’s native serverless database. D1 allows you to build applications that handle large amounts of users at no extra cost. With D1, you can restore your database to any minute within the last 30 days.
+Workflows is a durable execution engine built on Cloudflare Workers. Workflows allow you to build multi-step applications that can automatically retry, persist state and run for minutes, hours, days or weeks. Workflows introduces a programming model that makes it easier to build reliable, long-running tasks, observe as they progress, and programatically trigger instances based on events across your services.
 
-Create your first D1 database by [following the Get started guide](/d1/get-started/), learn how to [import data into a database](/d1/build-with-d1/import-export-data/), and how to [interact with your database](/d1/build-with-d1/d1-client-api/) directly from [Workers](/workers/) or [Pages](/pages/functions/bindings/#d1-databases).
+Refer to the [get started guide](/workflows/get-started/guide/) to start building with Workflows
 
 ***
 
 ## Features
 
-<Feature header="Create your first D1 database" href="/d1/get-started/" cta="Create your D1 database">
+<Feature header="Deploy your first Workflow" href="/workflows/get-started/guide/" cta="Deploy your first Workflow">
 
-Create your first D1 database, establish a schema, import data and query D1 directly from an application [built with Workers](/workers/).
-
-
-</Feature>
-
-<Feature header="SQLite" href="/d1/build-with-d1/d1-client-api/" cta="Execute SQL queries">
-
-Execute SQL with SQLite's SQL compatibility and D1 Client API.
-
+Define your first Workflow, understand how to compose multi-steps, and deploy to production.
 
 </Feature>
 
-<Feature header="Time Travel" href="/d1/reference/time-travel/" cta="Learn about Time Travel">
+<Feature header="Rules of Workflows" href="/workflows/build/rules-of-workflows/" cta="Best practices">
 
-Time Travel is D1’s approach to backups and point-in-time-recovery, and allows you to restore a database to any minute within the last 30 days.
+Understand best practices when writing and building applications using Workflows.
 
+</Feature>
+
+<Feature header="Trigger Workflows" href="/workflows/build/trigger-workflows/" cta="Trigger Workflows from Workers">
+
+Learn how to trigger Workflows from your Workers applications, via the REST API, and the command-line.
 
 </Feature>
 
@@ -76,16 +71,12 @@ Deploy dynamic front-end applications in record time.
 
 <CardGrid>
 
-<LinkTitleCard title="Pricing" href="/d1/platform/pricing/" icon="seti:shell">
-Learn about D1's pricing and how to estimate your usage.
+<LinkTitleCard title="Pricing" href="/workflows/reference/pricing/" icon="seti:shell">
+Learn more about how Workflows is priced.
 </LinkTitleCard>
 
-<LinkTitleCard title="Limits" href="/d1/platform/limits/" icon="document">
-Learn about what limits D1 has and how to work within them.
-</LinkTitleCard>
-
-<LinkTitleCard title="Community projects" href="/d1/reference/community-projects/" icon="pen">
-Browse what developers are building with D1.
+<LinkTitleCard title="Limits" href="/workflows/reference/limits/" icon="document">
+Learn about what limits Workflows has and how to work within them.
 </LinkTitleCard>
 
 <LinkTitleCard title="Storage options" href="/workers/platform/storage-options/" icon="document">

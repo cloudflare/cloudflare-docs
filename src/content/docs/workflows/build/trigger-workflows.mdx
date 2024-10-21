@@ -55,7 +55,7 @@ interface Env {
 
 export default {
 	async fetch(req: Request, env: Env) {
-        // 
+        //
         const instanceId = new URL(req.url).searchParams.get("instanceId")
 
         // If an ?instanceId=<id> query parameter is provided, fetch the status
@@ -84,3 +84,7 @@ export default {
 ## REST API (HTTP)
 
 TODO
+
+## Command line (CLI)
+
+Refer to the [CLI quick start](/workflows/get-started/cli-quick-start/) to learn more about how to manage and trigger Workflows via the command-line.
