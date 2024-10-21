@@ -34,12 +34,14 @@ The certificate is required if you want to [apply HTTP policies to encrypted web
 ## Install the certificate using WARP
 
 1. (Optional) [Upload](/cloudflare-one/connections/connect-devices/warp/user-side-certificates/custom-certificate/) a custom root certificate to Cloudflare.
-2. In [Zero Trust](https://one.dash.cloudflare.com/), go to **Settings** > **WARP client**.
-3. Turn on **Install CA to system certificate store**.
+2. In [Zero Trust](https://one.dash.cloudflare.com/), go to **Settings** > **WARP Client**.
+3. Turn on [**Install CA to system certificate store**](/cloudflare-one/connections/connect-devices/warp/configure-warp/warp-settings/#install-ca-to-system-certificate-store).
 4. [Install](/cloudflare-one/connections/connect-devices/warp/download-warp/) the WARP client on the device.
 5. [Enroll the device](/cloudflare-one/connections/connect-devices/warp/deployment/manual-deployment/) in your Zero Trust organization.
 
 If a custom certificate is not provided, WARP will install the default [Cloudflare certificate](/cloudflare-one/connections/connect-devices/warp/user-side-certificates/install-cloudflare-cert/#download-the-cloudflare-root-certificate) in the system keychain for all users. If you uploaded a custom certificate, the WARP client will deploy your custom certificate instead of the Cloudflare certificate.
+
+WARP will only install the [certificate set to **In-Use**](/cloudflare-one/connections/connect-devices/warp/user-side-certificates/#certificate-status). If you turn on a new certificate for inspection, WARP will automatically install that certificate to your users' devices.
 
 Next, [verify](#access-the-installed-certificate) that the certificate was successfully installed.
 
