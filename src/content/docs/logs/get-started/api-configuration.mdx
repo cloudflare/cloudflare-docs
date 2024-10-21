@@ -125,7 +125,15 @@ to follow a specific format:
 * **Splunk** (scheme `splunk`): Splunk endpoint URL + Splunk channel ID + insecure-skip-verify flag + Splunk sourcetype + Splunk authorization token; for example: `splunk://<SPLUNK_ENDPOINT_URL>?channel=<SPLUNK_CHANNEL_ID>&insecure-skip-verify=<INSECURE_SKIP_VERIFY>&sourcetype=<SOURCE_TYPE>&header_Authorization=<SPLUNK_AUTH_TOKEN>`
 * **Sumo Logic** (scheme `sumo`): HTTP source address URL with `https` replaced by `sumo`; for example: `sumo://<SUMO_ENDPOINT_URL>/receiver/v1/http/<UNIQUE_HTTP_COLLECTOR_CODE>`
 
-For **R2**, **S3**, **Google Cloud Storage**, and **Azure**, logs can be separated into daily subdirectories by using the special string `{DATE}` in the URL path; for example: `s3://mybucket/logs/{DATE}?region=us-east-1&sse=AES256` or `azure://myblobcontainer/logs/{DATE}?[QueryString]`. It will be substituted with the date in `YYYYMMDD` format, like `20180523`.
+For **R2**, **S3**, **Google Cloud Storage**, and **Azure**, you can organize logs into daily subdirectories by including the special placeholder `{DATE}` in the URL path. This placeholder will automatically be replaced with the date in the `YYYYMMDD` format (e.g., `20180523`).
+
+For example:
+
+* `s3://mybucket/logs/{DATE}?region=us-east-1&sse=AES256`
+* `azure://myblobcontainer/logs/{DATE}?[QueryString]`
+
+This approach is useful when you want your logs grouped by day.
+
 
 For more information on the value for your cloud storage provider, consult the following conventions:
 
