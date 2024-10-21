@@ -1,0 +1,43 @@
+---
+pcx_content_type: how-to
+title: Customize cache behavior with Workers
+sidebar:
+  order: 1
+head:
+  - tag: title
+    content: Customize cache behavior with Workers
+
+---
+
+You can use [Workers](/workers/) to customize cache behavior on Cloudflare's CDN. Cloudflare Workers provide flexibility in handling assets and responses by running both before and after the cache. A Worker can be configured to run before a request reaches the cache, allowing for modifications to the request, and it can also be used to modify assets once they are returned from the cache.
+
+The diagram below illustrates a common interaction flow between Workers and Cache.
+
+![Workers and cache flow example flow diagram.](~/assets/images/cache/workers-cache-flow.png)
+
+1. A User (a) Requests a URI, and this request is directed to a Worker. The Worker can then interact with the request, either requesting the content further upstream using (b) fetch() or sending a (f) Response back to the User.
+2. If the content is cached, the Cache will send a (e) Response back to the Worker which can now interact with the response before sending a (f) Response back to the user.
+
+Here are a few examples of how Workers can be used to customize cache behavior:
+
+- **Modify Response**: Adjust or enhance content after it is retrieved from the cache, ensuring that responses are up-to-date or tailored to specific needs.
+
+- **Signed URLs**: Generate URLs that are valid for a specific duration (for example, minutes, hours, days) to control access and enhance security.
+
+- **Personalized Response**: Deliver personalized content based on user data while leveraging cached resources to reduce the load on the origin.
+
+- **Reduce Latency**: Serve content from a location close to the user, decreasing load times and improving the user experience.
+
+You can also use [Snippets](/rules/snippets/) as a free alternative for simple modifications and logic, bypassing the need for full Worker scripts. These lightweight scripts enable quick adjustments and optimizations, offering an efficient way to enhance your Cloudflare setup without the complexity and overhead of more extensive code deployments.
+
+:::note
+When using Workers and [Orange-to-Orange (O2O)](/cloudflare-for-platforms/cloudflare-for-saas/saas-customers/how-it-works/), some caveats and limitations may apply.
+:::
+
+## Cache features in Workers
+
+- **fetch()**: Allows interaction with Cloudflare's Cache and Tiered Cache, providing control over how requests are handled. To optimize caching behavior, you can set TTLs, define custom cache keys, and configure cache headers directly within a fetch request. For more details on these configurations, refer to [Cache using fetch](/workers/examples/cache-using-fetch/).
+
+- **Cache API**: Enables storing and retrieving responses from Cloudflare's cache, limited to the cache in the local data center and excluding content stored in the Tiered Cache. To use the Cache API to store responses in Cloudflare's cache, refer to [Using the Cache API](/workers/examples/cache-api/).
+
+To understand more about how Cache and Workers interact refer to [Cache in Workers](/workers/reference/how-the-cache-works/).

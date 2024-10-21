@@ -7,6 +7,7 @@ tags:
 languages:
   - JavaScript
   - TypeScript
+  - Rust
 preview:
   - true
 pcx_content_type: example
@@ -258,4 +259,75 @@ export default {
 } satisfies ExportedHandler<Env>;
 ```
 
+</TabItem> <TabItem label="Rust" icon="seti:rust">
+```rs
+use base64::prelude::*;
+use worker::*;
+
+#[event(fetch)]
+async fn fetch(req: Request, env: Env, _ctx: Context) -> Result<Response> {
+    let basic_user = "admin";
+    // You will need an admin password. This should be
+    // attached to your Worker as an encrypted secret.
+    // Refer to https://developers.cloudflare.com/workers/configuration/secrets/
+    let basic_pass = match env.secret("PASSWORD") {
+        Ok(s) => s.to_string(),
+        Err(_) => "password".to_string(),
+    };
+    let url = req.url()?;
+
+    match url.path() {
+        "/" => Response::ok("Anyone can access the homepage."),
+        // Invalidate the "Authorization" header by returning a HTTP 401.
+        // We do not send a "WWW-Authenticate" header, as this would trigger
+        // a popup in the browser, immediately asking for credentials again.
+        "/logout" => Response::error("Logged out.", 401),
+        "/admin" => {
+            // The "Authorization" header is sent when authenticated.
+            let authorization = req.headers().get("Authorization")?;
+            if authorization == None {
+                let mut headers = Headers::new();
+                // Prompts the user for credentials.
+                headers.set(
+                    "WWW-Authenticate",
+                    "Basic realm='my scope', charset='UTF-8'",
+                )?;
+                return Ok(Response::error("You need to login.", 401)?.with_headers(headers));
+            }
+            let authorization = authorization.unwrap();
+            let auth: Vec<&str> = authorization.split(" ").collect();
+            let scheme = auth[0];
+            let encoded = auth[1];
+
+            // The Authorization header must start with Basic, followed by a space.
+            if encoded == "" || scheme != "Basic" {
+                return Response::error("Malformed authorization header.", 400);
+            }
+
+            let buff = BASE64_STANDARD.decode(encoded).unwrap();
+            let credentials = String::from_utf8_lossy(&buff);
+            // The username & password are split by the first colon.
+            //=> example: "username:password"
+            let credentials: Vec<&str> = credentials.split(':').collect();
+            let user = credentials[0];
+            let pass = credentials[1];
+
+            if user != basic_user || pass != basic_pass {
+                let mut headers = Headers::new();
+                // Prompts the user for credentials.
+                headers.set(
+                    "WWW-Authenticate",
+                    "Basic realm='my scope', charset='UTF-8'",
+                )?;
+                return Ok(Response::error("You need to login.", 401)?.with_headers(headers));
+            }
+
+            let mut headers = Headers::new();
+            headers.set("Cache-Control", "no-store")?;
+            Ok(Response::ok("🎉 You have private access!")?.with_headers(headers))
+        }
+        _ => Response::error("Not Found.", 404),
+    }
+}
+```
 </TabItem> </Tabs>

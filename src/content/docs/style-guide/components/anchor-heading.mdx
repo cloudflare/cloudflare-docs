@@ -17,7 +17,17 @@ import { AnchorHeading } from "~/components";
 
 Markdown files (including partials) have this behavior by default, applied via rehype plugins. Therefore, the `AnchorHeading` component is usually only required when writing headings yourself inside components, or when working on non-markdown files.
 
-Additionally, `AnchorHeading` is useful when rendering partial files into one location where there are duplicate headings (for example, when there are multiple H3 corresponding to `/#create` in one page). `AnchorHeading` allows you to explicitly define fragments, ensuring that each heading can be referred correctly with unique anchors.
+To override the ID given to a heading within Markdown, add an MDX comment at the end of the line:
+
+```mdx
+# foo {/*bar*/}
+```
+
+It will result in the following HTML:
+
+```html
+<a id="bar">foo</a>
+```
 
 :::note
 
