@@ -11,6 +11,8 @@ Advanced security features such as [HTTPS traffic inspection](/cloudflare-one/po
 
 Gateway [generates a unique root CA](#generate-a-cloudflare-root-certificate) for each Zero Trust account and deploys its across the Cloudflare global network. Alternatively, Enterprise users can upload and deploy their own [custom certificate](/cloudflare-one/connections/connect-devices/warp/user-side-certificates/custom-certificate/).
 
+## Certificate status
+
 Zero Trust will indicate if a certificate is ready for use in inspection based on its deployment status:
 
 | Deployment status | Description                                                                                                    |
@@ -22,10 +24,6 @@ Zero Trust will indicate if a certificate is ready for use in inspection based o
 
 ## Generate a Cloudflare root certificate
 
-:::note[Certificate generation limitation]
-Each Zero Trust account can generate a new root certificate a maximum of three times per day.
-:::
-
 To generate a new Cloudflare root certificate for your Zero Trust organization:
 
 1. In [Zero Trust](https://one.dash.cloudflare.com/), go to **Settings** > **Resources**.
@@ -35,6 +33,8 @@ To generate a new Cloudflare root certificate for your Zero Trust organization:
 5. Select **Generate certificate**.
 
 The certificate will appear in your list of certificates as **Inactive**. To deploy your certificate and turn it on for inspection, you need to [activate the certificate](#activate-a-root-certificate).
+
+Each Zero Trust account can generate a new root certificate a maximum of three times per day.
 
 ## Activate a root certificate
 
