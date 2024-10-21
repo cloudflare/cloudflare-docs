@@ -148,6 +148,8 @@ Specifically, the code above:
 4. Defines a custom retry configuration for a step.
 5. Binds to the Workflow from a Worker's `fetch` handler so that we can create (trigger) instances of our Workflow via a HTTP call.
 
+You can edit the Workflow by adding (or removing) additional `step` calls, changing the retry configuration, and/or making your own API calls. This Workflow template is designed to illustrate some of Workflows APIs.
+
 ## 2. Deploy a Workflow
 
 Workflows are deployed via [`wrangler`](/workers/wrangler/install-and-update/), which is installed when you first ran `npm create cloudflare`, above. Workflows are Workers scripts, and deployed the same way:
