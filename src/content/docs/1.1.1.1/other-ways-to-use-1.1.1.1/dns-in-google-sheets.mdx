@@ -12,7 +12,7 @@ import { Details } from "~/components"
 1.1.1.1 works directly inside Google Sheets. To get started, create a [Google Function](https://developers.google.com/apps-script/guides/sheets/functions) with the following code:
 
 ```js
-function NSLookup(type, domain, usecache = false, cachettl = 1800) {
+function NSLookup(type, domain, usecache = false, cachettl = 30) {
 
   if (typeof type == 'undefined') {
     throw new Error('Missing parameter 1 dns type');
@@ -82,20 +82,17 @@ function NSLookup(type, domain, usecache = false, cachettl = 1800) {
   }
 
   var outputData = [];
+	var minCacheTTL = cachettl;
 
   for (var i in response.Answer) {
     outputData.push(response.Answer[i].data);
+    minCacheTTL = Math.max(minCacheTTL, response.Answer[i].TTL);
   }
 
   var outputString = outputData.join(',');
 
   if (usecache) {
-    cache.put(cacheBinKey, outputString, cachettl);
-  }
-
-  for (var i in response.Answer) {
-    outputData.push(response.Answer[i].data);
-    minCacheTTL = Math.min(minCacheTTL, response.Answer[i].TTL);
+    cache.put(cacheBinKey, outputString, minCacheTTL);
   }
 
   return outputString;
