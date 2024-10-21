@@ -1,0 +1,60 @@
+---
+pcx_content_type: troubleshooting
+title: Troubleshooting
+
+---
+
+## Troubleshooting 403 / CORS issues with R2
+
+If you are encountering a CORS error despite setting up everything correctly, you may follow this troubleshooting guide to help you.
+
+In your browser console, do you see a 401/403 error right above the CORS error? If yes, then you aren't actually dealing with a CORS issue! If you do have a CORS issue, head to the section on [resolving CORS issues](#if-its-actually-cors).
+
+### If you are using a Custom domain
+
+Go to the Network tab and find the failing request (you may need to reload the page, since only requests after opening the developer tools are logged).
+You need to check the response headers for the following two headers:
+- `cf-cache-status`
+- `cf-mitigated`
+
+#### If you have a `cf-mitigated` header
+
+Your request was blocked by one of your WAF rules. Inspect your [Security Events](/waf/analytics/security-events/) to identify the cause of the block.
+
+#### If you don't have a `cf-cache-status` header
+
+Your request was blocked by [Hotlink Protection](/waf/tools/scrape-shield/hotlink-protection/).
+You need to tweak your Hotlink Protection settings using a [Configuration Rule](/rules/configuration-rules/) or you can disable it completely.
+
+### If you are using the S3 API
+
+Your request is very likely incorrectly signed.
+You may see a better error message by trying the request over curl.
+
+You can find working S3 signing examples on the [Examples](/r2/examples/aws/) page.
+
+### If it's actually CORS
+
+Here are some common issues with CORS configurations:
+
+- `ExposeHeaders` is missing headers like `ETag`
+- `AllowedHeaders` is missing headers like `Authorization` or `Content-Type`
+- `AllowedMethods` is missing methods like `POST`/`PUT`
+
+## HTTP 5XX Errors and Capacity limitations of Cloudflare R2
+
+When you encounter an HTTP 5XX error, it's usually a sign that your Cloudflare R2 bucket has been overwhelmed by too many concurrent requests.
+These errors can trigger bucket-wide read and write locks, affecting the performance of all ongoing operations.
+To avoid these disruptions, it's important to implement strategies for managing request volume.
+
+Here are some mitigations you can employ:
+
+### Monitor Concurrent Requests
+
+Track the number of concurrent requests to your bucket. If a client encounters a 5XX error, ensure that it retries the operation and communicates with other clients. By coordinating, clients can collectively slow down, reducing the request rate and maintaining a more stable flow of successful operations.
+
+If your users are directly uploading to the bucket (for example, using the S3 or Workers API), you may not be able to monitor or enforce a concurrency limit. In that case, we recommend Bucket Sharding:
+
+### Bucket Sharding
+
+For higher capacity at the cost of added complexity, consider bucket sharding. This approach distributes reads and writes across multiple buckets, reducing the load on any single bucket.  While sharding won't prevent a single hot object from exhausting capacity, it can mitigate the overall impact and improve system resilience.
