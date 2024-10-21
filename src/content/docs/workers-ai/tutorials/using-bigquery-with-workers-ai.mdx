@@ -35,7 +35,7 @@ You will be needing:
 
 ## Step 1 - Setting up your Cloudflare Worker
 
-In order to ingest the data into Cloudflare and feed it into Workers AI, you will be using a [Cloudflare Worker](/workers/). If you haven’t created one yet, please feel free to review our [tutorial on how to get started](/workers/get-started/).
+In order to ingest the data into Cloudflare and feed it into Workers AI, you will be using a [Cloudflare Worker](/workers/). If you haven't created one yet, please feel free to review our [tutorial on how to get started](/workers/get-started/).
 
 After following the steps to create a Worker, you should have the following code in your new Worker project:
 
@@ -55,7 +55,7 @@ If the Worker project has successfully been created, you should also be able to 
 
 Open a browser tab at `http://localhost:8787/` to see your deployed Worker. Please note that the port `8787` may be a different one in your case.
 
-You should be seeing 'Hello World!' in your browser:
+You should be seeing `Hello World!` in your browser:
 
 ```sh
 Hello World!
@@ -192,7 +192,7 @@ To verify that the installation succeeded, you can run `npm list`, which list li
 
 ## Step 4 - Generate JSON Web Token
 
-Now that you have installed the `jose` library, it’s time to import it and add a function to your code that generates a signed JWT:
+Now that you have installed the `jose` library, it's time to import it and add a function to your code that generates a signed JWT:
 
 ```javascript
 import * as jose from 'jose';
@@ -234,11 +234,11 @@ export default {
 
 ```
 
-Now that you have created a JWT, it’s time to do an API call to BigQuery to fetch some data.
+Now that you have created a JWT, it's time to do an API call to BigQuery to fetch some data.
 
 ## Step 5 - Making authenticated requests to Google BigQuery
 
-With the JWT token created in the previous step, issue an API request to BigQuery’s API to retrieve data from a table. 
+With the JWT token created in the previous step, issue an API request to BigQuery's API to retrieve data from a table. 
 
 You will now query the table that you already have created in BigQuery as part of the prerequisites of this tutorial. This example uses a sampled version of the [Hacker News Corpus](https://www.kaggle.com/datasets/hacker-news/hacker-news-corpus) that was used under its MIT licence and uploaded to BigQuery.
 
@@ -277,7 +277,7 @@ Having the raw row data from BigQuery means that you can now format it in a JSON
 
 ## Step 6 - Formatting results from the query
 
-Now that you have retrieved the data from BigQuery, it’s time to note that a BigQuery API response looks something like this:
+Now that you have retrieved the data from BigQuery, it's time to note that a BigQuery API response looks something like this:
 
 ```json
 {
@@ -656,7 +656,7 @@ This will create a public endpoint that you can use to access the Worker globall
 
 ## Conclusion
 
-In this tutorial, you’ve learnt how to integrate Google BigQuery and Cloudflare Workers by creating a GCP service account key and storing part of it as Worker Secrets. This was later imported in the code and by using the `jose` npm library, you created a JSON Web Token to authenticate the API query to BigQuery. 
+In this tutorial, you've learnt how to integrate Google BigQuery and Cloudflare Workers by creating a GCP service account key and storing part of it as Worker Secrets. This was later imported in the code and by using the `jose` npm library, you created a JSON Web Token to authenticate the API query to BigQuery. 
 
 Once you obtained the results, some formatting was applied to them to later be passed to generative AI models via Workers AI to generate tags and to perform sentiment analysis on the extracted data. 
 
