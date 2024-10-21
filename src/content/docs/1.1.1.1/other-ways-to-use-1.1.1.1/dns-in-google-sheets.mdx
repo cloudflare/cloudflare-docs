@@ -82,7 +82,7 @@ function NSLookup(type, domain, usecache = false, cachettl = 30) {
   }
 
   var outputData = [];
-	var minCacheTTL = cachettl;
+  var minCacheTTL = cachettl;
 
   for (var i in response.Answer) {
     outputData.push(response.Answer[i].data);
