@@ -6,7 +6,7 @@ sidebar:
 
 ---
 
-import { Example, Tabs, TabItem, Render } from "~/components"
+import { Example, Render } from "~/components"
 
 When you add a domain to Cloudflare, you may also need to create a DNS record on your zone apex (`example.com`).
 
@@ -20,25 +20,10 @@ To do this, create an [IP address resolution record](/dns/manage-dns-records/ref
 
 </Example>
 
-<Tabs syncKey="dashPlusAPI">
-<TabItem label="Dashboard">
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/) and select your account and zone.
-2. Go to **DNS** > **Records** and select **Add record**.
-3. Select `A`, `AAAA`, or `CNAME` as the record **Type**, according to your needs:
-    - If your hosting service has provided an IPv4 address, select `A`, use `@` for the record **Name**, and insert the IPv4 address in the respective field.
-    - If your hosting service has provided an IPv6 address, select `AAAA`, use `@` for the record **Name**, and insert the IPv6 address in the respective field.
-    - If your hosting service has provided a hostname (or a [fully qualified domain name](https://en.wikipedia.org/wiki/Fully_qualified_domain_name)), select `CNAME`, use `@` for the record **Name**, and insert the hostname in the **Target** field.
-4. Specify the **Proxy status** and **TTL** according to your needs.
-5. Select **Save** to confirm.
-</TabItem>
-<TabItem label="API">
-Use the [Create DNS Record API endpoint](/api/operations/dns-records-for-a-zone-create-dns-record).
-<Render file="api-field-definitions" />
-    - If your hosting service has provided an IPv4 address, select **A Record**, use `@` for the field `name`, and use the IPv4 address for the field `content`.
-    - If your hosting service has provided an IPv6 address, select **AAAA Record**, use `@` for the field `name`, and use the IPv6 address for the field `content`.
-    - If your hosting service has provided a hostname (or a [fully qualified domain name](https://en.wikipedia.org/wiki/Fully_qualified_domain_name)), select **CNAME Record**, use `@` for the field `name`, and use the hostname for the field `content`.
-</TabItem>
-</Tabs>
+<Render file="dns-record-steps" product="dns" params={{
+    name: "your zone apex",
+		example: "@"
+}} />
 
 ## Domain redirects
 
