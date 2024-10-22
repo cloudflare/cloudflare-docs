@@ -63,3 +63,11 @@ The Cloudflare dashboard offers a simplified user interface for creating URL rew
   - **Query** > **Rewrite to**: Enter the new query string. You can use [wildcard replacement](/ruleset-engine/rules-language/functions/#wildcard_replace) such as `${1}` and `${2}` to define a dynamic query string (for example, `?order=${1}`). Leave this field empty to remove the query string.
 
 Refer to [URL rewrite parameters](/rules/transform/url-rewrite/reference/parameters/#wildcard-matching-and-replacement) for the equivalent rule configuration when using the API.
+
+:::note[Notes]
+
+The **Request URL** value is only used to match the incoming request with a rule. It will not be used for capturing URL patterns for rewrites. If you are matching the URL path or query string in **Target path** or **Target query**, respectively, make sure that the **Request URL** pattern also matches the incoming request, or else the rule will not trigger.
+
+To validate rewrite URL rule matches, use Cloudflare Trace. To validate rewritten URLs, check your origin server.
+
+:::
