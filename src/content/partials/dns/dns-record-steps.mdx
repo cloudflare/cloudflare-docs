@@ -19,7 +19,7 @@ import { Tabs, TabItem, Render } from "~/components";
 </TabItem>
 <TabItem label="API">
 Use the [Create DNS Record API endpoint](/api/operations/dns-records-for-a-zone-create-dns-record).
-<Render file="api-field-definitions" />
+<Render file="api-field-definitions" product="dns"/>
     - If your hosting service has provided an IPv4 address, select **A Record**, use {props.name} (<code>{props.example}</code>) for the field `name`, and use the IPv4 address for the field `content`.
     - If your hosting service has provided an IPv6 address, select **AAAA Record**, use {props.name} (<code>{props.example}</code>) for the field `name`, and use the IPv6 address for the field `content`.
     - If your hosting service has provided a hostname (or a [fully qualified domain name](https://en.wikipedia.org/wiki/Fully_qualified_domain_name)), select **CNAME Record**, use {props.name} (<code>{props.example}</code>) for the field `name`, and use the hostname for the field `content`.
