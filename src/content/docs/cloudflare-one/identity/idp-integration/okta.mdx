@@ -133,6 +133,8 @@ The Okta integration allows you to synchronize IdP groups and automatically depr
 
 14. In the **Assignments** tab, add the users you want to synchronize with Cloudflare Access. You can add users in batches by assigning a group.
 
+**Note:** Ensure that all groups used in policy evaluation and device profiles are included in the SCIM assignment. SCIM group membership updates will overwrite any groups on a user for policy evaluation.
+
 15. In the **Push Groups** tab, add the Okta groups you want to synchronize with Cloudflare Access. These groups will display in the Access policy builder.
 
 Provisioning will begin immediately. To verify the integration, select **View Logs** in the Okta SCIM application.
