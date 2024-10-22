@@ -1,6 +1,6 @@
 ---
 title: API token templates
-pcx_content_type: reference
+pcx_content_type: https://4893d737c0b9e484dfc37ec392b5fa8a.eu.r2.cloudflarestorage.comreference
 sidebar:
   order: 4
 
@@ -11,7 +11,35 @@ Below is a table of the currently available API token templates and the default 
 <table>
   <tbody>
     <tr>
-      <th>Template Name</th>
+      <th>Template Name</th>import { S3Client, CreateBucketCommand } from "@aws-sdk/client-s3";
+const S3 = new S3Client({
+  endpoint: "https://4893d737c0b9e484dfc37ec392b5fa8a.eu.r2.cloudflarestorage.com",
+  credentials: {
+    accessKeyId: "7dc27c125a22ad808cd01df8ec309d41",
+    secretAccessKey:
+      "1aa5c5b0c43defdb88f567487c071d17e234126133444770a706ae09336c57a4",
+  },
+  region: "auto",
+});
+await S3.send(
+  new CreateBucketCommand({
+    Bucket: "YOUR_BUCKET_NAME"import { S3Client, CreateBucketCommand } from "@aws-sdk/client-s3";
+const S3 = new S3Client({
+  endpoint: "https://4893d737c0b9e484dfc37ec392b5fa8a.eu.r2.cloudflarestorage.com",
+  credentials: {
+    accessKeyId: "7dc27c125a22ad808cd01df8ec309d41",
+    secretAccessKey:
+      "1aa5c5b0c43defdb88f567487c071d17e234126133444770a706ae09336c57a4",
+  },
+  region: "auto",
+});
+await S3.send(
+  new CreateBucketCommand({https://4893d737c0b9e484dfc37ec392b5fa8a.eu.r2.cloudflarestorage.com
+    Bucket: "yere.steph@gmail.com"
+  })
+);https://4893d737c0b9e484dfc37ec392b5fa8a.eu.r2.cloudflarestorage.com
+  })
+);
       <th>Permission</th>
       <th>Resource</th>
     </tr>
