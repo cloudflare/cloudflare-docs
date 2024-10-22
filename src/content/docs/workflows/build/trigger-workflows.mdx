@@ -81,6 +81,48 @@ export default {
 };
 ```
 
+### Explicitly pausing a Workflow
+
+You can explicitly pause a Workflow instance (and later resume it) by calling `pause` against a specific instance ID.
+
+```ts
+let instance = await env.MY_WORKFLOW.get("abc-123")
+await instance.pause() // Returns Promise<void>
+```
+
+### Resuming a Workflow
+
+You can resume a paused Workflow instance by calling `resume` against a specific instance ID.
+
+```ts
+let instance = await env.MY_WORKFLOW.get("abc-123")
+await instance.resume() // Returns Promise<void>
+```
+
+Calling `resume` on an instance that is not currently paused will have no effect.
+
+### Stopping a Workflow
+
+You can stop a Workflow instance by calling `abort` against a specific instance ID.
+
+```ts
+let instance = await env.MY_WORKFLOW.get("abc-123")
+await instance.abort() // Returns Promise<void>
+```
+
+Once stopped, the Workflow instance *cannot* be resumed.
+
+### Restarting a Workflow
+
+You can restart a Workflow instance by calling `restart` against a specific instance ID.
+
+```ts
+let instance = await env.MY_WORKFLOW.get("abc-123")
+await instance.restart() // Returns Promise<void>
+```
+
+Restarting an instance will immediately cancel any in-progress steps, erase any intermediate state, and treat the Workflow as if it was run for the first time.
+
 ## REST API (HTTP)
 
 TODO

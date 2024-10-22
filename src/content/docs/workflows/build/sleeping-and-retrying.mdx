@@ -18,14 +18,40 @@ A Workflow instance that is resuming from sleep will take priority over newly sc
 
 :::
 
-### Explicitly pausing a Workflow
-
-TODO
-
-### Resuming a Workflow
-
-TODO
 
 ## Retrying steps
 
-TODO
+Each call to `step.do` in a Workflow accepts an optional `StepConfig`, which allows you define the retry behaviour for that step.
+
+If you do not provide your own retry configuration, Workflows applies the following defaults:
+
+```ts
+const defaultConfig: WorkflowStepConfig = {
+	retries: {
+		limit: 5,
+		delay: 1000,
+		backoff: "constant",
+	},
+	timeout: "15 minutes",
+};
+```
+
+When providing your own `StepConfig`, you can configure:
+
+* The total number of attempts to make for a step
+* The delay between attempts
+* What backoff algorithm to apply between each attempt: any of `constant`, `linear`, or `exponential`
+* When to timeout (in duration) before considering the step as failed (including during a retry attempt).
+
+For example, to limit a step to 10 retries and have it apply an exponential delay (starting at 10 seconds) between each attempt, you would pass the following configuration as an optional object to `step.do`:
+
+```ts
+let someState = step.do("call an API", {
+  retries: {
+    limit: 10, // The total number of attempts
+    delay: "10 seconds", // Delay between each retry
+    backoff: "exponential" // Any of "constant" | "linear" | "exponential";
+  },
+  timeout: "30 minutes",
+}, async () => { /* Step code goes here /* }
+```
