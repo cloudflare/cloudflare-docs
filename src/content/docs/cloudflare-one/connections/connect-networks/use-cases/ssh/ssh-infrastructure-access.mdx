@@ -59,9 +59,11 @@ To generate a Cloudflare SSH CA and get its public key:
 <Render file="ssh/modify-sshd" />
 
 :::note
-For certain distributions, such as Amazon Linux 1 (based on RHEL), the certificate file permissions must be set to 600.
+For certain distributions, such as Amazon Linux 1 (based on RHEL), the certificate file permissions must be set to `600`. You can set file permissions with the following command:
 
-This can be done with the following command: `chmod 600 /etc/ssh/ca.pub`.
+```sh
+chmod 600 /etc/ssh/ca.pub
+```
 :::
 
 ### Restart your SSH server
