@@ -5,6 +5,10 @@ productLink: "/cloudflare-one/connections/connect-networks/"
 productArea: Cloudflare One
 productAreaLink: /cloudflare-one/changelog/
 entries:
+  - publish_date: "2024-10-17"
+    title: Simplifed WARP Connector deployment
+    description: |-
+      You can now deploy WARP Connector using a simplified, guided workflow similar to `cloudflared` connectors. For detailed instructions, refer to the [WARP Connector documentation](/cloudflare-one/connections/connect-networks/private-net/warp-connector/).
   - publish_date: "2024-10-10"
     title: Bugfix for --grace-period
     description: |-

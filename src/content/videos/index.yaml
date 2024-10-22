@@ -202,13 +202,13 @@ entries:
     languages: [TypeScript]
     products: [Workers, Workers AI]
     cloudflare: true
-    # stream_id: 
+    # stream_id:
     author: confidence
     updated: 2024-10-07
     difficulty: Beginner
     content_type: 🎥 Video
     pcx_content_type: tutorial    
-  - link: http://localhost:1111/pages/framework-guides/deploy-a-hono-site/#creator-interview
+  - link: https://developers.cloudflare.com/pages/framework-guides/deploy-a-hono-site/#creator-interview
     title: DevTalk | Episode 01 - Yusuke Wada, creator of Hono Framework
     description: In this interview, Yusuke Wada reflects on his journey in developing Hono.
     tags: [Pages, Workers]
@@ -220,3 +220,16 @@ entries:
     difficulty: Beginner
     content_type: 🎥 Video
     pcx_content_type: interview    
+  - link: https://developers.cloudflare.com/workers-ai/tutorials/image-generator-flux/
+    title: How to build an AI Image Generator using Cloudflare Workers AI
+    description: The new flux-schnell models on Workers AI are our most powerful text to image AI models yet. In this video, we show you how to deploy your own Workers AI image playground.
+    tags: [Workers, Workers AI]
+    languages: [TypeScript]
+    stream_id: aeafae151e84a81be19c52c2348e9bab
+    products: [Workers, Workers AI]
+    cloudflare: true
+    author: kristian
+    updated: 2024-10-17
+    difficulty: Intermediate
+    content_type: 🎥 Video
+    pcx_content_type: tutorial

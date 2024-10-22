@@ -4,6 +4,9 @@ pcx_content_type: reference-architecture-diagram
 sidebar:
   order: 1
   label: Securing data in transit
+head:
+  - tag: title
+    content: "Reference Architecture Diagram: Securing data in transit"
 updated: 2024-05-01
 ---
 
@@ -13,7 +16,7 @@ Data in transit typically means when it's traveling over the network. Because th
 
 - Browsing online and uploading/download data to/from cloud applications
 - Sending texts, pictures and emails
-- Applications exposing and consuming data via APIs
+- Applications exposing and consuming data through APIs
 
 Data in transit is often considered vulnerable to interception or tampering during transmission, so it is important to secure it through encryption techniques such as [QUIC](https://cloudflare-quic.com/), Transport Layer Security (TLS) or Secure Sockets Layer (SSL). This helps to ensure that the data remains confidential and protected from unauthorized access during its journey. There are other methods of inspecting data as it passes network boundaries to make decisions on if that data should continue to travel or not, Data Loss Prevention (DLP) technologies can be used to inspect the contents of network traffic and block sensitive data from going to a risky destination. This document outlines the methods Cloudflare has available to protect data in transit.
 
@@ -54,9 +57,9 @@ The following diagram shows a common flow for how Cloudflare inspects a request 
 ![Figure 4: Upload of file containing sensitive data blocked by Cloudflare DLP](~/assets/images/reference-architecture/securing-data-in-transit/securing-data-in-transit-fig4.svg "Figure 4: Upload of file containing sensitive data blocked by Cloudflare DLP")
 
 1. User attempts to upload a file to a SaaS application (via a secure tunnel to Cloudflare created by our [device agent](/cloudflare-one/connections/connect-devices/warp/download-warp/)). [Clientless](/cloudflare-one/connections/connect-devices/agentless/) options are supported as well.
-2. Cloudflare’s [Secure Web Gateway](/cloudflare-one/policies/gateway/) (SWG) will first verify that the user is permitted to use the requested SaaS application, and then scrutinize the file’s payload for [malicious code](/cloudflare-one/policies/gateway/http-policies/antivirus-scanning/) and [sensitive data](/cloudflare-one/policies/data-loss-prevention/).
+2. Cloudflare's [Secure Web Gateway](/cloudflare-one/policies/gateway/) (SWG) will first verify that the user is permitted to use the requested SaaS application, and then scrutinize the file's payload for [malicious code](/cloudflare-one/policies/gateway/http-policies/antivirus-scanning/) and [sensitive data](/cloudflare-one/policies/data-loss-prevention/).
 3. The DLP profile determines the file contains national identifiers like US Social Security Numbers (SSN).
-4. The SWG policy is configured with a [‘block’ action](/cloudflare-one/policies/gateway/http-policies/#block), so the attempt is [logged](/cloudflare-one/policies/data-loss-prevention/dlp-policies/payload-logging/) and a [block page](/cloudflare-one/policies/gateway/configuring-block-page/) returned to the end user’s web browser.
+4. The SWG policy is configured with a ['block' action](/cloudflare-one/policies/gateway/http-policies/#block), so the attempt is [logged](/cloudflare-one/policies/data-loss-prevention/dlp-policies/payload-logging/) and a [block page](/cloudflare-one/policies/gateway/block-page/) returned to the end user's web browser.
 
 ## Related resources
 

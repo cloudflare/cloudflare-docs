@@ -17,56 +17,83 @@ import {
 	Tabs,
 } from "~/components";
 
-Cloudflare [Workers with static assets](/workers/static-assets/) and [Pages](/pages/) both have the ability to host front-end and full-stack applications. The following compatibility matrix shows the features are available for each product to help you when choosing which product to start with.
+You can deploy full-stack applications, including front-end static assets and back-end APIs, as well as server-side rendered pages (SSR), to both Cloudflare [Workers](/workers/static-assets/) and [Pages](/pages/). The compatibility matrix below shows which features are available for each, to help you choose whether to build with Workers or Pages. Unless otherwise stated below, what works in Pages works in Workers, and what works in Workers works in Pages. Think something is missing from this list? [Open a pull request](https://github.com/cloudflare/cloudflare-docs/edit/production/src/content/docs/workers/static-assets/compatibility-matrix.mdx) or [create a GitHub issue](https://github.com/cloudflare/cloudflare-docs/issues/new).
 
 We plan to bridge the gaps between Workers and Pages and provide ways to migrate your Pages projects to Workers.
 
-|                                                                                     | Asset hosting on Workers | Pages |
-| ----------------------------------------------------------------------------------- | ------------------------ | ----- |
-| **Features**                                                                        |                          |       |
-| Middleware                                                                          | ❌ <sup>1</sup>          | ✅    |
-| [Redirects](/pages/configuration/redirects/)                                        | ❌ <sup>2</sup>          | ✅    |
-| [Smart Placement](/workers/configuration/smart-placement/)                          | ⏳ <sup>3</sup>          | ✅    |
-| [Gradual Deployments](/workers/configuration/versions-and-deployments/)             | ✅                       | ❌    |
-| **Observability**                                                                   |                          |       |
-| [Workers Logs](/workers/observability/)                                             | ✅                       | ❌    |
-| [Logpush](/workers/observability/logs/logpush/)                                  | ✅                       | ❌    |
-| [Tail Workers](/workers/observability/logs/tail-workers/)                        | ⏳ <sup>4</sup>          | ❌    |
-| [Real-time logs](/workers/observability/logs/real-time-logs/)                    | ✅                       | ✅    |
-| **Bindings**                                                                        |                          |       |
-| [AI](/workers-ai/get-started/workers-wrangler/#2-connect-your-worker-to-workers-ai) | ✅                       | ✅    |
-| [Analytics Engine](/analytics/analytics-engine)                                     | ✅                       | ✅    |
-| [Assets](/workers/static-assets/binding/)                                           | ✅                       | ❌    |
-| [Browser Rendering](/browser-rendering)                                             | ✅                       | ✅    |
-| [D1](/d1/build-with-d1/d1-client-api/)                                              | ✅                       | ✅    |
-| [Durable Objects](/durable-objects/api/)                                            | ✅                       | ❌    |
-| [Environment Variables](/workers/configuration/environment-variables/)              | ✅                       | ✅    |
-| [Hyperdrive](/hyperdrive/)                                                          | ✅                       | ❌    |
-| [KV](/kv/)                                                                          | ✅                       | ✅    |
-| [mTLS](/workers/runtime-apis/bindings/mtls/)                                        | ✅                       | ✅    |
-| [Queue Producers](/queues/configuration/configure-queues/#producer)                 | ✅                       | ✅    |
-| [Queue Consumers](/queues/configuration/configure-queues/#consumer)                 | ✅                       | ❌    |
-| [R2](/r2/)                                                                          | ✅                       | ✅    |
-| [Rate Limiting](/workers/runtime-apis/bindings/rate-limit/)                         | ✅                       | ✅    |
-| [Secrets](/workers/configuration/secrets/)                                          | ✅                       | ✅    |
-| [Service bindings](/workers/runtime-apis/bindings/service-bindings/)                | ✅                       | ✅    |
-| [Vectorize](/vectorize/get-started/intro/#3-bind-your-worker-to-your-index)         | ✅                       | ✅    |
+**Legend** <br />
+✅: Supported <br />
+⏳: Coming soon <br />
+🟡: Unsupported, workaround available <br />
+❌: Unsupported
 
-<sup>1</sup> If you need to run a Worker script ahead of serving static assets,
-we currently recommend using [Service
-bindings](/workers/runtime-apis/bindings/service-bindings/) to connect a Worker
-in front of the Worker with assets. We plan to explore additional configuration
-to support more complex routing in the future.
+|                                                                                     | Workers | Pages   |
+| ----------------------------------------------------------------------------------- | ------- | ------- |
+| **Writing, Testing, and Deploying Code**                                            |         |         |
+| [Rollbacks](/workers/configuration/versions-and-deployments/rollbacks/)             | ✅      | ✅      |
+| [Gradual Deployments](/workers/configuration/versions-and-deployments/)             | ✅      | ❌      |
+| [Preview URLs](/workers/configuration/previews)                                     | ✅      | ✅      |
+| [Testing tools](/workers/testing)                                                   | ✅      | ✅      |
+| [Local Development](/workers/testing/local-development/)                            | ✅      | ✅      |
+| [Remote Development (`--remote`)](/workers/wrangler/commands/)                      | ✅ [^1] | ❌      |
+| [Quick Editor in Dashboard](https://blog.cloudflare.com/improved-quick-edit)        | ✅      | ❌      |
+| **Static Assets**                                                                   |         |         |
+| [Early Hints](/pages/configuration/early-hints/)                                    | ❌      | ✅      |
+| [Custom HTTP headers for static assets](/pages/configuration/headers/)              | 🟡 [^2] | ✅      |
+| [Middleware](/pages/functions/middleware/)                                          | 🟡 [^3] | ✅      |
+| [Redirects](/pages/configuration/redirects/)                                        | 🟡 [^4] | ✅      |
+| [Smart Placement](/workers/configuration/smart-placement/)                          | ⏳ [^5] | ✅      |
+| **Observability**                                                                   |         |         |
+| [Workers Logs](/workers/observability/)                                             | ✅      | ❌      |
+| [Logpush](/workers/observability/logs/logpush/)                                     | ✅      | ❌      |
+| [Tail Workers](/workers/observability/logs/tail-workers/)                           | ⏳ [^6] | ❌      |
+| [Real-time logs](/workers/observability/logs/real-time-logs/)                       | ✅      | ✅      |
+| **Runtime APIs & Compute Models**                                                   |         |         |
+| [Node.js Compatibility Mode](/workers/runtime-apis/nodejs/)                         | ✅      | ✅      |
+| [Durable Objects](/durable-objects/api/)                                            | ✅      | 🟡 [^7] |
+| [Cron Triggers](/workers/configuration/cron-triggers/)                              | ✅      | ❌      |
+| **Bindings**                                                                        |         |         |
+| [AI](/workers-ai/get-started/workers-wrangler/#2-connect-your-worker-to-workers-ai) | ✅      | ✅      |
+| [Analytics Engine](/analytics/analytics-engine)                                     | ✅      | ✅      |
+| [Assets](/workers/static-assets/binding/)                                           | ✅      | ✅      |
+| [Browser Rendering](/browser-rendering)                                             | ✅      | ✅      |
+| [D1](/d1/build-with-d1/d1-client-api/)                                              | ✅      | ✅      |
+| [Environment Variables](/workers/configuration/environment-variables/)              | ✅      | ✅      |
+| [Hyperdrive](/hyperdrive/)                                                          | ✅      | ❌      |
+| [KV](/kv/)                                                                          | ✅      | ✅      |
+| [mTLS](/workers/runtime-apis/bindings/mtls/)                                        | ✅      | ✅      |
+| [Queue Producers](/queues/configuration/configure-queues/#producer)                 | ✅      | ✅      |
+| [Queue Consumers](/queues/configuration/configure-queues/#consumer)                 | ✅      | ❌      |
+| [R2](/r2/)                                                                          | ✅      | ✅      |
+| [Rate Limiting](/workers/runtime-apis/bindings/rate-limit/)                         | ✅      | ✅      |
+| [Secrets](/workers/configuration/secrets/)                                          | ✅      | ✅      |
+| [Service bindings](/workers/runtime-apis/bindings/service-bindings/)                | ✅      | ✅      |
+| [Vectorize](/vectorize/get-started/intro/#3-bind-your-worker-to-your-index)         | ✅      | ✅      |
+| **Builds (CI/CD)**                                                                  |         |         |
+| [Monorepos](/workers/ci-cd/builds/advanced-setups/)                                 | ✅      | ✅      |
+| [Build Watch Paths](/pages/configuration/build-watch-paths/)                        | ✅      | ✅      |
+| [Deploy Hooks](/pages/configuration/deploy-hooks/)                                  | ❌      | ✅      |
+| [Build Caching](/pages/configuration/build-caching/)                                | ❌      | ✅      |
+| [Custom Preview Branches](/pages/configuration/branch-build-controls/)              | ❌      | ✅      |
+| [Custom Branch Aliases](/pages/how-to/custom-branch-aliases/)                       | ❌      | ✅      |
+| **Pages Functions**                                                                 |         |         |
+| [File-based Routing](/pages/functions/routing/)                                     | ❌ [^8] | ✅      |
+| [Pages Plugins](/pages/functions/plugins/)                                          | ❌ [^9] | ✅      |
 
-<sup>2</sup> You can handle redirects by adding code to your Worker (a
-[community package](https://npmjs.com/package/redirects-in-workers) is available
-for `_redirects` support), or you can use [Bulk
-Redirects](/rules/url-forwarding/bulk-redirects/).
+[^1]: Does not currently support Workers with static assets. For more details on which bindings are supported in remote development, [refer to the docs](/workers/testing/local-development/#supported-resource-bindings-in-different-environments).
 
-<sup>3</sup> You cannot yet enable [Smart
-Placement](/workers/configuration/smart-placement/) projects with static assets.
-This is a temporary limitation, we are working to remove it.
+[^2]: Similar to <sup>3</sup>, to customize the HTTP headers that are returned by static assets, you can use [Service bindings](/workers/runtime-apis/bindings/service-bindings/) to connect a Worker in front of the Worker with assets.
 
-<sup>4</sup> You cannot yet add a [Tail
-Worker](/workers/observability/logs/tail-workers/) to a project with assets.
-This is a temporary limitation, we are working to remove it.
+[^3]: If you need to run a Worker before serving static assets, you can create a separate Worker that acts as middleware, and then use [Service bindings](/workers/runtime-apis/bindings/service-bindings/) to forward the request to the Worker with assets. We plan to explore additional configuration to support more complex routing in the future.
+
+[^4]: You can handle redirects by adding code to your Worker (a [community package](https://npmjs.com/package/redirects-in-workers) is available for `_redirects` support), or you can use [Bulk Redirects](/rules/url-forwarding/bulk-redirects/).
+
+[^5]: You cannot yet enable [Smart Placement](/workers/configuration/smart-placement/) for Workers with static assets. This is a temporary limitation we are working to remove.
+
+[^6]: You cannot yet add a [Tail Worker](/workers/observability/logs/tail-workers/) to a project with assets. This is a temporary limitation we are working to remove.
+
+[^7]: To [use Durable Objects with your Cloudflare Pages project](/pages/functions/bindings/#durable-objects), you must create a separate Worker with a Durable Object and then declare a binding to it in both your Production and Preview environments. Using Durable Objects with Workers is simpler and recommended.
+
+[^8]: Workers [supports popular frameworks](/workers/frameworks/), many of which implement file-based routing.
+
+[^9]: Everything that is possible with Pages Functions can also be achieved by adding code to your Worker or by using framework-specific plugins for relevant third party tools.
