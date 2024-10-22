@@ -32,7 +32,7 @@ Deploying the Cloudflare root certificate is the simplest way to get started wit
 If you already have a certificate that you use for other inspection or trust purposes, we recommend uploading your own root certificate for the following reasons:
 
 - Using a single certificate streamlines IT management.
-- If other services (such as git workflows, other cli tools, or thick client applications) rely on an existing certificate store, presenting the same certificate in inspection is far less likely to interrupt their traffic flow.
+- If other services (such as `git` workflows, other CLI tools, or thick client applications) rely on an existing certificate store, presenting the same certificate in inspection is far less likely to interrupt their traffic flow.
 - If you are using WARP Connector to connect devices to Cloudflare, those devices will not be able to leverage HTTP policies that require decrypting TLS unless they have a certificate that matches either your uploaded certificate or the Cloudflare root certificate. It is more likely that your network infrastructure already has your own device certificates deployed, so using the existing PKI infrastructure for inspection will reduce the number of steps needed to deploy Zero Trust.
 
 :::note[MDM deployments]
