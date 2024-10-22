@@ -48,6 +48,12 @@ class_name = "MyWorkflow"
 
 The `binding = "MY_WORKFLOW"` line defines the JavaScript variable that our Workflow methods are accessible on, including `create` (which triggers a new instance) or `get` (which returns the status of an existing instance).
 
+The following example shows how to:
+
+* Retrieve the status of an existing Workflow instance by its ID
+* Create (trigger) a new Workflow instance
+* Return the status of a given instance ID.
+
 ```ts title="src/index.ts"
 interface Env {
 	MY_WORKFLOW: Workflow;
@@ -78,6 +84,33 @@ export default {
 
 		return Response.json({ result });
 	},
+};
+```
+
+### Inspect a Workflow's status
+
+You can inspect the status of any running Workflow instance by calling `status` against a specific instance ID. This allows you to programmatically inspect whether an instance is queued (waiting to be scheduled), actively running, paused or errored.
+
+```ts
+let instance = await env.MY_WORKFLOW.get("abc-123")
+let status = await instance.status() // Returns an InstanceStatus
+```
+
+The possible values of status are as follows:
+
+```ts
+  status:
+    | "queued" // means that instance is waiting to be started (see concurrency limits)
+    | "running"
+    | "paused"
+    | "errored"
+    | "terminated" // user terminated the instance while it was running
+    | "complete"
+    | "waiting" // instance is hibernating and waiting for sleep or event to finish
+    | "waitingForPause" // instance is finishing the current work to pause
+    | "unknown";
+  error?: string;
+  output?: object;
 };
 ```
 
@@ -125,7 +158,7 @@ Restarting an instance will immediately cancel any in-progress steps, erase any 
 
 ## REST API (HTTP)
 
-TODO
+Refer to the [Workflows REST API documentation](/api/paths/accounts-account_id--workflows--workflow_name--instances/post).
 
 ## Command line (CLI)
 
