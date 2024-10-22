@@ -13,7 +13,7 @@ products:
 weight: null
 sidebar:
   order: 1
-  label: Cloudflare One for SaaS applications
+  label: Zero Trust for SaaS applications
 updated: 2024-10-22
 ---
 
@@ -21,14 +21,14 @@ updated: 2024-10-22
 
 SaaS applications have become crucial in today's business landscape, particularly with the rise of hybrid workforces. As organizations adopt flexible working models, the ability of SaaS apps to provide seamless, global access is essential for maintaining productivity and fostering collaboration across distributed teams.
 
-SaaS applications significantly reduce the burden on IT teams by eliminating the need to manage the underlying infrastructure. By entrusting these responsibilities to the SaaS  provider, organizations no longer need to worry about hardware and software lifecycle management or scalability challenges. SaaS providers also offer robust security features, such as DDoS, ensuring high levels of reliability and performance. Furthermore, the subscription-based model of SaaS applications lowers adoption barriers by minimizing upfront costs and ultimately offer a lower Total Cost of Ownership (TCO) compared to legacy applications.
+SaaS applications significantly reduce the burden on IT teams by eliminating the need to manage the underlying infrastructure. By entrusting these responsibilities to the SaaS  provider, organizations no longer need to worry about hardware and software lifecycle management or scalability challenges. Furthermore, the subscription-based model of SaaS applications lowers adoption barriers by minimizing upfront costs and ultimately offer a lower Total Cost of Ownership (TCO) compared to legacy applications.
 
-Along with these advantages, SaaS applications introduce new challenges and security risks. Their Internet accessibility requires greater focus on the security of users and devices to prevent unauthorized access and data leaks. User provisioning (onboarding/offboarding), appropriate access controls and control/visibility into device security is essential to ensure only authorized users on trusted devices access company applications. Moreover, IT teams must monitor SaaS applications for misconfiguration and maintain visibility into user activity. Employees might publicly share files that contain sensitive information or integrate managed SaaS applications with unauthorized third-party apps, all without the IT team's knowledge.
+Along with these advantages, SaaS applications introduce new challenges and security risks. Their Internet accessibility requires greater focus on the security of users and devices to prevent unauthorized access and data leaks. User provisioning (onboarding/offboarding), appropriate access controls and control/visibility into device security is essential to ensure only authorized users on trusted devices access company applications. Moreover, IT teams must monitor SaaS applications for misconfiguration and gain visibility into risky user activity. Employees might publicly share files that contain sensitive information or integrate managed SaaS applications with unauthorized third-party apps, all without the IT team's knowledge.
 
 The ease with which users can sign up for new SaaS services, particularly free and popular ones, often leaves IT teams unaware of all the applications employees use - a trend known as [Shadow IT](https://www.cloudflare.com/en-gb/learning/access-management/what-is-shadow-it/). These unmanaged SaaS applications can be misused by employees, either intentionally or accidentally, potentially leading to data leaks due to the upload of sensitive data into applications that are not under the control of the IT team.
 
 Trying to use a [traditional castle-and-moat security model](https://www.cloudflare.com/en-gb/learning/access-management/castle-and-moat-network-security/) is unsuitable for SaaS applications, as the services and their data are no longer confined to on-premises data centers within an enterprise network. This outdated approach forces a trade-off between security and performance:
-- One strategy organizations adopt to enhance security involves shielding SaaS applications from the broader Internet by implementing IP allow lists and routing traffic through the organization's data center. This approach also enables the inspection of traffic for on-premises applications. However, this method negatively impacts the user experience, leading to increased latency and reduced bandwidth when routing all traffic through a single data center.
+- One strategy organizations adopt to enhance security involves shielding SaaS applications from the broader Internet by implementing IP allow lists and routing traffic through the organization's data center where traffic can be inspected and filtered according to security policy. However, this method negatively impacts the user experience, leading to increased latency and reduced bandwidth when routing all traffic through a single data center.
 - Conversely, if user traffic is sent directly to the Internet, bypassing a local VPN client by using split tunneling, security and visibility are compromised as enterprise network controls are bypassed (and IP allow lists are no longer feasible).
 
 ![Figure 1: Two different routes to a SaaS application, one secure but low performance, the second fast but less security.](~/assets/images/reference-architecture/zero-trust-for-saas/zero-trust-saas-image-01.svg "Figure 1: Two different routes to a SaaS application, one secure but low performance, the second fast but less security.")
@@ -65,8 +65,8 @@ Recommended resources for a stronger understanding of Cloudflare:
 
 Managed SaaS applications are those procured and approved by IT, forming part of the official suite of tools employees use to perform their tasks. IT typically manages these applications and are responsible for:
 1. **Securing access:** Ensuring only authorized users and devices can access SaaS applications. This includes managing the onboarding and offboarding of users. For instance, if an employee leaves the organization, their access is automatically revoked. Typically this involves integrating the SaaS application with the company identity management solution.
-2. **Data protection:** Preventing data leaks from within the SaaS applications and proactively mitigating risky behaviors by users that may result in data breaches.
-3. **Monitor configuration:** Identifying and promptly correcting misconfigurations within the SaaS applications to ensure they operate securely and efficiently.
+2. **Data protection:** Preventing data leaks from within the SaaS application and proactively mitigating risky behaviors by users that may result in data breaches.
+3. **Monitor configuration:** Identifying and promptly correcting misconfigurations within the SaaS application to ensure they operate securely and efficiently.
 4. **Cloud email security:** IT teams should take special care when dealing with cloud email SaaS solutions. Since email is a primary target for attacks, a specialized approach is required to protect users from phishing and other email-based threats.
 
 Note a section later in this document will cover how to gain visibility into, and control over, unmanaged applications. For example where your marketing department decides to sign up and start using a new CRM system without engaging IT or security departments.
@@ -77,10 +77,10 @@ Note a section later in this document will cover how to gain visibility into, an
 
 One simple method for securing access to SaaS applications, is to only allow access from a specific set of IP addresses. This forces users to have to connect to, and have their traffic exit via a specific network and therefore ensure whatever access controls are in place on that network are applied to that traffic.
 
-Organizations that already use IP allow lists to secure access to SaaS applications can easily migrate to Cloudflare using [dedicated egress IPs](/cloudflare-one/policies/gateway/egress-policies/dedicated-egress-ips/). User traffic egresses from Cloudflare to the Internet and onto the SaaS application, sourced from a set of IP addresses unique to the organization. This approach supports various user scenarios:
-- Hybrid employees: Connecting to Cloudflare using our Zero Trust client, [WARP](/cloudflare-one/connections/connect-devices/warp/).
-- Office-based users: Connecting to a local network which routes Internet bound traffic to Cloudflare through GRE or IPsec [Magic WAN tunnels](/magic-wan/).
-- Contractors and external users: Accessing SaaS applications via a [remote browser](/learning-paths/zero-trust-web-access/alternative-onramps/clientless-rbi/) hosted in a Cloudflare data center.
+Organizations that already use IP allow lists to secure access to SaaS applications can easily migrate to Cloudflare using [dedicated egress IPs](/cloudflare-one/policies/gateway/egress-policies/dedicated-egress-ips/). User traffic egresses from Cloudflare to the Internet and onto the SaaS application, sourced from a set of IP addresses unique to the organization. This approach supports various ways in which users access Cloudflare before gaining access to the SaaS application:
+- **Hybrid employees:** Connecting to Cloudflare using our Zero Trust client, [WARP](/cloudflare-one/connections/connect-devices/warp/).
+- **Office-based users:** Connecting to a local network which routes Internet bound traffic to Cloudflare through GRE or IPsec [Magic WAN tunnels](/magic-wan/).
+- **Contractors and external users:** Accessing SaaS applications via a [remote browser](/learning-paths/zero-trust-web-access/alternative-onramps/clientless-rbi/) hosted in a Cloudflare data center.
 
 Organizations add the new dedicated egress IPs to the existing SaaS IP allow lists for the Cloudflare sourced traffic to be allowed into the SaaS application. This way, organizations can maintain legacy connectivity methods in parallel with Cloudflare and migrate users gradually. Once all users are migrated to access via Cloudflare, the SaaS IP allow lists can be updated by removing the IPs corresponding to legacy infrastructure.
 
@@ -127,7 +127,7 @@ To mitigate these risks, controls should be implemented for both data in transit
 
 #### Data in transit
 
-As mentioned before, all traffic can be forced via Cloudflare using the device agent, MWAN tunnels or the remote browser. This allows [secure web gateway](/cloudflare-one/policies/gateway/) policies to manage and protect data as it is uploaded or downloaded from SaaS applications.. Common use cases include:
+As mentioned before, all traffic can be forced via Cloudflare using the device agent, MWAN tunnels or the remote browser. This allows [secure web gateway](/cloudflare-one/policies/gateway/) policies to manage and protect data as it is uploaded or downloaded from SaaS applications. Common use cases include:
 - Restricting the ability to download [all](/cloudflare-one/policies/gateway/http-policies/common-policies/#block-google-drive-downloads) or a [subset of files](/cloudflare-one/policies/gateway/http-policies/common-policies/#block-file-types) from managed SaaS applications to specific groups of users within the organization.
 - Using [Data Loss Prevention (DLP)](/cloudflare-one/policies/data-loss-prevention/#data-loss-prevention) profiles to limit the download of data containing sensitive information from managed SaaS applications.
 
@@ -167,13 +167,13 @@ While SaaS email solutions offer native security capabilities, their popularity 
 
 [Cloudflare's Email Security](https://www.cloudflare.com/en-gb/zero-trust/products/email-security/) scans for malicious content or attachments in emails and proactively monitors the Internet for attacker infrastructure and attack delivery mechanisms. It identifies programmatically-created and impersonation domains used to host malicious content as part of planned attacks. This data also helps protect against business and vendor email compromises ([BEC](https://www.cloudflare.com/en-gb/learning/email-security/business-email-compromise-bec/)/[VEC](https://www.cloudflare.com/en-gb/learning/email-security/what-is-vendor-email-compromise/)), which are notoriously difficult to detect due to their lack of payloads and resemblance to legitimate email traffic and  a gap for legacy email security platforms.
 
-Integrating Cloudflare into the existing email infrastructure is both flexible and straightforward, with deployment options available in [/email-security/deployment/inline/](/email-security/deployment/inline/) and [/email-security/deployment/api/](/email-security/deployment/api/) modes.
+Integrating Cloudflare into the existing email infrastructure is both flexible and straightforward, with deployment options available in [inline](/email-security/deployment/inline/) and [API](/email-security/deployment/api/) modes.
 
 In an inline deployment, Cloudflare's Email Security will evaluate email messages before they reach a user's inboxes (by pointing the email domain MX record to Cloudflare). This allows Cloudflare to [quarantine messages](/email-security/email-configuration/admin-quarantine/) so they never reach the user's inbox or [tag messages via email headers](/email-security/reference/dispositions-and-attributes/#header-structure) to inform the email provider how emails should be handled (for example, [by redirecting bulk emails directly to the spam folder](/email-security/deployment/inline/setup/office-365-area1-mx/use-cases/one-junk-admin-quarantine/)). Cloudflare can also [modify the subject and body of email messages](/email-security/email-configuration/email-policies/text-addons/) to inform a user to be more cautious about a suspicious email and [rewrite links within emails and even isolate those links behind a remote browser](/email-security/email-configuration/email-policies/link-actions/).
 
-In an API deployment, Cloudflare's Email Security will see the email messages only after they have reached the users' inboxes by setting up Journaling/BCC rules in the email provider or via API scan. Then, through integrations with the email provider, Cloudflare can [retract phishing emails](/email-security/email-configuration/retract-settings/) from user's inboxes. Unlike the Inline mode, this deployment method does not support quarantining emails or modifying the email messages, however, it is an easy way to add protection in complex email infrastructures with no changes to the existing mail flow operations.
+In an API deployment, Cloudflare's Email Security will see the email messages only after they have reached the users' inboxes by setting up Journaling/BCC rules in the email provider or via API scan. Then, through integrations with the email provider, Cloudflare can [retract phishing emails](/email-security/email-configuration/retract-settings/) from user's inboxes. Unlike the inline mode, this deployment method does not support quarantining emails or modifying the email messages, however, it is an easy way to add protection in complex email infrastructures with no changes to the existing mail flow operations.
 
-These modes can be used concurrently to enhance email security. The Inline mode ensures that Cloudflare's Email Security scans and filters emails before they reach users' inboxes. For emails that initially pass through without being flagged as threats, Cloudflare [periodically re-evaluates them](/email-security/email-configuration/retract-settings/office365-retraction/#post-delivery-retractions-for-new-threats). If these emails are later identified as part of a phishing campaign, they are automatically retracted via API. This proactive approach protects organizations against deferred phishing attacks, where attackers send emails with seemingly benign links that are weaponized after delivery to bypass initial detection.
+These modes can be used concurrently to enhance email security. The inline mode ensures that Cloudflare's Email Security scans and filters emails before they reach users' inboxes. For emails that initially pass through without being flagged as threats, Cloudflare [periodically re-evaluates them](/email-security/email-configuration/retract-settings/office365-retraction/#post-delivery-retractions-for-new-threats). If these emails are later identified as part of a phishing campaign, they are automatically retracted via API. This proactive approach protects organizations against deferred phishing attacks, where attackers send emails with seemingly benign links that are weaponized after delivery to bypass initial detection.
 
 ![Figure 8: Cloudflare can protect email services either inline or by API.](~/assets/images/reference-architecture/zero-trust-for-saas/zero-trust-saas-image-08.svg "Figure 8: Cloudflare can protect email services either inline or by API.")
 
@@ -190,9 +190,9 @@ Moreover, organizations that utilize [Microsoft Purview Sensitivity Labels](/clo
 ## Regain control over unmanaged SaaS applications
 
 Unmanaged SaaS applications are those used by employees without IT's approval or knowledge, commonly referred to as [shadow IT](https://www.cloudflare.com/en-gb/learning/access-management/what-is-shadow-it/). This growing challenge is driven by the proliferation of free or low-cost SaaS applications. While these apps can boost employee satisfaction and productivity, they also pose significant risks, such as:
-- Data breaches: Employees can upload sensitive data to these applications without any security controls. And without Single Sign-On (SSO) or strong password protocols, the risk of data loss or theft is significantly higher.
-- Compliance violations: In regulated industries, the use of unauthorized SaaS tools can lead to non-compliance with legal and industry standards, potentially resulting in fines, legal action, and reputational damage.
-- Increased costs: IT typically can often secure favorable pricing by managing SaaS subscription across the business. However, when employees independently purchase subscriptions with personal credit cards, it can lead to unchecked shadow IT spending and higher overall costs for the organization.
+- **Data breaches:** Employees can upload sensitive data to these applications without any security controls. And without Single Sign-On (SSO) or strong password protocols, the risk of data loss or theft is significantly higher.
+- **Compliance violations:** In regulated industries, the use of unauthorized SaaS tools can lead to non-compliance with legal and industry standards, potentially resulting in fines, legal action, and reputational damage.
+- **Increased costs:** IT typically can often secure favorable pricing by managing SaaS subscription across the business. However, when employees independently purchase subscriptions with personal credit cards, it can lead to unchecked shadow IT spending and higher overall costs for the organization.
 
 To mitigate these risks, the first step is to discover which SaaS applications employees are using. When all traffic from employee devices is routed through Cloudflare, [reports are generated](/cloudflare-one/insights/analytics/access/#shadow-it-discovery) showing the usage of common SaaS applications. 
 
@@ -206,9 +206,8 @@ With this information, IT teams can analyze and decide how to handle each unmana
 
 ### Data protection for unmanaged SaaS applications
 
-Data protection for unmanaged SaaS applications is similar to that for managed SaaS applications, but the focus shifts from mitigating the downloading of data to preventing the uploading of sensitive information.
+Data protection for unmanaged SaaS applications is similar to that for managed SaaS applications, but the focus shifts from mitigating the downloading of data to preventing the uploading of sensitive information. Policies can be configured using Cloudflare Gateway to address these risks. Common use cases include:
 
-Policies can be configured using Cloudflare Gateway to address these risks. Common use cases include:
 - Restricting the ability to [upload certain file types](/cloudflare-one/policies/data-loss-prevention/dlp-policies/common-policies/#block-file-types) to SaaS applications, limiting this capability to specific groups of users within the organization.
 - Using Data Loss Prevention (DLP) profiles to block the upload of data containing sensitive information.
 
@@ -226,7 +225,7 @@ After fully adopting the new SaaS application, access to the consumer version ma
 
 This design guide described how organizations can enhance their SaaS application security by implementing a Zero Trust framework within a SASE architecture. With Cloudflare, organizations gain access to a comprehensive solution that addresses the challenges posed by both managed and unmanaged SaaS applications. By using techniques like ZTNA, dedicated egress IPs, CASB, and robust email security measures, organizations can ensure secure access, protect sensitive data, and gain control over Shadow IT, all while maintaining a positive user experience. These techniques and when to apply them are summarized in the diagram below:
 
-![Figure 11: Techniques for enforcing a zero trust approach in SaaS applications.](~/assets/images/reference-architecture/zero-trust-for-saas/zero-trust-saas-image-10.svg "Figure 10: Techniques for enforcing a zero trust approach in SaaS applications.")
+![Figure 11: Techniques for enforcing a zero trust approach in SaaS applications.](~/assets/images/reference-architecture/zero-trust-for-saas/zero-trust-saas-image-11.svg "Figure 11: Techniques for enforcing a zero trust approach in SaaS applications.")
 
 ## Related resources
 - [SASE reference architecture](/reference-architecture/architectures/sase/)
