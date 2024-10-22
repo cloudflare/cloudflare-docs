@@ -48,11 +48,11 @@ class_name = "MyWorkflow"
 
 The `binding = "MY_WORKFLOW"` line defines the JavaScript variable that our Workflow methods are accessible on, including `create` (which triggers a new instance) or `get` (which returns the status of an existing instance).
 
-The following example shows how to:
+The following example shows how you can manage Workflows from within a Worker, including:
 
-* Retrieve the status of an existing Workflow instance by its ID
-* Create (trigger) a new Workflow instance
-* Return the status of a given instance ID.
+* Retrieving the status of an existing Workflow instance by its ID
+* Creating (triggering) a new Workflow instance
+* Returning the status of a given instance ID.
 
 ```ts title="src/index.ts"
 interface Env {
