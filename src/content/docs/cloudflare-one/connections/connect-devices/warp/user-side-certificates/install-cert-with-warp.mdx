@@ -40,17 +40,15 @@ The certificate is required if you want to [apply HTTP policies to encrypted web
 5. [Enroll the device](/cloudflare-one/connections/connect-devices/warp/deployment/manual-deployment/) in your Zero Trust organization.
 6. (Optional) If the device is running macOS Ventura `13.5` or newer, [manually trust the certificate](#manually-trust-the-certificate).
 
-If a custom certificate is not provided, WARP will install the default [Cloudflare certificate](/cloudflare-one/connections/connect-devices/warp/user-side-certificates/install-cloudflare-cert/#download-the-cloudflare-root-certificate) in the system keychain for all users. If you uploaded a custom certificate, the WARP client will deploy your custom certificate instead of the Cloudflare certificate.
-
-WARP will only install the [certificate set to **In-Use**](/cloudflare-one/connections/connect-devices/warp/user-side-certificates/#certificate-status). If you turn on a new certificate for inspection, WARP will automatically install the new certificate to your users' devices and remove the old certificate.
-
-Next, [verify](#access-the-installed-certificate) that the certificate was successfully installed.
+WARP will install the [certificate set to **In-Use**](/cloudflare-one/connections/connect-devices/warp/user-side-certificates/#certificate-status). This certificate can be either a [Cloudflare-generated certificate](/cloudflare-one/connections/connect-devices/warp/user-side-certificates/#generate-a-cloudflare-root-certificate) or a [custom certificate](/cloudflare-one/connections/connect-devices/warp/user-side-certificates/custom-certificate/). If you turn on a new certificate for inspection, WARP will automatically install the new certificate and remove the old certificate from your users' devices.
 
 :::note[Important]
 WARP only installs the system certificate -- it does not install the certificate to individual applications. You will need to [manually add the certificate](/cloudflare-one/connections/connect-devices/warp/user-side-certificates/install-cloudflare-cert/#add-the-certificate-to-applications) to applications that rely on their own certificate store.
 :::
 
 ## Access the installed certificate
+
+After installing the certificate using WARP, you can verify successful installation by accessing the device's system certificate store.
 
 ### Windows
 
