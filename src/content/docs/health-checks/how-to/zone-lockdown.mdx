@@ -26,7 +26,7 @@ To bypass zone lockdown using a WAF custom rule:
 5. Set the action to *Skip* and the corresponding feature to **Zone Lockdown** under **More components to skip**.
 
 Cloudflare Health Checks have a user agent of the following format:
-`Mozilla/5.0 (compatible;Cloudflare-Healthchecks/1.0;"+https://www.cloudflare.com/; healthcheck-id: XXX)` where `XXX` is replaced with the first 16 characters of the Health Check ID.
+`Mozilla/5.0 (compatible;Cloudflare-Healthchecks/1.0;+https://www.cloudflare.com/; healthcheck-id: XXX)` where `XXX` is replaced with the first 16 characters of the Health Check ID.
 
 To allow a specific Health Check, verify if the user agent contains the first 16 characters of the Health Check ID.
 
