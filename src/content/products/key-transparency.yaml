@@ -7,8 +7,7 @@ product:
 
 meta:
   title: Key Transparency Auditor
-  description:
-    Key Transparency Auditor docs
+  description: Key Transparency Auditor docs
   author: "@cloudflare"
 
 externals:
