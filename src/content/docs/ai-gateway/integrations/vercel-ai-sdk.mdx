@@ -1,0 +1,40 @@
+---
+title: Vercel AI SDK
+pcx_content_type: configuration
+sidebar:
+  order: 3
+---
+
+The [Vercel AI SDK](https://sdk.vercel.ai/) is a TypeScript library for building AI applications. The SDK supports many different AI providers, tools for streaming completions, and more.
+
+To use Cloudflare AI Gateway inside of the AI SDK, you can configure a custom "Gateway URL" for most supported providers. Below are a few examples of how it works.
+
+## Examples
+
+### OpenAI
+
+If you're using the `openai` provider in AI SDK, you can create a customized setup with `createOpenAI`, passing your OpenAI-compatible AI Gateway URL:
+
+```typescript
+import { createOpenAI } from "@ai-sdk/openai";
+
+const openai = createOpenAI({
+	baseURL: `https://gateway.ai.cloudflare.com/v1/{account_id}/{gateway_id}/openai`,
+});
+```
+
+### Anthropic
+
+If you're using the `anthropic` provider in AI SDK, you can create a customized setup with `createAnthropic`, passing your Anthropic-compatible AI Gateway URL:
+
+```typescript
+import { createAnthropic } from "@ai-sdk/anthropic";
+
+const anthropic = createAnthropic({
+	baseURL: `https://gateway.ai.cloudflare.com/v1/{account_id}/{gateway_id}/anthropic`,
+});
+```
+
+### Other providers
+
+For other providers that are not listed above, you can follow a similar pattern by creating a custom instance for any AI provider, and passing your AI Gateway URL. For help finding your provider-specific AI Gateway URL, refer to the [Supported providers page](/ai-gateway/providers).

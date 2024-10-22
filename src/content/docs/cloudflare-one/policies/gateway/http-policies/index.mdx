@@ -96,7 +96,7 @@ The **Untrusted certificate action** determines how to handle insecure requests.
 | Option       | Action                                                                                                                                                                                                                                                                                                                                                                                                     |
 | ------------ | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | Error        | Display Gateway error page. Matches the default behavior when no action is configured.                                                                                                                                                                                                                                                                                                                     |
-| Block        | Display [block page](/cloudflare-one/policies/gateway/configuring-block-page/) as set in Zero Trust.                                                                                                                                                                                                                                                                                                       |
+| Block        | Display [block page](/cloudflare-one/policies/gateway/block-page/) as set in Zero Trust.                                                                                                                                                                                                                                                                                                                   |
 | Pass through | Bypass insecure connection warnings and seamlessly connect to the upstream. To use this feature, deploy a [custom root certificate](/cloudflare-one/connections/connect-devices/warp/user-side-certificates/custom-certificate/). For more information on what statuses are bypassed, refer to the [troubleshooting FAQ](/cloudflare-one/faq/troubleshooting/#i-see-error-526-when-browsing-to-a-website). |
 
 ### Block
@@ -460,12 +460,57 @@ Use this selector to match against a domain and all subdomains -- for example, i
 ### Download and Upload File Types
 
 :::caution[Deprecated selectors]
-
 The **Download File Types** and **Upload File Types** selectors supersede the **Download File Type** and **Upload File Type** selectors. Gateway will still evaluate policies with the previous selectors. However, Cloudflare recommends migrating any policies with deprecated selectors to the new corresponding selectors.
-
 :::
 
-These selectors will scan file signatures in the HTTP body. You can select from file categories or specific file types, including executables, archives and compressed files, Microsoft 365/Office documents, and Adobe files.
+These selectors will scan file signatures in the HTTP body. You can select from file categories or specific file types, such as executables, archives and compressed files, Microsoft 365/Office documents, and Adobe files:
+
+<Details header="Supported file types">
+
+**Compressed**
+
+- 7-Zip archive (`.7z`)
+- `bzip2` archive (`.bz2`)
+- GNU Gzip archive (`.gz`)
+- Microsoft Cabinet file (`.cab`)
+- Microsoft Compiled HTML Help file (`.chm`)
+- RAR archive (`.rar`)
+- `xz` archive (`.xz`)
+- ZIP archive (`.zip`)
+
+**Documents**
+
+- Microsoft Office/365 files
+  - Word document (`.doc`, `.docx`, `.docm`)
+  - Excel spreadsheet (`.xls`, `.xlsx`, `.xlsm`)
+  - PowerPoint presentation (`.ppt`, `.pptx`, `.pptm`)
+- PDF document (`.pdf`)
+
+**Executable**
+
+- Dynamic-link library (DLL) file (`.dll`)
+- Executable and Linkable Format (ELF) file (`.elf`)
+- Java archive (JAR) package (`.jar`)
+- Java class file (`.class`)
+- Mach object (Mach-O) file (`.macho`)
+- Microsoft Windows installer (`.msi`)
+- Microsoft Windows executable (`.exe`)
+
+**Image**
+
+- Adobe Photoshop document (`.psd`)
+- Bitmap image (`.bmp`)
+- GIF image (`.gif`)
+- Icon file (`.ico`)
+- JPEG image (`.jpg`, `.jpeg`)
+- PNG image (`.png`)
+- WebP image (`.webp`)
+
+**Other**
+
+- BitTorrent file (`.torrent`)
+
+</Details>
 
 | UI name             | API example                                         |
 | ------------------- | --------------------------------------------------- |

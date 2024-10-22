@@ -202,7 +202,7 @@ entries:
     languages: [TypeScript]
     products: [Workers, Workers AI]
     cloudflare: true
-    # stream_id: 
+    # stream_id:
     author: confidence
     updated: 2024-10-07
     difficulty: Beginner
@@ -232,4 +232,4 @@ entries:
     updated: 2024-10-17
     difficulty: Intermediate
     content_type: 🎥 Video
-    pcx_content_type: tutorial    
+    pcx_content_type: tutorial

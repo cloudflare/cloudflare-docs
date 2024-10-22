@@ -93,14 +93,15 @@
 /ai/ /use-cases/ai/ 301
 
 # AI Gateway
-
 /ai-gateway/get-started/configuring-settings/ /ai-gateway/get-started/ 301
 /ai-gateway/get-started/connecting-applications/ /ai-gateway/get-started/ 301
 /ai-gateway/get-started/creating-gateway/ /ai-gateway/get-started/ 301
 /ai-gateway/pricing/ /ai-gateway/reference/pricing/ 301
 /ai-gateway/observability/evaluations/ /ai-gateway/evaluations/ 301
 /ai-gateway/observability/evaluations/set-up-evaluations/ /ai-gateway/evaluations//set-up-evaluations/ 301
-
+/ai-gateway/integration/vercel-ai-sdk/ /ai-gateway/integrations/vercel-ai-sdk/ 301
+/ai-gateway/integration/aig-workers-ai-binding/ /ai-gateway/integrations/aig-workers-ai-binding/ 301
+/ai-gateway/integration/ /ai-gateway/integrations/ 301
 
 # analytics
 /analytics/migration-guides/zone-analytics/ /analytics/graphql-api/migration-guides/zone-analytics/ 301
@@ -211,7 +212,8 @@
 /cache/about/ /cache/concepts/ 301
 /cache/concepts/enable-http2-to-origin/ /speed/optimization/protocol/http2-to-origin/ 301
 /cache/how-to/enable-http2-to-origin/ /speed/optimization/protocol/http2-to-origin/ 301
-/cache/how-to/interact-with-workers/ /cache/concepts/interact-with-workers/ 301
+/cache/how-to/interact-with-workers/ /cache/interaction-cloudflare-products/workers/ 301
+/cache/concepts/interact-with-workers/ /cache/interaction-cloudflare-products/workers/ 301
 /cache/best-practices/cache-behavior/ /cache/concepts/cache-behavior/ 301
 /cache/best-practices/customize-cache/ /cache/concepts/customize-cache/ 301
 /cache/best-practices/ /cache/concepts/ 301
@@ -1124,6 +1126,9 @@
 /support/account-management-billing/account-privacy-and-security/ /support/account-management-billing/ 301
 /support/troubleshooting/general-troubleshooting/troubleshooting-surges-or-spikes-in-web-traffic/ /fundamentals/basic-tasks/preparing-for-surges-or-spikes-in-web-traffic/ 301
 /support/troubleshooting/general-troubleshooting/preparing-for-surges-or-spikes-in-web-traffic/ /fundamentals/basic-tasks/preparing-for-surges-or-spikes-in-web-traffic/ 301
+/support/third-party-software/others/configuring-an-amazon-web-services-static-site-to-use-cloudflare/ /rules/cloud-connector/providers/ 301
+/support/third-party-software/others/enabling-cloudflare-ssl-on-azure-storage-static-web-hosting-applications/ /rules/cloud-connector/providers/ 301
+
 
 # r2
 /r2/platform/s3-compatibility/api/ /r2/api/s3/api/ 301
@@ -1498,6 +1503,7 @@
 /workers-ai/platform/storage-options/ /workers/platform/storage-options/ 301
 /workers-ai/configuration/workers-ai-sdk/ /workers-ai/configuration/bindings/ 301
 /workers-ai/tutorials/creating-a-recommendation-api/ /developer-spotlight/tutorials/creating-a-recommendation-api/ 301
+/workers/observability/baselime-integration/ /workers/observability/integrations/baselime-integration/ 301
 
 # workers KV
 /kv/platform/environments/ /kv/reference/environments/ 301
@@ -1655,6 +1661,7 @@
 /cloudflare-one/identity/service-auth/service-tokens/ /cloudflare-one/identity/service-tokens/ 301
 /cloudflare-one/identity/users/short-lived-certificates/ /cloudflare-one/connections/connect-networks/use-cases/ssh/ssh-infrastructure-access/ 301
 /cloudflare-one/identity/users/validating-json/ /cloudflare-one/identity/authorization-cookie/validating-json/ 301
+/cloudflare-one/policies/gateway/configuring-block-page/ /cloudflare-one/policies/gateway/block-page/ 301
 /cloudflare-one/policies/lists/ /cloudflare-one/policies/gateway/lists 301
 /cloudflare-one/policies/gateway/dns-policies/scheduled-dns-policies/ /cloudflare-one/policies/gateway/timed-policies/#scheduled-policies 301
 /cloudflare-one/policies/zero-trust/ /cloudflare-one/policies/access/ 301
@@ -1714,6 +1721,7 @@
 /cloudflare-one/tutorials/zsh-env-var/ /cloudflare-one/tutorials/cli/ 301
 
 ### DYNAMIC REDIRECTS ###
+/*/sitemap.xml /sitemap-index.xml 301
 /access/configuring-identity-providers/* /cloudflare-one/identity/idp-integration/:splat 301
 /api-security/* /api-shield/:splat 301
 /api-shield/products/* /api-shield/security/:splat 301
