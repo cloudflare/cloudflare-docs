@@ -157,7 +157,7 @@ As described already, implementing ZTNA to secure your email platform offers num
 
 #### Tenant control
 
-Organizations with stringent requirements about email communications, for compliance or regulatory reasons, operational control or accountability or to reduce the potential for data leaks can block access to email tenants other than the organization’s own. This can be achieved by using [Cloudflare Gateway SaaS tenant controls](https://developers.cloudflare.com/cloudflare-one/policies/gateway/http-policies/tenant-control/). Cloudflare injects custom HTTP headers into the traffic flow, informing Microsoft 365 and Google Workspace of the specific tenant users are allowed to authenticate into and blocking any access attempts to any other tenant.
+Organizations with stringent requirements about email communications, for compliance or regulatory reasons, operational control or accountability or to reduce the potential for data leaks can block access to email tenants other than the organization's own. This can be achieved by using [Cloudflare Gateway SaaS tenant controls](https://developers.cloudflare.com/cloudflare-one/policies/gateway/http-policies/tenant-control/). Cloudflare injects custom HTTP headers into the traffic flow, informing Microsoft 365 and Google Workspace of the specific tenant users are allowed to authenticate into and blocking any access attempts to any other tenant.
 
 ![Figure 7: Cloudflare can enforce access to only specific cloud email tenants.](~/assets/images/reference-architecture/zero-trust-for-saas/zero-trust-saas-image-07.svg "Figure 7: Cloudflare can enforce access to only specific cloud email tenants.")
 
