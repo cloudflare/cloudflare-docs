@@ -30,7 +30,7 @@ When you enable **Respect Strong ETags** in a cache rule, Cloudflare will use st
 However, in some situations Cloudflare will convert strong ETags to weak ETags. For example, given the following conditions:
 
 * **Respect Strong ETags** is enabled
-* [Compression](/speed/optimization/content/compression/) is enabled
+* [Brotli compression](/speed/optimization/content/compression/) is enabled
 * The origin server's response includes an `etag: "foobar"` strong ETag header
 
 The Cloudflare network will take the following actions, depending on the visitor's `accept-encoding` header and the compression used in the origin server's response:
@@ -60,7 +60,7 @@ When **Respect Strong ETags** is disabled, Cloudflare will preserve strong ETag 
 In all other situations, Cloudflare will either convert strong ETag headers to weak ETag headers or remove the strong ETag. For example, given the following conditions:
 
 * **Respect Strong ETags** is disabled
-* [Compression](/speed/optimization/content/compression/) is enabled
+* [Brotli compression](/speed/optimization/content/compression/) is enabled
 * The origin server's response includes an `etag: "foobar"` strong ETag header
 
 The Cloudflare network will take the following actions, depending on the visitor's `accept-encoding` header and the compression used in the origin server's response:
