@@ -167,4 +167,4 @@ By default, Cloudflare uses the following compression methods for content delive
 
 ### Between Cloudflare and the Origin
 
-On all plans, Cloudflare requests content from the origin server using the `accept-encoding: gzip,br` header. This means that Cloudflare asks the origin to send the content compressed using gzip or Brotli, depending on which method the origin server supports.
+On all plans, Cloudflare requests content from the origin server using the `accept-encoding: br, gzip` header. This means that Cloudflare asks the origin to send the content compressed using Brotli or Gzip, depending on which method the origin server supports.
