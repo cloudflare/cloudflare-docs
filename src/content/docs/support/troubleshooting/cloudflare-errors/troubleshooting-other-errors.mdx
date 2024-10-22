@@ -35,5 +35,5 @@ Make sure that the field values are respecting the following requirements: [RFC 
 
 * A compression issue, for example the origin server is serving gzip encoded compressed content but is not updating the `content-length` header, or the origin is serving broken gzip compressed content.
 
-**Resolution**: In this case you can try to disable compression at your origin and rely on Cloudflare to [compress content](/speed/optimization/content/brotli/content-compression/)
+**Resolution**: In this case you can try to disable compression at your origin and rely on Cloudflare to [compress content](/speed/optimization/content/compression/)
 You can also investigate the configuration of your origin server to make sure the compression is working as expected.

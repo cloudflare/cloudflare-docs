@@ -2146,7 +2146,7 @@
 		},
 		"brotli": {
 			"title": "Brotli compression",
-			"link": "/speed/optimization/content/brotli/",
+			"link": "/speed/optimization/content/compression/",
 			"properties": {
 				"availability": {
 					"title": "Availability",
