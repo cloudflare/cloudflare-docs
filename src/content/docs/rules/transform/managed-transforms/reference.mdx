@@ -76,6 +76,12 @@ Adds HTTP headers with location information for the visitor's IP address to the 
 Turning on [IP geolocation](/network/ip-geolocation/) will send a `cf-ipcountry` HTTP header to your origin server even when **Add visitor location headers** is turned off.
 :::
 
+#### Encoding of non-ASCII header values
+
+Cloudflare always converts non-ASCII characters to UTF-8 (using hexadecimal character representation) in HTTP request and response header values. This applies to location headers added by the **Add visitor location headers** managed transform.
+
+For example, the header value `São Paulo` would be encoded as `S\u00c3\u00a3o Paulo`.
+
 ### Add "True-Client-IP" header
 
 :::note
@@ -105,6 +111,25 @@ For example, consider an incoming request proxied by two CDNs (`CDN_1` and `CDN_
 
 With **Remove visitor IP headers** enabled, the `x-forwarded-for` header sent to the origin server will be:<br/>
 `x-forwarded-for: <THIRD_PARTY_CDN_2_IP>`
+
+### Add Leaked Credentials Checks Header
+
+Adds an `Exposed-Credential-Check` request header whenever the WAF detects leaked credentials in the incoming request.
+
+The header can have these values:
+
+| Header + Value                | Description                                                             | Availability       |
+| ----------------------------- | ----------------------------------------------------------------------- | ------------------ |
+| `Exposed-Credential-Check: 1` | Previously leaked username and password detected                        | Pro plan and above |
+| `Exposed-Credential-Check: 2` | Previously leaked username detected                                     | Enterprise plan    |
+| `Exposed-Credential-Check: 3` | Similar combination of previously leaked username and password detected | Enterprise plan    |
+| `Exposed-Credential-Check: 4` | Previously leaked password detected                                     | All plans          |
+
+You will only receive this managed header at your origin server if:
+
+- The [leaked credentials detection](/waf/detections/leaked-credentials/) in the WAF is turned on.
+- The **Add Leaked Credentials Checks Header** managed transform is turned on.
+- Your Cloudflare plan supports the type of credentials detection. For example, Free plans can only know if a password was previously leaked. In this situation, Cloudflare will add an `Exposed-Credential-Check: 4` header to the request.
 
 ## HTTP response headers
 

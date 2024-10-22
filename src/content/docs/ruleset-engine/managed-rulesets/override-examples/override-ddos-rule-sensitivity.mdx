@@ -3,10 +3,9 @@ pcx_content_type: configuration
 title: Adjust the sensitivity of an HTTP DDoS rule to Low
 sidebar:
   order: 6
-
 ---
 
-import { Details } from "~/components"
+import { Details } from "~/components";
 
 Follow the steps below to override the sensitivity of a specific rule of the Cloudflare HTTP DDoS Attack Protection managed ruleset.
 
@@ -15,9 +14,8 @@ Follow the steps below to override the sensitivity of a specific rule of the Clo
 
 The example below uses the [Update ruleset](/ruleset-engine/rulesets-api/update/) operation to execute the steps in a single `PUT` request.
 
-* Add a rule to the ruleset of the `ddos_l7` phase that applies the Cloudflare HTTP DDoS Attack Protection managed ruleset (with ID `<HTTP_DDOS_RULESET_ID>`).
-* Create an override for the rule with ID `<RULE_ID>` and set the rule sensitivity to `low`. All other rules use the default sensitivity defined by Cloudflare.
-
+- Add a rule to the ruleset of the `ddos_l7` phase that applies the Cloudflare HTTP DDoS Attack Protection managed ruleset (with ID `<HTTP_DDOS_RULESET_ID>`).
+- Create an override for the rule with ID `<RULE_ID>` and set the rule sensitivity to `low`. All other rules use the default sensitivity defined by Cloudflare.
 
 <Details header="Example: Use an override to set the sensitivity of an HTTP DDoS rule at the zone level">
 
@@ -46,6 +44,5 @@ https://api.cloudflare.com/client/v4/zones/{zone_id}/rulesets/phases/ddos_l7/ent
   ]
 }'
 ```
-
 
 </Details>

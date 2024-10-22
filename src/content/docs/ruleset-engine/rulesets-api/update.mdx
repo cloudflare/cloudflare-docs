@@ -6,8 +6,6 @@ sidebar:
   order: 6
 ---
 
-import { Details } from "~/components";
-
 You can use the API to update **basic properties** of a ruleset (currently only the description) and the **list of rules** in the ruleset.
 
 Use one of the following API endpoints:
@@ -32,8 +30,6 @@ You cannot update the name of the ruleset or its type. Do not include these fiel
 
 Use this API method to set the rules of a ruleset. You must include all the rules you want to associate with the ruleset in every request.
 
-<Details header="Request">
-
 ```bash
 curl --request PUT \
 https://api.cloudflare.com/client/v4/zones/{zone_id}/rulesets/{ruleset_id} \
@@ -52,11 +48,7 @@ https://api.cloudflare.com/client/v4/zones/{zone_id}/rulesets/{ruleset_id} \
 }'
 ```
 
-</Details>
-
-<Details header="Response">
-
-```json
+```json output
 {
 	"result": {
 		"id": "<RULESET_ID>",
@@ -85,15 +77,11 @@ https://api.cloudflare.com/client/v4/zones/{zone_id}/rulesets/{ruleset_id} \
 }
 ```
 
-</Details>
-
 ## Example - Deploy a ruleset
 
 To deploy a ruleset, create a rule with `"action": "execute"` that executes the ruleset, and add the ruleset ID to the `action_parameters` field in the `id` parameter.
 
 The following example deploys a managed ruleset to the zone-level `http_request_firewall_managed` phase of a zone (`{zone_id}`).
-
-<Details header="Request">
 
 ```bash
 curl --request PUT \
@@ -114,11 +102,7 @@ https://api.cloudflare.com/client/v4/zones/{zone_id}/rulesets/phases/http_reques
 }'
 ```
 
-</Details>
-
-<Details header="Response">
-
-```json
+```json output
 {
 	"result": {
 		"id": "<ZONE_PHASE_RULESET_ID>",
@@ -151,19 +135,17 @@ https://api.cloudflare.com/client/v4/zones/{zone_id}/rulesets/phases/http_reques
 }
 ```
 
-</Details>
-
 For more information on deploying rulesets, refer to [Deploy rulesets](/ruleset-engine/basic-operations/deploy-rulesets/).
 
 ## Example - Update ruleset description
 
 You can use this API method to update the description of an existing ruleset or phase entry point.
 
+The response will include the complete ruleset definition, including all the rules.
+
 :::note
 You cannot update the description or the rules in a managed ruleset. You can only [define overrides](/ruleset-engine/managed-rulesets/override-managed-ruleset/) to customize the ruleset behavior.
 :::
-
-<Details header="Request">
 
 ```bash
 curl --request PUT \
@@ -175,13 +157,7 @@ https://api.cloudflare.com/client/v4/zones/{zone_id}/rulesets/{ruleset_id} \
 }'
 ```
 
-</Details>
-
-The response includes the complete ruleset definition, including all the rules.
-
-<Details header="Response">
-
-```json
+```json output
 {
 	"result": {
 		"id": "<RULESET_ID>",
@@ -200,5 +176,3 @@ The response includes the complete ruleset definition, including all the rules.
 	"messages": []
 }
 ```
-
-</Details>

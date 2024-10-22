@@ -1,18 +1,17 @@
 ---
 {}
-
 ---
 
 :::note
 
-Only available on Pay-as-you-go and Enterprise plans. 
+Only available on Pay-as-you-go and Enterprise plans.
 :::
 
 You can display a custom block page when users fail to authenticate to an Access application. Each application can have a different block page.
 
 :::note
 
-To customize the page that users see when they are blocked by a Gateway firewall policy, refer to [Gateway block page](/cloudflare-one/policies/gateway/configuring-block-page/). 
+To customize the page that users see when they are blocked by a Gateway firewall policy, refer to [Gateway block page](/cloudflare-one/policies/gateway/block-page/).
 :::
 
 ## Create a custom block page
@@ -34,15 +33,13 @@ To create a custom block page for Access:
 7. In **Custom HTML**, enter the HTML code for your custom page. For example,
 
    ```html
-   <!DOCTYPE html>
+   <!doctype html>
    <html>
-   <body>
+   	<body>
+   		<h1>Access denied.</h1>
 
-   <h1>Access denied.</h1>
-
-   <p>To obtain access, contact your IT administrator.</p>
-
-   </body>
+   		<p>To obtain access, contact your IT administrator.</p>
+   	</body>
    </html>
    ```
 

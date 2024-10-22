@@ -120,7 +120,7 @@ Learn how the WARP client determines if an application is running on various sys
 To get the list of active processes, run the following command:
 
 ```sh
-ps -eo comm | xargs which | sort | uniq
+ps -eo comm | xargs which | sort | uniq | xargs realpath
 ```
 
 The application path must appear in the output for the check to pass.

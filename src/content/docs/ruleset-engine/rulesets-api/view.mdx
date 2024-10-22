@@ -6,8 +6,6 @@ sidebar:
   order: 4
 ---
 
-import { Details } from "~/components";
-
 - [List existing rulesets](#list-existing-rulesets)
 - [View a specific ruleset](#view-a-specific-ruleset)
 - [List all versions of a ruleset](#list-all-versions-of-a-ruleset)
@@ -40,18 +38,12 @@ The result does not include the list of rules in the ruleset. Refer to [View a s
 
 ### Example
 
-<Details header="Request">
-
 ```bash
 curl https://api.cloudflare.com/client/v4/zones/{zone_id}/rulesets \
 --header "Authorization: Bearer <API_TOKEN>"
 ```
 
-</Details>
-
-<Details header="Response">
-
-```json
+```json output
 {
 	"result": [
 		{
@@ -69,8 +61,6 @@ curl https://api.cloudflare.com/client/v4/zones/{zone_id}/rulesets \
 	"messages": []
 }
 ```
-
-</Details>
 
 ## View a specific ruleset
 
@@ -101,18 +91,12 @@ The API returns a `404 Not Found` HTTP status code under these conditions:
 
 ### Example
 
-<Details header="Request">
-
 ```bash
 curl https://api.cloudflare.com/client/v4/zones/{zone_id}/rulesets/{ruleset_id} \
 --header "Authorization: Bearer <API_TOKEN>"
 ```
 
-</Details>
-
-<Details header="Response">
-
-```json
+```json output
 {
 	"result": {
 		"id": "<RULESET_ID>",
@@ -141,8 +125,6 @@ curl https://api.cloudflare.com/client/v4/zones/{zone_id}/rulesets/{ruleset_id} 
 }
 ```
 
-</Details>
-
 ## List all versions of a ruleset
 
 Returns a list of all the versions of a ruleset.
@@ -167,18 +149,12 @@ When the specified phase entry point ruleset does not exist, this API method ret
 
 ### Example
 
-<Details header="Request">
-
 ```bash
 curl https://api.cloudflare.com/client/v4/zones/{zone_id}/rulesets/{ruleset_id}/versions \
 --header "Authorization: Bearer <API_TOKEN>"
 ```
 
-</Details>
-
-<Details header="Response">
-
-```json
+```json output
 {
 	"result": [
 		{
@@ -206,8 +182,6 @@ curl https://api.cloudflare.com/client/v4/zones/{zone_id}/rulesets/{ruleset_id}/
 }
 ```
 
-</Details>
-
 ## View a specific version of a ruleset
 
 Returns the configuration of a specific version of a ruleset, including its rules.
@@ -230,18 +204,12 @@ When the specified phase entry point ruleset does not exist, this API method ret
 
 ### Example
 
-<Details header="Request">
-
 ```bash
 curl https://api.cloudflare.com/client/v4/zones/{zone_id}/rulesets/{ruleset_id}/versions/{version_number} \
 --header "Authorization: Bearer <API_TOKEN>"
 ```
 
-</Details>
-
-<Details header="Response">
-
-```json
+```json output
 {
 	"result": {
 		"id": "<RULESET_ID>",
@@ -270,8 +238,6 @@ curl https://api.cloudflare.com/client/v4/zones/{zone_id}/rulesets/{ruleset_id}/
 }
 ```
 
-</Details>
-
 :::note
 When you view a specific version of a managed ruleset, each rule listed in the result can have one or more associated categories/tags, and it will not contain an expression.
 :::
@@ -288,18 +254,12 @@ Returns a list of all the rules in a managed ruleset with a specific tag.
 
 ### Example
 
-<Details header="Request">
-
 ```bash
 curl https://api.cloudflare.com/client/v4/accounts/{account_id}/rulesets/{ruleset_id}/versions/2/by_tag/wordpress \
 --header "Authorization: Bearer <API_TOKEN>"
 ```
 
-</Details>
-
-<Details header="Response">
-
-```json
+```json output
 {
 	"result": {
 		"id": "<MANAGED_RULESET_ID>",
@@ -345,5 +305,3 @@ curl https://api.cloudflare.com/client/v4/accounts/{account_id}/rulesets/{rulese
 	"messages": []
 }
 ```
-
-</Details>

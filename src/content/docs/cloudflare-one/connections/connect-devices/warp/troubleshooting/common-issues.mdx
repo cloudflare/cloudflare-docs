@@ -3,12 +3,11 @@ pcx_content_type: reference
 title: Common issues
 sidebar:
   order: 1
-
 ---
 
-import { Render } from "~/components"
+import { Render } from "~/components";
 
-This section covers the most common issues you might encounter as you deploy the WARP client in your organization, or turn on new features that interact with the client. If you do not see your issue listed below, refer to the [troubleshooting FAQ](/cloudflare-one/faq/teams-troubleshooting/) or [contact Cloudflare Support](/support/contacting-cloudflare-support/).
+This section covers the most common issues you might encounter as you deploy the WARP client in your organization, or turn on new features that interact with the client. If you do not see your issue listed below, refer to the [troubleshooting FAQ](/cloudflare-one/faq/troubleshooting/) or [contact Cloudflare Support](/support/contacting-cloudflare-support/).
 
 ## Unable to connect WARP
 
@@ -22,13 +21,13 @@ If WARP is stuck in the `Disconnected` state or frequently changes between `Conn
 
 In your [WARP debug logs](/cloudflare-one/connections/connect-devices/warp/troubleshooting/warp-logs/), `daemon.log` will typically show one or more of the following errors:
 
-* Happy Eyeball checks failing:
+- Happy Eyeball checks failing:
 
   ```txt
   ERROR main_loop: warp::warp::happy_eyeballs: Happy eyeballs error Custom { kind: NotConnected, error: "All Happy Eyeballs checks failed" }
   ```
 
-* Many other checks timing out:
+- Many other checks timing out:
 
   ```txt
   ERROR warp::warp::connectivity_check: DNS check failed error=ResolveError { kind: Timeout }
@@ -49,7 +48,7 @@ Configure the third-party service to exempt the [IP addresses required by WARP](
 
 The most common places we see interference with WARP from VPNs are:
 
-* **Control of traffic routing:** In `daemon.log`, you will see a large number of routing table changes. For example,
+- **Control of traffic routing:** In `daemon.log`, you will see a large number of routing table changes. For example,
 
   ```txt
   DEBUG warp::warp_service: Routes changed:
@@ -64,7 +63,7 @@ The most common places we see interference with WARP from VPNs are:
 
   This indicates that a third-party VPN is fighting WARP for control over the routing table.
 
-* **Control of DNS:** In `daemon.log`, you will see a large number of DNS changes followed by this warning:
+- **Control of DNS:** In `daemon.log`, you will see a large number of DNS changes followed by this warning:
 
   ```txt
   WARN main_loop: warp::warp_service: Reinforcing DNS settings. Is something else fighting us?
@@ -131,9 +130,7 @@ If the root CA is not installed on the device, you will see untrusted certificat
 
 :::note
 
-
 More and more applications (including browsers) are relying on their own certificate stores. In addition to ensuring the root certificate is trusted at the device level, you may also need to [add the certificate to individual applications](/cloudflare-one/connections/connect-devices/warp/user-side-certificates/install-cloudflare-cert/#add-the-certificate-to-applications). For example, to use Firefox on Linux, you must install the certificate on both the system and on Firefox.
-
 
 :::
 

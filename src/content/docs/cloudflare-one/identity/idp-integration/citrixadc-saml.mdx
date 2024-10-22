@@ -1,9 +1,6 @@
 ---
 pcx_content_type: how-to
 title: Citrix ADC (SAML)
-sidebar:
-  order: 9
-
 ---
 
 Cloudflare Zero Trust can integrate with Citrix ADC (formerly Citrix NetScaler ADC) as a SAML IdP. Documentation from Citrix shows you [how to configure Citrix ADC as a SAML IdP](https://docs.citrix.com/en-us/citrix-adc/12-1/aaa-tm/saml-authentication/citrix-adc-saml-idp.html). These steps are specific to Cloudflare Zero Trust.
@@ -14,8 +11,8 @@ To set up Citrix ADC (SAML) as your identity provider:
 
 1. First, you'll need to configure 2 SAML certificates:
 
-   * A certificate to **terminate TLS at the vServer**. Ensure that the certificate is issued by a publicly trusted CA.
-   * A certificate for **signing SAML assertions**.
+   - A certificate to **terminate TLS at the vServer**. Ensure that the certificate is issued by a publicly trusted CA.
+   - A certificate for **signing SAML assertions**.
 
    If you do not already have a certificate for signing SAML assertions, you can use a self-signed certificate generated on Citrix ADC by following these steps:
 
@@ -46,7 +43,7 @@ To set up Citrix ADC (SAML) as your identity provider:
    | **Name ID Format**                 | EmailAddress                                                                           |
    | **Attribute 1**                    | `email = AAA.USER.ATTRIBUTE("email")`                                                  |
 
-   Cloudflare Access currently sends the IdP address in place of the *Service Provider ID* for the AuthN request.
+   Cloudflare Access currently sends the IdP address in place of the _Service Provider ID_ for the AuthN request.
 
 2. Create an Authentication Policy that refers to the Profile just created, and bind it to the authentication vServer mentioned above.
 

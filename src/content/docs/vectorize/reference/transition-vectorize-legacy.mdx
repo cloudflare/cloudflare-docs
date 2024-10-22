@@ -17,6 +17,8 @@ This document provides details around any transition steps that may be needed to
 
 Legacy Vectorize (V1) indexes are on a deprecation path. Support for these indexes would be limited and their usage is not recommended for any production workloads.
 
+Furthermore, you will no longer be able to create legacy Vectorize indexes by December 2024. Other operations will be unaffected and will remain functional.
+
 Additionally, the new Vectorize (V2) indexes can operate at a significantly larger scale (with a capacity for multi-million vectors), and provide faster performance. Please review the [Limits](/vectorize/platform/limits/) page to understand the latest capabilities supported by Vectorize.
 
 ## Notable changes
@@ -41,7 +43,7 @@ Watch this space for the upcoming capability to migrate legacy (V1) indexes to t
 
 :::
 
-1. Wrangler now supports operations on the new version of Vectorize (V2) indexes by default. To use Wangler commands for legacy (V1) indexes, the `--deprecated-v1` flag must be enabled. Please note that this flag is only supported to create, get, list and delete indexes and to insert vectors.
+1. Wrangler now supports operations on the new version of Vectorize (V2) indexes by default. To use Wrangler commands for legacy (V1) indexes, the `--deprecated-v1` flag must be enabled. Please note that this flag is only supported to create, get, list and delete indexes and to insert vectors.
 
 2. Refer to the [REST API](/api/operations/vectorize-create-vectorize-index) page for details on the routes and payload types for the new Vectorize (V2) indexes. For legacy (V1) index operations, refer to [Deprecated REST API](</api/operations/vectorize-(-deprecated)-create-vectorize-index>).
 

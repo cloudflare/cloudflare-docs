@@ -56,7 +56,7 @@ This is especially useful if you already have mTLS implemented and client certif
 
     :::caution
 
-    Submitting an empty array will remove all hostnames associations. 
+    Submitting an empty array will remove all hostnames associations.
     :::
 
 * `mtls_certificate_id` string required
@@ -65,12 +65,18 @@ This is especially useful if you already have mTLS implemented and client certif
 
     :::caution
 
-    If no `mtls_certificate_id` is provided, the action will be performed against a Cloudflare Managed CA. 
+    If no `mtls_certificate_id` is provided, the action will be performed against a Cloudflare Managed CA.
     :::
 
 
 
 4. (Optional) Since this process is API-only, and hostnames that use your uploaded CA certificate **are not** listed on the dashboard, you can make a [GET request](/api/operations/client-certificate-for-a-zone-list-hostname-associations) with the `mtls_certificate_id` as a query parameter to confirm the hostname association.
+
+```bash
+curl "https://api.cloudflare.com/client/v4/zones/zone_id/certificate_authorities/hostname_associations?mtls_certificate_id={id_from_step_2}"  \
+--header "X-Auth-Email: <EMAIL>" \
+--header "X-Auth-Key: <API_KEY>"
+```
 
 5. Create a custom rule to enforce client certificate validation.
    You can do this [via the dashboard](/api-shield/security/mtls/configure/) or [via API](/waf/custom-rules/create-api/).

@@ -68,6 +68,11 @@ curl https://api.cloudflare.com/client/v4/zones/{zone_id}/managed_headers \
 				"enabled": false,
 				"has_conflict": false,
 				"conflicts_with": ["add_true_client_ip_headers"]
+			},
+			{
+				"id": "add_waf_credential_check_status_header",
+				"enabled": false,
+				"has_conflict": false
 			}
 		],
 		"managed_response_headers": [

@@ -1,16 +1,19 @@
 ---
-inputParameters: productName;;anycastURL;;trafficSteering;;magicWANecmp
-
+params:
+  - productName
+  - anycastURL
+  - trafficSteering
+  - magicWANecmp
 ---
 
-import { GlossaryTooltip, Markdown } from "~/components"
+import { GlossaryTooltip, Markdown } from "~/components";
 
-{props.one} uses a static configuration to route your traffic through <GlossaryTooltip term="anycast" link={props.two}>anycast tunnels</GlossaryTooltip> from Cloudflare’s global network to your locations.
+{props.productName} uses a static configuration to route your traffic through <GlossaryTooltip term="anycast" link={props.anycastURL}>anycast tunnels</GlossaryTooltip> from Cloudflare’s global network to your locations.
 
 You must assign a route priority to each tunnel–subnet pair in your configuration, as follows:
 
 - Lower values have greater priority.
-- When the priority values for prefix entries match, Cloudflare uses equal-cost multi-path (ECMP) packet forwarding to route traffic. {props.four} For more on how Cloudflare uses ECMP packet forwarding, refer to <GlossaryTooltip term="traffic steering" link={props.three}>Traffic steering</GlossaryTooltip>.
+- When the priority values for prefix entries match, Cloudflare uses equal-cost multi-path (ECMP) packet forwarding to route traffic. {props.magicWANecmp} For more on how Cloudflare uses ECMP packet forwarding, refer to <GlossaryTooltip term="traffic steering" link={props.trafficSteering}>Traffic steering</GlossaryTooltip>.
 
 You can also create and edit static routes using the [Magic Static Routes API](/api/operations/magic-static-routes-list-routes).
 

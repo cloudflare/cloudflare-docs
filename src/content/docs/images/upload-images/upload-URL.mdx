@@ -12,6 +12,10 @@ You can use the Images API to use a URL of an image instead of uploading the dat
 
 Make a `POST` request using the example below as reference. Keep in mind that the `--form 'file=<FILE>'` and `--form 'url=<URL>'` fields are mutually exclusive.
 
+:::note
+The `metadata` included in the request is never shared with end users.
+:::
+
 ```bash
 curl --request POST \
 https://api.cloudflare.com/client/v4/accounts/{account_id}/images/v1 \

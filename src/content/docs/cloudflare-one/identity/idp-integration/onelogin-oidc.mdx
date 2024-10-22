@@ -1,9 +1,6 @@
 ---
 pcx_content_type: how-to
 title: OneLogin
-sidebar:
-  order: 19
-
 ---
 
 OneLogin provides SSO identity management. Cloudflare Access supports OneLogin as an OIDC identity provider.
@@ -41,10 +38,11 @@ OneLogin provides SSO identity management. Cloudflare Access supports OneLogin a
 12. Select **OneLogin**.
 
 13. Fill in the following information:
-    * **Name**: Name your identity provider.
-    * **App ID**: Enter your OneLogin client ID.
-    * **Client secret**: Enter your OneLogin client secret.
-    * **OneLogin account URL**: Enter your OneLogin domain, for example `https://<your-domain>.onelogin.com`.
+
+    - **Name**: Name your identity provider.
+    - **App ID**: Enter your OneLogin client ID.
+    - **Client secret**: Enter your OneLogin client secret.
+    - **OneLogin account URL**: Enter your OneLogin domain, for example `https://<your-domain>.onelogin.com`.
 
 14. (Optional) Under **Optional configurations**, enter [custom OIDC claims](/cloudflare-one/identity/idp-integration/generic-oidc/#oidc-claims) that you wish to add to your Access [application token](/cloudflare-one/identity/authorization-cookie/application-token/).
 
@@ -56,12 +54,12 @@ To test that your connection is working, go to **Authentication** > **Login meth
 
 ```json
 {
-  "config": {
-    "client_id": "<your client id>",
-    "client_secret": "<your client secret>",
-    "onelogin_account": "https://mycompany.onelogin.com"
-  },
-  "type": "onelogin",
-  "name": "my example idp"
+	"config": {
+		"client_id": "<your client id>",
+		"client_secret": "<your client secret>",
+		"onelogin_account": "https://mycompany.onelogin.com"
+	},
+	"type": "onelogin",
+	"name": "my example idp"
 }
 ```

@@ -1,5 +1,6 @@
 ---
-inputParameters: mwanAccount
+params:
+  - mwanAccount
 ---
 
 import { Markdown } from "~/components";
@@ -10,7 +11,7 @@ Magic Cloud Networking (beta) allows you to create on-ramps from your cloud netw
 
 Before creating on-ramps from your cloud networks to Magic WAN, make sure you:
 
-- {props.one}
+- {props.mwanAccount}
 - Went through process of [setting up your cloud provider](/magic-cloud-networking/get-started/).
 - Have the correct cloud resources. Refer to [Reference](/magic-cloud-networking/reference/) to check resource by cloud provider.
 

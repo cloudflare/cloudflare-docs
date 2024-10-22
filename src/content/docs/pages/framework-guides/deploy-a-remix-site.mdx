@@ -44,7 +44,7 @@ npm run dev
 
 ## Deploy with Cloudflare Pages
 
-<Render file="deploy-via-c3" params={{ one: "Remix" }} />
+<Render file="deploy-via-c3" params={{ name: "Remix" }} />
 
 ### Deploy via the Cloudflare dashboard
 
@@ -94,7 +94,7 @@ export const loader = ({ context }: LoaderFunctionArgs) => {
 };
 ```
 
-:::undefined[Correcting the env type]
+:::note[Correcting the env type]
 
 You may have noticed that `context.cloudflare.env` is not typed correctly when you add additional bindings in `wrangler.toml`.
 

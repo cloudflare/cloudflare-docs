@@ -5,11 +5,17 @@ productLink: "/workers/"
 productArea: Developer platform
 productAreaLink: /workers/platform/changelog/platform/
 entries:
+  - publish_date: "2024-09-26"
+    description: |-
+      -  You can now connect your GitHub or GitLab repository to an existing Worker to automatically build and deploy your changes when you make a git push with [Workers Builds](/workers/ci-cd/builds/).
   - publish_date: "2024-09-20"
       - Workers now support the [`handle_cross_request_promise_resolution`] compatibility flag which addresses certain edge cases around awaiting and resolving promises across multiple requests.
   - publish_date: "2024-09-19"
     description: |-
       -  Revamped Workers and Pages UI settings to simplify the creation and management of project configurations. For bugs and general feedback, please submit this [form](https://forms.gle/XXqhRGbZmuzninuN9).
+  - publish_date: '2024-09-16'
+    description: |-
+      - Updated v8 to version 12.9.
   - publish_date: "2024-08-19"
     description: |-
       -  Workers now support the [`allow_custom_ports` compatibility flag](/workers/configuration/compatibility-dates/#allow-specifying-a-custom-port-when-making-a-subrequest-with-the-fetch-api) which enables using the `fetch()` calls to custom ports.
@@ -26,7 +32,7 @@ entries:
       - Workers with the [mTLS](/workers/runtime-apis/bindings/mtls/) binding now support [Gradual Deployments](/workers/configuration/versions-and-deployments/gradual-deployments/).
   - publish_date: "2024-07-18"
     description: |-
-      - Added a new `truncated` flag to [Tail Worker](/workers/observability/logging/tail-workers/) events to indicate when the event buffer is full and events are being dropped.
+      - Added a new `truncated` flag to [Tail Worker](/workers/observability/logs/tail-workers/) events to indicate when the event buffer is full and events are being dropped.
   - publish_date: "2024-07-17"
     description: |-
       - Updated v8 to version 12.7.
@@ -104,7 +110,7 @@ entries:
       - The new [`unwrap_custom_thenables` compatibility flag](/workers/configuration/compatibility-dates/#handling-custom-thenables) enables workers to accept custom thenables in internal APIs that expect a promise (for instance, the `ctx.waitUntil(...)` method).
       - TransformStreams created with the TransformStream constructor now have a cancel algorithm that is called when the stream is canceled or aborted. This change is part of the implementation of the WHATWG Streams standard.
       - The [`nodejs_compat` compatibility flag](/workers/runtime-apis/nodejs/) now includes an implementation of the [`MockTracker` API from `node:test`](https://nodejs.org/api/test.html#class-mocktracker). This is not an implementation of the full `node:test` module, and mock timers are currently not included.
-      - Exceptions reported to [Tail Workers](/workers/observability/logging/tail-workers/) now include a "stack" property containing the exception's stack trace, if available.
+      - Exceptions reported to [Tail Workers](/workers/observability/logs/tail-workers/) now include a "stack" property containing the exception's stack trace, if available.
   - publish_date: "2024-03-11"
     description: |-
       - Built-in APIs that return Promises will now produce stack traces when the Promise rejects. Previously, the rejection error lacked a stack trace.
@@ -202,7 +208,7 @@ entries:
   - publish_date: "2023-05-05"
     description: |-
       - The new `nodeJsCompatModule` type can be used with a Worker bundle to emulate a Node.js environment. Common Node.js globals such as `process` and `Buffer` will be present, and `require('...')` can be used to load Node.js built-ins without the `node:` specifier prefix.
-      - Fixed an issue where websocket connections would be disconnected when updating workers. Now, only websockets connected to Durable Object instances are disconnected by updates to that Durable Object’s code.
+      - Fixed an issue where websocket connections would be disconnected when updating workers. Now, only WebSockets connected to Durable Objects are disconnected by updates to that Durable Object’s code.
   - publish_date: "2023-04-28"
     description: |-
       - The Web Crypto API now supports curves Ed25519 and X25519 defined in the Secure Curves specification.
@@ -224,7 +230,7 @@ entries:
       - No externally-visible changes.
   - publish_date: "2023-03-06"
     description: |-
-      - [Workers Logpush](/workers/observability/logging/logpush/#limits) now supports
+      - [Workers Logpush](/workers/observability/logs/logpush/#limits) now supports
       300 characters per log line. This is an increase from the previous limit of 150
       characters per line.
   - publish_date: "2023-02-06"

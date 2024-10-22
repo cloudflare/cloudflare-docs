@@ -8,15 +8,18 @@ head:
     content: Configure exposed credentials checks via API
 ---
 
+import { Render } from "~/components";
+
 Configure exposed credentials checks using the [Rulesets API](/ruleset-engine/rulesets-api/). You can do the following:
 
 - [Deploy the Cloudflare Exposed Credentials Check Managed Ruleset](/waf/managed-rules/reference/exposed-credentials-check/#configure-via-api).
 - Create custom rules that check for exposed credentials.
 
+<Render file="leaked-credentials-recommend-detection" />
+
 ## Create a custom rule checking for exposed credentials
 
 :::note
-
 This feature requires account-level WAF, which is available to Enterprise customers with a paid add-on.
 :::
 

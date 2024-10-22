@@ -26,6 +26,7 @@ export { default as LinkTitleCard } from "./LinkTitleCard.astro";
 export { default as ListExamples } from "./ListExamples.astro";
 export { default as ListTutorials } from "./ListTutorials.astro";
 export { default as Markdown } from "./Markdown.astro";
+export { default as MetaInfo } from "./MetaInfo.astro";
 export { default as NetworkMap } from "./NetworkMap.astro";
 export { default as PagesBuildEnvironment } from "./PagesBuildEnvironment.astro";
 export { default as PagesBuildEnvironmentLanguages } from "./PagesBuildEnvironmentLanguages.astro";
@@ -48,7 +49,8 @@ export { default as Stream } from "./Stream.astro";
 export { default as ThreeCardGrid } from "./ThreeCardGrid.astro";
 export { default as TroubleshootingList } from "./TroubleshootingList.astro";
 export { default as TunnelCalculator } from "./TunnelCalculator.astro";
-export { default as WorkersAIModels } from "./WorkersAIModels.astro";
+export { default as Type } from "./Type.astro";
+export { default as TypeScriptExample } from "./TypeScriptExample.astro"
 export { default as WorkersArchitectureDiagram } from "./WorkersArchitectureDiagram.astro";
 export { default as WorkersIsolateDiagram } from "./WorkersIsolateDiagram.astro";
 export { default as WorkerStarter } from "./WorkerStarter.astro";

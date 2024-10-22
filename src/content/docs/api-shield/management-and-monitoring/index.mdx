@@ -3,12 +3,14 @@ pcx_content_type: concept
 type: overview
 title: Management and Monitoring
 sidebar:
-  order: 5
+  order: 6
   label: Endpoint Management
 
 ---
 
-import { GlossaryTooltip } from "~/components"
+import { GlossaryTooltip, Plan } from "~/components"
+
+<Plan type="all" />
 
 Monitor the health of your <GlossaryTooltip term="API endpoint">API endpoints</GlossaryTooltip> by saving, updating, and monitoring performance metrics using API Shield’s Endpoint Management.
 
@@ -75,13 +77,11 @@ Cloudflare supports hostname variables in the following formats:
 
 ```txt
 
-Unknown macro: {hostVar1}.example.com
-
-.foo.example.com
+{hostVar1}.example.com
 
 foo.{hostVar1}.example.com
 
-Unknown macro: {hostVar2}.{hostVar1}.example.com
+{hostVar2}.{hostVar1}.example.com
 ```
 
 Hostname variables must comprise the entire domain field and must not be used with other text in the field. 
@@ -89,7 +89,8 @@ Hostname variables must comprise the entire domain field and must not be used wi
 The following format is not supported: 
 
 ```txt
-foo-{hostVar1}.example.com.
+
+foo-{hostVar1}.example.com
 ```
 
 For more information on how Cloudflare uses variables in API Shield, refer to the examples from [API Discovery](/api-shield/security/api-discovery/).

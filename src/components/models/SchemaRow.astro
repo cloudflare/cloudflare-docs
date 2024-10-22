@@ -1,0 +1,56 @@
+---
+import { Type, MetaInfo } from "~/components";
+import { type SchemaNode } from "@stoplight/json-schema-tree";
+
+const { node, root } = Astro.props;
+---
+
+<li
+	class={`py-2 !my-0 !list-none ${root ? "" : "border-l border-l-gray-200 dark:border-l-gray-500 pl-4"}`}
+>
+	{
+		node.title ? (
+			<span class="mr-2 font-bold">{node.title}</span>
+		) : (
+			<code class="mr-2 !pr-0 font-mono rounded-md bg-gray-100">
+				{node.subpath[node.subpath.length - 1]}
+			</code>
+		)
+	}
+
+	{node.primaryType && <Type text={node.primaryType} />}
+	{node.combiners && node.combiners.includes("oneOf") && <Type text="one of" />}
+
+	{
+		node.annotations.default && (
+			<MetaInfo text={`default ${node.annotations.default}`} />
+		)
+	}
+	{
+		(node.validations.minLength !== undefined ||
+			node.validations.minimum !== undefined) && (
+			<MetaInfo
+				text={`min ${node.validations.minLength || node.validations.minimum}`}
+			/>
+		)
+	}
+	{
+		(node.validations.maxLength !== undefined ||
+			node.validations.maximum !== undefined) && (
+			<MetaInfo
+				text={`max ${node.validations.maxLength || node.validations.maximum}`}
+			/>
+		)
+	}
+	<p class="!mb-0">{node.annotations.description}</p>
+
+	{
+		node.children && (
+			<ul class="!list-none m-0 p-0 ml-4">
+				{node.children.map((node: SchemaNode) => (
+					<Astro.self node={node} />
+				))}
+			</ul>
+		)
+	}
+</li>

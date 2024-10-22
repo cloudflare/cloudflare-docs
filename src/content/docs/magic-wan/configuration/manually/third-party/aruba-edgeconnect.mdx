@@ -151,7 +151,7 @@ For additional information on creating IPsec tunnels, refer to [API documentatio
 
 1. Test new IPsec tunnel creation
 
-```bash title="Request"
+```bash
 curl "https://api.cloudflare.com/client/v4/accounts/{account_id}/magic/ipsec_tunnels?validate_only=true" \
 --header "X-Auth-Email: <EMAIL>" \
 --header "X-Auth-Key: <API_KEY>" \
@@ -171,7 +171,7 @@ curl "https://api.cloudflare.com/client/v4/accounts/{account_id}/magic/ipsec_tun
 
 2. Create a new IPsec tunnel
 
-```bash title="Request"
+```bash
 curl https://api.cloudflare.com/client/v4/accounts/{account_id}/magic/ipsec_tunnels \
 --header "X-Auth-Email: <EMAIL>" \
 --header "X-Auth-Key: <API_KEY>" \
@@ -189,7 +189,7 @@ curl https://api.cloudflare.com/client/v4/accounts/{account_id}/magic/ipsec_tunn
 }'
 ```
 
-```json title="Response"
+```json output
 {
   "result": {
     "ipsec_tunnels": [
@@ -220,14 +220,14 @@ curl https://api.cloudflare.com/client/v4/accounts/{account_id}/magic/ipsec_tunn
 
 Use the tunnel ID from the response in Step 2. Save the pre-shared key generated in this step as you will need it to set up tunnels on the Orchestrator.
 
-```bash title="Request"
+```bash
 curl --request POST \
 "https://api.cloudflare.com/client/v4/accounts/{account_id}/magic/ipsec_tunnels/{tunnel_id}/psk_generate?validate_only=true" \
 --header "X-Auth-Email: <EMAIL>" \
 --header "X-Auth-Key: <API_KEY>"
 ```
 
-```json title="Response"
+```json output
 {
   "result": {
   "ipsec_id": "<ipsec_id>",

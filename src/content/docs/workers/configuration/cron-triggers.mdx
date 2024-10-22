@@ -125,7 +125,15 @@ curl "http://localhost:8787/__scheduled?cron=*+*+*+*+*"
 
 ## View past events
 
-Users can review the execution history of their Cron Triggers in **Past Cron Events** under [**Logs**](https://dash.cloudflare.com/?to=/:account/workers) or through Cloudflare's [GraphQL Analytics API](/analytics/graphql-api).
+To view the execution history of Cron Triggers, view **Cron Events**:
+
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) and select your account.
+2. In Account Home, go to **Workers & Pages**.
+3. In **Overview**, select your **Worker**.
+4. Select **Settings**.
+5. Under **Trigger Events**, select **View events**.
+
+Cron Events stores the 100 most recent invocations of the Cron scheduled event. [Workers Logs](/workers/observability/logs/workers-logs) also records invocation logs for the Cron Trigger with a longer retention period and a filter & query interface. If you are interested in an API to access Cron Events, use Cloudflare's [GraphQL Analytics API](/analytics/graphql-api).
 
 :::note
 

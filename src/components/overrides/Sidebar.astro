@@ -86,6 +86,7 @@ async function handleGroup(group: Group): Promise<SidebarEntry> {
 
 	group.label = frontmatter.sidebar.group?.label ?? frontmatter.title;
 	group.order = frontmatter.sidebar.order ?? Number.MAX_VALUE;
+	group.badge = frontmatter.sidebar.group?.badge;
 
 	if (frontmatter.hideChildren) {
 		return {
@@ -109,7 +110,9 @@ async function handleGroup(group: Group): Promise<SidebarEntry> {
 	group.entries = group.entries.sort(sortGroup);
 
 	const indexIdx = group.entries.findIndex(
-		(x) => x.type === "link" && x.href === indexLink.href,
+		(x) =>
+			x.type === "link" &&
+			[indexLink.href, frontmatter.external_link].includes(x.href),
 	) as number;
 
 	if (indexPage.data.sidebar.group?.hideIndex) {
@@ -205,20 +208,46 @@ const lookupProductTitle = async (slug: string) => {
 
 <style is:global>
 	:root {
-		a[aria-current="page"] {
-			background-color: var(--sidebar-blue-accent-600) !important;
-			border: 1px solid !important;
-			border-color: var(--blue-accent-900) !important;
-			color: var(--sidebar-blue-text) !important;
+		.sidebar-content {
+			--sl-color-hairline-light: #cacaca !important;
+
+			& > * {
+				a {
+					padding: 0.2375em var(--sl-sidebar-item-padding-inline) !important;
+
+					&[aria-current="page"] {
+						background-color: unset !important;
+						border: unset !important;
+						border-color: unset !important;
+						color: var(--sl-color-accent) !important;
+						font-weight: 600 !important;
+					}
+				}
+
+				summary {
+					padding: 0.1375em var(--sl-sidebar-item-padding-inline) !important;
+				}
+
+				.large {
+					color: var(--sl-color-gray-2) !important;
+					font-weight: unset !important;
+					font-size: unset !important;
+
+					@media (min-width: 50rem) {
+						font-size: var(--sl-text-sm) !important;
+					}
+				}
+
+				.caret {
+					font-size: 1rem !important;
+				}
+			}
 		}
 	}
 
 	:root[data-theme="dark"] {
-		a[aria-current="page"] {
-			background-color: var(--sidebar-orange-accent-600) !important;
-			border: 1px solid !important;
-			border-color: var(--orange-accent-200) !important;
-			color: var(--sl-color-white) !important;
+		.sidebar-content {
+			--sl-color-hairline-light: #444444 !important;
 		}
 	}
 </style>

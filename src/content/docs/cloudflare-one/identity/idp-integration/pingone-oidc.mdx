@@ -1,12 +1,9 @@
 ---
 pcx_content_type: how-to
-title: PingOne®
-sidebar:
-  order: 22
-
+title: PingOne
 ---
 
-The PingOne® cloud platform from PingIdentity provides SSO identity management. Cloudflare Access supports PingOne as an OIDC identity provider.
+The PingOne cloud platform from PingIdentity provides SSO identity management. Cloudflare Access supports PingOne as an OIDC identity provider.
 
 ## Set up PingOne as an OIDC provider
 
@@ -25,6 +22,7 @@ The PingOne® cloud platform from PingIdentity provides SSO identity management.
    ```
 
    You can find your team name in Zero Trust under **Settings** > **Custom Pages**.
+
 10. Select **Save**.
 11. In [Zero Trust](https://one.dash.cloudflare.com/), go to **Settings** > **Authentication**.
 12. Under **Login methods**, select **Add new**.
@@ -40,12 +38,12 @@ You can now [test your connection](/cloudflare-one/identity/idp-integration/#tes
 
 ```json
 {
-  "config": {
-    "client_id": "<your client id>",
-    "client_secret": "<your client secret>",
-    "ping_env_id": "<your ping environment id>"
-  },
-  "type": "ping",
-  "name": "my example idp"
+	"config": {
+		"client_id": "<your client id>",
+		"client_secret": "<your client secret>",
+		"ping_env_id": "<your ping environment id>"
+	},
+	"type": "ping",
+	"name": "my example idp"
 }
 ```

@@ -1,28 +1,46 @@
 ---
 pcx_content_type: concept
 title: workers.dev
-
 ---
 
-Cloudflare Workers accounts come with a `workers.dev` subdomain that is configurable in the Cloudflare dashboard. Your `workers.dev` subdomain allows you to deploy Workers without attaching your domain as a Cloudflare zone.
+Cloudflare Workers accounts come with a `workers.dev` subdomain that is configurable in the Cloudflare dashboard. Your `workers.dev` subdomain allows you getting started quickly by deploying Workers without first onboarding your custom domain to Cloudflare.
 
-The first time you visit the **Workers & Pages** in the Cloudflare dashboard, a `workers.dev` subdomain is automatically assigned to your account.
+It's recommended to run production Workers on a [Workers route or custom domain](/workers/configuration/routing/), rather than on your `workers.dev` subdomain. Your `workers.dev` subdomain is treated as a [Free website](https://www.cloudflare.com/plans/) and is intended for personal or hobby projects that aren't business-critical.
 
 ## Configure `workers.dev`
 
-To change the name of your `workers.dev` account subdomain, such as `<YOUR_ACCOUNT_SUBDOMAIN>.workers.dev`:
+`workers.dev` subdomains take the format: `<YOUR_ACCOUNT_SUBDOMAIN>.workers.dev`. To change your `workers.dev` subdomain:
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) and select your account.
 2. Select **Workers & Pages**.
 3. Select **Change** next to **Your subdomain**.
 
-All Workers are assigned a `workers.dev` route when they are created or renamed following the syntax `<YOUR_WORKER_NAME>.<YOUR_SUBDOMAIN>.workers.dev.`. The [`name`](/workers/wrangler/configuration/#inheritable-keys) field in your Worker configuration is used as the subdomain for the deployed Worker, (for example, `<YOUR_WORKER_NAME>.<YOUR_SUBDOMAIN>.workers.dev.`).
+All Workers are assigned a `workers.dev` route when they are created or renamed following the syntax `<YOUR_WORKER_NAME>.<YOUR_SUBDOMAIN>.workers.dev`. The [`name`](/workers/wrangler/configuration/#inheritable-keys) field in your Worker configuration is used as the subdomain for the deployed Worker.
 
-## Routes with `workers.dev`
+## Disabling `workers.dev`
 
-Refer to [Routes with `workers.dev`](/workers/configuration/routing/routes/#routes-with-workersdev) to learn more.
+Review your `workers.dev` route in your Worker > **Settings** > **Domains & Routes**.
+
+To disable the `workers.dev` route for a Worker, include the following in your Worker's `wrangler.toml` file:
+
+```toml
+workers_dev = false
+```
+
+When you redeploy your Worker with this change, the `workers.dev` route will be disabled. Disabling your `workers.dev` subdomain will also make [preview URLs](/workers/configuration/previews) inaccessible.
+
+If you do not specify `workers_dev = false` but add a [`routes` component](/workers/wrangler/configuration/#routes) to your `wrangler.toml`, the value of `workers_dev` will be inferred as `false` on the next deploy.
+
+:::caution
+
+If you disable your `workers.dev` route in the Cloudflare dashboard but do not update your Worker's `wrangler.toml` file with `workers_dev = false`, the `workers.dev` route will re-enable the next time you publish your Worker.
+:::
+
+## Limitations
+
+- You cannot currently secure `workers.dev` URLs behind [Cloudflare Access](/cloudflare-one/policies/access/). This is a temporary limitation, we are working to remove it.
 
 ## Related resources
 
-* [Announcing `workers.dev`](https://blog.cloudflare.com/announcing-workers-dev)
-* [`wrangler.toml` routes configuration](/workers/wrangler/configuration/#types-of-routes)
+- [Announcing `workers.dev`](https://blog.cloudflare.com/announcing-workers-dev)
+- [`wrangler.toml` routes configuration](/workers/wrangler/configuration/#types-of-routes)

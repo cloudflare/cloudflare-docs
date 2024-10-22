@@ -262,7 +262,7 @@ let range = (n: number) => [...Array(n).keys()];
 		right: 0;
 		bottom: 0;
 		left: 0;
-		background: rgba(var(--sl-color-text-accent), 0.25);
+		background: color-mix(in srgb, var(--sl-color-accent-high) 25%, transparent);
 	}
 
 	.ArchitectureDiagram--user-code {
@@ -270,12 +270,12 @@ let range = (n: number) => [...Array(n).keys()];
 		z-index: 1;
 		width: var(--user-code-size);
 		height: var(--user-code-size);
-		background: rgba(var(--accent-color-rgb), 0.9);
+		background: color-mix(in srgb, var(--sl-color-accent-high) 90%, transparent);
 	}
 
 	.ArchitectureDiagram--process-overhead-background,
 	.ArchitectureDiagram--user-code {
-		--box-shadow: inset 0 0 0 1px rgb(var(--background-color-rgb));
+		--box-shadow: inset 0 0 0 1px var(--sl-color-bg);
 		box-shadow: var(--box-shadow);
 	}
 
@@ -288,7 +288,7 @@ let range = (n: number) => [...Array(n).keys()];
 		height: 100%;
 		width: 100%;
 		text-align: center;
-		color: rgba(var(--background-color-rgb), 0.7);
+		color: color-mix(in srgb, var(--sl-color-bg) 70%, transparent);
 	}
 
 	.ArchitectureDiagram--key-user-code {
