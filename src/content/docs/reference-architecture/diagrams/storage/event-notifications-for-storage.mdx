@@ -40,23 +40,23 @@ Consider the scenario below: A user initiates a delete from R2. An external serv
 
 ![Figure 2: Pull-Based R2 Event Notifications](~/assets/images/reference-architecture/event-notifications-for-storage/pull-based-event-notification.svg "Figure 2: Pull-Based R2 Event Notifications")
 
-1. A user initiates a delete from R2
+1. A user initiates a delete from R2.
 2. An event notification is sent to the queue.
-3. The external service, when ready to process the request, makes an HTTP POST request to the queue to pull the message
+3. The external service, when ready to process the request, makes an HTTP POST request to the queue to pull the message.
 4. The queue sends the message in response to the POST request from step 3.
-5. The external service must acknowledge that the message has been received
+5. The external service must acknowledge that the message has been received.
 
 You can follow the steps here to [configure a pull-based consumer](/queues/configuration/pull-consumers/#1-enable-http-pull).
 
-## Additional Example Use Cases
+## Additional example use cases
 
-- Send an email to an administrator anytime objects are deleted from R2.
+- Send an email to an administrator any time objects are deleted from R2.
 - When a video or podcast is uploaded to R2, it automatically processes the content using one of Cloudflare's Automatic Speech Recognition (ASR) AI models to generate subtitles or even translate the content.
 - Remove related database entries if an object in R2 is deleted.
 
-## Related Resources
+## Related resources
 - [Tutorial: Log and store upload events in R2 with event notifications](/r2/tutorials/upload-logs-event-notifications/)
-- [Event Notifications Documentation](/r2/buckets/event-notifications/)
-- [Cloudflare R2 Overview](/r2/)
-- [Cloudflare Queues Overview](/queues/)
+- [Event Notifications documentation](/r2/buckets/event-notifications/)
+- [Cloudflare R2 overview](/r2/)
+- [Cloudflare Queues overview](/queues/)
 - [Cloudflare Queues Pull Consumers](/queues/configuration/pull-consumers/)
