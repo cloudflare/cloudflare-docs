@@ -139,6 +139,8 @@ SCIM requires a separate enterprise application from the one created during [ini
 
 5. Once the SCIM application is created, [assign users and groups to the application](https://learn.microsoft.com/entra/identity/enterprise-apps/assign-user-or-group-access-portal).
 
+**Note:** Ensure that all groups used in policy evaluation and device profiles are included in the SCIM assignment. SCIM group membership updates will overwrite any groups on a user for policy evaluation.
+
 6. Go to **Provisioning** and select **Get started**.
 
 7. For **Provisioning Mode**, choose _Automatic_.
