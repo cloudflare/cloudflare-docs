@@ -120,7 +120,7 @@ npx wrangler secret put BQ_PRIVATE_KEY_ID
 npx wrangler secret put BQ_PROJECT_ID
 ```
 
-At this point, you have successfully imported three fields from the JSON key file downloaded from Google Cloud Platform into Cloudflare Secrets to be used in a Worker.
+At this point, you have successfully imported three fields from the JSON key file downloaded from Google Cloud Platform into Cloudflare secrets to be used in a Worker.
 
 [Secrets](/workers/configuration/secrets/) are only made available to Workers once they are deployed. To make them available during development, [create a `.dev.vars`](/workers/configuration/secrets/#local-development-with-secrets) file to locally store these credentials and reference them as environment variables.
 
