@@ -20,8 +20,7 @@ entries:
   - publish_date: "2024-10-23"
     title: WARP client for Windows (version 2024.10.279.1)
     description: |-
-      A new beta release for the Windows WARP client is now available in the [App Center](https://install.appcenter.ms/
-      orgs/cloudflare/apps/1.1.1.1-windows/distribution_groups/beta). This release contains minor fixes and improvements.
+      A new beta release for the Windows WARP client is now available in the [App Center](https://install.appcenter.ms/orgs/cloudflare/apps/1.1.1.1-windows/distribution_groups/beta). This release contains minor fixes and improvements.
 
       Changes and improvements:
         - Fixed an issue where SSH sessions and other application connections over TCP or UDP could drop when a device that is using MASQUE changes its primary network interface.
