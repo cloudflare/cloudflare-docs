@@ -376,9 +376,9 @@ npx wrangler workflows trigger workflows-starter '{"hello":"world"}'
 To inspect the current status of the Workflow instance we just triggered, we can either reference it by ID or by using the keyword `latest`:
 
 ```sh
-npx wrangler@workflows workflows instances describe workflows-starter latest
+npx wrangler@latest workflows instances describe workflows-starter latest
 # Or by ID:
-# npx wrangler@workflows workflows instances describe workflows-starter 12dc179f-9f77-4a37-b973-709dca4189ba
+# npx wrangler@latest workflows instances describe workflows-starter 12dc179f-9f77-4a37-b973-709dca4189ba
 ```
 ```sh output
 Workflow Name:         workflows-starter
