@@ -5,16 +5,16 @@ sidebar:
   order: 10
 ---
 
-A Workflow contains one or more steps. Each step is a self-contained, individually retriable component of a Workflow. Steps may emit (optional) state that allows a Workflow to persist and continue from that step, even if a Workflow fails due to a network or infrastructure issue. A Workflow is comprised of one or more steps.
+A Workflow contains one or more steps. Each step is a self-contained, individually retriable component of a Workflow. Steps may emit (optional) state that allows a Workflow to persist and continue from that step, even if a Workflow fails due to a network or infrastructure issue.
 
 This is a small guidebook on how to build more resilient and correct Workflows.
 
 ### Ensure API/Binding calls are idempotent
 
 Because a step might be retried multiple times, your steps should (ideally) be idempotent. For context, idempotency is a logical property where the operation (in this case a step),
-can be applied multiple times without changing the result beyond the intial application.
+can be applied multiple times without changing the result beyond the initial application.
 
-As an example, let's assume you have a Workflow that charges your customers and you really don't want to charge them twice by accident, before charging them, you should
+As an example, let us assume you have a Workflow that charges your customers, and you really do not want to charge them twice by accident. Before charging them, you should
 check if they were already charged:
 
 ```ts
@@ -55,13 +55,13 @@ export class MyWorkflow extends WorkflowEntrypoint {
 
 :::note
 
-Guaranteeing idempotency might be optional in your specific use-case and implementation, although we recommend it to always try to guarantee it.
+Guaranteeing idempotency might be optional in your specific use-case and implementation, but we recommend that you always try to guarantee it.
 
 :::
 
 ### Make your steps granular
 
-Steps should be as self-contained as possible, this allows your own logic to be more durable in case of failures in third-party APIs, network errors, and so on.
+Steps should be as self-contained as possible. This allows your own logic to be more durable in case of failures in third-party APIs, network errors, and so on.
 
 You can also think of it as a transaction, or a unit of work.
 
@@ -85,12 +85,12 @@ export class MyWorkflow extends WorkflowEntrypoint {
 }
 ```
 
-Otherwise your entire workflow might not be as durable as you might think, and encounter into some undefined behaviour and you can avoid them by:
+Otherwise, your entire Workflow might not be as durable as you might think, and you may encounter some undefined behaviour. You can avoid them by following the rules below:
 
 - 🔴 Do not encapsulate your entire logic in one single step.
-- 🔴 Do not call seperate services in the same step (unless you need it to prove idempotency)
-- 🔴 Do not make too many service calls in the same step (unless you need it to prove idempotency)
-- 🔴 Do not do too much CPU-intensive work inside of a single step - sometimes engine might have to restart and it will start over from that step.
+- 🔴 Do not call separate services in the same step (unless you need it to prove idempotency).
+- 🔴 Do not make too many service calls in the same step (unless you need it to prove idempotency).
+- 🔴 Do not do too much CPU-intensive work inside a single step - sometimes the engine may have to restart, and it will start over from the beginning of that step.
 
 ```ts
 export class MyWorkflow extends WorkflowEntrypoint {
@@ -106,9 +106,9 @@ export class MyWorkflow extends WorkflowEntrypoint {
 }
 ```
 
-### Don't rely on state outside of a step
+### Do not rely on state outside of a step
 
-Workflows may hibernate and lose all in-memory state. This will happen when engine detects that there's no pending work and can hibernate until it needs to wake-up (because of a sleep, retry or event).
+Workflows may hibernate and lose all in-memory state. This will happen when engine detects that there is no pending work and can hibernate until it needs to wake-up (because of a sleep, retry, or event).
 
 This means that you should not store state outside of a step:
 
@@ -193,14 +193,34 @@ export class MyWorkflow extends WorkflowEntrypoint {
 }
 ```
 
-### Set sensible retry parameters
+### Do not mutate your incoming events
 
-TODO
+The `event` passed to your Workflow's `run` method is immutable: changes you make to the event are not persisted across steps and/or Workflow restarts.
 
-### Name your steps clearly
+```ts
+interface MyEvent {
+  user: string;
+  data: string;
+}
 
-TODO
+export class MyWorkflow extends WorkflowEntrypoint {
+	async run(event: WorkflowEvent<MyEvent>, step: WorkflowStep) {
+		// 🔴 Bad: Mutating the event
+		// This will not be persisted across steps and `event.data` will
+		// take on its original value.
+		await step.do("bad step that mutates the incoming event", async () => {
+		    let userData = await env.KV.get(event.user)
+				event.data = userData
+		})
 
-### Don't mutate your incoming events
+		// ✅ Good: persist data by returning it as state from your step
+		// Use that state in subsequent steps
+		let userData = await step.do("good step that returns state", async () => {
+		  return await env.KV.get(event.user)
+		})
 
-TODO
+		let someOtherData await step.do("following step that uses that state", async () => {
+		  // Access to userData here
+			// Will always be the same if this step is retried
+		})
+```

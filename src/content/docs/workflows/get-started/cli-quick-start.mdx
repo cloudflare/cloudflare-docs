@@ -13,7 +13,7 @@ import { Render, PackageManagers } from "~/components"
 
 Workflows is in **public beta**, and any developer with a [free or paid Workers plan](/workers/platform/pricing/#workers) can start using Workflows immediately.
 
-To learn more about Workflows, read [the beta announcement blog](https://blog.cloudflare.com/THE-BLOG-SLUG-WILL-GO-HERE) and the [How Workflows Works](/workflows/build/how-workflows-works/) developer documentation.
+To learn more about Workflows, read [the beta announcement blog](https://blog.cloudflare.com/building-workflows-durable-execution-on-workers) and the [How Workflows Works](/workflows/reference/how-workflows-works/) developer documentation.
 
 :::
 
@@ -27,15 +27,10 @@ You can build Workflows to post-process file uploads to [R2 object storage](/r2/
 
 This guide is for users who are already familiar with Cloudflare Workers and [durable execution](/workflows/reference/how-workflows-works/) programming models.
 
-If you're new to either, we recommend the [introduction to Workflows](/workflows/get-started/guide/) guide, which steps through how a Workflow is defined, how to persist state, and how to deploy and run your first Workflow.
+If you are new to either, we recommend the [introduction to Workflows](/workflows/get-started/guide/) guide, which walks you through how a Workflow is defined, how to persist state, and how to deploy and run your first Workflow.
 
 :::
-
-Before you continue, ensure you:
-
-1. Sign up for a [Cloudflare account](https://dash.cloudflare.com/sign-up/workers-and-pages) if you have not already.
-2. Install [`npm`](https://docs.npmjs.com/getting-started).
-3. Install [`Node.js`](https://nodejs.org/en/). Use a Node version manager like [Volta](https://volta.sh/) or [nvm](https://github.com/nvm-sh/nvm) to avoid permission issues and change Node.js versions. [Wrangler](/workers/wrangler/install-and-update/) requires a Node version of `16.17.0` or later.
+<Render file="prereqs" product="workers" />
 
 ## 1. Create a Workflow
 
@@ -152,17 +147,17 @@ You can edit this Workflow by adding (or removing) additional `step` calls, chan
 
 ## 2. Deploy a Workflow
 
-Workflows are deployed via [`wrangler`](/workers/wrangler/install-and-update/), which is installed when you first ran `npm create cloudflare`, above. Workflows are Workers scripts, and deployed the same way:
+Workflows are deployed via [`wrangler`](/workers/wrangler/install-and-update/), which is installed when you first ran `npm create cloudflare`, above. Workflows are Worker scripts, and are deployed the same way:
 
 ```sh
 npx wrangler@latest deploy
 ```
 
-## 3. Running a Workflow
+## 3. Run a Workflow
 
-You can run a Workflow via the `wrangler` CLI, via a Worker binding, or via the Workflows [REST API]().
+You can run a Workflow via the `wrangler` CLI, via a Worker binding, or via the Workflows [REST API](/api/paths/accounts-account_id--workflows/get).
 
-### CLI
+### `wrangler` CLI
 
 ```sh
 # Trigger a Workflow from the CLI, and pass (optional) parameters as an event to the Workflow.
@@ -193,7 +188,7 @@ script_name = "workflows-starter"
 You can then invoke the methods on this binding directly from your Worker script's `env` parameter. The `Workflow` type has methods for:
 
 * `create()` - creating (triggering) a new instance of the Workflow, returning the ID.
-* `getByName()`- retrieve a Workflow instance by name (or `getById` by ID)
+* `get()`- retrieve a Workflow instance by its ID.
 * `status()` - get the current status of a unique Workflow instance.
 
 For example, the following Worker will fetch the status of an existing Workflow instance by ID (if supplied), else it will create a new Workflow instance and return its ID:
@@ -229,13 +224,13 @@ export default {
 };
 ```
 
-Refer to the [triggering Workflows](/workflows/build/trigger-workflows/) documentation for how to trigger a Workflow from other Workers handler functions.
+Refer to the [triggering Workflows](/workflows/build/trigger-workflows/) documentation for how to trigger a Workflow from other Workers' handler functions.
 
-## 4. Managing Workflows
+## 4. Manage Workflows
 
 :::note
 
-The `wrangler workflows` command requires wrangler version `3.82.0` or greater. Use `npx wrangler@latest` to always use the latest wrangler version when invoking commands.
+The `wrangler workflows` command requires Wrangler version `3.82.0` or greater. Use `npx wrangler@latest` to always use the latest Wrangler version when invoking commands.
 
 :::
 
@@ -248,78 +243,17 @@ The `wrangler workflows` command group has several sub-commands for managing and
 You can also view the state of the latest instance of a Workflow by using the `latest` keyword instead of an ID:
 
 ```sh
-npx wrangler@workflows workflows instances describe workflows-starter latest
+npx wrangler@latest workflows instances describe workflows-starter latest
 # Or by ID:
-# npx wrangler@workflows workflows instances describe workflows-starter 12dc179f-9f77-4a37-b973-709dca4189ba
-```
-```sh output
-Workflow Name:         workflows-starter
-Instance Id:           f72c1648-dfa3-45ea-be66-b43d11d216f8
-Version Id:            cedc33a0-11fa-4c26-8a8e-7d28d381a291
-Status:                ✅ Completed
-Trigger:               🌎 API
-Queued:                10/15/2024, 1:55:31 PM
-Success:               ✅ Yes
-Start:                 10/15/2024, 1:55:31 PM
-End:                   10/15/2024, 1:56:32 PM
-Duration:              1 minute
-Last Successful Step:  make a call to write that could maybe, just might, fail-1
-Steps:
-
-  Name:      my first step-1
-  Type:      🎯 Step
-  Start:     10/15/2024, 1:55:31 PM
-  End:       10/15/2024, 1:55:31 PM
-  Duration:  0 seconds
-  Success:   ✅ Yes
-  Output:    "{\"inputParams\":[{\"timestamp\":\"2024-10-15T13:55:29.363Z\",\"payload\":{\"hello\":\"world\"}}],\"files\":[\"doc_7392_rev3.pdf\",\"report_x29_final.pdf\",\"memo_2024_05_12.pdf\",\"file_089_update.pdf\",\"proj_alpha_v2.pdf\",\"data_analysis_q2.pdf\",\"notes_meeting_52.pdf\",\"summary_fy24_draft.pdf\",\"plan_2025_outline.pdf\"]}"
-┌────────────────────────┬────────────────────────┬───────────┬────────────┐
-│ Start                  │ End                    │ Duration  │ State      │
-├────────────────────────┼────────────────────────┼───────────┼────────────┤
-│ 10/15/2024, 1:55:31 PM │ 10/15/2024, 1:55:31 PM │ 0 seconds │ ✅ Success │
-└────────────────────────┴────────────────────────┴───────────┴────────────┘
-
-  Name:      some other step-1
-  Type:      🎯 Step
-  Start:     10/15/2024, 1:55:31 PM
-  End:       10/15/2024, 1:55:31 PM
-  Duration:  0 seconds
-  Success:   ✅ Yes
-  Output:    "{\"result\":{\"ipv4_cidrs\":[\"173.245.48.0/20\",\"103.21.244.0/22\",\"103.22.200.0/22\",\"103.31.4.0/22\",\"141.101.64.0/18\",\"108.162.192.0/18\",\"190.93.240.0/20\",\"188.114.96.0/20\",\"197.234.240.0/22\",\"198.41.128.0/17\",\"162.158.0.0/15\",\"104.16.0.0/13\",\"104.24.0.0/14\",\"172.64.0.0/13\",\"131.0.72.0/22\"],\"ipv6_cidrs\":[\"2400:cb00::/32\",\"2606:4700::/32\",\"2803:f800::/32\",\"2405:b500::/32\",\"2405:8100::/32\",\"2a06:98c0::/29\",\"2c0f:f248::/32\"],\"etag\":\"38f79d050aa027e3be3865e495dcc9bc\"},\"success\":true,\"errors\":[],\"messages\":[]}"
-┌────────────────────────┬────────────────────────┬───────────┬────────────┐
-│ Start                  │ End                    │ Duration  │ State      │
-├────────────────────────┼────────────────────────┼───────────┼────────────┤
-│ 10/15/2024, 1:55:31 PM │ 10/15/2024, 1:55:31 PM │ 0 seconds │ ✅ Success │
-└────────────────────────┴────────────────────────┴───────────┴────────────┘
-
-  Name:      wait on something-1
-  Type:      💤 Sleeping
-  Start:     10/15/2024, 1:55:31 PM
-  End:       10/15/2024, 1:56:31 PM
-  Duration:  1 minute
-
-  Name:      make a call to write that could maybe, just might, fail-1
-  Type:      🎯 Step
-  Start:     10/15/2024, 1:56:31 PM
-  End:       10/15/2024, 1:56:32 PM
-  Duration:  1 second
-  Success:   ✅ Yes
-  Output:    null
-┌────────────────────────┬────────────────────────┬───────────┬────────────┬───────────────────────────────────────────┐
-│ Start                  │ End                    │ Duration  │ State      │ Error                                     │
-├────────────────────────┼────────────────────────┼───────────┼────────────┼───────────────────────────────────────────┤
-│ 10/15/2024, 1:56:31 PM │ 10/15/2024, 1:56:31 PM │ 0 seconds │ ❌ Error   │ Error: API call to $STORAGE_SYSTEM failed │
-├────────────────────────┼────────────────────────┼───────────┼────────────┼───────────────────────────────────────────┤
-│ 10/15/2024, 1:56:32 PM │ 10/15/2024, 1:56:32 PM │ 0 seconds │ ✅ Success │                                           │
-└────────────────────────┴────────────────────────┴───────────┴────────────┴───────────────────────────────────────────┘
+# npx wrangler@latest workflows instances describe workflows-starter 12dc179f-9f77-4a37-b973-709dca4189ba
 ```
 
-From the output above, we can inspect:
+The output of `instances describe` shows:
 
 * The status (success, failure, running) of each step
 * Any state emitted by the step
 * Any `sleep` state, including when the Workflow will wake up
-* Retries associated with each step.
+* Retries associated with each step
 * Errors, including exception messages
 
 :::note
@@ -330,8 +264,8 @@ You do not have to wait for a Workflow instance to finish executing to inspect i
 
 ## Next steps
 
-* Learn more about [how events are passed to a Workflow](/workflows/build/events-and-parameters/)
-* Binding to and triggering Workflow instances using the [Workers API](/workflows/build/workers-api/)
+* Learn more about [how events are passed to a Workflow](/workflows/build/events-and-parameters/).
+* Binding to and triggering Workflow instances using the [Workers API](/workflows/build/workers-api/).
 * The [Rules of Workflows](/workflows/build/rules-of-workflows/) and best practices for building applications using Workflows.
 
 If you have any feature requests or notice any bugs, share your feedback directly with the Cloudflare team by joining the [Cloudflare Developers community on Discord](https://discord.cloudflare.com).

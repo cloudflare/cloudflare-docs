@@ -10,11 +10,11 @@ When a Workflow is triggered, it can receive an optional event. This event can i
 
 Events are a powerful part of a Workflow, as you often want a Workflow to act on data. Because a given Workflow instance executes durably, events are a useful way to provide a Workflow with data that should be immutable (not changing) and/or represents data the Workflow needs to operate on at that point in time.
 
-## Passing parameters to a Workflow
+## Pass parameters to a Workflow
 
 You can pass parameters to a Workflow in two ways:
 
-* As an optional argument to the `create` method on a [Workflow binding] when triggering a Workflow from a Worker.
+* As an optional argument to the `create` method on a [Workflow binding](/workers/wrangler/commands/#trigger) when triggering a Workflow from a Worker.
 * Via the `--params` flag when using the `wrangler` CLI to trigger a Workflow.
 
 You can pass any JSON-serializable object as a parameter.
@@ -80,7 +80,7 @@ interface YourEventType {
 }
 ```
 
-When we pass our `YourEventType` to `WorkflowEvent` as a type parameter, the `event.payload` property now has the type `YourEventType` throughout our workflow definition:
+When you pass your `YourEventType` to `WorkflowEvent` as a type parameter, the `event.payload` property now has the type `YourEventType` throughout your workflow definition:
 
 ```ts title="src/index.ts"
 // Import the Workflow definition

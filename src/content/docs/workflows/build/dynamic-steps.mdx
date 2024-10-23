@@ -8,12 +8,12 @@ sidebar:
 
 A Workflow does not have to define all of its steps statically: steps can be created programmatically and/or conditionally.
 
-This allows you to not only trigger steps based on specific input parameters, but to also name steps dynamically, set the retry configuration for a step 
+This allows you to not only trigger steps based on specific input parameters, but to also name steps dynamically and set the retry configuration for a single step. 
 
 
 ## Example
 
-Steps can be created on-the-fly, allowing you create a step for each parameter passed to your Workflow, for each file you want to read from storage, or for calls to third-party APIs.
+You can create steps on-the-fly. You can create a step for each parameter passed to your Workflow, for each file you want to read from storage, or for calls to third-party APIs.
 
 For example, you can loop over each event, label the step dynamically, and have the step operate only over that `event`:
 
