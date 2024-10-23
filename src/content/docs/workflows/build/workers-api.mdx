@@ -6,57 +6,109 @@ sidebar:
 
 ---
 
-TODO
+Workflows exposes a API directly to your Workers scripts via the [bindings](/workers/runtime-apis/bindings/#what-is-a-binding) concept. Bindings allow you to securely call a Workflow without having to manage API keys or clients.
 
-## Binding
+This guide details the Workflows API within Cloudflare Workers, including methods, types and usage examples.
 
-TODO
+## Bind to a Workflow
 
-## Interact with Workflows
+:::note[Workflows beta]
 
-* Running a Workflow with the `run()` method
-* `StepConfig`
-* `NonRetriableError`
-* TODO on TypeScript type params
+Workflows currently requires you to bind to a Workflow via `wrangler.toml` and does not yet support bindings via the Workers dashboard.
+
+:::
+
+You can bind to a Workflow by defining a `[[workflows]]` binding within your `wrangler.toml` configuration.
+
+For example, to bind to a Workflow called `workflows-starter` and to make it available on the `MY_WORKFLOW` variable to your Worker script, you would configure the following fields within the `[[workflows]]` binding definition:
+
+```toml title="wrangler.toml"
+#:schema node_modules/wrangler/config-schema.json
+name = "workflows-starter"
+main = "src/index.ts"
+compatibility_date = "2024-10-16"
+
+[[workflows]]
+# name of your workflow
+name = "workflows-starter"
+# binding name env.MYWORKFLOW
+binding = "MY_WORKFLOW"
+# this is class that extends the Workflow class in src/index.ts
+class_name = "MyWorkflow"
+# script_name is required during for the beta.
+# Must match the "name" of your Worker at the top of wrangler.toml
+script_name = "workflows-starter"
+```
 
 ## Workflow
 
-* <code>run(events: WorkflowEvent&lt;T&gt;[], step: WorkflowStep): Promise&lt;T&gt;</code>
+* <code>run(event: WorkflowEvent&lt;T&gt;, step: WorkflowStep): Promise&lt;T&gt;</code>
 
-TODO
+  * `event` - the event passed to the Workflow, including an optional `payload` containing data (parameters)
+  * `step` - the `WorkflowStep` type that provides the step methods for your Workflow
+
+The `WorkflowEvent` type accepts an optional [type parameter](https://www.typescriptlang.org/docs/handbook/2/generics.html#working-with-generic-type-variables) that allows you to provide a type for the `payload` property within the `WorkflowEvent`.
+
+Refer to the [events and parameters](/workflows/build/events-and-parameters/) documentation for how to handle events within yur Workflow code.
+
+## WorkflowEvent
 
 ```ts
-export class MyWorkflow extends Workflow<Env, Params> {
-	async run(events: WorkflowEvent[], step: WorkflowStep) {
-    // TODO
-  }
-}
+export type WorkflowEvent<T> = {
+  payload: Readonly<T>;
+  timestamp: Date;
+};
 ```
 
+* The `WorkflowEvent` is the first argument to a Workflow's `run` method, and includes an optional `payload` parameter and a `timestamp` property.
+
+  * `payload` - a default type of `any` or type `T` if a type parameter is provided.
+  * `timestamp` - a `Date` object set to the time the Workflow instance was created (triggered).
+
+Refer to the [events and parameters](/workflows/build/events-and-parameters/) documentation for how to handle events within yur Workflow code.
 
 ## WorkflowStep
 
 ### step
 
-TODO - into to steps
+* <code>step.do(name: string, callback: (): RpcSerializable): Promise&lt;T&gt;</code>
+* <code>step.do(name: string, config?: WorkflowStepConfig, callback: (): RpcSerializable): Promise&lt;T&gt;</code>
 
-* <code>step.do(name: string, callback: (): RpcSerializable, config?: StepConfig): Promise&lt;T&gt;</code>
-
-  * TODO - describe each param
-  * TODO -
-
-TODO - show an example
-TODO - show an example of dynamically creating a step
+  * `name` - the name of the step.
+  * `config` (optional) - an optional `WorkflowStepConfig` for configuring [step specific retry behaviour](/workflows/build/sleeping-and-retrying/)
+  * `callback` - an asynchronous function that optionally returns serializable state for the Workflow to persist.
 
 * <code>step.sleep(name: string, duration: WorkflowDuration): Promise&lt;void&gt;</code>
 
-  * TODO -
+  * `name` - the name of the step.
+  * `duration` - the duration to sleep until, in either seconds or as a `WorkflowDuration` compatible string.
+  * Refer to the [documentation on sleeping and retrying](/workflows/build/sleeping-and-retrying/) to learn more about how how Workflows are retried.
 
-TODO - show an example
+* <code>step.sleepUntil(name: string, timestamp: Date | number): Promise&lt;void&gt;</code>
 
+  * `name` - the name of the step.
+  * `timestamp` - a JavaScript `Date` object or seconds from the Unix epoch to sleep the Workflow instance until.
 
-## StepConfig
+## WorkflowStepConfig
 
-TODO
+```ts
+export type WorkflowStepConfig = {
+  retries?: {
+    limit: number;
+    delay: string | number;
+    backoff?: WorkflowBackoff;
+  };
+  timeout?: string | number;
+};
+```
 
-## NonRetriableError
+* A `WorkflowStepConfig` is an optional argument to the `do` method of a `WorkflowStep` and defines properties that allow you to configure the retry behaviour of that step.
+
+Refer to the [documentation on sleeping and retrying](/workflows/build/sleeping-and-retrying/) to learn more about how how Workflows are retried.
+
+## NonRetryableError
+
+* <code>throw new NonRetryableError(message: <Type text='string' />, name <Type text='string' /> <MetaInfo text='optional' />)</code>: <Type text='NonRetryableError' />
+
+  * Throws an error that forces the current Workflow instance to fail and not be retried.
+  * Refer to the [documentation on sleeping and retrying](/workflows/build/sleeping-and-retrying/) to learn more about how how Workflows are retried.
