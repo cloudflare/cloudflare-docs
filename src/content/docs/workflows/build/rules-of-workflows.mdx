@@ -193,14 +193,34 @@ export class MyWorkflow extends WorkflowEntrypoint {
 }
 ```
 
-### Set sensible retry parameters
-
-TODO
-
-### Name your steps clearly
-
-TODO
-
 ### Don't mutate your incoming events
 
-TODO
+The `event` passed to your Workflow's `run` method is immutable: changes you make to the event are not persisted across steps and/or Workflow restarts.
+
+```ts
+interface MyEvent {
+  user: string;
+  data: string;
+}
+
+export class MyWorkflow extends WorkflowEntrypoint {
+	async run(event: WorkflowEvent<MyEvent>, step: WorkflowStep) {
+		// 🔴 Bad: Mutating the event
+		// This will not be persisted across steps and `event.data` will
+		// take on its original value.
+		await step.do("bad step that mutates the incoming event", async () => {
+		    let userData = await env.KV.get(event.user)
+				event.data = userData
+		})
+
+		// ✅ Good: persist data by returning it as state from your step
+		// Use that state in subsequent steps
+		let userData = await step.do("good step that returns state", async () => {
+		  return await env.KV.get(event.user)
+		})
+
+		let someOtherData await step.do("following step that uses that state", async () => {
+		  // Access to userData here
+			// Will always be the same if this step is retried
+		})
+```
