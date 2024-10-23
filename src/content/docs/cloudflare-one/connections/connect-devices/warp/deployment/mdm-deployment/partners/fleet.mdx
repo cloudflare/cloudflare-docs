@@ -41,15 +41,23 @@ To add the WARP client installer package for distribution to your hosts enrolled
 
 ### 5. Install WARP with Fleet
 
-To deploy the uploaded `.pkg` file to your hosts, refer to the [Fleet documentation](https://fleetdm.com/guides/deploy-software-packages).
+To deploy the uploaded `.pkg` file to your hosts:
+
+1. In the Fleet admin console, go to **Hosts**.
+2. Select the host that requires the WARP client.
+3. Go to **Software** and search for `Cloudflare`.
+4. Select **Actions** > **Install**.
+
+Installation will happen automatically when the host comes online. To deploy with REST API or GitOps, refer to the [Fleet documentation](https://fleetdm.com/guides/deploy-software-packages).
 
 ### 6. Uninstall WARP with Fleet
 
 To uninstall the Fleet-deployed WARP client:
 
-1. In the Fleet admin console, select the host that requires the WARP client to be uninstalled.
-2. Go to **Software** and search for `Cloudflare`.
-3. In **Actions**, select **Uninstall**.
+1. In the Fleet admin console, go to **Hosts**.
+2. Select the host that requires the WARP client to be uninstalled.
+3. Go to **Software** and search for `Cloudflare`.
+4. Select **Actions** > **Uninstall**.
 
 ## Windows
 
@@ -91,15 +99,23 @@ Refer to [deployment parameters](/cloudflare-one/connections/connect-devices/war
 
 ### 3. Install WARP with Fleet
 
-To deploy the uploaded `.msi` file to your hosts, refer to the [Fleet documentation](https://fleetdm.com/guides/deploy-software-packages).
+To deploy the uploaded `.pkg` file to your hosts:
+
+1. In the Fleet admin console, go to **Hosts**.
+2. Select the host that requires the WARP client.
+3. Go to **Software** and search for `Cloudflare`.
+4. Select **Actions** > **Install**.
+
+Installation will happen automatically when the host comes online. To deploy with REST API or GitOps, refer to the [Fleet documentation](https://fleetdm.com/guides/deploy-software-packages).
 
 ### 4. Uninstall WARP with Fleet
 
 To uninstall the Fleet-deployed WARP client:
 
-1. In the Fleet admin console, select the host that requires the WARP client to be uninstalled.
-2. Go to **Software** and search for `Cloudflare`.
-3. In **Actions**, select **Uninstall**.
+1. In the Fleet admin console, go to **Hosts**.
+2. Select the host that requires the WARP client to be uninstalled.
+3. Go to **Software** and search for `Cloudflare`.
+4. Select **Actions** > **Uninstall**.
 
 ## Linux
 
