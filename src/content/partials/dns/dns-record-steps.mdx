@@ -4,7 +4,7 @@ params:
   - example
 ---
 
-import { Tabs, TabItem, Render } from "~/components";
+import { Tabs, TabItem, Render, GlossaryTooltip } from "~/components";
 
 <Tabs syncKey="dashPlusAPI">
 <TabItem label="Dashboard">
@@ -14,7 +14,7 @@ import { Tabs, TabItem, Render } from "~/components";
     - If your hosting service has provided an IPv4 address, select `A`, use {props.name} (<code>{props.example}</code>) for the record **Name**, and insert the IPv4 address in the respective field.
     - If your hosting service has provided an IPv6 address, select `AAAA`, use {props.name} (<code>{props.example}</code>) for the record **Name**, and insert the IPv6 address in the respective field.
     - If your hosting service has provided a hostname (or a [fully qualified domain name](https://en.wikipedia.org/wiki/Fully_qualified_domain_name)), select `CNAME`, use {props.name} (<code>{props.example}</code>) for the record **Name**, and insert the hostname in the **Target** field.
-4. Specify the **Proxy status** and **TTL** according to your needs.
+4. Specify the <GlossaryTooltip term="proxy status" link="/dns/manage-dns-records/reference/proxied-dns-records/">**Proxy status**</GlossaryTooltip> and <GlossaryTooltip term="time-to-live (TTL)" link="/dns/manage-dns-records/reference/ttl/">**TTL**</GlossaryTooltip> according to your needs.
 5. Select **Save** to confirm.
 </TabItem>
 <TabItem label="API">
