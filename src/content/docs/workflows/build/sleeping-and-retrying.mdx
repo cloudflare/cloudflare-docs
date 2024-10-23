@@ -6,11 +6,11 @@ sidebar:
 
 ---
 
-TODO
+This guide details how to sleep a Workflow and/or configure retries for a Workflow step.
 
 ## Sleeping
 
-TODO
+You can set a Workflow to sleep as an explicit step, which can be useful when you want a Workflow to wait, schedule work ahead, or pause until an input or other external state is ready.
 
 :::note
 
@@ -18,6 +18,35 @@ A Workflow instance that is resuming from sleep will take priority over newly sc
 
 :::
 
+### Sleep for a relative period
+
+Use `step.sleep` to have a Workflow sleep for a relative period of time:
+
+```ts
+await step.sleep("sleep for a bit", "1 hour")
+```
+
+The second argument to `step.sleep` accepts both `number` (seconds) or a human-readable format, such as "1 minute" or "26 hours". The accepted units for `step.sleep` when used this way are as follows:
+
+```ts
+| "second"
+| "minute"
+| "hour"
+| "day"
+| "week"
+| "month"
+| "year"
+```
+
+### Sleep until a fixed date
+
+Use `step.sleepUntil` to have a Workflow sleep to a specific `Date`: this can be useful when you have a timestamp from another system or want to "schedule" work to occur at a specific time (e.g. Sunday, 9AM UTC)
+
+```ts
+// sleepUntil accepts a Date object as its second argument
+const workflowsLaunchDate = Date.parse("24 Oct 2024 13:00:00 UTC");
+await step.sleepUntil("sleep until X times out", workflowsLaunchDate)
+```
 
 ## Retrying steps
 
