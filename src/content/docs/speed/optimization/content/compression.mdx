@@ -157,7 +157,7 @@ Cloudflare will take into consideration the `accept-encoding` header value in we
 
 ## Compression methods by plan 
 
-### Between Visitors and Cloudflare
+### Between visitors and Cloudflare
 
 By default, Cloudflare uses the following compression methods for content delivery, depending on the zone plan. However, the actual compression applied may also depend on what the visitor's browser requests via the `accept-encoding` header.
 
@@ -165,6 +165,6 @@ By default, Cloudflare uses the following compression methods for content delive
 - Pro and Business Plans: Content is compressed by default using Brotli.
 - Enterprise Plan: Content is compressed by default using Gzip.
 
-### Between Cloudflare and the Origin
+### Between Cloudflare and the origin server
 
 On all plans, Cloudflare requests content from the origin server using the `accept-encoding: br, gzip` header. This means that Cloudflare asks the origin to send the content compressed using Brotli or Gzip, depending on which method the origin server supports.
