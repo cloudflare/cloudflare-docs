@@ -234,7 +234,7 @@ entries:
     content_type: 🎥 Video
     pcx_content_type: tutorial
   - link: https://youtu.be/W45MIi_t_go
-    title: Building Front-End Applications: Now Supported by Cloudflare Workers
+    title: Building Front-End Applications | Now Supported by Cloudflare Workers
     description: You can now build front-end applications, just like you do on Cloudflare Pages, but with the added benefit of Workers.
     tags: [Workers, Workers AI]
     languages: [TypeScript]
