@@ -179,7 +179,7 @@ http.request.uri.path ends_with ".html"
 
 ### Comparing string values
 
-String comparison in rule expressions is case sensitive. To account for possible variations of string capitalization in an expression, you can use the [`lower()`](/ruleset-engine/rules-language/functions/#lower) function and compare the result with a lowercased string, like in the following example:
+String comparison in rule expressions is case-sensitive. To account for possible variations of string capitalization in an expression, you can use the [`lower()`](/ruleset-engine/rules-language/functions/#lower) function and compare the result with a lowercased string, like in the following example:
 
 ```txt
 lower(http.request.uri.path) contains "/wp-login.php"
@@ -191,7 +191,7 @@ Wildcard matching is only supported with the `wildcard` and `strict wildcard` op
 
 ### Wildcard matching
 
-The `wildcard` operator performs a case-insensitive match between a field value and a literal string containing zero or more `*` metacharacters. Each `*` metacharacter represents zero or more characters. The `strict wildcard` operator performs a similar match, but is case sensitive.
+The `wildcard` operator performs a case-insensitive match between a field value and a literal string containing zero or more `*` metacharacters. Each `*` metacharacter represents zero or more characters. The `strict wildcard` operator performs a similar match, but is case-sensitive.
 
 When using the `wildcard`/`strict wildcard` operator, the entire field value must match the literal string with wildcards (the literal after the operator).
 
@@ -243,7 +243,7 @@ http.request.full_uri wildcard "*.example.com/*" or http.request.full_uri wildca
 
 </Details>
 
-The matching algorithm used by the `wildcard` operator is case insensitive. To perform case-sensitive wildcard matching, use the `strict wildcard` operator.
+The matching algorithm used by the `wildcard` operator is case-insensitive. To perform case-sensitive wildcard matching, use the `strict wildcard` operator.
 
 To enter a literal `*` character in a literal string with wildcards you must escape it using `\*`. Additionally, you must also escape `\` using `\\`. Two unescaped `*` characters in a row (`**`) in a wildcard literal string are considered invalid and cannot be used. If you need to perform character escaping, it is recommended that you use the [raw string syntax](/ruleset-engine/rules-language/values/#raw-string-syntax) to specify a literal string with wildcards.
 
