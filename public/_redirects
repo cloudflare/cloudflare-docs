@@ -378,6 +378,8 @@
 # email-security
 /email-security/setup/api-deployment/ /email-security/setup/post-delivery-deployment/api/ 301
 /email-security/setup/api-deployment/office365-api/ /email-security/setup/post-delivery-deployment/api/office365-api/ 301
+/email-security/email-configuration/retract-settings/gmail-retraction/ /email-security/deployment/api/setup/gsuite-bcc-setup/add-retraction/ 301
+ 
 
 # firewall
 /firewall/api/cf-lists/ /waf/tools/lists/lists-api/ 301
