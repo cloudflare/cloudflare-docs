@@ -116,7 +116,11 @@ It should also have updated [Access Control Lists (ACLs)](/dns/zone-setups/zone-
 
 Using the information from your secondary DNS provider, [create `NS` records](/dns/manage-dns-records/how-to/create-dns-records/#create-dns-records) on your zone apex listing your secondary nameservers.
 
-By default, Cloudflare ignores `NS` records that are added to the zone apex. To modify this behaviour, enable [multi-provider DNS](/dns/nameservers/nameserver-options/#multi-provider-dns):
+By default, Cloudflare ignores `NS` records added to the zone apex. To modify this behavior, enable [multi-provider DNS](/dns/nameservers/nameserver-options/#multi-provider-dns):
+
+:::note
+If your account [zone defaults](/dns/additional-options/dns-zone-defaults/) are already defined to have **Multi-provider DNS** enabled, this step may not be necessary.
+:::
 
 <Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
 
@@ -126,6 +130,8 @@ By default, Cloudflare ignores `NS` records that are added to the zone apex. To 
 4. Enable **Multi-provider DNS**.
 
 </TabItem> <TabItem label="API">
+
+Send the following `PATCH` request replacing the placeholders with your zone ID and authentication information:
 
 ```bash
 curl --request PATCH \
