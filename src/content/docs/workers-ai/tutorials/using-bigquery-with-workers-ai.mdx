@@ -14,6 +14,7 @@ languages:
 sidebar:
   order: 2
 ---
+
 ## TL;DR
 
 You can skip this tutorial and check its [resulting code](#final-result).
@@ -28,12 +29,13 @@ In this tutorial, you will learn how to bring data from Google BigQuery to a Clo
 
 ## Prerequisites
 
-You will be needing: 
-- A [Cloudflare Worker](/workers/) project running a [Hello World script](/workers/get-started/guide/). 
+You will be needing:
+
+- A [Cloudflare Worker](/workers/) project running a [Hello World script](/workers/get-started/guide/).
 - A Google Cloud Platform [service account](https://cloud.google.com/iam/docs/service-accounts-create#iam-service-accounts-create-console) with an [associated key](https://cloud.google.com/iam/docs/keys-create-delete#iam-service-account-keys-create-console) file downloaded that has read access to BigQuery.
 - Access to a BigQuery table with some test data that allows you to create a [BigQuery Job Query](https://cloud.google.com/bigquery/docs/reference/rest/v2/jobs/query). For this tutorial it is recommended you that you create your own table as [sampled tables](https://cloud.google.com/bigquery/public-data#sample_tables), unless cloned to your own GCP namespace, won't allow you to run job queries against them. For this example, the [Hacker News Corpus](https://www.kaggle.com/datasets/hacker-news/hacker-news-corpus) was used under its MIT licence.
 
-## Step 1 - Setting up your Cloudflare Worker
+## 1. Setting up your Cloudflare Worker
 
 In order to ingest the data into Cloudflare and feed it into Workers AI, you will be using a [Cloudflare Worker](/workers/). If you haven't created one yet, please feel free to review our [tutorial on how to get started](/workers/get-started/).
 
@@ -42,7 +44,7 @@ After following the steps to create a Worker, you should have the following code
 ```javascript
 export default {
 	async fetch(request, env, ctx) {
-		return new Response('Hello World!');
+		return new Response("Hello World!");
 	},
 };
 ```
@@ -63,7 +65,7 @@ Hello World!
 
 If you are running into any issues during this step, please make sure to review [Worker's Get Started Guide](/workers/get-started/guide/).
 
-## Step 2 - Import GCP Service key into the Worker as Secrets
+## 2. Import GCP Service key into the Worker as Secrets
 
 Now that you have verified that the Worker has been created successfully, you will need to reference the Google Cloud Platform service key created in the [Prerequisites](#prerequisites) section of this tutorial.
 
@@ -71,21 +73,21 @@ Your downloaded key JSON file from Google Cloud Platform should have the followi
 
 ```json
 {
-  "type": "service_account",
-  "project_id": "<your_project_id>",
-  "private_key_id": "<your_private_key_id>",
-  "private_key": "<your_private_key>",
-  "client_email": "<your_service_account_id>@<your_project_id>.iam.gserviceaccount.com",
-  "client_id": "<your_oauth2_client_id>",
-  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
-  "token_uri": "https://oauth2.googleapis.com/token",
-  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
-  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/<your_service_account_id>%40<your_project_id>.iam.gserviceaccount.com",
-  "universe_domain": "googleapis.com"
+	"type": "service_account",
+	"project_id": "<your_project_id>",
+	"private_key_id": "<your_private_key_id>",
+	"private_key": "<your_private_key>",
+	"client_email": "<your_service_account_id>@<your_project_id>.iam.gserviceaccount.com",
+	"client_id": "<your_oauth2_client_id>",
+	"auth_uri": "https://accounts.google.com/o/oauth2/auth",
+	"token_uri": "https://oauth2.googleapis.com/token",
+	"auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+	"client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/<your_service_account_id>%40<your_project_id>.iam.gserviceaccount.com",
+	"universe_domain": "googleapis.com"
 }
 ```
 
-For this tutorial, you will only be needing the values of the following fields: `client_email`, `private_key`, `private_key_id` and `project_id`. 
+For this tutorial, you will only be needing the values of the following fields: `client_email`, `private_key`, `private_key_id` and `project_id`.
 
 Instead of storing this information in plain text in the Worker, you will use [Secrets](/workers/configuration/secrets/) to make sure its unencrypted content is only accessible via the Worker itself.
 
@@ -95,7 +97,7 @@ Import those three values from the JSON file into Secrets, starting with the fie
 npx wrangler secret put BQ_CLIENT_EMAIL
 ```
 
-You will be asked to enter a secret value, which will be the value of the field `client_email` in the JSON key file. 
+You will be asked to enter a secret value, which will be the value of the field `client_email` in the JSON key file.
 
 :::note
 
@@ -123,12 +125,12 @@ npx wrangler secret put BQ_PRIVATE_KEY_ID
 npx wrangler secret put BQ_PROJECT_ID
 ```
 
-
 At this point, you have successfully imported three fields from the JSON key file downloaded from Google Cloud Platform into Cloudflare Secrets to be used in a Worker.
 
-[Secrets](/workers/configuration/secrets/) are only made available to Workers once they are deployed. To make them available during development, [create a `.dev.vars`](/workers/configuration/secrets/#local-development-with-secrets) file to locally store these credentials and reference them as environment variables. 
+[Secrets](/workers/configuration/secrets/) are only made available to Workers once they are deployed. To make them available during development, [create a `.dev.vars`](/workers/configuration/secrets/#local-development-with-secrets) file to locally store these credentials and reference them as environment variables.
 
 Your `dev.vars` file should look like the following:
+
 ```
 BQ_CLIENT_EMAIL="<your_service_account_id>@<your_project_id>.iam.gserviceaccount.com"
 BQ_CLIENT_KEY="-----BEGIN PRIVATE KEY-----<content_of_your_private_key>-----END PRIVATE KEY-----\n"
@@ -143,11 +145,11 @@ Check that secrets are loaded correctly in `src/index.js` by logging their value
 ```javascript
 export default {
 	async fetch(request, env, ctx) {
-    	console.log("BQ_CLIENT_EMAIL: ", env.BQ_CLIENT_EMAIL);
-    	console.log("BQ_PRIVATE_KEY: ", env.BQ_PRIVATE_KEY);
-    	console.log("BQ_PRIVATE_KEY_ID: ", env.BQ_PRIVATE_KEY_ID);
-      console.log("BQ_PROJECT_ID: ", env.BQ_PROJECT_ID);
-    	return new Response('Hello World!');
+		console.log("BQ_CLIENT_EMAIL: ", env.BQ_CLIENT_EMAIL);
+		console.log("BQ_PRIVATE_KEY: ", env.BQ_PRIVATE_KEY);
+		console.log("BQ_PRIVATE_KEY_ID: ", env.BQ_PRIVATE_KEY_ID);
+		console.log("BQ_PROJECT_ID: ", env.BQ_PROJECT_ID);
+		return new Response("Hello World!");
 	},
 };
 ```
@@ -169,7 +171,7 @@ If you open `http://localhost:8787` in your browser, you should see the values o
 
 You now have access to the GCP credentials from a Worker. Next, you will install a library to help with the creation of the JSON Web Token needed to interact with GCP's API.
 
-## Step 3 - Install library to handle JWT operations
+## 3. Install library to handle JWT operations
 
 To interact with BigQuery's REST API, you will need to generate a [JSON Web Token](https://jwt.io/introduction) to authenticate your requests using the credentials that you've loaded into Worker Secrets in the previous step.
 
@@ -179,10 +181,10 @@ For this tutorial, you will be using the [jose](https://www.npmjs.com/package/jo
 npm i jose
 ```
 
-To verify that the installation succeeded, you can run `npm list`, which lists all the installed packages and see if the `jose` dependency has been added: 
+To verify that the installation succeeded, you can run `npm list`, which lists all the installed packages and see if the `jose` dependency has been added:
 
 ```sh
-<project_name>@0.0.0 
+<project_name>@0.0.0
 /<path_to_your_project>/<project_name>
 ├── @cloudflare/vitest-pool-workers@0.4.29
 ├── jose@5.9.2
@@ -190,7 +192,7 @@ To verify that the installation succeeded, you can run `npm list`, which lists a
 └── wrangler@3.75.0
 ```
 
-## Step 4 - Generate JSON Web Token
+## 4. Generate JSON Web Token
 
 Now that you have installed the `jose` library, it's time to import it and add a function to your code that generates a signed JWT:
 
@@ -236,9 +238,9 @@ export default {
 
 Now that you have created a JWT, it's time to do an API call to BigQuery to fetch some data.
 
-## Step 5 - Making authenticated requests to Google BigQuery
+## 5. Making authenticated requests to Google BigQuery
 
-With the JWT token created in the previous step, issue an API request to BigQuery's API to retrieve data from a table. 
+With the JWT token created in the previous step, issue an API request to BigQuery's API to retrieve data from a table.
 
 You will now query the table that you already have created in BigQuery as part of the prerequisites of this tutorial. This example uses a sampled version of the [Hacker News Corpus](https://www.kaggle.com/datasets/hacker-news/hacker-news-corpus) that was used under its MIT licence and uploaded to BigQuery.
 
@@ -275,7 +277,7 @@ export default {
 
 Having the raw row data from BigQuery means that you can now format it in a JSON-like style up next.
 
-## Step 6 - Formatting results from the query
+## 6. Formatting results from the query
 
 Now that you have retrieved the data from BigQuery, it's time to note that a BigQuery API response looks something like this:
 
@@ -337,26 +339,26 @@ This format may be a bit harder to read and to work with iterating through resul
 
 ```javascript
 [
-  {
-	title: "<some_value>",
-	text: "<some_value>"
-  },
-  {
-	title: "<some_value>",
-	text: "<some_value>"
-  },
-  {
-	title: "<some_value>",
-	text: "<some_value>"
-  }
-]
+	{
+		title: "<some_value>",
+		text: "<some_value>",
+	},
+	{
+		title: "<some_value>",
+		text: "<some_value>",
+	},
+	{
+		title: "<some_value>",
+		text: "<some_value>",
+	},
+];
 ```
 
 Create a `formatRows` function that takes a number of rows and fields returned from the BigQuery response body and returns an array of results as objects with named fields.
 
 ```javascript
 const formatRows = (rowsWithoutFieldNames, fields) => {
-	// Depending on the position of each value, it is known what field you should assign to it. 
+	// Depending on the position of each value, it is known what field you should assign to it.
 	const fieldsByIndex = new Map();
 
 	// Load all fields name and have their index in the array result as their key
@@ -398,7 +400,7 @@ export default {
 };
 ```
 
-## Step 7 - Feeding data into Workers AI
+## 7. Feeding data into Workers AI
 
 Now that you have converted the response from the BigQuery API into an array of results, generate some tags and attach an associated sentiment score using an LLM via [Workers AI](/workers-ai/):
 
@@ -424,7 +426,7 @@ const getAIGeneratedContent = (data, env, aiHandler) => {
 }
 ...
 export default {
-	async fetch(request, env, ctx) { 	
+	async fetch(request, env, ctx) {
 		...
 let summaries, sentimentScores;
     	try {
@@ -506,138 +508,156 @@ The actual values and fields will mostly depend on the query made in Step 5 that
 All the code shown in the different steps are combined into the following code in `src/index.js`:
 
 ```javascript
-import * as jose from 'jose'
+import * as jose from "jose";
 
 const generateBQJWT = async (env) => {
-	const algorithm = "RS256"
-	const audience = "https://bigquery.googleapis.com/"
-	const expiryAt = (new Date().valueOf() / 1000)
-	const privateKey = await jose.importPKCS8(env.BQ_PRIVATE_KEY, algorithm)
+	const algorithm = "RS256";
+	const audience = "https://bigquery.googleapis.com/";
+	const expiryAt = new Date().valueOf() / 1000;
+	const privateKey = await jose.importPKCS8(env.BQ_PRIVATE_KEY, algorithm);
 
 	// Generate signed JSON Web Token (JWT)
 	return new jose.SignJWT()
-    	.setProtectedHeader({
-        	typ: 'JWT',
-        	alg: algorithm,
-        	kid: env.BQ_PRIVATE_KEY_ID
-    	})
-    	.setIssuer(env.BQ_CLIENT_EMAIL)
-    	.setSubject(env.BQ_CLIENT_EMAIL)
-    	.setAudience(audience)
-    	.setExpirationTime(expiryAt)
-    	.setIssuedAt()
-    	.sign(privateKey)
-}
+		.setProtectedHeader({
+			typ: "JWT",
+			alg: algorithm,
+			kid: env.BQ_PRIVATE_KEY_ID,
+		})
+		.setIssuer(env.BQ_CLIENT_EMAIL)
+		.setSubject(env.BQ_CLIENT_EMAIL)
+		.setAudience(audience)
+		.setExpirationTime(expiryAt)
+		.setIssuedAt()
+		.sign(privateKey);
+};
 
 const queryBQ = async (bgJWT, path) => {
-	const bqEndpoint = `https://bigquery.googleapis.com${path}`
-	const query = 'SELECT text FROM hn.news_sampled LIMIT 3';
+	const bqEndpoint = `https://bigquery.googleapis.com${path}`;
+	const query = "SELECT text FROM hn.news_sampled LIMIT 3";
 	const response = await fetch(bqEndpoint, {
-    	method: "POST",
-    	body: JSON.stringify({
-        	"query": query
-    	}),
-    	headers: {
-        	Authorization: `Bearer ${bgJWT}`
-    	}
-	})
-	return response.json()
-}
+		method: "POST",
+		body: JSON.stringify({
+			query: query,
+		}),
+		headers: {
+			Authorization: `Bearer ${bgJWT}`,
+		},
+	});
+	return response.json();
+};
 
 const formatRows = (rowsWithoutFieldNames, fields) => {
 	// Index to fieldName
-	const fieldsByIndex = new Map()
+	const fieldsByIndex = new Map();
 
 	fields.forEach((field, index) => {
-    	fieldsByIndex.set(index, field.name)
-	})
+		fieldsByIndex.set(index, field.name);
+	});
 
-	const rowsWithFieldNames = rowsWithoutFieldNames.map(row => {
-    	// Map rows into an array of objects with field names
-    	let newRow = {}
-    	row.f.forEach((field, index) => {
-        	const fieldName = fieldsByIndex.get(index)
-        	if (fieldName) {
-            	newRow = ({ ...newRow, [fieldName]: field.v })
-        	}
-    	})
-    	return newRow
-	})
+	const rowsWithFieldNames = rowsWithoutFieldNames.map((row) => {
+		// Map rows into an array of objects with field names
+		let newRow = {};
+		row.f.forEach((field, index) => {
+			const fieldName = fieldsByIndex.get(index);
+			if (fieldName) {
+				newRow = { ...newRow, [fieldName]: field.v };
+			}
+		});
+		return newRow;
+	});
 
-	return rowsWithFieldNames
-}
+	return rowsWithFieldNames;
+};
 
 const generateTags = (data, env) => {
 	return env.AI.run("@cf/meta/llama-3.1-8b-instruct", {
-    	prompt: `Create three one-word tags for the following text. return only these three tags separated by a comma. don't return text that is not a category.Lowercase only. ${JSON.stringify(data)}`,
-	})
-}
+		prompt: `Create three one-word tags for the following text. return only these three tags separated by a comma. don't return text that is not a category.Lowercase only. ${JSON.stringify(data)}`,
+	});
+};
 
 const generateSentimentScore = (data, env) => {
 	return env.AI.run("@cf/meta/llama-3.1-8b-instruct", {
-    	prompt: `return a float number between 0 and 1 measuring the sentiment of the following text. 0 being negative and 1 positive. return only the number, no text. ${JSON.stringify(data)}`,
-	})
-}
+		prompt: `return a float number between 0 and 1 measuring the sentiment of the following text. 0 being negative and 1 positive. return only the number, no text. ${JSON.stringify(data)}`,
+	});
+};
 
 const getAIGeneratedContent = (data, env, aiHandler) => {
-	let results = data?.map(dataPoint => {
-    	return aiHandler(dataPoint, env)
-	})
-	return Promise.all(results)
-}
+	let results = data?.map((dataPoint) => {
+		return aiHandler(dataPoint, env);
+	});
+	return Promise.all(results);
+};
 
 export default {
 	async fetch(request, env, ctx) {
+		// Create JWT to authenticate the BigQuery API call
+		let bqJWT;
+		try {
+			bqJWT = await generateBQJWT(env);
+		} catch (error) {
+			console.log(error);
+			return new Response("An error has ocurred while generating the JWT", {
+				status: 500,
+			});
+		}
 
-    	// Create JWT to authenticate the BigQuery API call
-    	let bqJWT
-    	try {
-        	bqJWT = await generateBQJWT(env);
-    	} catch (error) {
-        	console.log(error)
-        	return new Response('An error has ocurred while generating the JWT', { status: 500 })
-    	}
+		// Fetch results from BigQuery
+		let ticketInfo;
+		try {
+			ticketInfo = await queryBQ(
+				bqJWT,
+				`/bigquery/v2/projects/${env.BQ_PROJECT_ID}/queries`,
+			);
+		} catch (error) {
+			console.log(error);
+			return new Response("An error has occurred while querying BQ", {
+				status: 500,
+			});
+		}
 
-    	// Fetch results from BigQuery
-    	let ticketInfo
-    	try {
-        	ticketInfo = await queryBQ(bqJWT, `/bigquery/v2/projects/${env.BQ_PROJECT_ID}/queries`)
-    	} catch (error) {
-        	console.log(error)
-        	return new Response('An error has occurred while querying BQ', { status: 500 })
-    	}
+		// Transform output format into array of objects with named fields
+		let formattedResults;
+		if ("rows" in ticketInfo) {
+			formattedResults = formatRows(ticketInfo.rows, ticketInfo.schema.fields);
+		} else if ("error" in ticketInfo) {
+			return new Response(ticketInfo.error.message, { status: 500 });
+		}
 
-    	// Transform output format into array of objects with named fields
-    	let formattedResults
-    	if ('rows' in ticketInfo) {
-        	formattedResults = formatRows(ticketInfo.rows, ticketInfo.schema.fields)
-    	} else if ('error' in ticketInfo) {
-        	return new Response(ticketInfo.error.message, { status: 500 })
-    	}
+		// Generate AI summaries and sentiment scores
+		let summaries, sentimentScores;
+		try {
+			summaries = await getAIGeneratedContent(
+				formattedResults,
+				env,
+				generateTags,
+			);
+			sentimentScores = await getAIGeneratedContent(
+				formattedResults,
+				env,
+				generateSentimentScore,
+			);
+		} catch {
+			return new Response(
+				"There was an error while generating the text summaries or sentiment scores",
+			);
+		}
 
-    	// Generate AI summaries and sentiment scores
-    	let summaries, sentimentScores
-    	try {
-        	summaries = await getAIGeneratedContent(formattedResults, env, generateTags)
-        	sentimentScores = await getAIGeneratedContent(formattedResults, env, generateSentimentScore)
-    	} catch {
-        	return new Response('There was an error while generating the text summaries or sentiment scores')
-    	}
+		// Add AI summaries and sentiment scores to previous results
+		formattedResults = formattedResults?.map((formattedResult, i) => {
+			if (sentimentScores[i].response && summaries[i].response) {
+				return {
+					...formattedResult,
+					sentiment: parseFloat(sentimentScores[i].response).toFixed(2),
+					tags: summaries[i].response.split(",").map((result) => result.trim()),
+				};
+			}
+		});
 
-    	// Add AI summaries and sentiment scores to previous results
-    	formattedResults = formattedResults?.map((formattedResult, i) => {
-        	if (sentimentScores[i].response && summaries[i].response) {
-            	return {
-                	...formattedResult,
-                	'sentiment': parseFloat(sentimentScores[i].response).toFixed(2),
-                	'tags': summaries[i].response.split(',').map((result) => result.trim())
-            	}
-        	}
-    	})
+		const response = { data: formattedResults };
 
-    	const response = {data: formattedResults}
-
-    	return new Response(JSON.stringify(response), { headers: { "Content-Type": "application/json" } })
+		return new Response(JSON.stringify(response), {
+			headers: { "Content-Type": "application/json" },
+		});
 	},
 };
 ```
@@ -656,13 +676,13 @@ This will create a public endpoint that you can use to access the Worker globall
 
 ## Conclusion
 
-In this tutorial, you've learnt how to integrate Google BigQuery and Cloudflare Workers by creating a GCP service account key and storing part of it as Worker Secrets. This was later imported in the code and by using the `jose` npm library, you created a JSON Web Token to authenticate the API query to BigQuery. 
+In this tutorial, you've learnt how to integrate Google BigQuery and Cloudflare Workers by creating a GCP service account key and storing part of it as Worker Secrets. This was later imported in the code and by using the `jose` npm library, you created a JSON Web Token to authenticate the API query to BigQuery.
 
-Once you obtained the results, some formatting was applied to them to later be passed to generative AI models via Workers AI to generate tags and to perform sentiment analysis on the extracted data. 
+Once you obtained the results, some formatting was applied to them to later be passed to generative AI models via Workers AI to generate tags and to perform sentiment analysis on the extracted data.
 
 ## Next Steps
 
-If instead of displaying the results of ingesting the data to the AI model in a browser, your workflow requires fetching and store data (for example in [R2](/r2/) or [D1](/d1/)) on regular intervals, you may want to consider adding a [scheduled handler](/workers/runtime-apis/handlers/scheduled/) for this Worker. It allows triggering the Worker with a predefined cadence via a [Cron Trigger](/workers/configuration/cron-triggers/). 
+If instead of displaying the results of ingesting the data to the AI model in a browser, your workflow requires fetching and store data (for example in [R2](/r2/) or [D1](/d1/)) on regular intervals, you may want to consider adding a [scheduled handler](/workers/runtime-apis/handlers/scheduled/) for this Worker. It allows triggering the Worker with a predefined cadence via a [Cron Trigger](/workers/configuration/cron-triggers/).
 
 A use case to ingest data from other sources, like you did in this tutorial, is to create a RAG system. If this sounds relevant to you, please check out the tutorial [Build a Retrieval Augmented Generation (RAG) AI](/workers-ai/tutorials/build-a-retrieval-augmented-generation-ai/).
 
