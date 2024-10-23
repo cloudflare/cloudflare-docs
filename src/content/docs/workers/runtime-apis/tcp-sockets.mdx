@@ -15,6 +15,11 @@ Many application-layer protocols are built on top of the Transmission Control Pr
 Connecting to a PostgreSQL database? You should use [Hyperdrive](/hyperdrive/), which provides the `connect()` API with built-in connection pooling and query caching. 
 :::
 
+:::note
+
+TCP Workers outbound connections are sourced from a prefix that is not part of [list of IP ranges](https://www.cloudflare.com/ips/).
+:::
+
 ## `connect()`
 
 The `connect()` function returns a TCP socket, with both a [readable](/workers/runtime-apis/streams/readablestream/) and [writable](/workers/runtime-apis/streams/writablestream/) stream of data. This allows you to read and write data on an ongoing basis, as long as the connection remains open.
