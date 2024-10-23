@@ -36,6 +36,5 @@ If you already have a certificate that you use for other inspection or trust pur
 - If you are using WARP Connector to connect devices to Cloudflare, those devices will not be able to leverage HTTP policies that require decrypting TLS unless they have a certificate that matches either your uploaded certificate or the Cloudflare root certificate. It is more likely that your network infrastructure already has your own device certificates deployed, so using the existing PKI infrastructure for inspection will reduce the number of steps needed to deploy Zero Trust.
 
 :::note[MDM deployments]
-
-Many customers [deploy WARP](/learning-paths/replace-vpn/connect-devices/) onto devices in production using an MDM tool like JAMF or InTune. Cloudflare has the ability to deploy the root certificate along with the device, but this could be more consistently and holistically configured within the MDM, where other certificates are presumably managed, trusted, and stored.
+Many customers [deploy WARP](/learning-paths/replace-vpn/connect-devices/) onto devices in production using an MDM tool like JAMF or InTune. Cloudflare has the ability to deploy a root certificate along with the device, but this could be more consistently and holistically configured within the MDM, where other certificates are presumably managed, trusted, and stored.
 :::

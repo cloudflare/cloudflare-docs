@@ -6,6 +6,8 @@ sidebar:
 head: []
 description: Configure WARP to use a custom root certificate instead of the
   Cloudflare certificate.
+banner:
+  content: The default global Cloudflare root certificate will expire on 2025-02-02. If you installed the default Cloudflare certificate before 2024-17-10, you must <a href="#generate-a-cloudflare-root-certificate">generate a new certificate</a> and activate it for your Zero Trust organization to avoid inspection errors.
 ---
 
 import { Render, Tabs, TabItem } from "~/components";
@@ -14,10 +16,10 @@ import { Render, Tabs, TabItem } from "~/components";
 Only available on Enterprise plans.
 :::
 
-Enterprise customers who do not wish to install the [Cloudflare certificate](/cloudflare-one/connections/connect-devices/warp/user-side-certificates/manual-deployment/) have the option to upload their own root certificate to Cloudflare. This feature is sometimes referred to as Bring Your Own Public Key Infrastructure (BYOPKI). Gateway will use your uploaded certificate to encrypt all sessions between the end user and Gateway, enabling all HTTPS inspection features that previously required the Cloudflare certificate. You can upload multiple certificates to your account, but only one can be active at any given time. You also need to upload a private key to intercept domains with JIT certificates and to enable the [block page](/cloudflare-one/policies/gateway/block-page/).
+Enterprise customers who do not wish to install a [Cloudflare certificate](/cloudflare-one/connections/connect-devices/warp/user-side-certificates/manual-deployment/) have the option to upload their own root certificate to Cloudflare. This feature is sometimes referred to as Bring Your Own Public Key Infrastructure (BYOPKI). Gateway will use your uploaded certificate to encrypt all sessions between the end user and Gateway, enabling all HTTPS inspection features that previously required a Cloudflare certificate. You can upload multiple certificates to your account, but only one can be active at any given time. You also need to upload a private key to intercept domains with JIT certificates and to enable the [block page](/cloudflare-one/policies/gateway/block-page/).
 
 :::caution
-Custom certificates are limited to use between your users and the Gateway proxy. Connections between Gateway and the origin server will use the Cloudflare certificate.
+Custom certificates are limited to use between your users and the Gateway proxy. Connections between Gateway and the origin server will use a Cloudflare certificate.
 :::
 
 ## Generate a custom root CA

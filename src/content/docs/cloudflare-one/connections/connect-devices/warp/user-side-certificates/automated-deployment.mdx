@@ -5,6 +5,8 @@ sidebar:
   order: 1
 head: []
 description: Automatically deploy a root certificate on desktop devices.
+banner:
+  content: The default global Cloudflare root certificate will expire on 2025-02-02. If you installed the default Cloudflare certificate before 2024-17-10, you must <a href="#generate-a-cloudflare-root-certificate">generate a new certificate</a> and activate it for your Zero Trust organization to avoid inspection errors.
 ---
 
 import { Details } from "~/components";
@@ -27,11 +29,11 @@ import { Details } from "~/components";
 <sup>*</sup> Only supported on Debian-based systems.
 </Details>
 
-The WARP client can automatically install the Cloudflare certificate (or a [custom root certificate](/cloudflare-one/connections/connect-devices/warp/user-side-certificates/custom-certificate/)) on Windows, macOS, and Debian/Ubuntu Linux devices. On mobile devices and Red Hat-based systems, you will need to [install the certificate manually](/cloudflare-one/connections/connect-devices/warp/user-side-certificates/manual-deployment/).
+The WARP client can automatically install a Cloudflare certificate or [custom root certificate](/cloudflare-one/connections/connect-devices/warp/user-side-certificates/custom-certificate/) on Windows, macOS, and Debian/Ubuntu Linux devices. On mobile devices and Red Hat-based systems, you will need to [install the certificate manually](/cloudflare-one/connections/connect-devices/warp/user-side-certificates/manual-deployment/).
 
 The certificate is required if you want to [apply HTTP policies to encrypted websites](/cloudflare-one/policies/gateway/http-policies/tls-decryption/), display custom block pages, and more.
 
-## Install the certificate using WARP
+## Install a certificate using WARP
 
 1. (Optional) [Upload](/cloudflare-one/connections/connect-devices/warp/user-side-certificates/custom-certificate/) a custom root certificate to Cloudflare.
 2. In [Zero Trust](https://one.dash.cloudflare.com/), go to **Settings** > **WARP Client**.

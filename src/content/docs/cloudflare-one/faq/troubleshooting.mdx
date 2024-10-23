@@ -89,7 +89,7 @@ This error occurs when the identity provider has not included the signing public
 
 This error will appear if a certificate has not been generated for the Access application users are attempting to connect to. For more information on how to generate a certificate for the application on the Access Service Auth SSH page, refer to [these instructions](/cloudflare-one/applications/non-http/short-lived-certificates-legacy/).
 
-## Mobile applications warn of an invalid certificate, even though I installed the Cloudflare certificate on my system.
+## Mobile applications warn of an invalid certificate, even though I installed a Cloudflare certificate on my system.
 
 These mobile applications may use <GlossaryTooltip term="certificate pinning">certificate pinning</GlossaryTooltip> Cloudflare Gateway dynamically generates a certificate for all encrypted connections in order to inspect the content of HTTP traffic. This certificate will not match the expected certificate by applications that use certificate pinning.
 To allow these applications to function normally, administrators can configure bypass rules to exempt traffic to hosts associated with the application from being intercepted and inspected.
