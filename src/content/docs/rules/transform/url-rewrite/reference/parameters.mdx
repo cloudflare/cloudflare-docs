@@ -78,6 +78,10 @@ The syntax of a dynamic rewrite URL rule that rewrites both the URI path and the
 
 The `<REQUEST_URL>`, `<PATH_TARGET_PATH>`, `<PATH_REWRITE_TO>`, `<QUERY_TARGET_QUERY>`, and `<QUERY_REWRITE_TO>` value placeholders correspond to the fields available in the Cloudflare dashboard when you select the **Wildcard pattern** option. For more information, refer to [Wildcard pattern parameters](/rules/transform/url-rewrite/create-dashboard/#wildcard-pattern-parameters).
 
+:::note
+The `http.request.uri.query` field does not include the `?` delimiter at the beginning, which means that your `<QUERY_TARGET_QUERY>` value should not try to match an initial `?`.
+:::
+
 ### Different URL rewrite types in the same rule
 
 The same rule can have different types of URL rewrites for the URI path and the query string. For example, a single rule can perform a **dynamic** URL rewrite of the URI path and a **static** URL rewrite of the query string. The syntax of such a rule would be the following:
