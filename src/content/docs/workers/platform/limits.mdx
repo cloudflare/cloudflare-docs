@@ -304,6 +304,24 @@ You can emit a maximum of 128 KB of data (across `console.log()` statements, exc
 
 Refer to the [Workers Trace Event Logpush documentation](/workers/observability/logs/logpush/#limits) for information on the maximum size of fields sent to logpush destinations.
 
+---
+
+## Unbound and Bundled plan limits
+
+:::note
+Unbound and Bundled plans have been deprecated and are no longer available for new accounts.
+:::
+
+If your Worker is on an Unbound plan, your limits are exactly the same as the Workers Paid plan.
+
+If your Worker is on a Bundled plan, your limits are the same as the Workers Paid plan except for the following differences:
+* Your limit for [subrequests](/workers/platform/limits/#subrequests) is 50/request
+* Your limit for [CPU time](/workers/platform/limits/#cpu-time) is 50ms for HTTP requests and 50ms for [Cron Triggers](/workers/configuration/cron-triggers/)
+* You have no [Duration](/workers/platform/limits/#duration) limits for [Cron Triggers](/workers/configuration/cron-triggers/), [Durable Object alarms](/durable-objects/api/alarms/), or [Queue consumers](/queues/configuration/javascript-apis/#consumer)
+* Your Cache API limits for calls/requests is 50
+
+---
+
 ## Related resources
 
 Review other developer platform resource limits.
