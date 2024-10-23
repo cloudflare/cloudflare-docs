@@ -3,20 +3,26 @@
 
 ---
 
-import { Example } from "~/components"
+import { Example, Render } from "~/components";
 
 Most subdomains serve a specific purpose within the overall context of your website. For example, `blog.example.com` might be your blog, `support.example.com` could be your customer help portal, and `store.example.com` would be your e-commerce site.
 
 ## Subdomain records
 
-To create a new subdomain, you would first add the subdomain content at your host.
+To create a new subdomain, you would first add the subdomain content at your [host](/fundamentals/setup/manage-domains/#host-your-domain).
 
-Then, you would create a corresponding [`A`, `AAAA`, or `CNAME` record](/dns/manage-dns-records/how-to/create-dns-records/) for that subdomain (`blog`, `store`).
+Then, you would create a corresponding [IP address resolution record](/dns/manage-dns-records/reference/dns-record-types/#ip-address-resolution) (`A`, `AAAA`, or `CNAME`), specifying the subdomain (`blog`, `www`, or `store`, for example) as the record **Name**.
 
 <Example>
 
 | Type | Name  | IPv4 address | Proxy status |
 | ---- | ----- | ------------ | ------------ |
-| A    | `www` | `192.0.2.1`  | Proxied      |
+| A    | `blog` | `192.0.2.1`  | Proxied      |
 
 </Example>
+
+
+<Render file="dns-record-steps" product="dns" params={{
+    name: "your subdomain",
+		example: "blog"
+}} />
