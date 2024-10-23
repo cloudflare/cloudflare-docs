@@ -85,7 +85,7 @@ let someState = step.do("call an API", {
 }, async () => { /* Step code goes here /* }
 ```
 
-### Force a step to fail
+## Force a Workflow to fail
 
 You can also force a Workflow instance to fail and _not_ retry by throwing a `NonRetryableError` from within the step.
 
