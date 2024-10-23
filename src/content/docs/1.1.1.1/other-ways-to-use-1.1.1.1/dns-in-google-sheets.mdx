@@ -12,7 +12,7 @@ import { Details } from "~/components"
 1.1.1.1 works directly inside Google Sheets. To get started, create a [Google Function](https://developers.google.com/apps-script/guides/sheets/functions) with the following code:
 
 ```js
-function NSLookup(type, domain, usecache = false, cachettl = 30) {
+function NSLookup(type, domain, useCache = false, minCacheTTL = 30) {
 
   if (typeof type == 'undefined') {
     throw new Error('Missing parameter 1 dns type');
@@ -22,47 +22,48 @@ function NSLookup(type, domain, usecache = false, cachettl = 30) {
     throw new Error('Missing parameter 2 domain name');
   }
 
-  if (typeof usecache != "boolean") {
+  if (typeof useCache != "boolean") {
     throw new Error('Only boolean values allowed in 3 use cache');
   }
 
-  if (typeof cachettl != "number") {
-    throw new Error('Only numeric values allowed in 4 cache ttl');
+  if (typeof minCacheTTL != "number") {
+    throw new Error('Only numeric values allowed in 4 min cache ttl');
   }
 
   type = type.toUpperCase();
   domain = domain.toLowerCase();
 
-  if (usecache) {
+  let cache = null;
+  if (useCache) {
     // Cache key and hash
     cacheKey = domain + "@" + type;
     cacheHash = Utilities.base64Encode(cacheKey);
     cacheBinKey = "nslookup-result-" + cacheHash;
 
-    var cache = CacheService.getScriptCache();
-    var cachedResult = cache.get(cacheBinKey);
+    cache = CacheService.getScriptCache();
+    const cachedResult = cache.get(cacheBinKey);
     if (cachedResult != null) {
       return cachedResult;
     }
   }
 
-  var url = 'https://cloudflare-dns.com/dns-query?name=' + encodeURIComponent(domain) + '&type=' + encodeURIComponent(type);
-  var options = {
+  const url = 'https://cloudflare-dns.com/dns-query?name=' + encodeURIComponent(domain) + '&type=' + encodeURIComponent(type);
+  const options = {
     muteHttpExceptions: true,
     headers: {
       accept: "application/dns-json"
     }
   };
 
-  var result = UrlFetchApp.fetch(url, options);
-  var rc = result.getResponseCode();
-  var resultText = result.getContentText();
+  const result = UrlFetchApp.fetch(url, options);
+  const rc = result.getResponseCode();
+  const resultText = result.getContentText();
 
   if (rc !== 200) {
     throw new Error(rc);
   }
 
-  var errors = [
+  const errors = [
     { name: "NoError", description: "No Error"}, // 0
     { name: "FormErr", description: "Format Error"}, // 1
     { name: "ServFail", description: "Server Failure"}, // 2
@@ -75,24 +76,25 @@ function NSLookup(type, domain, usecache = false, cachettl = 30) {
     { name: "NotAuth", description: "Not Authorized"} // 9
   ];
 
-  var response = JSON.parse(resultText);
+  const response = JSON.parse(resultText);
 
   if (response.Status !== 0) {
     return errors[response.Status].name;
   }
 
-  var outputData = [];
-  var minCacheTTL = cachettl;
+  const outputData = [];
+  let cacheTTL = 0;
 
   for (var i in response.Answer) {
     outputData.push(response.Answer[i].data);
-    minCacheTTL = Math.max(minCacheTTL, response.Answer[i].TTL);
+    const ttl = response.Answer[i].TTL;
+    cacheTTL = Math.min(cacheTTL || ttl, ttl);
   }
 
-  var outputString = outputData.join(',');
+  const outputString = outputData.join(',');
 
-  if (usecache) {
-    cache.put(cacheBinKey, outputString, minCacheTTL);
+  if (useCache) {
+    cache.put(cacheBinKey, outputString, Math.max(cacheTTL, minCacheTTL));
   }
 
   return outputString;
