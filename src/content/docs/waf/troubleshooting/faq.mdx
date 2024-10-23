@@ -81,18 +81,18 @@ There is no functional difference between known and verified bots. However, the 
 
 ## Challenges
 
-### Why Am I Being Challenged on a Cloudflare-Protected Site?
+### Why am I being challenged on a Cloudflare-protected site?
 
-Cloudflare issues challenges to website visitors to protect against malicious activity such as bot attacks and DDoS. Key reasons include:
+Cloudflare issues challenges to website visitors to protect against malicious activity such as bot attacks and DDoS attacks. Key reasons include:
 
 - **High Threat Score**: IP addresses with a high-risk score trigger challenges.
-- **IP Reputation**: If your IP has a history of suspicious activity, it may be flagged.
-- **Bot Detection**: Automated traffic resembling bots is filtered by Cloudflare.
-- **Custom Firewall Rules**: Site owners may set rules targeting specific regions or user agents.
+- **IP reputation**: If your IP has a history of suspicious activity, it may be flagged.
+- **Bot detection**: Automated traffic resembling bots is filtered by Cloudflare.
+- **Web Application Firewall (WAF) custom rules**: Site owners may set rules targeting specific regions or user agents.
 - **Browser Integrity Check**: Cloudflare verifies that browsers meet certain standards.
 - **Challenge Passage**: Technologies like Privacy Pass reduce the frequency of repeated challenges.
 
-To avoid repeated challenges, ensure your browser is up-to-date, disable any privacy tools that might block standard browser headers, or use a different network connection if your current one has a poor IP reputation.
+To avoid repeated challenges, ensure your browser is up to date, disable any privacy tools that might block standard browser headers, or use a different network connection if your current one has a poor IP reputation.
 
 ### How do I exclude certain requests from being blocked or challenged?
 
