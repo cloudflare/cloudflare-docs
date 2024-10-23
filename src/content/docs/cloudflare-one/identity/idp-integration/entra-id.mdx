@@ -139,7 +139,9 @@ SCIM requires a separate enterprise application from the one created during [ini
 
 5. Once the SCIM application is created, [assign users and groups to the application](https://learn.microsoft.com/entra/identity/enterprise-apps/assign-user-or-group-access-portal).
 
-**Note:** Ensure that all groups used in policy evaluation and device profiles are included in the SCIM assignment. SCIM group membership updates will overwrite any groups on a user for policy evaluation.
+	:::note
+	Groups in this SCIM application should match the groups in your other [Cloudflare Access enterprise application](/cloudflare-one/identity/idp-integration/entra-id/#set-up-entra-id-as-an-identity-provider). Because SCIM group membership updates will overwrite any groups in a user's identity, assigning the same groups to each app ensures consistent policy evaluation.
+	:::
 
 6. Go to **Provisioning** and select **Get started**.
 
