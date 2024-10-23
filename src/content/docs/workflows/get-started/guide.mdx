@@ -19,7 +19,7 @@ To learn more about Workflows, read [the beta announcement blog](https://blog.cl
 
 Workflows allow you to build durable, multi-step applications using the Workers platform. A Workflow can automatically retry, persist state, run for hours or days, and coordinate between third-party APIs.
 
-You can build Workflows to post-process file uploads to [R2 object storage](/r2/), automate generation of [Workers AI](/workers-ai/) embeddings into a [Vectorize](/vectorize/) vector database, or to trigger [user lifecycle emails](TODO) using your favorite email API.
+You can build Workflows to post-process file uploads to [R2 object storage](/r2/), automate generation of [Workers AI](/workers-ai/) embeddings into a [Vectorize](/vectorize/) vector database, or to trigger user lifecycle emails using your favorite email API.
 
 This guide will instruct you through:
 
@@ -183,7 +183,7 @@ We have a very basic Workflow definition, but now need to provide a way to call 
 1. External HTTP requests via a `fetch()` handler
 2. Messages from a [Queue](/queues/)
 3. A schedule via [Cron Trigger](/workers/configuration/cron-triggers/)
-4. Via the [Workflows REST API](TODO) or [wrangler CLI](/workers/wrangler/commands/#workflows)
+4. Via the [Workflows REST API](/api/paths/accounts-account_id--workflows/get) or [wrangler CLI](/workers/wrangler/commands/#workflows)
 
 Return to the `src/index.ts` file we created in the previous step and add a `fetch` handler that _binds_ to our Workflow. This binding allows us to create new Workflow instances, fetch the status of an existing Workflow, pause and/or terminate a Workflow.
 
@@ -325,7 +325,15 @@ Deploying a Workflow is identical to deploying a Worker.
 npx wrangler deploy
 ```
 ```sh output
-TODO
+# Note the "Workflows" binding mentioned here, showing that
+# wrangler has detected your Workflow
+Your worker has access to the following bindings:
+- Workflows:
+  - MY_WORKFLOW: MyWorkflow (defined in workflows-starter)
+Uploaded workflows-starter (2.53 sec)
+Deployed workflows-starter triggers (1.12 sec)
+  https://workflows-starter.silverlock.workers.dev
+  workflow: workflows-starter
 ```
 
 A Worker with a valid Workflow definition will be automatically registered by Workflows. You can list your current Workflows using wrangler:
@@ -334,11 +342,13 @@ A Worker with a valid Workflow definition will be automatically registered by Wo
 npx wrangler workflows list
 ```
 ```sh output
-TODO
+Showing last 1 workflow:
+┌───────────────────┬───────────────────┬────────────┬─────────────────────────┬─────────────────────────┐
+│ Name              │ Script name       │ Class name │ Created                 │ Modified                │
+├───────────────────┼───────────────────┼────────────┼─────────────────────────┼─────────────────────────┤
+│ workflows-starter │ workflows-starter │ MyWorkflow │ 10/23/2024, 11:33:58 AM │ 10/23/2024, 11:33:58 AM │
+└───────────────────┴───────────────────┴────────────┴─────────────────────────┴─────────────────────────┘
 ```
-
-TODO - describe the output, Workflows, instances, etc.
-
 
 ## 6. Run and observe your Workflow
 
@@ -457,8 +467,6 @@ curl -s https://workflows-starter.YOUR_WORKERS_SUBDOMAIN.workers.dev/
 ```
 
 ## 7. (Optional) Clean up
-
-TODO - delete the Workflow.
 
 You can optionally delete the Workflow, which will prevent the creation of any (all) instances by using `wrangler`:
 
