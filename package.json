@@ -38,7 +38,7 @@
 		"@types/he": "^1.2.3",
 		"@types/node": "^22.7.8",
 		"@types/react": "^18.3.11",
-		"@types/react-dom": "^18.3.0",
+		"@types/react-dom": "^18.3.1",
 		"algoliasearch": "^5.9.1",
 		"astro": "^4.16.6",
 		"astro-breadcrumbs": "^3.2.0",
