@@ -94,7 +94,7 @@ application/geo+json
 Cloudflare's global network can deliver content to website visitors using Gzip compression, Brotli compression, Zstandard compression, or no compression, depending on:
 
 - The values visitors provide in the `accept-encoding` request header.
-- The value of the [Brotli setting](/speed/optimization/content/brotli/) at the zone level.
+- The value of the [Brotli setting](/speed/optimization/content/compression/) at the zone level.
 - Any configured [compression rule](/rules/compression-rules/) that matches incoming requests.
 
 For responses with error status codes, Cloudflare will only compress responses if their error status code is `403` or `404`. For successful response status codes, Cloudflare will only compress responses if their status code is `200`. Responses with other status codes will not be compressed.
@@ -154,3 +154,17 @@ Cloudflare will take into consideration the `accept-encoding` header value in we
 ---
 
 <Render file="brotli-compression-warning" />
+
+## Compression methods by plan 
+
+### Between visitors and Cloudflare
+
+By default, Cloudflare uses the following compression methods for content delivery, depending on the zone plan. However, the actual compression applied may also depend on what the visitor's browser requests via the `accept-encoding` header.
+
+- Free Plan: Content is compressed by default using Zstandard.
+- Pro and Business Plans: Content is compressed by default using Brotli.
+- Enterprise Plan: Content is compressed by default using Gzip.
+
+### Between Cloudflare and the origin server
+
+On all plans, Cloudflare requests content from the origin server using the `accept-encoding: br, gzip` header. This means that Cloudflare asks the origin to send the content compressed using Brotli or Gzip, depending on which method the origin server supports.
