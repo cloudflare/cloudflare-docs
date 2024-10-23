@@ -246,3 +246,16 @@ entries:
     difficulty: Beginner
     content_type: 🎥 Video
     pcx_content_type: tutorial
+  - link: https://youtu.be/HXOpxNaKUzw
+    title: How to Build Event-Driven Applications with Cloudflare Queues
+    description: In this video, we demonstrate how to build an event-driven application using Cloudflare Queues. Event-driven system lets you decouple services, allowing them to process and scale independently.
+    tags: [Workers, Queues]
+    languages: [TypeScript]
+    # stream_id: 
+    products: [Workers, Workers AI]
+    cloudflare: true
+    author: harshil
+    updated: 2024-09-26
+    difficulty: Intermediate
+    content_type: 🎥 Video
+    pcx_content_type: tutorial
