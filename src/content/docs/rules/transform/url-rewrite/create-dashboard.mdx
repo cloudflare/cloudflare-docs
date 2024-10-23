@@ -6,7 +6,6 @@ sidebar:
 head:
   - tag: title
     content: Create a rewrite URL rule in the dashboard
-
 ---
 
 Refer to the [Rules examples gallery](/rules/transform/examples/?operation=Rewrite+URL) for examples of rule definitions.
@@ -19,29 +18,56 @@ To create a rule:
 
 3. To create a new empty rule, select **Create rule**. To duplicate an existing rule, select the three dots next to it > **Duplicate**.
 
-   ![The rewrite URL rule creation page in the Cloudflare dashboard.](~/assets/images/rules/transform/create-url-rewrite-rule.png)
-
 4. In the rule creation page, enter a descriptive name for the rule in **Rule name**.
 
-5. Under **When incoming requests match**, select if you wish to apply the rule to all incoming requests or only to requests that match a custom filter expression.
+   ![The rewrite URL rule creation page in the Cloudflare dashboard.](~/assets/images/rules/transform/create-url-rewrite-rule.png)
 
-6. (Optional) To define a custom expression, use the Expression Builder (specifying one or more values for **Field**, **Operator**, and **Value**) or manually enter an expression using the Expression Editor. For more information, refer to [Edit expressions in the dashboard](/ruleset-engine/rules-language/expressions/edit-expressions/).
+5. Under **If incoming requests match**, select one of the following options:
 
-   :::note
+   - **Wildcard pattern**: The rule will only apply to traffic matching the wildcard pattern in **Request URL**. Refer to [Wildcard pattern parameters](#wildcard-pattern-parameters) for details.
 
-   Check the [available fields and functions](/rules/transform/url-rewrite/reference/fields-functions/). 
-   :::
+   - **Custom filter expression**: The rule will only apply to traffic matching a custom expression. Define the [rule expression](/ruleset-engine/rules-language/expressions/edit-expressions/) to configure which requests should be rewritten. Use either the Expression Builder or the Expression Editor to define the custom expression. For more information, refer to [Edit expressions in the dashboard](/ruleset-engine/rules-language/expressions/edit-expressions/).
 
-7. Define the action for your rewrite URL rule by selecting one of the available options displayed as radio buttons, and then a value from the drop-down list, depending on the action:
+     :::note
+     Check the [fields and functions](/rules/transform/url-rewrite/reference/fields-functions/) you can use in filter expressions of rewrite URL rules.
+     :::
 
-   * If you select **Rewrite to** > *Static*, enter the string that will replace the original URL path (or query string). For example, enter `welcome-gb.html` to rewrite the original URL path to `/welcome-gb.html`.
+   - **All incoming requests**: The rule will apply to all traffic.
 
-   * If you select **Rewrite to** > *Dynamic*, enter a [rewrite expression](/rules/transform/url-rewrite/reference/fields-functions/#rewrite-expressions) that defines the dynamic URL rewrite to perform.
+6. (Optional) Define the action for your rewrite URL rule by selecting one of the available options displayed as radio buttons, and then a value from the drop-down list, depending on the action:
 
-   * If you do not want to change the value of a component of the original request (the URL path or the URL query string), choose the *Preserve* action for that component.
+   - If you select **Rewrite to** > _Static_, enter the string that will replace the original URL path (or query string). For example, enter `welcome-gb.html` to rewrite the original URL path to `/welcome-gb.html`.
+
+   - If you select **Rewrite to** > _Dynamic_, enter a [rewrite expression](/rules/transform/url-rewrite/reference/fields-functions/#rewrite-expressions) that defines the dynamic URL rewrite to perform.
+
+   - If you do not want to change the value of a component of the original request (the URL path or the URL query string), choose the _Preserve_ action for that component.
 
    For more information, refer to [URL rewrite parameters](/rules/transform/url-rewrite/reference/parameters/).
+
+7. Under **Place at**, define where to place the rule in the rules list: first rule in the list, last rule in the list, or in a custom position (after a given rule).
 
 8. To save and deploy your rule, select **Deploy**. If you are not ready to deploy your rule, select **Save as Draft**.
 
 If you choose to deploy your rewrite URL rule, the new rule will be enabled. If you save the rule as a draft, the new rule will be disabled.
+
+## Wildcard pattern parameters
+
+The Cloudflare dashboard offers a simplified user interface for creating URL rewrites based on wildcard matching and replacement. When you select **Wildcard pattern**, you will have the following parameters available:
+
+- **Request URL**: Enter the [wildcard pattern](/ruleset-engine/rules-language/operators/#wildcard-matching) using the asterisk (`*`) character to match multiple requests. For example, `https://*.example.com/*`.
+
+- **Then rewrite the path and/or query**: Define the [URL rewrite settings](/rules/transform/url-rewrite/reference/parameters/) including:
+  - **Path** > **Target path**: Enter the URI path to match, which can include wildcards (for example, `/oldpath/*`).
+  - **Path** > **Rewrite to**: Enter the new URI path. You can use [wildcard replacement](/ruleset-engine/rules-language/functions/#wildcard_replace) such as `${1}` and `${2}` to define a dynamic target path (for example, `/newpath/${1}`). Leave this field empty to remove the URI path.
+  - **Query** > **Target query**: Enter the query string to match, which can include wildcards (for example, `?sort=*`).
+  - **Query** > **Rewrite to**: Enter the new query string. You can use [wildcard replacement](/ruleset-engine/rules-language/functions/#wildcard_replace) such as `${1}` and `${2}` to define a dynamic query string (for example, `?order=${1}`). Leave this field empty to remove the query string.
+
+Refer to [URL rewrite parameters](/rules/transform/url-rewrite/reference/parameters/#wildcard-matching-and-replacement) for the equivalent rule configuration when using the API.
+
+:::note[Notes]
+
+The **Request URL** value is only used to match the incoming request with a rule. It will not be used for capturing URL patterns for rewrites. If you are matching the URL path or query string in **Target path** or **Target query**, respectively, make sure that the **Request URL** pattern also matches the incoming request, or else the rule will not trigger.
+
+To validate rewrite URL rule matches, use [Cloudflare Trace](/fundamentals/basic-tasks/trace-request/). To validate rewritten URLs, check your origin server.
+
+:::
