@@ -30,7 +30,7 @@ You will need:
 - A Google Cloud Platform [service account](https://cloud.google.com/iam/docs/service-accounts-create#iam-service-accounts-create-console) with an [associated key](https://cloud.google.com/iam/docs/keys-create-delete#iam-service-account-keys-create-console) file downloaded that has read access to BigQuery.
 - Access to a BigQuery table with some test data that allows you to create a [BigQuery Job Query](https://cloud.google.com/bigquery/docs/reference/rest/v2/jobs/query). For this tutorial it is recommended you that you create your own table as [sampled tables](https://cloud.google.com/bigquery/public-data#sample_tables), unless cloned to your own GCP namespace, won't allow you to run job queries against them. For this example, the [Hacker News Corpus](https://www.kaggle.com/datasets/hacker-news/hacker-news-corpus) was used under its MIT licence.
 
-## 1. Setting up your Cloudflare Worker
+## 1. Set up your Cloudflare Worker
 
 In order to ingest the data into Cloudflare and feed it into Workers AI, you will be using a [Cloudflare Worker](/workers/). If you haven't created one yet, please feel free to review our [tutorial on how to get started](/workers/get-started/).
 
