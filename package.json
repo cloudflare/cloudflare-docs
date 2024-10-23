@@ -39,7 +39,7 @@
 		"@types/node": "^22.7.8",
 		"@types/react": "^18.3.11",
 		"@types/react-dom": "^18.3.1",
-		"algoliasearch": "^5.9.1",
+		"algoliasearch": "^5.10.2",
 		"astro": "^4.16.6",
 		"astro-breadcrumbs": "^3.2.0",
 		"astro-icon": "^1.1.1",
