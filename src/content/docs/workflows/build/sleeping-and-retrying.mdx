@@ -8,7 +8,7 @@ sidebar:
 
 This guide details how to sleep a Workflow and/or configure retries for a Workflow step.
 
-## Sleeping
+## Sleep a Workflow
 
 You can set a Workflow to sleep as an explicit step, which can be useful when you want a Workflow to wait, schedule work ahead, or pause until an input or other external state is ready.
 
@@ -40,7 +40,7 @@ The second argument to `step.sleep` accepts both `number` (seconds) or a human-r
 
 ### Sleep until a fixed date
 
-Use `step.sleepUntil` to have a Workflow sleep to a specific `Date`: this can be useful when you have a timestamp from another system or want to "schedule" work to occur at a specific time (e.g. Sunday, 9AM UTC)
+Use `step.sleepUntil` to have a Workflow sleep to a specific `Date`: this can be useful when you have a timestamp from another system or want to "schedule" work to occur at a specific time (e.g. Sunday, 9AM UTC).
 
 ```ts
 // sleepUntil accepts a Date object as its second argument
@@ -48,7 +48,7 @@ const workflowsLaunchDate = Date.parse("24 Oct 2024 13:00:00 UTC");
 await step.sleepUntil("sleep until X times out", workflowsLaunchDate)
 ```
 
-## Retrying steps
+## Retry steps
 
 Each call to `step.do` in a Workflow accepts an optional `StepConfig`, which allows you define the retry behaviour for that step.
 
@@ -70,7 +70,7 @@ When providing your own `StepConfig`, you can configure:
 * The total number of attempts to make for a step
 * The delay between attempts
 * What backoff algorithm to apply between each attempt: any of `constant`, `linear`, or `exponential`
-* When to timeout (in duration) before considering the step as failed (including during a retry attempt).
+* When to timeout (in duration) before considering the step as failed (including during a retry attempt)
 
 For example, to limit a step to 10 retries and have it apply an exponential delay (starting at 10 seconds) between each attempt, you would pass the following configuration as an optional object to `step.do`:
 

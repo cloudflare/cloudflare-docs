@@ -27,15 +27,10 @@ You can build Workflows to post-process file uploads to [R2 object storage](/r2/
 
 This guide is for users who are already familiar with Cloudflare Workers and [durable execution](/workflows/reference/how-workflows-works/) programming models.
 
-If you're new to either, we recommend the [introduction to Workflows](/workflows/get-started/guide/) guide, which steps through how a Workflow is defined, how to persist state, and how to deploy and run your first Workflow.
+If you are new to either, we recommend the [introduction to Workflows](/workflows/get-started/guide/) guide, which walks you through how a Workflow is defined, how to persist state, and how to deploy and run your first Workflow.
 
 :::
-
-Before you continue, ensure you:
-
-1. Sign up for a [Cloudflare account](https://dash.cloudflare.com/sign-up/workers-and-pages) if you have not already.
-2. Install [`npm`](https://docs.npmjs.com/getting-started).
-3. Install [`Node.js`](https://nodejs.org/en/). Use a Node version manager like [Volta](https://volta.sh/) or [nvm](https://github.com/nvm-sh/nvm) to avoid permission issues and change Node.js versions. [Wrangler](/workers/wrangler/install-and-update/) requires a Node version of `16.17.0` or later.
+<Render file="prereqs" product="workers" />
 
 ## 1. Create a Workflow
 
@@ -152,17 +147,17 @@ You can edit this Workflow by adding (or removing) additional `step` calls, chan
 
 ## 2. Deploy a Workflow
 
-Workflows are deployed via [`wrangler`](/workers/wrangler/install-and-update/), which is installed when you first ran `npm create cloudflare`, above. Workflows are Workers scripts, and deployed the same way:
+Workflows are deployed via [`wrangler`](/workers/wrangler/install-and-update/), which is installed when you first ran `npm create cloudflare`, above. Workflows are Worker scripts, and are deployed the same way:
 
 ```sh
 npx wrangler@latest deploy
 ```
 
-## 3. Running a Workflow
+## 3. Run a Workflow
 
 You can run a Workflow via the `wrangler` CLI, via a Worker binding, or via the Workflows [REST API](/api/paths/accounts-account_id--workflows/get).
 
-### CLI
+### `wrangler` CLI
 
 ```sh
 # Trigger a Workflow from the CLI, and pass (optional) parameters as an event to the Workflow.
@@ -229,13 +224,13 @@ export default {
 };
 ```
 
-Refer to the [triggering Workflows](/workflows/build/trigger-workflows/) documentation for how to trigger a Workflow from other Workers handler functions.
+Refer to the [triggering Workflows](/workflows/build/trigger-workflows/) documentation for how to trigger a Workflow from other Workers' handler functions.
 
-## 4. Managing Workflows
+## 4. Manage Workflows
 
 :::note
 
-The `wrangler workflows` command requires wrangler version `3.82.0` or greater. Use `npx wrangler@latest` to always use the latest wrangler version when invoking commands.
+The `wrangler workflows` command requires Wrangler version `3.82.0` or greater. Use `npx wrangler@latest` to always use the latest Wrangler version when invoking commands.
 
 :::
 
@@ -258,7 +253,7 @@ The output of `instances describe` shows:
 * The status (success, failure, running) of each step
 * Any state emitted by the step
 * Any `sleep` state, including when the Workflow will wake up
-* Retries associated with each step.
+* Retries associated with each step
 * Errors, including exception messages
 
 :::note
@@ -269,8 +264,8 @@ You do not have to wait for a Workflow instance to finish executing to inspect i
 
 ## Next steps
 
-* Learn more about [how events are passed to a Workflow](/workflows/build/events-and-parameters/)
-* Binding to and triggering Workflow instances using the [Workers API](/workflows/build/workers-api/)
+* Learn more about [how events are passed to a Workflow](/workflows/build/events-and-parameters/).
+* Binding to and triggering Workflow instances using the [Workers API](/workflows/build/workers-api/).
 * The [Rules of Workflows](/workflows/build/rules-of-workflows/) and best practices for building applications using Workflows.
 
 If you have any feature requests or notice any bugs, share your feedback directly with the Cloudflare team by joining the [Cloudflare Developers community on Discord](https://discord.cloudflare.com).
