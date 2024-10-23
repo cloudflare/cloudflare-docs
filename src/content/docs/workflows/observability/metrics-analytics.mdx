@@ -38,31 +38,159 @@ Workflows GraphQL datasets require an `accountTag` filter with your Cloudflare a
 
 ### Examples
 
-To query the sum of `readQueries`, `writeQueries` for a given `$databaseId`, grouping by `databaseId` and `date`:
+To query the count (number of workflow invocations) and sum of `wallTime` for a given `$workflowName` between `$datetimeStart` and `$datetimeEnd`, grouping by `date`:
 
 ```graphql
-query {
-	viewer {
-		accounts(filter: { accountTag: $accountId }) {
-			d1AnalyticsAdaptiveGroups(
-				limit: 10000
-				filter: {
-					date_geq: $startDate
-					date_leq: $endDate
-					databaseId: $databaseId
-				}
-				orderBy: [date_DESC]
-			) {
-				sum {
-					readQueries
-					writeQueries
-				}
-				dimensions {
-					date
-					databaseId
-				}
-			}
-		}
-	}
+{
+  viewer {
+    accounts(filter: { accountTag: $accountTag }) {
+      wallTime: workflowsAdaptiveGroups(
+        limit: 10000
+        filter: {
+          datetimeHour_geq: $datetimeStart,
+          datetimeHour_leq: $datetimeEnd,
+          workflowName: $workflowName
+        }
+        orderBy: [count_DESC]
+      ) {
+        count
+        sum {
+          wallTime
+        }
+        dimensions {
+          date: datetimeHour
+        }
+      }
+    }
+  }
 }
 ```
+
+Here we are doing the same for `wallTime`, `instanceRuns` and `stepCount` in the same query:
+
+```graphql
+{
+  viewer {
+    accounts(filter: { accountTag: $accountTag  }) {
+      instanceRuns: workflowsAdaptiveGroups(
+        limit: 10000
+        filter: {
+          datetimeHour_geq: $datetimeStart
+          datetimeHour_leq: $datetimeEnd
+          workflowName: $workflowName
+          eventType: "WORKFLOW_START"
+        }
+        orderBy: [count_DESC]
+      ) {
+        count
+        dimensions {
+          date: datetimeHour
+        }
+      }
+      stepCount: workflowsAdaptiveGroups(
+        limit: 10000
+        filter: {
+          datetimeHour_geq: $datetimeStart
+          datetimeHour_leq: $datetimeEnd
+          workflowName: $workflowName
+          eventType: "STEP_START"
+        }
+        orderBy: [count_DESC]
+      ) {
+        count
+        dimensions {
+          date: datetimeHour
+        }
+      }
+      wallTime: workflowsAdaptiveGroups(
+        limit: 10000
+        filter: {
+          datetimeHour_geq: $datetimeStart
+          datetimeHour_leq: $datetimeEnd
+          workflowName: $workflowName
+        }
+        orderBy: [count_DESC]
+      ) {
+        count
+        sum {
+          wallTime
+        }
+        dimensions {
+          date: datetimeHour
+        }
+      }
+    }
+  }
+}
+```
+
+Here lets query `workflowsAdaptive` for raw data about `$instanceId` between `$datetimeStart` and `$datetimeEnd`:
+
+```
+{
+  viewer {
+    accounts(filter: { accountTag: $accountTag  }) {
+      workflowsAdaptive(
+        limit: 100
+        filter: {
+          datetime_geq: $datetimeStart
+          datetime_leq: $datetimeEnd
+          instanceId: $instanceId
+        }
+        orderBy: [datetime_ASC]
+      ) {
+        datetime
+        eventType
+        workflowName
+        instanceId
+        stepName
+        stepCount
+        wallTime
+      }
+    }
+  }
+}
+```
+
+#### GraphQL query variables
+
+Example values for the query variables:
+
+```json
+{
+	"accountTag": "fedfa729a5b0ecfd623bca1f9000f0a22",
+	"datetimeStart": "2024-10-20T00:00:00Z",
+	"datetimeEnd": "2024-10-29T00:00:00Z",
+	"workflowName": "shoppingCart",
+	"instanceId": "ecc48200-11c4-22a3-b05f-88a3c1c1db81"
+}
+```
+
+As said above, you can use [introspection](/analytics/graphql-api/features/discovery/introspection/) with your favorite GraphQL client to discover the available fields and types of the Workflows datasets, but here are some of our `workflowsAdaptiveGroups` dimensions:
+
+* date - The date when trigger was triggered
+* datetimeFifteenMinutes - The date and time truncated to fifteen minutes
+* datetimeFiveMinutes - The date and time truncated to five minutes
+* datetimeHour - The date and time truncated to the hour
+* datetimeMinute - The date and time truncated to the minute
+* eventType - Event type
+* instanceId - Instance Id
+* stepCount - Step number
+* stepName - Step name
+* workflowName - Workflow Name
+
+And here's a list of `eventType`s you can filter on:
+
+* WORKFLOW_QUEUED
+* ORKFLOW_START
+* WORKFLOW_SUCCESS
+* WORKFLOW_FAILURE
+* WORKFLOW_TERMINATED
+* STEP_START
+* STEP_SUCCESS
+* STEP_FAILURE
+* SLEEP_START
+* SLEEP_COMPLETE
+* ATTEMPT_START
+* ATTEMPT_SUCCESS
+* ATTEMPT_FAILURE
