@@ -92,13 +92,9 @@ To install a Cloudflare certificate in macOS, you can use either the Keychain Ac
 <TabItem label="Keychain Access">
 
 1. Download a Cloudflare certificate.
-
 2. Open the `.crt` file in Keychain Access. If prompted, enter your local password.
-
 3. In **Keychain**, choose the access option that suits your needs and select **Add**.
-
 4. In the list of certificates, locate the newly installed certificate. Keychain Access will mark this certificate as not trusted. Right-click the certificate and select **Get Info**.
-
 5. Select **Trust**. Under **When using this certificate**, select _Always Trust_.
 
 The root certificate is now installed and ready to be used.
@@ -143,19 +139,12 @@ Windows offers two locations to install the certificate, each impacting which us
 | Local Machine Store | All users on the system |
 
 1. [Download a Cloudflare certificate](#download-the-cloudflare-root-certificate).
-
 2. Right-click the certificate file.
-
 3. Select **Open**. If a security warning appears, choose **Open** to proceed.
-
 4. The **Certificate** window will appear. Select **Install Certificate**.
-
 5. Now choose a Store Location. If a security warning appears, choose **Yes** to proceed.
-
 6. On the next screen, select **Browse**.
-
 7. In the list, choose the _Trusted Root Certification Authorities_ store.
-
 8. Select **OK**, then select **Finish**.
 
 The root certificate is now installed and ready to be used.
@@ -216,24 +205,23 @@ NixOS does not use the system certificate store for self updating and instead re
 
 ### iOS
 
-iOS only allows the Safari browser to open and install certificates.
-
-1. Open Safari and [download a Cloudflare certificate](#download-the-cloudflare-root-certificate). The device will display a confirmation dialog.
-2. Select **Allow**.
-3. Go to **Settings**, where a new **Profile Downloaded** section will appear directly beneath your iCloud user account info. Alternatively, you can go to **Settings** > **General** > **VPN & Device Management** and select the **Cloudflare for Teams ECC Certificate Authority** profile.
-4. Select **Install**. If the iOS device is passcode-protected, you will be prompted to enter the passcode.
-5. A certificate warning will appear. Select **Install**. If a second prompt appears, select **Install** again.
-6. The Profile Installed screen will appear. Select **Done**. The certificate is now installed. However, before it can be used, it must be trusted by the device.
-7. In **Settings**, go to **General** > **About** > **Certificate Trust Settings**. The installed root certificates will be displayed under Enable full trust for root certificates.
-8. Turn on the Cloudflare certificate.
-9. A security warning message will appear. Choose **Continue**.
+1. In Safari, [download a Cloudflare certificate](#download-the-cloudflare-root-certificate) in `.pem` format.
+2. Open Files and go to **Recents**.
+3. Find and open the downloaded certificate file. A message will appear confirming the profile was downloaded. Select **Close**.
+4. Open Settings. Select the **Profile Downloaded** section beneath your Apple Account info. Alternatively, go to **General** > **VPN & Device Management** and select the **Gateway CA - Cloudflare Managed G1** profile.
+5. Select **Install**. If the iOS device is passcode-protected, you will be prompted to enter the passcode.
+6. A certificate warning will appear. Select **Install**. If a second prompt appears, select **Install** again.
+7. The Profile Installed screen will appear. Select **Done**. The certificate is now installed. However, before it can be used, it must be trusted by the device.
+8. In Settings, go to **General** > **About** > **Certificate Trust Settings**. The installed root certificates will be displayed under Enable full trust for root certificates.
+9. Turn on the Cloudflare certificate.
+10. A security warning message will appear. Choose **Continue**.
 
 The root certificate is now installed and ready to be used.
 
 ### Android
 
 1. [Download a Cloudflare certificate](#download-the-cloudflare-root-certificate).
-2. In **Settings**, go to **Security** > **Advanced** > **Encryption & credentials** > **Install a certificate**.
+2. In Settings, go to **Security** > **Advanced** > **Encryption & credentials** > **Install a certificate**.
 3. Select **CA certificate**.
 4. Select **Install anyway**.
 5. Verify your identity.
