@@ -423,6 +423,45 @@ On some systems you may need to set the following in your path/export list:
 export NODE_EXTRA_CA_CERTS='[PATH_TO_CLOUDFLARE_CERT.pem]'
 ```
 
+### Docker
+
+Before you install a certificate to a Docker container, you must add it to the Docker build context:
+
+1. [Download a Cloudflare certificate](#download-the-cloudflare-root-certificate) in `.pem` format.
+2. Create a directory for certificates:
+
+   ```sh
+   mkdir certs
+   mv /path/to/downloaded/certificate.pem certs/
+   ```
+
+3. Verify the certificate is in the right directory. Your project should have the following structure:
+
+   ```sh
+   docker-project/
+   ├── Dockerfile
+   └── certs/
+       └── certificate.pem
+   ```
+
+4. Add the certificate to the build process:
+
+   <Tabs>
+
+   <TabItem label="During build">
+
+   During build
+
+   </TabItem>
+
+   <TabItem label="Multi-stage build">
+
+   Multi-stage build
+
+   </TabItem>
+
+   </Tabs>
+
 ### Google Cloud
 
 #### Google Cloud SDK
