@@ -13,9 +13,9 @@ Cloudflare Access provides visibility and control over who has access to your [c
 
 ## Prerequisites
 
-* You must have a custom hostname in a Standard, Apex Proxy or BYOIP configuration. For setup instructions, refer to [Configuring Cloudflare for SaaS](/cloudflare-for-platforms/cloudflare-for-saas/start/getting-started/).
+* You must have an active custom hostname. For setup instructions, refer to [Configuring Cloudflare for SaaS](/cloudflare-for-platforms/cloudflare-for-saas/start/getting-started/).
 * You must have a Cloudflare Zero Trust plan in your SaaS provider account. Learn more about [getting started with Zero Trust](/cloudflare-one/setup/).
-* Your customer zone must exist in a separate Cloudflare account, not the same as your SaaS provider account.
+* You can only run Access on custom hostnames if those are managed externally to Cloudflare or in a separate Cloudflare account. If the custom hostname zone is in the same account as the SaaS zone, the Access application will not be applied.
 
 ## Setup
 
@@ -25,6 +25,6 @@ Cloudflare Access provides visibility and control over who has access to your [c
 4. Enter a name for your Access application and, in **Session Duration**, choose how often the user's [application token](/cloudflare-one/identity/authorization-cookie/application-token/) should expire.
 5. In the **Domain** field, insert the custom hostname (for example, `mycustomhostname.com`) and press enter. The custom hostname will not appear in the dropdown and must be manually entered.
     :::caution[Domain field validation]
-    Since your customer zone must be in a separate Cloudflare account, it is expected that you find a validation warning `Zone is not associated with the current account`. You can proceed with the configuration despite this message.
+    Since the custom hostname zone must be in a separate Cloudflare account, it is expected that you find a validation warning `Zone is not associated with the current account`. You can proceed with the configuration despite this message.
     :::
 6. Follow the remaining [self-hosted application creation steps](/cloudflare-one/applications/configure-apps/self-hosted-apps/) to publish the application.
