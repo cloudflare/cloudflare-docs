@@ -30,7 +30,7 @@ This means that - if you choose to use wildcard custom hostnames - you will need
 
 ---
 
-### Step 1 - Get TXT tokens
+### 1. Get TXT tokens
 
 Once you [create a new hostname](/cloudflare-for-platforms/cloudflare-for-saas/security/certificate-management/issue-and-validate/issue-certificates/) and choose this validation method, your tokens will be ready after a few seconds.
 
@@ -48,21 +48,21 @@ Once you [create a new hostname](/cloudflare-for-platforms/cloudflare-for-saas/s
 
 </TabItem> </Tabs>
 
-### Step 2 - Share with your customer
+### 2. Share with your customer
 
 You will then need to share these TXT tokens with your customers.
 
-### Step 3 - Add DNS records (customer)
+### 3. Add DNS records (customer)
 
 <Render file="txt-validation_post" />
 
 <Render file="ssl-for-saas-validate-patch" />
 
-### Step 4 (optional) - Fetch new tokens
+### 4. (Optional) Fetch new tokens
 
 Your DCV tokens expire after a [certain amount of time](/cloudflare-for-platforms/cloudflare-for-saas/reference/token-validity-periods/), depending on your certificate authority.
 
-This means that, if your customers take too long to place their tokens at their authoritative DNS provider, you may need to [get new tokens](#step-1---get-txt-tokens) and re-share them with your customer.
+This means that, if your customers take too long to place their tokens at their authoritative DNS provider, you may need to [get new tokens](#1-get-txt-tokens) and re-share them with your customer.
 
 ---
 

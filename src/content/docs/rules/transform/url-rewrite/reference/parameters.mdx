@@ -3,13 +3,14 @@ title: URL rewrite parameters
 pcx_content_type: reference
 sidebar:
   order: 2
-
 ---
 
 Static and dynamic URL rewrites have different parameters:
 
-* A static URL rewrite requires a static value for the target URL.
-* A dynamic URL rewrite requires an expression that, when evaluated, will define the target URL.
+- A static URL rewrite requires a static value for the target URL.
+- A dynamic URL rewrite requires an expression that, when evaluated, will define the target URL.
+
+A URL rewrite with wildcard patterns is a simplified interface in the Cloudflare dashboard for creating dynamic URL rewrites with [wildcard matching and replacement](#wildcard-matching-and-replacement).
 
 The maximum length of all parameter values in a URL rewrite (combined) is 4,096 characters. For example, you could provide a static value (or an expression) for the URI path with 2,048 characters and a static value (or expression) for the query string with 2,048 characters.
 
@@ -52,6 +53,34 @@ The full syntax of the `action_parameters` field for a dynamic rewrite URL rule 
 ```
 
 If you are only rewriting the URI path or the query string, omit the `query` or `path` parameter, respectively.
+
+#### Wildcard matching and replacement
+
+The syntax of a dynamic rewrite URL rule that rewrites both the URI path and the query string based on wildcard matching and replacement is the following:
+
+```json
+{
+	"expression": "(http.request.full_uri wildcard r\"<REQUEST_URL>\")",
+	"action_parameters": {
+		"uri": {
+			"path": {
+				"expression": "wildcard_replace(http.request.uri.path, r\"<PATH_TARGET_PATH>\", r\"<PATH_REWRITE_TO>\")"
+			},
+			"query": {
+				"expression": "wildcard_replace(http.request.uri.query, r\"<QUERY_TARGET_QUERY>\", r\"<QUERY_REWRITE_TO>\")"
+			}
+		}
+	},
+	"action": "rewrite"
+	// ...
+}
+```
+
+The `<REQUEST_URL>`, `<PATH_TARGET_PATH>`, `<PATH_REWRITE_TO>`, `<QUERY_TARGET_QUERY>`, and `<QUERY_REWRITE_TO>` value placeholders correspond to the fields available in the Cloudflare dashboard when you select the **Wildcard pattern** option. For more information, refer to [Wildcard pattern parameters](/rules/transform/url-rewrite/create-dashboard/#wildcard-pattern-parameters).
+
+:::note
+The `http.request.uri.query` field does not include the `?` delimiter at the beginning, which means that your `<QUERY_TARGET_QUERY>` value should not try to match an initial `?`.
+:::
 
 ### Different URL rewrite types in the same rule
 

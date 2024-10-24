@@ -76,6 +76,7 @@ export const baseSchema = z.object({
 	sidebar: z
 		.object({
 			order: z.number().optional(),
+			label: z.string().optional(),
 			group: z
 				.object({
 					label: z

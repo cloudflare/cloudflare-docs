@@ -35,11 +35,11 @@ Gateway does not support TLS decryption for applications which use:
 
 ### Incompatible certificates
 
-Applications that use certificate pinning and mTLS authentication do not trust the Cloudflare certificate. For example, most mobile applications use <GlossaryTooltip term="certificate pinning" link="/ssl/reference/certificate-pinning/">certificate pinning</GlossaryTooltip>. Cloudflare does not trust applications that use self-signed certificates instead of certificates signed by a public CA.
+Applications that use certificate pinning and mTLS authentication do not trust Cloudflare certificates. For example, most mobile applications use <GlossaryTooltip term="certificate pinning" link="/ssl/reference/certificate-pinning/">certificate pinning</GlossaryTooltip>. Cloudflare does not trust applications that use self-signed certificates instead of certificates signed by a public CA.
 
 If you try to perform TLS decryption, these applications may not load or may return an error. To resolve this issue, you can:
 
-- Add the [Cloudflare certificate](/cloudflare-one/connections/connect-devices/warp/user-side-certificates/install-cloudflare-cert/#add-the-certificate-to-applications) to supported applications.
+- Add a [Cloudflare certificate](/cloudflare-one/connections/connect-devices/warp/user-side-certificates/manual-deployment/#add-the-certificate-to-applications) to supported applications.
 - Create a [Do Not Inspect policy](/cloudflare-one/policies/gateway/http-policies/#do-not-inspect) to exempt applications from inspection. The [Application selector](/cloudflare-one/policies/gateway/http-policies/#application) provides a list of trusted applications that are known to use embedded certificates.
 - Configure a [Split Tunnel](/cloudflare-one/connections/connect-devices/warp/configure-warp/route-traffic/split-tunnels/) in Include mode to ensure Gateway will only inspect traffic destined for your IPs or domains. This is useful for organizations that deploy Zero Trust on users' personal devices or otherwise expect personal applications to be used.
 

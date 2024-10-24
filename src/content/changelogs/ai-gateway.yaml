@@ -5,6 +5,11 @@ productLink: "/ai-gateway/"
 productArea: Developer platform
 productAreaLink: /workers/platform/changelog/platform/
 entries:
+  - publish_date: "2024-10-17"
+    title: Vercel SDK
+    description: |-
+      Added [Vercel AI SDK](https://sdk.vercel.ai/). The SDK supports many different AI providers, tools for streaming completions, and more.
+
   - publish_date: "2024-09-26"
     title: Persistent logs
     description: |-
@@ -23,7 +28,7 @@ entries:
   - publish_date: "2024-09-26"
     title: Evaluations
     description: |-
-      * **Configurations**: Use AI Gateway’s [Evaluations](/ai-gateway/observability/evaluations/index.mdx) to make informed decisions on how to optimize your AI application.
+      * **Configurations**: Use AI Gateway’s [Evaluations](/ai-gateway/evaluations) to make informed decisions on how to optimize your AI application.
 
   - publish_date: "2024-09-10"
     title: Custom costs

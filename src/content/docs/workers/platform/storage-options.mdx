@@ -136,6 +136,10 @@ To get started with D1:
 - Follow the [Get started guide](/d1/get-started/) to provision your first D1 database.
 - Review the [D1 client API](/d1/build-with-d1/d1-client-api/).
 
+:::note
+If your working data size exceeds 10 GB (the maximum size for a D1 database), consider splitting the database into multiple, smaller D1 databases.
+:::
+
 ## Queues
 
 Cloudflare Queues allows developers to send and receive messages with guaranteed delivery. It integrates with [Cloudflare Workers](/workers) and offers at-least once delivery, message batching, and does not charge for egress bandwidth.
@@ -209,4 +213,19 @@ The new beta version of Durable Objects is available where each Durable Object h
 
 :::
 
+## D1 vs Hyperdrive
 
+D1 is a standalone, serverless database that provides a SQL API, using SQLite's SQL semantics, to store and access your relational data.
+
+Hyperdrive is a service that lets you connect to your existing, regional PostgreSQL databases and improves database performance by optimizing them for global, scalable data access from Workers.
+
+- If you are building a new project on Workers or are considering migrating your data, use D1.
+- If you are building a Workers project with an existing PostgreSQL database, use Hyperdrive.
+
+:::note
+
+You cannot use D1 with Hyperdrive.
+
+However, D1 does not need to be used with Hyperdrive because it does not have slow connection setups which would benefit from Hyperdrive's connection pooling. D1 data can also be cached within Workers using the [Cache API](/workers/runtime-apis/cache/).
+
+:::

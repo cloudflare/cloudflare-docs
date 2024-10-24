@@ -9,15 +9,24 @@ import { Render } from "~/components";
 
 The following limits apply to gateway configurations, logs, and related features in Cloudflare's platform.
 
-| Feature                                                         | Limit                      |
-| --------------------------------------------------------------- | -------------------------- |
-| Maximum gateways                                                | 10 per account             |
-| Maximum logs stored [paid plan](/ai-gateway/reference/pricing/) | 10 million per gateway     |
-| Maximum logs stored [free plan](/ai-gateway/reference/pricing/) | 100,000 per account        |
-| Maximum log size stored                                         | 10 MB per log <sup>1</sup> |
-| Maximum Logpush jobs                                            | 4 per account              |
-| Maximum gateway name length                                     | 64 characters              |
+| Feature                                                         | Limit                               |
+| --------------------------------------------------------------- | ----------------------------------- |
+| Maximum datasets                                                | 10 per gateway                      |
+| Maximum gateways                                                | 10 per account                      |
+| Maximum logs stored [paid plan](/ai-gateway/reference/pricing/) | 10 million per gateway <sup>1</sup> |
+| Maximum logs stored [free plan](/ai-gateway/reference/pricing/) | 100,000 per account <sup>2</sup>    |
+| Maximum log size stored                                         | 10 MB per log <sup>3</sup>          |
+| Maximum Logpush jobs                                            | 4 per account                       |
+| Maximum gateway name length                                     | 64 characters                       |
 
-<sup>1</sup> Logs larger than 10 MB will not be stored.
+<sup>1</sup> If you have reached 10 million logs stored per gateway, new logs
+will stop being saved. To continue saving logs, you must delete older logs in
+that gateway to free up space or create a new gateway.
+
+<sup>2</sup> If you have reached 100,000 logs stored per account, accross all
+gateways, new logs will stop being saved. To continue saving logs, you must
+delete older logs.
+
+<sup>3</sup> Logs larger than 10 MB will not be stored.
 
 <Render file="limits-increase" product="ai-gateway" />

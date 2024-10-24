@@ -61,7 +61,7 @@ In the example above, assets would be available through `env.ASSETS`.
 
 Your dynamic code can make new, or forward incoming, requests to your project's static assets using the assets binding.
 
-Take the following example that configures a Worker to return a response under all requests headed for `/api/`. Otherwise, the Worker will fallback to returning static assets.
+Take the following example that configures a Worker script to return a response under all requests headed for `/api/`. Otherwise, the Worker script will pass the incoming request through to the asset binding. In this case, because a Worker script is only invoked when the requested route has not matched any static assets, this will always evaluate [`not_found_handling`](/workers/static-assets/routing/#routing-configuration) behavior.
 
 <Tabs> <TabItem label="JavaScript" icon="seti:javascript">
 
@@ -73,8 +73,8 @@ export default {
 			// TODO: Add your custom /api/* logic here.
 			return new Response("Ok");
 		}
-		// Otherwise, serve the static assets.
-		// Without this, the Worker will error and no assets will be served.
+		// Passes the incoming request through to the assets binding.
+		// No asset matched this request, so this will evaluate `not_found_handling` behavior.
 		return env.ASSETS.fetch(request);
 	},
 };
@@ -94,8 +94,8 @@ export default {
 			// TODO: Add your custom /api/* logic here.
 			return new Response("Ok");
 		}
-		// Otherwise, serve the static assets.
-		// Without this, the Worker will error and no assets will be served.
+		// Passes the incoming request through to the assets binding.
+		// No asset matched this request, so this will evaluate `not_found_handling` behavior.
 		return env.ASSETS.fetch(request);
 	},
 } satisfies ExportedHandler<Env>;

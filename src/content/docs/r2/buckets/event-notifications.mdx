@@ -50,7 +50,7 @@ $ npx wrangler r2 bucket notification create <BUCKET_NAME> --event-type <EVENT_T
 $ npx wrangler r2 bucket notification create <BUCKET_NAME> --event-type <EVENT_TYPE> --queue <QUEUE_NAME> --prefix "<PREFIX_VALUE>" --suffix "<SUFFIX_VALUE>"
 ```
 
-For a more complete step-by-step example, refer to the [Log and store upload events in R2 with event notifications](/r2/examples/upload-logs-event-notifications/) example.
+For a more complete step-by-step example, refer to the [Log and store upload events in R2 with event notifications](/r2/tutorials/upload-logs-event-notifications/) example.
 
 ## Event notification rules
 
@@ -231,5 +231,4 @@ Queue consumers receive notifications as [Messages](/queues/configuration/javasc
 
 ## Notes
 
-- Event notifications are not available for buckets with [jursdictional restrictions](/r2/reference/data-location/#jurisdictional-restrictions) (_coming soon_).
 - Queues [per-queue message throughput](/queues/platform/limits/) is currently 5,000 messages per second. If your workload produces more than 5,000 notifications per second, we recommend splitting notification rules across multiple queues.

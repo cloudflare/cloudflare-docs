@@ -1,11 +1,11 @@
 ---
-inputParameters: shippedLanguage
-
+params:
+  - shippedLanguage
 ---
 
-import { Markdown } from "~/components"
+import { Markdown } from "~/components";
 
-{props.one}, and will only establish a connection to the Cloudflare network when it is activated. Cloudflare recommends leaving it deactivated until you finish [setting it up in the dashboard](#1-create-a-site).
+{props.shippedLanguage}, and will only establish a connection to the Cloudflare network when it is activated. Cloudflare recommends leaving it deactivated until you finish [setting it up in the dashboard](#1-create-a-site).
 
 When the Connector is first activated, one of the ports must be connected to the Internet through a device that supports DHCP. This is required so that the Connector can reach the Cloudflare global network and download the required configurations that you set up in the [site configuration](#1-create-a-site) step.
 

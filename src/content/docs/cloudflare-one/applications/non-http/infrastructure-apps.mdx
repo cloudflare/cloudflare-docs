@@ -10,6 +10,23 @@ sidebar:
 
 import { Badge, Details, Tabs, TabItem, Render } from "~/components";
 
+<Details header="Feature availability">
+
+| [WARP modes](/cloudflare-one/connections/connect-devices/warp/configure-warp/warp-modes/) | [Zero Trust plans](https://www.cloudflare.com/teams-pricing/) |
+| ----------------------------------------------------------------------------------------- | ------------------------------------------------------------- |
+| <ul><li> Gateway with WARP</li><li> Secure Web Gateway without DNS filtering </li></ul>   | All plans                                                     |
+
+| System   | Availability |
+| -------- | ------------ |
+| Windows  | ✅            |
+| macOS    | ✅            |
+| Linux    | ✅            |
+| iOS      | ✅            |
+| Android  | ✅            |
+| ChromeOS | ✅            |
+
+</Details>
+
 Access for Infrastructure allows you to have granular control over how users access individual servers, clusters, or databases in your private network. By adding an infrastructure application to Cloudflare Access, you can configure how users authenticate to the resource as well as control and authorize the ports, protocols, and usernames that they can connect with. Access and command logs ensure regulatory compliance and allow for auditing of user activity in case of a security breach.
 
 :::note
@@ -20,7 +37,6 @@ Access for Infrastructure currently only supports [SSH](/cloudflare-one/connecti
 
 - [Connect your private network](/cloudflare-one/connections/connect-networks/private-net/) to Cloudflare using `cloudflared` or WARP Connector.
 - [Deploy the WARP client](/cloudflare-one/connections/connect-devices/warp/deployment/) on user devices in Gateway with WARP mode.
-- Install and trust the [Cloudflare root certificate](/cloudflare-one/connections/connect-devices/warp/user-side-certificates/) on user devices.
 
 ## 1. Add a target
 
@@ -30,29 +46,13 @@ Access for Infrastructure currently only supports [SSH](/cloudflare-one/connecti
 
 <Render file="access/add-infrastructure-app" />
 
-## 3. Add a policy
-
-<Render file="access/add-infrastructure-policy" />
-
-### Selectors
-
-The following [Access policy selectors](/cloudflare-one/policies/access/#selectors) are available for securing infrastructure applications:
-
-- Email
-- Emails ending in
-- SAML group
-- Country
-- Authentication method
-- Device posture
-- Entra group, GitHub organization, Google Workspace group, Okta group
-
-## 4. Configure the server
+## 3. Configure the server
 
 Certain protocols require configuring the server to trust connections through Access for Infrastructure. For more information, refer to the protocol-specific tutorial:
 
 - [SSH](/cloudflare-one/connections/connect-networks/use-cases/ssh/ssh-infrastructure-access/#7-configure-ssh-server)
 
-## Connect as a user
+## 4. Connect as a user
 
 Users connect to the target's IP address as if they were on your private network, using their preferred client software. The user must be logged into WARP on their device, but no other system configuration is required. You can optionally configure a [private DNS resolver](/cloudflare-one/policies/gateway/resolver-policies/) to allow connections to the target's private hostname.
 
@@ -64,6 +64,50 @@ To connect to targets that are in different VNETS, users will need to [switch th
 If a user is connected to a target in VNET-A and needs to connect to a target in VNET-B, switching their VNET will not break any existing connections to targets within VNET-A. At present, connections are maintained between VNETs.
 :::
 
+### Display available targets
+
+<Details header="Feature availability">
+
+| System   | Availability | Minimum WARP version |
+| -------- | ------------ | -------------------- |
+| Windows  | ✅            | 2024.9.346.0        |
+| macOS    | ✅            | 2024.9.346.0        |
+| Linux    | ✅            | 2024.9.346.0        |
+| iOS      | ❌            |                     |
+| Android  | ❌            |                     |
+| ChromeOS | ❌            |                     |
+
+
+</Details>
+
+Users can use `warp-cli` to display a list of targets they can access. On the WARP device, open a terminal and run the following command:
+
+```sh
+warp-cli target list
+```
+
+```sh output
+╭──────────────────────────────────────┬──────────┬──────┬────────────────────────────────┬───────────────────────────────────────────────────┬───────────╮
+│ Target ID                            │ Protocol │ Port │ Attributes                     │ IP (Virtual Network)                              │ Usernames │
+├──────────────────────────────────────┼──────────┼──────┼────────────────────────────────┼───────────────────────────────────────────────────┼───────────┤
+│ 0192027a-ef8a-7966-aff6-4576475db365 │ SSH      │ 22   │ hostname: digital-ocean-target │ 10.116.0.3 (a663a21c-76e5-4e3c-8296-d856682269f9) │ root      │
+├──────────────────────────────────────┼──────────┼──────┼────────────────────────────────┼───────────────────────────────────────────────────┼───────────┤
+│ 0192027a-ef8a-7966-aff6-4576475db365 │ SSH      │ 23   │ hostname: digital-ocean-target │ 10.116.0.3 (a663a21c-76e5-4e3c-8296-d856682269f9) │ root      │
+╰──────────────────────────────────────┴──────────┴──────┴────────────────────────────────┴───────────────────────────────────────────────────┴───────────╯
+```
+
 ## Revoke a user's session
 
 To revoke a user's access to all infrastructure targets, you can either [revoke the user from Zero Trust](/cloudflare-one/identity/users/session-management/#per-user) or revoke their device. Cloudflare does not currently support revoking a user's session for a specific target.
+
+## Infrastructure policy selectors
+
+The following [Access policy selectors](/cloudflare-one/policies/access/#selectors) are available for securing infrastructure applications:
+
+- Email
+- Emails ending in
+- SAML group
+- Country
+- Authentication method
+- Device posture
+- Entra group, GitHub organization, Google Workspace group, Okta group

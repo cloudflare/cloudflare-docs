@@ -67,7 +67,7 @@ For more troubleshooting information, refer to [Support](/support/troubleshootin
 
 You may not see analytics on the Overview page for the following reasons:
 
-- **You are not sending DNS queries to Gateway**. Verify that the destination IP addresses you are sending DNS queries to are correct. You can check the destination IP addresses for your DNS location by going to **Gateway** > **DNS Locations** and then expanding the location.
+- **You are not sending DNS queries to Gateway**. Verify that the destination IP addresses you are sending DNS queries to are correct. You can check the destination IP addresses for your DNS location by going to **Gateway** > **DNS locations** and then expanding the location.
 - **You are using other DNS resolvers**. If you have other DNS resolvers in your DNS settings, your device could be using IP addresses for resolvers that are not part of Gateway. Make sure to remove all other IP addresses from your DNS settings and only include Gateway's DNS resolver IP addresses.
 - **The source IPv4 address for your DNS location is incorrect**. If you are using IPv4, check the source IPv4 address that you entered for the DNS location matches with the network's source IPv4 address.
 - **Analytics is not available yet**. It takes some time to generate the analytics for Cloudflare Gateway. If you are not seeing anything even after 5 minutes, file a support ticket.
@@ -89,7 +89,7 @@ This error occurs when the identity provider has not included the signing public
 
 This error will appear if a certificate has not been generated for the Access application users are attempting to connect to. For more information on how to generate a certificate for the application on the Access Service Auth SSH page, refer to [these instructions](/cloudflare-one/applications/non-http/short-lived-certificates-legacy/).
 
-## Mobile applications warn of an invalid certificate, even though I installed the Cloudflare certificate on my system.
+## Mobile applications warn of an invalid certificate, even though I installed a Cloudflare certificate on my system.
 
 These mobile applications may use <GlossaryTooltip term="certificate pinning">certificate pinning</GlossaryTooltip> Cloudflare Gateway dynamically generates a certificate for all encrypted connections in order to inspect the content of HTTP traffic. This certificate will not match the expected certificate by applications that use certificate pinning.
 To allow these applications to function normally, administrators can configure bypass rules to exempt traffic to hosts associated with the application from being intercepted and inspected.
@@ -100,7 +100,7 @@ If you see this warning, you may have to disable DNS over HTTPS setting in Firef
 
 ## Chrome shows `NET::ERR_CERT_AUTHORITY_INVALID` when I use the WARP client.
 
-Advanced security features including HTTPS traffic inspection require you to deploy a [root certificate](/cloudflare-one/connections/connect-devices/warp/user-side-certificates/) on the device. If [**Install CA to system certificate store**](/cloudflare-one/connections/connect-devices/warp/user-side-certificates/install-cert-with-warp/) is enabled, the WARP client will automatically install a new root certificate whenever you install or update WARP.
+Advanced security features including HTTPS traffic inspection require you to deploy a [root certificate](/cloudflare-one/connections/connect-devices/warp/user-side-certificates/) on the device. If [**Install CA to system certificate store**](/cloudflare-one/connections/connect-devices/warp/user-side-certificates/automated-deployment/) is enabled, the WARP client will automatically install a new root certificate whenever you install or update WARP.
 
 Certain web browsers (such as Chrome and Microsoft Edge) load and cache root certificates when they start. Therefore, if you install a root certificate while the browser is already running, the browser may not detect the new certificate. To resolve the error, restart the browser.
 
@@ -174,3 +174,9 @@ To enable software rasterization:
 By default, the WARP client blocks outgoing SMTP traffic on port `25` to prevent users from abusing our service to send spam. Modern email service providers use port `587` or `465` to encrypt emails over a TLS/SSL connection. For more information, refer to [What SMTP port should be used?](https://www.cloudflare.com/learning/email-security/smtp-port-25-587/).
 
 If you need to unblock port `25`, contact your account team.
+
+## I see `502 Bad Gateway` when browsing to a website.
+
+This issue can occur when communicating with an origin that partially supports HTTP/2. In these scenarios, the connection from Gateway to the website starts using HTTP/2 but requests a downgrade to HTTP/1.1 for some requests. For example, servers such as [Microsoft Internet Information Services (IIS)](https://learn.microsoft.com/iis/get-started/whats-new-in-iis-10/http2-on-iis#when-is-http2-not-supported) do not support authentication over HTTP/2. When errors occur, the website may send back a `RST_STREAM` frame with the error code `HTTP_1_1_REQUIRED`, which indicates that the browser should retry the request over HTTP/1.1. Gateway translates any received upstream `RST_STREAM` frames to a pseudo socket close, so this appears as a `502 Bad Gateway` exception page. The browser will not indicate why it failed.
+
+Gateway does not support this downgrade mechanism. When receiving the `HTTP_1_1_REQUIRED` error code, Gateway will not reissue requests over HTTP/1.1. To make the connection from Gateway to the website successfully, you will need to disable HTTP/2 at the origin.

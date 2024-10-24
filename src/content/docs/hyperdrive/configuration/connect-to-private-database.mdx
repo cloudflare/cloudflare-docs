@@ -56,7 +56,7 @@ If you are setting up the tunnel through the CLI instead ([locally-managed tunne
 
 The service token will be used to restrict requests to the tunnel, and is needed for the next step.
 
-1. In [Zero Trust](https://one.dash.cloudflare.com), go to **Access** > **Service Auth** > **Service Tokens**.
+1. In [Zero Trust](https://one.dash.cloudflare.com), go to **Access** > **Service auth** > **Service Tokens**.
 
 2. Select **Create Service Token**.
 
@@ -165,3 +165,8 @@ npx wrangler deploy
 ```
 
 If you successfully receive the list of `pg_tables` from your database when you access your deployed Worker, your Hyperdrive has now been configured to securely connect to a private database using [Cloudflare Tunnel](/cloudflare-one/connections/connect-networks/) and [Cloudflare Access](/cloudflare-one/policies/access/).
+
+## Troubleshooting
+
+If you encounter issues when setting up your Hyperdrive configuration with tunnels to a private database, consider these common solutions, in addition to [general troubleshooting steps](/hyperdrive/observability/troubleshooting/) for Hyperdrive:
+* Ensure your database is configured to use TLS (SSL). Hyperdrive requires TLS (SSL) to connect.

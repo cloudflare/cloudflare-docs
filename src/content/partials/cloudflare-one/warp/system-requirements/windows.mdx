@@ -10,4 +10,7 @@
 | **.NET Framework version** | 4.7.2 or later                                    |
 | **HD space**               | 184 MB                                            |
 | **Memory**                 | 3 MB                                              |
-| **Network interface**      | <li> WIFI or LAN </li> <li> MTU ≥ 1280 bytes</li> |
+| **Network interface type**  | WIFI or LAN |
+| **Minimum MTU** | 1360 bytes[^1]|
+
+[^1]: WireGuard requires 1360 bytes for IPv6 and 1340 bytes for IPv4. MASQUE requires 1350 bytes for IPv6 and 1330 bytes for IPv4.

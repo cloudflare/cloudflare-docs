@@ -216,14 +216,69 @@
 			"title": "Cache keys",
 			"link": "/cache/how-to/cache-keys/",
 			"properties": {
-				"availability": {
-					"title": "Availability",
-					"summary": "Enterprise-only",
+				"deception_armor": {
+					"title": "Cache deception armor",
+					"free": "Yes",
+					"pro": "Yes",
+					"biz": "Yes",
+					"ent": "Yes"
+				},
+				"device_type": {
+					"title": "Cache by device type",
+					"free": "Yes",
+					"pro": "Yes",
+					"biz": "Yes",
+					"ent": "Yes"
+				},
+				"ignore_query_string": {
+					"title": "Ignore query string",
+					"free": "Yes",
+					"pro": "Yes",
+					"biz": "Yes",
+					"ent": "Yes"
+				},
+				"sort_query_string": {
+					"title": "Sort query string",
+					"free": "Yes",
+					"pro": "Yes",
+					"biz": "Yes",
+					"ent": "Yes"
+				},
+				"query_string": {
+					"title": "Query string",
 					"free": "No",
 					"pro": "No",
 					"biz": "No",
 					"ent": "Yes"
-				}
+				},
+				"headers": {
+					"title": "Headers",
+					"free": "No",
+					"pro": "No",
+					"biz": "No",
+					"ent": "Yes"
+				},
+				"cookie": {
+					"title": "Cookie",
+					"free": "No",
+					"pro": "No",
+					"biz": "No",
+					"ent": "Yes"
+				},
+				"host": {
+					"title": "Host",
+					"free": "No",
+					"pro": "No",
+					"biz": "No",
+					"ent": "Yes"
+				},
+				"user": {
+					"title": "User features",
+					"free": "No",
+					"pro": "No",
+					"biz": "No",
+					"ent": "Yes"
+				}	
 			}
 		},
 		"cache_level": {
@@ -1728,7 +1783,7 @@
 				},
 				"z_custom_rulesets": {
 					"title": "Custom rulesets",
-					"link": "/waf/custom-rules/custom-rulesets/",
+					"link": "/waf/account/custom-rulesets/",
 					"summary": "Enterprise with add-on",
 					"free": "No",
 					"pro": "No",
@@ -2091,7 +2146,7 @@
 		},
 		"brotli": {
 			"title": "Brotli compression",
-			"link": "/speed/optimization/content/brotli/",
+			"link": "/speed/optimization/content/compression/",
 			"properties": {
 				"availability": {
 					"title": "Availability",

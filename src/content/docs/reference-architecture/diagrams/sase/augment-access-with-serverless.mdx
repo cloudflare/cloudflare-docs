@@ -1,0 +1,190 @@
+---
+title: Extend ZTNA with external authorization and serverless computing
+pcx_content_type: reference-architecture-diagram
+products:
+  - Access
+  - Workers
+sidebar:
+  order: 1
+  label: ZTNA with external authorization
+updated: 2024-10-10
+---
+
+import { RelatedProduct, LinkCard} from "~/components";
+
+## Introduction
+
+Companies using Zero Trust Network Access (ZTNA) services build policies to determine if a user can access a protected resource such as a privately hosted Wiki server or source code repository. Policies typically use group membership, authentication methods, device security posture to determine which users can access which resources. 
+
+Secure access requires a range of attributes being available to the policy engine for evaluation. With Cloudflare's ZTNA service, [Access](/cloudflare-one/policies/access/), it is possible to include in the policy an external request to another API that provides part of the data required for the access decision. 
+
+For example, you might have a policy which states all members of the group "Engineers", who have authenticated with credentials that required a hard token, can have access to the self-hosted source code repository. But you also want to only allow engineers who have completed security training. That data might be available in another system, so Cloudflare allows you to, as part of the policy check, make a call using [Workers](https://workers.cloudflare.com/) to the training system to determine if this user has passed security training.
+
+Additionally, once authentication and the policy checks are successful Cloudflare passes traffic to the protected origin. It is important to note that the origin should, too, verify that the incoming requests are authenticated by Cloudflare in order to avoid any illegitimate access. Cloudflare inserts a JWT token in the traffic destined to the origin to prove cryptographically that the request was successfully authenticated, and the origin can use this data as part of its authorization logic.
+
+To help integrate these types of use cases, Cloudflare has an [entire development platform](/workers/) on which you can design and run your own business logic. This means you spend less time trying to piece a solution together and more time getting the integration done.
+
+This document outlines how to combine both solutions to enhance Cloudflare Access capabilities in terms of [authorization and authentication](https://www.cloudflare.com/learning/access-management/what-is-access-control/).
+
+## Showcased products
+
+<RelatedProduct header="Workers" href="/workers/" product="workers">
+    Build serverless applications and deploy instantly across the globe for exceptional performance, reliability, and scale.
+</RelatedProduct>
+
+<RelatedProduct header="Access" href="/cloudflare-one/" product="cloudflare-one">
+    Cloudflare Zero Trust replaces legacy security perimeters with Cloudflare's global network, making the Internet faster and safer for teams around the world
+</RelatedProduct>
+
+## Use-cases
+
+- **Custom authorization logic**: Access External evaluation using Workers as a backend (for example, using your own implementation of [Open Policy Agent aka OPA](https://www.openpolicyagent.org/integrations/cloudflare-worker/)])
+- **Augmented [JSON Web Token (JWT)](/cloudflare-one/identity/authorization-cookie/validating-json/)**: Using Cloudflare's own authentication JWT material, for example, adding posture details as part of an incoming request.
+- **Serverless augmented apps protected with Zero-trust**: Allowing anyone building serverless applications to benefit from native ZTNA features
+
+
+
+![Figure 1: Showing a request to a private resource and where  Access can be customized for AuthZ and AuthN](~/assets/images/reference-architecture/augment-access-with-serverless/diagram1.svg "Figure 1: Showing a request to a private resource and where  Access can be customized for AuthZ and AuthN")
+
+## Getting started
+
+The following outlines how organizations can run their own custom business logic, allowing them to tailor authentication and authorization processes to meet almost any requirement. Each use case below refers to a step in the above diagram.
+
+### 1. Custom authorization process using your own rules
+
+During policy evaluation, the [external evaluation](/cloudflare-one/policies/access/external-evaluation/) rule allows for executing your own code during access policy evaluation. In this example an API exposed by Cloudflare Workers receives data about the user making the request, the important part being their username.
+
+The code typically makes calls to either a [database](/d1/) or another API to evaluate if the passed username has access to the application. The external evaluation rule requires that the call returns either a True or False, and this is combined with the policy to determine access.
+
+<LinkCard
+    title="Learn more"
+    description="External authorization with Clouflare's external evaluation functionality"
+    href="/cloudflare-one/policies/access/external-evaluation/"
+/>
+
+### 2. Analyze and validate the authentication material (JWT)
+
+When a user successfully authenticates and is authorized to access a protected application, Cloudflare inserts a [JSON Web Token (JWT)](/cloudflare-one/identity/authorization-cookie/validating-json/) into the HTTP traffic sent to the origin. This token serves as a valuable asset for expanding custom business logic through secure processing. The format for that JWT is deterministic and rather lightweight to avoid overloading the requests towards origin unnecessarily. 
+
+Here is an example of a JWT sent to an origin (use [JWT.io](http://jwt.io) to read the contents of a JWT)
+
+
+```json title="JWT content"
+{
+  "aud": [
+    "264063895705477af73bfbaed1bf401981f4812eefcdb9fea33f5e10e666e282"
+  ],
+  "email": "john.doe@cloudflare.com",
+  "exp": 1728551137,
+  "iat": 1728464737,
+  "nbf": 1728464737,
+  "iss": "https://myorg.cloudflareaccess.com",
+  "type": "app",
+  "identity_nonce": "IA0hPRvwILtbUXSQ",
+  "sub": "ce40d564-c72f-475f-a9b8-f395f19ad986",
+  "device_id": "8469d7c4-83a9-11ee-b559-76e6e80876db",
+  "country": "FR"
+}
+```
+
+Cloudflare exposes a specific [endpoint](/cloudflare-one/identity/authorization-cookie/validating-json/#_top) to allow anyone to validate and expand a Cloudflare signed JWT.
+
+Cloudflare's Workers are a great candidate for interacting with incoming JSON Web Tokens (JWTs), enabling additional processing directly within the serverless platform without introducing any added latency.
+
+
+<LinkCard
+    title="Learn more"
+    description="How to validate and visualize Cloudflare Access JWTs"
+    href="/cloudflare-one/identity/authorization-cookie/application-token/#user-identity"
+/>
+
+### 3. Augment the authentication material (JWT) with extra authentication details
+
+In some situations, it is beneficial to elaborate on this JWT in order to execute additional processing on the protected destination application (for example, adding device [posture details](/cloudflare-one/identity/devices/) as part of an incoming request).
+
+In the following example, we want to make sure the exposed application is aware of the  status of the device's firewall and disk encryption (Note that the WARP client needs to be installed on the client machine for these signals to be collected).
+
+![Figure 2: Modified origin request including posture details](~/assets/images/reference-architecture/augment-access-with-serverless/diagram2.svg "Figure 2: Modified origin request including posture details")
+
+When a JSON Web Token (JWT) is expanded, the details of the attached authentication event become visible. This expansion reveals much more information than what is provided by default within the JWT itself, an example is below.
+
+```json title="Expanded JWT"
+{
+  "id": "P51Tuu01fWHMBjIBvrCK1lK-eUDWs2aQMv03WDqT5oY",
+  "name": "John Doe",
+  "email": "john.doe@cloudflare.com",
+  "amr": [
+    "pwd"
+  ],
+  "oidc_fields": {
+    "principalName": "john.doe_cloudflare.com#EXT#@XXXXXXcloudflare.onmicrosoft.com"
+  },
+  "groups": [
+    {
+      "id": "fdaedb59-e9be-4ab7-8001-3e069da54185",
+      "name": "Security Team"
+    }
+  ],
+  "idp": {
+    "id": "b9f4d68e-dac1-48b0-b728-ae05a5f0d4b2",
+    "type": "azureAD"
+  },
+  "geo": {
+    "country": "FR"
+  },
+  "user_uuid": "ce40d564-c72f-475f-a9b8-f395f19ad986",
+  "account_id": "121287a0c6e6260ec930655e6b39a3a8",
+  "iat": 1724056537,
+  "devicePosture": {
+    "f6f9391e-6776-4878-9c60-0cc807dc7dc8": {
+      "id": "f6f9391e-6776-4878-9c60-0cc807dc7dc8",
+      "schedule": "5m",
+      "timestamp": "2024-08-19T08:31:59.274Z",
+      "description": "",
+      "type": "disk_encryption",
+      "check": {
+        "drives": {
+          "C": {
+            "encrypted": true
+          }
+        }
+      },
+      "success": false,
+      "rule_name": "Disk Encryption - Windows",
+      "input": {
+        "requireAll": true,
+        "checkDisks": []
+    },
+    "a0a8e83d-be75-4aa6-bfa0-5791da6e9186": {
+      "id": "a0a8e83d-be75-4aa6-bfa0-5791da6e9186",
+      "schedule": "5m",
+      "timestamp": "2024-08-19T08:31:59.274Z",
+      "description": "",
+      "type": "firewall",
+      "check": {
+        "firewall": false
+      },
+      "success": false,
+      "rule_name": "Local Firewall Check - Windows",
+      "input": {
+        "enabled": true
+      }
+    }
+    ...
+  }
+```
+
+Using the details in the JWT, you can use a Worker to extract the details of the device posture and then reinsert them into HTTP headers which the application uses for its own authorization logic. Below is a guided tutorial explaining how this request modification can be performed with Cloudflare Developer platform.
+
+<LinkCard
+    title="Tutorial"
+    description="How to augment Cloudflare Access JWT with Cloudflare's Workers"
+    href="/cloudflare-one/tutorials/extend-sso-with-workers"
+/>
+
+## Related Resources
+
+- [External Evaluation rules](/cloudflare-one/policies/access/external-evaluation/)
+- [SASE reference architecture](/reference-architecture/architectures/sase/)
+- [External Evaluation rules Developer Documentation](/cloudflare-one/policies/access/external-evaluation/)
+- [External Evaluation blog post](https://blog.cloudflare.com/access-external-validation-rules/)

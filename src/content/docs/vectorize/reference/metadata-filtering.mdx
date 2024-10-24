@@ -7,27 +7,27 @@ sidebar:
 
 import { Render, PackageManagers } from "~/components";
 
-:::note[Enable metadata filtering]
-
-Vectorize requires metadata indexes to be specified before vectors are inserted to support metadata filtering. `string`, `number` and `boolean` metadata indexes are supported. Please refer to [Create metadata indexes](/vectorize/get-started/intro/#4-optional-create-metadata-indexes) for details.
-
-Vectorize supports [namespace](/vectorize/best-practices/insert-vectors/#namespaces) filtering by default.
-
-:::
-
-In addition to providing an input vector to your query, you can also filter by [vector metadata](/vectorize/best-practices/insert-vectors/#metadata) associated with every vector. Query results only include vectors that match `filter` criteria, meaning that `filter` is applied first, and `topK` results are taken from the filtered set.
+In addition to providing an input vector to your query, you can also filter by [vector metadata](/vectorize/best-practices/insert-vectors/#metadata) associated with every vector. Query results will only include vectors that match the `filter` criteria, meaning that `filter` is applied first, and the `topK` results are taken from the filtered set.
 
 By using metadata filtering to limit the scope of a query, you can filter by specific customer IDs, tenant, product category or any other metadata you associate with your vectors.
 
-## Limits
+## Metadata indexes
 
-You can store up to 10KiB of metadata per vector, and create up to 10 metadata indexes per Vectorize index.
+Vectorize supports [namespace](/vectorize/best-practices/insert-vectors/#namespaces) filtering by default, but to filter on another metadata property of your vectors, you'll need to create a metadata index. You can create up to 10 metadata indexes per Vectorize index.
+
+Metadata indexes for properties of type `string`, `number` and `boolean` are supported. Please refer to [Create metadata indexes](/vectorize/get-started/intro/#4-optional-create-metadata-indexes) for details.
+
+You can store up to 10KiB of metadata per vector. See [Vectorize Limits](/vectorize/platform/limits/) for a complete list of limits.
 
 For metadata indexes of type `number`, the indexed number precision is that of float64.
 
 For metadata indexes of type `string`, each vector indexes the first 64B of the string data truncated on UTF-8 character boundaries to the longest well-formed UTF-8 substring within that limit, so vectors are filterable on the first 64B of their value for each indexed property.
 
-See [Vectorize Limits](/vectorize/platform/limits/) for a complete list of limits.
+:::note[Enable metadata filtering]
+
+Vectors upserted before a metadata index was created won't have their metadata contained in that index. Upserting/re-upserting vectors after it was created will have them indexed as expected. Please refer to [Create metadata indexes](/vectorize/get-started/intro/#4-optional-create-metadata-indexes) for details.
+
+:::
 
 ## Supported operations
 
@@ -60,13 +60,13 @@ Both [namespaces](/vectorize/best-practices/insert-vectors/#namespaces) and meta
 #### Explicit operator
 
 ```json
-{ "someKey": { "$ne": true } }
+{ "someKey": { "$ne": "hbo" } }
 ```
 
 #### Implicit logical `AND` with multiple keys
 
 ```json
-{ "pandas.nice": 42, "someKey": { "$ne": true } }
+{ "pandas.nice": 42, "someKey": { "$ne": "someValue" } }
 ```
 
 #### Keys define nesting with `.` (dot)
@@ -152,6 +152,7 @@ Results without metadata filtering:
 
 ```json
 {
+	"count": 3,
 	"matches": [
 		{
 			"id": "5",
@@ -200,6 +201,7 @@ Results with metadata filtering:
 
 ```json
 {
+	"count": 2,
 	"matches": [
 		{
 			"id": "4",

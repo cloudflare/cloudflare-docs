@@ -9,18 +9,18 @@ A target represents a single resource in your infrastructure (such as a server, 
 
 To create a new target:
 
-<Tabs>
+<Tabs syncKey="dashPlusAPI">
 <TabItem label="Dashboard">
-1. In [Zero Trust](https://one.dash.cloudflare.com/), go to **Network** > **Targets**.
+1. In [Zero Trust](https://one.dash.cloudflare.com/), go to **Networks** > **Targets**.
 2. Select **Add a target**.
-3. In **Target hostname**, enter a user-friendly name for the target resource. We recommend using the server hostname, for example `production-server`. The hostname does not need to be unique and can be reused for multiple targets.
+3. In **Target hostname**, enter a user-friendly name for the target resource. We recommend using the server hostname, for example `production-server`. The hostname does not need to be unique and can be reused for multiple targets. Hostnames are used to define the subset of targets included in an infrastructure application and are not used in DNS address resolution.
 	<Details header="Format restrictions">
 			- Case insensitive
-			- Contain no more than 255 characters
+			- Contain no more than 253 characters
 			- Contain only alphanumeric characters, `-`, or `.` (no spaces allowed)
 			- Start and end with an alphanumeric character
 	</Details>
-4. In **IP addresses**, enter the private IPv4 and/or IPv6 address of the target resource. If the IP address overlaps across multiple private networks, select the [virtual network](/cloudflare-one/connections/connect-networks/private-net/cloudflared/tunnel-virtual-networks/) where the resource is located.
+4. In **IP addresses**, enter the private IPv4 and/or IPv6 address of the target resource. If the IP address overlaps across multiple private networks, select the [virtual network](/cloudflare-one/connections/connect-networks/private-net/cloudflared/tunnel-virtual-networks/) where the resource is located. This IP address and virtual network pairing is now assigned to this target and cannot be reused in another target by design.
 :::note[IP address requirements]
 - Public IPs are not currently supported.
 - The IP address must be reachable through Cloudflare Tunnel.
@@ -30,22 +30,51 @@ To create a new target:
 </TabItem>
 <TabItem label="API">
 
-```sh
-curl https://api.cloudflare.com/client/v4/accounts/{account_id}/infrastructure/targets \
---header "Authorization: Bearer <API_TOKEN>" \
---data '{
-  "hostname": "infra-access-target",
-  "ip": {
-    "ipv4": {
-      "ip_addr": "187.26.29.249",
-      "virtual_network_id": "c77b744e-acc8-428f-9257-6878c046ed55"
-    },
-    "ipv6": {
-      "ip_addr": "64c0:64e8:f0b4:8dbf:7104:72b0:ec8f:f5e0",
-      "virtual_network_id": "c77b744e-acc8-428f-9257-6878c046ed55"
+1. [Create an API token](/fundamentals/api/get-started/create-token/) with the following permissions:
+		| Type    | Item             | Permission |
+		| ------- | ---------------- | ---------- |
+		| Account | Zero Trust       | Edit       |
+
+2. Make a `POST` request to the [Infrastructure Access Targets](/api/operations/infra-targets-post) endpoint:
+
+		```sh
+		curl https://api.cloudflare.com/client/v4/accounts/{account_id}/infrastructure/targets \
+		--header "Authorization: Bearer <API_TOKEN>" \
+		--data '{
+			"hostname": "infra-access-target",
+			"ip": {
+				"ipv4": {
+					"ip_addr": "187.26.29.249",
+					"virtual_network_id": "c77b744e-acc8-428f-9257-6878c046ed55"
+				},
+				"ipv6": {
+					"ip_addr": "64c0:64e8:f0b4:8dbf:7104:72b0:ec8f:f5e0",
+					"virtual_network_id": "c77b744e-acc8-428f-9257-6878c046ed55"
+				}
+			}
+		}'
+		```
+
+</TabItem>
+<TabItem label="Terraform">
+
+Configure the [`cloudflare_infrastructure_access_target`](https://registry.terraform.io/providers/cloudflare/cloudflare/4.44.0/docs/resources/infrastructure_access_target) resource:
+
+```tf
+resource "cloudflare_infrastructure_access_target" "infra-ssh-target" {
+  account_id = "f037e56e89293a057740de681ac9abbe"
+    hostname   = "infra-access-target"
+    ip = {
+			ipv4 = {
+         ip_addr = "187.26.29.249"
+         virtual_network_id = "c77b744e-acc8-428f-9257-6878c046ed55"
+       }
+			ipv6 = {
+				ip_addr = "64c0:64e8:f0b4:8dbf:7104:72b0:ec8f:f5e0"
+				virtual_network_id = "c77b744e-acc8-428f-9257-6878c046ed55"
+			}
     }
-  }
-}'
+}
 ```
 
 </TabItem>

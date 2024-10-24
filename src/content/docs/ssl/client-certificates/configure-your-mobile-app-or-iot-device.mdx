@@ -98,7 +98,7 @@ addEventListener("fetch", (event) => {
 
 ---
 
-## Step 1 — Validate API
+## 1. Validate API
 
 ### POST sample data to API
 
@@ -141,7 +141,7 @@ $ curl --silent https://shield.upinatoms.com/temps | jq .
 
 ---
 
-## Step 2 — Create Cloudflare-issued certificates
+## 2. Create Cloudflare-issued certificates
 
 Before you can use API Shield to protect your API or web application, create Cloudflare-issued client certificates.
 
@@ -262,7 +262,7 @@ $ curl https://api.cloudflare.com/client/v4/zones/{zone_id}/client_certificates 
 
 ---
 
-## Step 3 — Embed the client certificate in your mobile app
+## 3. Embed the client certificate in your mobile app
 
 To configure the mobile app to securely request temperature data submitted by the IoT device, embed the client certificate in the mobile app.
 
@@ -274,7 +274,7 @@ Enter Export Password:
 Verifying - Enter Export Password:
 ```
 
-In a real-world deployment, a bootstrap certificate should only be used in conjunction with users’ credentials to authenticate with an API endpoint that can return a unique user certificate. Corporate users will want to use mobile device management (MDM) to distribute certificates.
+In a real-world deployment, a bootstrap certificate should only be used in conjunction with users' credentials to authenticate with an API endpoint that can return a unique user certificate. Corporate users will want to use mobile device management (MDM) to distribute certificates.
 
 ### Embed the client certificate in an Android app
 
@@ -351,7 +351,7 @@ The above function returns an `OkHttpClient` embedded with the client certificat
 
 ---
 
-## Step 4 — Embed the client certificate on your IoT device
+## 4. Embed the client certificate on your IoT device
 
 To prepare the IoT device for secure communication with the API endpoint, embed the certificate on the device and configure the device to use the certificate when making POST requests.
 
@@ -411,12 +411,12 @@ Response status code: 201
 
 ---
 
-## Step 5 — Enable mTLS
+## 5. Enable mTLS
 
 After creating Cloudflare-issued certificates, the next step is to [enable mTLS](/ssl/client-certificates/enable-mtls/) for the hosts you want to protect with API Shield.
 
 ---
 
-## Step 6 — Configure API Shield to require client certificates
+## 6. Configure API Shield to require client certificates
 
 To configure API Shield to require client certificates, [create a mTLS rule](/api-shield/security/mtls/configure/#create-an-mtls-rule/).
