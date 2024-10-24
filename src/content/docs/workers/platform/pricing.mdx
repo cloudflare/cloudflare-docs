@@ -99,25 +99,30 @@ If you had a Worker on the Bundled usage model prior to the migration to Standar
 
 :::
 
-:::note
+## Legacy Workers Pricing
 
-Some Workers Enterprise customers maintain the ability to change usage models. 
+If you are a Workers Enterprise customer, you may have opted to remain on the legacy Bundled or Unbound usage models with the following inclusions: 
+| Usage Model | Requests  | Duration  | CPU time  |       
+|---- | ----- | ------ | ------- |
+| **Bundled** | 10 million included per month | No charge for duration | 50 milliseconds CPU time per invocation  | 
+| **Unbound** | 1 million included per month | 400,000 GB-s included per month | 30 seconds of CPU time per invocation <br /> 15 minutes of CPU time per [Cron Trigger](/workers/configuration/cron-triggers/) or [Queue Consumer](/queues/configuration/javascript-apis/#consumer) invocation |
 
-Usage models may be changed at the individual Worker level:
+If using legacy pricing, you may switch between the Bundled and Unbound usage models. 
+
+**To change your usage model at the individual Worker level:**
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) and select your account.
 2. In Account Home, select **Workers & Pages**.
 3. In **Overview**, select your Worker > **Settings** > **Usage Model**.
 
-To change your default account-wide usage model:
+**To change your default account-wide usage model:**
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) and select your account.
 2. In Account Home, select **Workers & Pages**.
 3. Find **Usage Model** on the right-side menu > **Change**.
 
-Existing Workers will not be impacted when changing the default usage model. You may change the usage model for individual Workers without affecting your account-wide default usage model.
+Existing Workers will not be impacted when changing the default usage model. You may change the usage model for individual Workers without affecting your account-wide default usage model. If you would like to migrate to the [Standard](##Workers) usage model, please contact your account team. 
 
-:::
 
 ## Workers Logs
 
@@ -202,7 +207,7 @@ For example, if Worker A makes a subrequest to Worker B via a Service Binding, o
 - The total amount of CPU time used across both Worker A and Worker B
 
 :::note[Only available on Workers Standard pricing]
-If your Worker is on the deprecated [Bundled](/workers/platform/pricing/#example-pricing-bundled-usage-model) or [Unbound](/workers/platform/pricing/#example-pricing-unbound-usage-model) pricing plans, subrequests and RPC calls made via Service Bindings are charged as if they are request from the Internet. In the example above, you would be charged for two requests, one to Worker A, and one to Worker B.
+If your Worker is on the [legacy Bundled and Unbound pricing plans](#legacy-workers-pricing), subrequests and RPC calls made via Service Bindings are charged as if they are request from the Internet. In the example above, you would be charged for two requests, one to Worker A, and one to Worker B.
 :::
 
 ## Fine Print
