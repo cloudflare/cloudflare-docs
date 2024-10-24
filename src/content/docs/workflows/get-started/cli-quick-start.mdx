@@ -180,9 +180,6 @@ name = "workflows-starter"
 binding = "MY_WORKFLOW"
 # this is class that extends the Workflow class in src/index.ts
 class_name = "MyWorkflow"
-# script_name is required during for the beta.
-# Must match the "name" of your Worker at the top of wrangler.toml
-script_name = "workflows-starter"
 ```
 
 You can then invoke the methods on this binding directly from your Worker script's `env` parameter. The `Workflow` type has methods for:
