@@ -138,11 +138,9 @@ wrangler docs [<COMMAND>]
 
 ## `init`
 
-:::note 
+:::note
 
-
-The `init` command will be removed in a future version. Please use `npm create cloudflare@latest` instead. 
-
+The `init` command will be removed in a future version. Please use `npm create cloudflare@latest` instead.
 
 :::
 
@@ -596,8 +594,10 @@ npx wrangler vectorize query <INDEX_NAME> [OPTIONS]
 
 - `INDEX_NAME` <Type text="string" /> <MetaInfo text="required" />
   - The name of the Vectorize index to query.
-- `--vector` <Type text="array" /> <MetaInfo text="required" />
-  - Vector against which the Vectorize index is queried.
+- `--vector` <Type text="array" /> <MetaInfo text="optional" />
+  - Vector against which the Vectorize index is queried. Either this or the `vector-id` param must be provided.
+- `--vector-id` <Type text="string" /> <MetaInfo text="optional" />
+  - Identifier for a vector that is already present in the index against which the index is queried. Either this or the `vector` param must be provided.
 - `--top-k` <Type text="number" /> <MetaInfo text="optional" />
   - The number of vectors to query (default: `5`).
 - `--return-values` <Type text="boolean" /> <MetaInfo text="optional" />
