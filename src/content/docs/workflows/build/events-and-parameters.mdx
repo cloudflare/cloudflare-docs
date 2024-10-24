@@ -29,23 +29,23 @@ Store state durably by returning it from your `step.do` callbacks.
 
 ```ts
 export default {
-	async fetch(req: Request, env: Env) {
-	  let someEvent = { url: req.url, createdTimestamp: Date.now() }
-	  // Trigger our Workflow
-		// Pass our event as the second parameter to the `create` method
-		// on our Workflow binding.
-		let instance = await env.MYWORKFLOW.create({
+  async fetch(req: Request, env: Env) {
+    let someEvent = { url: req.url, createdTimestamp: Date.now() }
+    // Trigger our Workflow
+    // Pass our event as the second parameter to the `create` method
+    // on our Workflow binding.
+    let instance = await env.MYWORKFLOW.create({
       id: await crypto.randomUUID(),
       params: someEvent
     });
 
-		return Response.json({
-		  id: instance.id,
-		  details: await instance.status(),
-		});
+    return Response.json({
+      id: instance.id,
+      details: await instance.status(),
+    });
 
-		return Response.json({ result });
-	 },
+    return Response.json({ result });
+  },
 };
 ```
 
