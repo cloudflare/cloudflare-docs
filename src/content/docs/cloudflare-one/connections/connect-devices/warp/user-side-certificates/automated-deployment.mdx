@@ -40,7 +40,7 @@ The certificate is required if you want to [apply HTTP policies to encrypted web
 3. Turn on [**Install CA to system certificate store**](/cloudflare-one/connections/connect-devices/warp/configure-warp/warp-settings/#install-ca-to-system-certificate-store).
 4. [Install](/cloudflare-one/connections/connect-devices/warp/download-warp/) the WARP client on the device.
 5. [Enroll the device](/cloudflare-one/connections/connect-devices/warp/deployment/manual-deployment/) in your Zero Trust organization.
-6. (Optional) If the device is running macOS Ventura `13.5` or newer, [manually trust the certificate](#manually-trust-the-certificate).
+6. (Optional) If the device is running macOS Ventura or newer, [manually trust the certificate](#manually-trust-the-certificate).
 
 WARP will install the [certificate set to **In-Use**](/cloudflare-one/connections/connect-devices/warp/user-side-certificates/#certificate-status). This certificate can be either a [Cloudflare-generated certificate](/cloudflare-one/connections/connect-devices/warp/user-side-certificates/#generate-a-cloudflare-root-certificate) or a [custom certificate](/cloudflare-one/connections/connect-devices/warp/user-side-certificates/custom-certificate/). If you turn on a new certificate for inspection, WARP will automatically install the new certificate and remove the old certificate from your users' devices.
 
@@ -52,41 +52,41 @@ WARP only installs the system certificate -- it does not install the certificate
 
 After installing the certificate using WARP, you can verify successful installation by accessing the device's system certificate store.
 
-### Windows
-
-To access the installed certificate in Windows:
-
-1. Open the Start menu and select **Run**.
-2. Enter `certlm.msc`.
-3. Go to **Trusted Root Certification Authority** > **Certificates**.
-
-The default Cloudflare certificate is named **Cloudflare for Teams ECC Certificate Authority**.
-
-The WARP client will also place the certificate in `%ProgramData%\Cloudflare\installed_cert.pem` for reference by scripts or tools.
-
 ### macOS
 
 To access the installed certificate in macOS:
 
 1. Open Keychain Access.
 2. In **System Keychains**, go to **System** > **Certificates**.
-3. Open your certificate. The default Cloudflare certificate is named **Cloudflare for Teams ECC Certificate Authority**.
+3. Open your certificate. The default Cloudflare certificate name is **Gateway CA - Cloudflare Managed G1**.
 4. If the certificate is trusted by all users, Keychain Access will display **This certificate is marked as trusted for all users**.
 
 The WARP client will also place the certificate in `/Library/Application Support/Cloudflare/installed_cert.pem` for reference by scripts or tools.
 
 #### Manually trust the certificate
 
-macOS Ventura `13.5` and newer do not allow WARP to automatically trust the certificate. To manually trust the certificate:
+macOS Ventura and newer do not allow WARP to automatically trust the certificate. To manually trust the certificate:
 
-1. Select **Trust**.
-2. Set **When using this certificate** to _Always Trust_.
+1. In Keychain Access, [find and open the certificate](#macos).
+2. Open **Trust**.
+3. Set **When using this certificate** to _Always Trust_.
+4. (Optional) Restart the device to reset connections to Zero Trust.
 
 Alternatively, you can configure your mobile device management (MDM) to automatically trust the certificate on all of your organization's devices.
 
+### Windows
+
+To access the installed certificate in Windows:
+
+1. Open the Start menu and select **Run**.
+2. Enter `certlm.msc`.
+3. Go to **Trusted Root Certification Authority** > **Certificates**. The default Cloudflare certificate name is **Gateway CA - Cloudflare Managed G1**.
+
+The WARP client will also place the certificate in `%ProgramData%\Cloudflare\installed_cert.pem` for reference by scripts or tools.
+
 ### Linux
 
-On Linux, the certificate is stored in `/usr/local/share/ca-certificates`. The default Cloudflare certificate is named `managed-warp.pem`.
+On Linux, the certificate is stored in `/usr/local/share/ca-certificates`. The default Cloudflare certificate name is `managed-warp.pem`.
 
 If you cannot find the certificate, run the following commands to update the system store:
 
