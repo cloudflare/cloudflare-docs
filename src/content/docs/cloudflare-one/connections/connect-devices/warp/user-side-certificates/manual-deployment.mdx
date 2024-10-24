@@ -432,23 +432,57 @@ Before you install a certificate to a Docker container, you must add it to the D
        └── certificate.pem
    ```
 
-4. Add the certificate to the build process:
+4. Add the certificate to the build process by adding the following to your dockerfile:
 
-   <Tabs>
+   ```docker title="Red Hat/CentOS/Fedora-based images"
+   FROM registry.access.redhat.com/ubi9/ubi:latest
+   # Or use: FROM centos:7 or FROM fedora:38
 
-   <TabItem label="During build">
+   # Install necessary certificates package
+   RUN dnf install -y ca-certificates
 
-   During build
+   # Copy and add Cloudflare root certificate
+   COPY certs/certificate.pem /etc/pki/ca-trust/source/anchors/certificate.crt
+   RUN update-ca-trust extract
+   ```
 
-   </TabItem>
+   ```docker title="Debian/Ubuntu-based images"
+   FROM ubuntu:22.04
 
-   <TabItem label="Multi-stage build">
+   # Install necessary certificates package
+   RUN apt-get update && apt-get install -y ca-certificates
 
-   Multi-stage build
+   # Copy and add Cloudflare root certificate
+   COPY certs/certificate.pem /usr/local/share/ca-certificates/certificate.crt
+   RUN update-ca-certificates
+   ```
 
-   </TabItem>
+   ```docker title="Alpine-based images"
+   FROM alpine:3.18
 
-   </Tabs>
+   # Install necessary certificates package
+   RUN apk add --no-cache ca-certificates
+
+   # Copy and add Cloudflare root certificate
+   COPY certs/certificate.pem /usr/local/share/ca-certificates/certificate.crt
+   RUN update-ca-certificates
+   ```
+
+5. Build the Docker image:
+
+   ```sh
+   docker build -t your-image-name .
+   ```
+
+6. Verify the certificate was installed:
+
+   ```sh title="Red Hat-based images"
+   docker run --rm your-image-name sh -c "cat /etc/pki/ca-trust/extracted/pem/tls-ca-bundle.pem | grep Cloudflare"
+   ```
+
+   ```sh title="Debian/Ubuntu/Alpine-based images"
+   docker run --rm your-image-name sh -c "cat /etc/ssl/certs/certificate.pem"
+   ```
 
 ### Google Cloud
 
