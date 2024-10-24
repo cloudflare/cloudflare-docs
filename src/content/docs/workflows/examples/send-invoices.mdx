@@ -15,7 +15,7 @@ description: Send invoice when shopping cart is checked out and paid for
 
 import { TabItem, Tabs } from "~/components"
 
-In this example we implement a Workflow for that is triggered
+In this example, we implement a Workflow for an e-commerce website that is triggered every time a shopping cart is created.
 
 Once a workflow instance is triggered, it starts polling a [D1](/d1) database for the cart ID until it's been checked out. Once the shopping cart is checked out, we proceed to process the payment with an external provider doing a fetch POST. Finally, assuming everything goes well, we try to send an email using [Email Workers](/email-routing/email-workers/) with the invoice to the customer.
 
