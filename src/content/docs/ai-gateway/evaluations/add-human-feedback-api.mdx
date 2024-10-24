@@ -7,7 +7,7 @@ sidebar:
 
 This guide will walk you through the steps of adding human feedback to an AI Gateway request using the Cloudflare API. You will learn how to retrieve the relevant request logs, and submit feedback using the API.
 
-## Step 1. Create an API Token
+## 1. Create an API Token
 
 1. [Create an API token](/fundamentals/api/get-started/create-token/) with the following permissions:
 
@@ -17,11 +17,11 @@ This guide will walk you through the steps of adding human feedback to an AI Gat
 2. Get your [Account ID](/fundamentals/setup/find-account-and-zone-ids/).
 3. Using that API token and Account ID, send a [`POST` request](/api/operations/aig-config-create-gateway) to the Cloudflare API.
 
-## Step 2. Using the API Token
+## 2. Using the API Token
 
 Once you have the token, you can use it in API requests by adding it to the authorization header as a bearer token. Here is an example of how to use it in a request:
 
-```bash
+````bash
 curl "https://api.cloudflare.com/client/v4/accounts/{account_id}/ai-gateway/gateways/{gateway_id}/logs" \
 --header "Authorization: Bearer {your_api_token}"
 
@@ -53,7 +53,7 @@ In the example below, the `cf-aig-log-id` is `01JADMCQQQBWH3NXZ5GCRN98DP`.
 		"cf-aig-log-id": "01JADMCQQQBWH3NXZ5GCRN98DP"
 	}
 }
-```
+````
 
 ### Method 2: Retrieve the `cf-aig-log-id` via API (GET request)
 
@@ -119,7 +119,7 @@ In the example below, the `id` is `01JADMCQQQBWH3NXZ5GCRN98DP`.
 }
 ```
 
-## Step 4. Submit feedback via PATCH request
+## 4. Submit feedback via PATCH request
 
 Once you have both the API token and the `cf-aig-log-id`, you can send a PATCH request to submit feedback. Use the following URL format, replacing the `{account_id}`, `{gateway_id}`, and `{log_id}` with your specific details:
 
@@ -143,7 +143,7 @@ Add the following in the request body to submit negative feedback:
 }
 ```
 
-## Step 5. Verify the feedback submission
+## 5. Verify the feedback submission
 
 You can verify the feedback submission in two ways:
 
