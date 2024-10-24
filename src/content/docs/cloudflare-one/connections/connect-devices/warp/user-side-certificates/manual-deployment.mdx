@@ -216,24 +216,23 @@ NixOS does not use the system certificate store for self updating and instead re
 
 ### iOS
 
-iOS only allows the Safari browser to open and install certificates.
-
-1. Open Safari and [download a Cloudflare certificate](#download-the-cloudflare-root-certificate). The device will display a confirmation dialog.
-2. Select **Allow**.
-3. Go to **Settings**, where a new **Profile Downloaded** section will appear directly beneath your iCloud user account info. Alternatively, you can go to **Settings** > **General** > **VPN & Device Management** and select the **Cloudflare for Teams ECC Certificate Authority** profile.
-4. Select **Install**. If the iOS device is passcode-protected, you will be prompted to enter the passcode.
-5. A certificate warning will appear. Select **Install**. If a second prompt appears, select **Install** again.
-6. The Profile Installed screen will appear. Select **Done**. The certificate is now installed. However, before it can be used, it must be trusted by the device.
-7. In **Settings**, go to **General** > **About** > **Certificate Trust Settings**. The installed root certificates will be displayed under Enable full trust for root certificates.
-8. Turn on the Cloudflare certificate.
-9. A security warning message will appear. Choose **Continue**.
+1. In Safari, [download a Cloudflare certificate](#download-the-cloudflare-root-certificate) in `.pem` format.
+2. Open Files and go to **Recents**.
+3. Find and open the downloaded certificate file. A message will appear confirming the profile was downloaded. Select **Close**.
+4. Open Settings. Select the **Profile Downloaded** section beneath your Apple Account info. Alternatively, go to **General** > **VPN & Device Management** and select the **Gateway CA - Cloudflare Managed G1** profile.
+5. Select **Install**. If the iOS device is passcode-protected, you will be prompted to enter the passcode.
+6. A certificate warning will appear. Select **Install**. If a second prompt appears, select **Install** again.
+7. The Profile Installed screen will appear. Select **Done**. The certificate is now installed. However, before it can be used, it must be trusted by the device.
+8. In Settings, go to **General** > **About** > **Certificate Trust Settings**. The installed root certificates will be displayed under Enable full trust for root certificates.
+9. Turn on the Cloudflare certificate.
+10. A security warning message will appear. Choose **Continue**.
 
 The root certificate is now installed and ready to be used.
 
 ### Android
 
 1. [Download a Cloudflare certificate](#download-the-cloudflare-root-certificate).
-2. In **Settings**, go to **Security** > **Advanced** > **Encryption & credentials** > **Install a certificate**.
+2. In Settings, go to **Security** > **Advanced** > **Encryption & credentials** > **Install a certificate**.
 3. Select **CA certificate**.
 4. Select **Install anyway**.
 5. Verify your identity.
