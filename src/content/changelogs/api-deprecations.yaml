@@ -216,7 +216,7 @@ entries:
     description: |-
       Deprecation date: August 15, 2024
 
-      The Brotli setting and its API endpoints are deprecated. After the end of life date, Brotli compression will be enabled by default for all zones.
+      The Brotli setting and its API endpoints are deprecated. Brotli compression is now enabled for all non-Enterprise zones, and it will be extended to Enterprise zones in the coming year.
 
       Deprecated APIs:
 
