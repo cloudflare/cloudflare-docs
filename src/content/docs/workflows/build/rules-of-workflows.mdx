@@ -224,3 +224,26 @@ export class MyWorkflow extends WorkflowEntrypoint {
 			// Will always be the same if this step is retried
 		})
 ```
+
+### Name steps deterministically
+
+Dynamically naming a step will prevent it from being cached, and cause the step to be re-run unnecessarily. Step names act as the "cache key" in your Workflow.
+
+```ts
+export class MyWorkflow extends WorkflowEntrypoint {
+	async run(event: WorkflowEvent, step: WorkflowStep) {
+		// 🔴 Bad: Dynamically naming the step prevents it from being cached
+		// This will cause the step to be re-run if subsequent steps fail.
+		await step.do(`step #1 running at: ${Date.now}`, async () => {
+		    let userData = await env.KV.get(event.user)
+				event.data = userData
+		})
+
+		// ✅ Good: give steps a deterministic name.
+		// Return dynamic values in your state, or log them instead.
+		let state = await step.do("fetch user data from KV", async () => {
+		    let userData = await env.KV.get(event.user)
+				console.log(`fetched at ${Date.now})
+				return userData
+		})
+```
