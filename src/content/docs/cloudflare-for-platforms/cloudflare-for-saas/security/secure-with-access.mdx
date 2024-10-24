@@ -25,6 +25,6 @@ Cloudflare Access provides visibility and control over who has access to your [c
 4. Enter a name for your Access application and, in **Session Duration**, choose how often the user's [application token](/cloudflare-one/identity/authorization-cookie/application-token/) should expire.
 5. In the **Domain** field, insert the custom hostname (for example, `mycustomhostname.com`) and press enter. The custom hostname will not appear in the dropdown and must be manually entered.
     :::caution[Domain field validation]
-    Since the custom hostname zone must be in a separate Cloudflare account, it is expected that you find a validation warning `Zone is not associated with the current account`. You can proceed with the configuration despite this message.
+    Since the custom hostname zone must be managed externally to Cloudflare or in a separate Cloudflare account, it is expected that you find a validation warning `Zone is not associated with the current account`. You can proceed with the configuration despite this message.
     :::
 6. Follow the remaining [self-hosted application creation steps](/cloudflare-one/applications/configure-apps/self-hosted-apps/) to publish the application.
