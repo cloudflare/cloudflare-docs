@@ -86,7 +86,7 @@ When you pass your `YourEventType` to `WorkflowEvent` as a type parameter, the `
 // Import the Workflow definition
 import { WorkflowEntrypoint, WorkflowStep, WorkflowEvent} from 'cloudflare:workers';
 
-export class MyWorkflow implements Workflow {
+export class MyWorkflow extends WorkflowEntrypoint {
     // Pass your type as a type parameter to WorkflowEvent
     // The 'payload' property will have the type of your parameter.
     async run(event: WorkflowEvent<YourEventType>, step: WorkflowStep) {
