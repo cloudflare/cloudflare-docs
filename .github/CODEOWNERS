@@ -131,6 +131,7 @@
 /cloudflare-for-platforms/workers-for-platforms/ @irvinebroque @tanushree-sharma @angelampcosta @GregBrimble @cloudflare/pcx-technical-writing
 /src/content/docs/workers/observability/ @irvinebroque @mikenomitch @rohinlohe @cloudflare/pcx-technical-writing
 /src/content/docs/workers/static-assets @irvinebroque @tanushree-sharma @GregBrimble @WalshyDev @cloudflare/pcx-technical-writing
+/src/content/docs/workflows/ @elithrar @celso @sidharthachatterjee @cloudflare/pcx-technical-writing
 
 # DDoS Protection
 
