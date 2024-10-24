@@ -125,9 +125,9 @@ When trying to decide whether to break code up into more than one step, a good r
 
 For example, each of the below tasks is ideally encapsulated in its own step, so that any failure — such as a file not existing, a third-party API being down or rate limited — does not cause your entire program to fail.
 
-* Reading or writing files from R2
+* Reading or writing files from [R2](/r2/)
 * Running an AI task using [Workers AI](/workers-ai/)
-* Querying a D1 database or a database via [Hyperdrive](/hyperdrive/)
+* Querying a [D1 database](/d1/) or a database via [Hyperdrive](/hyperdrive/)
 * Calling a third-party API
 
 If a subsequent step fails, your Workflow can retry from that step, using any state returned from a previous step. This can also help you avoid unnecessarily querying a database or calling an paid API repeatedly for data you have already fetched.
