@@ -48,6 +48,8 @@ const workflowsLaunchDate = Date.parse("24 Oct 2024 13:00:00 UTC");
 await step.sleepUntil("sleep until X times out", workflowsLaunchDate)
 ```
 
+You can also provide a Unix timestamp (seconds since the Unix epoch) directly to `sleepUntil`.
+
 ## Retry steps
 
 Each call to `step.do` in a Workflow accepts an optional `StepConfig`, which allows you define the retry behaviour for that step.
