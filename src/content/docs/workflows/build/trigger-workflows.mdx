@@ -80,7 +80,7 @@ export default {
         // Else, create a new instance of our Workflow, passing in any (optional) params
         // and return the ID.
 		const newId = await crypto.randomUUID();
-		let instance = await env.MY_WORKFLOW.create(newId, {});
+		let instance = await env.MY_WORKFLOW.create({ id: newId });
 		return Response.json({
 			id: instance.id,
 			details: await instance.status(),

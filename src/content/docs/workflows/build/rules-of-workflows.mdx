@@ -19,7 +19,7 @@ check if they were already charged:
 
 ```ts
 export class MyWorkflow extends WorkflowEntrypoint {
-	async run(event: WorkflowEvent, step: WorkflowStep) {
+	async run(event: WorkflowEvent<Params>, step: WorkflowStep) {
 		const customer_id = 123456;
 		// ✅ Good: Non-idempotent API/Binding calls are always done **after** checking if the operation is
 		// still needed.
@@ -69,7 +69,7 @@ You can also think of it as a transaction, or a unit of work.
 
 ```ts
 export class MyWorkflow extends WorkflowEntrypoint {
-	async run(event: WorkflowEvent, step: WorkflowStep) {
+	async run(event: WorkflowEvent<Params>, step: WorkflowStep) {
 		// ✅ Good: Unrelated API/Binding calls are self-contained, so that in case one of them fails
 		// it can retry them individually. It also has an extra advantage: you can control retry or
 		// timeout policies for each granular step - you might not to want to overload http.cat in
@@ -94,7 +94,7 @@ Otherwise, your entire Workflow might not be as durable as you might think, and 
 
 ```ts
 export class MyWorkflow extends WorkflowEntrypoint {
-	async run(event: WorkflowEvent, step: WorkflowStep) {
+	async run(event: WorkflowEvent<Params>, step: WorkflowStep) {
 		// 🔴 Bad: you're calling two seperate services from within the same step. This might cause
 		// some extra calls to the first service in case the second one fails, and in some cases, makes
 		// the step non-idempotent altogether
@@ -120,7 +120,7 @@ function getRandomInt(min, max) {
 }
 
 export class MyWorkflow extends WorkflowEntrypoint {
-	async run(event: WorkflowEvent, step: WorkflowStep) {
+	async run(event: WorkflowEvent<Params>, step: WorkflowStep) {
 		// 🔴 Bad: `imageList` will be not persisted across engine's lifetimes. Which means that after hibernation,
 		// `imageList` will be empty again, even though the following two steps have already ran.
 		const imageList: string[] = [];
@@ -163,7 +163,7 @@ function getRandomInt(min, max) {
 }
 
 export class MyWorkflow extends WorkflowEntrypoint {
-	async run(event: WorkflowEvent, step: WorkflowStep) {
+	async run(event: WorkflowEvent<Params>, step: WorkflowStep) {
 		// ✅ Good: imageList state is exclusively comprised of step returns - this means that in the event of
 		// multiple engine lifetimes, imageList will be built accordingly
 		const imageList: string[] = await Promise.all([
@@ -231,7 +231,7 @@ Dynamically naming a step will prevent it from being cached, and cause the step 
 
 ```ts
 export class MyWorkflow extends WorkflowEntrypoint {
-	async run(event: WorkflowEvent, step: WorkflowStep) {
+	async run(event: WorkflowEvent<Params>, step: WorkflowStep) {
 		// 🔴 Bad: Dynamically naming the step prevents it from being cached
 		// This will cause the step to be re-run if subsequent steps fail.
 		await step.do(`step #1 running at: ${Date.now}`, async () => {
