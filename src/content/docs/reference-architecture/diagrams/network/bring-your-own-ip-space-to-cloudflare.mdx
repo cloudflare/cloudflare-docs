@@ -34,7 +34,7 @@ In the diagram below, the customer wants to proxy traffic through Cloudflare's a
 3. A DNS query for [www.abc.com](http://www.abc.com) is made.
 4. Cloudflare returns an address from the customer's space that was previously configured from BYOIP space provided by the customer. In this case, the response was 152.2.15.200 which is a part of the /24 prefix of 152.2.15.0/24.
 5. The eyeball sends a request to 152.2.15.200 which is routed to the Cloudflare edge.
-6. Cloudflare proxies the connection, leveraging the SNI (www.abc.com) to determine the actual origin IP, 152.3.14.10. The request is then routed through Cloudflare proxy services (e.g. DDoS, Web Application Firewall, Bot Management, etc.)
+6. Cloudflare proxies the connection, using the SNI (www.abc.com) to determine the actual origin IP, 152.3.14.10. The request is then routed through Cloudflare's proxy services, such as DDoS protection, Web Application Firewall, and Bot Management.
 7. Successful requests are sent to origin (if not served by cache) to 152.3.14.10 with a source IP of the Cloudflare edge.
 
 ## BYOIP scenario two \- network DDoS protection
