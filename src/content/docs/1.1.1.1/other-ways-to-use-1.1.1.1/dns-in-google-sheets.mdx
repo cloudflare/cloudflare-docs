@@ -105,7 +105,7 @@ function NSLookup(type, domain, useCache = false, minCacheTTL = 30) {
 
 When you feed the function `NSLookup` a record type and a domain, you will get a DNS record value in the cell you called `NSLookup`.
 
-To limit the number of DNS lookups and speed up the results (especially in larger Google Sheets), you can cache the returned DNS record value for 1800 seconds. Both the cache usage and the cache TTL can be controlled in arguments 3 and 4, respectively.
+To limit the number of DNS lookups and speed up the results (especially in larger Google Sheets), you can cache the returned DNS record value. Both the cache usage and the cache TTL can be controlled in arguments 3 and 4, respectively.
 
 <Details header="Supported DNS record types">
 
