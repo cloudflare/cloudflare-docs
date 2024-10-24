@@ -22,9 +22,8 @@ This guide will walk you through the steps of adding human feedback to an AI Gat
 Once you have the token, you can use it in API requests by adding it to the authorization header as a bearer token. Here is an example of how to use it in a request:
 
 ```bash
-curl -X GET "https://api.cloudflare.com/client/v4/accounts/{account_id}/ai-gateway/gateways/{gateway_id}/logs" \
--H "Authorization: Bearer {your_api_token}"
-```
+curl "https://api.cloudflare.com/client/v4/accounts/{account_id}/ai-gateway/gateways/{gateway_id}/logs" \
+--header "Authorization: Bearer {your_api_token}"
 
 In the request above:
 
