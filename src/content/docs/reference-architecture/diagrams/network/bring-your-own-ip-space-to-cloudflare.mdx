@@ -29,7 +29,7 @@ In the diagram below, the customer wants to proxy traffic through Cloudflare's a
 
 ![Figure 1: Cloudflare announces customer IP range and proxies it to the origin server IP.](~/assets/images/reference-architecture/bring-your-own-ip-space-to-cloudflare/figure1.svg "Figure 1: Cloudflare announces customer IP range and proxies it to the origin server IP.")
 
-1. In order for Cloudflare to respond to DNS queries with addresses from the customer’s space, a Letter of Agency must be provided by the customer to Cloudflare, so that it can be provisioned and advertised by Cloudflare. This example address space (152.3.15.0/24) must be dedicated for Cloudflare’s configuration and not used anywhere within the customer environment.
+1. In order for Cloudflare to respond to DNS queries with addresses from the customer's space, a Letter of Agency must be provided by the customer to Cloudflare, so that it can be provisioned and advertised by Cloudflare. This example address space (152.3.15.0/24) must be dedicated for Cloudflare's configuration and not used anywhere within the customer environment.
 2. The Cloudflare DNS configuration for the origin server [www.abc.com](http://www.abc.com) is configured with the IP address 152.3.14.10/32.
 3. A DNS query for [www.abc.com](http://www.abc.com) is made.
 4. Cloudflare returns an address from the customer’s space that was previously configured from BYOIP space provided by the customer. In this case, the response was 152.2.15.200 which is a part of the /24 prefix of 152.2.15.0/24.
