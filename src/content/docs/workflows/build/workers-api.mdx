@@ -116,10 +116,34 @@ compatibility_date = "2024-10-22"
 [[workflows]]
 # name of your workflow
 name = "workflows-starter"
-# binding name env.MYWORKFLOW
+# binding name env.MY_WORKFLOW
 binding = "MY_WORKFLOW"
 # this is class that extends the Workflow class in src/index.ts
 class_name = "MyWorkflow"
+```
+
+### Cross-script calls
+
+You can also bind to a Workflow that is defined in a different Worker script from the script your Workflow definition is in. To do this, provide the `script_name` key with the name of the script to the `[[workflows]]` binding definition in your `wrangler.toml` configuration.
+
+For example, if your Workflow is defined in a Worker script named `billing-worker`, but you are calling it from your `web-api-worker` script, your `wrangler.toml` would resemble the following:
+
+```toml title="wrangler.toml"
+#:schema node_modules/wrangler/config-schema.json
+name = "web-api-worker"
+main = "src/index.ts"
+compatibility_date = "2024-10-22"
+
+[[workflows]]
+# name of your workflow
+name = "billing-workflow"
+# binding name env.MY_WORKFLOW
+binding = "MY_WORKFLOW"
+# this is class that extends the Workflow class in src/index.ts
+class_name = "MyWorkflow"
+# the script name where the Workflow is defined.
+# required if the Workflow is defined in another script.
+script_name = "billing-worker"
 ```
 
 ## Workflow
