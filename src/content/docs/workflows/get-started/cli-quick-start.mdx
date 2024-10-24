@@ -161,7 +161,7 @@ You can run a Workflow via the `wrangler` CLI, via a Worker binding, or via the 
 
 ```sh
 # Trigger a Workflow from the CLI, and pass (optional) parameters as an event to the Workflow.
-npx wrangler@latest workflows trigger workflows-tutorial --params={"hello":"world"}
+npx wrangler@latest workflows trigger workflows-tutorial --params={"email": "user@example.com", "metadata": {"id": "1"}}
 ```
 
 Refer to the [events and parameters documentation](/workflows/build/events-and-parameters/) to understand how events are passed to Workflows.
