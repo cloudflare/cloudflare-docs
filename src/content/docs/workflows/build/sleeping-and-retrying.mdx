@@ -95,7 +95,8 @@ This can be useful when you detect a terminal (permanent) error from an upstream
 
 ```ts
 // Import the NonRetryableError definition
-import { WorkflowEntrypoint, WorkflowStep, WorkflowEvent, NonRetryableError } from 'cloudflare:workers';
+import { WorkflowEntrypoint, WorkflowStep, WorkflowEvent } from 'cloudflare:workers';
+import { NonRetryableError } from 'cloudflare:workflows';
 
 // In your step code:
 export class MyWorkflow extends WorkflowEntrypoint<Env, Params> {
