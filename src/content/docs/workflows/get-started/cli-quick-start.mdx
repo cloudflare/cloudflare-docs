@@ -147,7 +147,7 @@ You can edit this Workflow by adding (or removing) additional `step` calls, chan
 
 ## 2. Deploy a Workflow
 
-Workflows are deployed via [`wrangler`](/workers/wrangler/install-and-update/), which is installed when you first ran `npm create cloudflare`, above. Workflows are Worker scripts, and are deployed the same way:
+Workflows are deployed via [`wrangler`](/workers/wrangler/install-and-update/), which is installed when you first ran `npm create cloudflare` above. Workflows are Worker scripts, and are deployed the same way:
 
 ```sh
 npx wrangler@latest deploy
@@ -195,7 +195,7 @@ For example, the following Worker will fetch the status of an existing Workflow 
 
 ```ts title="src/index.ts"
 // Import the Workflow definition
-import { WorkflowEntrypoint, WorkflowEvent, WorkflowStep } from "cloudflare:workflows"
+import { WorkflowEntrypoint, WorkflowStep, WorkflowEvent} from 'cloudflare:workers';
 
 interface Env {
   // Matches the binding definition in your wrangler.toml

@@ -8,7 +8,7 @@ sidebar:
 
 import { MetaInfo, Type } from "~/components";
 
-This guide details the Workflows API within Cloudflare Workers, including methods, types and usage examples.
+This guide details the Workflows API within Cloudflare Workers, including methods, types, and usage examples.
 
 ## WorkflowEntrypoint
 
@@ -101,7 +101,7 @@ Workflows currently requires you to bind to a Workflow via `wrangler.toml` and d
 
 :::
 
-Workflows exposes a API directly to your Workers scripts via the [bindings](/workers/runtime-apis/bindings/#what-is-a-binding) concept. Bindings allow you to securely call a Workflow without having to manage API keys or clients.
+Workflows exposes an API directly to your Workers scripts via the [bindings](/workers/runtime-apis/bindings/#what-is-a-binding) concept. Bindings allow you to securely call a Workflow without having to manage API keys or clients.
 
 You can bind to a Workflow by defining a `[[workflows]]` binding within your `wrangler.toml` configuration.
 
@@ -133,7 +133,7 @@ Ensure you have `@cloudflare/workers-types` version `4.20241022.0` or later inst
 
 :::
 
-The `Workflow` type provides methods that allow you to create, inspect the status and manage running Workflow instances from within a Worker script.
+The `Workflow` type provides methods that allow you to create, inspect the status, and manage running Workflow instances from within a Worker script.
 
 ```ts
 interface Env {
@@ -230,7 +230,7 @@ Return the id of a Workflow.
 
 ### status
 
-Pause a running Workflow instance.
+Return the status of a running Workflow instance.
 
 * <code>status(): Promise&lt;void&gt;</code>
 

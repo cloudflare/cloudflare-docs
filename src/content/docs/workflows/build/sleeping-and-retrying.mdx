@@ -60,10 +60,10 @@ If you do not provide your own retry configuration, Workflows applies the follow
 const defaultConfig: WorkflowStepConfig = {
 	retries: {
 		limit: 5,
-		delay: 1000,
-		backoff: "constant",
+		delay: 10000,
+		backoff: 'exponential',
 	},
-	timeout: "15 minutes",
+	timeout: '10 minutes',
 };
 ```
 

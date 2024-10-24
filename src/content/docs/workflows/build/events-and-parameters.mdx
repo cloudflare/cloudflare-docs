@@ -84,7 +84,7 @@ When you pass your `YourEventType` to `WorkflowEvent` as a type parameter, the `
 
 ```ts title="src/index.ts"
 // Import the Workflow definition
-import { Workflow, WorkflowEvent, WorkflowStep } from "cloudflare:workflows"
+import { WorkflowEntrypoint, WorkflowStep, WorkflowEvent} from 'cloudflare:workers';
 
 export class MyWorkflow implements Workflow {
     // Pass your type as a type parameter to WorkflowEvent
