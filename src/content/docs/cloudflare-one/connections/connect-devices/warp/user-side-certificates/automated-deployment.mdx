@@ -58,7 +58,7 @@ To access the installed certificate in macOS:
 
 1. Open Keychain Access.
 2. In **System Keychains**, go to **System** > **Certificates**.
-3. Open your certificate. The default Cloudflare certificate is named **Cloudflare for Teams ECC Certificate Authority**.
+3. Open your certificate. The default Cloudflare certificate name is **Gateway CA - Cloudflare Managed G1**.
 4. If the certificate is trusted by all users, Keychain Access will display **This certificate is marked as trusted for all users**.
 
 The WARP client will also place the certificate in `/Library/Application Support/Cloudflare/installed_cert.pem` for reference by scripts or tools.
@@ -80,13 +80,13 @@ To access the installed certificate in Windows:
 2. Enter `certlm.msc`.
 3. Go to **Trusted Root Certification Authority** > **Certificates**.
 
-The default Cloudflare certificate is named **Cloudflare for Teams ECC Certificate Authority**.
+The default Cloudflare certificate name is **Gateway CA - Cloudflare Managed G1**.
 
 The WARP client will also place the certificate in `%ProgramData%\Cloudflare\installed_cert.pem` for reference by scripts or tools.
 
 ### Linux
 
-On Linux, the certificate is stored in `/usr/local/share/ca-certificates`. The default Cloudflare certificate is named `managed-warp.pem`.
+On Linux, the certificate is stored in `/usr/local/share/ca-certificates`. The default Cloudflare certificate name is `managed-warp.pem`.
 
 If you cannot find the certificate, run the following commands to update the system store:
 
