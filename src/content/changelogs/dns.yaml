@@ -1,0 +1,13 @@
+---
+link: "/dns/changelog/"
+productName: DNS
+productLink: "/dns/"
+productArea: Core platform
+productAreaLink: /fundamentals/reference/changelog/performance/
+entries:
+  - publish_date: "2024-10-15"
+    title: Quote validation for TXT records added via dashboard
+    description: |-
+      When creating TXT records via the dashboard users will now find:
+      - Field validation errors if double quotes `"` are added inconsistently.
+      - Automatically quoted TXT content upon save if no quotes exist in the record content field.
