@@ -1,16 +1,19 @@
 ---
 pcx_content_type: concept
 title: Build watch paths
+description: Reduce compute for your monorepo by specifying paths for Workers Builds to skip
+sidebar:
+  order: 6
 ---
 
-When you connect a git repository to Pages, by default a change to any file in the repository will trigger a Pages build. You can configure Pages to include or exclude specific paths to specify if Pages should skip a build for a given path. This can be especially helpful if you are using a monorepo project structure and want to limit the amount of builds being kicked off.
+When you connect a git repository to Workers, by default a change to any file in the repository will trigger a build. You can configure Workers to include or exclude specific paths to specify if Workers should skip a build for a given path. This can be especially helpful if you are using a monorepo project structure and want to limit the amount of builds being kicked off.
 
 ## Configure paths
 
 To configure which paths are included and excluded:
 
-1. In **Overview**, select your Pages project.
-2. Go to **Settings** > **Build** > **Build watch paths**. Pages will default to setting your project’s includes paths to everything (\[\*]) and excludes paths to nothing (`[]`).
+1. In **Overview**, select your Workers project.
+2. Go to **Settings** > **Build** > **Build watch paths**. Workers will default to setting your project’s includes paths to everything (\[\*]) and excludes paths to nothing (`[]`).
 
 The configuration fields can be filled in two ways:
 
@@ -29,7 +32,7 @@ For each path in a push event, build watch paths will be evaluated as follows:
 - Any remaining paths are checked against includes conditions
 - If any matching path is found, a build is triggered. Otherwise the build is skipped
 
-Pages will bypass the path matching for a push event and default to building the project if:
+Workers will bypass the path matching for a push event and default to building the project if:
 
 - A push event contains 0 file changes, in case a user pushes a empty push event to trigger a build
 - A push event contains 3000+ file changes or 20+ commits
