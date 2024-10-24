@@ -18,7 +18,7 @@ When making requests to [Grok](https://docs.x.ai/docs#getting-started), replace 
 
 ## Examples
 
-### Curl
+### cURL
 
 ```bash title="Request"
 curl -X POST https://gateway.ai.cloudflare.com/v1/{account_id}/{gateway_id}/grok/v1/chat/completions \
@@ -35,7 +35,7 @@ curl -X POST https://gateway.ai.cloudflare.com/v1/{account_id}/{gateway_id}/grok
 }'
 ```
 
-### JavaScript (OpenAI SDK)
+If you are using the OpenAI SDK with JavaScript, you can set your endpoint like this:
 
 ```js title="JavaScript"
 import OpenAI from "openai";
@@ -63,7 +63,7 @@ const completion = await openai.chat.completions.create({
 console.log(completion.choices[0].message);
 ```
 
-### Python (OpenAI SDK)
+If you are using the OpenAI SDK with Python, you can set your endpoint like this:
 
 ```python title="Python"
 import os
@@ -86,7 +86,7 @@ completion = client.chat.completions.create(
 print(completion.choices[0].message)
 ```
 
-### JavaScript (Anthropic SDK)
+If you are using the Anthropic SDK with JavaScript, you can set your endpoint like this:
 
 ```js title="JavaScript"
 import Anthropic from "@anthropic-ai/sdk";
@@ -112,7 +112,7 @@ const msg = await anthropic.messages.create({
 console.log(msg);
 ```
 
-### Python (Anthropic SDK)
+If you are using the Anthropic SDK with Python, you can set your endpoint like this:
 
 ```python title="Python"
 import os
