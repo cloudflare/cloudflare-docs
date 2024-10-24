@@ -17,11 +17,11 @@ import { TabItem, Tabs } from "~/components"
 
 In this example, we implement a Workflow for an e-commerce website that is triggered every time a shopping cart is created.
 
-Once a workflow instance is triggered, it starts polling a [D1](/d1) database for the cart ID until it's been checked out. Once the shopping cart is checked out, we proceed to process the payment with an external provider doing a fetch POST. Finally, assuming everything goes well, we try to send an email using [Email Workers](/email-routing/email-workers/) with the invoice to the customer.
+Once a Workflow instance is triggered, it starts polling a [D1](/d1) database for the cart ID until it has been checked out. Once the shopping cart is checked out, we proceed to process the payment with an external provider doing a fetch POST. Finally, assuming everything goes well, we try to send an email using [Email Workers](/email-routing/email-workers/) with the invoice to the customer.
 
 As you can see, Workflows handles all the different service responses and failures; it will retry D1 until the cart is checked out, retry the payment processor if it fails for some reason, and retry sending the email with the invoice if it can't. The developer doesn't have to care about any of that logic, and the workflow can run for hours, handling all the possible conditions until it is completed.
 
-This is obviously a simplified example of processing a shopping cart. We'd assume more steps and additional logic in a real-life scenario, but hopefully, it gives you a good idea of what you can do with Workflows.
+This is a simplified example of processing a shopping cart. We would assume more steps and additional logic in a real-life scenario, but this example gives you a good idea of what you can do with Workflows.
 
 ```ts
 import {
