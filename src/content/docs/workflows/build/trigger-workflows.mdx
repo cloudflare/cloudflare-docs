@@ -34,7 +34,7 @@ To bind to a Workflow from your Workers code, you need to define a [binding](/wo
 ```toml title="wrangler.toml"
 name = "workflows-tutorial"
 main = "src/index.ts"
-compatibility_date = "2024-10-22"
+compatibility_date = "2024-10-15"
 
 [[workflows]]
 # The name of the Workflow
@@ -117,7 +117,7 @@ The possible values of status are as follows:
   output?: object;
 };
 ```
-
+{/*
 ### Explicitly pause a Workflow
 
 You can explicitly pause a Workflow instance (and later resume it) by calling `pause` against a specific instance ID.
@@ -137,6 +137,7 @@ await instance.resume() // Returns Promise<void>
 ```
 
 Calling `resume` on an instance that is not currently paused will have no effect.
+*/}
 
 ### Stop a Workflow
 
@@ -153,7 +154,7 @@ Once stopped, the Workflow instance *cannot* be resumed.
 
 :::caution
 
-**Known issue**: Restarting a Workflow via the `restart()` method is not currently supported and will throw an exception (error).
+**Known issue**: Restarting a Workflow via the `restart()` method is not currently supported ad will throw an exception (error).
 
 :::
 

@@ -1249,7 +1249,7 @@ Finished processing secrets JSON file:
 
 :::note
 
-`wrangler workflows` commands are available in `wrangler` version `3.82.0` or later.
+The `wrangler workflows` command requires Wrangler version `3.83.0` or greater. Use `npx wrangler@latest` to always use the latest Wrangler version when invoking commands.
 
 :::
 
@@ -1327,6 +1327,7 @@ wrangler workflows instances terminate <WORKFLOW_NAME> <ID> [OPTIONS]
 - `ID` <Type text="string" /> <MetaInfo text="required" />
   - The ID of a Workflow instance.
 
+{/*
 ### `instances pause`
 
 Pause (until resumed) a Workflow instance.
@@ -1352,6 +1353,8 @@ wrangler workflows instances resume <WORKFLOW_NAME> <ID> [OPTIONS]
   - The name of a registered Workflow.
 - `ID` <Type text="string" /> <MetaInfo text="required" />
   - The ID of a Workflow instance.
+
+*/}
 
 ### `describe`
 
