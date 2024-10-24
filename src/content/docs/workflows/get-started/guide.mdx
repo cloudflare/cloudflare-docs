@@ -49,10 +49,12 @@ Open the `src/index.ts` file in your text editor. This file contains the followi
 // Import the Workflow definition
 import { WorkflowEntrypoint, WorkflowEvent, WorkflowStep } from "cloudflare:workers"
 
+type Params = {}
+
 // Create your own class that implements a Workflow
-export class MyWorkflow implements WorkflowEntrypoint {
+export class MyWorkflow extends WorkflowEntrypoint {
     // Define a run() method
-    async run(event: WorkflowEvent, step: WorkflowStep) {
+    async run(event: WorkflowEvent<Params>, step: WorkflowStep) {
         // Define one or more steps that optionally return state.
       	const state = await step.do('my first step', async () => {
             return {}
@@ -99,10 +101,12 @@ At its most basic, a step looks like this:
 // Import the Workflow definition
 import { WorkflowEntrypoint, WorkflowEvent, WorkflowStep } from "cloudflare:workers"
 
+type Params = {}
+
 // Create your own class that implements a Workflow
-export class MyWorkflow implements WorkflowEntrypoint {
+export class MyWorkflow extends WorkflowEntrypoint {
     // Define a run() method
-    async run(event: WorkflowEvent, step: WorkflowStep) {
+    async run(event: WorkflowEvent<Params>, step: WorkflowStep) {
         // Define one or more steps that optionally return state.
         let state = step.do("my first step", async () => {
 
@@ -125,9 +129,9 @@ When trying to decide whether to break code up into more than one step, a good r
 
 For example, each of the below tasks is ideally encapsulated in its own step, so that any failure — such as a file not existing, a third-party API being down or rate limited — does not cause your entire program to fail.
 
-* Reading or writing files from R2
+* Reading or writing files from [R2](/r2/)
 * Running an AI task using [Workers AI](/workers-ai/)
-* Querying a D1 database or a database via [Hyperdrive](/hyperdrive/)
+* Querying a [D1 database](/d1/) or a database via [Hyperdrive](/hyperdrive/)
 * Calling a third-party API
 
 If a subsequent step fails, your Workflow can retry from that step, using any state returned from a previous step. This can also help you avoid unnecessarily querying a database or calling an paid API repeatedly for data you have already fetched.
@@ -150,7 +154,7 @@ Open the `wrangler.toml` file at the root of your `workflows-starter` folder, wh
 #:schema node_modules/wrangler/config-schema.json
 name = "workflows-starter"
 main = "src/index.ts"
-compatibility_date = "2024-10-23"
+compatibility_date = "2024-10-22"
 
 [[workflows]]
 # name of your workflow
@@ -159,7 +163,7 @@ name = "workflows-starter"
 binding = "MY_WORKFLOW"
 # this is class that extends the Workflow class in src/index.ts
 class_name = "MyWorkflow"
-# script_name is required during for the beta.
+# script_name is required during the beta.
 # Must match the "name" of your Worker at the top of wrangler.toml
 script_name = "workflows-starter"
 ```
@@ -328,7 +332,7 @@ Your worker has access to the following bindings:
   - MY_WORKFLOW: MyWorkflow (defined in workflows-starter)
 Uploaded workflows-starter (2.53 sec)
 Deployed workflows-starter triggers (1.12 sec)
-  https://workflows-starter.silverlock.workers.dev
+  https://workflows-starter.YOUR_WORKERS_SUBDOMAIN.workers.dev
   workflow: workflows-starter
 ```
 
