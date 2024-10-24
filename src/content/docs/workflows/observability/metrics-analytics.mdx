@@ -12,7 +12,7 @@ The metrics displayed in the [Cloudflare dashboard](https://dash.cloudflare.com/
 
 ## Metrics
 
-Workflows currently export the below metrics within the `workflowsAdaptiveGroups` GraphQL dataset
+Workflows currently export the below metrics within the `workflowsAdaptiveGroups` GraphQL dataset.
 
 | Metric                 | GraphQL Field Name        | Description                                                                                                                           |
 | ---------------------- | ------------------------- | ------------------------------------------------------------------------------------------------------------------------------------- |
@@ -46,7 +46,7 @@ The possible values for `eventType` are documented below:
 * `WORKFLOW_QUEUED` - the Workflow is queued, but not currently running. This can happen when you are at the [concurrency limit](/workflows/reference/limits/) and new instances are waiting for currently running instances to complete.
 * `WORKFLOW_START` - the Workflow has started and is running.
 * `WORKFLOW_SUCCESS` - the Workflow finished without errors.
-* `WORKFLOW_FAILURE` - the Workflow failed due to errors (exhausting retries, errors thrown, etc)
+* `WORKFLOW_FAILURE` - the Workflow failed due to errors (exhausting retries, errors thrown, etc).
 * `WORKFLOW_TERMINATED` - the Workflow was explicitly terminated.
 
 #### Step-level status labels

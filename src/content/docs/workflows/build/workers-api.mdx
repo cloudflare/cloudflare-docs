@@ -55,7 +55,7 @@ Refer to the [events and parameters](/workflows/build/events-and-parameters/) do
 * <code>step.do(name: string, config?: WorkflowStepConfig, callback: (): RpcSerializable): Promise&lt;T&gt;</code>
 
   * `name` - the name of the step.
-  * `config` (optional) - an optional `WorkflowStepConfig` for configuring [step specific retry behaviour](/workflows/build/sleeping-and-retrying/)
+  * `config` (optional) - an optional `WorkflowStepConfig` for configuring [step specific retry behaviour](/workflows/build/sleeping-and-retrying/).
   * `callback` - an asynchronous function that optionally returns serializable state for the Workflow to persist.
 
 * <code>step.sleep(name: string, duration: WorkflowDuration): Promise&lt;void&gt;</code>

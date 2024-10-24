@@ -47,7 +47,7 @@ Open the `src/index.ts` file in your text editor. This file contains the followi
 
 ```ts title="src/index.ts"
 // Import the Workflow definition
-import { WorkflowEntrypoint, WorkflowEvent, WorkflowStep } from "cloudflare:workflows"
+import { WorkflowEntrypoint, WorkflowEvent, WorkflowStep } from "cloudflare:workers"
 
 // Create your own class that implements a Workflow
 export class MyWorkflow implements WorkflowEntrypoint {
@@ -60,7 +60,7 @@ export class MyWorkflow implements WorkflowEntrypoint {
 
 		await step.sleep('wait on something', '1 minute');
 
-		await await step.do(
+		await step.do(
 			'make a call to write that could maybe, just might, fail',
 			async () => {
 				// Do stuff here, with access to 'state' from the previous step
@@ -97,7 +97,7 @@ At its most basic, a step looks like this:
 
 ```ts title="src/index.ts"
 // Import the Workflow definition
-import { WorkflowEntrypoint, WorkflowEvent, WorkflowStep } from "cloudflare:workflows"
+import { WorkflowEntrypoint, WorkflowEvent, WorkflowStep } from "cloudflare:workers"
 
 // Create your own class that implements a Workflow
 export class MyWorkflow implements WorkflowEntrypoint {
