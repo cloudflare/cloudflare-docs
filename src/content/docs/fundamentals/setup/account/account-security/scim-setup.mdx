@@ -92,13 +92,14 @@ This will provision all of the users affected to your Cloudflare account with "m
 
    Refer to the list of available [Roles](/fundamentals/setup/manage-members/roles/) for more details. 
    :::
-2. In the Application object, go to **Provisioning** and select **Edit**.
-3. Enable **Create Users** and **Deactivate Users**. Select **Save**.
-4. Go to **Push Groups** and make sure the appropriate group matches the existing group of the same name on Cloudflare
-5. Disable **Rename groups**. Select **Save**.
-6. Within the **Push Groups** tab, select **Push Groups**.
-7. Add the groups you created.
-8. Select **Save**.
+2. Go to your SCIM application in the App Integration Catalog, then select **Provisioning**.
+3. Select **Edit**.
+4. Enable **Create Users** and **Deactivate Users**. Select **Save**.
+5. Go to **Push Groups** and make sure the appropriate group matches the existing group of the same name on Cloudflare.
+6. Disable **Rename groups**. Select **Save**.
+7. Within the **Push Groups** tab, select **Push Groups**.
+8. Add the groups you created.
+9. Select **Save**.
 
 Adding any users to these groups will grant them the role. Removing the users from the identity provider will remove them from the associated role.
 
