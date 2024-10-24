@@ -12,6 +12,7 @@ import {
 	learningPathsSchema,
 	videosSchema,
 	workersAiSchema,
+	wranglerCommandsSchema,
 } from "~/schemas";
 
 const partialSchema = z.object({
@@ -72,6 +73,10 @@ export const collections = {
 	}),
 	apps: defineCollection({
 		schema: appsSchema,
+		type: "data",
+	}),
+	"wrangler-commands": defineCollection({
+		schema: wranglerCommandsSchema,
 		type: "data",
 	}),
 };
