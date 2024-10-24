@@ -89,17 +89,15 @@ const { products, productAreas, changelogs } = await getChangelogs();
 <script>
 	import StickyHeader from "@codingheads/sticky-header";
 
-	document.addEventListener("DOMContentLoaded", () => {
-		const navHeightRem = getComputedStyle(document.body).getPropertyValue(
-			"--sl-nav-height",
-		);
-		const navHeightPx = Number(navHeightRem.split("rem")[0]) * 16 + 16;
+	const navHeightRem = getComputedStyle(document.body).getPropertyValue(
+		"--sl-nav-height",
+	);
+	const navHeightPx = Number(navHeightRem.split("rem")[0]) * 16 + 16;
 
-		const headers = document.querySelectorAll<HTMLElement>("[data-date] > h2");
-		headers.forEach(
-			(header) => new StickyHeader(header, { offset: 0 - navHeightPx }),
-		);
-	});
+	const headers = document.querySelectorAll<HTMLElement>("[data-date] > h2");
+	headers.forEach(
+		(header) => new StickyHeader(header, { offset: 0 - navHeightPx }),
+	);
 
 	const productFilter = document.querySelector<HTMLSelectElement>("#products");
 	productFilter?.addEventListener("change", filterEntries);

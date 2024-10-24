@@ -5,6 +5,11 @@ productLink: "/vectorize/"
 productArea: Developer platform
 productAreaLink: /workers/platform/changelog/platform/
 entries:
+  - publish_date: "2024-09-26"
+    title: Vectorize GA
+    description: |-
+      Vectorize is now generally available
+
   - publish_date: "2024-09-16"
     title: Vectorize is available on Workers Free plan
     description: |-

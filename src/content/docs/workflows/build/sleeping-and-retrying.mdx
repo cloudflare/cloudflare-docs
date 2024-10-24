@@ -1,0 +1,113 @@
+---
+title: Sleeping and retrying
+pcx_content_type: concept
+sidebar:
+  order: 4
+
+---
+
+This guide details how to sleep a Workflow and/or configure retries for a Workflow step.
+
+## Sleep a Workflow
+
+You can set a Workflow to sleep as an explicit step, which can be useful when you want a Workflow to wait, schedule work ahead, or pause until an input or other external state is ready.
+
+:::note
+
+A Workflow instance that is resuming from sleep will take priority over newly scheduled (queued) instances. This helps ensure that older Workflow instances can run to completion and are not blocked by newer instances.
+
+:::
+
+### Sleep for a relative period
+
+Use `step.sleep` to have a Workflow sleep for a relative period of time:
+
+```ts
+await step.sleep("sleep for a bit", "1 hour")
+```
+
+The second argument to `step.sleep` accepts both `number` (seconds) or a human-readable format, such as "1 minute" or "26 hours". The accepted units for `step.sleep` when used this way are as follows:
+
+```ts
+| "second"
+| "minute"
+| "hour"
+| "day"
+| "week"
+| "month"
+| "year"
+```
+
+### Sleep until a fixed date
+
+Use `step.sleepUntil` to have a Workflow sleep to a specific `Date`: this can be useful when you have a timestamp from another system or want to "schedule" work to occur at a specific time (e.g. Sunday, 9AM UTC).
+
+```ts
+// sleepUntil accepts a Date object as its second argument
+const workflowsLaunchDate = Date.parse("24 Oct 2024 13:00:00 UTC");
+await step.sleepUntil("sleep until X times out", workflowsLaunchDate)
+```
+
+You can also provide a Unix timestamp (seconds since the Unix epoch) directly to `sleepUntil`.
+
+## Retry steps
+
+Each call to `step.do` in a Workflow accepts an optional `StepConfig`, which allows you define the retry behaviour for that step.
+
+If you do not provide your own retry configuration, Workflows applies the following defaults:
+
+```ts
+const defaultConfig: WorkflowStepConfig = {
+	retries: {
+		limit: 5,
+		delay: 10000,
+		backoff: 'exponential',
+	},
+	timeout: '10 minutes',
+};
+```
+
+When providing your own `StepConfig`, you can configure:
+
+* The total number of attempts to make for a step
+* The delay between attempts
+* What backoff algorithm to apply between each attempt: any of `constant`, `linear`, or `exponential`
+* When to timeout (in duration) before considering the step as failed (including during a retry attempt)
+
+For example, to limit a step to 10 retries and have it apply an exponential delay (starting at 10 seconds) between each attempt, you would pass the following configuration as an optional object to `step.do`:
+
+```ts
+let someState = step.do("call an API", {
+  retries: {
+    limit: 10, // The total number of attempts
+    delay: "10 seconds", // Delay between each retry
+    backoff: "exponential" // Any of "constant" | "linear" | "exponential";
+  },
+  timeout: "30 minutes",
+}, async () => { /* Step code goes here /* }
+```
+
+## Force a Workflow to fail
+
+You can also force a Workflow instance to fail and _not_ retry by throwing a `NonRetryableError` from within the step.
+
+This can be useful when you detect a terminal (permanent) error from an upstream system (such as an authentication failure) or other errors where retrying would not help.
+
+```ts
+// Import the NonRetryableError definition
+import { WorkflowEntrypoint, WorkflowStep, WorkflowEvent } from 'cloudflare:workers';
+import { NonRetryableError } from 'cloudflare:workflows';
+
+// In your step code:
+export class MyWorkflow extends WorkflowEntrypoint<Env, Params> {
+	async run(event: WorkflowEvent<Params>, step: WorkflowStep) {
+	  await step.do("some step", async () => {
+			  if !(event.data) {
+					throw NonRetryableError("event.data did not contain the expected payload")
+				}
+			})
+	}
+}
+```
+
+The Workflow instance itself will fail immediately, no further steps will be invoked, and the Workflow will not be retried.

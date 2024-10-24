@@ -1,0 +1,31 @@
+---
+title: Gmail BCC setup
+pcx_content_type: integration-guide
+sidebar:
+  order: 1
+head:
+  - tag: title
+    content: Setup Gmail with Email Security (formerly
+      Area 1)
+
+---
+
+import { Render, Details } from "~/components"
+
+:::caution[Area 1 has been renamed]
+
+<Render file="rename-area1-to-ces" />
+
+:::
+
+For customers using Gmail, setting up Email Security via BCC is quick and easy. All you need to do is create a content compliance filter to send emails to Email Security through BCC. The following email flow shows how this works:
+
+![Email flow when setting up a phishing assessment risk for Gmail with Email Security.](~/assets/images/email-security/deployment/api-setup/gmail/gmail-bcc-flow.png)
+
+To set up Gmail with Email Security:
+
+1. [Find your BCC address and add a domain](/email-security/deployment/api/setup/gsuite-bcc-setup/add-domain/).
+2. [Add BCC rules](/email-security/deployment/api/setup/gsuite-bcc-setup/bcc-rules-to-area1/).
+3. [Create a project on Google Cloud Console](/email-security/deployment/api/setup/gsuite-bcc-setup/create-project-gcp/).
+4. [Create a service account](/email-security/deployment/api/setup/gsuite-bcc-setup/create-service-account/).
+5. [Add retraction](/email-security/deployment/api/setup/gsuite-bcc-setup/add-retraction/).

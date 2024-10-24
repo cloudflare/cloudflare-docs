@@ -1,13 +1,14 @@
 ---
 title: Access to private apps without having to deploy client agents
 pcx_content_type: reference-architecture-diagram
+products:
+  - Access
+  - Browser Isolation
+  - Gateway
 sidebar:
   order: 1
-head:
-  - tag: title
-    content: "Reference Architecture Diagram: Access to private apps without having
-      to deploy client agents"
-
+  label: Access to private apps without having to deploy client agents
+updated: 2024-04-03
 ---
 
 ## Introduction
@@ -16,9 +17,9 @@ Using Cloudflare to access private resources - such as applications, servers, an
 
 Typically, to provide access to internal resources, you use Cloudflare Zero Trust Network Access [ZTNA](https://www.cloudflare.com/learning/access-management/what-is-ztna/) which supports two methods for how the user device accesses a private resource.
 
-* A CNAME in public DNS, that resolves to a hostname representing the Cloudflare tunnel which proxies the request to the internal application.
+- A CNAME in public DNS, that resolves to a hostname representing the Cloudflare tunnel which proxies the request to the internal application.
 
-* An IP address exposed by Cloudflare tunnel, that again, proxies traffic direct to that IP address.
+- An IP address exposed by Cloudflare tunnel, that again, proxies traffic direct to that IP address.
 
 ## Accessing private applications
 
@@ -38,4 +39,4 @@ Follow this [tutorial](/cloudflare-one/tutorials/clientless-access-private-dns/)
 
 ## Related resources
 
-* [Tutorial: Access a web application via its private hostname without WARP](/cloudflare-one/tutorials/clientless-access-private-dns/)
+- [Tutorial: Access a web application via its private hostname without WARP](/cloudflare-one/tutorials/clientless-access-private-dns/)

@@ -1,5 +1,6 @@
 ---
-inputParameters: ipRange
+params:
+  - ipRange
 ---
 
 import { GlossaryTooltip, Markdown } from "~/components";
@@ -16,7 +17,7 @@ To configure the tunnels between Cloudflare and your locations, you must provide
   - `10.0.0.0/8`
   - `172.16.0.0/12`
   - `192.168.0.0/16`
-  - `169.254.240.0/20` {props.one}
+  - `169.254.240.0/20` {props.ipRange}
     :::caution
     Especially for cloud service providers that might automatically generate prefixes for you, make sure the prefixes are always within the allowed Cloudflare ranges, or the tunnel will not work.
     :::

@@ -1,0 +1,216 @@
+---
+updated: 2024-09-30
+category: 🔐 Zero Trust
+difficulty: Advanced
+pcx_content_type: tutorial
+title: Send SSO attributes to Access-protected origins with Workers
+---
+
+import { Render, GlossaryTooltip, PackageManagers } from "~/components"
+
+This tutorial will walk you through extending the single-sign-on (SSO) capabilities of [Cloudflare Access](/cloudflare-one/policies/access/) with our serverless computing platform, [Cloudflare Workers](/workers/). Specifically, this guide will demonstrate how to modify requests sent to your secured origin to include additional information from the Cloudflare Access authentication event.
+
+**Time to complete:** 45 minutes
+
+## Authentication flow
+
+[Cloudflare Access](/cloudflare-one/policies/access/) is an authentication proxy in charge of validating a user's identity before they connect to your application. As shown in the diagram below, Access inserts a [JWT](/cloudflare-one/identity/authorization-cookie/application-token/) into the request, which can then be [verified](/cloudflare-one/identity/authorization-cookie/validating-json/#validate-jwts) by the origin server.
+
+![Standard authentication flow for a request to an Access application](~/assets/images/cloudflare-one/applications/access-standard-flow.png)
+
+You can extend this functionality by using a Cloudflare Worker to insert additional HTTP headers into the request. In this example, we will add the [device posture attributes](/cloudflare-one/identity/devices/#enforce-device-posture) `firewall_activated` and `disk_encrypted`, but you can include any attributes that Cloudflare Access collects from the authentication event.
+
+![Extended authentication flow uses a Worker to pass additional request headers to the origin](~/assets/images/cloudflare-one/applications/access-extended-flow-serverless.png)
+
+## Benefits
+
+This approach allows you to:
+
+* **Enhance security:** By incorporating additional information from the authentication event, you can implement more robust security measures. For example, you can use device posture data to enforce access based on device compliance.
+* **Improve user experience:** You can personalize the user experience by tailoring content or functionality based on user attributes. For example, you can display different content based on the user's role or location.
+* **Simplify development:** By using Cloudflare Workers, you can easily extend your Cloudflare Access configuration without modifying your origin application code.
+
+
+## Before you begin
+
+- Add a [self-hosted application](/cloudflare-one/applications/configure-apps/self-hosted-apps/) to Cloudflare Access.
+- Enable the [Disk encryption](/cloudflare-one/identity/devices/warp-client-checks/disk-encryption/) and [Firewall](/cloudflare-one/identity/devices/warp-client-checks/firewall/) device posture checks.
+- Install [Wrangler](/workers/wrangler/install-and-update/) on your local machine.
+
+## 1. Create the Worker
+
+1. Create a new Workers project:
+
+		<PackageManagers
+			type="create"
+			pkg="cloudflare@latest"
+			args={"device-posture-worker"}
+		/>
+
+		<Render
+			file="c3-post-run-steps"
+			product="workers"
+			params={{
+				category: "hello-world",
+				type: "Hello World Worker",
+				lang: "JavaScript",
+			}}
+		/>
+
+2. Change to the project directory:
+
+    ```sh
+    $ cd device-posture-worker
+    ```
+
+3. Copy-paste the following code into `src/index.js`. Be sure to replace `<your-team-name>` with your Zero Trust <GlossaryTooltip term="team name">team name</GlossaryTooltip>.
+
+    ```js title="index.js"
+
+    import { parse } from "cookie";
+    export default {
+      async fetch(request, env, ctx) {
+        // The name of the cookie
+        const COOKIE_NAME = "CF_Authorization";
+      const CF_GET_IDENTITY = "https://<your-team-name>.cloudflareaccess.com>/cdn-cgi/access/get-identity";
+        const cookie = parse(request.headers.get("Cookie") || "");
+        if (cookie[COOKIE_NAME] != null) {
+        try {
+        let id = await (await fetch(CF_GET_IDENTITY, request)).json()
+        let diskEncryptionStatus = false;
+        let firewallStatus = false;
+
+        for (const checkId in id.devicePosture) {
+          const check = id.devicePosture[checkId];
+          if (check.type === "disk_encryption") {
+            console.log(check.type)
+            diskEncryptionStatus = check.success;
+          }
+          if (check.type === "firewall") {
+            console.log(check.type)
+            firewallStatus = check.success;
+            break;
+          }
+        }
+        //clone request (immutable otherwise) and insert posture values in new header set
+        let newRequest = await new Request(request)
+        newRequest.headers.set("Cf-Access-Firewall-Activated", firewallStatus)
+        newRequest.headers.set("Cf-Access-Disk-Encrypted", firewallStatus)
+
+        //sent modified request to origin
+        return await fetch(newRequest)
+
+        } catch (e) {
+        console.log(e)
+        return await fetch(request)
+        }
+        }
+        return await fetch(request)
+      },
+    };
+
+    ```
+
+## 2. View the user's identity
+
+The script in `index.js` uses the [`get-identity`](/cloudflare-one/identity/authorization-cookie/application-token/#user-identity) endpoint to fetch a user's complete identity from a Cloudflare Access authentication event. To view a list of available data fields, log in to your Access application and append `/cdn-cgi/access/get-identity` to the URL. For example, if `www.example.com` is behind Access, go to `https://www.example.com/cdn-cgi/access/get-identity`.
+
+Below is an example of a user identity that includes the `disk_encryption` and `firewall` posture checks. The Worker inserts the posture check results into the request headers **Cf-Access-Firewall-Activated** and **Cf-Access-Disk-Encrypted**.
+
+```json title="Example user identity" {33,52}
+{
+  "id": "P51Tuu01fWHMBjIBvrCK1lK-eUDWs2aQMv03WDqT5oY",
+  "name": "John Doe",
+  "email": "john.doe@cloudflare.com",
+  "amr": [
+    "pwd"
+  ],
+  "oidc_fields": {
+    "principalName": "XXXXXX_cloudflare.com#EXT#@XXXXXXcloudflare.onmicrosoft.com"
+  },
+  "groups": [
+    {
+      "id": "fdaedb59-e9be-4ab7-8001-3e069da54185",
+      "name": "XXXXX"
+    }
+  ],
+  "idp": {
+    "id": "b9f4d68e-dac1-48b0-b728-ae05a5f0d4b2",
+    "type": "azureAD"
+  },
+  "geo": {
+    "country": "FR"
+  },
+  "user_uuid": "ce40d564-c72f-475f-a9b8-f395f19ad986",
+  "account_id": "121287a0c6e6260ec930655e6b39a3a8",
+  "iat": 1724056537,
+  "devicePosture": {
+    "f6f9391e-6776-4878-9c60-0cc807dc7dc8": {
+      "id": "f6f9391e-6776-4878-9c60-0cc807dc7dc8",
+      "schedule": "5m",
+      "timestamp": "2024-08-19T08:31:59.274Z",
+      "description": "",
+      "type": "disk_encryption",
+      "check": {
+        "drives": {
+          "C": {
+            "encrypted": true
+          }
+        }
+      },
+      "success": false,
+      "rule_name": "Disk Encryption - Windows",
+      "input": {
+        "requireAll": true,
+        "checkDisks": []
+    },
+    "a0a8e83d-be75-4aa6-bfa0-5791da6e9186": {
+      "id": "a0a8e83d-be75-4aa6-bfa0-5791da6e9186",
+      "schedule": "5m",
+      "timestamp": "2024-08-19T08:31:59.274Z",
+      "description": "",
+      "type": "firewall",
+      "check": {
+        "firewall": false
+      },
+      "success": false,
+      "rule_name": "Local Firewall Check - Windows",
+      "input": {
+        "enabled": true
+      }
+    }
+    ...
+  }
+```
+
+## 3. Route the Worker to your application
+
+In `wrangler.toml`, [set up a route](/workers/configuration/routing/routes/) that maps the Worker to your Access application domain:
+
+```toml
+route = { pattern= "app.example.com/*", zone_name="example.com"}
+```
+
+## 4. Deploy the Worker
+
+```sh
+npx wrangler deploy
+```
+
+The Worker will now insert the **Cf-Access-Firewall-Activated** and **Cf-Access-Disk-Encrypted** headers into requests that pass your application's Access policies.
+
+```json title="Example request headers" {7,8}
+{
+  "headers": {
+    "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7",
+    "Accept-Encoding": "gzip",
+    "Accept-Language": "en-US,en;q=0.9,fr-FR;q=0.8,fr;q=0.7,en-GB;q=0.6",
+    "Cf-Access-Authenticated-User-Email": "John.Doe@cloudflare.com",
+    "Cf-Access-Disk-Encrypted": "false",
+    "Cf-Access-Firewall-Activated": "false",
+    "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/127.0.0.0 Safari/537.36"
+  }
+}
+```
+
+You can verify that these headers are received by the origin server.

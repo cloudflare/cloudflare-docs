@@ -1,0 +1,15 @@
+---
+import { z } from "astro:schema";
+
+type Props = z.infer<typeof props>;
+
+const props = z
+	.object({
+		text: z.string(),
+	})
+	.strict();
+
+const { text } = props.parse(Astro.props);
+---
+
+<span class="text-xs align-middle">{text}</span>

@@ -18,7 +18,7 @@ For more background information on Origin CA certificates, refer to the [introdu
 
 :::note
 
-Using Cloudflare Origin CA certificates do not prevent you from using [delegated DCV](/ssl/edge-certificates/changing-dcv-method/methods/delegated-dcv/). 
+Using Cloudflare Origin CA certificates do not prevent you from using [delegated DCV](/ssl/edge-certificates/changing-dcv-method/methods/delegated-dcv/).
 :::
 
 ## Availability
@@ -120,7 +120,7 @@ Wildcards may only cover one level, but can be used multiple times on the same c
 
 ## API calls
 
-To automate processes involving Origin CA certificates, use the following API calls with [Origin CA Keys](/fundamentals/api/get-started/ca-keys/).
+To automate processes involving Origin CA certificates, use the following API calls. To authenticate, use either [Origin CA Keys](/fundamentals/api/get-started/ca-keys/) or an [API token](/fundamentals/api/get-started/create-token/) with **Permissions** that include `Zone`-`SSL and Certificates`-`Edit`.
 
 | Operation                                                          | Method   | Endpoint                           |
 | ------------------------------------------------------------------ | -------- | ---------------------------------- |

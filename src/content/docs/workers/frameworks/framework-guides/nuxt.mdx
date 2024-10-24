@@ -1,0 +1,69 @@
+---
+pcx_content_type: how-to
+title: Nuxt
+head: []
+description: Create a Nuxt application and deploy it to Cloudflare Workers with Workers Assets.
+---
+
+import {
+	Badge,
+	Description,
+	InlineBadge,
+	Render,
+	PackageManagers,
+} from "~/components";
+
+In this guide, you will create a new [Nuxt](https://nuxt.com/) application and deploy to Cloudflare Workers (with the new [<InlineBadge preset="beta" /> Workers Assets](/workers/static-assets/)).
+
+## 1. Set up a new project
+
+Use the [`create-cloudflare`](https://www.npmjs.com/package/create-cloudflare) CLI (C3) to set up a new project. C3 will create a new project directory, initiate Nuxt's official setup tool, and provide the option to deploy instantly.
+
+To use `create-cloudflare` to create a new Nuxt project with <InlineBadge preset="beta" /> Workers Assets, run the following command:
+
+<PackageManagers
+	type="create"
+	pkg="cloudflare@latest my-nuxt-app"
+	args={"--framework=nuxt --experimental"}
+/>
+
+<Render
+	file="c3-post-run-steps"
+	product="workers"
+	params={{
+		category: "web-framework",
+		framework: "Nuxt",
+	}}
+/>
+
+After setting up your project, change your directory by running the following command:
+
+```sh
+cd my-nuxt-app
+```
+
+## 2. Develop locally
+
+After you have created your project, run the following command in the project directory to start a local server. This will allow you to preview your project locally during development.
+
+<PackageManagers type="run" args={"dev"} />
+
+## 3. Deploy your Project
+
+Your project can be deployed to a `*.workers.dev` subdomain or a [Custom Domain](/workers/configuration/routing/custom-domains/), from your own machine or from any CI/CD system, including [Cloudflare's own](/workers/ci-cd/builds/).
+
+The following command will build and deploy your project. If you're using CI, ensure you update your ["deploy command"](/workers/ci-cd/builds/configuration/#build-settings) configuration appropriately.
+
+<PackageManagers type="run" args={"deploy"} />
+
+---
+
+## Bindings
+
+Your Nuxt application can be fully integrated with the Cloudflare Developer Platform, in both local development and in production, by using product bindings. The [Nuxt documentation](https://nitro.unjs.io/deploy/providers/cloudflare#direct-access-to-cloudflare-bindings) provides information about configuring bindings and how you can access them in your Nuxt event handlers.
+
+## Static assets
+
+You can serve static assets your Nuxt application by placing them in [the `./public/` directory](https://nuxt.com/docs/guide/directory-structure/public). This can be useful for resource files such as images, stylesheets, fonts, and manifests.
+
+<Render file="workers-assets-routing-summary" />

@@ -3,6 +3,7 @@ pcx_content_type: reference
 title: Workers API reference
 
 ---
+import { Type, MetaInfo } from "~/components";
 
 The in-Worker R2 API is accessed by binding an R2 bucket to a [Worker](/workers). The Worker you write can expose external access to  buckets via a route or manipulate R2 objects internally.
 
@@ -63,41 +64,39 @@ export default {
 };
 ```
 
-
-
-* <code>head(keystring)</code> : Promise\<R2Object|null>
+* `head` <Type text="(key: string): Promise<R2Object | null>" />
 
   * Retrieves the `R2Object` for the given key containing only object metadata, if the key exists, and `null` if the key does not exist.
 
-* <code>get(keystring, optionsR2GetOptionsoptional)</code> : Promise\<R2ObjectBody|R2Object|null>
+* `get` <Type text="(key: string, options?: R2GetOptions): Promise<R2ObjectBody | R2Object | null>" />
 
   * Retrieves the `R2ObjectBody` for the given key containing object metadata and the object body as a <code>ReadableStream</code>, if the key exists, and `null` if the key does not exist.
   * In the event that a precondition specified in <code>options</code> fails, <code>get()</code> returns an <code>R2Object</code> with <code>body</code> undefined.
 
-* <code>put(keystring, valueReadableStream|ArrayBuffer|ArrayBufferView|string|null|Blob,</code> <code> optionsR2PutOptionsoptional)</code> : Promise\<R2Object|null>
+* `put` <Type text="(key: string, value: ReadableStream | ArrayBuffer | ArrayBufferView | string | null | Blob, options?: R2PutOptions): Promise<R2Object | null>" />
 
   * Stores the given <code>value</code> and metadata under the associated <code>key</code>. Once the write succeeds, returns an `R2Object` containing metadata about the stored Object.
   * In the event that a precondition specified in <code>options</code> fails, <code>put()</code> returns `null`, and the object will not be stored.
   * R2 writes are strongly consistent. Once the Promise resolves, all subsequent read operations will see this key value pair globally.
 
-* <code>delete(keysstring | string\[])</code> : Promise\<void >
+* `delete` <Type text="(key: string | string[]): Promise<void>" />
 
   * Deletes the given <code>values</code> and metadata under the associated <code>keys</code>. Once the delete succeeds, returns <code>void</code>.
   * R2 deletes are strongly consistent. Once the Promise resolves, all subsequent read operations will no longer see the provided key value pairs globally.
 
-* <code>list(optionsR2ListOptionsoptional)</code> : Promise\<R2Objects>
+* `list` <Type text="(options?: R2ListOptions): Promise<R2Objects>" />
 
   * Returns an <code>R2Objects</code> containing a list of <code>R2Object</code> contained within the bucket.
   * The returned list of objects is ordered lexicographically. 
   * Returns up to 1000 entries, but may return less in order to minimize memory pressure within the Worker.
   * To explicitly set the number of objects to list, provide an [R2ListOptions](/r2/api/workers/workers-api-reference/#r2listoptions) object with the `limit` property set. 
 
-* <code>createMultipartUpload(keystring, optionsR2MultipartOptions)</code> : Promise\<R2MultipartUpload>
+* `createMultipartUpload` <Type text="(key: string, options?: R2MultipartOptions): Promise<R2MultipartUpload>" />
 
   * Creates a multipart upload.
   * Returns Promise which resolves to an `R2MultipartUpload` object representing the newly created multipart upload. Once the multipart upload has been created, the multipart upload can be immediately interacted with globally, either through the Workers API, or through the S3 API.
 
-* <code>resumeMultipartUpload(keystring, uploadIdstring)</code> : R2MultipartUpload
+* `resumeMultipartUpload` <Type text="(key: string, uploadId: string): R2MultipartUpload" />
 
   * Returns an object representing a multipart upload with the given key and uploadId.
   * The resumeMultipartUpload operation does not perform any checks to ensure the validity of the uploadId, nor does it verify the existence of a corresponding active multipart upload. This is done to minimize latency before being able to call subsequent operations on the `R2MultipartUpload` object.
@@ -110,19 +109,19 @@ export default {
 
 
 
-* <code>key</code>string
+* `key` <Type text="string" />
 
   * The object's key.
 
-* <code>version</code>string
+* `version` <Type text="string" />
 
   * Random unique string associated with a specific upload of a key.
 
-* <code>size</code>number
+* `size` <Type text="number" />
 
   * Size of the object in bytes.
 
-* <code>etag</code>string
+* `etag` <Type text="string" />
 
 :::note
 
@@ -131,35 +130,35 @@ Cloudflare recommends using the `httpEtag` field when returning an etag in a res
 
 * The etag associated with the object upload.
 
-* <code>httpEtag</code>string
+* `httpEtag` <Type text="string" />
 
   * The object's etag, in quotes so as to be returned as a header.
 
-* <code>uploaded</code>Date
+* `uploaded` <Type text="Date" />
 
   * A Date object representing the time the object was uploaded.
 
-* <code>httpMetadata</code>R2HTTPMetadata
+* `httpMetadata` <Type text="R2HTTPMetadata" />
 
   * Various HTTP headers associated with the object. Refer to [HTTP Metadata](#http-metadata).
 
-* <code>customMetadata</code>Record\<string, string>
+* `customMetadata` <Type text="Record<string, string>" />
 
   * A map of custom, user-defined metadata associated with the object.
 
-* <code>range</code> R2Range
+* `range`  <Type text="R2Range" />
 
   * A `R2Range` object containing the returned range of the object.
 
-* <code>checksums</code> R2Checksums
+* `checksums`  <Type text="R2Checksums" />
 
   * A `R2Checksums` object containing the stored checksums of the object. Refer to [checksums](#checksums).
 
-* <code>writeHttpMetadata(headersHeaders)</code> : void
+* `writeHttpMetadata` <Type text="(headers: Headers): void" />
 
   * Retrieves the `httpMetadata` from the `R2Object` and applies their corresponding HTTP headers to the `Headers` input object. Refer to [HTTP Metadata](#http-metadata).
 
-* <code>storageClass</code>"Standard"|"InfrequentAccess"
+* `storageClass` <Type text="'Standard' | 'InfrequentAccess'" />
 
   * The storage class associated with the object. Refer to [Storage Classes](#storage-class).
 
@@ -171,27 +170,27 @@ Cloudflare recommends using the `httpEtag` field when returning an etag in a res
 
 
 
-* <code>body</code>ReadableStream
+* `body` <Type text="ReadableStream" />
 
   * The object's value.
 
-* <code>bodyUsed</code>boolean
+* `bodyUsed` <Type text="boolean" />
 
   * Whether the object's value has been consumed or not.
 
-* <code>arrayBuffer()</code> : Promise\<ArrayBuffer>
+* `arrayBuffer` <Type text="(): Promise<ArrayBuffer>" />
 
   * Returns a Promise that resolves to an `ArrayBuffer` containing the object's value.
 
-* <code>text()</code> : Promise\<string>
+* `text` <Type text="(): Promise<string>" />
 
   * Returns a Promise that resolves to an string containing the object's value.
 
-* <code>json`<T>`()</code> : Promise\<T>
+* `json` <Type text="<T>() : Promise<T>" />
 
   * Returns a Promise that resolves to the given object containing the object's value.
 
-* <code>blob()</code> : Promise\<Blob>
+* `blob` <Type text="(): Promise<Blob>" />
 
   * Returns a Promise that resolves to a binary Blob containing the object's value.
 
@@ -215,24 +214,24 @@ A multipart upload can be completed or aborted at any time, either through the S
 
 
 
-* <code>key</code>string
+* `key` <Type text="string" />
 
   * The `key` for the multipart upload.
 
-* <code>uploadId</code>string
+* `uploadId` <Type text="string" />
 
   * The `uploadId` for the multipart upload.
 
-* <code>uploadPart(partNumbernumber, valueReadableStream|ArrayBuffer|ArrayBufferView|string|Blob)</code> : Promise\<R2UploadedPart>
+* `uploadPart` <Type text="(partNumber: number, value: ReadableStream | ArrayBuffer | ArrayBufferView | string | Blob): Promise<R2UploadedPart>" />
 
   * Uploads a single part with the specified part number to this multipart upload. Each part must be uniform in size with an exception for the final part which can be smaller.
   * Returns an `R2UploadedPart` object containing the `etag` and `partNumber`. These `R2UploadedPart` objects are required when completing the multipart upload.
 
-* <code>abort() </code> : Promise\<void>
+* `abort` <Type text="(): Promise<void>" />
 
   * Aborts the multipart upload. Returns a Promise that resolves when the upload has been successfully aborted.
 
-* <code>complete(uploadedPartsR2UploadedPart\[])</code> : Promise\<R2Object>
+* `complete` <Type text="(uploadedParts: R2UploadedPart[]): Promise<R2Object>" />
 
   * Completes the multipart upload with the given parts.
   * Returns a Promise that resolves when the complete operation has finished. Once this happens, the object is immediately accessible globally by any subsequent read operation.
@@ -245,10 +244,10 @@ A multipart upload can be completed or aborted at any time, either through the S
 
 
 
-* <code>onlyIf</code>R2Conditional |Headers
+* `onlyIf` <Type text="R2Conditional | Headers" />
 
   * Specifies that the object should only be returned given satisfaction of certain conditions in the `R2Conditional` or in the conditional Headers. Refer to [Conditional operations](#conditional-operations).
-* <code>range</code>R2Range
+* `range` <Type text="R2Range" />
 
   * Specifies that only a specific length (from an optional offset) or suffix of bytes from the object should be returned. Refer to [Ranged reads](#ranged-reads).
 
@@ -266,15 +265,15 @@ There are 3 variations of arguments that can be used in a range:
 
 
 
-* <code>offset</code>number
+* `offset` <Type text="number" />
 
   * The byte to begin returning data from, inclusive.
 
-* <code>length</code>number
+* `length` <Type text="number" />
 
   * The number of bytes to return. If more bytes are requested than exist in the object, fewer bytes than this number may be returned.
 
-* <code>suffix</code>number
+* `suffix` <Type text="number" />
 
   * The number of bytes to return from the end of the file, starting from the last byte. If more bytes are requested than exist in the object, fewer bytes than this number may be returned.
 
@@ -284,15 +283,15 @@ There are 3 variations of arguments that can be used in a range:
 
 
 
-* <code>onlyIf</code>R2Conditional |Headers
+* `onlyIf` <Type text="R2Conditional | Headers" />
 
   * Specifies that the object should only be stored given satisfaction of certain conditions in the `R2Conditional`. Refer to [Conditional operations](#conditional-operations).
 
-* <code>httpMetadata</code>R2HTTPMetadata |Headersoptional
+* `httpMetadata` <Type text="R2HTTPMetadata | Headers" /> <MetaInfo text="optional" />
 
   * Various HTTP headers associated with the object. Refer to [HTTP Metadata](#http-metadata).
 
-* <code>customMetadata</code>Record\<string, string>optional
+* `customMetadata` <Type text="Record<string, string>" /> <MetaInfo text="optional" />
 
   * A map of custom, user-defined metadata that will be stored with the object.
 
@@ -304,27 +303,27 @@ Only a single hashing algorithm can be specified at once.
 
 :::
 
-* <code>md5</code>ArrayBuffer |stringoptional
+* `md5` <Type text="ArrayBuffer | string" /> <MetaInfo text="optional" />
 
   * A md5 hash to use to check the received object's integrity.
 
-* <code>sha1</code>ArrayBuffer |stringoptional
+* `sha1` <Type text="ArrayBuffer | string" /> <MetaInfo text="optional" />
 
   * A SHA-1 hash to use to check the received object's integrity.
 
-* <code>sha256</code>ArrayBuffer |stringoptional
+* `sha256` <Type text="ArrayBuffer | string" /> <MetaInfo text="optional" />
 
   * A SHA-256 hash to use to check the received object's integrity.
 
-* <code>sha384</code>ArrayBuffer |stringoptional
+* `sha384` <Type text="ArrayBuffer | string" /> <MetaInfo text="optional" />
 
   * A SHA-384 hash to use to check the received object's integrity.
 
-* <code>sha512</code>ArrayBuffer |stringoptional
+* `sha512` <Type text="ArrayBuffer | string" /> <MetaInfo text="optional" />
 
   * A SHA-512 hash to use to check the received object's integrity.
 
-* <code>storageClass</code>"Standard"|"InfrequentAccess"
+* `storageClass` <Type text="'Standard' | 'InfrequentAccess'" />
 
   * Sets the storage class of the object if provided. Otherwise, the object will be stored in the default storage class associated with the bucket. Refer to [Storage Classes](#storage-class).
 
@@ -334,15 +333,15 @@ Only a single hashing algorithm can be specified at once.
 
 
 
-* <code>httpMetadata</code>R2HTTPMetadata |Headersoptional
+* `httpMetadata` <Type text="R2HTTPMetadata | Headers" /> <MetaInfo text="optional" />
 
   * Various HTTP headers associated with the object. Refer to [HTTP Metadata](#http-metadata).
 
-* <code>customMetadata</code>Record\<string, string>optional
+* `customMetadata` <Type text="Record<string, string>" /> <MetaInfo text="optional" />
 
   * A map of custom, user-defined metadata that will be stored with the object.
 
-* <code>storageClass</code>string
+* `storageClass` <Type text="string" />
 
   * Sets the storage class of the object if provided. Otherwise, the object will be stored in the default storage class associated with the bucket. Refer to [Storage Classes](#storage-class).
 
@@ -352,21 +351,21 @@ Only a single hashing algorithm can be specified at once.
 
 
 
-* <code>limit</code>numberoptional
+* `limit` <Type text="number" /> <MetaInfo text="optional" />
   * The number of results to return. Defaults to `1000`, with a maximum of `1000`.
 
   * If `include` is set, you may receive fewer than `limit` results in your response to accommodate metadata.
 
-* <code>prefix</code>stringoptional
+* `prefix` <Type text="string" /> <MetaInfo text="optional" />
   * The prefix to match keys against. Keys will only be returned if they start with given prefix.
 
-* <code>cursor</code>stringoptional
+* `cursor` <Type text="string" /> <MetaInfo text="optional" />
   * An opaque token that indicates where to continue listing objects from. A cursor can be retrieved from a previous list operation.
 
-* <code>delimiter</code>stringoptional
+* `delimiter` <Type text="string" /> <MetaInfo text="optional" />
   * The character to use when grouping keys.
 
-* <code>include</code>Array\<string>optional
+* `include` <Type text="Array<string>" /> <MetaInfo text="optional" />
 
   * Can include `httpMetadata` and/or `customMetadata`. If included, items returned by the list will include the specified metadata.
 
@@ -415,19 +414,19 @@ An object containing an `R2Object` array, returned by `BUCKET_BINDING.list()`.
 
 
 
-* <code>objects</code>Array\<R2Object>
+* `objects` <Type text="Array<R2Object>" />
 
   * An array of objects matching the `list` request.
 
-* <code>truncated</code>boolean
+* `truncated` boolean
 
   * If true, indicates there are more results to be retrieved for the current `list` request.
 
-* <code>cursor</code>stringoptional
+* `cursor` <Type text="string" /> <MetaInfo text="optional" />
 
   * A token that can be passed to future `list` calls to resume listing from that point. Only present if truncated is true.
 
-* <code>delimitedPrefixes</code>Array\<string>
+* `delimitedPrefixes` <Type text="Array<string>" />
 
   * If a delimiter has been specified, contains all prefixes between the specified prefix and the next occurrence of the delimiter.
 
@@ -443,19 +442,19 @@ If the condition check for `put()` fails, `null` will be returned instead of the
 
 
 
-* <code>etagMatches</code>stringoptional
+* `etagMatches` <Type text="string" /> <MetaInfo text="optional" />
 
   * Performs the operation if the object's etag matches the given string.
 
-* <code>etagDoesNotMatch</code>stringoptional
+* `etagDoesNotMatch` <Type text="string" /> <MetaInfo text="optional" />
 
   * Performs the operation if the object's etag does not match the given string.
 
-* <code>uploadedBefore</code>Dateoptional
+* `uploadedBefore` <Type text="Date" /> <MetaInfo text="optional" />
 
   * Performs the operation if the object was uploaded before the given date.
 
-* <code>uploadedAfter</code>Dateoptional
+* `uploadedAfter` <Type text="Date" /> <MetaInfo text="optional" />
 
   * Performs the operation if the object was uploaded after the given date.
 
@@ -471,17 +470,17 @@ Generally, these fields match the HTTP metadata passed when the object was creat
 
 
 
-* <code>contentType</code>stringoptional
+* `contentType` <Type text="string" /> <MetaInfo text="optional" />
 
-* <code>contentLanguage</code>stringoptional
+* `contentLanguage` <Type text="string" /> <MetaInfo text="optional" />
 
-* <code>contentDisposition</code>stringoptional
+* `contentDisposition` <Type text="string" /> <MetaInfo text="optional" />
 
-* <code>contentEncoding</code>stringoptional
+* `contentEncoding` <Type text="string" /> <MetaInfo text="optional" />
 
-* <code>cacheControl</code>stringoptional
+* `cacheControl` <Type text="string" /> <MetaInfo text="optional" />
 
-* <code>cacheExpiry</code>Dateoptional
+* `cacheExpiry` <Type text="Date" /> <MetaInfo text="optional" />
 
 
 
@@ -491,23 +490,23 @@ If a checksum was provided when using the `put()` binding, it will be available 
 
 
 
-* <code>md5</code> ArrayBuffer optional
+* `md5` <Type text="ArrayBuffer" /> <MetaInfo text="optional" />
 
   * The MD5 checksum of the object.
 
-* <code>sha1</code> ArrayBuffer optional
+* `sha1` <Type text="ArrayBuffer" /> <MetaInfo text="optional" />
 
   * The SHA-1 checksum of the object.
 
-* <code>sha256</code> ArrayBuffer optional
+* `sha256` <Type text="ArrayBuffer" /> <MetaInfo text="optional" />
 
   * The SHA-256 checksum of the object.
 
-* <code>sha384</code> ArrayBuffer optional
+* `sha384` <Type text="ArrayBuffer" /> <MetaInfo text="optional" />
 
   * The SHA-384 checksum of the object.
 
-* <code>sha512</code> ArrayBuffer optional
+* `sha512` <Type text="ArrayBuffer" /> <MetaInfo text="optional" />
 
   * The SHA-512 checksum of the object.
 
@@ -519,11 +518,11 @@ An `R2UploadedPart` object represents a part that has been uploaded. `R2Uploaded
 
 
 
-* <code>partNumber</code> number
+* `partNumber` <Type text="number" />
 
   * The number of the part.
 
-* <code>etag</code> string
+* `etag` <Type text="string" />
 
   * The `etag` of the part.
 

@@ -1,15 +1,16 @@
 ---
-title: Multi-Vendor Architecture
+title: Multi-vendor Application Security and Performance Reference Architecture
 pcx_content_type: reference-architecture
+products:
+  - DNS
+  - Network Interconnect
 sidebar:
   order: 1
-head:
-  - tag: title
-    content: "Reference Architecture: Multi-vendor Application Security and Performance"
-
+  label: Multi-Vendor Architecture
+updated: 2023-08-04
 ---
 
-import { LinkButton, Render } from "~/components"
+import { LinkButton, Render } from "~/components";
 
 ## Introduction
 
@@ -29,8 +30,8 @@ To build a stronger baseline understanding of Cloudflare, we recommend the follo
 
 Those who read this reference architecture will learn:
 
-* How Cloudflare application security and performance capabilities can work alongside existing technology vendors
-* Understanding the decisions to be made when using many vendors
+- How Cloudflare application security and performance capabilities can work alongside existing technology vendors
+- Understanding the decisions to be made when using many vendors
 
 ## Cloud based security and performance providers
 
@@ -42,7 +43,7 @@ Cloud-based security and performance providers like Cloudflare work as a reverse
 
 Normal traffic flow without a reverse proxy would involve a client sending a DNS lookup request, receiving the origin IP address, and communicating directly to the origin server(s). This is visualized in Figure 1.
 
-When a reverse proxy is introduced, the client still sends a DNS lookup request to its resolver, which is the first stop in the DNS lookup. In this case, the DNS resolver returns a vendor’s reverse proxy IP address to the client and the client then makes a request to the vendor’s reverse proxy. The cloud-based proxy solution can now provide additional security,  performance, and reliability services like [CDN](https://www.cloudflare.com/cdn/), [WAF](https://www.cloudflare.com/waf/), [DDoS](https://www.cloudflare.com/ddos/), [API Gateway](https://www.cloudflare.com/products/api-gateway/), [Bot Management](https://www.cloudflare.com/products/bot-management/) capabilities, etc, before deciding, based on security policy, whether to route the client request to the respective origin server(s). This is visualized in Figure 2.
+When a reverse proxy is introduced, the client still sends a DNS lookup request to its resolver, which is the first stop in the DNS lookup. In this case, the DNS resolver returns a vendor’s reverse proxy IP address to the client and the client then makes a request to the vendor’s reverse proxy. The cloud-based proxy solution can now provide additional security, performance, and reliability services like [CDN](https://www.cloudflare.com/cdn/), [WAF](https://www.cloudflare.com/waf/), [DDoS](https://www.cloudflare.com/ddos/), [API Gateway](https://www.cloudflare.com/products/api-gateway/), [Bot Management](https://www.cloudflare.com/products/bot-management/) capabilities, etc, before deciding, based on security policy, whether to route the client request to the respective origin server(s). This is visualized in Figure 2.
 
 ![Figure 2: Client request routed through reverse proxy for additional security and performance services](~/assets/images/reference-architecture/multi-vendor-architecture-images/Figure_2.png "Figure 2")
 
@@ -58,9 +59,9 @@ Cloudflare has one global network with every service running on every server in 
 
 [Cloudflare’s global anycast network](https://www.cloudflare.com/network/) provides the following advantages:
 
-* Incoming traffic is routed to the nearest data center with the capacity to process the requests efficiently.
-* Availability and redundancy is inherently provided. Since multiple nodes advertise the same IP address, if one node were to fail, requests are simply routed to another node in close proximity.
-* Because anycast distributes traffic across multiple data centers, it increases overall distribution of traffic across Cloudflare’s network, preventing any one location from becoming overwhelmed with requests. For this reason, anycast networks are very resilient to DDoS attacks.
+- Incoming traffic is routed to the nearest data center with the capacity to process the requests efficiently.
+- Availability and redundancy is inherently provided. Since multiple nodes advertise the same IP address, if one node were to fail, requests are simply routed to another node in close proximity.
+- Because anycast distributes traffic across multiple data centers, it increases overall distribution of traffic across Cloudflare’s network, preventing any one location from becoming overwhelmed with requests. For this reason, anycast networks are very resilient to DDoS attacks.
 
 ![Figure 4: Cloudflare providing DNS and security/performance services via global anycast network](~/assets/images/reference-architecture/multi-vendor-architecture-images/Figure_4.png "Figure 4")
 
@@ -104,7 +105,7 @@ Some customers may have to comply with regulatory/company policy of not being de
 
 ### Resiliency
 
-When a single vendor is used for all security and performance services, this may be perceived as  a single point of failure. This can be driven by regulatory pressure to improve reliability in all critical systems, outages experienced with an incumbent vendor, or uncertainty with the long term reliability of a single vendor.
+When a single vendor is used for all security and performance services, this may be perceived as a single point of failure. This can be driven by regulatory pressure to improve reliability in all critical systems, outages experienced with an incumbent vendor, or uncertainty with the long term reliability of a single vendor.
 
 ### Performance
 
@@ -126,7 +127,7 @@ Avoid a “stacked” approach. This means avoid having Cloudflare placed in the
 
 One note on a stacked approach is that in certain cases for particular point solutions, it can make sense to place one vendor solution in front of the other, such as particular bot management solutions and API gateways, especially when migrating towards a new vendor/provider. In these scenarios it’s important to understand where each solution falls in the request flow to optimize effectiveness.
 
-While Cloudflare and many providers maintain a high degree of availability and a robust fault tolerant architecture, some customers have a further desire to reduce dependency and respectively single vendor point of failures. It’s important to plan for a worst case scenario where some or all of a vendor's services are down and how to work around that in a short timeframe. Customers must consider how to have redundancy across DNS providers, networks, and origin connectivity to eliminate the risk of  a single vendor/component failure cascading into a widespread outage.
+While Cloudflare and many providers maintain a high degree of availability and a robust fault tolerant architecture, some customers have a further desire to reduce dependency and respectively single vendor point of failures. It’s important to plan for a worst case scenario where some or all of a vendor's services are down and how to work around that in a short timeframe. Customers must consider how to have redundancy across DNS providers, networks, and origin connectivity to eliminate the risk of a single vendor/component failure cascading into a widespread outage.
 
 While the specifics may vary widely depending on the vendor and business case, the technical considerations for a multi-vendor deployment can be bucketed into three areas: routing logic, configuration management and origin connectivity.
 
@@ -162,9 +163,9 @@ Some important considerations when designing a multi-vendor solution are operati
 
 A primary focus for Cloudflare has always been operational simplicity and providing visibility. Cloudflare provides a single unified dashboard where all security, performance, and reliability services can be accessed from a consistent operationally simple UI.
 
-Additionally, Cloudflare offers logging, analytics and security analytics dashboards.  Logs with additional details are also accessible from the UI. Customers have granular data that can be used for analysis and troubleshooting.
+Additionally, Cloudflare offers logging, analytics and security analytics dashboards. Logs with additional details are also accessible from the UI. Customers have granular data that can be used for analysis and troubleshooting.
 
-Figure 7  below shows a view of Cloudflare Security Analytics which brings together all of Cloudflare’s detection capabilities in one place. This provides security engineers and admins with a quick view of current traffic and security insights in regards to their site.
+Figure 7 below shows a view of Cloudflare Security Analytics which brings together all of Cloudflare’s detection capabilities in one place. This provides security engineers and admins with a quick view of current traffic and security insights in regards to their site.
 
 ![Figure 7: Cloudflare Security Analytics](~/assets/images/reference-architecture/multi-vendor-architecture-images/Figure_7.png "Figure 7")
 
@@ -176,12 +177,12 @@ In Figure 8 below a Logpush is being configured to automatically export logs to 
 
 When selecting the vendors for a multi-vendor solution you should ensure you select vendors where the below criteria is met:
 
-* The vendor provides for operational simplicity with a single consistent UI for all operations where users can easily manage and get things done in one place.
-* The vendor has useful security analytics to give an understanding of a sites’ traffic, security insights, and useful data for troubleshooting.
-* The vendor has the ability to export logs/request data to third party clouds/applications.
-* The vendor has an API first approach and provides APIs for all operations so tasks can be easily automated.
-* The vendor is reputable and can provide effective support and help when needed.
-* Employees are trained and have expertise or are comfortable using the vendor’s products.
+- The vendor provides for operational simplicity with a single consistent UI for all operations where users can easily manage and get things done in one place.
+- The vendor has useful security analytics to give an understanding of a sites’ traffic, security insights, and useful data for troubleshooting.
+- The vendor has the ability to export logs/request data to third party clouds/applications.
+- The vendor has an API first approach and provides APIs for all operations so tasks can be easily automated.
+- The vendor is reputable and can provide effective support and help when needed.
+- Employees are trained and have expertise or are comfortable using the vendor’s products.
 
 ## Common deployments
 
@@ -225,7 +226,7 @@ It’s important to note here that typically the DNS resolvers have already seen
 
 In this example, we are also seeing records being kept in sync via periodic zone transfers. Cloudflare is able to support both outgoing and incoming zone transfers. Traffic is directed to each proxy by either a provider specific CNAME record or static IP.
 
-The configuration on the DNS side can vary; the different options are discussed in more detail in the next section. DNS can be set up with one provider acting as primary and the other acting as secondary. The DNS provider acting  as primary is where all the DNS configuration is done and the secondary DNS receives the configuration copy via zone transfer.
+The configuration on the DNS side can vary; the different options are discussed in more detail in the next section. DNS can be set up with one provider acting as primary and the other acting as secondary. The DNS provider acting as primary is where all the DNS configuration is done and the secondary DNS receives the configuration copy via zone transfer.
 
 Some DNS providers like [Cloudflare](/dns/zone-setups/zone-transfers/cloudflare-as-secondary/proxy-traffic/) offer the capability where secondary DNS can overwrite the A and AAAA records. This allows the provider to rewrite the A/AAAA record to proxy traffic through a different vendor as desired. In this case the secondary DNS provider will provide a different response than the primary for the same hostname. This means that depending on what nameserver a client resolver queries, the request will be routed to the vendor’s respective network. This allows for flexibility and reduced complexity by relying on the client resolver for traffic steering and failover if the nameservers are slow or unreachable. This comes at the cost of direct control and predictability over what provider a client selects.
 
@@ -245,21 +246,21 @@ The advantage and main use case with this deployment model is that it uses a sta
 
 Sometimes customers may decide to use another option due to the following:
 
-* The requirement of updating DNS records when the record management and zone transfer pipeline is down.
-* Not wanting to rely on a third party/vendor for the DNS synchronization and desiring more control.
-* Having specific restrictions/regulations excluding this option.
+- The requirement of updating DNS records when the record management and zone transfer pipeline is down.
+- Not wanting to rely on a third party/vendor for the DNS synchronization and desiring more control.
+- Having specific restrictions/regulations excluding this option.
 
 This setup is recommended for customers who desire simplicity offered by a secondary DNS and provider for maintaining synchronization.
 
 Pros:
 
-* Uses standard (AXFR, IXFR) to keep DNS synced and done automatically via Zone Transfers.
-* Simplicity as the DNS provider is responsible for DNS synchronization.
+- Uses standard (AXFR, IXFR) to keep DNS synced and done automatically via Zone Transfers.
+- Simplicity as the DNS provider is responsible for DNS synchronization.
 
 Cons:
 
-* If the record management and zone transfer pipeline is down, DNS records cannot be updated.
-* Some customers do not want to rely on a vendor/3rd party for DNS sync and desire more control and flexibility.
+- If the record management and zone transfer pipeline is down, DNS records cannot be updated.
+- Some customers do not want to rely on a vendor/3rd party for DNS sync and desire more control and flexibility.
 
 **2. Two authoritative - both primary**
 
@@ -273,13 +274,13 @@ This setup is recommended for customers who desire the most flexible and resilie
 
 Pros:
 
-* If control plane is down on one provider, DNS records can still be updated at the other.
-* More control and no reliance on DNS provider for DNS synchronization.
+- If control plane is down on one provider, DNS records can still be updated at the other.
+- More control and no reliance on DNS provider for DNS synchronization.
 
 Cons:
 
-* More complexity in keeping DNS between providers synced.
-* Customer is responsible for DNS synchronization which can be done via automation tools, automated via vendor APIs, or manually.
+- More complexity in keeping DNS between providers synced.
+- Customer is responsible for DNS synchronization which can be done via automation tools, automated via vendor APIs, or manually.
 
 **3. One or more authoritative - hidden primary and multiple secondary**
 
@@ -291,13 +292,13 @@ This setup is recommended for customers who desire simplicity offered by a secon
 
 Pros:
 
-* Allows customers to maintain DNS record management on their infrastructure and use standard to keep DNS synced automatically via Zone Transfers.
-* Primary is used only for source of truth and maintaining DNS records and can be taken offline for maintenance /administration.
+- Allows customers to maintain DNS record management on their infrastructure and use standard to keep DNS synced automatically via Zone Transfers.
+- Primary is used only for source of truth and maintaining DNS records and can be taken offline for maintenance /administration.
 
 Cons:
 
-* If the record management and zone transfer pipeline is down, DNS records cannot be updated.
-* Some customers do not want to rely on a vendor/3rd party for DNS sync and desire more control.
+- If the record management and zone transfer pipeline is down, DNS records cannot be updated.
+- Some customers do not want to rely on a vendor/3rd party for DNS sync and desire more control.
 
 ## Configuration and management best practices
 
@@ -375,4 +376,9 @@ If you want your domain to be [FIPS](https://en.wikipedia.org/wiki/Federal_Infor
 
 To summarize, a successful multi-vendor strategy for application security and performance requires careful consideration of your business objectives, infrastructure requirements, and vendor capabilities. There are several options to choose from when deploying a multi-vendor strategy with various advantages and limitations to each. Cloudflare can support these configurations by delivering services through the Cloudflare Global Network that are highly resilient, performant, and cost effective to fit your organizations multi-vendor strategy.
 
-<LinkButton variant="primary" href="/reference-architecture/static/multi-vendor-application-security-performance.pdf">Download this page as a PDF</LinkButton>
+<LinkButton
+	variant="primary"
+	href="/reference-architecture/static/multi-vendor-application-security-performance.pdf"
+>
+	Download this page as a PDF
+</LinkButton>

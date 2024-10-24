@@ -6,42 +6,39 @@ sidebar:
 head:
   - tag: title
     content: Available skip options
-
 ---
 
 The available skip options in custom rules are the following:
 
+- **Skip the remaining custom rules (current ruleset)**
 
+  - Dashboard option: **All remaining custom rules**.
+  - API action parameter: `ruleset`.
+  - Skips the remaining rules in the current ruleset.
 
-* **Skip the remaining custom rules (current ruleset)**
+- **Skip phases**
 
-  * Dashboard option: **All remaining custom rules**.
-  * API action parameter: `ruleset`.
-  * Skips the remaining rules in the current ruleset.
+  - Dashboard options: **All rate limiting rules**, **All Super Bot Fight Mode rules**, and **All managed rules**.
 
-* **Skip phases**
+  - API action parameter: `phases`.
 
-  * Dashboard options: **All rate limiting rules**, **All Super Bot Fight Mode rules**, and **All managed rules**.
+  - Skips the execution of one or more phases. Based on the phases you can skip, this option effectively allows you to skip [rate limiting rules](/waf/rate-limiting-rules/), [Super Bot Fight Mode rules](/bots/get-started/pro/), and/or [WAF Managed Rules](/waf/managed-rules/). When skipping a phase, both the account and zone-level entry point rulesets of the phase will be skipped.
 
-  * API action parameter: `phases`.
+  - The phases you can skip are the following:
 
-  * Skips the execution of one or more phases. Based on the phases you can skip, this option effectively allows you to skip [rate limiting rules](/waf/rate-limiting-rules/), [Super Bot Fight Mode rules](/bots/get-started/pro/), and/or [WAF Managed Rules](/waf/managed-rules/). When skipping a phase, both the account and zone-level entry point rulesets of the phase will be skipped.
+    - `http_ratelimit`
+    - `http_request_sbfm`
+    - `http_request_firewall_managed`
 
-  * The phases you can skip are the following:
+  - Refer to [Phases](/ruleset-engine/about/phases/) for more information.
 
-    * `http_ratelimit`
-    * `http_request_sbfm`
-    * `http_request_firewall_managed`
+- **Skip products**
 
-  * Refer to [Phases](/ruleset-engine/about/phases/) for more information.
+  - API action parameter: `products`.
 
-* **Skip products**
+  - Skips specific security products that are not based on the Ruleset Engine. The products you can skip are the following:
 
-  * API action parameter: `products`.
-
-  * Skips specific security products that are not based on the Ruleset Engine. The products you can skip are the following:
-
-  * | Product name in the dashboard                                                        | API value       |
+  - | Product name in the dashboard                                                        | API value       |
     | ------------------------------------------------------------------------------------ | --------------- |
     | [Zone Lockdown](/waf/tools/zone-lockdown/)                                           | `zoneLockdown`  |
     | [User Agent Blocking](/waf/tools/user-agent-blocking/)                               | `uaBlock`       |
@@ -51,23 +48,17 @@ The available skip options in custom rules are the following:
     | [Rate Limiting (previous version)](/waf/reference/legacy/old-rate-limiting/)         | `rateLimit`     |
     | [WAF managed rules (previous version)](/waf/reference/legacy/old-waf-managed-rules/) | `waf`           |
 
-  * The API values are case sensitive.
+  - The API values are case sensitive.
 
-:::caution
-
-Currently, you cannot skip [Bot Fight Mode](/bots/get-started/free/), only Super Bot Fight Mode (refer to Skip phases above). 
+:::note
+Currently, you cannot skip [Bot Fight Mode](/bots/get-started/free/), only Super Bot Fight Mode (refer to Skip phases above).
 :::
-
-
 
 ## Logging
 
+- **Log requests matching the skip rule**
 
-
-* **Log requests matching the skip rule**
-
-  * Dashboard option: **Log matching requests**.
-  * API action parameter: `logging` > `enabled` (boolean, optional).
-  * When disabled, Cloudflare will not log any requests matching the current skip rule, and these requests will not appear in [Security Events](/waf/analytics/security-events/).
-  * If you do not specify this option in the API, the default value is `true` for custom rules with the skip action (logs requests matching the skip rule).
-
+  - Dashboard option: **Log matching requests**.
+  - API action parameter: `logging` > `enabled` (boolean, optional).
+  - When disabled, Cloudflare will not log any requests matching the current skip rule, and these requests will not appear in [Security Events](/waf/analytics/security-events/).
+  - If you do not specify this option in the API, the default value is `true` for custom rules with the skip action (logs requests matching the skip rule).

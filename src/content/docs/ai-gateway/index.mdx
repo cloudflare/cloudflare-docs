@@ -6,14 +6,21 @@ sidebar:
 head:
   - tag: title
     content: AI Gateway
-
 ---
 
-import { CardGrid, Description, Feature, LinkTitleCard, Plan, RelatedProduct } from "~/components"
+import {
+	CardGrid,
+	Description,
+	Feature,
+	LinkTitleCard,
+	Plan,
+	RelatedProduct,
+} from "~/components";
 
 <Description>
 
-Observe and control your AI applications. 
+Observe and control your AI applications.
+
 </Description>
 
 <Plan type="all" />
@@ -28,13 +35,11 @@ Check out the [Get started guide](/ai-gateway/get-started/) to learn how to conf
 
 View metrics such as the number of requests, tokens, and the cost it takes to run your application.
 
-
 </Feature>
 
-<Feature header="Real-time logs" href="/ai-gateway/observability/analytics/#logging" cta="View Real-time logs">
+<Feature header="Logging" href="/ai-gateway/observability/analytics/#logging" cta="View Logging">
 
 Gain insight on requests and errors.
-
 
 </Feature>
 
@@ -42,13 +47,11 @@ Gain insight on requests and errors.
 
 Serve requests directly from Cloudflare's cache instead of the original model provider for faster requests and cost savings.
 
-
 </Feature>
 
 <Feature header="Rate limiting" href="/ai-gateway/configuration/rate-limiting">
 
 Control how your application scales by limiting the number of requests your application receives.
-
 
 </Feature>
 
@@ -56,17 +59,15 @@ Control how your application scales by limiting the number of requests your appl
 
 Improve resilience by defining request retry and model fallbacks in case of an error.
 
-
 </Feature>
 
 <Feature header="Your favorite providers" href="/ai-gateway/providers/">
 
 Workers AI, OpenAI, Azure OpenAI, HuggingFace, Replicate, and more work with AI Gateway.
 
-
 </Feature>
 
-***
+---
 
 ## Related products
 
@@ -74,13 +75,11 @@ Workers AI, OpenAI, Azure OpenAI, HuggingFace, Replicate, and more work with AI 
 
 Run machine learning models, powered by serverless GPUs, on Cloudflare’s global network.
 
-
 </RelatedProduct>
 
 <RelatedProduct header="Vectorize" href="/vectorize/" product="vectorize">
 
 Build full-stack AI applications with Vectorize, Cloudflare’s vector database. Adding Vectorize enables you to perform tasks such as semantic search, recommendations, anomaly detection or can be used to provide context and memory to an LLM.
-
 
 </RelatedProduct>
 
@@ -88,16 +87,27 @@ Build full-stack AI applications with Vectorize, Cloudflare’s vector database.
 
 <CardGrid>
 
-<LinkTitleCard title="Developer Discord" href="https://discord.cloudflare.com" icon="discord">
-Connect with the Workers community on Discord to ask questions, show what you are building, and discuss the platform with other developers.
+<LinkTitleCard
+	title="Developer Discord"
+	href="https://discord.cloudflare.com"
+	icon="discord"
+>
+	Connect with the Workers community on Discord to ask questions, show what you
+	are building, and discuss the platform with other developers.
 </LinkTitleCard>
 
 <LinkTitleCard title="Use cases" href="/use-cases/ai/" icon="document">
-Learn how you can build and deploy ambitious AI applications to Cloudflare's global network.
+	Learn how you can build and deploy ambitious AI applications to Cloudflare's
+	global network.
 </LinkTitleCard>
 
-<LinkTitleCard title="@CloudflareDev" href="https://x.com/cloudflaredev" icon="x.com">
-Follow @CloudflareDev on Twitter to learn about product announcements, and what is new in Cloudflare Workers.
+<LinkTitleCard
+	title="@CloudflareDev"
+	href="https://x.com/cloudflaredev"
+	icon="x.com"
+>
+	Follow @CloudflareDev on Twitter to learn about product announcements, and
+	what is new in Cloudflare Workers.
 </LinkTitleCard>
 
 </CardGrid>

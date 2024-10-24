@@ -13,9 +13,7 @@ For example, if TLS 1.1 is selected, visitors attempting to connect using TLS 1.
 
 :::note
 
-If you are looking to restrict cipher suites, refer to [Customize cipher suites](/ssl/edge-certificates/additional-options/cipher-suites/customize-cipher-suites/).
-
-For guidance on which TLS version to use, refer to [TLS protocols](/ssl/reference/protocols/).
+If you are looking to restrict cipher suites, refer to [Customize cipher suites](/ssl/edge-certificates/additional-options/cipher-suites/customize-cipher-suites/). For guidance on which TLS version to use, refer to [TLS protocols](/ssl/reference/protocols/).
 
 :::
 
@@ -35,6 +33,10 @@ If you have an [Advanced Certificate Manager](/ssl/edge-certificates/advanced-ce
 
 ## Setup
 
+:::caution
+The Minimum TLS version that you set up following these steps does not apply to [R2](/r2/) custom domains. To control the TLS version for R2 custom domains, refer to the [custom domains documentation](/r2/buckets/public-buckets/#minimum-tls-version).
+:::
+
 ### Zone-level
 
 To manage the TLS version applied to your whole zone when proxied through Cloudflare:
@@ -48,7 +50,20 @@ To manage the TLS version applied to your whole zone when proxied through Cloudf
 
 </TabItem> <TabItem label="API">
 
-Use the [Edit zone setting](/api/operations/zone-settings-edit-single-setting) endpoint with `min_tls_version` as the setting name in the URI path, and specify your preferred minimum version in the `value` parameter.
+Use the [Edit zone setting](/api/operations/zone-settings-edit-single-setting) endpoint with `min_tls_version` as the setting name in the URI path, and specify your preferred minimum version in the `value` field.
+
+In the following example, the minimum TLS version for the zone will be set to `1.2`. Replace the zone ID and API token placeholders with your information, and adjust the `value` field with your chosen TLS version.
+
+```bash
+curl --request PATCH \
+"https://api.cloudflare.com/client/v4/zones/{zone_id}/settings/min_tls_version" \
+--header "Authorization: Bearer <API_TOKEN>" \
+--header "Content-Type: application/json" \
+--data '{
+    "id": "min_tls_version",
+    "value": "1.2"
+  }'
+```
 
 </TabItem> </Tabs>
 
@@ -62,6 +77,18 @@ This is currently only available via the API:
 - Use the [Delete TLS setting for hostname](/api/operations/per-hostname-tls-settings-delete) endpoint to clear previously defined `min_tls_version` setting.
 
 Cloudflare uses the [hostname priority logic](/ssl/reference/certificate-and-hostname-priority/) to determine which setting to apply.
+
+In the following example, the minimum TLS version for a specific hostname will be set to `1.2`. Replace the zone ID, hostname, and API token placeholders with your information, and adjust the `value` field with your chosen TLS version.
+
+```bash
+curl --request PUT \
+"https://api.cloudflare.com/client/v4/zones/{zone_id}/hostnames/settings/min_tls_version/{hostname}" \
+--header "Authorization: Bearer <API_TOKEN>" \
+--header "Content-Type: application/json" \
+--data '{
+    "value": "1.2"
+  }'
+```
 
 ## Test supported TLS versions
 

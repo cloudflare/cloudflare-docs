@@ -1,0 +1,62 @@
+---
+title: Event notifications for storage
+pcx_content_type: reference-architecture-diagram
+products:
+  - R2
+sidebar:
+  order: 1
+  label: Event notifications for storage
+updated: 2024-10-21
+---
+
+## Introduction
+
+Cloudflare [R2](/r2/) Storage allows developers to store large amounts of unstructured data without the costly egress bandwidth fees associated with typical cloud storage services. The lifecycle of data in object storage often extends beyond uploading, modifying, or deleting the data. There may be a requirement to transform, analyze, or perform post-processing on the data. R2 provides [event notifications](/r2/buckets/event-notifications/) to manage these event-driven workflows.
+
+This document walks through how to use our built in serverless [Cloudflare Workers](/workers/) or an external service to monitor for notifications about data changes and then handle them appropriately.
+
+## Push-based consumer Worker
+
+Event notifications function by sending messages to a [queue](/queues/) whenever there is a change to your data. These messages are then handled by a [consumer Worker](/queues/reference/how-queues-works/#consumers). A consumer Worker is the term for a client that is subscribing to or consuming messages from a queue. The consumer Worker will automatically receive these messages, allowing you to define any subsequent actions that need to be taken.
+
+For instance, you can configure a notification to trigger when new images are uploaded to your R2 bucket. This notification can then automatically start an AI workload that performs an action on the image, such as converting the image to text.
+
+Consider the example below of push-based post-processing: when a user uploads a new object into R2, we want to log and store that event into a separate R2 bucket. You can create this scenario yourself by following this tutorial: [Log and store upload events in R2 with event notifications](/r2/tutorials/upload-logs-event-notifications/).
+
+![Figure 1: Push-Based R2 Event Notifications](~/assets/images/reference-architecture/event-notifications-for-storage/pushed-based-event-notification.svg "Figure 1: Push-Based R2 Event Notifications")
+
+1. A user uploads a new object directly to R2.
+2. An event notification is sent to the queue.
+3. The consumer Worker is pushed the new work from the queue.
+4. The Worker inserts a log event into R2.
+
+## Pull-based HTTP consumer
+
+Alternatively, you can establish a [pull-based consumer](/queues/configuration/pull-consumers/), where you pull from a queue over HTTP from any environment. Use a pull-based consumer if you need to consume messages from existing infrastructure outside of Cloudflare where you need to carefully control how fast messages are consumed.
+
+A pull-based consumer must explicitly make a call to pull (and then acknowledge) messages from the queue, only when it is ready to do so.
+
+Consider the scenario below: A user initiates a delete from R2. An external service needs to be informed of the deletion, so a pull-based queue has been established for the external service to retrieve notifications.
+
+![Figure 2: Pull-Based R2 Event Notifications](~/assets/images/reference-architecture/event-notifications-for-storage/pull-based-event-notification.svg "Figure 2: Pull-Based R2 Event Notifications")
+
+1. A user initiates a delete from R2.
+2. An event notification is sent to the queue.
+3. The external service, when ready to process the request, makes an HTTP POST request to the queue to pull the message.
+4. The queue sends the message in response to the POST request from step 3.
+5. The external service must acknowledge that the message has been received.
+
+You can follow the steps here to [configure a pull-based consumer](/queues/configuration/pull-consumers/#1-enable-http-pull).
+
+## Additional example use cases
+
+- Send an email to an administrator any time objects are deleted from R2.
+- When a video or podcast is uploaded to R2, it automatically processes the content using one of Cloudflare's Automatic Speech Recognition (ASR) AI models to generate subtitles or even translate the content.
+- Remove related database entries if an object in R2 is deleted.
+
+## Related resources
+- [Tutorial: Log and store upload events in R2 with event notifications](/r2/tutorials/upload-logs-event-notifications/)
+- [Event Notifications documentation](/r2/buckets/event-notifications/)
+- [Cloudflare R2 overview](/r2/)
+- [Cloudflare Queues overview](/queues/)
+- [Cloudflare Queues Pull Consumers](/queues/configuration/pull-consumers/)

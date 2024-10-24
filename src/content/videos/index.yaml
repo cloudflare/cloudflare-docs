@@ -181,17 +181,81 @@ entries:
     updated: 2024-09-16
     difficulty: Intermediate
     content_type: 🎥 Video
-    pcx_content_type: tutorial    
+    pcx_content_type: tutorial
   - link: https://youtu.be/bwJkwD-F0kQ
     title: Welcome to the Cloudflare Developer Channel
     description: Welcome to the Cloudflare Developers YouTube channel. We've got tutorials and working demos and everything you need to level up your projects. Whether you're working on your next big thing or just dorking around with some side projects, we've got you covered! So why don't you come hang out, subscribe to our developer channel and together we'll build something awesome. You're gonna love it.
-    tags: [Workers, AI, Vectorize, RAG, Hono, KV, D1, R2, AI Gateway]
+    tags: [Workers, AI, Vectorize, RAG, Hono, D1, R2, AI Gateway]
     languages: [TypeScript, JavaScript, Python]
-    products: [Workers, Workers AI, Vectorize, RAG, Hono, KV, D1, R2, AI Gateway]
+    products: [Workers, Workers AI, Vectorize, RAG, Hono, D1, R2, AI Gateway]
     cloudflare: true
     stream_id: 0fe3acaf4dc09ba0285b75af6602c362
     author: craig
     updated: 2024-09-18
     difficulty: Beginner
+    content_type: 🎥 Video
+    pcx_content_type: tutorial
+  - link: https://youtu.be/10-kiyJNr8s
+    title: Build a private AI chatbot using Meta's Llama 3.1
+    description: In this video, you will learn how to set up a private AI chat powered by Llama 3.1 for secure, fast interactions, deploy the model on Cloudflare Workers for serverless, scalable performance and use Cloudflare's Workers AI for seamless integration and edge computing benefits.
+    tags: [Workers, AI]
+    languages: [TypeScript]
+    products: [Workers, Workers AI]
+    cloudflare: true
+    # stream_id:
+    author: confidence
+    updated: 2024-10-07
+    difficulty: Beginner
+    content_type: 🎥 Video
+    pcx_content_type: tutorial    
+  - link: https://developers.cloudflare.com/pages/framework-guides/deploy-a-hono-site/#creator-interview
+    title: DevTalk | Episode 01 - Yusuke Wada, creator of Hono Framework
+    description: In this interview, Yusuke Wada reflects on his journey in developing Hono.
+    tags: [Pages, Workers]
+    languages: [TypeScript]
+    products: [Pages, Workers, Workers AI]
+    cloudflare: true
+    author: yusuke
+    updated: 2024-10-08
+    difficulty: Beginner
+    content_type: 🎥 Video
+    pcx_content_type: interview    
+  - link: https://developers.cloudflare.com/workers-ai/tutorials/image-generator-flux/
+    title: How to build an AI Image Generator using Cloudflare Workers AI
+    description: The new flux-schnell models on Workers AI are our most powerful text to image AI models yet. In this video, we show you how to deploy your own Workers AI image playground.
+    tags: [Workers, Workers AI]
+    languages: [TypeScript]
+    stream_id: aeafae151e84a81be19c52c2348e9bab
+    products: [Workers, Workers AI]
+    cloudflare: true
+    author: kristian
+    updated: 2024-10-17
+    difficulty: Intermediate
+    content_type: 🎥 Video
+    pcx_content_type: tutorial
+  - link: https://youtu.be/W45MIi_t_go
+    title: Building Front-End Applications | Now Supported by Cloudflare Workers
+    description: You can now build front-end applications, just like you do on Cloudflare Pages, but with the added benefit of Workers.
+    tags: [Workers, Workers AI]
+    languages: [TypeScript]
+    stream_id: 84039c66f18a34fa70cae7e2a0e70dae
+    products: [Workers, Workers AI]
+    cloudflare: true
+    author: confidence
+    updated: 2024-10-23
+    difficulty: Beginner
+    content_type: 🎥 Video
+    pcx_content_type: tutorial
+  - link: https://youtu.be/HXOpxNaKUzw
+    title: How to Build Event-Driven Applications with Cloudflare Queues
+    description: In this video, we demonstrate how to build an event-driven application using Cloudflare Queues. Event-driven system lets you decouple services, allowing them to process and scale independently.
+    tags: [Workers, Queues]
+    languages: [TypeScript]
+    # stream_id: 
+    products: [Workers, Workers AI]
+    cloudflare: true
+    author: harshil
+    updated: 2024-09-26
+    difficulty: Intermediate
     content_type: 🎥 Video
     pcx_content_type: tutorial

@@ -64,4 +64,7 @@ For more information, refer to [Zone status](/dns/zone-setups/reference/domain-s
 
 SSL/TLS certificates associated with your previous Cloudflare account will not be transferred to your new account. If your site requires an SSL/TLS certificate prior to domain transfer, refer to [Minimize downtime](/ssl/edge-certificates/universal-ssl/enable-universal-ssl/#minimize-downtime).
 
+If you were using [Custom certificates](/ssl/edge-certificates/custom-certificates/), you will need to delete them from the previous zone and upload them to the new zone.
+You can upload them whilst the new zone is pending: they will have the [Holding Deployment](/ssl/reference/certificate-statuses/#custom-certificates) status and will become active once the zone is active.
+
 You can order an [advanced certificate](/ssl/edge-certificates/advanced-certificate-manager/) prior to transferring your domain. Once issued, the certificate will enter **Holding Deployment** status until the domain is active. ACM certificates will automatically deploy to active domains. For more information, refer to [Custom certificates](/ssl/reference/certificate-statuses/#custom-certificates).

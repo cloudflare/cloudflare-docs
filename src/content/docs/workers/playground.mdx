@@ -2,11 +2,10 @@
 pcx_content_type: concept
 title: Playground
 sidebar:
-  order: 5
-
+  order: 6
 ---
 
-import { LinkButton } from "~/components"
+import { LinkButton } from "~/components";
 
 :::note[Browser support]
 
@@ -18,7 +17,9 @@ The quickest way to experiment with Cloudflare Workers is in the [Playground](ht
 
 The Playground uses the same editor as the authenticated experience. The Playground provides the ability to [share](#share) the code you write as well as [deploy](#deploy) it instantly to Cloudflare's global network. This way, you can try new things out and deploy them when you are ready.
 
-<LinkButton href="https://workers.cloudflare.com/playground" icon="external">Launch the Playground</LinkButton>
+<LinkButton href="https://workers.cloudflare.com/playground" icon="external">
+	Launch the Playground
+</LinkButton>
 
 ## Hello Cloudflare Workers
 
@@ -32,21 +33,21 @@ import welcome from "welcome.html";
  */
 
 export default {
-  /**
-   * @param {Request} request
-   * @param {Env} env
-   * @param {ExecutionContext} ctx
-   * @returns {Response}
-   */
-  fetch(request, env, ctx) {
-    console.log("Hello Cloudflare Workers!");
+	/**
+	 * @param {Request} request
+	 * @param {Env} env
+	 * @param {ExecutionContext} ctx
+	 * @returns {Response}
+	 */
+	fetch(request, env, ctx) {
+		console.log("Hello Cloudflare Workers!");
 
-    return new Response(welcome, {
-      headers: {
-        "content-type": "text/html",
-      },
-    });
-  },
+		return new Response(welcome, {
+			headers: {
+				"content-type": "text/html",
+			},
+		});
+	},
 };
 ```
 

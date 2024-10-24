@@ -12,8 +12,8 @@ description: Magic Transit uses a static configuration to route your traffic
 
 import { Render } from "~/components"
 
-<Render file="static-routes/static-routes1" params={{ one: "Magic Transit", two: "/magic-transit/reference/tunnels/", three: "/magic-transit/reference/traffic-steering/", four: "" }} />
+<Render file="static-routes/static-routes1" params={{ productName: "Magic Transit", anycastURL: "/magic-transit/reference/tunnels/", trafficSteering: "/magic-transit/reference/traffic-steering/", magicWANecmp: "" }} />
 
 <Render file="static-routes/static-routes2-prefixes-smaller-24" />
 
-<Render file="static-routes/static-routes3" params={{ one: "Magic Transit > Configuration", two: "/magic-transit/how-to/configure-tunnels/", three: " " }} />
+<Render file="static-routes/static-routes3" params={{ createPath: "Magic Transit > Configuration", tunnelEndpoints: "/magic-transit/how-to/configure-tunnels/", ipRanges: " " }} />

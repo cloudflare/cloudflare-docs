@@ -1,0 +1,107 @@
+---
+title: Events and parameters
+pcx_content_type: concept
+sidebar:
+  order: 10
+
+---
+
+When a Workflow is triggered, it can receive an optional event. This event can include data that your Workflow can act on, including request details, user data fetched from your database (such as D1 or KV) or from a webhook, or messages from a Queue consumer.
+
+Events are a powerful part of a Workflow, as you often want a Workflow to act on data. Because a given Workflow instance executes durably, events are a useful way to provide a Workflow with data that should be immutable (not changing) and/or represents data the Workflow needs to operate on at that point in time.
+
+## Pass parameters to a Workflow
+
+You can pass parameters to a Workflow in two ways:
+
+* As an optional argument to the `create` method on a [Workflow binding](/workers/wrangler/commands/#trigger) when triggering a Workflow from a Worker.
+* Via the `--params` flag when using the `wrangler` CLI to trigger a Workflow.
+
+You can pass any JSON-serializable object as a parameter.
+
+:::caution
+
+A `WorkflowEvent` and its associated `payload` property are effectively _immutable_: any changes to an event are not persisted across the steps of a Workflow. This includes both cases when a Workflow is progressing normally, and in cases where a Workflow has to be restarted due to a failure.
+
+Store state durably by returning it from your `step.do` callbacks.
+
+:::
+
+```ts
+export default {
+  async fetch(req: Request, env: Env) {
+    let someEvent = { url: req.url, createdTimestamp: Date.now() }
+    // Trigger our Workflow
+    // Pass our event as the second parameter to the `create` method
+    // on our Workflow binding.
+    let instance = await env.MYWORKFLOW.create({
+      id: await crypto.randomUUID(),
+      params: someEvent
+    });
+
+    return Response.json({
+      id: instance.id,
+      details: await instance.status(),
+    });
+
+    return Response.json({ result });
+  },
+};
+```
+
+To pass parameters via the `wrangler` command-line interface, pass a JSON string as the second parameter to the `workflows trigger` sub-command:
+
+```sh
+npx wrangler@latest workflows trigger workflows-starter '{"some":"data"}'
+```
+```sh output
+🚀 Workflow instance "57c7913b-8e1d-4a78-a0dd-dce5a0b7aa30" has been queued successfully
+```
+
+## TypeScript and type parameters
+
+By default, the `WorkflowEvent` passed to the `run` method of your Workflow definition has a type that conforms to the following, with `payload` (your data) and `timestamp` properties:
+
+```ts
+export type WorkflowEvent<T> = {
+  // The data passed as the parameter when the Workflow instance was triggered
+  payload: T;
+  // The timestamp that the Workflow was triggered
+  timestamp: Date;
+};
+```
+
+You can optionally type these events by defining your own type and passing it as a [type parameter](https://www.typescriptlang.org/docs/handbook/2/generics.html#working-with-generic-type-variables) to the `WorkflowEvent`:
+
+```ts
+// Define a type that conforms to the events your Workflow instance is
+// instantiated with
+interface YourEventType {
+  userEmail: string;
+  createdTimestamp: number;
+  metadata?: Record<string, string>;
+}
+```
+
+When you pass your `YourEventType` to `WorkflowEvent` as a type parameter, the `event.payload` property now has the type `YourEventType` throughout your workflow definition:
+
+```ts title="src/index.ts"
+// Import the Workflow definition
+import { WorkflowEntrypoint, WorkflowStep, WorkflowEvent} from 'cloudflare:workers';
+
+export class MyWorkflow extends WorkflowEntrypoint {
+    // Pass your type as a type parameter to WorkflowEvent
+    // The 'payload' property will have the type of your parameter.
+    async run(event: WorkflowEvent<YourEventType>, step: WorkflowStep) {
+        let state = step.do("my first step", async () => {
+          // Access your properties via event.payload
+          let userEmail = event.payload.userEmail
+          let createdTimestamp = event.payload.createdTimestamp
+        })
+
+        step.do("my second step", async () => { /* your code here */ )
+    }
+}
+```
+
+Note that type parameters do not _validate_ that the incoming event matches your type definition. Properties (fields) that do not exist or conform to the type you provided will be dropped. If you need to validate incoming events, we recommend a library such as [zod](https://zod.dev/) or your own validator logic.

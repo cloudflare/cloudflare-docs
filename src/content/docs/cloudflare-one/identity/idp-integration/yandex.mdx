@@ -1,9 +1,6 @@
 ---
 pcx_content_type: how-to
 title: Yandex
-sidebar:
-  order: 25
-
 ---
 
 Yandex is a web search engine that also offers identity provider (IdP) services.
@@ -58,11 +55,11 @@ To set up Yandex for Cloudflare Access:
 
 ```json
 {
-  "config": {
-    "client_id": "<your client id>",
-    "client_secret": "<your client secret>"
-  },
-  "type": "yandex",
-  "name": "my example idp"
+	"config": {
+		"client_id": "<your client id>",
+		"client_secret": "<your client secret>"
+	},
+	"type": "yandex",
+	"name": "my example idp"
 }
 ```

@@ -9,6 +9,8 @@ description: Learn how to set up Cloudflare Authenticated Origin Pulls with the
 
 ---
 
+import { Render } from "~/components";
+
 This guide will walk you through how to set up [per-hostname](/ssl/origin-configuration/authenticated-origin-pull/set-up/per-hostname/) authenticated origin pulls to securely connect to an AWS Application Load Balancer using [mutual TLS verify](https://docs.aws.amazon.com/elasticloadbalancing/latest/application/mutual-authentication.html).
 
 You can also find instructions on how to [rollback](#rollback-the-cloudflare-configuration) this setup in Cloudflare.
@@ -21,35 +23,7 @@ You can also find instructions on how to [rollback](#rollback-the-cloudflare-con
 
 ## 1. Generate a custom certificate
 
-1. Run the following command to generate a 4096-bit RSA private key, using AES-256 encryption. Enter a passphrase when prompted.
-
-```bash
-openssl genrsa -aes256 -out rootca.key 4096
-```
-
-2. Create the CA root certificate. When prompted, fill in the information to be included in the certificate. For the `Common Name` field, use the domain name as value, not the hostname.
-
-```bash
-openssl req -x509 -new -nodes -key rootca.key -sha256 -days 1826 -out rootca.crt
-```
-
-3. Create a Certificate Signing Request (CSR). When prompted, fill in the information to be included in the request. For the `Common Name` field, use the hostname as value.
-
-```bash
-openssl req -new -nodes -out cert.csr -newkey rsa:4096 -keyout cert.key
-```
-
-4. Sign the certificate using the `rootca.key` and `rootca.crt` created in previous steps.
-
-```bash
-openssl x509 -req -in cert.csr -CA rootca.crt -CAkey rootca.key -CAcreateserial -out cert.crt -days 730 -sha256 -extfile ./cert.v3.ext
-```
-
-5. Make sure the certificate extensions file `cert.v3.ext` specifies the following:
-
-```
-basicConstraints=CA:FALSE
-```
+<Render file="custom-cert-openssl-commands" />
 
 ## 2. Configure AWS Application Load Balancer
 
@@ -93,28 +67,7 @@ curl --verbose https://<your-application-load-balancer>
 
 1. [Upload the certificate](/ssl/edge-certificates/custom-certificates/uploading/#upload-a-custom-certificate) you created in [Step 1](#1-generate-a-custom-certificate) to Cloudflare. You should use the leaf certificate, not the root CA.
 
-```bash
-MYCERT="$(cat cert.crt|perl -pe 's/\r?\n/\\n/'|sed -e 's/..$//')"
-MYKEY="$(cat cert.key|perl -pe 's/\r?\n/\\n/'|sed -e's/..$//')"
-
-request_body=$(< <(cat <<EOF
-{
-"certificate": "$MYCERT",
-"private_key": "$MYKEY",
-"bundle_method":"ubiquitous"
-}
-EOF
-))
-
-# Push the certificate
-
-curl --silent \
-"https://api.cloudflare.com/client/v4/zones/$ZONEID/origin_tls_client_auth/hostnames/certificates" \
---header "Content-Type: application/json" \
---header "X-Auth-Email: $MYAUTHEMAIL" \
---header "X-Auth-Key: $MYAUTHKEY" \
---data "$request_body"
-```
+<Render file="aop-per-hostname-upload-cert" />
 
 2.[Associate the certificate with the hostname](/api/operations/per-hostname-authenticated-origin-pull-enable-or-disable-a-hostname-for-client-authentication) that should use it.
 
@@ -150,7 +103,7 @@ curl --request PATCH \
 
 :::note
 
-Make sure your [encryption mode](/ssl/origin-configuration/ssl-modes/) is set to **Full** or higher. If you only want to adjust this setting for a specific hostname, use [Configuration Rules](/rules/configuration-rules/settings/#ssl). 
+Make sure your [encryption mode](/ssl/origin-configuration/ssl-modes/) is set to **Full** or higher. If you only want to adjust this setting for a specific hostname, use [Configuration Rules](/rules/configuration-rules/settings/#ssl).
 :::
 
 ***

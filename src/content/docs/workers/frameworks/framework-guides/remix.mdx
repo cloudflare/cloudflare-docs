@@ -1,0 +1,69 @@
+---
+pcx_content_type: how-to
+title: Remix
+head: []
+description: Create a Remix application and deploy it to Cloudflare Workers with Workers Assets.
+---
+
+import {
+	Badge,
+	Description,
+	InlineBadge,
+	Render,
+	PackageManagers,
+} from "~/components";
+
+In this guide, you will create a new [Remix](https://remix.run/) application and deploy to Cloudflare Workers (with the new [<InlineBadge preset="beta" /> Workers Assets](/workers/static-assets/)).
+
+## 1. Set up a new project
+
+Use the [`create-cloudflare`](https://www.npmjs.com/package/create-cloudflare) CLI (C3) to set up a new project. C3 will create a new project directory, initiate Remix's official setup tool, and provide the option to deploy instantly.
+
+To use `create-cloudflare` to create a new Remix project with <InlineBadge preset="beta" /> Workers Assets, run the following command:
+
+<PackageManagers
+	type="create"
+	pkg="cloudflare@latest my-remix-app"
+	args={"--framework=remix --experimental"}
+/>
+
+<Render
+	file="c3-post-run-steps"
+	product="workers"
+	params={{
+		category: "web-framework",
+		framework: "Remix",
+	}}
+/>
+
+After setting up your project, change your directory by running the following command:
+
+```sh
+cd my-remix-app
+```
+
+## 2. Develop locally
+
+After you have created your project, run the following command in the project directory to start a local server. This will allow you to preview your project locally during development.
+
+<PackageManagers type="run" args={"dev"} />
+
+## 3. Deploy your Project
+
+Your project can be deployed to a `*.workers.dev` subdomain or a [Custom Domain](/workers/configuration/routing/custom-domains/), from your own machine or from any CI/CD system, including [Cloudflare's own](/workers/ci-cd/builds/).
+
+The following command will build and deploy your project. If you're using CI, ensure you update your ["deploy command"](/workers/ci-cd/builds/configuration/#build-settings) configuration appropriately.
+
+<PackageManagers type="run" args={"deploy"} />
+
+---
+
+## Bindings
+
+Your Remix application can be fully integrated with the Cloudflare Developer Platform, in both local development and in production, by using product bindings. The [Remix documentation](https://remix.run/docs/en/main/guides/vite#bindings) provides information about configuring bindings and how you can access them in your Remix page loaders.
+
+## Static assets
+
+You can serve static assets your Remix application by placing them in the `./public/` directory. This can be useful for resource files such as images, stylesheets, fonts, and manifests.
+
+<Render file="workers-assets-routing-summary" />
