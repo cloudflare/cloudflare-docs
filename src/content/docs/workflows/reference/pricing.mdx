@@ -1,0 +1,44 @@
+---
+pcx_content_type: concept
+title: Pricing
+sidebar:
+  order: 2
+
+---
+
+import { Render } from "~/components"
+
+# Pricing
+
+:::note
+
+Workflows is included in both the Free and Paid [Workers plans](/workers/platform/pricing/#workers).
+
+:::
+
+Workflows pricing is identical to [Workers Standard pricing](/workers/platform/pricing/#workers) and are billed on two dimensions:
+
+* **CPU time**: the total amount of compute (measured in milliseconds) consumed by a given Workflow.
+* **Requests** (invocations): the number of Workflow invocations. [Subrequests](/workers/platform/limits/#subrequests) made from a Workflow do not incur additional request costs.
+
+A Workflow that is waiting on a response to an API call, paused as a result of calling `step.sleep`, or otherwise idle, does not incur CPU time.
+
+## Frequently Asked Questions
+
+Frequently asked questions related to Workflows pricing:
+
+### Are there additional costs for Workflows?
+
+No. Workflows are priced based on the same compute (CPU time) and requests (invocations) as Workers.
+
+### Are Workflows available on the [Workers Free](/workers/platform/pricing/#workers) plan?
+
+Yes.
+
+### How do Workflows show up on my bill?
+
+Workflows are billed as Workers, and share the same CPU time and request SKUs.
+
+### Are there any limits to Workflows?
+
+Refer to the published [limits](/workflows/reference/limits/) documentation.
