@@ -67,8 +67,10 @@ The WARP client will also place the certificate in `/Library/Application Support
 
 macOS Ventura and newer do not allow WARP to automatically trust the certificate. To manually trust the certificate:
 
-1. Select **Trust**.
-2. Set **When using this certificate** to _Always Trust_.
+1. In Keychain Access, [find and open the certificate](#macos).
+2. Open **Trust**.
+3. Set **When using this certificate** to _Always Trust_.
+4. (Optional) Restart the device to reset connections to Zero Trust.
 
 Alternatively, you can configure your mobile device management (MDM) to automatically trust the certificate on all of your organization's devices.
 
@@ -78,9 +80,7 @@ To access the installed certificate in Windows:
 
 1. Open the Start menu and select **Run**.
 2. Enter `certlm.msc`.
-3. Go to **Trusted Root Certification Authority** > **Certificates**.
-
-The default Cloudflare certificate name is **Gateway CA - Cloudflare Managed G1**.
+3. Go to **Trusted Root Certification Authority** > **Certificates**. The default Cloudflare certificate name is **Gateway CA - Cloudflare Managed G1**.
 
 The WARP client will also place the certificate in `%ProgramData%\Cloudflare\installed_cert.pem` for reference by scripts or tools.
 
