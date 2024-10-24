@@ -35,18 +35,3 @@ As an example, to send the header `x-send-jwt-claim-user` request header to the 
 5. Choose **Set dynamic**.
 6. Set the header name.
 7. Set the value to `lookup_json_string(http.request.jwt.claims["<TOKEN_CONFIGURATION_ID>"][0], "claim_name")`, where `<TOKEN_CONFIGURATION_ID>` is your token configuration ID found in JWT Validation and `claim_name` is the JWT claim you want to add to the header.
-
-## Available fields
-
-You can create [custom rules](/waf/custom-rules/) using more claims present in tokens processed by [JWT Validation](/api-shield/security/jwt-validation/).
-
-| Name | Field |
-| --- | --- |
-| [JWT Registered Claim - Audience](https://datatracker.ietf.org/doc/html/rfc7519#section-4.1.3) | `http.request.jwt.claims.aud` <br /> `http.request.jwt.claims.aud.names` <br /> `http.request.jwt.claims.aud.values` |
-| [JWT Registered Claim - Issued At](https://datatracker.ietf.org/doc/html/rfc7519#section-4.1.6) | `http.request.jwt.claims.iat.sec` <br /> `http.request.jwt.claims.iat.sec.names` <br /> `http.request.jwt.claims.iat.sec.values`|
-| [JWT Registered Claim - Issuer](https://datatracker.ietf.org/doc/html/rfc7519#section-4.1.1) | `http.request.jwt.claims.iss` <br /> `http.request.jwt.claims.iss.names` <br /> `http.request.jwt.claims.iss.values`|
-| [JWT Registered Claim - JWT ID](https://datatracker.ietf.org/doc/html/rfc7519#section-4.1.7) | `http.request.jwt.claims.jti` <br /> `http.request.jwt.claims.jti.names` <br /> `http.request.jwt.claims.jti.values`|
-| [JWT Registered Claim - Not Before](https://datatracker.ietf.org/doc/html/rfc7519#section-4.1.5) | `http.request.jwt.claims.nbf.sec` <br /> `http.request.jwt.claims.nbf.sec.names` <br /> `http.request.jwt.claims.nbf.sec.values`|
-| [JWT Registered Claim - Subject](https://datatracker.ietf.org/doc/html/rfc7519#section-4.1.2) |  `http.request.jwt.claims.sub` <br /> `http.request.jwt.claims.sub.names` <br /> `http.request.jwt.claims.sub.values`|
-| [Session identifier](/api-shield/get-started/#session-identifiers) | `cf.api_gateway.auth_id_present`|
-| [Schema Validation](/api-shield/security/schema-validation/) | `cf.api_gateway.request_violates_schema`|
