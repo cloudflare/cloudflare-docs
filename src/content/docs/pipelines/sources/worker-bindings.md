@@ -14,7 +14,7 @@ You can send records to your Pipeline directly from a [Cloudflare Worker](worker
 1. Create a Worker
 2. Create a Pipeline
 3. Add your Pipeline as a binding in your Workers' `wrangler.toml` file
-4. Write your worker, to send records to your Pipeline
+4. Write your Worker, to send records to your Pipeline
 
 ## 1. Create a Worker
 Create a Cloudflare Worker if you don't already have one. This Worker will send records to your Pipeline.
