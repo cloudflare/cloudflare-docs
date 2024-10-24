@@ -62,7 +62,7 @@ Open your newly generated `wrangler.toml` configuration file and add the followi
 Replace `<MY-PIPELINE-NAME>` with the name of the Pipeline you created in step 2. Next, replace `MY_PIPELINE` with the name you want for your `binding`. The binding must be a valid JavaScript variable name. This is the variable you will use to reference this queue in your Worker.
 
 ## 4. Write your Worker
-You will now configure your Worker to send records to your Pipeline. Your worker will:
+You will now configure your Worker to send records to your Pipeline. Your Worker will:
 
 1. Take a request it receives from the browser
 2. Transform the request to JSON
