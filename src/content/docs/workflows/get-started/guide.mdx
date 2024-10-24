@@ -49,10 +49,12 @@ Open the `src/index.ts` file in your text editor. This file contains the followi
 // Import the Workflow definition
 import { WorkflowEntrypoint, WorkflowEvent, WorkflowStep } from "cloudflare:workers"
 
+type Params = {}
+
 // Create your own class that implements a Workflow
-export class MyWorkflow implements WorkflowEntrypoint {
+export class MyWorkflow extends WorkflowEntrypoint {
     // Define a run() method
-    async run(event: WorkflowEvent, step: WorkflowStep) {
+    async run(event: WorkflowEvent<Params>, step: WorkflowStep) {
         // Define one or more steps that optionally return state.
       	const state = await step.do('my first step', async () => {
             return {}
@@ -99,10 +101,12 @@ At its most basic, a step looks like this:
 // Import the Workflow definition
 import { WorkflowEntrypoint, WorkflowEvent, WorkflowStep } from "cloudflare:workers"
 
+type Params = {}
+
 // Create your own class that implements a Workflow
-export class MyWorkflow implements WorkflowEntrypoint {
+export class MyWorkflow extends WorkflowEntrypoint {
     // Define a run() method
-    async run(event: WorkflowEvent, step: WorkflowStep) {
+    async run(event: WorkflowEvent<Params>, step: WorkflowStep) {
         // Define one or more steps that optionally return state.
         let state = step.do("my first step", async () => {
 
@@ -150,7 +154,7 @@ Open the `wrangler.toml` file at the root of your `workflows-starter` folder, wh
 #:schema node_modules/wrangler/config-schema.json
 name = "workflows-starter"
 main = "src/index.ts"
-compatibility_date = "2024-10-23"
+compatibility_date = "2024-10-22"
 
 [[workflows]]
 # name of your workflow
