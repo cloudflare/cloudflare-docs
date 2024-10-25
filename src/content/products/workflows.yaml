@@ -9,7 +9,7 @@ product:
 meta:
   title: Cloudflare Workflows docs
   description: Build durable, multi-step applications using the Workers platform
-  author: '@cloudflare'
+  author: "@cloudflare"
 
 resources:
   community: https://community.cloudflare.com/c/developers/workers/40
