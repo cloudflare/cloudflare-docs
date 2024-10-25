@@ -65,6 +65,10 @@ This does not mean that your traffic was blocked. It is the challenge sent to yo
 
 To understand if the result of the challenge was a success or a failure, you can verify using [Logpush](/logs/about/).
 
+## Does the WAF run before Super Bot Fight Mode?
+
+Yes. WAF rules are executed before Super Bot Fight Mode. If a WAF custom rule performs a [terminating action](/ruleset-engine/rules-language/actions/) such as _Block_, your Super Bot Fight Mode configuration will not be evaluated.
+
 ---
 
 ## What is the difference between the threat score and bot management score?

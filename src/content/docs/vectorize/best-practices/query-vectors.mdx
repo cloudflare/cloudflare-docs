@@ -70,9 +70,9 @@ Refer to [Vectorize API](/vectorize/reference/client-api/) for additional exampl
 ## Control over scoring precision and query accuracy
 
 When querying vectors, you can specify to either use high-precision scoring, thereby increasing the precision of the query matches scores as well as the accuracy of the query results, or use approximate scoring for faster response times.
-Using approximate scoring, returned scores will be an approximation of the real distance/similarity between your query and the returned vectors.
+Using approximate scoring, returned scores will be an approximation of the real distance/similarity between your query and the returned vectors; this is the query's default as it's a nice trade-off between accuracy and latency.
 
-High-precision scoring is enabled by setting `returnValues: true` on your query; this tells Vectorize to fetch and use the original vector values for your matches, which enables the computation of exact scores of matches, increasing the accuracy of the results.
+High-precision scoring is enabled by setting `returnValues: true` on your query. This setting tells Vectorize to use the original vector values for your matches, allowing the computation of exact match scores and increasing the accuracy of the results. Because it processes more data, though, high-precision scoring will increase the latency of queries.
 
 ## Workers AI
 

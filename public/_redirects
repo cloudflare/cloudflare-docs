@@ -93,14 +93,15 @@
 /ai/ /use-cases/ai/ 301
 
 # AI Gateway
-
 /ai-gateway/get-started/configuring-settings/ /ai-gateway/get-started/ 301
 /ai-gateway/get-started/connecting-applications/ /ai-gateway/get-started/ 301
 /ai-gateway/get-started/creating-gateway/ /ai-gateway/get-started/ 301
 /ai-gateway/pricing/ /ai-gateway/reference/pricing/ 301
 /ai-gateway/observability/evaluations/ /ai-gateway/evaluations/ 301
 /ai-gateway/observability/evaluations/set-up-evaluations/ /ai-gateway/evaluations//set-up-evaluations/ 301
-
+/ai-gateway/integration/vercel-ai-sdk/ /ai-gateway/integrations/vercel-ai-sdk/ 301
+/ai-gateway/integration/aig-workers-ai-binding/ /ai-gateway/integrations/aig-workers-ai-binding/ 301
+/ai-gateway/integration/ /ai-gateway/integrations/ 301
 
 # analytics
 /analytics/migration-guides/zone-analytics/ /analytics/graphql-api/migration-guides/zone-analytics/ 301
@@ -377,6 +378,8 @@
 # email-security
 /email-security/setup/api-deployment/ /email-security/setup/post-delivery-deployment/api/ 301
 /email-security/setup/api-deployment/office365-api/ /email-security/setup/post-delivery-deployment/api/office365-api/ 301
+/email-security/email-configuration/retract-settings/gmail-retraction/ /email-security/deployment/api/setup/gsuite-bcc-setup/add-retraction/ 301
+ 
 
 # firewall
 /firewall/api/cf-lists/ /waf/tools/lists/lists-api/ 301
@@ -953,7 +956,10 @@
 /support/speed/optimization-delivery/configuring-cloudflare-mirage/ /speed/optimization/images/mirage/ 301
 /support/speed/optimization-mobile/understanding-cloudflare-mobile-redirect/ /speed/optimization/other/mobile-redirect/ 301
 /support/speed/optimization-file-size/using-cloudflare-auto-minify/ /speed/optimization/content/ 301
-/support/speed/optimization-file-size/what-will-cloudflare-compress/ /speed/optimization/content/brotli/ 301
+/support/speed/optimization-file-size/what-will-cloudflare-compress/ /speed/optimization/content/compression/ 301
+/speed/optimization/content/brotli/ /speed/optimization/content/compression/ 301
+/speed/optimization/content/brotli/enable/ /speed/optimization/content/compression/ 301
+/speed/optimization/content/brotli/content-compression/ /speed/optimization/content/compression/ 301
 /support/speed/optimization-file-size/why-isnt-auto-minify-working/ /speed/optimization/content/troubleshooting/ 301
 /support/speed/optimization-mobile/why-is-the-mobile-redirect-i-set-up-through-cloudflare-redirecting-my-static-assets/ /speed/optimization/other/troubleshooting/mobile-redirect-affect-static-assets/ 301
 /speed/optimization/other/amp-real-ulr/ /speed/optimization/other/amp-real-url/ 301
@@ -1630,6 +1636,8 @@
 /cloudflare-one/connections/connect-devices/warp/deployment/macOS-Teams/ /cloudflare-one/connections/connect-devices/warp/deployment/mdm-deployment/ 301
 /cloudflare-one/connections/connect-devices/warp/device-enrollment/ /cloudflare-one/connections/connect-devices/warp/configure-warp/warp-settings/ 301
 /cloudflare-one/connections/connect-devices/warp/warp-settings/ /cloudflare-one/connections/connect-devices/warp/configure-warp/warp-settings/ 301
+/cloudflare-one/connections/connect-devices/warp/user-side-certificates/install-cloudflare-cert/ /cloudflare-one/connections/connect-devices/warp/user-side-certificates/manual-deployment/ 301
+/cloudflare-one/connections/connect-devices/warp/user-side-certificates/install-cert-with-warp/ /cloudflare-one/connections/connect-devices/warp/user-side-certificates/automated-deployment/ 301
 /cloudflare-one/connections/connect-networks/locations/ /cloudflare-one/connections/connect-devices/agentless/dns/locations/ 301
 /cloudflare-one/connections/connect-networks/monitor-tunnels/grafana/ /cloudflare-one/tutorials/grafana/ 301
 /cloudflare-one/connections/connect-networks/use-cases/kubectl/ /cloudflare-one/tutorials/many-cfd-one-tunnel/ 301

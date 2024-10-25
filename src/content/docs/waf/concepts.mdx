@@ -68,4 +68,6 @@ Cloudflare evaluates different types of rules when processing incoming requests.
 5. [WAF Managed Rules](/waf/managed-rules/)
 6. [Cloudflare Rate Limiting](/waf/reference/legacy/old-rate-limiting/) (previous version, deprecated)
 
-For more information on the Ruleset Engine phases where each WAF feature will execute, refer to [WAF phases](/waf/reference/phases/).
+Rules are evaluated in order. If there is a match for a rule with a [terminating action](/ruleset-engine/rules-language/actions/), the rule evaluation will stop and the action will be executed immediately. Rules with a non-terminating action (such as _Log_) will not prevent subsequent rules from being evaluated and executed. For more information on how rules are evaluated, refer to [Rule evaluation](/ruleset-engine/about/rules/#rule-evaluation) in the Ruleset Engine documentation.
+
+For more information on the phases where each WAF feature will execute, refer to [WAF phases](/waf/reference/phases/).

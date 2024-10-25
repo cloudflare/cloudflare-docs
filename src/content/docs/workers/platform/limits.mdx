@@ -11,9 +11,9 @@ import { Render } from "~/components";
 
 ## Account plan limits
 
-| Feature                                                                          | Workers Free | Workers Paid ([Bundled](/workers/platform/pricing/#example-pricing-bundled-usage-model), [Unbound](/workers/platform/pricing/#example-pricing-unbound-usage-model)) and [Standard](/workers/platform/pricing/#example-pricing-standard-usage-model)                |
+| Feature                                                                          | Workers Free | Workers Paid              |
 | -------------------------------------------------------------------------------- | ------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| [Subrequests](#subrequests)                                                      | 50/request   | 50/request ([Bundled](/workers/platform/pricing/#example-pricing-bundled-usage-model)),<br/> 1000/request ([Unbound](/workers/platform/pricing/#example-pricing-unbound-usage-model), [Standard](/workers/platform/pricing/#example-pricing-standard-usage-model)) |
+| [Subrequests](#subrequests)                                                      | 50/request   | 1000/request |
 | [Simultaneous outgoing<br/>connections/request](#simultaneous-open-connections)  | 6            | 6                                                                                                                                                                                                                                                                  |
 | [Environment variables](#environment-variables)                                  | 64/Worker    | 128/Worker                                                                                                                                                                                                                                                         |
 | [Environment variable<br/>size](#environment-variables)                          | 5 KB         | 5 KB                                                                                                                                                                                                                                                               |
@@ -56,12 +56,12 @@ Cloudflare does not enforce response limits, but cache limits for [Cloudflare's 
 
 ## Worker limits
 
-| Feature                  | Free                                       | [Bundled usage model](/workers/platform/pricing/#example-pricing-bundled-usage-model) | [Unbound](/workers/platform/pricing/#example-pricing-unbound-usage-model) and [Standard](/workers/platform/pricing/#example-pricing-standard-usage-model) usage model                                         |
-| ------------------------ | ------------------------------------------ | ------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| [Request](#request)      | 100,000 requests/day<br/>1000 requests/min | none                                                                                  | none                                                                                                                                                                                                          |
-| [Worker memory](#memory) | 128 MB                                     | 128 MB                                                                                | 128 MB                                                                                                                                                                                                        |
-| [CPU time](#cpu-time)    | 10 ms                                      | 50 ms HTTP request <br/> 50 ms [Cron Trigger](/workers/configuration/cron-triggers/)  | 30 s HTTP request <br/> 15 min [Cron Trigger](/workers/configuration/cron-triggers/)                                          		|
-| [Duration](#duration)    | None                                       | none                                                                                  | 15 min [Cron Trigger](/workers/configuration/cron-triggers/) <br/> 15 min [Durable Object Alarm](/durable-objects/api/alarms/) <br/> 15 min [Queue Consumer](/queues/configuration/javascript-apis/#consumer) |
+| Feature                  | Workers Free                               | Workers Paid     |
+| ------------------------ | ------------------------------------------ | ---------------- |
+| [Request](#request)      | 100,000 requests/day<br/>1000 requests/min | No limit         |
+| [Worker memory](#memory) | 128 MB                                     | 128 MB           |
+| [CPU time](#cpu-time)    | 10 ms                                      | 30 s HTTP request <br/> 15 min [Cron Trigger](/workers/configuration/cron-triggers/)    	|
+| [Duration](#duration)    | No limit                                   | No limit for Workers. <br/>15 min duration limit for [Cron Triggers](/workers/configuration/cron-triggers/), [Durable Object Alarms](/durable-objects/api/alarms/) and [Queue Consumers](/queues/configuration/javascript-apis/#consumer) |
 
 ### Duration
 
@@ -91,12 +91,12 @@ Scheduled Workers ([Cron Triggers](/workers/configuration/cron-triggers/)) have 
 
 ## Cache API limits
 
-| Feature                                  | Workers Free | [Bundled](/workers/platform/pricing/#example-pricing-bundled-usage-model) | [Unbound](/workers/platform/pricing/#example-pricing-unbound-usage-model) and [Standard](/workers/platform/pricing/#example-pricing-standard-usage-model) |
-| ---------------------------------------- | ------------ | ------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| [Maximum object size](#cache-api-limits) | 512 MB       | 512 MB                                                                    | 512 MB                                                                                                                                                    |
-| [Calls/request](#cache-api-limits)       | 50           | 50                                                                        | 1,000                                                                                                                                                     |
+| Feature                                  | Workers Free | Workers Paid
+| ---------------------------------------- | ------------ | ------------ |
+| [Maximum object size](#cache-api-limits) | 512 MB       | 512 MB       |
+| [Calls/request](#cache-api-limits)       | 50           | 1,000        |
 
-- 50 total `put()`, `match()`, or `delete()` calls per-request, using the same quota as `fetch()`.
+Calls/request means the number of calls to `put()`, `match()`, or `delete()` Cache API method per-request, using the same quota as subrequests (`fetch()`).
 
 :::note
 
@@ -176,7 +176,7 @@ If you make a subrequest from your Worker to a target Worker that runs on a [Cus
 
 ### How many subrequests can I make?
 
-The limit for subrequests a Worker can make is 50 per request on the Bundled usage model or 1,000 per request on the Unbound usage model. Each subrequest in a redirect chain counts against this limit. This means that the number of subrequests a Worker makes could be greater than the number of `fetch(request)` calls in the Worker.
+You can make 50 subrequests per request on Workers Free, and 1,000 subrequests per request on Workers Paid. Each subrequest in a redirect chain counts against this limit. This means that the number of subrequests a Worker makes could be greater than the number of `fetch(request)` calls in the Worker.
 
 For subrequests to internal services like Workers KV and Durable Objects, the subrequest limit is 1,000 per request, regardless of the [usage model](/workers/platform/pricing/#workers) configured for the Worker.
 
@@ -303,6 +303,24 @@ When using Image Resizing with Workers, refer to [Image Resizing documentation](
 You can emit a maximum of 128 KB of data (across `console.log()` statements, exceptions, request metadata and headers) to the console for a single request. After you exceed this limit, further context associated with the request will not be recorded in logs, appear when tailing logs of your Worker, or within a [Tail Worker](/workers/observability/logs/tail-workers/).
 
 Refer to the [Workers Trace Event Logpush documentation](/workers/observability/logs/logpush/#limits) for information on the maximum size of fields sent to logpush destinations.
+
+---
+
+## Unbound and Bundled plan limits
+
+:::note
+Unbound and Bundled plans have been deprecated and are no longer available for new accounts.
+:::
+
+If your Worker is on an Unbound plan, your limits are exactly the same as the Workers Paid plan.
+
+If your Worker is on a Bundled plan, your limits are the same as the Workers Paid plan except for the following differences:
+* Your limit for [subrequests](/workers/platform/limits/#subrequests) is 50/request
+* Your limit for [CPU time](/workers/platform/limits/#cpu-time) is 50ms for HTTP requests and 50ms for [Cron Triggers](/workers/configuration/cron-triggers/)
+* You have no [Duration](/workers/platform/limits/#duration) limits for [Cron Triggers](/workers/configuration/cron-triggers/), [Durable Object alarms](/durable-objects/api/alarms/), or [Queue consumers](/queues/configuration/javascript-apis/#consumer)
+* Your Cache API limits for calls/requests is 50
+
+---
 
 ## Related resources
 

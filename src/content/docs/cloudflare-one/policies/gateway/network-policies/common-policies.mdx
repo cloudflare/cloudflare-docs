@@ -6,10 +6,9 @@ sidebar:
 head:
   - tag: title
     content: Common network policies
-
 ---
 
-import { Render } from "~/components"
+import { Render } from "~/components";
 
 The following policies are commonly used to secure network traffic.
 
@@ -23,12 +22,7 @@ Refer to the [network policies page](/cloudflare-one/policies/gateway/network-po
 
 Require devices to have certain software installed or other configuration attributes. For instructions on enabling a device posture check, refer to the [device posture section](/cloudflare-one/identity/devices/).
 
-In the following example, users can only access an application if they connect from a company device.
-
-| Selector                     | Operator | Value                   | Logic | Action |
-| ---------------------------- | -------- | ----------------------- | ----- | ------ |
-| Passed Device Posture Checks | not in   | `Device serial numbers` | And   | Block  |
-| SNI Domain                   | is       | `internalapp.com`       |       |        |
+<Render file="gateway/policies/enforce-device-posture" />
 
 ## Enforce session duration
 

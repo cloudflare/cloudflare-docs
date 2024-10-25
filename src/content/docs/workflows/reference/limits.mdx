@@ -1,0 +1,34 @@
+---
+pcx_content_type: concept
+title: Limits
+sidebar:
+  order: 4
+
+---
+
+import { Render } from "~/components"
+
+Limits that apply to authoring, deploying, and running Workflows are detailed below.
+
+Many limits are inherited from those applied to Workers scripts and as documented in the [Workers limits](/workers/platform/limits/) documentation.
+
+| Feature                                   | Workers Free            | Workers Paid          |
+| ----------------------------------------- | ----------------------- | --------------------- |
+| Workflow class definitions per script     | 1MB max script size per [Worker size limits](/workers/platform/limits/#account-plan-limits) | 10MB max script size per [Worker size limits](/workers/platform/limits/#account-plan-limits)
+| Total scripts per account                 | 100 | 500 (shared with [Worker script limits](/workers/platform/limits/#account-plan-limits) |
+| Compute time per Workflow                 | 10 seconds | 30 seconds of [active CPU time](/workers/platform/limits/#cpu-time) |
+| Duration (wall clock) per `step`          | Unlimited | Unlimited - e.g. waiting on network I/O calls or querying a database |
+| Maximum persisted state per step          | 1MiB (2^20 bytes) | 1MiB (2^20 bytes) |
+| Maximum state that can be persisted per Workflow instance | 100MB | 1GB |
+| Maximum `step.sleep` duration             | 365 days (1 year) [^1] |
+| Maximum steps per Workflow                | 256 [^1] |
+| Maximum Workflow executions               | 100,000 per day [shared with Workers daily limit](/workers/platform/limits/#worker-limits) | Unlimited |
+| Concurrent Workflow instances (executions) | 25 | 100 [^1] |
+| Retention limit for completed Workflow state | 3 days | 30 days [^2] |
+| Maximum length of a Workflow ID | 64 bytes |
+
+[^1]: This limit will be reviewed and revised during the open beta for Workflows. Follow the [Workflows changelog](/workflows/reference/changelog/) for updates.
+
+[^2]: Workflow state and logs will be retained for 3 days on the Workers Free plan and for 7 days on the Workers Paid plan.
+
+<Render file="limits_increase" product="workers" />

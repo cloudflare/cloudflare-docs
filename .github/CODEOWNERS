@@ -21,10 +21,11 @@
 /src/content/docs/ai-gateway/ @kathayl @G4brym @mchenco @daisyfaithauma @cloudflare/pcx-technical-writing
 /src/content/docs/workers-ai/ @rita3ko @craigsdennis @markdembo @mchenco @daisyfaithauma @cloudflare/pcx-technical-writing
 /src/content/docs/workers-ai/static @mchenco @craigsdennis @cloudflare/pcx-technical-writing
-/src/content/docs/vectorize/ @elithrar @vy-ton @sejoker @cloudflare/pcx-technical-writing
+/src/content/docs/vectorize/ @elithrar @vy-ton @sejoker @mchenco @cloudflare/pcx-technical-writing
+/src/content/partials/vectorize/ @elithrar @mchenco @sejoker @cloudflare/pcx-technical-writing
 /src/content/changelogs/workers-ai.yaml @kathayl @G4brym @mchenco @daisyfaithauma @cloudflare/pcx-technical-writing
 /src/content/changelogs/ai-gateway.yaml @kathayl @G4brym @mchenco @daisyfaithauma @cloudflare/pcx-technical-writing
-/src/content/changelogs/vectorize.yaml @elithrar @sejoker @cloudflare/pcx-technical-writing
+/src/content/changelogs/vectorize.yaml @elithrar @mchenco @sejoker @cloudflare/pcx-technical-writing
 
 # Analytics & Logs
 
@@ -130,6 +131,7 @@
 /cloudflare-for-platforms/workers-for-platforms/ @irvinebroque @tanushree-sharma @angelampcosta @GregBrimble @cloudflare/pcx-technical-writing
 /src/content/docs/workers/observability/ @irvinebroque @mikenomitch @rohinlohe @cloudflare/pcx-technical-writing
 /src/content/docs/workers/static-assets @irvinebroque @tanushree-sharma @GregBrimble @WalshyDev @cloudflare/pcx-technical-writing
+/src/content/docs/workflows/ @elithrar @celso @sidharthachatterjee @cloudflare/pcx-technical-writing
 
 # DDoS Protection
 
