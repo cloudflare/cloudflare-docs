@@ -1,18 +1,16 @@
 ---
-title: How it works
+title: How Page Shield works
 pcx_content_type: concept
 sidebar:
   order: 3
-head:
-  - tag: title
-    content: How Page Shield works
+  group:
+    label: How it works
 description: Page Shield tracks resources (such as scripts) loaded by your
   website visitors and provides alerts when it detects new, changed, or
   malicious resources.
-
 ---
 
-import { GlossaryTooltip } from "~/components"
+import { GlossaryTooltip } from "~/components";
 
 Page Shield helps manage resources loaded by your website visitors, including scripts, their connections, and cookies. It can trigger alert notifications when resources change or are considered malicious.
 
@@ -30,8 +28,8 @@ Enterprise customers with a paid add-on can create [policies](/page-shield/polic
 
 When you create policies, Page Shield will generate CSP directives from those policies based on their configuration:
 
-* Log policies will create CSP directives for the `Content-Security-Policy-Report-Only` HTTP header.
-* Allow policies will create CSP directives for the `Content-Security-Policy` HTTP header.
+- Log policies will create CSP directives for the `Content-Security-Policy-Report-Only` HTTP header.
+- Allow policies will create CSP directives for the `Content-Security-Policy` HTTP header.
 
 For more information, refer to [Policies](/page-shield/policies/).
 
