@@ -1,7 +1,7 @@
-name: Cloudflare Image Optimization
+name: Cloudflare Images
 
 product:
-  title: Cloudflare Image Optimization
+  title: Cloudflare Images
   url: /images/
   group: Developer platform
   additional_groups: [Media]
@@ -9,10 +9,9 @@ product:
   preview_tryout: true
 
 meta:
-  title: Cloudflare Image Optimization docs
+  title: Cloudflare Images docs
   description:
-    Choose between Cloudflare Images and Cloudflare Image Resizing, two
-    products tailored to your different needs.
+    Store, transform, optimize, and deliver images at scale.
   author: "@cloudflare"
 
 resources:

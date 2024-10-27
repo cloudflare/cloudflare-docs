@@ -1,0 +1,88 @@
+---
+pcx_content_type: how-to
+type: overview
+title: Work with custom rulesets in the dashboard
+sidebar:
+  order: 2
+  label: Use the dashboard
+head:
+  - tag: title
+    content: Work with WAF custom rulesets in the dashboard
+---
+
+import { Render } from "~/components";
+
+:::note
+This feature requires an Enterprise plan with a paid add-on.
+:::
+
+Custom rulesets are configured at the account level. To work with custom rulesets, go to Account Home > **WAF** > **Custom rulesets**.
+
+## Create and deploy a custom ruleset
+
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/) and select your account.
+
+2. Go to Account Home > **WAF** > **Custom rulesets**.
+
+   ![Custom rulesets page in the Cloudflare dashboard](~/assets/images/waf/account/custom-rulesets-dashboard.png)
+
+3. To create a new empty ruleset, select **Create ruleset**. To duplicate an existing ruleset, select the three dots next to it > **Duplicate**.
+
+4. In the page that displays, enter a name and (optionally) a description for the custom ruleset.
+
+5. Under **Scope**, define when the custom ruleset should run.
+
+   - Select **All incoming requests** to apply the custom ruleset to all incoming requests for all your zones on an Enterprise plan.
+   - Select **Custom filter expression** to define a custom expression that defines when to execute the custom ruleset. Use the **Field** drop-down list to choose an HTTP property. For each request, the value of the property you choose for **Field** is compared to the value you specify for **Value** using the operator selected in **Operator**. Alternatively, select **Edit expression** to define your expression using the [Expression Editor](/ruleset-engine/rules-language/expressions/edit-expressions/#expression-editor).
+
+   :::caution
+   Deployed custom rulesets will only apply to incoming traffic of Enterprise domains. The Expression Builder will automatically include this filter. If you define a custom expression for the ruleset using the Expression Editor, you must use parentheses to enclose any custom conditions and end your expression with `and cf.zone.plan eq "ENT"` so that the rule only applies to domains on an Enterprise plan.
+   :::
+
+6. To create a new rule, select **Add rule**.
+
+7. Enter a descriptive name for the rule in **Rule name**.
+
+8. Under **When incoming requests match**, use the **Field** drop-down list to choose an HTTP property. For each request, the value of the property you choose for **Field** is compared to the value you specify for **Value** using the operator selected in **Operator**. Alternatively, select **Edit expression** to define your expression using the [Expression Editor](/ruleset-engine/rules-language/expressions/edit-expressions/#expression-editor).
+
+9. Select the rule action from the **Choose action** drop-down list. For example, selecting _Block_ tells Cloudflare to refuse requests that match the conditions you specified.
+
+10. (Optional) If you selected the _Block_ action, you can [configure a custom response](#configure-a-custom-response-for-blocked-requests).
+
+11. Select **Deploy**.
+
+12. Add other rules to the custom ruleset, if needed. You can also duplicate an existing rule in the custom ruleset.
+
+13. Select **Create**.
+
+## Edit a custom ruleset
+
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/) and select your account.
+
+2. Go to Account Home > **WAF** > **Custom rulesets**.
+
+   ![Custom rulesets page in the Cloudflare dashboard](~/assets/images/waf/account/custom-rulesets-dashboard.png)
+
+3. To edit a custom ruleset, select the three dots next to it > **Edit**.
+
+4. Make any desired changes to the ruleset by selecting **Edit** next to the items you want to change.
+
+5. When you are done, select **Back to rulesets list**.
+
+:::caution
+Deployed custom rulesets will only apply to incoming traffic of Enterprise domains. The Expression Builder will automatically include this filter. If you define a custom expression for the ruleset using the Expression Editor, you must use parentheses to enclose any custom conditions and end your expression with `and cf.zone.plan eq "ENT"` so that the rule only applies to domains on an Enterprise plan.
+:::
+
+## Delete a custom ruleset
+
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/) and select your account.
+2. Go to Account Home > **WAF** > **Custom rulesets**.
+3. To delete a custom ruleset, select the three dots next to it > **Delete**.
+4. To confirm the delete operation, select **Delete**.
+
+## Configure a custom response for blocked requests
+
+<Render
+	file="custom-response-blocked-requests"
+	params={{ one: "WAF block", two: "403", three: "2 KB" }}
+/>

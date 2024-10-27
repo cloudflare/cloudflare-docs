@@ -145,6 +145,17 @@ You can customize a variety of options for your waiting rooms.
       <td></td>
     </tr>
     <tr>
+      <td>Session Revocation</td>
+      <td>
+        <code></code>
+      </td>
+      <td>No</td>
+      <td>
+        Revoke a user's session when they perform a specific action by sending a command to the waiting room using an HTTP header on the response from your origin. 
+      </td>
+      <td>Enable this setting in the dashboard and add the `Cf-Waiting-Room-Command: revoke` HTTP header to the response from your origin.</td>
+    </tr>
+    <tr>
       <td>Description</td>
       <td>
         <code>description</code>

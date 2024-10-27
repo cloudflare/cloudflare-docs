@@ -1,0 +1,23 @@
+---
+title: Rate limiting rulesets
+pcx_content_type: concept
+sidebar:
+  order: 3
+---
+
+import { GlossaryTooltip } from "~/components";
+
+A rate limiting rule defines a <GlossaryTooltip term="rate limiting">rate limit</GlossaryTooltip> for requests matching an expression, and the action to perform when that rate limit is reached. At the account level, rate limiting rules are always grouped into rate limiting rulesets, which you then deploy.
+
+:::note
+This feature requires an Enterprise plan with a paid add-on.
+:::
+
+To apply a rate limiting ruleset at the account level, create a custom rate limiting ruleset with one or more rate limiting rules and then deploy it to one or more zones on an Enterprise plan.
+
+## Next steps
+
+For instructions on creating and deploying a rate limiting ruleset, refer to the following pages:
+
+- [Create a rate limiting ruleset in the dashboard](/waf/account/rate-limiting-rulesets/create-dashboard/)
+- [Create a rate limiting ruleset using the API](/waf/account/rate-limiting-rulesets/create-api/)

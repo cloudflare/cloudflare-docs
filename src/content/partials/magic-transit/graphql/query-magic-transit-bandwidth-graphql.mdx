@@ -1,13 +1,13 @@
 ---
-inputParameters: productName
-
+params:
+  - productName
 ---
 
-import { Markdown } from "~/components"
+import { Markdown } from "~/components";
 
-In this example, you are going to use the GraphQL Analytics API to query {props.one} ingress tunnel traffic over a specified time period.
+In this example, you are going to use the GraphQL Analytics API to query {props.productName} ingress tunnel traffic over a specified time period.
 
-The following API call will request {props.one} ingress tunnel traffic over a one-hour period and output the requested fields. Be sure to replace `<CLOUDFLARE_ACCOUNT_ID>` with your account ID, `<EMAIL>`, `<API_KEY>`, and `<API_TOKEN>` with your API credentials, and adjust the `datetime_geq` and `datetime_leq` values as needed.
+The following API call will request {props.productName} ingress tunnel traffic over a one-hour period and output the requested fields. Be sure to replace `<CLOUDFLARE_ACCOUNT_ID>` with your account ID, `<EMAIL>`, `<API_KEY>`, and `<API_TOKEN>` with your API credentials, and adjust the `datetime_geq` and `datetime_leq` values as needed.
 
 The following example queries for ingress traffic. To query for egress, change the value in the direction filter.
 

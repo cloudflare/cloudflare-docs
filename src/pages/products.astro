@@ -13,7 +13,7 @@ const frontmatter = {
 	description:
 		"API reference, how-to guides, tutorials, example code, and more.",
 	template: "splash",
-};
+} as const;
 
 function productGroups(products: Array<CollectionEntry<"products">>) {
 	const groups = products.flatMap((p) => p.data.product.group ?? []);
@@ -158,7 +158,7 @@ const groups = productGroups(products);
 		input.addEventListener("change", filterProducts);
 	});
 
-	document.addEventListener("DOMContentLoaded", () => {
+	function initProducts() {
 		const params = new URLSearchParams(window.location.search);
 
 		const groups = params.get("product-group");
@@ -170,13 +170,12 @@ const groups = productGroups(products);
 		if (!filters) return;
 
 		for (const filter of filters) {
-			console.log(groups);
-			console.log(filter.id);
 			if (groups.includes(filter.id)) {
 				filter.checked = true;
 			}
 		}
 
 		filterProducts();
-	});
+	}
+	initProducts();
 </script>

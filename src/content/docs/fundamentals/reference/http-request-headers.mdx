@@ -1,16 +1,15 @@
 ---
 pcx_content_type: reference
 title: Cloudflare HTTP request headers
-
 ---
 
-import { Render } from "~/components"
+import { Render } from "~/components";
 
 Cloudflare passes all HTTP request headers to your origin web server and adds additional headers as specified below.
 
 :::note
 
-Cloudflare may remove HTTP request headers with names considered invalid [according to NGINX](https://nginx.org/en/docs/http/ngx_http_core_module.html#ignore_invalid_headers) — for example, header names containing a `.` (dot) character. 
+Cloudflare may remove HTTP request headers with names considered invalid [according to NGINX](https://nginx.org/en/docs/http/ngx_http_core_module.html#ignore_invalid_headers) — for example, header names containing a `.` (dot) character.
 :::
 
 ## Accept-Encoding
@@ -40,7 +39,7 @@ When no Worker subrequest is triggered, `cf-connecting-ip` reflects the client's
 
 Cloudflare provides [free IPv6 support](/network/ipv6-compatibility/) to all domains without requiring additional configuration or hardware. To support migrating to IPv6, Cloudflare's [Pseudo IPv4](/network/pseudo-ipv4/) provides an IPv6 to IPv4 translation service for all Cloudflare domains.
 
-<Render file="pseudo-ipv4-warning" /> <br/>
+<Render file="pseudo-ipv4-warning" /> <br />
 
 ## CF-EW-Via
 
@@ -62,9 +61,7 @@ Alternatively, if you do not wish to receive the `True-Client-IP` header or any 
 
 :::caution
 
-
 If you are using Cloudflare in a stacked CDN and authenticating HTTP requests based on the IP address value in the `True-Client-IP` header, you must add a `True-Client-IP` header to your requests. If you do not add this header, its value can be spoofed to any value.
-
 
 :::
 
@@ -80,9 +77,7 @@ If you do not wish to receive the visitor's IP address in the `X-Forwarded-For` 
 
 :::note
 
-
 To restore the original visitor IP address at your origin web server, Cloudflare recommends that your logs or applications look at `CF-Connecting-IP` or `True-Client-IP` instead of `X-Forwarded-For`. `CF-Connecting-IP` and `True-Client-IP` both have a consistent format containing only one IP address.
-
 
 :::
 
@@ -104,18 +99,16 @@ Enterprise customers can also see all requests via [Cloudflare Logs](/logs/).
 
 The `CF-IPCountry` header contains a two-character country code of the originating visitor’s country.
 
-Besides the  [ISO-3166-1 alpha-2 codes](https://www.iso.org/iso-3166-country-codes.html), Cloudflare uses the following special country codes:
+Besides the [ISO-3166-1 alpha-2 codes](https://www.iso.org/iso-3166-country-codes.html), Cloudflare uses the following special country codes:
 
-* `XX` - Used for clients without country code data.
-* `T1` - Used for clients using the Tor network.
+- `XX` - Used for clients without country code data.
+- `T1` - Used for clients using the Tor network.
 
 To add this header to requests, along with other HTTP headers with location information for the visitor's IP address, [enable the **Add visitor location headers** Managed Transform](/rules/transform/managed-transforms/configure/).
 
 :::note
 
-
 The `CF-IPCountry` header is removed from requests made from a Worker to an origin that is not proxied behind Cloudflare.
-
 
 :::
 
@@ -141,9 +134,7 @@ The intended purpose of this header is to provide a means for recipients (for ex
 
 :::note
 
-
 When configuring WAF custom rules, do not match on this header. These rules are applied before Cloudflare adds the `CF-Worker` header. Instead, use the [`cf.worker.upstream_zone`](/ruleset-engine/rules-language/fields/dynamic-fields/#cfworkerupstream_zone) dynamic field, which contains the same value and exists for the same purpose.
-
 
 :::
 
@@ -155,5 +146,5 @@ For incoming requests, the value of this header will always be set to `Keep-Aliv
 
 When using Spectrum with a TCP application, these headers are not visible at the origin as they are HTTP headers. If you wish to utilize these in your application, there are two options:
 
-* Use an HTTP or HTTPS Spectrum app instead of TCP
-* Use the [Proxy Protocol feature](/spectrum/how-to/enable-proxy-protocol/)
+- Use an HTTP or HTTPS Spectrum app instead of TCP
+- Use the [Proxy Protocol feature](/spectrum/how-to/enable-proxy-protocol/)

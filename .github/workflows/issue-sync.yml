@@ -15,7 +15,7 @@ jobs:
       - name: Set up Go
         uses: actions/setup-go@v4
         with:
-          go-version-file: 'tools/go.mod'
+          go-version-file: "tools/go.mod"
       - run: make tools
       - name: Set the issue number to sync
         run: |

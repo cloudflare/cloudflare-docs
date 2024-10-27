@@ -7,7 +7,7 @@ sidebar:
 
 import { Render, PackageManagers } from "~/components";
 
-<Render file="vectorize-beta" />
+<Render file="vectorize-ga" />
 
 Vectorize is Cloudflare's vector database. Vector databases allow you to use machine learning (ML) models to perform semantic search, recommendation, classification and anomaly detection tasks, as well as provide context to LLMs (Large Language Models).
 
@@ -19,9 +19,9 @@ This guide will instruct you through:
 
 ## Prerequisites
 
-:::note[Workers Paid plan required]
+:::note[Workers Free or Paid plans required]
 
-Vectorize is available to all users on the [Workers Paid plan](/workers/platform/pricing/#workers).
+Vectorize is available to all users on the [Workers Free or Paid plans](/workers/platform/pricing/#workers).
 
 :::
 
@@ -53,9 +53,9 @@ Create a new project named `vectorize-tutorial` by running:
 	file="c3-post-run-steps"
 	product="workers"
 	params={{
-		one: "Hello World example",
-		two: "Hello World Worker",
-		three: "TypeScript",
+		category: "hello-world",
+		type: "Hello World Worker",
+		lang: "TypeScript",
 	}}
 />
 
@@ -132,7 +132,7 @@ Specifically:
 
 ## 4. [Optional] Create metadata indexes
 
-Vectorize allows you to add metadata along with vectors into your index, and also provides the ability to to filter on the vector metadata while querying vectors. To do so you would need to specify a metadata field as a "metadata index" for your Vectorize index.
+Vectorize allows you to add up to 10KiB of metadata per vector into your index, and also provides the ability to filter on that metadata while querying vectors. To do so you would need to specify a metadata field as a "metadata index" for your Vectorize index.
 
 :::note[When to create metadata indexes?]
 
@@ -167,6 +167,14 @@ npx wrangler vectorize list-metadata-index tutorial-index
 │ url          │ String │
 └──────────────┴────────┘
 ```
+
+You can create up to 10 metadata indexes per Vectorize index.
+
+For metadata indexes of type `number`, the indexed number precision is that of float64.
+
+For metadata indexes of type `string`, each vector indexes the first 64B of the string data truncated on UTF-8 character boundaries to the longest well-formed UTF-8 substring within that limit, so vectors are filterable on the first 64B of their value for each indexed property.
+
+See [Vectorize Limits](/vectorize/platform/limits/) for a complete list of limits.
 
 ## 5. Insert vectors
 

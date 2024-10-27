@@ -1,5 +1,5 @@
 ---
-import { z } from "astro:content";
+import { z } from "astro:schema";
 import { getEntry } from "astro:content";
 import { getProperty } from "dot-prop";
 import { marked } from "marked";
@@ -25,7 +25,8 @@ const entries = Object.entries(plan);
 ---
 
 {
-	entries.map(([key, value]) => {
+	// TODO: improve product features types
+	entries.map(([key, value]: [string, any]) => {
 		if (key === "title" || key === "link") return;
 
 		return (
@@ -37,7 +38,7 @@ const entries = Object.entries(plan);
 						<a href={value.link}>{value.title}</a>
 					</p>
 				)}
-				{Object.entries(value.properties).map(([key, value]) => (
+				{Object.entries(value.properties).map(([_, value]: [string, any]) => (
 					<p>
 						<strong
 							set:html={marked.parseInline(
@@ -57,13 +58,17 @@ const entries = Object.entries(plan);
 								/>
 							</li>
 							{additional_descriptions && (
-								<li><strong>Lite: </strong>
-								{value.lite ? (<Fragment
-									set:html={marked.parseInline(value.lite.toString())}
-								/>): (<Fragment
-									set:html={marked.parseInline(value.free.toString())}
-								/>)}
-								
+								<li>
+									<strong>Lite: </strong>
+									{value.lite ? (
+										<Fragment
+											set:html={marked.parseInline(value.lite.toString())}
+										/>
+									) : (
+										<Fragment
+											set:html={marked.parseInline(value.free.toString())}
+										/>
+									)}
 								</li>
 							)}
 							<li>
@@ -71,13 +76,17 @@ const entries = Object.entries(plan);
 								<Fragment set:html={marked.parseInline(value.pro.toString())} />
 							</li>
 							{additional_descriptions && (
-								<li><strong>Pro Plus: </strong>
-								{value.pro_plus ? (<Fragment
-									set:html={marked.parseInline(value.pro_plus.toString())}
-								/>): (<Fragment
-									set:html={marked.parseInline(value.pro.toString())}
-								/>)}
-								
+								<li>
+									<strong>Pro Plus: </strong>
+									{value.pro_plus ? (
+										<Fragment
+											set:html={marked.parseInline(value.pro_plus.toString())}
+										/>
+									) : (
+										<Fragment
+											set:html={marked.parseInline(value.pro.toString())}
+										/>
+									)}
 								</li>
 							)}
 							<li>

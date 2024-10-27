@@ -6,16 +6,8 @@ pcx_content_type: concept
 
 import { DirectoryListing, FeatureTable } from "~/components"
 
-Cloudflare offers different options to purge your content. Although single-file cache purging (purge by URL) is recommended, the following options are also available:
+Cloudflare's Instant Purge ensures that updates to your content are reflected immediately. Multiple options are available for purging content, with single-file cache purging (purge by URL) being the recommended method. However, the following additional options are also available:
 
 <DirectoryListing />
 
 <FeatureTable id="cache.purge_cache" />
-
-:::note[Note]
-
-
-Purge requests appear in Cloudflare Logs and are identified by the `PURGE` method and the Cloudflare-branded User Agent.
-
-
-:::

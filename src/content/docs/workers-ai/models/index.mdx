@@ -3,15 +3,9 @@ pcx_content_type: navigation
 title: Models
 hideChildren: true
 sidebar:
-  order: 4
-
+  order: 3
 ---
 
-import { Render, WorkersAIModels } from "~/components"
+import ModelCatalog from "~/pages/workers-ai/models/index.astro";
 
-Browse our entire catalog of models:
-
-<Render file="file_issues" />
-
-{/* % models-grouped-by-task % */}
-<WorkersAIModels />
+<ModelCatalog />

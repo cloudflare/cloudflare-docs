@@ -4,10 +4,9 @@ type: overview
 title: Add rule to ruleset
 sidebar:
   order: 7
-
 ---
 
-import { Details, Render } from "~/components"
+import { Render } from "~/components";
 
 Adds a single rule to an existing ruleset. Use this endpoint to add a rule without having to include all the existing ruleset rules in the request.
 
@@ -19,7 +18,6 @@ Use one of the following API endpoints:
 | [Create a zone ruleset rule][ar-zone]        | `POST /zones/{zone_id}/rulesets/{ruleset_id}/rules`       |
 
 [ar-account]: /api/operations/createAccountRulesetRule
-
 [ar-zone]: /api/operations/createZoneRulesetRule
 
 Include the rule definition in the request body.
@@ -32,8 +30,7 @@ Invoking this method creates a new version of the ruleset.
 
 The following example adds a rule to ruleset `{ruleset_id}` of zone `{zone_id}`. The ruleset ID was previously obtained using the [List zone rulesets](/api/operations/listZoneRulesets) operation, and corresponds to the entry point ruleset for the `http_request_firewall_custom` phase.
 
-
-<Details header="Request">
+The response will include the complete ruleset after adding the rule.
 
 ```bash
 curl https://api.cloudflare.com/client/v4/zones/{zone_id}/rulesets/{ruleset_id}/rules \
@@ -46,54 +43,43 @@ curl https://api.cloudflare.com/client/v4/zones/{zone_id}/rulesets/{ruleset_id}/
 }'
 ```
 
-
-</Details>
-
-The response includes the complete ruleset after adding the rule.
-
-
-<Details header="Response">
-
-```json
+```json output
 {
-  "result": {
-    "id": "<RULESET_ID>",
-    "name": "Zone Ruleset 1",
-    "description": "My phase entry point ruleset at the zone level",
-    "kind": "zone",
-    "version": "11",
-    "rules": [
-      {
-        "id": "<RULE_ID_1>",
-        "version": "1",
-        "action": "challenge",
-        "expression": "not http.request.uri.path matches \"^/api/.*$\"",
-        "last_updated": "2020-11-23T11:36:24.192361Z",
-        "ref": "<RULE_REF_1>",
-        "enabled": true
-      },
-      {
-        "id": "<NEW_RULE_ID>",
-        "version": "1",
-        "action": "js_challenge",
-        "expression": "(ip.geoip.country eq \"GB\" or ip.geoip.country eq \"FR\") or cf.threat_score > 0",
-        "description": "challenge GB and FR or based on IP Reputation",
-        "last_updated": "2021-06-22T12:35:58.144683Z",
-        "ref": "<NEW_RULE_REF>",
-        "enabled": true
-      }
-    ],
-    "last_updated": "2021-06-22T12:35:58.144683Z",
-    "phase": "http_request_firewall_custom"
-  },
-  "success": true,
-  "errors": [],
-  "messages": []
+	"result": {
+		"id": "<RULESET_ID>",
+		"name": "Zone Ruleset 1",
+		"description": "My phase entry point ruleset at the zone level",
+		"kind": "zone",
+		"version": "11",
+		"rules": [
+			{
+				"id": "<RULE_ID_1>",
+				"version": "1",
+				"action": "challenge",
+				"expression": "not http.request.uri.path matches \"^/api/.*$\"",
+				"last_updated": "2020-11-23T11:36:24.192361Z",
+				"ref": "<RULE_REF_1>",
+				"enabled": true
+			},
+			{
+				"id": "<NEW_RULE_ID>",
+				"version": "1",
+				"action": "js_challenge",
+				"expression": "(ip.geoip.country eq \"GB\" or ip.geoip.country eq \"FR\") or cf.threat_score > 0",
+				"description": "challenge GB and FR or based on IP Reputation",
+				"last_updated": "2021-06-22T12:35:58.144683Z",
+				"ref": "<NEW_RULE_REF>",
+				"enabled": true
+			}
+		],
+		"last_updated": "2021-06-22T12:35:58.144683Z",
+		"phase": "http_request_firewall_custom"
+	},
+	"success": true,
+	"errors": [],
+	"messages": []
 }
 ```
-
-
-</Details>
 
 ## Define the rule position in the ruleset
 

@@ -1,0 +1,268 @@
+---
+title: CLI quick start
+pcx_content_type: get-started
+updated: 2024-10-23
+sidebar:
+  order: 3
+
+---
+
+import { Render, PackageManagers } from "~/components"
+
+:::note
+
+Workflows is in **public beta**, and any developer with a [free or paid Workers plan](/workers/platform/pricing/#workers) can start using Workflows immediately.
+
+To learn more about Workflows and how it works, read [the beta announcement blog](https://blog.cloudflare.com/building-workflows-durable-execution-on-workers).
+
+:::
+
+Workflows allow you to build durable, multi-step applications using the Workers platform. A Workflow can automatically retry, persist state, run for hours or days, and coordinate between third-party APIs.
+
+You can build Workflows to post-process file uploads to [R2 object storage](/r2/), automate generation of [Workers AI](/workers-ai/) embeddings into a [Vectorize](/vectorize/) vector database, or to trigger user lifecycle emails using your favorite email API.
+
+## Prerequisites
+
+:::caution
+
+This guide is for users who are already familiar with Cloudflare Workers the [durable execution](/workflows/reference/glossary/) programming model it enables.
+
+If you are new to either, we recommend the [introduction to Workflows](/workflows/get-started/guide/) guide, which walks you through how a Workflow is defined, how to persist state, and how to deploy and run your first Workflow.
+
+:::
+<Render file="prereqs" product="workers" />
+
+## 1. Create a Workflow
+
+Workflows are defined as part of a Worker script.
+
+To create a Workflow, use the `create cloudflare` (C3) CLI tool, specifying the Workflows starter template:
+
+```sh
+npm create cloudflare@latest workflows-starter -- --template "cloudflare/workflows-starter"
+```
+
+This will create a new folder called `workflows-tutorial`, which contains two files:
+
+* `src/index.ts` - this is where your Worker script, including your Workflows definition, is defined.
+* `wrangler.toml` - the configuration for your Workers project and your Workflow.
+
+Open the `src/index.ts` file in your text editor. This file contains the following code, which is the most basic instance of a Workflow definition:
+
+```ts title="src/index.ts"
+import { WorkflowEntrypoint, WorkflowStep, WorkflowEvent } from 'cloudflare:workers';
+
+type Env = {
+	// Add your bindings here, e.g. Workers KV, D1, Workers AI, etc.
+	MY_WORKFLOW: Workflow;
+};
+
+// User-defined params passed to your workflow
+type Params = {
+	email: string;
+	metadata: Record<string, string>;
+};
+
+export class MyWorkflow extends WorkflowEntrypoint<Env, Params> {
+	async run(event: WorkflowEvent<Params>, step: WorkflowStep) {
+		// Can access bindings on `this.env`
+		// Can access params on `event.params`
+
+		const files = await step.do('my first step', async () => {
+			// Fetch a list of files from $SOME_SERVICE
+			return {
+				inputParams: event,
+				files: [
+					'doc_7392_rev3.pdf',
+					'report_x29_final.pdf',
+					'memo_2024_05_12.pdf',
+					'file_089_update.pdf',
+					'proj_alpha_v2.pdf',
+					'data_analysis_q2.pdf',
+					'notes_meeting_52.pdf',
+					'summary_fy24_draft.pdf',
+				],
+			};
+		});
+
+		const apiResponse = await step.do('some other step', async () => {
+			let resp = await fetch('https://api.cloudflare.com/client/v4/ips');
+			return await resp.json<any>();
+		});
+
+		await step.sleep('wait on something', '1 minute');
+
+		await step.do(
+			'make a call to write that could maybe, just might, fail',
+			// Define a retry strategy
+			{
+				retries: {
+					limit: 5,
+					delay: '5 second',
+					backoff: 'exponential',
+				},
+				timeout: '15 minutes',
+			},
+			async () => {
+				// Do stuff here, with access to the state from our previous steps
+				if (Math.random() > 0.5) {
+					throw new Error('API call to $STORAGE_SYSTEM failed');
+				}
+			},
+		);
+	}
+}
+
+export default {
+	async fetch(req: Request, env: Env): Promise<Response> {
+		let id = new URL(req.url).searchParams.get('instanceId');
+
+		// Get the status of an existing instance, if provided
+		if (id) {
+			let instance = await env.MY_WORKFLOW.get(id);
+			return Response.json({
+				status: await instance.status(),
+			});
+		}
+
+		// Spawn a new instance and return the ID and status
+		let instance = await env.MY_WORKFLOW.create();
+		return Response.json({
+			id: instance.id,
+			details: await instance.status(),
+		});
+	},
+};
+```
+
+Specifically, the code above:
+
+1. Extends the Workflows base class (`WorkflowsEntrypoint`) and defines a `run` method for our Workflow.
+2. Passes in our `Params` type as a [type parameter](/workflows/build/events-and-parameters/) so that events that trigger our Workflow are typed.
+3. Defines several steps that return state.
+4. Defines a custom retry configuration for a step.
+5. Binds to the Workflow from a Worker's `fetch` handler so that we can create (trigger) instances of our Workflow via a HTTP call.
+
+You can edit this Workflow by adding (or removing) additional `step` calls, changing the retry configuration, and/or making your own API calls. This Workflow template is designed to illustrate some of Workflows APIs.
+
+## 2. Deploy a Workflow
+
+Workflows are deployed via [`wrangler`](/workers/wrangler/install-and-update/), which is installed when you first ran `npm create cloudflare` above. Workflows are Worker scripts, and are deployed the same way:
+
+```sh
+npx wrangler@latest deploy
+```
+
+## 3. Run a Workflow
+
+You can run a Workflow via the `wrangler` CLI, via a Worker binding, or via the Workflows [REST API](/api/operations/wor-list-workflows).
+
+### `wrangler` CLI
+
+```sh
+# Trigger a Workflow from the CLI, and pass (optional) parameters as an event to the Workflow.
+npx wrangler@latest workflows trigger workflows-tutorial --params={"email": "user@example.com", "metadata": {"id": "1"}}
+```
+
+Refer to the [events and parameters documentation](/workflows/build/events-and-parameters/) to understand how events are passed to Workflows.
+
+### Worker binding
+
+You can [bind to a Workflow](/workers/runtime-apis/bindings/#what-is-a-binding) from any handler in a Workers script, allowing you to programatically trigger and pass parameters to a Workflow instance from your own application code.
+
+To bind a Workflow to a Worker, you need to define a `[[workflows]]` binding in your `wrangler.toml` configuration:
+
+```toml title="wrangler.toml"
+[[workflows]]
+# name of your workflow
+name = "workflows-starter"
+# binding name env.MYWORKFLOW
+binding = "MY_WORKFLOW"
+# this is class that extends the Workflow class in src/index.ts
+class_name = "MyWorkflow"
+```
+
+You can then invoke the methods on this binding directly from your Worker script's `env` parameter. The `Workflow` type has methods for:
+
+* `create()` - creating (triggering) a new instance of the Workflow, returning the ID.
+* `get()`- retrieve a Workflow instance by its ID.
+* `status()` - get the current status of a unique Workflow instance.
+
+For example, the following Worker will fetch the status of an existing Workflow instance by ID (if supplied), else it will create a new Workflow instance and return its ID:
+
+```ts title="src/index.ts"
+// Import the Workflow definition
+import { WorkflowEntrypoint, WorkflowStep, WorkflowEvent} from 'cloudflare:workers';
+
+interface Env {
+  // Matches the binding definition in your wrangler.toml
+  MY_WORKFLOW: Workflow;
+}
+
+export default {
+	async fetch(req: Request, env: Env): Promise<Response> {
+		let id = new URL(req.url).searchParams.get('instanceId');
+
+		// Get the status of an existing instance, if provided
+		if (id) {
+			let instance = await env.MY_WORKFLOW.get(id);
+			return Response.json({
+				status: await instance.status(),
+			});
+		}
+
+		// Spawn a new instance and return the ID and status
+		let instance = await env.MY_WORKFLOW.create();
+		return Response.json({
+			id: instance.id,
+			details: await instance.status(),
+		});
+	},
+};
+```
+
+Refer to the [triggering Workflows](/workflows/build/trigger-workflows/) documentation for how to trigger a Workflow from other Workers' handler functions.
+
+## 4. Manage Workflows
+
+:::note
+
+The `wrangler workflows` command requires Wrangler version `3.83.0` or greater. Use `npx wrangler@latest` to always use the latest Wrangler version when invoking commands.
+
+:::
+
+The `wrangler workflows` command group has several sub-commands for managing and inspecting Workflows and their instances:
+
+* List Workflows: `wrangler workflows list`
+* Inspect the instances of a Workflow: `wrangler workflows instances list YOUR_WORKFLOW_NAME`
+* View the state of a running Workflow instance by its ID: `wrangler workflows instances describe YOUR_WORKFLOW_NAME WORKFLOW_ID`
+
+You can also view the state of the latest instance of a Workflow by using the `latest` keyword instead of an ID:
+
+```sh
+npx wrangler@latest workflows instances describe workflows-starter latest
+# Or by ID:
+# npx wrangler@latest workflows instances describe workflows-starter 12dc179f-9f77-4a37-b973-709dca4189ba
+```
+
+The output of `instances describe` shows:
+
+* The status (success, failure, running) of each step
+* Any state emitted by the step
+* Any `sleep` state, including when the Workflow will wake up
+* Retries associated with each step
+* Errors, including exception messages
+
+:::note
+
+You do not have to wait for a Workflow instance to finish executing to inspect its current status. The `wrangler workflows instances describe` sub-command will show the status of an in-progress instance, including any persisted state, if it is sleeping, and any errors or retries. This can be especially useful when debugging a Workflow during development.
+
+:::
+
+## Next steps
+
+* Learn more about [how events are passed to a Workflow](/workflows/build/events-and-parameters/).
+* Binding to and triggering Workflow instances using the [Workers API](/workflows/build/workers-api/).
+* The [Rules of Workflows](/workflows/build/rules-of-workflows/) and best practices for building applications using Workflows.
+
+If you have any feature requests or notice any bugs, share your feedback directly with the Cloudflare team by joining the [Cloudflare Developers community on Discord](https://discord.cloudflare.com).

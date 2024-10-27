@@ -1,0 +1,18 @@
+---
+pcx_content_type: troubleshooting
+title: Troubleshooting
+description: Learn about troubleshooting and known issues in Workers Builds.
+sidebar:
+  order: 9
+---
+
+Workers Builds provides build logs for every build started. You can view build logs by navigating to your **Worker project** > **Deployments** > **View Build History** > **View Build**.
+
+While Workers Builds is in Open Beta, the following issues and limitations may apply:
+
+- **Worker name:** The Worker name in your Cloudflare dashboard and the Worker name written in the associated `wrangler.toml` must be the same. If they do not match, the deploy will fail, and you must update either the file or dashboard.
+- **Updating API tokens:** If you have updated or deleted an API Token, the changes may not be reflected in the Build Configuration settings on the dashboard. If you are encountering authentication errors after updating your build's API Token, we recommend creating a new API Token for the build.
+- **Failed builds stuck in in-progress:** If your build has failed but the status still show that the build is "In-progress", you should cancel the build, review your build configuration, then retry the build.
+- **Git integration:** If you are running into errors associated with your git integration, you can try [removing access](/workers/ci-cd/builds/git-integration/#removing-access) to your GitHub or GitLab from Cloudflare, then [reinstalling the git integration](/workers/ci-cd/builds/git-integration/#reinstall-a-git-installation).
+
+If you discover additional issues or would like to provide feedback, please notify us in the [Discord](https://discord.com/channels/595317990191398933/1052656806058528849).

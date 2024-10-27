@@ -1,33 +1,28 @@
 ---
-import type { GetStaticPaths } from "astro";
-import StarlightPage from "@astrojs/starlight/components/StarlightPage.astro";
+import type { GetStaticPaths, MarkdownHeading } from "astro";
 import { getCollection } from "astro:content";
-import { InlineBadge } from "~/components";
-import Schemas from "~/components/models/Schemas.astro";
-import Playground from "~/components/models/Playground.astro";
-import TextGenerationResponses from "~/components/models/responses/TextGenerationResponses.astro";
+import StarlightPage, {
+	type StarlightPageProps,
+} from "@astrojs/starlight/components/StarlightPage.astro";
+import { LinkButton, Tabs, TabItem, Code, Aside } from "~/components";
+import ModelInfo from "~/components/models/ModelInfo.jsx";
+import ModelBadges from "~/components/models/ModelBadges.jsx";
+import SchemaViewer from "~/components/models/SchemaViewer.astro";
+
 import TextGenerationCode from "~/components/models/code/TextGenerationCode.astro";
-import TextGenerationPrompting from "~/components/models/prompting/TextGenerationPrompting.astro";
-import AutomaticSpeechRecognitionResponses from "~/components/models/responses/AutomaticSpeechRecognitionResponses.astro";
 import AutomaticSpeechRecognitionCode from "~/components/models/code/AutomaticSpeechRecognitionCode.astro";
-import ImageClassificationResponses from "~/components/models/responses/ImageClassificationResponses.astro";
 import ImageClassificationCode from "~/components/models/code/ImageClassificationCode.astro";
-import ImageToTextResponses from "~/components/models/responses/ImageToTextResponses.astro";
 import ImageToTextCode from "~/components/models/code/ImageToTextCode.astro";
-import ObjectDetectionResponses from "~/components/models/responses/ObjectDetectionResponses.astro";
 import ObjectDetectionCode from "~/components/models/code/ObjectDetectionCode.astro";
-import SummarizationResponses from "~/components/models/responses/SummarizationResponses.astro";
 import SummarizationCode from "~/components/models/code/SummarizationCode.astro";
-import TextClassificationResponses from "~/components/models/responses/TextClassificationResponses.astro";
 import TextClassificationCode from "~/components/models/code/TextClassificationCode.astro";
-import TextEmbeddingsResponses from "~/components/models/responses/TextEmbeddingsResponses.astro";
 import TextEmbeddingCode from "~/components/models/code/TextEmbeddingCode.astro";
-import TextToImageResponses from "~/components/models/responses/TextToImageResponses.astro";
 import TextToImageCode from "~/components/models/code/TextToImageCode.astro";
-import TranslationResponses from "~/components/models/responses/TranslationResponses.astro";
 import TranslationCode from "~/components/models/code/TranslationCode.astro";
 import StableDiffusionV15Img2ImgCode from "~/components/models/code/StableDiffusion-v1-5-img2imgCode.astro";
 import StableDiffusionV15InpaintingCode from "~/components/models/code/StableDiffusion-v1-5-inpaintingCode.astro";
+
+import { authorData } from "~/components/models/data";
 
 export const getStaticPaths = (async () => {
 	const models = await getCollection("workers-ai-models");
@@ -35,147 +30,195 @@ export const getStaticPaths = (async () => {
 	return models.map((entry) => {
 		return {
 			params: {
-				name: entry.id,
+				name: entry.data.name.split("/")[2],
 			},
-			props: { data: entry.data },
+			props: { model: entry.data },
 		};
 	});
 }) satisfies GetStaticPaths;
 
 const { name } = Astro.params;
-const { data } = Astro.props;
+const { model } = Astro.props;
 
-const description = data.model.description;
-const terms = data.model.properties.find((x) => x.property_id === "terms");
-const showPlayground = data.model.task.name === "Text Generation";
-const hasLora = Boolean(
-	data.model.properties.find((x) => x.property_id === "lora"),
-);
-
-const badges = data.model.properties.flatMap(({ property_id, value }) => {
-	if (property_id === "beta" && value === "true") {
-		return {
-			preset: "beta",
-		};
-	}
-
-	if (property_id === "lora" && value === "true") {
-		return {
-			variant: "tip",
-			text: "LoRA",
-		};
-	}
-
-	if (property_id === "function_calling" && value === "true") {
-		return {
-			variant: "note",
-			text: "Function calling",
-		};
-	}
-
-	if (property_id === "planned_deprecation_date") {
-		const timestamp = Math.floor(new Date(value).getTime() / 1000);
-
-		if (Date.now() > timestamp) {
-			return { variant: "danger", text: "Deprecated" };
-		}
-
-		return { variant: "danger", text: "Planned deprecation" };
-	}
-
-	return [];
-});
-
-let CodeExamples;
-let Responses;
-
-switch (data.task_type) {
-	case "text-generation": {
+let CodeExamples = null;
+switch (model.task.name) {
+	case "Text Generation":
 		CodeExamples = TextGenerationCode;
-		Responses = TextGenerationResponses;
-	}
-	break;
-	case "automatic-speech-recognition": {
+		break;
+	case "Automatic Speech Recognition":
 		CodeExamples = AutomaticSpeechRecognitionCode;
-		Responses = AutomaticSpeechRecognitionResponses;
-	}
-	break;
-	case "image-classification": {
+		break;
+	case "Image Classification":
 		CodeExamples = ImageClassificationCode;
-		Responses = ImageClassificationResponses;
-	}
-	break;
-	case "image-to-text": {
-		CodeExamples = ImageToTextCode;
-		Responses = ImageToTextResponses;
-	}
-	break;
-	case "object-detection": {
+		break;
+	case "Object Detection":
 		CodeExamples = ObjectDetectionCode;
-		Responses = ObjectDetectionResponses;
-	}
-	break;
-	case "summarization": {
-		CodeExamples = SummarizationCode;
-		Responses = SummarizationResponses;
-	}
-	break;
-	case "text-classification": {
-		CodeExamples = TextClassificationCode;
-		Responses = TextClassificationResponses;
-	}
-	break;
-	case "text-embeddings": {
-		CodeExamples = TextEmbeddingCode;
-		Responses = TextEmbeddingsResponses;
-	}
-	break;
-	case "text-to-image": {
+		break;
+	case "Image-to-Text":
+		CodeExamples = ImageToTextCode;
+		break;
+	case "Text-to-Image":
 		CodeExamples = TextToImageCode;
-		Responses = TextToImageResponses;
-	}
-	break;
-	case "translation": {
+		break;
+	case "Translation":
 		CodeExamples = TranslationCode;
-		Responses = TranslationResponses;
-	}
-	break;
+		break;
+	case "Summarization":
+		CodeExamples = SummarizationCode;
+		break;
+	case "Text Embedding":
+		CodeExamples = TextEmbeddingCode;
+		break;
+	case "Text Classification":
+		CodeExamples = TextClassificationCode;
+		break;
 }
 
-if (data.model.name === "@cf/runwayml/stable-diffusion-v1-5-inpainting") {
-	CodeExamples = StableDiffusionV15InpaintingCode;
-} else if (data.model.name === "@cf/runwayml/stable-diffusion-v1-5-img2img") {
+if (model.name === "@cf/runwayml/stable-diffusion-v1-5-img2img") {
 	CodeExamples = StableDiffusionV15Img2ImgCode;
 }
 
+if (model.name === "@cf/runwayml/stable-diffusion-v1-5-inpainting") {
+	CodeExamples = StableDiffusionV15InpaintingCode;
+}
+
+const description = model.description;
+const terms = model.properties.find((x) => x.property_id === "terms");
+
+const isBeta = model.properties.find(
+	({ property_id, value }) => property_id === "beta" && value === "true",
+);
+
+const hasPlayground = model.task.name === "Text Generation";
+
+const author = (authorData as any)[model.name.split("/")[1]];
+
+// Strong type coercion needed due to Starlight's component override for hideTitle
+const starlightPageProps = {
+	frontmatter: {
+		title: name,
+		description,
+	},
+	headings: [
+		hasPlayground
+			? { depth: 2, slug: "Playground", text: "Playground" }
+			: false,
+		CodeExamples ? { depth: 2, slug: "Usage", text: "Usage" } : false,
+		{ depth: 2, slug: "Parameters", text: "Parameters" },
+		{ depth: 3, slug: "Input", text: "Input" },
+		{ depth: 3, slug: "Output", text: "Output" },
+		{ depth: 2, slug: "API Schemas", text: "API Schemas" },
+	].filter((v) => Boolean(v)) as MarkdownHeading[],
+	hideTitle: true,
+} as StarlightPageProps;
 ---
 
-<StarlightPage frontmatter={{ title: name, description }}>
-	{badges.map((badge) => <InlineBadge {...badge} /> )}
-	<p>
-		<strong>Model ID: </strong>
-		<code>{data.model.name}</code>
-	</p>
-	<p>{description}</p>
+<StarlightPage {...starlightPageProps}>
+	<div class="flex align-center">
+		{
+			author ? (
+				<img class="mr-4 w-12 h-12 block" src={author.logo} />
+			) : (
+				<div class="w-12 h-12 mr-4 rounded-md bg-gray-100 text-gray-400 uppercase text-2xl font-black flex justify-center items-center">
+					{model.name.split("/")[1].substring(0, 1)}
+				</div>
+			)
+		}
+		<div>
+			<h1
+				id="_top"
+				class="!-mt-4 !mb-0 !leading-none !text-4xl !font-bold flex items-center"
+			>
+				{name}
+				{
+					isBeta && (
+						<span class="ml-3 font-normal mt-2 bg-orange-200 text-orange-900 rounded-full px-2 py-0.5 text-xs">
+							Beta
+						</span>
+					)
+				}
+			</h1>
+			<span class="block -mt-1"><ModelInfo model={model} /></span>
+		</div>
+	</div>
+
+	<span class="font-mono text-gray-400 text-sm mt-4 block">{model.name}</span>
+
+	<p class="mt-3 !mb-2">{description}</p>
+	{terms && <a href={terms.value}>Terms and License</a>}
+	<ModelBadges model={model} />
+
 	{
-		terms && (
-			<p>
-				<a href={terms.value}>Terms & License</a>
-			</p>
+		model.name === "@cf/meta/llama-3.2-11b-vision-instruct" && (
+			<Aside>
+				<p>
+					To use Llama 3.2 11b Vision Instruct, you need to agree to the{" "}
+					<a href="https://github.com/meta-llama/llama-models/blob/main/models/llama3_2/LICENSE">
+						Meta License
+					</a>{" "}
+					and{" "}
+					<a href="https://github.com/meta-llama/llama-models/blob/main/models/llama3_2/USE_POLICY.md">
+						Acceptable Use Policy
+					</a>
+					. To do so, please send an initial request to
+					<code>@cf/meta/llama-3.2-11b-vision-instruct</code> with
+					<code>"prompt" : "agree"</code>. After that, you'll be able to use the
+					model as normal.
+				</p>
+				<Code
+					code={`curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/run/@cf/meta/llama-3.2-11b-vision-instruct \\
+   -X POST \\
+   -H "Authorization: Bearer $CLOUDFLARE_AUTH_TOKEN" \\
+   -d '{ "prompt": "agree"}'`}
+					lang="sh"
+				/>
+			</Aside>
 		)
 	}
-	<h2>Properties</h2>
-	<p>
-		<strong>Task Type: </strong>
-		<a href={`/workers-ai/models/#${data.task_type}`}>{data.model.task.name}</a>
-	</p>
-	{showPlayground && <Playground name={data.model.name} />}
-	<CodeExamples name={data.model.name} lora={hasLora} />
+
 	{
-		data.task_type === "text-generation" && (
-			<TextGenerationPrompting lora={hasLora} />
+		hasPlayground && (
+			<>
+				<h2 id="Playground">Playground</h2>
+				<p>
+					Try out this model with Workers AI LLM Playground. It does not require
+					any setup or authentication and an instant way to preview and test a
+					model directly in the browser.
+				</p>
+				<LinkButton
+					href={`https://playground.ai.cloudflare.com/?model=${model.name}`}
+				>
+					Launch the LLM Playground
+				</LinkButton>
+			</>
 		)
 	}
-	<Responses name={data.model.name} />
-	<Schemas schemas={data.json_schema} />
+
+	{
+		CodeExamples && (
+			<>
+				<h2 id="Usage">Usage</h2>
+				<CodeExamples name={model.name} lora={false} />
+			</>
+		)
+	}
+
+	<h2 id="Parameters">Parameters</h2>
+	<h3 id="Input">Input</h3>
+	<SchemaViewer schema={model.schema.input} />
+
+	<h3 id="Output">Output</h3>
+	<SchemaViewer schema={model.schema.output} />
+
+	<h2 id="API Schemas">API Schemas</h2>
+	<p>The following schemas are based on JSON Schema</p>
+
+	<Tabs>
+		<TabItem label="Input">
+			<Code code={JSON.stringify(model.schema.input, null, 4)} lang="json" />
+		</TabItem>
+		<TabItem label="Output">
+			<Code code={JSON.stringify(model.schema.output, null, 4)} lang="json" />
+		</TabItem>
+	</Tabs>
 </StarlightPage>

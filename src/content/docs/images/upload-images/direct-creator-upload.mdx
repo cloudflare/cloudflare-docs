@@ -12,6 +12,10 @@ The Direct Creator Upload feature in Cloudflare Images lets your users upload im
 
 Make a `POST` request to the `direct_upload` endpoint using the example below as reference.
 
+:::note
+The `metadata` included in the request is never shared with end users.
+:::
+
 ```bash
 curl --request POST \
 https://api.cloudflare.com/client/v4/accounts/{account_id}/images/v2/direct_upload \

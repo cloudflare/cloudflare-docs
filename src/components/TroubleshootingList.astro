@@ -7,6 +7,7 @@ const troubleshootingTypes = ["troubleshooting", "faq"];
 
 const resources = await getCollection("docs", (entry) => {
 	return (
+		entry.data.pcx_content_type &&
 		troubleshootingTypes.includes(entry.data.pcx_content_type) &&
 		entry.slug.startsWith(`${currentSection}/`)
 	);

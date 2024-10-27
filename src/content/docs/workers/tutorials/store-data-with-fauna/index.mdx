@@ -1,5 +1,5 @@
 ---
-updated: 2023-09-13
+updated: 2024-09-05
 difficulty: Beginner
 content_type: 📝 Tutorial
 pcx_content_type: tutorial
@@ -27,7 +27,7 @@ Fauna is a document-based database with a flexible schema. This allows you to de
 - **title** - A human-friendly string that represents the title or name of a product.
 - **serialNumber** - A machine-friendly string that uniquely identifies the product.
 - **weightLbs** - A floating point number that represents the weight in pounds of the product.
-- **quantity** A non-negative integer that represents how many items of a particular product there are in the inventory.
+- **quantity** - A non-negative integer that represents how many items of a particular product there are in the inventory.
 
 Documents are stored in a [collection](https://docs.fauna.com/fauna/current/reference/schema_entities/collection/). Collections in document databases are groups of related documents.
 
@@ -39,7 +39,7 @@ For this tutorial, all API endpoints are public. However, Fauna also offers mult
 
 ### Create your database
 
-Open the [Fauna dashboard](https://dashboard.fauna.com/) in your browser and log in to your Fauna account.
+To create a database, log in to the [Fauna Dashboard](https://dashboard.fauna.com/) and click **Create Database**. When prompted, select your preferred [Fauna region group](https://docs.fauna.com/fauna/current/manage/region-groups/) and other database settings.
 
 :::note[Fauna Account]
 
@@ -47,44 +47,44 @@ If you do not have a Fauna account, [sign up](https://dashboard.fauna.com/regist
 
 :::
 
-In the Fauna dashboard:
-
-1. Select **CREATE DATABASE**.
-2. Provide a valid name.
-3. Select a [Region Group](https://docs.fauna.com/fauna/current/administration/region_groups).
-4. Select **CREATE**.
-
 ### Create a collection
 
-To create a collection named **Products**, enter the FQL query in the **SHELL** window on right side of the screen.
+Create a `Products` collection for the database with the following query. To run the query in the Fauna Dashboard, select your database and click the **Shell** tab:
 
 ```js title="Create a new collection"
 Collection.create({ name: "Products" });
 ```
 
-Select **Run**. You will see an output similar to the following.
+The query outputs a result similar to the following:
 
 ```js title="Output"
 {
-  name: "Products",
-  coll: Collection,
-  ts: "<timestamp>",
-  indexes: {},
-  constraints: []
+	name: "Products",
+	coll: Collection,
+	ts: Time("2099-08-28T15:03:53.773Z"),
+	history_days: 0,
+	indexes: {},
+	constraints: []
 }
 ```
 
 ### Create a secret key
 
-You must create a secret key to connect to the database from your Worker.
+In production, the Worker will use the Cloudflare Fauna integration to automatically connect to Fauna. The integration creates any credentials needed for authentication with Fauna.
 
-To create a secret key:
+For local development, you must manually create a [Fauna authentication key](https://docs.fauna.com/fauna/current/learn/security/keys/) and pass the key's secret to your Worker as a [development secret](#add-your-fauna-database-key-for-local-development).
 
-1. Go to **Explorer** in the Fauna dashboard.
-2. Hover over your database name, and select the key icon to manage your keys.
-3. Choose **Server Role** and enter a key name.
+To create a Fauna authentication key:
 
-The Fauna dashboard displays the key's secret. Copy and save this server key to use in a later step.
+1. In the upper left pane of Fauna Dashboard’s Explorer page, select your database, and click the **Keys** tab.
+
+2. Click **Create Key**.
+
+3. Choose a **Role** of **Server**.
+
+4. Click **Save**.
+
+5. Copy the **Key Secret**. The secret is scoped to the database.
 
 :::caution[Protect your keys]
 
@@ -118,27 +118,48 @@ Update the `wrangler.toml` file to set the name for the Worker.
 name = "fauna-workers"
 ```
 
-### Add your Fauna secret key as a secret
+### Add your Fauna database key for local development
 
-Before developing your Worker, add your Fauna secret key as a [secret](/workers/configuration/secrets/).
-
-There are two types of secrets for [development](/workers/configuration/secrets/#local-development-with-secrets) or [production](/workers/configuration/secrets/#secrets-on-deployed-workers).
-
-For development, add a `.dev.vars` file on the project root and write your secret.
+For local development, add a `.dev.vars` file on the project root and add your Fauna key's secret as a [development secret](/workers/configuration/secrets/#local-development-with-secrets):
 
 ```plain title=".dev.vars"
-FAUNA_SECRET=<YOUR SECRET>
+DATABASE_KEY=<FAUNA_SECRET>
 ```
 
-For production, store your secret safely with [`wrangler secret put` command](/workers/wrangler/commands/#put-3):
+### Add the Fauna integration
 
-```sh title="Store your Fauna secret"
-npx wrangler secret put FAUNA_SECRET
+Deploy your Worker to Cloudflare to ensure that everything is set up correctly:
+
+```sh
+npm run deploy
 ```
 
-When prompted, paste the Fauna server secret you obtained earlier.
+1.  Login to your [Cloudflare dashboard](https://dash.cloudflare.com/).
 
-The `FAUNA_SECRET` secret is now injected automatically into your Worker code at runtime.
+2.  Select the **Integrations** tab and click on the **Fauna** integration.
+
+        ![Selecting the fauna integration](~/assets/images/workers/tutorials/store-data-with-fauna/integrate_fauna.png)
+
+3.  Login to your Fauna account.
+
+4.  Select the Fauna database you created earlier.
+
+5.  Select `server` role as your database role.
+
+6.  Enter `DATABASE_KEY` as the **Secret Name**.
+
+7.  Select **Finish**.
+
+8.  Navigate to **Settings** tab and select **Variables**. Notice that a new variable `DATABASE_KEY`
+    is added to your Worker.
+
+The integration creates a new Fauna authentication key and stores the key's secret in the Worker's `DATABASE_KEY` secret. The deployed Worker uses this key.
+
+:::note
+
+You can mange the generated Fauna key in the Fauna Dashboard. See the [Clouflare Fauna integration docs](/workers/databases/native-integrations/fauna).
+
+:::
 
 ### Install dependencies
 
@@ -167,7 +188,7 @@ import { Hono } from "hono";
 import { Client, fql, ServiceError } from "fauna";
 
 type Bindings = {
-	FAUNA_SECRET: string;
+	DATABASE_KEY: string;
 };
 
 type Variables = {
@@ -186,7 +207,7 @@ const app = new Hono<{ Bindings: Bindings; Variables: Variables }>();
 
 app.use("*", async (c, next) => {
 	const faunaClient = new Client({
-		secret: c.env.FAUNA_SECRET,
+		secret: c.env.DATABASE_KEY,
 	});
 	c.set("faunaClient", faunaClient);
 	await next();
@@ -204,14 +225,14 @@ This is custom middleware to initialize the Fauna client and set the instance wi
 ```js title="Custom middleware for the Fauna Client"
 app.use("*", async (c, next) => {
 	const faunaClient = new Client({
-		secret: c.env.FAUNA_SECRET,
+		secret: c.env.DATABASE_KEY,
 	});
 	c.set("faunaClient", faunaClient);
 	await next();
 });
 ```
 
-You can access the `FAUNA_SECRET` environment variable from `c.env.FAUNA_SECRET`. Workers run on a [custom JavaScript runtime](https://developers.cloudflare.com/workers/runtime-apis/nodejs/) instead of Node.js, so you cannot use `process.env` to access your environment variables.
+You can access the `DATABASE_KEY` environment variable from `c.env.DATABASE_KEY`. Workers run on a [custom JavaScript runtime](/workers/runtime-apis/) instead of Node.js, so you cannot use `process.env` to access your environment variables.
 
 ### Create product documents
 
@@ -504,9 +525,3 @@ yarn deploy
 ```
 
 </TabItem> </Tabs>
-
-## Related resources
-
-In this tutorial, you learned how to use Fauna with Cloudflare Workers to create a globally distributed, strongly consistent, next-generation serverless REST API that serves data quickly to a worldwide audience.
-
-If you would like to review the full source code for this application, you can find the repository [on GitHub](https://github.com/yusukebe/fauna-workers).

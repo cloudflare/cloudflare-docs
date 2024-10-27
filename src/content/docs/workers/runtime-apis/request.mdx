@@ -6,6 +6,8 @@ description: Interface that represents an HTTP request.
 
 ---
 
+import { Type, MetaInfo } from "~/components";
+
 The [`Request`](https://developer.mozilla.org/en-US/docs/Web/API/Request/Request) interface represents an HTTP request and is part of the [Fetch API](/workers/runtime-apis/fetch/).
 
 ## Background
@@ -66,7 +68,7 @@ An object containing properties that you want to apply to the request.
 
   * Cloudflare-specific properties that can be set on the `Request` that control how Cloudflare’s global network handles the request.
 
-* `method` string optional
+* `method` <Type text="string" /> <MetaInfo text="optional" />
 
   * The HTTP request method. The default is `GET`. In Workers, all [HTTP request methods](https://developer.mozilla.org/en-US/docs/Web/HTTP/Methods) are supported, except for [`CONNECT`](https://developer.mozilla.org/en-US/docs/Web/HTTP/Methods/CONNECT).
 
@@ -79,7 +81,7 @@ An object containing properties that you want to apply to the request.
   * The request body, if any.
   * Note that a request using the GET or HEAD method cannot have a body.
 
-* `redirect` string optional
+* `redirect` <Type text="string" /> <MetaInfo text="optional" />
 
   * The redirect mode to use: `follow`, `error`, or `manual`. The default  for a new `Request` object is `follow`. Note, however, that the incoming `Request` property of a `FetchEvent` will have redirect mode `manual`.
 
@@ -98,16 +100,16 @@ Invalid or incorrectly-named keys in the `cf` object will be silently ignored. C
 
 
 
-* `apps` boolean optional
+* `apps` <Type text="boolean" /> <MetaInfo text="optional" />
 
   * Whether [Cloudflare Apps](https://www.cloudflare.com/apps/) should be enabled for this request. Defaults to `true`.
 
-* `cacheEverything` boolean optional
+* `cacheEverything` <Type text="boolean" /> <MetaInfo text="optional" />
 
   * Treats all content as static and caches all [file types](/cache/concepts/default-cache-behavior#default-cached-file-extensions) beyond the Cloudflare default cached content. Respects cache headers from the origin web server. This is equivalent to setting the Page Rule [**Cache Level** (to **Cache Everything**)](/rules/page-rules/reference/settings/). Defaults to `false`.
     This option applies to `GET` and `HEAD` request methods only.
 
-* `cacheKey` string optional
+* `cacheKey` <Type text="string" /> <MetaInfo text="optional" />
 
   * A request’s cache key is what determines if two requests are the same for caching purposes. If a request has the same cache key as some previous request, then Cloudflare can serve the same cached response for both.
 
@@ -115,7 +117,7 @@ Invalid or incorrectly-named keys in the `cf` object will be silently ignored. C
 
   * This option appends additional [**Cache-Tag**](/cache/how-to/purge-cache/purge-by-tags/) headers to the response from the origin server. This allows for purges of cached content based on tags provided by the Worker, without modifications to the origin server. This is performed using the [**Purge by Tag**](/cache/how-to/purge-cache/purge-by-tags/#purge-using-cache-tags) feature, which is currently only available to Enterprise zones. If this option is used in a non-Enterprise zone, the additional headers will not be appended.
 
-* `cacheTtl` number optional
+* `cacheTtl` <Type text="number" /> <MetaInfo text="optional" />
 
   * This option forces Cloudflare to cache the response for this request, regardless of what headers are seen on the response. This is equivalent to setting two Page Rules: [**Edge Cache TTL**](/cache/how-to/edge-browser-cache-ttl/) and [**Cache Level** (to **Cache Everything**)](/rules/page-rules/reference/settings/). The value must be zero or a positive number. A value of `0` indicates that the cache asset expires immediately. This option applies to `GET` and `HEAD` request methods only.
 
@@ -127,23 +129,23 @@ Invalid or incorrectly-named keys in the `cf` object will be silently ignored. C
 
   * Enables [Image Resizing](/images/transform-images/) for this request. The possible values are described in [Transform images via Workers](/images/transform-images/transform-via-workers/) documentation.
 
-* `mirage` boolean optional
+* `mirage` <Type text="boolean" /> <MetaInfo text="optional" />
 
   * Whether [Mirage](https://www.cloudflare.com/website-optimization/mirage/) should be enabled for this request, if otherwise configured for this zone. Defaults to `true`.
 
-* `polish` string optional
+* `polish` <Type text="string" /> <MetaInfo text="optional" />
 
   * Sets [Polish](https://blog.cloudflare.com/introducing-polish-automatic-image-optimizati/) mode. The possible values are `lossy`, `lossless` or `off`.
 
-* `resolveOverride` string optional
+* `resolveOverride` <Type text="string" /> <MetaInfo text="optional" />
 
   * Directs the request to an alternate origin server by overriding the DNS lookup. The value of `resolveOverride` specifies an alternate hostname which will be used when determining the origin IP address, instead of using the hostname specified in the URL. The `Host` header of the request will still match what is in the URL. Thus, `resolveOverride` allows a request to be sent to a different server than the URL / `Host` header specifies. However, `resolveOverride` will only take effect if both the URL host and the host specified by `resolveOverride` are within your zone. If either specifies a host from a different zone / domain, then the option will be ignored for security reasons. If you need to direct a request to a host outside your zone (while keeping the `Host` header pointing within your zone), first create a CNAME record within your zone pointing to the outside host, and then set `resolveOverride` to point at the CNAME record. Note that, for security reasons, it is not possible to set the `Host` header to specify a host outside of your zone unless the request is actually being sent to that host.
 
-* `scrapeShield` boolean optional
+* `scrapeShield` <Type text="boolean" /> <MetaInfo text="optional" />
 
   * Whether [ScrapeShield](https://blog.cloudflare.com/introducing-scrapeshield-discover-defend-dete/) should be enabled for this request, if otherwise configured for this zone. Defaults to `true`.
 
-* `webp` boolean optional
+* `webp` <Type text="boolean" /> <MetaInfo text="optional" />
 
   * Enables or disables [WebP](https://blog.cloudflare.com/a-very-webp-new-year-from-cloudflare/) image format in [Polish](/images/polish/).
 

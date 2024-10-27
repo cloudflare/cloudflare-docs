@@ -16,7 +16,9 @@ Dynamic fields represent computed or derived values, typically related to threat
 
 - Access to `cf.bot_management.*` fields requires a Cloudflare Enterprise plan with [Bot Management](/bots/plans/bm-subscription/) enabled.
 
-- Access to `cf.waf.content_scan.*` fields requires a Cloudflare Enterprise plan with [WAF content scanning](/waf/about/content-scanning/) enabled.
+- Access to `cf.waf.content_scan.*` fields requires a Cloudflare Enterprise plan with [malicious uploads detection](/waf/detections/malicious-uploads/) enabled.
+
+- Access to fields `cf.waf.auth_detected` and `cf.waf.credential_check.*` depends on your Cloudflare plan and add-ons. For more information, refer to [Leaked credentials detection](/waf/detections/leaked-credentials/).
 
 - The `cf.tls_client_auth.*` string fields are only filled in if the request includes a client certificate for [mTLS authentication](/ssl/client-certificates/enable-mtls/).
 
@@ -160,6 +162,18 @@ Example:
 
 ```txt
 "CN=Access Testing CA,OU=TX,O=Access Testing,L=Austin,ST=Texas,C=US"
+```
+
+## `cf.tls_client_auth.cert_subject_dn`
+
+`cf.tls_client_auth.cert_subject_dn` `String`
+
+The Distinguished Name (DN) of the owner (or requester) of the certificate included in the request.
+
+Example:
+
+```txt
+"CN=James Royal,OU=Access Admins,O=Access,L=Austin,ST=Texas,C=US"
 ```
 
 ## `cf.tls_client_auth.cert_issuer_dn_rfc2253`
@@ -360,7 +374,7 @@ Example:
 
 When `true`, the request contains at least one [content object](https://www.cloudflare.com/learning/ssl/what-happens-in-a-tls-handshake/).
 
-For more details, refer to [Uploaded content scanning](https://www.cloudflare.com/waf/about/content-scanning/).
+For more details, refer to [Malicious uploads detection](/waf/detections/malicious-uploads/).
 
 ## `cf.waf.content_scan.has_malicious_obj`
 
@@ -368,7 +382,7 @@ For more details, refer to [Uploaded content scanning](https://www.cloudflare.co
 
 When `true`, the request contains at least one malicious content object.
 
-For more details, refer to [Uploaded content scanning](https://www.cloudflare.com/waf/about/content-scanning/).
+For more details, refer to [Malicious uploads detection](/waf/detections/malicious-uploads/).
 
 ## `cf.waf.content_scan.num_malicious_obj`
 
@@ -376,7 +390,7 @@ For more details, refer to [Uploaded content scanning](https://www.cloudflare.co
 
 The number of malicious content objects detected in the request (zero or greater).
 
-For more details, refer to [Uploaded content scanning](https://www.cloudflare.com/waf/about/content-scanning/).
+For more details, refer to [Malicious uploads detection](/waf/detections/malicious-uploads/).
 
 ## `cf.waf.content_scan.has_failed`
 
@@ -384,7 +398,7 @@ For more details, refer to [Uploaded content scanning](https://www.cloudflare.co
 
 When `true`, the file scanner was unable to scan all the content objects detected in the request.
 
-For more details, refer to [Uploaded content scanning](https://www.cloudflare.com/waf/about/content-scanning/).
+For more details, refer to [Malicious uploads detection](/waf/detections/malicious-uploads/).
 
 ## `cf.waf.content_scan.num_obj`
 
@@ -392,7 +406,7 @@ For more details, refer to [Uploaded content scanning](https://www.cloudflare.co
 
 The number of content objects detected in the request (zero or greater).
 
-For more details, refer to [Uploaded content scanning](https://www.cloudflare.com/waf/about/content-scanning/).
+For more details, refer to [Malicious uploads detection](/waf/detections/malicious-uploads/).
 
 ## `cf.waf.content_scan.obj_sizes`
 
@@ -400,7 +414,7 @@ For more details, refer to [Uploaded content scanning](https://www.cloudflare.co
 
 An array of file sizes in bytes, in the order the content objects were detected in the request.
 
-For more details, refer to [Uploaded content scanning](https://www.cloudflare.com/waf/about/content-scanning/).
+For more details, refer to [Malicious uploads detection](/waf/detections/malicious-uploads/).
 
 ## `cf.waf.content_scan.obj_types`
 
@@ -408,7 +422,7 @@ For more details, refer to [Uploaded content scanning](https://www.cloudflare.co
 
 An array of file types in the order the content objects were detected in the request. If Cloudflare cannot determine the file type of a content object, the corresponding value in the `obj_types` array will be `application/octet-stream`.
 
-For more details, refer to [Uploaded content scanning](https://www.cloudflare.com/waf/about/content-scanning/).
+For more details, refer to [Malicious uploads detection](/waf/detections/malicious-uploads/).
 
 ## `cf.waf.content_scan.obj_results`
 
@@ -416,13 +430,13 @@ For more details, refer to [Uploaded content scanning](https://www.cloudflare.co
 
 An array of scan results in the order the content objects were detected in the request. The possible values are: `clean`, `suspicious`, `infected`, and `not scanned`.
 
-For more details, refer to [Uploaded content scanning](https://www.cloudflare.com/waf/about/content-scanning/).
+For more details, refer to [Malicious uploads detection](/waf/detections/malicious-uploads/).
 
 ## `cf.waf.score`
 
 `cf.waf.score` `Number`
 
-A global score from 1 to 99 that combines the score of each WAF attack vector into a single score. This is the standard [WAF attack score](https://www.cloudflare.com/waf/about/waf-attack-score/) to detect variants of attack patterns.
+A global score from 1 to 99 that combines the score of each WAF attack vector into a single score. This is the standard [WAF attack score](/waf/detections/attack-score/) to detect variants of attack patterns.
 
 ## `cf.waf.score.sqli`
 
@@ -447,6 +461,46 @@ An attack score from 1 to 99 classifying the command injection or Remote Code Ex
 `cf.waf.score.class` `String`
 
 The attack score class of the current request, based on the WAF attack score. Can have one of the following values: `attack`, `likely_attack`, `likely_clean`, `clean`.
+
+## `cf.waf.auth_detected`
+
+`cf.waf.auth_detected` `Boolean`
+
+When `true`, the Cloudflare WAF detected authentication credentials in the request.
+
+Only available when [leaked credentials detection](/waf/detections/leaked-credentials/) is enabled.
+
+## `cf.waf.credential_check.password_leaked`
+
+`cf.waf.credential_check.password_leaked` `Boolean`
+
+When `true`, the password detected in the request was previously leaked.
+
+Only available when [leaked credentials detection](/waf/detections/leaked-credentials/) is enabled.
+
+## `cf.waf.credential_check.username_leaked`
+
+`cf.waf.credential_check.username_leaked` `Boolean`
+
+When `true`, the username detected in the request was previously leaked.
+
+Only available when [leaked credentials detection](/waf/detections/leaked-credentials/) is enabled.
+
+## `cf.waf.credential_check.username_and_password_leaked`
+
+`cf.waf.credential_check.username_and_password_leaked` `Boolean`
+
+When `true`, the authentication credentials detected in the request (username and password pair) were previously leaked.
+
+Only available when [leaked credentials detection](/waf/detections/leaked-credentials/) is enabled.
+
+## `cf.waf.credential_check.username_password_similar`
+
+`cf.waf.credential_check.username_password_similar` `Boolean`
+
+When `true`, a similar version of the username and password credentials detected in the request were previously leaked.
+
+Only available when [leaked credentials detection](/waf/detections/leaked-credentials/) is enabled.
 
 ## `cf.worker.upstream_zone`
 

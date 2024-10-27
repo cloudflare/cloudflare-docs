@@ -12,7 +12,7 @@ import { Details } from "~/components"
 1.1.1.1 works directly inside Google Sheets. To get started, create a [Google Function](https://developers.google.com/apps-script/guides/sheets/functions) with the following code:
 
 ```js
-function NSLookup(type, domain) {
+function NSLookup(type, domain, useCache = false, minCacheTTL = 30) {
 
   if (typeof type == 'undefined') {
     throw new Error('Missing parameter 1 dns type');
@@ -22,26 +22,48 @@ function NSLookup(type, domain) {
     throw new Error('Missing parameter 2 domain name');
   }
 
+  if (typeof useCache != "boolean") {
+    throw new Error('Only boolean values allowed in 3 use cache');
+  }
+
+  if (typeof minCacheTTL != "number") {
+    throw new Error('Only numeric values allowed in 4 min cache ttl');
+  }
+
   type = type.toUpperCase();
+  domain = domain.toLowerCase();
 
-  var url = 'https://cloudflare-dns.com/dns-query?name=' + encodeURIComponent(domain) + '&type=' + encodeURIComponent(type);
+  let cache = null;
+  if (useCache) {
+    // Cache key and hash
+    cacheKey = domain + "@" + type;
+    cacheHash = Utilities.base64Encode(cacheKey);
+    cacheBinKey = "nslookup-result-" + cacheHash;
 
-  var options = {
+    cache = CacheService.getScriptCache();
+    const cachedResult = cache.get(cacheBinKey);
+    if (cachedResult != null) {
+      return cachedResult;
+    }
+  }
+
+  const url = 'https://cloudflare-dns.com/dns-query?name=' + encodeURIComponent(domain) + '&type=' + encodeURIComponent(type);
+  const options = {
     muteHttpExceptions: true,
     headers: {
       accept: "application/dns-json"
     }
   };
 
-  var result = UrlFetchApp.fetch(url, options);
-  var rc = result.getResponseCode();
-  var resultText = result.getContentText();
+  const result = UrlFetchApp.fetch(url, options);
+  const rc = result.getResponseCode();
+  const resultText = result.getContentText();
 
   if (rc !== 200) {
     throw new Error(rc);
   }
 
-  var errors = [
+  const errors = [
     { name: "NoError", description: "No Error"}, // 0
     { name: "FormErr", description: "Format Error"}, // 1
     { name: "ServFail", description: "Server Failure"}, // 2
@@ -54,19 +76,26 @@ function NSLookup(type, domain) {
     { name: "NotAuth", description: "Not Authorized"} // 9
   ];
 
-  var response = JSON.parse(resultText);
+  const response = JSON.parse(resultText);
 
   if (response.Status !== 0) {
     return errors[response.Status].name;
   }
 
-  var outputData = [];
+  const outputData = [];
+  let cacheTTL = 0;
 
-  for (var i in response.Answer) {
+  for (const i in response.Answer) {
     outputData.push(response.Answer[i].data);
+    const ttl = response.Answer[i].TTL;
+    cacheTTL = Math.min(cacheTTL || ttl, ttl);
   }
 
-  var outputString = outputData.join(',');
+  const outputString = outputData.join(',');
+
+  if (useCache) {
+    cache.put(cacheBinKey, outputString, Math.max(cacheTTL, minCacheTTL));
+  }
 
   return outputString;
 }
@@ -76,6 +105,7 @@ function NSLookup(type, domain) {
 
 When you feed the function `NSLookup` a record type and a domain, you will get a DNS record value in the cell you called `NSLookup`.
 
+To limit the number of DNS lookups and speed up the results (especially in larger Google Sheets), you can cache the returned DNS record value. Both the cache usage and the cache TTL can be controlled in arguments 3 and 4, respectively.
 
 <Details header="Supported DNS record types">
 

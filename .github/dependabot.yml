@@ -1,0 +1,13 @@
+version: 2
+updates:
+  - package-ecosystem: "npm"
+    directory: "/"
+    versioning-strategy: "increase"
+    commit-message:
+      prefix: "[Docs Site] "
+    schedule:
+      interval: "daily"
+    assignees:
+      - "KianNH"
+    reviewers:
+      - "KianNH"

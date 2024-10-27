@@ -38,7 +38,7 @@ To turn on TLS inspection for your Zero Trust organization:
 
 ### 3. Determine the certificate used for inspection
 
-TLS inspection requires a trusted private root certificate to be able to inspect and filter encrypted traffic. The [default Cloudflare root certificate](/cloudflare-one/connections/connect-devices/warp/user-side-certificates/install-cert-with-warp/) is a simple and common solution that is usually appropriate for testing or proof-of-concept conditions when deployed to your devices.
+TLS inspection requires a trusted private root certificate to be able to inspect and filter encrypted traffic. A [Cloudflare root certificate](/cloudflare-one/connections/connect-devices/warp/user-side-certificates/automated-deployment/) is a simple and common solution that is usually appropriate for testing or proof-of-concept conditions when deployed to your devices.
 
 Alternatively, if you already have a root CA that you use for other inspection or trust applications, we recommend [using your own certificate](/cloudflare-one/connections/connect-devices/warp/user-side-certificates/custom-certificate/). A few reasons for this include:
 
@@ -128,7 +128,7 @@ For example, if users are issued a corporate-managed iPhone with limited permiss
 
 </TabItem> </Tabs>
 
-If you filter your network-connected devices with Magic WAN tunnels, the WARP Connector, or other devices that do not have the Cloudflare certificate installed, you will need to accommodate by creating pass-through policies. For these devices, you should explicitly exempt TLS inspection for the source network IP range from which that traffic will be originating. For example:
+If you filter your network-connected devices with Magic WAN tunnels, the WARP Connector, or other devices that do not have a Cloudflare certificate installed, you will need to accommodate by creating pass-through policies. For these devices, you should explicitly exempt TLS inspection for the source network IP range from which that traffic will be originating. For example:
 
 <Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
 

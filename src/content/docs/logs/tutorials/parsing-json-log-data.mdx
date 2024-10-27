@@ -7,25 +7,27 @@ sidebar:
 
 After downloading your Cloudflare Logs data, you can use different tools to parse and analyze your logs.
 
-One of those tools used to parse your JSON log data is _jq_. To get started with _jq_, visit the [_jq_ official site](https://jqlang.github.io/jq/).
+One of those tools used to parse your JSON log data is `jq`.
+
+Refer to [Download jq](https://jqlang.github.io/jq/download/) for more information on obtaining and installing `jq`.
 
 :::note[Note]
 
-_jq_ is a powerful command line for parsing JSON data and performing certain types of analysis. To perform more detailed analysis, consider a full-fledged data analysis system, such as _Kibana_.
+`jq` is a powerful command line for parsing JSON data and performing certain types of analysis. To perform more detailed analysis, consider a full-fledged data analysis system, such as _Kibana_.
 
 :::
 
 ## Aggregate fields
 
-To aggregate a field appearing in the log, such as by IP address, URI, or referrer, you can use several _jq_ commands. This is useful to identify any patterns in traffic; for example, to identify your most popular pages or to block an attack.
+To aggregate a field appearing in the log, such as by IP address, URI, or referrer, you can use several `jq` commands. This is useful to identify any patterns in traffic; for example, to identify your most popular pages or to block an attack.
 
 The following examples match on a field name and provide a count of each field instance, sorted in ascending order by count.
 
-```sh
+```bash
 jq -r .ClientRequestURI logs.json | sort -n | uniq -c | sort -n | tail
 ```
 
-```sh output
+```bash output
 2 /nginx-logo.png
 2 /poweredby.png
 2 /testagain
@@ -38,11 +40,11 @@ jq -r .ClientRequestURI logs.json | sort -n | uniq -c | sort -n | tail
 54 /
 ```
 
-```sh
+```bash
 jq -r .ClientRequestUserAgent logs.json | sort -n | uniq -c | sort -n | tail
 ```
 
-```sh output
+```bash output
 1 python-requests/2.9.1
 2 Mozilla/5.0 (Macintosh; Intel Mac OS X 10_7_5) AppleWebKit/537.17 (KHTML, like Gecko) Chrome/24.0.1312.56 Safari/537.17
 4 Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/48.0.2564.116 Safari/537.36
@@ -51,11 +53,11 @@ jq -r .ClientRequestUserAgent logs.json | sort -n | uniq -c | sort -n | tail
 51 curl/7.46.0-DEV
 ```
 
-```sh
+```bash
 jq -r .ClientRequestReferer logs.json | sort -n | uniq -c | sort -n | tail
 ```
 
-```sh output
+```bash output
 2 http://example.com/testagain
 3 http://example.com/testing
 5 http://example.com/
@@ -68,11 +70,11 @@ jq -r .ClientRequestReferer logs.json | sort -n | uniq -c | sort -n | tail
 
 Another common use case involves filtering data for a specific field value and then aggregating after that. This helps answer questions like _Which URLs saw the most 502 errors?_ For example:
 
-```sh
+```bash
 jq 'select(.OriginResponseStatus == 502) | .ClientRequestURI' logs.json | sort -n | uniq -c | sort -n | tail
 ```
 
-```sh output
+```bash output
 1 "/favicon.ico"
 1 "/testing"
 3 "/testing123"
@@ -83,11 +85,11 @@ jq 'select(.OriginResponseStatus == 502) | .ClientRequestURI' logs.json | sort -
 
 To find out the top IP addresses blocked by the Cloudflare WAF, use the following query:
 
-```sh
+```bash
 jq -r 'select(.SecurityAction == "block") | .ClientIP' logs.json | sort -n | uniq -c | sort -n
 ```
 
-```sh output
+```bash output
 1 127.0.0.1
 ```
 
@@ -95,11 +97,11 @@ jq -r 'select(.SecurityAction == "block") | .ClientIP' logs.json | sort -n | uni
 
 To retrieve your cache ratios, try the following query:
 
-```sh
+```bash
 jq -r '.CacheCacheStatus' logs.json | sort -n | uniq -c | sort -n
 ```
 
-```sh output
+```bash output
 3 hit
 3 null
 3 stale
@@ -112,11 +114,11 @@ jq -r '.CacheCacheStatus' logs.json | sort -n | uniq -c | sort -n
 
 To find out which TLS versions your visitors are using — for example, to decide if you can disable TLS versions that are older than 1.2 — use the following query:
 
-```sh
+```bash
 jq -r '.ClientSSLProtocol' logs.json | sort -n | uniq -c | sort -n
 ```
 
-```sh output
+```bash output
 42 none
 58 TLSv1.2
 ```

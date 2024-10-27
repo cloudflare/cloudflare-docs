@@ -124,7 +124,7 @@ When `true`, `http.request.headers`, `http.request.headers.names`, and `http.req
 
 Represents the list of language tags provided in the [`Accept-Language`](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Accept-Language) HTTP request header, sorted by weight (`;q=<weight>`, with a default weight of `1`) in descending order.
 
-If the HTTP header is not present in the request or is empty, `http.request.accepted_languages[0]` will return a "[missing value](/ruleset-engine/rules-language/values/#array-notes)", which the `concat()` function will handle as an empty string.
+If the HTTP header is not present in the request or is empty, `http.request.accepted_languages[0]` will return a "[missing value](/ruleset-engine/rules-language/values/#notes)", which the `concat()` function will handle as an empty string.
 
 If the HTTP header includes the language tag `*` it will not be stored in the array.
 

@@ -51,10 +51,7 @@ To retrieve those values:
 
 ### 2. Add CrowdStrike as a service provider
 
-1. In [Zero Trust](https://one.dash.cloudflare.com), go to **Settings** > **WARP Client**.
-2. Scroll down to **Device posture providers** and select **Add new**.
-3. Select **CrowdStrike**.
-4. Enter any name for the provider. This name will be used throughout the dashboard to reference this connection.
+<Render file="posture/add-service-provider" params={{ provider: "Crowdstrike" }} />
 5. Enter the **Client ID** and **Client secret** you noted down above.
 6. Enter your **Rest API URL**.
 7. Enter your **Customer ID**.
@@ -78,4 +75,4 @@ Device posture data is gathered from the [CrowdStrike Zero Trust Assessment APIs
 | Sensor config | Sensor signal score                                                                               | `1` to `100`                                                                                  |
 | Version       | ZTA score version                                                                                 | `2.1.0`                                                                                       |
 | State         | Current online status of the device                                                               | *Online*, *Offline*, or *Unknown*                                                             |
-| Last seen     | Elapsed time since the device was last seen. Only returned if its state is `online` or `unknown`. | Less than 1 hour, 3 hours, 6 hours, 12 hours, 24 hours, 7 days, 30 days, or more than 30 days |
+| Last seen     | Elapsed time since the device was last seen. Only returned if its state is `online` or `unknown`. | In the last 1 hour, 3 hours, 6 hours, 12 hours, 24 hours, 7 days, 30 days, or more than 30 days |

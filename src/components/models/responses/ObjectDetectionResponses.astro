@@ -1,5 +1,5 @@
 ---
-import { Code } from "~/components";
+import { Code } from "@astrojs/starlight/components";
 
 const json = `[
   { "label":"cat" ,"score":0.4071170687675476, "box": { "xmin": 0, "ymin": 0, "xmax": 10, "ymax": 10 } },
@@ -10,6 +10,9 @@ const json = `[
 
 <h2>Response</h2>
 
-<p>This task returns a list of detected objects, each one containing a label, a probability score, and its surrounding box coordinates.</p>
+<p>
+	This task returns a list of detected objects, each one containing a label, a
+	probability score, and its surrounding box coordinates.
+</p>
 
 <Code code={json} lang="json" />

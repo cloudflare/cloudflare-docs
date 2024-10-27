@@ -9,6 +9,10 @@ description: The built-in, JavaScript-native RPC system built into Workers and
 
 import { DirectoryListing, Render } from "~/components"
 
+:::note
+To use RPC, [define a compatibility date](/workers/configuration/compatibility-dates) of `2024-04-03` or higher, or include `rpc` in your [compatibility flags](/workers/configuration/compatibility-dates/#nodejs-compatibility-flag).
+:::
+
 Workers provide a built-in, JavaScript-native [RPC (Remote Procedure Call)](https://en.wikipedia.org/wiki/Remote_procedure_call) system, allowing you to:
 
 * Define public methods on your Worker that can be called by other Workers on the same Cloudflare account, via [Service Bindings](/workers/runtime-apis/bindings/service-bindings/rpc)
@@ -126,7 +130,7 @@ export default {
 
 :::note
 
-Refer to [Explicit Resource Management](/workers/runtime-apis/rpc/lifecycle) to learn more about the `using` declaration shown in the example above. 
+Refer to [Explicit Resource Management](/workers/runtime-apis/rpc/lifecycle) to learn more about the `using` declaration shown in the example above.
 :::
 
 Classes that extend `RpcTarget` work a lot like functions: the object itself is not serialized, but is instead replaced by a stub. In this case, the stub itself is not callable, but its methods are. Calling any method on the stub actually makes an RPC back to the original object, where it was created.
@@ -135,12 +139,12 @@ As shown above, you can also access properties of classes. Properties behave lik
 
 :::note
 
-While it's possible to define a similar interface to the caller using an object that contains many functions, this is less efficient. If you return an object that contains five functions, then you are creating five stubs. If you return a class instance, where the class declares five methods, you are only returning a single stub. Returning a single stub is often more efficient and easier to reason about. Moreover, when returning a plain object (not a class), non-function properties of the object will be transmitted at the time the object itself is transmitted; they cannot be fetched asynchronously on-demand. 
+While it's possible to define a similar interface to the caller using an object that contains many functions, this is less efficient. If you return an object that contains five functions, then you are creating five stubs. If you return a class instance, where the class declares five methods, you are only returning a single stub. Returning a single stub is often more efficient and easier to reason about. Moreover, when returning a plain object (not a class), non-function properties of the object will be transmitted at the time the object itself is transmitted; they cannot be fetched asynchronously on-demand.
 :::
 
 :::note
 
-Classes which do not inherit `RpcTarget` cannot be sent over RPC at all. This differs from Structured Clone, which defines application-defined classes as clonable. Why the difference? By default, the Structured Clone algorithm simply ignores an object's class entirely. So, the recipient receives a plain object, containing the original object's instance properties but entirely missing its original type. This behavior is rarely useful in practice, and could be confusing if the developer had intended the class to be treated as an `RpcTarget`. So, Workers RPC has chosen to disallow classes that are not `RpcTarget`s, to avoid any confusion. 
+Classes which do not inherit `RpcTarget` cannot be sent over RPC at all. This differs from Structured Clone, which defines application-defined classes as clonable. Why the difference? By default, the Structured Clone algorithm simply ignores an object's class entirely. So, the recipient receives a plain object, containing the original object's instance properties but entirely missing its original type. This behavior is rarely useful in practice, and could be confusing if the developer had intended the class to be treated as an `RpcTarget`. So, Workers RPC has chosen to disallow classes that are not `RpcTarget`s, to avoid any confusion.
 :::
 
 ### Promise pipelining

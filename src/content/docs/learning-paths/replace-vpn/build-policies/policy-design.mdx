@@ -30,7 +30,7 @@ Determine which identity provider you will use as the source of truth for user e
 
 :::note
 
-Ensure that the [identity provider is connected to Cloudflare](/learning-paths/replace-vpn/get-started/configure-idp/) and available to users in your [device enrollment permissions](/learning-paths/replace-vpn/configure-device-agent/device-enrollment-permissions/). 
+Ensure that the [identity provider is connected to Cloudflare](/learning-paths/replace-vpn/get-started/configure-idp/) and available to users in your [device enrollment permissions](/learning-paths/replace-vpn/configure-device-agent/device-enrollment-permissions/).
 :::
 
 If you plan to grant access to services based on group membership, [view the user registry](/cloudflare-one/insights/logs/users/) and verify that the target users have that group value in their User Registry.
@@ -41,7 +41,7 @@ Most customers will also build policies that are contingent on the use of a corp
 
 :::note
 
-Be sure to [enable the device posture checks](/cloudflare-one/identity/devices/) that you want to use in your policies. 
+Be sure to [enable the device posture checks](/cloudflare-one/identity/devices/) that you want to use in your policies.
 :::
 
 ### 2. Define your networks
@@ -68,7 +68,7 @@ On the other hand, if the IPs behind the load balancer are static or only semi-d
 
 Gather any existing security policies or block lists that you wish to migrate from your VPN provider to Zero Trust.
 
-:::undefined[Descaler program]
+:::note[Descaler program]
 
-If you are an Enterprise organization migrating from Zscaler, you can use our [Descaler toolkit](https://blog.cloudflare.com/descaler-program/) to export policies from Zscaler Internet Access (ZIA) and import them into Cloudflare Gateway. 
+If you are an Enterprise organization migrating from Zscaler, you can use our [Descaler toolkit](https://blog.cloudflare.com/descaler-program/) to export policies from Zscaler Internet Access (ZIA) and import them into Cloudflare Gateway.
 :::

@@ -8,18 +8,17 @@ head:
     content: Bulk Redirect concepts
 description: Bulk Redirects work through a combination of URL redirects, a Bulk
   Redirect list, and a Bulk Redirect rule.
-
 ---
 
-import { Example, GlossaryTooltip } from "~/components"
+import { Example, GlossaryTooltip } from "~/components";
 
 Bulk Redirects involve the following elements:
 
-* **URL redirect**: A simple object with a source URL, a target URL, a status code, and redirect parameters. URL redirects are the list items of Bulk Redirect Lists.
+- **URL redirect**: A simple object with a source URL, a target URL, a status code, and redirect parameters. URL redirects are the list items of Bulk Redirect Lists.
 
-* **Bulk Redirect List**: A list, similar to an IP list, containing one or more URL redirects. To enable all the URL redirects in a Bulk Redirect List, reference the list in a Bulk Redirect Rule. Different Bulk Redirect Rules can reference the same Bulk Redirect List.
+- **Bulk Redirect List**: A list, similar to an IP list, containing one or more URL redirects. To enable all the URL redirects in a Bulk Redirect List, reference the list in a Bulk Redirect Rule. Different Bulk Redirect Rules can reference the same Bulk Redirect List.
 
-* **Bulk Redirect Rule**: A rule powered by the Ruleset Engine, similar to a [Transform Rule](/rules/transform/). A Bulk Redirect Rule has an associated Bulk Redirect List.
+- **Bulk Redirect Rule**: A rule powered by the Ruleset Engine, similar to a [Transform Rule](/rules/transform/). A Bulk Redirect Rule has an associated Bulk Redirect List.
 
 A Bulk Redirect Rule enables a Bulk Redirect List, which contains one or more URL redirects.
 
@@ -44,8 +43,8 @@ The following Bulk Redirect Rule, named `Rule 2`, enables the URL redirects in t
 
 **`Rule 2` Bulk Redirect Rule**
 
-* **Rule name**: `Rule 2`
-* **Associated list**: `list_b`
+- **Rule name**: `Rule 2`
+- **Associated list**: `list_b`
 
 </Example>
 
@@ -69,9 +68,7 @@ For details on the CSV format for importing items to a Bulk Redirect List, refer
 
 :::note
 
-
 You can only reference Bulk Redirect Lists in Bulk Redirect Rules. Other types of rules powered by the Ruleset Engine do not support Bulk Redirect Lists.
-
 
 :::
 
@@ -103,16 +100,14 @@ ip.src.country == "GB" and http.request.full_uri in $<LIST_NAME>
 
 For more information on the available fields, refer to [Available fields and functions](/rules/url-forwarding/bulk-redirects/reference/fields-functions/).
 
-:::note[Note]
-
+:::note
 
 At the left of the `in` operator you can only use fields directly and not values returned by a function. In most situations, you will want to use one of the following fields with the `in` operator:
 
-* `http.request.full_uri`
-* `raw.http.request.full_uri`
+- `http.request.full_uri`
+- `raw.http.request.full_uri`
 
 Refer to [Fields](/ruleset-engine/rules-language/fields/) for more information.
-
 
 :::
 

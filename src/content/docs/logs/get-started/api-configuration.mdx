@@ -8,27 +8,27 @@ sidebar:
 
 ## Endpoints
 
-The table below summarizes the job operations available for both Logpush and Edge Log Delivery jobs. Make sure that Account-scoped datasets use `/accounts/{account_id}` and Zone-scoped use `/zone/{zone_id}`. For more information, refer to the [Log fields](/logs/reference/log-fields/) page.
+The table below summarizes the job operations available for both Logpush and Edge Log Delivery jobs. Make sure that Account-scoped datasets use `/accounts/{account_id}` and Zone-scoped datasets use `/zone/{zone_id}`. For more information, refer to the [Log fields](/logs/reference/log-fields/) page.
 
-The `{zone_id}` argument is the zone id (hexadecimal string). The `{account_id}` argument is the organization id (hexadecimal string). These arguments can be found using [API's zones endpoint](/fundamentals/setup/find-account-and-zone-ids/).
-The `{job_id}` argument is the numeric job id. The `{dataset_id}` argument indicates the log category (such as `http_requests`, `spectrum_events`, `firewall_events`, `nel_reports`, or `dns_logs`).
+You can locate `{zone_id}` and `{account_id}` arguments based on the [Find zone and account IDs](/fundamentals/setup/find-account-and-zone-ids/) page.
+The `{job_id}` argument is numeric, like 123456.
+The `{dataset_id}` argument indicates the log category (such as `http_requests` or `audit_logs`).
 
 
 
-| Operation | Description                                 | API                                                                                                                                                                                                              |
-| --------- | ------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `POST`    | Create job                                  | [Zone-scoped job](/api/operations/post-zones-zone_identifier-logpush-jobs) / [Account-scoped job](/api/operations/post-accounts-account_identifier-logpush-jobs)                                                 |
-| `GET`     | Retrieve job                                | [Zone-scoped job](/api/operations/get-zones-zone_identifier-logpush-jobs-job_identifier) / [Account-scoped job](/api/operations/get-accounts-account_identifier-logpush-jobs-job_identifier)                     |
-| `GET`     | Retrieve all jobs for all datasets          | [Zone-scoped jobs](/api/operations/get-zones-zone_identifier-logpush-jobs) / [Account-scoped jobs](/api/operations/get-accounts-account_identifier-logpush-jobs)                                                 |
-| `GET`     | Retrieve all jobs for a dataset             | [Zone-scoped jobs](/api/operations/get-zones-zone_identifier-logpush-datasets-dataset-jobs) / [Account-scoped jobs](/api/operations/get-accounts-account_identifier-logpush-datasets-dataset-jobs)               |
-| `GET`     | Retrieve all available fields for a dataset | [Zone-scoped fields](/api/operations/get-zones-zone_identifier-logpush-datasets-dataset-fields) / [Account-scoped fields](/api/operations/get-accounts-account_identifier-logpush-datasets-dataset-fields)       |
-| `PUT`     | Update job                                  | [Zone-scoped job](/api/operations/put-zones-zone_identifier-logpush-jobs-job_identifier) / [Account-scoped job](/api/operations/put-accounts-account_identifier-logpush-jobs-job_identifier)                     |
-| `DELETE`  | Delete job                                  | [Zone-scoped job](/api/operations/delete-zones-zone_identifier-logpush-jobs-job_identifier) / [Account-scoped job](/api/operations/delete-accounts-account_identifier-logpush-jobs-job_identifier)               |
-| `POST`    | Check whether destination exists            | [Zone-scoped job](/api/operations/post-zones-zone_identifier-logpush-validate-destination-exists) / [Account-scoped job](/api/operations/delete-accounts-account_identifier-logpush-validate-destination-exists) |
-| `POST`    | Get ownership challenge                     | [Zone-scoped job](/api/operations/post-zones-zone_identifier-logpush-ownership) / [Account-scoped job](/api/operations/post-accounts-account_identifier-logpush-ownership)                                       |
-| `POST`    | Validate ownership challenge                | [Zone-scoped job](/api/operations/post-zones-zone_identifier-logpush-ownership-validate) / [Account-scoped job](/api/operations/post-accounts-account_identifier-logpush-ownership-validate)                     |
-| `POST`    | Validate log options                        | [Zone-scoped job](/api/operations/post-zones-zone_identifier-logpush-validate-origin) / [Account-scoped job](/api/operations/post-accounts-account_identifier-logpush-validate-origin)                           |
-
+| Operation | Description                                 | API                                                                                                                                                                                              |
+| --------- | ------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `POST`    | Create job                                  | [Zone-scoped job](/api/operations/post-zones-zone_id-logpush-jobs) / [Account-scoped job](/api/operations/post-accounts-account_id-logpush-jobs)                                                 |
+| `GET`     | Retrieve job details                        | [Zone-scoped job](/api/operations/get-zones-zone_id-logpush-jobs-job_id) / [Account-scoped job](/api/operations/get-accounts-account_id-logpush-jobs-job_id)                                     |
+| `GET`     | Retrieve all jobs for all datasets          | [Zone-scoped jobs](/api/operations/get-zones-zone_id-logpush-jobs) / [Account-scoped jobs](/api/operations/get-accounts-account_id-logpush-jobs)                                                 |
+| `GET`     | Retrieve all jobs for a dataset             | [Zone-scoped jobs](/api/operations/get-zones-zone_id-logpush-datasets-dataset_id-jobs) / [Account-scoped jobs](/api/operations/get-accounts-account_id-logpush-datasets-dataset_id-jobs)         |
+| `GET`     | Retrieve all available fields for a dataset | [Zone-scoped fields](/api/operations/get-zones-zone_id-logpush-datasets-dataset_id-fields) / [Account-scoped fields](/api/operations/get-accounts-account_id-logpush-datasets-dataset_id-fields) |
+| `PUT`     | Update job                                  | [Zone-scoped job](/api/operations/put-zones-zone_id-logpush-jobs-job_id) / [Account-scoped job](/api/operations/put-accounts-account_id-logpush-jobs-job_id)                                     |
+| `DELETE`  | Delete job                                  | [Zone-scoped job](/api/operations/delete-zones-zone_id-logpush-jobs-job_id) / [Account-scoped job](/api/operations/delete-accounts-account_id-logpush-jobs-job_id)                               |
+| `POST`    | Check whether destination exists            | [Zone-scoped job](/api/operations/post-zones-zone_id-logpush-validate-destination-exists) / [Account-scoped job](/api/operations/delete-accounts-account_id-logpush-validate-destination-exists) |
+| `POST`    | Get ownership challenge                     | [Zone-scoped job](/api/operations/post-zones-zone_id-logpush-ownership) / [Account-scoped job](/api/operations/post-accounts-account_id-logpush-ownership)                                       |
+| `POST`    | Validate ownership challenge                | [Zone-scoped job](/api/operations/post-zones-zone_id-logpush-ownership-validate) / [Account-scoped job](/api/operations/post-accounts-account_id-logpush-ownership-validate)                     |
+| `POST`    | Validate log options                        | [Zone-scoped job](/api/operations/post-zones-zone_id-logpush-validate-origin) / [Account-scoped job](/api/operations/post-accounts-account_id-logpush-validate-origin)                           |
 
 
 For concrete examples, refer to the tutorials in [Logpush examples](/logs/tutorials/examples/).
@@ -38,7 +38,7 @@ For concrete examples, refer to the tutorials in [Logpush examples](/logs/tutori
 The Logpush API requires credentials like any other Cloudflare API.
 
 ```bash
-curl --silent "https://api.cloudflare.com/client/v4/zones/{zone_id}/logpush/jobs" \
+curl https://api.cloudflare.com/client/v4/zones/{zone_id}/logpush/jobs \
 --header "X-Auth-Email: <EMAIL>" \
 --header "X-Auth-Key: <API_KEY>"
 ```
@@ -50,12 +50,13 @@ Before creating a new job, ownership of the destination must be proven.
 To issue an ownership challenge token to your destination:
 
 ```bash
-curl --silent --request POST \
-"https://api.cloudflare.com/client/v4/zones/{zone_id}/logpush/ownership" \
+curl https://api.cloudflare.com/client/v4/zones/{zone_id}/logpush/ownership \
 --header "X-Auth-Email: <EMAIL>" \
 --header "X-Auth-Key: <API_KEY>" \
 --header "Content-Type: application/json" \
---data '{"destination_conf":"s3://<BUCKET_PATH>?region=us-west-2"}' | jq .
+--data '{
+  "destination_conf": "s3://<BUCKET_PATH>?region=us-west-2"
+}'
 ```
 
 A challenge file will be written to the destination, and the filename will be in the response (the filename may be expressed as a path, if appropriate for your destination):
@@ -67,7 +68,7 @@ A challenge file will be written to the destination, and the filename will be in
   "result": {
     "valid": true,
     "message": "",
-    "filename": "<path-to-challenge-file>.txt"
+    "filename": "<PATH_TO_CHALLENGE_FILE>.txt"
   },
   "success": true
 }
@@ -92,16 +93,46 @@ You can specify your cloud service provider destination via the required **desti
 As of May 2022, defining a unique destination for a Logpush job will no longer be required. As this constraint has been removed, you can now have more than one job writing to the same destination. 
 :::
 
-* **Cloudflare R2**: bucket path + account ID + R2 access key ID + R2 secret access key; for example: `r2://<BUCKET_PATH>?account-id=<ACCOUNT_ID>&access-key-id=<R2_ACCESS_KEY_ID>&secret-access-key=<R2_SECRET_ACCESS_KEY>`
-* **AWS S3**: bucket + optional directory + region + optional encryption parameter (if required by your policy); for example: `s3://bucket/[dir]?region=<REGION>[&sse=AES256]`
-* **Datadog**: Datadog endpoint URL + Datadog API key + optional parameters; for example: `datadog://<DATADOG_ENDPOINT_URL>?header_DD-API-KEY=<DATADOG_API_KEY>&ddsource=cloudflare&service=<SERVICE>&host=<HOST>&ddtags=<TAGS>`
-* **Google Cloud Storage**: bucket + optional directory; for example: `gs://bucket/[dir]`
-* **Microsoft Azure**: service-level SAS URL with `https` replaced by `azure` + optional directory added before query string; for example: `azure://<BlobContainerPath>/[dir]?<QueryString>`
-* **New Relic** New Relic endpoint URL which is `https://log-api.newrelic.com/log/v1` for US or `https://log-api.eu.newrelic.com/log/v1` for EU + a license key + a format; for example: for US `"https://log-api.newrelic.com/log/v1?Api-Key=<NR_LICENSE_KEY>&format=cloudflare"` and for EU `"https://log-api.eu.newrelic.com/log/v1?Api-Key=<NR_LICENSE_KEY>&format=cloudflare"`
-* **Splunk**: Splunk endpoint URL + Splunk channel ID + insecure-skip-verify flag + Splunk sourcetype + Splunk authorization token; for example: `splunk://<SPLUNK_ENDPOINT_URL>?channel=<SPLUNK_CHANNEL_ID>&insecure-skip-verify=<INSECURE_SKIP_VERIFY>&sourcetype=<SOURCE_TYPE>&header_Authorization=<SPLUNK_AUTH_TOKEN>`
-* **Sumo Logic**: HTTP source address URL with `https` replaced by `sumo`; for example: `sumo://<SumoEndpoint>/receiver/v1/http/<UniqueHTTPCollectorCode>`
+The `destination_conf` parameter must follow this format:
 
-For R2, S3, Google Cloud Storage, and Azure, logs can be separated into daily subdirectories by using the special string `{DATE}` in the URL path; for example: `s3://mybucket/logs/{DATE}?region=us-east-1&sse=AES256` or `azure://myblobcontainer/logs/{DATE}?[QueryString]`. It will be substituted with the date in `YYYYMMDD` format, like `20180523`.
+```
+<scheme>://<destination-address>
+```
+
+Supported schemes are listed below, each tailored to specific providers such as
+R2, S3, etc. Additionally, generic use cases like `https` are also covered:
+
+* `r2`,
+* `gs`,
+* `s3`,
+* `sumo`,
+* `https`,
+* `azure`,
+* `splunk`,
+* `datadog`.
+
+The `destination-address` should generally be provided by the destination
+provider. However, for certain providers, we require the `destination-address`
+to follow a specific format:
+
+* **Cloudflare R2** (scheme `r2`): bucket path + account ID + R2 access key ID + R2 secret access key; for example: `r2://<BUCKET_PATH>?account-id=<ACCOUNT_ID>&access-key-id=<R2_ACCESS_KEY_ID>&secret-access-key=<R2_SECRET_ACCESS_KEY>`
+* **AWS S3** (scheme `s3`): bucket + optional directory + region + optional encryption parameter (if required by your policy); for example: `s3://bucket/[dir]?region=<REGION>[&sse=AES256]`
+* **Datadog** (scheme `datadog`): Datadog endpoint URL + Datadog API key + optional parameters; for example: `datadog://<DATADOG_ENDPOINT_URL>?header_DD-API-KEY=<DATADOG_API_KEY>&ddsource=cloudflare&service=<SERVICE>&host=<HOST>&ddtags=<TAGS>`
+* **Google Cloud Storage** (scheme `gs`): bucket + optional directory; for example: `gs://bucket/[dir]`
+* **Microsoft Azure** (scheme `azure`): service-level SAS URL with `https` replaced by `azure` + optional directory added before query string; for example: `azure://<BLOB_CONTAINER_PATH>/[dir]?<QUERY_STRING>`
+* **New Relic** (use scheme `https`): New Relic endpoint URL which is `https://log-api.newrelic.com/log/v1` for US or `https://log-api.eu.newrelic.com/log/v1` for EU + a license key + a format; for example: for US `"https://log-api.newrelic.com/log/v1?Api-Key=<NR_LICENSE_KEY>&format=cloudflare"` and for EU `"https://log-api.eu.newrelic.com/log/v1?Api-Key=<NR_LICENSE_KEY>&format=cloudflare"`
+* **Splunk** (scheme `splunk`): Splunk endpoint URL + Splunk channel ID + insecure-skip-verify flag + Splunk sourcetype + Splunk authorization token; for example: `splunk://<SPLUNK_ENDPOINT_URL>?channel=<SPLUNK_CHANNEL_ID>&insecure-skip-verify=<INSECURE_SKIP_VERIFY>&sourcetype=<SOURCE_TYPE>&header_Authorization=<SPLUNK_AUTH_TOKEN>`
+* **Sumo Logic** (scheme `sumo`): HTTP source address URL with `https` replaced by `sumo`; for example: `sumo://<SUMO_ENDPOINT_URL>/receiver/v1/http/<UNIQUE_HTTP_COLLECTOR_CODE>`
+
+For **R2**, **S3**, **Google Cloud Storage**, and **Azure**, you can organize logs into daily subdirectories by including the special placeholder `{DATE}` in the URL path. This placeholder will automatically be replaced with the date in the `YYYYMMDD` format (for example, `20180523`).
+
+For example:
+
+* `s3://mybucket/logs/{DATE}?region=us-east-1&sse=AES256`
+* `azure://myblobcontainer/logs/{DATE}?[QueryString]`
+
+This approach is useful when you want your logs grouped by day.
+
 
 For more information on the value for your cloud storage provider, consult the following conventions:
 
@@ -113,12 +144,13 @@ For more information on the value for your cloud storage provider, consult the f
 To check if a destination is already in use:
 
 ```bash
-curl --silent --request POST \
-"https://api.cloudflare.com/client/v4/zones/{zone_id}/logpush/validate/destination/exists" \
+curl https://api.cloudflare.com/client/v4/zones/{zone_id}/logpush/validate/destination/exists \
 --header "X-Auth-Email: <EMAIL>" \
 --header "X-Auth-Key: <API_KEY>" \
 --header "Content-Type: application/json" \
---data '{"destination_conf":"s3://foo"}' | jq .
+--data '{
+  "destination_conf": "s3://foo"
+}'
 ```
 
 Response
@@ -133,14 +165,6 @@ Response
   "success": true
 }
 ```
-
-## Job object
-
-:::note[Note]
-
-
-For a detailed description, refer to the [API documentation](/api/operations/get-zones-zone_identifier-logpush-jobs).
-
 
 :::
 
@@ -157,8 +181,7 @@ The kind parameter cannot be used to update existing Logpush jobs. You can only 
 :::
 
 ```bash
-curl --silent --request POST \
-"https://api.cloudflare.com/client/v4/zones/{zone_id}/logpush/jobs" \
+curl https://api.cloudflare.com/client/v4/zones/{zone_id}/logpush/jobs \
 --header "X-Auth-Email: <EMAIL>" \
 --header "X-Auth-Key: <API_KEY>" \
 --header "Content-Type: application/json" \
@@ -171,7 +194,7 @@ curl --silent --request POST \
     "timestamp_format": "rfc3339"
   },
   "kind": "edge"
-}' | jq .
+}'
 ```
 
 ## Options
@@ -192,15 +215,14 @@ The **CVE-2021-44228** parameter can only be set through the API at this time. U
 To check if the selected **logpull\_options** are valid:
 
 ```bash
-curl --silent --request POST \
-"https://api.cloudflare.com/client/v4/zones/{zone_id}/logpush/validate/origin" \
+curl https://api.cloudflare.com/client/v4/zones/{zone_id}/logpush/validate/origin \
 --header "X-Auth-Email: <EMAIL>" \
 --header "X-Auth-Key: <API_KEY>" \
 --header "Content-Type: application/json" \
 --data '{
   "logpull_options": "fields=RayID,ClientIP,EdgeStartTimestamp&timestamps=rfc3339&CVE-2021-44228=true",
   "dataset": "http_requests"
-}' | jq .
+}'
 ```
 
 Response
@@ -211,7 +233,7 @@ Response
   "messages": [],
   "result": {
     "valid": true,
-    "message": "",
+    "message": ""
   },
   "success": true
 }
@@ -229,8 +251,8 @@ Value can range from `0.0` (exclusive) to `1.0` (inclusive). `sample=0.1` means 
 
 These parameters can be used to gain control of batch size in the case that a destination has specific requirements. Files will be sent based on whichever parameter is hit first. If these options are not set, the system uses our internal defaults of 30s, 100k records, or the destinations globally defined limits.
 
-1. **max\_upload\_bytes** (optional): The maximum uncompressed file size of a batch of logs. This setting value must be between 5MB and 1GB. Note that you cannot set a minimum file size; this means that log files may be much smaller than this batch size.
-2. **max\_upload\_records** (optional): The maximum number of log lines per batch. This setting must be between 1000 and 1,000,000 lines. Note that you cannot specify a minimum number of log lines per batch; this means that log files may contain many fewer lines than this.
+1. **max\_upload\_bytes** (optional): The maximum uncompressed file size of a batch of logs. This setting value must be between 5 MB and 1 GB. Note that you cannot set a minimum file size; this means that log files may be much smaller than this batch size.
+2. **max\_upload\_records** (optional): The maximum number of log lines per batch. This setting must be between 1,000 and 1,000,000 lines. Note that you cannot specify a minimum number of log lines per batch; this means that log files may contain many fewer lines than this.
 3. **max\_upload\_interval\_seconds** (optional): The maximum interval in seconds for log batches. This setting must be between 30 and 300 seconds. Note that you cannot specify a minimum interval for log batches; this means that log files may be sent in shorter intervals than this.
 
 :::note[Note]

@@ -1,7 +1,6 @@
 ---
 title: Perplexity
 pcx_content_type: get-started
-
 ---
 
 [Perplexity](https://www.perplexity.ai/) is an AI powered answer engine.
@@ -34,13 +33,13 @@ Perplexity doesn't have their own SDK, but they have compatibility with the Open
 import OpenAI from "openai";
 
 const apiKey = env.PERPLEXITY_API_KEY;
-const accountId = '{account_id}';
-const gatewayId = '{gateway_id}';
+const accountId = "{account_id}";
+const gatewayId = "{gateway_id}";
 const baseURL = `https://gateway.ai.cloudflare.com/v1/${accountId}/${gatewayId}/perplexity-ai`;
 
 const perplexity = new OpenAI({
-  apiKey,
-  baseURL
+	apiKey,
+	baseURL,
 });
 
 const model = "mistral-7b-instruct";
@@ -48,9 +47,8 @@ const messages = [{ role: "user", content: "What is Cloudflare?" }];
 const maxTokens = 20;
 
 const chatCompletion = await perplexity.chat.completions.create({
-  model,
-  messages,
-  max_tokens: maxTokens,
+	model,
+	messages,
+	max_tokens: maxTokens,
 });
-
 ```

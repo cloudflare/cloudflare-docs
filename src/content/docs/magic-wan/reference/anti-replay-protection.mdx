@@ -4,9 +4,15 @@ title: Anti-replay protection
 head: []
 description: If you use Magic WAN and anycast IPsec tunnels, you will need to
   disable anti-replay protection. Review the information here to learn more.
-
 ---
 
-import { Render } from "~/components"
+import { Render } from "~/components";
 
-<Render file="anti-replay-protection" params={{ one: "Magic WAN", two: "/magic-wan/configuration/manually/how-to/configure-tunnels/#add-tunnels" }} />
+<Render
+	file="anti-replay-protection"
+	params={{
+		productName: "Magic WAN",
+		productPath:
+			"/magic-wan/configuration/manually/how-to/configure-tunnels/#add-tunnels",
+	}}
+/>

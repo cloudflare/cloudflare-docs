@@ -2,9 +2,12 @@
 {}
 ---
 
+import { Tabs, TabItem, Render } from "~/components"
+
 Once you have modified your SSHD configuration, restart the SSH service on the remote machine.
 
-### Debian/Ubuntu
+<Tabs>
+<TabItem label="Debian/Ubuntu">
 
 For older Debian/Ubuntu versions:
 
@@ -17,8 +20,8 @@ For newer Debian/Ubuntu versions:
 ```sh
 sudo systemctl restart ssh
 ```
-
-### CentOS/RHEL
+</TabItem>
+<TabItem label="CentOS/RHEL">
 
 For CentOS/RHEL 6 and older:
 
@@ -31,3 +34,6 @@ For CentOS/RHEL 7 and newer:
 ```sh
 sudo systemctl restart sshd
 ```
+
+</TabItem>
+</Tabs>

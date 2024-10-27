@@ -172,7 +172,7 @@ Example value:
 
 The lowercased file extension in the URI path without the dot (`.`) character. This corresponds to the string after the last dot in the URI path, excluding the query string.
 
-If the first character of the last path segment is a dot and the segment does not contain other dot characters, the field value will be an empty string (`""`). Having a dot as the first character does not represent a file extension and is commonly used in Unix-like systems to denote a hidden file or directory.
+If the first character of the last path segment is a dot and the segment does not contain other dot characters, the field value will be an empty string (`""`). Having a dot as the first character does not represent a file extension and is commonly used in UNIX-like systems to denote a hidden file or directory.
 
 Example values:
 
@@ -340,7 +340,7 @@ TX
 
 `ip.src.timezone.name` `String`
 
-Represents the name of the timezone associated with the incoming request. This field is only available in rewrite expressions of [Transform Rules](https://www.cloudflare.com/rules/transform/).
+Represents the name of the timezone associated with the incoming request. This field is only available in rewrite expressions of [Transform Rules](/rules/transform/).
 
 Example value:
 

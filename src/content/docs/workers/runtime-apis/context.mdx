@@ -25,7 +25,7 @@ Context is exposed via the following places:
 
 :::note[Alternatives to waitUntil]
 
-If you are using `waitUntil()` to emit logs or exceptions, we recommend using [Tail Workers](/workers/observability/logging/tail-workers/) instead. Even if your Worker throws an uncaught exception, the Tail Worker will execute, ensuring that you can emit logs or exceptions regardless of the Worker's invocation status.
+If you are using `waitUntil()` to emit logs or exceptions, we recommend using [Tail Workers](/workers/observability/logs/tail-workers/) instead. Even if your Worker throws an uncaught exception, the Tail Worker will execute, ensuring that you can emit logs or exceptions regardless of the Worker's invocation status.
 
 [Cloudflare Queues](/queues/) is purpose-built for performing work out-of-band, without blocking returning a response back to the client Worker. 
 :::

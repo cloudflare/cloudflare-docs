@@ -16,6 +16,6 @@ The time window that an object should be considered safe for a cache to use is d
 
 * Include [Origin Cache Control](/cache/concepts/cache-control/) or [CDN Cache Control](/cache/concepts/cache-control/) directives, like `max-age` or `s-maxage`, in the origin cache-control response header.
 
-* Use [Cache Rules](/cache/how-to/cache-rules/) or [Workers](/cache/concepts/interact-with-workers/).
+* Use [Cache Rules](/cache/how-to/cache-rules/) or [Workers](/cache/interaction-cloudflare-products/workers/).
 
 If an object in cache is no longer fresh and Cloudflare receives a request for it, we ask the origin to revalidate the object we have in cache. The Origin can then either send a new version of the object which will replace the old in cache, or tell us the object we have is valid and to refresh its TTL. This revalidation will happen any time an object’s retention period is greater than its freshness period.

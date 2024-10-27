@@ -3,10 +3,9 @@ title: IP Access rules
 pcx_content_type: concept
 sidebar:
   order: 2
-
 ---
 
-import { GlossaryTooltip } from "~/components"
+import { GlossaryTooltip } from "~/components";
 
 Use IP Access rules to <GlossaryTooltip term="allowlist">allowlist</GlossaryTooltip>, block, and challenge traffic based on the visitor's IP address, country, or Autonomous System Number (ASN).
 
@@ -14,11 +13,19 @@ IP Access rules are commonly used to block or challenge suspected malicious traf
 
 :::caution
 
+- Allowing an IP, ASN, or country will bypass any configured [custom rules](/waf/custom-rules/), [rate limiting rules](/waf/rate-limiting-rules/), and firewall rules (deprecated).
+- Allowing a country will **not** bypass [WAF Managed Rules](/waf/managed-rules/) or [WAF managed rules (previous version)](/waf/reference/legacy/old-waf-managed-rules/).
+
+:::
+
+## Recommendation: Use WAF custom rules instead
+
 Cloudflare recommends that you create [WAF custom rules](/waf/custom-rules/) instead of IP Access rules to perform IP-based or geography-based blocking (geoblocking):
 
-* For IP-based blocking, use an [IP list](/waf/tools/lists/custom-lists/#ip-lists) in the custom rule expression.
-* For geoblocking, use fields such as *AS Num*, *Country*, and *Continent* in the custom rule expression. 
-  :::
+- For IP-based blocking, use an [IP list](/waf/tools/lists/custom-lists/#lists-with-ip-addresses-ip-lists) in the custom rule expression.
+- For geoblocking, use fields such as _AS Num_, _Country_, and _Continent_ in the custom rule expression.
+
+---
 
 ## Availability
 
@@ -28,15 +35,13 @@ Each Cloudflare account can have a maximum of 50,000 rules. If you are an Enterp
 
 Block by country is only available on the Enterprise plan. Other customers may perform country blocking using [WAF custom rules](/waf/custom-rules/).
 
-## Important remarks
+## Final remarks
 
-* Allowing a country code does not bypass [WAF Managed Rules](/waf/managed-rules/) or [WAF managed rules (previous version)](/waf/reference/legacy/old-waf-managed-rules/).
+- By design, IP Access rules configured to _Allow_ traffic do not show up in [Security Events](/waf/analytics/security-events/).
 
-* By design, IP Access rules configured to *Allow* traffic do not show up in [Security Events](/waf/analytics/security-events/).
+- Requests containing certain attack patterns in the `User-Agent` field are checked before being processed by the general firewall pipeline. Therefore, such requests are blocked before any allowlist logic takes place. When this occurs, security events downloaded from the API show `rule_id` as `security_level` and action as `drop`.
 
-* Requests containing certain attack patterns in the `User-Agent` field are checked before being processed by the general firewall pipeline. Therefore, such requests are blocked before any allowlist logic takes place. When this  occurs, security events downloaded from the API show `rule_id` as `security_level` and action as `drop`.
-
-* Cloudflare supports use of `fail2ban` to block IPs on your server. However, to prevent `fail2ban` from inadvertently blocking Cloudflare IPs and causing errors for some visitors, ensure you restore original visitor IP in your origin server logs. For details, refer to [Restoring original visitor IPs](/support/troubleshooting/restoring-visitor-ips/restoring-original-visitor-ips/).
+- Cloudflare supports use of `fail2ban` to block IPs on your server. However, to prevent `fail2ban` from inadvertently blocking Cloudflare IPs and causing errors for some visitors, ensure you restore original visitor IP in your origin server logs. For details, refer to [Restoring original visitor IPs](/support/troubleshooting/restoring-visitor-ips/restoring-original-visitor-ips/).
 
 ## Related resources
 

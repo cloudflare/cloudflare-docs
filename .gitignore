@@ -25,3 +25,4 @@ pnpm-debug.log*
 
 .wrangler
 /assets/secrets
+/worker/functions/

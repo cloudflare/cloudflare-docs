@@ -2,6 +2,16 @@
 title: External resources
 ---
 
+The `ExternalResources` component pulls from a central list of [apps](https://github.com/cloudflare/cloudflare-docs/blob/production/src/content/apps/index.yaml) and [videos](https://github.com/cloudflare/cloudflare-docs/blob/production/src/content/videos/index.yaml).
+
+## Import
+
+```mdx
+import { ExternalResources } from "~/components";
+```
+
+## Preview
+
 ```mdx live
 import { ExternalResources } from "~/components";
 
@@ -11,3 +21,33 @@ import { ExternalResources } from "~/components";
 ## Videos
 <ExternalResources type="videos" tags={["AI"]} />
 ```
+
+## Props
+
+### `type`
+
+**required**
+
+**type:** `"apps" | "videos"`
+
+The type of resources to show, apps or videos.
+
+### `tags`
+
+**type:** `string[]`
+
+Filter resources down to those where the `tags` property contains any of these strings.
+
+### `products`
+
+**type:** `string[]`
+
+Filter resources down to those where the `products` property contains any of these strings.
+
+### `cloudflareOnly`
+
+**type:** `boolean`
+
+**default:** `true`
+
+Filter resources down to those with `cloudflare: true`.

@@ -6,23 +6,30 @@ sidebar:
 head:
   - tag: title
     content: Origin Rules
-
 ---
 
-import { FeatureTable, Render } from "~/components"
+import { FeatureTable, Render } from "~/components";
 
 Origin Rules allow you to customize where the incoming traffic will go and with which parameters. Currently you can perform the following overrides:
 
-* [Host header](/rules/origin-rules/features/#host-header): Overrides the `Host` header of incoming requests.
-* [Server Name Indication (SNI)](/rules/origin-rules/features/#server-name-indication-sni): Overrides the Server Name Indication (SNI) value of incoming requests.
-* [DNS record](/rules/origin-rules/features/#dns-record): Overrides the resolved hostname of incoming requests.
-* [Destination port](/rules/origin-rules/features/#destination-port): Overrides the resolved destination port of incoming requests.
+- [Host header](/rules/origin-rules/features/#host-header): Overrides the `Host` header of incoming requests.
+- [Server Name Indication (SNI)](/rules/origin-rules/features/#server-name-indication-sni): Overrides the Server Name Indication (SNI) value of incoming requests.
+- [DNS record](/rules/origin-rules/features/#dns-record): Overrides the resolved hostname of incoming requests.
+- [Destination port](/rules/origin-rules/features/#destination-port): Overrides the resolved destination port of incoming requests.
 
 The origin rule expression will determine when these overrides will be applied.
 
-<Render file="snippets-alternative" params={{ one: "and customized modifications" }} /><br />
+<Render
+	file="snippets-alternative"
+	params={{ one: "and customized modifications" }}
+/>
+<br />
 
 <Render file="rules-requirements" params={{ one: "Origin Rules require" }} />
+
+## Rules templates
+
+<Render file="rules-templates" />
 
 ## Availability
 

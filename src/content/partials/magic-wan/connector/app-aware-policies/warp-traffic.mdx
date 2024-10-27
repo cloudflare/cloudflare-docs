@@ -1,0 +1,11 @@
+---
+{}
+---
+
+If you have Magic WAN Connector and WARP clients deployed in your premises, Magic WAN Connector automatically routes WARP traffic to the Internet rather than Magic WAN IPsec tunnels. This prevents traffic from being encapsulated twice.
+
+You may need to configure your firewall to allow this new traffic. Make sure to allow the following IPs and ports:
+
+- **Destination IPs**: `162.159.193.0/24`, `162.159.197.0/24`
+- **Destination ports**: `443`, `500`, `1701`, `2408`, `4443`, `4500`, `8095`, `844`
+Refer to [WARP with firewall](/cloudflare-one/connections/connect-devices/warp/deployment/firewall/) for more information on this topic.

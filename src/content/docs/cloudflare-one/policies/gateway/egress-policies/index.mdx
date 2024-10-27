@@ -3,14 +3,13 @@ pcx_content_type: configuration
 title: Egress policies
 sidebar:
   order: 5
-
 ---
 
-import { Render } from "~/components"
+import { Render } from "~/components";
 
 :::note
 
-Only available on Enterprise plans. 
+Only available on Enterprise plans.
 :::
 
 When your users connect to the Internet through Cloudflare Gateway, by default their traffic is assigned a source IP address that is shared across all Cloudflare WARP users. Enterprise users can purchase [dedicated egress IPs](/cloudflare-one/policies/gateway/egress-policies/dedicated-egress-ips/) to ensure that egress traffic from your organization is assigned a unique, static IP. These source IPs are dedicated to your account and can be used within allowlists on upstream services.
@@ -41,9 +40,9 @@ Since Gateway policies evaluate from [top to bottom](/cloudflare-one/policies/ga
 
 Choose one of the following options for your egress policy:
 
-* **Default Cloudflare egress**: uses the default source IP range shared across all Zero Trust accounts. Ensures the most performant Internet experience as user traffic egresses from the nearest Cloudflare data center.
+- **Default Cloudflare egress**: uses the default source IP range shared across all Zero Trust accounts. Ensures the most performant Internet experience as user traffic egresses from the nearest Cloudflare data center.
 
-* **Dedicated Cloudflare egress IPs** uses the primary IPv4 address and IPv6 range selected in the dropdown menus. You can optionally specify a secondary IPv4 address in a different data center. If the primary data center goes down, Gateway will egress from the secondary data center to avoid traffic drops during reroutes. There is no need for a secondary IPv6 because IPv6 traffic can egress from any Cloudflare data center. To learn more about IPv4 and IPv6 egress behavior, refer to [Egress locations](/cloudflare-one/policies/gateway/egress-policies/dedicated-egress-ips/#egress-location).
+- **Dedicated Cloudflare egress IPs** uses the primary IPv4 address and IPv6 range selected in the dropdown menus. You can optionally specify a secondary IPv4 address in a different data center. If the primary data center goes down, Gateway will egress from the secondary data center to avoid traffic drops during reroutes. There is no need for a secondary IPv6 because IPv6 traffic can egress from any Cloudflare data center. To learn more about IPv4 and IPv6 egress behavior, refer to [Egress locations](/cloudflare-one/policies/gateway/egress-policies/dedicated-egress-ips/#egress-location).
 
 ## Selectors
 
@@ -51,11 +50,17 @@ Gateway matches egress traffic against the following selectors, or criteria:
 
 ### Destination Continent
 
-<Render file="gateway/selectors/destination-continent" params={{ one: "net.dst" }} />
+<Render
+	file="gateway/selectors/destination-continent"
+	params={{ one: "net.dst" }}
+/>
 
 ### Destination Country
 
-<Render file="gateway/selectors/destination-country" params={{ one: "net.dst" }} />
+<Render
+	file="gateway/selectors/destination-country"
+	params={{ one: "net.dst" }}
+/>
 
 ### Destination IP
 
@@ -85,6 +90,13 @@ The continent of the user making the request. <Render file="gateway/selectors/so
 
 The country of the user making the request. <Render file="gateway/selectors/source-country" params={{ one: "net.src" }} />
 
+### Source Internal IP
+
+<Render
+	file="gateway/selectors/source-internal-ip"
+	params={{ one: "egress", two: "net" }}
+/>
+
 ### Source IP
 
 <Render file="gateway/selectors/source-ip-net" />
@@ -99,7 +111,10 @@ The country of the user making the request. <Render file="gateway/selectors/sour
 
 ### Virtual Network
 
-<Render file="gateway/selectors/virtual-network" params={{ one: "net.vnet_id" }} />
+<Render
+	file="gateway/selectors/virtual-network"
+	params={{ one: "net.vnet_id" }}
+/>
 
 ## Comparison operators
 
@@ -113,4 +128,7 @@ Gateway uses Rust to evaluate regular expressions. The Rust implementation is sl
 
 ## Logical operators
 
-<Render file="gateway/logical-operators" params={{ one: "**Identity** or **Device Posture**" }} />
+<Render
+	file="gateway/logical-operators"
+	params={{ one: "**Identity** or **Device Posture**" }}
+/>

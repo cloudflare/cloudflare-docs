@@ -16,7 +16,7 @@ Below, you will find information regarding the current limitations for Browser I
 Our Network Vector Rendering (NVR) technology allows us to deliver a secure remote computing experience without the bandwidth limitations of video streams. While we expect most websites to work perfectly, some browser features and web technologies are unsupported and will be implemented in the future:
 
 * Webcam and microphone support is unavailable.
-* Websites that use WebGL may not function.
+* Websites that use WebGL may not function. To turn off WebGL in the browser, refer to [WebGL Rendering Error](/cloudflare-one/faq/troubleshooting/#i-see-webgl-rendering-error).
 * Netflix and Spotify Web Player are unavailable.
 
 ## Browser compatibility
@@ -70,7 +70,7 @@ For user convenience, [create a bookmark](/cloudflare-one/applications/bookmarks
 
 :::note
 
-IdP sessions are not shared between the non-isolated IdP and the Clientless Web Isolation IdP. Users will be prompted to establish an additional session with their IdP. 
+IdP sessions are not shared between the non-isolated IdP and the Clientless Web Isolation IdP. Users will be prompted to establish an additional session with their IdP.
 :::
 
 #### Add the application to Access
@@ -91,7 +91,7 @@ The HTTP `405` error does not occur when both the IdP and SP are isolated.
 
 :::note
 
-SAML HTTP-POST attempts initiated from the remote browser are not forwarded to non-Isolated SPs. All SPs should be isolated to avoid SSO errors. 
+SAML HTTP-POST attempts initiated from the remote browser are not forwarded to non-Isolated SPs. All SPs should be isolated to avoid SSO errors.
 :::
 
 #### In-line SSO between Okta and Salesforce
@@ -177,4 +177,3 @@ Some applications that use HTTP-POST bindings (for example, Salesforce) complete
     </tr>
   </tbody>
 </table>
-

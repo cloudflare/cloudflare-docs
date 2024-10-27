@@ -1,0 +1,68 @@
+---
+title: Convert secondary setup to partial setup
+pcx_content_type: tutorial
+sidebar:
+  order: 8
+  label: Secondary to partial
+
+---
+
+
+import { GlossaryTooltip, Details, Render } from "~/components";
+
+If you initially set up [incoming zone transfers (Cloudflare as secondary)](/dns/zone-setups/zone-transfers/cloudflare-as-secondary/setup/), you can later convert your zone to use a <GlossaryTooltip term="partial setup">partial setup</GlossaryTooltip>.
+
+<Render file="conversion-subdomain-setup-callout" />
+
+Follow the steps below to achieve this conversion.
+
+## 1. Stop transferring the zone
+
+<Render file="secondary-conversion-unlink" />
+
+## 2. Configure your authoritative DNS provider
+
+1. (Optional) If you are also migrating to a new authoritative DNS provider, export a zone file from the previous provider and import it into the new one.
+2. At your authoritative DNS provider, create `CNAME` records pointing to `{your-hostname}.cdn.cloudflare.net` for every hostname you wish to proxy through Cloudflare.
+
+    <Details header="Example CNAME record at authoritative DNS provider">
+
+    The `CNAME` record for `www.example.com` would be:
+
+    ```txt
+    www.example.com CNAME www.example.com.cdn.cloudflare.net
+    ```
+    </Details>
+
+3. At your authoritative DNS provider, remove any previously existing `A`, `AAAA`, or `CNAME` records referencing the hostnames you want to proxy through Cloudflare. For these hostnames, leave only the records pointing to `{your-hostname}.cdn.cloudflare.net`.
+
+## 3. Convert your Cloudflare zone
+
+1. Back at your Cloudflare zone, confirm that you have all the `A`, `AAAA`, or `CNAME` [DNS records](/dns/manage-dns-records/how-to/create-dns-records/) needed for the hostnames you pointed to `{your-hostname}.cdn.cloudflare.net` in the previous step. You can also delete any DNS records that have a different type, as they will no longer resolve once you convert your zone to a partial setup.
+2. Use the [Edit Zone endpoint](/api/operations/zones-0-patch) with `type` set to `partial` to convert the zone type. Existing DNS records will not be affected.
+3. On [**DNS** > **Records**](https://dash.cloudflare.com/?to=/:account/:zone/dns/records), get the **Verification TXT Record** and add it at your authoritative DNS provider.
+
+    <Details header="Example verification record">
+
+    A verification record for `sub.example.com` might be:
+
+    | Type | Name                            | Content             |
+    | ---- | ------------------------------- | ------------------- |
+    | TXT  | `cloudflare-verify.sub.example.com` | 966215192-518620144 |
+
+    If your authoritative DNS provider automatically appends DNS record `name` fields with your domain, make sure to only insert `cloudflare-verify` as the record name. Otherwise, it may result in an incorrect record name, such as `cloudflare-verify.sub.example.com.sub.example.com`.
+
+    After creating the record, you can use this [Dig Web Interface link](https://digwebinterface.com/?type=TXT&ns=auth&nameservers=) to search (`dig`) for `cloudflare-verify.<YOUR DOMAIN>` and validate if it is working.
+
+    </Details>
+
+    :::note
+    The verification record must remain in place for as long as you want your partial setup to be active on Cloudflare.
+    :::
+
+## 4. Update nameservers
+
+At your domain registrar (or parent zone), [update the nameservers](/dns/nameservers/update-nameservers/). In a partial (CNAME) setup, only the nameservers of your external DNS provider should be listed.
+
+    - Remove any `secondary.cloudflare.com` nameservers if you used to have them.
+    - If you are also migrating to a new authoritative DNS provider, add your new nameservers.

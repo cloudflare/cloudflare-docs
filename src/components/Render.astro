@@ -1,6 +1,6 @@
 ---
-import { getEntry, z } from "astro:content";
-import { marked } from "marked";
+import { z } from "astro:schema";
+import { getEntry } from "astro:content";
 
 type Props = z.infer<typeof props>;
 

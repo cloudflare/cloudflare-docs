@@ -14,7 +14,6 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-
   flag_changed_filenames:
     runs-on: ubuntu-latest
     steps:
@@ -28,8 +27,8 @@ jobs:
           files=$(curl -s -H "Authorization: Bearer $GITHUB_TOKEN" \
             -H "Accept: application/vnd.github.v3+json" \
             "https://api.github.com/repos/${{ github.repository }}/pulls/${{ github.event.pull_request.number }}/files" | \
-            jq -r '.[] | select(.status=="renamed" or .status=="removed") | select (.filename | contains("_partials") | not) | select(.filename | endswith(".md")) | if .status == "renamed" then .previous_filename else .filename end' | \
-            sed -e 's|^content||' -e 's|/_index\.md$|/|' -e 's|/index\.md$|/|' -e 's|\.md$|/|')
+            jq -r '.[] | select(.status=="renamed" or .status=="removed") | select (.filename | startswith("src/content/docs")) | select(.filename | endswith(".mdx")) | if .status == "renamed" then .previous_filename else .filename end' | \
+            sed -e 's|^src/content/docs||' -e 's|/index\.mdx$|/|' -e 's|\.mdx$|/|')
           # Use random delimiter for security reasons
           delimiter="$(openssl rand -hex 8)"
           echo "CHANGED_FILES<<${delimiter}" >> "$GITHUB_ENV"

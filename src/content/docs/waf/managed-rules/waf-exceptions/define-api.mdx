@@ -32,12 +32,12 @@ The following example adds a rule that skips all remaining rules in the entry po
 
 1.  Invoke the [Get a zone entry point ruleset](/api/operations/getZoneEntrypointRuleset) operation to obtain the current configuration of the entry point ruleset of the `http_request_firewall_managed` phase.
 
-    ```bash title="Request"
+    ```bash
     curl https://api.cloudflare.com/client/v4/zones/{zone_id}/rulesets/phases/http_request_firewall_managed/entrypoint \
     --header "Authorization: Bearer <API_TOKEN>"
     ```
 
-    ```json title="Example response" {3}
+    ```json output {3}
     {
     	"result": {
     		"id": "060013b1eeb14c93b0dcd896537e0d2c", // entry point ruleset ID
@@ -62,7 +62,7 @@ The following example adds a rule that skips all remaining rules in the entry po
 
 2.  Invoke the [Create a zone ruleset rule](/api/operations/createZoneRulesetRule) operation (a `POST` request) to add an exception (or skip rule) at the beginning of the rules list, since a skip rule applies only to rules listed after it. The exact rule location is defined in the [`position` object](/ruleset-engine/rulesets-api/add-rule/#define-the-rule-position-in-the-ruleset).
 
-    ```bash title="Request"
+    ```bash
     curl "https://api.cloudflare.com/client/v4/zones/{zone_id}/rulesets/{entry_point_ruleset_id}/rules" \
     --header "Authorization: Bearer <API_TOKEN>" \
     --header "Content-Type: application/json" \
@@ -87,12 +87,12 @@ The following example adds a rule that skips the [Cloudflare Managed Ruleset](/w
 
 1.  Invoke the [Get a zone entry point ruleset](/api/operations/getZoneEntrypointRuleset) operation to obtain the current configuration of the entry point ruleset of the `http_request_firewall_managed` phase.
 
-    ```bash title="Request"
+    ```bash
     curl https://api.cloudflare.com/client/v4/zones/{zone_id}/rulesets/phases/http_request_firewall_managed/entrypoint \
     --header "Authorization: Bearer <API_TOKEN>"
     ```
 
-    ```json title="Example response" {3,12,20}
+    ```json output {3,12,20}
     {
     	"result": {
     		"id": "060013b1eeb14c93b0dcd896537e0d2c", // entry point ruleset ID
@@ -140,7 +140,7 @@ The following example adds a rule that skips the [Cloudflare Managed Ruleset](/w
 
 2.  Invoke the [Create a zone ruleset rule](/api/operations/createZoneRulesetRule) operation (a `POST` request) to add an exception (or skip rule) immediately before the `execute` rule deploying the Cloudflare Managed Ruleset, since a skip rule applies only to rules listed after it. The exact rule location is defined in the [`position` object](/ruleset-engine/rulesets-api/add-rule/#define-the-rule-position-in-the-ruleset).
 
-    ```bash title="Request"
+    ```bash
     curl "https://api.cloudflare.com/client/v4/zones/{zone_id}/rulesets/{entry_point_ruleset_id}/rules" \
     --header "Authorization: Bearer <API_TOKEN>" \
     --header "Content-Type: application/json" \
@@ -173,12 +173,12 @@ The following example adds a rule that skips a particular rule of the [Cloudflar
     To get the IDs of existing WAF managed rulesets, refer to [WAF Managed Rules](/waf/managed-rules/#managed-rulesets) or use the [List account rulesets](/api/operations/listAccountRulesets) operation.
     :::
 
-    ```bash title="Request"
+    ```bash
     curl https://api.cloudflare.com/client/v4/zones/{zone_id}/rulesets/efb7b8c949ac4650a09736fc376e9aee \
     --header "Authorization: Bearer <API_TOKEN>"
     ```
 
-    ```json title="Example response" {12}
+    ```json output {12}
     {
     	"result": {
     		"id": "efb7b8c949ac4650a09736fc376e9aee",
@@ -214,12 +214,12 @@ The following example adds a rule that skips a particular rule of the [Cloudflar
 
 2.  Invoke the [Get a zone entry point ruleset](/api/operations/getZoneEntrypointRuleset) operation to obtain the current configuration of the [entry point ruleset](/ruleset-engine/about/rulesets/#entry-point-ruleset) of the `http_request_firewall_managed` phase.
 
-    ```bash title="Request"
+    ```bash
     curl https://api.cloudflare.com/client/v4/zones/{zone_id}/rulesets/phases/http_request_firewall_managed/entrypoint \
     --header "Authorization: Bearer <API_TOKEN>"
     ```
 
-    ```json title="Example response" {3,12,20}
+    ```json output {3,12,20}
     {
     	"result": {
     		"id": "060013b1eeb14c93b0dcd896537e0d2c", // entry point ruleset ID
@@ -257,7 +257,6 @@ The following example adds a rule that skips a particular rule of the [Cloudflar
     Identify the rule deploying the Cloudflare Managed Ruleset by searching for an `execute` rule with `action_parameters` > `id` equal to <RuleID id="efb7b8c949ac4650a09736fc376e9aee" /> (the managed ruleset ID).
 
     :::note
-
     To get the IDs of existing WAF managed rulesets, refer to [WAF Managed Rules](/waf/managed-rules/#managed-rulesets) or use the [List account rulesets](/api/operations/listAccountRulesets) operation.
     :::
 
@@ -273,7 +272,7 @@ The following example adds a rule that skips a particular rule of the [Cloudflar
 
 3.  Invoke the [Create a zone ruleset rule](/api/operations/createZoneRulesetRule) operation (a `POST` request) to add an exception (or skip rule) immediately before the `execute` rule deploying the Cloudflare Managed Ruleset, since a skip rule applies only to rules listed after it.
 
-    ```bash title="Request"
+    ```bash
     curl "https://api.cloudflare.com/client/v4/zones/{zone_id}/rulesets/{entry_point_ruleset_id}/rules" \
     --header "Authorization: Bearer <API_TOKEN>" \
     --header "Content-Type: application/json" \

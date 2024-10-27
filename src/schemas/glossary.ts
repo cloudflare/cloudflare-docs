@@ -1,4 +1,4 @@
-import { z } from "astro:content";
+import { z } from "astro:schema";
 
 export const glossarySchema = z.object({
 	productName: z.string(),

@@ -8,16 +8,22 @@ import { Render } from "~/components";
 [Preact](https://preactjs.com) is a popular, open-source framework for building modern web applications. Preact can also be used as a lightweight alternative to React because the two share the same API and component model.
 
 In this guide, you will create a new Preact application and deploy it using Cloudflare Pages.
-You will use [`wmr`](https://github.com/preactjs/wmr), an all-in-one development tool built by the Preact team, to quickly generate an optimized web application.
+You will use [`create-preact`](https://github.com/preactjs/create-preact), a lightweight project scaffolding tool to set up a new Preact app in seconds.
 
 ## Setting up a new project
 
 Create a new project by running the [`npm init`](https://docs.npmjs.com/cli/v6/commands/npm-init) command in your terminal, giving it a title:
 
 ```sh
-npm init wmr your-project-name
+npm init preact
 cd your-project-name
 ```
+
+:::note
+
+During initialization, you can accept the `Prerender app (SSG)?` option to have `create-preact` scaffold your app to produce static HTML pages, along with their assets, for production builds. This option is perfect for Pages.
+
+:::
 
 <Render file="tutorials-before-you-start" />
 
@@ -49,12 +55,6 @@ Optionally, you can customize the **Project name** field. It defaults to the Git
 After completing configuration, select **Save and Deploy**.
 
 You will see your first deploy pipeline in progress. Pages installs all dependencies and builds the project as specified.
-
-:::note
-
-**Note:** You will notice that within the `package.json` file, the `"build"` script uses the `--prerender` flag. With this, `wmr` produces static HTML pages – along with their assets – which is perfect for Pages.
-
-:::
 
 After you have deployed your site, you will receive a unique subdomain for your project on `*.pages.dev`.
 

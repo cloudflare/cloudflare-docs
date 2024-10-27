@@ -18,7 +18,7 @@ Once you have the token, and you know your `account_id`, you are ready to make y
 
 ### Submit URL to scan
 
-In order to submit a URL to scan, the only required information is the URL to be scanned in the `POST` request body:
+To submit a URL to scan, the only required information is the URL to be scanned in the `POST` request body:
 
 ```bash
 curl "https://api.cloudflare.com/client/v4/accounts/{account_id}/urlscanner/scan" \
@@ -112,11 +112,11 @@ Some examples of more specific properties include:
 
 The [Get URL Scan](/api/operations/urlscanner-get-scan) API endpoint documentation contains the full response schema.
 
-In order to fetch the scan's [screenshots](/api/operations/urlscanner-get-scan-screenshot) or full [network log](/api/operations/urlscanner-get-scan-har), please visit the corresponding endpoints' documentation.
+To fetch the scan's [screenshots](/api/operations/urlscanner-get-scan-screenshot) or full [network log](/api/operations/urlscanner-get-scan-har) refer to the corresponding endpoints' documentation.
 
 ### Search scans
 
-`Public` scans can also be searched for. In order to search for scans to the hostname `google.com`, use the query parameter `page_hostname=google.com`:
+`Public` scans can also be searched for. To search for scans to the hostname `google.com`, use the query parameter `page_hostname=google.com`:
 
 ```bash
 curl "https://api.cloudflare.com/client/v4/accounts/{account_id}/urlscanner/scan?page_hostname=google.com" \
@@ -125,11 +125,15 @@ curl "https://api.cloudflare.com/client/v4/accounts/{account_id}/urlscanner/scan
 
 Search results will also include your *own* `Unlisted` scans.
 
-If, instead, you wanted to search for scans which made at least one request to the hostname `cdnjs.cloudflare.com` - e.g. sites that use a JavaScript library hosted at `cdnjs.cloudflare.com`  - use the query parameter `hostname=cdnjs.cloudflare.com`:
+If, instead, you wanted to search for scans that made at least one request to the hostname `cdnjs.cloudflare.com`, for example sites that use a JavaScript library hosted at `cdnjs.cloudflare.com`, use the query parameter `hostname=cdnjs.cloudflare.com`:
 
 ```bash
 curl "https://api.cloudflare.com/client/v4/accounts/{account_id}/urlscanner/scan?hostname=cdnjs.cloudflare.com" \
 --header "Authorization: Bearer <API_TOKEN>"
 ```
 
-Check `https://developers.cloudflare.com/api/operations/urlscanner-search-scans` for the full list of available options.
+You can also search for the hash in the URL Scanner API.
+
+Go to [Search URL scans](/api/operations/urlscanner-search-scans) in the API documentation for the full list of available options.
+
+Alternatively, you can search for the hash on the [Cloudflare dashboard](https://dash.cloudflare.com/) by selecting your account > **Security Center** > **Investigate** > Enter the hash > Select **Search**.

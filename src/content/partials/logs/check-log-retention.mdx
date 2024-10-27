@@ -1,0 +1,30 @@
+---
+{}
+
+---
+
+import { TabItem, Tabs } from "~/components";
+
+<Tabs> <TabItem label="Linux">
+
+```bash
+curl https://api.cloudflare.com/client/v4/zones/{zone_id}/logs/control/retention/flag \
+--header "Authorization: Bearer <API_TOKEN>"
+```
+
+</TabItem> <TabItem label="CMD">
+
+```txt
+curl.exe "https://api.cloudflare.com/client/v4/zones/{zone_id}/logs/control/retention/flag" ^
+--header "Authorization: Bearer <API_TOKEN>"
+```
+
+</TabItem> <TabItem label="PowerShell">
+
+```powershell
+$uri = "https://api.cloudflare.com/client/v4/zones/{zone_id}/logs/control/retention/flag"
+$headers = @{"Authorization" = "Bearer <API_TOKEN>"}
+Invoke-RestMethod -Uri $uri -Method Get -Headers $headers
+```
+
+</TabItem> </Tabs>

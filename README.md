@@ -35,9 +35,11 @@ This spawns a server that will be accessible via `http://localhost:1111` in your
 
 ### Recommendations
 
-Part of our application accesses the GitHub API (to populate the [Wrangler changelog](https://github.com/cloudflare/cloudflare-docs/blob/production/layouts/partials/wrangler-changelog.html)).
+Part of our application accesses the GitHub API (to populate the [Wrangler changelog](https://developers.cloudflare.com/workers/platform/changelog/wrangler/)).
 
+<!--
 Since GitHub gives a higher request limit to authenticated requests, you may want to add a [classic token](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/managing-your-personal-access-tokens#personal-access-tokens-classic) with permissions for `repos:public_repo` to `/assets/secrets/github_token.txt`. The token value should be the only thing in your file.
+-->
 
 ## Deployment
 
@@ -61,12 +63,12 @@ Please note that we may use AI tools to help us review technical documentation, 
 
 All commands are run from the root of the project, from a terminal:
 
-| Command                   | Action                                           |
-| :------------------------ | :----------------------------------------------- |
-| `npm install`             | Installs dependencies                            |
-| `npm run dev`             | Starts local dev server at `localhost:4321`      |
-| `npx astro build`          | Build your production site to `./dist/`          |
-| `npm run astro -- --help` | Get help using the Astro CLI                     |
+| Command                   | Action                                      |
+|:--------------------------|:--------------------------------------------|
+| `npm install`             | Installs dependencies                       |
+| `npm run dev`             | Starts local dev server at `localhost:1111` |
+| `npx astro build`         | Build your production site to `./dist/`     |
+| `npm run astro -- --help` | Get help using the Astro CLI                |
 
 ## 👀 Want to learn more?
 

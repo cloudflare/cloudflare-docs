@@ -3,10 +3,9 @@ title: Lists
 pcx_content_type: overview
 sidebar:
   order: 1
-
 ---
 
-import { FeatureTable, Render } from "~/components"
+import { FeatureTable, Render } from "~/components";
 
 Use lists to refer to a group of items (such as IP addresses) collectively, by name, in rule expressions of Cloudflare products. You can create your own custom lists or use lists managed by Cloudflare, such as [Managed IP Lists](/waf/tools/lists/managed-lists/#managed-ip-lists).
 
@@ -18,22 +17,21 @@ Lists have the following advantages:
 
 Cloudflare supports the following lists:
 
-* [Custom lists](/waf/tools/lists/custom-lists/): Includes custom IP lists, hostname lists, and ASN lists.
-* [Managed Lists](/waf/tools/lists/managed-lists/): Lists managed and updated by Cloudflare, such as Managed IP Lists.
+- [Custom lists](/waf/tools/lists/custom-lists/): Includes custom IP lists, hostname lists, and ASN lists.
+- [Managed Lists](/waf/tools/lists/managed-lists/): Lists managed and updated by Cloudflare, such as Managed IP Lists.
 
 Refer to each page for details.
 
 :::note
-
-Bulk Redirects use [Bulk Redirect Lists](/rules/url-forwarding/bulk-redirects/concepts/#bulk-redirect-lists), a different type of list covered in the Rules documentation. 
+Bulk Redirects use [Bulk Redirect Lists](/rules/url-forwarding/bulk-redirects/concepts/#bulk-redirect-lists), a different type of list covered in the Rules documentation.
 :::
 
 ## List names
 
 The name of a list must comply with the following requirements:
 
-* The name uses only lowercase letters, numbers, and the underscore (`_`) character in the name. A valid name satisfies this regular expression: `^[a-z0-9_]+$`.
-* The maximum length of a list name is 50 characters.
+- The name uses only lowercase letters, numbers, and the underscore (`_`) character in the name. A valid name satisfies this regular expression: `^[a-z0-9_]+$`.
+- The maximum length of a list name is 50 characters.
 
 ## Work with lists
 
@@ -47,12 +45,11 @@ After creating a list, you can add and remove items from the list, but you canno
 
 Both the Cloudflare dashboard and the Cloudflare API support lists:
 
-* To use lists in an expression from the Cloudflare dashboard, refer to [Use lists in expressions](/waf/tools/lists/use-in-expressions/).
-* To reference a list in an API expression, refer to [Values: Lists](/ruleset-engine/rules-language/values/#lists) in the Rules language reference.
+- To use lists in an expression from the Cloudflare dashboard, refer to [Use lists in expressions](/waf/tools/lists/use-in-expressions/).
+- To reference a list in an API expression, refer to [Values: Lists](/ruleset-engine/rules-language/values/#lists) in the Rules language reference.
 
 :::caution
-
-Currently, not all Cloudflare products support lists in their expressions. Refer to the documentation of each [individual product](/products/) for details on list support. 
+Currently, not all Cloudflare products support lists in their expressions. Refer to the documentation of each [individual product](/products/) for details on list support.
 :::
 
 ### Search list items
@@ -73,15 +70,15 @@ Notes:
 
 <Render file="lists-notes" product="waf" />
 
-***
+---
 
 ## User role requirements
 
 The following user roles have access to the list management functionality:
 
-* Super Administrator
-* Administrator
-* Firewall
+- Super Administrator
+- Administrator
+- Firewall
 
 ## Final remarks
 

@@ -24,16 +24,16 @@ Cloudflare issues the following **Edge Pathing Statuses**:
 - `bic` (browser integrity check)
 - `hot` (hotlink protection)
 - `macro` (the reputation list)
-- `skip` (Always Online or CDNJS resources)
+- `skip` (Always Online or cdnjs resources)
 - `user` (user firewall rule)
 
 For example:
 
-```sh
+```bash
 jq -r .EdgePathingSrc logs.json | sort -n | uniq -c | sort -n | tail
 ```
 
-```sh output
+```bash output
 1 err
 5 user
 93 macro
@@ -63,11 +63,11 @@ jq -r .EdgePathingOp logs.json | sort -n | uniq -c | sort -n | tail
 
 For example:
 
-```sh
+```bash
 jq -r .EdgePathingStatus logs.json | sort -n | uniq -c | sort -n | tail
 ```
 
-```sh output
+```bash output
 1 dnsErr
 5 ip
 92 nr
@@ -102,11 +102,11 @@ This is how you can see where a request terminates. Requests with only an **edge
 
 For example, the following query shows the status code and pathing information for all requests that terminated at the Cloudflare edge:
 
-```sh
+```bash
 jq -r 'select(.OriginResponseStatus == null) | select(.CacheResponseStatus == null) |"\(.EdgeResponseStatus) / \(.EdgePathingSrc) / \(.EdgePathingStatus) / \(.EdgePathingOp)"' logs.json | sort -n | uniq -c | sort -n
 ```
 
-```sh output
+```bash output
 1 403 / macro / nr / wl
 1 409 / err / dnsErr / errHost
 ```
@@ -192,18 +192,18 @@ Drop DDoS attacks through L7 mitigation.
 
 The macro stage is comprised of many different paths. They are categorized by the reputation of the visitor IP.
 
-| EdgePathingStatus | Description                                                                                                                                                                                                                                                                                   | EdgePathingOp | EdgePathingSrc |
-| ----------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------- | -------------- |
-| `nr`              | There is no reputation data for the IP and no action is being taken.                                                                                                                                                                                                                          | `wl`          | `macro`        |
-| `wl`              | IP is explicitly allowlisted.                                                                                                                                                                                                                                                                 | `wl`          | `macro`        |
-| `scan`            | IP is explicitly allowlisted and categorized as a security scanner.                                                                                                                                                                                                                           | `wl`          | `macro`        |
-| `mon`             | IP is explicitly allowlisted and categorized as a Monitoring Service.                                                                                                                                                                                                                         | `wl`          | `macro`        |
-| `bak`             | IP is explicitly allowlisted and categorized as a Backup Service.                                                                                                                                                                                                                             | `wl`          | `macro`        |
-| `mob`             | IP is explicitly allowlisted and categorized as Mobile Proxy Service.                                                                                                                                                                                                                         | `wl`          | `macro`        |
-| `se`              | IP is explicitly allowlisted as it belongs to a search engine crawler and no action is taken.                                                                                                                                                                                                 | `wl`          | `macro`        |
-| `grey`            | IP is greylisted (suspected to be bad) but the request was either for a favicon or security is turned off and as such, it is allowlisted.                                                                                                                                                     | `wl`          | `macro`        |
-| `bad_ok`          | The reputation score of the IP is bad (or is a TOR IP) but the request was either for a favicon or security is turned off and as such, it is allowlisted. Alternatively, the <GlossaryTooltip term="threat score">threat score</GlossaryTooltip> of the IP is in the accepted security level. | `wl`          | `macro`        |
-| `unknown`         | The `pathing_status` is unknown and the request is being processed as normal.                                                                                                                                                                                                                 | `wl`          | `macro`        |
+| EdgePathingStatus | Description                                                                                                                                                                                                                                                                  | EdgePathingOp | EdgePathingSrc |
+| ----------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------  | ------------- | -------------- |
+| `nr`              | There is no reputation data for the IP and no action is being taken.                                                                                                                                                                                                         | `wl`          | `macro`        |
+| `wl`              | IP is explicitly allowlisted.                                                                                                                                                                                                                                                | `wl`          | `macro`        |
+| `scan`            | IP is explicitly allowlisted and categorized as a security scanner.                                                                                                                                                                                                          | `wl`          | `macro`        |
+| `mon`             | IP is explicitly allowlisted and categorized as a Monitoring Service.                                                                                                                                                                                                        | `wl`          | `macro`        |
+| `bak`             | IP is explicitly allowlisted and categorized as a Backup Service.                                                                                                                                                                                                            | `wl`          | `macro`        |
+| `mob`             | IP is explicitly allowlisted and categorized as Mobile Proxy Service.                                                                                                                                                                                                        | `wl`          | `macro`        |
+| `se`              | IP is explicitly allowlisted as it belongs to a search engine crawler and no action is taken.                                                                                                                                                                                | `wl`          | `macro`        |
+| `grey`            | IP is greylisted (suspected to be bad) but the request was either for a favicon or security is turned off and as such, it is allowlisted.                                                                                                                                    | `wl`          | `macro`        |
+| `bad_ok`          | The reputation score of the IP is bad but the request was either for a favicon or security is turned off and as such, it is allowlisted. Alternatively, the <GlossaryTooltip term="threat score">threat score</GlossaryTooltip> of the IP is in the accepted security level. | `wl`          | `macro`        |
+| `unknown`         | The `pathing_status` is unknown and the request is being processed as normal.                                                                                                                                                                                                | `wl`          | `macro`        |
 
 ## Rate Limiting
 

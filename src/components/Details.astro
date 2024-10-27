@@ -1,5 +1,5 @@
 ---
-import { z } from "astro:content";
+import { z } from "astro:schema";
 import { marked } from "marked";
 
 type Props = z.infer<typeof props>;
@@ -13,6 +13,6 @@ const { header, open } = props.parse(Astro.props);
 ---
 
 <details open={open}>
-    <summary set:html={marked.parse(header)} />
-    <slot />
+	<summary set:html={marked.parse(header)} />
+	<slot />
 </details>

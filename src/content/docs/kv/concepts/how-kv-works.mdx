@@ -21,7 +21,7 @@ Initial reads from a location do not have a cached value. Data must be read from
 
 :::note[Hot and cold read]
 
-A hot read means that the data is cached on Cloudflare's edge network using the [CDN](https://developers.cloudflare.com/cache/). A cold read means that the data is not cached, therefore you have to fetch the data from the storage provider. 
+A hot read means that the data is cached on Cloudflare's edge network using the [CDN](https://developers.cloudflare.com/cache/), whether it is in a local cache or a regional cache. A cold read means that the data is not cached, so the data must be fetched from the central stores.
 :::
 
 ![Initial reads will miss the cache and go to the nearest central data store first.](~/assets/images/kv/kv-slow-read.svg)
@@ -55,7 +55,7 @@ Visibility of changes takes longer in locations which have recently read a previ
 :::note
 
 KV is not ideal for applications where you need support for atomic operations or where values must be read and written in a single transaction.
-If you need stronger consistency guarantees, consider using [Durable Objects](/durable-objects/). 
+If you need stronger consistency guarantees, consider using [Durable Objects](/durable-objects/).
 :::
 
 An approach to achieve write-after-write consistency is to send all of your writes for a given KV key through a corresponding instance of a Durable Object, and then read that value from KV in other Workers. This is useful if you need more control over writes, but are satisfied with KV's read characteristics described above.

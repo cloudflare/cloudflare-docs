@@ -1,25 +1,25 @@
 ---
-title: Load Balancing
+title: Load Balancing Reference Architecture
 pcx_content_type: reference-architecture
+products:
+  - Load Balancing
 sidebar:
   order: 1
-head:
-  - tag: title
-    content: "Reference Architecture: Cloudflare Load Balancing Reference Architecture"
-
+  label: Load Balancing
+updated: 2024-02-26
 ---
 
-import { Render } from "~/components"
+import { Render } from "~/components";
 
 ## Introduction
 
 Cloudflare Load Balancing is a SaaS offering that allows organizations to host applications for a global user base while vastly reducing concerns of maintenance, failover, resiliency, and scalability. Using Cloudflare Load Balancing allows organizations to address the following challenges:
 
-* Efficiently handling large volumes of incoming traffic, especially during unexpected surges or spikes.
-* Ensuring applications and services remain accessible to users.
-* Maintaining quick response times and optimal performance for all users, especially during high traffic periods.
-* Adapting to changing traffic demands and ensuring the infrastructure can accommodate growth.
-* Helping applications and services resist Distributed Denial of Service (DDoS) attacks.
+- Efficiently handling large volumes of incoming traffic, especially during unexpected surges or spikes.
+- Ensuring applications and services remain accessible to users.
+- Maintaining quick response times and optimal performance for all users, especially during high traffic periods.
+- Adapting to changing traffic demands and ensuring the infrastructure can accommodate growth.
+- Helping applications and services resist Distributed Denial of Service (DDoS) attacks.
 
 Cloudflare Load Balancing is built on Cloudflare’s connectivity cloud, ​​a unified, intelligent platform of programmable cloud-native services that enable secure any-to-any connectivity between all networks (enterprise and Internet), cloud environments, applications, and users. It is one of the largest global networks, with data centers spanning more than 310 cities in over 120 countries and interconnection with over 13,000 other networks. It also has a greater presence in core Internet exchanges than many other large technology companies.
 
@@ -35,16 +35,16 @@ To build a stronger baseline understanding of Cloudflare and its load balancing 
 
 <Render file="what-is-cloudflare-link" />
 
-* Solution Brief: [Cloudflare LTM Load Balancing](https://cf-assets.www.cloudflare.com/slt3lc6tev37/4mn2dtdw7TvSwCUJw8mMf5/f1fa6269f4468c432560b2c9f5ebd38a/Cloudflare_Local_Traffic_Manager_Solution_Brief.pdf) (5 minute read)
-* Solution Brief: [Cloudflare GTM Load Balancing](https://cf-assets.www.cloudflare.com/slt3lc6tev37/5OWUduF4YBKYADj3zREAX6/5241a81a3fc4ff1db7c9bade14991b23/Cloudflare_Global_Traffic_Manager__GTM__Solution_Brief.pdf) (5 minute read)
-* Blog: [Elevate load balancing with Private IPs and Cloudflare Tunnels: a secure path to efficient traffic distribution](https://blog.cloudflare.com/elevate-load-balancing-with-private-ips-and-cloudflare-tunnels-a-secure-path-to-efficient-traffic-distribution/) (13 minutes)
+- Solution Brief: [Cloudflare LTM Load Balancing](https://cf-assets.www.cloudflare.com/slt3lc6tev37/4mn2dtdw7TvSwCUJw8mMf5/f1fa6269f4468c432560b2c9f5ebd38a/Cloudflare_Local_Traffic_Manager_Solution_Brief.pdf) (5 minute read)
+- Solution Brief: [Cloudflare GTM Load Balancing](https://cf-assets.www.cloudflare.com/slt3lc6tev37/5OWUduF4YBKYADj3zREAX6/5241a81a3fc4ff1db7c9bade14991b23/Cloudflare_Global_Traffic_Manager__GTM__Solution_Brief.pdf) (5 minute read)
+- Blog: [Elevate load balancing with Private IPs and Cloudflare Tunnels: a secure path to efficient traffic distribution](https://blog.cloudflare.com/elevate-load-balancing-with-private-ips-and-cloudflare-tunnels-a-secure-path-to-efficient-traffic-distribution/) (13 minutes)
 
 Those who read this reference architecture will learn:
 
-* How Cloudflare Load Balancing can address both local traffic management and global traffic management use cases.
-* How Cloudflare’s global network enhances the functionality of Cloudflare Load Balancing.
-* The capabilities of Cloudflare Load Balancers, and how they apply to various use cases.
-* The structure of Cloudflare Load Balancers and their various configurations.
+- How Cloudflare Load Balancing can address both local traffic management and global traffic management use cases.
+- How Cloudflare’s global network enhances the functionality of Cloudflare Load Balancing.
+- The capabilities of Cloudflare Load Balancers, and how they apply to various use cases.
+- The structure of Cloudflare Load Balancers and their various configurations.
 
 ## Handling dynamic workloads in modern applications
 
@@ -122,8 +122,8 @@ As mentioned, load balancing for global applications and services comes in two l
 
 A Global Traffic Manager is responsible for routing requests, generally from the Internet, to the proper region or data center. Many GTM load balancers operate at the DNS layer, allowing them to:
 
-* Resolve a DNS request to an IP address based on geographic region or physical location.
-* Provide the IP of the endpoint or service closest to the client, so it can connect.
+- Resolve a DNS request to an IP address based on geographic region or physical location.
+- Provide the IP of the endpoint or service closest to the client, so it can connect.
 
 Figure 4 shows how a GTM load balancer is used to select a data center based on the client location or region.
 
@@ -143,12 +143,12 @@ Local traffic managers and their endpoints usually sit behind firewalls. But whi
 
 There are two main load balancer architectures:
 
-* On-premises load balancers
-  * Typically hardware-based, but also can be virtualized or software-based
-  * Focused on maximum performance
-* Cloud-based load balancers
-  * Software deployed public cloud infrastructure
-  * Handle requests closer to the originator of the request
+- On-premises load balancers
+  - Typically hardware-based, but also can be virtualized or software-based
+  - Focused on maximum performance
+- Cloud-based load balancers
+  - Software deployed public cloud infrastructure
+  - Handle requests closer to the originator of the request
 
 Each approach has advantages and disadvantages. On-premises load balancers usually exist inside of private networks completely controlled by the organization. These load balancers are collocated with the endpoints they are load balancing, so latency and RTT time should be minimal. The disadvantage of these on-premises load balancers is that they are restricted to a single physical location. Which means traffic from other regions can have long RTT and high latency in responses. Also, adding another data center requires purchasing and deploying all new equipment. On-premises load balancers also typically require cloud-based load balancers for geographic traffic steering to get requests routed by a geographically local or region-appropriate data center. The advantages of cloud-based load balancers is that they can operate in almost any geographic region without concern for rack space, power, cooling, or maintenance and can scale without concern for new chassis, modules, or larger network connections. Cloud-based load balancers do however increase latency and RTT between the load balancer and the endpoints as they are not typically colocated with the endpoints they are steering traffic toward.
 
@@ -238,8 +238,8 @@ Below are some examples with diagrams to help in understanding how weight is use
 
 Example 1:
 
-* There are three endpoint pools defined, all with a weight of 1
-* Each endpoint pool has a 33% probability of being selected
+- There are three endpoint pools defined, all with a weight of 1
+- Each endpoint pool has a 33% probability of being selected
 
 Example math for weight of 1: (1) ÷ (1 + 1 + 1) = (.3333) (or 33.33%)
 
@@ -251,9 +251,9 @@ Since the sum of the weights is used to calculate the probability, organizations
 
 Example 2
 
-* There are three endpoint pools defined
-* Each endpoint pool has a different number of endpoints, but all endpoints have equal capacity
-* To evenly distribute load across endpoints, each endpoint pool needs a different probability
+- There are three endpoint pools defined
+- Each endpoint pool has a different number of endpoints, but all endpoints have equal capacity
+- To evenly distribute load across endpoints, each endpoint pool needs a different probability
 
 ![Three endpoint pools with different numbers of endpoints](~/assets/images/reference-architecture/load-balancing-reference-architecture-images/lb-ref-arch-14.svg "Figure 14: Illustrates how to use weight to balance load across endpoint pools with different capacity")
 
@@ -267,10 +267,10 @@ It is possible that endpoints do not all have the same capacity. In the followin
 
 Example 3
 
-* There are three endpoint pools defined
-* Endpoint pool 1 has endpoints that have double the capacity compared to those in endpoint pool 2 and endpoint pool 3
-* The goal is to place double the amount of traffic to endpoint pool 1 per endpoint
-* Endpoint pool 1 has 4 endpoints but with double capacity, the weight of each endpoint will be valued at .2 for a total of .8 for the endpoint pool
+- There are three endpoint pools defined
+- Endpoint pool 1 has endpoints that have double the capacity compared to those in endpoint pool 2 and endpoint pool 3
+- The goal is to place double the amount of traffic to endpoint pool 1 per endpoint
+- Endpoint pool 1 has 4 endpoints but with double capacity, the weight of each endpoint will be valued at .2 for a total of .8 for the endpoint pool
 
 ![Three endpoint pools with different numbers of endpoints and endpoints of different capacity](~/assets/images/reference-architecture/load-balancing-reference-architecture-images/lb-ref-arch-15.svg "Figure 15: Using weight to balance load across endpoint pools with different capacities and endpoints")
 
@@ -328,26 +328,26 @@ LORS uses the number of unanswered HTTP requests to influence steering and is on
 
 Equation for LORS transformed weight:
 
-* weight / (count + 1) = transformedWeight
+- weight / (count + 1) = transformedWeight
 
 Reminder for random weight calculation:
 
-* weight / (total weight) = probability of being selected
+- weight / (total weight) = probability of being selected
 
 Here’s an example of LORS:
 
-* Pool A has a weight of 0.4
-* Pool B has a weight of 0.6
-* Pool A has 3 open requests
-* Pool B has 0 open requests
-* Relevant equation
-  * weight / (count + 1) = transformedWeight
-* Pool A's transformed weight: 0.4 / (3 + 1) = 0.1
-* Pool B's transformed weight: 0.6 / (0 + 1) = 0.6
-* Relevant equation
-  * weight / (total weight) = probability of being selected
-* Pool A’s probability of being steered toward: 0.1 / (0.1+0.6) = .1429 (14.29%)
-* Pool B’s probability of being steered toward: 0.6 / (0.1+0.6) = .8571 (85.71%)
+- Pool A has a weight of 0.4
+- Pool B has a weight of 0.6
+- Pool A has 3 open requests
+- Pool B has 0 open requests
+- Relevant equation
+  - weight / (count + 1) = transformedWeight
+- Pool A's transformed weight: 0.4 / (3 + 1) = 0.1
+- Pool B's transformed weight: 0.6 / (0 + 1) = 0.6
+- Relevant equation
+  - weight / (total weight) = probability of being selected
+- Pool A’s probability of being steered toward: 0.1 / (0.1+0.6) = .1429 (14.29%)
+- Pool B’s probability of being steered toward: 0.6 / (0.1+0.6) = .8571 (85.71%)
 
 In this example, the next connection has a 14.29% probability of being steered to Pool A and a 85.71% probability of being steered to Pool B. While it’s likely that traffic will be steered towards Pool B, it is still possible for it to be steered to Pool A. In situations with lighter load conditions, there will be more variation in the steering results, which may not precisely match the configured weights. However, as the load increases, the actual steering results will closely match the configured weights.
 
@@ -381,43 +381,43 @@ The Simulate Zone feature ensures that health monitor probes follow the same pat
 
 Health monitor Probes can be configured as the following types:
 
-* HTTP
-* HTTPS
-* TCP
-* UDP ICMP
-* ICMP Ping
-* SMTP
-* LDAP
+- HTTP
+- HTTPS
+- TCP
+- UDP ICMP
+- ICMP Ping
+- SMTP
+- LDAP
 
 Once a health monitor is defined, it can be assigned to an endpoint and the probes will be sent to the endpoint at the interval defined. There are two additional settings to note in regards to the health monitor configuration within the endpoint pool. The first is the Health Threshold, which is used to determine how many endpoints within the pool need to be healthy in order to consider the endpoint pool to be healthy or degraded.
 
-* Endpoint pool in healthy state
-  * Contains only healthy endpoints
-* Endpoint pool in degraded state
-  * Contains at least one critical endpoint but remains at or above the health threshold setting
-* Endpoint pool in critical state
-  * Contains healthy endpoints below the health threshold
-  * Not capable of handling traffic; removed from all steering decisions.
+- Endpoint pool in healthy state
+  - Contains only healthy endpoints
+- Endpoint pool in degraded state
+  - Contains at least one critical endpoint but remains at or above the health threshold setting
+- Endpoint pool in critical state
+  - Contains healthy endpoints below the health threshold
+  - Not capable of handling traffic; removed from all steering decisions.
 
 ![Comparison of three endpoint pools with different numbers of healthy endpoints](~/assets/images/reference-architecture/load-balancing-reference-architecture-images/lb-ref-arch-17.svg "Figure 17: When endpoints pool are considered healthy, degraded, or critical")
 
 The second setting after defining the health monitor in the endpoint pool is to define which regions the health monitor probes should source from inside the Cloudflare global network. The available selections are listed below:
 
-* All Regions (Default)
-* All Data Centers (Enterprise Only)
-* Western North America
-* Eastern North America
-* Western Europe
-* Eastern Europe
-* Northern South America
-* Southern South America
-* Oceania
-* Middle East
-* Northern Africa
-* Southern Africa
-* Southern Asia
-* Southeast Asia
-* Northeast Asia
+- All Regions (Default)
+- All Data Centers (Enterprise Only)
+- Western North America
+- Eastern North America
+- Western Europe
+- Eastern Europe
+- Northern South America
+- Southern South America
+- Oceania
+- Middle East
+- Northern Africa
+- Southern Africa
+- Southern Asia
+- Southeast Asia
+- Northeast Asia
 
 ![Endpoint pool settings to further customize the health monitors](~/assets/images/reference-architecture/load-balancing-reference-architecture-images/lb-ref-arch-18.png "Figure 18: Health Threshold and region selection for an endpoint pool configuration")
 
@@ -479,27 +479,27 @@ The first configuration, besides defining a name and description of the endpoint
 
 Individual endpoints are defined within endpoint pools, and the endpoint pool allows for one or more endpoints to be defined per pool.
 
-* The *endpoint name* is primarily used for reference, reporting, and analytics; it does not affect the function of the load balancer or endpoint pool.
-* The *endpoint address*, however, defines a resource that the load balancer can use to handle a request or connection.
-  * Endpoints within an endpoint pool must be accessible over port 80 or 443. If the endpoint is not listening on port 80 or 443, then either a proxy service or network port forwarding device needs to be placed in front of the endpoint to map port 80 or 443 to the port that the service is actually listening on.
-  * Another method for mapping ports of endpoints to 80 or 443 is to connect to the endpoint service using [Cloudflare Tunnel](#cloudflare-tunnel), and then use the hostname created through that process as the endpoint address. This will automatically map the intended endpoint port to port 443.
+- The _endpoint name_ is primarily used for reference, reporting, and analytics; it does not affect the function of the load balancer or endpoint pool.
+- The _endpoint address_, however, defines a resource that the load balancer can use to handle a request or connection.
+  - Endpoints within an endpoint pool must be accessible over port 80 or 443. If the endpoint is not listening on port 80 or 443, then either a proxy service or network port forwarding device needs to be placed in front of the endpoint to map port 80 or 443 to the port that the service is actually listening on.
+  - Another method for mapping ports of endpoints to 80 or 443 is to connect to the endpoint service using [Cloudflare Tunnel](#cloudflare-tunnel), and then use the hostname created through that process as the endpoint address. This will automatically map the intended endpoint port to port 443.
 
-*Endpoint address* can be defined in one of the following ways:
+_Endpoint address_ can be defined in one of the following ways:
 
-* Publicly routable IP address
-* Cloudflare-proxied publicly reachable hostname
-* Publicly reachable non-Cloudflare hostname
-* Private, non-publicly routable IP address with the selection of a virtual network
+- Publicly routable IP address
+- Cloudflare-proxied publicly reachable hostname
+- Publicly reachable non-Cloudflare hostname
+- Private, non-publicly routable IP address with the selection of a virtual network
 
 ##### Virtual networks
 
-Using public IPs and hostnames of any type require no additional configuration. In those scenarios, the virtual network should be set to the default value of “*none*”. The “*none*” setting signals that these resources will be accessible on the public Internet, routed via Cloudflare’s global edge network.
+Using public IPs and hostnames of any type require no additional configuration. In those scenarios, the virtual network should be set to the default value of “_none_”. The “_none_” setting signals that these resources will be accessible on the public Internet, routed via Cloudflare’s global edge network.
 
-The use of the *virtual network* option is reserved for private IP resources. This setting maps to IP subnets that are hosted behind [Cloudflare Tunnel configurations](/cloudflare-one/connections/connect-networks/configure-tunnels/). A virtual network should be selected that has a route to the IP address of the endpoint. To navigate to this setting in the Cloudflare Dashboard, select *Networks - Routes* from the Zero Trust page.
+The use of the _virtual network_ option is reserved for private IP resources. This setting maps to IP subnets that are hosted behind [Cloudflare Tunnel configurations](/cloudflare-one/connections/connect-networks/configure-tunnels/). A virtual network should be selected that has a route to the IP address of the endpoint. To navigate to this setting in the Cloudflare Dashboard, select _Networks - Routes_ from the Zero Trust page.
 
 ##### Endpoint weight
 
-*Endpoint weight* is only used for the random, hash, and least outstanding request steering methods; it must always be defined as part of the endpoint definition. (Please refer to the [Weighted Steering](#weighted-steering) section for more information on how weights are used for endpoint selection.)
+_Endpoint weight_ is only used for the random, hash, and least outstanding request steering methods; it must always be defined as part of the endpoint definition. (Please refer to the [Weighted Steering](#weighted-steering) section for more information on how weights are used for endpoint selection.)
 
 ##### Host header modification
 
@@ -509,11 +509,11 @@ Within a layer 7 load balancer where requests are HTTP(S)-based, the Host header
 
 For example:
 
-* Say a user tries to reach `www.example.com`. The load balancer will be configured with the hostname of `www.example.com `to receive all the requests.
-* Since the endpoints can’t have the same public hostname in DNS, its hostname is `endpoint1.example.com`.
-* When the user makes a request to `www.example.com,` the Host header will be set to` www.example.com,` as well. The endpoint will need to be configured to respond to Host headers of `www.example.com`.
-* In some cases (such as with certain cloud or SaaS applications), however, endpoints aren’t configurable in that manner, so the endpoint may receive a request with an unknown Host header and fail to respond appropriately.
-* In this example, in the endpoint configuration, setting the Host header for the endpoint to the endpoint address of `endpoint1.example.com` will replace the Host header of `www.example.com` with `endpoint1.example.com`, and will allow the endpoint to properly respond to this request.
+- Say a user tries to reach `www.example.com`. The load balancer will be configured with the hostname of `www.example.com `to receive all the requests.
+- Since the endpoints can’t have the same public hostname in DNS, its hostname is `endpoint1.example.com`.
+- When the user makes a request to `www.example.com,` the Host header will be set to` www.example.com,` as well. The endpoint will need to be configured to respond to Host headers of `www.example.com`.
+- In some cases (such as with certain cloud or SaaS applications), however, endpoints aren’t configurable in that manner, so the endpoint may receive a request with an unknown Host header and fail to respond appropriately.
+- In this example, in the endpoint configuration, setting the Host header for the endpoint to the endpoint address of `endpoint1.example.com` will replace the Host header of `www.example.com` with `endpoint1.example.com`, and will allow the endpoint to properly respond to this request.
 
 Figure 21 highlights the potential problem of mismatched Host headers:
 
@@ -551,9 +551,9 @@ Figure 22 highlights all the possible combinations of load balancers and endpoin
 
 Cloudflare offers three load balancing deployment models, each of which support different use cases, functionality, and privacy requirements.
 
-* [Layer 7 HTTP(S) load balancing](#layer-7-https-load-balancing)
-* [DNS-only load balancing](#dns-only-load-balancing)
-* [Spectrum load balancing](#spectrum-load-balancing)
+- [Layer 7 HTTP(S) load balancing](#layer-7-https-load-balancing)
+- [DNS-only load balancing](#dns-only-load-balancing)
+- [Spectrum load balancing](#spectrum-load-balancing)
 
 Except for the DNS-only load balancing option described in more detail below, all of the deployment models anchor traffic through the load balancer. This means the user or client creating the request or connection is never aware of the endpoints that are being used to service the request or connection. Endpoint information can certainly be exposed — if desired — through the use of headers, but this is not default behavior for any of these anchored deployment models.
 
@@ -579,9 +579,9 @@ For customized treatment after the load balancer selects an endpoint, the load b
 
 **Important notes about Layer 7 HTTP(S) load balancers:**
 
-* Layer 7 HTTP(S) load balancers support both public and private endpoints
-* Layer 7 HTTP(S) load balancers will only support HTTP(S) and WebSocket traffic
-* Zero trust policies can be applied to Layer 7 HTTP(S) load balancers
+- Layer 7 HTTP(S) load balancers support both public and private endpoints
+- Layer 7 HTTP(S) load balancers will only support HTTP(S) and WebSocket traffic
+- Zero trust policies can be applied to Layer 7 HTTP(S) load balancers
 
 ##### DNS-only load balancing
 
@@ -601,8 +601,8 @@ After a DNS-only load balancer has selected an endpoint pool via traffic steerin
 
 The decision to send one or many IP addresses within the DNS response is based on the weight assigned to the endpoints within the selected endpoint pool:
 
-* If all the weights are equal across all endpoints, all IP addresses of all the endpoints will be returned in DNS response.
-* If at least one endpoint is specified with a unique weight within the endpoint pool, then only a single IP address will be returned in the DNS response — regardless of the endpoint steering method selected on the endpoint pool.
+- If all the weights are equal across all endpoints, all IP addresses of all the endpoints will be returned in DNS response.
+- If at least one endpoint is specified with a unique weight within the endpoint pool, then only a single IP address will be returned in the DNS response — regardless of the endpoint steering method selected on the endpoint pool.
 
 This gives organizations the flexibility to allow applications to be aware of all the endpoints and perform local failover, or to allow Cloudflare to provide a single IP for an application to utilize.
 
@@ -612,10 +612,10 @@ Figure 27 shows how the defined weight within an endpoint pool can affect how a 
 
 Please note that DNS-only load balancers have a few limitations compared to proxied load balancers:
 
-* The load balancer no longer hides the endpoint’s IP address from the client as it is sent back to the client directly.
-* They do not have the built-in layer 7 stack services mentioned in the previous model; i.e., DNS-only load balancers do not include caching, WAF, DDoS protection, or Zero Trust support.
-* Session affinity is limited to `ip_cookie`, which will select an endpoint deterministically and then map that endpoint to the client IP address for all subsequent requests.
-* Finally, because connections are not proxied through the load balancer for DNS only, certain steering methods will not work either. For example, [LORS](#least-outstanding-requests-steering-lors) will not work since Cloudflare will not be aware of the connections to the endpoints. These steering methods will revert to random weighted steering.
+- The load balancer no longer hides the endpoint’s IP address from the client as it is sent back to the client directly.
+- They do not have the built-in layer 7 stack services mentioned in the previous model; i.e., DNS-only load balancers do not include caching, WAF, DDoS protection, or Zero Trust support.
+- Session affinity is limited to `ip_cookie`, which will select an endpoint deterministically and then map that endpoint to the client IP address for all subsequent requests.
+- Finally, because connections are not proxied through the load balancer for DNS only, certain steering methods will not work either. For example, [LORS](#least-outstanding-requests-steering-lors) will not work since Cloudflare will not be aware of the connections to the endpoints. These steering methods will revert to random weighted steering.
 
 For more information on additional steering methods, please refer to the [Steering](#steering) section.
 
@@ -625,9 +625,9 @@ The TTL of a DNS-only load balancer is set to 30 (seconds). This ensures that as
 
 **Important notes about DNS-only load balancers:**
 
-* DNS-only load balancers support only public endpoints
-* DNS-only load balancers do not proxy traffic — and — as such, are not involved in the connections to endpoint
-* DNS-only load balancers only respond to a DNS request with an IP address or set of IP addresses
+- DNS-only load balancers support only public endpoints
+- DNS-only load balancers do not proxy traffic — and — as such, are not involved in the connections to endpoint
+- DNS-only load balancers only respond to a DNS request with an IP address or set of IP addresses
 
 ##### Spectrum load balancing
 
@@ -639,18 +639,18 @@ Given the breadth of services and protocols this represents, the treatment provi
 
 ![Spectrum-based load balancing supports public endpoints](~/assets/images/reference-architecture/load-balancing-reference-architecture-images/lb-ref-arch-28-ALT.svg "Figure 28: Spectrum Layer 4 load balancers support both TCP and UDP protocols")
 
-Cloudflare layer 4 Spectrum load balancers are publicly accessible. Access to these load balancing resources can be managed using a Spectrum configuration called *IP Access Rules,* which can be defined as part of a WAF configuration, but are limited to rules created with the “allow” or “block” action for specific IP addresses, subnets, countries, or [Border Gateway Protocol (BGP)](https://www.cloudflare.com/learning/security/glossary/what-is-bgp/) Autonomous System Numbers (ASNs).
+Cloudflare layer 4 Spectrum load balancers are publicly accessible. Access to these load balancing resources can be managed using a Spectrum configuration called _IP Access Rules,_ which can be defined as part of a WAF configuration, but are limited to rules created with the “allow” or “block” action for specific IP addresses, subnets, countries, or [Border Gateway Protocol (BGP)](https://www.cloudflare.com/learning/security/glossary/what-is-bgp/) Autonomous System Numbers (ASNs).
 
 In addition to being public, Spectrum load balancers are always proxied. The proxy setting shown earlier (Figures 24 and 25) will be ignored when Spectrum is configured as the ingress path for the load balancer. All traffic destined for Spectrum-based load balancers will always pass through the Cloudflare edge.
 
 **Important notes about Spectrum load balancers:**
 
-* Spectrum load balancers support both public and private endpoints
-* Spectrum load balancers are initially created as Layer 7 HTTP(S) load balancers. A Spectrum application is then created with a Load Balancer endpoint type, and the load balancer that has already been created is selected.
-* Spectrum load balancers are always proxied, regardless of the proxy setting on the load balancer configuration
-* There is no ability to change the ingress port from the Internet via Spectrum to the endpoint; i.e., if the traffic comes in on port 22 to Spectrum, it will be steered to port 22 on the endpoint
-* Spectrum load balancers only support session affinity using the hash endpoint steering method
-* Spectrum load balancers do not support Custom Rules
+- Spectrum load balancers support both public and private endpoints
+- Spectrum load balancers are initially created as Layer 7 HTTP(S) load balancers. A Spectrum application is then created with a Load Balancer endpoint type, and the load balancer that has already been created is selected.
+- Spectrum load balancers are always proxied, regardless of the proxy setting on the load balancer configuration
+- There is no ability to change the ingress port from the Internet via Spectrum to the endpoint; i.e., if the traffic comes in on port 22 to Spectrum, it will be steered to port 22 on the endpoint
+- Spectrum load balancers only support session affinity using the hash endpoint steering method
+- Spectrum load balancers do not support Custom Rules
 
 ##### Deployment models at-a-glance
 
@@ -677,7 +677,7 @@ Session affinity, also known as session persistence or sticky sessions, keeps a 
 Cloudflare offers three methods for enabling session affinity:
 
 1. **By Cloudflare cookie only (cookie):** On the first request to a proxied load balancer, a cookie is generated, encoding information of which endpoint the request will be forwarded to. Subsequent requests (by the same client to the same load balancer) will be sent to the endpoint that the cookie encodes for a) the duration of the cookie and b) as long as the endpoint remains healthy. If the cookie has expired or the endpoint is unhealthy, a new endpoint will be calculated and used.
-2. **By Cloudflare cookie and Client IP fallback (ip\_cookie):** This behaves similar to the cookie method above, except that the cookie is generated based on the client IP address. In this case, requests from the same IP address always get steered towards the same endpoint for a) the duration of the cookie and b) as long as the endpoint remains healthy. If the cookie has expired or the endpoint is unhealthy, a new endpoint will be calculated and used.
+2. **By Cloudflare cookie and Client IP fallback (ip_cookie):** This behaves similar to the cookie method above, except that the cookie is generated based on the client IP address. In this case, requests from the same IP address always get steered towards the same endpoint for a) the duration of the cookie and b) as long as the endpoint remains healthy. If the cookie has expired or the endpoint is unhealthy, a new endpoint will be calculated and used.
 3. **By HTTP header (header):** On the first request to a proxied load balancer, a session key is generated based on the configured HTTP headers. Subsequent requests to the load balancer with the same headers will be sent to the same endpoint, for a) the duration of the session or b) as long as the endpoint remains healthy. If the session has been idle for the duration of session affinity time-to-live (TTL) seconds or the endpoint is unhealthy, then a new endpoint will be calculated and used.
 
 These three session affinity options only apply to layer 7 HTTP(S) load balancers. Session affinity requires a TTL, which determines how long the load balancer will route subsequent requests to a specific endpoint. The default TTL is 82,800 seconds (23 hours), but it can be set for anywhere from 1,800 seconds (30 minutes) to 604,800 seconds (seven days).
@@ -706,11 +706,11 @@ Zero-downtime failover has three modes of operation:
 
 ##### Adaptive routing - failover across pools
 
-*Adaptive routing - failover across pools* extends the functionality of zero-downtime failover by allowing failover to extend to endpoints in another endpoint pool, rather than only failing over to an endpoint in the *same* pool.
+_Adaptive routing - failover across pools_ extends the functionality of zero-downtime failover by allowing failover to extend to endpoints in another endpoint pool, rather than only failing over to an endpoint in the _same_ pool.
 
 ##### Endpoint pools
 
-Endpoint pools are configured in a priority order and can be rearranged as needed. This priority order is only considered when using *Off - Failover traffic steering;* otherwise, endpoint pools will be selected based on the criteria outlined in the [Steering methods](#steering-methods) section.
+Endpoint pools are configured in a priority order and can be rearranged as needed. This priority order is only considered when using _Off - Failover traffic steering;_ otherwise, endpoint pools will be selected based on the criteria outlined in the [Steering methods](#steering-methods) section.
 
 The endpoint pools assigned to a load balancer represent the entire collection of endpoints that could possibly handle requests or connections through the load balancer. An endpoint pool typically contains endpoints that all have the same capabilities and are in the data center or geographic region. All endpoints in a pool should be capable of handling any request directed to an endpoint pool. For more information about endpoint pools, please refer to the [Endpoint pools](#endpoint-pools) section.
 
@@ -736,8 +736,8 @@ Alternatively, that session affinity TTL could be reset based on a request going
 
 It is not possible to document all of the potential combinations of fields that can be matched and actions that can be taken. However, the following resources describe all of the fields and actions that are currently available:
 
-* [Supported fields and operators](/load-balancing/additional-options/load-balancing-rules/reference/)
-* [Load Balancing actions](/load-balancing/additional-options/load-balancing-rules/actions/)
+- [Supported fields and operators](/load-balancing/additional-options/load-balancing-rules/reference/)
+- [Load Balancing actions](/load-balancing/additional-options/load-balancing-rules/actions/)
 
 If the default behavior of a load balancer is not covered in the documents listed above, it is likely that a custom rule can help meet unique use case requirements.
 
@@ -747,27 +747,27 @@ If the default behavior of a load balancer is not covered in the documents liste
 
 All Cloudflare Load Balancer deployment models come with inherent protections. The following section briefly highlights the default security Cloudflare provides, as well as optional protections that can be added in front of Cloudflare Load Balancers:
 
-* Proxied HTTP layer 7 load balancer (Public)
-  * [DDoS protection](/ddos-protection/managed-rulesets/http/) to protect against attacks
-  * WAF with [Cloudflare managed ruleset](/waf/managed-rules/reference/cloudflare-managed-ruleset/) and [OWASP ruleset](/waf/managed-rules/reference/owasp-core-ruleset/#cloudflare-owasp-core-ruleset) to block known vulnerabilities and exploits
-* DNS-only load balancer (Public)
-  * [DNS DDoS protection](https://www.cloudflare.com/learning/cdn/glossary/anycast-network/) to ensure a DNS-only load balancer is always available
-* Spectrum layer 4 load balancer (Public)
-  * [DDoS Protection](/spectrum/about/ddos-for-spectrum/#ddos-protection-for-spectrum) to protect against layer 4 attacks
+- Proxied HTTP layer 7 load balancer (Public)
+  - [DDoS protection](/ddos-protection/managed-rulesets/http/) to protect against attacks
+  - WAF with [Cloudflare managed ruleset](/waf/managed-rules/reference/cloudflare-managed-ruleset/) and [OWASP ruleset](/waf/managed-rules/reference/owasp-core-ruleset/) to block known vulnerabilities and exploits
+- DNS-only load balancer (Public)
+  - [DNS DDoS protection](https://www.cloudflare.com/learning/cdn/glossary/anycast-network/) to ensure a DNS-only load balancer is always available
+- Spectrum layer 4 load balancer (Public)
+  - [DDoS Protection](/spectrum/about/ddos-for-spectrum/) to protect against layer 4 attacks
 
 #### Additional options
 
 Cloudflare offers additional security layers that can be used in conjunction with load balancing to protect any services — including websites, APIs, HTTP(S)-based services, and more:
 
-* Proxied HTTP layer 7 load balancer (Public)
-  * [Bot management](/bots/) to control which bots can access resources
-  * [WAF](/waf/) for creating custom rules for web applications
-  * [Page Shield](/page-shield/) for monitoring script usage on web applications
-  * [API Shield](/api-shield/) for protecting APIs
-* DNS-only load balancer (Public)
-  * [DNSSEC](/dns/dnssec/) to ensure authenticity of DNS records
-* Spectrum layer 4 load balancer (Public)
-  * [IP Access Rules](/spectrum/reference/configuration-options/#ip-access-rules) for controlling access to public layer 4 load balancers
+- Proxied HTTP layer 7 load balancer (Public)
+  - [Bot management](/bots/) to control which bots can access resources
+  - [WAF](/waf/) for creating custom rules for web applications
+  - [Page Shield](/page-shield/) for monitoring script usage on web applications
+  - [API Shield](/api-shield/) for protecting APIs
+- DNS-only load balancer (Public)
+  - [DNSSEC](/dns/dnssec/) to ensure authenticity of DNS records
+- Spectrum layer 4 load balancer (Public)
+  - [IP Access Rules](/spectrum/reference/configuration-options/#ip-access-rules) for controlling access to public layer 4 load balancers
 
 ## Summary
 

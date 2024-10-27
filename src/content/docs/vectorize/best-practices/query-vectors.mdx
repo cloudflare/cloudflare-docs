@@ -17,7 +17,7 @@ A query vector is either an array of JavaScript numbers, 32-bit floating point o
 
 ```ts
 // query vector dimensions must match the Vectorize index dimension being queried
-let queryVector = [54.8, 5.5, 3.1, ...]; 
+let queryVector = [54.8, 5.5, 3.1, ...];
 let matches = await env.YOUR_INDEX.query(queryVector);
 ```
 
@@ -25,16 +25,14 @@ This would return a set of matches resembling the following, based on the distan
 
 ```json
 {
-	"matches": {
-		"count": 5,
-		"matches": [
-			{ "score": 0.999909486, "id": "5" },
-			{ "score": 0.789848214, "id": "4" },
-			{ "score": 0.720476967, "id": "4444" },
-			{ "score": 0.463884663, "id": "6" },
-			{ "score": 0.378282232, "id": "1" }
-		]
-	}
+	"count": 5,
+	"matches": [
+		{ "score": 0.999909486, "id": "5" },
+		{ "score": 0.789848214, "id": "4" },
+		{ "score": 0.720476967, "id": "4444" },
+		{ "score": 0.463884663, "id": "6" },
+		{ "score": 0.378282232, "id": "1" }
+	]
 }
 ```
 
@@ -42,7 +40,7 @@ You can optionally change the number of results returned and/or whether results 
 
 ```ts
 // query vector dimensions must match the Vectorize index dimension being queried
-let queryVector = [54.8, 5.5, 3.1, ...]; 
+let queryVector = [54.8, 5.5, 3.1, ...];
 // topK defaults to 5; returnValues defaults to false; returnMetadata defaults to "none"
 let matches = await env.YOUR_INDEX.query(queryVector, {
 	topK: 1,
@@ -55,21 +53,26 @@ This would return a set of matches resembling the following, based on the distan
 
 ```json
 {
-	"matches": {
-		"count": 1,
-		"matches": [
-			{
-				"score": 0.999909486,
-				"id": "5",
-				"values": [58.79999923706055, 6.699999809265137, 3.4000000953674316, ...],
-				"metadata": { "url": "/products/sku/55519183" }
-			}
-		]
-	}
+	"count": 1,
+	"matches": [
+		{
+			"score": 0.999909486,
+			"id": "5",
+			"values": [58.79999923706055, 6.699999809265137, 3.4000000953674316, ...],
+			"metadata": { "url": "/products/sku/55519183" }
+		}
+	]
 }
 ```
 
 Refer to [Vectorize API](/vectorize/reference/client-api/) for additional examples.
+
+## Control over scoring precision and query accuracy
+
+When querying vectors, you can specify to either use high-precision scoring, thereby increasing the precision of the query matches scores as well as the accuracy of the query results, or use approximate scoring for faster response times.
+Using approximate scoring, returned scores will be an approximation of the real distance/similarity between your query and the returned vectors; this is the query's default as it's a nice trade-off between accuracy and latency.
+
+High-precision scoring is enabled by setting `returnValues: true` on your query. This setting tells Vectorize to use the original vector values for your matches, allowing the computation of exact match scores and increasing the accuracy of the results. Because it processes more data, though, high-precision scoring will increase the latency of queries.
 
 ## Workers AI
 

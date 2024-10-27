@@ -9,11 +9,11 @@ head:
 
 ---
 
-import { DirectoryListing, GlossaryTooltip } from "~/components"
+import { DirectoryListing, GlossaryTooltip, Render } from "~/components"
 
 :::caution
 
-Subdomain setup is only available for Enterprise accounts. If you only want to create a subdomain for your site in Cloudflare, refer to [Create a subdomain record](/dns/manage-dns-records/how-to/create-subdomain/). 
+Subdomain setup is only available for Enterprise accounts. If you only want to create a subdomain for your site in Cloudflare, refer to [Create a subdomain record](/dns/manage-dns-records/how-to/create-subdomain/).
 :::
 
 [Subdomain setup](/dns/zone-setups/subdomain-setup/) relies on a process known as delegation. When, in a parent domain such as `example.com`, an [`NS` record](https://www.cloudflare.com/learning/dns/dns-records/dns-ns-record/) is created for a subdomain `blog.example.com`, this means that DNS management for the subdomain can be done separately, in its own <GlossaryTooltip term="DNS zone" link="/dns/concepts/#zone">DNS zone</GlossaryTooltip>.
@@ -50,10 +50,10 @@ The availability of different setups will depend on both the parent zone setup a
 
 :::caution[* Subdomain zones in partial setup are not delegated]
 
-Subdomains using a partial setup represent an exception in the sense that [delegation](#subdomain-delegation) does not apply in this context. As explained in the dedicated [Partial (CNAME) setup section](/dns/zone-setups/partial-setup/), this setup is intended to simply proxy individual subdomains through Cloudflare. For completeness, however, this is listed as an option in this table and the [how-to guide](/dns/zone-setups/subdomain-setup/setup/parent-on-partial/) has detailed explanation on how to achieve a subdomain zone using partial setup. 
+Subdomains using a partial setup represent an exception in the sense that [delegation](#subdomain-delegation) does not apply in this context. As explained in the dedicated [Partial (CNAME) setup section](/dns/zone-setups/partial-setup/), this setup is intended to simply proxy individual subdomains through Cloudflare. For completeness, however, this is listed as an option in this table and the [how-to guide](/dns/zone-setups/subdomain-setup/setup/parent-on-partial/) has detailed explanation on how to achieve a subdomain zone using partial setup.
 :::
 
-This table assumes zones that are in an [active status](/dns/zone-setups/reference/domain-status/). For example, if you need to add the parent zone to Cloudflare when its child zone already exists in a partial setup, you can [convert the parent zone to partial](/dns/zone-setups/partial-setup/setup/#add-your-domain-to-cloudflare) while it is still in pending status.
+This table assumes zones that are in an [active status](/dns/zone-setups/reference/domain-status/). For example, if you need to add the parent zone to Cloudflare when its child zone already exists in a partial setup, you can [convert the parent zone to partial](/dns/zone-setups/partial-setup/setup/#1-convert-your-zone-and-review-dns-records) while it is still in pending status.
 
 ***
 
@@ -72,3 +72,7 @@ Although the how-to guides in this documentation are focused on both parent doma
 If the parent domain's SSL/TLS certificate explicitly lists the delegated subdomain and is created after the subdomain's SSL/TLS own certificate, the parent domain's certificate will take precedence over the subdomain's certificate.
 
 For instance, if `example.com` [creates an advanced certificate](/ssl/edge-certificates/advanced-certificate-manager/manage-certificates/) that directly lists `docs.example.com`, visitors to `docs.example.com` might see the SSL/TLS certificate for `example.com`.
+
+## Access applications
+
+<Render file="subdomain-setup-access-apps" />

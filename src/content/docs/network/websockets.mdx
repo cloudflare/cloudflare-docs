@@ -8,10 +8,6 @@ import { FeatureTable, TabItem, Tabs } from "~/components";
 
 Cloudflare supports proxied WebSocket connections without additional configuration.
 
-## Availability
-
-<FeatureTable id="network.websockets" />
-
 ## Background
 
 WebSockets are open connections sustained between the client and the origin server. Inside a WebSockets connection, the client and the origin can pass data back and forth without having to reestablish sessions. This makes exchanging data within a WebSockets connection fast. WebSockets are often used for real-time applications such as live chat and gaming.
@@ -46,13 +42,21 @@ Cloudflare also supports [ASP.NET SignalR](http://signalr.net/), which helps neg
 
 :::
 
-## What happens if my site exceeds the number of concurrent WebSockets connections that Cloudflare expects?
+## Availability
 
-Immediately, nothing. Cloudflare will allow occasional spikes in usage beyond our guidelines and we will not apply unnecessary limits.
+WebSockets are supported on all Cloudflare plans.
 
-Repeated spikes or high continued usage will prompt a dialogue. Cloudflare will reach out to learn more about your application. We will not impose limit errors for any application without contacting the customer unless we suspect that abuse or an attack is involved.
+## Requests and Bandwidth measurement
 
-Customers whose usage claims a disproportionate percentage of resources for their current plan level may be asked to upgrade to the plan level that matches their needs.
+Given the nature of WebSocket connections, you may notice they differ from typical HTTP traffic in terms of requests and bandwidth usage. If you are an Enterprise customer, it is important to consider how Cloudflare measures requests and bandwidth to accurately estimate your usage.
+
+Cloudflare measures a single WebSocket connection in the following way:
+
+- **Requests**: Cloudflare recognizes only the initial upgrade request per WebSocket connection as an HTTP request. Even though you can send a bidirectional message stream through the established WebSocket connection, it will be counted as a single long-lived HTTP request.
+
+- **Bandwidth**: Cloudflare measures data transfer sent from Cloudflare to the client. This typically means that messages from the WebSocket server behind Cloudflare to the WebSocket client are counted towards bandwidth usage.
+
+Once a WebSocket connection is closed, you can view your aggregated WebSocket usage through [Traffic Analytics](/analytics/account-and-zone-analytics/zone-analytics/#traffic), the [GraphQL Analytics API](/analytics/graphql-api/), and [HTTP requests logs](/logs/reference/log-fields/zone/http_requests/).
 
 ## Technical note
 

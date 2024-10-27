@@ -25,7 +25,7 @@ No. Cloudflare pushes logs in batches as soon as possible.
 ## My job was accidentally turned off, and I did not receive my logs for a certain time period. Can they still be pushed to me?
 
 
-No. **Logpush** only pushes the logs once as they become available and is unable to backfill. However, the logs are stored for at least 72 hours and can be downloaded using the **Logpull API**.
+No. **Logpush** only pushes the logs once as they become available and is unable to backfill.
 
 
 ## I have reconfigured the job to a new destination, but why am I still receiving the logs at the old destination?
@@ -64,10 +64,11 @@ The proper way to resolve the issue is to fix the certificates. This flag is onl
 Ensure that you can publish events to your Splunk instance through `curl` without the `-k` flag and with the **insecure-skip-verify** parameter set to `false`, as in the following example:
 
 ```bash
-curl  "https://<SPLUNK_ENDPOINT_URL>?channel=<SPLUNK_CHANNEL_ID>&insecure-skip-verify=<INSECURE_SKIP_VERIFY>&sourcetype=<SOURCE_TYPE>" \
-   -H "Authorization: Splunk <SPLUNK_AUTH_TOKEN>" \
-   -d '{"BotScore":99,"BotScoreSrc":"Machine Learning","CacheCacheStatus":"miss","CacheResponseBytes":2478}'
+curl "https://<SPLUNK_ENDPOINT_URL>?channel=<SPLUNK_CHANNEL_ID>&insecure-skip-verify=<INSECURE_SKIP_VERIFY>&sourcetype=<SOURCE_TYPE>" \
+--header "Authorization: Splunk <SPLUNK_AUTH_TOKEN>" \
+--data '{"BotScore":99,"BotScoreSrc":"Machine Learning","CacheCacheStatus":"miss","CacheResponseBytes":2478}'
 ```
+
 ```json
 {"text":"Success","code":0}
 ```

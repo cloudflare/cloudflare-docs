@@ -19,5 +19,5 @@ export async function entryToString(entry: CollectionEntry<"docs">) {
 		params: { slug: entry.slug },
 	});
 
-    return html;
+	return html;
 }

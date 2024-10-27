@@ -9,39 +9,76 @@ const { products, productAreas, changelogs } = await getChangelogs();
 
 <StarlightPage frontmatter={{ title: "Changelogs", template: "splash" }}>
 	<Badge text="Beta" variant="caution" size="medium" />
-	<br/>
-	<br/>
-	<p id="productDescription">Subscribe to all Changelog posts via <a href="/changelog/index.xml">RSS</a>.</p>
-    <p id="productAreaDescription" style="display:none">Subscribe to all Changelog posts via <a class="rssLink" href="/changelog/index.xml">RSS</a>.</p>
-    <p>Unless otherwise noted, all dates refer to the release date of the change.</p>
-	<br/>
+	<br />
+	<br />
+	<p id="productDescription">
+		Subscribe to all Changelog posts via <a href="/changelog/index.xml">RSS</a>.
+	</p>
+	<p id="productAreaDescription" style="display:none">
+		Subscribe to all Changelog posts via <a
+			class="rssLink"
+			href="/changelog/index.xml">RSS</a
+		>.
+	</p>
+	<p>
+		Unless otherwise noted, all dates refer to the release date of the change.
+	</p>
+	<br />
 	<label for="products">Product:</label>
 	<select name="products" id="products">
 		<option value="all">Select...</option>
-		{products.map((product) => <option value={product.toLowerCase()}>{product}</option>)}
+		{
+			products.map((product) => (
+				<option value={product.toLowerCase()}>{product}</option>
+			))
+		}
 	</select>
 	<label for="productAreas">Product area:</label>
 	<select name="productAreas" id="productAreas">
 		<option value="all">Select...</option>
-		{productAreas.map((productAreas) => <option value={productAreas.toLowerCase()}>{productAreas}</option>)}
+		{
+			productAreas.map((productAreas) => (
+				<option value={productAreas.toLowerCase()}>{productAreas}</option>
+			))
+		}
 	</select>
 	{
 		changelogs.map(([date, entries]) => (
 			<div style="overflow-anchor: none;" data-date={date}>
 				<h2>{date}</h2>
 				{entries?.map((entry) => (
-					<div data-product={entry.product.toLowerCase()} data-productArea={entry.productAreaName.toLowerCase()}>
+					<div
+						data-product={entry.product.toLowerCase()}
+						data-productArea={entry.productAreaName.toLowerCase()}
+					>
 						<h3>
 							<a href={entry.link}>{entry.product}</a>
 						</h3>
 						{["WAF", "DDoS protection"].includes(entry.product) ? (
-							<p set:html={marked.parse((entry.scheduled ? "**" + "Scheduled changes for " + (entry.date ?? "") + "**" : "**" + (entry.date ?? "") + "**"))}></p>
+							<p
+								set:html={marked.parse(
+									entry.scheduled
+										? "**" +
+												"Scheduled changes for " +
+												(entry.date ?? "") +
+												"**"
+										: "**" + (entry.date ?? "") + "**",
+								)}
+							/>
 						) : (
 							<p set:html={marked.parse("**" + (entry.title ?? "") + "**")} />
 						)}
-						{["WAF", "DDoS protection"].includes(entry.product) ? (<p set:html={marked.parse("For more details, refer to the [changelog page](" + entry.link + ").")}></p>
-) : (
-						<p set:html={marked.parse(entry.description ?? "")} />)}
+						{["WAF", "DDoS protection"].includes(entry.product) ? (
+							<p
+								set:html={marked.parse(
+									"For more details, refer to the [changelog page](" +
+										entry.link +
+										").",
+								)}
+							/>
+						) : (
+							<p set:html={marked.parse(entry.description ?? "")} />
+						)}
 					</div>
 				))}
 			</div>
@@ -50,20 +87,23 @@ const { products, productAreas, changelogs } = await getChangelogs();
 </StarlightPage>
 
 <script>
-	import StickyHeader from '@codingheads/sticky-header';
+	import StickyHeader from "@codingheads/sticky-header";
 
-	document.addEventListener("DOMContentLoaded", () => {
-		const navHeightRem = getComputedStyle(document.body).getPropertyValue('--sl-nav-height');
-		const navHeightPx = Number(navHeightRem.split("rem")[0]) * 16 + 16;
+	const navHeightRem = getComputedStyle(document.body).getPropertyValue(
+		"--sl-nav-height",
+	);
+	const navHeightPx = Number(navHeightRem.split("rem")[0]) * 16 + 16;
 
-		const headers = document.querySelectorAll<HTMLElement>("[data-date] > h2");
-		headers.forEach((header) => new StickyHeader(header, { offset: 0 - navHeightPx }));
-	});
+	const headers = document.querySelectorAll<HTMLElement>("[data-date] > h2");
+	headers.forEach(
+		(header) => new StickyHeader(header, { offset: 0 - navHeightPx }),
+	);
 
 	const productFilter = document.querySelector<HTMLSelectElement>("#products");
 	productFilter?.addEventListener("change", filterEntries);
 
-	const productAreaFilter = document.querySelector<HTMLSelectElement>("#productAreas");
+	const productAreaFilter =
+		document.querySelector<HTMLSelectElement>("#productAreas");
 	productAreaFilter?.addEventListener("change", filterEntries);
 
 	function filterEntries() {
@@ -72,7 +112,10 @@ const { products, productAreas, changelogs } = await getChangelogs();
 		for (const date of dates) {
 			const entries = date.querySelectorAll<HTMLElement>("[data-product]");
 
-			if (productAreaFilter.value === "all" && productFilter.value === "all") {
+			if (
+				productAreaFilter?.value === "all" &&
+				productFilter?.value === "all"
+			) {
 				dates.forEach((x) => {
 					x.style.display = "";
 				});
@@ -86,15 +129,19 @@ const { products, productAreas, changelogs } = await getChangelogs();
 
 			for (const entry of entries) {
 				const product = entry.dataset.product;
-				const productArea = entry.dataset.productarea
+				const productArea = entry.dataset.productarea;
 
-				if ((productFilter?.value === product || productFilter?.value === "all") && (productAreaFilter?.value === productArea || productAreaFilter?.value === "all") ) {
+				if (
+					(productFilter?.value === product ||
+						productFilter?.value === "all") &&
+					(productAreaFilter?.value === productArea ||
+						productAreaFilter?.value === "all")
+				) {
 					entry.style.display = "";
 					date.style.display = "";
 				} else {
 					entry.style.display = "none";
 					entriesHidden++;
-					
 				}
 			}
 

@@ -1,0 +1,29 @@
+---
+params:
+	- note
+---
+
+import { Markdown } from "~/components"
+
+To log SSH commands, you will need to generate an HPKE key pair and upload the public key to Cloudflare.
+
+1. [Download](https://github.com/cloudflare/ssh-log-cli/releases/latest/) the Cloudflare `ssh-log-cli` utility.
+
+2. Using the `ssh-log-cli` utility, generate a public and private key pair.
+
+   ```sh
+   ./ssh-log-cli generate-key-pair -o sshkey
+   ls
+   ```
+
+   ```sh output
+   README.md    ssh-log-cli    sshkey    sshkey.pub
+   ```
+
+   This command outputs two files, an `sshkey.pub` public key and a matching `sshkey` private key.
+
+3. In [Zero Trust](https://one.dash.cloudflare.com), go to **Settings** > **Network**.
+
+4. In **SSH encryption public key**, paste the contents of `sshkey.pub` and select **Save**. <Markdown text={props.note} />
+
+All proxied SSH commands are immediately encrypted using this public key. The matching private key is required to view logs.

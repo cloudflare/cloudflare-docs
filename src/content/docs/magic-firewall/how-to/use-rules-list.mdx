@@ -6,10 +6,9 @@ sidebar:
 head:
   - tag: title
     content: Define an IP list
-
 ---
 
-[IP lists](/waf/tools/lists/custom-lists/#ip-lists) are a part of Cloudflare's custom lists. Custom lists contain one or more items of the same type — IP addresses, hostnames or ASNs — that you can reference in rule expressions.
+[IP lists](/waf/tools/lists/custom-lists/#lists-with-ip-addresses-ip-lists) are a part of Cloudflare's custom lists. Custom lists contain one or more items of the same type — IP addresses, hostnames or ASNs — that you can reference in rule expressions.
 
 IP lists are defined at the account level and can be used to match against `ip.src` and `ip.dst` fields. Currently, Magic Firewall only supports IPv4 addresses in these lists, not IPv6.
 
@@ -73,10 +72,10 @@ Available for customers with a Magic Firewall Advanced plan.
 
 You can create rules with managed lists. Managed IP Lists are [lists of IP addresses](/waf/tools/lists/managed-lists/#managed-ip-lists) maintained by Cloudflare and updated frequently.
 
-You can access these managed lists when you create rules with either *IP destination address* or *IP source address* in the **Field** dropdown, and *is in list* or *is not in list* in the **Operator** dropdown.
+You can access these managed lists when you create rules with either _IP destination address_ or _IP source address_ in the **Field** dropdown, and _is in list_ or _is not in list_ in the **Operator** dropdown.
 
 For example:
 
 | Field                    | Operator     | Value         |
 | ------------------------ | ------------ | ------------- |
-| *IP destination address* | *is in list* | *Anonymizers* |
+| _IP destination address_ | _is in list_ | _Anonymizers_ |

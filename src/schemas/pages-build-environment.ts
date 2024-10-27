@@ -1,4 +1,4 @@
-import { z } from "astro:content";
+import { z } from "astro:schema";
 
 const supportInfo = z
 	.object({
@@ -20,5 +20,6 @@ export const pagesBuildEnvironmentSchema = z
 			operating_system: z.string(),
 			architecture: z.string(),
 		}),
+		status: z.string().optional().nullable(),
 	})
 	.strict();

@@ -3,10 +3,9 @@ pcx_content_type: concept
 title: Pricing
 sidebar:
   order: 11
-
 ---
 
-import { InlineBadge } from "~/components"
+import { InlineBadge } from "~/components";
 
 R2 charges based on the total volume of data stored, along with two classes of operations on that data:
 
@@ -19,9 +18,7 @@ All included usage is on a monthly basis.
 
 :::note
 
-
 To learn about potential cost savings from using R2, refer to the [R2 pricing calculator](https://r2-calculator.cloudflare.com/).
-
 
 :::
 
@@ -33,9 +30,13 @@ To learn about potential cost savings from using R2, refer to the [R2 pricing ca
 | Class A Operations                 | $4.50 / million requests | $9.00 / million requests                               |
 | Class B Operations                 | $0.36 / million requests | $0.90 / million requests                               |
 | Data Retrieval (processing)        | None                     | $0.01 / GB                                             |
-| Egress (data transfer to Internet) | Free [^1]                | Free [^1]                                              |
+| Egress (data transfer to Internet) | Free <sup>1</sup>        | Free <sup>1</sup>                                      |
 
-[^1]: Egressing directly from R2, including via the [Workers API](/r2/api/workers/), [S3 API](/r2/api/s3/), and [`r2.dev` domains](/r2/buckets/public-buckets/#enable-managed-public-access) does not incur data transfer (egress) charges and is free. If you connect other metered services to an R2 bucket, you may be charged by those services.
+<sup>1</sup> Egressing directly from R2, including via the [Workers
+API](/r2/api/workers/), [S3 API](/r2/api/s3/), and [`r2.dev`
+domains](/r2/buckets/public-buckets/#enable-managed-public-access) does not
+incur data transfer (egress) charges and is free. If you connect other metered
+services to an R2 bucket, you may be charged by those services.
 
 ### Free tier
 
@@ -46,19 +47,23 @@ You can use the following amount of storage and operations each month for free. 
 | Storage                            | 10 GB / month               |
 | Class A Operations                 | 1 million requests / month  |
 | Class B Operations                 | 10 million requests / month |
-| Egress (data transfer to Internet) | Free [^1]                   |
+| Egress (data transfer to Internet) | Free <sup>1</sup>           |
 
-[^1]: Egressing directly from R2, including via the [Workers API](/r2/api/workers/), [S3 API](/r2/api/s3/), and [`r2.dev` domains](/r2/buckets/public-buckets/#enable-managed-public-access) does not incur data transfer (egress) charges and is free. If you connect other metered services to an R2 bucket, you may be charged by those services.
+<sup>1</sup> Egressing directly from R2, including via the [Workers
+API](/r2/api/workers/), [S3 API](/r2/api/s3/), and [`r2.dev`
+domains](/r2/buckets/public-buckets/#enable-managed-public-access) does not
+incur data transfer (egress) charges and is free. If you connect other metered
+services to an R2 bucket, you may be charged by those services.
 
 ### Storage usage
 
-Storage is billed using gigabyte-month (GB-month) as the billing metric. A GB-month is calculated by averaging the *peak* storage per day over a billing period (30 days).
+Storage is billed using gigabyte-month (GB-month) as the billing metric. A GB-month is calculated by averaging the _peak_ storage per day over a billing period (30 days).
 
 For example:
 
-* Storing 1 GB constantly for 30 days will be charged as 1 GB-month.
-* Storing 3 GB constantly for 30 days will be charged as 3 GB-month.
-* Storing 1 GB for 5 days, then 3 GB for the remaining 25 days will be charged as `1 GB * 5/30 month + 3 GB * 25/30 month = 2.66 GB-month`
+- Storing 1 GB constantly for 30 days will be charged as 1 GB-month.
+- Storing 3 GB constantly for 30 days will be charged as 3 GB-month.
+- Storing 1 GB for 5 days, then 3 GB for the remaining 25 days will be charged as `1 GB * 5/30 month + 3 GB * 25/30 month = 2.66 GB-month`
 
 For objects stored in Infrequent Access storage, you will be charged for the object for the minimum storage duration even if the object was deleted or moved before the duration specified.
 
@@ -111,8 +116,6 @@ To learn about potential cost savings from using R2, refer to the [R2 pricing ca
 
 If a user writes 1,000 objects in R2 for 1 month with an average size of 1 GB and requests each 1,000 times per month, the estimated cost for the month would be:
 
-
-
 |                    | Usage                                       | Free Tier    | Billable Quantity | Price      |
 | ------------------ | ------------------------------------------- | ------------ | ----------------- | ---------- |
 | Class B Operations | (1,000 objects) \* (1,000 reads per object) | 10 million   | 0                 | $0.00      |
@@ -124,8 +127,6 @@ If a user writes 1,000 objects in R2 for 1 month with an average size of 1 GB an
 ### Asset hosting
 
 If a user writes 100,000 files with an average size of 100 KB object and reads 10,000,000 objects per day, the estimated cost in a month would be:
-
-
 
 |                    | Usage                                   | Free Tier    | Billable Quantity | Price       |
 | ------------------ | --------------------------------------- | ------------ | ----------------- | ----------- |

@@ -2,15 +2,27 @@
 pcx_content_type: troubleshooting
 source: https://support.cloudflare.com/hc/en-us/articles/200170566-Troubleshooting-SSL-errors
 title: General SSL errors
+sidebar:
+  order: 1
 head: []
 description: Learn how to troubleshoot various SSL/TLS errors with Cloudflare.
 ---
 
 import { GlossaryTooltip } from "~/components";
 
+## Let's Encrypt chain update
+
+### Symptom
+
+Starting September 9, 2024, visitors that try to connect to your website using older devices - for example, Android 7.0 and earlier - have access problems or reach security warnings.
+
+### Resolution
+
+The fastest way to resolve this issue is to change your certificate to use [Google Trust Services](/ssl/reference/certificate-authorities/#google-trust-services) as the certificate authority. Refer to the [migration guide](/ssl/reference/migration-guides/lets-encrypt-chain/#how-your-products-are-affected) to learn how to proceed with each certificate type.
+
 ## Outdated browsers
 
-### Sympton
+### Symptom
 
 Until Cloudflare provides an SSL certificate for your domain, the following errors may appear in various browsers for HTTPS traffic:
 

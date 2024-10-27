@@ -3,32 +3,38 @@ title: Cloudflare Workers KV
 pcx_content_type: overview
 sidebar:
   order: 1
-
 ---
 
-import { CardGrid, Description, Feature, LinkTitleCard, Plan, RelatedProduct } from "~/components"
+import {
+	CardGrid,
+	Description,
+	Feature,
+	LinkTitleCard,
+	Plan,
+	RelatedProduct,
+} from "~/components";
 
 <Description>
 
-Create a global, low-latency, key-value data storage. 
+Create a global, low-latency, key-value data storage.
+
 </Description>
 
 <Plan type="workers-all" />
 
 Workers KV is a data storage that allows you to store and retrieve data globally. With Workers KV, you can build dynamic and performant APIs and websites that support high read volumes with low latency.
 
-***
+---
 
 ## Features
 
 <Feature header="Key-value storage" href="/kv/get-started/">
-Learn how Workers KV stores and retrieves data. 
+	Learn how Workers KV stores and retrieves data.
 </Feature>
 
 <Feature header="Wrangler" href="/workers/wrangler/install-and-update/">
 
 The Workers command-line interface, Wrangler, allows you to [create](/workers/wrangler/commands/#init), [test](/workers/wrangler/commands/#dev), and [deploy](/workers/wrangler/commands/#publish) your Workers projects.
-
 
 </Feature>
 
@@ -36,10 +42,9 @@ The Workers command-line interface, Wrangler, allows you to [create](/workers/wr
 
 Bindings allow your Workers to interact with resources on the Cloudflare developer platform, including [R2](/r2/), [Durable Objects](/durable-objects/), and [D1](/d1/).
 
-
 </Feature>
 
-***
+---
 
 ## Related products
 
@@ -47,13 +52,11 @@ Bindings allow your Workers to interact with resources on the Cloudflare develop
 
 Cloudflare R2 Storage allows developers to store large amounts of unstructured data without the costly egress bandwidth fees associated with typical cloud storage services.
 
-
 </RelatedProduct>
 
 <RelatedProduct header="Durable Objects" href="/durable-objects/" product="durable-objects">
 
 Cloudflare Durable Objects allows developers to access scalable compute and permanent, consistent storage.
-
 
 </RelatedProduct>
 
@@ -61,29 +64,34 @@ Cloudflare Durable Objects allows developers to access scalable compute and perm
 
 Built on SQLite, D1 is Cloudflare’s first queryable relational database. Create an entire database by importing data or defining your tables and writing your queries within a Worker or through the API.
 
-
 </RelatedProduct>
 
-***
+---
 
 ### More resources
 
 <CardGrid>
 
 <LinkTitleCard title="Limits" href="/kv/platform/limits/" icon="document">
-&#x20;Learn about KV limits. 
+	&#x20;Learn about KV limits.
 </LinkTitleCard>
 
 <LinkTitleCard title="Pricing" href="/kv/platform/pricing/" icon="seti:shell">
-&#x20;Learn about KV pricing. 
+	&#x20;Learn about KV pricing.
 </LinkTitleCard>
 
-<LinkTitleCard title="Discord" href="https://discord.com/channels/595317990191398933/893253103695065128" icon="discord">
-&#x20;Ask questions, show off what you are building, and discuss the platform with other developers. 
+<LinkTitleCard
+	title="Discord"
+	href="https://discord.com/channels/595317990191398933/893253103695065128"
+	icon="discord"
+>
+	&#x20;Ask questions, show off what you are building, and discuss the platform
+	with other developers.
 </LinkTitleCard>
 
 <LinkTitleCard title="Twitter" href="https://x.com/cloudflaredev" icon="x.com">
-&#x20;Learn about product announcements, new tutorials, and what is new in Cloudflare Developer Platform. 
+	&#x20;Learn about product announcements, new tutorials, and what is new in
+	Cloudflare Developer Platform.
 </LinkTitleCard>
 
 </CardGrid>

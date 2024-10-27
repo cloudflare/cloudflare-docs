@@ -7,21 +7,14 @@ sidebar:
 head:
   - tag: title
     content: Preview firewall rules
-
 ---
-
-
 
 The expression of a firewall rule can become quite complex. In this situation, you should test your firewall rule before deploying it to ensure that the rule will behave as expected.
 
 Rule Preview helps you understand the potential impact of a firewall rule, by testing the rule against a sample drawn from the last 72 hours of traffic. Rule Preview is built into the firewall rules Expression Editor so that you can test a rule as you edit it.
 
 :::caution
-
-
 Rule Preview is only available to customers on an Enterprise plan.
-
-
 :::
 
 ## Test a firewall rule with Rule Preview
@@ -39,13 +32,10 @@ In this screenshot, a rule that matches all User-Agents that contain the string 
 
 ## Important notes
 
-**Consider the results of Firewall Preview an *indication* of traffic levels**, not an exact calculation. The sample rate can be as little as 1% of your total traffic.
+**Consider the results of Firewall Preview an _indication_ of traffic levels**, not an exact calculation. The sample rate can be as little as 1% of your total traffic.
 
 **Rule Preview does not take into account other firewall rules** that you have already configured. In effect, Rule Preview tests a single firewall rule in isolation. Security events or any other rules with a higher priority that may have blocked or challenged a request are ignored.
 
-**You cannot test firewall rules that reference [IP lists](/waf/tools/lists/custom-lists/#ip-lists)**.
+**You cannot test firewall rules that reference [IP lists](/waf/tools/lists/custom-lists/#lists-with-ip-addresses-ip-lists)**.
 
 **Cloudflare does not store the entirety of requests, so only a limited number of fields are available to Rule Preview**. The table below lists the fields that Rule Preview supports (green cells), broken down by operator. Fields and operators that are not supported are not included in this table.
-
-
-

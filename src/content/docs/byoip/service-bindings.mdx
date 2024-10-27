@@ -1,0 +1,33 @@
+---
+title: IP address service bindings
+pcx_content_type: concept
+sidebar:
+  order: 6
+  label: Service bindings
+description: In IP address management, service binding refers to the association of IPs to specific Cloudflare services. Review the available options and the API endpoints to set up service bindings.
+---
+
+Within IP address management, service binding refers to the association of an IP (or a range of IPs) to specific Cloudflare services.
+
+:::note
+Service binding operations are currently only available via API. You can find all endpoints and their specifications in the [Cloudflare API documentation](/api/operations/ip-address-management-service-bindings-list-service-bindings).
+:::
+
+## Scope
+
+Currently, if you have BYOIP configured with [Magic Transit](/magic-transit/), you can use the [service binding API](/api/operations/ip-address-management-service-bindings-list-service-bindings) endpoints to add CDN or Spectrum capabilities on top of Magic Transit.
+
+You can upgrade individual IPs within a Magic Transit prefix to either a CDN IP or a Spectrum IP. For example, if you have `203.0.113.0/24`, you can upgrade `203.0.113.1` to CDN and `203.0.113.2` to Spectrum.
+
+### CDN (Cache)
+
+When you add the CDN service binding, any HTTP requests received via designated IPs are directed into the CDN pipeline (for [Layer 7 processing](/fundamentals/concepts/how-cloudflare-works/#how-cloudflare-works-as-a-reverse-proxy)) as they reach the Cloudflare network.
+
+### Spectrum
+
+Adding [Spectrum](/spectrum/) allows you to benefit from Cloudflare security and performance for Layer 4 traffic.
+
+## Limitations
+
+- You must keep Magic Transit as a common base service, spanning all addresses in your prefix.
+- Once a service binding is created, its propagation across the Cloudflare network will take four to six hours to complete.

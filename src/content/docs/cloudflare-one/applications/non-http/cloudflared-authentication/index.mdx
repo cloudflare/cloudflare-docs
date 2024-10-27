@@ -1,0 +1,25 @@
+---
+pcx_content_type: how-to
+title: Client-side cloudflared
+sidebar:
+  order: 4
+tableOfContents: false
+---
+
+With Cloudflare Zero Trust, users can connect to non-HTTP applications via a public hostname without installing the WARP client. This method requires you to onboard a domain to Cloudflare and install `cloudflared` on both the server and the user's device.
+
+Users log in to the application by running a `cloudflared access` command in their terminal. `cloudflared` will launch a browser window and prompt the user to authenticate with your identity provider.
+
+:::note
+
+Automated services should only authenticate with `cloudflared` if they cannot use a [service token](/cloudflare-one/identity/service-tokens/). Cloudflared authentication relies on WebSockets to establish a connection. WebSockets have a known limitation where persistent connections may close unexpectedly. We recommend either a [Service Auth policy](/cloudflare-one/policies/access/#service-auth) or using [Warp to Tunnel routing](/cloudflare-one/applications/non-http/) in these instances.
+:::
+
+For examples of how to connect to Access applications with client-side `cloudflared`, refer to these tutorials:
+
+* [Connect through Access using a CLI](/cloudflare-one/tutorials/cli/)
+* [Connect through Access using kubectl](/cloudflare-one/tutorials/kubectl/)
+* [Connect over SSH with cloudflared](/cloudflare-one/connections/connect-networks/use-cases/ssh/ssh-cloudflared-authentication/) (legacy) -- SSH connections are now managed through [Access for Infrastructure](/cloudflare-one/connections/connect-networks/use-cases/ssh/ssh-infrastructure-access/).
+* [Connect over RDP with cloudflared](/cloudflare-one/connections/connect-networks/use-cases/rdp/#connect-to-rdp-server-with-cloudflared-access)
+* [Connect over SMB with cloudflared](/cloudflare-one/connections/connect-networks/use-cases/smb/)
+* [Connect over arbitrary TCP with cloudflared](/cloudflare-one/applications/non-http/cloudflared-authentication/arbitrary-tcp/)

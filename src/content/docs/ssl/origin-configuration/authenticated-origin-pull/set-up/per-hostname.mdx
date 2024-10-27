@@ -9,20 +9,32 @@ head:
 
 ---
 
-import { AvailableNotifications, Render } from "~/components"
+import { AvailableNotifications, Render, Details } from "~/components"
 
 When you enable Authenticated Origin Pulls per hostname, all proxied traffic to the specified hostname is authenticated at the origin web server. You can use client certificates from your Private PKI to authenticate connections from Cloudflare.
 
-<Render file="aop-per-hostname-cert-requirement" /><br />
+## Before you begin
+
+:::caution[Warning]
+ <Render file="aop-per-hostname-cert-requirement" />
+:::
+
+Refer to the steps below for an example of how to generate a custom certificate using OpenSSL. The CA root certificate that you use to issue the custom certificate should be the same CA that you will [upload to your origin](#2-configure-origin-to-accept-client-certificates).
+
+<Details header="OpenSSL example">
+<Render file="custom-cert-openssl-commands" />
+</Details>
 
 ## 1. Upload custom certificate
 
-First, follow the API instructions to [upload a custom certificate to Cloudflare](/ssl/edge-certificates/custom-certificates/uploading/#upload-a-custom-certificate), but use the [`/origin_tls_client_auth/hostnames/certificates` endpoint](/api/operations/per-hostname-authenticated-origin-pull-upload-a-hostname-client-certificate).
+Use the [`/origin_tls_client_auth/hostnames/certificates`](/api/operations/per-hostname-authenticated-origin-pull-upload-a-hostname-client-certificate) endpoint to upload your custom certificate.
 
 :::note
 
-You must upload a [leaf certificate](/ssl/concepts/#chain-of-trust). If you upload a root CA instead, the API will return a `missing leaf certificate` error. 
+You must upload a [leaf certificate](/ssl/concepts/#chain-of-trust). If you upload a root CA instead, the API will return a `missing leaf certificate` error.
 :::
+
+<Render file="aop-per-hostname-upload-cert" />
 
 In the API response, save the certificate `id` since it will be required in step 4.
 

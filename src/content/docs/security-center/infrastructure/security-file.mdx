@@ -1,0 +1,37 @@
+---
+pcx_content_type: concept
+title: Set up your security.txt file
+sidebar:
+  order: 4
+---
+
+To manage your [security.txt](https://en.wikipedia.org/wiki/Security.txt) file via the Cloudflare dashboard:
+
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/), select your account and domain.
+2. Go to **Security** > **Settings** > **Enable Security.txt**.
+
+From here, you can create and manage your `security.txt` file to provide the security research team with a standardized way to report vulnerabilities.
+
+Fill in the following information:
+
+- **(Required) Contact**: You can enter one of the following to contact you about security issues:
+  - An email address: The email address must start with `mailto:` (for example, `mailto:help@example.com`).
+  - A phone number: The phone number must start with `tel:` (for example, `tel:+1 1234567890`).
+  - A URL link: The URL link must start with `https://` (for example, `https://example.com`).
+
+  Select **Add more** to add multiple contacts.
+- **(Required) Expires at**: Enter the expiration date and time of the `security.txt` file.
+- **Encryption**: A link to a key which security researchers can use to communicate with you.
+- **Acknowledgements**: A link to your acknowledgements page.
+- **Canonical**: Links to your `security.txt` file.
+- **Hiring**: A link to your security-related job openings.
+- **Policy**: A link to a policy describing what security researchers should do when searching for or reporting security issues.
+- **Preferred languages**: A list of language codes that your security team speaks.
+
+Once you have entered the necessary information, select **Save**.
+
+To edit your security.txt file, select **Security** > **Settings** > **Edit Security.txt**.
+
+To download your security.txt file, select **Security** > **Settings** > **Download Security.txt**.
+
+To delete your security.txt file, select **Security** > **Settings** > **Delete Security.txt**.

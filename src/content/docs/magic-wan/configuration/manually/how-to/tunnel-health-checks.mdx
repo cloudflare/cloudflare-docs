@@ -3,9 +3,16 @@ pcx_content_type: how-to
 title: Update tunnel health checks frequency
 sidebar:
   order: 4
-
 ---
 
-import { Render } from "~/components"
+import { Render } from "~/components";
 
-<Render file="tunnel-health/update-tunnel-health-checks-frequency" product="magic-transit" params={{ one: "/magic-wan/reference/tunnel-health-checks/", two: "/magic-wan/configuration/manually/how-to/configure-tunnels/#add-tunnels" }} />
+<Render
+	file="tunnel-health/update-tunnel-health-checks-frequency"
+	product="magic-transit"
+	params={{
+		healthChecksUrl: "/magic-wan/reference/tunnel-health-checks/",
+		addTunnelsPath:
+			"/magic-wan/configuration/manually/how-to/configure-tunnels/#add-tunnels",
+	}}
+/>

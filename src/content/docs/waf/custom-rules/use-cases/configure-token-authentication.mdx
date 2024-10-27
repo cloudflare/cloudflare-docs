@@ -2,12 +2,11 @@
 pcx_content_type: troubleshooting
 source: https://support.cloudflare.com/hc/en-us/articles/115001376488-Configuring-Token-Authentication
 title: Configure token authentication
-
 ---
 
-import { TabItem, Tabs } from "~/components"
+import { TabItem, Tabs } from "~/components";
 
-Token authentication allows you to restrict access to documents, files, and media to select users without requiring them to register. This helps protect paid/restricted content from leeching and unauthorized sharing. 
+Token authentication allows you to restrict access to documents, files, and media to select users without requiring them to register. This helps protect paid/restricted content from leeching and unauthorized sharing.
 
 There are two options to configure token authentication: via Cloudflare Workers or via WAF custom rules.
 
@@ -15,14 +14,14 @@ There are two options to configure token authentication: via Cloudflare Workers 
 
 Refer to the following Cloudflare Workers resources for two different implementations of token authentication:
 
-* The [Sign requests](/workers/examples/signing-requests/) example.
-* The [Auth with headers](/workers/examples/auth-with-headers/) template.
+- The [Sign requests](/workers/examples/signing-requests/) example.
+- The [Auth with headers](/workers/examples/auth-with-headers/) template.
 
 To get started with Workers, refer to [Configure a Worker](/workers/get-started/quickstarts/).
 
 :::note
 
-The code provided in the [Sign requests](/workers/examples/signing-requests/) example is compatible with the `is_timed_hmac_valid_v0()` function used in [Option 2](#option-2-configure-using-waf-custom-rules). This means that you can verify requests signed by the example Worker script using a WAF custom rule. 
+The code provided in the [Sign requests](/workers/examples/signing-requests/) example is compatible with the `is_timed_hmac_valid_v0()` function used in [Option 2](#option-2-configure-using-waf-custom-rules). This means that you can verify requests signed by the example Worker script using a WAF custom rule.
 :::
 
 ## Option 2: Configure using WAF custom rules
@@ -30,8 +29,7 @@ The code provided in the [Sign requests](/workers/examples/signing-requests/) ex
 Use the Rules language [`is_timed_hmac_valid_v0()`](/ruleset-engine/rules-language/functions/#hmac-validation) HMAC validation function to validate hash-based message authentication code (HMAC) tokens in a custom rule expression.
 
 :::note
-
-Access to the `is_timed_hmac_valid_v0()` HMAC validation function requires a Cloudflare Pro, Business, or Enterprise plan. 
+Access to the `is_timed_hmac_valid_v0()` HMAC validation function requires a Cloudflare Pro, Business, or Enterprise plan.
 :::
 
 To validate token authentication:
@@ -41,17 +39,17 @@ To validate token authentication:
 3. Select **Create rule**.
 4. Select **Edit expression** to switch to the [Expression Editor](/ruleset-engine/rules-language/expressions/edit-expressions/#expression-editor).
 5. Enter the rule expression, making sure you include a call to the `is_timed_hmac_valid_v0()` function.
-6. Under **Then take action**, select an action such as *Block*.
+6. Under **Then take action**, select an action such as _Block_.
 7. To save and deploy your rule, select **Deploy**.
 
 ### Example rule
 
 This example illustrates a rule that blocks any visitor that does not pass HMAC key validation on a specific hostname and URL path. Details required for token authentication include:
 
-* The secret key for generating and validating the HMAC (for example, `mysecrettoken`)
-* The path you wish to authenticate (for example, `downloads.example.com/images/cat.jpg`)
-* The name of the query string parameter containing the token (for example, `verify`)
-* The token lifetime in seconds (for example, 3 hours = 10,800 seconds)
+- The secret key for generating and validating the HMAC (for example, `mysecrettoken`)
+- The path you wish to authenticate (for example, `downloads.example.com/images/cat.jpg`)
+- The name of the query string parameter containing the token (for example, `verify`)
+- The token lifetime in seconds (for example, 3 hours = 10,800 seconds)
 
 Consider the following example URL:
 
@@ -61,14 +59,13 @@ downloads.example.com/images/cat.jpg?verify=1484063787-9JQB8vP1z0yc5DEBnH6JGWM3m
 
 Where:
 
-* `/images/cat.jpg` represents the path to the asset — the HMAC message to authenticate.
-* `?verify=` is the separator between the path to the asset and the timestamp when the HMAC token was issued.
-* `1484063787` represents the timestamp when the token was issued, expressed as UNIX time in seconds.
-* `9JQB8vP1z0yc5DEBnH6JGWM3mBmvIeMrnnxFi3WtJLE%3D` is a Base64-encoded MAC.
+- `/images/cat.jpg` represents the path to the asset — the HMAC message to authenticate.
+- `?verify=` is the separator between the path to the asset and the timestamp when the HMAC token was issued.
+- `1484063787` represents the timestamp when the token was issued, expressed as UNIX time in seconds.
+- `9JQB8vP1z0yc5DEBnH6JGWM3mBmvIeMrnnxFi3WtJLE%3D` is a Base64-encoded MAC.
 
 :::caution
-
-When you do not use the optional `flags` argument for `is_timed_hmac_valid_v0()`, you must URL encode the Base64-encoded MAC value. For more information, refer to [HMAC validation](/ruleset-engine/rules-language/functions/#hmac-validation). 
+When you do not use the optional `flags` argument for `is_timed_hmac_valid_v0()`, you must URL encode the Base64-encoded MAC value. For more information, refer to [HMAC validation](/ruleset-engine/rules-language/functions/#hmac-validation).
 :::
 
 The expression for the custom rule would be similar to the following:
@@ -79,11 +76,11 @@ The expression for the custom rule would be similar to the following:
 
 The components of this example custom rule (using the previous example URL) include:
 
-* Token secret key = `mysecrettoken`
-* Token lifetime = `10800` (10,800 seconds = 3 hours)
-* `http.request.uri` = `/images/cat.jpg?verify=1484063787-9JQB8vP1z0yc5DEBnH6JGWM3mBmvIeMrnnxFi3WtJLE%3D`
-* `http.request.timestamp.sec` = `1484071925` (for example)
-* Separator length: `len("?verify=")` = `8`
+- Token secret key = `mysecrettoken`
+- Token lifetime = `10800` (10,800 seconds = 3 hours)
+- `http.request.uri` = `/images/cat.jpg?verify=1484063787-9JQB8vP1z0yc5DEBnH6JGWM3mBmvIeMrnnxFi3WtJLE%3D`
+- `http.request.timestamp.sec` = `1484071925` (for example)
+- Separator length: `len("?verify=")` = `8`
 
 The [`is_timed_hmac_valid_v0()`](/ruleset-engine/rules-language/functions/#hmac-validation) function compares the value of a MAC generated using the `mysecrettoken` secret key to the value encoded in `http.request.uri`.
 
@@ -95,7 +92,7 @@ http.request.timestamp.sec < (<TIMESTAMP_ISSUED> + 10800)
 
 Then the token is valid and the `is_timed_hmac_valid_v0()` function returns `true`.
 
-***
+---
 
 ## HMAC token generation
 
@@ -170,18 +167,17 @@ You will need to append this parameter to the URL you are protecting:
 ```
 
 :::caution
-
-The authentication token parameter (`verify=<VALUE>` in the example) must be the last parameter in the query string. 
+The authentication token parameter (`verify=<VALUE>` in the example) must be the last parameter in the query string.
 :::
 
 ### Testing the generated token parameter
 
 If you are on an Enterprise plan, you can test if URLs are being generated correctly on the origin server by doing the following:
 
-1. Set the WAF custom rule action to *Log*.
+1. Set the WAF custom rule action to _Log_.
 2. Check the activity log in **Security** > **Events**.
 
-***
+---
 
 ## Protecting several paths using the same secret
 

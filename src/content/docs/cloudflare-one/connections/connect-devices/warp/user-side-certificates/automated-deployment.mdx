@@ -1,0 +1,117 @@
+---
+pcx_content_type: how-to
+title: Install certificate using WARP
+sidebar:
+  order: 1
+head: []
+description: Automatically deploy a root certificate on desktop devices.
+banner:
+  content: The default global Cloudflare root certificate will expire on 2025-02-02. If you installed the default Cloudflare certificate before 2024-17-10, you must <a href="#generate-a-cloudflare-root-certificate">generate a new certificate</a> and activate it for your Zero Trust organization to avoid inspection errors.
+---
+
+import { Details } from "~/components";
+
+<Details header="Feature availability">
+
+| [WARP modes](/cloudflare-one/connections/connect-devices/warp/configure-warp/warp-modes/) | [Zero Trust plans](https://www.cloudflare.com/teams-pricing/) |
+| ----------------------------------------------------------------------------------------- | ------------------------------------------------------------- |
+| All modes                                                                                 | All plans                                                     |
+
+| System              | Availability | Minimum WARP version |
+| ------------------- | ------------ | -------------------- |
+| Windows             | ✅           | 2023.3.381.0         |
+| macOS               | ✅           | 2023.3.381.0         |
+| Linux <sup>\*</sup> | ✅           | 2023.3.381.0         |
+| iOS                 | ❌           |                      |
+| Android             | ❌           |                      |
+| ChromeOS            | ❌           |                      |
+
+<sup>*</sup> Only supported on Debian-based systems.
+</Details>
+
+The WARP client can automatically install a Cloudflare certificate or [custom root certificate](/cloudflare-one/connections/connect-devices/warp/user-side-certificates/custom-certificate/) on Windows, macOS, and Debian/Ubuntu Linux devices. On mobile devices and Red Hat-based systems, you will need to [install the certificate manually](/cloudflare-one/connections/connect-devices/warp/user-side-certificates/manual-deployment/).
+
+The certificate is required if you want to [apply HTTP policies to encrypted websites](/cloudflare-one/policies/gateway/http-policies/tls-decryption/), display custom block pages, and more.
+
+## Install a certificate using WARP
+
+1. (Optional) [Upload](/cloudflare-one/connections/connect-devices/warp/user-side-certificates/custom-certificate/) a custom root certificate to Cloudflare.
+2. In [Zero Trust](https://one.dash.cloudflare.com/), go to **Settings** > **WARP Client**.
+3. Turn on [**Install CA to system certificate store**](/cloudflare-one/connections/connect-devices/warp/configure-warp/warp-settings/#install-ca-to-system-certificate-store).
+4. [Install](/cloudflare-one/connections/connect-devices/warp/download-warp/) the WARP client on the device.
+5. [Enroll the device](/cloudflare-one/connections/connect-devices/warp/deployment/manual-deployment/) in your Zero Trust organization.
+6. (Optional) If the device is running macOS Ventura or newer, [manually trust the certificate](#manually-trust-the-certificate).
+
+WARP will install the [certificate set to **In-Use**](/cloudflare-one/connections/connect-devices/warp/user-side-certificates/#certificate-status). This certificate can be either a [Cloudflare-generated certificate](/cloudflare-one/connections/connect-devices/warp/user-side-certificates/#generate-a-cloudflare-root-certificate) or a [custom certificate](/cloudflare-one/connections/connect-devices/warp/user-side-certificates/custom-certificate/). If you turn on a new certificate for inspection, WARP will automatically install the new certificate and remove the old certificate from your users' devices.
+
+:::note[Important]
+WARP only installs the system certificate -- it does not install the certificate to individual applications. You will need to [manually add the certificate](/cloudflare-one/connections/connect-devices/warp/user-side-certificates/manual-deployment/#add-the-certificate-to-applications) to applications that rely on their own certificate store.
+:::
+
+## Access the installed certificate
+
+After installing the certificate using WARP, you can verify successful installation by accessing the device's system certificate store.
+
+### macOS
+
+To access the installed certificate in macOS:
+
+1. Open Keychain Access.
+2. In **System Keychains**, go to **System** > **Certificates**.
+3. Open your certificate. The default Cloudflare certificate name is **Gateway CA - Cloudflare Managed G1**.
+4. If the certificate is trusted by all users, Keychain Access will display **This certificate is marked as trusted for all users**.
+
+The WARP client will also place the certificate in `/Library/Application Support/Cloudflare/installed_cert.pem` for reference by scripts or tools.
+
+#### Manually trust the certificate
+
+macOS Ventura and newer do not allow WARP to automatically trust the certificate. To manually trust the certificate:
+
+1. In Keychain Access, [find and open the certificate](#macos).
+2. Open **Trust**.
+3. Set **When using this certificate** to _Always Trust_.
+4. (Optional) Restart the device to reset connections to Zero Trust.
+
+Alternatively, you can configure your mobile device management (MDM) to automatically trust the certificate on all of your organization's devices.
+
+### Windows
+
+To access the installed certificate in Windows:
+
+1. Open the Start menu and select **Run**.
+2. Enter `certlm.msc`.
+3. Go to **Trusted Root Certification Authority** > **Certificates**. The default Cloudflare certificate name is **Gateway CA - Cloudflare Managed G1**.
+
+The WARP client will also place the certificate in `%ProgramData%\Cloudflare\installed_cert.pem` for reference by scripts or tools.
+
+### Linux
+
+On Linux, the certificate is stored in `/usr/local/share/ca-certificates`. The default Cloudflare certificate name is `managed-warp.pem`.
+
+If you cannot find the certificate, run the following commands to update the system store:
+
+1. Go to the system certificate store.
+
+   ```sh
+   cd /usr/local/share/ca-certificates
+   ```
+
+2. Rename the certificate, changing the file extension to `.crt`.
+
+   ```sh
+   sudo mv managed-warp.pem managed-warp.crt
+   ```
+
+3. Update your list of custom CA certificates.
+
+   ```sh
+   sudo update-ca-certificates
+   ```
+
+The WARP client will also place the certificate in `/var/lib/cloudflare-warp/installed_cert.pem` for reference by scripts or tools.
+
+## Uninstall the certificate
+
+If the certificate was installed by the WARP client, it is automatically removed when you turn on another certificate for inspection in Zero Trust, turn off **Install CA to system certificate store**, or [uninstall WARP](/cloudflare-one/connections/connect-devices/warp/remove-warp/). WARP does not remove certificates that were installed manually (for example, certificates added to third-party applications).
+
+To manually remove the certificate, refer to the instructions supplied by your operating system or the third-party application.

@@ -1,0 +1,14 @@
+---
+{}
+---
+
+```js
+// Create a new unique ID
+const id = env.MY_DURABLE_OBJECT.newUniqueId();
+// Convert the ID to a string to be saved elsewhere, e.g. a session cookie
+const session_id = id.toString();
+
+...
+// Recreate the ID from the string
+const id = env.MY_DURABLE_OBJECT.idFromString(session_id);
+```

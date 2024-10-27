@@ -33,7 +33,7 @@ For specific guidance on making API calls, refer to the following resources:
 
 - The product's [Developer Docs section](/products/) for how-to guides.
 - [API schema docs](/api/) for request and response payloads for each endpoint.
-- The first-party libraries for [Go](https://github.com/cloudflare/cloudflare-go), [Typescript](https://github.com/cloudflare/cloudflare-typescript), [Python](https://github.com/cloudflare/cloudflare-python), or [Hashicorp's Terraform](https://github.com/cloudflare/terraform-provider-cloudflare).
+- The first-party libraries for [Go](https://github.com/cloudflare/cloudflare-go), [TypeScript](https://github.com/cloudflare/cloudflare-typescript), [Python](https://github.com/cloudflare/cloudflare-python), or [Hashicorp's Terraform](https://github.com/cloudflare/terraform-provider-cloudflare).
 
 ## Query parameters
 
@@ -110,7 +110,7 @@ PowerShell has specific cmdlets (`Invoke-RestMethod` and `ConvertFrom-Json`) for
 The following example uses the `Invoke-RestMethod` cmdlet:
 
 ```powershell
-PS C:\> Invoke-RestMethod -URI 'https://api.cloudflare.com/client/v4/zones/{zone_id}/ssl/certificate_packs?ssl_status=all' -Method 'GET' -ContentType 'application/json' -Headers @{'X-Auth-Email'='<EMAIL>';'X-Auth-Key'='<API_KEY>'}
+Invoke-RestMethod -URI 'https://api.cloudflare.com/client/v4/zones/{zone_id}/ssl/certificate_packs?ssl_status=all' -Method 'GET' -ContentType 'application/json' -Headers @{'X-Auth-Email'='<EMAIL>';'X-Auth-Key'='<API_KEY>'}
 ```
 
 ```txt title="Example output"
@@ -127,7 +127,7 @@ messages    : {}
 By default, the output will only contain the first level of the JSON object hierarchy (in the above example, the content of objects such as `hosts` and `certificates` is not shown). To show additional levels and format the output like the `jq` tool, you can use the `ConvertFrom-Json` cmdlet specifying the desired maximum depth (by default, `2`):
 
 ```powershell
-PS C:\> Invoke-RestMethod -URI 'https://api.cloudflare.com/client/v4/zones/{zone_id}/ssl/certificate_packs?ssl_status=all' -Method 'GET' -ContentType 'application/json' -Headers @{'X-Auth-Email'='<EMAIL>';'X-Auth-Key'='<API_KEY>'} | ConvertTo-Json -Depth 5
+Invoke-RestMethod -URI 'https://api.cloudflare.com/client/v4/zones/{zone_id}/ssl/certificate_packs?ssl_status=all' -Method 'GET' -ContentType 'application/json' -Headers @{'X-Auth-Email'='<EMAIL>';'X-Auth-Key'='<API_KEY>'} | ConvertTo-Json -Depth 5
 ```
 
 ```json title="Example output"
@@ -174,7 +174,7 @@ You can also use the curl tool in PowerShell. However, in PowerShell `curl` is a
 A typical `PATCH` request with curl will be similar to the following:
 
 ```powershell
-PS C:\> curl.exe --request PATCH "https://api.cloudflare.com/client/v4/user/invites/{id}" --header "Authorization: Bearer <API_TOKEN>" --data '{\"status\": \"accepted\"}'
+curl.exe --request PATCH "https://api.cloudflare.com/client/v4/user/invites/{id}" --header "Authorization: Bearer <API_TOKEN>" --data '{\"status\": \"accepted\"}'
 ```
 
 To escape a double quote (`"`) character in a request body (specified with `-d` or `--data`), prepend it with another double quote (`"`) or a backslash (`\`). You must escape double quotes even when using single quotes (`'`) as string delimiters.
@@ -182,7 +182,7 @@ To escape a double quote (`"`) character in a request body (specified with `-d` 
 To break a single command in two or more lines, use a backtick (`` ` ``) character as the line continuation character at the end of a line:
 
 ```powershell
-PS C:\> curl.exe --request PATCH `
+curl.exe --request PATCH `
 "https://api.cloudflare.com/client/v4/user/invites/{id}" `
 --header "X-Auth-Email: <EMAIL>" `
 --header "X-Auth-Key: <API_KEY>" `

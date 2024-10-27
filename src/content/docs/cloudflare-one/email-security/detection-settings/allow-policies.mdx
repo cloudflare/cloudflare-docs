@@ -1,0 +1,62 @@
+---
+title: Allow policies
+pcx_content_type: how-to
+sidebar:
+  order: 1
+---
+
+Email Security allows you to configure allow policies. An allow policy exempts messages that match certain patterns from normal detection scanning.
+
+To configure allow policies:
+
+1. Log in to [Zero Trust](https://one.dash.cloudflare.com/).
+2. Select **Email Security**.
+3. Select **Settings**, then go to **Detection settings** > **Allow policies**.
+4. On the **Detection settings** page, select **Add a policy**.
+5. On the **Add an allow policy** page, enter the policy information:
+   - **Input method**: Choose between **Manual input**, and **Uploading an allow policy**:
+       - **Manual input**:
+           - **Action**: Select one of the following to choose how Email Security will handle messages that match your criteria:
+               - **Trust sender**: Messages will bypass all detections and link following.
+               - **Exempt recipient**: Message to this recipient will bypass all detections.
+               - **Accept sender**: Messages from this sender will be exempted from Spam, Spoof, and Bulk dispositions.
+       - **Rule type**: Specify the scope of your policy. Choose one of the following:
+           - **Email addresses**: Must be a valid email.
+           - **IP addresses**: Can only be IPv4. IPv6 and CIDR are invalid entries.
+           - **Domains**: Must be a valid domain.
+           - **Regular expressions**: Must be valid Java expressions. Regular expressions are matched with fields related to the sender email address (envelope from, header from, reply-to), the originating IP address, and the server name for the email.
+     - **(Recommended) Sender verification**: This option enforces DMARC, SPF, or DKIM authentication. If you choose to enable this option, Email Security will only honor policies that pass authentication.
+       - **Notes**: Provide additional information about your allow policy.
+   - **Uploading an allow policy**: Upload a file no larger than 150 KB. The file can only contain `Pattern`, `Notes`, `Verify Email`, `Trusted Sender`, `Exempt Recipient` and `Acceptable Sender` fields. The first row must be a header row. 
+6. Select **Save**.
+
+## Export allow policies
+
+To export a list of allow policies:
+
+1. On the **Detection settings** page, select the allow policies you want to export.
+2. Select **Action**.
+3. Select **Export to CSV**.
+
+## Edit allow policy
+
+To edit an allow policy:
+
+1. On the **Detection settings** page, select the allow policy you want to edit.
+2. Select the three dots > **Edit**.
+3. Edit the allow policy.
+4. Select **Save**.
+
+## Delete allow policy
+
+To delete an allow policy:
+
+1. On the **Detection settings** page, select the allow policy you want to delete.
+2. Select the three dots > **Delete**.
+3. On the pop-up message, select **Delete**.
+
+To delete multiple allow policies at once:
+
+1. On the **Detection settings** page, select the allow policies you want to delete.
+2. Select **Action**.
+3. Select **Delete**. 

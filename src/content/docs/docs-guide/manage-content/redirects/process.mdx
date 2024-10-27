@@ -6,7 +6,6 @@ sidebar:
 head:
   - tag: title
     content: Redirects | How we do it
-
 ---
 
 There are [multiple ways](https://developers.google.com/search/docs/crawling-indexing/301-redirects) of performing redirects, including at your server, client-side redirects, and using a CDN.
@@ -19,7 +18,7 @@ We use various Cloudflare products for our redirects, due to ease of use and spe
 
 ### Cloudflare Pages (primary)
 
-Our primary method takes advantage of the [Pages platform](/pages/configuration/redirects/), defining redirects in a [plain text file](https://github.com/cloudflare/cloudflare-docs/blob/production/content/_redirects) in our GitHub repo.
+Our primary method takes advantage of the [Pages platform](/pages/configuration/redirects/), defining redirects in a [plain text file](https://github.com/cloudflare/cloudflare-docs/blob/production/public/_redirects) in our GitHub repo.
 
 This setup allows us to use the same workflow for redirects as for any other documentation change. We implement a redirect in the same pull request as the content change and can test these changes in our preview branches.
 
@@ -33,7 +32,7 @@ Normally, bulk redirects only come up when another team is adding a large number
 
 We use this method when the contributors are outside of our team and when the total number of redirects is so large that it would clutter our `_redirects` file and count against our [limit for Pages redirects](/pages/configuration/redirects/#surpass-_redirects-limits).
 
-***
+---
 
 ## When we add redirects
 
@@ -43,8 +42,8 @@ Our team adds redirects in two situations: during the course of normal content a
 
 During normal content work, you want to add redirects when you do the following to a page:
 
-* Change any part of the URL (filename, folder).
-* Delete the page.
+- Change any part of the URL (filename, folder).
+- Delete the page.
 
 We have some automation to help [flag needed redirects](/docs-guide/manage-content/automation/process/#contributor-resources).
 

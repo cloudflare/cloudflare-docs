@@ -16,6 +16,8 @@ description: Use the Durable Objects Alarms API to batch requests to a Durable O
 This example implements an `alarm()` handler that wakes the Durable Object once every 10 seconds to batch requests to a single Durable Object. The `alarm()` handler will delay processing until there is enough work in the queue.
 
 ```js
+import { DurableObject } from 'cloudflare:workers';
+
 // Worker
 export default {
   async fetch(request, env) {
@@ -27,7 +29,7 @@ export default {
 const SECONDS = 10;
 
 // Durable Object
-export class Batcher {
+export class Batcher extends DurableObject {
   constructor(state, env) {
     this.state = state;
     this.storage = state.storage;
@@ -69,3 +71,17 @@ export class Batcher {
 ```
 
 The `alarm()` handler will be called once every 10 seconds. If an unexpected error terminates the Durable Object, the `alarm()` handler will be re-instantiated on another machine. Following a short delay, the `alarm()` handler will run from the beginning on the other machine.
+
+Finally, configure your `wrangler.toml` file to include a Durable Object [binding](/durable-objects/get-started/#5-configure-durable-object-bindings) and [migration](/durable-objects/reference/durable-objects-migrations/) based on the namespace and class name chosen previously.
+
+```toml title="wrangler.toml"
+name = "durable-object-alarm"
+
+[[durable_objects.bindings]]
+name = "BATCHER"
+class_name = "Batcher"
+
+[[migrations]]
+tag = "v1"
+new_classes = ["Batcher"]
+```

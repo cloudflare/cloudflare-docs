@@ -42,30 +42,32 @@ You can set up External Evaluation rules using any API service, but to get start
 3. Create a [Workers KV namespace](/kv/concepts/kv-namespaces/) to store the key. The binding name should be `KV` if you want to run the example as written.
 
    ```sh
-   wrangler kv:namespace create "KV"
+   npx wrangler kv namespace create "KV"
    ```
 
-   The command will output the binding name and KV namespace ID, for example `{ binding = "KV", id = "3e56d0300d714e7994c209d7aff3ccbe" }`.
+   The command will output the binding name and KV namespace ID, for example
+
+   ```txt
+     [[kv_namespaces]]
+      binding = "KV"
+      id = "YOUR_KV_NAMESPACE_ID"
+   ```
 
 4. Open `wrangler.toml` in a text editor and insert the following:
 
-   - `<ACCOUNT_ID>`: your Cloudflare [account ID](/fundamentals/setup/find-account-and-zone-ids/).
-   - `<KV_NAMESPACE_ID>`: the `id` of your KV namespace.
+   - `[[kv_namespaces]]`: Add the output generated in the previous step.
    - `<TEAM_NAME>`: your Cloudflare Zero Trust <GlossaryTooltip term="team name">team name</GlossaryTooltip>.
 
    ```txt
    name = "my-worker"
-   type = "javascript"
-
-   account_id = "<ACCOUNT_ID>"
    workers_dev = true
-   route = ""
-   zone_id = ""
-   compatibility_date = "2022-05-16"
+   compatibility_date = "2024-08-06"
+   main = "index.js"
 
-   kv_namespaces = [
-   { binding = "KV", id = "<KV_NAMESPACE_ID>" }
-   ]
+
+   [[kv_namespaces]]
+   binding = "KV"
+   id = "YOUR_KV_NAMESPACE_ID"
 
    [vars]
    TEAM_DOMAIN="<TEAM_NAME>.cloudflareaccess.com"

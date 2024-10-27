@@ -3,18 +3,17 @@ pcx_content_type: reference
 title: Values
 sidebar:
   order: 4
-
 ---
 
-import { Render } from "~/components"
+import { Render } from "~/components";
 
 When an HTTP request reaches the Cloudflare global network, Cloudflare creates a table of field–value pairs against which to match expressions. This table exists for as long as the current request is being processed.
 
 The values that populate the lookup tables of the Rules language are drawn from a variety of sources:
 
-* **Primitive properties** are obtained directly from the request (`http.request.uri.path`, for example).
-* **Derived values** are the product of a transformation, composition, or basic operation. For example, the transformation `lower(http.request.uri.path)` converts the value of `http.request.uri.path` to lowercase.
-* **Computed values** are the product of a lookup, computation, or other intelligence. For example, Cloudflare uses a machine learning process to dynamically calculate threat scores, represented by the `cf.threat_score` field.
+- **Primitive properties** are obtained directly from the request (`http.request.uri.path`, for example).
+- **Derived values** are the product of a transformation, composition, or basic operation. For example, the transformation `lower(http.request.uri.path)` converts the value of `http.request.uri.path` to lowercase.
+- **Computed values** are the product of a lookup, computation, or other intelligence. For example, Cloudflare uses a machine learning process to dynamically calculate threat scores, represented by the `cf.threat_score` field.
 
 Besides these values, expressions may also contain literal values. These are static, known values that you incorporate into expressions to compare them with values from request/response fields with or without any transformations.
 
@@ -36,8 +35,8 @@ When using the quoted string syntax, a string literal is delimited by `"` (doubl
 
 The quoted string syntax has the following additional escaping requirements:
 
-* When used to specify a regular expression on the right-hand side of the [regex operator](/ruleset-engine/rules-language/operators/#comparison-operators) (`matches` or `~`), the string is parsed using regex escaping rules.
-* When used on the right hand-side of expressions with other operators, or in [function parameters](/ruleset-engine/rules-language/functions/), the string is parsed using basic escaping rules.
+- When used to specify a regular expression on the right-hand side of the [regex operator](/ruleset-engine/rules-language/operators/#comparison-operators) (`matches` or `~`), the string is parsed using regex escaping rules.
+- When used on the right hand-side of expressions with other operators, or in [function parameters](/ruleset-engine/rules-language/functions/), the string is parsed using basic escaping rules.
 
 ```txt title="Examples"
 # Test if URI path contains 'a"b'
@@ -50,7 +49,7 @@ http.request.uri.path matches "a\"#b"
 regex_replace(http.host, "a", "\\")
 ```
 
-:::caution[Warning]
+:::caution
 
 In some situations you will need to double-escape a string — for example, when using the [`regex_replace()`](/ruleset-engine/rules-language/functions/#regex_replace) function with a regular expression matching a backslash (`\`).
 
@@ -62,15 +61,16 @@ Therefore, to replace a backslash (`\`) with the `a` character using `regex_repl
 regex_replace(http.host, "\\\\", "a")
 ```
 
-To avoid this situation, Cloudflare recommends that you use the [raw string syntax](#raw-string-syntax) for specifying regular expressions. 
+To avoid this situation, Cloudflare recommends that you use the [raw string syntax](#raw-string-syntax) for specifying regular expressions.
+
 :::
 
 ### Raw string syntax
 
 To specify a string (or regular expression) using the raw string syntax you use special delimiters:
 
-* The initial delimiter is composed of an `r` character, optionally followed by one or more `#` characters (up to 255), followed by a `"` (double quote) character.
-* The ending delimiter is a `"` (double quote) character followed by the same number of `#` characters as in the initial delimiter (from 0 to 255).
+- The initial delimiter is composed of an `r` character, optionally followed by one or more `#` characters (up to 255), followed by a `"` (double quote) character.
+- The ending delimiter is a `"` (double quote) character followed by the same number of `#` characters as in the initial delimiter (from 0 to 255).
 
 In a raw string there are no special characters, so all characters up to the ending delimiter are interpreted as is (there are no escape sequences).
 
@@ -120,22 +120,22 @@ The Cloudflare Rules language includes [fields](/ruleset-engine/rules-language/f
 
 You can access individual array elements using an index (a non-negative value) between square brackets (`[]`). Array indexes start at `0` (zero).
 
-Use the special notation `[*]` when specifying an expression that will be evaluated for each array element (like the [`map` high-order function](https://wikipedia.org/wiki/Map_\(higher-order_function\))). This special index notation will unpack the array, call the enclosing function for all its elements individually, and return a new array containing all the individual return values.
+Use the special notation `[*]` when specifying an expression that will be evaluated for each array element (like the [`map` high-order function](<https://wikipedia.org/wiki/Map_(higher-order_function)>)). This special index notation will unpack the array, call the enclosing function for all its elements individually, and return a new array containing all the individual return values.
 
 ### Examples
 
 Consider the `http.request.headers.names` field with type `Array<String>` in the following examples:
 
-* Obtain the first element in the array:<br/>
+- Obtain the first element in the array:<br/>
   `http.request.headers.names[0]`
 
-* Check if the first array element is equal to `Content-Type` (case sensitive):<br/>
+- Check if the first array element is equal to `Content-Type` (case sensitive):<br/>
   `http.request.headers.names[0] == "Content-Type"`
 
-* Check if any array element is equal to `Content-Type` (case sensitive):<br/>
+- Check if any array element is equal to `Content-Type` (case sensitive):<br/>
   `any(http.request.headers.names[*] == "Content-Type")`
 
-* Check if any array element is equal to `Content-Type`, ignoring the case:<br/>
+- Check if any array element is equal to `Content-Type`, ignoring the case:<br/>
   `any(lower(http.request.headers.names[*])[*] == "content-type")`
 
 In the last example, the `lower()` function includes the `[*]` notation so that the function is evaluated for each array element. This function, used along `[*]`, returns a new array where each element of the input array is converted to lowercase. Then, the string comparison uses `[*]` to transform the array resulting from applying `lower()` to each header name into an array of boolean values. Finally, `any()` evaluates to true if at least one of these array elements is true.
@@ -144,20 +144,23 @@ In the last example, the `lower()` function includes the `[*]` notation so that 
 
 It is not possible to define your own arrays. You can only use arrays returned by fields, either directly or modified by functions.
 
-<Render file="rules-language-missing-value-behavior" params={{ one: "an out-of-bounds array index" }} />
+<Render
+	file="rules-language-missing-value-behavior"
+	params={{ one: "an out-of-bounds array index" }}
+/>
 
 You can only use `[*]` multiple times in the same expression if applied to the same array. Also, you can only use `[*]` in the first argument of a function call.
 
 The Rules language [operators](/ruleset-engine/rules-language/operators/) do not directly support arrays or the `[*]` operator — however, they support indexed array elements like `array_value[0]`. For example, you cannot use `[*]` with the `==` operator outside the context of an enclosing function call:
 
-* `http.request.headers.names[*] == "Content-Type"` — **Invalid** expression
-* `any(http.request.headers.names[*] == "Content-Type")` — **Valid** expression
+- `http.request.headers.names[*] == "Content-Type"` — **Invalid** expression
+- `any(http.request.headers.names[*] == "Content-Type")` — **Valid** expression
 
 ## Maps
 
 A map, also called associative array, is a data structure that stores a collection of key-value pairs, where the key must be a `String` and the value can be of any type (for example, a `String` or an array of values). All values in a map must have the same type.
 
-The Cloudflare Rules language includes several [fields](/ruleset-engine/rules-language/fields/) of `Map` data type. The type notation for map fields, for example `Map<Array<String>>`, indicates the data type of the values associated with keys (an `Array` of `String` elements). This means that when you access the value of key `"foo"` you will get either an array of `String` elements or a [missing value](#map-notes).
+The Cloudflare Rules language includes several [fields](/ruleset-engine/rules-language/fields/) of `Map` data type. The type notation for map fields, for example `Map<Array<String>>`, indicates the data type of the values associated with keys (an `Array` of `String` elements). This means that when you access the value of key `"foo"` you will get either an array of `String` elements or a [missing value](#notes-1).
 
 To access a value in a map, enter the key between square brackets (`[]`):
 
@@ -212,7 +215,10 @@ For more information on `any()`, `all()`, `len()`, and other available functions
 
 It is not possible to define your own maps. You can only use maps returned by fields.
 
-<Render file="rules-language-missing-value-behavior" params={{ one: "a non-existing key in a map" }} />
+<Render
+	file="rules-language-missing-value-behavior"
+	params={{ one: "a non-existing key in a map" }}
+/>
 
 ## Lists
 
@@ -220,7 +226,7 @@ Lists allow you to create a group of items and refer to them collectively, by na
 
 To refer to a list in a rule expression, use `$<list_name>` and specify the `in` [operator](/ruleset-engine/rules-language/operators/). Only one value in the list has to match the left-hand side of the expression (before the `in` operator) for the simple expression to evaluate to `true`. If there is no match, the expression will evaluate to `false`.
 
-The following example expression filters requests from IP addresses that are in an [IP list](/waf/tools/lists/custom-lists/#ip-lists) named `office_network`:
+The following example expression filters requests from IP addresses that are in an [IP list](/waf/tools/lists/custom-lists/#lists-with-ip-addresses-ip-lists) named `office_network`:
 
 ```sql
 (ip.src in $office_network)
@@ -236,11 +242,11 @@ Elements in an inline list can be strings, integers, or IP addresses/ranges. All
 
 Additionally, for some data types you can use ranges as elements:
 
-* For integer values, enter ranges in the form `<start_value>..<end_value>`. An inline list can contain both integer ranges and integer values.
-* For IP addresses, you can enter:
+- For integer values, enter ranges in the form `<start_value>..<end_value>`. An inline list can contain both integer ranges and integer values.
+- For IP addresses, you can enter:
 
-  * Explicit IP ranges in the form `<start_address>..<end_address>` (for example, `198.51.100.3..198.51.100.7`).
-  * CIDR ranges (for example, `192.0.2.0/24` or `2001:0db8::/32`).
+  - Explicit IP ranges in the form `<start_address>..<end_address>` (for example, `198.51.100.3..198.51.100.7`).
+  - CIDR ranges (for example, `192.0.2.0/24` or `2001:0db8::/32`).
 
   An inline list can contain explicit IP ranges, CIDR ranges, and individual IP addresses.
 

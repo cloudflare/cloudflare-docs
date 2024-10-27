@@ -7,7 +7,7 @@ slug: 1.1.1.1/other-ways-to-use-1.1.1.1/dns-over-discord
 
 import { Details } from "~/components"
 
-1.1.1.1 works from a Discord server, thanks to the 1.1.1.1 bot. [Invite the bot to your Discord server](https://cfl.re/3nM6VfQ) to start using DNS over Discord.
+1.1.1.1 works from a Discord server, thanks to the 1.1.1.1 bot. [Invite the bot to your Discord server](https://cfl.re/3nM6VfQ) to start using DNS over Discord. Or, [add the bot to your Discord account](https://dns-over-discord.v4.wtf/invite/user) to use it anywhere in Discord.
 
 ## Perform DNS lookups
 
@@ -71,9 +71,19 @@ Example:
 /dig domain: cloudflare.com type: AAAA records short: True
 ```
 
+### Disable DNSSEC checking
+
+You can disable DNSSEC checking in the `dig` command by passing `cdflag` as true. This will return the DNS records even if the DNSSEC validation fails.
+
+Example:
+
+```txt
+/dig domain: cloudflare.com type: AAAA records cdflag: True
+```
+
 ### Refreshing existing results
 
-You can refresh the DNS lookup results by selecting the Refresh button. Selecting it will trigger the bot to re-request the DNS query in the message, and update the results in the message. Any user can select this button.
+You can refresh the DNS lookup results by clicking the Refresh button. Clicking it will trigger the bot to re-request the DNS query in the message, and update the results in the message. Any user can click this button.
 
 The refresh button is available on all responses to the `/dig` command, including those that resulted in an error, such as an unknown domain or no records found.
 
@@ -159,6 +169,16 @@ Example:
 /multi-dig domain: cloudflare.com types: CDS CDNSKEY short: True
 ```
 
+### Disable DNSSEC checking
+
+As with the `dig` command, you can disable DNSSEC checking by passing `cdflag` as true. This will return the DNS records even if the DNSSEC validation fails.
+
+Example:
+
+```txt
+/multi-dig domain: cloudflare.com type: AAAA records cdflag: True
+```
+
 ### Refreshing existing results
 
 The `/multi-dig` command also provides a refresh button below each set of DNS results requested (or after each block of 10 DNS record types, if you requested more than 10).
@@ -230,8 +250,9 @@ Example:
 
 ### `invite` command
 
-The `/invite` command provides the user with a quick link to invite the 1.1.1.1 DNS over Discord bot to another Discord server.
+The `/invite` command provides the user with a quick link to invite the 1.1.1.1 DNS over Discord bot to another Discord server, or to add it to a Discord account.
 The bot can be invited at any time with [https://cfl.re/3nM6VfQ](https://cfl.re/3nM6VfQ).
+The bot can also be added to accounts with [https://dns-over-discord.v4.wtf/invite/user](https://dns-over-discord.v4.wtf/invite/user).
 
 ```txt
 /invite

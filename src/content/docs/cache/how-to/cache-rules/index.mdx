@@ -1,14 +1,17 @@
 ---
 title: Cache Rules
 pcx_content_type: concept
-
 ---
 
-import { FeatureTable, Render } from "~/components"
+import { FeatureTable, Render } from "~/components";
 
 Use Cache Rules to customize cache settings on Cloudflare. Cache Rules allows you to make adjustments to what is eligible to cache, how long it should be cached and where, as well as trigger specific interactions with Cloudflare’s cache and other Rules products for matching requests.
 
 Cache Rules can be created in the [dashboard](/cache/how-to/cache-rules/create-dashboard/), via [API](/cache/how-to/cache-rules/create-api/) or [Terraform](/cache/how-to/cache-rules/terraform-example/).
+
+## Rules templates
+
+<Render file="rules-templates" product="rules" />
 
 ## Availability
 
@@ -16,4 +19,8 @@ The following table describes Cache Rules availability per plan.
 
 <FeatureTable id="cache.cache_rules" />
 
-<Render file="troubleshoot-rules-with-trace" product="rules" params={{ one: "cache rules" }} />
+<Render
+	file="troubleshoot-rules-with-trace"
+	product="rules"
+	params={{ one: "cache rules" }}
+/>

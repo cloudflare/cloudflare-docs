@@ -24,7 +24,7 @@ Both `max_batch_size` and `max_batch_timeout` work together. Whichever limit is 
 
 For example, a `max_batch_size = 30` and a `max_batch_timeout = 10` means that if 30 messages are written to the queue, the consumer will deliver a batch of 30 messages. However, if it takes longer than 10 seconds for those 30 messages to be written to the queue, then the consumer will get a batch of messages that contains however many messages were on the queue at the time (somewhere between 1 and 29, in this case).
 
-:::info[Empty queues]
+:::note[Empty queues]
 
 When a queue is empty, a push-based (Worker) consumer's `queue` handler will not be invoked until there are messages to deliver. A queue does not attempt to push empty batches to a consumer and thus does not invoke unnecessary reads.
 
@@ -43,7 +43,7 @@ The following batch-level settings can be configured to adjust how Queues delive
 | Setting                                   | Default     | Minimum   | Maximum      |
 | ----------------------------------------- | ----------- | --------- | ------------ |
 | Maximum Batch Size `max_batch_size`       | 10 messages | 1 message | 100 messages |
-| Maximum Batch Timeout `max_batch_timeout` | 5 seconds   | 0 seconds | 30 seconds   |
+| Maximum Batch Timeout `max_batch_timeout` | 5 seconds   | 0 seconds | 60 seconds   |
 
 </table-wrap>
 
@@ -115,7 +115,7 @@ When publishing messages to a queue, or when [marking a message or batch for ret
 
 Delaying messages allows you to defer tasks until later, and/or respond to backpressure when consuming from a queue. For example, if an upstream API you are calling to returns a `HTTP 429: Too Many Requests`, you can delay messages to slow down how quickly you are consuming them before they are re-processed.
 
-Messages can be delayed by upto 12 hours.
+Messages can be delayed by up to 12 hours.
 
 :::note
 
