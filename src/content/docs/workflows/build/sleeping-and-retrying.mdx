@@ -112,4 +112,4 @@ export class MyWorkflow extends WorkflowEntrypoint<Env, Params> {
 
 The Workflow instance itself will fail immediately, no further steps will be invoked, and the Workflow will not be retried.
 
-Users can catch this error if they intend to continue the Workflow execution. Otherwise, the Workflow will fail.
+Like other Errors, any uncaught exceptions that propagate to the top level will cause the Workflow to end execution in an Errored state. Catch the `NonRetryableError` to continue Workflow execution.
