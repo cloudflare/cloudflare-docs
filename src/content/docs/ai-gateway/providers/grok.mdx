@@ -6,7 +6,7 @@ sidebar:
     text: Beta
 ---
 
-[Grok](https://docs.x.ai/docs#getting-started) is a general purpose model that can be used for a variety of tasks, including generating and understanding text, code, and function calling.
+[Grok](https://docs.x.ai/docs#getting-started) is s a general purpose model that can be used for a variety of tasks, including generating and understanding text, code, and function calling.
 
 ## Endpoint
 
@@ -22,16 +22,16 @@ When making requests to [Grok](https://docs.x.ai/docs#getting-started), replace 
 
 ```bash title="Request"
 curl https://gateway.ai.cloudflare.com/v1/{account_id}/{gateway_id}/grok/v1/chat/completions \
---header "content-type: application/json" \
---header "Authorization: Bearer <GROK_API_TOKEN>" \
---data '{
-  "model": "grok-beta",
-  "messages": [
-    {
-      "role": "user",
-      "content": "What is Cloudflare?"
-    }
-  ]
+  --header 'content-type: application/json' \
+  --header 'Authorization: Bearer {grok_api_token}' \
+  --data '{
+    "model": "grok-beta",
+    "messages": [
+        {
+            "role": "user",
+            "content": "What is Cloudflare?"
+        }
+    ]
 }'
 ```
 
@@ -41,8 +41,9 @@ If you are using the OpenAI SDK with JavaScript, you can set your endpoint like 
 import OpenAI from "openai";
 
 const openai = new OpenAI({
-	apiKey: "<XAI_API_KEY>",
-	baseURL: "https://api.x.ai/v1",
+	apiKey: "<api key>",
+	baseURL:
+		"https://gateway.ai.cloudflare.com/v1/{account_id}/{gateway_id}/grok",
 });
 
 const completion = await openai.chat.completions.create({
@@ -72,7 +73,7 @@ from openai import OpenAI
 XAI_API_KEY = os.getenv("XAI_API_KEY")
 client = OpenAI(
     api_key=XAI_API_KEY,
-    base_url="https://api.x.ai/v1",
+    base_url="https://gateway.ai.cloudflare.com/v1/{account_id}/{gateway_id}/grok",
 )
 
 completion = client.chat.completions.create(
@@ -92,8 +93,9 @@ If you are using the Anthropic SDK with JavaScript, you can set your endpoint li
 import Anthropic from "@anthropic-ai/sdk";
 
 const anthropic = new Anthropic({
-	apiKey: "<XAI_API_KEY>",
-	baseURL: "https://api.x.ai/",
+	apiKey: "<api key>",
+	baseURL:
+		"https://gateway.ai.cloudflare.com/v1/{account_id}/{gateway_id}/grok",
 });
 
 const msg = await anthropic.messages.create({
@@ -121,7 +123,7 @@ from anthropic import Anthropic
 XAI_API_KEY = os.getenv("XAI_API_KEY")
 client = Anthropic(
     api_key=XAI_API_KEY,
-    base_url="https://api.x.ai",
+    base_url="https://gateway.ai.cloudflare.com/v1/{account_id}/{gateway_id}/grok",
 )
 
 message = client.messages.create(
