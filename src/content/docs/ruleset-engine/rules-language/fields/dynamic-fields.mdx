@@ -514,7 +514,7 @@ Identifies whether a request comes from a worker or not. When a request comes fr
 
 ## JSON Web Tokens Validation claims
 
-[API Shield](/api-shield/) users can now create [Custom Rules](/waf/custom-rules/) using claims present in tokens processed by [JSON Web Tokens Validation](/api-shield/security/jwt-validation/).
+[API Shield](/api-shield/) users can now create [custom rules](/waf/custom-rules/) using claims present in tokens processed by [JSON Web Tokens Validation](/api-shield/security/jwt-validation/).
 
 ### `aud` (audience)
 
@@ -522,7 +522,7 @@ Identifies whether a request comes from a worker or not. When a request comes fr
 `http.request.jwt.claims.aud.names` `Array<String>` <br />
 `http.request.jwt.claims.aud.values` `Array<String>` <br />
 
-The `aud` (audience) claim identifies the recipients that the JWT is intended for. Each principal intended to process the JWT must identify itself with a value in the audience claim. In the general case, the `aud` value is an array of case-sensitive strings, each containing a StringOrURI value.
+The `aud` (audience) claim identifies the recipients that the JSON Web Token (JWT) is intended for. Each principal intended to process the JWT must identify itself with a value in the audience claim. In the general case, the `aud` value is an array of case-sensitive strings, each containing a `StringOrURI` value.
 
 <Render file="jwt-claims" product="api-shield" />
 
@@ -532,7 +532,7 @@ The `aud` (audience) claim identifies the recipients that the JWT is intended fo
 `http.request.jwt.claims.iat.sec.names` `Array<String>` <br />
 `http.request.jwt.claims.iat.sec.values` `Array<Integer>` <br />
 
-The `iat` (issued at) claim identifies the time at which the JWT was issued.
+The `iat` (issued at) claim identifies the time (number of seconds) at which the JWT was issued.
 
 <Render file="jwt-claims" product="api-shield" />
 
@@ -562,7 +562,7 @@ The `jti` (JWT ID) claim provides a unique identifier for the JWT.
 `http.request.jwt.claims.nbf.sec.names` `Array<String>` <br />
 `http.request.jwt.claims.nbf.sec.values` `Array<Integer>` <br />
 
-The `nbf` (not before) claim identifies the time before which the JWT must not be accepted for processing.
+The `nbf` (not before) claim identifies the time (number of seconds) before which the JWT must not be accepted for processing.
 
 <Render file="jwt-claims" product="api-shield" />
 
