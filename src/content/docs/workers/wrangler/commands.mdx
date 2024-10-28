@@ -946,12 +946,12 @@ wrangler r2 bucket domain add <NAME> [OPTIONS]
   - The custom domain to connect to the R2 bucket.
 - `--zone-id` <Type text="string" /> <MetaInfo text="required" />
   - The [zone ID](/fundamentals/setup/find-account-and-zone-ids/) associated with the custom domain.
-- `--enabled` <Type text="boolean" /> <MetaInfo text="optional" />
-  - Whether to enable public access at the custom domain (default is enabled).
 - `--min-tls` <Type text="'1.0'|'1.1'|'1.2'|'1.3'" /> <MetaInfo text="optional" />
   - Set the minimum TLS version for the custom domain (defaults to 1.0 if not set).
 - `--jurisdiction` <Type text="string" /> <MetaInfo text="optional" />
   - The jurisdiction where the bucket exists, if a jurisdiction has been specified. Refer to [jurisdictional restrictions](/r2/reference/data-location/#jurisdictional-restrictions).
+- `--force` <Type text="boolean" /> <MetaInfo text="optional" />
+  - Skip confirmation when adding the custom domain.
 
 ### `domain remove`
 
@@ -982,8 +982,6 @@ wrangler r2 bucket domain update <NAME> [OPTIONS]
   - The name of the R2 bucket associated with the custom domain to update.
 - `--domain` <Type text="string" /> <MetaInfo text="required" />
   - The custom domain whose settings will be updated.
-- `--enabled` <Type text="boolean" /> <MetaInfo text="optional" />
-  - Enable or disable public access at the custom domain.
 - `--min-tls` <Type text="'1.0'|'1.1'|'1.2'|'1.3'" /> <MetaInfo text="optional" />
   - Update the minimum TLS version for the custom domain.
 - `--jurisdiction` <Type text="string" /> <MetaInfo text="optional" />
@@ -1376,7 +1374,6 @@ wrangler workflows instances describe <WORKFLOW_NAME> <ID> [OPTIONS]
 # Passing `latest` instead of an explicit ID will describe the most recently queued instance
 wrangler workflows instances describe my-workflow latest
 ```
-
 ```sh output
 Workflow Name:         my-workflow
 Instance Id:           51c73fc8-7fd5-47d9-bd82-9e301506ee72
@@ -1442,7 +1439,6 @@ wrangler workflows describe <WORKFLOW_NAME> [OPTIONS]
 ### `trigger`
 
 Trigger (create) a Workflow instance.
-
 ```sh
 wrangler workflows trigger <WORKFLOW_NAME> <PARAMS> [OPTIONS]
 ```
