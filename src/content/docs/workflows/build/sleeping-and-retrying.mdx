@@ -125,9 +125,10 @@ try {
     console.log('error was thrown');
 }
 
-// the Workflow will not fail and can continue its execution
+// the Workflow will not fail and will continue its execution
 
-await step.do(next task, async() => {
+await step.do('next-task', async() => {
 	// more work to be done
 });
+...
 ```
