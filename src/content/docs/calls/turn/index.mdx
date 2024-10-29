@@ -18,6 +18,10 @@ Using Cloudflare Calls TURN service is available free of charge when used togeth
 | TURN over TCP | turn.cloudflare.com | 3478/tcp     | 80/tcp         |
 | TURN over TLS | turn.cloudflare.com | 5349/tcp     | 443/tcp        |
 
+:::note[Note]
+Use of alternate port 53 only by itself is not reccomended. Port 53 is blocked by many ISPs, and by popular browsers such as [Chrome](https://chromium.googlesource.com/chromium/src.git/+/refs/heads/master/net/base/port_util.cc#44) and [Firefox](https://github.com/mozilla/gecko-dev/blob/master/netwerk/base/nsIOService.cpp#L132). It is useful only in certain specific scenerios.
+:::
+
 ## Regions
 
 Calls TURN service is available in every Cloudflare data center.
