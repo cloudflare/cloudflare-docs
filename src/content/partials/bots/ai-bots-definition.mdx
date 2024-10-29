@@ -17,7 +17,7 @@ For Bot Management customers, if you have set a rule to serve managed challenges
 
 This behavior remains the same if the setting for verified, definitely automated, and likely bots is set to `block` or `allow`. If you have an action to `allow` for these rules, the request is not matched to any rule and proceeds to the next ruleset phase. Similarly, if the action is set to block, they will be blocked in the earlier phase and do not move on to match the AI rule at all. However, when the action is `challenge`, the request matches a rule and therefore will not be matched to any rules after. 
 
-For non-Bot Management customers, all rules for verified, definitely automated, and likely bots run in the phase following the AI bots rule. 
+For self-serve non-Bot Management customers, all rules for verified, definitely automated, and likely bots run in the phase following the AI bots rule. 
 
 ```mermaid
 ---
