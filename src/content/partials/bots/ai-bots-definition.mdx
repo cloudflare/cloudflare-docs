@@ -15,7 +15,7 @@ The rule to block AI bots takes precedence over all other Super Bot Fight Mode r
 
 For Bot Management customers, if you have set a rule to serve managed challenges to definitely automated bots, AI bots will also be challenged because custom rules run in a phase before Super Bot Fight Mode, which is the phase when the rule to block AI bots runs. 
 
-This behavior remains the same if the setting for verified, definitely automated, and likely bots is set to `block` or `allow`. If you have an action to `allow` for these rules, the request is not matched to any rule and proceeds to the next ruleset phase. Similarly, if the action is set to block, they will be blocked in the earlier phase and do not move on to match the AI rule at all. However, when the action is `challenge`, the request matches a rule and therefore will not be matched to any rules after. 
+This behavior remains the same if the setting for verified, definitely automated, and likely bots is set to `block` or `allow`. If you have an action to `allow` for these rules, the request is not matched to any rule and proceeds to the next ruleset phase. Similarly, if the action is set to `block`, they will be blocked in the earlier phase and do not move on to match the AI rule at all. However, when the action is `challenge`, the request matches a rule and therefore will not be matched to any rules after. 
 
 For self-serve non-Bot Management customers, all rules for verified, definitely automated, and likely bots run in the phase following the AI bots rule. 
 
@@ -26,7 +26,7 @@ title: Rule phases
 flowchart LR
 accTitle: AI bots rule phases diagram
 accDescr: This diagram details the phases in which AI bots rules run.
-A[Custom rules] --> B[Block AI bots rule] --> C[Allow verified bots rule]
+A[Custom rules] --> B[Block AI bots<br>managed rule] --> C[Allow verified bots rule]
 ```
 
 This feature is available on all Cloudflare plans.
