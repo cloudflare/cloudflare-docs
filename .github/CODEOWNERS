@@ -90,13 +90,13 @@
 /src/content/docs/d1/ @elithrar @rozenmd @vy-ton @joshthoward @oxyjun @cloudflare/pcx-technical-writing
 /src/content/changelogs/d1.yaml @elithrar @rozenmd @vy-ton @joshthoward @oxyjun @cloudflare/pcx-technical-writing
 /src/content/partials/d1/ @elithrar @rozenmd @vy-ton @joshthoward @oxyjun @cloudflare/pcx-technical-writing
-/src/content/docs/durable-objects/ @elithrar @vy-ton @joshthoward @cloudflare/pcx-technical-writing
-/src/content/changelogs/durable-objects.yaml @elithrar @rozenmd @vy-ton @joshthoward @cloudflare/pcx-technical-writing
+/src/content/docs/durable-objects/ @elithrar @vy-ton @joshthoward @oxyjun @cloudflare/pcx-technical-writing
+/src/content/changelogs/durable-objects.yaml @elithrar @rozenmd @vy-ton @joshthoward @oxyjun @cloudflare/pcx-technical-writing
 /src/content/docs/email-routing/ @cloudflare/pcx-technical-writing
 /src/content/docs/hyperdrive/ @elithrar @thomasgauvin @sejoker @oxyjun @cloudflare/pcx-technical-writing
 /src/content/changelogs/hyperdrive.yaml @elithrar @thomasgauvin @sejoker @oxyjun @cloudflare/pcx-technical-writing
 /src/content/partials/hyperdrive/ @elithrar @thomasgauvin @sejoker @oxyjun @cloudflare/pcx-technical-writing
-/src/content/changelogs/durable-objects.yaml @elithrar @vy-ton @joshthoward @cloudflare/pcx-technical-writing
+/src/content/changelogs/durable-objects.yaml @elithrar @vy-ton @joshthoward @oxyjun @cloudflare/pcx-technical-writing
 /src/content/docs/images/ @dcpena @cloudflare/pcx-technical-writing @renandincer @third774
 /src/content/docs/pages/ @cloudflare/workers-docs @GregBrimble @WalshyDev @aninibread @irvinebroque @cloudflare/pcx-technical-writing @ToriLindsay
 /src/assets/images/pages/ @cloudflare/workers-docs @GregBrimble @WalshyDev @aninibread @cloudflare/pcx-technical-writing @ToriLindsay
