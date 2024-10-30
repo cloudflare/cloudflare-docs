@@ -13,7 +13,7 @@ Only available on Enterprise plans. For more information, contact your account t
 
 In addition to [anti-virus (AV) scanning](/cloudflare-one/policies/gateway/http-policies/antivirus-scanning/), Gateway can quarantine previously unseen files downloaded by your users into a sandbox and scan them for malware.
 
-If AV scanning does not detect malware in a file download, Gateway will quarantine the file in the sandbox. If the file has not been downloaded before, Gateway will monitor the inputs and outputs of the file and display an interstitial page for the user. If the sandbox does not detect malicious activity, Gateway will release the file from quarantine and download it to your user's device. If the sandbox detects malicious activity, Gateway will block the download. For any subsequent downloads of the file, Gateway will remember and apply the allow/block decision.
+If AV scanning does not detect malware in a file download, Gateway will quarantine the file in the sandbox. If the file has not been downloaded before, Gateway will monitor any actions taken by the file and compare them to known malware patterns. During this process, Gateway will display an interstitial page in the user's browser. If the sandbox does not detect malicious activity, Gateway will release the file from quarantine and download it to your user's device. If the sandbox detects malicious activity, Gateway will block the download. For any subsequent downloads of the file, Gateway will remember and apply its allow/block decision.
 
 Gateway will log any file sandbox decisions in your [HTTP logs](/cloudflare-one/insights/logs/gateway-logs/#http-logs).
 
