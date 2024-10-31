@@ -27,4 +27,4 @@ The original implementation of the [`URL`](https://developer.mozilla.org/en-US/d
 
 Set the compatibility date of your Worker to a date after `2022-10-31` or enable the `url_standard` compatibility flag to opt-in the fully spec compliant `URL` API implementation.
 
-Refer to the [`response_redirect_url_standard` compatibility flag](/workers/configuration/compatibility-dates/#use-a-spec-compliant-url-implementation-in-redirects) , which affects the URL implementation used in `Response.redirect()`.
+Refer to the [`response_redirect_url_standard` compatibility flag](/workers/configuration/compatibility-flags/#use-a-spec-compliant-url-implementation-in-redirects) , which affects the URL implementation used in `Response.redirect()`.

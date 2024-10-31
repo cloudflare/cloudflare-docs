@@ -123,6 +123,8 @@
 /src/content/docs/workers/runtime-apis/bindings/ @irvinebroque @mikenomitch @GregBrimble @cloudflare/pcx-technical-writing
 /src/content/docs/workers/platform/ @irvinebroque @tanushree-sharma @GregBrimble @cloudflare/deploy-config @cloudflare/pcx-technical-writing
 /src/content/docs/workers/configuration/compatibility-dates/ @irvinebroque @mikenomitch @GregBrimble @cloudflare/deploy-config @cloudflare/pcx-technical-writing
+/src/content/docs/workers/configuration/compatibility-flags/ @irvinebroque @mikenomitch @GregBrimble @cloudflare/deploy-config @cloudflare/pcx-technical-writing
+
 /src/content/docs/workers/reference/migrate-to-module-workers/ @irvinebroque @GregBrimble @cloudflare/deploy-config @cloudflare/pcx-technical-writing
 /src/content/docs/workers/reference/security-model/ @irvinebroque @GregBrimble @cloudflare/pcx-technical-writing
 /src/content/compatibility-dates/ @irvinebroque @kflansburg @mikenomitch @GregBrimble @cloudflare/pcx-technical-writing

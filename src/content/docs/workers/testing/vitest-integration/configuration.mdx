@@ -145,7 +145,7 @@ The following functions are exported from the `@cloudflare/vitest-pool-workers/c
 
 * `miniflare`: `SourcelessWorkerOptions & { workers?: WorkerOptions\[]; }` optional
 
-  * Use this to provide configuration information that is typically stored within the Wrangler configuration file, such as [bindings](/workers/runtime-apis/bindings/), [compatibility dates](/workers/configuration/compatibility-dates/), and [compatibility flags](/workers/configuration/compatibility-dates/#compatibility-flags). The `WorkerOptions` interface is defined [here](https://github.com/cloudflare/workers-sdk/tree/main/packages/miniflare#interface-workeroptions). Use the `main` option above to configure the entry point, instead of the Miniflare `script`, `scriptPath`, or `modules` options.
+  * Use this to provide configuration information that is typically stored within the Wrangler configuration file, such as [bindings](/workers/runtime-apis/bindings/), [compatibility dates](/workers/configuration/compatibility-dates/), and [compatibility flags](/workers/configuration/compatibility-flags/). The `WorkerOptions` interface is defined [here](https://github.com/cloudflare/workers-sdk/tree/main/packages/miniflare#interface-workeroptions). Use the `main` option above to configure the entry point, instead of the Miniflare `script`, `scriptPath`, or `modules` options.
 
   * If your project makes use of multiple Workers, you can configure auxiliary Workers that run in the same `workerd` process as your tests and can be bound to. Auxiliary Workers are configured using the `workers` array, containing regular Miniflare [`WorkerOptions`](https://github.com/cloudflare/workers-sdk/tree/main/packages/miniflare#interface-workeroptions) objects. Note that unlike the `main` Worker, auxiliary Workers:
     * Cannot have TypeScript entrypoints. You must compile auxiliary Workers to JavaScript first. You can use the [`wrangler deploy --dry-run --outdir dist`](/workers/wrangler/commands/#deploy) command for this.
@@ -166,7 +166,7 @@ The following functions are exported from the `@cloudflare/vitest-pool-workers/c
 :::caution
 
 
-You must define a compatibility date of `2022-10-31` or higher, and include [`nodejs_compat` in your compatibility flags](/workers/configuration/compatibility-dates/#nodejs-compatibility-flag) to use the Workers Vitest integration.
+You must define a compatibility date of `2022-10-31` or higher, and include [`nodejs_compat` in your compatibility flags](/workers/configuration/compatibility-flags/#nodejs-compatibility-flag) to use the Workers Vitest integration.
 
 
 :::
