@@ -21,8 +21,3 @@ externals:
     url: https://blog.cloudflare.com/automatic-platform-optimizations-starting-with-wordpress/
   - title: "Blog: APO Post-launch report"
     url: https://blog.cloudflare.com/apo-post-launch-report/
-
-algolia:
-  index: TEST - Re-dev docs
-  apikey: 4edb0a6cef3338ff4bcfbc6b3d2db56b
-  product: automatic-platform-optimization
