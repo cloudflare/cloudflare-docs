@@ -5,9 +5,11 @@ sidebar:
   order: 8
 ---
 
+import { GlossaryTooltip } from "~/components";
+
 ## Restrict Durable Objects to a jurisdiction
 
-Jurisdictions are used to create Durable Objects that only run and store data within a region to comply with local regulations such as the [GDPR](https://gdpr-info.eu/) or [FedRAMP](https://blog.cloudflare.com/cloudflare-achieves-fedramp-authorization/).
+Jurisdictions are used to create <GlossaryTooltip term="Durable Object">Durable Objects</GlossaryTooltip> that only run and store data within a region to comply with local regulations such as the [GDPR](https://gdpr-info.eu/) or [FedRAMP](https://blog.cloudflare.com/cloudflare-achieves-fedramp-authorization/).
 
 Workers may still access Durable Objects constrained to a jurisdiction from anywhere in the world. The jurisdiction constraint only controls where the Durable Object itself runs and persists data. Consider using [Regional Services](/data-localization/regional-services/) to control the regions from which Cloudflare responds to requests.
 

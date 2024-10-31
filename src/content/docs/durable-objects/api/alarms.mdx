@@ -5,11 +5,11 @@ sidebar:
   order: 6
 ---
 
-import { Type } from "~/components";
+import { Type, GlossaryTooltip } from "~/components";
 
 ## Background
 
-Durable Objects alarms allow you to schedule the Durable Object to be woken up at a time in the future. When the alarm's scheduled time comes, the `alarm()` handler method will be called. Alarms are modified using the [Storage API](/durable-objects/api/storage-api/), and alarm operations follow the same rules as other storage operations.
+Durable Objects alarms allow you to schedule the Durable Object to be woken up at a time in the future. When the alarm's scheduled time comes, the `alarm()` handler method will be called. Alarms are modified using the <GlossaryTooltip term="Storage API">Storage API</GlossaryTooltip>, and alarm operations follow the same rules as other storage operations.
 
 Notably:
 
@@ -37,10 +37,7 @@ Alarms can be used to build distributed primitives, like queues or batching of w
 
 ### setAlarm
 
-- <code>
-  	{" "}
-  	setAlarm(scheduledTimeMs <Type text="number" />)
-  </code>
+- <code>{" "}setAlarm(scheduledTimeMs <Type text="number" />)</code>
   : <Type text="void" />
 
   - Set the time for the alarm to run. Specify the time as the number of milliseconds elapsed since the UNIX epoch.

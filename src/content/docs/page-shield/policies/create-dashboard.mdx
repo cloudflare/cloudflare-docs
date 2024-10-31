@@ -1,13 +1,10 @@
 ---
+title: Create a policy in the dashboard
 pcx_content_type: how-to
-title: Create in the dashboard
 sidebar:
   order: 2
-head:
-  - tag: title
-    content: Create a policy in the dashboard
+  label: Create in the dashboard
 description: Learn how to create a Page Shield policy in the Cloudflare dashboard.
-
 ---
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) and select your account and domain.
@@ -21,17 +18,18 @@ description: Learn how to create a Page Shield policy in the Cloudflare dashboar
 5. Under **If incoming requests match**, define the policy scope. You can use the Expression Builder (specifying one or more values for **Field**, **Operator**, and **Value**) or manually enter an expression using the Expression Editor. For more information, refer to [Edit expressions in the dashboard](/ruleset-engine/rules-language/expressions/edit-expressions/).
 
 6. Under **Allow these directives**, select the desired [CSP directives](/page-shield/policies/csp-directives/) for the policy by enabling one or more checkboxes.
-   * To manually enter an allowed source, select **Add source**.
-   * To refresh the displayed sources based on Page Shield's detected resources, select **Refresh suggestions**.
+
+   - To manually enter an allowed source, select **Add source**.
+   - To refresh the displayed sources based on Page Shield's detected resources, select **Refresh suggestions**.
 
      :::note
 
-     Page Shield provides suggestions for **Default**, **Scripts**, and **Connections** directives. For the **Default** directive, suggestions are based on monitored scripts and connections resources. 
+     Page Shield provides suggestions for **Default**, **Scripts**, and **Connections** directives. For the **Default** directive, suggestions are based on monitored scripts and connections resources.
      :::
 
 7. Under **Then take action**, select the desired action:
 
-   * *Allow*: Enforces the CSP directives configured in the policy, blocking any other resources from being loaded on your website, and logging any [policy violations](/page-shield/policies/violations/).
-   * *Log*: Logs any policy violations without blocking any resources not covered by the policy.
+   - _Allow_: Enforces the CSP directives configured in the policy, blocking any other resources from being loaded on your website, and logging any [policy violations](/page-shield/policies/violations/).
+   - _Log_: Logs any policy violations without blocking any resources not covered by the policy.
 
 8. To save and deploy your rule, select **Deploy**. If you are not ready to deploy your rule, select **Save as Draft**.

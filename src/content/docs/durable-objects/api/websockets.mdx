@@ -5,13 +5,13 @@ sidebar:
   order: 5
 ---
 
-import { Render, Type, MetaInfo } from "~/components";
+import { Render, Type, MetaInfo, GlossaryTooltip } from "~/components";
 
 ## Background
 
 WebSockets are long-lived TCP connections that enable bi-directional, real-time communication between client and server.
 
-Durable Objects support the Workers Runtime [WebSocket API](/workers/runtime-apis/websockets/). Your Durable Object can act as a single point-of-coordination for WebSocket sessions, giving you full control over messages sent to and from clients, allowing you to build applications like chat rooms and multiplayer games.
+<GlossaryTooltip term="Durable Object">Durable Objects</GlossaryTooltip> support the Workers Runtime [WebSocket API](/workers/runtime-apis/websockets/). Your Durable Object can act as a single point-of-coordination for WebSocket sessions, giving you full control over messages sent to and from clients, allowing you to build applications like chat rooms and multiplayer games.
 
 For more information beyond the API reference, refer to the [Build a WebSocket server](/durable-objects/examples/websocket-server/) example.
 

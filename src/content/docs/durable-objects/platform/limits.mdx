@@ -6,7 +6,7 @@ sidebar:
 
 ---
 
-import { Render } from "~/components";
+import { Render, GlossaryTooltip } from "~/components";
 
 Durable Objects are only available on the [Workers Paid plan](/workers/platform/pricing/#workers). Durable Objects limits are the same as [Workers Limits](/workers/platform/limits/), as well as the following limits that are specific to Durable Objects:
 
@@ -58,6 +58,6 @@ A Durable Object that receives too many requests will, after attempting to queue
 
 Durable Objects are designed such that the number of individual objects in the system do not need to be limited, and can scale horizontally.
 
-- You can create and run as many separate Durable Objects as you want within a given Durable Object namespace.
+- You can create and run as many separate Durable Objects as you want within a given Durable Object <GlossaryTooltip term="namespace">namespace</GlossaryTooltip>.
 - The main limit to your usage of Durable Objects is the total storage limit per account.
 - If you need more storage, contact your account team or complete the [Limit Increase Request Form](https://forms.gle/ukpeZVLWLnKeixDu7) and we will contact you with next steps.

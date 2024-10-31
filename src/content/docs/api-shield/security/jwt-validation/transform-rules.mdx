@@ -34,29 +34,4 @@ As an example, to send the header `x-send-jwt-claim-user` request header to the 
 4. Enter a rule name and a filter expression, if applicable.
 5. Choose **Set dynamic**.
 6. Set the header name.
-7. Set the value to `lookup_json_string(http.request.jwt.claims["<TOKEN_CONFIGURATION_ID>"][0], "claim_name")`, where `<TOKEN_CONFIGURATION_ID>` is your token configuration ID found in JWT Validation and `claim_name` is the JWT claim you want to add to the header.
-
-## Available fields
-
-You can create Transform Rules using more claims present in tokens processed by [JWT Validation](/api-shield/security/jwt-validation/).
-
-- `http.request.jwt.claims.aud,`
-- `http.request.jwt.claims.aud.names,`
-- `http.request.jwt.claims.aud.values,`
-- `http.request.jwt.claims.iat.sec,`
-- `http.request.jwt.claims.iat.sec.names,`
-- `http.request.jwt.claims.iat.sec.values,`
-- `http.request.jwt.claims.iss,`
-- `http.request.jwt.claims.iss.names,`
-- `http.request.jwt.claims.iss.values,`
-- `http.request.jwt.claims.jti,`
-- `http.request.jwt.claims.jti.names,`
-- `http.request.jwt.claims.jti.values,`
-- `http.request.jwt.claims.nbf.sec,`
-- `http.request.jwt.claims.nbf.sec.names,`
-- `http.request.jwt.claims.nbf.sec.values,`
-- `http.request.jwt.claims.sub,`
-- `http.request.jwt.claims.sub.names,`
-- `http.request.jwt.claims.sub.values,`
-- `cf.api_gateway.auth_id_present,`
-- `cf.api_gateway.request_violates_schema`
+7. Set the value to `lookup_json_string(http.request.jwt.claims["<TOKEN_CONFIGURATION_ID>"][0], "claim_name")`, where `<TOKEN_CONFIGURATION_ID>` is your token configuration ID found in JWT Validation and `claim_name` is the [JWT claim](/ruleset-engine/rules-language/fields/dynamic-fields/#json-web-tokens-validation-claims) you want to add to the header.

@@ -368,6 +368,8 @@
 /durable-objects/reference/troubleshooting/ /durable-objects/observability/troubleshooting/ 301
 /durable-objects/reference/graphql-analytics/ /durable-objects/observability/graphql-analytics/ 301
 /durable-objects/api/transactional-storage-api/ /durable-objects/api/storage-api/ 301
+/durable-objects/platform/changelog/ /durable-objects/changelog/ 301
+/durable-objects/glossary/ /durable-objects/reference/glossary/ 301
 
 # email-routing
 /email-routing/enable-email-routing/ /email-routing/get-started/enable-email-routing/ 301
@@ -379,7 +381,7 @@
 /email-security/setup/api-deployment/ /email-security/setup/post-delivery-deployment/api/ 301
 /email-security/setup/api-deployment/office365-api/ /email-security/setup/post-delivery-deployment/api/office365-api/ 301
 /email-security/email-configuration/retract-settings/gmail-retraction/ /email-security/deployment/api/setup/gsuite-bcc-setup/add-retraction/ 301
- 
+
 
 # firewall
 /firewall/api/cf-lists/ /waf/tools/lists/lists-api/ 301
@@ -648,6 +650,8 @@
 /learning-paths/workers/test/intro-to-observability/ /learning-paths/workers/get-started/ 301
 /learning-paths/cybersafe/area1-onboarding/area1-api/ /learning-paths/cybersafe/area1-onboarding/ 301
 /learning-paths/cybersafe/area1-onboarding/area1-connection-methods/ /learning-paths/cybersafe/area1-onboarding/area1-inline/ 301
+/learning-paths/secure-internet-traffic/connect-networks/ /learning-paths/secure-internet-traffic/connect-devices-networks/ 301
+/learning-paths/secure-internet-traffic/connect-networks/choose-on-ramp/ /learning-paths/secure-internet-traffic/connect-devices/choose-on-ramp/ 301
 
 ## dns-filtering / secure-internet-traffic
 /learning-paths/dns-filtering/ /learning-paths/secure-internet-traffic/ 301
@@ -1803,6 +1807,9 @@
 ## DNS filtering --> Secure your Internet traffic and SaaS apps
 /learning-paths/dns-filtering/account/* /learning-paths/secure-internet-traffic/initial-setup/:splat 301
 /learning-paths/dns-filtering/create-policy/* /learning-paths/secure-internet-traffic/build-dns-policies/:splat 301
+## Secure your Internet Traffic
+/learning-paths/secure-internet-traffic/connect-devices/* /learning-paths/secure-internet-traffic/connect-devices-networks/:splat 301
+
 
 # Old WAF changelog entries
 /waf/change-log/2019-* /waf/change-log/historical-2019/ 301

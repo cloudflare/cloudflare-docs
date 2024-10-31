@@ -5,7 +5,9 @@ sidebar:
   order: 1
 ---
 
-In-memory state means that each Durable Object has one active instance at any particular time. All requests sent to that Durable Object are handled by that same instance. You can store some state in memory.
+import { GlossaryTooltip } from "~/components";
+
+In-memory state means that each <GlossaryTooltip term="Durable Object">Durable Object</GlossaryTooltip> has one active instance at any particular time. All requests sent to that Durable Object are handled by that same instance. You can store some state in memory.
 
 Variables in a Durable Object will maintain state as long as your Durable Object is not evicted from memory.
 

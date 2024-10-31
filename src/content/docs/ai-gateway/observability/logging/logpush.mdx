@@ -13,13 +13,15 @@ You can toggle Logpush on and off in the [Cloudflare dashboard](https://dash.clo
 
 This guide explains how to set up Logpush for AI Gateway, generate an RSA key pair for encryption, and decrypt the logs once they are received.
 
-You can store up to 10 million logs per gateway. If your limit is reached, new logs will stop being saved and will not be exported through Logpush. To continue saving and exporting logs, you must delete older logs to free up space for new logs. Logpush has a limit of 4 jobs.
+You can store up to 10 million logs per gateway. If your limit is reached, new logs will stop being saved and will not be exported through Logpush. To continue saving and exporting logs, you must delete older logs to free up space for new logs. Logpush has a limit of 4 jobs and a maximum request size of 1 MB per log.
 
 :::note[Note]
 
 To export logs using Logpush, you must have logs turned on for the gateway.
 
 :::
+
+<Render file="limits-increase" product="ai-gateway" />
 
 ## How logs are encrypted
 

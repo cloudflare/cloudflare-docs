@@ -68,7 +68,7 @@ export default {
         // If an ?instanceId=<id> query parameter is provided, fetch the status
         // of an existing Workflow by its ID.
         if (instanceId) {
-            let instance = await env.MY_WORKFLOW.get(id);
+            let instance = await env.MY_WORKFLOW.get(instanceId);
 			return Response.json({
 				status: await instance.status(),
 			});
@@ -151,7 +151,7 @@ Once stopped, the Workflow instance *cannot* be resumed.
 
 :::caution
 
-**Known issue**: Restarting a Workflow via the `restart()` method is not currently supported ad will throw an exception (error).
+**Known issue**: Restarting a Workflow via the `restart()` method is not currently supported and will throw an exception (error).
 
 :::
 

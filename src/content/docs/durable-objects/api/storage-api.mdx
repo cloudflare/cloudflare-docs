@@ -6,9 +6,9 @@ sidebar:
 
 ---
 
-import { Render, Type, MetaInfo } from "~/components";
+import { Render, Type, MetaInfo, GlossaryTooltip } from "~/components";
 
-The Storage API allows Durable Objects to access transactional and strongly consistent storage. A Durable Object's attached storage is private to its unique instance and cannot be accessed by other objects.
+The Storage API allows <GlossaryTooltip term="Durable Object">Durable Objects</GlossaryTooltip> to access transactional and strongly consistent storage. A Durable Object's attached storage is private to its unique instance and cannot be accessed by other objects.
 
 Durable Objects gain access to a persistent Storage API via `ctx.storage`, on the `ctx` parameter passed to the Durable Object constructor.
 
@@ -191,7 +191,21 @@ The `put()` method returns a `Promise`, but most applications can discard this p
 
 * `txn`
 
-  * Provides access to the `put()`, `get()`, `delete()` and `list()` methods documented above to run in the current transaction context. In order to get transactional behavior within a transaction closure, you must call the methods on the `txn` Object instead of on the top-level `state.storage` Object.<br/><br/>Also supports a `rollback()` function that ensures any changes made during the transaction will be rolled back rather than committed. After `rollback()` is called, any subsequent operations on the `txn` Object will fail with an exception. `rollback()` takes no parameters and returns nothing to the caller.
+  * Provides access to the `put()`, `get()`, `delete()` and `list()` methods documented above to run in the current transaction context. In order to get transactional behavior within a transaction closure, you must call the methods on the `txn` Object instead of on the top-level `ctx.storage` Object.<br/><br/>Also supports a `rollback()` function that ensures any changes made during the transaction will be rolled back rather than committed. After `rollback()` is called, any subsequent operations on the `txn` Object will fail with an exception. `rollback()` takes no parameters and returns nothing to the caller.
+
+  * When using [the SQLite-backed storage engine](/durable-objects/best-practices/access-durable-objects-storage/#sqlite-storage-backend), the `txn` object is obsolete. Any storage operations performed directly on the `ctx.storage` object, including SQL queries using [`ctx.storage.sql.exec()`](#sqlexec), will be considered part of the transaction.
+
+### transactionSync
+
+* `transactionSync(callback)`: <Type text='any' />
+
+  * Only available when using [the SQLite-backed storage engine](/durable-objects/best-practices/access-durable-objects-storage/#sqlite-storage-backend).
+
+  * Invokes `callback()` wrapped in a transaction, and returns its result.
+
+  * If `callback()` throws an exception, the transaction will be rolled back.
+
+  * The callback must complete synchronously, that is, it should not be declared `async` nor otherwise return a Promise. Only synchronous storage operations can be part of the transaction. This is intended for use with SQL queries using [`ctx.storage.sql.exec()`](#sqlexec), which complete sychronously.
 
 ### sync
 
@@ -233,7 +247,7 @@ The `put()` method returns a `Promise`, but most applications can discard this p
 
 :::note[SQLite in Durable Objects Beta]
 
-SQL API methods accessed with `ctx.storage.sql` are only allowed on [Durable Object classes with SQLite storage backend](/durable-objects/reference/durable-objects-migrations/#enable-sqlite-storage-backend-on-create-durable-object-class-migration) and will return an error if called on Durable Object classes with a key-value storage backend.
+SQL API methods accessed with `ctx.storage.sql` are only allowed on [Durable Object classes with SQLite storage backend](/durable-objects/reference/durable-objects-migrations/#enable-sqlite-storage-backend-on-new-durable-object-class-migration) and will return an error if called on Durable Object classes with a key-value storage backend.
 
 :::
 
@@ -281,6 +295,8 @@ A cursor (`SqlStorageCursor`) to iterate over query row results as objects. `Sql
   * The number of rows read so far as part of this SQL `query`. This may increase as you iterate the cursor. The final value is used for [SQL billing](/durable-objects/platform/pricing/#sqlite-storage-backend).
 *  `rowsWritten`: <Type text='number' />
   * The number of rows written so far as part of this SQL `query`. This may increase as you iterate the cursor. The final value is used for [SQL billing](/durable-objects/platform/pricing/#sqlite-storage-backend).
+
+Note that `sql.exec()` cannot execute transaction-related statements like `BEGIN TRANSACTION` or `SAVEPOINT`. Instead, use the [`ctx.storage.transaction()`](#transaction) or [`ctx.storage.transactionSync()`](#transactionsync) APIs to start a transaction, and then execute SQL queries in your callback.
 
 #### Examples
 

@@ -5,11 +5,11 @@ sidebar:
   order: 2
 ---
 
-import { Render, Tabs, TabItem } from "~/components";
+import { Render, Tabs, TabItem, GlossaryTooltip } from "~/components";
 
 ## Description
 
-A Durable Object ID is a 64-digit hexadecimal number used to identify a Durable Object. Not all 64-digit hex numbers are valid IDs. Durable Object IDs are constructed indirectly via the [`DurableObjectNamespace`](/durable-objects/api/namespace) interface.
+A Durable Object ID is a 64-digit hexadecimal number used to identify a <GlossaryTooltip term="Durable Object">Durable Object</GlossaryTooltip>. Not all 64-digit hex numbers are valid IDs. Durable Object IDs are constructed indirectly via the [`DurableObjectNamespace`](/durable-objects/api/namespace) interface.
 
 The `DurableObjectId` interface refers to a new or existing Durable Object. This interface is most frequently used by [`DurableObjectNamespace::get`](/durable-objects/api/namespace/#get) to obtain a [`DurableObjectStub`](/durable-objects/api/stub) for submitting requests to a Durable Object. Note that creating an ID for a Durable Object does not create the Durable Object. The Durable Object is created lazily after creating a stub from a `DurableObjectId`. This ensures that objects are not constructed until they are actually accessed.
 

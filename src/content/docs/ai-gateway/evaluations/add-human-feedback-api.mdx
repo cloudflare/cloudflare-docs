@@ -7,6 +7,8 @@ sidebar:
 
 This guide will walk you through the steps of adding human feedback to an AI Gateway request using the Cloudflare API. You will learn how to retrieve the relevant request logs, and submit feedback using the API.
 
+If you prefer to add human feedback via the dashboard, refer to [Add Human Feedback](/ai-gateway/evaluations/add-human-feedback/).
+
 ## 1. Create an API Token
 
 1. [Create an API token](/fundamentals/api/get-started/create-token/) with the following permissions:
@@ -37,21 +39,23 @@ The `cf-aig-log-id` is a unique identifier for the specific log entry to which y
 
 ### Method 1: Locate the `cf-aig-log-id` in the request response
 
-This method allows you to directly find the `cf-aig-log-id` within the body of the response returned by the AI Gateway. This is the most straightforward approach if you have access to the original API response.
+This method allows you to directly find the `cf-aig-log-id` within the header of the response returned by the AI Gateway. This is the most straightforward approach if you have access to the original API response.
 
 The steps below outline how to do this.
 
 1. **Make a Request to the AI Gateway**: This could be a request your application sends to the AI Gateway. Once the request is made, the response will contain various pieces of metadata.
-2. **Check the Response Body**: The response body will include a field named `cf-aig-log-id`. This is the identifier you will need to submit feedback.
+2. **Check the Response Headers**: The response will include a header named `cf-aig-log-id`. This is the identifier you will need to submit feedback.
 
 In the example below, the `cf-aig-log-id` is `01JADMCQQQBWH3NXZ5GCRN98DP`.
 
 ```json
 {
 	"status": "success",
-	"data": {
-		"response": "Sample response data",
+	"headers": {
 		"cf-aig-log-id": "01JADMCQQQBWH3NXZ5GCRN98DP"
+	},
+	"data": {
+		"response": "Sample response data"
 	}
 }
 ```
@@ -119,6 +123,30 @@ In the example below, the `id` is `01JADMCQQQBWH3NXZ5GCRN98DP`.
 	"success": true
 }
 ```
+
+### Method 3: Retrieve the `cf-aig-log-id` via a binding
+
+You can also retrieve the `cf-aig-log-id` using a binding, which streamlines the process. Here's how to retrieve the log ID directly:
+
+```js
+const resp = await env.AI.run('@cf/meta/llama-3-8b-instruct', {
+		prompt: 'tell me a joke'
+}, {
+		gateway: {
+				id: 'my_gateway_id'
+		}
+})
+
+const myLogId = env.AI.aiGatewayLogId
+```
+
+:::note[Note:]
+
+
+The `aiGatewayLogId` property, will only hold the last inference call log id.
+
+
+:::
 
 ## 4. Submit feedback via PATCH request
 

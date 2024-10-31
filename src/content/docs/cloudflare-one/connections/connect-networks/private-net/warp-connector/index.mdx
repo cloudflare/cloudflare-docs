@@ -28,7 +28,7 @@ import { Render, Details} from "~/components";
 
 </Details>
 
-Cloudflare WARP Connector is a piece of software [^1] that enables site-to-site, bidirectional, and mesh networking connectivity without requiring changes to underlying network routing infrastructure. WARP Connector establishes a secure Layer 3 connection between a private network and Cloudflare, allowing you to:
+Cloudflare WARP Connector is a software client[^1] that enables site-to-site, bidirectional, and mesh networking connectivity without requiring changes to underlying network routing infrastructure. WARP Connector establishes a secure Layer 3 proxy between a private network and Cloudflare, allowing you to:
 
 - Connect two or more private networks to each other.
 - Connect IoT devices that cannot run external software, such as printers and IP phones.
@@ -37,7 +37,7 @@ Cloudflare WARP Connector is a piece of software [^1] that enables site-to-site,
 
 ![Two subnets connected with WARP Connector](~/assets/images/cloudflare-one/connections/connect-apps/warp-connector/overview.png)
 
-As shown in the diagram, WARP Connector acts as a router for a subnet within the private network to on-ramp and off-ramp traffic through Cloudflare. All devices on the subnet can access any services connected to Cloudflare, and all devices connected to Cloudflare can access any services on the subnet. Each subnet runs a WARP Connector on a designated Linux machine (typically the default gateway router), but other devices on the network do not need to install software.
+As shown in the diagram, WARP Connector acts as a router for a subnet within the private network to on-ramp and off-ramp traffic through Cloudflare. All devices on the subnet can access any services connected to Cloudflare, and all devices connected to Cloudflare can access any services on the subnet. Each subnet runs a WARP Connector on a designated Linux machine (typically the [default gateway router](/cloudflare-one/connections/connect-networks/private-net/warp-connector/site-to-internet/#3-route-traffic-from-subnet-to-warp-connector)), but other devices on the network do not need to install software.
 
 To set up WARP Connector, refer to the guide for your use case:
 

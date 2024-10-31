@@ -11,21 +11,26 @@ The following limits apply to gateway configurations, logs, and related features
 
 | Feature                                                         | Limit                               |
 | --------------------------------------------------------------- | ----------------------------------- |
-| Maximum datasets                                                | 10 per gateway                      |
-| Maximum gateways                                                | 10 per account                      |
-| Maximum logs stored [paid plan](/ai-gateway/reference/pricing/) | 10 million per gateway <sup>1</sup> |
-| Maximum logs stored [free plan](/ai-gateway/reference/pricing/) | 100,000 per account <sup>2</sup>    |
-| Maximum log size stored                                         | 10 MB per log <sup>3</sup>          |
-| Maximum Logpush jobs                                            | 4 per account                       |
-| Maximum gateway name length                                     | 64 characters                       |
+| Datasets                                                        | 10 per gateway                      |
+| Gateways                                                        | 10 per account                      |
+| Logs stored [paid plan](/ai-gateway/reference/pricing/)         | 10 million per gateway <sup>1</sup> |
+| Logs stored [free plan](/ai-gateway/reference/pricing/)         | 100,000 per account <sup>2</sup>    |
+| Log size stored                                                 | 10 MB per log <sup>3</sup>          |
+| Logpush jobs                                                    | 4 per account                       |
+| Logpush size limit                                              | 1MB per log 	                      |
+| Gateway name length                                             | 64 characters                       |
 
 <sup>1</sup> If you have reached 10 million logs stored per gateway, new logs
 will stop being saved. To continue saving logs, you must delete older logs in
-that gateway to free up space or create a new gateway.
+that gateway to free up space or create a new gateway. Refer to [Auto Log
+Cleanup](/ai-gateway/observability/logging/#auto-log-cleanup) for more details
+on how to automatically delete logs.
 
-<sup>2</sup> If you have reached 100,000 logs stored per account, accross all
+<sup>2</sup> If you have reached 100,000 logs stored per account, across all
 gateways, new logs will stop being saved. To continue saving logs, you must
-delete older logs.
+delete older logs. Refer to [Auto Log
+Cleanup](/ai-gateway/observability/logging/#auto-log-cleanup) for more details
+on how to automatically delete logs.
 
 <sup>3</sup> Logs larger than 10 MB will not be stored.
 
