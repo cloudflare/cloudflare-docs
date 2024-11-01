@@ -75,9 +75,12 @@ async function eventHandler(event) {
 * [`resource`](https://developer.mozilla.org/en-US/docs/Web/API/fetch#resource) Request | string | URL
 
 * `options` options
+	* `cache` `undefined | 'no-store'` optional
+		* Standard HTTP `cache` header. Only `cache: 'no-store'` is supported.
+		Any other `cache` header will result in a `TypeError` with the message `Unsupported cache mode: <attempted-cache-mode>`.
+			* For all requests this forwards the `Pragma: no-cache` and `Cache-Control: no-cache` headers to the origin.
+			* For requests to origins not hosted by Cloudflare, `no-store` bypasses the use of Cloudflare's caches.
   * An object that defines the content and behavior of the request.
-
-
 
 ***
 
