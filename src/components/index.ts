@@ -16,6 +16,7 @@ export { default as ExternalResources } from "./ExternalResources.astro";
 export { default as Feature } from "./Feature.astro";
 export { default as FeatureTable } from "./FeatureTable.astro";
 export { default as Flex } from "./Flex.astro";
+export { default as GitHubCode } from "./GitHubCode.astro";
 export { default as Glossary } from "./Glossary.astro";
 export { default as GlossaryDefinition } from "./GlossaryDefinition.astro";
 export { default as GlossaryTooltip } from "./GlossaryTooltip.astro";

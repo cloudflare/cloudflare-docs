@@ -898,10 +898,12 @@ wrangler r2 bucket create <NAME>
 
 - `NAME` <Type text="string" /> <MetaInfo text="required" />
   - The name of the new R2 bucket.
+- `--location` <Type text="string" /> <MetaInfo text="optional" />
+  - The optional [location hint](/r2/reference/data-location/#location-hints) that determines geographic placement of the R2 bucket.
 - `--storage-class` <Type text="'Standard|InfrequentAccess'" /> <MetaInfo text="optional" />
   - The default storage class for objects uploaded to the bucket.
 - `--jurisdiction` <Type text="string" /> <MetaInfo text="optional" />
-  - The jurisdiction where the R2 bucket is created. Refer to [Jurisdictional Restrictions](/r2/reference/data-location/#jurisdictional-restrictions).
+  - The jurisdiction where the R2 bucket is created. Refer to [jurisdictional restrictions](/r2/reference/data-location/#jurisdictional-restrictions).
 
 ### `delete`
 
