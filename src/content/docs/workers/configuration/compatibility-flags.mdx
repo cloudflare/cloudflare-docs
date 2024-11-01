@@ -8,7 +8,9 @@ description: Opt into a specific features of the Workers runtime for your Worker
 
 import { CompatibilityDates } from "~/components";
 
-`compatibility_flags` enable specific features. They can be useful if you want to help the Workers team test upcoming changes that are not yet enabled by default, or if you need to hold back a change that your code depends on but still want to apply other compatibility changes.
+Compatibility flags enable specific features. They can be useful if you want to help the Workers team test upcoming changes that are not yet enabled by default, or if you need to hold back a change that your code depends on but still want to apply other compatibility changes.
+
+Compatibility flags will often have a date in which they are enabled by default, and so, by specifying a [`compatibility_date`](/workers/configuration/compatibility-dates) for your Worker, you can quickly enable all of these various compatibility flags up to, and including, that date.
 
 ## Setting compatibility flags
 
