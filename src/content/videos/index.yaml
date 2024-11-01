@@ -207,7 +207,7 @@ entries:
     updated: 2024-10-07
     difficulty: Beginner
     content_type: 🎥 Video
-    pcx_content_type: tutorial    
+    pcx_content_type: tutorial
   - link: https://developers.cloudflare.com/pages/framework-guides/deploy-a-hono-site/#creator-interview
     title: DevTalk | Episode 01 - Yusuke Wada, creator of Hono Framework
     description: In this interview, Yusuke Wada reflects on his journey in developing Hono.
@@ -219,7 +219,7 @@ entries:
     updated: 2024-10-08
     difficulty: Beginner
     content_type: 🎥 Video
-    pcx_content_type: interview    
+    pcx_content_type: interview
   - link: https://developers.cloudflare.com/workers-ai/tutorials/image-generator-flux/
     title: How to build an AI Image Generator using Cloudflare Workers AI
     description: The new flux-schnell models on Workers AI are our most powerful text to image AI models yet. In this video, we show you how to deploy your own Workers AI image playground.
@@ -251,7 +251,7 @@ entries:
     description: In this video, we demonstrate how to build an event-driven application using Cloudflare Queues. Event-driven system lets you decouple services, allowing them to process and scale independently.
     tags: [Workers, Queues]
     languages: [TypeScript]
-    # stream_id: 
+    # stream_id:
     products: [Workers, Workers AI]
     cloudflare: true
     author: harshil
@@ -264,7 +264,7 @@ entries:
     description: In this video, we introduce Cloudflare Workflows, the Newest Developer Platform Primitive at Cloudflare.
     tags: [Workflows, Workers, Queues, Workers AI, AI Gateway, KV]
     languages: [TypeScript]
-    # stream_id: 
+    # stream_id:
     products: [Workflows, Workers, Queues, Workers AI, AI Gateway, KV]
     cloudflare: true
     author: craig
@@ -277,7 +277,7 @@ entries:
     description: Workflows exposes metrics such as execution, error rates, steps, and total duration!
     tags: [Workflows, Workers, Queues, Workers AI, AI Gateway, KV]
     languages: [TypeScript]
-    # stream_id: 
+    # stream_id:
     products: [Workflows, Workers, Queues, Workers AI, AI Gateway, KV]
     cloudflare: true
     author: craig
@@ -290,7 +290,7 @@ entries:
     description: Cloudflare Workflows allows you to initiate sleep as an explicit step, which can be useful when you want a Workflow to wait, schedule work ahead, or pause until an input or other external state is ready.
     tags: [Workflows, Workers, Queues, Workers AI, AI Gateway, KV]
     languages: [TypeScript]
-    # stream_id: 
+    # stream_id:
     products: [Workflows, Workers, Queues, Workers AI, AI Gateway, KV]
     cloudflare: true
     author: craig
@@ -299,11 +299,11 @@ entries:
     content_type: 🎥 Video
     pcx_content_type: tutorial
   - link: https://developers.cloudflare.com/pages/framework-guides/nextjs/#video-tutorial
-    title: Deploy NextJS to your Workers Application 
+    title: Deploy NextJS to your Workers Application
     description: Watch to learn how to easily deploy your NextJS application to the Cloudflare global network.
     tags: [NextJS, Workers, Pages]
     languages: [TypeScript]
-    # stream_id: 
+    # stream_id:
     products: [Workers, Pages]
     cloudflare: true
     author: confidence
@@ -316,11 +316,11 @@ entries:
     description: With Workers Logs, you can collect, store, filter, and analyze all logging data from your Workers directly in the Cloudflare dashboard.
     tags: [Workers, Pages]
     languages: [TypeScript]
-    # stream_id: 
+    # stream_id:
     products: [Workers, Pages]
     cloudflare: true
     author: confidence
     updated: 2024-10-31
     difficulty: Intermediate
     content_type: 🎥 Video
-    pcx_content_type: tutorial     
+    pcx_content_type: tutorial
