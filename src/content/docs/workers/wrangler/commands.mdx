@@ -945,6 +945,49 @@ List R2 bucket in the current account.
 wrangler r2 bucket list
 ```
 
+### `dev-url enable`
+
+Enable public access via the [r2.dev URL](/r2/buckets/public-buckets/#enable-managed-public-access) for an R2 bucket.
+
+```txt
+wrangler r2 bucket dev-url enable <NAME> [OPTIONS]
+```
+
+- `NAME` <Type text="string" /> <MetaInfo text="required" />
+  - The name of the R2 bucket to enable public access via its r2.dev URL.
+- `--jurisdiction` <Type text="string" /> <MetaInfo text="optional" />
+  - The jurisdiction where the bucket exists, if a jurisdiction has been specified. Refer to [jurisdictional restrictions](/r2/reference/data-location/#jurisdictional-restrictions).
+- `--force` <Type text="boolean" /> <MetaInfo text="optional" />
+  - Skip confirmation when enabling public access via r2.dev URL.
+
+### `dev-url disable`
+
+Disable public access via the [r2.dev URL](/r2/buckets/public-buckets/#enable-managed-public-access) for an R2 bucket.
+
+```txt
+wrangler r2 bucket dev-url disable <NAME> [OPTIONS]
+```
+
+- `NAME` <Type text="string" /> <MetaInfo text="required" />
+  - The name of the R2 bucket to disable public access via its r2.dev URL.
+- `--jurisdiction` <Type text="string" /> <MetaInfo text="optional" />
+  - The jurisdiction where the bucket exists, if a jurisdiction has been specified. Refer to [jurisdictional restrictions](/r2/reference/data-location/#jurisdictional-restrictions).
+- `--force` <Type text="boolean" /> <MetaInfo text="optional" />
+  - Skip confirmation when disabling public access via r2.dev URL.
+
+### `dev-url get`
+
+Get the [r2.dev URL](/r2/buckets/public-buckets/#enable-managed-public-access) and status for an R2 bucket.
+
+```txt
+wrangler r2 bucket dev-url get <NAME> [OPTIONS]
+```
+
+- `NAME` <Type text="string" /> <MetaInfo text="required" />
+  - The name of the R2 bucket whose r2.dev URL status to retrieve.
+- `--jurisdiction` <Type text="string" /> <MetaInfo text="optional" />
+  - The jurisdiction where the bucket exists, if a jurisdiction has been specified. Refer to [jurisdictional restrictions](/r2/reference/data-location/#jurisdictional-restrictions).
+
 ### `domain add`
 
 Connect a [custom domain](/r2/buckets/public-buckets/#custom-domains) to an R2 bucket.
