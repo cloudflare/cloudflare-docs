@@ -104,7 +104,7 @@ The download will contain two files:
 - `main.tf`: Terraform configuration for the new resources needed to create the on-ramp.
 - `instructions.txt`: Instructions for modifying resources that already exist in your cloud environment.
 
-If you intend to plan and apply the downloaded configuration using Terraform, you'll need to use the [Cloudflare Terraform provider](/terraform/) (in addition to the Terraform provider for the on-ramp's cloud service provider). Use your Cloudflare [Global API Key](/fundamentals/api/get-started/keys/), not an API Token.
+If you intend to plan and apply the downloaded configuration using Terraform, you will need to use the [Cloudflare Terraform provider](/terraform/) (in addition to the Terraform provider for the on-ramp's cloud service provider). Use your Cloudflare [Global API Key](/fundamentals/api/get-started/keys/), not an API Token.
 
 :::caution
 Do not deploy the on-ramp using both Cloudflare and Terraform. If you plan to deploy your on-ramp with Cloudflare (meaning you are both planning to create an on-ramp and applying an on-ramp), Cloudflare creates resources that will result in conflicts when you run Terraform (and vice versa). The Cloudflare dashboard will warn you if it detects you might encounter a conflict.
