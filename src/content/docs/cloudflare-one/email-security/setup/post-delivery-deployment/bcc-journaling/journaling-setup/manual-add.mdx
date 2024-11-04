@@ -48,15 +48,11 @@ On the **Set up Email Security** page:
 
 ## Enable auto-moves
 
-To enable auto-move events:
+To enable auto-move events, you will have to connect and associate an integration:
 
-1. Go to **Settings**.
-2. On the **Domains** page, go to **Integrated domains** > **View**.
-3. Select **Connect an integration** > **BCC/Journaling**.
-4. Select **Integrate with MS** > **Authorize**. Follow the steps to [Enable Microsoft Integration](/cloudflare-one/email-security/setup/post-delivery-deployment/api/office365-api/#enable-microsoft-integration).
-5. On the **Set up Email Security** page:
-    - **Connect domains**: Select the domain you want to enable auto-move for. The domain status should be active. This ensures that Email Security is actively scanning your domain.
-    - Select **Continue** until the **Move messages (optional)** step.
-    - **Move messages (optional)**: On this step, choose how you want to [configure auto-moves](/cloudflare-one/email-security/auto-moves/). Once you have configured auto-moves, select **Continue**.
-    - **Review details** > Select **Continue**.
-    - On the **Domains** page, the dashboard will display **Yes** under **Auto-move**, meaning that auto-move events are now enabled on your domain.
+1. Go to **Settings** > **Domain management** > **Integrated domains** > Select **View**.
+2. On the **Domains** page, select the three dots, then select **Associate an integration**.
+3. Select **Connect an integration**. Follow the steps to [enable the Microsoft Office 365 integration](/cloudflare-one/email-security/setup/post-delivery-deployment/bcc-journaling/journaling-setup/office365-journaling/#integrate-with-microsoft-o365).
+4. Once you completed the steps to enable the integration, select **Continue to Email Security**. You will be redirected to the **Domains** page, where you will connect the integration to your specified domain.
+5. Select the three dots, then select **Associate an integration**. Select the integration, then select **Associate**.
+6. Now that your domain has an associated integration, enable [auto-move events](/cloudflare-one/email-security/auto-moves/) on your domain.

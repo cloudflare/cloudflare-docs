@@ -66,11 +66,7 @@ If the zone is on an Enterprise plan, make sure that you [release the zone hold]
 
 ### Restrictions
 
-There are a few restrictions when using custom domains to access R2 buckets.
-
-- The domain being used must belong to the same account as the R2 bucket.
-- Use of a domain with CNAME flattening enabled is not supported. You will need to disable [CNAME flattening](/dns/cname-flattening/) before enabling domain access.
-- Object access is only available via HTTPS; plaintxt HTTP is not supported.
+There is a restriction when using custom domains to access R2 buckets. The domain being used must belong to the same account as the R2 bucket.
 
 ## Disable domain access
 
