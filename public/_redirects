@@ -298,22 +298,30 @@
 # data loss prevention (dlp)
 /cloudflare-one/policies/data-loss-prevention/integration-profiles/ /cloudflare-one/policies/data-loss-prevention/dlp-profiles/integration-profiles/ 301
 /cloudflare-one/policies/data-loss-prevention/dlp-logs/ /cloudflare-one/policies/data-loss-prevention/dlp-policies/ 301
+/cloudflare-one/policies/data-loss-prevention/dlp-policies/payload-logging/ /cloudflare-one/policies/data-loss-prevention/dlp-policies/logging-options/#log-the-payload-of-matched-rules 301
 /cloudflare-one/policies/data-loss-prevention/exact-data-match/ /cloudflare-one/policies/data-loss-prevention/datasets/ 301
 
 # ddos-protection
 /ddos-protection/change-log/http/2022-09-19-emergency-emergency/ /ddos-protection/change-log/http/2022-09-19-emergency/
 /ddos-protection/change-log/http/2022-12-07-emergency-emergency/ /ddos-protection/change-log/http/2022-12-07-emergency/
-/ddos-protection/managed-rulesets/tcp-protection/ /ddos-protection/tcp-protection/ 301
 /ddos-protection/managed-rulesets/http/location-aware-protection/ /ddos-protection/managed-rulesets/adaptive-protection/ 301
 /ddos-protection/managed-rulesets/network/fields/ /ddos-protection/managed-rulesets/network/override-expressions/ 301
 /support/about-cloudflare/attack-preparation-and-response/responding-to-ddos-attacks/ /ddos-protection/best-practices/respond-to-ddos-attacks/ 301
 /support/about-cloudflare/attack-preparation-and-response/understanding-cloudflare-ddos-protection/ /ddos-protection/about/ 301
 /ddos-protection/change-log/global-changes/ /ddos-protection/change-log/general-updates/ 301
-# Redirect the following pages temporarily (using HTTP 307 Temporary redirect)
-/ddos-protection/dns-protection/rule-settings/ /ddos-protection/dns-protection/ 307
-/ddos-protection/dns-protection/api/ /ddos-protection/dns-protection/ 307
-/ddos-protection/dns-protection/api/examples/ /ddos-protection/dns-protection/ 307
-/ddos-protection/dns-protection/api/json-objects/ /ddos-protection/dns-protection/ 307
+/ddos-protection/tcp-protection/api/examples/ /ddos-protection/advanced-ddos-systems/api/tcp-protection/examples/ 301
+/ddos-protection/tcp-protection/api/json-objects/ /ddos-protection/advanced-ddos-systems/api/tcp-protection/json-objects/ 301
+/ddos-protection/tcp-protection/concepts/ /ddos-protection/advanced-ddos-systems/concepts/ 301
+/ddos-protection/tcp-protection/how-to/add-prefix-allowlist/ /ddos-protection/advanced-ddos-systems/how-to/add-prefix-allowlist/ 301
+/ddos-protection/tcp-protection/how-to/add-prefix/ /ddos-protection/advanced-ddos-systems/how-to/add-prefix/ 301
+/ddos-protection/tcp-protection/how-to/create-filter/ /ddos-protection/advanced-ddos-systems/how-to/create-filter/ 301
+/ddos-protection/tcp-protection/how-to/exclude-prefix/ /ddos-protection/advanced-ddos-systems/how-to/exclude-prefix/ 301
+/ddos-protection/tcp-protection/how-to/ /ddos-protection/advanced-ddos-systems/how-to/ 301
+/ddos-protection/tcp-protection/ /ddos-protection/advanced-ddos-systems/overview/advanced-tcp-protection/ 301
+/ddos-protection/tcp-protection/mitigation-reasons/ /ddos-protection/advanced-ddos-systems/overview/advanced-tcp-protection/mitigation-reasons/ 301
+/ddos-protection/tcp-protection/rule-settings/ /ddos-protection/advanced-ddos-systems/rule-settings/ 301
+/ddos-protection/dns-protection/ /ddos-protection/advanced-ddos-systems/overview/advanced-dns-protection/ 301
+/ddos-protection/tcp-protection/api/ /ddos-protection/advanced-ddos-systems/api/ 301
 
 # dmarc-management
 /dmarc-management/manage-sources/ /dmarc-management/ 301
@@ -368,6 +376,8 @@
 /durable-objects/reference/troubleshooting/ /durable-objects/observability/troubleshooting/ 301
 /durable-objects/reference/graphql-analytics/ /durable-objects/observability/graphql-analytics/ 301
 /durable-objects/api/transactional-storage-api/ /durable-objects/api/storage-api/ 301
+/durable-objects/platform/changelog/ /durable-objects/changelog/ 301
+/durable-objects/glossary/ /durable-objects/reference/glossary/ 301
 
 # email-routing
 /email-routing/enable-email-routing/ /email-routing/get-started/enable-email-routing/ 301
@@ -378,6 +388,8 @@
 # email-security
 /email-security/setup/api-deployment/ /email-security/setup/post-delivery-deployment/api/ 301
 /email-security/setup/api-deployment/office365-api/ /email-security/setup/post-delivery-deployment/api/office365-api/ 301
+/email-security/email-configuration/retract-settings/gmail-retraction/ /email-security/deployment/api/setup/gsuite-bcc-setup/add-retraction/ 301
+
 
 # firewall
 /firewall/api/cf-lists/ /waf/tools/lists/lists-api/ 301
@@ -646,6 +658,8 @@
 /learning-paths/workers/test/intro-to-observability/ /learning-paths/workers/get-started/ 301
 /learning-paths/cybersafe/area1-onboarding/area1-api/ /learning-paths/cybersafe/area1-onboarding/ 301
 /learning-paths/cybersafe/area1-onboarding/area1-connection-methods/ /learning-paths/cybersafe/area1-onboarding/area1-inline/ 301
+/learning-paths/secure-internet-traffic/connect-networks/ /learning-paths/secure-internet-traffic/connect-devices-networks/ 301
+/learning-paths/secure-internet-traffic/connect-networks/choose-on-ramp/ /learning-paths/secure-internet-traffic/connect-devices/choose-on-ramp/ 301
 
 ## dns-filtering / secure-internet-traffic
 /learning-paths/dns-filtering/ /learning-paths/secure-internet-traffic/ 301
@@ -954,7 +968,10 @@
 /support/speed/optimization-delivery/configuring-cloudflare-mirage/ /speed/optimization/images/mirage/ 301
 /support/speed/optimization-mobile/understanding-cloudflare-mobile-redirect/ /speed/optimization/other/mobile-redirect/ 301
 /support/speed/optimization-file-size/using-cloudflare-auto-minify/ /speed/optimization/content/ 301
-/support/speed/optimization-file-size/what-will-cloudflare-compress/ /speed/optimization/content/brotli/ 301
+/support/speed/optimization-file-size/what-will-cloudflare-compress/ /speed/optimization/content/compression/ 301
+/speed/optimization/content/brotli/ /speed/optimization/content/compression/ 301
+/speed/optimization/content/brotli/enable/ /speed/optimization/content/compression/ 301
+/speed/optimization/content/brotli/content-compression/ /speed/optimization/content/compression/ 301
 /support/speed/optimization-file-size/why-isnt-auto-minify-working/ /speed/optimization/content/troubleshooting/ 301
 /support/speed/optimization-mobile/why-is-the-mobile-redirect-i-set-up-through-cloudflare-redirecting-my-static-assets/ /speed/optimization/other/troubleshooting/mobile-redirect-affect-static-assets/ 301
 /speed/optimization/other/amp-real-ulr/ /speed/optimization/other/amp-real-url/ 301
@@ -1631,6 +1648,8 @@
 /cloudflare-one/connections/connect-devices/warp/deployment/macOS-Teams/ /cloudflare-one/connections/connect-devices/warp/deployment/mdm-deployment/ 301
 /cloudflare-one/connections/connect-devices/warp/device-enrollment/ /cloudflare-one/connections/connect-devices/warp/configure-warp/warp-settings/ 301
 /cloudflare-one/connections/connect-devices/warp/warp-settings/ /cloudflare-one/connections/connect-devices/warp/configure-warp/warp-settings/ 301
+/cloudflare-one/connections/connect-devices/warp/user-side-certificates/install-cloudflare-cert/ /cloudflare-one/connections/connect-devices/warp/user-side-certificates/manual-deployment/ 301
+/cloudflare-one/connections/connect-devices/warp/user-side-certificates/install-cert-with-warp/ /cloudflare-one/connections/connect-devices/warp/user-side-certificates/automated-deployment/ 301
 /cloudflare-one/connections/connect-networks/locations/ /cloudflare-one/connections/connect-devices/agentless/dns/locations/ 301
 /cloudflare-one/connections/connect-networks/monitor-tunnels/grafana/ /cloudflare-one/tutorials/grafana/ 301
 /cloudflare-one/connections/connect-networks/use-cases/kubectl/ /cloudflare-one/tutorials/many-cfd-one-tunnel/ 301
@@ -1796,6 +1815,9 @@
 ## DNS filtering --> Secure your Internet traffic and SaaS apps
 /learning-paths/dns-filtering/account/* /learning-paths/secure-internet-traffic/initial-setup/:splat 301
 /learning-paths/dns-filtering/create-policy/* /learning-paths/secure-internet-traffic/build-dns-policies/:splat 301
+## Secure your Internet Traffic
+/learning-paths/secure-internet-traffic/connect-devices/* /learning-paths/secure-internet-traffic/connect-devices-networks/:splat 301
+
 
 # Old WAF changelog entries
 /waf/change-log/2019-* /waf/change-log/historical-2019/ 301

@@ -126,11 +126,11 @@ If the root CA is not installed on the device, you will see untrusted certificat
 
 #### Solution
 
-[Install the Cloudflare certificate](/cloudflare-one/connections/connect-devices/warp/user-side-certificates/install-cloudflare-cert/) on all of your devices, or [upload your own certificate](/cloudflare-one/connections/connect-devices/warp/user-side-certificates/custom-certificate/) to Cloudflare.
+[Install a Cloudflare certificate](/cloudflare-one/connections/connect-devices/warp/user-side-certificates/manual-deployment/) on all of your devices, or [upload your own certificate](/cloudflare-one/connections/connect-devices/warp/user-side-certificates/custom-certificate/) to Cloudflare.
 
 :::note
 
-More and more applications (including browsers) are relying on their own certificate stores. In addition to ensuring the root certificate is trusted at the device level, you may also need to [add the certificate to individual applications](/cloudflare-one/connections/connect-devices/warp/user-side-certificates/install-cloudflare-cert/#add-the-certificate-to-applications). For example, to use Firefox on Linux, you must install the certificate on both the system and on Firefox.
+More and more applications (including browsers) are relying on their own certificate stores. In addition to ensuring a root certificate is trusted at the device level, you may also need to [add the certificate to individual applications](/cloudflare-one/connections/connect-devices/warp/user-side-certificates/manual-deployment/#add-the-certificate-to-applications). For example, to use Firefox on Linux, you must install the certificate on both the system and on Firefox.
 
 :::
 
@@ -156,7 +156,7 @@ Some applications do not support SSL inspection or are otherwise [incompatible w
 
 Applications such as Firefox, Docker, Python, and npm rely on their own certificate store and the Cloudflare root certificate must be trusted in each.
 
-Refer to [our instructions](/cloudflare-one/connections/connect-devices/warp/user-side-certificates/install-cloudflare-cert/#add-the-certificate-to-applications) for adding the root certificate to common applications. For applications not on our list, try searching the Internet for `<app-name> proxy support` or `<app-name> proxy certificate`.
+Refer to [our instructions](/cloudflare-one/connections/connect-devices/warp/user-side-certificates/manual-deployment/#add-the-certificate-to-applications) for adding a root certificate to common applications. For applications not on our list, try searching the Internet for `<app-name> proxy support` or `<app-name> proxy certificate`.
 
 #### Solution (last resort)
 

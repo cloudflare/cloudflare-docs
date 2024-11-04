@@ -13,17 +13,29 @@ import { Details } from "~/components"
 
 `@cloudflare/next-on-pages` supports all minor and patch version of Next.js 13 and 14. We regularly run manual and automated tests to ensure compatibility.
 
-### Node.js
+### Node.js API support
 
-Next.js has [two "runtimes"](https://nextjs.org/docs/app/building-your-application/rendering/edge-and-nodejs-runtimes) — "Edge" and "Node.js". When you run your Next.js app on Cloudflare, you [can use available Node.js APIs](/workers/runtime-apis/nodejs/) — but you currently can only use Next.js' "Edge" runtime.
+Next.js has [two "runtimes"](https://nextjs.org/docs/app/building-your-application/rendering/edge-and-nodejs-runtimes) — "Edge" and "Node.js".
 
-The Workers runtime [supports a broad set of Node.js APIs](/workers/runtime-apis/nodejs/) — but [the Next.js Edge Runtime code intentionally constrains this](https://github.com/vercel/next.js/blob/canary/packages/next/src/build/webpack/plugins/middleware-plugin.ts#L820). As a result, only the following Node.js APIs work in a Next.js app:
+The `@cloudflare/next-on-pages` adapter supports only the edge "runtime".
+
+The [`@opennextjs/cloudflare` adapter](https://opennext.js.org/cloudflare), which lets you build and deploy Next.js apps to [Cloudflare Workers](/workers/), supports the Node.js "runtime" from Next.js. When you use it, you can use the [full set of Node.js APIs](/workers/runtime-apis/nodejs/) that Cloudflare Workers provide.
+
+`@opennextjs/cloudflare` is pre 1.0, and still in active development. As it approaches 1.0, it will become the clearly better choice for most Next.js apps, since Next.js has been engineered to only support its Node.js "runtime" for many newly introduced features.
+
+Refer to the [OpenNext docs](https://opennext.js.org/cloudflare) and the [Workers vs. Pages compatibility matrix](/workers/static-assets/compatibility-matrix/) for more information to help you decide which to use.
+
+#### Supported Node.js APIs when using `@cloudflare/next-on-pages`
+
+When you use `@cloudflare/next-on-pages`, your Next.js app must use the "edge" runtime from Next.js. The Workers runtime [supports a broad set of Node.js APIs](/workers/runtime-apis/nodejs/) — but [the Next.js Edge Runtime code intentionally constrains this](https://github.com/vercel/next.js/blob/canary/packages/next/src/build/webpack/plugins/middleware-plugin.ts#L820). As a result, only the following Node.js APIs will work in your Next.js app:
 
 * `buffer`
 * `events`
 * `assert`
 * `util`
 * `async_hooks`
+
+If you need to use other APIs from Node.js, you should use [`@opennextjs/cloudflare`](https://opennext.js.org/cloudflare) instead.
 
 ## Supported Features
 
@@ -85,7 +97,7 @@ Cloudflare also supports the older [Pages](https://nextjs.org/docs/pages) router
 - N/A: Not applicable
 ```
 
-[^1]: **compression**: [Cloudflare applies gzip or brotli compression](/speed/optimization/content/brotli/) automatically. When developing locally with Wrangler, no compression is applied.
+[^1]: **compression**: [Cloudflare applies Brotli or Gzip compression](/speed/optimization/content/compression/) automatically. When developing locally with Wrangler, no compression is applied.
 
 [^2]: **dev indicators**: If you're developing using `wrangler pages dev`, it hard refreshes your application the dev indicator doesn't appear. If you run your app locally using `next dev`, this option works fine.
 

@@ -1,0 +1,19 @@
+---
+{}
+---
+import { Tabs, TabItem } from "~/components"
+
+Increases saturation by a factor. A value of `1.0` equals no change, a value of `0.5` equals half saturation, and a value of `2.0` equals twice as saturated. A value of `0` will convert the image to grayscale.
+
+<Tabs>
+  <TabItem label="URL format">
+    ```js 
+    saturation=0.5
+    ```
+  </TabItem>
+  <TabItem label="Workers">
+  ```js 
+  cf: {image: {saturation: 0.5}}
+  ```
+  </TabItem>
+</Tabs>

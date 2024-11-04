@@ -6,17 +6,17 @@ sidebar:
 
 ---
 
-import { Render } from "~/components";
+import { Render, GlossaryTooltip } from "~/components";
 
-Durable Objects are a powerful compute API that provides a compute with storage building block. Each Durable Object has its own private, transactional and strongly consistent storage. Durable Objects [Storage API](/durable-objects/api/storage-api/#methods) provides access to a Durable Object's attached storage.
+<GlossaryTooltip term="Durable Object">Durable Objects</GlossaryTooltip> are a powerful compute API that provides a compute with storage building block. Each Durable Object has its own private, transactional and strongly consistent storage. Durable Objects <GlossaryTooltip term="Storage API">Storage API</GlossaryTooltip> provides access to a Durable Object's attached storage.
 
 A Durable Object's [in-memory state](/durable-objects/reference/in-memory-state/) is preserved as long as the Durable Object is not evicted from memory. Inactive Durable Objects with no incoming request traffic can be evicted. There are normal operations like [code deployments](/workers/configuration/versions-and-deployments/) that trigger Durable Objects to restart and lose their in-memory state. For these reasons, you should use Storage API to persist state durably on disk that needs to survive eviction or restart of Durable Objects.
 
 ## Access storage
 
-By default, a Durable Object class leverages a key-value storage backend. New Durable Object classes can opt-in to using a [SQLite storage backend](/durable-objects/best-practices/access-durable-objects-storage/#sqlite-storage-backend).
+By default, a <GlossaryTooltip term="Durable Object class">Durable Object class</GlossaryTooltip> leverages a key-value storage backend. New Durable Object classes can opt-in to using a [SQLite storage backend](/durable-objects/best-practices/access-durable-objects-storage/#sqlite-storage-backend).
 
-[Storage API](/durable-objects/api/storage-api/#methods) methods are available on `ctx.storage` parameter passed to the Durable Object constructor. Storage API has key-value APIs and SQL APIs. Only Durable Object classes with a SQLite storage backend can access SQL API.
+[Storage API methods](/durable-objects/api/storage-api/#methods) are available on `ctx.storage` parameter passed to the Durable Object constructor. Storage API has key-value APIs and SQL APIs. Only Durable Object classes with a SQLite storage backend can access SQL API.
 
 A common pattern is to initialize a Durable Object from [persistent storage](/durable-objects/api/storage-api/) and set instance variables the first time it is accessed. Since future accesses are routed to the same Durable Object, it is then possible to return any initialized values without making further calls to persistent storage.
 
@@ -44,7 +44,7 @@ export class Counter extends DurableObject {
 ```
 ### Removing a Durable Object's storage
 
-A Durable Object fully ceases to exist if, when it shuts down, its storage is empty. If you never write to a Durable Object's storage at all (including setting alarms), then storage remains empty, and so the Durable Object will no longer exist once it shuts down.
+A Durable Object fully ceases to exist if, when it shuts down, its storage is empty. If you never write to a Durable Object's storage at all (including setting <GlossaryTooltip term="alarm">alarms</GlossaryTooltip>), then storage remains empty, and so the Durable Object will no longer exist once it shuts down.
 
 However if you ever write using [Storage API](/durable-objects/api/storage-api/), including setting alarms, then you must explicitly call [`storage.deleteAll()`](/durable-objects/api/storage-api/#deleteall) to empty storage. It is not sufficient to simply delete the specific data that you wrote, such as deleting a key or dropping a table, as some metadata may remain. The only way to remove all storage is to call `deleteAll()`. Calling `deleteAll()` ensures that a Durable Object will not be billed for storage.
 

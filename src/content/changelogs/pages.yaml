@@ -5,6 +5,11 @@ productLink: "/pages/"
 productArea: Developer platform
 productAreaLink: /workers/platform/changelog/platform/
 entries:
+  - publish_date: "2024-10-24"
+    title: Updating Bun version to 1.1.33 in V2 build system
+    description: |-
+      * Bun version is being updated from `1.0.1` to `1.1.33` in Pages V2 build system. This is a minor version change, please see details at [Bun](https://bun.sh/blog/bun-v1.1.33).
+      * If you wish to use a previous Bun version, you can [override default version](/pages/configuration/build-image/#overriding-default-versions).
   - publish_date: "2023-09-13"
     title: Support for D1's new storage subsystem and build error message improvements
     description: |-

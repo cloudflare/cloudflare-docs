@@ -26,6 +26,74 @@ For more information on string syntaxes and escaping, refer to [String values an
 
 If you are using a regular expression, it is recommended that you test it with a tool such as [Regular Expressions 101](https://regex101.com/?flavor=rust&regex=) or [Rustexp](https://rustexp.lpil.uk).
 
+### Why are some rules bypassed when I did not create an exception?
+
+If you have [SSL/TLS certificates](/ssl/) managed by Cloudflare, every time a certificate is issued or renewed, a [domain control validation (DCV)](/ssl/edge-certificates/changing-dcv-method/dcv-flow/) must happen. When a certificate is in `pending_validation` state and there are valid DCV tokens in place, some Cloudflare security features such as [custom rules](/waf/custom-rules/) and [WAF Managed Rules](/waf/managed-rules/) will be automatically disabled on specific DCV paths (for example, `/.well-known/pki-validation/` and `/.well-known/acme-challenge/`).
+
+### Why is Cloudflare blocking a specific IP address?
+
+Cloudflare may block an IP address due to various reasons:
+
+- **Web Application Firewall (WAF) mitigation actions**: The Cloudflare WAF protects websites from various online threats, including malicious traffic, DDoS attacks, and common vulnerabilities. If your IP address is associated with suspicious or malicious activity, it might trigger the WAF and block requests.
+
+- **High security settings**: The website owner might have set their Cloudflare security settings to a high level, making the filtering of incoming traffic stricter. In this situation, even legitimate users may get blocked or have to solve challenges.
+
+- **Excessive requests**: Cloudflare may block an IP address if it detects an unusually high number of requests in a short period, in which case it will rate limiting subsequent requests. This is a protective measure against potential abuse or attacks.
+
+- **Traffic from malicious bots**: Cloudflare employs bot detection mechanisms to distinguish between legitimate users and automated bots. If traffic from your IP address behaves like traffic from a malicious bot, it could get blocked.
+
+- **Blocklisted IPs**: Cloudflare might block IP addresses listed on public blocklists due to their association with known malicious activities.
+
+If your IP address is blocked, try the following:
+
+- **Check Cloudflare Security Events**: Use the [Security Events](/waf/analytics/security-events/paid-plans/) log to check for specific reasons your IP might be getting blocked. Look for details on the type of threat or activity that triggered the block.
+
+- **Contact the website owner**: If you are a legitimate user and your IP is wrongly blocked, contact the website owner or administrator. They may be able to allowlist your IP or investigate the issue further.
+
+- **Verify your own website traffic**: Check for abnormal activity. If you manage a website behind Cloudflare, ensure that your site's traffic is legitimate and not triggering security measures inadvertently.
+
+- **Check your IP reputation**: Verify whether your IP address is listed on public blocklists, such as [Project Honey Pot](https://projecthoneypot.org/). If so, take steps to address any issues that may have led to the listing.
+
+- **Adjust your security settings**: If you are a website owner using Cloudflare, consider adjusting security settings to find the right balance between protection and accessibility.
+
+## Bots
+
+### How does the WAF handle traffic from known bots?
+
+#### Caution about potentially blocking bots
+
+When you create a WAF custom rule with a _Block_, _Interactive Challenge_, _JS Challenge_, or _Managed Challenge (Recommended)_ action, you might unintentionally block traffic from known bots. Specifically, this might affect search engine optimization (SEO) and website monitoring when trying to enforce a mitigation action based on URI, path, host, ASN, or country.
+
+Refer to [How do I exclude certain requests from being blocked or challenged?](#how-do-i-exclude-certain-requests-from-being-blocked-or-challenged).
+
+#### Bots currently detected
+
+[Cloudflare Radar](https://radar.cloudflare.com/verified-bots) lists a **sample** of known bots that the WAF currently detects. When traffic comes from these bots and others not listed, the `cf.client.bot` field is set to `true`.
+
+To submit a friendly bot to be verified, go to the [**Verified bots**](https://radar.cloudflare.com/traffic/verified-bots) page in Cloudflare Radar and select **Add a bot**.
+
+For more information on verified bots, refer to [Bots](/bots/concepts/bot/).
+
+:::note
+
+There is no functional difference between known and verified bots. However, the known bots field (`cf.client.bot`) is available for all customers, while the verified bots field (`cf.bot_management.verified_bot`) is available for Enterprise customers.
+:::
+
+## Challenges
+
+### Why am I being challenged on a Cloudflare-protected site?
+
+Cloudflare issues challenges to website visitors to protect against malicious activity such as bot attacks and DDoS attacks. Key reasons include:
+
+- **High Threat Score**: IP addresses with a high-risk score trigger challenges.
+- **IP reputation**: If your IP has a history of suspicious activity, it may be flagged.
+- **Bot detection**: Automated traffic resembling bots is filtered by Cloudflare.
+- **Web Application Firewall (WAF) custom rules**: Site owners may set rules targeting specific regions or user agents.
+- **Browser Integrity Check**: Cloudflare verifies that browsers meet certain standards.
+- **Challenge Passage**: Technologies like Privacy Pass reduce the frequency of repeated challenges.
+
+To avoid repeated challenges, ensure your browser is up to date, disable any privacy tools that might block standard browser headers, or use a different network connection if your current one has a poor IP reputation.
+
 ### How do I exclude certain requests from being blocked or challenged?
 
 In certain situations you want to enforce a blocking or challenging action but make an exception for specific types of requests.
@@ -88,61 +156,6 @@ Block Amazon Web Services (AWS) and Google Cloud Platform (GCP) because of large
 
      - Expression: `(http.host eq "example.com" and cf.threat_score > 5)`
      - Action: Block (or a challenge action)
-
-### Why are some rules bypassed when I did not create an exception?
-
-If you have [SSL/TLS certificates](/ssl/) managed by Cloudflare, every time a certificate is issued or renewed, a [domain control validation (DCV)](/ssl/edge-certificates/changing-dcv-method/dcv-flow/) must happen. When a certificate is in `pending_validation` state and there are valid DCV tokens in place, some Cloudflare security features such as [custom rules](/waf/custom-rules/) and [WAF Managed Rules](/waf/managed-rules/) will be automatically disabled on specific DCV paths (for example, `/.well-known/pki-validation/` and `/.well-known/acme-challenge/`).
-
-### Why is Cloudflare blocking a specific IP address?
-
-Cloudflare may block an IP address due to various reasons:
-
-- **Web Application Firewall (WAF) mitigation actions**: The Cloudflare WAF protects websites from various online threats, including malicious traffic, DDoS attacks, and common vulnerabilities. If your IP address is associated with suspicious or malicious activity, it might trigger the WAF and block requests.
-
-- **High security settings**: The website owner might have set their Cloudflare security settings to a high level, making the filtering of incoming traffic stricter. In this situation, even legitimate users may get blocked or have to solve challenges.
-
-- **Excessive requests**: Cloudflare may block an IP address if it detects an unusually high number of requests in a short period, in which case it will rate limiting subsequent requests. This is a protective measure against potential abuse or attacks.
-
-- **Traffic from malicious bots**: Cloudflare employs bot detection mechanisms to distinguish between legitimate users and automated bots. If traffic from your IP address behaves like traffic from a malicious bot, it could get blocked.
-
-- **Blocklisted IPs**: Cloudflare might block IP addresses listed on public blocklists due to their association with known malicious activities.
-
-If your IP address is blocked, try the following:
-
-- **Check Cloudflare Security Events**: Use the [Security Events](/waf/analytics/security-events/paid-plans/) log to check for specific reasons your IP might be getting blocked. Look for details on the type of threat or activity that triggered the block.
-
-- **Contact the website owner**: If you are a legitimate user and your IP is wrongly blocked, contact the website owner or administrator. They may be able to allowlist your IP or investigate the issue further.
-
-- **Verify your own website traffic**: Check for abnormal activity. If you manage a website behind Cloudflare, ensure that your site's traffic is legitimate and not triggering security measures inadvertently.
-
-- **Check your IP reputation**: Verify whether your IP address is listed on public blocklists, such as [Project Honey Pot](https://projecthoneypot.org/). If so, take steps to address any issues that may have led to the listing.
-
-- **Adjust your security settings**: If you are a website owner using Cloudflare, consider adjusting security settings to find the right balance between protection and accessibility.
-
-## Bots
-
-### How does the WAF handle traffic from known bots?
-
-#### Caution about potentially blocking bots
-
-When you create a WAF custom rule with a _Block_, _Interactive Challenge_, _JS Challenge_, or _Managed Challenge (Recommended)_ action, you might unintentionally block traffic from known bots. Specifically, this might affect search engine optimization (SEO) and website monitoring when trying to enforce a mitigation action based on URI, path, host, ASN, or country.
-
-Refer to [How do I exclude certain requests from being blocked or challenged?](#how-do-i-exclude-certain-requests-from-being-blocked-or-challenged).
-
-#### Bots currently detected
-
-[Cloudflare Radar](https://radar.cloudflare.com/verified-bots) lists a **sample** of known bots that the WAF currently detects. When traffic comes from these bots and others not listed, the `cf.client.bot` field is set to `true`.
-
-To submit a friendly bot to be verified, go to the [**Verified bots**](https://radar.cloudflare.com/traffic/verified-bots) page in Cloudflare Radar and select **Add a bot**.
-
-For more information on verified bots, refer to [Bots](/bots/concepts/bot/).
-
-:::note
-
-There is no functional difference between known and verified bots. However, the known bots field (`cf.client.bot`) is available for all customers, while the verified bots field (`cf.bot_management.verified_bot`) is available for Enterprise customers.
-:::
-
-## Challenges
 
 ### Do the Challenge actions support content types other than HTML (for example, AJAX or XHR requests)?
 

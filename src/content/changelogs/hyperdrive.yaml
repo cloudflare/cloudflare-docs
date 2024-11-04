@@ -5,6 +5,12 @@ productLink: "/hyperdrive/"
 productArea: Developer platform
 productAreaLink: /workers/platform/changelog/platform/
 entries:
+  - publish_date: "2024-10-30"
+    title: New Hyperdrive configurations to private databases using Tunnels are validated before creation
+    description: |-
+      When creating a new Hyperdrive configuration to a private database using Tunnels, Hyperdrive will verify that it can connect to the database to ensure that your Tunnel and Access application have been properly configured. This makes it easier to debug connectivity issues. 
+      
+      Refer to [documentation on connecting to private databases](/hyperdrive/configuration/connect-to-private-database/) for more information.
   - publish_date: "2024-09-20"
     title: The `node-postgres` (pg) driver is now supported for Pages applications using Hyperdrive.
     description: |-

@@ -25,7 +25,7 @@ import { Tabs, TabItem, Badge, Render } from "~/components";
 To connect your devices to Cloudflare:
 
 1. [Deploy the WARP client](/cloudflare-one/connections/connect-devices/warp/deployment/) on your devices in Gateway with WARP mode.
-2. Install and trust the [Cloudflare root certificate](/cloudflare-one/connections/connect-devices/warp/user-side-certificates/) on your devices.
+2. [Enable the Gateway proxy for TCP](/cloudflare-one/policies/gateway/proxy/#enable-the-gateway-proxy).
 3. [Create device enrollment rules](/cloudflare-one/connections/connect-devices/warp/deployment/device-enrollment/) to determine which devices can enroll to your Zero Trust organization.
 
 ## 3. Route private network IPs through WARP
@@ -58,6 +58,14 @@ To generate a Cloudflare SSH CA and get its public key:
 ### Modify your SSHD config
 <Render file="ssh/modify-sshd" />
 
+:::note
+For certain distributions, such as Amazon Linux 1 (based on RHEL), the certificate file permissions must be set to `600`. You can set file permissions with the following command:
+
+```sh
+chmod 600 /etc/ssh/ca.pub
+```
+:::
+
 ### Restart your SSH server
 <Render file="ssh/restart-server" />
 
@@ -68,6 +76,8 @@ Users can use any SSH client to connect to the target, as long as they are logge
 ```sh
 ssh <username>@<target IP>
 ```
+
+SSH with Access for Infrastructure also supports `scp` and `rsync` commands. At this time, `sftp` is not supported.
 
 For more information, refer to the [Access for Infrastructure documentation](/cloudflare-one/applications/non-http/infrastructure-apps/#connect-as-a-user).
 

@@ -11,7 +11,7 @@ entries:
 
 - term: "Durable Object"
   general_definition: |-
-    An individual instance of a Durable Object class. A Durable Object is globally unique (referenced by ID), provides a global point of coordination for all methods/requests sent to it, and has private, persistent storage that is not shared with other Durable Objects within a namespace.
+    A Durable Object is an individual instance of a Durable Object class. A Durable Object is globally unique (referenced by ID), provides a global point of coordination for all methods/requests sent to it, and has private, persistent storage that is not shared with other Durable Objects within a namespace.
 
 - term: "stub"
   general_definition: |-

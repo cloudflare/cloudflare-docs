@@ -5,11 +5,11 @@ sidebar:
   order: 1
 ---
 
-import { Render, Tabs, TabItem } from "~/components";
+import { Render, Tabs, TabItem, GlossaryTooltip } from "~/components";
 
 ## Description
 
-A Durable Object namespace is a set of Durable Objects that are backed by the same Durable Object class. There is only one Durable Object namespace per class. A Durable Object namespace can contain any number of Durable Objects.
+A Durable Object namespace is a set of Durable Objects that are backed by the same <GlossaryTooltip term="Durable Object class">Durable Object class</GlossaryTooltip>. There is only one Durable Object namespace per class. A Durable Object namespace can contain any number of Durable Objects.
 
 The `DurableObjectNamespace` interface is used to obtain a reference to new or existing Durable Objects. The interface is accessible from the fetch handler on a Cloudflare Worker via the `env` parameter, which is the standard interface when referencing bindings declared in `wrangler.toml`.
 
@@ -129,7 +129,7 @@ After this first use, the location of the Durable Object will be cached around t
 
 `get` obtains a [`DurableObjectStub`](/durable-objects/api/stub) from a [`DurableObjectId`](/durable-objects/api/id) which can be used to invoke methods on a Durable Object.
 
-This method returns the stub immediately, often before a connection has been established to the Durable Object. This allows requests to be sent to the instance right away, without waiting for a network round trip.
+This method returns the <GlossaryTooltip term="stub">stub</GlossaryTooltip> immediately, often before a connection has been established to the Durable Object. This allows requests to be sent to the instance right away, without waiting for a network round trip.
 
 ```js
 const id = env.MY_DURABLE_OBJECT.newUniqueId();

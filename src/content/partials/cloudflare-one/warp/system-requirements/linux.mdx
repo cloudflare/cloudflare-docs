@@ -9,4 +9,7 @@
 | **OS type**           | 64-bit only                                                                   |
 | **HD space**          | 75 MB                                                                         |
 | **Memory**            | 35 MB                                                                         |
-| **Network interface** | <li> WIFI or LAN </li> <li> MTU ≥ 1280 bytes</li>                             |
+| **Network interface type**  | WIFI or LAN |
+| **Minimum MTU** | 1360 bytes[^1] |
+
+[^1]: WireGuard requires 1360 bytes for IPv6 and 1340 bytes for IPv4. MASQUE requires 1350 bytes for IPv6 and 1330 bytes for IPv4.

@@ -9,7 +9,7 @@ head:
 
 ---
 
-To make your first request to Cloudflare's Radar API, you must obtain your [API token](/fundamentals/api/get-started/create-token/) first. Create a Custom Token, with *User* > *User Details* in the **Permissions** group, and select *Read* as the access level.
+To make your first request to Cloudflare's Radar API, you must obtain your [API token](/fundamentals/api/get-started/create-token/) first. Create a Custom Token, with *Account* > *Radar* in the **Permissions** group, and select *Read* as the access level.
 
 Once you have the token, you are ready to make your first request to Radar's API at `https://api.cloudflare.com/client/v4/radar/`.
 
@@ -49,7 +49,7 @@ A successful response will look similar to the following:
 This response means that 41% of the requests are classified as coming from mobile devices, while 58% are desktop traffic.
 
 :::note
-Cloudflare Radar attempts to provide trends and insights into general Internet usage, using the traffic that goes through Cloudflare infrastructure. As such, Cloudflare Radar only provides data on traffic coming from end-users, unless otherwise specified (for example, origin fetches are excluded). 
+Cloudflare Radar attempts to provide trends and insights into general Internet usage, using the traffic that goes through Cloudflare infrastructure. As such, Cloudflare Radar only provides data on traffic coming from end-users, unless otherwise specified (for example, origin fetches are excluded).
 :::
 
 The previous example returns all traffic from bots and humans. However, you can access just the traffic classified as coming from humans (the default in [Cloudflare Radar](https://radar.cloudflare.com)) by adding `botClass=LIKELY_HUMAN`. You can also access traffic coming only from bots with `botClass=LIKELY_AUTOMATED` (refer to [bot classes](/radar/concepts/bot-classes) for more information). For example:
@@ -67,7 +67,7 @@ The `result.meta` property in the response includes metadata about the current r
 
 When querying for time series, `result.meta` will also include the returned [aggregation interval](/radar/concepts/aggregation-intervals) in `meta.aggInterval`.
 
-When present, `meta.confidenceInfo.level` will also provide an indication of how much confidence Cloudflare has in the data. Confidence levels are affected either by internal issues affecting data quality or by Cloudflare not having sufficient data for a given location or Autonomous System (AS). In these cases, confidence level will be below `5` (refer to [Confidence levels](/radar/concepts/confidence-levels) for more information). 
+When present, `meta.confidenceInfo.level` will also provide an indication of how much confidence Cloudflare has in the data. Confidence levels are affected either by internal issues affecting data quality or by Cloudflare not having sufficient data for a given location or Autonomous System (AS). In these cases, confidence level will be below `5` (refer to [Confidence levels](/radar/concepts/confidence-levels) for more information).
 :::
 
 ## Use Python

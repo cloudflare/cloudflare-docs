@@ -1,0 +1,22 @@
+---
+productName: Workflows
+entries:
+- term: "Workflow"
+  general_definition: |-
+    The named Workflow definition, associated with a single Workers script.
+
+- term: "instance"
+  general_definition: |-
+    A specific instance (running, paused, errored) of a Workflow. A Workflow can have a potentially infinite number of instances.
+
+- term: "step"
+  general_definition: |-
+    A step is self-contained, individually retriable component of a Workflow. Steps may emit (optional) state that allows a Workflow to persist and continue from that step, even if a Workflow fails due to a network or infrastructure issue. A Workflow can have one or more steps up to the [step limit](/workflows/reference/limits/).
+
+- term: "Event"
+  general_definition: |-
+    The event that triggered the Workflow instance. A `WorkflowEvent` may contain optional parameters (data) that a Workflow can operate on.
+
+- term: "Durable Execution"
+  general_definition: |-
+    "Durable Execution" is a programming model that allows applications to execute reliably, automatically persist state, retry, and be resistant to errors caused by API, network or even machine/infrastructure failures. Cloudflare Workflows provide a way to build and deploy applications that align with this model.

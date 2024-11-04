@@ -63,6 +63,10 @@ Top-level keys apply to the Worker as a whole (and therefore all environments). 
 
   - Whether Wrangler should keep variables configured in the dashboard on deploy. Refer to [source of truth](#source-of-truth).
 
+- `migrations` <Type text="object[]" /> <MetaInfo text="optional" />
+
+  - When making changes to your Durable Object classes, you must perform a migration. Refer to [Durable Object migrations](/durable-objects/reference/durable-objects-migrations/).
+
 - `send_metrics` <Type text="boolean" /> <MetaInfo text="optional" />
 
   - Whether Wrangler should send usage metrics to Cloudflare for this project.
@@ -161,13 +165,13 @@ At a minimum, the `name`, `main` and `compatibility_date` keys are required to d
 
 - `logpush` <Type text="boolean" /> <MetaInfo text="optional" />
 
-  - Enables Workers Trace Events Logpush for a Worker. Any scripts with this property will automatically get picked up by the Workers Logpush job configured for your account. Defaults to `false`.
+  - Enables Workers Trace Events Logpush for a Worker. Any scripts with this property will automatically get picked up by the Workers Logpush job configured for your account. Defaults to `false`. Refer to [Workers Logpush](/workers/observability/logs/logpush/).
 
 - `limits` <Type text="Limits" /> <MetaInfo text="optional" />
 
   - Configures limits to be imposed on execution at runtime. Refer to [Limits](#limits).
 
-* `observability` object optional
+* `observability` <Type text="object" /> <MetaInfo text="optional" />
 
   - Configures automatic observability settings for telemetry data emitted from your Worker. Refer to [Observability](#observability).
 
@@ -321,6 +325,26 @@ Example:
 [triggers]
 crons = ["* * * * *"]
 ```
+
+## Observability
+
+The [Observability](/workers/observability/logs/workers-logs) setting allows you to automatically ingest, store, filter, and analyze logging data emitted from Cloudflare Workers directly from your Cloudflare Worker's dashboard.
+
+- `enabled` <Type text="boolean" /> <MetaInfo text="required" />
+
+  - When set to `true` on a Worker, logs for the Worker are persisted. Defaults to `true` for all new Workers.
+
+- `head_sampling_rate` <Type text="number" /> <MetaInfo text="optional" />
+  - A number between 0 and 1, where 0 indicates zero out of one hundred requests are logged, and 1 indicates every request is logged. If `head_sampling_rate` is unspecified, it is configured to a default value of 1 (100%). Read more about [head-based sampling](/workers/observability/logs/workers-logs/#head-based-sampling).
+
+Example:
+
+```toml title="wrangler.toml"
+[observability]
+enabled = true
+head_sampling_rate = 0.1 # 10% of requests are logged
+```
+
 
 ## Custom builds
 
@@ -510,7 +534,7 @@ When making changes to your Durable Object classes, you must perform a migration
 
   - The new Durable Objects being defined.
 
-- `renamed_classes` <Type text="from: string, to: string}[]" /> <MetaInfo text="optional" />
+- `renamed_classes` <Type text="{from: string, to: string}[]" /> <MetaInfo text="optional" />
 
   - The Durable Objects being renamed.
 
@@ -627,28 +651,6 @@ id = "<NAMESPACE_ID1>"
 [[kv_namespaces]]
 binding = "<BINDING_NAME2>"
 id = "<NAMESPACE_ID2>"
-```
-
-### Observability
-
-The [Observability](/workers/observability/logs/workers-logs) setting allows you to automatically ingest, store, filter, and analyze logging data emitted from Cloudflare Workers directly from your Cloudflare Worker's dashboard.
-
-- `enabled` boolean required
-
-  - When set to `true` on a Worker, logs for the Worker are persisted. Defaults to `true` for all new Workers.
-
-- `head_sampling_rate` number optional
-  - A number between 0 and 1, where 0 indicates zero out of one hundred requests are logged, and 1 indicates every request is logged. If `head_sampling_rate` is unspecified, it is configured to a default value of 1 (100%). Read more about [head-based sampling](/workers/observability/logs/workers-logs/#head-based-sampling).
-
-Example:
-
-```toml title="wrangler.toml"
-[observability]
-enabled = true
-
-[observability]
-enabled = true
-head_sampling_rate = 0.1 # 10% of requests are logged
 ```
 
 ### Queues
