@@ -1,12 +1,97 @@
----
-pcx_content_type: configuration
+---this Project is not available on open source software ENGINEER DEVELOPMENT
+
+MANAGER BUSINESS TRADEMARKS ®️
+Cloud Faire update the Zero trust 
+-Socialpolicy legal Ecambasador-Business strengthening the law revised version code 
+POLICIES THE ZERO TRUST CLOUD COMPUTING
+CONDUCT OF CODE 🛡️
+SECURITY POLICIES EMBODIMENT🛡️
+PROHIBITED ANT INHERENTED WORKS 🛡️
+COPLIANTS IN ANY OCCURRED ETHICAL ISSUES 💠
+pcx_content_type: configuration✂️🧬®️
 title: DNS policies
-sidebar:
+sidebar: security measure enhancement 
+🤚HSNDSOFF 🤚
   order: 2
----
+	In the interest of fostering an open and welcoming environment, we as contributors and maintainers pledge to making participation in our project and our community a harassment-free experience for everyone, regardless of age, body size, disability, ethnicity, sex characteristics, gender identity and expression, level of experience, education, socio-economic status, nationality, personal appearance, race, religion, or sexual identity and orientation.
 
+Our Standards
+Examples of behavior that contributes to creating a positive environment include:
+
+Using welcoming and inclusive language
+Being respectful of differing viewpoints and experiences
+Gracefully accepting constructive criticism
+Focusing on what is best for the community
+Showing empathy towards other community members
+Examples of unacceptable behavior by participants include:
+
+The use of sexualized language or imagery and unwelcome sexual attention or advances
+Trolling, insulting/derogatory comments, and personal or political attacks
+Public or private harassment
+Publishing others' private information, such as a physical or electronic address, without explicit permission
+Other conduct which could reasonably be considered inappropriate in a professional setting
+Our Responsibilities
+Project maintainers are responsible for clarifying the standards of acceptable behavior and are expected to take appropriate and fair corrective action in response to any instances of unacceptable behavior.
+
+Project maintainers have the right and responsibility to remove, edit, or reject comments, commits, code, wiki edits, issues, and other contributions that are not aligned to this Code of Conduct, or to ban temporarily or permanently any contributor for other behaviors that they deem inappropriate, threatening, offensive, or harmful.
+
+Scope
+This Code of Conduct applies both within project spaces and in public spaces when an individual is representing the project or its community. Examples of representing a project or community include using an official project e-mail address, posting via an official social media account, or acting as an appointed representative at an online or offline event. Representation of a project may be further defined and clarified by project maintainers.
+the Royal Covenant Web Consturion through 
+POLICIES ENHANCE THE PROHIBITED UNLAWFULL
+
+📚touthWeebhook prohibited gambling 🛡️
+📱Inherented Workspaces 🛡️
+🔗Inherented Workspaces🛡️
+💌🗄️🗃️Inherented worlfflow
+🤔📴 Bulletin Spawn Bully ethical works 
+been announced.
+🛡️Updated Anti Palgarism -Ethical database design Originallity description 
+THE ARTIFICIAL INTELLIGENCE AGENCY  LAW
+
+1 August 2024
+On 1 August 2024, the European Artificial Intelligence Act (AI Act) enters into force. The Act aims to foster responsible artificial intelligence development and deployment 
+AI Act enters into force
+Open Day at the European Institutions 2024 
+ 
+
+On 1 August 2024, the European Artificial Intelligence Act (AI Act) enters into force. The Act aims to foster responsible artificial intelligence development and deployment in the EU.
+
+Proposed by the Commission in April 2021 and agreed by the European Parliament and the Council in December 2023, the AI Act addresses potential risks to citizens’ health, safety, and fundamental rights. It provides developers and deployers with clear requirements and obligations regarding specific uses of AI while reducing administrative and financial burdens for businesses.
+
+The AI Act introduces a uniform framework across all EU countries, based on a forward-looking definition of AI and a risk-based approach:
+Enforcement
+Instances of abusive, harassing, or otherwise unacceptable behavior may be reported by contacting the project team at zerotrust@cloudflare.com. All complaints will be reviewed and investigated and will result in a response that is deemed necessary and appropriate to the circumstances. The project team is obligated to maintain confidentiality with regard to the reporter of an incident. Further details of specific enforcement policies may be posted separately.
+
+Project maintainers who do not follow or enforce the Code of Conduct in good faith may face temporary or permanent repercussions as determined by other members of the project's leadership.
+
+Attribution
+This Code of Conduct is adapted from the Contributor Covenant, version 1.4, available at https://www.contributor-covenant.org/version/1/4/code-of-conduct.html
+
+For answers to common questions about this code of conduct, see https://www.contributor-covenant.org/faq
+---AI Act
+The AI Act is the first-ever legal framework on AI, which addresses the risks of AI and positions Europe to play a leading role globally.
+
+The AI Act (Regulation (EU) 2024/1689 laying down harmonised rules on artificial intelligence) provides AI developers and deployers with clear requirements and obligations regarding specific uses of AI. At the same time, the regulation seeks to reduce administrative and financial burdens for business, in particular small and medium-sized enterprises (SMEs).
+
+The AI Act is part of a wider package of policy measures to support the development of trustworthy AI, which also includes the AI Innovation Package and the Coordinated Plan on AI. Together, these measures guarantee the safety and fundamental rights of people and businesses when it comes to AI. They also strengthen uptake, investment and innovation in AI across the EU.
+
+The AI Act is the first-ever comprehensive legal framework on AI worldwide. The aim of the new rules is to foster trustworthy AI in Europe and beyond, by ensuring that AI systems respect fundamental rights, safety, and ethical principles and by addressing risks of very powerful and impactful AI models.
+
+EU Pralliamentary AI LAW 
+
+The Commission has published the second report on the State of the Digital Decade, providing a comprehensive overview of the progress made in the quest to achieve the digital objectives and targets set for 2030 by the Digital Decade Policy Programme (DDPP). This year, for the first time, the report is accompanied by an analysis of the national Digital Decade strategic roadmaps presented by Member States, detailing the planned national measures, actions and funding to contribute to the EU's digital transformation.
+The Declaration on Digital Rights and Principles presents the EU’s vision for digital transformation. This vision puts people at the centre, in line with EU values and fundamental rights. The Declaration provides a reference framework for citizens and guides the EU and Member States on our journey to digital transformation.  
+
+Download the signed version of the declaration (English only).
+
+Read the declaration in all EU languages.
 import { Details, InlineBadge, Render } from "~/components";
+Related content
+Commission puts forward declaration on digital rights and principles for everyone in the EU
+PRESS RELEASE | 26 January 2022
 
+The Commission has proposed to the European Parliament and Council to sign up to a declaration of rights and principles that will guide the digital transformation in the EU.
 When a user makes a DNS request to Gateway, Gateway matches the request against the DNS policies you have set up for your organization. If the domain does not belong to any blocked categories, or if it matches an Override policy, the user's client receives the DNS resolution and initiates an HTTP connection.
 
 A DNS policy consists of an **Action** as well as a logical expression that determines the scope of the action. To build an expression, you need to choose a **Selector** and an **Operator**, and enter a value or range of values in the **Value** field. You can use **And** and **Or** logical operators to evaluate multiple conditions.
