@@ -627,7 +627,13 @@ To trust a Cloudflare root certificate in RubyGems, follow the procedure for you
    gem sources --add-trusted-cert ~/.gem/ssl/rubygems.org.pem
    ```
 
-6. Restart RubyGems.
+   Alternatively, add the following line to your RubyGems configuration file located in `~/.gemrc` file to globally trust the certificate:
+
+   ```yaml
+   :ssl_cert: ~/.gem/ssl/rubygems.org.pem
+   ```
+
+6. Restart any terminal sessions.
 
 </Details>
 
@@ -659,7 +665,13 @@ To trust a Cloudflare root certificate in RubyGems, follow the procedure for you
    gem sources --add-trusted-cert "$env:USERPROFILE\.gem\ssl\rubygems.org.pem"
    ```
 
-6. Restart RubyGems.
+   Alternatively, add the following line to your RubyGems configuration file located in `$HOME\.gemrc` to globally trust the certificate:
+
+   ```yaml
+   :ssl_cert: C:/Users/<username>/.gem/ssl/rubygems.org.pem
+   ```
+
+6. Restart any terminal sessions.
 
 </Details>
 
