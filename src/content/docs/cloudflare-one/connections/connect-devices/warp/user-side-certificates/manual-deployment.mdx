@@ -447,7 +447,7 @@ If you use Kaniko with Google Cloud SDK, you must install a Cloudflare certifica
 
 #### Google Drive for desktop
 
-To trust the Cloudflare root certificate in the Google Drive desktop application, follow the procedure for your operating system. These steps require you to [download the .pem certificate](#download-the-cloudflare-root-certificate).
+To trust a Cloudflare root certificate in the Google Drive desktop application, follow the procedure for your operating system. These steps require you to [download the .pem certificate](#download-the-cloudflare-root-certificate).
 
 <Details header="macOS">
 
@@ -509,11 +509,11 @@ Google Apps Manager (GAM) uses its own certificate store. To add a Cloudflare ce
 
 ### AWS CLI
 
-If you're using the AWS CLI, you need to set the `AWS_CA_BUNDLE` environment variable to use the Cloudflare root certificate. Commands are available for different operating systems in the [AWS instructions](https://docs.aws.amazon.com/cli/latest/userguide/cli-configure-envvars.html).
+If you're using the AWS CLI, you need to set the `AWS_CA_BUNDLE` environment variable to use a Cloudflare root certificate. Commands are available for different operating systems in the [AWS instructions](https://docs.aws.amazon.com/cli/latest/userguide/cli-configure-envvars.html).
 
 ### PHP Composer
 
-The command below will set the [`cafile`](https://getcomposer.org/doc/06-config.md#cafile) configuration inside of `composer.json` to use the Cloudflare root certificate. Make sure to use the certificate in the [`.pem`](/cloudflare-one/static/certificate.pem) file type.
+The command below will set the [`cafile`](https://getcomposer.org/doc/06-config.md#cafile) configuration inside of `composer.json` to use the Cloudflare root certificate. Make sure to [download the certificate](#download-the-cloudflare-root-certificate) in the `.pem` file type.
 
 ```sh
 composer config cafile [PATH_TO_CLOUDFLARE_CERT.pem]
@@ -523,7 +523,7 @@ Alternatively, you can add this manually to your `composer.json` file under the 
 
 ### JetBrains
 
-To install the Cloudflare root certificate on JetBrains products, refer to the links below:
+To install a Cloudflare root certificate on JetBrains products, refer to the links below:
 
 - [AppCode](https://www.jetbrains.com/help/objc/settings-tools-server-certificates.html)
 - [CLion](https://www.jetbrains.com/help/clion/settings-tools-server-certificates.html)
@@ -538,7 +538,7 @@ To install the Cloudflare root certificate on JetBrains products, refer to the l
 
 ### Eclipse
 
-To install the Cloudflare root certificate on Eclipse IDE for Java Developers, you must add the certificate to the Java virtual machine (JVM) used by Eclipse.
+To install a Cloudflare root certificate on Eclipse IDE for Java Developers, you must add the certificate to the Java virtual machine (JVM) used by Eclipse.
 
 1. [Download a Cloudflare certificate](#download-the-cloudflare-root-certificate).
 
@@ -597,7 +597,7 @@ For more information on adding certificates to Eclipse with `keytool`, refer to 
 
 ### RubyGems
 
-To trust the Cloudflare root certificate in RubyGems, follow the procedure for your operating system. These steps require you to [download a `.pem` certificate](#download-the-cloudflare-root-certificate).
+To trust a Cloudflare root certificate in RubyGems, follow the procedure for your operating system. These steps require you to [download a `.pem` certificate](#download-the-cloudflare-root-certificate).
 
 <Details header="macOS and Linux">
 
@@ -665,4 +665,4 @@ To trust the Cloudflare root certificate in RubyGems, follow the procedure for y
 
 ### Minikube
 
-To trust the Cloudflare root certificate in Minikube, refer to [x509: certificate signed by unknown authority](https://minikube.sigs.k8s.io/docs/handbook/vpn_and_proxy/#x509-certificate-signed-by-unknown-authority).
+To trust a Cloudflare root certificate in Minikube, refer to [x509: certificate signed by unknown authority](https://minikube.sigs.k8s.io/docs/handbook/vpn_and_proxy/#x509-certificate-signed-by-unknown-authority).
