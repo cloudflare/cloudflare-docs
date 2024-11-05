@@ -43,7 +43,7 @@ Even though it is possible to add discrete bindings for non-contiguous CIDR bloc
 Once a service binding is created (or deleted), it will take **four** to **six** hours to propagate across Cloudflare's global network. Services for the IP addresses in scope will likely be disrupted during this window.
 
 :::note
-This assumes that the prefix is tied to an account that has both Magic Transit and CDN properties. If not refer to [Prefix Delegations](/byoip/concepts/prefix-delegations/). The [Edge Service Bindings](#2-create-service-binding) will need to be done on the parent account as well.
+This guide assumes that the prefix is tied to a single Cloudflare account that has both Magic Transit and CDN properties. If you are using [prefix delegations](/byoip/concepts/prefix-delegations/), the service bindings must be [created](#2-create-service-binding) on the parent account.
 :::
 
 ## 1. Get account information
