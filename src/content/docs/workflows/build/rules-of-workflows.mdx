@@ -227,9 +227,8 @@ export class MyWorkflow extends WorkflowEntrypoint {
 
 ### Name steps deterministically
 
-Dynamically naming a step will prevent it from being cached, and cause the step to be re-run unnecessarily. Step names act as the "cache key" in your Workflow.
+Steps should be named deterministically (even if dynamic). This  ensures that their state is cached, and prevents the step from being rerun unnecessarily. Step names act as the "cache key" in your Workflow.
 
-Note that, step names can be formed dynamically as long they are deterministic across steps and/or Workflow restarts.
 
 ```ts
 export class MyWorkflow extends WorkflowEntrypoint {
