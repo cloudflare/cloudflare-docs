@@ -16,7 +16,7 @@ export default function () {
 				const last = element.children.at(-1);
 
 				// @ts-expect-error this is added by mdast-util-mdx-expression
-				if (last.type != "mdxTextExpression") {
+				if (last.type === "mdxTextExpression") {
 					const lastElement = last as MdxTextExpression;
 					if (
 						lastElement.value.startsWith("/*") &&
