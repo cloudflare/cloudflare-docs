@@ -55,7 +55,7 @@ The configuration looks like this:
 }
 ```
 
-This configuration instructs the browser to initiate prefetch requests for future navigations. These prefetch requests will include the `sec-purpose: prefetch` HTTP request header. Prefetches that are not successful will respond with a `503` status code. Prefetches that are successful will respond with a `200` status code.
+This configuration instructs the browser to initiate prefetch requests for future navigations. These prefetch requests will include the `sec-purpose: prefetch` HTTP request header. Prefetches that are not successful will respond with a `406` status code (used to be `503`). Prefetches that are successful will respond with a `200` status code.
 
 ## Test Speed Brain
 
