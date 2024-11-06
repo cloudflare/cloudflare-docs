@@ -37,6 +37,8 @@ jobs:
           NODE_OPTIONS: "--max-old-space-size=4192"
           RUN_LINK_CHECK: true
 
+      - run: npm run check:worker
+
       - uses: actions/cache/save@v4
         with:
           path: |

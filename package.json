@@ -10,6 +10,7 @@
 		"check": "npm run check:functions && npm run check:astro",
 		"check:astro": "npm run sync && astro check",
 		"check:functions": "npx tsc --noEmit -p ./functions/tsconfig.json",
+		"check:worker": "npx tsc --noEmit -p ./worker/tsconfig.json",
 		"dev": "npx astro dev",
 		"format": "npx prettier --write \"**/*.{js,jsx,ts,tsx,mjs,astro,css,json,yaml,yml}\"",
 		"postinstall": "npx patch-package && npm run sync",
@@ -35,6 +36,7 @@
 		"@codingheads/sticky-header": "^1.0.2",
 		"@stoplight/json-schema-tree": "^4.0.0",
 		"@types/dompurify": "^3.0.5",
+		"@types/hast": "^3.0.4",
 		"@types/he": "^1.2.3",
 		"@types/node": "^22.8.7",
 		"@types/react": "^18.3.12",
@@ -56,6 +58,7 @@
 		"instantsearch.js": "^4.75.3",
 		"lz-string": "^1.5.0",
 		"marked": "^14.1.3",
+		"mdast-util-mdx-expression": "^2.0.1",
 		"mermaid": "^11.3.0",
 		"node-html-parser": "^6.1.13",
 		"patch-package": "^8.0.0",
@@ -83,7 +86,7 @@
 		"typescript": "^5.6.3",
 		"unist-util-visit": "^5.0.0",
 		"vitest": "2.1.4",
-		"wrangler": "^3.78.10",
+		"wrangler": "^3.84.1",
 		"yaml": "^2.6.0"
 	},
 	"engines": {
