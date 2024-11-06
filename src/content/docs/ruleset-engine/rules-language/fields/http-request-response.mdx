@@ -16,7 +16,7 @@ The Cloudflare Rules language supports these HTTP response fields.
 
 `http.response.code` `Integer`
 
-Represents the HTTP status code returned to the client, either set by a Cloudflare product or returned by the origin server.
+The HTTP status code returned to the client, either set by a Cloudflare product or returned by the origin server.
 
 Example value:
 `403`
@@ -25,7 +25,7 @@ Example value:
 
 `http.response.headers` `Map<Array<String>>`
 
-Represents HTTP response headers as a Map (or associative array).
+The HTTP response headers represented as a Map (or associative array).
 
 When there are repeating headers, the array includes them in the order they appear in the response. The keys convert to lowercase.
 
@@ -47,7 +47,7 @@ Example value:
 
 ## `http.response.headers.names`
 
-Represents the names of the headers in the HTTP response. The names are not pre-processed and retain the original case used in the response.
+The names of the headers in the HTTP response. The names are not pre-processed and retain the original case used in the response.
 
 The order of header names is not guaranteed but will match `http.response.headers.values`.
 
@@ -67,7 +67,7 @@ Example value: `["content-type"]`
 
 ## `http.response.headers.values`
 
-Represents the values of the headers in the HTTP response.
+The values of the headers in the HTTP response.
 
 The values are not pre-processed and retain the original case used in the response.
 
@@ -155,7 +155,7 @@ Note: This field is only available in [HTTP response header modifications](/rule
 
 `cf.response.error_type` `String`
 
-Contains a string with the type of error in the response being returned. The default value is an empty string (`""`).
+A string with the type of error in the response being returned. The default value is an empty string (`""`).
 
 The available values are the following:
 

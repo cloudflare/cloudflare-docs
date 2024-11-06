@@ -8,7 +8,7 @@ head:
     content: Standard fields | Fields reference
 ---
 
-import { Details } from "~/components";
+import { Details, Render } from "~/components";
 
 Most standard fields use the same naming conventions as [Wireshark display fields](https://www.wireshark.org/docs/wsug_html_chunked/ChWorkBuildDisplayFilterSection.html). However, there are some subtle differences between Cloudflare and Wireshark:
 
@@ -34,7 +34,7 @@ The Cloudflare Rules language supports these standard fields.
 
 `http.cookie` `String`
 
-Represents the entire cookie as a string.
+The entire cookie as a string.
 
 Example value:
 
@@ -46,7 +46,7 @@ session=8521F670545D7865F79C3D7BEDC29CCE;-background=light
 
 `http.host` `String`
 
-Represents the hostname used in the full request URI.
+The hostname used in the full request URI.
 
 Example value:
 
@@ -58,7 +58,7 @@ www.example.org
 
 `http.referer` `String`
 
-Represents the HTTP Referer request header, which contains the address of the web page that linked to the currently requested page.
+The HTTP `Referer` request header, which contains the address of the web page that linked to the currently requested page.
 
 Example value:
 
@@ -70,7 +70,7 @@ Referer: htt­ps://developer.example.org/en-US/docs/Web/JavaScript
 
 `http.request.full_uri` `String`
 
-Represents the full URI as received by the web server (does not include `#fragment`, which is not sent to web servers).
+The full URI as received by the web server (does not include `#fragment`, which is not sent to web servers).
 
 Example value:
 
@@ -82,7 +82,7 @@ htt­ps://www.example.org/articles/index?section=539061&expand=comments
 
 `http.request.method` `String`
 
-Represents the HTTP method, returned as a string of uppercase characters.
+The HTTP method, returned as a string of uppercase characters.
 
 Example value:
 
@@ -94,7 +94,7 @@ GET
 
 `http.request.cookies` `Map<Array<String>>`
 
-Represents the `Cookie` HTTP header associated with a request as a Map (associative array). The cookie values are not pre-processed and retain the original case used in the request.
+The `Cookie` HTTP header associated with a request represented as a Map (associative array). The cookie values are not pre-processed and retain the original case used in the request.
 
 **Decoding:** The cookie names are URL decoded. If two cookies have the same name after decoding, their value arrays are merged.
 
@@ -114,7 +114,7 @@ Example value:
 
 `http.request.timestamp.sec` `Integer`
 
-Represents the timestamp when Cloudflare received the request, expressed as Unix time in seconds. This value is 10 digits long.
+The timestamp when Cloudflare received the request, expressed as UNIX time in seconds. This value is 10 digits long.
 
 To obtain the timestamp milliseconds, use the `http.request.timestamp.msec` field.
 
@@ -130,7 +130,7 @@ When validating HMAC tokens in an expression, pass this field as the `currentTim
 
 `http.request.timestamp.msec` `Integer`
 
-Represents the millisecond when Cloudflare received the request, between 0 and 999.
+The millisecond when Cloudflare received the request, between 0 and 999.
 
 To obtain the complete timestamp, use both `http.request.timestamp.sec` and `http.request.timestamp.msec` fields.
 
@@ -146,7 +146,7 @@ Here is the formatted information for the provided rows:
 
 `http.request.uri` `String`
 
-Represents the URI path and query string of the request.
+The URI path and query string of the request.
 
 Example value:
 
@@ -158,7 +158,7 @@ Example value:
 
 `http.request.uri.path` `String`
 
-Represents the URI path of the request.
+The URI path of the request.
 
 Example value:
 
@@ -197,7 +197,7 @@ Example values:
 
 `http.request.uri.query` `String`
 
-Represents the entire query string, without the `?` delimiter.
+The entire query string, without the `?` delimiter.
 
 Example value:
 
@@ -209,7 +209,7 @@ section=539061&expand=comments
 
 `http.user_agent` `String`
 
-Represents the HTTP User-Agent request header, which contains a characteristic string to identify the client operating system and web browser.
+The HTTP `User-Agent` request header, which contains a characteristic string to identify the client operating system and web browser.
 
 Example value:
 
@@ -221,7 +221,7 @@ Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/65
 
 `http.request.version` `String`
 
-Represents the version of the HTTP protocol used. Use this field when different checks are needed for different versions.
+The version of the HTTP protocol used. Use this field when different checks are needed for different versions.
 
 Example values:
 
@@ -232,7 +232,7 @@ Example values:
 
 `http.x_forwarded_for` `String`
 
-Represents the full `X-Forwarded-For` HTTP header.
+The full `X-Forwarded-For` HTTP header.
 
 Example value:
 
@@ -244,7 +244,7 @@ Example value:
 
 `ip.src` `IP address`
 
-Represents the client TCP IP address, which may be adjusted to reflect the actual address of the client using HTTP headers such as `X-Forwarded-For` or `X-Real-IP`.
+The client TCP IP address, which may be adjusted to reflect the actual address of the client using HTTP headers such as `X-Forwarded-For` or `X-Real-IP`.
 
 Example value:
 
@@ -256,7 +256,7 @@ Example value:
 
 `ip.src.lat` `String`
 
-Represents the latitude associated with the client IP address.
+The latitude associated with the client IP address.
 
 Example value:
 
@@ -268,7 +268,7 @@ Example value:
 
 `ip.src.lon` `String`
 
-Represents the longitude associated with the client IP address.
+The longitude associated with the client IP address.
 
 Example value:
 
@@ -280,7 +280,7 @@ Example value:
 
 `ip.src.city` `String`
 
-Represents the city associated with the client IP address.
+The city associated with the client IP address.
 
 Example value:
 
@@ -292,7 +292,7 @@ San Francisco
 
 `ip.src.postal_code` `String`
 
-Represents the postal code associated with the incoming request.
+The postal code associated with the incoming request.
 
 Example value:
 
@@ -304,7 +304,7 @@ Example value:
 
 `ip.src.metro_code` `String`
 
-Represents the metro code or Designated Market Area (DMA) code associated with the incoming request.
+The metro code or Designated Market Area (DMA) code associated with the incoming request.
 
 Example value:
 
@@ -316,7 +316,7 @@ Example value:
 
 `ip.src.region` `String`
 
-Represents the region name associated with the incoming request.
+The region name associated with the incoming request.
 
 Example value:
 
@@ -328,7 +328,7 @@ Texas
 
 `ip.src.region_code` `String`
 
-Represents the region code associated with the incoming request.
+The region code associated with the incoming request.
 
 Example value:
 
@@ -340,7 +340,7 @@ TX
 
 `ip.src.timezone.name` `String`
 
-Represents the name of the timezone associated with the incoming request. This field is only available in rewrite expressions of [Transform Rules](/rules/transform/).
+The name of the timezone associated with the incoming request. This field is only available in rewrite expressions of [Transform Rules](/rules/transform/).
 
 Example value:
 
@@ -352,7 +352,7 @@ America/Chicago
 
 `ip.src.asnum` `Number`
 
-Represents the 16- or 32-bit integer representing the Autonomous System (AS) number associated with the client IP address.
+The 16-bit or 32-bit integer representing the Autonomous System (AS) number associated with the client IP address.
 
 This field has the same value as the `ip.geoip.asnum` field, which is deprecated. The `ip.geoip.asnum` field is still available for new and existing rules, but you should use the `ip.src.asnum` field instead.
 
@@ -360,7 +360,7 @@ This field has the same value as the `ip.geoip.asnum` field, which is deprecated
 
 `ip.src.continent` `String`
 
-Represents the continent code associated with the client IP address:
+The continent code associated with the client IP address:
 
 - **AF**: Africa
 - **AN**: Antarctica
@@ -377,7 +377,7 @@ This field has the same value as the `ip.geoip.continent` field, which is deprec
 
 `ip.src.country` `String`
 
-Represents the 2-letter country code in [ISO 3166-1 Alpha 2](https://www.iso.org/obp/ui/#search/code/) format.
+The 2-letter country code in [ISO 3166-1 Alpha 2](https://www.iso.org/obp/ui/#search/code/) format.
 
 Example value:
 
@@ -393,7 +393,7 @@ This field has the same value as the `ip.geoip.country` field, which is deprecat
 
 `ip.src.subdivision_1_iso_code` `String`
 
-Represents the ISO 3166-2 code for the first-level region associated with the IP address. When the actual value is not available, this field contains an empty string.
+The ISO 3166-2 code for the first-level region associated with the IP address. When the actual value is not available, this field contains an empty string.
 
 Example value:
 
@@ -409,7 +409,7 @@ This field has the same value as the `ip.geoip.subdivision_1_iso_code` field, wh
 
 `ip.src.subdivision_2_iso_code` `String`
 
-Represents the ISO 3166-2 code for the second-level region associated with the IP address. When the actual value is not available, this field contains an empty string.
+The ISO 3166-2 code for the second-level region associated with the IP address. When the actual value is not available, this field contains an empty string.
 
 Example value:
 
@@ -476,7 +476,12 @@ This field has the same value as the `ip.geoip.is_in_european_union` field, whic
 
 `raw.http.request.full_uri` `String`
 
-Similar to the [`http.request.full_uri`](#httprequestfull_uri) non-raw field. Represents the full URI as received by the web server without the URI fragment (if any) and without any transformation.
+The raw full URI as received by the web server without the URI fragment (if any) and without any transformation.
+
+<Render
+	file="raw-fields-definition-with-link"
+	params={{ fieldLink: "[`http.request.full_uri`](#httprequestfull_uri)" }}
+/>
 
 **Note:** This raw field may include some basic normalization done by Cloudflare's HTTP server. However, this can change in the future.
 
@@ -484,7 +489,12 @@ Similar to the [`http.request.full_uri`](#httprequestfull_uri) non-raw field. Re
 
 `raw.http.request.uri` `String`
 
-Similar to the [`http.request.uri`](#httprequesturi) non-raw field. Represents the URI path and query string of the request without any transformation.
+The raw URI path and query string of the request without any transformation.
+
+<Render
+	file="raw-fields-definition-with-link"
+	params={{ fieldLink: "[`http.request.uri`](#httprequesturi)" }}
+/>
 
 **Note:** This raw field may include some basic normalization done by Cloudflare's HTTP server. However, this can change in the future.
 
@@ -492,7 +502,12 @@ Similar to the [`http.request.uri`](#httprequesturi) non-raw field. Represents t
 
 `raw.http.request.uri.path` `String`
 
-Similar to the [`http.request.uri.path`](#httprequesturipath) non-raw field. Represents the URI path of the request without any transformation.
+The raw URI path of the request without any transformation.
+
+<Render
+	file="raw-fields-definition-with-link"
+	params={{ fieldLink: "[`http.request.uri.path`](#httprequesturipath)" }}
+/>
 
 **Note:** This raw field may include some basic normalization done by Cloudflare's HTTP server. However, this can change in the future.
 
@@ -500,13 +515,26 @@ Similar to the [`http.request.uri.path`](#httprequesturipath) non-raw field. Rep
 
 `raw.http.request.uri.path.extension` `String`
 
-Similar to the [`http.request.uri.path.extension`](#httprequesturipathextension) non-raw field. Represents the file extension in the request URI path without any transformation.
+The raw file extension in the request URI path without any transformation.
+
+<Render
+	file="raw-fields-definition-with-link"
+	params={{
+		fieldLink:
+			"[`http.request.uri.path.extension`](#httprequesturipathextension)",
+	}}
+/>
 
 ## `raw.http.request.uri.query`
 
 `raw.http.request.uri.query` `String`
 
-Similar to the [`http.request.uri.query`](#httprequesturiquery) non-raw field. Represents the entire query string without the `?` delimiter and without any transformation.
+The entire query string without the `?` delimiter and without any transformation.
+
+<Render
+	file="raw-fields-definition-with-link"
+	params={{ fieldLink: "[`http.request.uri.query`](#httprequesturiquery)" }}
+/>
 
 **Note:** This raw field may include some basic normalization done by Cloudflare's HTTP server. However, this can change in the future.
 

@@ -28,7 +28,7 @@ The Cloudflare Rules language supports these HTTP body fields.
 
 `http.request.body.raw` `String`
 
-Represents the unaltered HTTP request body.
+The unaltered HTTP request body.
 
 When the value of `http.request.body.truncated` is true, the return value may be truncated.
 
@@ -58,7 +58,7 @@ This field may have a value larger than the one returned by `len(http.request.bo
 
 `http.request.body.form` `Map<Array<String>>`
 
-Represents the HTTP request body of a form as a Map (or associative array). Populated when the Content-Type header is `application/x-www-form-urlencoded`.
+The HTTP request body of a form represented as a Map (or associative array). Populated when the `Content-Type` header is `application/x-www-form-urlencoded`.
 
 The values are not pre-processed and retain the original case used in the request.
 
@@ -83,9 +83,9 @@ Example value:
 
 `http.request.body.form.names` `Array<String>`
 
-Represents the names of the form fields in an HTTP request where the content type is `application/x-www-form-urlencoded`.
+The names of the form fields in an HTTP request where the content type is `application/x-www-form-urlencoded`.
 
-The names are not pre-processed and retain the original case used in the request. They are listed in the same order as in the request.
+Names are not pre-processed and retain the original case used in the request. They are listed in the same order as in the request.
 
 Duplicate names are listed multiple times.
 
@@ -109,7 +109,7 @@ Example value:
 
 `http.request.body.form.values` `Array<String>`
 
-Represents the values of the form fields in an HTTP request where the content type is `application/x-www-form-urlencoded`.
+The values of the form fields in an HTTP request where the content type is `application/x-www-form-urlencoded`.
 
 The values are not pre-processed and retain the original case used in the request. They are listed in the same order as in the request.
 
@@ -149,7 +149,7 @@ This field is available on all Cloudflare plans.
 
 `http.request.body.multipart` `Map<Array<String>>`
 
-A Map (or associative array) of multipart names to multipart values in the request body.
+A Map (or associative array) representation of multipart names to multipart values in the request body.
 
 Example value:
 
