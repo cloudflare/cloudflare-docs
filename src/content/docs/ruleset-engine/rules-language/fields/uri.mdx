@@ -8,6 +8,8 @@ head:
     content: URI argument and value fields | Fields reference
 ---
 
+import { Render } from "~/components";
+
 The Cloudflare Rules language includes URI argument and value fields associated with HTTP requests. Many of these fields return [arrays](/ruleset-engine/rules-language/values/#arrays) containing the respective values.
 
 The Cloudflare Rules language supports these URI argument and value fields.
@@ -75,16 +77,35 @@ Example value:
 
 `raw.http.request.uri.args` `Map<Array<String>>`
 
-Contains the same field values as [`http.request.uri.args`](#httprequesturiargs).
+Contains the raw HTTP URI arguments associated with a request as a Map (associative array).
+
+<Render
+	file="raw-fields-definition-with-link"
+	params={{ fieldLink: "[`http.request.uri.args`](#httprequesturiargs)" }}
+/>
 
 ## `raw.http.request.uri.args.names`
 
 `raw.http.request.uri.args.names` `Array<String>`
 
-Contains the same field values as [`http.request.uri.args.names`](#httprequesturiargsnames).
+Contains the raw names of the arguments in the HTTP URI query string.
+
+<Render
+	file="raw-fields-definition-with-link"
+	params={{
+		fieldLink: "[`http.request.uri.args.names`](#httprequesturiargsnames)",
+	}}
+/>
 
 ## `raw.http.request.uri.args.values`
 
 `raw.http.request.uri.args.values` `Array<String>`
 
-Contains the same field values as [`http.request.uri.args.values`](#httprequesturiargsvalues).
+Contains the raw values of arguments in the HTTP URI query string.
+
+<Render
+	file="raw-fields-definition-with-link"
+	params={{
+		fieldLink: "[`http.request.uri.args.values`](#httprequesturiargsvalues)",
+	}}
+/>

@@ -8,7 +8,7 @@ head:
     content: Standard fields | Fields reference
 ---
 
-import { Details } from "~/components";
+import { Details, Render } from "~/components";
 
 Most standard fields use the same naming conventions as [Wireshark display fields](https://www.wireshark.org/docs/wsug_html_chunked/ChWorkBuildDisplayFilterSection.html). However, there are some subtle differences between Cloudflare and Wireshark:
 
@@ -476,7 +476,12 @@ This field has the same value as the `ip.geoip.is_in_european_union` field, whic
 
 `raw.http.request.full_uri` `String`
 
-Similar to the [`http.request.full_uri`](#httprequestfull_uri) non-raw field. Represents the full URI as received by the web server without the URI fragment (if any) and without any transformation.
+Represents the raw full URI as received by the web server without the URI fragment (if any) and without any transformation.
+
+<Render
+	file="raw-fields-definition-with-link"
+	params={{ fieldLink: "[`http.request.full_uri`](#httprequestfull_uri)" }}
+/>
 
 **Note:** This raw field may include some basic normalization done by Cloudflare's HTTP server. However, this can change in the future.
 
@@ -484,7 +489,12 @@ Similar to the [`http.request.full_uri`](#httprequestfull_uri) non-raw field. Re
 
 `raw.http.request.uri` `String`
 
-Similar to the [`http.request.uri`](#httprequesturi) non-raw field. Represents the URI path and query string of the request without any transformation.
+Represents the raw URI path and query string of the request without any transformation.
+
+<Render
+	file="raw-fields-definition-with-link"
+	params={{ fieldLink: "[`http.request.uri`](#httprequesturi)" }}
+/>
 
 **Note:** This raw field may include some basic normalization done by Cloudflare's HTTP server. However, this can change in the future.
 
@@ -492,7 +502,12 @@ Similar to the [`http.request.uri`](#httprequesturi) non-raw field. Represents t
 
 `raw.http.request.uri.path` `String`
 
-Similar to the [`http.request.uri.path`](#httprequesturipath) non-raw field. Represents the URI path of the request without any transformation.
+Represents the raw URI path of the request without any transformation.
+
+<Render
+	file="raw-fields-definition-with-link"
+	params={{ fieldLink: "[`http.request.uri.path`](#httprequesturipath)" }}
+/>
 
 **Note:** This raw field may include some basic normalization done by Cloudflare's HTTP server. However, this can change in the future.
 
@@ -500,13 +515,26 @@ Similar to the [`http.request.uri.path`](#httprequesturipath) non-raw field. Rep
 
 `raw.http.request.uri.path.extension` `String`
 
-Similar to the [`http.request.uri.path.extension`](#httprequesturipathextension) non-raw field. Represents the file extension in the request URI path without any transformation.
+Represents the raw file extension in the request URI path without any transformation.
+
+<Render
+	file="raw-fields-definition-with-link"
+	params={{
+		fieldLink:
+			"[`http.request.uri.path.extension`](#httprequesturipathextension)",
+	}}
+/>
 
 ## `raw.http.request.uri.query`
 
 `raw.http.request.uri.query` `String`
 
-Similar to the [`http.request.uri.query`](#httprequesturiquery) non-raw field. Represents the entire query string without the `?` delimiter and without any transformation.
+Represents the entire query string without the `?` delimiter and without any transformation.
+
+<Render
+	file="raw-fields-definition-with-link"
+	params={{ fieldLink: "[`http.request.uri.query`](#httprequesturiquery)" }}
+/>
 
 **Note:** This raw field may include some basic normalization done by Cloudflare's HTTP server. However, this can change in the future.
 
