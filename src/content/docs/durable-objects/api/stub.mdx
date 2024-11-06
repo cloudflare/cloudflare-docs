@@ -5,15 +5,15 @@ sidebar:
   order: 3
 ---
 
-import { Render } from "~/components";
+import { Render, GlossaryTooltip } from "~/components";
 
 ## Description
 
-The `DurableObjectStub` interface is a client used to invoke methods on a remote Durable Object. The type of `DurableObjectStub` is generic to allow for RPC methods to be invoked on the stub.
+The `DurableObjectStub` interface is a client used to invoke methods on a remote <GlossaryTooltip term="Durable Object">Durable Object</GlossaryTooltip>. The type of `DurableObjectStub` is generic to allow for RPC methods to be invoked on the stub.
 
 Durable Objects implement E-order semantics, a concept deriving from the [E distributed programming language](<https://en.wikipedia.org/wiki/E_(programming_language)>). When you make multiple calls to the same Durable Object, it is guaranteed that the calls will be delivered to the remote Durable Object in the order in which you made them. E-order semantics makes many distributed programming problems easier. E-order is implemented by the [Cap'n Proto](https://capnproto.org) distributed object-capability RPC protocol, which Cloudflare Workers uses for internal communications.
 
-If an exception is thrown by a Durable Object stub all in-flight calls and future calls will fail with [exceptions](/durable-objects/observability/troubleshooting/). To continue invoking methods on a remote Durable Object a Worker must recreate the stub. There are no ordering guarantees between different stubs.
+If an exception is thrown by a Durable Object <GlossaryTooltip term="stub">stub</GlossaryTooltip> all in-flight calls and future calls will fail with [exceptions](/durable-objects/observability/troubleshooting/). To continue invoking methods on a remote Durable Object a Worker must recreate the stub. There are no ordering guarantees between different stubs.
 
 <Render file="example-rpc" />
 

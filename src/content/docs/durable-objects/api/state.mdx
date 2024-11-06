@@ -9,9 +9,9 @@ import { Tabs, TabItem, GlossaryTooltip } from "~/components";
 
 ## Description
 
-The `DurableObjectState` interface is accessible as an instance property on the Durable Objects class. This interface encapsulates methods that modify the state of a Durable Object, for example which WebSockets are attached to a Durable Object or how the runtime should handle concurrent Durable Object requests.
+The `DurableObjectState` interface is accessible as an instance property on the <GlossaryTooltip term="Durable Object class">Durable Object class</GlossaryTooltip>. This interface encapsulates methods that modify the state of a Durable Object, for example which WebSockets are attached to a Durable Object or how the runtime should handle concurrent Durable Object requests.
 
-The `DurableObjectState` interface is different from the [Storage API](/durable-objects/api/storage-api) in that it does not have top-level methods which manipulate persistent application data. These methods are instead encapsulated in the [`DurableObjectStorage`](/durable-objects/api/storage-api) interface and accessed by [`DurableObjectState::storage`](/durable-objects/api/state/#storage).
+The `DurableObjectState` interface is different from the <GlossaryTooltip term="Storage API">Storage API</GlossaryTooltip> in that it does not have top-level methods which manipulate persistent application data. These methods are instead encapsulated in the [`DurableObjectStorage`](/durable-objects/api/storage-api) interface and accessed by [`DurableObjectState::storage`](/durable-objects/api/state/#storage).
 
 <Tabs> <TabItem label="JavaScript" icon="seti:javascript">
 

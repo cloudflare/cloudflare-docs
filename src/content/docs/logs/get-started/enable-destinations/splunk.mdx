@@ -23,7 +23,7 @@ Cloudflare Logpush supports pushing logs directly to Splunk via the Cloudflare d
    * **Splunk raw HTTP Event Collector URL**
    * **Channel ID** - This is a random GUID that you can generate using [guidgenerator.com](http://guidgenerator.com/).
    * **Auth Token**
-   * **Source Type** - For example, `cloudflare:json`.
+   * **Source Type** - For example, `cloudflare:json`. If you are using the [Cloudflare App for Splunk](https://splunkbase.splunk.com/app/4501), refer to the appropriate source type for the corresponding datasets under the **Details** section. For instance, for Zero Trust Access requests logs, the source type is `cloudflare:access`.
    * **Use insecure skip verify option** (not recommended).
 
 When you are done entering the destination details, select **Continue**.

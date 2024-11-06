@@ -72,6 +72,8 @@ There are two possible causes:
 - (Most common cause) [502/504 from your origin web server](#502504-from-your-origin-web-server)
 - [502/504 from Cloudflare](#502504-from-cloudflare)
 
+You may also see 504 status codes in logs or analytics caused by [cache MISS responses from Early Hints](/cache/advanced-configuration/early-hints/#emit-early-hints).
+
 ### 502/504 from your origin web server
 
 Cloudflare returns a Cloudflare-branded HTTP 502 or 504 error when your origin web server responds with a standard HTTP 502 bad gateway or 504 gateway timeout error:
@@ -128,6 +130,8 @@ HTTP error 503 occurs when your origin web server is overloaded. There are two p
 1. Your domain name
 2. The time and timezone of the 503 error occurrence
 3. The output of `www.example.com/cdn-cgi/trace` from the browser where the 503 error was observed (replace `www.example.com` with your actual domain and hostname)
+
+You may also see 503 status codes in logs or analytics caused by [unsuccessful prefetches from Speed Brain](/speed/optimization/content/speed-brain/#how-speed-brain-works).
 
 ---
 

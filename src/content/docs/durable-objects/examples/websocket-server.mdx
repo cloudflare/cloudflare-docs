@@ -11,9 +11,9 @@ description: Build a WebSocket server using Durable Objects and Workers.
 
 ---
 
-import { TabItem, Tabs } from "~/components"
+import { TabItem, Tabs, GlossaryTooltip } from "~/components"
 
-This example shows how to build a WebSocket server using Durable Objects and Workers. The example exposes an endpoint to create a new WebSocket connection. This WebSocket connection echos any message while including the total number of WebSocket connections currently established. For more information, refer to [Use Durable Objects with WebSockets](/durable-objects/reference/websockets/).
+This example shows how to build a WebSocket server using <GlossaryTooltip term="Durable Object">Durable Objects</GlossaryTooltip> and Workers. The example exposes an endpoint to create a new WebSocket connection. This WebSocket connection echos any message while including the total number of WebSocket connections currently established. For more information, refer to [Use Durable Objects with WebSockets](/durable-objects/reference/websockets/).
 
 :::caution
 
@@ -187,7 +187,7 @@ export class WebSocketServer extends DurableObject {
 
 </TabItem> </Tabs>
 
-Finally, configure your `wrangler.toml` file to include a Durable Object [binding](/durable-objects/get-started/#5-configure-durable-object-bindings) and [migration](/durable-objects/reference/durable-objects-migrations/) based on the namespace and class name chosen previously.
+Finally, configure your `wrangler.toml` file to include a Durable Object [binding](/durable-objects/get-started/#5-configure-durable-object-bindings) and [migration](/durable-objects/reference/durable-objects-migrations/) based on the <GlossaryTooltip term="namespace">namespace</GlossaryTooltip> and class name chosen previously.
 
 ```toml title="wrangler.toml"
 name = "websocket-server"

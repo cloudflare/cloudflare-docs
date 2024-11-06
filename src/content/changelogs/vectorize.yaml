@@ -5,6 +5,22 @@ productLink: "/vectorize/"
 productArea: Developer platform
 productAreaLink: /workers/platform/changelog/platform/
 entries:
+  - publish_date: "2024-10-28"
+    title: Improved query latency through REST API
+    description: |-
+      Vectorize now has a significantly improved query latency through REST API:
+      * [Query vectors](/api/operations/vectorize-query-vector).
+      * [Get vector by identifier](/api/operations/vectorize-get-vectors-by-id).
+
+  - publish_date: "2024-10-24"
+    title: Vectorize increased limits
+    description: |-
+      Developers with a Workers Paid plan can:
+      * Create 50,000 indexes per account, up from the previous 100 limit.
+      * Create 50,000 namespaces per index, up from the previous 100 limt. This applies to both existing and newly created indexes.
+
+      Refer to [Limits](/vectorize/platform/limits/) to learn about Vectorize's limits.
+
   - publish_date: "2024-09-26"
     title: Vectorize GA
     description: |-

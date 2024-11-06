@@ -1,0 +1,31 @@
+---
+title: Add BCC rules
+pcx_content_type: how-to
+sidebar:
+  order: 3
+---
+
+import { Render } from "~/components"
+
+1. In the [Google Admin console](https://admin.google.com/), go to **Menu** > **Apps** > **Google Workspace** > **Gmail** > **Compliance**.
+2. Go to **Content Compliance** > Select **Edit**.
+3. Add a **Content Compliance** filter, and name it `Email Security (Area 1) - BCC`.
+4. In **Email messages to affect**, select **Inbound**.
+5. Select the recipients you want to send emails to Email Security (formerly Area 1) via BCC:
+    1. Select **Add** to configure the expression.
+    2. Select **Advanced content match**.
+    3. In **Location**, select **Headers + Body**.
+    4. In **Match type**, select **Matches regex**.
+    5. In **Regexp** input `.*`. You can customize the regex as needed and test within the admin page or on sites like [Regexr](https://regexr.com/).
+    6. Select **SAVE**.
+6. In **If the above expressions match, do the following**, select **Modify message**, select **Add more recipients** > Select **ADD** > Choose **Advanced**:
+    1. Under **Envelope recipient**, select **Change envelope recipient** > **Replace recipient** > Enter the email of the recipient.
+    2. Under **Spam and delivery options**, select **Suppress bounces from this recipient**.
+    3. Under **Headers**, select **Add X-Gm-Spam and X-Gm-Phishy headers**.
+    4. Select **SAVE**.
+7. In **Account types to affect**, select **Users** and **Groups**.
+8. Select **SAVE**.
+
+## Next steps
+
+Now that you have added BCC rules on the Area 1 portal, you need to [create a project on Google Cloud Console](/email-security/deployment/api/setup/gsuite-bcc-setup/create-project-gcp/).

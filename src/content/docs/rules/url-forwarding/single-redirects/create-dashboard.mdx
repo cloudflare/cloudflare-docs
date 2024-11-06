@@ -13,8 +13,9 @@ import { Render } from "~/components";
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) and select your account and domain.
 2. Go to **Rules** > **Redirect Rules**.
 3. To create a new empty redirect rule, select **Create rule**. To duplicate an existing rule, select the three dots next to it > **Duplicate**.
-4. Enter a descriptive name for the rule in **Rule name**.
-5. Under **When incoming requests match**, select one of the following options:
+4. (Optional) Select one of the rule templates that address common use cases. Then, review and adjust the proposed rule configuration.
+5. Enter a descriptive name for the rule in **Rule name**.
+6. Under **When incoming requests match**, select one of the following options:
    - **Wildcard pattern**: The rule will only apply to traffic matching the wildcard pattern.
      - **Request URL**: Enter the [wildcard pattern](/ruleset-engine/rules-language/operators/#wildcard-matching) using the asterisk (`*`) character to match multiple requests. For example, `https://*.example.com/files/*`.
      - **Then**: Define the [URL redirect settings](/rules/url-forwarding/single-redirects/settings/) including:
@@ -25,7 +26,7 @@ import { Render } from "~/components";
      - **Then**: Define the [URL redirect settings](/rules/url-forwarding/single-redirects/settings/) for all incoming requests.
    - **Custom filter expression**: The rule will only apply to traffic matching a custom expression. Define the [rule expression](/ruleset-engine/rules-language/expressions/edit-expressions/) to configure which requests should be redirected.
      - **Then**: Define the [URL redirect settings](/rules/url-forwarding/single-redirects/settings/) for requests matching the custom rule expression.
-6. To save and deploy your rule, select **Deploy**. If you are not ready to deploy your rule, select **Save as Draft**.
+7. To save and deploy your rule, select **Deploy**. If you are not ready to deploy your rule, select **Save as Draft**.
 
 <Render
 	file="url-forwarding/requires-proxied-site"

@@ -5,6 +5,10 @@ productLink: "/cloudflare-one/policies/data-loss-prevention/"
 productArea: Cloudflare One
 productAreaLink: /cloudflare-one/changelog/
 entries:
+  - publish_date: "2024-11-01"
+    title: Send entire HTTP requests to a Logpush destination
+    description: |-
+      In addition to [logging the payload](/cloudflare-one/policies/data-loss-prevention/dlp-policies/logging-options/#log-the-payload-of-matched-rules) from HTTP requests that matched a DLP policy in Cloudflare Logs, Enterprise users can now configure a [Logpush job](/cloudflare-one/policies/data-loss-prevention/dlp-policies/logging-options/#send-http-requests-to-logpush-destination) to send the entire HTTP request that triggered a DLP match to a storage destination. This allows long-term storage of full requests for use in forensic investigation.
   - publish_date: "2024-09-03"
     title: Exact Data Match multi-entry upload support
     description: |-

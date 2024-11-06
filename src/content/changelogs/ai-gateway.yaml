@@ -5,6 +5,11 @@ productLink: "/ai-gateway/"
 productArea: Developer platform
 productAreaLink: /workers/platform/changelog/platform/
 entries:
+  - publish_date: "2024-10-28"
+    title: Grok
+    description: |-
+      * **Providers**: Added [Grok](/ai-gateway/providers/grok/) as a new provider.
+      
   - publish_date: "2024-10-17"
     title: Vercel SDK
     description: |-

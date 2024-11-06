@@ -20,8 +20,3 @@ resources:
 externals:
   - title: Web3 homepage
     url: https://cloudflare.com/web3/
-
-algolia:
-  index: TEST - Re-dev docs
-  apikey: 4edb0a6cef3338ff4bcfbc6b3d2db56b
-  product: web3

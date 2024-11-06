@@ -5,6 +5,35 @@ productLink: "/cloudflare-one/connections/connect-devices/warp/"
 productArea: Cloudflare One
 productAreaLink: /cloudflare-one/changelog/
 entries:
+  - publish_date: "2024-10-23"
+    title: WARP client for macOS (version 2024.10.279.1)
+    description: |-
+      A new beta release for the macOS WARP client is now available in the [App Center](https://install.appcenter.ms/orgs/cloudflare/apps/1.1.1.1-macos/distribution_groups/beta). This release contains minor fixes and improvements.
+
+      Changes and improvements:
+        - Fixed an issue where SSH sessions and other application connections over TCP or UDP could drop when a device that is using MASQUE changes its primary network interface.
+        - Fixed an issue to ensure the Cloudflare root certificate (or custom certificate) is installed in the trust store if not already there.
+
+      Known issues:
+        - Cloudflare is investigating temporary networking issues on macOS 15 (Sequoia) that affect some users and may occur on any version of the WARP client.
+
+  - publish_date: "2024-10-23"
+    title: WARP client for Windows (version 2024.10.279.1)
+    description: |-
+      A new beta release for the Windows WARP client is now available in the [App Center](https://install.appcenter.ms/orgs/cloudflare/apps/1.1.1.1-windows/distribution_groups/beta). This release contains minor fixes and improvements.
+
+      Changes and improvements:
+        - Fixed an issue where SSH sessions and other application connections over TCP or UDP could drop when a device that is using MASQUE changes its primary network interface.
+        - Fixed an issue to ensure the Cloudflare root certificate (or custom certificate) is installed in the trust store if not already there.
+
+      Known issues:
+        - DNS resolution may be broken when all of the following conditions are true:
+          - WARP is in Secure Web Gateway without DNS filtering (tunnel-only) mode.
+          - A custom DNS server address is configured on the primary network adapter.
+          - The custom DNS server address on the primary network adapter is changed while WARP is connected.
+
+          To work around the DNS issue, reconnect the WARP client by toggling off and back on.
+
   - publish_date: "2024-10-03"
     title: WARP client for Linux (version 2024.9.346.0)
     description: |-
