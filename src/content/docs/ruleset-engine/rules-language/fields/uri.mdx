@@ -18,7 +18,7 @@ The Cloudflare Rules language supports these URI argument and value fields.
 
 `http.request.uri.args` `Map<Array<String>>`
 
-Represents the HTTP URI arguments associated with a request as a Map (associative array).
+The HTTP URI arguments associated with a request represented as a Map (associative array).
 
 When an argument repeats, the array contains multiple items in the order they appear in the request.
 
@@ -39,7 +39,7 @@ Example value:
 
 `http.request.uri.args.names` `Array<String>`
 
-Represents the names of the arguments in the HTTP URI query string. The names are not pre-processed and retain the original case used in the request.
+The names of the arguments in the HTTP URI query string. The names are not pre-processed and retain the original case used in the request.
 
 When a name repeats, the array contains multiple items in the order that they appear in the request.
 
@@ -58,7 +58,7 @@ Example value:
 
 `http.request.uri.args.values` `Array<String>`
 
-Represents the values of arguments in the HTTP URI query string. The values are not pre-processed and retain the original case used in the request. They are in the same order as in the request.
+The values of arguments in the HTTP URI query string. The values are not pre-processed and retain the original case used in the request. They are in the same order as in the request.
 
 Duplicated values are listed multiple times.
 
@@ -77,7 +77,7 @@ Example value:
 
 `raw.http.request.uri.args` `Map<Array<String>>`
 
-Contains the raw HTTP URI arguments associated with a request as a Map (associative array).
+The raw HTTP URI arguments associated with a request represented as a Map (associative array).
 
 <Render
 	file="raw-fields-definition-with-link"
@@ -88,7 +88,7 @@ Contains the raw HTTP URI arguments associated with a request as a Map (associat
 
 `raw.http.request.uri.args.names` `Array<String>`
 
-Contains the raw names of the arguments in the HTTP URI query string.
+The raw names of the arguments in the HTTP URI query string.
 
 <Render
 	file="raw-fields-definition-with-link"
@@ -101,7 +101,7 @@ Contains the raw names of the arguments in the HTTP URI query string.
 
 `raw.http.request.uri.args.values` `Array<String>`
 
-Contains the raw values of arguments in the HTTP URI query string.
+The raw values of arguments in the HTTP URI query string.
 
 <Render
 	file="raw-fields-definition-with-link"
