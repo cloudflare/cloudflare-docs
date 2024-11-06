@@ -20,3 +20,4 @@ _redirects text eol=lf
 .editorconfig text eol=lf
 .gitattributes text eol=lf
 .prettierignore text eol=lf
+.npmrc text eol=lf
