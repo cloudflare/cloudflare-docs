@@ -152,7 +152,7 @@ export default {
 		// Helper function to attempt a write to KV and handle errors
 		const attemptWrite = async (i: number) => {
 			try {
-				await env.simple_kv_hono_jsx.put(key, `Write attempt #${i}`);
+				await env. YOUR_KV_NAMESPACE.put(key, `Write attempt #${i}`);
 				return { attempt: i, success: true };
 			} catch (error) {
 				// An error may be thrown if a write to the same key is made within 1 second with a message. For example:
