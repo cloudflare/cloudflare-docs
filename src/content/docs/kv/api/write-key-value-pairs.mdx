@@ -209,7 +209,7 @@ export default {
 		// Helper function to attempt a write to KV with retries
 		const attemptWrite = async (i: number) => {
 			return await retryWithBackoff(async () => {
-				await env.simple_kv_hono_jsx.put(key, `Write attempt #${i}`);
+				await env.YOUR_KV_NAMESPACE.put(key, `Write attempt #${i}`);
 				return { attempt: i, success: true };
 			});
 		};
