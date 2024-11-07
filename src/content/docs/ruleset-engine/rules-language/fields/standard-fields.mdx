@@ -8,7 +8,7 @@ head:
     content: Standard fields | Fields reference
 ---
 
-import { Details, Render } from "~/components";
+import { Details, Render, Type } from "~/components";
 
 Most standard fields use the same naming conventions as [Wireshark display fields](https://www.wireshark.org/docs/wsug_html_chunked/ChWorkBuildDisplayFilterSection.html). However, there are some subtle differences between Cloudflare and Wireshark:
 
@@ -32,7 +32,7 @@ The Cloudflare Rules language supports these standard fields.
 
 ## `http.cookie`
 
-`http.cookie` `String`
+`http.cookie` <Type text='String' />
 
 The entire cookie as a string.
 
@@ -44,7 +44,7 @@ session=8521F670545D7865F79C3D7BEDC29CCE;-background=light
 
 ## `http.host`
 
-`http.host` `String`
+`http.host` <Type text='String' />
 
 The hostname used in the full request URI.
 
@@ -56,7 +56,7 @@ www.example.org
 
 ## `http.referer`
 
-`http.referer` `String`
+`http.referer` <Type text='String' />
 
 The HTTP `Referer` request header, which contains the address of the web page that linked to the currently requested page.
 
@@ -68,7 +68,7 @@ Referer: htt­ps://developer.example.org/en-US/docs/Web/JavaScript
 
 ## `http.request.full_uri`
 
-`http.request.full_uri` `String`
+`http.request.full_uri` <Type text='String' />
 
 The full URI as received by the web server (does not include `#fragment`, which is not sent to web servers).
 
@@ -80,7 +80,7 @@ htt­ps://www.example.org/articles/index?section=539061&expand=comments
 
 ## `http.request.method`
 
-`http.request.method` `String`
+`http.request.method` <Type text='String' />
 
 The HTTP method, returned as a string of uppercase characters.
 
@@ -92,7 +92,7 @@ GET
 
 ## `http.request.cookies`
 
-`http.request.cookies` `Map<Array<String>>`
+`http.request.cookies` <Type text='Map<Array<String>>' />
 
 The `Cookie` HTTP header associated with a request represented as a Map (associative array). The cookie values are not pre-processed and retain the original case used in the request.
 
@@ -112,11 +112,11 @@ Example value:
 
 ## `http.request.timestamp.sec`
 
-`http.request.timestamp.sec` `Integer`
+`http.request.timestamp.sec` <Type text='Integer' />
 
 The timestamp when Cloudflare received the request, expressed as UNIX time in seconds. This value is 10 digits long.
 
-To obtain the timestamp milliseconds, use the `http.request.timestamp.msec` field.
+To obtain the timestamp milliseconds, use the [`http.request.timestamp.msec`](#httprequesttimestampmsec) field.
 
 Example value:
 
@@ -124,15 +124,15 @@ Example value:
 1484063137
 ```
 
-When validating HMAC tokens in an expression, pass this field as the `currentTimestamp` argument to the [is_timed_hmac_valid_v0()](/ruleset-engine/rules-language/functions/#hmac-validation) validation function.
+When validating HMAC tokens in an expression, pass this field as the `currentTimestamp` argument to the [`is_timed_hmac_valid_v0()`](/ruleset-engine/rules-language/functions/#hmac-validation) validation function.
 
 ## `http.request.timestamp.msec`
 
-`http.request.timestamp.msec` `Integer`
+`http.request.timestamp.msec` <Type text='Integer' />
 
 The millisecond when Cloudflare received the request, between 0 and 999.
 
-To obtain the complete timestamp, use both `http.request.timestamp.sec` and `http.request.timestamp.msec` fields.
+To obtain the complete timestamp, use both [`http.request.timestamp.sec`](#httprequesttimestampsec) and [`http.request.timestamp.msec`](#httprequesttimestampmsec) fields.
 
 Example value:
 
@@ -144,7 +144,7 @@ Here is the formatted information for the provided rows:
 
 ## `http.request.uri`
 
-`http.request.uri` `String`
+`http.request.uri` <Type text='String' />
 
 The URI path and query string of the request.
 
@@ -156,7 +156,7 @@ Example value:
 
 ## `http.request.uri.path`
 
-`http.request.uri.path` `String`
+`http.request.uri.path` <Type text='String' />
 
 The URI path of the request.
 
@@ -168,7 +168,7 @@ Example value:
 
 ## `http.request.uri.path.extension`
 
-`http.request.uri.path.extension` `String`
+`http.request.uri.path.extension` <Type text='String' />
 
 The lowercased file extension in the URI path without the dot (`.`) character. This corresponds to the string after the last dot in the URI path, excluding the query string.
 
@@ -195,7 +195,7 @@ Example values:
 
 ## `http.request.uri.query`
 
-`http.request.uri.query` `String`
+`http.request.uri.query` <Type text='String' />
 
 The entire query string, without the `?` delimiter.
 
@@ -207,7 +207,7 @@ section=539061&expand=comments
 
 ## `http.user_agent`
 
-`http.user_agent` `String`
+`http.user_agent` <Type text='String' />
 
 The HTTP `User-Agent` request header, which contains a characteristic string to identify the client operating system and web browser.
 
@@ -219,7 +219,7 @@ Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/65
 
 ## `http.request.version`
 
-`http.request.version` `String`
+`http.request.version` <Type text='String' />
 
 The version of the HTTP protocol used. Use this field when different checks are needed for different versions.
 
@@ -230,7 +230,7 @@ Example values:
 
 ## `http.x_forwarded_for`
 
-`http.x_forwarded_for` `String`
+`http.x_forwarded_for` <Type text='String' />
 
 The full `X-Forwarded-For` HTTP header.
 
@@ -242,7 +242,7 @@ Example value:
 
 ## `ip.src`
 
-`ip.src` `IP address`
+`ip.src` <Type text='IP address' />
 
 The client TCP IP address, which may be adjusted to reflect the actual address of the client using HTTP headers such as `X-Forwarded-For` or `X-Real-IP`.
 
@@ -254,7 +254,7 @@ Example value:
 
 ## `ip.src.lat`
 
-`ip.src.lat` `String`
+`ip.src.lat` <Type text='String' />
 
 The latitude associated with the client IP address.
 
@@ -266,7 +266,7 @@ Example value:
 
 ## `ip.src.lon`
 
-`ip.src.lon` `String`
+`ip.src.lon` <Type text='String' />
 
 The longitude associated with the client IP address.
 
@@ -278,7 +278,7 @@ Example value:
 
 ## `ip.src.city`
 
-`ip.src.city` `String`
+`ip.src.city` <Type text='String' />
 
 The city associated with the client IP address.
 
@@ -290,7 +290,7 @@ San Francisco
 
 ## `ip.src.postal_code`
 
-`ip.src.postal_code` `String`
+`ip.src.postal_code` <Type text='String' />
 
 The postal code associated with the incoming request.
 
@@ -302,7 +302,7 @@ Example value:
 
 ## `ip.src.metro_code`
 
-`ip.src.metro_code` `String`
+`ip.src.metro_code` <Type text='String' />
 
 The metro code or Designated Market Area (DMA) code associated with the incoming request.
 
@@ -314,7 +314,7 @@ Example value:
 
 ## `ip.src.region`
 
-`ip.src.region` `String`
+`ip.src.region` <Type text='String' />
 
 The region name associated with the incoming request.
 
@@ -326,7 +326,7 @@ Texas
 
 ## `ip.src.region_code`
 
-`ip.src.region_code` `String`
+`ip.src.region_code` <Type text='String' />
 
 The region code associated with the incoming request.
 
@@ -338,7 +338,7 @@ TX
 
 ## `ip.src.timezone.name`
 
-`ip.src.timezone.name` `String`
+`ip.src.timezone.name` <Type text='String' />
 
 The name of the timezone associated with the incoming request. This field is only available in rewrite expressions of [Transform Rules](/rules/transform/).
 
@@ -350,7 +350,7 @@ America/Chicago
 
 ## `ip.src.asnum`
 
-`ip.src.asnum` `Number`
+`ip.src.asnum` <Type text='Number' />
 
 The 16-bit or 32-bit integer representing the Autonomous System (AS) number associated with the client IP address.
 
@@ -358,7 +358,7 @@ This field has the same value as the `ip.geoip.asnum` field, which is deprecated
 
 ## `ip.src.continent`
 
-`ip.src.continent` `String`
+`ip.src.continent` <Type text='String' />
 
 The continent code associated with the client IP address:
 
@@ -375,7 +375,7 @@ This field has the same value as the `ip.geoip.continent` field, which is deprec
 
 ## `ip.src.country`
 
-`ip.src.country` `String`
+`ip.src.country` <Type text='String' />
 
 The 2-letter country code in [ISO 3166-1 Alpha 2](https://www.iso.org/obp/ui/#search/code/) format.
 
@@ -391,7 +391,7 @@ This field has the same value as the `ip.geoip.country` field, which is deprecat
 
 ## `ip.src.subdivision_1_iso_code`
 
-`ip.src.subdivision_1_iso_code` `String`
+`ip.src.subdivision_1_iso_code` <Type text='String' />
 
 The ISO 3166-2 code for the first-level region associated with the IP address. When the actual value is not available, this field contains an empty string.
 
@@ -407,7 +407,7 @@ This field has the same value as the `ip.geoip.subdivision_1_iso_code` field, wh
 
 ## `ip.src.subdivision_2_iso_code`
 
-`ip.src.subdivision_2_iso_code` `String`
+`ip.src.subdivision_2_iso_code` <Type text='String' />
 
 The ISO 3166-2 code for the second-level region associated with the IP address. When the actual value is not available, this field contains an empty string.
 
@@ -423,7 +423,7 @@ This field has the same value as the `ip.geoip.subdivision_2_iso_code` field, wh
 
 ## `ip.src.is_in_european_union`
 
-`ip.src.is_in_european_union` `Boolean`
+`ip.src.is_in_european_union` <Type text='Boolean' />
 
 Returns `true` when the request originates from a country in the European Union (EU).
 
@@ -474,7 +474,7 @@ This field has the same value as the `ip.geoip.is_in_european_union` field, whic
 
 ## `raw.http.request.full_uri`
 
-`raw.http.request.full_uri` `String`
+`raw.http.request.full_uri` <Type text='String' />
 
 The raw full URI as received by the web server without the URI fragment (if any) and without any transformation.
 
@@ -487,7 +487,7 @@ The raw full URI as received by the web server without the URI fragment (if any)
 
 ## `raw.http.request.uri`
 
-`raw.http.request.uri` `String`
+`raw.http.request.uri` <Type text='String' />
 
 The raw URI path and query string of the request without any transformation.
 
@@ -500,7 +500,7 @@ The raw URI path and query string of the request without any transformation.
 
 ## `raw.http.request.uri.path`
 
-`raw.http.request.uri.path` `String`
+`raw.http.request.uri.path` <Type text='String' />
 
 The raw URI path of the request without any transformation.
 
@@ -513,7 +513,7 @@ The raw URI path of the request without any transformation.
 
 ## `raw.http.request.uri.path.extension`
 
-`raw.http.request.uri.path.extension` `String`
+`raw.http.request.uri.path.extension` <Type text='String' />
 
 The raw file extension in the request URI path without any transformation.
 
@@ -527,7 +527,7 @@ The raw file extension in the request URI path without any transformation.
 
 ## `raw.http.request.uri.query`
 
-`raw.http.request.uri.query` `String`
+`raw.http.request.uri.query` <Type text='String' />
 
 The entire query string without the `?` delimiter and without any transformation.
 
@@ -540,7 +540,7 @@ The entire query string without the `?` delimiter and without any transformation
 
 ## `ssl`
 
-`ssl` `Boolean`
+`ssl` <Type text='Boolean' />
 
 Returns `true` when the HTTP connection to the client is encrypted.
 

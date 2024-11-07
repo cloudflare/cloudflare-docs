@@ -8,7 +8,7 @@ head:
     content: URI argument and value fields | Fields reference
 ---
 
-import { Render } from "~/components";
+import { Render, Type } from "~/components";
 
 The Cloudflare Rules language includes URI argument and value fields associated with HTTP requests. Many of these fields return [arrays](/ruleset-engine/rules-language/values/#arrays) containing the respective values.
 
@@ -16,7 +16,7 @@ The Cloudflare Rules language supports these URI argument and value fields.
 
 ## `http.request.uri.args`
 
-`http.request.uri.args` `Map<Array<String>>`
+`http.request.uri.args` <Type text='Map<Array<String>>' />
 
 The HTTP URI arguments associated with a request represented as a Map (associative array).
 
@@ -37,7 +37,7 @@ Example value:
 
 ## `http.request.uri.args.names`
 
-`http.request.uri.args.names` `Array<String>`
+`http.request.uri.args.names` <Type text='Array<String>' />
 
 The names of the arguments in the HTTP URI query string. The names are not pre-processed and retain the original case used in the request.
 
@@ -56,7 +56,7 @@ Example value:
 
 ## `http.request.uri.args.values`
 
-`http.request.uri.args.values` `Array<String>`
+`http.request.uri.args.values` <Type text='Array<String>' />
 
 The values of arguments in the HTTP URI query string. The values are not pre-processed and retain the original case used in the request. They are in the same order as in the request.
 
@@ -75,7 +75,7 @@ Example value:
 
 ## `raw.http.request.uri.args`
 
-`raw.http.request.uri.args` `Map<Array<String>>`
+`raw.http.request.uri.args` <Type text='Map<Array<String>>' />
 
 The raw HTTP URI arguments associated with a request represented as a Map (associative array).
 
@@ -86,7 +86,7 @@ The raw HTTP URI arguments associated with a request represented as a Map (assoc
 
 ## `raw.http.request.uri.args.names`
 
-`raw.http.request.uri.args.names` `Array<String>`
+`raw.http.request.uri.args.names` <Type text='Array<String>' />
 
 The raw names of the arguments in the HTTP URI query string.
 
@@ -99,7 +99,7 @@ The raw names of the arguments in the HTTP URI query string.
 
 ## `raw.http.request.uri.args.values`
 
-`raw.http.request.uri.args.values` `Array<String>`
+`raw.http.request.uri.args.values` <Type text='Array<String>' />
 
 The raw values of arguments in the HTTP URI query string.
 
