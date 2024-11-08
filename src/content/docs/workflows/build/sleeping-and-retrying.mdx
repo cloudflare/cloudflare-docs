@@ -133,7 +133,10 @@ try {
         throw new NonRetryableError('oh no');
     });
 } catch(e as Error) {
-    console.log('error was thrown');
+    console.log(`Step failed: ${e.message}`);
+    await step.do('clean up', async () => {
+      // Clean up code here
+    }
 }
 
 // the Workflow will not fail and will continue its execution
