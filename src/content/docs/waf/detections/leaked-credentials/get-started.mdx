@@ -93,11 +93,11 @@ To check for leaked credentials in a way that is not covered by the default conf
 3. Under **Incoming traffic detections**, select **Leaked credentials** and then select **Add custom username and password location**.
 4. In **Username location** and **Password location** (optional), enter expressions for obtaining the username and the password from the HTTP request. Refer to the following example expressions:
 
-   | Request type     | Username location / Password location                                                                                 |
-   | ---------------- | --------------------------------------------------------------------------------------------------------------------- |
-   | JSON body        | `lookup_json_string(http.request.body.raw, "username")`<br/>`lookup_json_string(http.request.body.raw, "password")`   |
-   | URL-encoded form | `url_decode(http.request.body.form["username"][0])`<br/>`url_decode(http.request.body.form["password"][0])`           |
-   | Multipart form   | `url_decode(http.request.body.multipart["username"][0])`<br/>`url_decode(http.request.body.multipart["password"][0])` |
+   | Request type     | Username location / Password location                                                                           |
+   | ---------------- | --------------------------------------------------------------------------------------------------------------- |
+   | JSON body        | `lookup_json_string(http.request.body.raw, "user")`<br/>`lookup_json_string(http.request.body.raw, "secret")`   |
+   | URL-encoded form | `url_decode(http.request.body.form["user"][0])`<br/>`url_decode(http.request.body.form["secret"][0])`           |
+   | Multipart form   | `url_decode(http.request.body.multipart["user"][0])`<br/>`url_decode(http.request.body.multipart["secret"][0])` |
 
 5. Select **Save**.
 
