@@ -99,6 +99,8 @@ To check for leaked credentials in a way that is not covered by the default conf
    | URL-encoded form | `url_decode(http.request.body.form["user"][0])`<br/>`url_decode(http.request.body.form["secret"][0])`           |
    | Multipart form   | `url_decode(http.request.body.multipart["user"][0])`<br/>`url_decode(http.request.body.multipart["secret"][0])` |
 
+   Refer to the [`lookup_json_string()`](/ruleset-engine/rules-language/functions/#lookup_json_string) and [`url_decode()`](/ruleset-engine/rules-language/functions/#url_decode) documentation for more information on these functions.
+
 5. Select **Save**.
 
 </TabItem> <TabItem label="API">
@@ -121,6 +123,8 @@ This pair of lookup expressions (for username and password) will scan incoming H
 ```js
 {"user": "<username>", "secret": "<password>"}
 ```
+
+Refer to the [`lookup_json_string()`](/ruleset-engine/rules-language/functions/#lookup_json_string) documentation for more information on this function.
 
 </TabItem> </Tabs>
 
