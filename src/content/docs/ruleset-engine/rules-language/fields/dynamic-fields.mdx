@@ -520,7 +520,7 @@ Identifies whether a request comes from a worker or not. When a request comes fr
 
 `http.request.jwt.claims.aud` <Type text='Map<Array<String>>' /> <br />
 `http.request.jwt.claims.aud.names` <Type text='Array<String>' /> <br />
-`http.request.jwt.claims.aud.values` <Type text='Array<String>' /> <br />
+`http.request.jwt.claims.aud.values` <Type text='Array<String>' />
 
 The `aud` (audience) claim identifies the recipients that the JSON Web Token (JWT) is intended for. Each principal intended to process the JWT must identify itself with a value in the audience claim. In the general case, the `aud` value is an array of case-sensitive strings, each containing a `StringOrURI` value.
 
@@ -540,7 +540,7 @@ The `iat` (issued at) claim identifies the time (number of seconds) at which the
 
 `http.request.jwt.claims.iss` <Type text='Map<Array<String>>' /> <br />
 `http.request.jwt.claims.iss.names` <Type text='Array<String>' /> <br />
-`http.request.jwt.claims.iss.values` <Type text='Array<String>' /> <br />
+`http.request.jwt.claims.iss.values` <Type text='Array<String>' />
 
 The `iss` (issuer) claim identifies the principal that issued the JWT.
 
@@ -550,7 +550,7 @@ The `iss` (issuer) claim identifies the principal that issued the JWT.
 
 `http.request.jwt.claims.jti` <Type text='Map<Array<String>>' /> <br />
 `http.request.jwt.claims.jti.names` <Type text='Array<String>' /> <br />
-`http.request.jwt.claims.jti.values` <Type text='Array<String>' /> <br />
+`http.request.jwt.claims.jti.values` <Type text='Array<String>' />
 
 The `jti` (JWT ID) claim provides a unique identifier for the JWT.
 
@@ -570,7 +570,7 @@ The `nbf` (not before) claim identifies the time (number of seconds) before whic
 
 `http.request.jwt.claims.sub` <Type text='Map<Array<String>>' /> <br />
 `http.request.jwt.claims.sub.names` <Type text='Array<String>' /> <br />
-`http.request.jwt.claims.sub.values` <Type text='Array<String>' /> <br />
+`http.request.jwt.claims.sub.values` <Type text='Array<String>' />
 
 The `sub` (subject) claim identifies the principal that is the subject of the JWT. The claims in a JWT are normally statements about the subject.
 
