@@ -90,20 +90,16 @@ To check for leaked credentials in a way that is not covered by the default conf
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/), and select your account and domain.
 2. Go to **Security** > **Settings**.
-3. Under **Incoming traffic detections**, select **Leaked credentials** and then select the three dots to add a custom detection.
-4. In **Username location**, enter an expression for obtaining the username in the HTTP request. For example:
+3. Under **Incoming traffic detections**, select **Leaked credentials** and then select **Add custom username and password location**.
+4. In **Username location** and **Password location** (optional), enter expressions for obtaining the username and the password from the HTTP request. Refer to the following example expressions:
 
-   ```txt
-   lookup_json_string(http.request.body.raw, "user")
-   ```
+   | Request type     | Username location / Password location                                                                                 |
+   | ---------------- | --------------------------------------------------------------------------------------------------------------------- |
+   | JSON body        | `lookup_json_string(http.request.body.raw, "username")`<br/>`lookup_json_string(http.request.body.raw, "password")`   |
+   | URL-encoded form | `url_decode(http.request.body.form["username"][0])`<br/>`url_decode(http.request.body.form["password"][0])`           |
+   | Multipart form   | `url_decode(http.request.body.multipart["username"][0])`<br/>`url_decode(http.request.body.multipart["password"][0])` |
 
-5. In **Password location**, enter an expression for obtaining the password in the HTTP request. For example:
-
-   ```txt
-   lookup_json_string(http.request.body.raw, "secret")
-   ```
-
-6. Select **Save**.
+5. Select **Save**.
 
 </TabItem> <TabItem label="API">
 
