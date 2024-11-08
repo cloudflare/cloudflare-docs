@@ -136,6 +136,6 @@ curl https://gateway.ai.cloudflare.com/v1/{account_id}/{gateway_id}/openai/chat/
 '
 ```
 
-:::caution[AI Gateway Caching Behavior]
+:::caution[AI Gateway caching behavior]
 Cache in AI Gateway is volatile. If two identical requests are sent simultaneously, the first request may not cache in time for the second request to use it, which may result in the second request retrieving data from the original source.
 :::
