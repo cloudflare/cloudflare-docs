@@ -132,7 +132,7 @@ try {
 		// work not to be retried
         throw new NonRetryableError('oh no');
     });
-} catch {
+} catch(e as Error) {
     console.log('error was thrown');
 }
 
