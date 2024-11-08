@@ -2,17 +2,16 @@
 title: WebSockets
 pcx_content_type: concept
 sidebar:
-  order: 3
-
+  order: 5
 ---
 
-import { Render, Type, MetaInfo } from "~/components";
+import { Render, Type, MetaInfo, GlossaryTooltip } from "~/components";
 
 ## Background
 
 WebSockets are long-lived TCP connections that enable bi-directional, real-time communication between client and server.
 
-Durable Objects support the Workers Runtime [WebSocket API](/workers/runtime-apis/websockets/). Your Durable Object can act as a single point-of-coordination for WebSocket sessions, giving you full control over messages sent to and from clients, allowing you to build applications like chat rooms and multiplayer games.
+<GlossaryTooltip term="Durable Object">Durable Objects</GlossaryTooltip> support the Workers Runtime [WebSocket API](/workers/runtime-apis/websockets/). Your Durable Object can act as a single point-of-coordination for WebSocket sessions, giving you full control over messages sent to and from clients, allowing you to build applications like chat rooms and multiplayer games.
 
 For more information beyond the API reference, refer to the [Build a WebSocket server](/durable-objects/examples/websocket-server/) example.
 
@@ -28,7 +27,7 @@ To learn more about WebSocket Hibernation, refer to [Build a WebSocket server wi
 
 ### serializeAttachment
 
-- <code>serializeAttachment(value <Type text='any' />)</code>: <Type text='void' />
+- <code> serializeAttachment(value <Type text="any" />)</code>: <Type text="void" />
 
   - Keeps a copy of `value` in memory (not on disk) to survive hibernation. The value can be any type supported by the [structured clone algorithm](https://developer.mozilla.org/en-US/docs/Web/API/Web_Workers_API/Structured_clone_algorithm), which is true of most types.
 
@@ -40,12 +39,11 @@ To learn more about WebSocket Hibernation, refer to [Build a WebSocket server wi
 
   - Retrieves the most recent value passed to `serializeAttachment()`, or `null` if none exists.
 
-
 ## State Methods
 
 ### acceptWebSocket
 
-- <code>acceptWebSocket(ws <Type text='WebSocket' />, tags <Type text='Array<string>'/> <MetaInfo text='optional'/>)</code>: <Type text='void' />
+- <code>acceptWebSocket(ws <Type text="WebSocket" />, tags{" "}<Type text="Array<string>" /> <MetaInfo text="optional" />)</code>: <Type text="void" />
 
   - Adds a WebSocket to the set attached to this Durable Object. `ws.accept()` must not have been called separately. Once called, any incoming messages will be delivered by calling the Durable Object's `webSocketMessage()` handler, and `webSocketClose()` will be invoked upon disconnect.
 
@@ -53,25 +51,30 @@ To learn more about WebSocket Hibernation, refer to [Build a WebSocket server wi
 
   - `tags` are optional string tags used to look up the WebSocket with `state.getWebSockets()`. Each tag is limited to 256 characters, and each WebSocket is limited to 10 tags associated with it.
 
-  - The WebSocket Hibernation API permits a maximum of 32,768 WebSocket connections per Durable Object instance, but the CPU and memory usage of a given workload may further limit the practical number of simultaneous connections.
+  - The WebSocket Hibernation API permits a maximum of 32,768 WebSocket connections per Durable Object, but the CPU and memory usage of a given workload may further limit the practical number of simultaneous connections.
 
 ### getWebSockets
 
-- <code>getWebSockets(tag <Type text='string' /> <MetaInfo text='optional' />)</code>: <Type text='Array<WebSocket>' />
+- <code>getWebSockets(tag <Type text="string" /> <MetaInfo text="optional" />)</code>: <Type text="Array<WebSocket>" />
 
   - Gets an array of accepted WebSockets matching the given tag. Disconnected WebSockets <sup>1</sup> are automatically removed from the list. Calling `state.getWebSockets()` with no `tag` argument will return all WebSockets.
 
-  - <sup>1</sup> `state.getWebSockets()` may still return websockets even after `ws.close()` has been called. For example, if your server-side WebSocket (the Durable Object) sends a close, but does not receive one back (and has not detected a disconnect from the client), then the connection is in the `CLOSING` "readyState". The client might send more messages, so the WebSocket is technically not disconnected.
+  - <sup>1</sup> `state.getWebSockets()` may still return websockets even after
+    `ws.close()` has been called. For example, if your server-side WebSocket
+    (the Durable Object) sends a close, but does not receive one back (and has
+    not detected a disconnect from the client), then the connection is in the
+    `CLOSING` "readyState". The client might send more messages, so the
+    WebSocket is technically not disconnected.
 
 ### getTags
 
-- <code>getTags(ws <Type text='WebSocket' />)</code>: <Type text='Array<string>' />
+- <code>getTags(ws <Type text="WebSocket" />)</code>: <Type text="Array<string>" />
 
   - Returns an Array of tags associated with the given WebSocket. Throws an error if you have not called `state.acceptWebSocket()` on the given WebSocket.
 
 ### setWebSocketAutoResponse
 
-- <code>setWebSocketAutoResponse(webSocketRequestResponsePair <Type text='WebSocketRequestResponsePair' /> <MetaInfo text='optional' />)</code>: <Type text='void' />
+- <code>setWebSocketAutoResponse(webSocketRequestResponsePair{" "}<Type text="WebSocketRequestResponsePair" /> <MetaInfo text="optional" />)</code>: <Type text="void" />
 
   - Sets an application level auto response that does not wake hibernated WebSockets.
 
@@ -89,17 +92,17 @@ To learn more about WebSocket Hibernation, refer to [Build a WebSocket server wi
 
   - Gets the <code>WebSocketRequestResponsePair(request <Type text='string'/>, response <Type text='string'/>)</code> currently set, or `null` if there is none.
 
-  - Each <code>WebSocketRequestResponsePair(request <Type text='string'/>, response <Type text='string'/>)</code> Object provides methods for `getRequest()` and  `getResponse()`.
+  - Each <code>WebSocketRequestResponsePair(request <Type text='string'/>, response <Type text='string'/>)</code> Object provides methods for `getRequest()` and `getResponse()`.
 
 ### getWebSocketAutoResponseTimestamp
 
-- <code>getWebSocketAutoResponseTimestamp(ws <Type text='WebSocket'/>)</code>: <Type text= 'Date | null' />
+- <code>getWebSocketAutoResponseTimestamp(ws <Type text="WebSocket" />)</code>: <Type text="Date | null" />
 
   - Gets the most recent `Date` when the WebSocket received an auto-response request, or `null` if the given WebSocket never received an auto-response request.
 
 ### setHibernatableWebSocketEventTimeout
 
-- <code>setHibernatableWebSocketEventTimeout(timeout <Type text='number' /> <MetaInfo text='optional' />)</code>: <Type text='void' />
+- <code>setHibernatableWebSocketEventTimeout(timeout <Type text="number" />{" "}<MetaInfo text="optional" />)</code>: <Type text="void" />
 
   - Sets the maximum amount of milliseconds a WebSocket event (refer to the handler methods below) can run for.
 
@@ -113,12 +116,11 @@ To learn more about WebSocket Hibernation, refer to [Build a WebSocket server wi
 
   - Gets the currently set hibernatable WebSocket event timeout if any had been set with `state.setHibernatableWebSocketEventTimeout()`.
 
-
 ## Handler Methods
 
 ### webSocketMessage
 
-- <code>webSocketMessage(ws <Type text='WebSocket' />, message <Type text='string | ArrayBuffer' />)</code>: <Type text='void' />
+- <code> webSocketMessage(ws <Type text="WebSocket" />, message{" "} <Type text="string | ArrayBuffer" />)</code>: <Type text="void" />
 
   - Called by the system when an accepted WebSocket receives a message.
 
@@ -128,7 +130,7 @@ To learn more about WebSocket Hibernation, refer to [Build a WebSocket server wi
 
 ### webSocketClose
 
-- <code>webSocketClose(ws <Type text='WebSocket' />, code <Type text='number' />, reason <Type text='string' />, wasClean <Type text='boolean' />)</code>: <Type text='void' />
+- <code> webSocketClose(ws <Type text="WebSocket" />, code <Type text="number" />,reason <Type text="string" />, wasClean <Type text="boolean" />)</code>: <Type text="void" />
 
   - Called by the system when a WebSocket is closed. `wasClean()` is true if the connection closed cleanly, false otherwise.
 
@@ -136,13 +138,13 @@ To learn more about WebSocket Hibernation, refer to [Build a WebSocket server wi
 
 ### webSocketError
 
-- <code>webSocketError(ws <Type text='WebSocket' />, error <Type text='any' />)</code> : <Type text='void' />
+- <code> webSocketError(ws <Type text="WebSocket" />, error <Type text="any" />)</code> : <Type text="void" />
 
   - Called by the system when any non-disconnection related errors occur.
 
   - This method can be `async`.
 
-***
+---
 
 ## Related resources
 

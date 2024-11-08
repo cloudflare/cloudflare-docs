@@ -6,10 +6,9 @@ sidebar:
 head:
   - tag: title
     content: Common HTTP policies
-
 ---
 
-import { Render } from "~/components"
+import { Render } from "~/components";
 
 The following policies are commonly used to secure HTTP traffic.
 
@@ -53,7 +52,7 @@ Gateway [evaluates Do Not Inspect policies first](/cloudflare-one/policies/gatew
 
 :::note
 
-You can select either individual applications or the entire Do Not Inspect set, which will update as new applications are added. 
+You can select either individual applications or the entire Do Not Inspect set, which will update as new applications are added.
 :::
 
 ## Check device posture
@@ -97,9 +96,11 @@ When accessing origin servers with certificates not signed by a public certifica
 
 <Render file="gateway/policies/block-file-types" />
 
+For more information on supported file types, refer to [Download and Upload File Types](/cloudflare-one/policies/gateway/http-policies/#download-and-upload-file-types).
+
 ## Block Google services
 
-To enable Gateway inspection for Google Drive traffic, you must [add the Cloudflare certificate to Google Drive](/cloudflare-one/connections/connect-devices/warp/user-side-certificates/install-cloudflare-cert/#google-drive-for-desktop).
+To enable Gateway inspection for Google Drive traffic, you must [add a Cloudflare certificate to Google Drive](/cloudflare-one/connections/connect-devices/warp/user-side-certificates/manual-deployment/#google-drive-for-desktop).
 
 ### Block Google Drive uploads
 

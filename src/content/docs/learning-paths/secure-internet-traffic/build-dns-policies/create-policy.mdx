@@ -3,29 +3,25 @@ title: Create your first DNS policy
 pcx_content_type: learning-unit
 sidebar:
   order: 1
-
 ---
 
-import { Render } from "~/components"
+import { Render } from "~/components";
 
 DNS policies determine how Gateway should handle a DNS request. When a user sends a DNS request, Gateway matches the request against your filters and either allows the query to resolve, blocks the query, or responds to the query with a different IP.
 
-You can filter DNS traffic based on query or response parameters (such as domain, source IP, or geolocation). You can also filter by user identity if you connect your devices to Gateway with the [WARP client or Cloudflare One Agent](/learning-paths/secure-internet-traffic/connect-devices/install-agent/). To learn more, refer to [DNS policies](/cloudflare-one/policies/gateway/dns-policies/).
+You can filter DNS traffic based on query or response parameters (such as domain, source IP, or geolocation). You can also filter by user identity if you connect your devices to Gateway with the [WARP client or Cloudflare One Agent](/learning-paths/secure-internet-traffic/connect-devices-networks/install-agent/).
 
 To create a new DNS policy:
 
-1. In [Zero Trust](https://one.dash.cloudflare.com/), go to **Gateway** > **Firewall Policies**.
-
+1. In [Zero Trust](https://one.dash.cloudflare.com/), go to **Gateway** > **Firewall policies**.
 2. In the **DNS** tab, select **Add a policy**.
-
 3. Name the policy.
-
 4. Under **Traffic**, build a logical expression that defines the traffic you want to allow or block.
-
 5. Choose an **Action** to take when traffic matches the logical expression. For example, we recommend adding a policy to block all [security categories](/cloudflare-one/policies/gateway/domain-categories/#security-categories):
-
-   <Render file="gateway/policies/block-security-categories" product="cloudflare-one" />
-
+   <Render
+   	file="gateway/policies/block-security-categories"
+   	product="cloudflare-one"
+   />
 6. Select **Create policy**.
 
 For more information, refer to [DNS policies](/cloudflare-one/policies/gateway/dns-policies/).

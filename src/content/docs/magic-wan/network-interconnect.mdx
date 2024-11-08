@@ -6,27 +6,26 @@ sidebar:
 head:
   - tag: title
     content: Network Interconnect and Magic WAN
-
 ---
 
-import { Render } from "~/components"
+import { Render } from "~/components";
 
 Cloudflare Network Interconnect (CNI) allows you to connect your network infrastructure directly with Cloudflare – rather than using the public Internet – for a more reliable and secure experience. With CNI, you can bring Cloudflare’s full suite of network functions to your physical network edge.
 
 When working with Magic WAN and Cloudflare Network Interconnect (CNI), there are a few guidelines you should follow.
 
-## Express CNI
+## Direct CNI
 
-With [Express CNI](/network-interconnect/express-cni/) you can use the Cloudflare dashboard to provision a connection to Cloudflare in three minutes or less. This type of connection supports IP packets with 1,500 bytes, both for ingress and egress traffic.
+With [Direct CNI](/network-interconnect/express-cni/) you can use the Cloudflare dashboard to provision a connection to Cloudflare in three minutes or less. This type of connection supports IP packets with 1,500 bytes, both for ingress and egress traffic.
 
-For the time being, Express CNI does not support BGP. You need to create policy-based routes to ensure traffic is routed correctly. You also need to implement tracking of network traffic to ensure that the CNI and Cloudflare data center is functioning properly.
+For the time being, Direct CNI does not support BGP. You need to create policy-based routes to ensure traffic is routed correctly. You also need to implement tracking of network traffic to ensure that the CNI and Cloudflare data center is functioning properly.
 
 ### Bidirectional health checks
 
-Bidirectional health checks do not work when you use Express CNI to onboard your traffic to Cloudflare. You will need to resort to the [legacy health check system](/magic-wan/configuration/manually/how-to/configure-tunnels/#legacy-health-checks-system).
+Bidirectional health checks do not work when you use Direct CNI to onboard your traffic to Cloudflare. You will need to resort to the [legacy health check system](/magic-wan/configuration/manually/how-to/configure-tunnels/#legacy-health-checks-system).
 
 :::note
-Do not use Magic WAN Connector with Express CNI. You can use the Connector with a [Public Peering or a Private Network Interconnection (PNI)](/network-interconnect/pni-and-peering/) if needed.
+Do not use Magic WAN Connector with Direct CNI. You can use the Connector with a [Public Peering or a Private Network Interconnection (PNI)](/network-interconnect/pni-and-peering/) if needed.
 :::
 
 ## Classic CNI

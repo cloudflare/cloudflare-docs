@@ -3,20 +3,17 @@ pcx_content_type: reference
 title: Applications and app types
 sidebar:
   order: 8
-
 ---
 
-import { GlossaryDefinition, GlossaryTooltip } from "~/components"
+import { GlossaryDefinition, GlossaryTooltip } from "~/components";
 
 Gateway allows you to create DNS, Network, and HTTP policies based on applications and app types. You can select individual applications or groups of app types to filter specific traffic on your network.
 
 ## Applications
 
-When you choose the *Application* selector in a Gateway policy builder, the **Value** field will include all supported applications and their respective app types. Alternatively, you can use the [Gateway API](/api/operations/zero-trust-gateway-application-and-application-type-mappings-list-application-and-application-type-mappings) to fetch a list of applications, app types, and ID numbers.
+When you choose the _Application_ selector in a Gateway policy builder, the **Value** field will include all supported applications and their respective app types. Alternatively, you can use the [Gateway API](/api/operations/zero-trust-gateway-application-and-application-type-mappings-list-application-and-application-type-mappings) to fetch a list of applications, app types, and ID numbers.
 
 ## App types
-
-
 
 | Value                                          | Definition                                                                                                                  |
 | ---------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------- |
@@ -46,25 +43,26 @@ When you choose the *Application* selector in a Gateway policy builder, the **Va
 | Video Streaming                                | Video streaming applications                                                                                                |
 | [Do Not Inspect](#do-not-inspect-applications) | Applications incompatible with the TLS certificate required by the [Gateway proxy](/cloudflare-one/policies/gateway/proxy/) |
 
-
-
 ### Do Not Inspect applications
 
 #### TLS decryption limitations
 
 Applications can be incompatible with [TLS decryption](/cloudflare-one/policies/gateway/http-policies/tls-decryption/) for various reasons:
 
-<GlossaryDefinition term="certificate pinning" prepend="Certificate pinning is "/>
+<GlossaryDefinition
+	term="certificate pinning"
+	prepend="Certificate pinning is "
+/>
 
-* **Non-web traffic**: Some applications send non-web traffic, such as Session Initiation Protocol (SIP) and Extensible Messaging and Presence Protocol (XMPP), over TLS. Gateway cannot inspect these protocols.
+- **Non-web traffic**: Some applications send non-web traffic, such as Session Initiation Protocol (SIP) and Extensible Messaging and Presence Protocol (XMPP), over TLS. Gateway cannot inspect these protocols.
 
 #### Application grouping
 
-Gateway automatically groups applications incompatible with TLS decryption into the *Do Not Inspect* app type. As Cloudflare identifies incompatible applications, Gateway will periodically update this app type to add new applications. To ensure Gateway does not intercept any current or future incompatible traffic, you can [create a Do Not Inspect HTTP policy](/cloudflare-one/policies/gateway/initial-setup/http/#bypass-inspection-for-incompatible-applications) with the entire *Do Not Inspect* app type selected.
+Gateway automatically groups applications incompatible with TLS decryption into the _Do Not Inspect_ app type. As Cloudflare identifies incompatible applications, Gateway will periodically update this app type to add new applications. To ensure Gateway does not intercept any current or future incompatible traffic, you can [create a Do Not Inspect HTTP policy](/cloudflare-one/policies/gateway/initial-setup/http/#bypass-inspection-for-incompatible-applications) with the entire _Do Not Inspect_ app type selected.
 
 :::note[Install Cloudflare certificate manually to allow TLS decryption]
 
-Instead of creating a Do Not Inspect policy for an application, you may be able to configure the application to [trust the Cloudflare certificate](/cloudflare-one/connections/connect-devices/warp/user-side-certificates/install-cloudflare-cert/#add-the-certificate-to-applications). Doing so will allow the application to function without losing visibility into your traffic. 
+Instead of creating a Do Not Inspect policy for an application, you may be able to configure the application to [trust a Cloudflare certificate](/cloudflare-one/connections/connect-devices/warp/user-side-certificates/manual-deployment/#add-the-certificate-to-applications). Doing so will allow the application to function without losing visibility into your traffic.
 :::
 
 #### Microsoft 365 integration
@@ -75,6 +73,6 @@ To turn on the Microsoft 365 integration:
 
 1. In [Zero Trust](https://one.dash.cloudflare.com/), go to **Settings** > **Network** > **Integrated experiences**.
 2. In **Bypass decryption of Microsoft 365 traffic**, select **Create policy**.
-3. To verify the policy was created, select **View policy**. Alternatively, go to **Gateway** > **Firewall Policies** > **HTTP**. A policy named Microsoft 365 Auto Generated will be enabled in your list.
+3. To verify the policy was created, select **View policy**. Alternatively, go to **Gateway** > **Firewall policies** > **HTTP**. A policy named Microsoft 365 Auto Generated will be enabled in your list.
 
 All future Microsoft 365 traffic will bypass Gateway logging and filtering. To disable this behavior, turn off or delete the policy.

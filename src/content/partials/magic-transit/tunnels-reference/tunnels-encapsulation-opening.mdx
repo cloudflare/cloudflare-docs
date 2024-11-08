@@ -1,18 +1,22 @@
 ---
-inputParameters: productName;;mssURL;;productURL;;tunnelEndpoints
+params:
+  - productName
+  - mssURL
+  - productURL
+  - tunnelEndpoints
 ---
 
 import { GlossaryTooltip, Markdown, Details } from "~/components";
 
 ## Tunnels and encapsulation
 
-{props.one} uses <GlossaryTooltip term="GRE tunnel" link="https://www.cloudflare.com/learning/network-layer/what-is-gre-tunneling/">Generic Routing Encapsulation (GRE)</GlossaryTooltip> and <GlossaryTooltip term="IPsec tunnel" link="https://www.cloudflare.com/learning/network-layer/what-is-ipsec/">IPsec tunnels</GlossaryTooltip> to transmit packets from Cloudflare's global network to your origin network. Cloudflare sets up tunnel endpoints on global network servers inside your network namespace, and you set up tunnel endpoints on routers at your data center.
+{props.productName} uses <GlossaryTooltip term="GRE tunnel" link="https://www.cloudflare.com/learning/network-layer/what-is-gre-tunneling/">Generic Routing Encapsulation (GRE)</GlossaryTooltip> and <GlossaryTooltip term="IPsec tunnel" link="https://www.cloudflare.com/learning/network-layer/what-is-ipsec/">IPsec tunnels</GlossaryTooltip> to transmit packets from Cloudflare's global network to your origin network. Cloudflare sets up tunnel endpoints on global network servers inside your network namespace, and you set up tunnel endpoints on routers at your data center.
 
 To accommodate additional header data introduced by encapsulation, the <GlossaryTooltip term="maximum segment size (MSS)">maximum segment size (MSS)</GlossaryTooltip> must be adjusted so that packets comply with the standard Internet routable maximum transmission unit (MTU), which is 1500 bytes.
 
-For instructions, refer to <a href={props.two}>Set Maximum segment size</a>.
+For instructions, refer to <a href={props.mssURL}>Set Maximum segment size</a>.
 
-This diagram illustrates the flow of traffic with {props.one}.
+This diagram illustrates the flow of traffic with {props.productName}.
 
 ```mermaid
 sequenceDiagram
@@ -36,7 +40,7 @@ By default, egress packets are routed by your ISP interface, not Cloudflare.
 
 ## Anycast
 
-{props.one} uses <GlossaryTooltip term="anycast" link="https://www.cloudflare.com/learning/cdn/glossary/anycast-network/">anycast</GlossaryTooltip> IP addresses for Cloudflare's tunnel endpoints. In the anycast model, any server in any data center can receive traffic and must be capable of encapsulating and decapsulating packets for any tunnel.
+{props.productName} uses <GlossaryTooltip term="anycast" link="https://www.cloudflare.com/learning/cdn/glossary/anycast-network/">anycast</GlossaryTooltip> IP addresses for Cloudflare's tunnel endpoints. In the anycast model, any server in any data center can receive traffic and must be capable of encapsulating and decapsulating packets for any tunnel.
 
 This works with <GlossaryTooltip term="GRE tunnel">GRE</GlossaryTooltip> tunnels because the GRE protocol is stateless. Each packet is processed independently and does not require any negotiation or coordination between tunnel endpoints. Tunnel endpoints are technically bound to IP addresses but do not need to be bound to specific devices. Any device that can strip off the outer headers and then route the inner packet can handle any GRE packet sent over the tunnel.
 
@@ -81,11 +85,11 @@ a --> 1== Cloudflare anycast GRE <br> single endpoint ==>i --> j
 
 [IPsec](https://www.cloudflare.com/learning/network-layer/what-is-ipsec/) is a group of protocols that are used together to set up encrypted connections between devices. It helps keep data sent over public networks secure. IPsec is often used to set up VPNs, and it works by encrypting IP packets, along with authenticating the source where the packets come from.
 
-For information on how to set up an IPsec tunnel, refer to <a href={props.four}>Configure tunnel endpoints</a>. To learn more about the configuration parameters {props.one} uses to create an IPsec tunnel, keep reading.
+For information on how to set up an IPsec tunnel, refer to <a href={props.tunnelEndpoints}>Configure tunnel endpoints</a>. To learn more about the configuration parameters {props.productName} uses to create an IPsec tunnel, keep reading.
 
 ### How IKEv2 is used to establish an IPsec tunnel
 
-{props.one} uses the following stages to establish an IPsec tunnel:
+{props.productName} uses the following stages to establish an IPsec tunnel:
 
 - **Initial Exchange** (`IKE_SA_INIT`): IKE peers negotiate parameters for the IKE Security Association (SA) and establish a shared secret used for key derivation. After this exchange, the peers have a secure communication channel but they have not yet authenticated each other. If supported, the peers will also perform NAT detection in this exchange.
 - **Auth Exchange** (`IKE_AUTH`): Using the secure tunnel established in the initial exchange, IKE peers mutually authenticate each other. After authentication, the IKE security association (SA) is established. Next, the peers negotiate and establish an IPsec tunnel, known as a Child SA.
@@ -94,7 +98,7 @@ For information on how to set up an IPsec tunnel, refer to <a href={props.four}>
 It is important to note that the IKE SA and the Child SA are separate things, each with their own parameters. The Child SA is the actual IPsec tunnel where user traffic flows (that is, the dataplane). The IKE SA is used to set up and manage the Child SA.
 :::
 
-In summary, an IKE SA is created that uses certain cryptographic transforms. That IKE SA is then used to create a Child SA which itself uses certain cryptographic transforms. The configuration section below details which of these transforms for IKE SAs and Child SAs are currently supported by {props.one}.
+In summary, an IKE SA is created that uses certain cryptographic transforms. That IKE SA is then used to create a Child SA which itself uses certain cryptographic transforms. The configuration section below details which of these transforms for IKE SAs and Child SAs are currently supported by {props.productName}.
 
 ### Supported configuration parameters
 
@@ -176,14 +180,14 @@ The Child SA. Sometimes referred to as Phase 2 as per IKEv1 language.
 
 <Details header="Optional configuration parameters">
 
-- Disable <a href={props.three}>anti-replay protection</a>.
+- Disable <a href={props.productURL}>anti-replay protection</a>.
 - **`NULL` encryption for IPsec:** This option should not be used unless necessary as it reduces security because IPsec traffic is not encrypted. You must explicitly opt in to use this option.
 
 </Details>
 
 ### Supported IKE ID formats
 
-{props.one} supports the following IKE ID types for IPsec:
+{props.productName} supports the following IKE ID types for IPsec:
 
 <Details header="RFC name `ID_RFC822_ADDR`">
 - **Format**: `ipsec@<TUNNEL_ID>.<ACCOUNT_ID>.ipsec.cloudflare.com`
@@ -206,5 +210,5 @@ Additionally, the IKE ID type of `ID_IPV4_ADDR` is supported if the following tw
 2. The combination of `cloudflare_endpoint` and `customer_endpoint` is unique among the customer’s IPsec tunnels.
 
 :::caution
-Make sure each IPsec tunnel has a unique combination of a <a href={props.four}>Cloudflare endpoint and customer endpoint</a>. If this combination is not unique among your IPsec tunnels, you should use one of the custom IKE formats (`ID_RFC822_ADDR`, `ID_FQDN`, or `ID_KEY_ID`) to specify the tunnel ID and account ID. This helps Cloudflare link the IKE packet to the right IPsec tunnel for tasks like authentication.
+Make sure each IPsec tunnel has a unique combination of a <a href={props.tunnelEndpoints}>Cloudflare endpoint and customer endpoint</a>. If this combination is not unique among your IPsec tunnels, you should use one of the custom IKE formats (`ID_RFC822_ADDR`, `ID_FQDN`, or `ID_KEY_ID`) to specify the tunnel ID and account ID. This helps Cloudflare link the IKE packet to the right IPsec tunnel for tasks like authentication.
 :::

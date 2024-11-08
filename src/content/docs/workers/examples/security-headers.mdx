@@ -10,6 +10,7 @@ languages:
   - JavaScript
   - TypeScript
   - Python
+  - Rust
 pcx_content_type: example
 title: Set security headers
 sidebar:
@@ -250,4 +251,75 @@ async def on_fetch(request):
     return Response.new(res.body, status=res.status, statusText=res.statusText, headers=new_headers)
 ```
 
+</TabItem> <TabItem label="Rust" icon="seti:rust">
+```rs
+use std::collections::HashMap;
+use worker::*;
+
+#[event(fetch)]
+async fn fetch(req: Request, _env: Env, _ctx: Context) -> Result<Response> {
+    let default_security_headers = HashMap::from([
+        //Secure your application with Content-Security-Policy headers.
+        //Enabling these headers will permit content from a trusted domain and all its subdomains.
+        //@see https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Security-Policy
+        (
+            "Content-Security-Policy",
+            "default-src 'self' example.com *.example.com",
+        ),
+        //You can also set Strict-Transport-Security headers.
+        //These are not automatically set because your website might get added to Chrome's HSTS preload list.
+        //Here's the code if you want to apply it:
+        (
+            "Strict-Transport-Security",
+            "max-age=63072000; includeSubDomains; preload",
+        ),
+        //Permissions-Policy header provides the ability to allow or deny the use of browser features, such as opting out of FLoC - which you can use below:
+        ("Permissions-Policy", "interest-cohort=()"),
+        //X-XSS-Protection header prevents a page from loading if an XSS attack is detected.
+        //@see https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/X-XSS-Protection
+        ("X-XSS-Protection", "0"),
+        //X-Frame-Options header prevents click-jacking attacks.
+        //@see https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/X-Frame-Options
+        ("X-Frame-Options", "DENY"),
+        //X-Content-Type-Options header prevents MIME-sniffing.
+        //@see https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/X-Content-Type-Options
+        ("X-Content-Type-Options", "nosniff"),
+        ("Referrer-Policy", "strict-origin-when-cross-origin"),
+        (
+            "Cross-Origin-Embedder-Policy",
+            "require-corp; report-to='default';",
+        ),
+        (
+            "Cross-Origin-Opener-Policy",
+            "same-site; report-to='default';",
+        ),
+        ("Cross-Origin-Resource-Policy", "same-site"),
+    ]);
+    let blocked_headers = ["Public-Key-Pins", "X-Powered-By", "X-AspNet-Version"];
+    let tls = req.cf().unwrap().tls_version();
+    let res = Fetch::Request(req).send().await?;
+    let mut new_headers = res.headers().clone();
+
+    // This sets the headers for HTML responses
+    if Some(String::from("text/html")) == new_headers.get("Content-Type")? {
+        return Ok(Response::from_body(res.body().clone())?
+            .with_headers(new_headers)
+            .with_status(res.status_code()));
+    }
+    for (k, v) in default_security_headers {
+        new_headers.set(k, v)?;
+    }
+
+    for k in blocked_headers {
+        new_headers.delete(k)?;
+    }
+
+    if !vec!["TLSv1.2", "TLSv1.3"].contains(&tls.as_str()) {
+        return Response::error("You need to use TLS version 1.2 or higher.", 400);
+    }
+    Ok(Response::from_body(res.body().clone())?
+        .with_headers(new_headers)
+        .with_status(res.status_code()))
+}
+```
 </TabItem> </Tabs>

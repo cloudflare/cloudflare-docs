@@ -24,8 +24,3 @@ externals:
     url: https://www.cloudflare.com/cdn/
   - title: Cloudflare homepage
     url: https://cloudflare.com
-
-algolia:
-  index: TEST - Re-dev docs
-  apikey: 4edb0a6cef3338ff4bcfbc6b3d2db56b
-  product: cache

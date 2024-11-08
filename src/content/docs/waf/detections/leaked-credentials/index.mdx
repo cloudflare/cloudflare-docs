@@ -15,7 +15,7 @@ Once enabled, leaked credentials detection will scan incoming HTTP requests for 
 
 If Cloudflare detects authentication credentials in the request, those credentials are checked against a list of known leaked credentials. This list of credentials consists of Cloudflare-collected credentials, in addition to the [Have I been Pwned (HIBP)](https://haveibeenpwned.com) matched passwords dataset.
 
-Cloudflare will populate the existing [leaked credentials fields](#leaked-credentials-fields) based on the scan results. You can check these results in the Security Analytics dashboard, and use these fields in rule expressions ([custom rules](/waf/custom-rules/) or [rate limiting rules](/waf/rate-limiting-rules/)) to protect your application against the usage of compromised credentials by your end users, and also against leaked credential attacks.
+Cloudflare will populate the existing [leaked credentials fields](#leaked-credentials-fields) based on the scan results. You can check these results in the [Security Analytics](/waf/analytics/security-analytics/) dashboard, and use these fields in rule expressions ([custom rules](/waf/custom-rules/) or [rate limiting rules](/waf/rate-limiting-rules/)) to protect your application against the usage of compromised credentials by your end users, and also against leaked credential attacks.
 
 In addition, leaked credentials detection provides a [managed transform](/rules/transform/managed-transforms/reference/#add-leaked-credentials-checks-header) that adds an `Exposed-Credential-Check` request header with a value indicating which field was leaked. For example, if both username and password were previously leaked, the header value will be `1`; if only the password was leaked, the value will be `4`.
 
@@ -71,10 +71,11 @@ When specifying a custom detection location, only the location of the username f
 Expressions used to specify custom detection locations can include the following fields and functions:
 
 - Fields:
+  - [`http.request.body.form`](/ruleset-engine/rules-language/fields/http-request-body/#httprequestbodyform)
   - [`http.request.body.raw`](/ruleset-engine/rules-language/fields/http-request-body/#httprequestbodyraw)
 - Functions:
   - [`lookup_json_string()`](/ruleset-engine/rules-language/functions/#lookup_json_string)
-  - [`lower()`](/ruleset-engine/rules-language/functions/#lower)
+  - [`url_decode()`](/ruleset-engine/rules-language/functions/#url_decode)
 
 For instructions on configuring a custom detection location, refer to [Get started](/waf/detections/leaked-credentials/get-started/#4-optional-configure-a-custom-detection-location).
 

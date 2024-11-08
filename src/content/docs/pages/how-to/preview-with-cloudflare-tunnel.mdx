@@ -23,21 +23,21 @@ cloudflared version 2021.5.9 (built 2021-05-21-1541 UTC)
 
 ## Run a local service
 
-The easiest way to get up and running with Cloudflare Tunnel is to have an application running locally, such as a [React](/pages/framework-guides/deploy-a-react-site/) or [Svelte](/pages/framework-guides/deploy-a-svelte-site/) site. When you are developing an application with these frameworks, they will often make use of a `npm run develop` script, or something similar, which mounts the application and runs it on a `localhost` port. For example, the popular `create-react-app` tool runs your in-development React application on port `3000`, making it accessible at the `http://localhost:3000` address.
+The easiest way to get up and running with Cloudflare Tunnel is to have an application running locally, such as a [React](/pages/framework-guides/deploy-a-react-site/) or [Svelte](/pages/framework-guides/deploy-a-svelte-site/) site. When you are developing an application with these frameworks, they will often make use of a `npm run develop` script, or something similar, which mounts the application and runs it on a `localhost` port. For example, the popular `vite` tool runs your in-development React application on port `5173`, making it accessible at the `http://localhost:5173` address.
 
 ## Start a Cloudflare Tunnel
 
 With a local development server running, a new Cloudflare Tunnel can be instantiated by running `cloudflared tunnel` in a new command line window, passing in the `--url` flag with your `localhost` URL and port. `cloudflared` will output logs to your command line, including a banner with a tunnel URL:
 
 ```sh
-cloudflared tunnel --url http://localhost:3000
+cloudflared tunnel --url http://localhost:5173
 ```
 
 ```sh output
 2021-07-15T20:11:29Z INF Cannot determine default configuration path. No file [config.yml config.yaml] in [~/.cloudflared ~/.cloudflare-warp ~/cloudflare-warp /etc/cloudflared /usr/local/etc/cloudflared]
 2021-07-15T20:11:29Z INF Version 2021.5.9
 2021-07-15T20:11:29Z INF GOOS: linux, GOVersion: devel +11087322f8 Fri Nov 13 03:04:52 2020 +0100, GoArch: amd64
-2021-07-15T20:11:29Z INF Settings: map[url:http://localhost:3000]
+2021-07-15T20:11:29Z INF Settings: map[url:http://localhost:5173]
 2021-07-15T20:11:29Z INF cloudflared will not automatically update when run from the shell. To enable auto-updates, run cloudflared as a service: https://developers.cloudflare.com/argo-tunnel/reference/service/
 2021-07-15T20:11:29Z INF Initial protocol h2mux
 2021-07-15T20:11:29Z INF Starting metrics server on 127.0.0.1:42527/metrics
@@ -50,7 +50,7 @@ cloudflared tunnel --url http://localhost:3000
 2021-07-15T20:11:32Z INF +-------------------------------------------------------------+
 ```
 
-In this example, the randomly-generated URL `https://seasonal-deck-organisms-sf.trycloudflare.com` has been created and assigned to your tunnel instance. Visiting this URL in a browser will show the application running, with requests being securely forwarded through Cloudflare's global network, through the tunnel running on your machine, to `localhost:3000`:
+In this example, the randomly-generated URL `https://seasonal-deck-organisms-sf.trycloudflare.com` has been created and assigned to your tunnel instance. Visiting this URL in a browser will show the application running, with requests being securely forwarded through Cloudflare's global network, through the tunnel running on your machine, to `localhost:5173`:
 
 ![Cloudflare Tunnel example rendering a randomly-generated URL](~/assets/images/pages/how-to/tunnel.png)
 

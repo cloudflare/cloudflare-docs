@@ -39,6 +39,7 @@ export async function getChangelogs(opts?: {
 				productLink: product.data.productLink,
 				productAreaName: product.data.productArea,
 				productAreaLink: product.data.productAreaLink,
+				individual_page: entry.individual_page && entry.link,
 			};
 		});
 	});

@@ -363,11 +363,11 @@ If the first two rules don't match, the final rule of any will match all remaini
 By default, Stream embed codes can be used on any domain. If needed, you can limit the domains a video can be embedded on from the Stream dashboard.
 
 In the dashboard, you will see a text box by each video labeled `Enter allowed origin domains separated by commas`. If you click on it, you can list the domains that the Stream embed code should be able to be used on.
-
-* `*.badtortilla.com` covers a.badtortilla.com, a.b.badtortilla.com and does not cover badtortilla.com
+`
+* `*.badtortilla.com` covers `a.badtortilla.com`, `a.b.badtortilla.com` and does not cover `badtortilla.com`
 * `example.com` does not cover [www.example.com](http://www.example.com) or any subdomain of example.com
 * `localhost` requires a port if it is not being served over HTTP on port 80 or over HTTPS on port 443
-* There's no path support - `example.com` covers example.com/\*
+* There is no path support - `example.com` covers `example.com/\*`
 
 You can also control embed limitation programmatically using the Stream API. `uid` in the example below refers to the video id.
 
@@ -376,6 +376,10 @@ curl https://api.cloudflare.com/client/v4/accounts/{account_id}/stream/{video_ui
 --header "Authorization: Bearer <API_TOKEN>" \
 --data "{\"uid\": \"<VIDEO_UID>\", \"allowedOrigins\": [\"example.com\"]}"
 ```
+
+### Allowed Origins
+
+The Allowed Origins feature lets you specify which origins are allowed for playback. This feature works even if you are using your own video player. When using your own video player, Allowed Origins restricts which domain the HLS/DASH manifests and the video segments can be requested from. 
 
 ### Signed URLs
 

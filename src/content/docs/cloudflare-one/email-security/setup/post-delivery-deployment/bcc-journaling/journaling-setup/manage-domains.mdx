@@ -1,0 +1,35 @@
+---
+title: Manage domains
+sidebar:
+  order: 4
+---
+
+## Filter domains
+
+To filter your domains:
+
+1. Select **Settings**.
+2. Select **Configured method** and/or **Status**:
+    * If you select **Configured method**, choose among the following:
+        * **All**: To view all the domains.
+        * **MS Graph API**: To view domains connected via MS Graph API.
+        * **BCC/Journaling**: To view domains connected via BCC/Journaling.
+    * If you select **Status**, choose among the following:
+        * **All**: To view Active and No mail flow domains.
+        * **Active**: To view active domains. A domain is active when the connection is running, and Email Security is able to scan email messages.
+        * **No mail flow**: To view no mail flow domains. A domain has a "No mail flow" status when no mail flow is detected. You may not have any email traffic or your BCC/Journaling configuration is incomplete. 
+
+## Edit domains
+
+To edit your domains:
+
+1. On the **Domains** page, locate your domain, select the three dots > **Edit**.
+2. If you did not manually add your domain, you will only be able to edit **Hops**. If you manually added your domain, you will be able to edit **Domain name** and **Hops**.
+3. Select **Save**.
+
+## Prevent Cloudflare from scanning a domain
+
+To unscan domains:
+
+1. On the **Domains** page, locate your domain, select the three dots > **Unscan**.
+2. Select **Unscan** again to stop Cloudflare from scanning your domain.

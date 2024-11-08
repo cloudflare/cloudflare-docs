@@ -1,0 +1,45 @@
+---
+title: IP address service bindings
+pcx_content_type: concept
+sidebar:
+  order: 6
+  label: About
+  group:
+    label: Service bindings
+description: In IP address management, service binding refers to the association of IPs to specific Cloudflare services. Review the available options and the API endpoints to set up service bindings.
+---
+
+Service bindings are mappings that control whether traffic destined for a given IP address is routed to [Magic Transit](/magic-transit/), the CDN pipeline [^1], or the Spectrum pipeline [^2].
+
+:::note
+Service binding operations are currently only available via API. You can find all endpoints and their specifications in the [Cloudflare API documentation](/api/operations/ip-address-management-service-bindings-list-service-bindings).
+:::
+
+## Scope
+
+Customers using BYOIP with Magic Transit can leverage the [service binding API endpoints](/api/operations/ip-address-management-service-bindings-list-service-bindings) to selectively route traffic through the CDN [^1] or Spectrum [^2] pipelines on a per-IP address basis.
+
+You can upgrade individual IPs within a Magic Transit prefix to either a CDN IP or a Spectrum IP. For example, if you have `203.0.113.0/24`, you can upgrade `203.0.113.1` to CDN and `203.0.113.2` to Spectrum.
+
+:::caution
+Magic Transit customers must ensure that their contract includes CDN and/or Spectrum according to their needs.
+:::
+
+### CDN (Cache)
+
+When a service binding of type `CDN` is applied, once the change has propagated across Cloudflare's global network (four to six hours), any HTTP requests are directed into the CDN pipeline for Layer 7 processing.
+
+Refer to [Use BYOIP with Magic Transit and CDN](/byoip/service-bindings/magic-transit-with-cdn/) for detailed guidance.
+
+### Spectrum
+
+When a service binding of type `Spectrum` is applied, once the change has propagated across Cloudflare's global network (four to six hours), any TCP/UDP/HTTP requests are directed into the Spectrum pipeline for Layer 4 or Layer 7 processing.
+
+## Limitations
+
+- You must keep Magic Transit as a common base service, spanning all addresses in your prefix.
+- When adding a service binding for a given IP address, it must be either a CDN service binding or a Spectrum service binding. It is not possible (or necessary) to bind both services.
+-  Once a service binding is created (or deleted), it will take four to six hours to propagate across Cloudflare's global network. Services for the IP addresses in scope will likely be disrupted during this window.
+
+[^1]: Layer 7 HTTP-based
+[^2]: Layer 4 or Layer 7 HTTP with custom ports

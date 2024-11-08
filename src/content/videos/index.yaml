@@ -195,3 +195,132 @@ entries:
     difficulty: Beginner
     content_type: 🎥 Video
     pcx_content_type: tutorial
+  - link: https://youtu.be/10-kiyJNr8s
+    title: Build a private AI chatbot using Meta's Llama 3.1
+    description: In this video, you will learn how to set up a private AI chat powered by Llama 3.1 for secure, fast interactions, deploy the model on Cloudflare Workers for serverless, scalable performance and use Cloudflare's Workers AI for seamless integration and edge computing benefits.
+    tags: [Workers, AI]
+    languages: [TypeScript]
+    products: [Workers, Workers AI]
+    cloudflare: true
+    # stream_id:
+    author: confidence
+    updated: 2024-10-07
+    difficulty: Beginner
+    content_type: 🎥 Video
+    pcx_content_type: tutorial    
+  - link: https://developers.cloudflare.com/pages/framework-guides/deploy-a-hono-site/#creator-interview
+    title: DevTalk | Episode 01 - Yusuke Wada, creator of Hono Framework
+    description: In this interview, Yusuke Wada reflects on his journey in developing Hono.
+    tags: [Pages, Workers]
+    languages: [TypeScript]
+    products: [Pages, Workers, Workers AI]
+    cloudflare: true
+    author: yusuke
+    updated: 2024-10-08
+    difficulty: Beginner
+    content_type: 🎥 Video
+    pcx_content_type: interview    
+  - link: https://developers.cloudflare.com/workers-ai/tutorials/image-generator-flux/
+    title: How to build an AI Image Generator using Cloudflare Workers AI
+    description: The new flux-schnell models on Workers AI are our most powerful text to image AI models yet. In this video, we show you how to deploy your own Workers AI image playground.
+    tags: [Workers, Workers AI]
+    languages: [TypeScript]
+    stream_id: aeafae151e84a81be19c52c2348e9bab
+    products: [Workers, Workers AI]
+    cloudflare: true
+    author: kristian
+    updated: 2024-10-17
+    difficulty: Intermediate
+    content_type: 🎥 Video
+    pcx_content_type: tutorial
+  - link: https://youtu.be/W45MIi_t_go
+    title: Building Front-End Applications | Now Supported by Cloudflare Workers
+    description: You can now build front-end applications, just like you do on Cloudflare Pages, but with the added benefit of Workers.
+    tags: [Workers, Workers AI]
+    languages: [TypeScript]
+    stream_id: 84039c66f18a34fa70cae7e2a0e70dae
+    products: [Workers, Workers AI]
+    cloudflare: true
+    author: confidence
+    updated: 2024-10-23
+    difficulty: Beginner
+    content_type: 🎥 Video
+    pcx_content_type: tutorial
+  - link: https://youtu.be/HXOpxNaKUzw
+    title: How to Build Event-Driven Applications with Cloudflare Queues
+    description: In this video, we demonstrate how to build an event-driven application using Cloudflare Queues. Event-driven system lets you decouple services, allowing them to process and scale independently.
+    tags: [Workers, Queues]
+    languages: [TypeScript]
+    # stream_id: 
+    products: [Workers, Workers AI]
+    cloudflare: true
+    author: harshil
+    updated: 2024-09-26
+    difficulty: Intermediate
+    content_type: 🎥 Video
+    pcx_content_type: tutorial
+  - link: https://youtu.be/slS4RBV0SBk
+    title: Cloudflare Workflows | Introduction (Part 1 of 3)
+    description: In this video, we introduce Cloudflare Workflows, the Newest Developer Platform Primitive at Cloudflare.
+    tags: [Workflows, Workers, Queues, Workers AI, AI Gateway, KV]
+    languages: [TypeScript]
+    # stream_id: 
+    products: [Workflows, Workers, Queues, Workers AI, AI Gateway, KV]
+    cloudflare: true
+    author: craig
+    updated: 2024-10-30
+    difficulty: Intermediate
+    content_type: 🎥 Video
+    pcx_content_type: tutorial
+  - link: https://youtu.be/y4PPsvHrQGA
+    title: Cloudflare Workflows | Batching and Monitoring Your Durable Execution (Part 2 of 3)
+    description: Workflows exposes metrics such as execution, error rates, steps, and total duration!
+    tags: [Workflows, Workers, Queues, Workers AI, AI Gateway, KV]
+    languages: [TypeScript]
+    # stream_id: 
+    products: [Workflows, Workers, Queues, Workers AI, AI Gateway, KV]
+    cloudflare: true
+    author: craig
+    updated: 2024-10-30
+    difficulty: Intermediate
+    content_type: 🎥 Video
+    pcx_content_type: tutorial
+  - link: https://youtu.be/L6gR4Yr3UW8
+    title: Cloudflare Workflows | Schedule and Sleep For Your Apps (Part 3 of 3)
+    description: Cloudflare Workflows allows you to initiate sleep as an explicit step, which can be useful when you want a Workflow to wait, schedule work ahead, or pause until an input or other external state is ready.
+    tags: [Workflows, Workers, Queues, Workers AI, AI Gateway, KV]
+    languages: [TypeScript]
+    # stream_id: 
+    products: [Workflows, Workers, Queues, Workers AI, AI Gateway, KV]
+    cloudflare: true
+    author: craig
+    updated: 2024-10-30
+    difficulty: Intermediate
+    content_type: 🎥 Video
+    pcx_content_type: tutorial
+  - link: https://developers.cloudflare.com/pages/framework-guides/nextjs/#video-tutorial
+    title: Deploy NextJS to your Workers Application 
+    description: Watch to learn how to easily deploy your NextJS application to the Cloudflare global network.
+    tags: [NextJS, Workers, Pages]
+    languages: [TypeScript]
+    # stream_id: 
+    products: [Workers, Pages]
+    cloudflare: true
+    author: confidence
+    updated: 2024-10-31
+    difficulty: Intermediate
+    content_type: 🎥 Video
+    pcx_content_type: tutorial
+  - link: https://developers.cloudflare.com/workers/observability/logs/#video-tutorial
+    title: Workers Observability
+    description: With Workers Logs, you can collect, store, filter, and analyze all logging data from your Workers directly in the Cloudflare dashboard.
+    tags: [Workers, Pages]
+    languages: [TypeScript]
+    # stream_id: 
+    products: [Workers, Pages]
+    cloudflare: true
+    author: confidence
+    updated: 2024-10-31
+    difficulty: Intermediate
+    content_type: 🎥 Video
+    pcx_content_type: tutorial     

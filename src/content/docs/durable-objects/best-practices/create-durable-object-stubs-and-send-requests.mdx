@@ -1,128 +1,222 @@
 ---
-title: Create Durable Object stubs and send requests
+title: Invoking methods
 pcx_content_type: concept
 sidebar:
   order: 2
-
 ---
 
-import { Glossary, Type } from "~/components";
+import { Render, Tabs, TabItem, GlossaryTooltip } from "~/components";
 
-A Durable Object stub is a client Object used to send requests to a remote Durable Object.
+## Invoking methods on a Durable Object
 
-`OBJECT_NAMESPACE.get(id)` creates a Durable Object.
+All new projects and existing projects with a compatibility date greater than or equal to [`2024-04-03`](/workers/configuration/compatibility-dates/#durable-object-stubs-and-service-bindings-support-rpc) should prefer to invoke [Remote Procedure Call (RPC)](/workers/runtime-apis/rpc/) methods defined on a <GlossaryTooltip term="Durable Object class">Durable Object class</GlossaryTooltip>. Legacy projects can continue to invoke the `fetch` handler on the Durable Object class indefinitely.
 
-Durable Objects implement E-order semantics. When you make multiple calls to the same Durable Object, it is guaranteed that the calls will be delivered to the remote Durable Object in the order in which you made them. E-order semantics makes many distributed programming problems easier.
+### Invoke RPC methods
 
-However, due to random network disruptions or other transient issues, a Durable Object stub may become disconnected from its remote Durable Object. A disconnected stub is permanently broken. In this scenario, all in-flight calls and future calls will fail with [exceptions](/durable-objects/observability/troubleshooting/).
+By writing a Durable Object class which inherits from the built-in type `DurableObject`, public methods on the Durable Objects class are exposed as [RPC methods](/workers/runtime-apis/rpc/), which you can call using a [DurableObjectStub](/durable-objects/api/stub) from a Worker.
 
-To make new requests to the Durable Object, you must call `OBJECT_NAMESPACE.get(id)` again to get a new Durable Object stub. There are no ordering guarantees between requests to the new stub compared to the old one. If ordering is not a concern, you can create a new Durable Object for every request.
+All RPC calls are [asynchronous](/workers/runtime-apis/rpc/lifecycle/), accept and return [serializable types](/workers/runtime-apis/rpc/), and [propagate exceptions](/workers/runtime-apis/rpc/error-handling/) to the caller without a stack trace. Refer to [Workers RPC](/workers/runtime-apis/rpc/) for complete details.
 
-:::note[E-order]
+<Render file="example-rpc" />
 
+:::note
 
-E-order is a concept deriving from the [E distributed programming language](https://en.wikipedia.org/wiki/E_\(programming_language\)). E-order is implemented by the [Cap'n Proto](https://capnproto.org) distributed object-capability RPC protocol, which Cloudflare Workers uses for internal communications.
-
+With RPC, the `DurableObject` superclass defines `ctx` and `env` as class properties. What was previously called `state` is now called `ctx` when you extend the `DurableObject` class. The name `ctx` is adopted rather than `state` for the `DurableObjectState` interface to be consistent between `DurableObject` and `WorkerEntrypoint` objects.
 
 :::
 
-## Terminology
+Refer to [Build a Counter](/durable-objects/examples/build-a-counter/) for a complete example.
 
-Durable Objects documentation uses several concepts and terms, including:
+### Invoking the `fetch` handler
 
-<Glossary product="durable-objects" />
+If your project is stuck on a compatibility date before [`2024-04-03`](/workers/configuration/compatibility-dates/#durable-object-stubs-and-service-bindings-support-rpc), or has the need to send a [`Request`](/workers/runtime-apis/request/) object and return a `Response` object, then you should send requests to a Durable Object via the fetch handler.
 
-## Get a Durable Object stub
+<Tabs> <TabItem label="JavaScript" icon="seti:javascript">
 
 ```js
-let durableObjectStub = OBJECT_NAMESPACE.get(id);
+import { DurableObject } from "cloudflare:workers";
+
+// Durable Object
+export class MyDurableObject extends DurableObject {
+	constructor(ctx, env) {
+		super(ctx, env);
+	}
+
+	async fetch(request) {
+		return new Response("Hello, World!");
+	}
+}
+
+// Worker
+export default {
+	async fetch(request, env) {
+		// Every unique ID refers to an individual instance of the Durable Object class
+		const id = env.MY_DURABLE_OBJECT.idFromName("foo");
+
+		// A stub is a client used to invoke methods on the Durable Object
+		const stub = env.MY_DURABLE_OBJECT.get(id);
+
+		// Methods on the Durable Object are invoked via the stub
+		const response = await stub.fetch(request);
+
+		return response;
+	},
+};
 ```
 
-### Parameters
-
-* `id` <Type text='DurableObjectId' />
-  * An ID constructed using `newUniqueId()`, `idFromName()`, or `idFromString()` on this Durable Object namespace. For details, refer to [Access a Durable Object](/durable-objects/best-practices/access-durable-objects-from-a-worker/#generate-ids-randomly) .
-
-  * This method constructs an Object, which is a local client that provides access to a remote Object.
-
-  * If the remote Object does not already exist, it will be created. Thus, there will always be an Object accessible from the stub.
-
-  * This method always returns the Object immediately, before it has connected to the remote Object. This allows you to begin making requests to the Object right away, without waiting for a network round trip.
-
-
-## Call a Durable Object
-
-You can call a Durable Object by:
-
-* **Recommended** Invoking [Remote Procedure Call (RPC)](/workers/runtime-apis/rpc/) methods defined on a Durable Object class (available for Workers with a [compatibility date greater than or equal to `2024-04-03`](/workers/configuration/compatibility-dates/#durable-object-stubs-and-service-bindings-support-rpc)).
-* [Sending HTTP requests](/durable-objects/best-practices/create-durable-object-stubs-and-send-requests/#send-http-requests) to a Durable Object's `fetch()` handler.
-* Using the [WebSocket API](/durable-objects/reference/websockets/).
-
-### Call RPC methods
-
-To use RPC, a Durable Objects class must extend the built-in type `DurableObject`. Then, public methods on a Durable Objects class are exposed as [RPC methods](/workers/runtime-apis/rpc/), which you can call from a Durable Object stub in a Worker. All RPC calls are [asynchronous](/workers/runtime-apis/rpc/lifecycle/), accept and return [serializable types](/workers/runtime-apis/rpc/), and [propagate exceptions](/workers/runtime-apis/rpc/error-handling/) to the caller without a stack trace. Refer to [Workers RPC](/workers/runtime-apis/rpc/) for complete details.
+</TabItem> <TabItem label="TypeScript" icon="seti:typescript">
 
 ```ts
 import { DurableObject } from "cloudflare:workers";
 
-export class Counter extends DurableObject {
-
-	async increment(amount = 1) {
-    let value: number = (await this.ctx.storage.get("value")) || 0;
-    value += amount;
-    this.ctx.storage.put("value", value);
-    return value;
-  }
+export interface Env {
+	MY_DURABLE_OBJECT: DurableObjectNamespace<MyDurableObject>;
 }
+
+// Durable Object
+export class MyDurableObject extends DurableObject {
+	constructor(ctx: DurableObjectState, env: Env) {
+		super(ctx, env);
+	}
+
+	async fetch(request: Request): Promise<Response> {
+		return new Response("Hello, World!");
+	}
+}
+
+// Worker
+export default {
+	async fetch(request, env) {
+		// Every unique ID refers to an individual instance of the Durable Object class
+		const id = env.MY_DURABLE_OBJECT.idFromName("foo");
+
+		// A stub is a client used to invoke methods on the Durable Object
+		const stub = env.MY_DURABLE_OBJECT.get(id);
+
+		// Methods on the Durable Object are invoked via the stub
+		const response = await stub.fetch(request);
+
+		return response;
+	},
+} satisfies ExportedHandler<Env>;
 ```
 
-```ts
-// A Worker calling a Durable Object
-let durableObjectStub = env.COUNTERS.get(id);
-let response = await durableObjectStub.increment();
-```
+</TabItem> </Tabs>
 
-:::note
+The `URL` associated with the [`Request`](/workers/runtime-apis/request/) object passed to the `fetch()` handler of your Durable Object must be a well-formed URL, but does not have to be a publicly-resolvable hostname.
 
-When you write a Worker that does not extend the [`DurableObject` class](/workers/configuration/compatibility-dates/#durable-object-stubs-and-service-bindings-support-rpc), the `ctx` object in your Durable Object is instead called `state`, and is provided as the first argument to the constructor, but not set as a property of your class.
+Without RPC, customers frequently construct requests which corresponded to private methods on the Durable Object and dispatch requests from the `fetch` handler. RPC is obviously more ergonomic in this example.
 
-With RPC, the `DurableObject` superclass defines `ctx` and `env` as class properties. What was previously called `state` is now called `ctx` when you extend the `DurableObject` class.
-
-This naming change from `state` to `ctx` was made both to ensure consistency between `DurableObject` and `WorkerEntrypoint`, and to avoid setting the false expectation that directly mutating the value of `state` would persist data.
-:::
-
-Refer to [Build a Counter](/durable-objects/examples/build-a-counter/) for a full example.
-
-### Send HTTP requests
+<Tabs> <TabItem label="JavaScript" icon="seti:javascript">
 
 ```js
-let response = await durableObjectStub.fetch(request);
-// Alternatively, passing a URL directly:
-let response = await durableObjectStub.fetch(url, options);
+import { DurableObject } from "cloudflare:workers";
+
+// Durable Object
+export class MyDurableObject extends DurableObject {
+	constructor(ctx: DurableObjectState, env: Env) {
+		super(ctx, env);
+	}
+
+	private hello(name) {
+		return new Response(`Hello, ${name}!`);
+	}
+
+	private goodbye(name) {
+		return new Response(`Goodbye, ${name}!`);
+	}
+
+	async fetch(request) {
+		const url = new URL(request.url);
+		let name = url.searchParams.get("name");
+		if (!name) {
+			name = "World";
+		}
+
+		switch (url.pathname) {
+			case "/hello":
+				return this.hello(name);
+			case "/goodbye":
+				return this.goodbye(name);
+			default:
+				return new Response("Bad Request", { status: 400 });
+		}
+	}
+}
+
+// Worker
+export default {
+	async fetch(_request, env, _ctx) {
+		// Every unique ID refers to an individual instance of the Durable Object class
+		const id = env.MY_DURABLE_OBJECT.idFromName("foo");
+
+		// A stub is a client used to invoke methods on the Durable Object
+		const stub = env.MY_DURABLE_OBJECT.get(id);
+
+		// Invoke the fetch handler on the Durable Object stub
+		let response = await stub.fetch("http://do/hello?name=World");
+
+		return response;
+	},
+};
 ```
 
-The `url` passed to the `fetch()` handler of your Durable Object must be a well-formed URL, but does not have to be a publicly-resolvable hostname. You can:
-
-* Pass the client `Request` directly into the `fetch()` handler as is.
-* Use an internal URL scheme, such as `http://do/some-path`, as the `url` parameter in the `fetch()` handler. This allows you to construct your own path or query parameter based approach to sharing state between your client-facing Worker and your Durable Object.
-* Alternatively, you can construct your own [`Request` object](/workers/runtime-apis/request/), which allows you to use a [`Headers`](/workers/runtime-apis/headers/) object to pass in key-value pairs, representing data you wish to pass to your Durable Objects.
-
-The example below shows you how to construct your own `Request` object:
+</TabItem> <TabItem label="TypeScript" icon="seti:typescript">
 
 ```ts
-// Constructing a new Request and passing metadata to the Durable Object via headers
-let doReq = new Request("http://do/write", { headers: { "user-id": userId }})
-let resp = await durableObjectStub.fetch(doReq)
+import { DurableObject } from "cloudflare:workers";
 
-// Alternatively, using URL query params or paths
-let resp = await durableObjectStub.fetch(`http://do/write?userId=${userId}`)
+export interface Env {
+	MY_DURABLE_OBJECT: DurableObjectNamespace<MyDurableObject>;
+}
+
+// Durable Object
+export class MyDurableObject extends DurableObject {
+	constructor(ctx: DurableObjectState, env: Env) {
+		super(ctx, env);
+	}
+
+	private hello(name: string) {
+		return new Response(`Hello, ${name}!`);
+	}
+
+	private goodbye(name: string) {
+		return new Response(`Goodbye, ${name}!`);
+	}
+
+	async fetch(request: Request): Promise<Response> {
+		const url = new URL(request.url);
+		let name = url.searchParams.get("name");
+		if (!name) {
+			name = "World";
+		}
+
+		switch (url.pathname) {
+			case "/hello":
+				return this.hello(name);
+			case "/goodbye":
+				return this.goodbye(name);
+			default:
+				return new Response("Bad Request", { status: 400 });
+		}
+	}
+}
+
+// Worker
+export default {
+	async fetch(_request, env, _ctx) {
+		// Every unique ID refers to an individual instance of the Durable Object class
+		const id = env.MY_DURABLE_OBJECT.idFromName("foo");
+
+		// A stub is a client used to invoke methods on the Durable Object
+		const stub = env.MY_DURABLE_OBJECT.get(id);
+
+		// Invoke the fetch handler on the Durable Object stub
+		let response = await stub.fetch("http://do/hello?name=World");
+
+		return response;
+	},
+} satisfies ExportedHandler<Env>;
 ```
 
-:::note
-
-To understand how exceptions are thrown from within a Durable Object, refer to the [Error handling](/durable-objects/best-practices/error-handling/) documentation.
-:::
-
-## List Durable Objects
-
-The Cloudflare REST API supports retrieving a [list of Durable Objects](/api/operations/durable-objects-namespace-list-objects) within a Durable Object namespace and a [list of namespaces](/api/operations/durable-objects-namespace-list-namespaces) associated with an account.
+</TabItem> </Tabs>

@@ -23,7 +23,7 @@ For example, if you created a policy to block `example.com`, you can do the foll
 
 2. Type `dig example.com` (`nslookup example.com` if you are using Windows) and press **Enter**.
 
-3. If the [block page](/cloudflare-one/policies/gateway/configuring-block-page/) is disabled for the policy, you should see `REFUSED` in the answer section:
+3. If the [block page](/cloudflare-one/policies/gateway/block-page/) is disabled for the policy, you should see `REFUSED` in the answer section:
 
    ```sh
    dig example.com
@@ -46,7 +46,7 @@ For example, if you created a policy to block `example.com`, you can do the foll
    ;; MSG SIZE  rcvd: 29
    ```
 
-   If the [block page](/cloudflare-one/policies/gateway/configuring-block-page/) is enabled for the policy, you should see `NOERROR` in the answer section and `162.159.36.12` and `162.159.46.12` as the answers:
+   If the [block page](/cloudflare-one/policies/gateway/block-page/) is enabled for the policy, you should see `NOERROR` in the answer section with `162.159.36.12` and `162.159.46.12` as the answers:
 
    ```sh null
    dig example.com
@@ -117,7 +117,7 @@ If you [enabled EDNS client subnet](/cloudflare-one/connections/connect-devices/
 
 1. Obtain your DNS location's DOH subdomain:
 
-   1. In [Zero Trust](https://one.dash.cloudflare.com), go to **Gateway** > **DNS Locations**.
+   1. In [Zero Trust](https://one.dash.cloudflare.com), go to **Gateway** > **DNS locations**.
    2. Select the DNS location you are testing.
    3. Note the value of **DNS over HTTPS**.
 

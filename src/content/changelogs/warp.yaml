@@ -5,6 +5,99 @@ productLink: "/cloudflare-one/connections/connect-devices/warp/"
 productArea: Cloudflare One
 productAreaLink: /cloudflare-one/changelog/
 entries:
+  - publish_date: "2024-10-23"
+    title: WARP client for macOS (version 2024.10.279.1)
+    description: |-
+      A new beta release for the macOS WARP client is now available in the [App Center](https://install.appcenter.ms/orgs/cloudflare/apps/1.1.1.1-macos/distribution_groups/beta). This release contains minor fixes and improvements.
+
+      Changes and improvements:
+        - Fixed an issue where SSH sessions and other application connections over TCP or UDP could drop when a device that is using MASQUE changes its primary network interface.
+        - Fixed an issue to ensure the Cloudflare root certificate (or custom certificate) is installed in the trust store if not already there.
+
+      Known issues:
+        - Cloudflare is investigating temporary networking issues on macOS 15 (Sequoia) that affect some users and may occur on any version of the WARP client.
+
+  - publish_date: "2024-10-23"
+    title: WARP client for Windows (version 2024.10.279.1)
+    description: |-
+      A new beta release for the Windows WARP client is now available in the [App Center](https://install.appcenter.ms/orgs/cloudflare/apps/1.1.1.1-windows/distribution_groups/beta). This release contains minor fixes and improvements.
+
+      Changes and improvements:
+        - Fixed an issue where SSH sessions and other application connections over TCP or UDP could drop when a device that is using MASQUE changes its primary network interface.
+        - Fixed an issue to ensure the Cloudflare root certificate (or custom certificate) is installed in the trust store if not already there.
+
+      Known issues:
+        - DNS resolution may be broken when all of the following conditions are true:
+          - WARP is in Secure Web Gateway without DNS filtering (tunnel-only) mode.
+          - A custom DNS server address is configured on the primary network adapter.
+          - The custom DNS server address on the primary network adapter is changed while WARP is connected.
+
+          To work around the DNS issue, reconnect the WARP client by toggling off and back on.
+
+  - publish_date: "2024-10-03"
+    title: WARP client for Linux (version 2024.9.346.0)
+    description: |-
+      A new GA release for the Linux WARP client is now available in the [package repository](https://pkg.cloudflareclient.com/). This release contains minor fixes and minor improvements.
+
+      Notable updates:
+        - Added `target list` to the `warp-cli` to enhance the user experience with the [Access for Infrastructure SSH](/cloudflare-one/connections/connect-networks/use-cases/ssh/ssh-infrastructure-access/) solution.
+        - Added the ability to customize PCAP options in the `warp-cli`.
+        - Added a list of installed applications in `warp-diag`.
+        - Added a `tunnel reset mtu` subcommand to the `warp-cli`.
+        - Added the ability for `warp-cli` to use the team name provided in the MDM file for initial registration.
+        - Added a JSON output option to the `warp-cli`.
+        - Added the ability to execute a PCAP on multiple interfaces with `warp-cli`.
+        - Added MASQUE tunnel protocol support for the consumer version of WARP ([1.1.1.1 w/ WARP](/warp-client/)).
+        - Improved the performance of firewall operations when enforcing split tunnel configuration.
+        - Fixed an issue where device posture certificate checks were unexpectedly failing.
+        - Fixed an issue where the Linux GUI fails to open the browser login window when registering a new Zero Trust organization.
+        - Fixed an issue where clients using service tokens failed to retry after a network change.
+        - Fixed an issue where the client, when switching between WireGuard and MASQUE protocols, sometimes required a manual tunnel key reset.
+        - Fixed a known issue which required users to re-register when an older single configuration MDM file was deployed after deploying the newer, multiple configuration format.
+        - Deprecated `warp-cli` commands have been removed. If you have any workflows that use the deprecated commands, update to the new commands where necessary.
+
+      Known issues:
+        - Using MASQUE as the tunnel protocol may be incompatible if your organization has Regional Services is enabled.
+
+  - publish_date: "2024-10-03"
+    title: WARP client for Windows (version 2024.9.346.0)
+    description: |-
+      A new GA release for the Windows WARP client is now available in the [App Center](https://install.appcenter.ms/orgs/cloudflare/apps/1.1.1.1-windows-1/distribution_groups/release). This release contains minor fixes and improvements.
+
+      Notable updates:
+        - Added `target list` to the `warp-cli` to enhance the user experience with the [Access for Infrastructure SSH](/cloudflare-one/connections/connect-networks/use-cases/ssh/ssh-infrastructure-access/) solution.
+        - Added [pre-login](/cloudflare-one/connections/connect-devices/warp/deployment/mdm-deployment/windows-prelogin/) configuration details to the `warp-diag` output.
+        - Added a `tunnel reset mtu` subcommand to the `warp-cli`.
+        - Added a JSON output option to the `warp-cli`.
+        - Added the ability for `warp-cli` to use the team name provided in the MDM file for initial registration.
+        - Added the ability to execute a PCAP on multiple interfaces with `warp-cli` and `warp-dex`.
+        - Improved `warp-dex` default interface selection for PCAPs and changed `warp-dex` CLI output to JSON.
+        - Fixed an issue where the client, when switching between WireGuard and MASQUE protocols, sometimes required a manual tunnel key reset.
+        - Added MASQUE tunnel protocol support for the consumer version of WARP ([1.1.1.1 w/ WARP](/warp-client/)).
+
+      Known issues:
+        - Using MASQUE as the tunnel protocol may be incompatible if your organization has Regional Services is enabled.
+
+  - publish_date: "2024-10-03"
+    title: WARP client for macOS (version 2024.9.346.0)
+    description: |-
+      A new GA release for the macOS WARP client is now available in the [App Center](https://install.appcenter.ms/orgs/cloudflare/apps/1.1.1.1-macos-1/distribution_groups/release). This release contains minor fixes and improvements.
+
+      All customers running macOS Ventura 13.0 and above (including Sequoia) are advised to upgrade to this release. This release fixes an incompatibility with the firewall found on macOS Sonoma 14.4 and above that could result in the firewall being disabled.
+
+      Notable updates:
+        - Added `target list` to the `warp-cli` to enhance the user experience with the [Access for Infrastructure SSH](/cloudflare-one/connections/connect-networks/use-cases/ssh/ssh-infrastructure-access/) solution.
+        - Added a `tunnel reset mtu` subcommand to the `warp-cli`.
+        - Added the ability for `warp-cli` to use the team name provided in the MDM file for initial registration.
+        - Added a JSON output option to the `warp-cli`.
+        - Added the ability to execute a PCAP on multiple interfaces with `warp-cli` and `warp-dex`.
+        - Improved `warp-dex` default interface selection for PCAPs and changed `warp-dex` CLI output to JSON.
+        - Improved [application posture check](/cloudflare-one/identity/devices/warp-client-checks/application-check/) compatibility with symbolically linked files.
+        - Fixed an issue where the client, when switching between WireGuard and MASQUE protocols, sometimes required a manual tunnel key reset.
+        - Added MASQUE tunnel protocol support for the consumer version of WARP ([1.1.1.1 w/ WARP](/warp-client/)).
+
+      Known issues:
+        - Using MASQUE as the tunnel protocol may be incompatible if your organization has Regional Services is enabled.
   - publish_date: "2024-09-26"
     title: WARP client for macOS (version 2024.8.457.0)
     description: |-

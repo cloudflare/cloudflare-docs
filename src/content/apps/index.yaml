@@ -333,3 +333,11 @@ entries:
     languages: [TypeScript]
     cloudflare: true
     updated: 2024-09-12
+  - link: https://github.com/atinux/flux-ai-image-generator
+    name: Flux Schnell Image Generator
+    description: An application to generate images with AI using Flux-1 Schnell and store them in Cloudflare R2.
+    tags: [Nuxt]
+    products: [Pages, Workers AI, R2]
+    languages: [TypeScript]
+    cloudflare: false
+    updated: 2024-10-07

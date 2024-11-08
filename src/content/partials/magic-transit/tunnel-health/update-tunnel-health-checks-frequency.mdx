@@ -1,16 +1,18 @@
 ---
-inputParameters: healthChecksUrl;;addTunnelsPath
+params:
+  - healthChecksUrl
+  - addTunnelsPath
 ---
 
 import { GlossaryTooltip, Markdown, TabItem, Tabs } from "~/components";
 
-By default, Cloudflare servers send <GlossaryTooltip term="tunnel health-check" link={props.one}>health checks</GlossaryTooltip> to each <GlossaryTooltip term="GRE tunnel">GRE</GlossaryTooltip>, CNI, or <GlossaryTooltip term="IPsec tunnel">IPsec</GlossaryTooltip> tunnel endpoint you configure to receive traffic from Magic Transit and Magic WAN. You can configure this frequency via the dashboard or [the API](/api/operations/magic-gre-tunnels-update-gre-tunnel) to suit your use case. For example, if you are connecting a lower-traffic site for which you do not need immediate failover and would rather receive a lower volume of health check traffic, you should set the frequency to `low`. On the other hand, if you are connecting a site that is extremely sensitive to any issues, and you want a more proactive failover at the earliest sign of a potential problem, you should set this to `high`.
+By default, Cloudflare servers send <GlossaryTooltip term="tunnel health-check" link={props.healthChecksUrl}>health checks</GlossaryTooltip> to each <GlossaryTooltip term="GRE tunnel">GRE</GlossaryTooltip>, CNI, or <GlossaryTooltip term="IPsec tunnel">IPsec</GlossaryTooltip> tunnel endpoint you configure to receive traffic from Magic Transit and Magic WAN. You can configure this frequency via the dashboard or [the API](/api/operations/magic-gre-tunnels-update-gre-tunnel) to suit your use case. For example, if you are connecting a lower-traffic site for which you do not need immediate failover and would rather receive a lower volume of health check traffic, you should set the frequency to `low`. On the other hand, if you are connecting a site that is extremely sensitive to any issues, and you want a more proactive failover at the earliest sign of a potential problem, you should set this to `high`.
 
 Available options are `low`, `mid`, and `high`.
 
 <Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
 
-1. Refer to <a href={props.two}>Add tunnels</a> to learn how to create or edit your tunnel.
+1. Refer to <a href={props.addTunnelsPath}>Add tunnels</a> to learn how to create or edit your tunnel.
 2. Change the **Health check rate** to your desired rate. For example, _Low_.
 3. Save your changes.
 

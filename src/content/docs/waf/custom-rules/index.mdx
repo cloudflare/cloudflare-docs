@@ -5,12 +5,9 @@ sidebar:
   order: 5
 ---
 
-Custom rules allow you to control incoming traffic by filtering requests to a zone. You can perform actions like _Block_ or _Managed Challenge_ on incoming requests according to rules you define.
+import { Render } from "~/components";
 
-Like other rules evaluated by Cloudflare's [Ruleset Engine](/ruleset-engine/), custom rules have the following basic parameters:
-
-- An [expression](/ruleset-engine/rules-language/expressions/) that specifies the criteria you are matching traffic on using the [Rules language](/ruleset-engine/rules-language/).
-- An [action](/ruleset-engine/rules-language/actions/) that specifies what to perform when there is a match for the rule.
+<Render file="custom-rules-intro" product="waf" />
 
 Custom rules are evaluated in order, and some actions like _Block_ will stop the evaluation of other rules. For more details on actions and their behavior, refer to the [actions reference](/ruleset-engine/rules-language/actions/).
 
@@ -19,7 +16,7 @@ Custom rules are evaluated in order, and some actions like _Block_ will stop the
 Refer to the [migration guide](/waf/reference/migration-guides/firewall-rules-to-custom-rules/#main-differences) to learn more about the differences between firewall rules and custom rules.
 :::
 
-To define sets of custom rules that apply to more than one zone, use [custom rulesets](/waf/custom-rules/custom-rulesets/), which require an Enterprise plan with a paid add-on.
+To define sets of custom rules that apply to more than one zone, use [custom rulesets](/waf/account/custom-rulesets/), which require an Enterprise plan with a paid add-on.
 
 ---
 

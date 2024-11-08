@@ -10,8 +10,8 @@ import { Render, Tabs, TabItem } from "~/components";
 <Render
 	file="magic-tunnel-health-alerts/magic-tunnel-health-alerts"
 	params={{
-		one: "Magic WAN",
-		two: "/magic-wan/reference/magic-tunnels/"
+		productName: "Magic WAN",
+		backgroundInfoPath: "/magic-wan/reference/magic-tunnels/",
 	}}
 />
 
@@ -22,7 +22,7 @@ import { Render, Tabs, TabItem } from "~/components";
 <Render
 	file="magic-tunnel-health-alerts/setup-magic-tunnels-dash"
 	params={{
-		one: "Magic WAN"
+		productName: "Magic WAN",
 	}}
 />
 
@@ -108,8 +108,8 @@ curl https://api.cloudflare.com/client/v4/accounts/account_id/alerting/v3/polici
 	file="magic-tunnel-health-alerts/recommended-slo"
 	product="magic-wan"
 	params={{
-		one: "/magic-wan/reference/magic-tunnels/",
-		two: "/magic-wan/analytics/network-analytics/",
-		three: "/magic-wan/reference/tunnel-health-checks/",
+		backgroundInfoPath: "/magic-wan/reference/magic-tunnels/",
+		networkAnalyticsPath: "/magic-wan/analytics/network-analytics/",
+		healthChecks: "/magic-wan/reference/tunnel-health-checks/",
 	}}
 />

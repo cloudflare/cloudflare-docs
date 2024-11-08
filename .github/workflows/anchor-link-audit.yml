@@ -36,7 +36,7 @@ jobs:
 
       - run: npm ci
 
-      - run: npx astro build
+      - run: npm run build
         env:
           NODE_OPTIONS: "--max-old-space-size=4192"
 
@@ -57,4 +57,4 @@ jobs:
           curl --silent -X POST -H "Authorization: Bearer $GITHUB_TOKEN" \
             -H "Accept: application/vnd.github+json" \
             "https://api.github.com/repos/$GITHUB_REPOSITORY/issues" \
-            -d "{\"title\": \"Broken Header Links Found\", \"body\": \"$(cat issue_body.txt)\", \"assignees\": [\"kodster28\", \"haleycode\"]}"
+            -d "{\"title\": \"Broken Header Links Found\", \"body\": \"$(cat issue_body.txt)\", \"assignees\": [\"haleycode\"]}"

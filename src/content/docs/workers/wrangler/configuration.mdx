@@ -63,6 +63,10 @@ Top-level keys apply to the Worker as a whole (and therefore all environments). 
 
   - Whether Wrangler should keep variables configured in the dashboard on deploy. Refer to [source of truth](#source-of-truth).
 
+- `migrations` <Type text="object[]" /> <MetaInfo text="optional" />
+
+  - When making changes to your Durable Object classes, you must perform a migration. Refer to [Durable Object migrations](/durable-objects/reference/durable-objects-migrations/).
+
 - `send_metrics` <Type text="boolean" /> <MetaInfo text="optional" />
 
   - Whether Wrangler should send usage metrics to Cloudflare for this project.
@@ -132,6 +136,23 @@ At a minimum, the `name`, `main` and `compatibility_date` keys are required to d
 
   - Skip internal build steps and directly deploy your Worker script. You must have a plain JavaScript Worker with no dependencies.
 
+- `find_additional_modules` <Type text="boolean" /> <MetaInfo text="optional" />
+
+  - If true then Wrangler will traverse the file tree below `base_dir`.
+    Any files that match `rules` will be included in the deployed Worker.
+    Defaults to true if `no_bundle` is true, otherwise false.
+    Can only be used with Module format Workers (not Service Worker format).
+
+- `base_dir` <Type text="string" /> <MetaInfo text="optional" />
+
+  - The directory in which module "rules" should be evaluated when including additional files (via `find_additional_modules`) into a Worker deployment. Defaults to the directory containing the `main` entry point of the Worker if not specified.
+
+- `preserve_file_names` <Type text="boolean" /> <MetaInfo text="optional" />
+
+  - Determines whether Wrangler will preserve the file names of additional modules bundled with the Worker.
+    The default is to prepend filenames with a content hash.
+    For example, `34de60b44167af5c5a709e62a4e20c4f18c9e3b6-favicon.ico`.
+
 - `minify` <Type text="boolean" /> <MetaInfo text="optional" />
 
   - Minify the Worker script before uploading.
@@ -142,21 +163,15 @@ At a minimum, the `name`, `main` and `compatibility_date` keys are required to d
     Setting `node_compat = true` will add polyfills for Node.js built-in modules and globals to your Worker's code, when bundled with Wrangler.
     This is powered by `@esbuild-plugins/node-globals-polyfill` which in itself is powered by [rollup-plugin-node-polyfills](https://github.com/ionic-team/rollup-plugin-node-polyfills/).
 
-- `preserve_file_names` <Type text="boolean" /> <MetaInfo text="optional" />
-
-  - Determines whether Wrangler will preserve the file names of additional modules bundled with the Worker.
-    The default is to prepend filenames with a content hash.
-    For example, `34de60b44167af5c5a709e62a4e20c4f18c9e3b6-favicon.ico`.
-
 - `logpush` <Type text="boolean" /> <MetaInfo text="optional" />
 
-  - Enables Workers Trace Events Logpush for a Worker. Any scripts with this property will automatically get picked up by the Workers Logpush job configured for your account. Defaults to `false`.
+  - Enables Workers Trace Events Logpush for a Worker. Any scripts with this property will automatically get picked up by the Workers Logpush job configured for your account. Defaults to `false`. Refer to [Workers Logpush](/workers/observability/logs/logpush/).
 
 - `limits` <Type text="Limits" /> <MetaInfo text="optional" />
 
   - Configures limits to be imposed on execution at runtime. Refer to [Limits](#limits).
 
-* `observability` object optional
+* `observability` <Type text="object" /> <MetaInfo text="optional" />
 
   - Configures automatic observability settings for telemetry data emitted from your Worker. Refer to [Observability](#observability).
 
@@ -311,6 +326,26 @@ Example:
 crons = ["* * * * *"]
 ```
 
+## Observability
+
+The [Observability](/workers/observability/logs/workers-logs) setting allows you to automatically ingest, store, filter, and analyze logging data emitted from Cloudflare Workers directly from your Cloudflare Worker's dashboard.
+
+- `enabled` <Type text="boolean" /> <MetaInfo text="required" />
+
+  - When set to `true` on a Worker, logs for the Worker are persisted. Defaults to `true` for all new Workers.
+
+- `head_sampling_rate` <Type text="number" /> <MetaInfo text="optional" />
+  - A number between 0 and 1, where 0 indicates zero out of one hundred requests are logged, and 1 indicates every request is logged. If `head_sampling_rate` is unspecified, it is configured to a default value of 1 (100%). Read more about [head-based sampling](/workers/observability/logs/workers-logs/#head-based-sampling).
+
+Example:
+
+```toml title="wrangler.toml"
+[observability]
+enabled = true
+head_sampling_rate = 0.1 # 10% of requests are logged
+```
+
+
 ## Custom builds
 
 You can configure a custom build step that will be run before your Worker is deployed. Refer to [Custom builds](/workers/wrangler/custom-builds/).
@@ -399,6 +434,10 @@ To bind D1 databases to your Worker, assign an array of the below object to the 
   - The preview ID of this D1 database. If provided, `wrangler dev` will use this ID. Otherwise, it will use `database_id`. This option is required when using `wrangler dev --remote`.
 
   - The ID of the database. The database ID is available when you first use `wrangler d1 create` or when you call `wrangler d1 list`, and uniquely identifies your database.
+
+- `migrations_dir` <Type text="string" /> <MetaInfo text="optional" />
+
+  - The migration directory containing the migration files. By default, `wrangler d1 migrations create` creates a folder named `migrations`. You can use `migrations_dir` to specify a different folder containing the migration files. For more information, refer to [D1 Wrangler `migrations` commands](/workers/wrangler/commands/#migrations-create) and [D1 migrations](/d1/reference/migrations/).
 
 :::note
 
@@ -495,7 +534,7 @@ When making changes to your Durable Object classes, you must perform a migration
 
   - The new Durable Objects being defined.
 
-- `renamed_classes` <Type text="from: string, to: string}[]" /> <MetaInfo text="optional" />
+- `renamed_classes` <Type text="{from: string, to: string}[]" /> <MetaInfo text="optional" />
 
   - The Durable Objects being renamed.
 
@@ -612,28 +651,6 @@ id = "<NAMESPACE_ID1>"
 [[kv_namespaces]]
 binding = "<BINDING_NAME2>"
 id = "<NAMESPACE_ID2>"
-```
-
-### Observability
-
-The [Observability](/workers/observability/logs/workers-logs) setting allows you to automatically ingest, store, filter, and analyze logging data emitted from Cloudflare Workers directly from your Cloudflare Worker's dashboard.
-
-- `enabled` boolean required
-
-  - When set to `true` on a Worker, logs for the Worker are persisted. Defaults to `true` for all new Workers.
-
-- `head_sampling_rate` number optional
-  - A number between 0 and 1, where 0 indicates zero out of one hundred requests are logged, and 1 indicates every request is logged. If `head_sampling_rate` is unspecified, it is configured to a default value of 1 (100%). Read more about [head-based sampling](/workers/observability/logs/workers-logs/#head-based-sampling).
-
-Example:
-
-```toml title="wrangler.toml"
-[observability]
-enabled = true
-
-[observability]
-enabled = true
-head_sampling_rate = 0.1 # 10% of requests are logged
 ```
 
 ### Queues
@@ -938,7 +955,13 @@ assets = { directory = "./public", binding = "ASSETS", html_handling = "force-tr
 
 ## Bundling
 
-You can bundle modules into your Worker using the `rules` key, making these modules available to be imported when your Worker is invoked. The `rules` key will be an array of the below object.
+Wrangler can operate in two modes: the default bundling mode and `--no-bundle` mode.
+In bundling mode, Wrangler will traverse all the imports of your code and generate a single JavaScript "entry-point" file.
+Imported source code is "inlined/bundled" into this entry-point file.
+
+It is also possible to include additional modules into your Worker, which are uploaded alongside the entry-point.
+You specify which additional modules should be included into your Worker using the `rules` key, making these modules available to be imported when your Worker is invoked.
+The `rules` key will be an array of the below object.
 
 - `type` <Type text="string" /> <MetaInfo text="required" />
 
@@ -973,6 +996,15 @@ export default {
 	},
 };
 ```
+
+### Find additional modules
+
+Normally Wrangler will only include additional modules that are statically imported in your source code as in the example above.
+By setting `find_additional_modules` to `true` in your configuration file, Wrangler will traverse the file tree below `base_dir`.
+Any files that match `rules` will also be included as unbundled, external modules in the deployed Worker.
+`base_dir` defaults to the directory containing your `main` entrypoint.
+
+See https://developers.cloudflare.com/workers/wrangler/bundling/ for more details and examples.
 
 ## Local development settings
 

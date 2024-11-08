@@ -62,12 +62,20 @@ For example, if you added `192.168.2.1` to your tunnel, users can connect to you
 
 :::note
 
-All users with access to your remote browser can access your Cloudflare Tunnel applications unless you create a Gateway HTTP policy to block them. 
+All users with access to your remote browser can access your Cloudflare Tunnel applications unless you create a Gateway HTTP policy to block them.
 :::
 
 ### Disable remote browser controls
 
 You can configure [remote browser controls](/cloudflare-one/policies/browser-isolation/isolation-policies/#policy-settings) such as disabling copy/paste, printing, or keyboard input. These settings display in the Gateway [HTTP policy builder](/cloudflare-one/policies/gateway/http-policies/) when you select the Isolate action.
+
+### Sync cookies between local and remote browser
+
+The Cloudflare One Chrome extension allows a user to seamlessly access isolated and non-isolated applications without needing to re-authenticate. The user can log in once to their identity provider (whether through a Clientless Web Isolation link or their local browser) and gain access to all applications behind the SSO login.
+
+:::note
+The Chrome extension is available in early access. To install, contact your account team.
+:::
 
 ## Address bar
 

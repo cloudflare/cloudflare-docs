@@ -1,9 +1,14 @@
 ---
 pcx_content_type: how-to
 title: Update tunnel health checks frequency
-
 ---
 
-import { Render } from "~/components"
+import { Render } from "~/components";
 
-<Render file="tunnel-health/update-tunnel-health-checks-frequency" params={{ one: "/magic-transit/reference/tunnel-health-checks/", two: "/magic-transit/how-to/configure-tunnels/#add-tunnels" }} />
+<Render
+	file="tunnel-health/update-tunnel-health-checks-frequency"
+	params={{
+		healthChecksUrl: "/magic-transit/reference/tunnel-health-checks/",
+		addTunnelsPath: "/magic-transit/how-to/configure-tunnels/#add-tunnels",
+	}}
+/>

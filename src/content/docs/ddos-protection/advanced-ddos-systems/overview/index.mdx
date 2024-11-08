@@ -1,0 +1,67 @@
+---
+title: Overview
+pcx_content_type: overview
+sidebar:
+  order: 1
+  label: General settings
+head:
+  - tag: title
+    content: Advanced DDoS Protection systems
+
+---
+
+import { GlossaryTooltip, Render } from "~/components"
+
+The Advanced DDoS Protection system includes [Advanced TCP Protection](/ddos-protection/advanced-ddos-systems/overview/advanced-tcp-protection/) and [Advanced DNS Protection](/ddos-protection/advanced-ddos-systems/overview/advanced-dns-protection/). Both systems are configured using the general settings, but also comprise of their own dedicated settings.
+
+Advanced DDoS Protection systems is available to [Magic Transit](/magic-transit/) customers.
+
+Protection for simpler TCP or DNS-based DDoS attacks is included as part of the [Network-layer DDoS Attack Protection managed ruleset](/ddos-protection/managed-rulesets/network/).
+
+## General settings
+
+General settings enable and control the use of the Advanced TCP Protection and the Advanced DNS Protection systems, and are composed of thresholds, prefixes, rules, and enablement.
+
+### Thresholds
+
+Thresholds are based on your network's unique traffic and are configured by Cloudflare. The sensitivity levels manipulate the thresholds.
+
+When you get access to Advanced DDoS Protection systems, there are no configured thresholds in your account.
+
+Thresholds are based on your network's individual behavior, derived from your traffic profile as monitored by Cloudflare. Defining the thresholds will effectively determine what the _High_, _Medium_, and _Low_ [sensitivities](/ddos-protection/advanced-ddos-systems/concepts/#burst-sensitivity) will be for your specific case.
+
+Ask your Implementation Manager to configure initial threshold values. Separate thresholds need to be configured for Advanced TCP Protection and Advanced DNS Protection.
+
+Once thresholds are configured, the Implementation Manager will let you know that Advanced DDoS Protection systems have been initialized and can be configured and enabled.
+
+### Prefixes
+
+The prefixes that you have [onboarded](/magic-transit/how-to/advertise-prefixes/) to and approved by Cloudflare instruct the system on which traffic to route through the system.
+
+[Add the prefixes](/ddos-protection/advanced-ddos-systems/how-to/add-prefix/) you would like to use with Advanced TCP and DNS Protection. You will be able to register prefixes that you previously [onboarded to Magic Transit](/magic-transit/how-to/advertise-prefixes/) or a subset of these prefixes.
+
+You cannot add unapproved prefixes to Advanced DDoS Protection systems. Contact your account team to get help with prefix approvals.
+
+### Rules
+
+[Create a rule](/ddos-protection/advanced-ddos-systems/how-to/create-rule/) for Advanced TCP and Advanced DNS Protection (as needed) to enable mitigation. 
+
+You can create a rule for SYN Flood Protection and another rule for Out-of-state TCP Protection, both with global scope and in monitoring mode. These rules will apply to all received <GlossaryTooltip term="data packet">packets</GlossaryTooltip>.
+
+Optionally, you can create [filters](/ddos-protection/advanced-ddos-systems/concepts/#filter) for each protection system component (SYN flood protection and out-of-state TCP protection). <Render file="atp-filter-definition" />
+
+### Prefixes
+
+Optionally, you can [add prefixes to the allowlist](/ddos-protection/advanced-ddos-systems/how-to/add-prefix-allowlist/) if your traffic should bypass Advanced DDoS Protection rules.
+
+The <GlossaryTooltip term="allowlist">allowlist</GlossaryTooltip> only applies to source IPs — it does not apply to your own IPs or prefixes. You can also [exclude a subset of an onboarded prefix](/ddos-protection/advanced-ddos-systems/how-to/exclude-prefix/) from Advanced TCP Protection.
+
+Refer to [Concepts](/ddos-protection/advanced-ddos-systems/concepts/) for more information.
+
+### Enablement
+
+Enable the Advanced DDoS system and begin routing traffic through it.
+
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/) and select your account.
+2. Go to **L3/4 DDoS** > **Advanced Protection** > **General settings**.
+3. Under **General settings**, toggle the feature status **On**.

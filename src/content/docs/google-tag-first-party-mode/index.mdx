@@ -1,0 +1,31 @@
+---
+title: Google tag in first-party mode
+pcx_content_type: reference
+sidebar:
+  order: 1
+
+---
+
+## Get started
+
+Google tag in first-party mode allows website owners using Cloudflare as a CDN to get the most out of ad measurement tools with just a few clicks.
+
+At the moment, Google tag in first-party mode is in closed beta. You can [sign up](https://www.cloudflare.com/en-gb/lp/google-tag-first-party-mode/) to participate in the closed beta through [Google Ads](http://ads.google.com), [Google Analytics](http://analytics.google.com) or [Google Marketing Platform](https://marketingplatform.google.com/).
+
+### Configure Google tag in first-party mode in the dashboard
+
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login) and select your account.
+2. Go to **Google tag in first-party mode** > **Configuration**.
+3. Enable the toggle for **Turn on and configure Google tag**. 
+
+![Google tag in first-party mode configuration](~/assets/images/google-tag-first-party-mode/google-tag-configuration.png)
+
+4. Add your Google tag ID and the path on your website reserved for the Google tag. 
+The [Google tag ID](https://support.google.com/analytics/answer/9539598?hl=en) can be found in the Google Tag Experience dashboard. The measurement path is an unused path on your site that will load Google Tag Manager and all subsequent measurement requests.  
+
+![Add to ID and path](~/assets/images/google-tag-first-party-mode/google-tag-id-path.png)
+
+5. Once you click **Save**, Google Tag in First Party Mode will be enabled on your zone. If you already have a GTM script on your website, this First Party Tag will override the existing script.
+
+Now that you have authenticated into your Cloudflare account and configured GTM in first-party mode, your Google Tags will be loaded using `https://your-domain/measurement-path/...`and subsequent measurement requests will be served by Cloudflare.
+

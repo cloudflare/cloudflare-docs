@@ -31,7 +31,7 @@ Vision models will convert the image input into tokens for billing. Depending on
 
 | Model Size       | Pricing                  |
 | ---------------- | ------------------------ |
-| \<= 3B            | $0.10 per Million Tokens |
+| \<= 3B           | $0.10 per Million Tokens |
 | 3.1B - 8B        | $0.15 per Million Tokens |
 | 8.1B - 20B       | $0.20 per Million Tokens |
 | 20.1B - 40B      | $0.50 per Million Tokens |
@@ -41,32 +41,29 @@ Vision models will convert the image input into tokens for billing. Depending on
 Model size is measured in parameters.
 Pricing is based on input tokens.
 
-| Model Size         | Pricing                   |
-| ------------------ | ------------------------- |
+| Model Size          | Pricing                   |
+| ------------------- | ------------------------- |
 | \<= 150M parameters | $0.008 per Million Tokens |
-| 151M+ parameters   | $0.015 per Million Tokens |
+| 151M+ parameters    | $0.015 per Million Tokens |
 
 ## Image Generation
 Standard models are large image models such as `@cf/stabilityai/stable-diffusion-xl-base-1.0`
 Fast models are usually smaller image models that require fewer steps to generate an image, such as `@cf/black-forest-labs/flux-1-schnell` and `@cf/bytedance/stable-diffusion-xl-lightning`
 We take the maximum of the image height and width to calculate pricing. For example, and image of 1024x768 would fall under 1024x1024 pricing.
 
-| Image Size  | Model Type | Price                 |
-| ----------- | ---------- | --------------------- |
-| \<=256x256   | Standard   | $0.00125 per 25 steps |
-| \<=256x256   | Fast       | $0.00025 per 5 steps  |
-| \<=512x512   | Standard   | $0.0025 per 25 steps  |
-| \<=512x512   | Fast       | $0.0005 per 5 steps   |
-| \<=1024x1024 | Standard   | $0.005 per 25 steps   |
-| \<=1024x1024 | Fast       | $0.001 per 5 steps    |
-| \<=2048x2048 | Standard   | $0.01 per 25 steps    |
-| \<=2048x2048 | Fast       | $0.002 per 5 steps    |
+| Image Size   | Price                 |
+| ------------ | --------------------- |
+| \<=256x256   | $0.00025 per 5 steps  |
+| \<=512x512   | $0.0005 per 5 steps   |
+| \<=1024x1024 | $0.001 per 5 steps    |
+| \<=2048x2048 | $0.002 per 5 steps    |
 
 ## Speech-to-text
-Speech to text models like `@cf/openai/whisper` is billed on minutes of audio input.
+Speech-to-text models like `@cf/openai/whisper` are billed on minutes of audio input.
 
-| Price                            |
-| $0.0039 per minute of audio input|
+| Price                             |
+| --------------------------------- |
+| $0.0039 per minute of audio input |
 
 
 ## Free Allocation

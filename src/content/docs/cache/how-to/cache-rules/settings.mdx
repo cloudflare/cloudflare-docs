@@ -246,7 +246,6 @@ This rule can also be used to specify Cache Reserve eligibility for website reso
 Cloudflare will still enforce the plan-based [cacheable file limits](/cache/concepts/default-cache-behavior/#customization-options-and-limits) when using this configuration. 
 :::
 
-
 <Details header="API information">
 
 API configuration object name: `"cache_reserve"`.
@@ -262,6 +261,10 @@ API property name for enabling Cache Reserve: `"eligible"` (boolean).
   }
 }
 ```
+
+:::note
+If `minimum_file_size` is omitted and `eligible` is true, Cloudflare will use 0 bytes by default.
+:::
 
 Refer to [Create a cache rule via API](/cache/how-to/cache-rules/create-api/#example-requests) for complete API examples.
 

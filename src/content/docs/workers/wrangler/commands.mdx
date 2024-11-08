@@ -12,7 +12,7 @@ import { TabItem, Tabs, Render, Type, MetaInfo } from "~/components";
 Wrangler offers a number of commands to manage your Cloudflare Workers.
 
 - [`docs`](#docs) - Open this page in your default browser.
-- [`init`](#init) - Create a new project from a variety of web frameworks and templates. (Deprecated — use `npm create cloudflare@latest` instead)
+- [`init`](#init) - Create a new project from a variety of web frameworks and templates.
 - [`generate`](#generate) - Create a Wrangler project using an existing [Workers template](https://github.com/cloudflare/worker-template).
 - [`d1`](#d1) - Interact with D1.
 - [`vectorize`](#vectorize) - Interact with Vectorize indexes.
@@ -20,7 +20,7 @@ Wrangler offers a number of commands to manage your Cloudflare Workers.
 - [`deploy`](#deploy) - Deploy your Worker to Cloudflare.
 - [`dev`](#dev) - Start a local server for developing your Worker.
 - [`publish`](#publish) - Publish your Worker to Cloudflare.
-- [`delete`](#delete-3) - Delete your Worker from Cloudflare.
+- [`delete`](#delete-2) - Delete your Worker from Cloudflare.
 - [`kv namespace`](#kv-namespace) - Manage Workers KV namespaces.
 - [`kv key`](#kv-key) - Manage key-value pairs within a Workers KV namespace.
 - [`kv bulk`](#kv-bulk) - Manage multiple key-value pairs within a Workers KV namespace in batches.
@@ -28,6 +28,7 @@ Wrangler offers a number of commands to manage your Cloudflare Workers.
 - [`r2 object`](#r2-object) - Manage Workers R2 objects.
 - [`secret`](#secret) - Manage the secret variables for a Worker.
 - [`secret:bulk`](#secretbulk) - Manage multiple secret variables for a Worker.
+- [`workflows`](#workflows) - Manage and configure Workflows.
 - [`tail`](#tail) - Start a session to livestream logs from a deployed Worker.
 - [`pages`](#pages) - Configure Cloudflare Pages.
 - [`queues`](#queues) - Configure Workers Queues.
@@ -137,14 +138,6 @@ wrangler docs [<COMMAND>]
   - The Wrangler command you want to learn more about. This opens your default browser to the section of the documentation that describes the command.
 
 ## `init`
-
-:::note 
-
-
-The `init` command will be removed in a future version. Please use `npm create cloudflare\@2.5.0` instead. 
-
-
-:::
 
 Create a new project via the [create-cloudflare-cli (C3) tool](/workers/get-started/guide/#1-create-a-new-worker-project). A variety of web frameworks are available to choose from as well as templates. Dependencies are installed by default, with the option to deploy your project immediately.
 
@@ -435,6 +428,8 @@ wrangler d1 migrations list <DATABASE_NAME> [OPTIONS]
   - The name of the D1 database you wish to list unapplied migrations for.
 - `--local` <Type text="boolean" /> <MetaInfo text="optional" />
   - Show the list of unapplied migration files on your locally persisted D1 database.
+- `--remote` <Type text="boolean" /> <MetaInfo text="(default: false) optional" />
+  - Show the list of unapplied migration files on your remote D1 database.
 - `--persist-to` <Type text="string" /> <MetaInfo text="optional" />
   - Specify directory to use for local persistence (for use in combination with `--local`).
 - `--preview` <Type text="boolean" /> <MetaInfo text="optional" />
@@ -458,6 +453,8 @@ wrangler d1 migrations apply <DATABASE_NAME> [OPTIONS]
 
 - `DATABASE_NAME` <Type text="string" /> <MetaInfo text="required" />
   - The name of the D1 database you wish to apply your migrations on.
+- `--env` <Type text="string" /> <MetaInfo text="optional" />
+  - Specify which environment configuration to use for D1 binding
 - `--local` <Type text="boolean" /> <MetaInfo text="(default: true) optional" />
   - Execute any unapplied migrations on your locally persisted D1 database.
 - `--remote` <Type text="boolean" /> <MetaInfo text="(default: false) optional" />
@@ -901,10 +898,12 @@ wrangler r2 bucket create <NAME>
 
 - `NAME` <Type text="string" /> <MetaInfo text="required" />
   - The name of the new R2 bucket.
+- `--location` <Type text="string" /> <MetaInfo text="optional" />
+  - The optional [location hint](/r2/reference/data-location/#location-hints) that determines geographic placement of the R2 bucket.
 - `--storage-class` <Type text="'Standard|InfrequentAccess'" /> <MetaInfo text="optional" />
   - The default storage class for objects uploaded to the bucket.
 - `--jurisdiction` <Type text="string" /> <MetaInfo text="optional" />
-  - The jurisdiction where the R2 bucket is created. Refer to [Jurisdictional Restrictions](/r2/reference/data-location/#jurisdictional-restrictions).
+  - The jurisdiction where the R2 bucket is created. Refer to [jurisdictional restrictions](/r2/reference/data-location/#jurisdictional-restrictions).
 
 ### `delete`
 
@@ -943,6 +942,8 @@ wrangler r2 bucket notification create <NAME> [OPTIONS]
   - The prefix that an object must match to emit event notifications (note: regular expressions are not supported).
 - `--suffix` <Type text="string" /> <MetaInfo text="optional" />
   - The suffix that an object must match to emit event notifications (note: regular expressions are not supported).
+- `--description` <Type text="string" /> <MetaInfo text="optional" />
+  - A description that can be used to identify the event notification rule after creation.
 
 ### `notification delete`
 
@@ -1241,6 +1242,154 @@ Finished processing secrets JSON file:
 ✨ 1 secrets successfully uploaded
 🚨 1 secrets failed to upload
 ```
+
+## `workflows`
+
+:::note
+
+The `wrangler workflows` command requires Wrangler version `3.83.0` or greater. Use `npx wrangler@latest` to always use the latest Wrangler version when invoking commands.
+
+:::
+
+Manage and configure [Workflows](/workflows/).
+
+### `list`
+
+Lists the registered Workflows for this account.
+
+```sh
+wrangler workflows list
+```
+
+- `--page` <Type text="number" /> <MetaInfo text="optional" />
+  -  Show a specific page from the listing. You can configure page size using "per-page".
+- `--per-page` <Type text="number" /> <MetaInfo text="optional" />
+  - Configure the maximum number of Workflows to show per page.
+
+### `instances`
+
+Manage and interact with specific instances of a Workflow.
+
+### `instances list`
+
+List Workflow instances.
+
+```sh
+wrangler workflows instances list <WORKFLOW_NAME> [OPTIONS]
+```
+
+- `WORKFLOW_NAME` <Type text="string" /> <MetaInfo text="required" />
+  - The name of a registered Workflow.
+
+### `instances describe`
+
+Describe a specific instance of a Workflow, including its current status, any persisted state, and per-step outputs.
+
+```sh
+wrangler workflows instances describe <WORKFLOW_NAME> <ID> [OPTIONS]
+```
+
+- `WORKFLOW_NAME` <Type text="string" /> <MetaInfo text="required" />
+  - The name of a registered Workflow.
+- `ID` <Type text="string" /> <MetaInfo text="required" />
+  - The ID of a Workflow instance. You can optionally provide `latest` to refer to the most recently created instance of a Workflow.
+
+```sh
+# Passing `latest` instead of an explicit ID will describe the most recently queued instance
+wrangler workflows instances describe my-workflow latest
+```
+```sh output
+Workflow Name:         my-workflow
+Instance Id:           51c73fc8-7fd5-47d9-bd82-9e301506ee72
+Version Id:            cedc33a0-11fa-4c26-8a8e-7d28d381a291
+Status:                ✅ Completed
+Trigger:               🌎 API
+Queued:                10/16/2024, 2:00:39 PM
+Success:               ✅ Yes
+Start:                 10/16/2024, 2:00:39 PM
+End:                   10/16/2024, 2:01:40 PM
+Duration:              1 minute
+# Remaining output truncated
+```
+
+### `instances terminate`
+
+Terminate (permanently stop) a Workflow instance.
+
+```sh
+wrangler workflows instances terminate <WORKFLOW_NAME> <ID> [OPTIONS]
+```
+
+- `WORKFLOW_NAME` <Type text="string" /> <MetaInfo text="required" />
+  - The name of a registered Workflow.
+- `ID` <Type text="string" /> <MetaInfo text="required" />
+  - The ID of a Workflow instance.
+
+{/*
+### `instances pause`
+
+Pause (until resumed) a Workflow instance.
+
+```sh
+wrangler workflows instances pause <WORKFLOW_NAME> <ID> [OPTIONS]
+```
+
+- `WORKFLOW_NAME` <Type text="string" /> <MetaInfo text="required" />
+  - The name of a registered Workflow.
+- `ID` <Type text="string" /> <MetaInfo text="required" />
+  - The ID of a Workflow instance.
+
+### `instances resume`
+
+Resume a paused Workflow instance.
+
+```sh
+wrangler workflows instances resume <WORKFLOW_NAME> <ID> [OPTIONS]
+```
+
+- `WORKFLOW_NAME` <Type text="string" /> <MetaInfo text="required" />
+  - The name of a registered Workflow.
+- `ID` <Type text="string" /> <MetaInfo text="required" />
+  - The ID of a Workflow instance.
+
+*/}
+
+### `describe`
+
+```sh
+wrangler workflows describe <WORKFLOW_NAME> [OPTIONS]
+```
+
+- `WORKFLOW_NAME` <Type text="string" /> <MetaInfo text="required" />
+  - The name of a registered Workflow.
+
+### `trigger`
+
+Trigger (create) a Workflow instance.
+```sh
+wrangler workflows describe <WORKFLOW_NAME> <PARAMS> [OPTIONS]
+```
+
+- `WORKFLOW_NAME` <Type text="string" /> <MetaInfo text="required" />
+  - The name of a registered Workflow.
+- `PARAMS` <Type text="string" /> <MetaInfo text="optional" />
+  - The parameters to pass to the Workflow as an event. Must be a JSON-encoded string.
+
+ ```sh
+ # Pass optional params to the Workflow.
+ wrangler workflows instances trigger my-workflow '{"hello":"world"}'
+ ```
+
+### `delete`
+
+Delete (unregister) a Workflow.
+
+```sh
+wrangler workflows delete <WORKFLOW_NAME> [OPTIONS]
+```
+
+- `WORKFLOW_NAME` <Type text="string" /> <MetaInfo text="required" />
+  - The name of a registered Workflow.
 
 ## `tail`
 

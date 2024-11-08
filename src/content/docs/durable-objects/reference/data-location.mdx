@@ -3,85 +3,53 @@ title: Data location
 pcx_content_type: concept
 sidebar:
   order: 8
-
 ---
 
-You can restrict a Durable Object to a jurisdiction, or provide a location hint.
+import { GlossaryTooltip } from "~/components";
 
 ## Restrict Durable Objects to a jurisdiction
 
-Durable Objects can be created so that they only run and store data within a specific jurisdiction to comply with local regulations such as the [GDPR](https://gdpr-info.eu/) or [FedRAMP](https://blog.cloudflare.com/cloudflare-achieves-fedramp-authorization/).
+Jurisdictions are used to create <GlossaryTooltip term="Durable Object">Durable Objects</GlossaryTooltip> that only run and store data within a region to comply with local regulations such as the [GDPR](https://gdpr-info.eu/) or [FedRAMP](https://blog.cloudflare.com/cloudflare-achieves-fedramp-authorization/).
 
-:::note
+Workers may still access Durable Objects constrained to a jurisdiction from anywhere in the world. The jurisdiction constraint only controls where the Durable Object itself runs and persists data. Consider using [Regional Services](/data-localization/regional-services/) to control the regions from which Cloudflare responds to requests.
 
-Jurisdictions are available to all Durable Objects users. 
-:::
+:::note[Logging]
 
-To use a jurisdiction, first create a jurisidictional subnamespace in your Worker's code:
-
-```js
-let subnamespace = OBJECT_NAMESPACE.jurisdiction('eu');
-```
-
-A jurisdictional subnamespace works like a normal Durable Object namespace (`OBJECT_NAMESPACE` above), except that IDs created within them permanently encode the jurisdiction that was used to create the subnamespace. Additionally, the `idFromString()` and `get()` methods will throw an exception if the IDs passed into them are not within the subnamespace's jurisdiction. Once you have a subnamespace, you can use all of the namespace methods documented above.
-
-To create a new Durable Object ID that will only run and persist data within the jurisdiction:
-
-```js
-let id = subnamespace.newUniqueId();
-```
-
-To derive a unique Object ID from the given name string that will only run and persist data within the jurisdiction:
-
-```js
-let id = subnamespace.idFromName(name);
-```
-
-:::note[IDs derived from the same name but different jurisdictions will differ]
-
-
-Because the jurisdiction is encoded permanently in the Durable Object ID, it is possible to have the same name represent different Durable Objects in different jurisdictions. For example: `OBJECT_NAMESPACE.idFromName('my-name')` and `OBJECT_NAMESPACE.jurisdiction('eu').idFromName('my-name')` represent different Durable Objects. They will have their own transient (in-memory) and persistent state, and will likely run in different geographical regions.
-
-This may be counterintuitive at first, but it would be impossible to enforce two different non-overlapping jurisdictions for a single name. The key insight to remember is that Durable Object namespaces operate on IDs, not names, and the jurisdiction is a permanent part of the ID.
-
+A [`DurableObjectId`](/durable-objects/api/id) will be logged outside of the specified jurisdiction for billing and debugging purposes.
 
 :::
 
-To parse a previously-created ID from a string:
+Durable Objects can be restricted to a specific jurisdiction either by creating a [`DurableObjectNamespace`](/durable-objects/api/namespace/) restricted to a jurisdiction, or by creating an individual [`DurableObjectId`](/durable-objects/api/id) restricted to a jurisdiction:
 
 ```js
-let id = subnamespace.idFromString(id);
+const euSubnamespace = env.MY_DURABLE_OBJECT.jurisdiction("eu");
+const euId = euSubnamespace.newUniqueId();
+// or
+const euId = env.MY_DURABLE_OBJECT.newUniqueId({ jurisdiction: "eu" });
 ```
 
-To obtain an Object:
+Methods on a [`DurableObjectNamespace`](/durable-objects/api/namespace/) that take a [`DurableObjectId`](/durable-objects/api/id) as a parameter will throw an exception if the parameter is associated with a different jurisdiction. To achieve this, a [`DurableObjectId`](/durable-objects/api/id) encodes its jurisdiction. As a consequence, it is possible to have the same name represent different IDs in different jurisdictions.
 
 ```js
-let durableObjectStub = subnamespace.get(id)
+const euId1 = env.MY_DURABLE_OBJECT.idFromName("my-name");
+const euId2 = env.MY_DURABLE_OBJECT.jurisdiction("eu").idFromName("my-name");
+console.assert(!euId1.equal(euId2), "This should always be true");
 ```
 
-While you cannot use an ID from a different jurisdiction in a subnamespace's `idFromString()` or `get()` methods, you can use any valid ID in the top-level namespace's methods. Object IDs created with a jurisdiction will still only run and persist data within the jurisdiction.
+Methods on a [`DurableObjectNamespace`](/durable-objects/api/namespace/) that take a [`DurableObjectId`](/durable-objects/api/id) as a parameter will throw an exception if the parameter is associated with a different jurisdiction. However, these methods will not throw an exception if the [`DurableObjectNamespace`](/durable-objects/api/namespace/) is not associated with a jurisdiction. The common case is that any valid [`DurableObjectId`](/durable-objects/api/id) can be used in the top-level namespace's methods.
 
 ```js
-let id = subnamespace.idFromName(name);
-
-// This is valid.
-OBJECT_NAMESPACE.idFromString(id.toString())
-
-// And so is this.
-OBJECT_NAMESPACE.get(id)
+const euSubnamespace = env.MY_DURABLE_OBJECT.jurisdiction("eu");
+const euId = euSubnamespace.idFromName(name);
+const stub = env.MY_DURABLE_OBJECT.get(euId);
 ```
 
-Your Workers may still access Durable Objects constrained to a jurisdiction from anywhere in the world. The jurisdiction constraint only controls where the Durable Object itself runs and persists data. Consider using [Regional Services](/data-localization/regional-services/) to control the regions from which Cloudflare responds to requests.
+### Supported locations
 
-The currently supported jurisdictions are `eu` (the European Union) and `fedramp` (FedRAMP).
-
-:::note[ID logging]
-
-
-Durable Object IDs will be logged outside of the specified jurisdiction for billing and debugging purposes.
-
-
-:::
+| Parameter | Location                     |
+| --------- | ---------------------------- |
+| eu        | The European Union           |
+| fedramp   | FedRAMP-compliant data centers |
 
 ## Provide a location hint
 
@@ -91,9 +59,7 @@ Durable Objects do not currently change locations after they are created<sup>1</
 
 :::caution[Initial requests to Durable Objects]
 
-
 It can negatively impact latency to pre-create Durable Objects prior to the first client request or when the first client request is not representative of where the majority of requests will come from. It is better for latency to create Durable Objects in response to actual production traffic or provide explicit location hints.
-
 
 :::
 
@@ -102,26 +68,27 @@ Location hints are the mechanism provided to specify the location that a Durable
 To manually create Durable Objects in another location, provide an optional `locationHint` parameter to `get()`. Only the first call to `get()` for a particular Object will respect the hint.
 
 ```js
-let durableObjectStub = OBJECT_NAMESPACE.get(id, { locationHint: 'enam' });
+let durableObjectStub = OBJECT_NAMESPACE.get(id, { locationHint: "enam" });
 ```
 
 :::caution
 
-Hints are a best effort and not a guarantee. Unlike with jurisdictions, Durable Objects will not necessarily be instantiated in the hinted location, but instead instantiated in a data center selected to minimize latency from the hinted location. 
+Hints are a best effort and not a guarantee. Unlike with jurisdictions, Durable Objects will not necessarily be instantiated in the hinted location, but instead instantiated in a data center selected to minimize latency from the hinted location.
 :::
 
-The following locations are supported:
+### Supported locations
 
-| Location Hint Parameter | Location              |
-| ----------------------- | --------------------- |
-| wnam                    | Western North America |
-| enam                    | Eastern North America |
-| sam                     | South America         |
-| weur                    | Western Europe        |
-| eeur                    | Eastern Europe        |
-| apac                    | Asia-Pacific          |
-| oc                      | Oceania               |
-| afr                     | Africa                |
-| me                      | Middle East           |
+| Parameter | Location              |
+| --------- | --------------------- |
+| wnam      | Western North America |
+| enam      | Eastern North America |
+| sam       | South America         |
+| weur      | Western Europe        |
+| eeur      | Eastern Europe        |
+| apac      | Asia-Pacific          |
+| oc        | Oceania               |
+| afr       | Africa                |
+| me        | Middle East           |
 
-<sup>1</sup> Dynamic relocation of existing Durable Objects is planned for the future.
+<sup>1</sup> Dynamic relocation of existing Durable Objects is planned for the
+future.

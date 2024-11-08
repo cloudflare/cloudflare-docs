@@ -19,8 +19,3 @@ externals:
     url: https://www.cloudflare.com/network-interconnect-partnerships/
   - title: Cloudflare homepage
     url: https://cloudflare.com
-
-algolia:
-  index: TEST - Re-dev docs
-  apikey: 4edb0a6cef3338ff4bcfbc6b3d2db56b
-  product: network-interconnect
