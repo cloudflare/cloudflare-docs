@@ -88,6 +88,7 @@
 /cloudflare-one/tutorials/ssh-browser/ /cloudflare-one/connections/connect-networks/use-cases/ssh/ 301
 /access/ssh/short-live-cert-server/ /cloudflare-one/connections/connect-networks/use-cases/ssh/ssh-infrastructure-access/ 301
 /access/ssh/ssh-guide/ /cloudflare-one/connections/connect-networks/use-cases/ssh/ 301
+/cloudflare-one/connections/connect-networks/install-and-setup/installation /cloudflare-one/connections/connect-networks/downloads/update-cloudflared/ 307
 
 # ai
 /ai/ /use-cases/ai/ 301
