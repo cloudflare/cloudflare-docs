@@ -38,7 +38,7 @@ curl https://api.cloudflare.com/client/v4/zones/{zone_id}/rulesets/{ruleset_id}/
 --header "Content-Type: application/json" \
 --data '{
   "action": "js_challenge",
-  "expression": "(ip.geoip.country eq \"GB\" or ip.geoip.country eq \"FR\") or cf.threat_score > 0",
+  "expression": "(ip.src.country eq \"GB\" or ip.src.country eq \"FR\") or cf.threat_score > 0",
   "description": "challenge GB and FR or based on IP Reputation"
 }'
 ```
@@ -65,7 +65,7 @@ curl https://api.cloudflare.com/client/v4/zones/{zone_id}/rulesets/{ruleset_id}/
 				"id": "<NEW_RULE_ID>",
 				"version": "1",
 				"action": "js_challenge",
-				"expression": "(ip.geoip.country eq \"GB\" or ip.geoip.country eq \"FR\") or cf.threat_score > 0",
+				"expression": "(ip.src.country eq \"GB\" or ip.src.country eq \"FR\") or cf.threat_score > 0",
 				"description": "challenge GB and FR or based on IP Reputation",
 				"last_updated": "2021-06-22T12:35:58.144683Z",
 				"ref": "<NEW_RULE_REF>",

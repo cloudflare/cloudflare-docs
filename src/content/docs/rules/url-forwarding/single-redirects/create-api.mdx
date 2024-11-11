@@ -38,13 +38,13 @@ curl https://api.cloudflare.com/client/v4/zones/{zone_id}/rulesets \
   "phase": "http_request_dynamic_redirect",
   "rules": [
     {
-      "expression": "(ip.geoip.country eq \"GB\" or ip.geoip.country eq \"FR\") and http.request.uri.path eq \"/\"",
+      "expression": "(ip.src.country eq \"GB\" or ip.src.country eq \"FR\") and http.request.uri.path eq \"/\"",
       "description": "Redirect GB and FR users in home page to localized site.",
       "action": "redirect",
       "action_parameters": {
         "from_value": {
           "target_url": {
-            "expression": "lower(concat(\"https://\", ip.geoip.country, \".example.com\"))"
+            "expression": "lower(concat(\"https://\", ip.src.country, \".example.com\"))"
           },
           "status_code": 307,
           "preserve_query_string": true
@@ -68,13 +68,13 @@ curl https://api.cloudflare.com/client/v4/zones/{zone_id}/rulesets \
 			{
 				"id": "235e557b92fd4e5e8753ee665a9ddd75",
 				"version": "1",
-				"expression": "(ip.geoip.country eq \"GB\" or ip.geoip.country eq \"FR\") and http.request.uri.path eq \"/\"",
+				"expression": "(ip.src.country eq \"GB\" or ip.src.country eq \"FR\") and http.request.uri.path eq \"/\"",
 				"description": "Redirect GB and FR users in home page to localized site.",
 				"action": "redirect",
 				"action_parameters": {
 					"from_value": {
 						"target_url": {
-							"expression": "lower(concat(\"https://\", ip.geoip.country, \".example.com\"))"
+							"expression": "lower(concat(\"https://\", ip.src.country, \".example.com\"))"
 						},
 						"status_code": 307,
 						"preserve_query_string": true
@@ -107,13 +107,13 @@ https://api.cloudflare.com/client/v4/zones/{zone_id}/rulesets/{ruleset_id} \
   "phase": "http_request_dynamic_redirect",
   "rules": [
     {
-      "expression": "(ip.geoip.country eq \"GB\" or ip.geoip.country eq \"FR\") and http.request.uri.path eq \"/\"",
+      "expression": "(ip.src.country eq \"GB\" or ip.src.country eq \"FR\") and http.request.uri.path eq \"/\"",
       "description": "Redirect GB and FR users in home page to localized site.",
       "action": "redirect",
       "action_parameters": {
         "from_value": {
           "target_url": {
-            "expression": "lower(concat(\"https://\", ip.geoip.country, \".example.com\"))"
+            "expression": "lower(concat(\"https://\", ip.src.country, \".example.com\"))"
           },
           "status_code": 307,
           "preserve_query_string": true
@@ -155,13 +155,13 @@ https://api.cloudflare.com/client/v4/zones/{zone_id}/rulesets/{ruleset_id} \
 				"action_parameters": {
 					"from_value": {
 						"target_url": {
-							"expression": "lower(concat(\"https://\", ip.geoip.country, \".example.com\"))"
+							"expression": "lower(concat(\"https://\", ip.src.country, \".example.com\"))"
 						},
 						"status_code": 307,
 						"preserve_query_string": true
 					}
 				},
-				"expression": "(ip.geoip.country eq \"GB\" or ip.geoip.country eq \"FR\") and http.request.uri.path eq \"/\"",
+				"expression": "(ip.src.country eq \"GB\" or ip.src.country eq \"FR\") and http.request.uri.path eq \"/\"",
 				"description": "Redirect GB and FR users in home page to localized site.",
 				"last_updated": "2022-10-03T15:38:51.658387Z",
 				"ref": "235e557b92fd4e5e8753ee665a9ddd75",

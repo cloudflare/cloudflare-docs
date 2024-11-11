@@ -32,7 +32,7 @@ https://api.cloudflare.com/client/v4/accounts/{account_id}/rulesets/{custom_rule
 --data '{
   "rules": [
     {
-      "expression": "(ip.geoip.country eq \"GB\" or ip.geoip.country eq \"FR\") or cf.threat_score > 0",
+      "expression": "(ip.src.country eq \"GB\" or ip.src.country eq \"FR\") or cf.threat_score > 0",
       "action": "challenge",
       "description": "challenge GB and FR or based on IP Reputation"
     },
@@ -57,7 +57,7 @@ https://api.cloudflare.com/client/v4/accounts/{account_id}/rulesets/{custom_rule
 				"id": "<CUSTOM_RULE_ID_1>",
 				"version": "1",
 				"action": "challenge",
-				"expression": "(ip.geoip.country eq \"GB\" or ip.geoip.country eq \"FR\") or cf.threat_score \u003e 0",
+				"expression": "(ip.src.country eq \"GB\" or ip.src.country eq \"FR\") or cf.threat_score \u003e 0",
 				"description": "challenge GB and FR or based on IP Reputation",
 				"last_updated": "2021-03-18T18:25:08.122758Z",
 				"ref": "<CUSTOM_RULE_REF_1>",
@@ -133,7 +133,7 @@ https://api.cloudflare.com/client/v4/accounts/{account_id}/rulesets/{ruleset_id}
 				"id": "<CUSTOM_RULE_ID_1>",
 				"version": "1",
 				"action": "challenge",
-				"expression": "(ip.geoip.country eq \"GB\" or ip.geoip.country eq \"FR\") or cf.threat_score \u003e 0",
+				"expression": "(ip.src.country eq \"GB\" or ip.src.country eq \"FR\") or cf.threat_score \u003e 0",
 				"description": "challenge GB and FR or based on IP Reputation",
 				"last_updated": "2021-03-18T18:25:08.122758Z",
 				"ref": "<CUSTOM_RULE_ID_1>",
