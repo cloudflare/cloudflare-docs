@@ -110,3 +110,15 @@ Refer to the [full migration guide](/ssl/reference/migration-guides/lets-encrypt
 
 The [zone hold feature](/fundamentals/setup/account/account-security/zone-holds/) is a toggle that will prevent their zone from being activated on other Cloudflare account.
 When the option `Also prevent subdomains` is enabled, this prevents the verification of custom hostnames for this domain. The custom hostname will remain in the `Blocked` status, with the following error message: `The hostname is associated with a held zone. Please contact the owner of this domain to have the hold removed.` In this case, the owner of the zone needs to [release the hold](/fundamentals/setup/account/account-security/zone-holds/#release-zone-holds) before the custom hostname can become activated.
+
+## Hostnames over 64 characters
+
+The Common Name (CN) restriction establishes a limit of 64 characters ([RFC 5280](https://www.rfc-editor.org/rfc/rfc5280.html)). If you have a hostname that exceeds this length, you may find the following error:
+
+```txt
+Since no host is 64 characters or fewer, Cloudflare Branding is required. Please check your input and try again. (1469)
+```
+
+To solve this, you can set `cloudflare_branding` to `true` when [creating your custom hostnames](/cloudflare-for-platforms/cloudflare-for-saas/domain-support/create-custom-hostnames/#hostnames-over-64-characters) via API.
+
+Cloudflare branding means that `sni.cloudflaressl.com` will be added as the certificate Common Name (CN) and the long hostname will be included as a part of the Subject Alternative Name (SAN).

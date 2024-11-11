@@ -28,3 +28,18 @@ To create a custom hostname:
 </TabItem> </Tabs>
 
 <Render file="issue-certs-preamble" />
+
+
+## Hostnames over 64 characters
+
+The Common Name (CN) restriction establishes a limit of 64 characters ([RFC 5280](https://www.rfc-editor.org/rfc/rfc5280.html)). If you have a hostname that exceeds this length, you can set `cloudflare_branding` to `true` when creating your custom hostnames [via API](/api/operations/custom-hostname-for-a-zone-create-custom-hostname).
+
+```txt
+
+"ssl": {
+    "cloudflare_branding": true
+  }
+
+```
+
+Cloudflare branding means that `sni.cloudflaressl.com` will be added as the certificate Common Name (CN) and the long hostname will be included as a part of the Subject Alternative Name (SAN).
