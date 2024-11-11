@@ -26,7 +26,7 @@ curl "https://api.cloudflare.com/client/v4/zones/{zone_id}/custom_hostnames" \
 --data '{"Hostname":"example.com"}, "Ssl":{wildcard:false}}'
 ```
 
-## Step 1 - Associate custom metadata to a custom hostname
+## 1. Associate custom metadata to a custom hostname
 
 To apply WAF to your custom hostname, you need to create an association between your customer's domain and the WAF configuration that you would like to attach to it. Cloudflare's product, [custom metadata](/cloudflare-for-platforms/cloudflare-for-saas/domain-support/custom-metadata/) allows you to do this via the API.
 
@@ -68,7 +68,7 @@ curl --request PATCH \
 
 This assigns custom metadata to your custom hostname so that it has a security tag associated with its ID.
 
-## Step 2 - Trigger security products based on tags
+## 2. Trigger security products based on tags
 
 1. Locate the custom metadata field in the Ruleset Engine where the WAF runs. This can be used to trigger different configurations of products such as [WAF custom rules](/waf/custom-rules/), [rate limiting rules](/waf/rate-limiting-rules/), and [Transform Rules](/rules/transform/).
 

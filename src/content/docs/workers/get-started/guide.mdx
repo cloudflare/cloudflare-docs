@@ -58,7 +58,7 @@ In your project directory, C3 will have generated the following:
 
 <Details header="What if I already have a project in a git repository?">
 
-In addition to creating new projects from C3 templates, C3 also supports creating new projects from Git repositories. To create a new project from a Git repository, open your terminal and run:
+In addition to creating new projects from C3 templates, C3 also supports creating new projects from existing Git repositories. To create a new project from an existing Git repository, open your terminal and run:
 
 ```sh
 npm create cloudflare@latest -- --template <SOURCE>
@@ -75,10 +75,10 @@ npm create cloudflare@latest -- --template <SOURCE>
 - `bitbucket:user/repo` (Bitbucket)
 - `gitlab:user/repo` (GitLab)
 
-At a minimum, template folders must contain the following:
+Your existing template folder must contain the following files, at a minimum, to meet the requirements for Cloudflare Workers:
 
 - `package.json`
-- `wrangler.toml`
+- `wrangler.toml` [See sample Wrangler configuration](/workers/wrangler/configuration/#sample-wranglertoml-configuration)
 - `src/` containing a worker script referenced from `wrangler.toml`
 
 </Details>
@@ -199,7 +199,7 @@ If you see [`523` errors](/support/troubleshooting/cloudflare-errors/troubleshoo
 
 To do more:
 
-- Visit the [Cloudlfare dashboard](https://dash.cloudflare.com/) for simpler editing.
+- Visit the [Cloudflare dashboard](https://dash.cloudflare.com/) for simpler editing.
 - Review our [Examples](/workers/examples/) and [Tutorials](/workers/tutorials/) for inspiration.
 - Set up [bindings](/workers/runtime-apis/bindings/) to allow your Worker to interact with other resources and unlock new functionality.
 - Learn how to [test and debug](/workers/testing/) your Workers.

@@ -5,11 +5,17 @@ productLink: "/rules/"
 productArea: Application performance
 productAreaLink: /fundamentals/reference/changelog/performance/
 entries:
-  - publish_date: "2024-09-20" 
+  - publish_date: "2024-10-23"
+    title: Simplified user interface for URL Rewrites with wildcard support
+    description: |-
+      The new simplified user interface for [URL Rewrites](/rules/transform/url-rewrite/) is now live, making it easier for users to configure URL rewrites with wildcard support. This update streamlines the process by eliminating the need for complex functions in rule creation.
+      The updated user interface is available at **Rules** > **Transform Rules** > **Rewrite URL**. For more information, refer to the [wildcard support documentation](/rules/transform/url-rewrite/reference/parameters/#wildcard-matching-and-replacement).
+
+  - publish_date: "2024-09-20"
     title: Automatic DNS Validation for Cloudflare Rules
-    description: |- 
+    description: |-
       The Cloudflare dashboard now automatically validates [DNS records](/dns/manage-dns-records/reference/proxied-dns-records/) and [Cloudflare for SaaS custom hostnames](/cloudflare-for-platforms/cloudflare-for-saas/domain-support/) for rules targeting specific hostnames or URLs. To prevent misconfigured rules and ensure smoother deployments, you will get proactive warnings for missing or misconfigured DNS records and custom hostnames.
-      
+
   - publish_date: "2024-09-17"
     title: Compression Rules available to all plans with Zstandard support
     description: |-

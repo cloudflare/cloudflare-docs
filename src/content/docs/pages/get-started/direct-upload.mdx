@@ -25,7 +25,7 @@ After you have your prebuilt assets ready, there are two ways to begin uploading
 
 :::note
 
-Within a Direct Upload project, you can switch between creating deployments with either Wrangler or drag and drop. However, you cannot create deployments with Direct Upload on a project that you created through Git integration on the dashboard. Only projects created with Direct Upload can be updated with Direct Upload.
+Within a Direct Upload project, you can switch between creating deployments with either Wrangler or drag and drop. For existing Git-integrated projects, you can manually create deployments using [`wrangler deploy`](/workers/wrangler/commands/#deploy). However, you cannot use drag and drop on the dashboard with existing Git-integrated projects.
 
 :::
 
@@ -141,4 +141,4 @@ If using the drag and drop method, a red warning symbol will appear next to an a
 
 Drag and drop deployments made from the Cloudflare dashboard do not currently support compiling a `functions` folder of [Pages Functions](/pages/functions/). To deploy a `functions` folder, you must use Wrangler. When deploying a project using Wrangler, if a `functions` folder exists where the command is run, that `functions` folder will be uploaded with the project.
 
-However, note that a `_worker.js` file is supported by both Wrangler and drag-and-drop deployments made from the dashboard.
+However, note that a `_worker.js` file is supported by both Wrangler and drag and drop deployments made from the dashboard.

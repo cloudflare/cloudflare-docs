@@ -9,3 +9,7 @@ entries:
     title: Email Security is live
     description: |-
       Email Security is now live under Zero Trust.
+  - publish_date: "2024-08-06"
+    title: Microsoft Graph API deployment.
+    description: |-
+      Customers using Microsoft Office 365 can set up Email Security via Microsoft Graph API.

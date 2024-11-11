@@ -52,8 +52,8 @@ The supported parameters are as follows:
     * `destination_conf` may have more URL parameters in addition to special `"header_*"` parameters.
       * Non URL-encoded special characters will be encoded when uploading.
     * Example: `https://logs.example.com?header_Authorization=Basic%20REDACTED&tags=host:theburritobot.com,dataset:http_requests`
-  * **max\_upload\_bytes** (optional): The maximum uncompressed file size of a batch of logs. This must be at least 5 MB. Note that you cannot set a minimum file size; this means that log files may be much smaller than this batch size.
-  * **max\_upload\_records** (optional): The maximum number of log lines per batch. This must be at least 1000 lines or more. Note that you cannot to specify a minimum number of log lines per batch; this means that log files may contain many fewer lines than this.
+  * **max\_upload\_bytes** (optional): The maximum uncompressed file size of a batch of logs. This setting value must be between 5 MB and 1 GB. Note that you cannot set a minimum file size; this means that log files may be much smaller than this batch size.
+  * **max\_upload\_records** (optional): The maximum number of log lines per batch. This setting must be between 1,000 and 1,000,000 lines. Note that you cannot to specify a minimum number of log lines per batch; this means that log files may contain many fewer lines than this.
 
 :::note[Note]
 

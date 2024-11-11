@@ -11,12 +11,9 @@ import { GlossaryDefinition, Render } from "~/components";
 <Render file="gateway/add-locations" />
 
 10. Change the DNS resolvers on your router, browser, or OS by following the setup instructions in the UI.
-
 11. Select **Go to DNS Location**. Your location will appear in your list of locations.
 
 You can now apply [DNS policies](/cloudflare-one/policies/gateway/dns-policies/) to your location using the [Location selector](/cloudflare-one/policies/gateway/dns-policies/#location).
-
-<Render file="gateway/add-locations-static-ip-warning" />
 
 ## DNS endpoints
 
@@ -49,3 +46,13 @@ For more information, refer to [DNS over TLS](/cloudflare-one/connections/connec
 <GlossaryDefinition term="DNS over HTTPS" />
 
 Gateway requires a DoH endpoint for default DNS locations. For more information, refer to [DNS over HTTPS](/cloudflare-one/connections/connect-devices/agentless/dns/dns-over-https/).
+
+## Limitations
+
+### Captive portals
+
+<Render file="gateway/add-locations-static-ip-warning" />
+
+### Third-party filtering
+
+<Render file="gateway/third-party-warning" />

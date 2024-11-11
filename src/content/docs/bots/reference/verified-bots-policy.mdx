@@ -108,6 +108,30 @@ If any of the requirements to validate are breached, a service will be removed f
 
 To submit a verified bot that Cloudflare is not [currently tracking](https://radar.cloudflare.com/verified-bots), fill out an [online application](https://dash.cloudflare.com/?to=/:account/configurations/verified-bots) in the Cloudflare dashboard for the fastest possible results. Bot operators who prefer not to create a free Cloudflare account can do so using our [old form](https://docs.google.com/forms/d/e/1FAIpQLSdqYNuULEypMnp4i5pROSc-uP6x65Xub9svD27mb8JChA_-XA/viewform?usp=sf_link), but the waiting time is up to several weeks for verified bot requests to be evaluated.
 
+### Generic user-agents
+
+User-agent patterns that match generic user-agents will be rejected by the Verified Bots API. When you add a user-agent pattern that is considered very common to the Verified Bot form, you may encounter an error message that will prompt you to correct the user-agent before you can submit again.
+
+Generic user-agents include:
+
+- `Dart`
+- `Go-http-client`
+- `GuzzleHttp`
+- `Google Chrome`
+- `Mozilla Firefox`
+- `Safari`
+- `Nessus`
+- `Websocket++`
+- `cloudflare-go`
+- `fasthttp`
+- `got`
+- `nginx-ssl early hints`
+- `node`
+- `node-fetch`
+- `okhttp`
+- `python-requests`
+- `uTorrent`
+
 ## Transient false negatives
 
 Once Cloudflare lists a bot as a verified bot, this entry is cached and may get delisted if no traffic is seen in the Cloudflare network coming from the bot for a defined period of time.

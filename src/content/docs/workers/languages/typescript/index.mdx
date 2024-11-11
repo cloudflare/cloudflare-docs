@@ -17,12 +17,12 @@ TypeScript is a first-class language on Cloudflare Workers. Cloudflare publishes
 ### Generate types that match your Worker's configuration (experimental)
 
 Cloudflare continuously improves [workerd](https://github.com/cloudflare/workerd), the open-source Workers runtime.
-Changes in workerd can introduce JavaScript API changes, thus changing the respective TypeScript types. For example, the [`urlsearchparams_delete_has_value_arg`](/workers/configuration/compatibility-dates/#urlsearchparams-delete-and-has-value-argument) compatibility flag adds optional arguments to some methods, in order to support new additions to the WHATWG URL standard API.
+Changes in workerd can introduce JavaScript API changes, thus changing the respective TypeScript types. For example, the [`urlsearchparams_delete_has_value_arg`](/workers/configuration/compatibility-flags/#urlsearchparams-delete-and-has-value-argument) compatibility flag adds optional arguments to some methods, in order to support new additions to the WHATWG URL standard API.
 
 This means the correct TypeScript types for your Worker depend on:
 
 1. Your Worker's [Compatibility Date](/workers/configuration/compatibility-dates/).
-2. Your Worker's [Compatibility Flags](/workers/configuration/compatibility-dates/#compatibility-flags).
+2. Your Worker's [Compatibility Flags](/workers/configuration/compatibility-flags/).
 
 For example, if you have `compatibility_flags = ["nodejs_als"]` in your `wrangler.toml`, then the runtime will allow you to use the [`AsyncLocalStorage`](https://nodejs.org/api/async_context.html#class-asynclocalstorage) class in your worker code, but you will not see this reflected in the type definitions in `@cloudflare/workers-types`.
 

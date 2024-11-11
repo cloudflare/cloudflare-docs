@@ -55,6 +55,17 @@ When you search for a URL, Cloudflare will provide a list of recent scan reports
 
 Different Cloudflare plans will have different [scan limitations](/security-center/investigate/scan-limits/).
 
+If you want to scan a URL:
+
+1. Log in to your [Cloudflare dashboard](https://dash.cloudflare.com/) and select your account.
+2. Go to **Security Center** > **Investigate**. Enter the URL, then select **Search**.
+
+Alternatively, to scan a URL, go to [Cloudflare Radar](https://radar.cloudflare.com/) > **URL scanner**. Enter the URL, then select **Publish**.
+
+:::note
+You can use [Cloudflare Radar API](/radar/investigate/url-scanner/#use-the-api) to investigate threats.
+:::
+
 ### Visibility
 
 When generating a new scan report, the default visibility is set to `Unlisted`, but you have the option to set it to `Public`. By choosing `Public`, the generated scan will be available to all Cloudflare dashboard and Cloudflare Radar users alike, which will increase awareness of potentially malicious websites for others.
@@ -64,3 +75,13 @@ We recommend choosing `Unlisted` if you are scanning infrastructure that is not 
 ### Filters
 
 While viewing the most recent scans, you can use the filtering options. Selecting `All account scans` will display both `Unlisted` or `Public` scans initiated from your Cloudflare account. However, by selecting `All global scans`, only `Public` scans are displayed.
+
+### Downloads
+
+You can download a report of your scan in HAR or JSON format.
+
+To download a report:
+
+1. Log in to your [Cloudflare dashboard](https://dash.cloudflare.com/) and select your account.
+2. Select **Investigate** > Enter your domain > Select **Search**.
+3. Once the report has been generated, select **Download** > Choose between **Download HAR** or **Download JSON**.

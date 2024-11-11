@@ -7,10 +7,9 @@ head:
   - tag: title
     content: Get started with Cloudflare Page Shield
 description: Learn how to set up Page Shield.
-
 ---
 
-import { Render } from "~/components"
+import { Render } from "~/components";
 
 ## Activate Page Shield
 
@@ -34,7 +33,7 @@ Depending on your plan, you may be able to also review the connections made by s
 
 :::note
 
-Only available to customers on a Business or Enterprise plan. 
+Only available to customers on a Business or Enterprise plan.
 :::
 
 <Render file="alerts-intro" />
@@ -44,16 +43,15 @@ Only available to customers on a Business or Enterprise plan.
 ## Define policies
 
 :::note
-
-Only available to Enterprise customers with a paid add-on. 
+Only available to Enterprise customers with a paid add-on.
 :::
 
 [Policies](/page-shield/policies/) define allowed resources on your websites. Create policies to implement a positive security model [^1].
 
-1. [Create a policy](/page-shield/policies/create-dashboard/) with the *Log* action.
+1. [Create a policy](/page-shield/policies/create-dashboard/) with the _Log_ action.
 
 2. After some time, [review the list of policy violations](/page-shield/policies/violations/) to make sure the policy is correct. Update the policy if needed.
 
-3. Change the policy action to *Allow* to start blocking resources not covered by the policy.
+3. Change the policy action to _Allow_ to start blocking resources not covered by the policy.
 
 [^1]: A positive security model is one that defines what is allowed and rejects everything else. In contrast, a negative security model defines what will be rejected and accepts the rest.

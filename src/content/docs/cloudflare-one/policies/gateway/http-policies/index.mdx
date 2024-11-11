@@ -96,7 +96,7 @@ The **Untrusted certificate action** determines how to handle insecure requests.
 | Option       | Action                                                                                                                                                                                                                                                                                                                                                                                                     |
 | ------------ | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | Error        | Display Gateway error page. Matches the default behavior when no action is configured.                                                                                                                                                                                                                                                                                                                     |
-| Block        | Display [block page](/cloudflare-one/policies/gateway/configuring-block-page/) as set in Zero Trust.                                                                                                                                                                                                                                                                                                       |
+| Block        | Display [block page](/cloudflare-one/policies/gateway/block-page/) as set in Zero Trust.                                                                                                                                                                                                                                                                                                                   |
 | Pass through | Bypass insecure connection warnings and seamlessly connect to the upstream. To use this feature, deploy a [custom root certificate](/cloudflare-one/connections/connect-devices/warp/user-side-certificates/custom-certificate/). For more information on what statuses are bypassed, refer to the [troubleshooting FAQ](/cloudflare-one/faq/troubleshooting/#i-see-error-526-when-browsing-to-a-website). |
 
 ### Block
@@ -155,7 +155,7 @@ The Block action blocks outbound traffic from reaching destinations you specify 
 | Application      | in            | `Google Drive` | And   | Block  |
 | Upload Mime Type | matches regex | `.*`           |       |        |
 
-#### WARP client block notifications <InlineBadge preset="early-access" />
+#### WARP client block notifications
 
 <Render file="gateway/client-notifications" />
 
@@ -407,9 +407,9 @@ When using Terraform to create a policy with the [Do Not Inspect](#do-not-inspec
 
 ### Content Categories
 
-| UI name            | API example                                             |
-| ------------------ | ------------------------------------------------------- |
-| Content Categories | `not(any(http.request.uri.content_category[*] in {1}))` |
+| UI name            | API example                                      |
+| ------------------ | ------------------------------------------------ |
+| Content Categories | `not(any(http.conn.content_category[*] in {1}))` |
 
 For more information, refer to our list of [content categories](/cloudflare-one/policies/gateway/domain-categories/#content-categories).
 
@@ -441,9 +441,9 @@ Only applies to traffic sent through the [WARP client](/cloudflare-one/connectio
 Only applies to traffic sent through the [WARP client](/cloudflare-one/connections/connect-devices/warp/set-up-warp/#gateway-with-warp-default).
 :::
 
-| UI name        | API example                   |
-| -------------- | ----------------------------- |
-| Destination IP | `http.dst.ip == "10.0.0.0/8"` |
+| UI name        | API example                        |
+| -------------- | ---------------------------------- |
+| Destination IP | `http.conn.dst_ip == "10.0.0.0/8"` |
 
 ### Device Posture
 
@@ -453,19 +453,64 @@ Only applies to traffic sent through the [WARP client](/cloudflare-one/connectio
 
 Use this selector to match against a domain and all subdomains -- for example, if you want to block `example.com` and subdomains such as `www.example.com`.
 
-| UI name | API example                                     |
-| ------- | ----------------------------------------------- |
-| Domain  | `any(http.request.domains[*] == "example.com")` |
+| UI name | API example                                  |
+| ------- | -------------------------------------------- |
+| Domain  | `any(http.conn.domains[*] == "example.com")` |
 
 ### Download and Upload File Types
 
 :::caution[Deprecated selectors]
-
 The **Download File Types** and **Upload File Types** selectors supersede the **Download File Type** and **Upload File Type** selectors. Gateway will still evaluate policies with the previous selectors. However, Cloudflare recommends migrating any policies with deprecated selectors to the new corresponding selectors.
-
 :::
 
-These selectors will scan file signatures in the HTTP body. You can select from file categories or specific file types, including executables, archives and compressed files, Microsoft 365/Office documents, and Adobe files.
+These selectors will scan file signatures in the HTTP body. You can select from file categories or specific file types, such as executables, archives and compressed files, Microsoft 365/Office documents, and Adobe files:
+
+<Details header="Supported file types">
+
+**Compressed**
+
+- 7-Zip archive (`.7z`)
+- `bzip2` archive (`.bz2`)
+- GNU Gzip archive (`.gz`)
+- Microsoft Cabinet file (`.cab`)
+- Microsoft Compiled HTML Help file (`.chm`)
+- RAR archive (`.rar`)
+- `xz` archive (`.xz`)
+- ZIP archive (`.zip`)
+
+**Documents**
+
+- Microsoft Office/365 files
+  - Word document (`.doc`, `.docx`, `.docm`)
+  - Excel spreadsheet (`.xls`, `.xlsx`, `.xlsm`)
+  - PowerPoint presentation (`.ppt`, `.pptx`, `.pptm`)
+- PDF document (`.pdf`)
+
+**Executable**
+
+- Dynamic-link library (DLL) file (`.dll`)
+- Executable and Linkable Format (ELF) file (`.elf`)
+- Java archive (JAR) package (`.jar`)
+- Java class file (`.class`)
+- Mach object (Mach-O) file (`.macho`)
+- Microsoft Windows installer (`.msi`)
+- Microsoft Windows executable (`.exe`)
+
+**Image**
+
+- Adobe Photoshop document (`.psd`)
+- Bitmap image (`.bmp`)
+- GIF image (`.gif`)
+- Icon file (`.ico`)
+- JPEG image (`.jpg`, `.jpeg`)
+- PNG image (`.png`)
+- WebP image (`.webp`)
+
+**Other**
+
+- BitTorrent file (`.torrent`)
+
+</Details>
 
 | UI name             | API example                                         |
 | ------------------- | --------------------------------------------------- |
@@ -495,9 +540,9 @@ Scans HTTP traffic for the presence of social security numbers and other PII. Yo
 
 Use this selector to match only the hostname specified -- for example, if you want to block `test.example.com` but not `example.com` or `www.test.example.com`.
 
-| UI name | API example                               |
-| ------- | ----------------------------------------- |
-| Host    | `http.request.host == "test.example.com"` |
+| UI name | API example                                |
+| ------- | ------------------------------------------ |
+| Host    | `http.conn.hostname == "test.example.com"` |
 
 :::note
 Some hostnames (`example.com`) will invisibly redirect to the www subdomain (`www.example.com`). To match this type of website, use the [Domain](#domain) selector instead of the Host selector.
@@ -521,9 +566,9 @@ Some hostnames (`example.com`) will invisibly redirect to the www subdomain (`ww
 
 ### Security Risks
 
-| UI name        | API example                                |
-| -------------- | ------------------------------------------ |
-| Security Risks | `any(http.request.uri.category[*] in {1})` |
+| UI name        | API example                                  |
+| -------------- | -------------------------------------------- |
+| Security Risks | `any(http.conn.security_category[*] in {1})` |
 
 For more information, refer to our list of [security categories](/cloudflare-one/policies/gateway/domain-categories/#security-categories).
 
@@ -539,14 +584,14 @@ The country of the user making the request. <Render file="gateway/selectors/sour
 
 <Render
 	file="gateway/selectors/source-internal-ip"
-	params={{ one: "HTTP", two: "http" }}
+	params={{ one: "HTTP", two: "http.conn.internal_src_ip" }}
 />
 
 ### Source IP
 
-| UI name   | API example                   |
-| --------- | ----------------------------- |
-| Source IP | `http.src.ip == "10.0.0.0/8"` |
+| UI name   | API example                        |
+| --------- | ---------------------------------- |
+| Source IP | `http.conn.src_ip == "10.0.0.0/8"` |
 
 ### URL
 

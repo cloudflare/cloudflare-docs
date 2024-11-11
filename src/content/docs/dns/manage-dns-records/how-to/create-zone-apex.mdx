@@ -6,11 +6,11 @@ sidebar:
 
 ---
 
-import { Example } from "~/components"
+import { Example, Render } from "~/components"
 
 When you add a domain to Cloudflare, you may also need to create a DNS record on your zone apex (`example.com`).
 
-To do this, create a corresponding [`A`, `AAAA`, or `CNAME` record](/dns/manage-dns-records/how-to/create-dns-records/) using `@` for the **Name**.
+To do this, create an [IP address resolution record](/dns/manage-dns-records/reference/dns-record-types/#ip-address-resolution) (`A`, `AAAA`, or `CNAME`) using `@` for the **Name**, as in the following example.
 
 <Example>
 
@@ -19,6 +19,11 @@ To do this, create a corresponding [`A`, `AAAA`, or `CNAME` record](/dns/manage-
 | A    | `@`  | `192.0.2.1`  | Proxied      |
 
 </Example>
+
+<Render file="dns-record-steps" product="dns" params={{
+    name: "your zone apex",
+		example: "@"
+}} />
 
 ## Domain redirects
 

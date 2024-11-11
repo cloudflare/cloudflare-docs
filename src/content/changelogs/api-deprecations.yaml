@@ -46,10 +46,10 @@ entries:
       - `GET /accounts/:account_id`
       - `PUT /accounts/:account_id`
 
-  - publish_date: "2025-01-15"
+  - publish_date: "2025-06-15"
     title: "Firewall Rules API and Filters API"
     description: |-
-      Deprecation date: January 15, 2025
+      Deprecation date: June 15, 2025
 
       The Firewall Rules API and the Filters API are deprecated, since Firewall Rules was deprecated in favor of [WAF custom rules](/waf/custom-rules/). Refer to [Firewall Rules to WAF custom rules migration](/waf/reference/migration-guides/firewall-rules-to-custom-rules/) for more information about this change.
 
@@ -74,10 +74,10 @@ entries:
 
       Replacement: [WAF custom rules](/waf/custom-rules/)
 
-  - publish_date: "2025-01-15"
+  - publish_date: "2025-06-15"
     title: "WAF managed rules APIs (previous version)"
     description: |-
-      Deprecation date: January 15, 2025
+      Deprecation date: June 15, 2025
 
       The APIs for managing WAF managed rules (previous version) — namely for managing packages, rule groups, rules, and overrides — are deprecated in favor of [WAF Managed Rules](/waf/managed-rules/). Refer to [WAF Managed Rules migration](/waf/reference/migration-guides/waf-managed-rules-migration/) for more information about this change.
 
@@ -100,10 +100,10 @@ entries:
 
       Replacement: [WAF Managed Rules](/waf/managed-rules/) (new version)
 
-  - publish_date: "2025-01-15"
+  - publish_date: "2025-06-15"
     title: "Rate Limiting API (previous version)"
     description: |-
-      Deprecation date: January 15, 2025
+      Deprecation date: June 15, 2025
 
       The Rate Limiting API is deprecated, since the previous version of rate limiting rules was deprecated in favor of the new [rate limiting rules](/waf/rate-limiting-rules/) based on the Ruleset Engine. Refer to [Rate limiting (previous version) deprecation notice](/waf/reference/migration-guides/old-rate-limiting-deprecation/) for more information about this change.
 
@@ -216,7 +216,7 @@ entries:
     description: |-
       Deprecation date: August 15, 2024
 
-      The Brotli setting and its API endpoints are deprecated. After the end of life date, Brotli compression will be enabled by default for all zones.
+      The Brotli setting and its API endpoints are deprecated. Brotli compression is available for all non-Enterprise zones, and it will be extended to Enterprise zones in the coming year.
 
       Deprecated APIs:
 

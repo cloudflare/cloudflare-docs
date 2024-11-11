@@ -4,15 +4,17 @@ title: Known issues
 
 ---
 
+import { GlossaryTooltip } from "~/components";
+
 Durable Objects is generally available. However, there are some known issues.
 
 ## Global uniqueness
 
-Global uniqueness guarantees there is only a single instance of a Durable Object class with a given ID running at once, across the world.
+Global uniqueness guarantees there is only a single instance of a <GlossaryTooltip term="Durable Object class">Durable Object class</GlossaryTooltip> with a given ID running at once, across the world.
 
 Uniqueness is enforced upon starting a new event (such as receiving an HTTP request), and upon accessing storage.
 
-After an event is received, if the event takes some time to execute and does not ever access its durable storage, then it is possible that the Durable Object instance may no longer be current, and some other instance of the same Durable Object ID will have been created elsewhere. If the event accesses storage at this point, it will receive an [exception](/durable-objects/observability/troubleshooting/). If the event completes without ever accessing storage, it may not ever realize that the Durable Object was no longer current.
+After an event is received, if the event takes some time to execute and does not ever access its durable storage, then it is possible that the Durable Object may no longer be current, and some other instance of the same Durable Object ID will have been created elsewhere. If the event accesses storage at this point, it will receive an [exception](/durable-objects/observability/troubleshooting/). If the event completes without ever accessing storage, it may not ever realize that the Durable Object was no longer current.
 
 A Durable Object may be replaced in the event of a network partition or a software update (including either an update of the Durable Object's class code, or of the Workers system itself). Enabling `wrangler tail` or [Cloudflare dashboard](https://dash.cloudflare.com/) logs requires a software update.
 

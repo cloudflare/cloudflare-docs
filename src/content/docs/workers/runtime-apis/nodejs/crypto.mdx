@@ -1,10 +1,9 @@
 ---
 pcx_content_type: configuration
 title: Crypto
-
 ---
 
-import { Render } from "~/components"
+import { Render } from "~/components";
 
 <Render file="nodejs-compat-howto" />
 
@@ -18,28 +17,28 @@ The [WebCrypto API](/workers/runtime-apis/web-crypto/) is also available within 
 
 | API                                                                               | Supported? | Notes |
 | --------------------------------------------------------------------------------- | ---------- | ----- |
-| [Certificate](https://nodejs.org/api/crypto.html#class-certificate)               | ✅          |       |
+| [Certificate](https://nodejs.org/api/crypto.html#class-certificate)               | ✅         |       |
 | [Cipher](https://nodejs.org/api/crypto.html#class-cipher)                         |            |       |
 | [Decipher](https://nodejs.org/api/crypto.html#class-decipher)                     |            |       |
-| [DiffieHellman](https://nodejs.org/api/crypto.html#class-diffiehellman)           | ✅          |       |
-| [DiffieHellmanGroup](https://nodejs.org/api/crypto.html#class-diffiehellmangroup) | ✅          |       |
+| [DiffieHellman](https://nodejs.org/api/crypto.html#class-diffiehellman)           | ✅         |       |
+| [DiffieHellmanGroup](https://nodejs.org/api/crypto.html#class-diffiehellmangroup) | ✅         |       |
 | [ECDH](https://nodejs.org/api/crypto.html#class-ecdh)                             |            |       |
-| [Hash](https://nodejs.org/api/crypto.html#class-hash)                             | ✅          |       |
-| [Hmac](https://nodejs.org/api/crypto.html#class-hmac)                             | ✅          |       |
+| [Hash](https://nodejs.org/api/crypto.html#class-hash)                             | ✅         |       |
+| [Hmac](https://nodejs.org/api/crypto.html#class-hmac)                             | ✅         |       |
 | [KeyObject](https://nodejs.org/api/crypto.html#class-keyobject)                   |            |       |
 | [Sign](https://nodejs.org/api/crypto.html#class-sign)                             |            |       |
 | [Verify](https://nodejs.org/api/crypto.html#class-verify)                         |            |       |
-| [X509Certificate](https://nodejs.org/api/crypto.html#class-x509certificate)       | ✅          |       |
+| [X509Certificate](https://nodejs.org/api/crypto.html#class-x509certificate)       | ✅         |       |
 | [constants](https://nodejs.org/api/crypto.html#cryptoconstants)                   |            |       |
 
 ## Primes
 
 | API                                                                                          | Supported? | Notes |
 | -------------------------------------------------------------------------------------------- | ---------- | ----- |
-| [checkPrime](https://nodejs.org/api/crypto.html#cryptocheckprimecandidate-options-callback)  | ✅          |       |
-| [checkPrimeSync](https://nodejs.org/api/crypto.html#cryptocheckprimesynccandidate-options)   | ✅          |       |
-| [generatePrime](https://nodejs.org/api/crypto.html#cryptogenerateprimesize-options-callback) | ✅          |       |
-| [generatePrimeSync](https://nodejs.org/api/crypto.html#cryptogenerateprimesyncsize-options)  | ✅          |       |
+| [checkPrime](https://nodejs.org/api/crypto.html#cryptocheckprimecandidate-options-callback)  | ✅         |       |
+| [checkPrimeSync](https://nodejs.org/api/crypto.html#cryptocheckprimesynccandidate-options)   | ✅         |       |
+| [generatePrime](https://nodejs.org/api/crypto.html#cryptogenerateprimesize-options-callback) | ✅         |       |
+| [generatePrimeSync](https://nodejs.org/api/crypto.html#cryptogenerateprimesyncsize-options)  | ✅         |       |
 
 ## Ciphers
 
@@ -58,20 +57,20 @@ The [WebCrypto API](/workers/runtime-apis/web-crypto/) is also available within 
 
 | API                                                                                                                                       | Supported? | Notes |
 | ----------------------------------------------------------------------------------------------------------------------------------------- | ---------- | ----- |
-| [createDiffieHellman(prime)](https://nodejs.org/api/crypto.html#cryptocreatediffiehellmanprime-primeencoding-generator-generatorencoding) | ✅          |       |
-| [createDiffieHellman(primeLength)](https://nodejs.org/api/crypto.html#cryptocreatediffiehellmanprimelength-generator)                     | ✅          |       |
-| [createDiffieHellmanGroup](https://nodejs.org/api/crypto.html#cryptocreatediffiehellmangroupname)                                         | ✅          |       |
+| [createDiffieHellman(prime)](https://nodejs.org/api/crypto.html#cryptocreatediffiehellmanprime-primeencoding-generator-generatorencoding) | ✅         |       |
+| [createDiffieHellman(primeLength)](https://nodejs.org/api/crypto.html#cryptocreatediffiehellmanprimelength-generator)                     | ✅         |       |
+| [createDiffieHellmanGroup](https://nodejs.org/api/crypto.html#cryptocreatediffiehellmangroupname)                                         | ✅         |       |
 | [createECDH](https://nodejs.org/api/crypto.html#cryptocreateecdhcurvename)                                                                |            |       |
 | [diffieHellman](https://nodejs.org/api/crypto.html#cryptodiffiehellmanoptions)                                                            |            |       |
-| [getDiffieHellman](https://nodejs.org/api/crypto.html#cryptogetdiffiehellmangroupname)                                                    | ✅          |       |
+| [getDiffieHellman](https://nodejs.org/api/crypto.html#cryptogetdiffiehellmangroupname)                                                    | ✅         |       |
 
 ## Hash
 
 | API                                                                                    | Supported? | Notes |
 | -------------------------------------------------------------------------------------- | ---------- | ----- |
-| [createHash](https://nodejs.org/api/crypto.html#cryptocreatehashalgorithm-options)     | ✅          |       |
-| [createHmac](https://nodejs.org/api/crypto.html#cryptocreatehmacalgorithm-key-options) | ✅          |       |
-| [getHashes](https://nodejs.org/api/crypto.html#cryptogethashes)                        | ✅          |       |
+| [createHash](https://nodejs.org/api/crypto.html#cryptocreatehashalgorithm-options)     | ✅         |       |
+| [createHmac](https://nodejs.org/api/crypto.html#cryptocreatehmacalgorithm-key-options) | ✅         |       |
+| [getHashes](https://nodejs.org/api/crypto.html#cryptogethashes)                        | ✅         |       |
 
 ## Keys
 
@@ -79,11 +78,11 @@ The [WebCrypto API](/workers/runtime-apis/web-crypto/) is also available within 
 | ------------------------------------------------------------------------------------------------ | ---------- | ----- |
 | [createPrivateKey](https://nodejs.org/api/crypto.html#cryptocreateprivatekeykey)                 |            |       |
 | [createPublicKey](https://nodejs.org/api/crypto.html#cryptocreatepublickeykey)                   |            |       |
-| [createSecretKey](https://nodejs.org/api/crypto.html#cryptocreatesecretkeykey-encoding)          | ✅          |       |
-| [generateKey](https://nodejs.org/api/crypto.html#cryptogeneratekeytype-options-callback)         | ✅          |       |
-| [generateKeyPair](https://nodejs.org/api/crypto.html#cryptogeneratekeypairtype-options-callback) | ✅          |       |
-| [generateKeyPairSync](https://nodejs.org/api/crypto.html#cryptogeneratekeypairsynctype-options)  | ✅          |       |
-| [generateKeySync](https://nodejs.org/api/crypto.html#cryptogeneratekeysynctype-options)          | ✅          |       |
+| [createSecretKey](https://nodejs.org/api/crypto.html#cryptocreatesecretkeykey-encoding)          |            |       |
+| [generateKey](https://nodejs.org/api/crypto.html#cryptogeneratekeytype-options-callback)         |            |       |
+| [generateKeyPair](https://nodejs.org/api/crypto.html#cryptogeneratekeypairtype-options-callback) |            |       |
+| [generateKeyPairSync](https://nodejs.org/api/crypto.html#cryptogeneratekeypairsynctype-options)  |            |       |
+| [generateKeySync](https://nodejs.org/api/crypto.html#cryptogeneratekeysynctype-options)          |            |       |
 
 ## Sign/Verify
 
@@ -99,45 +98,45 @@ The [WebCrypto API](/workers/runtime-apis/web-crypto/) is also available within 
 | API                                                                                      | Supported? | Notes |
 | ---------------------------------------------------------------------------------------- | ---------- | ----- |
 | [getCipherInfo](https://nodejs.org/api/crypto.html#cryptogetcipherinfonameornid-options) |            |       |
-| [getCiphers](https://nodejs.org/api/crypto.html#cryptogetciphers)                        | ✅          |       |
-| [getCurves](https://nodejs.org/api/crypto.html#cryptogetcurves)                          | ✅          |       |
-| [secureHeapUsed](https://nodejs.org/api/crypto.html#cryptosecureheapused)                | ✅          |       |
-| [setEngine](https://nodejs.org/api/crypto.html#cryptosetengineengine-flags)              | ✅          |       |
-| [timingSafeEqual](https://nodejs.org/api/crypto.html#cryptotimingsafeequala-b)           | ✅          |       |
+| [getCiphers](https://nodejs.org/api/crypto.html#cryptogetciphers)                        | ✅         |       |
+| [getCurves](https://nodejs.org/api/crypto.html#cryptogetcurves)                          | ✅         |       |
+| [secureHeapUsed](https://nodejs.org/api/crypto.html#cryptosecureheapused)                | ✅         |       |
+| [setEngine](https://nodejs.org/api/crypto.html#cryptosetengineengine-flags)              | ✅         |       |
+| [timingSafeEqual](https://nodejs.org/api/crypto.html#cryptotimingsafeequala-b)           | ✅         |       |
 
 ## Fips
 
 | API                                                             | Supported? | Notes                               |
 | --------------------------------------------------------------- | ---------- | ----------------------------------- |
-| [getFips](https://nodejs.org/api/crypto.html#cryptogetfips)     | ✅          |                                     |
-| [fips](https://nodejs.org/api/crypto.html#cryptofips)           | ✅          | Deprecated, use `getFips()` instead |
-| [setFips](https://nodejs.org/api/crypto.html#cryptosetfipsbool) | ✅          |                                     |
+| [getFips](https://nodejs.org/api/crypto.html#cryptogetfips)     | ✅         |                                     |
+| [fips](https://nodejs.org/api/crypto.html#cryptofips)           | ✅         | Deprecated, use `getFips()` instead |
+| [setFips](https://nodejs.org/api/crypto.html#cryptosetfipsbool) | ✅         |                                     |
 
 ## Random
 
 | API                                                                                          | Supported? | Notes |
 | -------------------------------------------------------------------------------------------- | ---------- | ----- |
-| [getRandomValues](https://nodejs.org/api/crypto.html#cryptogetrandomvaluestypedarray)        | ✅          |       |
-| [randomBytes](https://nodejs.org/api/crypto.html#cryptorandombytessize-callback)             | ✅          |       |
-| [randomFillSync](https://nodejs.org/api/crypto.html#cryptorandomfillsyncbuffer-offset-size)  | ✅          |       |
-| [randomFill](https://nodejs.org/api/crypto.html#cryptorandomfillbuffer-offset-size-callback) | ✅          |       |
-| [randomInt](https://nodejs.org/api/crypto.html#cryptorandomintmin-max-callback)              | ✅          |       |
-| [randomUUID](https://nodejs.org/api/crypto.html#cryptorandomuuidoptions)                     | ✅          |       |
+| [getRandomValues](https://nodejs.org/api/crypto.html#cryptogetrandomvaluestypedarray)        | ✅         |       |
+| [randomBytes](https://nodejs.org/api/crypto.html#cryptorandombytessize-callback)             | ✅         |       |
+| [randomFillSync](https://nodejs.org/api/crypto.html#cryptorandomfillsyncbuffer-offset-size)  | ✅         |       |
+| [randomFill](https://nodejs.org/api/crypto.html#cryptorandomfillbuffer-offset-size-callback) | ✅         |       |
+| [randomInt](https://nodejs.org/api/crypto.html#cryptorandomintmin-max-callback)              | ✅         |       |
+| [randomUUID](https://nodejs.org/api/crypto.html#cryptorandomuuidoptions)                     | ✅         |       |
 
 ## Key Derivation
 
 | API                                                                                                          | Supported? | Notes                          |
 | ------------------------------------------------------------------------------------------------------------ | ---------- | ------------------------------ |
-| [hkdf](https://nodejs.org/api/crypto.html#cryptohkdfdigest-ikm-salt-info-keylen-callback)                    | ✅          | Does not yet support KeyObject |
-| [hkdfSync](https://nodejs.org/api/crypto.html#cryptohkdfsyncdigest-ikm-salt-info-keylen)                     | ✅          | Does not yet support KeyObject |
-| [pbkdf2](https://nodejs.org/api/crypto.html#cryptopbkdf2password-salt-iterations-keylen-digest-callback)     | ✅          |                                |
-| [pbkdf2Sync](https://nodejs.org/api/crypto.html#cryptopbkdf2password-salt-iterations-keylen-digest-callback) | ✅          |                                |
-| [scrypt](https://nodejs.org/api/crypto.html#cryptoscryptpassword-salt-keylen-options-callback)               | ✅          |                                |
-| [scryptSync](https://nodejs.org/api/crypto.html#cryptoscryptsyncpassword-salt-keylen-options)                | ✅          |                                |
+| [hkdf](https://nodejs.org/api/crypto.html#cryptohkdfdigest-ikm-salt-info-keylen-callback)                    | ✅         | Does not yet support KeyObject |
+| [hkdfSync](https://nodejs.org/api/crypto.html#cryptohkdfsyncdigest-ikm-salt-info-keylen)                     | ✅         | Does not yet support KeyObject |
+| [pbkdf2](https://nodejs.org/api/crypto.html#cryptopbkdf2password-salt-iterations-keylen-digest-callback)     | ✅         |                                |
+| [pbkdf2Sync](https://nodejs.org/api/crypto.html#cryptopbkdf2password-salt-iterations-keylen-digest-callback) | ✅         |                                |
+| [scrypt](https://nodejs.org/api/crypto.html#cryptoscryptpassword-salt-keylen-options-callback)               | ✅         |                                |
+| [scryptSync](https://nodejs.org/api/crypto.html#cryptoscryptsyncpassword-salt-keylen-options)                | ✅         |                                |
 
 ## WebCrypto
 
 | API                                                       | Supported? | Notes |
 | --------------------------------------------------------- | ---------- | ----- |
-| [subtle](https://nodejs.org/api/crypto.html#cryptosubtle) | ✅          |       |
-| [webcrypto](https://nodejs.org/api/crypto.html#)          | ✅          |       |
+| [subtle](https://nodejs.org/api/crypto.html#cryptosubtle) | ✅         |       |
+| [webcrypto](https://nodejs.org/api/crypto.html#)          | ✅         |       |

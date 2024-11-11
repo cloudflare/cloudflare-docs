@@ -1,0 +1,282 @@
+---
+title: Durable Object State
+pcx_content_type: concept
+sidebar:
+  order: 4
+---
+
+import { Tabs, TabItem, GlossaryTooltip } from "~/components";
+
+## Description
+
+The `DurableObjectState` interface is accessible as an instance property on the <GlossaryTooltip term="Durable Object class">Durable Object class</GlossaryTooltip>. This interface encapsulates methods that modify the state of a Durable Object, for example which WebSockets are attached to a Durable Object or how the runtime should handle concurrent Durable Object requests.
+
+The `DurableObjectState` interface is different from the <GlossaryTooltip term="Storage API">Storage API</GlossaryTooltip> in that it does not have top-level methods which manipulate persistent application data. These methods are instead encapsulated in the [`DurableObjectStorage`](/durable-objects/api/storage-api) interface and accessed by [`DurableObjectState::storage`](/durable-objects/api/state/#storage).
+
+<Tabs> <TabItem label="JavaScript" icon="seti:javascript">
+
+```js
+import { DurableObject } from "cloudflare:workers";
+
+// Durable Object
+export class MyDurableObject extends DurableObject {
+  // DurableObjectState is accessible via the ctx instance property
+	constructor(ctx, env) {
+		super(ctx, env);
+	}
+  ...
+}
+```
+
+</TabItem> <TabItem label="TypeScript" icon="seti:typescript">
+
+```ts
+import { DurableObject } from "cloudflare:workers";
+
+export interface Env {
+  MY_DURABLE_OBJECT: DurableObjectNamespace<MyDurableObject>;
+}
+
+// Durable Object
+export class MyDurableObject extends DurableObject {
+  // DurableObjectState is accessible via the ctx instance property
+	constructor(ctx: DurableObjectState, env: Env) {
+		super(ctx, env);
+	}
+  ...
+}
+```
+
+</TabItem> </Tabs>
+
+## Methods
+
+### `waitUntil`
+
+`waitUntil` waits until the promise which is passed as a parameter resolves and can extends an <GlossaryTooltip term= "event context">event context</GlossaryTooltip> up to 30 seconds after the last client disconnects.
+
+:::note[`waitUntil` is not necessary]
+
+The event context for a Durable Objects extends at least 60 seconds after the last client disconnects. So `waitUntil` is not necessary. It remains part of the `DurableObjectState` interface to remain compatible with [Workers Runtime APIs](/workers/runtime-apis/context/#waituntil).
+
+:::
+
+#### Parameters
+
+- A required promise of any type.
+
+#### Return values
+
+- None.
+
+### `blockConcurrencyWhile`
+
+`blockConcurrencyWhile` executes an async callback while blocking any other events from being delivered to the Durable Object until the callback completes. This method guarantees ordering and prevents concurrent requests. All events that were not explicitly initiated as part of the callback itself will be blocked. Once the callback completes, all other events will be delivered.
+
+`blockConcurrencyWhile` is commonly used within the constructor of the Durable Object class to enforce initialization to occur before any requests are delivered. Another use case is executing `async` operations based on the current state of the Durable Object and using `blockConcurrencyWhile` to prevent that state from changing while yielding the event loop.
+
+If the callback throws an exception, the object will be terminated and reset. This ensures that the object cannot be left stuck in an uninitialized state if something fails unexpectedly. To avoid this behavior, enclose the body of your callback in a `try...catch` block to ensure it cannot throw an exception.
+
+To help mitigate deadlocks there is a 30 second timeout applied when executing the callback. If this timeout is exceeded, the Durable Object will be reset. It is best practice to have the callback do as little work as possible to improve overall request throughput to the Durable Object.
+
+```js
+// Durable Object
+export class MyDurableObject extends DurableObject {
+	initialized = false;
+
+	constructor(ctx, env) {
+		super(ctx, env);
+
+		// blockConcurrencyWhile will ensure that initialized will always be true
+		this.ctx.blockConcurrencyWhile(async () => {
+			this.initialized = true;
+		});
+	}
+  ...
+}
+```
+
+#### Parameters
+
+- A required callback which returns a `Promise<T>`.
+
+#### Return values
+
+- A `Promise<T>` returned by the callback.
+
+### `acceptWebSocket`
+
+`acceptWebSocket` is part of the [WebSocket Hibernation API](/durable-objects/reference/websockets/#websocket-hibernation), which allows a Durable Object to be removed from memory to save costs while keeping its WebSockets connected.
+
+`acceptWebSocket` adds a WebSocket to the set of WebSockets attached to the Durable Object. Once called, any incoming messages will be delivered by calling the Durable Object's `webSocketMessage` handler, and `webSocketClose` will be invoked upon disconnect. After calling `acceptWebSocket`, the WebSocket is accepted and its `send` and `close` methods can be used.
+
+The [WebSocket Hibernation API](/durable-objects/reference/websockets/#websocket-hibernation) takes the place of the standard [WebSockets API](/workers/runtime-apis/websockets/). Therefore, `ws.accept` must not have been called separately and `ws.addEventListener` method will not receive events as they will instead be delivered to the Durable Object.
+
+The WebSocket Hibernation API permits a maximum of 32,768 WebSocket connections per Durable Object, but the CPU and memory usage of a given workload may further limit the practical number of simultaneous connections.
+
+#### Parameters
+
+- A required `WebSocket` with name `ws`.
+- An optional `Array<string>` of associated tags. Tags can be used to retrieve WebSockets via [`DurableObjectState::getWebSockets`](/durable-objects/api/state/#getwebsockets). Each tag is a maximum of 256 characters and there can be at most 10 tags associated with a WebSocket.
+
+#### Return values
+
+- None.
+
+### `getWebSockets`
+
+`getWebSockets` is part of the [WebSocket Hibernation API](/durable-objects/reference/websockets/#websocket-hibernation), which allows a Durable Object to be removed from memory to save costs while keeping its WebSockets connected.
+
+`getWebSockets` returns an `Array<WebSocket>` which is the set of WebSockets attached to the Durable Object. An optional tag argument can be used to filter the list according to tags supplied when calling [`DurableObjectState::acceptWebSocket`](/durable-objects/api/state/#acceptwebsocket).
+
+:::note[`waitUntil` is not necessary]
+
+Disconnected WebSockets are not returned by this method, but `getWebSockets` may still return WebSockets even after `ws.close` has been called. For example, if the server-side WebSocket sends a close, but does not receive one back (and has not detected a disconnect from the client), then the connection is in the CLOSING 'readyState'. The client might send more messages, so the WebSocket is technically not disconnected.
+
+:::
+
+#### Parameters
+
+- An optional tag of type `string`.
+
+#### Return values
+
+- An `Array<WebSocket>`.
+
+### `setWebSocketAutoResponse`
+
+`setWebSocketAutoResponse` is part of the [WebSocket Hibernation API](/durable-objects/reference/websockets/#websocket-hibernation), which allows a Durable Object to be removed from memory to save costs while keeping its WebSockets connected.
+
+`setWebSocketAutoResponse` sets an automatic response, auto-response, for the request provided for all WebSockets attached to the Durable Object. If a request is received matching the provided request then the auto-response will be returned without waking WebSockets in hibernation and incurring billable duration charges.
+
+`setWebSocketAutoResponse` is a common alternative to setting up a server for static ping/pong messages because this can be handled without waking hibernating WebSockets.
+
+#### Parameters
+
+- An optional `WebSocketRequestResponsePair(request string, response string)` enabling any WebSocket accepted via [`DurableObjectState::acceptWebSocket`](/durable-objects/api/state/#acceptwebsocket) to automatically reply to the provided response when it receives the provided request. Both request and response are limited to 2,048 characters each. If the parameter is omitted, any previously set auto-response configuration will be removed. [`DurableObjectState::getWebSocketAutoResponseTimestamp`](/durable-objects/api/state/#getwebsocketautoresponsetimestamp) will still reflect the last timestamp that an auto-response was sent.
+
+#### Return values
+
+- None.
+
+### `getWebSocketAutoResponse`
+
+`getWebSocketAutoResponse` returns the `WebSocketRequestResponsePair` object last set by [`DurableObjectState::setWebSocketAutoResponse`](/durable-objects/api/state/#setwebsocketautoresponse), or null if not auto-response has been set.
+
+:::note[inspect `WebSocketRequestResponsePair`]
+
+`WebSocketRequestResponsePair` can be inspected further by calling `getRequest` and `getResponse` methods.
+
+:::
+
+#### Parameters
+
+- None.
+
+#### Return values
+
+- A `WebSocketRequestResponsePair` or null.
+
+### `getWebSocketAutoResponseTimestamp`
+
+`getWebSocketAutoResponseTimestamp` is part of the [WebSocket Hibernation API](/durable-objects/reference/websockets/#websocket-hibernation), which allows a Durable Object to be removed from memory to save costs while keeping its WebSockets connected.
+
+`getWebSocketAutoResponseTimestamp` gets the most recent `Date` on which the given WebSocket sent an auto-response, or null if the given WebSocket never sent an auto-response.
+
+#### Parameters
+
+- A required `WebSocket`.
+
+#### Return values
+
+- A `Date` or null.
+
+### `setHibernatableWebSocketEventTimeout`
+
+`setHibernatableWebSocketEventTimeout` is part of the [WebSocket Hibernation API](/durable-objects/reference/websockets/#websocket-hibernation), which allows a Durable Object to be removed from memory to save costs while keeping its WebSockets connected.
+
+`setHibernatableWebSocketEventTimeout` sets the maximum amount of time in milliseconds that a WebSocket event can run for.
+
+If no parameter or a parameter of `0` is provided and a timeout has been previously set, then the timeout will be unset. The maximum value of timeout is 604,800,000 ms (7 days).
+
+#### Parameters
+
+- An optional `number`.
+
+#### Return values
+
+- None.
+
+### `getHibernatableWebSocketEventTimeout`
+
+`getHibernatableWebSocketEventTimeout` is part of the [WebSocket Hibernation API](/durable-objects/reference/websockets/#websocket-hibernation), which allows a Durable Object to be removed from memory to save costs while keeping its WebSockets connected.
+
+`getHibernatableWebSocketEventTimeout` gets the currently set hibernatable WebSocket event timeout if one has been set via [`DurableObjectState::setHibernatableWebSocketEventTimeout`](/durable-objects/api/state/#sethibernatablewebsocketeventtimeout).
+
+#### Parameters
+
+- None.
+
+#### Return values
+
+- A number, or null if the timeout has not been set.
+
+### `getTags`
+
+`getTags` is part of the [WebSocket Hibernation API](/durable-objects/reference/websockets/#websocket-hibernation), which allows a Durable Object to be removed from memory to save costs while keeping its WebSockets connected.
+
+`getTags` returns tags associated with a given WebSocket. This method throws an exception if the WebSocket has not been associated with the Durable Object via [`DurableObjectState::acceptWebSocket`](/durable-objects/api/state/#acceptwebsocket).
+
+#### Parameters
+
+- A required `WebSocket`.
+
+#### Return values
+
+- An `Array<string>` of tags.
+
+### `abort`
+
+`abort` is used to forcibly reset a Durable Object. A JavaScript `Error` with the message passed as a parameter will be logged. This error is not able to be caught within the application code.
+
+```js
+// Durable Object
+export class MyDurableObject extends DurableObject {
+	constructor(ctx: DurableObjectState, env: Env) {
+		super(ctx, env);
+	}
+
+  async sayHello() {
+    // Error: Hello, World! will be logged
+    this.ctx.abort("Hello, World!");
+  }
+}
+```
+
+:::caution[Not available in local development]
+
+`abort` is not available in local development with the `wrangler dev` CLI command.
+
+:::
+
+#### Parameters
+
+- An optional `string` .
+
+#### Return values
+
+- None.
+
+## Properties
+
+### `id`
+
+`id` is a readonly property of type `DurableObjectId` corresponding to the [`DurableObjectId`](/durable-objects/api/id) of the Durable Object.
+
+### `storage`
+
+`storage` is a readonly property of type `DurableObjectStorage` encapsulating the [Storage API](/durable-objects/api/storage-api).
+
+## Related resources
+
+- [Durable Objects: Easy, Fast, Correct – Choose Three](https://blog.cloudflare.com/durable-objects-easy-fast-correct-choose-three/).

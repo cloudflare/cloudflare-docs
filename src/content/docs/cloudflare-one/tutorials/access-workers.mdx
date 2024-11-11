@@ -10,26 +10,19 @@ products:
   - Access
 languages:
   - JavaScript
-
 ---
-
-
 
 This tutorial covers how to use a [Cloudflare Worker](/workers/) to add custom HTTP headers to traffic, and how to send those custom headers to your origin services protected by [Cloudflare Access](/cloudflare-one/policies/access/).
 
 Some applications and networking implementations require specific custom headers to be passed to the origin, which can be difficult to implement for traffic moving through a Zero Trust proxy. You can configure a Worker to send the [user authorization headers](/cloudflare-one/identity/authorization-cookie/) required by Access.
 
-***
+---
 
 ## Before you begin
 
-
-
-* Secure your origin server with Cloudflare Access
-
+- Secure your origin server with Cloudflare Access
 
 ## Before you begin
-
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/) and select your account. Go to **Workers & Pages**.
 
@@ -41,29 +34,25 @@ Some applications and networking implementations require specific custom headers
 
 5. Input the following Worker:
 
-   ```javascript title="Worker with custom HTTP headers"
-   addEventListener("fetch", event => {
-     event.respondWith(handleRequest(event.request))
-   })
+```js title="Worker with custom HTTP headers"
+export default {
+  async fetch(request, env, ctx): Promise<Response> {
+    const { headers } = request;
+    const cfaccessemail = headers.get("cf-access-authenticated-user-email");
 
-   async function handleRequest(request) {
-     const { headers } = request;
-     const cfaccessemail = headers.get("cf-access-authenticated-user-email");
-     const requestWithID = new Request(request);
-     requestWithID.headers.set('company-user-id', cfaccessemail);
+    const requestWithID = new Request(request);
+    requestWithID.headers.set('company-user-id', cfaccessemail);
 
-   return await fetch(requestWithID);
-   }
-
-   ```
+    return fetch(requestWithID);
+  },
+} satisfies ExportedHandler<Env>;
+```
 
 6. Select **Save and deploy**.
 
 Your Worker is now ready to send custom headers to your Access-protected origin services.
 
 ## Apply the Worker to your hostname
-
-
 
 1. Select the Worker you created, then go to **Triggers**.
 2. In **Routes**, select **Add route**.
@@ -79,6 +68,3 @@ The Worker will now insert a custom header into requests that match the defined 
     "Company-User-Id": "user@example.com",
     "Connection": "keep-alive"
 ```
-
-
-

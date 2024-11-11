@@ -6,13 +6,15 @@ sidebar:
 
 ---
 
-Durable Objects expose analytics for Durable Object namespace-level and request-level metrics.
+import { GlossaryTooltip } from "~/components";
+
+<GlossaryTooltip term="Durable Object">Durable Objects</GlossaryTooltip> expose analytics for Durable Object namespace-level and request-level metrics.
 
 The metrics displayed in the [Cloudflare dashboard](https://dash.cloudflare.com/) charts are queried from Cloudflare’s [GraphQL Analytics API](/analytics/graphql-api/). You can access the metrics [programmatically via GraphQL](#query-via-the-graphql-api) or HTTP client.
 
 :::note[Durable Object namespace]
 
-A Durable Object namespace is a set of Durable Objects that can be addressed by name, backed by the same class. There is only one Durable Object namespace per class. A Durable Object namespace can contain any number of Durable Objects. 
+A Durable Object namespace is a set of Durable Objects that can be addressed by name, backed by the same class. There is only one Durable Object namespace per class. A Durable Object namespace can contain any number of Durable Objects.
 :::
 
 ## View metrics and analytics via the dashboard
@@ -51,10 +53,10 @@ Durable Objects using [WebSockets](/durable-objects/reference/websockets/) will 
 
 ```js
   viewer {
-    /* 
+    /*
     Replace with your account tag, the 32 hex character id visible at the beginning of any url
-    when logged in to dash.cloudflare.com or under "Account ID" on the sidebar of the Workers & Pages Overview 
-    */ 
+    when logged in to dash.cloudflare.com or under "Account ID" on the sidebar of the Workers & Pages Overview
+    */
     accounts(filter: {accountTag: "your account tag here"}) {
       // Replace dates with a recent date
       durableObjectsInvocationsAdaptiveGroups(filter: {date_gt: "2023-05-23"}, limit: 1000) {

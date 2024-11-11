@@ -1,8 +1,8 @@
-name: Email Security (formerly Area 1)
+name: Email Security
 
 product:
-  title: Email Security (formerly Area 1)
-  url: /email-security/
+  title: Email Security 
+  url: /cloudflare-one/email-security/
   group: Cloudflare One
 
 meta:
@@ -18,7 +18,3 @@ externals:
   - title: Cloudflare Email Security (formerly Area 1)
     url: https://www.cloudflare.com/products/zero-trust/email-security/
 
-algolia:
-  index: TEST - Re-dev docs
-  apikey: 4edb0a6cef3338ff4bcfbc6b3d2db56b
-  product: email-security

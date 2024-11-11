@@ -13,7 +13,9 @@ description: Use the Durable Objects Alarms API to batch requests to a Durable O
 
 ---
 
-This example implements an `alarm()` handler that wakes the Durable Object once every 10 seconds to batch requests to a single Durable Object. The `alarm()` handler will delay processing until there is enough work in the queue.
+import { GlossaryTooltip } from "~/components";
+
+This example implements an <GlossaryTooltip term="alarm">`alarm()`</GlossaryTooltip> handler that wakes the Durable Object once every 10 seconds to batch requests to a single Durable Object. The `alarm()` handler will delay processing until there is enough work in the queue.
 
 ```js
 import { DurableObject } from 'cloudflare:workers';

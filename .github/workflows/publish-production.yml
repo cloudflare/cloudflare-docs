@@ -8,7 +8,7 @@ jobs:
     runs-on: ubuntu-22.04
     permissions:
       contents: read
-    name: Publish to Cloudflare Pages (Production)
+    name: Publish Production
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
@@ -19,10 +19,10 @@ jobs:
       - uses: actions/cache/restore@v4
         with:
           path: |
-            node_modules/.astro/_astro
-            node_modules/.astro/assets
+            node_modules/.astro
           key: static
-      - run: npx astro build
+      - run: npm run build
+        name: Build
         env:
           NODE_OPTIONS: --max-old-space-size=4096
       - run: npx wrangler pages deploy --project-name cloudflare-docs dist
@@ -30,10 +30,13 @@ jobs:
         env:
           CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
           CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+      - run: npx wrangler deploy -c ./wrangler-workers.toml
+        name: Deploy to Cloudflare Workers
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
       - uses: actions/cache/save@v4
         if: always()
         with:
           path: |
-            node_modules/.astro/_astro
-            node_modules/.astro/assets
+            node_modules/.astro
           key: static

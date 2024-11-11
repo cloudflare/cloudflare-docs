@@ -5,18 +5,27 @@ productLink: "/workers/"
 productArea: Developer platform
 productAreaLink: /workers/platform/changelog/platform/
 entries:
+  - publish_date: '2024-10-21'
+    description: |-
+      - Fixed encoding of WebSocket pong messages when talking to remote servers. Previously, when a Worker made a WebSocket connection to an external server, the server may have prematurely closed the WebSocket for failure to respond correctly to pings. Client-side connections were not affected.
+  - publish_date: '2024-10-14'
+    description: |-
+      - Updated v8 to version 13.0.
   - publish_date: "2024-09-26"
     description: |-
       -  You can now connect your GitHub or GitLab repository to an existing Worker to automatically build and deploy your changes when you make a git push with [Workers Builds](/workers/ci-cd/builds/).
+  - publish_date: "2024-09-20"
+    description: |-
+      - Workers now support the [`handle_cross_request_promise_resolution`] compatibility flag which addresses certain edge cases around awaiting and resolving promises across multiple requests.
   - publish_date: "2024-09-19"
     description: |-
       -  Revamped Workers and Pages UI settings to simplify the creation and management of project configurations. For bugs and general feedback, please submit this [form](https://forms.gle/XXqhRGbZmuzninuN9).
-  - publish_date: '2024-09-16'
+  - publish_date: "2024-09-16"
     description: |-
       - Updated v8 to version 12.9.
   - publish_date: "2024-08-19"
     description: |-
-      -  Workers now support the [`allow_custom_ports` compatibility flag](/workers/configuration/compatibility-dates/#allow-specifying-a-custom-port-when-making-a-subrequest-with-the-fetch-api) which enables using the `fetch()` calls to custom ports.
+      -  Workers now support the [`allow_custom_ports` compatibility flag](/workers/configuration/compatibility-flags/#allow-specifying-a-custom-port-when-making-a-subrequest-with-the-fetch-api) which enables using the `fetch()` calls to custom ports.
   - publish_date: "2024-08-15"
     description: |-
       - Updated v8 to version 12.8.
@@ -71,12 +80,12 @@ entries:
       - Updated v8 to version 12.6.
   - publish_date: "2024-05-15"
     description: |-
-      - The new [`fetch_standard_url` compatibility flag](/workers/configuration/compatibility-dates/#use-standard-url-parsing-in-fetch) will become active by default on June 3rd, 2024 and ensures that URLs passed into the `fetch(...)` API, the `new Request(...)` constructor, and redirected requests will be parsed using the standard WHATWG URL parser.
+      - The new [`fetch_standard_url` compatibility flag](/workers/configuration/compatibility-flags/#use-standard-url-parsing-in-fetch) will become active by default on June 3rd, 2024 and ensures that URLs passed into the `fetch(...)` API, the `new Request(...)` constructor, and redirected requests will be parsed using the standard WHATWG URL parser.
       - DigestStream is now more efficient and exposes a new `bytesWritten` property that indicates that number of bytes written to the digest.
   - publish_date: "2024-05-13"
     description: |-
       - Updated v8 to version 12.5.
-      - A bug in the fetch API implementation would cause the content type of a Blob to be incorrectly set. The fix is being released behind a new [`blob_standard_mime_type` compatibility flag](/workers/configuration/compatibility-dates/#properly-extract-blob-mime-type-from-content-type-headers).
+      - A bug in the fetch API implementation would cause the content type of a Blob to be incorrectly set. The fix is being released behind a new [`blob_standard_mime_type` compatibility flag](/workers/configuration/compatibility-flags/#properly-extract-blob-mime-type-from-content-type-headers).
   - publish_date: "2024-05-03"
     description: |-
       - Fixed RPC to/from Durable Objects not honoring the output gate.
@@ -99,13 +108,13 @@ entries:
       - The Web standard `ReadableStream.from()` API is now implemented. The API enables creating a `ReadableStream` from a either a sync or async iterable.
   - publish_date: "2024-04-03"
     description: |-
-      - When the [`brotli_content_encoding`](/workers/configuration/compatibility-dates/#brotli-content-encoding-support) compatibility flag is enabled, the Workers runtime now supports compressing and decompressing request bodies encoded using the [Brotli](https://developer.mozilla.org/en-US/docs/Glossary/Brotli_compression) compression algorithm. Refer to [this docs section](/workers/runtime-apis/fetch/#how-the-accept-encoding-header-is-handled) for more detail.
+      - When the [`brotli_content_encoding`](/workers/configuration/compatibility-flags/#brotli-content-encoding-support) compatibility flag is enabled, the Workers runtime now supports compressing and decompressing request bodies encoded using the [Brotli](https://developer.mozilla.org/en-US/docs/Glossary/Brotli_compression) compression algorithm. Refer to [this docs section](/workers/runtime-apis/fetch/#how-the-accept-encoding-header-is-handled) for more detail.
   - publish_date: "2024-04-02"
     description: |-
       - You can now [write Workers in Python](/workers/languages/python)
   - publish_date: "2024-04-01"
     description: |-
-      - The new [`unwrap_custom_thenables` compatibility flag](/workers/configuration/compatibility-dates/#handling-custom-thenables) enables workers to accept custom thenables in internal APIs that expect a promise (for instance, the `ctx.waitUntil(...)` method).
+      - The new [`unwrap_custom_thenables` compatibility flag](/workers/configuration/compatibility-flags/#handling-custom-thenables) enables workers to accept custom thenables in internal APIs that expect a promise (for instance, the `ctx.waitUntil(...)` method).
       - TransformStreams created with the TransformStream constructor now have a cancel algorithm that is called when the stream is canceled or aborted. This change is part of the implementation of the WHATWG Streams standard.
       - The [`nodejs_compat` compatibility flag](/workers/runtime-apis/nodejs/) now includes an implementation of the [`MockTracker` API from `node:test`](https://nodejs.org/api/test.html#class-mocktracker). This is not an implementation of the full `node:test` module, and mock timers are currently not included.
       - Exceptions reported to [Tail Workers](/workers/observability/logs/tail-workers/) now include a "stack" property containing the exception's stack trace, if available.
@@ -134,7 +143,7 @@ entries:
       - Workers and Pages Functions on the Standard usage model can set custom [CPU limits](/workers/wrangler/configuration/#limits) for their Workers
   - publish_date: "2023-10-20"
     description: |-
-      - Added the [`crypto_preserve_public_exponent`](/workers/configuration/compatibility-dates/#webcrypto-preserve-publicexponent-field)
+      - Added the [`crypto_preserve_public_exponent`](/workers/configuration/compatibility-flags/#webcrypto-preserve-publicexponent-field)
         compatibility flag to correct a wrong type being used in the algorithm field of RSA keys in
         the WebCrypto API.
   - publish_date: "2023-10-18"
@@ -147,7 +156,7 @@ entries:
   - publish_date: "2023-10-09"
     description: |-
       - The Web Platform standard [`CustomEvent` class](https://dom.spec.whatwg.org/#interface-customevent) is now available in Workers.
-      - Fixed a bug in the WebCrypto API where the `publicExponent` field of the algorithm of RSA keys would have the wrong type. Use the [`crypto_preserve_public_exponent` compatibility flag](/workers/configuration/compatibility-dates/#webcrypto-preserve-publicexponent-field) to enable the new behavior.
+      - Fixed a bug in the WebCrypto API where the `publicExponent` field of the algorithm of RSA keys would have the wrong type. Use the [`crypto_preserve_public_exponent` compatibility flag](/workers/configuration/compatibility-flags/#webcrypto-preserve-publicexponent-field) to enable the new behavior.
   - publish_date: "2023-09-14"
     description: |-
       - An implementation of the [`node:crypto`](/workers/runtime-apis/nodejs/crypto/)
@@ -164,7 +173,7 @@ entries:
       - An implementation of the [`diagnostics_channel`](/workers/runtime-apis/nodejs/diagnostics-channel) API from Node.js is now available when using the `nodejs_compat` compatibility flag.
   - publish_date: "2023-06-22"
     description: |-
-      - Added the [`strict_crypto_checks`](/workers/configuration/compatibility-dates/#strict-crypto-error-checking) compatibility flag to enable additional [Web Crypto API](/workers/runtime-apis/web-crypto/) error and security checking.
+      - Added the [`strict_crypto_checks`](/workers/configuration/compatibility-flags/#strict-crypto-error-checking) compatibility flag to enable additional [Web Crypto API](/workers/runtime-apis/web-crypto/) error and security checking.
       - Fixes regression in the [TCP Sockets API](/workers/runtime-apis/tcp-sockets/) where `connect("google.com:443")` would fail with a `TypeError`.
   - publish_date: "2023-06-19"
     description: |-
@@ -174,8 +183,8 @@ entries:
     description: |-
       - `AbortSignal.any()` is now available.
       - Updated V8 to 11.4.
-      - Following an update to the [WHATWG URL spec](https://url.spec.whatwg.org/#interface-urlsearchparams), the `delete()` and `has()` methods of the `URLSearchParams` class now accept an optional second argument to specify the search parameter’s value. This is potentially a breaking change, so it is gated behind the new `urlsearchparams_delete_has_value_arg` and [`url_standard`](/workers/configuration/compatibility-dates/#new-url-parser-implementation) compatibility flags.
-      - Added the [`strict_compression_checks`](/workers/configuration/compatibility-dates/#strict-compression-error-checking) compatibility flag for additional [`DecompressionStream`](/workers/runtime-apis/web-standards/#compression-streams) error checking.
+      - Following an update to the [WHATWG URL spec](https://url.spec.whatwg.org/#interface-urlsearchparams), the `delete()` and `has()` methods of the `URLSearchParams` class now accept an optional second argument to specify the search parameter’s value. This is potentially a breaking change, so it is gated behind the new `urlsearchparams_delete_has_value_arg` and [`url_standard`](/workers/configuration/compatibility-flags/#new-url-parser-implementation) compatibility flags.
+      - Added the [`strict_compression_checks`](/workers/configuration/compatibility-flags/#strict-compression-error-checking) compatibility flag for additional [`DecompressionStream`](/workers/runtime-apis/web-standards/#compression-streams) error checking.
   - publish_date: "2023-05-26"
     description: |-
       - A new [Hibernatable WebSockets API](/durable-objects/api/websockets/)
@@ -206,7 +215,7 @@ entries:
   - publish_date: "2023-05-05"
     description: |-
       - The new `nodeJsCompatModule` type can be used with a Worker bundle to emulate a Node.js environment. Common Node.js globals such as `process` and `Buffer` will be present, and `require('...')` can be used to load Node.js built-ins without the `node:` specifier prefix.
-      - Fixed an issue where websocket connections would be disconnected when updating workers. Now, only websockets connected to Durable Object instances are disconnected by updates to that Durable Object’s code.
+      - Fixed an issue where websocket connections would be disconnected when updating workers. Now, only WebSockets connected to Durable Objects are disconnected by updates to that Durable Object’s code.
   - publish_date: "2023-04-28"
     description: |-
       - The Web Crypto API now supports curves Ed25519 and X25519 defined in the Secure Curves specification.

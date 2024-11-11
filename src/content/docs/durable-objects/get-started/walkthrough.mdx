@@ -10,7 +10,7 @@ import { Render, TabItem, Tabs, PackageManagers } from "~/components";
 This guide will instruct you through:
 
 - Writing a Durable Object class.
-- Writing a Worker which invokes methods on a Durable Object instance.
+- Writing a Worker which invokes methods on a Durable Object.
 - Deploying a Durable Object.
 
 ## Prerequisites
@@ -139,7 +139,7 @@ export default {
 		// Every unique ID refers to an individual instance of the Durable Object class
 		const id = env.MY_DURABLE_OBJECT.idFromName("foo");
 
-		// A stub is a client used to invoke methods on the Durable Object instance
+		// A stub is a client used to invoke methods on the Durable Object
 		const stub = env.MY_DURABLE_OBJECT.get(id);
 
 		// Methods on the Durable Object are invoked via the stub
@@ -159,7 +159,7 @@ export default {
 		// Every unique ID refers to an individual instance of the Durable Object class
 		const id = env.MY_DURABLE_OBJECT.idFromName("foo");
 
-		// A stub is a client used to invoke methods on the Durable Object instance
+		// A stub is a client used to invoke methods on the Durable Object
 		const stub = env.MY_DURABLE_OBJECT.get(id);
 
 		// Methods on the Durable Object are invoked via the stub
@@ -174,7 +174,7 @@ export default {
 
 ## 5. Configure Durable Object bindings
 
-To allow a Worker to invoke methods on a Durable Object instance, the Worker must have a [Durable Object binding](/workers/runtime-apis/bindings/) in the project's [`wrangler.toml`](/workers/wrangler/configuration/#durable-objects) file. The binding is configured to use a particular Durable Object class.
+To allow a Worker to invoke methods on a Durable Object, the Worker must have a [Durable Object binding](/workers/runtime-apis/bindings/) in the project's [`wrangler.toml`](/workers/wrangler/configuration/#durable-objects) file. The binding is configured to use a particular Durable Object class.
 
 ```toml
 [[durable_objects.bindings]]

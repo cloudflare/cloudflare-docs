@@ -20,19 +20,12 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: 22
-
-      - name: Get npm cache directory
-        id: npm-cache-dir
-        shell: bash
-        run: echo "dir=$(npm config get cache)" >> ${GITHUB_OUTPUT}
-
-      - uses: actions/cache@v4
-        id: npm-cache
+          cache: "npm"
+      - uses: actions/cache/restore@v4
         with:
-          path: ${{ steps.npm-cache-dir.outputs.dir }}
-          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
-          restore-keys: |
-            ${{ runner.os }}-node-
+          path: |
+            node_modules/.astro
+          key: static
 
       - run: npm ci
       - run: npm run check
@@ -44,5 +37,14 @@ jobs:
           NODE_OPTIONS: "--max-old-space-size=4192"
           RUN_LINK_CHECK: true
 
+      - uses: actions/cache/save@v4
+        with:
+          path: |
+            node_modules/.astro
+          key: static
+
       - name: Check - Validate redirects (infinite loops, sources with fragment)
         run: npx tsm bin/validate-redirects.ts
+
+      - name: Tests
+        run: npm run test

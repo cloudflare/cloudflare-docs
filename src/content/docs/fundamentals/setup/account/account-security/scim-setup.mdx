@@ -11,17 +11,22 @@ Currently, we only provide SCIM support for Enterprise customers, and for Micros
 
 ## Limitations
 
-* If a user is the only Super Administrator on an Enterprise account, they will not be deprovisioned.
-* Cloudflare currently only supports [Account-scoped Roles](/fundamentals/setup/manage-members/roles/#account-scoped-roles) and does not support Domain-scoped Roles provisioning via SCIM. We are working on this limitation.
-* Cloudflare does not currently allow custom group names to leave space for future development.
+- If a user is the only Super Administrator on an Enterprise account, they will not be deprovisioned.
+- Cloudflare currently only supports [Account-scoped Roles](/fundamentals/setup/manage-members/roles/#account-scoped-roles) and does not support Domain-scoped Roles provisioning via SCIM. We are working on this limitation.
+- Cloudflare does not currently allow custom group names to leave space for future development.
 
 ## Prerequisites
 
-* Cloudflare provisioning with SCIM is only available to Enterprise customers and requires a Cloudflare-specific feature flag. Contact your account team for more information.
-* In Cloudflare, [Super Administrator](/fundamentals/setup/manage-members/roles/) access on the account.
-* In your identity provider, the ability to create applications and groups.
+- Cloudflare provisioning with SCIM is only available to Enterprise customers and requires a Cloudflare-specific feature flag. Contact your account team for more information.
+- In Cloudflare, [Super Administrator](/fundamentals/setup/manage-members/roles/) access on the account.
+- In your identity provider, the ability to create applications and groups.
 
-***
+:::note
+
+Accounts provisioned with SCIM need to verify their email addresses. 
+:::
+
+---
 
 ## Create an API token
 
@@ -42,27 +47,22 @@ Currently, we only provide SCIM support for Enterprise customers, and for Micros
 
 5. Copy the token value.
 
-***
+---
 
 ## Provision with Okta
 
 ### Set up your Okta SCIM application.
 
 1. In the Okta dashboard, go to **Applications** > **Applications**.
-
 2. Select **Browse App Catalog**.
-
 3. Locate and select **SCIM 2.0 Test App (OAuth Bearer Token)**.
-
 4. Select **Add Integration** and name your integration.
-
 5. Enable the following options:
 
    * **Do not display application icon to users**
    * **Do not display application icon in the Okta Mobile App**
 
 6. Disable **Automatically log in when user lands on login page**.
-
 7. Select **Next**, then select **Done**.
 
 ### Integrate the Cloudflare API.
@@ -92,17 +92,18 @@ This will provision all of the users affected to your Cloudflare account with "m
 
    Refer to the list of available [Roles](/fundamentals/setup/manage-members/roles/) for more details. 
    :::
-2. In the Application object, go to **Provisioning** and select **Edit**.
-3. Enable **Create Users** and **Deactivate Users**. Select **Save**.
-4. Go to **Push Groups** and make sure the appropriate group matches the existing group of the same name on Cloudflare
-5. Disable **Rename groups**. Select **Save**.
-6. Within the **Push Groups** tab, select **Push Groups**.
-7. Add the groups you created.
-8. Select **Save**.
+2. Go to your SCIM application in the App Integration Catalog, then select **Provisioning**.
+3. Select **Edit**.
+4. Enable **Create Users** and **Deactivate Users**. Select **Save**.
+5. Go to **Push Groups** and make sure the appropriate group matches the existing group of the same name on Cloudflare.
+6. Disable **Rename groups**. Select **Save**.
+7. Within the **Push Groups** tab, select **Push Groups**.
+8. Add the groups you created.
+9. Select **Save**.
 
 Adding any users to these groups will grant them the role. Removing the users from the identity provider will remove them from the associated role.
 
-***
+---
 
 ## Provision with Microsoft Entra ID
 

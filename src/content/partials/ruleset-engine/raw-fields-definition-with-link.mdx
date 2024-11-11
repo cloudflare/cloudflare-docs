@@ -1,0 +1,8 @@
+---
+params:
+  - fieldLink
+---
+
+import { Markdown } from "~/components";
+
+This is the raw field version of the <Markdown text={props.fieldLink}/> field. Raw fields, prefixed with `raw.`, preserve original request values for later evaluations. These fields are immutable during the entire request evaluation workflow, and they are not affected by the actions of previously matched rules.

@@ -5,7 +5,7 @@ sidebar:
   order: 2
 ---
 
-import { Details, GlossaryTooltip, InlineBadge, Render } from "~/components";
+import { Details, GlossaryTooltip, InlineBadge, Render, Tabs, TabItem} from "~/components";
 
 WARP settings define the WARP client modes and permissions available to end users.
 
@@ -61,7 +61,7 @@ The client will automatically reconnect after the [Auto connect period](#auto-co
 
 </Details>
 
-When `Enabled`, the WARP client will [automatically install](/cloudflare-one/connections/connect-devices/warp/user-side-certificates/install-cert-with-warp/) your organization's root certificate on the device.
+When `Enabled`, the WARP client will [automatically install](/cloudflare-one/connections/connect-devices/warp/user-side-certificates/automated-deployment/) your organization's root certificate on the device.
 
 ### Override local interface IP <InlineBadge preset="beta" />
 
@@ -237,15 +237,16 @@ Creates [Split Tunnel](/cloudflare-one/connections/connect-devices/warp/configur
 | Windows  | ✅           | 2024.1.159.0         |
 | macOS    | ✅           | 2024.1.160.0         |
 | Linux    | ✅           | 2024.2.62.0          |
-| iOS      | ❌           |                      |
+| iOS      | ❌           | N/A[^1]              |
 | Android  | ✅           | 1.4                  |
 | ChromeOS | ✅           | 1.4                  |
 
+[^1]:  Current versions of iOS do not allow LAN traffic to route through the WARP tunnel. Therefore, this feature is not needed on iOS.
 </Details>
 
 This setting is intended as a workaround for users whose home network uses the same set of IP addresses as your corporate private network. To use this setting, **Split Tunnels** must be set to **Exclude IPs and domains**.
 
-When `Enabled`, users have the option to access local network resources (such as printers and storage devices) while connected to WARP. When the user enables **Access local network** in the WARP GUI, WARP will detect the local IP range advertised by the user's home network (for example, `10.0.0.0/24`) and temporarily exclude this range from the WARP tunnel. The user will need to re-request access after the **Timeout** expires. Setting **Timeout** to `0 minutes` will allow LAN access until the next WARP reconnection, such as a reboot or a laptop waking from sleep.
+When `Enabled`, users have the option to access local network resources (such as printers and storage devices) while connected to WARP. When the user turns on [**Access Local Network**](#access-local-network-as-a-user), WARP will detect the local IP range advertised by the user's home network (for example, `10.0.0.0/24`) and temporarily exclude this range from the WARP tunnel. The user will need to re-request access after the **Timeout** expires. Setting **Timeout** to `0 minutes` will allow LAN access until the next WARP reconnection, such as a reboot or a laptop waking from sleep.
 
 :::caution[Warning]
 
@@ -255,6 +256,31 @@ Enabling this setting comes with two major consequences:
 - **User loses access to corporate resources.** — While accessing their local network, the user will be unable to connect to corporate resources that fall within the same IP/CIDR range.
 
 :::
+
+#### Access local network as a user
+
+To turn on local network access in the WARP client:
+
+<Tabs> <TabItem label="Windows and macOS">
+
+1. Select the Cloudflare logo in the menu bar.
+2. Select the gear icon.
+3. Select **Access Local Network**.
+</TabItem> <TabItem label="Linux">
+
+1. Open a terminal window.
+2. Run `warp-cli override local-network start`.
+
+</TabItem>
+
+<TabItem label="Android and ChromeOS">
+
+1. Open the Cloudflare One Agent app.
+2. Go to **Settings** > **Advanced** > **Connection Options**.
+3. Select **Access Local Network**.
+</TabItem>
+
+</Tabs>
 
 #### Limitations
 

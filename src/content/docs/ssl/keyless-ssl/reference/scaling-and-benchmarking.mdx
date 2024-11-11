@@ -6,7 +6,7 @@ sidebar:
 
 ---
 
-Cloudflare’s Keyless SSL technology was designed to scale to accommodate any sized workload using vertical and horizontal scaling, and pre-computation techniques wherever possible, such as ECDSA. The goals of the architectural design of the key server are to minimize latency while maximizing signing operations per second.
+Cloudflare's Keyless SSL technology was designed to scale to accommodate any sized workload using vertical and horizontal scaling, and pre-computation techniques wherever possible, such as ECDSA. The goals of the architectural design of the key server are to minimize latency while maximizing signing operations per second.
 
 Each key server uses a worker pool model, with incoming client connections handled by its own pair of reader/writer goroutines and cryptographic work done in separate worker goroutines pulled from a global pool.
 
@@ -26,7 +26,7 @@ Additional details can be found in the [gokeyless server readme file](https://gi
 
 ## Benchmarks
 
-We conducted benchmarks using [Cloudflare’s gokeyless bench tool](https://github.com/cloudflare/gokeyless/tree/master/cmd/bench) on a then current-generation, compute-optimized EC2 instance ([c5.xlarge](https://aws.amazon.com/ec2/instance-types/c5/)). This particular instance has 4 vCPUs powered by 3.0 GHz Intel Xeon processors:
+We conducted benchmarks using [Cloudflare's gokeyless bench tool](https://github.com/cloudflare/gokeyless/tree/master/cmd/bench) on a then current-generation, compute-optimized EC2 instance ([c5.xlarge](https://aws.amazon.com/ec2/instance-types/c5/)). This particular instance has 4 vCPUs powered by 3.0 GHz Intel Xeon processors:
 
 ```txt
 c5$ cat /proc/cpuinfo|grep "model name"
