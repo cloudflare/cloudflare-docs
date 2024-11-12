@@ -119,7 +119,24 @@ To uninstall the Fleet-deployed WARP client:
 
 ## Linux
 
-Fleet allows you to [execute custom scripts](https://fleetdm.com/guides/scripts) on Linux hosts. Your script should:
+Fleet allows you to [execute custom scripts](https://fleetdm.com/guides/scripts) on Linux hosts. The following example script creates an [MDM file](/cloudflare-one/connections/connect-devices/warp/deployment/mdm-deployment/#linux) and installs WARP on an Ubuntu 22.04 host:
 
-1. Place an [`mdm.xml` file](/cloudflare-one/connections/connect-devices/warp/deployment/mdm-deployment/#linux) in `/var/lib/cloudflare-warp/`.
-2. Run the [WARP installation commands](https://pkg.cloudflareclient.com/)  for your specific Linux platform.
+```sh
+#!/bin/sh
+
+# Write the mdm.xml file
+touch /var/lib/cloudflare-warp/mdm.xml
+echo -e "<dict>\n   <key>organization</key>\n   <string>your-team-name</string>\n</dict>
+" > /var/lib/cloudflare-warp/mdm.xml
+
+# Add cloudflare gpg key
+curl -fsSL https://pkg.cloudflareclient.com/pubkey.gpg | sudo gpg --yes --dearmor --output /usr/share/keyrings/cloudflare-warp-archive-keyring.gpg
+
+# Add this repo to your apt repositories
+echo "deb [signed-by=/usr/share/keyrings/cloudflare-warp-archive-keyring.gpg] https://pkg.cloudflareclient.com/ $(lsb_release -cs) main" | sudo tee /etc/apt/sources.list.d/cloudflare-client.list
+
+# Install
+sudo apt-get -y update && sudo apt-get -y install cloudflare-warp
+```
+
+To install WARP on other Linux distributions, refer to the [package repository](https://pkg.cloudflareclient.com/).
