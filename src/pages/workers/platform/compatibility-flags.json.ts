@@ -1,7 +1,7 @@
 import { getCollection } from "astro:content";
 
 export async function GET() {
-	const entries = await getCollection("compatibility-dates");
+	const entries = await getCollection("compatibility-flags");
 
 	entries.sort((a, b) => a.data.sort_date.localeCompare(b.data.sort_date));
 

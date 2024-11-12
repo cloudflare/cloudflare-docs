@@ -1448,6 +1448,7 @@
 /workers/platform/triggers/cron-triggers/ /workers/configuration/cron-triggers/ 301
 /workers/platform/cron-triggers/ /workers/configuration/cron-triggers/ 301
 /workers/platform/compatibility-dates/ /workers/configuration/compatibility-dates/ 301
+/workers/platform/compatibility-dates.json /workers/platform/compatibility-flags.json 301
 /workers/learning/integrations/ /workers/configuration/integrations/ 301
 /workers/learning/integrations/apis/ /workers/configuration/integrations/apis/ 301
 /workers/learning/integrations/external-services/ /workers/configuration/integrations/external-services/ 301

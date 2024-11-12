@@ -11,7 +11,7 @@ const props = z.object({
 
 const { experimental } = props.parse(Astro.props);
 
-let flags = await getCollection("compatibility-dates");
+let flags = await getCollection("compatibility-flags");
 
 if (experimental) {
 	flags = flags.filter((x) => x.data.experimental);

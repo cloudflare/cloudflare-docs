@@ -6,7 +6,7 @@ head: []
 description: Opt into a specific features of the Workers runtime for your Workers project.
 ---
 
-import { CompatibilityDates } from "~/components";
+import { CompatibilityFlags } from "~/components";
 
 Compatibility flags enable specific features. They can be useful if you want to help the Workers team test upcoming changes that are not yet enabled by default, or if you need to hold back a change that your code depends on but still want to apply other compatibility changes.
 
@@ -61,14 +61,14 @@ The Node.js `AsyncLocalStorage` API is a particularly useful feature for Workers
 compatibility_flags = [ "nodejs_als" ]
 ```
 
-## Change history
+## Flags history
 
-Newest changes are listed first.
+Newest flags are listed first.
 
-<CompatibilityDates />
+<CompatibilityFlags />
 
-## Experimental changes
+## Experimental flags
 
-These changes can be enabled via `compatibility_flags`, but are not yet scheduled to become default on any particular date.
+These flags can be enabled via `compatibility_flags`, but are not yet scheduled to become default on any particular date.
 
-<CompatibilityDates experimental />
+<CompatibilityFlags experimental />

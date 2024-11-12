@@ -1,8 +1,8 @@
 import { z } from "astro:schema";
 
-export type CompatibilityDatesSchema = z.infer<typeof compatibilityDatesSchema>;
+export type CompatibilityFlagsSchema = z.infer<typeof compatibilityFlagsSchema>;
 
-export const compatibilityDatesSchema = z.object({
+export const compatibilityFlagsSchema = z.object({
 	name: z.string(),
 	enable_date: z.string().optional().nullable(),
 	enable_flag: z.string().nullable(),
