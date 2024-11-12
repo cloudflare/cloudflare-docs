@@ -14,15 +14,14 @@ Create a script to monitor IP address changes and then have that script push cha
 
 ## ddclient
 
-[ddclient](https://github.com/ddclient/ddclient) is a third-party Perl client used to update dynamic DNS entries for accounts on various DNS providers.
+[ddclient](https://github.com/ddclient/ddclient) is a third-party Perl client used to update dynamic DNS entries for accounts on various DNS providers. It works on Linux, macOS, or any other Unix systems.
 
-## DNS-O-Matic
+## Dynamic-DNS-Record-Updater-For-CloudFlare
 
-[DNS-O-Matic](https://dnsomatic.com/docs/) is a third-party tool that announces dynamic IP changes to multiple services.
+This [third-party C# client](https://github.com/SunsetQuest/Dynamic-DNS-Record-Updater-For-CloudFlare/) can update several DNS entries dynamicly for a zone.
+Configuration requires the following information:
 
-Configuration of DNS-O-Matic requires the following information:
-
-* **Email**: `<CLOUDFLARE ACCOUNT EMAIL ADDRESS>` (associated account must have sufficient privileges to manage DNS)
+* **Zone Id**: `<CLOUDFLARE ZONE ID>` (associated ZoneID to manage DNS)
 * **API Token**: `<CLOUDFLARE GLOBAL API KEY>` (for details refer to [API Keys](/fundamentals/api/get-started/keys/))
-* **Domain**: `<example.com>`
-* **Hostname**: *dynamic*
+* **Domains**: `["git.example.com", "example.com"]`
+* **FrequencyToCheckInMinutes**: `120` (Default)
