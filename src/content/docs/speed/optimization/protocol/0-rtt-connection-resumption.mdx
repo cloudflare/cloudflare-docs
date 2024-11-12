@@ -7,11 +7,13 @@ sidebar:
 
 import { FeatureTable, TabItem, Tabs } from "~/components";
 
-Zero round trip time resumption (0-RTT) improves performance for clients who have previously connected to your website.
+Zero round trip time resumption (0-RTT) improves performance for clients who have previously connected to your website, reducing latency for returning users. This feature is especially beneficial for those who frequently visit your application or connect over mobile networks.
 
-This feature particularly benefits end users who visit your application regularly or who use mobile networks.
+We support 0-RTT for GET, HEAD, and OPTIONS requests, facilitating faster responses for these types of requests. Note that 0-RTT is not supported for POST requests.
 
-For more details on what 0-RTT is, how it works, and potential limitations, refer to [our blog](https://blog.cloudflare.com/even-faster-connection-establishment-with-quic-0-rtt-resumption/).
+In line with 0-RTT standards, we add the `Early-Data: 1` header to 0-RTT requests, which allows origin servers to identify when a request has used 0-RTT resumption. Customers should be able to see the `Early-Data: 1` header for any 0-RTT requests connecting to their origin.
+
+For more information on 0-RTT, including its functionality and potential limitations, refer to our [blog post](https://blog.cloudflare.com/even-faster-connection-establishment-with-quic-0-rtt-resumption/).
 
 ## Availability
 

@@ -171,7 +171,7 @@ Policies with Block actions block network traffic from reaching certain IPs or p
 | ---------------- | -------- | ----- | ------ |
 | Destination Port | in       | `443` | Block  |
 
-#### WARP client block notifications <InlineBadge preset="early-access" />
+#### WARP client block notifications
 
 <Render file="gateway/client-notifications" />
 
@@ -292,7 +292,7 @@ The country of the user making the request. <Render file="gateway/selectors/sour
 
 <Render
 	file="gateway/selectors/source-internal-ip"
-	params={{ one: "network", two: "net" }}
+	params={{ one: "network", two: "net.src.internal_src_ip" }}
 />
 
 ### Source IP

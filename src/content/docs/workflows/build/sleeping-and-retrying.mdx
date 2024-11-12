@@ -70,7 +70,7 @@ const defaultConfig: WorkflowStepConfig = {
 When providing your own `StepConfig`, you can configure:
 
 * The total number of attempts to make for a step
-* The delay between attempts
+* The delay between attempts (accepts both `number` (ms) or a human-readable format)
 * What backoff algorithm to apply between each attempt: any of `constant`, `linear`, or `exponential`
 * When to timeout (in duration) before considering the step as failed (including during a retry attempt)
 

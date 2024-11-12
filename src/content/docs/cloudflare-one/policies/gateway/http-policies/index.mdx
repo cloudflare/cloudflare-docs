@@ -155,7 +155,7 @@ The Block action blocks outbound traffic from reaching destinations you specify 
 | Application      | in            | `Google Drive` | And   | Block  |
 | Upload Mime Type | matches regex | `.*`           |       |        |
 
-#### WARP client block notifications <InlineBadge preset="early-access" />
+#### WARP client block notifications
 
 <Render file="gateway/client-notifications" />
 
@@ -407,9 +407,9 @@ When using Terraform to create a policy with the [Do Not Inspect](#do-not-inspec
 
 ### Content Categories
 
-| UI name            | API example                                             |
-| ------------------ | ------------------------------------------------------- |
-| Content Categories | `not(any(http.request.uri.content_category[*] in {1}))` |
+| UI name            | API example                                      |
+| ------------------ | ------------------------------------------------ |
+| Content Categories | `not(any(http.conn.content_category[*] in {1}))` |
 
 For more information, refer to our list of [content categories](/cloudflare-one/policies/gateway/domain-categories/#content-categories).
 
@@ -441,9 +441,9 @@ Only applies to traffic sent through the [WARP client](/cloudflare-one/connectio
 Only applies to traffic sent through the [WARP client](/cloudflare-one/connections/connect-devices/warp/set-up-warp/#gateway-with-warp-default).
 :::
 
-| UI name        | API example                   |
-| -------------- | ----------------------------- |
-| Destination IP | `http.dst.ip == "10.0.0.0/8"` |
+| UI name        | API example                        |
+| -------------- | ---------------------------------- |
+| Destination IP | `http.conn.dst_ip == "10.0.0.0/8"` |
 
 ### Device Posture
 
@@ -453,9 +453,9 @@ Only applies to traffic sent through the [WARP client](/cloudflare-one/connectio
 
 Use this selector to match against a domain and all subdomains -- for example, if you want to block `example.com` and subdomains such as `www.example.com`.
 
-| UI name | API example                                     |
-| ------- | ----------------------------------------------- |
-| Domain  | `any(http.request.domains[*] == "example.com")` |
+| UI name | API example                                  |
+| ------- | -------------------------------------------- |
+| Domain  | `any(http.conn.domains[*] == "example.com")` |
 
 ### Download and Upload File Types
 
@@ -540,9 +540,9 @@ Scans HTTP traffic for the presence of social security numbers and other PII. Yo
 
 Use this selector to match only the hostname specified -- for example, if you want to block `test.example.com` but not `example.com` or `www.test.example.com`.
 
-| UI name | API example                               |
-| ------- | ----------------------------------------- |
-| Host    | `http.request.host == "test.example.com"` |
+| UI name | API example                                |
+| ------- | ------------------------------------------ |
+| Host    | `http.conn.hostname == "test.example.com"` |
 
 :::note
 Some hostnames (`example.com`) will invisibly redirect to the www subdomain (`www.example.com`). To match this type of website, use the [Domain](#domain) selector instead of the Host selector.
@@ -566,9 +566,9 @@ Some hostnames (`example.com`) will invisibly redirect to the www subdomain (`ww
 
 ### Security Risks
 
-| UI name        | API example                                |
-| -------------- | ------------------------------------------ |
-| Security Risks | `any(http.request.uri.category[*] in {1})` |
+| UI name        | API example                                  |
+| -------------- | -------------------------------------------- |
+| Security Risks | `any(http.conn.security_category[*] in {1})` |
 
 For more information, refer to our list of [security categories](/cloudflare-one/policies/gateway/domain-categories/#security-categories).
 
@@ -584,14 +584,14 @@ The country of the user making the request. <Render file="gateway/selectors/sour
 
 <Render
 	file="gateway/selectors/source-internal-ip"
-	params={{ one: "HTTP", two: "http" }}
+	params={{ one: "HTTP", two: "http.conn.internal_src_ip" }}
 />
 
 ### Source IP
 
-| UI name   | API example                   |
-| --------- | ----------------------------- |
-| Source IP | `http.src.ip == "10.0.0.0/8"` |
+| UI name   | API example                        |
+| --------- | ---------------------------------- |
+| Source IP | `http.conn.src_ip == "10.0.0.0/8"` |
 
 ### URL
 

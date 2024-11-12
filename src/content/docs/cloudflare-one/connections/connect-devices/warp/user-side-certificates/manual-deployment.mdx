@@ -7,7 +7,7 @@ head: []
 description: Manually add a Cloudflare certificate to mobile devices and
   individual applications.
 banner:
-  content: The default global Cloudflare root certificate will expire on 2025-02-02. If you installed the default Cloudflare certificate before 2024-17-10, you must <a href="#generate-a-cloudflare-root-certificate">generate a new certificate</a> and activate it for your Zero Trust organization to avoid inspection errors.
+  content: The default global Cloudflare root certificate will expire on 2025-02-02. If you installed the default Cloudflare certificate before 2024-10-17, you must <a href="#generate-a-cloudflare-root-certificate">generate a new certificate</a> and activate it for your Zero Trust organization to avoid inspection errors.
 ---
 
 import { Details, Render, TabItem, Tabs } from "~/components";
@@ -40,7 +40,7 @@ To verify your download, use a terminal to check that the downloaded certificate
 #### SHA1
 
 ```sh title="SHA1 .crt example"
-openssl x509 -noout -fingerprint -sha1 -inform der -in <Cloudflare_CA.crt>
+openssl x509 -noout -fingerprint -sha1 -inform der -in <certificate.crt>
 ```
 
 ```sh output
@@ -48,7 +48,7 @@ SHA1 Fingerprint=BB:2D:B6:3D:6B:DE:DA:06:4E:CA:CB:40:F6:F2:61:40:B7:10:F0:6C
 ```
 
 ```sh title="SHA1 .pem example"
-openssl x509 -noout -fingerprint -sha1 -inform pem -in <Cloudflare_CA.pem>
+openssl x509 -noout -fingerprint -sha1 -inform pem -in <certificate.pem>
 ```
 
 ```sh output
@@ -58,7 +58,7 @@ SHA1 Fingerprint=BB:2D:B6:3D:6B:DE:DA:06:4E:CA:CB:40:F6:F2:61:40:B7:10:F0:6C
 #### SHA256
 
 ```sh title="SHA256 .crt example"
-openssl x509 -noout -fingerprint -sha256 -inform der -in <Cloudflare_CA.crt>
+openssl x509 -noout -fingerprint -sha256 -inform der -in <certificate.crt>
 ```
 
 ```sh output
@@ -66,7 +66,7 @@ sha256 Fingerprint=F5:E1:56:C4:89:78:77:AD:79:3A:1E:83:FA:77:83:F1:9C:B0:C6:1B:5
 ```
 
 ```sh title="SHA256 .pem example"
-openssl x509 -noout -fingerprint -sha256 -inform pem -in <Cloudflare_CA.pem>
+openssl x509 -noout -fingerprint -sha256 -inform pem -in <certificate.pem>
 ```
 
 ```sh output
@@ -108,7 +108,7 @@ The root certificate is now installed and ready to be used.
 3. Add the certificate to your keychain:
 
 ```sh
-sudo security add-trusted-cert -d -r trustRoot -k /Library/Keychains/System.keychain <path-to-Cloudflare_CA.crt>
+sudo security add-trusted-cert -d -r trustRoot -k /Library/Keychains/System.keychain <path-to-certificate.crt>
 ```
 
 This keychain will allow all users on the system access to the certificate. If you want to install the certificate to a different keychain, replace `System.keychain` with the name of that keychain.
@@ -116,7 +116,7 @@ This keychain will allow all users on the system access to the certificate. If y
 4. Update the OpenSSL CA Store to include the Cloudflare certificate:
 
 ```sh
-echo | sudo tee -a /etc/ssl/cert.pem < Cloudflare_CA.pem
+echo | sudo tee -a /etc/ssl/cert.pem < certificate.pem
 ```
 
 The root certificate is now installed and ready to be used.
@@ -167,7 +167,7 @@ The following procedure applies to Debian-based systems, such as Debian, Ubuntu,
 3. Copy the certificate to the system, changing the file extension to `.crt`.
 
    ```sh
-   sudo cp Cloudflare_CA.pem /usr/share/ca-certificates/Cloudflare_CA.crt
+   sudo cp certificate.pem /usr/share/ca-certificates/certificate.crt
    ```
 
 4. Import the certificate.
@@ -190,7 +190,7 @@ The following procedure applies to Red Hat-based systems, such as CentOS and Red
 3. Copy both certificates to the trust store.
 
    ```sh
-   sudo cp Cloudflare_CA.crt Cloudflare_CA.pem /etc/pki/ca-trust/source/anchors
+   sudo cp certificate.crt certificate.pem /etc/pki/ca-trust/source/anchors
    ```
 
 4. Import the certificate.
@@ -240,7 +240,7 @@ ChromeOS devices use different methods to store and deploy root certificates. Ce
 	params={{ one: "Install from SD card" }}
 />
 
-5. In the file open dialog, choose the `Cloudflare_CA.crt` file you downloaded. Select **Open**.
+5. In the file open dialog, choose the `certificate.crt` file you downloaded. Select **Open**.
 6. Enter a name to identify the certificate. Ensure **Credential use** is set to _VPN and apps_.
 7. Select **OK**.
 
@@ -254,7 +254,7 @@ ChromeOS devices use different methods to store and deploy root certificates. Ce
 />
 
 5. When prompted with a privacy warning, select **Install anyway**.
-6. In the file open dialog, choose the `Cloudflare_CA.crt` file you downloaded. Select **Open**.
+6. In the file open dialog, choose the `certificate.crt` file you downloaded. Select **Open**.
 7. To verify the certificate is installed and trusted, go to **Settings** > **Apps** > **Google Play Store** > **Manage Android Preferences** > **Security** > **Credentials** > **Trusted credentials** > **User**.
 
 </TabItem> </Tabs>
@@ -283,7 +283,7 @@ To install a Cloudflare certificate to Chrome manually:
 2. In Chrome, go to **Settings** > **Privacy and security** > **Security**.
 3. Select **Manage certificates**.
 4. Go to **Authorities**. Select **Import**.
-5. In the file open dialog, choose the `Cloudflare_CA.pem` file you downloaded.
+5. In the file open dialog, choose the `certificate.pem` file you downloaded.
 6. In the dialog box, turn on _Trust this certificate for identifying websites_, _Trust this certificate for identifying email users_, and _Trust this certificate for identifying software makers_. Select **OK**.
 7. To verify the certificate was installed and trusted, locate it in **Authorities**.
 
@@ -297,7 +297,7 @@ To install a Cloudflare certificate to Firefox manually:
 2. In Firefox, go to **Settings** > **Privacy & Security**.
 3. In **Security**, select **Certificates** > **View Certificates**.
 4. In **Authorities**, select **Import**.
-5. In the file open dialog, choose the `Cloudflare_CA.pem` file you downloaded.
+5. In the file open dialog, choose the `certificate.pem` file you downloaded.
 6. In the dialog box, turn on _Trust this CA to identify websites_ and _Trust this CA to identify email users_. Select **OK**.
 7. To verify the certificate was installed and trusted, locate it in the table under **Cloudflare**.
 
@@ -305,49 +305,51 @@ For information on installing a Cloudflare certificate for organizations, refer 
 
 ### Python
 
+Depending on which version of Python you have installed and your configuration, you may need to use either the `python` or `python3` command. If you use [virtual environments](https://docs.python.org/3/library/venv.html), you will need to repeat the following steps within each virtual environment.
+
 #### Python on Windows
 
 The command to install the certificate with Python on Windows automatically includes `pip` and `certifi` (the default certificate bundle for certificate validation).
 
 1. [Download a Cloudflare certificate](#download-the-cloudflare-root-certificate) in `.crt` format.
-2. Update the bundle to include the Cloudflare certificate:
+2. In a PowerShell terminal, install the `certifi` package:
    ```powershell
-   gc "$env:USERPROFILE\Downloads\Cloudflare_CA.crt" | ac C:\Python37\Lib\site-packages\pip\_vendor\certifi\cacert.pem
+   python -m pip install certifi
    ```
+3. Identify the Python CA store:
+   ```powershell
+   $CERT_PATH = python -c "import certifi; print(certifi.where())"
+   ```
+4. Update the bundle to include the Cloudflare certificate:
+   ```powershell
+   gc "$env:USERPROFILE\Downloads\certificate.crt" | ac $CERT_PATH
+   ```
+5. (Optional) Configure your system variables to point to the CA store by adding them to PowerShell's configuration file:
+   ```powershell
+   [System.Environment]::SetEnvironmentVariable('CERT_PATH', $CERT_PATH, 'Machine')
+   [System.Environment]::SetEnvironmentVariable('SSL_CERT_FILE', $CERT_PATH, 'Machine')
+   [System.Environment]::SetEnvironmentVariable('REQUESTS_CA_BUNDLE', $CERT_PATH, 'Machine')
+   ```
+6. Restart your terminal.
 
 #### Python on Mac and Linux
 
-1. In a terminal, install the `certifi` package:
-
+1. [Download a Cloudflare certificate](#download-the-cloudflare-root-certificate) in `.pem` format.
+2. In a terminal, install the `certifi` package:
    ```sh
-   pip install certifi
+   python -m pip install certifi
    ```
-
-2. Identify the CA store:
-
+3. Append the Cloudflare certificate to this CA store by running:
    ```sh
-   python -m certifi
+   echo | cat - certificate.pem >> $(python -m certifi)
    ```
-
-   ```sh output
-   ~/Library/Python/3.7/lib/python/site-packages/certifi/cert.pem
-   ```
-
-3. [Download a Cloudflare certificate](#download-the-cloudflare-root-certificate) in `.pem` format.
-
-4. Append the Cloudflare certificate to this CA store by running:
-
+4. (Optional) Configure your system variables to point to the CA store by adding them to your shell's configuration file (such as `~/.zshrc` or `~/.bash_profile`). For example:
    ```sh
-   echo | cat - Cloudflare_CA.pem >> $(python -m certifi)
-   ```
-
-5. If needed, configure system variables to point to this CA store:
-
-   ```sh
-   export CERT_PATH=$(python -m certifi)
+   echo 'export CERT_PATH=$(python -c "import certifi; print(certifi.where())")
    export SSL_CERT_FILE=${CERT_PATH}
-   export REQUESTS_CA_BUNDLE=${CERT_PATH}
+   export REQUESTS_CA_BUNDLE=${CERT_PATH}' >> ~/.zshrc
    ```
+5. Restart your terminal.
 
 ### Git
 
@@ -386,7 +388,7 @@ The command to install the certificate with Python on Windows automatically incl
 3. The `http.sslcainfo` defines the CA Certificate store. To append the Cloudflare certificate to the CA bundle, update `http.sslcainfo`.
 
    ```powershell
-   gc .\Cloudflare_CA.pem | ac $(git config --get http.sslcainfo)
+   gc .\certificate.pem | ac $(git config --get http.sslcainfo)
    ```
 
 #### Git on Mac and Linux
@@ -427,7 +429,7 @@ The commands below will set the Google Cloud SDK to use a Cloudflare certificate
 3. Combine the certs into a single `.pem` file.
 
    ```sh
-   cat cacert.pem Cloudflare_CA.pem > ~/ca.pem
+   cat cacert.pem certificate.pem > ~/ca.pem
    ```
 
 4. Configure Google Cloud to use the combined `.pem`.
@@ -447,7 +449,7 @@ If you use Kaniko with Google Cloud SDK, you must install a Cloudflare certifica
 
 #### Google Drive for desktop
 
-To trust the Cloudflare root certificate in the Google Drive desktop application, follow the procedure for your operating system. These steps require you to [download the .pem certificate](#download-the-cloudflare-root-certificate).
+To trust a Cloudflare root certificate in the Google Drive desktop application, follow the procedure for your operating system. These steps require you to [download the .pem certificate](#download-the-cloudflare-root-certificate).
 
 <Details header="macOS">
 
@@ -458,7 +460,7 @@ To trust the Cloudflare root certificate in the Google Drive desktop application
 3. Append the contents of `cloudflare.pem` to the end of `roots.pem`.
 
    ```sh
-   cat ~/Downloads/Cloudflare_CA.pem >> path/to/roots.pem
+   cat ~/Downloads/certificate.pem >> path/to/roots.pem
    ```
 
 4. Apply the newly created root certificate to your Google Drive application.
@@ -484,7 +486,7 @@ defaults read /Library/Preferences/com.google.drivefs.settings
 3. Append the contents of `cloudflare.pem` to the end of `roots.pem`.
 
    ```powershell
-   cat ~\Downloads\Cloudflare_CA.pem >> path\to\roots.pem
+   cat ~\Downloads\certificate.pem >> path\to\roots.pem
    ```
 
 4. Update the Google Drive registry key.
@@ -509,11 +511,11 @@ Google Apps Manager (GAM) uses its own certificate store. To add a Cloudflare ce
 
 ### AWS CLI
 
-If you're using the AWS CLI, you need to set the `AWS_CA_BUNDLE` environment variable to use the Cloudflare root certificate. Commands are available for different operating systems in the [AWS instructions](https://docs.aws.amazon.com/cli/latest/userguide/cli-configure-envvars.html).
+If you're using the AWS CLI, you need to set the `AWS_CA_BUNDLE` environment variable to use a Cloudflare root certificate. Commands are available for different operating systems in the [AWS instructions](https://docs.aws.amazon.com/cli/latest/userguide/cli-configure-envvars.html).
 
 ### PHP Composer
 
-The command below will set the [`cafile`](https://getcomposer.org/doc/06-config.md#cafile) configuration inside of `composer.json` to use the Cloudflare root certificate. Make sure to use the certificate in the [`.pem`](/cloudflare-one/static/Cloudflare_CA.pem) file type.
+The command below will set the [`cafile`](https://getcomposer.org/doc/06-config.md#cafile) configuration inside of `composer.json` to use the Cloudflare root certificate. Make sure to [download the certificate](#download-the-cloudflare-root-certificate) in the `.pem` file type.
 
 ```sh
 composer config cafile [PATH_TO_CLOUDFLARE_CERT.pem]
@@ -523,7 +525,7 @@ Alternatively, you can add this manually to your `composer.json` file under the 
 
 ### JetBrains
 
-To install the Cloudflare root certificate on JetBrains products, refer to the links below:
+To install a Cloudflare root certificate on JetBrains products, refer to the links below:
 
 - [AppCode](https://www.jetbrains.com/help/objc/settings-tools-server-certificates.html)
 - [CLion](https://www.jetbrains.com/help/clion/settings-tools-server-certificates.html)
@@ -538,7 +540,7 @@ To install the Cloudflare root certificate on JetBrains products, refer to the l
 
 ### Eclipse
 
-To install the Cloudflare root certificate on Eclipse IDE for Java Developers, you must add the certificate to the Java virtual machine (JVM) used by Eclipse.
+To install a Cloudflare root certificate on Eclipse IDE for Java Developers, you must add the certificate to the Java virtual machine (JVM) used by Eclipse.
 
 1. [Download a Cloudflare certificate](#download-the-cloudflare-root-certificate).
 
@@ -568,7 +570,7 @@ To install the Cloudflare root certificate on Eclipse IDE for Java Developers, y
 2. Run `keytool` to install and trust the Cloudflare certificate.
 
    ```sh
-   "$JAVA_HOME/bin/keytool" -import -file ~/Downloads/Cloudflare_CA.crt -alias CloudflareRootCA -keystore "$JAVA_HOME/lib/security/cacerts" -storepass changeit -trustcacerts -noprompt
+   "$JAVA_HOME/bin/keytool" -import -file ~/Downloads/certificate.crt -alias CloudflareRootCA -keystore "$JAVA_HOME/lib/security/cacerts" -storepass changeit -trustcacerts -noprompt
    ```
 
 3. Restart Eclipse.
@@ -586,7 +588,7 @@ set JAVA_HOME="\path\to\java.home"
 2. Run `keytool` to install and trust the Cloudflare certificate.
 
 ```powershell
-"%JAVA_HOME%\bin\keytool.exe" -import -file "%UserProfile%\Downloads\Cloudflare_CA.crt" -alias CloudflareRootCA -keystore "%JAVA_HOME%\lib\security\cacerts" -storepass changeit -trustcacerts -noprompt
+"%JAVA_HOME%\bin\keytool.exe" -import -file "%UserProfile%\Downloads\certificate.crt" -alias CloudflareRootCA -keystore "%JAVA_HOME%\lib\security\cacerts" -storepass changeit -trustcacerts -noprompt
 ```
 
 3. Restart Eclipse.
@@ -597,7 +599,7 @@ For more information on adding certificates to Eclipse with `keytool`, refer to 
 
 ### RubyGems
 
-To trust the Cloudflare root certificate in RubyGems, follow the procedure for your operating system. These steps require you to [download a `.pem` certificate](#download-the-cloudflare-root-certificate).
+To trust a Cloudflare root certificate in RubyGems, follow the procedure for your operating system. These steps require you to [download a `.pem` certificate](#download-the-cloudflare-root-certificate).
 
 <Details header="macOS and Linux">
 
@@ -606,22 +608,34 @@ To trust the Cloudflare root certificate in RubyGems, follow the procedure for y
 2. In a terminal, format the Cloudflare certificate for Ruby.
 
    ```sh
-   openssl x509 -inform DER -in ~/Downloads/Cloudflare_CA.pem -out ruby-root-ca.crt
+   openssl x509 -in ~/Downloads/certificate.pem -out ~/Downloads/ruby-root-ca.crt
    ```
 
-3. Add your RubyGems directory as an environment variable.
+3. Create a RubyGems certificate directory in your home folder.
 
    ```sh
-   export RUBY_DIR=$(gem which rubygems)
+   mkdir -p ~/.gem/ssl
    ```
 
 4. Copy the Cloudflare certificate to your RubyGems certificate store.
 
    ```sh
-   cp ~/Downloads/ruby-root-ca.crt $RUBY_DIR/ssl_cert/rubygems.org
+   cp ~/Downloads/ruby-root-ca.crt ~/.gem/ssl/rubygems.org.pem
    ```
 
-5. Restart RubyGems.
+5. Configure RubyGems to use the certificate.
+
+   ```sh
+   gem sources --add-trusted-cert ~/.gem/ssl/rubygems.org.pem
+   ```
+
+   Alternatively, add the following line to your RubyGems configuration file located in `~/.gemrc` file to globally trust the certificate:
+
+   ```yaml
+   :ssl_cert: ~/.gem/ssl/rubygems.org.pem
+   ```
+
+6. Restart any terminal sessions.
 
 </Details>
 
@@ -629,28 +643,40 @@ To trust the Cloudflare root certificate in RubyGems, follow the procedure for y
 
 1. Install [OpenSSL for Windows](https://slproweb.com/products/Win32OpenSSL.html).
 
-2. In a terminal, format the Cloudflare certificate for Ruby.
+2. In a PowerShell terminal, format the Cloudflare certificate for Ruby.
 
    ```powershell
-   openssl x509 -inform DER -in %UserProfile%\Downloads\Cloudflare_CA.pem -out ruby-root-ca.crt
+   openssl x509 -in %UserProfile%\Downloads\certificate.pem -out %UserProfile%\Downloads\ruby-root-ca.crt
    ```
 
-3. Add your RubyGems directory as an environment variable.
+3. Create a RubyGems certificate directory in your home folder.
 
    ```powershell
-   set RUBY_DIR=gem which rubygems
+   mkdir -Force "$env:USERPROFILE\.gem\ssl"
    ```
 
 4. Copy the Cloudflare certificate to your RubyGems certificate store.
 
    ```powershell
-   copy %UserProfile%\Downloads\ruby-root-ca.crt %RUBY_DIR%\ssl_cert\rubygems.org
+   Copy-Item "$env:USERPROFILE\Downloads\ruby-root-ca.crt" "$env:USERPROFILE\.gem\ssl\rubygems.org.pem"
    ```
 
-5. Restart RubyGems.
+5. Configure RubyGems to use the certificate.
+
+   ```powershell
+   gem sources --add-trusted-cert "$env:USERPROFILE\.gem\ssl\rubygems.org.pem"
+   ```
+
+   Alternatively, add the following line to your RubyGems configuration file located in `$HOME\.gemrc` to globally trust the certificate:
+
+   ```yaml
+   :ssl_cert: C:/Users/<username>/.gem/ssl/rubygems.org.pem
+   ```
+
+6. Restart any terminal sessions.
 
 </Details>
 
 ### Minikube
 
-To trust the Cloudflare root certificate in Minikube, refer to [x509: certificate signed by unknown authority](https://minikube.sigs.k8s.io/docs/handbook/vpn_and_proxy/#x509-certificate-signed-by-unknown-authority).
+To trust a Cloudflare root certificate in Minikube, refer to [x509: certificate signed by unknown authority](https://minikube.sigs.k8s.io/docs/handbook/vpn_and_proxy/#x509-certificate-signed-by-unknown-authority).

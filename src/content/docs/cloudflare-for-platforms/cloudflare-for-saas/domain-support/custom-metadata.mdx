@@ -5,27 +5,26 @@ sidebar:
   order: 5
 head: []
 description: Configure per-hostname settings such as URL rewriting and custom headers.
-
 ---
 
-import { Render } from "~/components"
+import { Render } from "~/components";
 
 You may wish to configure per-hostname (customer) settings beyond the scale of Page Rules or Rate Limiting, which have a maximum of 125 rules each.
 
 To do this, you will first need to reach out to your account team to enable access to Custom Metadata. After configuring custom metadata, you can use it in the following ways:
 
-* Read the metadata JSON from [Cloudflare Workers](/workers/) (requires access to Workers) to define per-hostname behavior.
-* Use custom metadata values in [rule expressions](/ruleset-engine/rules-language/expressions/) of different Cloudflare security products to define the rule scope.
+- Read the metadata JSON from [Cloudflare Workers](/workers/) (requires access to Workers) to define per-hostname behavior.
+- Use custom metadata values in [rule expressions](/ruleset-engine/rules-language/expressions/) of different Cloudflare security products to define the rule scope.
 
 <Render file="ssl-for-saas-plan-limitation" />
 
-***
+---
 
 ## Examples
 
-* Per-customer URL rewriting — for example, customers 1-10,000 fetch assets from server A, 10,001-20,000 from server B, etc.
-* Adding custom headers — for example, `X-Customer-ID: $number` based on the metadata you provided
-* Setting HTTP Strict Transport Security (“HSTS”) headers on a per-customer basis
+- Per-customer URL rewriting — for example, customers 1-10,000 fetch assets from server A, 10,001-20,000 from server B, etc.
+- Adding custom headers — for example, `X-Customer-ID: $number` based on the metadata you provided
+- Setting HTTP Strict Transport Security (“HSTS”) headers on a per-customer basis
 
 Please speak with your Solutions Engineer to discuss additional logic and requirements.
 
@@ -54,32 +53,32 @@ curl --request PATCH \
 
 Changes to metadata will propagate across Cloudflare’s edge within 30 seconds.
 
-***
+---
 
 ## Accessing custom metadata from a Cloudflare Worker
 
 The metadata object will be accessible on each request using the `request.cf.hostMetadata` property. You can then read the data, and customize any behavior on it using the Worker.
 
-In the example below we will use the user\_id in the Worker that was submitted using the API call above `"custom_metadata":{"customer_id":"12345","redirect_to_https": true,"security_tag":"low"}`, and set a request header to send the `customer_id` to the origin:
+In the example below we will use the user_id in the Worker that was submitted using the API call above `"custom_metadata":{"customer_id":"12345","redirect_to_https": true,"security_tag":"low"}`, and set a request header to send the `customer_id` to the origin:
 
 ```js
-addEventListener('fetch', event => {
-  event.respondWith(fetchAndAddHeader(event.request));
-});
-/**
- * Fetch and add a X-Customer-Id header to the origin based on hostname
- * @param {Request} request
- */ async function fetchAndAddHeader(request) {
-  let customer_id = request.cf.hostMetadata.customer_id;
-  let newHeaders = new Headers(request.headers);
-  newHeaders.append('X-Customer-Id', customer_id);
-  let init = {
-    headers: newHeaders,
-    method: request.method,
-  };
-  let response = await fetch(request.url, init);
-  return response;
-}
+export default {
+  /**
+   * Fetch and add a X-Customer-Id header to the origin based on hostname
+   * @param {Request} request
+   */
+  async fetch(request, env, ctx): Promise<Response> {
+    const customer_id = request.cf.hostMetadata.customer_id;
+    const newHeaders = new Headers(request.headers);
+    newHeaders.append('X-Customer-Id', customer_id);
+
+    const init = {
+      headers: newHeaders,
+      method: request.method,
+    };
+    return fetch(request.url, init);
+  },
+} satisfies ExportedHandler<Env>;
 ```
 
 ## Accessing custom metadata in a rule expression
@@ -92,35 +91,35 @@ The following rule expression defines that there will be a rule match if the `se
 lookup_json_string(cf.hostname.metadata, "security_tag") eq "low"
 ```
 
-***
+---
 
 ## Best practices
 
-* Ensure that the JSON schema used is fixed: changes to the schema without corresponding Cloudflare Workers changes will potentially break websites, or fall back to any defined “default” behavior
-* Prefer a flat JSON structure
-* Use string keys in snake\_case (rather than camelCase or PascalCase)
-* Use proper booleans (true/false rather than `true` or `1` or `0`)
-* Use numbers to represent integers instead of strings (`1` or `2` instead of `"1"` or `"2"`)
-* Define fallback behaviour in the non-presence of metadata
-* Define fallback behaviour if a key or value in the metadata are unknown
+- Ensure that the JSON schema used is fixed: changes to the schema without corresponding Cloudflare Workers changes will potentially break websites, or fall back to any defined “default” behavior
+- Prefer a flat JSON structure
+- Use string keys in snake_case (rather than camelCase or PascalCase)
+- Use proper booleans (true/false rather than `true` or `1` or `0`)
+- Use numbers to represent integers instead of strings (`1` or `2` instead of `"1"` or `"2"`)
+- Define fallback behaviour in the non-presence of metadata
+- Define fallback behaviour if a key or value in the metadata are unknown
 
 General guidance is to follow [Google’s JSON Style guide](https://google.github.io/styleguide/jsoncstyleguide.xml) where appropriate.
 
-***
+---
 
 ## Limitations
 
 There are some limitations to the metadata that can be provided to Cloudflare:
 
-* It must be valid JSON.
-* Any origin resolution — for example, directing requests for a given hostname to a specific backend — must be provided as a hostname that exists within Cloudflare’s DNS (even for non-authoritative setups). Providing an IP address directly will cause requests to error.
-* The total payload must not exceed 4 KB.
-* It requires a Cloudflare Worker that knows how to process the schema and trigger logic based on the contents.
-* Custom metadata cannot be set on custom hostnames that contain wildcards.
+- It must be valid JSON.
+- Any origin resolution — for example, directing requests for a given hostname to a specific backend — must be provided as a hostname that exists within Cloudflare’s DNS (even for non-authoritative setups). Providing an IP address directly will cause requests to error.
+- The total payload must not exceed 4 KB.
+- It requires a Cloudflare Worker that knows how to process the schema and trigger logic based on the contents.
+- Custom metadata cannot be set on custom hostnames that contain wildcards.
 
 :::note
 
-Be careful when modifying the schema. Adding, removing, or changing keys and possible values may cause the Cloudflare Worker to either ignore the data or return an error for requests that trigger it. 
+Be careful when modifying the schema. Adding, removing, or changing keys and possible values may cause the Cloudflare Worker to either ignore the data or return an error for requests that trigger it.
 :::
 
 ### Terraform support

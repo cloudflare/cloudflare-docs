@@ -4,7 +4,7 @@ title: User-side certificates
 sidebar:
   order: 4
 banner:
-  content: The default global Cloudflare root certificate will expire on 2025-02-02. If you installed the default Cloudflare certificate before 2024-17-10, you must <a href="#generate-a-cloudflare-root-certificate">generate a new certificate</a> and activate it for your Zero Trust organization to avoid inspection errors.
+  content: The default global Cloudflare root certificate will expire on 2025-02-02. If you installed the default Cloudflare certificate before 2024-10-17, you must <a href="#generate-a-cloudflare-root-certificate">generate a new certificate</a> and activate it for your Zero Trust organization to avoid inspection errors.
 ---
 
 Advanced security features such as [HTTPS traffic inspection](/cloudflare-one/policies/gateway/http-policies/tls-decryption/), [Data Loss Prevention](/cloudflare-one/policies/data-loss-prevention/), [anti-virus scanning](/cloudflare-one/policies/gateway/http-policies/antivirus-scanning/), [Access for Infrastructure](/cloudflare-one/applications/non-http/infrastructure-apps/), and [Browser Isolation](/cloudflare-one/policies/browser-isolation/) require users to install and trust a root certificate on their device. You can either install the certificate provided by Cloudflare (default option), or generate your own custom certificate and upload it to Cloudflare.
@@ -42,7 +42,7 @@ Each Zero Trust account can generate a new root certificate a maximum of three t
 Zero Trust accounts using the Cloudflare certificate prior to September 2024 will need to redeploy and activate the newly generated certificate. Zero Trust accounts created during or after September 2024 will use an active certificate by default.
 :::
 
-Once a certificate is generated in or uploaded to Zero Trust, you need to activate it. Activating a certificate deploys it across the Cloudflare network.
+Once a certificate is generated in or uploaded to Zero Trust, you need to activate it. Activating a certificate deploys it across the Cloudflare network. You can have up to 25 active certificates at once.
 
 To activate your root certificate:
 

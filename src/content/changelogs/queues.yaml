@@ -31,7 +31,7 @@ entries:
     description: |-
       The default [content type](/queues/configuration/javascript-apis/#queuescontenttype) for messages published to a queue is now `json`, which improves compatibility with the upcoming pull-based queues.
 
-      Any Workers created on or after the [compatibility date](/workers/configuration/compatibility-dates/#queues-send-messages-in-json-format) of `2024-03-18`, or that explicitly set the `queues_json_messages` compatibility flag, will use the new default behaviour. Existing Workers with a compatibility date prior will continue to use `v8` as the default content type for published messages.
+      Any Workers created on or after the [compatibility date](/workers/configuration/compatibility-flags/#queues-send-messages-in-json-format) of `2024-03-18`, or that explicitly set the `queues_json_messages` compatibility flag, will use the new default behaviour. Existing Workers with a compatibility date prior will continue to use `v8` as the default content type for published messages.
   - publish_date: "2024-02-24"
     title: Explicit retries no longer impact consumer concurrency/scaling.
     description: |-

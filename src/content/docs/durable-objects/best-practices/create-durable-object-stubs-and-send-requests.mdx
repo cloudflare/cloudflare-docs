@@ -9,7 +9,7 @@ import { Render, Tabs, TabItem, GlossaryTooltip } from "~/components";
 
 ## Invoking methods on a Durable Object
 
-All new projects and existing projects with a compatibility date greater than or equal to [`2024-04-03`](/workers/configuration/compatibility-dates/#durable-object-stubs-and-service-bindings-support-rpc) should prefer to invoke [Remote Procedure Call (RPC)](/workers/runtime-apis/rpc/) methods defined on a <GlossaryTooltip term="Durable Object class">Durable Object class</GlossaryTooltip>. Legacy projects can continue to invoke the `fetch` handler on the Durable Object class indefinitely.
+All new projects and existing projects with a compatibility date greater than or equal to [`2024-04-03`](/workers/configuration/compatibility-flags/#durable-object-stubs-and-service-bindings-support-rpc) should prefer to invoke [Remote Procedure Call (RPC)](/workers/runtime-apis/rpc/) methods defined on a <GlossaryTooltip term="Durable Object class">Durable Object class</GlossaryTooltip>. Legacy projects can continue to invoke the `fetch` handler on the Durable Object class indefinitely.
 
 ### Invoke RPC methods
 
@@ -29,7 +29,7 @@ Refer to [Build a Counter](/durable-objects/examples/build-a-counter/) for a com
 
 ### Invoking the `fetch` handler
 
-If your project is stuck on a compatibility date before [`2024-04-03`](/workers/configuration/compatibility-dates/#durable-object-stubs-and-service-bindings-support-rpc), or has the need to send a [`Request`](/workers/runtime-apis/request/) object and return a `Response` object, then you should send requests to a Durable Object via the fetch handler.
+If your project is stuck on a compatibility date before [`2024-04-03`](/workers/configuration/compatibility-flags/#durable-object-stubs-and-service-bindings-support-rpc), or has the need to send a [`Request`](/workers/runtime-apis/request/) object and return a `Response` object, then you should send requests to a Durable Object via the fetch handler.
 
 <Tabs> <TabItem label="JavaScript" icon="seti:javascript">
 

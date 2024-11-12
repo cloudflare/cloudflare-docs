@@ -139,6 +139,12 @@ wrangler docs [<COMMAND>]
 
 ## `init`
 
+:::note
+
+The `init` command will be removed in a future version. Please use `npm create cloudflare@latest` instead.
+
+:::
+
 Create a new project via the [create-cloudflare-cli (C3) tool](/workers/get-started/guide/#1-create-a-new-worker-project). A variety of web frameworks are available to choose from as well as templates. Dependencies are installed by default, with the option to deploy your project immediately.
 
 ```txt
@@ -591,8 +597,10 @@ npx wrangler vectorize query <INDEX_NAME> [OPTIONS]
 
 - `INDEX_NAME` <Type text="string" /> <MetaInfo text="required" />
   - The name of the Vectorize index to query.
-- `--vector` <Type text="array" /> <MetaInfo text="required" />
-  - Vector against which the Vectorize index is queried.
+- `--vector` <Type text="array" /> <MetaInfo text="optional" />
+  - Vector against which the Vectorize index is queried. Either this or the `vector-id` param must be provided.
+- `--vector-id` <Type text="string" /> <MetaInfo text="optional" />
+  - Identifier for a vector that is already present in the index against which the index is queried. Either this or the `vector` param must be provided.
 - `--top-k` <Type text="number" /> <MetaInfo text="optional" />
   - The number of vectors to query (default: `5`).
 - `--return-values` <Type text="boolean" /> <MetaInfo text="optional" />
@@ -924,6 +932,74 @@ List R2 bucket in the current account.
 wrangler r2 bucket list
 ```
 
+### `domain add`
+
+Connect a [custom domain](/r2/buckets/public-buckets/#custom-domains) to an R2 bucket.
+
+```txt
+wrangler r2 bucket domain add <NAME> [OPTIONS]
+```
+
+- `NAME` <Type text="string" /> <MetaInfo text="required" />
+  - The name of the R2 bucket to connect a custom domain to.
+- `--domain` <Type text="string" /> <MetaInfo text="required" />
+  - The custom domain to connect to the R2 bucket.
+- `--zone-id` <Type text="string" /> <MetaInfo text="required" />
+  - The [zone ID](/fundamentals/setup/find-account-and-zone-ids/) associated with the custom domain.
+- `--min-tls` <Type text="'1.0'|'1.1'|'1.2'|'1.3'" /> <MetaInfo text="optional" />
+  - Set the minimum TLS version for the custom domain (defaults to 1.0 if not set).
+- `--jurisdiction` <Type text="string" /> <MetaInfo text="optional" />
+  - The jurisdiction where the bucket exists, if a jurisdiction has been specified. Refer to [jurisdictional restrictions](/r2/reference/data-location/#jurisdictional-restrictions).
+- `--force` <Type text="boolean" /> <MetaInfo text="optional" />
+  - Skip confirmation when adding the custom domain.
+
+### `domain remove`
+
+Remove a [custom domain](/r2/buckets/public-buckets/#custom-domains) from an R2 bucket.
+
+```txt
+wrangler r2 bucket domain remove <NAME> [OPTIONS]
+```
+
+- `NAME` <Type text="string" /> <MetaInfo text="required" />
+  - The name of the R2 bucket to remove the custom domain from.
+- `--domain` <Type text="string" /> <MetaInfo text="required" />
+  - The custom domain to remove from the R2 bucket.
+- `--jurisdiction` <Type text="string" /> <MetaInfo text="optional" />
+  - The jurisdiction where the bucket exists, if a jurisdiction has been specified. Refer to [jurisdictional restrictions](/r2/reference/data-location/#jurisdictional-restrictions).
+- `--force` <Type text="boolean" /> <MetaInfo text="optional" />
+  - Skip confirmation when removing the custom domain.
+
+### `domain update`
+
+Update settings for a [custom domain](/r2/buckets/public-buckets/#custom-domains) connected to an R2 bucket.
+
+```txt
+wrangler r2 bucket domain update <NAME> [OPTIONS]
+```
+
+- `NAME` <Type text="string" /> <MetaInfo text="required" />
+  - The name of the R2 bucket associated with the custom domain to update.
+- `--domain` <Type text="string" /> <MetaInfo text="required" />
+  - The custom domain whose settings will be updated.
+- `--min-tls` <Type text="'1.0'|'1.1'|'1.2'|'1.3'" /> <MetaInfo text="optional" />
+  - Update the minimum TLS version for the custom domain.
+- `--jurisdiction` <Type text="string" /> <MetaInfo text="optional" />
+  - The jurisdiction where the bucket exists, if a jurisdiction has been specified. Refer to [jurisdictional restrictions](/r2/reference/data-location/#jurisdictional-restrictions).
+
+### `domain list`
+
+List [custom domains](/r2/buckets/public-buckets/#custom-domains) for an R2 bucket.
+
+```txt
+wrangler r2 bucket domain list <NAME> [OPTIONS]
+```
+
+- `NAME` <Type text="string" /> <MetaInfo text="required" />
+  - The name of the R2 bucket whose connected custom domains will be listed.
+- `--jurisdiction` <Type text="string" /> <MetaInfo text="optional" />
+  - The jurisdiction where the bucket exists, if a jurisdiction has been specified. Refer to [jurisdictional restrictions](/r2/reference/data-location/#jurisdictional-restrictions).
+
 ### `notification create`
 
 Create an [event notification](/r2/buckets/event-notifications/) rule for an R2 bucket.
@@ -990,7 +1066,7 @@ wrangler r2 bucket sippy enable <NAME> [OPTIONS]
 - `--r2-secret-access-key` <Type text="string" /> <MetaInfo text="required" />
   - Your R2 Secret Access Key. Requires read and write access.
 - `--jurisdiction` <Type text="string" /> <MetaInfo text="optional" />
-  - The jurisdiction where this R2 bucket is located, if a jurisdiction has been specified. Refer to [Jurisdictional Restrictions](/r2/reference/data-location/#jurisdictional-restrictions).
+  - The jurisdiction where the bucket exists, if a jurisdiction has been specified. Refer to [jurisdictional restrictions](/r2/reference/data-location/#jurisdictional-restrictions).
 - **AWS S3 provider-specific options:**
 - `--key-id` <Type text="string" /> <MetaInfo text="optional" />
   - Your AWS Access Key ID. Requires [read and list access](/r2/data-migration/sippy/#amazon-s3).
@@ -1262,7 +1338,7 @@ wrangler workflows list
 ```
 
 - `--page` <Type text="number" /> <MetaInfo text="optional" />
-  -  Show a specific page from the listing. You can configure page size using "per-page".
+  - Show a specific page from the listing. You can configure page size using "per-page".
 - `--per-page` <Type text="number" /> <MetaInfo text="optional" />
   - Configure the maximum number of Workflows to show per page.
 
@@ -1325,7 +1401,6 @@ wrangler workflows instances terminate <WORKFLOW_NAME> <ID> [OPTIONS]
 - `ID` <Type text="string" /> <MetaInfo text="required" />
   - The ID of a Workflow instance.
 
-{/*
 ### `instances pause`
 
 Pause (until resumed) a Workflow instance.
@@ -1352,8 +1427,6 @@ wrangler workflows instances resume <WORKFLOW_NAME> <ID> [OPTIONS]
 - `ID` <Type text="string" /> <MetaInfo text="required" />
   - The ID of a Workflow instance.
 
-*/}
-
 ### `describe`
 
 ```sh
@@ -1367,7 +1440,7 @@ wrangler workflows describe <WORKFLOW_NAME> [OPTIONS]
 
 Trigger (create) a Workflow instance.
 ```sh
-wrangler workflows describe <WORKFLOW_NAME> <PARAMS> [OPTIONS]
+wrangler workflows trigger <WORKFLOW_NAME> <PARAMS> [OPTIONS]
 ```
 
 - `WORKFLOW_NAME` <Type text="string" /> <MetaInfo text="required" />
@@ -1377,8 +1450,10 @@ wrangler workflows describe <WORKFLOW_NAME> <PARAMS> [OPTIONS]
 
  ```sh
  # Pass optional params to the Workflow.
- wrangler workflows instances trigger my-workflow '{"hello":"world"}'
+ wrangler workflows trigger my-workflow '{"hello":"world"}'
  ```
+
+{/*
 
 ### `delete`
 
@@ -1390,6 +1465,8 @@ wrangler workflows delete <WORKFLOW_NAME> [OPTIONS]
 
 - `WORKFLOW_NAME` <Type text="string" /> <MetaInfo text="required" />
   - The name of a registered Workflow.
+
+*/}
 
 ## `tail`
 

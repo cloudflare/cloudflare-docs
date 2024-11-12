@@ -24,6 +24,6 @@ The Cloudflare dashboard shows a list of all previously created interconnects, a
 
 Direct CNI connections are LACP (Link Aggregation Control Protocol) enabled and use LACP packets to negotiate with other ports. The [Status column](https://dash.cloudflare.com/?to=/:account/interconnects/all) in the dashboard shows three different status:
 
-- **Pending**: Pending shows up in new interconnects that are not yet active. This is expected and can occur for several reasons: the customer has not received their interconnect, the device is unresponsive, or physical adjustments may be required, such as swapping RX/TX fibers. The `Pending` status will go away after the customer completes the cross-connect.
+- **Pending**: Pending shows up in new interconnects that are not yet active. This is expected and can occur for several reasons: the customer has not received a cross-connect, the device is unresponsive, or physical adjustments may be required, such as swapping RX/TX fibers. The `Pending` status will go away after the customer completes the cross-connect.
 - **Active**: The interconnect port on the Customer Connectivity Router (CCR) has established a LACP session with the connected port on the customer device.
 - **Unhealthy**: The interconnect port on the CCR has lost a previously established LACP session with the connected port on the customer device. You can take general troubleshooting steps to solve the issue (such as checking cables and status lights for connectivity issues). If you are unable to solve the issue in this way, contact your account team.

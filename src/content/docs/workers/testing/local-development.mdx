@@ -47,11 +47,13 @@ npx wrangler dev
 | R2                                  | ✅                  | ✅                   |
 | Rate Limiting                       | ✅                  | ✅                   |
 | Service Bindings (multiple workers) | ✅                  | ✅                   |
-| Vectorize                           | ❌                  | ✅                   |
+| Vectorize                           | ✅[^2]              | ✅                   |
 
 With any bindings that are not supported locally, you will need to use the `--remote` command in wrangler, such as `wrangler dev --remote`.
 
 [^1]: Using Workers AI always accesses your Cloudflare account in order to run AI models and will incur usage charges even in local development.
+
+[^2]: Using Vectorize always accesses your Cloudflare account to run queries, and will incur usage charges even in local development.
 
 ## Work with local data
 

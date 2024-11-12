@@ -42,7 +42,7 @@ When your content reaches our edge network, Cloudflare:
 * For cache purges, the maximum length of a cache-tag in an API call is 1,024 characters.
 * The `Cache-Tag` HTTP header must only contain UTF-8 encoded characters.
 * Spaces are not allowed in cache-tags.
-* Case does not matter. For example, `Tag1` and `tag1` are considered the same.
+* Case is not sensitive. For example, `Tag1` and `tag1` are considered the same. Note that case insensitivity applies only for ASCII characters.
 
 ## Purge using cache-tags
 

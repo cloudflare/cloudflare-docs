@@ -8,9 +8,8 @@ In this example, we are going to use the GraphQL Analytics API to retrieve logs 
 
 The following API call will request logs for a single Access login event and output the requested fields. The authentication request is identified by its **Ray ID**, which you can obtain from the `403` Forbidden page shown to the user.
 
-You will need to insert your API credentials in `<EMAIL>` and `<API_KEY>` and substitute your own values for the following variables:
+You will need to insert your `<CLOUDFLARE_ACCOUNT_TAG>`, your API credentials in `<API_TOKEN>`[^1], and substitute your own values for the following variables:
 
-* `accountTag`: Your Cloudflare account ID.
 * `rayID`: A unique identifier assigned to the authentication request.
 * `datetimeStart`: The earliest event time to query (no earlier than September 16, 2022).
 * `datetimeEnd`: The latest event time to query. Be sure to specify a time range that includes the login event you are querying.
@@ -46,7 +45,7 @@ echo '{ "query":
     }
   }",
   "variables": {
-    "accountTag": "699d98642c564d2e855e9661899b7252",
+    "accountTag": "<CLOUDFLARE_ACCOUNT_TAG>",
     "rayId": "74e4ac510dfdc44f",
     "datetimeStart": "2022-09-20T14:36:38Z",
     "datetimeEnd": "2022-09-22T14:36:38Z"
@@ -103,3 +102,5 @@ Rather than filter by `cfRayId`, you may also [filter](/analytics/graphql-api/fe
 ```
 
 You can compare the query results to your Access policies to understand why a user was blocked. For example, if your application requires a valid mTLS certificate, Access blocked the request shown above because `mtlsStatus`, `mtlsCommonName`, and `mtlsCertSerialId` are empty.
+
+[^1]: Refer to [Configure an Analytics API token](/analytics/graphql-api/getting-started/authentication/api-token-auth/) for more information on configuration and permissions.

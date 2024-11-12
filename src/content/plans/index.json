@@ -1461,7 +1461,7 @@
 				},
 				"tcp_protection": {
 					"title": "Advanced TCP Protection",
-					"link": "/ddos-protection/tcp-protection/",
+					"link": "/ddos-protection/advanced-ddos-systems/overview/advanced-tcp-protection/",
 					"free": "Available to [Magic Transit](/magic-transit/) customers",
 					"pro": "Available to [Magic Transit](/magic-transit/) customers",
 					"biz": "Available to [Magic Transit](/magic-transit/) customers",
@@ -1470,7 +1470,7 @@
 				},
 				"u_dns_protection": {
 					"title": "Advanced DNS Protection",
-					"link": "/ddos-protection/dns-protection/",
+					"link": "/ddos-protection/advanced-ddos-systems/overview/advanced-dns-protection/",
 					"free": "Available to [Magic Transit](/magic-transit/) customers",
 					"pro": "Available to [Magic Transit](/magic-transit/) customers",
 					"biz": "Available to [Magic Transit](/magic-transit/) customers",

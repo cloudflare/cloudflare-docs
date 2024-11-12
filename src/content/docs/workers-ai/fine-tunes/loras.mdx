@@ -181,7 +181,7 @@ const response = await env.AI.run(
 </TabItem> <TabItem label="rest api">
 
 ```bash null {5-6}
-curl https://api.cloudflare.com/client/v4/accounts/{ACCOUNT_ID}/ai/run/@cf/mistralai/mistral-7b-instruct-v0.2-lora \
+curl https://api.cloudflare.com/client/v4/accounts/{ACCOUNT_ID}/ai/run/@cf/mistral/mistral-7b-instruct-v0.2-lora \
   -H 'Authorization: Bearer {API_TOKEN}' \
   -d '{
     "messages": [{"role": "user", "content": "Hello world"}],

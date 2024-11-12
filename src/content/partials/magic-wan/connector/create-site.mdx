@@ -41,10 +41,8 @@ curl https://api.cloudflare.com/client/v4/accounts/{account_id}/magic/sites \
 --header "X-Auth-Key: <API_KEY>" \
 --header "Content-Type: application/json" \
 --data '{
-  "site": {
-    "description": "<SITE_DESCRIPTION>",
-    "name": "<SITE_NAME>"
-  }
+	"name": "<SITE_NAME>"
+	"description": "<SITE_DESCRIPTION>",
 }'
 ```
 
@@ -105,12 +103,10 @@ curl https://api.cloudflare.com/client/v4/accounts/{account_id}/magic/sites/{sit
 --header "X-Auth-Key: <API_KEY>" \
 --header "Content-Type: application/json" \
 --data '{
-  "wan": {
-    "description": "<YOUR_WAN_NAME>",
-    "physport": 1,
-    "priority": 0,
-    "vlan_tag": 0
-  }
+	"name": "<YOUR_WAN_NAME>",
+	"physport": 1,
+	"priority": 0,
+	"vlan_tag": 0
 }'
 ```
 
@@ -161,14 +157,12 @@ curl https://api.cloudflare.com/client/v4/accounts/{account_id}/magic/sites/{sit
 --header "X-Auth-Key: <API_KEY>" \
 --header "Content-Type: application/json" \
 --data '{
-  "lan": {
-    "description": "<YOUR_LAN_NAME>",
-    "physport": 2,
-    "static_addressing": {
-      "address": "172.16.14.0/24"
-    },
-    "vlan_tag": 0
-  }
+	"name": "<YOUR_LAN_NAME>",
+	"physport": 2,
+	"static_addressing": {
+		"address": "172.16.14.0/24"
+	},
+	"vlan_tag": 0
 }'
 ```
 

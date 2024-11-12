@@ -56,7 +56,7 @@ In this model, a single `workerd` process is started with a single Worker for al
 
 Each Worker has its own module cache. As Workers are reused between test runs, their module caches are also reused. Vitest invalidates parts of the module cache at the start of each test run based on changed files.
 
-The Workers Vitest pool works by running code inside a Cloudflare Worker that Vitest would usually run inside a [Node.js worker thread](https://nodejs.org/api/worker_threads.html). To make this possible, the pool requires the [`nodejs_compat`](/workers/configuration/compatibility-dates/#nodejs-compatibility-flag) and [`export_commonjs_default`](/workers/configuration/compatibility-dates/#commonjs-modules-do-not-export-a-module-namespace) compatibility flags to be enabled. The pool also configures `workerd` to use Node-style module resolution and polyfills required `node:*` modules not provided by `nodejs_compat`.
+The Workers Vitest pool works by running code inside a Cloudflare Worker that Vitest would usually run inside a [Node.js worker thread](https://nodejs.org/api/worker_threads.html). To make this possible, the pool requires the [`nodejs_compat`](/workers/configuration/compatibility-flags/#nodejs-compatibility-flag) and [`export_commonjs_default`](/workers/configuration/compatibility-flags/#commonjs-modules-do-not-export-a-module-namespace) compatibility flags to be enabled. The pool also configures `workerd` to use Node-style module resolution and polyfills required `node:*` modules not provided by `nodejs_compat`.
 
 :::caution
 

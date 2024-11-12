@@ -27,18 +27,18 @@ Rules features require that you [proxy the DNS records](/dns/manage-dns-records/
 
 ## Features
 
+<Feature header="Configuration Rules" href="/rules/configuration-rules/">
+	Customize Cloudflare configuration settings for matching incoming requests.
+</Feature>
+
+<Feature header="Snippets" href="/rules/snippets/">
+	Customize the behavior of your website or application using short pieces of
+	JavaScript code.
+</Feature>
+
 <Feature header="Transform Rules" href="/rules/transform/">
 	Adjust the URI path, query string, and HTTP headers of requests and responses
 	on the Cloudflare global network.
-</Feature>
-
-<Feature
-	header="URL normalization"
-	href="/rules/normalization/"
-	cta="Configure URL normalization"
->
-	Modify the URLs of incoming requests so that they conform to a consistent
-	formatting standard.
 </Feature>
 
 <Feature header="Redirects" href="/rules/url-forwarding/">
@@ -53,8 +53,9 @@ Rules features require that you [proxy the DNS records](/dns/manage-dns-records/
 	destination port.
 </Feature>
 
-<Feature header="Configuration Rules" href="/rules/configuration-rules/">
-	Customize Cloudflare configuration settings for matching incoming requests.
+<Feature header="Cloud Connector" href="/rules/cloud-connector/">
+	Route matching incoming traffic from your website to a public cloud provider
+	such as AWS, Google Cloud, and Azure.
 </Feature>
 
 <Feature header="Compression Rules" href="/rules/compression-rules/">
@@ -63,9 +64,17 @@ Rules features require that you [proxy the DNS records](/dns/manage-dns-records/
 	type.
 </Feature>
 
-<Feature header="Snippets" href="/rules/snippets/">
-	Customize the behavior of your website or application using short pieces of
-	JavaScript code.
+<Feature header="Page Rules" href="/rules/page-rules/" cta="Use Page Rules">
+	Trigger certain actions when a request matches a URL pattern.
+</Feature>
+
+<Feature
+	header="URL normalization"
+	href="/rules/normalization/"
+	cta="Configure URL normalization"
+>
+	Modify the URLs of incoming requests so that they conform to a consistent
+	formatting standard.
 </Feature>
 
 <Feature
@@ -75,10 +84,6 @@ Rules features require that you [proxy the DNS records](/dns/manage-dns-records/
 >
 	Define custom responses for errors returned by an origin server or by a
 	Cloudflare product, including Workers.
-</Feature>
-
-<Feature header="Page Rules" href="/rules/page-rules/" cta="Use Page Rules">
-	Trigger certain actions when a request matches a URL pattern.
 </Feature>
 
 ---

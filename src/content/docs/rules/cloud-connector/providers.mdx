@@ -22,14 +22,21 @@ Support for Cloudflare R2 will be added soon.
 The hostname of your S3 bucket URL must have one of the following formats (where `*` is a wildcard character):
 
 - `*s3.amazonaws.com`
-- `*s3-website.<REGION>.amazonaws.com`
 - `*s3.<REGION>.amazonaws.com`
+- `*s3-website.<REGION>.amazonaws.com`
 - `*s3-website-<REGION>.amazonaws.com`
 
 Cloud Connector supports both subdomain and URI path-style URLs:
 
 - **Subdomain-style URLs**: Set the hostname to `<BUCKET_NAME>.s3.amazonaws.com`. In this case, your files are accessible directly under the root of the bucket. For example, `https://example.com/index.html` will map to `https://<BUCKET_NAME>.s3.amazonaws.com/index.html`.
 - **URI path-style URLs**: Set the hostname to `s3.amazonaws.com`. Here, your bucket name must be part of the URI path in your requests. For example, if your bucket name is `<BUCKET_NAME>`, files will be available on paths like `https://example.com/<BUCKET_NAME>/index.html`, and your Cloud Connector rule should filter traffic based on the URI path starting with `/<BUCKET_NAME>`.
+
+### SSL connections to AWS S3 endpoints
+
+The SSL setting applied to requests between Cloud Connector and AWS S3 depends on the type of S3 endpoint you use:
+
+- **HTTPS-supported endpoints**: For hostnames like `*s3.<REGION>.amazonaws.com` and `*s3.amazonaws.com`, Cloudflare will connect to AWS S3 over HTTPS if you set your zone's SSL/TLS mode to **Full** or **Full (Strict)**.
+- **Non-HTTPS endpoints**: For website-style hostnames such as `*s3-website.<REGION>.amazonaws.com` or `*s3-website-<REGION>.amazonaws.com`, which do not support HTTPS, Cloudflare will default to **Flexible SSL**.
 
 ### Get the bucket URL
 
