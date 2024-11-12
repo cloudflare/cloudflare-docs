@@ -5,10 +5,10 @@ productLink: "/workers/"
 productArea: Developer platform
 productAreaLink: /workers/platform/changelog/platform/
 entries:
-  - publish_date: '2024-10-21'
+  - publish_date: "2024-10-21"
     description: |-
       - Fixed encoding of WebSocket pong messages when talking to remote servers. Previously, when a Worker made a WebSocket connection to an external server, the server may have prematurely closed the WebSocket for failure to respond correctly to pings. Client-side connections were not affected.
-  - publish_date: '2024-10-14'
+  - publish_date: "2024-10-14"
     description: |-
       - Updated v8 to version 13.0.
   - publish_date: "2024-09-26"

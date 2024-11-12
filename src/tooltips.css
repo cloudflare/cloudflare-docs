@@ -5,8 +5,8 @@
 }
 
 .tippy-box {
-    background-color: var(--sl-color-bg-nav);
-    border-color: var(--sl-color-text);
-    border: 0.1em solid;
-    color: var(--sl-color-white);
+	background-color: var(--sl-color-bg-nav);
+	border-color: var(--sl-color-text);
+	border: 0.1em solid;
+	color: var(--sl-color-white);
 }
