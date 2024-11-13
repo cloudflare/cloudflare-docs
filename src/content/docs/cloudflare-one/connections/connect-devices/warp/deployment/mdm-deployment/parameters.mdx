@@ -170,20 +170,22 @@ Assigns a unique identifier to the device for the [device UUID posture check](/c
 
 ### `auth_client_id`
 
-Enrolls the device in your Zero Trust organization using a [service token](/cloudflare-one/connections/connect-devices/warp/deployment/device-enrollment/#check-for-service-token). Requires the `auth_client_secret` parameter.
+Enrolls the device in your Zero Trust organization using a [service token](/cloudflare-one/connections/connect-devices/warp/deployment/device-enrollment/#check-for-service-token).
+Requires the `auth_client_secret` parameter. 
 
 **Value Type:** `string`
 
-**Value:** `Client ID` of the service token.
-
+**Value:** `Client ID` of the service token. Expects everything after `CF-Access-Client-Id: ` and includes `.access` 
+The String should be everything after `CF-Access-Client-Id: ` and includes `.access` 
 ### `auth_client_secret`
 
-Enrolls the device in your Zero Trust organization using a [service token](/cloudflare-one/connections/connect-devices/warp/deployment/device-enrollment/#check-for-service-token). Requires the `auth_client_id` parameter.
+Enrolls the device in your Zero Trust organization using a [service token](/cloudflare-one/connections/connect-devices/warp/deployment/device-enrollment/#check-for-service-token). 
+Requires the `auth_client_id` parameter.
 
 **Value Type:** `string`
 
 **Value:** `Client Secret` of the service token.
-
+The String should be just the value after `CF-Access-Client-Secret: ` 
 ### `display_name`
 
 When WARP is deployed with [multiple organizations or configurations](/cloudflare-one/connections/connect-devices/warp/deployment/mdm-deployment/switch-organizations/), this parameter is used to identify each configuration in the GUI.
