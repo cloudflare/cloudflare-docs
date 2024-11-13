@@ -345,7 +345,6 @@ enabled = true
 head_sampling_rate = 0.1 # 10% of requests are logged
 ```
 
-
 ## Custom builds
 
 You can configure a custom build step that will be run before your Worker is deployed. Refer to [Custom builds](/workers/wrangler/custom-builds/).
@@ -1181,3 +1180,15 @@ If you change your environment variables in the Cloudflare dashboard, Wrangler w
 If you change your routes in the dashboard, Wrangler will override them in the next deploy with the routes you have set in your `wrangler.toml`. To manage routes via the Cloudflare dashboard only, remove any route and routes keys from your `wrangler.toml` file. Then add `workers_dev = false` to your `wrangler.toml` file. For more information, refer to [Deprecations](/workers/wrangler/deprecations/#other-deprecated-behavior).
 
 Wrangler will not delete your secrets (encrypted environment variables) unless you run `wrangler secret delete <key>`.
+
+## Extending user configuration
+
+The main goal here is to allow tools to generate a partial configuration file that is merged into the user configuration when Wrangler commands are run.
+
+The file must be written to `./.wrangler/config/extra.json`. This path is relative to the project path, which is the directory containing the wrangler.toml or the current working directory if there is no wrangler.toml.
+
+The format of the file is a JSON object whose properties are the [inheritable](#inheritable-keys) and [non-inheritable](#non-inheritable-keys) keys described above. Notably it cannot contain the [top level only](#top-level-only-keys) configuration keys.
+
+The configuration in this file will be merged into the configuration of the currently selected environment before being used in all Wrangler commands.
+
+The user does not need to manually specify that this merging should happen. It is done automatically when the file is found.
