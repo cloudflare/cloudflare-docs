@@ -1,51 +1,52 @@
 ---
+# Code generator. DO NOT EDIT.
+
 title: NEL reports
 pcx_content_type: configuration
 sidebar:
   order: 21
-
 ---
 
 The descriptions below detail the fields available for `nel_reports`.
 
 ## ClientIPASN
 
-Type: int
+Type: `int`
 
 Client ASN.
 
 ## ClientIPASNDescription
 
-Type: string
+Type: `string`
 
 Client ASN description.
 
 ## ClientIPCountry
 
-Type: string
+Type: `string`
 
 Client country.
 
 ## LastKnownGoodColoCode
 
-Type: string
+Type: `string`
 
 IATA airport code of colo client connected to.
 
 ## Phase
 
-Type: string
+Type: `string`
 
-The phase of connection the error occurred in; <em>dns</em> | <em>connection</em> | <em>application</em> | <em>unknown</em>.
+The phase of connection the error occurred in; <em>dns</em> \| <em>connection</em> \| <em>application</em> \| <em>unknown</em>.
 
 ## Timestamp
 
-Type: int or string
+Type: `int or string`
 
 Timestamp for error report.
 
 ## Type
 
-Type: string
+Type: `string`
 
 The type of error in the phase.

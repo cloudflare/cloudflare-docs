@@ -1,57 +1,58 @@
 ---
+# Code generator. DO NOT EDIT.
+
 title: Page Shield events
 pcx_content_type: configuration
 sidebar:
   order: 21
-
 ---
 
 The descriptions below detail the fields available for `page_shield_events`.
 
 ## Action
 
-Type: string
+Type: `string`
 
-The action which was taken against the violation. <br />Possible values are <em>log</em> | <em>allow</em>.
+The action which was taken against the violation. <br />Possible values are <em>log</em> \| <em>allow</em>.
 
 ## Host
 
-Type: string
+Type: `string`
 
 The host where the resource was seen on.
 
 ## PageURL
 
-Type: string
+Type: `string`
 
 The page URL the violation was seen on.
 
 ## PolicyID
 
-Type: string
+Type: `string`
 
 The ID of the policy which was violated.
 
 ## Timestamp
 
-Type: int or string
+Type: `int or string`
 
 The timestamp of when the report was received.
 
 ## URL
 
-Type: string
+Type: `string`
 
 The resource URL.
 
 ## URLContainsCDNCGIPath
 
-Type: bool
+Type: `bool`
 
 Whether the resource URL contains the CDN-CGI path.
 
 ## URLHost
 
-Type: string
+Type: `string`
 
 The domain host of the URL.
