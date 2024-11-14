@@ -324,3 +324,27 @@ entries:
     difficulty: Intermediate
     content_type: 🎥 Video
     pcx_content_type: tutorial     
+  - link: https://youtu.be/RmF05GpLE20
+    title: DevTalk Episode 02 | Post-Quantum Cryptography
+    description: Bas Westerbaan is Cloudflare’s Research Lead on Post-Quantum efforts. His work ranges from cryptographic implementation and standardization, to driving large-scale experiment and subsequent deployment. 
+    tags: [SSL]
+    languages: [TypeScript]
+    products: [SSL]
+    cloudflare: true
+    author: bas
+    updated: 2024-11-14
+    difficulty: Beginner
+    content_type: 🎥 Video
+    pcx_content_type: tutorial       
+  - link: https://youtu.be/xu4Wb-IppmM
+    title: OpenAI Relay Server on Cloudflare Workers
+    description: In this video, Craig Dennis walks you through the deployment of OpenAI's relay server to use with their realtime API.
+    tags: [Workers, Workers AI, Pages]
+    languages: [TypeScript]
+    products: [Workers, Workers AI, Pages]
+    cloudflare: true
+    author: craig
+    updated: 2024-11-14
+    difficulty: Intermediate
+    content_type: 🎥 Video
+    pcx_content_type: tutorial       
