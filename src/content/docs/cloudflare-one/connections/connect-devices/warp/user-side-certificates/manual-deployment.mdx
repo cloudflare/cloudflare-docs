@@ -77,7 +77,8 @@ sha256 Fingerprint=F5:E1:56:C4:89:78:77:AD:79:3A:1E:83:FA:77:83:F1:9C:B0:C6:1B:5
 
 Some applications require a certificate formatted in the `.cer` file type. You can convert your downloaded certificate using [OpenSSL](https://www.openssl.org/):
 
-<Details header="macOS and Linux">
+<Tabs>
+<TabItem label="macOS and Linux" icon="seti:shell">
 
 1. [Install OpenSSL](https://wiki.openssl.org/index.php/Compilation_and_Installation).
 2. [Download a Cloudflare certificate](#download-the-cloudflare-root-certificate) in `.pem` format.
@@ -86,9 +87,9 @@ Some applications require a certificate formatted in the `.cer` file type. You c
    openssl x509 -inform PEM -in ~/Downloads/certificate.pem -outform DER -out ~/Downloads/certificate.cer
    ```
 
-</Details>
+</TabItem>
 
-<Details header="Windows">
+<TabItem label="Windows" icon="seti:windows">
 
 1. [Install OpenSSL for Windows](https://slproweb.com/products/Win32OpenSSL.html).
 2. [Download a Cloudflare certificate](#download-the-cloudflare-root-certificate) in `.pem` format.
@@ -97,7 +98,8 @@ Some applications require a certificate formatted in the `.cer` file type. You c
    openssl x509 -inform PEM -in "$HOME\Downloads\certificate.pem" -outform DER -out "$HOME\Downloads\certificate.cer"
    ```
 
-</Details>
+</TabItem>
+</Tabs>
 
 ## Add the certificate to operating systems
 
@@ -114,7 +116,6 @@ In macOS, you can choose the keychain in which you want to install the certifica
 To install a Cloudflare certificate in macOS, you can use either the Keychain Access application or a terminal. Both methods require you to [download a certificate](#download-the-cloudflare-root-certificate) in `.crt` format.
 
 <Tabs>
-
 <TabItem label="Keychain Access">
 
 1. Download a Cloudflare certificate.
@@ -148,7 +149,6 @@ echo | sudo tee -a /etc/ssl/cert.pem < Cloudflare_CA.pem
 The root certificate is now installed and ready to be used.
 
 </TabItem>
-
 </Tabs>
 
 :::note[Change certificate access scope]
@@ -525,7 +525,8 @@ If you use Kaniko with Google Cloud SDK, you must install a Cloudflare certifica
 
 To trust the Cloudflare root certificate in the Google Drive desktop application, follow the procedure for your operating system. These steps require you to [download the .pem certificate](#download-the-cloudflare-root-certificate).
 
-<Details header="macOS">
+<Tabs>
+<TabItem label="macOS" icon="apple">
 
 1. In the Finder menu bar, go to **Go** > **Go to Folder**. Enter `/Applications/Google Drive.app/Contents/Resources`.
 
@@ -549,9 +550,9 @@ You can verify the update with the following command.
 defaults read /Library/Preferences/com.google.drivefs.settings
 ```
 
-</Details>
+</TabItem>
 
-<Details header="Windows">
+<TabItem label="Windows" icon="seti:windows">
 
 1. In File Explorer, go to `\Program Files\Google\Drive File Stream\<version>\config\`.
 
@@ -575,7 +576,8 @@ You can verify the update with the following command.
 reg QUERY "HKEY_LOCAL_MACHINE\Software\Google\DriveFS" /v TrustedRootCertsFile"
 ```
 
-</Details>
+</TabItem>
+</Tabs>
 
 For more information, refer to the [Google documentation](https://support.google.com/a/answer/7644837) for the `TrustedRootCertsFile` setting.
 
@@ -633,7 +635,8 @@ To install the Cloudflare root certificate on Eclipse IDE for Java Developers, y
 
 3. Add the Cloudflare certificate to Eclipse's JVM:
 
-<Details header="macOS and Linux">
+<Tabs>
+<TabItem label="macOS and Linux" icon="seti:shell">
 
 1. In a terminal, add the `java.home` value you copied as an environment variable.
 
@@ -649,25 +652,26 @@ To install the Cloudflare root certificate on Eclipse IDE for Java Developers, y
 
 3. Restart Eclipse.
 
-</Details>
+</TabItem>
 
-<Details header="Windows">
+<TabItem label="Windows" icon="seti:windows">
 
 1. In a terminal, add the `java.home` value you copied as an environment variable.
 
-```powershell
-set JAVA_HOME="\path\to\java.home"
-```
+   ```powershell
+   set JAVA_HOME="\path\to\java.home"
+   ```
 
 2. Run `keytool` to install and trust the Cloudflare certificate.
 
-```powershell
-"%JAVA_HOME%\bin\keytool.exe" -import -file "%UserProfile%\Downloads\Cloudflare_CA.crt" -alias CloudflareRootCA -keystore "%JAVA_HOME%\lib\security\cacerts" -storepass changeit -trustcacerts -noprompt
-```
+   ```powershell
+   "%JAVA_HOME%\bin\keytool.exe" -import -file "%UserProfile%\Downloads\Cloudflare_CA.crt" -alias CloudflareRootCA -keystore "%JAVA_HOME%\lib\security\cacerts" -storepass changeit -trustcacerts -noprompt
+   ```
 
 3. Restart Eclipse.
 
-</Details>
+</TabItem>
+</Tabs>
 
 For more information on adding certificates to Eclipse with `keytool`, refer to [IBM's documentation](https://www.ibm.com/docs/en/ram/7.5.4?topic=client-adding-server-public-certificate-eclipse).
 
@@ -675,7 +679,8 @@ For more information on adding certificates to Eclipse with `keytool`, refer to 
 
 To trust the Cloudflare root certificate in RubyGems, follow the procedure for your operating system. These steps require you to [download a `.pem` certificate](#download-the-cloudflare-root-certificate).
 
-<Details header="macOS and Linux">
+<Tabs>
+<TabItem label="macOS and Linux" icon="seti:shell">
 
 1. Install [OpenSSL](https://www.openssl.org/).
 
@@ -699,9 +704,9 @@ To trust the Cloudflare root certificate in RubyGems, follow the procedure for y
 
 5. Restart RubyGems.
 
-</Details>
+</TabItem>
 
-<Details header="Windows">
+<TabItem label="Windows" icon="seti:windows">
 
 1. Install [OpenSSL for Windows](https://slproweb.com/products/Win32OpenSSL.html).
 
@@ -725,7 +730,8 @@ To trust the Cloudflare root certificate in RubyGems, follow the procedure for y
 
 5. Restart RubyGems.
 
-</Details>
+</TabItem>
+</Tabs>
 
 ### Minikube
 
