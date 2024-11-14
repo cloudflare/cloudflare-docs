@@ -73,6 +73,34 @@ openssl x509 -noout -fingerprint -sha256 -inform pem -in <Cloudflare_CA.pem>
 sha256 Fingerprint=F5:E1:56:C4:89:78:77:AD:79:3A:1E:83:FA:77:83:F1:9C:B0:C6:1B:58:2C:2F:50:11:B3:37:72:7C:62:3D:EF
 ```
 
+### Convert the certificate
+
+Some applications require a certificate formatted in the `.cer` file type to use it. You can convert downloaded certificates using [OpenSSL](https://www.openssl.org/):
+
+<Details header="macOS and Linux">
+
+1. [Install OpenSSL](https://wiki.openssl.org/index.php/Compilation_and_Installation).
+2. [Download a Cloudflare certificate](#download-the-cloudflare-root-certificate) in `.pem` format.
+3. In a terminal, convert the certificate to DER format with the `.cer` file type:
+
+   ```sh
+   openssl x509 -inform PEM -in ~/Downloads/certificate.pem -outform DER -out ~/Downloads/certificate.cer
+   ```
+
+</Details>
+
+<Details header="Windows">
+
+1. [Install OpenSSL for Windows](https://slproweb.com/products/Win32OpenSSL.html).
+2. [Download a Cloudflare certificate](#download-the-cloudflare-root-certificate) in `.pem` format.
+3. In a PowerShell terminal, convert the certificate to DER format with the `.cer` file type:
+
+   ```powershell
+   openssl x509 -inform PEM -in "$HOME\Downloads\certificate.pem" -outform DER -out "$HOME\Downloads\certificate.cer"
+   ```
+
+</Details>
+
 ## Add the certificate to operating systems
 
 ### macOS
@@ -309,33 +337,10 @@ Zero Trust integrates with several [mobile device management (MDM) software part
 
 #### Microsoft Intune
 
-To deploy a certificate to Microsoft Intune devices, you must convert your certificate and create a trusted certificate profile. These steps require you to [download a Cloudflare certificate](#download-the-cloudflare-root-certificate) in `.pem` format.
+To deploy a certificate to Microsoft Intune devices, you must convert your certificate and create a trusted certificate profile:
 
-<Details header="macOS and Linux">
-
-1. Install [OpenSSL](https://www.openssl.org/).
-2. In a terminal, convert the certificate to DER format with the `.cer` file type:
-
-   ```sh
-   openssl x509 -inform PEM -in ~/Downloads/certificate.pem -outform DER -out ~/Downloads/certificate.cer
-   ```
-
-3. In Microsoft Intune, [create a trusted certificate profile](https://learn.microsoft.com/mem/intune/protect/certificates-trusted-root#to-create-a-trusted-certificate-profile) with your converted certificate.
-
-</Details>
-
-<Details header="Windows">
-
-1. Install [OpenSSL for Windows](https://slproweb.com/products/Win32OpenSSL.html).
-2. In a PowerShell terminal, convert the certificate to DER format with the `.cer` file type:
-
-   ```powershell
-   openssl x509 -inform PEM -in "$HOME\Downloads\certificate.pem" -outform DER -out "$HOME\Downloads\certificate.cer"
-   ```
-
-3. In Microsoft Intune, [create a trusted certificate profile](https://learn.microsoft.com/mem/intune/protect/certificates-trusted-root#to-create-a-trusted-certificate-profile) with your converted certificate.
-
-</Details>
+1. [Download and convert a Cloudflare certificate](#convert-the-certificate) to DER format with the `.cer` file type.
+2. In Microsoft Intune, [create a trusted certificate profile](https://learn.microsoft.com/mem/intune/protect/certificates-trusted-root#to-create-a-trusted-certificate-profile) with your converted certificate.
 
 For more information, refer to the [Microsoft documentation](https://learn.microsoft.com/mem/intune/protect/certificates-trusted-root).
 
@@ -343,7 +348,7 @@ For more information, refer to the [Microsoft documentation](https://learn.micro
 
 To upload and deploy a Cloudflare certificate in Jamf Pro:
 
-1. [Download a Cloudflare certificate](#download-the-cloudflare-root-certificate) in `.pem` format.
+1. [Download and convert a Cloudflare certificate](#convert-the-certificate) to DER format with the `.cer` file type.
 2. In Jamf Pro, go to **Computers** > **Configuration Profiles** to create a computer configuration profile, or go to **Devices** > **Configuration Profiles** to create a mobile device configuration profile. Select **New**.
 3. Name the profile, then select **Add** > **Certificate**.
 4. Choose the certificate file.
