@@ -82,7 +82,6 @@ Some applications require a certificate formatted in the `.cer` file type to use
 1. [Install OpenSSL](https://wiki.openssl.org/index.php/Compilation_and_Installation).
 2. [Download a Cloudflare certificate](#download-the-cloudflare-root-certificate) in `.pem` format.
 3. In a terminal, convert the certificate to DER format with the `.cer` file type:
-
    ```sh
    openssl x509 -inform PEM -in ~/Downloads/certificate.pem -outform DER -out ~/Downloads/certificate.cer
    ```
@@ -94,7 +93,6 @@ Some applications require a certificate formatted in the `.cer` file type to use
 1. [Install OpenSSL for Windows](https://slproweb.com/products/Win32OpenSSL.html).
 2. [Download a Cloudflare certificate](#download-the-cloudflare-root-certificate) in `.pem` format.
 3. In a PowerShell terminal, convert the certificate to DER format with the `.cer` file type:
-
    ```powershell
    openssl x509 -inform PEM -in "$HOME\Downloads\certificate.pem" -outform DER -out "$HOME\Downloads\certificate.cer"
    ```
@@ -350,10 +348,12 @@ To upload and deploy a Cloudflare certificate in Jamf Pro:
 
 1. [Download and convert a Cloudflare certificate](#convert-the-certificate) to DER format with the `.cer` file type.
 2. In Jamf Pro, go to **Computers** > **Configuration Profiles** to create a computer configuration profile, or go to **Devices** > **Configuration Profiles** to create a mobile device configuration profile. Select **New**.
-3. Name the profile, then select **Add** > **Certificate**.
-4. Choose the certificate file.
-5. Select **Scope**, then choose which devices or groups to deploy the certificate to.
-6. Select **Save**.
+3. Add a name and description for the profile.
+4. Choose whether you would like Jamf to install the certificate automatically or with self-service, and whether you would like to install the certificate for a single user or all users on the device.
+5. Select **Add** > **Certificate**. Choose the certificate file.
+6. Uncheck **Allow export from keychain**.
+7. Select **Scope**, then choose which devices or groups to deploy the certificate to.
+8. Select **Save**.
 
 For more information, refer to the [Jamf Pro documentation](https://learn.jamf.com/bundle/jamf-pro-documentation-current/page/PKI_Certificates.html).
 
