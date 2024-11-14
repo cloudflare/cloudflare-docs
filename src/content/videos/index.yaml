@@ -348,3 +348,16 @@ entries:
     difficulty: Intermediate
     content_type: 🎥 Video
     pcx_content_type: tutorial       
+  - link: https://developers.cloudflare.com/workers/runtime-apis/rpc/#video-tutorial
+    title: Workers RPC Tutorial
+    description: Learn how to implement RPC in your JavaScript applications and build serverless solutions.
+    tags: [Workers, Pages]
+    languages: [TypeScript]
+    products: [Workers, Pages]
+    cloudflare: true
+    author: confidence
+    updated: 2024-11-14
+    difficulty: Beginner
+    content_type: 🎥 Video
+    pcx_content_type: tutorial       
+  
