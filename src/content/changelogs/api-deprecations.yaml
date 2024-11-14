@@ -117,6 +117,44 @@ entries:
 
       Replacement: [Rate limiting rules](/waf/rate-limiting-rules/) (new version)
 
+  - publish_date: "2025-02-21"
+    title: "DNS Records API: Changes to Filter Parameters"
+    description: |-
+      Deprecation date: February 21, 2025
+
+      The following URL parameters for filtering DNS records are deprecated:
+
+      - `name=contains:value`  
+        Instead, use the supported `name.contains=value` syntax.
+      - `name=starts_with:value`  
+        Instead, use the supported `name.startswith=value` syntax.
+      - `name=ends_with:value`  
+        Instead, use the supported `name.endswith=value` syntax.
+      - `name=one,two,three` (searching for one of multiple possible names, separated by commas)  
+        Instead, make multiple requests, one for each possible `name`.
+        Alternatively, if only querying the `name` field, the `?match=any&name=one&name=two&name=three` syntax can be used instead.
+        This syntax has an extended deprecation date of May 23, 2025.
+      - `content=contains:value`  
+        Instead, use the supported `content.contains=value` syntax.
+      - `content=starts_with:value`  
+        Instead, use the supported `content.startswith=value` syntax.
+      - `content=ends_with:value`  
+        Instead, use the supported `content.endswith=value` syntax.
+      - `content=one,two,three` (searching for one of multiple possible contents, separated by commas)  
+        Instead, make multiple requests, one for each possible `content`.
+        Alternatively, if only querying the `content` field, the `?match=any&content=one&content=two&content=three` syntax can be used instead.
+        This syntax has an extended deprecation date of May 23, 2025.
+      - `type=contains:value`  
+        Searching for substrings of a type name will no longer be supported.
+        Instead, please search for an exact type name, such as `type=CNAME`.
+        If the input value is a free-text search from a human user, consider using the `search` parameter instead.
+
+      None of the parameters being deprecated were ever officially supported per our API documentation.
+
+      Affected APIs:
+
+      - `GET /zones/:zone_id/dns_records`
+
   - publish_date: "2024-11-30"
     title: "Zone information in individual DNS records"
     description: |-

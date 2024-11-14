@@ -177,6 +177,7 @@ export default defineConfig({
 				? [
 						starlightLinksValidator({
 							errorOnInvalidHashes: false,
+							errorOnLocalLinks: false,
 							exclude: [
 								"/api/",
 								"/api/operations/**",

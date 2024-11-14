@@ -58,24 +58,27 @@ To create a new target:
 </TabItem>
 <TabItem label="Terraform">
 
-Configure the [`cloudflare_infrastructure_access_target`](https://registry.terraform.io/providers/cloudflare/cloudflare/4.44.0/docs/resources/infrastructure_access_target) resource:
+1. Add the following permission to your [`cloudflare_api_token`](https://registry.terraform.io/providers/cloudflare/cloudflare/4.40.0/docs/resources/api_token):
+	- `Teams Write`
 
-```tf
-resource "cloudflare_infrastructure_access_target" "infra-ssh-target" {
-  account_id = "f037e56e89293a057740de681ac9abbe"
-    hostname   = "infra-access-target"
-    ip = {
-			ipv4 = {
-         ip_addr = "187.26.29.249"
-         virtual_network_id = "c77b744e-acc8-428f-9257-6878c046ed55"
-       }
-			ipv6 = {
-				ip_addr = "64c0:64e8:f0b4:8dbf:7104:72b0:ec8f:f5e0"
-				virtual_network_id = "c77b744e-acc8-428f-9257-6878c046ed55"
+2. Configure the [`cloudflare_zero_trust_infrastructure_access_target`](https://registry.terraform.io/providers/cloudflare/cloudflare/4.45.0/docs/resources/zero_trust_infrastructure_access_target) resource:
+
+	```tf
+	resource "cloudflare_zero_trust_infrastructure_access_target" "infra-ssh-target" {
+		account_id = var.cloudflare_account_id
+			hostname   = "infra-access-target"
+			ip = {
+				ipv4 = {
+					ip_addr = "187.26.29.249"
+					virtual_network_id = "c77b744e-acc8-428f-9257-6878c046ed55"
+				}
+				ipv6 = {
+					ip_addr = "64c0:64e8:f0b4:8dbf:7104:72b0:ec8f:f5e0"
+					virtual_network_id = "c77b744e-acc8-428f-9257-6878c046ed55"
+				}
 			}
-    }
-}
-```
+	}
+	```
 
 </TabItem>
 </Tabs>

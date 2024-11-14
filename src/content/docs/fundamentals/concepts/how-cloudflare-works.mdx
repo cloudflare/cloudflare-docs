@@ -55,3 +55,7 @@ When the browser initiates a `HTTP/HTTPS` request to `blog.example.com`, a DNS r
 #### DNS only record example
 
 When the browser initiates a `HTTP/HTTPS` request to `shop.example.com`, a DNS resolver will convert the hostname into an IP address. Since this domain is using Cloudflare as its Authoritative DNS provider, the DNS query will be routed to Cloudflare; but since the proxy is off (that is, `DNS only`), Cloudflare will answer with `192.0.2.2`. Finally, the browser initiates a `HTTP/HTTPS` request to the server hosted at `192.0.2.2`.
+
+#### HTTP methods Cloudflare supports
+
+Cloudflare supports all standard HTTP methods, with the exception of `CONNECT`, `TRACE`, and `PURGE`, which are restricted.

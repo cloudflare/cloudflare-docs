@@ -9,7 +9,7 @@ head:
 
 ---
 
-import { Render } from "~/components"
+import { Render, TabItem, Tabs, GlossaryTooltip } from "~/components"
 
 :::note
 
@@ -25,11 +25,19 @@ If the `CNAME` target is on the same zone as the `CNAME` record, Cloudflare proc
 
 ## For all CNAME records
 
-Accounts on paid plans can choose to flatten all `CNAME` records on their domain. This option is useful for DNS-only (unproxied) `CNAME` records since proxied records are flattened by default (as they return Cloudflare IPv4 and IPv6 addresses).
+For zones on paid plans, you can choose to flatten all `CNAME` records. This option is useful for <GlossaryTooltip term="proxy status">DNS-only (unproxied)</GlossaryTooltip> `CNAME` records. [Proxied records](/dns/manage-dns-records/reference/proxied-dns-records/#proxied-records) are flattened by default as they return Cloudflare anycast IPs.
+
+<Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login) and select your account and domain.
 2. Go to **DNS** > **Settings**.
-3. For **CNAME Flattening**, select **Flatten all CNAMEs**.
+3. Turn on the option **CNAME flattening for all CNAME records**.
+
+</TabItem> <TabItem label="API">
+
+Make a `PATCH` request to the [Update DNS Settings](/api/operations/dns-settings-for-a-zone-update-dns-settings) endpoint and set `flatten_all_cnames` to `true` in the request body.
+
+</TabItem> </Tabs>
 
 :::caution
  <Render file="cname-flattening-callout" />
@@ -37,7 +45,24 @@ Accounts on paid plans can choose to flatten all `CNAME` records on their domain
 
 ## Per record
 
-Accounts on paid plans also have the option to flatten specific `CNAME` records. This operation is currently only supported via API.
+Paid zones also have the option of flattening specific `CNAME` records.
+
+<Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
+
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login) and select your account and domain.
+2. In **DNS** > **Settings**, make sure that **CNAME flattening for all CNAME records** is turned off.
+3. Go to **DNS** > **Records** and find the `CNAME` record you would like to flatten.
+4. Select **Edit** and turn on the **Flatten** option.
+5. Select **Save** to confirm.
+
+:::note[Unavailable flatten option]
+For the following cases, **Flatten** will not be available:
+- The record is at the [zone apex](#for-your-zone-apex).
+- The record is already proxied, which means it will be flattened by default.
+- **CNAME flattening for all CNAME records** is turned on, which means you cannot override it per record.
+:::
+
+</TabItem> <TabItem label="API">
 
 With the available [API endpoints](/api/operations/dns-records-for-a-zone-create-dns-record), specify the following for each `CNAME` record in the request body:
 
@@ -46,3 +71,5 @@ With the available [API endpoints](/api/operations/dns-records-for-a-zone-create
   "flatten_cname": true
 }
 ```
+
+</TabItem> </Tabs>

@@ -1,0 +1,19 @@
+---
+link: "/cloudflare-for-platforms/workers-for-platforms/platform/changelog/"
+productName: Workers for Platforms
+productLink: "/cloudflare-for-platforms/"
+productArea: Developer platform
+productAreaLink: /workers/platform/changelog/platform/
+entries:
+  - publish_date: "2024-04-16"
+    title: Workers for Platforms available to all users
+    description: |-
+      Workers for Platforms will be available for all users through the new pay-as-you-go plan. For more information, refer to the [blog post](https://blog.cloudflare.com/browser-rendering-api-ga-rolling-out-cloudflare-snippets-swr-and-bringing-workers-for-platforms-to-our-paygo-plans/).
+  - publish_date: "2023-05-18"
+    title: Outbound Workers, Custom Limits and Tail Workers
+    description: |-
+      [Outbound Workers](/cloudflare-for-platforms/workers-for-platforms/configuration/outbound-workers/), [Custom Limits](/cloudflare-for-platforms/workers-for-platforms/configuration/custom-limits/) and [Tail Workers](/cloudflare-for-platforms/workers-for-platforms/configuration/observability/#tail-workers) are now available.
+  - publish_date: "2022-05-10"
+    title: Workers for Platform announced
+    description: |-
+      Workers for Platforms, built on top of Cloudflare Workers, allows you to deploy custom code on behalf of your users or lets your users directly deploy their own code to your platform. For more information, refer to the [announcement blog post](https://blog.cloudflare.com/workers-for-platforms/).

@@ -13,6 +13,7 @@ import {
 	FileTree,
 	Tabs,
 	TabItem,
+	TypeScriptExample
 } from "~/components";
 
 This guide instructs you through:
@@ -298,6 +299,7 @@ After you have set up your database, run an SQL query from within your Worker.
 2. Clear the content of `index.ts`.
 3. Paste the following code snippet into your `index.ts` file:
 
+    <TypeScriptExample filename="index.ts">
     ```typescript
     export interface Env {
     	// If you set another name in wrangler.toml as the value for 'binding',
@@ -325,6 +327,7 @@ After you have set up your database, run an SQL query from within your Worker.
     	},
     } satisfies ExportedHandler<Env>;
     ```
+    </TypeScriptExample>
 
     In the code above, you:
 
@@ -403,10 +406,6 @@ To deploy your Worker to production using Wrangler, you must first repeat the [d
 
    ```sh
    npx wrangler deploy
-   ```
-
-   ```sh output
-   Outputs: https://d1-tutorial.<YOUR_SUBDOMAIN>.workers.dev
    ```
 
    ```sh output

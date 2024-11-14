@@ -5,6 +5,18 @@ productLink: "/zaraz/"
 productArea: Developer platform
 productAreaLink: /workers/platform/changelog/platform/
 entries:
+- publish_date: '2024-11-12'
+  description: |
+    * **Facebook Component**: Update to version 21 of the API, and fail gracefully when e-commerce payload doesn't match schema
+    - **Zaraz Monitoring**: Show all response status codes from the Zaraz server-side requests in the dashboard
+    - **Zaraz Debugger**: Fix a bug that broke the display when Custom HTML included backticks
+    - **Context Enricher**: It's now possible to programatically edit the Zaraz `config` itself, in addition to the `system` and `client` objects
+    - **Rocker Loader**: Issues with using Zaraz next to Rocket Loader were fixed
+    - **Automatic Actions**: The tools setup flow now fully supports configuring Automatic Actions
+    - **Bing Managed Component**: Issues with setting the currency field were fixed
+    - **Improvement**: The allowed size for a Zaraz config was increased by 250x
+    - **Improvement**: The Zaraz runtime should run faster due to multiple code optimizations
+    - **Bugfix**: Fixed an issue that caused the dashboard to sometimes show "E-commerce" option for tools that do not support it
 - publish_date: '2024-09-17'
   description: |
     * **Automatic Actions**: E-commerce support is now integrated with Automatic Actions
@@ -76,7 +88,6 @@ entries:
     * **Bugfix**: Prevent duplicate pageviews in monitoring after consent granting
     * **Bugfix**: Prevent Managed Component routes from blocking origin routes unintentionally
 - publish_date: '2024-02-15'
-
   description: |-
     * **Single Page Applications**: Introduce `zaraz.spaPageview()` for manually triggering SPA pageviews
     * **Pinterest Managed Component**: Add ecommerce support

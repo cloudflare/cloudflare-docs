@@ -57,7 +57,7 @@ if (lines) {
 		x.includes(`</docs-tag name="${tag}">`),
 	);
 
-	if (!startTag || !endTag) {
+	if (startTag === -1 || endTag === -1) {
 		throw new Error(`[GitHubCode] Unable to find a region using tag "${tag}".`);
 	}
 

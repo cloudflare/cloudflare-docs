@@ -32,7 +32,7 @@ API Shield uses your configured <GlossaryTooltip term="session identifier">sessi
 
 API Shield scores sequences by a metric called precedence score. Sequence Analytics displays sequences by the highest precedence score. High-scoring sequences contain API requests which are likely to occur together in order.
 
-Using the example above, a high score means that the last operation in the sequence `POST /api/v1/transferFunds` is highly likely to come after the other operations in sequence `GET /api/v1/users/{user_id}/accounts` followed by `GET /api/v1/accounts/{account_id}/balance`. The scores are probabilities, which API Shield estimates using data from the last 24 hours.
+Using the example above, a high score means that the last operation in the sequence `POST /api/v1/transferFunds` is highly likely to be preceded by the other operations in sequence `GET /api/v1/users/{user_id}/accounts` followed by `GET /api/v1/accounts/{account_id}/balance`. The scores are probabilities, which API Shield estimates using data from the last 24 hours.
 
 ### Secure your API
 

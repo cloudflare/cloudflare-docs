@@ -25,15 +25,18 @@ To create a new advanced certificate in the dashboard:
 3. Select **Order Advanced Certificate**.
 4. If Cloudflare does not have your billing information, you will need to enter that information.
 5. Enter the following information:
-   - Certificate Authority
-   - Certificate Hostnames
+   - Certificate authority
+   - Certificate hostnames
+	   - For hostnames longer than 64 characters, use the API.
    - Validation method
-   - Certificate Validity Period
+   - Certificate validity period
 6. Select **Save**.
 
 </TabItem> <TabItem label="API">
 
 To create a new certificate using the API, send a [POST request](/api/operations/certificate-packs-order-advanced-certificate-manager-certificate-pack) to the Cloudflare API.
+
+If you need certificates for hostnames longer than 64 characters ([RFC 5280](https://www.rfc-editor.org/rfc/rfc5280.html)), set the `cloudflare_branding` option to `true`. This will add `sni.cloudflaressl.com` in the Common Name (CN) field and will include the long hostname as a part of the Subject Alternative Name (SAN).
 
 </TabItem> </Tabs>
 

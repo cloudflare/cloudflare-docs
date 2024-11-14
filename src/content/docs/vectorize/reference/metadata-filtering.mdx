@@ -37,10 +37,13 @@ Optional `filter` property on `query()` method specifies metadata filter:
 | -------- | ----------- |
 | `$eq`    | Equals      |
 | `$ne`    | Not equals  |
+| `$in`    | In          |
+| `$nin`   | Not in      |
 
 - `filter` must be non-empty object whose compact JSON representation must be less than 2048 bytes.
 - `filter` object keys cannot be empty, contain `" | .` (dot is reserved for nesting), start with `$`, or be longer than 512 characters.
-- `filter` object non-nested values can be `string`, `number`, `boolean`, or `null` values.
+- For `$eq` and `$ne`, `filter` object non-nested values can be `string`, `number`, `boolean`, or `null` values.
+- For `$in` and `$nin`, `filter` object values can be arrays of `string`, `number`, `boolean`, or `null` values.
 
 ### Namespace versus metadata filtering
 
@@ -61,6 +64,18 @@ Both [namespaces](/vectorize/best-practices/insert-vectors/#namespaces) and meta
 
 ```json
 { "someKey": { "$ne": "hbo" } }
+```
+
+#### `$in` operator
+
+```json
+{ "someKey": { "$in": ["hbo", "netflix"] } }
+```
+
+#### `$nin` operator
+
+```json
+{ "someKey": { "$nin": ["hbo", "netflix"] } }
 ```
 
 #### Implicit logical `AND` with multiple keys
