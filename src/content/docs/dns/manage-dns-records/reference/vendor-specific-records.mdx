@@ -83,7 +83,7 @@ At Cloudflare, you will need at least two `CNAME` records:
 </Example>
 
 :::caution[CNAME flattening]
-If your Cloudflare zone is on a paid plan, also make sure that the **Flatten** option turned off for the validation `CNAME` record, and that you zone is **not** using [CNAME flattening for all CNAME records](/dns/cname-flattening/set-up-cname-flattening/#for-all-cname-records)
+If your Cloudflare zone is on a paid plan, also make sure that the **Flatten** option turned off for the validation `CNAME` record, and that you zone is **not** using [CNAME flattening for all CNAME records](/dns/cname-flattening/set-up-cname-flattening/#for-all-cname-records).
 :::
 
 - One `CNAME` for the <GlossaryTooltip term="apex domain">apex domain</GlossaryTooltip> (`example.com`) and/or for each of the subdomains (`blog.example.com`) that you want to manage on Cloudflare. For details refer to [Manage DNS records](/dns/manage-dns-records/how-to/create-dns-records/). These records can be proxied.
