@@ -11,10 +11,6 @@ entries:
     title: Security Events pagination
     description: |-
       Fixed an issue with pagination in Security Events' activity log where some pages were missing data. Also removed the total count from the activity log as these are only sampled logs.
-  - publish_date: "2024-11-11"
-    title: Matched payloads improvements
-    description: |-
-      The matched payloads in Security Events will now highlight the portion of the payload that was flagged as malicious.
   - publish_date: "2024-11-04"
     title: New table in Security Analytics and Security Events
     description: |-
