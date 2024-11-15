@@ -7,6 +7,14 @@ topLevelLink: "/waf/change-log/"
 productArea: Application security
 productAreaLink: /fundamentals/reference/changelog/security/
 entries:
+  - publish_date: "2024-11-14"
+    title: Security Events pagination
+    description: |-
+      Fixed an issue with pagination in Security Events' activity log where some pages were missing data. Also removed the total count from the activity log as these are only sampled logs.
+  - publish_date: "2024-11-04"
+    title: New table in Security Analytics and Security Events
+    description: |-
+      Switched to a new, more responsive table in Security Analytics and Security Events.
   - publish_date: "2024-08-29"
     title: Fixed occasional attack score mismatches
     description: |-

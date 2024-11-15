@@ -13,8 +13,17 @@ Use AI Gateway for analytics, caching, and security on requests to [Workers AI](
 
 To interact with a REST API, update the URL used for your request:
 
-- **Previous**: `https://api.cloudflare.com/client/v4/accounts/{account_id}/ai/run/{model_id}`
-- **New**: `https://gateway.ai.cloudflare.com/v1/{account_id}/{gateway_id}/workers-ai/{model_id}`
+- **Previous**:
+
+```txt
+https://api.cloudflare.com/client/v4/accounts/{account_id}/ai/run/{model_id}
+```
+
+- **New**:
+
+```txt
+https://gateway.ai.cloudflare.com/v1/{account_id}/{gateway_id}/workers-ai/{model_id}
+```
 
 For these parameters:
 

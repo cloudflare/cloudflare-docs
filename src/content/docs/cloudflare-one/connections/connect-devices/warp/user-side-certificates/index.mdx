@@ -51,7 +51,9 @@ To activate your root certificate:
 3. Select the certificate you want to activate.
 4. Select **Activate**.
 
-The status of the certificate will change to **Pending** while it deploys. Once the status of your certificate is **Active**, you can turn the certificate on for use in inspection:
+The status of the certificate will change to **Pending** while it deploys. Once the status of your certificate is **Active**, you can install it on your user's devices either [with WARP](/cloudflare-one/connections/connect-devices/warp/user-side-certificates/automated-deployment/) or [manually](/cloudflare-one/connections/connect-devices/warp/user-side-certificates/manual-deployment/).
+
+Once you deploy and install your certificate, you can turn it on for use in inspection:
 
 1. In [Zero Trust](https://one.dash.cloudflare.com/), go to **Settings** > **Resources**.
 2. In **Certificates**, select **Manage**.
@@ -59,5 +61,3 @@ The status of the certificate will change to **Pending** while it deploys. Once 
 4. In **Basic information**, select **Confirm and turn on certificate**.
 
 You can set multiple certificates to **Active**, but you can only turn on one certificate for use in inspection at a time. Setting a certificate as **In-Use** will set any other turned on certificates as **Active** and prevent them from being used for inspection until turned on again.
-
-Once you deploy your certificate across Cloudflare and turn it on, you can install it on your user's devices either [with WARP](/cloudflare-one/connections/connect-devices/warp/user-side-certificates/automated-deployment/) or [manually](/cloudflare-one/connections/connect-devices/warp/user-side-certificates/manual-deployment/).

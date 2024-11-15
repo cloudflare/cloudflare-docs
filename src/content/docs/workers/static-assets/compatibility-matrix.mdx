@@ -46,11 +46,11 @@ We plan to bridge the gaps between Workers and Pages and provide ways to migrate
 | **Observability**                                                                   |         |         |
 | [Workers Logs](/workers/observability/)                                             | ✅      | ❌      |
 | [Logpush](/workers/observability/logs/logpush/)                                     | ✅      | ❌      |
-| [Tail Workers](/workers/observability/logs/tail-workers/)                           | ⏳ [^6] | ❌      |
+| [Tail Workers](/workers/observability/logs/tail-workers/)                           | ✅      | ❌      |
 | [Real-time logs](/workers/observability/logs/real-time-logs/)                       | ✅      | ✅      |
 | **Runtime APIs & Compute Models**                                                   |         |         |
 | [Node.js Compatibility Mode](/workers/runtime-apis/nodejs/)                         | ✅      | ✅      |
-| [Durable Objects](/durable-objects/api/)                                            | ✅      | 🟡 [^7] |
+| [Durable Objects](/durable-objects/api/)                                            | ✅      | 🟡 [^6] |
 | [Cron Triggers](/workers/configuration/cron-triggers/)                              | ✅      | ❌      |
 | **Bindings**                                                                        |         |         |
 | [AI](/workers-ai/get-started/workers-wrangler/#2-connect-your-worker-to-workers-ai) | ✅      | ✅      |
@@ -77,8 +77,8 @@ We plan to bridge the gaps between Workers and Pages and provide ways to migrate
 | [Custom Preview Branches](/pages/configuration/branch-build-controls/)              | ❌      | ✅      |
 | [Custom Branch Aliases](/pages/how-to/custom-branch-aliases/)                       | ❌      | ✅      |
 | **Pages Functions**                                                                 |         |         |
-| [File-based Routing](/pages/functions/routing/)                                     | ❌ [^8] | ✅      |
-| [Pages Plugins](/pages/functions/plugins/)                                          | ❌ [^9] | ✅      |
+| [File-based Routing](/pages/functions/routing/)                                     | ❌ [^7] | ✅      |
+| [Pages Plugins](/pages/functions/plugins/)                                          | ❌ [^8] | ✅      |
 
 [^1]: Does not currently support Workers with static assets. For more details on which bindings are supported in remote development, [refer to the docs](/workers/testing/local-development/#supported-resource-bindings-in-different-environments).
 
@@ -90,10 +90,8 @@ We plan to bridge the gaps between Workers and Pages and provide ways to migrate
 
 [^5]: You cannot yet enable [Smart Placement](/workers/configuration/smart-placement/) for Workers with static assets. This is a temporary limitation we are working to remove.
 
-[^6]: You cannot yet add a [Tail Worker](/workers/observability/logs/tail-workers/) to a project with assets. This is a temporary limitation we are working to remove.
+[^6]: To [use Durable Objects with your Cloudflare Pages project](/pages/functions/bindings/#durable-objects), you must create a separate Worker with a Durable Object and then declare a binding to it in both your Production and Preview environments. Using Durable Objects with Workers is simpler and recommended.
 
-[^7]: To [use Durable Objects with your Cloudflare Pages project](/pages/functions/bindings/#durable-objects), you must create a separate Worker with a Durable Object and then declare a binding to it in both your Production and Preview environments. Using Durable Objects with Workers is simpler and recommended.
+[^7]: Workers [supports popular frameworks](/workers/frameworks/), many of which implement file-based routing.
 
-[^8]: Workers [supports popular frameworks](/workers/frameworks/), many of which implement file-based routing.
-
-[^9]: Everything that is possible with Pages Functions can also be achieved by adding code to your Worker or by using framework-specific plugins for relevant third party tools.
+[^8]: Everything that is possible with Pages Functions can also be achieved by adding code to your Worker or by using framework-specific plugins for relevant third party tools.

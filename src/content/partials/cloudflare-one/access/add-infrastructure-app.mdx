@@ -79,11 +79,14 @@ import { Tabs, TabItem, Render } from "~/components"
 </TabItem>
 <TabItem label="Terraform">
 
-1. Use the [`cloudflare_zero_trust_access_application`](https://registry.terraform.io/providers/cloudflare/cloudflare/4.44.0/docs/resources/zero_trust_access_application) resource to create an infrastructure application:
+1. Add the following permission to your [`cloudflare_api_token`](https://registry.terraform.io/providers/cloudflare/cloudflare/4.40.0/docs/resources/api_token):
+	- `Access: Apps and Policies Write`
+
+2. Use the [`cloudflare_zero_trust_access_application`](https://registry.terraform.io/providers/cloudflare/cloudflare/4.45.0/docs/resources/zero_trust_access_application) resource to create an infrastructure application:
 
 	```tf
 	resource "cloudflare_zero_trust_access_application" "infra-app" {
-		account_id = "f037e56e89293a057740de681ac9abbe"
+		account_id = var.cloudflare_account_id
 		name       = "Example infrastructure app"
 		type       = "infrastructure"
 
@@ -98,12 +101,12 @@ import { Tabs, TabItem, Render } from "~/components"
 	}
 	```
 
-2. Use the [`cloudflare_zero_trust_access_policy`](https://registry.terraform.io/providers/cloudflare/cloudflare/4.44.0/docs/resources/zero_trust_access_policy) resource to add an infrastructure policy to the application:
+3. Use the [`cloudflare_zero_trust_access_policy`](https://registry.terraform.io/providers/cloudflare/cloudflare/4.45.0/docs/resources/zero_trust_access_policy) resource to add an infrastructure policy to the application:
 
 	```tf
 	resource "cloudflare_zero_trust_access_policy" "infra-app-policy" {
 		application_id = cloudflare_zero_trust_access_application.infra-app.id
-		account_id = "f037e56e89293a057740de681ac9abbe"
+		account_id = var.cloudflare_account_id
 		name       = "Allow a specific email"
 		decision   = "allow"
 		precedence = 1

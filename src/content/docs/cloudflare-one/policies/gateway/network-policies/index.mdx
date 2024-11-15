@@ -41,6 +41,7 @@ API value: `allow`
 **Traffic**
 
 - [Application](#application)
+- [Content Categories](#content-categories)
 - [Destination Continent IP Geolocation](#destination-continent)
 - [Destination Country IP Geolocation](#destination-country)
 - [Destination IP](#destination-ip)
@@ -48,6 +49,7 @@ API value: `allow`
 - [Detected Protocol](#detected-protocol)
 - [Protocol](#protocol)
 - [Proxy Endpoint](#proxy-endpoint)
+- [Security Risks](#security-risks)
 - [SNI](#sni)
 - [SNI Domain](#sni-domain)
 - [Source Continent IP Geolocation](#source-continent)
@@ -134,6 +136,7 @@ API value: `block`
 **Traffic**
 
 - [Application](#application)
+- [Content Categories](#content-categories)
 - [Destination Continent IP Geolocation](#destination-continent)
 - [Destination Country IP Geolocation](#destination-country)
 - [Destination IP](#destination-ip)
@@ -141,6 +144,7 @@ API value: `block`
 - [Detected Protocol](#detected-protocol)
 - [Protocol](#protocol)
 - [Proxy Endpoint](#proxy-endpoint)
+- [Security Risks](#security-risks)
 - [SNI](#sni)
 - [SNI Domain](#sni-domain)
 - [Source Continent IP Geolocation](#source-continent)
@@ -228,6 +232,14 @@ Gateway matches network traffic against the following selectors, or criteria.
 
 <Render file="gateway/selectors/application" params={{ one: "network" }} />
 
+### Content Categories
+
+| UI name            | API example                                      |
+| ------------------ | ------------------------------------------------ |
+| Content Categories | `not(any(net.fqdn.content_category[*] in {1}))` |
+
+For more information, refer to our list of [content categories](/cloudflare-one/policies/gateway/domain-categories/#content-categories).
+
 ### Destination Continent
 
 <Render
@@ -271,6 +283,14 @@ To enable Gateway filtering on TCP and UDP, go to **Settings** > **Network** > *
 ### Proxy Endpoint
 
 <Render file="gateway/selectors/proxy-endpoint" />
+
+### Security Risks
+
+| UI name        | API example                                  |
+| -------------- | -------------------------------------------- |
+| Security Risks | `any(net.fqdn.security_category[*] in {1})` |
+
+For more information, refer to our list of [security categories](/cloudflare-one/policies/gateway/domain-categories/#security-categories).
 
 ### SNI
 
