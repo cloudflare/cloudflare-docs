@@ -508,7 +508,7 @@ To install a certificate for use in a Docker container:
       	redhat-app:
       		image: registry.access.redhat.com/ubi9/ubi:latest
        		volumes:
-       			- /path/to/certificate.pem:/etc/pki/ca-trust/source/anchors/certificate.pem
+       			- certs/certificate.pem:/etc/pki/ca-trust/source/anchors/certificate.pem
        		entrypoint: /bin/sh -c "dnf install -y ca-certificates && update-ca-trust extract && app start"
       ```
 
@@ -518,7 +518,7 @@ To install a certificate for use in a Docker container:
       	debian-app:
       		image: debian:12
        		volumes:
-       			- /path/to/certificate.pem:/usr/local/share/ca-certificates/certificate.crt
+       			- certs/certificate.pem:/usr/local/share/ca-certificates/certificate.crt
        		entrypoint: /bin/sh -c "apt-get update && apt-get install -y ca-certificates && update-ca-certificates && app start"
       ```
 
@@ -528,7 +528,7 @@ To install a certificate for use in a Docker container:
       	alpine-app:
       		image: alpine:3.18
        		volumes:
-       			- /path/to/cert.pem:/usr/local/share/ca-certificates/cert.pem
+       			- certs/certificate.pem:/usr/local/share/ca-certificates/certificate.pem
        		entrypoint: /bin/sh -c "apk add --no-cache ca-certificates && update-ca-certificates && app start"
       ```
 
