@@ -192,9 +192,13 @@ import { AstroIcon } from "~/components";
 					form.addEventListener("submit", async (e) => {
 						e.preventDefault();
 
+						const formData = new FormData(e.target as HTMLFormElement);
+						formData.set("page", window.location.pathname);
+						formData.set("option", questions.split("-")[1]);
+
 						fetch("https://feedback.developers.cloudflare.com", {
 							method: "POST",
-							body: new FormData(e.target as HTMLFormElement),
+							body: formData,
 						});
 
 						questionsDiv.classList.add("hidden");
