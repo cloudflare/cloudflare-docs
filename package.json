@@ -12,7 +12,7 @@
 		"check:functions": "npx tsc --noEmit -p ./functions/tsconfig.json",
 		"check:worker": "npx tsc --noEmit -p ./worker/tsconfig.json",
 		"dev": "npx astro dev",
-		"format": "npm run format:core && npm run format:content && npm run format:data",
+		"format": "npm run format:core && npm run format:data",
 		"format:core": "npx prettier --write \"**/*.{js,jsx,ts,tsx,mjs,css}\"",
 		"format:core:check": "npm run format:core -- --check",
 		"format:content": "npx prettier --write \"**/*.{md,mdx,astro}\"",
