@@ -73,8 +73,8 @@ const autolinkConfig: rehypeAutolinkHeadingsOptions = {
 // https://astro.build/config
 export default defineConfig({
 	site: "https://developers.cloudflare.com",
-	smartypants: false,
 	markdown: {
+		smartypants: false,
 		rehypePlugins: [
 			[
 				rehypeMermaid,

@@ -74,7 +74,7 @@ Assets stored in the cache through [Cache API](/workers/runtime-apis/cache/) ope
 
 ## Edge versus browser caching
 
-The browser cache is controlled through the `Cache-Control` header sent in the response to the client (the response passed or promised to `event.respondWith()`). Workers can customize browser cache behavior by setting this header on the response.
+The browser cache is controlled through the `Cache-Control` header sent in the response to the client (the `Response` instance return from the handler). Workers can customize browser cache behavior by setting this header on the response.
 
 Other means to control Cloudflare’s cache that are not mentioned in this documentation include: Page Rules and Cloudflare cache settings. Refer to the [How to customize Cloudflare’s cache](/cache/concepts/customize-cache/) if you wish to avoid writing JavaScript with still some granularity of control.
 

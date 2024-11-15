@@ -22,7 +22,7 @@ Indexes are automatically updated when the table and column(s) they reference ar
 
 :::note
 
-Tables that use the default primary key (an `INTEGER` based `ROWID`), or that define their own `INTEGER PRIMARY KEY`, do not need to create an index for that column. 
+Tables that use the default primary key (an `INTEGER` based `ROWID`), or that define their own `INTEGER PRIMARY KEY`, do not need to create an index for that column.
 :::
 
 To create an index on a D1 table, use the `CREATE INDEX` SQL command and specify the table and column(s) to create the index over.
@@ -43,7 +43,7 @@ To create the index on the `customer_id` column, execute the below statement aga
 
 :::note
 
-A common naming format for indexes is `idx_TABLE_NAME_COLUMN_NAMES`, so that you can identify the table and column(s) your indexes are for when managing your database. 
+A common naming format for indexes is `idx_TABLE_NAME_COLUMN_NAMES`, so that you can identify the table and column(s) your indexes are for when managing your database.
 :::
 
 ```sql
@@ -97,6 +97,8 @@ QUERY PLAN
 Review the `USING INDEX <INDEX_NAME>` output from the query planner, confirming the index was used.
 
 This is also a fairly common use-case for an index. Finding a user based on their email address is often a very common query type for login (authentication) systems.
+
+Using an index can reduce the number of rows read by a query. Use the `meta` object to estimate your usage. Refer to ["Can I use an index to reduce the number of rows read by a query?"](/d1/platform/pricing/#can-i-use-an-index-to-reduce-the-number-of-rows-read-by-a-query) and ["How can I estimate my (eventual) bill?"](/d1/platform/pricing/#how-can-i-estimate-my-eventual-bill).
 
 ## Multi-column indexes
 

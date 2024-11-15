@@ -3,6 +3,10 @@
 
 ---
 
+import { Tabs, TabItem } from '~/components';
+
+<Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
+
 1. In [Zero Trust](https://one.dash.cloudflare.com), go to **Settings** > **WARP Client**.
 2. In **Device enrollment permissions**, select **Manage**.
 3. In the **Rules** tab, configure one or more [Access policies](/cloudflare-one/policies/access/) to define who can join their device. For example, you could allow all users with a company email address:
@@ -12,8 +16,45 @@
 
 :::note
 
-Device posture checks are not supported in device enrollment policies. WARP can only perform posture checks after the device is enrolled. 
+Device posture checks are not supported in device enrollment policies. WARP can only perform posture checks after the device is enrolled.
 :::
 
 4. In the **Authentication** tab, select the [identity providers](/cloudflare-one/identity/idp-integration/) users can authenticate with. If you have not integrated an identity provider, you can use the [one-time PIN](/cloudflare-one/identity/one-time-pin/).
 5. Select **Save**.
+
+</TabItem> <TabItem label="Terraform">
+
+1. Add the following permission to your [`cloudflare_api_token`](https://registry.terraform.io/providers/cloudflare/cloudflare/4.40.0/docs/resources/api_token):
+	- `Access: Apps and Policies Write`
+
+2. Use the [`cloudflare_zero_trust_access_application`](https://registry.terraform.io/providers/cloudflare/cloudflare/4.45.0/docs/resources/zero_trust_access_application) resource to create an application with type `warp`.
+
+	```tf
+	resource "cloudflare_zero_trust_access_application" "warp_enrollment_app" {
+		account_id                = var.cloudflare_account_id
+		session_duration          = "18h"
+		name                      = "Warp device enrollment"
+		allowed_idps              = [cloudflare_zero_trust_access_identity_provider.microsoft_entra_id.id]
+		auto_redirect_to_identity = true
+		type                      = "warp"
+		app_launcher_visible      = false
+	}
+	```
+
+3. Use the [`cloudflare_zero_trust_access_policy`](https://registry.terraform.io/providers/cloudflare/cloudflare/4.45.0/docs/resources/zero_trust_access_policy) resource to define enrollment permissions.
+
+	```tf
+	resource "cloudflare_zero_trust_access_policy" "warp_enrollment_employees" {
+		application_id = cloudflare_zero_trust_access_application.warp_enrollment_app.id
+		account_id     = var.cloudflare_account_id
+		name           = "Allow company emails"
+		decision       = "allow"
+		precedence     = 1
+
+		include {
+			email_domain = ["company.com"]
+		}
+	}
+	```
+
+</TabItem> </Tabs>

@@ -15,11 +15,13 @@ const url = new URL(`${videoId}/iframe`, baseUrl);
 url.searchParams.set("preload", "true");
 url.searchParams.set("letterboxColor", "transparent");
 
-
 // full url option
 if (thumbnailTimeOrURL !== undefined) {
 	if (!thumbnailTimeOrURL.startsWith("http")) {
-		const thumbnailUrl = new URL(`${videoId}/thumbnails/thumbnail.jpg`, baseUrl);
+		const thumbnailUrl = new URL(
+			`${videoId}/thumbnails/thumbnail.jpg`,
+			baseUrl,
+		);
 		thumbnailUrl.searchParams.set("fit", "crop");
 		thumbnailUrl.searchParams.set("time", thumbnailTimeOrURL);
 
@@ -28,7 +30,6 @@ if (thumbnailTimeOrURL !== undefined) {
 		url.searchParams.set("poster", thumbnailTimeOrURL);
 	}
 }
-
 ---
 
 <div style="position: relative; padding-top: 56.25%">
@@ -38,7 +39,7 @@ if (thumbnailTimeOrURL !== undefined) {
 		allow="accelerometer; gyroscope; autoplay; encrypted-media; picture-in-picture;"
 		allowfullscreen="true"
 		title={videoTitle}
-		id={videoId}></iframe>		
+		id={videoId}></iframe>
 </div>
 
 {moreVideosLink=="true" &&

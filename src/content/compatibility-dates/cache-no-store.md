@@ -6,7 +6,7 @@ _build:
 
 name: "Enable `cache: no-store` HTTP standard API"
 sort_date: "2024-11-11"
-enabled_date: "2024-11-11"
+enable_date: "2024-11-11"
 enable_flag: "cache_option_enabled"
 disable_flag: "cache_option_disabled"
 ---
@@ -23,7 +23,7 @@ Specifying any other value will cause the Workers runtime to throw a `TypeError`
 When `no-store` is specified:
 * All requests have the headers `Pragma: no-cache` and `Cache-Control: no-cache` are set on them.
 
-* Subrequests to origins not hosted by Cloudflare bypasses Cloudflare's cache.
+* Subrequests to origins not hosted by Cloudflare bypass Cloudflare's cache.
 
 Examples using `cache: 'no-store'`:
 

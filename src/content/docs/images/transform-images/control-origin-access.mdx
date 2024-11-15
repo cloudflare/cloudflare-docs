@@ -3,7 +3,6 @@ pcx_content_type: reference
 title: Control origin access
 sidebar:
   order: 24
-
 ---
 
 You can serve resized images without giving access to the original image. Images can be hosted on another server outside of your zone, and the true source of the image can be entirely hidden. The origin server may require authentication to disclose the original image, without needing visitors to be aware of it. Access to the full-size image may be prevented by making it impossible to manipulate resizing parameters.
@@ -11,15 +10,13 @@ You can serve resized images without giving access to the original image. Images
 All these behaviors are completely customizable, because they are handled by custom code of a script running [on the edge in a Cloudflare Worker](/images/transform-images/transform-via-workers/).
 
 ```js
-addEventListener("fetch", event => {
-  event.respondWith(handleRequest(event.request))
-})
-
-async function handleRequest(request) {
-  // Here you can compute arbitrary imageURL and
-  // resizingOptions from any request data ...
-  return fetch(imageURL, {cf:{image:resizingOptions}})
-}
+export default {
+	async fetch(request, env, ctx) {
+		// Here you can compute arbitrary imageURL and
+		// resizingOptions from any request data ...
+		return fetch(imageURL, { cf: { image: resizingOptions } });
+	},
+};
 ```
 
 This code will be run for every request, but the source code will not be accessible to website visitors. This allows the code to perform security checks and contain secrets required to access the images in a controlled manner.
@@ -28,28 +25,30 @@ The examples below are only suggestions, and do not have to be followed exactly.
 
 :::caution[Warning]
 
-
 When testing image transformations, make sure you deploy the script and test it from a regular web browser window. The preview in the dashboard does not simulate transformations.
-
 
 :::
 
 ## Hiding the image server
 
 ```js
-async function handleRequest(request) {
-  const resizingOptions = {/* resizing options will be demonstrated in the next example */}
+export default {
+	async fetch(request, env, ctx) {
+		const resizingOptions = {
+			/* resizing options will be demonstrated in the next example */
+		};
 
-  const hiddenImageOrigin = "https://secret.example.com/hidden-directory"
-  const requestURL = new URL(request.url)
-  // Append the request path such as "/assets/image1.jpg" to the hiddenImageOrigin.
-  // You could also process the path to add or remove directories, modify filenames, etc.
-  const imageURL = hiddenImageOrigin + requestURL.path
-  // This will fetch image from the given URL, but to the website's visitors this
-  // will appear as a response to the original request. Visitor’s browser will
-  // not see this URL.
-  return fetch(imageURL, {cf:{image:resizingOptions}})
-}
+		const hiddenImageOrigin = "https://secret.example.com/hidden-directory";
+		const requestURL = new URL(request.url);
+		// Append the request path such as "/assets/image1.jpg" to the hiddenImageOrigin.
+		// You could also process the path to add or remove directories, modify filenames, etc.
+		const imageURL = hiddenImageOrigin + requestURL.path;
+		// This will fetch image from the given URL, but to the website's visitors this
+		// will appear as a response to the original request. Visitor’s browser will
+		// not see this URL.
+		return fetch(imageURL, { cf: { image: resizingOptions } });
+	},
+};
 ```
 
 ## Preventing access to full-size images
@@ -57,7 +56,8 @@ async function handleRequest(request) {
 On top of protecting the original image URL, you can also validate that only certain image sizes are allowed:
 
 ```js
-async function handleRequest(request) {
+export default {
+  async fetch(request, env, ctx) {
   const imageURL = … // detail omitted in this example, see the previous example
 
   const requestURL = new URL(request.url)
@@ -70,7 +70,7 @@ async function handleRequest(request) {
     throw Error("We don’t allow viewing images larger than 1000 pixels wide")
   }
   return fetch(imageURL, {cf:{image:resizingOptions}})
-}
+},};
 ```
 
 ## Avoid image dimensions in URLs
@@ -78,30 +78,38 @@ async function handleRequest(request) {
 You do not have to include actual pixel dimensions in the URL. You can embed sizes in the Worker script, and select the size in some other way — for example, by naming a preset in the URL:
 
 ```js
-async function handleRequest(request) {
-  const requestURL = new URL(request.url)
-  const resizingOptions = {}
+export default {
+	async fetch(request, env, ctx) {
+		const requestURL = new URL(request.url);
+		const resizingOptions = {};
 
-  // The regex selects the first path component after the "images"
-  // prefix, and the rest of the path (e.g. "/images/first/rest")
-  const match = requestURL.path.match(/images\/([^/]+)\/(.+)/)
+		// The regex selects the first path component after the "images"
+		// prefix, and the rest of the path (e.g. "/images/first/rest")
+		const match = requestURL.path.match(/images\/([^/]+)\/(.+)/);
 
-  // You can require the first path component to be one of the
-  // predefined sizes only, and set actual dimensions accordingly.
-  switch (match && match[1]) {
-    case "small": resizingOptions.width = 300; break;
-    case "medium": resizingOptions.width = 600; break;
-    case "large": resizingOptions.width = 900; break;
-    default:
-      throw Error("invalid size");
-  }
+		// You can require the first path component to be one of the
+		// predefined sizes only, and set actual dimensions accordingly.
+		switch (match && match[1]) {
+			case "small":
+				resizingOptions.width = 300;
+				break;
+			case "medium":
+				resizingOptions.width = 600;
+				break;
+			case "large":
+				resizingOptions.width = 900;
+				break;
+			default:
+				throw Error("invalid size");
+		}
 
-  // The remainder of the path may be used to locate the original
-  // image, e.g. here "/images/small/image1.jpg" would map to
-  // "https://storage.example.com/bucket/image1.jpg" resized to 300px.
-  const imageURL = "https://storage.example.com/bucket/" + match[2]
-  return fetch(imageURL, {cf:{image:resizingOptions}})
-}
+		// The remainder of the path may be used to locate the original
+		// image, e.g. here "/images/small/image1.jpg" would map to
+		// "https://storage.example.com/bucket/image1.jpg" resized to 300px.
+		const imageURL = "https://storage.example.com/bucket/" + match[2];
+		return fetch(imageURL, { cf: { image: resizingOptions } });
+	},
+};
 ```
 
 ## Authenticated origin
@@ -111,7 +119,7 @@ Cloudflare image transformations cache resized images to aid performance. Images
 ```js null {9}
 // generate signed headers (application specific)
 const signedHeaders = generatedSignedHeaders();
- 
+
 fetch(private_url, {
   headers: signedHeaders
   cf: {
@@ -125,20 +133,20 @@ fetch(private_url, {
 
 When using this code, the following headers are passed through to the origin, and allow your request to be successful:
 
-* `Authorization`
-* `Cookie`
-* `x-amz-content-sha256`
-* `x-amz-date`
-* `x-ms-date`
-* `x-ms-version`
-* `x-sa-date`
-* `cf-access-client-id`
-* `cf-access-client-secret`
+- `Authorization`
+- `Cookie`
+- `x-amz-content-sha256`
+- `x-amz-date`
+- `x-ms-date`
+- `x-ms-version`
+- `x-sa-date`
+- `cf-access-client-id`
+- `cf-access-client-secret`
 
 For more information, refer to:
 
-* [AWS docs](https://docs.aws.amazon.com/AmazonS3/latest/API/sig-v4-authenticating-requests.html)
-* [Azure docs](https://docs.microsoft.com/en-us/rest/api/storageservices/List-Containers2#request-headers)
-* [Google Cloud docs](https://cloud.google.com/storage/docs/aws-simple-migration)
-* [Cloudflare Zero Trust docs](/cloudflare-one/identity/service-tokens/)
-* [SecureAuth docs](https://docs.secureauth.com/2104/en/authentication-api-guide.html)
+- [AWS docs](https://docs.aws.amazon.com/AmazonS3/latest/API/sig-v4-authenticating-requests.html)
+- [Azure docs](https://docs.microsoft.com/en-us/rest/api/storageservices/List-Containers2#request-headers)
+- [Google Cloud docs](https://cloud.google.com/storage/docs/aws-simple-migration)
+- [Cloudflare Zero Trust docs](/cloudflare-one/identity/service-tokens/)
+- [SecureAuth docs](https://docs.secureauth.com/2104/en/authentication-api-guide.html)

@@ -26,10 +26,10 @@ To configure a Cloud Connector rule in the dashboard:
 
 6. Under **If**, select **Custom filter expression** and [enter an expression](/ruleset-engine/rules-language/expressions/edit-expressions/) to define the traffic that will be redirected to the bucket. For example:
 
-   - To route all requests under `https://example.com/images/*` you could enter the following expression:<br/>
-     `http.request.full_uri wildcard "https://example.com/images/*"`
-   - To route all requests under `https://images.example.com/*` you could enter the following expression:<br/>
-     `http.request.full_uri wildcard "https://images.example.com/*"`
+   - To route all requests matching `http*://example.com/images/*` (HTTPS and HTTP requests) you could enter the following expression:<br/>
+     `http.request.full_uri wildcard "http*://example.com/images/*"`
+   - To route all requests matching `http*://images.example.com/*` (HTTPS and HTTP requests) you could enter the following expression:<br/>
+     `http.request.full_uri wildcard "http*://images.example.com/*"`
 
    Alternatively, select **All incoming requests** to redirect all incoming traffic for your zone to the storage bucket you selected.
 

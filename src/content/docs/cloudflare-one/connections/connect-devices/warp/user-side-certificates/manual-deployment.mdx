@@ -73,6 +73,34 @@ openssl x509 -noout -fingerprint -sha256 -inform pem -in <certificate.pem>
 sha256 Fingerprint=F5:E1:56:C4:89:78:77:AD:79:3A:1E:83:FA:77:83:F1:9C:B0:C6:1B:58:2C:2F:50:11:B3:37:72:7C:62:3D:EF
 ```
 
+### Convert the certificate
+
+Some applications require a certificate formatted in the `.cer` file type. You can convert your downloaded certificate using [OpenSSL](https://www.openssl.org/):
+
+<Tabs>
+<TabItem label="macOS and Linux" icon="seti:shell">
+
+1. [Install OpenSSL](https://wiki.openssl.org/index.php/Compilation_and_Installation).
+2. [Download a Cloudflare certificate](#download-the-cloudflare-root-certificate) in `.pem` format.
+3. In a terminal, convert the certificate to DER format with the `.cer` file type:
+   ```sh
+   openssl x509 -inform PEM -in ~/Downloads/certificate.pem -outform DER -out ~/Downloads/certificate.cer
+   ```
+
+</TabItem>
+
+<TabItem label="Windows" icon="seti:windows">
+
+1. [Install OpenSSL for Windows](https://slproweb.com/products/Win32OpenSSL.html).
+2. [Download a Cloudflare certificate](#download-the-cloudflare-root-certificate) in `.pem` format.
+3. In a PowerShell terminal, convert the certificate to DER format with the `.cer` file type:
+   ```powershell
+   openssl x509 -inform PEM -in "$HOME\Downloads\certificate.pem" -outform DER -out "$HOME\Downloads\certificate.cer"
+   ```
+
+</TabItem>
+</Tabs>
+
 ## Add the certificate to operating systems
 
 ### macOS
@@ -88,7 +116,6 @@ In macOS, you can choose the keychain in which you want to install the certifica
 To install a Cloudflare certificate in macOS, you can use either the Keychain Access application or a terminal. Both methods require you to [download a certificate](#download-the-cloudflare-root-certificate) in `.crt` format.
 
 <Tabs>
-
 <TabItem label="Keychain Access">
 
 1. Download a Cloudflare certificate.
@@ -122,7 +149,6 @@ echo | sudo tee -a /etc/ssl/cert.pem < certificate.pem
 The root certificate is now installed and ready to be used.
 
 </TabItem>
-
 </Tabs>
 
 :::note[Change certificate access scope]
@@ -303,6 +329,56 @@ To install a Cloudflare certificate to Firefox manually:
 
 For information on installing a Cloudflare certificate for organizations, refer to this [Mozilla support article](https://support.mozilla.org/en-US/kb/setting-certificate-authorities-firefox).
 
+### Mobile device management (MDM) software
+
+Zero Trust integrates with several [mobile device management (MDM) software partners](/cloudflare-one/connections/connect-devices/warp/deployment/mdm-deployment/partners/) to deploy WARP across devices.
+
+#### Microsoft Intune
+
+To upload and deploy a Cloudflare certificate in Microsoft Intune:
+
+1. [Download and convert a Cloudflare certificate](#convert-the-certificate) to DER format with the `.cer` file type.
+2. In Microsoft Intune, [create a trusted certificate profile](https://learn.microsoft.com/mem/intune/protect/certificates-trusted-root#to-create-a-trusted-certificate-profile) with your converted certificate.
+
+For more information, refer to the [Microsoft documentation](https://learn.microsoft.com/mem/intune/protect/certificates-trusted-root).
+
+#### Jamf Pro
+
+To upload and deploy a Cloudflare certificate in Jamf Pro:
+
+1. [Download and convert a Cloudflare certificate](#convert-the-certificate) to DER format with the `.cer` file type.
+2. In Jamf Pro, go to **Computers** > **Configuration Profiles** to create a computer configuration profile, or go to **Devices** > **Configuration Profiles** to create a mobile device configuration profile. Select **New**.
+3. Add a name and description for the profile.
+4. Choose whether you would like Jamf to install the certificate automatically or with self-service, and whether you would like to install the certificate for a single user or all users on the device.
+5. Select **Add** > **Certificate**. Choose the certificate file.
+6. Uncheck **Allow export from keychain**.
+7. Select **Scope**, then choose which devices or groups to deploy the certificate to.
+8. Select **Save**.
+
+For more information, refer to the [Jamf Pro documentation](https://learn.jamf.com/bundle/jamf-pro-documentation-current/page/PKI_Certificates.html).
+
+#### Kandji
+
+To upload and deploy a Cloudflare certificate in Kandji:
+
+1. [Download a Cloudflare certificate](#download-the-cloudflare-root-certificate) in `.crt` format.
+2. In Kandji, [upload the certificate](https://support.kandji.io/support/solutions/articles/72000558739-certificate-profile) as a PKCS #1-formatted certificate.
+
+#### Hexnode
+
+To upload and deploy a Cloudflare certificate in Hexnode:
+
+1. [Download a Cloudflare certificate](#download-the-cloudflare-root-certificate) in `.pem` format.
+2. In Hexnode, follow the directions for adding the certificate to [macOS](https://www.hexnode.com/mobile-device-management/help/how-to-add-certificates-for-mac-devices-with-hexnode-mdm/), [iOS](https://www.hexnode.com/mobile-device-management/help/add-certificates-for-ios-devices-with-hexnode-mdm/), and/or [Android](https://www.hexnode.com/mobile-device-management/help/how-to-add-certificates-for-android-devices-using-hexnode-mdm/) devices.
+
+#### JumpCloud
+
+To upload and deploy a Cloudflare certificate in JumpCloud:
+
+1. [Download a Cloudflare certificate](#download-the-cloudflare-root-certificate) in `.pem` format.
+2. In JumpCloud, [upload the certificate](https://jumpcloud.com/support/manage-device-trust-certificates#distributing-global-device-certificates-).
+3. [Configure a conditional access policy](https://jumpcloud.com/support/configure-a-conditional-access-policy) to deploy the certificate across devices.
+
 ### Python
 
 Depending on which version of Python you have installed and your configuration, you may need to use either the `python` or `python3` command. If you use [virtual environments](https://docs.python.org/3/library/venv.html), you will need to repeat the following steps within each virtual environment.
@@ -451,7 +527,8 @@ If you use Kaniko with Google Cloud SDK, you must install a Cloudflare certifica
 
 To trust a Cloudflare root certificate in the Google Drive desktop application, follow the procedure for your operating system. These steps require you to [download the .pem certificate](#download-the-cloudflare-root-certificate).
 
-<Details header="macOS">
+<Tabs>
+<TabItem label="macOS" icon="apple">
 
 1. In the Finder menu bar, go to **Go** > **Go to Folder**. Enter `/Applications/Google Drive.app/Contents/Resources`.
 
@@ -475,9 +552,9 @@ You can verify the update with the following command.
 defaults read /Library/Preferences/com.google.drivefs.settings
 ```
 
-</Details>
+</TabItem>
 
-<Details header="Windows">
+<TabItem label="Windows" icon="seti:windows">
 
 1. In File Explorer, go to `\Program Files\Google\Drive File Stream\<version>\config\`.
 
@@ -501,7 +578,8 @@ You can verify the update with the following command.
 reg QUERY "HKEY_LOCAL_MACHINE\Software\Google\DriveFS" /v TrustedRootCertsFile"
 ```
 
-</Details>
+</TabItem>
+</Tabs>
 
 For more information, refer to the [Google documentation](https://support.google.com/a/answer/7644837) for the `TrustedRootCertsFile` setting.
 
@@ -511,7 +589,37 @@ Google Apps Manager (GAM) uses its own certificate store. To add a Cloudflare ce
 
 ### AWS CLI
 
-If you're using the AWS CLI, you need to set the `AWS_CA_BUNDLE` environment variable to use a Cloudflare root certificate. Commands are available for different operating systems in the [AWS instructions](https://docs.aws.amazon.com/cli/latest/userguide/cli-configure-envvars.html).
+To use a Cloudflare root certificate with AWS CLI, configure it in your AWS configuration files:
+
+<Tabs>
+<TabItem label="Global config">
+
+To persistently set the location of the certificate:
+
+1. [Download a Cloudflare certificate](#download-the-cloudflare-root-certificate) in `.pem` format.
+2. Locate and open your [AWS configuration file](https://docs.aws.amazon.com/cli/v1/userguide/cli-configure-files.html#cli-configure-files-where).
+3. Configure the [`ca_bundle` setting](https://docs.aws.amazon.com/cli/v1/userguide/cli-configure-files.html#cli-configure-files-settings) with the location of your certificate. For example:
+
+   ```diff lang="ini" title=".aws\config"
+   [default]
+   region = us-west-1
+
+   +ca_bundle = C:\certificate.pem
+   ```
+
+4. Restart your terminal.
+
+</TabItem>
+<TabItem label="Environment variable">
+
+To set the location of the certificate for use as an environment variable:
+
+1. [Download a Cloudflare certificate](#download-the-cloudflare-root-certificate) in `.pem` format.
+2. In a terminal, set the [`AWS_CA_BUNDLE` environment variable](https://docs.aws.amazon.com/cli/latest/userguide/cli-configure-envvars.html) to the location of your certificate depending on your operating system.
+3. Restart your terminal.
+
+</TabItem>
+</Tabs>
 
 ### PHP Composer
 
@@ -559,7 +667,8 @@ To install a Cloudflare root certificate on Eclipse IDE for Java Developers, you
 
 3. Add the Cloudflare certificate to Eclipse's JVM:
 
-<Details header="macOS and Linux">
+<Tabs>
+<TabItem label="macOS and Linux" icon="seti:shell">
 
 1. In a terminal, add the `java.home` value you copied as an environment variable.
 
@@ -575,25 +684,26 @@ To install a Cloudflare root certificate on Eclipse IDE for Java Developers, you
 
 3. Restart Eclipse.
 
-</Details>
+</TabItem>
 
-<Details header="Windows">
+<TabItem label="Windows" icon="seti:windows">
 
 1. In a terminal, add the `java.home` value you copied as an environment variable.
 
-```powershell
-set JAVA_HOME="\path\to\java.home"
-```
+   ```powershell
+   set JAVA_HOME="\path\to\java.home"
+   ```
 
 2. Run `keytool` to install and trust the Cloudflare certificate.
 
-```powershell
-"%JAVA_HOME%\bin\keytool.exe" -import -file "%UserProfile%\Downloads\certificate.crt" -alias CloudflareRootCA -keystore "%JAVA_HOME%\lib\security\cacerts" -storepass changeit -trustcacerts -noprompt
-```
+   ```powershell
+   "%JAVA_HOME%\bin\keytool.exe" -import -file "%UserProfile%\Downloads\Cloudflare_CA.crt" -alias CloudflareRootCA -keystore "%JAVA_HOME%\lib\security\cacerts" -storepass changeit -trustcacerts -noprompt
+   ```
 
 3. Restart Eclipse.
 
-</Details>
+</TabItem>
+</Tabs>
 
 For more information on adding certificates to Eclipse with `keytool`, refer to [IBM's documentation](https://www.ibm.com/docs/en/ram/7.5.4?topic=client-adding-server-public-certificate-eclipse).
 
@@ -601,7 +711,8 @@ For more information on adding certificates to Eclipse with `keytool`, refer to 
 
 To trust a Cloudflare root certificate in RubyGems, follow the procedure for your operating system. These steps require you to [download a `.pem` certificate](#download-the-cloudflare-root-certificate).
 
-<Details header="macOS and Linux">
+<Tabs>
+<TabItem label="macOS and Linux" icon="seti:shell">
 
 1. Install [OpenSSL](https://www.openssl.org/).
 
@@ -637,9 +748,9 @@ To trust a Cloudflare root certificate in RubyGems, follow the procedure for you
 
 6. Restart any terminal sessions.
 
-</Details>
+</TabItem>
 
-<Details header="Windows">
+<TabItem label="Windows" icon="seti:windows">
 
 1. Install [OpenSSL for Windows](https://slproweb.com/products/Win32OpenSSL.html).
 
@@ -675,7 +786,8 @@ To trust a Cloudflare root certificate in RubyGems, follow the procedure for you
 
 6. Restart any terminal sessions.
 
-</Details>
+</TabItem>
+</Tabs>
 
 ### Minikube
 
