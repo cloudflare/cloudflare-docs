@@ -5,7 +5,7 @@ sidebar:
   order: 6
 ---
 
-When the WARP client is deployed on a device, Cloudflare will process all DNS queries and network traffic by default. However, under certain circumstances, you may need to exclude specific DNS queries or network traffic from WARP. For example, you may need to resolve an internal hostname with a private DNS resolver instead of Cloudflare's [public DNS resolver](/1.1.1.1).
+When the WARP client is deployed on a device, Cloudflare will process all DNS queries and network traffic by default. However, under certain circumstances, you may need to exclude specific DNS queries or network traffic from WARP. For example, you may need to resolve an internal hostname with a private DNS resolver instead of Cloudflare's [public DNS resolver](/1.1.1.1/).
 
 There are four options you can configure to exclude traffic from WARP:
 
@@ -15,7 +15,7 @@ There are four options you can configure to exclude traffic from WARP:
   Gateway will not encrypt, monitor, or apply DNS policies to DNS queries to domain names entered in Local Domain Fallback.
   :::
 - [Split Tunnels](/cloudflare-one/connections/connect-devices/warp/configure-warp/route-traffic/split-tunnels/) Exclude mode: Use Exclude mode to instruct the WARP client to ignore traffic to a specified set of IP addresses or domains. Any traffic that is destined to an IP address or domain defined in the Split Tunnels Exclude configuration will be ignored by the WARP client and handled by the local machine. Use this mode when you want the majority of your traffic encrypted and processed by Gateway, but need to exclude certain routes due to app compatibility, or if you need WARP to run alongside a VPN.
-- [Split Tunnels](/cloudflare-one/connections/connect-devices/warp/configure-warp/route-traffic/split-tunnels/) Include mode: Use Include mode to instruct the WARP client to only handle traffic to a specified set of IP addresses or domains. Any traffic that is not included by IP address or domains defined in the Split Tunnel Include configuration will be ignored by the WARP client and handled by the local machine. Use this mode when you only want specific traffic processed by Gateway, such as when using Tunnels for a specific resource.
+- [Split Tunnels](/cloudflare-one/connections/connect-devices/warp/configure-warp/route-traffic/split-tunnels/) Include mode: Use Include mode to instruct the WARP client to only handle traffic to a specified set of IP addresses or domains. Any traffic that is not included by an IP address or domain defined in the Split Tunnel Include configuration will be ignored by the WARP client and handled by the local machine. Use this mode when you only want specific traffic processed by Gateway, such as when using Tunnels for a specific resource.
   :::caution
   Gateway will not encrypt, manage, or monitor traffic excluded from WARP by a Split Tunnel configuration.
   :::
