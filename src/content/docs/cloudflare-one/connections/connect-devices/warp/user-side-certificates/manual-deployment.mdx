@@ -435,7 +435,7 @@ To install a certificate for use in a Docker container:
        └── certificate.pem
    ```
 
-4. Add the certificate to your Docker container:
+4. Add the certificate to your Docker image:
 
    <Tabs> <TabItem label="During build process">
 
@@ -443,7 +443,7 @@ To install a certificate for use in a Docker container:
 
    1. Add the certificate install directions to your Dockerfile. For example:
 
-      ```docker title="Red Hat-based containers"
+      ```docker title="Red Hat-based images"
       FROM registry.access.redhat.com/ubi9/ubi:latest
       # Or FROM centos:7 or FROM fedora:38
 
@@ -455,7 +455,7 @@ To install a certificate for use in a Docker container:
       RUN update-ca-trust extract
       ```
 
-      ```docker title="Debian-based containers"
+      ```docker title="Debian-based images"
       FROM debian:12
       # Or FROM ubuntu:22.04
 
@@ -467,7 +467,7 @@ To install a certificate for use in a Docker container:
       RUN update-ca-certificates
       ```
 
-      ```docker title="Alpine-based containers"
+      ```docker title="Alpine-based images"
       FROM alpine:3.18
 
       # Install necessary certificates package
@@ -478,7 +478,7 @@ To install a certificate for use in a Docker container:
       RUN update-ca-certificates
       ```
 
-   2. Build the Docker container:
+   2. Build the Docker image:
 
       ```sh
       docker build -t <your-container-name> .
@@ -486,11 +486,11 @@ To install a certificate for use in a Docker container:
 
    3. Verify the certificate was installed:
 
-      ```sh title="Red Hat-based containers"
+      ```sh title="Red Hat-based images"
       docker run --rm your-image-name sh -c "cat /etc/pki/ca-trust/extracted/pem/tls-ca-bundle.pem | grep Cloudflare"
       ```
 
-      ```sh title="Debian and Alpine-based containers"
+      ```sh title="Debian and Alpine-based images"
       docker run --rm your-image-name sh -c "cat /etc/ssl/certs/certificate.pem"
       ```
 
