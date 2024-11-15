@@ -220,19 +220,6 @@ entries:
     difficulty: Beginner
     content_type: 🎥 Video
     pcx_content_type: interview    
-  - link: https://developers.cloudflare.com/workers-ai/tutorials/image-generator-flux/
-    title: How to build an AI Image Generator using Cloudflare Workers AI
-    description: The new flux-schnell models on Workers AI are our most powerful text to image AI models yet. In this video, we show you how to deploy your own Workers AI image playground.
-    tags: [Workers, Workers AI]
-    languages: [TypeScript]
-    stream_id: aeafae151e84a81be19c52c2348e9bab
-    products: [Workers, Workers AI]
-    cloudflare: true
-    author: kristian
-    updated: 2024-10-17
-    difficulty: Intermediate
-    content_type: 🎥 Video
-    pcx_content_type: tutorial
   - link: https://youtu.be/W45MIi_t_go
     title: Building Front-End Applications | Now Supported by Cloudflare Workers
     description: You can now build front-end applications, just like you do on Cloudflare Pages, but with the added benefit of Workers.
@@ -298,7 +285,7 @@ entries:
     difficulty: Intermediate
     content_type: 🎥 Video
     pcx_content_type: tutorial
-  - link: https://developers.cloudflare.com/pages/framework-guides/nextjs/#video-tutorial
+  - link: https://developers.cloudflare.com/workers/static-assets/#video-tutorials
     title: Deploy NextJS to your Workers Application 
     description: Watch to learn how to easily deploy your NextJS application to the Cloudflare global network.
     tags: [NextJS, Workers, Pages]
@@ -360,4 +347,15 @@ entries:
     difficulty: Beginner
     content_type: 🎥 Video
     pcx_content_type: tutorial       
-  
+  # - link: 
+  #   title: 
+  #   description: 
+  #   tags: [Workers, Pages]
+  #   languages: [TypeScript]
+  #   products: [Workers, Pages]
+  #   cloudflare: true
+  #   author: confidence
+  #   updated: 2024-11-14
+  #   difficulty: Intermediate
+  #   content_type: 🎥 Video
+  #   pcx_content_type: tutorial       
