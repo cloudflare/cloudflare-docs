@@ -3,11 +3,11 @@ pcx_content_type: how-to
 title: Centrify (SAML)
 ---
 
-Centrify secures access to infrastructure, DevOps, cloud, and other modern enterprise so you can prevent the #1 cause of breaches – privileged access abuse.
+Centrify secures access to infrastructure, DevOps, cloud, and other modern enterprise so you can prevent the number one cause of breaches: privileged access abuse.
 
-## Set up Centrify (SAML)
+## Set up Centrify as a SAML provider
 
-To set up SAML with Centrify as your identity provider:
+## 1. Create an application in Centrify
 
 1. Log in to your **Centrify** admin portal and select **Apps**.
 
@@ -59,15 +59,21 @@ To set up SAML with Centrify as your identity provider:
 
 20. Select the **Manual Configuration** option.
 
-21. In Zero Trust, go to **Settings** > **Authentication**.
+### 2. Add Centrify to Zero Trust
 
-22. Under **Login methods**, select **Add new**.
+1. In [Zero Trust](https://one.dash.cloudflare.com/), go to **Settings** > **Authentication**.
 
-23. Select SAML.
+2. Under **Login methods**, select **Add new**.
 
-24. Copy and paste the corresponding information from Centrify into the fields.
+3. Select **SAML**.
 
-25. Select **Save**.
+4. Copy and paste the corresponding information from Centrify into the fields.
+
+5. (Optional) To enable SCIM, refer to [Synchronize users and groups](/cloudflare-one/identity/idp-integration/generic-saml/#synchronize-users-and-groups).
+
+6. (Optional) Under **Optional configurations**, configure [additional SAML options](/cloudflare-one/identity/idp-integration/generic-saml/#optional-configurations).
+
+7. Select **Save**.
 
 To test that your connection is working, go to **Authentication** > **Login methods** and select **Test** next to the login method you want to test.
 
