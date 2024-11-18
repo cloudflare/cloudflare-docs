@@ -15,7 +15,13 @@ The Cloudflare OWASP Core Ruleset is designed to work as a single entity to calc
 
 The Cloudflare OWASP Core Ruleset is Cloudflare's implementation of the OWASP ModSecurity Core Rule Set, which is different from the [OWASP Top 10](https://owasp.org/www-project-top-ten/).
 
-The OWASP Top 10 is a list of security risks and recommendations for addressing them. Some of the identified security risks cannot be protected by a firewall, which means that the Cloudflare OWASP Core Ruleset will not directly address all security risks and vulnerabilities identified in OWASP Top 10.
+The OWASP Top 10 is a list of the most severe security risks that can affect applications. Some of the identified security risks can be addressed by the OWASP Core Ruleset, but other risks cannot be protected by a web application firewall, such as the following:
+
+- Insecure Design
+- Identification and Authentication Failures
+- Security Logging and Monitoring Failures
+
+These risks depend more on how the application is built or how the entire monitoring pipeline is set up.
 
 :::
 
