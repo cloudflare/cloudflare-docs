@@ -1680,12 +1680,12 @@
 				},
 				"managed_rulesets_response": {
 					"title": "Cloudflare Sensitive Data Detection",
-					"summary": "Enterprise-only",
+					"summary": "Enterprise with add-on",
 					"link": "/waf/managed-rules/reference/sensitive-data-detection/",
 					"free": "No",
 					"pro": "No",
 					"biz": "No",
-					"ent": "Yes"
+					"ent": "Paid add-on"
 				}
 			}
 		},
