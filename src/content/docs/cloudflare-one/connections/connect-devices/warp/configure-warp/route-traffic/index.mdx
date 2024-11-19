@@ -7,9 +7,10 @@ sidebar:
 
 When the WARP client is deployed on a device, Cloudflare will process all DNS queries and network traffic by default. However, under certain circumstances, you may need to exclude specific DNS queries or network traffic from WARP. For example, you may need to resolve an internal hostname with a private DNS resolver instead of Cloudflare's [public DNS resolver](/1.1.1.1/).
 
-There are four options you can configure to exclude traffic from WARP:
+Cloudflare recommends Enterprise users configure [Gateway resolver policies](/cloudflare-one/policies/gateway/resolver-policies/) to resolve traffic with custom resolvers. WARP will send private DNS queries to Gateway, then Gateway will send the queries to custom resolvers based on matching policies.
 
-- [Resolver policies](/cloudflare-one/policies/gateway/resolver-policies/): Use Gateway resolver policies to route DNS queries to custom resolvers based on matching traffic. Resolver policies are only available on Enterprise plans.
+Additionally, there are three options you can configure to exclude traffic from WARP:
+
 - [Local Domain Fallback](/cloudflare-one/connections/connect-devices/warp/configure-warp/route-traffic/local-domains/): Use Local Domain Fallback to instruct the WARP client to proxy DNS requests for a specified domain to a resolver that is not Cloudflare Gateway. This is useful when you have private hostnames that would not otherwise resolve on the public Internet.
   :::caution
   Gateway will not encrypt, monitor, or apply DNS policies to DNS queries to domain names entered in Local Domain Fallback.
