@@ -569,7 +569,7 @@ entries:
       * You can also search for and add domains from your list of business or enterprise zones. The notification will be sent for the domains chosen.
       * You can filter events by a targeted action.
     additional_information: |-
-      The mean time to detection is two hours.
+      The mean time to detection is five minutes.
 
       When setting up this alert, you can select the services that will be monitored. Each selected service is monitored separately.
     limitations: |-
