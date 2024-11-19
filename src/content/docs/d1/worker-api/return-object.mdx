@@ -7,14 +7,14 @@ sidebar:
 
 Some D1 Worker Binding APIs return a typed object.
 
-| D1 Worker Binding API     | Return object |
-| ------------------------- | ------------- |
-| `stmt.run()`, `db.batch()`| `D1Result`    |
-| `db.exec()`               | `D1ExecResult`|
+| D1 Worker Binding API                          | Return object |
+| ---------------------------------------------- | ------------- |
+| `D1PreparedStatement::run`, `D1Database::batch`| `D1Result`    |
+| `D1Database::exec`                             | `D1ExecResult`|
 
 ## D1Result
 
-The methods `stmt.run()` and `db.batch()` return a typed `D1Result` object for each query statement. This object contains:
+The methods `D1PreparedStatement::run` and `D1Database::batch` return a typed `D1Result` object for each query statement. This object contains:
 
 - The success status
 - A meta object with the internal duration of the operation in milliseconds
@@ -75,7 +75,7 @@ return Response.json(result)
 
 ## D1ExecResult
 
-The method `db.exec()` returns a typed `D1ExecResult` object for each query statement. This object contains:
+The method `D1Database::exec` returns a typed `D1ExecResult` object for each query statement. This object contains:
 
 - The number of executed queries
 - The duration of the operation in milliseconds

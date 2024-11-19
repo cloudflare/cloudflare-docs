@@ -7,11 +7,11 @@ sidebar:
 
 import { Type, MetaInfo, Details } from "~/components";
 
-This chapter documents the various ways you can run and retrieve the results of a query after you have [prepared your statement](/d1/worker-api/d1-binding/#dbprepare).
+This chapter documents the various ways you can run and retrieve the results of a query after you have [prepared your statement](/d1/worker-api/d1-database/#dbprepare).
 
 ## Methods
 
-### `stmt.run()`
+### `run()`
 
 Runs the prepared query (or queries) and returns results. The returned results includes metadata.
 
@@ -70,8 +70,8 @@ return Response.json(returnValue);
 #### Guidance
 
 - `results` is empty for write operations such as `UPDATE`, `DELETE`, or `INSERT`.
-- When using TypeScript, you can pass a [type parameter](/d1/build-with-d1/d1-client-api/#typescript-support) to `run()` to return a typed result object.
-- `stmt.run()` is functionally equivalent to `stmt.all()`, and can be treated as an alias.
+- When using TypeScript, you can pass a [type parameter](/d1/build-with-d1/d1-client-api/#typescript-support) to `D1PreparedStatement::run` to return a typed result object.
+- `D1PreparedStatement::run` is functionally equivalent to `D1PreparedStatement::all`, and can be treated as an alias.
 - You can choose to extract only the results you expect from the statement by simply returning the `results` property of the return object.
 
 <Details header="Example of returning only the `results`" open={false}>
@@ -94,7 +94,7 @@ return Response.json(returnValue.results);
 ```
 </Details>
 
-### `stmt.raw()`
+### `raw()`
 
 Runs the prepared query (or queries), and returns the results as an array of arrays. The returned results do not include metadata.
 
@@ -106,8 +106,8 @@ const returnValue = await stmt.raw();
 
 #### Parameters
 
-- <code>columnNames</code>: <Type text="Boolean"/> <MetaInfo text="Optional"/>
-  - A boolean flag which includes column names as the first row of the result array.
+- <code>columnNames</code>: <Type text="Object"/> <MetaInfo text="Optional"/>
+  - A boolean object which includes column names as the first row of the result array.
 
 #### Return values
 
@@ -118,7 +118,7 @@ const returnValue = await stmt.raw();
 ```js
 const someVariable = `Bs Beverages`;
 const stmt = env.DB.prepare("SELECT * FROM Customers WHERE CompanyName = ?").bind(someVariable);
-const returnValue = await stmt.raw(); // columnName not specified
+const returnValue = await stmt.raw();
 return Response.json(returnValue);
 ```
 ```js output
@@ -158,9 +158,9 @@ return Response.json(returnValue)
 
 #### Guidance
 
-- When using TypeScript, you can pass a [type parameter](/d1/build-with-d1/d1-client-api/#typescript-support) to `raw()` to return a typed result array.
+- When using TypeScript, you can pass a [type parameter](/d1/build-with-d1/d1-client-api/#typescript-support) to `D1PreparedStatement::raw` to return a typed result array.
 
-### `stmt.first()`
+### `first()`
 
 Runs the prepared query (or queries), and returns the first row of the query result as an object. This does not return any metadata. Instead, it directly returns the object.
 
@@ -177,8 +177,9 @@ const values = await stmt.first();
 
 #### Return values
 
-- <code>firstRow</code>: <Type text="Object"/>
+- <code>firstRow</code>: <Type text="Object"/> <MetaInfo text="Optional"/>
   - An object containing the first row of the query result.
+  - The return value will be further filtered to a specific attribute if `columnName` was specified.
 
 - `null`: <Type text="null"/>
   - If the query returns no rows.
@@ -216,7 +217,7 @@ return Response.json(returnValue)
 
 #### Guidance
 
-- If the query returns rows but `column` does not exist, then `first()` throws the `D1_ERROR` exception.
-- `stmt.first()` does not alter the SQL query. To improve performance, consider appending `LIMIT 1` to your statement.
-- When using TypeScript, you can pass a [type parameter](/d1/build-with-d1/d1-client-api/#typescript-support) to `first()` to return a typed result object.
+- If the query returns rows but `column` does not exist, then `D1PreparedStatement::first` throws the `D1_ERROR` exception.
+- `D1PreparedStatement::first` does not alter the SQL query. To improve performance, consider appending `LIMIT 1` to your statement.
+- When using TypeScript, you can pass a [type parameter](/d1/build-with-d1/d1-client-api/#typescript-support) to `D1PreparedStatement::first` to return a typed result object.
 

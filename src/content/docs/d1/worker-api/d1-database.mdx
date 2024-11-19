@@ -1,5 +1,5 @@
 ---
-title: D1 binding
+title: D1 Database
 pcx_content_type: concept
 sidebar:
   order: 1
@@ -19,7 +19,7 @@ A D1 binding has the type `D1Database`, and supports a number of methods, as lis
 
 ## Methods
 
-### `db.prepare()`
+### `prepare()`
 
 Prepares a query statement to be later executed.
 
@@ -30,7 +30,7 @@ const stmt = env.DB.prepare("SELECT * FROM Customers WHERE CompanyName = ?").bin
 
 #### Parameters
 
-- <code>sqlQuery</code>: <Type text="String"/> <MetaInfo text="Required"/>
+- <code>query</code>: <Type text="String"/> <MetaInfo text="Required"/>
   - The SQL query you wish to execute on the database.
 
 #### Return values
@@ -46,7 +46,7 @@ const stmt = env.DB.prepare("SELECT * FROM Customers WHERE CompanyName = ?").bin
 	| `?NNN` | Ordered   | A question mark followed by a number `NNN` holds a spot for the `NNN`-th parameter. `NNN` must be between `1` and `SQLITE_MAX_VARIABLE_NUMBER`                                                                                                                                                                                                                                                                                                                                                                                                    |
 	| `?`    | Anonymous | A question mark that is not followed by a number creates a parameter with a number one greater than the largest parameter number already assigned. If this means the parameter number is greater than `SQLITE_MAX_VARIABLE_NUMBER`, it is an error. This parameter format is provided for compatibility with other database engines. But because it is easy to miscount the question marks, the use of this parameter format is discouraged. Programmers are encouraged to use one of the symbolic formats below or the `?NNN` format above instead. |
 
-	To bind a parameter, use the `stmt.bind()` method.
+	To bind a parameter, use the `D1PreparedStatement::bind` method.
 
 	Order and anonymous examples:
 
@@ -91,13 +91,13 @@ const stmt = env.DB.prepare("SELECT * FROM Customers WHERE CompanyName = Bs Beve
 // `stmt` is a static statement.
 ```
 
-### `db.batch()`
+### `batch()`
 
 Sends multiple SQL statements inside a single call to the database. This can have a huge performance impact as it reduces latency from network round trips to D1. D1 operates in auto-commit. Our implementation guarantees that each statement in the list will execute and commit, sequentially, non-concurrently.
 
 Batched statements are [SQL transactions](https://www.sqlite.org/lang_transaction.html). If a statement in the sequence fails, then an error is returned for that specific statement, and it aborts or rolls back the entire sequence.
 
-To send batch statements, provide `.batch()` a list of prepared statements and get the results in the same order.
+To send batch statements, provide `D1Database::batch` a list of prepared statements and get the results in the same order.
 
 ```js
 const companyName1 = `Bs Beverages`;
@@ -112,12 +112,12 @@ const batchResult = await env.DB.batch([
 #### Parameters
 
 - <code>statements</code>: <Type text="Array"/>
-  - An array of `db.prepare()` statements.
+  - An array of [`D1PreparedStatement`](#prepare)s.
 
 #### Return values
 
 - <code>results</code>: <Type text="Array"/>
-  - An array of `D1Result` objects containing the results of the `.db.prepare()` statements. Each object is in the array position corresponding to the array position of the initial `db.prepare()` statement within the `statementArray`.
+  - An array of `D1Result` objects containing the results of the `D1Database::prepare` statements. Each object is in the array position corresponding to the array position of the initial `D1Database::prepare` statement within the `statements`.
   - Refer to [`D1Result`](/d1/worker-api/return-object/#d1result) for more information about this object.
 
 <Details header="Example of return values" open={false}>
@@ -209,7 +209,7 @@ console.log(stmt[1].results);
 		return Response.json(batchResult);
 	```
 
-### `db.exec()`
+### `exec()`
 
 Executes one or more queries directly without prepared statements or parameter bindings.
 
@@ -219,7 +219,7 @@ const returnValue = await env.DB.exec(`SELECT * FROM Customers WHERE CompanyName
 
 #### Parameters
 
-- <code>queryString</code>: <Type text="String"/> <MetaInfo text="Required"/>
+- <code>query</code>: <Type text="String"/> <MetaInfo text="Required"/>
   - The SQL query statement without parameter binding.
 
 #### Return values
@@ -249,7 +249,7 @@ return Response.json(returnValue);
 - Only use this method for maintenance and one-shot tasks (for example, migration jobs).
 - The input can be one or multiple queries separated by `\n`.
 
-### `db.dump`
+### `dump`
 
 :::caution
 This API only works on databases created during D1's alpha period. Check which version your database uses with `wrangler d1 info <DATABASE_NAME>`.
