@@ -6,7 +6,7 @@ sidebar:
   order: 1
 ---
 
-import { Render } from "~/components";
+import { Render, Badge } from "~/components";
 
 You can use the Universal Endpoint to contact every provider.
 
@@ -31,7 +31,7 @@ You can use the Universal endpoint to contact every provider. The payload is exp
 
 The above will send a request to Workers AI Inference API, if it fails it will proceed to OpenAI. You can add as many fallbacks as you need, just by adding another JSON in the array.
 
-## Websockets API (beta)
+## Websockets API <Badge text="beta" variant="tip" size="small" />
 
 The Universal Endpoint can also be accessed via a [WebSockets API](/ai-gateway/configuration/websockets-api/) which provides a single persistent connection, enabling continuous communication. This API supports all AI providers connected to AI Gateway, including those that do not natively support WebSockets.
 
