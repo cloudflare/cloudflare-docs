@@ -10,7 +10,7 @@ The AI Gateway WebSockets API provides a single persistent connection, enabling 
 
 ## When to use webSockets?
 
-WebSockets are long-lived TCP connections that enable bi-directional, real-time communication between client and server. Unlike HTTP connections, which require repeated handshakes for each request, WebSocket maintains the connection, supporting continuous data exchange with reduced overhead. WebSockets are ideal for applications needing low-latency, real-time data, such as voice assistants.
+WebSockets are long-lived TCP connections that enable bi-directional, real-time communication between client and server. Unlike HTTP connections, which require repeated handshakes for each request, WebSockets maintain the connection, supporting continuous data exchange with reduced overhead. WebSockets are ideal for applications needing low-latency, real-time data, such as voice assistants.
 
 ## Key benefits
 
@@ -90,7 +90,7 @@ ws.on("message", function incoming(message) {
 }
 ```
 
-## Example for streaming requests
+## Example streaming request
 
 For streaming requests, AI Gateway sends an initial message with request metadata indicating the stream is starting:
 
