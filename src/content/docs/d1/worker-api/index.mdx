@@ -20,9 +20,9 @@ Refer to the relevant sections for the API documentation.
 
 D1 Worker Bindings API is fully-typed via the [`@cloudflare/workers-types`](/workers/languages/typescript/#typescript) package, and also supports [generic types](https://www.typescriptlang.org/docs/handbook/2/generics.html#generic-types) as part of its TypeScript API. A generic type allows you to provide an optional `type parameter` so that a function understands the type of the data it is handling.
 
-When using the [query statement methods](/d1/worker-api/prepared-statements) `D1PreparedStatement::run`, `D1PreparedStatement::raw` and `D1PreparedStatement::first`, you can provide a type representing each database row. D1's API will [return the result object](#return-object) with the correct type.
+When using the query statement methods [`D1PreparedStatement::run`](/d1/worker-api/prepared-statements/#run), [`D1PreparedStatement::raw`](/d1/worker-api/prepared-statements/#raw) and [`D1PreparedStatement::first`](/d1/worker-api/prepared-statements/#first), you can provide a type representing each database row. D1's API will [return the result object](#return-object) with the correct type.
 
-For example, providing an `OrderRow` type as a type parameter to `D1PreparedStatement::run` will return a typed `Array<OrderRow>` object instead of the default `Record<string, unknown>` type:
+For example, providing an `OrderRow` type as a type parameter to [`D1PreparedStatement::run`](/d1/worker-api/prepared-statements/#run) will return a typed `Array<OrderRow>` object instead of the default `Record<string, unknown>` type:
 
 ```ts
 // Row definition
