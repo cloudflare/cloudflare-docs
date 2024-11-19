@@ -359,6 +359,18 @@ entries:
     difficulty: Intermediate
     content_type: 🎥 Video
     pcx_content_type: tutorial
+  - link: https://developers.cloudflare.com/pages/framework-guides/deploy-an-astro-site/#video-tutorial
+    title: Build a Full-Stack Application using Astro and Cloudflare Workers
+    description: Learn how to deploy an Astro application to Cloudflare Workers.
+    tags: [Workers, Pages, Astro]
+    languages: [TypeScript]
+    products: [Workers, Pages]
+    cloudflare: true
+    author: kristian
+    updated: 2024-11-19
+    difficulty: Beginner
+    content_type: 🎥 Video
+    pcx_content_type: tutorial    
   # - link:
   #   title:
   #   description:
@@ -371,3 +383,4 @@ entries:
   #   difficulty: Intermediate
   #   content_type: 🎥 Video
   #   pcx_content_type: tutorial
+
