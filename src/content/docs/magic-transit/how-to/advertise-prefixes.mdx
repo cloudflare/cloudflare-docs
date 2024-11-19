@@ -83,7 +83,7 @@ To begin using BGP control, contact your account team with the following informa
 After receiving your information, Cloudflare will update firewall filters to establish the BGP session and provide you with the BGP endpoints to control your prefixes.
 
 :::note
-When you withdraw a prefix using BGP, you must withdraw the prefixes from all BGP sessions on all route reflectors. Otherwise, your prefix will not be withdrawn from Cloudflare's global network.
+When you withdraw a prefix using BGP, you must ensure the prefix is withdrawn across all BGP sessions on all route reflectors. Otherwise, your prefix will not be withdrawn from Cloudflare's global network.
 :::
 
 ### Regional settings
