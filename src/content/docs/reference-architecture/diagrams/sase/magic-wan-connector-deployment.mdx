@@ -58,7 +58,7 @@ Figure 3 below illustrates the deployment topology where Magic WAN Connector sup
 
 ![Figure 3. Full HA with dual Connectors and dual uplinks.](~/assets/images/reference-architecture/magic-wan-connector-deployment/figure03.svg "Figure 3. Full HA with dual Connectors and dual uplinks.")
 
-Each Magic WAN Connector connects to the same two ISPs using dual uplinks, and automatically creates one IPsec tunnel per WAN port. This requires each ISP to support multiple ports on their on-site Network Termination Unit (or their CPE, if there is one present). In this HA deployment there are four tunnels in total, two per Connector, while traffic can be load-balanced between the two tunnels on the active device. When either the active Connector, or its IPsec tunnel go down, the other Connector takes over and propagates traffic, holding the active role until it fails (preemption is not used to avoid unnecessary failover delays).
+Each Magic WAN Connector connects to the same two ISPs using dual uplinks, and automatically creates one IPsec tunnel per WAN port. This requires each ISP to support multiple ports on their on-site Network Termination Unit (or their CPE, if there is one present). In this HA deployment there are four tunnels in total, two per Connector, while traffic can be load-balanced between the two tunnels on the active device. When either the active Connector, or its IPsec tunnels go down, the other Connector takes over and propagates traffic, holding the active role until it fails (preemption is not used to avoid unnecessary failover delays).
 
 ## Advanced use cases
 
@@ -77,7 +77,7 @@ This type of hybrid architecture requires the MPLS Customer Edge router (CE) or 
 
 1. Devices on the local network use the MPLS CE (or some other local L3 device) as their default gateway
 2. Private traffic is sent towards the MPLS network. For example, the MPLS CE knows how to route these because it receives RFC1918 ranges via BGP from the MPLS network.
-3. Internet traffic from both LAN and MPLS network is sent towards the Magic WAN Connector (MPLS CE/L3 gateway points a static default route towards the Connector)
+3. Internet traffic from the LAN network is forwarded towards the Magic WAN Connector (MPLS CE/L3 gateway points a static default route towards the Connector)
 
 All traffic towards internal locations and self-hosted applications follows the MPLS path, while traffic to cloud-based and SaaS applications follows the local Internet breakout path, protected by Cloudflare security services.
 
@@ -87,7 +87,7 @@ In some deployments, customers might want to protect only specific protocols usi
 
 ![Figure 5. 'Split Tunneling' use case.](~/assets/images/reference-architecture/magic-wan-connector-deployment/figure05.svg "Figure 5. 'Split Tunneling' use case.")
 
-In this example, the organization wants Cloudflare to protect all Internet web traffic (HTTP/HTTPS), while the rest of the traffic flows out via the existing firewall. The latter could be traffic towards existing VPNs, or non-web traffic exiting the site, but protected by the on-premises firewall. This method could take the advantage of local device policy-based routing (PBR) capabilities, for example:
+In this example, the organization wants Cloudflare to protect all Internet web traffic (HTTP/HTTPS), while the rest of the traffic flows out via the existing firewall. The latter could be traffic towards existing VPNs, or non-web traffic exiting the site, but protected by the on-premises firewall. This method could take advantage of local device policy-based routing (PBR) capabilities, for example:
 
 1. Local devices use the on-premises firewall as their default gateway
 2. Firewall uses PBR to direct appropriate traffic to the right destination
