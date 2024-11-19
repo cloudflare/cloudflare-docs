@@ -5,6 +5,12 @@ productLink: "/hyperdrive/"
 productArea: Developer platform
 productAreaLink: /workers/platform/changelog/platform/
 entries:
+  - publish_date: "2024-11-19"
+    title: Hyperdrive now supports clear-text password authentication
+    description: |-
+      When connecting to a database that requires secure clear-text password authentication over TLS, Hyperdrive will now support this authentication method.
+
+      Refer to the documentation to see [all PostgreSQL authentication modes supported by Hyperdrive](/hyperdrive/reference/supported-databases#supported-postgresql-authentication-modes).
   - publish_date: "2024-10-30"
     title: New Hyperdrive configurations to private databases using Tunnels are validated before creation
     description: |-
