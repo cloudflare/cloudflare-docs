@@ -1,7 +1,8 @@
 ---
 import StarlightPage from "@astrojs/starlight/components/StarlightPage.astro";
-import { Aside, Badge } from "~/components";
+import { Aside } from "~/components";
 import { marked } from "marked";
+import { format } from "date-fns";
 import { getChangelogs } from "~/util/changelogs";
 
 const { products, productAreas, changelogs } = await getChangelogs();
@@ -27,7 +28,7 @@ const { products, productAreas, changelogs } = await getChangelogs();
 	</p>
 	<br />
 	<label for="products">Product:</label>
-	<select name="products" id="products">
+	<select name="products" id="products" class="mr-4">
 		<option value="all">Select...</option>
 		{
 			products.map((product) => (
@@ -46,9 +47,9 @@ const { products, productAreas, changelogs } = await getChangelogs();
 	</select>
 	{
 		changelogs.map(([date, entries]) => (
-			<div class="md:grid md:grid-cols-[20%_80%]" data-date={date}>
+			<div class="md:grid md:grid-cols-[18%_82%]" data-date={date}>
 				<div>
-					<h2 class="text-nowrap">{date}</h2>
+					<h4 class="text-nowrap">{format(date, "do MMMM yyyy")}</h4>
 				</div>
 				<div class="!mt-0">
 					{entries?.map((entry) => (
@@ -102,7 +103,7 @@ const { products, productAreas, changelogs } = await getChangelogs();
 	const navHeightPx = Number(navHeightRem.split("rem")[0]) * 16 + 16;
 
 	const headers = document.querySelectorAll<HTMLElement>(
-		"[data-date] > div > h2",
+		"[data-date] > div > h4",
 	);
 	headers.forEach(
 		(header) => new StickyHeader(header, { offset: 0 - navHeightPx }),
@@ -162,7 +163,7 @@ const { products, productAreas, changelogs } = await getChangelogs();
 </script>
 
 <style>
-	h2.sticky-pinned {
+	h4.sticky-pinned {
 		top: var(--sl-nav-height);
 		background-color: var(--sl-color-bg);
 	}
