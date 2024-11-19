@@ -70,7 +70,7 @@ const defaultConfig: WorkflowStepConfig = {
 When providing your own `StepConfig`, you can configure:
 
 * The total number of attempts to make for a step
-* The delay between attempts
+* The delay between attempts (accepts both `number` (ms) or a human-readable format)
 * What backoff algorithm to apply between each attempt: any of `constant`, `linear`, or `exponential`
 * When to timeout (in duration) before considering the step as failed (including during a retry attempt)
 
@@ -87,7 +87,7 @@ let someState = step.do("call an API", {
 }, async () => { /* Step code goes here /* }
 ```
 
-## Force a Workflow to fail
+## Force a Workflow instance to fail
 
 You can also force a Workflow instance to fail and _not_ retry by throwing a `NonRetryableError` from within the step.
 
@@ -111,3 +111,38 @@ export class MyWorkflow extends WorkflowEntrypoint<Env, Params> {
 ```
 
 The Workflow instance itself will fail immediately, no further steps will be invoked, and the Workflow will not be retried.
+
+## Catch Workflow errors
+
+Any uncaught exceptions that propagate to the top level, or any steps that reach their retry limit, will cause the Workflow to end execution in an `Errored` state.
+
+If you want to avoid this, you can catch exceptions emitted by a `step`. This can be useful if you need to trigger clean-up tasks or have conditional logic that triggers additional steps.
+
+To allow the Workflow to continue its execution, surround the intended steps that are allowed to fail with a `try-catch` block.
+
+
+```ts
+...
+await step.do('task', async () => {
+	// work to be done
+});
+
+try {
+    await step.do('non-retryable-task', async () => {
+		// work not to be retried
+        throw new NonRetryableError('oh no');
+    });
+} catch(e as Error) {
+    console.log(`Step failed: ${e.message}`);
+    await step.do('clean-up-task', async () => {
+      // Clean up code here
+    });
+}
+
+// the Workflow will not fail and will continue its execution
+
+await step.do('next-task', async() => {
+	// more work to be done
+});
+...
+```

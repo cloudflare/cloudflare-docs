@@ -32,7 +32,7 @@ Cloudflare Access requires that the credentials: `same-origin parameter` be adde
 ## I see untrusted certificate warnings for every page and I am unable to browse the Internet.
 
 Advanced security features including HTTPS traffic inspection require users to install and trust the Cloudflare root certificate on their machine or device. If you are installing certificates manually on all of your devices, these steps will need to be performed on each new device that is to be subject to HTTP Filtering.
-To install the Cloudflare root certificate, follow [this guide](/cloudflare-one/connections/connect-devices/warp/user-side-certificates/).
+To install the Cloudflare root certificate, follow [this guide](/cloudflare-one/connections/connect-devices/user-side-certificates/).
 
 ## I see error 526 when browsing to a website.
 
@@ -100,7 +100,7 @@ If you see this warning, you may have to disable DNS over HTTPS setting in Firef
 
 ## Chrome shows `NET::ERR_CERT_AUTHORITY_INVALID` when I use the WARP client.
 
-Advanced security features including HTTPS traffic inspection require you to deploy a [root certificate](/cloudflare-one/connections/connect-devices/warp/user-side-certificates/) on the device. If [**Install CA to system certificate store**](/cloudflare-one/connections/connect-devices/warp/user-side-certificates/automated-deployment/) is enabled, the WARP client will automatically install a new root certificate whenever you install or update WARP.
+Advanced security features including HTTPS traffic inspection require you to deploy a [root certificate](/cloudflare-one/connections/connect-devices/user-side-certificates/) on the device. If [**Install CA to system certificate store**](/cloudflare-one/connections/connect-devices/user-side-certificates/automated-deployment/) is enabled, the WARP client will automatically install a new root certificate whenever you install or update WARP.
 
 Certain web browsers (such as Chrome and Microsoft Edge) load and cache root certificates when they start. Therefore, if you install a root certificate while the browser is already running, the browser may not detect the new certificate. To resolve the error, restart the browser.
 

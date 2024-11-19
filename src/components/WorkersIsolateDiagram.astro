@@ -262,7 +262,11 @@ let range = (n: number) => [...Array(n).keys()];
 		right: 0;
 		bottom: 0;
 		left: 0;
-		background: color-mix(in srgb, var(--sl-color-accent-high) 25%, transparent);
+		background: color-mix(
+			in srgb,
+			var(--sl-color-accent-high) 25%,
+			transparent
+		);
 	}
 
 	.ArchitectureDiagram--user-code {
@@ -270,7 +274,11 @@ let range = (n: number) => [...Array(n).keys()];
 		z-index: 1;
 		width: var(--user-code-size);
 		height: var(--user-code-size);
-		background: color-mix(in srgb, var(--sl-color-accent-high) 90%, transparent);
+		background: color-mix(
+			in srgb,
+			var(--sl-color-accent-high) 90%,
+			transparent
+		);
 	}
 
 	.ArchitectureDiagram--process-overhead-background,

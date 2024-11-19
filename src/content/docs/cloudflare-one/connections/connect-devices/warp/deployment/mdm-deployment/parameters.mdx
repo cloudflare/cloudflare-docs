@@ -170,19 +170,30 @@ Assigns a unique identifier to the device for the [device UUID posture check](/c
 
 ### `auth_client_id`
 
-Enrolls the device in your Zero Trust organization using a [service token](/cloudflare-one/connections/connect-devices/warp/deployment/device-enrollment/#check-for-service-token). Requires the `auth_client_secret` parameter.
+Enrolls the device in your Zero Trust organization using a [service token](/cloudflare-one/connections/connect-devices/warp/deployment/device-enrollment/#check-for-service-token).
+Requires the `auth_client_secret` parameter. 
 
 **Value Type:** `string`
 
-**Value:** `Client ID` of the service token.
+**Value:** Client ID of the service token.
+
+Example configuration:
+
+```xml
+<key>auth_client_id</key>
+<string>88bf3b6d86161464f6509f7219099e57.access</string>
+<key>auth_client_secret</key>
+<string>bdd31cbc4dec990953e39163fbbb194c93313ca9f0a6e420346af9d326b1d2a5</string>
+```
 
 ### `auth_client_secret`
 
-Enrolls the device in your Zero Trust organization using a [service token](/cloudflare-one/connections/connect-devices/warp/deployment/device-enrollment/#check-for-service-token). Requires the `auth_client_id` parameter.
+Enrolls the device in your Zero Trust organization using a [service token](/cloudflare-one/connections/connect-devices/warp/deployment/device-enrollment/#check-for-service-token). 
+Requires the `auth_client_id` parameter.
 
 **Value Type:** `string`
 
-**Value:** `Client Secret` of the service token.
+**Value:** Client Secret of the service token.
 
 ### `display_name`
 

@@ -5,7 +5,14 @@ sidebar:
   order: 2
 ---
 
-import { Details, GlossaryTooltip, InlineBadge, Render, Tabs, TabItem} from "~/components";
+import {
+	Details,
+	GlossaryTooltip,
+	InlineBadge,
+	Render,
+	Tabs,
+	TabItem,
+} from "~/components";
 
 WARP settings define the WARP client modes and permissions available to end users.
 
@@ -61,9 +68,9 @@ The client will automatically reconnect after the [Auto connect period](#auto-co
 
 </Details>
 
-When `Enabled`, the WARP client will [automatically install](/cloudflare-one/connections/connect-devices/warp/user-side-certificates/automated-deployment/) your organization's root certificate on the device.
+When `Enabled`, the WARP client will [automatically install](/cloudflare-one/connections/connect-devices/user-side-certificates/automated-deployment/) your organization's root certificate on the device.
 
-### Override local interface IP <InlineBadge preset="beta" />
+### Override local interface IP
 
 <Details header="Feature availability">
 
@@ -120,9 +127,9 @@ When `Enabled`, users have the option to switch between [Gateway with WARP](/clo
 | Windows  | ✅           | 2024.6.415.0         |
 | macOS    | ✅           | 2024.6.416.0         |
 | Linux    | ✅           | 2024.6.497.0         |
-| iOS      | Coming soon  |                      |
-| Android  | Coming soon  |                      |
-| ChromeOS | Coming soon  |                      |
+| iOS      | ✅   			   | 1.7                  |
+| Android  | ✅   			   | 2.0                  |
+| ChromeOS | ✅ 				   | 2.0                  |
 
 </Details>
 
@@ -131,7 +138,7 @@ Configures the protocol used to route IP traffic from the device to Cloudflare G
 **Value**:
 
 - **WireGuard**: (default) Establishes a [WireGuard](https://www.wireguard.com/) connection to Cloudflare. The WARP client will encrypt traffic using a non-FIPs compliant cipher suite, `TLS_CHACHA20_POLY1305_SHA256`. When switching from MASQUE to WireGuard, users may lose Internet connectivity if their Wi-Fi network blocks the [ports and IPs](/cloudflare-one/connections/connect-devices/warp/deployment/firewall/#warp-ingress-ip) required for WireGuard to function.
-- **MASQUE** <InlineBadge preset="beta" />: Establishes an HTTP/3 connection to Cloudflare. To use MASQUE, [Override local interface IP](/cloudflare-one/connections/connect-devices/warp/configure-warp/warp-settings/#override-local-interface-ip-) must be `Enabled`. The WARP client will encrypt traffic using TLS 1.3 and a [FIPS 140-2](https://csrc.nist.gov/pubs/fips/140-2/upd2/final) compliant cipher suite, `TLS_AES_256_GCM_SHA384`.
+- **MASQUE**: Establishes an HTTP/3 connection to Cloudflare. To use MASQUE, [Override local interface IP](/cloudflare-one/connections/connect-devices/warp/configure-warp/warp-settings/#override-local-interface-ip-) must be `Enabled`. The WARP client will encrypt traffic using TLS 1.3 and a [FIPS 140-2](https://csrc.nist.gov/pubs/fips/140-2/upd2/final) compliant cipher suite, `TLS_AES_256_GCM_SHA384`.
 
 For more details on WireGuard versus MASQUE, refer to our [blog post](https://blog.cloudflare.com/zero-trust-warp-with-a-masque).
 
@@ -241,7 +248,8 @@ Creates [Split Tunnel](/cloudflare-one/connections/connect-devices/warp/configur
 | Android  | ✅           | 1.4                  |
 | ChromeOS | ✅           | 1.4                  |
 
-[^1]:  Current versions of iOS do not allow LAN traffic to route through the WARP tunnel. Therefore, this feature is not needed on iOS.
+[^1]: Current versions of iOS do not allow LAN traffic to route through the WARP tunnel. Therefore, this feature is not needed on iOS.
+
 </Details>
 
 This setting is intended as a workaround for users whose home network uses the same set of IP addresses as your corporate private network. To use this setting, **Split Tunnels** must be set to **Exclude IPs and domains**.
@@ -261,12 +269,17 @@ Enabling this setting comes with two major consequences:
 
 To turn on local network access in the WARP client:
 
-<Tabs> <TabItem label="Windows and macOS">
+<Tabs>
+
+<TabItem label="Windows and macOS">
 
 1. Select the Cloudflare logo in the menu bar.
 2. Select the gear icon.
 3. Select **Access Local Network**.
-</TabItem> <TabItem label="Linux">
+
+</TabItem>
+
+<TabItem label="Linux">
 
 1. Open a terminal window.
 2. Run `warp-cli override local-network start`.
@@ -278,6 +291,7 @@ To turn on local network access in the WARP client:
 1. Open the Cloudflare One Agent app.
 2. Go to **Settings** > **Advanced** > **Connection Options**.
 3. Select **Access Local Network**.
+
 </TabItem>
 
 </Tabs>

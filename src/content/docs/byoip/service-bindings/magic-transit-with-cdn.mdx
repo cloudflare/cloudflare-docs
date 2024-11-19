@@ -4,14 +4,13 @@ pcx_content_type: tutorial
 sidebar:
   order: 3
   label: Magic Transit with CDN
-
 ---
 
 import { Details, Example, TabItem, Tabs, GlossaryTooltip } from "~/components";
 
 [Magic Transit](/magic-transit/) customers using BYOIP can also benefit from the performance, reliability, and security that Cloudflare offers for HTTP-based applications.
 
-This documentation covers using the Cloudflare API to configure [service bindings](/byoip/service-bindings/) within Cloudflare's IP Address Management framework. Service bindings allow BYOIP customers to selectively route traffic on a per-IP address basis to the CDN pipeline (which includes [Cache](/cache/), [Web Application Firewal (WAF)](/waf/), and more).
+This documentation covers using the Cloudflare API to configure [service bindings](/byoip/service-bindings/) within Cloudflare's IP Address Management framework. Service bindings allow BYOIP customers to selectively route traffic on a per-IP address basis to the CDN pipeline (which includes [Cache](/cache/), [Web Application Firewall (WAF)](/waf/), and more).
 
 It is also possible to define service bindings to route traffic to the Spectrum pipeline selectively. However, this is not in the scope of this guide.
 
@@ -19,29 +18,32 @@ It is important to note that traffic routed to the CDN pipeline is protected at 
 
 ## Before you begin
 
-Efficiency is paramount when planning how you will implement service bindings. Implementing service bindings through an aggregated CIDR block is strongly recommended.
+Although it is possible to add discrete bindings for non-contiguous CIDR blocks, implementing service bindings through an **aggregated** CIDR block is **strongly** recommended as it is more efficient.
 
-  <Details header="Example" >
+<Details header="Example">
 
-  **Magic Transit protected prefix:** `203.0.113.100/24`
+**Magic Transit protected prefix:** `203.0.113.100/24`
 
-  **IPs to upgrade to the CDN:**
+**IPs to upgrade to the CDN:**
 
-  `203.0.113.16`
-  `203.0.113.17`
-  `203.0.113.18`
-  `203.0.113.19`
-  `203.0.113.20`
-  `203.0.113.21`
-  `203.0.113.22`
-  `203.0.113.23`
+`203.0.113.16`<br />
+`203.0.113.17`<br />
+`203.0.113.18`<br />
+`203.0.113.19`<br />
+`203.0.113.20`<br />
+`203.0.113.21`<br />
+`203.0.113.22`<br />
+`203.0.113.23`
 
-  **Best practice:** Add one discrete CDN service binding for `203.0.113.16` with a `/29` netmask.
+Add one discrete CDN service binding for `203.0.113.16` with a `/29` netmask.
 
-  </Details>
+</Details>
 
-Once a service binding is created (or deleted), it will take four to six hours to propagate across Cloudflare's global network. Services for the IP addresses in scope will likely be disrupted during this window.
+Once a service binding is created (or deleted), it will take **four** to **six** hours to propagate across Cloudflare's global network. Services for the IP addresses in scope will likely be disrupted during this window.
 
+:::note
+This guide assumes that the prefix is tied to a single Cloudflare account that has both Magic Transit and CDN properties. If you are using [prefix delegations](/byoip/concepts/prefix-delegations/), the service bindings must be [created](#2-create-service-binding) on the parent account.
+:::
 
 ## 1. Get account information
 
@@ -53,14 +55,14 @@ Once a service binding is created (or deleted), it will take four to six hours t
 
 At this point, continuing the [example](#before-you-begin), you should have a mapping similar to the following:
 
-| Variables  | Description                                        |
-|-------------------------------|----------------------------------------------------|
-| `{service_id}`                  | The ID of the CDN service within Cloudflare. <br /><br /> Example: `969xxxxxxxx000xxx0000000x00001bf`           |
-| `{prefix_id}`                   | The ID of the Magic Transit protected prefix (`203.0.113.100/24`) you want to configure. <br /><br /> Example: `6b25xxxxxxx000xxx0000000x0000cfc` |
+| Variables      | Description                                                                                                                                       |
+| -------------- | ------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `{service_id}` | The ID of the CDN service within Cloudflare. <br /><br /> Example: `969xxxxxxxx000xxx0000000x00001bf`                                             |
+| `{prefix_id}`  | The ID of the Magic Transit protected prefix (`203.0.113.100/24`) you want to configure. <br /><br /> Example: `6b25xxxxxxx000xxx0000000x0000cfc` |
 
 </Example>
 
-4. To confirm you currently only have a Magic Transit service binding and that it spans across your entire prefix, make a `GET` request to the  [List Service Bindings](/api/operations/ip-address-management-service-bindings-list-service-bindings) endpoint. Replace the `{prefix_id}` in the URI path by the actual prefix ID you got from the previous step.
+4. To confirm you currently only have a Magic Transit service binding and that it spans across your entire prefix, make a `GET` request to the [List Service Bindings](/api/operations/ip-address-management-service-bindings-list-service-bindings) endpoint. Replace the `{prefix_id}` in the URI path by the actual prefix ID you got from the previous step.
 
 <Example>
 
@@ -114,6 +116,7 @@ In the response body, the initial provisioning state should be `provisioning`.
   }
 }
 ```
+
 </Example>
 
 You can periodically check the service binding status using the [List Service Bindings](/api/operations/ip-address-management-service-bindings-list-service-bindings) endpoint.
@@ -124,12 +127,11 @@ Once you have configured your IPs to have CDN service, you can use <GlossaryTool
 
 You can choose between two different scopes:
 
-* Account-level: uses the address map for all proxied DNS records across all of the zones within an account.
-
-* Zone-level: uses the address map for all proxied DNS records within a zone.
+- Account-level: uses the address map for all proxied DNS records across all of the zones within an account.
+- Zone-level: uses the address map for all proxied DNS records within a zone.
 
 :::note
-If you need to map only specific subdomains to specific IP addresses - and not all proxied DNS records -, you can use a [Subdomain setup](/dns/zone-setups/subdomain-setup/).
+If you need to map only specific subdomains (and not all proxied DNS records) to specific IP addresses, you can use a [Subdomain setup](/dns/zone-setups/subdomain-setup/).
 :::
 
 <Tabs labels="Dashboard | API">
@@ -182,40 +184,43 @@ As you create the necessary DNS records, [Total TLS](/ssl/edge-certificates/addi
 
 While the DNS record proxy status and address map will determine how Cloudflare's authoritative DNS responds to requests for your hostnames, the IP addresses specified in `A`/`AAAA` records will determine [how Cloudflare reaches the configured origin](/fundamentals/concepts/how-cloudflare-works/#how-cloudflare-works-as-a-reverse-proxy).
 
-<Details header="Example" >
+<Details header="Example">
 
-| Type | Name | IP address | Proxy status | TTL |
-| --- | --- | --- | --- | --- |
-| `A` | `www` | `203.0.113.150` | `Proxied` | `Auto` |
+| Type | Name  | IP address      | Proxy status | TTL    |
+| ---- | ----- | --------------- | ------------ | ------ |
+| `A`  | `www` | `203.0.113.150` | `Proxied`    | `Auto` |
 
 At this point, if an address map for a zone `example.com` specifies that Cloudflare should use `203.0.113.100` for proxied records and the above record exists in the same zone, you can expect the following:
 
 1. Cloudflare responds to DNS requests with `203.0.113.100`.
-2. Cloudflare proxies requests through the CDN and then routes the requests via [GRE](/magic-transit/reference/tunnels/#gre-and-ipsec-tunnels) or [CNI](/magic-transit/network-interconnect/) to the origin server `203.0.113.150` (Magic Transit protected prefix).
+2. Cloudflare proxies requests through the CDN and then routes the requests via [GRE](/magic-transit/reference/tunnels/) or [CNI](/magic-transit/network-interconnect/) to the origin server `203.0.113.150` (Magic Transit protected prefix).
 3. Depending on whether Magic Transit is implemented with [direct server return model or with Magic Transit egress](/magic-transit/how-to/configure-tunnels/#bidirectional-vs-unidirectional-health-checks), the origin server responds back to Cloudflare either:
 
-    * Directly over the Internet in a Magic Transit direct server return model
-    * Back through the Magic GRE tunnel(s) in a Magic Transit egress model
+   - Directly over the Internet in a Magic Transit direct server return model
+   - Back through the Magic GRE tunnel(s) in a Magic Transit egress model
+
 4. As the HTTP response egresses the Cloudflare network back to the client side, the source IP address of the response becomes `203.0.113.100` (the IP address that the HTTP request originally landed on).
 
 </Details>
 
+:::note
 Having the same IP address as ingress IP (defined in the address map) and origin IP (listed in the DNS record) will not cause any loops.
+:::
 
-<Details header="Example" >
+<Details header="Example">
 
 Assuming `203.0.113.100` was also the origin IP, the DNS record would look like the following:
 
-| Type | Name | IP address | Proxy status | TTL |
-| --- | --- | --- | --- | --- |
-| `A` | `www` | `203.0.113.100` | `Proxied` | `Auto` |
+| Type | Name  | IP address      | Proxy status | TTL    |
+| ---- | ----- | --------------- | ------------ | ------ |
+| `A`  | `www` | `203.0.113.100` | `Proxied`    | `Auto` |
 
 </Details>
 
-## 5.(Optional) Add layer 7 functionality
+## 5. (Optional) Add layer 7 functionality
 
 Leverage other features according to your needs:
 
 - [Cache](/cache/)
-- [WAF custom rules](/waf/custom-rules/#custom-rules)
-- [Security analytics](/waf/analytics/security-analytics/#security-analytics)
+- [WAF custom rules](/waf/custom-rules/)
+- [Security analytics](/waf/analytics/security-analytics/)

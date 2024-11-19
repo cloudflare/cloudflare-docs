@@ -1,0 +1,202 @@
+---
+pcx_content_type: how-to
+title: Monitoring API
+sidebar:
+  order: 2
+---
+
+import { TabItem, Tabs } from "~/components";
+
+The **Zaraz Monitoring API** allows users to retrieve detailed data on Zaraz events through the **GraphQL Analytics API**. Using this API, you can monitor events, pageviews, triggers, actions, and server-side request statuses, including any errors and successes. The data available through the API mirrors what is shown on the Zaraz Monitoring page in the dashboard, but with the API, you can query it programmatically to create alerts and notifications for unexpected deviations.
+
+To get started, you'll need to generate an Analytics API token by following the [API token authentication guide](/analytics/graphql-api/getting-started/authentication/api-token-auth/).
+
+## Key Entities
+
+The Monitoring API includes the following core entities, which each provide distinct insights:
+
+- **zarazTrackAdaptiveGroups**: Contains data on Zaraz events, such as event counts and timestamps.
+- **zarazActionsAdaptiveGroups**: Provides information on Zaraz Actions.
+- **zarazTriggersAdaptiveGroups**: Tracks data on Zaraz Triggers.
+- **zarazFetchAdaptiveGroups**: Captures server-side request data, including URLs and returning status codes for third-party requests made by Zaraz.
+
+## Example GraphQL Queries
+
+You can construct any query you'd like using the above datasets, but here are some example queries you can use.
+
+<Tabs syncKey="GQLExamples"><TabItem label="Events">
+
+Query for the count of Zaraz events, grouped by time.
+
+```graphql
+query ZarazEvents(
+ $zoneTag: string
+ $limit: uint64!
+ $start: Date
+ $end: Date
+ $orderBy: [ZoneZarazTrackAdaptiveGroupsOrderBy!]
+) {
+ viewer {
+  zones(filter: { zoneTag: $zoneTag }) {
+   data: zarazTrackAdaptiveGroups(
+    limit: $limit
+    filter: { datetimeHour_geq: $start, datetimeHour_leq: $end }
+    orderBy: [$orderBy]
+   ) {
+    count
+    dimensions {
+     ts: datetimeHour
+    }
+   }
+  }
+ }
+}
+```
+
+</TabItem><TabItem label="Loads">
+
+Query for the count of Zaraz loads, grouped by time.
+
+```graphql
+query ZarazLoads(
+ $zoneTag: string
+ $limit: uint64!
+ $start: Date
+ $end: Date
+ $orderBy: [ZoneZarazTriggersAdaptiveGroupsOrderBy!]
+) {
+ viewer {
+  zones(filter: { zoneTag: $zoneTag }) {
+   data: zarazTriggersAdaptiveGroups(
+    limit: $limit
+    filter: { date_geq: $start, date_leq: $end, triggerName: Pageview }
+    orderBy: [$orderBy]
+   ) {
+    count
+    dimensions {
+     ts: date
+    }
+   }
+  }
+ }
+}
+```
+
+</TabItem> <TabItem label="Triggers">
+
+Query for the total execution count of each trigger processed by Zaraz.
+
+```graphql
+query ZarazTriggers(
+ $zoneTag: string
+ $limit: uint64!
+ $start: Date
+ $end: Date
+ $orderBy: [uint64!]
+) {
+ viewer {
+  zones(filter: { zoneTag: $zoneTag }) {
+   data: zarazTriggersAdaptiveGroups(
+    limit: $limit
+    filter: { date_geq: $start, date_leq: $end }
+    orderBy: [count_DESC]
+   ) {
+    count
+    dimensions {
+     name: triggerName
+    }
+   }
+  }
+ }
+}
+```
+
+</TabItem><TabItem label="Erroneous responses">
+
+Query for the count of 400 server-side responses, grouped by time and URL.
+
+```graphql
+query ErroneousResponses(
+ $zoneTag: string
+ $limit: uint64!
+ $start: Date
+ $end: Date
+ $orderBy: [ZoneZarazFetchAdaptiveGroupsOrderBy!]
+) {
+ viewer {
+  zones(filter: { zoneTag: $zoneTag }) {
+   data: zarazFetchAdaptiveGroups(
+    limit: $limit
+    filter: {
+     datetimeHour_geq: $start
+     datetimeHour_leq: $end
+     url_neq: ""
+     status: 400
+    }
+    orderBy: [$orderBy]
+   ) {
+    count
+    dimensions {
+     ts: datetimeHour
+     name: url
+    }
+   }
+  }
+ }
+}
+```
+
+ </TabItem></Tabs>
+
+### Variables Example
+
+```json
+{
+ "zoneTag": "d6dfdf32c704a77ac227243a5eb5ca61",
+ "start": "2025-01-01T00:00:00Z",
+ "end": "2025-01-30T00:00:00Z",
+ "limit": 10000,
+ "orderBy": "datetimeHour_ASC"
+}
+```
+
+Be sure to customize the zoneTag to match your specific zone, along with setting the desired start and end dates
+
+### Explanation of Parameters
+
+- **zoneTag**: Unique identifier of your Cloudflare zone.
+- **limit**: Maximum number of results to return.
+- **start** and **end**: Define the date range for the query in ISO 8601 format.
+- **orderBy**: Determines the sorting order, such as by ascending or descending datetime.
+
+## Example `curl` Request
+
+Use this `curl` command to query the Zaraz Monitoring API for the number of events processed by Zaraz. Replace `$TOKEN` with your API token, `$ZONE_TAG` with your zone tag, and adjust the start and end dates as needed.
+
+```bash
+curl -X POST https://api.cloudflare.com/client/v4/graphql \
+  -H "Content-Type: application/json" \
+  -H "Authorization: Bearer $TOKEN" \
+  -d '{
+    "query": "query AllEvents($zoneTag: String!, $limit: Int!, $start: Date, $end: Date, $orderBy: [ZoneZarazTriggersAdaptiveGroupsOrderBy!]) { viewer { zones(filter: { zoneTag: $zoneTag }) { data: zarazTrackAdaptiveGroups( limit: $limit filter: { datetimeHour_geq: $start datetimeHour_leq: $end } orderBy: [$orderBy] ) { count dimensions { ts: datetimeHour } } } } }",
+    "variables": {
+      "zoneTag": "$ZONE_TAG",
+      "start": "2025-01-01T00:00:00Z",
+      "end": "2025-01-30T00:00:00Z",
+      "limit": 10000,
+      "orderBy": "datetimeHour_ASC"
+    }
+  }'
+```
+
+### Explanation of the `curl` Components
+
+- **Authorization**: The `Authorization` header requires a Bearer token. Replace `$TOKEN` with your actual API token.
+- **Content-Type**: Set `application/json` to indicate a JSON payload.
+- **Data Payload**: This payload includes the GraphQL query and variable parameters, such as `zoneTag`, `start`, `end`, `limit`, and `orderBy`.
+
+This `curl` example will return a JSON response containing event counts and timestamps within the specified date range. Modify the `variables` values as needed for your use case.
+
+## Additional Resources
+
+Refer to the [full GraphQL Analytics API documentation](/analytics/graphql-api/) for more details on available fields, filters, and further customization options for Zaraz Monitoring API queries.

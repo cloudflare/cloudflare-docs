@@ -207,7 +207,7 @@ entries:
     updated: 2024-10-07
     difficulty: Beginner
     content_type: 🎥 Video
-    pcx_content_type: tutorial    
+    pcx_content_type: tutorial
   - link: https://developers.cloudflare.com/pages/framework-guides/deploy-a-hono-site/#creator-interview
     title: DevTalk | Episode 01 - Yusuke Wada, creator of Hono Framework
     description: In this interview, Yusuke Wada reflects on his journey in developing Hono.
@@ -219,20 +219,7 @@ entries:
     updated: 2024-10-08
     difficulty: Beginner
     content_type: 🎥 Video
-    pcx_content_type: interview    
-  - link: https://developers.cloudflare.com/workers-ai/tutorials/image-generator-flux/
-    title: How to build an AI Image Generator using Cloudflare Workers AI
-    description: The new flux-schnell models on Workers AI are our most powerful text to image AI models yet. In this video, we show you how to deploy your own Workers AI image playground.
-    tags: [Workers, Workers AI]
-    languages: [TypeScript]
-    stream_id: aeafae151e84a81be19c52c2348e9bab
-    products: [Workers, Workers AI]
-    cloudflare: true
-    author: kristian
-    updated: 2024-10-17
-    difficulty: Intermediate
-    content_type: 🎥 Video
-    pcx_content_type: tutorial
+    pcx_content_type: interview
   - link: https://youtu.be/W45MIi_t_go
     title: Building Front-End Applications | Now Supported by Cloudflare Workers
     description: You can now build front-end applications, just like you do on Cloudflare Pages, but with the added benefit of Workers.
@@ -251,7 +238,7 @@ entries:
     description: In this video, we demonstrate how to build an event-driven application using Cloudflare Queues. Event-driven system lets you decouple services, allowing them to process and scale independently.
     tags: [Workers, Queues]
     languages: [TypeScript]
-    # stream_id: 
+    # stream_id:
     products: [Workers, Workers AI]
     cloudflare: true
     author: harshil
@@ -264,7 +251,7 @@ entries:
     description: In this video, we introduce Cloudflare Workflows, the Newest Developer Platform Primitive at Cloudflare.
     tags: [Workflows, Workers, Queues, Workers AI, AI Gateway, KV]
     languages: [TypeScript]
-    # stream_id: 
+    # stream_id:
     products: [Workflows, Workers, Queues, Workers AI, AI Gateway, KV]
     cloudflare: true
     author: craig
@@ -277,7 +264,7 @@ entries:
     description: Workflows exposes metrics such as execution, error rates, steps, and total duration!
     tags: [Workflows, Workers, Queues, Workers AI, AI Gateway, KV]
     languages: [TypeScript]
-    # stream_id: 
+    # stream_id:
     products: [Workflows, Workers, Queues, Workers AI, AI Gateway, KV]
     cloudflare: true
     author: craig
@@ -290,7 +277,7 @@ entries:
     description: Cloudflare Workflows allows you to initiate sleep as an explicit step, which can be useful when you want a Workflow to wait, schedule work ahead, or pause until an input or other external state is ready.
     tags: [Workflows, Workers, Queues, Workers AI, AI Gateway, KV]
     languages: [TypeScript]
-    # stream_id: 
+    # stream_id:
     products: [Workflows, Workers, Queues, Workers AI, AI Gateway, KV]
     cloudflare: true
     author: craig
@@ -298,12 +285,12 @@ entries:
     difficulty: Intermediate
     content_type: 🎥 Video
     pcx_content_type: tutorial
-  - link: https://developers.cloudflare.com/pages/framework-guides/nextjs/#video-tutorial
-    title: Deploy NextJS to your Workers Application 
+  - link: https://developers.cloudflare.com/workers/frameworks/framework-guides/nextjs/#video-tutorial
+    title: Deploy NextJS to your Workers Application
     description: Watch to learn how to easily deploy your NextJS application to the Cloudflare global network.
     tags: [NextJS, Workers, Pages]
     languages: [TypeScript]
-    # stream_id: 
+    # stream_id:
     products: [Workers, Pages]
     cloudflare: true
     author: confidence
@@ -316,11 +303,84 @@ entries:
     description: With Workers Logs, you can collect, store, filter, and analyze all logging data from your Workers directly in the Cloudflare dashboard.
     tags: [Workers, Pages]
     languages: [TypeScript]
-    # stream_id: 
+    # stream_id:
     products: [Workers, Pages]
     cloudflare: true
     author: confidence
     updated: 2024-10-31
     difficulty: Intermediate
     content_type: 🎥 Video
-    pcx_content_type: tutorial     
+    pcx_content_type: tutorial
+  - link: https://youtu.be/RmF05GpLE20
+    title: DevTalk Episode 02 | Post-Quantum Cryptography
+    description: Bas Westerbaan is Cloudflare’s Research Lead on Post-Quantum efforts. His work ranges from cryptographic implementation and standardization, to driving large-scale experiment and subsequent deployment.
+    tags: [SSL]
+    languages: [TypeScript]
+    products: [SSL]
+    cloudflare: true
+    author: bas
+    updated: 2024-11-14
+    difficulty: Beginner
+    content_type: 🎥 Video
+    pcx_content_type: tutorial
+  - link: https://youtu.be/xu4Wb-IppmM
+    title: OpenAI Relay Server on Cloudflare Workers
+    description: In this video, Craig Dennis walks you through the deployment of OpenAI's relay server to use with their realtime API.
+    tags: [Workers, Workers AI, Pages]
+    languages: [TypeScript]
+    products: [Workers, Workers AI, Pages]
+    cloudflare: true
+    author: craig
+    updated: 2024-11-14
+    difficulty: Intermediate
+    content_type: 🎥 Video
+    pcx_content_type: tutorial
+  - link: https://developers.cloudflare.com/workers/runtime-apis/rpc/#video-tutorial
+    title: Workers RPC Tutorial
+    description: Learn how to implement RPC in your JavaScript applications and build serverless solutions.
+    tags: [Workers, Pages]
+    languages: [TypeScript]
+    products: [Workers, Pages]
+    cloudflare: true
+    author: confidence
+    updated: 2024-11-10
+    difficulty: Beginner
+    content_type: 🎥 Video
+    pcx_content_type: tutorial
+  - link: https://youtu.be/B2bLUc3iOsI
+    title: Deploy your React App to Cloudflare Workers
+    description: Learn how to deploy an existing React application to Cloudflare Workers.
+    tags: [Workers, Pages]
+    languages: [TypeScript]
+    products: [Workers, Pages]
+    cloudflare: true
+    author: confidence
+    updated: 2024-11-05
+    difficulty: Intermediate
+    content_type: 🎥 Video
+    pcx_content_type: tutorial
+  - link: https://developers.cloudflare.com/pages/framework-guides/deploy-an-astro-site/#video-tutorial
+    title: Build a Full-Stack Application using Astro and Cloudflare Workers
+    description: Learn how to deploy an Astro application to Cloudflare Workers.
+    tags: [Workers, Pages, Astro]
+    languages: [TypeScript]
+    products: [Workers, Pages]
+    cloudflare: true
+    author: kristian
+    updated: 2024-11-19
+    difficulty: Beginner
+    content_type: 🎥 Video
+    pcx_content_type: tutorial    
+  # - link:
+  #   title:
+  #   description:
+  #   tags: [Workers, Pages]
+  #   languages: [TypeScript]
+  #   products: [Workers, Pages]
+  #   cloudflare: true
+  #   author: confidence
+  #   updated: 2024-11-14
+  #   difficulty: Intermediate
+  #   content_type: 🎥 Video
+  #   pcx_content_type: tutorial
+

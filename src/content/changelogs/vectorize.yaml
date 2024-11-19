@@ -5,6 +5,11 @@ productLink: "/vectorize/"
 productArea: Developer platform
 productAreaLink: /workers/platform/changelog/platform/
 entries:
+  - publish_date: "2024-11-13"
+    title: Added support for $in and $nin metadata filters
+    description: |-
+      Vectorize now supports `$in` and `$nin` clauses in [metadata filters](/vectorize/reference/metadata-filtering/).
+
   - publish_date: "2024-10-28"
     title: Improved query latency through REST API
     description: |-
@@ -56,7 +61,7 @@ entries:
     description: |-
       Vectorize `/query` HTTP endpoint has the following changes:
       - `returnVectors` request body property is deprecated in favor of `returnValues` and `returnMetadata` properties.
-      - Response format has changed to the below format to match [Workers API change]:(/workers/configuration/compatibility-dates/#vectorize-query-with-metadata-optionally-returned)
+      - Response format has changed to the below format to match [Workers API change]:(/workers/configuration/compatibility-flags/#vectorize-query-with-metadata-optionally-returned)
 
       ```json
       {

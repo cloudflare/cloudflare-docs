@@ -23,7 +23,7 @@ Currently, we only provide SCIM support for Enterprise customers, and for Micros
 
 :::note
 
-Accounts provisioned with SCIM need to verify their email addresses. 
+Accounts provisioned with SCIM need to verify their email addresses.
 :::
 
 ---
@@ -32,14 +32,16 @@ Accounts provisioned with SCIM need to verify their email addresses.
 
 1. [Create an API token](/fundamentals/api/get-started/create-token/) with the following permissions:
 
-   | Type    | Item             | Permission |
-   | ------- | ---------------- | ---------- |
-   | Account | Account Settings | Read       |
-   | Account | Account Settings | Edit       |
-   | User    | Memberships      | Read       |
-   | User    | Memberships      | Edit       |
+   | Type    | Item              | Permission |
+   | ------- | ----------------- | ---------- |
+   | Account | SCIM Provisioning | Edit       |
 
-2. Under **Account Resources**, select the specific account to include or exclude from the dropdown menu.
+   :::note
+
+   Cloudflare recommends using Account Owned API tokens, but User API tokens are also supported.
+   :::
+
+2. Under **Account Resources**, select the specific account to include or exclude from the dropdown menu, if applicable.
 
 3. Select **Continue to summary**.
 

@@ -227,7 +227,8 @@ export class MyWorkflow extends WorkflowEntrypoint {
 
 ### Name steps deterministically
 
-Dynamically naming a step will prevent it from being cached, and cause the step to be re-run unnecessarily. Step names act as the "cache key" in your Workflow.
+Steps should be named deterministically (even if dynamic). This  ensures that their state is cached, and prevents the step from being rerun unnecessarily. Step names act as the "cache key" in your Workflow.
+
 
 ```ts
 export class MyWorkflow extends WorkflowEntrypoint {
@@ -243,7 +244,20 @@ export class MyWorkflow extends WorkflowEntrypoint {
 		// Return dynamic values in your state, or log them instead.
 		let state = await step.do("fetch user data from KV", async () => {
 		    let userData = await env.KV.get(event.user)
-				console.log(`fetched at ${Date.now})
+				console.log(`fetched at ${Date.now}`)
 				return userData
 		})
+
+		// ✅ Good: steps that are dynamically named are constructed in a deterministic way.
+		// In this case, `catList` is a step output, which is stable, and `catList` is
+		// traversed in a deterministic fashion (no shuffles or random accesses) so,
+		// it's fine to dynamically name steps (e.g: create a step per list entry).
+		let catList = await step.do("get cat list from KV", async () => {
+			return await env.KV.get("cat-list")
+		})
+		for(const cat of catList) {
+			await step.do(`get cat: ${cat}`, async () => {
+				return await env.KV.get(cat)
+			})
+		}
 ```

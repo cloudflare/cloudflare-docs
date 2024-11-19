@@ -4,7 +4,9 @@ title: Enable NAT for a subnet
 
 ---
 
-Each subnet (directly-attached or routed) must have a unique address space within your Magic WAN. You can re-use address spaces locally by enabling static network address translation (NAT) for a subnet. Subnet NAT is 1:1. To enable it, supply an address prefix the same size as the subnet's prefix, and the Magic WAN Connector will translate between the two.
+Each subnet (directly-attached or routed) must have a unique address space within your Magic WAN. You can re-use address spaces locally by enabling static network address translation (NAT) for a subnet. NAT is static. This means that inbound connections — from Magic WAN to the site behind the Connector — are allowed, and connections do not have to be initiated by hosts behind the Connector. NAT is also 1:1, that is, the Connector will translate between corresponding addresses in two equal-sized prefixes.
+
+To enable NAT, supply a WAN-facing address prefix the same size as the subnet's prefix, and the Magic WAN Connector will translate between the two.
 
 For example:
 

@@ -67,6 +67,15 @@ This would return a set of matches resembling the following, based on the distan
 
 Refer to [Vectorize API](/vectorize/reference/client-api/) for additional examples.
 
+## Query by vector identifier
+
+Vectorize now offers the ability to search for vectors similar to a vector that is already present in the index using the `queryById()` operation. This can be considered as a single operation that combines the `getById()` and the `query()` operation.
+
+```ts
+// the query operation would yield results if a vector with id `some-vector-id` is already present in the index.
+let matches = await env.YOUR_INDEX.queryById("some-vector-id");
+```
+
 ## Control over scoring precision and query accuracy
 
 When querying vectors, you can specify to either use high-precision scoring, thereby increasing the precision of the query matches scores as well as the accuracy of the query results, or use approximate scoring for faster response times.

@@ -136,6 +136,138 @@ await env.NAMESPACE.put(key, value, {
 });
 ```
 
+### Limits to KV writes to the same key
+
+Workers KV has a maximum of 1 write to the same key per second. Writes made to the same key within 1 second will cause rate limiting (`429`) errors to be thrown.
+
+You should not write more than once per second to the same key. Consider consolidating your writes to a key within a Worker invocation to a single write, or wait at least 1 second between writes.
+
+The following example serves as a demonstration of how multiple writes to the same key may return errors by forcing concurrent writes within a single Worker invocation. This is not a pattern that should be used in production.
+
+```typescript
+export default {
+	async fetch(request, env, ctx): Promise<Response> {
+		// Rest of code omitted
+		const key = "common-key";
+		const parallelWritesCount = 20;
+
+		// Helper function to attempt a write to KV and handle errors
+		const attemptWrite = async (i: number) => {
+			try {
+				await env. YOUR_KV_NAMESPACE.put(key, `Write attempt #${i}`);
+				return { attempt: i, success: true };
+			} catch (error) {
+				// An error may be thrown if a write to the same key is made within 1 second with a message. For example:
+				// error: {
+				//	"message": "KV PUT failed: 429 Too Many Requests"
+				// }
+
+				return {
+					attempt: i,
+					success: false,
+					error: { message: (error as Error).message },
+				};
+			}
+		};
+
+		// Send all requests in parallel and collect results
+		const results = await Promise.all(
+			Array.from({ length: parallelWritesCount }, (_, i) =>
+				attemptWrite(i + 1),
+			),
+		);
+		// Results will look like:
+		// [
+		// 	  {
+		// 		  "attempt": 1,
+		// 		  "success": true
+		// 	  },
+		//    {
+		// 		  "attempt": 2,
+		// 		  "success": false,
+		// 		  "error": {
+		// 			  "message": "KV PUT failed: 429 Too Many Requests"
+		// 		  }
+		// 	  },
+		// 	  ...
+		// ]
+
+		return new Response(JSON.stringify(results), {
+			headers: { "Content-Type": "application/json" },
+		});
+	},
+};
+```
+
+To handle these errors, we recommend implementing a retry logic, with exponential backoff. Here is a simple approach to add retries to the above code.
+
+```typescript
+export default {
+	async fetch(request, env, ctx): Promise<Response> {
+		// Rest of code omitted
+		const key = "common-key";
+		const parallelWritesCount = 20;
+
+		// Helper function to attempt a write to KV with retries
+		const attemptWrite = async (i: number) => {
+			return await retryWithBackoff(async () => {
+				await env.YOUR_KV_NAMESPACE.put(key, `Write attempt #${i}`);
+				return { attempt: i, success: true };
+			});
+		};
+
+		// Send all requests in parallel and collect results
+		const results = await Promise.all(
+			Array.from({ length: parallelWritesCount }, (_, i) =>
+				attemptWrite(i + 1),
+			),
+		);
+
+		return new Response(JSON.stringify(results), {
+			headers: { "Content-Type": "application/json" },
+		});
+	},
+};
+
+async function retryWithBackoff(
+	fn: Function,
+	maxAttempts = 5,
+	initialDelay = 1000,
+) {
+	let attempts = 0;
+	let delay = initialDelay;
+
+	while (attempts < maxAttempts) {
+		try {
+			// Attempt the function
+			return await fn();
+		} catch (error) {
+			// Check if the error is a rate limit error
+			if (
+				(error as Error).message.includes(
+					"KV PUT failed: 429 Too Many Requests",
+				)
+			) {
+				attempts++;
+				if (attempts >= maxAttempts) {
+					throw new Error("Max retry attempts reached");
+				}
+
+				// Wait for the backoff period
+				console.warn(`Attempt ${attempts} failed. Retrying in ${delay} ms...`);
+				await new Promise((resolve) => setTimeout(resolve, delay));
+
+				// Exponential backoff
+				delay *= 2;
+			} else {
+				// If it's a different error, rethrow it
+				throw error;
+			}
+		}
+	}
+}
+```
+
 ## Other methods to access KV
 
 You can also [write key-value pairs from the command line with Wrangler](/kv/reference/kv-commands/#create) and [write data via the API](/api/operations/workers-kv-namespace-write-key-value-pair-with-metadata).

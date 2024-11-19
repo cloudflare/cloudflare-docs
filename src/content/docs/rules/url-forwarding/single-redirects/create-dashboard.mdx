@@ -1,23 +1,22 @@
 ---
 pcx_content_type: how-to
-title: Create rule in the dashboard
+title: Create a redirect rule in the dashboard
 sidebar:
   order: 2
-head:
-  - tag: title
-    content: Create a redirect rule in the dashboard
+  label: Create rule in the dashboard
 ---
 
 import { Render } from "~/components";
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) and select your account and domain.
 2. Go to **Rules** > **Redirect Rules**.
-3. To create a new empty redirect rule, select **Create rule**. To duplicate an existing rule, select the three dots next to it > **Duplicate**.
+3. In the **Single Redirects** tab, select **Create rule** to create a new empty rule. To duplicate an existing rule, select the three dots next to it > **Duplicate**.
 4. (Optional) Select one of the rule templates that address common use cases. Then, review and adjust the proposed rule configuration.
 5. Enter a descriptive name for the rule in **Rule name**.
 6. Under **When incoming requests match**, select one of the following options:
+
    - **Wildcard pattern**: The rule will only apply to traffic matching the wildcard pattern.
-     - **Request URL**: Enter the [wildcard pattern](/ruleset-engine/rules-language/operators/#wildcard-matching) using the asterisk (`*`) character to match multiple requests. For example, `https://*.example.com/files/*`.
+     - **Request URL**: Enter the [wildcard pattern](/ruleset-engine/rules-language/operators/#wildcard-matching) using the asterisk (`*`) character to match multiple requests. For example, `http*://*.example.com/files/*`.
      - **Then**: Define the [URL redirect settings](/rules/url-forwarding/single-redirects/settings/) including:
        - **Target URL**: Enter the target URL, which can be static (for example, `https://example.com`) or dynamic (for example, `https://example.com/${1}/files/${2}`). Use [wildcard replacement](/ruleset-engine/rules-language/functions/#wildcard_replace) such as `${1}` and `${2}` to define dynamic target URLs.
        - **Status code**: Select the status code for the redirect (for example, `301`).
@@ -26,6 +25,7 @@ import { Render } from "~/components";
      - **Then**: Define the [URL redirect settings](/rules/url-forwarding/single-redirects/settings/) for all incoming requests.
    - **Custom filter expression**: The rule will only apply to traffic matching a custom expression. Define the [rule expression](/ruleset-engine/rules-language/expressions/edit-expressions/) to configure which requests should be redirected.
      - **Then**: Define the [URL redirect settings](/rules/url-forwarding/single-redirects/settings/) for requests matching the custom rule expression.
+
 7. To save and deploy your rule, select **Deploy**. If you are not ready to deploy your rule, select **Save as Draft**.
 
 <Render

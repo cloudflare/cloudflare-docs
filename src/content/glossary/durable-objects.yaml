@@ -1,65 +1,65 @@
 ---
 productName: Durable Objects
 entries:
-- term: "Durable Objects"
-  general_definition: |-
-    The product name, or the collective noun referring to more than one Durable Object.
+  - term: "Durable Objects"
+    general_definition: |-
+      The product name, or the collective noun referring to more than one Durable Object.
 
-- term: "namespace"
-  general_definition: |-
-    A container for a collection of Durable Objects that all share the same Durable Object (class) definition. A single namespace can have (tens of) millions of Durable Objects. Metrics are scoped per namespace.
+  - term: "namespace"
+    general_definition: |-
+      A container for a collection of Durable Objects that all share the same Durable Object (class) definition. A single namespace can have (tens of) millions of Durable Objects. Metrics are scoped per namespace.
 
-- term: "Durable Object"
-  general_definition: |-
-    A Durable Object is an individual instance of a Durable Object class. A Durable Object is globally unique (referenced by ID), provides a global point of coordination for all methods/requests sent to it, and has private, persistent storage that is not shared with other Durable Objects within a namespace.
+  - term: "Durable Object"
+    general_definition: |-
+      A Durable Object is an individual instance of a Durable Object class. A Durable Object is globally unique (referenced by ID), provides a global point of coordination for all methods/requests sent to it, and has private, persistent storage that is not shared with other Durable Objects within a namespace.
 
-- term: "stub"
-  general_definition: |-
-    An object that refers to a unique Durable Object within a namespace and allows you to call into that Durable Object via RPC methods or the `fetch` API. For example, `let stub = env.MY_DURABLE_OBJECT.get(id)`
+  - term: "stub"
+    general_definition: |-
+      An object that refers to a unique Durable Object within a namespace and allows you to call into that Durable Object via RPC methods or the `fetch` API. For example, `let stub = env.MY_DURABLE_OBJECT.get(id)`
 
-- term: "instance"
-  general_definition: |-
-    See "Durable Object".
+  - term: "instance"
+    general_definition: |-
+      See "Durable Object".
 
-- term: "Durable Object class"
-  general_definition: |-
-    The JavaScript class that defines the methods (RPC) and handlers (`fetch`, `alarm`) as part of your Durable Object, and/or an optional `constructor`. All Durable Objects within a single namespace share the same class definition.
+  - term: "Durable Object class"
+    general_definition: |-
+      The JavaScript class that defines the methods (RPC) and handlers (`fetch`, `alarm`) as part of your Durable Object, and/or an optional `constructor`. All Durable Objects within a single namespace share the same class definition.
 
-- term: "Storage Backend"
-  general_definition: |-
-    By default, a Durable Object class can use Storage API that leverages a key-value storage backend. New Durable Object classes can opt-in to using a [SQLite storage backend](/durable-objects/best-practices/access-durable-objects-storage/#sqlite-storage-backend).
+  - term: "Storage Backend"
+    general_definition: |-
+      By default, a Durable Object class can use Storage API that leverages a key-value storage backend. New Durable Object classes can opt-in to using a [SQLite storage backend](/durable-objects/best-practices/access-durable-objects-storage/#sqlite-storage-backend).
 
-- term: "Storage API"
-  general_definition: |-
-    The transactional and strongly consistent (serializable) [Storage API](/durable-objects/api/storage-api/) for persisting data within each Durable Object. State stored within a unique Durable Object is "private" to that Durable Object, and not accessible from other Durable Objects.
+  - term: "Storage API"
+    general_definition: |-
+      The transactional and strongly consistent (serializable) [Storage API](/durable-objects/api/storage-api/) for persisting data within each Durable Object. State stored within a unique Durable Object is "private" to that Durable Object, and not accessible from other Durable Objects.
 
-    Storage API includes key-value (KV) API, SQL API, and point-in-time-recovery (PITR) API.
+      Storage API includes key-value (KV) API, SQL API, and point-in-time-recovery (PITR) API.
 
-    - Durable Object classes with the key-value storage backend can use KV API.
-    - Durable Object classes with the SQLite storage backend can use KV API, SQL API, and PITR API.
+      - Durable Object classes with the key-value storage backend can use KV API.
+      - Durable Object classes with the SQLite storage backend can use KV API, SQL API, and PITR API.
 
-- term: "KV API"
-  general_definition: |-
-    API methods part of Storage API that support persisting key-value data.
+  - term: "KV API"
+    general_definition: |-
+      API methods part of Storage API that support persisting key-value data.
 
-- term: "SQL API"
-  general_definition: |-
-    API methods part of Storage API that support SQL querying.
+  - term: "SQL API"
+    general_definition: |-
+      API methods part of Storage API that support SQL querying.
 
-- term: "migration"
-  general_definition: |-
-    A Durable Object migration is a mapping process from a class name to a runtime state.
-    Initiate a Durable Object migration when you need to:
+  - term: "migration"
+    general_definition: |-
+      A Durable Object migration is a mapping process from a class name to a runtime state.
+      Initiate a Durable Object migration when you need to:
 
-    - Create a new Durable Object class.
-    - Rename a Durable Object class.
-    - Delete a Durable Object class.
-    - Transfer an existing Durable Objects class.
+      - Create a new Durable Object class.
+      - Rename a Durable Object class.
+      - Delete a Durable Object class.
+      - Transfer an existing Durable Objects class.
 
-- term: "alarm"
-  general_definition: |-
-    A Durable Object alarm is a mechanism that allows you to schedule the Durable Object to be woken up at a time in the future.
+  - term: "alarm"
+    general_definition: |-
+      A Durable Object alarm is a mechanism that allows you to schedule the Durable Object to be woken up at a time in the future.
 
-- term: "event context"
-  general_definition: |-
-    The duration of time that a Durable Object is processing an event, such as a remote procedure call. [Compute duration charges](/durable-objects/platform/pricing) are incurred for the duration of the event context.
+  - term: "event context"
+    general_definition: |-
+      The duration of time that a Durable Object is processing an event, such as a remote procedure call. [Compute duration charges](/durable-objects/platform/pricing) are incurred for the duration of the event context.

@@ -16,17 +16,13 @@ You can store up to 10 million logs per gateway. If your limit is reached, new l
 
 To learn more about your plan limits, refer to [Limits](/ai-gateway/reference/limits/).
 
+We recommend using an authenticated gateway when storing logs to prevent unauthorized access and protecs against invalid requests that can inflate log storage usage and make it harder to find the data you need. Learn more about setting up an [authenticated gateway](/ai-gateway/configuration/authentication/).
+
 ## Default configuration
 
 Logs, which include metrics as well as request and response data, are enabled by default for each gateway. This logging behavior will be uniformly applied to all requests in the gateway. If you are concerned about privacy or compliance and want to turn log collection off, you can go to settings and opt out of logs. If you need to modify the log settings for specific requests, you can override this setting on a per-request basis.
 
 <Render file="logging" />
-
-:::note
-
-To export logs using [Logpush](/ai-gateway/observability/logging/logpush), you must have logs turned on for the gateway.
-
-:::
 
 ## Per-request logging
 

@@ -73,8 +73,8 @@ const autolinkConfig: rehypeAutolinkHeadingsOptions = {
 // https://astro.build/config
 export default defineConfig({
 	site: "https://developers.cloudflare.com",
-	smartypants: false,
 	markdown: {
+		smartypants: false,
 		rehypePlugins: [
 			[
 				rehypeMermaid,
@@ -158,6 +158,7 @@ export default defineConfig({
 				PageTitle: "./src/components/overrides/PageTitle.astro",
 				SocialIcons: "./src/components/overrides/SocialIcons.astro",
 				SkipLink: "./src/components/overrides/SkipLink.astro",
+				TableOfContents: "./src/components/overrides/TableOfContents.astro",
 			},
 			sidebar: await autogenSections(),
 			customCss: [
@@ -177,6 +178,7 @@ export default defineConfig({
 				? [
 						starlightLinksValidator({
 							errorOnInvalidHashes: false,
+							errorOnLocalLinks: false,
 							exclude: [
 								"/api/",
 								"/api/operations/**",

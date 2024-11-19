@@ -5,6 +5,8 @@ sidebar:
   order: 2
 ---
 
+import { Render } from "~/components";
+
 Cloudflare Zero Trust integrates with any identity provider that supports SAML 2.0. If your identity provider is not listed in the integration list of login methods in Zero Trust, it can be configured using SAML 2.0 (or OpenID if OIDC based). Generic SAML can also be used if you would like to pass additional SAML headers or claims for an IdP in the integration list.
 
 ## Prerequisites
@@ -45,12 +47,40 @@ To download the SAML metadata file, copy-paste the metadata endpoint into a web 
 2. Select **Add new** and select **SAML**.
 3. Choose a descriptive name for your identity provider.
 4. Enter the **Single Sign on URL**, **IdP Entity ID or Issuer URL**, and **Signing certificate** obtained from your identity provider.
-5. (Optional) Enter [optional configurations](#optional-configurations).
-6. Select **Save**.
+5. (Optional) To enable SCIM, refer to [Synchronize users and groups](#synchronize-users-and-groups).
+6. (Optional) Under **Optional configurations**, configure [additional SAML options](#optional-configurations).
+7. Select **Save**.
 
 ## 3. Test the connection
 
 You can now [test the IdP integration](/cloudflare-one/identity/idp-integration/#test-idps-in-zero-trust). A success response should return the configured SAML attributes.
+
+## Synchronize users and groups
+
+The generic SAML integration allows you to synchronize user groups and automatically deprovision users using [SCIM](/cloudflare-one/identity/users/scim/).
+
+### Prerequisites
+
+Your identity provider must support SCIM version 2.0.
+
+### 1. Enable SCIM in Zero Trust
+
+<Render
+	file="access/enable-scim-on-dashboard"
+	params={{ idp: "IdP"}}
+/>
+
+### 2. Configure SCIM in the IdP
+
+Setup instructions vary depending on the identity provider. In your identity provider, you will either need to edit the [original SSO application](#1-create-an-application-in-your-identity-provider) or create a new SCIM application. Refer to your identity provider's documentation for more details. For example instructions, refer to our [Okta](/cloudflare-one/identity/idp-integration/okta/#synchronize-users-and-groups) or [JumpCloud](/cloudflare-one/identity/idp-integration/jumpcloud-saml/#synchronize-users-and-groups) guides.
+
+:::note
+If your IdP requires creating a new SCIM application, ensure that the groups in the SCIM application match the groups in the [original SSO application](/cloudflare-one/identity/idp-integration/generic-saml/#1-create-an-application-in-your-identity-provider). Because SCIM group membership updates will overwrite any groups in a user's identity, assigning the same groups to each app ensures consistent policy evaluation.
+:::
+
+### 3. Verify SCIM provisioning
+
+<Render file="access/verify-scim-provisioning"/>
 
 ## Optional configurations
 

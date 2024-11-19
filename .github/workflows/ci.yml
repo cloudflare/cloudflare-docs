@@ -30,12 +30,14 @@ jobs:
       - run: npm ci
       - run: npm run check
 
-      ## TODO: formatting checks
-
+      - run: npm run format:core:check
+      ## TODO: content formatting checks
       - run: npm run build
         env:
           NODE_OPTIONS: "--max-old-space-size=4192"
           RUN_LINK_CHECK: true
+
+      - run: npm run check:worker
 
       - uses: actions/cache/save@v4
         with:
