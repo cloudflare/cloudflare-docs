@@ -100,6 +100,10 @@ It is important to note that the IKE SA and the Child SA are separate things, ea
 
 In summary, an IKE SA is created that uses certain cryptographic transforms. That IKE SA is then used to create a Child SA which itself uses certain cryptographic transforms. The configuration section below details which of these transforms for IKE SAs and Child SAs are currently supported by {props.productName}.
 
+:::note
+Internet Key Exchange (IKE) is one of the protocols that makes up IPsec. Cloudflare only operates as an IKE responder.
+:::
+
 ### Supported configuration parameters
 
 Below is a list of the configuration parameters supported by Magic WAN. Choose which ones to use based on what your appliance supports.
