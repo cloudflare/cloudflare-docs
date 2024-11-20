@@ -699,12 +699,15 @@
 /load-balancing/understand-basics/monitors/ /load-balancing/monitors/ 301
 /load-balancing/understand-basics/limitations/ /load-balancing/reference/limitations/ 301
 /load-balancing/understand-basics/load-balancers/ /load-balancing/load-balancers/ 301
-/load-balancing/understand-basics/traffic-management/ /load-balancing/local-traffic-management/ 301
+/load-balancing/understand-basics/traffic-management/ /load-balancing/private-network/ 301
 /load-balancing/understand-basics/traffic-steering/pool-level-steering/ /load-balancing/understand-basics/traffic-steering/steering-policies/ 301
 /load-balancing/understand-basics/weighted-load-balancing/ /load-balancing/load-balancers/common-configurations/ 301
 /support/traffic/ /load-balancing/ 301
 /support/traffic/load-balancing/load-balancing-faqs/ /load-balancing/troubleshooting/load-balancing-faq/ 301
 /load-balancing/additional-options/railgun/ /load-balancing/ 301
+/load-balancing/local-traffic-management/ /load-balancing/private-network/ 301
+/load-balancing/local-traffic-management/ltm-tunnels-setup/ /load-balancing/private-network/tunnels-setup/ 301
+/load-balancing/local-traffic-management/ltm-magic-wan/ /load-balancing/private-network/magic-wan/ 301
 
 # logs
 /logs/get-started/logpush-configuration-api/understanding-logpush-api/ /logs/get-started/api-configuration/ 301

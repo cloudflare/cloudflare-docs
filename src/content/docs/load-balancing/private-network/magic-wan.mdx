@@ -1,12 +1,12 @@
 ---
 pcx_content_type: how-to
-title: Set up LTM with Magic WAN
+title: Set up Private Network Load Balancing with Magic WAN
 sidebar:
   order: 3
 
 ---
 
-Consider the following steps to learn how to configure Cloudflare local traffic management (LTM) solution, using [Magic WAN](/magic-wan/) as the on-ramp and off-ramp to securely connect to your private or internal services. This is currently an API only feature.
+Consider the following steps to learn how to configure Private Network Load Balancing solution, using [Magic WAN](/magic-wan/) as the on-ramp and off-ramp to securely connect to your private or internal services. This is currently an API only feature.
 
 ## 1. Configure a virtual network for Magic Wan
 
@@ -24,7 +24,7 @@ The VNET ID value will be used to ensure that your load balancer is properly int
 
 ## 2. Configure an Account Load Balancer
 
-1. Once you have your [VNets configured](/load-balancing/local-traffic-management/ltm-magic-wan/#1-configure-a-virtual-network-for-magic-wan), you need to make sure that the [pools](/load-balancing/pools/create-pool/) you will be using with your load balancer are configured with the default VNet value in the **Virtual Network** field.
+1. Once you have your [VNets configured](/load-balancing/private-network/magic-wan/#1-configure-a-virtual-network-for-magic-wan), you need to make sure that the [pools](/load-balancing/pools/create-pool/) you will be using with your load balancer are configured with the default VNet value in the **Virtual Network** field.
 
 2. Next, create an Account Load Balancer by sending a `POST` request to the following API endpoint. The request body should be structured similarly to a Zone Load Balancer. Refer to the [Cloudflare API documentation](/api/operations/load-balancers-create-load-balancer#request-body) for details on the required fields and their formats. Make sure that the pools you are using in your load balancer have the default VNET configured (previous step).
 
@@ -51,7 +51,7 @@ curl https://api.cloudflare.com/client/v4/accounts/{account_id}/teamnet/routes \
 --header "Content-Type: application/json" \
 --data '{
 "comment": "Example comment - account load balancing",
-  "network": "<LTM_PRIVATE_IP/CIDR_MASK>,
+  "network": "<PRIVATE_IP/CIDR_MASK>,
   "tunnel_id": "<TUNNEL_ID>"
 }'
 ```
