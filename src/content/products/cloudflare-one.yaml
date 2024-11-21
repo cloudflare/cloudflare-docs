@@ -11,7 +11,6 @@ meta:
   title: Cloudflare Zero Trust docs
   description: Secure team access to any application, on any device, in any location.
    Cloudflare One™ provides secure, fast, reliable, cost-effective network services, 
-   integrated with leading identity management and endpoint security providers. 
   author: "@cloudflare"
 
 resources:
