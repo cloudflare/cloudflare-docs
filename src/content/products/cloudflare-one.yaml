@@ -9,16 +9,14 @@ product:
 
 meta:
   title: Cloudflare Zero Trust docs
-  description: Cloudflare One™ is the culmination of engineering and technical
-    development guided by conversations with thousands of customers about the
-    future of the corporate network. It provides secure, fast, reliable,
-    cost-effective network services, integrated with leading identity management
-    and endpoint security providers. These docs contain step-by-step, use case
-    driven, tutorials to use Cloudflare One products.
+  description: Secure team access to any application, on any device, in any location.
+   Cloudflare One™ provides secure, fast, reliable, cost-effective network services, 
+   integrated with leading identity management and endpoint security providers. 
+   These docs contain step-by-step tutorials to use Cloudflare One products.
   author: "@cloudflare"
 
 resources:
-  community: https://community.cloudflare.com/c/security/access/51
+  community: https://community.cloudflare.com/c/zero-trust/86
   dashboard_link: https://one.dash.cloudflare.com/
   learning_center: https://www.cloudflare.com/learning/security/glossary/what-is-zero-trust/
 
