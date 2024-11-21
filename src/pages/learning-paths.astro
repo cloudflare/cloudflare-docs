@@ -166,8 +166,6 @@ const products = lpProducts(learningPaths);
 
 		const learningPaths = getLearningPaths();
 
-		console.log(learningPaths);
-
 		if (!learningPaths) return;
 
 		if (checkedAreas.length === 0 && checkedProducts.length === 0) {
@@ -178,8 +176,6 @@ const products = lpProducts(learningPaths);
 		}
 
 		for (const learningPath of learningPaths) {
-			console.log(learningPath);
-
 			if (!learningPath.dataset.groups || !learningPath.dataset.products)
 				continue;
 
@@ -187,8 +183,6 @@ const products = lpProducts(learningPaths);
 			const products: Array<string> = JSON.parse(learningPath.dataset.products);
 
 			let show = true;
-
-			console.log(show);
 
 			show = checkedAreas.some((v) => {
 				return groups.includes(v);
