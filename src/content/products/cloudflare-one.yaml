@@ -9,7 +9,7 @@ product:
 
 meta:
   title: Cloudflare Zero Trust docs
-  description: Secure team access to any application, on any device, in any location.
+  description: Cloudflare Zero Trust replaces legacy security perimeters with Cloudflare's network, providing secure access to any application, on any device, in any location.
   author: "@cloudflare"
 
 resources:
