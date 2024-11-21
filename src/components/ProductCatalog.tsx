@@ -1,15 +1,13 @@
-import { useState, type ChangeEvent } from "react";
+import { useEffect, useState, type ChangeEvent } from "react";
 import type { CollectionEntry } from "astro:content";
 import type { IconifyIconBuildResult } from "@iconify/utils";
 
-const ProductCatalog = ({
-	products,
-}: {
-	products: (CollectionEntry<"products"> & {
-		icon: IconifyIconBuildResult;
-		groups: string[];
-	})[];
-}) => {
+export type ProductData = CollectionEntry<"products"> & {
+	icon?: IconifyIconBuildResult;
+	groups: string[];
+};
+
+const ProductCatalog = ({ products }: { products: ProductData[] }) => {
 	const [filters, setFilters] = useState<{
 		search: string;
 		groups: string[];
@@ -41,6 +39,19 @@ const ProductCatalog = ({
 		return true;
 	});
 
+	useEffect(() => {
+		// On component load, check for deep-links to groups in the query param
+		const params = new URLSearchParams(window.location.search);
+		const groups = params.get("product-group");
+
+		if (!groups) return;
+
+		setFilters({
+			...filters,
+			groups: [groups],
+		});
+	}, []);
+
 	return (
 		<div className="md:flex">
 			<div className="md:w-1/4 w-full mr-8">
@@ -63,6 +74,7 @@ const ProductCatalog = ({
 								type="checkbox"
 								className="mr-2"
 								value={group}
+								checked={filters.groups.includes(group)}
 								onChange={(e: ChangeEvent<HTMLInputElement>) => {
 									if (e.target.checked) {
 										setFilters({

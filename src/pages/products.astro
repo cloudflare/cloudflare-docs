@@ -5,6 +5,7 @@ import iconCollection from "virtual:astro-icon";
 import StarlightPage from "@astrojs/starlight/components/StarlightPage.astro";
 import { getIconData, iconToSVG } from "@iconify/utils";
 import ProductCatalog from "~/components/ProductCatalog";
+import type { ProductData } from "~/components/ProductCatalog";
 
 let products: CollectionEntry<"products">[] = await getCollection(
 	"products",
@@ -13,9 +14,9 @@ let products: CollectionEntry<"products">[] = await getCollection(
 	},
 );
 
-products = products.map((product) => {
+let productData: ProductData[] = products.map((product) => {
 	const iconData = getIconData(iconCollection.local, product.id);
-	let icon = null;
+	let icon = undefined;
 	if (iconData) {
 		icon = iconToSVG(iconData);
 	}
@@ -39,7 +40,7 @@ const frontmatter = {
 ---
 
 <StarlightPage frontmatter={frontmatter}>
-	<ProductCatalog products={products} client:load />
+	<ProductCatalog products={productData} client:load />
 </StarlightPage>
 
 <style>
