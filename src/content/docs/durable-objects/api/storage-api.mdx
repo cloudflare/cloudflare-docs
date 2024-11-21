@@ -43,7 +43,7 @@ export class Counter {
 
 :::note[SQLite in Durable Objects Beta]
 
-The new beta version of Durable Objects is available where each Durable Object has a private, embedded SQLite database. When deploying a new Durable Object class, users can [opt-in to a SQLite storage backend](/durable-objects/best-practices/access-durable-objects-storage/#sqlite-storage-backend) in order to access new [SQL API](/durable-objects/api/sql-storage/#exec). Otherwise, a Durable Object class has a key-value storage backend.
+The new beta version of Durable Objects is available where each Durable Object has a private, embedded SQLite database. When deploying a new Durable Object class, users can [opt-in to a SQLite storage backend](/durable-objects/best-practices/access-durable-objects-storage/#sqlite-storage-backend) to access the new [SQL API](/durable-objects/api/sql-storage/#exec). Otherwise, a Durable Object class has a key-value storage backend.
 
 :::
 
@@ -209,7 +209,7 @@ The `put()` method returns a `Promise`, but most applications can discard this p
 
 ### `sync`
 
-* `sync()` : <Type text='Promise' />
+* `sync()`: <Type text='Promise' />
 
   * Synchronizes any pending writes to disk.
 
@@ -247,7 +247,7 @@ The `put()` method returns a `Promise`, but most applications can discard this p
 
 ### `sql`
 
-`sql` is a readonly property of type `DurableObjectStorage` encapsulating the [SQL API](/durable-objects/api/sql-storage).
+`sql` is a readonly property of type `DurableObjectStorage` encapsulating the [SQL API](/durable-objects/api/sql-storage/).
 
 ## Related resources
 

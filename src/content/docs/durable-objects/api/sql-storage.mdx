@@ -12,11 +12,11 @@ The `SqlStorage` interface encapsulates methods that modify the SQLite database 
 
 For example, using `sql.exec()`, a user can create a table, then insert rows into the table.
 
-```js
+```ts
 import { DurableObject } from "cloudflare:workers";
 
 export class MyDurableObject extends DurableObject {
-  sql: SqlStorage
+  sql: SqlStorage;
   constructor(ctx: DurableObjectState, env: Env) {
     super(ctx, env);
     this.sql = ctx.storage.sql;
@@ -59,7 +59,7 @@ A cursor (`SqlStorageCursor`) to iterate over query row results as objects. `Sql
 `SqlStorageCursor` supports the following methods:
 
 * `next()`
-  * Returns an object representing the next value of the cursor. The returned object has  `done` and `value` properties adhering to the JavaScript [Iterator](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Iteration_protocols#the_iterator_protocol). `done` is set to `false` when a next value is present, and `value` is set to the next row object in the query result. `done` is set to `true` when the entire cursor is consumed, and no `value` is set.
+  * Returns an object representing the next value of the cursor. The returned object has `done` and `value` properties adhering to the JavaScript [Iterator](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Iteration_protocols#the_iterator_protocol). `done` is set to `false` when a next value is present, and `value` is set to the next row object in the query result. `done` is set to `true` when the entire cursor is consumed, and no `value` is set.
 * `toArray()`
   * Iterates through remaining cursor value(s) and returns an array of returned row objects.
 * `one()`
@@ -70,17 +70,18 @@ A cursor (`SqlStorageCursor`) to iterate over query row results as objects. `Sql
   * Returned cursor and `raw()` iterator iterate over the same query results and can be combined. For example:
 
 ```ts
-  let cursor = this.sql.exec("SELECT * FROM artist ORDER BY artistname ASC;");
-  let rawResult = cursor.raw().next();
+let cursor = this.sql.exec("SELECT * FROM artist ORDER BY artistname ASC;");
+let rawResult = cursor.raw().next();
 
-  if (!rawResult.done) {
-    console.log(rawResult.value); // prints [ 123, 'Alice' ]
-  } else {
-    // query returned zero results
-  }
+if (!rawResult.done) {
+  console.log(rawResult.value); // prints [ 123, 'Alice' ]
+} else {
+  // query returned zero results
+}
 
-  console.log(cursor.toArray()); // prints [{ artistid: 456, artistname: 'Bob' },{ artistid: 789, artistname: 'Charlie' }]
+console.log(cursor.toArray()); // prints [{ artistid: 456, artistname: 'Bob' },{ artistid: 789, artistname: 'Charlie' }]
 ```
+
 `SqlStorageCursor` had the following properties:
 
 * `columnNames`: <Type text='string[]' />
@@ -101,10 +102,11 @@ Note that `sql.exec()` cannot execute transaction-related statements like `BEGIN
 `databaseSize`: <Type text ='number' />
 
 #### Returns
+
 The current SQLite database size in bytes.
 
 ```ts
-  let size = ctx.storage.sql.databaseSize;
+let size = ctx.storage.sql.databaseSize;
 ```
 
 ## Point in time recovery
@@ -117,13 +119,13 @@ The PITR API represents points in times using 'bookmarks'. A bookmark is a mostl
 
 <code>ctx.storage.getCurrentBookmark()</code>: <Type text='Promise<string>' />
 
-  * Returns a bookmark representing the current point in time in the object's history.
+* Returns a bookmark representing the current point in time in the object's history.
 
 ### `getBookmarkForTime`
 
-<code>ctx.storage.getBookmarkForTime(timestamp: <Type text='number'/> | <Type text='Date'/>)</code>: <Type text='Promise<string>' />
+<code>ctx.storage.getBookmarkForTime(timestamp: <Type text='number | Date'/>)</code>: <Type text='Promise<string>' />
 
-  * Returns a bookmark representing approximately the given point in time, which must be within the last 30 days. If the timestamp is represented as a number, it is converted to a date as if using `new Date(timestamp)`.
+* Returns a bookmark representing approximately the given point in time, which must be within the last 30 days. If the timestamp is represented as a number, it is converted to a date as if using `new Date(timestamp)`.
 
 ### `onNextSessionRestoreBookmark`
 
@@ -131,12 +133,12 @@ The PITR API represents points in times using 'bookmarks'. A bookmark is a mostl
 
   * Configures the Durable Object so that the next time it restarts, it should restore its storage to exactly match what the storage contained at the given bookmark. After calling this, the application should typically invoke `ctx.abort()` to restart the Durable Object, thus completing the point-in-time recovery.
 
-  This method returns a special bookmark representing the point in time immediately before the recovery takes place (even though that point in time is still technically in the future). Thus, after the recovery completes, it can be undone by performing a second recovery to this bookmark.
+This method returns a special bookmark representing the point in time immediately before the recovery takes place (even though that point in time is still technically in the future). Thus, after the recovery completes, it can be undone by performing a second recovery to this bookmark.
 
 
 ```ts
-  let now = new Date();
-  // restore to 2 days ago
-  let bookmark = ctx.storage.getBookmarkForTime(now - 2);
-  ctx.storage.onNextSessionRestoreBookmark(bookmark);
+let now = new Date();
+// restore to 2 days ago
+let bookmark = ctx.storage.getBookmarkForTime(now - 2);
+ctx.storage.onNextSessionRestoreBookmark(bookmark);
 ```
