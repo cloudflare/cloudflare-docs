@@ -12,7 +12,6 @@ meta:
   description: Secure team access to any application, on any device, in any location.
    Cloudflare One™ provides secure, fast, reliable, cost-effective network services, 
    integrated with leading identity management and endpoint security providers. 
-   These docs contain step-by-step tutorials to use Cloudflare One products.
   author: "@cloudflare"
 
 resources:
