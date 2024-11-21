@@ -1,0 +1,26 @@
+---
+title: Add retraction
+pcx_content_type: how-to
+sidebar:
+  order: 5
+---
+
+import { Render } from "~/components"
+
+1. On the [Email Security (formerly Area 1) dashboard](https://horizon.area1security.com/), select **Domains** under **DOMAINS & ROUTING**, then select **NEW DOMAIN**. Fill in the information to add a new domain:
+    - On **FORWARDING TO**: Enter `Google.com`.
+    - Adjust **Hops** to 2.
+    - On **Outbound TLS**: Ensure you select **Forward all messages over TLS**.
+2. Select **Publish Domain**.
+3. Select **RETRACT SETTINGS** > **Authorize Gmail**.
+4. Upload the JSON file [previously generated](/email-security/deployment/api/setup/gsuite-bcc-setup/create-service-account/).
+5. Under **DOMAINS**, select the domain you added previously, then select **SAVE**.
+
+## Post delivery retractions for new threats
+
+Email Security (formerly Area 1) is continuously gathering new information about phishing campaigns. Users might have email messages in their inboxes that were scanned by Email Security but not retracted initially because, at the time of scan, these email messages had not been identified as a threat. To mitigate risk, Email Security offers you tools to re-evaluate email messages at a fixed time interval based on knowledge Cloudflare may have acquired since initial delivery. Any email messages that fit this new threat knowledge will be retracted.
+
+You can enable two options:
+
+- **Post Delivery Response**: Email Security will continue to re-evaluate emails already delivered to your users' inboxes at a fixed time interval in search for phishing sites or campaigns not previously known to Cloudflare. If any email messages fitting these new criteria are found, Email Security retracts them.
+- **Phish Submission Response**: Email Security will retract emails already delivered that are reported by your users as phishing, and are found to be malicious by Email Security. Retraction will occur according to your configuration.

@@ -19,7 +19,7 @@ For more details on how encryption modes fit into the bigger picture of Cloudfla
 
 ## Available encryption modes
 
-[Automatic SSL/TLS](#automatic-ssltls-default) uses the SSL/TLS Recommender to make the determination as to what encryption mode is the most secure and safest for a website to be set to. If there is a more secure option for your website (based on your origin certification or capabilities), Automatic SSL/TLS will find it and apply it for your domain. The other option, [Custom SSL/TLS](#custom-ssltls), will work exactly like the setting the encryption mode does today.
+[Automatic SSL/TLS](#automatic-ssltls-default) relies on the probes developed for the SSL/TLS Recommender to determine what encryption mode is the most secure and safest for a website to be set to. If there is a more secure option for your website (based on your origin certification or capabilities), Automatic SSL/TLS will find it and apply it for your domain. The other option, [Custom SSL/TLS](#custom-ssltls), will work exactly like the setting the encryption mode does today.
 
 :::note
 We are gradually rolling out the new [Automated SSL/TLS feature](#automatic-ssltls-default).
@@ -31,19 +31,19 @@ To understand how the various encryption modes affect your cache, refer to the s
 
 ### Automatic SSL/TLS (default)
 
-Automatic SSL/TLS uses the [SSL/TLS Recommender](/ssl/origin-configuration/ssl-tls-recommender/) to identify and apply the most secure encryption mode for your website. It continuously assesses your traffic to determine if a more secure option is needed based on your origin certification or capabilities, and updates your settings automatically to ensure the highest level of security for your domain.
+Automatic SSL/TLS leverages advanced methods developed by the SSL/TLS Recommender to select the most secure encryption mode for your website. The Recommender crawls your site using the Cloudflare-SSLDetector user agent, recognized as a trusted bot by Cloudflare, and bypasses `robots.txt` rules (except those that specifically target it) to ensure accuracy. It downloads content from your origin server over both HTTP and HTTPS, then applies a content similarity algorithm to assess consistency. By understanding your current SSL/TLS encryption mode and evaluating your origin's certification and capabilities, the Recommender can automatically adjust settings to maintain the highest security for your domain.
 
 :::note
-Automatic SSL/TLS will not change your setting to a less secure encryption mode. For example, if your origin certificate expires, the encryption mode will not change from **Full (strict)** to **Full**. You must ensure the validity of your origin SSL configuration at all times.
+Automatic SSL/TLS will not change your setting to a less secure encryption mode. For example, if your origin certificate expires, the encryption mode will not change from **Full (strict)** to **Full**. You must ensure the validity of your origin SSL/TLS configuration at all times.
 :::
 
 Cloudflare is enabling Automatic SSL/TLS on the following dates:
 
 | Plan           | Using SSL/TLS recommender? | Grace period ends |
 | -------------- | -------------------------- | ----------------- |
-| Non-Enterprise | Yes                        | September 9th, 2024 |
-| Enterprise     | Yes                        | October 7th, 2024   |
-| All plans      | No                         | October 21st, 2024  |
+| Non-Enterprise | Yes                        | November 5th, 2024 |
+| Enterprise     | Yes                        | February, 2025   |
+| All plans      | No                         | March, 2025  |
 
 #### Opt out single zone
 

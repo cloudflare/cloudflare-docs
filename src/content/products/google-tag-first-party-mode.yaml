@@ -8,15 +8,9 @@ product:
 
 meta:
   title: Google tag in first-party mode docs
-  description:
-    Google tag in first-party mode allows website owners using Google Tag Manager and Cloudflare as a CDN to add a layer of data security and enables additional data privacy controls.
+  description: Google tag in first-party mode allows website owners using Google Tag Manager and Cloudflare as a CDN to add a layer of data security and enables additional data privacy controls.
   author: "@cloudflare"
 
 externals:
   - title: Cloudflare home
     url: https://www.cloudflare.com/
-
-algolia:
-  index: TEST - Re-dev docs
-  apikey: 4edb0a6cef3338ff4bcfbc6b3d2db56b
-  product: google-tag-first-party-mode

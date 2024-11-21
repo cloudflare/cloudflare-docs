@@ -6,11 +6,13 @@ sidebar:
   order: 1
 ---
 
-import { Render } from "~/components";
+import { Render, Badge } from "~/components";
 
 You can use the Universal Endpoint to contact every provider.
 
-`https://gateway.ai.cloudflare.com/v1/{account_id}/{gateway_id}`
+```txt
+https://gateway.ai.cloudflare.com/v1/{account_id}/{gateway_id}
+```
 
 ## Description
 
@@ -28,3 +30,43 @@ You can use the Universal endpoint to contact every provider. The payload is exp
 <Render file="universal-gateway-example" />
 
 The above will send a request to Workers AI Inference API, if it fails it will proceed to OpenAI. You can add as many fallbacks as you need, just by adding another JSON in the array.
+
+## Websockets API <Badge text="beta" variant="tip" size="small" />
+
+The Universal Endpoint can also be accessed via a [WebSockets API](/ai-gateway/configuration/websockets-api/) which provides a single persistent connection, enabling continuous communication. This API supports all AI providers connected to AI Gateway, including those that do not natively support WebSockets.
+
+## Example request
+
+```javascript
+import WebSocket from "ws";
+const ws = new WebSocket(
+	"wss://gateway.ai.cloudflare.com/v1/my-account-id/my-gateway/",
+	{
+		headers: {
+			"cf-aig-authorization": "Bearer AI_GATEWAY_TOKEN",
+		},
+	},
+);
+
+ws.send(
+	JSON.stringify({
+		type: "universal.create",
+		request: {
+			eventId: "my-request",
+			provider: "workers-ai",
+			endpoint: "@cf/meta/llama-3.1-8b-instruct",
+			headers: {
+				Authorization: "Bearer WORKERS_AI_TOKEN",
+				"Content-Type": "application/json",
+			},
+			query: {
+				prompt: "tell me a joke",
+			},
+		},
+	}),
+);
+
+ws.on("message", function incoming(message) {
+	console.log(message.toString());
+});
+```

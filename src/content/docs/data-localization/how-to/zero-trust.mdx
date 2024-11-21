@@ -3,10 +3,9 @@ title: Zero Trust
 pcx_content_type: how-to
 sidebar:
   order: 1
-
 ---
 
-import { Render } from "~/components"
+import { Render } from "~/components";
 
 In the following sections, we will give you some details about how different Zero Trust products can be used with the Data Localization Suite.
 
@@ -28,9 +27,9 @@ As part of Regional Services, Cloudflare Gateway will only perform [TLS decrypti
 
 #### Data Loss Prevention (DLP)
 
-You are able to [log the payload of matched DLP rules](/cloudflare-one/policies/data-loss-prevention/dlp-policies/payload-logging/) and encrypt them with your public key so that only you can examine them later.
+You are able to [log the payload of matched DLP rules](/cloudflare-one/policies/data-loss-prevention/dlp-policies/logging-options/#log-the-payload-of-matched-rules/) and encrypt them with your public key so that only you can examine them later.
 
-[Cloudflare cannot decrypt encrypted payloads](/cloudflare-one/policies/data-loss-prevention/dlp-policies/payload-logging/#data-privacy).
+[Cloudflare cannot decrypt encrypted payloads](/cloudflare-one/policies/data-loss-prevention/dlp-policies/logging-options/#data-privacy).
 
 ### Network policies
 
@@ -44,7 +43,7 @@ Refer to the [WARP Settings](/data-localization/how-to/zero-trust/#warp-settings
 
 ### Custom certificates
 
-You can [bring your own certificate](/cloudflare-one/connections/connect-devices/warp/user-side-certificates/custom-certificate/) to Gateway but these cannot yet be restricted to a specific region.
+You can [bring your own certificate](/cloudflare-one/connections/connect-devices/user-side-certificates/custom-certificate/) to Gateway but these cannot yet be restricted to a specific region.
 
 ### Logs and Analytics
 
@@ -52,8 +51,8 @@ By default, Cloudflare will store and deliver logs from data centers across our 
 
 Customers also have the option to reduce the logs that Cloudflare stores:
 
-* You can [exclude PII from logs](/cloudflare-one/insights/logs/gateway-logs/manage-pii/)
-* You can [disable logging, or only log blocked requests](/cloudflare-one/insights/logs/gateway-logs/#selective-logging).
+- You can [exclude PII from logs](/cloudflare-one/insights/logs/gateway-logs/manage-pii/)
+- You can [disable logging, or only log blocked requests](/cloudflare-one/insights/logs/gateway-logs/#selective-logging).
 
 ## Access
 
@@ -75,5 +74,5 @@ You can use the WARP setting [Local Domain Fallback](/cloudflare-one/connections
 
 :::caution
 
-Gateway policies will not apply for excluded traffic. 
+Gateway policies will not apply for excluded traffic.
 :::

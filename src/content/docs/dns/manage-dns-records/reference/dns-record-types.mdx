@@ -212,9 +212,11 @@ A Domain-based Message Authentication Reporting and Conformance (DMARC) record h
 
 A [text (TXT) record](https://www.cloudflare.com/learning/dns/dns-records/dns-txt-record/) lets you enter text into the DNS system.
 
-At Cloudflare, these are most commonly used to demonstrate domain ownership prior to issuing SSL/TLS certificates for [your domain](/ssl/edge-certificates/changing-dcv-method/) or a [Cloudflare for SaaS domain](/cloudflare-for-platforms/cloudflare-for-saas/security/certificate-management/issue-and-validate/).
+As the content of TXT records consist of one or more text strings delimited by double quotes (`"`), you might find a validation error if you add inconsistent quotation marks (for example, `"this` or `"these" ones"`). For new records, if you save your TXT content without any quotes, Cloudflare will automatically add double quotes. For details, refer to [What is a DNS TXT record](https://www.cloudflare.com/learning/dns/dns-records/dns-txt-record/).
 
-You could also use these to create email authentication records, but we recommend that you use our [Email Security Wizard](/dns/manage-dns-records/how-to/email-records/#prevent-domain-spoofing) instead.
+At Cloudflare, TXT records are most commonly used to demonstrate domain ownership prior to issuing SSL/TLS certificates for [your domain](/ssl/edge-certificates/changing-dcv-method/) or a [Cloudflare for SaaS domain](/cloudflare-for-platforms/cloudflare-for-saas/security/certificate-management/issue-and-validate/).
+
+You could also use TXT to create email authentication records, but we recommend that you use our [Email Security Wizard](/dns/manage-dns-records/how-to/email-records/#prevent-domain-spoofing) instead.
 
 <Render file="api-field-definitions" />
 

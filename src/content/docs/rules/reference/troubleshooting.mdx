@@ -10,7 +10,7 @@ description: Review common troubleshooting scenarios for Rules features.
 
 ---
 
-import { Example } from "~/components"
+import { Example, Render } from "~/components"
 
 ## Interaction between Cloudflare challenges and Rules features
 
@@ -22,6 +22,12 @@ For example, define a compound expression for your rule using the `and` operator
 <OTHER_RULE_CONDITIONS> and not starts_with(http.request.uri, "/cdn-cgi/challenge-platform/")
 ```
 
+## HTTP DCV and redirects
+
+<Render file="dcv-definition" product="ssl" />
+
+If you are using [HTTP DCV](/ssl/edge-certificates/changing-dcv-method/methods/http/) and also have [Single Redirects](/rules/url-forwarding/single-redirects/) set up in your zone, consider excluding the `/.well-known/*` path from your rule to avoid DCV issues. For details and other resources refer to the [SSL/TLS documentation](/ssl/edge-certificates/changing-dcv-method/).
+
 ## URL rewrites affect other Rules features executed later
 
 If you rewrite a URI path using a [URL rewrite](/rules/transform/url-rewrite/), this may affect other Rules features executed later — such as [Origin Rules](/rules/origin-rules/) — if they include the URI path in their filter expression.
@@ -31,7 +37,7 @@ Consider the following origin rule configuration:
 <Example>
 
 * Rule expression: `http.host == "example.com" and starts_with(http.request.uri.path, "/downloads/")`
-* **Host header** > **Rewrite to**: `assets.example.com` 
+* **Host header** > **Rewrite to**: `assets.example.com`
 
 </Example>
 
@@ -40,7 +46,7 @@ If you configure a new URL rewrite with the following configuration:
 <Example>
 
 * Rule expression: `http.host == "example.com" and starts_with(http.request.uri.path, "/downloads/")`
-* **Path** > **Rewrite to** > **Dynamic**: `regex_replace(http.request.uri.path, "^/downloads/", "/")` 
+* **Path** > **Rewrite to** > **Dynamic**: `regex_replace(http.request.uri.path, "^/downloads/", "/")`
 
 </Example>
 
@@ -57,7 +63,7 @@ In the current example, you could use the `raw.http.request.uri.path` field in b
 <Example>
 
 * Rule expression: `http.host == "example.com" and starts_with(raw.http.request.uri.path, "/downloads/")`
-* **Path** > **Rewrite to** > **Dynamic**: `regex_replace(raw.http.request.uri.path, "^/downloads/", "/")` 
+* **Path** > **Rewrite to** > **Dynamic**: `regex_replace(raw.http.request.uri.path, "^/downloads/", "/")`
 
 </Example>
 
@@ -66,7 +72,7 @@ In the current example, you could use the `raw.http.request.uri.path` field in b
 <Example>
 
 * Rule expression: `http.host == "example.com" and starts_with(raw.http.request.uri.path, "/downloads/")`
-* **Host header** > **Rewrite to**: `assets.example.com` 
+* **Host header** > **Rewrite to**: `assets.example.com`
 
 </Example>
 

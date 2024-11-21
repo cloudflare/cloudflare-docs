@@ -1,0 +1,10 @@
+---
+import type { Props } from "@astrojs/starlight/props";
+import Default from "@astrojs/starlight/components/TableOfContents.astro";
+
+import { FeedbackPrompt } from "~/components";
+---
+
+<Default {...Astro.props} />
+<br />
+<FeedbackPrompt />

@@ -3,24 +3,28 @@ pcx_content_type: configuration
 title: Bundling
 head: []
 description: Review Wrangler's default bundling.
-
 ---
 
 By default, Wrangler bundles your Worker code using [`esbuild`](https://esbuild.github.io/). This means that Wrangler has built-in support for importing modules from [npm](https://www.npmjs.com/) defined in your `package.json`. To review the exact code that Wrangler will upload to Cloudflare, run `npx wrangler deploy --dry-run --outdir dist`, which will show your Worker code after Wrangler's bundling.
 
 :::note
 
-We recommend using Wrangler's inbuilt bundling, but we understand there are cases where you will need more flexibility. We have built an escape hatch in the form of [Custom Builds](/workers/wrangler/custom-builds/), which lets you run your own build before Wrangler's built-in one. 
+Wrangler's inbuilt bundling usually provides the best experience, but we understand there are cases where you will need more flexibility.
+You can provide `rules` and set `find_additional_modules` in your configuration to control which files are included in the deployed Worker but not bundled into the entry-point file.
+Furthermore, we have an escape hatch in the form of [Custom Builds](/workers/wrangler/custom-builds/), which lets you run your own build before Wrangler's built-in one.
 :::
 
-## Files which will not be bundled
+## Including non-JavaScript modules
 
-Bundling your Worker code takes multiple modules and bundles them into one. Sometimes, you might have modules that should not be inlined directly into the bundle. For example, instead of bundling a Wasm file into your JavaScript Worker, you would want to upload the Wasm file as a separate module that can be imported at runtime. Wrangler supports this for the following file types:
+Bundling your Worker code takes multiple modules and bundles them into one file.
+Sometimes, you might have modules that cannot be inlined directly into the bundle.
+For example, instead of bundling a Wasm file into your JavaScript Worker, you would want to upload the Wasm file as a separate module that can be imported at runtime.
+Wrangler supports this for the following file types:
 
-* `.txt`
-* `.html`
-* `.bin`
-* `.wasm` and `.wasm?module`
+- `.txt`
+- `.html`
+- `.bin`
+- `.wasm` and `.wasm?module`
 
 Refer to [Bundling configuration](/workers/wrangler/configuration/#bundling) to customize these file types.
 
@@ -37,16 +41,29 @@ import wasm from "./example.wasm"; // Where `example.wasm` is a file in your loc
 const instance = await WebAssembly.instantiate(wasm); // Instantiate Wasm modules in global scope, not within the fetch() handler
 
 export default {
-  fetch(request) {
-    const result = instance.exports.exported_func();
-  },
+	fetch(request) {
+		const result = instance.exports.exported_func();
+	},
 };
 ```
 
 :::caution
 
-Cloudflare Workers does not support `WebAssembly.instantiateStreaming()`. 
+Cloudflare Workers does not support `WebAssembly.instantiateStreaming()`.
 :::
+
+## Find additional modules
+
+By setting `find_additional_modules` to `true` in your configuration file, Wrangler will traverse the file tree below `base_dir`.
+Any files that match the `rules` you define will also be included as unbundled, external modules in the deployed Worker.
+
+This approach is useful for supporting lazy loading of large or dynamically imported JavaScript files:
+
+- Normally, a large lazy-imported file (for example, `await import("./large-dep.mjs")`) would be bundled directly into your entrypoint, reducing the effectiveness of the lazy loading.
+  If matching rule is added to `rules`, then this file would only be loaded and executed at runtime when it is actually imported.
+- Previously, variable based dynamic imports (for example, ``await import(`./lang/${language}.mjs`)``) would always fail at runtime because Wrangler had no way of knowing which modules to include in the upload.
+  Providing a rule that matches all these files, such as `{ type = "EsModule", globs = ["./land/**/*.mjs"], fallthrough = true }`, will ensure this module is available at runtime.
+- "Partial bundling" is supported when `find_additional_modules` is `true`, and a source file matches one of the configured `rules`, since Wrangler will then treat it as "external" and not try to bundle it into the entry-point file.
 
 ## Conditional exports
 
@@ -56,7 +73,7 @@ Wrangler respects the [conditional `exports` field](https://nodejs.org/api/packa
 
 :::caution
 
-Disabling bundling is not recommended in most scenarios. Use this option only when deploying code pre-processed by other tooling. 
+Disabling bundling is not recommended in most scenarios. Use this option only when deploying code pre-processed by other tooling.
 :::
 
 If your build tooling already produces build artifacts suitable for direct deployment to Cloudflare, you can opt out of bundling by using the `--no-bundle` command line flag: `npx wrangler deploy --no-bundle`. If you opt out of bundling, Wrangler will not process your code and some features introduced by Wrangler bundling (for example minification, and polyfills injection) will not be available.

@@ -1,38 +1,48 @@
 ---
-import { Type } from "~/components";
+import { Type, MetaInfo } from "~/components";
 import { type SchemaNode } from "@stoplight/json-schema-tree";
 
-const { node } = Astro.props;
+const { node, root } = Astro.props;
 ---
 
-<li class="my-2 !list-none">
-	<code class="mr-2 font-mono rounded-md bg-gray-100">
-		{node.subpath[node.subpath.length - 1]}
-	</code>
+<li
+	class={`py-2 !my-0 !list-none ${root ? "" : "border-l border-l-gray-200 dark:border-l-gray-500 pl-4"}`}
+>
+	{
+		node.title ? (
+			<span class="mr-2 font-bold">{node.title}</span>
+		) : (
+			<code class="mr-2 !pr-0 font-mono rounded-md bg-gray-100">
+				{node.subpath[node.subpath.length - 1]}
+			</code>
+		)
+	}
+
 	{node.primaryType && <Type text={node.primaryType} />}
+	{node.combiners && node.combiners.includes("oneOf") && <Type text="one of" />}
 
 	{
 		node.annotations.default && (
-			<span class="text-xs mr-2">default {node.annotations.default}</span>
+			<MetaInfo text={`default ${node.annotations.default}`} />
 		)
 	}
 	{
 		(node.validations.minLength !== undefined ||
 			node.validations.minimum !== undefined) && (
-			<span class="text-xs mr-2">
-				min {node.validations.minLength || node.validations.minimum}
-			</span>
+			<MetaInfo
+				text={`min ${node.validations.minLength || node.validations.minimum}`}
+			/>
 		)
 	}
 	{
 		(node.validations.maxLength !== undefined ||
 			node.validations.maximum !== undefined) && (
-			<span class="text-xs">
-				max {node.validations.maxLength || node.validations.maximum}
-			</span>
+			<MetaInfo
+				text={`max ${node.validations.maxLength || node.validations.maximum}`}
+			/>
 		)
 	}
-	<p>{node.annotations.description}</p>
+	<p class="!mb-0">{node.annotations.description}</p>
 
 	{
 		node.children && (

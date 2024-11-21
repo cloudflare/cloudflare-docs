@@ -134,7 +134,7 @@ The URL API supports URLs conforming to HTTP and HTTPS schemes.
 
 The default URL class behavior differs from the URL Spec documented above.
 
-A new spec-compliant implementation of the URL class can be enabled using the `url_standard` [compatibility flag](/workers/configuration/compatibility-dates/#compatibility-flags).
+A new spec-compliant implementation of the URL class can be enabled using the `url_standard` [compatibility flag](/workers/configuration/compatibility-flags/).
 
 
 :::
@@ -167,7 +167,7 @@ The `Intl` API allows you to format dates, times, numbers, and more to the forma
 
 ## `navigator.userAgent`
 
-When the [`global_navigator`](/workers/configuration/compatibility-dates/#global-navigator) compatibility flag is set, the [`navigator.userAgent`](https://developer.mozilla.org/en-US/docs/Web/API/Navigator/userAgent) property is available with the value `'Cloudflare-Workers'`. This can be used, for example, to reliably determine that code is running within the Workers environment.
+When the [`global_navigator`](/workers/configuration/compatibility-flags/#global-navigator) compatibility flag is set, the [`navigator.userAgent`](https://developer.mozilla.org/en-US/docs/Web/API/Navigator/userAgent) property is available with the value `'Cloudflare-Workers'`. This can be used, for example, to reliably determine that code is running within the Workers environment.
 
 ## Unhandled promise rejections
 
@@ -191,7 +191,7 @@ addEventListener('rejectionhandled', (event) => {
 
 ## `navigator.sendBeacon(url[, data])`
 
-When the [`global_navigator`](/workers/configuration/compatibility-dates/#global-navigator) compatibility flag is set, the [`navigator.sendBeacon(...)`](https://developer.mozilla.org/en-US/docs/Web/API/Navigator/sendBeacon) API is available to send an HTTP `POST` request containing a small amount of data to a web server. This API is intended as a means of transmitting analytics or diagnostics information asynchronously on a best-effort basis.
+When the [`global_navigator`](/workers/configuration/compatibility-flags/#global-navigator) compatibility flag is set, the [`navigator.sendBeacon(...)`](https://developer.mozilla.org/en-US/docs/Web/API/Navigator/sendBeacon) API is available to send an HTTP `POST` request containing a small amount of data to a web server. This API is intended as a means of transmitting analytics or diagnostics information asynchronously on a best-effort basis.
 
 For example, you can replace:
 

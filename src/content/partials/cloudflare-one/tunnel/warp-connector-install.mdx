@@ -1,0 +1,61 @@
+---
+{}
+---
+
+import { Details, GlossaryTooltip } from "~/components";
+
+To install WARP Connector on a host machine:
+
+1. In [Zero Trust](https://one.dash.cloudflare.com), go to **Networks** > **Tunnels**.
+2. Select **Create a tunnel**.
+3. For the tunnel type, select **WARP Connector**.
+4. You will be prompted to turn on **Warp to Warp** and [**Override local interface IP**](/cloudflare-one/connections/connect-devices/warp/configure-warp/warp-settings/#override-local-interface-ip) if they are currently turned off. These settings allow Cloudflare to assign a unique <GlossaryTooltip term="CGNAT IP">CGNAT IP</GlossaryTooltip> to each WARP device and route traffic between them.
+5. Give the tunnel any name (for example, `Subnet-10.0.0.0/24`) and select **Create tunnel**.
+6. Select the operating system of your host machine.
+7. On your host machine, open a terminal window and run the commands shown in the Zero Trust dashboard. Those commands will install the WARP Connector, enable IP forwarding on the host, and connect WARP Connector to your Zero Trust organization.
+
+    :::note[Remote SSH connections]
+
+    If you are managing the deployment remotely over SSH, your connection may drop when you install the WARP Connector. Because the WARP connector immediately starts forwarding traffic to Cloudflare, the remote SSH server's traffic will now route via Cloudflare instead of via the server's public IP. To work around the issue:
+    - **Option 1**: In your WARP Connector [device profile](#3-recommended-create-a-device-profile), temporarily add the public IP of your local machine to the [Split Tunnel Exclude list](/cloudflare-one/connections/connect-devices/warp/configure-warp/route-traffic/split-tunnels/).
+
+    - **Option 2**: If your local machine is connected to Zero Trust (for example, via the WARP client), you can SSH to the <GlossaryTooltip term="CGNAT IP">CGNAT IP</GlossaryTooltip> of the WARP Connector. Traffic to the CGNAT IP must [route through the WARP tunnel](#4-configure-split-tunnels).
+    :::
+
+8. (Optional) Configure IP forwarding:
+
+    <Details header="Enable IP forwarding to persist after reboot">
+      ```sh
+      echo 'net.ipv4.ip_forward = 1' | sudo tee -a /etc/sysctl.d/99-warp-svc.conf
+      sudo sysctl -p /etc/sysctl.d/99-warp-svc.conf
+      ```
+    </Details>
+
+    <Details header="Configure IP forwarding with iptables">
+    If you are setting up WARP Connector on a host with iptables enabled, make sure that your iptables FORWARD chain includes rules to accept the desired traffic. For testing and troubleshooting purposes, you can set the default policy for the WARP interface to ACCEPT:
+      ```sh
+      iptables -A FORWARD -i CloudflareWARP -J ACCEPT
+      iptables -A FORWARD -o CloudflareWARP -J ACCEPT
+      ```
+    </Details>
+
+
+9. To verify that the WARP Connector is connected to Cloudflare:
+    ```sh
+    $ warp-cli status
+    Status update: Connected
+    ```
+
+    <Details header="Troubleshoot connection">
+
+    If WARP is disconnected, try the following troubleshooting strategies:
+
+    - Run `warp-cli connect`.
+
+    - If your private network uses a firewall to restrict Internet traffic, ensure that it allows the [WARP ports and IPs](/cloudflare-one/connections/connect-devices/warp/deployment/firewall/).
+
+    - Review your [WARP daemon logs](/cloudflare-one/connections/connect-devices/warp/troubleshooting/warp-logs/) for information about why the connection is failing.
+
+    </Details>
+
+WARP Connector software is now installed but not yet routing traffic.

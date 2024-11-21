@@ -8,7 +8,9 @@ import { Markdown } from "~/components"
 1. In [Zero Trust](https://one.dash.cloudflare.com), go to **Settings** > **WARP Client** > **Service provider checks**.
 2. Select **Add new**.
 3. Select the {props.one} provider.
-4. Configure a [device posture check](#device-posture-attributes) and enter any name.
-5. Select **Save**.
+4. Enter any name for the posture check.
+5. Configure the [attributes](#device-posture-attributes) required for the device to pass the posture check.
+6. Select **Save**.
+7. To test, go to **Logs** > **Posture** and verify that the service provider posture check is returning the expected results.
 
-Next, go to **Logs** > **Posture** and verify that the service provider posture check is returning the expected results.
+You can now use this posture check in a [device posture policy](/cloudflare-one/identity/devices/#3-build-a-device-posture-policy).

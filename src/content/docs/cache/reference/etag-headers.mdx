@@ -14,7 +14,7 @@ Weak ETag headers indicate a cached resource is semantically equivalent to the v
 :::note
 
 
-When using weak ETag headers, it is necessary to disable certain features such as [Email Obfuscation](/waf/tools/scrape-shield/email-address-obfuscation/) and [Automatic HTTPS Rewrites](/ssl/edge-certificates/additional-options/automatic-https-rewrites/) to prevent Cloudflare from removing the ETag headers set by your origin web server. For a comprehensive list of the features you need to disable, refer to the [Notes about end-to-end compression](/speed/optimization/content/brotli/content-compression/#notes-about-end-to-end-compression).
+When using weak ETag headers, it is necessary to disable certain features such as [Email Obfuscation](/waf/tools/scrape-shield/email-address-obfuscation/) and [Automatic HTTPS Rewrites](/ssl/edge-certificates/additional-options/automatic-https-rewrites/) to prevent Cloudflare from removing the ETag headers set by your origin web server. For a comprehensive list of the features you need to disable, refer to the [Notes about end-to-end compression](/speed/optimization/content/compression/#notes-about-end-to-end-compression).
 
 
 :::
@@ -30,7 +30,7 @@ When you enable **Respect Strong ETags** in a cache rule, Cloudflare will use st
 However, in some situations Cloudflare will convert strong ETags to weak ETags. For example, given the following conditions:
 
 * **Respect Strong ETags** is enabled
-* [Brotli compression](/speed/optimization/content/brotli/) is enabled
+* [Brotli compression](/speed/optimization/content/compression/) is enabled
 * The origin server's response includes an `etag: "foobar"` strong ETag header
 
 The Cloudflare network will take the following actions, depending on the visitor's `accept-encoding` header and the compression used in the origin server's response:
@@ -60,7 +60,7 @@ When **Respect Strong ETags** is disabled, Cloudflare will preserve strong ETag 
 In all other situations, Cloudflare will either convert strong ETag headers to weak ETag headers or remove the strong ETag. For example, given the following conditions:
 
 * **Respect Strong ETags** is disabled
-* [Brotli compression](/speed/optimization/content/brotli/) is enabled
+* [Brotli compression](/speed/optimization/content/compression/) is enabled
 * The origin server's response includes an `etag: "foobar"` strong ETag header
 
 The Cloudflare network will take the following actions, depending on the visitor's `accept-encoding` header and the compression used in the origin server's response:

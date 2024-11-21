@@ -17,8 +17,3 @@ externals:
     url: https://blog.cloudflare.com/warp-for-desktop/
   - title: 1.1.1.1 homepage
     url: https://1.1.1.1
-
-algolia:
-  index: TEST - Re-dev docs
-  apikey: 4edb0a6cef3338ff4bcfbc6b3d2db56b
-  product: warp-client

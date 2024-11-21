@@ -1,0 +1,276 @@
+---
+title: D1 Database
+pcx_content_type: concept
+sidebar:
+  order: 1
+---
+
+import { Type, MetaInfo, Details } from "~/components";
+
+To interact with your D1 database from your Worker, you need to access it through the environment bindings provided to the Worker (`env`).
+
+```js
+async fetch(request, env) {
+	// D1 database is 'env.DB', where "DB" is the binding name from the Wrangler.toml file.
+}
+```
+
+A D1 binding has the type `D1Database`, and supports a number of methods, as listed below.
+
+## Methods
+
+### `prepare()`
+
+Prepares a query statement to be later executed.
+
+```js
+const someVariable = `Bs Beverages`;
+const stmt = env.DB.prepare("SELECT * FROM Customers WHERE CompanyName = ?").bind(someVariable);
+```
+
+#### Parameters
+
+- <code>query</code>: <Type text="String"/> <MetaInfo text="Required"/>
+  - The SQL query you wish to execute on the database.
+
+#### Return values
+
+- None.
+
+#### Guidance
+
+- D1 follows the [SQLite convention](https://www.sqlite.org/lang_expr.html#varparam) for prepared statements parameter binding. Currently, D1 only supports Ordered (`?NNNN`) and Anonymous (`?`) parameters. In the future, D1 will support named parameters as well.
+
+	| Syntax | Type      | Description                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       |
+	| ------ | --------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+	| `?NNN` | Ordered   | A question mark followed by a number `NNN` holds a spot for the `NNN`-th parameter. `NNN` must be between `1` and `SQLITE_MAX_VARIABLE_NUMBER`                                                                                                                                                                                                                                                                                                                                                                                                    |
+	| `?`    | Anonymous | A question mark that is not followed by a number creates a parameter with a number one greater than the largest parameter number already assigned. If this means the parameter number is greater than `SQLITE_MAX_VARIABLE_NUMBER`, it is an error. This parameter format is provided for compatibility with other database engines. But because it is easy to miscount the question marks, the use of this parameter format is discouraged. Programmers are encouraged to use one of the symbolic formats below or the `?NNN` format above instead. |
+
+	To bind a parameter, use the `.bind` method.
+
+	Order and anonymous examples:
+
+	```js
+	const stmt = db.prepare("SELECT * FROM Customers WHERE CompanyName = ?").bind("");
+	```
+
+	```js
+	const stmt = db
+		.prepare("SELECT * FROM Customers WHERE CompanyName = ? AND CustomerId = ?")
+		.bind("Alfreds Futterkiste", 1);
+	```
+
+	```js
+	const stmt = db
+		.prepare("SELECT * FROM Customers WHERE CompanyName = ?2 AND CustomerId = ?1")
+		.bind(1, "Alfreds Futterkiste");
+	```
+
+#### Static statements
+
+D1 API supports static statements. Static statements are SQL statements where the variables have been hard coded. When writing a static statement, you manually type the variable within the statement string.
+
+:::note
+The recommended approach is to bind parameters to create a prepared statement (which are precompiled objects used by the database) to run the SQL. Prepared statements lead to faster overall execution and prevent SQL injection attacks.
+:::
+
+Example of a prepared statement with dynamically bound value:
+
+```js
+const someVariable = `Bs Beverages`;
+const stmt = env.DB.prepare("SELECT * FROM Customers WHERE CompanyName = ?").bind(someVariable);
+// A variable (someVariable) will replace the placeholder '?' in the query.
+// `stmt` is a prepared statement.
+```
+
+Example of a static statement:
+
+```js
+const stmt = env.DB.prepare("SELECT * FROM Customers WHERE CompanyName = Bs Beverages");
+// "Bs Beverages" is hard-coded into the query.
+// `stmt` is a static statement.
+```
+
+### `batch()`
+
+Sends multiple SQL statements inside a single call to the database. This can have a huge performance impact as it reduces latency from network round trips to D1. D1 operates in auto-commit. Our implementation guarantees that each statement in the list will execute and commit, sequentially, non-concurrently.
+
+Batched statements are [SQL transactions](https://www.sqlite.org/lang_transaction.html). If a statement in the sequence fails, then an error is returned for that specific statement, and it aborts or rolls back the entire sequence.
+
+To send batch statements, provide `D1Database::batch` a list of prepared statements and get the results in the same order.
+
+```js
+const companyName1 = `Bs Beverages`;
+const companyName2 = `Around the Horn`;
+const stmt = env.DB.prepare(`SELECT * FROM Customers WHERE CompanyName = ?`);
+const batchResult = await env.DB.batch([
+	stmt.bind(companyName1),
+	stmt.bind(companyName2)
+]);
+```
+
+#### Parameters
+
+- <code>statements</code>: <Type text="Array"/>
+  - An array of [`D1PreparedStatement`](#prepare)s.
+
+#### Return values
+
+- <code>results</code>: <Type text="Array"/>
+  - An array of `D1Result` objects containing the results of the [`D1Database::prepare`](#prepare) statements. Each object is in the array position corresponding to the array position of the initial [`D1Database::prepare`](#prepare) statement within the `statements`.
+  - Refer to [`D1Result`](/d1/worker-api/return-object/#d1result) for more information about this object.
+
+<Details header="Example of return values" open={false}>
+
+```js
+const companyName1 = `Bs Beverages`;
+const companyName2 = `Around the Horn`;
+const stmt = await env.DB.batch([
+	env.DB.prepare(`SELECT * FROM Customers WHERE CompanyName = ?`).bind(companyName1),
+	env.DB.prepare(`SELECT * FROM Customers WHERE CompanyName = ?`).bind(companyName2)
+]);
+return Response.json(stmt)
+```
+```js output
+[
+  {
+    "success": true,
+    "meta": {
+      "served_by": "miniflare.db",
+      "duration": 0,
+      "changes": 0,
+      "last_row_id": 0,
+      "changed_db": false,
+      "size_after": 8192,
+      "rows_read": 4,
+      "rows_written": 0
+    },
+    "results": [
+      {
+        "CustomerId": 11,
+        "CompanyName": "Bs Beverages",
+        "ContactName": "Victoria Ashworth"
+      },
+      {
+        "CustomerId": 13,
+        "CompanyName": "Bs Beverages",
+        "ContactName": "Random Name"
+      }
+    ]
+  },
+  {
+    "success": true,
+    "meta": {
+      "served_by": "miniflare.db",
+      "duration": 0,
+      "changes": 0,
+      "last_row_id": 0,
+      "changed_db": false,
+      "size_after": 8192,
+      "rows_read": 4,
+      "rows_written": 0
+    },
+    "results": [
+      {
+        "CustomerId": 4,
+        "CompanyName": "Around the Horn",
+        "ContactName": "Thomas Hardy"
+      }
+    ]
+  }
+]
+```
+```js
+console.log(stmt[1].results);
+```
+```js output
+[
+  {
+    "CustomerId": 4,
+    "CompanyName": "Around the Horn",
+    "ContactName": "Thomas Hardy"
+  }
+]
+```
+</Details>
+
+#### Guidance
+
+- You can construct batches reusing the same prepared statement:
+
+	```js
+		const companyName1 = `Bs Beverages`;
+		const companyName2 = `Around the Horn`;
+		const stmt = env.DB.prepare(`SELECT * FROM Customers WHERE CompanyName = ?`);
+		const batchResult = await env.DB.batch([
+			stmt.bind(companyName1),
+			stmt.bind(companyName2)
+		]);
+		return Response.json(batchResult);
+	```
+
+### `exec()`
+
+Executes one or more queries directly without prepared statements or parameter bindings.
+
+```js
+const returnValue = await env.DB.exec(`SELECT * FROM Customers WHERE CompanyName = "Bs Beverages"`);
+```
+
+#### Parameters
+
+- <code>query</code>: <Type text="String"/> <MetaInfo text="Required"/>
+  - The SQL query statement without parameter binding.
+
+#### Return values
+
+- <code>D1ExecResult</code>: <Type text="Object"/>
+  - The `count` property contains the number of executed queries.
+  - The `duration` property contains the duration of operation in milliseconds.
+	- Refer to [`D1ExecResult`](/d1/worker-api/return-object/#d1execresult) for more information.
+
+<Details header="Example of return values" open={false}>
+```js
+const returnValue = await env.DB.exec(`SELECT * FROM Customers WHERE CompanyName = "Bs Beverages"`);
+return Response.json(returnValue);
+```
+```js output
+{
+  "count": 1,
+  "duration": 1
+}
+```
+</Details>
+
+#### Guidance
+
+- If an error occurs, an exception is thrown with the query and error messages, execution stops and further statements are not executed. Refer to [Errors](/d1/build-with-d1/d1-client-api/#errors) to learn more.
+- This method can have poorer performance (prepared statements can be reused in some cases) and, more importantly, is less safe.
+- Only use this method for maintenance and one-shot tasks (for example, migration jobs).
+- The input can be one or multiple queries separated by `\n`.
+
+### `dump`
+
+:::caution
+This API only works on databases created during D1's alpha period. Check which version your database uses with `wrangler d1 info <DATABASE_NAME>`.
+:::
+
+Dumps the entire D1 database to an SQLite compatible file inside an ArrayBuffer.
+
+```js
+const dump = await db.dump();
+return new Response(dump, {
+	status: 200,
+	headers: {
+		"Content-Type": "application/octet-stream",
+	},
+});
+```
+
+#### Parameters
+
+- None.
+
+#### Return values
+
+- None.

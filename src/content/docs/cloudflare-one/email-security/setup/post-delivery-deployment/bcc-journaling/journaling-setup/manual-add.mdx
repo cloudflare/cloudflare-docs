@@ -1,0 +1,58 @@
+---
+title: Manually add domains
+sidebar:
+  order: 3
+---
+
+import { GlossaryTooltip } from "~/components"
+
+To manually add domains:
+
+1. Log in to [Zero Trust](https://one.dash.cloudflare.com/).
+2. Select **Zero Trust**.
+3. Select **Email Security**.
+4. Select **Monitoring**: If you have not purchased Email Security, select **Contact Sales**. Otherwise, select **Connect a domain**.
+5. Select **BCC/Journaling**.
+6. Select **Manual add**.
+
+## Users with domains on Cloudflare
+
+On the **Set up Email Security** page:
+
+1. **Connect domains**: Select at least one domain. Then, select **Continue**.
+2. (**Optional**) **Add manual domains**: Manually enter additional domains. Then, select **Continue**.
+3. (**Optional**) **Adjust hop count**: Enter the number of <GlossaryTooltip term="Hops">hops</GlossaryTooltip>, and then select **Continue**.
+4. **Configure service address with your third party email provider**: Copy and paste the service address into your third-party email provider to allow BCC/Journaling: `<account tag>@CF-emailsecurity.com`
+5. **Review details**: Review your connected domains. Then, select **Go to domains.** 
+
+## Users who do not have domains with Cloudflare
+
+If you do not have domains with Cloudflare, the dashboard will display two options:
+
+* Add a domain to Cloudflare.
+* Enter domain manually.
+
+### Add a domain to Cloudflare
+
+Selecting **Add a domain to Cloudflare** will redirect you to a new page where you will connect your domain to Cloudflare. Once you have entered an existing domain, select **Continue**.
+
+### Enter domain manually
+
+On the **Set up Email Security** page:
+
+1. **Connect domains**: Select at least one domain. Then, select **Continue**.
+2. (**Optional**) **Add manual domains**: Manually enter additional domains. Then, select **Continue**.
+3. (**Optional**) **Adjust hop count**: Enter the number of <GlossaryTooltip term="Hops">hops</GlossaryTooltip>, and then select **Continue**.
+4. **Configure service address with your third party email provider**: Copy and paste the service address into your third-party email provider to allow BCC/Journaling: `<account tag>@CF-emailsecurity.com`.
+5. **Review details**: Review your connected domains. Then, select **Go to domains.**
+
+## Enable auto-moves
+
+To enable auto-move events, you will have to connect and associate an integration:
+
+1. Go to **Settings** > **Domain management** > **Integrated domains** > Select **View**.
+2. On the **Domains** page, select the three dots, then select **Associate an integration**.
+3. Select **Connect an integration**. Follow the steps to [enable the Microsoft Office 365 integration](/cloudflare-one/email-security/setup/post-delivery-deployment/bcc-journaling/journaling-setup/office365-journaling/#integrate-with-microsoft-o365).
+4. Once you completed the steps to enable the integration, select **Continue to Email Security**. You will be redirected to the **Domains** page, where you will connect the integration to your specified domain.
+5. Select the three dots, then select **Associate an integration**. Select the integration, then select **Associate**.
+6. Now that your domain has an associated integration, enable [auto-move events](/cloudflare-one/email-security/auto-moves/) on your domain.

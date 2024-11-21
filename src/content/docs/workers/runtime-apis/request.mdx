@@ -62,7 +62,10 @@ let request = new Request(input, options)
 
 An object containing properties that you want to apply to the request.
 
+* `cache` `undefined | 'no-store'` optional
 
+	* Standard HTTP `cache` header. Only `cache: 'no-store'` is supported.
+	Any other cache header will result in a `TypeError` with the message `Unsupported cache mode: <attempted-cache-mode>`.
 
 * `cf` RequestInitCfProperties optional
 
@@ -180,7 +183,7 @@ All properties of an incoming `Request` object (the request you receive from the
 
   :::caution
 
-  If the response is a redirect and the redirect mode is set to `follow` (see below), then all headers will be forwarded to the redirect destination, even if the destination is a different hostname or domain. This includes sensitive headers like `Cookie`, `Authorization`, or any application-specific headers. If this is not the behavior you want, you should set redirect mode to `manual` and implement your own redirect policy. Note that redirect mode defaults to `manual` for requests that originated from the Worker's client, so this warning only applies to `fetch()`es made by a Worker that are not proxying the original request. 
+  If the response is a redirect and the redirect mode is set to `follow` (see below), then all headers will be forwarded to the redirect destination, even if the destination is a different hostname or domain. This includes sensitive headers like `Cookie`, `Authorization`, or any application-specific headers. If this is not the behavior you want, you should set redirect mode to `manual` and implement your own redirect policy. Note that redirect mode defaults to `manual` for requests that originated from the Worker's client, so this warning only applies to `fetch()`es made by a Worker that are not proxying the original request.
   :::
 
 * `method` string read-only

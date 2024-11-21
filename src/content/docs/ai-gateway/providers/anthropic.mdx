@@ -7,7 +7,9 @@ pcx_content_type: get-started
 
 ## Endpoint
 
-`https://gateway.ai.cloudflare.com/v1/{account_id}/{gateway_id}/anthropic`
+```txt
+https://gateway.ai.cloudflare.com/v1/{account_id}/{gateway_id}/anthropic`
+```
 
 ## Examples
 
@@ -49,5 +51,4 @@ const message = await anthropic.messages.create({
 	messages,
 	max_tokens: maxTokens,
 });
-
 ```

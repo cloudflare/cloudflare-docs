@@ -22,10 +22,8 @@ Version Management does not currently support or have limited support for the fo
 
 <Details header="Cache">
 
-- [Cache](/workers/runtime-apis/cache/) configurations are versioned, but cache keys are not.
-- Caching a new URL on staging would cache it for production as well.
-- Purging cache on staging would purge it on production too.
-- Promoting a new version to production would wipe all exiting cache.
+- [Cache Reserve](/cache/advanced-configuration/cache-reserve/) is intended for production use only.
+- Purging the production environment purges all environments.
 
 </Details>
 

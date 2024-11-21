@@ -48,7 +48,7 @@ D1 PRAGMA statements only apply to the current transaction.
 
 Lists the tables and views in the database. This includes the system tables maintained by D1.
 
-**Returns:**
+#### Return values
 
 One row per each table. Each row contains:
 
@@ -114,7 +114,7 @@ One row per each table. Each row contains:
 
 Shows the schema (columns, types, null, default values) for the given `TABLE_NAME`.
 
-**Returns:**
+#### Return values
 
 One row for each column in the specified table. Each row contains:
 
@@ -222,7 +222,7 @@ Similar to `PRAGMA table_info(TABLE_NAME)` but also includes [generated columns]
 
 Show the indexes for the given `TABLE_NAME`.
 
-**Returns:**
+#### Return values
 
 One row for each index associated with the specified table. Each row contains:
 
@@ -255,7 +255,7 @@ One row for each index associated with the specified table. Each row contains:
 
 Show the indexed column(s) for the given `INDEX_NAME`.
 
-**Returns:**
+#### Return values
 
 One row for each key column in the specified index. Each row contains:
 
@@ -315,7 +315,7 @@ Checks the formatting and consistency of the table, including:
 - Missing pages
 - Sections of the database which are used multiple times, or are not used at all.
 
-Returns:
+#### Return values
 
 - **If there are no errors:** a single row with the value `OK`
 - **If there are errors:** a string which describes the issues flagged by the check

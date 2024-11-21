@@ -11,7 +11,7 @@ head:
 
 ---
 
-import { CardGrid, Description, Feature, LinkTitleCard, Plan, RelatedProduct, Render } from "~/components"
+import { CardGrid, Description, Feature, LinkTitleCard, Plan, RelatedProduct, Render, LinkButton, Flex } from "~/components"
 
 <Description>
 
@@ -23,6 +23,12 @@ Run machine learning models, powered by serverless GPUs, on Cloudflare's global 
 Workers AI allows you to run machine learning models, on the Cloudflare network, from your own code -- whether that be from [Workers](/workers/), [Pages](/pages/), or anywhere via [the Cloudflare API](/api/operations/workers-ai-post-run-model).
 
 With the launch of Workers AI, Cloudflare is rolling out GPUs to its global network. This enables you to build and deploy ambitious AI applications that run near your users, wherever they are.
+
+<div>
+  <LinkButton href="/workers-ai/get-started">Get started</LinkButton>
+  <LinkButton target="_blank" variant="secondary" icon="external" href="https://youtu.be/cK_leoJsBWY?si=4u6BIy_uBOZf9Ve8">Watch a Workers AI demo</LinkButton>
+</div>
+
 
 <Render file="custom_requirements" />
 

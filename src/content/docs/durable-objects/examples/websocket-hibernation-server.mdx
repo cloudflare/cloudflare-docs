@@ -41,7 +41,7 @@ export default {
         return new Response('Durable Object expected Upgrade: websocket', { status: 426 });
       }
 
-      // This example will refer to the same Durable Object instance,
+      // This example will refer to the same Durable Object,
       // since the name "foo" is hardcoded.
       let id = env.WEBSOCKET_HIBERNATION_SERVER.idFromName("foo");
       let stub = env.WEBSOCKET_HIBERNATION_SERVER.get(id);
@@ -66,7 +66,7 @@ export class WebSocketHibernationServer extends DurableObject {
     // Creates two ends of a WebSocket connection.
     const webSocketPair = new WebSocketPair();
     const [client, server] = Object.values(webSocketPair);
-  
+
     // Calling `acceptWebSocket()` informs the runtime that this WebSocket is to begin terminating
     // request within the Durable Object. It has the effect of "accepting" the connection,
     // and allowing the WebSocket to send and receive messages.
@@ -119,7 +119,7 @@ export default {
         return new Response('Durable Object expected Upgrade: websocket', { status: 426 });
       }
 
-      // This example will refer to the same Durable Object instance,
+      // This example will refer to the same Durable Object,
       // since the name "foo" is hardcoded.
       let id = env.WEBSOCKET_HIBERNATION_SERVER.idFromName("foo");
       let stub = env.WEBSOCKET_HIBERNATION_SERVER.get(id);
@@ -144,7 +144,7 @@ export class WebSocketHibernationServer extends DurableObject {
     // Creates two ends of a WebSocket connection.
     const webSocketPair = new WebSocketPair();
     const [client, server] = Object.values(webSocketPair);
-  
+
     // Calling `acceptWebSocket()` informs the runtime that this WebSocket is to begin terminating
     // request within the Durable Object. It has the effect of "accepting" the connection,
     // and allowing the WebSocket to send and receive messages.

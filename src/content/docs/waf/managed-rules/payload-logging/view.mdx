@@ -3,7 +3,6 @@ pcx_content_type: how-to
 title: View the payload content in the dashboard
 sidebar:
   order: 3
-
 ---
 
 View the content of the matched rule payload in the dashboard by entering your private key.
@@ -16,13 +15,12 @@ View the content of the matched rule payload in the dashboard by entering your p
 
    ![Example of a firewall event with available payload match data (still encrypted)](~/assets/images/waf/transform-rules/payload-logging-example.png)
 
+   The **Payload match** section is not available if the action taken by the matched rule is _Log_.
+
 4. Enter your private key in the pop-up window and select **Decrypt**.
 
    :::note
-
-
    The private key is not sent to a Cloudflare server. The decryption occurs entirely in the browser.
-
    :::
 
 If the private key you entered decrypts the encrypted payload successfully, the **Payload match** card displays the payload content in clear text.

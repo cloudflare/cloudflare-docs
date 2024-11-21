@@ -41,7 +41,7 @@ To set up a Custom Domain in the dashboard:
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) and select your account.
 2. Select **Workers & Pages** and in **Overview**, select your Worker.
-3. Go to **Settings** > **Triggers** > **Custom Domains** > **Add Custom Domain**.
+3. Go to **Settings** > **Domains & Routes** > **Add** > **Custom Domain**.
 4. Enter the domain you want to configure for your Worker.
 5. Select **Add Custom Domain**.
 
@@ -138,9 +138,9 @@ To migrate the route `example.com/*`:
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) and select your account.
 2. Go to **DNS** and delete the CNAME record for `example.com`.
 3. Go to **Account Home** > **Workers & Pages**.
-4. In **Overview**, select your Worker > **Triggers**.
-5. Select **Add Custom Domain** and add `example.com`.
-6. Delete the route `example.com/*` located in your Worker > **Triggers** > **Routes**.
+4. In **Overview**, select your Worker > **Settings** > **Domains & Routes**.
+5. Select **Add** > **Custom domain** and add `example.com`.
+6. Delete the route `example.com/*` located in your Worker > **Settings** > **Domains & Routes**.
 
 ### Migrate from Routes via Wrangler
 

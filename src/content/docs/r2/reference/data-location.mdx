@@ -3,7 +3,6 @@ title: Data location
 pcx_content_type: concept
 sidebar:
   order: 7
-
 ---
 
 Learn how the location of data stored in R2 is determined and about the different available inputs that control the physical location where objects in your buckets are stored.
@@ -25,7 +24,7 @@ You can choose to automatically create your bucket in the closest available regi
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) and select **R2**.
 2. Select **Create bucket**.
 3. Enter a name for the bucket.
-4. Under **Location**, leave *None* selected for automatic selection or choose a region from the list.
+4. Under **Location**, leave _None_ selected for automatic selection or choose a region from the list.
 5. Select **Create bucket** to complete the bucket creation process.
 
 ### Set hints via the S3 API
@@ -34,12 +33,12 @@ You can set the Location Hint via the `LocationConstraint` parameter using the S
 
 ```js
 await S3.send(
-  new CreateBucketCommand({
-    Bucket: "YOUR_BUCKET_NAME",
-    CreateBucketConfiguration: {
-      LocationConstraint: "WNAM",
-    },
-  })
+	new CreateBucketCommand({
+		Bucket: "YOUR_BUCKET_NAME",
+		CreateBucketConfiguration: {
+			LocationConstraint: "WNAM",
+		},
+	}),
 );
 ```
 
@@ -62,14 +61,6 @@ The following hint locations are supported:
 Location Hints are only honored the first time a bucket with a given name is created. If you delete and recreate a bucket with the same name, the original bucket’s location will be used.
 
 ## Jurisdictional Restrictions
-
-:::note
-
-
-This feature is currently in beta. If you have feedback, reach out to us on the [Cloudflare Developer Discord](https://discord.cloudflare.com) in the #r2-storage channel or open a thread on the [Community Forum](https://community.cloudflare.com/c/developers/storage/81).
-
-
-:::
 
 Jurisdictional Restrictions guarantee objects in a bucket are stored within a specific jurisdiction.
 
@@ -109,7 +100,8 @@ The example below shows how to create an R2 bucket in the `eu` jurisdiction usin
 ```js
 import { S3Client, CreateBucketCommand } from "@aws-sdk/client-s3";
 const S3 = new S3Client({
-	endpoint: "https://4893d737c0b9e484dfc37ec392b5fa8a.eu.r2.cloudflarestorage.com",
+	endpoint:
+		"https://4893d737c0b9e484dfc37ec392b5fa8a.eu.r2.cloudflarestorage.com",
 	credentials: {
 		accessKeyId: "7dc27c125a22ad808cd01df8ec309d41",
 		secretAccessKey:
@@ -118,9 +110,9 @@ const S3 = new S3Client({
 	region: "auto",
 });
 await S3.send(
-  new CreateBucketCommand({
-    Bucket: "YOUR_BUCKET_NAME"
-  })
+	new CreateBucketCommand({
+		Bucket: "YOUR_BUCKET_NAME",
+	}),
 );
 ```
 
@@ -137,16 +129,15 @@ The following jurisdictions are supported:
 
 :::note
 
-Cloudflare Enterprise customers may contact their account team or [Cloudflare Support](/support/contacting-cloudflare-support/) to get access to the FedRAMP jurisdiction. 
+Cloudflare Enterprise customers may contact their account team or [Cloudflare Support](/support/contacting-cloudflare-support/) to get access to the FedRAMP jurisdiction.
 :::
 
 ### Limitations
 
-During the beta, the following services will not interact with R2 resources with assigned jurisdictions:
+The following services do not interact with R2 resources with assigned jurisdictions:
 
-* [Super Slurper](/r2/data-migration/)
-* [Logpush](/logs/get-started/enable-destinations/r2/)
-* [Event Notifications](/r2/buckets/event-notifications/)
+- [Super Slurper](/r2/data-migration/) (_coming soon_)
+- [Logpush](/logs/get-started/enable-destinations/r2/)
 
 ### Additional considerations
 

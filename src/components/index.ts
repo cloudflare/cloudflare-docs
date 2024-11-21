@@ -7,7 +7,7 @@ export { Icon as AstroIcon } from "astro-icon/components";
 // Custom components
 export { default as AnchorHeading } from "./AnchorHeading.astro";
 export { default as AvailableNotifications } from "./AvailableNotifications.astro";
-export { default as CompatibilityDates } from "./CompatibilityDates.astro";
+export { default as CompatibilityFlags } from "./CompatibilityFlags.astro";
 export { default as Description } from "./Description.astro";
 export { default as Details } from "./Details.astro";
 export { default as DirectoryListing } from "./DirectoryListing.astro";
@@ -15,6 +15,9 @@ export { default as Example } from "./Example.astro";
 export { default as ExternalResources } from "./ExternalResources.astro";
 export { default as Feature } from "./Feature.astro";
 export { default as FeatureTable } from "./FeatureTable.astro";
+export { default as FeedbackPrompt } from "./FeedbackPrompt.astro";
+export { default as Flex } from "./Flex.astro";
+export { default as GitHubCode } from "./GitHubCode.astro";
 export { default as Glossary } from "./Glossary.astro";
 export { default as GlossaryDefinition } from "./GlossaryDefinition.astro";
 export { default as GlossaryTooltip } from "./GlossaryTooltip.astro";
@@ -50,7 +53,7 @@ export { default as ThreeCardGrid } from "./ThreeCardGrid.astro";
 export { default as TroubleshootingList } from "./TroubleshootingList.astro";
 export { default as TunnelCalculator } from "./TunnelCalculator.astro";
 export { default as Type } from "./Type.astro";
-export { default as TypeScriptExample } from "./TypeScriptExample.astro"
+export { default as TypeScriptExample } from "./TypeScriptExample.astro";
 export { default as WorkersArchitectureDiagram } from "./WorkersArchitectureDiagram.astro";
 export { default as WorkersIsolateDiagram } from "./WorkersIsolateDiagram.astro";
 export { default as WorkerStarter } from "./WorkerStarter.astro";

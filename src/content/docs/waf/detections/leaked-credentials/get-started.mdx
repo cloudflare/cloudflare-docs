@@ -8,31 +8,11 @@ head:
     content: Get started with leaked credentials detection
 ---
 
-import { TabItem, Tabs, Details } from "~/components";
+import { Render, TabItem, Tabs, Details } from "~/components";
 
 ## 1. Turn on leaked credentials detection
 
-On Free plans, the leaked credentials detection is enabled by default, and no action is required. On paid plans, you can turn on the detection in the Cloudflare dashboard or via API.
-
-<Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
-
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/), and select your account and domain.
-2. Go to **Security** > **Settings**.
-3. Under **Incoming traffic detections**, turn on **Leaked credentials**.
-
-</TabItem> <TabItem label="API">
-
-Enable the feature using a `POST` request similar to the following:
-
-```bash
-curl "https://api.cloudflare.com/client/v4/zones/{zone_id}/leaked-credential-checks" \
---header "X-Auth-Email: <EMAIL>" \
---header "X-Auth-Key: <API_KEY>" \
---header "Content-Type: application/json" \
---data '{ "enabled": true }'
-```
-
-</TabItem> </Tabs>
+<Render file="leaked-credentials-detection-enable" />
 
 :::note
 To achieve optimal latency performance, Cloudflare recommends that you turn off [Exposed Credentials Checks](/waf/managed-rules/reference/exposed-credentials-check/) (a previous implementation) after turning on leaked credentials detection and setting up your mitigation strategy as described in the next steps.
@@ -110,20 +90,18 @@ To check for leaked credentials in a way that is not covered by the default conf
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/), and select your account and domain.
 2. Go to **Security** > **Settings**.
-3. Under **Incoming traffic detections**, select **Leaked credentials** and then select the three dots to add a custom detection.
-4. In **Username location**, enter an expression for obtaining the username in the HTTP request. For example:
+3. Under **Incoming traffic detections**, select **Leaked credentials** and then select **Add custom username and password location**.
+4. In **Username location** and **Password location** (optional), enter expressions for obtaining the username and the password from the HTTP request. Refer to the following example expressions:
 
-   ```txt
-   lookup_json_string(http.request.body.raw, "user")
-   ```
+   | Request type     | Username location / Password location                                                                           |
+   | ---------------- | --------------------------------------------------------------------------------------------------------------- |
+   | JSON body        | `lookup_json_string(http.request.body.raw, "user")`<br/>`lookup_json_string(http.request.body.raw, "secret")`   |
+   | URL-encoded form | `url_decode(http.request.body.form["user"][0])`<br/>`url_decode(http.request.body.form["secret"][0])`           |
+   | Multipart form   | `url_decode(http.request.body.multipart["user"][0])`<br/>`url_decode(http.request.body.multipart["secret"][0])` |
 
-5. In **Password location**, enter an expression for obtaining the password in the HTTP request. For example:
+   Refer to the [`lookup_json_string()`](/ruleset-engine/rules-language/functions/#lookup_json_string) and [`url_decode()`](/ruleset-engine/rules-language/functions/#url_decode) documentation for more information on these functions.
 
-   ```txt
-   lookup_json_string(http.request.body.raw, "secret")
-   ```
-
-6. Select **Save**.
+5. Select **Save**.
 
 </TabItem> <TabItem label="API">
 
@@ -145,6 +123,8 @@ This pair of lookup expressions (for username and password) will scan incoming H
 ```js
 {"user": "<username>", "secret": "<password>"}
 ```
+
+Refer to the [`lookup_json_string()`](/ruleset-engine/rules-language/functions/#lookup_json_string) documentation for more information on this function.
 
 </TabItem> </Tabs>
 

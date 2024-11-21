@@ -16,8 +16,3 @@ resources:
   discord: https://discord.com/channels/595317990191398933/967783711955365899
 
 externals:
-
-algolia:
-  index: TEST - Re-dev docs
-  apikey: 4edb0a6cef3338ff4bcfbc6b3d2db56b
-  product: pub-sub

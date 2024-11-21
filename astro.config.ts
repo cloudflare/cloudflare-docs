@@ -4,7 +4,6 @@ import tailwind from "@astrojs/tailwind";
 import starlightDocSearch from "@astrojs/starlight-docsearch";
 import starlightImageZoom from "starlight-image-zoom";
 import liveCode from "astro-live-code";
-import rehypeSlug from "rehype-slug";
 import rehypeMermaid from "rehype-mermaid";
 import rehypeAutolinkHeadings, {
 	type Options as rehypeAutolinkHeadingsOptions,
@@ -17,6 +16,7 @@ import icon from "astro-icon";
 import sitemap from "@astrojs/sitemap";
 import react from "@astrojs/react";
 import rehypeTitleFigure from "rehype-title-figure";
+import rehypeHeadingSlugs from "./plugins/rehype/heading-slugs";
 
 const runLinkCheck = process.env.RUN_LINK_CHECK || false;
 
@@ -73,8 +73,8 @@ const autolinkConfig: rehypeAutolinkHeadingsOptions = {
 // https://astro.build/config
 export default defineConfig({
 	site: "https://developers.cloudflare.com",
-	smartypants: false,
 	markdown: {
+		smartypants: false,
 		rehypePlugins: [
 			[
 				rehypeMermaid,
@@ -95,7 +95,7 @@ export default defineConfig({
 					rel: ["noopener"],
 				},
 			],
-			rehypeSlug,
+			rehypeHeadingSlugs,
 			[rehypeAutolinkHeadings, autolinkConfig],
 			// @ts-expect-error TODO: fix types
 			rehypeTitleFigure,
@@ -104,6 +104,7 @@ export default defineConfig({
 	experimental: {
 		contentIntellisense: true,
 		contentLayer: true,
+		directRenderScript: true,
 	},
 	server: {
 		port: 1111,
@@ -154,10 +155,10 @@ export default defineConfig({
 				MarkdownContent: "./src/components/overrides/MarkdownContent.astro",
 				Sidebar: "./src/components/overrides/Sidebar.astro",
 				PageSidebar: "./src/components/overrides/PageSidebar.astro",
-				SiteTitle: "./src/components/overrides/SiteTitle.astro",
 				PageTitle: "./src/components/overrides/PageTitle.astro",
 				SocialIcons: "./src/components/overrides/SocialIcons.astro",
 				SkipLink: "./src/components/overrides/SkipLink.astro",
+				TableOfContents: "./src/components/overrides/TableOfContents.astro",
 			},
 			sidebar: await autogenSections(),
 			customCss: [
@@ -169,12 +170,15 @@ export default defineConfig({
 				"./src/mermaid.css",
 				"./src/table.css",
 				"./src/tailwind.css",
+				"./src/title.css",
+				"./src/tooltips.css",
 			],
 			pagination: false,
 			plugins: runLinkCheck
 				? [
 						starlightLinksValidator({
 							errorOnInvalidHashes: false,
+							errorOnLocalLinks: false,
 							exclude: [
 								"/api/",
 								"/api/operations/**",
@@ -223,13 +227,4 @@ export default defineConfig({
 		}),
 		react(),
 	],
-	vite: {
-		build: {
-			rollupOptions: {
-				output: {
-					entryFileNames: "_astro/[name].js",
-				},
-			},
-		},
-	},
 });

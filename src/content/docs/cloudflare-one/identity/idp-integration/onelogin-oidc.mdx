@@ -7,6 +7,8 @@ OneLogin provides SSO identity management. Cloudflare Access supports OneLogin a
 
 ## Set up OneLogin as an OIDC provider
 
+### 1. Create an application in OneLogin
+
 1. Log in to your OneLogin admin portal.
 
 2. Go to **Applications** > **Applications** and select **Add App**.
@@ -31,22 +33,26 @@ OneLogin provides SSO identity management. Cloudflare Access supports OneLogin a
 
 9. Copy the **Client ID** and **Client Secret**.
 
-10. In [Zero Trust](https://one.dash.cloudflare.com),, go to **Settings** > **Authentication**.
+### 2. Add OneLogin to Zero Trust
 
-11. Under **Login methods**, select **Add new**.
+1. In [Zero Trust](https://one.dash.cloudflare.com),, go to **Settings** > **Authentication**.
 
-12. Select **OneLogin**.
+2. Under **Login methods**, select **Add new**.
 
-13. Fill in the following information:
+3. Select **OneLogin**.
+
+4. Fill in the following information:
 
     - **Name**: Name your identity provider.
     - **App ID**: Enter your OneLogin client ID.
     - **Client secret**: Enter your OneLogin client secret.
     - **OneLogin account URL**: Enter your OneLogin domain, for example `https://<your-domain>.onelogin.com`.
 
-14. (Optional) Under **Optional configurations**, enter [custom OIDC claims](/cloudflare-one/identity/idp-integration/generic-oidc/#oidc-claims) that you wish to add to your Access [application token](/cloudflare-one/identity/authorization-cookie/application-token/).
+5. (Optional) To enable SCIM, refer to [Synchronize users and groups](/cloudflare-one/identity/idp-integration/generic-oidc/#synchronize-users-and-groups).
 
-15. Select **Save**.
+6. (Optional) Under **Optional configurations**, enter [custom OIDC claims](/cloudflare-one/identity/idp-integration/generic-oidc/#oidc-claims) that you wish to add to your Access [application token](/cloudflare-one/identity/authorization-cookie/application-token/).
+
+7. Select **Save**.
 
 To test that your connection is working, go to **Authentication** > **Login methods** and select **Test** next to OneLogin.
 

@@ -5,17 +5,19 @@ pcx_content_type: how-to
 
 Object lifecycles determine the retention period of objects uploaded to your bucket and allow you to specify when objects should transition from Standard storage to Infrequent Access storage.
 
+A lifecycle configuration is a collection of lifecycle rules that define actions to apply to objects during their lifetime.
+
 For example, you can create an object lifecycle rule to delete objects after 90 days, or you can set a rule to transition objects to Infrequent Access storage after 30 days.
 
 ## Behavior
 
 - Objects will typically be removed from a bucket within 24 hours of the `x-amz-expiration` value.
-- When a lifecycle policy is applied that deletes objects, newly uploaded objects' `x-amz-expiration` value immediately reflects the expiration based on the new rules, but existing objects may experience a delay. Most objects will be transitioned within 24 hours but may take longer depending on the number of objects in the bucket. While objects are being migrated, you may see old applied rules from the previous policy.
+- When a lifecycle configuration is applied that deletes objects, newly uploaded objects' `x-amz-expiration` value immediately reflects the expiration based on the new rules, but existing objects may experience a delay. Most objects will be transitioned within 24 hours but may take longer depending on the number of objects in the bucket. While objects are being migrated, you may see old applied rules from the previous configuration.
 - An object is no longer billable once it has been deleted.
-- Buckets have a default lifecycle policy to expire multipart uploads seven days after initiation.
+- Buckets have a default lifecycle rule to expire multipart uploads seven days after initiation.
 - When an object is transitioned from Standard storage to Infrequent Access storage, a [Class A operation](/r2/pricing/#class-a-operations) is incurred.
 
-## Configure your bucket's object lifecycle policy
+## Configure lifecycle rules for your bucket
 
 When you create an object lifecycle rule, you can specify which prefix you would like it to apply to.
 
@@ -31,9 +33,28 @@ When you create an object lifecycle rule, you can specify which prefix you would
 5. Fill out the fields for the new rule.
 6. When you are done, select **Add rule**.
 
+### Wrangler
+
+1. Install [`npm`](https://docs.npmjs.com/getting-started).
+2. Install [Wrangler, the Developer Platform CLI](/workers/wrangler/install-and-update/).
+3. Log in to Wrangler with the [`wrangler login` command](/workers/wrangler/commands/#login).
+4. Add a lifecycle rule to your bucket by running the [`r2 bucket lifecycle add` command](/workers/wrangler/commands/#lifecycle-add).
+
+```sh
+npx wrangler r2 bucket lifecycle add <BUCKET_NAME> [OPTIONS]
+```
+
+Alternatively you can set the entire lifecycle configuration for a bucket from a JSON file using the [`r2 bucket lifecycle set` command](/workers/wrangler/commands/#lifecycle-set).
+
+```sh
+npx wrangler r2 bucket lifecycle set <BUCKET_NAME> --file <FILE_PATH>
+```
+
+The JSON file should be in the format of the request body of the [put object lifecycle configuration API](/api/operations/r2-put-bucket-lifecycle-configuration).
+
 ### S3 API
 
-Below is an example of configuring a lifecycle policy with different sets of rules for different potential use cases.
+Below is an example of configuring a lifecycle configuration (a collection of lifecycle rules) with different sets of rules for different potential use cases.
 
 ```js title="Configure the S3 client to interact with R2"
 const client = new S3({
@@ -47,7 +68,7 @@ const client = new S3({
 });
 ```
 
-```javascript title="Configure the lifecycle policy for a bucket"
+```javascript title="Set the lifecycle configuration for a bucket"
 await client
 	.putBucketLifecycleConfiguration({
 		Bucket: "testBucket",
@@ -116,41 +137,15 @@ await client
 	.promise();
 ```
 
-## Get a bucket's lifecycle policy
+## Get lifecycle rules for your bucket
 
-```js
-import S3 from "aws-sdk/clients/s3.js";
+### Wrangler
 
-// Configure the S3 client to talk to R2.
-const client = new S3({
-	endpoint: "https://4893d737c0b9e484dfc37ec392b5fa8a.r2.cloudflarestorage.com",
-	credentials: {
-		accessKeyId: "7dc27c125a22ad808cd01df8ec309d41",
-		secretAccessKey:
-			"1aa5c5b0c43defdb88f567487c071d17e234126133444770a706ae09336c57a4",
-	},
-	region: "auto",
-});
+To get the list of lifecycle rules associated with your bucket, run the [`r2 bucket lifecycle list` command](/workers/wrangler/commands/#lifecycle-list).
 
-// Get lifecycle policy for bucket
-console.log(
-	await client
-		.getBucketLifecycleConfiguration({
-			Bucket: "bucketName",
-		})
-		.promise(),
-);
+```sh
+npx wrangler r2 bucket lifecycle list <BUCKET_NAME>
 ```
-
-## Delete a bucket's lifecycle policy
-
-### Dashboard
-
-1. From the Cloudflare dashboard, select **R2**.
-2. Locate and select your bucket from the list.
-3. From the bucket page, select **Settings**.
-4. Under **Object lifecycle rules**, select the rules you would like to delete.
-5. When you are done, select **Delete rule(s)**.
 
 ### S3 API
 
@@ -168,7 +163,51 @@ const client = new S3({
 	region: "auto",
 });
 
-// Delete lifecycle policy for bucket
+// Get lifecycle configuration for bucket
+console.log(
+	await client
+		.getBucketLifecycleConfiguration({
+			Bucket: "bucketName",
+		})
+		.promise(),
+);
+```
+
+## Delete lifecycle rules from your bucket
+
+### Dashboard
+
+1. From the Cloudflare dashboard, select **R2**.
+2. Locate and select your bucket from the list.
+3. From the bucket page, select **Settings**.
+4. Under **Object lifecycle rules**, select the rules you would like to delete.
+5. When you are done, select **Delete rule(s)**.
+
+### Wrangler
+
+To remove a specific lifecycle rule from your bucket, run the [`r2 bucket lifecycle remove` command](/workers/wrangler/commands/#lifecycle-remove).
+
+```sh
+npx wrangler r2 bucket lifecycle remove <BUCKET_NAME> --id <RULE_ID>
+```
+
+### S3 API
+
+```js
+import S3 from "aws-sdk/clients/s3.js";
+
+// Configure the S3 client to talk to R2.
+const client = new S3({
+	endpoint: "https://4893d737c0b9e484dfc37ec392b5fa8a.r2.cloudflarestorage.com",
+	credentials: {
+		accessKeyId: "7dc27c125a22ad808cd01df8ec309d41",
+		secretAccessKey:
+			"1aa5c5b0c43defdb88f567487c071d17e234126133444770a706ae09336c57a4",
+	},
+	region: "auto",
+});
+
+// Delete lifecycle configuration for bucket
 await client
 	.deleteBucketLifecycle({
 		Bucket: "bucketName",

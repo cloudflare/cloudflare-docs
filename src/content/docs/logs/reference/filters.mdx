@@ -17,7 +17,22 @@ The following table represents the comparison operators that are supported and e
 
 * Values represent the data associated with fields.
 
-
+| Name                       | Operator Notation | String | Int   | Bool  | Array | Object | Example                                                                 |
+|----------------------------|-------------------|--------|-------|-------|-------|--------|------------------------------------------------------------------------------------------------|
+| Equal                      | `eq`              | ✅     | ✅    | ✅    | ❌    | ❌     | `{"key":"ClientRequestHost","operator":"eq","value":"example.com"}`                        |
+| Not equal                  | `!eq`             | ✅     | ✅    | ✅    | ❌    | ❌     | `{"key":"ClientCountry","operator":"!eq","value":"ca"}`                                    |
+| Less than                  | `lt`              | ❌     | ✅    | ❌    | ❌    | ❌     | `{"key":"BotScore","operator":"lt","value":"30"}`                                          |
+| Less than or equal         | `leq`             | ❌     | ✅    | ❌    | ❌    | ❌     | `{"key":"BotScore","operator":"leq","value":"30"}`                                         |
+| Greater than               | `gt`              | ❌     | ✅    | ❌    | ❌    | ❌     | `{"key":"BotScore","operator":"gt","value":"30"}`                                          |
+| Greater than or equal      | `geq`             | ❌     | ✅    | ❌    | ❌    | ❌     | `{"key":"BotScore","operator":"geq","value":"30"}`                                         |
+| Starts with                | `startsWith`      | ✅     | ❌    | ❌    | ❌    | ❌     | `{"key":"ClientRequestPath","operator":"startsWith","value":"/foo"}`                       |
+| Ends with                  | `endsWith`        | ✅     | ❌    | ❌    | ❌    | ❌     | `{"key":"ClientRequestPath","operator":"endsWith","value":"/foo"}`                         |
+| Does not start with        | `!startsWith`     | ✅     | ❌    | ❌    | ❌    | ❌     | `{"key":"ClientRequestPath","operator":"!startsWith","value":"/foo"}`                      |
+| Does not end with          | `!endsWith`       | ✅     | ❌    | ❌    | ❌    | ❌     | `{"key":"ClientRequestPath","operator":"!endsWith","value":"/foo"}`                        |
+| Contains                   | `contains`        | ✅     | ❌    | ❌    | ✅    | ❌     | `{"key":"ClientRequestPath","operator":"contains","value":"/static"}`                      |
+| Does not contain           | `!contains`       | ✅     | ❌    | ❌    | ✅    | ❌     | `{"key":"ClientRequestPath","operator":"!contains","value":"/static"}`                     |
+| Value is in a set of values | `in`              | ✅     | ✅    | ❌    | ❌    | ❌     | `{"key":"EdgeResponseStatus","operator":"in","value":[200,201]}`                           |
+| Value is not in a set of values | `!in`        | ✅     | ✅    | ❌    | ❌    | ❌     | `{"key":"EdgeResponseStatus","operator":"!in","value":[200,201]}`                          |
 
 The filter field has limits of approximately 30 operators and 1000 bytes. Anything exceeding this value will return an error.
 

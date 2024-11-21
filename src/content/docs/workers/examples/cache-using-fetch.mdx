@@ -466,3 +466,13 @@ async function handleRequest(request) {
 ```
 
 </TabItem> </Tabs>
+
+## Using the HTTP Cache API
+
+The `cache` mode can be set in `fetch` options.
+Currently Workers only support the `no-store` mode for controlling the cache.
+When `no-store` is supplied the cache is bypassed on the way to the origin and the request is not cacheable.
+
+```js
+fetch(request, { cache: 'no-store'});
+```
