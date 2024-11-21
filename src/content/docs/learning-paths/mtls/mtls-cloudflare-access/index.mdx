@@ -19,7 +19,7 @@ Setting up [mTLS](/cloudflare-one/identity/devices/access-integrations/mutual-tl
 
 The CA certificate can be from a publicly trusted CA or self-signed.
 
-In case that you want to [create your own CA](/cloudflare-one/identity/devices/access-integrations/mutual-tls-authentication/#test-mtls-using-cloudflare-pki) from scratch, you can follow these example steps and adapt the information to your own needs:
+In case you want to [create your own CA](/cloudflare-one/identity/devices/access-integrations/mutual-tls-authentication/#test-mtls-using-cloudflare-pki) from scratch, you can follow these example steps and adapt the information to your own needs:
 
 1. Create a JSON file called `ca-csr.json`:
 
@@ -42,7 +42,7 @@ In case that you want to [create your own CA](/cloudflare-one/identity/devices/a
     }
 ```
 
-2. Create a JSON filed called `ca-config.json`:
+2. Create a JSON file called `ca-config.json`:
 
 ```json
 {
@@ -70,7 +70,7 @@ In case that you want to [create your own CA](/cloudflare-one/identity/devices/a
 cfssl gencert -initca ca-csr.json | cfssljson -bare ca
 ```
 
-## Create client Certificates
+## 2. Create Client Certificates
 
 1. In order to create the Client Certificates, you need to prepare the following JSON file called `client-csr.json`:
 
@@ -104,7 +104,7 @@ cfssl gencert -ca=ca.pem -ca-key=ca-key.pem -config=ca-config.json -profile=clie
 
 Follow the steps outlined in the [developer documentation](/cloudflare-one/identity/devices/access-integrations/mutual-tls-authentication/#add-mtls-authentication-to-your-access-configuration).
 
-Using the example from Step 2: upload the `ca.pem` to your Cloudflare Access account via the [Dashboard](/cloudflare-one/identity/devices/access-integrations/mutual-tls-authentication/#add-mtls-authentication-to-your-access-configuration) or [Cloudflare API](/api/operations/access-mtls-authentication-add-an-mtls-certificate).
+Using the example from Step 2: upload the `ca.pem` to your Cloudflare Access account via the [dashboard](/cloudflare-one/identity/devices/access-integrations/mutual-tls-authentication/#add-mtls-authentication-to-your-access-configuration) or [Cloudflare API](/api/operations/access-mtls-authentication-add-an-mtls-certificate).
 
 Do not forget to enter the fully-qualified domain names (FQDN / associated hostnames) that will use this CA certificate.
 
