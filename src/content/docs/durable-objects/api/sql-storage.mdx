@@ -131,9 +131,9 @@ The PITR API represents points in times using "bookmarks". A bookmark is a mostl
 
 <code>ctx.storage.onNextSessionRestoreBookmark(bookmark: <Type text='string'/>)</code>: <Type text='Promise<string>' />
 
-  * Configure the Durable Object so that the next time it restarts, it should restore its storage to exactly match what the storage contained at the given bookmark. After calling this, the application should typically invoke `ctx.abort()` to restart the Durable Object, thus completing the point-in-time recovery.
+* Configure the Durable Object so that the next time it restarts, it should restore its storage to exactly match what the storage contained at the given bookmark. After calling this method, the application should typically invoke `ctx.abort()` to restart the Durable Object, thus completing the point-in-time recovery.
 
-  This method returns a special bookmark representing the point in time immediately before the recovery takes place (even though that point in time is still technically in the future). Thus, after the recovery completes, it can be undone by performing a second recovery to this bookmark.
+This method returns a special bookmark representing the point in time immediately before the recovery takes place (even though that point in time is still technically in the future). Thus, after the recovery completes, it can be undone by performing a second recovery to this bookmark.
 
 
 ```ts
