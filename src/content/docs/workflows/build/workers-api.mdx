@@ -173,7 +173,7 @@ Create (trigger) a new instance of the given Workflow.
 
   * `options` - optional properties to pass when creating an instance.
 
-An ID is automatically generated, but a user-provided ID can be specified. This can be useful when mapping Workflows to users, merchants or other identifiers in your system.
+An ID is automatically generated, but a user-provided ID can be specified (up to 64 characters [^1]). This can be useful when mapping Workflows to users, merchants or other identifiers in your system.
 
 ```ts
 // Create a new Workflow instance with your own ID:
@@ -293,3 +293,5 @@ type InstanceStatus = {
   output?: object;
 };
 ```
+
+[^1]: Match pattern: _```^[a-zA-Z0-9_][a-zA-Z0-9-_]*$```_
