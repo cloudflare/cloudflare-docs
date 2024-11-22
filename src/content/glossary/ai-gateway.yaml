@@ -4,6 +4,7 @@ entries:
   - term: cf-aig-event-id
     general_definition: |-
       [cf-aig-event-id](/ai-gateway/evaluations/add-human-feedback-api/#3-retrieve-the-cf-aig-log-id)Unique identifier for an event, used to trace specific events through the system.
+         link: /ai-gateway/evaluations/add-human-feedback-api/#3-retrieve-the-cf-aig-log-id
 
   - term: cf-aig-step
     general_definition: |-
