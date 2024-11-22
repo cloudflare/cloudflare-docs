@@ -10,7 +10,7 @@ description: Learn about post-quantum cryptography in connections from Cloudflar
 
 import { Example } from "~/components";
 
-As explained in [About PQC](/ssl/post-quantum-cryptography/), Cloudflare has deployed support for hybrid key agreements, which include both the most common key agreement for TLS 1.3, X25519, and the post-quantum secure ML-KEM.
+As explained in [About PQC](/ssl/post-quantum-cryptography/), Cloudflare has deployed support for hybrid key agreements, which includes both the most common key agreement for TLS 1.3, X25519, and the post-quantum secure ML-KEM.
 
 With X25519, the [ClientHello](https://www.cloudflare.com/learning/ssl/what-happens-in-a-tls-handshake/) almost always fits within one network packet. However, with the addition of ML-KEM, the ClientHello is typically split across two packets.
 
