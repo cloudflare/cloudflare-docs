@@ -125,7 +125,7 @@ The WebSocket Hibernation API permits a maximum of 32,768 WebSocket connections 
 
 ### `getWebSockets`
 
-`getWebSockets` is part of the [WebSocket Hibernation API](/durable-objects/best-practices/websockets//#websocket-hibernation-api), which allows a Durable Object to be removed from memory to save costs while keeping its WebSockets connected.
+`getWebSockets` is part of the [WebSocket Hibernation API](/durable-objects/best-practices/websockets/#websocket-hibernation-api), which allows a Durable Object to be removed from memory to save costs while keeping its WebSockets connected.
 
 `getWebSockets` returns an `Array<WebSocket>` which is the set of WebSockets attached to the Durable Object. An optional tag argument can be used to filter the list according to tags supplied when calling [`DurableObjectState::acceptWebSocket`](/durable-objects/api/state/#acceptwebsocket).
 
