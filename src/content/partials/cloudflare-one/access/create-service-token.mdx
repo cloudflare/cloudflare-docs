@@ -42,7 +42,7 @@ import { Tabs, TabItem, Details } from '~/components';
 		}
 		```
 
-3. To output the Client ID and Client Secret of the service token:
+3. Get the Client ID and Client Secret of the service token:
 
 	<Details header="Example: Output to CLI" open = {false}>
   	1. Output the Client ID and Client Secret to the Terraform state file:
@@ -69,7 +69,7 @@ import { Tabs, TabItem, Details } from '~/components';
 			```
 	</Details>
 
-	<Details header="Example: Store in Hashicorp Vault" open = {false}>
+	<Details header="Example: Store in HashiCorp Vault" open = {false}>
     ```tf
 		resource "vault_generic_secret" "example_service_token" {
 			path         = "kv/cloudflare/example_service_token"
