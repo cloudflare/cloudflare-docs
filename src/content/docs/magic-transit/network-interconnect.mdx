@@ -6,10 +6,9 @@ sidebar:
 head:
   - tag: title
     content: Network Interconnect and Magic Transit
-
 ---
 
-import { GlossaryTooltip } from "~/components"
+import { GlossaryTooltip } from "~/components";
 
 Cloudflare Network Interconnect (CNI) allows you to connect your network infrastructure directly with Cloudflare – rather than using the public Internet – for a more reliable and secure experience. With CNI, you can bring Cloudflare’s full suite of network functions to your physical network edge.
 
@@ -19,11 +18,11 @@ Use Cloudflare Network Interconnect with Magic Transit to improve throughput and
 
 When working with Magic Transit and CNI, there are a few guidelines you should follow.
 
-### Express CNI
+### Direct CNI
 
-With [Express CNI](/network-interconnect/express-cni/) you can use the Cloudflare dashboard to provision a connection to Cloudflare in three minutes or less. This type of connection supports IP packets with 1,500 bytes, both for ingress and egress traffic.
+With [Direct CNI](/network-interconnect/express-cni/) you can use the Cloudflare dashboard to provision a connection to Cloudflare in three minutes or less. This type of connection supports IP packets with 1,500 bytes, both for ingress and egress traffic.
 
-For the time being, Express CNI does not support BGP. If your use case calls for BGP anycast prefix withdrawal or BGP based connection failover, you need to use [Classic CNI](/network-interconnect/classic-cni/) with a Magic Transit GRE tunnel.
+For the time being, Direct CNI does not support BGP. If your use case calls for BGP anycast prefix withdrawal or BGP based connection failover, you need to use [Classic CNI](/network-interconnect/classic-cni/) with a Magic Transit GRE tunnel.
 
 ### Classic CNI
 

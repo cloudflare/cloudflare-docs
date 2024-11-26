@@ -41,13 +41,21 @@ There are a couple of common reasons to change the Cache Key Template. You might
 * Fragment the cache so one URL is stored in multiple files. For example, to store different files based on a specific query string in the URL.
 * Consolidate the cache so different HTTP requests are stored in the same file. For example, to remove the Origin header added to Cloudflare Cache Keys by default.
 
-:::note[Note]
+### Impact of SSL settings on Cache behavior
 
+The `$scheme` refers to the protocol (HTTP or HTTPS) sent to your origin web server, not the protocol received from the visitor. Therefore, setting the Cloudflare [SSL option](/ssl/origin-configuration/ssl-modes/) influences caching decisions. For example, when using [Flexible SSL](/ssl/origin-configuration/ssl-modes/flexible/), Cloudflare only attempts to connect to your origin web server via HTTP. This means that Cloudflare serves the same cached resource for visitor requests via either HTTP or HTTPS, since Flexible SSL instructs Cloudflare to connect to an origin solely over HTTP.
 
-`$scheme` is the protocol (HTTP or HTTPS) sent to your origin web server and not the protocol received from the visitor. Therefore, setting the Cloudflare [SSL option](/ssl/origin-configuration/ssl-modes/) influences caching decisions. For instance, Cloudflare only attempts to connect to your origin web server via HTTP when [Flexible SSL](/ssl/origin-configuration/ssl-modes/flexible/) is utilized. Thus, Cloudflare serves the same cached resource for visitor requests via either HTTP or HTTPS since Flexible SSL instructs Cloudflare to connect to an origin solely over HTTP.
+It is important to understand how SSL setting changes affect the cache:
 
+- Switching from **Off** to **Full**, **Full (strict)**, or **Strict** will change the origin scheme from HTTP to HTTPS. This results in a cache bust, meaning the cached content becomes invalid and needs to be re-fetched from the origin server.
 
-:::
+- Transitioning from **Flexible** to **Full**, **Full (strict)**, or **Strict** changes the origin scheme from HTTP to HTTPS, causing a cache bust.
+
+- Downgrading from **Full**, **Full (strict)**, or **Strict** to **Flexible** or **Off** changes the origin scheme from HTTPS to HTTP, resulting in a cache bust.
+
+This behavior is important to consider when adjusting SSL settings, as any change in the origin scheme (HTTP to HTTPS or vice versa) triggers a cache reset.
+
+### Cache Level: Ignore Query String
 
 A [Cache Level](/cache/how-to/set-caching-levels/) of Ignore Query String creates a Cache Key that includes all the elements in the default cache key, except for the query string in the URI that is no longer included. For instance, a request for `http://example.com/file.jpg?something=123` and a request for `http://example.com/file.jpg?something=789` will have the same cache key, in this case.
 
@@ -75,11 +83,8 @@ Headers control which headers go into the Cache Key. Similar to Query String, yo
 
 When you include a header, the header value is included in the Cache Key. For example, if an HTTP request contains an HTTP header like `X-Auth-API-key: 12345`, and you include the `X-Auth-API-Key header` in your Cache Key Template, then `12345` appears in the Cache Key.
 
-To check for the presence of a header without including its actual value, use the `check_presence` option.
+In the **Check if header contains** section, you can add header names and their values to the cache key. For custom headers, values are optional, but for the following restricted headers, you must include one to three specific values:
 
-Currently, you can only exclude the `Origin` header. The `Origin` header is always included unless explicitly excluded. Including the [Origin header](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Origin) in the Cache Key is important to enforce [CORS](https://developer.mozilla.org/en-US/docs/Glossary/CORS). Additionally, you cannot include the following headers:
-
-* Headers that have high cardinality and risk sharding the cache
   * `accept`
   * `accept-charset`
   * `accept-encoding`
@@ -87,6 +92,13 @@ Currently, you can only exclude the `Origin` header. The `Origin` header is alwa
   * `accept-language`
   * `referer`
   * `user-agent`
+
+To check for the presence of a header without including its actual value, use the **Check presence of** option.
+
+Currently, you can only exclude the `Origin` header. The `Origin` header is always included unless explicitly excluded. Including the [Origin header](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Origin) in the Cache Key is important to enforce [CORS](https://developer.mozilla.org/en-US/docs/Glossary/CORS).
+
+Additionally, you cannot include the following headers:
+
 * Headers that re-implement cache or proxy features
   * `connection`
   * `content-length`
@@ -127,6 +139,8 @@ User feature fields add features about the end-user (client) into the Cache Key.
 * `lang` includes the first language code contained in the `Accept-Language` header sent by the client
 
 ## Availability
+
+Cache keys options availability varies according to your plan.
 
 <FeatureTable id="cache.cache_key" />
 

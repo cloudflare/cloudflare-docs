@@ -178,7 +178,17 @@ Define the request components used to define a [custom cache key](/cache/how-to/
 Enterprise customers have these additional options for custom cache keys:
 
 * In the **Query string** section, you can select **All query string parameters**, **All query string parameters except** and enter an exception, **No query parameters except** and enter the parameters, or **Ignore query string** (also available for pay-as-you-go customers).
-* In the **Headers** section, you can include headers names and their values, check the presence of another header, and **Include origin header**.
+* In the **Headers** section, you can specify header names along with their values. For custom headers, values are optional; however, for the following restricted headers, you must include one to three specific values:
+
+  * `accept`
+  * `accept-charset`
+  * `accept-encoding`
+  * `accept-datetime`
+  * `accept-language`
+  * `referer`
+  * `user-agent`
+
+  To check for a header's presence without including its value, use the **Check presence of** option. You can also choose whether to **Include origin header**.
 * In the **Cookie** section, you can include cookie names and their values, and check for the presence of another cookie.
 * In the **Host** section, you can select **Use original host** and **Resolved host**. In the **User** section, you can select **Device type**, **Country**, and **Language**.
 
@@ -207,7 +217,10 @@ API values: `"ignore_query_strings_order"`, `"cache_deception_armor"`, `"cache_b
         ],
         "check_presence": [
           "header_1"
-        ]
+        ],
+        "contains": {
+          "accept-encoding": ["br", "zstd"]
+        }
       },
       "cookie": {
         "include": [
@@ -246,7 +259,6 @@ This rule can also be used to specify Cache Reserve eligibility for website reso
 Cloudflare will still enforce the plan-based [cacheable file limits](/cache/concepts/default-cache-behavior/#customization-options-and-limits) when using this configuration. 
 :::
 
-
 <Details header="API information">
 
 API configuration object name: `"cache_reserve"`.
@@ -262,6 +274,10 @@ API property name for enabling Cache Reserve: `"eligible"` (boolean).
   }
 }
 ```
+
+:::note
+If `minimum_file_size` is omitted and `eligible` is true, Cloudflare will use 0 bytes by default.
+:::
 
 Refer to [Create a cache rule via API](/cache/how-to/cache-rules/create-api/#example-requests) for complete API examples.
 

@@ -1,9 +1,6 @@
 ---
 pcx_content_type: how-to
 title: Google
-sidebar:
-  order: 12
-
 ---
 
 You can integrate Google authentication with Cloudflare Access without a Google Workspace account. The integration allows any user with a Google account to log in (if the [Access policy](/cloudflare-one/policies/access/) allows them to reach the resource). Unlike the instructions for [Google Workspace](/cloudflare-one/identity/idp-integration/gsuite/), the steps below will not allow you to pull group membership information from a Google Workspace account.
@@ -22,7 +19,7 @@ You do not need to be a Google Cloud Platform user to integrate Google Suite as 
 
 4. Choose `External` as the User Type. Since this application is not being created in a Google Workspace account, any user with a Gmail address can login.
 
-5. Name the application, add a support email, and input contact fields. Google Cloud Platform requires an email in your account. 
+5. Name the application, add a support email, and input contact fields. Google Cloud Platform requires an email in your account.
    :::note
    In the **Scopes** section, we recommend adding the `userinfo.email` scope. This is not required for the integration, but shows authenticating users what information is being gathered. You do not need to add test users.
    :::
@@ -40,6 +37,7 @@ You do not need to be a Google Cloud Platform user to integrate Google Suite as 
    You can find your team name in Zero Trust under **Settings** > **Custom Pages**.
 
 8. Under **Authorized redirect URIs**, in the **URIs** field, enter the following URL:
+
    ```txt
    https://<your-team-name>.cloudflareaccess.com/cdn-cgi/access/callback
    ```
@@ -64,11 +62,11 @@ To test that your connection is working, go to **Authentication** > **Login meth
 
 ```json
 {
-  "config": {
-    "client_id": "<your client id>",
-    "client_secret": "<your client secret>"
-  },
-  "type": "google",
-  "name": "my example idp"
+	"config": {
+		"client_id": "<your client id>",
+		"client_secret": "<your client secret>"
+	},
+	"type": "google",
+	"name": "my example idp"
 }
 ```

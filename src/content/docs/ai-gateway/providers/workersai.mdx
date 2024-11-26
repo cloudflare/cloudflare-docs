@@ -7,14 +7,23 @@ sidebar:
 
 import { Render } from "~/components";
 
-Use AI Gateway for analytics, caching, and security on requests to [Workers AI](/workers-ai/).
+Use AI Gateway for analytics, caching, and security on requests to [Workers AI](/workers-ai/). Workers AI integrates seamlessly with AI Gateway, allowing you to execute AI inference via API requests or through an environment binding for Workers scripts. The binding simplifies the process by routing requests through your AI Gateway with minimal setup.
 
 ## REST API
 
 To interact with a REST API, update the URL used for your request:
 
-- **Previous**: `https://api.cloudflare.com/client/v4/accounts/{account_id}/ai/run/{model_id}`
-- **New**: `https://gateway.ai.cloudflare.com/v1/{account_id}/{gateway_id}/workers-ai/{model_id}`
+- **Previous**:
+
+```txt
+https://api.cloudflare.com/client/v4/accounts/{account_id}/ai/run/{model_id}
+```
+
+- **New**:
+
+```txt
+https://gateway.ai.cloudflare.com/v1/{account_id}/{gateway_id}/workers-ai/{model_id}
+```
 
 For these parameters:
 
@@ -60,9 +69,9 @@ curl https://gateway.ai.cloudflare.com/v1/{account_id}/{gateway_id}/workers-ai/v
 '
 ```
 
-### Worker
+## Workers Binding
 
-To include an AI Gateway within your Worker, add the gateway as an object in your Workers AI request.
+You can integrate Workers AI with AI Gateway using an environment binding. To include an AI Gateway within your Worker, add the gateway as an object in your Workers AI request.
 
 ```ts
 export interface Env {
@@ -88,6 +97,8 @@ export default {
 	},
 } satisfies ExportedHandler<Env>;
 ```
+
+For a detailed step-by-step guide on integrating Workers AI with AI Gateway using a binding, see [Integrations in AI Gateway](/ai-gateway/integrations/aig-workers-ai-binding/).
 
 Workers AI supports the following parameters for AI gateways:
 

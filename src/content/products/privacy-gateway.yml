@@ -18,8 +18,3 @@ externals:
     url: https://blog.cloudflare.com/building-privacy-into-internet-standards-and-how-to-make-your-app-more-private-today/
   - title: Product marketing page
     url: https://www.cloudflare.com/lp/privacy-edge/
-
-algolia:
-  index: TEST - Re-dev docs
-  apikey: 4edb0a6cef3338ff4bcfbc6b3d2db56b
-  product: privacy-gateway

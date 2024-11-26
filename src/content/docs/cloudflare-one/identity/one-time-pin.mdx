@@ -3,14 +3,13 @@ pcx_content_type: how-to
 title: One-time PIN login
 sidebar:
   order: 2
-
 ---
 
-import { Render } from "~/components"
+import { Render } from "~/components";
 
 Cloudflare Access can send a one-time PIN (OTP) to approved email addresses as an alternative to integrating an identity provider. You can simultaneously configure OTP login and the identity provider of your choice to allow users to select their own authentication method.
 
-For example, if your team uses Okta® but you are collaborating with someone outside your organization, you can use OTP to grant access to guests.
+For example, if your team uses Okta but you are collaborating with someone outside your organization, you can use OTP to grant access to guests.
 
 ## Set up OTP
 
@@ -29,26 +28,26 @@ To log in to Access using the one-time PIN:
 
 :::note
 
-By design, blocked users will not receive an email. The login page will always say **A code has been emailed to you**, regardless of whether or not an email was sent. 
+By design, blocked users will not receive an email. The login page will always say **A code has been emailed to you**, regardless of whether or not an email was sent.
 :::
 
 4. Paste the PIN into the Access login page and select **Sign in**.
    ![Enter PIN to sign in.](~/assets/images/cloudflare-one/identity/otp/otp2.png)
 
-   * If the code was valid, you will be redirected to the application.
-   * If the code was invalid, you will see **That account does not have access.**
+   - If the code was valid, you will be redirected to the application.
+   - If the code was invalid, you will see **That account does not have access.**
 
 :::note
 
-Access only logs an authentication attempt after the user enters a code. If the user enters their email but never submits a code, the event will not appear in your [audit logs](/cloudflare-one/insights/logs/audit-logs/#authentication-audit-logs). 
+Access only logs an authentication attempt after the user enters a code. If the user enters their email but never submits a code, the event will not appear in your [audit logs](/cloudflare-one/insights/logs/audit-logs/#authentication-audit-logs).
 :::
 
 ## Example API Config
 
 ```json
 {
-  "config": {},
-  "type": "onetimepin",
-  "name": "my example idp"
+	"config": {},
+	"type": "onetimepin",
+	"name": "my example idp"
 }
 ```

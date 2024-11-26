@@ -3,11 +3,22 @@ import StarlightPage from "@astrojs/starlight/components/StarlightPage.astro";
 import { ProductFeatures } from "~/components";
 ---
 
-<StarlightPage frontmatter={{ title: "Plans", template: "splash", description:
-		"View the products and features available to you based on your Cloudflare plan."}}>
-
-	<p>A feature-level companion to our <a href='https://www.cloudflare.com/plans/'>Plans and Pricing page</a></p>
-	<p style="font-size:.85em;margin-top:-.25em;">(may not include <a href='#missing-features'>all features</a>)</p>
+<StarlightPage
+	frontmatter={{
+		title: "Plans",
+		template: "splash",
+		description:
+			"View the products and features available to you based on your Cloudflare plan.",
+	}}
+>
+	<p>
+		A feature-level companion to our <a href="https://www.cloudflare.com/plans/"
+			>Plans and Pricing page</a
+		>
+	</p>
+	<p style="font-size:.85em;margin-top:-.25em;">
+		(may not include <a href="#missing-features">all features</a>)
+	</p>
 
 	<h2 id="account">Account</h2>
 	<div class="grid grid-cols-2 *:!mt-0">
@@ -96,12 +107,32 @@ import { ProductFeatures } from "~/components";
 
 	<h2 id="missing-features">Missing features</h2>
 
-	<p>This page is meant to be a companion to our <a href='https://www.cloudflare.com/plans/'>Plans and Pricing page</a>, but is not meant to be comprehensive. In the event of any inconsistency between this page and the Plans and Pricing page, the Plans and Pricing page controls.</p>
-    <p>Refer to the following locations for more information:</p>
-    <ul>
-        <li><strong>Developer products</strong>: Refer to the <a href='https://www.cloudflare.com/plans/developer-platform/'>Developer Platform pricing page</a> or individual <a href='/products/'>product docs</a> to learn more about plans and pricing.</li>
-        <li><strong>Zero Trust products</strong>: Refer to the <a href='https://www.cloudflare.com/plans/zero-trust-services/'>Zero Trust pricing</a> page.</li>
-        <li><strong>Other products</strong>: Refer to the individual <a href='/products/'>product docs</a> to learn more about plans and pricing.</li>
-    </ul>
-	
+	<p>
+		This page is meant to be a companion to our <a
+			href="https://www.cloudflare.com/plans/">Plans and Pricing page</a
+		>, but is not meant to be comprehensive. In the event of any inconsistency
+		between this page and the Plans and Pricing page, the Plans and Pricing page
+		controls.
+	</p>
+	<p>Refer to the following locations for more information:</p>
+	<ul>
+		<li>
+			<strong>Developer products</strong>: Refer to the <a
+				href="https://www.cloudflare.com/plans/developer-platform/"
+				>Developer Platform pricing page</a
+			> or individual <a href="/products/">product docs</a> to learn more about plans
+			and pricing.
+		</li>
+		<li>
+			<strong>Zero Trust products</strong>: Refer to the <a
+				href="https://www.cloudflare.com/plans/zero-trust-services/"
+				>Zero Trust pricing</a
+			> page.
+		</li>
+		<li>
+			<strong>Other products</strong>: Refer to the individual <a
+				href="/products/">product docs</a
+			> to learn more about plans and pricing.
+		</li>
+	</ul>
 </StarlightPage>

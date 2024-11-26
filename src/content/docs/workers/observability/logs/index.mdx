@@ -1,0 +1,32 @@
+---
+pcx_content_type: navigation
+title: Logs
+sidebar:
+  order: 2
+  group:
+    hideIndex: false
+---
+
+import { Badge, Stream } from "~/components";
+
+Logs are an important component of a developer's toolkit to troubleshoot and diagnose application issues and maintaining system health. The Cloudflare Developer Platform offers many tools to help developers manage their application's logs.
+
+## [Workers Logs](/workers/observability/logs/workers-logs) <Badge text="New" variant="tip" size="large" />
+
+Automatically ingest, filter, and analyze logs emitted from Cloudflare Workers in the Cloudflare dashboard.
+
+## [Real-time logs](/workers/observability/logs/real-time-logs)
+
+Access log events in near real-time. Real-time logs provide immediate feedback and visiblity into the health of your Cloudflare Worker.
+
+## [Tail Workers](/workers/observability/logs/tail-workers) <Badge text="Beta" size="large"/>
+
+Tail Workers allow developers to apply custom filtering, sampling, and transformation logic to telemetry data.
+
+## [Workers Logpush](/workers/observability/logs/logpush)
+
+Send Workers Trace Event Logs to a supported destination. Workers Logpush includes metadata about requests and responses, unstructured `console.log()` messages and any uncaught exceptions.
+
+## Video Tutorial
+
+<Stream videoId="8a29e0b3ee30140431df06c0ec935c60" videoTitle="Workers Observability" thumbnailTimeOrURL="2.5s" />

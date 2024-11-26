@@ -1,0 +1,22 @@
+---
+title: mTLS at Cloudflare
+pcx_content_type: overview
+sidebar:
+  order: 3
+---
+
+In this implementation guide we will be focusing on the L7 / Application Layer security for HTTP/S requests targeting [proxied](/dns/manage-dns-records/reference/proxied-dns-records/) hostnames, including the [first connection](/ssl/origin-configuration/ssl-modes/) between client and Cloudflare.
+
+Some common mTLS use cases are:
+- Protect and verify legitimate API traffic by verifying Client Certificates provided during TLS/SSL handshakes.
+- Check IoT devices' identity by verifying Client Certificates they provide during TLS/SSL handshakes.
+
+There are two main ways to use mTLS at Cloudflare, either by using the Application Security offering (optionally including [API Shield](/api-shield/)) or [Cloudflare Access](/cloudflare-one/policies/access/). Below is a non-exhaustive overview table of their differences:
+
+| Feature | Application Security (Client Certificate \+ WAF) | Cloudflare Access (mTLS) |
+| :---- | :---- | :---- |
+| Mainly used for | External Authentication (that is, APIs) | Internal Authentication (that is, employees) |
+| Availability | By default, 100 Client Certificates per Zone are included for free. For more certificates or [API Shield features](/api-shield/), contact your account team. | Zero Trust Enterprise only feature. |
+| [Certificate Authority (CA)](/ssl/concepts/#certificate-authority-ca)  | Cloudflare-managed or customer-uploaded (BYO CA). There's a soft-limit of up to [five customer-uploaded CAs](/ssl/client-certificates/byo-ca/#availability). | Customer-uploaded only (BYO CA). There's a soft-limit of up to [50 CAs](/cloudflare-one/account-limits/#access). |
+| Client Certificate Details | Forwarded to the origin server via [Cloudflare API](/ssl/client-certificates/enable-mtls/#cloudflare-api), [Cloudflare Workers](/ssl/client-certificates/enable-mtls/#cloudflare-workers), and [Managed Transforms](/ssl/client-certificates/enable-mtls/#managed-transforms). | Forwarded to the origin server via [Cloudflare API](/cloudflare-one/identity/devices/access-integrations/mutual-tls-authentication/#cloudflare-api), [Cloudflare Workers](/cloudflare-one/identity/devices/access-integrations/mutual-tls-authentication/#cloudflare-workers), and [Managed Transforms](/cloudflare-one/identity/devices/access-integrations/mutual-tls-authentication/#managed-transforms). Client Certificate headers and [Cf-Access-Jwt-Assertion](/cloudflare-one/identity/authorization-cookie/validating-json/) JWT header can be forwarded to the origin server. |
+| Client Certificates Revocation | Use the WAF [Custom Rules](/waf/custom-rules/) to check for [*cf.tls\_client\_auth.cert\_revoked*](/ssl/client-certificates/revoke-client-certificate/), which only applies to Cloudflare-managed CA. <br /><br /> For BYO CAs, it would be the same approach as with Cloudflare Access. | Generate a [Certificate Revocation List (CRL)](/cloudflare-one/identity/devices/access-integrations/mutual-tls-authentication/#create-a-crl) and enforce the revocation in a Cloudflare Worker. |

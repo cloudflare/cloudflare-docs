@@ -1,10 +1,9 @@
 ---
 pcx_content_type: integration-guide
 title: Fortinet
-
 ---
 
-import { Render } from "~/components"
+import { Render } from "~/components";
 
 This tutorial provides information and examples of how to configure Cloudflare Magic WAN with IPsec tunnels in conjunction with Fortinet FortiGate firewalls.
 
@@ -34,7 +33,7 @@ Cloudflare recommends customers configure two Magic IPsec tunnels per firewall/r
 5. When creating your IPsec tunnels:
    - **Health check type**: Change to _Request_.
    - **Replay Protection**: Do not change from the default setting.
-   - Set up fields such as **Name**, **Description**, **Interface Address**, **Customer endpoint**, and **Cloudflare endpoint** with settings that work for you.  Refer to [Add tunnels](/magic-wan/configuration/manually/how-to/configure-tunnels/#add-tunnels) to learn more.
+   - Set up fields such as **Name**, **Description**, **Interface Address**, **Customer endpoint**, and **Cloudflare endpoint** with settings that work for you. Refer to [Add tunnels](/magic-wan/configuration/manually/how-to/configure-tunnels/#add-tunnels) to learn more.
 
 ### Magic static routes
 
@@ -345,7 +344,7 @@ end
 
 ### Configure Address Group Object
 
-Create an Address Object that contains all of the Cloudflare IPv4 subnets as specified in the previous section.  You can copy/paste the CLI commands below into an SSH terminal and the objects will get created automatically:
+Create an Address Object that contains all of the Cloudflare IPv4 subnets as specified in the previous section. You can copy/paste the CLI commands below into an SSH terminal and the objects will get created automatically:
 
 ```txt
 config firewall addrgrp
@@ -412,7 +411,14 @@ end
 
 ## Monitor Cloudflare Magic IPsec tunnel health checks
 
-<Render file="tunnel-healthchecks-dash" params={{ one: "The dashboard shows the view of tunnel health as measured from each Cloudflare location where your traffic is likely to land.", two: "**Magic WAN** > **Tunnel health**" }} />
+<Render
+	file="tunnel-healthchecks-dash"
+	params={{
+		dashInfo:
+			"The dashboard shows the view of tunnel health as measured from each Cloudflare location where your traffic is likely to land.",
+		productPath: "**Magic WAN** > **Tunnel health**",
+	}}
+/>
 
 ## Troubleshooting
 

@@ -57,7 +57,7 @@ To check your prefixes, you can use [Cloudflare's RPKI Portal](https://rpki.clou
 
 <Render
 	file="prerequisites/maximum-segment-size"
-	params={{ one: "Magic Transit" }}
+	params={{ productName: "Magic Transit" }}
 />
 
 #### MSS clamping recommendations
@@ -112,7 +112,7 @@ You must [put the appropriate MSS clamps](#set-maximum-segment-size) in place be
 Also, when using [Cloudflare Network Interconnect](/magic-transit/network-interconnect/) with Magic Transit you must set the following MSS clamp sizes to accommodate additional overhead:
 
 - GRE tunnels over Classic CNI: 1476 bytes
-- Express CNI / Classic CNI with a maximum transmission unit (MTU) size of 1500 bytes handoff does not require an MSS clamp.
+- Direct CNI / Classic CNI with a maximum transmission unit (MTU) size of 1500 bytes handoff does not require an MSS clamp.
 
 MSS clamps are used to backhaul data from the data center where traffic is ingested (close to the end user) to the facility with the CNI link.
 :::

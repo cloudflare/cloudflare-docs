@@ -32,13 +32,16 @@ The `{zone_id}` argument is the [zone ID](/fundamentals/setup/find-account-and-z
 
 The following table summarizes the available operations.
 
-| Operation                                  | Verb + Endpoint                                        |
-| ------------------------------------------ | ------------------------------------------------------ |
-| List all code snippets                     | `GET /zones/{zone_id}/snippets`                        |
-| Create/update code snippet                 | `PUT /zones/{zone_id}/snippets/{snippet_name}`         |
-| Delete code snippet                        | `DELETE /zones/{zone_id}/snippets/{snippet_name}`      |
-| List snippet rules                         | `GET /zones/{zone_id}/snippets/snippet_rules`          |
-| Create/update/delete snippet rules         | `PUT /zones/{zone_id}/snippets/snippet_rules`          |
+| Operation                          | Verb + Endpoint                                        |
+| ---------------------------------- | ------------------------------------------------------ |
+| List all code snippets             | `GET /zones/{zone_id}/snippets`                        |
+| Create/update code snippet         | `PUT /zones/{zone_id}/snippets/{snippet_name}`         |
+| Get code snippet details           | `GET /zones/{zone_id}/snippets/{snippet_name}`         |
+| Get code snippet content           | `GET /zones/{zone_id}/snippets/{snippet_name}/content` |
+| Delete code snippet                | `DELETE /zones/{zone_id}/snippets/{snippet_name}`      |
+| List snippet rules                 | `GET /zones/{zone_id}/snippets/snippet_rules`          |
+| Create/update/delete snippet rules | `PUT /zones/{zone_id}/snippets/snippet_rules`          |
+| Delete all snippet rules           | `DELETE /zones/{zone_id}/snippets/snippet_rules`       |
 
 ## Example API calls
 
@@ -63,14 +66,14 @@ To make this example work, save your JavaScript code in a file named `example.js
 
 ```json title="Example response"
 {
-  "errors": [],
-  "messages": [],
-  "success": true,
-  "result": {
-    "created_on": "2023-07-24-00:00:00",
-    "modified_on": "2023-07-24-00:00:00",
-    "snippet_name": "snippet_name_01"
-  }
+	"errors": [],
+	"messages": [],
+	"success": true,
+	"result": {
+		"created_on": "2023-07-24-00:00:00",
+		"modified_on": "2023-07-24-00:00:00",
+		"snippet_name": "snippet_name_01"
+	}
 }
 ```
 

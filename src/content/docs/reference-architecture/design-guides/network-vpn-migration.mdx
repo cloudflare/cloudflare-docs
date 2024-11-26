@@ -1,17 +1,19 @@
 ---
 title: Network-focused migration from VPN concentrators to Zero Trust Network Access
 pcx_content_type: design-guide
-head:
-  - tag: title
-    content: "Design guide: Network-focused VPN migration"
+products:
+  - Magic WAN
+  - Gateway
+  - Access
+  - Network Interconnect
 sidebar:
   label: "Network-focused VPN migration"
-
+updated: 2024-09-17
 ---
 
 ## Introduction
 
-Over the past few years, the traditional approach of installing and maintaining hardware for remote access to private company networks is no longer secure or cost effective. Due to an increase in [vulnerabilities](https://www.networkworld.com/article/2114694/new-vpn-risk-report-finds-nearly-half-of-enterprises-attacked-via-vpn-vulnerabilities.html) found in on-premises VPN products, security and IT teams are looking for solutions that don't require teams to monitor for and respond to [CVE alerts](https://cve.mitre.org/cgi-bin/cvekey.cgi?keyword=vpn). These same systems also limit the user's bandwidth because they route all user Internet traffic through a single infrastructure which results in a poor user experience. IT teams are recognizing the cost and effort to install and maintain their own hardware can be offset with more modern, and more secure cloud hosted services. User expectations for application performance are exposing limitations in bandwidth constrained, self hosted VPN solutions. In summary, running your own VPN is expensive, high risk and doesn't deliver a great user experience. 
+Over the past few years, the traditional approach of installing and maintaining hardware for remote access to private company networks is no longer secure or cost effective. Due to an increase in [vulnerabilities](https://www.networkworld.com/article/2114694/new-vpn-risk-report-finds-nearly-half-of-enterprises-attacked-via-vpn-vulnerabilities.html) found in on-premises VPN products, security and IT teams are looking for solutions that don't require teams to monitor for and respond to [CVE alerts](https://cve.mitre.org/cgi-bin/cvekey.cgi?keyword=vpn). These same systems also limit the user's bandwidth because they route all user Internet traffic through a single infrastructure which results in a poor user experience. IT teams are recognizing the cost and effort to install and maintain their own hardware can be offset with more modern, and more secure cloud hosted services. User expectations for application performance are exposing limitations in bandwidth constrained, self hosted VPN solutions. In summary, running your own VPN is expensive, high risk and doesn't deliver a great user experience.
 
 ![Diagram showing suboptimal traffic paths for traffic to Internet resources.](~/assets/images/reference-architecture/design-guide-network-vpn-migr/traditional-vpn.svg "Figure 1: A traditional VPN deployment, where all user traffic destined for the Internet must route through the company hosted and managed VPN service.")
 
@@ -29,32 +31,32 @@ This guide is specifically aimed at network architects or IT admins who want to 
 
 ### Who is this document for and what will you learn?
 
-This guide is written for network and security experts considering a replacement of their current VPN vendor, while preparing their organization for a zero trust or SASE architecture. It assumes familiarity with networking concepts such as IPsec tunnels, routing tables and split tunneling. 
+This guide is written for network and security experts considering a replacement of their current VPN vendor, while preparing their organization for a zero trust or SASE architecture. It assumes familiarity with networking concepts such as IPsec tunnels, routing tables and split tunneling.
 
 What you will learn:
 
-* How Cloudflare can replace a traditional VPN-like implementation  
-* How to get visibility into VPN network traffic
-* What you need to consider to implement a Cloudflare solution at scale  
-* Steps to take to move to a recommended Zero Trust Network Access implementation
+- How Cloudflare can replace a traditional VPN-like implementation
+- How to get visibility into VPN network traffic
+- What you need to consider to implement a Cloudflare solution at scale
+- Steps to take to move to a recommended Zero Trust Network Access implementation
 
 The solution this guide describes requires you have a contract with Cloudflare that includes:
 
-* Cloudflare One licenses for the amount of users you are looking to onboard  
-* Cloudflare Magic WAN
+- Cloudflare One licenses for the amount of users you are looking to onboard
+- Cloudflare Magic WAN
 
 To build a stronger baseline understanding of Cloudflare, we recommend the following resources:
 
-1. What is Cloudflare? | [Website](https://www.cloudflare.com/what-is-cloudflare/) (five-minute read) or [video](https://www.youtube.com/watch?v=XHvmX3FhTwU) (two minutes)  
-2. Blog: [What is SASE? | Secure access service edge | Cloudflare](https://www.cloudflare.com/learning/access-management/what-is-sase/)  (14-minute read)  
+1. What is Cloudflare? | [Website](https://www.cloudflare.com/what-is-cloudflare/) (five-minute read) or [video](https://www.youtube.com/watch?v=XHvmX3FhTwU) (two minutes)
+2. Blog: [What is SASE? | Secure access service edge | Cloudflare](https://www.cloudflare.com/learning/access-management/what-is-sase/) (14-minute read)
 3. Reference architecture: [Evolving to a SASE architecture with Cloudflare](/reference-architecture/architectures/sase/) (three-hour read)
 
 ## Benefits of a SASE platform
 
 Traditional VPN approaches typically provide the following types of access.
 
-* Allowing remote users access to self hosted private applications running on a corporate network  
-* Routing all user Internet traffic through a single, concentrated VPN access point where security policies are applied
+- Allowing remote users access to self hosted private applications running on a corporate network
+- Routing all user Internet traffic through a single, concentrated VPN access point where security policies are applied
 
 A SASE platform replaces traditional VPN hardware by offering two key services. First, it maps user access directly to internal applications hosted on corporate networks or in the cloud, unlike hosting your own VPN service which typically provides broad access to the entire corporate network. Second, it enables filtering of Internet traffic close to the user, allowing users to securely access the Internet without routing all traffic through the corporate network, thereby improving efficiency and maintaining security.
 
@@ -62,14 +64,14 @@ A SASE platform replaces traditional VPN hardware by offering two key services. 
 
 Remote users authenticate and connect to a cloud hosted Zero Trust Network Access (ZTNA) service, which in turn has connectivity into the networks where the private applications reside. Cloudflare's [SASE reference architecture](/reference-architecture/architectures/sase/) describes three methods for connecting Cloudflare to your existing applications and networks:
 
-1. Software connectors ([`cloudflared`](/cloudflare-one/connections/connect-networks/private-net/cloudflared/) or [WARP Connector](/cloudflare-one/connections/connect-networks/private-net/warp-connector/))  
-2. IPsec or GRE tunnels using [Magic WAN](/magic-wan/)  
+1. Software connectors ([`cloudflared`](/cloudflare-one/connections/connect-networks/private-net/cloudflared/) or [WARP Connector](/cloudflare-one/connections/connect-networks/private-net/warp-connector/))
+2. IPsec or GRE tunnels using [Magic WAN](/magic-wan/)
 3. Direct network connections using [Cloudflare Network Interconnect](/network-interconnect/)
 
-All three methods have their specific advantages, however, software connectors are usually preferred when considering a modern Zero Trust implementation for three reasons. 
+All three methods have their specific advantages, however, software connectors are usually preferred when considering a modern Zero Trust implementation for three reasons.
 
-1. They deliver a network connectivity model that is flexible and easy to replicate across environments. You can move the applications and servers with little to no changes in configuration.  
-2. Software daemon architecture simplifies scaling to increased traffic demands, just install more agents on more servers.   
+1. They deliver a network connectivity model that is flexible and easy to replicate across environments. You can move the applications and servers with little to no changes in configuration.
+2. Software daemon architecture simplifies scaling to increased traffic demands, just install more agents on more servers.
 3. Because daemons run close to your applications (as opposed to at your network edge), you can build isolated network or application segments in which to enforce policy, preventing lateral movement and getting the full benefits of the zero trust model.
 
 :::note
@@ -90,9 +92,9 @@ This approach allows network and security teams to get up-and-running quickly, w
 
 This guide will describe the following phases at a high level, if you need help with specific details related to your environment please [contact Cloudflare](https://www.cloudflare.com/products/zero-trust/plans/enterprise/).
 
-* Phase 1: Quickly replace existing traditional/vulnerable VPN hardware with cloud-based remote access while gaining insight into application traffic.  
-* Phase 2: Scaling up and offloading traditional IPsec tunnels.  
-* Phase 3: Improving security posture by segmenting application access and enabling clientless access.
+- Phase 1: Quickly replace existing traditional/vulnerable VPN hardware with cloud-based remote access while gaining insight into application traffic.
+- Phase 2: Scaling up and offloading traditional IPsec tunnels.
+- Phase 3: Improving security posture by segmenting application access and enabling clientless access.
 
 ## Phase 1: Connectivity and network-based policies
 
@@ -102,8 +104,8 @@ Consider an organization with global IT infrastructure. Specifically, three data
 
 During this first phase, network connectivity will be created between user devices and the private networks they currently access via existing network infrastructure. This is achieved in two ways.
 
-* On employee devices install the Cloudflare [device agent](/cloudflare-one/connections/connect-devices/warp/). This replaces the use of existing VPN client software.  
-* Using existing network hardware in the data center, create IPsec tunnels to Cloudflare which are managed using Cloudflare Magic WAN service.
+- On employee devices install the Cloudflare [device agent](/cloudflare-one/connections/connect-devices/warp/). This replaces the use of existing VPN client software.
+- Using existing network hardware in the data center, create IPsec tunnels to Cloudflare which are managed using Cloudflare Magic WAN service.
 
 Both employee devices and data center networks will connect to their closest Cloudflare server. This is thanks to [Cloudflare's anycast architecture](https://www.cloudflare.com/learning/cdn/glossary/anycast-network/), and ensures the most optimal path for user traffic without any effort by employees or IT support staff. Users no longer need to make a choice to which VPN service region to connect to, as Cloudflare will always ensure they connect to the closest and most responsive service for the best access performance to their private applications.
 
@@ -131,26 +133,26 @@ Although this phase focuses on using the Magic WAN service and IPsec tunnels for
 
 Cloudflare offers two types of software connectors:
 
-* [`cloudflared`](/cloudflare-one/connections/connect-networks/get-started/)  
-* [WARP connector](/cloudflare-one/connections/connect-networks/private-net/warp-connector/)
+- [`cloudflared`](/cloudflare-one/connections/connect-networks/get-started/)
+- [WARP connector](/cloudflare-one/connections/connect-networks/private-net/warp-connector/)
 
-As discussed in the introduction, `cloudflared` is the preferred method for Zero Trust Network Access, but only supports inbound connectivity to your networks and application servers, any server initiated connection will not go via the tunnel and instead follow the server's default network path. WARP connector is designed to create tunnels that facilitate both inbound and outbound connectivity, but it doesn't currently have the same level of failover support and ease of configuration. For this guide, we will be discussing using `cloudflared` as it supports the internal DNS use case described. 
+As discussed in the introduction, `cloudflared` is the preferred method for Zero Trust Network Access, but only supports inbound connectivity to your networks and application servers, any server initiated connection will not go via the tunnel and instead follow the server's default network path. WARP connector is designed to create tunnels that facilitate both inbound and outbound connectivity, but it doesn't currently have the same level of failover support and ease of configuration. For this guide, we will be discussing using `cloudflared` as it supports the internal DNS use case described.
 
-For large remote access use cases, Cloudflare recommends deploying connectors to dedicated hosts. See the [System Requirements documentation](/cloudflare-one/connections/connect-networks/deploy-tunnels/system-requirements/) for more deployment recommendations and server sizing. Where to deploy these servers depends on the access they need and the internal firewall rules and segmentation of the network. Some customers start with their first deployment in their DMZ, while others install it deeper in their network and evolve from there. 
+For large remote access use cases, Cloudflare recommends deploying connectors to dedicated hosts. See the [System Requirements documentation](/cloudflare-one/connections/connect-networks/deploy-tunnels/system-requirements/) for more deployment recommendations and server sizing. Where to deploy these servers depends on the access they need and the internal firewall rules and segmentation of the network. Some customers start with their first deployment in their DMZ, while others install it deeper in their network and evolve from there.
 
 Installing `cloudflared` is best done in an automated manner, so we recommend deploying using a virtualization technology such as Docker or deploying as VMware guests and configuring via Ansible. Preferably, as traffic using `cloudflared` tunnels increases, such systems can scale the deployment automatically based on real-time metrics collected from the hosts. `cloudflared` instances can be monitored using the [Prometheus metrics endpoint](/cloudflare-one/connections/connect-networks/monitor-tunnels/metrics/). Prometheus is an HTTP-based monitoring and alerting system similar in functionality to SNMP, exposing metrics that can be polled from the resource to be monitored. Most monitoring systems on the market today support Prometheus as a format to collect the metrics needed for alerting and automatically scaling the deployment.
 
 For more information about deploying `cloudflared` connectors at scale:
 
-* [Various guides to deploy and update](/cloudflare-one/connections/connect-networks/deploy-tunnels/deployment-guides/) connectors in environments such as Ansible, Terraform and Kubernetes  
-* High availability using [replicas](/cloudflare-one/connections/connect-networks/deploy-tunnels/deploy-cloudflared-replicas/#cloudflared-replicas)  
-* [Monitor tunnels with Grafana](/cloudflare-one/tutorials/grafana/)
+- [Various guides to deploy and update](/cloudflare-one/connections/connect-networks/deploy-tunnels/deployment-guides/) connectors in environments such as Ansible, Terraform and Kubernetes
+- High availability using [replicas](/cloudflare-one/connections/connect-networks/deploy-tunnels/deploy-cloudflared-replicas/#cloudflared-replicas)
+- [Monitor tunnels with Grafana](/cloudflare-one/tutorials/grafana/)
 
 ### DNS resolution with Resolver Policies
 
 As you can see in Figure 4, both DNS and general network traffic will flow from the employee device to Cloudflare. By default, the device agent forwards all DNS queries to Cloudflare for inspection and filtering based on [DNS policies](/cloudflare-one/policies/gateway/dns-policies/). This is great, because it will allow administrators to configure [DNS policies to block potential security threats](/cloudflare-one/policies/gateway/dns-policies/common-policies/#block-security-threats) and immediately start to protect employees as they go online. This also applies to situations where Internet traffic is from the tunnel to Cloudflare, but the client still resolves hostname requests via Cloudflare DNS services.
 
-For internal domains, however, Cloudflare will need to know how to resolve them. This is where [resolver policies](/cloudflare-one/policies/gateway/resolver-policies/) come into play. After the DNS policies are applied to incoming DNS requests, customers can choose to forward requests for internal DNS hostnames to their internal DNS servers. For example, the domain `example.local` might be hosted on a DNS server running at 10.10.10.123. A resolver policy will make sure requests for hostnames part of that domain will be sent to that IP. 
+For internal domains, however, Cloudflare will need to know how to resolve them. This is where [resolver policies](/cloudflare-one/policies/gateway/resolver-policies/) come into play. After the DNS policies are applied to incoming DNS requests, customers can choose to forward requests for internal DNS hostnames to their internal DNS servers. For example, the domain `example.local` might be hosted on a DNS server running at 10.10.10.123. A resolver policy will make sure requests for hostnames part of that domain will be sent to that IP.
 
 A tunnel exposing a route to the internal DNS server is needed. `cloudflared` should be deployed on a host that can route DNS traffic to the 10.10.10.123 IP address. Requests for internal domains via the DNS gateway will then be redirected to this DNS server, via the tunnel.
 
@@ -158,9 +160,9 @@ A tunnel exposing a route to the internal DNS server is needed. `cloudflared` sh
 
 As steps are taken in this first phase and the first users will start accessing applications, the need for proper monitoring and logging will become apparent. Having visibility into the traffic flowing through Cloudflare will help with:
 
-* Operational activities such as troubleshooting by your support staff.  
-* Monitoring for potential threats by a SOC, possibly using a security information and event management ([SIEM](https://www.cloudflare.com/learning/security/what-is-siem/)) service.  
-* Visibility into application traffic to see where potential security and performance improvements can be made (see also phase 2).
+- Operational activities such as troubleshooting by your support staff.
+- Monitoring for potential threats by a SOC, possibly using a security information and event management ([SIEM](https://www.cloudflare.com/learning/security/what-is-siem/)) service.
+- Visibility into application traffic to see where potential security and performance improvements can be made (see also phase 2).
 
 Cloudflare provides visibility at different levels, available through the dashboard or exported using [Logpush](/logs/get-started/). For traffic flowing over Magic WAN IPsec tunnels, [Network Analytics](/analytics/network-analytics/) can be found in the dashboard and through the [GraphQL API](/analytics/graphql-api/). This will show sampled statistics of the traffic and can be used for trend and traffic flow analysis.
 
@@ -174,13 +176,13 @@ In most environments the IPsec termination points are limited in their throughpu
 
 Fortunately, most of these applications can be migrated one-by-one to the more scalable software connector based tunnels. Any application which doesn't rely on server-initiated traffic is eligible for this type of migration. With the experience gained during the initial deployment of `cloudflared` in phase 1:
 
-1. Deploy two or more `cloudflared` instances in the relevant environment, the USA datacenter in the example below.  
-2. Add [Private Networks to the tunnel](/cloudflare-one/connections/connect-networks/private-net/cloudflared/) to define routing and access that is scoped more specifically to the network and applications it handles traffic for. For example, expose the 10.20.56.0/24 subnet via the software connector tunnel, instead of the larger 10.20.0.0/16 exposed by the Magic WAN managed IPsec tunnel.  
+1. Deploy two or more `cloudflared` instances in the relevant environment, the USA datacenter in the example below.
+2. Add [Private Networks to the tunnel](/cloudflare-one/connections/connect-networks/private-net/cloudflared/) to define routing and access that is scoped more specifically to the network and applications it handles traffic for. For example, expose the 10.20.56.0/24 subnet via the software connector tunnel, instead of the larger 10.20.0.0/16 exposed by the Magic WAN managed IPsec tunnel.
 3. Traffic from employees will now be routed via the software connector tunnel for the /24 subnet instead of the /16 route going over the IPsec tunnel, thereby offloading the reliance on the IPsec termination device.
 
 ![An evolved architecture diagram showing software connector based tunnels offloading (or replacing) the IPsec tunnels.](~/assets/images/reference-architecture/design-guide-network-vpn-migr/phase-2.svg "Figure 5: An evolved phase 2 architecture diagram showing software connector based tunnels offloading (or replacing) the IPsec tunnels.")
 
-In some cases (such as the Asia datacenter above) this might mean that the IPsec tunnels are not needed anymore and software connectors are the sole connection into the infrastructure. In that case, the whole 10.30.0.0/16 subnet can be managed by `cloudflared` and the IPsec tunnel (and its related hardware) decommissioned. It is likely that this phase will be an ongoing effort: as more applications are mapped and traffic flows deemed eligible for software connector based tunnels, they will be migrated as needed. 
+In some cases (such as the Asia datacenter above) this might mean that the IPsec tunnels are not needed anymore and software connectors are the sole connection into the infrastructure. In that case, the whole 10.30.0.0/16 subnet can be managed by `cloudflared` and the IPsec tunnel (and its related hardware) decommissioned. It is likely that this phase will be an ongoing effort: as more applications are mapped and traffic flows deemed eligible for software connector based tunnels, they will be migrated as needed.
 
 ## Phase 3: Application-based policies
 
@@ -214,5 +216,5 @@ The flexibility of the Cloudflare connectivity cloud to connect any device, appl
 
 ### Further reading
 
-* Magic WAN integration: [WARP on-ramp to Magic WAN](/magic-wan/zero-trust/warp/)  
-* Policy configuration: [Gateway Network policies](/cloudflare-one/policies/gateway/network-policies/)
+- Magic WAN integration: [WARP on-ramp to Magic WAN](/magic-wan/zero-trust/warp/)
+- Policy configuration: [Gateway Network policies](/cloudflare-one/policies/gateway/network-policies/)

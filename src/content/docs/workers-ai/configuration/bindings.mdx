@@ -6,6 +6,8 @@ sidebar:
 
 ---
 
+import { Type, MetaInfo } from "~/components";
+
 ## Workers
 
 [Workers](/workers/) provides a serverless execution environment that allows you to create new applications or augment existing ones.
@@ -41,13 +43,13 @@ const answer = await env.AI.run('@cf/meta/llama-3.1-8b-instruct', {
 
 
 
-* `model` string required
+* `model` <Type text="string" /> <MetaInfo text="required" />
 
   * The model to run.
 
   **Supported options**
 
-  * `stream` boolean optional
+  * `stream` <Type text="boolean" /> <MetaInfo text="optional" />
     * Returns a stream of results as they are available.
 
 

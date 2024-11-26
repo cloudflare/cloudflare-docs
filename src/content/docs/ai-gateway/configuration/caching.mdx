@@ -9,11 +9,13 @@ description: Override caching settings on a per-request basis.
 
 import { TabItem, Tabs } from "~/components";
 
-Enable and customize your gateway cache to serve requests directly from Cloudflare’s cache, instead of the original model provider, for faster requests and cost savings.
+Enable and customize your gateway cache to serve requests directly from Cloudflare's cache, instead of the original model provider, for faster requests and cost savings.
 
 :::note
 
-Currently caching is supported only for text and image responses, and it applies only to identical requests. This is helpful for use cases when there are limited prompt options - for example, a support bot that asks "How can I help you?" and lets the user select an answer from a limited set of options works well with the current caching configuration.
+Currently caching is supported only for text and image responses, and it applies only to identical requests. 
+
+This is helpful for use cases when there are limited prompt options - for example, a support bot that asks "How can I help you?" and lets the user select an answer from a limited set of options works well with the current caching configuration.
 We plan on adding semantic search for caching in the future to improve cache hit rates.
 :::
 
@@ -51,11 +53,21 @@ To check whether a response comes from cache or not, **cf-aig-cache-status** wil
 
 In order to override the default cache behavior defined on the settings tab, you can, on a per-request basis, set headers for the following options:
 
-### Skip cache (cf-skip-cache)
+:::note
+
+The following headers have been updated to new names, though the old headers will still function. We recommend updating to the new headers to ensure future compatibility:
+
+`cf-cache-ttl` is now `cf-aig-cache-ttl`
+
+`cf-skip-cache` is now `cf-aig-skip-cache`
+
+:::
+
+### Skip cache (cf-aig-skip-cache)
 
 Skip cache refers to bypassing the cache and fetching the request directly from the original provider, without utilizing any cached copy.
 
-You can use the header **cf-skip-cache** to bypass the cached version of the request.
+You can use the header **cf-aig-skip-cache** to bypass the cached version of the request.
 
 As an example, when submitting a request to OpenAI, include the header in the following manner:
 
@@ -63,7 +75,7 @@ As an example, when submitting a request to OpenAI, include the header in the fo
 curl https://gateway.ai.cloudflare.com/v1/{account_id}/{gateway_id}/openai/chat/completions \
   --header 'Authorization: Bearer $TOKEN' \
   --header 'Content-Type: application/json' \
-  --header 'cf-skip-cache: true' \
+  --header 'cf-aig-skip-cache: true' \
   --data ' {
    		 "model": "gpt-4o-mini",
    		 "messages": [
@@ -76,11 +88,11 @@ curl https://gateway.ai.cloudflare.com/v1/{account_id}/{gateway_id}/openai/chat/
 '
 ```
 
-### Cache TTL (cf-cache-ttl)
+### Cache TTL (cf-aig-cache-ttl)
 
-Cache TTL, or Time To Live, is the duration a cached request remains valid before it expires and requires refreshing from the original source. You can use **cf-cache-ttl** to set the desired caching duration in milliseconds.
+Cache TTL, or Time To Live, is the duration a cached request remains valid before it expires and is refreshed from the original source. You can use **cf-aig-cache-ttl** to set the desired caching duration in seconds. The minimum TTL is 60 seconds and the maximum TTL is one month.
 
-For example, if you set a TTL of one hour, it means that a request is kept in the cache for an hour. Within that hour, an identical request will be served from the cache instead of the original API. After an hour, the cache expires and the request will go to the original API for a more recent response, and that response will repopulate the cache for the next hour.
+For example, if you set a TTL of one hour, it means that a request is kept in the cache for an hour. Within that hour, an identical request will be served from the cache instead of the original API. After an hour, the cache expires and the request will go to the original API for a fresh response, and that response will repopulate the cache for the next hour.
 
 As an example, when submitting a request to OpenAI, include the header in the following manner:
 
@@ -88,7 +100,7 @@ As an example, when submitting a request to OpenAI, include the header in the fo
 curl https://gateway.ai.cloudflare.com/v1/{account_id}/{gateway_id}/openai/chat/completions \
   --header 'Authorization: Bearer $TOKEN' \
   --header 'Content-Type: application/json' \
-  --header 'cf-cache-ttl: 3600000' \
+  --header 'cf-aig-cache-ttl: 3600' \
   --data ' {
    		 "model": "gpt-4o-mini",
    		 "messages": [
@@ -105,7 +117,7 @@ curl https://gateway.ai.cloudflare.com/v1/{account_id}/{gateway_id}/openai/chat/
 
 Custom cache keys let you override the default cache key in order to precisely set the cacheability setting for any resource. To override the default cache key, you can use the header **cf-aig-cache-key**.
 
-When you use the **cf-aig-cache-key** header for the first time, you will receive a response from the provider. Subsequent requests with the same header will return the cached response. If the **cf-cache-ttl** header is used, responses will be cached according to the specified Cache Time To Live. Otherwise, responses will be cached according to the cache settings in the dashboard. If caching is not enabled for the gateway, responses will be cached for 5 minutes by default.
+When you use the **cf-aig-cache-key** header for the first time, you will receive a response from the provider. Subsequent requests with the same header will return the cached response. If the **cf-aig-cache-ttl** header is used, responses will be cached according to the specified Cache Time To Live. Otherwise, responses will be cached according to the cache settings in the dashboard. If caching is not enabled for the gateway, responses will be cached for 5 minutes by default.
 
 As an example, when submitting a request to OpenAI, include the header in the following manner:
 
@@ -125,3 +137,7 @@ curl https://gateway.ai.cloudflare.com/v1/{account_id}/{gateway_id}/openai/chat/
    	 }
 '
 ```
+
+:::caution[AI Gateway caching behavior]
+Cache in AI Gateway is volatile. If two identical requests are sent simultaneously, the first request may not cache in time for the second request to use it, which may result in the second request retrieving data from the original source.
+:::

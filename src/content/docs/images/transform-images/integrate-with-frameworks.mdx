@@ -22,30 +22,37 @@ To use Images with **all** your app's images, define a global [loaderFile](https
 
 Add the following settings to the **next.config.js** file located at the root our your Next.js application.
 
-```js
+```ts
 module.exports = {
   images: {
     loader: 'custom',
-    loaderFile: './imageLoader.js',
+    loaderFile: './imageLoader.ts',
   },
 }
 ```
 
-Next, create the `imageLoader.js` file in the specified path (relative to the root of your Next.js application).
+Next, create the `imageLoader.ts` file in the specified path (relative to the root of your Next.js application).
 
-```js
-const normalizeSrc = src => {
-  return src.startsWith('/') ? src.slice(1) : src;
+```ts
+const normalizeSrc = (src: string) => {
+    return src.startsWith("/") ? src.slice(1) : src;
 };
 
-export default function cloudflareLoader ({ src, width, quality }) {
-  const params = [`width=${width}`];
-  if (quality) {
-    params.push(`quality=${quality}`);
-  }
-  const paramsString = params.join(',');
-  return `/cdn-cgi/image/${paramsString}/${normalizeSrc(src)}`;
-};
+export default function cloudflareLoader({
+    src,
+    width,
+    quality,
+}: { src: string; width: number; quality?: number }) {
+    if (process.env.NODE_ENV === "development") {
+        return src;
+    }
+    const params = [`width=${width}`];
+    if (quality) {
+        params.push(`quality=${quality}`);
+    }
+    const paramsString = params.join(",");
+    return `/cdn-cgi/image/${paramsString}/${normalizeSrc(src)}`;
+}
 ```
 
 ### Custom Loaders
@@ -60,6 +67,9 @@ const normalizeSrc = src => {
 };
 
 const cloudflareLoader = ({ src, width, quality }) => {
+  if (process.env.NODE_ENV === "development") {
+  	return src;
+  }
   const params = [`width=${width}`];
   if (quality) {
     params.push(`quality=${quality}`);

@@ -29,6 +29,8 @@ Currently, public buckets do not let you list the bucket contents at the root of
 
 Domain access through a custom domain allows you to use [Cloudflare Cache](/cache/) to accelerate access to your R2 bucket.
 
+Configure your cache to use [Smart Tiered Cache](/cache/how-to/tiered-cache/#smart-tiered-cache) to have a single upper tier data center next to your R2 bucket.
+
 :::note
 
 By default, only certain file types are cached. To cache all files in your bucket, you must set a Cache Everything page rule. For more information on default Cache behavior and how to customize it, refer to [Default Cache Behavior](/cache/concepts/default-cache-behavior/#default-cached-file-extensions)
@@ -66,11 +68,7 @@ If the zone is on an Enterprise plan, make sure that you [release the zone hold]
 
 ### Restrictions
 
-There are a few restrictions when using custom domains to access R2 buckets.
-
-- The domain being used must belong to the same account as the R2 bucket.
-- Use of a domain with CNAME flattening enabled is not supported. You will need to disable [CNAME flattening](/dns/cname-flattening/) before enabling domain access.
-- Object access is only available via HTTPS; plaintxt HTTP is not supported.
+There is a restriction when using custom domains to access R2 buckets. The domain being used must belong to the same account as the R2 bucket.
 
 ## Disable domain access
 

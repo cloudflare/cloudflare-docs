@@ -17,7 +17,7 @@ import { Render } from "~/components"
 These examples exclude the costs for the Workers calling the Durable Objects. When modelling the costs of a Durable Object, note that:
 
 * Inactive objects receiving no requests do not incur any duration charges.
-* The [WebSocket Hibernation API](/durable-objects/reference/websockets/#websocket-hibernation) can dramatically reduce duration-related charges for Durable Objects communicating with clients over the WebSocket protocol, especially if messages are only transmitted occasionally at sparse intervals.
+* The [WebSocket Hibernation API](/durable-objects/best-practices/websockets/#websocket-hibernation-api) can dramatically reduce duration-related charges for Durable Objects communicating with clients over the WebSocket protocol, especially if messages are only transmitted occasionally at sparse intervals.
 
 ### Example 1
 
@@ -115,6 +115,6 @@ In this scenario, the estimated monthly cost would be calculated as:
 
 <sup>2</sup> The example uses 1 second because each Durable Object is active for 1 second per minute. This can also be thought of as 432 million requests that each take 10 ms to execute (4,320,000 seconds).
 
-## Transactional Storage API billing
+## Storage API billing
 
-<Render file="transactional_storage_api_pricing" product="workers" />
+<Render file="storage_api_pricing" product="workers" />

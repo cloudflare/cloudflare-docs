@@ -3,14 +3,11 @@ title: FAQ
 pcx_content_type: faq
 sidebar:
   order: 10
-
 ---
 
 ## General questions
 
-
 ### Why does a security event display a Cloudflare IP address even though other fields match the client details?
-
 
 This happens when a request goes through a Cloudflare Worker.
 
@@ -20,14 +17,82 @@ In this case, Cloudflare considers the client details, including its IP address,
 
 Yes, you may have to escape certain characters in expressions. The exact escaping will depend on the string syntax you use:
 
-* If you use the raw string syntax (for example, `r#"this is a string"#`), you will only need to escape characters that have a special meaning in regular expressions.
-* If you use the quoted string syntax (for example, `"this is a string"`), you need to perform additional escaping, such as escaping special characters `"` and `\` using `\"` and `\\`, both in literal strings and in regular expressions.
+- If you use the raw string syntax (for example, `r#"this is a string"#`), you will only need to escape characters that have a special meaning in regular expressions.
+- If you use the quoted string syntax (for example, `"this is a string"`), you need to perform additional escaping, such as escaping special characters `"` and `\` using `\"` and `\\`, both in literal strings and in regular expressions.
 
 For more information on string syntaxes and escaping, refer to [String values and regular expressions](/ruleset-engine/rules-language/values/#string-values-and-regular-expressions).
 
 ### Why is my regular expression pattern not working?
 
-If you are using a regular expression, it is recommended that you test it with a tool such as [Regular Expressions 101](https://regex101.com/?flavor=rust\&regex=) or [Rustexp](https://rustexp.lpil.uk).
+If you are using a regular expression, it is recommended that you test it with a tool such as [Regular Expressions 101](https://regex101.com/?flavor=rust&regex=) or [Rustexp](https://rustexp.lpil.uk).
+
+### Why are some rules bypassed when I did not create an exception?
+
+If you have [SSL/TLS certificates](/ssl/) managed by Cloudflare, every time a certificate is issued or renewed, a [domain control validation (DCV)](/ssl/edge-certificates/changing-dcv-method/dcv-flow/) must happen. When a certificate is in `pending_validation` state and there are valid DCV tokens in place, some Cloudflare security features such as [custom rules](/waf/custom-rules/) and [WAF Managed Rules](/waf/managed-rules/) will be automatically disabled on specific DCV paths (for example, `/.well-known/pki-validation/` and `/.well-known/acme-challenge/`).
+
+### Why is Cloudflare blocking a specific IP address?
+
+Cloudflare may block an IP address due to various reasons:
+
+- **Web Application Firewall (WAF) mitigation actions**: The Cloudflare WAF protects websites from various online threats, including malicious traffic, DDoS attacks, and common vulnerabilities. If your IP address is associated with suspicious or malicious activity, it might trigger the WAF and block requests.
+
+- **High security settings**: The website owner might have set their Cloudflare security settings to a high level, making the filtering of incoming traffic stricter. In this situation, even legitimate users may get blocked or have to solve challenges.
+
+- **Excessive requests**: Cloudflare may block an IP address if it detects an unusually high number of requests in a short period, in which case it will rate limiting subsequent requests. This is a protective measure against potential abuse or attacks.
+
+- **Traffic from malicious bots**: Cloudflare employs bot detection mechanisms to distinguish between legitimate users and automated bots. If traffic from your IP address behaves like traffic from a malicious bot, it could get blocked.
+
+- **Blocklisted IPs**: Cloudflare might block IP addresses listed on public blocklists due to their association with known malicious activities.
+
+If your IP address is blocked, try the following:
+
+- **Check Cloudflare Security Events**: Use the [Security Events](/waf/analytics/security-events/paid-plans/) log to check for specific reasons your IP might be getting blocked. Look for details on the type of threat or activity that triggered the block.
+
+- **Contact the website owner**: If you are a legitimate user and your IP is wrongly blocked, contact the website owner or administrator. They may be able to allowlist your IP or investigate the issue further.
+
+- **Verify your own website traffic**: Check for abnormal activity. If you manage a website behind Cloudflare, ensure that your site's traffic is legitimate and not triggering security measures inadvertently.
+
+- **Check your IP reputation**: Verify whether your IP address is listed on public blocklists, such as [Project Honey Pot](https://projecthoneypot.org/). If so, take steps to address any issues that may have led to the listing.
+
+- **Adjust your security settings**: If you are a website owner using Cloudflare, consider adjusting security settings to find the right balance between protection and accessibility.
+
+## Bots
+
+### How does the WAF handle traffic from known bots?
+
+#### Caution about potentially blocking bots
+
+When you create a WAF custom rule with a _Block_, _Interactive Challenge_, _JS Challenge_, or _Managed Challenge (Recommended)_ action, you might unintentionally block traffic from known bots. Specifically, this might affect search engine optimization (SEO) and website monitoring when trying to enforce a mitigation action based on URI, path, host, ASN, or country.
+
+Refer to [How do I exclude certain requests from being blocked or challenged?](#how-do-i-exclude-certain-requests-from-being-blocked-or-challenged).
+
+#### Bots currently detected
+
+[Cloudflare Radar](https://radar.cloudflare.com/verified-bots) lists a **sample** of known bots that the WAF currently detects. When traffic comes from these bots and others not listed, the `cf.client.bot` field is set to `true`.
+
+To submit a friendly bot to be verified, go to the [**Verified bots**](https://radar.cloudflare.com/traffic/verified-bots) page in Cloudflare Radar and select **Add a bot**.
+
+For more information on verified bots, refer to [Bots](/bots/concepts/bot/).
+
+:::note
+
+There is no functional difference between known and verified bots. However, the known bots field (`cf.client.bot`) is available for all customers, while the verified bots field (`cf.bot_management.verified_bot`) is available for Enterprise customers.
+:::
+
+## Challenges
+
+### Why am I being challenged on a Cloudflare-protected site?
+
+Cloudflare issues challenges to website visitors to protect against malicious activity such as bot attacks and DDoS attacks. Key reasons include:
+
+- **High Threat Score**: IP addresses with a high-risk score trigger challenges.
+- **IP reputation**: If your IP has a history of suspicious activity, it may be flagged.
+- **Bot detection**: Automated traffic resembling bots is filtered by Cloudflare.
+- **Web Application Firewall (WAF) custom rules**: Site owners may set rules targeting specific regions or user agents.
+- **Browser Integrity Check**: Cloudflare verifies that browsers meet certain standards.
+- **Challenge Passage**: Technologies like Privacy Pass reduce the frequency of repeated challenges.
+
+To avoid repeated challenges, ensure your browser is up to date, disable any privacy tools that might block standard browser headers, or use a different network connection if your current one has a poor IP reputation.
 
 ### How do I exclude certain requests from being blocked or challenged?
 
@@ -35,8 +100,8 @@ In certain situations you want to enforce a blocking or challenging action but m
 
 Cloudflare supports two methods of allowing requests using WAF custom rules:
 
-* Exclude a type of request from being blocked or challenged in a custom rule by updating the rule expression, for example adding an exclusion based on IP address, ASN, or country.
-* Create a separate custom rule with a [*Skip* action](/waf/custom-rules/skip/). This skip rule must appear before the rule with the block/challenge action in the rules list.
+- Exclude a type of request from being blocked or challenged in a custom rule by updating the rule expression, for example adding an exclusion based on IP address, ASN, or country.
+- Create a separate custom rule with a [_Skip_ action](/waf/custom-rules/skip/). This skip rule must appear before the rule with the block/challenge action in the rules list.
 
 The examples below illustrate a few possible approaches.
 
@@ -57,11 +122,14 @@ Exclude multiple IP addresses from a blocking/challenging rule that assesses Thr
 - Two rules to skip remaining custom rules for specific IPs and block the rest.
 
   1. Rule 1:
-    - Expression: `ip.src in {192.0.2.1 198.51.100.42 203.0.113.0/24}`
-    - Action: Skip > All remaining custom rules
+
+     - Expression: `ip.src in {192.0.2.1 198.51.100.42 203.0.113.0/24}`
+     - Action: Skip > All remaining custom rules
+
   2. Rule 2:
-    - Expression: `(http.host eq "example.com" and cf.threat_score > 5)`
-    - Action: Block (or a challenge action)
+
+     - Expression: `(http.host eq "example.com" and cf.threat_score > 5)`
+     - Action: Block (or a challenge action)
 
 **Example 2**
 
@@ -80,42 +148,14 @@ Block Amazon Web Services (AWS) and Google Cloud Platform (GCP) because of large
 - Two rules to skip remaining custom rules for specific IPs and block the rest.
 
   1. Rule 1:
-    - Expression: `ip.src in {192.0.2.1 198.51.100.42 203.0.113.0/24}`
-    - Action: Skip > All remaining custom rules
+
+     - Expression: `ip.src in {192.0.2.1 198.51.100.42 203.0.113.0/24}`
+     - Action: Skip > All remaining custom rules
+
   2. Rule 2:
-    - Expression: `(http.host eq "example.com" and cf.threat_score > 5)`
-    - Action: Block (or a challenge action)
 
-### Why are some rules bypassed when I did not create an exception?
-
-
-If you have [SSL/TLS certificates](/ssl/) managed by Cloudflare, every time a certificate is issued or renewed, a [domain control validation (DCV)](/ssl/edge-certificates/changing-dcv-method/dcv-flow/) must happen. When a certificate is in `pending_validation` state and there are valid DCV tokens in place, some Cloudflare security features such as [custom rules](/waf/custom-rules/) and [WAF Managed Rules](/waf/managed-rules/) will be automatically disabled on specific DCV paths (for example, `/.well-known/pki-validation/` and `/.well-known/acme-challenge/`).
-
-## Bots
-
-### How does the WAF handle traffic from known bots?
-
-#### Caution about potentially blocking bots
-
-When you create a WAF custom rule with a *Block*, *Interactive Challenge*, *JS Challenge*, or *Managed Challenge (Recommended)* action, you might unintentionally block traffic from known bots. Specifically, this might affect search engine optimization (SEO) and website monitoring when trying to enforce a mitigation action based on URI, path, host, ASN, or country.
-
-Refer to [How do I exclude certain requests from being blocked or challenged?](#how-do-i-exclude-certain-requests-from-being-blocked-or-challenged).
-
-#### Bots currently detected
-
-[Cloudflare Radar](https://radar.cloudflare.com/verified-bots) lists a **sample** of known bots that the WAF currently detects. When traffic comes from these bots and others not listed, the `cf.client.bot` field is set to `true`.
-
-To submit a friendly bot to be verified, go to the [**Verified bots**](https://radar.cloudflare.com/traffic/verified-bots) page in Cloudflare Radar and select **Add a bot**.
-
-For more information on verified bots, refer to [Bots](/bots/concepts/bot/).
-
-:::note
-
-There is no functional difference between known and verified bots. However, the known bots field (`cf.client.bot`) is available for all customers, while the verified bots field (`cf.bot_management.verified_bot`) is available for Enterprise customers. 
-:::
-
-
-## Challenges
+     - Expression: `(http.host eq "example.com" and cf.threat_score > 5)`
+     - Action: Block (or a challenge action)
 
 ### Do the Challenge actions support content types other than HTML (for example, AJAX or XHR requests)?
 
@@ -135,10 +175,10 @@ Users do not complete all challenges. Cloudflare issues challenges that are neve
 
 There are multiple reasons for this:
 
-* Users give up on a challenge.
-* Users try to solve a challenge but cannot provide an answer.
-* Users keep refreshing the challenge, but never submit an answer.
-* Cloudflare receives a malformed challenge answer.
+- Users give up on a challenge.
+- Users try to solve a challenge but cannot provide an answer.
+- Users keep refreshing the challenge, but never submit an answer.
+- Cloudflare receives a malformed challenge answer.
 
 ### Why do I have matches for a firewall rule that was not supposed to match the request?
 
@@ -146,4 +186,4 @@ Make sure you are looking at the correct request.
 
 Only requests that triggered a challenge will match the request parameters of the rule. Subsequent requests with a `[js]challengeSolved` or `[js]challengeFailed` action may not match the parameters of the rule — for example, the bot score may have changed because the user solved a challenge.
 
-The "solved" and "failed" actions are informative actions about a previous request that matched a rule. These actions state that "previously a rule had matched a request with the action set to *Interactive Challenge* or *JS Challenge* and now that challenge was answered."
+The "solved" and "failed" actions are informative actions about a previous request that matched a rule. These actions state that "previously a rule had matched a request with the action set to _Interactive Challenge_ or _JS Challenge_ and now that challenge was answered."

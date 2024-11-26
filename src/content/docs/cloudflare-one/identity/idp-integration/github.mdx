@@ -1,12 +1,6 @@
 ---
 pcx_content_type: how-to
 title: GitHub
-sidebar:
-  order: 11
-head:
-  - tag: title
-    content: GitHub - IdP Integration
-
 ---
 
 Cloudflare Zero Trust allows your team to connect to your applications using their GitHub login. Administrators can build rules for specific individuals or using GitHub organizations. You do not need to have a GitHub organization to use the integration.
@@ -32,6 +26,7 @@ To configure GitHub access in both GitHub and Cloudflare Zero Trust:
    You can find your team name in Zero Trust under **Settings** > **Custom Pages**.
 
 5. In the GitHub **Authorization callback URL** field, enter the following URL:
+
    ```txt
    https://<your-team-name>.cloudflareaccess.com/cdn-cgi/access/callback
    ```
@@ -59,11 +54,11 @@ If you have GitHub two-factor authentication enabled, you will need to first log
 
 ```json
 {
-  "config": {
-    "client_id": "<your client id>",
-    "client_secret": "<your client secret>"
-  },
-  "type": "github",
-  "name": "my example idp"
+	"config": {
+		"client_id": "<your client id>",
+		"client_secret": "<your client secret>"
+	},
+	"type": "github",
+	"name": "my example idp"
 }
 ```

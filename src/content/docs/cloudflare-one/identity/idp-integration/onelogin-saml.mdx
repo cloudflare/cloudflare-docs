@@ -1,16 +1,13 @@
 ---
 pcx_content_type: how-to
 title: OneLogin (SAML)
-sidebar:
-  order: 20
-
 ---
 
 OneLogin provides SSO identity management. Cloudflare Access supports OneLogin as an SAML identity provider.
 
-## Set up OneLogin (SAML)
+## Set up OneLogin as a SAML provider
 
-To set up OneLogin (SAML) as your identity provider:
+## 1. Create an application in OneLogin
 
 1. Log in to your OneLogin admin portal.
 
@@ -50,17 +47,21 @@ To set up OneLogin (SAML) as your identity provider:
 
     ![OneLogin SAML Application SSO interface with SAML2.0 sign on method, Issuer URL, and X.509 Certificate](~/assets/images/cloudflare-one/identity/onelogin/onelogin-saml-7.png)
 
-15. In Zero Trust, go to **Settings** > **Authentication**.
+### 2. Add OneLogin to Zero Trust
 
-16. Under **Login methods**, select **Add new**.
+1. In [Zero Trust](https://one.dash.cloudflare.com/), go to **Settings** > **Authentication**.
 
-17. Select SAML.
+2. Under **Login methods**, select **Add new**.
 
-18. Input the details from your OneLogin account in the fields. We suggest that you name the attributes the same in both OneLogin and Cloudflare.
+3. Select **SAML**.
 
-    If other headers and SAML attribute names were added to OneLogin, be sure to add them to Cloudflare under **SAML attributes** and **SAML header attributes** in the **Optional configurations** menu.
+4. Input the details from your OneLogin account in the fields.
 
-19. Select **Save**.
+5. (Optional) To enable SCIM, refer to [Synchronize users and groups](/cloudflare-one/identity/idp-integration/generic-saml/#synchronize-users-and-groups).
+
+6. (Optional) Under **Optional configurations**, configure [additional SAML options](/cloudflare-one/identity/idp-integration/generic-saml/#optional-configurations). If you added other SAML headers and attribute names to OneLogin, be sure to add them to Cloudflare.
+
+7. Select **Save**.
 
 To test that your connection is working, go to **Authentication** > **Login methods** and select **Test** next to the login method you want to test.
 
@@ -84,15 +85,15 @@ To add a metadata file to your OneLogin SAML configuration:
 
 ```json
 {
-  "config": {
-    "issuer_url": "https://app.onelogin.com/saml/metadata/1b84ee45-d4fa-4373-8853-abz438942123",
-    "sso_target_url": "https://sandbox.onelogin.com/trust/saml2/http-post/sso/123456",
-    "attributes": ["email"],
-    "email_attribute_name": "",
-    "sign_request": false,
-    "idp_public_cert": "MIIDpDCCAoygAwIBAgIGAV2ka+55MA0GCSqGSIb3DQEBCwUAMIGSMQswCQYDVQQGEwJVUzETMBEG\nA1UEC.....GF/Q2/MHadws97cZg\nuTnQyuOqPuHbnN83d/2l1NSYKCbHt24o"
-  },
-  "type": "saml",
-  "name": "onelogin saml example"
+	"config": {
+		"issuer_url": "https://app.onelogin.com/saml/metadata/1b84ee45-d4fa-4373-8853-abz438942123",
+		"sso_target_url": "https://sandbox.onelogin.com/trust/saml2/http-post/sso/123456",
+		"attributes": ["email"],
+		"email_attribute_name": "",
+		"sign_request": false,
+		"idp_public_cert": "MIIDpDCCAoygAwIBAgIGAV2ka+55MA0GCSqGSIb3DQEBCwUAMIGSMQswCQYDVQQGEwJVUzETMBEG\nA1UEC.....GF/Q2/MHadws97cZg\nuTnQyuOqPuHbnN83d/2l1NSYKCbHt24o"
+	},
+	"type": "saml",
+	"name": "onelogin saml example"
 }
 ```

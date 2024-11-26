@@ -1,0 +1,65 @@
+---
+pcx_content_type: how-to
+title: Post-quantum between Cloudflare and origin servers
+sidebar:
+  order: 3
+  label: PQC to your origin
+head: []
+description: Learn about post-quantum cryptography in connections from Cloudflare to your origin servers.
+---
+
+import { Example } from "~/components";
+
+As explained in [About PQC](/ssl/post-quantum-cryptography/), Cloudflare has deployed support for hybrid key agreements, which includes both the most common key agreement for TLS 1.3, X25519, and the post-quantum secure ML-KEM.
+
+With X25519, the [ClientHello](https://www.cloudflare.com/learning/ssl/what-happens-in-a-tls-handshake/) almost always fits within one network packet. However, with the addition of ML-KEM, the ClientHello is typically split across two packets.
+
+This poses a question of how the origin servers - as well as other middleboxes (routers, load balancers, etc) - will handle this change in behavior. Although allowed by the TLS 1.3 standard ([RFC 8446](https://www.rfc-editor.org/rfc/rfc8446.html)), a split ClientHello risks not being handled well due to [protocol ossification](https://en.wikipedia.org/wiki/Protocol_ossification) and implementation bugs. Refer to our [blog post](https://blog.cloudflare.com/post-quantum-to-origins/) for details.
+
+## ClientHello from Cloudflare
+
+To reduce the risk of any issues when connecting to servers that are not ready for hybrid key agreements, Cloudflare leverages HelloRetryRequest. This means that, instead of sending [X25519MLKEM768](/ssl/post-quantum-cryptography/#hybrid-key-agreement) immediately as a keyshare [^1], Cloudflare will by default only advertise support for it.
+
+If the origin supports post-quantum hybrid key agreement, it can use HelloRetryRequest to request it from Cloudflare.
+
+## Set up
+
+### Cloudflare zone settings
+
+The method described above is the one Cloudflare uses to support post-quantum to all outbound connections. However, if your origin server supports PQC and prefers it, you can use the [API](/api/operations/zone-cache-settings-change-origin-post-quantum-encryption-setting) to adjust your Cloudflare zone settings and avoid the extra round trip.
+
+It is also possible to opt out of PQC using the same API endpoint.
+
+:::note
+This setting affects all outbound connections from the zone you specify in the API call, including `fetch()` requests made by [Workers](/workers/) on your zone.
+:::
+
+```bash
+curl --request PUT \
+"https://api.cloudflare.com/client/v4/zones/{zone_id}/cache/origin_post_quantum_encryption" \
+--header "Authorization: Bearer <API_TOKEN>" \
+--header "Content-Type: application/json" \
+--data '{
+  "value": "<YOUR_CHOSEN_SETTING>"
+}'
+```
+
+The possible values are:
+- `supported` (most compatible): Advertise support for post-quantum key agreement, but send a classical keyshare in the first ClientHello.
+- `preferred` (most performant): Send a post-quantum keyshare in the first ClientHello. Cloudflare continues to advertise support for classical keyshares as well.
+- `off`: Do not send nor advertise support for post-quantum key agreement to the origin.
+
+### Origin server
+
+To make sure that your origin server prefers the post-quantum key agreement, use the `bssl` tool of [BoringSSL](https://github.com/google/boringssl):
+
+<Example>
+```bash
+$ bssl client -connect (your server):443 -curves X25519MLKEM768
+```
+
+Verify that the `ECDHE curve` in the handshake output indicates `X25519MLKEM768`.
+
+</Example>
+
+[^1]: When, to remove a round trip, a client makes a guess of what the server supports.

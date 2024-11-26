@@ -1,0 +1,26 @@
+---
+pcx_content_type: concept
+title: Builds
+description: Use Workers Builds to integrate with Git and automatically build and deploy your Worker when you merge a pull request
+sidebar:
+  group:
+    badge:
+      text: Beta
+---
+
+Workers Builds allows you to connect an existing Worker to a GitHub or GitLab repository to set up automatic builds and deployments for your development workflow. Creating a new Worker from a git repository will be supported soon.
+
+## Get Started
+
+To set up your Git integration with Workers:
+
+1. **Select your Worker** in the [Workers & Pages dashboard](https://dash.cloudflare.com) and navigate to **Settings > Build**
+2. **Select the Git provider** you'd like to connect to by clicking "Connect". Follow the prompts to install the Cloudflare application on your git account.
+3. **Configure your build settings** by selecting your desired git repository, branch, and [configuring](/workers/ci-cd/builds/configuration/) a deploy command and optionally a build command.
+4. **Push a commit** to your git repository to trigger your first build and deploy.
+
+## View Build Details
+
+Once a build is in-progress, you can monitor its build logs and view build history by navigating to **View build history** at the bottom of the deployments tab of your Worker.
+
+If the build is successful, you can also view the build details by selecting **View build** in the associated new [version](/workers/configuration/versions-and-deployments/) created under **Version History**.

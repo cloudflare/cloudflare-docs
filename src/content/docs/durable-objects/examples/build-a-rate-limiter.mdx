@@ -11,13 +11,13 @@ description: Build a rate limiter using Durable Objects and Workers.
 
 ---
 
-import { TabItem, Tabs } from "~/components"
+import { TabItem, Tabs, GlossaryTooltip } from "~/components"
 
-This example shows how to build a rate limiter using Durable Objects and Workers that can be used to protect upstream resources, including third-party APIs that your application relies on and/or services that may be costly for you to invoke.
+This example shows how to build a rate limiter using <GlossaryTooltip term="Durable Object">Durable Objects</GlossaryTooltip> and Workers that can be used to protect upstream resources, including third-party APIs that your application relies on and/or services that may be costly for you to invoke.
 
 This example also discusses some decisions that need to be made when designing a system, such as a rate limiter, with Durable Objects.
 
-The Worker creates a `RateLimiter` Durable Object on a per IP basis to protect upstream resources. IP based rate limiting can be effective without negatively impacting latency because any given IP will remain within a small geographic area colocated with the `RateLimiter` Durable Object instance. Furthermore, throughput is also improved because each IP gets its own Durable Object.
+The Worker creates a `RateLimiter` Durable Object on a per IP basis to protect upstream resources. IP based rate limiting can be effective without negatively impacting latency because any given IP will remain within a small geographic area colocated with the `RateLimiter` Durable Object. Furthermore, throughput is also improved because each IP gets its own Durable Object.
 
 It might seem simpler to implement a global rate limiter, `const id = env.RATE_LIMITER.idFromName("global");`, which can provide better guarantees on the request rate to the upstream resource. However:
 
@@ -35,7 +35,7 @@ The Durable Object uses a token bucket algorithm to implement rate limiting. The
 
 This example uses Durable Object's [Alarms API](/durable-objects/api/alarms) to schedule the Durable Object to be woken up at a time in the future.
 
-* When the alarm's scheduled time comes, the `alarm()` handler method is called, and in this case, the alarm will add a token to the "Bucket".
+* When the alarm's scheduled time comes, the `alarm()` handler method is called, and in this case, the <GlossaryTooltip term="alarm">alarm</GlossaryTooltip> will add a token to the "Bucket".
 * The implementation is made more efficient by adding tokens in bulk (as specified by milliseconds\_for\_updates) and preventing the alarm handler from being invoked every millisecond. More frequent invocations of Durable Objects will lead to higher invocation and duration charges.
 
 The first implementation of a rate limiter is below:
@@ -205,6 +205,8 @@ While the token bucket algorithm is popular for implementing rate limiting and u
 <TabItem label="JavaScript" icon="seti:javascript">
 
 ```js
+import { DurableObject } from "cloudflare:workers";
+
 // Durable Object
 export class RateLimiter extends DurableObject {
   static milliseconds_per_request = 1;
@@ -232,6 +234,8 @@ export class RateLimiter extends DurableObject {
 <TabItem label="TypeScript" icon="seti:typescript">
 
 ```ts title="index.ts"
+import { DurableObject } from "cloudflare:workers";
+
 // Durable Object
 export class RateLimiter extends DurableObject {
   static milliseconds_per_request = 1;

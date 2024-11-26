@@ -24,7 +24,7 @@ The table below provides a summary of the Data Localization Suite product's beha
 | Cache Reserve          | ⚫️              | 🚧                 | ✅ [^29]                 |
 | DNS                    | ⚫️              | 🚧 [^33]           | 🚧 [^32]                 |
 | HTTP/3 (with QUIC)     | ⚫️              | ✘                  | ⚫️                       |
-| Image Resizing         | ✅              | ✘                  | 🚧 [^1]                  |
+| Image Resizing         | ✅              | ✅ [^6]           | 🚧 [^1]                  |
 | Load Balancing         | ✅              | ✅                 | 🚧 [^1]                  |
 | Onion Routing          | ✘               | ✘                  | ✘                        |
 | Orange-to-Orange (O2O) | ✘               | ✘                  | ✘                        |
@@ -59,15 +59,18 @@ The table below provides a summary of the Data Localization Suite product's beha
 
 | Product                      | Geo Key Manager | Regional Services | Customer Metadata Boundary |
 | ---------------------------- | --------------- | ----------------- | -------------------------- |
-| Cloudflare Images            | ⚫️              | ✘                 | ✘                         |
+| Cloudflare Images            | ⚫️              | ✅ [^36]          | 🚧 [^35]                    |
 | Cloudflare Pages             | ✘               | ✅ [^11]          | 🚧 [^1]                   |
 | Durable Objects              | ⚫️              | ✅ [^7]           | 🚧 [^1]                   |
 | Email Routing                | ⚫️              | ⚫️                | ✅                        |
 | R2                           | ✅ [^27]        | ✅ [^8]           | ✅ [^28]                  |
-| Stream                       | ⚫️              | ✘                 | ✘                         |
+| Smart Placement              | ⚫️              | ✘                 | ✘                         |
+| Stream                       | ⚫️              | ✘                 | 🚧 [^1]                    |
 | Workers (deployed on a Zone) | ✅              | ✅                | 🚧 [^1]                   |
-| Workers KV                   | ⚫️              | ✘                 | ✘                         |
-| Workers.dev                  | ✘               | ✘                 | ✘                         |
+| Workers AI                   | ⚫️              | ✘                 | ✅                        |
+| Workers KV                   | ⚫️              | ✘                 | ✅ [^34]                   |
+| Workers.dev                  | ✘              | ✘                 | ✘                         |
+
 
 ***
 
@@ -111,6 +114,7 @@ The table below provides a summary of the Data Localization Suite product's beha
 [^3]: Adaptive DDoS Protection is only supported for US CMB.
 [^4]: API shield will not yet work with Customer Metadata Boundary enabled outside of US region.
 [^5]: Some advanced Enterprise features, including the [Anomaly Detection engine](/bots/concepts/bot-score/#anomaly-detection), are not available.
+[^6]: Only when using a Custom Domain set to a region, either through Workers or [Transform Rules](/images/transform-images/serve-images-custom-paths/) within the same zone.
 [^7]: [Jurisdiction restrictions for Durable Objects](/durable-objects/reference/data-location/#restrict-durable-objects-to-a-jurisdiction).
 [^8]: Only when using a [Custom Domain](/r2/buckets/public-buckets/#connect-a-bucket-to-a-custom-domain) set to a region and using [jurisdictions with the S3 API](/r2/reference/data-location/#using-jurisdictions-with-the-s3-api).
 [^9]: Argo cannot be used with Regional Services.
@@ -135,3 +139,6 @@ The table below provides a summary of the Data Localization Suite product's beha
 [^31]: DLP is part of Gateway HTTP, however, [DLP datasets](/cloudflare-one/policies/data-loss-prevention/datasets/#use-dlp-datasets) are not available outside US region when using Customer Metadata Boundary.
 [^32]: Dashboard Analytics are empty when using CMB outside the US region. Use Logpush instead.
 [^33]: [Outgoing zone transfers](/dns/zone-setups/zone-transfers/cloudflare-as-primary/) will carry Earth region proxy IPs, thus making regional service dysfunctional when non-Cloudflare nameservers respond to the DNS queries.
+[^34]: Jurisdictional Restrictions (storage) for Workers KV pairs is not supported today.
+[^35]: Logs / Analytics not available outside US region when using Customer Metadata Boundary. Jurisdictional Restrictions (storage) options are not supported today.
+[^36]: Only when using a [Custom Domain](/images/manage-images/serve-images/serve-from-custom-domains/) set to a region.

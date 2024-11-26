@@ -5,6 +5,18 @@ productLink: "/workers-ai/"
 productArea: Developer platform
 productAreaLink: /workers/platform/changelog/platform/
 entries:
+  - publish_date: "2024-09-26"
+    title: Workers AI Birthday Week 2024 announcements
+    description: |-
+      - Meta Llama 3.2 1B, 3B, and 11B vision is now available on Workers AI
+      - `@cf/black-forest-labs/flux-1-schnell` is now available on Workers AI
+      - Workers AI is fast! Powered by new GPUs and optimizations, you can expect faster inference on Llama 3.1, Llama 3.2, and FLUX models.
+      - No more neurons. Workers AI is moving towards [unit-based pricing](/workers-ai/platform/pricing)
+      - Model pages get a refresh with better documentation on parameters, pricing, and model capabilities
+      - Closed beta for our Run Any* Model feature, [sign up here](https://forms.gle/h7FcaTF4Zo5dzNb68)
+      - Check out the [product announcements blog post](https://blog.cloudflare.com/workers-ai) for more information
+      - And the [technical blog post](https://blog.cloudflare.com/workers-ai/making-workers-ai-faster) if you want to learn about how we made Workers AI fast
+
   - publish_date: "2024-07-23"
     title: Meta Llama 3.1 now available on Workers AI
     description: |-

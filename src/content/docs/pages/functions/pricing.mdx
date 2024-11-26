@@ -30,20 +30,4 @@ On both free and paid plans, requests to static assets are free and unlimited. A
 
 Requests to your Pages Functions count towards your quota for the Workers Free plan. For example, you could use 50,000 Functions requests and 50,000 Workers requests to use your full 100,000 daily request usage. The free plan daily request limit resets at midnight UTC.
 
-There are two modes in Project Settings that determine how a Function will behave once the daily request limit has been reached: 1) Fail open and 2) Fail closed.
-
-### Fail open
-
-Once the daily request limit has been reached, Projects in fail open mode will bypass the Function and prevent it from operating on incoming traffic. Incoming requests will behave as if there was no Function, and pass through to the site's static assets. This is the default configuration for all Pages projects.
-
-### Fail closed
-
-Once the daily request limit has been reached, Projects in fail closed mode will display a Cloudflare 1027 error page to visitors, signifying the Function has been temporarily disabled. Cloudflare recommends this option if your Function is performing security related tasks.
-
-:::note
-
-
-The default configuration for all Pages projects is to Fail open. Fail closed can be configured per project by navigating to the Project Settings page.
-
-
 :::

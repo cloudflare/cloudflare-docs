@@ -1,0 +1,29 @@
+---
+title: Find BCC address and add domain
+pcx_content_type: how-to
+sidebar:
+  order: 2
+---
+
+import { Render } from "~/components"
+
+:::caution[Area 1 has been renamed]
+<Render file="rename-area1-to-ces" />
+:::
+
+To set up Email Security (formerly Area 1) for Gmail:
+
+1. Log in to the [Email Security (formerly Area 1) dashboard](https://horizon.area1security.com/).
+2. Select the question mark, where you will be able to find your BCC address.
+3. Once you found your address, select **Settings** (the gear icon), then select **New Domain**.
+4. Fill in the information needed to add your domain:
+  - **Domain**: Enter the domain you want to set up BCC from Google.
+  - **Configured As**: Select Hops, enter `2`.
+  - **Forwarding To**: Enter `google.com`.
+  - **Outbound TLS**: Select **Forward all messages over TLS**.
+  - **Quarantine policy**: Ensure no policy is selected.
+5. Select **Publish Domain**.
+
+## Next steps
+
+Now that you have found your BCC address and added your domain, continue with [Add BCC rules](/email-security/deployment/api/setup/gsuite-bcc-setup/bcc-rules-to-area1/) to add BCC rules to Email Security.

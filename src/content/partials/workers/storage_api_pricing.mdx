@@ -1,0 +1,57 @@
+---
+{}
+
+---
+
+The Durable Objects [Storage API](/durable-objects/api/storage-api) is only accessible from within Durable Objects.
+
+Durable Objects do not have to use the Storage API, but if your code does call methods on `ctx.storage`, it will incur additional charges.
+
+Pricing depends on whether a Durable Object class has default, key-value storage backend or opt-in [SQLite storage backend](/durable-objects/best-practices/access-durable-objects-storage/#sqlite-storage-backend).
+
+### Key-value storage backend
+
+|                                  | Workers Paid plan          |
+| -------------------------------- | -------------------------- |
+| Read request units<sup>1,2</sup> | 1 million, + $0.20/million |
+| Write request units<sup>3</sup>  | 1 million, + $1.00/million |
+| Delete requests<sup>4</sup>      | 1 million, + $1.00/million |
+| Stored data<sup>5</sup>          | 1 GB, + $0.20/ GB-month    |
+
+<sup>1</sup> A request unit is defined as 4 KB of data read or written. A request that writes or reads more than 4 KB will consume multiple units, for example, a 9 KB write will consume 3 write request units.
+
+<sup>2</sup>  List operations are billed by read request units, based on the amount of data examined. For example, a list request that returns a combined 80 KB of keys and values will be billed 20 read request units. A list request that does not return anything is billed for 1 read request unit.
+
+<sup>3</sup>  Each `setAlarm` is billed as a single write request unit.
+
+<sup>4</sup>  Delete requests are unmetered. For example, deleting a 100 KB value will be charged one delete request.
+
+<sup>5</sup>  Durable Objects will be billed for stored data until the data is removed. Once the data is removed, the object will be cleaned up automatically by the system.
+
+Requests that hit the [Durable Objects in-memory cache](/durable-objects/reference/in-memory-state/) or that use the [multi-key versions of `get()`/`put()`/`delete()` methods](/durable-objects/api/storage-api/) are billed the same as if they were a normal, individual request for each key.
+
+### SQLite storage backend
+
+:::note[SQLite in Durable Objects Beta]
+
+The new beta version of Durable Objects is available where each Durable Object has a private, embedded SQLite database. When deploying a new Durable Object class, users can [opt-in to a SQLite storage backend](/durable-objects/best-practices/access-durable-objects-storage/#sqlite-storage-backend) in order to access new [SQL API](/durable-objects/api/sql-storage/#exec).
+
+During the initial beta, Storage API billing is not enabled for Durable Object classes using SQLite storage backend. SQLite-backed Durable Objects will incur [charges for requests and duration](/durable-objects/platform/pricing/#billing-metrics). We plan to enable Storage API billing for Durable Objects using SQLite storage backend in the first half of 2025 after advance notice with the below pricing.
+
+You can introspect rows read and rows written using `cursor.rowsRead` and `cursor.rowsWritten` on the [cursor returned](/durable-objects/api/storage-api/#returns) by a SQL query and using [GraphQL analytics](/durable-objects/observability/graphql-analytics/#query-via-the-graphql-api). [`ctx.storage.sql.databaseSize`](/durable-objects/api/sql-storage/#sqldatabaseSize) returns the current SQL database size for a Durable Object.
+
+:::
+
+For [Durable Objects classes with SQLite storage backend](/durable-objects/reference/durable-objects-migrations/#enable-sqlite-storage-backend-on-new-durable-object-class-migration) via `ctx.storage.sql` the following pricing is used instead:
+
+|                             | Workers Paid plan          |
+| ----------------------------| -------------------------- |
+| Rows reads <sup>1,2</sup>   | First 25 billion / month included + $0.001 / million rows |
+| Rows written <sup>1,2</sup> | First 50 million / month included + $1.00 / million rows |
+| SQL Stored data             | 5 GB-month, + $0.20/ GB-month |
+
+<sup>1</sup> Rows read and rows written included limits and rates match D1, Cloudflare's serverless SQL database, [pricing](/d1/platform/pricing/).
+
+<sup>2</sup> Key-value methods like `get()`, `put()`, `delete()`, or `list()` store and query data in a hidden SQLite table and are billed as rows read and rows written.
+
+<sup>3</sup>  Each `setAlarm` is billed as a single row written.

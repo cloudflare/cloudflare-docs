@@ -81,22 +81,6 @@ After adding `sub2.example.com` to Cloudflare DNS
 // -> Can be resolved by Fetch API
 ```
 
-## Custom ports
-
-For Workers subrequests, when a Worker is deployed, custom ports are ignored and requests are sent to the scheme's default port, such as `443` for HTTPS. Note that when developing a Worker locally, or from within the Cloudflare dashboard using Quick Edit, custom ports are respected and allowed.
-
-For example:
-
-```js
-await fetch('https://example.com:1234/foo')
-```
-
-is the equivalent of:
-
-```js
-await fetch('https://example.com/foo')
-```
-
 ## Fetch to IP addresses
 
 For Workers subrequests, requests can only be made to URLs, not to IP addresses directly. To overcome this limitation [add a A or AAAA name record to your zone](https://developers.cloudflare.com/dns/manage-dns-records/how-to/create-dns-records/) and then fetch that resource.

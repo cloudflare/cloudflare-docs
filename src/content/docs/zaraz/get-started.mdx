@@ -1,0 +1,50 @@
+---
+pcx_content_type: get-started
+title: Get started
+sidebar:
+  order: 1
+---
+
+Before being able to use Zaraz, it is recommended that you proxy your website through Cloudflare. Refer to [Set up Cloudflare](/fundamentals/setup/) for more information. If you do not want to proxy your website through Cloudflare, refer to [Use Zaraz on domains not proxied by Cloudflare](/zaraz/advanced/domains-not-proxied/).
+
+## Add a third-party tool to your website
+
+You can add new third-party tools and load them into your website through the Cloudflare dashboard.
+
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login), and select your account and website.
+2. Select **Zaraz** from the side menu.
+3. If you have already added a tool before, select **Tools Configuration** > **Third-party tools** and click on **Add new tool**.
+4. Choose a tool from the tools catalog. Select **Continue** to confirm your selection.
+5. In **Set up**, configure the settings for your new tool. The information you need to enter will depend on the tool you choose. If you want to use any dynamic properties or variables, select the `+` sign in the drop-down menu next to the relevant field.
+6. In **Actions** setup the actions for your new tool. You should be able to select Pageviews, Events or E-Commerce [^1].
+7. Select **Save**. 
+
+[^1]: Some tools do not supported Automatic Actions, see the section about [Custom Actions](/zaraz/custom-actions) if the tool you are adding doesn't present Automatic Actions.
+
+## Events, triggers and actions
+
+Zaraz relies on events, triggers and actions to determine when to load the tools you need in your website, and what action they need to perform. The way you configure Zaraz and where you start largely depend on the tool you wish to use. When using a tool that supports Automatic Actions, this process is largely done for you. If the tool you are adding doesn't support Automatic Actions, read more about configuring [Custom Actions](/zaraz/custom-actions).
+
+When using Automatic Actions, the available actions are as follows:
+
+- **Pageviews** - for tracking every pageview on your website
+- **Events** - For tracking calls using the [`zaraz.track` Web API](/zaraz/web-api/track)
+- **E-commerce** - For tracking calls to [`zaraz.ecommerce` Web API](/zaraz/web-api/ecommerce)
+
+## Web API
+
+If you need to programmatically start actions in your tools, Cloudflare Zaraz provides a unified Web API to send events to Zaraz, and from there, to third-party tools. This Web API includes the `zaraz.track()`, `zaraz.set()` and `zaraz.ecommerce()` methods.
+
+[The Track method](/zaraz/web-api/track/) allows you to track custom events and actions on your website that might happen in real time. [The Set method](/zaraz/web-api/set/) is an easy shortcut to define a variable once and have it sent with every future Track call. [E-commerce](/zaraz/web-api/ecommerce/) is a unified method for sending e-commerce related data to multiple tools without needing to configure triggers and events. Refer to [Web API](/zaraz/web-api/) for more information.
+
+## Troubleshooting
+
+If you suspect that something is not working the way it should, or if you want to verify the operation of tools on your website, read more about [Debug Mode](/zaraz/web-api/debug-mode/) and [Zaraz Monitoring](/zaraz/monitoring/). Also, check the [FAQ](/zaraz/faq/) page to see if your question was already answered there.
+
+## Platform plugins
+
+Users and companies have developed plugins that make using Zaraz easier on specific platforms. We recommend checking out these plugins if you are using one of these platforms.
+
+### WooCommerce
+
+- [Beetle Tracking](https://beetle-tracking.com/) - Integrate Zaraz with your WordPress WooCommerce website to track e-commerce events with zero configuration. Beetle Tracking also supports consent management and other advanced features.

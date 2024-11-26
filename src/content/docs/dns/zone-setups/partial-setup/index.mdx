@@ -10,12 +10,13 @@ import { FeatureTable, Render } from "~/components"
 
 <Render file="partial-setup-definition" />
 
-Once you are on a partial setup, the actual resolution of your records to Cloudflare depends on `CNAME` records [added at your authoritative DNS provider](/dns/zone-setups/partial-setup/setup/#add-dns-records). Check your authoritative DNS provider to know which records are pointing to `{your-hostname}.cdn.cloudflare.net`.
+Once you are on a partial setup, the actual resolution of your records to Cloudflare depends on `CNAME` records [added at your authoritative DNS provider](/dns/zone-setups/partial-setup/setup/#3-add-dns-records). Check your authoritative DNS provider to know which records are pointing to `{your-hostname}.cdn.cloudflare.net`.
 
 ## How to
 
 * [Set up a partial domain](/dns/zone-setups/partial-setup/setup/)
-* [Convert a partial domain to a full domain](/dns/zone-setups/partial-setup/convert-partial-to-full/)
+* [Convert a partial setup to a full setup](/dns/zone-setups/conversions/convert-partial-to-full/)
+* [Convert a partial setup to a secondary setup](/dns/zone-setups/conversions/convert-partial-to-secondary/)
 
 ## Availability
 
@@ -36,3 +37,7 @@ If your authoritative DNS provider does not support CNAME Flattening, redirect i
 ### DDoS protection
 
 [DDoS protection](/ddos-protection/) for attacks against DNS infrastructure is only available for domains on [full setup](/dns/zone-setups/full-setup/). Domains on the partial setup are not using Cloudflare authoritative nameservers.
+
+### Domain ownership
+
+Enterprise customers can use [zone holds](/fundamentals/setup/account/account-security/zone-holds/) to prevent other teams in the organization from adding zones that are already active in another Cloudflare account. For partial setups, if the same zone is added to different accounts, the last account to complete the setup will gain ownership.

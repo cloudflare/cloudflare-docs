@@ -13,6 +13,6 @@ const { header, open } = props.parse(Astro.props);
 ---
 
 <details open={open}>
-    <summary set:html={marked.parse(header)} />
-    <slot />
+	<summary set:html={marked.parse(header)} />
+	<slot />
 </details>

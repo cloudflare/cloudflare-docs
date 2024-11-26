@@ -1,0 +1,15 @@
+name: Key Transparency Auditor
+
+product:
+  title: Key Transparency Auditor
+  url: /key-transparency/
+  group: Application security
+
+meta:
+  title: Key Transparency Auditor
+  description: Key Transparency Auditor docs
+  author: "@cloudflare"
+
+externals:
+  - title: Cloudflare homepage
+    url: https://cloudflare.com

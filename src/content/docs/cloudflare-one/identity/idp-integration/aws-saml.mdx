@@ -1,16 +1,13 @@
 ---
 pcx_content_type: how-to
 title: AWS IAM (SAML)
-sidebar:
-  order: 5
-
 ---
 
 AWS IAM Identity Center provides SSO identity management for users who interact with AWS resources (such as EC2 instances or S3 buckets). You can integrate AWS IAM with Cloudflare Zero Trust as a SAML identity provider, which allows users to authenticate to Zero Trust using their AWS credentials.
 
 ## Prerequisites
 
-* Admin access to an IAM Identity Center [organization instance](https://docs.aws.amazon.com/singlesignon/latest/userguide/identity-center-instances.html)
+- Admin access to an IAM Identity Center [organization instance](https://docs.aws.amazon.com/singlesignon/latest/userguide/identity-center-instances.html)
 
 ## Set up AWS IAM as a SAML provider
 
@@ -44,7 +41,7 @@ You can find your team name in Zero Trust under **Settings** > **Custom Pages**.
 
 11. Select **Submit**.
 
-12. Next, select the **Actions** dropdown menu and select *Edit attribute mappings*.
+12. Next, select the **Actions** dropdown menu and select _Edit attribute mappings_.
 
 13. For the `Subject` user attribute, enter `${user:email}`.
 
@@ -82,19 +79,17 @@ To [test](/cloudflare-one/identity/idp-integration/#test-idps-in-zero-trust) tha
 
 ```json
 {
-  "config": {
-      "issuer_url": "https://portal.sso.eu-central-1.amazonaws.com/saml/assertion/b2yJrC4kjy3ZAS0a2SeDJj74ebEAxozPfiURId0aQsal3",
-      "sso_target_url": "https://portal.sso.eu-central-1.amazonaws.com/saml/assertion/b2yJrC4kjy3ZAS0a2SeDJj74ebEAxozPfiURId0aQsal3",
-      "attributes": [
-          "email"
-      ],
-      "email_attribute_name": "email",
-      "sign_request": true,
-      "idp_public_certs": [
-          "MIIDpDCCAoygAwIBAgIGAV2ka+55MA0GCSqGSIb3DQEBCwUAMIGSMQswCQYDVQQGEwJVUzETMBEG\nA1UEC.....GF/Q2/MHadws97cZg\nuTnQyuOqPuHbnN83d/2l1NSYKCbHt24o"
-      ]
-  },
-  "type": "saml",
-  "name": "AWS IAM SAML example"
+	"config": {
+		"issuer_url": "https://portal.sso.eu-central-1.amazonaws.com/saml/assertion/b2yJrC4kjy3ZAS0a2SeDJj74ebEAxozPfiURId0aQsal3",
+		"sso_target_url": "https://portal.sso.eu-central-1.amazonaws.com/saml/assertion/b2yJrC4kjy3ZAS0a2SeDJj74ebEAxozPfiURId0aQsal3",
+		"attributes": ["email"],
+		"email_attribute_name": "email",
+		"sign_request": true,
+		"idp_public_certs": [
+			"MIIDpDCCAoygAwIBAgIGAV2ka+55MA0GCSqGSIb3DQEBCwUAMIGSMQswCQYDVQQGEwJVUzETMBEG\nA1UEC.....GF/Q2/MHadws97cZg\nuTnQyuOqPuHbnN83d/2l1NSYKCbHt24o"
+		]
+	},
+	"type": "saml",
+	"name": "AWS IAM SAML example"
 }
 ```

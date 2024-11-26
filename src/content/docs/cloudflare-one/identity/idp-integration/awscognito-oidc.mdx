@@ -1,16 +1,13 @@
 ---
 pcx_content_type: how-to
 title: Amazon Cognito
-sidebar:
-  order: 4
-
 ---
 
 Amazon Cognito provides SSO identity management for end users of web and mobile apps. You can integrate Amazon Cognito as an OIDC identity provider for Cloudflare Zero Trust.
 
 ## Prerequisites
 
-* An Amazon Cognito [user pool](https://docs.aws.amazon.com/cognito/latest/developerguide/tutorial-create-user-pool.html)
+- An Amazon Cognito [user pool](https://docs.aws.amazon.com/cognito/latest/developerguide/tutorial-create-user-pool.html)
 
 ## Set up Amazon Cognito (OIDC)
 
@@ -18,11 +15,11 @@ Amazon Cognito provides SSO identity management for end users of web and mobile 
 
 The following Amazon Cognito values are required to set up the integration:
 
-* App (client) ID
-* Client secret
-* Auth URL
-* Token URL
-* Certificate (key) URL
+- App (client) ID
+- Client secret
+- Auth URL
+- Token URL
+- Certificate (key) URL
 
 To retrieve those values:
 
@@ -36,9 +33,9 @@ To retrieve those values:
 
 5. Make note of the following [Amazon Cognito OIDC endpoints](https://docs.aws.amazon.com/cognito/latest/developerguide/federation-endpoints.html):
 
-   * **Auth URL**: `https://<your user pool domain>/oauth2/authorize`
-   * **Token URL**: `https://<your user pool domain>/oauth2/token`
-   * **Certificate (key) URL**: `https://cognito-idp.<region>.amazonaws.com/<your user pool ID>/.well-known/jwks.json` (This is the **Token signing key URL** shown in **User pool overview**.)
+   - **Auth URL**: `https://<your user pool domain>/oauth2/authorize`
+   - **Token URL**: `https://<your user pool domain>/oauth2/token`
+   - **Certificate (key) URL**: `https://cognito-idp.<region>.amazonaws.com/<your user pool ID>/.well-known/jwks.json` (This is the **Token signing key URL** shown in **User pool overview**.)
 
 6. Under **App client list**, select **Create app client**.
 
@@ -92,16 +89,16 @@ To [test](/cloudflare-one/identity/idp-integration/#test-idps-in-zero-trust) tha
 
 ```json
 {
-  "config": {
-    "client_id": "<your client id>",
-    "client_secret": "<your client secret>",
-    "auth_url": "https://<your user pool domain>/oauth2/authorize",
-    "token_url": "https://<your user pool domain>/oauth2/token",
-    "certs_url": "https://cognito-idp.<region>.amazonaws.com/<your user pool ID>/.well-known/jwks.json",
-    "scopes": ["openid", "email", "profile"],
-    "claims": ["sub", "cognito:username", "name", "cognito:groups"]
-  },
-  "type": "oidc",
-  "name": "Amazon Cognito example"
+	"config": {
+		"client_id": "<your client id>",
+		"client_secret": "<your client secret>",
+		"auth_url": "https://<your user pool domain>/oauth2/authorize",
+		"token_url": "https://<your user pool domain>/oauth2/token",
+		"certs_url": "https://cognito-idp.<region>.amazonaws.com/<your user pool ID>/.well-known/jwks.json",
+		"scopes": ["openid", "email", "profile"],
+		"claims": ["sub", "cognito:username", "name", "cognito:groups"]
+	},
+	"type": "oidc",
+	"name": "Amazon Cognito example"
 }
 ```

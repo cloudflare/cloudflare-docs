@@ -1,0 +1,62 @@
+---
+import {
+	SchemaTree,
+	type SchemaNode,
+	type RegularNode,
+	type SchemaTreeRefDereferenceFn,
+} from "@stoplight/json-schema-tree";
+import { type Dictionary } from "@stoplight/types";
+import { resolveInlineRef } from "@stoplight/json";
+import SchemaRow from "~/components/models/SchemaRow.astro";
+
+const { schema } = Astro.props;
+
+type ReferenceInfo = {
+	source: string | null;
+	pointer: string | null;
+};
+type ReferenceResolver = (
+	ref: ReferenceInfo,
+	propertyPath: string[] | null,
+	currentObject?: object,
+) => any;
+
+const defaultResolver: SchemaTreeRefDereferenceFn =
+	(contextObject: object): ReferenceResolver =>
+	({ pointer }, _, currentObject) => {
+		const activeObject = contextObject ?? currentObject;
+
+		if (pointer === null) {
+			return null;
+		}
+
+		if (pointer === "#") {
+			return activeObject;
+		}
+
+		const resolved = resolveInlineRef(
+			activeObject as Dictionary<string>,
+			pointer,
+		);
+
+		if (resolved) return resolved;
+
+		throw new ReferenceError(`Could not resolve '${pointer}`);
+	};
+
+const jsonSchemaTree = new SchemaTree(schema, {
+	mergeAllOf: true,
+	refResolver: defaultResolver,
+	maxRefDepth: 1,
+});
+
+jsonSchemaTree.populate();
+---
+
+<ul class="list-none m-0 p-0">
+	{
+		(jsonSchemaTree.root.children[0] as RegularNode).children?.map(
+			(node: SchemaNode) => <SchemaRow node={node} root />,
+		)
+	}
+</ul>

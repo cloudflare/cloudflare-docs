@@ -1,0 +1,103 @@
+---
+title: Leaked credentials detection
+pcx_content_type: concept
+sidebar:
+  order: 3
+  group:
+    label: Leaked credentials
+---
+
+The leaked credentials [traffic detection](/waf/detections/) scans incoming requests for previously leaked credentials (usernames and passwords) previously leaked from data breaches.
+
+:::note
+If you are currently using [Exposed Credentials Check](/waf/managed-rules/check-for-exposed-credentials/) (a previous implementation) and want to upgrade to leaked credentials detection, refer to our [upgrade guide](/waf/managed-rules/check-for-exposed-credentials/upgrade-to-leaked-credentials-detection/).
+:::
+
+## How it works
+
+Once enabled, leaked credentials detection will scan incoming HTTP requests for known authentication patterns from common web apps and any custom detection locations you configure.
+
+If Cloudflare detects authentication credentials in the request, those credentials are checked against a list of known leaked credentials. This list of credentials consists of Cloudflare-collected credentials, in addition to the [Have I been Pwned (HIBP)](https://haveibeenpwned.com) matched passwords dataset.
+
+Cloudflare will populate the existing [leaked credentials fields](#leaked-credentials-fields) based on the scan results. You can check these results in the [Security Analytics](/waf/analytics/security-analytics/) dashboard, and use these fields in rule expressions ([custom rules](/waf/custom-rules/) or [rate limiting rules](/waf/rate-limiting-rules/)) to protect your application against the usage of compromised credentials by your end users, and also against leaked credential attacks.
+
+In addition, leaked credentials detection provides a [managed transform](/rules/transform/managed-transforms/reference/#add-leaked-credentials-checks-header) that adds an `Exposed-Credential-Check` request header with a value indicating which field was leaked. For example, if both username and password were previously leaked, the header value will be `1`; if only the password was leaked, the value will be `4`.
+
+One common approach used in web applications when detecting the use of stolen credentials is to warn end users about the situation and ask them to update their password. You can do this based on the managed header received at your origin server.
+
+:::note
+Cloudflare may detect leaked credentials either because an attacker is performing a credential stuffing attack or because a legitimate end user is reusing a previously leaked password.
+:::
+
+## Availability
+
+For details on available features per plan, refer to [Availability](/waf/detections/#availability) in the traffic detections page.
+
+## Default scan locations
+
+Leaked credentials detection includes rules for identifying credentials in HTTP requests for the following well-known web applications:
+
+- Drupal
+- Joomla
+- Ghost
+- Magento
+- Plone
+- WordPress
+- Microsoft Exchange OWA
+
+Additionally, the scan includes generic rules for other common web authentication patterns.
+
+You can also configure custom detection locations to address the specific authentication mechanism used in your web applications. A custom detection location tells the Cloudflare WAF where to find usernames and passwords in HTTP requests of your web application.
+
+## Custom detection locations
+
+:::note
+Only available for Enterprise customers.
+:::
+
+Sometimes, you may wish to specify where to find credentials in HTTP requests for the specific case of your web applications.
+
+For example, if the JSON body of an HTTP authenticating a user looked like the following in your web application:
+
+```json
+{ "user": "<username>", "secret": "<password>" }
+```
+
+You could configure a custom detection location with the following settings:
+
+- Custom location for username:<br/>
+  `lookup_json_string(http.request.body.raw, "user")`
+- Custom location for password:<br/>
+  `lookup_json_string(http.request.body.raw, "secret")`
+
+When specifying a custom detection location, only the location of the username field is required.
+
+Expressions used to specify custom detection locations can include the following fields and functions:
+
+- Fields:
+  - [`http.request.body.form`](/ruleset-engine/rules-language/fields/http-request-body/#httprequestbodyform)
+  - [`http.request.body.multipart`](/ruleset-engine/rules-language/fields/http-request-body/#httprequestbodymultipart)
+  - [`http.request.body.raw`](/ruleset-engine/rules-language/fields/http-request-body/#httprequestbodyraw)
+  - [`http.request.headers`](/ruleset-engine/rules-language/fields/http-request-header/#httprequestheaders)
+  - [`http.request.uri.query`](/ruleset-engine/rules-language/fields/standard-fields/#httprequesturiquery)
+- Functions:
+  - [`lookup_json_string()`](/ruleset-engine/rules-language/functions/#lookup_json_string)
+  - [`url_decode()`](/ruleset-engine/rules-language/functions/#url_decode)
+
+For instructions on configuring a custom detection location, refer to [Get started](/waf/detections/leaked-credentials/get-started/#4-optional-configure-a-custom-detection-location).
+
+## Leaked credentials fields
+
+| Field name in the dashboard | Field                                                       | Availability       |
+| --------------------------- | ----------------------------------------------------------- | ------------------ |
+| Password Leaked             | [`cf.waf.credential_check.password_leaked`][1]              | All plans          |
+| User and Password Leaked    | [`cf.waf.credential_check.username_and_password_leaked`][2] | Pro plan and above |
+| Username Leaked             | [`cf.waf.credential_check.username_leaked`][3]              | Enterprise plan    |
+| Similar Password Leaked     | [`cf.waf.credential_check.username_password_similar`][4]    | Enterprise plan    |
+| Authentication detected     | [`cf.waf.auth_detected`][5]                                 | Enterprise plan    |
+
+[1]: /ruleset-engine/rules-language/fields/dynamic-fields/#cfwafcredential_checkpassword_leaked
+[2]: /ruleset-engine/rules-language/fields/dynamic-fields/#cfwafcredential_checkusername_and_password_leaked
+[3]: /ruleset-engine/rules-language/fields/dynamic-fields/#cfwafcredential_checkusername_leaked
+[4]: /ruleset-engine/rules-language/fields/dynamic-fields/#cfwafcredential_checkusername_password_similar
+[5]: /ruleset-engine/rules-language/fields/dynamic-fields/#cfwafauth_detected

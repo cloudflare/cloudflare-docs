@@ -11,6 +11,12 @@ Cron Triggers allow users to map a cron expression to a Worker using a [`schedul
 
 Cron Triggers are ideal for running periodic jobs, such as for maintenance or calling third-party APIs to collect up-to-date data. Workers scheduled by Cron Triggers will run on underutilized machines to make the best use of Cloudflare's capacity and route traffic efficiently.
 
+:::note
+
+Cron Triggers can also be combined with [Workflows](/workflows/) to trigger multi-step, long-running tasks. You can [bind to a Workflow](/workflows/build/workers-api/) from directly from your Cron Trigger to execute a Workflow on a schedule.
+
+:::
+
 Cron Triggers execute on UTC time.
 
 ## Add a Cron Trigger
@@ -125,7 +131,15 @@ curl "http://localhost:8787/__scheduled?cron=*+*+*+*+*"
 
 ## View past events
 
-Users can review the execution history of their Cron Triggers in **Past Cron Events** under [**Logs**](https://dash.cloudflare.com/?to=/:account/workers) or through Cloudflare's [GraphQL Analytics API](/analytics/graphql-api).
+To view the execution history of Cron Triggers, view **Cron Events**:
+
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) and select your account.
+2. In Account Home, go to **Workers & Pages**.
+3. In **Overview**, select your **Worker**.
+4. Select **Settings**.
+5. Under **Trigger Events**, select **View events**.
+
+Cron Events stores the 100 most recent invocations of the Cron scheduled event. [Workers Logs](/workers/observability/logs/workers-logs) also records invocation logs for the Cron Trigger with a longer retention period and a filter & query interface. If you are interested in an API to access Cron Events, use Cloudflare's [GraphQL Analytics API](/analytics/graphql-api).
 
 :::note
 

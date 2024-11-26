@@ -1,5 +1,8 @@
 ---
-inputParameters: createPath;;tunnelEndpoints;;ipRanges
+params:
+  - createPath
+  - tunnelEndpoints
+  - ipRanges
 ---
 
 import { GlossaryTooltip, Markdown, Render, TabItem, Tabs } from "~/components";
@@ -51,7 +54,7 @@ By default, you can only add static routes with [RFC 1918](https://datatracker.i
 - `172.16.0.0/12`
 - `192.168.0.0/16`
 
-<Markdown text={props.three} />
+<Markdown text={props.ipRanges} />
 If your use case requires IP prefixes outside RFC 1918, contact your Cloudflare
 customer service manager.
 
@@ -60,11 +63,11 @@ customer service manager.
 <Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login), and select your account.
-2. Go to **{props.one}**.
+2. Go to **{props.createPath}**.
 3. From the **Static Routes** tab, select **Create** to add a new route.
 4. Enter a descriptive name for your route in **Description**.
 5. In **Prefix**, enter your range of IP addresses. For example, `10.10.10.100/24`.
-6. In **Tunnel/Next hop** select which tunnel you want your route to go through. Choose from the tunnels you have created in <a href={props.two}>Configure tunnel endpoints</a>.
+6. In **Tunnel/Next hop** select which tunnel you want your route to go through. Choose from the tunnels you have created in <a href={props.tunnelEndpoints}>Configure tunnel endpoints</a>.
 7. Choose the **Priority** for your route. Lower numbers have higher priorities.
 8. (Optional) Choose a **Weight** for your route. Refer to [Edge routing configuration example](#edge-routing-configuration-example) for examples.
 9. (Optional) If you need to scope your route to a specific region, you can do it in **Region code**.

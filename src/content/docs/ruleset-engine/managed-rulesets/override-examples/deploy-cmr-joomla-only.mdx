@@ -6,10 +6,9 @@ sidebar:
 head:
   - tag: title
     content: Use category overrides to enable Joomla rules
-
 ---
 
-import { Details } from "~/components"
+import { Details } from "~/components";
 
 Use the [Rulesets API](/ruleset-engine/rulesets-api/) to configure the execution of a managed ruleset and override its behavior. By default, enabled rules perform the actions defined by the managed ruleset issuer. This example uses overrides to ensure that only rules with a specific tag are enabled.
 
@@ -24,7 +23,6 @@ Tag overrides take precedence over ruleset overrides. Only the rules with the sp
 ## Example 1
 
 This example uses the [Update ruleset](/ruleset-engine/rulesets-api/update/) operation to deploy the Cloudflare Managed Ruleset to a phase with only Joomla rules enabled. The `name`, `kind`, and `phase` fields are omitted from the request because they are immutable.
-
 
 <Details header="Example: Enable only Joomla rules using category overrides at the zone level">
 
@@ -56,13 +54,11 @@ https://api.cloudflare.com/client/v4/zones/{zone_id}/rulesets/phases/http_reques
 }'
 ```
 
-* `"id": "<MANAGED_RULESET_ID>"` adds a rule to the ruleset of a phase that will apply the Cloudflare Managed Ruleset to requests for the specified zone (`{zone_id}`).
-* `"enabled": false` defines an override at the ruleset level that disables all rules in the managed ruleset.
-* `"categories": [{"category": "joomla", "action": "block", "enabled": true}]` defines an override at the tag level that enables the Joomla rules and sets their action to `block`.
-
+- `"id": "<MANAGED_RULESET_ID>"` adds a rule to the ruleset of a phase that will apply the Cloudflare Managed Ruleset to requests for the specified zone (`{zone_id}`).
+- `"enabled": false` defines an override at the ruleset level that disables all rules in the managed ruleset.
+- `"categories": [{"category": "joomla", "action": "block", "enabled": true}]` defines an override at the tag level that enables the Joomla rules and sets their action to `block`.
 
 </Details>
-
 
 <Details header="Example: Enable only Joomla rules using category overrides at the account level">
 
@@ -94,10 +90,9 @@ https://api.cloudflare.com/client/v4/accounts/{account_id}/rulesets/phases/http_
 }'
 ```
 
-* `"id": "<MANAGED_RULESET_ID>"` adds a rule to the ruleset of a phase that will apply the Cloudflare Managed Ruleset to requests for `example.com`.
-* `"enabled": false` defines an override at the ruleset level that disables all rules in the managed ruleset.
-* `"categories": [{"category": "joomla", "action": "block", "enabled": true}]` defines an override at the tag level that enables the Joomla rules and sets their action to `block`.
-
+- `"id": "<MANAGED_RULESET_ID>"` adds a rule to the ruleset of a phase that will apply the Cloudflare Managed Ruleset to requests for `example.com`.
+- `"enabled": false` defines an override at the ruleset level that disables all rules in the managed ruleset.
+- `"categories": [{"category": "joomla", "action": "block", "enabled": true}]` defines an override at the tag level that enables the Joomla rules and sets their action to `block`.
 
 </Details>
 
@@ -106,7 +101,6 @@ You can add more than one category override to a rule.
 ## Example 2
 
 This example uses a `PUT` request to add two overrides to the rule that executes a managed ruleset (`<MANAGED_RULESET_ID>`) in the `http_request_firewall_managed` phase. Note that the `name`, `kind`, and `phase` fields are omitted from the request because they are immutable.
-
 
 <Details header="Example: Add more than one category override at the zone level">
 
@@ -142,9 +136,7 @@ https://api.cloudflare.com/client/v4/zones/{zone_id}/rulesets/phases/http_reques
 }'
 ```
 
-
 </Details>
-
 
 <Details header="Example: Add more than one category override at the account level">
 
@@ -180,46 +172,16 @@ https://api.cloudflare.com/client/v4/account/{account_id}/rulesets/phases/http_r
 }'
 ```
 
-
 </Details>
 
 The order of the overrides in the root ruleset affects whether rules in the deployed managed ruleset are enabled or disabled. Overrides placed later in the list take precedence over earlier overrides. Consider four rules from the managed ruleset in the code above that have different combinations of `category` tags.
 
 The following table shows the status of the rules after the overrides.
 
-<table>
-  <thead>
-    <tr>
-      <th>Rule in managed ruleset</th>
-      <th>Tags</th>
-      <th>Rule status after overrides</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>ManagedRule1</td>
-      <td>drupal, dos</td>
-      <td>disabled</td>
-    </tr>
-    <tr>
-      <td>ManagedRule2</td>
-      <td>drupal, dos, joomla</td>
-       <td>enabled</td>
-    </tr>
-    <tr>
-      <td>ManagedRule3</td>
-      <td>dos, joomla, wordpress</td>
-      <td>disabled</td>
-    </tr>
-    <tr>
-      <td>ManagedRule4</td>
-      <td>drupal, wordpress</td>
-      <td>disabled</td>
-    </tr>
-    <tr>
-      <td>ManagedRule5</td>
-      <td>(no tags)</td>
-      <td>disabled</td>
-    </tr>
-  </tbody>
-</table>
+| Rule in managed ruleset | Tags                   | Rule status after overrides |
+| ----------------------- | ---------------------- | --------------------------- |
+| ManagedRule1            | drupal, dos            | disabled                    |
+| ManagedRule2            | drupal, dos, joomla    | enabled                     |
+| ManagedRule3            | dos, joomla, wordpress | disabled                    |
+| ManagedRule4            | drupal, wordpress      | disabled                    |
+| ManagedRule5            | (no tags)              | disabled                    |

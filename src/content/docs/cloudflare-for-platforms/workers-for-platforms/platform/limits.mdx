@@ -16,6 +16,10 @@ Cloudflare provides an unlimited number of scripts for Workers for Platforms cus
 
 The [`cf` object](/workers/runtime-apis/request/#the-cf-property-requestinitcfproperties) contains Cloudflare-specific properties of a request. This field is not accessible in [user Workers](/cloudflare-for-platforms/workers-for-platforms/reference/how-workers-for-platforms-works/#user-workers) because some fields in this object are sensitive and can be used to manipulate Cloudflare features (eg.`cacheKey`, `resolveOverride`, `scrapeShield`.)
 
+## Durable Object namespace limits
+
+Workers for Platforms do not have a limit for the number of Durable Object namespaces.
+
 ## Cache API
 
 For isolation, `caches.default()` is disabled for namespaced scripts. To learn more about the cache, refer to [How the cache Works](/workers/reference/how-the-cache-works/).

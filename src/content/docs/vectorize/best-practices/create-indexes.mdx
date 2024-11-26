@@ -15,6 +15,8 @@ Creating an index requires three inputs:
 - The (fixed) [dimension size](#dimensions) of each vector, for example 384 or 1536.
 - The (fixed) [distance metric](#distance-metrics) to use for calculating vector similarity.
 
+An index cannot be created using the same name as an index previously deleted on your account. We are in the process of addressing this limitation.
+
 The configuration of an index cannot be changed after creation.
 
 ## Create an index
@@ -102,5 +104,10 @@ Distance metrics are functions that determine how close vectors are from each ot
 | `dot-product` | Negative dot product. Larger negative values _or_ smaller positive values denote more similar vectors. A score of `-1000` is more similar than `-500`, and a score of `15` more similar than `50`. |
 
 Determining the similarity between vectors can be subjective based on how the machine-learning model that represents features in the resulting vector embeddings. For example, a score of `0.8511` when using a `cosine` metric means that two vectors are close in distance, but whether data they represent is _similar_ is a function of how well the model is able to represent the original content.
+
+When querying vectors, you can specify Vectorize to use either:
+
+- High-precision scoring, which increases the precision of the query matches scores as well as the accuracy of the query results.
+- Approximate scoring for faster response times. Using approximate scoring, returned scores will be an approximation of the real distance/similarity between your query and the returned vectors. Refer to [Control over scoring precision and query accuracy](/vectorize/best-practices/query-vectors/#control-over-scoring-precision-and-query-accuracy).
 
 Distance metrics cannot be changed after index creation, and that each metric has a different scoring function.

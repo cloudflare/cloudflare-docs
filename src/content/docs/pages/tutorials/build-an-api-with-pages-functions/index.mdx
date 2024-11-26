@@ -1,12 +1,14 @@
 ---
-updated: 2023-05-31
+updated: 2024-10-01
 pcx_content_type: tutorial
-content_type: 📝 Tutorial
+content_type: 🎥 Video
 difficulty: Intermediate
 title: Build an API for your front end using Pages Functions
 languages:
   - JavaScript
 ---
+
+import { Stream } from "~/components";
 
 In this tutorial, you will build a full-stack Pages application. Your application will contain:
 
@@ -15,16 +17,24 @@ In this tutorial, you will build a full-stack Pages application. Your applicatio
 
 If you prefer to work with a headless CMS rather than an API to render your blog content, refer to the [headless CMS tutorial](/pages/tutorials/build-a-blog-using-nuxt-and-sanity/).
 
-## Build your front end
+## Video Tutorial
+
+<Stream
+	videoId="2d8bbaa18fbd3ffa859a7fb30e9b3dd1"
+	videoTitle="Build an API With Pages Functions"
+	thumbnailTimeOrURL="29s"
+/>
+
+## 1. Build your front end
 
 To begin, create a new Pages application using the React framework.
 
 ### Create a new React project
 
-In your terminal, create a new React project called `blog-frontend` using the `create-react-app` command. Go into the newly created `blog-frontend` directory and start a local development server:
+In your terminal, create a new React project called `blog-frontend` using the `create-vite` command. Go into the newly created `blog-frontend` directory and start a local development server:
 
 ```sh title="Create a new React application"
-npx create-react-app blog-frontend
+npx create-vite -t react blog-frontend
 cd blog-frontend
 npm start
 ```
@@ -144,7 +154,7 @@ const Post = () => {
 export default Post;
 ```
 
-## Build your API
+## 2. Build your API
 
 You will now create a Pages Functions that stores your blog content and retrieves it via a JSON API.
 
@@ -215,7 +225,7 @@ export function onRequestGet(context) {
 
 `[[id]].js` is a [dynamic route](/pages/functions/routing#dynamic-routes) which is used to accept a blog post `id`.
 
-## Deploy
+## 3. Deploy
 
 After you have configured your Pages application and Pages Function, deploy your project using the Wrangler or via the dashboard.
 

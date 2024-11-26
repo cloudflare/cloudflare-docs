@@ -23,6 +23,12 @@ openssl x509 -in certificate.crt -noout -text
 
 Then, make sure all the information is correct before uploading.
 
+## Moved domains
+
+If you move a domain without deleting the custom certificate from the previous zone, the certificate may still [take precedence](/ssl/reference/certificate-and-hostname-priority/) and be presented to your visitors, until the previous zone is [deleted](/dns/zone-setups/reference/domain-status/).
+
+Refer to [Move a domain between Cloudflare accounts](/fundamentals/setup/manage-domains/move-domain/#issue-new-certificates) for details.
+
 ## Let's Encrypt chain update
 
 As Let's Encrypt - one of the [certificate authorities (CAs)](/ssl/reference/certificate-authorities/) used by Cloudflare - has announced changes in its [chain of trust](/ssl/concepts/#chain-of-trust), you may face issues.

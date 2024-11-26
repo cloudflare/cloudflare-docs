@@ -30,7 +30,7 @@ You add cache-tags to your web content in `Cache-Tag` HTTP response headers to a
 
 When your content reaches our edge network, Cloudflare:
 
-* Removes the `Cache-Tag` HTTP header before sending the response to your website visitor. Your end users never see `Cache-Tag` HTTP headers on your Cloudflare-enabled website.
+* Removes the `Cache-Tag` HTTP header before sending the response to your website visitor or passing the response to a [Worker](/workers/). Your end users or Worker never see `Cache-Tag` HTTP headers on your Cloudflare-enabled website.
 * Removes whitespaces from the header and any before and after cache-tag names: `tag1`, `tag2` and `tag1,tag2` are considered the same.
 * Removes all repeated and trailing commas before applying cache-tags: `tag1,,,tag2` and `tag1,tag2` are considered the same.
 
@@ -40,9 +40,9 @@ When your content reaches our edge network, Cloudflare:
 * The minimum length of a cache-tag is one byte.
 * Individual tags do not have a maximum length, but the aggregate `Cache-Tag` HTTP header cannot exceed 16 KB after the header field name, which is approximately 1,000 unique tags. Length includes whitespace and commas but does not include the header field name.
 * For cache purges, the maximum length of a cache-tag in an API call is 1,024 characters.
-* The `Cache-Tag` HTTP header must only contain UTF-8 encoded characters.
+* The `Cache-Tag` HTTP header must only contain printable ASCII encoded characters.
 * Spaces are not allowed in cache-tags.
-* Case does not matter. For example, `Tag1` and `tag1` are considered the same.
+* Case is not sensitive. For example, `Tag1` and `tag1` are considered the same.
 
 ## Purge using cache-tags
 

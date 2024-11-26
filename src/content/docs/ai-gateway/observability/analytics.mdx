@@ -1,5 +1,5 @@
 ---
-title: Analytics and logging
+title: Analytics
 pcx_content_type: reference
 ---
 
@@ -34,20 +34,11 @@ curl https://api.cloudflare.com/client/v4/graphql \
     "query": "query{\n  viewer {\n	accounts(filter: { accountTag: \"{account_id}\" }) {\n	requests: aiGatewayRequestsAdaptiveGroups(\n    	limit: $limit\n    	filter: { datetimeHour_geq: $start, datetimeHour_leq: $end }\n    	orderBy: [datetimeMinute_ASC]\n  	) {\n    	count,\n    	dimensions {\n        	model,\n        	provider,\n        	gateway,\n        	ts: datetimeMinute\n    	}\n    	\n  	}\n    	\n	}\n  }\n}",
     "variables": {
    	 "limit": 1000,
-   	 "start": "2023-09-01T10:00:00.0Z",
-   	 "end": "2023-09-30T10:00:00.0Z",
+   	 "start": "2023-09-01T10:00:00.000Z",
+   	 "end": "2023-09-30T10:00:00.000Z",
    	 "orderBy": "date_ASC"
     }
 }'
 ```
 
 </TabItem> </Tabs>
-
-:::note[Note]
-
-The cost metric is an estimation based on the number of tokens sent and received in requests. While this metric can help you monitor and predict cost trends, refer to your provider’s dashboard for the most accurate cost details.
-:::
-
-## Logging
-
-Your AI Gateway dashboard also shows real-time logs of individual requests, such as the prompt, response, provider, timestamps, and whether the request was successful, cached, or if there was an error. These logs now persist and can store up to 10,000 logs per gateway for better observability and analysis.

@@ -1,3 +1,4 @@
+// @ts-check
 import starlightPlugin from "@astrojs/starlight-tailwind";
 
 const gray = {

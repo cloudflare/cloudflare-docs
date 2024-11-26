@@ -2,13 +2,24 @@
 pcx_content_type: concept
 title: TLS decryption
 sidebar:
-  order: 6
-
+  order: 2
 ---
 
-import { GlossaryDefinition, GlossaryTooltip, Render, TabItem, Tabs } from "~/components"
+import {
+	GlossaryDefinition,
+	GlossaryTooltip,
+	Render,
+	TabItem,
+	Tabs,
+} from "~/components";
 
-Cloudflare Gateway can perform [SSL/TLS decryption](https://www.cloudflare.com/learning/security/what-is-https-inspection/) in order to inspect HTTPS traffic for malware and other security risks. When you enable TLS decryption, Gateway will decrypt all traffic sent over HTTPS, apply your HTTP policies, and then re-encrypt the request with a [user-side certificate](/cloudflare-one/connections/connect-devices/warp/user-side-certificates/).
+Cloudflare Gateway can perform [SSL/TLS decryption](https://www.cloudflare.com/learning/security/what-is-https-inspection/) in order to inspect HTTPS traffic for malware and other security risks.
+
+When you enable TLS decryption, Gateway will decrypt all traffic sent over HTTPS, apply your HTTP policies, and then re-encrypt the request with a [user-side certificate](/cloudflare-one/connections/connect-devices/user-side-certificates/). Gateway will decrypt and re-encrypt traffic regardless of HTTP policy action, including [Do Not Inspect](/cloudflare-one/policies/gateway/http-policies/#do-not-inspect).
+
+Cloudflare prevents interference by decrypting, inspecting, and re-encrypting HTTPS requests in its data centers in memory only. Gateway only stores eligible cache content at rest. All cache disks are encrypted at rest. You can configure where TLS decryption takes place with [Regional Services](/data-localization/regional-services/) in the [Cloudflare Data Localization Suite (DLS)](/data-localization/).
+
+Cloudflare supports connections from users to Gateway over TLS 1.1, 1.2, and 1.3.
 
 ## Enable TLS decryption
 
@@ -18,23 +29,23 @@ Cloudflare Gateway can perform [SSL/TLS decryption](https://www.cloudflare.com/l
 
 Gateway does not support TLS decryption for applications which use:
 
-* [Certificate pinning](#incompatible-certificates)
-* [Self-signed certificates](#incompatible-certificates)
-* [Mutual TLS (mTLS) authentication](#incompatible-certificates)
-* [ESNI and ECH handshake encryption](#esni-and-ech)
-* [Automatic HTTPS upgrades](#google-chrome-automatic-https-upgrades)
+- [Certificate pinning](#incompatible-certificates)
+- [Self-signed certificates](#incompatible-certificates)
+- [Mutual TLS (mTLS) authentication](#incompatible-certificates)
+- [ESNI and ECH handshake encryption](#esni-and-ech)
+- [Automatic HTTPS upgrades](#google-chrome-automatic-https-upgrades)
 
 ### Incompatible certificates
 
-Applications that use certificate pinning and mTLS authentication do not trust the Cloudflare certificate. For example, most mobile applications use <GlossaryTooltip term="certificate pinning" link="/ssl/reference/certificate-pinning/">certificate pinning</GlossaryTooltip>. Cloudflare does not trust applications that use self-signed certificates instead of certificates signed by a public CA.
+Applications that use certificate pinning and mTLS authentication do not trust Cloudflare certificates. For example, most mobile applications use <GlossaryTooltip term="certificate pinning" link="/ssl/reference/certificate-pinning/">certificate pinning</GlossaryTooltip>. Cloudflare does not trust applications that use self-signed certificates instead of certificates signed by a public CA.
 
-If you try to perform TLS decryption, these applications may not load or may return an error. To resolve this issue, you can:
+If you try to perform TLS decryption on an application with an incompatible certificate configuration, the application may return an SSL or trust error and/or fail to load. To resolve this issue, you can:
 
-* Add the [Cloudflare certificate](/cloudflare-one/connections/connect-devices/warp/user-side-certificates/install-cloudflare-cert/#add-the-certificate-to-applications) to supported applications.
-* Create a [Do Not Inspect policy](/cloudflare-one/policies/gateway/http-policies/#do-not-inspect) to exempt applications from TLS decryption. The [Application selector](/cloudflare-one/policies/gateway/http-policies/#application) provides a list of trusted applications that are known to use embedded certificates.
-* Configure a [Split Tunnel](/cloudflare-one/connections/connect-devices/warp/configure-warp/route-traffic/split-tunnels/) in Include mode to ensure Gateway will only inspect traffic destined for your IPs or domains. This is useful for organizations that deploy Zero Trust on users' personal devices or otherwise expect personal applications to be used.
+- Add a [Cloudflare certificate](/cloudflare-one/connections/connect-devices/user-side-certificates/manual-deployment/#add-the-certificate-to-applications) to supported applications.
+- Create a [Do Not Inspect policy](/cloudflare-one/policies/gateway/http-policies/#do-not-inspect) to exempt applications from inspection. The [Application selector](/cloudflare-one/policies/gateway/http-policies/#application) provides a list of trusted applications that are known to use embedded certificates. Note that if you create a Do Not Inspect policy for an application or website, you will lose the ability to log or block HTTP requests, apply DLP policies, and perform AV scanning.
+- Configure a [Split Tunnel](/cloudflare-one/connections/connect-devices/warp/configure-warp/route-traffic/split-tunnels/) in Include mode to ensure Gateway will only inspect traffic destined for your IPs or domains. This is useful for organizations that deploy Zero Trust on users' personal devices or otherwise expect personal applications to be used.
 
-Alternatively, to allow HTTP filtering while accessing a site with an insecure certificate, set your [Untrusted certificate action](/cloudflare-one/policies/gateway/http-policies/#untrusted-certificates) to *Pass through*.
+Alternatively, to allow HTTP filtering while accessing a site with an insecure certificate, set your [Untrusted certificate action](/cloudflare-one/policies/gateway/http-policies/#untrusted-certificates) to _Pass through_.
 
 ### Google Chrome automatic HTTPS upgrades
 
@@ -42,11 +53,11 @@ Google Chrome can automatically upgrade HTTP requests to HTTPS requests, even wh
 
 You can turn off automatic HTTPS upgrades via a Gateway pass through policy, a Chrome browser flag, or a Chrome Enterprise policy.
 
-<Tabs> <TabItem label="pass through policy">
+<Tabs> <TabItem label="Pass through policy">
 
 To disable automatic HTTPS upgrades for a URL across your Zero Trust organization, create a Gateway pass through policy.
 
-1. Deploy a [custom root certificate](/cloudflare-one/connections/connect-devices/warp/user-side-certificates/custom-certificate/).
+1. Deploy a [custom root certificate](/cloudflare-one/connections/connect-devices/user-side-certificates/custom-certificate/).
 
 2. Create an [HTTP policy](/cloudflare-one/policies/gateway/http-policies/) to match the domain of the URL being automatically upgraded. For example:
 
@@ -54,17 +65,17 @@ To disable automatic HTTPS upgrades for a URL across your Zero Trust organizatio
    | -------- | -------- | ------------- | ------ |
    | URL      | in       | `example.com` | Allow  |
 
-3. In **Untrusted certificate action**, choose *Pass through*.
+3. In **Untrusted certificate action**, choose _Pass through_.
 
 4. Select **Create policy**.
 
 The pass through policy will bypass insecure connection upgrades for any device connected to your Zero Trust organization. For more information, refer to [Untrusted certificates](/cloudflare-one/policies/gateway/http-policies/#untrusted-certificates).
 
-</TabItem> <TabItem label="chrome browser flag">
+</TabItem> <TabItem label="Chrome browser flag">
 
 To disable automatic HTTPS upgrades on a per-browser basis, go to [Chrome flags](chrome://flags/#https-upgrades) and turn off **HTTPS Upgrades**.
 
-</TabItem> <TabItem label="chrome enterprise policy">
+</TabItem> <TabItem label="Chrome enterprise policy">
 
 Chrome Enterprise users can turn off automatic HTTPS upgrades for all URLs with a [`HttpsUpgradesEnabled` management policy](https://chromeenterprise.google/policies/#HttpsUpgradesEnabled).
 
@@ -98,17 +109,17 @@ FIPS-compliant traffic defaults to HTTP/3. Gateway does not inspect HTTP/3 traff
 
 The following table lists the default cipher suites Gateway uses for TLS decryption.
 
-| Name (OpenSSL)                | Name (IANA)                                    | FIPS-compliant |
-| ----------------------------- | ---------------------------------------------- | -------------- |
-| ECDHE-ECDSA-AES128-GCM-SHA256 | TLS\_ECDHE\_ECDSA\_WITH\_AES\_128\_GCM\_SHA256 | ✅              |
-| ECDHE-ECDSA-AES256-GCM-SHA384 | TLS\_ECDHE\_ECDSA\_WITH\_AES\_256\_GCM\_SHA384 | ✅              |
-| ECDHE-RSA-AES128-GCM-SHA256   | TLS\_ECDHE\_RSA\_WITH\_AES\_128\_GCM\_SHA256   | ✅              |
-| ECDHE-RSA-AES256-GCM-SHA384   | TLS\_ECDHE\_RSA\_WITH\_AES\_256\_GCM\_SHA384   | ✅              |
-| ECDHE-RSA-AES128-SHA          | TLS\_ECDHE\_RSA\_WITH\_AES\_128\_CBC\_SHA256   | ❌              |
-| ECDHE-RSA-AES256-SHA384       | TLS\_ECDHE\_RSA\_WITH\_AES\_256\_CBC\_SHA384   | ✅              |
-| AES128-GCM-SHA256             | TLS\_RSA\_WITH\_AES\_128\_GCM\_SHA256          | ✅              |
-| AES256-GCM-SHA384             | TLS\_RSA\_WITH\_AES\_256\_GCM\_SHA384          | ✅              |
-| AES128-SHA                    | TLS\_RSA\_WITH\_AES\_128\_CBC\_SHA             | ❌              |
-| AES256-SHA                    | TLS\_RSA\_WITH\_AES\_256\_CBC\_SHA             | ❌              |
+| Name (OpenSSL)                | Name (IANA)                             | FIPS-compliant |
+| ----------------------------- | --------------------------------------- | -------------- |
+| ECDHE-ECDSA-AES128-GCM-SHA256 | TLS_ECDHE_ECDSA_WITH_AES_128_GCM_SHA256 | ✅             |
+| ECDHE-ECDSA-AES256-GCM-SHA384 | TLS_ECDHE_ECDSA_WITH_AES_256_GCM_SHA384 | ✅             |
+| ECDHE-RSA-AES128-GCM-SHA256   | TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256   | ✅             |
+| ECDHE-RSA-AES256-GCM-SHA384   | TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384   | ✅             |
+| ECDHE-RSA-AES128-SHA          | TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256   | ❌             |
+| ECDHE-RSA-AES256-SHA384       | TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA384   | ✅             |
+| AES128-GCM-SHA256             | TLS_RSA_WITH_AES_128_GCM_SHA256         | ✅             |
+| AES256-GCM-SHA384             | TLS_RSA_WITH_AES_256_GCM_SHA384         | ✅             |
+| AES128-SHA                    | TLS_RSA_WITH_AES_128_CBC_SHA            | ❌             |
+| AES256-SHA                    | TLS_RSA_WITH_AES_256_CBC_SHA            | ❌             |
 
 For more information on cipher suites, refer to [Cipher suites](/ssl/edge-certificates/additional-options/cipher-suites/).

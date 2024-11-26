@@ -5,4 +5,6 @@ product:
   group: Application performance
   additional_groups: [Application security]
   url: /ssl/keyless-ssl/
-  grid_placeholder: true
+
+meta:
+  description: Keyless SSL allows security-conscious clients to upload their own custom certificates and benefit from Cloudflare, but without exposing their TLS private keys.

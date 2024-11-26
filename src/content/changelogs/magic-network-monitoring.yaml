@@ -1,0 +1,11 @@
+---
+link: "/magic-network-monitoring/changelog/"
+productName: Magic Network Monitoring
+productLink: "/magic-network-monitoring/"
+productArea: Cloudflare One
+productAreaLink: /cloudflare-one/changelog/
+entries:
+  - publish_date: "2024-09-24"
+    title: Magic Network Monitoring free version available to all customers
+    description: |-
+      The free version of Magic Network Monitoring (MNM) is now available to everyone with a Cloudflare account by default.

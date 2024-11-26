@@ -25,3 +25,5 @@ To enable this feature in the Cloudflare Dashboard, check the box next to Allow 
 To enable this feature through the [Cloudflare API](/api/operations/waiting-room-update-waiting-room), update the `enabled_origin_commands` property to include the value `”revoke”` in the list of enabled origin commands.
  
 Then, to return a revocation origin command and revoke the user's session associated with the current request, add the `Cf-Waiting-Room-Command: revoke` HTTP header to the response from your origin.
+
+To get the number of sessions revoked, you can query `sessionsRevoked` metrics from your [Waiting Room analytics](/waiting-room/waiting-room-analytics/#graphql-analytics) data via GraphQL API.

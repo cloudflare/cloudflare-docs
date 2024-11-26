@@ -160,7 +160,7 @@ entries:
 
   - term: Universal SSL certificate
     general_definition: |-
-      by default, Cloudflare issues — and renews — free, unshared, publicly trusted SSL certificates to all domains [added to](/fundamentals/setup/manage-domains/add-site/) and [activated on](/dns/zone-setups/reference/domain-status/) Cloudflare.
+      by default, Cloudflare issues — and [renews](/ssl/reference/certificate-validity-periods/#universal-ssl) — free, unshared, publicly trusted SSL certificates to all domains [added to](/fundamentals/setup/manage-domains/add-site/) and [activated on](/dns/zone-setups/reference/domain-status/) Cloudflare.
 
   - term: validation level
     general_definition: |-

@@ -5,6 +5,24 @@ productLink: "/hyperdrive/"
 productArea: Developer platform
 productAreaLink: /workers/platform/changelog/platform/
 entries:
+  - publish_date: "2024-11-19"
+    title: Hyperdrive now supports clear-text password authentication
+    description: |-
+      When connecting to a database that requires secure clear-text password authentication over TLS, Hyperdrive will now support this authentication method.
+
+      Refer to the documentation to see [all PostgreSQL authentication modes supported by Hyperdrive](/hyperdrive/reference/supported-databases#supported-postgresql-authentication-modes).
+  - publish_date: "2024-10-30"
+    title: New Hyperdrive configurations to private databases using Tunnels are validated before creation
+    description: |-
+      When creating a new Hyperdrive configuration to a private database using Tunnels, Hyperdrive will verify that it can connect to the database to ensure that your Tunnel and Access application have been properly configured. This makes it easier to debug connectivity issues. 
+
+      Refer to [documentation on connecting to private databases](/hyperdrive/configuration/connect-to-private-database/) for more information.
+  - publish_date: "2024-09-20"
+    title: The `node-postgres` (pg) driver is now supported for Pages applications using Hyperdrive.
+    description: |-
+      The popular `pg` ([node-postgres](https://github.com/brianc/node-postgres) driver no longer requires the legacy `node_compat` mode, and can now be used in both Workers and Pages for connecting to Hyperdrive. This uses the new (improved) Node.js compatibility in Workers and Pages. 
+
+      You can set [`compatibility_flags = ["nodejs_compat_v2"]`](/workers/runtime-apis/nodejs/) in your `wrangler.toml` or via the Pages dashboard to benefit from this change. Visit the [Hyperdrive documentation on supported drivers](/hyperdrive/configuration/connect-to-postgres/#supported-drivers) to learn more about the driver versions supported by Hyperdrive.
   - publish_date: "2024-08-19"
     title: Improved caching for Postgres.js
     description: |-

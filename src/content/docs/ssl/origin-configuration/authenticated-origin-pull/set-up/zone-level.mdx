@@ -11,11 +11,18 @@ head:
 
 import { AvailableNotifications, Render } from "~/components"
 
-When you enable Authenticated Origin Pulls for a zone, all proxied traffic to your zone is authenticated at the origin web server.
+When you enable Authenticated Origin Pulls (AOP) for a zone, all proxied traffic to your zone is authenticated at the origin web server.
 
 ## Before you begin
 
 Make sure your zone is using an [SSL/TLS encryption mode](/ssl/origin-configuration/ssl-modes/) of **Full** or higher.
+
+:::caution
+
+Zone-level AOP certificates are also applied to [custom hostnames](/cloudflare-for-platforms/cloudflare-for-saas/domain-support/) configured on a Cloudflare for SaaS zone.
+If you need a different AOP certificate to apply to different custom hostnames, use [Per-hostname AOP](/ssl/origin-configuration/authenticated-origin-pull/set-up/per-hostname/).
+
+:::
 
 ## 1. Upload certificate to origin
 

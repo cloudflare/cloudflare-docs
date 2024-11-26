@@ -27,18 +27,21 @@ pages.sort(sortBySidebarOrder);
 ---
 
 <ul>
-    {
-        pages.map((page) => {
-            const description = descriptions && page.data.description;
-            const href = page.data.external_link ?? "/" + page.slug + "/";
-            return (
-                <li>
-                    <a href={href}>{page.data.title}</a>{description &&
-                        <span>: </span>
-                        <Fragment set:html={marked.parseInline(description)} />
-                    }
-                </li>
-            );
-        })
-    }
+	{
+		pages.map((page) => {
+			const description = descriptions && page.data.description;
+			const href = page.data.external_link ?? "/" + page.slug + "/";
+			return (
+				<li>
+					<a href={href}>{page.data.title}</a>
+					{description && (
+						<>
+							<span>: </span>
+							<Fragment set:html={marked.parseInline(description)} />
+						</>
+					)}
+				</li>
+			);
+		})
+	}
 </ul>

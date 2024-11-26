@@ -1,0 +1,65 @@
+---
+title: Outbound Data Loss Prevention (DLP)
+pcx_content_type: how-to
+sidebar:
+  order: 6
+  badge:
+    text: Beta
+---
+
+
+:::note[Compatibility]
+Outbound DLP is only compatible with Microsoft 365.
+:::
+
+Outbound Data Loss Prevention ensures the protection of sensitive information in outbound emails with [Cloudflare Data Loss Prevention (DLP)](/cloudflare-one/policies/data-loss-prevention/). Outbound Data Loss Prevention integrates with your inbox, and it proactively monitors your email to prevent unauthorized data leaks.
+
+## Get started
+
+To begin using outbound DLP, install the Cloudflare add-in in Microsoft 365:
+
+1. In [Zero Trust](https://one.dash.cloudflare.com), go to **Email Security** > **Outbound DLP**.
+2. In **Protect sensitive data in outbound emails**, select **Get started**.
+3. Select **Download add-in** to download the Cloudflare add-in.
+4. Configure Microsoft 365 to use the Cloudflare add-in:
+   1. In the [Microsoft 365 Apps admin center](https://config.office.com/), go to **Microsoft 365 Admin Center** > **Settings** > **Integrated Apps**.
+   2. Select **Upload custom apps**. For the application type, choose _Office Add-in_.
+   3. Select **Upload manifest file (.xml) from device**.
+   4. Upload the Cloudflare add-in file.
+   5. Verify and complete the wizard.
+5. Confirm the Cloudflare add-in was configured in Microsoft 365.
+
+After configuring the Cloudflare add-in in Microsoft 365, you can select **Add a policy** to create an [outbound DLP policy](#create-an-outbound-policy).
+
+:::note
+The Cloudflare add-in can take up to 24 hours to propagate after install.
+:::
+
+## Create an outbound policy
+
+An outbound policy allows you to control outbound email flow.
+
+To create an outbound DLP policy:
+
+1. In [Zero Trust](https://one.dash.cloudflare.com), go to **Email Security** > **Outbound DLP**.
+2. Select **Add a policy**.
+3. Name your policy.
+4. Build an expression to match specific email traffic. For example, you can create a policy that blocks outbound emails containing identifying numbers:
+
+   | Selector            | Operator | Value                                                     | Logic | Action |
+   | ------------------- | -------- | --------------------------------------------------------- | ----- | ------ |
+   | Recipient email     | not in   | `example.com`                                             | And   | Block  |
+   | Matched DLP profile | in       | _Social Security, Insurance, Tax, and Identifier Numbers_ |       |        |
+
+5. (Optional) Choose whether to use the default block message or a custom message.
+6. Select **Create policy**.
+
+After creating your policy, you can modify or reorder your policies in **Email Security** > **Outbound DLP**.
+
+### Selectors
+
+| Selector            | Description                                                                                                                |
+| ------------------- | -------------------------------------------------------------------------------------------------------------------------- |
+| Recipient email     | The intended recipient of an outbound email.                                                                               |
+| Email sender        | The user in your organization sending an email.                                                                            |
+| Matched DLP profile | The [DLP profile](/cloudflare-one/policies/data-loss-prevention/dlp-profiles/) that content of an email matches upon scan. |

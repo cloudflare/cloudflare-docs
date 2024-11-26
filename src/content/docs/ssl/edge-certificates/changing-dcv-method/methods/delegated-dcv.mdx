@@ -31,7 +31,7 @@ You should use Delegated DCV when all of the following conditions are true:
 - Cloudflare is not already [performing DCV automatically](/ssl/edge-certificates/changing-dcv-method/).
 - Your zone is using an [Advanced certificate](/ssl/edge-certificates/advanced-certificate-manager/).
 - Your zone is not using multiple CDN providers.
-- The Certificate Authority is either Google or Let's Encrypt
+- The Certificate Authority is either Google Trust Services, SSL.com, or Let's Encrypt
 
 :::note[Delegated DCV and origin certificates]
 
@@ -64,7 +64,7 @@ _acme-challenge.example.com CNAME example.com.<COPIED_VALIDATION_URL>.
 For example, a certificate covering `example.com`, `*.example.com`, and `sub.example.com` would require the following records.
 
 ```txt
-_acme-challenge.example.com CNAME .example.com.<COPIED_VALIDATION_URL>.
+_acme-challenge.example.com CNAME example.com.<COPIED_VALIDATION_URL>.
 _acme-challenge.sub.example.com CNAME sub.example.com.<COPIED_VALIDATION_URL>.
 ```
 

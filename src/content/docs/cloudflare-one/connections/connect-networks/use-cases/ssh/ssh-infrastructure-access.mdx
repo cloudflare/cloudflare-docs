@@ -25,7 +25,7 @@ import { Tabs, TabItem, Badge, Render } from "~/components";
 To connect your devices to Cloudflare:
 
 1. [Deploy the WARP client](/cloudflare-one/connections/connect-devices/warp/deployment/) on your devices in Gateway with WARP mode.
-2. Install and trust the [Cloudflare root certificate](/cloudflare-one/connections/connect-devices/warp/user-side-certificates/) on your devices.
+2. [Enable the Gateway proxy for TCP](/cloudflare-one/policies/gateway/proxy/#enable-the-gateway-proxy).
 3. [Create device enrollment rules](/cloudflare-one/connections/connect-devices/warp/deployment/device-enrollment/) to determine which devices can enroll to your Zero Trust organization.
 
 ## 3. Route private network IPs through WARP
@@ -40,15 +40,16 @@ To connect your devices to Cloudflare:
 
 <Render file="access/add-infrastructure-app" />
 
-## 6. Add a policy
-
-<Render file="access/add-infrastructure-policy" />
-
-## 7. Configure SSH server
+## 6. Configure SSH server
 
 Next, configure your SSH server to trust the Cloudflare SSH CA. This allows Access to authenticate using short-lived certificates instead of traditional SSH keys.
 
 ### Generate a Cloudflare SSH CA
+
+<Render file="ssh/ssh-proxy-ca-note" />
+
+To generate a Cloudflare SSH CA and get its public key:
+
 <Render file="ssh/ssh-proxy-ca" />
 
 ### Save the public key
@@ -57,16 +58,26 @@ Next, configure your SSH server to trust the Cloudflare SSH CA. This allows Acce
 ### Modify your SSHD config
 <Render file="ssh/modify-sshd" />
 
+:::note
+For certain distributions, such as Amazon Linux 1 (based on RHEL), the certificate file permissions must be set to `600`. You can set file permissions with the following command:
+
+```sh
+chmod 600 /etc/ssh/ca.pub
+```
+:::
+
 ### Restart your SSH server
 <Render file="ssh/restart-server" />
 
-## 8. Connect as a user
+## 7. Connect as a user
 
-Users can use any SSH client to connect to the target, as long as they are logged into the WARP client on their device. Users do not need to modify any SSH configs on their device. For example, to SSH from a terminal:
+Users can use any SSH client to connect to the target, as long as they are logged into the WARP client on their device. If the target is located within a particular virtual network, ensure that the WARP client is [connected to that virtual network](/cloudflare-one/connections/connect-networks/private-net/cloudflared/tunnel-virtual-networks/#connect-to-a-virtual-network) before initiating the connection. Users do not need to modify any SSH configs on their device. For example, to SSH from a terminal:
 
 ```sh
 ssh <username>@<target IP>
 ```
+
+SSH with Access for Infrastructure also supports `scp` and `rsync` commands. At this time, `sftp` is not supported.
 
 For more information, refer to the [Access for Infrastructure documentation](/cloudflare-one/applications/non-http/infrastructure-apps/#connect-as-a-user).
 
@@ -119,5 +130,3 @@ To manually retrieve logs:
 2. Select a user who was allowed to access the target.
 3. Select **Download** to download the session's command log.
 4. <Render file="ssh/decrypt-ssh-log" />
-
-Enterprise customers can also export command logs using [Logpush](/cloudflare-one/insights/logs/logpush/).

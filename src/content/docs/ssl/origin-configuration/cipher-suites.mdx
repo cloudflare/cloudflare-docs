@@ -13,9 +13,9 @@ description: Review a list of cipher suites that Cloudflare presents to origins
 
 Refer to the following list to know what cipher suites Cloudflare presents to origin servers during an SSL/TLS handshake.
 
-:::undefined
+:::note
 
-Refer to [cipher suites supported at Cloudflare's global network](/ssl/edge-certificates/additional-options/cipher-suites/supported-cipher-suites/) to know what cipher suites Cloudflare presents to browsers and other user agents. 
+Refer to [cipher suites supported at Cloudflare's global network](/ssl/edge-certificates/additional-options/cipher-suites/supported-cipher-suites/) to know what cipher suites Cloudflare presents to browsers and other user agents.
 :::
 
 The list order is based on how the cipher suites appear in the [ClientHello](https://www.cloudflare.com/learning/ssl/what-happens-in-a-tls-handshake/#:~:text=client%20hello), communicating Cloudflare's preference.
@@ -47,7 +47,7 @@ However, if you want to ensure that your origin server supports the same cipher 
 ```txt
 ssl_protocols TLSv1 TLSv1.1 TLSv1.2 TLSv1.3;
 ssl_ecdh_curve X25519:P-256:P-384;
-ssl_ciphers '[ECDHE-ECDSA-AES128-GCM-SHA256|ECDHE-ECDSA-CHACHA20-POLY1305|ECDHE-RSA-AES128-GCM-SHA256|ECDHE-RSA-CHACHA20-POLY1305]:ECDHE+AES128:RSA+AES128:ECDHE+AES256:RSA+AES256:ECDHE+3DES:RSA+3DES';
+ssl_ciphers ECDHE-ECDSA-AES128-GCM-SHA256:ECDHE-ECDSA-CHACHA20-POLY1305:ECDHE-RSA-AES128-GCM-SHA256:ECDHE-RSA-CHACHA20-POLY1305:ECDHE+AES128:RSA+AES128:ECDHE+AES256:RSA+AES256:ECDHE+3DES:RSA+3DES;
 ssl_prefer_server_ciphers on;
 ```
 

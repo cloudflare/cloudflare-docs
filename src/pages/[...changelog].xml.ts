@@ -79,7 +79,8 @@ export const GET: APIRoute = async (context) => {
 							`Changelog entry points to ${link.slice(1, -1)} but unable to find entry with that slug`,
 						);
 
-					description = (await entryToString(page)) ?? page.body;
+					description =
+						(await entryToString(page, context.locals)) ?? page.body;
 				} else {
 					description = entry.description;
 				}

@@ -1,0 +1,63 @@
+---
+pcx_content_type: reference
+title: Build Image
+description: Understand the build image used in Workers Builds.
+sidebar:
+  order: 4
+---
+
+Workers Builds uses a build image with support for a variety of languages and tools such as Node.js, Python, PHP, Ruby, and Go.
+
+## Supported Languages and Tools
+
+In the following table, review the preinstalled versions for languages and tools included in the Cloudflare Workers' build image, and the environment variables and/or files available for [overriding the preinstalled version](/workers/ci-cd/builds/build-image/#overriding-default-versions):
+
+| Tool        | Default version  | Environment variable | File                         |
+| ----------- | ---------------- | -------------------- | ---------------------------- |
+| **Go**      | 1.23.0           | `GO_VERSION`         |                              |
+| **Node.js** | 22               | `NODE_VERSION`       | .nvmrc, .node-version        |
+| **Python**  | 3.12.5           | `PYTHON_VERSION`     | .python-version, runtime.txt |
+| **Ruby**    | 3.3.5            | `RUBY_VERSION`       | .ruby-version                |
+| **Bun**     | 1.1.28           | `BUN_VERSION`        |                              |
+| **Hugo**    | extended_0.134.3 | `HUGO_VERSION`       |                              |
+
+The default versions will be updated regularly to the latest minor version. No major version updates will be made without notice. If you need a specific minor version, please specify it by overriding the default version.
+
+### Overriding Default Versions
+
+If you need to override a [specific version](/workers/ci-cd/builds/build-image/#overriding-default-versions) of a language or tool within the image, you can specify it as a [build environment variable](/workers/ci-cd/builds/configuration/#build-settings), or set the relevant file in your source code as shown above.
+
+To set the version using a build environment variables, you can:
+
+1. Find the environment variable name for the language or tool and desired version (e.g. `NODE_VERSION = 22`)
+2. Add and save the environment variable on the dashboard by going to **Settings** > **Build** > **Build Variables and Secrets** in your Workers project
+
+Or, to set the version by adding a file to your project, you can:
+
+1. Find the filename for the language or tool (e.g. `.nvmrc`)
+2. Add the specified file name to the root directory and set the desired version number as the file's content. For example, if the version number is 22, the file should contain '22'.
+
+## Pre-installed Packages
+
+In the following table, review the pre-installed packages in the build image. The packages are installed with `apt`, a package manager for Linux distributions.
+
+|                   |                   |                   |
+| ----------------- | ----------------- | ----------------- |
+| `curl`            | `libbz2-dev`      | `libreadline-dev` |
+| `git`             | `libc++1`         | `libssl-dev`      |
+| `git-lfs`         | `libdb-dev`       | `libvips-dev`     |
+| `unzip`           | `libgdbm-dev`     | `libyaml-dev`     |
+| `autoconf`        | `libgdbm6`        | `tzdata`          |
+| `build-essential` | `libgbm1`         | `wget`            |
+| `bzip2`           | `libgmp-dev`      | `zlib1g-dev`      |
+| `gnupg`           | `liblzma-dev`     | `zstd`            |
+| `libffi-dev`      | `libncurses5-dev` |                   |
+
+## Build Environment
+
+Workers Builds are run in the following environment:
+
+|                       |              |
+| --------------------- | ------------ |
+| **Build Environment** | Ubuntu 24.04 |
+| **Architecture**      | x86_64       |
