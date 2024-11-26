@@ -53,6 +53,14 @@ Requests with an attack score of `100` will have a class of _Unscored_ in the Cl
 
 Attack score automatically detects and decodes Base64, JavaScript (Unicode escape sequences), and URL encoded content anywhere in the request: URL, headers, and body.
 
+## Rule recommendations
+
+Cloudflare does not recommend that you block traffic solely based on the WAF Attack Score for all values below `50`, since the _Likely attack_ range (scores between `21` and `50`) tends to have false positives. If you want to block traffic based on this score, do one of the following:
+
+- Use a more strict WAF Attack Score value in your expression. For example, block traffic with a WAF attack score below `20` or below `15` (you may need to adjust the exact threshold).
+
+- Combine a filter such as `WAF Attack Score less than 50` with other filters when blocking incoming traffic. For example, check for a specific URI path in your expression or use bot score.
+
 ---
 
 ## Start using WAF attack score
