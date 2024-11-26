@@ -67,13 +67,23 @@ Cloudflare does not recommend that you block traffic solely based on the WAF Att
 
 ### 1. Create a custom rule
 
-If you are an Enterprise customer:
+If you are an Enterprise customer, create a [WAF custom rule](/waf/custom-rules/create-dashboard/) that blocks requests with a **WAF Attack Score** less than or equal to 20 (recommended initial threshold). For example:
 
-- Create a [WAF custom rule](/waf/custom-rules/create-dashboard/) that logs all requests with a WAF Attack Score below 40 (recommended initial threshold). For example, set the rule expression to `cf.waf.score lt 40` and the rule action to _Log_.
+| Field            | Operator              | Value |
+| ---------------- | --------------------- | ----- |
+| WAF Attack Score | less than or equal to | `20`  |
 
-If you are a Business customer:
+- Equivalent rule expression: `cf.waf.score le 20`
+- Action: _Block_
 
-- Create a [WAF custom rule](/waf/custom-rules/create-dashboard/) matching requests with a WAF Attack Score Class of _Attack_. For example, set the rule expression to `cf.waf.score.class eq "attack"` and the rule action to a challenge action (such as _Managed Challenge_) or _Block_.
+Business customers must create a custom rule with the **WAF Attack Score Class** field instead. For example, use this field to block incoming requests with a score class of _Attack_:
+
+| Field                  | Operator | Value    |
+| ---------------------- | -------- | -------- |
+| WAF Attack Score Class | equals   | `Attack` |
+
+- Equivalent rule expression: `cf.waf.score.class eq "attack"`
+- Action: _Block_
 
 ### 2. Monitor domain traffic
 
