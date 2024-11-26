@@ -89,16 +89,12 @@ Leave the **Query** > **Rewrite to** > _Static_ field empty.
 
 ## Pass every image requested on your zone through Images
 
-:::note
-This feature requires a Business or Enterprise plan to enable regular expressions in Transform Rules. Refer to [Cloudflare Transform Rules Availability](/rules/transform/#availability) for more information.
-:::
-
 This example lets you transform every image that is requested on your zone with the `format=auto` option:
 
 ```txt
-(http.request.uri.path.extension matches "(jpg)|(jpeg)|(png)|(gif)") and (not (any(http.request.headers["via"][*] contains "image-resizing")))
+(http.request.uri.path.extension in {"jpg" "jpeg" "png" "gif"}) and (not (any(http.request.headers["via"][*] contains "image-resizing")))
 ```
 
 ```txt title="Text in Path > Rewrite to > Dynamic"
-regex_replace(http.request.uri.path, "/(.*)", "/cdn-cgi/image/format=auto/${1}")
+concat("/cdn-cgi/image/format=auto", http.request.uri.path)
 ```
