@@ -38,7 +38,7 @@ You can use these fields in expressions of [custom rules](/waf/custom-rules/) an
 - A score of `99` indicates that the request is likely clean.
 - A score of `100` indicates that the Cloudflare WAF did not score the request.
 
-The available scores are independent of each other. Namely, the WAF Attack Score is not a sum of the other scores.
+The individual attack scores (such as WAF SQLi Attack Score and XSS Attack Score) are independent of each other. Additionally, the global WAF Attack Score is related to individual scores, but does not result from a direct calculation.
 
 The WAF Attack Score Class field can have one of the following values, depending on the calculated request attack score:
 
@@ -59,7 +59,7 @@ Cloudflare does not recommend that you block traffic solely based on the WAF Att
 
 - Use a more strict WAF Attack Score value in your expression. For example, block traffic with a WAF attack score below `20` or below `15` (you may need to adjust the exact threshold).
 
-- Combine a filter such as `WAF Attack Score less than 50` with other filters when blocking incoming traffic. For example, check for a specific URI path in your expression or use bot score.
+- Combine a higher WAF Attack Score threshold with additional filters when blocking incoming traffic. For example, include a check for a specific URI path in your expression or use bot score as part of your criteria.
 
 ---
 
