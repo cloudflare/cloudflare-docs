@@ -73,7 +73,6 @@ import { Tabs, TabItem, Details } from '~/components';
     ```tf
 		resource "vault_generic_secret" "example_service_token" {
 			path         = "kv/cloudflare/example_service_token"
-			disable_read = true
 
 			data_json = jsonencode({
 				"CLIENT_ID"     = cloudflare_access_service_token.example_service_token.client_id
