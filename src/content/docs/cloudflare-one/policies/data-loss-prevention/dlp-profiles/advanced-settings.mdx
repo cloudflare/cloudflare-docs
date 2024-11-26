@@ -21,6 +21,12 @@ Confidence level is set on the DLP profile. When you select a confidence level i
 
 DLP confidence detections consist of Low, Medium, and High confidence levels. DLP will default to Low confidence detections, which are based on regular expressions, require few keywords, and will trigger more often. Medium and High confidence detections require more keywords, will trigger less often, and have a higher likelihood of accuracy.
 
+To change the confidence level of a DLP profile:
+
+1. In [Zero Trust](https://one.dash.cloudflare.com/), go to **DLP** > **DLP profiles**.
+2. Select the profile, then select **Edit**.
+3. In **Advanced settings** > **Confidence Level**, choose a new confidence level from the dropdown menu.
+
 Setting the confidence to Low will also consider Medium and High confidence detections as matches. Setting the confidence to Medium or High will filter out lower confidence detections.
 
 ### Gateway detections
