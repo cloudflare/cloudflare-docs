@@ -22,23 +22,24 @@ This feature is available to Enterprise customers. Business plans have access to
 
 ## Available scores
 
-The Cloudflare WAF provides the following attack scores:
+The Cloudflare WAF provides the following attack score fields:
 
-| Score                  | Minimum plan required | Attack vector               | Field                                                                                         |
-| ---------------------- | --------------------- | --------------------------- | --------------------------------------------------------------------------------------------- |
-| WAF Attack Score       | Enterprise            | N/A (global score)          | [`cf.waf.score`](/ruleset-engine/rules-language/fields/dynamic-fields/#cfwafscore)            |
-| WAF SQLi Attack Score  | Enterprise            | SQL injection (SQLi)        | [`cf.waf.score.sqli`](/ruleset-engine/rules-language/fields/dynamic-fields/#cfwafscoresqli)   |
-| WAF XSS Attack Score   | Enterprise            | Cross-site scripting (XSS)  | [`cf.waf.score.xss`](/ruleset-engine/rules-language/fields/dynamic-fields/#cfwafscorexss)     |
-| WAF RCE Attack Score   | Enterprise            | Remote Code Execution (RCE) | [`cf.waf.score.rce`](/ruleset-engine/rules-language/fields/dynamic-fields/#cfwafscorerce)     |
-| WAF Attack Score Class | Business              | N/A (global classification) | [`cf.waf.score.class`](/ruleset-engine/rules-language/fields/dynamic-fields/#cfwafscoreclass) |
+| Score                  | Data type | Minimum plan required | Attack vector               | Field                                                                                         |
+| ---------------------- | --------- | --------------------- | --------------------------- | --------------------------------------------------------------------------------------------- |
+| WAF Attack Score       | Number    | Enterprise            | N/A (global score)          | [`cf.waf.score`](/ruleset-engine/rules-language/fields/dynamic-fields/#cfwafscore)            |
+| WAF SQLi Attack Score  | Number    | Enterprise            | SQL injection (SQLi)        | [`cf.waf.score.sqli`](/ruleset-engine/rules-language/fields/dynamic-fields/#cfwafscoresqli)   |
+| WAF XSS Attack Score   | Number    | Enterprise            | Cross-site scripting (XSS)  | [`cf.waf.score.xss`](/ruleset-engine/rules-language/fields/dynamic-fields/#cfwafscorexss)     |
+| WAF RCE Attack Score   | Number    | Enterprise            | Remote Code Execution (RCE) | [`cf.waf.score.rce`](/ruleset-engine/rules-language/fields/dynamic-fields/#cfwafscorerce)     |
+| WAF Attack Score Class | String    | Business              | N/A (global classification) | [`cf.waf.score.class`](/ruleset-engine/rules-language/fields/dynamic-fields/#cfwafscoreclass) |
 
-You can use these fields in expressions of [custom rules](/waf/custom-rules/) and [rate limiting rules](/waf/rate-limiting-rules/) where:
+You can use these fields in expressions of [custom rules](/waf/custom-rules/) and [rate limiting rules](/waf/rate-limiting-rules/). Attack score fields of data type `Number` vary between `1` and `99` with the following meaning:
 
 - A score of `1` indicates that the request is almost certainly malicious.
 - A score of `99` indicates that the request is likely clean.
-- A score of `100` indicates that the Cloudflare WAF did not score the request.
 
-The individual attack scores (such as WAF SQLi Attack Score and XSS Attack Score) are independent of each other. Additionally, the global WAF Attack Score is related to individual scores, but does not result from a direct calculation.
+The special score `100` indicates that the Cloudflare WAF did not score the request.
+
+The global WAF Attack Score is mathematically derived from individual attack scores (for example, from SQLi Attack Score and XSS Attack Score), reflecting their interdependence. However, the global score is not a sum of individual scores. A low global score usually indicates medium to low individual scores, while a high global score suggests higher individual scores.
 
 The WAF Attack Score Class field can have one of the following values, depending on the calculated request attack score:
 
@@ -49,7 +50,7 @@ The WAF Attack Score Class field can have one of the following values, depending
 | _Likely clean_  | `likely_clean`  | Attack score between `51` and `80`. |
 | _Clean_         | `clean`         | Attack score between `81` and `99`. |
 
-Requests with an attack score of `100` will have a class of _Unscored_ in the Cloudflare dashboard, but you cannot use this class value in rule expressions.
+Requests with the special attack score `100` will show a WAF Attack Score Class of _Unscored_ in the Cloudflare dashboard, but you cannot use this class value in rule expressions.
 
 Attack score automatically detects and decodes Base64, JavaScript (Unicode escape sequences), and URL encoded content anywhere in the request: URL, headers, and body.
 
