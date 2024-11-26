@@ -40,4 +40,4 @@ Managed public bucket access through an `r2.dev` subdomain is not intended for p
 * If you exceed the rate limit (hundreds of requests/second), requests to your `r2.dev` endpoint will be temporarily throttled and you will receive a `429 Too Many Requests` response.
 * Bandwidth (throughput) may also be throttled when using the `r2.dev` endpoint.
 
-For production use cases, connect a [custom domain](/r2/buckets/public-buckets/#custom-domains) to your bucket. Custom domains allow you to serve content from a domain you control (e.g. `assets.example.com`), configure fine-grained caching, set up redirect and rewrite rules, mutate content via [Cloudflare Workers](/workers/), and get detailed URL-level analytics for content served from your R2 bucket.
+For production use cases, connect a [custom domain](/r2/buckets/public-buckets/#custom-domains) to your bucket. Custom domains allow you to serve content from a domain you control (for example, `assets.example.com`), configure fine-grained caching, set up redirect and rewrite rules, mutate content via [Cloudflare Workers](/workers/), and get detailed URL-level analytics for content served from your R2 bucket.
