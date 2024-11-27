@@ -35,25 +35,25 @@ Some browsers either require a browser extension or cannot generate a HAR. When 
 
 1. In a browser page viewed in Incognito Mode, right-click anywhere and select **Inspect Element**.
 
-2. The developer tools either appear at the bottom or left side of the browser. Click the **Network** tab.
+2. The Chrome DevTools appear either at the bottom, or left side of the browser. Click the **Network** tab.
 
 ![HAR network tab screenshot from Chrome developer tools](~/assets/images/support/gathering_har_file_network.png)
 
-3. Check **Preserve log**. Please also check **_Disable cache_** if you are reporting a Cloudflare Cache issue.
+3. Check **Preserve log**. Please also check **Disable cache** if you are reporting a Cloudflare Cache issue.
 
 4. Click record.
 
 ![HAR record button in chrome dev tools.](~/assets/images/support/gathering_har_file_record.png)
 
-5. Browse to the URL that causes issues. Once the issue is experienced, at the top of dev tools click the "Export HAR" option.
+5. Browse to the URL that causes issues. Once the issue is experienced, click the "Export HAR" option at the top of DevTools.
 
-![export HAR option in Chrome developer tools.](~/assets/images/support/export_har_chrome.png)
+![`export HAR` option in Chrome DevTools](~/assets/images/support/export_har_chrome.png).
 
 6. Attach the HAR file to your support ticket.
 
 :::note
 
-As of Chrome 130 this exports a sanitized HAR with redacted cookies and personalised data. To disable this you can go to Dev Tools **Settings** > **Preferences** > **Network** > **Allow to generate HAR with sensitive data**
+As of Chrome 130, this exports a sanitized HAR with redacted cookies and personalised data. To disable this, go to DevTools **Settings** > **Preferences** > **Network** > **Allow to generate HAR with sensitive data**.
 
 :::
 
@@ -67,7 +67,7 @@ As of Chrome 130 this exports a sanitized HAR with redacted cookies and personal
 
 ### In Microsoft Edge
 
-1. In a Private window, navigate to **Developer tools** (use _F12_ as a shortcut) and select the **Network** tab.
+1. In a Private window, navigate to **Developer tools** (use `F12` as a shortcut) and select the **Network** tab.
 
 2. Browse to the URL that causes issues.
 
@@ -125,10 +125,10 @@ In certain situations when request is not issued or cancelled by the browser (fo
 
 ### In Chrome
 
-1. Go to the **Console** tab from the Developer Tools bar.
+1. Go to the **Console** tab from the DevTools bar.
 2. Go to the Console Settings and select **Preserve Log**.
 3. Leave the console open and perform the steps that reproduce the issue.
-4. Right click on any of the items within the **Console** tab and select **Save as** log file.
+4. Right-click on any of the items within the **Console** tab and select **Save as** log file.
 5. Attach the log file to your support ticket.
 
 ![How to find the console tab in Chrome's developer tools.](~/assets/images/support/console_snapshot.png)
@@ -243,7 +243,7 @@ assistance.
 
 ### Performance
 
-curl measures latency or performance degradation for HTTP/HTTPS requests via the [_-w_ or _--write-out_ curl option](https://curl.haxx.se/docs/manpage.html#-w). The example curl below measures several performance vectors in the request transaction such as duration of the TLS handshake, DNS lookup, redirects, transfers, etc:
+curl measures latency or performance degradation for HTTP/HTTPS requests via the [`-w` or `--write-out` curl option](https://curl.haxx.se/docs/manpage.html#-w). The example curl below measures several performance vectors in the request transaction such as duration of the TLS handshake, DNS lookup, redirects, transfers, etc:
 
 ```
 curl -svo /dev/null https://example.com/ -w "\nContent Type: %{content_type} \
@@ -330,7 +330,7 @@ For more details, refer to [Pause Cloudflare](/fundamentals/setup/manage-domains
 
 ## Perform a traceroute
 
-Traceroute is a network diagnostic tool that measures the route latency of packets across a network. Most operating systems support the _traceroute_ command. If you experience connectivity issues with your Cloudflare-proxied website and [ask Cloudflare Support for assistance](/support/contacting-cloudflare-support/), ensure to provide output from a traceroute.
+Traceroute is a network diagnostic tool that measures the route latency of packets across a network. Most operating systems support the `traceroute` command. If you experience connectivity issues with your Cloudflare-proxied website and [ask Cloudflare Support for assistance](/support/contacting-cloudflare-support/), ensure to provide output from a traceroute.
 
 :::note
 
