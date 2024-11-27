@@ -409,7 +409,7 @@ When using Terraform to create a policy with the [Do Not Inspect](#do-not-inspec
 
 <Render
 	file="gateway/selectors/net-http-content-categories"
-	params={{ one: "http.conn" }}
+	params={{ APIendpoint: "http.conn.content_category" }}
 />
 
 ### Destination Continent
@@ -565,7 +565,10 @@ Some hostnames (`example.com`) will invisibly redirect to the www subdomain (`ww
 
 ### Security Risks
 
-<Render file="gateway/selectors/security-risks" params={{ one: "http.conn" }} />
+<Render
+	file="gateway/selectors/security-risks"
+	params={{ APIendpoint: "http.conn.security_category" }}
+/>
 
 ### Source Continent
 

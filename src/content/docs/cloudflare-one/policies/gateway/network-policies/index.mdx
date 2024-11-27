@@ -234,7 +234,7 @@ Gateway matches network traffic against the following selectors, or criteria.
 
 <Render
 	file="gateway/selectors/net-http-content-categories"
-	params={{ one: "net.fqdn" }}
+	params={{ APIendpoint: "net.fqdn.content_category" }}
 />
 
 ### Destination Continent
@@ -283,7 +283,10 @@ To enable Gateway filtering on TCP and UDP, go to **Settings** > **Network** > *
 
 ### Security Risks
 
-<Render file="gateway/selectors/security-risks" params={{ one: "net.fqdn" }} />
+<Render
+	file="gateway/selectors/security-risks"
+	params={{ APIendpoint: "net.fqdn.security_category" }}
+/>
 
 ### SNI
 
