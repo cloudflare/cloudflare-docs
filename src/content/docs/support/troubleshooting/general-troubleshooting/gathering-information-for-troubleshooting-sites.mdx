@@ -45,11 +45,17 @@ Some browsers either require a browser extension or cannot generate a HAR. When 
 
 ![HAR record button in chrome dev tools.](~/assets/images/support/gathering_har_file_record.png)
 
-5. Browse to the URL that causes issues. Once the issue is experienced, right click on any of the items within the **Network** tab and select **Save all as HAR with Content**.
+5. Browse to the URL that causes issues. Once the issue is experienced, at the top of dev tools click the "Export HAR" option.
 
-![HAR save menu in Chrome developer tools.](~/assets/images/support/gathering_har_file_save.png)
+![export HAR option in Chrome developer tools.](~/assets/images/support/export_har_chrome.png)
 
 6. Attach the HAR file to your support ticket.
+
+:::note
+
+As of Chrome 130 this exports a sanitized HAR with redacted cookies and personalised data. To disable this you can go to Dev Tools **Settings** > **Preferences** > **Network** > **Allow to generate HAR with sensitive data**
+
+:::
 
 ### In Firefox
 
