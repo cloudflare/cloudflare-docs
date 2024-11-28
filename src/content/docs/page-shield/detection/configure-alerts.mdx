@@ -31,8 +31,8 @@ When you set the **Policies of these zones** filter in a Page Shield alert, you 
 
 For each alert configured with a filter, Page Shield will do the following:
 
-1. Check which allow policies in a zone match the incoming request, according to their expression.
-2. For every matching policy, compare the URL of the new/changed resource against the allowed sources in the policy.
+1. Check which allow policies in a zone are enabled.
+2. For every enabled policy, compare the URL of the new/changed resource against the allowed sources in the policy.
 3. If the resource is allowed by the policy, check if the new/modified resource should trigger the current Page Shield alert.
 4. If the alert should trigger, send an alert notification to the configured destinations.
 
@@ -43,7 +43,6 @@ When you set the Policies of these zones filter in an alert you will not receive
 You will not receive notifications for alerts configured with a **Policies of these zones** filter in the following cases:
 
 - No configured policies in the zone
-- The expression of a policy does not match the incoming request
 - Policy configured in log mode
 - Policy is not enabled
 
