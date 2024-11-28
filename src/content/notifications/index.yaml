@@ -436,7 +436,7 @@ entries:
     limitations: |-
       Traffic Monitoring alerts are not sent for each individual events, but only when a spike in traffic reaches the threshold for an alert to be sent.
 
-      These thresholds cannot be configured. Service level objectives (SLOs) are used to determine the threshold.
+      For every account with this alert set up, you will not receive duplicate alerts within the same four-hour time frame. The alert received will contain the most recent set of origins returning 521s.
 
   - name: Traffic Anomalies Alert
     audience: Enterprise customers who want to receive a notification when one zone is experiencing an unexpected spike or drop in traffic. Refer to [HTTP Traffic Alerts](/notifications/reference/traffic-alerts/) for more information.
