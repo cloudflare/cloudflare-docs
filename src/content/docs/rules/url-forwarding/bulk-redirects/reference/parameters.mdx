@@ -5,7 +5,7 @@ sidebar:
   order: 3
 ---
 
-import { Type } from "~/components";
+import { Type, MetaInfo } from "~/components";
 
 A URL redirect has a source URL, a target URL, a status code, and some additional parameters that affect its URL matching behavior and runtime behavior.
 
@@ -34,9 +34,9 @@ For more information on the supported URL components, refer to [Supported URL co
 
 ## Subpath matching
 
-API field: `subpath_matching` <Type text="Boolean" />
+API field: `subpath_matching` <Type text="Boolean" /> <MetaInfo text="default: false" />
 
-If `true`, the current redirect will apply the subpath matching algorithm to the request URL when determining if there is a match for the current URL redirect. The default value is `false`.
+If `true`, the current redirect will apply the subpath matching algorithm to the request URL when determining if there is a match for the current URL redirect.
 
 For example, a URL redirect from `/my-folder/` to `/other-folder/` with **Subpath matching** enabled will also redirect a request from `/my-folder/item` to `/other-folder/item`. However, the redirect will only include the `item` part when [**Preserve path suffix**](#preserve-path-suffix) is `true`.
 
@@ -44,9 +44,9 @@ For more information, refer to [Matching the source URL of redirects](/rules/url
 
 ## Include subdomains
 
-API field: `include_subdomains` <Type text="Boolean" />
+API field: `include_subdomains` <Type text="Boolean" /> <MetaInfo text="default: false" />
 
-If `true`, the source URL hostname will also apply to any subdomains — the redirect will match for all subdomains to the left of the domain portion of the source URL, as well as the specified domain. The default value is `false`.
+If `true`, the source URL hostname will also apply to any subdomains — the redirect will match for all subdomains to the left of the domain portion of the source URL, as well as the specified domain.
 
 For example, a redirect with source URL defined as `http://example.com/about` will also apply to requests with source URL `http://a.example.com/about` or `http://a.b.example.com/about`.
 
@@ -54,25 +54,25 @@ For more information, refer to [Matching the source URL of redirects](/rules/url
 
 ## Preserve query string
 
-API field: `preserve_query_string` <Type text="Boolean" />
+API field: `preserve_query_string` <Type text="Boolean" /> <MetaInfo text="default: false" />
 
-If `true`, the redirect URL will keep the query string of the original request. The default value is `false`.
+If `true`, the redirect URL will keep the query string of the original request.
 
 For example, a URL redirect from `/my-folder/` to `/other-folder/` with **Preserve query string** enabled will redirect a request from `/my-folder/?name=value` to `/other-folder/?name=value`. If **Preserve query string** is disabled, the request will be redirected from `/my-folder/?name=value` to `/other-folder/`.
 
 ## Preserve path suffix
 
-API field: `preserve_path_suffix` <Type text="Boolean" />
+API field: `preserve_path_suffix` <Type text="Boolean" /> <MetaInfo text="default: true" />
 
-Applicable only when [**Subpath matching**](#subpath-matching) is enabled. If `true`, defines that the redirect URL will include the remaining (non-matched) path elements of the source URL, if any. The default value is `true`.
+Applicable only when [**Subpath matching**](#subpath-matching) is enabled. If `true`, defines that the redirect URL will include the remaining (non-matched) path elements of the source URL, if any.
 
 For example, when both **Subpath matching** and **Preserve path suffix** are enabled, a URL redirect from `/my-folder/` to `/another-folder/` will redirect an incoming request from `/my-folder/foo` to `/another-folder/foo`. If **Preserve path suffix** is disabled, the same request would still match the URL redirect, but it would redirect from `/my-folder/foo` to `/another-folder/`.
 
 ## Status code
 
-API field: `status_code` <Type text="Integer" />
+API field: `status_code` <Type text="Integer" /> <MetaInfo text="default: 301" />
 
-The HTTP status code returned to the client when redirecting. The default value is `301`.
+The HTTP status code returned to the client when redirecting.
 
 The value must be one of the following:
 
