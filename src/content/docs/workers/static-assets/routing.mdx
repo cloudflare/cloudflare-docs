@@ -17,7 +17,11 @@ import {
 	Tabs,
 } from "~/components";
 
-Assets are served by attempting to match up the incoming request's pathname to a static asset. The structure and organization of files in your static asset directory, along with any routing configuration, determine the routing paths for your application. When a request invokes a Worker with assets:
+import { WranglerConfig } from "~/components";
+
+## Default behavior
+
+By default, assets are served by attempting to match up the incoming request's pathname to a static asset. The structure and organization of files in your static asset directory, along with any routing configuration, determine the routing paths for your application. When a request invokes a Worker with assets:
 
 1. If a request is found with a matching path to the current route requested then that asset will always be served.
 
@@ -32,6 +36,62 @@ If a Worker is configured, and there are no assets that match the current route 
 In this example, request to `example.com/api` doesn't match a static asset so the Worker is invoked.
 
 ![A request to `example.com/blog` runs the Worker.](~/assets/images/workers/platform/assets/workers-assets-invoke-worker.png)
+
+## Invoking Worker Script Ahead of Assets
+
+You may wish to run code before assets are served. This is often the case when implementing authentication, logging, personalization, internationalization, or other similar functions. [`experimental_serve_directly`](/workers/static-assets/binding/#experimental_serve_directly) is a configuration option available in `wrangler.toml` which controls this behavior. When disabled, `experimental_serve_directly = false` will invoke your Worker's code, regardless of any assets that would have otherwise matched.
+
+Take the following directory structure, wrangler.toml, and user Worker code:
+
+<FileTree>
+
+- wrangler.toml
+- package.json
+- public
+  - supersecret.txt
+- src
+  - index.ts
+
+</FileTree>
+
+<WranglerConfig>
+
+```toml title="wrangler.toml"
+name = "my-worker"
+compatibility_date = "2024-09-19"
+main = "src/index.ts"
+assets = { directory = "./public/", binding = "ASSETS", experimental_serve_directly = false }
+```
+
+</WranglerConfig>
+
+```js
+export default {
+  async fetch(
+    request: Request,
+    env: Env,
+    ctx: ExecutionContext
+  ): Promise<Response> {
+    const url = new URL(request.url);
+    if (url.pathname === "/supersecret.txt") {
+      const auth = request.headers.get("Authorization");
+      if (!auth) {
+        return new Response("Forbidden", {
+          status: 403,
+          statusText: "Forbidden",
+          headers: {
+            "Content-Type": "text/plain",
+          },
+        });
+      }
+    }
+
+    return await env.ASSETS.fetch(request);
+  },
+};
+```
+
+In this example, any request will be routed to our user Worker, due to `experimental_serve_directly` being disabled. As a result, any request being made `/supersecret.txt` without an `Authorization` header will result in a 403.
 
 ## Routing configuration
 
@@ -61,11 +121,13 @@ If you have custom 404 HTML pages, and configure `not_found_handling` to `"404-p
 
 Take the following directory structure:
 
-```
-|---- file.html
-|---- folder
-      |___ index.html
-```
+<FileTree>
+
+- file.html
+- folder
+  - index.html
+
+</FileTree>
 
 Based on the incoming requests, the following assets would be served:
 
@@ -99,8 +161,6 @@ Alternate configuration options are outlined on this page and can be specified i
 
 Example `wrangler.toml` configuration:
 
-import { WranglerConfig } from "~/components";
-
 <WranglerConfig>
 
 ```toml title="wrangler.toml"
@@ -113,11 +173,13 @@ assets = { directory = "./public", binding = "ASSETS", html_handling = "force-tr
 
 Take the following directory structure:
 
-```
-|---- file.html
-|---- folder
-      |___ index.html
-```
+<FileTree>
+
+- file.html
+- folder
+  - index.html
+
+</FileTree>
 
 **`html_handling: "auto-trailing-slash"`**
 
@@ -191,12 +253,14 @@ Based on the incoming requests, the following assets would be served:
 
 Take the following directory structure:
 
-```
-|---- 404.html
-|---- index.html
-|---- folder
-      |___ 404.html
-```
+<FileTree>
+
+- 404.html
+- index.html
+- folder
+  - 404.html
+
+</FileTree>
 
 **`not_found_handling: "none"`**
 

@@ -17,6 +17,8 @@ import {
 	Tabs,
 } from "~/components";
 
+import { WranglerConfig } from "~/components";
+
 Configuring a Worker with assets requires specifying a [directory](/workers/static-assets/binding/#directory) and, optionally, an [assets binding](/workers/static-assets/binding/), in your Worker's `wrangler.toml` file. The [assets binding](/workers/static-assets/binding/) allows you to dynamically fetch assets from within your Worker script (e.g. `env.ASSETS.fetch()`), similarly to how you might with a make a `fetch()` call with a [Service binding](/workers/runtime-apis/bindings/service-bindings/http/).
 
 Only one collection of static assets can be configured in each Worker.
@@ -24,8 +26,6 @@ Only one collection of static assets can be configured in each Worker.
 ## `directory`
 
 The folder of static assets to be served. For many frameworks, this is the `./public/`, `./dist/`, or `./build/` folder.
-
-import { WranglerConfig } from "~/components";
 
 <WranglerConfig>
 
@@ -59,6 +59,23 @@ _headers
 ```
 
 Now Wrangler will not upload these files as client-side assets when deploying the Worker.
+
+## `experimental_serve_directly`
+
+Controls whether assets will be served first on a matching request. `experimental_serve_directly = true` ([default](/workers/static-assets/routing/#default-behavior)) will serve any static asset matching a request, while `experimental_serve_directly = false` will unconditionally [invoke your Worker script](/workers/static-assets/routing/#invoking-worker-script-ahead-of-assets).
+
+<WranglerConfig>
+
+```toml title="wrangler.toml"
+name = "my-worker"
+compatibility_date = "2024-09-19"
+main = "src/index.ts"
+ # The following configuration unconditionally invokes the Worker script at
+ # `src/index.ts`, which can programatically fetch assets via the ASSETS binding
+assets = { directory = "./public/", binding = "ASSETS", experimental_serve_directly = false }
+```
+
+</WranglerConfig>
 
 ## `binding`
 

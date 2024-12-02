@@ -981,6 +981,10 @@ The following options are available under the `assets` key.
 
   - The binding name used to refer to the assets. Optional, and only useful when a Worker script is set with `main`.
 
+- `experimental_serve_directly` <Type text="boolean" /> <MetaInfo text="optional, defaults to true" />
+
+  - Controls whether static assets are fetched directly, or a Worker script is invoked. Learn more about fetching assets when using [`experimental_serve_directly`](/workers/static-assets/routing/#invoking-worker-script-ahead-of-assets).
+
 - `html_handling`: <Type text={'"auto-trailing-slash" | "force-trailing-slash" | "drop-trailing-slash" | "none"'} /> <MetaInfo text={'optional, defaults to "auto-trailing-slash"'} />
 
   - Determines the redirects and rewrites of requests for HTML content. Learn more about the various options in [assets routing](/workers/static-assets/routing/#html_handling).
