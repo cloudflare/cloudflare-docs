@@ -23,6 +23,10 @@ To execute your Worker, define the binding.
 
 In the following example, the binding is called `TODO`. In the `kv_namespaces` portion of your `wrangler.toml` file, add:
 
+import { WranglerConfig } from "~/components";
+
+<WranglerConfig>
+
 ```toml
 name = "worker"
 
@@ -32,6 +36,8 @@ kv_namespaces = [
   { binding = "TODO", id = "06779da6940b431db6e566b4846d64db" }
 ]
 ```
+
+</WranglerConfig>
 
 With this, the deployed Worker will have a `TODO` field in their environment object (the second parameter of the `fetch()` request handler). Any methods on the `TODO` binding will map to the KV namespace with an ID of `06779da6940b431db6e566b4846d64db` – which you called `My Tasks` earlier.
 
@@ -54,6 +60,10 @@ When you use Wrangler to develop locally with the `wrangler dev` command, Wrangl
 
 To have `wrangler dev` connect to your Workers KV namespace running on Cloudflare's global network, call `wrangler dev --remote` instead. This will use the `preview_id` of the KV binding configuration in the `wrangler.toml` file. This is how a `wrangler.toml` file looks with the `preview_id` specified.
 
+
+
+<WranglerConfig>
+
 ```toml title="wrangler.toml"
 name = "worker"
 
@@ -63,6 +73,8 @@ kv_namespaces = [
   { binding = "TODO", id = "06779da6940b431db6e566b4846d64db", preview_id="06779da6940b431db6e566b484a6a769a7a" }
 ]
 ```
+
+</WranglerConfig>
 
 ## Access KV from Durable Objects and Workers using ES modules format
 

@@ -238,6 +238,10 @@ To make an authenticated request to Airtable, you need to provide four constants
 
 Add a `vars` table at the end of your `wrangler.toml` file:
 
+import { WranglerConfig } from "~/components";
+
+<WranglerConfig>
+
 ```toml null {7}
 name = "workers-airtable-form"
 main = "src/index.js"
@@ -247,6 +251,8 @@ compatibility_date = "2023-06-13"
 AIRTABLE_BASE_ID = "exampleBaseId"
 AIRTABLE_TABLE_NAME = "Form Submissions"
 ```
+
+</WranglerConfig>
 
 With all these fields submitted, it is time to deploy your Workers serverless function and get your form communicating with it. First, publish your Worker:
 

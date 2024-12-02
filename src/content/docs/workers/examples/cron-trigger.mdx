@@ -48,6 +48,10 @@ Refer to [Cron Triggers](/workers/configuration/cron-triggers/) for more informa
 
 If you are deploying with Wrangler, set the cron syntax (once per hour as shown below) by adding this to your `wrangler.toml` file:
 
+import { WranglerConfig } from "~/components";
+
+<WranglerConfig>
+
 ```toml
 name = "worker"
 
@@ -57,12 +61,20 @@ name = "worker"
 crons = ["0 * * * *"]
 ```
 
+</WranglerConfig>
+
 You also can set a different Cron Trigger for each [environment](/workers/wrangler/environments/) in your `wrangler.toml`. You need to put the `[triggers]` table under your chosen environment. For example:
+
+
+
+<WranglerConfig>
 
 ```toml
 [env.dev.triggers]
 crons = ["0 * * * *"]
 ```
+
+</WranglerConfig>
 
 ## Test Cron Triggers using Wrangler
 

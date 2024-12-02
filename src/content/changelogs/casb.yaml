@@ -1,7 +1,7 @@
 ---
 link: "/cloudflare-one/changelog/casb/"
 productName: CASB
-productLink: "/cloudflare-one/applications/scan-apps/"
+productLink: "/cloudflare-one/applications/casb/"
 productArea: Cloudflare One
 productAreaLink: /cloudflare-one/changelog/
 entries:
@@ -12,7 +12,7 @@ entries:
   - publish_date: "2024-05-23"
     title: Data-at-rest DLP for Box and Dropbox
     description: |-
-      You can now scan your [Box](/cloudflare-one/applications/scan-apps/casb-integrations/box/#data-loss-prevention-optional) and [Dropbox](/cloudflare-one/applications/scan-apps/casb-integrations/dropbox/#data-loss-prevention-optional) files for DLP matches.
+      You can now scan your [Box](/cloudflare-one/applications/casb/casb-integrations/box/#data-loss-prevention-optional) and [Dropbox](/cloudflare-one/applications/casb/casb-integrations/dropbox/#data-loss-prevention-optional) files for DLP matches.
   - publish_date: "2024-04-16"
     title: Export CASB findings to CSV
     description: |-

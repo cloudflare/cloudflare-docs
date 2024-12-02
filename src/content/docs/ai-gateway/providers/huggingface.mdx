@@ -7,13 +7,17 @@ pcx_content_type: get-started
 
 ## Endpoint
 
-`https://gateway.ai.cloudflare.com/v1/{account_id}/{gateway_id}/huggingface`
+```txt
+https://gateway.ai.cloudflare.com/v1/{account_id}/{gateway_id}/huggingface
+```
 
 ## URL structure
 
 When making requests to HuggingFace Inference API, replace `https://api-inference.huggingface.co/models/` in the URL you’re currently using with `https://gateway.ai.cloudflare.com/v1/{account_id}/{gateway_id}/huggingface`. Note that the model you’re trying to access should come right after, for example `https://gateway.ai.cloudflare.com/v1/{account_id}/{gateway_id}/huggingface/bigcode/starcoder`.
 
 ## Examples
+
+### cURL
 
 ```bash title="Request"
 curl https://gateway.ai.cloudflare.com/v1/{account_id}/{gateway_id}/huggingface/bigcode/starcoder \
@@ -23,6 +27,8 @@ curl https://gateway.ai.cloudflare.com/v1/{account_id}/{gateway_id}/huggingface/
     "inputs": "console.log"
 }'
 ```
+
+### Use HuggingFace.js library with JavaScript
 
 If you are using the HuggingFace.js library, you can set your inference endpoint like this:
 

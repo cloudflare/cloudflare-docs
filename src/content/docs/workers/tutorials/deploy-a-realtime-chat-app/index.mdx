@@ -52,21 +52,33 @@ To deploy your application to a custom domain using Wrangler, open your project'
 
 To configure a route in your `wrangler.toml`, add the following to your environment:
 
+import { WranglerConfig } from "~/components";
+
+<WranglerConfig>
+
 ```toml
 routes = [
     { pattern = "example.com/about", zone_id = "<YOUR_ZONE_ID>" }
 ]
 ```
 
+</WranglerConfig>
+
 If you have specified your zone ID in the environment of your `wrangler.toml`, you will not need to write it again in object form.
 
 To configure a subdomain in your `wrangler.toml`, add the following to your environment:
+
+
+
+<WranglerConfig>
 
 ```toml
 routes = [
 	{ pattern = "subdomain.example.com", custom_domain = true }
 ]
 ```
+
+</WranglerConfig>
 
 To test your live application:
 
@@ -78,6 +90,10 @@ To test your live application:
 ## Uninstall your application
 
 To uninstall your chat application, modify your `wrangler.toml` file to remove the `durable_objects` bindings and add a `deleted_classes` migration:
+
+
+
+<WranglerConfig>
 
 ```toml
 [durable_objects]
@@ -93,6 +109,8 @@ new_classes = ["ChatRoom", "RateLimiter"]
 tag = "v2"
 deleted_classes = ["ChatRoom", "RateLimiter"]
 ```
+
+</WranglerConfig>
 
 Then run `npx wrangler deploy`.
 

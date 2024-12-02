@@ -447,10 +447,16 @@ formattedResults = formattedResults?.map((formattedResult, i) => {
 
 Uncomment the following lines from the `wrangler.toml` file in your project:
 
+import { WranglerConfig } from "~/components";
+
+<WranglerConfig>
+
 ```toml
 [ai]
 binding = "AI"
 ```
+
+</WranglerConfig>
 
 Restart the Worker that is running locally, and after doing so, go to your application endpoint:
 

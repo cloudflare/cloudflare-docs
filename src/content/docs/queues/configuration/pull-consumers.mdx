@@ -40,6 +40,10 @@ You can enable HTTP pull or change a queue from push-based to pull-based via `wr
 
 A HTTP consumer can be configured in `wrangler.toml` by setting `type = "http_pull"` in the consumer configuration:
 
+import { WranglerConfig } from "~/components";
+
+<WranglerConfig>
+
 ```toml
 [[queues.consumers]]
 # Required
@@ -50,6 +54,8 @@ visibility_timeout_ms = 5000
 max_retries = 5
 dead_letter_queue = "SOME-OTHER-QUEUE"
 ```
+
+</WranglerConfig>
 
 Omitting the `type` property will default the queue to push-based.
 
@@ -247,28 +253,28 @@ Queues aims to be permissive when it comes to lease IDs: if a consumer acknowled
 
     {/* <!--
 
-    ## Examples
+	## Examples
 
-    ### TypeScript (Node.js)
+	### TypeScript (Node.js)
 
-    The following example is a Node.js-based TypeScript application that pulls from a queue on startup, acknowledges messages after writing them to stdout, and polls the queue at a fixed interval.
+	The following example is a Node.js-based TypeScript application that pulls from a queue on startup, acknowledges messages after writing them to stdout, and polls the queue at a fixed interval.
 
-    In a production application, you could replace writing to stdout with inserting into a database, making HTTP requests to an upstream service, or writing to object storage.
+	In a production application, you could replace writing to stdout with inserting into a database, making HTTP requests to an upstream service, or writing to object storage.
 
-    ```ts
+	```ts
 
-    ```
+	```
 
-    ### Go
+	### Go
 
-    The following example is a Go application that pulls from a queue on startup, acknowledges messages after writing them to stdout, and polls the queue at a fixed interval.
+	The following example is a Go application that pulls from a queue on startup, acknowledges messages after writing them to stdout, and polls the queue at a fixed interval.
 
-    ```go
+	```go
 
 
-    ```
+	```
 
-    --> */}
+	--> */}
 
 ## Content types
 

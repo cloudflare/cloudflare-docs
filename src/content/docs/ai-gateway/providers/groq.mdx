@@ -7,13 +7,17 @@ pcx_content_type: get-started
 
 ## Endpoint
 
-`https://gateway.ai.cloudflare.com/v1/{account_id}/{gateway_id}/groq`
+```txt
+https://gateway.ai.cloudflare.com/v1/{account_id}/{gateway_id}/groq
+```
 
 ## URL structure
 
 When making requests to [Groq](https://groq.com/), replace `https://api.groq.com/openai/v1` in the URL you’re currently using with `https://gateway.ai.cloudflare.com/v1/{account_id}/{gateway_id}/groq`.
 
 ## Examples
+
+### cURL
 
 ```bash title="Example fetch request"
 curl https://gateway.ai.cloudflare.com/v1/{account_id}/{gateway_id}/groq/chat/completions \
@@ -29,6 +33,8 @@ curl https://gateway.ai.cloudflare.com/v1/{account_id}/{gateway_id}/groq/chat/co
     "model": "mixtral-8x7b-32768"
 }'
 ```
+
+### Use Groq SDK with JavaScript
 
 If using the [`groq-sdk`](https://www.npmjs.com/package/groq-sdk), set your endpoint like this:
 

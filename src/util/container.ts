@@ -3,7 +3,10 @@ import { getContainerRenderer } from "@astrojs/mdx";
 import { loadRenderers } from "astro:container";
 import type { CollectionEntry } from "astro:content";
 
-export async function entryToString(entry: CollectionEntry<"docs">) {
+export async function entryToString(
+	entry: CollectionEntry<"docs">,
+	locals: any,
+) {
 	if (!entry.render) {
 		return undefined;
 	}
@@ -17,6 +20,7 @@ export async function entryToString(entry: CollectionEntry<"docs">) {
 
 	const html = await container.renderToString(Content, {
 		params: { slug: entry.slug },
+		locals,
 	});
 
 	return html;

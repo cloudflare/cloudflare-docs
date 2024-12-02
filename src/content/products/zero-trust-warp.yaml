@@ -5,4 +5,6 @@ product:
   group: Cloudflare One
   url: /cloudflare-one/connections/connect-devices/warp/
   wrap: true
-  grid_placeholder: true
+
+meta:
+  description: The Cloudflare WARP client allows you to protect corporate devices by securely and privately sending traffic from those devices to Cloudflare’s global network, where Cloudflare Gateway can apply advanced web filtering.

@@ -107,6 +107,10 @@ You can bind to a Workflow by defining a `[[workflows]]` binding within your `wr
 
 For example, to bind to a Workflow called `workflows-starter` and to make it available on the `MY_WORKFLOW` variable to your Worker script, you would configure the following fields within the `[[workflows]]` binding definition:
 
+import { WranglerConfig } from "~/components";
+
+<WranglerConfig>
+
 ```toml title="wrangler.toml"
 #:schema node_modules/wrangler/config-schema.json
 name = "workflows-starter"
@@ -122,11 +126,17 @@ binding = "MY_WORKFLOW"
 class_name = "MyWorkflow"
 ```
 
+</WranglerConfig>
+
 ### Cross-script calls
 
 You can also bind to a Workflow that is defined in a different Worker script from the script your Workflow definition is in. To do this, provide the `script_name` key with the name of the script to the `[[workflows]]` binding definition in your `wrangler.toml` configuration.
 
 For example, if your Workflow is defined in a Worker script named `billing-worker`, but you are calling it from your `web-api-worker` script, your `wrangler.toml` would resemble the following:
+
+
+
+<WranglerConfig>
 
 ```toml title="wrangler.toml"
 #:schema node_modules/wrangler/config-schema.json
@@ -145,6 +155,8 @@ class_name = "MyWorkflow"
 # required if the Workflow is defined in another script.
 script_name = "billing-worker"
 ```
+
+</WranglerConfig>
 
 ## Workflow
 
@@ -173,7 +185,7 @@ Create (trigger) a new instance of the given Workflow.
 
   * `options` - optional properties to pass when creating an instance.
 
-An ID is automatically generated, but a user-provided ID can be specified. This can be useful when mapping Workflows to users, merchants or other identifiers in your system.
+An ID is automatically generated, but a user-provided ID can be specified (up to 64 characters [^1]). This can be useful when mapping Workflows to users, merchants or other identifiers in your system.
 
 ```ts
 // Create a new Workflow instance with your own ID:
@@ -194,7 +206,24 @@ Get a specific Workflow instance by ID.
 
   * `id` - the ID of the Workflow instance.
 
-Returns a `WorkflowInstance`.
+Returns a `WorkflowInstance`. Throws an exception if the instance ID does not exist.
+
+```ts
+// Fetch an existing Workflow instance by ID:
+try {
+  let instance = await env.MY_WORKFLOW.get(id)
+  return Response.json({
+	  id: instance.id,
+	  details: await instance.status(),
+  });
+} catch (e: any) {
+  // Handle errors
+  // .get will throw an exception if the ID doesn't exist or is invalid.
+  const msg = `failed to get instance ${id}: ${e.message}`
+  console.error(msg)
+  return Response.json({error: msg}, { status: 400 })
+}
+```
 
 ## WorkflowInstanceCreateOptions
 
@@ -293,3 +322,5 @@ type InstanceStatus = {
   output?: object;
 };
 ```
+
+[^1]: Match pattern: _```^[a-zA-Z0-9_][a-zA-Z0-9-_]*$```_

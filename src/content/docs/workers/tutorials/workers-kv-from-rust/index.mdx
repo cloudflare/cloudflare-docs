@@ -52,6 +52,10 @@ npx wrangler kv:namespace create cities
 
 To add this configuration to your project, open the `wrangler.toml` file and create an entry for `kv_namespaces` above the build command:
 
+import { WranglerConfig } from "~/components";
+
+<WranglerConfig>
+
 ```toml
 kv_namespaces = [
   { binding = "cities", id = "e29b263ab50e42ce9b637fa8370175e8" }
@@ -59,6 +63,8 @@ kv_namespaces = [
 
 # build command...
 ```
+
+</WranglerConfig>
 
 With this configured, you can access the KV namespace with the binding `"cities"` from Rust.
 

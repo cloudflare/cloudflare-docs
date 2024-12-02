@@ -13,9 +13,11 @@ Article IDs: 115002816808 | How do I enable HTTP/2 Server Push in WordPress
 
 Cloudflare supports HTTP/2 Server Push and it can be enabled for stylesheets and scripts using Cloudflare’s WordPress plugin. In order to utilise this feature, you must first ensure you have the Cloudflare WordPress plugin [installed and set-up on your site](https://support.cloudflare.com/hc/en-us/articles/227634427-Using-Cloudflare-with-WordPress).
 
-Once the plugin is installed, you can enable HTTP/2 Server Push simply by adding the following configuration code to your *wp-config.php* file:
+Once the plugin is installed, you can enable HTTP/2 Server Push by adding the following line to your `wp-config.php` file:
 
-*define('CLOUDFLARE\_HTTP2\_SERVER\_PUSH\_ACTIVE', true);*
+```php
+define('CLOUDFLARE_HTTP2_SERVER_PUSH_ACTIVE', true);
+```
 
 You should insert this line above where it says *"/\* That's all, stop editing! Happy blogging. \*/*", like follows:|
 

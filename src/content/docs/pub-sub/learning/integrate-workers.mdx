@@ -88,6 +88,10 @@ Your public keys will be unique to your own Pub/Sub Broker: you should ensure yo
 
 :::
 
+import { WranglerConfig } from "~/components";
+
+<WranglerConfig>
+
 ```toml
 name = "my-pubsub-worker"
 type = "javascript"
@@ -122,6 +126,8 @@ BROKER_PUBLIC_KEYS = '''{
   ]
 }'''
 ```
+
+</WranglerConfig>
 
 With the `BROKER_PUBLIC_KEYS` environmental variable set, we can now access these in our Worker code. The [`@cloudflare/pubsub`](https://www.npmjs.com/package/@cloudflare/pubsub) package allows you to authenticate the incoming request against your Broker's
 public keys.

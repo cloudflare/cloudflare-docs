@@ -57,21 +57,21 @@ Cloudflare uses the following order to determine the certificate and settings us
 
 ***
 
-## Hostname priority (Cloudflare for SaaS)
+## Hostname priority
 
-When multiple proxied DNS records exist for a zone — usually with Cloudflare for SaaS — only one record can control the zone settings and associated origin server.
+When multiple proxied DNS records exist for a hostname, in multiple zones — usually due to Cloudflare for SaaS — only one record will control the zone settings and associated origin server.
 
-Cloudflare determines this priority in the following order (assuming each record exists and is proxied (orange-clouded)):
+Cloudflare determines this priority in the following order, assuming each record exists and is proxied (orange-clouded):
 
 1. **Exact hostname match**:
 
    1. [New custom hostname](/cloudflare-for-platforms/cloudflare-for-saas/start/getting-started/) (belonging to a SaaS provider)
    2. [Legacy custom hostname](/cloudflare-for-platforms/cloudflare-for-saas/reference/versioning/) (belonging to a SaaS provider)
-   3. [DNS](/dns/manage-dns-records/reference/proxied-dns-records/) (Belonging to the logical DNS zone)
+   3. [DNS](/dns/manage-dns-records/reference/proxied-dns-records/) (belonging to the logical DNS zone)
 
 2. **Wildcard hostname match**:
 
-   1. DNS (Belonging to the logical DNS zone)
+   1. DNS (belonging to the logical DNS zone)
    2. New custom hostname (belonging to a SaaS provider)
 
 If a hostname resource record is not proxied (gray-clouded) for a zone on Cloudflare, that zone's settings are not applied and any settings configured at the associated origin are applied instead. This origin could be another zone on Cloudflare or any other server.
@@ -90,6 +90,6 @@ Customer1 uses Cloudflare as authoritative DNS for the zone `shop.example.com`. 
 
 A customer has a [proxied](/dns/manage-dns-records/reference/proxied-dns-records/) DNS record for their domain. The customer's zone on Cloudflare is using a Free plan.
 
-This customer is also using a SaaS provider that utilizes Cloudflare for SaaS. The SaaS provider is using a Cloudflare Enterprise plan.
+This customer is also using a SaaS provider that uses Cloudflare for SaaS. The SaaS provider is using a Cloudflare Enterprise plan.
 
 If the provider is using a wildcard custom hostname, then the original customer's plan limits will take precedence over the provider's plan limits (Cloudflare will treat the zone as a Free zone). To apply the Enterprise limits through Cloudflare for SaaS, the original customer's zone would need to either use a [DNS-only](/dns/manage-dns-records/reference/proxied-dns-records/) record or the SaaS provider would need to use an exact hostname match.

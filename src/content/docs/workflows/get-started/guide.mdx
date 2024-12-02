@@ -185,6 +185,10 @@ Before you can deploy a Workflow, you need to configure it.
 
 Open the `wrangler.toml` file at the root of your `workflows-starter` folder, which contains the following `[[workflows]]` configuration:
 
+import { WranglerConfig } from "~/components";
+
+<WranglerConfig>
+
 ```toml title="wrangler.toml"
 #:schema node_modules/wrangler/config-schema.json
 name = "workflows-starter"
@@ -199,6 +203,8 @@ binding = "MY_WORKFLOW"
 # this is class that extends the Workflow class in src/index.ts
 class_name = "MyWorkflow"
 ```
+
+</WranglerConfig>
 
 :::note
 

@@ -5,10 +5,13 @@ productLink: "/workers/"
 productArea: Developer platform
 productAreaLink: /workers/platform/changelog/platform/
 entries:
-  - publish_date: '2024-10-21'
+  - publish_date: "2024-11-18"
+    description: |-
+      - Updated v8 to version 13.1.
+  - publish_date: "2024-10-21"
     description: |-
       - Fixed encoding of WebSocket pong messages when talking to remote servers. Previously, when a Worker made a WebSocket connection to an external server, the server may have prematurely closed the WebSocket for failure to respond correctly to pings. Client-side connections were not affected.
-  - publish_date: '2024-10-14'
+  - publish_date: "2024-10-14"
     description: |-
       - Updated v8 to version 13.0.
   - publish_date: "2024-09-26"
@@ -187,7 +190,7 @@ entries:
       - Added the [`strict_compression_checks`](/workers/configuration/compatibility-flags/#strict-compression-error-checking) compatibility flag for additional [`DecompressionStream`](/workers/runtime-apis/web-standards/#compression-streams) error checking.
   - publish_date: "2023-05-26"
     description: |-
-      - A new [Hibernatable WebSockets API](/durable-objects/api/websockets/)
+      - A new [Hibernatable WebSockets API](/durable-objects/best-practices/websockets/)
       (beta) has been added to [Durable Objects](/durable-objects/). The Hibernatable
       WebSockets API allows a Durable Object that is not currently running an event
       handler (for example, processing a WebSocket message or alarm) to be removed from

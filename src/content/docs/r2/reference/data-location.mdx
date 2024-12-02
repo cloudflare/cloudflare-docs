@@ -55,6 +55,7 @@ The following hint locations are supported:
 | weur | Western Europe        |
 | eeur | Eastern Europe        |
 | apac | Asia-Pacific          |
+| oc   | Oceania               |
 
 ### Additional considerations
 
@@ -78,12 +79,18 @@ Use Jurisdictional Restrictions when you need to ensure data is stored and proce
 
 To access R2 buckets that belong to a jurisdiction from [Workers](/workers/), you will need to specify the jurisdiction as well as the bucket name as part of your [bindings](/r2/api/workers/workers-api-usage/#3-bind-your-bucket-to-a-worker) in your `wrangler.toml`:
 
+import { WranglerConfig } from "~/components";
+
+<WranglerConfig>
+
 ```toml
 [[r2_buckets]]
 bindings = [
   { binding = "MY_BUCKET", bucket_name = "<YOUR_BUCKET_NAME>", jurisdiction = "<JURISDICTION>" }
 ]
 ```
+
+</WranglerConfig>
 
 For more information on getting started, refer to [Use R2 from Workers](/r2/api/workers/workers-api-usage/).
 

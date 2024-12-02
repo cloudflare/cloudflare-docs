@@ -16,7 +16,7 @@ This guide will instruct you through:
 
 :::note[SQLite in Durable Objects Beta]
 
-The new beta version of Durable Objects is available where each Durable Object has a private, embedded SQLite database. When deploying a new Durable Object class, users can [opt-in to a SQLite storage backend](/durable-objects/best-practices/access-durable-objects-storage/#sqlite-storage-backend) in order to access new [SQL API](/durable-objects/api/storage-api/#sqlexec), part of Durable Objects Storage API.
+The new beta version of Durable Objects is available where each Durable Object has a private, embedded SQLite database. When deploying a new Durable Object class, users can [opt-in to a SQLite storage backend](/durable-objects/best-practices/access-durable-objects-storage/#sqlite-storage-backend) in order to access new [SQL API](/durable-objects/api/sql-storage/#exec), part of Durable Objects Storage API.
 
 :::
 
@@ -132,7 +132,7 @@ export class MyDurableObject extends DurableObject {
 In the code above, you have:
 
 1. Defined a RPC method, `sayHello()`, that can be called by a Worker to communicate with a Durable Object.
-2. Accessed a Durable Object's attached storage, which is a private SQLite database only accesible to the object, using [SQL API](/durable-objects/api/storage-api/#sqlexec) methods (`sql.exec()`) available on `ctx.storage` .
+2. Accessed a Durable Object's attached storage, which is a private SQLite database only accesible to the object, using [SQL API](/durable-objects/api/sql-storage/#exec) methods (`sql.exec()`) available on `ctx.storage` .
 3. Returned an object representing the single row query result using `one()`, which checks that the query result has exactly one row.
 4. Return the `greeting` column from the row object result.
 
@@ -197,18 +197,17 @@ Refer to [Access a Durable Object from a Worker](/durable-objects/best-practices
 
 [Bindings](/workers/runtime-apis/bindings/) allow your Workers to interact with resources on the Cloudflare developer platform. The Durable Object bindings in your Worker project's `wrangler.toml` will include a binding name (for this guide, use `MY_DURABLE_OBJECT`) and the class name (`MyDurableObject`).
 
+import { WranglerConfig } from "~/components";
+
+<WranglerConfig>
+
 ```toml
 [[durable_objects.bindings]]
 name = "MY_DURABLE_OBJECT"
 class_name = "MyDurableObject"
-
-# or
-
-[durable_objects]
-bindings = [
-  { name = "MY_DURABLE_OBJECT", class_name = "MyDurableObject" }
-]
 ```
+
+</WranglerConfig>
 
 The `[[durable_objects.bindings]]` section contains the following fields:
 
@@ -224,11 +223,17 @@ Migrations are performed through the `[[migrations]]` configurations key in your
 
 The Durable Object migration to create a new Durable Object class with SQLite storage backend will look like the following in your Worker's `wrangler.toml` file:
 
+
+
+<WranglerConfig>
+
 ```toml
 [[migrations]]
 tag = "v1" # Should be unique for each entry
 new_sqlite_classes = ["MyDurableObject"] # Array of new classes
 ```
+
+</WranglerConfig>
 
 Refer to [Durable Objects migrations](/durable-objects/reference/durable-objects-migrations/) to learn more about the migration process.
 

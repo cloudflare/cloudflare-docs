@@ -5,9 +5,9 @@ title: Vendor-specific DNS records
 
 ---
 
-import { Render } from "~/components"
+import { Render, GlossaryTooltip, Example } from "~/components"
 
-This article requires prior knowledge of DNS record management via the Cloudflare dashboard. To learn more, refer to Cloudflare's article on [managing DNS records](/dns/manage-dns-records/how-to/create-dns-records/).
+This article requires prior knowledge of DNS record management via the Cloudflare dashboard. To learn more, refer to Cloudflare's article on [managing DNS records](/dns/manage-dns-records/how-to/create-dns-records/).
 
 ## Google
 
@@ -46,7 +46,7 @@ AWS customers must [update their domain's nameservers](https://docs.aws.amazon.c
 
 Find the [URL](https://docs.aws.amazon.com/AmazonS3/latest/userguide/access-bucket-intro.html) for your bucket.
 
-Then, [create a `CNAME` record](/dns/manage-dns-records/how-to/create-dns-records/) in Cloudflare. For example, if the full host URL of the bucket is `files.example.com.s3.amazonaws.com`, you would add a `CNAME` record similar to the following:
+Then, [create a `CNAME` record](/dns/manage-dns-records/how-to/create-dns-records/) in Cloudflare. For example, if the full host URL of the bucket is `files.example.com.s3.amazonaws.com`, you would add a `CNAME` record similar to the following:
 
 ```txt
 files  CNAME  files.example.com.s3.amazonaws.com
@@ -58,14 +58,46 @@ For help setting up DKIM in SES, refer to the [Amazon documentation](https://doc
 
 ### Amazon ELB configuration
 
-Refer to [Amazon's ELB help content](http://docs.amazonwebservices.com/ElasticLoadBalancing/latest/DeveloperGuide/using-domain-names-with-elb.html) for guidance on ELB configuration at Amazon, but generally you should:
+Refer to [Amazon's ELB help content](http://docs.amazonwebservices.com/ElasticLoadBalancing/latest/DeveloperGuide/using-domain-names-with-elb.html) for guidance on ELB configuration at Amazon, but generally you should:
 
-Add a [`CNAME` record](/dns/manage-dns-records/how-to/create-dns-records/) to Cloudflare for the hostname you receive from AWS, for example:
+Add a [`CNAME` record](/dns/manage-dns-records/how-to/create-dns-records/) to Cloudflare for the hostname you receive from AWS, for example:
 
+<Example>
 | Type    | Name  | Target                                       | Proxy status |
 | ------- | ----- | -------------------------------------------- | ------------ |
 | `CNAME` | `elb` | `<AWS_HOSTNAME>.<REGION>._elb.amazonaws.com` | Proxied      |
+</ Example>
 
+### Amazon Amplify
+
+To use Cloudflare DNS with AWS Amplify, refer to the [Amplify help content](https://docs.aws.amazon.com/amplify/latest/userguide/to-add-a-custom-domain-managed-by-a-third-party-dns-provider.html) and follow the instructions for **manual configuration**.
+
+At Cloudflare, you will need at least two `CNAME` records:
+
+- A <GlossaryTooltip term="proxy status">DNS-only</GlossaryTooltip> `CNAME` to validate your domain ownership, which should look like the following:
+
+<Example>
+| Type    | Name  | Target                                       | Proxy status |
+| ------- | ----- | -------------------------------------------- | ------------ |
+| `CNAME` | `<UNIQUE_STRING>` | `<UNIQUE_STRING>.mhbtsbpdnt.acm-validation.aws` | DNS only     |
+</Example>
+
+:::caution[CNAME flattening]
+If your Cloudflare zone is on a paid plan, also make sure that the **Flatten** option turned off for the validation `CNAME` record, and that you zone is **not** using [CNAME flattening for all CNAME records](/dns/cname-flattening/set-up-cname-flattening/#for-all-cname-records).
+:::
+
+- One `CNAME` for the <GlossaryTooltip term="apex domain">apex domain</GlossaryTooltip> (`example.com`) and/or for each of the subdomains (`blog.example.com`) that you want to manage on Cloudflare. For details refer to [Manage DNS records](/dns/manage-dns-records/how-to/create-dns-records/). These records can be proxied.
+
+<Example>
+
+| Type    | Name  | Target                                       |
+| ------- | ----- | -------------------------------------------- |
+| `CNAME` | `@` | `<AMPLIFY_HOSTNAME>.cloudfront.net` |
+
+| Type    | Name  | Target                                       |
+| ------- | ----- | -------------------------------------------- |
+| `CNAME` | `blog` | `<AMPLIFY_HOSTNAME>.cloudfront.net` |
+</Example>
 ***
 
 ## Microsoft
@@ -76,9 +108,9 @@ For information about the records to Microsoft 365, refer to [Microsoft's docume
 
 ### Microsoft Azure
 
-Follow Microsoft’s instructions on [configuring Azure DNS settings](https://learn.microsoft.com/en-us/azure/app-service/app-service-web-tutorial-custom-domain).
+Follow Microsoft's instructions on [configuring Azure DNS settings](https://learn.microsoft.com/en-us/azure/app-service/app-service-web-tutorial-custom-domain).
 
-Then, add Azure’s required records to [Cloudflare DNS](/dns/manage-dns-records/how-to/create-dns-records/).
+Then, add Azure's required records to [Cloudflare DNS](/dns/manage-dns-records/how-to/create-dns-records/).
 
 ***
 

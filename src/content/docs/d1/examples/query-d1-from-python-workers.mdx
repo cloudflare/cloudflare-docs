@@ -57,6 +57,10 @@ npx wrangler d1 info some-existing-db
 
 In your `wrangler.toml` file, create a new `[[d1_databases]]` configuration block and set `database_name` and `database_id` to the name and id (respectively) of the D1 database you want to query:
 
+import { WranglerConfig } from "~/components";
+
+<WranglerConfig>
+
 ```toml
 name = "python-and-d1"
 main = "src/entry.py"
@@ -68,6 +72,8 @@ binding = "DB" # This will be how you refer to your database in your Worker
 database_name = "YOUR_DATABASE_NAME"
 database_id = "YOUR_DATABASE_ID"
 ```
+
+</WranglerConfig>
 
 The value of `binding` is how you will refer to your database from within your Worker. If you change this, you must change this in your Worker script as well.
 

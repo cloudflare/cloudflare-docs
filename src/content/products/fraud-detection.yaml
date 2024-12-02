@@ -4,4 +4,6 @@ product:
   title: Fraud Detection
   group: Application security
   url: /bots/concepts/sequence-rules/
-  grid_placeholder: true
+
+meta:
+  description: Sequence rules uses cookies to track the order of requests a user has made and the time between requests and makes them available via Cloudflare Rules.

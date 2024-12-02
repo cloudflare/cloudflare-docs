@@ -1,0 +1,121 @@
+---
+title: Magic WAN Connector deployment options
+pcx_content_type: reference-architecture-diagram
+products:
+  - Magic WAN
+sidebar:
+  order: 1
+  label: Magic WAN Connector deployment
+updated: 2024-11-14
+---
+
+## Introduction
+
+Cloudflare helps organizations transform their networks by providing secure, high-performance connectivity for on-premises networks, virtual cloud networks and access to SaaS applications. As applications migrate to the cloud, [Cloudflare's SASE](https://www.cloudflare.com/zero-trust/) platform enables businesses to replace traditional on-premise solutions, ensuring secure access, low latency, and automated scalability across distributed environments. This approach reduces reliance on legacy hardware, simplifies IT management, and improves user experience for cloud-based services.
+
+Magic WAN Connector is a physical, or virtual (deployed as a VM on a hypervisor) device which, using [Zero Touch Provisioning](https://en.wikipedia.org/wiki/Zero-touch_provisioning), automatically on-ramps traffic for a local network to Cloudflare, and replaces existing, difficult to manage edge hardware.
+
+Every organization and network is different, and as such there is no one-size-fits-all when it comes to how a Magic WAN Connector can be deployed. Therefore, the purpose of this document is to provide a high-level explanation of the deployment options that would make sense to most environments, while also describing the support of a few advanced use cases.
+
+## Deployment locations
+
+The first decision for a Magic WAN Connector deployment is its location in the network, and this relates to whether the organization wants to keep the existing Customer Premises Equipment (CPE, edge router or firewall at a site), and if so, for what reason. Experience shows that this decision usually leads to three different topologies:
+
+- **Connector replacing the CPE** (Figure 1a): When the link is an Internet connection and the organization does not have any real use of existing equipment since the Connector supports all the required networking features such as DHCP, DNS, NAT, Trunking (801.1Q), IP access lists, breakout traffic, etc. Examples could be:
+
+  - The transition from MPLS to Internet-based connectivity, where the MPLS router probably does not add any value in the deployment.
+  - An Internet-facing CPE reaching, or already having exceeded, its end of life.
+  - An Internet-facing CPE that is redundant with Magic WAN Connector and can be removed for simplicity's sake.
+
+- **Connector north of the CPE** (Figure 1b): This option might be preferred when the existing CPE is a firewall, and the organization wants to keep it for:
+
+  - Additional LAN protection as a result of a defense-in-depth approach.
+  - Advanced segmentation requirements, for example allowing/blocking traffic between segments based on various Layer 3 to Layer 7 rules, since Magic WAN Connector supports segmentation only on layers 3 and 4 of the OSI model.
+
+- **Connector south of the CPE** (Figure 1c): Reasons for installing Magic WAN Connector south of an existing Internet-facing CPE might be:
+  - CPE cannot be replaced because it connects to a broadband service with a presentation (for example RJ-11) or protocol (for example PPPoE) that Magic WAN Connector does not support.
+  - CPE cannot be replaced because it is part of a fiber service that only works with that specific hardware, such as an ISP-provided ONT (Optical Network Terminal).
+  - CPE cannot be replaced (yet) because it is part of an active managed service.
+  - CPE cannot be replaced because it is a firewall that the organization wants to keep in place for other reasons (technical or contractual).
+
+![Figure 1: Connector location options: (a) replacing CPE, (b) north of CPE , (c) south of CPE.](~/assets/images/reference-architecture/magic-wan-connector-deployment/figure01.svg "Figure 1. Connector location options: (a) replacing CPE, (b) north of CPE , (c) south of CPE")
+
+## High availability
+
+In Wide Area Network (WAN) environments, where remote offices, data centers, and cloud services are interconnected, any downtime can lead to loss of access to critical applications, communication disruptions, and productivity losses. To avoid such downtimes, WAN networks are mostly designed with High Availability (HA) principles in mind. Deploying redundant hardware and uplink circuits, as well as failover mechanisms, ensures that if one component fails, another can immediately take over. This resilience is key to maintaining seamless connectivity, reliability, and service continuity in distributed networks.
+
+### Uplink HA
+
+Magic WAN Connector can use two or more WAN ports for uplinks, and therefore it can connect to multiple different ISPs for circuit resiliency. One option for a basic level of HA is to use a single Magic WAN Connector with two uplinks, while traffic can be load-balanced between them (Figure 2 below). This approach could be used for non-critical branches, small offices, and other similar types of locations, or as an intermediate step towards a full HA deployment.
+
+![Figure 2. Uplink high-availability deployment.](~/assets/images/reference-architecture/magic-wan-connector-deployment/figure02.svg "Figure 2. Uplink high-availability deployment.")
+
+### Full HA
+
+In this type of setup, a redundant device is configured to take over in case of a failure in the primary device, allowing seamless traffic failover and ensuring uninterrupted access to applications, data, and services. This approach enhances network resilience, improves service reliability, and helps maintain productivity by reducing the risk of single points of failure.
+
+Figure 3 below illustrates the deployment topology where Magic WAN Connector supports full HA. Using an election process, one device becomes active and the other becomes passive. To achieve this, the two Connectors must connect to a LAN switch on the same Layer 2 domain (like a VLAN) for heartbeat messages to be sent between them. Active/passive means that the active Connector is the only device that propagates traffic at any point in time.
+
+![Figure 3. Full HA with dual Connectors and dual uplinks.](~/assets/images/reference-architecture/magic-wan-connector-deployment/figure03.svg "Figure 3. Full HA with dual Connectors and dual uplinks.")
+
+Each Magic WAN Connector connects to the same two ISPs using dual uplinks, and automatically creates one IPsec tunnel per WAN port. This requires each ISP to support multiple ports on their on-site Network Termination Unit (or their CPE, if there is one present). In this HA deployment there are four tunnels in total, two per Connector, while traffic can be load-balanced between the two tunnels on the active device. When either the active Connector, or its IPsec tunnels go down, the other Connector takes over and propagates traffic, holding the active role until it fails (preemption is not used to avoid unnecessary failover delays).
+
+## Advanced use cases
+
+This section describes how the Magic WAN Connector can be deployed to support a few advanced use cases, that is, use cases beyond the typical scenarios where the Connector acts as a simple CPE that on-ramps traffic to Cloudflare for site-to-site, or site-to-Internet, connectivity and protection.
+
+### Protecting local Internet breakout (LIBO)
+
+The main use case for this type of deployment is based on the fact that many organizations today require local Internet breakout to improve the performance of Cloud and SaaS applications, while they probably continue to use their private MPLS connectivity for self-hosted applications, or site-to-site connectivity, until they decide to further modernize their architectures at a later stage. Reasons behind such a decision might be:
+
+- MPLS service is still in contract, but it is planned to be replaced by Internet connectivity everywhere when the term ends
+- Self-hosted applications might require low latency with agreed SLAs, so a hybrid MPLS/Internet architecture might be required
+
+![Figure 4. Hybrid MPLS/Internet use case.](~/assets/images/reference-architecture/magic-wan-connector-deployment/figure04.svg "Figure 4. Hybrid MPLS/Internet use case.")
+
+This type of hybrid architecture requires the MPLS Customer Edge router (CE) or some other L3 device in the LAN to route traffic via different interfaces depending on the destination. Traffic flows in this scenario as follows:
+
+1. Devices on the local network use the MPLS CE (or some other local L3 device) as their default gateway
+2. Private traffic is sent towards the MPLS network. For example, the MPLS CE knows how to route these because it receives RFC1918 ranges via BGP from the MPLS network.
+3. Internet traffic from the LAN network is forwarded towards the Magic WAN Connector (MPLS CE/L3 gateway points a static default route towards the Connector)
+
+All traffic towards internal locations and self-hosted applications follows the MPLS path, while traffic to cloud-based and SaaS applications follows the local Internet breakout path, protected by Cloudflare security services.
+
+### Split tunneling
+
+In some deployments, customers might want to protect only specific protocols using Cloudflare security services such as our [secure web gateway](/cloudflare-one/policies/gateway/), while the rest of the traffic routes through the existing edge device (router or firewall). Figure 5 illustrates such a use case.
+
+![Figure 5. 'Split Tunneling' use case.](~/assets/images/reference-architecture/magic-wan-connector-deployment/figure05.svg "Figure 5. 'Split Tunneling' use case.")
+
+In this example, the organization wants Cloudflare to protect all Internet web traffic (HTTP/HTTPS), while the rest of the traffic flows out via the existing firewall. The latter could be traffic towards existing VPNs, or non-web traffic exiting the site, but protected by the on-premises firewall. This method could take advantage of local device policy-based routing (PBR) capabilities, for example:
+
+1. Local devices use the on-premises firewall as their default gateway
+2. Firewall uses PBR to direct appropriate traffic to the right destination
+3. Web traffic (TCP 80/443) is sent towards Cloudflare via the Magic WAN Connector
+4. All other traffic exits via the on-premises firewall
+
+As long as PBR capability exists locally, and the ISP provides at least two public IP addresses to the organization, the possibilities of splitting traffic towards the Magic WAN Connector are endless, and really depend on each organization's unique environment and use cases.
+
+### Protecting segments / segmentation
+
+Another advanced group of use cases that Magic WAN Connector can support is local segmentation, and protection of specific local networks. To achieve that, and depending on an organization's current architecture, line of business, security policies, and compliance requirements, Magic WAN Connector can be installed in any location south of the site edge device to provide more granular network security, as illustrated in figure 6 and described in the following paragraphs.
+
+![Figure 6. Segmentation-related use cases.](~/assets/images/reference-architecture/magic-wan-connector-deployment/figure06.svg "Figure 6. Segmentation-related use cases.")
+
+In this example, the Magic WAN Connector will create an IPsec tunnel to Cloudflare through the on premises firewall and local Internet connection. Subnet A and B are both connected to the Magic WAN Connector, but have no direct connection with each other. This will enable a couple of use cases:
+
+- **Internet security**: Segment 1 adheres to Cloudflare security policies, bypassing the local firewall policy.
+- **Site-to-site connectivity**: Segment 1 can connect to local segments in other locations (or entire sites, for example Site 2), depending on the organization's policy.
+
+The example also shows how Magic WAN Connector can be used to provide two types of local network segmentation:
+
+- **Intra-segment**: Traffic between LAN ports on the same Connector is blocked by default, hence, Subnet A and Subnet B in Segment 1 cannot talk to each other. The administrator would have to explicitly allow this traffic flow by using configuration logic similar to IP access lists. This ability to hairpin local traffic via the Connector's LAN ports, avoids traffic tromboning via the Cloudflare platform (that is, travel out and back in via the Magic WAN tunnel), which could result in those segments losing connectivity to each other in the event of Internet circuit outage. Therefore, this capability allows local nodes that do not necessarily require Internet access to function, for example printers, file servers, network attached storage (NAS) nodes, and various Internet of Things (IoT) devices, to continue being accessible by local hosts in different segments during Internet outages.
+- **Inter-segment**: Magic WAN Connector does not allow any inbound traffic on its WAN ports. Therefore, Segments 1 and 2 cannot talk to each other.
+
+To summarize, Magic WAN Connector is a Zero-Touch Provisioning (ZTP) device that organizations can use to connect to Cloudflare and consume advanced security and connectivity services, while keeping operational costs low.
+
+## Related Resources
+
+- [Magic WAN - Cloud-delivered enterprise networking](https://www.cloudflare.com/en-gb/network-services/products/magic-wan/)
+- [Announcing the Magic WAN Connector: the easiest on-ramp to your next generation network](https://blog.cloudflare.com/magic-wan-connector/)
+- [Configuring Magic WAN Connector](/magic-wan/configuration/connector/)

@@ -5,6 +5,9 @@ productLink: "/r2/"
 productArea: Developer platform
 productAreaLink: /workers/platform/changelog/platform/
 entries:
+  - publish_date: "2024-11-20"
+    description: |-
+      - Oceania (OC) is now available as an R2 region.
   - publish_date: "2024-06-07"
     description: |-
       - Fixed an issue that prevented Sippy from copying over objects from S3 buckets with SSE set up.

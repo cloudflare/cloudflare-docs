@@ -106,11 +106,11 @@ export class MyDurableObject extends DurableObject {
 
 ### `acceptWebSocket`
 
-`acceptWebSocket` is part of the [WebSocket Hibernation API](/durable-objects/reference/websockets/#websocket-hibernation), which allows a Durable Object to be removed from memory to save costs while keeping its WebSockets connected.
+`acceptWebSocket` is part of the [WebSocket Hibernation API](/durable-objects/best-practices/websockets/#websocket-hibernation-api), which allows a Durable Object to be removed from memory to save costs while keeping its WebSockets connected.
 
 `acceptWebSocket` adds a WebSocket to the set of WebSockets attached to the Durable Object. Once called, any incoming messages will be delivered by calling the Durable Object's `webSocketMessage` handler, and `webSocketClose` will be invoked upon disconnect. After calling `acceptWebSocket`, the WebSocket is accepted and its `send` and `close` methods can be used.
 
-The [WebSocket Hibernation API](/durable-objects/reference/websockets/#websocket-hibernation) takes the place of the standard [WebSockets API](/workers/runtime-apis/websockets/). Therefore, `ws.accept` must not have been called separately and `ws.addEventListener` method will not receive events as they will instead be delivered to the Durable Object.
+The [WebSocket Hibernation API](/durable-objects/best-practices/websockets/#websocket-hibernation-api) takes the place of the standard [WebSockets API](/workers/runtime-apis/websockets/). Therefore, `ws.accept` must not have been called separately and `ws.addEventListener` method will not receive events as they will instead be delivered to the Durable Object.
 
 The WebSocket Hibernation API permits a maximum of 32,768 WebSocket connections per Durable Object, but the CPU and memory usage of a given workload may further limit the practical number of simultaneous connections.
 
@@ -125,7 +125,7 @@ The WebSocket Hibernation API permits a maximum of 32,768 WebSocket connections 
 
 ### `getWebSockets`
 
-`getWebSockets` is part of the [WebSocket Hibernation API](/durable-objects/reference/websockets/#websocket-hibernation), which allows a Durable Object to be removed from memory to save costs while keeping its WebSockets connected.
+`getWebSockets` is part of the [WebSocket Hibernation API](/durable-objects/best-practices/websockets/#websocket-hibernation-api), which allows a Durable Object to be removed from memory to save costs while keeping its WebSockets connected.
 
 `getWebSockets` returns an `Array<WebSocket>` which is the set of WebSockets attached to the Durable Object. An optional tag argument can be used to filter the list according to tags supplied when calling [`DurableObjectState::acceptWebSocket`](/durable-objects/api/state/#acceptwebsocket).
 
@@ -145,7 +145,7 @@ Disconnected WebSockets are not returned by this method, but `getWebSockets` may
 
 ### `setWebSocketAutoResponse`
 
-`setWebSocketAutoResponse` is part of the [WebSocket Hibernation API](/durable-objects/reference/websockets/#websocket-hibernation), which allows a Durable Object to be removed from memory to save costs while keeping its WebSockets connected.
+`setWebSocketAutoResponse` is part of the [WebSocket Hibernation API](/durable-objects/best-practices/websockets/#websocket-hibernation-api), which allows a Durable Object to be removed from memory to save costs while keeping its WebSockets connected.
 
 `setWebSocketAutoResponse` sets an automatic response, auto-response, for the request provided for all WebSockets attached to the Durable Object. If a request is received matching the provided request then the auto-response will be returned without waking WebSockets in hibernation and incurring billable duration charges.
 
@@ -179,7 +179,7 @@ Disconnected WebSockets are not returned by this method, but `getWebSockets` may
 
 ### `getWebSocketAutoResponseTimestamp`
 
-`getWebSocketAutoResponseTimestamp` is part of the [WebSocket Hibernation API](/durable-objects/reference/websockets/#websocket-hibernation), which allows a Durable Object to be removed from memory to save costs while keeping its WebSockets connected.
+`getWebSocketAutoResponseTimestamp` is part of the [WebSocket Hibernation API](/durable-objects/best-practices/websockets/#websocket-hibernation-api), which allows a Durable Object to be removed from memory to save costs while keeping its WebSockets connected.
 
 `getWebSocketAutoResponseTimestamp` gets the most recent `Date` on which the given WebSocket sent an auto-response, or null if the given WebSocket never sent an auto-response.
 
@@ -193,7 +193,7 @@ Disconnected WebSockets are not returned by this method, but `getWebSockets` may
 
 ### `setHibernatableWebSocketEventTimeout`
 
-`setHibernatableWebSocketEventTimeout` is part of the [WebSocket Hibernation API](/durable-objects/reference/websockets/#websocket-hibernation), which allows a Durable Object to be removed from memory to save costs while keeping its WebSockets connected.
+`setHibernatableWebSocketEventTimeout` is part of the [WebSocket Hibernation API](/durable-objects/best-practices/websockets/#websocket-hibernation-api), which allows a Durable Object to be removed from memory to save costs while keeping its WebSockets connected.
 
 `setHibernatableWebSocketEventTimeout` sets the maximum amount of time in milliseconds that a WebSocket event can run for.
 
@@ -209,7 +209,7 @@ If no parameter or a parameter of `0` is provided and a timeout has been previou
 
 ### `getHibernatableWebSocketEventTimeout`
 
-`getHibernatableWebSocketEventTimeout` is part of the [WebSocket Hibernation API](/durable-objects/reference/websockets/#websocket-hibernation), which allows a Durable Object to be removed from memory to save costs while keeping its WebSockets connected.
+`getHibernatableWebSocketEventTimeout` is part of the [WebSocket Hibernation API](/durable-objects/best-practices/websockets/#websocket-hibernation-api), which allows a Durable Object to be removed from memory to save costs while keeping its WebSockets connected.
 
 `getHibernatableWebSocketEventTimeout` gets the currently set hibernatable WebSocket event timeout if one has been set via [`DurableObjectState::setHibernatableWebSocketEventTimeout`](/durable-objects/api/state/#sethibernatablewebsocketeventtimeout).
 
@@ -223,7 +223,7 @@ If no parameter or a parameter of `0` is provided and a timeout has been previou
 
 ### `getTags`
 
-`getTags` is part of the [WebSocket Hibernation API](/durable-objects/reference/websockets/#websocket-hibernation), which allows a Durable Object to be removed from memory to save costs while keeping its WebSockets connected.
+`getTags` is part of the [WebSocket Hibernation API](/durable-objects/best-practices/websockets/#websocket-hibernation-api), which allows a Durable Object to be removed from memory to save costs while keeping its WebSockets connected.
 
 `getTags` returns tags associated with a given WebSocket. This method throws an exception if the WebSocket has not been associated with the Durable Object via [`DurableObjectState::acceptWebSocket`](/durable-objects/api/state/#acceptwebsocket).
 

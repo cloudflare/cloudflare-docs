@@ -25,15 +25,25 @@ Only one collection of static assets can be configured in each Worker.
 
 The folder of static assets to be served. For many frameworks, this is the `./public/`, `./dist/`, or `./build/` folder.
 
+import { WranglerConfig } from "~/components";
+
+<WranglerConfig>
+
 ```toml title="wrangler.toml"
 name = "my-worker"
 compatibility_date = "2024-09-19"
 assets = { directory = "./public/" }
 ```
 
+</WranglerConfig>
+
 ## `binding`
 
 Configuring the optional [binding](/workers/runtime-apis/bindings) gives you access to the collection of assets from within your Worker script.
+
+
+
+<WranglerConfig>
 
 ```toml title="wrangler.toml"
 name = "my-worker"
@@ -42,6 +52,8 @@ compatibility_date = "2024-09-19"
 
 assets = { directory = "./public/", binding = "ASSETS" }
 ```
+
+</WranglerConfig>
 
 In the example above, assets would be available through `env.ASSETS`.
 

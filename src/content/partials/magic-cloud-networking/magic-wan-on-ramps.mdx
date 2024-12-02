@@ -5,7 +5,9 @@ params:
 
 import { Markdown } from "~/components";
 
-Magic Cloud Networking (beta) allows you to create on-ramps from your cloud networks to Magic WAN. Cloudflare will create virtual private network (VPN) tunnels between Magic WAN and your virtual private cloud (VPC), configuring both sides of the connection on your behalf. Cloudflare orchestrates the cloud provider's native VPN functionality, without requiring deployment of any additional compute virtual machines (VMs).
+Magic Cloud Networking (beta) allows you to create on-ramps from your cloud networks to Magic WAN. Cloudflare will create virtual private network (VPN) tunnels between Magic WAN and your cloud provider, configuring both sides of the connection on your behalf. Cloudflare orchestrates the cloud provider's native VPN functionality, without requiring deployment of any additional compute virtual machines (VMs).
+
+There are two types of on-ramps: single virtual private cloud (VPC) and hubs.
 
 ## Prerequisites
 
@@ -19,9 +21,9 @@ Before creating on-ramps from your cloud networks to Magic WAN, make sure you:
 
 Magic Cloud Networking has the following cloud on-ramps integrations:
 
-- AWS
-- Azure
-- GCP
+- AWS (single VPC and hubs)
+- Azure (single VPC)
+- GCP (single VPC)
 
 Refer to [Reference](/magic-cloud-networking/reference/) to learn more about how Cloudflare orchestrates VPN connectivity to your cloud networks.
 
@@ -29,68 +31,100 @@ Refer to [Reference](/magic-cloud-networking/reference/) to learn more about how
 
 ## Set up on-ramps
 
-### Create a Magic WAN cloud on-ramp
+### Single virtual private cloud
+
+Choose this option if you have a single virtual private cloud (VPC) in your cloud to connect to Magic WAN. To set up a single-VPC on-ramp:
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/), and select your account.
 2. Select **Magic WAN** > **Cloud on-ramps**.
 3. Select **Add new on-ramp**.
-4. Give your new on-ramp a descriptive name.
-5. Select the network you want to connect to, and select **Continue**.
-6. **Configure on-ramp** shows where Cloudflare will install the new routes. Installing these routes is required to correctly configure both Magic WAN and your cloud provider, and ensure successful communication between them:
-   - **Add routes for your Magic WAN address space to your cloud network**: Select this option to install routes for reaching Magic WAN in your cloud network's route tables (refer to [Magic WAN Address Space](#magic-wan-address-space) to learn what routes are installed and how to customize them). If you prefer to do this manually, unselect this option.
-     :::caution
-     Cloudflare recommends that you leave this option selected. If you unselect **Add routes for your Magic WAN address space to your cloud network**, you will need to manually create all the required configurations to allow Magic WAN to connect to your cloud, like routing tables, transit gateways, and VPNs. Refer to the [Magic WAN How to](/magic-wan/configuration/manually/how-to/) section, or consult the documentation for your cloud provider for more information.
-     :::
-   - **Add routes for your cloud network to Magic WAN**: Select this option to create routes for reaching your cloud network in Magic WAN.
-7. Select **Continue**. Applying your settings might take a few seconds to complete.
-8. Review the changes in your cloud environment, and select **Approve changes**.
+4. Go to **Connect an existing VPC to Cloudflare** > **Select**.
+5. Give your new on-ramp a name and a description (optional), then select **Continue**.
+6. From the drop-down menu, choose your cloud provider. You can choose between AWS, GCP and Azure. Then, select **Continue**.
+7. Select the network that you want to connect to. This list comes from the [cloud integrations](/magic-cloud-networking/get-started/#2-set-up-cloud-integrations) you have already set up. When you are done, select **Continue**.
+8. **Configure route propagation** shows where Cloudflare will install the new routes. Installing these routes is required to correctly configure both Magic WAN and your cloud provider, and ensure successful communication between them:
+	- **Add routes for your Magic WAN address space to your cloud network**: Select this option to install routes for reaching Magic WAN in your cloud network's route tables (refer to [Magic WAN Address Space](#magic-wan-address-space) to learn what routes are installed and how to customize them). If you prefer to do this manually, unselect this option.
+		:::caution[Warning]
+		Cloudflare recommends that you leave this option selected. If you unselect **Add routes for your Magic WAN address space to your cloud network**, you will need to manually create all the required configurations to allow Magic WAN to connect to your cloud, such as routing tables, transit gateways, and VPNs. Refer to the [Magic WAN How to](/magic-wan/configuration/manually/how-to/) section, or consult the documentation for your cloud provider for more information.
+		:::
+	- **Add routes for your cloud network to Magic WAN**: Select this option to create routes for reaching your cloud network in Magic WAN.
+9. Select **Continue**. Applying your settings might take a few seconds to complete.
+10. Review the changes in your cloud environment, and select **Approve changes**.
 
 You have successfully created your Magic WAN on-ramp. However, on-ramp creation can take up to an hour before you can use it.
 
-### Edit a Magic WAN cloud on-ramp
+### Hubs
+
+If you want to connect multiple VPCs to Magic WAN, the best way to connect them is using a hub. A hub is a cloud VPN gateway that peers with multiple VPCs, allowing them to share a VPN tunnel to Magic WAN. Each cloud provider has their own term for hubs, so refer to your cloud provider for more information.
+
+Depending on how you have set up your cloud provider, you can:
+
+- **Connect to an existing hub**: Choose this option if you already have a VPN hub in your cloud and you want to connect it to Magic WAN.
+- **Create a new hub**: Choose this option if you want to create a new hub and connect it to Magic WAN.
+
+When you configure a hub on-ramp, Cloudflare always manages the VPN tunnel between Magic WAN and the hub. Optionally, you can also choose to have Cloudflare manage peering with VPCs and/or with other hubs:
+
+- **Manage VPC peering:** If you enable this option, Cloudflare will attach your chosen VPCs to the hub.
+- **Manage hub peering:** Hubs are regional, so in order to connect VPCs attached to hubs in different regions, those hubs need to be peered. If you enable this option, Cloudflare will peer your chosen hubs to this hub.
+
+#### Connect to an existing hub
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/), and select your account.
 2. Select **Magic WAN** > **Cloud on-ramps**.
-3. Select the on-ramp you want to edit.
-4. Select **Edit** in the side panel.
-5. In **Basic information**, you can change the name and description of your on-ramp. Select **Save** when you are finished.
-6. In **Configurations**, you can modify where the required routes are installed. Select **Continue**.
-   1. Select **Save and review** after making changes.
-   2. Review your settings, and select **Approve changes**.
-      :::caution
-      If you uncheck any of the Propagation settings, you will have to manually configure Magic WAN or your cloud provider to ensure successful communication between them. Refer to the [How to](/magic-wan/configuration/manually/how-to/) section of Magic WAN, or consult the documentation for your cloud provider for more information.
-      :::
+3. Select **Add new on-ramp**.
+4. Go to **Connect an existing hub to Cloudflare** > **Select**.
+5. Give your new on-ramp a name and a description (optional), then select **Continue**.
+6. From the drop-down menu, choose your cloud provider. You can choose between AWS, GCP, and Azure. Then, select **Continue**.
+7. Choose an existing hub. This list comes from the [cloud integrations](/magic-cloud-networking/get-started/#2-set-up-cloud-integrations) you have already set up. When you are done, select **Continue**.
+8. (*Optional*) In **VPC peering configuration**, you can enable **Manage VPC peering**. This allows Cloudflare to attach your chosen VPCs to the hub:
+	1. Select **Manage VPC peering** to enable this feature.
+	2. Choose the VPCs you want Cloudflare to attach to the hub.
+9. Select **Continue**.
+10. (*Optional*) In **Configure hub peering**, you can enable **Manage hub peering**. Enabling this option allows Cloudflare to attach remote hubs you have chosen to this hub (establishing connectivity between VPCs attached to any of the peered hubs):
+	1. Select **Manage hub peering** to enable this feature.
+	2. Select the remote hubs you want Cloudflare to attach to this hub.
+11. Select **Continue**.
+12. **Configure route propagation** shows where Cloudflare will install the new routes. Installing these routes is required to correctly configure both Magic WAN and your cloud provider, and ensure successful communication between them:
+	1. **Add routes for your Magic WAN address space to your cloud network**: Select this option to install routes for reaching Magic WAN in your cloud network's route tables (refer to [Magic WAN Address Space](#magic-wan-address-space) to learn what routes are installed and how to customize them). If you prefer to do this manually, unselect this option.
+		:::caution[Warning]
+		Cloudflare recommends that you leave this option selected. If you unselect **Add routes for your Magic WAN address space to your cloud network**, you will need to manually create all the required configurations to allow Magic WAN to connect to your cloud, such as routing tables, transit gateways, and VPNs. Refer to the [Magic WAN How to](/magic-wan/configuration/manually/how-to/) section, or consult the documentation for your cloud provider for more information.
+		:::
+	2. **Add routes for your cloud network to Magic WAN**: Select this option to create routes for reaching your cloud network in Magic WAN.
+13. Select **Continue**. Applying your settings might take a few seconds to complete.
+14. Review the changes in your cloud environment, and select **Approve changes**.
 
-### Delete a Magic WAN cloud on-ramp
+You have successfully created your Magic WAN on-ramp. However, on-ramp creation can take up to an hour before you can use it.
+
+#### Create a new hub
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/), and select your account.
 2. Select **Magic WAN** > **Cloud on-ramps**.
-3. Select the on-ramp you want to delete.
-4. Select **Edit** in the side panel.
-5. Choose **Detach** or **Destroy** to proceed:
-   - **Detach**: Cloudflare will stop managing the cloud resources that were created to build this on-ramp, but will leave them in place. On-ramp connectivity will not be impacted.
-   - **Destroy**: Cloudflare will delete the resources that were created to build this on-ramp in the cloud provider, if possible. Resources cannot be deleted if other resources depend upon them. For example, if an AWS Customer Gateway was created for this on-ramp, but was subsequently used in a second on-ramp, destroying this on-ramp will not destroy the AWS Customer Gateway.
+3. Select **Add new on-ramp**.
+4. Go to **Create a new hub & connect it to Cloudflare** > **Select**.
+5. Give your new on-ramp a name and a description (optional), then select **Continue**.
+6. Configure your cloud in **Select your cloud details**:
+	1. From the drop-down menu, choose your cloud provider. You can choose between AWS, GCP, and Azure.
+	2. Choose an existing integration. This list comes from the [cloud integrations](/magic-cloud-networking/get-started/#2-set-up-cloud-integrations) you have already set up.
+	3. Choose a region in which to create the new hub.
+	4. Select **Continue**.
+7. (*Optional*) In **VPC peering configuration**, you can enable **Manage VPC peering**. This allows Cloudflare to attach your chosen VPCs to the hub:
+	1. Select **Manage VPC peering** to enable this feature.
+	2. Choose the VPCs you want Cloudflare to attach to the hub.
+8. Select **Continue**.
+9. (*Optional*) In **Configure hub peering**, you can enable **Manage hub peering**. Enabling this option allows Cloudflare to attach remote hubs you have chosen to this hub (establishing connectivity between VPCs attached to any of the peered hubs):
+	1. Select **Manage hub peering** to enable this feature.
+	2. Select the remote hubs you want Cloudflare to attach to this hub.
+10. Select **Continue**.
+11. **Configure route propagation** shows where Cloudflare will install the new routes. Installing these routes is required to correctly configure both Magic WAN and your cloud provider, and ensure successful communication between them:
+	1. **Add routes for your Magic WAN address space to your cloud network**: Select this option to install routes for reaching Magic WAN in your cloud network's route tables (refer to [Magic WAN Address Space](#magic-wan-address-space) to learn what routes are installed and how to customize them). If you prefer to do this manually, unselect this option.
+		:::caution[Warning]
+		Cloudflare recommends that you leave this option selected. If you unselect **Add routes for your Magic WAN address space to your cloud network**, you will need to manually create all the required configurations to allow Magic WAN to connect to your cloud, such as routing tables, transit gateways, and VPNs. Refer to the [Magic WAN How to](/magic-wan/configuration/manually/how-to/) section, or consult the documentation for your cloud provider for more information.
+		:::
+	2. **Add routes for your cloud network to Magic WAN**: Select this option to create routes for reaching your cloud network in Magic WAN.
+12. Select **Continue**. Applying your settings might take a few seconds to complete.
+13. Review the changes in your cloud environment, and select **Approve changes**.
 
-### Magic WAN Address Space
-
-By default, Cloudflare installs the following summarized routes in your cloud route tables to direct traffic to Magic WAN:
-
-```txt
-10.0.0.0/8
-172.16.0.0./12
-192.168.0.0/16
-100.64.0.0./10
-```
-
-To override the defaults with custom prefixes:
-
-1. Log in to the Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/), and select your account.
-2. Select **Magic WAN** > **Configuration**.
-3. Select **Magic WAN Address Space**.
-4. Delete the prefixes, and enter your custom ones.
-5. When you are finished, select **Save changes**.
-
-To install a default route to send all traffic to Magic WAN, enter `0.0.0.0/0` (on Azure, enter `0.0.0.0/1` and `128.0.0.0/1`).
+You have successfully created your Magic WAN on-ramp. However, on-ramp creation can take up to an hour before you can use it.
 
 ## Set up with Terraform
 
@@ -117,14 +151,61 @@ Do not deploy the on-ramp using both Cloudflare and Terraform. If you plan to de
 3. Select **Add new on-ramp** and begin the **Create a Magic WAN cloud on-ramp** workflow as normal.
 4. After the **Configure route propagation** step, select **View download options** instead of selecting **Continue**.
 5. Select a download option:
-   1. Choose **Download and continue** to download the Terraform configuration, review the configuration, and then continue deploying the on-ramp with Cloudflare.
-   2. Choose **Download and exit** to download the Terraform configuration that you will apply yourself.
+   1. Choose **Download file and continue** to download the Terraform configuration, review the configuration, and then continue deploying the on-ramp with Cloudflare.
+   2. Choose **Download file and exit** to download the Terraform configuration that you will apply yourself.
 
 ### Download Terraform configuration for an existing on-ramp
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/), and select your account.
 2. Select **Magic WAN** > **Cloud on-ramps**.
-3. Select the three dots for the on-ramp you want to download > **Download Terraform**.
+3. Select the three dots for the on-ramp you want to download > **Download as Terraform**.
+
+## Edit on-ramps
+
+### Edit a Magic WAN cloud on-ramp
+
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/), and select your account.
+2. Select **Magic WAN** > **Cloud on-ramps**.
+3. Select the on-ramp you want to edit.
+4. Select **Edit** in the side panel.
+5. In **Basic information**, you can change the name and description of your on-ramp. Select **Save** when you are finished.
+6. In **Configurations**, you can modify where the required routes are installed. Select **Continue**.
+   1. Select **Save and review** after making changes.
+   2. Review your settings, and select **Approve changes**.
+      :::caution
+      If you uncheck any of the Propagation settings, you will have to manually configure Magic WAN or your cloud provider to ensure successful communication between them. Refer to the [How to](/magic-wan/configuration/manually/how-to/) section of Magic WAN, or consult the documentation for your cloud provider for more information.
+      :::
+
+### Delete a Magic WAN cloud on-ramp
+
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/), and select your account.
+2. Select **Magic WAN** > **Cloud on-ramps**.
+3. Select the on-ramp you want to delete.
+4. Select **Edit** in the side panel.
+5. Choose **Detach** or **Destroy** to proceed:
+   - **Detach**: Cloudflare will stop managing the cloud resources that were created to build this on-ramp, but will leave them in place. On-ramp connectivity will not be impacted.
+   - **Destroy**: Cloudflare will delete the resources that were created to build this on-ramp in the cloud provider, if possible. Resources cannot be deleted if other resources depend upon them. For example, if an AWS Customer Gateway was created for this on-ramp, but was subsequently used in a second on-ramp, destroying this on-ramp will not destroy the AWS Customer Gateway.
+
+## Magic WAN Address Space
+
+By default, Cloudflare installs the following summarized routes in your cloud route tables to direct traffic to Magic WAN:
+
+```txt
+10.0.0.0/8
+172.16.0.0./12
+192.168.0.0/16
+100.64.0.0./10
+```
+
+To override the defaults with custom prefixes:
+
+1. Log in to the Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/), and select your account.
+2. Select **Magic WAN** > **Configuration**.
+3. Select **Magic WAN Address Space**.
+4. Delete the prefixes, and enter your custom ones.
+5. When you are finished, select **Save changes**.
+
+To install a default route to send all traffic to Magic WAN, enter `0.0.0.0/0` (on Azure, enter `0.0.0.0/1` and `128.0.0.0/1`).
 
 ## Cost estimates
 

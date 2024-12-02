@@ -255,7 +255,7 @@ export class MyWorkflow extends WorkflowEntrypoint {
 		let catList = await step.do("get cat list from KV", async () => {
 			return await env.KV.get("cat-list")
 		})
-		for(const cat of carList) {
+		for(const cat of catList) {
 			await step.do(`get cat: ${cat}`, async () => {
 				return await env.KV.get(cat)
 			})

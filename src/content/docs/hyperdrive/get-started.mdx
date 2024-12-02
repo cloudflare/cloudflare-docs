@@ -78,9 +78,15 @@ This will create a new `hyperdrive-tutorial` directory. Your new `hyperdrive-tut
 
 Note that the `wrangler.toml` file contains the following option:
 
+import { WranglerConfig } from "~/components";
+
+<WranglerConfig>
+
 ```toml title="wrangler.toml"
 compatibility_flags = [ "nodejs_compat" ]
 ```
+
+</WranglerConfig>
 
 This enables the Node.js compatibility mode which is required for database drivers, including Postgres.js.
 

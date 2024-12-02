@@ -1,0 +1,1471 @@
+---
+updated: 2024-11-06
+difficulty: Intermediate
+content_type: 📝 Tutorial
+pcx_content_type: tutorial
+title: Build an interview practice tool with Workers AI
+products:
+  - Workers
+  - Workers AI
+  - Durable Objects
+  - Developer Spotlight
+spotlight:
+  author: Vasyl
+  author_bio_link: https://github.com/berezovyy
+  author_bio_source: GitHub
+languages:
+  - TypeScript
+tags:
+  - AI
+---
+
+import { Render, PackageManagers } from "~/components";
+
+Job interviews can be stressful, and practice is key to building confidence. While traditional mock interviews with friends or mentors are valuable, they are not always available when you need them. In this tutorial, you will learn how to build an AI-powered interview practice tool that provides real-time feedback to help improve interview skills.
+
+By the end of this tutorial, you will have built a complete interview practice tool with the following core functionalities:
+
+- A real-time interview simulation tool using WebSocket connections
+- An AI-powered speech processing pipeline that converts audio to text
+- An intelligent response system that provides interviewer-like interactions
+- A persistent storage system for managing interview sessions and history using Durable Objects
+
+<Render file="tutorials-before-you-start" product="workers" />
+<Render file="prereqs" product="workers" />
+
+### Prerequisites
+
+This tutorial demonstrates how to use multiple Cloudflare products and while many features are available in free tiers, some components of Workers AI may incur usage-based charges. Please review the pricing documentation for Workers AI before proceeding.
+
+<Render file="ai-local-usage-charges" product="workers" />
+
+## 1. Create a new Worker project
+
+Create a Cloudflare Workers project using the Create Cloudflare CLI (C3) tool and the Hono framework.
+
+:::note
+[Hono](https://hono.dev) is a lightweight web framework that helps build API endpoints and handle HTTP requests. This tutorial uses Hono to create and manage the application's routing and middleware components.
+:::
+
+Create a new Worker project by running the following commands, using `ai-interview-tool` as the Worker name:
+
+<PackageManagers
+	type="create"
+	pkg="cloudflare@latest"
+	args={"ai-interview-tool"}
+/>
+
+<Render
+	file="c3-post-run-steps"
+	product="workers"
+	params={{
+		category: "web-framework",
+		framework: "Hono",
+	}}
+/>
+
+To develop and test your Cloudflare Workers application locally:
+
+1. Navigate to your Workers project directory in your terminal:
+
+```sh
+cd ai-interview-tool
+```
+
+2. Start the development server by running:
+
+```sh
+npx wrangler dev
+```
+
+When you run `wrangler dev`, the command starts a local development server and provides a `localhost` URL where you can preview your application.
+You can now make changes to your code and see them reflected in real-time at the provided localhost address.
+
+## 2. Define TypeScript types for the interview system
+
+Now that the project is set up, create the TypeScript types that will form the foundation of the interview system. These types will help you maintain type safety and provide clear interfaces for the different components of your application.
+
+Create a new file `types.ts` that will contain essential types and enums for:
+
+- Interview skills that can be assessed (JavaScript, React, etc.)
+- Different interview positions (Junior Developer, Senior Developer, etc.)
+- Interview status tracking
+- Message handling between user and AI
+- Core interview data structure
+
+```typescript title="src/types.ts"
+import { Context } from "hono";
+
+// Context type for API endpoints, including environment bindings and user info
+export interface ApiContext {
+	Bindings: CloudflareBindings;
+	Variables: {
+		username: string;
+	};
+}
+
+export type HonoCtx = Context<ApiContext>;
+
+// List of technical skills you can assess during mock interviews.
+// This application focuses on popular web technologies and programming languages
+// that are commonly tested in real interviews.
+export enum InterviewSkill {
+	JavaScript = "JavaScript",
+	TypeScript = "TypeScript",
+	React = "React",
+	NodeJS = "NodeJS",
+	Python = "Python",
+}
+
+// Available interview types based on different engineering roles.
+// This helps tailor the interview experience and questions to
+// match the candidate's target position.
+export enum InterviewTitle {
+	JuniorDeveloper = "Junior Developer Interview",
+	SeniorDeveloper = "Senior Developer Interview",
+	FullStackDeveloper = "Full Stack Developer Interview",
+	FrontendDeveloper = "Frontend Developer Interview",
+	BackendDeveloper = "Backend Developer Interview",
+	SystemArchitect = "System Architect Interview",
+	TechnicalLead = "Technical Lead Interview",
+}
+
+// Tracks the current state of an interview session.
+// This will help you to manage the interview flow and show appropriate UI/actions
+// at each stage of the process.
+export enum InterviewStatus {
+	Created = "created", // Interview is created but not started
+	Pending = "pending", // Waiting for interviewer/system
+	InProgress = "in_progress", // Active interview session
+	Completed = "completed", // Interview finished successfully
+	Cancelled = "cancelled", // Interview terminated early
+}
+
+// Defines who sent a message in the interview chat
+export type MessageRole = "user" | "assistant" | "system";
+
+// Structure of individual messages exchanged during the interview
+export interface Message {
+	messageId: string; // Unique identifier for the message
+	interviewId: string; // Links message to specific interview
+	role: MessageRole; // Who sent the message
+	content: string; // The actual message content
+	timestamp: number; // When the message was sent
+}
+
+// Main data structure that holds all information about an interview session.
+// This includes metadata, messages exchanged, and the current status.
+export interface InterviewData {
+	interviewId: string;
+	title: InterviewTitle;
+	skills: InterviewSkill[];
+	messages: Message[];
+	status: InterviewStatus;
+	createdAt: number;
+	updatedAt: number;
+}
+
+// Input format for creating a new interview session.
+// Simplified interface that accepts basic parameters needed to start an interview.
+export interface InterviewInput {
+	title: string;
+	skills: string[];
+}
+```
+
+## 3. Configure error types for different services
+
+Next, set up custom error types to handle different kinds of errors that may occur in your application. This includes:
+
+- Database errors (for example, connection issues, query failures)
+- Interview-related errors (for example, invalid input, transcription failures)
+- Authentication errors (for example, invalid sessions)
+
+Create the following `errors.ts` file:
+
+```typescript title="src/errors.ts"
+export const ErrorCodes = {
+	INVALID_MESSAGE: "INVALID_MESSAGE",
+	TRANSCRIPTION_FAILED: "TRANSCRIPTION_FAILED",
+	LLM_FAILED: "LLM_FAILED",
+	DATABASE_ERROR: "DATABASE_ERROR",
+} as const;
+
+export class AppError extends Error {
+	constructor(
+		message: string,
+		public statusCode: number,
+	) {
+		super(message);
+		this.name = this.constructor.name;
+	}
+}
+
+export class UnauthorizedError extends AppError {
+	constructor(message: string) {
+		super(message, 401);
+	}
+}
+
+export class BadRequestError extends AppError {
+	constructor(message: string) {
+		super(message, 400);
+	}
+}
+
+export class NotFoundError extends AppError {
+	constructor(message: string) {
+		super(message, 404);
+	}
+}
+
+export class InterviewError extends Error {
+	constructor(
+		message: string,
+		public code: string,
+		public statusCode: number = 500,
+	) {
+		super(message);
+		this.name = "InterviewError";
+	}
+}
+```
+
+## 4. Configure authentication middleware and user routes
+
+In this step, you will implement a basic authentication system to track and identify users interacting with your AI interview practice tool. The system uses HTTP-only cookies to store usernames, allowing you to identify both the request sender and their corresponding Durable Object. This straightforward authentication approach requires users to provide a username, which is then stored securely in a cookie. This approach allows you to:
+
+- Identify users across requests
+- Associate interview sessions with specific users
+- Secure access to interview-related endpoints
+
+### Create the Authentication Middleware
+
+Create a middleware function that will check for the presence of a valid authentication cookie. This middleware will be used to protect routes that require authentication.
+
+Create a new middleware file `middleware/auth.ts`:
+
+```typescript title="src/middleware/auth.ts"
+import { Context } from "hono";
+import { getCookie } from "hono/cookie";
+import { UnauthorizedError } from "../errors";
+
+export const requireAuth = async (ctx: Context, next: () => Promise<void>) => {
+	// Get username from cookie
+	const username = getCookie(ctx, "username");
+
+	if (!username) {
+		throw new UnauthorizedError("User is not logged in");
+	}
+
+	// Make username available to route handlers
+	ctx.set("username", username);
+	await next();
+};
+```
+
+This middleware:
+
+- Checks for a `username` cookie
+- Throws an `Error` if the cookie is missing
+- Makes the username available to downstream handlers via the context
+
+### Create Authentication Routes
+
+Next, create the authentication routes that will handle user login. Create a new file `routes/auth.ts`:
+
+```typescript title="src/routes/auth.ts"
+import { Context, Hono } from "hono";
+import { setCookie } from "hono/cookie";
+import { BadRequestError } from "../errors";
+import { ApiContext } from "../types";
+
+export const authenticateUser = async (ctx: Context) => {
+	// Extract username from request body
+	const { username } = await ctx.req.json();
+
+	// Make sure username was provided
+	if (!username) {
+		throw new BadRequestError("Username is required");
+	}
+
+	// Create a secure cookie to track the user's session
+	// This cookie will:
+	// - Be HTTP-only for security (no JS access)
+	// - Work across all routes via path="/"
+	// - Last for 24 hours
+	// - Only be sent in same-site requests to prevent CSRF
+	setCookie(ctx, "username", username, {
+		httpOnly: true,
+		path: "/",
+		maxAge: 60 * 60 * 24,
+		sameSite: "Strict",
+	});
+
+	// Let the client know login was successful
+	return ctx.json({ success: true });
+};
+
+// Set up authentication-related routes
+export const configureAuthRoutes = () => {
+	const router = new Hono<ApiContext>();
+
+	// POST /login - Authenticate user and create session
+	router.post("/login", authenticateUser);
+
+	return router;
+};
+```
+
+Finally, update main application file to include the authentication routes. Modify `src/index.ts`:
+
+```typescript title="src/index.ts"
+import { configureAuthRoutes } from "./routes/auth";
+import { Hono } from "hono";
+import { logger } from "hono/logger";
+import type { ApiContext } from "./types";
+import { requireAuth } from "./middleware/auth";
+
+// Create our main Hono app instance with proper typing
+const app = new Hono<ApiContext>();
+
+// Create a separate router for API endpoints to keep things organized
+const api = new Hono<ApiContext>();
+
+// Set up global middleware that runs on every request
+// - Logger gives us visibility into what is happening
+app.use("*", logger());
+
+// Wire up all our authentication routes (login, etc)
+// These will be mounted under /api/v1/auth/
+api.route("/auth", configureAuthRoutes());
+
+// Mount all API routes under the version prefix (for example, /api/v1)
+// This allows us to make breaking changes in v2 without affecting v1 users
+app.route("/api/v1", api);
+
+export default app;
+```
+
+Now we have a basic authentication system that:
+
+1. Provides a login endpoint at `/api/v1/auth/login`
+2. Securely stores the username in a cookie
+3. Includes middleware to protect authenticated routes
+
+## 5. Create a Durable Object to manage interviews
+
+Now that you have your authentication system in place, create a Durable Object to manage interview sessions. Durable Objects are perfect for this interview practice tool because they provide the following functionalities:
+
+- Maintains states between connections, so users can reconnect without losing progress.
+- Provides a SQLite database to store all interview Q&A, feedback and metrics.
+- Enables smooth real-time interactions between the interviewer AI and candidate.
+- Handles multiple interview sessions efficiently without performance issues.
+- Creates a dedicated instance for each user, giving them their own isolated environment.
+
+First, you will need to configure the Durable Object in `wrangler.toml` file. Add the following configuration:
+
+```toml title="wrangler.toml"
+[[durable_objects.bindings]]
+name = "INTERVIEW"
+class_name = "Interview"
+
+[[migrations]]
+tag = "v1"
+new_sqlite_classes = ["Interview"]
+```
+
+Next, create a new file `interview.ts` to define our Interview Durable Object:
+
+```typescript title="src/interview.ts"
+import { DurableObject } from "cloudflare:workers";
+
+export class Interview extends DurableObject<CloudflareBindings> {
+	// We will use it to keep track of all active WebSocket connections for real-time communication
+	private sessions: Map<WebSocket, { interviewId: string }>;
+
+	constructor(state: DurableObjectState, env: CloudflareBindings) {
+		super(state, env);
+
+		// Initialize empty sessions map - we will add WebSocket connections as users join
+		this.sessions = new Map();
+	}
+
+	// Entry point for all HTTP requests to this Durable Object
+	// This will handle both initial setup and WebSocket upgrades
+	async fetch(request: Request) {
+		// For now, just confirm the object is working
+		// We'll add WebSocket upgrade logic and request routing later
+		return new Response("Interview object initialized");
+	}
+
+	// Broadcasts a message to all connected WebSocket clients.
+	private broadcast(message: string) {
+		this.ctx.getWebSockets().forEach((ws) => {
+			try {
+				if (ws.readyState === WebSocket.OPEN) {
+					ws.send(message);
+				}
+			} catch (error) {
+				console.error(
+					"Error broadcasting message to a WebSocket client:",
+					error,
+				);
+			}
+		});
+	}
+}
+```
+
+Now we need to export the Durable Object in our main `src/index.ts` file:
+
+```typescript title="src/index.ts"
+import { Interview } from "./interview";
+
+// ... previous code ...
+
+export { Interview };
+
+export default app;
+```
+
+Since the Worker code is written in TypeScript, you should run the following command to add the necessary type definitions:
+
+```sh
+npm run cf-typegen
+```
+
+### Set up SQLite database schema to store interview data
+
+Now you will use SQLite at the Durable Object level for data persistence. This gives each user their own isolated database instance. You will need two main tables:
+
+- `interviews`: Stores interview session data
+- `messages`: Stores all messages exchanged during interviews
+
+Before you create these tables, create a service class to handle your database operations. This encapsulates database logic and helps you:
+
+- Manage database schema changes
+- Handle errors consistently
+- Keep database queries organized
+
+Create a new file called `services/InterviewDatabaseService.ts`:
+
+```typescript title="src/services/InterviewDatabaseService.ts"
+import {
+	InterviewData,
+	Message,
+	InterviewStatus,
+	InterviewTitle,
+	InterviewSkill,
+} from "../types";
+import { InterviewError, ErrorCodes } from "../errors";
+
+const CONFIG = {
+	database: {
+		tables: {
+			interviews: "interviews",
+			messages: "messages",
+		},
+		indexes: {
+			messagesByInterview: "idx_messages_interviewId",
+		},
+	},
+} as const;
+
+export class InterviewDatabaseService {
+	constructor(private sql: SqlStorage) {}
+
+	/**
+	 * Sets up the database schema by creating tables and indexes if they do not exist.
+	 * This is called when initializing a new Durable Object instance to ensure
+	 * we have the required database structure.
+	 *
+	 * The schema consists of:
+	 * - interviews table: Stores interview metadata like title, skills, and status
+	 * - messages table: Stores the conversation history between user and AI
+	 * - messages index: Helps optimize queries when fetching messages for a specific interview
+	 */
+	createTables() {
+		try {
+			// Get list of existing tables to avoid recreating them
+			const cursor = this.sql.exec(`PRAGMA table_list`);
+			const existingTables = new Set([...cursor].map((table) => table.name));
+
+			// The interviews table is our main table storing interview sessions.
+			// We only create it if it does not exist yet.
+			if (!existingTables.has(CONFIG.database.tables.interviews)) {
+				this.sql.exec(InterviewDatabaseService.QUERIES.CREATE_INTERVIEWS_TABLE);
+			}
+
+			// The messages table stores the actual conversation history.
+			// It references interviews table via foreign key for data integrity.
+			if (!existingTables.has(CONFIG.database.tables.messages)) {
+				this.sql.exec(InterviewDatabaseService.QUERIES.CREATE_MESSAGES_TABLE);
+			}
+
+			// Add an index on interviewId to speed up message retrieval.
+			// This is important since we will frequently query messages by interview.
+			this.sql.exec(InterviewDatabaseService.QUERIES.CREATE_MESSAGE_INDEX);
+		} catch (error: unknown) {
+			const message = error instanceof Error ? error.message : String(error);
+			throw new InterviewError(
+				`Failed to initialize database: ${message}`,
+				ErrorCodes.DATABASE_ERROR,
+			);
+		}
+	}
+
+	private static readonly QUERIES = {
+		CREATE_INTERVIEWS_TABLE: `
+      CREATE TABLE IF NOT EXISTS interviews (
+        interviewId TEXT PRIMARY KEY,
+        title TEXT NOT NULL,
+        skills TEXT NOT NULL,
+        createdAt INTEGER NOT NULL DEFAULT (strftime('%s','now') * 1000),
+        updatedAt INTEGER NOT NULL DEFAULT (strftime('%s','now') * 1000),
+        status TEXT NOT NULL DEFAULT 'pending'
+      )
+    `,
+		CREATE_MESSAGES_TABLE: `
+      CREATE TABLE IF NOT EXISTS messages (
+        messageId TEXT PRIMARY KEY,
+        interviewId TEXT NOT NULL,
+        role TEXT NOT NULL,
+        content TEXT NOT NULL,
+        timestamp INTEGER NOT NULL,
+        FOREIGN KEY (interviewId) REFERENCES interviews(interviewId)
+      )
+    `,
+		CREATE_MESSAGE_INDEX: `
+      CREATE INDEX IF NOT EXISTS idx_messages_interview ON messages(interviewId)
+    `,
+	};
+}
+```
+
+Update the `Interview` Durable Object to use the database service by modifying `src/interview.ts`:
+
+```typescript title="src/interview.ts"
+import { InterviewDatabaseService } from "./services/InterviewDatabaseService";
+
+export class Interview extends DurableObject<CloudflareBindings> {
+	// Database service for persistent storage of interview data and messages
+	private readonly db: InterviewDatabaseService;
+	private sessions: Map<WebSocket, { interviewId: string }>;
+
+	constructor(state: DurableObjectState, env: CloudflareBindings) {
+		// ... previous code ...
+		// Set up our database connection using the DO's built-in SQLite instance
+		this.db = new InterviewDatabaseService(state.storage.sql);
+		// First-time setup: ensure our database tables exist
+		// This is idempotent so safe to call on every instantiation
+		this.db.createTables();
+	}
+}
+```
+
+Add methods to create and retrieve interviews in `services/InterviewDatabaseService.ts`:
+
+```typescript title="src/services/InterviewDatabaseService.ts"
+export class InterviewDatabaseService {
+	/**
+	 * Creates a new interview session in the database.
+	 *
+	 * This is the main entry point for starting a new interview. It handles all the
+	 * initial setup like:
+	 * - Generating a unique ID using crypto.randomUUID() for reliable uniqueness
+	 * - Recording the interview title and required skills
+	 * - Setting up timestamps for tracking interview lifecycle
+	 * - Setting the initial status to "Created"
+	 *
+	 */
+	createInterview(title: InterviewTitle, skills: InterviewSkill[]): string {
+		try {
+			const interviewId = crypto.randomUUID();
+			const currentTime = Date.now();
+
+			this.sql.exec(
+				InterviewDatabaseService.QUERIES.INSERT_INTERVIEW,
+				interviewId,
+				title,
+				JSON.stringify(skills), // Store skills as JSON for flexibility
+				InterviewStatus.Created,
+				currentTime,
+				currentTime,
+			);
+
+			return interviewId;
+		} catch (error: unknown) {
+			const message = error instanceof Error ? error.message : String(error);
+			throw new InterviewError(
+				`Failed to create interview: ${message}`,
+				ErrorCodes.DATABASE_ERROR,
+			);
+		}
+	}
+
+	/**
+	 * Fetches all interviews from the database, ordered by creation date.
+	 *
+	 * This is useful for displaying interview history and letting users
+	 * resume previous sessions. We order by descending creation date since
+	 * users typically want to see their most recent interviews first.
+	 *
+	 * Returns an array of InterviewData objects with full interview details
+	 * including metadata and message history.
+	 */
+	getAllInterviews(): InterviewData[] {
+		try {
+			const cursor = this.sql.exec(
+				InterviewDatabaseService.QUERIES.GET_ALL_INTERVIEWS,
+			);
+
+			return [...cursor].map(this.parseInterviewRecord);
+		} catch (error) {
+			const message = error instanceof Error ? error.message : String(error);
+			throw new InterviewError(
+				`Failed to retrieve interviews: ${message}`,
+				ErrorCodes.DATABASE_ERROR,
+			);
+		}
+	}
+
+	// Retrieves an interview and its messages by ID
+	getInterview(interviewId: string): InterviewData | null {
+		try {
+			const cursor = this.sql.exec(
+				InterviewDatabaseService.QUERIES.GET_INTERVIEW,
+				interviewId,
+			);
+
+			const record = [...cursor][0];
+			if (!record) return null;
+
+			return this.parseInterviewRecord(record);
+		} catch (error: unknown) {
+			const message = error instanceof Error ? error.message : String(error);
+			throw new InterviewError(
+				`Failed to retrieve interview: ${message}`,
+				ErrorCodes.DATABASE_ERROR,
+			);
+		}
+	}
+
+	addMessage(
+		interviewId: string,
+		role: Message["role"],
+		content: string,
+		messageId: string,
+	): Message {
+		try {
+			const timestamp = Date.now();
+
+			this.sql.exec(
+				InterviewDatabaseService.QUERIES.INSERT_MESSAGE,
+				messageId,
+				interviewId,
+				role,
+				content,
+				timestamp,
+			);
+
+			return {
+				messageId,
+				interviewId,
+				role,
+				content,
+				timestamp,
+			};
+		} catch (error: unknown) {
+			const message = error instanceof Error ? error.message : String(error);
+			throw new InterviewError(
+				`Failed to add message: ${message}`,
+				ErrorCodes.DATABASE_ERROR,
+			);
+		}
+	}
+
+	/**
+	 * Transforms raw database records into structured InterviewData objects.
+	 *
+	 * This helper does the heavy lifting of:
+	 * - Type checking critical fields to catch database corruption early
+	 * - Converting stored JSON strings back into proper objects
+	 * - Filtering out any null messages that might have snuck in
+	 * - Ensuring timestamps are proper numbers
+	 *
+	 * If any required data is missing or malformed, it throws an error
+	 * rather than returning partially valid data that could cause issues
+	 * downstream.
+	 */
+	private parseInterviewRecord(record: any): InterviewData {
+		const interviewId = record.interviewId as string;
+		const createdAt = Number(record.createdAt);
+		const updatedAt = Number(record.updatedAt);
+
+		if (!interviewId || !createdAt || !updatedAt) {
+			throw new InterviewError(
+				"Invalid interview data in database",
+				ErrorCodes.DATABASE_ERROR,
+			);
+		}
+
+		return {
+			interviewId,
+			title: record.title as InterviewTitle,
+			skills: JSON.parse(record.skills as string) as InterviewSkill[],
+			messages: record.messages
+				? JSON.parse(record.messages)
+						.filter((m: any) => m !== null)
+						.map((m: any) => ({
+							messageId: m.messageId,
+							role: m.role,
+							content: m.content,
+							timestamp: m.timestamp,
+						}))
+				: [],
+			status: record.status as InterviewStatus,
+			createdAt,
+			updatedAt,
+		};
+	}
+
+	// Add these SQL queries to the QUERIES object
+	private static readonly QUERIES = {
+		// ... previous queries ...
+
+		INSERT_INTERVIEW: `
+      INSERT INTO ${CONFIG.database.tables.interviews} 
+      (interviewId, title, skills, status, createdAt, updatedAt)
+      VALUES (?, ?, ?, ?, ?, ?)
+    `,
+
+		GET_ALL_INTERVIEWS: `
+      SELECT 
+        interviewId, 
+        title, 
+        skills, 
+        createdAt, 
+        updatedAt, 
+        status 
+      FROM ${CONFIG.database.tables.interviews} 
+      ORDER BY createdAt DESC
+    `,
+
+		INSERT_MESSAGE: `
+      INSERT INTO ${CONFIG.database.tables.messages} 
+      (messageId, interviewId, role, content, timestamp)
+      VALUES (?, ?, ?, ?, ?)
+    `,
+
+		GET_INTERVIEW: `
+      SELECT 
+        i.interviewId, 
+        i.title, 
+        i.skills, 
+        i.status, 
+        i.createdAt, 
+        i.updatedAt,
+        COALESCE(
+          json_group_array(
+            CASE WHEN m.messageId IS NOT NULL THEN
+              json_object(
+                'messageId', m.messageId,
+                'role', m.role,
+                'content', m.content,
+                'timestamp', m.timestamp
+              )
+            END
+          ),
+          '[]'
+        ) as messages
+      FROM ${CONFIG.database.tables.interviews} i
+      LEFT JOIN ${CONFIG.database.tables.messages} m ON i.interviewId = m.interviewId
+      WHERE i.interviewId = ?
+      GROUP BY i.interviewId
+    `,
+	};
+}
+```
+
+Add RPC methods to the `Interview` Durable Object to expose database operations through API. Add this code to `src/interview.ts`:
+
+```typescript title="src/interview.ts"
+import {
+	InterviewData,
+	InterviewTitle,
+	InterviewSkill,
+	Message,
+} from "./types";
+
+export class Interview extends DurableObject<CloudflareBindings> {
+	// Creates a new interview session
+	createInterview(title: InterviewTitle, skills: InterviewSkill[]): string {
+		return this.db.createInterview(title, skills);
+	}
+
+	// Retrieves all interview sessions
+	getAllInterviews(): InterviewData[] {
+		return this.db.getAllInterviews();
+	}
+
+	// Adds a new message to the 'messages' table and broadcasts it to all connected WebSocket clients.
+	addMessage(
+		interviewId: string,
+		role: "user" | "assistant",
+		content: string,
+		messageId: string,
+	): Message {
+		const newMessage = this.db.addMessage(
+			interviewId,
+			role,
+			content,
+			messageId,
+		);
+		this.broadcast(
+			JSON.stringify({
+				...newMessage,
+				type: "message",
+			}),
+		);
+		return newMessage;
+	}
+}
+```
+
+## 6. Create REST API endpoints
+
+With your Durable Object and database service ready, create REST API endpoints to manage interviews. You will need endpoints to:
+
+- Create new interviews
+- Retrieve all interviews for a user
+
+Create a new file for your interview routes at `routes/interview.ts`:
+
+```typescript title="src/routes/interview.ts"
+import { Hono } from "hono";
+import { BadRequestError } from "../errors";
+import {
+	InterviewInput,
+	ApiContext,
+	HonoCtx,
+	InterviewTitle,
+	InterviewSkill,
+} from "../types";
+import { requireAuth } from "../middleware/auth";
+
+/**
+ * Gets the Interview Durable Object instance for a given user.
+ * We use the username as a stable identifier to ensure each user
+ * gets their own dedicated DO instance that persists across requests.
+ */
+const getInterviewDO = (ctx: HonoCtx) => {
+	const username = ctx.get("username");
+	const id = ctx.env.INTERVIEW.idFromName(username);
+	return ctx.env.INTERVIEW.get(id);
+};
+
+/**
+ * Validates the interview creation payload.
+ * Makes sure we have all required fields in the correct format:
+ * - title must be present
+ * - skills must be a non-empty array
+ * Throws an error if validation fails.
+ */
+const validateInterviewInput = (input: InterviewInput) => {
+	if (
+		!input.title ||
+		!input.skills ||
+		!Array.isArray(input.skills) ||
+		input.skills.length === 0
+	) {
+		throw new BadRequestError("Invalid input");
+	}
+};
+
+/**
+ * GET /interviews
+ * Retrieves all interviews for the authenticated user.
+ * The interviews are stored and managed by the user's DO instance.
+ */
+const getAllInterviews = async (ctx: HonoCtx) => {
+	const interviewDO = getInterviewDO(ctx);
+	const interviews = await interviewDO.getAllInterviews();
+	return ctx.json(interviews);
+};
+
+/**
+ * POST /interviews
+ * Creates a new interview session with the specified title and skills.
+ * Each interview gets a unique ID that can be used to reference it later.
+ * Returns the newly created interview ID on success.
+ */
+const createInterview = async (ctx: HonoCtx) => {
+	const body = await ctx.req.json<InterviewInput>();
+	validateInterviewInput(body);
+
+	const interviewDO = getInterviewDO(ctx);
+	const interviewId = await interviewDO.createInterview(
+		body.title as InterviewTitle,
+		body.skills as InterviewSkill[],
+	);
+
+	return ctx.json({ success: true, interviewId });
+};
+
+/**
+ * Sets up all interview-related routes.
+ * Currently supports:
+ * - GET / : List all interviews
+ * - POST / : Create a new interview
+ */
+export const configureInterviewRoutes = () => {
+	const router = new Hono<ApiContext>();
+	router.use("*", requireAuth);
+	router.get("/", getAllInterviews);
+	router.post("/", createInterview);
+	return router;
+};
+```
+
+The `getInterviewDO` helper function uses the username from our authentication cookie to create a unique Durable Object ID. This ensures each user has their own isolated interview state.
+
+Update your main application file to include the routes and protect them with authentication middleware. Update `src/index.ts`:
+
+```typescript title="src/index.ts"
+import { configureAuthRoutes } from "./routes/auth";
+import { configureInterviewRoutes } from "./routes/interview";
+import { Hono } from "hono";
+import { Interview } from "./interview";
+import { logger } from "hono/logger";
+import type { ApiContext } from "./types";
+
+const app = new Hono<ApiContext>();
+const api = new Hono<ApiContext>();
+
+app.use("*", logger());
+
+api.route("/auth", configureAuthRoutes());
+api.route("/interviews", configureInterviewRoutes());
+
+app.route("/api/v1", api);
+
+export { Interview };
+export default app;
+```
+
+Now you have two new API endpoints:
+
+- `POST /api/v1/interviews`: Creates a new interview session
+- `GET /api/v1/interviews`: Retrieves all interviews for the authenticated user
+
+You can test these endpoints running the following command:
+
+1. Create a new interview:
+
+```sh
+curl -X POST http://localhost:8787/api/v1/interviews \
+-H "Content-Type: application/json" \
+-H "Cookie: username=testuser; HttpOnly" \
+-d '{"title":"Frontend Developer Interview","skills":["JavaScript","React","CSS"]}'
+```
+
+2. Get all interviews:
+
+```sh
+curl http://localhost:8787/api/v1/interviews \
+-H "Cookie: username=testuser; HttpOnly"
+```
+
+## 7. Set up WebSockets to handle real-time communication
+
+With the basic interview management system in place, you will now implement Durable Objects to handle real-time message processing and maintain WebSocket connections.
+
+Update the `Interview` Durable Object to handle WebSocket connections by adding the following code to `src/interview.ts`:
+
+```typescript
+export class Interview extends DurableObject<CloudflareBindings> {
+	// Services for database operations and managing WebSocket sessions
+	private readonly db: InterviewDatabaseService;
+	private sessions: Map<WebSocket, { interviewId: string }>;
+
+	constructor(state: DurableObjectState, env: CloudflareBindings) {
+		// ... previous code ...
+
+		// Keep WebSocket connections alive by automatically responding to pings
+		// This prevents timeouts and connection drops
+		this.ctx.setWebSocketAutoResponse(
+			new WebSocketRequestResponsePair("ping", "pong"),
+		);
+	}
+
+	async fetch(request: Request): Promise<Response> {
+		// Check if this is a WebSocket upgrade request
+		const upgradeHeader = request.headers.get("Upgrade");
+		if (upgradeHeader?.toLowerCase().includes("websocket")) {
+			return this.handleWebSocketUpgrade(request);
+		}
+
+		// If it is not a WebSocket request, we don't handle it
+		return new Response("Not found", { status: 404 });
+	}
+
+	private async handleWebSocketUpgrade(request: Request): Promise<Response> {
+		// Extract the interview ID from the URL - it should be the last segment
+		const url = new URL(request.url);
+		const interviewId = url.pathname.split("/").pop();
+
+		if (!interviewId) {
+			return new Response("Missing interviewId parameter", { status: 400 });
+		}
+
+		// Create a new WebSocket connection pair - one for the client, one for the server
+		const pair = new WebSocketPair();
+		const [client, server] = Object.values(pair);
+
+		// Keep track of which interview this WebSocket is connected to
+		// This is important for routing messages to the right interview session
+		this.sessions.set(server, { interviewId });
+
+		// Tell the Durable Object to start handling this WebSocket
+		this.ctx.acceptWebSocket(server);
+
+		// Send the current interview state to the client right away
+		// This helps initialize their UI with the latest data
+		const interviewData = await this.db.getInterview(interviewId);
+		if (interviewData) {
+			server.send(
+				JSON.stringify({
+					type: "interview_details",
+					data: interviewData,
+				}),
+			);
+		}
+
+		// Return the client WebSocket as part of the upgrade response
+		return new Response(null, {
+			status: 101,
+			webSocket: client,
+		});
+	}
+
+	async webSocketClose(
+		ws: WebSocket,
+		code: number,
+		reason: string,
+		wasClean: boolean,
+	) {
+		// Clean up when a connection closes to prevent memory leaks
+		// This is especially important in long-running Durable Objects
+		console.log(
+			`WebSocket closed: Code ${code}, Reason: ${reason}, Clean: ${wasClean}`,
+		);
+	}
+}
+```
+
+Next, update the interview routes to include a WebSocket endpoint. Add the following to `routes/interview.ts`:
+
+```typescript title="src/routes/interview.ts"
+// ... previous code ...
+const streamInterviewProcess = async (ctx: HonoCtx) => {
+	const interviewDO = getInterviewDO(ctx);
+	return await interviewDO.fetch(ctx.req.raw);
+};
+
+export const configureInterviewRoutes = () => {
+	const router = new Hono<ApiContext>();
+	router.get("/", getAllInterviews);
+	router.post("/", createInterview);
+	// Add WebSocket route
+	router.get("/:interviewId", streamInterviewProcess);
+	return router;
+};
+```
+
+The WebSocket system provides real-time communication features for interview practice tool:
+
+- Each interview session gets its own dedicated WebSocket connection, allowing seamless communication between the candidate and AI interviewer
+- The Durable Object maintains the connection state, ensuring no messages are lost even if the client temporarily disconnects
+- To keep connections stable, it automatically responds to ping messages with pongs, preventing timeouts
+- Candidates and interviewers receive instant updates as the interview progresses, creating a natural conversational flow
+
+## 8. Add audio processing capabilities with Workers AI
+
+Now that WebSocket connection set up, the next step is to add speech-to-text capabilities using Workers AI. Let's use Cloudflare's Whisper model to transcribe audio in real-time during the interview.
+
+The audio processing pipeline will work like this:
+
+1. Client sends audio through the WebSocket connection
+2. Our Durable Object receives the binary audio data
+3. We pass the audio to Whisper for transcription
+4. The transcribed text is saved as a new message
+5. We immediately send the transcription back to the client
+6. The client receives a notification that the AI interviewer is generating a response
+
+### Create audio processing pipeline
+
+In this step you will update the Interview Durable Object to handle the following:
+
+1. Detect binary audio data sent through WebSocket
+2. Create a unique message ID for tracking the processing status
+3. Notify clients that audio processing has begun
+4. Include error handling for failed audio processing
+5. Broadcast status updates to all connected clients
+
+First, update Interview Durable Object to handle binary WebSocket messages. Add the following methods to your `src/interview.ts` file:
+
+```typescript title="src/interview.ts"
+// ... previous code ...
+/**
+ * Handles incoming WebSocket messages, both binary audio data and text messages.
+ * This is the main entry point for all WebSocket communication.
+ */
+async webSocketMessage(ws: WebSocket, eventData: ArrayBuffer | string): Promise<void> {
+  try {
+    // Handle binary audio data from the client's microphone
+    if (eventData instanceof ArrayBuffer) {
+      await this.handleBinaryAudio(ws, eventData);
+      return;
+    }
+    // Text messages will be handled by other methods
+  } catch (error) {
+    this.handleWebSocketError(ws, error);
+  }
+}
+
+/**
+ * Processes binary audio data received from the client.
+ * Converts audio to text using Whisper and broadcasts processing status.
+ */
+private async handleBinaryAudio(ws: WebSocket, audioData: ArrayBuffer): Promise<void> {
+  try {
+    const uint8Array = new Uint8Array(audioData);
+
+    // Retrieve the associated interview session
+    const session = this.sessions.get(ws);
+    if (!session?.interviewId) {
+      throw new Error("No interview session found");
+    }
+
+    // Generate unique ID to track this message through the system
+    const messageId = crypto.randomUUID();
+
+    // Let the client know we're processing their audio
+    this.broadcast(
+      JSON.stringify({
+        type: "message",
+        status: "processing",
+        role: "user",
+        messageId,
+        interviewId: session.interviewId,
+      }),
+    );
+
+    // TODO: Implement Whisper transcription in next section
+    // For now, just log the received audio data size
+    console.log(`Received audio data of length: ${uint8Array.length}`);
+  } catch (error) {
+    console.error("Audio processing failed:", error);
+    this.handleWebSocketError(ws, error);
+  }
+}
+
+/**
+ * Handles WebSocket errors by logging them and notifying the client.
+ * Ensures errors are properly communicated back to the user.
+ */
+private handleWebSocketError(ws: WebSocket, error: unknown): void {
+  const errorMessage = error instanceof Error ? error.message : "An unknown error occurred.";
+  console.error("WebSocket error:", errorMessage);
+
+  if (ws.readyState === WebSocket.OPEN) {
+    ws.send(
+      JSON.stringify({
+        type: "error",
+        message: errorMessage,
+      }),
+    );
+  }
+}
+
+```
+
+Your `handleBinaryAudio` method currently logs when it receives audio data. Next, you'll enhance it to transcribe speech using Workers AI's Whisper model.
+
+### Configure speech-to-text
+
+Now that audio processing pipeline is set up, you will now integrate Workers AI's Whisper model for speech-to-text transcription.
+
+Configure the Worker AI binding in your `wrangler.toml` file by adding:
+
+```toml
+# ... previous configuration ...
+[ai]
+binding = "AI"
+```
+
+Next, generate TypeScript types for our AI binding. Run the following command:
+
+```sh
+npm run cf-typegen
+```
+
+You will need a new service class for AI operations. Create a new file called `services/AIService.ts`:
+
+```typescript title="src/services/AIService.ts"
+import { InterviewError, ErrorCodes } from "../errors";
+
+export class AIService {
+	constructor(private readonly AI: Ai) {}
+
+	async transcribeAudio(audioData: Uint8Array): Promise<string> {
+		try {
+			// Call the Whisper model to transcribe the audio
+			const response = await this.AI.run("@cf/openai/whisper-tiny-en", {
+				audio: Array.from(audioData),
+			});
+
+			if (!response?.text) {
+				throw new Error("Failed to transcribe audio content.");
+			}
+
+			return response.text;
+		} catch (error) {
+			throw new InterviewError(
+				"Failed to transcribe audio content",
+				ErrorCodes.TRANSCRIPTION_FAILED,
+			);
+		}
+	}
+}
+```
+
+You will need to update the `Interview` Durable Object to use this new AI service. To do this, update the handleBinaryAudio method in `src/interview.ts`:
+
+```typescript title="src/interview.ts"
+import { AIService } from "./services/AIService";
+
+export class Interview extends DurableObject<CloudflareBindings> {
+private readonly aiService: AIService;
+
+constructor(state: DurableObjectState, env: Env) {
+  // ... previous code ...
+
+  // Initialize the AI service with the Workers AI binding
+  this.aiService = new AIService(this.env.AI);
+}
+
+private async handleBinaryAudio(ws: WebSocket, audioData: ArrayBuffer): Promise<void> {
+  try {
+    const uint8Array = new Uint8Array(audioData);
+    const session = this.sessions.get(ws);
+
+    if (!session?.interviewId) {
+      throw new Error("No interview session found");
+    }
+
+    // Create a message ID for tracking
+    const messageId = crypto.randomUUID();
+
+    // Send processing state to client
+    this.broadcast(
+      JSON.stringify({
+        type: "message",
+        status: "processing",
+        role: "user",
+        messageId,
+        interviewId: session.interviewId,
+      }),
+    );
+
+    // NEW: Use AI service to transcribe the audio
+    const transcribedText = await this.aiService.transcribeAudio(uint8Array);
+
+    // Store the transcribed message
+    await this.addMessage(session.interviewId, "user", transcribedText, messageId);
+
+  } catch (error) {
+    console.error("Audio processing failed:", error);
+    this.handleWebSocketError(ws, error);
+  }
+}
+```
+
+:::note
+The Whisper model `@cf/openai/whisper-tiny-en` is optimized for English speech recognition. If you need support for other languages, you can use different Whisper model variants available through Workers AI.
+:::
+
+When users speak during the interview, their audio will be automatically transcribed and stored as messages in the interview session. The transcribed text will be immediately available to both the user and the AI interviewer for generating appropriate responses.
+
+## 9. Integrate AI response generation
+
+Now that you have audio transcription working, let's implement AI interviewer response generation using Workers AI's LLM capabilities. You'll create an interview system that:
+
+- Maintains context of the conversation
+- Provides relevant follow-up questions
+- Gives constructive feedback
+- Stays in character as a professional interviewer
+
+### Set up Workers AI LLM integration
+
+First, update the `AIService` class to handle LLM interactions. You will need to add methods for:
+
+- Processing interview context
+- Generating appropriate responses
+- Handling conversation flow
+
+Update the `services/AIService.ts` class to include LLM functionality:
+
+```typescript title="src/services/AIService.ts"
+import { InterviewData, Message } from "../types";
+
+export class AIService {
+
+async processLLMResponse(interview: InterviewData): Promise<string> {
+  const messages = this.prepareLLMMessages(interview);
+
+  try {
+    const { response } = await this.AI.run("@cf/meta/llama-2-7b-chat-int8", {
+      messages,
+    });
+
+    if (!response) {
+      throw new Error("Failed to generate a response from the LLM model.");
+    }
+
+    return response;
+  } catch (error) {
+    throw new InterviewError("Failed to generate a response from the LLM model.", ErrorCodes.LLM_FAILED);
+  }
+}
+
+private prepareLLMMessages(interview: InterviewData) {
+  const messageHistory = interview.messages.map((msg: Message) => ({
+    role: msg.role,
+    content: msg.content,
+  }));
+
+  return [
+    {
+      role: "system",
+      content: this.createSystemPrompt(interview),
+    },
+    ...messageHistory,
+  ];
+}
+```
+
+:::note
+The @cf/meta/llama-2-7b-chat-int8 model is optimized for chat-like interactions and provides good performance while maintaining reasonable resource usage.
+:::
+
+### Create the conversation prompt
+
+Prompt engineering is crucial for getting high-quality responses from the LLM. Next, you will create a system prompt that:
+
+- Sets the context for the interview
+- Defines the interviewer's role and behavior
+- Specifies the technical focus areas
+- Guides the conversation flow
+
+Add the following method to your `services/AIService.ts` class:
+
+```typescript title="src/services/AIService.ts"
+private createSystemPrompt(interview: InterviewData): string {
+  const basePrompt = "You are conducting a technical interview.";
+  const rolePrompt = `The position is for ${interview.title}.`;
+  const skillsPrompt = `Focus on topics related to: ${interview.skills.join(", ")}.`;
+  const instructionsPrompt = "Ask relevant technical questions and provide constructive feedback.";
+
+  return `${basePrompt} ${rolePrompt} ${skillsPrompt} ${instructionsPrompt}`;
+}
+```
+
+### Implement response generation logic
+
+Finally, integrate the LLM response generation into the interview flow. Update the `handleBinaryAudio` method in the `src/interview.ts` Durable Object to:
+
+- Process transcribed user responses
+- Generate appropriate AI interviewer responses
+- Maintain conversation context
+
+Update the `handleBinaryAudio` method in `src/interview.ts`:
+
+```typescript title="src/interview.ts"
+private async handleBinaryAudio(ws: WebSocket, audioData: ArrayBuffer): Promise<void> {
+  try {
+    // Convert raw audio buffer to uint8 array for processing
+    const uint8Array = new Uint8Array(audioData);
+    const session = this.sessions.get(ws);
+
+    if (!session?.interviewId) {
+      throw new Error("No interview session found");
+    }
+
+    // Generate a unique ID to track this message through the system
+    const messageId = crypto.randomUUID();
+
+    // Let the client know we're processing their audio
+    // This helps provide immediate feedback while transcription runs
+    this.broadcast(
+      JSON.stringify({
+        type: "message",
+        status: "processing",
+        role: "user",
+        messageId,
+        interviewId: session.interviewId,
+      }),
+    );
+
+    // Convert the audio to text using our AI transcription service
+    // This typically takes 1-2 seconds for normal speech
+    const transcribedText = await this.aiService.transcribeAudio(uint8Array);
+
+    // Save the user's message to our database so we maintain chat history
+    await this.addMessage(session.interviewId, "user", transcribedText, messageId);
+
+    // Look up the full interview context - we need this to generate a good response
+    const interview = await this.db.getInterview(session.interviewId);
+    if (!interview) {
+      throw new Error(`Interview not found: ${session.interviewId}`);
+    }
+
+    // Now it's the AI's turn to respond
+    // First generate an ID for the assistant's message
+    const assistantMessageId = crypto.randomUUID();
+
+    // Let the client know we're working on the AI response
+    this.broadcast(
+      JSON.stringify({
+        type: "message",
+        status: "processing",
+        role: "assistant",
+        messageId: assistantMessageId,
+        interviewId: session.interviewId,
+      }),
+    );
+
+    // Generate the AI interviewer's response based on the conversation history
+    const llmResponse = await this.aiService.processLLMResponse(interview);
+    await this.addMessage(session.interviewId, "assistant", llmResponse, assistantMessageId);
+  } catch (error) {
+    // Something went wrong processing the audio or generating a response
+    // Log it and let the client know there was an error
+    console.error("Audio processing failed:", error);
+    this.handleWebSocketError(ws, error);
+  }
+}
+```
+
+## Conclusion
+
+You have successfully built an AI-powered interview practice tool using Cloudflare's Workers AI. In summary, you have:
+
+- Created a real-time WebSocket communication system using Durable Objects
+- Implemented speech-to-text processing with Workers AI Whisper model
+- Built an intelligent interview system using Workers AI LLM capabilities
+- Designed a persistent storage system with SQLite in Durable Objects
+
+The complete source code for this tutorial is available on GitHub:
+[ai-interview-practice-tool](https://github.com/berezovyy/ai-interview-practice-tool)

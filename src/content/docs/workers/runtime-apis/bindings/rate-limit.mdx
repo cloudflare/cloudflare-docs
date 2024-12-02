@@ -36,6 +36,10 @@ We want your feedback. Tell us what you'd like to see in the [#workers-discussio
 
 First, add a [binding](/workers/runtime-apis/bindings) to your Worker that gives it access to the Rate Limiting API:
 
+import { WranglerConfig } from "~/components";
+
+<WranglerConfig>
+
 ```toml
 main = "src/index.js"
 
@@ -52,6 +56,8 @@ namespace_id = "1001"
 # Period: the duration of the period, in seconds. Must be either 10 or 60
 simple = { limit = 100, period = 60 }
 ```
+
+</WranglerConfig>
 
 This binding makes the `MY_RATE_LIMITER` binding available, which provides a `limit()` method:
 
@@ -104,6 +110,10 @@ You can define and configure multiple rate limiting configurations per Worker, w
 
 For example, here is how you can define two rate limiting configurations for free and paid tier users:
 
+
+
+<WranglerConfig>
+
 ```toml
 main = "src/index.js"
 
@@ -122,6 +132,8 @@ namespace_id = "1002"
 simple = { limit = 1000, period = 60 }
 ```
 
+</WranglerConfig>
+
 ## Configuration
 
 A rate limiting binding has three settings:
@@ -132,6 +144,10 @@ A rate limiting binding has three settings:
 
 For example, to apply a rate limit of 1500 requests per minute, you would define a rate limiting configuration as follows:
 
+
+
+<WranglerConfig>
+
 ```toml
 [[unsafe.bindings]]
 name = "MY_RATE_LIMITER"
@@ -141,6 +157,8 @@ namespace_id = "1001"
 # 1500 requests - calls to limit() increment this
 simple = { limit = 1500, period = 60 }
 ```
+
+</WranglerConfig>
 
 ## Best practices
 

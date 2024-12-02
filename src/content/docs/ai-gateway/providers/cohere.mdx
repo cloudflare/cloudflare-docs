@@ -7,13 +7,17 @@ pcx_content_type: get-started
 
 ## Endpoint
 
-`https://gateway.ai.cloudflare.com/v1/{account_id}/{gateway_id}/cohere`
+```txt
+https://gateway.ai.cloudflare.com/v1/{account_id}/{gateway_id}/cohere
+```
 
 ## URL structure
 
 When making requests to [Cohere](https://cohere.com/), replace `https://api.cohere.ai/v1` in the URL you’re currently using with `https://gateway.ai.cloudflare.com/v1/{account_id}/{gateway_id}/cohere`.
 
 ## Examples
+
+### cURL
 
 ```bash title="Request"
 curl https://gateway.ai.cloudflare.com/v1/{account_id}/{gateway_id}/cohere/v1/chat \
@@ -28,6 +32,8 @@ curl https://gateway.ai.cloudflare.com/v1/{account_id}/{gateway_id}/cohere/v1/ch
   "connectors": [{"id": "web-search"}]
 }'
 ```
+
+### Use Cohere SDK with Python
 
 If using the [`cohere-python-sdk`](https://github.com/cohere-ai/cohere-python), set your endpoint like this:
 

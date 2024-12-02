@@ -52,11 +52,15 @@ However if you ever write using [Storage API](/durable-objects/api/storage-api/)
 
 :::note[SQLite in Durable Objects Beta]
 
-The new beta version of Durable Objects is available where each Durable Object has a private, embedded SQLite database. When deploying a new Durable Object class, users can opt-in to a SQLite storage backend in order to access new [SQL API](/durable-objects/api/storage-api/#sqlexec). Otherwise, a Durable Object class has a key-value storage backend.
+The new beta version of Durable Objects is available where each Durable Object has a private, embedded SQLite database. When deploying a new Durable Object class, users can opt-in to a SQLite storage backend in order to access new [SQL API](/durable-objects/api/sql-storage/#exec). Otherwise, a Durable Object class has a key-value storage backend.
 
 :::
 
 To allow a new Durable Object class to use SQLite storage backend, use `new_sqlite_classes` on the migration in your Worker's `wrangler.toml` file:
+
+import { WranglerConfig } from "~/components";
+
+<WranglerConfig>
 
 ```toml
 [[migrations]]
@@ -64,7 +68,9 @@ tag = "v1" # Should be unique for each entry
 new_sqlite_classes = ["MyDurableObject"] # Array of new classes
 ```
 
-[SQL API](/durable-objects/api/storage-api/#sqlexec) is available on `ctx.storage.sql` parameter passed to the Durable Object constructor.
+</WranglerConfig>
+
+[SQL API](/durable-objects/api/sql-storage/#exec) is available on `ctx.storage.sql` parameter passed to the Durable Object constructor.
 
 ### Examples
 

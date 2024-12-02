@@ -1,0 +1,16 @@
+---
+{}
+---
+
+import { Type } from "~/components";
+
+The following global flags work on every command:
+
+- `--help` <Type text="boolean" />
+  - Show help.
+- `--version` <Type text="boolean" />
+  - Show version number.
+- `--config` <Type text="string" /> (not supported by Pages)
+  - Path to `.toml` configuration file.
+- `--experimental-json-config` <Type text="boolean" /> (not supported by Pages)
+  - ⚠️ This is an experimental command. Read configuration from a `wrangler.json` file, instead of `wrangler.toml`. `wrangler.json` is a [JSONC](https://code.visualstudio.com/docs/languages/json#_json-with-comments) file.

@@ -12,13 +12,13 @@ System for Cross-domain Identity Management (SCIM) is an open standard protocol 
 
 ## Supported identity providers
 
-Cloudflare Access currently supports SCIM provisioning using the following identity providers:
-
-<Render file="access/scim-supported-idps" />
+Cloudflare Access supports SCIM provisioning for all SAML and OIDC identity providers that use SCIM version 2.0.
 
 ## Sync users and groups in Zero Trust policies
 
 Cloudflare Access can automatically deprovision users from Zero Trust after they are deactivated in the identity provider and display synchronized group names in the Access and Gateway policy builders. Cloudflare does not provision new users in Zero Trust when they are added to the identity provider -- users must first register a device with the WARP client or authenticate to an Access application.
+
+To set up SCIM for Zero Trust, refer to our [SSO integration](/cloudflare-one/identity/idp-integration/) guides.
 
 ## SCIM for Cloudflare dashboard SSO
 

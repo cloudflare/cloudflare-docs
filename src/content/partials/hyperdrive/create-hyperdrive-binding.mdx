@@ -7,11 +7,17 @@ You must create a binding for your Worker to connect to your Hyperdrive configur
 
 To bind your Hyperdrive configuration to your Worker, add the following to the end of your `wrangler.toml` file:
 
+import { WranglerConfig } from "~/components";
+
+<WranglerConfig>
+
 ```toml
 [[hyperdrive]]
 binding = "HYPERDRIVE"
 id = "<YOUR_DATABASE_ID>" # the ID associated with the Hyperdrive you just created
 ```
+
+</WranglerConfig>
 
 Specifically:
 

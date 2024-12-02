@@ -23,7 +23,7 @@ Offers the best security and performance, limiting your range of clients to mode
 
 * Cipher suites:
 
-`AEAD-AES128-GCM-SHA256`, `AEAD-AES256-GCM-SHA384`, `AEAD-CHACHA20-POLY1305-SHA256`,`ECDHE-ECDSA-AES128-GCM-SHA256`, `ECDHE-ECDSA-CHACHA20-POLY1305`, `ECDHE-RSA-AES128-GCM-SHA256`, `ECDHE-RSA-CHACHA20-POLY1305`, `ECDHE-ECDSA-AES256-GCM-SHA384`, `ECDHE-RSA-AES256-GCM-SHA384`
+`AEAD-AES128-GCM-SHA256`[^1], `AEAD-AES256-GCM-SHA384`[^2], `AEAD-CHACHA20-POLY1305-SHA256`[^3],`ECDHE-ECDSA-AES128-GCM-SHA256`, `ECDHE-ECDSA-CHACHA20-POLY1305`, `ECDHE-RSA-AES128-GCM-SHA256`, `ECDHE-RSA-CHACHA20-POLY1305`, `ECDHE-ECDSA-AES256-GCM-SHA384`, `ECDHE-RSA-AES256-GCM-SHA384`
 
 * Formatted array to copy:
 
@@ -58,3 +58,7 @@ Includes all cipher suites that Cloudflare supports today. Broadest compatibilit
 `AEAD-AES128-GCM-SHA256`, `AEAD-AES256-GCM-SHA384`, `AEAD-CHACHA20-POLY1305-SHA256`, `ECDHE-ECDSA-AES128-GCM-SHA256`, `ECDHE-ECDSA-CHACHA20-POLY1305`, `ECDHE-RSA-AES128-GCM-SHA256`, `ECDHE-RSA-CHACHA20-POLY1305`, `ECDHE-ECDSA-AES256-GCM-SHA384`, `ECDHE-RSA-AES256-GCM-SHA384`, `ECDHE-ECDSA-AES128-SHA256`, `ECDHE-RSA-AES128-SHA256`, `ECDHE-ECDSA-AES256-SHA384`, `ECDHE-RSA-AES256-SHA384`, `ECDHE-ECDSA-AES128-SHA`, `ECDHE-RSA-AES128-SHA`, `AES128-GCM-SHA256`, `AES128-SHA256`, `AES128-SHA`, `ECDHE-RSA-AES256-SHA`, `AES256-GCM-SHA384`, `AES256-SHA256`, `AES256-SHA`, `DES-CBC3-SHA`
 
 To reset your option to the default, [use an empty array](/ssl/edge-certificates/additional-options/cipher-suites/customize-cipher-suites/#reset-to-default-values).
+
+[^1]: Same as `TLS_AES_128_GCM_SHA256`. Refer to [TLS 1.3 cipher suites](/ssl/edge-certificates/additional-options/cipher-suites/#tls-13) for details.
+[^2]: Same as `TLS_AES_256_GCM_SHA384`. Refer to [TLS 1.3 cipher suites](/ssl/edge-certificates/additional-options/cipher-suites/#tls-13) for details.
+[^3]: Same as `TLS_CHACHA20_POLY1305_SHA256`. Refer to [TLS 1.3 cipher suites](/ssl/edge-certificates/additional-options/cipher-suites/#tls-13) for details.

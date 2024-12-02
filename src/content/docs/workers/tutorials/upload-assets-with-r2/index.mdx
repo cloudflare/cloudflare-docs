@@ -68,11 +68,17 @@ After your new R2 bucket is ready, use it inside your Worker application.
 
 Use your R2 bucket inside your Worker project by modifying the `wrangler.toml` configuration file to include an R2 bucket [binding](/workers/runtime-apis/bindings/). Add the following R2 bucket binding to your `wrangler.toml` file:
 
+import { WranglerConfig } from "~/components";
+
+<WranglerConfig>
+
 ```toml
 [[r2_buckets]]
 binding = 'MY_BUCKET'
 bucket_name = '<YOUR_BUCKET_NAME>'
 ```
+
+</WranglerConfig>
 
 Give your R2 bucket binding name. Replace `<YOUR_BUCKET_NAME>` with the name of the R2 bucket you created earlier.
 

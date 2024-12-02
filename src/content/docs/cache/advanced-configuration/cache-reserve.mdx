@@ -55,6 +55,7 @@ Not all assets are eligible for Cache Reserve. To be admitted into Cache Reserve
 - Vary for Images is currently not compatible with Cache Reserve.
 - Requests to [R2 public buckets linked to a zone's domain](/r2/buckets/public-buckets/) will not use Cache Reserve. Enabling Cache Reserve for the connected zone will use Cache Reserve only for requests not destined for the R2 bucket.
 - Cache Reserve makes requests for uncompressed content directly from the origin. Unlike the standard Cloudflare CDN, Cache Reserve does not include the `Accept-Encoding: gzip` header when sending requests to the origin.
+- Cache Reserve is bypassed when using the Cloudflare [O2O](/cloudflare-for-platforms/cloudflare-for-saas/saas-customers/how-it-works/) setup.
 
 ## Usage
 

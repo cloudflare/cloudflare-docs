@@ -27,11 +27,17 @@ A binding is defined in the `wrangler.toml` file of your Worker project's direct
 
 To bind your R2 bucket to your Worker, add the following to your `wrangler.toml` file. Update the `binding` property to a valid JavaScript variable identifier and `bucket_name` to the name of your R2 bucket:
 
+import { WranglerConfig } from "~/components";
+
+<WranglerConfig>
+
 ```toml
 [[r2_buckets]]
 binding = 'MY_BUCKET' # <~ valid JavaScript variable name
 bucket_name = '<YOUR_BUCKET_NAME>'
 ```
+
+</WranglerConfig>
 
 Within your Worker, your bucket binding is now available under the `MY_BUCKET` variable and you can begin interacting with it using the [bucket methods](#bucket-method-definitions) described below.
 
@@ -87,9 +93,9 @@ export default {
 * `list` <Type text="(options?: R2ListOptions): Promise<R2Objects>" />
 
   * Returns an <code>R2Objects</code> containing a list of <code>R2Object</code> contained within the bucket.
-  * The returned list of objects is ordered lexicographically. 
+  * The returned list of objects is ordered lexicographically.
   * Returns up to 1000 entries, but may return less in order to minimize memory pressure within the Worker.
-  * To explicitly set the number of objects to list, provide an [R2ListOptions](/r2/api/workers/workers-api-reference/#r2listoptions) object with the `limit` property set. 
+  * To explicitly set the number of objects to list, provide an [R2ListOptions](/r2/api/workers/workers-api-reference/#r2listoptions) object with the `limit` property set.
 
 * `createMultipartUpload` <Type text="(key: string, options?: R2MultipartOptions): Promise<R2MultipartUpload>" />
 
@@ -125,7 +131,7 @@ export default {
 
 :::note
 
-Cloudflare recommends using the `httpEtag` field when returning an etag in a response header. This ensures the etag is quoted and conforms to [RFC 9110](https://www.rfc-editor.org/rfc/rfc9110#section-8.8.3). 
+Cloudflare recommends using the `httpEtag` field when returning an etag in a response header. This ensures the etag is quoted and conforms to [RFC 9110](https://www.rfc-editor.org/rfc/rfc9110#section-8.8.3).
 :::
 
 * The etag associated with the object upload.

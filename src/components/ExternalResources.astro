@@ -34,10 +34,8 @@ filtered.sort((a, b) => Number(b.updated) - Number(a.updated));
 			const title = "name" in entry ? entry.name : entry.title;
 			return (
 				<li>
-					<>
-						<a href={entry.link}>{title}:</a>
-						<span>{entry.description}</span>
-					</>
+					<a href={entry.link}>{title}:</a>
+					<span>{entry.description}</span>
 				</li>
 			);
 		})

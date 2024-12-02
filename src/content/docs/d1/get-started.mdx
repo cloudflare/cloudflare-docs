@@ -13,7 +13,8 @@ import {
 	FileTree,
 	Tabs,
 	TabItem,
-	TypeScriptExample
+	TypeScriptExample,
+	WranglerConfig
 } from "~/components";
 
 This guide instructs you through:
@@ -23,6 +24,10 @@ This guide instructs you through:
 - Connecting a [Cloudflare Worker](/workers/) to your D1 database to query your D1 database programmatically.
 
 You can perform these tasks through the CLI or through the Cloudflare dashboard.
+
+:::note
+If you already have an existing Worker and an existing D1 database, follow this tutorial from [3. Bind your Worker to your D1 database](/d1/get-started/#3-bind-your-worker-to-your-d1-database).
+:::
 
 ## Prerequisites
 
@@ -172,12 +177,16 @@ You create bindings by updating your `wrangler.toml` file.
 1. Copy the lines obtained from [step 2](/d1/get-started/#2-create-a-database) from your terminal.
 2. Add them to the end of your `wrangler.toml` file.
 
+   <WranglerConfig>
+
    ```toml
    [[d1_databases]]
    binding = "DB" # available in your Worker on env.DB
    database_name = "prod-d1-tutorial"
    database_id = "<unique-ID-for-your-database>"
    ```
+
+   </WranglerConfig>
 
    Specifically:
 
@@ -531,5 +540,5 @@ In this tutorial, you have:
 If you have any feature requests or notice any bugs, share your feedback directly with the Cloudflare team by joining the [Cloudflare Developers community on Discord](https://discord.cloudflare.com).
 
 - See supported [Wrangler commands for D1](/workers/wrangler/commands/#d1).
-- Learn how to use the [D1 client API](/d1/build-with-d1/d1-client-api/) within your Worker.
+- Learn how to use [D1 Worker Binding APIs](/d1/worker-api/) within your Worker, and test them from the [API playground](/d1/worker-api/#api-playground).
 - Explore [community projects built on D1](/d1/reference/community-projects/).

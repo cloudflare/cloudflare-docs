@@ -132,6 +132,7 @@
 /support/analytics/learn-more/understanding-cloudflare-network-analytics-v1/ /analytics/network-analytics/reference/network-analytics-v1/ 301
 /support/analytics/learn-more/what-are-the-types-of-threats/ /analytics/account-and-zone-analytics/threat-types/ 301
 /analytics/graphql-api/tutorials/build-your-own-analytics/ /analytics/graphql-api/tutorials/ 301
+/analytics/graphql-api/tutorials/export-graphql-to-csv/ /analytics/graphql-api/tutorials/ 301
 
 # email-security
 /email-security/reporting/search/unified-search/ /email-security/reporting/search/ 301
@@ -294,6 +295,7 @@
 /d1/configuration/remote-development/ /d1/build-with-d1/remote-development/ 301
 /d1/build-with-d1/import-data/ /d1/build-with-d1/import-export-data/ 301
 /d1/reference/database-commands/ /d1/reference/sql-statements/ 301
+/d1/reference/sql-statements/ /d1/sql-api/sql-statements/ 301
 
 # data loss prevention (dlp)
 /cloudflare-one/policies/data-loss-prevention/integration-profiles/ /cloudflare-one/policies/data-loss-prevention/dlp-profiles/integration-profiles/ 301
@@ -356,8 +358,9 @@
 /support/dns/troubleshooting/why-was-my-domain-deleted-from-cloudflare/ /dns/zone-setups/troubleshooting/domain-deleted/ 301
 
 /durable-objects/examples/durable-object-example/ /durable-objects/examples/durable-object-in-memory-state/ 301
-/durable-objects/api/hibernatable-websockets-api/ /durable-objects/api/websockets/ 301
+/durable-objects/api/hibernatable-websockets-api/ /durable-objects/best-practices/websockets/ 301
 /durable-objects/api/alarms-in-durable-objects/ /durable-objects/api/alarms/ 301
+/durable-objects/api/websockets/ /durable-objects/best-practices/websockets/ 301
 /durable-objects/platform/data-location/ /durable-objects/reference/data-location/ 301
 /durable-objects/platform/environments/ /durable-objects/reference/environments/ 301
 /durable-objects/platform/graphql-analytics/ /durable-objects/observability/graphql-analytics/ 301
@@ -365,7 +368,7 @@
 /durable-objects/learning/ /durable-objects/reference/ 301
 /durable-objects/learning/in-memory-state/ /durable-objects/reference/in-memory-state/ 301
 /durable-objects/learning/durable-objects-migrations/ /durable-objects/reference/durable-objects-migrations/ 301
-/durable-objects/learning/websockets/ /durable-objects/reference/websockets/ 301
+/durable-objects/learning/websockets/ /durable-objects/best-practices/websockets/ 301
 /durable-objects/examples/durable-object-location-example/ /durable-objects/examples/durable-object-in-memory-state/ 301
 /durable-objects/how-to/ /durable-objects/best-practices/ 301
 /durable-objects/how-to/access-durable-object-from-a-worker/ /durable-objects/best-practices/access-durable-objects-from-a-worker/ 301
@@ -375,6 +378,7 @@
 /durable-objects/reference/error-handling/ /durable-objects/best-practices/error-handling/ 301
 /durable-objects/reference/troubleshooting/ /durable-objects/observability/troubleshooting/ 301
 /durable-objects/reference/graphql-analytics/ /durable-objects/observability/graphql-analytics/ 301
+/durable-objects/reference/websockets/ /durable-objects/best-practices/websockets/ 301
 /durable-objects/api/transactional-storage-api/ /durable-objects/api/storage-api/ 301
 /durable-objects/platform/changelog/ /durable-objects/changelog/ 301
 /durable-objects/glossary/ /durable-objects/reference/glossary/ 301
@@ -389,6 +393,7 @@
 /email-security/setup/api-deployment/ /email-security/setup/post-delivery-deployment/api/ 301
 /email-security/setup/api-deployment/office365-api/ /email-security/setup/post-delivery-deployment/api/office365-api/ 301
 /email-security/email-configuration/retract-settings/gmail-retraction/ /email-security/deployment/api/setup/gsuite-bcc-setup/add-retraction/ 301
+/cloudflare-one/insights/email-monitoring/email-security-logs/ /cloudflare-one/insights/email-monitoring/enable-logs/ 301
 
 
 # firewall
@@ -697,12 +702,15 @@
 /load-balancing/understand-basics/monitors/ /load-balancing/monitors/ 301
 /load-balancing/understand-basics/limitations/ /load-balancing/reference/limitations/ 301
 /load-balancing/understand-basics/load-balancers/ /load-balancing/load-balancers/ 301
-/load-balancing/understand-basics/traffic-management/ /load-balancing/local-traffic-management/ 301
+/load-balancing/understand-basics/traffic-management/ /load-balancing/private-network/ 301
 /load-balancing/understand-basics/traffic-steering/pool-level-steering/ /load-balancing/understand-basics/traffic-steering/steering-policies/ 301
 /load-balancing/understand-basics/weighted-load-balancing/ /load-balancing/load-balancers/common-configurations/ 301
 /support/traffic/ /load-balancing/ 301
 /support/traffic/load-balancing/load-balancing-faqs/ /load-balancing/troubleshooting/load-balancing-faq/ 301
 /load-balancing/additional-options/railgun/ /load-balancing/ 301
+/load-balancing/local-traffic-management/ /load-balancing/private-network/ 301
+/load-balancing/local-traffic-management/ltm-tunnels-setup/ /load-balancing/private-network/tunnels-setup/ 301
+/load-balancing/local-traffic-management/ltm-magic-wan/ /load-balancing/private-network/magic-wan/ 301
 
 # logs
 /logs/get-started/logpush-configuration-api/understanding-logpush-api/ /logs/get-started/api-configuration/ 301
@@ -1448,6 +1456,7 @@
 /workers/platform/triggers/cron-triggers/ /workers/configuration/cron-triggers/ 301
 /workers/platform/cron-triggers/ /workers/configuration/cron-triggers/ 301
 /workers/platform/compatibility-dates/ /workers/configuration/compatibility-dates/ 301
+/workers/platform/compatibility-dates.json /workers/platform/compatibility-flags.json 301
 /workers/learning/integrations/ /workers/configuration/integrations/ 301
 /workers/learning/integrations/apis/ /workers/configuration/integrations/apis/ 301
 /workers/learning/integrations/external-services/ /workers/configuration/integrations/external-services/ 301
@@ -1781,9 +1790,11 @@
 /cloudflare-one/connections/connect-apps/install-and-setup/deployment-guides/* /cloudflare-one/connections/connect-networks/deploy-tunnels/deployment-guides/:splat 301
 /cloudflare-one/connections/connect-networks/deployment-guides/* /cloudflare-one/connections/connect-networks/deploy-tunnels/deployment-guides/:splat 301
 /cloudflare-one/analytics/logs/* /cloudflare-one/insights/logs/:splat 301
+/cloudflare-one/applications/scan-apps/* /cloudflare-one/applications/casb/:splat 301
 /cloudflare-one/connections/connect-apps/use_cases/* /cloudflare-one/connections/connect-networks/use-cases/:splat 301
 /cloudflare-one/connections/connect-apps/* /cloudflare-one/connections/connect-networks/:splat 301
 /cloudflare-one/connections/connect-devices/warp/exclude-traffic/* /cloudflare-one/connections/connect-devices/warp/configure-warp/route-traffic/:splat 301
+/cloudflare-one/connections/connect-devices/warp/user-side-certificates/* /cloudflare-one/connections/connect-devices/user-side-certificates/:splat 301
 /cloudflare-one/examples/* /cloudflare-one/api-terraform/access-api-examples/:splat 301
 /cloudflare-one/faq/teams-* /cloudflare-one/faq/:splat 301
 /cloudflare-one/learning-paths/* /cloudflare-one/implementation-guides/:splat 301

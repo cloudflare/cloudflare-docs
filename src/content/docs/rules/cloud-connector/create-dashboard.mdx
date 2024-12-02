@@ -14,9 +14,10 @@ To configure a Cloud Connector rule in the dashboard:
 
 2. Go to **Rules** > **Cloud Connector**.
 
-3. Select your [cloud provider](/rules/cloud-connector/providers/).
+3. Select your [cloud provider](/rules/cloud-connector/providers/) (Cloudflare R2 or an external provider).
 
-4. Enter the bucket URL and select **Next**.
+4. If you selected Cloudflare R2 in the previous step, select your bucket and your custom domain, and select **Next**.<br/>
+   If you selected a different storage provider, enter the bucket URL and select **Next**.
 
    :::caution
    The bucket URL must follow a [specific format](/rules/cloud-connector/providers/) according to your provider.
@@ -26,10 +27,10 @@ To configure a Cloud Connector rule in the dashboard:
 
 6. Under **If**, select **Custom filter expression** and [enter an expression](/ruleset-engine/rules-language/expressions/edit-expressions/) to define the traffic that will be redirected to the bucket. For example:
 
-   - To route all requests under `https://example.com/images/*` you could enter the following expression:<br/>
-     `http.request.full_uri wildcard "https://example.com/images/*"`
-   - To route all requests under `https://images.example.com/*` you could enter the following expression:<br/>
-     `http.request.full_uri wildcard "https://images.example.com/*"`
+   - To route all requests matching `http*://example.com/images/*` (HTTPS and HTTP requests) you could enter the following expression:<br/>
+     `http.request.full_uri wildcard "http*://example.com/images/*"`
+   - To route all requests matching `http*://images.example.com/*` (HTTPS and HTTP requests) you could enter the following expression:<br/>
+     `http.request.full_uri wildcard "http*://images.example.com/*"`
 
    Alternatively, select **All incoming requests** to redirect all incoming traffic for your zone to the storage bucket you selected.
 

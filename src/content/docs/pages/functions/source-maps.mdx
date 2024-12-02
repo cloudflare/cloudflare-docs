@@ -25,9 +25,15 @@ Support for uploading source maps for Pages is available now in open beta. Minim
 
 To enable source maps, provide the `--upload-source-maps` flag to [`wrangler pages deploy`](/workers/wrangler/commands/#deploy-1) or add the following to your Pages application's [`wrangler.toml`](/pages/functions/wrangler-configuration/) file if you are using the Pages build environment:
 
+import { WranglerConfig } from "~/components";
+
+<WranglerConfig>
+
 ```toml
 upload_source_maps = true
 ```
+
+</WranglerConfig>
 
 When uploading source maps is enabled, Wrangler will automatically generate and upload source map files when you run [`wrangler pages deploy`](/workers/wrangler/commands/#deploy-1).
 

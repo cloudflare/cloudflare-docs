@@ -15,11 +15,17 @@ import { DirectoryListing } from "~/components"
 
 Add the following to your `wrangler.toml` file to create a [binding](/workers/runtime-apis/bindings/) to a Workers Analytics Engine dataset. A dataset is like a table in SQL: the rows and columns should have consistent meaning.
 
+import { WranglerConfig } from "~/components";
+
+<WranglerConfig>
+
 ```toml
 [[analytics_engine_datasets]]
 binding = "<BINDING_NAME>"
 dataset = "<DATASET_NAME>"
 ```
+
+</WranglerConfig>
 
 ## 2. Write data points from your Worker
 
@@ -38,7 +44,7 @@ async fetch(request, env) {
 
 :::note
 
-You do not need to await `writeDataPoint()` — it will return immediately, and the Workers runtime handles writing your data in the background. 
+You do not need to await `writeDataPoint()` — it will return immediately, and the Workers runtime handles writing your data in the background.
 :::
 
 A data point is a structured event that consists of:
@@ -81,7 +87,7 @@ LIMIT 10
 
 :::note
 
-We are using a custom averaging function to take [sampling](/analytics/analytics-engine/sql-api/#sampling) into account. 
+We are using a custom averaging function to take [sampling](/analytics/analytics-engine/sql-api/#sampling) into account.
 :::
 
 You can run this query by making an HTTP request to the SQL API:
@@ -117,6 +123,6 @@ Refer to [Querying Workers Analytics Engine from Grafana](/analytics/analytics-e
 
 ## Further reading
 
-<DirectoryListing 
+<DirectoryListing
 folder="analytics/analytics-engine"
 />

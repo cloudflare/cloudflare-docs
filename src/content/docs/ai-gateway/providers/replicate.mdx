@@ -7,13 +7,17 @@ pcx_content_type: get-started
 
 ## Endpoint
 
-`https://gateway.ai.cloudflare.com/v1/{account_id}/{gateway_id}/replicate`
+```txt
+https://gateway.ai.cloudflare.com/v1/{account_id}/{gateway_id}/replicate
+```
 
 ## URL structure
 
 When making requests to Replicate, replace `https://api.replicate.com/v1` in the URL you’re currently using with `https://gateway.ai.cloudflare.com/v1/{account_id}/{gateway_id}/replicate`.
 
 ## Example
+
+### cURL
 
 ```bash title="Request"
 curl https://gateway.ai.cloudflare.com/v1/{account_id}/{gateway_id}/replicate/predictions \

@@ -32,11 +32,17 @@ You add a Service binding by modifying the `wrangler.toml` of the caller — th
 
 For example, if you want Worker A to be able to call Worker B — you'd add the following to the `wrangler.toml` for Worker A:
 
+import { WranglerConfig } from "~/components";
+
+<WranglerConfig>
+
 ```toml
 services = [
   { binding = "<BINDING_NAME>", service = "<WORKER_NAME>" }
 ]
 ```
+
+</WranglerConfig>
 
 * `binding`: The name of the key you want to expose on the `env` object.
 * `service`: The name of the target Worker you would like to communicate with. This Worker must be on your Cloudflare account.
@@ -52,15 +58,21 @@ Worker A that declares a Service binding to Worker B can call Worker B in two di
 
 First, create the Worker that you want to communicate with. Let's call this "Worker B". Worker B exposes the public method, `add(a, b)`:
 
+
+
+<WranglerConfig>
+
 ```toml
 name = "worker_b"
 main = "./src/workerB.js"
 ```
 
+</WranglerConfig>
+
 ```js
 import { WorkerEntrypoint } from "cloudflare:workers";
 
-export class WorkerB extends WorkerEntrypoint {
+export default class WorkerB extends WorkerEntrypoint {
   // Currently, entrypoints without a named handler are not supported
   async fetch() { return new Response(null, {status: 404}); }
 
@@ -70,6 +82,10 @@ export class WorkerB extends WorkerEntrypoint {
 
 Next, create the Worker that will call Worker B. Let's call this "Worker A". Worker A declares a binding to Worker B. This is what gives it permission to call public methods on Worker B.
 
+
+
+<WranglerConfig>
+
 ```toml
 name = "worker_a"
 main = "./src/workerA.js"
@@ -77,6 +93,8 @@ services = [
   { binding = "WORKER_B", service = "worker_b" }
 ]
 ```
+
+</WranglerConfig>
 
 ```js
 export default {
@@ -99,7 +117,16 @@ For more about the lifecycle of calling a Worker over a Service Binding via RPC,
 
 ## Local development
 
-Local development is supported for Service bindings. For each Worker, open a new terminal and use [`wrangler dev`](/workers/wrangler/commands/#dev) in the relevant directory or use the `SCRIPT` option to specify the relevant Worker's entrypoint.
+Local development is supported for Service bindings. For each Worker, open a new terminal and use [`wrangler dev`](/workers/wrangler/commands/#dev) in the relevant directory. When running `wrangler dev`, service bindings will show as `connected`/`not connected` depending on whether Wrangler can find a running `wrangler dev` session for that Worker. For example:
+
+```sh
+$ wrangler dev
+...
+Your worker has access to the following bindings:
+- Services:
+  - SOME_OTHER_WORKER: some-other-worker connected
+  - ANOTHER_WORKER: another-worker not connected
+```
 
 ## Deployment
 

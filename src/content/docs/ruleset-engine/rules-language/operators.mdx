@@ -197,10 +197,11 @@ When using the `wildcard`/`strict wildcard` operator, the entire field value mus
 
 ```txt title="Example A"
 # The following expression:
-http.request.full_uri wildcard "https://example.com/a/*"
+http.request.full_uri wildcard "http*://example.com/a/*"
 
 # Would match the following URIs:
 # - https://example.com/a/           (the '*' matches zero characters)
+# - http://example.com/a/
 # - https://example.com/a/page.html
 # - https://example.com/a/sub/folder/?name=value
 
@@ -233,7 +234,7 @@ http.request.full_uri wildcard "*.example.com/*/page.html"
 
 ```txt
 # The following expression:
-http.request.full_uri wildcard "*.example.com/*" or http.request.full_uri wildcard "example.com/*"
+http.request.full_uri wildcard "*.example.com/*" or http.request.full_uri wildcard "http*://example.com/*"
 
 # Would match the following URIs:
 # - https://example.com/folder/list.htm

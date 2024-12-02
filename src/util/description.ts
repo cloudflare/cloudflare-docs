@@ -6,10 +6,13 @@ import { entryToString } from "./container";
     2. If there is a `<p>...</p>` element in the HTML, return that.
     3. Return `undefined` to signal to consumers there is no suitable description.
 */
-export async function getPageDescription(entry: CollectionEntry<"docs">) {
+export async function getPageDescription(
+	entry: CollectionEntry<"docs">,
+	locals: any,
+) {
 	if (entry.data.description) return entry.data.description;
 
-	const html = await entryToString(entry);
+	const html = await entryToString(entry, locals);
 
 	if (!html) return undefined;
 

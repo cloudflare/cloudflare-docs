@@ -53,17 +53,27 @@ Before you set up a route, make sure you have a DNS record set up for the [domai
 
 To configure a route using your `wrangler.toml` file, refer to the following example.
 
+import { WranglerConfig } from "~/components";
+
+<WranglerConfig>
+
 ```toml
 routes = [
-	{ pattern = "subdomain.example.com/*", zone_name = "example.com" }
+	{ pattern = "subdomain.example.com/*", zone_name = "example.com" },
 	# or
 	{ pattern = "subdomain.example.com/*", zone_id = "<YOUR_ZONE_ID>" }
 ]
 ```
 
+</WranglerConfig>
+
 Add the `zone_name` or `zone_id` option after each route. The `zone_name` and `zone_id` options are interchangeable. If using `zone_id`, find your zone ID by logging in to the [Cloudflare dashboard](https://dash.cloudflare.com) > select your account > select your website > find the **Zone ID** in the lefthand side of **Overview**.
 
 To add multiple routes:
+
+
+
+<WranglerConfig>
 
 ```toml
 routes = [
@@ -71,6 +81,8 @@ routes = [
 	{ pattern = "subdomain-two.example.com/example", zone_id = "<YOUR_ZONE_ID>" }
 ]
 ```
+
+</WranglerConfig>
 
 :::note
 

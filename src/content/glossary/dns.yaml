@@ -47,7 +47,7 @@ entries:
     general_definition: |-
       ECS is a DNS extension that enables recursive DNS resolvers to include client IP address information in their DNS queries.
 
-      Not all resolvers use ECS but, if they do, usually a part of the IP address is omitted. Sending ECS headers is generally intended to reduce latency and speed up content delivery in connection to [CDNs](/glossary/?term=cdn) and [load balancers](https://www.cloudflare.com/learning/performance/what-is-load-balancing/). The ECS mechanism is specified in [RFC 7871](https://www.rfc-editor.org/rfc/inline-errata/rfc7871.html).
+      Not all resolvers use ECS but, if they do, usually a part of the IP address is omitted. Sending ECS headers is generally intended to reduce latency and speed up content delivery in connection to [CDNs](/glossary/?term=cdn) and [load balancers](https://www.cloudflare.com/learning/performance/what-is-load-balancing/). The ECS mechanism is specified in [RFC 7871](https://www.rfc-editor.org/rfc/rfc7871.html).
     associated_products:
       - Load Balancing
       - Cloudflare One

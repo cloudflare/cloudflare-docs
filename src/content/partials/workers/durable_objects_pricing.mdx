@@ -36,7 +36,7 @@ The 20:1 ratio does not affect Durable Object metrics and analytics, which
 reflect actual usage.
 
 <sup>3</sup> Application level auto-response messages handled by
-[`state.setWebSocketAutoResponse()`](/durable-objects/api/websockets/) will not
+[`state.setWebSocketAutoResponse()`](/durable-objects/best-practices/websockets/) will not
 incur additional wall-clock time, and so they will not be charged.
 
 <sup>4</sup> Duration is billed in wall-clock time as long as the Object is
@@ -44,7 +44,7 @@ active, but is shared across all requests active on an Object at once. Once your
 Object finishes responding to all requests, it will stop incurring duration
 charges. Calling `accept()` on a WebSocket in an Object will incur duration
 charges for the entire time the WebSocket is connected. If you prefer, use
-[`state.acceptWebSocket()`](/durable-objects/api/websockets/#state-methods-for-websockets)
+[`state.acceptWebSocket()`](/durable-objects/best-practices/websockets/)
 instead, which will stop incurring duration charges once all event handlers
 finish running.
 

@@ -613,10 +613,16 @@ If using a queue producer binding with a Pages Function, you will be able to sen
 
 PostgreSQL drivers like [`Postgres.js`](https://github.com/porsager/postgres) depend on Node.js APIs. Pages Functions with Hyperdrive bindings must be [deployed with Node.js compatibility](/workers/runtime-apis/nodejs).
 
+import { WranglerConfig } from "~/components";
+
+<WranglerConfig>
+
 ```toml title="wrangler.toml"
 compatibility_flags = [ "nodejs_compat" ]
 compatibility_date = "2024-09-23"
 ```
+
+</WranglerConfig>
 
 :::
 
@@ -683,7 +689,7 @@ export const onRequest: PagesFunction<Env> = async (context) => {
 };
 ```
 
-</TabItem> </Tabs> 
+</TabItem> </Tabs>
 
 ### Interact with your Hyperdrive binding locally
 

@@ -52,6 +52,10 @@ export default {
 
 To define environment variables for different environments, refer to the example below:
 
+import { WranglerConfig } from "~/components";
+
+<WranglerConfig>
+
 ```toml
 name = "my-worker-dev"
 
@@ -65,6 +69,8 @@ API_HOST = "production.example.com"
 API_ACCOUNT_ID = "production_example_user"
 SERVICE_X_DATA = { URL = "service-x-api.prod.example", MY_ID = 456 }
 ```
+
+</WranglerConfig>
 
 For local development with `wrangler dev`, variables in `wrangler.toml` are automatically overridden by any values defined in a `.dev.vars` file located in the root directory of your worker. This is useful for providing values you do not want to check in to source control.
 

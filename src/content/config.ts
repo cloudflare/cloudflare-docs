@@ -7,7 +7,7 @@ import {
 	notificationsSchema,
 	pagesBuildEnvironmentSchema,
 	pagesFrameworkPresetsSchema,
-	compatibilityDatesSchema,
+	compatibilityFlagsSchema,
 	glossarySchema,
 	learningPathsSchema,
 	videosSchema,
@@ -29,8 +29,8 @@ export const collections = {
 		schema: changelogsSchema,
 		type: "data",
 	}),
-	"compatibility-dates": defineCollection({
-		schema: compatibilityDatesSchema,
+	"compatibility-flags": defineCollection({
+		schema: compatibilityFlagsSchema,
 	}),
 	partials: defineCollection({
 		schema: partialSchema,

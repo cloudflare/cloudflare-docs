@@ -99,9 +99,15 @@ Alternate configuration options are outlined on this page and can be specified i
 
 Example `wrangler.toml` configuration:
 
+import { WranglerConfig } from "~/components";
+
+<WranglerConfig>
+
 ```toml title="wrangler.toml"
 assets = { directory = "./public", binding = "ASSETS", html_handling = "force-trailing-slash", not_found_handling = "404-page" }
 ```
+
+</WranglerConfig>
 
 #### `html_handling = "auto-trailing-slash" | "force-trailing-slash" | "drop-trailing-slash" | "none"`
 

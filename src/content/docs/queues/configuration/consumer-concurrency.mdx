@@ -84,11 +84,17 @@ Ensure you are using the latest version of [wrangler](/workers/wrangler/install-
 
 To set a fixed maximum number of concurrent consumer invocations for a given queue, configure a `max_concurrency` in your `wrangler.toml` file:
 
+import { WranglerConfig } from "~/components";
+
+<WranglerConfig>
+
 ```toml
 [[queues.consumers]]
   queue = "my-queue"
   max_concurrency = 1
 ```
+
+</WranglerConfig>
 
 To remove the limit, remove the `max_concurrency` setting from the `[[queues.consumers]]` configuration for a given queue and call `npx wrangler deploy` to push your configuration update.
 

@@ -75,12 +75,16 @@ Configure your `browser-worker` project's [`wrangler.toml`](/workers/wrangler/co
 
 Update your `wrangler.toml` configuration file with the Browser Rendering API binding, the R2 bucket you created and a Durable Object:
 
+import { WranglerConfig } from "~/components";
+
+<WranglerConfig>
+
 ```toml
 name = "rendering-api-demo"
 main = "src/index.js"
 compatibility_date = "2023-09-04"
 compatibility_flags = [ "nodejs_compat"]
-account_id = <ACCOUNT_ID>
+account_id = "<ACCOUNT_ID>"
 
 
 # Browser Rendering API binding
@@ -102,6 +106,8 @@ tag = "v1" # Should be unique for each entry
 new_classes = ["Browser"] # Array of new classes
 
 ```
+
+</WranglerConfig>
 
 ## 6. Code
 

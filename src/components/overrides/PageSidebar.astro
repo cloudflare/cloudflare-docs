@@ -12,6 +12,7 @@ let rangeBetween = (x: number, y: number) =>
 if (Astro.props.toc) {
 	const text = await entryToString(
 		Astro.props.entry as CollectionEntry<"docs">,
+		Astro.locals,
 	);
 
 	if (text) {

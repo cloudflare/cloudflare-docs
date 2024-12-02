@@ -7,13 +7,17 @@ pcx_content_type: get-started
 
 ## Endpoint
 
-`https://gateway.ai.cloudflare.com/v1/{account_id}/{gateway_id}/openai`
+```txt
+https://gateway.ai.cloudflare.com/v1/{account_id}/{gateway_id}/openai
+```
 
 ## URL structure
 
 When making requests to OpenAI, replace `https://api.openai.com/v1` in the URL you’re currently using with `https://gateway.ai.cloudflare.com/v1/{account_id}/{gateway_id}/openai`.
 
 ## Examples
+
+### cURL
 
 ```bash title="Request"
 curl https://gateway.ai.cloudflare.com/v1/{account_id}/{gateway_id}/openai/chat/completions \
@@ -31,7 +35,9 @@ curl https://gateway.ai.cloudflare.com/v1/{account_id}/{gateway_id}/openai/chat/
 '
 ```
 
-If you’re using a library like openai-node, set the `baseURL` to your OpenAI endpoint like this:
+### Use OpenAI SDK with JavaScript
+
+If you are using a library like openai-node, set the `baseURL` to your OpenAI endpoint like this:
 
 ```js title="JavaScript"
 import OpenAI from "openai";
@@ -63,5 +69,4 @@ try {
 } catch (e) {
 	return new Response(e);
 }
-
 ```

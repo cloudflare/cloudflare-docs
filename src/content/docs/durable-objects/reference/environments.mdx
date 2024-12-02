@@ -12,6 +12,10 @@ If you are using Wrangler environments, you must specify any [Durable Object bin
 
 Durable Object bindings are not inherited. For example, you can define an environment named `staging` as below:
 
+import { WranglerConfig } from "~/components";
+
+<WranglerConfig>
+
 ```toml
 [env.staging]
 durable_objects.bindings = [
@@ -19,7 +23,13 @@ durable_objects.bindings = [
 ]
 ```
 
+</WranglerConfig>
+
 Because Wrangler appends the [environment name](/workers/wrangler/environments/) to the top-level name when publishing, for a Worker named `worker-name` the above example is equivalent to:
+
+
+
+<WranglerConfig>
 
 ```toml
 [env.staging]
@@ -28,9 +38,15 @@ durable_objects.bindings = [
 ]
 ```
 
+</WranglerConfig>
+
 `"EXAMPLE_CLASS"` in the staging environment is bound to a different Worker code name compared to the top-level `"EXAMPLE_CLASS"` binding, and will therefore access different Durable Objects with different persistent storage.
 
 If you want an environment-specific binding that accesses the same Objects as the top-level binding, specify the top-level Worker code name explicitly using `script_name`:
+
+
+
+<WranglerConfig>
 
 ```toml
 [env.another]
@@ -38,3 +54,5 @@ durable_objects.bindings = [
   {name = "EXAMPLE_CLASS", class_name = "DurableObjectExample", script_name = "worker-name"}
 ]
 ```
+
+</WranglerConfig>

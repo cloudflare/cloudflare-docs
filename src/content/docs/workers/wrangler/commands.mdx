@@ -44,16 +44,7 @@ Wrangler offers a number of commands to manage your Cloudflare Workers.
 
 :::note
 
-The following global flags work on every command, with some exceptions for `pages` commands.
-
-- `--help` <Type text="boolean" />
-  - Show help.
-- `--version` <Type text="boolean" />
-  - Show version number.
-- `--config` <Type text="string" /> (not supported by Pages)
-  - Path to `.toml` configuration file.
-- `--experimental-json-config` <Type text="boolean" /> (not supported by Pages)
-  - ⚠️ This is an experimental command. Read configuration from a `wrangler.json` file, instead of `wrangler.toml`. `wrangler.json` is a [JSONC](https://code.visualstudio.com/docs/languages/json#_json-with-comments) file.
+<Render file="wrangler-commands/global-flags" product="workers" />
 
 :::
 
@@ -137,6 +128,8 @@ wrangler docs [<COMMAND>]
 - `COMMAND` <Type text="string" /> <MetaInfo text="optional" />
   - The Wrangler command you want to learn more about. This opens your default browser to the section of the documentation that describes the command.
 
+<Render file="wrangler-commands/global-flags" product="workers" />
+
 ## `init`
 
 :::note
@@ -159,6 +152,8 @@ wrangler init [<NAME>] [OPTIONS]
   - Fetch a Worker initialized from the dashboard. This is done by passing the flag and the Worker name. `wrangler init --from-dash <WORKER_NAME>`.
   - The `--from-dash` command will not automatically sync changes made to the dashboard after the command is used. Therefore, it is recommended that you continue using the CLI.
 
+<Render file="wrangler-commands/global-flags" product="workers" />
+
 ---
 
 ## `generate`
@@ -180,6 +175,8 @@ wrangler generate [<NAME>] [TEMPLATE]
 - `TEMPLATE` <Type text="string" /> <MetaInfo text="optional" />
   - The URL of a GitHub template, with a default [worker-template](https://github.com/cloudflare/worker-template). Browse a list of available templates on the [cloudflare/workers-sdk](https://github.com/cloudflare/workers-sdk/tree/main/templates#usage) repository.
 
+<Render file="wrangler-commands/global-flags" product="workers" />
+
 ---
 
 ## `d1`
@@ -200,6 +197,8 @@ wrangler d1 create <DATABASE_NAME> [OPTIONS]
   - Provide an optional [location hint](/d1/configuration/data-location/) for your database leader.
   - Available options include `weur` (Western Europe), `eeur` (Eastern Europe), `apac` (Asia Pacific), `oc` (Oceania), `wnam` (Western North America), and `enam` (Eastern North America).
 
+<Render file="wrangler-commands/global-flags" product="workers" />
+
 ### `info`
 
 Get information about a D1 database, including the current database size and state.
@@ -213,6 +212,8 @@ wrangler d1 info <DATABASE_NAME> [OPTIONS]
 - `--json` <Type text="boolean" /> <MetaInfo text="optional" />
   - Return output as JSON rather than a table.
 
+<Render file="wrangler-commands/global-flags" product="workers" />
+
 ### `list`
 
 List all D1 databases in your account.
@@ -223,6 +224,8 @@ wrangler d1 list [OPTIONS]
 
 - `--json` <Type text="boolean" /> <MetaInfo text="optional" />
   - Return output as JSON rather than a table.
+
+<Render file="wrangler-commands/global-flags" product="workers" />
 
 ### `delete`
 
@@ -236,6 +239,8 @@ wrangler d1 delete <DATABASE_NAME> [OPTIONS]
   - The name of the D1 database to delete.
 - `-y, --skip-confirmation` <Type text="boolean" /> <MetaInfo text="optional" />
   - Skip deletion confirmation prompt.
+
+<Render file="wrangler-commands/global-flags" product="workers" />
 
 ### `execute`
 
@@ -272,6 +277,8 @@ You must provide either `--command` or `--file` for this command to run successf
 - `--batch-size` <Type text="number" /> <MetaInfo text="optional" />
   - Number of queries to send in a single batch.
 
+<Render file="wrangler-commands/global-flags" product="workers" />
+
 ### `export`
 
 Export a D1 database or table's schema and/or content to a `.sql` file.
@@ -293,6 +300,8 @@ wrangler d1 export <DATABASE_NAME> [OPTIONS]
 - `--no-schema` <Type text="boolean" /> <MetaInfo text="(default: false) optional" />
   - Controls whether export SQL file contains database schema. Note that `--no-schema=true` is not recommended due to a known wrangler limitation that intreprets the value as false.
 
+<Render file="wrangler-commands/global-flags" product="workers" />
+
 ### `time-travel restore`
 
 Restore a database to a specific point-in-time using [Time Travel](/d1/reference/time-travel/).
@@ -310,6 +319,8 @@ wrangler d1 time-travel restore <DATABASE_NAME> [OPTIONS]
 - `--json` <Type text="boolean" /> <MetaInfo text="optional" />
   - Return output as JSON rather than a table.
 
+<Render file="wrangler-commands/global-flags" product="workers" />
+
 ### `time-travel info`
 
 Inspect the current state of a database for a specific point-in-time using [Time Travel](/d1/reference/time-travel/).
@@ -324,6 +335,8 @@ wrangler d1 time-travel info <DATABASE_NAME> [OPTIONS]
   - A UNIX timestamp or JavaScript date-time `string` within the last 30 days.
 - `--json` b<Type text="boolean" /> <MetaInfo text="optional" />
   - Return output as JSON rather than a table.
+
+<Render file="wrangler-commands/global-flags" product="workers" />
 
 ### `backup create`
 
@@ -343,6 +356,8 @@ wrangler d1 backup create <DATABASE_NAME>
 - `DATABASE_NAME` <Type text="string" /> <MetaInfo text="required" />
   - The name of the D1 database to backup.
 
+<Render file="wrangler-commands/global-flags" product="workers" />
+
 ### `backup list`
 
 :::caution
@@ -360,6 +375,8 @@ wrangler d1 backup list <DATABASE_NAME>
 
 - `DATABASE_NAME` <Type text="string" /> <MetaInfo text="required" />
   - The name of the D1 database to list the backups of.
+
+<Render file="wrangler-commands/global-flags" product="workers" />
 
 ### `backup restore`
 
@@ -380,6 +397,8 @@ wrangler d1 backup restore <DATABASE_NAME> <BACKUP_ID>
   - The name of the D1 database to restore the backup into.
 - `BACKUP_ID` <Type text="string" /> <MetaInfo text="required" />
   - The ID of the backup you wish to restore.
+
+<Render file="wrangler-commands/global-flags" product="workers" />
 
 ### `backup download`
 
@@ -403,6 +422,8 @@ wrangler d1 backup download <DATABASE_NAME> <BACKUP_ID>
 - `--output` <Type text="string" /> <MetaInfo text="optional" />
   - The `.sqlite3` file to write to (defaults to `'<DB_NAME>.<SHORT_BACKUP_ID>.sqlite3'`).
 
+<Render file="wrangler-commands/global-flags" product="workers" />
+
 ### `migrations create`
 
 Create a new migration.
@@ -422,6 +443,8 @@ wrangler d1 migrations create <DATABASE_NAME> <MIGRATION_NAME>
 - `MIGRATION_NAME` <Type text="string" /> <MetaInfo text="required" />
   - A descriptive name for the migration you wish to create.
 
+<Render file="wrangler-commands/global-flags" product="workers" />
+
 ### `migrations list`
 
 View a list of unapplied migration files.
@@ -440,6 +463,8 @@ wrangler d1 migrations list <DATABASE_NAME> [OPTIONS]
   - Specify directory to use for local persistence (for use in combination with `--local`).
 - `--preview` <Type text="boolean" /> <MetaInfo text="optional" />
   - Show the list of unapplied migration files on your preview D1 database (as defined by `preview_database_id` in [`wrangler.toml`](/workers/wrangler/configuration/#d1-databases)).
+
+<Render file="wrangler-commands/global-flags" product="workers" />
 
 ### `migrations apply`
 
@@ -471,6 +496,8 @@ wrangler d1 migrations apply <DATABASE_NAME> [OPTIONS]
   - Execute any unapplied migrations on your preview D1 database (as defined by `preview_database_id` in [`wrangler.toml`](/workers/wrangler/configuration/#d1-databases)).
 - `--batch-size` <Type text="number" /> <MetaInfo text="optional" />
   - Number of queries to send in a single batch.
+
+<Render file="wrangler-commands/global-flags" product="workers" />
 
 ---
 
@@ -505,6 +532,8 @@ npx wrangler vectorize create <INDEX_NAME> [--dimensions=<NUM_DIMENSIONS>] [--me
 - `--deprecated-v1` <Type text="boolean" /> <MetaInfo text="optional" />
   - Create a legacy Vectorize index. Please note that legacy Vectorize indexes are on a [deprecation path](/vectorize/reference/transition-vectorize-legacy).
 
+<Render file="wrangler-commands/global-flags" product="workers" />
+
 ### `list`
 
 List all Vectorize indexes in your account, including the configured dimensions and distance metric.
@@ -515,6 +544,8 @@ npx wrangler vectorize list
 
 - `--deprecated-v1` <Type text="boolean" /> <MetaInfo text="optional" />
   - List legacy Vectorize indexes. Please note that legacy Vectorize indexes are on a [deprecation path](/vectorize/reference/transition-vectorize-legacy).
+
+<Render file="wrangler-commands/global-flags" product="workers" />
 
 ### `get`
 
@@ -529,6 +560,8 @@ npx wrangler vectorize get <INDEX_NAME>
 - `--deprecated-v1` <Type text="boolean" /> <MetaInfo text="optional" />
   - Get a legacy Vectorize index. Please note that legacy Vectorize indexes are on a [deprecation path](/vectorize/reference/transition-vectorize-legacy).
 
+<Render file="wrangler-commands/global-flags" product="workers" />
+
 ### `info`
 
 Get some additional information about an individual index, including the vector count and details about the last processed mutation.
@@ -539,6 +572,8 @@ npx wrangler vectorize info <INDEX_NAME>
 
 - `INDEX_NAME` <Type text="string" /> <MetaInfo text="required" />
   - The name of the index to fetch details for.
+
+<Render file="wrangler-commands/global-flags" product="workers" />
 
 ### `delete`
 
@@ -554,6 +589,8 @@ npx wrangler vectorize delete <INDEX_NAME> [OPTIONS]
   - Skip confirmation when deleting the index (Note: This is not a recoverable operation).
 - `--deprecated-v1` <Type text="boolean" /> <MetaInfo text="optional" />
   - Delete a legacy Vectorize index. Please note that legacy Vectorize indexes are on a [deprecation path](/vectorize/reference/transition-vectorize-legacy).
+
+<Render file="wrangler-commands/global-flags" product="workers" />
 
 ### `insert`
 
@@ -572,6 +609,8 @@ npx wrangler vectorize insert <INDEX_NAME> [OPTIONS]
 - `--deprecated-v1` <Type text="boolean" /> <MetaInfo text="optional" />
   - Insert into a legacy Vectorize index. Please note that legacy Vectorize indexes are on a [deprecation path](/vectorize/reference/transition-vectorize-legacy).
 
+<Render file="wrangler-commands/global-flags" product="workers" />
+
 ### `upsert`
 
 Upsert vectors into an index. Existing vectors in the index would be overwritten.
@@ -586,6 +625,8 @@ npx wrangler vectorize upsert <INDEX_NAME> [OPTIONS]
   - A file containing the vectors to insert in newline-delimited JSON (JSON) format.
 - `--batch-size` <Type text="number" /> <MetaInfo text="optional" />
   - The number of vectors to insert at a time (default: `5000`).
+
+<Render file="wrangler-commands/global-flags" product="workers" />
 
 ### `query`
 
@@ -612,6 +653,8 @@ npx wrangler vectorize query <INDEX_NAME> [OPTIONS]
 - `--filter` <Type text="string" /> <MetaInfo text="optional" />
   - Filter vectors based on this metadata filter. Example: `'{ 'p1': 'abc', 'p2': { '$ne': true }, 'p3': 10, 'p4': false, 'nested.p5': 'abcd' }'`
 
+<Render file="wrangler-commands/global-flags" product="workers" />
+
 ### `get-vectors`
 
 Fetch vectors from a Vectorize index using the provided ids.
@@ -625,6 +668,8 @@ npx wrangler vectorize get-vectors <INDEX_NAME> [OPTIONS]
 - `--ids` <Type text="array" /> <MetaInfo text="required" />
   - List of ids for which vectors must be fetched.
 
+<Render file="wrangler-commands/global-flags" product="workers" />
+
 ### `delete-vectors`
 
 Delete vectors in a Vectorize index using the provided ids.
@@ -637,6 +682,8 @@ npx wrangler vectorize delete-vectors <INDEX_NAME> [OPTIONS]
   - The name of the Vectorize index from which vectors need to be deleted.
 - `--ids` <Type text="array" /> <MetaInfo text="required" />
   - List of ids corresponding to the vectors that must be deleted.
+
+<Render file="wrangler-commands/global-flags" product="workers" />
 
 ### `create-metadata-index`
 
@@ -653,6 +700,8 @@ npx wrangler vectorize create-metadata-index <INDEX_NAME> [OPTIONS]
 - `--type` <Type text="string" /> <MetaInfo text="required" />
   - Data type of the property. Must be one of `string`, `number`, or `boolean`.
 
+<Render file="wrangler-commands/global-flags" product="workers" />
+
 ### `list-metadata-index`
 
 List metadata properties on which metadata filtering is enabled.
@@ -663,6 +712,8 @@ npx wrangler vectorize list-metadata-index <INDEX_NAME> [OPTIONS]
 
 - `INDEX_NAME` <Type text="string" /> <MetaInfo text="required" />
   - The name of the Vectorize index for which metadata indexes needs to be fetched.
+
+<Render file="wrangler-commands/global-flags" product="workers" />
 
 ### `delete-metadata-index`
 
@@ -676,6 +727,8 @@ npx wrangler vectorize delete-metadata-index <INDEX_NAME> [OPTIONS]
   - The name of the Vectorize index for which metadata index needs to be disabled.
 - `--property-name` <Type text="string" /> <MetaInfo text="required" />
   - Metadata property for which metadata filtering should be disabled.
+
+<Render file="wrangler-commands/global-flags" product="workers" />
 
 ---
 
@@ -774,6 +827,8 @@ As of Wrangler v3.2.0, `wrangler dev` is supported by any Linux distributions pr
 - `--alias` `Array<string>`
   - Specify modules to alias using [module aliasing](/workers/wrangler/configuration/#module-aliasing).
 
+<Render file="wrangler-commands/global-flags" product="workers" />
+
 `wrangler dev` is a way to [locally test](/workers/testing/local-development/) your Worker while developing. With `wrangler dev` running, send HTTP requests to `localhost:8787` and your Worker should execute as expected. You will also see `console.log` messages and exceptions appearing in your terminal.
 
 ---
@@ -848,6 +903,8 @@ None of the options for this command are required. Also, many can be set in your
 - `--dispatch-namespace` <Type text="string" /> <MetaInfo text="optional" />
   - Specify the [Workers for Platforms dispatch namespace](/cloudflare-for-platforms/workers-for-platforms/get-started/configuration/#2-create-a-dispatch-namespace) to upload this Worker to.
 
+<Render file="wrangler-commands/global-flags" product="workers" />
+
 ---
 
 ## `publish`
@@ -883,6 +940,8 @@ wrangler delete [<SCRIPT>] [OPTIONS]
 - `--dry-run` <Type text="boolean" /> <MetaInfo text="(default: false) optional" />
   - Do not actually delete the Worker. This is useful for testing the output of `wrangler delete`.
 
+<Render file="wrangler-commands/global-flags" product="workers" />
+
 <Render file="wrangler-commands/kv" product="workers" />
 
 ---
@@ -913,6 +972,23 @@ wrangler r2 bucket create <NAME>
 - `--jurisdiction` <Type text="string" /> <MetaInfo text="optional" />
   - The jurisdiction where the R2 bucket is created. Refer to [jurisdictional restrictions](/r2/reference/data-location/#jurisdictional-restrictions).
 
+<Render file="wrangler-commands/global-flags" product="workers" />
+
+### `info`
+
+Get information about an R2 bucket, including the bucket size and number of objects.
+
+```txt
+wrangler r2 bucket info <NAME>
+```
+
+- `NAME` <Type text="string" /> <MetaInfo text="required" />
+  - The name of the R2 bucket to get information about.
+- `--jurisdiction` <Type text="string" /> <MetaInfo text="optional" />
+  - The jurisdiction where the bucket exists, if a jurisdiction has been specified. Refer to [jurisdictional restrictions](/r2/reference/data-location/#jurisdictional-restrictions).
+
+<Render file="wrangler-commands/global-flags" product="workers" />
+
 ### `delete`
 
 Delete an R2 bucket.
@@ -924,6 +1000,8 @@ wrangler r2 bucket delete <NAME>
 - `NAME` <Type text="string" /> <MetaInfo text="required" />
   - The name of the R2 bucket to delete.
 
+<Render file="wrangler-commands/global-flags" product="workers" />
+
 ### `list`
 
 List R2 bucket in the current account.
@@ -931,6 +1009,57 @@ List R2 bucket in the current account.
 ```txt
 wrangler r2 bucket list
 ```
+
+<Render file="wrangler-commands/global-flags" product="workers" />
+
+### `dev-url enable`
+
+Enable public access via the [r2.dev URL](/r2/buckets/public-buckets/#enable-managed-public-access) for an R2 bucket.
+
+```txt
+wrangler r2 bucket dev-url enable <NAME> [OPTIONS]
+```
+
+- `NAME` <Type text="string" /> <MetaInfo text="required" />
+  - The name of the R2 bucket to enable public access via its r2.dev URL.
+- `--jurisdiction` <Type text="string" /> <MetaInfo text="optional" />
+  - The jurisdiction where the bucket exists, if a jurisdiction has been specified. Refer to [jurisdictional restrictions](/r2/reference/data-location/#jurisdictional-restrictions).
+- `--force` <Type text="boolean" /> <MetaInfo text="optional" />
+  - Skip confirmation when enabling public access via r2.dev URL.
+
+<Render file="wrangler-commands/global-flags" product="workers" />
+
+### `dev-url disable`
+
+Disable public access via the [r2.dev URL](/r2/buckets/public-buckets/#enable-managed-public-access) for an R2 bucket.
+
+```txt
+wrangler r2 bucket dev-url disable <NAME> [OPTIONS]
+```
+
+- `NAME` <Type text="string" /> <MetaInfo text="required" />
+  - The name of the R2 bucket to disable public access via its r2.dev URL.
+- `--jurisdiction` <Type text="string" /> <MetaInfo text="optional" />
+  - The jurisdiction where the bucket exists, if a jurisdiction has been specified. Refer to [jurisdictional restrictions](/r2/reference/data-location/#jurisdictional-restrictions).
+- `--force` <Type text="boolean" /> <MetaInfo text="optional" />
+  - Skip confirmation when disabling public access via r2.dev URL.
+
+<Render file="wrangler-commands/global-flags" product="workers" />
+
+### `dev-url get`
+
+Get the [r2.dev URL](/r2/buckets/public-buckets/#enable-managed-public-access) and status for an R2 bucket.
+
+```txt
+wrangler r2 bucket dev-url get <NAME> [OPTIONS]
+```
+
+- `NAME` <Type text="string" /> <MetaInfo text="required" />
+  - The name of the R2 bucket whose r2.dev URL status to retrieve.
+- `--jurisdiction` <Type text="string" /> <MetaInfo text="optional" />
+  - The jurisdiction where the bucket exists, if a jurisdiction has been specified. Refer to [jurisdictional restrictions](/r2/reference/data-location/#jurisdictional-restrictions).
+
+<Render file="wrangler-commands/global-flags" product="workers" />
 
 ### `domain add`
 
@@ -953,6 +1082,8 @@ wrangler r2 bucket domain add <NAME> [OPTIONS]
 - `--force` <Type text="boolean" /> <MetaInfo text="optional" />
   - Skip confirmation when adding the custom domain.
 
+<Render file="wrangler-commands/global-flags" product="workers" />
+
 ### `domain remove`
 
 Remove a [custom domain](/r2/buckets/public-buckets/#custom-domains) from an R2 bucket.
@@ -969,6 +1100,8 @@ wrangler r2 bucket domain remove <NAME> [OPTIONS]
   - The jurisdiction where the bucket exists, if a jurisdiction has been specified. Refer to [jurisdictional restrictions](/r2/reference/data-location/#jurisdictional-restrictions).
 - `--force` <Type text="boolean" /> <MetaInfo text="optional" />
   - Skip confirmation when removing the custom domain.
+
+<Render file="wrangler-commands/global-flags" product="workers" />
 
 ### `domain update`
 
@@ -987,6 +1120,8 @@ wrangler r2 bucket domain update <NAME> [OPTIONS]
 - `--jurisdiction` <Type text="string" /> <MetaInfo text="optional" />
   - The jurisdiction where the bucket exists, if a jurisdiction has been specified. Refer to [jurisdictional restrictions](/r2/reference/data-location/#jurisdictional-restrictions).
 
+<Render file="wrangler-commands/global-flags" product="workers" />
+
 ### `domain list`
 
 List [custom domains](/r2/buckets/public-buckets/#custom-domains) for an R2 bucket.
@@ -999,6 +1134,8 @@ wrangler r2 bucket domain list <NAME> [OPTIONS]
   - The name of the R2 bucket whose connected custom domains will be listed.
 - `--jurisdiction` <Type text="string" /> <MetaInfo text="optional" />
   - The jurisdiction where the bucket exists, if a jurisdiction has been specified. Refer to [jurisdictional restrictions](/r2/reference/data-location/#jurisdictional-restrictions).
+
+<Render file="wrangler-commands/global-flags" product="workers" />
 
 ### `notification create`
 
@@ -1021,6 +1158,8 @@ wrangler r2 bucket notification create <NAME> [OPTIONS]
 - `--description` <Type text="string" /> <MetaInfo text="optional" />
   - A description that can be used to identify the event notification rule after creation.
 
+<Render file="wrangler-commands/global-flags" product="workers" />
+
 ### `notification delete`
 
 Remove an event notification rule from a bucket's [event notification](/r2/buckets/event-notifications/) configuration.
@@ -1036,6 +1175,8 @@ wrangler r2 bucket notification delete <NAME> [OPTIONS]
 - `--rule` <Type text="string" /> <MetaInfo text="optional" />
   - The ID of the event notification rule to delete.
 
+<Render file="wrangler-commands/global-flags" product="workers" />
+
 ### `notification list`
 
 List the [event notification](/r2/buckets/event-notifications/) rules for a bucket.
@@ -1046,6 +1187,88 @@ wrangler r2 bucket notification list <NAME>
 
 - `NAME` <Type text="string" /> <MetaInfo text="required" />
   - The name of the R2 bucket to get event notification rules for.
+
+<Render file="wrangler-commands/global-flags" product="workers" />
+
+### `lifecycle add`
+
+Add an [object lifecycle](/r2/buckets/object-lifecycles/) rule to an R2 bucket.
+
+```txt
+wrangler r2 bucket lifecycle add <NAME> [OPTIONS]
+```
+
+- `NAME` <Type text="string" /> <MetaInfo text="required" />
+  - The name of the R2 bucket to add a lifecycle rule to.
+- `--id` <Type text="string" /> <MetaInfo text="optional" />
+  - A unique identifier for the lifecycle rule.
+- `--prefix` <Type text="string" /> <MetaInfo text="optional" />
+  - Prefix condition for the lifecycle rule (leave empty for all prefixes).
+- `--expire-days` <Type text="number" /> <MetaInfo text="optional" />
+  - Sets the lifecycle rule action to expire objects after this number of days. Note you can provide only one of `--expire-days` or `--expire-date`.
+- `--expire-date` <Type text="string" /> <MetaInfo text="optional" />
+  - Sets the lifecycle rule action to expire objects after this date (YYYY-MM-DD). Note you can provide only one of `--expire-days` or `--expire-date`.
+- `--ia-transition-days` <Type text="number" /> <MetaInfo text="optional" />
+  - Sets the lifecycle rule action to transition objects to Infrequent Access storage after this number of days. Note you can provide only one of `--ia-transition-days` or `--ia-transition-date`.
+- `--ia-transition-date` <Type text="string" /> <MetaInfo text="optional" />
+  - Sets the lifecycle rule action to transition objects to Infrequent Access storage after this date (YYYY-MM-DD). Note you can provide only one of `--ia-transition-days` or `--ia-transition-date`.
+- `--abort-multipart-days` <Type text="number" /> <MetaInfo text="optional" />
+  - Sets the lifecycle rule action to abort incomplete multipart uploads after this number of days.
+- `--jurisdiction` <Type text="string" /> <MetaInfo text="optional" />
+  - The jurisdiction where the bucket exists, if a jurisdiction has been specified. Refer to [jurisdictional restrictions](/r2/reference/data-location/#jurisdictional-restrictions).
+- `--force` <Type text="boolean" /> <MetaInfo text="optional" />
+  - Skip confirmation when adding the lifecycle rule.
+
+<Render file="wrangler-commands/global-flags" product="workers" />
+
+### `lifecycle remove`
+
+Remove an [object lifecycle](/r2/buckets/object-lifecycles/) rule from an R2 bucket.
+
+```txt
+wrangler r2 bucket lifecycle remove <NAME> [OPTIONS]
+```
+
+- `NAME` <Type text="string" /> <MetaInfo text="required" />
+  - The name of the R2 bucket to remove a lifecycle rule from.
+- `--id` <Type text="string" /> <MetaInfo text="required" />
+  - The unique identifier of the lifecycle rule to remove.
+- `--jurisdiction` <Type text="string" /> <MetaInfo text="optional" />
+  - The jurisdiction where the bucket exists, if a jurisdiction has been specified. Refer to [jurisdictional restrictions](/r2/reference/data-location/#jurisdictional-restrictions).
+
+<Render file="wrangler-commands/global-flags" product="workers" />
+
+### `lifecycle list`
+
+List [object lifecycle](/r2/buckets/object-lifecycles/) rules for an R2 bucket.
+
+```txt
+wrangler r2 bucket lifecycle list <NAME> [OPTIONS]
+```
+
+- `NAME` <Type text="string" /> <MetaInfo text="required" />
+  - The name of the R2 bucket to list lifecycle rules for.
+- `--jurisdiction` <Type text="string" /> <MetaInfo text="optional" />
+  - The jurisdiction where the bucket exists, if a jurisdiction has been specified. Refer to [jurisdictional restrictions](/r2/reference/data-location/#jurisdictional-restrictions).
+
+<Render file="wrangler-commands/global-flags" product="workers" />
+
+### `lifecycle set`
+
+Set the [object lifecycle](/r2/buckets/object-lifecycles/) configuration for an R2 bucket from a JSON file.
+
+```txt
+wrangler r2 bucket lifecycle set <NAME> [OPTIONS]
+```
+
+- `NAME` <Type text="string" /> <MetaInfo text="required" />
+  - The name of the R2 bucket to set lifecycle configuration for.
+- `--file` <Type text="string" /> <MetaInfo text="required" />
+  - Path to the JSON file containing lifecycle configuration (file must be in format of request body of [put object lifecycle configuration API](/api/operations/r2-put-bucket-lifecycle-configuration)).
+- `--jurisdiction` <Type text="string" /> <MetaInfo text="optional" />
+  - The jurisdiction where the bucket exists, if a jurisdiction has been specified. Refer to [jurisdictional restrictions](/r2/reference/data-location/#jurisdictional-restrictions).
+
+<Render file="wrangler-commands/global-flags" product="workers" />
 
 ### `sippy enable`
 
@@ -1083,6 +1306,8 @@ wrangler r2 bucket sippy enable <NAME> [OPTIONS]
   - The private key for your Google Cloud service account key. Requires [read and list access](/r2/data-migration/sippy/#google-cloud-storage).
 - Note that you must provide either `service-account-key-file` or `client_email` and `private_key` for this command to run successfully.
 
+<Render file="wrangler-commands/global-flags" product="workers" />
+
 ### `sippy disable`
 
 Disable [Sippy](/r2/data-migration/sippy/) incremental migration for a bucket.
@@ -1093,6 +1318,8 @@ wrangler r2 bucket sippy disable <NAME>
 
 - `NAME` <Type text="string" /> <MetaInfo text="required" />
   - The name of the R2 bucket to disable Sippy.
+
+<Render file="wrangler-commands/global-flags" product="workers" />
 
 ### `sippy get`
 
@@ -1105,11 +1332,15 @@ wrangler r2 bucket sippy get <NAME>
 - `NAME` <Type text="string" /> <MetaInfo text="required" />
   - The name of the R2 bucket to get the status of Sippy.
 
+<Render file="wrangler-commands/global-flags" product="workers" />
+
 ---
 
 ## `r2 object`
 
 Interact with R2 objects.
+
+<Render file="wrangler-commands/global-flags" product="workers" />
 
 :::note
 
@@ -1130,6 +1361,8 @@ wrangler r2 object get <OBJECT_PATH> [OPTIONS]
   - Interact with locally persisted data.
 - `--persist-to` <Type text="string" /> <MetaInfo text="optional" />
   - Specify directory for locally persisted data.
+
+<Render file="wrangler-commands/global-flags" product="workers" />
 
 ### `put`
 
@@ -1162,6 +1395,8 @@ wrangler r2 object put <OBJECT_PATH> [OPTIONS]
 - `--persist-to` <Type text="string" /> <MetaInfo text="optional" />
   - Specify directory for locally persisted data.
 
+<Render file="wrangler-commands/global-flags" product="workers" />
+
 ### `delete`
 
 Delete an object in an R2 bucket.
@@ -1176,6 +1411,8 @@ wrangler r2 object delete <OBJECT_PATH> [OPTIONS]
   - Interact with locally persisted data.
 - `--persist-to` <Type text="string" /> <MetaInfo text="optional" />
   - Specify directory for locally persisted data.
+
+<Render file="wrangler-commands/global-flags" product="workers" />
 
 ---
 
@@ -1194,15 +1431,13 @@ wrangler secret put <KEY> [OPTIONS]
 ```
 
 - `KEY` <Type text="string" /> <MetaInfo text="required" />
-
   - The variable name for this secret to be accessed in the Worker.
-
 - `--name` <Type text="string" /> <MetaInfo text="optional" />
-
   - Perform on a specific Worker rather than inheriting from `wrangler.toml`.
-
 - `--env` <Type text="string" /> <MetaInfo text="optional" />
   - Perform on a specific environment.
+
+<Render file="wrangler-commands/global-flags" product="workers" />
 
 When running this command, you will be prompted to input the secret's value:
 
@@ -1231,15 +1466,13 @@ wrangler secret delete <KEY> [OPTIONS]
 ```
 
 - `KEY` <Type text="string" /> <MetaInfo text="required" />
-
   - The variable name for this secret to be accessed in the Worker.
-
 - `--name` <Type text="string" /> <MetaInfo text="optional" />
-
   - Perform on a specific Worker rather than inheriting from `wrangler.toml`.
-
 - `--env` <Type text="string" /> <MetaInfo text="optional" />
   - Perform on a specific environment.
+
+<Render file="wrangler-commands/global-flags" product="workers" />
 
 ### `list`
 
@@ -1250,12 +1483,11 @@ wrangler secret list [OPTIONS]
 ```
 
 - `--name` <Type text="string" /> <MetaInfo text="optional" />
-
   - Perform on a specific Worker rather than inheriting from `wrangler.toml`.
-
 - `--env` <Type text="string" /> <MetaInfo text="optional" />
-
   - Perform on a specific environment
+
+<Render file="wrangler-commands/global-flags" product="workers" />
 
 The following is an example of listing the secrets for the current Worker.
 
@@ -1283,16 +1515,14 @@ wrangler secret:bulk [<FILENAME>] [OPTIONS]
 ```
 
 - `FILENAME` <Type text="string" /> <MetaInfo text="optional" />
-
   - The JSON file containing key-value pairs to upload as secrets, in the form `{"SECRET_NAME": "secret value", ...}`.
   - If omitted, Wrangler expects to receive input from `stdin` rather than a file.
-
 - `--name` <Type text="string" /> <MetaInfo text="optional" />
-
   - Perform on a specific Worker rather than inheriting from `wrangler.toml`.
-
 - `--env` <Type text="string" /> <MetaInfo text="optional" />
   - Perform on a specific environment.
+
+<Render file="wrangler-commands/global-flags" product="workers" />
 
 The following is an example of uploading secrets from a JSON file redirected to `stdin`. When complete, the output summary will show the number of secrets uploaded and the number of secrets that failed to upload.
 
@@ -1342,6 +1572,8 @@ wrangler workflows list
 - `--per-page` <Type text="number" /> <MetaInfo text="optional" />
   - Configure the maximum number of Workflows to show per page.
 
+<Render file="wrangler-commands/global-flags" product="workers" />
+
 ### `instances`
 
 Manage and interact with specific instances of a Workflow.
@@ -1357,6 +1589,8 @@ wrangler workflows instances list <WORKFLOW_NAME> [OPTIONS]
 - `WORKFLOW_NAME` <Type text="string" /> <MetaInfo text="required" />
   - The name of a registered Workflow.
 
+<Render file="wrangler-commands/global-flags" product="workers" />
+
 ### `instances describe`
 
 Describe a specific instance of a Workflow, including its current status, any persisted state, and per-step outputs.
@@ -1370,10 +1604,13 @@ wrangler workflows instances describe <WORKFLOW_NAME> <ID> [OPTIONS]
 - `ID` <Type text="string" /> <MetaInfo text="required" />
   - The ID of a Workflow instance. You can optionally provide `latest` to refer to the most recently created instance of a Workflow.
 
+<Render file="wrangler-commands/global-flags" product="workers" />
+
 ```sh
 # Passing `latest` instead of an explicit ID will describe the most recently queued instance
 wrangler workflows instances describe my-workflow latest
 ```
+
 ```sh output
 Workflow Name:         my-workflow
 Instance Id:           51c73fc8-7fd5-47d9-bd82-9e301506ee72
@@ -1401,6 +1638,8 @@ wrangler workflows instances terminate <WORKFLOW_NAME> <ID> [OPTIONS]
 - `ID` <Type text="string" /> <MetaInfo text="required" />
   - The ID of a Workflow instance.
 
+<Render file="wrangler-commands/global-flags" product="workers" />
+
 ### `instances pause`
 
 Pause (until resumed) a Workflow instance.
@@ -1413,6 +1652,8 @@ wrangler workflows instances pause <WORKFLOW_NAME> <ID> [OPTIONS]
   - The name of a registered Workflow.
 - `ID` <Type text="string" /> <MetaInfo text="required" />
   - The ID of a Workflow instance.
+
+<Render file="wrangler-commands/global-flags" product="workers" />
 
 ### `instances resume`
 
@@ -1427,6 +1668,8 @@ wrangler workflows instances resume <WORKFLOW_NAME> <ID> [OPTIONS]
 - `ID` <Type text="string" /> <MetaInfo text="required" />
   - The ID of a Workflow instance.
 
+<Render file="wrangler-commands/global-flags" product="workers" />
+
 ### `describe`
 
 ```sh
@@ -1436,9 +1679,12 @@ wrangler workflows describe <WORKFLOW_NAME> [OPTIONS]
 - `WORKFLOW_NAME` <Type text="string" /> <MetaInfo text="required" />
   - The name of a registered Workflow.
 
+<Render file="wrangler-commands/global-flags" product="workers" />
+
 ### `trigger`
 
 Trigger (create) a Workflow instance.
+
 ```sh
 wrangler workflows trigger <WORKFLOW_NAME> <PARAMS> [OPTIONS]
 ```
@@ -1448,10 +1694,12 @@ wrangler workflows trigger <WORKFLOW_NAME> <PARAMS> [OPTIONS]
 - `PARAMS` <Type text="string" /> <MetaInfo text="optional" />
   - The parameters to pass to the Workflow as an event. Must be a JSON-encoded string.
 
- ```sh
- # Pass optional params to the Workflow.
- wrangler workflows trigger my-workflow '{"hello":"world"}'
- ```
+<Render file="wrangler-commands/global-flags" product="workers" />
+
+```sh
+# Pass optional params to the Workflow.
+wrangler workflows trigger my-workflow '{"hello":"world"}'
+```
 
 {/*
 
@@ -1494,6 +1742,8 @@ wrangler tail <WORKER> [OPTIONS]
   - Filter by the IP address the request originates from. Use `"self"` to show only messages from your own IP.
 - `--version-id` <Type text="string" /> <MetaInfo text="optional" />
   - Filter by Worker version.
+
+<Render file="wrangler-commands/global-flags" product="workers" />
 
 After starting `wrangler tail`, you will receive a live feed of console and exception logs for each request your Worker receives.
 
@@ -1551,6 +1801,8 @@ wrangler pages dev [<DIRECTORY>] [OPTIONS]
 - `--https-cert-path` <Type text="string" /> <MetaInfo text="optional" />
   - Path to a custom certificate.
 
+<Render file="wrangler-commands/global-flags" product="workers" />
+
 ### `download config`
 
 Download your Pages project config as a wrangler.toml file.
@@ -1559,6 +1811,8 @@ Download your Pages project config as a wrangler.toml file.
 wrangler pages download config <PROJECT_NAME>
 ```
 
+<Render file="wrangler-commands/global-flags" product="workers" />
+
 ### `project list`
 
 List your Pages projects.
@@ -1566,6 +1820,8 @@ List your Pages projects.
 ```txt
 wrangler pages project list
 ```
+
+<Render file="wrangler-commands/global-flags" product="workers" />
 
 ### `project create`
 
@@ -1580,6 +1836,8 @@ wrangler pages project create <PROJECT_NAME> [OPTIONS]
 - `--production-branch` <Type text="string" /> <MetaInfo text="optional" />
   - The name of the production branch of your project.
 
+<Render file="wrangler-commands/global-flags" product="workers" />
+
 ### `project delete`
 
 Delete a Cloudflare Pages project.
@@ -1593,6 +1851,8 @@ wrangler pages project delete <PROJECT_NAME> [OPTIONS]
 - `--yes` <Type text="boolean" /> <MetaInfo text="optional" />
   - Answer `"yes"` to confirmation prompt.
 
+<Render file="wrangler-commands/global-flags" product="workers" />
+
 ### `deployment list`
 
 List deployments in your Cloudflare Pages project.
@@ -1603,6 +1863,10 @@ wrangler pages deployment list [--project-name <PROJECT_NAME>]
 
 - `--project-name` <Type text="string" /> <MetaInfo text="optional" />
   - The name of the project you would like to list deployments for.
+- `--environment` <Type text="'production'|'preview'" /> <MetaInfo text="optional" />
+  - Environment type to list deployments for.
+
+<Render file="wrangler-commands/global-flags" product="workers" />
 
 ### `deployment tail`
 
@@ -1633,6 +1897,8 @@ wrangler pages deployment tail [<DEPLOYMENT>] [OPTIONS]
 - `--ip` <Type text="(string|'self')\[]" /> <MetaInfo text="optional" />
   - Filter by the IP address the request originates from. Use `"self"` to show only messages from your own IP.
 
+<Render file="wrangler-commands/global-flags" product="workers" />
+
 :::note
 
 Filtering with `--ip self` will allow tailing your deployed Functions beyond the normal request per second limits.
@@ -1661,6 +1927,8 @@ wrangler pages deploy <BUILD_OUTPUT_DIRECTORY> [OPTIONS]
 - `--commit-dirty` <Type text="boolean" /> <MetaInfo text="optional" />
   - Whether or not the workspace should be considered dirty for this deployment.
 
+<Render file="wrangler-commands/global-flags" product="workers" />
+
 :::note
 
 Your site is deployed to `<PROJECT_NAME>.pages.dev`. If you do not provide the `--project-name` argument, you will be prompted to enter a project name in your terminal after you run the command.
@@ -1674,6 +1942,8 @@ Publish a directory of static assets as a Pages deployment.
 ```txt
 wrangler pages publish [<DIRECTORY>] [OPTIONS]
 ```
+
+<Render file="wrangler-commands/global-flags" product="workers" />
 
 :::note
 
@@ -1690,12 +1960,11 @@ wrangler pages secret put <KEY> [OPTIONS]
 ```
 
 - `KEY` <Type text="string" /> <MetaInfo text="required" />
-
   - The variable name for this secret to be accessed in the Pages project.
-
 - `--project-name` <Type text="string" /> <MetaInfo text="optional" />
-
   - The name of your Pages project.
+
+<Render file="wrangler-commands/global-flags" product="workers" />
 
 ### `secret delete`
 
@@ -1706,12 +1975,11 @@ wrangler pages secret delete <KEY> [OPTIONS]
 ```
 
 - `KEY` <Type text="string" /> <MetaInfo text="required" />
-
   - The variable name for this secret to be accessed in the Pages project.
-
 - `--project-name` <Type text="string" /> <MetaInfo text="optional" />
-
   - The name of your Pages project.
+
+<Render file="wrangler-commands/global-flags" product="workers" />
 
 ### `secret list`
 
@@ -1722,8 +1990,9 @@ wrangler pages secret list [OPTIONS]
 ```
 
 - `--project-name` <Type text="string" /> <MetaInfo text="optional" />
-
   - The name of your Pages project.
+
+<Render file="wrangler-commands/global-flags" product="workers" />
 
 ### `secret bulk`
 
@@ -1734,13 +2003,12 @@ wrangler pages secret bulk [<FILENAME>] [OPTIONS]
 ```
 
 - `FILENAME` <Type text="string" /> <MetaInfo text="optional" />
-
   - The JSON file containing key-value pairs to upload as secrets, in the form `{"SECRET_NAME": "secret value", ...}`.
   - If omitted, Wrangler expects to receive input from `stdin` rather than a file.
-
 - `--project-name` <Type text="string" /> <MetaInfo text="optional" />
-
   - The name of your Pages project.
+
+<Render file="wrangler-commands/global-flags" product="workers" />
 
 ---
 
@@ -1761,6 +2029,8 @@ wrangler queues create <name> [OPTIONS]
 - `--delivery-delay-secs` <Type text="number" /> <MetaInfo text="optional" />
   - How long a published message should be delayed for, in seconds. Must be a positive integer.
 
+<Render file="wrangler-commands/global-flags" product="workers" />
+
 ### `delete`
 
 Delete an existing queue.
@@ -1772,6 +2042,8 @@ wrangler queues delete <name> [OPTIONS]
 - `name` <Type text="string" /> <MetaInfo text="required" />
   - The name of the queue to delete.
 
+<Render file="wrangler-commands/global-flags" product="workers" />
+
 ### `list`
 
 List all queues in the current account.
@@ -1779,6 +2051,19 @@ List all queues in the current account.
 ```txt
 wrangler queues list [OPTIONS]
 ```
+
+<Render file="wrangler-commands/global-flags" product="workers" />
+
+### `info`
+
+Get information on individual queues.
+
+```txt
+wrangler queues info <name>
+```
+
+- `name` <Type text="string" /> <MetaInfo text="required" />
+	- The name of the queue to inspect.
 
 ### `consumer`
 
@@ -1807,6 +2092,8 @@ wrangler queues consumer add <queue-name> <script-name> [OPTIONS]
 - `--retry-delay-secs` <Type text="number" /> <MetaInfo text="optional" />
   - How long a retried message should be delayed for, in seconds. Must be a positive integer.
 
+<Render file="wrangler-commands/global-flags" product="workers" />
+
 ### `consumer remove`
 
 Remove a consumer from a queue.
@@ -1819,6 +2106,8 @@ wrangler queues consumer remove <queue-name> <script-name>
   - The name of the queue to remove the consumer from.
 - `script-name` <Type text="string" /> <MetaInfo text="required" />
   - The name of the Workers script to remove as the consumer.
+
+<Render file="wrangler-commands/global-flags" product="workers" />
 
 ---
 
@@ -1837,6 +2126,8 @@ wrangler login [OPTIONS]
 - `--scopes $SCOPES` <Type text="string" /> <MetaInfo text="optional" />
   - Allows to choose your set of OAuth scopes. The set of scopes must be entered in a whitespace-separated list,
     for example, `npx wrangler login --scopes account:read user:read`.
+
+<Render file="wrangler-commands/global-flags" product="workers" />
 
 :::note
 
@@ -1880,6 +2171,8 @@ Remove Wrangler's authorization for accessing your account. This command will in
 wrangler logout
 ```
 
+<Render file="wrangler-commands/global-flags" product="workers" />
+
 If you are using `CLOUDFLARE_API_TOKEN` instead of OAuth, and you can logout by deleting your API token in the Cloudflare dashboard:
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/).
@@ -1896,6 +2189,8 @@ Retrieve your user information and test your authentication configuration.
 ```txt
 wrangler whoami
 ```
+
+<Render file="wrangler-commands/global-flags" product="workers" />
 
 ---
 
@@ -1920,6 +2215,8 @@ wrangler versions upload [OPTIONS]
 - `--name` <Type text="string" /> <MetaInfo text="optional" />
   - Perform on a specific Worker rather than inheriting from `wrangler.toml`.
 
+<Render file="wrangler-commands/global-flags" product="workers" />
+
 ### `deploy`
 
 Deploy a previously created [version](/workers/configuration/versions-and-deployments/#versions) of your Worker all at once or create a [gradual deployment](/workers/configuration/versions-and-deployments/gradual-deployments/) to incrementally shift traffic to a new version by following an interactive prompt.
@@ -1930,6 +2227,8 @@ wrangler versions deploy [OPTIONS]
 
 - `--name` <Type text="string" /> <MetaInfo text="optional" />
   - Perform on a specific Worker rather than inheriting from `wrangler.toml`.
+
+<Render file="wrangler-commands/global-flags" product="workers" />
 
 :::note
 
@@ -1951,6 +2250,8 @@ wrangler versions list [OPTIONS]
 - `--name` <Type text="string" /> <MetaInfo text="optional" />
   - Perform on a specific Worker rather than inheriting from `wrangler.toml`.
 
+<Render file="wrangler-commands/global-flags" product="workers" />
+
 ### `secret put`
 
 Create or replace a secret for a Worker. Creates a new [version](/workers/configuration/versions-and-deployments/#versions) with modified secrets without [deploying](/workers/configuration/versions-and-deployments/#deployments) the Worker.
@@ -1965,6 +2266,8 @@ wrangler versions secret put <KEY> [OPTIONS]
   - Perform on a specific Worker rather than inheriting from `wrangler.toml`.
 - `--env` <Type text="string" /> <MetaInfo text="optional" />
   - Perform on a specific environment.
+
+<Render file="wrangler-commands/global-flags" product="workers" />
 
 ### `secret delete`
 
@@ -1981,6 +2284,8 @@ wrangler versions delete <KEY> [OPTIONS]
 - `--env` <Type text="string" /> <MetaInfo text="optional" />
   - Perform on a specific environment.
 
+<Render file="wrangler-commands/global-flags" product="workers" />
+
 ### `secret bulk`
 
 Upload multiple secrets for a Worker at once. Creates a new [version](/workers/configuration/versions-and-deployments/#versions) with modified secrets without [deploying](/workers/configuration/versions-and-deployments/#deployments) the Worker.
@@ -1996,6 +2301,8 @@ wrangler versions secret bulk <FILENAME> [OPTIONS]
   - Perform on a specific Worker rather than inheriting from `wrangler.toml`.
 - `--env` <Type text="string" /> <MetaInfo text="optional" />
   - Perform on a specific environment.
+
+<Render file="wrangler-commands/global-flags" product="workers" />
 
 ---
 
@@ -2015,6 +2322,8 @@ wrangler triggers deploy [OPTIONS]
 
 - `--name` <Type text="string" /> <MetaInfo text="optional" />
   - Perform on a specific Worker rather than inheriting from `wrangler.toml`.
+
+<Render file="wrangler-commands/global-flags" product="workers" />
 
 ---
 
@@ -2037,6 +2346,8 @@ wrangler deployments list [OPTIONS]
 - `--name` <Type text="string" /> <MetaInfo text="optional" />
   - Perform on a specific Worker rather than inheriting from `wrangler.toml`.
 
+<Render file="wrangler-commands/global-flags" product="workers" />
+
 ### `status`
 
 Retrieve details for the most recent deployment. Details include `Created on`, `Author`, `Source`, an optional `Message`, and metadata about the `Version(s)` in the deployment.
@@ -2047,6 +2358,8 @@ wrangler deployments status
 
 - `--name` <Type text="string" /> <MetaInfo text="optional" />
   - Perform on a specific Worker rather than inheriting from `wrangler.toml`.
+
+<Render file="wrangler-commands/global-flags" product="workers" />
 
 ## `rollback`
 
@@ -2065,6 +2378,8 @@ wrangler rollback [<VERSION_ID>] [OPTIONS]
 - `--message` <Type text="string" /> <MetaInfo text="optional" />
   - Add message for rollback. Accepts empty string. When specified, interactive prompts for rollback confirmation and message are skipped.
 
+<Render file="wrangler-commands/global-flags" product="workers" />
+
 ---
 
 ## dispatch namespace
@@ -2077,6 +2392,8 @@ List all dispatch namespaces.
 wrangler dispatch-namespace list
 ```
 
+<Render file="wrangler-commands/global-flags" product="workers" />
+
 ### `get`
 
 Get information about a dispatch namespace.
@@ -2086,8 +2403,9 @@ wrangler dispatch-namespace get <NAME>
 ```
 
 - `NAME` <Type text="string" /> <MetaInfo text="required" />
-
   - The name of the dispatch namespace to get details about.
+
+<Render file="wrangler-commands/global-flags" product="workers" />
 
 ### `create`
 
@@ -2098,8 +2416,9 @@ wrangler dispatch-namespace create <NAME>
 ```
 
 - `NAME` <Type text="string" /> <MetaInfo text="required" />
-
   - The name of the dispatch namespace to create.
+
+<Render file="wrangler-commands/global-flags" product="workers" />
 
 ### `delete`
 
@@ -2115,8 +2434,9 @@ You must delete all user Workers in the dispatch namespace before it can be dele
 :::
 
 - `NAME` <Type text="string" /> <MetaInfo text="required" />
-
   - The name of the dispatch namespace to delete.
+
+<Render file="wrangler-commands/global-flags" product="workers" />
 
 ### `rename`
 
@@ -2127,12 +2447,11 @@ wrangler dispatch-namespace get <OLD_NAME> <NEW_NAME>
 ```
 
 - `OLD_NAME` <Type text="string" /> <MetaInfo text="required" />
-
   - The previous name of the dispatch namespace.
-
 - `NEW_NAME` <Type text="string" /> <MetaInfo text="required" />
-
   - The new name of the dispatch namespace.
+
+<Render file="wrangler-commands/global-flags" product="workers" />
 
 ---
 
@@ -2157,6 +2476,8 @@ wrangler mtls-certificate upload --cert <PATH> --key <PATH> [OPTIONS]
 - `--name` <Type text="string" /> <MetaInfo text="optional" />
   - The name assigned to the mTLS certificate at upload.
 
+<Render file="wrangler-commands/global-flags" product="workers" />
+
 The following is an example of using the `upload` command to upload an mTLS certificate.
 
 ```sh
@@ -2173,11 +2494,17 @@ Expires: 1/01/2025
 
 You can then add this certificate as a [binding](/workers/runtime-apis/bindings/) in your `wrangler.toml`:
 
+import { WranglerConfig } from "~/components";
+
+<WranglerConfig>
+
 ```toml
 mtls_certificates = [
   { binding = "MY_CERT", certificate_id = "99f5fef1-6cc1-46b8-bd79-44a0d5082b8d" }
 ]
 ```
+
+</WranglerConfig>
 
 Note that the certificate and private keys must be in separate (typically `.pem`) files when uploading.
 
@@ -2188,6 +2515,8 @@ List mTLS certificates associated with the current account ID.
 ```txt
 wrangler mtls-certificate list
 ```
+
+<Render file="wrangler-commands/global-flags" product="workers" />
 
 The following is an example of using the `list` command to upload an mTLS certificate.
 
@@ -2220,6 +2549,8 @@ wrangler mtls-certificate delete {--id <ID|--name <NAME>}
   - The ID of the mTLS certificate.
 - `--name` <Type text="string" />
   - The name assigned to the mTLS certificate at upload.
+
+<Render file="wrangler-commands/global-flags" product="workers" />
 
 The following is an example of using the `delete` command to delete an mTLS certificate.
 
@@ -2259,17 +2590,15 @@ The minimum required Wrangler version to use this command is 3.66.0.
 :::
 
 - `PATH` <Type text="string" /> <MetaInfo text="(default: `./worker-configuration.d.ts`)" />
-
   - The path to where **the `Env` types** for your Worker will be written.
   - The path must have a `d.ts` extension.
-
 - `--env-interface` <Type text="string" /> <MetaInfo text="(default: `Env`)" />
-
   - The name of the interface to generate for the environment object.
   - Not valid if the Worker uses the Service Worker syntax.
-
 - `--experimental-include-runtime` <Type text="string" /> <MetaInfo text="optional (default: `./.wrangler/types/runtime.d.ts`)" />
   - The path to where the **runtime types** file will be written.
   - Leave the path blank to use the default option, e.g. `npx wrangler types --x-include-runtime`
   - A custom path must be relative to the project root, e.g. `./my-runtime-types.d.ts`
   - A custom path must have a `d.ts` extension.
+
+<Render file="wrangler-commands/global-flags" product="workers" />

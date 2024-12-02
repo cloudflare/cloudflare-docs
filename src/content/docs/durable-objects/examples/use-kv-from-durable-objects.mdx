@@ -1,6 +1,6 @@
 ---
-title: Use KV from Durable Objects
-summary: Read and write to/from KV within a Durable Object
+title: Use Workers KV from Durable Objects
+summary: Read and write to/from Workers KV within a Durable Object
 pcx_content_type: example
 sidebar:
   order: 20
@@ -13,7 +13,7 @@ description: Read and write to/from KV within a Durable Object
 
 import { GlossaryTooltip } from "~/components";
 
-The following Worker script shows you how to configure a <GlossaryTooltip term="Durable Object">Durable Object</GlossaryTooltip> to read from and/or write to a [Workers KV namespace](/kv/concepts/how-kv-works/). This is useful when using a Durable Object to coordinate between multiple clients, and allows you to serialize writes to KV and/or broadcast a single read from KV to hundreds or thousands of clients connected to a single Durable Object [using WebSockets](/durable-objects/api/websockets/).
+The following Worker script shows you how to configure a <GlossaryTooltip term="Durable Object">Durable Object</GlossaryTooltip> to read from and/or write to a [Workers KV namespace](/kv/concepts/how-kv-works/). This is useful when using a Durable Object to coordinate between multiple clients, and allows you to serialize writes to KV and/or broadcast a single read from KV to hundreds or thousands of clients connected to a single Durable Object [using WebSockets](/durable-objects/best-practices/websockets/).
 
 Prerequisites:
 
@@ -22,6 +22,10 @@ Prerequisites:
 * A [Durable Object namespace binding](/workers/wrangler/configuration/#durable-objects).
 
 Configure your `wrangler.toml` file as follows:
+
+import { WranglerConfig } from "~/components";
+
+<WranglerConfig>
 
 ```toml
 name = "my-worker"
@@ -35,6 +39,8 @@ bindings = [
   { name = "YOUR_DO_CLASS", class_name = "YourDurableObject" }
 ]
 ```
+
+</WranglerConfig>
 
 ```ts
 import { DurableObject } from 'cloudflare:workers';

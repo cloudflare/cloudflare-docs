@@ -2,7 +2,7 @@
 title: Alarms
 pcx_content_type: concept
 sidebar:
-  order: 6
+  order: 7
 ---
 
 import { Type, GlossaryTooltip } from "~/components";
@@ -29,20 +29,20 @@ Alarms can be used to build distributed primitives, like queues or batching of w
 
 ## Storage methods
 
-### getAlarm
+### `getAlarm`
 
 - <code>getAlarm()</code>: <Type text="number | null" />
 
   - If there is an alarm set, then return the currently set alarm time as the number of milliseconds elapsed since the UNIX epoch. Otherwise, return `null`.
 
-### setAlarm
+### `setAlarm`
 
 - <code>{" "}setAlarm(scheduledTimeMs <Type text="number" />)</code>
   : <Type text="void" />
 
   - Set the time for the alarm to run. Specify the time as the number of milliseconds elapsed since the UNIX epoch.
 
-### deleteAlarm
+### `deleteAlarm`
 
 - `deleteAlarm()`: <Type text='void' />
 
@@ -52,7 +52,7 @@ Alarms can be used to build distributed primitives, like queues or batching of w
 
 ## Handler methods
 
-### alarm
+### `alarm`
 
 - `alarm()`: <Type text='void' />
 

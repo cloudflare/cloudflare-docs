@@ -70,13 +70,19 @@ To expose your queue to the code inside your Worker, you need to connect your qu
 
 To create a binding, open your newly generated `wrangler.toml` configuration file and add the following:
 
+import { WranglerConfig } from "~/components";
+
+<WranglerConfig>
+
 ```toml
 [[queues.producers]]
  queue = "MY-QUEUE-NAME"
  binding = "MY_QUEUE"
 ```
 
-Replace `MY-QUEUE-NAME` with the name of the queue you created in [step 3](/queues/get-started/#3-create-a-queue). Next, replace `MY_QUEUE` with the name you want for your `binding`. The binding must be a valid JavaScript variable name. This is the variable you will use to reference this queue in your Worker.
+</WranglerConfig>
+
+Replace `MY-QUEUE-NAME` with the name of the queue you created in [step 2](/queues/get-started/#2-create-a-queue). Next, replace `MY_QUEUE` with the name you want for your `binding`. The binding must be a valid JavaScript variable name. This is the variable you will use to reference this queue in your Worker.
 
 ### Write your producer Worker
 
@@ -184,6 +190,10 @@ Each queue can only have one consumer Worker connected to it. If you try to conn
 
 To connect your queue to your consumer Worker, open your `wrangler.toml` file and add this to the bottom:
 
+
+
+<WranglerConfig>
+
 ```toml
 [[queues.consumers]]
  queue = "<MY-QUEUE-NAME>"
@@ -193,7 +203,9 @@ To connect your queue to your consumer Worker, open your `wrangler.toml` file an
  max_batch_timeout = 5 # optional: defaults to 5 seconds
 ```
 
-Replace `MY-QUEUE-NAME` with the queue you created in [step 3](/queues/get-started/#3-create-a-queue).
+</WranglerConfig>
+
+Replace `MY-QUEUE-NAME` with the queue you created in [step 2](/queues/get-started/#2-create-a-queue).
 
 In your consumer Worker, you are using queues to auto batch messages using the `max_batch_size` option and the `max_batch_timeout` option. The consumer Worker will receive messages in batches of `10` or every `5` seconds, whichever happens first.
 
@@ -219,7 +231,7 @@ Run `wrangler tail` to start waiting for our consumer to log the messages it rec
 npx wrangler tail
 ```
 
-With `wrangler tail` running, open the Worker URL you opened in [step 4](/queues/get-started/#4-set-up-your-producer-worker).
+With `wrangler tail` running, open the Worker URL you opened in [step 3](/queues/get-started/#3-set-up-your-producer-worker).
 
 You should receive a `Success` message in your browser window.
 
@@ -229,7 +241,7 @@ With `wrangler tail` running, your consumer Worker will start logging the reques
 
 If you refresh less than 10 times, it may take a few seconds for the messages to appear because batch timeout is configured for 10 seconds. After 10 seconds, messages should arrive in your terminal.
 
-If you get errors when you refresh, check that the queue name you created in [step 3](/queues/get-started/#3-create-a-queue) and the queue you referenced in your `wrangler.toml` file is the same. You should ensure that your producer Worker is returning `Success` and is not returning an error.
+If you get errors when you refresh, check that the queue name you created in [step 2](/queues/get-started/#2-create-a-queue) and the queue you referenced in your `wrangler.toml` file is the same. You should ensure that your producer Worker is returning `Success` and is not returning an error.
 
 By completing this guide, you have now created a queue, a producer Worker that publishes messages to that queue, and a consumer Worker that consumes those messages from it.
 

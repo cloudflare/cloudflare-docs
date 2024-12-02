@@ -72,12 +72,18 @@ After the database is successfully created, you will see the data for the bindin
 The binding declaration will start with `[[d1_databases]]` and contain the binding name, database name and ID.
 To use the database in your worker, you will need to add the binding to your `wrangler.toml` file, by copying the declaration and pasting it into the wrangler file, as shown in the example below.
 
+import { WranglerConfig } from "~/components";
+
+<WranglerConfig>
+
 ```toml
 [[d1_databases]]
 binding = "DB"
 database_name = "<YOUR_DATABASE_NAME>"
 database_id = "<YOUR_DATABASE_ID>"
 ```
+
+</WranglerConfig>
 
 ## 3. Create R2 bucket and binding
 
@@ -92,11 +98,17 @@ npx wrangler r2 bucket create <YOUR_BUCKET_NAME>
 This works similar to the D1 database creation, where you will need to replace `<YOUR_BUCKET_NAME>` with the name you want to use for your bucket.
 To do this, go to the `wrangler.toml` file again and then add the following lines:
 
+
+
+<WranglerConfig>
+
 ```toml
 [[r2_buckets]]
 binding = "BUCKET"
 bucket_name = "<YOUR_BUCKET_NAME>"
 ```
+
+</WranglerConfig>
 
 Now that you have prepared the Wrangler configuration, you should update the `worker-configuration.d.ts` file to include the new bindings.
 This file will then provide TypeScript with the correct type definitions for the bindings, which allows for type checking and code completion in your editor.

@@ -192,6 +192,10 @@ npx wrangler@latest queues consumer http add $QUEUE-NAME --retry-delay-secs=60
 
 Delays can also be configured in [`wrangler.toml`](/workers/wrangler/configuration/#queues) with the `delivery_delay` setting for producers (when sending) and/or the `retry_delay` (when retrying) per-consumer:
 
+import { WranglerConfig } from "~/components";
+
+<WranglerConfig>
+
 ```toml title="wrangler.toml"
 [[queues.producers]]
   binding = "<BINDING_NAME>"
@@ -202,6 +206,8 @@ Delays can also be configured in [`wrangler.toml`](/workers/wrangler/configurati
   queue = "my-queue"
   retry_delay = 300 # delay any retried message by 5 minutes before re-attempting delivery
 ```
+
+</WranglerConfig>
 
 If you use both the `wrangler` CLI and `wrangler.toml` to change the settings associated with a queue or a queue consumer, the most recent configuration change will take effect.
 

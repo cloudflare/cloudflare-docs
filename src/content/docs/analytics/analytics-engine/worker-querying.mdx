@@ -48,10 +48,16 @@ First the environment variables are set up with the account ID and API token.
 
 The account ID is set in `wrangler.toml`:
 
+import { WranglerConfig } from "~/components";
+
+<WranglerConfig>
+
 ```toml
 [vars]
 ACCOUNT_ID = "<account_id>"
 ```
+
+</WranglerConfig>
 
 The API_TOKEN can be set as a secret, using the wrangler command line tool, by running the following and entering your token string:
 

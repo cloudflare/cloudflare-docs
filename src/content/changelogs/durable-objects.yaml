@@ -17,7 +17,7 @@ entries:
   - publish_date: "2024-09-26"
     title: (Beta) SQLite storage backend & SQL API available on new Durable Object classes
     description: |-
-      The new beta version of Durable Objects is available where each Durable Object has a private, embedded SQLite database. When deploying a new Durable Object class, users can [opt-in to a SQLite storage backend](/durable-objects/best-practices/access-durable-objects-storage/#sqlite-storage-backend) in order to access new [SQL API](/durable-objects/api/storage-api/#sqlexec) and [point-in-time-recovery API](/durable-objects/api/storage-api/#point-in-time-recovery), part of Durable Objects Storage API.
+      The new beta version of Durable Objects is available where each Durable Object has a private, embedded SQLite database. When deploying a new Durable Object class, users can [opt-in to a SQLite storage backend](/durable-objects/best-practices/access-durable-objects-storage/#sqlite-storage-backend) in order to access new [SQL API](/durable-objects/api/sql-storage/#exec) and [point-in-time-recovery API](/durable-objects/api/sql-storage/#point-in-time-recovery), part of Durable Objects Storage API.
 
       You cannot enable a SQLite storage backend on an existing, deployed Durable Object class. Automatic migration of deployed classes from their key-value storage backend to SQLite storage backend will be available in the future.
 
