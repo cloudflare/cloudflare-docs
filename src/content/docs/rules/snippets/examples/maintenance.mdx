@@ -14,6 +14,7 @@ description: Serve a custom maintenance page instead of fetching content from th
 
 ```js
 // Define your customizable inputs
+const statusCode = 503;
 const title = "We'll Be Right Back!";
 const message = "Our site is currently undergoing scheduled maintenance. We’re working hard to bring you a better experience. Thank you for your patience and understanding.";
 const estimatedTime = "1 hour";
@@ -24,7 +25,11 @@ export default {
     async fetch(request) {
         // Serve the maintenance page as a response
         return new Response(generateMaintenancePage(), {
-            headers: { "Content-Type": "text/html" },
+            status: statusCode,
+            headers: {
+                "Content-Type": "text/html",
+                "Retry-After": "3600", // Suggest retry after 1 hour 
+            },
         });
     },
 };
@@ -91,7 +96,7 @@ function generateMaintenancePage() {
             <p>${message}</p>
             <p>If all goes to plan, we'll be back online in <span class="timer">${estimatedTime}</span>. 🚀</p>
             <p class="contact">
-                Need help? Reach out to us at <a href="mailto:${contactEmail}">${contactEmail}</a>  
+                Need help? Reach out to us at <a href="mailto:${contactEmail}">${contactEmail}</a>
                 or call us at <a href="tel:${contactPhone}">${contactPhone}</a>.
             </p>
         </div>
