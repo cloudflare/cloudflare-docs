@@ -552,7 +552,7 @@ entries:
     additional_information: |-
       The mean time to detection is five minutes.
 
-       This alert will look for spikes across all services that generate log entries in [security/firewall events](/waf/analytics/security-events/paid-plans/).
+      When setting up this alert, you can select the services that will be monitored. Each selected service is monitored separately and can be selected as a filter.
     limitations: |-
       Security Events (WAF) alerts are not sent for each individual events, but only when a spike in traffic reaches the threshold for an alert to be sent.
 
