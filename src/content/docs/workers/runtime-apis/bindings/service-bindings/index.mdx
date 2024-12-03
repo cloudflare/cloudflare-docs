@@ -128,7 +128,7 @@ Your worker has access to the following bindings:
   - ANOTHER_WORKER: another-worker [not connected]
 ```
 
-Wrangler also supports running multiple workers at once with one command. To try it out, pass multiple `-c` flags to Wrangler: i.e. `wrangler dev -c wrangler.toml -c ../other-worker/wrangler.toml`. The first config will be treated as the _primary_ worker and will be exposed over HTTP as usual (http://localhost:8787) while the rest will be treated as _secondary_ and will only be accessible via a service binding from the primary worker.
+Wrangler also supports running multiple Workers at once with one command. To try it out, pass multiple `-c` flags to Wrangler, like this: `wrangler dev -c wrangler.toml -c ../other-worker/wrangler.toml`. The first config will be treated as the _primary_ worker, which will be exposed over HTTP as usual at `http://localhost:8787`. The remaining config files will be treated as _secondary_ and will only be accessible via a service binding from the primary worker.
 
 :::caution
 
