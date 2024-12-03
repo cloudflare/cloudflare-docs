@@ -22,6 +22,7 @@
                 "prompt": {
                     "type": "string",
                     "minLength": 1,
+                    "maxLength": 2048,
                     "description": "A text description of the image you want to generate."
                 },
                 "steps": {
