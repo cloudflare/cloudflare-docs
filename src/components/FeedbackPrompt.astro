@@ -62,7 +62,7 @@ import { AstroIcon } from "~/components";
 						name="info"
 					/>
 				</div>
-				<input type="submit" value="Submit" />
+				<input type="submit" value="Submit" disabled />
 			</fieldset>
 		</form>
 	</div>
@@ -109,7 +109,7 @@ import { AstroIcon } from "~/components";
 						name="info"
 					/>
 				</div>
-				<input type="submit" value="Submit" />
+				<input type="submit" value="Submit" disabled />
 			</fieldset>
 		</form>
 	</div>
@@ -184,6 +184,28 @@ import { AstroIcon } from "~/components";
 					const form = questionsDiv.querySelector("form");
 
 					if (!form) return;
+
+					const reasons = form.querySelectorAll<HTMLInputElement>(
+						"input[type='radio']",
+					);
+
+					if (!reasons) return;
+
+					const submit = form.querySelector<HTMLInputElement>(
+						"input[type='submit']",
+					);
+
+					if (!submit) return;
+
+					reasons.forEach((reason) =>
+						reason.addEventListener(
+							"change",
+							() => {
+								submit.disabled = false;
+							},
+							{ once: true },
+						),
+					);
 
 					form.addEventListener("submit", async (e) => {
 						e.preventDefault();
