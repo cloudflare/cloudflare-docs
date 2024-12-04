@@ -230,7 +230,7 @@ The following configuration defines the specifications for the GCP virtual machi
        automatic_restart = false
      }
      // Configures the VM to run a startup script that takes in the Terraform variables.
-     metadata_startup_script = templatefile("./install-tunnel.tpl",
+     metadata_startup_script = templatefile("./install-tunnel.tftpl",
        {
          tunnel_token = cloudflare_zero_trust_tunnel_cloudflared.auto_tunnel.tunnel_token
        })
