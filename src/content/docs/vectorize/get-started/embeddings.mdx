@@ -111,11 +111,17 @@ You must create a binding for your Worker to connect to your Vectorize index. [B
 
 To bind your index to your Worker, add the following to the end of your `wrangler.toml` file:
 
+import { WranglerConfig } from "~/components";
+
+<WranglerConfig>
+
 ```toml
 [[vectorize]]
 binding = "VECTORIZE" # available in your Worker on env.VECTORIZE
 index_name = "embeddings-index"
 ```
+
+</WranglerConfig>
 
 Specifically:
 
@@ -129,6 +135,10 @@ Before you deploy your embedding example, ensure your Worker uses your model cat
 
 From within the `embeddings-tutorial` directory, open your `wrangler.toml` file in your editor and add the new `[[ai]]` binding to make Workers AI's models available in your Worker:
 
+
+
+<WranglerConfig>
+
 ```toml
 [[vectorize]]
 binding = "VECTORIZE" # available in your Worker on env.VECTORIZE
@@ -137,6 +147,8 @@ index_name = "embeddings-index"
 [ai]
 binding = "AI" # available in your Worker on env.AI
 ```
+
+</WranglerConfig>
 
 With Workers AI ready, you can write code in your Worker.
 

@@ -17,6 +17,8 @@ When making requests to HuggingFace Inference API, replace `https://api-inferenc
 
 ## Examples
 
+### cURL
+
 ```bash title="Request"
 curl https://gateway.ai.cloudflare.com/v1/{account_id}/{gateway_id}/huggingface/bigcode/starcoder \
   --header 'Authorization: Bearer {hf_api_token}' \
@@ -25,6 +27,8 @@ curl https://gateway.ai.cloudflare.com/v1/{account_id}/{gateway_id}/huggingface/
     "inputs": "console.log"
 }'
 ```
+
+### Use HuggingFace.js library with JavaScript
 
 If you are using the HuggingFace.js library, you can set your inference endpoint like this:
 

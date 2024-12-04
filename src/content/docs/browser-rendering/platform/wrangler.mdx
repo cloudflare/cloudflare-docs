@@ -24,6 +24,10 @@ To deploy a Browser Rendering Worker, you must declare a [browser binding](/work
 If you are using [Puppeteer](/browser-rendering/platform/puppeteer/) in your Worker code, then you also need to add "nodejs_compat_v2" to the compatibility_flags in your Worker's `wrangler.toml` configuration. More information [here](/workers/runtime-apis/nodejs/#enable-nodejs-with-workers), including for [pages functions](/workers/runtime-apis/nodejs/#enable-nodejs-with-pages-functions).
 :::
 
+import { WranglerConfig } from "~/components";
+
+<WranglerConfig>
+
 ```toml
 # Top-level configuration
 name = "browser-rendering"
@@ -33,6 +37,8 @@ compatibility_flags = ["nodejs_compat_v2"]
 
 browser = { binding = "MYBROWSER" }
 ```
+
+</WranglerConfig>
 
 After the binding is declared, access the DevTools endpoint using `env.MYBROWSER` in your Worker code:
 

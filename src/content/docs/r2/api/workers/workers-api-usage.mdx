@@ -64,11 +64,17 @@ A binding is defined in the `wrangler.toml` file of your Worker project's direct
 
 To bind your R2 bucket to your Worker, add the following to your `wrangler.toml` file. Update the `binding` property to a valid JavaScript variable identifier and `bucket_name` to the `<YOUR_BUCKET_NAME>` you used to create your bucket in [step 2](#2-create-your-bucket):
 
+import { WranglerConfig } from "~/components";
+
+<WranglerConfig>
+
 ```toml
 [[r2_buckets]]
 binding = 'MY_BUCKET' # <~ valid JavaScript variable name
 bucket_name = '<YOUR_BUCKET_NAME>'
 ```
+
+</WranglerConfig>
 
 Find more detailed information on configuring your Worker in the [Wrangler Configuration documentation](/workers/wrangler/configuration/).
 

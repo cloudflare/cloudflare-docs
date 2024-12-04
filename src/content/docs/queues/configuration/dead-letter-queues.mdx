@@ -11,11 +11,17 @@ With Cloudflare Queues, a Dead Letter Queue is defined within your [consumer con
 
 For example, the following consumer configuration would send messages to our DLQ named `"my-other-queue"` after retrying delivery (by default, 3 times):
 
+import { WranglerConfig } from "~/components";
+
+<WranglerConfig>
+
 ```toml
 [[queues.consumers]]
   queue = "my-queue"
   dead_letter_queue = "my-other-queue"
 ```
+
+</WranglerConfig>
 
 You can also configure a DLQ when creating a consumer from the command-line using `wrangler`:
 

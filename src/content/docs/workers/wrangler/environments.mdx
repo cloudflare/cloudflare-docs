@@ -33,6 +33,10 @@ Be careful when naming your environments that they do not contain sensitive info
 
 Review the layout of an example `[env.dev]` environment that sets up a custom `dev.example.com` route:
 
+import { WranglerConfig } from "~/components";
+
+<WranglerConfig>
+
 ```toml
 name = "your-worker"
 route = "example.com"
@@ -40,6 +44,8 @@ route = "example.com"
 [env.dev]
 route = "dev.example.com"
 ```
+
+</WranglerConfig>
 
 You cannot specify multiple environments with the same name.
 
@@ -54,6 +60,10 @@ After you have configured your environment, run `npx wrangler deploy` in your Wo
 [Bindings](/workers/runtime-apis/bindings/) and [environment variables](/workers/configuration/environment-variables/) must be specified per each [environment](/workers/wrangler/environments/) in your [`wrangler.toml`](/workers/wrangler/configuration/) file.
 
 Review the following example `wrangler.toml` file:
+
+
+
+<WranglerConfig>
 
 ```toml
 name = "my-worker"
@@ -73,6 +83,8 @@ kv_namespaces = [
 ]
 ```
 
+</WranglerConfig>
+
 You may assign environment-specific [secrets](/workers/configuration/secrets/) by running the command [`wrangler secret put <KEY> -env`](/workers/wrangler/commands/#put-3).
 
 ---
@@ -82,6 +94,10 @@ You may assign environment-specific [secrets](/workers/configuration/secrets/) b
 ### Staging and production environments
 
 The following `wrangler.toml` file adds two environments, `[env.staging]` and `[env.production]`, to the `wrangler.toml` file. If you are deploying to a [Custom Domain](/workers/configuration/routing/custom-domains/) or [route](/workers/configuration/routing/routes/), you must provide a [`route` or `routes` key](/workers/wrangler/configuration/) for each environment.
+
+
+
+<WranglerConfig>
 
 ```toml
 name = "my-worker"
@@ -99,6 +115,8 @@ routes = [
   "example.com/bar/*"
 ]
 ```
+
+</WranglerConfig>
 
 In order to use environments with this configuration, you can pass the name of the environment via the `--env` flag.
 
@@ -150,6 +168,10 @@ if (ENVIRONMENT === "staging") {
 
 To deploy your code to your `*.workers.dev` subdomain, include `workers_dev = true` in the desired environment. Your `wrangler.toml` file may look like this:
 
+
+
+<WranglerConfig>
+
 ```toml
 name = "my-worker"
 route = "example.com/*"
@@ -157,6 +179,8 @@ route = "example.com/*"
 [env.staging]
 workers_dev = true
 ```
+
+</WranglerConfig>
 
 With this configuration, Wrangler will behave in the following manner:
 

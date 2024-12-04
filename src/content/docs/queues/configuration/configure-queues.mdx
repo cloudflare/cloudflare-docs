@@ -29,11 +29,17 @@ A producer is a [Cloudflare Worker](/workers/) that writes to one or more queues
 
 To produce to a queue, set up a binding in your `wrangler.toml` file. These options should be used when a Worker wants to send messages to a queue.
 
+import { WranglerConfig } from "~/components";
+
+<WranglerConfig>
+
 ```toml
 [[queues.producers]]
   queue = "my-queue"
   binding = "MY_QUEUE"
 ```
+
+</WranglerConfig>
 
 
 
@@ -53,6 +59,10 @@ To produce to a queue, set up a binding in your `wrangler.toml` file. These opti
 
 To consume messages from one or more queues, set up a binding in your `wrangler.toml` file. These options should be used when a Worker wants to receive messages from a queue.
 
+
+
+<WranglerConfig>
+
 ```toml
 [[queues.consumers]]
   queue = "my-queue"
@@ -61,6 +71,8 @@ To consume messages from one or more queues, set up a binding in your `wrangler.
   max_retries = 10
   dead_letter_queue = "my-queue-dlq"
 ```
+
+</WranglerConfig>
 
 Refer to [Limits](/queues/platform/limits) to review the maximum values for each of these options.
 

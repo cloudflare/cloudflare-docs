@@ -70,11 +70,17 @@ To expose your queue to the code inside your Worker, you need to connect your qu
 
 To create a binding, open your newly generated `wrangler.toml` configuration file and add the following:
 
+import { WranglerConfig } from "~/components";
+
+<WranglerConfig>
+
 ```toml
 [[queues.producers]]
  queue = "MY-QUEUE-NAME"
  binding = "MY_QUEUE"
 ```
+
+</WranglerConfig>
 
 Replace `MY-QUEUE-NAME` with the name of the queue you created in [step 2](/queues/get-started/#2-create-a-queue). Next, replace `MY_QUEUE` with the name you want for your `binding`. The binding must be a valid JavaScript variable name. This is the variable you will use to reference this queue in your Worker.
 
@@ -184,6 +190,10 @@ Each queue can only have one consumer Worker connected to it. If you try to conn
 
 To connect your queue to your consumer Worker, open your `wrangler.toml` file and add this to the bottom:
 
+
+
+<WranglerConfig>
+
 ```toml
 [[queues.consumers]]
  queue = "<MY-QUEUE-NAME>"
@@ -192,6 +202,8 @@ To connect your queue to your consumer Worker, open your `wrangler.toml` file an
  max_batch_size = 10 # optional: defaults to 10
  max_batch_timeout = 5 # optional: defaults to 5 seconds
 ```
+
+</WranglerConfig>
 
 Replace `MY-QUEUE-NAME` with the queue you created in [step 2](/queues/get-started/#2-create-a-queue).
 

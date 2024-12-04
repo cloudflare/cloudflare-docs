@@ -24,6 +24,10 @@ By default, migrations are created in the `migrations/` folder in your Worker pr
 
 This location and table name can be customized in your `wrangler.toml` file, inside the D1 binding.
 
+import { WranglerConfig } from "~/components";
+
+<WranglerConfig>
+
 ```toml
 [[ d1_databases ]]
 binding = "<BINDING_NAME>" # i.e. if you set this to "DB", it will be available in your Worker at `env.DB`
@@ -31,8 +35,10 @@ database_name = "<DATABASE_NAME>"
 database_id = "<UUID>"
 preview_database_id = "<UUID>"
 migrations_table = "<d1_migrations>" # Customize this value to change your applied migrations table name
-migrations_dir = "<FOLDER_NAME>" # Customize this value to rename the `migrations` folder
+migrations_dir = "<FOLDER_NAME>" # Specify your custom migration directory
 ```
+
+</WranglerConfig>
 
 ## Foreign key constraints
 

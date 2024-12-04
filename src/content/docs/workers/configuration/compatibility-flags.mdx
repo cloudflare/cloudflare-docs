@@ -22,12 +22,18 @@ Compatibility flags can be set in a Worker's [`wrangler.toml`](/workers/wrangler
 
 This example enables the specific flag `formdata_parser_supports_files`, which is described [below](/workers/configuration/compatibility-flags/#formdata-parsing-supports-file). As of the specified date, `2021-09-14`, this particular flag was not yet enabled by default, but, by specifying it in `compatibility_flags`, we can enable it anyway. `compatibility_flags` can also be used to disable changes that became the default in the past.
 
+import { WranglerConfig } from "~/components";
+
+<WranglerConfig>
+
 ```toml
 # Opt into backwards-incompatible changes through September 14, 2021.
 compatibility_date = "2021-09-14"
 # Also opt into an upcoming fix to the FormData API.
 compatibility_flags = [ "formdata_parser_supports_files" ]
 ```
+
+</WranglerConfig>
 
 #### Via the Cloudflare Dashboard
 
@@ -49,17 +55,29 @@ compatibility_date to 2024-09-23 or later.
 
 A [growing subset](/workers/runtime-apis/nodejs/) of Node.js APIs are available directly as [Runtime APIs](/workers/runtime-apis/nodejs), with no need to add polyfills to your own code. To enable these APIs in your Worker, add the `nodejs_compat` compatibility flag to your `wrangler.toml`:
 
+
+
+<WranglerConfig>
+
 ```toml title="wrangler.toml"
 compatibility_flags = [ "nodejs_compat" ]
 ```
+
+</WranglerConfig>
 
 As additional Node.js APIs are added, they will be made available under the `nodejs_compat` compatibility flag. Unlike most other compatibility flags, we do not expect the `nodejs_compat` to become active by default at a future date.
 
 The Node.js `AsyncLocalStorage` API is a particularly useful feature for Workers. To enable only the `AsyncLocalStorage` API, use the `nodejs_als` compatibility flag.
 
+
+
+<WranglerConfig>
+
 ```toml title="wrangler.toml"
 compatibility_flags = [ "nodejs_als" ]
 ```
+
+</WranglerConfig>
 
 ## Flags history
 

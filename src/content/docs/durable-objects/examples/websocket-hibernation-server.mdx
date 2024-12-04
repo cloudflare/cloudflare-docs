@@ -179,6 +179,10 @@ export class WebSocketHibernationServer extends DurableObject {
 
 Finally, configure your `wrangler.toml` file to include a Durable Object [binding](/durable-objects/get-started/#5-configure-durable-object-bindings) and [migration](/durable-objects/reference/durable-objects-migrations/) based on the namespace and class name chosen previously.
 
+import { WranglerConfig } from "~/components";
+
+<WranglerConfig>
+
 ```toml title="wrangler.toml"
 name = "websocket-hibernation-server"
 
@@ -190,6 +194,8 @@ class_name = "WebSocketHibernationServer"
 tag = "v1"
 new_classes = ["WebSocketHibernationServer"]
 ```
+
+</WranglerConfig>
 
 ### Related resources
 

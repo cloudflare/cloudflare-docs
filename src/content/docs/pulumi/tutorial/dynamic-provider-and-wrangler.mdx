@@ -1,0 +1,339 @@
+---
+title: Create different resources using Pulumi and Wrangler
+pcx_content_type: tutorial
+updated: 2024-11-08
+sidebar:
+  order: 5
+---
+
+import { TabItem, Tabs } from "~/components";
+
+This example creates a zone and other resources using two different strategies:
+
+- Use Pulumi for some resources supported by the Cloudflare Pulumi provider.
+- Use Wrangler to create other types of resources.
+
+The example code covers the creation of resources such as Workers, Zero Trust Applications, Zero Trust Policies, and D1 databases.
+
+## Wrangler usage
+
+The code in this example shows how you can create Workers by calling Wrangler directly instead of using the resource directly supported by the Cloudflare Pulumi provider. The advantage of using this method is that you can use it for any deployment-related task such as executing D1 migrations. When you run the infrastructure as code (IaC) script, Wrangler creates or updates Workers and D1, which includes performing database migrations.
+
+In the current example, the D1 migrations state in Pulumi only changes when the hash of the `migrations` directory changes, in which case the Pulumi command will be executed.
+
+## Dynamic resource provider for Vectorize
+
+The example also provides an example of a dynamic resource provider for a resource that is not directly supported by the Cloudflare Pulumi provider (in this case, Vectorize).
+
+## Example code
+
+```js
+"use strict";
+
+const pulumi = require("@pulumi/pulumi");
+const cloudflare = require("@pulumi/cloudflare");
+const command = require("@pulumi/command");
+const path = require("path");
+const axios = require("axios");
+const https = require("https");
+const crypto = require("crypto");
+const fs = require("fs");
+
+// Load configuration
+const config = new pulumi.Config();
+const domainName = config.require("domainName");
+const accountId = config.require("accountId");
+const apiToken = config.requireSecret("apiToken");
+
+// Function to compute hash of a file
+function computeFileHashSync(filePath) {
+	const fileBuffer = fs.readFileSync(filePath);
+	const hash = crypto.createHash("sha256");
+	hash.update(fileBuffer);
+	return hash.digest("hex");
+}
+
+// Function to compute the hash of a directory
+async function hashDirectory(dirPath) {
+	const files = await fs.promises.readdir(dirPath);
+	const fileHashes = [];
+	for (const file of files) {
+		const filePath = path.join(dirPath, file);
+		const fileStat = await fs.promises.stat(filePath);
+		if (fileStat.isFile()) {
+			const fileData = await fs.promises.readFile(filePath);
+			const hash = crypto.createHash("sha256").update(fileData).digest("hex");
+			fileHashes.push(hash);
+		}
+	}
+	// Combine all file hashes and hash the result to get a unique hash for the directory
+	const combinedHash = crypto
+		.createHash("sha256")
+		.update(fileHashes.join(""))
+		.digest("hex");
+	return combinedHash;
+}
+
+// Instantiate Cloudflare provider
+// https://www.pulumi.com/registry/packages/cloudflare/
+//-----------------------------------------------------------------------------
+const cloudflareProvider = new cloudflare.Provider("cloudflare", {
+	apiToken: apiToken,
+});
+
+// Create a Cloudflare Zone
+// https://www.pulumi.com/registry/packages/cloudflare/api-docs/zone/
+//-----------------------------------------------------------------------------
+const myZone = new cloudflare.Zone(
+	"myZone",
+	{
+		zone: domainName,
+		plan: "enterprise",
+		accountId: accountId,
+	},
+	{ provider: cloudflareProvider },
+);
+
+// Create a Cloudflare Queue (used as a binding in Worker)
+// https://www.pulumi.com/registry/packages/cloudflare/api-docs/queue/
+//-----------------------------------------------------------------------------
+const myqueue = new cloudflare.Queue(
+	"myqueue",
+	{
+		zoneId: myZone.id,
+		name: "myqueue",
+		description: "Queue for my messages",
+		accountId: accountId,
+	},
+	{ provider: cloudflareProvider },
+);
+
+// Create a Cloudflare Queue (used as a binding in Worker)
+// https://www.pulumi.com/registry/packages/cloudflare/api-docs/queue/
+//-----------------------------------------------------------------------------
+const myqueuedeadletter = new cloudflare.Queue(
+	"myqueuedeadletter",
+	{
+		zoneId: myZone.id,
+		name: "myqueuedeadletter",
+		description: "Queue for messages that were not processed correctly",
+		accountId: accountId,
+	},
+	{ provider: cloudflareProvider },
+);
+
+// Create a D1 Database
+// https://www.pulumi.com/registry/packages/cloudflare/api-docs/d1database/
+//-----------------------------------------------------------------------------
+const myD1Database = new cloudflare.D1Database(
+	"myD1Database",
+	{
+		accountId: accountId,
+		name: "mydb",
+	},
+	{ provider: cloudflareProvider },
+);
+
+// Deploy Changes to D1 Schema
+// - Cloudflare Wrangler stores a list of migrations in the D1 database.
+// - To check which migrations were run, go to the Cloudflare dashboard
+//   and run "SELECT * FROM d1_migrations" on the console of the D1 database.
+//-----------------------------------------------------------------------------
+const d1Dir = "../../mydb/";
+const d1Migration = new command.local.Command(
+	"d1Migration",
+	{
+		dir: d1Dir,
+		create: `npx wrangler d1 migrations apply mydb --remote`,
+		triggers: [hashDirectory(`${d1Dir}migrations`)],
+	},
+	{ dependsOn: [myD1Database] },
+);
+
+// Run 'wrangler' command
+// https://www.pulumi.com/registry/packages/command/api-docs/local/command/
+//-----------------------------------------------------------------------------
+const workerDir = "../../worker-test/";
+const workerTest = new command.local.Command(
+	"worker-test",
+	{
+		dir: workerDir,
+		create: "npx wrangler deploy",
+		triggers: [
+			// A unique trigger vector to force recreation
+			computeFileHashSync(`${workerDir}src/index.js`),
+			computeFileHashSync(`${workerDir}wrangler.toml`),
+		],
+	},
+	{ dependsOn: [myZone, myqueue, myqueuedeadletter, myD1Database] },
+);
+
+// Create "Add" group Service Auth Token
+//    https://www.pulumi.com/registry/packages/cloudflare/api-docs/zerotrustaccessservicetoken/
+//-----------------------------------------------------------------------------
+const myServiceToken = new cloudflare.ZeroTrustAccessServiceToken(
+	"myServiceToken",
+	{
+		zoneId: myZone.id,
+		name: "myServiceToken",
+	},
+	{ provider: cloudflareProvider },
+);
+
+// Create an Access "Add" Group
+// https://www.pulumi.com/registry/packages/cloudflare/api-docs/zerotrustaccessgroup/
+//-----------------------------------------------------------------------------
+const myAccessGroup = new cloudflare.ZeroTrustAccessGroup(
+	"myAccessGroup",
+	{
+		accountId: accountId,
+		name: "myAccessGroup",
+		// Define the group criteria (e.g., email domains, identity providers, etc.)
+		// This example adds users from the specified email domain.
+		includes: [{ serviceTokens: [myServiceToken.id] }],
+	},
+	{ provider: cloudflareProvider, dependsOn: [myServiceToken] },
+);
+
+// Create an Access App for "Add"
+// https://www.pulumi.com/registry/packages/cloudflare/api-docs/zerotrustaccessapplication/
+//-----------------------------------------------------------------------------
+const myAccessApp = new cloudflare.ZeroTrustAccessApplication(
+	"myAccessApp",
+	{
+		zoneId: myZone.id,
+		name: "myApp",
+		domain: `myapp.${domainName}`,
+		sessionDuration: "24h",
+	},
+	{ provider: cloudflareProvider, dependsOn: [myAccessGroup, myZone] },
+);
+
+// Create an Access App with Allow Policy for Access "Add" Group
+// https://www.pulumi.com/registry/packages/cloudflare/api-docs/zerotrustaccesspolicy/
+//-----------------------------------------------------------------------------
+const myAddAccessPolicy = new cloudflare.ZeroTrustAccessPolicy(
+	"myAccessPolicy",
+	{
+		zoneId: myZone.id,
+		applicationId: myAccessApp.id,
+		name: "myAccessPolicy",
+		decision: "allow",
+		precedence: 1,
+		includes: [
+			{
+				groups: [myAccessGroup.id],
+			},
+		],
+	},
+	{ provider: cloudflareProvider, dependsOn: [myAccessApp] },
+);
+
+// Create a Vectorize Index
+//-----------------------------------------------------------------------------
+// Define a dynamic provider for Vectorize, since the Cloudflare Pulumi provider does not support
+// this resource yet
+const VectorizeIndexDynamicCloudflareProvider = {
+	async create(inputs) {
+		// Create an instance of the HTTPS Agent with SSL verification disabled to avoid WARP issues
+		const httpsAgent = new https.Agent({
+			rejectUnauthorized: false,
+		});
+		const url = `https://api.cloudflare.com/client/v4/accounts/${inputs.accountId}/vectorize/v2/indexes`;
+		const data = {
+			config: { dimensions: 768, metric: "cosine" },
+			description: inputs.description,
+			name: inputs.name,
+		};
+		// Headers
+		const options = {
+			httpsAgent,
+			headers: {
+				"Content-Type": "application/json",
+				Authorization: `Bearer ${inputs.apiToken}`,
+			},
+		};
+		// Make an API call to create the resource
+		const response = await axios.post(url, data, options);
+		// For now we use the Vectorize index name as id, because Vectorize does not
+		// provide an id for it
+		const resourceId = inputs.name;
+
+		// Return the ID and output values
+		return {
+			id: resourceId,
+			outs: {
+				name: inputs.name,
+				accountId: inputs.accountId,
+				apiToken: inputs.apiToken,
+			},
+		};
+	},
+
+	async delete(id, props) {
+		// Create an instance of the HTTPS Agent with SSL verification disabled to avoid WARP issues
+		const httpsAgent = new https.Agent({
+			rejectUnauthorized: false,
+		});
+		const url = `https://api.cloudflare.com/client/v4/accounts/${props.accountId}/vectorize/v2/indexes/${id}`;
+		// Headers
+		const options = {
+			httpsAgent,
+			headers: {
+				"Content-Type": "application/json",
+				Authorization: `Bearer ${props.apiToken}`,
+			},
+		};
+		// Make an API call to delete the resource
+		await axios.delete(url, options);
+	},
+
+	async update(id, oldInputs, newInputs) {
+		// Vectorize once created does not allow updates
+	},
+};
+
+// Define a dynamic resource
+class VectorizeIndex extends pulumi.dynamic.Resource {
+	constructor(name, args, opts) {
+		super(VectorizeIndexDynamicCloudflareProvider, name, args, opts);
+	}
+}
+
+// Use the dynamic resource in your Pulumi stack
+// - Don't change properties after creation. Currently, Vectorize does not allow changes.
+// - To delete this resource, remove or comment this block of code
+const my_vectorize_index = new VectorizeIndex("myvectorizeindex", {
+	name: "myvectorize_index",
+	accountId: accountId,
+	namespaceId: myZone.id, // Set appropriate namespace id
+	vectorDimensions: 768, // This is an example - adjust dimensions as needed
+	apiToken: apiToken,
+});
+
+// Export relevant outputs
+// Access these outputs after Pulumi has run using:
+// $ pulumi stack output
+// $ pulumi stack output zoneId
+//-----------------------------------------------------------------------------
+exports.zoneId = myZone.id;
+exports.myqueueId = myqueue.id;
+exports.myqueuedeadletter = myqueuedeadletter.id;
+exports.myD1DatabaseId = myD1Database.id;
+exports.workerTestId = workerTest.id;
+exports.myServiceToken = myServiceToken.id;
+exports.myServiceTokenClientId = myAddServiceToken.clientId;
+exports.myServiceTokenClientSecret = myAddServiceToken.clientSecret;
+```
+
+## Access Pulumi exports
+
+Once you run your Pulumi script with `pulumi up`, your resources will be created or updated.
+
+The example script above also exports outputs that you can access from other tools. This is useful for example when integrating the Pulumi script into a deployment pipeline.
+
+You could use a command similar to the following:
+
+```bash
+pulumi stack output myServiceTokenClientSecret --show-secrets
+```

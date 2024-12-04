@@ -245,8 +245,8 @@ To create credentials with the correct permissions:
 	"Statement": [
 		{
 			"Effect": "Allow",
-			"Action": ["s3:Get*", "s3:List*"],
-			"Resource": ["arn:aws:s3:::<BUCKET_NAME>", "arn:aws:s3:::<BUCKET_NAME>/*"]
+			"Action": ["s3:GetObject"],
+			"Resource": ["arn:aws:s3:::<BucketName>/*"]
 		}
 	]
 }

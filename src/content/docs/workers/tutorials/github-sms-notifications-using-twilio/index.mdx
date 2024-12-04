@@ -155,9 +155,15 @@ npx wrangler secret put GITHUB_SECRET_TOKEN
 
 Add the nodejs_compat flag to your `wrangler.toml` file:
 
+import { WranglerConfig } from "~/components";
+
+<WranglerConfig>
+
 ```toml
 compatibility_flags = ["nodejs_compat"]
 ```
+
+</WranglerConfig>
 
 ---
 

@@ -53,6 +53,7 @@ export { default as TroubleshootingList } from "./TroubleshootingList.astro";
 export { default as TunnelCalculator } from "./TunnelCalculator.astro";
 export { default as Type } from "./Type.astro";
 export { default as TypeScriptExample } from "./TypeScriptExample.astro";
+export { default as WranglerConfig } from "./WranglerConfig.astro";
 export { default as WorkersArchitectureDiagram } from "./WorkersArchitectureDiagram.astro";
 export { default as WorkersIsolateDiagram } from "./WorkersIsolateDiagram.astro";
 export { default as WorkerStarter } from "./WorkerStarter.astro";

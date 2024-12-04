@@ -407,11 +407,10 @@ When using Terraform to create a policy with the [Do Not Inspect](#do-not-inspec
 
 ### Content Categories
 
-| UI name            | API example                                      |
-| ------------------ | ------------------------------------------------ |
-| Content Categories | `not(any(http.conn.content_category[*] in {1}))` |
-
-For more information, refer to our list of [content categories](/cloudflare-one/policies/gateway/domain-categories/#content-categories).
+<Render
+	file="gateway/selectors/net-http-content-categories"
+	params={{ APIendpoint: "http.conn.content_category" }}
+/>
 
 ### Destination Continent
 
@@ -566,11 +565,10 @@ Some hostnames (`example.com`) will invisibly redirect to the www subdomain (`ww
 
 ### Security Risks
 
-| UI name        | API example                                  |
-| -------------- | -------------------------------------------- |
-| Security Risks | `any(http.conn.security_category[*] in {1})` |
-
-For more information, refer to our list of [security categories](/cloudflare-one/policies/gateway/domain-categories/#security-categories).
+<Render
+	file="gateway/selectors/security-risks"
+	params={{ APIendpoint: "http.conn.security_category" }}
+/>
 
 ### Source Continent
 

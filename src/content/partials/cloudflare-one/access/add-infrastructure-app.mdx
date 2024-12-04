@@ -22,7 +22,13 @@ import { Tabs, TabItem, Render } from "~/components"
 9. To secure your targets, configure a policy that defines who can connect and how they can connect:
 	1. Enter any name for your policy.
 	2. Create a rule that matches the users who are allowed to reach the targets. For more information, refer to [Access policies](/cloudflare-one/policies/access/) and review the list of [infrastructure policy selectors](/cloudflare-one/applications/non-http/infrastructure-apps/#infrastructure-policy-selectors).
-	3. In **Connection context**, enter the UNIX usernames that users can log in as (for example, `root` or `ec2-user`).
+	3. In **Connection context**, configure the following settings:
+		- **SSH user**: Enter the UNIX usernames that users can log in as (for example, `root` or `ec2-user`).
+		- **Allow users to log in as their email alias**: (Optional) When selected, users who match your policy definition will be able to access the target using their email address prefix. For example, `jdoe@company.com` could log in as `jdoe`.
+
+		:::note
+		Cloudflare will not create new users on the target. UNIX users must already be present on the server.
+		:::
 4. Select **Add application**.
 </TabItem>
 <TabItem label="API">

@@ -142,6 +142,10 @@ Hyperdrive will attempt to connect to your database with the provided credential
 
 This command outputs your Hyperdrive ID. You can now bind your Hyperdrive configuration to your Worker in your `wrangler.toml` configuration by replacing the content with the following:
 
+import { WranglerConfig } from "~/components";
+
+<WranglerConfig>
+
 ```toml
 name = "timescale-api"
 main = "src/index.ts"
@@ -152,6 +156,8 @@ compatibility_flags = [ "nodejs_compat"]
 binding = "HYPERDRIVE"
 id = "your-id-here"
 ```
+
+</WranglerConfig>
 
 Install the Postgres driver into your Worker project:
 

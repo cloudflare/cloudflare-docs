@@ -16,10 +16,16 @@ To use Workers AI with Workers, you must create a Workers AI [binding](/workers/
 
 To bind Workers AI to your Worker, add the following to the end of your `wrangler.toml` file:
 
+import { WranglerConfig } from "~/components";
+
+<WranglerConfig>
+
 ```toml
 [ai]
 binding = "AI" # i.e. available in your Worker on env.AI
 ```
+
+</WranglerConfig>
 
 ## Pages Functions
 

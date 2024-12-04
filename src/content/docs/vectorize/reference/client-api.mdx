@@ -204,11 +204,17 @@ Bindings are defined in either the [`wrangler.toml`](/workers/wrangler/configura
 
 Vectorize indexes are bound by name. A binding for an index named `production-doc-search` would resemble the below:
 
+import { WranglerConfig } from "~/components";
+
+<WranglerConfig>
+
 ```toml
 [[vectorize]]
 binding = "PROD_SEARCH" # the index will be available as env.PROD_SEARCH in your Worker
 index_name = "production-doc-search"
 ```
+
+</WranglerConfig>
 
 Refer to the [bindings documentation](/workers/wrangler/configuration/#vectorize-indexes) for more details.
 

@@ -21,7 +21,7 @@ import { Render } from "~/components";
 and configuring buckets.
 <br /> <sup>2</sup> The object size limit is 5 GiB less than 5 TiB, so 4.995
 TiB.
-<br /> <sup>2</sup> The max upload size is 5 MiB less than 5 GiB, so 4.995 GiB.
+<br /> <sup>3</sup> The max upload size is 5 MiB less than 5 GiB, so 4.995 GiB.
 <br /> <sup>4</sup> Max upload size applies to uploading a file via one request,
 uploading a part of a multipart upload, or copying into a part of a multipart
 upload. If you have a Worker, its inbound request size is constrained by
@@ -35,4 +35,9 @@ Limits specified in MiB (mebibyte), GiB (gibibyte), or TiB (tebibyte) are storag
 
 ## Rate limiting on managed public buckets through `r2.dev`
 
-Managed public bucket access through an `r2.dev` subdomain is not intended for production usage and has a rate limit applied to it. If you exceed the rate limit, requests through your `r2.dev` subdomain will be temporarily throttled and you will receive a `429 Too Many Requests` response. For production use cases, consider linking a [custom domain](/r2/buckets/public-buckets/#custom-domains) to your bucket.
+Managed public bucket access through an `r2.dev` subdomain is not intended for production usage and has a variable rate limit applied to it. The `r2.dev` endpoint for your bucket is designed to enable testing.
+
+* If you exceed the rate limit (hundreds of requests/second), requests to your `r2.dev` endpoint will be temporarily throttled and you will receive a `429 Too Many Requests` response.
+* Bandwidth (throughput) may also be throttled when using the `r2.dev` endpoint.
+
+For production use cases, connect a [custom domain](/r2/buckets/public-buckets/#custom-domains) to your bucket. Custom domains allow you to serve content from a domain you control (for example, `assets.example.com`), configure fine-grained caching, set up redirect and rewrite rules, mutate content via [Cloudflare Workers](/workers/), and get detailed URL-level analytics for content served from your R2 bucket.

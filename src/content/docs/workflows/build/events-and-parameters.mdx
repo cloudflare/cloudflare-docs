@@ -6,6 +6,8 @@ sidebar:
 
 ---
 
+import { MetaInfo, Render, Type } from "~/components";
+
 When a Workflow is triggered, it can receive an optional event. This event can include data that your Workflow can act on, including request details, user data fetched from your database (such as D1 or KV) or from a webhook, or messages from a Queue consumer.
 
 Events are a powerful part of a Workflow, as you often want a Workflow to act on data. Because a given Workflow instance executes durably, events are a useful way to provide a Workflow with data that should be immutable (not changing) and/or represents data the Workflow needs to operate on at that point in time.
@@ -104,4 +106,4 @@ export class MyWorkflow extends WorkflowEntrypoint {
 }
 ```
 
-Note that type parameters do not _validate_ that the incoming event matches your type definition. Properties (fields) that do not exist or conform to the type you provided will be dropped. If you need to validate incoming events, we recommend a library such as [zod](https://zod.dev/) or your own validator logic.
+<Render file="workflows-type-parameters"/>

@@ -297,10 +297,16 @@ const platform = await getPlatformProxy(options);
 
 The `getPlatformProxy` function uses bindings found in `wrangler.toml`. For example, if you have an [environment variable](/workers/configuration/environment-variables/#add-environment-variables-via-wrangler) configuration set up in `wrangler.toml`:
 
+import { WranglerConfig } from "~/components";
+
+<WranglerConfig>
+
 ```toml
 [vars]
 MY_VARIABLE = "test"
 ```
+
+</WranglerConfig>
 
 You can access the bindings by importing `getPlatformProxy` like this:
 
@@ -336,12 +342,18 @@ The bindings supported by `getPlatformProxy` are:
 
     For example, you might have the following file read by `getPlatformProxy`.
 
+
+
+    <WranglerConfig>
+
     ```toml
     [[durable_objects.bindings]]
     name = "MyDurableObject"
     class_name = "MyDurableObject"
     script_name = "my-worker"
     ```
+
+    </WranglerConfig>
 
     In order for this binding to be successfully proxied by `getPlatformProxy`, a worker named `my-worker`
     with a Durable Object declaration using the same `class_name` of `"MyDurableObject"` must be run

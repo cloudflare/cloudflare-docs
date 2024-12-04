@@ -33,7 +33,7 @@ There are three main causes of error 1016:
 
 1. Custom Hostname ownership validation is not complete. To check validation status, run an API call to [search for a certificate by hostname](/cloudflare-for-platforms/cloudflare-for-saas/start/common-api-calls/) and check the verification error field: `"verification_errors": ["custom hostname does not CNAME to this zone."]`.
 2. Fallback Origin is not [correctly set](/cloudflare-for-platforms/cloudflare-for-saas/start/getting-started/#1-create-fallback-origin). Confirm that you have created a DNS record for the fallback origin and also set the fallback origin.
-3. A Wildcard Custom Hostname has been created, but the requested hostname is associated with a domain that exists in Cloudflare as a standalone zone. In this case, the [hostname priority](/ssl/reference/certificate-and-hostname-priority/#hostname-priority-cloudflare-for-saas) for the standalone zone will take precedence over the wildcard custom hostname. This behavior applies even if there is no DNS record for this standalone zone hostname.
+3. A Wildcard Custom Hostname has been created, but the requested hostname is associated with a domain that exists in Cloudflare as a standalone zone. In this case, the [hostname priority](/ssl/reference/certificate-and-hostname-priority/#hostname-priority) for the standalone zone will take precedence over the wildcard custom hostname. This behavior applies even if there is no DNS record for this standalone zone hostname.
 
 In this scenario each hostname that needs to be served by the Cloudflare for SaaS parent zone needs to be added as an individual Custom Hostname.
 
@@ -79,7 +79,7 @@ More details can be found on the [CAA records FAQ](/ssl/edge-certificates/troubl
 
 As Let's Encrypt - one of the [certificate authorities (CAs)](/ssl/reference/certificate-authorities/) used by Cloudflare - has announced changes in its [chain of trust](/ssl/concepts/#chain-of-trust), starting September 9, 2024, there may be issues with older devices trying to connect to your custom hostname certificate.
 
-Refer to the [full migration guide](/ssl/reference/migration-guides/lets-encrypt-chain/) for details and consider the following solutions:
+Consider the following solutions:
 
 - Use the [Edit Custom Hostname](/api/operations/custom-hostname-for-a-zone-edit-custom-hostname) endpoint to set the `certificate_authority` parameter to an empty string (`""`): this sets the custom hostname certificate to "default CA", leaving the choice up to Cloudflare. Cloudflare will always attempt to issue the certificate from a more compatible CA, such as [Google Trust Services](/ssl/reference/certificate-authorities/#google-trust-services), and will only fall back to using Let’s Encrypt if there is a [CAA record](/ssl/edge-certificates/caa-records/) in place that blocks Google from issuing a certificate.
 

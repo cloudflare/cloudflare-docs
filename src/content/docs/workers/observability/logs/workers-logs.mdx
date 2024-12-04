@@ -11,7 +11,7 @@ sidebar:
 
 ---
 
-import { TabItem, Tabs, Steps, Render } from "~/components"
+import { TabItem, Tabs, Steps, Render, WranglerConfig } from "~/components"
 
 Workers Logs lets you automatically collect, store, filter, and analyze logging data emitted from Cloudflare Workers. Data is written to your Cloudflare Account, and you can query it in the dashboard for each of your Workers. All newly created Workers will come with the observability setting enabled by default.
 
@@ -29,24 +29,35 @@ Minimum required Wrangler version: 3.78.6. Check your version by running `wrangl
 
 You must add the observability setting for your Worker to write logs to Workers Logs. Add the following setting to your Worker's `wrangler.toml` file and redeploy your Worker.
 
+<WranglerConfig>
+
 	```toml
 	[observability]
 	enabled = true
 	head_sampling_rate = 1 # optional. default = 1.
 	```
 
+</WranglerConfig>
+
 [Head-based sampling](/workers/observability/logs/workers-logs/#head-based-sampling) allows you set the percentage of Workers requests that are logged.
 
 ### Enabling with environments
 
-[Environments](/workers/wrangler/environments/) allow you to deploy the same Worker application with different configurations. For example, you may want to configure a different `head_sampling_rate` to staging and production. To configure observability for your environment:
-	1. Add the following configuration below `[env.<NAME>]`
+[Environments](/workers/wrangler/environments/) allow you to deploy the same Worker application with different configurations. For example, you may want to configure a different `head_sampling_rate` to staging and production. To configure observability for an environment named `staging`:
+	1. Add the following configuration below `[env.staging]`
+
+
+	<WranglerConfig>
+
 	```toml
-	[env.<NAME>.observability]
+	[env.staging.observability]
 	enabled = true
 	head_sampling_rate = 1 # optional
 	```
-	2. Deploy your Worker with `npx wrangler deploy -e <NAME>`
+
+	</WranglerConfig>
+
+	2. Deploy your Worker with `npx wrangler deploy -e staging`
 	3. Repeat step 1 and 2 for each environment.
 
 ## View logs from the dashboard
@@ -84,10 +95,16 @@ In the Workers Logs UI, logs are presented with a localized timestamp and a mess
 
 Invocation logs can be disabled in wrangler by adding the `invocation_logs = false` configuration.
 
+
+
+<WranglerConfig>
+
 ```toml
 [observability.logs]
 invocation_logs = false
 ```
+
+</WranglerConfig>
 
 | Invocation Handler                                              | Invocation Message         |
 | --------------------------------------------------------------- | -------------------------- |
@@ -156,11 +173,17 @@ Head-based sampling allows you to log a percentage of incoming requests to your 
 
 To enable head-based sampling, set `head_sampling_rate` within the observability configuration. The valid range is from 0 to 1, where 0 indicates zero out of one hundred requests are logged, and 1 indicates every request is logged. If `head_sampling_rate` is unspecified, it is configured to a default value of 1 (100%). In the example below, `head_sampling_rate` is set to 0.01, which means one out of every one hundred requests is logged.
 
+
+
+<WranglerConfig>
+
 ```toml
 [observability]
 enabled = true
 head_sampling_rate = 0.01 # 1% sampling rate
 ```
+
+</WranglerConfig>
 
 ## Limits
 

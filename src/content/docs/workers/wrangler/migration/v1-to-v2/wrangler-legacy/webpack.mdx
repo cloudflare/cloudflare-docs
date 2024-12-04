@@ -51,6 +51,10 @@ module.exports = {
 };
 ```
 
+import { WranglerConfig } from "~/components";
+
+<WranglerConfig>
+
 ```toml
 type = "webpack"
 name = "my-worker"
@@ -59,9 +63,15 @@ workers_dev = true
 webpack_config = "webpack.config.js"
 ```
 
+</WranglerConfig>
+
 ### Example with multiple environments
 
 It is possible to use different webpack configuration files within different [Wrangler environments](/workers/wrangler/environments/). For example, the `"webpack.development.js"` configuration file is used during `wrangler dev` for development, but other, more production-ready configurations are used when building for the staging or production environments:
+
+
+
+<WranglerConfig>
 
 ```toml
 type = "webpack"
@@ -78,6 +88,8 @@ webpack_config = "webpack.staging.js"
 name = "my-worker-production"
 webpack_config = "webpack.production.js"
 ```
+
+</WranglerConfig>
 
 ```js
 module.exports = {

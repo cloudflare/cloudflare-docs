@@ -68,10 +68,16 @@ To use an instance of a class that you define as a parameter or return value of 
 
 Consider the following example:
 
+import { WranglerConfig } from "~/components";
+
+<WranglerConfig>
+
 ```toml
 name = "counter"
 main = "./src/counter.js"
 ```
+
+</WranglerConfig>
 
 ```js
 import { WorkerEntrypoint, RpcTarget } from "cloudflare:workers";
@@ -104,6 +110,10 @@ export default {
 
 The method `increment` can be called directly by the client, as can the public property `value`:
 
+
+
+<WranglerConfig>
+
 ```toml
 name = "client-worker"
 main = "./src/clientWorker.js"
@@ -111,6 +121,8 @@ services = [
   { binding = "COUNTER_SERVICE", service = "counter", entrypoint = "CounterService" }
 ]
 ```
+
+</WranglerConfig>
 
 ```js
 export default {

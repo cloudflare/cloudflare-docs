@@ -213,7 +213,7 @@ When Cloudflare acts as the SSO service to an application, user authentication i
 
 ![The flow of SSO requests is proxied through Cloudflare, where the IdP is still used to authenticate, but Cloudflare provides additional access controls.](~/assets/images/reference-architecture/cloudflare-one-reference-architecture-images/cf1-ref-arch-8.svg)
 
-The last method of connecting SaaS applications to Cloudflare's SASE architecture is with an API-based [cloud access security broker](https://www.cloudflare.com/learning/access-management/what-is-a-casb/) (CASB). The Cloudflare CASB integrates via API to [popular SaaS suites](/cloudflare-one/applications/scan-apps/casb-integrations/) — including Google Workspace, Microsoft 365, Salesforce, and more — and continuously scans these applications for misconfigurations, unauthorized user activity, and other security risks.
+The last method of connecting SaaS applications to Cloudflare's SASE architecture is with an API-based [cloud access security broker](https://www.cloudflare.com/learning/access-management/what-is-a-casb/) (CASB). The Cloudflare CASB integrates via API to [popular SaaS suites](/cloudflare-one/applications/casb/casb-integrations/) — including Google Workspace, Microsoft 365, Salesforce, and more — and continuously scans these applications for misconfigurations, unauthorized user activity, and other security risks.
 
 Native integration with the Cloudflare [data loss prevention](https://www.cloudflare.com/learning/access-management/what-is-dlp/) (DLP) service enables CASB to scan for sensitive or regulated data that may be stored in files with incorrect permissions — further risking leaks or unauthorized access. CASB reports findings that alert IT teams to items such as:
 
@@ -678,7 +678,7 @@ It's worth noting that many of the capabilities described in this document can b
 | Secure Web Gateway        | [How to build Gateway policies](/cloudflare-one/policies/gateway/)                                                                                                       |
 | Zero Trust Network Access | [How to build Access policies](/cloudflare-one/policies/access/)                                                                                                         |
 | Remote Browser Isolation  | [Understanding browser isolation](/cloudflare-one/policies/browser-isolation/)                                                                                           |
-| API-Driven CASB           | [Scanning SaaS applications](/cloudflare-one/applications/scan-apps/)                                                                                                    |
+| API-Driven CASB           | [Scanning SaaS applications](/cloudflare-one/applications/casb/)                                                                                                         |
 | Email Security            | [Understanding Cloudflare Email Security](/email-security/)                                                                                                              |
 | Replacing your VPN        | [Using Cloudflare to replace your VPN](/learning-paths/replace-vpn/)                                                                                                     |
 

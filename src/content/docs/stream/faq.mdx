@@ -25,7 +25,7 @@ You cannot download the *exact* input file that you uploaded. However, depending
 
 * By default, a video upload can be at most 30 GB.
 
-* By default, you can have up to 120 videos in the `inprogress`, `queued` or `downloading` state at the same time. Videos in the `error`, `ready` or `pendingupload` state do not count toward this limit. If you need the concurrency limit raised, please [contact Cloudflare support](/support/contacting-cloudflare-support/) explaining your use case and why you would like the limit raised.
+* By default, you can have up to 120 videos queued or being encoded simultaneously. Videos in the `ready` status are playable but may still be encoding certain quality levels until the `pctComplete` reaches 100. Videos in the `error`, `ready`, or `pendingupload` state do not count toward this limit. If you need the concurrency limit raised, [contact Cloudflare support](/support/contacting-cloudflare-support/) explaining your use case and why you would like the limit raised.
 
 :::note
 

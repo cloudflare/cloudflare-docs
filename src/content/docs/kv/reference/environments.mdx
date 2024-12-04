@@ -9,6 +9,10 @@ KV namespaces can be used with [environments](/workers/wrangler/environments/). 
 
 The following code in the `wrangler.toml` file shows you how to have two environments that have two different KV namespaces but the same binding name:
 
+import { WranglerConfig } from "~/components";
+
+<WranglerConfig>
+
 ```toml
 [env.staging]
 kv_namespaces = [
@@ -20,6 +24,8 @@ kv_namespaces = [
   { binding = "MY_KV", id = "a825455ce00f4f7282403da85269f8ea" }
 ]
 ```
+
+</WranglerConfig>
 
 Using the same binding name for two different KV namespaces keeps your Worker code more readable.
 
@@ -48,6 +54,10 @@ Specifying an environment with the optional `--env` flag allows you to publish W
 
 For example, you could use separate staging and production KV namespaces for KV data in your `wrangler.toml` file:
 
+
+
+<WranglerConfig>
+
 ```toml
 type = "webpack"
 name = "my-worker"
@@ -65,6 +75,8 @@ kv_namespaces = [
   { binding = "MY_KV", id = "07bc1f3d1f2a4fd8a45a7e026e2681c6" }
 ]
 ```
+
+</WranglerConfig>
 
 With the `wrangler.toml` file above, you can specify `--env production` when you want to perform a KV action on the KV namespace `MY_KV` under `env.production`.
 

@@ -13,6 +13,8 @@ https://gateway.ai.cloudflare.com/v1/{account_id}/{gateway_id}/perplexity-ai
 
 ## Examples
 
+### cURL
+
 ```bash title="Example fetch request"
 curl https://gateway.ai.cloudflare.com/v1/{account_id}/{gateway_id}/perplexity-ai/chat/completions \
      --header 'accept: application/json' \
@@ -29,7 +31,9 @@ curl https://gateway.ai.cloudflare.com/v1/{account_id}/{gateway_id}/perplexity-a
     }'
 ```
 
-Perplexity doesn't have their own SDK, but they have compatibility with the OpenAI SDK. You can use the OpenAI SDK to make a Perplexity call through AI Gateway as follows:
+### Use Perplexity through OpenAI SDK with JavaScript
+
+Perplexity does not have their own SDK, but they have compatibility with the OpenAI SDK. You can use the OpenAI SDK to make a Perplexity call through AI Gateway as follows:
 
 ```js title="JavaScript"
 import OpenAI from "openai";

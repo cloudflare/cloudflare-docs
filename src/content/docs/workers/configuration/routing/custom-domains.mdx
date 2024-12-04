@@ -51,13 +51,23 @@ After you have added the domain or subdomain, Cloudflare will create a new DNS r
 
 To configure a Custom Domain in your `wrangler.toml`, add the `custom_domain=true` option on each pattern under `routes`. For example, to configure a Custom Domain:
 
+import { WranglerConfig } from "~/components";
+
+<WranglerConfig>
+
 ```toml
 routes = [
 	{ pattern = "shop.example.com", custom_domain = true }
 ]
 ```
 
+</WranglerConfig>
+
 To configure multiple Custom Domains:
+
+
+
+<WranglerConfig>
 
 ```toml
 routes = [
@@ -65,6 +75,8 @@ routes = [
 	{ pattern = "shop-two.example.com", custom_domain = true }
 ]
 ```
+
+</WranglerConfig>
 
 ## Worker to Worker communication
 
@@ -150,10 +162,16 @@ To migrate the route `example.com/*` in your `wrangler.toml`:
 2. Go to **DNS** and delete the CNAME record for `example.com`.
 3. Add the following to your `wrangler.toml` file:
 
+
+
+<WranglerConfig>
+
 ```toml
 routes = [
 	{ pattern = "example.com", custom_domain = true }
 ]
 ```
+
+</WranglerConfig>
 
 4. Run `npx  wrangler deploy` to create the Custom Domain your Worker will run on.

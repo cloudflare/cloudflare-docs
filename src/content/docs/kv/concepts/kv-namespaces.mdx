@@ -35,11 +35,17 @@ To bind KV namespaces to your Worker, assign an array of the below object to the
 
 Example:
 
+import { WranglerConfig } from "~/components";
+
+<WranglerConfig>
+
 ```toml title="wrangler.toml"
 kv_namespaces = [
   { binding = "<TEST_NAMESPACE>", id = "<TEST_ID>" }
 ]
 ```
+
+</WranglerConfig>
 
 ## Bind your KV namespace via the dashboard
 

@@ -1,0 +1,472 @@
+---
+updated: 2024-11-20
+difficulty: Beginner
+content_type: 📝 Tutorial
+pcx_content_type: tutorial
+title: Automate analytics reporting with Cloudflare Workers and email routing
+products:
+  - Workers
+  - Email Routing
+  - Developer Spotlight
+spotlight:
+  author: Aleksej Komnenovic
+  author_bio_link: https://www.linkedin.com/in/komnenovic/
+  author_bio_source: LinkedIn
+languages:
+  - JavaScript
+---
+
+import { Render, PackageManagers } from "~/components";
+import { TabItem, Tabs } from "~/components";
+
+In this tutorial, you will create a [Cloudflare Worker](https://workers.cloudflare.com/) that fetches analytics data about your account from Cloudflare's [GraphQL Analytics API](https://developers.cloudflare.com/analytics/graphql-api/). You will be able to view the account analytics data in your browser and receive a scheduled email report.
+
+You will learn:
+
+1. How to create a Worker using the `c3` CLI.
+2. How to fetch analytics data from Cloudflare's GraphQL Analytics API.
+3. How to send an email with a Worker.
+4. How to schedule the Worker to run at a specific time.
+5. How to store secrets and environment variables in your Worker.
+6. How to test the Worker locally.
+7. How to deploy the Worker to Cloudflare's edge network.
+
+## Prerequisites
+
+Before you start, make sure you:
+
+<Render file="prereqs" product="workers" />
+
+3. [Add a domain](/fundamentals/setup/manage-domains/add-site/) to your Cloudflare account.
+4. [Enable Email Routing](/email-routing/get-started/enable-email-routing/) for your domain.
+5. Create Cloudflare's [Analytics API token](/analytics/graphql-api/getting-started/authentication/api-token-auth/).
+
+## 1. Create a Worker
+
+While you can create a Worker using the Cloudflare dashboard, creating a Worker using the `c3` CLI is recommended as it provides a more streamlined development experience and allows you to test your Worker locally.
+
+First, use the `c3` CLI to create a new Cloudflare Workers project.
+
+<PackageManagers
+	type="create"
+	pkg="cloudflare@latest"
+	args={"account-analytics"}
+/>
+
+In this tutorial, name your Worker as `account-analytics`.
+
+<Render
+	file="c3-post-run-steps"
+	product="workers"
+	params={{
+		category: "hello-world",
+		type: "Hello World Worker",
+		lang: "JavaScript",
+	}}
+/>
+
+Now, the Worker is set up. Move into your project directory:
+
+```sh
+cd account-analytics
+```
+
+To continue with this tutorial, install the [`mimetext`](https://www.npmjs.com/package/mimetext) package:
+
+<Tabs> <TabItem label="pnpm">
+
+```sh
+pnpm install mimetext
+```
+
+</TabItem> <TabItem label="npm">
+
+```sh
+npm install mimetext
+```
+
+</TabItem> <TabItem label="yarn">
+
+```sh
+yarn add mimetext
+```
+
+</TabItem> </Tabs>
+
+## 2. Update wrangler.toml file
+
+[`wrangler.toml`](https://developers.cloudflare.com/workers/wrangler/configuration/) is the configuration file for your Worker. It was created when you ran `c3` CLI. Open `wrangler.toml` in your code editor and update it with the following configuration:
+
+```toml
+name = "account-analytics"
+main = "src/index.js"
+
+compatibility_date = "2024-11-01"
+compatibility_flags = ["nodejs_compat"]
+
+# Set destination_address to the email address where you want to receive the report
+send_email = [
+    {name = "ANALYTICS_EMAIL", destination_address = "<>"}
+]
+
+# Schedule the Worker to run every day at 10:00 AM
+[triggers]
+crons = ["0 10 * * *"]
+
+# Enable observability to view Worker logs
+[observability]
+enabled = true
+
+[vars]
+# This value shows the name of the sender in the email
+SENDER_NAME = "Cloudflare Analytics Worker"
+
+# This email address will be used as the sender of the email
+SENDER_EMAIL = "<>"
+
+# This email address will be used as the recipient of the email
+RECIPIENT_EMAIL = "<>"
+
+# This value will be used as the subject of the email
+EMAIL_SUBJECT = "Cloudflare Analytics Report"
+```
+
+Before you continue, update the following:
+
+1. `destination_address`: Enter the email address where you want to receive the analytics report.
+2. `[VARS]`: Enter the environment variable values you want to use in your Worker.
+
+:::note[IMPORTANT]
+`destination_address` and `RECIPIENT_EMAIL` **must** contain [Email Routing verified email](/email-routing/get-started/enable-email-routing/) address.
+
+`SENDER_EMAIL` **must** be an email address on a domain that is added to your Cloudflare domain and has Email Routing enabled.
+
+:::
+
+## 3. Update the Worker code
+
+You will now add the code step by step to the `src/index.js` file. This tutorial will explain each part of the code.
+
+### Add the required modules and Handlers
+
+While you are in your project directory, open `src/index.js` in your code editor and update it with the following code:
+
+```js
+// Import required modules for email handling
+import { EmailMessage } from "cloudflare:email";
+import { createMimeMessage } from "mimetext";
+
+export default {
+	// HTTP request handler - This Handler is invoked when the Worker is accessed via HTTP
+	async fetch(request, env, ctx) {
+		try {
+			const analyticsData = await fetchAnalytics(env);
+			const formattedContent = formatContent(
+				analyticsData.data,
+				analyticsData.formattedDate,
+			);
+			return new Response(formattedContent, {
+				headers: { "Content-Type": "text/plain" },
+			});
+		} catch (error) {
+			console.error("Error:", error);
+			return new Response(`Error: ${error.message}`, {
+				status: 500,
+				headers: { "Content-Type": "text/plain" },
+			});
+		}
+	},
+
+	// Scheduled task handler - This Handler is invoked via a Cron Trigger
+	async scheduled(event, env, ctx) {
+		try {
+			const analyticsData = await fetchAnalytics(env);
+			const formattedContent = formatContent(
+				analyticsData.data,
+				analyticsData.formattedDate,
+			);
+			await sendEmail(env, formattedContent);
+			console.log("Analytics email sent successfully");
+		} catch (error) {
+			console.error("Failed to send analytics email:", error);
+		}
+	},
+};
+```
+
+The code above defines two [Worker Handlers](/workers/runtime-apis/handlers/):
+
+- `fetch`: This Handler executes when the Worker is accessed via HTTP. It fetches the analytics data, formats it and returns it as a response.
+- `scheduled`: This Handler executes at the scheduled time. It fetches the analytics data, formats it and sends an email with the analytics data.
+
+### Add the analytics fetching function
+
+Add the following function to the `src/index.js` file, below the Handlers:
+
+```js
+async function fetchAnalytics(env) {
+	// Calculate yesterday's date for the report and format it for display
+	const yesterday = new Date();
+	yesterday.setDate(yesterday.getDate() - 1);
+	const dateString = yesterday.toISOString().split("T")[0];
+	const formattedDate = yesterday.toLocaleDateString("en-US", {
+		weekday: "long",
+		year: "numeric",
+		month: "long",
+		day: "numeric",
+	});
+
+	// Fetch analytics data from Cloudflare's GraphQL Analytics API
+	const response = await fetch(`https://api.cloudflare.com/client/v4/graphql`, {
+		method: "POST",
+		headers: {
+			Authorization: `Bearer ${env.CF_API_TOKEN}`,
+			"Content-Type": "application/json",
+		},
+		body: JSON.stringify({
+			query: `
+                query GetAnalytics($accountTag: String!, $date: String!) {
+                    viewer {
+                        accounts(filter: { accountTag: $accountTag }) {
+                            httpRequests1dGroups(limit: 1, filter: { date: $date }) {
+                                sum {
+                                    requests
+                                    pageViews
+                                    bytes
+                                    encryptedRequests
+                                    encryptedBytes
+                                    cachedRequests
+                                    cachedBytes
+                                    threats
+                                    browserMap {
+                                        pageViews
+                                        uaBrowserFamily
+                                    }
+                                    responseStatusMap {
+                                        requests
+                                        edgeResponseStatus
+                                    }
+                                    clientHTTPVersionMap {
+                                        requests
+                                        clientHTTPProtocol
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            `,
+			variables: {
+				accountTag: env.CF_ACCOUNT_ID,
+				date: dateString,
+			},
+		}),
+	});
+
+	const data = await response.json();
+	if (data.errors) {
+		throw new Error(`GraphQL Error: ${JSON.stringify(data.errors)}`);
+	}
+
+	return { data, formattedDate };
+}
+```
+
+In the code above, the `fetchAnalytics` function fetches analytics data from Cloudflare's GraphQL Analytics API. The `fetchAnalytics` function calculates yesterday's date, formats the date for display, and sends a GraphQL query to the Analytics API to fetch the analytics data.
+
+:::note
+`env.CF_API_TOKEN` and `env.CF_ACCOUNT_ID` are [Worker Secrets](/workers/configuration/secrets/). These variables are used to authenticate the request and fetch the analytics data for the specified account. You will add these secrets to your Worker after the code is complete.
+:::
+
+This function returns the **raw** data for the previous day, including:
+
+- Traffic overview data (Total requests, Page views and Blocked threats)
+- Bandwidth data (Total bandwidth, Encrypted bandwidth and Cached bandwidth)
+- Caching and Encryption data (Encrypted requests, Cached requests, Encryption rate and Cache rate)
+- Browser data (Page views by browser)
+- HTTP status code data (Requests by status code)
+- HTTP version data (Requests by HTTP version)
+
+This data will be used to generate the analytics report. In the following step, you will add the function that formats this data.
+
+### Add the data formatting function
+
+Add the following function to the `src/index.js` file, below the `fetchAnalytics` function:
+
+```js
+function formatContent(analyticsData, formattedDate) {
+	const stats =
+		analyticsData.data.viewer.accounts[0].httpRequests1dGroups[0].sum;
+
+	// Helper function to format bytes into human-readable format
+	const formatBytes = (bytes) => {
+		if (bytes === 0) return "0 Bytes";
+		const k = 1024;
+		const sizes = ["Bytes", "KB", "MB", "GB", "TB"];
+		const i = Math.floor(Math.log(bytes) / Math.log(k));
+		return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + " " + sizes[i];
+	};
+
+	// Format browser statistics
+	const browserData = stats.browserMap
+		.sort((a, b) => b.pageViews - a.pageViews)
+		.map((b) => `    ${b.uaBrowserFamily}: ${b.pageViews} views`)
+		.join("\n");
+
+	// Format HTTP status code statistics
+	const statusData = stats.responseStatusMap
+		.sort((a, b) => b.requests - a.requests)
+		.map((s) => `    ${s.edgeResponseStatus}: ${s.requests} requests`)
+		.join("\n");
+
+	// Format HTTP version statistics
+	const httpVersionData = stats.clientHTTPVersionMap
+		.sort((a, b) => b.requests - a.requests)
+		.map((h) => `    ${h.clientHTTPProtocol}: ${h.requests} requests`)
+		.join("\n");
+
+	// Return formatted report
+	return `
+CLOUDFLARE ANALYTICS REPORT
+==========================
+Generated for: ${formattedDate}
+
+TRAFFIC OVERVIEW
+---------------
+    Total Requests: ${stats.requests.toLocaleString()}
+    Page Views: ${stats.pageViews.toLocaleString()}
+    Security Threats Blocked: ${stats.threats.toLocaleString()}
+
+BANDWIDTH
+---------
+    Total Bandwidth: ${formatBytes(stats.bytes)}
+    Encrypted Bandwidth: ${formatBytes(stats.encryptedBytes)}
+    Cached Bandwidth: ${formatBytes(stats.cachedBytes)}
+
+CACHING & ENCRYPTION
+-------------------
+    Total Requests: ${stats.requests.toLocaleString()}
+    Encrypted Requests: ${stats.encryptedRequests.toLocaleString()}
+    Cached Requests: ${stats.cachedRequests.toLocaleString()}
+    Encryption Rate: ${((stats.encryptedRequests / stats.requests) * 100).toFixed(1)}%
+    Cache Rate: ${((stats.cachedRequests / stats.requests) * 100).toFixed(1)}%
+
+BROWSERS
+--------
+${browserData}
+
+HTTP STATUS CODES
+---------------
+${statusData}
+
+HTTP VERSIONS
+------------
+${httpVersionData}
+`;
+}
+```
+
+At this point, you have defined the `fetchAnalytics` function that fetches raw analytics data from Cloudflare's GraphQL Analytics API and the `formatContent` function that formats the analytics data into a human-readable report.
+
+### Add the email sending function
+
+Add the following function to the `src/index.js` file, below the `formatContent` function:
+
+```js
+async function sendEmail(env, content) {
+	// Create and configure email message
+	const msg = createMimeMessage();
+
+	msg.setSender({
+		name: env.SENDER_NAME,
+		addr: env.SENDER_EMAIL,
+	});
+
+	msg.setRecipient(env.RECIPIENT_EMAIL);
+	msg.setSubject(env.EMAIL_SUBJECT);
+
+	msg.addMessage({
+		contentType: "text/plain",
+		data: content,
+	});
+
+	// Send email using Cloudflare Email Routing service
+	const message = new EmailMessage(
+		env.SENDER_EMAIL,
+		env.RECIPIENT_EMAIL,
+		msg.asRaw(),
+	);
+
+	try {
+		await env.ANALYTICS_EMAIL.send(message);
+	} catch (error) {
+		throw new Error(`Failed to send email: ${error.message}`);
+	}
+}
+```
+
+This function sends an email with the formatted analytics data to the specified recipient email address using Cloudflare's Email Routing service.
+
+:::note
+`sendEmail` function uses multiple environment variables that are set in the `wrangler.toml` file.
+:::
+
+## 4. Test the Worker
+
+Now that you have updated the Worker code, you can test it locally using the `wrangler dev` command. This command starts a local server that runs your Worker code.
+
+Before you run the Worker, you need to add two Worker secrets:
+
+- `CF_API_TOKEN`: Cloudflare GraphQL Analytics API token you created earlier.
+- `CF_ACCOUNT_ID`: Your Cloudflare account ID. You can find your account ID in the Cloudflare dashboard under the **Workers & Pages** Overview tab.
+
+Create a `.dev.vars` file in the root of your project directory and add the following:
+
+```sh
+CF_API_TOKEN=YOUR_CLOUDFLARE_API_TOKEN
+CF_ACCOUNT_ID=YOUR_CLOUDFLARE_ACCOUNT_ID
+```
+
+Now, run the Worker locally:
+
+```sh
+npx wrangler dev --remote
+```
+
+Open the `http://localhost:8787` URL on your browser. The browser will display analytics data.
+
+## 5. Deploy the Worker and Worker secrets
+
+Once you have tested the Worker locally, you can deploy your Worker to Cloudflare's edge network:
+
+```sh
+npx wrangler deploy
+```
+
+CLI command will output the URL where your Worker is deployed. Before you can use this URL in your browser to view the analytics data, you need to add two Worker secrets you already have locally to your deployed Worker:
+
+```sh
+npx wrangler secret put <secret>
+```
+
+Replace `<secret>` with the name of the secret you want to add. Repeat this command for `CF_API_TOKEN` and `CF_ACCOUNT_ID` secrets.
+
+Once you put the secrets, preview your analytics data at `account-analytics.<YOUR_SUBDOMAIN>.workers.dev`. You will also receive an email report to the specified recipient email address every day at 10:00 AM.
+
+If you want to disable a public URL for your Worker, you can do so by following these steps:
+
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com).
+
+2. In Account Home, select **Workers & Pages**, then select `account-analytics` Worker.
+
+3. Go to **Settings** > **Domains & Routes**.
+
+4. Select **Disable** to disable the public `account-analytics.<YOUR_SUBDOMAIN>.workers.dev` URL.
+
+You have successfully created, tested and deployed a Worker that fetches analytics data from Cloudflare's GraphQL Analytics API and sends an email report via Email Routing.
+
+## Related resources
+
+To build more with Workers, refer to [Tutorials](/workers/tutorials/).
+
+If you have any questions, need assistance, or would like to share your project, join the Cloudflare Developer community on [Discord](https://discord.cloudflare.com) to connect with other developers and the Cloudflare team.

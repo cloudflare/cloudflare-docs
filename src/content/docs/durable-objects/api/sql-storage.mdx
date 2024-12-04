@@ -2,7 +2,7 @@
 title: SQL Storage
 pcx_content_type: concept
 sidebar:
-  order: 5
+  order: 6
 
 ---
 
@@ -35,6 +35,12 @@ export class MyDurableObject extends DurableObject {
 
 :::note[SQLite in Durable Objects Beta]
 SQL API methods accessed with `ctx.storage.sql` are only allowed on [Durable Object classes with SQLite storage backend](/durable-objects/reference/durable-objects-migrations/#enable-sqlite-storage-backend-on-new-durable-object-class-migration) and will return an error if called on Durable Object classes with a key-value storage backend.
+:::
+
+:::note[Writing to indexes or virtual tables]
+When writing data, every index counts as an additional row. However, indexes may be beneficial for read-heavy use cases. Refer to [Index for SQLite Durable Objects](/durable-objects/best-practices/access-durable-objects-storage/#index-for-sqlite-durable-objects).
+
+Writing data to [SQLite virtual tables](https://www.sqlite.org/vtab.html) also counts towards rows written.
 :::
 
 Specifically for Durable Object classes with SQLite storage backend, KV operations which were previously asynchronous (for example, [`get`](/durable-objects/api/storage-api/#get), [`put`](/durable-objects/api/storage-api/#put), [`delete`](/durable-objects/api/storage-api/#delete), [`deleteAll`](/durable-objects/api/storage-api/#deleteall), [`list`](/durable-objects/api/storage-api/#list)) are synchronous, even though they return promises. These methods will have completed their operations before they return the promise.

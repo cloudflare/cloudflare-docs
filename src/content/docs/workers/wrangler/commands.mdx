@@ -2054,6 +2054,17 @@ wrangler queues list [OPTIONS]
 
 <Render file="wrangler-commands/global-flags" product="workers" />
 
+### `info`
+
+Get information on individual queues.
+
+```txt
+wrangler queues info <name>
+```
+
+- `name` <Type text="string" /> <MetaInfo text="required" />
+	- The name of the queue to inspect.
+
 ### `consumer`
 
 Manage queue consumer configurations.
@@ -2483,11 +2494,17 @@ Expires: 1/01/2025
 
 You can then add this certificate as a [binding](/workers/runtime-apis/bindings/) in your `wrangler.toml`:
 
+import { WranglerConfig } from "~/components";
+
+<WranglerConfig>
+
 ```toml
 mtls_certificates = [
   { binding = "MY_CERT", certificate_id = "99f5fef1-6cc1-46b8-bd79-44a0d5082b8d" }
 ]
 ```
+
+</WranglerConfig>
 
 Note that the certificate and private keys must be in separate (typically `.pem`) files when uploading.
 

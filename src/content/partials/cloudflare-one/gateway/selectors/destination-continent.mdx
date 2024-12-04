@@ -1,21 +1,22 @@
 ---
 inputParameters: param1
-
 ---
 
-import { Markdown } from "~/components"
+import { Markdown } from "~/components";
 
 The continent where the request is destined. Geolocation is determined from the target IP address. To specify a continent, enter its two-letter code into the **Value** field:
 
-* AF – Africa
-* AN – Antarctica
-* AS – Asia
-* EU – Europe
-* NA – North America
-* OC – Oceania
-* SA – South America
-* T1 – Tor network
+| Continent     | Code |
+| ------------- | ---- |
+| Africa        | `AF` |
+| Antarctica    | `AN` |
+| Asia          | `AS` |
+| Europe        | `EU` |
+| North America | `NA` |
+| Oceania       | `OC` |
+| South America | `SA` |
+| Tor network   | `T1` |
 
-| UI name                              | API example                |
-| ------------------------------------ | -------------------------- |
+| UI name                              | API example                                    |
+| ------------------------------------ | ---------------------------------------------- |
 | Destination Continent IP Geolocation | <code>{props.one}.geo.continent == "EU"</code> |

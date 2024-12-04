@@ -8,9 +8,7 @@ sidebar:
 import { Details, InlineBadge, Render } from "~/components";
 
 :::note
-
 To enable this feature, download and deploy the [WARP client](/cloudflare-one/connections/connect-devices/warp/deployment/) on your devices.
-
 :::
 
 With Cloudflare Zero Trust, you can configure policies to control network-level traffic leaving your endpoints. Using network selectors like IP addresses and ports, your policies will control access to any network origin. Because Cloudflare Zero Trust [integrates with your identity provider](/cloudflare-one/identity/idp-integration/), it also gives you the ability to create identity-based network policies. This means you can now control access to non-HTTP resources on a per-user basis regardless of where they are or what device they access that resource from.
@@ -216,13 +214,15 @@ API value: `l4_override`
 
 </Details>
 
-Policies with Network Override actions override traffic directed to, or coming from, certain IPv4/IPv6 addresses or ports. Destination IPs can be public IPs or private IPs connected to your Zero Trust network. For example, the following configuration overrides traffic sent to a public IP with a private IP based on a user's identity:
+Policies with Network Override actions override traffic directed to or coming from certain IPv4/IPv6 addresses or ports. Destination IPs can be public IPs or private IPs connected to your Zero Trust network. For example, the following configuration overrides traffic sent to a public IP with a private IP based on a user's identity:
 
 | Selector       | Operator | Value           | Logic | Action           |
 | -------------- | -------- | --------------- | ----- | ---------------- |
 | Destination IP | in       | `95.92.143.151` | And   | Network Override |
 | User Email     | in       | `*@example.com` | And   |                  |
-| Override IP    |          | 10.0.0.1        |       |                  |
+| Override IP    |          | `10.0.0.1`      |       |                  |
+
+Gateway will only log successful override connections in your [network logs](/cloudflare-one/insights/logs/gateway-logs/#network-logs). If the override destination IP does not exist, Gateway will override the destination IP but will not log the override action.
 
 ## Selectors
 
@@ -234,11 +234,10 @@ Gateway matches network traffic against the following selectors, or criteria.
 
 ### Content Categories
 
-| UI name            | API example                                      |
-| ------------------ | ------------------------------------------------ |
-| Content Categories | `not(any(net.fqdn.content_category[*] in {1}))` |
-
-For more information, refer to our list of [content categories](/cloudflare-one/policies/gateway/domain-categories/#content-categories).
+<Render
+	file="gateway/selectors/net-http-content-categories"
+	params={{ APIendpoint: "net.fqdn.content_category" }}
+/>
 
 ### Destination Continent
 
@@ -286,11 +285,10 @@ To enable Gateway filtering on TCP and UDP, go to **Settings** > **Network** > *
 
 ### Security Risks
 
-| UI name        | API example                                  |
-| -------------- | -------------------------------------------- |
-| Security Risks | `any(net.fqdn.security_category[*] in {1})` |
-
-For more information, refer to our list of [security categories](/cloudflare-one/policies/gateway/domain-categories/#security-categories).
+<Render
+	file="gateway/selectors/security-risks"
+	params={{ APIendpoint: "net.fqdn.security_category" }}
+/>
 
 ### SNI
 

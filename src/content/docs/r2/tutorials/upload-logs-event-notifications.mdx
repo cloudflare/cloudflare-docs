@@ -87,6 +87,10 @@ cd consumer-worker
 
 In your Worker project's [`wrangler.toml`](/workers/wrangler/configuration/) file, add a [queue consumer](/workers/wrangler/configuration/#queues) and [R2 bucket binding](/workers/wrangler/configuration/#r2-buckets). The queues consumer bindings will register your Worker as a consumer of your future event notifications and the R2 bucket bindings will allow your Worker to access your R2 bucket.
 
+import { WranglerConfig } from "~/components";
+
+<WranglerConfig>
+
 ```toml
 name = "event-notification-writer"
 main = "src/index.ts"
@@ -102,6 +106,8 @@ max_batch_timeout = 5
 binding = "LOG_SINK"
 bucket_name = "example-log-sink-bucket"
 ```
+
+</WranglerConfig>
 
 ## 6. Write event notification messages to R2
 

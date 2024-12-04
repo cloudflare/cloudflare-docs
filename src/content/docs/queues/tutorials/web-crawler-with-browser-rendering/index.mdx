@@ -86,12 +86,18 @@ id = "<GENERATED_NAMESPACE_ID>"
 
 Then, in your `wrangler.toml` file, add the following with the values generated in the terminal:
 
+import { WranglerConfig } from "~/components";
+
+<WranglerConfig>
+
 ```toml
 kv_namespaces = [
   { binding = "CRAWLER_SCREENSHOTS_KV", id = "<GENERATED_NAMESPACE_ID>" },
   { binding = "CRAWLER_LINKS_KV", id = "<GENERATED_NAMESPACE_ID>" }
 ]
 ```
+
+</WranglerConfig>
 
 ## 3. Set up Browser Rendering
 
@@ -106,9 +112,15 @@ npm install robots-parser
 
 Then, add a Browser Rendering binding. Adding a Browser Rendering binding gives the Worker access to a headless Chromium instance you will control with Puppeteer.
 
+
+
+<WranglerConfig>
+
 ```toml
 browser = { binding = "CRAWLER_BROWSER" }
 ```
+
+</WranglerConfig>
 
 ## 4. Set up a Queue
 
@@ -127,6 +139,10 @@ Created queue queues-web-crawler.
 
 Then, in your `wrangler.toml` file, add the following:
 
+
+
+<WranglerConfig>
+
 ```toml
 [[queues.consumers]]
 queue = "queues-web-crawler"
@@ -137,9 +153,15 @@ queue = "queues-web-crawler"
 binding = "CRAWLER_QUEUE"
 ```
 
+</WranglerConfig>
+
 Adding the `max_batch_timeout` of 60 seconds to the consumer queue is important because Browser Rendering has a limit of two new browsers per minute per account. This timeout waits up to a minute before collecting queue messages into a batch. The Worker will then remain under this browser invocation limit.
 
 Your final `wrangler.toml` file should look similar to the one below.
+
+
+
+<WranglerConfig>
 
 ```toml
 #:schema node_modules/wrangler/config-schema.json
@@ -163,6 +185,8 @@ max_batch_timeout = 60
 queue = "queues-web-crawler"
 binding = "CRAWLER_QUEUE"
 ```
+
+</WranglerConfig>
 
 ## 5. Add bindings to environment
 

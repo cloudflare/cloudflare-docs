@@ -1,15 +1,14 @@
 ---
 {}
-
 ---
 
-import { GlossaryTooltip } from "~/components"
+import { GlossaryTooltip } from "~/components";
 
 With the Access App Launcher, users can open all applications that they have access to from a single dashboard.
 
 The App Launcher is available at a <GlossaryTooltip term="team domain">team domain</GlossaryTooltip> unique to your Cloudflare Zero Trust account, for example `mycompany.cloudflareaccess.com`.
 
-Users log in using one of the identity providers configured for the account. Once Access authenticates the user, the App Launcher displays applications they are authorized to use, in the form of application tiles. Selecting an application tile launches the application’s hostname, sending the user to that tool as part of their SSO flow.
+Users log in using one of the identity providers configured for the account. Once Access authenticates the user, the App Launcher displays applications they are authorized to use, in the form of application tiles. Selecting an application tile launches the application's hostname, sending the user to that tool as part of their SSO flow.
 
 ![App Launcher portal](~/assets/images/cloudflare-one/applications/app-launcher.png)
 
@@ -43,7 +42,7 @@ To show an Access application in the App Launcher:
 
 :::note
 
-This toggle does not impact the user's ability to reach the application. Allowed users can always reach the application via a direct link, regardless of whether the toggle is enabled. Blocked users will never have access to the application. 
+This toggle does not impact the user's ability to reach the application. Allowed users can always reach the application via a direct link, regardless of whether the toggle is enabled. Blocked users will never have access to the application.
 :::
 
 4. Choose a domain to use for the App Launcher link.
@@ -52,14 +51,14 @@ This toggle does not impact the user's ability to reach the application. Allowed
 
 :::note
 
-If you are having issues specifying a custom logo, check that the image is served from an HTTPS endpoint. For example, `http://www.example.com/upload/logo.png` will not work. However, `https://www.example.com/upload/logo.png` will. 
+If you are having issues specifying a custom logo, check that the image is served from an HTTPS endpoint. For example, `http://www.example.com/upload/logo.png` will not work. However, `https://www.example.com/upload/logo.png` will.
 :::
 
 ## Customize App Launcher appearance
 
 :::note
 
-Only available on Pay-as-you-go and Enterprise plans. 
+Only available on Pay-as-you-go and Enterprise plans.
 :::
 
 You can display your own branding, messages, and links to users when they open the App Launcher.
@@ -69,24 +68,24 @@ To customize the App Launcher appearance:
 1. In [Zero Trust](https://one.dash.cloudflare.com/), go to **Settings** > **Custom Pages**.
 2. Find the **Customize App Launcher** setting and select **Customize**.
 3. Give the App Launcher the look and feel of your organization by adding:
-   * Your organization's name
-   * A logo
-   * A preferred background color for the header
-   * A preferred background color for the page
-   * A custom footer with links to your organization's help desk or other internal resources.
+   - Your organization's name
+   - A logo
+   - A preferred background color for the header
+   - A preferred background color for the page
+   - A custom footer with links to your organization's help desk or other internal resources.
 
 :::note
 
-We recommend lighter background colors because the font defaults to black. 
+We recommend lighter background colors because the font defaults to black.
 :::
 
 4. Next, customize the landing page that users will see when they login to the App Launcher. Available properties include:
 
-   * A custom title
-   * A custom subtitle
-   * An image
-   * A preferred color for the **Log in** button
-   * A preferred color for the **Log in** button text
+   - A custom title
+   - A custom subtitle
+   - An image
+   - A preferred color for the **Log in** button
+   - A preferred color for the **Log in** button text
 
    All of the properties configured in Step 3 will also apply to the landing page.
 

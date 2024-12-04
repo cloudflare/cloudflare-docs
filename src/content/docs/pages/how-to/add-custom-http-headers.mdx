@@ -66,6 +66,10 @@ npm install
 
 To operate your Workers function alongside your Pages application, deploy it to the same custom domain as your Pages application. To do this, update the `wrangler.toml` file in your project with your account and zone details:
 
+import { WranglerConfig } from "~/components";
+
+<WranglerConfig>
+
 ```toml null {4,6,7}
 name = "custom-headers-example"
 
@@ -74,6 +78,8 @@ workers_dev = false
 route = "FILL-IN-YOUR-WEBSITE.com/*"
 zone_id = "FILL-IN-YOUR-ZONE-ID"
 ```
+
+</WranglerConfig>
 
 If you do not know how to find your Account ID and Zone ID, refer to [our guide](/fundamentals/setup/find-account-and-zone-ids/).
 

@@ -3,7 +3,7 @@
 
 ---
 
-import { Tabs, TabItem } from '~/components';
+import { Tabs, TabItem, Details } from '~/components';
 
 <Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
 
@@ -32,35 +32,55 @@ import { Tabs, TabItem } from '~/components';
 
 		```tf
 		resource "cloudflare_zero_trust_access_service_token" "example_service_token" {
-		account_id = var.cloudflare_account_id
-		name       = "Example service token"
-		duration  = "8760h"
+			account_id = var.cloudflare_account_id
+			name       = "Example service token"
+			duration  = "8760h"
+
+			lifecycle {
+				create_before_destroy = true
+			}
 		}
 		```
 
-3. Output the Client ID and Client Secret to the Terraform state file:
+3. Get the Client ID and Client Secret of the service token:
 
-		```tf
-		output "example_service_token_client_id" {
-			value     = cloudflare_zero_trust_access_service_token.example_service_token.client_id
+	<Details header="Example: Output to CLI" open = {false}>
+  	1. Output the Client ID and Client Secret to the Terraform state file:
+			```tf
+			output "example_service_token_client_id" {
+				value     = cloudflare_zero_trust_access_service_token.example_service_token.client_id
+			}
+
+			output "example_service_token_client_secret" {
+				value     = cloudflare_zero_trust_access_service_token.example_service_token.client_secret
+				sensitive = true
+			}
+			```
+	2. Apply the configuration:
+			```sh
+			terraform apply
+			```
+	3. Read the Client ID and Client Secret:
+			```sh
+			terraform output -raw example_service_token_client_id
+			```
+			```sh
+			terraform output -raw example_service_token_client_secret
+			```
+	</Details>
+
+	<Details header="Example: Store in HashiCorp Vault" open = {false}>
+    ```tf
+		resource "vault_generic_secret" "example_service_token" {
+			path         = "kv/cloudflare/example_service_token"
+
+			data_json = jsonencode({
+				"CLIENT_ID"     = cloudflare_access_service_token.example_service_token.client_id
+				"CLIENT_SECRET" = cloudflare_access_service_token.example_service_token.client_secret
+			})
 		}
+		```
+	</Details>
 
-		output "example_service_token_client_secret" {
-			value     = cloudflare_zero_trust_access_service_token.example_service_token.client_secret
-			sensitive = true
-		}
-		```
-4. Apply the configuration:
-		```sh
-		terraform apply
-		```
-
-5. Read the Client ID and Client Secret:
-		```sh
-		terraform output -raw example_service_token_client_id
-		```
-		```sh
-		terraform output -raw example_service_token_client_secret
-		```
 
 </TabItem> </Tabs>

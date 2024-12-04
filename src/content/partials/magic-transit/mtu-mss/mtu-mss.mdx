@@ -17,7 +17,7 @@ One common misconception about MSS/MTU is that setting these values negatively i
 
 Since {props.productName} uses encapsulation to deliver its services, it is also important to understand why MTU and MSS matter in this case.
 
-Encapsulation adds bytes to the packet, since we add a new IP header and (often) some sort of encapsulating header to every packet. For example, in the case of GRE for IPv4, we add 24 bytes – 20 bytes for the IPv4 header, and 4 bytes for the GRE tunnel header.
+Encapsulation adds bytes to the packet, since we add a new IP header and (often) some sort of encapsulating header to every packet. For example, in the case of GRE for IPv4, we add 24 bytes - 20 bytes for the IPv4 header, and 4 bytes for the GRE tunnel header.
 
 A network interface which performs GRE encapsulation needs to account for the added overhead by reducing its MTU. Since the MTU maximum size is 1,500 bytes, for IPv4 this means that the MTU can be 1,476 bytes (the original 1,500 bytes minus the 24 bytes from the GRE encapsulation). This reduced MTU defines the maximum size of the IP packet that can be encapsulated by GRE.
 
@@ -35,7 +35,7 @@ Consider a UDP datagram of size 3,000 bytes (8 bytes for the UDP header + 2,992 
 
 ![A diagram showing a UDP datagram and its various components.](~/assets/images/magic-transit/mtu-mss/udp-datagram.png)
 
-Suppose that the UDP datagram has source port `389` and is destined for a {props.productName} customer IP address. Let us also suppose that the {props.productName} customer has a firewall rule in place that drops UDP traffic with source port `389`, a common [Connectionless Lightweight Directory Access Protocol (CLDAP)](https://blog.cloudflare.com/reflections-on-reflections) reflection attack vector. The three packet fragments above will arrive at Cloudflare, but only the first fragment contains a UDP header with source port information — the second and third fragments, while they contain UDP data, do not have UDP header information. So the question is: which of these fragments does Cloudflare drop and which are delivered to the customer? If we only drop the first parts of fragmented packets, the remaining parts could still generate a large amount of traffic during a DoS attack.
+Suppose that the UDP datagram has source port `389` and is destined for a {props.productName} customer IP address. Let us also suppose that the {props.productName} customer has a firewall rule in place that drops UDP traffic with source port `389`, a common [Connectionless Lightweight Directory Access Protocol (CLDAP)](https://blog.cloudflare.com/reflections-on-reflections) reflection attack vector. The three packet fragments above will arrive at Cloudflare, but only the first fragment contains a UDP header with source port information - the second and third fragments, while they contain UDP data, do not have UDP header information. So the question is: which of these fragments does Cloudflare drop and which are delivered to the customer? If we only drop the first parts of fragmented packets, the remaining parts could still generate a large amount of traffic during a DoS attack.
 
 ### How Cloudflare handles fragments
 
@@ -55,9 +55,9 @@ Maximum segment size (MSS) is a TCP setting that limits the size of TCP segments
 
 By default, a TCP endpoint will set its MSS value based on its local network interface MTU. For example, for IPv4, if the MTU is 1,500 bytes then MSS will be 1,460 bytes (1,500 bytes minus 20 bytes from the IPv4 header minus 20 bytes from the TCP header).
 
-MSS is a tool that can be used to configure TCP packet size behavior. If a TCP endpoint is known to be behind a network with reduced MTU, changing the MSS value to match the actual path MTU value will force remote endpoints to send packets that fit within the specified MTU. So, if an IPv4 TCP endpoint is known to be behind a GRE tunnel with an MTU of 1,476 bytes, the MSS value in its TCP SYN packets should be 1,436 bytes — 1,476 bytes minus the 20 bytes from the IPv4 header, minus the 20 bytes from the TCP header.
+MSS is a tool that can be used to configure TCP packet size behavior. If a TCP endpoint is known to be behind a network with reduced MTU, changing the MSS value to match the actual path MTU value will force remote endpoints to send packets that fit within the specified MTU. So, if an IPv4 TCP endpoint is known to be behind a GRE tunnel with an MTU of 1,476 bytes, the MSS value in its TCP SYN packets should be 1,436 bytes - 1,476 bytes minus the 20 bytes from the IPv4 header, minus the 20 bytes from the TCP header.
 
-One way to modify the MSS setting is by changing the MTU of the network interface in the router's WAN interface to match the path MTU. Another way to modify MSS is by applying a MSS clamp, where an intermediary network device — such as a router — is configured to modify the MSS TCP option on-the-fly when packets pass through it. Note that changing the MTU on the interface of an intermediary network device is not the same as applying an MSS clamp, and it will not cause the TCP MSS value to be changed.
+One way to modify the MSS setting is by changing the MTU of the network interface in the router's WAN interface to match the path MTU. Another way to modify MSS is by applying a MSS clamp, where an intermediary network device - such as a router - is configured to modify the MSS TCP option on-the-fly when packets pass through it. Note that changing the MTU on the interface of an intermediary network device is not the same as applying an MSS clamp, and it will not cause the TCP MSS value to be changed.
 
 Refer to [MSS clamping recommendations](#mss-clamping-recommendations) for information on what you should set your MSS clamping to, depending on the type of tunnel.
 

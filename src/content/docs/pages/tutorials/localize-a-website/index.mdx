@@ -260,11 +260,17 @@ Your i18n tool built on Cloudflare Pages is complete and it is time to deploy it
 
 To deploy your application to a `*.pages.dev` subdomain, you need to specify a directory of static assets to serve, configure the `pages_build_output_dir` in your project’s `wrangler.toml` file and set the value to `./public`:
 
+import { WranglerConfig } from "~/components";
+
+<WranglerConfig>
+
 ```toml null {2}
 name = "i18n-example"
 pages_build_output_dir = "./public"
 compatibility_date = "2024-01-29"
 ```
+
+</WranglerConfig>
 
 Next, you need to configure a deploy script in `package.json` file in your project. Add a deploy script with the value `wrangler pages deploy`:
 

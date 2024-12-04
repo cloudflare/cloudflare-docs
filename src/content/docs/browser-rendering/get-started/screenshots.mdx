@@ -62,6 +62,10 @@ Configure your `browser-worker` project's [`wrangler.toml`](/workers/wrangler/co
 
 Update your `wrangler.toml` configuration file with the Browser Rendering API binding and the KV namespaces you created:
 
+import { WranglerConfig } from "~/components";
+
+<WranglerConfig>
+
 ```toml
 name = "browser-worker"
 main = "src/index.js"
@@ -73,6 +77,8 @@ kv_namespaces = [
   { binding = "BROWSER_KV_DEMO", id = "22cf855786094a88a6906f8edac425cd", preview_id = "e1f8b68b68d24381b57071445f96e623" }
 ]
 ```
+
+</WranglerConfig>
 
 ## 5. Code
 

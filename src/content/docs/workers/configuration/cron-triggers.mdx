@@ -40,6 +40,10 @@ If a Worker is managed with Wrangler, Cron Triggers should be exclusively manage
 
 Refer to the example below for a sample `wrangler.toml` Cron Triggers configuration:
 
+import { WranglerConfig } from "~/components";
+
+<WranglerConfig>
+
 ```toml
 [triggers]
 # Schedule cron triggers:
@@ -49,12 +53,20 @@ Refer to the example below for a sample `wrangler.toml` Cron Triggers configurat
 crons = [ "*/3 * * * *", "0 15 1 * *", "59 23 LW * *" ]
 ```
 
+</WranglerConfig>
+
 You also can set a different Cron Trigger for each [environment](/workers/wrangler/environments/) in your `wrangler.toml`. You need to put the `[triggers]` table under your chosen environment. For example:
+
+
+
+<WranglerConfig>
 
 ```toml
 [env.dev.triggers]
 crons = ["0 * * * *"]
 ```
+
+</WranglerConfig>
 
 #### Via the dashboard
 

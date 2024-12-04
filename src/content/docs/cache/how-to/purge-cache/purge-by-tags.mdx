@@ -30,7 +30,7 @@ You add cache-tags to your web content in `Cache-Tag` HTTP response headers to a
 
 When your content reaches our edge network, Cloudflare:
 
-* Removes the `Cache-Tag` HTTP header before sending the response to your website visitor. Your end users never see `Cache-Tag` HTTP headers on your Cloudflare-enabled website.
+* Removes the `Cache-Tag` HTTP header before sending the response to your website visitor or passing the response to a [Worker](/workers/). Your end users or Worker never see `Cache-Tag` HTTP headers on your Cloudflare-enabled website.
 * Removes whitespaces from the header and any before and after cache-tag names: `tag1`, `tag2` and `tag1,tag2` are considered the same.
 * Removes all repeated and trailing commas before applying cache-tags: `tag1,,,tag2` and `tag1,tag2` are considered the same.
 

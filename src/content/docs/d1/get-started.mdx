@@ -13,7 +13,8 @@ import {
 	FileTree,
 	Tabs,
 	TabItem,
-	TypeScriptExample
+	TypeScriptExample,
+	WranglerConfig
 } from "~/components";
 
 This guide instructs you through:
@@ -176,12 +177,16 @@ You create bindings by updating your `wrangler.toml` file.
 1. Copy the lines obtained from [step 2](/d1/get-started/#2-create-a-database) from your terminal.
 2. Add them to the end of your `wrangler.toml` file.
 
+   <WranglerConfig>
+
    ```toml
    [[d1_databases]]
    binding = "DB" # available in your Worker on env.DB
    database_name = "prod-d1-tutorial"
    database_id = "<unique-ID-for-your-database>"
    ```
+
+   </WranglerConfig>
 
    Specifically:
 

@@ -85,9 +85,15 @@ The following Worker code is an example of what the `events` object may look lik
 
 3. Add the following to the `wrangler.toml` file of the producer Worker:
 
+import { WranglerConfig } from "~/components";
+
+<WranglerConfig>
+
 ```toml
 tail_consumers = [{service = "<TAIL_WORKER_NAME>"}]
 ```
+
+</WranglerConfig>
 
 :::note
 

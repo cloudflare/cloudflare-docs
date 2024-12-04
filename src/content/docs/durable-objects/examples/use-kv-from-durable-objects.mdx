@@ -23,6 +23,10 @@ Prerequisites:
 
 Configure your `wrangler.toml` file as follows:
 
+import { WranglerConfig } from "~/components";
+
+<WranglerConfig>
+
 ```toml
 name = "my-worker"
 
@@ -35,6 +39,8 @@ bindings = [
   { name = "YOUR_DO_CLASS", class_name = "YourDurableObject" }
 ]
 ```
+
+</WranglerConfig>
 
 ```ts
 import { DurableObject } from 'cloudflare:workers';

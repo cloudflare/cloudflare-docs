@@ -92,10 +92,16 @@ To begin using Cloudflare's AI products, you can add the `ai` block to `wrangler
 
 This example features the [`@cf/meta/llama-3-8b-instruct` model](/workers-ai/models/llama-3-8b-instruct/), which generates text.
 
+import { WranglerConfig } from "~/components";
+
+<WranglerConfig>
+
 ```toml
 [ai]
 binding = "AI"
 ```
+
+</WranglerConfig>
 
 Now, find the `src/index.js` file. Inside the `fetch` handler, you can query the `AI` binding:
 
@@ -141,6 +147,10 @@ npx wrangler vectorize create vector-index --dimensions=768 --metric=cosine
 
 Then, add the configuration details for your new Vectorize index to `wrangler.toml`:
 
+
+
+<WranglerConfig>
+
 ```toml
 # ... existing wrangler configuration
 
@@ -148,6 +158,8 @@ Then, add the configuration details for your new Vectorize index to `wrangler.to
 binding = "VECTOR_INDEX"
 index_name = "vector-index"
 ```
+
+</WranglerConfig>
 
 A vector index allows you to store a collection of dimensions, which are floating point numbers used to represent your data. When you want to query the vector database, you can also convert your query into dimensions. **Vectorize** is designed to efficiently determine which stored vectors are most similar to your query.
 
@@ -161,6 +173,10 @@ npx wrangler d1 create database
 
 Then, paste the configuration details output from the previous command into `wrangler.toml`:
 
+
+
+<WranglerConfig>
+
 ```toml
 # ... existing wrangler configuration
 
@@ -169,6 +185,8 @@ binding = "DB" # available in your Worker on env.DB
 database_name = "database"
 database_id = "abc-def-geh" # replace this with a real database_id (UUID)
 ```
+
+</WranglerConfig>
 
 In this application, we'll create a `notes` table in D1, which will allow us to store notes and later retrieve them in Vectorize. To create this table, run a SQL command using `wrangler d1 execute`:
 

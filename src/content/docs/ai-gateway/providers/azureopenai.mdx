@@ -27,6 +27,8 @@ Your new base URL will use the data above in this structure: `https://gateway.ai
 
 ## Examples
 
+### cURL
+
 ```bash title="Example fetch request"
 curl 'https://gateway.ai.cloudflare.com/v1/{account_id}/{gateway_id}/azure-openai/{resource_name}/{deployment_name}/chat/completions?api-version=2023-05-15' \
   --header 'Content-Type: application/json' \
@@ -40,6 +42,8 @@ curl 'https://gateway.ai.cloudflare.com/v1/{account_id}/{gateway_id}/azure-opena
   ]
 }'
 ```
+
+### Use `openai-node` with JavaScript
 
 If you are using the `openai-node` library, you can set your endpoint like this:
 

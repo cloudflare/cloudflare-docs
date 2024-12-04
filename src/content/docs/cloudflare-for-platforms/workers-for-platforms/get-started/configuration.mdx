@@ -99,11 +99,17 @@ cd my-dispatcher
 
 Open the `wrangler.toml` file in your project directory, and add the dispatch namespace binding:
 
+import { WranglerConfig } from "~/components";
+
+<WranglerConfig>
+
 ```toml
 [[dispatch_namespaces]]
 binding = "DISPATCHER"
 namespace = "testing"
 ```
+
+</WranglerConfig>
 
 Add the following to the index.js file:
 

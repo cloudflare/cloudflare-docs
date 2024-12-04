@@ -76,6 +76,10 @@ export default {
 
 (Wrangler toml file example.)
 
+import { WranglerConfig } from "~/components";
+
+<WranglerConfig>
+
 ```toml title="wrangler.toml"
 #:schema node_modules/wrangler/config-schema.json
 name = "<WORKER_NAME>"
@@ -86,6 +90,8 @@ compatibility_flags = ["nodejs_compat"]
  [ai]
  binding = "AI"
 ```
+
+</WranglerConfig>
 
 (Aside examples. For more details read our [style guide documentation on Notes/tips/warnings](/style-guide/documentation-content-strategy/component-attributes/notes-tips-warnings/#recommendations).)
 

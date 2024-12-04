@@ -90,12 +90,18 @@ npx wrangler d1 create d1-example
 
 Reference your created database in your Worker code by creating a [binding](/workers/runtime-apis/bindings/) inside of your `wrangler.toml` file, Wrangler's configuration file. Bindings allow us to access Cloudflare resources, like D1 databases, KV namespaces, and R2 buckets, using a variable name in code. In `wrangler.toml`, set up the binding `DB` and connect it to the `database_name` and `database_id`:
 
+import { WranglerConfig } from "~/components";
+
+<WranglerConfig>
+
 ```toml
 [[ d1_databases ]]
 binding = "DB" # available in your Worker on `env.DB`
 database_name = "d1-example"
 database_id = "4e1c28a9-90e4-41da-8b4b-6cf36e5abb29"
 ```
+
+</WranglerConfig>
 
 With your binding configured in your `wrangler.toml` file, you can interact with your database from the command line, and inside your Workers function.
 
@@ -201,6 +207,10 @@ Begin by running `wrangler whoami` to confirm that you are logged in to your Clo
 
 After you have logged in, confirm that your `wrangler.toml` file is configured similarly to what is seen below. You can change the `name` field to a project name of your choice:
 
+
+
+<WranglerConfig>
+
 ```toml
 name = "d1-example"
 main = "src/worker.js"
@@ -211,6 +221,8 @@ binding = "DB" # available in your Worker on env.DB
 database_name = "<YOUR_DATABASE_NAME>"
 database_id = "<YOUR_DATABASE_UUID>"
 ```
+
+</WranglerConfig>
 
 Now, run `npx wrangler deploy` to deploy your project to Cloudflare.
 

@@ -371,15 +371,27 @@ entries:
     difficulty: Beginner
     content_type: 🎥 Video
     pcx_content_type: tutorial    
+  - link: https://youtu.be/Pz0-mFk6aBM
+    title: Schedule Twilio Messaging and Phone Calls with Workflows
+    description: Integrate Workflows with Twilio. Learn how to receive and send text messages and phone calls via APIs and Webhooks. 
+    tags: [Workers, Workflows]
+    languages: [TypeScript]
+    products: [Workers, Workflows]
+    cloudflare: true
+    author: craig
+    updated: 2024-11-30
+    difficulty: Intermediate
+    content_type: 🎥 Video
+    pcx_content_type: tutorial    
   # - link:
   #   title:
   #   description:
-  #   tags: [Workers, Pages]
+  #   tags: [Workers]
   #   languages: [TypeScript]
-  #   products: [Workers, Pages]
+  #   products: [Workers]
   #   cloudflare: true
-  #   author: confidence
-  #   updated: 2024-11-14
+  #   author: 
+  #   updated: 
   #   difficulty: Intermediate
   #   content_type: 🎥 Video
   #   pcx_content_type: tutorial
