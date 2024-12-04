@@ -8,7 +8,7 @@ params:
 
 import { GlossaryTooltip, Markdown } from "~/components";
 
-{props.productName} uses a static configuration to route traffic through <GlossaryTooltip term="anycast">anycast</GlossaryTooltip> tunnels using the <GlossaryTooltip term="GRE tunnel" link={props.greURL}>GRE</GlossaryTooltip> and <GlossaryTooltip term="IPsec tunnel" link={props.ipsecURL}>Internet Protocol Security (IPsec)</GlossaryTooltip> protocols from Cloudflare’s global network to your network, and from your network to Cloudflare’s global network.
+{props.productName} uses a static configuration to route traffic through [Cloudflare Network Interconnect (CNI)](/network-interconnect/), as well as <GlossaryTooltip term="anycast">anycast</GlossaryTooltip> tunnels using the <GlossaryTooltip term="GRE tunnel" link={props.greURL}>GRE</GlossaryTooltip> and <GlossaryTooltip term="IPsec tunnel" link={props.ipsecURL}>Internet Protocol Security (IPsec)</GlossaryTooltip> protocols from Cloudflare's global network to your network, and from your network to Cloudflare's global network.
 
 {props.productName} steers traffic along tunnel routes based on priorities you define in the Cloudflare dashboard or via API.
 
