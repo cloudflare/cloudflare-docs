@@ -25,7 +25,7 @@ This section of the document will cover the configuration of:
 1. Start by [creating the IPsec tunnels](/magic-wan/configuration/manually/how-to/configure-tunnels/#add-tunnels) in the Cloudflare dashboard with the following values:
 	- **Tunnel name**: Up to 15 characters (no spaces).
 	- **Description** (Optional).
-	- **Interface address**: This is the Virtual Tunnel Interface (VTI = `st0.x`) RFC 1918 address — the IP address specified in this dialog box is the address on the Cloudflare side of the tunnel.
+	- **Interface address**: This is the Virtual Tunnel Interface (VTI = `st0.x`) RFC 1918 address - the IP address specified in this dialog box is the address on the Cloudflare side of the tunnel.
 	- **Customer endpoint**: This is the public IP address the tunnel will be established with on the Juniper SRX.
 	- **Cloudflare endpoint**: One of the two Cloudflare anycast IP addresses.
 	- **Pre-shared key**: Choose **Add pre-shared key later**.
@@ -54,7 +54,7 @@ This document assumes that the **trust zone** behind the Juniper SRX firewall ha
 
 [Magic static routes](/magic-wan/configuration/manually/how-to/configure-static-routes/) define which tunnel(s) to route traffic through for a given subnet. Since two tunnels are configured to each endpoint, it is necessary to configure two static routes.
 
-Cloudflare leverages [equal-cost multi-path routing](/magic-wan/reference/traffic-steering/) to control steering of traffic across the tunnels. The default priority for each route is `100` — traffic will be load-balanced across the two tunnels equally. You can modify the priorities as needed.
+Cloudflare leverages [equal-cost multi-path routing](/magic-wan/reference/traffic-steering/) to control steering of traffic across the tunnels. The default priority for each route is `100` - traffic will be load-balanced across the two tunnels equally. You can modify the priorities as needed.
 
 1. Create a static route with the following values. Make sure you select the first tunnel in **Tunnel/Next hop**:
 	- **Description:** The description for the static route assigned to your first tunnel.
@@ -148,7 +148,7 @@ interfaces {
 
 ### Security zone (untrust) - `host-inbound-traffic`
 
-Add `ping` and `ike` to the security zone containing the external interface used to establish the IPsec tunnels to Cloudflare. If your security policy blocks `ping` by default, you will need to create a firewall-filter to allow ICMP from the [Cloudflare IPv4 address space](https://www.cloudflare.com/ips-v4) — not covered in this tutorial.
+Add `ping` and `ike` to the security zone containing the external interface used to establish the IPsec tunnels to Cloudflare. If your security policy blocks `ping` by default, you will need to create a firewall-filter to allow ICMP from the [Cloudflare IPv4 address space](https://www.cloudflare.com/ips-v4) - not covered in this tutorial.
 
 ```txt
 set security zones security-zone untrust interfaces ge-0/0/2.0 host-inbound-traffic system-services ping
@@ -187,7 +187,7 @@ set security ike proposal cf_ike_magic_wan_prop lifetime-seconds 28800
 
 #### IKE policies
 
-Define two IKE policies — one for each of the two Magic IPsec tunnels:
+Define two IKE policies - one for each of the two Magic IPsec tunnels:
 
 **Tunnel 1 (SRX220_IPSEC_01)**
 
@@ -207,7 +207,7 @@ set security ike policy cf_magic_wan_pol_02 pre-shared-key ascii-text "$9$sH4GD<
 
 #### IKE gateways
 
-Define two IKE gateways — one for each of the two Magic IPsec tunnels. In the examples below, note the use of the FQDN ID value obtained from the Cloudflare dashboard in the `local-identity` hostname setting.
+Define two IKE gateways - one for each of the two Magic IPsec tunnels. In the examples below, note the use of the FQDN ID value obtained from the Cloudflare dashboard in the `local-identity` hostname setting.
 
 **Tunnel 1 (SRX220_IPSEC_01)**
 
@@ -243,7 +243,7 @@ set security ipsec proposal cf_ipsec_magic_wan_prop lifetime-seconds 28800
 
 #### IPsec policies
 
-Define two IPsec policies — one for each of the two Magic IPsec tunnels. It is crucial to ensure that:
+Define two IPsec policies - one for each of the two Magic IPsec tunnels. It is crucial to ensure that:
 
 - [Anti-replay](/magic-wan/reference/anti-replay-protection/) protection is disabled.
   - Use [`no-anti-replay`](https://www.juniper.net/documentation/us/en/software/junos/interfaces-adaptive-services/topics/ref/statement/no-anti-replay-edit-services.html) as the setting
@@ -314,7 +314,7 @@ static {
 
 Define security policies to permit traffic flows destined for Magic WAN protected resources. The source/destination zones will need to incorporate the zone containing the tunnel interfaces.
 
-There are two very simple rules to allow traffic bidirectionally — it is generally recommended to start with a similar policy, then to add more stringent rules once general connectivity is established successfully.
+There are two very simple rules to allow traffic bidirectionally - it is generally recommended to start with a similar policy, then to add more stringent rules once general connectivity is established successfully.
 
 **From Cloudflare to *trust*:**
 
