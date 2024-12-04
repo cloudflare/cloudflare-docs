@@ -1,12 +1,9 @@
 ---
 {}
-
 ---
 
-[Magic Transit](/magic-transit/) customers are automatically onboarded to the Advanced TCP Protection and Advanced DNS Protection systems. 
-
-Every 10 minutes, the `flowtrackd` API will look for new accounts in the conduit API. For each new account that it finds, it will add the account and its `authorized_prefixes` to the `flowtrackd` API, add default manual thresholds and rules for the TCP policer, TCP tracker, and DNS tracker—all in `monitoring` mode, and set the protection status to `Enabled` which allows `flowtrackd` to start processing your traffic.
-
 :::note
-If the `flowtrackd` API cannot find any `authorized_prefixes` for an account in the conduit API, it will wait to onboard you until the prefixes are present (up to seven days).
+Advanced TCP and DNS Protection systems are automatically enabled in `Monitor` mode with the default thresholds for new Magic Transit customers and their [authorized prefixes](/magic-transit/how-to/advertise-prefixes/).
+
+Magic Transit customers can also enable the Advanced DDoS systems when the prefixes are ready, change the sensitivity level, or adjust the thresholds by contacting their account team.
 :::
