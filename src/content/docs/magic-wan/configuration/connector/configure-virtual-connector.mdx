@@ -33,12 +33,11 @@ Refer to [VMware's documentation](https://docs.vmware.com/en/VMware-vSphere/7.0/
 
 ## DHCP vs static IP connections
 
-<Render
-	file="connector/before-you-begin"
-	params={{
-		name: "Virtual Connector"
-	}}
-/>
+Virtual Connector uses a DHCP connection at first boot to download your settings and go through the activation process. If you need to use a static IP in your Virtual Connector, and this is a fresh install:
+1. Connect the machine with your Virtual Connector VM to a DHCP port with access to the Internet
+2. Go through the [setup flow](#set-up-cloudflare-dashboard) below and activate your Connector
+3. Refer to [WAN with a static IP address](#wan-with-a-static-ip-address)
+
 
 ## Obtain the Virtual Connector image
 
