@@ -1,0 +1,71 @@
+entries:
+  - name: http.cookie
+    data_type: String
+    categories: [Request, Headers]
+    keywords: [request, cookie, header, client, visitor]
+    summary: The entire cookie as a string.
+    example_value: |-
+      session=8521F670545D7865F79C3D7BEDC29CCE;-background=light
+
+  - name: http.host
+    data_type: String
+    categories: [Request, URI]
+    keywords: [request, uri, url, domain, source, visitor]
+    summary: The hostname used in the full request URI.
+    example_value: |-
+      www.example.org
+
+  - name: http.request.full_uri
+    data_type: String
+    categories: [Request, URI]
+    keywords: [request, uri, url, source, visitor]
+    summary: The full URI as received by the web server.
+    description: |-
+      The value will not include the `#fragment` part, which is not sent to web servers.
+    example_value: |-
+      https://www.example.org/articles/index?section=539061&expand=comments
+
+  - name: http.request.method
+    data_type: String
+    categories: [Request, URI]
+    keywords: [request, source, visitor]
+    summary: The HTTP method, returned as a string of uppercase characters.
+    example_value: |-
+      GET
+
+  - name: http.request.cookies
+    data_type: Map<Array<String>>
+    categories: [Request, Headers]
+    keywords: [request, header, source, visitor]
+    summary: The `Cookie` HTTP header associated with a request represented as a Map (associative array).
+    description: |-
+      The cookie names are URL decoded. If two cookies have the same name after decoding, their value arrays are merged.
+
+      The cookie values are not pre-processed and retain the original case used in the request.
+    example_value: |-
+      { "app": ["test"] }
+    example_block: |-
+      any(http.request.cookies["app"][*] == "test")
+
+  - name: http.referer
+    data_type: String
+    categories: [Request, Headers]
+    keywords: [request, header, referer, referrer, client, visitor]
+    summary: The HTTP `Referer` request header, which contains the address of the web page that linked to the currently requested page.
+    example_value: |-
+      Referer: https://developer.example.org/en-US/docs/Web/JavaScript
+
+  - name: test.request.body.multipart.content_transfer_encodings
+    data_type: "Array<Array<String>>"
+    categories: [Request, Body]
+    keywords: [request, body, payload, form, multipart, upload, source, visitor]
+    summary: One liner here.
+    description: |-
+      This is a longer description, possibly using [Markdown](/).
+    plan_info_label: ENT
+    plan_info_description: Enterprise plan
+    example_value: |-
+      "asdfasdfuhaoweuqhre must keep quotes!"
+    example_block: |-
+      func(a, b)    # correct
+      a func b      # incorrect
