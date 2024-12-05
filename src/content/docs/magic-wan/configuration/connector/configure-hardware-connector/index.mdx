@@ -35,7 +35,7 @@ Magic WAN Connector uses a DHCP connection at first boot to download your settin
 6. Wait 60 seconds again
 7. Adjust your physical connections as required to match the static IP configuration
 
-Fore more information, read the setup flow below.
+Fore more information, read the [Set up Cloudflare dashboard](#set-up-cloudflare-dashboard) flow below.
 
 ---
 
@@ -130,14 +130,23 @@ If there is a firewall deployed upstream of the Magic WAN Connector, configure t
 
 ### WAN with a static IP address
 
-After activating your Connector, you can use it in a network configuration with the WAN interface set to a static IP address - that is, an Internet configuration that is not automatically set by DHCP.
+After activating your Connector, you can use it in a network configuration with the WAN interface set to a static IP address — that is, an Internet configuration that is not automatically set by DHCP. To use your Connector on a network configuration with a static IP, follow the steps below.
 
-To use your Connector on a network configuration with a static IP:
+:::caution
+Before proceeding, make sure that you went through the setup workflow and activated your Magic WAN Connector.
+:::
 
-1. Wait 60 seconds after activating your Connector.
-2. Unplug the physical connection to the Internet-connected device which provides DHCP.
-3. Adjust your physical connections as required to match the static configuration, and make changes to the [WAN settings](#2-create-a-wan) in the Cloudflare dashboard to reflect the static IP address configuration.
-4. Power cycle the Connector.
+1. Connect Magic WAN Connector to a DHCP port with access to the Internet
+2. [Add a site](#1-create-a-site) in the Cloudflare dashboard
+3. Associate a Connector to it
+4. Create a [DHCP WAN](#2-create-a-wan)
+5. [Active](#activate-connector) and power on your Connector
+6. Wait 60 seconds
+7. Make changes to the [WAN settings](#2-create-a-wan) in the dashboard to a static IP set up
+8. Wait 60 seconds again
+9. Magic WAN Connector will go offline. This is normal and expected behavior
+10. Adjust your physical connections as required to match the static configuration
+11. Magic WAN Connector comes back online
 
 ---
 
