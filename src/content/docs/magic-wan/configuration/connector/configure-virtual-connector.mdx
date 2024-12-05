@@ -31,6 +31,12 @@ Refer to [VMware's documentation](https://docs.vmware.com/en/VMware-vSphere/7.0/
 
 ---
 
+## DHCP vs static IP connections
+
+<Render file="connector/dhcp-vs-static-ip" />
+
+---
+
 ## Obtain the Virtual Connector image
 
 Contact your account team at Cloudflare to obtain the Virtual Connector [OVA package](https://docs.vmware.com/en/VMware-vSphere/7.0/com.vmware.vsphere.vm_admin.doc/GUID-AE61948B-C2EE-436E-BAFB-3C7209088552.html) and license keys. The OVA image includes the files required to install and configure the virtual machine (VM) for Virtual Connector with the appropriate settings.
@@ -127,14 +133,7 @@ You cannot use the same license key twice, or reuse a key once the virtual machi
 
 ### WAN with a static IP address
 
-After activating your Virtual Connector, you can use it in a network configuration with the WAN interface set to a static IP address - that is, an Internet configuration that is not automatically set by DHCP.
-
-To use your Virtual Connector on a network configuration with a static IP:
-
-1. Wait 60 seconds after activating your Connector.
-2. Modify your Port Groups as needed to change the source from which the WAN port obtains its IP address.
-3. [Adjust the WAN settings](#2-create-a-wan) in the Cloudflare dashboard to reflect the new static IP address configuration.
-4. Reboot your virtual machine.
+<Render	file="connector/wan-with-static-ip" />
 
 ## Boot your Virtual Connector
 
