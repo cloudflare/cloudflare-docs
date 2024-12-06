@@ -9,9 +9,9 @@ The configuration settings in this document are based on JUNOS 23.4R2.13.
 
 ## Prerequisites
 
-Confirm that you have the two Cloudflare anycast IPs allocated to your account. You will establish IPsec tunnels to the two anycast IPs irrespective of the location of your Juniper SRX devices (hereon in "endpoint") - traffic will be naturally attracted to the closest Cloudflare colocation facility via BGP Anycast.
+Confirm that you have the two Cloudflare anycast IPs allocated to your account. You will establish IPsec tunnels to the two anycast IPs irrespective of the location of your Juniper SRX devices (hereon in "endpoint") - traffic will be naturally attracted to the closest Cloudflare colocation facility via BGP anycast.
 
-Cloudflare recommends customers configure two IPsec tunnels (one to each of the two Anycast IPs allocated to you Cloudflare account) per Internet Service Provider per endpoint. This provides tunnel redundancy diversity.
+Cloudflare recommends customers configure two IPsec tunnels (one to each of the two anycast IPs allocated to you Cloudflare account) per Internet Service Provider per endpoint. This provides tunnel redundancy diversity.
 
 Equal Cost Multipath Routing (ECMP) ensures traffic is load-balanced across the tunnels, and you can control traffic steering across the tunnels through route prioritization.
 
@@ -33,7 +33,7 @@ This documentation assumes there are two locations connected via Magic WAN:
 | Site | Local/Remote | Security Zone | Subnet        |
 | ---- | ------------ | ------------- | ------------- |
 | A    | Local        | trust         | 10.1.20.0/24  |
-| B    | Remote       | cloudflare    | 10.1.100.0/24 |
+| B    | Remote       | Cloudflare    | 10.1.100.0/24 |
 
 ### Magic IPsec tunnels
 
@@ -564,7 +564,7 @@ Define security policies to permit traffic flows destined for Magic WAN-protecte
 
 There are two very simple rules to allow traffic bidirectionally — it is generally recommended to start with a similar policy and then add more stringent rules once general connectivity is established successfully.
 
-**From Zone:** *cloudflare* **To Zone:** *trust*
+**From Zone:** *Cloudflare* **To Zone:** *trust*
 
 ```txt
 set security policies from-zone cloudflare to-zone trust policy cloudflare_to_trust match source-address any
@@ -593,7 +593,7 @@ policy cloudflare_to_trust_permit {
 }
 ```
 
-**From Zone:** *trust* **To Zone:** *cloudflare*
+**From Zone:** *trust* **To Zone:** *Cloudflare*
 
 ```txt
 set security policies from-zone trust to-zone cloudflare policy trust_to_cloudflare_permit match source-address any
@@ -707,7 +707,7 @@ ID    Algorithm       SPI      Life:sec/kb  Mon lsys Port  Gateway
 
 It can be very helpful to enable debug logging via traceoptions while setting up the tunnels. The log data can help determine if there are issues and, if so, where they might be occurring.
 
-Please note that some errors in the log are benign. The types of errors to look for are those related to authentication or encryption/integrity (i.e. no proposal chosen).
+Please note that some errors in the log are benign. The types of errors to look for are those related to authentication or encryption/integrity (that is, no proposal chosen).
 
 #### Enable IKE `traceoptions`
 
