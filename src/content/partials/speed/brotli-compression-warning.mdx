@@ -4,6 +4,8 @@
 
 ## Notes about end-to-end compression
 
+### Content recompression due to dynamic transformations
+
 Even when using the same compression algorithm end to end (between your origin server and Cloudflare, and between the Cloudflare global network and your website visitor), Cloudflare will need to decompress the response and compress it again if you enable any of the following settings for the request:
 
 - [Automatic HTTPS Rewrites](/ssl/edge-certificates/additional-options/automatic-https-rewrites/)
@@ -20,3 +22,7 @@ To disable these settings for specific URI paths, create a [configuration rule](
 :::note
 Additionally, the [Replace insecure JS libraries](/waf/tools/replace-insecure-js-libraries/) setting also requires Cloudflare to decompress the response and compress it again. At this time, you cannot turn it off using Configuration Rules.
 :::
+
+### Content-Length header
+
+Cloudflare may remove the `Content-Length` HTTP header of responses delivered to website visitors. To ensure that the header is preserved, add a `cache-control: no-transform` HTTP header to the response at the origin server.

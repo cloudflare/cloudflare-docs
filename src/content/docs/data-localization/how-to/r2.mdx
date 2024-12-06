@@ -22,11 +22,11 @@ To configure Regional Services for hostnames [proxied](/dns/manage-dns-records/r
 
 Regional Services only applies to the custom domain configured for an R2 Bucket.
 
-### Send logs to an EU R2 bucket via an S3-compatible endpoint
+### Send logs to R2 via S3-Compatible endpoint
 
-The following instructions will show you how to set up a Logpush job using an S3-compatible endpoint to store logs in an R2 bucket with EU jurisdiction.
+The following instructions will show you how to set up a Logpush job using an S3-compatible endpoint to store logs in an R2 bucket in the jurisdiction of your choice.
 
-1. Create an [R2 bucket](/r2/get-started/) in your Cloudflare account and set EU as the jurisdiction.
+1. Create an [R2 bucket](/r2/get-started/) in your Cloudflare account and select the [jurisdiction](/r2/reference/data-location/#set-jurisdiction-via-the-cloudflare-dashboard) you would like to use.
 
 2. Generate an API token for your R2 bucket. You have the following two options:
 
@@ -80,12 +80,12 @@ This command will output a hash similar to `dxxxx391b`.
 
 </Details>
 
-3. Set up a Logpush destination using [S3-compatible endpoint](/logs/get-started/enable-destinations/s3-compatible-endpoints/) and fill in the required fields as follows:
+3. Set up a Logpush destination using [S3-compatible endpoint](/logs/get-started/enable-destinations/s3-compatible-endpoints/) and fill in the following fields:
 
-- **Bucket**: Enter the name of the R2 bucket you created with the EU jurisdiction.
+- **Bucket**: Enter the name of the R2 bucket you created with the jurisdiction you would like to use.
 - **Path** (optional): If you want, you can specify a folder path to organize your logs.
 - **Endpoint URL**: Provide the S3 API endpoint for your bucket in the format `<account-id>.eu.r2.cloudflarestorage.com`. Do not include the bucket name, as it was set in the first field.
-- **Bucket Region**: Use `WEUR` to specify the EU region.
+- **Bucket Region**: For instance, use `WEUR` to specify the EU region.
 - **Access Key ID**: Enter the Token ID created previously (`325xxxxcd`).
 - **Secret Access Key**: Use the SHA-256 hash of the token (`dxxxx391b`).
 

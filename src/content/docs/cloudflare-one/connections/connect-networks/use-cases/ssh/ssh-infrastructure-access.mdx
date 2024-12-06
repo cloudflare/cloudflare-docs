@@ -18,7 +18,7 @@ import { Tabs, TabItem, Badge, Render } from "~/components";
 
 1. Create a Cloudflare Tunnel for your server by following our [dashboard setup guide](/cloudflare-one/connections/connect-networks/get-started/create-remote-tunnel/). You can skip the connect an application step and go straight to connecting a network.
 
-2. In the **Private Networks** tab for the tunnel, enter the private IP address of your server (or a range that includes the server IP).
+2. In the **Private Networks** tab for the tunnel, enter the IP address of your server (or a range that includes the server IP). Typically this would be a private IP, but public IPs are also allowed.
 
 ## 2. Set up the client
 
@@ -28,9 +28,10 @@ To connect your devices to Cloudflare:
 2. [Enable the Gateway proxy for TCP](/cloudflare-one/policies/gateway/proxy/#enable-the-gateway-proxy).
 3. [Create device enrollment rules](/cloudflare-one/connections/connect-devices/warp/deployment/device-enrollment/) to determine which devices can enroll to your Zero Trust organization.
 
-## 3. Route private network IPs through WARP
+## 3. Route server IPs through WARP
 
-<Render file="tunnel/warp-to-tunnel-route-ips" />
+<Render file="tunnel/warp-to-tunnel-route-ips" params={{ one: "SSH server"}} />
+
 
 ## 4. Add a target
 

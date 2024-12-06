@@ -6,6 +6,8 @@ sidebar:
 
 ---
 
+This guide covers how to deploy the Cloudflare WARP client using Microsoft Intune.
+
 ## Windows
 
 ### Prerequisites
@@ -44,4 +46,79 @@ Intune allows you to insert [predefined variables](https://learn.microsoft.com/e
 
 ## Android
 
-Refer to the [generic instructions for Android](/cloudflare-one/connections/connect-devices/warp/deployment/mdm-deployment/#android).
+To deploy WARP on Android devices:
+
+1. Log in to your Microsoft Intune account.
+2. Go to **Apps** > **Android** >**Add**.
+3. In **App type**, select _Managed Google Play app_.
+4. Add the **Cloudflare One Agent** app from the Google Play store. Its application ID is `com.cloudflare.cloudflareoneagent`.
+5. Go to **Apps** > **App Configuration policies** > **Add**.
+6. Select _Managed devices_.
+7. In **Name**, enter `Cloudflare One Agent`.
+8. For **Platform**, select _Android Enterprise_.
+9. Choose your desired  **Profile Type**.
+10. For **Targeted app**, select **Cloudflare One Agent**. Select **Next**.
+11. For **Configuration settings format**, select _Enter JSON data_. Enter your desired [deployment parameters](/cloudflare-one/connections/connect-devices/warp/deployment/mdm-deployment/parameters/) in the `managedProperty` field. For example:
+
+	```json
+	{
+		"kind": "androidenterprise#managedConfiguration",
+		"productId": "app:com.cloudflare.cloudflareoneagent",
+		"managedProperty": [
+			{
+				"key": "app_config_bundle_list",
+				"valueBundleArray": [
+					{
+						"managedProperty": [
+							{
+								"key": "organization",
+								"valueString": "your-team-name"
+							},
+							{
+								"key": "display_name",
+								"valueString": "Production environment"
+							},
+							{
+								"key": "service_mode",
+								"valueString": "warp"
+							},
+							{
+								"key": "onboarding",
+								"valueBool": false
+							},
+							{
+								"key": "support_url",
+								"valueString": "https://support.example.com/"
+							}
+						]
+					},
+					{
+						"managedProperty": [
+							{
+								"key": "organization",
+								"valueString": "test-org"
+							},
+							{
+								"key": "display_name",
+								"valueString": "Test environment"
+							}
+						]
+					}
+				]
+			}
+		]
+	}
+	```
+
+    Alternatively, if you do not want to copy and paste the JSON data, you can change **Configuration settings format** to _Use configuration designer_ and manually configure each deployment parameter.
+
+    Once you have configured the deployment parameters, select **Next**.
+
+12. Assign users or groups to this policy and select **Next**.
+13. Save the app configuration policy.
+14. Assign users or groups to the application:
+    1. Go to **Apps** > **Android** > **Cloudflare One Agent** > **Manage Properties**.
+    2. Select **Edit** and add users or groups.
+    3. Select **Review + save** > **Save**.
+
+Intune will now deploy the Cloudflare One Agent to user devices.

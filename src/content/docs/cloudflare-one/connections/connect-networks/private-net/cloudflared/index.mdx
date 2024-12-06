@@ -20,18 +20,7 @@ To enable remote access to your private network, follow the guide below.
 To connect your infrastructure with Cloudflare Tunnel:
 
 1. Create a Cloudflare Tunnel for your server by following our [dashboard setup guide](/cloudflare-one/connections/connect-networks/get-started/create-remote-tunnel/). You can skip the connect an application step and go straight to connecting a network.
-
-2. In the **Private Networks** tab for the tunnel, enter the IP/CIDR range of your private network (for example `10.0.0.0/8`). This makes the WARP client aware that any requests to this IP range need to be routed to your new tunnel.
-
-:::note
-
-Cloudflare Tunnel only supports routes in the [private IP address space](https://www.rfc-editor.org/rfc/rfc1918.html#section-3):
-
-- `10.0.0.0` - `10.255.255.255`
-- `172.16.0.0` - `172.31.255.255`
-- `192.168.0.0` - `192.168.255.255`
-
-:::
+2. In the **Private Networks** tab for the tunnel, enter the IP/CIDR range that you wish to route through the tunnel (for example `10.0.0.0/8`).
 
 ## 2. Set up the client
 
@@ -39,7 +28,7 @@ Cloudflare Tunnel only supports routes in the [private IP address space](https:/
 
 ## 3. Route private network IPs through WARP
 
-<Render file="tunnel/warp-to-tunnel-route-ips" />
+<Render file="tunnel/warp-to-tunnel-route-ips" params={{ one: "private network"}}/>
 
 ## 4. (Recommended) Filter network traffic with Gateway
 
@@ -63,7 +52,6 @@ You can create Zero Trust policies to manage access to specific applications on 
 
 5. For **Value**, enter the IP address for your application (for example, `10.128.0.7`).
    :::note
-
    If you would like to create a policy for an IP/CIDR range instead of a specific IP address, you can build a [Gateway Network policy](/cloudflare-one/policies/gateway/network-policies/) using the **Destination IP** selector.
    :::
 
@@ -74,15 +62,17 @@ You can create Zero Trust policies to manage access to specific applications on 
 8. Modify the policies to include additional identity-based conditions. For example:
 
    - **Policy 1**
-     | Selector | Operator | Value | Logic | Action |
+
+     | Selector       | Operator      | Value            | Logic | Action |
      | -------------- | ------------- | ---------------- | ----- | ------ |
-     | Destination IP | in | `10.128.0.7` | And | Allow |
-     | User Email | matches regex | `.*@example.com` | | |
+     | Destination IP | in            | `10.128.0.7`     | And   | Allow  |
+     | User Email     | matches regex | `.*@example.com` |       |        |
 
    - **Policy 2**
-     | Selector | Operator | Value | Action |
+
+     | Selector       | Operator | Value        | Action |
      | -------------- | -------- | ------------ | ------ |
-     | Destination IP | in | `10.128.0.7` | Block |
+     | Destination IP | in       | `10.128.0.7` | Block  |
 
    Policies are evaluated in [numerical order](/cloudflare-one/policies/gateway/order-of-enforcement/#order-of-precedence), so a user with an email ending in @example.com will be able to access `10.128.0.7` while all others will be blocked. For more information on building network policies, refer to our [dedicated documentation](/cloudflare-one/policies/gateway/network-policies/).
 
@@ -111,7 +101,5 @@ Check the local IP address of the device and ensure that it does not fall within
 To resolve the IP conflict, you can either:
 
 - Reconfigure the user's router to use a non-overlapping IP range. Compatible routers typically use `192.168.1.0/24`, `192.168.0.0/24` or `172.16.0.0/24`.
-
 - Tighten the IP range in your Split Tunnel configuration to exclude the `10.0.0.0/24` range. This will only work if your private network does not have any hosts within `10.0.0.0/24`.
-
 - Change the IP/CIDR of your private network so that it does not overlap with a range commonly used by home networks.

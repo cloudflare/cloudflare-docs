@@ -92,7 +92,7 @@ A `key` and a `value` are required for each KV pair. The entire request size mus
 
 ### Expiring keys
 
-KV offers the ability to create keys that automatically expire. You may configure expiration to occur either at a particular point in time, or after a certain amount of time has passed since the key was last modified.
+KV offers the ability to create keys that automatically expire. You may configure expiration to occur either at a particular point in time (using the `expiration` option), or after a certain amount of time has passed since the key was last modified (using the `expirationTtl` option).
 
 Once the expiration time of an expiring key is reached, it will be deleted from the system. After its deletion, attempts to read the key will behave as if the key does not exist. The deleted key will not count against the KV namespace’s storage usage for billing purposes.
 

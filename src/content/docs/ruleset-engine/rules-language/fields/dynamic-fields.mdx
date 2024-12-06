@@ -516,6 +516,8 @@ Identifies whether a request comes from a worker or not. When a request comes fr
 
 [API Shield](/api-shield/) users can now create [custom rules](/waf/custom-rules/) using claims present in tokens processed by [JSON Web Tokens Validation](/api-shield/security/jwt-validation/).
 
+Users can also use any custom JWT claim. Refer to the [WAF documentation](/waf/custom-rules/use-cases/check-jwt-claim-to-protect-admin-user/) for an example of a custom JWT claim.
+
 ### `aud` (audience)
 
 `http.request.jwt.claims.aud` <Type text='Map<Array<String>>' /> <br />

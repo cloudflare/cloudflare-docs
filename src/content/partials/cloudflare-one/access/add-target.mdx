@@ -20,10 +20,9 @@ To create a new target:
 			- Contain only alphanumeric characters, `-`, or `.` (no spaces allowed)
 			- Start and end with an alphanumeric character
 	</Details>
-4. In **IP addresses**, enter the private IPv4 and/or IPv6 address of the target resource. If the IP address overlaps across multiple private networks, select the [virtual network](/cloudflare-one/connections/connect-networks/private-net/cloudflared/tunnel-virtual-networks/) where the resource is located. This IP address and virtual network pairing is now assigned to this target and cannot be reused in another target by design.
+4. In **IP addresses**, enter the IPv4 and/or IPv6 address of the target resource. If the IP address overlaps across multiple private networks, select the [virtual network](/cloudflare-one/connections/connect-networks/private-net/cloudflared/tunnel-virtual-networks/) where the resource is located. This IP address and virtual network pairing is now assigned to this target and cannot be reused in another target by design.
 :::note[IP address requirements]
-- Public IPs are not currently supported.
-- The IP address must be reachable through Cloudflare Tunnel.
+- The IP address must route through Cloudflare Tunnel. To verify, confirm that the target IP appears in **Networks** > **Routes**.
 - You must input the full IP address. The selector in the UI does not do partial matches.
 :::
 5. Select **Add target**.

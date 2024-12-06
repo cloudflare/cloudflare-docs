@@ -112,6 +112,10 @@ Smaller responses will not be compressed, regardless of their content type.
 
 :::
 
+### Content-Length header handling
+
+When Cloudflare compresses a response sent to the website visitor, it may omit the `Content-Length` HTTP header to avoid delivering incorrect length information caused by dynamic transformations. To preserve the `Content-Length` header set by the origin server, add `cache-control: no-transform` to the origin server's response. This directive prevents Cloudflare from altering compression on responses, allowing the `Content-Length` header to pass through as-is. The `cache-control: no-transform` header must be set by the origin — it cannot be added in client requests.
+
 ---
 
 ## Content compression from origin servers to the Cloudflare network
@@ -155,7 +159,7 @@ Cloudflare will take into consideration the `accept-encoding` header value in we
 
 <Render file="brotli-compression-warning" />
 
-## Compression methods by plan 
+## Compression methods by plan
 
 ### Between visitors and Cloudflare
 

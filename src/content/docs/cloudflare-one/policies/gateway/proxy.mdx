@@ -3,10 +3,9 @@ pcx_content_type: concept
 title: Proxy
 sidebar:
   order: 14
-
 ---
 
-import { Badge } from "~/components"
+import { Badge } from "~/components";
 
 You can forward [HTTP](/cloudflare-one/policies/gateway/initial-setup/http/) and [network](/cloudflare-one/policies/gateway/initial-setup/network/) traffic to Gateway for logging and filtering. Gateway can proxy both outbound traffic and traffic directed to resources connected via a Cloudflare Tunnel, GRE tunnel, or IPsec tunnel.
 
@@ -36,8 +35,9 @@ The ICMP proxy forwards traffic for diagnostic tools such as `ping` and `tracero
 Gateway cannot log or filter ICMP traffic.
 :::
 
-## Enable the Gateway proxy
+## Turn on the Gateway proxy
 
 1. In [Zero Trust](https://one.dash.cloudflare.com), go to **Settings** > **Network**.
-2. Enable **Proxy** for TCP.
-3. (Optional) Depending on your use case, you can enable **UDP** and/or **ICMP**.
+2. In **Firewall**, turn on **Proxy**.
+3. Select **TCP**.
+4. (Optional) Depending on your use case, you can select **UDP** and/or **ICMP**.

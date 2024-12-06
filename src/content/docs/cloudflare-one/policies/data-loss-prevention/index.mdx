@@ -15,6 +15,8 @@ Users on Zero Trust Free and Pay-as-you-go plans can use the [Financial Informat
 
 <GlossaryDefinition term="Cloudflare Data Loss Prevention (DLP)" />
 
+To prevent interference, Cloudflare does not write scanned content to disk. Instead, DLP only encrypts and temporarily stores content in memory. Optionally, you can configure [payload logging](/cloudflare-one/policies/data-loss-prevention/dlp-policies/logging-options/#log-the-payload-of-matched-rules) to store encrypted copies of payloads from matching HTTP requests or a [Logpush destination](/cloudflare-one/policies/data-loss-prevention/dlp-policies/logging-options/#send-http-requests-to-logpush-destination) to export entire matching HTTP requests.
+
 ## Data in transit
 
 Data Loss Prevention complements [Secure Web Gateway](/cloudflare-one/policies/gateway/) to detect sensitive data transferred in HTTP requests. DLP scans the entire HTTP body, which may include uploaded or downloaded files, chat messages, forms, and other web content. You can also use DLP with [Email Security](/cloudflare-one/email-security/) to scan [outbound emails](/cloudflare-one/email-security/outbound-dlp/).

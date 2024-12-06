@@ -6,7 +6,7 @@ sidebar:
 
 ---
 
-import { MetaInfo, Type } from "~/components";
+import { MetaInfo, Render, Type } from "~/components";
 
 This guide details the Workflows API within Cloudflare Workers, including methods, types, and usage examples.
 
@@ -183,13 +183,16 @@ Create (trigger) a new instance of the given Workflow.
 
 * <code>create(options?: WorkflowInstanceCreateOptions): Promise&lt;WorkflowInstance&gt;</code>
 
-  * `options` - optional properties to pass when creating an instance.
+  * `options` - optional properties to pass when creating an instance, includng a user-provided ID and payload parameters.
 
-An ID is automatically generated, but a user-provided ID can be specified (up to 64 characters [^1]). This can be useful when mapping Workflows to users, merchants or other identifiers in your system.
+An ID is automatically generated, but a user-provided ID can be specified (up to 64 characters [^1]). This can be useful when mapping Workflows to users, merchants or other identifiers in your system. You can also provide a JSON object as the `params` property, allowing you to pass data for the Workflow instance to act on as its [`WorkflowEvent`](/workflows/build/events-and-parameters/).
 
 ```ts
-// Create a new Workflow instance with your own ID:
-let instance = await env.MY_WORKFLOW.create({ id: myIdDefinedFromOtherSystem })
+// Create a new Workflow instance with your own ID and pass params to the Workflow instance
+let instance = await env.MY_WORKFLOW.create({
+	id: myIdDefinedFromOtherSystem,
+	params: { "hello": "world" }
+})
 return Response.json({
 	id: instance.id,
 	details: await instance.status(),
@@ -197,6 +200,42 @@ return Response.json({
 ```
 
 Returns a `WorkflowInstance`.
+
+<Render file="workflows-type-parameters"/>
+
+To provide an optional type parameter to the `Workflow`, pass a type argument with your type when defining your Workflow bindings:
+
+```ts
+interface User {
+	email: string;
+	createdTimestamp: number;
+}
+
+interface Env {
+	// Pass our User type as the type parameter to the Workflow definition
+  MY_WORKFLOW: Workflow<User>;
+}
+
+export default {
+	async fetch(request, env, ctx) {
+		// More likely to come from your database or via the request body!
+		const user: User = {
+			email: user@example.com,
+			createdTimestamp: Date.now()
+		}
+
+		let instance = await env.MY_WORKFLOW.create({
+			// params expects the type User
+			params: user
+		})
+		
+		return Response.json({
+			id: instance.id,
+			details: await instance.status(),
+		});
+	}
+}
+```
 
 ### get
 

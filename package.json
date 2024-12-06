@@ -35,7 +35,7 @@
 		"@astrojs/starlight-tailwind": "^2.0.3",
 		"@astrojs/tailwind": "^5.1.2",
 		"@cloudflare/puppeteer": "^0.0.14",
-		"@cloudflare/vitest-pool-workers": "^0.5.31",
+		"@cloudflare/vitest-pool-workers": "^0.5.32",
 		"@cloudflare/workers-types": "^4.20241112.0",
 		"@codingheads/sticky-header": "^1.0.2",
 		"@iconify-json/material-symbols": "^1.2.8",
@@ -64,7 +64,7 @@
 		"instantsearch.js": "^4.75.4",
 		"jsonc-parser": "^3.3.1",
 		"lz-string": "^1.5.0",
-		"marked": "^15.0.2",
+		"marked": "^15.0.3",
 		"mdast-util-mdx-expression": "^2.0.1",
 		"mermaid": "^11.4.0",
 		"node-html-parser": "^6.1.13",
@@ -94,7 +94,7 @@
 		"unist-util-visit": "^5.0.0",
 		"vitest": "2.1.5",
 		"wrangler": "^3.87.0",
-		"yaml": "^2.6.0"
+		"yaml": "^2.6.1"
 	},
 	"engines": {
 		"node": ">=22"

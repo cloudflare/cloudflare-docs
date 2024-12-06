@@ -1008,6 +1008,7 @@
 /ssl/reference/certificate-validation-options/ /ssl/concepts/#validation-level 301
 /ssl/reference/cipher-suites/custom-certificates/ /ssl/edge-certificates/custom-certificates/#certificate-packs 301
 /ssl/reference/cipher-suites/matching-on-origin/ /ssl/origin-configuration/cipher-suites/#match-on-origin 301
+/ssl/reference/migration-guides/lets-encrypt-chain/ /ssl/reference/certificate-authorities/#lets-encrypt 301
 /ssl/reference/validation-backoff-schedule/ /ssl/edge-certificates/changing-dcv-method/validation-backoff-schedule/ 301
 /ssl/universal-ssl/changing-dcv-method/ /ssl/edge-certificates/changing-dcv-method/ 301
 /support/dns/how-to/certification-authority-authorization-caa-faq/ /ssl/edge-certificates/troubleshooting/caa-records/ 301

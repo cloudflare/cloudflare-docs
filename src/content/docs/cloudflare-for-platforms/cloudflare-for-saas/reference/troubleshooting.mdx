@@ -79,7 +79,7 @@ More details can be found on the [CAA records FAQ](/ssl/edge-certificates/troubl
 
 As Let's Encrypt - one of the [certificate authorities (CAs)](/ssl/reference/certificate-authorities/) used by Cloudflare - has announced changes in its [chain of trust](/ssl/concepts/#chain-of-trust), starting September 9, 2024, there may be issues with older devices trying to connect to your custom hostname certificate.
 
-Refer to the [full migration guide](/ssl/reference/migration-guides/lets-encrypt-chain/) for details and consider the following solutions:
+Consider the following solutions:
 
 - Use the [Edit Custom Hostname](/api/operations/custom-hostname-for-a-zone-edit-custom-hostname) endpoint to set the `certificate_authority` parameter to an empty string (`""`): this sets the custom hostname certificate to "default CA", leaving the choice up to Cloudflare. Cloudflare will always attempt to issue the certificate from a more compatible CA, such as [Google Trust Services](/ssl/reference/certificate-authorities/#google-trust-services), and will only fall back to using Let’s Encrypt if there is a [CAA record](/ssl/edge-certificates/caa-records/) in place that blocks Google from issuing a certificate.
 

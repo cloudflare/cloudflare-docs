@@ -50,9 +50,12 @@ const resources = await getCollection("docs", (entry) => {
 					location.push(title);
 				}
 
+				// Use the custom title from the `head` frontmatter, minus
+				// the product area suffix, if present.
 				const title =
-					resource.data.head.find((x) => x.tag === "title")?.content ??
-					resource.data.title;
+					resource.data.head
+						.find((x) => x.tag === "title")
+						?.content.split(" · ")[0] ?? resource.data.title;
 
 				return (
 					<tr>

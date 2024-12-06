@@ -5,6 +5,10 @@ productLink: "/cloudflare-one/applications/configure-apps/"
 productArea: Cloudflare One
 productAreaLink: /cloudflare-one/changelog/
 entries:
+  - publish_date: "2024-12-04"
+    title: SCIM GA for Okta and Microsoft Entra ID
+    description: |-
+      Cloudflare's SCIM integrations with [Okta](/cloudflare-one/identity/idp-integration/okta/#synchronize-users-and-groups) and [Microsoft Entra ID](//cloudflare-one/identity/idp-integration/entra-id/#synchronize-users-and-groups) (formerly AzureAD) are now out of beta and generally available (GA) for all customers. These integrations can be used for Access and Gateway policies and Zero Trust user management. Note: This GA release does not include [Dashboard SSO SCIM](/fundamentals/setup/account/account-security/scim-setup/) support.
   - publish_date: "2024-08-26"
     title: Reduce automatic seat deprovisioning minimum to 1 month, down from 2 months.
     description: |-

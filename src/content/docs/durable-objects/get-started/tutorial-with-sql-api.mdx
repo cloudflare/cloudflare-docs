@@ -87,7 +87,10 @@ export class MyDurableObject extends DurableObject {
 
 ```ts
 export class MyDurableObject extends DurableObject {
-	constructor(ctx: DurableObjectState, env: Env) {}
+	constructor(ctx: DurableObjectState, env: Env) {
+		// Required, as we're extending the base class.
+		super(ctx, env)
+	}
 }
 ```
 
@@ -101,7 +104,7 @@ Your file should now look like:
 
 ```js
 export class MyDurableObject extends DurableObject {
-	constructor(ctx, env) {}
+	constructor(ctx: DurableObjectState, env: Env) {}
 
 	async sayHello() {
 		let result = this.ctx.storage.sql
@@ -116,7 +119,10 @@ export class MyDurableObject extends DurableObject {
 
 ```ts
 export class MyDurableObject extends DurableObject {
-	constructor(ctx: DurableObjectState, env: Env) {}
+	constructor(ctx: DurableObjectState, env: Env) {
+		// Required, as we're extending the base class.
+		super(ctx, env)
+	}
 
 	async sayHello() {
 		let result = this.ctx.storage.sql

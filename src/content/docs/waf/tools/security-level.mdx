@@ -2,22 +2,23 @@
 pcx_content_type: reference
 source: https://support.cloudflare.com/hc/en-us/articles/200170056-Understanding-the-Cloudflare-Security-Level
 title: Security Level
-
 ---
 
-import { Render } from "~/components"
+import { Render } from "~/components";
 
 <Render file="security-level-description" product="waf" />
 
-***
+---
+
+<Render file="threat-score-definition" product="waf" />
 
 <Render file="security-level-scores" product="waf" />
 
-***
+---
 
 ## Customize security level
 
-The default security level is *Medium*.
+The default security level is _Medium_.
 
 ### Update globally
 
@@ -31,16 +32,14 @@ To update the security level for your entire zone:
 
 To set the security level more selectively, do one of the following:
 
-* Configure it via a [configuration rule](/rules/configuration-rules/).
-* Use the **Threat Score** as a **Field** criteria within [custom rules](/waf/custom-rules/). If you are using the Expression Editor, use the `cf.threat_score` field.
+- Configure it via a [configuration rule](/rules/configuration-rules/).
+- Use the **Threat Score** as a **Field** criteria within [custom rules](/waf/custom-rules/). If you are using the Expression Editor, use the `cf.threat_score` field.
 
-***
+---
 
 ## Recommendations
 
 To prevent bot IPs from attacking a website:
 
-* A new website owner might set a *Medium* or *High* **Security Level** and lower [**Challenge Passage**](/waf/tools/challenge-passage/) to a value below **30 minutes** to ensure that Cloudflare is constantly protecting the site.
-* An experienced website administrator confident in their security settings might set **Security Level** to *Essentially Off* or *Low* while setting a higher [**Challenge Passage**](/waf/tools/challenge-passage/) for a week, month, or even year to provide a less obtrusive visitor experience.
-
-You can also create [WAF custom rules](/waf/custom-rules/) to protect sensitive areas of your website — like comment form pages or login forms — using the [threat score](#threat-score) in your rule expression. The flexibility of custom rules allows you to select the action to take (for example, challenge or block) and exclude specific IP addresses.
+- A new website owner might set a _Medium_ or _High_ **Security Level** and lower [**Challenge Passage**](/waf/tools/challenge-passage/) to a value below **30 minutes** to ensure that Cloudflare is constantly protecting the site.
+- An experienced website administrator confident in their security settings might set **Security Level** to _Essentially Off_ or _Low_ while setting a higher [**Challenge Passage**](/waf/tools/challenge-passage/) for a week, month, or even year to provide a less obtrusive visitor experience.
