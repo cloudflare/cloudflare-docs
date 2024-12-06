@@ -27,7 +27,7 @@ entries:
 
   - name: http.request.method
     data_type: String
-    categories: [Request, URI]
+    categories: [Request]
     keywords: [request, source, visitor]
     summary: The HTTP method, returned as a string of uppercase characters.
     example_value: |-

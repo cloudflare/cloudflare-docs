@@ -43,12 +43,12 @@ const FieldCatalog = ({ fields }) => {
 	// ];
 
 	// apply filters to the fields list
-	const fieldList = mapped.filter(({ field }) => {
-		// if (filters.authors.length > 0) {
-		// 	if (!filters.authors.includes(field.name.split("/")[1])) {
-		// 		return false;
-		// 	}
-		// }
+	const fieldList = mapped.filter((field) => {
+		if (filters.categories.length > 0) {
+			if (!field.categories?.some((c) => filters.categories.includes(c))) {
+				return false;
+			}
+		}
 
 		// if (filters.tasks.length > 0) {
 		// 	if (!filters.tasks.includes(field.task.name)) {
@@ -62,11 +62,20 @@ const FieldCatalog = ({ fields }) => {
 		// 	}
 		// }
 
-		// if (filters.search) {
-		// 	if (!field.name.toLowerCase().includes(filters.search.toLowerCase())) {
-		// 		return false;
-		// 	}
-		// }
+		if (filters.search) {
+			// search keywords
+			let keywordFound = field.keywords?.some(
+				(kw) => kw.indexOf(filters.search) >= 0,
+			);
+
+			if (
+				!field.name.toLowerCase().includes(filters.search.toLowerCase()) &&
+				!field.summary.toLowerCase().includes(filters.search.toLowerCase()) &&
+				!keywordFound
+			) {
+				return false;
+			}
+		}
 
 		return true;
 	});
@@ -162,7 +171,7 @@ const FieldCatalog = ({ fields }) => {
 					return (
 						<a
 							key={field.name}
-							className="p-3 border-gray-200 dark:border-gray-700 border-solid border rounded-md w-full block !text-inherit no-underline self-start hover:bg-gray-50 dark:hover:bg-black mb-3"
+							className="p-3 border-gray-200 dark:border-gray-700 border-solid border rounded-md lg:w-[48%] w-full block !text-inherit no-underline self-start hover:bg-gray-50 dark:hover:bg-black mb-3"
 							href={`/ruleset-engine/rules-language/fields/reference/${field.name}`}
 						>
 							<div className="-mb-1 flex items-center">
