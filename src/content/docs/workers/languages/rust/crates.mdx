@@ -38,10 +38,8 @@ The [`reqwest` library](https://docs.rs/reqwest/latest/reqwest/) can be compiled
 
 [Refer to the `tokio-postgres` example](https://github.com/cloudflare/workers-rs/tree/main/examples/tokio-postgres) for more information.
 
-## `hyper`
+## `axum`
 
-The `hyper` crate contains two HTTP clients, the lower-level `conn` module and the higher-level `Client`.
-The `conn` module can be used with Workers `Socket`, however `Client` requires timing dependencies which are
-not yet Wasm friendly.
+The `axum` crate is a web application framework that focuses on ergonomics and modularity.
 
-[Refer to the `hyper` example](https://github.com/cloudflare/workers-rs/tree/main/examples/hyper) for more information.
+[Refer to the `axum` example](https://github.com/cloudflare/workers-rs/tree/main/examples/axum) for more information.
