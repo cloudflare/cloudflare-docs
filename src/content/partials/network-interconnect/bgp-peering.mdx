@@ -1,7 +1,6 @@
 ---
 params:
   - productName
-	- tunnelHcPath
   - productPath
 ---
 
@@ -22,7 +21,7 @@ BGP peering sessions can advertise reachable prefixes to a peer, and withdraw pr
 
 ## Tunnel health checks
 
-You need to enable [tunnel health checks]({props.tunnelHcPath}) alongside BGP. This is essential to determine if a specific Cloudflare datacenter is reachable from a customer router or not. Tunnel health checks will modify the route's priorities for dynamically learned BGP routes, like what happens for static routes.
+You need to enable [tunnel health checks]({props.productPath}) alongside BGP. This is essential to determine if a specific Cloudflare datacenter is reachable from a customer router or not. Tunnel health checks will modify the route's priorities for dynamically learned BGP routes, like what happens for static routes.
 
 {props.productName} customers should configure unidirectional health checks.
 
