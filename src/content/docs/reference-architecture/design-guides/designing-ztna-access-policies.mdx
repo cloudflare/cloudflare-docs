@@ -31,12 +31,11 @@ By the end of this guide, you will be equipped to implement granular access poli
 
 ## Prerequisites
 
-This section covers the essential architectural components and concepts to understand before you can design granular access policies. 
+This section covers the essential architectural components and concepts to understand before you can design granular access policies.
 
-:::note[Header]
+:::note[Note]
 We recommend reading the [SASE reference architecture](/reference-architecture/architectures/sase/) to get a deeper understanding of connecting applications, identity providers, and device posture providers.
 :::
-
 
 Cloudflare allows organizations to facilitate application access using our [connectivity cloud](https://www.cloudflare.com/connectivity-cloud/), which securely connects users, applications and data regardless of their location. Core to the platform is Cloudflare's [extensive global network](https://www.cloudflare.com/network/) which delivers low-latency connectivity for users worldwide. By running every service in every data center, Cloudflare applies networking, performance and security functions in a single pass, eliminating the need to route traffic through multiple, specialized security servers, and therefore reduces latency and avoids performance bottlenecks.
 
@@ -300,7 +299,7 @@ Now we define the first policy in the application. First, select the Access Grou
 | **Additional settings** |                                       |
 | Isolate Application     | No                                    |
 
-This policy ensures that users can gain full access to your company wiki only if they have passed the following requirements: 
+This policy ensures that users can gain full access to your company wiki only if they have passed the following requirements:
 
 - They are full-time employees on devices with the latest operating system.
 - Users have authenticated using MFA.
@@ -436,7 +435,7 @@ Other posture elements here include:
 
 - Requiring the latest OS.
 - The user's device is joined to a Microsoft Active Directory domain.
-- The user's device is explicitly a company-managed device (shown by referencing a list of managed device serial numbers). 
+- The user's device is explicitly a company-managed device (shown by referencing a list of managed device serial numbers).
 
 These combined posture checks ensure that only up-to-date, company-controlled devices within your managed environment can access the database, further reducing the attack surface and the risk of access from potentially compromised or uncontrolled endpoints.
 
@@ -474,6 +473,7 @@ Inside the policy, we have made this application available to our new access gro
 [External evaluation](/cloudflare-one/policies/access/external-evaluation/) means we have an API endpoint containing some sort of [access logic](https://github.com/cloudflare/workers-access-external-auth-example) — in this case, time of day access. We are making an API call to this endpoint, and defining the key that Cloudflare is using to verify that the response came from the API. This is useful for several reasons:
 
 External evaluation allows users to create bespoke security posture checks based on criteria that may not be covered by the default set of posture checks. For this example, we will be using a service built on [Cloudflare Workers](https://workers.cloudflare.com/).
+
 - Restricting access to the terminal outside of business hours implements a form of time-based access control. This adds an extra layer of security by limiting the window of opportunity for potential attackers.
 
 Now, you will learn how to secure RDP access as a private IP application:
