@@ -55,6 +55,57 @@ entries:
     example_value: |-
       Referer: https://developer.example.org/en-US/docs/Web/JavaScript
 
+  - name: ip.src.is_in_european_union
+    data_type: Boolean
+    categories: [Request, Geolocation]
+    keywords: [request, location, europe, country, maxmind, source, visitor]
+    summary: Returns `true` when the request originates from a country in the European Union (EU).
+    description: |-
+      <details><summary><p>Countries in the EU (from geolocation data)</p></summary>
+
+      | Country code | Country name    |
+      | ------------ | --------------- |
+      | `AT`         | Austria         |
+      | `AX`         | Åland Islands   |
+      | `BE`         | Belgium         |
+      | `BG`         | Bulgaria        |
+      | `CY`         | Cyprus          |
+      | `CZ`         | Czechia         |
+      | `DE`         | Germany         |
+      | `DK`         | Denmark         |
+      | `EE`         | Estonia         |
+      | `ES`         | Spain           |
+      | `FI`         | Finland         |
+      | `FR`         | France          |
+      | `GF`         | French Guiana   |
+      | `GP`         | Guadeloupe      |
+      | `GR`         | Greece          |
+      | `HR`         | Croatia         |
+      | `HU`         | Hungary         |
+      | `IE`         | Ireland         |
+      | `IT`         | Italy           |
+      | `LT`         | Lithuania       |
+      | `LU`         | Luxembourg      |
+      | `LV`         | Latvia          |
+      | `MF`         | Saint Martin    |
+      | `MQ`         | Martinique      |
+      | `MT`         | Malta           |
+      | `NL`         | The Netherlands |
+      | `PL`         | Poland          |
+      | `PT`         | Portugal        |
+      | `RE`         | Réunion         |
+      | `RO`         | Romania         |
+      | `SE`         | Sweden          |
+      | `SI`         | Slovenia        |
+      | `SK`         | Slovakia        |
+      | `YT`         | Mayotte         |
+
+      The EU country list was obtained from MaxMind's GeoIP2 database on 2023-12-05. For details on obtaining up-to-date country information, refer to the [MaxMind website](https://dev.maxmind.com/geoip/geolite2-free-geolocation-data).
+
+      </details>
+
+      This field has the same value as the `ip.geoip.is_in_european_union` field, which is deprecated. The `ip.geoip.is_in_european_union` field is still available for new and existing rules, but you should use the `ip.src.is_in_european_union` field instead.
+
   - name: test.request.body.multipart.content_transfer_encodings
     data_type: "Array<Array<String>>"
     categories: [Request, Body]
