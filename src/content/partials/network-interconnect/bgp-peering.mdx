@@ -1,0 +1,40 @@
+---
+params:
+  - productName
+	- tunnelHcPath
+  - productPath
+---
+
+import { Markdown } from "~/components";
+
+{props.productName} customers can use the Cloudflare dashboard to configure and manage BGP peering between their networks and Cloudflare when using a Direct CNI on-ramp. Using BGP peering with a CNI allows customers to:
+- Exchange routes dynamically
+- Automate the process of adding or removing networks and subnets
+- Take advantage of failure detection and session recovery features
+- Establish an eBGP session between their routers and Cloudflare in a single-hop link, secured by MD5 authentication to prevent misconfigurations.
+- Established sessions both with dedicated ports using Direct CNI, as well as Cloud CNI dedicated and virtual circuits.
+
+## Route distribution and convergence
+
+All {props.productName} routes are distributed into BGP announcements. Each BGP peer will receive each prefix route along with the full `AS_PATH`, with the selected overlay ASN prepended. This is so that the peer can accurately perform [loop prevention](https://datatracker.ietf.org/doc/html/rfc4271#section-9.1.2).
+
+BGP peering sessions can advertise reachable prefixes to a peer, and withdraw previously advertised prefixes. This should not take more than a few minutes to propagate.
+
+## Tunnel health checks
+
+You need to enable [tunnel health checks]({props.tunnelHcPath}) alongside BGP. This is essential to determine if a specific Cloudflare datacenter is reachable from a customer router or not. Tunnel health checks will modify the route's priorities for dynamically learned BGP routes, like what happens for static routes.
+
+{props.productName} customers should configure unidirectional health checks.
+
+## How to set up BGP peering
+
+BGP peering if available to Magic WAN/Transit customers with Direct CNI as an on-ramp. If your network is set up with GRE or IPsec tunnels, you cannot use BGP peering
+
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login), and select your account.
+2. Go to **Interconnects**.
+3. Find the Direct CNI interconnect you want to configure with BGP > select the **three dots** next to it > **Configure BGP**.
+4. In **Customer device ASN**, enter the ASN for your network.
+5. In **MD5 key**, you can optionally enter the key for your network. Note that this is meant to prevent accidental misconfigurations, and is not a security mechanism.
+6. In **Advertised prefix list**, input the inside IP tunnel addresses automatically assigned by Cloudflare during the creation of the CNI interconnect.
+7. Select **Enable BPG**.
+
