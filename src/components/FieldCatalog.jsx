@@ -122,38 +122,6 @@ const FieldCatalog = ({ fields }) => {
 						</label>
 					))}
 				</div>
-
-				<div className="!mb-8 md:block hidden">
-					<span className="uppercase text-gray-600 dark:text-gray-200 text-sm font-bold">
-						▼ Keywords
-					</span>
-
-					{keywords.map((keyword) => (
-						<label key={keyword} className="block !my-2">
-							<input
-								type="checkbox"
-								value={keyword}
-								className="mr-2"
-								onClick={(e) => {
-									if (e.target.checked) {
-										setFilters({
-											...filters,
-											keywords: [...filters.keywords, e.target.value],
-										});
-									} else {
-										setFilters({
-											...filters,
-											keywords: filters.keywords.filter(
-												(f) => f !== e.target.value,
-											),
-										});
-									}
-								}}
-							/>{" "}
-							{keyword}
-						</label>
-					))}
-				</div>
 			</div>
 
 			<div className="flex md:w-3/4 w-full gap-[1%] items-stretch self-start flex-wrap !mt-0">
