@@ -10,7 +10,7 @@ entries:
   - name: http.host
     data_type: String
     categories: [Request, URI]
-    keywords: [request, uri, url, domain, source, visitor]
+    keywords: [request, uri, url, domain, client, visitor]
     summary: The hostname used in the full request URI.
     example_value: |-
       www.example.org
@@ -18,7 +18,7 @@ entries:
   - name: http.request.full_uri
     data_type: String
     categories: [Request, URI]
-    keywords: [request, uri, url, source, visitor]
+    keywords: [request, uri, url, client, visitor]
     summary: The full URI as received by the web server.
     description: |-
       The value will not include the `#fragment` part, which is not sent to web servers.
@@ -28,7 +28,7 @@ entries:
   - name: http.request.method
     data_type: String
     categories: [Request]
-    keywords: [request, source, visitor]
+    keywords: [request, client, visitor]
     summary: The HTTP method, returned as a string of uppercase characters.
     example_value: |-
       GET
@@ -36,7 +36,7 @@ entries:
   - name: http.request.cookies
     data_type: Map<Array<String>>
     categories: [Request, Headers]
-    keywords: [request, header, source, visitor]
+    keywords: [request, header, client, visitor]
     summary: The `Cookie` HTTP header associated with a request represented as a Map (associative array).
     description: |-
       The cookie names are URL decoded. If two cookies have the same name after decoding, their value arrays are merged.
@@ -58,7 +58,7 @@ entries:
   - name: ip.src.is_in_european_union
     data_type: Boolean
     categories: [Request, Geolocation]
-    keywords: [request, location, europe, country, maxmind, source, visitor]
+    keywords: [request, geolocation, europe, country, maxmind, client, visitor]
     summary: Returns `true` when the request originates from a country in the European Union (EU).
     description: |-
       <details><summary><p>Countries in the EU (from geolocation data)</p></summary>
@@ -109,7 +109,7 @@ entries:
   - name: test.request.body.multipart.content_transfer_encodings
     data_type: "Array<Array<String>>"
     categories: [Request, Body]
-    keywords: [request, body, payload, form, multipart, upload, source, visitor]
+    keywords: [request, body, payload, form, multipart, upload, client, visitor]
     summary: One liner here.
     description: |-
       This is a longer description, possibly using [Markdown](/).
