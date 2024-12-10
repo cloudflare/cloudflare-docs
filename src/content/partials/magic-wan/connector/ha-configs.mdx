@@ -1,13 +1,14 @@
 ---
 params:
   - finalInstructions
+  - hardSoftConn
 ---
 
 import { Markdown } from "~/components";
 
 ## About high availability configurations
 
-When you set up a site in high availability, the WANs and LANs in your Connectors have the same configuration but are replicated on two nodes. In case of failure of a Connector, the other Connector becomes the active node, taking over configuration of the LAN gateway IP and allowing traffic to continue without disruption.
+{props.hardSoftConn} When you set up a site in high availability, the WANs and LANs in your Connectors have the same configuration but are replicated on two nodes. In case of failure of a Connector, the other Connector becomes the active node, taking over configuration of the LAN gateway IP and allowing traffic to continue without disruption.
 
 Because Connectors in high availability configurations share a single site, you need to set up:
 
