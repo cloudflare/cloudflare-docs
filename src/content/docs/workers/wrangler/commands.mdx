@@ -2041,17 +2041,19 @@ wrangler pipelines create <name> --r2 <r2-bucket-name> [OPTIONS]
 	- The maximum duration of a batch before data is written, in seconds. Default 15s. Maximum of 600s.
 - `--compression` string optional
 	- Type of compression to apply to output files. Choices: "none", "gzip", "deflate"
+- `--prefix` string optional
+	- Optional base path to store files in the destination bucket.
 - `--filepath` string optional
-	- The path to store files in the destination bucket. Defaults to `event_date=${date}/hr=${hr}`
+	- The path to store partitioned files in the destination bucket. Defaults to `event_date=${date}/hr=${hr}`
 - `--filename` string optional
-	- The name of the file in the bucket. Must contain `${slug}`. File extension is optional. Defaults to `${slug}-${hr}.json`
+	- The name of the file in the bucket. Must contain `${slug}`. File extension is optional. Defaults to `${slug}${extension}`
 
 ### `update`
 
 Update an existing pipeline
 
 ```txt
-wrangler pipelines create <name> [OPTIONS]
+wrangler pipelines update <name> [OPTIONS]
 ```
 
 - `name` string required
@@ -2066,10 +2068,12 @@ wrangler pipelines create <name> [OPTIONS]
 	- The maximum duration of a batch before data is written, in seconds. Default 15s. Maximum of 600s.
 - `--compression` string optional
 	- Type of compression to apply to output files. Choices: "none", "gzip", "deflate"
+- `--prefix` string optional
+	- Optional base path to store files in the destination bucket.
 - `--filepath` string optional
-	- The path to store files in the destination bucket. Defaults to `event_date=${date}/hr=${hr}`
+	- The path to store partitioned files in the destination bucket. Defaults to `event_date=${date}/hr=${hr}`
 - `--filename` string optional
-	- The name of the file in the bucket. Must contain `${slug}`. File extension is optional. Defaults to `${slug}-${hr}.json`
+	- The name of the file in the bucket. Must contain `${slug}`. File extension is optional. Defaults to `${slug}${extension}`
 
 ### `delete`
 
