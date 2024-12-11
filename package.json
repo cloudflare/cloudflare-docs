@@ -66,7 +66,7 @@
 		"lz-string": "^1.5.0",
 		"marked": "^15.0.3",
 		"mdast-util-mdx-expression": "^2.0.1",
-		"mermaid": "^11.4.0",
+		"mermaid": "^11.4.1",
 		"node-html-parser": "^6.1.13",
 		"patch-package": "^8.0.0",
 		"playwright": "^1.49.0",
