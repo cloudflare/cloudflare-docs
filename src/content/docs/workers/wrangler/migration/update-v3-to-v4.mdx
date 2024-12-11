@@ -1,0 +1,71 @@
+---
+title: Migrate from Wrangler v3 to v4
+pcx_content_type: how-to
+sidebar:
+  order: 1
+
+---
+Wrangler v4 is a major release focused on updates to underlying systems and dependencies, along with improvements to keep Wrangler commands consistent and clear. While many users should expect a no-op upgrade, the following sections outline  significant changes and steps for migrating where necessary. 
+
+### Summary of changes
+* **Updated Node.js Support Policy:**
+Node.js v16, which reached End-of-Life in 2022, is no longer supported in Wrangler v4. Wrangler now follows Node.js's [official support lifecycle](https://nodejs.org/en/about/previous-releases). 
+
+* **esbuild Version Upgrade**: Wrangler v4 uses [esbuild](https://esbuild.github.io/) to bundle Worker code before deploying it, and was previously pinned to esbuild v0.17.19. Wrangler v4 uses esbuild v0.24, which could impact dynamic wildcard imports. 
+
+* **Commands default to local mode**: All commands now run in local mode by default, requiring a `--remote` flag for API queries, 
+
+* **Changes to KV command output formats**: `wrangler kv list` now outputs data in a format compatible with `wrangler kv bulk delete.` 
+
+* **Deprecated commands and configurations removed:** Legacy commands, flags, and configurations have been removed. 
+
+## Detailed Changes 
+
+### Updated Node.js Support Policy 
+
+#### What changed?
+
+Wrangler now supports only Node.js versions that align with [Node.js's official lifecycle](https://nodejs.org/en/about/previous-releases): 
+* **Supported**: Current, Active LTS, Maintenance LTS
+* **No longer supported:** Node.js v16 (EOL in 2022)
+
+Wrangler tests no longer run on v16, and users still on this version may encounter unsupported behavior.
+
+#### Impact
+Users still using Node.js v16 must upgrade to a supported version (v18 or higher) to continue receiving support and compatibility with Wrangler. 
+
+### esbuild Version Upgrade
+
+#### What changed?
+
+Wrangler upgraded esbuild from **v0.17.19** to **v0.24**, bringing improvements (such as the ability to use the `using` keyword with RPC) and changes to bundling behavior: 
+* **Dynamic imports:** Wildcard imports (e.g., `import('./data/' + kind + '.json') `) now automatically include all matching files in the bundle. 
+
+#### Impact
+Users relying on wildcard dynamic imports may see unwanted files bundled. Prior to esbuild v0.19, `import` statements with dynamic paths ( like `import('./data/' + kind + '.json')`) did not bundle all files matches the glob pattern (`*.json`) . Only files explicitly referenced or included using `find_additional_modules`  were bundled. With esbuild v0.19, wildcard imports now automatically bundle all files matching the glob pattern. This could result in unwanted files being bundled, so users might want to avoid wildcard dynamic imports and use explicit imports instead. 
+
+### Commands default to local mode
+
+#### What changed?
+All commands now run in **local mode by default.** Wrangler has many commands for accessing resources like KV and R2, but the commands were prviously inconsistent in whether they run in a local or remote environment. For example, D1 defaults to querying a local datastore, and requires the `--remote`  flag to query via the API. KV, on the other hand, previously defaulted to querying via the API (implicitly using the `--remote`  flag) and required a `--local`  flag to query a local datastore. In order to make the behavior consistent across Wrangler, each command now uses the `--local`  flag by default, and will require an explicit `--remote`  flag to query via the API. 
+
+For example:
+
+* **Previous Behavior (Wrangler v3):** `wrangler kv list` queried remotely by default.
+* **New Behavior (Wrangler v4):** `wrangler kv list` queries locally unless `--remote` is specified.
+
+
+#### Impact
+Those using `wrangler kv` and/or `wrangler r2` commands to query or write to their data store will need to add the `--remote` flag in order to replicate previous behavior. 
+
+### Changes to KV command output formats
+
+#### What changed? 
+The output format of `wrangler kv list` has been updateed to align with the input format for `wrangler kv bulk delete.` 
+
+#### Impact
+Scripts or tools relying on the old `wrangler kv list` output format will need to be updated to handle the new format.
+
+### Deprecated Commands and Configurations Removed
+
+TBD 
