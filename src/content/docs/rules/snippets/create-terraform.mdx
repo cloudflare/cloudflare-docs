@@ -36,7 +36,7 @@ resource "cloudflare_snippet_rules" "cookie_snippet_rule" {
 		description = "Trigger snippet on specific cookie"
 		snippet_name = "my_test_snippet_1"
 	}
-	depends_on = ["cloudflare_snippet.my_snippet"]
+	depends_on = [cloudflare_snippet.my_snippet]
 }
 ```
 
