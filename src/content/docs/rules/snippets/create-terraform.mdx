@@ -20,7 +20,7 @@ The following example Terraform configuration creates a snippet and an associate
 ```tf
 resource "cloudflare_snippet" "my_snippet" {
 	zone_id  = "<ZONE_ID>"
-	name = "test_snippet_1"
+	name = "my_test_snippet_1"
 	main_module = "file1.js"
 	files {
 		name = "file1.js"
@@ -34,11 +34,15 @@ resource "cloudflare_snippet_rules" "cookie_snippet_rule" {
 		enabled = true
 		expression = "http.cookie eq \"a=b\""
 		description = "Trigger snippet on specific cookie"
-		snippet_name = "test_snippet_1"
+		snippet_name = "my_test_snippet_1"
 	}
 	depends_on = ["cloudflare_snippet.my_snippet"]
 }
 ```
+
+The name of a snippet can only contain the characters `a-z`, `0-9`, and `_` (underscore). The name must be unique in the context of the zone.
+
+All `snippet_name` values in the `cloudflare_snippet_rules` resource must match the names of existing snippets.
 
 ## More resources
 
