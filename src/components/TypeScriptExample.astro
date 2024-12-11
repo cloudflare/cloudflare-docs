@@ -58,7 +58,11 @@ if (!code) {
 
 code = code.replace(/\u007f/g, "\n");
 
-const js = await transform(code, "placeholder.ts");
+const js = await transform(code, "placeholder.ts", {
+	prettierOptions: {
+		useTabs: true,
+	},
+});
 
 const TabsWrapper = tabsWrapper ? Tabs : Fragment;
 ---
