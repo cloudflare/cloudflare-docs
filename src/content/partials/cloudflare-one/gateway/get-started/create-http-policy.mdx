@@ -1,0 +1,29 @@
+---
+{}
+---
+
+import { Render } from "~/components";
+
+To create a new HTTP policy:
+
+1. In [Zero Trust](https://one.dash.cloudflare.com/), go to **Gateway** > **Firewall policies**.
+2. In the **HTTP** tab, select **Add a policy**.
+3. Name the policy.
+4. Under **Traffic**, build a logical expression that defines the traffic you want to allow or block.
+5. Choose an **Action** to take when traffic matches the logical expression. For example, if you have enabled TLS inspection, some applications that use [embedded certificates](/cloudflare-one/policies/gateway/http-policies/tls-decryption/#inspection-limitations) may not support HTTP inspection, such as some Google products. You can create a policy to bypass inspection for these applications:
+
+   <Render
+   	file="gateway/policies/do-not-inspect-applications"
+   	product="cloudflare-one"
+   />
+
+   Cloudflare also recommends adding a policy to block [known threats](/cloudflare-one/policies/gateway/domain-categories/#security-categories) such as Command & Control, Botnet and Malware based on Cloudflare's threat intelligence:
+
+   <Render
+   	file="gateway/policies/block-security-categories"
+   	product="cloudflare-one"
+   />
+
+6. Select **Create policy**.
+
+For more information, refer to [HTTP policies](/cloudflare-one/policies/gateway/http-policies/).
