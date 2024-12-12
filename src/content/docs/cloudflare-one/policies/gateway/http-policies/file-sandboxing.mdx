@@ -57,7 +57,7 @@ You can now create [Quarantine HTTP policies](/cloudflare-one/policies/gateway/h
 
 ## Create test policy
 
-To test file sandboxing is working, you can create a Quarantine policy that matches the [Cloudflare Sandbox Test](https://sandbox.cloudflaredemos.com/):
+To test if file sandboxing is working, you can create a Quarantine policy that matches the [Cloudflare Sandbox Test](https://sandbox.cloudflaredemos.com/):
 
 1. In [Zero Trust](https://one.dash.cloudflare.com/), go to **Gateway** > **Firewall policies**, then select **HTTP**.
 2. Select **Add a policy**.
@@ -71,7 +71,7 @@ To test file sandboxing is working, you can create a Quarantine policy that matc
 5. From a device [connected to your Zero Trust organization](/cloudflare-one/connections/connect-devices/), open a browser and go to the [Cloudflare Sandbox Test](https://sandbox.cloudflaredemos.com/).
 6. Select **Download Test File**.
 
-Before downloading the test file to the device, Gateway will quarantine and scan the file while displaying an interstitial status page.
+Gateway will quarantine and scan the file, display an interstitial status page in the browser, then release the file for download.
 
 ## Compatibility
 
