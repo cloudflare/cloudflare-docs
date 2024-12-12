@@ -41,7 +41,7 @@ For example:
 * Furthermore, you may have dedicated infrastructure (managed by a partner) for a few applications
 
  The example scenario is described in the below diagram:
- ![Diagram showing the example scenario with multiple domains, subdomains and web applications](~/assets/images/reference-architecture/streamlined-waf-deployment-across-zones-and-applications/diagram-1.svg "Figure 1: An example scenario with multiple domains, subdomains and web applications.")
+ ![Diagram showing the example scenario with multiple domains, subdomains and web applications](~/assets/images/reference-architecture/streamlined-waf-deployment-across-zones-apps/diagram-1.svg "Figure 1: An example scenario with multiple domains, subdomains and web applications.")
 
 In this scenario, there are multiple requirements from a WAF setup perspective:
 * To create an easily deployable configuration that deploys standard WAF rules configuration in front of most applications.
@@ -65,7 +65,7 @@ Referring to the earlier scenario, there may be 6 applications (on 6 different F
 
 This is what the structure would look like for the scenario described above, using “example.com” and “example.org” as 2nd domains.
 
-![Diagram showing how the example scenario can be modelled in a Cloudflare Account with multiple zones](~/assets/images/reference-architecture/streamlined-waf-deployment-across-zones-and-applications/diagram-2.svg "Figure 2: The example scenario now included in a Cloudflare Account with multiple zones.")
+![Diagram showing how the example scenario can be modelled in a Cloudflare Account with multiple zones](~/assets/images/reference-architecture/streamlined-waf-deployment-across-zones-apps/diagram-2.svg "Figure 2: The example scenario now included in a Cloudflare Account with multiple zones.")
 
 We have two Cloudflare zones within a single Cloudflare Account, and within each zone multiple applications identified by their FQDNs
 
