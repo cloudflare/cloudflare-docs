@@ -1,0 +1,35 @@
+---
+{}
+---
+
+After your first deploy, select **Continue to project** to see your project's configuration in the Cloudflare Pages dashboard. On this page, you can see your project's current deployment status, the production URL and associated commit, and all past deployments.
+
+![Site dashboard displaying your environments and deployments](~/assets/images/pages/get-started/site-dashboard.png)
+
+### Delete a project
+
+To delete your Pages project:
+
+1. Go back to the **Account Home** or use the drop-down menu at the top of the dashboard.
+2. Select **Workers & Pages**.
+3. Select your Pages project > **Settings** > **Delete project**.
+
+:::caution
+
+
+For projects with a custom domain, you must first delete the CNAME record associated with your Pages project. Failure to do so may leave the DNS records active, causing your domain to point to a Pages project that no longer exists. Refer to [Deleting a custom domain](/pages/configuration/custom-domains/#delete-a-custom-domain) for instructions.
+
+For projects without a custom domain (any project on a `*.pages.dev` subdomain), your project can be deleted in the project's settings.
+
+
+:::
+
+## Advanced project settings
+
+In the **Settings** section, you can configure advanced settings, such as changing your project name, updating your Git configuration, or updating your build command, build directory or environment variables.
+
+## Related resources
+
+* Set up a [custom domain for your Pages project](/pages/configuration/custom-domains/).
+* Enable [Cloudflare Web Analytics](/pages/how-to/web-analytics/).
+* Set up Access policies to [manage who can view your deployment previews](/pages/configuration/preview-deployments/#customize-preview-deployments-access).

@@ -5,6 +5,52 @@ productLink: "/fundamentals/"
 productArea: Core platform
 productAreaLink: /fundamentals/reference/changelog/platform/
 entries:
+  - publish_date: "2024-12-09"
+    title: "Access applications: self_hosted_domains"
+    description: |-
+      Deprecation date: November 21, 2025
+
+      The `self_hosted_domains` field for [Access applications](https://developers.cloudflare.com/api/operations/access-applications-update-an-access-application) is deprecated in favor of `destinations` to allow for more flexibility in defining different types of domains.
+
+      Before:
+      ```json
+      {
+        // ...
+        "self_hosted_domains": ["foo.example.com", "bar.example.com"]
+      }
+      ```
+
+      After:
+      ```json
+      {
+        // ...
+        "destinations": [
+          {
+            "type": "public",
+            "uri": "foo.example.com"
+          },
+          {
+            "type": "public",
+            "uri": "bar.example.com"
+          }
+        ]
+      }
+      ```
+
+      The API will accept both fields until the deprecation date. If `self_hosted_domains` are provided, then they will be interpreted as `public` destinations. However, if `destinations` are provided, then `self_hosted_domains` will be ignored even if provided.
+
+      Additionally, the API will continue to return `self_hosted_domains` until the deprecation date. The field will contain the URIs of the subset of destinations that have type `public`.
+
+      Affected APIs:
+      - `GET /accounts/:account_id/access/apps`
+      - `POST /accounts/:account_id/access/apps`
+      - `GET /accounts/:account_id/access/apps/:app_id`
+      - `PUT /accounts/:account_id/access/apps/:app_id`
+      - `GET /zones/:zone_id/access/apps`
+      - `POST /zones/:zone_id/access/apps`
+      - `GET /zones/:zone_id/access/apps/:app_id`
+      - `PUT /zones/:zone_id/access/apps/:app_id`
+
   - publish_date: "2025-03-21"
     title: "Zone Setting: cname_flattening"
     description: |-

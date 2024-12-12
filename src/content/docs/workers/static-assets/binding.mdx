@@ -37,11 +37,32 @@ assets = { directory = "./public/" }
 
 </WranglerConfig>
 
+### Ignoring assets
+
+Sometime there are files in the asset directory that should not be uploaded.
+
+In this case, create a `.assetsignore` file in the root of the assets directory.
+This file takes the same format as `.gitignore`.
+
+Wrangler will not upload asset files that match lines in this file.
+
+**Example**
+
+You are migrating from a Pages project where the assets directory is `dist`.
+You do not want to upload the server-side Worker code nor Pages configuration files as public client-side assets.
+Add the following `.assetsignore` file:
+
+```gitignore
+_worker.js
+_redirects
+_headers
+```
+
+Now Wrangler will not upload these files as client-side assets when deploying the Worker.
+
 ## `binding`
 
 Configuring the optional [binding](/workers/runtime-apis/bindings) gives you access to the collection of assets from within your Worker script.
-
-
 
 <WranglerConfig>
 

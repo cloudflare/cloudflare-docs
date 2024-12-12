@@ -4,28 +4,30 @@
 
 ---
 
-Account Owned Tokens are the first step that Cloudflare is taking to represent service principals in our service.
+Account owned tokens are the first step that Cloudflare is taking to represent service principals in our service.
 
-Cloudflare is working to ensure that all features eventually become compatible with Account Owned Tokens. 
+Cloudflare is working to ensure that all features eventually become compatible with account owned tokens. 
 
-If you are working with a service that is not currently supported by Account Owned Tokens, it is recommended that you continue to use the existing user tokens.
+If you are working with a service that is not currently supported by account owned tokens, it is recommended that you continue to use the existing user tokens.
 
 :::note
 User tokens will continue to work and we do not have plans to deprecate them.
 :::
 
-Account Owned Tokens are available to all customers. Super Administrators of accounts on the [Cloudflare dashboard](https://dash.cloudflare.com/) can find them via **Manage Account** > **API Tokens**.
+Account owned tokens are available to all customers. Super Administrators of accounts on the [Cloudflare dashboard](https://dash.cloudflare.com/) can find them via **Manage Account** > **API Tokens**.
 
 You can still create tokens using the Cloudflare dashboard, and it can also be accessed via the API at `/accounts/<accountID>/tokens`.
 
-Try using Account Owned Tokens specifically in these scenarios:
+Try using account owned tokens specifically in these scenarios:
 
 - You require business continuity when managing tokens as a team of super administrators.
 - You need to restrict API access on your account and want to centralize visibility and management of these tokens.
 
+Refer to the [blog post](https://blog.cloudflare.com/account-owned-tokens-automated-actions-zaraz/) for more information.
+
 ## Compatibility matrix
 
-Account Owned Tokens are a new credential type that is currently in open beta. Refer to the table below for products currently supported and their compatibility status.
+Account owned tokens are a new credential type that is currently in open beta. Refer to the table below for products currently supported and their compatibility status.
 
 | Product                         | Compatible              |
 | ------------------------------- | ----------------------- |

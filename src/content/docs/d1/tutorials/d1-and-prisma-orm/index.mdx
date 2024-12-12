@@ -193,8 +193,8 @@ CREATE UNIQUE INDEX "User_email_key" ON "User"("email");
 
 You now need to use the `wrangler d1 migrations apply` command to send this SQL statement to D1. This command accepts two options:
 
-- `--local`: Executes the statement against a _local_ version of D1. This local version of D1 is a SQLite database file that will be located in the `.wrangler/state` directory of your project. Use this approach when you want to develop and test your Worker on your local machine. Refer to [Local development](/d1/build-with-d1/local-development/) to learn more.
-- `--remote`: Executes the statement against your _remote_ version of D1. This version is used by your _deployed_ Cloudflare Workers. Refer to [Remote development](/d1/build-with-d1/remote-development/) to learn more.
+- `--local`: Executes the statement against a _local_ version of D1. This local version of D1 is a SQLite database file that will be located in the `.wrangler/state` directory of your project. Use this approach when you want to develop and test your Worker on your local machine. Refer to [Local development](/d1/best-practices/local-development/) to learn more.
+- `--remote`: Executes the statement against your _remote_ version of D1. This version is used by your _deployed_ Cloudflare Workers. Refer to [Remote development](/d1/best-practices/remote-development/) to learn more.
 
 In this tutorial, you will do local and remote development. You will test the Worker locally and deploy your Worker afterwards. Open your terminal, and run both commands:
 

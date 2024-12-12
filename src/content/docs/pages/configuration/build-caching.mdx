@@ -36,12 +36,14 @@ When enabled, the build cache will automatically detect and cache data from each
 
 ### Package managers
 
-Package manager caches are automatically saved to the build cache to speed up dependency installation. Pages will cache the global cache directories of the following package managers:
+Pages will cache the global cache directories of the following package managers:
 
-- [yarn 1](https://yarnpkg.com/)
-- [npm](https://www.npmjs.com/)
-- [pnpm](https://pnpm.io/)
-- [bun](https://bun.sh/)
+| Package Manager               | Directories cached   |
+| ----------------------------- | -------------------- |
+| [npm](https://www.npmjs.com/) | `.npm`               |
+| [yarn](https://yarnpkg.com/)  | `.cache/yarn`        |
+| [pnpm](https://pnpm.io/)      | `.pnpm-store`        |
+| [bun](https://bun.sh/)        | `.bun/install/cache` |
 
 ### Frameworks
 

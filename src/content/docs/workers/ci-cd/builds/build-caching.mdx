@@ -39,10 +39,12 @@ The following shows which package managers and frameworks are supported for depe
 
 Workers build cache will cache the global cache directories of the following package managers:
 
-- [yarn](https://yarnpkg.com/)
-- [npm](https://www.npmjs.com/)
-- [pnpm](https://pnpm.io/)
-- [node.js](https://nodejs.org/)
+| Package Manager               | Directories cached   |
+| ----------------------------- | -------------------- |
+| [npm](https://www.npmjs.com/) | `.npm`               |
+| [yarn](https://yarnpkg.com/)  | `.cache/yarn`        |
+| [pnpm](https://pnpm.io/)      | `.pnpm-store`        |
+| [bun](https://bun.sh/)        | `.bun/install/cache` |
 
 ### Frameworks
 

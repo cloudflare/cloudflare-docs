@@ -24,7 +24,7 @@ export class MyWorkflow extends WorkflowEntrypoint {
 		// ✅ Good: Non-idempotent API/Binding calls are always done **after** checking if the operation is
 		// still needed.
 		await step.do(
-			`charge ${customer_id} for it's montly subscription`,
+			`charge ${customer_id} for its monthly subscription`,
 			async () => {
 				// API call to check if customer was already charged
 				const subscription = await fetch(

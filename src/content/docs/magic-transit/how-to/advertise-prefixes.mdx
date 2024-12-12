@@ -16,23 +16,27 @@ List all prefixes and the [autonomous systems (ASNs)](https://www.cloudflare.com
 - Internet Routing Registry entries and <GlossaryTooltip term="letter of agency">Letters of Agency (LOA)</GlossaryTooltip> must match the prefixes and originating prefixes you submit to Cloudflare.
 - When using contiguous prefixes, specify aggregate prefixes where possible.
 - When using Route Origin Authorizations (ROAs) to sign routes for [resource public key infrastructure (RPKI)](https://tools.ietf.org/html/rfc8210), the prefix and originating ASN must match the onboarding submission.
-- If you do not own an ASN, you can use the Cloudflare Customer ASN (AS209242).
+- If you do not own an ASN, you can use the Cloudflare Customer ASN (AS13335).
 - Prefixes using BGP-controlled advertisements cannot be used in conjunction with dynamic advertisement (via dashboard/API). Please specify your preferred on-demand advertisement method during the prefix onboarding.
 
 <Details header="Prefix configuration example">
 
 | Prefix            | Originating AS |
 | ----------------- | -------------- |
-| `103.21.244.0/23` | AS209242       |
+| `103.21.244.0/23` | AS13335       |
 | `131.0.72.0/22`   | AS395747       |
 | `103.21.245.0/24` | AS395747       |
 
 </Details>
 
-:::note[Note]
+## Cloudflare ASN vs. your own ASN
+
 When customers supply their own ASN, Cloudflare prepends the main Cloudflare ASN (AS13335) to the BGP `AS_PATH`. For example, if the customer ASN is AS64496, anyone directly peering with Cloudflare sees the path as `13335 64496`.
 
-If you do not have an ASN or do not want to bring your ASN to Cloudflare, you can use the Cloudflare Customer ASN (AS209242). In this case, the path becomes `13335 209242`.
+If you do not have an ASN or do not want to bring your ASN to Cloudflare, you can use the Cloudflare Customer ASN (AS13335).
+
+:::note
+Current customers who are still using Cloudflare's AS209242 can continue using this same ASN. No further change is required.
 :::
 
 ## Add an IP prefix

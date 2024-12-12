@@ -28,10 +28,10 @@ flowchart TB
 
     gateway-->query{{"Is the DNS query sent over HTTPS?"}}
 
-    query--Yes-->hostname["Look up location by<br />unique hostname"]
+    query--"Yes"-->hostname["Look up location by<br />unique hostname"]
     query--"No"-->ipv4{{"Is it over IPv4?"}}
 
-    ipv4--Yes-->source["Look up location by<br />source IPv4 address"]
+    ipv4--"Yes"-->source["Look up location by<br />source IPv4 address"]
     ipv4--"No"-->destination["Look up location by<br />destination IPv6 address"]
 ```
 

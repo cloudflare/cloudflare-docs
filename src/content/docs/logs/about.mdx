@@ -8,7 +8,7 @@ sidebar:
 
 import { FeatureTable, LinkButton } from "~/components"
 
-Logpush delivers logs in batches as quickly as possible, with no minimum batch size, potentially delivering files more than once per minute. This capability enables Cloudflare to provide information almost in real time, in smaller file sizes.
+Logpush delivers logs in batches as quickly as possible, with no minimum batch size, potentially delivering files more than once per minute. This capability enables Cloudflare to provide information almost in real time, in smaller file sizes. Users can configure the batch size [using the API](/logs/get-started/api-configuration/#max-upload-parameters) for improved control in case the log destination has specific requirements.
 
 Logpush does not offer storage or search functionality for logs; its primary aim is to send logs as quickly as they arrive.
 

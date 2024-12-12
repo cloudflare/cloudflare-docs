@@ -33,6 +33,12 @@ Once attack traffic matches a rule, Cloudflare's systems will track that traffic
 | Log | Records matching requests in the Cloudflare Logs. |
 | Use rule defaults | Uses the default action that is pre-defined for each rule. | 
 
+## Thresholds
+
+Thresholds vary for each rule and there are different thresholds globally and per colocation. Within a rule, the traffic is fingerprinted and the thresholds are per fingerprint, and it is difficult to know ahead of time which rules, colocations, or fingerprints your traffic generates, so the threshold numbers are not necessarily valuable.
+
+Instead, Cloudflare's DDoS Protection system provides the sensitivity adjustment. If you experience a false positive, you can decrease the sensitivity. You can also use the `Log` action to help find an appropriate sensitivity level. You can decrease the sensitivity while in `Log` mode until the rule no longer matches.
+
 ## Time to mitigate
 
 - Immediate mitigation for Advanced TCP and DNS Protection systems.

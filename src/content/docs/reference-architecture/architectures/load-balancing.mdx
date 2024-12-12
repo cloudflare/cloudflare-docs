@@ -35,13 +35,13 @@ To build a stronger baseline understanding of Cloudflare and its load balancing 
 
 <Render file="what-is-cloudflare-link" />
 
-- Solution Brief: [Cloudflare LTM Load Balancing](https://cf-assets.www.cloudflare.com/slt3lc6tev37/4mn2dtdw7TvSwCUJw8mMf5/f1fa6269f4468c432560b2c9f5ebd38a/Cloudflare_Local_Traffic_Manager_Solution_Brief.pdf) (5 minute read)
+- Solution Brief: [Cloudflare Private Network Load Balancing](https://cf-assets.www.cloudflare.com/slt3lc6tev37/4mn2dtdw7TvSwCUJw8mMf5/f1fa6269f4468c432560b2c9f5ebd38a/Cloudflare_Local_Traffic_Manager_Solution_Brief.pdf) (5 minute read)
 - Solution Brief: [Cloudflare GTM Load Balancing](https://cf-assets.www.cloudflare.com/slt3lc6tev37/5OWUduF4YBKYADj3zREAX6/5241a81a3fc4ff1db7c9bade14991b23/Cloudflare_Global_Traffic_Manager__GTM__Solution_Brief.pdf) (5 minute read)
 - Blog: [Elevate load balancing with Private IPs and Cloudflare Tunnels: a secure path to efficient traffic distribution](https://blog.cloudflare.com/elevate-load-balancing-with-private-ips-and-cloudflare-tunnels-a-secure-path-to-efficient-traffic-distribution/) (13 minutes)
 
 Those who read this reference architecture will learn:
 
-- How Cloudflare Load Balancing can address both local traffic management and global traffic management use cases.
+- How Cloudflare Load Balancing can address both Private Network Load Balancing and global traffic management use cases.
 - How Cloudflare’s global network enhances the functionality of Cloudflare Load Balancing.
 - The capabilities of Cloudflare Load Balancers, and how they apply to various use cases.
 - The structure of Cloudflare Load Balancers and their various configurations.
@@ -112,11 +112,11 @@ Intentional downtime comes in a few different forms, including capacity changes,
 
 Effective application scaling helps organizations meet customer or user demand and avoid unnecessary billing or charges. During traffic increases, organizations may need to temporarily deploy more endpoints to ensure the service stays performant and available. However, constantly having enough endpoints online to meet your maximum possible traffic could be costly regardless whether the endpoint is located on-premises or via a cloud provider like AWS, GCP, or Azure. Load balancers allow for dynamic increases or decreases in capacity by monitoring requests, connections, and latency to the endpoints.
 
-Another type of scale to consider is geographic scale. As services grow in popularity, endpoint location becomes more important. Users in a different geographic region than an endpoint may have slower response times and receive a lower quality of service than users in the same region. As organizations deploy new endpoints in different regions, they have to decide how they want to distribute their traffic. This challenge has been met by different layers of load balancing called global traffic management (GTM) and local traffic management (LTM). This document describes both of these in detail in the following section — but in summary, the GTM load balancer handles the initial request (typically via DNS) and then selects and steers traffic to the LTM load balancer that is deployed close to endpoints in the appropriate geographic region.
+Another type of scale to consider is geographic scale. As services grow in popularity, endpoint location becomes more important. Users in a different geographic region than an endpoint may have slower response times and receive a lower quality of service than users in the same region. As organizations deploy new endpoints in different regions, they have to decide how they want to distribute their traffic. This challenge has been met by different layers of load balancing called global traffic management (GTM) and Private Network Load Balancing. This document describes both of these in detail in the following section — but in summary, the GTM load balancer handles the initial request (typically via DNS) and then selects and steers traffic to the Private Network Load Balancer that is deployed close to endpoints in the appropriate geographic region.
 
 ### Types of traffic management
 
-As mentioned, load balancing for global applications and services comes in two layers. The first layer is called Global Traffic Management or Manager (GTM), which may also be called Global Server Load Balancing (GSLB). The second layer is called Local Traffic Management or Manager (LTM), which may also be referred to as Server Load Balancing (SLB). This section will define the purpose of these different types of load balancing and how they work together.
+As mentioned, load balancing for global applications and services comes in two layers. The first layer is called Global Traffic Management or Manager (GTM), which may also be called Global Server Load Balancing (GSLB). The second layer is called Private Network Load Balancing, which may also be referred to as Server Load Balancing (SLB). This section will define the purpose of these different types of load balancing and how they work together.
 
 #### Global traffic manager / global traffic management (GTM)
 
@@ -131,13 +131,13 @@ Figure 4 shows how a GTM load balancer is used to select a data center based on 
 
 Global Traffic Managers can also proxy traffic and perform a variety of inspections, including reading/changing/deleting headers in HTTP requests and modifying URLs based on region or geographic location. GTM functionality is best implemented by cloud-based load balancers (like Cloudflare) since the goal is to steer traffic from anywhere in the world. Hardware load balancers exist in a single physical location, which means the further traffic originates from the load balancer, the slower the end-user experience. A cloud-based load balancer can run in many different geographic locations, helping it provide a performant solution for DNS-only, layer 4, and layer 7 contexts.
 
-#### Local traffic manager / local traffic management (LTM)
+#### Private Network Load Balancing
 
-A Local Traffic Manager steers traffic within a data center or geographic location. A LTM can be responsible for load balancing, SSL/TLS offloading, content switching, and other application delivery functions. LTM ensures efficient distribution of client requests across multiple endpoints to improve performance and ensure high availability. LTM load balancers are usually placed inside private networks and are used to load balance publicly or privately accessible resources. In Figure 5 below, the GTM load balancer has selected the Europe data center to direct a request to the Europe data center’s LTM load balancer which will then steer it to the appropriate endpoint.
+Private Network Load Balancing steers traffic within a data center or geographic location. A Private Network Load Balancer can be responsible for load balancing, SSL/TLS offloading, content switching, and other application delivery functions. Private Network Load Balancing ensures efficient distribution of client requests across multiple endpoints to improve performance and ensure high availability. Private Network Load Balancers are usually placed inside private networks and are used to load balance publicly or privately accessible resources. In Figure 5 below, the GTM load balancer has selected the Europe data center to direct a request to the Europe data center’s Private Network Load Balancer which will then steer it to the appropriate endpoint.
 
-![Local traffic management is responsible for steering to the final endpoint or destination](~/assets/images/reference-architecture/load-balancing-reference-architecture-images/lb-ref-arch-5.svg "Figure 5: Local traffic management load balancer overview")
+![Private Network Load Balancing is responsible for steering to the final endpoint or destination](~/assets/images/reference-architecture/load-balancing-reference-architecture-images/lb-ref-arch-5.svg "Figure 5: Private Network Load Balancer overview")
 
-Local traffic managers and their endpoints usually sit behind firewalls. But while endpoints may be protected on private networks, accessibility to the LTM load balancer can be either public or private depending on deployment requirements. A LTM load balancer will monitor total requests, connections, and endpoint health to ensure requests are steered towards endpoints capable of responding in a timely manner.
+Private Network Load Balancer and their endpoints usually sit behind firewalls. But while endpoints may be protected on private networks, accessibility to the Private Network Load Balancer can be either public or private depending on deployment requirements. A Private Network Load Balancer will monitor total requests, connections, and endpoint health to ensure requests are steered towards endpoints capable of responding in a timely manner.
 
 #### On-premises vs cloud-based load balancers
 
@@ -154,7 +154,7 @@ Each approach has advantages and disadvantages. On-premises load balancers usual
 
 ## Cloudflare Load Balancing architecture and design
 
-Cloudflare has offered cloud-based GTM since 2016 and started adding LTM capabilities in 2023. This section will review the entire Cloudflare Load Balancing architecture and dive deep into the different configurations and options available. First, however, it's important to understand the benefits that Cloudflare Load Balancers have simply by running on Cloudflare’s global network.
+Cloudflare has offered cloud-based GTM since 2016 and started adding Private Network Load Balancing capabilities in 2023. This section will review the entire Cloudflare Load Balancing architecture and dive deep into the different configurations and options available. First, however, it's important to understand the benefits that Cloudflare Load Balancers have simply by running on Cloudflare’s global network.
 
 ### Inherent advantages in the Cloudflare architecture
 
@@ -184,9 +184,9 @@ Another way traffic flow can be affected is by the use of Cloudflare Tunnels. Th
 
 ![Requests take different paths depending on whether the endpoint is public or connected over Cloudflare Tunnel](~/assets/images/reference-architecture/load-balancing-reference-architecture-images/lb-ref-arch-9.svg "Figure 9: Paths to endpoints differ when connecting endpoints via Cloudflare Tunnel")
 
-Usually, GTM and LTM load balancers are either separate hardware or separate SaaS (GTM) and hardware (LTM) components. Cloudflare’s GTM and LTM load balancing capabilities are combined into a single SaaS offering which greatly simplifies configuration and management. There is no need to create a GTM load balancer and steer traffic to more local LTM load balancers. All endpoints can be directly connected to Cloudflare and traffic is steered to the correct region, data center, and endpoint all from a single load balancer configuration. While the concepts of GTM and LTM features will persist, their implementation in Cloudflare will be done in a way that keeps load balancer configurations as simple and straightforward as possible. Figure 10 illustrates how global traffic can be steered from any geographic region to a specific endpoint as needed.
+Usually, GTM and Private Network Load Balancers are either separate hardware or separate SaaS (GTM) and hardware Private Network Load Balancing components. Cloudflare’s GTM and Private Network Load Balancing capabilities are combined into a single SaaS offering which greatly simplifies configuration and management. There is no need to create a GTM load balancer and steer traffic to more local Private Network Load Balancers. All endpoints can be directly connected to Cloudflare and traffic is steered to the correct region, data center, and endpoint all from a single load balancer configuration. While the concepts of GTM and Private Network Load Balancing features will persist, their implementation in Cloudflare will be done in a way that keeps load balancer configurations as simple and straightforward as possible. Figure 10 illustrates how global traffic can be steered from any geographic region to a specific endpoint as needed.
 
-![Combining GTM and LTM load balancing functions into a single load balancer configuration](~/assets/images/reference-architecture/load-balancing-reference-architecture-images/lb-ref-arch-10.svg "Figure 10: Cloudflare combines the function of GTM and LTM load balancing")
+![Combining GTM and Private Network Load Balancing functions into a single load balancer configuration](~/assets/images/reference-architecture/load-balancing-reference-architecture-images/lb-ref-arch-10.svg "Figure 10: Cloudflare combines the function of GTM and Private Network Load Balancing")
 
 ### The structure of a Cloudflare Load Balancer
 
@@ -218,7 +218,7 @@ Traffic steering selects the group of endpoints, also called an endpoint pool. T
 
 #### Endpoint steering
 
-Endpoint steering is responsible for selecting which endpoint will receive the request or connection. Endpoint steering can randomly select an endpoint, a previously selected endpoint (if session affinity is enabled), or it can be used to select the least utilized, fastest responding, endpoint for a request or connection. Endpoint steering is closely related to local traffic management, as it is responsible for selecting the final destination of a request or connection.
+Endpoint steering is responsible for selecting which endpoint will receive the request or connection. Endpoint steering can randomly select an endpoint, a previously selected endpoint (if session affinity is enabled), or it can be used to select the least utilized, fastest responding, endpoint for a request or connection. Endpoint steering is closely related to Private Network Load Balancing, as it is responsible for selecting the final destination of a request or connection.
 
 #### Weighted steering
 
@@ -539,7 +539,7 @@ Health monitors are attached to endpoints at the endpoint pool as well as health
 
 ### Load balancers
 
-Load balancing within Cloudflare combines both GTM and LTM load balancing into a single load balancer configuration. While certain features or terms may align more with GTM or LTM load balancers, for Cloudflare customers, both are combined into a single, easy-to-manage instance.
+Load balancing within Cloudflare combines both GTM and Private Network Load Balancing into a single load balancer configuration. While certain features or terms may align more with GTM or Private Network Load Balancing, for Cloudflare customers, both are combined into a single, easy-to-manage instance.
 
 Depending on their specific use case, organizations can leverage different types of Cloudflare Load Balancers. The following section highlights the main differences between the deployment models, and articulates when each type of load balancer should be implemented.
 
@@ -773,6 +773,6 @@ Cloudflare offers additional security layers that can be used in conjunction wit
 
 The Cloudflare global anycast network is a powerful platform for load balancing. A load balancing configuration in Cloudflare is accessible in over 310 cities across the world and has virtually unlimited capacity and bandwidth.
 
-These load balancers operate within approximately 50ms of about 95% of the Internet-connected population, including endpoints that allow Cloudflare Load Balancers to perform both GTM and LTM load balancing. Cloudflare now combines these two distinct load balancing concepts into a single load balancer. This helps enable organizations to steer traffic to geographically-relevant data centers, then select the proper endpoint to handle the request.
+These load balancers operate within approximately 50ms of about 95% of the Internet-connected population, including endpoints that allow Cloudflare Load Balancers to perform both GTM and Private Network Load Balancing. Cloudflare now combines these two distinct load balancing concepts into a single load balancer. This helps enable organizations to steer traffic to geographically-relevant data centers, then select the proper endpoint to handle the request.
 
 With Cloudflare Tunnel, endpoints can be located within private networks and still be utilized by Cloudflare Load Balancers. Cloudflare offers public layer 7 load balancers — that supports both HTTP(S) and WebSockets, as well as public layer 4 load balancers that can steer any TCP or UDP traffic. This means that Cloudflare can offer load balancing services to all organizations and users, no matter their location, use cases, or existing configurations.

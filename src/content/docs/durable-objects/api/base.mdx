@@ -35,9 +35,13 @@ export class MyDurableObject extends DurableObject {
 
 ### `alarm`
 
-- <code>alarm()</code>: <Type text="Promise <void>"/>
+- <code>alarm(`alarmInfo`<Type text="Object"/>)</code>: <Type text="Promise <void>"/>
 
   - Called by the system when a scheduled alarm time is reached.
+
+  - The optional parameter `alarmInfo` object has two properties:
+    - `retryCount` <Type text="number"/>: The number of times this alarm event has been retried.
+    - `isRetry` <Type text="boolean"/>: A boolean value to indicate if the alarm has been retried. This value is `true` if this alarm event is a retry.
 
   - The `alarm()` handler has guaranteed at-least-once execution and will be retried upon failure using exponential backoff, starting at two second delays for up to six retries. Retries will be performed if the method fails with an uncaught exception.
 

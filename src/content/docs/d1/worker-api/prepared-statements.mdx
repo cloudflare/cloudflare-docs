@@ -70,7 +70,7 @@ return Response.json(returnValue);
 #### Guidance
 
 - `results` is empty for write operations such as `UPDATE`, `DELETE`, or `INSERT`.
-- When using TypeScript, you can pass a [type parameter](/d1/build-with-d1/d1-client-api/#typescript-support) to [`D1PreparedStatement::run`](#run) to return a typed result object.
+- When using TypeScript, you can pass a [type parameter](/d1/worker-api/#typescript-support) to [`D1PreparedStatement::run`](#run) to return a typed result object.
 - [`D1PreparedStatement::run`](#run) is functionally equivalent to `D1PreparedStatement::all`, and can be treated as an alias.
 - You can choose to extract only the results you expect from the statement by simply returning the `results` property of the return object.
 
@@ -158,7 +158,7 @@ return Response.json(returnValue)
 
 #### Guidance
 
-- When using TypeScript, you can pass a [type parameter](/d1/build-with-d1/d1-client-api/#typescript-support) to [`D1PreparedStatement::raw`](#raw) to return a typed result array.
+- When using TypeScript, you can pass a [type parameter](/d1/worker-api/#typescript-support) to [`D1PreparedStatement::raw`](#raw) to return a typed result array.
 
 ### `first()`
 
@@ -219,5 +219,5 @@ return Response.json(returnValue)
 
 - If the query returns rows but `column` does not exist, then [`D1PreparedStatement::first`](#first) throws the `D1_ERROR` exception.
 - [`D1PreparedStatement::first`](#first) does not alter the SQL query. To improve performance, consider appending `LIMIT 1` to your statement.
-- When using TypeScript, you can pass a [type parameter](/d1/build-with-d1/d1-client-api/#typescript-support) to [`D1PreparedStatement::first`](#first) to return a typed result object.
+- When using TypeScript, you can pass a [type parameter](/d1/worker-api/#typescript-support) to [`D1PreparedStatement::first`](#first) to return a typed result object.
 
