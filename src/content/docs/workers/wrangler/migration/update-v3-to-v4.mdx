@@ -32,7 +32,7 @@ Wrangler tests no longer run on v16, and users still on this version may encount
 ### esbuild Version Upgrade
 
 Wrangler upgraded esbuild from **v0.17.19** to **v0.24**, bringing improvements (such as the ability to use the `using` keyword with RPC) and changes to bundling behavior: 
-* **Dynamic imports:** Wildcard imports (e.g., `import('./data/' + kind + '.json')`) now automatically include all matching files in the bundle. 
+* **Dynamic imports:** Wildcard imports (for example, `import('./data/' + kind + '.json')`) now automatically include all matching files in the bundle.
 
 
 Users relying on wildcard dynamic imports may see unwanted files bundled. Prior to esbuild v0.19, `import` statements with dynamic paths ( like `import('./data/' + kind + '.json')`) did not bundle all files matches the glob pattern (`*.json`) . Only files explicitly referenced or included using `find_additional_modules`  were bundled. With esbuild v0.19, wildcard imports now automatically bundle all files matching the glob pattern. This could result in unwanted files being bundled, so users might want to avoid wildcard dynamic imports and use explicit imports instead. 
