@@ -109,6 +109,5 @@ flowchart TB
 		preloginbehavior--"Log in to Windows"---->regexists{{"Has the user already registered with WARP?"}}
 		regexists--"Yes"-->user["Switch to that user's registration"]
 		regexists-. "No" .->reg
-		user--"Log out of Windows"--> prelogin
 ```
 
