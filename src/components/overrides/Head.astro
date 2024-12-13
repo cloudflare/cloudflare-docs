@@ -44,6 +44,7 @@ if (currentSection) {
 				content: "",
 			});
 		}
+
 		if (product.data.product.title) {
 			const productName = product.data.product.title;
 			Astro.props.entry.data.head.push({
@@ -63,7 +64,58 @@ if (currentSection) {
 				content: "",
 			});
 		}
+
 		if (product.data.product.group) {
+			const group = product.data.product.group.toLowerCase();
+
+			let ogImage = "https://developers.cloudflare.com/cf-twitter-card.png";
+			const images: Record<string, string> = {
+				"cloudflare essentials":
+					"https://developers.cloudflare.com/core-services-preview.png",
+				"cloudflare one": "https://developers.cloudflare.com/zt-preview.png",
+				"developer platform":
+					"https://developers.cloudflare.com/dev-products-preview.png",
+				"network security":
+					"https://developers.cloudflare.com/core-services-preview.png",
+				"application performance":
+					"https://developers.cloudflare.com/core-services-preview.png",
+				"application security":
+					"https://developers.cloudflare.com/core-services-preview.png",
+			};
+
+			if (images[group]) {
+				ogImage = images[group];
+			}
+
+			const tags = [
+				{
+					tag: "meta",
+					attrs: {
+						name: "image",
+						content: ogImage,
+					},
+					content: "",
+				},
+				{
+					tag: "meta",
+					attrs: {
+						name: "og:image",
+						content: ogImage,
+					},
+					content: "",
+				},
+				{
+					tag: "meta",
+					attrs: {
+						name: "twitter:image",
+						content: ogImage,
+					},
+					content: "",
+				},
+			] as const;
+
+			Astro.props.entry.data.head.push(...tags);
+
 			Astro.props.entry.data.head.push({
 				tag: "meta",
 				attrs: {
