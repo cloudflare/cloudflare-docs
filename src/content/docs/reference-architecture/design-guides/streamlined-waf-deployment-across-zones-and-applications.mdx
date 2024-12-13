@@ -119,7 +119,7 @@ Cloudflare provides the ability to create [lists of hostnames](/waf/tools/lists/
 
 You can then update the lists directly and re-use them across multiple rulesets. For example, use the same list for the Cloudflare Managed Rules but also for the OWASP Ruleset and Rate Limiting. Your filters [will reference the lists directly](/waf/tools/lists/use-in-expressions/), meaning a cleaner and maintainable configuration.
 
-When using lists, it is also much easier to adopt a “catch all rule” that runs last in the evaluation order. This could implement, for example, the `Default` Cloudflare Managed Ruleset when the host in the HTTPS request is not included in any of your lists. This ensures that a default WAF Managed Rules configuration is always applied, in case some of your applications are not added by mistake to the lists.
+When using lists, it is also much easier to adopt a "catch all rule" that runs last in the evaluation order. This could implement, for example, the `Default` Cloudflare Managed Ruleset when the host in the HTTPS request is not included in any of your lists. This ensures that a default WAF Managed Rules configuration is always applied, in case some of your applications are not added by mistake to the lists.
 
 ### Using automations
 
