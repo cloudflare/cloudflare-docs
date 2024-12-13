@@ -5,6 +5,10 @@ productLink: "/rules/"
 productArea: Application performance
 productAreaLink: /fundamentals/reference/changelog/performance/
 entries:
+  - publish_date: "2024-12-11"
+    title: Snippets support in the Cloudflare provider for Terraform
+    description: |-
+      You can now manage Snippets using Terraform. For more information, refer to [Configure Snippets using Terraform](/rules/snippets/create-terraform/).
   - publish_date: "2024-11-22"
     title: Support for Cloudflare R2 object storage in Cloud Connector
     description: |-

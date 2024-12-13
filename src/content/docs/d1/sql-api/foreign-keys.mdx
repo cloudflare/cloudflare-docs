@@ -16,7 +16,7 @@ By default, D1 enforces that foreign key constraints are valid within all querie
 
 ## Defer foreign key constraints
 
-When running a [query](/d1/build-with-d1/d1-client-api/), [migration](/d1/reference/migrations/) or [importing data](/d1/build-with-d1/import-export-data/) against a D1 database, there may be situations in which you need to disable foreign key validation during table creation or changes to your schema.
+When running a [query](/d1/worker-api/), [migration](/d1/reference/migrations/) or [importing data](/d1/best-practices/import-export-data/) against a D1 database, there may be situations in which you need to disable foreign key validation during table creation or changes to your schema.
 
 D1's foreign key enforcement is equivalent to SQLite's `PRAGMA foreign_keys = on` directive. Because D1 runs every query inside an implicit transaction, user queries cannot change this during a query or migration.
 
@@ -87,7 +87,7 @@ There are five actions you can set when defining the `ON UPDATE` and/or `ON DELE
 
 :::caution[CASCADE usage]
 
-Although `CASCADE` can be the desired behavior in some cases, deleting child rows across tables can have undesirable effects and/or result in unintended side effects for your users. 
+Although `CASCADE` can be the desired behavior in some cases, deleting child rows across tables can have undesirable effects and/or result in unintended side effects for your users.
 :::
 
 In the following example, deleting a user from the `users` table will delete all related rows in the `scores` table as you have defined `ON DELETE CASCADE`. Delete all related rows in the `scores` table if you do not want to retain the scores for any users you have deleted entirely. This might mean that *other* users can no longer look up or refer to scores that were still valid.
@@ -110,5 +110,5 @@ CREATE TABLE scores (
 ## Next Steps
 
 * Read the SQLite [`FOREIGN KEY`](https://www.sqlite.org/foreignkeys.html) documentation.
-* Learn how to [use the D1 client API](/d1/build-with-d1/d1-client-api/) from within a Worker.
+* Learn how to [use the D1 Workers Binding API](/d1/worker-api/) from within a Worker.
 * Understand how [database migrations work](/d1/reference/migrations/) with D1.

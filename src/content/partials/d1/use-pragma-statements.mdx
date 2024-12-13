@@ -391,7 +391,7 @@ Toggles the foreign key constraint enforcement. When `PRAGMA foreign_keys` is se
 
 ### `PRAGMA defer_foreign_keys = (on|off)`
 
-Allows you to defer the enforcement of [foreign key constraints](/d1/build-with-d1/foreign-keys/) until the end of the current transaction. This can be useful during [database migrations](/d1/reference/migrations/), as schema changes may temporarily violate constraints depending on the order in which they are applied.
+Allows you to defer the enforcement of [foreign key constraints](/d1/sql-api/foreign-keys/) until the end of the current transaction. This can be useful during [database migrations](/d1/reference/migrations/), as schema changes may temporarily violate constraints depending on the order in which they are applied.
 
 This does not disable foreign key enforcement outside of the current transaction. If you have not resolved outstanding foreign key violations at the end of your transaction, it will fail with a `FOREIGN KEY constraint failed` error.
 
@@ -410,4 +410,4 @@ ALTER TABLE users ...
 PRAGMA defer_foreign_keys = off
 ```
 
-Refer to the [foreign key documentation](/d1/build-with-d1/foreign-keys/) to learn more about how to work with foreign keys.
+Refer to the [foreign key documentation](/d1/sql-api/foreign-keys/) to learn more about how to work with foreign keys.

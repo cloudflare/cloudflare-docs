@@ -7,12 +7,9 @@ This tutorial provides information and examples of how to configure IPsec betwee
 
 ## Prerequisites
 
-You need a pre-shared key to establish the IPsec tunnel. You can use [Cloudflare Workers](/workers/) to create a random key. For example:
+You need a pre-shared key to establish the IPsec tunnel. You can use the following code to create a random key:
 
 ```js
-export default {
-	async fetch() {
-
 		const a = new Uint8Array(48);
 		crypto.getRandomValues(a);
 		let base64String = btoa(String.fromCharCode.apply(null, a));
@@ -21,22 +18,14 @@ export default {
 								   .replace(/\//g, '')
 								   .replace(/=/g, '');
 
-		const finalString = base64String.substring(0, 32);
-
-		return new Response(finalString, {
-			headers: {
-				"content-type": "text/html",
-			},
-		});
-	},
-};
+		console.log(base64String.substring(0, 32));
 ```
 
 :::caution
-The code above is an example of how you might use Cloudflare Workers to generate a random key. However, make sure you generate a code that is strong enough to comply with your security needs.
+The code above is an example of how you might generate a random key. However, make sure you generate a key that is strong enough to comply with your security needs.
 :::
 
-You can use the [Workers playground](https://workers.cloudflare.com/playground#LYVwNgLglgDghgJwgegGYHsHALQBM4RwDcABAEbogB2+CAngLzbPYDqApmQNJQQBimYACFKNRHSoBzAB4ArAEoBBANYR5AEVYAJAOJCAagA0AXCxYduvAVhHVaEmQpVrNug4YCwAKADC6KhDsAdjqUADOMOhhvFD+xiQYWHgExCRUcMDsDABEUDTs0gB0smHZpKhQYEEZWbn5RSXZ3n4BQRDYACp0MOzxcDAwYFAAxgSxVMiycABucGHDCLAQANTA6Ljg7N7eBZFIJLjsqHDgECQA3l4AkHMSwwnsEMMAFgAUAJQXXtdXw-5hZzgJAYaXYAHcSABVPIQAAcigQCDgdFeABZYe8iD8Ft0IOhCpJHvI4DR0MB9HAwCB2GFXnBMT8qmcyHN2AA2VEAZQgiykwPIeLgr25vMkhVQCDJPmeiD8h0K-UGKKo4DAABoSPSGT8WWF2VyeXlJPzdfqRUbCgh2IM4MN2K9kAAdZbISQagDk7vePyuvr9JADlutYFt9qdyFdHq9Pr9voDJCDNrtDoYkZInu1vr+VABCTylPNfJBpo5hbFYRAZABoteAAYNQBmABMmauVogIAQVFBEPkNMiOftFXSYDLGsufue7DghwQYXiE792WzgWCEG67Gy8WygWkKGeEGAYGyap9AF9T76zwyrhevGesd4zMwLDx+IJbGJ6FI5EpVBptD0Ixmn8Vd2lCCIohiOIEkEZJCFIdJMhyTJCHwQgyjzKokNqMgwHQMgml8UC2k6Dc+gGIZRmgfxJjCfxti8c5lzJeBoDISpeDoAB9dDN2MbIm1rJtUWwWsGzEgB2E8WOANioA4oZ1241AQ0kUpjAAbWyKh1nYEpuL+OSCGyABdNVsmAOA8m4tYNiqLc6kOBpSjPJ9n1fKwP1Eewfycf9XCAwxmG8IA) to try this Worker.
+You can try this code in the [Workers playground](https://workers.cloudflare.com/playground#LYVwNgLglgDghgJwgegGYHsHALQBM4RwDcABAEbogB2+CAngLzbPYDqApmQNJQQBimYACFKNRHSoBzAB4ArAEoBBANYR5AEVYAJAOJCAagA0AXCxYduvAVhHVaEmQpVrNug4YCwAKADC6KhDsAdjqUADOMOhhvFD+xiQYWHgExCRUcMDsDABEUDTs0gB0smHZpKhQYEEZWbn5RSXZ3n4BQRDYACp0MOzxcDAwYFAAxgSxVMiycABucGHDCLAQANTA6Ljg7N7eBZFIJLjsqHDgECQA3l4AkHMSwwnsEMMAFgAUAJQXXtdXw-5hZzgJAYaXYAHcSABVPIQAAcigQCDgdFeABZYe8iD8Ft0IOhCpJHvI4DR0MB9HAwCB2GFXnBMT8qmcyHN2AA2VEAZQgiykwPIeLgr25vMkhVQCDJPmeiD8h0K-UGKKo4DAABoSPSGT8WWF2VyeXlJPzdfqRUbCgh2IM4MN2K9kAAdZbISQagDk7vePyuvr9JADlutYFt9qdyFdHq9Pr9voDJCDNrtDoYkZInu1vr+VABCTylPNfJBpo5hbFYRAZABoteAAYNQBmABMmauVogIAQVFBEPkNMiOftFXSYDLGsufue7DghwQYXiE792WzgWCEG67Gy8WygWkKGeEGAYGyap9AF9T76zwyrhevGesd4zMwLDx+IJbGJ6FI5EpVBptD0Ixmn8Vd2lCCIohiOIEkEZJCFIdJMhyTJCHwQgyjzKokNqMgwHQMgml8UC2k6Dc+gGIZRmgfxJjCfxti8c5lzJeBoDISpeDoAB9dDN2MbIm1rJtUWwWsGzEgB2E8WOANioA4oZ1241AQ0kUpjAAbWyKh1nYEpuL+OSCGyABdNVsmAOA8m4tYNiqLc6kOBpSjPJ9n1fKwP1Eewfycf9XCAwxmG8IA).
 
 ## Oracle Cloud
 

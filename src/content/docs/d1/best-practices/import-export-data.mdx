@@ -7,7 +7,7 @@ sidebar:
 
 D1 allows you to import existing SQLite tables and their data directly, enabling you to migrate existing data into D1 quickly and easily. This can be useful when migrating applications to use Workers and D1, or when you want to prototype a schema locally before importing it to your D1 database(s).
 
-D1 also allows you to export a database. This can be useful for [local development](/d1/build-with-d1/local-development/) or testing.
+D1 also allows you to export a database. This can be useful for [local development](/d1/best-practices/local-development/) or testing.
 
 ## Import an existing database
 
@@ -69,7 +69,7 @@ The `_cf_KV` table is a reserved table used by D1's underlying storage system. I
 
 :::
 
-From here, you can now query our new table from our Worker [using the D1 client API](/d1/build-with-d1/d1-client-api/).
+From here, you can now query our new table from our Worker [using the D1 Workers Binding API](/d1/worker-api/).
 
 :::caution[Known limitations]
 
@@ -104,12 +104,6 @@ Once you have run the above command, you will need to edit the output SQL file t
    ```
 
 You can then follow the steps to [import an existing database](#import-an-existing-database) into D1 by using the `.sql` file you generated from the database dump as the input to `wrangler d1 execute`.
-
-## Foreign key constraints
-
-When importing data, you may need to temporarily disable [foreign key constraints](/d1/build-with-d1/foreign-keys/). To do so, call `PRAGMA defer_foreign_keys = true` before making changes that would violate foreign keys.
-
-Refer to the [foreign key documentation](/d1/build-with-d1/foreign-keys/) to learn more about how to work with foreign keys and D1.
 
 ## Export an existing D1 database
 
@@ -198,8 +192,14 @@ VALUES
   ('1000', 'Boris Pewter', '2022-12-15 22:16:15');
 ```
 
+## Foreign key constraints
+
+When importing data, you may need to temporarily disable [foreign key constraints](/d1/sql-api/foreign-keys/). To do so, call `PRAGMA defer_foreign_keys = true` before making changes that would violate foreign keys.
+
+Refer to the [foreign key documentation](/d1/sql-api/foreign-keys/) to learn more about how to work with foreign keys and D1.
+
 ## Next Steps
 
 - Read the SQLite [`CREATE TABLE`](https://www.sqlite.org/lang_createtable.html) documentation.
-- Learn how to [use the D1 client API](/d1/build-with-d1/d1-client-api/) from within a Worker.
+- Learn how to [use the D1 Workers Binding API](/d1/worker-api/) from within a Worker.
 - Understand how [database migrations work](/d1/reference/migrations/) with D1.
