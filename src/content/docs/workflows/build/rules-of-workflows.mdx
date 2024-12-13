@@ -297,7 +297,7 @@ export default {
   async fetch(req: Request, env: Env): Promise<Response> {
 		// 🔴 Bad: Use an ID that isn't unique across future Workflow invocations
 		let userId = getUserId(req) // Returns the userId
-    let instance = await env.MY_WORKFLOW.create({
+    let badInstance = await env.MY_WORKFLOW.create({
     	id: userId,
     	params: payload
     });
@@ -308,14 +308,14 @@ export default {
     // so that you can track all instances associated with a specific user or merchant.
     instanceId = `${getUserId(request)}-${await crypto.randomUUID().slice(0, 6)}`
     let { result } = await addNewInstanceToDB(userId, instanceId)
-    let instance = await env.MY_WORKFLOW.create({
+    let goodInstance = await env.MY_WORKFLOW.create({
     	id: userId,
     	params: payload
     });
 
     return Response.json({
-      id: instance.id,
-      details: await instance.status(),
+      id: badInstance.id,
+      details: await badInstance.status(),
     });
   },
 };
