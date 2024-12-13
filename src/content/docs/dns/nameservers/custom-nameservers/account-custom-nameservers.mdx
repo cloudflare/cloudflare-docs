@@ -88,7 +88,7 @@ Cloudflare will assign an IPv4 and an IPv6 address to each ACNS name, and these 
 </TabItem>
 <TabItem label="API">
 
-Use the [Set ACNS Related Zone Metadata endpoint](/api/operations/account-level-custom-nameservers-usage-for-a-zone-set-account-custom-nameserver-related-zone-metadata) for each zone.
+Use the endpoint [Update DNS Settings for a Zone](/api/operations/dns-settings-for-a-zone-update-dns-settings) and configure the `nameservers` object accordingly for each zone.
 
 </TabItem>
 </Tabs>
@@ -158,7 +158,7 @@ Following the [configuration conditions](#configuration-conditions), each set mu
 <TabItem label="Dashboard">
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) and select your account.
-2. Go to **Manage Account** > **Configurations**.
+2. Go to **Manage Account** > **Configurations** > **DNS Settings**.
 3. For **Account custom nameservers**, select **Delete** next to the ACNS name.
 
 </TabItem>
