@@ -5,7 +5,7 @@ title: 1xx Informational
 
 ---
 
-The 1xx Informational status codes serve as interim responses that provide connection status updates without completing the request-response cycle. These codes are not intended for final actions but rather for indicating that the request is being processed or additional steps are required. 
+The 1xx Informational status codes serve as interim responses that provide connection status updates without completing the request-response cycle. These codes are not intended for final actions but rather to indicate that the request is being processed or additional steps are required. 
 
 The requirements the server must follow when sending 1xx Informational status codes in response to a client's request include:
 
@@ -22,7 +22,7 @@ The 100 Continue status indicates that the server has received the request heade
 
 Allows clients to verify if the server will accept their request headers before sending a potentially large or unusable request body, optimizing data flow.
 
-When a client includes the `Expect: 100-continue` header, is requesting a confirmation before sending the request body, prompting the server to respond immediately with either `100 Continue` to proceed or an appropriate status code (for example, 401 Unauthorized or 413 Payload Too Large) if the request is unacceptable.
+When a client includes the `Expect: 100-continue` header, it is requesting a confirmation before sending the request body, prompting the server to respond immediately with either `100 Continue` to proceed or an appropriate status code (for example, `401 Unauthorized` or `413 Payload Too Large`) if the request is unacceptable.
 
 ### Cloudflare-specific information
 
