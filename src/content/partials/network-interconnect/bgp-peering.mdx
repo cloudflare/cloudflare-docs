@@ -31,6 +31,13 @@ You need to enable <a href={props.productPath}>tunnel health checks</a> alongsid
 BGP peering is only available to Magic WAN/Transit customers with Direct CNI as an on-ramp. If your network is set up with GRE or IPsec tunnels, you cannot use BGP peering.
 :::
 
+You need to configure two ASNs:
+- The Cloudflare global account one.
+- One ASN for each Interconnect you want to configure with BGP.
+
+If you already have set up your Cloudflare account ASN, you can skip steps two and three below.
+
+
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login), and select your account.
 2. Go to **{props.productName}** > **Configuration** > **BGP**.
 3. In **CF Account ASN**, enter Cloudflare's ASN.
