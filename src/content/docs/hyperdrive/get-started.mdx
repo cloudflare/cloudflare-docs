@@ -175,7 +175,7 @@ To connect to your database, you will need a database driver which allows you to
 
 To install `postgres`, ensure you are in the `hyperdrive-tutorial` directory. Open your terminal and run the following command:
 
-<PackageManagers pkg="postgres" comment="This should install v3.4.4 or later" />
+<PackageManagers pkg="postgres" comment="This should install v3.4.5 or later" />
 
 With the driver installed, you can now create a Worker script that queries your database.
 
@@ -190,7 +190,7 @@ The `index.ts` file is where you configure your Worker's interactions with Hyper
 Populate your `index.ts` file with the following code:
 
 ```typescript
-// Postgres.js 3.4.4 or later is recommended
+// Postgres.js 3.4.5 or later is recommended
 import postgres from "postgres";
 
 export interface Env {
