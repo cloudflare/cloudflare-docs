@@ -51,7 +51,7 @@ For example, you could be in the following (or similar) scenario:
 From a WAF setup perspective, this scenario raises interesting requirements:
 * To create an easily deployable configuration that implements standard WAF rules configuration in front of most applications.
 * To have the ability to fine tune and tweak which rules are deployed in front of the legacy applications, which may be more prone to false positives than the others.
-* To include a “catch-all” configuration, ensuring that a Cloudflare default WAF setup is always applied to all web traffic that does not fall in the above scenarios.
+* To include a "catch-all" configuration, ensuring that a Cloudflare default WAF setup is always applied to all web traffic that does not fall in the above scenarios.
 * To minimize set up time and ongoing maintenance efforts, as applications are added and removed over time.
 
 In this Design Guide we will review how the Cloudflare WAF operates, and what tools are provided to achieve all the above architectural requirements.
