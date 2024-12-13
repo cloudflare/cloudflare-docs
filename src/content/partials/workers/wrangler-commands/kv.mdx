@@ -2,7 +2,7 @@
 {}
 ---
 
-import { AnchorHeading, Type, MetaInfo } from "~/components";
+import { AnchorHeading, Type, MetaInfo, Render } from "~/components";
 
 ## `kv namespace`
 
@@ -32,6 +32,8 @@ wrangler kv namespace create <NAMESPACE> [OPTIONS]
   - Perform on a specific environment.
 - `--preview` <Type text="boolean" /> <MetaInfo text="optional" />
   - Interact with a preview namespace (the `preview_id` value).
+
+<Render file="wrangler-commands/global-flags" product="workers" />
 
 The following is an example of using the `create` command to create a KV namespace called `MY_KV`.
 
@@ -70,6 +72,8 @@ List all KV namespaces associated with the current account ID.
 ```txt
 wrangler kv namespace list
 ```
+
+<Render file="wrangler-commands/global-flags" product="workers" />
 
 The following is an example that passes the Wrangler command through the `jq` command:
 
@@ -111,6 +115,8 @@ This command requires `--binding` or `--namespace-id`.
   - Perform on a specific environment.
 - `--preview` <Type text="boolean" /> <MetaInfo text="optional" />
   - Interact with a preview namespace instead of production.
+
+<Render file="wrangler-commands/global-flags" product="workers" />
 
 The following is an example of deleting a KV namespace called `MY_KV.`
 
@@ -191,6 +197,8 @@ This command requires a `--binding` or `--namespace-id` flag.
 - `--persist-to` <Type text="string" /> <MetaInfo text="optional" />
   - Specify directory for locally persisted data.
 
+<Render file="wrangler-commands/global-flags" product="workers" />
+
 The following is an example that puts a key-value into the namespace with binding name of `MY_KV`.
 
 ```sh
@@ -259,6 +267,8 @@ This command requires `--binding` or `--namespace-id`.
 - `--persist-to` <Type text="string" /> <MetaInfo text="optional" />
   - Specify directory for locally persisted data.
 
+<Render file="wrangler-commands/global-flags" product="workers" />
+
 Below is an example that passes the Wrangler command through the `jq` command:
 
 ```sh
@@ -307,6 +317,8 @@ Exactly one of `--binding` or `--namespace-id` is required.
 - `--persist-to` <Type text="string" /> <MetaInfo text="optional" />
   - Specify directory for locally persisted data.
 
+<Render file="wrangler-commands/global-flags" product="workers" />
+
 The following is an example that gets the value of the `"my-key"` key from the KV namespace with binding name `MY_KV`.
 
 ```sh
@@ -344,6 +356,8 @@ Exactly one of `--binding` or `--namespace-id` is required.
   - Interact with locally persisted data.
 - `--persist-to` <Type text="string" /> <MetaInfo text="optional" />
   - Specify directory for locally persisted data.
+
+<Render file="wrangler-commands/global-flags" product="workers" />
 
 The following is an example that deletes the key-value pair with key `"my-key"` from the KV namespace with binding name `MY_KV`.
 
@@ -396,6 +410,8 @@ This command requires `--binding` or `--namespace-id`.
   - Interact with locally persisted data.
 - `--persist-to` <Type text="string" /> <MetaInfo text="optional" />
   - Specify directory for locally persisted data.
+
+<Render file="wrangler-commands/global-flags" product="workers" />
 
 This command takes a JSON file as an argument with a list of key-value pairs to upload. An example of JSON input:
 
@@ -478,6 +494,8 @@ This command requires `--binding` or `--namespace-id`.
   - Interact with locally persisted data.
 - `--persist-to` <Type text="string" /> <MetaInfo text="optional" />
   - Specify directory for locally persisted data.
+
+<Render file="wrangler-commands/global-flags" product="workers" />
 
 This command takes a JSON file as an argument containing an array of keys to delete.
 

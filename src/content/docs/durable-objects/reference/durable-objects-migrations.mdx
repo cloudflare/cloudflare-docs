@@ -70,13 +70,23 @@ All migrations are applied at deployment. Each migration can only be applied onc
 
 To illustrate an example migrations workflow, the `DurableObjectExample` class can be initially defined with:
 
+import { WranglerConfig } from "~/components";
+
+<WranglerConfig>
+
 ```toml
 [[migrations]]
 tag = "v1" # Should be unique for each entry
 new_classes = ["DurableObjectExample"] # Array of new classes
 ```
 
+</WranglerConfig>
+
 Each migration in the list can have multiple directives, and multiple migrations can be specified as your project grows in complexity. For example, you may want to rename the `DurableObjectExample` class to `UpdatedName` and delete an outdated `DeprecatedClass` entirely.
+
+
+
+<WranglerConfig>
 
 ```toml
 [[migrations]]
@@ -88,6 +98,8 @@ tag = "v2"
 renamed_classes = [{from = "DurableObjectExample", to = "UpdatedName" }] # Array of rename directives
 deleted_classes = ["DeprecatedClass"] # Array of deleted class names
 ```
+
+</WranglerConfig>
 
 :::note
 
@@ -101,16 +113,22 @@ Note that `.toml` files do not allow line breaks in inline tables (the `{key = "
 
 :::note[SQLite in Durable Objects Beta]
 
-The new beta version of Durable Objects is available where each Durable Object has a private, embedded SQLite database. When deploying a new Durable Object class, users can opt-in to a SQLite storage backend in order to access new [SQL API](/durable-objects/api/storage-api/#sqlexec). Otherwise, a Durable Object class has a key-value storage backend.
+The new beta version of Durable Objects is available where each Durable Object has a private, embedded SQLite database. When deploying a new Durable Object class, users can opt-in to a SQLite storage backend in order to access new [SQL API](/durable-objects/api/sql-storage/#exec). Otherwise, a Durable Object class has a key-value storage backend.
 
 :::
 
 To allow a new Durable Object class to use a SQLite storage backend, use `new_sqlite_classes` on the migration in your Worker's `wrangler.toml` file:
+
+
+
+<WranglerConfig>
 
 ```toml
 [[migrations]]
 tag = "v1" # Should be unique for each entry
 new_sqlite_classes = ["MyDurableObject"] # Array of new classes
 ```
+
+</WranglerConfig>
 
 You cannot enable a SQLite storage backend on an existing, deployed Durable Object class, so setting `new_sqlite_classes` on later migrations will fail with an error. Automatic migration of deployed classes from their key-value storage backend to SQLite storage backend will be available in the future.

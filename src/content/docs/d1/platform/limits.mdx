@@ -42,3 +42,18 @@ Limits for individual queries (listed above) apply to each individual statement 
 Cloudflare also offers other storage solutions such as [Workers KV](/kv/api/), [Durable Objects](/durable-objects/), and [R2](/r2/get-started/). Each product has different advantages and limits. Refer to [Choose a data or storage product](/workers/platform/storage-options/) to review which storage option is right for your use case.
 
 <Render file="limits_increase" product="workers" />
+
+## Frequently Asked Questions
+
+Frequently asked questions related to D1 limits:
+
+### How much work can a D1 database do?
+
+D1 is designed for horizontal scale out across multiple, smaller (10 GB) databases, such as per-user, per-tenant or per-entity databases. D1 allows you to build applications with thousands of databases at no extra cost for isolating with multiple databases, as the pricing is based only on query and storage costs.
+
+- Each D1 database can store up to 10 GB of data, and you can create up to thousands of separate D1 databases. This allows you to split a single monolithic database into multiple, smaller databases, thereby isolating application data by user, customer, or tenant.
+- SQL queries over a smaller working data set can be more efficient and performant while improving data isolation.
+
+:::caution
+Note that the 10 GB limit of a D1 database cannot be further increased.
+:::

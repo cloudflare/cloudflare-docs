@@ -1,0 +1,94 @@
+---
+title: mTLS with Application Security
+pcx_content_type: overview
+sidebar:
+  order: 1
+---
+
+:::note
+This implementation requires an active [Zone](/fundamentals/setup/accounts-and-zones/#zones), a valid [Edge Certificate](/ssl/edge-certificates/), and [proxied](/dns/manage-dns-records/reference/proxied-dns-records/) hostname. <br />
+
+API Shield is not required to use mTLS. <br />
+
+By default, mTLS uses Client Certificates issued by a Cloudflare Managed CA. Cloudflare generates a unique CA for each customer account, meaning that Client Certificates all validate against an account-level Cloudflare CA.
+:::
+
+## 1. Enable mTLS
+
+1. Go to your Cloudflare dashboard and select your account and domain.
+2. Go to **SSL/TLS** > **[Client Certificates](/ssl/client-certificates/)** tab and select **Edit** to add the Hosts (hostnames) you want to [enable mTLS](/ssl/client-certificates/enable-mtls/) for. 
+
+    Example host: `mtls-test.example.com`
+
+3. Select **Create Certificate** and fill in the required fields. You can choose one of the following options:
+
+- Generate a private key (usually referred to as Private Certificate) and Certificate Signing Request (CSR) with Cloudflare (which includes the Public Certificate).
+- Use your own private key and CSR which allows you to also [label client certificates](/ssl/client-certificates/label-client-certificate/).
+
+To generate and use your own CSR, you can run a command like the following:
+
+```txt
+openssl req -new -newkey rsa:2048 -nodes -keyout client1.key -out client1.csr -subj '/C=GB/ST=London/L=London/O=Organization/CN=CommonName'
+```
+
+Or use a script like this one from [GitHub](https://github.com/erfianugrah/rootcatest/blob/main/fullgenerator.py).
+
+Do not forget to copy the values shown when creating the certificate as they become unavailable after creation.
+
+## 2. Install the client certificate
+
+In order for a client to utilize the Client Certificate you created, it must be on the devices that you want to use them on. You will want to place them in the same directory as your process / script that targets your APIs / hostnames.
+
+We generally recommended using one Client Certificate per device. Configuring your system to actually use the Public and Private Certificates is especially important.
+
+An example is to [add both certificates to the Keychain](https://support.apple.com/en-gb/guide/keychain-access/kyca2431/mac) on a MacBook laptop. 
+
+Another example is to generate a [PKCS12 (P12) certificate](https://en.wikipedia.org/wiki/PKCS_12) file and then [add it to your browser](https://www.ibm.com/docs/en/engineering-lifecycle-management-suite/lifecycle-management/7.0.2?topic=dashboards-importing-certificates-configuring-browsers):
+
+```txt
+openssl pkcs12 -export -out certificate.p12 -inkey private-cert.pem -in cert.pem
+```
+
+Use the values from the previous step.
+
+Example using cURL command:
+
+```cURL
+curl -v --cert cert.pem --key private-cert.pem <HOSTNAME>
+```
+
+Use the values from the previous step.
+
+## 3. Validate the client certificate in the WAF
+
+mTLS is verified and checked in the [Cloudflare WAF phase](/waf/reference/phases/). This is done by creating WAF [Custom Rules](/waf/custom-rules/) using the dynamic fields.
+
+All Client Certificate details can be found in the [`cf.tls_*`](/ruleset-engine/rules-language/fields/dynamic-fields/#cftls_cipher) dynamic fields in the [Cloudflare Ruleset Engine](/ruleset-engine/).
+
+Example WAF Custom Rule with action block:
+
+![Example of a WAF custom rule with an action block in the Cloudflare dashboard during the validate client certificate step](~/assets/images/learning-paths/mtls/waf-custom-rule-action-block.png)
+
+## Demo
+
+:::note
+Ensure you are not using a VPN that could interfere with certificates or TLS decryption. If needed, enable [Split Tunnels](/cloudflare-one/connections/connect-devices/warp/configure-warp/route-traffic/split-tunnels/) for specific hostnames to bypass the VPN for trusted services, such as the mTLS hostnames.
+:::
+
+With the Public and Private Certificates in the same directory, with this cURL command, we will gain access:
+
+```curl
+curl -I --cert cert.pem --key private-cert.pem https://mtls-test.example.com/mtls-test
+
+HTTP/2 200 
+server: cloudflare
+```
+
+Without the certificates, the terminal will display the following:
+
+```curl
+$ curl -I https://mtls-test.example.com/mtls-test
+
+HTTP/2 403
+server: cloudflare
+```

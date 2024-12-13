@@ -3,6 +3,10 @@
 
 ---
 
+import { Tabs, TabItem, Details } from '~/components';
+
+<Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
+
 1. In [Zero Trust](https://one.dash.cloudflare.com), go to **Access** > **Service Auth** > **Service Tokens**.
 
 2. Select **Create Service Token**.
@@ -16,5 +20,67 @@
 6. Copy the Client Secret.
 
    :::caution
-   This is the only time Cloudflare Access will display the Client Secret. If you lose the Client Secret, you must generate a new service token. 
+   This is the only time Cloudflare Access will display the Client Secret. If you lose the Client Secret, you must generate a new service token.
    :::
+
+</TabItem> <TabItem label="Terraform">
+
+1. Add the following permission to your [`cloudflare_api_token`](https://registry.terraform.io/providers/cloudflare/cloudflare/4.40.0/docs/resources/api_token):
+	- `Access: Service Tokens Write`
+
+2. Configure the [`cloudflare_zero_trust_access_service_token`](https://registry.terraform.io/providers/cloudflare/cloudflare/4.40.0/docs/resources/zero_trust_access_service_token) resource:
+
+		```tf
+		resource "cloudflare_zero_trust_access_service_token" "example_service_token" {
+			account_id = var.cloudflare_account_id
+			name       = "Example service token"
+			duration  = "8760h"
+
+			lifecycle {
+				create_before_destroy = true
+			}
+		}
+		```
+
+3. Get the Client ID and Client Secret of the service token:
+
+	<Details header="Example: Output to CLI" open = {false}>
+  	1. Output the Client ID and Client Secret to the Terraform state file:
+			```tf
+			output "example_service_token_client_id" {
+				value     = cloudflare_zero_trust_access_service_token.example_service_token.client_id
+			}
+
+			output "example_service_token_client_secret" {
+				value     = cloudflare_zero_trust_access_service_token.example_service_token.client_secret
+				sensitive = true
+			}
+			```
+	2. Apply the configuration:
+			```sh
+			terraform apply
+			```
+	3. Read the Client ID and Client Secret:
+			```sh
+			terraform output -raw example_service_token_client_id
+			```
+			```sh
+			terraform output -raw example_service_token_client_secret
+			```
+	</Details>
+
+	<Details header="Example: Store in HashiCorp Vault" open = {false}>
+    ```tf
+		resource "vault_generic_secret" "example_service_token" {
+			path         = "kv/cloudflare/example_service_token"
+
+			data_json = jsonencode({
+				"CLIENT_ID"     = cloudflare_access_service_token.example_service_token.client_id
+				"CLIENT_SECRET" = cloudflare_access_service_token.example_service_token.client_secret
+			})
+		}
+		```
+	</Details>
+
+
+</TabItem> </Tabs>

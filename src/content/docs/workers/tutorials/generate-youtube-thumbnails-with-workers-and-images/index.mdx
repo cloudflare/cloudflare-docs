@@ -337,10 +337,16 @@ Adding a query parameter with custom text, you should receive:
 
 To deploy your Worker, open your `wrangler.toml` file and update the `name` key with your project's name. Below is an example with this tutorial's project name:
 
+import { WranglerConfig } from "~/components";
+
+<WranglerConfig>
+
 ```toml
 name = "worker-to-text"
 
 ```
+
+</WranglerConfig>
 
 Then run the `npx wrangler deploy` command to deploy your Worker.
 
@@ -494,10 +500,16 @@ Image transformations can only be tested when you deploy your Worker.
 
 To deploy your Worker, open your `wrangler.toml` file and update the `name` key with your project's name. Below is an example with this tutorial's project name:
 
+
+
+<WranglerConfig>
+
 ```toml
 name = "thumbnail-image"
 
 ```
+
+</WranglerConfig>
 
 Deploy your Worker by running:
 

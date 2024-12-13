@@ -71,3 +71,5 @@ When Cloudflare releases new code to its global network, we may restart servers,
 
 Investigating issues with Websocket can be facilitated with client tools like [wscat](https://github.com/websockets/wscat).
 Being able to reproduce an issue on a single URL with a minimalistic tool helps narrowing down the issue.
+
+The `EdgeStartTimestamp` and `EdgeStopTimestamp` fields in [HTTP requests logs](/logs/reference/log-fields/zone/http_requests/) represent the duration of the WebSocket connection (they do not represent the initial HTTP connection).

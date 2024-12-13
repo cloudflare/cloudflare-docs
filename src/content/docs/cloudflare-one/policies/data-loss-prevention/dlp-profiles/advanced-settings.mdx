@@ -13,20 +13,52 @@ This page lists the advanced settings available when configuring a [predefined](
 
 Match count refers to the number of times that any enabled entry in the profile can be detected before an action is triggered, such as blocking or logging. For example, if you select a match count of 10, the scanned file or HTTP body must contain 11 or more matching strings. Detections do not have to be unique.
 
-## Context analysis
+## Confidence levels
 
-Context analysis restricts detections based on proximity keywords to prevent false positives. Proximity keywords must be detected within a distance of 1000 bytes (~1000 characters) from the original detection to trigger an context-aware detection. For example, the string `123-45-6789` will only count as a detection if in proximity to keywords such as `ssn`.
+Confidence levels indicate how confident Cloudflare DLP is in a DLP detection. DLP determines the confidence by inspecting the content for proximity keywords around the detection.
 
-DLP will apply context analysis to traffic and the content of [supported files](/cloudflare-one/policies/data-loss-prevention/#supported-file-types). Supported detections include the [Financial Information](/cloudflare-one/policies/data-loss-prevention/dlp-profiles/predefined-profiles/#financial-information) and [Social Security, Insurance, Tax, and Identifier Numbers](/cloudflare-one/policies/data-loss-prevention/dlp-profiles/predefined-profiles/#social-security-insurance-tax-and-identifier-numbers) predefined profiles.
+Confidence level is set on the DLP profile. When you select a confidence level in Zero Trust, you will see which DLP entries will be affected by the confidence level. Entries that do not reflect a confidence level in Zero Trust are not yet supported or are not applicable.
 
-### Exclude files from context analysis
+DLP confidence detections consist of Low, Medium, and High confidence levels. DLP will default to Low confidence detections, which are based on regular expressions, require few keywords, and will trigger more often. Medium and High confidence detections require more keywords, will trigger less often, and have a higher likelihood of accuracy.
 
-You can exclude the content of files from context analysis while still applying context analysis to traffic. For example, if you send an email containing the string `123-45-6789`, DLP will only count a detection if the string is in proximity to keywords such as `ssn`. If you include a file in an email containing the string `123-45-6789`, DLP will match a detection regardless of keywords.
+To change the confidence level of a DLP profile:
 
-To exclude file content from context analysis, in **Exclude content type**, choose _Files_.
+1. In [Zero Trust](https://one.dash.cloudflare.com/), go to **DLP** > **DLP profiles**.
+2. Select the profile, then select **Edit**.
+3. In **Advanced settings** > **Confidence Level**, choose a new confidence level from the dropdown menu.
 
-## Optical Character Recognition (OCR) <Badge text="Beta" variant="caution" size="small" />
+Setting the confidence to Low will also consider Medium and High confidence detections as matches. Setting the confidence to Medium or High will filter out lower confidence detections.
+
+### Gateway detections
+
+For inline detections in Gateway, to display Low and Medium confidence detections but block High confidence detections, Cloudflare recommends creating two HTTP policies. The first policy should use a Low confidence DLP profile with an Allow action. The second policy should use a High confidence DLP profile with a Block action. For example:
+
+| Selector    | Operator | Value                       | Action |
+| ----------- | -------- | --------------------------- | ------ |
+| DLP Profile | in       | _Low Confidence Detections_ | Allow  |
+
+| Selector    | Operator | Value                        | Action |
+| ----------- | -------- | ---------------------------- | ------ |
+| DLP Profile | in       | _High Confidence Detections_ | Block  |
+
+## Optical Character Recognition (OCR) <Badge text="Beta" variant="caution" size="small" /> {/* optical-character-recognition-ocr */}
 
 Optical Character Recognition (OCR) analyzes and interprets text within image files. When used with DLP profiles, OCR can detect sensitive data within images your users upload.
 
 OCR supports scanning `.jpg`/`.jpeg` and `.png` files between 4 KB and 1 MB in size. Text is encoded in UTF-8 format, including support for non-Latin characters.
+
+## Context analysis <Badge text="Deprecated" variant="caution" size="small" /> {/* context-analysis */}
+
+:::caution
+Context analysis has been superseded by [confidence levels](#confidence-levels). DLP will migrate users who had context analysis turned on to confidence levels where applicable.
+:::
+
+When it was available, context analysis restricted detections based on proximity keywords to prevent false positives. Proximity keywords had to be detected within a distance of 1000 bytes (~1000 characters) from the original detection to trigger an context-aware detection. For example, the string `123-45-6789` only counted as a detection if in proximity to keywords such as `ssn`.
+
+DLP applied context analysis to traffic and the content of [supported files](/cloudflare-one/policies/data-loss-prevention/#supported-file-types). Supported detections included the [Financial Information](/cloudflare-one/policies/data-loss-prevention/dlp-profiles/predefined-profiles/#financial-information) and [Social Security, Insurance, Tax, and Identifier Numbers](/cloudflare-one/policies/data-loss-prevention/dlp-profiles/predefined-profiles/#social-security-insurance-tax-and-identifier-numbers) predefined profiles.
+
+### Exclude files from context analysis
+
+You could exclude the content of files from context analysis while still applying context analysis to traffic. For example, if you sent an email containing the string `123-45-6789`, DLP only counted a detection if the string was in proximity to keywords such as `ssn`. If you included a file in an email containing the string `123-45-6789`, DLP matched a detection regardless of keywords.
+
+To exclude file content from context analysis, in **Exclude content type**, choose _Files_.

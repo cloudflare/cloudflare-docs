@@ -1,0 +1,67 @@
+---
+title: mTLS with Workers
+pcx_content_type: overview
+sidebar:
+  order: 4
+---
+
+:::note
+Cloudflare Workers runs after the Cloudflare WAF and Cloudflare Access. Review the [Traffic Sequence](https://blog.cloudflare.com/traffic-sequence-which-product-runs-first/) visible on the Cloudflare dashboard.
+:::
+
+[mTLS for Workers](/workers/runtime-apis/bindings/mtls/) can be used for requests made to services that are [not proxied](/dns/manage-dns-records/reference/proxied-dns-records/#dns-only-records) on Cloudflare, or alternatively used to gain visibility into certificate details and optionally add your own programmatic logic for further checks or actions.
+
+## Expose mTLS headers
+
+All Client Certificate details can be found in the [tlsClientAuth](/workers/runtime-apis/request#incomingrequestcfproperties) object in Cloudflare Workers.
+
+Example Cloudflare Workers code to return all headers and gain visibility, including [Client Certificate headers](/ssl/client-certificates/enable-mtls/#cloudflare-workers):
+
+```js
+addEventListener('fetch', event => {
+  event.respondWith(
+    (async request => {
+      const { tlsClientAuth = {} } = request.cf || {};
+      const tlsHeaders = {
+        'X-CERT-ISSUER-DN': tlsClientAuth.certIssuerDN,
+        'X-CERT-SUBJECT-DN': tlsClientAuth.certSubjectDN,
+        'X-CERT-ISSUER-DN-L': tlsClientAuth.certIssuerDNLegacy,
+        'X-CERT-SUBJECT-DN-L': tlsClientAuth.certSubjectDNLegacy,
+        'X-CERT-SERIAL': tlsClientAuth.certSerial,
+        'X-CERT-FINGER': tlsClientAuth.certFingerprintSHA1,
+        'X-CERT-VERIFY': tlsClientAuth.certVerify,
+        'X-CERT-NOTBE': tlsClientAuth.certNotBefore,
+        'X-CERT-NOTAF': tlsClientAuth.certNotAfter
+      };
+
+      const headers = Object.fromEntries(request.headers);
+      return new Response(JSON.stringify({ ...headers, ...tlsHeaders }, null, 2), {
+        headers: { 'Content-Type': 'application/json' }
+      });
+    })(event.request)
+  );
+});
+```
+
+The response when using the browser with a P12 Certificate to visit the mTLS hostname would look similar to this example:
+
+![Example response after exposing an mTLS header with Cloudflare Workers](~/assets/images/learning-paths/mtls/expose-mtls-workers.png)
+
+```txt
+{
+  "X-CERT-ISSUER-DN": "CN=Managed CA abcdefghijklmnopq123456789,OU=www.cloudflare.com,O=Cloudflare\\, Inc.,L=San Francisco,ST=California,C=US",
+  "X-CERT-SUBJECT-DN": "CN=Cloudflare,C=US",
+  "X-CERT-ISSUER-DN-L": "/C=US/ST=California/L=San Francisco/O=Cloudflare, Inc./OU=www.cloudflare.com/CN=Managed CA abcdefghijklmnopq123456789",
+  "X-CERT-SUBJECT-DN-L": "/C=US/CN=Cloudflare",
+  "X-CERT-SERIAL": "37C52778E2F1820CC6342172A0E0ED33A4555F8B",
+  "X-CERT-FINGER": "161e3a2089add0b2134ec43c9071f460e9f4b898",
+  "X-CERT-NOTBE": "May 25 23:11:00 2024 GMT",
+  "X-CERT-NOTAF": "May 23 23:11:00 2034 GMT"
+}
+```
+
+:::note
+The client certificate serial number is a unique identifier assigned to each certificate by the CA, ensuring that no two certificates issued by the same CA have the same serial number. This can be useful to track and monitor certificate usage or abuse.
+:::
+
+This approach can also be useful to handle additional checks and logic on the mTLS via the Cloudflare Workers.

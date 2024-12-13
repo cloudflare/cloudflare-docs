@@ -49,12 +49,18 @@ The [`env`](/workers/runtime-apis/bindings) object is exposed as a class propert
 
 For example, a Worker that declares a binding to the [environment variable](/workers/configuration/environment-variables/) `GREETING`:
 
+import { WranglerConfig } from "~/components";
+
+<WranglerConfig>
+
 ```toml
 name = "my-worker"
 
 [vars]
 GREETING = "Hello"
 ```
+
+</WranglerConfig>
 
 Can access it by calling `this.env.GREETING`:
 
@@ -103,6 +109,10 @@ You can also export any number of named `WorkerEntrypoint` classes from within a
 
 You can use this to group multiple pieces of compute together. For example, you might create a distinct `WorkerEntrypoint` for each permission role in your application, and use these to provide role-specific RPC methods:
 
+
+
+<WranglerConfig>
+
 ```toml
 name = "todo-app"
 
@@ -111,6 +121,8 @@ binding = "D1"
 database_name = "todo-app-db"
 database_id = "<unique-ID-for-your-database>"
 ```
+
+</WranglerConfig>
 
 ```js
 import { WorkerEntrypoint } from "cloudflare:workers";
@@ -156,6 +168,10 @@ export default class extends WorkerEntrypoint {
 
 You can then declare a Service binding directly to `AdminEntrypoint` in another Worker:
 
+
+
+<WranglerConfig>
+
 ```toml
 name = "admin-app"
 
@@ -164,6 +180,8 @@ binding = "ADMIN"
 service = "todo-app"
 entrypoint = "AdminEntrypoint"
 ```
+
+</WranglerConfig>
 
 ```js
 export default {

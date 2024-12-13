@@ -22,12 +22,18 @@ Bindings allow your Worker to interact with resources on the Cloudflare Develope
 
 For example, to access a [KV](/kv) namespace from a Python Worker, you would declare the following in your Worker's [`wrangler.toml`](/workers/wrangler/configuration/):
 
+import { WranglerConfig } from "~/components";
+
+<WranglerConfig>
+
 ```toml
 main = "./src/index.py"
 kv_namespaces = [
   { binding = "FOO", id = "<YOUR_KV_NAMESPACE_ID>" }
 ]
 ```
+
+</WranglerConfig>
 
 ...and then call `.get()` on the binding object that is exposed on `env`:
 

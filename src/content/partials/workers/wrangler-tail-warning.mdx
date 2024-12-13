@@ -8,9 +8,15 @@
 
 When updating a Worker with Wrangler the [Tail Consumer](/workers/observability/logs/tail-workers) config will be removed. Please add the tail\_consumer config to the top level of your `wrangler.toml`.
 
+import { WranglerConfig } from "~/components";
+
+<WranglerConfig>
+
 ```toml
 tail_consumers = [{service = "<TAIL_WORKER_NAME>"}]
 ```
+
+</WranglerConfig>
 
 
 :::

@@ -16,10 +16,10 @@ The following in-line DLP policies are commonly used to secure data in uploaded 
 
 The **Allow** action functions as an implicit logger, providing visibility into where your sensitive data is going without impacting the end user experience. The following example scans for your enabled Financial Information profile entries when users upload or download data to file sharing apps.
 
-| Selector         | Operator | Value                   | Logic | Action |
-| ---------------- | -------- | ----------------------- | ----- | ------ |
-| DLP Profile      | in       | `Financial Information` | And   | Allow  |
-| Content Category | in       | `File Sharing`          |       |        |
+| Selector           | Operator | Value                   | Logic | Action |
+| ------------------ | -------- | ----------------------- | ----- | ------ |
+| DLP Profile        | in       | _Financial Information_ | And   | Allow  |
+| Content Categories | in       | _File Sharing_          |       |        |
 
 <Render file="gateway/policies/block-file-types" />
 
@@ -29,11 +29,11 @@ For more information on what file formats DLP can scan, refer to [Supported file
 
 You can configure access on a per-user or group basis by adding [identity-based conditions](/cloudflare-one/policies/gateway/identity-selectors/) to your policies. The following example blocks only contractors from uploading/downloading Financial Information to file sharing apps.
 
-| Selector         | Operator | Value                   | Logic | Action |
-| ---------------- | -------- | ----------------------- | ----- | ------ |
-| DLP Profile      | in       | `Financial Information` | And   | Block  |
-| Content Category | in       | `File Sharing`          | And   |        |
-| User Group Names | in       | `Contractors`           |       |        |
+| Selector           | Operator | Value                   | Logic | Action |
+| ------------------ | -------- | ----------------------- | ----- | ------ |
+| DLP Profile        | in       | _Financial Information_ | And   | Block  |
+| Content Categories | in       | _File Sharing_          | And   |        |
+| User Group Names   | in       | _Contractors_           |       |        |
 
 ## Exclude Android applications
 
@@ -45,8 +45,8 @@ Many Android applications (such as Google Drive) use <GlossaryTooltip term="cert
 
    | Selector                     | Operator | Value                | Logic | Action         |
    | ---------------------------- | -------- | -------------------- | ----- | -------------- |
-   | Passed Device Posture Checks | in       | `OS Version Android` | And   | Do Not Inspect |
-   | Application                  | in       | `Google Drive`       |       |                |
+   | Application                  | in       | _Google Drive_       | And   | Do Not Inspect |
+   | Passed Device Posture Checks | in       | _OS Version Android_ |       |                |
 
 Android users can now use the app, but the app traffic will bypass DLP scanning.
 
@@ -60,6 +60,6 @@ In your [DLP logs](/cloudflare-one/policies/data-loss-prevention/dlp-policies/#4
 
    | Selector    | Operator    | Value                   | Logic | Action |
    | ----------- | ----------- | ----------------------- | ----- | ------ |
-   | DLP Profile | in          | `Financial Information` | And   | Block  |
-   | Application | in          | `Google Drive`          | And   |        |
-   | Domain      | not in list | `Do not DLP - SSN`      |       |        |
+   | DLP Profile | in          | _Financial Information_ | And   | Block  |
+   | Application | in          | _Google Drive_          | And   |        |
+   | Domain      | not in list | _Do not DLP - SSN_      |       |        |

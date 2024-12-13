@@ -1,0 +1,142 @@
+---
+pcx_content_type: how-to
+title: Fleet
+sidebar:
+  order: 1
+---
+
+This guide covers how to deploy the Cloudflare WARP client using [Fleet](https://fleetdm.com/) device management software.
+
+## macOS
+
+### 1. Create a custom MDM file
+
+1. [Download](/cloudflare-one/static/mdm/CloudflareWARP.mobileconfig) an example `.mobileconfig` file.
+2. Modify the file with your desired [deployment parameters](/cloudflare-one/connections/connect-devices/warp/deployment/mdm-deployment/parameters/).
+
+### 2. Upload MDM file to Fleet
+
+1. In the Fleet admin console, go to **Controls**.
+2. From the **Teams** dropdown, select the team (group of hosts) that requires Cloudflare WARP.
+3. Select **OS settings** > **Custom settings**.
+4. Select **Add profile** and upload the custom `.mobileconfig`.
+5. Select the hosts which require Cloudflare WARP:
+		- **All hosts**: Deploys WARP to all hosts in the team.
+		- **Custom**: Deploys WARP to a subset of the hosts in the team. Use [labels](https://fleetdm.com/guides/managing-labels-in-fleet#basic-article) to define the hosts that should be included or excluded.
+6. Select **Add profile**.
+
+The defined hosts will immediately receive the deployment profile, but WARP is not yet installed.
+
+### 3. Download WARP package for macOS
+
+Visit the [Download page](/cloudflare-one/connections/connect-devices/warp/download-warp/#macos) to review system requirements and download the installer for your operating system.
+
+### 4. Upload WARP package to Fleet
+
+To add the WARP client installer package for distribution to your hosts enrolled in Fleet:
+
+1. In the Fleet admin console, go to **Software**.
+2. From the **Teams** dropdown, select the team (group of hosts) that requires Cloudflare WARP.
+3. Select **Add Software** and upload the `.pkg` file that was previously downloaded.
+
+### 5. Install WARP with Fleet
+
+To deploy the uploaded `.pkg` file to your hosts:
+
+1. In the Fleet admin console, go to **Hosts**.
+2. Select the host that requires the WARP client.
+3. Go to **Software** and search for `Cloudflare`.
+4. Select **Actions** > **Install**.
+
+Installation will happen automatically when the host comes online. To deploy with REST API or GitOps, refer to the [Fleet documentation](https://fleetdm.com/guides/deploy-software-packages).
+
+### 6. Uninstall WARP with Fleet
+
+To uninstall the Fleet-deployed WARP client:
+
+1. In the Fleet admin console, go to **Hosts**.
+2. Select the host that requires the WARP client to be uninstalled.
+3. Go to **Software** and search for `Cloudflare`.
+4. Select **Actions** > **Uninstall**.
+
+## Windows
+
+### 1. Download WARP package for Windows
+
+Visit the [Download page](/cloudflare-one/connections/connect-devices/warp/download-warp/#windows) to review system requirements and download the installer for your operating system.
+
+### 2. Upload WARP package to Fleet
+
+To add the WARP client installer package for distribution to your hosts enrolled in Fleet:
+
+1. In the Fleet admin console, go to **Software**.
+2. From the **Teams** dropdown, select the team (group of hosts) that requires Cloudflare WARP.
+3. Select **Add Software** and upload the `.msi` file that was previously downloaded.
+4. (Optional) To allow users to install WARP from Fleet Desktop, select **Self-service**.
+5. Select **Advanced options**.
+6. In **Install script**, replace the default script with the following:
+
+```bash
+$logFile = "${env:TEMP}/fleet-install-software.log"
+
+try {
+
+$installProcess = Start-Process msiexec.exe `
+  -ArgumentList "/quiet /norestart ORGANIZATION=your-team-name SUPPORT_URL=https://example.com /lv ${logFile} /i `"${env:INSTALLER_PATH}`"" `
+  -PassThru -Verb RunAs -Wait
+
+Get-Content $logFile -Tail 500
+
+Exit $installProcess.ExitCode
+
+} catch {
+  Write-Host "Error: $_"
+  Exit 1
+}
+```
+
+Refer to [deployment parameters](/cloudflare-one/connections/connect-devices/warp/deployment/mdm-deployment/parameters/) for a description of each argument.
+
+### 3. Install WARP with Fleet
+
+To deploy the uploaded `.pkg` file to your hosts:
+
+1. In the Fleet admin console, go to **Hosts**.
+2. Select the host that requires the WARP client.
+3. Go to **Software** and search for `Cloudflare`.
+4. Select **Actions** > **Install**.
+
+Installation will happen automatically when the host comes online. To deploy with REST API or GitOps, refer to the [Fleet documentation](https://fleetdm.com/guides/deploy-software-packages).
+
+### 4. Uninstall WARP with Fleet
+
+To uninstall the Fleet-deployed WARP client:
+
+1. In the Fleet admin console, go to **Hosts**.
+2. Select the host that requires the WARP client to be uninstalled.
+3. Go to **Software** and search for `Cloudflare`.
+4. Select **Actions** > **Uninstall**.
+
+## Linux
+
+Fleet allows you to [execute custom scripts](https://fleetdm.com/guides/scripts) on Linux hosts. The following example script creates an [MDM file](/cloudflare-one/connections/connect-devices/warp/deployment/mdm-deployment/#linux) and installs WARP on an Ubuntu 22.04 host:
+
+```sh
+#!/bin/sh
+
+# Write the mdm.xml file
+touch /var/lib/cloudflare-warp/mdm.xml
+echo -e "<dict>\n   <key>organization</key>\n   <string>your-team-name</string>\n</dict>
+" > /var/lib/cloudflare-warp/mdm.xml
+
+# Add cloudflare gpg key
+curl -fsSL https://pkg.cloudflareclient.com/pubkey.gpg | sudo gpg --yes --dearmor --output /usr/share/keyrings/cloudflare-warp-archive-keyring.gpg
+
+# Add this repo to your apt repositories
+echo "deb [signed-by=/usr/share/keyrings/cloudflare-warp-archive-keyring.gpg] https://pkg.cloudflareclient.com/ $(lsb_release -cs) main" | sudo tee /etc/apt/sources.list.d/cloudflare-client.list
+
+# Install
+sudo apt-get -y update && sudo apt-get -y install cloudflare-warp
+```
+
+To install WARP on other Linux distributions, refer to the [package repository](https://pkg.cloudflareclient.com/).

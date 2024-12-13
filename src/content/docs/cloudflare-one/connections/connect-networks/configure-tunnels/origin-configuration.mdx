@@ -24,7 +24,7 @@ Hostname that `cloudflared` should expect from your origin server certificate. I
 | ------- | -------------------------- |
 | `""`    | Certificate Authority Pool |
 
-Path to the certificate authority (CA) for the certificate of your origin. This option should be used only if your certificate is not signed by Cloudflare.
+Local file path to the certificate authority (CA) for your origin server certificate (for example, `/root/certs/ca.pem`). The path should point to a certificate store file or a bundle file in `.pem` or `.crt` format that contains one or more trusted root CA certificates. You should only configure this setting if your certificate is not signed by Cloudflare.
 
 ### noTLSVerify
 

@@ -35,11 +35,17 @@ To bind KV namespaces to your Worker, assign an array of the below object to the
 
 Example:
 
+import { WranglerConfig } from "~/components";
+
+<WranglerConfig>
+
 ```toml title="wrangler.toml"
 kv_namespaces = [
   { binding = "<TEST_NAMESPACE>", id = "<TEST_ID>" }
 ]
 ```
+
+</WranglerConfig>
 
 ## Bind your KV namespace via the dashboard
 
@@ -48,6 +54,9 @@ To bind the namespace to your Worker in the Cloudflare dashboard:
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com).
 2. Go to **Workers & Pages**.
 3. Select your **Worker**.
-4. Select **Settings** > **Variables**.
-5. Go to **KV Namespace Bindings**.
-6. Select **Add binding**.
+4. Select **Settings** > **Bindings**.
+5. Select **Add**.
+6. Select **KV Namespace**.
+7. Enter your desired variable name (the name of the binding).
+8. Select the KV namespace you wish to bind the Worker to.
+9. Select **Deploy**.

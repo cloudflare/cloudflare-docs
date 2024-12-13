@@ -34,11 +34,11 @@ Requests that hit the [Durable Objects in-memory cache](/durable-objects/referen
 
 :::note[SQLite in Durable Objects Beta]
 
-The new beta version of Durable Objects is available where each Durable Object has a private, embedded SQLite database. When deploying a new Durable Object class, users can [opt-in to a SQLite storage backend](/durable-objects/best-practices/access-durable-objects-storage/#sqlite-storage-backend) in order to access new [SQL API](/durable-objects/api/storage-api/#sqlexec).
+The new beta version of Durable Objects is available where each Durable Object has a private, embedded SQLite database. When deploying a new Durable Object class, users can [opt-in to a SQLite storage backend](/durable-objects/best-practices/access-durable-objects-storage/#sqlite-storage-backend) in order to access new [SQL API](/durable-objects/api/sql-storage/#exec).
 
 During the initial beta, Storage API billing is not enabled for Durable Object classes using SQLite storage backend. SQLite-backed Durable Objects will incur [charges for requests and duration](/durable-objects/platform/pricing/#billing-metrics). We plan to enable Storage API billing for Durable Objects using SQLite storage backend in the first half of 2025 after advance notice with the below pricing.
 
-You can introspect rows read and rows written using `cursor.rowsRead` and `cursor.rowsWritten` on the [cursor returned](/durable-objects/api/storage-api/#returns) by a SQL query and using [GraphQL analytics](/durable-objects/observability/graphql-analytics/#query-via-the-graphql-api). [`ctx.storage.sql.databaseSize`](/durable-objects/api/storage-api/#sqldatabaseSize) returns the current SQL database size for a Durable Object.
+You can introspect rows read and rows written using `cursor.rowsRead` and `cursor.rowsWritten` on the [cursor returned](/durable-objects/api/storage-api/#returns) by a SQL query and using [GraphQL analytics](/durable-objects/observability/graphql-analytics/#query-via-the-graphql-api). [`ctx.storage.sql.databaseSize`](/durable-objects/api/sql-storage/#sqldatabaseSize) returns the current SQL database size for a Durable Object.
 
 :::
 

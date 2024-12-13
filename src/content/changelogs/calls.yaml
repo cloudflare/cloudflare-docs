@@ -12,7 +12,7 @@ entries:
   - publish_date: "2024-04-04"
     title: Orange Meets availability
     description: |-
-      Orange Meets, Cloudflare's internal video conferencing app, is open source and available for use from [Github](https://github.com/cloudflare/orange?cf_target_id=40DF7321015C5928F9359DD01303E8C2). 
+      Orange Meets, Cloudflare's internal video conferencing app, is open source and available for use from [Github](https://github.com/cloudflare/orange?cf_target_id=40DF7321015C5928F9359DD01303E8C2).
   - publish_date: "2024-04-04"
     title: Cloudflare Calls open beta
     description: |-

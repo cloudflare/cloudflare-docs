@@ -2,7 +2,7 @@
 {}
 ---
 
-import { AnchorHeading, Type, MetaInfo } from "~/components";
+import { AnchorHeading, Type, MetaInfo, Render } from "~/components";
 
 <AnchorHeading title="`create`" slug="hyperdrive-create" depth={3} />
 
@@ -38,6 +38,8 @@ wrangler hyperdrive create <CONFIG_NAME> [OPTIONS]
   - Specifies max duration for which items should persist in the cache, cannot be set when caching is disabled.
 - `--swr` <Type text="number" /> <MetaInfo text="optional" />
   - Stale While Revalidate - Indicates the number of seconds cache may serve the response after it becomes stale, cannot be set when caching is disabled.
+
+<Render file="wrangler-commands/global-flags" product="workers" />
 
 <AnchorHeading title="`update`" slug="hyperdrive-update" depth={3} />
 
@@ -76,6 +78,8 @@ wrangler hyperdrive update <ID> [OPTIONS]
 - `--swr` <Type text="number" /> <MetaInfo text="optional" />
   - Stale While Revalidate - Indicates the number of seconds cache may serve the response after it becomes stale, cannot be set when caching is disabled.
 
+<Render file="wrangler-commands/global-flags" product="workers" />
+
 <AnchorHeading title="`list`" slug="hyperdrive-list" depth={3} />
 
 List all Hyperdrive configurations.
@@ -83,6 +87,8 @@ List all Hyperdrive configurations.
 ```txt
 wrangler hyperdrive list
 ```
+
+<Render file="wrangler-commands/global-flags" product="workers" />
 
 <AnchorHeading title="`delete`" slug="hyperdrive-delete" depth={3} />
 
@@ -95,6 +101,8 @@ wrangler hyperdrive delete <ID>
 - `ID` <Type text="string" /> <MetaInfo text="required" />
   - The name of the Hyperdrive configuration to delete.
 
+<Render file="wrangler-commands/global-flags" product="workers" />
+
 <AnchorHeading title="`get`" slug="hyperdrive-get" depth={3} />
 
 Get an existing Hyperdrive configuration.
@@ -105,3 +113,5 @@ wrangler hyperdrive get <ID>
 
 - `ID` <Type text="string" /> <MetaInfo text="required" />
   - The name of the Hyperdrive configuration to get.
+
+<Render file="wrangler-commands/global-flags" product="workers" />

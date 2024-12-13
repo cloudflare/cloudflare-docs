@@ -172,6 +172,10 @@ You can [bind to a Workflow](/workers/runtime-apis/bindings/#what-is-a-binding) 
 
 To bind a Workflow to a Worker, you need to define a `[[workflows]]` binding in your `wrangler.toml` configuration:
 
+import { WranglerConfig } from "~/components";
+
+<WranglerConfig>
+
 ```toml title="wrangler.toml"
 [[workflows]]
 # name of your workflow
@@ -181,6 +185,8 @@ binding = "MY_WORKFLOW"
 # this is class that extends the Workflow class in src/index.ts
 class_name = "MyWorkflow"
 ```
+
+</WranglerConfig>
 
 You can then invoke the methods on this binding directly from your Worker script's `env` parameter. The `Workflow` type has methods for:
 

@@ -46,7 +46,9 @@ The following methods are provided to read from KV:
 To get the value for a given key, call the `get()` method on any KV namespace you have bound to your Worker code:
 
 ```js
-env.NAMESPACE.get(key, type?, options?);
+env.NAMESPACE.get(key, type?);
+// OR
+env.NAMESPACE.get(key, options?);
 ```
 
 The `get()` method returns a promise you can `await` on to get the value. If the key is not found, the promise will resolve with the literal value `null`.
@@ -58,10 +60,10 @@ The `get()` method returns a promise you can `await` on to get the value. If the
 - `type`: `"text" | "json" | "arrayBuffer" | "stream"`
   - Optional. The type of the value to be returned. `text` is the default.
 - `options`: `{
-    cacheTtl: number,
-    type: "text" | "json" | "arrayBuffer" | "stream"
+    cacheTtl?: number,
+    type?: "text" | "json" | "arrayBuffer" | "stream"
 }`
-  - Optional. Object containing the `cacheTtl` and `type` properties. The `cacheTtl` property defines the length of time in seconds that a KV result is cached in the global network location it is accessed from (minimum: 60). The `type` property defines the type of the value to be returned.
+  - Optional. Object containing the optional `cacheTtl` and `type` properties. The `cacheTtl` property defines the length of time in seconds that a KV result is cached in the global network location it is accessed from (minimum: 60). The `type` property defines the type of the value to be returned.
 
 #### Response
 
@@ -79,7 +81,9 @@ The `get()` method may return stale values. If a given key has recently been rea
 To get the value for a given key along with its metadata, call the `getWithMetadata()` method on any KV namespace you have bound to your Worker code:
 
 ```js
-env.NAMESPACE.getWithMetadata(key, type?, options?);
+env.NAMESPACE.getWithMetadata(key, type?);
+// OR
+env.NAMESPACE.getWithMetadata(key, options?);
 ```
 
 Metadata is a serializable value you append to each KV entry.
@@ -91,10 +95,10 @@ Metadata is a serializable value you append to each KV entry.
 - `type`: `"text" | "json" | "arrayBuffer" | "stream"`
   - Optional. The type of the value to be returned. `text` is the default.
 - `options`: `{
-    cacheTtl: number,
-    type: "text" | "json" | "arrayBuffer" | "stream"
+    cacheTtl?: number,
+    type?: "text" | "json" | "arrayBuffer" | "stream"
 }`
-  - Optional. Object containing the `cacheTtl` and `type` properties. The `cacheTtl` property defines the length of time in seconds that a KV result is cached in the global network location it is accessed from (minimum: 60). The `type` property defines the type of the value to be returned.
+  - Optional. Object containing the optional `cacheTtl` and `type` properties. The `cacheTtl` property defines the length of time in seconds that a KV result is cached in the global network location it is accessed from (minimum: 60). The `type` property defines the type of the value to be returned.
 
 #### Response
 
@@ -162,5 +166,5 @@ The effective `cacheTtl` of an already cached item can be reduced by getting it 
 
 ## Other methods to access KV
 
-You can [read key-value pairs from the command line with Wrangler](/kv/reference/kv-commands/#get) and [from the API](/api/operations/workers-kv-namespace-read-key-value-pair).
+You can [read key-value pairs from the command line with Wrangler](/kv/reference/kv-commands/#get) and [from the REST API](/api/operations/workers-kv-namespace-read-key-value-pair).
 

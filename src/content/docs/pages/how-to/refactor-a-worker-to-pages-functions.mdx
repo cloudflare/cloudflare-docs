@@ -1,7 +1,6 @@
 ---
 pcx_content_type: how-to
 title: Refactor a Worker to a Pages Function
-
 ---
 
 In this guide, you will learn how to refactor a Worker made to intake form submissions to a Pages Function that can be hosted on your Cloudflare Pages application. [Pages Functions](/pages/functions/) is a serverless function that lives within the same project directory as your application and is deployed with Cloudflare Pages. It enables you to run server-side code that adds dynamic functionality without running a dedicated server. You may want to refactor a Worker to a Pages Function for one of these reasons:
@@ -11,17 +10,15 @@ In this guide, you will learn how to refactor a Worker made to intake form submi
 
 :::note
 
-
 You can import your Worker to a Pages project without using Functions by creating a `_worker.js` file in the output directory of your Pages project. This [Advanced mode](/pages/functions/advanced-mode/) requires writing your Worker with [Module syntax](/workers/reference/migrate-to-module-workers/).
 
 However, when using the `_worker.js` file in Pages, the entire `/functions` directory is ignored – including its routing and middleware characteristics.
-
 
 :::
 
 ## General refactoring steps
 
-1. Remove the `addEventListener()` method and its event response and replace it with the appropriate `OnRequest` method. Refer to [Functions](/pages/functions/get-started/) to select the appropriate method for your Function.
+1. Remove the fetch handler and replace it with the appropriate `OnRequest` method. Refer to [Functions](/pages/functions/get-started/) to select the appropriate method for your Function.
 2. Pass the `context` object as an argument to your new `OnRequest` method to access the properties of the context parameter: `request`,`env`,`params` and `next`.
 3. Use middleware to handle logic that must be executed before or after route handlers. Learn more about [using Middleware](/pages/functions/middleware/) in the Functions documentation.
 
@@ -47,63 +44,60 @@ This step creates the boilerplate to write your Airtable submission Worker. Afte
 
 The following code block shows an example of a Worker that handles Airtable form submission.
 
-Every Worker will have the default response to a `fetch` action with a `request` handler. The `submitHandler` async function is called if the pathname of the work is `/submit`. This function checks that the request method is a `POST` request and then proceeds to parse and post the form entries to Airtable using your credentials, which you can store using [Wrangler `secret`](/workers/wrangler/commands/#secret).
+The `submitHandler` async function is called if the pathname of the work is `/submit`. This function checks that the request method is a `POST` request and then proceeds to parse and post the form entries to Airtable using your credentials, which you can store using [Wrangler `secret`](/workers/wrangler/commands/#secret).
 
 ```js
-addEventListener("fetch", (event) => {
-  event.respondWith(handleRequest(event.request));
-});
+export default {
+	async fetch(request, env, ctx) {
+		const url = new URL(request.url);
 
+		if (url.pathname === "/submit") {
+			return submitHandler(request, env);
+		}
 
-async function handleRequest(request) {
-  const url = new URL(request.url);
+		return fetch(request.url);
+	},
+};
 
-  if (url.pathname === "/submit") {
-    return submitHandler(request);
-  }
+async function submitHandler(request, env) {
+	if (request.method !== "POST") {
+		return new Response("Method not allowed", {
+			status: 405,
+		});
+	}
+	const body = await request.formData();
 
-  return fetch(request.url);
+	const { first_name, last_name, email, phone, subject, message } =
+		Object.fromEntries(body);
+
+	const reqBody = {
+		fields: {
+			"First Name": first_name,
+			"Last Name": last_name,
+			Email: email,
+			"Phone number": phone,
+			Subject: subject,
+			Message: message,
+		},
+	};
+
+	return HandleAirtableData(reqBody, env);
 }
 
-async function submitHandler(request) {
-  if (request.method !== "POST") {
-    return new Response("Method not allowed", {
-      status: 405,
-    });
-  }
-  const body = await request.formData();
-
-  const { first_name, last_name, email, phone, subject, message } =
-    Object.fromEntries(body);
-
-  const reqBody = {
-    fields: {
-      "First Name": first_name,
-      "Last Name": last_name,
-      Email: email,
-      "Phone number": phone,
-      Subject: subject,
-      Message: message,
-    },
-  };
-
-  return HandleAirtableData(reqBody);
-}
-
-const HandleAirtableData = (body) => {
-  return fetch(
-    `https://api.airtable.com/v0/${AIRTABLE_BASE_ID}/${encodeURIComponent(
-      AIRTABLE_TABLE_NAME
-    )}`,
-    {
-      method: "POST",
-      body: JSON.stringify(body),
-      headers: {
-        Authorization: `Bearer ${AIRTABLE_API_KEY}`,
-        "Content-type": `application/json`,
-      },
-    }
-  );
+const HandleAirtableData = (body, env) => {
+	return fetch(
+		`https://api.airtable.com/v0/${env.AIRTABLE_BASE_ID}/${encodeURIComponent(
+			env.AIRTABLE_TABLE_NAME,
+		)}`,
+		{
+			method: "POST",
+			body: JSON.stringify(body),
+			headers: {
+				Authorization: `Bearer ${env.AIRTABLE_API_KEY}`,
+				"Content-type": `application/json`,
+			},
+		},
+	);
 };
 ```
 
@@ -117,7 +111,6 @@ Then, in the `form.js` file, export a single `onRequestPost`:
 export async function onRequestPost(context) {
 	return await submitHandler(context);
 }
-
 ```
 
 Every Worker has an `addEventListener` to listen for `fetch` events, but you will not need this in a Pages Function. Instead, you will `export` a single `onRequest` function, and depending on the HTTPS request it handles, you will name it accordingly. Refer to [Function documentation](/pages/functions/get-started/) to select the appropriate method for your function.
@@ -132,23 +125,23 @@ export async function onRequestPost(context) {
 }
 
 async function submitHandler(context) {
-  const body = await context.request.formData();
+	const body = await context.request.formData();
 
-  const { first_name, last_name, email, phone, subject, message } =
-    Object.fromEntries(body);
+	const { first_name, last_name, email, phone, subject, message } =
+		Object.fromEntries(body);
 
-  const reqBody = {
-    fields: {
-      "First Name": first_name,
-      "Last Name": last_name,
-      Email: email,
-      "Phone number": phone,
-      Subject: subject,
-      Message: message,
-    },
-  };
+	const reqBody = {
+		fields: {
+			"First Name": first_name,
+			"Last Name": last_name,
+			Email: email,
+			"Phone number": phone,
+			Subject: subject,
+			Message: message,
+		},
+	};
 
-  return HandleAirtableData({ body: reqBody, env: env });
+	return HandleAirtableData({ body: reqBody, env: env });
 }
 ```
 
@@ -157,19 +150,19 @@ Finally, create a `HandleAirtableData` function. This function will send a `fetc
 ```js
 // ..
 const HandleAirtableData = async function onRequest({ body, env }) {
-  return fetch(
-    `https://api.airtable.com/v0/${env.AIRTABLE_BASE_ID}/${encodeURIComponent(
-      env.AIRTABLE_TABLE_NAME
-    )}`,
-    {
-      method: "POST",
-      body: JSON.stringify(body),
-      headers: {
-        Authorization: `Bearer ${env.AIRTABLE_API_KEY}`,
-        "Content-type": `application/json`,
-      },
-    }
-  );
+	return fetch(
+		`https://api.airtable.com/v0/${env.AIRTABLE_BASE_ID}/${encodeURIComponent(
+			env.AIRTABLE_TABLE_NAME,
+		)}`,
+		{
+			method: "POST",
+			body: JSON.stringify(body),
+			headers: {
+				Authorization: `Bearer ${env.AIRTABLE_API_KEY}`,
+				"Content-type": `application/json`,
+			},
+		},
+	);
 };
 ```
 
@@ -177,6 +170,6 @@ You can test your Function [locally using Wrangler](/pages/functions/local-devel
 
 ## Related resources
 
-* [HTML forms](/pages/tutorials/forms/)
-* [Plugins documentation](/pages/functions/plugins/)
-* [Functions documentation](/pages/functions/)
+- [HTML forms](/pages/tutorials/forms/)
+- [Plugins documentation](/pages/functions/plugins/)
+- [Functions documentation](/pages/functions/)

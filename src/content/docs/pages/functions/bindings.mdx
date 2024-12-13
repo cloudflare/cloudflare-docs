@@ -265,7 +265,7 @@ You can interact with your D1 database bindings locally in one of two ways:
 - Configure your Pages project's `wrangler.toml` file and run [`npx wrangler pages dev`](/workers/wrangler/commands/#dev-1).
 - Pass arguments to `wrangler pages dev` directly.
 
-To interact with a D1 database via the Wrangler CLI while [developing locally](/d1/build-with-d1/local-development/#develop-locally-with-pages), add `--d1 <BINDING_NAME>=<DATABASE_ID>` to the `wrangler pages dev` command.
+To interact with a D1 database via the Wrangler CLI while [developing locally](/d1/best-practices/local-development/#develop-locally-with-pages), add `--d1 <BINDING_NAME>=<DATABASE_ID>` to the `wrangler pages dev` command.
 
 If your D1 database is bound to your Pages Function via the `NORTHWIND_DB` binding and the `database_id` in your `wrangler.toml` file is `xxxx-xxxx-xxxx-xxxx-xxxx`, access this database in local development by running:
 
@@ -281,7 +281,7 @@ By default, Wrangler automatically persists data to local storage. For more info
 
 :::
 
-Refer to the [D1 client API documentation](/d1/build-with-d1/d1-client-api/) for the API methods available on your D1 binding.
+Refer to the [D1 Workers Binding API documentation](/d1/worker-api/) for the API methods available on your D1 binding.
 
 <Render file="cli-precedence-over-file" />
 
@@ -613,10 +613,16 @@ If using a queue producer binding with a Pages Function, you will be able to sen
 
 PostgreSQL drivers like [`Postgres.js`](https://github.com/porsager/postgres) depend on Node.js APIs. Pages Functions with Hyperdrive bindings must be [deployed with Node.js compatibility](/workers/runtime-apis/nodejs).
 
+import { WranglerConfig } from "~/components";
+
+<WranglerConfig>
+
 ```toml title="wrangler.toml"
 compatibility_flags = [ "nodejs_compat" ]
 compatibility_date = "2024-09-23"
 ```
+
+</WranglerConfig>
 
 :::
 
@@ -683,7 +689,7 @@ export const onRequest: PagesFunction<Env> = async (context) => {
 };
 ```
 
-</TabItem> </Tabs> 
+</TabItem> </Tabs>
 
 ### Interact with your Hyperdrive binding locally
 

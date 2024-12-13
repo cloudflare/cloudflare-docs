@@ -20,6 +20,10 @@ Prerequisites:
 
 Configure your `wrangler.toml` file as follows:
 
+import { WranglerConfig } from "~/components";
+
+<WranglerConfig>
+
 ```toml
 name = "my-worker"
 
@@ -36,6 +40,8 @@ bindings = [
 tag = "v1"
 new_classes = ["YourDurableObject"]
 ```
+
+</WranglerConfig>
 
 The following Worker script:
 

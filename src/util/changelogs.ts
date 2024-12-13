@@ -5,6 +5,7 @@ import { type CollectionEntry } from "astro:content";
 export async function getChangelogs(opts?: {
 	filter?: Parameters<typeof getCollection<"changelogs">>[1];
 	wranglerOnly?: boolean;
+	deprecationsOnly?: boolean;
 }) {
 	let changelogs;
 
@@ -20,6 +21,12 @@ export async function getChangelogs(opts?: {
 		throw new Error(
 			`[getChangelogs] Unable to find any changelogs with ${JSON.stringify(opts)}`,
 		);
+	}
+
+	if (opts?.deprecationsOnly) {
+		changelogs = changelogs.filter((x) => x.id === "api-deprecations");
+	} else {
+		changelogs = changelogs.filter((x) => x.id !== "api-deprecations");
 	}
 
 	const products = [...new Set(changelogs.flatMap((x) => x.data.productName))];

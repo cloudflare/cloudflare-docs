@@ -205,7 +205,7 @@ Specific error cases include but are not limited to:
 
 #### Worker exceeded the upload size limit
 
-A Worker can be up to 10 MB in size after compression on the Workers Paid plan, and up to 1 MB on the Workers Free plan.
+A Worker can be up to 10 MB in size after compression on the Workers Paid plan, and up to 3 MB on the Workers Free plan.
 
 To reduce the upload size of a Worker, you should consider removing unnecessary dependencies and/or using Workers KV, a D1 database or R2 to store configuration files, static assets and binary data instead of attempting to bundle them within your Worker code.
 

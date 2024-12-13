@@ -8,6 +8,8 @@ head:
     content: Functions reference
 ---
 
+import { Type, MetaInfo } from "~/components";
+
 The Cloudflare Rules language provides functions for manipulating and validating values in an expression:
 
 - [Transformation functions](#transformation-functions) manipulate values extracted from an HTTP request.
@@ -31,7 +33,8 @@ The Rules language supports these transformation functions:
 
 ### `any`
 
-`any(Array<Boolean>)` → `Boolean`
+{/* prettier-ignore */}
+<code>any(<Type text="Array<Boolean>" />)</code>: <Type text="Boolean" />
 
 Returns `true` when the comparison operator in the argument returns `true` for _any_ of the values in the argument array. Returns `false` otherwise.
 
@@ -43,7 +46,8 @@ any(url_decode(http.request.body.form.values[*])[*] contains "an xss attack")
 
 ### `all`
 
-`all(Array<Boolean>)` → `Boolean`
+{/* prettier-ignore */}
+<code>all(<Type text="Array<Boolean>" />)</code>: <Type text="Boolean" />
 
 Returns `true` when the comparison operator in the argument returns `true` for _all_ values in the argument array. Returns `false` otherwise.
 
@@ -55,7 +59,8 @@ all(http.request.headers["content-type"][*] == "application/json")
 
 ### `cidr`
 
-`cidr(address (IP address), ipv4_network_bits (Integer), ipv6_network_bits (Integer))` → `IP address`
+{/* prettier-ignore */}
+<code>cidr(address <Type text="IP address" />, ipv4_network_bits <Type text="Integer" />, ipv6_network_bits <Type text="Integer" />)</code>: <Type text="IP address" />
 
 Returns the network address corresponding to an IP address (IPv4 or IPv6), given the provided IPv4 and IPv6 network bits (which determine the corresponding netmasks).
 
@@ -74,7 +79,8 @@ You can only use the `cidr()` function in [custom rules](/waf/custom-rules/) and
 
 ### `cidr6`
 
-`cidr6(address (IP address), ipv6_network_bits (Integer))` → `IP address`
+{/* prettier-ignore */}
+<code>cidr6(address <Type text="IP address" />, ipv6_network_bits <Type text='Integer' />)</code>: <Type text="IP address" />
 
 Returns the IPv6 network address corresponding to an IPv6 address, given the provided network bits (which determine the netmask). If you provide an IPv4 address in the first parameter, it will be returned unchanged.
 
@@ -95,7 +101,8 @@ You can only use the `cidr6()` function in [custom rules](/waf/custom-rules/) an
 
 ### `concat`
 
-`concat(String | Integer | Bytes | Array elements)` → `String`
+{/* prettier-ignore */}
+<code>concat(<Type text="String | Integer | Bytes | Array elements" />)</code>: <Type text="String" />
 
 Takes a comma-separated list of values. Concatenates the argument values into a single String.
 
@@ -103,7 +110,8 @@ For example, `concat("String1", " ", "String", 2)` will return `"String1 String2
 
 ### `decode_base64`
 
-`decode_base64(source (String))` → `String`
+{/* prettier-ignore */}
+<code>decode_base64(source <Type text="String" />)</code>: <Type text="String" />
 
 Decodes a Base64-encoded String specified in `source`.
 
@@ -117,7 +125,8 @@ You can only use the `decode_base64()` function in [header modification rules](/
 
 ### `ends_with`
 
-`ends_with(source (String), substring (String))` → `Boolean`
+{/* prettier-ignore */}
+<code>ends_with(source <Type text="String" />, substring <Type text="String" />)</code>: <Type text="Boolean" />
 
 Returns `true` when the source ends with a given substring. Returns `false` otherwise. The source cannot be a literal value (like `"foo"`).
 
@@ -125,7 +134,8 @@ For example, if `http.request.uri.path` is `"/welcome.html"`, then `ends_with(ht
 
 ### `len`
 
-`len(String | Bytes)` → `Integer`
+{/* prettier-ignore */}
+<code>len(<Type text="String | Bytes" />)</code>: <Type text="Integer" />
 
 Returns the byte length of a String or Bytes field.
 
@@ -133,7 +143,8 @@ For example, if `http.host` is `"example.com"`, then `len(http.host)` will retur
 
 ### `lookup_json_integer`
 
-`lookup_json_integer(field (String), key (String | Integer) [, key (String | Integer), ...])` → `Integer`
+{/* prettier-ignore */}
+<code>lookup_json_integer(field <Type text="String" />, key <Type text="String | Integer" />, key <Type text="String | Integer" /> <MetaInfo text='optional' />, ...)</code>: <Type text="Integer" />
 
 Returns the integer value associated with the supplied `key` in `field`.
 
@@ -167,7 +178,8 @@ Examples:
 
 ### `lookup_json_string`
 
-`lookup_json_string(field (String) key (String | Integer) [, key (String | Integer), ...])` → `String`
+{/* prettier-ignore */}
+<code>lookup_json_string(field <Type text="String" />, key <Type text="String | Integer" />, key <Type text="String | Integer" /> <MetaInfo text='optional' />, ...)</code>: <Type text="String" />
 
 Returns the string value associated with the supplied `key` in `field`.
 
@@ -199,7 +211,8 @@ Examples:
 
 ### `lower`
 
-`lower(String)` → `String`
+{/* prettier-ignore */}
+<code>lower(<Type text="String" />)</code>: <Type text="String" />
 
 Converts a string field to lowercase. Only uppercase ASCII bytes are converted. All other bytes are unaffected.
 
@@ -207,7 +220,8 @@ For example, if `http.host` is `"WWW.cloudflare.com"`, then `lower(http.host) ==
 
 ### `regex_replace`
 
-`regex_replace(source (String), regular_expression (String), replacement (String))` → `String`
+{/* prettier-ignore */}
+<code>regex_replace(source <Type text="String" />, regular_expression <Type text="String" />, replacement <Type text="String" />)</code>: <Type text="String" />
 
 Replaces a part of a source string matched by a regular expression with a replacement string, returning the result. The replacement string can contain references to regular expression capture groups (for example, `${1}` and `${2}`), up to eight replacement references.
 
@@ -239,7 +253,8 @@ You can only use the `regex_replace()` function in rewrite expressions of [Trans
 
 ### `remove_bytes`
 
-`remove_bytes(Bytes)` → `Bytes`
+{/* prettier-ignore */}
+<code>remove_bytes(<Type text="Bytes" />)</code>: <Type text="Bytes" />
 
 Returns a new byte array with all the occurrences of the given bytes removed.
 
@@ -247,7 +262,8 @@ For example, if `http.host` is `"www.cloudflare.com"`, then `remove_bytes(http.h
 
 ### `starts_with`
 
-`starts_with(source (String), substring (String))` → `Boolean`
+{/* prettier-ignore */}
+<code>starts_with(source <Type text="String" />, substring <Type text="String" />)</code>: <Type text="Boolean" />
 
 Returns `true` when the source starts with a given substring. Returns `false` otherwise. The source cannot be a literal value (like `"foo"`).
 
@@ -255,7 +271,8 @@ For example, if `http.request.uri.path` is `"/blog/first-post"`, then `starts_wi
 
 ### `substring`
 
-`substring(field (String | Bytes), start (Integer) [, end (Integer)])` → `String`
+{/* prettier-ignore */}
+<code>substring(field <Type text="String | Bytes" />, start <Type text="Integer" />, end <Type text="Integer" /> <MetaInfo text='optional' />)</code>: <Type text="String" />
 
 Returns part of the `field` value (the value of a String or Bytes [field](/ruleset-engine/rules-language/fields/)) from the `start` byte index up to (but excluding) the `end` byte index. The first byte in `field` has index `0`. If you do not provide the optional `end` index, the function returns the part of the string from `start` index to the end of the string.
 
@@ -274,7 +291,8 @@ substring(http.request.body.raw, 0, -2)  will return "asdfgh"
 
 ### `to_string`
 
-`to_string(Integer | Boolean | IP address)` → `String`
+{/* prettier-ignore */}
+<code>to_string(<Type text="Integer | Boolean | IP address" />)</code>: <Type text="String" />
 
 Returns the string representation of an Integer, Boolean, or IP address value.
 
@@ -294,7 +312,8 @@ You can only use the `to_string()` function in rewrite expressions of [Transform
 
 ### `upper`
 
-`upper(String)` → `String`
+{/* prettier-ignore */}
+<code>upper(<Type text="String" />)</code>: <Type text="String" />
 
 Converts a string field to uppercase. Only lowercase ASCII bytes are converted. All other bytes are unaffected.
 
@@ -302,7 +321,8 @@ For example, if `http.host` is`"www.cloudflare.com"`, then `upper(http.host)` wi
 
 ### `url_decode`
 
-`url_decode(source (String)[, options (String)])` → `String`
+{/* prettier-ignore */}
+<code>url_decode(source <Type text="String" />, options <Type text="String" /> <MetaInfo text='optional' />)</code>: <Type text="String" />
 
 Decodes a URL-formatted string defined in `source`, as in the following:
 
@@ -331,7 +351,8 @@ any(url_decode(http.request.body.form.values[*])[*] contains "an xss attack")
 
 ### `uuidv4`
 
-`uuidv4(Bytes)` → `String`
+{/* prettier-ignore */}
+<code>uuidv4(source <Type text="Bytes" />)</code>: <Type text="String" />
 
 Generates a random UUIDv4 (Universally Unique Identifier, version 4) based on the given argument (a source of randomness). To obtain an array of random bytes, use the [`cf.random_seed`](/ruleset-engine/rules-language/fields/dynamic-fields/#cfrandom_seed) field.
 
@@ -343,7 +364,8 @@ You can only use the `uuidv4()` function in [rewrite expressions of Transform Ru
 
 ### `wildcard_replace`
 
-`wildcard_replace(source (Bytes), wildcard_pattern (Bytes), replacement (Bytes) [, flags (Bytes)])` → `String`
+{/* prettier-ignore */}
+<code>wildcard_replace(source <Type text="Bytes" />, wildcard_pattern <Type text="Bytes" />, replacement <Type text="Bytes" />, flags <Type text="Bytes" /> <MetaInfo text='optional' />)</code>: <Type text="String" />
 
 Replaces a `source` string, matched by a literal with zero or more `*` wildcard metacharacters, with a replacement string, returning the result. The replacement string can contain references to wildcard capture groups (for example, `${1}` and `${2}`), up to eight replacement references.
 
@@ -389,7 +411,8 @@ Currently, you can only use the `wildcard_replace()` function in rewrite express
 
 ### `bit_slice`
 
-`bit_slice(protocol (String), offset_start (Number), offset_end (Number))` → `Number`
+{/* prettier-ignore */}
+<code>bit_slice(protocol <Type text="String" />, offset_start <Type text="Number" />, offset_end <Type text="Number" />)</code>: <Type text="Number" />
 
 This function looks for matches on a given slice of bits.
 
@@ -424,27 +447,27 @@ is_timed_hmac_valid_v0(
 
 The `is_timed_hmac_valid_v0()` function has these parameter definitions:
 
-- `Key` (String literal)
+- `Key` <Type text="String literal" />
 
   - Specifies the secret cryptographic key for validating the HMAC.
 
-- `MessageMAC` (String)
+- `MessageMAC` <Type text="String" />
 
   - Contains a concatenation of these HMAC elements: `message`, `separator`, `timestamp`, `mac`. For a definition and an example, refer to [MessageMAC](#messagemac).
 
-- `ttl` (Integer literal)
+- `ttl` <Type text="Integer literal" />
 
   - Defines the time-to-live for the HMAC token, expressed in seconds. Determines how long the token is valid, relative to the time it was issued.
 
-- `currentTimeStamp` (Integer)
+- `currentTimeStamp` <Type text="Integer" />
 
   - Represents the UNIX timestamp when Cloudflare received the request, expressed in seconds. Pass the `http.request.timestamp.sec` field as an approximate value to this argument.
 
-- `lengthOfSeparator` (Integer literal, optional)
+- `lengthOfSeparator` <Type text="Integer literal" /> <MetaInfo text='optional' />
 
   - Specifies the length of the `separator` between the `timestamp` and the `message` in the `MessageMAC`. Expressed in bytes, with a default value of `0`.
 
-- `flags` (String literal, optional)
+- `flags` <Type text="String literal" /> <MetaInfo text='optional' />
 
   - When you set this optional argument to `'s'`, the function expects the value of the Base64-encoded `mac` in the `MessageMAC` argument to use the URL-safe character set with no padding.
 

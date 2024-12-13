@@ -1,8 +1,10 @@
 // Vendored from https://github.com/withastro/starlight/blob/a171a996b842f1fdb37a0bdbb2c9d86e1073e1a4/packages/starlight/schemas/badge.ts#
-import { z } from 'astro:schema';
+import { z } from "astro:schema";
 
 const badgeBaseSchema = z.object({
-	variant: z.enum(['note', 'danger', 'success', 'caution', 'tip', 'default']).default('default'),
+	variant: z
+		.enum(["note", "danger", "success", "caution", "tip", "default"])
+		.default("default"),
 	class: z.string().optional(),
 });
 
@@ -16,7 +18,7 @@ const i18nBadgeSchema = badgeBaseSchema.extend({
 
 export const BadgeComponentSchema = badgeSchema
 	.extend({
-		size: z.enum(['small', 'medium', 'large']).default('small'),
+		size: z.enum(["small", "medium", "large"]).default("small"),
 	})
 	.passthrough();
 
@@ -26,15 +28,18 @@ export const BadgeConfigSchema = () =>
 	z
 		.union([z.string(), badgeSchema])
 		.transform((badge) => {
-			if (typeof badge === 'string') {
-				return { variant: 'default' as const, text: badge };
+			if (typeof badge === "string") {
+				return { variant: "default" as const, text: badge };
 			}
 			return badge;
 		})
 		.optional();
 
-export const I18nBadgeConfigSchema = () => z.union([z.string(), i18nBadgeSchema]).optional();
+export const I18nBadgeConfigSchema = () =>
+	z.union([z.string(), i18nBadgeSchema]).optional();
 
 export type Badge = z.output<typeof badgeSchema>;
 export type I18nBadge = z.output<typeof i18nBadgeSchema>;
-export type I18nBadgeConfig = z.output<ReturnType<typeof I18nBadgeConfigSchema>>;
+export type I18nBadgeConfig = z.output<
+	ReturnType<typeof I18nBadgeConfigSchema>
+>;

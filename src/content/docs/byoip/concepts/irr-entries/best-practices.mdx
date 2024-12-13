@@ -72,7 +72,7 @@ Verify your Internet Routing Registry (IRR) entries to ensure that the IP prefix
 Each IRR entry record must include the following information:
 
 * **Route**: Each IP prefix Cloudflare advertises for you.
-* **Origin ASN**: Your ASN, or if you do not have your own ASN, the Cloudflare ASN (`AS209242`).
+* **Origin ASN**: Your ASN, or if you do not have your own ASN, the Cloudflare ASN (AS13335).
 * **Source**: The name of the routing registry, for example, AFRINIC, APNIC, ARIN, RADB, RIPE, or NTT.
 
 Add or update IRR entries when they meet any of these criteria:
@@ -109,7 +109,7 @@ To verify your prefix and ASN route, use the tools and methods outlined on the t
     <tr>
       <td>ASN for the<br/>subnet prefix</td>
       <td><span style="white-space: nowrap"><a href=" https://irrexplorer.nlnog.net">IRR Explorer</a></span></td>
-      <td><span style="white-space: nowrap">Search for the ASN, for example <code>AS209242</code>.</span></td>
+      <td><span style="white-space: nowrap">Search for the ASN, for example <code>AS13335</code>.</span></td>
       <td><span style="white-space: nowrap">List of prefixes, source, and any associated errors.</span></td>
     </tr>
     <tr>
@@ -155,6 +155,6 @@ source:         APNIC
 
 :::note
 
-WHOIS output also shows the RPKI entry information for prefix IP addresses. When your WHOIS output only contains an RPKI entry, you must add the IRR entry. 
+WHOIS output also shows the RPKI entry information for prefix IP addresses. When your WHOIS output only contains an RPKI entry, you must add the IRR entry.
 
 :::

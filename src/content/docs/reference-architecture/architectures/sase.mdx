@@ -213,7 +213,7 @@ When Cloudflare acts as the SSO service to an application, user authentication i
 
 ![The flow of SSO requests is proxied through Cloudflare, where the IdP is still used to authenticate, but Cloudflare provides additional access controls.](~/assets/images/reference-architecture/cloudflare-one-reference-architecture-images/cf1-ref-arch-8.svg)
 
-The last method of connecting SaaS applications to Cloudflare's SASE architecture is with an API-based [cloud access security broker](https://www.cloudflare.com/learning/access-management/what-is-a-casb/) (CASB). The Cloudflare CASB integrates via API to [popular SaaS suites](/cloudflare-one/applications/scan-apps/casb-integrations/) — including Google Workspace, Microsoft 365, Salesforce, and more — and continuously scans these applications for misconfigurations, unauthorized user activity, and other security risks.
+The last method of connecting SaaS applications to Cloudflare's SASE architecture is with an API-based [cloud access security broker](https://www.cloudflare.com/learning/access-management/what-is-a-casb/) (CASB). The Cloudflare CASB integrates via API to [popular SaaS suites](/cloudflare-one/applications/casb/casb-integrations/) — including Google Workspace, Microsoft 365, Salesforce, and more — and continuously scans these applications for misconfigurations, unauthorized user activity, and other security risks.
 
 Native integration with the Cloudflare [data loss prevention](https://www.cloudflare.com/learning/access-management/what-is-dlp/) (DLP) service enables CASB to scan for sensitive or regulated data that may be stored in files with incorrect permissions — further risking leaks or unauthorized access. CASB reports findings that alert IT teams to items such as:
 
@@ -394,7 +394,7 @@ One option is to configure the browser to forward HTTP requests to Cloudflare by
 
 From there, configure a proxy endpoint where the browser will send all HTTP requests to. If using this method, please note that:
 
-- Filtering HTTPS traffic will also require [installing and trusting Cloudflare root certificates](/cloudflare-one/connections/connect-devices/warp/user-side-certificates/) on the devices.
+- Filtering HTTPS traffic will also require [installing and trusting Cloudflare root certificates](/cloudflare-one/connections/connect-devices/user-side-certificates/) on the devices.
 - A proxy endpoint will only proxy traffic sourced from a set of known IP addresses, such as the pool of public IP addresses used by a site's NAT gateway, that the administrator must specify.
 
 #### Using remote browser instances
@@ -447,7 +447,7 @@ The following table summarizes SWG capabilities for the various methods of forwa
 Notes:
 
 1. Running the device agent in DNS over HTTP mode provides user identity information, in addition to the same capabilities as connecting via DNS.
-2. To filter HTTPS traffic, the Cloudflare [certificate](/cloudflare-one/connections/connect-devices/warp/user-side-certificates/) needs to be installed on each device. This can be automated when using the device agent.
+2. To filter HTTPS traffic, the Cloudflare [certificate](/cloudflare-one/connections/connect-devices/user-side-certificates/) needs to be installed on each device. This can be automated when using the device agent.
 3. If configuring DNS over HTTPS, it is possible to inject a [service token](/cloudflare-one/connections/connect-devices/agentless/dns/dns-over-https/#filter-doh-requests-by-user) into the request, which associates the query with an authenticated user.
 
 #### Checkpoint: Forwarding device traffic to Cloudflare
@@ -678,7 +678,7 @@ It's worth noting that many of the capabilities described in this document can b
 | Secure Web Gateway        | [How to build Gateway policies](/cloudflare-one/policies/gateway/)                                                                                                       |
 | Zero Trust Network Access | [How to build Access policies](/cloudflare-one/policies/access/)                                                                                                         |
 | Remote Browser Isolation  | [Understanding browser isolation](/cloudflare-one/policies/browser-isolation/)                                                                                           |
-| API-Driven CASB           | [Scanning SaaS applications](/cloudflare-one/applications/scan-apps/)                                                                                                    |
+| API-Driven CASB           | [Scanning SaaS applications](/cloudflare-one/applications/casb/)                                                                                                         |
 | Email Security            | [Understanding Cloudflare Email Security](/email-security/)                                                                                                              |
 | Replacing your VPN        | [Using Cloudflare to replace your VPN](/learning-paths/replace-vpn/)                                                                                                     |
 

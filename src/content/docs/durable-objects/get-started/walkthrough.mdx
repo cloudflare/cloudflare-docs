@@ -176,18 +176,17 @@ export default {
 
 To allow a Worker to invoke methods on a Durable Object, the Worker must have a [Durable Object binding](/workers/runtime-apis/bindings/) in the project's [`wrangler.toml`](/workers/wrangler/configuration/#durable-objects) file. The binding is configured to use a particular Durable Object class.
 
+import { WranglerConfig } from "~/components";
+
+<WranglerConfig>
+
 ```toml
 [[durable_objects.bindings]]
 name = "MY_DURABLE_OBJECT"
 class_name = "MyDurableObject"
-
-# or
-
-[durable_objects]
-bindings = [
-  { name = "MY_DURABLE_OBJECT", class_name = "MyDurableObject" }
-]
 ```
+
+</WranglerConfig>
 
 The `[[durable_objects.bindings]]` section contains the following fields:
 
@@ -206,11 +205,17 @@ Migrations are performed through the `[[migrations]]` configurations key in your
 
 The Durable Object migration to create a new Durable Object class will look like the following in your Worker's `wrangler.toml` file:
 
+
+
+<WranglerConfig>
+
 ```toml
 [[migrations]]
 tag = "v1" # Should be unique for each entry
 new_classes = ["MyDurableObject"] # Array of new classes
 ```
+
+</WranglerConfig>
 
 ### 6.a Optional: Configure new Durable Object class for SQL storage
 
@@ -224,11 +229,17 @@ A Durable Object class can only have a single storage type, which cannot be chan
 
 To configure SQL storage and API, replace `new_classes` with `new_sqlite_classes` in your Worker's `wrangler.toml` file:
 
+
+
+<WranglerConfig>
+
 ```toml
 [[migrations]]
 tag = "v1" # Should be unique for each entry
 new_sqlite_classes = ["MyDurableObject"] # Array of new classes
 ```
+
+</WranglerConfig>
 
 Refer to [Durable Objects migrations](/durable-objects/reference/durable-objects-migrations/) to learn more about the migration process.
 

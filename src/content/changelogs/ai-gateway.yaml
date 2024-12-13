@@ -5,11 +5,20 @@ productLink: "/ai-gateway/"
 productArea: Developer platform
 productAreaLink: /workers/platform/changelog/platform/
 entries:
+  - publish_date: "2024-11-19"
+    title: WebsocketS API
+    description: |-
+      * **Configuration**: Added [WebSockets API](/ai-gateway/configuration/websockets-api/) which provides a single persistent connection, enabling continuous communication.
+  - publish_date: "2024-11-19"
+    title: Authentication
+    description: |-
+      * **Configuration**: Added [Authentication](/ai-gateway/configuration/authentication/) which adds security by requiring a valid authorization token for each request.
+
   - publish_date: "2024-10-28"
     title: Grok
     description: |-
       * **Providers**: Added [Grok](/ai-gateway/providers/grok/) as a new provider.
-      
+
   - publish_date: "2024-10-17"
     title: Vercel SDK
     description: |-

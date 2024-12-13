@@ -26,7 +26,7 @@ If the custom hostname is in a **Moved** state for seven days, it will transitio
 
 If your customer's domain is not using Cloudflare, you must remove a customer's custom hostname from your zone if they decide to churn.
 
-This is especially important if your end customers are using Cloudflare because if the custom hostname changes the DNS target to point away from your SaaS zone, the custom hostname will continue to route to your service. This is a result of the [custom hostname priority logic](/ssl/reference/certificate-and-hostname-priority/#hostname-priority-cloudflare-for-saas).
+This is especially important if your end customers are using Cloudflare because if the custom hostname changes the DNS target to point away from your SaaS zone, the custom hostname will continue to route to your service. This is a result of the [custom hostname priority logic](/ssl/reference/certificate-and-hostname-priority/#hostname-priority).
 
 <Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
 

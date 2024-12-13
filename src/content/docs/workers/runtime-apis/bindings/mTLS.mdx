@@ -33,11 +33,17 @@ npx wrangler mtls-certificate upload --cert cert.pem --key key.pem --name my-cli
 
 Then, update your Worker project's `wrangler.toml` file to create an mTLS certificate binding:
 
+import { WranglerConfig } from "~/components";
+
+<WranglerConfig>
+
 ```toml title="wrangler.toml"
 mtls_certificates = [
   { binding = "MY_CERT", certificate_id = "<CERTIFICATE_ID>" }
 ]
 ```
+
+</WranglerConfig>
 
 :::note
 

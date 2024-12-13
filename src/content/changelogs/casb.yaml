@@ -1,18 +1,22 @@
 ---
 link: "/cloudflare-one/changelog/casb/"
 productName: CASB
-productLink: "/cloudflare-one/applications/scan-apps/"
+productLink: "/cloudflare-one/applications/casb/"
 productArea: Cloudflare One
 productAreaLink: /cloudflare-one/changelog/
 entries:
+  - publish_date: "2024-11-22"
+    title: CASB and DLP with Cloud Data Extraction for AWS cloud environments
+    description: |-
+      You can now use CASB to find security misconfigurations in your AWS cloud environment. You can also [connect your AWS compute account](/cloudflare-one/applications/casb/casb-integrations/aws-s3/#compute-account) to extract and scan your S3 buckets for sensitive data while avoiding egress fees.
   - publish_date: "2024-06-03"
     title: Atlassian Bitbucket integration
     description: |-
-      Customers can now scan their Bitbucket Cloud workspaces for a variety of contextualized security issues such as source code exposure, admin misconfigurations, and more.
+      You can now scan your Bitbucket Cloud workspaces for a variety of contextualized security issues such as source code exposure, admin misconfigurations, and more.
   - publish_date: "2024-05-23"
     title: Data-at-rest DLP for Box and Dropbox
     description: |-
-      You can now scan your [Box](/cloudflare-one/applications/scan-apps/casb-integrations/box/#data-loss-prevention-optional) and [Dropbox](/cloudflare-one/applications/scan-apps/casb-integrations/dropbox/#data-loss-prevention-optional) files for DLP matches.
+      You can now scan your [Box](/cloudflare-one/applications/casb/casb-integrations/box/#data-loss-prevention-optional) and [Dropbox](/cloudflare-one/applications/casb/casb-integrations/dropbox/#data-loss-prevention-optional) files for DLP matches.
   - publish_date: "2024-04-16"
     title: Export CASB findings to CSV
     description: |-

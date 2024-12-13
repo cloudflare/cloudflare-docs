@@ -16,6 +16,10 @@
 
 3. In the `ca.pub` file, paste the public key without any modifications.
 
+	```txt title="ca.pub"
+	ecdsa-sha2-nistp256 <redacted> open-ssh-ca@cloudflareaccess.org
+	```
+
    The `ca.pub` file can hold multiple keys, listed one per line. Empty lines and comments starting with `#` are also allowed.
 
 4. Save the `ca.pub` file. In some systems, you may need to use the following command to force the file to save depending on your permissions:

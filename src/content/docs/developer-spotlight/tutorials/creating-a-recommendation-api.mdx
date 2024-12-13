@@ -192,6 +192,10 @@ index_name = "stripe-products"
 
 To use the created Vectorize index from your Worker, let's add the binding. Open `wrangler.toml` and add the copied lines.
 
+import { WranglerConfig } from "~/components";
+
+<WranglerConfig>
+
 ```toml null {5,6,7}
 name = "cross-sell-api"
 main = "src/index.ts"
@@ -202,7 +206,13 @@ binding = "VECTORIZE_INDEX"
 index_name = "stripe-products"
 ```
 
+</WranglerConfig>
+
 Additionally, let's add the configuration to use Workers AI in `wrangler.toml`.
+
+
+
+<WranglerConfig>
 
 ```toml null {9,10}
 name = "cross-sell-api"
@@ -216,6 +226,8 @@ index_name = "stripe-products"
 [ai]
 binding = "AI" # available in your Worker on env.AI
 ```
+
+</WranglerConfig>
 
 When handling bound resources from your application, you can generate TypeScript type definitions to develop more safely. Run the `npm run cf-typegen` command. This command updates the `worker-configuration.d.ts` file, allowing you to use both Vectorize and Workers AI in a type-safe manner.
 

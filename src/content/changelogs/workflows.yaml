@@ -5,6 +5,24 @@ productLink: "/workflows/"
 productArea: Developer platform
 productAreaLink: /workers/platform/changelog/platform/
 entries:
+  - publish_date: "2024-11-30"
+    title: "Step limit increased"
+    description: |-
+      Workflows now allow you to define up to 512 steps in a single Workflow definition, up from the previous limit of 256. This limit will continue to increase during the course of the open beta.
+
+      If you have Workflows that need more steps, we recommend delegating additional work to other Workflows by [triggering a new Workflow](/workflows/build/trigger-workflows/) from within a step and passing any state as [parameters to that Workflow instance](/workflows/build/events-and-parameters/).
+  - publish_date: "2024-11-21"
+    title: "Fixed create instance API in Workers bindings"
+    description: |-
+      You can now call `create()` without any arguments when using the [Workers API](/workflows/build/workers-api/#create) for Workflows. Workflows will automatically generate the ID of the Workflow on your behalf.
+
+      This addresses a bug that caused calls to `create()` to fail when provided with no arguments.
+  - publish_date: "2024-11-20"
+    title: "Multiple Workflows in local development now supported"
+    description: |-
+      Local development with `wrangler dev` now correctly supports multiple Workflow definitions per script.
+
+      There is no change to production Workflows, where multiple Workflow definitions per Worker script was already supported.
   - publish_date: "2024-10-23"
     title: "Workflows is now in public beta!"
     description: |-

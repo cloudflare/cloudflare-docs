@@ -27,3 +27,7 @@ There are three reasons to set up email records for your domain:
 ### Configure email security records
 
 Refer to [Security records](/dmarc-management/security-records/) to learn how to set up your email security records.
+
+## Proxy SMTP traffic
+
+By default, Cloudflare does not proxy email traffic on port 25 (SMTP). You can only proxy outgoing email if you have [Spectrum](/spectrum/) configured for [SMTP](/spectrum/reference/configuration-options/#smtp).

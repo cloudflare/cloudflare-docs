@@ -21,7 +21,7 @@ When end users visit a website, their browser will send the request to a Cloudfl
 
 ## Prerequisites
 
-Install a [Cloudflare certificate](/cloudflare-one/connections/connect-devices/warp/user-side-certificates/) on your device.
+Install a [Cloudflare certificate](/cloudflare-one/connections/connect-devices/user-side-certificates/) on your device.
 
 ## 1. Generate a proxy endpoint
 
@@ -201,7 +201,9 @@ You can now use the Proxy Endpoint selector in [network](/cloudflare-one/policie
 
 ### Traffic limitations
 
-At this time, the agentless HTTP proxy does not support [identity-based policies](/cloudflare-one/policies/gateway/identity-selectors/), mTLS authentication, or UDP traffic. To enforce HTTP policies for UDP traffic, you must [disable QUIC](/cloudflare-one/policies/gateway/http-policies/http3/#prevent-inspection-bypass) in your users' browsers.
+The agentless HTTP proxy does not support [identity-based policies](/cloudflare-one/policies/gateway/identity-selectors/) or mTLS authentication.
+
+To enforce HTTP policies for UDP traffic, you must turn on the [Gateway proxy for UDP](/cloudflare-one/policies/gateway/http-policies/http3/#enable-http3-inspection).
 
 ### Gateway DNS and resolver policies
 

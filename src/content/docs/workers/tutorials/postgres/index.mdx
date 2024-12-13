@@ -61,9 +61,15 @@ cd postgres-tutorial
 When creating your Worker application, [enable Node.js APIs](/workers/runtime-apis/nodejs/#enable-nodejs-with-workers) by including the
 "nodejs_compat_v2" compatibility flag to your `wrangler.toml`. This will be needed to use the library to connect to your PostgreSQL database.
 
+import { WranglerConfig } from "~/components";
+
+<WranglerConfig>
+
 ```toml title="wrangler.toml"
 compatibility_flags = ["nodejs_compat_v2"]
 ```
+
+</WranglerConfig>
 
 ## 2. Add the PostgreSQL connection library
 
@@ -107,13 +113,23 @@ npx wrangler secret put DB_URL
 
 Set your `DB_URL` secret locally in a `.dev.vars` file as documented in [Local Development with Secrets](/workers/configuration/secrets/).
 
+
+
+<WranglerConfig>
+
 ```toml
 DB_URL="<ENTER YOUR POSTGRESQL CONNECTION STRING>"
 ```
 
+</WranglerConfig>
+
 ### Set explicit parameters
 
 Configure each database parameter as an [environment variable](/workers/configuration/environment-variables/) via the [Cloudflare dashboard](/workers/configuration/environment-variables/#add-environment-variables-via-the-dashboard) or in your `wrangler.toml` file. Refer to an example of a`wrangler.toml` file configuration:
+
+
+
+<WranglerConfig>
 
 ```toml
 [vars]
@@ -123,6 +139,8 @@ DB_HOST = "ep-aged-sound-175961.us-east-2.aws.neon.tech"
 DB_PORT = "5432"
 DB_NAME = "productsdb"
 ```
+
+</WranglerConfig>
 
 To set your password as a [secret](/workers/configuration/secrets/) so that it is not stored as plain text, use [`wrangler secret put`](/workers/wrangler/commands/#secret). `DB_PASSWORD` is an example variable name for this secret to be accessed in your Worker:
 
@@ -312,6 +330,10 @@ You can also use explicit parameters by following the [wrangler documentation fo
 
 This command outputs the Hyperdrive configuration `id` that will be used for your Hyperdrive [binding](/workers/runtime-apis/bindings/). Set up your binding by specifying the `id` in the `wrangler.toml` file.
 
+
+
+<WranglerConfig>
+
 ```toml {7-9}
 name = "hyperdrive-example"
 main = "src/index.ts"
@@ -323,6 +345,8 @@ compatibility_flags = ["nodejs_compat"]
 binding = "HYPERDRIVE"
 id = "<ID OF THE CREATED HYPERDRIVE CONFIGURATION>"
 ```
+
+</WranglerConfig>
 
 Create the types for your Hyperdrive binding using the following command:
 

@@ -23,9 +23,15 @@ Review your `workers.dev` route in your Worker > **Settings** > **Domains & Rout
 
 To disable the `workers.dev` route for a Worker, include the following in your Worker's `wrangler.toml` file:
 
+import { WranglerConfig } from "~/components";
+
+<WranglerConfig>
+
 ```toml
 workers_dev = false
 ```
+
+</WranglerConfig>
 
 When you redeploy your Worker with this change, the `workers.dev` route will be disabled. Disabling your `workers.dev` subdomain will also make [preview URLs](/workers/configuration/previews) inaccessible.
 

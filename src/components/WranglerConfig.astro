@@ -1,0 +1,54 @@
+---
+import { parse } from "node-html-parser";
+import { Code, Tabs, TabItem } from "@astrojs/starlight/components";
+import TOML from "@iarna/toml";
+import { parse as jsoncParse } from "jsonc-parser";
+
+const slot = await Astro.slots.render("default");
+
+const html = parse(slot);
+
+const copy = html.querySelector("div.copy > button");
+
+if (!copy) {
+	throw new Error(
+		`[WranglerConfig] Unable to find copy button in rendered code block HTML.`,
+	);
+}
+
+let code = copy.attributes["data-code"];
+
+if (!code) {
+	throw new Error(
+		`[WranglerConfig] Unable to find data-code attribute on copy button.`,
+	);
+}
+
+code = code.replace(/\u007f/g, "\n");
+
+const language =
+	html.querySelector("[data-language]")?.attributes["data-language"];
+
+if (!language) {
+	throw new Error(`[WranglerConfig] Unable to find data-language.`);
+}
+
+let toml, json;
+
+if (language === "toml") {
+	toml = code;
+	json = JSON.stringify(TOML.parse(code), null, 2);
+} else {
+	json = code;
+	toml = TOML.stringify(jsoncParse(code));
+}
+---
+
+<Tabs syncKey="wranglerConfig">
+	<TabItem label="wrangler.toml" icon="setting">
+		<Code lang="toml" code={toml} />
+	</TabItem>
+	<TabItem label="wrangler.json" icon="seti:json">
+		<Code lang="jsonc" code={json} />
+	</TabItem>
+</Tabs>

@@ -1,0 +1,30 @@
+---
+type: example
+summary: Connect Hyperdrive to a Xata database instance.
+pcx_content_type: example
+title: Connect to Xata
+sidebar:
+  order: 2
+description: Connect Hyperdrive to a Xata database instance.
+---
+
+import { Render } from "~/components";
+
+This example shows you how to connect Hyperdrive to a Xata PostgreSQL database instance.
+
+## 1. Allow Hyperdrive access
+
+You can connect Hyperdrive to any existing Xata database with the default user and password provided by Xata.
+
+### Xata dashboard
+
+To retrieve your connection string from the Xata dashboard:
+
+1. Go to the [**Xata dashboard**](https://app.xata.io/).
+2. Select the database you want to connect to.
+3. Select **Settings**.
+4. Copy the connection string from the `PostgreSQL endpoint` section and add your API key.
+
+## 2. Create a database configuration
+
+<Render file="create-hyperdrive-config" />

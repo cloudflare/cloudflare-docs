@@ -1,24 +1,29 @@
 ---
-inputParameters: param1
-
+params:
+  - idp
+  - and
+  - supportgroups
 ---
 
 import { Markdown } from "~/components"
 
 1. In [Zero Trust](https://one.dash.cloudflare.com), go to **Settings** > **Authentication**.
 
-2. Locate the IdP you want to synchronize and select **Edit**.
+2. Find the {props.idp} integration and select **Edit**.
 
-3. Select {props.one}.
+3. Turn on **Enable SCIM**{props.and}**{props.supportgroups}**.
 
-4. (Optional) Enable the following settings:
+4. (Optional) Configure the following settings:
 
-* **Enable user deprovisioning**: [Revoke a user's active session](/cloudflare-one/identity/users/session-management/#per-user) when they are removed from the SCIM application in the IdP. This will invalidate all active Access sessions and prompt for reauthentication for any Gateway WARP session policies.
-* **Remove user seat on deprovision**: [Remove a user's seat](/cloudflare-one/identity/users/seat-management/) from your Zero Trust account when they are removed from the SCIM application in the IdP.
-* **Enable group membership change reauthentication**: [Revoke a user's active session](/cloudflare-one/identity/users/session-management/#per-user) when their group membership changes in the IdP. This will invalidate all active Access sessions and prompt for reauthentication for any Gateway WARP session policies. Access will read the user's updated group membership when they reauthenticate.
+* **Enable user deprovisioning**: [Revoke a user's active session](/cloudflare-one/identity/users/session-management/#per-user) when they are removed from the SCIM application in {props.idp}. This will invalidate all active Access sessions and prompt for reauthentication for any [WARP session policies](/cloudflare-one/connections/connect-devices/warp/configure-warp/warp-sessions/).
+* **Remove user seat on deprovision**: [Remove a user's seat](/cloudflare-one/identity/users/seat-management/) from your Zero Trust account when they are removed from the SCIM application in {props.idp}.
+* **SCIM identity update behavior**: Choose what happens in Zero Trust when the user's identity updates in {props.idp}.
+	- _Automatic identity updates_: Automatically update the [User Registry identity](/cloudflare-one/insights/logs/users/) when {props.idp} sends an updated identity or group membership through SCIM. This identity is used for Gateway policies and WARP [device profiles](/cloudflare-one/connections/connect-devices/warp/configure-warp/device-profiles/); Access will read the user's updated identity when they reauthenticate.
+	- _Group membership change reauthentication_: [Revoke a user's active session](/cloudflare-one/identity/users/session-management/#per-user) when their group membership changes in {props.idp}. This will invalidate all active Access sessions and prompt for reauthentication for any [WARP session policies](/cloudflare-one/connections/connect-devices/warp/configure-warp/warp-sessions/). Access will read the user's updated group membership when they reauthenticate.
+	- _No action_: Update the user's identity the next time they reauthenticate to Access or WARP.
 
 5. Select **Save**.
 
-6. Copy the **SCIM Endpoint** and **SCIM Secret**. You will need to enter these values into the IdP.
+6. Copy the **SCIM Endpoint** and **SCIM Secret**. You will need to enter these values into {props.idp}.
 
 The SCIM secret never expires, but you can manually regenerate the secret at any time.

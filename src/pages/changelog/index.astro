@@ -1,16 +1,19 @@
 ---
 import StarlightPage from "@astrojs/starlight/components/StarlightPage.astro";
-import { Badge } from "~/components";
+import { Aside } from "~/components";
 import { marked } from "marked";
+import { format } from "date-fns";
 import { getChangelogs } from "~/util/changelogs";
 
 const { products, productAreas, changelogs } = await getChangelogs();
 ---
 
 <StarlightPage frontmatter={{ title: "Changelogs", template: "splash" }}>
-	<Badge text="Beta" variant="caution" size="medium" />
-	<br />
-	<br />
+	<Aside>
+		Looking for API deprecations? They can be found on our <a
+			href="/deprecations/">dedicated deprecations page.</a
+		>
+	</Aside>
 	<p id="productDescription">
 		Subscribe to all Changelog posts via <a href="/changelog/index.xml">RSS</a>.
 	</p>
@@ -25,7 +28,7 @@ const { products, productAreas, changelogs } = await getChangelogs();
 	</p>
 	<br />
 	<label for="products">Product:</label>
-	<select name="products" id="products">
+	<select name="products" id="products" class="mr-4">
 		<option value="all">Select...</option>
 		{
 			products.map((product) => (
@@ -44,43 +47,48 @@ const { products, productAreas, changelogs } = await getChangelogs();
 	</select>
 	{
 		changelogs.map(([date, entries]) => (
-			<div style="overflow-anchor: none;" data-date={date}>
-				<h2>{date}</h2>
-				{entries?.map((entry) => (
-					<div
-						data-product={entry.product.toLowerCase()}
-						data-productArea={entry.productAreaName.toLowerCase()}
-					>
-						<h3>
-							<a href={entry.link}>{entry.product}</a>
-						</h3>
-						{["WAF", "DDoS protection"].includes(entry.product) ? (
-							<p
-								set:html={marked.parse(
-									entry.scheduled
-										? "**" +
-												"Scheduled changes for " +
-												(entry.date ?? "") +
-												"**"
-										: "**" + (entry.date ?? "") + "**",
-								)}
-							/>
-						) : (
-							<p set:html={marked.parse("**" + (entry.title ?? "") + "**")} />
-						)}
-						{["WAF", "DDoS protection"].includes(entry.product) ? (
-							<p
-								set:html={marked.parse(
-									"For more details, refer to the [changelog page](" +
-										entry.link +
-										").",
-								)}
-							/>
-						) : (
-							<p set:html={marked.parse(entry.description ?? "")} />
-						)}
-					</div>
-				))}
+			<div class="md:grid md:grid-cols-[18%_82%]" data-date={date}>
+				<div>
+					<h4 class="text-nowrap">{format(date, "do MMMM yyyy")}</h4>
+				</div>
+				<div class="!mt-0">
+					{entries?.map((entry) => (
+						<div
+							data-product={entry.product.toLowerCase()}
+							data-productArea={entry.productAreaName.toLowerCase()}
+						>
+							<h3>
+								<a href={entry.link}>{entry.product}</a>
+							</h3>
+							{["WAF", "DDoS protection"].includes(entry.product) && (
+								<p
+									set:html={marked.parse(
+										entry.scheduled
+											? "**" +
+													"Scheduled changes for " +
+													(entry.date ?? "") +
+													"**"
+											: "**" + (entry.date ?? "") + "**",
+									)}
+								/>
+							)}
+							{entry.title && (
+								<p set:html={marked.parse("**" + (entry.title ?? "") + "**")} />
+							)}
+							{["WAF", "DDoS protection"].includes(entry.product) ? (
+								<p
+									set:html={marked.parse(
+										"For more details, refer to the [changelog page](" +
+											entry.link +
+											").",
+									)}
+								/>
+							) : (
+								<p set:html={marked.parse(entry.description ?? "")} />
+							)}
+						</div>
+					))}
+				</div>
 			</div>
 		))
 	}
@@ -94,7 +102,9 @@ const { products, productAreas, changelogs } = await getChangelogs();
 	);
 	const navHeightPx = Number(navHeightRem.split("rem")[0]) * 16 + 16;
 
-	const headers = document.querySelectorAll<HTMLElement>("[data-date] > h2");
+	const headers = document.querySelectorAll<HTMLElement>(
+		"[data-date] > div > h4",
+	);
 	headers.forEach(
 		(header) => new StickyHeader(header, { offset: 0 - navHeightPx }),
 	);
@@ -153,7 +163,7 @@ const { products, productAreas, changelogs } = await getChangelogs();
 </script>
 
 <style>
-	h2.sticky-pinned {
+	h4.sticky-pinned {
 		top: var(--sl-nav-height);
 		background-color: var(--sl-color-bg);
 	}

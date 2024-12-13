@@ -1,3 +1,4 @@
+// @ts-check
 import starlightPlugin from "@astrojs/starlight-tailwind";
 
 const gray = {
@@ -13,7 +14,7 @@ const gray = {
 
 /** @type {import('tailwindcss').Config} */
 export default {
-	content: ["./src/**/*.{astro,html,js,jsx,md,mdx,svelte,ts,tsx,vue}"],
+	content: ["./src/**/*.{astro,html,js,jsx,ts,tsx}"],
 	theme: {
 		extend: {
 			colors: {

@@ -32,7 +32,7 @@ Yes. `SERVFAIL` is treated like any other negative answer for caching purposes. 
 
 <Details header="Does DNS Firewall support EDNS Client Subnet (ECS)?">
 
-Yes. Often, DNS providers want to see a client's IP via <GlossaryTooltip term="EDNS Client Subnet (ECS)">EDNS Client Subnet (ECS)</GlossaryTooltip> ([RFC 7871](https://www.rfc-editor.org/rfc/inline-errata/rfc7871.html)) because they serve geographically specific DNS answers based on the client's IP. With EDNS Client Subnet enabled, the DNS Firewall will forward the client's IP subnet along with the DNS query to the upstream nameserver.
+Yes. Often, DNS providers want to see a client's IP via <GlossaryTooltip term="EDNS Client Subnet (ECS)">EDNS Client Subnet (ECS)</GlossaryTooltip> ([RFC 7871](https://www.rfc-editor.org/rfc/rfc7871.html)) because they serve geographically specific DNS answers based on the client's IP. With EDNS Client Subnet enabled, the DNS Firewall will forward the client's IP subnet along with the DNS query to the upstream nameserver.
 
 When EDNS is enabled, the DNS Firewall gives out the geographically correct answer in cache based on the client IP subnet. To do this, the DNS Firewall segments its cache. For example:
 
@@ -59,6 +59,9 @@ Yes. The default TTL is 30 seconds. You can set `negative_cache_ttl` via the [AP
 
 <Details header="How can I set PTR records for nameserver hostnames?">
 
-If you want PTR records on the assigned DNS Firewall cluster IPs that point to your nameserver hostnames, please reach out to your Cloudflare account team.
+To set up PTR records for the DNS Firewall cluster IPs that point to your nameserver hostnames, use the following API endpoints:
+
+- [Show DNS Firewall Cluster Reverse DNS](/api/operations/dns-firewall-show-dns-firewall-cluster-reverse-dns)
+- [Update DNS Firewall Cluster Reverse DNS](/api/operations/dns-firewall-update-dns-firewall-cluster-reverse-dns)
 
 </Details>

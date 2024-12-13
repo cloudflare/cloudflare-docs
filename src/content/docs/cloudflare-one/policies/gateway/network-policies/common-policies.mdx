@@ -26,7 +26,24 @@ Require devices to have certain software installed or other configuration attrib
 
 ## Enforce session duration
 
-[Require users to re-authenticate](/cloudflare-one/connections/connect-devices/warp/configure-warp/warp-sessions/) after a certain amount of time has elapsed.
+To require users to re-authenticate after a certain amount of time has elapsed, configure [WARP sessions](/cloudflare-one/connections/connect-devices/warp/configure-warp/warp-sessions/).
+
+## Allow only approved traffic
+
+Restrict user access to only the specific sites or applications configured in your [HTTP policies](/cloudflare-one/policies/gateway/http-policies/).
+
+### 1. Allow HTTP and HTTPS traffic
+
+| Selector          | Operator | Value       | Logic | Action |
+| ----------------- | -------- | ----------- | ----- | ------ |
+| Detected Protocol | is       | _TLS_       | And   | Allow  |
+| Destination Port  | in       | `80`, `443` |       |        |
+
+### 2. Block all other traffic
+
+| Selector | Operator | Value        | Action |
+| -------- | -------- | ------------ | ------ |
+| Protocol | in       | _UDP_, _TCP_ | Block  |
 
 ## Restrict access to private networks
 

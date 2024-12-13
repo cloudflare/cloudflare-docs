@@ -1,7 +1,10 @@
 ---
 import type { Props } from "@astrojs/starlight/props";
 import '@astrojs/starlight/style/markdown.css';
+
 import ImageZoom from "starlight-image-zoom/components/ImageZoom.astro";
+
+import { FeedbackPrompt } from "~/components";
 /*
     MIT License
 
@@ -40,8 +43,35 @@ const { tableOfContents } = Astro.props.entry.data;
 <ImageZoom />
 <div class="sl-markdown-content">
     <slot />
+	<div class="feedback-prompt-content">
+		<FeedbackPrompt />
+	</div>
 </div>
 <style>
+	html {
+		.feedback-prompt-content {
+			margin-top: 1.5em !important;
+
+			@media (min-width: 1152px) {
+				& {
+					display: none;
+				}
+			}
+		}
+
+		&:not([data-has-toc]) {
+			.feedback-prompt-content {
+				display: block;
+			}
+		}
+
+		&[data-has-hero] {
+			.feedback-prompt-content {
+				display: none;
+			}
+		}
+	}
+
 	/* Custom styles for heading anchor links. */
 	.sl-markdown-content :global(.heading-wrapper) {
 		--icon-size: 0.75em;

@@ -40,7 +40,9 @@ INFO Created: https://api.cloudflare.com/client/v4/accounts/d467d4f0fcbcd9791b61
 
 ### Golang example
 
-Before you begin, import a tus client such as [go-tus](https://github.com/eventials/go-tus) to upload from your Go applications. 
+Before you begin, import a tus client such as [go-tus](https://github.com/eventials/go-tus) to upload from your Go applications.
+
+The `go-tus` library does not return the response headers to the calling function, which makes it difficult to read the video ID from the `stream-media-id` header. As a workaround, create a [Direct Creator Upload](/stream/uploading-videos/direct-creator-uploads/) link. That API response will include the TUS endpoint as well as the video ID. Setting a Creator ID is not required.
 
 ```go title="Upload with Golang"
 package main

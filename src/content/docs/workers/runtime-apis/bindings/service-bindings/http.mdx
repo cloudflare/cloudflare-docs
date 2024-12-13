@@ -12,10 +12,16 @@ Worker A that declares a Service binding to Worker B can forward a [`Request`](/
 
 For example, consider the following Worker that implements a [`fetch()` handler](/workers/runtime-apis/handlers/fetch/):
 
+import { WranglerConfig } from "~/components";
+
+<WranglerConfig>
+
 ```toml
 name = "worker_b"
 main = "./src/workerB.js"
 ```
+
+</WranglerConfig>
 
 ```js
 export default {
@@ -27,6 +33,10 @@ export default {
 
 The following Worker declares a binding to the Worker above:
 
+
+
+<WranglerConfig>
+
 ```toml
 name = "worker_a"
 main = "./src/workerA.js"
@@ -34,6 +44,8 @@ services = [
   { binding = "WORKER_B", service = "worker_b" }
 ]
 ```
+
+</WranglerConfig>
 
 And then can forward a request to it:
 

@@ -26,11 +26,17 @@ async def on_fetch(request, env):
 
 …with a wrangler.toml file that points to a .py file:
 
+import { WranglerConfig } from "~/components";
+
+<WranglerConfig>
+
 ```toml
 name = "hello-world-python-worker"
 main = "src/entry.py"
 compatibility_date = "2024-04-01"
 ```
+
+</WranglerConfig>
 
 When you run `npx wrangler@latest dev` in local dev, the Workers runtime will:
 

@@ -1,0 +1,51 @@
+---
+productName: AI Gateway
+entries:
+  - term: cf-aig-event-id
+    general_definition: |-
+      [cf-aig-event-id](/ai-gateway/evaluations/add-human-feedback-api/#3-retrieve-the-cf-aig-log-id) is a unique identifier for an event, used to trace specific events through the system.
+
+  - term: cf-aig-step
+    general_definition: |-
+      [cf-aig-step](/ai-gateway/configuration/fallbacks/#response-headercf-aig-step) identifies the processing step in the AI Gateway flow for better tracking and debugging.
+
+  - term: cf-aig-log-id
+    general_definition: |-
+      The [cf-aig-log-id](/ai-gateway/evaluations/add-human-feedback-api/#3-retrieve-the-cf-aig-log-id) is a unique identifier for the specific log entry to which you want to add feedback.
+
+  - term: cf-aig-collect-log
+    general_definition: |-
+      The [cf-aig-collect-log](/ai-gateway/observability/logging/#collect-logs-cf-aig-collect-log) header allows you to bypass the default log setting for the gateway.
+
+  - term: cf-aig-custom-cost
+    general_definition: |-
+      Allows the [customization of request cost](/ai-gateway/configuration/custom-costs/#custom-cost) to reflect user-defined parameters.
+
+  - term: cf-aig-cache-key
+    general_definition: |-
+      The [cf-aig-cache-key-aig-cache-key](/ai-gateway/configuration/caching/#custom-cache-key-cf-aig-cache-key) let you override the default cache key in order to precisely set the cacheability setting for any resource.
+
+  - term: cf-aig-cache-status
+    general_definition: |-
+      [Status indicator for caching](/ai-gateway/configuration/caching/#default-configuration), showing if a request was served from cache.
+
+  - term: cf-aig-metadata
+    general_definition: |-
+      [Custom metadata](/ai-gateway/configuration/custom-metadata/)allows you to tag requests with user IDs or other identifiers, enabling better tracking and analysis of your requests.
+
+  - term: cf-aig-cache-ttl
+    general_definition: |-
+      Specifies the [cache time-to-live for responses](/ai-gateway/configuration/caching/#cache-ttl-cf-aig-cache-ttl).
+
+  - term: cf-aig-skip-cache
+    general_definition: |-
+      Header to [bypass caching for a specific request](/ai-gateway/configuration/caching/#skip-cache-cf-aig-skip-cache).
+
+  # Deprecated headers
+  - term: cf-cache-ttl
+    general_definition: |-
+      Deprecated: This header is replaced by `cf-aig-cache-ttl`. It specifies cache time-to-live.
+
+  - term: cf-skip-cache
+    general_definition: |-
+      Deprecated: This header is replaced by `cf-aig-skip-cache`. It bypasses caching for a specific request.

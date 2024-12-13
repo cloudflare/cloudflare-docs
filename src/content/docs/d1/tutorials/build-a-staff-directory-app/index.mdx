@@ -72,12 +72,22 @@ After creating your database, you will need to set up a [binding](/workers/runti
 
 This binding enables your application to interact with Cloudflare resources such as D1 databases, KV namespaces, and R2 buckets. To configure this, create a `wrangler.toml` file in your project's root directory and input the basic setup information:
 
+import { WranglerConfig } from "~/components";
+
+<WranglerConfig>
+
 ```toml
 name = "staff-directory"
 compatibility_date = "2023-12-01"
 ```
 
+</WranglerConfig>
+
 Next, add the database binding details to your `wrangler.toml` file. This involves specifying a binding name (in this case, `DB`), which will be used to reference the database within your application, along with the `database_name` and `database_id` provided when you created the database:
+
+
+
+<WranglerConfig>
 
 ```toml
 [[d1_databases]]
@@ -85,6 +95,8 @@ binding = "DB"
 database_name = "staff-directory"
 database_id = "f495af5f-dd71-4554-9974-97bdda7137b3"
 ```
+
+</WranglerConfig>
 
 You have now configured your application to access and interact with your D1 database, either through the command line or directly within your codebase.
 
@@ -367,11 +379,17 @@ wrangler r2 bucket create employee-avatars
 
 Once the bucket is created, add the R2 bucket binding to your `wrangler.toml` file:
 
+
+
+<WranglerConfig>
+
 ```toml
 [[r2_buckets]]
 binding = "MY_BUCKET"
 bucket_name = "employee-avatars"
 ```
+
+</WranglerConfig>
 
 Pass the R2 binding to the `global.d.ts` file:
 
@@ -412,6 +430,10 @@ With your application ready for deployment, you can use Wrangler to build and de
 
 After successful login, confirm that your `wrangler.toml` file is configured similarly to the code block below:
 
+
+
+<WranglerConfig>
+
 ```toml
 name = "staff-directory"
 compatibility_date = "2023-12-01"
@@ -425,6 +447,8 @@ binding = "DB"
 database_name = "staff-directory"
 database_id = "f495af5f-dd71-4554-9974-97bdda7137b3"
 ```
+
+</WranglerConfig>
 
 Run `wrangler deploy` to deploy your project to Cloudflare. After deployment you can test your application is working by accessing the deployed URL provided for you. Your browser should display your application with the base frontend you created. If you do not have any data populated in your database, go to the `/admin` page to add a new employee, and this should return a new employee in your home page.
 

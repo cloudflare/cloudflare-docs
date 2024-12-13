@@ -115,12 +115,18 @@ As an example, you will bind and query a D1 database in a Remix application.
 1. Create a D1 database. Refer to the [D1 documentation](/d1/) to learn more.
 2. Configure bindings for your D1 database in the `wrangler.toml` file:
 
+import { WranglerConfig } from "~/components";
+
+<WranglerConfig>
+
 ```toml
 [[ d1_databases ]]
 binding = "DB"
 database_name = "<YOUR_DATABASE_NAME>"
 database_id = "<YOUR_DATABASE_ID>"
 ```
+
+</WranglerConfig>
 
 3. Run `npm run typegen` to generate TypeScript types for your bindings.
 

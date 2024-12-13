@@ -5,10 +5,14 @@ productLink: "/cloudflare-one/policies/gateway/"
 productArea: Cloudflare One
 productAreaLink: /cloudflare-one/changelog/
 entries:
+  - publish_date: "2024-11-20"
+    title: Category filtering in the network policy builder
+    description: |-
+      Gateway users can now create network policies with the [Content Categories](/cloudflare-one/policies/gateway/network-policies/#content-categories) and [Security Risks](/cloudflare-one/policies/gateway/network-policies/#security-risks) traffic selectors. This update simplifies malicious traffic blocking and streamlines network monitoring for improved security management.
   - publish_date: "2024-10-17"
     title: Per-account Cloudflare root certificate
     description: |-
-      Gateway users can now generate [unique root CAs](/cloudflare-one/connections/connect-devices/warp/user-side-certificates/) for their Zero Trust account. Both generated certificate and custom certificate users must [activate a root certificate](/cloudflare-one/connections/connect-devices/warp/user-side-certificates/#activate-a-root-certificate) to use it for inspection. Per-account certificates replace the default Cloudflare certificate, which is set to expire on 2025-02-02.
+      Gateway users can now generate [unique root CAs](/cloudflare-one/connections/connect-devices/user-side-certificates/) for their Zero Trust account. Both generated certificate and custom certificate users must [activate a root certificate](/cloudflare-one/connections/connect-devices/user-side-certificates/#activate-a-root-certificate) to use it for inspection. Per-account certificates replace the default Cloudflare certificate, which is set to expire on 2025-02-02.
   - publish_date: "2024-10-10"
     title: Time-based policy duration
     description: |-

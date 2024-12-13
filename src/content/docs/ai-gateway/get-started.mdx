@@ -24,26 +24,26 @@ Then, create a new AI Gateway.
 
 <Render file="create-gateway" />
 
+## Choosing gateway authentication
+
+When setting up a new gateway, you can choose between an authenticated and unauthenticated gateway. Enabling an authenticated gateway requires each request to include a valid authorization token, adding an extra layer of security. We recommend using an authenticated gateway when storing logs to prevent unauthorized access and protect against invalid requests that can inflate log storage usage and make it harder to find the data you need. Learn more about setting up an [Authenticated Gateway](/ai-gateway/configuration/authentication/).
+
 ## Connect application
 
 Next, connect your AI provider to your gateway.
 
 AI Gateway offers multiple endpoints for each Gateway you create - one endpoint per provider, and one Universal Endpoint.
 
-<Details header="Supported providers">
+Additionally, AI Gateway has a [WebSockets API](/ai-gateway/configuration/websockets-api/) which provides a single persistent connection, enabling continuous communication. This API supports all AI providers connected to AI Gateway, including those that do not natively support WebSockets.
+
+Below is a list of our supported model providers:
 
 <DirectoryListing folder="ai-gateway/providers" />
 
-</Details>
+If you do not have a provider preference, start with one of our dedicated tutorials:
 
-If you do not have a provider preference, start with one of our dedicated tutorials.
-
-<Details header="Onboarding tutorials">
-
-- [OpenAI](/ai-gateway/tutorials/deploy-aig-worker/)
-- [Worker AI](/ai-gateway/tutorials/create-first-aig-workers/)
-
-</Details>
+- [OpenAI](/ai-gateway/integrations/aig-workers-ai-binding/)
+- [Workers AI](/ai-gateway/tutorials/create-first-aig-workers/)
 
 ## View analytics
 

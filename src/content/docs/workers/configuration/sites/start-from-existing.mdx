@@ -5,7 +5,7 @@ sidebar:
   order: 1
 ---
 
-import { Render, TabItem, Tabs } from "~/components";
+import { Render, TabItem, Tabs, WranglerConfig } from "~/components";
 
 <Render file="workers_sites" />
 
@@ -36,10 +36,14 @@ To deploy a pre-existing static site project, start with a pre-generated site. W
 
 2. Add your site’s build/output directory to the `wrangler.toml` file:
 
+   <WranglerConfig>
+
    ```toml
    [site]
    bucket = "./public" # <-- Add your build directory name here.
    ```
+
+   </WranglerConfig>
 
    The default directories for the most popular static site generators are listed below:
 
@@ -122,9 +126,15 @@ async function handleEvent(event) {
 
 6. Deploy your site to a [custom domain](/workers/configuration/routing/custom-domains/) that you own and have already attached as a Cloudflare zone. Add a `route` property to the `wrangler.toml` file.
 
+
+
+   <WranglerConfig>
+
    ```toml
    route = "https://example.com/*"
    ```
+
+   </WranglerConfig>
 
    :::note
 

@@ -187,9 +187,15 @@ Below is an example of a user identity that includes the `disk_encryption` and `
 
 In `wrangler.toml`, [set up a route](/workers/configuration/routing/routes/) that maps the Worker to your Access application domain:
 
+import { WranglerConfig } from "~/components";
+
+<WranglerConfig>
+
 ```toml
 route = { pattern= "app.example.com/*", zone_name="example.com"}
 ```
+
+</WranglerConfig>
 
 ## 4. Deploy the Worker
 

@@ -17,7 +17,7 @@ Cloudflare encapsulates the ICMP reply packet and sends the probe across the tun
 
 Every Cloudflare data center configured to process your traffic sends tunnel health check probes. The rate at which these health check probes are sent varies based on tunnel and location. This rate can also be tuned up or down on a per tunnel basis by modifying the `health_check` rate of a tunnel <a href={props.healthCheckFrequencyURL}>with the API</a>.
 
-When a probe attempt fails for a [healthy](#health-state-and-prioritization) tunnel, each server detecting the failure quickly probes up to two more times to obtain an accurate result. We also do the same if a tunnel has been down and probes start returning success. Because Cloudflare global network servers send probes up to every second, you can expect your network to receive several hundred health check packets per second — each Cloudflare data center will only send one health check packet as part of a probe. This represents a relatively trivial amount of traffic.
+When a probe attempt fails for a [healthy](#health-state-and-prioritization) tunnel, each server detecting the failure quickly probes up to two more times to obtain an accurate result. We also do the same if a tunnel has been down and probes start returning success. Because Cloudflare global network servers send probes up to every second, you can expect your network to receive several hundred health check packets per second - each Cloudflare data center will only send one health check packet as part of a probe. This represents a relatively trivial amount of traffic.
 
 :::note[Note]
 To avoid control plane policies enforced by the origin network, tunnel health checks use an encapsulated ICMP reply instead of an ICMP echo request. To use echo request packets, change your health check type to **Request** in your tunnels. Refer to <a href={props.urlChangeHealthCheckType}>Configure tunnel endpoints</a> to learn how to change this setting.
@@ -75,7 +75,7 @@ Once a tunnel is in the down state, global network servers continue to emit prob
 
 Tunnels in a degraded state transition to healthy when the failure rate for the previous 30 probes is less than 0.1%. This transition may take up to 30 minutes.
 
-{props.productName}'s tunnel health check system allows a tunnel to quickly transition from healthy to degraded or down, but tunnel transition occurs slowly from degraded or down to healthy. This scenario is referred to as hysteresis — which is when a system's output depends on its history of past inputs — and dampens changes to tunnel routing caused by flapping and other intermittent network failures.
+{props.productName}'s tunnel health check system allows a tunnel to quickly transition from healthy to degraded or down, but tunnel transition occurs slowly from degraded or down to healthy. This scenario is referred to as hysteresis - which is when a system's output depends on its history of past inputs - and dampens changes to tunnel routing caused by flapping and other intermittent network failures.
 
 :::note[Note]
 Cloudflare always attempts to send traffic over available tunnel routes with the highest priority (lowest route value), even when all configured tunnels are in an unhealthy state.

@@ -10,6 +10,8 @@ import { GlossaryDefinition, Render } from "~/components"
 
 <GlossaryDefinition term="Universal SSL certificate" />
 
+---
+
 The process for activating a Universal SSL certificate depends on your domain's DNS setup.
 
 ## Full DNS setup
@@ -40,6 +42,16 @@ For non-authoritative or [partial domains](/dns/zone-setups/partial-setup/), Uni
 
 Unless you cover and validate multiple subdomains with an [advanced certificate](/ssl/edge-certificates/advanced-certificate-manager/), you will need to proxy and validate new subdomains as they are added.
 
+---
+
 ## Verify your certificate is active
 
 Once you enable Universal SSL, you can review the [activation status](/ssl/reference/certificate-statuses/) in the dashboard at **SSL/TLS** > **Edge Certificates** or via the API with a [GET request](/api/operations/certificate-packs-list-certificate-packs).
+
+---
+
+## Universal SSL renewal
+
+<Render file="universal-ssl-validity" />
+
+If you are on a [partial setup](/ssl/edge-certificates/universal-ssl/enable-universal-ssl/#partial-dns-setup), make sure [Domain control validation (DCV)](/ssl/edge-certificates/changing-dcv-method/) is configured correctly. Refer to [Troubleshooting DCV](/ssl/edge-certificates/changing-dcv-method/troubleshooting/) for further help.

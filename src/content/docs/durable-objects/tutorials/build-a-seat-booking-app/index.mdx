@@ -258,10 +258,16 @@ The frontend of the application is a simple HTML page that allows users to selec
 
 4. Update the bindings in `wrangler.toml` to configure `assets` to serve the `public` directory.
 
+import { WranglerConfig } from "~/components";
+
+<WranglerConfig>
+
 ```toml title="wrangler.toml"
 [assets]
 directory = "public"
 ```
+
+</WranglerConfig>
 
 5. If you start the development server using the following command, the frontend will be served at `http://localhost:8787`. However, it will not work because the backend is not yet implemented.
 
@@ -281,6 +287,10 @@ The application already has the binding for the Durable Objects class configured
 
 1. Update the binding to use the SQLite storage in Durable Objects. In `wrangler.toml`, replace `new_classes=["Flight"]` with `new_sqlite_classes=["Flight"]`, `name = "FLIGHT"` with `name = "FLIGHT"`, and `class_name = "MyDurableObject"` with `class_name = "Flight"`. Your `wrangler.toml` should look like this:
 
+
+
+<WranglerConfig>
+
 ```toml {9} title="wrangler.toml"
 [[durable_objects.bindings]]
 name = "FLIGHT"
@@ -292,6 +302,8 @@ class_name = "Flight"
 tag = "v1"
 new_sqlite_classes = ["Flight"]
 ```
+
+</WranglerConfig>
 
 Your application can now use the SQLite storage in Durable Objects.
 

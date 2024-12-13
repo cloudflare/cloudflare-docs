@@ -5,6 +5,63 @@ productLink: "/cloudflare-one/connections/connect-devices/warp/"
 productArea: Cloudflare One
 productAreaLink: /cloudflare-one/changelog/
 entries:
+  - publish_date: "2024-11-19"
+    title: MASQUE GA
+    description: |-
+      MASQUE as a device tunnel protocol option is now generally available (GA). Refer to [Device tunnel protocol](/cloudflare-one/connections/connect-devices/warp/configure-warp/warp-settings/#device-tunnel-protocol) for configuration details and minimum WARP client requirements.
+
+  - publish_date: "2024-11-18"
+    title: WARP client for macOS (version 2024.11.309.0)
+    description: |-
+      A new GA release for the macOS WARP client is now available in the [App Center](https://install.appcenter.ms/orgs/cloudflare/apps/1.1.1.1-macos-1/distribution_groups/release). This release contains minor fixes and improvements.
+
+      Changes and improvements:
+        - Fixed an issue where SSH sessions and other application connections over TCP or UDP could drop when a device that is using MASQUE changes its primary network interface.
+        - Fixed an issue to ensure the Cloudflare root certificate (or custom certificate) is installed in the trust store if not already there.
+        - Fixed an issue with the WARP client becoming unresponsive during startup.
+        - Extended `warp-diag` to collect system profiler firewall state as part of diagnostics.
+        - Fixed an issue with the WARP client becoming unresponsive while handling LAN inclusion.
+        - Fixed an issue where users were unable to connect with an IPC error message displayed in the UI.
+        - Fixed an issue that was preventing proper operation of DNS-over-TLS (DoT) for consumer users.
+
+      Known issues:
+        - macOS Sequoia: Due to changes Apple introduced in macOS 15.0.x, the WARP client may not behave as expected. Cloudflare recommends the use of macOS 15.1 or later.
+
+  - publish_date: "2024-11-18"
+    title: WARP client for Windows (version 2024.11.309.0)
+    description: |-
+      A new GA release for the Windows WARP client is now available in the [App Center](https://install.appcenter.ms/orgs/cloudflare/apps/1.1.1.1-windows-1/distribution_groups/release). This release contains minor fixes and improvements.
+
+      Changes and improvements:
+        - Fixed an issue where SSH sessions and other application connections over TCP or UDP could drop when a device that is using MASQUE changes its primary network interface.
+        - Fixed an issue to ensure the Cloudflare root certificate (or custom certificate) is installed in the trust store if not already there.
+        - Fixed an issue with the WARP client becoming unresponsive during startup.
+        - Extended diagnostics collection time in `warp-diag` to ensure logs are captured reliably.
+        - Fixed an issue that was preventing proper operation of DNS-over-TLS (DoT) for consumer users.
+
+      Known issues:
+        - DNS resolution may be broken when all of the following conditions are true:
+          - WARP is in Secure Web Gateway without DNS filtering (tunnel-only) mode.
+          - A custom DNS server address is configured on the primary network adapter.
+          - The custom DNS server address on the primary network adapter is changed while WARP is connected.
+
+          To work around the DNS issue, reconnect the WARP client by toggling off and back on.
+
+  - publish_date: "2024-11-18"
+    title: WARP client for Linux (version 2024.11.309.0)
+    description: |-
+      A new GA release for the Linux WARP client is now available in the [package repository](https://pkg.cloudflareclient.com/). This release contains reliability improvements and general bug fixes.
+
+      Changes and improvements:
+        - Fixed an issue where SSH sessions and other connections ould drop when a device that is using MASQUE changes its primary network interface.
+        - Device posture client certificate checks now support PKCS#1.
+        - Fixed an issue to ensure the Cloudflare root certificate (or custom certificate) is installed in the trust store if not already there.
+        - Reduced unnecessary log messages when `resolv.conf` has no owner.
+        - Fixed an issue with `warp-diag` printing benign TLS certificate errors.
+        - Fixed an issue with the WARP client becoming unresponsive during startup.
+        - Extended diagnostics collection time in `warp-diag` to ensure logs are captured reliably.
+        - Fixed an issue that was preventing proper operation of DNS-over-TLS (DoT) for consumer users.
+
   - publish_date: "2024-10-23"
     title: WARP client for macOS (version 2024.10.279.1)
     description: |-

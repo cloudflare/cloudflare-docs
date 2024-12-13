@@ -5,10 +5,16 @@
 
 Consider the following two Workers, connected via a [Service Binding](/workers/runtime-apis/bindings/service-bindings/rpc). The counter service provides the RPC method `newCounter()`, which returns a function:
 
+import { WranglerConfig } from "~/components";
+
+<WranglerConfig>
+
 ```toml
 name = "counter-service"
 main = "./src/counterService.js"
 ```
+
+</WranglerConfig>
 
 ```js
 import { WorkerEntrypoint } from "cloudflare:workers";
@@ -28,6 +34,10 @@ export default class extends WorkerEntrypoint {
 
 This function can then be called by the client Worker:
 
+
+
+<WranglerConfig>
+
 ```toml
 name = "client_worker"
 main = "./src/clientWorker.js"
@@ -35,6 +45,8 @@ services = [
   { binding = "COUNTER_SERVICE", service = "counter-service" }
 ]
 ```
+
+</WranglerConfig>
 
 ```js
 export default {
@@ -51,7 +63,7 @@ export default {
 
 :::note
 
-Refer to [Explicit Resource Management](/workers/runtime-apis/rpc/lifecycle) to learn more about the `using` declaration shown in the example above. 
+Refer to [Explicit Resource Management](/workers/runtime-apis/rpc/lifecycle) to learn more about the `using` declaration shown in the example above.
 :::
 
 How is this possible? The system is not serializing the function itself. When the function returned by `CounterService` is called, it runs within `CounterService` — even if it is called by another Worker.

@@ -21,6 +21,10 @@ This allows you to write to a Queue from any service or programming language tha
 
 Configure your `wrangler.toml` file as follows:
 
+import { WranglerConfig } from "~/components";
+
+<WranglerConfig>
+
 ```toml
 name = "my-worker"
 
@@ -29,6 +33,8 @@ name = "my-worker"
   binding = "YOUR_QUEUE"
 
 ```
+
+</WranglerConfig>
 
 ### 1. Create a shared secret
 

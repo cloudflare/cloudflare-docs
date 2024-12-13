@@ -13,22 +13,19 @@ description: Create a rewrite URL rule (part of Transform Rules) to rewrite
 
 import { Example } from "~/components";
 
-To rewrite everything under `/blog/<PATH>` to `/marketing/<PATH>` you must modify the first component of the path (`/blog/`). Create a rewrite URL rule and use the [`regex_replace()`](/ruleset-engine/rules-language/functions/#regex_replace) function for this purpose:
+To rewrite everything under `/blog/<PATH>` to `/marketing/<PATH>`, create a new rewrite URL rule and define a dynamic URL path rewrite using [wildcard pattern parameters](/rules/transform/url-rewrite/create-dashboard/#wildcard-pattern-parameters):
 
 <Example>
 
-Text in **Expression Editor**:
+**When incoming requests match**
 
-```txt
-starts_with(http.request.uri.path, "/blog/")
-```
+- **Wildcard pattern**
+  - **Request URL**: `https://<YOUR_HOSTNAME>/blog/*`
 
-Text after **Path** > **Rewrite to...** > _Dynamic_:
-
-```txt
-regex_replace(http.request.uri.path, "^/blog/", "/marketing/")
-```
+**Then rewrite the path and/or query**
+- **Target path**: `/blog/*`
+- **Rewrite to**: `/marketing/${1}`
 
 </Example>
 
-The `regex_replace()` function matches the path component on a regular expression (`^/blog/`) and then provides a replacement for that match (`/marketing/`).
+Make sure to replace `<YOUR_HOSTNAME>` with your actual hostname and adjust the example paths according to your setup.

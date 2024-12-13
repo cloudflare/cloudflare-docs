@@ -13,9 +13,9 @@ To list all the keys in your KV namespace, call the `list()` method of the [KV b
 env.NAMESPACE.list();
 ```
 
-The `list()` method returns a promise you can `await` on to get the value. 
+The `list()` method returns a promise you can `await` on to get the value.
 
-#### Example 
+#### Example
 
 An example of listing keys from within a Worker:
 
@@ -63,16 +63,16 @@ env.NAMESPACE.list(options?)
 #### Response
 * `response`: `Promise<{
   keys: {
-    name: string, 
+    name: string,
     expiration?: number,
     metadata?: object
   }[],
   list_complete: boolean,
   cursor: string
 }>`
-  * A `Promise` that resolves to an object containing `keys`, `list_complete`, and `cursor` attributes. 
+  * A `Promise` that resolves to an object containing `keys`, `list_complete`, and `cursor` attributes.
     * `keys` is an array that contains an object for each key listed. Each object has attributes `name`, `expiration` (optional), and `metadata` (optional). If the key-value pair has an expiration set, the expiration will be present and in absolute value form (even if it was set in TTL form). If the key-value pair has non-null metadata set, the metadata will be present.
-    * `list_complete` is a boolean, which will be `false` if there are more keys to fetch, even if the `keys` array is empty. 
+    * `list_complete` is a boolean, which will be `false` if there are more keys to fetch, even if the `keys` array is empty.
     * `cursor` is a `string` used for paginating responses.
 
 The `list()` method returns a promise which resolves with an object that looks like the following:
@@ -159,4 +159,4 @@ await NAMESPACE.put(key, "", {
 ```
 
 ## Other methods to access KV
-You can also [list keys on the command line with Wrangler](/kv/reference/kv-commands/#list) or [with the API](/api/operations/workers-kv-namespace-list-a-namespace'-s-keys).
+You can also [list keys on the command line with Wrangler](/kv/reference/kv-commands/#list) or [with the REST API](/api/operations/workers-kv-namespace-list-a-namespace'-s-keys).

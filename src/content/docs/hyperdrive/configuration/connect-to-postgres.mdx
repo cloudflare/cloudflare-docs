@@ -28,6 +28,10 @@ npx wrangler hyperdrive create my-first-hyperdrive --connection-string="postgres
 
 The command above will output the ID of your Hyperdrive, which you will need to set in the `wrangler.toml` configuration file for your Workers project:
 
+import { WranglerConfig } from "~/components";
+
+<WranglerConfig>
+
 ```toml
 # required for database drivers to function
 compatibility_flags = ["nodejs_compat"]
@@ -37,6 +41,8 @@ compatibility_date = "2024-09-23"
 binding = "HYPERDRIVE"
 id = "<your-hyperdrive-id-here>"
 ```
+
+</WranglerConfig>
 
 This will allow Hyperdrive to generate a dynamic connection string within your Worker that you can pass to your existing database driver. Refer to [Driver examples](#driver-examples) to learn how to set up a database driver with Hyperdrive.
 

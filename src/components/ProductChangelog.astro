@@ -43,6 +43,11 @@ if (page.data.changelog_product_area_name) {
 			wranglerOnly: true,
 		};
 		({ changelogs } = await getChangelogs(opts));
+	} else if (name === "api-deprecations") {
+		const opts = {
+			deprecationsOnly: true,
+		};
+		({ changelogs } = await getChangelogs(opts));
 	} else {
 		const opts = {
 			filter: (entry: CollectionEntry<"changelogs">) => {
@@ -80,7 +85,7 @@ if (!changelogs) {
 							`Changelog entry points to ${link.slice(1, -1)} but unable to find entry with that slug`,
 						);
 
-					description = (await entryToString(page)) ?? page.body;
+					description = (await entryToString(page, Astro.locals)) ?? page.body;
 
 					return (
 						<div data-product={entry.product.toLowerCase()}>

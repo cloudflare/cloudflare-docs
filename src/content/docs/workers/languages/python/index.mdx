@@ -124,6 +124,10 @@ the Python `fetch` handler and can be used to access
 For example, let's try setting and using an environment variable in a Python
 Worker. First, add the environment variable to your Worker's `wrangler.toml`:
 
+import { WranglerConfig } from "~/components";
+
+<WranglerConfig>
+
 ```toml
 name = "hello-python-worker"
 main = "src/entry.py"
@@ -133,6 +137,8 @@ compatibility_date = "2024-03-20"
 [vars]
 API_HOST = "example.com"
 ```
+
+</WranglerConfig>
 
 Then, you can access the `API_HOST` environment variable via the `env` parameter:
 

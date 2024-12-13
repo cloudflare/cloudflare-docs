@@ -23,9 +23,11 @@ A single DDoS attack consisting of thousands of bots can involve as little as on
 
 In the case of HTTPS DDoS attacks, service providers only see encrypted payloads leaving their network without any possibility to decrypt or understand if it is malicious or legitimate traffic. However, Cloudflare can see an entire attack and all of its sources if the attack targets an Internet property that uses Cloudflare's services. This global view can help service providers stop the abusers.
 
+For more details, refer to [How DDoS protection works](/ddos-protection/about/how-ddos-protection-works/).
+
 ## Availability
 
-The Cloudflare DDoS Botnet Threat Feed is available in early access for free to service providers. To get access, [sign up to the waiting list](https://www.cloudflare.com/lp/botnet-threat-feed/). For more information, refer to the [Terms of Use](https://www.cloudflare.com/en-gb/service-specific-terms-application-services/#ddos-botnet-threat-feed).
+The Cloudflare DDoS Botnet Threat Feed is available for free to service providers. For more information, refer to the [Terms of Use](https://www.cloudflare.com/en-gb/service-specific-terms-application-services/#ddos-botnet-threat-feed).
 
 ---
 
@@ -34,7 +36,6 @@ The Cloudflare DDoS Botnet Threat Feed is available in early access for free to 
 Make sure that:
 
 - You have [created a Cloudflare account](/fundamentals/setup/account/).
-- You have access to the DDoS Botnet Threat Feed. If not, [sign up to the waiting list](https://www.cloudflare.com/lp/botnet-threat-feed/).
 
 ## Get started
 
@@ -45,6 +46,10 @@ Make sure that:
 3. Select **DDoS Threat Feed ASNs**.
 4. On the list of ASNs configured for your threat feed, select **Add ASN**.
 5. You will be redirected to the PeeringDB authentication page, where you can log in and consent to share the affiliation data with us. You will be redirected back to the configuration page once it is successful.
+
+:::note
+You can add multiple ASNs to your threat feed.
+:::
 
 ### 2. Obtain Cloudflare API token
 
@@ -67,6 +72,7 @@ Invoke one of the Botnet Threat Feed API endpoints:
 
 - The API URI path is planned to change from `.../botnet_feed/...` to `.../ddos_botnet_feed/...` in the future.
 - Responses with no IP addresses in the results (empty state) will return an `HTTP 200` status code (success), with an empty list in the `result` property.
+- When the response is a success but the result is `0` or `null`, this means that there are no detected offenses.
 :::
 
 To invoke an API endpoint, append the operation endpoint to the Cloudflare API base URL:

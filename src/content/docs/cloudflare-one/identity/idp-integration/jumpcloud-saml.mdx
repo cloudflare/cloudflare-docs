@@ -1,93 +1,109 @@
 ---
 pcx_content_type: how-to
-title: Jumpcloud (SAML)
+title: JumpCloud (SAML)
 ---
 
-JumpCloud provides [Directory-as-a-Service](https://jumpcloud.com/daas-product/) to securely connect user identities to systems, apps, files, and networks. Cloudflare Access integrates with JumpCloud using the SAML protocol. [This documentation from JumpCloud](https://support.jumpcloud.com/s/article/getting-started-applications-saml-sso2) can help you configure applications within your JumpCloud deployment.
+import { Render } from "~/components";
 
-These steps focus on requirements specific to Cloudflare Zero Trust.
+[JumpCloud](https://jumpcloud.com/#platform) provides SSO identity management. Cloudflare Access integrates with JumpCloud as a SAML identity provider.
 
-## Set up Jumpcloud SAML
+The following steps are specific to setting up JumpCloud with Cloudflare Access. For more information on configuring JumpCloud SSO application, refer to the [JumpCloud documentation](https://jumpcloud.com/support/integrate-with-cloudflare).
 
-To set up JumpCloud SAML as your identity provider:
+## Set up Jumpcloud as a SAML provider
 
-1. Generate a SAML certificate.
+### 1. Create an SSO application in JumpCloud
 
-   **Tip:** JumpCloud requires that you provide your own certificates for signing SAML assertions. Self-signed certificates are acceptable.
+1. In the [JumpCloud Admin Portal](https://console.jumpcloud.com/#/home), go to **SSO Applications**.
 
-   If you do not have a certificate, this command generates one using OpenSSL:
+2. Select **Add New Application**.
 
-   ```sh
-   openssl genrsa -out samlidp.key 2048 ; openssl req -new -x509 -sha256 -key samlidp.key -out samlidp.crt -days 1095
-   ```
+3. In the search bar, enter `Cloudflare` and select the **Cloudflare Access** application.
 
-   ```sh output
-   Generating RSA private key, 2048 bit long modulus
-   .................................................................................+++++
-   ......................+++++
-   e is 65537 (0x010001)
-   ```
+4. Select **Next**.
 
-   When asked to enter a Distinguished Name or a DN to incorporate into your certificate request, you can leave some of these fields blank. Some fields have a default value. Enter a dot (`.`) in the field to leave it blank. For example:
+5. In **Display Label**, enter an application name.
 
-   ```txt
-   -----
-   Country Name (2 letter code) [AU]:.
-   State or Province Name (full name) [Some-State]:.
-   Locality Name (eg, city) []:.
-   Organization Name (eg, company) [Internet Widgits Pty Ltd]:.
-   Organizational Unit Name (eg, section) []:.
-   Common Name (e.g. server FQDN or YOUR name) []:JumpCloud SAML IdP
-   Email Address []:
-   ```
+6. Select **Save Application**.
 
-2. In JumpCloud, select **Applications** in the left-side menu.
+7. Review the application summary and select **Configure Application**.
 
-3. Select the + icon at the top-left of the screen to add an application.
+8. In the **SSO** tab, configure the following settings:
+	1. In **IdP Entity ID**, enter your Cloudflare team domain:
 
-4. Choose the **SAML** option in **Application Types**.
+		```txt
+		https://<your-team-name>.cloudflareaccess.com/
+		```
+		You can find your team name in Zero Trust under **Settings** > **Custom Pages**.
 
-5. Enter an application name in **Display Label**.
+	2. Set both **SP Entity ID** and **ACS URL** to the following callback URL:
 
-6. Enter an IdP entity in the **IDP IDENTITY ID** field.The IdP entity can be anything, but must be unique. We suggest you reference something identifiable, such as your Cloudflare team domain (`https://<your-team-name>.cloudflareaccess.com/`).
+		```txt
+		https://<your-team-name>.cloudflareaccess.com/cdn-cgi/access/callback
+		```
+	3. (Optional) Configure SAML attributes that you want to send to Cloudflare Access.
 
-7. At the prompt, enter the IdP private key and IdP certificate you previously generated.
+	4. Scroll up to **JumpCloud Metadata** and select **Export Metadata**. Save this XML file for use in a [later step](#2-add-jumpcloud-to-zero-trust).
 
-8. Set both the **SP entity ID** and **ACS URL** to the following callback URL:
+9. In the **User Groups** tab, [assign user groups](https://jumpcloud.com/support/get-started-applications-saml-sso#managing-employee-access-to-applications) to this application.
 
-   ```txt
-   https://<your-team-name>.cloudflareaccess.com/cdn-cgi/access/callback
-   ```
+10. Select **Save**.
 
-   You can find your team name in Zero Trust under **Settings** > **Custom Pages**.
+### 2. Add JumpCloud to Zero Trust
 
-9. Under **SAML SUBJECT NAMEID**, choose **email**.
+1. In [Zero Trust](https://one.dash.cloudflare.com/), go to **Settings** > **Authentication**.
 
-10. Set the **SAML SUBJECT NAMEID FORMAT** to:
+2. Under **Login methods**, select **Add new**.
 
-    ```txt
-    urn:oasis:names:tc:SAML:1.1:nameid-format:emailAddress
-    ```
+3. Select **SAML**.
 
-11. Under USER ATTRIBUTES enter `email` for the name and `email` for the value.
+4. Upload your JumpCloud XML metadata file.
 
-12. Leave other settings at default.
+5. (Optional) To enable SCIM, refer to [Synchronize users and groups](#synchronize-users-and-groups).
 
-13. Select **save**. Remember to assign this application to users or groups.
+6. (Optional) Under **Optional configurations**, configure [additional SAML options](#optional-configurations).
 
-    ![JumpCloud Application dialog with group added to application](~/assets/images/cloudflare-one/identity/jumpcloud/jumpcloud-saml-2.png)
+7. Select **Save**.
 
-14. In Zero Trust, go to **Settings** > **Authentication**.
+You can now [test your connection](/cloudflare-one/identity/idp-integration/#test-idps-in-zero-trust) and create [Access policies](/cloudflare-one/policies/access/) based on the configured login method and SAML attributes.
 
-15. Under **Login methods**, select **Add new**.
+## Synchronize users and groups
 
-16. Select **SAML**.
+The JumpCloud integration allows you to synchronize user groups and automatically deprovision users using [SCIM](/cloudflare-one/identity/users/scim/).
 
-17. Input a **Name**, a **Single Sign on URL**, **IdP Entity ID or Issuer URL**, and **Signing Certificate**.
+### 1. Enable SCIM in Zero Trust
 
-18. Select **Save**.
+<Render
+	file="access/enable-scim-on-dashboard"
+	params={{ idp: "JumpCloud"}}
+/>
 
-To test that your connection is working, go to **Authentication** > **Login methods** and select **Test** next to the login method you want to test.
+### 2. Configure SCIM in JumpCloud
+
+1. In the [JumpCloud Admin Portal](https://console.jumpcloud.com/#/home), go to **SSO Applications**.
+2. Select the Cloudflare application that was created when you [Set up JumpCloud as a SAML provider](/cloudflare-one/identity/idp-integration/jumpcloud-saml/#set-up-jumpcloud-as-a-saml-provider).
+3. Select the **Identity Management** tab.
+4. Make sure that **Enable management of User Groups and Group Membership in this application** is turned on.
+5. Select **Configure**.
+6. In the **Base URL** field, enter the **SCIM Endpoint** obtained from Zero Trust.
+7. In the **Token Key** field, enter the **SCIM Secret** obtained from Zero Trust.
+8. Select **Activate**. You will receive a confirmation that the Identity Management integration has been successfully verified.
+9. Select **Save**.
+
+<Render file="access/verify-scim-provisioning"/>
+
+### Provisioning attributes
+
+Provisioning attributes define the user and group properties that JumpCloud will synchronize with Cloudflare Access. By default, JumpCloud will send the following attributes during a SCIM update event:
+
+| JumpCloud user attribute| Cloudflare Access attribute |
+| ------------------ | ----------------------- |
+| `email` 					 | `email`            |
+| `firstname`        | `givenName`        |
+| `lastname`         | `surname`          |
+
+| JumpCloud group attribute | Cloudflare Access attribute |
+| ------------------ | ----------------------- |
+| `name` 					   | `groups`            |
 
 ## Example API configuration
 

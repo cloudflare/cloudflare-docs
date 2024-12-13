@@ -3,9 +3,10 @@ interface Props {
 	videoId: string;
 	videoTitle: string;
 	thumbnailTimeOrURL: string;
+	moreVideosLink: string;
 }
 
-const { videoId, videoTitle, thumbnailTimeOrURL } = Astro.props;
+const { videoId, videoTitle, thumbnailTimeOrURL, moreVideosLink="true" } = Astro.props;
 
 const customerId = "1mwganm1ma0xgnmj";
 const baseUrl = `https://customer-${customerId}.cloudflarestream.com/`;
@@ -14,11 +15,13 @@ const url = new URL(`${videoId}/iframe`, baseUrl);
 url.searchParams.set("preload", "true");
 url.searchParams.set("letterboxColor", "transparent");
 
-
 // full url option
 if (thumbnailTimeOrURL !== undefined) {
 	if (!thumbnailTimeOrURL.startsWith("http")) {
-		const thumbnailUrl = new URL(`${videoId}/thumbnails/thumbnail.jpg`, baseUrl);
+		const thumbnailUrl = new URL(
+			`${videoId}/thumbnails/thumbnail.jpg`,
+			baseUrl,
+		);
 		thumbnailUrl.searchParams.set("fit", "crop");
 		thumbnailUrl.searchParams.set("time", thumbnailTimeOrURL);
 
@@ -27,7 +30,6 @@ if (thumbnailTimeOrURL !== undefined) {
 		url.searchParams.set("poster", thumbnailTimeOrURL);
 	}
 }
-
 ---
 
 <div style="position: relative; padding-top: 56.25%">
@@ -37,9 +39,13 @@ if (thumbnailTimeOrURL !== undefined) {
 		allow="accelerometer; gyroscope; autoplay; encrypted-media; picture-in-picture;"
 		allowfullscreen="true"
 		title={videoTitle}
-		id={videoId}></iframe>		
+		id={videoId}></iframe>
 </div>
-<a href="https://www.youtube.com/@CloudflareDevelopers" target="_blank">Watch more videos on our Developer Channel</a>
+
+{moreVideosLink=="true" &&
+	<a href="https://www.youtube.com/@CloudflareDevelopers" target="_blank">Watch more videos on our Developer Channel</a>
+}
+
 <script is:inline src="https://embed.cloudflarestream.com/embed/sdk.latest.js"
 ></script>
 <script is:inline define:vars={{ vidId: videoId, videoTitle }}>

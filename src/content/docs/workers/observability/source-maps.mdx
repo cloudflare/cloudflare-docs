@@ -25,9 +25,15 @@ Support for uploading source maps is available now in open beta. Minimum require
 
 To enable source maps, add the following to your Worker's [`wrangler.toml`](/workers/wrangler/configuration/) file:
 
+import { WranglerConfig } from "~/components";
+
+<WranglerConfig>
+
 ```toml
 upload_source_maps = true
 ```
+
+</WranglerConfig>
 
 When `upload_source_maps` is set to `true`, Wrangler will automatically generate and upload source map files when you run [`wrangler deploy`](/workers/wrangler/commands/#deploy) or [`wrangler versions deploy`](/workers/wrangler/commands/#deploy-2).
 ​​

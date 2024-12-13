@@ -68,15 +68,7 @@ This is especially useful if you already have mTLS implemented and client certif
     If no `mtls_certificate_id` is provided, the action will be performed against a Cloudflare Managed CA.
     :::
 
-
-
-4. (Optional) Since this process is API-only, and hostnames that use your uploaded CA certificate **are not** listed on the dashboard, you can make a [GET request](/api/operations/client-certificate-for-a-zone-list-hostname-associations) with the `mtls_certificate_id` as a query parameter to confirm the hostname association.
-
-```bash
-curl "https://api.cloudflare.com/client/v4/zones/zone_id/certificate_authorities/hostname_associations?mtls_certificate_id={id_from_step_2}"  \
---header "X-Auth-Email: <EMAIL>" \
---header "X-Auth-Key: <API_KEY>"
-```
+4. (Optional) Since this process is API-only, and hostnames that use your uploaded CA certificate **are not** listed on the dashboard, you can make a [GET request](#list-ca-hostname-associations) to confirm the CA hostname associations.
 
 5. Create a custom rule to enforce client certificate validation.
    You can do this [via the dashboard](/api-shield/security/mtls/configure/) or [via API](/waf/custom-rules/create-api/).
@@ -98,3 +90,15 @@ If you want to remove a CA that you have previously uploaded, you must first rem
 ```
 
 2. Use the [Delete mTLS certificate endpoint](/api/operations/m-tls-certificate-management-delete-m-tls-certificate) to delete the certificate.
+
+## List CA hostname associations
+
+You can also use the [API](/api/operations/client-certificate-for-a-zone-list-hostname-associations) to list the hostname associations. Make sure you include the query parameter `mtls_certificate_id`, where `mtls_certificate_id` is the certificate ID of the uploaded CA (step 2 above).
+
+```bash
+curl "https://api.cloudflare.com/client/v4/zones/zone_id/certificate_authorities/hostname_associations?mtls_certificate_id={id_from_step_2}"  \
+--header "X-Auth-Email: <EMAIL>" \
+--header "X-Auth-Key: <API_KEY>"
+```
+
+

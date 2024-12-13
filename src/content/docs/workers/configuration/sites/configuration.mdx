@@ -43,6 +43,10 @@ If your project uses [environments](/workers/wrangler/environments/), make sure 
 
 Example of a `wrangler.toml`:
 
+import { WranglerConfig } from "~/components";
+
+<WranglerConfig>
+
 ```toml
 name = "docs-site-blah"
 
@@ -57,6 +61,8 @@ route = "https://example.com/docs*"
 name = "docs-site-staging"
 route = "https://staging.example.com/docs*"
 ```
+
+</WranglerConfig>
 
 ## Storage limits
 
@@ -76,11 +82,17 @@ This means that you should use gitignore semantics when declaring which director
 
 If you want to include only a certain set of files or directories in your `bucket`, you can add an `include` field to your `[site]` section of your `wrangler.toml` file:
 
+
+
+<WranglerConfig>
+
 ```toml
 [site]
 bucket = "./public"
 include = ["included_dir"] # must be an array.
 ```
+
+</WranglerConfig>
 
 Wrangler will only upload files or directories matching the patterns in the `include` array.
 
@@ -88,11 +100,17 @@ Wrangler will only upload files or directories matching the patterns in the `inc
 
 If you want to exclude files or directories in your `bucket`, you can add an `exclude` field to your `[site]` section of your `wrangler.toml` file:
 
+
+
+<WranglerConfig>
+
 ```toml
 [site]
 bucket = "./public"
 exclude = ["excluded_dir"] # must be an array.
 ```
+
+</WranglerConfig>
 
 Wrangler will ignore files or directories matching the patterns in the `exclude` array when uploading assets to Workers KV.
 

@@ -10,6 +10,10 @@ sidebar:
 
 To specify different D1 databases for different environments, use the following syntax in your `wrangler.toml` file:
 
+import { WranglerConfig } from "~/components";
+
+<WranglerConfig>
+
 ```toml
 # This is a staging environment
 [env.staging]
@@ -24,4 +28,92 @@ d1_databases = [
 ]
 ```
 
+</WranglerConfig>
+
 In the code above, the `staging` environment is using a different database (`DATABASE_NAME_1`) than the `production` environment (`DATABASE_NAME_2`).
+
+## Anatomy of `wrangler.toml` file
+
+If you need to specify different D1 databases for different environments, your `wrangler.toml` may contain bindings that resemble the following:
+
+
+
+<WranglerConfig>
+
+```toml
+[[production.d1_databases]]
+binding = "DB"
+database_name = "DATABASE_NAME"
+database_id = "DATABASE_ID"
+```
+
+</WranglerConfig>
+
+In the above configuration:
+
+- `[[production.d1_databases]]` creates an object `production` with a property `d1_databases`, where `d1_databases` is an array of objects, since you can create multiple D1 bindings in case you have more than one database.
+- Any property below the line in the form `<key> = <value>` is a property of an object within the `d1_databases` array.
+
+Therefore, the above binding is equivalent to:
+
+```json
+{
+  "production": {
+    "d1_databases": [
+      {
+        "binding": "DB",
+        "database_name": "DATABASE_NAME",
+        "database_id": "DATABASE_ID"
+      }
+    ]
+  }
+}
+```
+
+### Example
+
+
+
+<WranglerConfig>
+
+```toml
+[[env.staging.d1_databases]]
+binding = "BINDING_NAME_1"
+database_name = "DATABASE_NAME_1"
+database_id = "UUID_1"
+
+[[env.production.d1_databases]]
+binding = "BINDING_NAME_2"
+database_name = "DATABASE_NAME_2"
+database_id = "UUID_2"
+
+```
+
+</WranglerConfig>
+
+The above is equivalent to the following structure in JSON:
+
+```json
+{
+  "env": {
+    "production": {
+      "d1_databases": [
+        {
+          "binding": "BINDING_NAME_2",
+          "database_id": "UUID_2",
+          "database_name": "DATABASE_NAME_2"
+        }
+      ]
+    },
+    "staging": {
+      "d1_databases": [
+        {
+          "binding": "BINDING_NAME_1",
+          "database_id": "UUID_1",
+          "database_name": "DATABASE_NAME_1"
+        }
+      ]
+    }
+  }
+}
+```

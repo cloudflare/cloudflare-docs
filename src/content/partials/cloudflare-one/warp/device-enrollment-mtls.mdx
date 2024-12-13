@@ -3,9 +3,11 @@
 
 ---
 
-import { GlossaryTooltip } from "~/components"
+import { GlossaryTooltip, Tabs, TabItem } from "~/components"
 
 To check for an mTLS certificate:
+
+<Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
 
 1. [Add an mTLS certificate](/cloudflare-one/identity/devices/access-integrations/mutual-tls-authentication/#add-mtls-authentication-to-your-access-configuration) to your account. You can generate a sample certificate using the [Cloudflare PKI toolkit](/cloudflare-one/identity/devices/access-integrations/mutual-tls-authentication/#test-mtls-using-cloudflare-pki).
 
@@ -18,3 +20,49 @@ To check for an mTLS certificate:
    | Allow  | Require   | Common Name | `<CERT-COMMON-NAME>` |
 
 4. On your device, add the client certificate to the [system keychain](/cloudflare-one/identity/devices/access-integrations/mutual-tls-authentication/#test-in-the-browser).
+
+</TabItem> <TabItem label="Terraform">
+
+1. Add the following permissions to your [`cloudflare_api_token`](https://registry.terraform.io/providers/cloudflare/cloudflare/4.40.0/docs/resources/api_token):
+	- `Access: Mutual TLS Certificates Write`
+	- `Access: Apps and Policies Write`
+
+2. Use the [`cloudflare_zero_trust_access_mtls_certificate`](https://registry.terraform.io/providers/cloudflare/cloudflare/4.40.0/docs/resources/zero_trust_access_mtls_certificate) resource to add an mTLS certificate to your account:
+
+	```tf
+	resource "cloudflare_zero_trust_access_mtls_certificate" "example_mtls_cert" {
+		account_id     = var.cloudflare_account_id
+		name           = "WARP enrollment mTLS cert"
+		certificate    = <<EOT
+		-----BEGIN CERTIFICATE-----
+		xxxx
+		xxxx
+		-----END CERTIFICATE-----
+		EOT
+		associated_hostnames = ["your-team-name.cloudflareaccess.com"]
+	}
+	```
+
+3. Add the following policy to your [WARP enrollment Access application](/cloudflare-one/connections/connect-devices/warp/deployment/device-enrollment/#set-device-enrollment-permissions):
+
+	```tf
+	resource "cloudflare_zero_trust_access_policy" "warp_enrollment_employees" {
+		application_id = cloudflare_zero_trust_access_application.warp_enrollment_app.id
+		account_id     = var.cloudflare_account_id
+		name           = "Allow company emails"
+		decision       = "allow"
+		precedence     = 1
+
+		include {
+			email_domain = ["company.com"]
+		}
+
+		require {
+			common_names = ["Common name 1", "Common name 2"]
+		}
+	}
+	```
+
+4. On your device, add the client certificate to the [system keychain](/cloudflare-one/identity/devices/access-integrations/mutual-tls-authentication/#test-in-the-browser).
+
+</TabItem> </Tabs>

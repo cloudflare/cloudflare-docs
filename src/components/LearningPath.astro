@@ -64,17 +64,19 @@ if (!firstModule)
 						<LinkButton href={"/" + module.slug + "/"} variant="secondary">
 							Start module
 						</LinkButton>
-						<Details header={`Contains ${units.length} units`} open>
-							<Steps>
-								<ol>
-									{units.map((unit) => (
-										<li>
-											<a href={"/" + unit.slug + "/"}>{unit.data.title}</a>
-										</li>
-									))}
-								</ol>
-							</Steps>
-						</Details>
+						{units.length > 0 && (
+							<Details header={`Contains ${units.length} units`} open>
+								<Steps>
+									<ol>
+										{units.map((unit) => (
+											<li>
+												<a href={"/" + unit.slug + "/"}>{unit.data.title}</a>
+											</li>
+										))}
+									</ol>
+								</Steps>
+							</Details>
+						)}
 					</li>
 				);
 			})

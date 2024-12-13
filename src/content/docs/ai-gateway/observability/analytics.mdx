@@ -34,8 +34,8 @@ curl https://api.cloudflare.com/client/v4/graphql \
     "query": "query{\n  viewer {\n	accounts(filter: { accountTag: \"{account_id}\" }) {\n	requests: aiGatewayRequestsAdaptiveGroups(\n    	limit: $limit\n    	filter: { datetimeHour_geq: $start, datetimeHour_leq: $end }\n    	orderBy: [datetimeMinute_ASC]\n  	) {\n    	count,\n    	dimensions {\n        	model,\n        	provider,\n        	gateway,\n        	ts: datetimeMinute\n    	}\n    	\n  	}\n    	\n	}\n  }\n}",
     "variables": {
    	 "limit": 1000,
-   	 "start": "2023-09-01T10:00:00.0Z",
-   	 "end": "2023-09-30T10:00:00.0Z",
+   	 "start": "2023-09-01T10:00:00.000Z",
+   	 "end": "2023-09-30T10:00:00.000Z",
    	 "orderBy": "date_ASC"
     }
 }'

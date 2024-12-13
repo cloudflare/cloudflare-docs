@@ -1,0 +1,156 @@
+---
+pcx_content_type: reference
+title: Amazon Web Services (AWS) S3
+rss: file
+---
+
+import { Render } from "~/components";
+
+<Render
+	file="casb/integration-description"
+	params={{ one: "Amazon Web Services (AWS) S3", two: "AWS account" }}
+/>
+
+## Integration prerequisites
+
+- An AWS account using AWS S3 (Simple Storage Service)
+- For initial setup, access to the AWS account with permission to create a new IAM Role with the scopes listed below.
+
+## Integration permissions
+
+For the AWS S3 integration to function, Cloudflare CASB requires the following access scopes via an IAM Role with cross-account access:
+
+- `s3:PutBucketNotification`
+- `s3:GetObject`
+- `s3:ListBucket`
+
+These permissions follow the principle of least privilege to ensure that only the minimum required access is granted. To learn more about each permission scope, refer to the [AWS S3 Permissions documentation](https://docs.aws.amazon.com/AmazonS3/latest/userguide/using-with-s3-policy-actions.html).
+
+## Compute account
+
+You can connect an AWS compute account to your CASB integration to perform [Data Loss Prevention](/cloudflare-one/policies/data-loss-prevention/) scans within your S3 bucket and avoid data egress. CASB will scan any objects that exist in the bucket at the time of configuration.
+
+### Add a compute account
+
+To connect a compute account to your AWS integration:
+
+1. In [Zero Trust](https://one.dash.cloudflare.com), go to **CASB** > **Integrations**.
+2. Find and select your AWS integration.
+3. Select **Open connection instructions**.
+4. Follow the instructions provided to connect a new compute account.
+5. Select **Refresh**.
+
+You can only connect one computer account to an integration. To remove a compute account, select **Manage compute accounts**.
+
+### Configure compute account scanning
+
+Once your AWS compute account has successfully connected to your CASB integration, you can configure where and how to scan for sensitive data:
+
+1. In [Zero Trust](https://one.dash.cloudflare.com), go to **CASB** > **Integrations**.
+2. Find and select your AWS integration.
+3. Select **Create new configuration**.
+4. In **Resources**, choose the buckets you want to scan. Select **Continue**.
+5. Choose the file types, sampling percentage, and [DLP profiles](/cloudflare-one/policies/data-loss-prevention/dlp-profiles/) to scan for.
+6. (Optional) Configure additional settings, such as the limit of API calls over time for CASB to adhere to.
+7. Select **Continue**.
+8. Review the details of the scan, then select **Start scan**.
+
+CASB will take up to an hour to begin scanning. To view the scan results, go to **CASB** > **Content** > **Cloud**.
+
+To manage your resources, go to **CASB** > **Integrations**, then find and select your AWS integration. From here, you can pause all or individual scans, add or remove resources, and change scan settings.
+
+For more information, refer to [Content findings](/cloudflare-one/applications/casb/manage-findings/#content-findings).
+
+## Security findings
+
+<Render
+	file="casb/security-findings"
+	params={{ one: "AWS S3", two: "aws-s3" }}
+/>
+
+### S3 Bucket security
+
+Flag security issues in S3 Buckets, including overpermissioning, access policies, and user security best practices.
+
+| Finding type                                             | FindingTypeID                          | Severity |
+| -------------------------------------------------------- | -------------------------------------- | -------- |
+| S3 Bucket ACL Allows Any Authenticated User to Write     | `09bc7d1f-e682-43bc-a4ce-e6e03b408244` | Critical |
+| S3 Bucket ACL Allows Any Authenticated User to Write ACP | `9392a460-c566-4e0d-b06b-01d87dc84d7c` | Critical |
+| S3 Bucket ACL Allows Public ACP Write                    | `5b792c7f-2546-4fcd-96dc-a58a53fea7e0` | Critical |
+| S3 Bucket ACL Allows Public Write                        | `f50ae197-fa0a-4caa-be95-79aed91eed63` | Critical |
+| S3 Bucket Policy Allows Any Authenticated User to Write  | `70fe0596-28bc-41dd-a2c3-1486fb0fb1dd` | Critical |
+| S3 Bucket Policy Allows Public Write                     | `5e2aac4b-d8be-43dc-b324-84fdf63f760e` | Critical |
+| S3 Bucket Publicly Accessible                            | `6b1276e3-88e8-4150-a4d5-1b8273f11078` | Critical |
+| S3 Bucket ACL Allows Any Authenticated User to Read      | `fda31c4d-24dc-43d4-8a84-a1a9e1df01a1` | High     |
+| S3 Bucket ACL Allows Any Authenticated User to Read ACP  | `7232e46b-3539-4080-b905-022f1091556c` | High     |
+| S3 Bucket ACL Allows Public ACP Read                     | `e324242c-5feb-41a3-8d91-f70611471fad` | High     |
+| S3 Bucket ACL Allows Public Read                         | `f8c9f979-29f0-4ada-b09e-a149937a55d4` | High     |
+| S3 Bucket Policy Allows Any Authenticated User to Read   | `c6b3a745-b535-45ea-b2c0-ba8a139ca634` | High     |
+| S3 Bucket Policy Allows Public Read                      | `f3915412-eef9-47d9-8448-e04462de8ba2` | High     |
+| S3 Bucket Without MFA Delete Enabled                     | `f108bd28-9870-453f-a439-01818e85bdc7` | High     |
+| S3 Bucket Without Server-Side Encryption (SSE)           | `7817b383-79c3-44ca-8d5d-e01748afe75b` | High     |
+| S3 Bucket Encryption in Transit Disabled                 | `0b3227dd-63d3-46bc-97b3-e62d9c11567a` | Medium   |
+| S3 Bucket MFA Delete Disabled                            | `518697ff-3f7e-463e-acf3-79d106599f0e` | Medium   |
+| S3 Bucket ACL Allows Public List                         | `e3c8a170-7817-4151-bd01-55442f4416ea` | Medium   |
+| S3 Bucket Objects Can Be Public                          | `0ff170dc-be6b-46fa-a1cf-95ca7d067f4b` | Medium   |
+| S3 Bucket Policy Allows Any Authenticated AWS User       | `264be783-7fe1-4f50-aee7-d8df370b7b77` | Medium   |
+| S3 Bucket Policy Allows Any Authenticated User to Delete | `4431eaeb-63e3-43c1-a4bc-029f09da66fd` | Medium   |
+| S3 Bucket Policy Allows Any Authenticated User to List   | `319c9715-b86d-4215-bdfa-c5d9b3a5cc83` | Medium   |
+| S3 Bucket Policy Allows Public Delete                    | `bbbeacbc-6692-4121-a785-d634da1e5c56` | Medium   |
+| S3 Bucket Policy Allows Public List                      | `f7ae03e3-1303-4404-b6f5-a7f97e52105e` | Medium   |
+| S3 Bucket Server Side Encryption Disabled                | `d69ab398-fba8-4e71-bf49-60af48d00cbc` | Medium   |
+| S3 Bucket Without Access Logging                         | `67d0995d-7b4a-40c5-a43f-7a98d20faac6` | Medium   |
+| S3 Bucket Without AWS CloudTrail Logging                 | `89366ebe-ca0b-45fc-a9cb-135674e0a49b` | Medium   |
+| S3 Bucket Without Cross-Region Replication               | `d4e5c815-33e3-4a01-b852-fe040d51ee55` | Medium   |
+| S3 Bucket Without Default Encryption                     | `fb7a41af-294c-4e9b-a6ca-a1fed35542d6` | Medium   |
+| S3 Bucket Without Lifecycle Policies                     | `2df6f1b8-e41c-4ab5-a466-992ce485a367` | Medium   |
+| S3 Bucket Without Object-Level Logging                   | `9af2594c-3999-49c9-bd3d-2f4b091f99c0` | Medium   |
+| S3 Bucket Without Replication Enabled                    | `cb61ef18-a498-456c-985c-78a45e19f4fe` | Medium   |
+| S3 Bucket Without Versioning Enabled                     | `95e1284f-a514-4396-bf64-cd003818790c` | Medium   |
+| S3 Bucket Access Logging Disabled                        | `84ba76fa-4703-490e-ab75-1b554993c054` | Low      |
+| S3 Bucket Lifecycle Disabled                             | `970d2ca8-e189-42a8-8e86-9f674fcb1aea` | Low      |
+| S3 Bucket Policy Not Existent                            | `3e1d0535-d82f-4ed1-9664-d2c50905db17` | Low      |
+| S3 Bucket Versioning Disabled                            | `4e976e0d-b545-4c4a-99c5-a2f5d9a6f3d8` | Low      |
+
+### IAM Policies
+
+Identify AWS IAM-related security issues that could affect S3 Bucket and Object security.
+
+| Finding type                                                    | FindingTypeID                          | Severity |
+| --------------------------------------------------------------- | -------------------------------------- | -------- |
+| IAM Account Password Policy Does Not Exist                      | `e39ee4da-eed5-49d0-95f7-b423884b858c` | Critical |
+| IAM Account Password Policy Doesn't Require Lowercase Letters   | `9278444b-0c38-4ed0-8127-f3f25444811c` | High     |
+| IAM Account Password Policy Doesn't Require Passwords to Expire | `5be79a96-4570-45cf-8ba3-1abe62802d16` | High     |
+| IAM Account Password Policy Doesn't Require Symbols             | `dd17afa3-4d4c-49e4-84c3-e829af9fff97` | High     |
+| IAM Account Password Policy Doesn't Require Uppercase Letters   | `e4976e53-bab5-4276-a1d3-1d85ebfd4d57` | High     |
+| IAM Account Password Policy Max Age is greater than 90 days     | `4e1092a0-7092-405f-a991-537d8c371440` | High     |
+| IAM Account Password Policy Minimum Length is less than 8       | `2a2fa181-7beb-48ba-bc8d-8f1170c6062c` | High     |
+| IAM Account Password Policy Re-use Prevention is less than 5    | `a4791a20-373f-44d3-9f6e-e61f1685fe05` | High     |
+| IAM Role with Cross-Account Access                              | `8de72710-b23a-4d94-915e-26ef7249d21e` | High     |
+| IAM Access Key Inactive over 90 Days                            | `37d1adb1-8e37-4708-a849-e06945c60802` | Medium   |
+| IAM Access Key Not Rotated over 90 Days                         | `d2caf571-4c99-4da7-a21c-4384f8cb4e5c` | Medium   |
+| IAM User Console Login Inactive Over 90 Days                    | `82b50a4d-8582-4766-9bad-f41b441bf336` | Medium   |
+| IAM User MFA Disabled                                           | `4679563f-5975-4c68-9dbf-896810ec8de9` | Medium   |
+| IAM User Password Older Than 90 Days                            | `c5376384-e4e4-4b2c-af84-12d6740939f0` | Medium   |
+| IAM Account Password Policy Doesn't Require Numbers             | `15c65813-c7e6-4b22-95b3-b3942c8b8924` | Low      |
+
+### Root User Management
+
+Detect security issues related to the use of an IAM Root User, which has the ability to access and configure important settings.
+
+| Finding type                                      | FindingTypeID                          | Severity |
+| ------------------------------------------------- | -------------------------------------- | -------- |
+| AWS Root User Access Key Used within Last 90 Days | `9d23c002-aece-42b5-b082-2b51fab8d7c1` | Critical |
+| AWS Root User has Access Keys                     | `1b788d31-ed56-4008-b136-6993f38e4d1c` | Critical |
+| AWS Root User Logged in within Last 90 Days       | `e9959d6e-edc9-4ea3-9113-3c30b02a811e` | Critical |
+| AWS Root User MFA Disabled                        | `19abe0ee-e8bd-4e3b-9ee9-ea5c64fe769c` | Critical |
+
+### Certificates
+
+Catch certificate-related issues and risks to prevent malicious compromise of internal resources.
+
+| Finding type                           | FindingTypeID                          | Severity |
+| -------------------------------------- | -------------------------------------- | -------- |
+| ACM Certificate Expired                | `30ce0a22-eb3d-457d-bc59-6468f9bb4c4f` | Critical |
+| ACM Certificate Has Domain Wildcard    | `d313bc0c-a2fb-41d8-b5a8-ef2704bb5570` | High     |
+| ACM Certificate Expires within 30 days | `cd93f2c1-9b07-4e6c-964c-79f3a64d56ac` | Medium   |

@@ -137,12 +137,18 @@ export default {
 
 You then connect that consumer to a queue with `wrangler queues consumer <queue-name> <worker-script-name>` or by defining a `[[queues.consumers]]` configuration in your `wrangler.toml` manually:
 
+import { WranglerConfig } from "~/components";
+
+<WranglerConfig>
+
 ```toml
 [[queues.consumers]]
   queue = "<your-queue-name>"
   max_batch_size = 100 # optional
   max_batch_timeout = 30 # optional
 ```
+
+</WranglerConfig>
 
 Importantly, each queue can only have one active consumer. This allows Cloudflare Queues to achieve at least once delivery and minimize the risk of duplicate messages beyond that.
 

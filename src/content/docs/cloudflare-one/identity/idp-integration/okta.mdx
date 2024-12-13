@@ -92,7 +92,7 @@ The Okta integration allows you to synchronize IdP groups and automatically depr
 
 <Render
 	file="access/enable-scim-on-dashboard"
-	params={{ one: "Enable SCIM " }}
+	params={{ idp: "Okta"}}
 />
 
 ### 2. Configure SCIM in Okta
@@ -139,7 +139,9 @@ The Okta integration allows you to synchronize IdP groups and automatically depr
 
 15. In the **Push Groups** tab, add the Okta groups you want to synchronize with Cloudflare Access. These groups will display in the Access policy builder.
 
-Provisioning will begin immediately. To verify the integration, select **View Logs** in the Okta SCIM application.
+To verify the integration, select **View Logs** in the Okta SCIM application.
+
+<Render file="access/verify-scim-provisioning"/>
 
 ## Example API Configuration
 

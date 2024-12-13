@@ -9,10 +9,12 @@ product:
 meta:
   title: Cloudflare Automatic Platform Optimization docs
   description:
-    With Automatic Platform Optimization, Cloudflare serves your entire
-    site from our edge network, ensuring customers see improved performance when
-    visiting your site.
+    Serve your WP site from Cloudflare's edge, ensuring improved performance.
   author: "@cloudflare"
+
+resources:
+  community: https://community.cloudflare.com/c/website-application-performance/apo/5
+  dashboard_link: https://dash.cloudflare.com/?to=/:account/:zone/speed/optimization/content
 
 externals:
   - title: Cloudflare homepage

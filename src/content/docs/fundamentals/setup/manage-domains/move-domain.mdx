@@ -6,13 +6,10 @@ title: Move a domain between Cloudflare accounts
 
 You will have to move or transfer domains from one Cloudflare account to another if you:
 
-* Manage a multi-user organization and need to segment domain access by user.
-
-* Receive a `Cloudflare is already hosting under a different account` error.
-
-* Lose access to your email address or Cloudflare account (though you can also use the [backup codes](/fundamentals/setup/account/account-security/2fa/#use-a-backup-code) if you have two-factor authentication enabled).
-
-* Registered a Cloudflare account with a typo in your email.
+- Manage a multi-user organization and need to segment domain access by user.
+- Receive a `Cloudflare is already hosting under a different account` error.
+- Lose access to your email address or Cloudflare account (though you can also use the [backup codes](/fundamentals/setup/account/account-security/2fa/#use-a-backup-code) if you have two-factor authentication enabled).
+- Registered a Cloudflare account with a typo in your email.
 
 :::caution
 If your domain is registered with Cloudflare Registrar, you need to submit a manual request to transfer the domain and its registration to a new account.
@@ -24,8 +21,8 @@ Refer to [Transfer a Cloudflare Registrar domain registration between accounts](
 
 To transfer a domain from one Cloudflare account to another, you will need:
 
-* Access to your domain registrar. If your domain is using Cloudflare Registrar, you will need to refer to [Transfer a Cloudflare Registrar domain registration between accounts](/registrar/account-options/inter-account-transfer/).
-* At least one Cloudflare account associated with the domain.
+- Access to your domain registrar. If your domain is using Cloudflare Registrar, refer to [Transfer a Cloudflare Registrar domain registration between accounts](/registrar/account-options/inter-account-transfer/).
+- At least one Cloudflare account associated with the domain.
 
 ## Transfer your domain
 
@@ -40,18 +37,15 @@ If you miss this step, Cloudflare will import your proxied DNS records, which mi
 
 :::
 
-If you still have access to your previous Cloudflare account, you can copy over the Cloudflare account settings manually. You must reissue [SSL/TLS certificates](/ssl/edge-certificates/) and [recreate and validate DNS records](/dns/manage-dns-records/how-to/create-dns-records/) when transferring domains between Cloudflare accounts.
+If you still have access to your previous Cloudflare account, you can copy over the Cloudflare account settings manually. You must reissue [SSL/TLS certificates](#issue-new-certificates) and [recreate and validate DNS records](/dns/manage-dns-records/how-to/create-dns-records/) when transferring domains between Cloudflare accounts.
 
 If you lose access to the email address associated with your Cloudflare account and do not have backup codes, you will need to manually transfer your domain to a new Cloudflare account associated with a different email address.
 
 The domain transfer process depends on your DNS settings. If Cloudflare is your authoritative DNS provider (that is, your domain nameservers point to Cloudflare), you must:
 
 1. [Create a new Cloudflare account](/fundamentals/setup/account/create-account/) or log in to an existing Cloudflare account.
-
 2. [Add the domain](/fundamentals/setup/manage-domains/add-site/) to the account (as if you were adding it for the first time).
-
 3. Log in to your domain registrar account and [update the nameservers](/dns/zone-setups/full-setup/setup/) to the provided Cloudflare nameservers.
-
 4. Finalize the nameserver update by selecting your domain in the dashboard > **Overview** > **Re-check now**.
 
 Once the Cloudflare network recognizes the nameserver change, the domain in the new account will be marked as **Active**. While the domain in the new account is **Pending**, it cannot proxy traffic through Cloudflare and the origin IP addresses will be returned until the domain is marked as **Active**.
@@ -64,7 +58,6 @@ For more information, refer to [Zone status](/dns/zone-setups/reference/domain-s
 
 SSL/TLS certificates associated with your previous Cloudflare account will not be transferred to your new account. If your site requires an SSL/TLS certificate prior to domain transfer, refer to [Minimize downtime](/ssl/edge-certificates/universal-ssl/enable-universal-ssl/#minimize-downtime).
 
-If you were using [Custom certificates](/ssl/edge-certificates/custom-certificates/), you will need to delete them from the previous zone and upload them to the new zone.
-You can upload them whilst the new zone is pending: they will have the [Holding Deployment](/ssl/reference/certificate-statuses/#custom-certificates) status and will become active once the zone is active.
+If you were using [custom certificates](/ssl/edge-certificates/custom-certificates/), you will need to delete them from the previous zone and upload them to the new zone. You can upload the certificates while the new zone is in **Pending** status - if you do so, once you upload the certificates, they will have a [**Holding Deployment**](/ssl/reference/certificate-statuses/#custom-certificates) status and will become active once the zone is active.
 
-You can order an [advanced certificate](/ssl/edge-certificates/advanced-certificate-manager/) prior to transferring your domain. Once issued, the certificate will enter **Holding Deployment** status until the domain is active. ACM certificates will automatically deploy to active domains. For more information, refer to [Custom certificates](/ssl/reference/certificate-statuses/#custom-certificates).
+You can order an [advanced certificate](/ssl/edge-certificates/advanced-certificate-manager/) prior to transferring your domain. ACM certificates will automatically deploy to active domains.

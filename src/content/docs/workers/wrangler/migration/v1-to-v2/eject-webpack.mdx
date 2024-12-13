@@ -103,15 +103,25 @@ module.exports = {
 
 Remove the `type` and `webpack_config` keys from your `wrangler.toml` file, as they are not supported anymore.
 
+import { WranglerConfig } from "~/components";
+
+<WranglerConfig>
+
 ```toml
 # Remove these!
 type = "webpack"
 webpack_config = "webpack.config.js"
 ```
 
+</WranglerConfig>
+
 5. Tell Wrangler how to bundle your Worker.
 
 Wrangler no longer has any knowledge of how to build your Worker. You will need to tell it how to call webpack and where to look for webpack's output. This translates into two fields:
+
+
+
+<WranglerConfig>
 
 ```toml
 main = "./worker/script.js" # by default, or whatever file webpack outputs
@@ -119,6 +129,8 @@ main = "./worker/script.js" # by default, or whatever file webpack outputs
 command = "npm run build" # or "yarn build"
 # ...
 ```
+
+</WranglerConfig>
 
 6. Test your project.
 

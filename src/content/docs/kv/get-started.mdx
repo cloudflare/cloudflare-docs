@@ -5,7 +5,7 @@ sidebar:
   order: 2
 ---
 
-import { Render, PackageManagers, Steps, FileTree, Details, Tabs, TabItem } from "~/components";
+import { Render, PackageManagers, Steps, FileTree, Details, Tabs, TabItem, WranglerConfig } from "~/components";
 
 Workers KV provides low-latency, high-throughput global storage to your [Cloudflare Workers](/workers/) applications. Workers KV is ideal for storing user configuration data, routing data, A/B testing configurations and authentication tokens, and is well suited for read-heavy workloads.
 
@@ -163,12 +163,15 @@ To bind your KV namespace to your Worker:
 <Steps>
 1. In your `wrangler.toml` file, add the following with the values generated in your terminal from [step 2](/kv/get-started/#2-create-a-kv-namespace):
 
+	<WranglerConfig>
+
 	```toml
 	[[kv_namespaces]]
 	binding = "<BINDING_NAME>"
 	id = "<BINDING_ID>"
-
 	```
+
+	</WranglerConfig>
 
    Binding names do not need to correspond to the namespace you created. Binding names are only a reference. Specifically:
 

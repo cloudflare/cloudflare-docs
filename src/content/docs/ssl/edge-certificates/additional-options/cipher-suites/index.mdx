@@ -20,7 +20,7 @@ This section covers cipher suites used in connections between clients -- such as
 
 Cloudflare maintains a [public repository of our SSL/TLS configurations](https://github.com/cloudflare/sslconfig) on GitHub, where you can find changes in the commit history.
 
-[RC4 cipher suites](https://blog.cloudflare.com/end-of-the-road-for-rc4/) or [SSLv3](https://blog.cloudflare.com/sslv3-support-disabled-by-default-due-to-vulnerability/) are no longer supported. 
+[RC4 cipher suites](https://blog.cloudflare.com/end-of-the-road-for-rc4/) or [SSLv3](https://blog.cloudflare.com/sslv3-support-disabled-by-default-due-to-vulnerability/) are no longer supported.
 :::
 
 ## Cipher suites and edge certificates
@@ -48,6 +48,15 @@ Each cipher suite relates to a specific minimum protocol that it supports. This 
 ### TLS 1.3
 
 <Render file="tls-13-cipher-limitations" />
+
+Cloudflare may return the following names for TLS 1.3 cipher suites. This is how they map to [RFC 8446](https://www.rfc-editor.org/rfc/rfc8446.html) names:
+
+| Cloudflare                      | RFC 8446                           |
+| ------------------------------  | -----------------------------------|
+| `AEAD-AES128-GCM-SHA256`        | `TLS_AES_128_GCM_SHA256`           |
+| `AEAD-AES256-GCM-SHA384`        | `TLS_AES_256_GCM_SHA384`           |
+| `AEAD-CHACHA20-POLY1305-SHA256` | `TLS_CHACHA20_POLY1305_SHA256`     |
+
 
 ## Resources
 

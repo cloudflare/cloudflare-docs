@@ -6,9 +6,9 @@ sidebar:
 
 ---
 
-To get started with Magic Cloud Networking you need to give Cloudflare permission to interact with cloud providers on your behalf. You might have multiple provider accounts for the same cloud provider — for example, you might want Cloudflare to manage virtual private clouds (VPCs) belonging to two different AWS accounts.
+To get started with Magic Cloud Networking you need to give Cloudflare permission to interact with cloud providers on your behalf. You might have multiple provider accounts for the same cloud provider - for example, you might want Cloudflare to manage virtual private clouds (VPCs) belonging to two different AWS accounts.
 
-Once Cloudflare has the credentials required to access your cloud environments, Magic Cloud Networking will automatically begin discovering your cloud resources — like routing tables and virtual private networks. Discovered resources appear in your [Cloud resource catalog](/magic-cloud-networking/manage-resources/#cloud-resource-catalog).
+Once Cloudflare has the credentials required to access your cloud environments, Magic Cloud Networking will automatically begin discovering your cloud resources - like routing tables and virtual private networks. Discovered resources appear in your [Cloud resource catalog](/magic-cloud-networking/manage-resources/#cloud-resource-catalog).
 
 ## 1. Set up cloud credentials
 
@@ -42,7 +42,7 @@ Before you can connect Magic Cloud Networking to your cloud provider, you first 
 }
 ```
 
-2. Follow the [instructions on AWS](https://docs.aws.amazon.com/IAM/latest/UserGuide/id_users_create.html) to create an IAM user up until step 4 — do not check the **Provide users access to the AWS Management Console** option.
+2. Follow the [instructions on AWS](https://docs.aws.amazon.com/IAM/latest/UserGuide/id_users_create.html) to create an IAM user up until step 4 - do not check the **Provide users access to the AWS Management Console** option.
 
 3. **In Give users permissions to manage their own security credentials** (step 7 of the AWS instructions) select **Attach policies directly**, and add the following policies:
    - `AmazonEC2ReadOnlyAccess`

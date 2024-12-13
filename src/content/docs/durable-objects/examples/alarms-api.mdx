@@ -76,6 +76,10 @@ The `alarm()` handler will be called once every 10 seconds. If an unexpected err
 
 Finally, configure your `wrangler.toml` file to include a Durable Object [binding](/durable-objects/get-started/#5-configure-durable-object-bindings) and [migration](/durable-objects/reference/durable-objects-migrations/) based on the namespace and class name chosen previously.
 
+import { WranglerConfig } from "~/components";
+
+<WranglerConfig>
+
 ```toml title="wrangler.toml"
 name = "durable-object-alarm"
 
@@ -87,3 +91,5 @@ class_name = "Batcher"
 tag = "v1"
 new_classes = ["Batcher"]
 ```
+
+</WranglerConfig>

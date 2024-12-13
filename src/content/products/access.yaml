@@ -4,4 +4,8 @@ product:
   title: Access
   group: Cloudflare One
   url: /cloudflare-one/policies/access/
-  grid_placeholder: true
+
+meta:
+  title: Cloudflare Access
+  description: Determine who can reach your application using policies.
+  author: "@cloudflare"

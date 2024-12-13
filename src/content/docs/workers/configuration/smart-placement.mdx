@@ -9,6 +9,8 @@ sidebar:
     text: Beta
 ---
 
+import { WranglerConfig } from "~/components";
+
 By default, [Workers](/workers/) and [Pages Functions](/pages/functions/) are invoked in a data center closest to where the request was received. If you are running back-end logic in a Worker, it may be more performant to run that Worker closer to your back-end infrastructure rather than the end user. Smart Placement automatically places your workloads in an optimal location that minimizes latency and speeds up your applications.
 
 ## Background
@@ -31,6 +33,8 @@ Smart Placement only considers candidate locations where the Worker has previous
 
 Smart Placement only affects the execution of [fetch event handlers](/workers/runtime-apis/handlers/fetch/). Workers without a fetch event handler will be ignored by Smart Placement. For Workers with both fetch and non-fetch event handlers, Smart Placement will only affect the execution of the fetch event handler.
 
+Similarly, Smart Placement will not affect where [static assets](/workers/static-assets/) are served from. Static assets will continue to be served from the location nearest to the incoming request. If a Worker is invoked and your code retrieves assets via the [static assets binding](https://developers.cloudflare.com/workers/static-assets/binding/), then assets will be served from the location that your Worker runs in.
+
 ## Enable Smart Placement
 
 Smart Placement is available to users on all Workers plans.
@@ -43,10 +47,14 @@ To enable Smart Placement via Wrangler:
 
 2. Add the following to your Worker project's `wrangler.toml` file:
 
+   <WranglerConfig>
+
    ```toml
    [placement]
    mode = "smart"
    ```
+
+   </WranglerConfig>
 
 3. Wait for Smart Placement to analyze your Worker. This process may take up to 15 minutes.
 

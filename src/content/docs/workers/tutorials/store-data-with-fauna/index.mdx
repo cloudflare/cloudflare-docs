@@ -114,9 +114,15 @@ cd fauna-workers
 
 Update the `wrangler.toml` file to set the name for the Worker.
 
+import { WranglerConfig } from "~/components";
+
+<WranglerConfig>
+
 ```toml title="wrangler.toml"
 name = "fauna-workers"
 ```
+
+</WranglerConfig>
 
 ### Add your Fauna database key for local development
 

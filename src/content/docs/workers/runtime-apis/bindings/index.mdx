@@ -18,12 +18,18 @@ The following bindings available today:
 
 When you declare a binding on your Worker, you grant it a specific capability, such as being able to read and write files to an [R2](/r2/) bucket. For example:
 
+import { WranglerConfig } from "~/components";
+
+<WranglerConfig>
+
 ```toml
 main = "./src/index.js"
 r2_buckets = [
   { binding = "MY_BUCKET", bucket_name = "<MY_BUCKET_NAME>" }
 ]
 ```
+
+</WranglerConfig>
 
 ```js
 export default {

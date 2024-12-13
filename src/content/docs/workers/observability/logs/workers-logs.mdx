@@ -11,7 +11,7 @@ sidebar:
 
 ---
 
-import { TabItem, Tabs, Steps, Render } from "~/components"
+import { TabItem, Tabs, Steps, Render, WranglerConfig } from "~/components"
 
 Workers Logs lets you automatically collect, store, filter, and analyze logging data emitted from Cloudflare Workers. Data is written to your Cloudflare Account, and you can query it in the dashboard for each of your Workers. All newly created Workers will come with the observability setting enabled by default.
 
@@ -29,24 +29,35 @@ Minimum required Wrangler version: 3.78.6. Check your version by running `wrangl
 
 You must add the observability setting for your Worker to write logs to Workers Logs. Add the following setting to your Worker's `wrangler.toml` file and redeploy your Worker.
 
+<WranglerConfig>
+
 	```toml
 	[observability]
 	enabled = true
 	head_sampling_rate = 1 # optional. default = 1.
 	```
 
-[Head-based sampling](/workers/observability/logs/workers-logs/#head-based-sampling) allows you set the percentage of Workers requests that are logged. 
+</WranglerConfig>
+
+[Head-based sampling](/workers/observability/logs/workers-logs/#head-based-sampling) allows you set the percentage of Workers requests that are logged.
 
 ### Enabling with environments
 
-[Environments](/workers/wrangler/environments/) allow you to deploy the same Worker application with different configurations. For example, you may want to configure a different `head_sampling_rate` to staging and production. To configure observability for your environment:
-	1. Add the following configuration below `[env.<NAME>]`
+[Environments](/workers/wrangler/environments/) allow you to deploy the same Worker application with different configurations. For example, you may want to configure a different `head_sampling_rate` to staging and production. To configure observability for an environment named `staging`:
+	1. Add the following configuration below `[env.staging]`
+
+
+	<WranglerConfig>
+
 	```toml
-	[env.<NAME>.observability]
+	[env.staging.observability]
 	enabled = true
 	head_sampling_rate = 1 # optional
 	```
-	2. Deploy your Worker with `npx wrangler deploy -e <NAME>`
+
+	</WranglerConfig>
+
+	2. Deploy your Worker with `npx wrangler deploy -e staging`
 	3. Repeat step 1 and 2 for each environment.
 
 ## View logs from the dashboard
@@ -66,13 +77,13 @@ Access logs for your Worker from the [Cloudflare dashboard](https://dash.cloudfl
 
 To get the most out of Workers Logs, it is recommended you log in JSON format. Workers Logs automatically extracts the fields and indexes them intelligently in the database. The benefit of this structured logging technique is in how it allows you to easily segment data across any dimension for fields with unlimited cardinality. Consider the following scenarios:
 
-| Scenario | Logging Code                                               | Event Log (Partial)                           | 
+| Scenario | Logging Code                                               | Event Log (Partial)                           |
 | -------- | ---------------------------------------------------------- | --------------------------------------------- |
 |    1     | `console.log("user_id: " + 123)`                           | `{message: "user_id: 123"}`                   |
 |    2     | `console.log({user_id: 123})`                              | `{user_id: 123}`                              |
 |    3     | `console.log({user_id: 123, user_email: "a@example.com"})` | `{user_id: 123, user_email: "a@example.com"}` |
 
-The difference between these examples is in how you index your logs to enable faster queries. In scenario 1, the `user_id` is embedded within a message. To find all logs relating to a particular user_id, you would have to run a text match. In scenarios 2 and 3, your logs can be filtered against the keys `user_id` and `user_email`. 
+The difference between these examples is in how you index your logs to enable faster queries. In scenario 1, the `user_id` is embedded within a message. To find all logs relating to a particular user_id, you would have to run a text match. In scenarios 2 and 3, your logs can be filtered against the keys `user_id` and `user_email`.
 
 ## Features
 
@@ -81,6 +92,19 @@ The difference between these examples is in how you index your logs to enable fa
 Each Workers invocation returns a single invocation log that contains details such as the Request, Response, and related metadata. These invocation logs can be identified by the field `$cloudflare.$metadata.type = "cf-worker-event"`. Each invocation log is enriched with information available to Cloudflare in the context of the invocation.
 
 In the Workers Logs UI, logs are presented with a localized timestamp and a message. The message is dependent on the invocation handler. For example, Fetch requests will have a message describing the request method and the request URL, while cron events will be listed as cron. Below is a list of invocation handlers along with their invocation message.
+
+Invocation logs can be disabled in wrangler by adding the `invocation_logs = false` configuration.
+
+
+
+<WranglerConfig>
+
+```toml
+[observability.logs]
+invocation_logs = false
+```
+
+</WranglerConfig>
 
 | Invocation Handler                                              | Invocation Message         |
 | --------------------------------------------------------------- | -------------------------- |
@@ -149,16 +173,22 @@ Head-based sampling allows you to log a percentage of incoming requests to your 
 
 To enable head-based sampling, set `head_sampling_rate` within the observability configuration. The valid range is from 0 to 1, where 0 indicates zero out of one hundred requests are logged, and 1 indicates every request is logged. If `head_sampling_rate` is unspecified, it is configured to a default value of 1 (100%). In the example below, `head_sampling_rate` is set to 0.01, which means one out of every one hundred requests is logged.
 
+
+
+<WranglerConfig>
+
 ```toml
 [observability]
 enabled = true
 head_sampling_rate = 0.01 # 1% sampling rate
 ```
 
+</WranglerConfig>
+
 ## Limits
 
 | Description                                                        | Retention  |
-| ------------------------------------------------------------------ | ---------- | 
+| ------------------------------------------------------------------ | ---------- |
 | Maximum log retention period                                       | 7 Days     |
 | Maximum logs per account per day<sup>1</sup>                       | 5 Billion  |
 | Maximum log size<sup>2</sup>                                       | 128 KB     |
@@ -181,7 +211,7 @@ Workers Logs billing will begin on November 1, 2024.
 A Worker serves 15 million requests per month. Each request emits 1 invocation log and 1 `console.log`. `head_sampling_rate` is configured to 1.
 
 |            | Monthly Costs     | Formula                                                                                                                |
-| ---------- | ----------------- | ---------------------------------------------------------------------------------------------------------------------- | 
+| ---------- | ----------------- | ---------------------------------------------------------------------------------------------------------------------- |
 | **Logs**   | $6.00             | ((15,000,000 requests per month \* 2 logs per request \* 100% sample) - 20,000,000 included logs) / 1,000,000 \* $0.60    |
 | **Total**  | $6.00             |                                                                                                                        |
 
@@ -190,6 +220,6 @@ A Worker serves 15 million requests per month. Each request emits 1 invocation l
 A Worker serves 1 billion requests per month. Each request emits 1 invocation log and 1 `console.log`. `head_sampling_rate` is configured to 0.1.
 
 |            | Monthly Costs     | Formula                                                                                                                |
-| ---------- | ----------------- | ---------------------------------------------------------------------------------------------------------------------- | 
+| ---------- | ----------------- | ---------------------------------------------------------------------------------------------------------------------- |
 | **Logs**   | $108.00           | ((1,000,000,000 requests per month \* 2 logs per request \* 10% sample) - 20,000,000 included logs) / 1,000,000 \* $0.60 |
 | **Total**  | $108.00           |                                                                                                                        |

@@ -70,7 +70,7 @@ const ModelCatalog = ({ models }) => {
 		}
 
 		if (filters.search) {
-			if (!model.name.includes(filters.search)) {
+			if (!model.name.toLowerCase().includes(filters.search.toLowerCase())) {
 				return false;
 			}
 		}

@@ -1,39 +1,34 @@
 ---
 pcx_content_type: concept
-title: HTTP/3
+title: HTTP/3 inspection
 sidebar:
   order: 3
 ---
 
 import { Details } from "~/components";
 
-Gateway supports inspection of HTTP/3 traffic, which uses the QUIC protocol over UDP. HTTP/3 inspection requires a [user-side certificate](/cloudflare-one/connections/connect-devices/warp/user-side-certificates/) to be deployed and traffic to be proxied over UDP with [TLS version 1.3](/cloudflare-one/policies/gateway/http-policies/tls-decryption/).
+Gateway supports inspection of HTTP/3 traffic, which uses the QUIC protocol over UDP. HTTP/3 inspection requires a [user-side certificate](/cloudflare-one/connections/connect-devices/user-side-certificates/) to be deployed and traffic to be proxied over UDP with [TLS version 1.3](/cloudflare-one/policies/gateway/http-policies/tls-decryption/).
 
 Gateway applies HTTP policies to HTTP/3 traffic last. For more information, refer to the [order of enforcement](/cloudflare-one/policies/gateway/order-of-enforcement/#http3-traffic).
 
 ## Enable HTTP/3 inspection
 
-To enable HTTP/3 inspection:
+To enable HTTP/3 inspection, turn on the [Gateway proxy](/cloudflare-one/policies/gateway/proxy/) for UDP:
 
 1. In [Zero Trust](https://one.dash.cloudflare.com), go to **Settings** > **Network**.
-2. Under **Firewall**, enable **Proxy** and select **UDP**.
-3. Enable **TLS decryption**.
+2. In **Firewall**, turn on **Proxy**.
+3. Select **TCP** and **UDP**.
+4. Turn on **TLS decryption**.
 
 ### Application limitations
 
-Gateway can inspect HTTP/3 traffic from Microsoft Edge, as well as other HTTP applications, such as cURL.
+Gateway can inspect HTTP/3 traffic from Mozilla Firefox and Microsoft Edge, as well as other HTTP applications, such as cURL.
 
-By default, the following browsers do not support HTTP/3 inspection unless you [disable QUIC](#prevent-inspection-bypass):
+If the UDP proxy is enabled in Zero Trust, Google Chrome will force all HTTP/3 traffic to fall back to HTTP/2, allowing you to enforce your HTTP policies. If the UDP proxy is not enabled, HTTP/3 traffic from Chrome will bypass inspection.
 
-- Google Chrome
-- Safari
-- Firefox
+## Force HTTP/2 traffic
 
-If the [UDP proxy](#enable-http3-inspection) is enabled in Zero Trust, Gateway will force all HTTP/3 traffic in these browsers to fall back to HTTP/2, allowing you to enforce your HTTP policies. If the UDP proxy is not enabled, HTTP/3 traffic will bypass inspection.
-
-## Prevent inspection bypass
-
-To prevent HTTP/3 traffic from bypassing inspection, disable QUIC in your users' browsers.
+To apply Gateway policies to HTTP traffic without turning on the UDP proxy, you must disable QUIC in your users' browsers to ensure only HTTP/2 traffic reaches Gateway.
 
 <Details header="Google Chrome">
 

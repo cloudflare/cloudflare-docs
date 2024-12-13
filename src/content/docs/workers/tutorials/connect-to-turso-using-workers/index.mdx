@@ -156,10 +156,16 @@ libsql://my-db-<your-github-username>.turso.io
 
 Open `wrangler.toml` in your editor and at the bottom of the file, create a new `[vars]` section representing the [environment variables](/workers/configuration/environment-variables/) for your project:
 
+import { WranglerConfig } from "~/components";
+
+<WranglerConfig>
+
 ```toml
 [vars]
 LIBSQL_DB_URL = "paste-your-url-here"
 ```
+
+</WranglerConfig>
 
 Save the changes to `wrangler.toml`.
 

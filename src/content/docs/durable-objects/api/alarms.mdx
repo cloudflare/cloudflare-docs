@@ -2,7 +2,7 @@
 title: Alarms
 pcx_content_type: concept
 sidebar:
-  order: 6
+  order: 8
 ---
 
 import { Type, GlossaryTooltip } from "~/components";
@@ -29,20 +29,20 @@ Alarms can be used to build distributed primitives, like queues or batching of w
 
 ## Storage methods
 
-### getAlarm
+### `getAlarm`
 
 - <code>getAlarm()</code>: <Type text="number | null" />
 
   - If there is an alarm set, then return the currently set alarm time as the number of milliseconds elapsed since the UNIX epoch. Otherwise, return `null`.
 
-### setAlarm
+### `setAlarm`
 
 - <code>{" "}setAlarm(scheduledTimeMs <Type text="number" />)</code>
   : <Type text="void" />
 
   - Set the time for the alarm to run. Specify the time as the number of milliseconds elapsed since the UNIX epoch.
 
-### deleteAlarm
+### `deleteAlarm`
 
 - `deleteAlarm()`: <Type text='void' />
 
@@ -52,11 +52,15 @@ Alarms can be used to build distributed primitives, like queues or batching of w
 
 ## Handler methods
 
-### alarm
+### `alarm`
 
-- `alarm()`: <Type text='void' />
+- <code>alarm(`alarmInfo`<Type text="Object"/>)</code>`: <Type text='void' />
 
   - Called by the system when a scheduled alarm time is reached.
+
+  - The optional parameter `alarmInfo` object has two properties:
+    - `retryCount` <Type text="number"/>: The number of times this alarm event has been retried.
+    - `isRetry` <Type text="boolean"/>: A boolean value to indicate if the alarm has been retried. This value is `true` if this alarm event is a retry.
 
   - The `alarm()` handler has guaranteed at-least-once execution and will be retried upon failure using exponential backoff, starting at 2 second delays for up to 6 retries. Retries will be performed if the method fails with an uncaught exception.
 
@@ -99,6 +103,18 @@ export class AlarmExample extends DurableObject {
 		// You can use this to do work, read from the Storage API, make HTTP calls
 		// and set future alarms to run using this.storage.setAlarm() from within this handler.
 	}
+}
+```
+
+The following example shows how to use the `alarmInfo` property to identify if the alarm event has been attempted before.
+
+```js
+class MyDurableObject extends DurableObject {
+  async alarm(alarmInfo) {
+    if (alarmInfo?.retryCount != 0) {
+      console.log("This alarm event has been attempted ${alarmInfo?.retryCount} times before.");
+    }
+  }
 }
 ```
 

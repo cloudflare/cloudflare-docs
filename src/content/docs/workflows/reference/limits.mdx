@@ -14,21 +14,25 @@ Many limits are inherited from those applied to Workers scripts and as documente
 
 | Feature                                   | Workers Free            | Workers Paid          |
 | ----------------------------------------- | ----------------------- | --------------------- |
-| Workflow class definitions per script     | 1MB max script size per [Worker size limits](/workers/platform/limits/#account-plan-limits) | 10MB max script size per [Worker size limits](/workers/platform/limits/#account-plan-limits)
+| Workflow class definitions per script     | 3MB max script size per [Worker size limits](/workers/platform/limits/#account-plan-limits) | 10MB max script size per [Worker size limits](/workers/platform/limits/#account-plan-limits)
 | Total scripts per account                 | 100 | 500 (shared with [Worker script limits](/workers/platform/limits/#account-plan-limits) |
-| Compute time per Workflow                 | 10 seconds | 30 seconds of [active CPU time](/workers/platform/limits/#cpu-time) |
-| Duration (wall clock) per `step`          | Unlimited | Unlimited - e.g. waiting on network I/O calls or querying a database |
+| Compute time per step [^3]                | 10 seconds | 30 seconds of [active CPU time](/workers/platform/limits/#cpu-time) |
+| Duration (wall clock) per step [^3]       | Unlimited | Unlimited - for example, waiting on network I/O calls or querying a database |
 | Maximum persisted state per step          | 1MiB (2^20 bytes) | 1MiB (2^20 bytes) |
 | Maximum state that can be persisted per Workflow instance | 100MB | 1GB |
-| Maximum `step.sleep` duration             | 365 days (1 year) [^1] |
-| Maximum steps per Workflow                | 256 [^1] |
+| Maximum `step.sleep` duration             | 365 days (1 year) [^1] | 365 days (1 year) [^1] |
+| Maximum steps per Workflow                | 512 [^1] | 512 [^1] |
 | Maximum Workflow executions               | 100,000 per day [shared with Workers daily limit](/workers/platform/limits/#worker-limits) | Unlimited |
-| Concurrent Workflow instances (executions) | 25 | 100 [^1] |
+| Concurrent Workflow instances (executions)   | 25 | 100 [^1] |
 | Retention limit for completed Workflow state | 3 days | 30 days [^2] |
-| Maximum length of a Workflow ID | 64 bytes |
+| Maximum length of a Workflow ID [^4]         | 64 characters | 64 characters |
 
 [^1]: This limit will be reviewed and revised during the open beta for Workflows. Follow the [Workflows changelog](/workflows/reference/changelog/) for updates.
 
 [^2]: Workflow state and logs will be retained for 3 days on the Workers Free plan and for 7 days on the Workers Paid plan.
+
+[^3]: A Workflow instance can run forever, as long as each step does not take more than the CPU time limit and the maximum number of steps per Workflow is not reached.
+
+[^4]: Match pattern: _```^[a-zA-Z0-9_][a-zA-Z0-9-_]*$```_
 
 <Render file="limits_increase" product="workers" />

@@ -21,6 +21,7 @@ import TextToImageCode from "~/components/models/code/TextToImageCode.astro";
 import TranslationCode from "~/components/models/code/TranslationCode.astro";
 import StableDiffusionV15Img2ImgCode from "~/components/models/code/StableDiffusion-v1-5-img2imgCode.astro";
 import StableDiffusionV15InpaintingCode from "~/components/models/code/StableDiffusion-v1-5-inpaintingCode.astro";
+import Flux1Schnell from "~/components/models/code/Flux-1-Schnell.astro";
 
 import { authorData } from "~/components/models/data";
 
@@ -74,12 +75,17 @@ switch (model.task.name) {
 		break;
 }
 
+// Overrides
 if (model.name === "@cf/runwayml/stable-diffusion-v1-5-img2img") {
 	CodeExamples = StableDiffusionV15Img2ImgCode;
 }
 
 if (model.name === "@cf/runwayml/stable-diffusion-v1-5-inpainting") {
 	CodeExamples = StableDiffusionV15InpaintingCode;
+}
+
+if (model.name === "@cf/black-forest-labs/flux-1-schnell") {
+	CodeExamples = Flux1Schnell;
 }
 
 const description = model.description;

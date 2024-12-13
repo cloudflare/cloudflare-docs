@@ -16,7 +16,7 @@ In [Zero Trust](https://one.dash.cloudflare.com/), go to **My Team** > **Users**
 
 ### Available logs
 
-* **User Registry identity**: Select the user's name to view their last seen identity. This identity is refreshed when the user re-authenticates WARP, logs into an Access application, or has their IdP group membership updated via <GlossaryTooltip term="SCIM" link="/cloudflare-one/identity/users/scim/">SCIM provisioning</GlossaryTooltip>. To track how the user's identity has changed over time, go to the **Audit logs** tab.
+* **User Registry identity**: Select the user's name to view their last seen identity. This identity is used to evaluate Gateway policies and WARP [device profiles](/cloudflare-one/connections/connect-devices/warp/configure-warp/device-profiles/). A refresh occurs when the user re-authenticates WARP, logs into an Access application, or has their IdP group membership updated via <GlossaryTooltip term="SCIM" link="/cloudflare-one/identity/users/scim/">SCIM provisioning</GlossaryTooltip>. To track how the user's identity has changed over time, go to the **Audit logs** tab.
 * **Session identities**: The user's active sessions, the identity used to authenticate each session, and when each session will [expire](/cloudflare-one/identity/users/session-management/).
 * **Devices**: Devices registered to the user via WARP.
 * **Recent activities**: The user's five most recent Access login attempts. For more details, refer to your [authentication audit logs](/cloudflare-one/insights/logs/audit-logs/#authentication-audit-logs).

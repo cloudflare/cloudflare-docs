@@ -201,6 +201,10 @@ cd hijack-alerts
 In your `wrangler.toml` file, change the default checking frequency (once per hour) to what you like. Here is an example
 of configuring the workers to run the script five minutes.
 
+import { WranglerConfig } from "~/components";
+
+<WranglerConfig>
+
 ```toml
 name = "hijack-alerts"
 main = "src/index.js"
@@ -210,7 +214,13 @@ compatibility_date = "2023-04-27"
 crons = [ "*/5 * * * *" ]
 ```
 
+</WranglerConfig>
+
 In this example, we will also need to use Cloudflare KV to save the latest checked event IDs which allows us to know what events are new. Once you have created a KV, you can head back to the `wranglers.toml` file and add the following sections:
+
+
+
+<WranglerConfig>
 
 ```toml
 [[kv_namespaces]]
@@ -218,6 +228,8 @@ binding = "HIJACKS_KV"
 id = "KV_ID_FOR_PRODUCTION"
 preview_id = "TEMPORARY_KV_FOR_DEV_ENVIRONMENT"
 ```
+
+</WranglerConfig>
 
 ### Fetch for newly detected BGP hijacks
 
@@ -362,11 +374,17 @@ If you have [Email Routing][email-routing] enabled for your domain, you can also
 
 For this alert to work, you will need to configure the proper email bindings in the [`wrangler.toml`][wrangler-send-email] file.
 
+
+
+<WranglerConfig>
+
 ```toml
 send_email = [
     {type = "send_email", name = "SEND_EMAIL_BINDING", destination_address = "<YOUR_EMAIL>@example.com"},
 ]
 ```
+
+</WranglerConfig>
 
 Then, you can create an email-sending function to send alert emails to your configured destination address:
 

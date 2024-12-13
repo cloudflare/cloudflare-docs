@@ -120,7 +120,7 @@ The Microsoft Entra ID integration allows you to synchronize IdP groups and auto
 
 <Render
 	file="access/enable-scim-on-dashboard"
-	params={{ one: "Enable SCIM and Support groups" }}
+	params={{ idp: "Entra ID", and: " and ", supportgroups: "Support groups"}}
 />
 
 ### 2. Configure SCIM in Entra ID
@@ -158,6 +158,8 @@ SCIM requires a separate enterprise application from the one created during [ini
 12. On the **Provisioning** page, select **Start provisioning**. You will see the synchronization status in Entra ID.
 
 To check which users and groups were synchronized, select **View provisioning logs**.
+
+<Render file="access/verify-scim-provisioning"/>
 
 ### Provisioning attributes
 

@@ -7,9 +7,10 @@
 
 In addition to enforcing mTLS authentication for your host, you can also forward a client certificate to your origin server as an HTTP header. This setup is often helpful for server logging.
 
-:::caution
+To avoid adding the certificate to every single request, the certificate is only forwarded on the first request of an mTLS connection.
 
-This process is only available on accounts with [Cloudflare Access](/cloudflare-one/). 
+:::caution
+This process is only available on accounts with [Cloudflare Access](/cloudflare-one/).
 :::
 
 ### Cloudflare API

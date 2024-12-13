@@ -203,6 +203,10 @@ Here's a minimal package.json:
 
 And finally wrangler.toml:
 
+import { WranglerConfig } from "~/components";
+
+<WranglerConfig>
+
 ```toml
 name = "cart-invoices"
 main = "src/index.ts"
@@ -217,3 +221,5 @@ class_name = "cartInvoicesWorkflow"
 [[send_email]]
 name = "SEND_EMAIL"
 ```
+
+</WranglerConfig>

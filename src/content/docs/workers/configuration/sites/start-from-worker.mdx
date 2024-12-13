@@ -5,7 +5,7 @@ sidebar:
   order: 3
 ---
 
-import { Render, TabItem, Tabs } from "~/components";
+import { Render, TabItem, Tabs, WranglerConfig } from "~/components";
 
 <Render file="workers_sites" />
 
@@ -19,10 +19,14 @@ If you have a pre-existing Worker project, you can use Workers Sites to serve st
 
 2. Add configuration to your `wrangler.toml` file to point to it.
 
+   <WranglerConfig>
+
    ```toml
    [site]
    bucket = "./public" # Add the directory with your static assets!
    ```
+
+   </WranglerConfig>
 
 3. Install the `@cloudflare/kv-asset-handler` package in your project:
 

@@ -5,6 +5,8 @@ sidebar:
   order: 1
 ---
 
+import { Render } from "~/components";
+
 Cloudflare Access has a generic OpenID Connect (OIDC) connector to help you integrate IdPs not already set in Access.
 
 ## Set up a generic OIDC
@@ -39,11 +41,40 @@ Cloudflare Access has a generic OpenID Connect (OIDC) connector to help you inte
 
 8. (Optional) Enable [Proof of Key Exchange (PKCE)](https://www.oauth.com/oauth2-servers/pkce/) if the protocol is supported by your IdP. PKCE will be performed on all login attempts.
 
-9. (Optional) Under **Optional configurations**, enter [custom OIDC claims](#oidc-claims) that you wish to add to users' identity. This information will be available in the [user identity endpoint](/cloudflare-one/identity/authorization-cookie/application-token/#user-identity).
+9. (Optional) To enable SCIM, refer to [Synchronize users and groups](#synchronize-users-and-groups).
 
-10. Select **Save**.
+10. (Optional) Under **Optional configurations**, enter [custom OIDC claims](#oidc-claims) that you wish to add to users' identity. This information will be available in the [user identity endpoint](/cloudflare-one/identity/authorization-cookie/application-token/#user-identity).
+
+11. Select **Save**.
 
 To test that your connection is working, go to **Authentication** > **Login methods** and select **Test** next to the login method you want to test. On success, a confirmation screen displays.
+
+## Synchronize users and groups
+
+The generic OIDC integration allows you to synchronize user groups and automatically deprovision users using [SCIM](/cloudflare-one/identity/users/scim/).
+
+### Prerequisites
+
+Your identity provider must support SCIM version 2.0.
+
+### 1. Enable SCIM in Zero Trust
+
+<Render
+	file="access/enable-scim-on-dashboard"
+	params={{ idp: "IdP"}}
+/>
+
+### 2. Configure SCIM in the IdP
+
+Setup instructions vary depending on the identity provider. In your identity provider, you will either need to edit the [original SSO application](/cloudflare-one/identity/idp-integration/generic-oidc/#set-up-a-generic-oidc) or create a new SCIM application. Refer to your identity provider's documentation for more details. For example instructions, refer to our [Okta](/cloudflare-one/identity/idp-integration/okta/#synchronize-users-and-groups) or [Jumpcloud](/cloudflare-one/identity/idp-integration/jumpcloud-saml/#synchronize-users-and-groups) guides.
+
+:::note
+If your IdP requires creating a new SCIM application, ensure that the groups in the SCIM application match the groups in the [original SSO application](/cloudflare-one/identity/idp-integration/generic-oidc/#set-up-a-generic-oidc). Because SCIM group membership updates will overwrite any groups in a user's identity, assigning the same groups to each app ensures consistent policy evaluation.
+:::
+
+### 3. Verify SCIM provisioning
+
+<Render file="access/verify-scim-provisioning"/>
 
 ## Optional configurations
 

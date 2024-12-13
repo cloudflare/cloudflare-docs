@@ -6,4 +6,6 @@ product:
   additional_groups: [Analytics]
   url: /analytics/graphql-api/
   wrap: true
-  grid_placeholder: true
+
+meta:
+  description: The GraphQL Analytics API provides data regarding HTTP requests passing through Cloudflare’s network, as well as data from specific products, such as Firewall or Load Balancing.

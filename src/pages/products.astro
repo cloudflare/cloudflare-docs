@@ -1,12 +1,35 @@
 ---
-import StarlightPage from "@astrojs/starlight/components/StarlightPage.astro";
 import { getCollection, type CollectionEntry } from "astro:content";
-import { ThreeCardGrid, LinkCard } from "~/components";
+// @ts-ignore virtual module
+import iconCollection from "virtual:astro-icon";
+import StarlightPage from "@astrojs/starlight/components/StarlightPage.astro";
+import { getIconData, iconToSVG } from "@iconify/utils";
+import ProductCatalog from "~/components/ProductCatalog";
+import type { ProductData } from "~/components/ProductCatalog";
 
-let products = await getCollection("products", (entry) => {
-	return entry.data.product?.show ?? true;
+let products: CollectionEntry<"products">[] = await getCollection(
+	"products",
+	(entry: CollectionEntry<"products">) => {
+		return entry.data.product?.show ?? true;
+	},
+);
+
+let productData: ProductData[] = products.map((product) => {
+	const iconData = getIconData(iconCollection.local, product.id);
+	let icon = undefined;
+	if (iconData) {
+		icon = iconToSVG(iconData);
+	}
+
+	return {
+		...product,
+		icon,
+		groups: [
+			product.data.product.group,
+			...(product.data.product.additional_groups || []),
+		].filter((val) => Boolean(val)),
+	};
 });
-products = products.sort();
 
 const frontmatter = {
 	title: "Products",
@@ -14,68 +37,10 @@ const frontmatter = {
 		"API reference, how-to guides, tutorials, example code, and more.",
 	template: "splash",
 } as const;
-
-function productGroups(products: Array<CollectionEntry<"products">>) {
-	const groups = products.flatMap((p) => p.data.product.group ?? []);
-	const additional = products.flatMap(
-		(p) => p.data.product.additional_groups ?? [],
-	);
-
-	const unique = [...new Set(groups.concat(additional))];
-
-	return unique.sort();
-}
-
-const groups = productGroups(products);
 ---
 
 <StarlightPage frontmatter={frontmatter}>
-	<span class="justify-center flex text-xl">
-		{frontmatter.description}
-	</span>
-	<div class="flex">
-		<div class="w-1/4 pr-4 hidden md:block">
-			<div class="border-b-2 border-accent-600 dark:border-accent-200">
-				<h2>Filters</h2>
-			</div>
-			<div id="groups-filter">
-				<p>
-					<strong>Groups</strong>
-				</p>
-				{
-					groups.map((group) => (
-						<>
-							<input type="checkbox" id={group} />
-							<label for={group}>{group}</label>
-							<br />
-						</>
-					))
-				}
-			</div>
-		</div>
-		<div id="product-grid" class="w-full">
-			<ThreeCardGrid>
-				{
-					products.map((product) => {
-						const groups = productGroups([product]);
-
-						return (
-							<div
-								class="[&>div]:h-full [&>div]:w-full"
-								data-product={product.data.product.title}
-								data-groups={JSON.stringify(groups)}
-							>
-								<LinkCard
-									title={product.data.product.title}
-									href={product.data.product.url}
-								/>
-							</div>
-						);
-					})
-				}
-			</ThreeCardGrid>
-		</div>
-	</div>
+	<ProductCatalog products={productData} client:load />
 </StarlightPage>
 
 <style>
@@ -83,99 +48,3 @@ const groups = productGroups(products);
 		--sl-content-width: 75rem;
 	}
 </style>
-
-<script>
-	function getGroupFilters(): NodeListOf<HTMLInputElement> | undefined {
-		const groupFiltersContainer =
-			document.querySelector<HTMLDivElement>("#groups-filter");
-
-		if (!groupFiltersContainer) return undefined;
-
-		const groupFilters =
-			groupFiltersContainer.querySelectorAll<HTMLInputElement>("input");
-
-		if (!groupFilters) return undefined;
-
-		return groupFilters;
-	}
-
-	function getProductCards(): NodeListOf<HTMLDivElement> | undefined {
-		const productCardsContainer =
-			document.querySelector<HTMLDivElement>("#product-grid");
-
-		if (!productCardsContainer) return undefined;
-
-		const productCards =
-			productCardsContainer.querySelectorAll<HTMLDivElement>("[data-product]");
-
-		if (!productCards) return undefined;
-
-		return productCards;
-	}
-
-	function filterProducts() {
-		const filters = getGroupFilters();
-
-		if (!filters) return;
-
-		const checked: Array<string> = [];
-
-		for (const filter of filters) {
-			if (filter.checked) {
-				checked.push(filter.id);
-			}
-		}
-
-		const products = getProductCards();
-
-		if (!products) return;
-
-		if (checked.length === 0) {
-			products.forEach((card) => {
-				card.style.display = "";
-			});
-			return;
-		}
-
-		for (const product of products) {
-			if (!product.dataset.groups) continue;
-
-			const groups: Array<string> = JSON.parse(product.dataset.groups);
-
-			const show = checked.some((v) => {
-				return groups.includes(v);
-			});
-
-			if (show) {
-				product.style.display = "";
-			} else {
-				product.style.display = "none";
-			}
-		}
-	}
-
-	getGroupFilters()?.forEach((input) => {
-		input.addEventListener("change", filterProducts);
-	});
-
-	function initProducts() {
-		const params = new URLSearchParams(window.location.search);
-
-		const groups = params.get("product-group");
-
-		if (!groups) return;
-
-		const filters = getGroupFilters();
-
-		if (!filters) return;
-
-		for (const filter of filters) {
-			if (groups.includes(filter.id)) {
-				filter.checked = true;
-			}
-		}
-
-		filterProducts();
-	}
-	initProducts();
-</script>

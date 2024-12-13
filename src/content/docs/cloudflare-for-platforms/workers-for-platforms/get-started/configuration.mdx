@@ -28,7 +28,7 @@ This guide will instruct you on setting up Workers for Platforms. You will confi
 
 ### 1. Create a user Worker
 
-First, create a [user Workers](/cloudflare-for-platforms/workers-for-platforms/reference/how-workers-for-platforms-works/#user-workers). User Workers are Workers that your end users (end developers) will be uploading.
+First, create a [user Worker](/cloudflare-for-platforms/workers-for-platforms/reference/how-workers-for-platforms-works/#user-workers). User Workers are Workers that your end users (end developers) will be uploading.
 
 User Workers can be created using C3. C3 (create-cloudflare-cli) is a command-line tool designed to help you setup and deploy Workers to Cloudflare as fast as possible.
 
@@ -99,11 +99,17 @@ cd my-dispatcher
 
 Open the `wrangler.toml` file in your project directory, and add the dispatch namespace binding:
 
+import { WranglerConfig } from "~/components";
+
+<WranglerConfig>
+
 ```toml
 [[dispatch_namespaces]]
 binding = "DISPATCHER"
 namespace = "testing"
 ```
+
+</WranglerConfig>
 
 Add the following to the index.js file:
 

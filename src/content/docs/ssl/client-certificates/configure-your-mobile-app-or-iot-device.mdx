@@ -83,17 +83,13 @@ async function getTemperatures(request) {
 	}
 }
 
-async function handleRequest(request) {
-	if (request.method === "POST") {
-		return addTemperature(request);
-	} else {
-		return getTemperatures(request);
-	}
-}
-
-addEventListener("fetch", (event) => {
-	event.respondWith(handleRequest(event.request));
-});
+export default {
+	async fetch(request, env, ctx) {
+		return request.method === "POST"
+			? addTemperature(request)
+			: getTemperatures(request);
+	},
+};
 ```
 
 ---

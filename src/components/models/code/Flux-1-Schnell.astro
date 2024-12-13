@@ -1,0 +1,73 @@
+---
+import { z } from "astro:schema";
+import { Code } from "@astrojs/starlight/components";
+import Details from "~/components/Details.astro";
+
+type Props = z.infer<typeof props>;
+
+const props = z.object({
+	name: z.string(),
+});
+
+const { name } = props.parse(Astro.props);
+
+const workerReturningDataURI = `
+export interface Env {
+	AI: Ai;
+}
+
+export default {
+	async fetch(request, env): Promise<Response> {
+		const response = await env.AI.run('@cf/black-forest-labs/flux-1-schnell', {
+			prompt: 'a cyberpunk lizard',
+		});
+		// response.image is base64 encoded which can be used directly as an <img src=""> data URI
+		const dataURI = \`data:image/jpeg;charset=utf-8;base64,\${response.image}\`;
+		return Response.json({ dataURI });
+	},
+} satisfies ExportedHandler<Env>;
+
+`;
+
+const workerReturningImage = `
+export interface Env {
+	AI: Ai;
+}
+
+export default {
+	async fetch(request, env): Promise<Response> {
+		const response = await env.AI.run('@cf/black-forest-labs/flux-1-schnell', {
+			prompt: 'a cyberpunk lizard',
+		});
+		// Convert from base64 string
+		const binaryString = atob(response.image);
+		// Create byte representation
+		const img = Uint8Array.from(binaryString, (m) => m.codePointAt(0));
+		return new Response(img, {
+			headers: {
+				'Content-Type': 'image/jpeg',
+			},
+		});
+	},
+} satisfies ExportedHandler<Env>;
+`;
+
+const curl = `
+curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/run/${name}  \\
+  -X POST  \\
+  -H "Authorization: Bearer $CLOUDFLARE_API_TOKEN"  \\
+  -d '{ "prompt": "cyberpunk cat" }'
+`;
+---
+
+<Details header="Workers - Returning a data URI - TypeScript">
+	<Code code={workerReturningDataURI} lang="ts" />
+</Details>
+
+<Details header="Workers - Returning an image - TypeScript">
+	<Code code={workerReturningImage} lang="ts" />
+</Details>
+
+<Details header="curl">
+	<Code code={curl} lang="sh" />
+</Details>

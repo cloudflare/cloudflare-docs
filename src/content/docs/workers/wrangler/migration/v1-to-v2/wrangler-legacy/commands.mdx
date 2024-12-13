@@ -492,6 +492,10 @@ one for staging and one for production).
 
 A `wrangler.toml` file with two environments:
 
+import { WranglerConfig } from "~/components";
+
+<WranglerConfig>
+
 ```toml
 [env.staging]
 kv_namespaces = [
@@ -503,6 +507,8 @@ kv_namespaces = [
   { binding = "MY_KV", id = "a825455ce00f4f7282403da85269f8ea" }
 ]
 ```
+
+</WranglerConfig>
 
 To insert a value into a specific KV namespace, you can use:
 
@@ -536,6 +542,10 @@ Most `kv` commands require you to specify a namespace. A namespace can be specif
 
 Most `kv` subcommands also allow you to specify an environment with the optional `--env` flag. This allows you to publish Workers running the same code but with different namespaces. For example, you could use separate staging and production namespaces for KV data in your `wrangler.toml` file:
 
+
+
+<WranglerConfig>
+
 ```toml
 type = "webpack"
 name = "my-worker"
@@ -553,6 +563,8 @@ kv_namespaces = [
   { binding = "MY_KV", id = "07bc1f3d1f2a4fd8a45a7e026e2681c6" }
 ]
 ```
+
+</WranglerConfig>
 
 With the `wrangler.toml` file above, you can specify `--env production` when you want to perform a KV action on the namespace `MY_KV` under `env.production`. For example, with the `wrangler.toml` file above, you can get a value out of a production KV instance with:
 

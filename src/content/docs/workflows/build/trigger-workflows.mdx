@@ -31,6 +31,10 @@ New to Workflows? Start with the [Workflows tutorial](/workflows/get-started/gui
 
 To bind to a Workflow from your Workers code, you need to define a [binding](/workers/wrangler/configuration/) to a specific Workflow. For example, to bind to the Workflow defined in the [get started guide](/workflows/get-started/guide/), you would configure a `wrangler.toml` with the below:
 
+import { WranglerConfig } from "~/components";
+
+<WranglerConfig>
+
 ```toml title="wrangler.toml"
 name = "workflows-tutorial"
 main = "src/index.ts"
@@ -46,6 +50,8 @@ binding = "MY_WORKFLOW"
 # Must match the class defined in your code that extends the Workflow class
 class_name = "MyWorkflow"
 ```
+
+</WranglerConfig>
 
 The `binding = "MY_WORKFLOW"` line defines the JavaScript variable that our Workflow methods are accessible on, including `create` (which triggers a new instance) or `get` (which returns the status of an existing instance).
 
