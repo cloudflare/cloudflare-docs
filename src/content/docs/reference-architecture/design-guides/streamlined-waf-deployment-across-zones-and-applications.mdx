@@ -89,7 +89,7 @@ Then, you can adopt the following approach:
 In practice, using the [Account Level WAF's Managed rulesets](/waf/account/managed-rulesets/), you can deploy the three instances of our Managed Ruleset. Each instance will have its own [Custom Filter Expression](/ruleset-engine/rules-language/expressions/edit-expressions/), which will check that the HTTPS requests's hostname belongs to one of the FQDNs in a list:
 
 * For the first list (`web1.example.com`, `web2.example.com`, `web3.example.com` and `web5.example.org`), you will apply the Cloudflare Managed Ruleset in its `Default` configuration.
-* For `special4.example.com`, the same ruleset will be deployed in `Default` mode, but taking care of disabling the specific rules that cause false positives. This can be achieved with the [Rule Overrides](/ruleset-engine/managed-rulesets/override-managed-ruleset/), using the Dashboard or the APIs. [Real examples are available here](ruleset-engine/managed-rulesets/override-examples/).
+* For `special4.example.com`, the same ruleset will be deployed in `Default` mode, but taking care of disabling the specific rules that cause false positives. This can be achieved with the [Rule Overrides](/ruleset-engine/managed-rulesets/override-managed-ruleset/), using the Dashboard or the APIs. [Real examples are available here](/ruleset-engine/managed-rulesets/override-examples/).
 * For `special6.example.org`, you repeat the setup done for the first list, this time modifying the Managed Ruleset instance to operate in `Log` mode instead of `Default`.
 
 Let's visualize the complete configuration in the below diagram:
