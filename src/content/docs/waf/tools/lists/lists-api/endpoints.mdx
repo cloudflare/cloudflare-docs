@@ -6,7 +6,7 @@ sidebar:
 
 ---
 
-To invoke a [Lists API](/api/operations/lists-get-lists) operation, append the endpoint to the Cloudflare API base URL:
+To invoke a [Lists API](/api/resources/rules/subresources/lists/methods/list/) operation, append the endpoint to the Cloudflare API base URL:
 
 `https://api.cloudflare.com/client/v4/`
 
@@ -19,7 +19,7 @@ For help with making API calls and paginating results, refer to [Make API calls]
 
 The Lists API endpoints require a value for `{account_id}`.
 
-To retrieve a list of accounts to which you have access, use the [List Accounts](/api/operations/accounts-list-accounts) operation and note the IDs of the accounts you want to manage.
+To retrieve a list of accounts to which you have access, use the [List Accounts](/api/resources/accounts/methods/list/) operation and note the IDs of the accounts you want to manage.
 
 
 :::
@@ -32,11 +32,11 @@ The Lists API supports the operations outlined below. Visit the associated links
 
 | Operation | Endpoint | Notes |
 | --- | --- | --- |
-| [Create a list](/api/operations/lists-create-a-list) | `POST accounts/{account_id}/rules/lists` | Creates an empty list |
-| [Get lists](/api/operations/lists-get-lists) | `GET accounts/{account_id}/rules/lists` | Fetch all lists for the account. (This request does not fetch the items in the lists.) |
-| [Get a list](/api/operations/lists-get-a-list) | `GET accounts/{account_id}/rules/lists/{list_id}` | Fetches a list by its ID. (This request does not display the items in the list.) |
-| [Update a list](/api/operations/lists-update-a-list) | `PUT accounts/{account_id}/rules/lists/{list_id}` | Updates the `description` of a list. You cannot edit the `name` or `kind`, and you cannot update items in a list. To update an item in a list, use the [Update all list items](/api/operations/lists-update-all-list-items) operation. |
-| [Delete a list](/api/operations/lists-delete-a-list) | `DELETE accounts/{account_id}/rules/lists/{list_id}` | Deletes the list, but only when no filters reference it. |
+| [Create a list](/api/resources/rules/subresources/lists/methods/create/) | `POST accounts/{account_id}/rules/lists` | Creates an empty list |
+| [Get lists](/api/resources/rules/subresources/lists/methods/list/) | `GET accounts/{account_id}/rules/lists` | Fetch all lists for the account. (This request does not fetch the items in the lists.) |
+| [Get a list](/api/resources/rules/subresources/lists/methods/get/) | `GET accounts/{account_id}/rules/lists/{list_id}` | Fetches a list by its ID. (This request does not display the items in the list.) |
+| [Update a list](/api/resources/rules/subresources/lists/methods/update/) | `PUT accounts/{account_id}/rules/lists/{list_id}` | Updates the `description` of a list. You cannot edit the `name` or `kind`, and you cannot update items in a list. To update an item in a list, use the [Update all list items](/api/resources/rules/subresources/lists/subresources/items/methods/update/) operation. |
+| [Delete a list](/api/resources/rules/subresources/lists/methods/delete/) | `DELETE accounts/{account_id}/rules/lists/{list_id}` | Deletes the list, but only when no filters reference it. |
 
 ## Manage items in a list
 
@@ -44,29 +44,29 @@ The Lists API supports the operations outlined below. Visit the associated links
 
 Nearly all the operations for managing items in a list are asynchronous. When you add or delete a large amount of items to or from a list, there may be a delay before the bulk operation is complete.
 
-Asynchronous list operations return an `operation_id`, which you can use to monitor the status of an API operation. To monitor the status of an asynchronous operation, use the [Get bulk operation status](/api/operations/lists-get-bulk-operation-status) endpoint and specify the ID of the operation you want to monitor.
+Asynchronous list operations return an `operation_id`, which you can use to monitor the status of an API operation. To monitor the status of an asynchronous operation, use the [Get bulk operation status](/api/resources/rules/subresources/lists/subresources/bulk_operations/methods/get/) endpoint and specify the ID of the operation you want to monitor.
 
 When you make requests to a list while a bulk operation on that list is in progress, the requests are queued and processed in sequence (first in, first out). Requests for successful asynchronous operations return an `HTTP 201` status code.
 
 ### Get list items
 
-- **Operation**: [Get list items](/api/operations/lists-get-list-items)
+- **Operation**: [Get list items](/api/resources/rules/subresources/lists/subresources/items/methods/list/)
 - **Method and endpoints**: `GET accounts/{account_id}/rules/lists/{list_id}/items[?search={query}]`
 - **Notes**: 
   - Fetches items in a list (all items, by default).
   - Items are sorted in ascending order.
   - In the case of IP lists, CIDRs are sorted by IP address, then by the subnet mask.
-  - To filter returned items, use the optional `search` query string parameter. For more information, refer to the [Get list items](/api/operations/lists-get-list-items) API operation.
+  - To filter returned items, use the optional `search` query string parameter. For more information, refer to the [Get list items](/api/resources/rules/subresources/lists/subresources/items/methods/list/) API operation.
 
 ### Get a list item
 
-- **Operation**: [Get a list item](/api/operations/lists-get-a-list-item)
+- **Operation**: [Get a list item](/api/resources/rules/subresources/lists/subresources/items/methods/get/)
 - **Method and endpoints**: `GET accounts/{account_id}/rules/lists/{list_id}/items/{item_id}`
 - **Notes**: Fetches an item from a list by ID
      
 ### Create list items
 
-- **Operation**: [Create list items](/api/operations/lists-create-list-items)
+- **Operation**: [Create list items](/api/resources/rules/subresources/lists/subresources/items/methods/create/)
 - **Method and endpoints**: `POST accounts/{account_id}/rules/lists/{list_id}/items`
 - **Notes**: 
   - Appends a new item or items to a list.
@@ -76,7 +76,7 @@ When you make requests to a list while a bulk operation on that list is in progr
    
 ### Update all list items
 
-- **Operation**: [Update all list items](/api/operations/lists-update-all-list-items)
+- **Operation**: [Update all list items](/api/resources/rules/subresources/lists/subresources/items/methods/update/)
 - **Method and endpoints**: `PUT accounts/{account_id}/rules/lists/{list_id}/items`
 - **Notes**: 
   - Deletes all current items in the list and replaces them with `items`.
@@ -85,7 +85,7 @@ When you make requests to a list while a bulk operation on that list is in progr
 
 ### Delete list items
 
-- **Operation**: [Delete list items](/api/operations/lists-delete-list-items)
+- **Operation**: [Delete list items](/api/resources/rules/subresources/lists/subresources/items/methods/delete/)
 - **Method and endpoints**: `DELETE accounts/{account_id}/rules/lists/{list_id}/items`
 - **Notes**: 
   - Deletes specified list items.

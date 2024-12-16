@@ -35,7 +35,7 @@ For zones on paid plans, you can choose to flatten all `CNAME` records. This opt
 
 </TabItem> <TabItem label="API">
 
-Make a `PATCH` request to the [Update DNS Settings](/api/operations/dns-settings-for-a-zone-update-dns-settings) endpoint and set `flatten_all_cnames` to `true` in the request body.
+Make a `PATCH` request to the [Update DNS Settings](/api/resources/dns/subresources/settings/methods/edit/) endpoint and set `flatten_all_cnames` to `true` in the request body.
 
 </TabItem> </Tabs>
 
@@ -66,7 +66,7 @@ For the following cases, **Flatten** will not be available:
 
 </TabItem> <TabItem label="API">
 
-With the available [API endpoints](/api/operations/dns-records-for-a-zone-create-dns-record), specify the following for each `CNAME` record in the request body:
+With the available [API endpoints](/api/resources/dns/subresources/records/methods/create/), specify the following for each `CNAME` record in the request body:
 
 ```txt
 "settings": {

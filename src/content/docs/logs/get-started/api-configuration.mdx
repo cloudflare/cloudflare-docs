@@ -18,17 +18,17 @@ The `{dataset_id}` argument indicates the log category (such as `http_requests` 
 
 | Operation | Description                                 | API                                                                                                                                                                                              |
 | --------- | ------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| `POST`    | Create job                                  | [Zone-scoped job](/api/operations/post-zones-zone_id-logpush-jobs) / [Account-scoped job](/api/operations/post-accounts-account_id-logpush-jobs)                                                 |
-| `GET`     | Retrieve job details                        | [Zone-scoped job](/api/operations/get-zones-zone_id-logpush-jobs-job_id) / [Account-scoped job](/api/operations/get-accounts-account_id-logpush-jobs-job_id)                                     |
-| `GET`     | Retrieve all jobs for all datasets          | [Zone-scoped jobs](/api/operations/get-zones-zone_id-logpush-jobs) / [Account-scoped jobs](/api/operations/get-accounts-account_id-logpush-jobs)                                                 |
-| `GET`     | Retrieve all jobs for a dataset             | [Zone-scoped jobs](/api/operations/get-zones-zone_id-logpush-datasets-dataset_id-jobs) / [Account-scoped jobs](/api/operations/get-accounts-account_id-logpush-datasets-dataset_id-jobs)         |
-| `GET`     | Retrieve all available fields for a dataset | [Zone-scoped fields](/api/operations/get-zones-zone_id-logpush-datasets-dataset_id-fields) / [Account-scoped fields](/api/operations/get-accounts-account_id-logpush-datasets-dataset_id-fields) |
-| `PUT`     | Update job                                  | [Zone-scoped job](/api/operations/put-zones-zone_id-logpush-jobs-job_id) / [Account-scoped job](/api/operations/put-accounts-account_id-logpush-jobs-job_id)                                     |
-| `DELETE`  | Delete job                                  | [Zone-scoped job](/api/operations/delete-zones-zone_id-logpush-jobs-job_id) / [Account-scoped job](/api/operations/delete-accounts-account_id-logpush-jobs-job_id)                               |
-| `POST`    | Check whether destination exists            | [Zone-scoped job](/api/operations/post-zones-zone_id-logpush-validate-destination-exists) / [Account-scoped job](/api/operations/delete-accounts-account_id-logpush-validate-destination-exists) |
-| `POST`    | Get ownership challenge                     | [Zone-scoped job](/api/operations/post-zones-zone_id-logpush-ownership) / [Account-scoped job](/api/operations/post-accounts-account_id-logpush-ownership)                                       |
-| `POST`    | Validate ownership challenge                | [Zone-scoped job](/api/operations/post-zones-zone_id-logpush-ownership-validate) / [Account-scoped job](/api/operations/post-accounts-account_id-logpush-ownership-validate)                     |
-| `POST`    | Validate log options                        | [Zone-scoped job](/api/operations/post-zones-zone_id-logpush-validate-origin) / [Account-scoped job](/api/operations/post-accounts-account_id-logpush-validate-origin)                           |
+| `POST`    | Create job                                  | [Documentation](/api/resources/logpush/subresources/jobs/methods/create/)                                             |
+| `GET`     | Retrieve job details                        | [Documentation](/api/resources/logpush/subresources/datasets/subresources/jobs/methods/get/)                                     |
+| `GET`     | Retrieve all jobs for all datasets          | [Documentation](/api/resources/logpush/subresources/jobs/methods/list/)                                                 |
+| `GET`     | Retrieve all jobs for a dataset             | [Documentation](/api/resources/logpush/subresources/datasets/subresources/jobs/methods/get/)        |
+| `GET`     | Retrieve all available fields for a dataset | [Documentation](/api/resources/logpush/subresources/datasets/subresources/fields/methods/get/) |
+| `PUT`     | Update job                                  | [Documentation](/api/resources/logpush/subresources/jobs/methods/update/)                                      |
+| `DELETE`  | Delete job                                  | [Documentation](/api/resources/logpush/subresources/jobs/methods/delete/)                           |
+| `POST`    | Check whether destination exists            | [Documentation](/api/resources/logpush/subresources/validate/methods/destination/) |
+| `POST`    | Get ownership challenge                     | [Documentation](/api/resources/logpush/subresources/ownership/methods/validate/)                                      |
+| `POST`    | Validate ownership challenge                | [Documentation](/api/resources/logpush/subresources/ownership/methods/validate/)                      |
+| `POST`    | Validate log options                        | [Documentation](/api/resources/logpush/subresources/validate/methods/origin/)                           |
 
 
 For concrete examples, refer to the tutorials in [Logpush examples](/logs/tutorials/examples/).
@@ -90,7 +90,7 @@ You can specify your cloud service provider destination via the required **desti
 
 :::note[Note]
 
-As of May 2022, defining a unique destination for a Logpush job will no longer be required. As this constraint has been removed, you can now have more than one job writing to the same destination. 
+As of May 2022, defining a unique destination for a Logpush job will no longer be required. As this constraint has been removed, you can now have more than one job writing to the same destination.
 :::
 
 The `destination_conf` parameter must follow this format:
@@ -209,7 +209,7 @@ If you are still using logpull\_options, here are the options that you can custo
 
 :::note[Note]
 
-The **CVE-2021-44228** parameter can only be set through the API at this time. Updating your Logpush job through the dashboard will set this option to false. 
+The **CVE-2021-44228** parameter can only be set through the API at this time. Updating your Logpush job through the dashboard will set this option to false.
 :::
 
 To check if the selected **logpull\_options** are valid:
@@ -257,7 +257,7 @@ These parameters can be used to gain control of batch size in the case that a de
 
 :::note[Note]
 
-Parameters **max\_upload\_bytes** and **max\_upload\_records** are not configurable for Edge Log Delivery. 
+Parameters **max\_upload\_bytes** and **max\_upload\_records** are not configurable for Edge Log Delivery.
 :::
 
 ## Custom fields

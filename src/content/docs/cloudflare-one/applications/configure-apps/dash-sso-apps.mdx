@@ -69,7 +69,7 @@ This section describes how to restore access to the Cloudflare dashboard in case
 
 If there is an issue with your SSO IdP provider, you can add an alternate IdP using the API. The following example shows how to add [Cloudflare One-time PIN](/cloudflare-one/identity/one-time-pin/) as a login method:
 
-1. [Add](/api/operations/access-identity-providers-add-an-access-identity-provider) one-time PIN login:
+1. [Add](/api/resources/zero_trust/subresources/identity_providers/methods/create/) one-time PIN login:
 
 ```bash title="cURL command"
 curl 'https://api.cloudflare.com/client/v4/accounts/{account_id}/access/identity_providers' \
@@ -82,7 +82,7 @@ curl 'https://api.cloudflare.com/client/v4/accounts/{account_id}/access/identity
 }'
 ```
 
-2. [Get](/api/operations/access-applications-list-access-applications) the `id` of the `dash_sso` Access application. You can use [`jq`](https://jqlang.github.io/jq/download/) to quickly find the correct application:
+2. [Get](/api/resources/zero_trust/subresources/access/subresources/applications/methods/list/) the `id` of the `dash_sso` Access application. You can use [`jq`](https://jqlang.github.io/jq/download/) to quickly find the correct application:
 
 ```bash title="cURL command"
 curl 'https://api.cloudflare.com/client/v4/accounts/{account_id}/access/apps' \
@@ -101,7 +101,7 @@ curl 'https://api.cloudflare.com/client/v4/accounts/{account_id}/access/apps' \
 }
 ```
 
-3. Using the `id` obtained above, [update](/api/operations/access-applications-update-an-access-application) **SSO App** to accept all identity providers:
+3. Using the `id` obtained above, [update](/api/resources/zero_trust/subresources/access/subresources/applications/methods/update/) **SSO App** to accept all identity providers:
 
 ```bash title="cURL command"
 curl --request PUT \

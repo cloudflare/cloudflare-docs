@@ -12,7 +12,7 @@ head:
 In order to enable automatic mitigation of [random prefix attacks](/dns/dns-firewall/random-prefix-attacks/about/):
 
 1. Set up [DNS Firewall](/dns/dns-firewall/setup/).
-2. Send a [`PATCH` request](/api/operations/dns-firewall-update-dns-firewall-cluster) to update your DNS Firewall cluster.
+2. Send a [`PATCH` request](/api/resources/dns_firewall/methods/edit/) to update your DNS Firewall cluster.
 
    ```bash
    curl --request PATCH "https://api.cloudflare.com/client/v4/accounts/{account_id}/dns_firewall/{cluster_tag}" \

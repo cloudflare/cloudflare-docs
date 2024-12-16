@@ -42,7 +42,7 @@ In this setup, DNSSEC on your pirmary DNS provider does not need to be enabled.
 
 </TabItem> <TabItem label="API">
 
-1. Use the [Edit DNSSEC Status endpoint](/api/operations/dnssec-edit-dnssec-status) and set a `status` of `active` for your zone.
+1. Use the [Edit DNSSEC Status endpoint](/api/resources/dns/subresources/dnssec/methods/edit/) and set a `status` of `active` for your zone.
 
 ```bash
 curl --request PATCH \
@@ -55,7 +55,7 @@ https://api.cloudflare.com/client/v4/zones/{zone_id}/dnssec \
 }'
 ```
 
-2. Use the [DNSSEC Details endpoint](/api/operations/dnssec-dnssec-details) to get the necessary values to create a **DS** record at your registrar.
+2. Use the [DNSSEC Details endpoint](/api/resources/dns/subresources/dnssec/methods/get/) to get the necessary values to create a **DS** record at your registrar.
 
 3. <Render file="dnssec-registrar-steps" />
 
@@ -95,7 +95,7 @@ b. Under **DNSSEC with Secondary DNS** select **Pre-signed**.
 
 </TabItem> <TabItem label="API">
 
-Use the [Edit DNSSEC Status endpoint](/api/operations/dnssec-edit-dnssec-status) and set the `dnssec_presigned` value to `true`.
+Use the [Edit DNSSEC Status endpoint](/api/resources/dns/subresources/dnssec/methods/edit/) and set the `dnssec_presigned` value to `true`.
 
 ```bash
 curl --request PATCH \

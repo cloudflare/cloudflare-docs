@@ -5,6 +5,8 @@ sidebar:
   order: 10
 ---
 
+import { WranglerConfig, TypeScriptExample } from "~/components";
+
 A Workflow contains one or more steps. Each step is a self-contained, individually retriable component of a Workflow. Steps may emit (optional) state that allows a Workflow to persist and continue from that step, even if a Workflow fails due to a network or infrastructure issue.
 
 This is a small guidebook on how to build more resilient and correct Workflows.
@@ -17,6 +19,7 @@ can be applied multiple times without changing the result beyond the initial app
 As an example, let us assume you have a Workflow that charges your customers, and you really do not want to charge them twice by accident. Before charging them, you should
 check if they were already charged:
 
+<TypeScriptExample filename="index.ts">
 ```ts
 export class MyWorkflow extends WorkflowEntrypoint {
 	async run(event: WorkflowEvent<Params>, step: WorkflowStep) {
@@ -52,6 +55,7 @@ export class MyWorkflow extends WorkflowEntrypoint {
 	}
 }
 ```
+</TypeScriptExample>
 
 :::note
 
@@ -67,6 +71,7 @@ You can also think of it as a transaction, or a unit of work.
 
 - ✅ Minimize the number of API/binding calls per step (unless you need multiple calls to prove idempotency).
 
+<TypeScriptExample filename="index.ts">
 ```ts
 export class MyWorkflow extends WorkflowEntrypoint {
 	async run(event: WorkflowEvent<Params>, step: WorkflowStep) {
@@ -84,6 +89,7 @@ export class MyWorkflow extends WorkflowEntrypoint {
 	}
 }
 ```
+</TypeScriptExample>
 
 Otherwise, your entire Workflow might not be as durable as you might think, and you may encounter some undefined behaviour. You can avoid them by following the rules below:
 
@@ -92,6 +98,7 @@ Otherwise, your entire Workflow might not be as durable as you might think, and 
 - 🔴 Do not make too many service calls in the same step (unless you need it to prove idempotency).
 - 🔴 Do not do too much CPU-intensive work inside a single step - sometimes the engine may have to restart, and it will start over from the beginning of that step.
 
+<TypeScriptExample filename="index.ts">
 ```ts
 export class MyWorkflow extends WorkflowEntrypoint {
 	async run(event: WorkflowEvent<Params>, step: WorkflowStep) {
@@ -105,6 +112,7 @@ export class MyWorkflow extends WorkflowEntrypoint {
 	}
 }
 ```
+</TypeScriptExample>
 
 ### Do not rely on state outside of a step
 
@@ -112,6 +120,7 @@ Workflows may hibernate and lose all in-memory state. This will happen when engi
 
 This means that you should not store state outside of a step:
 
+<TypeScriptExample filename="index.ts">
 ```ts
 function getRandomInt(min, max) {
 	const minCeiled = Math.ceil(min);
@@ -152,9 +161,11 @@ export class MyWorkflow extends WorkflowEntrypoint {
 	}
 }
 ```
+</TypeScriptExample>
 
 Instead, you should build top-level state exclusively comprised of `step.do` returns:
 
+<TypeScriptExample filename="index.ts">
 ```ts
 function getRandomInt(min, max) {
 	const minCeiled = Math.ceil(min);
@@ -192,11 +203,13 @@ export class MyWorkflow extends WorkflowEntrypoint {
 	}
 }
 ```
+</TypeScriptExample>
 
 ### Do not mutate your incoming events
 
 The `event` passed to your Workflow's `run` method is immutable: changes you make to the event are not persisted across steps and/or Workflow restarts.
 
+<TypeScriptExample filename="index.ts">
 ```ts
 interface MyEvent {
   user: string;
@@ -219,17 +232,20 @@ export class MyWorkflow extends WorkflowEntrypoint {
 		  return await env.KV.get(event.user)
 		})
 
-		let someOtherData await step.do("following step that uses that state", async () => {
+		let someOtherData = await step.do("following step that uses that state", async () => {
 		  // Access to userData here
 			// Will always be the same if this step is retried
 		})
+	}
+}
 ```
+</TypeScriptExample>
 
 ### Name steps deterministically
 
 Steps should be named deterministically (even if dynamic). This  ensures that their state is cached, and prevents the step from being rerun unnecessarily. Step names act as the "cache key" in your Workflow.
 
-
+<TypeScriptExample filename="index.ts">
 ```ts
 export class MyWorkflow extends WorkflowEntrypoint {
 	async run(event: WorkflowEvent<Params>, step: WorkflowStep) {
@@ -255,9 +271,53 @@ export class MyWorkflow extends WorkflowEntrypoint {
 		let catList = await step.do("get cat list from KV", async () => {
 			return await env.KV.get("cat-list")
 		})
+
 		for(const cat of catList) {
 			await step.do(`get cat: ${cat}`, async () => {
 				return await env.KV.get(cat)
 			})
 		}
+	}
+}
 ```
+</TypeScriptExample>
+
+### Instance IDs are unique
+
+Workflow [instance IDs](/workflows/build/workers-api/#workflowinstance) are unique per Workflow. The ID is the unique identifier that associates logs, metrics, state and status of a run to a specific an instance, even after completion. Allowing ID re-use would make it hard to understand if a Workflow instance ID referred to an instance that run yesterday, last week or today.
+
+It would also present a problem if you wanted to run multiple different Workflow instances with different [input parameters](/workflows/build/events-and-parameters/) for the same user ID, as you would immediately need to determine a new ID mapping.
+
+If you need to associate multiple instances with a specific user, merchant or other "customer" ID in your system, consider using a composite ID or using randomly generated IDs and storing the mapping in a database like [D1](/d1/).
+
+<TypeScriptExample filename="index.ts">
+```ts
+// This is in the same file as your Workflow definition
+export default {
+  async fetch(req: Request, env: Env): Promise<Response> {
+		// 🔴 Bad: Use an ID that isn't unique across future Workflow invocations
+		let userId = getUserId(req) // Returns the userId
+    let badInstance = await env.MY_WORKFLOW.create({
+    	id: userId,
+    	params: payload
+    });
+
+    // ✅ Good: use a composite ID or an
+    let instanceId = getTransactionId() // e.g. assuming transaction IDs are unique
+    // or: compose a composite ID and store it in your database
+    // so that you can track all instances associated with a specific user or merchant.
+    instanceId = `${getUserId(request)}-${await crypto.randomUUID().slice(0, 6)}`
+    let { result } = await addNewInstanceToDB(userId, instanceId)
+    let goodInstance = await env.MY_WORKFLOW.create({
+    	id: userId,
+    	params: payload
+    });
+
+    return Response.json({
+      id: badInstance.id,
+      details: await badInstance.status(),
+    });
+  },
+};
+```
+</TypeScriptExample>

@@ -39,7 +39,7 @@ DNS filtering is then enforced through DNS policies set up by the service provid
 
 To achieve more precise control over which domains are allowed or blocked, the service provider can configure additional Allowed Domain and Blocked Domains policies. By setting these policies with [lower precedence](/cloudflare-one/policies/gateway/order-of-enforcement/#order-of-precedence) than the Security Risks policy, the service provider can override the Security Risks policy for specific domains.
 
-To streamline the management of allowed and blocked domains, use [lists](/cloudflare-one/policies/gateway/lists/). Lists are easily updated through the dashboard or via [APIs](/api/operations/zero-trust-lists-update-zero-trust-list), making policy adjustments more efficient.
+To streamline the management of allowed and blocked domains, use [lists](/cloudflare-one/policies/gateway/lists/). Lists are easily updated through the dashboard or via [APIs](/api/resources/zero_trust/subresources/gateway/subresources/lists/methods/update/), making policy adjustments more efficient.
 
 ![Figure 3: DNS policies are applied according to their order of precedence. In this example, the 'Allow List Policy' and 'Block List Policy' will be considered before the 'Security List' policy.](~/assets/images/reference-architecture/gateway-dns-for-isp/gateway-dns-for-isp-image-03.svg)
 

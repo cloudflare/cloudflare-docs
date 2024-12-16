@@ -174,43 +174,39 @@ export default defineConfig({
 				"./src/tooltips.css",
 			],
 			pagination: false,
-			plugins: runLinkCheck
-				? [
-						starlightLinksValidator({
-							errorOnInvalidHashes: false,
-							errorOnLocalLinks: false,
-							exclude: [
-								"/api/",
-								"/api/operations/**",
-								"/changelog/",
-								"/http/resources/**",
-								"{props.*}",
-								"/",
-								"**/glossary/?term=**",
-								"/products/?product-group=*",
-								"/products/",
-								"/rules/snippets/examples/?operation=*",
-								"/rules/transform/examples/?operation=*",
-								"/workers/examples/?languages=*",
-								"/workers/examples/?tags=*",
-								"/workers-ai/models/**",
-							],
-						}),
-						starlightDocSearch({
-							appId: "8MU1G3QO9P",
-							apiKey: "4edb0a6cef3338ff4bcfbc6b3d2db56b",
-							indexName: "TEST - Re-dev docs",
-						}),
-						starlightImageZoom(),
-					]
-				: [
-						starlightDocSearch({
-							appId: "8MU1G3QO9P",
-							apiKey: "4edb0a6cef3338ff4bcfbc6b3d2db56b",
-							indexName: "TEST - Re-dev docs",
-						}),
-						starlightImageZoom(),
-					],
+			plugins: [
+				...(runLinkCheck
+					? [
+							starlightLinksValidator({
+								errorOnInvalidHashes: false,
+								errorOnLocalLinks: false,
+								exclude: [
+									"/api/",
+									"/api/operations/**",
+									"/changelog/",
+									"/http/resources/**",
+									"{props.*}",
+									"/",
+									"**/glossary/?term=**",
+									"/products/?product-group=*",
+									"/products/",
+									"/rules/snippets/examples/?operation=*",
+									"/rules/transform/examples/?operation=*",
+									"/workers/examples/?languages=*",
+									"/workers/examples/?tags=*",
+									"/workers-ai/models/**",
+								],
+							}),
+						]
+					: []),
+				starlightDocSearch({
+					appId: "D32WIYFTUF",
+					apiKey: "5cec275adc19dd3bc17617f7d9cf312a",
+					indexName: "prod_devdocs",
+					insights: true,
+				}),
+				starlightImageZoom(),
+			],
 		}),
 		tailwind({
 			applyBaseStyles: false,

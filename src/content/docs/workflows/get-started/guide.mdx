@@ -221,7 +221,7 @@ We have a very basic Workflow definition, but now need to provide a way to call 
 1. External HTTP requests via a `fetch()` handler
 2. Messages from a [Queue](/queues/)
 3. A schedule via [Cron Trigger](/workers/configuration/cron-triggers/)
-4. Via the [Workflows REST API](/api/operations/wor-list-workflows) or [wrangler CLI](/workers/wrangler/commands/#workflows)
+4. Via the [Workflows REST API](/api/resources/workflows/methods/list/) or [wrangler CLI](/workers/wrangler/commands/#workflows)
 
 Return to the `src/index.ts` file we created in the previous step and add a `fetch` handler that _binds_ to our Workflow. This binding allows us to create new Workflow instances, fetch the status of an existing Workflow, pause and/or terminate a Workflow.
 

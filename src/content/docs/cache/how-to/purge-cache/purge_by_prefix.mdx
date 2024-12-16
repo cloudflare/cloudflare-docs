@@ -33,7 +33,7 @@ Purging by prefix is useful in different scenarios, such as:
 :::note[API]
 
 
-You can purge prefixes via the Cloudflare API. For more information, refer to the [API documentation](/api/operations/zone-purge). You can use up to 30 prefixes per API call and make up to 30,000 purge API calls in a 24-hour period.
+You can purge prefixes via the Cloudflare API. For more information, refer to the [API documentation](/api/resources/cache/methods/purge/). You can use up to 30 prefixes per API call and make up to 30,000 purge API calls in a 24-hour period.
 
 
 :::
@@ -59,7 +59,7 @@ There are several limitations regarding purge by prefix:
 
 * Path separators are limited to 31 for a prefix `(example.com/a/b/c/d/e/f/g/h/i/j/k/l/m…)`.
 * Purge requests are limited to 30 prefixes per request.
-* [Purge rate-limits apply](/api/operations/zone-purge).
+* [Purge rate-limits apply](/api/resources/cache/methods/purge/).
 * URI query strings & fragments cannot purge by prefix:
   * `www.example.com/foo?a=b` (query string)
   * `www.example.com/foo#bar` (fragment)

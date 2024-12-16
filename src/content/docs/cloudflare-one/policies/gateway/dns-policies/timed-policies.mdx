@@ -37,7 +37,7 @@ For policies with an exact end time, you can change the time before the policy t
 
 ## Scheduled policies
 
-You can use the Gateway API to create a new DNS policy with a schedule or add a schedule to an existing policy. To schedule a policy, use the [Create a Zero Trust Gateway rule endpoint](/api/operations/zero-trust-gateway-rules-create-zero-trust-gateway-rule) or [Update a Zero Trust Gateway rule endpoint](/api/operations/zero-trust-gateway-rules-update-zero-trust-gateway-rule) with the `schedule` parameter set to your desired days of the week, times of day, and an optional time zone. The schedule will appear in Zero Trust under **Gateway** > **Firewall policies** > **DNS** when you select the policy.
+You can use the Gateway API to create a new DNS policy with a schedule or add a schedule to an existing policy. To schedule a policy, use the [Create a Zero Trust Gateway rule endpoint](/api/resources/zero_trust/subresources/gateway/subresources/rules/methods/create/) or [Update a Zero Trust Gateway rule endpoint](/api/resources/zero_trust/subresources/gateway/subresources/rules/methods/update/) with the `schedule` parameter set to your desired days of the week, times of day, and an optional time zone. The schedule will appear in Zero Trust under **Gateway** > **Firewall policies** > **DNS** when you select the policy.
 
 ### How Gateway determines time zone
 

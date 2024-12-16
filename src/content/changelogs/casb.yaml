@@ -12,7 +12,7 @@ entries:
   - publish_date: "2024-06-03"
     title: Atlassian Bitbucket integration
     description: |-
-      You can now scan their Bitbucket Cloud workspaces for a variety of contextualized security issues such as source code exposure, admin misconfigurations, and more.
+      You can now scan your Bitbucket Cloud workspaces for a variety of contextualized security issues such as source code exposure, admin misconfigurations, and more.
   - publish_date: "2024-05-23"
     title: Data-at-rest DLP for Box and Dropbox
     description: |-

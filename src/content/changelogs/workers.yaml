@@ -67,7 +67,7 @@ entries:
       - [Exceptions](/durable-objects/best-practices/error-handling) thrown from Durable Object internal operations and tunneled to the caller may now be populated with a `.retryable: true` property if the exception was likely due to a transient failure, or populated with an `.overloaded: true` property if the exception was due to [overload](/durable-objects/observability/troubleshooting/#durable-object-is-overloaded).
   - publish_date: "2024-06-20"
     description: |-
-      - We now prompt for extra confirmation if attempting to rollback to a version of a Worker using the [Deployments API](/api/operations/worker-deployments-create-deployment) where the value of a secret is different than the currently deployed version. A `?force=true` query parameter can be specified to proceed with the rollback.
+      - We now prompt for extra confirmation if attempting to rollback to a version of a Worker using the [Deployments API](/api/resources/workers/subresources/scripts/subresources/deployments/methods/create/) where the value of a secret is different than the currently deployed version. A `?force=true` query parameter can be specified to proceed with the rollback.
   - publish_date: "2024-06-19"
     description: |-
       - When using [`nodejs_compat` compatibility flag](/workers/runtime-apis/nodejs/), the `buffer` module now has an implementation of `isAscii()` and `isUtf8()` methods.
