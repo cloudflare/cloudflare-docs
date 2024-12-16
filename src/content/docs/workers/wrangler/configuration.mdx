@@ -1191,7 +1191,7 @@ upload_source_maps = true
 
 ## Workers Sites
 
-<Render file="workers_sites"/>
+<Render file="workers_sites" />
 
 [Workers Sites](/workers/configuration/sites/) allows you to host static websites, or dynamic websites using frameworks like Vue or React, on Workers.
 
@@ -1252,3 +1252,90 @@ If you change your environment variables in the Cloudflare dashboard, Wrangler w
 If you change your routes in the dashboard, Wrangler will override them in the next deploy with the routes you have set in your Wrangler configuration file. To manage routes via the Cloudflare dashboard only, remove any route and routes keys from your Wrangler configuration file. Then add `workers_dev = false` to your Wrangler configuration file. For more information, refer to [Deprecations](/workers/wrangler/deprecations/#other-deprecated-behavior).
 
 Wrangler will not delete your secrets (encrypted environment variables) unless you run `wrangler secret delete <key>`.
+
+## Generated Wrangler configuration
+
+:::note
+
+This section describes a feature that can be implemented by frameworks and other build tools that are integrating with Wrangler.
+
+It is unlikely that an application developer will need to use this feature, but it is documented here to help you understand when Wrangler is using a generated configuration rather than a user's configuration.
+
+:::
+
+When using a framework or a custom pre-build process, some tools need to generate a modified Wrangler configuration alongside the generated code.
+In this case, the tool may also create a special `.wrangler/deploy/config.json` file that redirects Wrangler to use the generated configuration rather than the original user configuration.
+
+Wrangler uses this generated configuration only for the following deploy and dev related commands:
+
+- `wrangler deploy`
+- `wrangler dev`
+- `wrangler versions upload`
+- `wrangler versions deploy`
+- `wrangler pages deploy`
+- `wrangler pages build`
+- `wrangler pages build-env`
+
+When running these commands, Wrangler looks up the directory tree from the current working directory for a file at the path `.wrangler/deploy/config.json`.
+This file must contain only a single JSON object of the form:
+
+```json
+{ "configPath": "../../path/to/wrangler.json" }
+```
+
+When this `config.json` file exists Wrangler will follow the `configPath` (relative to the `.wrangler/deploy/config.json` file) to find the generated Wrangler configuration file to load and use in the current command.
+Wrangler will display messaging to the user to indicate that the configuration has been redirected to a different file than the user's configuration file.
+
+### Custom build tool example
+
+A common approach that a build tool might choose to implement is to output code and configuration in a `dist` directory.
+
+- The user writes code that uses Cloudflare Workers resources, configured via a user `wrangler.toml` file.
+
+  ```toml
+  name = "my-worker"
+  main = "src/index.ts"
+  [[kv_namespaces]]
+  binding = "<BINDING_NAME1>"
+  id = "<NAMESPACE_ID1>"
+  ```
+
+  Note that this configuration points `main` at the user code entry-point.
+
+- The user runs a custom build, which might read the user's `wrangler.toml` to find the source code entry-point:
+
+  ```bash
+  > my-tool build
+  ```
+
+- This `my-tool` generates a `dist` directory that contains both compiled code and a new deployment configuration file.
+  It also generates a `.wrangler/deploy/config.json` file that redirects Wrangler to the new generated deployment configuration file:
+
+  ```plain
+  - dist
+    - index.js
+  	- wrangler.json
+  - .wrangler
+    - deploy
+  	  - config.json
+  ```
+
+  The generated `dist/wrangler.json` might contain:
+
+  ```json
+  {
+  	"name": "my-worker",
+  	"main": "./index.js",
+  	"kv_namespaces": [{ "binding": "<BINDING_NAME1>", "id": "<NAMESPACE_ID1>" }]
+  }
+  ```
+
+  Note that, now, the `main` property points to the generated code entry-point.
+
+  And the `.wrangler/deploy/config.json` contains the path to the generated configuration file:
+
+  ```json
+  {
+  	"configPath": "../../dist/wrangler.json"
+  }
+  ```
