@@ -1,6 +1,6 @@
 ---
 pcx_content_type: concept
-title: Configuration and binding
+title: Configuration and Bindings
 sidebar:
   order: 7
 head: []
@@ -156,3 +156,23 @@ export default {
 ## Routing configuration
 
 For the various static asset routing configuration options, refer to [Routing](/workers/static-assets/routing/).
+
+## Smart Placement
+
+[Smart Placement](/workers/configuration/smart-placement/) can be used to place a Worker's code close to your back-end infrastructure. Smart Placement will only have an effect if you specified a `main`, pointing to your Worker code.
+
+### Smart Placement with Worker Code First
+
+If you desire to run your [Worker code ahead of assets](/workers/static-assets/routing/#invoking-worker-script-ahead-of-assets) by setting `experimental_serve_directly=false`, all requests must first travel to your Smart-Placed Worker. As a result, you may experience increased latency for asset requests.
+
+Use Smart Placement with `experimental_serve_directly=false` when you need to integrate with other backend services, authenticate requests before serving any assets, or if your want to make modifications to your assets before serving them.
+
+If you want some assets served as quickly as possible to the user, but others to be served behind a smart-placed Worker, considering splitting your app into multiple Workers and [using service bindings to connect them](/workers/configuration/smart-placement/#best-practices).
+
+### Smart Placement with Assets First
+
+Enabling Smart Placement with `experimental_serve_directly=true` lets you serve assets from as close as possible to your users, but moves your Worker logic to run most efficiently (such as near a database).
+
+Use Smart Placement with `experimental_serve_directly=true` when prioritizing fast asset delivery.
+
+This will not impact the [default routing behavior](/workers/static-assets/routing/#default-behavior).
