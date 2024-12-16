@@ -43,24 +43,24 @@ curl -X POST https://gateway.ai.cloudflare.com/v1/ACCOUNT_TAG/GATEWAY/openrouter
 If you are using the OpenAI SDK with JavaScript, you can set your endpoint like this:
 
 ```js title="JavaScript"
-import OpenAI from 'openai';
+import OpenAI from "openai";
 
 const openai = new OpenAI({
- apiKey: env.OPENROUTER_TOKEN,
- baseURL: "https://gateway.ai.cloudflare.com/v1/ACCOUNT_TAG/GATEWAY/openrouter"
+	apiKey: env.OPENROUTER_TOKEN,
+	baseURL:
+		"https://gateway.ai.cloudflare.com/v1/ACCOUNT_TAG/GATEWAY/openrouter",
 });
 
 try {
-  const chatCompletion = await openai.chat.completions.create({
-    model: "openai/gpt-3.5-turbo",
-    messages: [{ role: "user", content: "What is Cloudflare?" }]
-  });
+	const chatCompletion = await openai.chat.completions.create({
+		model: "openai/gpt-3.5-turbo",
+		messages: [{ role: "user", content: "What is Cloudflare?" }],
+	});
 
-  const response = chatCompletion.choices[0].message;
+	const response = chatCompletion.choices[0].message;
 
-  return new Response(JSON.stringify(response));
+	return new Response(JSON.stringify(response));
 } catch (e) {
-  return new Response(e);
+	return new Response(e);
 }
-
 ```
