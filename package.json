@@ -93,7 +93,7 @@
 		"typescript": "^5.7.2",
 		"unist-util-visit": "^5.0.0",
 		"vitest": "2.1.8",
-		"wrangler": "^3.87.0",
+		"wrangler": "^3.96.0",
 		"yaml": "^2.6.1"
 	},
 	"engines": {
