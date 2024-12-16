@@ -16,6 +16,7 @@ For example, you can create an object lifecycle rule to delete objects after 90 
 - An object is no longer billable once it has been deleted.
 - Buckets have a default lifecycle rule to expire multipart uploads seven days after initiation.
 - When an object is transitioned from Standard storage to Infrequent Access storage, a [Class A operation](/r2/pricing/#class-a-operations) is incurred.
+- When rules conflict and specify both a storage class transition and expire transition within a 24 hour period, the expire (or delete) lifecycle transition takes precedence over transitioning storage class. 
 
 ## Configure lifecycle rules for your bucket
 
