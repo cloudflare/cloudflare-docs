@@ -39,14 +39,17 @@ If you do not have an ASN or do not want to bring your ASN to Cloudflare, you ca
 Current customers who are still using Cloudflare's AS209242 can continue using this same ASN. No further change is required.
 :::
 
-## Add an IP prefix
+## Advertise your prefix
+
+:::note
+You can only advertise your prefix [after running pre-flight checks](/magic-transit/get-started/#5-run-pre-flight-checks) with Cloudflare. If your prefix status is greyed out and shows an _Withdrawn_ status, your prefix is locked. Contact your account team to close the pre-flight checks phase with you and unlock your prefixes.
+:::
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login), and select your account.
 2. Go to **Magic Transit** > **Configuration**.
-3. From the **IP Prefixes** tab, select **Create**.
-4. Fill out the information for your prefix and select **Add IP Prefix**.
-
-After you add the prefix, you can edit its status.
+3. From the **IP Prefixes** tab select your prefix > **Edit**.
+4. Under **Status**, select _Advertise_ to advertise your prefix.
+5. Select **Edit Prefix** to save your changes.
 
 ## Edit the status of a prefix
 
@@ -55,9 +58,9 @@ After you add the prefix, you can edit its status.
 3. _(Optional)_ Edit the description for your prefix.
 4. Select **Edit IP Prefix** to save your changes.
 
-:::note[Note:]
 To avoid latency and potentially dropped routes, enable prefix advertisement from Cloudflare before withdrawing the advertisement from your data center.
-:::
+
+You should also be aware that announcing or withdrawing a prefix should propagate across Cloudflare's global network almost instantly, with changes typically taking effect within a few minutes at most. However, Cloudflare has no control over how long ISPs take to refresh their routes. Keep this in mind when announcing or withdrawing a prefix from your account, and plan accordingly.
 
 ## Delete a prefix
 
@@ -65,10 +68,6 @@ You can only delete a prefix with an **Unapproved** status. To delete prefixes w
 
 1. From the **IP Prefixes** tab, locate the prefix you want to modify and select **Delete**.
 2. Confirm your choice from the modal by selecting **Delete**.
-
-:::note
-Withdrawing a prefix should propagate across Cloudflare's global network almost instantly, with changes typically taking effect within a few minutes at most. However, Cloudflare has no control over how long ISPs take to refresh their routes. Keep this in mind when announcing or withdrawing a prefix from your account, and plan accordingly.
-:::
 
 ## Border Gateway Protocol (BGP) control for advertisements
 

@@ -13,26 +13,10 @@ Now that you have considered which devices and applications TLS inspection shoul
 
 Use a standard naming convention when building all policies. Policy names should be unique across the Cloudflare account, follow the same structure, and be as descriptive as possible.
 
-To create a new HTTP policy:
-
-1. In [Zero Trust](https://one.dash.cloudflare.com/), go to **Gateway** > **Firewall policies**.
-
-2. In the **HTTP** tab, select **Add a policy**.
-
-3. Name the policy.
-
-4. Under **Traffic**, build a logical expression that defines the traffic you want to allow or block.
-
-5. Choose an **Action** to take when traffic matches the logical expression. For example, if you have enabled TLS inspection, some applications that use [embedded certificates](/cloudflare-one/policies/gateway/http-policies/tls-decryption/#inspection-limitations) may not support HTTP inspection, such as some Google products. You can create a policy to bypass inspection for these applications:
-
-   <Render
-   	file="gateway/policies/do-not-inspect-applications"
-   	product="cloudflare-one"
-   />
-
-6. Select **Create policy**.
-
-For more information, refer to [HTTP policies](/cloudflare-one/policies/gateway/http-policies/).
+<Render
+	file="gateway/get-started/create-http-policy"
+	product="cloudflare-one"
+/>
 
 ## Order your policies
 
