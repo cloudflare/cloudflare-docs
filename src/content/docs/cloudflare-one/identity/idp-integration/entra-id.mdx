@@ -206,7 +206,7 @@ Access and Gateway policies for an Entra group will also apply to all [nested gr
 
 ## Force user interaction during WARP reauthentication
 
-You can require users to re-enter their credentials into Entra ID whenever they [re-authenticate their WARP session](/cloudflare-one/connections/connect-devices/warp/configure-warp/warp-sessions/). To configure this setting, make a [`PUT` request](/api/operations/access-identity-providers-update-an-access-identity-provider) and set the `prompt` parameter to either `login` or `select_account`.
+You can require users to re-enter their credentials into Entra ID whenever they [re-authenticate their WARP session](/cloudflare-one/connections/connect-devices/warp/configure-warp/warp-sessions/). To configure this setting, make a [`PUT` request](/api/resources/zero_trust/subresources/identity_providers/methods/update/) and set the `prompt` parameter to either `login` or `select_account`.
 
 ## Example API Configuration
 

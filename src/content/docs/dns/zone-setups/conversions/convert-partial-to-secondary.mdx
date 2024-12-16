@@ -135,8 +135,8 @@ If you keep any DNS records that still refer `cdn.cloudflare.net`, HTTP traffic 
 
 </TabItem> <TabItem label="API">
 
-Use the [Update Secondary Zone Configuration endpoint](</api/operations/secondary-dns-(-secondary-zone)-update-secondary-zone-configuration>) to link your Cloudflare zone to the peer DNS server.
+Use the [Update Secondary Zone Configuration endpoint](/api/resources/dns/subresources/zone_transfers/subresources/peers/methods/update/) to link your Cloudflare zone to the peer DNS server.
 
 </TabItem> </Tabs>
 
-4. In [**DNS** > **Settings**](https://dash.cloudflare.com/?to=/:account/:zone/dns/settings), confirm the linked peer is listed under **DNS Zone Transfers**, and select **Initiate zone transfer**. Alternatively, you can use the [Force AXFR endpoint](</api/operations/secondary-dns-(-secondary-zone)-force-axfr>).
+4. In [**DNS** > **Settings**](https://dash.cloudflare.com/?to=/:account/:zone/dns/settings), confirm the linked peer is listed under **DNS Zone Transfers**, and select **Initiate zone transfer**. Alternatively, you can use the [Force AXFR endpoint](/api/resources/dns/subresources/zone_transfers/subresources/force_axfr/methods/create/).

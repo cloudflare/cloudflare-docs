@@ -10,7 +10,7 @@ entries:
     description: |-
       Deprecation date: November 21, 2025
 
-      The `self_hosted_domains` field for [Access applications](https://developers.cloudflare.com/api/operations/access-applications-update-an-access-application) is deprecated in favor of `destinations` to allow for more flexibility in defining different types of domains.
+      The `self_hosted_domains` field for [Access applications](https://developers.cloudflare.com/api/resources/zero_trust/subresources/access/subresources/applications/methods/update/) is deprecated in favor of `destinations` to allow for more flexibility in defining different types of domains.
 
       Before:
       ```json
@@ -57,7 +57,7 @@ entries:
       Deprecation date: March 21, 2025
 
       The Zone Settings API endpoints for managing zone-level CNAME flattening are deprecated.
-      Instead, use the [Show DNS Settings](/api/operations/dns-settings-for-a-zone-list-dns-settings) and [Update DNS Settings](/api/operations/dns-settings-for-a-zone-update-dns-settings) endpoints to manage this setting.
+      Instead, use the [Show DNS Settings](/api/resources/dns/subresources/settings/methods/get/) and [Update DNS Settings](/api/resources/dns/subresources/settings/methods/edit/) endpoints to manage this setting.
 
       Changes via the old endpoints will be reflected in the new ones, and vice versa, so there is no need to migrate existing zones. However, future API calls must use DNS Settings instead of the Zone Settings endpoints.
 
@@ -80,7 +80,7 @@ entries:
       Deprecation date: March 14, 2025
 
       The fields `"default_nameservers"` and `"use_account_custom_ns_by_default"` within the `"settings"` object of accounts are deprecated.
-      Instead, use the [Show DNS Settings](/api/operations/dns-settings-for-an-account-list-dns-settings) and [Update DNS Settings](/api/operations/dns-settings-for-an-account-update-dns-settings) endpoints to manage this setting.
+      Instead, use the [Show DNS Settings](/api/resources/dns/subresources/settings/methods/get/) and [Update DNS Settings](/api/resources/dns/subresources/settings/methods/edit/) endpoints to manage this setting.
       This setting is available in the new API as `.zone_defaults.nameservers.type`, with allowed values `"cloudflare.standard"`, `"cloudflare.standard.random"`, `"custom.account"` and `"custom.tenant"`.
 
       Changes via the old endpoints will be reflected in the new ones, and vice versa, so there is no need to migrate existing zones. However, future API calls must use DNS Settings instead of the Accounts endpoints.
@@ -283,7 +283,7 @@ entries:
 
       The dedicated endpoints for DNS settings `use_apex_ns` and `secondary_overrides` are being deprecated.
 
-      Instead, use the [Show DNS Settings](/api/operations/dns-settings-for-a-zone-list-dns-settings) and [Update DNS Settings](/api/operations/dns-settings-for-a-zone-update-dns-settings) endpoints to manage these settings.
+      Instead, use the [Show DNS Settings](/api/resources/dns/subresources/settings/methods/get/) and [Update DNS Settings](/api/resources/dns/subresources/settings/methods/edit/) endpoints to manage these settings.
 
       - Instead of the `.../use_apex_ns` endpoint, use the `multi_provider` field.
       - Instead of the `.../secondary_overrides` endpoint, use the `secondary_overrides` field.
@@ -371,7 +371,7 @@ entries:
 
       The complete name would then be, e.g., `_xmpp._tcp.example.com`.
 
-      When interacting with DNS records through the [API](/api/operations/dns-records-for-a-zone-create-dns-record), SRV records contain both a full `name` as well as a `data` map containing the individual components of the name:
+      When interacting with DNS records through the [API](/api/resources/dns/subresources/records/methods/create/), SRV records contain both a full `name` as well as a `data` map containing the individual components of the name:
 
       ```txt
       {
