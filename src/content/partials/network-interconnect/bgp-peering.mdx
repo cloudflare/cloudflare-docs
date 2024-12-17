@@ -58,7 +58,7 @@ By default each BGP peering session will use the same Cloudflare side ASN to rep
 
 ### For Magic Transit customers
 - The Cloudflare side ASN will never be exposed in `AS PATH` of anycast announcements from the Cloudflare edge. In those announcements, Cloudflare will always use the Cloudflare ASN of `13335` optionally prepended with a bring-your-own ASN as described in [Cloudflare ASN vs. your own ASN](/magic-transit/how-to/advertise-prefixes/#cloudflare-asn-vs-your-own-asn)
-- The customer device ASN can be a private ASN, or the ASN they are using for Magic Transit anycast announcements at the edge: this has no impact on the ASN for the Anycast announced prefix at the edge of the Cloudflare global network.
+- The customer device ASN can be a private ASN, or the ASN they are using for Magic Transit anycast announcements at the edge: this has no impact on the ASN for the anycast announced prefix at the edge of the Cloudflare global network.
 
 ## How to set up BGP peering
 
