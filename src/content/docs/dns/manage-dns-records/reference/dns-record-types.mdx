@@ -6,7 +6,7 @@ sidebar:
 
 ---
 
-import { Render } from "~/components"
+import { Details, Render } from "~/components"
 
 This page provides information about some of the different types of DNS records that you can manage on Cloudflare. For guidance on how to add, edit, or delete DNS records, refer to [Manage DNS records](/dns/manage-dns-records/how-to/create-dns-records/).
 
@@ -318,19 +318,72 @@ Within Cloudflare, PTR records are used for reverse DNS lookups and should prefe
 
 ### SOA
 
-A [start of authority (SOA)](https://www.cloudflare.com/learning/dns/dns-records/dns-soa-record/) record stores information about your domain such as admin email address, when the domain was last updated, and more.
+A start of authority (SOA) record stores information about your domain such as admin email address, when the domain was last updated, and more. Refer to [What is a DNS SOA record](https://www.cloudflare.com/learning/dns/dns-records/dns-soa-record/) for an example.
 
 If you are using Cloudflare for your [authoritative DNS](/dns/zone-setups/full-setup/), you do not need to create an SOA record. Cloudflare creates this record automatically when you start using Cloudflare's authoritative nameservers.
 
-<Render file="api-field-definitions" />
+If you have an Enterprise account, you also have the option to change the SOA record values that Cloudflare will use.
+You can do that for existing zones by going to **DNS** > **Records** > **DNS record options**, or you can configure your own [DNS zone defaults](/dns/additional-options/dns-zone-defaults/) and define the SOA record values that Cloudflare will use for all new zones added to your account.
+
+Refer to the following list for information about each SOA record field:
+
+<Details header="SOA record fields">
+
+* **`MNAME`**: The primary nameserver for the zone. Secondary nameservers receive zone updates from the nameserver specified in this field.
+* **`RNAME`**: The email address of the administrator responsible for the zone.
+
+    The `@` symbol is replaced by the first dot. If an email address contains a dot before `@`, this should be represented as `\.`.
+
+    | Email                     | `RNAME`                 |
+    |---------------------------|-------------------------|
+    |`john@example.com`         | `john.example.com`      |
+    |`john.doe@example.com`     | `john\.doe.example.com` |
+
+* **`Serial`**: The serial number for the zone. Secondary nameservers initiate zone transfers if this number increases.
+* **`Refresh`**: Time (in seconds) after which a secondary nameserver should query the primary for the `SOA` record, to detect zone changes. Only relevant if DNS NOTIFY ([RFC 1996](https://www.rfc-editor.org/rfc/rfc1996.html)) is not configured.
+
+    | Default      | Minimum    | Maximum  |
+    |--------------|------------|----------|
+    |`10000`       | `600`      | `86400`  |
+
+* **`Retry`**: Time (in seconds) after which a secondary nameserver should retry getting the serial number from the primary nameserver after a failed attempt. Any specified values must not be greater than `Refresh`.
+
+    | Default      | Minimum    | Maximum  |
+    |--------------|------------|----------|
+    |`2400`        | `600`      | `3600`   |
+
+* **`Expire`**: Time (in seconds) after which a secondary nameserver should stop answering queries for a zone if the primary does not respond. Any specified values must not be smaller than `Refresh`.
+
+    | Default      | Minimum    | Maximum   |
+    |--------------|------------|-----------|
+    |`604800`      | `86400`    | `2419200` |
+
+* **`Record TTL`**: The [time to live](/dns/manage-dns-records/reference/ttl/) of the SOA record.
+
+    | Default      | Minimum    | Maximum  |
+    |--------------|------------|----------|
+    |`3600`        | `1800`     | `3600`   |
+
+* **`Minimum TTL`**: The TTL for caching negative responses. Refer to [RFC 2308](https://www.rfc-editor.org/rfc/rfc2308.html#section-4) for details.
+
+    | Default      | Minimum    | Maximum  |
+    |--------------|------------|----------|
+    |`1800`        | `60`       | `86400`  |
+
+
+</Details>
 
 ### NS
 
 A [nameserver (NS) record](https://www.cloudflare.com/learning/dns/dns-records/dns-ns-record/) indicates which server should be used for authoritative DNS.
 
-You only need to add NS records when you are [creating custom or vanity nameservers](/dns/nameservers/custom-nameservers/), using [subdomain setup](/dns/zone-setups/subdomain-setup/), or [delegating subdomains outside of Cloudflare](/dns/manage-dns-records/how-to/subdomains-outside-cloudflare/).
+You only need to add NS records to your DNS records table in Cloudflare when you are using [subdomain setup](/dns/zone-setups/subdomain-setup/) or [delegating subdomains outside of Cloudflare](/dns/manage-dns-records/how-to/subdomains-outside-cloudflare/).
 
 <Render file="api-field-definitions" />
+
+:::note
+Your assigned Cloudflare nameservers, custom nameservers, and their corresponding [nameserver TTLs](/dns/nameservers/nameserver-options/#nameserver-ttl) are controlled via dedicated sections in [**DNS** > **Records**](https://dash.cloudflare.com/?to=/:account/:zone/dns/records). For details, refer to [Nameservers](/dns/nameservers/).
+:::
 
 ### DS and DNSKEY
 

@@ -18,7 +18,7 @@ Follow the steps below to achieve this conversion.
 
 1. [Export a zone file](/dns/manage-dns-records/how-to/import-and-export/#export-records).
 2. Import the zone file into your new primary DNS provider.
-3. At your Cloudflare zone, use the [Update DNS Settings](/api/operations/dns-settings-for-a-zone-update-dns-settings) endpoint to enable [secondary DNS overrides](/dns/zone-setups/zone-transfers/cloudflare-as-secondary/proxy-traffic/). Set the value for `secondary_overrides` to `true`.
+3. At your Cloudflare zone, use the [Update DNS Settings](/api/resources/dns/subresources/settings/methods/edit/) endpoint to enable [secondary DNS overrides](/dns/zone-setups/zone-transfers/cloudflare-as-secondary/proxy-traffic/). Set the value for `secondary_overrides` to `true`.
 
     :::note
     Enabling secondary DNS overrides is necessary in case you have DNS records that you wish to keep <GlossaryTooltip term="proxy status" link="/dns/manage-dns-records/reference/proxied-dns-records/">proxied</GlossaryTooltip>.
@@ -47,7 +47,7 @@ Follow the steps below to achieve this conversion.
 
 ## 3. Convert the zone and initiate zone transfers
 
-1. Use the [Edit Zone endpoint](/api/operations/zones-0-patch) with `type` set to `secondary` to convert the zone type. The existing records will remain in place.
+1. Use the [Edit Zone endpoint](/api/resources/zones/methods/edit/) with `type` set to `secondary` to convert the zone type. The existing records will remain in place.
 2. Go to **DNS** > **Settings** > **DNS Zone Transfers** and select **Manage linked peers**.
 3. Link the peer server you created in the previous steps and select **Save**.
 4. On  **DNS** > **Settings**, select **Initiate zone transfer**.

@@ -28,7 +28,7 @@ This is especially useful if you already have mTLS implemented and client certif
 
 ## Set up mTLS with your CA
 
-1. Use the [Upload mTLS certificate endpoint](/api/operations/m-tls-certificate-management-upload-m-tls-certificate) to upload the CA root certificate.
+1. Use the [Upload mTLS certificate endpoint](/api/resources/mtls_certificates/methods/create/) to upload the CA root certificate.
 
 
 
@@ -46,7 +46,7 @@ This is especially useful if you already have mTLS implemented and client certif
 
 
 2. Take note of the certificate ID (`id`) that is returned in the API response.
-3. Use the [Replace Hostname Associations endpoint](/api/operations/client-certificate-for-a-zone-put-hostname-associations) to enable mTLS in each hostname that should use the CA for mTLS validation. Use the following parameters:
+3. Use the [Replace Hostname Associations endpoint](/api/resources/certificate_authorities/subresources/hostname_associations/methods/update/) to enable mTLS in each hostname that should use the CA for mTLS validation. Use the following parameters:
 
 
 
@@ -82,23 +82,21 @@ This is especially useful if you already have mTLS implemented and client certif
 
 If you want to remove a CA that you have previously uploaded, you must first remove any hostname associations that it has.
 
-1. Make a request to the [Replace Hostname Associations endpoint](/api/operations/client-certificate-for-a-zone-put-hostname-associations), with an empty array for `hostnames` and specifying your CA certificate ID in `mtls_certificate_id`:
+1. Make a request to the [Replace Hostname Associations endpoint](/api/resources/certificate_authorities/subresources/hostname_associations/methods/update/), with an empty array for `hostnames` and specifying your CA certificate ID in `mtls_certificate_id`:
 
 ```txt
   "hostnames": [],
   "mtls_certificate_id": "<CERTIFICATE_ID>"
 ```
 
-2. Use the [Delete mTLS certificate endpoint](/api/operations/m-tls-certificate-management-delete-m-tls-certificate) to delete the certificate.
+2. Use the [Delete mTLS certificate endpoint](/api/resources/mtls_certificates/methods/delete/) to delete the certificate.
 
 ## List CA hostname associations
 
-You can also use the [API](/api/operations/client-certificate-for-a-zone-list-hostname-associations) to list the hostname associations. Make sure you include the query parameter `mtls_certificate_id`, where `mtls_certificate_id` is the certificate ID of the uploaded CA (step 2 above).
+You can also use the [API](/api/resources/certificate_authorities/subresources/hostname_associations/methods/get/) to list the hostname associations. Make sure you include the query parameter `mtls_certificate_id`, where `mtls_certificate_id` is the certificate ID of the uploaded CA (step 2 above).
 
 ```bash
 curl "https://api.cloudflare.com/client/v4/zones/zone_id/certificate_authorities/hostname_associations?mtls_certificate_id={id_from_step_2}"  \
 --header "X-Auth-Email: <EMAIL>" \
 --header "X-Auth-Key: <API_KEY>"
 ```
-
-

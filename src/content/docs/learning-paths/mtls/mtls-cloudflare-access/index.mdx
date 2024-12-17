@@ -104,7 +104,7 @@ cfssl gencert -ca=ca.pem -ca-key=ca-key.pem -config=ca-config.json -profile=clie
 
 Follow the steps outlined in the [developer documentation](/cloudflare-one/identity/devices/access-integrations/mutual-tls-authentication/#add-mtls-authentication-to-your-access-configuration).
 
-Using the example from Step 2: upload the `ca.pem` to your Cloudflare Access account via the [dashboard](/cloudflare-one/identity/devices/access-integrations/mutual-tls-authentication/#add-mtls-authentication-to-your-access-configuration) or [Cloudflare API](/api/operations/access-mtls-authentication-add-an-mtls-certificate).
+Using the example from Step 2: upload the `ca.pem` to your Cloudflare Access account via the [dashboard](/cloudflare-one/identity/devices/access-integrations/mutual-tls-authentication/#add-mtls-authentication-to-your-access-configuration) or [Cloudflare API](/api/resources/zero_trust/subresources/access/subresources/certificates/methods/create/).
 
 Do not forget to enter the fully-qualified domain names (FQDN / associated hostnames) that will use this CA certificate.
 

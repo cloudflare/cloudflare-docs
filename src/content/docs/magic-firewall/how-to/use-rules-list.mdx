@@ -14,7 +14,7 @@ IP lists are defined at the account level and can be used to match against `ip.s
 
 To use this feature:
 
-## 1. Create a [new IP list](/api/operations/lists-create-a-list).
+## 1. Create a [new IP list](/api/resources/rules/subresources/lists/methods/create/).
 
 For example:
 
@@ -32,7 +32,7 @@ curl https://api.cloudflare.com/client/v4/accounts/{account_id}/rules/lists \
 
 ## 2. Add IPs to the list
 
-Next, [create list items](/api/operations/lists-create-list-items). This will add elements to the current list.
+Next, [create list items](/api/resources/rules/subresources/lists/subresources/items/methods/create/). This will add elements to the current list.
 
 ```bash
 curl https://api.cloudflare.com/client/v4/accounts/{account_id}/rules/lists/{list_id}/items \

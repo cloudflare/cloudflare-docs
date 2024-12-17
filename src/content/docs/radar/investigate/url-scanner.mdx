@@ -8,7 +8,7 @@ sidebar:
 
 import { GlossaryTooltip } from "~/components"
 
-To better understand Internet usage around the world, use Cloudflare's URL Scanner. With Cloudflare's URL Scanner, you have the ability to investigate the details of a domain, IP, URL, or ASN. Cloudflare's URL Scanner is available in the Security Center of the Cloudflare dashboard, [Cloudflare Radar](https://radar.cloudflare.com/scan) and the Cloudflare [API](/api/operations/urlscanner-search-scans).
+To better understand Internet usage around the world, use Cloudflare's URL Scanner. With Cloudflare's URL Scanner, you have the ability to investigate the details of a domain, IP, URL, or ASN. Cloudflare's URL Scanner is available in the Security Center of the Cloudflare dashboard, [Cloudflare Radar](https://radar.cloudflare.com/scan) and the Cloudflare [API](/api/resources/url_scanner/subresources/scans/methods/list/).
 
 ## Use the API
 
@@ -110,9 +110,9 @@ Some examples of more specific properties include:
 * `page.securityViolations` - <GlossaryTooltip term="content security policy (CSP)" link="https://developer.mozilla.org/en-US/docs/Web/HTTP/CSP">CSP</GlossaryTooltip> or [SRI](https://developer.mozilla.org/en-US/docs/Web/Security/Subresource_Integrity) violations.
 * `verdicts.overall.malicious` - Whether the website was considered malicious *at the time of the scan*. Please check the remaining properties for each subsystem(s) for specific threats detected.
 
-The [Get URL Scan](/api/operations/urlscanner-get-scan) API endpoint documentation contains the full response schema.
+The [Get URL Scan](/api/resources/url_scanner/subresources/scans/methods/get/) API endpoint documentation contains the full response schema.
 
-To fetch the scan's [screenshots](/api/operations/urlscanner-get-scan-screenshot) or full [network log](/api/operations/urlscanner-get-scan-har) refer to the corresponding endpoints' documentation.
+To fetch the scan's [screenshots](/api/resources/url_scanner/subresources/scans/methods/get/-screenshot) or full [network log](/api/resources/url_scanner/subresources/scans/methods/get/-har) refer to the corresponding endpoints' documentation.
 
 ### Search scans
 
@@ -134,6 +134,6 @@ curl "https://api.cloudflare.com/client/v4/accounts/{account_id}/urlscanner/scan
 
 You can also search for the hash in the URL Scanner API.
 
-Go to [Search URL scans](/api/operations/urlscanner-search-scans) in the API documentation for the full list of available options.
+Go to [Search URL scans](/api/resources/url_scanner/subresources/scans/methods/list/) in the API documentation for the full list of available options.
 
 Alternatively, you can search for the hash on the [Cloudflare dashboard](https://dash.cloudflare.com/) by selecting your account > **Security Center** > **Investigate** > Enter the hash > Select **Search**.

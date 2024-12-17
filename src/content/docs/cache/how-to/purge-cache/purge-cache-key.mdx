@@ -6,11 +6,11 @@ sidebar:
 
 ---
 
-Instantly purge resources that use Cache Keys via the [Cloudflare API](/api/operations/zone-purge). If you use [Cloudflare's Purge by URL](/api/operations/zone-purge#purge-cached-content-by-url), include the headers and query strings that are in your custom Cache Key.
+Instantly purge resources that use Cache Keys via the [Cloudflare API](/api/resources/cache/methods/purge/). If you use [Cloudflare's Purge by URL](/api/resources/cache/methods/purge/#purge-cached-content-by-url), include the headers and query strings that are in your custom Cache Key.
 
 Currently, it is not possible to purge a URL stored through Cache API that uses a custom cache key set by a Worker. Instead, use a [custom key created by Cache Rules](/cache/how-to/cache-rules/settings/#cache-key). Alternatively, purge your assets using purge everything, purge by tag, purge by host or purge by prefix.
 
-To instantly purge by `device_type`, `geo`, or `lang` use `CF-Device-Type`, `CF-IPCountry` or `accept-language`, respectively. [Purge by Tag / Host](/api/operations/zone-purge#purge-cached-content-by-tag-host-or-prefix) and [Purge Everything](/api/operations/zone-purge#purge-all-cached-content) are not impacted by the use of custom Cache Keys.
+To instantly purge by `device_type`, `geo`, or `lang` use `CF-Device-Type`, `CF-IPCountry` or `accept-language`, respectively. [Purge by Tag / Host](/api/resources/cache/methods/purge/#purge-cached-content-by-tag-host-or-prefix) and [Purge Everything](/api/resources/cache/methods/purge/#purge-all-cached-content) are not impacted by the use of custom Cache Keys.
 
 ## Purge by device type
 

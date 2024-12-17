@@ -139,7 +139,7 @@ Lastly, Gateway evaluates all Allow, Block, and Do Not Scan policies. These poli
 
 :::caution[Terraform precedence limitation]
 
-To avoid conflicts, Terraform applies a hash calculation to precedences. For example, a precedence of `1000` may become `1000901`. This can cause errors when reordering policies. To avoid this issue, manually set the precedence of your policies via the [Cloudflare API](/api/operations/zero-trust-gateway-rules-update-zero-trust-gateway-rule).
+To avoid conflicts, Terraform applies a hash calculation to precedences. For example, a precedence of `1000` may become `1000901`. This can cause errors when reordering policies. To avoid this issue, manually set the precedence of your policies via the [Cloudflare API](/api/resources/zero_trust/subresources/gateway/subresources/rules/methods/update/).
 :::
 
 ## Example

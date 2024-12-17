@@ -20,7 +20,7 @@ A few common rate limiting configuration issues prevent proper request matches:
 
 ## Common API errors
 
-The following common errors may prevent configuring rate limiting rules via the [Cloudflare API](/api/operations/rate-limits-for-a-zone-create-a-rate-limit):  
+The following common errors may prevent configuring rate limiting rules via the [Cloudflare API](/api/resources/rate_limits/methods/create/):  
 
 * `Decoding is not yet implemented` – Indicates that your request is missing the `Content-Type: application/json` header. Add the header to your API request to fix the issue.
 * `Ratelimit.api.not_entitled` – Enterprise customers must contact their account team before adding rules.

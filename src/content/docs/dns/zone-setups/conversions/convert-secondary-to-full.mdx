@@ -27,11 +27,11 @@ Follow the steps below to achieve this conversion.
     - If you have [Secondary DNS override](/dns/zone-setups/zone-transfers/cloudflare-as-secondary/proxy-traffic/), confirm each record has the appropriate setting (**Proxied** or **DNS only**).
     - If [Secondary DNS override](/dns/zone-setups/zone-transfers/cloudflare-as-secondary/proxy-traffic/) is disabled, make sure all of your DNS records are listed as **DNS only**.
 
-3. (Optional) For consistency, use the [Update DNS Settings](/api/operations/dns-settings-for-a-zone-update-dns-settings) endpoint to specify SOA record fields according to your needs. Once Cloudflare automatically generates an SOA record for your zone on full setup, the field overrides will be considered.
+3. (Optional) For consistency, use the [Update DNS Settings](/api/resources/dns/subresources/settings/methods/edit/) endpoint to specify SOA record fields according to your needs. Once Cloudflare automatically generates an SOA record for your zone on full setup, the field overrides will be considered.
 
 ## 3. Convert your zone
 
-1. Use the [Edit Zone endpoint](/api/operations/zones-0-patch) with `type` set to `full` to convert the zone type. Existing DNS records will not be affected.
+1. Use the [Edit Zone endpoint](/api/resources/zones/methods/edit/) with `type` set to `full` to convert the zone type. Existing DNS records will not be affected.
 2. Go to [**DNS** > **Records**](https://dash.cloudflare.com/?to=/:account/:zone/dns/records) and take note of your new **Cloudflare Nameservers**.
 3. At your domain registrar (or parent zone), [update your nameservers](/dns/nameservers/update-nameservers/). Replace the nameservers ending in `secondary.cloudflare.com` by the ones ending in `ns.cloudflare.com`.
 

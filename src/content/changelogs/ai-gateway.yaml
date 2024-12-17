@@ -92,7 +92,7 @@ entries:
   - publish_date: "2024-05-09"
 
     description: |-
-      * Added new endpoints to the [REST API](/api/operations/aig-config-create-gateway).
+      * Added new endpoints to the [REST API](/api/resources/ai_gateway/methods/create/).
 
   - publish_date: "2024-03-26"
 

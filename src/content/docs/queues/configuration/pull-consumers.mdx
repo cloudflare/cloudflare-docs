@@ -114,7 +114,7 @@ You will need to note the token down: it will only be displayed once.
 
 ## 3. Pull messages
 
-To pull a message, make a HTTP POST request to the [Queues REST API](/api/operations/queue-v2-messages-pull) with a JSON-encoded body that optionally specifies a `visibility_timeout` and a `batch_size`, or an empty JSON object (`{}`):
+To pull a message, make a HTTP POST request to the [Queues REST API](/api/resources/queues/subresources/messages/methods/pull/) with a JSON-encoded body that optionally specifies a `visibility_timeout` and a `batch_size`, or an empty JSON object (`{}`):
 
 ```ts
 // POST /accounts/${CF_ACCOUNT_ID}/queues/${QUEUE_ID}/messages/pull with the timeout & batch size
@@ -173,7 +173,7 @@ Pull consumers follow a "short polling" approach: if there are messages availabl
 
 :::note
 
-The [`pull`](/api/operations/queue-v2-messages-pull) and [`ack`](/api/operations/queue-v2-messages-ack) endpoints use the new `/queues/queue_id/messages/{action}` API format, as defined in the Queues API documentation.
+The [`pull`](/api/resources/queues/subresources/messages/methods/pull/) and [`ack`](/api/resources/queues/subresources/messages/methods/ack/) endpoints use the new `/queues/queue_id/messages/{action}` API format, as defined in the Queues API documentation.
 
 The undocumented `/queues/queue_id/{action}` endpoints are not supported and will be deprecated as of June 30th, 2024.
 
@@ -206,7 +206,7 @@ Multiple consumers can be useful in cases where you have multiple upstream resou
 
 Messages pulled by a consumer need to be either acknowledged or marked for retry.
 
-To acknowledge and/or mark messages to be retried, make a HTTP `POST` request to `/ack` endpoint of your queue per the [Queues REST API](/api/operations/queue-v2-messages-ack) by providing an array of `lease_id` objects to acknowledge and/or retry:
+To acknowledge and/or mark messages to be retried, make a HTTP `POST` request to `/ack` endpoint of your queue per the [Queues REST API](/api/resources/queues/subresources/messages/methods/ack/) by providing an array of `lease_id` objects to acknowledge and/or retry:
 
 ```ts
 // POST /accounts/${CF_ACCOUNT_ID}/queues/${QUEUE_ID}/messages/ack with the lease_ids
@@ -297,6 +297,6 @@ Your consumer will need to decode the `json` and `bytes` types before operating 
 
 ## Next steps
 
-- Review the [REST API documentation](/api/operations/queue-v2-create-queue-consumer) and schema for Queues.
+- Review the [REST API documentation](/api/resources/queues/subresources/consumers/methods/create/) and schema for Queues.
 - Learn more about [how to make API calls](/fundamentals/api/how-to/make-api-calls/) to the Cloudflare API.
 - Understand [what limit apply](/queues/platform/limits/) when consuming and writing to a queue.

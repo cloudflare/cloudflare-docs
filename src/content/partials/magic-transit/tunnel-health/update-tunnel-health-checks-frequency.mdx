@@ -6,7 +6,7 @@ params:
 
 import { GlossaryTooltip, Markdown, TabItem, Tabs } from "~/components";
 
-By default, Cloudflare servers send <GlossaryTooltip term="tunnel health-check" link={props.healthChecksUrl}>health checks</GlossaryTooltip> to each <GlossaryTooltip term="GRE tunnel">GRE</GlossaryTooltip>, CNI, or <GlossaryTooltip term="IPsec tunnel">IPsec</GlossaryTooltip> tunnel endpoint you configure to receive traffic from Magic Transit and Magic WAN. You can configure this frequency via the dashboard or [the API](/api/operations/magic-gre-tunnels-update-gre-tunnel) to suit your use case. For example, if you are connecting a lower-traffic site for which you do not need immediate failover and would rather receive a lower volume of health check traffic, you should set the frequency to `low`. On the other hand, if you are connecting a site that is extremely sensitive to any issues, and you want a more proactive failover at the earliest sign of a potential problem, you should set this to `high`.
+By default, Cloudflare servers send <GlossaryTooltip term="tunnel health-check" link={props.healthChecksUrl}>health checks</GlossaryTooltip> to each <GlossaryTooltip term="GRE tunnel">GRE</GlossaryTooltip>, CNI, or <GlossaryTooltip term="IPsec tunnel">IPsec</GlossaryTooltip> tunnel endpoint you configure to receive traffic from Magic Transit and Magic WAN. You can configure this frequency via the dashboard or [the API](/api/resources/magic_transit/subresources/gre_tunnels/methods/update/) to suit your use case. For example, if you are connecting a lower-traffic site for which you do not need immediate failover and would rather receive a lower volume of health check traffic, you should set the frequency to `low`. On the other hand, if you are connecting a site that is extremely sensitive to any issues, and you want a more proactive failover at the earliest sign of a potential problem, you should set this to `high`.
 
 Available options are `low`, `mid`, and `high`.
 
@@ -18,7 +18,7 @@ Available options are `low`, `mid`, and `high`.
 
 </TabItem> <TabItem label="API">
 
-You can adjust the health check frequency by updating your [GRE](/api/operations/magic-gre-tunnels-update-gre-tunnel), [IPsec](/api/operations/magic-ipsec-tunnels-update-ipsec-tunnel), or [CNI](/api/operations/magic-interconnects-update-interconnect) tunnels.
+You can adjust the health check frequency by updating your [GRE](/api/resources/magic_transit/subresources/gre_tunnels/methods/update/), [IPsec](/api/resources/magic_transit/subresources/ipsec_tunnels/methods/update/), or [CNI](/api/resources/magic_transit/subresources/cf_interconnects/methods/update/) tunnels.
 
 Below is an example of how to adjust tunnel health check frequency to `low`. Note that this command applies to GRE, IPsec and CNI tunnels:
 
