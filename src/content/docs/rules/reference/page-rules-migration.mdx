@@ -5,17 +5,24 @@ sidebar:
   order: 3
 ---
 
-import { Render, TabItem, Tabs } from "~/components";
+import { Render, TabItem, Tabs, Example } from "~/components";
 
-Cloudflare recommends that you consider using modern Rules features for your new implementations instead of Page Rules. Follow the recommendations in this migration guide to learn about the [new Rules products](/rules/) and how you can start adopting them today.
+Cloudflare is continuously improving its platform to deliver more powerful and scalable tools for managing your configurations. To help you take full advantage of these improvements, we recommend using [modern Rules features](/rules/) for new implementations. These products address the limitations of Page Rules while providing greater flexibility, scalability, and ease of use.
+
+For a quick start, explore the one-click templates available in the Cloudflare dashboard in **Rules** > **Templates**. These templates simplify common configurations like redirects, rewrites and header modifications, making setup faster and easier.
 
 ## Page Rules migration
 
-Cloudflare plans to migrate your existing Page Rules during 2025. You do not need to migrate your own rules, as Cloudflare will handle this process for you. However, it is beneficial to understand the correspondence between the different Page Rules settings and new Rules features ahead of the migration. This will help you familiarize yourself with implementing the new types of rules in your Cloudflare account.
+To make the transition seamless, Cloudflare will handle the migration of your existing Page Rules automatically. This process is planned for late 2025 or beyond, with no action required on your part. You will receive advance notification before any changes are made.
 
-We encourage you to explore and start using the new Rules products to take advantage of their enhanced capabilities and features. This migration guide will be updated in the coming months with additional information about the Page Rules migration. Some instructions may also change as we simplify configuration deployment and release new features as part of this project. Cloudflare users will receive email updates about the migration of the Page Rules configured on their Cloudflare account before the migration occurs. We will not perform any migration or changes on your behalf without prior notification.
+If you wish to explore the benefits of modern Rules features sooner, you can begin adopting them today. Doing so allows you to:
 
-## Context
+- Take advantage of modern features and capabilities sooner.
+- Customise and refine your rules to match your evolving needs.
+
+To assist with this process, we provide you with a comprehensive mapping between Page Rules settings and modern Rules products in this guide.
+
+## Why transition?
 
 Cloudflare Page Rules has several fundamental limitations, such as triggering solely based on URL patterns and being limited to 125 rules per zone for performance reasons. These rules are also complex to debug when multiple page rules apply to the same incoming request.
 
@@ -28,64 +35,44 @@ Improvements in modern Rules features include:
 - **Easier troubleshooting**: Rule execution is more predictable, since each rule operates independently, simplifying troubleshooting. Additionally, [Cloudflare Trace](/fundamentals/basic-tasks/trace-request/) helps understand rule interactions.
 - **Improved consistency**: New Rules features also ensure consistency, with common fields and capabilities shared across products, offering a seamless experience and predictable Terraform configurations.
 
-## Important differences
+## Key differences
 
 The evaluation and execution order of Rules features is different from Page Rules:
 
-- Requests handled by Workers will suppress Page Rules actions, but they will not suppress actions from modern Rules features.
-- The first Page Rule to match is applied (also called first match). In contrast, other rules like Cache Rules are stackable. This means that multiple matching rules can be combined and applied to the same request (last match). For example, if multiple cache rules match the same URL, then the features set in those cache rules will all be applied in order. For more information, refer to [Order and priority](/cache/how-to/cache-rules/order/) in the Cache documentation and the [Origin Rules FAQ](/rules/origin-rules/faq/#what-happens-if-more-than-one-origin-rule-matches-the-current-request).
-- A Page Rule may include multiple configurations for different products that are applied in a sequence selected by the customer. In contrast, modern Rules features are evaluated [in a fixed sequence](/rules/origin-rules/#execution-order), with a customer being able to define the rule order within a product [phase](/ruleset-engine/reference/phases-list/). Refer to the [Ruleset Engine documentation](/ruleset-engine/about/) for more information.
-- Modern Rules features will take precedence over Page Rules. For example, if you have Page Rules and Cache Rules defining caching settings for the same path, Cache Rules will take precedence.
-
-### Behavior change in Cache Rules
-
-There is a behavior change between Page Rules and Cache Rules: when you select **Eligible for cache** in a cache rule, the Cache Everything feature is now enabled by default.
-
-If you need to keep the exact same behavior you had with Page Rules, you will need to make some additional configurations. For details, refer to [Migration from Page Rules](/cache/how-to/cache-rules/page-rules-migration/) in the Cache documentation.
+- **Rule matching logic**: Page Rules apply the first matching rule (first match wins). In contrast, modern Rules are stackable, meaning multiple matching rules can combine and apply to the same request (last match wins). For example, if multiple cache rules match the same URL, the features in those rules will all apply in order.
+- **Action separation**: A Page Rule may include multiple actions for different products that are applied in a sequence selected by the customer within the Page Rule itself. Modern Rules features are evaluated [in a fixed sequence](/rules/origin-rules/#execution-order), with customers defining the rule order within a product [phase](/ruleset-engine/reference/phases-list/).
+- **Precedence**: Modern Rules features take precedence over Page Rules. For instance, if both define caching settings for the same path, Cache Rules will override Page Rules.
+- **Caching behavior**: In Cache Rules, selecting **Eligible for cache** automatically enables **Cache Everything** by default. To maintain the exact behavior of Page Rules, you may need to [adjust your configuration](/cache/how-to/cache-rules/page-rules-migration/).
+- **Interactions with Workers**: Requests handled by Workers will suppress Page Rules actions, but they will not suppress actions from modern Rules features.
 
 ## Convert Page Rules URLs to filter expressions
 
-When migrating a Page Rule you will need to write a filter expression equivalent to your Page Rules URL using the Rules language.
+Modern Rules use filter expressions instead of URL patterns. These expressions, built with the Rules language, allow greater precision by leveraging [fields](/ruleset-engine/rules-language/fields/), [functions](/ruleset-engine/rules-language/functions/), and [operators](/ruleset-engine/rules-language/operators/).
 
-Rule filter expressions are built differently from Page Rules URLs. You can use different elements of the Rules language in a filter expression, including [fields](/ruleset-engine/rules-language/fields/), [functions](/ruleset-engine/rules-language/functions/), and [operators](/ruleset-engine/rules-language/operators/).
+The following example demonstrates the use of the [`http.request.full_uri`](/ruleset-engine/rules-language/fields/standard-fields/#httprequestfull_uri) field and the `wildcard` operator for [wildcard matching](/ruleset-engine/rules-language/operators/#wildcard-matching):
 
-You will need to adapt your Page Rules URLs when migrating them to modern rules. In the Rules language, use the `wildcard` and `strict wildcard` operators (case insensitive and case sensitive operator, respectively) for [wildcard matching](/ruleset-engine/rules-language/operators/#wildcard-matching). Enterprise and Business customers can use regular expressions, but it will also require adapting the original URLs in your Page Rules to regular expressions.
+<Example>
+A **Page Rules URL** like:
 
-### Matching full URIs with wildcards
+`example.com/*/downloads/*.txt` 
 
-The Page Rules URL matching does not take into account the URI scheme (for example, `https://`) and the query string of incoming requests, unless included in the rule URL. However, the `http.request.full_uri` field used in filter expressions includes the URI scheme and the query string (when the incoming request includes one). When writing a filter expression equivalent to a Page Rule URL, you may want to perform wildcard matching on the full URI. To check for a match regardless of the URI scheme and query string, you can add a `*` wildcard at the beginning and at the end of the literal string with wildcards.
+becomes a **filter expression** such as:
 
-For example, if you were using the Page Rules URL `example.com/*/downloads/*.txt`, in modern Rules features you could use an expression such as `http.request.full_uri wildcard *example.com/*/downloads/*.txt*` to make sure it matches any scheme and any query string.
+`http.request.full_uri wildcard "http*://example.com/*/downloads/*.txt*"`
+</Example>
 
-Alternatively, you could match on individual hostname and URI path fields instead of the full URI field. For example, `http.host eq "example.com" and http.request.uri.path wildcard "/*/downloads/*.txt"`. This was the conversion method followed in the table with example conversions from Page Rules URLs to filter expressions.
+[Single Redirects](/rules/url-forwarding/single-redirects/create-dashboard/) and [Rewrite URL](/rules/transform/url-rewrite/create-dashboard/) rules also offer a simplified view called **Wildcard pattern**, allowing you to specify URL patterns (`http*://example.com/*/downloads/*.txt*`) without specifying the full filter expression (`http.request.full_uri wildcard "http*://example.com/*/downloads/*.txt*"`).
 
-### Example conversions from Page Rules URLs to filter expressions
+### Important considerations
 
-The following table lists the most common Page Rule URLs and their equivalent filters:
-
-<table-wrap style="font-size: 87%">
-
-| Target and components                                                                                   | <div style="width:130px">Page Rule URL example</div>                                                    | Filter expression using Rules language                                                                                                                                               |
-| ------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| Index page of root domain only<br/>_(Domain + Path)_                                                    | `example.com/`                                                                                          | `http.host eq "example.com" and http.request.uri.path eq "/"`                                                                                                                        |
-| Everything on a specific domain<br/>_(Domain)_                                                          | `example.com/*`                                                                                         | `http.host eq "example.com"`                                                                                                                                                         |
-| All subdomains and URLs on a specific domain<br/>_(Domain)_                                             | `*example.com/*`                                                                                        | `http.host contains "example.com"`                                                                                                                                                   |
-| Only subdomains and their URLs<br/>_(Domain)_                                                           | `*.example.com/*`                                                                                       | `http.host contains ".example.com"`                                                                                                                                                  |
-| Specific file on subdomains of a specific domain<br/>_(Domain + Path)_                                  | `*.example.com/*wp-login.php`                                                                           | `ends_with(http.host, ".example.com") and ends_with(http.request.uri.path, "wp-login.php")`                                                                                          |
-| Specific file extension in a directory or its subdirectories of a domain<br/>_(Domain + Path)_          | `example.com/archives/*.zip`                                                                            | `http.host eq "example.com" and starts_with(http.request.uri.path, "/archives/") and http.request.uri.path.extension eq "zip"`                                                       |
-| Specific file extension in any subdirectory of a domain<br/>_(Domain + Path)_                           | `example.com/*/downloads/*.txt`                                                                         | `http.host eq "example.com" and not starts_with(http.request.uri.path, "/downloads/") and http.request.uri.path contains "/downloads/" and http.request.uri.path.extension eq "txt"` |
-| Specific directory and all its contents on all subdomains of a specific subdomain<br/>_(Domain + Path)_ | `*cdn.example.com/file/*`                                                                               | `http.request.full_uri contains "cdn.example.com/file/"`                                                                                                                             |
-| Specific URL on all domains<br/>_(Path)_                                                                | `*/images`<br/>(required [Cloudflare for SaaS](/cloudflare-for-platforms/cloudflare-for-saas/))         | `http.request.uri.path eq "/images"`                                                                                                                                                 |
-| Specific directory and its subdirectories on all domains<br/>_(Path)_                                   | `*/images/*`<br/>(required [Cloudflare for SaaS](/cloudflare-for-platforms/cloudflare-for-saas/))       | `starts_with(http.request.uri.path, "/images/")`                                                                                                                                     |
-| Specific file in any directory<br/>_(Path)_                                                             | `*/wp-login.php`<br/>(required [Cloudflare for SaaS](/cloudflare-for-platforms/cloudflare-for-saas/))   | `ends_with(http.request.uri.path, "/wp-login.php")`                                                                                                                                  |
-| Specific query string on all domains<br/>_(Path)_                                                       | `*/*?country=GB`<br/>(required [Cloudflare for SaaS](/cloudflare-for-platforms/cloudflare-for-saas/))   | `http.request.uri.query eq "country=GB"`                                                                                                                                             |
-| Part of a query string on all domains<br/>_(Path)_                                                      | `*/*?*country=GB*`<br/>(required [Cloudflare for SaaS](/cloudflare-for-platforms/cloudflare-for-saas/)) | `http.request.uri.query contains "country=GB"`                                                                                                                                       |
-
-</table-wrap>
+- **Protocol scheme**: Page Rules URL matching does not include the URI scheme (for example, `http://` or `https://`) unless explicitly included in the rule. Filter expressions using `http.request.full_uri` field, however, require matching the full URI, including the protocol scheme. To make your filter expression scheme-agnostic, use `http*://` as a wildcard for both `http://` and `https://`.
+- **Query strings**: Page Rules ignore query strings unless they are part of the rule URL. Filter expressions include the query string automatically, as part of the `http.request.full_uri` field. To ensure query strings do not affect your matching, append a `*` wildcard at the end of your filter expression, such as `.txt*`.
 
 ## Feature correspondence table
 
-The following table summarizes how different Page Rules settings will be migrated to other Rules features. You can refer to this table and the next sections to learn more about the new way of implementing a given Page Rules setting, and also to learn how you can manually migrate your existing Page Rules.
+To help you map existing Page Rules to modern Rules products, this table outlines how Page Rules settings translate to modern Rules and provides examples for common configurations.
+
+Also, to streamline common configurations, the Cloudflare dashboard now includes dozens of one-click templates, available in **Rules** > **Templates**. These templates enable you to deploy commonly used features — such as redirects, rewrites, and header modifications — instantly, with pre-filled filter expressions and actions. Explore these templates in the dashboard for a faster setup.
 
 | Page Rules setting          | New implementation uses...           | Migration/Replacement instructions                                          |
 | --------------------------- | ------------------------------------ | --------------------------------------------------------------------------- |

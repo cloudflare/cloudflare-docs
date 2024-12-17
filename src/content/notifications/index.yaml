@@ -544,7 +544,7 @@ entries:
     associatedProducts: Web Application Firewall (WAF)
     nextSteps: Review the information in [Security Events](/waf/analytics/security-events/paid-plans/) to identify any possible attack or misconfiguration.
     otherFilters: |-
-      A mandatory [`filters`](/api/operations/notification-policies-create-a-notification-policy) selection is needed when you create a notification policy which includes the list of services and zones that you want to be alerted on.
+      A mandatory [`filters`](/api/resources/alerting/subresources/policies/methods/create/) selection is needed when you create a notification policy which includes the list of services and zones that you want to be alerted on.
 
       * You can search for and add domains from your list of Enterprise zones.
       * You can choose which services the alert should monitor (Managed Firewall, Rate Limiting, etc.).
@@ -564,7 +564,7 @@ entries:
     associatedProducts: Web Application Firewall (WAF)
     nextSteps: Review the information in [Security Events](/waf/analytics/security-events/paid-plans/) to identify any possible attack or misconfiguration.
     otherFilters: |-
-      A mandatory [`filters`](/api/operations/notification-policies-create-a-notification-policy) selection is needed when you create a notification policy which includes the list of zones that you want to be alerted on.
+      A mandatory [`filters`](/api/resources/alerting/subresources/policies/methods/create/) selection is needed when you create a notification policy which includes the list of zones that you want to be alerted on.
 
       * You can also search for and add domains from your list of business or enterprise zones. The notification will be sent for the domains chosen.
       * You can filter events by a targeted action.

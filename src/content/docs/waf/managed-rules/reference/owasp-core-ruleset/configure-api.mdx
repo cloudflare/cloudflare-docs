@@ -34,7 +34,7 @@ For example, to enable all the rules associated with Paranoia Level 2 (PL2), dis
 
 This example sets the Cloudflare OWASP Core Ruleset's paranoia level for a zone to PL2. To perform this configuration, you must disable the tags associated with levels PL3 and PL4 (`paranoia-level-3` and `paranoia-level-4`) using tag overrides.
 
-1.  Get the ID of the Cloudflare OWASP Core Ruleset using the [List account rulesets](/api/operations/listAccountRulesets) method, since WAF's managed rulesets exist at the account level. Alternatively, use the following ruleset ID directly: <RuleID id="4814384a9e5d4991b9815dcfc25d2f1f" />.
+1.  Get the ID of the Cloudflare OWASP Core Ruleset using the [List account rulesets](/api/resources/rulesets/methods/list/) method, since WAF's managed rulesets exist at the account level. Alternatively, use the following ruleset ID directly: <RuleID id="4814384a9e5d4991b9815dcfc25d2f1f" />.
 
     ```bash
     curl "https://api.cloudflare.com/client/v4/accounts/{account_id}/rulesets" \
@@ -62,7 +62,7 @@ This example sets the Cloudflare OWASP Core Ruleset's paranoia level for a zone 
     }
     ```
 
-2.  Get the ID of the rule that deploys the OWASP ruleset to your zone using the [Get a zone entry point ruleset](/api/operations/getZoneEntrypointRuleset). Search for a rule with `"action": "execute"` configured with the OWASP ruleset's ID in the `action_parameters` object. This rule will only exist if you have already deployed the OWASP ruleset.
+2.  Get the ID of the rule that deploys the OWASP ruleset to your zone using the [Get a zone entry point ruleset](/api/resources/rulesets/subresources/phases/methods/get/). Search for a rule with `"action": "execute"` configured with the OWASP ruleset's ID in the `action_parameters` object. This rule will only exist if you have already deployed the OWASP ruleset.
 
     ```bash
     curl "https://api.cloudflare.com/client/v4/zones/{zone_id}/rulesets/phases/http_request_firewall_managed/entrypoint" \
@@ -104,7 +104,7 @@ This example sets the Cloudflare OWASP Core Ruleset's paranoia level for a zone 
     }
     ```
 
-3.  Update the rule you identified using the [Update a zone ruleset rule](/api/operations/updateZoneRulesetRule) operation, adding tag overrides that disable the rules with tags `paranoia-level-3` and `paranoia-level-4`.
+3.  Update the rule you identified using the [Update a zone ruleset rule](/api/resources/rulesets/methods/update/) operation, adding tag overrides that disable the rules with tags `paranoia-level-3` and `paranoia-level-4`.
 
     ```bash null {9-20}
     curl --request PATCH \
@@ -146,7 +146,7 @@ To define the [score threshold](/waf/managed-rules/reference/owasp-core-ruleset/
 
 This example configures the managed ruleset score threshold and the performed action by creating a rule override for the last rule of the managed ruleset.
 
-1. Get the ID of the Cloudflare OWASP Core Ruleset using the [List account rulesets](/api/operations/listAccountRulesets) method, since WAF's managed rulesets exist at the account level. Alternatively, use the following ruleset ID directly: <RuleID id="4814384a9e5d4991b9815dcfc25d2f1f" />.
+1. Get the ID of the Cloudflare OWASP Core Ruleset using the [List account rulesets](/api/resources/rulesets/methods/list/) method, since WAF's managed rulesets exist at the account level. Alternatively, use the following ruleset ID directly: <RuleID id="4814384a9e5d4991b9815dcfc25d2f1f" />.
 
    ```bash
    curl "https://api.cloudflare.com/client/v4/accounts/{account_id}/rulesets" \
@@ -174,7 +174,7 @@ This example configures the managed ruleset score threshold and the performed ac
    }
    ```
 
-2. Get the ID of the **last rule** in the Cloudflare OWASP Core Ruleset. Use the [Get an account ruleset](/api/operations/getAccountRuleset) method to obtain the list of rules in the ruleset. Alternatively, use the following rule ID directly: <RuleID id="6179ae15870a4bb7b2d480d4843b323c" />.
+2. Get the ID of the **last rule** in the Cloudflare OWASP Core Ruleset. Use the [Get an account ruleset](/api/resources/rulesets/methods/get/) method to obtain the list of rules in the ruleset. Alternatively, use the following rule ID directly: <RuleID id="6179ae15870a4bb7b2d480d4843b323c" />.
 
    ```bash
    curl "https://api.cloudflare.com/client/v4/accounts/{account_id}/rulesets/{owasp_ruleset_id}" \
@@ -212,7 +212,7 @@ This example configures the managed ruleset score threshold and the performed ac
    }
    ```
 
-3. Get the ID of the rule that deploys the OWASP ruleset to your zone using the [Get a zone entry point ruleset](/api/operations/getZoneEntrypointRuleset) (in this example, `<EXECUTE_RULE_ID>`). Search for a rule with `"action": "execute"` configured with the OWASP ruleset's ID in the `action_parameters` object. This rule will only exist if you have already deployed the OWASP ruleset.
+3. Get the ID of the rule that deploys the OWASP ruleset to your zone using the [Get a zone entry point ruleset](/api/resources/rulesets/subresources/phases/methods/get/) (in this example, `<EXECUTE_RULE_ID>`). Search for a rule with `"action": "execute"` configured with the OWASP ruleset's ID in the `action_parameters` object. This rule will only exist if you have already deployed the OWASP ruleset.
 
    ```bash
    curl "https://api.cloudflare.com/client/v4/zones/{zone_id}/rulesets/phases/http_request_firewall_managed/entrypoint" \
@@ -254,7 +254,7 @@ This example configures the managed ruleset score threshold and the performed ac
    }
    ```
 
-4. Update the rule you identified in the entry point ruleset using the [Update a zone ruleset rule](/api/operations/updateZoneRulesetRule) operation, adding a rule override for the last rule in the OWASP ruleset (identified in step 2) with the following properties and values:
+4. Update the rule you identified in the entry point ruleset using the [Update a zone ruleset rule](/api/resources/rulesets/methods/update/) operation, adding a rule override for the last rule in the OWASP ruleset (identified in step 2) with the following properties and values:
 
    - `"score_threshold": 60`
    - `"action": "managed_challenge"`

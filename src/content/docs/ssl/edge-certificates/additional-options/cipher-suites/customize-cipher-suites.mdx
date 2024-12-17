@@ -37,8 +37,8 @@ Custom cipher suites is a hostname-level setting, which implies that:
 
 Currently, you can only customize cipher suites when using the API:
 
-* [Zone](/api/operations/zone-settings-edit-single-setting) (using `ciphers` as the setting name in the URI path)
-* [Per-hostname](/api/operations/per-hostname-tls-settings-put) (regular zones only)
+* [Zone](/api/resources/zones/subresources/settings/methods/edit/) (using `ciphers` as the setting name in the URI path)
+* [Per-hostname](/api/resources/hostnames/subresources/settings/subresources/tls/methods/update/) (regular zones only)
 * [Custom hostname](/cloudflare-for-platforms/cloudflare-for-saas/security/certificate-management/enforce-mtls/#cipher-suites) (Cloudflare for SaaS zones only)
 
 ### Settings priority and ciphers order
@@ -68,7 +68,7 @@ Note that:
 
 3. Get the Zone ID from the [Overview page](https://dash.cloudflare.com/?to=/:account/:zone/) of the domain you want to specify cipher suites for.
 
-4. Make an API call to either the [Edit zone setting](/api/operations/zone-settings-edit-single-setting) endpoint or the [Edit TLS setting for hostname](/api/operations/per-hostname-tls-settings-put) endpoint, specifying `ciphers` in the URL. List your array of chosen cipher suites in the `value` field.
+4. Make an API call to either the [Edit zone setting](/api/resources/zones/subresources/settings/methods/edit/) endpoint or the [Edit TLS setting for hostname](/api/resources/hostnames/subresources/settings/subresources/tls/methods/update/) endpoint, specifying `ciphers` in the URL. List your array of chosen cipher suites in the `value` field.
 
 :::caution
 
@@ -154,7 +154,7 @@ curl --request PATCH \
 
 <Tabs> <TabItem label="zone">
 
-To reset to the default cipher suites at zone level, use the [Edit zone setting](/api/operations/zone-settings-edit-single-setting) endpoint, specifying `ciphers` as the setting name in the URL, and send an empty array in the `value` field.
+To reset to the default cipher suites at zone level, use the [Edit zone setting](/api/resources/zones/subresources/settings/methods/edit/) endpoint, specifying `ciphers` as the setting name in the URL, and send an empty array in the `value` field.
 
 ```bash
 curl --request PATCH \
@@ -167,7 +167,7 @@ curl --request PATCH \
 
 </TabItem> <TabItem label="per-hostname">
 
-For specific hostname settings, use the [Delete TLS setting for hostname](/api/operations/per-hostname-tls-settings-delete) endpoint.
+For specific hostname settings, use the [Delete TLS setting for hostname](/api/resources/hostnames/subresources/settings/subresources/tls/methods/delete/) endpoint.
 
 ```bash
 curl --request DELETE \

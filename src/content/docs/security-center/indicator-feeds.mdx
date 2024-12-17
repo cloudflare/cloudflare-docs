@@ -29,10 +29,10 @@ If your organization is interested in becoming a provider or a subscriber, conta
 
 ### Create a Custom Indicator Feed
 
-Providers can create and manage a Custom Indicator Feed with the [Custom Indicator Feeds API endpoints](/api/operations/custom-indicator-feeds-get-indicator-feeds):
+Providers can create and manage a Custom Indicator Feed with the [Custom Indicator Feeds API endpoints](/api/resources/intel/subresources/indicator_feeds/methods/list/):
 
 1. Contact your account team to configure your account as an indicator feed provider.
-2. Create a feed with the [Create new indicator feed endpoint](/api/operations/custom-indicator-feeds-create-indicator-feeds). Make note of the `feed_id` generated for your feed. For example:
+2. Create a feed with the [Create new indicator feed endpoint](/api/resources/intel/subresources/indicator_feeds/methods/create/). Make note of the `feed_id` generated for your feed. For example:
 
    ```bash title="Create new indicator feed"
    curl "https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/intel/indicator-feeds" \
@@ -60,7 +60,7 @@ Providers can create and manage a Custom Indicator Feed with the [Custom Indicat
    }
    ```
 
-3. Upload data to the feed with the [Update indicator feed data endpoint](/api/operations/custom-indicator-feeds-update-indicator-feed-data). Uploaded indicator data must be in a [`.stix2`](https://oasis-open.github.io/cti-documentation/stix/intro) formatted file.
+3. Upload data to the feed with the [Update indicator feed data endpoint](/api/resources/intel/subresources/indicator_feeds/subresources/snapshots/methods/update/). Uploaded indicator data must be in a [`.stix2`](https://oasis-open.github.io/cti-documentation/stix/intro) formatted file.
 
    ```bash title="Update indicator feed data"
    curl --request PUT \
@@ -88,7 +88,7 @@ Providers can create and manage a Custom Indicator Feed with the [Custom Indicat
    Indicator feeds use a snapshot system. To update feeds with new data, providers must upload a file containing all previous and new indicators.
    :::
 
-4. (Optional) Verify the status of your feed upload with the [Get indicator feed data endpoint](/api/operations/custom-indicator-feeds-get-indicator-feed-data). For example:
+4. (Optional) Verify the status of your feed upload with the [Get indicator feed data endpoint](/api/resources/intel/subresources/indicator_feeds/methods/data/). For example:
 
    ```bash title="Get indicator feed data"
    curl --request GET \
@@ -114,7 +114,7 @@ Providers can create and manage a Custom Indicator Feed with the [Custom Indicat
    }
    ```
 
-5. Grant access to subscribers with the [Grant permission to indicator feed endpoint](/api/operations/custom-indicator-feeds-add-permission). You can add subscribers to the feed's allowed subscribers list using their [account IDs](/fundamentals/setup/find-account-and-zone-ids/). For example:
+5. Grant access to subscribers with the [Grant permission to indicator feed endpoint](/api/resources/intel/subresources/indicator_feeds/subresources/permissions/methods/create/). You can add subscribers to the feed's allowed subscribers list using their [account IDs](/fundamentals/setup/find-account-and-zone-ids/). For example:
 
    ```bash title="Update indicator feed data"
    curl --request PUT \

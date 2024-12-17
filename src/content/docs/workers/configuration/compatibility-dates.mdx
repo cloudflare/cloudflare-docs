@@ -44,6 +44,6 @@ The compatibility date can be updated in the Workers settings on the [Cloudflare
 
 #### Via the Cloudflare API
 
-The compatibility date can be set when uploading a Worker using the [Workers Script API](/api/operations/worker-script-upload-worker-module) or [Workers Versions API](/api/operations/worker-versions-upload-version#request-body) in the request body's `metadata` field.
+The compatibility date can be set when uploading a Worker using the [Workers Script API](/api/resources/workers/subresources/scripts/methods/update/) or [Workers Versions API](/api/resources/workers/subresources/scripts/subresources/versions/methods/create/#request-body) in the request body's `metadata` field.
 
 If a compatibility date is not specified on upload via the API, it defaults to the oldest compatibility date, before any flags took effect (2021-11-02). When creating new Workers, it is highly recommended to set the compatibility date to the current date when uploading via the API.

@@ -6,7 +6,7 @@ title: Multipart upload metadata
 
 import { Type, MetaInfo } from "~/components";
 
-If you're using the [Workers Script Upload API](/api/operations/worker-script-upload-worker-module) or [Version Upload API](/api/operations/worker-versions-upload-version) directly, `multipart/form-data` uploads require you to specify a `metadata` part. This metadata defines the Worker's configuration in JSON format, analogue to the [wrangler.toml file](/workers/wrangler/configuration/).
+If you're using the [Workers Script Upload API](/api/resources/workers/subresources/scripts/methods/update/) or [Version Upload API](/api/resources/workers/subresources/scripts/subresources/versions/methods/create/) directly, `multipart/form-data` uploads require you to specify a `metadata` part. This metadata defines the Worker's configuration in JSON format, analogue to the [wrangler.toml file](/workers/wrangler/configuration/).
 
 ## Sample `metadata`
 
@@ -74,7 +74,7 @@ At a minimum, the `main_module` key is required to upload a Worker.
 
 
 
-## Additional attributes: [Workers Script Upload API](/api/operations/worker-script-upload-worker-module)
+## Additional attributes: [Workers Script Upload API](/api/resources/workers/subresources/scripts/methods/update/)
 
 For [immediately deployed uploads](/workers/configuration/versions-and-deployments/#upload-a-new-version-and-deploy-it-immediately), the following **additional** attributes are configurable at the top-level.
 
@@ -103,7 +103,7 @@ These attributes are **not available** for version uploads.
 
 
 
-## Additional attributes: [Version Upload API](/api/operations/worker-versions-upload-version)
+## Additional attributes: [Version Upload API](/api/resources/workers/subresources/scripts/subresources/versions/methods/create/)
 
 For [version uploads](/workers/configuration/versions-and-deployments/#upload-a-new-version-to-be-gradually-deployed-or-deployed-at-a-later-time), the following **additional** attributes are configurable at the top-level.
 

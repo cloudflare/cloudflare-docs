@@ -38,7 +38,7 @@ A partial setup is only available to customers on a Business or Enterprise plan.
 1. On the **Overview** page, select **Convert to CNAME DNS Setup**.
 2. Select **Convert** to confirm.
 3. Save the information from the **Verification TXT Record**. If you lose the information, you can also access it by going to **DNS** > **Records** > **Verification TXT Record**.
-4. Make sure that you have all the DNS records for subdomains that you want to proxy through Cloudflare.
+4. Make sure that you have all the DNS records (A, AAAA, or CNAME) for subdomains that you want to proxy through Cloudflare.
 </Steps>
 
 ## 2. Verify ownership for your domain
@@ -82,3 +82,9 @@ If your organization has multiple Cloudflare accounts, also consider using zone 
 
 2. Repeat this process for each subdomain that should be proxied to Cloudflare.
 </Steps>
+
+---
+
+## Other record types
+
+If you are preparing a conversion from partial to full setup, or if you have a more specific use case, you can use the [Create DNS Record](/api/operations/dns-records-for-a-zone-create-dns-record) API endpoint to create DNS records of any supported type.

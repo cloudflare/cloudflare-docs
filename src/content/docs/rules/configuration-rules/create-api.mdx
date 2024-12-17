@@ -33,7 +33,7 @@ Make sure your API token has the [required permissions](#required-api-token-perm
 
 <Details header="Example: Add a rule that enables Email Obfuscation and Browser Integrity Check">
 
-The following example sets the rules of an existing phase ruleset (`{ruleset_id}`) to a single configuration rule — enabling Email Obfuscation and Browser Integrity Check for the contacts page — using the [Update a zone ruleset](/api/operations/updateZoneRuleset) operation:
+The following example sets the rules of an existing phase ruleset (`{ruleset_id}`) to a single configuration rule — enabling Email Obfuscation and Browser Integrity Check for the contacts page — using the [Update a zone ruleset](/api/resources/rulesets/methods/update/) operation:
 
 ```bash title="Request"
 curl --request PUT \
@@ -61,7 +61,7 @@ https://api.cloudflare.com/client/v4/zones/{zone_id}/rulesets/{ruleset_id} \
 
 <Details header="Example: Add a rule that turns on I'm Under Attack mode for the admin area">
 
-The following example sets the rules of an existing phase ruleset (`{ruleset_id}`) to a single configuration rule — turning on I'm Under Attack mode for the administration area — using the [Update a zone ruleset](/api/operations/updateZoneRuleset) operation:
+The following example sets the rules of an existing phase ruleset (`{ruleset_id}`) to a single configuration rule — turning on I'm Under Attack mode for the administration area — using the [Update a zone ruleset](/api/resources/rulesets/methods/update/) operation:
 
 ```bash title="Request"
 curl --request PUT \

@@ -137,7 +137,7 @@ Block Amazon Web Services (AWS) and Google Cloud Platform (GCP) because of large
 
 - Basic rule, no exclusion:
 
-  - **Expression**: `(ip.geoip.asnum in {16509 15169})`
+  - **Expression**: `(ip.src.asnum in {16509 15169})`
   - **Action**: Block (or a challenge action)
 
 - Rule that excludes IP addresses from being blocked/challenged:

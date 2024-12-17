@@ -15,8 +15,8 @@ Use one of the following API endpoints:
 | [Delete an account ruleset rule][dr-account] | `DELETE /accounts/{account_id}/rulesets/{ruleset_id}/rules/{rule_id}` |
 | [Delete a zone ruleset rule][dr-zone]        | `DELETE /zones/{zone_id}/rulesets/{ruleset_id}/rules/{rule_id}`       |
 
-[dr-account]: /api/operations/deleteAccountRulesetRule
-[dr-zone]: /api/operations/deleteZoneRulesetRule
+[dr-account]: /api/resources/rulesets/subresources/rules/methods/delete/
+[dr-zone]: /api/resources/rulesets/methods/delete/
 
 If the delete operation succeeds, the API method call returns a `200 OK` HTTP status code with the complete ruleset in the response body.
 
@@ -45,7 +45,7 @@ https://api.cloudflare.com/client/v4/accounts/{account_id}/rulesets/{ruleset_id}
 				"id": "<RULE_ID_2>",
 				"version": "2",
 				"action": "js_challenge",
-				"expression": "(ip.geoip.country eq \"GB\" or ip.geoip.country eq \"FR\") or cf.threat_score > 0",
+				"expression": "(ip.src.country eq \"GB\" or ip.src.country eq \"FR\") or cf.threat_score > 0",
 				"description": "challenge GB and FR or based on IP Reputation",
 				"last_updated": "2021-07-22T12:54:58.144683Z",
 				"ref": "<RULE_REF_2>",
