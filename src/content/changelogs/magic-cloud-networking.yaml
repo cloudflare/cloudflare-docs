@@ -5,10 +5,10 @@ productLink: "/magic-cloud-networking/"
 productArea: Cloudflare One
 productAreaLink: /cloudflare-one/changelog/
 entries:
-  - publish_date: "2024-09-11"
-    title: Cost estimates for network resources
+  - publish_date: "2024-10-01"
+    title: Cost visibility for managed cloud configuration
     description: |-
-      Customers can now view estimated costs for discovered network resources.
+      Customers can now see the cloud provider list price of discovered network resources and will be informed of total cost and delta cost when deploying managed configuration.
   - publish_date: "2024-08-14"
     title: GCP on-ramps
     description: |-
