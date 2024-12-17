@@ -177,27 +177,27 @@ export default defineConfig({
 			plugins: [
 				...(runLinkCheck
 					? [
-							starlightLinksValidator({
-								errorOnInvalidHashes: false,
-								errorOnLocalLinks: false,
-								exclude: [
-									"/api/",
-									"/api/operations/**",
-									"/changelog/",
-									"/http/resources/**",
-									"{props.*}",
-									"/",
-									"**/glossary/?term=**",
-									"/products/?product-group=*",
-									"/products/",
-									"/rules/snippets/examples/?operation=*",
-									"/rules/transform/examples/?operation=*",
-									"/workers/examples/?languages=*",
-									"/workers/examples/?tags=*",
-									"/workers-ai/models/**",
-								],
-							}),
-						]
+						starlightLinksValidator({
+							errorOnInvalidHashes: false,
+							errorOnLocalLinks: false,
+							exclude: [
+								"/api/",
+								"/api/**",
+								"/changelog/",
+								"/http/resources/**",
+								"{props.*}",
+								"/",
+								"**/glossary/?term=**",
+								"/products/?product-group=*",
+								"/products/",
+								"/rules/snippets/examples/?operation=*",
+								"/rules/transform/examples/?operation=*",
+								"/workers/examples/?languages=*",
+								"/workers/examples/?tags=*",
+								"/workers-ai/models/**",
+							],
+						}),
+					]
 					: []),
 				starlightDocSearch({
 					appId: "D32WIYFTUF",
