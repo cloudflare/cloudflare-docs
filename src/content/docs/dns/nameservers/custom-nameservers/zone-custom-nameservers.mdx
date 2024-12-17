@@ -34,7 +34,7 @@ To create zone custom nameservers:
 
 </TabItem> <TabItem label="API">
 
-Use the [Edit zone endpoint](/api/operations/zones-0-patch) and specify the custom nameservers in the payload:
+Use the [Edit zone endpoint](/api/resources/zones/methods/edit/) and specify the custom nameservers in the payload:
 
 ```txt
 "vanity_name_servers": ["ns1.example.com","ns2.example.com"]
@@ -52,7 +52,7 @@ The next step depends on whether you are using [Cloudflare Registrar](/registrar
 
 If you are using [Cloudflare as a secondary DNS provider](/dns/zone-setups/zone-transfers/cloudflare-as-secondary/), you can still set up zone custom nameservers. After following the [steps above](/dns/nameservers/custom-nameservers/zone-custom-nameservers/#primary-full-setup-zones) to create zone custom nameservers, do the following:
 
-1. Get the ZCNS IPs. You can see them on the dashboard (**DNS** > **Records**) or you can use the [Zone details endpoint](/api/operations/zones-0-get) to get the `vanity_name_servers_ips`.
+1. Get the ZCNS IPs. You can see them on the dashboard (**DNS** > **Records**) or you can use the [Zone details endpoint](/api/resources/zones/methods/get/) to get the `vanity_name_servers_ips`.
 2. At your primary DNS provider, add [`NS` records](/dns/manage-dns-records/reference/dns-record-types/#ns) and, on the subdomains that you used as ZCNS names, add `A/AAAA` records.
 3. At your registrar, add the zone custom nameservers as your authoritative nameservers and as glue (A and AAAA) records ([RFC 1912](https://www.rfc-editor.org/rfc/rfc1912.html)).
 
@@ -68,7 +68,7 @@ To remove zone custom nameservers (and their associated, read-only DNS records):
 
 </TabItem> <TabItem label="API">
 
-Use the [Edit zone endpoint](/api/operations/zones-0-patch) and include an empty array in the payload:
+Use the [Edit zone endpoint](/api/resources/zones/methods/edit/) and include an empty array in the payload:
 
 ```txt
 "vanity_name_servers": []

@@ -42,7 +42,7 @@ For the purpose of this tutorial, you will update your registrar with the DS rec
 </TabItem>
 <TabItem label="API">
 
-1. Use the [Edit DNSSEC Status endpoint](/api/operations/dnssec-edit-dnssec-status) to enable DNSSEC and activate multi-signer DNSSEC for your zone. Set `status` to `active` and `dnssec_multi_signer` to `true`, as in the following example.
+1. Use the [Edit DNSSEC Status endpoint](/api/resources/dns/subresources/dnssec/methods/edit/) to enable DNSSEC and activate multi-signer DNSSEC for your zone. Set `status` to `active` and `dnssec_multi_signer` to `true`, as in the following example.
 
 ```bash
 curl --request PATCH \
@@ -133,7 +133,7 @@ For the purpose of this tutorial, you will update your registrar with the DS rec
 </TabItem>
 <TabItem label="API">
 
-1. Use the [Edit DNSSEC Status endpoint](/api/operations/dnssec-edit-dnssec-status) to enable DNSSEC and activate multi-signer DNSSEC for your zone. Set `status` to `active` and `dnssec_multi_signer` to `true`, as in the following example.
+1. Use the [Edit DNSSEC Status endpoint](/api/resources/dns/subresources/dnssec/methods/edit/) to enable DNSSEC and activate multi-signer DNSSEC for your zone. Set `status` to `active` and `dnssec_multi_signer` to `true`, as in the following example.
 
 ```bash
 $ curl --request PATCH 'https://api.cloudflare.com/client/v4/zones/{zone_id}/dnssec' \

@@ -213,7 +213,7 @@ entries:
     otherFilters: None.
 
   - name: Magic Tunnel Health Check Alert
-    audience: Magic Transit and Magic WAN customers who wish to receive alerts when the percentage of successful health checks for a Magic Tunnel drops below the selected service-level objective (SLO).
+    audience: Magic Transit and Magic WAN customers who wish to receive alerts when the percentage of tunnel states meeting the selected service-level objective (SLO) drops below the defined threshold for a Magic Tunnel.
     availability: Purchase of Magic Transit and Magic WAN.
     associatedProducts: Magic Transit
     nextSteps: Refer to the [Magic Transit tunnel health](/magic-transit/how-to/check-tunnel-health-dashboard/) or [Magic WAN tunnel health](/magic-wan/configuration/common-settings/check-tunnel-health-dashboard/) for more information on what the issue might be.
@@ -544,7 +544,7 @@ entries:
     associatedProducts: Web Application Firewall (WAF)
     nextSteps: Review the information in [Security Events](/waf/analytics/security-events/paid-plans/) to identify any possible attack or misconfiguration.
     otherFilters: |-
-      A mandatory [`filters`](/api/operations/notification-policies-create-a-notification-policy) selection is needed when you create a notification policy which includes the list of services and zones that you want to be alerted on.
+      A mandatory [`filters`](/api/resources/alerting/subresources/policies/methods/create/) selection is needed when you create a notification policy which includes the list of services and zones that you want to be alerted on.
 
       * You can search for and add domains from your list of Enterprise zones.
       * You can choose which services the alert should monitor (Managed Firewall, Rate Limiting, etc.).
@@ -564,7 +564,7 @@ entries:
     associatedProducts: Web Application Firewall (WAF)
     nextSteps: Review the information in [Security Events](/waf/analytics/security-events/paid-plans/) to identify any possible attack or misconfiguration.
     otherFilters: |-
-      A mandatory [`filters`](/api/operations/notification-policies-create-a-notification-policy) selection is needed when you create a notification policy which includes the list of zones that you want to be alerted on.
+      A mandatory [`filters`](/api/resources/alerting/subresources/policies/methods/create/) selection is needed when you create a notification policy which includes the list of zones that you want to be alerted on.
 
       * You can also search for and add domains from your list of business or enterprise zones. The notification will be sent for the domains chosen.
       * You can filter events by a targeted action.

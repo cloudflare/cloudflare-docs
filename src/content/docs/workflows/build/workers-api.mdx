@@ -186,7 +186,7 @@ Create (trigger) a new instance of the given Workflow.
 
 * <code>create(options?: WorkflowInstanceCreateOptions): Promise&lt;WorkflowInstance&gt;</code>
 
-  * `options` - optional properties to pass when creating an instance, includng a user-provided ID and payload parameters.
+  * `options` - optional properties to pass when creating an instance, including a user-provided ID and payload parameters.
 
 An ID is automatically generated, but a user-provided ID can be specified (up to 64 characters [^1]). This can be useful when mapping Workflows to users, merchants or other identifiers in your system. You can also provide a JSON object as the `params` property, allowing you to pass data for the Workflow instance to act on as its [`WorkflowEvent`](/workflows/build/events-and-parameters/).
 

@@ -9,7 +9,7 @@ entries:
     title: Workers KV REST API bulk operations provide granular errors
     description: |-
 
-      The REST API endpoints for bulk operations ([write](/api/operations/workers-kv-namespace-write-multiple-key-value-pairs), [delete](/api/operations/workers-kv-namespace-delete-multiple-key-value-pairs)) now return the keys of operations that failed during the bulk operation. The updated response bodies are documented in the [REST API documentation](/api/operations/workers-kv-namespace-list-namespaces) and contain the following information in the `result` field:
+      The REST API endpoints for bulk operations ([write](/api/resources/kv/subresources/namespaces/methods/bulk_update/), [delete](/api/resources/kv/subresources/namespaces/methods/bulk_delete/)) now return the keys of operations that failed during the bulk operation. The updated response bodies are documented in the [REST API documentation](/api/resources/kv/subresources/namespaces/methods/list/) and contain the following information in the `result` field:
 
       ```
       {
@@ -26,5 +26,5 @@ entries:
 
       Workers KV now has a new [metrics dashboard](/kv/observability/metrics-analytics/#view-metrics-in-the-dashboard) and [analytics API](/kv/observability/metrics-analytics/#query-via-the-graphql-api) that leverages the [GraphQL Analytics API](/analytics/graphql-api/) used by many other Cloudflare products. The new analytics API provides per-account and per-namespace metrics for both operations and storage, including latency metrics for read and write operations to Workers KV.
 
-      The legacy Workers KV [analytics REST API](/api/operations/workers-kv-request-analytics-query-request-analytics) will be turned off as of January 31st, 2025.
+      The legacy Workers KV [analytics REST API](/api/resources/kv/subresources/namespaces/subresources/analytics/methods/list/) will be turned off as of January 31st, 2025.
       Developers using this API will receive a series of email notifications prior to the shutdown of the legacy API.

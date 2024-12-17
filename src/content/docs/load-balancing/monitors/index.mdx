@@ -26,7 +26,7 @@ Health monitors associated with load balancers are different from standalone [He
 
 ## Properties
 
-For an up-to-date list of monitor properties, refer to [Monitor properties](/api/operations/account-load-balancer-monitors-list-monitors) in our API documentation.
+For an up-to-date list of monitor properties, refer to [Monitor properties](/api/resources/load_balancers/subresources/monitors/methods/list/) in our API documentation.
 
 ***
 
@@ -66,13 +66,13 @@ The Cloudflare API supports the following commands for monitors. Examples are gi
 
 | Command                                                                                       | Method   | Endpoint                                                   |
 | --------------------------------------------------------------------------------------------- | -------- | ---------------------------------------------------------- |
-| [Create Monitor](/api/operations/account-load-balancer-monitors-create-monitor)               | `POST`   | `accounts/:account_id/load_balancers/monitors`             |
-| [Delete Monitor](/api/operations/account-load-balancer-monitors-delete-monitor)               | `DELETE` | `accounts/:account_id/load_balancers/monitors/:id`         |
-| [List Monitors](/api/operations/account-load-balancer-monitors-list-monitors)                 | `GET`    | `accounts/:account_id/load_balancers/monitors`             |
-| [Monitor Details](/api/operations/account-load-balancer-monitors-monitor-details)             | `GET`    | `accounts/:account_id/load_balancers/monitors/:id`         |
-| [Overwrite specific properties](/api/operations/account-load-balancer-monitors-patch-monitor) | `PATCH`  | `accounts/:account_id/load_balancers/monitors/:id`         |
-| [Overwrite existing monitor](/api/operations/account-load-balancer-monitors-update-monitor)   | `PUT`    | `accounts/:account_id/load_balancers/monitors/:id`         |
-| [Preview Monitor](/api/operations/account-load-balancer-monitors-preview-monitor)             | `POST`   | `accounts/:account_id/load_balancers/monitors/:id/preview` |
+| [Create Monitor](/api/resources/load_balancers/subresources/monitors/methods/create/)               | `POST`   | `accounts/:account_id/load_balancers/monitors`             |
+| [Delete Monitor](/api/resources/load_balancers/subresources/monitors/methods/delete/)               | `DELETE` | `accounts/:account_id/load_balancers/monitors/:id`         |
+| [List Monitors](/api/resources/load_balancers/subresources/monitors/methods/list/)                 | `GET`    | `accounts/:account_id/load_balancers/monitors`             |
+| [Monitor Details](/api/resources/load_balancers/subresources/monitors/methods/get/)             | `GET`    | `accounts/:account_id/load_balancers/monitors/:id`         |
+| [Overwrite specific properties](/api/resources/load_balancers/subresources/monitors/methods/edit/) | `PATCH`  | `accounts/:account_id/load_balancers/monitors/:id`         |
+| [Overwrite existing monitor](/api/resources/load_balancers/subresources/monitors/methods/update/)   | `PUT`    | `accounts/:account_id/load_balancers/monitors/:id`         |
+| [Preview Monitor](/api/resources/load_balancers/subresources/monitors/subresources/previews/methods/create/)             | `POST`   | `accounts/:account_id/load_balancers/monitors/:id/preview` |
 
 ## Supported protocols
 

@@ -102,6 +102,7 @@
 /ai-gateway/integration/vercel-ai-sdk/ /ai-gateway/integrations/vercel-ai-sdk/ 301
 /ai-gateway/integration/aig-workers-ai-binding/ /ai-gateway/integrations/aig-workers-ai-binding/ 301
 /ai-gateway/integration/ /ai-gateway/integrations/ 301
+/ai-gateway/providers/open-router/ /ai-gateway/providers/openrouter/ 301
 
 # analytics
 /analytics/migration-guides/zone-analytics/ /analytics/graphql-api/migration-guides/zone-analytics/ 301
@@ -644,7 +645,7 @@
 /images/cloudflare-images/upload-images/custom-id/ /images/upload-images/upload-custom-path/ 301
 /images/cloudflare-images/upload-images/dashboard-upload/ /images/upload-images/upload-dashboard/ 301
 /images/cloudflare-images/upload-images/direct-creator-upload/ /images/upload-images/direct-creator-upload/ 301
-/images/cloudflare-images/upload-images/images-batch/ /api/operations/cloudflare-images-list-images 301
+/images/cloudflare-images/upload-images/images-batch/ /api/resources/images/subresources/v2/methods/list/ 301
 /images/cloudflare-images/upload-images/upload-via-url/ /images/upload-images/upload-url/ 301
 /images/faq/ /images/ 301
 /images/image-resizing/ /images/manage-images/create-variants/ 301
@@ -1317,9 +1318,9 @@
 /workers/about/tips/signing-requests/ /workers/examples/signing-requests/ 301
 /workers/about/using-cache/ /workers/reference/how-the-cache-works/ 301
 /workers/learning/how-the-cache-works/ /workers/reference/how-the-cache-works/ 301
-/workers/api/ /api/operations/worker-script-list-workers 301
+/workers/api/ /api/resources/workers/subresources/scripts/methods/list/ 301
 /workers/learning/how-kv-works/ /kv/learning/how-kv-works/ 301
-/workers/api/resource-bindings/webassembly-modules/ /api/operations/worker-script-list-workers 301
+/workers/api/resource-bindings/webassembly-modules/ /api/resources/workers/subresources/scripts/methods/list/ 301
 /workers/api/route-matching/ /workers/platform/routing/routes/ 301
 /workers/cli-wrangler/ /workers/wrangler/ 301
 /workers/cli-wrangler/configuration/ /workers/wrangler/configuration/ 301
@@ -1334,7 +1335,7 @@
 /workers/learning/fetch-event-lifecycle/ /workers/runtime-apis/fetch-event/ 301
 /workers/learning/getting-started/ /workers/get-started/guide/ 301
 /workers/learning/profiling-workers/ /workers/reference/how-workers-works/ 301
-/workers/platform/scripts/ /api/operations/worker-script-list-workers 301
+/workers/platform/scripts/ /api/resources/workers/subresources/scripts/methods/list/ 301
 /workers/platform/services/ /workers/runtime-apis/bindings/service-bindings/ 301
 /workers/platform/web-assembly/ /workers/platform/webassembly/ 301
 /workers/platform/web-assembly/rust/ /workers/platform/webassembly/rust/ 301

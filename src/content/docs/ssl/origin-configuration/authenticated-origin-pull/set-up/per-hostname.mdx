@@ -27,7 +27,7 @@ Refer to the steps below for an example of how to generate a custom certificate 
 
 ## 1. Upload custom certificate
 
-Use the [`/origin_tls_client_auth/hostnames/certificates`](/api/operations/per-hostname-authenticated-origin-pull-upload-a-hostname-client-certificate) endpoint to upload your custom certificate.
+Use the [`/origin_tls_client_auth/hostnames/certificates`](/api/resources/origin_tls_client_auth/subresources/hostnames/subresources/certificates/methods/create/) endpoint to upload your custom certificate.
 
 :::note
 
@@ -48,7 +48,7 @@ In the API response, save the certificate `id` since it will be required in step
 
 ## 4. Enable Authenticated Origin Pulls for the hostname
 
-Use the Cloudflare API to send a [`PUT`](/api/operations/per-hostname-authenticated-origin-pull-enable-or-disable-a-hostname-for-client-authentication) request to enable Authenticated Origin Pulls for specific hostnames.
+Use the Cloudflare API to send a [`PUT`](/api/resources/origin_tls_client_auth/subresources/hostnames/methods/update/) request to enable Authenticated Origin Pulls for specific hostnames.
 
 If you had set up logging on your origin during step 2, test and confirm that Authenticated Origin Pulls is working.
 

@@ -18,7 +18,7 @@ To route requests from visitors in the European Union to a Google Cloud Storage 
 5. _(Optional)_ Use the [Rewrite URL](/rules/transform/url-rewrite/) feature of [Transform Rules](/rules/transform/) to adjust the URL structure. For example, you can [create a URL rewrite](/rules/transform/url-rewrite/create-dashboard/) that changes `/eu` to `/<BUCKET_NAME>` to match the URI path-style URL structure.
 6. Click **Next** and enter a descriptive name like "Route EU visitors to GCP" in Cloud Connector name.
 7. Under **If**, select **Custom filter expression** and enter the following expression:
-   `(ip.geoip.is_in_european_union)`<br />
+   `(ip.src.is_in_european_union)`<br />
    This expression targets traffic from European Union users.
 8. Select **Deploy** to activate the rule.
 

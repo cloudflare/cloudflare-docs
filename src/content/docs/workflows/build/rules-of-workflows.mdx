@@ -302,7 +302,8 @@ export default {
     	params: payload
     });
 
-    // ✅ Good: use a composite ID or an
+    // ✅ Good: use an ID that is unique
+    // e.g. a transaction ID, order ID, or task ID are good options
     let instanceId = getTransactionId() // e.g. assuming transaction IDs are unique
     // or: compose a composite ID and store it in your database
     // so that you can track all instances associated with a specific user or merchant.
@@ -314,8 +315,8 @@ export default {
     });
 
     return Response.json({
-      id: badInstance.id,
-      details: await badInstance.status(),
+      id: goodInstance.id,
+      details: await goodInstance.status(),
     });
   },
 };

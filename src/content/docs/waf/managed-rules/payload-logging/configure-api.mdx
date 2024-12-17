@@ -15,12 +15,12 @@ Use the [Rulesets API](/ruleset-engine/rulesets-api/) to configure payload loggi
 
 ## Configure and enable payload logging
 
-1. Use the [Get a zone entry point ruleset](/api/operations/getZoneEntrypointRuleset) operation to obtain the following IDs:
+1. Use the [Get a zone entry point ruleset](/api/resources/rulesets/subresources/phases/methods/get/) operation to obtain the following IDs:
 
    - The ID of the [entry point ruleset](/ruleset-engine/about/rulesets/#entry-point-ruleset) of the `http_request_firewall_managed` [phase](/ruleset-engine/about/phases/).
    - The ID of the rule deploying the WAF managed ruleset (an `execute` rule) for which you want to configure payload logging.
 
-2. Use the [Update a zone ruleset rule](/api/operations/updateZoneRulesetRule) operation to update the rule you identified in the previous step.
+2. Use the [Update a zone ruleset rule](/api/resources/rulesets/methods/update/) operation to update the rule you identified in the previous step.
 
    Include a `matched_data` object in the rule's `action_parameters` object to configure payload logging. The `matched_data` object has the following structure:
 
@@ -39,8 +39,8 @@ Use the [Rulesets API](/ruleset-engine/rulesets-api/) to configure payload loggi
 
 To configure payload logging for a managed ruleset deployed at the account level (only available in Enterprise plans with a paid add-on), use the following API operations instead:
 
-- In step 1: [Get an account entry point ruleset](/api/operations/getAccountEntrypointRuleset)
-- In step 2: [Update an account ruleset rule](/api/operations/updateAccountRulesetRule)
+- In step 1: [Get an account entry point ruleset](/api/resources/rulesets/subresources/phases/methods/get/)
+- In step 2: [Update an account ruleset rule](/api/resources/rulesets/subresources/rules/methods/edit/)
 
 :::
 
@@ -48,7 +48,7 @@ To configure payload logging for a managed ruleset deployed at the account level
 
 This example configures payload logging for the [Cloudflare Managed Ruleset](/waf/managed-rules/reference/cloudflare-managed-ruleset/), which is already deployed for a zone with ID `{zone_id}`.
 
-1. Invoke the [Get a zone entry point ruleset](/api/operations/getZoneEntrypointRuleset) operation (a `GET` request) to obtain the rules currently configured in the entry point ruleset of the `http_request_firewall_managed` phase.
+1. Invoke the [Get a zone entry point ruleset](/api/resources/rulesets/subresources/phases/methods/get/) operation (a `GET` request) to obtain the rules currently configured in the entry point ruleset of the `http_request_firewall_managed` phase.
 
    ```bash title="Request"
    curl https://api.cloudflare.com/client/v4/zones/{zone_id}/rulesets/phases/http_request_firewall_managed/entrypoint \
@@ -99,10 +99,10 @@ This example configures payload logging for the [Cloudflare Managed Ruleset](/wa
 
    :::note
 
-   To get the IDs of existing WAF managed rulesets, refer to [WAF Managed Rules](/waf/managed-rules/#managed-rulesets) or use the [List account rulesets](/api/operations/listAccountRulesets) operation.
+   To get the IDs of existing WAF managed rulesets, refer to [WAF Managed Rules](/waf/managed-rules/#managed-rulesets) or use the [List account rulesets](/api/resources/rulesets/methods/list/) operation.
    :::
 
-3. Invoke the [Update a zone ruleset rule](/api/operations/updateZoneRulesetRule) operation (a `PATCH` request) to update the configuration of the rule you identified. The rule will now include the payload logging configuration (`matched_data` object).
+3. Invoke the [Update a zone ruleset rule](/api/resources/rulesets/methods/update/) operation (a `PATCH` request) to update the configuration of the rule you identified. The rule will now include the payload logging configuration (`matched_data` object).
 
    ```bash title="Request" {9-11}
    curl --request PATCH \
@@ -131,7 +131,7 @@ For more information on deploying managed rulesets via API, refer to [Deploy a m
 
 To disable payload logging for a managed ruleset:
 
-1. Use the [Update a zone ruleset rule](/api/operations/updateZoneRulesetRule) operation (a `PATCH` request) to update the rule deploying the managed ruleset (an `execute` rule).
+1. Use the [Update a zone ruleset rule](/api/resources/rulesets/methods/update/) operation (a `PATCH` request) to update the rule deploying the managed ruleset (an `execute` rule).
 
 2. Modify the rule definition so that there is no `matched_data` object in `action_parameters`.
 

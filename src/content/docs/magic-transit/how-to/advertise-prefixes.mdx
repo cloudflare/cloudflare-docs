@@ -3,7 +3,6 @@ pcx_content_type: how-to
 title: Advertise prefixes
 sidebar:
   order: 3
-
 ---
 
 import { Details, GlossaryTooltip } from "~/components"
@@ -88,6 +87,11 @@ After receiving your information, Cloudflare will update firewall filters to est
 :::note
 When you withdraw a prefix using BGP, you must ensure the prefix is withdrawn across all BGP sessions on all route reflectors. Otherwise, your prefix will not be withdrawn from Cloudflare's global network.
 :::
+
+### BGP peering
+
+If you use Direct CNI as a way to on-ramp your network traffic to Magic Transit, refer to [BGP peering](/magic-transit/how-to/bgp-peering/) to learn how to configure BGP peering.
+
 
 ### Regional settings
 

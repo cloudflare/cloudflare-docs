@@ -22,7 +22,7 @@ By default, `cloudflared` will periodically check for updates and restart with t
 
 :::note
 
-For locally-managed tunnels only. 
+For locally-managed tunnels only.
 :::
 
 | Syntax                                                  | Default                     |
@@ -97,7 +97,7 @@ Disables automatic `cloudflared` updates. See also: [`autoupdate-freq`](#autoupd
 
 :::note
 
-For locally-managed tunnels only. 
+For locally-managed tunnels only.
 :::
 
 | Syntax                                                      | Default                   | Environment Variable |
@@ -152,11 +152,11 @@ Specifies custom tags used to identify this tunnel. Multiple tags may be specifi
 
 :::note
 
-For remotely-managed tunnels only. 
+For remotely-managed tunnels only.
 :::
 
 | Syntax                                          | Environment Variable |
 | ----------------------------------------------- | -------------------- |
 | `cloudflared tunnel run --token <TUNNEL_TOKEN>` | `TUNNEL_TOKEN`       |
 
-Associates the `cloudflared` instance with a specific tunnel. The tunnel's token is shown in the dashboard when you first [create the tunnel](/cloudflare-one/connections/connect-networks/get-started/create-remote-tunnel/). You can also retrieve the token using the [API](/api/operations/cloudflare-tunnel-get-a-cloudflare-tunnel-token).
+Associates the `cloudflared` instance with a specific tunnel. The tunnel's token is shown in the dashboard when you first [create the tunnel](/cloudflare-one/connections/connect-networks/get-started/create-remote-tunnel/). You can also retrieve the token using the [API](/api/resources/zero_trust/subresources/tunnels/subresources/token/methods/get/).

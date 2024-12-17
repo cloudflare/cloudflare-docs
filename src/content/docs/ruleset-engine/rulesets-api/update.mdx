@@ -17,10 +17,10 @@ Use one of the following API endpoints:
 | [Update an account entry point ruleset][uep-account] | `PUT /accounts/{account_id}/rulesets/phases/{phase_name}/entrypoint` |
 | [Update a zone entry point ruleset][uep-zone]        | `PUT /zones/{zone_id}/rulesets/phases/{phase_name}/entrypoint`       |
 
-[ur-account]: /api/operations/updateAccountRuleset
-[ur-zone]: /api/operations/updateZoneRuleset
-[uep-account]: /api/operations/updateAccountEntrypointRuleset
-[uep-zone]: /api/operations/updateZoneEntrypointRuleset
+[ur-account]: /api/resources/rulesets/methods/update/
+[ur-zone]: /api/resources/rulesets/methods/update/
+[uep-account]: /api/resources/rulesets/subresources/phases/methods/update/
+[uep-zone]: /api/resources/rulesets/subresources/phases/methods/update/
 
 :::note
 You cannot update the name of the ruleset or its type. Do not include these fields in the `data` field of your `PUT` request.
