@@ -10,8 +10,8 @@ import { Markdown } from "~/components";
 {props.productName} customers can use the Cloudflare dashboard to configure and manage BGP peering between their networks and their Magic routing table when using a Direct CNI on-ramp.
 
 Using BGP peering with a CNI allows customers to:
-- Automate the process of adding or removing networks and subnets
-- Take advantage of failure detection and session recovery features
+- Automate the process of adding or removing networks and subnets.
+- Take advantage of failure detection and session recovery features.
 
 With this functionality, customers can:
 - Establish an eBGP session between their devices and the {props.productName} service when connected via CNI
@@ -32,9 +32,9 @@ BGP multipath is supported. If the same prefix is learned on two different inter
 
 BGP support currently has the following limitations:
 - The Cloudflare account ASN and the customer device ASN must be different. Only eBGP is supported.
-- Routes are always injected with a priority of 100
-- Bidirectional Forwarding Detection (BFD) is not supported
-- 4-byte ASNs are not supported
+- Routes are always injected with a priority of 100.
+- Bidirectional Forwarding Detection (BFD) is not supported.
+- 4-byte ASNs are not supported.
 
 ## Tunnel health checks
 
@@ -48,15 +48,17 @@ The Magic routing table is under the control of the customer, and the customer i
 
 By default each BGP peering session will use the same Cloudflare side ASN to represent peering with the Magic WAN/Transit routing table. This default ASN is called the **CF Account ASN** and should be configured to a private 2-byte ASN (64512 and 65534). To set this ASN:
 
-1. Log in to the Cloudflare dashboard, and select your account.
-2. Go to Magic WAN / Transit > Configuration > BGP.
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/), and select your account.
+2. Go to **Magic WAN / Transit** > **Configuration** > **BGP**.
 3. In CF Account ASN, enter Cloudflare's ASN.
 
 ### For Magic WAN customers
+
 - The Cloudflare side ASN will be included in the `AS PATH` of announced routes to any BGP enabled interconnect.
 - The customer device ASN can be chosen by the customer, and should be different to the Cloudflare side ASN.
 
 ### For Magic Transit customers
+
 - The Cloudflare side ASN will never be exposed in `AS PATH` of anycast announcements from the Cloudflare edge. In those announcements, Cloudflare will always use the Cloudflare ASN of `13335` optionally prepended with a bring-your-own ASN as described in [Cloudflare ASN vs. your own ASN](/magic-transit/how-to/advertise-prefixes/#cloudflare-asn-vs-your-own-asn)
 - The customer device ASN can be a private ASN, or the ASN they are using for Magic Transit anycast announcements at the edge: this has no impact on the ASN for the anycast announced prefix at the edge of the Cloudflare global network.
 
