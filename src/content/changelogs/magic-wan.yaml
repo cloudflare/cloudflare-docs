@@ -5,6 +5,10 @@ productLink: "/magic-wan/"
 productArea: Cloudflare One
 productAreaLink: /cloudflare-one/changelog/
 entries:
+  - publish_date: "2024-12-17"
+    title: BGP support for Cloudflare Network Interconnect (CNI)
+    description: |-
+      Magic WAN customers can now establish BGP peering over CNI circuits. Customers can now dynamically exchange routes and path availability status between their router device and the Magic WAN table.
   - publish_date: "2024-10-01"
     title: Early access testing for BGP on CNI 2.0 circuits
     description: |-
