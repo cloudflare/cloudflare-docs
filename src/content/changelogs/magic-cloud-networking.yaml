@@ -5,6 +5,14 @@ productLink: "/magic-cloud-networking/"
 productArea: Cloudflare One
 productAreaLink: /cloudflare-one/changelog/
 entries:
+  - publish_date: "2024-11-21"
+    title: Import cloud resources for VMs and LBs
+    description: |-
+      Cloud network discovery now includes cloud native virtual machine (VM) and load-balancer (LB) resources.
+  - publish_date: "2024-11-21"
+    title: Export resource catalog
+    description: |-
+      Customers can export their resource catalog including all discovered resource metadata to a downloadable JSON file, suitable for offline analysis.
   - publish_date: "2024-10-01"
     title: Cost visibility for managed cloud configuration
     description: |-
