@@ -38,7 +38,7 @@ If you do not have an ASN or do not want to bring your ASN to Cloudflare, you ca
 Current customers who are still using Cloudflare's AS209242 can continue using this same ASN. No further change is required.
 :::
 
-## Advertise your prefix
+## Advertise or withdraw a prefix
 
 :::note
 You can only advertise your prefix [after running pre-flight checks](/magic-transit/get-started/#5-run-pre-flight-checks) with Cloudflare. If your prefix status is greyed out and shows an _Withdrawn_ status, your prefix is locked. Contact your account team to close the pre-flight checks phase with you and unlock your prefixes.
@@ -46,16 +46,17 @@ You can only advertise your prefix [after running pre-flight checks](/magic-tran
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login), and select your account.
 2. Go to **Magic Transit** > **Configuration**.
-3. From the **IP Prefixes** tab select your prefix > **Edit**.
-4. Under **Status**, select _Advertise_ to advertise your prefix.
-5. Select **Edit Prefix** to save your changes.
+3. From **IP Prefixes** tab, select the prefix you want to modify > **Edit**.
+4. From the dropdown menu **Status**, choose weather the status of your IP is _Advertised_ or _Withdrawn_.
+5. _(Optional)_ Edit the description for your prefix.
+6. Select **Edit IP Prefix** to save your changes.
 
 ## Edit the status of a prefix
 
-1. From the **IP Prefixes** tab, locate the prefix you want to modify and select **Edit**.
-2. On the **Edit IP Prefix** page under **Status**, choose a status.
-3. _(Optional)_ Edit the description for your prefix.
-4. Select **Edit IP Prefix** to save your changes.
+1. Go to **Magic Transit** > **Configuration**.
+2. From the **IP Prefixes** tab, locate the prefix you want to modify.
+3. Select the three dots in front of the IP prefix > **Delete**.
+4. Confirm your choice from the modal by selecting **Delete**.
 
 To avoid latency and potentially dropped routes, enable prefix advertisement from Cloudflare before withdrawing the advertisement from your data center.
 
