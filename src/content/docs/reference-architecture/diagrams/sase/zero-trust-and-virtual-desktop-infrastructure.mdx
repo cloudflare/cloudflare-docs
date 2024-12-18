@@ -12,14 +12,14 @@ updated: 2024-12-17
 
 ## Introduction
 
-Virtual Desktop Infrastructure (VDI) is old, costly and clunky for a number of reasons including poor user experience, high upfront investments, ongoing operational costs, and many others of which you can read about in detail [here](https://blog.cloudflare.com/decommissioning-virtual-desktop/). We recognize and empathize with the challenges many organizations face that result in continued reliance on this approach. This reference architecture describes how Cloudflare's Zero Trust solution can help organizations secure their virtual desktop infrastructure (VDI) and in most cases offload it entirely. Many organizations use expensive and poor performing VDI only to provide a secure web browser to their remote users. In these cases, Cloudflare can help offload the use of VDI entirely for web-based applications or SaaS apps.
+Virtual Desktop Infrastructure (VDI) is old, costly, and clunky for a number of reasons including poor user experience, high upfront investments, ongoing operational costs, and many others of which you can read about in detail [here](https://blog.cloudflare.com/decommissioning-virtual-desktop/). We recognize and empathize with the challenges many organizations face that result in continued reliance on this approach. This reference architecture describes how Cloudflare's Zero Trust solution can help organizations secure their virtual desktop infrastructure (VDI) and in most cases offload it entirely. Many organizations use expensive and poor performing VDI only to provide a secure web browser to their remote users. In these cases, Cloudflare can help offload the use of VDI entirely for web-based applications or SaaS apps.
 
 In other cases, a full virtualized desktop may be necessary for legacy apps, yet organizations still need help securing remote access to their VDI or securing the virtualized desktops themselves once users are interacting with them. This document provides a reference and guidance for using Cloudflare's Zero Trust services and is split into two main sections.
 
 - Replacing your VDI for secure remote access to web-based applications. Accessing a full blown desktop environment to just use a web browser isn't the best experience for users. Cloudflare offers a vast improvement over remote access to web applications and can do so with greater security.
-- Securing your VDI desktops
-  - From unauthorized access
-  - From risky public Internet destinations
+- Securing your VDI desktops...
+  - From unauthorized access.
+  - From risky public Internet destinations.
 
 ### Who is this document for and what will you learn?
 
@@ -65,7 +65,7 @@ The diagram above displays a general Zero Trust deployment using best practices 
 2. Traffic destined to the VDI resources reaches ZTNA policies where it is evaluated for any combination of conditional access criteria, including device posture, identity and traffic context or type.
 3. Traffic that passes the ZTNA policies is allowed to reach the VDI resources where the user can interact with the VDI normally.
 
-This model could also benefit from the below options demonstrating how to filter traffic sourced from the VDI hosts as well (See below)
+This model could also benefit from the below options demonstrating how to filter traffic sourced from the VDI hosts as well (refer to below).
 
 ### Securing traffic from your VDI using secure web gateway policies
 
@@ -77,12 +77,12 @@ Cloudflare's SASE platform is capable of much more than replacing VPNs and bolst
 
    a. DNS configurations allow for DNS policies to be enforced while PAC files allow for all gateway policy types (DNS, Network and HTTP).
 
-2. Traffic is sent from the VDI to the secure web gateway where it's filtered by DNS, network or HTTP policies.
-3. Traffic is sent to the Internet if it is allowed past gateway policies
+2. Traffic is sent from the VDI to the secure web gateway where it is filtered by DNS, network or HTTP policies.
+3. Traffic is sent to the Internet if it is allowed past Gateway policies
 
 ## Summary
 
-As shown we have seen several ways to incorporate Cloudflare's Zero Trust services with your existing VDI, either by replacing it completely in favor of Remote Browser Isolation technology or further securing it with our [Access](/cloudflare-one/policies/access/) or [Gateway](/cloudflare-one/policies/gateway/) services.
+As shown, we have seen several ways to incorporate Cloudflare's Zero Trust services with your existing VDI, either by replacing it completely in favor of Remote Browser Isolation technology or further securing it with our [Access](/cloudflare-one/policies/access/) or [Gateway](/cloudflare-one/policies/gateway/) services.
 
 For more thorough background, explanation and action steps to a smooth migration be sure to read the following resources:
 
@@ -94,4 +94,4 @@ For more thorough background, explanation and action steps to a smooth migration
 - [Agentless DNS Configurations](/cloudflare-one/connections/connect-devices/agentless/dns/)
 - [PAC Files for Agentless HTTP Filtering](/cloudflare-one/connections/connect-devices/agentless/pac-files/)
 
-As always, If you have any questions on these services be sure to reach out to your Cloudflare team or contact us to [talk to an expert](https://www.cloudflare.com/products/zero-trust/plans/enterprise/).
+As always, if you have any questions on these services, be sure to reach out to your Cloudflare team or contact us to [talk to an expert](https://www.cloudflare.com/products/zero-trust/plans/enterprise/).
