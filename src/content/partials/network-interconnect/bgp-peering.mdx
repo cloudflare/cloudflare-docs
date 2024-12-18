@@ -39,7 +39,7 @@ BGP support currently has the following limitations:
 
 ## Tunnel health checks
 
-You need to enable <a href={props.productPath}>tunnel health checks</a> alongside BGP. This is essential to determine if a specific Cloudflare datacenter is reachable from a customer router or not. Tunnel health checks will modify the route's priorities for dynamically learned BGP routes.
+You need to enable <a href={props.productPath}>tunnel health checks</a> alongside BGP. This is essential to determine if a specific Cloudflare datacenter is reachable from a customer device or not. Tunnel health checks will modify the route's priorities for dynamically learned BGP routes.
 
 {props.productName} customers should configure legacy <a href={props.legacyHCs}>bidirectional health checks</a>.
 
@@ -47,10 +47,10 @@ You need to enable <a href={props.productPath}>tunnel health checks</a> alongsid
 
 The Magic routing table is under the control of the customer, and the customer is able to choose both the Cloudflare side ASN and their customer device side ASN.
 
-By default each BGP peering session will use the same Cloudflare side ASN to represent peering with the Magic WAN/Transit routing table. This default ASN is called the **CF Account ASN** and should be configured to a private 2-byte ASN (64512 and 65534). To set this ASN:
+By default each BGP peering session will use the same Cloudflare side ASN to represent peering with the {props.productName} routing table. This default ASN is called the **CF Account ASN** and should be configured to a private 2-byte ASN (64512 and 65534). To set this ASN:
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/), and select your account.
-2. Go to **Magic WAN / Transit** > **Configuration** > **BGP**.
+2. Go to **{props.productName}** > **Configuration** > **BGP**.
 3. In **CF Account ASN**, enter Cloudflare's ASN.
 
 <Markdown text={props.asnProduct} />
