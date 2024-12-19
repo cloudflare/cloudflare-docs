@@ -5,6 +5,18 @@ productLink: "/workflows/"
 productArea: Developer platform
 productAreaLink: /workers/platform/changelog/platform/
 entries:
+  - publish_date: "2024-12-19"
+    title: "Improved queued logic & step limit increased"
+    description: |-
+      Introduction of a new mechanism to queue instances, which will prevent instances from getting stuck on queued status forever. Also, this new mechanism will force miss-behaved queued instances to be automatically errored.
+
+      Workflows can now be terminated and pause instances from a queued state.
+
+      The ID of an instance is now exposed via the `WorkflowEvent` parameter.
+
+      Workflows now allow you to define up to 1024 steps in a single Workflow definition, up from the previous limit of 512. This limit will continue to increase during the course of the open beta.
+
+      If you have Workflows that need more steps, we recommend delegating additional work to other Workflows by [triggering a new Workflow](/workflows/build/trigger-workflows/) from within a step and passing any state as [parameters to that Workflow instance](/workflows/build/events-and-parameters/).
   - publish_date: "2024-11-30"
     title: "Step limit increased"
     description: |-
