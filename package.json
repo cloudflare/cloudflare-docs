@@ -38,7 +38,7 @@
 		"@cloudflare/workers-types": "^4.20241218.0",
 		"@codingheads/sticky-header": "^1.0.2",
 		"@iarna/toml": "^2.2.5",
-		"@iconify-json/material-symbols": "^1.2.11",
+		"@iconify-json/material-symbols": "^1.2.12",
 		"@stoplight/json-schema-tree": "^4.0.0",
 		"@types/dompurify": "^3.2.0",
 		"@types/hast": "^3.0.4",
