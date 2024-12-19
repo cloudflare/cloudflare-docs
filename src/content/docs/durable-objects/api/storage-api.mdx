@@ -25,25 +25,13 @@ While access to a Durable Object is single-threaded, request executions can stil
 The following code snippet shows you how to store and retrieve data using the Durable Object Storage API.
 
 ```js
-export class Counter {
-	constructor(ctx, env) {
-		this.ctx = ctx;
-	}
-
-	async fetch(request) {
-		let url = new URL(request.url);
-
-		// retrieve data
-		let value = (await this.ctx.storage.get("value")) || 0;
-
-		// increment counter and get a new value
-		value += 1;
-
-		// store data
-		await this.ctx.storage.put("value", value);
-
-		return new Response(value);
-	}
+export class Counter extends DurableObject {
+	async increment() {
+    let value = (await this.ctx.storage.get("value")) || 0;
+    value += 1;
+    await this.ctx.storage.put("value", value);
+    return value;
+  }
 }
 ```
 
