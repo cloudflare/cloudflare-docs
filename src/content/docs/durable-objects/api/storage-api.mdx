@@ -5,7 +5,7 @@ sidebar:
   order: 6
 ---
 
-import { Render, Type, MetaInfo, GlossaryTooltip } from "~/components";
+import { Render, Type, MetaInfo, GlossaryTooltip, TypeScriptExample } from "~/components";
 
 The Durable Object Storage API allows <GlossaryTooltip term="Durable Object">Durable Objects</GlossaryTooltip> to access transactional and strongly consistent storage. A Durable Object's attached storage is private to its unique instance and cannot be accessed by other objects.
 
@@ -24,16 +24,22 @@ While access to a Durable Object is single-threaded, request executions can stil
 
 The following code snippet shows you how to store and retrieve data using the Durable Object Storage API.
 
-```js
+<TypeScriptExample>
+```ts
 export class Counter extends DurableObject {
-	async increment() {
-    let value = (await this.ctx.storage.get("value")) || 0;
-    value += 1;
-    await this.ctx.storage.put("value", value);
-    return value;
-  }
+	constructor(ctx: DurableObjectState, env: Env) {
+		super(ctx, env);
+	}
+
+	async increment(): Promise < number > {
+		let value: number = (await this.ctx.storage.get('value')) || 0;
+		value += 1;
+		await this.ctx.storage.put('value', value);
+		return value;
+	}
 }
 ```
+</TypeScriptExample>
 
 ## Methods
 
