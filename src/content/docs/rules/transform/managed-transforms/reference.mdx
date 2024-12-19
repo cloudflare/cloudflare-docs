@@ -111,7 +111,7 @@ For example, consider an incoming request proxied by two CDNs (`CDN_1` and `CDN_
 With **Remove visitor IP headers** enabled, the `x-forwarded-for` header sent to the origin server will be:<br/>
 `x-forwarded-for: <THIRD_PARTY_CDN_2_IP>`
 
-### Add Leaked Credentials Checks Header
+### Add leaked credentials checks header
 
 Adds an `Exposed-Credential-Check` request header whenever the WAF detects leaked credentials in the incoming request.
 
@@ -129,6 +129,20 @@ You will only receive this managed header at your origin server if:
 - The [leaked credentials detection](/waf/detections/leaked-credentials/) in the WAF is turned on.
 - The **Add Leaked Credentials Checks Header** managed transform is turned on.
 - Your Cloudflare plan supports the type of credentials detection. For example, Free plans can only know if a password was previously leaked. In this situation, Cloudflare will add an `Exposed-Credential-Check: 4` header to the request.
+
+### Add malicious uploads detection header
+
+Adds a `Malicious-Uploads-Detection` request header indicating the outcome of scanning uploaded content for malicious signatures.
+
+The header can have one of the following values:
+
+| Header + Value                   | Description                                                                                                                                                                                                            |
+| -------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `Malicious-Uploads-Detection: 1` | The request contains at least one malicious content object ([`cf.waf.content_scan.has_malicious_obj`](/ruleset-engine/rules-language/fields/dynamic-fields/#cfwafcontent_scanhas_malicious_obj) is `true`).            |
+| `Malicious-Uploads-Detection: 2` | The file scanner was unable to scan all the content objects detected in the request ([`cf.waf.content_scan.has_failed`](/ruleset-engine/rules-language/fields/dynamic-fields/#cfwafcontent_scanhas_failed) is `true`). |
+| `Malicious-Uploads-Detection: 3` | The request contains at least one content object ([`cf.waf.content_scan.has_obj`](/ruleset-engine/rules-language/fields/dynamic-fields/#cfwafcontent_scanhas_obj) is `true`).                                          |
+
+For more information, refer to [Malicious uploads detection](/waf/detections/malicious-uploads/).
 
 ## HTTP response headers
 
