@@ -16,7 +16,7 @@ entries:
           - Existing users will be prompted to update permissions when GitHub sends an email with subject "[GitHub] Cloudflare Workers & Pages is requesting updated permission" on December 19th, 2024.
           - New users installing the app will see the updated permissions during the connecting repository process.
         - **Action:** Review and accept the permissions update to use upcoming features. *If you decline or take no action, you can continue connecting repositories and deploying changes via the Cloudflare GitHub App as you do today, but new features requiring these permissions will not be available.*
-        - **Questions?** Visit [#github-permissions-update](https://discord.com/channels/595317990191398933/1313895851520688163) in Cloudflare Developers Discord.
+        - **Questions?** Visit [#github-permissions-update](https://discord.com/channels/595317990191398933/1313895851520688163) in the Cloudflare Developers Discord.
   - publish_date: "2024-11-18"
     description: |-
       - Updated v8 to version 13.1.
