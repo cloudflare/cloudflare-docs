@@ -46,7 +46,7 @@
 
 # Cloudflare One
 
-/src/content/docs/cloudflare-one/ @ranbel cloudflare/pcx-technical-writing
+/src/content/docs/cloudflare-one/ @ranbel @cloudflare/pcx-technical-writing
 /src/content/docs/cloudflare-one/applications/ @kennyj42 @ranbel @cloudflare/pcx-technical-writing
 /src/content/docs/cloudflare-one/identity/ @kennyj42 @ranbel @cloudflare/pcx-technical-writing
 /src/content/docs/cloudflare-one/policies/access/ @kennyj42 @ranbel @cloudflare/pcx-technical-writing
