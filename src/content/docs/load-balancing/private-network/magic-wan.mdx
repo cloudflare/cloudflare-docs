@@ -26,7 +26,7 @@ The VNET ID value will be used to ensure that your load balancer is properly int
 
 1. Once you have your [VNets configured](/load-balancing/private-network/magic-wan/#1-configure-a-virtual-network-for-magic-wan), you need to make sure that the [pools](/load-balancing/pools/create-pool/) you will be using with your load balancer are configured with the default VNet value in the **Virtual Network** field.
 
-2. Next, create an Account Load Balancer by sending a `POST` request to the following API endpoint. The request body should be structured similarly to a Zone Load Balancer. Refer to the [Cloudflare API documentation](/api/resources/load_balancers/methods/create/#request-body) for details on the required fields and their formats. Make sure that the pools you are using in your load balancer have the default VNET configured (previous step).
+2. Next, create an Account Load Balancer by sending a `POST` request to the following API endpoint. The request body should be structured similarly to a Zone Load Balancer. Refer to the [Cloudflare API documentation](/api/resources/load_balancers/methods/create/) for details on the required fields and their formats. Make sure that the pools you are using in your load balancer have the default VNET configured (previous step).
 
 ```txt
 https://api.cloudflare.com/client/v4/accounts/{ACCOUNT_ID}/load_balancers/
