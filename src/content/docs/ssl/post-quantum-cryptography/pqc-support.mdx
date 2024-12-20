@@ -7,13 +7,14 @@ head: []
 description: Consider information about post-quantum cryptography at Cloudflare - deployed key agreements and software support.
 ---
 
-Cloudflare's deployment of post-quantum [hybrid key agreements](/ssl/post-quantum-cryptography/#hybrid-key-agreement) is supported by different software as listed below.
+Cloudflare's deployment of post-quantum [hybrid key agreements](/ssl/post-quantum-cryptography/#hybrid-key-agreement) is supported by different software as listed below. [Contributions](https://github.com/cloudflare/cloudflare-docs/blob/production/CONTRIBUTING.md) to keep the listing up-to-date are welcome!
 
 ## X25519MLKEM768
 - Default for [Firefox 132+](https://www.mozilla.org/firefox/channel/desktop/) (Beta)
 - Default for [Chrome 131+](https://www.google.com/chrome/beta/) (Beta)
 - Cloudflare's [fork of Go](https://github.com/cloudflare/go)
 - [BoringSSL](https://boringssl.googlesource.com/boringssl/)
+- [rustls-post-quantum 0.2.0+](https://crates.io/crates/rustls-post-quantum) ([blog](https://www.memorysafety.org/blog/pq-key-exchange/))
 
 ## X25519Kyber768Draft00
 
@@ -33,4 +34,3 @@ Cloudflare's deployment of post-quantum [hybrid key agreements](/ssl/post-quantu
 - [nginx](https://www.nginx.org/) when [compiled with BoringSSL](https://mailman.nginx.org/pipermail/nginx/2023-August/NOISOYU3QTB2DGIYUBGF7CAMQHDI2QLT.html) ([guide](https://blog.centminmod.com/2023/10/03/2860/how-to-enable-cloudflare-post-quantum-x25519kyber768-key-exchange-support-in-centmin-mod-nginx/))
 - [Caddy HTTP server](https://caddyserver.com/) nightly [compiled with Go 1.23+](https://gist.github.com/bwesterb/2f7bfa7ae689de0d242b56ea3ecac424)
 - [Botan C++ library 3.2.0+](https://botan.randombit.net/) ([instructions](https://github.com/randombit/botan/discussions/3747))
-- ISRG's fork of [Rustls](https://www.memorysafety.org/blog/pq-key-exchange/)

@@ -3,12 +3,26 @@ pcx_content_type: reference
 title: Remote captures
 sidebar:
   order: 4
-
 ---
 
-:::note
-DEX remote captures are available for beta testing on [Windows](https://install.appcenter.ms/orgs/cloudflare/apps/1.1.1.1-windows/distribution_groups/beta) and [macOS](https://install.appcenter.ms/orgs/cloudflare/apps/1.1.1.1-macos/distribution_groups/beta). Linux builds are available upon request by contacting your account team.
-:::
+import { Details } from "~/components"
+
+<Details header="Feature availability">
+
+| [WARP modes](/cloudflare-one/connections/connect-devices/warp/configure-warp/warp-modes/)   | [Zero Trust plans](https://www.cloudflare.com/teams-pricing/) |
+| ------------------------------------------------------------------------------------------- | ------------------------------------------------------------- |
+| <ul> <li> Gateway with WARP </li> <li> Secure Web Gateway without DNS Filtering </li> </ul> | All plans                                                     |
+
+| System   | Availability | Minimum WARP version |
+| -------- | ------------ | -------------------- |
+| Windows  | ✅            | 2024.12.492.0     |
+| macOS    | ✅            | 2024.12.492.0     |
+| Linux    | ✅            | 2024.12.492.0     |
+| iOS      | ❌            |                   |
+| Android  | ❌            |                   |
+| ChromeOS | ❌            |                   |
+
+</Details>
 
 Remote captures allow administrators to collect packet captures (PCAPs) and WARP diagnostic logs directly from end user devices. This data can be used to troubleshoot network problems, investigate security incidents, and identify performance bottlenecks.
 

@@ -168,6 +168,10 @@ Response
 
 :::
 
+## Name
+
+A human-readable, optional job name that does not need to be unique. We recommend choosing a meaningful name, such as the domain name, to help you easily identify and manage your job. You can update the name later if needed.
+
 ## Kind
 
 The kind parameter (optional) is used to differentiate between Logpush and Edge Log Delivery jobs. For Logpush jobs, this parameter can be left empty or omitted. For Edge Log Delivery jobs, set `"kind": "edge"`. Currently, Edge Log Delivery is only supported for the `http_requests` dataset.

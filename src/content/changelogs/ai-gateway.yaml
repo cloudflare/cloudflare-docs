@@ -5,8 +5,19 @@ productLink: "/ai-gateway/"
 productArea: Developer platform
 productAreaLink: /workers/platform/changelog/platform/
 entries:
+  - publish_date: "2024-12-13"
+    title: Bug Fixes
+    description: |-
+      * **Bug Fixes**: Fixed Anthropic errors being cached.
+      * **Bug Fixes**: Fixed `env.AI.run()` requests using authenticated gateways returning authentication error.
+      
+  - publish_date: "2024-11-28"
+    title: OpenRouter
+    description: |-
+      * **Configuration**: Added [OpenRouter](/ai-gateway/providers/openrouter/) as a new provider.
+
   - publish_date: "2024-11-19"
-    title: WebsocketS API
+    title: WebSockets API
     description: |-
       * **Configuration**: Added [WebSockets API](/ai-gateway/configuration/websockets-api/) which provides a single persistent connection, enabling continuous communication.
   - publish_date: "2024-11-19"

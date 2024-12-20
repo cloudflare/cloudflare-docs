@@ -5,7 +5,7 @@ sidebar:
   order: 1
 ---
 
-import { TabItem, Tabs } from "~/components";
+import { TabItem, Tabs, Render } from "~/components";
 
 If you created a Cloudflare Tunnel [from the dashboard](/cloudflare-one/connections/connect-networks/get-started/create-remote-tunnel/), the tunnel runs as a service on your OS.
 
@@ -310,4 +310,4 @@ The tunnel token is now fully rotated. The old token is no longer in use.
 
 ### Account-scoped roles
 
-Account members with [Cloudflare Access](/cloudflare-one/roles-permissions/) and [DNS](/fundamentals/setup/manage-members/roles/) permissions will be able to create, delete, and configure all tunnels for the account.
+<Render file="tunnel/account-scoped-roles" />

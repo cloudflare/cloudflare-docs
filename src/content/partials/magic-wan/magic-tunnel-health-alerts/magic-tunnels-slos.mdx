@@ -1,6 +1,6 @@
 ---
-{}
-
+params:
+  - tunnelStatePath
 ---
 
 Cloudflare combines different metrics to determine when to send you Magic Tunnel health alerts. Review key concepts below to better understand this process.
@@ -11,7 +11,7 @@ A ratio between the total number of positive events divided by the total number 
 
 ### Service-level objectives (SLOs)
 
-SLOs are the threshold for the SLI, and set a target level of reliability for Magic Tunnels. For example, if the SLI is the percentage of successful Magic Tunnel health checks, an SLO could be 99.9% of requests being successful over the past 30 days. Customers decide the required threshold to be notified of a problem with Magic Tunnels. Above the set threshold, Cloudflare will not send any alerts.
+SLOs are the threshold for the SLI and they set a target level of reliability for Magic Tunnels. For example, if the SLI is based on the percentage of Magic Tunnel states meeting the desired criteria, an SLO could be 99.9% of tunnel states being healthy over the past 30 days. The SLI values for the SLO are calculated based on the <a href={props.tunnelStatePath}>tunnel state values</a>, not on the timeout results from tunnel health checks.
 
 ### Error budget
 

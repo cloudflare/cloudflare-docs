@@ -5,6 +5,16 @@ productLink: "/fundamentals/"
 productArea: Core platform
 productAreaLink: /fundamentals/reference/changelog/platform/
 entries:
+  - publish_date: "2025-03-23"
+    title: "Eligible Zones For Account Custom Nameservers"
+    description: |-
+      Deprecation date: March 23, 2025
+
+      Users can now add custom nameservers that are not part of a zone managed within their account. As a result, any zone is eligible for custom nameservers, regardless of whether it is managed by Cloudflare. Given this change, an endpoint to check for eligible zones is no longer relevant and is therefore being deprecated.
+
+      Deprecated APIs:
+      - `GET /accounts/:account_id/custom_ns/availability`
+
   - publish_date: "2024-12-09"
     title: "Access applications: self_hosted_domains"
     description: |-

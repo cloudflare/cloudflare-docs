@@ -1,14 +1,24 @@
 ---
 params:
+  - productName
   - healthChecksUrl
   - addTunnelsPath
+  - connectorExtraInfo
+  - connectorNote
+  - connectorTitle1
+  - connectorTitle2
+  - connectorSteps
 ---
 
-import { GlossaryTooltip, Markdown, TabItem, Tabs } from "~/components";
+import {AnchorHeading, GlossaryTooltip, Markdown, TabItem, Tabs } from "~/components";
 
-By default, Cloudflare servers send <GlossaryTooltip term="tunnel health-check" link={props.healthChecksUrl}>health checks</GlossaryTooltip> to each <GlossaryTooltip term="GRE tunnel">GRE</GlossaryTooltip>, CNI, or <GlossaryTooltip term="IPsec tunnel">IPsec</GlossaryTooltip> tunnel endpoint you configure to receive traffic from Magic Transit and Magic WAN. You can configure this frequency via the dashboard or [the API](/api/resources/magic_transit/subresources/gre_tunnels/methods/update/) to suit your use case. For example, if you are connecting a lower-traffic site for which you do not need immediate failover and would rather receive a lower volume of health check traffic, you should set the frequency to `low`. On the other hand, if you are connecting a site that is extremely sensitive to any issues, and you want a more proactive failover at the earliest sign of a potential problem, you should set this to `high`.
+By default, Cloudflare servers send <GlossaryTooltip term="tunnel health-check" link={props.healthChecksUrl}>health checks</GlossaryTooltip> to each <GlossaryTooltip term="GRE tunnel">GRE</GlossaryTooltip>, CNI, or <GlossaryTooltip term="IPsec tunnel">IPsec</GlossaryTooltip> tunnel endpoint you configure to receive traffic from {props.productName}. {props.connectorExtraInfo}
 
-Available options are `low`, `mid`, and `high`.
+You can configure the health check frequency via the dashboard or [the API](/api/resources/magic_transit/subresources/gre_tunnels/methods/update/) to suit your use case. For example, if you are connecting a lower-traffic site for which you do not need immediate failover and would rather receive a lower volume of health check traffic, you should set the frequency to `low`. On the other hand, if you are connecting a site that is extremely sensitive to any issues, and you want a more proactive failover at the earliest sign of a potential problem, you should set this to `high`.
+
+Available options are `low`, `mid`, and `high`. <Markdown text={props.connectorNote} />
+
+{ props.connectorTitle1 && <AnchorHeading depth={2} title={props.connectorTitle1} /> }
 
 <Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
 
@@ -34,3 +44,7 @@ https://api.cloudflare.com/client/v4/accounts/{account_id}/magic/gre_tunnels/{tu
 ```
 
 </TabItem> </Tabs>
+
+{ props.connectorTitle2 && <AnchorHeading depth={2} title={props.connectorTitle2} /> }
+
+<Markdown text={props.connectorSteps} />

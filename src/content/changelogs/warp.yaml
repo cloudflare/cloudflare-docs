@@ -5,6 +5,10 @@ productLink: "/cloudflare-one/connections/connect-devices/warp/"
 productArea: Cloudflare One
 productAreaLink: /cloudflare-one/changelog/
 entries:
+  - publish_date: "2024-12-04"
+    title: Custom device posture integration
+    description: |-
+     WARP now supports setting up [custom device posture integrations](/cloudflare-one/identity/devices/service-providers/custom/) using a third-party API of your choice.
   - publish_date: "2024-11-19"
     title: MASQUE GA
     description: |-

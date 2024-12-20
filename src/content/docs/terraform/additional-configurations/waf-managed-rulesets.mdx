@@ -50,7 +50,6 @@ resource "cloudflare_ruleset" "zone_level_managed_waf" {
     action = "execute"
     action_parameters {
       id = "efb7b8c949ac4650a09736fc376e9aee"
-      version = "latest"
     }
     expression = "true"
     description = "Execute Cloudflare Managed Ruleset on my zone-level phase entry point ruleset"
@@ -62,7 +61,6 @@ resource "cloudflare_ruleset" "zone_level_managed_waf" {
     action = "execute"
     action_parameters {
       id = "4814384a9e5d4991b9815dcfc25d2f1f"
-      version = "latest"
     }
     expression = "true"
     description = "Execute Cloudflare OWASP Core Ruleset on my zone-level phase entry point ruleset"
@@ -159,7 +157,6 @@ resource "cloudflare_ruleset" "account_level_managed_waf" {
     action = "execute"
     action_parameters {
       id = "efb7b8c949ac4650a09736fc376e9aee"
-      version = "latest"
     }
     expression = "true"
     description = "Execute Cloudflare Managed Ruleset on my zone-level phase entry point ruleset"
@@ -195,7 +192,6 @@ The following configuration includes the three overrides in the rule that execut
     action = "execute"
     action_parameters {
       id = "efb7b8c949ac4650a09736fc376e9aee"
-      version = "latest"
       overrides {
         rules {
           id = "5de7edfa648c4d6891dc3e7f84534ffa"
@@ -235,7 +231,6 @@ Building upon the rule that deploys the Cloudflare Managed Ruleset, the followin
     action = "execute"
     action_parameters {
       id = "efb7b8c949ac4650a09736fc376e9aee"
-      version = "latest"
       matched_data {
          public_key = "Ycig/Zr/pZmklmFUN99nr+taURlYItL91g+NcHGYpB8="
       }

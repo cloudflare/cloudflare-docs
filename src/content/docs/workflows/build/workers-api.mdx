@@ -69,6 +69,14 @@ Refer to the [events and parameters](/workflows/build/events-and-parameters/) do
   * `name` - the name of the step.
   * `timestamp` - a JavaScript `Date` object or seconds from the Unix epoch to sleep the Workflow instance until.
 
+:::note
+
+`step.sleep` and `step.sleepUntil` methods do not count towards the maximum Workflow steps limit. 
+
+More information about the limits imposed on Workflow can be found in the [Workflows limits documentation](/workflows/reference/limits/).
+
+:::
+
 ## WorkflowStepConfig
 
 ```ts

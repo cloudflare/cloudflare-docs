@@ -25,14 +25,14 @@ Refer to [Certificate authorities](/ssl/reference/certificate-authorities/) for 
 
 ## Non-SNI support
 
-Although [SNI extensions](https://www.cloudflare.com/learning/ssl/what-is-sni/) to the TLS protocol were standardized in 2003, some browsers and operating systems only implemented this extension when TLS 1.1 was released in 2006 (or 2011 for mobile browsers).
-
-If your visitors use devices that have not been updated since 2011, they may not have SNI support.
+Although [SNI extensions](https://www.cloudflare.com/learning/ssl/what-is-sni/) to the TLS protocol were standardized in 2003, some browsers and operating systems only implemented this extension when TLS 1.1 was released in 2006 (or 2011 for mobile browsers). If your visitors use devices that have not been updated since 2011, they may not have SNI support.
 
 To support non-SNI requests, you can:
 
 * [Upload a custom certificate](/ssl/edge-certificates/custom-certificates/uploading/#upload-a-custom-certificate) and specify a value of `Legacy` for its client support.
 
   Note that `Legacy` custom certificates are not compatible with [BYOIP](/byoip/) and that, unlike [Universal SSL](/ssl/edge-certificates/universal-ssl/) or [advanced certificates](/ssl/edge-certificates/advanced-certificate-manager/), Cloudflare does not manage issuance and renewal for [custom certificates](/ssl/edge-certificates/custom-certificates/).
+
+* (BYOIP customers only) Enterprise customers can choose to bring your own IP prefix to Cloudflare Network and [specify the default SNI used for any handshake in the address map](/byoip/troubleshooting/#non-sni-support).
 
 * (Paid plans only) [Contact Cloudflare Support](/support/contacting-cloudflare-support/) and request a set of dedicated IPs for your zone.

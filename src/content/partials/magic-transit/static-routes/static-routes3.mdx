@@ -64,7 +64,7 @@ customer service manager.
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login), and select your account.
 2. Go to **{props.createPath}**.
-3. From the **Static Routes** tab, select **Create** to add a new route.
+3. From the **Routes** tab, select **Create** to add a new route.
 4. Enter a descriptive name for your route in **Description**.
 5. In **Prefix**, enter your range of IP addresses. For example, `10.10.10.100/24`.
 6. In **Tunnel/Next hop** select which tunnel you want your route to go through. Choose from the tunnels you have created in <a href={props.tunnelEndpoints}>Configure tunnel endpoints</a>.
@@ -114,7 +114,7 @@ curl https://api.cloudflare.com/client/v4/accounts/{account_id}/magic/routes \
 
 <Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
 
-1. In **Static routes**, select **Edit** next to the route you want to modify.
+1. In **Routes**, select **Edit** next to the route you want to modify.
 2. Enter the updated route information.
 3. (Optional) We highly recommend testing your route before adding it by selecting **Test routes**.
 4. Select **Edit routes** to save the new information when you are done.
@@ -160,7 +160,7 @@ https://api.cloudflare.com/client/v4/accounts/{account_id}/magic/routes \
 
 <Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
 
-1. In **Static routes**, locate the static route you want to modify and select **Delete**.
+1. In **Routes**, locate the static route you want to modify and select **Delete**.
 2. Confirm the action by selecting the checkbox and select **Delete**.
 
 </TabItem> <TabItem label="API">

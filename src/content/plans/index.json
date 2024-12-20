@@ -2010,6 +2010,53 @@
 					"ent": 200
 				}
 			}
+		},
+		"turnstile": {
+			"title": "Turnstile",
+			"link": "/turnstile/",
+			"properties": {
+				"widgets": {
+					"title": "Number of widgets",
+					"link": "/turnstile/concepts/widget/",
+					"free": "10 widgets",
+					"ent": "Unlimited"
+				},
+				"modes": {
+					"title": "Interactivity modes",
+					"link": "/turnstile/get-started/client-side-rendering/#appearance-modes",
+					"free": "Managed, Invisible, Interactive",
+					"ent": "Managed, Invisible, Interactive"
+				},
+				"offlabel": {
+					"title": "Offlabel (remove Cloudflare branding)",
+					"free": "No",
+					"ent": "Yes"
+				},
+				"preclearance": {
+					"title": "Pre-clearance support",
+					"link": "/turnstile/concepts/pre-clearance-support/",
+					"free": "Yes",
+					"ent": "Yes"
+				},
+				"hostname_validation": {
+					"title": "Hostname validation",
+					"link": "/turnstile/concepts/hostname-management/",
+					"free": "10 hostnames per widget",
+					"ent": "Maximum of 200 hostnames per widget. <br> The `any hostname` entitlement removes hostname as a requirement and allows you to use the widget anywhere."
+				},
+				"graphql_analytics": {
+					"title": "Analytics time window",
+					"link": "/turnstile/turnstile-analytics/",
+					"free": "30 days maximum",
+					"ent": "30 days maximum"
+				},
+				"ephemeral_ids": {
+					"title": "Ephemeral IDs",
+					"link": "/turnstile/concepts/ephemeral-id/",
+					"free": "No",
+					"ent": "Yes"
+				}
+			}
 		}
 	},
 	"scrape_shield": {
