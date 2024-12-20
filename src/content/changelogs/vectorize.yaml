@@ -5,10 +5,15 @@ productLink: "/vectorize/"
 productArea: Developer platform
 productAreaLink: /workers/platform/changelog/platform/
 entries:
+  - publish_date: "2024-12-20"
+    title: Added support for index name reuse
+    description: |-
+      Vectorize now supports the reuse of index names within the account. An index can be created using the same name as an index that is in a deleted state.
+
   - publish_date: "2024-12-19"
     title: Added support for range queries in metadata filters
     description: |-
-      Vectorize now supports `$lt`, `$lte`, `$gt`, and `$gte` clauses in [metadata filters](/vectorize/reference/metadata-filtering/). 
+      Vectorize now supports `$lt`, `$lte`, `$gt`, and `$gte` clauses in [metadata filters](/vectorize/reference/metadata-filtering/).
 
   - publish_date: "2024-11-13"
     title: Added support for $in and $nin metadata filters
