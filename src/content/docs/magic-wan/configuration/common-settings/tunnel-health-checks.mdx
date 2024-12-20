@@ -12,13 +12,13 @@ import { Render } from "~/components";
 	product="magic-transit"
 	params={{
 		productName: "Magic WAN",
-		connectorExtraInfo: "— in the case of Magic WAN Connector, IPsec tunnels.",
+		connectorExtraInfo: "For Magic WAN Connector, health checks are sent to IPsec tunnel endpoints.",
 		healthChecksUrl: "/magic-wan/reference/tunnel-health-checks/",
 		addTunnelsPath:
 			"/magic-wan/configuration/manually/how-to/configure-tunnels/#add-tunnels",
-		connectorNote: "Refer to [Configure Connector](#configure-connector) to set up health checks frequency",
+		connectorNote: "<br /> <br /> To configure health checks frequency in Magic WAN Connector, refer to [Configure Connector](#configure-connector).",
 		connectorTitle1: "Manual configuration",
 		connectorTitle2: "Configure Connector",
-		connectorSteps: "<ol><li>Log in to the <a href='https://dash.cloudflare.com/'>Cloudflare dashboard</a> and select your account.</li><li>Go to **Magic WAN** > **Sites**.</li><li>Select your site > **Edit**.</li><li>Select **Tunnels** > your tunnel > **Edit**.</li><li>Change **Health check rate** to your desire rate.</li><li>Select **Update**.</li></ol>",
+		connectorSteps: "<ol><li>Log in to the <a href='https://dash.cloudflare.com/'>Cloudflare dashboard</a> and select your account.</li><li>Go to **Magic WAN** > **Sites**.</li><li>Select your site > **Edit**.</li><li>In **Network** > **WAN configuration** > select your WAN > **Edit**.</li><li>Change the **Health check rate** to your desire rate.</li><li>Select **Save**.</li></ol>",
 	}}
 />
