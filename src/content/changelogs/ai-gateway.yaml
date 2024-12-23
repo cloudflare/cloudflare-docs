@@ -8,7 +8,7 @@ entries:
   - publish_date: "2024-12-17"
     title: AI Gateway Dashboard
     description: |-
-      * Quickly view performance and costs across all gateways, aggregate stats for reporting, and stay organized as you scale.
+      * Updated dashboard to view performance, costs, and stats across all gateways.
 
   - publish_date: "2024-12-13"
     title: Bug Fixes
