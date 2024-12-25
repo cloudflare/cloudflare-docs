@@ -40,7 +40,7 @@ The certificate is required if you want to [apply HTTP policies to encrypted web
 3. Turn on [**Install CA to system certificate store**](/cloudflare-one/connections/connect-devices/warp/configure-warp/warp-settings/#install-ca-to-system-certificate-store).
 4. [Install](/cloudflare-one/connections/connect-devices/warp/download-warp/) the WARP client on the device.
 5. [Enroll the device](/cloudflare-one/connections/connect-devices/warp/deployment/manual-deployment/) in your Zero Trust organization.
-6. (Optional) If the device is running macOS Ventura or newer, [manually trust the certificate](#manually-trust-the-certificate).
+6. (Optional) If the device is running macOS Big Sur or newer, [manually trust the certificate](#manually-trust-the-certificate).
 
 WARP will install the [certificate set to **In-Use**](/cloudflare-one/connections/connect-devices/user-side-certificates/#certificate-status). This certificate can be either a [Cloudflare-generated certificate](/cloudflare-one/connections/connect-devices/user-side-certificates/#generate-a-cloudflare-root-certificate) or a [custom certificate](/cloudflare-one/connections/connect-devices/user-side-certificates/custom-certificate/). If you turn on a new certificate for inspection, WARP will automatically install the new certificate and remove the old certificate from your users' devices.
 
@@ -65,7 +65,7 @@ The WARP client will also place the certificate in `/Library/Application Support
 
 #### Manually trust the certificate
 
-macOS Ventura and newer do not allow WARP to automatically trust the certificate. To manually trust the certificate:
+macOS Big Sur and newer do not allow WARP to automatically trust the certificate. To manually trust the certificate:
 
 1. In Keychain Access, [find and open the certificate](#macos).
 2. Open **Trust**.
