@@ -60,7 +60,7 @@ entries:
   - publish_date: "2024-12-19"
     title: WARP client for macOS (version 2024.12.554.0)
     description: |-
-      A new GA release for the macOS WARP client is now available in the [App Center](https://install.appcenter.ms/orgs/cloudflare/apps/1.1.1.1-macos-1/distribution_groups/release). This release contains improvements to support custom Gateway certificate installation in addition to the changes and improvements included in version 2024.12.492.0(20241218.36).
+      A new GA release for the macOS WARP client is now available in the [App Center](https://install.appcenter.ms/orgs/cloudflare/apps/1.1.1.1-macos-1/distribution_groups/release). This release contains improvements to support custom Gateway certificate installation in addition to the changes and improvements included in version 2024.12.492.0.
 
       Note: If using macOS Sequoia, Cloudflare recommends the use of macOS 15.2 or later. With macOS 15.2, Apple addressed several issues that may have caused the WARP client to not behave as expected when used with macOS 15.0 and 15.1.
 
