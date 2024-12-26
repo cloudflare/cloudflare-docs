@@ -41,7 +41,7 @@ curl https://api.cloudflare.com/client/v4/accounts/{account_id}/gateway/rule\
   "filters": [
     "dns"
   ],
-  "traffic": "any(dns.domains[*] in $<LIST-UUID>)",
+  "traffic": "any(dns.domains[*] in $<LIST_UUID>)",
   "identity": ""
 }'
 ```
@@ -243,7 +243,7 @@ curl https://api.cloudflare.com/client/v4/accounts/{account_id}/gateway/rule\
   "filters": [
     "dns"
   ],
-  "traffic": "not(any(dns.domains[*] in $<LIST-UUID>)) and any(dns.domains[*] matches \".*okta.*\\|.*cloudflare.*\\|.*mfa.*\\|.sso.*\")",
+  "traffic": "not(any(dns.domains[*] in $<LIST_UUID>)) and any(dns.domains[*] matches \".*okta.*\\|.*cloudflare.*\\|.*mfa.*\\|.sso.*\")",
   "identity": ""
 }'
 ```
@@ -252,7 +252,7 @@ curl https://api.cloudflare.com/client/v4/accounts/{account_id}/gateway/rule\
 
 ## Block online tracking
 
-To safeguard user privacy, some organizations will block tracking domains such as _dig.whatsapp.com_ as well as other tracking domains embedded at the OS level. This policy is implemented by creating a custom blocklist. Refer to [this repository](https://github.com/nextdns/native-tracking-domains/tree/28991a0d5b2ab6d35588a74af82162ea7caff420/domains) for a list of widespread tracking domains that you can add to your blocklist.
+To safeguard user privacy, some organizations will block tracking domains such as `dig.whatsapp.com` as well as other tracking domains embedded at the OS level. This policy is implemented by creating a custom blocklist. Refer to [this repository](https://github.com/nextdns/native-tracking-domains/tree/28991a0d5b2ab6d35588a74af82162ea7caff420/domains) for a list of widespread tracking domains that you can add to your blocklist.
 
 <Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
 
@@ -276,7 +276,7 @@ curl https://api.cloudflare.com/client/v4/accounts/{account_id}/gateway/rule\
   "filters": [
     "dns"
   ],
-  "traffic": "any(dns.domains[*] in $<LIST-UUID>)",
+  "traffic": "any(dns.domains[*] in $<LIST_UUID>)",
   "identity": ""
 }'
 ```
@@ -309,7 +309,7 @@ curl https://api.cloudflare.com/client/v4/accounts/{account_id}/gateway/rule\
   "filters": [
     "dns"
   ],
-  "traffic": "any(dns.resolved_ips[*] in $<LIST-UUID>)",
+  "traffic": "any(dns.resolved_ips[*] in $<LIST_UUID>)",
   "identity": ""
 }'
 ```
