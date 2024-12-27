@@ -72,7 +72,10 @@ compatibility_date = "2024-09-19"
 main = "src/index.ts"
  # The following configuration unconditionally invokes the Worker script at
  # `src/index.ts`, which can programatically fetch assets via the ASSETS binding
-assets = { directory = "./public/", binding = "ASSETS", experimental_serve_directly = false }
+[assets]
+directory = "./public/"
+binding = "ASSETS"
+experimental_serve_directly = false
 ```
 
 </WranglerConfig>
@@ -88,7 +91,9 @@ name = "my-worker"
 main = "./src/index.js"
 compatibility_date = "2024-09-19"
 
-assets = { directory = "./public/", binding = "ASSETS" }
+[assets]
+directory = "./public/"
+binding = "ASSETS"
 ```
 
 </WranglerConfig>
@@ -113,8 +118,8 @@ Your dynamic code can make new, or forward incoming, requests to your project's 
 
 Take the following example that configures a Worker script to return a response under all requests headed for `/api/`. Otherwise, the Worker script will pass the incoming request through to the asset binding. In this case, because a Worker script is only invoked when the requested route has not matched any static assets, this will always evaluate [`not_found_handling`](/workers/static-assets/routing/#routing-configuration) behavior.
 
-<Tabs> <TabItem label="JavaScript" icon="seti:javascript">
-
+<Tabs>
+<TabItem label="JavaScript" icon="seti:javascript">
 ```js
 export default {
 	async fetch(request, env) {
@@ -129,9 +134,8 @@ export default {
 	},
 };
 ```
-
-</TabItem> <TabItem label="TypeScript" icon="seti:typescript">
-
+</TabItem>
+<TabItem label="TypeScript" icon="seti:typescript">
 ```ts
 interface Env {
 	ASSETS: Fetcher;
@@ -150,8 +154,8 @@ export default {
 	},
 } satisfies ExportedHandler<Env>;
 ```
-
-</TabItem> </Tabs>
+</TabItem>
+</Tabs>
 
 ## Routing configuration
 
