@@ -47,18 +47,256 @@ entries:
     example_block: |-
       any(http.request.cookies["app"][*] == "test")
 
-  - name: http.referer
+  - name: http.request.timestamp.sec
+    data_type: Integer
+    categories: [Request]
+    keywords: [request, timestamp, client, visitor]
+    summary: The timestamp when Cloudflare received the request, expressed as UNIX time in seconds.
+    description: |-
+      The field value is 10 digits long.
+
+      When validating HMAC tokens in an expression, pass this field as the `currentTimestamp` argument to the [`is_timed_hmac_valid_v0()`](/ruleset-engine/rules-language/functions/#hmac-validation) validation function.
+
+      To obtain the timestamp milliseconds, use the [`http.request.timestamp.msec`](/ruleset-engine/rules-language/fields/reference/http.request.timestamp.msec/) field.
+    example_value: |-
+      1484063137
+
+  - name: http.request.timestamp.msec
+    data_type: Integer
+    categories: [Request]
+    keywords: [request, timestamp, client, visitor]
+    summary: The millisecond when Cloudflare received the request, between 0 and 999.
+    description: |-
+      To obtain the complete timestamp, use both [`http.request.timestamp.sec`](/ruleset-engine/rules-language/fields/reference/http.request.timestamp.sec/) and [`http.request.timestamp.msec`](/ruleset-engine/rules-language/fields/reference/http.request.timestamp.msec/) fields.
+    example_value: |-
+      857
+
+  - name: http.request.uri
+    data_type: String
+    categories: [Request, URI]
+    keywords: [request, uri, url, path, query, query string, client, visitor]
+    summary: The URI path and query string of the request.
+    example_value: |-
+      /articles/index?section=539061&expand=comments
+
+  - name: http.request.uri.path
+    data_type: String
+    categories: [Request, URI]
+    keywords: [request, uri, url, path, client, visitor]
+    summary: The URI path of the request.
+    example_value: |-
+      /articles/index
+
+  - name: http.request.uri.path.extension
+    data_type: String
+    categories: [Request, URI]
+    keywords: [request, uri, url, path, client, visitor]
+    summary: The lowercased file extension in the URI path without the dot (`.`) character.
+    description: |-
+      This corresponds to the string after the last dot in the URI path, excluding the query string.
+
+      If the first character of the last path segment is a dot and the segment does not contain other dot characters, the field value will be an empty string (`""`). Having a dot as the first character does not represent a file extension and is commonly used in UNIX-like systems to denote a hidden file or directory.
+
+      Example values:
+
+      - If the URI path is `/articles/index.html`, the field value will be `html`.
+      - If the URI path is `/articles/index.`, the field value will be an empty string (`""`).
+
+      <details><summary><p>Example values</p></summary>
+
+      | URI path       | Field value |
+      | -------------- | ----------- |
+      | `/foo`         | `""`        |
+      | `/foo.mp3`     | `"mp3"`     |
+      | `/.mp3`        | `""`        |
+      | `/.foo.mp3`    | `"mp3"`     |
+      | `/foo.tar.bz2` | `"bz2"`     |
+      | `/foo.`        | `""`        |
+      | `/foo.MP3`     | `"mp3"`     |
+
+      </details>
+
+  - name: http.request.uri.query
+    data_type: String
+    categories: [Request, URI]
+    keywords: [request, uri, url, query, query string, client, visitor]
+    summary: The entire query string, without the `?` delimiter.
+    example_value: |-
+      section=539061&expand=comments
+
+  - name: http.user_agent
     data_type: String
     categories: [Request, Headers]
-    keywords: [request, header, referer, referrer, client, visitor]
-    summary: The HTTP `Referer` request header, which contains the address of the web page that linked to the currently requested page.
+    keywords: [request, header, agent, user-agent, browser, client, visitor]
+    summary: The HTTP `User-Agent` request header, which contains a characteristic string to identify the client operating system and web browser.
     example_value: |-
-      Referer: https://developer.example.org/en-US/docs/Web/JavaScript
+      Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/65.0.3325.181 Safari/537.36
+
+  - name: http.request.version
+    data_type: String
+    categories: [Request]
+    keywords: [request, protocol, client, visitor]
+    summary: The version of the HTTP protocol used. Use this field when different checks are needed for different versions.
+    description: |-
+      Example values:
+
+      - `HTTP/1.1`
+      - `HTTP/3`
+
+  - name: http.x_forwarded_for
+    data_type: String
+    categories: [Request, Headers]
+    keywords: [request, header, proxy, ip, client, visitor]
+    summary: The full `X-Forwarded-For` HTTP header.
+    example_value: |-
+      203.0.113.195, 70.41.3.18
+
+  - name: ip.src
+    data_type: IP address
+    categories: [Request]
+    keywords: [request, proxy, ip, client, visitor]
+    summary: The client TCP IP address, which may be adjusted to reflect the actual address of the client using HTTP headers such as `X-Forwarded-For` or `X-Real-IP`.
+    example_value: |-
+      93.184.216.34
+
+  - name: ip.src.lat
+    data_type: String
+    categories: [Request, Geolocation]
+    keywords: [request, location, geolocation, client, visitor]
+    summary: The latitude associated with the client IP address.
+    example_value: |-
+      37.78044
+
+  - name: ip.src.lon
+    data_type: String
+    categories: [Request, Geolocation]
+    keywords: [request, location, geolocation, client, visitor]
+    summary: The longitude associated with the client IP address.
+    example_value: |-
+      -122.39055
+
+  - name: ip.src.city
+    data_type: String
+    categories: [Request, Geolocation]
+    keywords: [request, location, geolocation, client, visitor]
+    summary: The city associated with the client IP address.
+    example_value: |-
+      San Francisco
+
+  - name: ip.src.postal_code
+    data_type: String
+    categories: [Request, Geolocation]
+    keywords: [request, location, geolocation, zip, zip code, client, visitor]
+    summary: The postal code associated with the incoming request.
+    example_value: |-
+      78701
+
+  - name: ip.src.metro_code
+    data_type: String
+    categories: [Request, Geolocation]
+    keywords: [request, location, geolocation, dma, client, visitor]
+    summary: The metro code or Designated Market Area (DMA) code associated with the incoming request.
+    example_value: |-
+      635
+
+  - name: ip.src.region
+    data_type: String
+    categories: [Request, Geolocation]
+    keywords: [request, location, geolocation, state, client, visitor]
+    summary: The region name associated with the incoming request.
+    example_value: |-
+      Texas
+
+  - name: ip.src.region_code
+    data_type: String
+    categories: [Request, Geolocation]
+    keywords: [request, location, geolocation, state, client, visitor]
+    summary: The region code associated with the incoming request.
+    example_value: |-
+      TX
+
+  - name: ip.src.timezone.name
+    data_type: String
+    categories: [Request, Geolocation]
+    keywords:
+      [request, location, geolocation, time zone, clock, client, visitor]
+    summary: The name of the timezone associated with the incoming request.
+    description: |-
+      This field is only available in rewrite expressions of [Transform Rules](/rules/transform/).
+    example_value: |-
+      America/Chicago
+
+  - name: ip.src.asnum
+    data_type: Number
+    categories: [Request, Geolocation]
+    keywords: [request, location, geolocation, asn, client, visitor]
+    summary: The 16-bit or 32-bit integer representing the Autonomous System (AS) number associated with the client IP address.
+    description: |-
+      This field has the same value as the `ip.geoip.asnum` field, which is deprecated. The `ip.geoip.asnum` field is still available for new and existing rules, but you should use the `ip.src.asnum` field instead.
+
+  - name: ip.src.continent
+    data_type: String
+    categories: [Request, Geolocation]
+    keywords: [request, location, geolocation, client, visitor]
+    summary: The continent code associated with the client IP address.
+    description: |-
+      Values:
+
+      - **AF**: Africa
+      - **AN**: Antarctica
+      - **AS**: Asia
+      - **EU**: Europe
+      - **NA**: North America
+      - **OC**: Oceania
+      - **SA**: South America
+      - **T1**: Tor network
+
+      This field has the same value as the `ip.geoip.continent` field, which is deprecated. The `ip.geoip.continent` field is still available for new and existing rules, but you should use the `ip.src.continent` field instead.
+
+  - name: ip.src.country
+    data_type: String
+    categories: [Request, Geolocation]
+    keywords: [request, location, geolocation, client, visitor]
+    summary: The 2-letter country code in [ISO 3166-1 Alpha 2](https://www.iso.org/obp/ui/#search/code/) format.
+    example_value: |-
+      GB
+    description: |-
+      For more information on the ISO 3166-1 Alpha 2 format, refer to [ISO 3166-1 Alpha 2](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2) on Wikipedia.
+
+      This field has the same value as the `ip.geoip.country` field, which is deprecated. The `ip.geoip.country` field is still available for new and existing rules, but you should use the `ip.src.country` field instead.
+
+  - name: ip.src.subdivision_1_iso_code
+    data_type: String
+    categories: [Request, Geolocation]
+    keywords: [request, location, geolocation, region, client, visitor]
+    summary: The ISO 3166-2 code for the first-level region associated with the IP address.
+    example_value: |-
+      GB-ENG
+    description: |-
+      When the actual value is not available, this field contains an empty string.
+
+      For more information on the ISO 3166-2 standard and the available regions, refer to [ISO 3166-2](https://en.wikipedia.org/wiki/ISO_3166-2) on Wikipedia.
+
+      This field has the same value as the `ip.geoip.subdivision_1_iso_code` field, which is deprecated. The `ip.geoip.subdivision_1_iso_code` field is still available for new and existing rules, but you should use the `ip.src.subdivision_1_iso_code` field instead.
+
+  - name: ip.src.subdivision_2_iso_code
+    data_type: String
+    categories: [Request, Geolocation]
+    keywords: [request, location, geolocation, region, client, visitor]
+    summary: The ISO 3166-2 code for the second-level region associated with the IP address.
+    example_value: |-
+      GB-SWK
+    description: |-
+      When the actual value is not available, this field contains an empty string.
+
+      For more information on the ISO 3166-2 standard and the available regions, refer to [ISO 3166-2](https://en.wikipedia.org/wiki/ISO_3166-2) on Wikipedia.
+
+      This field has the same value as the `ip.geoip.subdivision_2_iso_code` field, which is deprecated. The `ip.geoip.subdivision_2_iso_code` field is still available for new and existing rules, but you should use the `ip.src.subdivision_2_iso_code` field instead.
 
   - name: ip.src.is_in_european_union
     data_type: Boolean
     categories: [Request, Geolocation]
-    keywords: [request, geolocation, europe, country, maxmind, client, visitor]
+    keywords: [request, location, geolocation, country, client, visitor]
     summary: Returns `true` when the request originates from a country in the European Union (EU).
     description: |-
       <details><summary><p>Countries in the EU (from geolocation data)</p></summary>
@@ -105,6 +343,36 @@ entries:
       </details>
 
       This field has the same value as the `ip.geoip.is_in_european_union` field, which is deprecated. The `ip.geoip.is_in_european_union` field is still available for new and existing rules, but you should use the `ip.src.is_in_european_union` field instead.
+
+  - name: http.request.full_uri
+    data_type: String
+    categories: [Request, URI, Raw fields]
+    keywords: [request, uri, url, raw, client, visitor]
+    summary: The raw full URI as received by the web server without any transformation.
+    description: |-
+      The value will not include the `#fragment` part, which is not sent to web servers.
+
+      This is the raw field version of the [`http.request.full_uri`](/ruleset-engine/rules-language/fields/reference/http.request.full_uri/) field. Raw fields, prefixed with `raw.`, preserve original request values for later evaluations. These fields are immutable during the entire request evaluation workflow, and they are not affected by the actions of previously matched rules.
+
+      **Note:** This raw field may include some basic normalization done by Cloudflare's HTTP server. However, this can change in the future.
+
+  - name: http.request.full_uri
+    data_type: String
+    categories: [Request, URI, Raw fields]
+    keywords: [request, uri, url, path, query, raw, client, visitor]
+    summary: The raw URI path and query string of the request without any transformation.
+    description: |-
+      This is the raw field version of the [`http.request.uri`](/ruleset-engine/rules-language/fields/reference/http.request.uri/) field. Raw fields, prefixed with `raw.`, preserve original request values for later evaluations. These fields are immutable during the entire request evaluation workflow, and they are not affected by the actions of previously matched rules.
+
+      **Note:** This raw field may include some basic normalization done by Cloudflare's HTTP server. However, this can change in the future.
+
+  - name: http.referer
+    data_type: String
+    categories: [Request, Headers]
+    keywords: [request, header, referer, referrer, client, visitor]
+    summary: The HTTP `Referer` request header, which contains the address of the web page that linked to the currently requested page.
+    example_value: |-
+      Referer: https://developer.example.org/en-US/docs/Web/JavaScript
 
   - name: test.request.body.multipart.content_transfer_encodings
     data_type: "Array<Array<String>>"
