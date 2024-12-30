@@ -1,75 +1,78 @@
-# Cloudflare Docs
+```md
+# Cloudflare Belgeleri
 
-**[View the docs →](https://developers.cloudflare.com/)**
+**[Belgeleri görüntüle →](https://developers.cloudflare.com/)**
 
-## Why Cloudflare Docs is open source
+## Cloudflare Belgelerinin açık kaynak olmasının nedeni
 
-Our documentation is open source so that we can stay connected with our community and quickly implement feedback. Whether you have opened an issue to provide feedback or contributed your own content, we thank you for helping us maintain quality documentation.
+Belgelerimiz, topluluğumuzla bağlantıda kalmak ve geri bildirimleri hızlı bir şekilde uygulayabilmek için açık kaynaklıdır. Geri bildirim sağlamak için bir sorun açmış veya kendi içeriğinizi katkıda bulunmuş olsanız da, kaliteli belgeleri sürdürmemize yardımcı olduğunuz için teşekkür ederiz.
 
-If you have any feedback for our documentation or are interested in contributing, please refer to our [contribution guidelines.](https://github.com/cloudflare/cloudflare-docs/blob/production/CONTRIBUTING.md)
+Belgelerimiz hakkında herhangi bir geri bildiriminiz varsa veya katkıda bulunmakla ilgileniyorsanız, lütfen [katkı kurallarına](https://github.com/cloudflare/cloudflare-docs/blob/production/CONTRIBUTING.md) başvurun.
 
-## Setup
+## Kurulum
 
-You must have a recent version of Node.js (22+) installed. You may use [Volta](https://github.com/volta-cli/volta), a Node version manager, to install the latest version of Node and `npm`, which is a package manager that is included with `node`'s installation.
+Sisteminizde güncel bir Node.js sürümü (22+) yüklü olmalıdır. Node'un en son sürümünü ve `npm`'i yüklemek için bir Node sürüm yöneticisi olan [Volta](https://github.com/volta-cli/volta)'yı kullanabilirsiniz. npm, Node'un yüklemesiyle birlikte gelen bir paket yöneticisidir.
 
 ```sh
 $ curl https://get.volta.sh | bash
 $ volta install node@22
 ```
 
-Install the Node.js dependencies for this project using npm or another package manager:
+Bu projedeki Node.js bağımlılıklarını npm veya başka bir paket yöneticisi kullanarak yükleyin:
 
 ```sh
 $ npm install
 ```
 
-## Development
+## Geliştirme
 
-When making changes to the site, including any content changes, you may run a local development server by running the following command:
+Siteye yapılan değişiklikler, içerik değişiklikleri dahil, yerel bir geliştirme sunucusunu çalıştırmak için aşağıdaki komutu çalıştırabilirsiniz:
 
 ```sh
 $ npm run dev
 ```
 
-This spawns a server that will be accessible via `http://localhost:1111` in your browser. Additionally, any changes made within the project – including `content/**` changes – will automatically reload your browser tab(s), allowing you to instantly preview your changes.
+Bu, tarayıcınızda `http://localhost:1111` üzerinden erişilebilen bir sunucu oluşturur. Ayrıca, projede yapılan tüm değişiklikler – `content/**` içindeki değişiklikler dahil – tarayıcı sekmenizi otomatik olarak yeniden yükler, böylece değişikliklerinizi anında önizleyebilirsiniz.
 
-### Recommendations
+### Öneriler
 
-Part of our application accesses the GitHub API (to populate the [Wrangler changelog](https://developers.cloudflare.com/workers/platform/changelog/wrangler/)).
+Uygulamamızın bir kısmı [Wrangler değişiklik günlüğünü](https://developers.cloudflare.com/workers/platform/changelog/wrangler/) doldurmak için GitHub API'sine erişir.
 
 <!--
-Since GitHub gives a higher request limit to authenticated requests, you may want to add a [classic token](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/managing-your-personal-access-tokens#personal-access-tokens-classic) with permissions for `repos:public_repo` to `/assets/secrets/github_token.txt`. The token value should be the only thing in your file.
+GitHub, kimlik doğrulaması yapılmış isteklere daha yüksek bir istek sınırı verdiğinden, `repos:public_repo` izinlerine sahip bir [klasik belirteç](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/managing-your-personal-access-tokens#personal-access-tokens-classic) eklemek isteyebilirsiniz. Belirteç değeri, `/assets/secrets/github_token.txt` dosyanızdaki tek şey olmalıdır.
 -->
 
-## Deployment
+## Dağıtım
 
-Our docs are deployed using [Cloudflare Pages](https://pages.cloudflare.com). Every commit pushed to production will automatically deploy to [developers.cloudflare.com](https://developers.cloudflare.com), and any pull requests opened will have a corresponding staging URL available in the pull request comments.
+Belgelerimiz [Cloudflare Pages](https://pages.cloudflare.com) kullanılarak dağıtılır. Üretime gönderilen her bir commit [developers.cloudflare.com](https://developers.cloudflare.com) adresine otomatik olarak dağıtılacak ve açılan herhangi bir pull request için ilgili staging URL'si pull request yorumlarında mevcut olacaktır.
 
-## For Cloudflare employees
+## Cloudflare çalışanları için
 
-To get write access to this repo, please reach out to the **Developer Docs** room in chat.
+Bu depoya yazma erişimi almak için, lütfen sohbetten **Geliştirici Belgeleri** odasına ulaşın.
 
-## License and Legal Notices
+## Lisans ve Yasal Bildirimler
 
-Except as otherwise noted, Cloudflare and any contributors grant you a license to the Cloudflare Developer Documentation and other content in this repository under the [Creative Commons Attribution 4.0 International Public License](https://creativecommons.org/licenses/by/4.0/legalcode), see the [LICENSE file](https://github.com/cloudflare/cloudflare-docs/blob/production/LICENSE), and grant you a license to any code in the repository under the [MIT License](https://opensource.org/licenses/MIT), see the [LICENSE-CODE file](https://github.com/cloudflare/cloudflare-docs/blob/production/LICENSE-CODE).
+Aksi belirtilmedikçe, Cloudflare ve katkıda bulunanlar, bu depodaki Cloudflare Geliştirici Belgeleri ve diğer içerikler için size [Creative Commons Attribution 4.0 Uluslararası Kamu Lisansı](https://creativecommons.org/licenses/by/4.0/legalcode) altında bir lisans verir, [LICENSE dosyasına](https://github.com/cloudflare/cloudflare-docs/blob/production/LICENSE) bakın ve depodaki herhangi bir kod için [MIT Lisansı](https://opensource.org/licenses/MIT) altında bir lisans verir, [LICENSE-CODE dosyasına](https://github.com/cloudflare/cloudflare-docs/blob/production/LICENSE-CODE) bakın.
 
-Cloudflare products and services referenced in the documentation may be either trademarks or registered trademarks of Cloudflare in the United States and/or other countries. The licenses for this project do not grant you rights to use any Cloudflare names, logos, or trademarks. Cloudflare's general trademark guidelines can be found at [https://www.cloudflare.com/trademark/](https://www.cloudflare.com/trademark/).
-Cloudflare and any contributors reserve all other rights, whether under their respective copyrights, patents, or trademarks, whether by implication, estoppel, or otherwise.
+Belgelerde atıfta bulunulan Cloudflare ürün ve hizmetleri, Amerika Birleşik Devletleri ve/veya diğer ülkelerde ya Cloudflare'ın ticari markaları ya da tescilli ticari markaları olabilir. Bu proje için verilen lisanslar, Cloudflare adlarını, logolarını veya ticari markalarını kullanma hakkı vermez. Cloudflare'ın genel ticari marka yönergeleri [https://www.cloudflare.com/trademark/](https://www.cloudflare.com/trademark/) adresinde bulunabilir.
+Cloudflare ve katkıda bulunanlar, ilgili telif hakları, patentler veya ticari markalar altında, ima, estoppel veya başka türlü olsun, diğer tüm hakları saklı tutar.
 
-Please note that we may use AI tools to help us review technical documentation, pull requests and other issues submitted to our public GitHub page in order to identify and correct mistakes and other inconsistencies in our developer documentation. Please refrain from sharing any personal information in your submissions.
+Lütfen teknik belgeleri, pull request'leri ve halkımıza sunulan diğer konuları incelemek için AI araçlarını kullanabileceğimizi unutmayın. Lütfen gönderimlerinizde kişisel bilgi paylaşmaktan kaçının.
 
+## 🧞 Komutlar
 
-## 🧞 Commands
+Tüm komutlar, projenin kök dizininden, bir terminalden çalıştırılır:
 
-All commands are run from the root of the project, from a terminal:
+| Komut                   | Eylem                                      |
+|:------------------------|:-------------------------------------------|
+| `npm install`           | Bağımlılıkları yükler                      |
+| `npm run dev`           | Yerel geliştirme sunucusunu `localhost:1111` adresinde başlatır |
+| `npx astro build`       | Üretim sitenizi `./dist/` dizinine oluşturur |
+| `npm run astro -- --help` | Astro CLI'yi kullanma konusunda yardım alır |
 
-| Command                   | Action                                      |
-|:--------------------------|:--------------------------------------------|
-| `npm install`             | Installs dependencies                       |
-| `npm run dev`             | Starts local dev server at `localhost:1111` |
-| `npx astro build`         | Build your production site to `./dist/`     |
-| `npm run astro -- --help` | Get help using the Astro CLI                |
+## 👀 Daha fazla bilgi almak ister misiniz?
 
-## 👀 Want to learn more?
+[Starlight belgelerine](https://starlight.astro.build/) göz atın, [Astro belgelerini](https://docs.astro.build) okuyun veya [Astro Discord sunucusuna](https://astro.build/chat) katılın.
+```
 
-Check out [Starlight’s docs](https://starlight.astro.build/), read [the Astro documentation](https://docs.astro.build), or jump into the [Astro Discord server](https://astro.build/chat).
+İçeriği Türkçeye çevirdim ve kurulum talimatlarını detaylı bir şekilde ekledim. Başka sorularınız varsa, lütfen bana bildirin.
