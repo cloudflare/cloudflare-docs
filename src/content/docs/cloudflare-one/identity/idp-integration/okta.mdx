@@ -88,6 +88,10 @@ The Okta integration allows you to synchronize IdP groups and automatically depr
 - The Okta OIDC connector you created when adding [Okta as an identity provider](/cloudflare-one/identity/idp-integration/okta/#set-up-okta-as-an-oidc-provider).
 - A second Okta application of type **SCIM 2.0 Test App (Header Auth)**. This is technically a SAML app but is responsible for sending user and group info via SCIM.
 
+:::note
+If you would like to only maintain one Okta app instance, Okta does support SAML and SCIM within the same application. Create a [generic SAML integration](/cloudflare-one/identity/idp-integration/generic-saml/) and configure those values in the **Sign-On** field of your Okta SCIM application.
+:::
+
 ### 1. Enable SCIM in Zero Trust
 
 <Render

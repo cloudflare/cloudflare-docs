@@ -5,6 +5,10 @@ productLink: "/cloudflare-one/insights/dex/"
 productArea: Cloudflare One
 productAreaLink: /cloudflare-one/changelog/
 entries:
+  - publish_date: "2024-12-19"
+    title: Remote captures
+    description: |-
+      Admins can now collect packet captures (PCAPs) and WARP diagnostic logs from end user devices. For more information, refer to [Remote captures](/cloudflare-one/insights/dex/remote-captures/).
   - publish_date: "2024-05-20"
     title: Last seen ISP
     description: |-

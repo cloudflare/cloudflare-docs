@@ -24,7 +24,6 @@ The `{dataset_id}` argument indicates the log category (such as `http_requests` 
 | `GET`     | Retrieve all jobs for a dataset             | [Documentation](/api/resources/logpush/subresources/datasets/subresources/jobs/methods/get/)        |
 | `GET`     | Retrieve all available fields for a dataset | [Documentation](/api/resources/logpush/subresources/datasets/subresources/fields/methods/get/) |
 | `PUT`     | Update job                                  | [Documentation](/api/resources/logpush/subresources/jobs/methods/update/)                                      |
-| `PUT`     | Update job name.                            | [Documentation](/api/resources/logpush/subresources/jobs/methods/update/)                                      |
 | `DELETE`  | Delete job                                  | [Documentation](/api/resources/logpush/subresources/jobs/methods/delete/)                           |
 | `POST`    | Check whether destination exists            | [Documentation](/api/resources/logpush/subresources/validate/methods/destination/) |
 | `POST`    | Get ownership challenge                     | [Documentation](/api/resources/logpush/subresources/ownership/methods/validate/)                                      |
@@ -168,6 +167,10 @@ Response
 ```
 
 :::
+
+## Name
+
+A human-readable, optional job name that does not need to be unique. We recommend choosing a meaningful name, such as the domain name, to help you easily identify and manage your job. You can update the name later if needed.
 
 ## Kind
 

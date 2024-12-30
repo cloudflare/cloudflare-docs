@@ -44,6 +44,62 @@ Refer to the [generic instructions for iOS](/cloudflare-one/connections/connect-
 
 Intune allows you to insert [predefined variables](https://learn.microsoft.com/en-us/mem/intune/apps/app-configuration-policies-use-ios#tokens-used-in-the-property-list) into the XML configuration file. For example, you can set the [`unique_client_id`](/cloudflare-one/connections/connect-devices/warp/deployment/mdm-deployment/parameters/#unique_client_id) key to `{{deviceid}}` for a [device UUID posture check](/cloudflare-one/identity/devices/warp-client-checks/device-uuid/) deployment.
 
+### Per-app VPN for iOS
+
+:::note
+Per-app VPN is supported on Cloudflare One Agent version `1.8` or greater for iOS.
+:::
+
+Before proceeding with per-app VPN configuration, you must make sure Auto connect is disabled for your organization in the Cloudflare dashboard. To disable Auto connect:
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/) and select your account.
+2. Select **Zero Trust** > **Settings** > **WARP Client**.
+3. Go to **Device Settings** > select your profile and select **Edit** > toggle **Auto Connect** off.
+
+To configure per-app VPN:
+
+1. Log in to Microsoft Intune admin center for your organization.
+2. Go to **Devices** > **iOS/iPadOS Devices** > **Manage Devices** > **Configuration** > select **+ Create** > **New Policy.**
+3. Select _Templates_ in the **Profile Type** dropdown menu, then select **VPN** as the **Template Name** and select **Create**.
+4. Give the configuration a name, and an optional description, if you desire, then select **Next**.
+5. Select _Custom VPN_ from the **Connection Type** dropdown menu.
+6. Expand the **Base VPN** section.
+	- Give the VPN connection a name.
+	- Enter "1.1.1.1" as the VPN server address (this value is not actually used.)
+	- Set _Username and password_ as the **Authentication method**.
+	- Enter "com.cloudflare.cloudflareoneagent" as the VPN identifier.
+	- Enter any Key and Value into the custom VPN attributes (Cloudflare One does not use these but Intunes requires at least one entry.)
+7. Expand the **Automatic VPN** section.
+	- Select _Per-app VPN_ as the **Type of automatic VPN**.
+	- Select _packet-tunnel_ as the **Provider Type**. Select **Next**.
+8. Add any Groups, Users, or Devices to which you want to distribute this configuration and select **Next**.
+9. Review the settings and select **Create**.
+10. Go to **Apps** > **iOS/iPadOS Apps** and select **+ Add**.
+11. Select _iOS store app_ from the **App Type** dropdown > **Select**.
+12. Select **Search the App Store**, then search for the app whose traffic you want to go through the VPN > select the desired app > **Select**.
+13. Review the selected app settings and select **Next**.
+14. Select **+ Add Group** to add the group of users to which to distribute this app. Then select **None** underneath VPN.
+15. Select the configuration you just created from the VPN dropdown menu and select **OK**.
+16. Select **Next**, review the settings, then select **Create**.
+17. Repeat steps 10-16 for each app you want to use the VPN with.
+
+:::note
+
+To support re-authentication, you must include a third-party browser that Cloudflare One can use to re-authenticate the user. The following third-party browsers are supported:
+
+- Google Chrome
+- Firefox
+- Firefox Focus
+- Microsoft Edge
+- Brave
+- Opera
+
+Cloudflare One will continue to use a Safari window for initial authentication per-security best practices.
+:::
+
+:::note
+Cloudflare One cannot apply split tunnel setting for a per app VPN. Included or excluded domains can be added to the Configuration Profile under Associated Domains and Excluded Domains sections respectively.
+:::
+
 ## Android
 
 To deploy WARP on Android devices:
@@ -122,3 +178,135 @@ To deploy WARP on Android devices:
     3. Select **Review + save** > **Save**.
 
 Intune will now deploy the Cloudflare One Agent to user devices.
+
+### Per-app VPN for Android
+
+:::note
+Per-app VPN is supported on the Cloudflare One Agent app version `2.3` or greater for Android.
+:::
+
+Review the following steps to approve and deploy the Cloudflare One Agent application in Microsoft Intune and use a configuration policy to set up the per-app VPN. To use the per-app VPN, the admin must have linked the Microsoft Intune account with the Google-managed Play account. For more information, refer to [Connect your Intune account to your managed Google Play account in the Microsoft documentation](https://learn.microsoft.com/en-us/mem/intune/enrollment/connect-intune-android-enterprise).
+
+#### Approve the Cloudflare One Agent app within Microsoft Intune
+
+1. Log into the Microsoft Intune admin center.
+2. Go to **Apps** > **All apps** > select **Add**.
+3. In App type, select _Managed Google Play_.
+4. Search for _Cloudflare One Agent_ > select the app > select **Sync**.
+5. Once the sync is successful, admin will see the Cloudflare One Agent app within the **All apps** view in the Microsoft Intune admin center.
+
+#### Configure your Cloudflare One Agent app policy
+
+To configure your Cloudflare One Agent app policy:
+
+1. In the Microsoft Intune admin center, go to **Apps** > **App configuration policies** > select **Add** > **Managed Devices**.
+2. Fill out the basic details of your configuration policy:
+	1. Enter the **Name** of the profile. (For example: Cloudflare One Agent - configuration policy)
+	2. Select the Platform as **Android Enterprise**.
+	3. Select the desired **Profile Type**. (For example: Personally-Owned Work Profile Only)
+	4. Select **Cloudflare One Agent** as the **Targeted app**.
+	5. Select **Next**.
+
+3. Fill out the settings for the configuration policy.
+	1. Select **Configuration setting format** as **Enter JSON data**.
+	2. Enter your desired deployment parameters in the `managedProperty` field. For example:
+
+		```sh
+			{
+			"kind": "androidenterprise#managedConfiguration",
+			"productId": "app:com.cloudflare.cloudflareoneagent",
+			"managedProperty": [
+				{
+					"key": "app_config_bundle_list",
+					"valueBundleArray": [
+						{
+							"managedProperty": [
+								{
+									"key": "organization",
+									"valueString": "${ORGANIZATION_NAME-1}"
+								},
+								{
+									"key": "service_mode",
+									"valueString": "warp"
+								},
+								{
+									"key": "onboarding",
+									"valueBool": true
+								},
+								{
+									"key": "display_name",
+									"valueString": "${UNIQUE_DISPLAY_NAME-1}"
+								},
+								{
+									"key": "warp_tunnel_protocol",
+									"valueString": "MASQUE"
+								},
+								{
+									"key": "tunneled_apps",
+									"valueBundleArray" :[
+										{
+											"managedProperty": [
+												{
+													"key": "app_identifier",
+													"valueString": "com.android.chrome" # Application package name/unique bundle identifier for the Chrome app browser
+												},
+												{
+													"key": "is_browser",
+													"valueBool": true
+												}
+											]
+										},
+										{
+											"managedProperty": [
+												{
+													"key": "app_identifier",
+													"valueString": "com.google.android.gm" # Application package name/unique bundle identifier for the Gmail app
+												},
+												{
+													"key": "is_browser",
+													"valueBool": false # Default value is false, if a user does not define `is_browser` property our app would not treat `app_identifier` package name as a browser.
+												}
+											]
+										}
+									]
+								}
+							]
+						},
+						{
+							"managedProperty": [
+								{
+									"key": "organization",
+									"valueString": "${ORGANIZATION_NAME-1}"
+								},
+								{
+									"key": "service_mode",
+									"valueString": "warp"
+								},
+								{
+									"key": "display_name",
+									"valueString": "${UNIQUE_DISPLAY_NAME-2}"
+								},
+								{
+									"key": "warp_tunnel_protocol",
+									"valueString": "wireguard"
+								}
+							]
+						}
+					]
+				}
+			]
+		}
+		```
+		Refer to [Per-app VPN parameters](/cloudflare-one/connections/connect-devices/warp/deployment/mdm-deployment/parameters/#per-app-vpn-parameters-android) to learn more about the MDM parameters introduced to support the per-app VPN for Android devices.
+
+	3. After you have configured the deployment parameters, click **Next**.
+4. Fill out the assignments for the configuration policy. The admin can `Include` or `Exclude` specific groups of users to this policy. After you finish, select **Next**.
+5. Review the policy and select **Create**.
+
+#### Assign users to the Cloudflare One Agent application
+
+1. Go to **Apps** > **All Apps** > select **Cloudflare One Agent**.
+2. Under **Manage**, select **Properties** and near **Assignments**, select **Edit**.
+3. Add the groups of users in the assignments > select **Review + Save** > select **Save**.
+
+Intune will now deploy the Cloudflare One Agent application on a user's device with the managed parameters.
