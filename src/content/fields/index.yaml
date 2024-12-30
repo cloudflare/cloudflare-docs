@@ -344,7 +344,7 @@ entries:
 
       This field has the same value as the `ip.geoip.is_in_european_union` field, which is deprecated. The `ip.geoip.is_in_european_union` field is still available for new and existing rules, but you should use the `ip.src.is_in_european_union` field instead.
 
-  - name: http.request.full_uri
+  - name: raw.http.request.full_uri
     data_type: String
     categories: [Request, URI, Raw fields]
     keywords: [request, uri, url, raw, client, visitor]
@@ -356,7 +356,7 @@ entries:
 
       **Note:** This raw field may include some basic normalization done by Cloudflare's HTTP server. However, this can change in the future.
 
-  - name: http.request.full_uri
+  - name: raw.http.request.uri.path
     data_type: String
     categories: [Request, URI, Raw fields]
     keywords: [request, uri, url, path, query, raw, client, visitor]
