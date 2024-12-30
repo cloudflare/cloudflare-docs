@@ -1,0 +1,95 @@
+# Windows'ta GİGES İçin SSH ile Altyapıya Erişim Kurulumu
+
+Bu rehber, GİGES altyapısında güvenli SSH bağlantılarını etkinleştirmek için Windows işletim sisteminde Cloudflare'ın Altyapıya Erişim çözümünü nasıl kuracağınızı açıklar. 
+
+---
+
+## 1. Sunucuyu Cloudflare’a Bağlayın
+
+1. [Cloudflare Tünel Kurulum Kılavuzu](https://developers.cloudflare.com/cloudflare-one/connections/connect-networks/get-started/create-remote-tunnel/) yardımıyla sunucunuz için bir tünel oluşturun.  
+   - "Bir ağ bağla" adımına geçerek yalnızca bağlantı oluşturun, uygulama bağlama adımını atlayabilirsiniz.
+
+2. Tünelin **Özel Ağlar** sekmesine gidin ve sunucunuzun IP adresini veya IP aralığını ekleyin.  
+   - Özel IP adresleri tercih edilir, ancak genel IP adresleri de desteklenir.
+
+---
+
+## 2. WARP İstemcisini Kurun
+
+Cihazlarınızı Cloudflare ağına bağlamak için WARP istemcisini kurmanız gerekir:
+
+1. [WARP İstemcisini İndirin ve Kurun](https://developers.cloudflare.com/cloudflare-one/connections/connect-devices/warp/deployment/).  
+   - Windows için, `.exe` dosyasını indirin ve kurulum adımlarını izleyin.
+
+2. Gateway Proxy'yi TCP bağlantıları için etkinleştirin:  
+   - **Gateway Ayarları** > **Proxy Ayarları** bölümünden TCP için proxy'yi açın.
+
+3. Zero Trust organizasyonunuza cihaz kaydını etkinleştirmek için [Cihaz Kayıt Kuralları Oluşturun](https://developers.cloudflare.com/cloudflare-one/connections/connect-devices/warp/deployment/device-enrollment/).
+
+---
+
+## 3. Sunucu IP’lerini WARP Üzerinden Yönlendirin
+
+Windows cihazlarından sunucu IP'lerine erişim sağlamak için IP adreslerini WARP istemcisi üzerinden yönlendirin. Bu işlem için [IP Yönlendirme Dokümantasyonu](https://developers.cloudflare.com/cloudflare-one/connections/connect-networks/private-net/cloudflared/tunnel-virtual-networks/#connect-to-a-virtual-network) rehberlik edecektir.
+
+---
+
+## 4. Cloudflare SSH Sertifika Yetkilisini (CA) Oluşturun
+
+SSH bağlantıları için Cloudflare tarafından sağlanan kısa ömürlü sertifikalar kullanabilirsiniz. Bunun için:
+
+1. [Cloudflare SSH CA'yı oluşturun ve genel anahtarını alın](https://developers.cloudflare.com/cloudflare-one/connections/connect-networks/private-net/ssh/#short-lived-certificates).
+
+2. Alınan genel anahtarı sunucunuzda güvenli bir konuma kaydedin (örneğin, `C:\ProgramData\ssh\ca.pub`).
+
+3. SSH sunucunuzun yapılandırma dosyasını (`sshd_config`) güncelleyerek bu CA'yı tanıyacak şekilde düzenleyin.
+
+---
+
+## 5. SSHD Yapılandırmasını Güncelleyin
+
+Windows için OpenSSH sunucusunu etkinleştirin ve yapılandırmasını aşağıdaki şekilde düzenleyin:
+
+1. **OpenSSH Sunucusunu Kurun:**  
+   - **Ayarlar** > **Uygulamalar** > **İsteğe Bağlı Özellikler** sekmesinden OpenSSH sunucusunu ekleyin.  
+
+2. `sshd_config` dosyasını düzenleyin:  
+   - Dosya konumu genellikle `C:\ProgramData\ssh\` altında bulunur.  
+   - Aşağıdaki satırları dosyaya ekleyin veya mevcut değerleri güncelleyin:  
+     ```
+     TrustedUserCAKeys C:\ProgramData\ssh\ca.pub
+     ```
+   - Dosya izinlerini kontrol edin ve gerekirse şu komutu çalıştırarak 600 olarak ayarlayın:
+     ```powershell
+     icacls "C:\ProgramData\ssh\ca.pub" /inheritance:r /grant:r SYSTEM:F
+     ```
+
+3. SSH sunucusunu yeniden başlatın:  
+   ```powershell
+   Restart-Service sshd
+   ```
+
+---
+
+## 6. Hedefe Bağlanın
+
+Kullanıcılar, Windows cihazlarında herhangi bir SSH istemcisi ile hedef sunucuya bağlanabilir. Örneğin, bir PowerShell terminalinden bağlanmak için:  
+
+```powershell
+ssh <kullanıcı_adı>@<hedef_IP>
+```
+
+---
+
+## SSH Komut Kayıtları ve Denetim
+
+SSH komutlarını izlemek ve kaydetmek için:  
+
+1. **Cloudflare Paneline Gidin:**  
+   - **Zero Trust Ayarları** > **Ağ** > **SSH Şifreleme Genel Anahtarı** sekmesinden bir genel anahtar yükleyin.  
+
+2. Kullanıcıların oturumları sırasında gerçekleştirdiği komutları görüntülemek için oturum loglarını indirebilir ve şifre çözme işlemlerini gerçekleştirebilirsiniz.  
+
+---
+
+Bu yöntemle GİGES altyapısında Windows cihazlarınızdan güvenli, izlenebilir ve denetlenebilir SSH bağlantılarını kolayca etkinleştirebilirsiniz.
