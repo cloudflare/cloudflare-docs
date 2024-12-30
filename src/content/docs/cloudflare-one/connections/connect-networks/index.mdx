@@ -1,16 +1,42 @@
+İçeriği Türkçeye çevireceğim ve kurulum talimatlarını detaylı bir şekilde anlatacağım.
+
+```mdx
 ---
 pcx_content_type: concept
-title: Cloudflare Tunnel
+title: Cloudflare Tüneli
 sidebar:
   order: 1
 ---
 
-Cloudflare Tunnel provides you with a secure way to connect your resources to Cloudflare without a publicly routable IP address. With Tunnel, you do not send traffic to an external IP — instead, a lightweight daemon in your infrastructure (`cloudflared`) creates outbound-only connections to Cloudflare's global network. Cloudflare Tunnel can connect HTTP web servers, [SSH servers](/cloudflare-one/connections/connect-networks/use-cases/ssh/), [remote desktops](/cloudflare-one/connections/connect-networks/use-cases/rdp/), and other protocols safely to Cloudflare. This way, your origins can serve traffic through Cloudflare without being vulnerable to attacks that bypass Cloudflare.
+Cloudflare Tüneli, kaynaklarınızı herkese açık yönlendirilebilir bir IP adresi olmadan Cloudflare'a bağlamanızı sağlayan güvenli bir yol sunar. Tünel ile trafiği harici bir IP'ye göndermezsiniz — bunun yerine, trafiği güvenli bir şekilde Cloudflare'ın ağına yönlendirirsiniz.
 
-Refer to our [reference architecture](/reference-architecture/architectures/sase/) for details on how to implement Cloudflare Tunnel into your existing infrastructure.
+Mevcut altyapınıza Cloudflare Tünelini nasıl uygulayacağınıza dair ayrıntılar için [referans mimarimize](/reference-architecture/architectures/sase/) bakın.
 
-## How it works
+## Nasıl çalışır?
 
-Cloudflared establishes outbound connections (tunnels) between your resources and Cloudflare's global network. Tunnels are persistent objects that route traffic to DNS records. Within the same tunnel, you can run as many 'cloudflared' processes (connectors) as needed. These processes will establish connections to Cloudflare and send traffic to the nearest Cloudflare data center.
+Cloudflared, kaynaklarınız ile Cloudflare'ın global ağı arasında giden bağlantılar (tüneller) kurar. Tüneller, DNS kayıtlarına trafik yönlendiren kalıcı nesnelerdir. Aynı tünel içinde birden fazla bağlantı kurarak yüksek kullanılabilirlik elde edebilirsiniz.
 
-![How an HTTP request reaches a private application connected with Cloudflare Tunnel](~/assets/images/cloudflare-one/connections/connect-apps/handshake.jpg)
+![Bir HTTP isteğinin Cloudflare Tüneli ile bağlanan özel bir uygulamaya ulaşma süreci](~/assets/images/cloudflare-one/connections/connect-apps/handshake.jpg)
+
+### Kurulum Adımları
+
+1. **Cloudflared Yükleme**
+   - Öncelikle, Cloudflared'ı sisteminize yüklemeniz gerekmektedir. [Cloudflared yükleme kılavuzuna](https://developers.cloudflare.com/cloudflare-one/connections/connect-apps/install-and-setup/installation) göz atabilirsiniz.
+
+2. **Tünel Oluşturma**
+   - Cloudflared yüklendikten sonra bir tünel oluşturmanız gerekmektedir. `cloudflared tunnel create <TUNNEL_NAME>` komutunu kullanarak tünel oluşturabilirsiniz. Bu komut, sizin için benzersiz bir tünel ID ve ad oluşturur.
+
+3. **Tünel Yapılandırma ve Başlatma**
+   - Tüneli yapılandırmak için `cloudflared tunnel route dns <TUNNEL_NAME> <HOSTNAME>` komutunu kullanarak tünelinizi DNS kaydınıza yönlendirin.
+   - Tüneli başlatmak için `cloudflared tunnel run <TUNNEL_NAME>` komutunu çalıştırın.
+
+4. **DNS Kayıtlarını Yönlendirme**
+   - Cloudflare kontrol paneline giderek DNS kayıtlarınızı ayarlayın. Burada, tünelinize yönlendirmek istediğiniz alan adını belirleyin ve gerekli DNS ayarlarını yapın.
+
+5. **Güvenlik ve Erişim Politikaları**
+   - Cloudflare Zero Trust ile güvenlik ve erişim politikaları oluşturun. Bu, tünelinize kimlerin ve nasıl erişebileceğini kontrol etmenizi sağlar.
+
+Bu adımları takip ederek Cloudflare Tünelini kurabilir ve kaynaklarınızı güvenli bir şekilde Cloudflare ağına bağlayabilirsiniz. Daha fazla bilgi ve ayrıntılı yönergeler için Cloudflare [dökümantasyonuna](https://developers.cloudflare.com/cloudflare-one/connections/connect-networks) başvurabilirsiniz.
+
+Başka sorularınız varsa, lütfen bana bildirin.
+```
