@@ -983,6 +983,186 @@ entries:
       and not cf.bot_management.corporate_proxy
       and cf.bot_management.score lt 30
 
+  - name: http.request.jwt.claims.aud
+    data_type: Map<Array<String>>
+    categories: [Request, JWT validation]
+    keywords: [request, jwt, api shield, client, visitor]
+    summary: The `aud` (audience) claim identifies the recipients that the JSON Web Token (JWT) is intended for.
+    description: |-
+      Each principal intended to process the JWT must identify itself with a value in the audience claim. In the general case, the `aud` value is an array of case-sensitive strings, each containing a `StringOrURI` value. For details, refer to the [Registered Claim Names](https://datatracker.ietf.org/doc/html/rfc7519#section-4.1) in RFC 7519.
+
+      For more information on validating JSON Web Tokens, refer to [JSON Web Tokens Validation](/api-shield/security/jwt-validation/) in the API Shield documentation.
+
+  - name: http.request.jwt.claims.aud.names
+    data_type: Array<String>
+    categories: [Request, JWT validation]
+    keywords: [request, jwt, api shield, client, visitor]
+    summary: The `aud` (audience) claim identifies the recipients that the JSON Web Token (JWT) is intended for.
+    description: |-
+      Each principal intended to process the JWT must identify itself with a value in the audience claim. In the general case, the `aud` value is an array of case-sensitive strings, each containing a `StringOrURI` value. For details, refer to the [Registered Claim Names](https://datatracker.ietf.org/doc/html/rfc7519#section-4.1) in RFC 7519.
+
+      For more information on validating JSON Web Tokens, refer to [JSON Web Tokens Validation](/api-shield/security/jwt-validation/) in the API Shield documentation.
+
+  - name: http.request.jwt.claims.aud.values
+    data_type: Array<String>
+    categories: [Request, JWT validation]
+    keywords: [request, jwt, api shield, client, visitor]
+    summary: The `aud` (audience) claim identifies the recipients that the JSON Web Token (JWT) is intended for.
+    description: |-
+      Each principal intended to process the JWT must identify itself with a value in the audience claim. In the general case, the `aud` value is an array of case-sensitive strings, each containing a `StringOrURI` value. For details, refer to the [Registered Claim Names](https://datatracker.ietf.org/doc/html/rfc7519#section-4.1) in RFC 7519.
+
+      For more information on validating JSON Web Tokens, refer to [JSON Web Tokens Validation](/api-shield/security/jwt-validation/) in the API Shield documentation.
+
+  - name: http.request.jwt.claims.iat.sec
+    data_type: Map<Array<Integer>>
+    categories: [Request, JWT validation]
+    keywords: [request, jwt, api shield, client, visitor]
+    summary: The `iat` (issued at) claim identifies the time (number of seconds) at which the JWT was issued.
+    description: |-
+      For details, refer to the [Registered Claim Names](https://datatracker.ietf.org/doc/html/rfc7519#section-4.1) in RFC 7519.
+
+      For more information on validating JSON Web Tokens, refer to [JSON Web Tokens Validation](/api-shield/security/jwt-validation/) in the API Shield documentation.
+
+  - name: http.request.jwt.claims.iat.sec.names
+    data_type: Array<String>
+    categories: [Request, JWT validation]
+    keywords: [request, jwt, api shield, client, visitor]
+    summary: The `iat` (issued at) claim identifies the time (number of seconds) at which the JWT was issued.
+    description: |-
+      For details, refer to the [Registered Claim Names](https://datatracker.ietf.org/doc/html/rfc7519#section-4.1) in RFC 7519.
+
+      For more information on validating JSON Web Tokens, refer to [JSON Web Tokens Validation](/api-shield/security/jwt-validation/) in the API Shield documentation.
+
+  - name: http.request.jwt.claims.iat.sec.values
+    data_type: Array<Integer>
+    categories: [Request, JWT validation]
+    keywords: [request, jwt, api shield, client, visitor]
+    summary: The `iat` (issued at) claim identifies the time (number of seconds) at which the JWT was issued.
+    description: |-
+      For details, refer to the [Registered Claim Names](https://datatracker.ietf.org/doc/html/rfc7519#section-4.1) in RFC 7519.
+
+      For more information on validating JSON Web Tokens, refer to [JSON Web Tokens Validation](/api-shield/security/jwt-validation/) in the API Shield documentation.
+
+  - name: http.request.jwt.claims.iss
+    data_type: Map<Array<String>>
+    categories: [Request, JWT validation]
+    keywords: [request, jwt, api shield, client, visitor]
+    summary: The `iss` (issuer) claim identifies the principal that issued the JWT.
+    description: |-
+      For details, refer to the [Registered Claim Names](https://datatracker.ietf.org/doc/html/rfc7519#section-4.1) in RFC 7519.
+
+      For more information on validating JSON Web Tokens, refer to [JSON Web Tokens Validation](/api-shield/security/jwt-validation/) in the API Shield documentation.
+
+  - name: http.request.jwt.claims.iss.names
+    data_type: Array<String>
+    categories: [Request, JWT validation]
+    keywords: [request, jwt, api shield, client, visitor]
+    summary: The `iss` (issuer) claim identifies the principal that issued the JWT.
+    description: |-
+      For details, refer to the [Registered Claim Names](https://datatracker.ietf.org/doc/html/rfc7519#section-4.1) in RFC 7519.
+
+      For more information on validating JSON Web Tokens, refer to [JSON Web Tokens Validation](/api-shield/security/jwt-validation/) in the API Shield documentation.
+
+  - name: http.request.jwt.claims.iss.values
+    data_type: Array<String>
+    categories: [Request, JWT validation]
+    keywords: [request, jwt, api shield, client, visitor]
+    summary: The `iss` (issuer) claim identifies the principal that issued the JWT.
+    description: |-
+      For details, refer to the [Registered Claim Names](https://datatracker.ietf.org/doc/html/rfc7519#section-4.1) in RFC 7519.
+
+      For more information on validating JSON Web Tokens, refer to [JSON Web Tokens Validation](/api-shield/security/jwt-validation/) in the API Shield documentation.
+
+  - name: http.request.jwt.claims.jti
+    data_type: Map<Array<String>>
+    categories: [Request, JWT validation]
+    keywords: [request, jwt, api shield, client, visitor]
+    summary: The `jti` (JWT ID) claim provides a unique identifier for the JWT.
+    description: |-
+      For details, refer to the [Registered Claim Names](https://datatracker.ietf.org/doc/html/rfc7519#section-4.1) in RFC 7519.
+
+      For more information on validating JSON Web Tokens, refer to [JSON Web Tokens Validation](/api-shield/security/jwt-validation/) in the API Shield documentation.
+
+  - name: http.request.jwt.claims.jti.names
+    data_type: Array<String>
+    categories: [Request, JWT validation]
+    keywords: [request, jwt, api shield, client, visitor]
+    summary: The `jti` (JWT ID) claim provides a unique identifier for the JWT.
+    description: |-
+      For details, refer to the [Registered Claim Names](https://datatracker.ietf.org/doc/html/rfc7519#section-4.1) in RFC 7519.
+
+      For more information on validating JSON Web Tokens, refer to [JSON Web Tokens Validation](/api-shield/security/jwt-validation/) in the API Shield documentation.
+
+  - name: http.request.jwt.claims.jti.values
+    data_type: Array<String>
+    categories: [Request, JWT validation]
+    keywords: [request, jwt, api shield, client, visitor]
+    summary: The `jti` (JWT ID) claim provides a unique identifier for the JWT.
+    description: |-
+      For details, refer to the [Registered Claim Names](https://datatracker.ietf.org/doc/html/rfc7519#section-4.1) in RFC 7519.
+
+      For more information on validating JSON Web Tokens, refer to [JSON Web Tokens Validation](/api-shield/security/jwt-validation/) in the API Shield documentation.
+
+  - name: http.request.jwt.claims.nbf.sec
+    data_type: Map<Array<Integer>>
+    categories: [Request, JWT validation]
+    keywords: [request, jwt, api shield, client, visitor]
+    summary: The `nbf` (not before) claim identifies the time (number of seconds) before which the JWT must not be accepted for processing.
+    description: |-
+      For details, refer to the [Registered Claim Names](https://datatracker.ietf.org/doc/html/rfc7519#section-4.1) in RFC 7519.
+
+      For more information on validating JSON Web Tokens, refer to [JSON Web Tokens Validation](/api-shield/security/jwt-validation/) in the API Shield documentation.
+
+  - name: http.request.jwt.claims.nbf.sec.names
+    data_type: Array<String>
+    categories: [Request, JWT validation]
+    keywords: [request, jwt, api shield, client, visitor]
+    summary: The `nbf` (not before) claim identifies the time (number of seconds) before which the JWT must not be accepted for processing.
+    description: |-
+      For details, refer to the [Registered Claim Names](https://datatracker.ietf.org/doc/html/rfc7519#section-4.1) in RFC 7519.
+
+      For more information on validating JSON Web Tokens, refer to [JSON Web Tokens Validation](/api-shield/security/jwt-validation/) in the API Shield documentation.
+
+  - name: http.request.jwt.claims.nbf.sec.values
+    data_type: Array<Integer>
+    categories: [Request, JWT validation]
+    keywords: [request, jwt, api shield, client, visitor]
+    summary: The `nbf` (not before) claim identifies the time (number of seconds) before which the JWT must not be accepted for processing.
+    description: |-
+      For details, refer to the [Registered Claim Names](https://datatracker.ietf.org/doc/html/rfc7519#section-4.1) in RFC 7519.
+
+      For more information on validating JSON Web Tokens, refer to [JSON Web Tokens Validation](/api-shield/security/jwt-validation/) in the API Shield documentation.
+
+  - name: http.request.jwt.claims.sub
+    data_type: Map<Array<String>>
+    categories: [Request, JWT validation]
+    keywords: [request, jwt, api shield, client, visitor]
+    summary: The `sub` (subject) claim identifies the principal that is the subject of the JWT.
+    description: |-
+      The claims in a JWT are normally statements about the subject. For details, refer to the [Registered Claim Names](https://datatracker.ietf.org/doc/html/rfc7519#section-4.1) in RFC 7519.
+
+      For more information on validating JSON Web Tokens, refer to [JSON Web Tokens Validation](/api-shield/security/jwt-validation/) in the API Shield documentation.
+
+  - name: http.request.jwt.claims.sub.names
+    data_type: Array<String>
+    categories: [Request, JWT validation]
+    keywords: [request, jwt, api shield, client, visitor]
+    summary: The `sub` (subject) claim identifies the principal that is the subject of the JWT.
+    description: |-
+      The claims in a JWT are normally statements about the subject. For details, refer to the [Registered Claim Names](https://datatracker.ietf.org/doc/html/rfc7519#section-4.1) in RFC 7519.
+
+      For more information on validating JSON Web Tokens, refer to [JSON Web Tokens Validation](/api-shield/security/jwt-validation/) in the API Shield documentation.
+
+  - name: http.request.jwt.claims.sub.values
+    data_type: Array<String>
+    categories: [Request, JWT validation]
+    keywords: [request, jwt, api shield, client, visitor]
+    summary: The `sub` (subject) claim identifies the principal that is the subject of the JWT.
+    description: |-
+      The claims in a JWT are normally statements about the subject. For details, refer to the [Registered Claim Names](https://datatracker.ietf.org/doc/html/rfc7519#section-4.1) in RFC 7519.
+
+      For more information on validating JSON Web Tokens, refer to [JSON Web Tokens Validation](/api-shield/security/jwt-validation/) in the API Shield documentation.
+
   - name: test.request.body.multipart.content_transfer_encodings
     data_type: "Array<Array<String>>"
     categories: [Request, Body]
