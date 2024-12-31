@@ -18,7 +18,7 @@ To make the transition seamless, Cloudflare will handle the migration of your ex
 If you wish to explore the benefits of modern Rules features sooner, you can begin adopting them today. Doing so allows you to:
 
 - Take advantage of modern features and capabilities sooner.
-- Customise and refine your rules to match your evolving needs.
+- Customize and refine your rules to match your evolving needs.
 
 To assist with this process, we provide you with a comprehensive mapping between Page Rules settings and modern Rules products in this guide.
 
@@ -54,11 +54,12 @@ The following example demonstrates the use of the [`http.request.full_uri`](/rul
 <Example>
 A **Page Rules URL** like:
 
-`example.com/*/downloads/*.txt` 
+`example.com/*/downloads/*.txt`
 
 becomes a **filter expression** such as:
 
 `http.request.full_uri wildcard "http*://example.com/*/downloads/*.txt*"`
+
 </Example>
 
 [Single Redirects](/rules/url-forwarding/single-redirects/create-dashboard/) and [Rewrite URL](/rules/transform/url-rewrite/create-dashboard/) rules also offer a simplified view called **Wildcard pattern**, allowing you to specify URL patterns (`http*://example.com/*/downloads/*.txt*`) without specifying the full filter expression (`http.request.full_uri wildcard "http*://example.com/*/downloads/*.txt*"`).

@@ -1611,6 +1611,10 @@
 /cloudflare-one/analytics/gateway/ /cloudflare-one/insights/analytics/gateway/ 301
 /cloudflare-one/analytics/users/ /cloudflare-one/insights/logs/users/ 301
 /cloudflare-one/api-terraform/access-api-examples/azure-group/ /cloudflare-one/api-terraform/access-api-examples/entra-group/ 301
+/cloudflare-one/api-terraform/gateway-api-examples/ /cloudflare-one/policies/gateway/ 301
+/cloudflare-one/api-terraform/gateway-api-examples/dns-policy/ /cloudflare-one/policies/gateway/dns-policies/common-policies/ 301
+/cloudflare-one/api-terraform/gateway-api-examples/network-policy/ /cloudflare-one/policies/gateway/network-policies/common-policies/ 301
+/cloudflare-one/api-terraform/gateway-api-examples/http-policy/ /cloudflare-one/policies/gateway/http-policies/common-policies/ 301
 /cloudflare-one/applications/non-http/arbitrary-tcp/ /cloudflare-one/applications/non-http/cloudflared-authentication/arbitrary-tcp/ 301
 /cloudflare-one/connections/connect-apps/configuration/ /cloudflare-one/connections/connect-networks/configure-tunnels/ 301
 /cloudflare-one/connections/connect-apps/install-and-setup/setup/ /cloudflare-one/connections/connect-networks/get-started/ 301

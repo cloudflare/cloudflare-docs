@@ -5,12 +5,17 @@ productLink: "/ai-gateway/"
 productArea: Developer platform
 productAreaLink: /workers/platform/changelog/platform/
 entries:
+  - publish_date: "2024-12-17"
+    title: AI Gateway Dashboard
+    description: |-
+      * Updated dashboard to view performance, costs, and stats across all gateways.
+
   - publish_date: "2024-12-13"
     title: Bug Fixes
     description: |-
       * **Bug Fixes**: Fixed Anthropic errors being cached.
       * **Bug Fixes**: Fixed `env.AI.run()` requests using authenticated gateways returning authentication error.
-      
+
   - publish_date: "2024-11-28"
     title: OpenRouter
     description: |-
