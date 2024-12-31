@@ -546,6 +546,8 @@ entries:
     description: |-
       When `true`, the [`cf.tls_client_auth.cert_verified`](/ruleset-engine/rules-language/fields/reference/cf.tls_client_auth.cert_verified/) field is also `true`.
 
+      This field is only filled in if the request includes a client certificate for [mTLS authentication](/ssl/client-certificates/enable-mtls/).
+
   - name: cf.tls_client_auth.cert_verified
     data_type: Boolean
     categories: [Request]
@@ -554,17 +556,23 @@ entries:
     description: |-
       Also returns `true` when a request includes a valid certificate that was revoked (refer to [`cf.tls_client_auth.cert_revoked`](/ruleset-engine/rules-language/fields/reference/cf.tls_client_auth.cert_revoked/)).
 
+      This field is only filled in if the request includes a client certificate for [mTLS authentication](/ssl/client-certificates/enable-mtls/).
+
   - name: cf.tls_client_auth.cert_presented
     data_type: Boolean
     categories: [Request]
     keywords: [request, ssl, tls, client, visitor]
     summary: Returns `true` when a request presents a certificate (valid or not).
+    description: |-
+      This field is only filled in if the request includes a client certificate for [mTLS authentication](/ssl/client-certificates/enable-mtls/).
 
   - name: cf.tls_client_auth.cert_issuer_dn
     data_type: String
     categories: [Request]
     keywords: [request, ssl, tls, client, visitor]
     summary: The Distinguished Name (DN) of the Certificate Authority (CA) that issued the certificate included in the request.
+    description: |-
+      This field is only filled in if the request includes a client certificate for [mTLS authentication](/ssl/client-certificates/enable-mtls/).
     example_value: |-
       "CN=Access Testing CA,OU=TX,O=Access Testing,L=Austin,ST=Texas,C=US"
 
@@ -573,6 +581,8 @@ entries:
     categories: [Request]
     keywords: [request, ssl, tls, client, visitor]
     summary: The Distinguished Name (DN) of the owner (or requester) of the certificate included in the request.
+    description: |-
+      This field is only filled in if the request includes a client certificate for [mTLS authentication](/ssl/client-certificates/enable-mtls/).
     example_value: |-
       "CN=James Royal,OU=Access Admins,O=Access,L=Austin,ST=Texas,C=US"
 
@@ -581,6 +591,8 @@ entries:
     categories: [Request]
     keywords: [request, ssl, tls, client, visitor]
     summary: The Distinguished Name (DN) of the Certificate Authority (CA) that issued the certificate in the request in [RFC 2253](https://datatracker.ietf.org/doc/html/rfc2253) format.
+    description: |-
+      This field is only filled in if the request includes a client certificate for [mTLS authentication](/ssl/client-certificates/enable-mtls/).
     example_value: |-
       "CN=Access Testing CA,OU=TX,O=Access Testing,L=Austin,ST=Texas,C=US"
 
@@ -589,6 +601,8 @@ entries:
     categories: [Request]
     keywords: [request, ssl, tls, client, visitor]
     summary: The Distinguished Name (DN) of the owner (or requester) of the certificate in the request in [RFC 2253](https://datatracker.ietf.org/doc/html/rfc2253) format.
+    description: |-
+      This field is only filled in if the request includes a client certificate for [mTLS authentication](/ssl/client-certificates/enable-mtls/).
     example_value: |-
       "CN=James Royal,OU=Access Admins,O=Access,L=Austin,ST=Texas,C=US"
 
@@ -597,6 +611,8 @@ entries:
     categories: [Request]
     keywords: [request, ssl, tls, client, visitor]
     summary: The Distinguished Name (DN) of the Certificate Authority (CA) that issued the certificate in the request in a legacy format.
+    description: |-
+      This field is only filled in if the request includes a client certificate for [mTLS authentication](/ssl/client-certificates/enable-mtls/).
     example_value: |-
       "/C=US/ST=Texas/L=Austin/O=Access Testing/OU=TX/CN=Access Testing CA"
 
@@ -605,6 +621,8 @@ entries:
     categories: [Request]
     keywords: [request, ssl, tls, client, visitor]
     summary: The Distinguished Name (DN) of the owner (or requester) of the certificate in the request in a legacy format.
+    description: |-
+      This field is only filled in if the request includes a client certificate for [mTLS authentication](/ssl/client-certificates/enable-mtls/).
     example_value: |-
       "/C=US/ST=Texas/L=Austin/O=Access/OU=Access Admins/CN=James Royal"
 
@@ -613,6 +631,8 @@ entries:
     categories: [Request]
     keywords: [request, ssl, tls, client, visitor]
     summary: Serial number of the certificate in the request.
+    description: |-
+      This field is only filled in if the request includes a client certificate for [mTLS authentication](/ssl/client-certificates/enable-mtls/).
     example_value: |-
       "527E0F20A20EA2A4146C78390F34CE7AF0878CA4"
 
@@ -621,6 +641,8 @@ entries:
     categories: [Request]
     keywords: [request, ssl, tls, client, visitor]
     summary: Serial number of the direct issuer of the certificate in the request.
+    description: |-
+      This field is only filled in if the request includes a client certificate for [mTLS authentication](/ssl/client-certificates/enable-mtls/).
     example_value: |-
       "2688201DBA77402EA87118876F2E1B24CF8B0395"
 
@@ -629,6 +651,8 @@ entries:
     categories: [Request]
     keywords: [request, ssl, tls, client, visitor]
     summary: The SHA-256 fingerprint of the certificate in the request.
+    description: |-
+      This field is only filled in if the request includes a client certificate for [mTLS authentication](/ssl/client-certificates/enable-mtls/).
     example_value: |-
       "af363dc85bc942a892d3cee9796190fdb36d89cd588a4f1cb17c74a943439714"
 
@@ -637,6 +661,8 @@ entries:
     categories: [Request]
     keywords: [request, ssl, tls, client, visitor]
     summary: The SHA-1 fingerprint of the certificate in the request.
+    description: |-
+      This field is only filled in if the request includes a client certificate for [mTLS authentication](/ssl/client-certificates/enable-mtls/).
     example_value: |-
       "933ad5282c560ae3f482a43ecd73bc9de878a190"
 
@@ -645,6 +671,8 @@ entries:
     categories: [Request]
     keywords: [request, ssl, tls, client, visitor]
     summary: The certificate in the request is not valid before this date.
+    description: |-
+      This field is only filled in if the request includes a client certificate for [mTLS authentication](/ssl/client-certificates/enable-mtls/).
     example_value: |-
       "Mar 21 13:35:00 2022 GMT"
 
@@ -653,6 +681,8 @@ entries:
     categories: [Request]
     keywords: [request, ssl, tls, client, visitor]
     summary: The certificate in the request is not valid after this date.
+    description: |-
+      This field is only filled in if the request includes a client certificate for [mTLS authentication](/ssl/client-certificates/enable-mtls/).
     example_value: |-
       "Mar 21 13:35:00 2023 GMT"
 
@@ -661,6 +691,8 @@ entries:
     categories: [Request]
     keywords: [request, ssl, tls, client, visitor]
     summary: The Subject Key Identifier (SKI) of the certificate in the request.
+    description: |-
+      This field is only filled in if the request includes a client certificate for [mTLS authentication](/ssl/client-certificates/enable-mtls/).
     example_value: |-
       "27846FAE6EAC4A8DAD9101B519CF1EB460242831"
 
@@ -669,6 +701,8 @@ entries:
     categories: [Request]
     keywords: [request, ssl, tls, client, visitor]
     summary: The Subject Key Identifier (SKI) of the direct issuer of the certificate in the request.
+    description: |-
+      This field is only filled in if the request includes a client certificate for [mTLS authentication](/ssl/client-certificates/enable-mtls/).
     example_value: |-
       "8204924CF49D471E855862706D889F58F6B784D3"
 
@@ -722,7 +756,7 @@ entries:
       ]
     summary: When `true`, the request contains at least one content object.
     description: |-
-      For more details, refer to [Malicious uploads detection](/waf/detections/malicious-uploads/).
+      Requires a Cloudflare Enterprise plan with [malicious uploads detection](/waf/detections/malicious-uploads/) enabled.
 
   - name: cf.waf.content_scan.has_malicious_obj
     data_type: Boolean
@@ -738,7 +772,7 @@ entries:
       ]
     summary: When `true`, the request contains at least one malicious content object.
     description: |-
-      For more details, refer to [Malicious uploads detection](/waf/detections/malicious-uploads/).
+      Requires a Cloudflare Enterprise plan with [malicious uploads detection](/waf/detections/malicious-uploads/) enabled.
 
   - name: cf.waf.content_scan.num_malicious_obj
     data_type: Integer
@@ -754,7 +788,7 @@ entries:
       ]
     summary: The number of malicious content objects detected in the request (zero or greater).
     description: |-
-      For more details, refer to [Malicious uploads detection](/waf/detections/malicious-uploads/).
+      Requires a Cloudflare Enterprise plan with [malicious uploads detection](/waf/detections/malicious-uploads/) enabled.
 
   - name: cf.waf.content_scan.has_failed
     data_type: Boolean
@@ -770,7 +804,7 @@ entries:
       ]
     summary: When `true`, the file scanner was unable to scan all the content objects detected in the request.
     description: |-
-      For more details, refer to [Malicious uploads detection](/waf/detections/malicious-uploads/).
+      Requires a Cloudflare Enterprise plan with [malicious uploads detection](/waf/detections/malicious-uploads/) enabled.
 
   - name: cf.waf.content_scan.num_obj
     data_type: Integer
@@ -786,7 +820,7 @@ entries:
       ]
     summary: The number of content objects detected in the request (zero or greater).
     description: |-
-      For more details, refer to [Malicious uploads detection](/waf/detections/malicious-uploads/).
+      Requires a Cloudflare Enterprise plan with [malicious uploads detection](/waf/detections/malicious-uploads/) enabled.
 
   - name: cf.waf.content_scan.obj_sizes
     data_type: Array<Integer>
@@ -802,7 +836,7 @@ entries:
       ]
     summary: An array of file sizes in bytes, in the order the content objects were detected in the request.
     description: |-
-      For more details, refer to [Malicious uploads detection](/waf/detections/malicious-uploads/).
+      Requires a Cloudflare Enterprise plan with [malicious uploads detection](/waf/detections/malicious-uploads/) enabled.
 
   - name: cf.waf.content_scan.obj_types
     data_type: Array<String>
@@ -820,7 +854,7 @@ entries:
     description: |-
       If Cloudflare cannot determine the file type of a content object, the corresponding value in the `obj_types` array will be `application/octet-stream`.
 
-      For more details, refer to [Malicious uploads detection](/waf/detections/malicious-uploads/).
+      Requires a Cloudflare Enterprise plan with [malicious uploads detection](/waf/detections/malicious-uploads/) enabled.
 
   - name: cf.waf.content_scan.obj_results
     data_type: Array<String>
@@ -838,7 +872,7 @@ entries:
     description: |-
       The possible values are: `clean`, `suspicious`, `infected`, and `not scanned`.
 
-      For more details, refer to [Malicious uploads detection](/waf/detections/malicious-uploads/).
+      Requires a Cloudflare Enterprise plan with [malicious uploads detection](/waf/detections/malicious-uploads/) enabled.
 
   - name: cf.waf.score
     data_type: Number
@@ -848,13 +882,15 @@ entries:
     description: |-
       This is the standard [WAF attack score](/waf/detections/attack-score/) to detect variants of attack patterns.
 
+      Requires a Cloudflare Enterprise plan with [attack score detection](/waf/detections/attack-score/) enabled.
+
   - name: cf.waf.score.sqli
     data_type: Number
     categories: [Request]
     keywords: [request, cloudflare, attack score, waf score, client, visitor]
     summary: An attack score from `1` to `99` classifying the SQL injection (SQLi) attack vector.
     description: |-
-      For more details, refer to [WAF attack score](/waf/detections/attack-score/).
+      Requires a Cloudflare Enterprise plan with [attack score detection](/waf/detections/attack-score/) enabled.
 
   - name: cf.waf.score.xss
     data_type: Number
@@ -862,7 +898,7 @@ entries:
     keywords: [request, cloudflare, attack score, waf score, client, visitor]
     summary: An attack score from `1` to `99` classifying the cross-site scripting (XSS) attack vector.
     description: |-
-      For more details, refer to [WAF attack score](/waf/detections/attack-score/).
+      Requires a Cloudflare Enterprise plan with [attack score detection](/waf/detections/attack-score/) enabled.
 
   - name: cf.waf.score.rce
     data_type: Number
@@ -870,7 +906,7 @@ entries:
     keywords: [request, cloudflare, attack score, waf score, client, visitor]
     summary: An attack score from `1` to `99` classifying the command injection or Remote Code Execution (RCE) attack vector.
     description: |-
-      For more details, refer to [WAF attack score](/waf/detections/attack-score/).
+      Requires a Cloudflare Enterprise plan with [attack score detection](/waf/detections/attack-score/) enabled.
 
   - name: cf.waf.score.class
     data_type: String
@@ -880,7 +916,7 @@ entries:
     description: |-
       Can have one of the following values: `attack`, `likely_attack`, `likely_clean`, `clean`.
 
-      For more details, refer to [WAF attack score](/waf/detections/attack-score/).
+      Requires a Cloudflare Business plan (or above) with [attack score detection](/waf/detections/attack-score/) enabled.
 
   - name: cf.waf.auth_detected
     data_type: Boolean
@@ -896,7 +932,7 @@ entries:
       ]
     summary: When `true`, the Cloudflare WAF detected authentication credentials in the request.
     description: |-
-      Only available when [leaked credentials detection](/waf/detections/leaked-credentials/) is enabled.
+      Requires a Cloudflare Enterprise plan with [leaked credentials detection](/waf/detections/leaked-credentials/) enabled.
 
   - name: cf.waf.credential_check.password_leaked
     data_type: Boolean
@@ -928,7 +964,7 @@ entries:
       ]
     summary: When `true`, the username detected in the request was previously leaked.
     description: |-
-      Only available when [leaked credentials detection](/waf/detections/leaked-credentials/) is enabled.
+      Requires a Cloudflare Enterprise plan with [leaked credentials detection](/waf/detections/leaked-credentials/) enabled.
 
   - name: cf.waf.credential_check.username_and_password_leaked
     data_type: Boolean
@@ -944,7 +980,7 @@ entries:
       ]
     summary: When `true`, the authentication credentials detected in the request (username and password pair) were previously leaked.
     description: |-
-      Only available when [leaked credentials detection](/waf/detections/leaked-credentials/) is enabled.
+      Requires a Cloudflare Pro plan (or above) with [leaked credentials detection](/waf/detections/leaked-credentials/) enabled.
 
   - name: cf.waf.credential_check.username_password_similar
     data_type: Boolean
@@ -960,7 +996,7 @@ entries:
       ]
     summary: When `true`, a similar version of the username and password credentials detected in the request were previously leaked.
     description: |-
-      Only available when [leaked credentials detection](/waf/detections/leaked-credentials/) is enabled.
+      Requires a Cloudflare Enterprise plan with [leaked credentials detection](/waf/detections/leaked-credentials/) enabled.
 
   - name: cf.worker.upstream_zone
     data_type: String
