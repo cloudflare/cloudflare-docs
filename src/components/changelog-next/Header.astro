@@ -19,7 +19,9 @@ async function uniqueProducts(
 ) {
 	const products = entries?.flatMap((entry) => entry.data.products ?? []);
 
-	const unique = [...new Set(products)];
+	const unique = [
+		...new Map(products?.map((product) => [product.id, product])).values(),
+	];
 
 	return Promise.all(
 		unique.map(async (product) => {
