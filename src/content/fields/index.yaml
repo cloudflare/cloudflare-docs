@@ -15,6 +15,14 @@ entries:
     example_value: |-
       www.example.org
 
+  - name: http.referer
+    data_type: String
+    categories: [Request, Headers]
+    keywords: [request, header, referer, referrer, client, visitor]
+    summary: The HTTP `Referer` request header, which contains the address of the web page that linked to the currently requested page.
+    example_value: |-
+      Referer: https://developer.example.org/en-US/docs/Web/JavaScript
+
   - name: http.request.full_uri
     data_type: String
     categories: [Request, URI]
@@ -359,20 +367,621 @@ entries:
   - name: raw.http.request.uri.path
     data_type: String
     categories: [Request, URI, Raw fields]
-    keywords: [request, uri, url, path, query, raw, client, visitor]
+    keywords: [request, uri, url, path, raw, client, visitor]
     summary: The raw URI path and query string of the request without any transformation.
     description: |-
       This is the raw field version of the [`http.request.uri`](/ruleset-engine/rules-language/fields/reference/http.request.uri/) field. Raw fields, prefixed with `raw.`, preserve original request values for later evaluations. These fields are immutable during the entire request evaluation workflow, and they are not affected by the actions of previously matched rules.
 
       **Note:** This raw field may include some basic normalization done by Cloudflare's HTTP server. However, this can change in the future.
 
-  - name: http.referer
+  - name: raw.http.request.uri.path.extension
     data_type: String
-    categories: [Request, Headers]
-    keywords: [request, header, referer, referrer, client, visitor]
-    summary: The HTTP `Referer` request header, which contains the address of the web page that linked to the currently requested page.
+    categories: [Request, URI, Raw fields]
+    keywords: [request, uri, url, path, raw, client, visitor]
+    summary: The raw file extension in the request URI path without any transformation.
+    description: |-
+      This is the raw field version of the [`http.request.uri.path.extension`](/ruleset-engine/rules-language/fields/reference/http.request.uri.path.extension/) field. Raw fields, prefixed with `raw.`, preserve original request values for later evaluations. These fields are immutable during the entire request evaluation workflow, and they are not affected by the actions of previously matched rules.
+
+  - name: raw.http.request.uri.query
+    data_type: String
+    categories: [Request, URI, Raw fields]
+    keywords: [request, uri, url, query, query string, raw, client, visitor]
+    summary: The entire query string without the `?` delimiter and without any transformation.
+    description: |-
+      This is the raw field version of the [`http.request.uri.query`](/ruleset-engine/rules-language/fields/reference/http.request.uri.query/) field. Raw fields, prefixed with `raw.`, preserve original request values for later evaluations. These fields are immutable during the entire request evaluation workflow, and they are not affected by the actions of previously matched rules.
+
+      **Note:** This raw field may include some basic normalization done by Cloudflare's HTTP server. However, this can change in the future.
+
+  - name: ssl
+    data_type: Boolean
+    categories: [Request]
+    keywords: [request, tls, https, client, visitor]
+    summary: Returns `true` when the HTTP connection to the client is encrypted.
+
+  - name: cf.bot_management.verified_bot
+    data_type: Boolean
+    categories: [Request, Bots]
+    keywords: [request, bots, client, visitor]
+    summary: When `true`, this field indicates the request originated from a known good bot or crawler.
+    description: |-
+      Provides the same information as [`cf.client.bot`](/ruleset-engine/rules-language/fields/reference/cf.client.bot/).
+
+      Requires a Cloudflare Enterprise plan with [Bot Management](/bots/plans/bm-subscription/) enabled.
+
+  - name: cf.verified_bot_category
+    data_type: String
+    categories: [Request, Bots]
+    keywords: [request, bots, client, visitor]
+    summary: Provides the type and purpose of a verified bot.
+    description: |-
+      For more details, refer to [Verified Bot Categories](/bots/reference/verified-bot-categories/).
+
+  - name: cf.bot_management.score
+    data_type: Number
+    categories: [Request, Bots]
+    keywords: [request, bots, client, visitor]
+    summary: Represents the likelihood that a request originates from a bot using a score from 1–99.
+    description: |-
+      A low score indicates that the request comes from a bot or an automated agent. A high score indicates that a human issued the request.
+
+      Requires a Cloudflare Enterprise plan with [Bot Management](/bots/plans/bm-subscription/) enabled.
+
+  - name: cf.bot_management.static_resource
+    data_type: Number
+    categories: [Request, Bots]
+    keywords: [request, bots, client, visitor]
+    summary: Indicates whether static resources should be included when you create a rule using [`cf.bot_management.score`](/ruleset-engine/rules-language/fields/reference/cf.bot_management.score/).
+    description: |-
+      For more details, refer to [Static resource protection](/bots/reference/static-resources/).
+
+      Requires a Cloudflare Enterprise plan with [Bot Management](/bots/plans/bm-subscription/) enabled.
+
+  - name: cf.bot_management.ja3_hash
+    data_type: String
+    categories: [Request, Bots]
+    keywords: [request, bots, client, visitor]
+    summary: Provides an SSL/TLS fingerprint to help you identify potential bot requests.
+    description: |-
+      For more details, refer to [JA3/JA4 Fingerprint](/bots/concepts/ja3-ja4-fingerprint/).
+
+      Requires a Cloudflare Enterprise plan with [Bot Management](/bots/plans/bm-subscription/) enabled.
+
+  - name: cf.bot_management.ja4
+    data_type: String
+    categories: [Request, Bots]
+    keywords: [request, bots, client, visitor]
+    summary: Provides an SSL/TLS fingerprint to help you identify potential bot requests.
+    description: |-
+      For more details, refer to [JA3/JA4 Fingerprint](/bots/concepts/ja3-ja4-fingerprint/).
+
+      Requires a Cloudflare Enterprise plan with [Bot Management](/bots/plans/bm-subscription/) enabled.
+
+  - name: cf.bot_management.js_detection.passed
+    data_type: Boolean
+    categories: [Request, Bots]
+    keywords: [request, bots, client, visitor]
+    summary: Indicates whether the visitor has previously passed a JS Detection.
+    description: |-
+      For more details, refer to [JavaScript detections](/bots/reference/javascript-detections/).
+
+      Requires a Cloudflare Enterprise plan with [Bot Management](/bots/plans/bm-subscription/) enabled.
+
+  - name: cf.bot_management.detection_ids
+    data_type: Array<Number>
+    categories: [Request, Bots]
+    keywords: [request, bots, client, visitor]
+    summary: List of IDs that correlate to the Bot Management heuristic detections made on a request.
+    description: |-
+      Use this field to explicitly match a specific heuristic or to exclude a heuristic in a rule. You can have multiple heuristic detections on the same request.
+
+      Requires a Cloudflare Enterprise plan with [Bot Management](/bots/plans/bm-subscription/) enabled.
+    example_block: |-
+      any(cf.bot_management.detection_ids[*] eq 33554817)
+
+  - name: cf.client.bot
+    data_type: Boolean
+    categories: [Request, Bots]
+    keywords: [request, bots, client, visitor]
+    summary: When `true`, this field indicates the request originated from a known good bot or crawler.
+    description: |-
+      Provides the same information as [`cf.bot_management.verified_bot`](/ruleset-engine/rules-language/fields/reference/cf.bot_management.verified_bot/).
+
+  - name: cf.edge.server_ip
+    data_type: IP address
+    categories: [Request]
+    keywords: [request, cloudflare, client, visitor]
+    summary: Represents the global network's IP address to which the HTTP request has resolved.
+    description: |-
+      This field is only meaningful for [BYOIP customers](/byoip/).
+
+  - name: cf.edge.server_port
+    data_type: IP address
+    categories: [Request]
+    keywords: [request, cloudflare, client, visitor]
+    summary: Represents the port number at which the Cloudflare global network received the request.
+    description: |-
+      Use this field to filter traffic on a specific port. The value is a port number in the range 1–65535.
+
+  - name: cf.hostname.metadata
+    data_type: String
+    categories: [Request]
+    keywords: [request, cloudflare, saas, platforms, client, visitor]
+    summary: Returns the string representation of the per-hostname [custom metadata](/cloudflare-for-platforms/cloudflare-for-saas/domain-support/custom-metadata/) JSON object set by SSL for SaaS customers.
+
+  - name: cf.random_seed
+    data_type: Bytes
+    categories: [Request]
+    keywords: [request, cloudflare, client, visitor]
+    summary: Returns per-request random bytes that you can use in the [`uuidv4()`](/ruleset-engine/rules-language/functions/#uuidv4) function.
+
+  - name: cf.ray_id
+    data_type: String
+    categories: [Request]
+    keywords: [request, cloudflare, client, visitor]
+    summary: The Ray ID of the current request.
+    description: |-
+      A [Ray ID](/fundamentals/reference/cloudflare-ray-id/) is an identifier given to every request that goes through Cloudflare.
+
+  - name: cf.threat_score
+    data_type: Number
+    categories: [Request]
+    keywords: [request, cloudflare, score, client, visitor]
+    summary: Represents a Cloudflare threat score from 0–100, where 0 indicates low risk.
+    description: |-
+      Values above 10 may represent spammers or bots, and values above 40 identify bad actors on the Internet. It is rare to see values above 60. A common recommendation is to challenge requests with a score above 10 and to block those above 50.
+
+  - name: cf.tls_cipher
+    data_type: String
+    categories: [Request]
+    keywords: [request, ssl, tls, client, visitor]
+    summary: The cipher for the connection to Cloudflare.
     example_value: |-
-      Referer: https://developer.example.org/en-US/docs/Web/JavaScript
+      "AES128-SHA256"
+
+  - name: cf.tls_client_auth.cert_revoked
+    data_type: Boolean
+    categories: [Request]
+    keywords: [request, ssl, tls, client, visitor]
+    summary: Returns `true` when a request presents a valid but revoked client certificate.
+    description: |-
+      When `true`, the [`cf.tls_client_auth.cert_verified`](/ruleset-engine/rules-language/fields/reference/cf.tls_client_auth.cert_verified/) field is also `true`.
+
+  - name: cf.tls_client_auth.cert_verified
+    data_type: Boolean
+    categories: [Request]
+    keywords: [request, ssl, tls, client, visitor]
+    summary: Returns `true` when a request presents a valid client certificate.
+    description: |-
+      Also returns `true` when a request includes a valid certificate that was revoked (refer to [`cf.tls_client_auth.cert_revoked`](/ruleset-engine/rules-language/fields/reference/cf.tls_client_auth.cert_revoked/)).
+
+  - name: cf.tls_client_auth.cert_presented
+    data_type: Boolean
+    categories: [Request]
+    keywords: [request, ssl, tls, client, visitor]
+    summary: Returns `true` when a request presents a certificate (valid or not).
+
+  - name: cf.tls_client_auth.cert_issuer_dn
+    data_type: String
+    categories: [Request]
+    keywords: [request, ssl, tls, client, visitor]
+    summary: The Distinguished Name (DN) of the Certificate Authority (CA) that issued the certificate included in the request.
+    example_value: |-
+      "CN=Access Testing CA,OU=TX,O=Access Testing,L=Austin,ST=Texas,C=US"
+
+  - name: cf.tls_client_auth.cert_subject_dn
+    data_type: String
+    categories: [Request]
+    keywords: [request, ssl, tls, client, visitor]
+    summary: The Distinguished Name (DN) of the owner (or requester) of the certificate included in the request.
+    example_value: |-
+      "CN=James Royal,OU=Access Admins,O=Access,L=Austin,ST=Texas,C=US"
+
+  - name: cf.tls_client_auth.cert_issuer_dn_rfc2253
+    data_type: String
+    categories: [Request]
+    keywords: [request, ssl, tls, client, visitor]
+    summary: The Distinguished Name (DN) of the Certificate Authority (CA) that issued the certificate in the request in [RFC 2253](https://datatracker.ietf.org/doc/html/rfc2253) format.
+    example_value: |-
+      "CN=Access Testing CA,OU=TX,O=Access Testing,L=Austin,ST=Texas,C=US"
+
+  - name: cf.tls_client_auth.cert_subject_dn_rfc2253
+    data_type: String
+    categories: [Request]
+    keywords: [request, ssl, tls, client, visitor]
+    summary: The Distinguished Name (DN) of the owner (or requester) of the certificate in the request in [RFC 2253](https://datatracker.ietf.org/doc/html/rfc2253) format.
+    example_value: |-
+      "CN=James Royal,OU=Access Admins,O=Access,L=Austin,ST=Texas,C=US"
+
+  - name: cf.tls_client_auth.cert_issuer_dn_legacy
+    data_type: String
+    categories: [Request]
+    keywords: [request, ssl, tls, client, visitor]
+    summary: The Distinguished Name (DN) of the Certificate Authority (CA) that issued the certificate in the request in a legacy format.
+    example_value: |-
+      "/C=US/ST=Texas/L=Austin/O=Access Testing/OU=TX/CN=Access Testing CA"
+
+  - name: cf.tls_client_auth.cert_subject_dn_legacy
+    data_type: String
+    categories: [Request]
+    keywords: [request, ssl, tls, client, visitor]
+    summary: The Distinguished Name (DN) of the owner (or requester) of the certificate in the request in a legacy format.
+    example_value: |-
+      "/C=US/ST=Texas/L=Austin/O=Access/OU=Access Admins/CN=James Royal"
+
+  - name: cf.tls_client_auth.cert_serial
+    data_type: String
+    categories: [Request]
+    keywords: [request, ssl, tls, client, visitor]
+    summary: Serial number of the certificate in the request.
+    example_value: |-
+      "527E0F20A20EA2A4146C78390F34CE7AF0878CA4"
+
+  - name: cf.tls_client_auth.cert_issuer_serial
+    data_type: String
+    categories: [Request]
+    keywords: [request, ssl, tls, client, visitor]
+    summary: Serial number of the direct issuer of the certificate in the request.
+    example_value: |-
+      "2688201DBA77402EA87118876F2E1B24CF8B0395"
+
+  - name: cf.tls_client_auth.cert_fingerprint_sha256
+    data_type: String
+    categories: [Request]
+    keywords: [request, ssl, tls, client, visitor]
+    summary: The SHA-256 fingerprint of the certificate in the request.
+    example_value: |-
+      "af363dc85bc942a892d3cee9796190fdb36d89cd588a4f1cb17c74a943439714"
+
+  - name: cf.tls_client_auth.cert_fingerprint_sha1
+    data_type: String
+    categories: [Request]
+    keywords: [request, ssl, tls, client, visitor]
+    summary: The SHA-1 fingerprint of the certificate in the request.
+    example_value: |-
+      "933ad5282c560ae3f482a43ecd73bc9de878a190"
+
+  - name: cf.tls_client_auth.cert_not_before
+    data_type: String
+    categories: [Request]
+    keywords: [request, ssl, tls, client, visitor]
+    summary: The certificate in the request is not valid before this date.
+    example_value: |-
+      "Mar 21 13:35:00 2022 GMT"
+
+  - name: cf.tls_client_auth.cert_not_after
+    data_type: String
+    categories: [Request]
+    keywords: [request, ssl, tls, client, visitor]
+    summary: The certificate in the request is not valid after this date.
+    example_value: |-
+      "Mar 21 13:35:00 2023 GMT"
+
+  - name: cf.tls_client_auth.cert_ski
+    data_type: String
+    categories: [Request]
+    keywords: [request, ssl, tls, client, visitor]
+    summary: The Subject Key Identifier (SKI) of the certificate in the request.
+    example_value: |-
+      "27846FAE6EAC4A8DAD9101B519CF1EB460242831"
+
+  - name: cf.tls_client_auth.cert_issuer_ski
+    data_type: String
+    categories: [Request]
+    keywords: [request, ssl, tls, client, visitor]
+    summary: The Subject Key Identifier (SKI) of the direct issuer of the certificate in the request.
+    example_value: |-
+      "8204924CF49D471E855862706D889F58F6B784D3"
+
+  - name: cf.tls_client_extensions_sha1
+    data_type: String
+    categories: [Request]
+    keywords: [request, ssl, tls, client, visitor]
+    summary: The SHA-1 fingerprint of TLS client extensions, encoded in Base64.
+    example_value: |-
+      "OWFiM2I5ZDc0YWI0YWYzZmFkMGU0ZjhlYjhiYmVkMjgxNTU5YTU2Mg=="
+
+  - name: cf.tls_client_hello_length
+    data_type: Number
+    categories: [Request]
+    keywords: [request, ssl, tls, client, visitor]
+    summary: The length of the client hello message sent in a [TLS handshake](https://www.cloudflare.com/learning/ssl/what-happens-in-a-tls-handshake).
+    description: |-
+      Specifically, the length of the bytestring of the client hello.
+    example_value: |-
+      508
+
+  - name: cf.tls_client_random
+    data_type: String
+    categories: [Request]
+    keywords: [request, ssl, tls, client, visitor]
+    summary: The value of the 32-byte random value provided by the client in a [TLS handshake](https://www.cloudflare.com/learning/ssl/what-happens-in-a-tls-handshake), encoded in Base64.
+    description: |-
+      For more details, refer to [RFC 8446](https://datatracker.ietf.org/doc/html/rfc8446#section-4.1.2).
+    example_value: |-
+      "YWJjZA=="
+
+  - name: cf.tls_version
+    data_type: String
+    categories: [Request]
+    keywords: [request, ssl, tls, client, visitor]
+    summary: The TLS version of the connection to Cloudflare.
+    example_value: |-
+      "TLSv1.2"
+
+  - name: cf.waf.content_scan.has_obj
+    data_type: Boolean
+    categories: [Request]
+    keywords:
+      [
+        request,
+        cloudflare,
+        content scanning,
+        malicious uploads,
+        client,
+        visitor,
+      ]
+    summary: When `true`, the request contains at least one content object.
+    description: |-
+      For more details, refer to [Malicious uploads detection](/waf/detections/malicious-uploads/).
+
+  - name: cf.waf.content_scan.has_malicious_obj
+    data_type: Boolean
+    categories: [Request]
+    keywords:
+      [
+        request,
+        cloudflare,
+        content scanning,
+        malicious uploads,
+        client,
+        visitor,
+      ]
+    summary: When `true`, the request contains at least one malicious content object.
+    description: |-
+      For more details, refer to [Malicious uploads detection](/waf/detections/malicious-uploads/).
+
+  - name: cf.waf.content_scan.num_malicious_obj
+    data_type: Integer
+    categories: [Request]
+    keywords:
+      [
+        request,
+        cloudflare,
+        content scanning,
+        malicious uploads,
+        client,
+        visitor,
+      ]
+    summary: The number of malicious content objects detected in the request (zero or greater).
+    description: |-
+      For more details, refer to [Malicious uploads detection](/waf/detections/malicious-uploads/).
+
+  - name: cf.waf.content_scan.has_failed
+    data_type: Boolean
+    categories: [Request]
+    keywords:
+      [
+        request,
+        cloudflare,
+        content scanning,
+        malicious uploads,
+        client,
+        visitor,
+      ]
+    summary: When `true`, the file scanner was unable to scan all the content objects detected in the request.
+    description: |-
+      For more details, refer to [Malicious uploads detection](/waf/detections/malicious-uploads/).
+
+  - name: cf.waf.content_scan.num_obj
+    data_type: Integer
+    categories: [Request]
+    keywords:
+      [
+        request,
+        cloudflare,
+        content scanning,
+        malicious uploads,
+        client,
+        visitor,
+      ]
+    summary: The number of content objects detected in the request (zero or greater).
+    description: |-
+      For more details, refer to [Malicious uploads detection](/waf/detections/malicious-uploads/).
+
+  - name: cf.waf.content_scan.obj_sizes
+    data_type: Array<Integer>
+    categories: [Request]
+    keywords:
+      [
+        request,
+        cloudflare,
+        content scanning,
+        malicious uploads,
+        client,
+        visitor,
+      ]
+    summary: An array of file sizes in bytes, in the order the content objects were detected in the request.
+    description: |-
+      For more details, refer to [Malicious uploads detection](/waf/detections/malicious-uploads/).
+
+  - name: cf.waf.content_scan.obj_types
+    data_type: Array<String>
+    categories: [Request]
+    keywords:
+      [
+        request,
+        cloudflare,
+        content scanning,
+        malicious uploads,
+        client,
+        visitor,
+      ]
+    summary: An array of file types in the order the content objects were detected in the request.
+    description: |-
+      If Cloudflare cannot determine the file type of a content object, the corresponding value in the `obj_types` array will be `application/octet-stream`.
+
+      For more details, refer to [Malicious uploads detection](/waf/detections/malicious-uploads/).
+
+  - name: cf.waf.content_scan.obj_results
+    data_type: Array<String>
+    categories: [Request]
+    keywords:
+      [
+        request,
+        cloudflare,
+        content scanning,
+        malicious uploads,
+        client,
+        visitor,
+      ]
+    summary: An array of scan results in the order the content objects were detected in the request.
+    description: |-
+      The possible values are: `clean`, `suspicious`, `infected`, and `not scanned`.
+
+      For more details, refer to [Malicious uploads detection](/waf/detections/malicious-uploads/).
+
+  - name: cf.waf.score
+    data_type: Number
+    categories: [Request]
+    keywords: [request, cloudflare, attack score, waf score, client, visitor]
+    summary: A global score from `1` to `99` that combines the score of each WAF attack vector into a single score.
+    description: |-
+      This is the standard [WAF attack score](/waf/detections/attack-score/) to detect variants of attack patterns.
+
+  - name: cf.waf.score.sqli
+    data_type: Number
+    categories: [Request]
+    keywords: [request, cloudflare, attack score, waf score, client, visitor]
+    summary: An attack score from `1` to `99` classifying the SQL injection (SQLi) attack vector.
+    description: |-
+      For more details, refer to [WAF attack score](/waf/detections/attack-score/).
+
+  - name: cf.waf.score.xss
+    data_type: Number
+    categories: [Request]
+    keywords: [request, cloudflare, attack score, waf score, client, visitor]
+    summary: An attack score from `1` to `99` classifying the cross-site scripting (XSS) attack vector.
+    description: |-
+      For more details, refer to [WAF attack score](/waf/detections/attack-score/).
+
+  - name: cf.waf.score.rce
+    data_type: Number
+    categories: [Request]
+    keywords: [request, cloudflare, attack score, waf score, client, visitor]
+    summary: An attack score from `1` to `99` classifying the command injection or Remote Code Execution (RCE) attack vector.
+    description: |-
+      For more details, refer to [WAF attack score](/waf/detections/attack-score/).
+
+  - name: cf.waf.score.class
+    data_type: String
+    categories: [Request]
+    keywords: [request, cloudflare, attack score, waf score, client, visitor]
+    summary: The attack score class of the current request, based on the WAF attack score.
+    description: |-
+      Can have one of the following values: `attack`, `likely_attack`, `likely_clean`, `clean`.
+
+      For more details, refer to [WAF attack score](/waf/detections/attack-score/).
+
+  - name: cf.waf.auth_detected
+    data_type: Boolean
+    categories: [Request]
+    keywords:
+      [
+        request,
+        cloudflare,
+        leaked credentials,
+        exposed credentials,
+        client,
+        visitor,
+      ]
+    summary: When `true`, the Cloudflare WAF detected authentication credentials in the request.
+    description: |-
+      Only available when [leaked credentials detection](/waf/detections/leaked-credentials/) is enabled.
+
+  - name: cf.waf.credential_check.password_leaked
+    data_type: Boolean
+    categories: [Request]
+    keywords:
+      [
+        request,
+        cloudflare,
+        leaked credentials,
+        exposed credentials,
+        client,
+        visitor,
+      ]
+    summary: When `true`, the password detected in the request was previously leaked.
+    description: |-
+      Only available when [leaked credentials detection](/waf/detections/leaked-credentials/) is enabled.
+
+  - name: cf.waf.credential_check.username_leaked
+    data_type: Boolean
+    categories: [Request]
+    keywords:
+      [
+        request,
+        cloudflare,
+        leaked credentials,
+        exposed credentials,
+        client,
+        visitor,
+      ]
+    summary: When `true`, the username detected in the request was previously leaked.
+    description: |-
+      Only available when [leaked credentials detection](/waf/detections/leaked-credentials/) is enabled.
+
+  - name: cf.waf.credential_check.username_and_password_leaked
+    data_type: Boolean
+    categories: [Request]
+    keywords:
+      [
+        request,
+        cloudflare,
+        leaked credentials,
+        exposed credentials,
+        client,
+        visitor,
+      ]
+    summary: When `true`, the authentication credentials detected in the request (username and password pair) were previously leaked.
+    description: |-
+      Only available when [leaked credentials detection](/waf/detections/leaked-credentials/) is enabled.
+
+  - name: cf.waf.credential_check.username_password_similar
+    data_type: Boolean
+    categories: [Request]
+    keywords:
+      [
+        request,
+        cloudflare,
+        leaked credentials,
+        exposed credentials,
+        client,
+        visitor,
+      ]
+    summary: When `true`, a similar version of the username and password credentials detected in the request were previously leaked.
+    description: |-
+      Only available when [leaked credentials detection](/waf/detections/leaked-credentials/) is enabled.
+
+  - name: cf.worker.upstream_zone
+    data_type: String
+    categories: [Request]
+    keywords: [request, cloudflare, workers]
+    summary: Identifies whether a request comes from a worker or not.
+    description: |-
+      When a request comes from a worker, this field will hold the name of the zone for that worker. Otherwise, `cf.worker.upstream_zone` is empty.
+
+  - name: cf.bot_management.corporate_proxy
+    data_type: Boolean
+    categories: [Request, Bots]
+    keywords: [request, bots, proxy, client, visitor]
+    summary: When `true`, the incoming request comes from an identified Enterprise-only cloud-based corporate proxy or secure web gateway.
+    description: |-
+      Requires a Cloudflare Enterprise plan with [Bot Management](/bots/plans/bm-subscription/) enabled.
+    example_block: |-
+      not cf.bot_management.verified_bot
+      and not cf.bot_management.static_resource
+      and not cf.bot_management.corporate_proxy
+      and cf.bot_management.score lt 30
 
   - name: test.request.body.multipart.content_transfer_encodings
     data_type: "Array<Array<String>>"
