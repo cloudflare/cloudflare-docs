@@ -1547,6 +1547,133 @@ entries:
     example_value: |-
       [["file1.txt"], ["photo.jpg"]]
 
+  - name: http.response.code
+    data_type: Integer
+    categories: [Response]
+    keywords: [response]
+    summary: The HTTP status code returned to the client, either set by a Cloudflare product or returned by the origin server.
+    example_value: |-
+      403
+
+  - name: http.response.headers
+    data_type: Map<Array<String>>
+    categories: [Response, Headers]
+    keywords: [response]
+    summary: The HTTP response headers represented as a Map (or associative array).
+    description: |-
+      When there are repeating headers, the array includes them in the order they appear in the response. The keys convert to lowercase.
+
+      - **Decoding**: No decoding performed
+      - **Whitespace**: Preserved
+      - **Non-ASCII**: Preserved
+    example_value: |-
+      {"server": ["nginx"]}
+    example_block: |-
+      any(http.response.headers["server"][*] == "nginx")
+
+  - name: http.response.headers.names
+    data_type: Array<String>
+    categories: [Response, Headers]
+    keywords: [response]
+    summary: The names of the headers in the HTTP response.
+    description: |-
+      The names are not pre-processed and retain the original case used in the response.
+
+      The order of header names is not guaranteed but will match [`http.response.headers.values`](/ruleset-engine/rules-language/fields/reference/http.response.headers.values/).
+
+      Duplicate headers are listed multiple times.
+
+      - **Decoding**: No decoding performed
+      - **Whitespace**: Preserved
+      - **Non-ASCII**: Preserved
+    example_value: |-
+      ["content-type"]
+    example_block: |-
+      any(http.response.headers.names[*] == "content-type")
+
+  - name: http.response.headers.values
+    data_type: Array<String>
+    categories: [Response, Headers]
+    keywords: [response]
+    summary: The values of the headers in the HTTP response.
+    description: |-
+      The values are not pre-processed and retain the original case used in the response.
+
+      The order of header values is not guaranteed but will match [`http.response.headers.names`](/ruleset-engine/rules-language/fields/reference/http.response.headers.names/).
+
+      Duplicate headers are listed multiple times.
+
+      - **Decoding**: No decoding performed
+      - **Whitespace**: Preserved
+      - **Non-ASCII**: Preserved
+    example_value: |-
+      Example 1: ["application/json"]
+      Example 2: ["This header value is longer than 10 bytes"]
+    example_block: |-
+      # Example 1: Check for specific header value.
+      any(http.response.headers.values[*] == "application/json")
+
+      # Example 2: Match requests according to the specified operator and the length/size entered for the header value.
+      any(len(http.response.headers.values[*])[*] gt 10)
+
+  - name: http.response.content_type.media_type
+    data_type: String
+    categories: [Response, Headers]
+    keywords: [response]
+    summary: The lowercased content type (including subtype and suffix) without any extra parameters, based on the response's `Content-Type` header.
+    description: |-
+      The field value will not include parameters such as `charset`.
+
+      Example values:
+
+      | Content-Type header                     | Field value         |
+      | --------------------------------------- | ------------------- |
+      | `text/html`                             | `"text/html"`       |
+      | `text/html; charset=utf-8`              | `"text/html"`       |
+      | `text/html+extra`                       | `"text/html+extra"` |
+      | `text/html+extra; charset=utf-8`        | `"text/html+extra"` |
+      | `text/HTML`                             | `"text/html"`       |
+      | `text/html; charset=utf-8; other=value` | `"text/html"`       |
+
+  - name: cf.response.1xxx_code
+    data_type: Integer
+    categories: [Response]
+    keywords: [response, cloudflare]
+    summary: Contains the specific code for 1XXX Cloudflare errors.
+    description: |-
+      Use this field to differentiate between 1XXX errors associated with the same HTTP status code. The default value is `0`.
+
+      For a list of 1XXX errors, refer to [Troubleshooting Cloudflare 1XXX errors](/support/troubleshooting/cloudflare-errors/troubleshooting-cloudflare-1xxx-errors/).
+
+      **Note**: This field is only available in [HTTP response header modifications](/rules/transform/response-header-modification/) and [Custom Error Responses](/rules/custom-error-responses/).
+    example_value: |-
+      1020
+
+  - name: cf.response.error_type
+    data_type: String
+    categories: [Response]
+    keywords: [response, cloudflare]
+    summary: A string with the type of error in the response being returned.
+    description: |-
+      The default value is an empty string (`""`).
+
+      The available values are the following:
+
+      - `managed_challenge`
+      - `iuam`
+      - `legacy_challenge`
+      - `ip_ban`
+      - `waf`
+      - `5xx`
+      - `1xxx`
+      - `always_online`
+      - `country_challenge`
+      - `ratelimit`
+
+      You can use this field to customize the response for a specific type of error (for example, all 1XXX errors or all WAF block actions).
+
+      **Note**: This field is only available in [HTTP response header modifications](/rules/transform/response-header-modification/) and [Custom Error Responses](/rules/custom-error-responses/).
+
   - name: TEST.request.body.multipart.content_transfer_encodings
     data_type: "Array<Array<String>>"
     categories: [Request, Body]
