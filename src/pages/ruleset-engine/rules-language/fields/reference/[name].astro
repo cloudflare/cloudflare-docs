@@ -6,7 +6,7 @@ import StarlightPage, {
 	type StarlightPageProps,
 } from "@astrojs/starlight/components/StarlightPage.astro";
 import { Code, Aside, Type } from "~/components";
-import FieldBadges from "~/components/models/FieldBadges.jsx";
+import FieldBadges from "~/components/fields/FieldBadges.jsx";
 
 export const getStaticPaths = (async () => {
 	const fields = await getEntry("fields", "index");
@@ -29,52 +29,6 @@ const { field } = Astro.props;
 marked.use({ walkTokens: null });
 
 let CodeExamples = null;
-// switch (field.task.name) {
-// 	case "Text Generation":
-// 		CodeExamples = TextGenerationCode;
-// 		break;
-// 	case "Automatic Speech Recognition":
-// 		CodeExamples = AutomaticSpeechRecognitionCode;
-// 		break;
-// 	case "Image Classification":
-// 		CodeExamples = ImageClassificationCode;
-// 		break;
-// 	case "Object Detection":
-// 		CodeExamples = ObjectDetectionCode;
-// 		break;
-// 	case "Image-to-Text":
-// 		CodeExamples = ImageToTextCode;
-// 		break;
-// 	case "Text-to-Image":
-// 		CodeExamples = TextToImageCode;
-// 		break;
-// 	case "Translation":
-// 		CodeExamples = TranslationCode;
-// 		break;
-// 	case "Summarization":
-// 		CodeExamples = SummarizationCode;
-// 		break;
-// 	case "Text Embedding":
-// 		CodeExamples = TextEmbeddingCode;
-// 		break;
-// 	case "Text Classification":
-// 		CodeExamples = TextClassificationCode;
-// 		break;
-// }
-
-// // Overrides
-// if (field.name === "@cf/runwayml/stable-diffusion-v1-5-img2img") {
-// 	CodeExamples = StableDiffusionV15Img2ImgCode;
-// }
-
-// if (field.name === "@cf/runwayml/stable-diffusion-v1-5-inpainting") {
-// 	CodeExamples = StableDiffusionV15InpaintingCode;
-// }
-
-// if (field.name === "@cf/black-forest-labs/flux-1-schnell") {
-// 	CodeExamples = Flux1Schnell;
-// }
-
 const description = field.description;
 
 // Strong type coercion needed due to Starlight's component override for hideTitle
