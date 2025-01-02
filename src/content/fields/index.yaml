@@ -235,15 +235,19 @@ entries:
   - name: ip.src.asnum
     data_type: Number
     categories: [Request, Geolocation]
-    keywords: [request, location, geolocation, asn, client, visitor]
+    keywords:
+      [request, location, geolocation, asn, ip.geoip.asnum, client, visitor]
     summary: The 16-bit or 32-bit integer representing the Autonomous System (AS) number associated with the client IP address.
     description: |-
       This field has the same value as the `ip.geoip.asnum` field, which is deprecated. The `ip.geoip.asnum` field is still available for new and existing rules, but you should use the `ip.src.asnum` field instead.
 
+      _GeoIP is the registered trademark of MaxMind, Inc._
+
   - name: ip.src.continent
     data_type: String
     categories: [Request, Geolocation]
-    keywords: [request, location, geolocation, client, visitor]
+    keywords:
+      [request, location, geolocation, ip.geoip.continent, client, visitor]
     summary: The continent code associated with the client IP address.
     description: |-
       Values:
@@ -259,10 +263,13 @@ entries:
 
       This field has the same value as the `ip.geoip.continent` field, which is deprecated. The `ip.geoip.continent` field is still available for new and existing rules, but you should use the `ip.src.continent` field instead.
 
+      _GeoIP is the registered trademark of MaxMind, Inc._
+
   - name: ip.src.country
     data_type: String
     categories: [Request, Geolocation]
-    keywords: [request, location, geolocation, client, visitor]
+    keywords:
+      [request, location, geolocation, ip.geoip.country, client, visitor]
     summary: The 2-letter country code in [ISO 3166-1 Alpha 2](https://www.iso.org/obp/ui/#search/code/) format.
     example_value: |-
       GB
@@ -271,10 +278,21 @@ entries:
 
       This field has the same value as the `ip.geoip.country` field, which is deprecated. The `ip.geoip.country` field is still available for new and existing rules, but you should use the `ip.src.country` field instead.
 
+      _GeoIP is the registered trademark of MaxMind, Inc._
+
   - name: ip.src.subdivision_1_iso_code
     data_type: String
     categories: [Request, Geolocation]
-    keywords: [request, location, geolocation, region, client, visitor]
+    keywords:
+      [
+        request,
+        location,
+        geolocation,
+        ip.geoip.subdivision_1_iso_code,
+        region,
+        client,
+        visitor,
+      ]
     summary: The ISO 3166-2 code for the first-level region associated with the IP address.
     example_value: |-
       GB-ENG
@@ -285,10 +303,21 @@ entries:
 
       This field has the same value as the `ip.geoip.subdivision_1_iso_code` field, which is deprecated. The `ip.geoip.subdivision_1_iso_code` field is still available for new and existing rules, but you should use the `ip.src.subdivision_1_iso_code` field instead.
 
+      _GeoIP is the registered trademark of MaxMind, Inc._
+
   - name: ip.src.subdivision_2_iso_code
     data_type: String
     categories: [Request, Geolocation]
-    keywords: [request, location, geolocation, region, client, visitor]
+    keywords:
+      [
+        request,
+        location,
+        geolocation,
+        ip.geoip.subdivision_2_iso_code,
+        region,
+        client,
+        visitor,
+      ]
     summary: The ISO 3166-2 code for the second-level region associated with the IP address.
     example_value: |-
       GB-SWK
@@ -299,10 +328,21 @@ entries:
 
       This field has the same value as the `ip.geoip.subdivision_2_iso_code` field, which is deprecated. The `ip.geoip.subdivision_2_iso_code` field is still available for new and existing rules, but you should use the `ip.src.subdivision_2_iso_code` field instead.
 
+      _GeoIP is the registered trademark of MaxMind, Inc._
+
   - name: ip.src.is_in_european_union
     data_type: Boolean
     categories: [Request, Geolocation]
-    keywords: [request, location, geolocation, country, client, visitor]
+    keywords:
+      [
+        request,
+        location,
+        geolocation,
+        ip.geoip.is_in_european_union,
+        country,
+        client,
+        visitor,
+      ]
     summary: Returns `true` when the request originates from a country in the European Union (EU).
     description: |-
       Countries in the EU (from geolocation data):
@@ -347,6 +387,8 @@ entries:
       The EU country list was obtained from MaxMind's GeoIP2 database on 2023-12-05. For details on obtaining up-to-date country information, refer to the [MaxMind website](https://dev.maxmind.com/geoip/geolite2-free-geolocation-data).
 
       This field has the same value as the `ip.geoip.is_in_european_union` field, which is deprecated. The `ip.geoip.is_in_european_union` field is still available for new and existing rules, but you should use the `ip.src.is_in_european_union` field instead.
+
+      _GeoIP is the registered trademark of MaxMind, Inc._
 
   - name: raw.http.request.full_uri
     data_type: String
