@@ -24,6 +24,10 @@ export const getStaticPaths = (async () => {
 const { name } = Astro.params;
 const { field } = Astro.props;
 
+// disable conversion of relative links to absolute links
+// set in /src/pages/changelog/index/index.xml.ts
+marked.use({ walkTokens: null });
+
 let CodeExamples = null;
 // switch (field.task.name) {
 // 	case "Text Generation":
