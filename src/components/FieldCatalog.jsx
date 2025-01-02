@@ -1,7 +1,5 @@
 import { useState } from "react";
-// import ModelInfo from "./fields/ModelInfo";
-// import ModelBadges from "./fields/ModelBadges";
-// import { authorData } from "./fields/data";
+import FieldBadges from "./fields/FieldBadges";
 import { marked } from "marked";
 
 const FieldCatalog = ({ fields }) => {
@@ -157,7 +155,7 @@ const FieldCatalog = ({ fields }) => {
 					return (
 						<a
 							key={field.name}
-							className="p-3 border-gray-200 dark:border-gray-700 border-solid border rounded-md lg:w-[48%] w-full block !text-inherit no-underline self-start hover:bg-gray-50 dark:hover:bg-black mb-3"
+							className="p-3 border-gray-200 dark:border-gray-700 border-solid border rounded-md lg:w-[48%] w-full block !text-inherit no-underline self-stretch hover:bg-gray-50 dark:hover:bg-black mb-3"
 							href={`/ruleset-engine/rules-language/fields/reference/${field.name}`}
 						>
 							<div className="-mb-1 flex items-center">
@@ -174,9 +172,12 @@ const FieldCatalog = ({ fields }) => {
 									__html: marked.parseInline(field.summary),
 								}}
 							/>
-							{/* <div className="text-xs !mt-2">
-								<ModelBadges model={model.model} />
-							</div> */}
+
+							{field.plan_info_label && (
+								<div className="text-xs !mt-2">
+									<FieldBadges badges={[field.plan_info_label]} />
+								</div>
+							)}
 						</a>
 					);
 				})}

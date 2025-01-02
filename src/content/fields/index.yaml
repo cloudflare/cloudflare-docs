@@ -45,8 +45,11 @@ entries:
     data_type: Map<Array<String>>
     categories: [Request, Headers]
     keywords: [request, header, client, visitor]
+    plan_info_label: Pro
     summary: The `Cookie` HTTP header associated with a request represented as a Map (associative array).
     description: |-
+      Requires a Cloudflare Pro, Business, or Enterprise plan.
+
       The cookie names are URL decoded. If two cookies have the same name after decoding, their value arrays are merged.
 
       The cookie values are not pre-processed and retain the original case used in the request.
@@ -293,11 +296,14 @@ entries:
         client,
         visitor,
       ]
+    plan_info_label: Business
     summary: The ISO 3166-2 code for the first-level region associated with the IP address.
     example_value: |-
       GB-ENG
     description: |-
       When the actual value is not available, this field contains an empty string.
+
+      Requires a Cloudflare Business or Enterprise plan.
 
       For more information on the ISO 3166-2 standard and the available regions, refer to [ISO 3166-2](https://en.wikipedia.org/wiki/ISO_3166-2) on Wikipedia.
 
@@ -318,11 +324,14 @@ entries:
         client,
         visitor,
       ]
+    plan_info_label: Business
     summary: The ISO 3166-2 code for the second-level region associated with the IP address.
     example_value: |-
       GB-SWK
     description: |-
       When the actual value is not available, this field contains an empty string.
+
+      Requires a Cloudflare Business or Enterprise plan.
 
       For more information on the ISO 3166-2 standard and the available regions, refer to [ISO 3166-2](https://en.wikipedia.org/wiki/ISO_3166-2) on Wikipedia.
 
@@ -343,8 +352,11 @@ entries:
         client,
         visitor,
       ]
+    plan_info_label: Business
     summary: Returns `true` when the request originates from a country in the European Union (EU).
     description: |-
+      Requires a Cloudflare Business or Enterprise plan.
+
       Countries in the EU (from geolocation data):
 
       | Country code | Country name    |
@@ -440,6 +452,7 @@ entries:
     data_type: Boolean
     categories: [Request, Bots]
     keywords: [request, bots, client, visitor]
+    plan_info_label: Enterprise add-on
     summary: When `true`, this field indicates the request originated from a known good bot or crawler.
     description: |-
       Provides the same information as [`cf.client.bot`](/ruleset-engine/rules-language/fields/reference/cf.client.bot/).
@@ -458,6 +471,7 @@ entries:
     data_type: Number
     categories: [Request, Bots]
     keywords: [request, bots, client, visitor]
+    plan_info_label: Enterprise add-on
     summary: Represents the likelihood that a request originates from a bot using a score from 1–99.
     description: |-
       A low score indicates that the request comes from a bot or an automated agent. A high score indicates that a human issued the request.
@@ -468,6 +482,7 @@ entries:
     data_type: Number
     categories: [Request, Bots]
     keywords: [request, bots, client, visitor]
+    plan_info_label: Enterprise add-on
     summary: Indicates whether static resources should be included when you create a rule using [`cf.bot_management.score`](/ruleset-engine/rules-language/fields/reference/cf.bot_management.score/).
     description: |-
       For more details, refer to [Static resource protection](/bots/reference/static-resources/).
@@ -478,6 +493,7 @@ entries:
     data_type: String
     categories: [Request, Bots]
     keywords: [request, bots, client, visitor]
+    plan_info_label: Enterprise add-on
     summary: Provides an SSL/TLS fingerprint to help you identify potential bot requests.
     description: |-
       For more details, refer to [JA3/JA4 Fingerprint](/bots/concepts/ja3-ja4-fingerprint/).
@@ -488,6 +504,7 @@ entries:
     data_type: String
     categories: [Request, Bots]
     keywords: [request, bots, client, visitor]
+    plan_info_label: Enterprise add-on
     summary: Provides an SSL/TLS fingerprint to help you identify potential bot requests.
     description: |-
       For more details, refer to [JA3/JA4 Fingerprint](/bots/concepts/ja3-ja4-fingerprint/).
@@ -498,6 +515,7 @@ entries:
     data_type: Boolean
     categories: [Request, Bots]
     keywords: [request, bots, client, visitor]
+    plan_info_label: Enterprise add-on
     summary: Indicates whether the visitor has previously passed a JS Detection.
     description: |-
       For more details, refer to [JavaScript detections](/bots/reference/javascript-detections/).
@@ -508,6 +526,7 @@ entries:
     data_type: Array<Number>
     categories: [Request, Bots]
     keywords: [request, bots, client, visitor]
+    plan_info_label: Enterprise add-on
     summary: List of IDs that correlate to the Bot Management heuristic detections made on a request.
     description: |-
       Use this field to explicitly match a specific heuristic or to exclude a heuristic in a rule. You can have multiple heuristic detections on the same request.
@@ -792,6 +811,7 @@ entries:
         client,
         visitor,
       ]
+    plan_info_label: Enterprise add-on
     summary: When `true`, the request contains at least one content object.
     description: |-
       Requires a Cloudflare Enterprise plan with [malicious uploads detection](/waf/detections/malicious-uploads/) enabled.
@@ -808,6 +828,7 @@ entries:
         client,
         visitor,
       ]
+    plan_info_label: Enterprise add-on
     summary: When `true`, the request contains at least one malicious content object.
     description: |-
       Requires a Cloudflare Enterprise plan with [malicious uploads detection](/waf/detections/malicious-uploads/) enabled.
@@ -824,6 +845,7 @@ entries:
         client,
         visitor,
       ]
+    plan_info_label: Enterprise add-on
     summary: The number of malicious content objects detected in the request (zero or greater).
     description: |-
       Requires a Cloudflare Enterprise plan with [malicious uploads detection](/waf/detections/malicious-uploads/) enabled.
@@ -840,6 +862,7 @@ entries:
         client,
         visitor,
       ]
+    plan_info_label: Enterprise add-on
     summary: When `true`, the file scanner was unable to scan all the content objects detected in the request.
     description: |-
       Requires a Cloudflare Enterprise plan with [malicious uploads detection](/waf/detections/malicious-uploads/) enabled.
@@ -856,6 +879,7 @@ entries:
         client,
         visitor,
       ]
+    plan_info_label: Enterprise add-on
     summary: The number of content objects detected in the request (zero or greater).
     description: |-
       Requires a Cloudflare Enterprise plan with [malicious uploads detection](/waf/detections/malicious-uploads/) enabled.
@@ -872,6 +896,7 @@ entries:
         client,
         visitor,
       ]
+    plan_info_label: Enterprise add-on
     summary: An array of file sizes in bytes, in the order the content objects were detected in the request.
     description: |-
       Requires a Cloudflare Enterprise plan with [malicious uploads detection](/waf/detections/malicious-uploads/) enabled.
@@ -888,6 +913,7 @@ entries:
         client,
         visitor,
       ]
+    plan_info_label: Enterprise add-on
     summary: An array of file types in the order the content objects were detected in the request.
     description: |-
       If Cloudflare cannot determine the file type of a content object, the corresponding value in the `obj_types` array will be `application/octet-stream`.
@@ -906,6 +932,7 @@ entries:
         client,
         visitor,
       ]
+    plan_info_label: Enterprise add-on
     summary: An array of scan results in the order the content objects were detected in the request.
     description: |-
       The possible values are: `clean`, `suspicious`, `infected`, and `not scanned`.
@@ -968,9 +995,10 @@ entries:
         client,
         visitor,
       ]
+    plan_info_label: Enterprise
     summary: When `true`, the Cloudflare WAF detected authentication credentials in the request.
     description: |-
-      Requires a Cloudflare Enterprise plan with [leaked credentials detection](/waf/detections/leaked-credentials/) enabled.
+      Requires a Cloudflare Enterprise plan. You must also enable [leaked credentials detection](/waf/detections/leaked-credentials/).
 
   - name: cf.waf.credential_check.password_leaked
     data_type: Boolean
@@ -1000,9 +1028,10 @@ entries:
         client,
         visitor,
       ]
+    plan_info_label: Enterprise
     summary: When `true`, the username detected in the request was previously leaked.
     description: |-
-      Requires a Cloudflare Enterprise plan with [leaked credentials detection](/waf/detections/leaked-credentials/) enabled.
+      Requires a Cloudflare Enterprise plan. You must also enable [leaked credentials detection](/waf/detections/leaked-credentials/).
 
   - name: cf.waf.credential_check.username_and_password_leaked
     data_type: Boolean
@@ -1016,9 +1045,10 @@ entries:
         client,
         visitor,
       ]
+    plan_info_label: Pro
     summary: When `true`, the authentication credentials detected in the request (username and password pair) were previously leaked.
     description: |-
-      Requires a Cloudflare Pro plan (or above) with [leaked credentials detection](/waf/detections/leaked-credentials/) enabled.
+      Requires a Cloudflare Pro plan (or above). You must also enable [leaked credentials detection](/waf/detections/leaked-credentials/).
 
   - name: cf.waf.credential_check.username_password_similar
     data_type: Boolean
@@ -1032,9 +1062,10 @@ entries:
         client,
         visitor,
       ]
+    plan_info_label: Enterprise
     summary: When `true`, a similar version of the username and password credentials detected in the request were previously leaked.
     description: |-
-      Requires a Cloudflare Enterprise plan with [leaked credentials detection](/waf/detections/leaked-credentials/) enabled.
+      Requires a Cloudflare Enterprise plan. You must also enable [leaked credentials detection](/waf/detections/leaked-credentials/).
 
   - name: cf.worker.upstream_zone
     data_type: String
@@ -1048,6 +1079,7 @@ entries:
     data_type: Boolean
     categories: [Request, Bots]
     keywords: [request, bots, proxy, client, visitor]
+    plan_info_label: Enterprise add-on
     summary: When `true`, the incoming request comes from an identified Enterprise-only cloud-based corporate proxy or secure web gateway.
     description: |-
       Requires a Cloudflare Enterprise plan with [Bot Management](/bots/plans/bm-subscription/) enabled.
@@ -1061,9 +1093,12 @@ entries:
     data_type: Map<Array<String>>
     categories: [Request, JWT validation]
     keywords: [request, jwt, api shield, client, visitor]
+    plan_info_label: Enterprise add-on
     summary: The `aud` (audience) claim identifies the recipients that the JSON Web Token (JWT) is intended for.
     description: |-
       Each principal intended to process the JWT must identify itself with a value in the audience claim. In the general case, the `aud` value is an array of case-sensitive strings, each containing a `StringOrURI` value. For details, refer to the [Registered Claim Names](https://datatracker.ietf.org/doc/html/rfc7519#section-4.1) in RFC 7519.
+
+      Requires a Cloudflare Enterprise plan with a paid add-on.
 
       For more information on validating JSON Web Tokens, refer to [JSON Web Tokens Validation](/api-shield/security/jwt-validation/) in the API Shield documentation.
 
@@ -1071,9 +1106,12 @@ entries:
     data_type: Array<String>
     categories: [Request, JWT validation]
     keywords: [request, jwt, api shield, client, visitor]
+    plan_info_label: Enterprise add-on
     summary: The `aud` (audience) claim identifies the recipients that the JSON Web Token (JWT) is intended for.
     description: |-
       Each principal intended to process the JWT must identify itself with a value in the audience claim. In the general case, the `aud` value is an array of case-sensitive strings, each containing a `StringOrURI` value. For details, refer to the [Registered Claim Names](https://datatracker.ietf.org/doc/html/rfc7519#section-4.1) in RFC 7519.
+
+      Requires a Cloudflare Enterprise plan with a paid add-on.
 
       For more information on validating JSON Web Tokens, refer to [JSON Web Tokens Validation](/api-shield/security/jwt-validation/) in the API Shield documentation.
 
@@ -1081,9 +1119,12 @@ entries:
     data_type: Array<String>
     categories: [Request, JWT validation]
     keywords: [request, jwt, api shield, client, visitor]
+    plan_info_label: Enterprise add-on
     summary: The `aud` (audience) claim identifies the recipients that the JSON Web Token (JWT) is intended for.
     description: |-
       Each principal intended to process the JWT must identify itself with a value in the audience claim. In the general case, the `aud` value is an array of case-sensitive strings, each containing a `StringOrURI` value. For details, refer to the [Registered Claim Names](https://datatracker.ietf.org/doc/html/rfc7519#section-4.1) in RFC 7519.
+
+      Requires a Cloudflare Enterprise plan with a paid add-on.
 
       For more information on validating JSON Web Tokens, refer to [JSON Web Tokens Validation](/api-shield/security/jwt-validation/) in the API Shield documentation.
 
@@ -1091,9 +1132,12 @@ entries:
     data_type: Map<Array<Integer>>
     categories: [Request, JWT validation]
     keywords: [request, jwt, api shield, client, visitor]
+    plan_info_label: Enterprise add-on
     summary: The `iat` (issued at) claim identifies the time (number of seconds) at which the JWT was issued.
     description: |-
       For details, refer to the [Registered Claim Names](https://datatracker.ietf.org/doc/html/rfc7519#section-4.1) in RFC 7519.
+
+      Requires a Cloudflare Enterprise plan with a paid add-on.
 
       For more information on validating JSON Web Tokens, refer to [JSON Web Tokens Validation](/api-shield/security/jwt-validation/) in the API Shield documentation.
 
@@ -1101,9 +1145,12 @@ entries:
     data_type: Array<String>
     categories: [Request, JWT validation]
     keywords: [request, jwt, api shield, client, visitor]
+    plan_info_label: Enterprise add-on
     summary: The `iat` (issued at) claim identifies the time (number of seconds) at which the JWT was issued.
     description: |-
       For details, refer to the [Registered Claim Names](https://datatracker.ietf.org/doc/html/rfc7519#section-4.1) in RFC 7519.
+
+      Requires a Cloudflare Enterprise plan with a paid add-on.
 
       For more information on validating JSON Web Tokens, refer to [JSON Web Tokens Validation](/api-shield/security/jwt-validation/) in the API Shield documentation.
 
@@ -1111,9 +1158,12 @@ entries:
     data_type: Array<Integer>
     categories: [Request, JWT validation]
     keywords: [request, jwt, api shield, client, visitor]
+    plan_info_label: Enterprise add-on
     summary: The `iat` (issued at) claim identifies the time (number of seconds) at which the JWT was issued.
     description: |-
       For details, refer to the [Registered Claim Names](https://datatracker.ietf.org/doc/html/rfc7519#section-4.1) in RFC 7519.
+
+      Requires a Cloudflare Enterprise plan with a paid add-on.
 
       For more information on validating JSON Web Tokens, refer to [JSON Web Tokens Validation](/api-shield/security/jwt-validation/) in the API Shield documentation.
 
@@ -1121,9 +1171,12 @@ entries:
     data_type: Map<Array<String>>
     categories: [Request, JWT validation]
     keywords: [request, jwt, api shield, client, visitor]
+    plan_info_label: Enterprise add-on
     summary: The `iss` (issuer) claim identifies the principal that issued the JWT.
     description: |-
       For details, refer to the [Registered Claim Names](https://datatracker.ietf.org/doc/html/rfc7519#section-4.1) in RFC 7519.
+
+      Requires a Cloudflare Enterprise plan with a paid add-on.
 
       For more information on validating JSON Web Tokens, refer to [JSON Web Tokens Validation](/api-shield/security/jwt-validation/) in the API Shield documentation.
 
@@ -1131,9 +1184,12 @@ entries:
     data_type: Array<String>
     categories: [Request, JWT validation]
     keywords: [request, jwt, api shield, client, visitor]
+    plan_info_label: Enterprise add-on
     summary: The `iss` (issuer) claim identifies the principal that issued the JWT.
     description: |-
       For details, refer to the [Registered Claim Names](https://datatracker.ietf.org/doc/html/rfc7519#section-4.1) in RFC 7519.
+
+      Requires a Cloudflare Enterprise plan with a paid add-on.
 
       For more information on validating JSON Web Tokens, refer to [JSON Web Tokens Validation](/api-shield/security/jwt-validation/) in the API Shield documentation.
 
@@ -1141,9 +1197,12 @@ entries:
     data_type: Array<String>
     categories: [Request, JWT validation]
     keywords: [request, jwt, api shield, client, visitor]
+    plan_info_label: Enterprise add-on
     summary: The `iss` (issuer) claim identifies the principal that issued the JWT.
     description: |-
       For details, refer to the [Registered Claim Names](https://datatracker.ietf.org/doc/html/rfc7519#section-4.1) in RFC 7519.
+
+      Requires a Cloudflare Enterprise plan with a paid add-on.
 
       For more information on validating JSON Web Tokens, refer to [JSON Web Tokens Validation](/api-shield/security/jwt-validation/) in the API Shield documentation.
 
@@ -1151,9 +1210,12 @@ entries:
     data_type: Map<Array<String>>
     categories: [Request, JWT validation]
     keywords: [request, jwt, api shield, client, visitor]
+    plan_info_label: Enterprise add-on
     summary: The `jti` (JWT ID) claim provides a unique identifier for the JWT.
     description: |-
       For details, refer to the [Registered Claim Names](https://datatracker.ietf.org/doc/html/rfc7519#section-4.1) in RFC 7519.
+
+      Requires a Cloudflare Enterprise plan with a paid add-on.
 
       For more information on validating JSON Web Tokens, refer to [JSON Web Tokens Validation](/api-shield/security/jwt-validation/) in the API Shield documentation.
 
@@ -1161,9 +1223,12 @@ entries:
     data_type: Array<String>
     categories: [Request, JWT validation]
     keywords: [request, jwt, api shield, client, visitor]
+    plan_info_label: Enterprise add-on
     summary: The `jti` (JWT ID) claim provides a unique identifier for the JWT.
     description: |-
       For details, refer to the [Registered Claim Names](https://datatracker.ietf.org/doc/html/rfc7519#section-4.1) in RFC 7519.
+
+      Requires a Cloudflare Enterprise plan with a paid add-on.
 
       For more information on validating JSON Web Tokens, refer to [JSON Web Tokens Validation](/api-shield/security/jwt-validation/) in the API Shield documentation.
 
@@ -1171,9 +1236,12 @@ entries:
     data_type: Array<String>
     categories: [Request, JWT validation]
     keywords: [request, jwt, api shield, client, visitor]
+    plan_info_label: Enterprise add-on
     summary: The `jti` (JWT ID) claim provides a unique identifier for the JWT.
     description: |-
       For details, refer to the [Registered Claim Names](https://datatracker.ietf.org/doc/html/rfc7519#section-4.1) in RFC 7519.
+
+      Requires a Cloudflare Enterprise plan with a paid add-on.
 
       For more information on validating JSON Web Tokens, refer to [JSON Web Tokens Validation](/api-shield/security/jwt-validation/) in the API Shield documentation.
 
@@ -1181,9 +1249,12 @@ entries:
     data_type: Map<Array<Integer>>
     categories: [Request, JWT validation]
     keywords: [request, jwt, api shield, client, visitor]
+    plan_info_label: Enterprise add-on
     summary: The `nbf` (not before) claim identifies the time (number of seconds) before which the JWT must not be accepted for processing.
     description: |-
       For details, refer to the [Registered Claim Names](https://datatracker.ietf.org/doc/html/rfc7519#section-4.1) in RFC 7519.
+
+      Requires a Cloudflare Enterprise plan with a paid add-on.
 
       For more information on validating JSON Web Tokens, refer to [JSON Web Tokens Validation](/api-shield/security/jwt-validation/) in the API Shield documentation.
 
@@ -1191,9 +1262,12 @@ entries:
     data_type: Array<String>
     categories: [Request, JWT validation]
     keywords: [request, jwt, api shield, client, visitor]
+    plan_info_label: Enterprise add-on
     summary: The `nbf` (not before) claim identifies the time (number of seconds) before which the JWT must not be accepted for processing.
     description: |-
       For details, refer to the [Registered Claim Names](https://datatracker.ietf.org/doc/html/rfc7519#section-4.1) in RFC 7519.
+
+      Requires a Cloudflare Enterprise plan with a paid add-on.
 
       For more information on validating JSON Web Tokens, refer to [JSON Web Tokens Validation](/api-shield/security/jwt-validation/) in the API Shield documentation.
 
@@ -1201,9 +1275,12 @@ entries:
     data_type: Array<Integer>
     categories: [Request, JWT validation]
     keywords: [request, jwt, api shield, client, visitor]
+    plan_info_label: Enterprise add-on
     summary: The `nbf` (not before) claim identifies the time (number of seconds) before which the JWT must not be accepted for processing.
     description: |-
       For details, refer to the [Registered Claim Names](https://datatracker.ietf.org/doc/html/rfc7519#section-4.1) in RFC 7519.
+
+      Requires a Cloudflare Enterprise plan with a paid add-on.
 
       For more information on validating JSON Web Tokens, refer to [JSON Web Tokens Validation](/api-shield/security/jwt-validation/) in the API Shield documentation.
 
@@ -1211,9 +1288,12 @@ entries:
     data_type: Map<Array<String>>
     categories: [Request, JWT validation]
     keywords: [request, jwt, api shield, client, visitor]
+    plan_info_label: Enterprise add-on
     summary: The `sub` (subject) claim identifies the principal that is the subject of the JWT.
     description: |-
       The claims in a JWT are normally statements about the subject. For details, refer to the [Registered Claim Names](https://datatracker.ietf.org/doc/html/rfc7519#section-4.1) in RFC 7519.
+
+      Requires a Cloudflare Enterprise plan with a paid add-on.
 
       For more information on validating JSON Web Tokens, refer to [JSON Web Tokens Validation](/api-shield/security/jwt-validation/) in the API Shield documentation.
 
@@ -1221,9 +1301,12 @@ entries:
     data_type: Array<String>
     categories: [Request, JWT validation]
     keywords: [request, jwt, api shield, client, visitor]
+    plan_info_label: Enterprise add-on
     summary: The `sub` (subject) claim identifies the principal that is the subject of the JWT.
     description: |-
       The claims in a JWT are normally statements about the subject. For details, refer to the [Registered Claim Names](https://datatracker.ietf.org/doc/html/rfc7519#section-4.1) in RFC 7519.
+
+      Requires a Cloudflare Enterprise plan with a paid add-on.
 
       For more information on validating JSON Web Tokens, refer to [JSON Web Tokens Validation](/api-shield/security/jwt-validation/) in the API Shield documentation.
 
@@ -1231,9 +1314,12 @@ entries:
     data_type: Array<String>
     categories: [Request, JWT validation]
     keywords: [request, jwt, api shield, client, visitor]
+    plan_info_label: Enterprise add-on
     summary: The `sub` (subject) claim identifies the principal that is the subject of the JWT.
     description: |-
       The claims in a JWT are normally statements about the subject. For details, refer to the [Registered Claim Names](https://datatracker.ietf.org/doc/html/rfc7519#section-4.1) in RFC 7519.
+
+      Requires a Cloudflare Enterprise plan with a paid add-on.
 
       For more information on validating JSON Web Tokens, refer to [JSON Web Tokens Validation](/api-shield/security/jwt-validation/) in the API Shield documentation.
 
@@ -1432,6 +1518,7 @@ entries:
     data_type: Boolean
     categories: [Request, Body]
     keywords: [request, body, client, visitor]
+    plan_info_label: Enterprise add-on
     summary: Indicates whether the HTTP request body is truncated.
     description: |-
       When `true`, `http.request.body.*` fields may not contain all of the HTTP request body.
@@ -1442,6 +1529,7 @@ entries:
     data_type: Number
     categories: [Request, Body]
     keywords: [request, body, client, visitor]
+    plan_info_label: Enterprise add-on
     summary: The total size of the HTTP request body (in bytes).
     description: |-
       This field may have a value larger than the one returned by `len(http.request.body.raw)`, since the [`http.request.body.raw`](/ruleset-engine/rules-language/fields/reference/http.request.body.raw/) field only considers the request body up to a maximum size that varies according to your Cloudflare plan.
@@ -1452,6 +1540,7 @@ entries:
     data_type: Map<Array<String>>
     categories: [Request, Body]
     keywords: [request, body, form, client, visitor]
+    plan_info_label: Enterprise add-on
     summary: The HTTP request body of a form represented as a Map (or associative array).
     description: |-
       Populated when the `Content-Type` header is `application/x-www-form-urlencoded`.
@@ -1476,6 +1565,7 @@ entries:
     data_type: Array<String>
     categories: [Request, Body]
     keywords: [request, body, form, client, visitor]
+    plan_info_label: Enterprise add-on
     summary: The names of the form fields in an HTTP request.
     description: |-
       Populated when the `Content-Type` header is `application/x-www-form-urlencoded`.
@@ -1500,6 +1590,7 @@ entries:
     data_type: Array<String>
     categories: [Request, Body]
     keywords: [request, body, form, client, visitor]
+    plan_info_label: Enterprise add-on
     summary: The values of the form fields in an HTTP request
     description: |-
       Populated when the `Content-Type` header is `application/x-www-form-urlencoded`.
@@ -1534,7 +1625,10 @@ entries:
     data_type: Map<Array<String>>
     categories: [Request, Body]
     keywords: [request, body, client, visitor]
+    plan_info_label: Enterprise add-on
     summary: A Map (or associative array) representation of multipart names to multipart values in the request body.
+    description: |-
+      Requires a Cloudflare Enterprise plan with a paid add-on.
     example_value: |-
       {"username": ["alice_doe"], "picture": [<binary_content_of_file>]}
 
@@ -1542,7 +1636,10 @@ entries:
     data_type: Array<Array<String>>
     categories: [Request, Body]
     keywords: [request, body, client, visitor]
+    plan_info_label: Enterprise add-on
     summary: List of multipart names for every part in the multipart body.
+    description: |-
+      Requires a Cloudflare Enterprise plan with a paid add-on.
     example_value: |-
       [["username"], ["picture"]]
     example_block: |-
@@ -1552,7 +1649,10 @@ entries:
     data_type: Array<String>
     categories: [Request, Body]
     keywords: [request, body, client, visitor]
+    plan_info_label: Enterprise add-on
     summary: List of multipart values for every part in the multipart body.
+    description: |-
+      Requires a Cloudflare Enterprise plan with a paid add-on.
     example_value: |-
       ["alice_doe", <binary_content_of_file>]
 
@@ -1560,7 +1660,10 @@ entries:
     data_type: Array<Array<String>>
     categories: [Request, Body]
     keywords: [request, body, client, visitor]
+    plan_info_label: Enterprise add-on
     summary: List of `Content-Type` headers for each part in the multipart body.
+    description: |-
+      Requires a Cloudflare Enterprise plan with a paid add-on.
     example_value: |-
       [["text/plain"], ["image/jpeg"]]
     example_block: |-
@@ -1570,7 +1673,10 @@ entries:
     data_type: Array<Array<String>>
     categories: [Request, Body]
     keywords: [request, body, client, visitor]
+    plan_info_label: Enterprise add-on
     summary: List of `Content-Disposition` headers for each part in the multipart body.
+    description: |-
+      Requires a Cloudflare Enterprise plan with a paid add-on.
     example_value: |-
       [["form-data; name=\"username\"], ["form-data;name=\"picture\"]]
 
@@ -1578,7 +1684,10 @@ entries:
     data_type: Array<Array<String>>
     categories: [Request, Body]
     keywords: [request, body, client, visitor]
+    plan_info_label: Enterprise add-on
     summary: List of `Content-Transfer-Encoding` headers for each part in the multipart body.
+    description: |-
+      Requires a Cloudflare Enterprise plan with a paid add-on.
     example_value: |-
       [["quoted-printable"], ["quoted-printable"]]
 
@@ -1586,7 +1695,10 @@ entries:
     data_type: Array<Array<String>>
     categories: [Request, Body]
     keywords: [request, body, client, visitor]
+    plan_info_label: Enterprise add-on
     summary: List of filenames for each part in the multipart body.
+    description: |-
+      Requires a Cloudflare Enterprise plan with a paid add-on.
     example_value: |-
       [["file1.txt"], ["photo.jpg"]]
 
