@@ -45,7 +45,7 @@ entries:
     data_type: Map<Array<String>>
     categories: [Request, Headers]
     keywords: [request, header, client, visitor]
-    plan_info_label: Pro
+    plan_info_label: Pro or above
     summary: The `Cookie` HTTP header associated with a request represented as a Map (associative array).
     description: |-
       Requires a Cloudflare Pro, Business, or Enterprise plan.
@@ -296,7 +296,7 @@ entries:
         client,
         visitor,
       ]
-    plan_info_label: Business
+    plan_info_label: Business or above
     summary: The ISO 3166-2 code for the first-level region associated with the IP address.
     example_value: |-
       GB-ENG
@@ -324,7 +324,7 @@ entries:
         client,
         visitor,
       ]
-    plan_info_label: Business
+    plan_info_label: Business or above
     summary: The ISO 3166-2 code for the second-level region associated with the IP address.
     example_value: |-
       GB-SWK
@@ -352,8 +352,8 @@ entries:
         client,
         visitor,
       ]
-    plan_info_label: Business
-    summary: Returns `true` when the request originates from a country in the European Union (EU).
+    plan_info_label: Business or above
+    summary: Whether the request originates from a country in the European Union (EU).
     description: |-
       Requires a Cloudflare Business or Enterprise plan.
 
@@ -935,45 +935,50 @@ entries:
     data_type: Number
     categories: [Request]
     keywords: [request, cloudflare, attack score, waf score, client, visitor]
+    plan_info_label: Enterprise
     summary: A global score from 1–99 that combines the score of each WAF attack vector into a single score.
     description: |-
       This is the standard [WAF attack score](/waf/detections/attack-score/) to detect variants of attack patterns.
 
-      Requires a Cloudflare Enterprise plan with [attack score detection](/waf/detections/attack-score/) enabled.
+      Requires a Cloudflare Enterprise plan. You must also enable [attack score detection](/waf/detections/attack-score/).
 
   - name: cf.waf.score.sqli
     data_type: Number
     categories: [Request]
     keywords: [request, cloudflare, attack score, waf score, client, visitor]
+    plan_info_label: Enterprise
     summary: An attack score from 1–99 classifying the SQL injection (SQLi) attack vector.
     description: |-
-      Requires a Cloudflare Enterprise plan with [attack score detection](/waf/detections/attack-score/) enabled.
+      Requires a Cloudflare Enterprise plan. You must also enable [attack score detection](/waf/detections/attack-score/).
 
   - name: cf.waf.score.xss
     data_type: Number
     categories: [Request]
     keywords: [request, cloudflare, attack score, waf score, client, visitor]
+    plan_info_label: Enterprise
     summary: An attack score from 1–99 classifying the cross-site scripting (XSS) attack vector.
     description: |-
-      Requires a Cloudflare Enterprise plan with [attack score detection](/waf/detections/attack-score/) enabled.
+      Requires a Cloudflare Enterprise plan. You must also enable [attack score detection](/waf/detections/attack-score/).
 
   - name: cf.waf.score.rce
     data_type: Number
     categories: [Request]
     keywords: [request, cloudflare, attack score, waf score, client, visitor]
+    plan_info_label: Enterprise
     summary: An attack score from 1–99 classifying the command injection or Remote Code Execution (RCE) attack vector.
     description: |-
-      Requires a Cloudflare Enterprise plan with [attack score detection](/waf/detections/attack-score/) enabled.
+      Requires a Cloudflare Enterprise plan. You must also enable [attack score detection](/waf/detections/attack-score/).
 
   - name: cf.waf.score.class
     data_type: String
     categories: [Request]
     keywords: [request, cloudflare, attack score, waf score, client, visitor]
+    plan_info_label: Business or above
     summary: The attack score class of the current request, based on the WAF attack score.
     description: |-
       Can have one of the following values: `attack`, `likely_attack`, `likely_clean`, `clean`.
 
-      Requires a Cloudflare Business plan (or above) with [attack score detection](/waf/detections/attack-score/) enabled.
+      Requires a Cloudflare Business plan or above. You must also enable [attack score detection](/waf/detections/attack-score/).
 
   - name: cf.waf.auth_detected
     data_type: Boolean
@@ -1038,10 +1043,10 @@ entries:
         client,
         visitor,
       ]
-    plan_info_label: Pro
+    plan_info_label: Pro or above
     summary: Indicates whether the auth credentials detected in the request (username-password pair) were previously leaked.
     description: |-
-      Requires a Cloudflare Pro plan (or above). You must also enable [leaked credentials detection](/waf/detections/leaked-credentials/).
+      Requires a Cloudflare Pro plan or above. You must also enable [leaked credentials detection](/waf/detections/leaked-credentials/).
 
   - name: cf.waf.credential_check.username_password_similar
     data_type: Boolean
