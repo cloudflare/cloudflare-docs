@@ -110,7 +110,7 @@ entries:
       - If the URI path is `/articles/index.html`, the field value will be `html`.
       - If the URI path is `/articles/index.`, the field value will be an empty string (`""`).
 
-      <details><summary><p>Example values</p></summary>
+      Example values:
 
       | URI path       | Field value |
       | -------------- | ----------- |
@@ -121,8 +121,6 @@ entries:
       | `/foo.tar.bz2` | `"bz2"`     |
       | `/foo.`        | `""`        |
       | `/foo.MP3`     | `"mp3"`     |
-
-      </details>
 
   - name: http.request.uri.query
     data_type: String
@@ -307,7 +305,7 @@ entries:
     keywords: [request, location, geolocation, country, client, visitor]
     summary: Returns `true` when the request originates from a country in the European Union (EU).
     description: |-
-      <details><summary><p>Countries in the EU (from geolocation data)</p></summary>
+      Countries in the EU (from geolocation data):
 
       | Country code | Country name    |
       | ------------ | --------------- |
@@ -347,8 +345,6 @@ entries:
       | `YT`         | Mayotte         |
 
       The EU country list was obtained from MaxMind's GeoIP2 database on 2023-12-05. For details on obtaining up-to-date country information, refer to the [MaxMind website](https://dev.maxmind.com/geoip/geolite2-free-geolocation-data).
-
-      </details>
 
       This field has the same value as the `ip.geoip.is_in_european_union` field, which is deprecated. The `ip.geoip.is_in_european_union` field is still available for new and existing rules, but you should use the `ip.src.is_in_european_union` field instead.
 
