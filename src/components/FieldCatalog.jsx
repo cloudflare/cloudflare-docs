@@ -11,7 +11,10 @@ const FieldCatalog = ({ fields }) => {
 		keywords: [],
 		// capabilities: [],
 	});
-	const mapped = fields; //fields.map((field) => ({
+	const mapped = fields.sort((f1, f2) => {
+		return f1.name < f2.name ? -1 : 1;
+	});
+	//fields.map((field) => ({
 	// 	field: {
 	// 		...field,
 	// 	},
@@ -19,9 +22,24 @@ const FieldCatalog = ({ fields }) => {
 	// }));
 
 	const categories = [
-		...new Set(fields.map((field) => field.categories).flat()),
+		...new Set(
+			fields
+				.map((field) => field.categories)
+				.flat()
+				.sort(),
+		),
 	];
-	const keywords = [...new Set(fields.map((field) => field.keywords).flat())];
+
+	// Not used in FieldCatalog
+	// const keywords = [
+	// 	...new Set(
+	// 		fields
+	// 			.map((field) => field.keywords)
+	// 			.flat()
+	// 			.sort(),
+	// 	),
+	// ];
+
 	// const capabilities = [
 	// 	...new Set(
 	// 		fields
