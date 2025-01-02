@@ -123,34 +123,6 @@ const starlightPageProps = {
 	}
 
 	{
-		field.name === "@cf/meta/llama-3.2-11b-vision-instruct" && (
-			<Aside>
-				<p>
-					To use Llama 3.2 11b Vision Instruct, you need to agree to the{" "}
-					<a href="https://github.com/meta-llama/llama-models/blob/main/models/llama3_2/LICENSE">
-						Meta License
-					</a>{" "}
-					and{" "}
-					<a href="https://github.com/meta-llama/llama-models/blob/main/models/llama3_2/USE_POLICY.md">
-						Acceptable Use Policy
-					</a>
-					. To do so, please send an initial request to
-					<code>@cf/meta/llama-3.2-11b-vision-instruct</code> with
-					<code>"prompt" : "agree"</code>. After that, you'll be able to use the
-					model as normal.
-				</p>
-				<Code
-					code={`curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/run/@cf/meta/llama-3.2-11b-vision-instruct \\
-   -X POST \\
-   -H "Authorization: Bearer $CLOUDFLARE_AUTH_TOKEN" \\
-   -d '{ "prompt": "agree"}'`}
-					lang="sh"
-				/>
-			</Aside>
-		)
-	}
-
-	{
 		field.example_value && (
 			<>
 				<p id="example-value">Example value:</p>
@@ -166,6 +138,39 @@ const starlightPageProps = {
 				<Code code={field.example_block} lang="txt" />
 			</>
 		)
+	}
+
+	{
+		field.name.startsWith("http.request.body") &&
+			!(field.name === "http.request.body.size") && (
+				<Aside type="caution">
+					<p>
+						All <code>http.request.body.*</code> fields (except{" "}
+						<a href="/ruleset-engine/rules-language/fields/reference/http.request.body.size/">
+							<code>http.request.body.size</code>
+						</a>
+						) handle a given maximum body size, which varies per plan. For
+						Enterprise customers, the maximum body size analyzed by Cloudflare
+						is 128 KB; for lower Cloudflare plans, the maximum size is lower.
+						You cannot define expressions that rely on request body data beyond
+						the maximum size set for your plan. If the request body is larger,
+						the body fields will contain a truncated value and the{" "}
+						<a href="/ruleset-engine/rules-language/fields/reference/http.request.body.truncated/">
+							<code>http.request.body.truncated</code>
+						</a>{" "}
+						field will be set to <code>true</code>. The{" "}
+						<a href="/ruleset-engine/rules-language/fields/reference/http.request.body.size/">
+							<code>http.request.body.size</code>
+						</a>{" "}
+						field will contain the full size of the request without any
+						truncation.
+					</p>
+					<p>
+						The maximum body size applies only to the values of HTTP body fields
+						— the origin server will still receive the complete request body.
+					</p>
+				</Aside>
+			)
 	}
 
 	<div class="!mt-8">
