@@ -26,7 +26,6 @@ If a domain is flagged by the CA, you need to contact Support before validation 
 If your customer has `CAA` records set on their domain, they will either need to add the following or remove `CAA` entirely:
 
 ```txt
-example.com. IN CAA 0 issue "digicert.com"
 example.com. IN CAA 0 issue "letsencrypt.org"
 example.com. IN CAA 0 issue "pki.goog"
 ```

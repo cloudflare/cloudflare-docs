@@ -100,11 +100,9 @@ To resolve this, add the necessary CAA records to allow Cloudflare to issue a ce
 
 ```
 example.com.            300     IN      CAA     0 issue "comodoca.com"
-example.com.            300     IN      CAA     0 issue "digicert.com; cansignhttpexchanges=yes"
 example.com.            300     IN      CAA     0 issue "letsencrypt.org"
 example.com.            300     IN      CAA     0 issue "pki.goog; cansignhttpexchanges=yes"
 example.com.            300     IN      CAA     0 issuewild "comodoca.com"
-example.com.            300     IN      CAA     0 issuewild "digicert.com; cansignhttpexchanges=yes"
 example.com.            300     IN      CAA     0 issuewild "letsencrypt.org"
 example.com.            300     IN      CAA     0 issuewild "pki.goog; cansignhttpexchanges=yes"
 ```
