@@ -52,11 +52,11 @@ If you're seeing a 403 response that contains Cloudflare branding in the respon
 * [DDoS Protection](/ddos-protection/), that is enabled by default on zones onboarded to Cloudflare, IP applications onboarded to Spectrum, and IP Prefixes onboarded to Magic Transit
 * Most [1xxx Cloudflare error codes](/support/troubleshooting/cloudflare-errors/troubleshooting-cloudflare-1xxx-errors/)
 * The [Browser Integrity Check](/waf/tools/browser-integrity-check/)
+* [Validation Checks](/waf/analytics/security-events/additional-information/)
 
-Cloudflare will also served blank 403 error pages in the following 2 cases. There errors are not logged as they occur early in Cloudflare's infrastructure before the configuration for domains has been loaded.
+Cloudflare will also serve an unstyled 403 error page in the following case. There errors are not logged as they occur early in Cloudflare's infrastructure before the configuration for domains has been loaded.
 
 * [SNI](https://www.cloudflare.com/learning/ssl/what-is-sni/) mismatch: an error 403 is returned if there is a mismatch caused by the client sending a different host to the SNI
-* [Validation Checks](/waf/analytics/security-events/additional-information/) 
 
 ## **404 Not Found ([RFC7231](https://tools.ietf.org/html/rfc7231))**
 
