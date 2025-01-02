@@ -76,7 +76,7 @@ entries:
     data_type: Integer
     categories: [Request]
     keywords: [request, timestamp, client, visitor]
-    summary: The millisecond when Cloudflare received the request, between 0 and 999.
+    summary: The millisecond when Cloudflare received the request, between 0–999.
     description: |-
       To obtain the complete timestamp, use both [`http.request.timestamp.sec`](/ruleset-engine/rules-language/fields/reference/http.request.timestamp.sec/) and [`http.request.timestamp.msec`](/ruleset-engine/rules-language/fields/reference/http.request.timestamp.msec/) fields.
     example_value: |-
@@ -453,7 +453,7 @@ entries:
     categories: [Request, Bots]
     keywords: [request, bots, client, visitor]
     plan_info_label: Enterprise add-on
-    summary: When `true`, this field indicates the request originated from a known good bot or crawler.
+    summary: Indicates whether the request originated from a known good bot or crawler.
     description: |-
       Provides the same information as [`cf.client.bot`](/ruleset-engine/rules-language/fields/reference/cf.client.bot/).
 
@@ -539,7 +539,7 @@ entries:
     data_type: Boolean
     categories: [Request, Bots]
     keywords: [request, bots, client, visitor]
-    summary: When `true`, this field indicates the request originated from a known good bot or crawler.
+    summary: Indicates whether the request originated from a known good bot or crawler.
     description: |-
       Provides the same information as [`cf.bot_management.verified_bot`](/ruleset-engine/rules-language/fields/reference/cf.bot_management.verified_bot/).
 
@@ -599,7 +599,7 @@ entries:
     data_type: Boolean
     categories: [Request]
     keywords: [request, ssl, tls, client, visitor]
-    summary: Returns `true` when a request presents a valid but revoked client certificate.
+    summary: Indicates whether the request presented a valid but revoked client certificate.
     description: |-
       When `true`, the [`cf.tls_client_auth.cert_verified`](/ruleset-engine/rules-language/fields/reference/cf.tls_client_auth.cert_verified/) field is also `true`.
 
@@ -812,10 +812,9 @@ entries:
         visitor,
       ]
     plan_info_label: Enterprise add-on
-    summary: When `true`, the request contains at least one content object.
+    summary: Indicates whether the request contains at least one content object.
     description: |-
-      Requires a Cloudflare Enterprise plan with [malicious uploads detection](/waf/detections/malicious-uploads/) enabled.
-
+      Requires a Cloudflare Enterprise plan with [malicious uploads detection](/waf/detections/malicious-uploads/).
   - name: cf.waf.content_scan.has_malicious_obj
     data_type: Boolean
     categories: [Request]
@@ -829,10 +828,9 @@ entries:
         visitor,
       ]
     plan_info_label: Enterprise add-on
-    summary: When `true`, the request contains at least one malicious content object.
+    summary: Indicates whether the request contains at least one malicious content object.
     description: |-
-      Requires a Cloudflare Enterprise plan with [malicious uploads detection](/waf/detections/malicious-uploads/) enabled.
-
+      Requires a Cloudflare Enterprise plan with [malicious uploads detection](/waf/detections/malicious-uploads/).
   - name: cf.waf.content_scan.num_malicious_obj
     data_type: Integer
     categories: [Request]
@@ -848,8 +846,7 @@ entries:
     plan_info_label: Enterprise add-on
     summary: The number of malicious content objects detected in the request (zero or greater).
     description: |-
-      Requires a Cloudflare Enterprise plan with [malicious uploads detection](/waf/detections/malicious-uploads/) enabled.
-
+      Requires a Cloudflare Enterprise plan with [malicious uploads detection](/waf/detections/malicious-uploads/).
   - name: cf.waf.content_scan.has_failed
     data_type: Boolean
     categories: [Request]
@@ -863,10 +860,9 @@ entries:
         visitor,
       ]
     plan_info_label: Enterprise add-on
-    summary: When `true`, the file scanner was unable to scan all the content objects detected in the request.
+    summary: Indicates whether the file scanner was unable to scan all the content objects detected in the request.
     description: |-
-      Requires a Cloudflare Enterprise plan with [malicious uploads detection](/waf/detections/malicious-uploads/) enabled.
-
+      Requires a Cloudflare Enterprise plan with [malicious uploads detection](/waf/detections/malicious-uploads/).
   - name: cf.waf.content_scan.num_obj
     data_type: Integer
     categories: [Request]
@@ -882,8 +878,7 @@ entries:
     plan_info_label: Enterprise add-on
     summary: The number of content objects detected in the request (zero or greater).
     description: |-
-      Requires a Cloudflare Enterprise plan with [malicious uploads detection](/waf/detections/malicious-uploads/) enabled.
-
+      Requires a Cloudflare Enterprise plan with [malicious uploads detection](/waf/detections/malicious-uploads/).
   - name: cf.waf.content_scan.obj_sizes
     data_type: Array<Integer>
     categories: [Request]
@@ -899,8 +894,7 @@ entries:
     plan_info_label: Enterprise add-on
     summary: An array of file sizes in bytes, in the order the content objects were detected in the request.
     description: |-
-      Requires a Cloudflare Enterprise plan with [malicious uploads detection](/waf/detections/malicious-uploads/) enabled.
-
+      Requires a Cloudflare Enterprise plan with [malicious uploads detection](/waf/detections/malicious-uploads/).
   - name: cf.waf.content_scan.obj_types
     data_type: Array<String>
     categories: [Request]
@@ -918,8 +912,7 @@ entries:
     description: |-
       If Cloudflare cannot determine the file type of a content object, the corresponding value in the `obj_types` array will be `application/octet-stream`.
 
-      Requires a Cloudflare Enterprise plan with [malicious uploads detection](/waf/detections/malicious-uploads/) enabled.
-
+      Requires a Cloudflare Enterprise plan with [malicious uploads detection](/waf/detections/malicious-uploads/).
   - name: cf.waf.content_scan.obj_results
     data_type: Array<String>
     categories: [Request]
@@ -937,13 +930,12 @@ entries:
     description: |-
       The possible values are: `clean`, `suspicious`, `infected`, and `not scanned`.
 
-      Requires a Cloudflare Enterprise plan with [malicious uploads detection](/waf/detections/malicious-uploads/) enabled.
-
+      Requires a Cloudflare Enterprise plan with [malicious uploads detection](/waf/detections/malicious-uploads/).
   - name: cf.waf.score
     data_type: Number
     categories: [Request]
     keywords: [request, cloudflare, attack score, waf score, client, visitor]
-    summary: A global score from `1` to `99` that combines the score of each WAF attack vector into a single score.
+    summary: A global score from 1–99 that combines the score of each WAF attack vector into a single score.
     description: |-
       This is the standard [WAF attack score](/waf/detections/attack-score/) to detect variants of attack patterns.
 
@@ -953,7 +945,7 @@ entries:
     data_type: Number
     categories: [Request]
     keywords: [request, cloudflare, attack score, waf score, client, visitor]
-    summary: An attack score from `1` to `99` classifying the SQL injection (SQLi) attack vector.
+    summary: An attack score from 1–99 classifying the SQL injection (SQLi) attack vector.
     description: |-
       Requires a Cloudflare Enterprise plan with [attack score detection](/waf/detections/attack-score/) enabled.
 
@@ -961,7 +953,7 @@ entries:
     data_type: Number
     categories: [Request]
     keywords: [request, cloudflare, attack score, waf score, client, visitor]
-    summary: An attack score from `1` to `99` classifying the cross-site scripting (XSS) attack vector.
+    summary: An attack score from 1–99 classifying the cross-site scripting (XSS) attack vector.
     description: |-
       Requires a Cloudflare Enterprise plan with [attack score detection](/waf/detections/attack-score/) enabled.
 
@@ -969,7 +961,7 @@ entries:
     data_type: Number
     categories: [Request]
     keywords: [request, cloudflare, attack score, waf score, client, visitor]
-    summary: An attack score from `1` to `99` classifying the command injection or Remote Code Execution (RCE) attack vector.
+    summary: An attack score from 1–99 classifying the command injection or Remote Code Execution (RCE) attack vector.
     description: |-
       Requires a Cloudflare Enterprise plan with [attack score detection](/waf/detections/attack-score/) enabled.
 
@@ -996,7 +988,7 @@ entries:
         visitor,
       ]
     plan_info_label: Enterprise
-    summary: When `true`, the Cloudflare WAF detected authentication credentials in the request.
+    summary: Indicates whether the Cloudflare WAF detected authentication credentials in the request.
     description: |-
       Requires a Cloudflare Enterprise plan. You must also enable [leaked credentials detection](/waf/detections/leaked-credentials/).
 
@@ -1012,7 +1004,7 @@ entries:
         client,
         visitor,
       ]
-    summary: When `true`, the password detected in the request was previously leaked.
+    summary: Indicates whether the password detected in the request was previously leaked.
     description: |-
       Only available when [leaked credentials detection](/waf/detections/leaked-credentials/) is enabled.
 
@@ -1029,7 +1021,7 @@ entries:
         visitor,
       ]
     plan_info_label: Enterprise
-    summary: When `true`, the username detected in the request was previously leaked.
+    summary: Indicates whether the username detected in the request was previously leaked.
     description: |-
       Requires a Cloudflare Enterprise plan. You must also enable [leaked credentials detection](/waf/detections/leaked-credentials/).
 
@@ -1040,13 +1032,14 @@ entries:
       [
         request,
         cloudflare,
+        authentication,
         leaked credentials,
         exposed credentials,
         client,
         visitor,
       ]
     plan_info_label: Pro
-    summary: When `true`, the authentication credentials detected in the request (username and password pair) were previously leaked.
+    summary: Indicates whether the auth credentials detected in the request (username-password pair) were previously leaked.
     description: |-
       Requires a Cloudflare Pro plan (or above). You must also enable [leaked credentials detection](/waf/detections/leaked-credentials/).
 
@@ -1063,7 +1056,7 @@ entries:
         visitor,
       ]
     plan_info_label: Enterprise
-    summary: When `true`, a similar version of the username and password credentials detected in the request were previously leaked.
+    summary: Indicates whether a similar version of the username and password credentials detected in the request were previously leaked.
     description: |-
       Requires a Cloudflare Enterprise plan. You must also enable [leaked credentials detection](/waf/detections/leaked-credentials/).
 
@@ -1080,7 +1073,7 @@ entries:
     categories: [Request, Bots]
     keywords: [request, bots, proxy, client, visitor]
     plan_info_label: Enterprise add-on
-    summary: When `true`, the incoming request comes from an identified Enterprise-only cloud-based corporate proxy or secure web gateway.
+    summary: Indicates whether the incoming request comes from an identified Enterprise-only cloud-based corporate proxy or secure web gateway.
     description: |-
       Requires a Cloudflare Enterprise plan with [Bot Management](/bots/plans/bm-subscription/) enabled.
     example_block: |-
@@ -1458,8 +1451,8 @@ entries:
 
       **Note**: In HTTP/2, the names of HTTP headers are always in lowercase. Recent versions of the `curl` tool [enable HTTP/2 by default](https://curl.se/docs/manpage.html#--http2) for HTTPS connections.
     example_value: |-
-      # Example 1: ["application/json"]
-      # Example 2: ["This header value is longer than 10 bytes"]
+      Example 1: ["application/json"]
+      Example 2: ["This header value is longer than 10 bytes"]
 
     example_block: |-
       # Example 1: Check for specific header value.
