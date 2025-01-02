@@ -1674,7 +1674,7 @@ entries:
 
       **Note**: This field is only available in [HTTP response header modifications](/rules/transform/response-header-modification/) and [Custom Error Responses](/rules/custom-error-responses/).
 
-  - name: TEST.request.body.multipart.content_transfer_encodings
+  - name: zTEST.request.body.multipart.content_transfer_encodings
     data_type: "Array<Array<String>>"
     categories: [Request, Body]
     keywords: [request, body, payload, form, multipart, upload, client, visitor]
