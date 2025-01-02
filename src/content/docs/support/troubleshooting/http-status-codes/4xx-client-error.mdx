@@ -56,7 +56,7 @@ If you're seeing a 403 response that contains Cloudflare branding in the respon
 
 Cloudflare will also serve an unstyled 403 error page in the following case. There errors are not logged as they occur early in Cloudflare's infrastructure before the configuration for domains has been loaded.
 
-* [SNI](https://www.cloudflare.com/learning/ssl/what-is-sni/) mismatch: an error 403 is returned if there is a mismatch caused by the client sending a different host to the SNI
+* [SNI](https://www.cloudflare.com/learning/ssl/what-is-sni/) mismatch: a 403 error is returned if there is a mismatch caused by the client sending a different host to the SNI
 
 ## **404 Not Found ([RFC7231](https://tools.ietf.org/html/rfc7231))**
 
