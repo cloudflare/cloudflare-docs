@@ -7,17 +7,10 @@ const FieldCatalog = ({ fields }) => {
 		search: "",
 		categories: [],
 		keywords: [],
-		// capabilities: [],
 	});
 	const mapped = fields.sort((f1, f2) => {
 		return f1.name < f2.name ? -1 : 1;
 	});
-	//fields.map((field) => ({
-	// 	field: {
-	// 		...field,
-	// 	},
-	// 	field_display_name: field.name,
-	// }));
 
 	const categories = [
 		...new Set(
@@ -28,36 +21,6 @@ const FieldCatalog = ({ fields }) => {
 		),
 	];
 
-	// Not used in FieldCatalog
-	// const keywords = [
-	// 	...new Set(
-	// 		fields
-	// 			.map((field) => field.keywords)
-	// 			.flat()
-	// 			.sort(),
-	// 	),
-	// ];
-
-	// const capabilities = [
-	// 	...new Set(
-	// 		fields
-	// 			.map((model) =>
-	// 				model.properties
-	// 					.flatMap(({ property_id, value }) => {
-	// 						if (property_id === "lora" && value === "true") {
-	// 							return "LoRA";
-	// 						}
-
-	// 						if (property_id === "function_calling" && value === "true") {
-	// 							return "Function calling";
-	// 						}
-	// 					})
-	// 					.filter((p) => Boolean(p)),
-	// 			)
-	// 			.flat(),
-	// 	),
-	// ];
-
 	// apply filters to the fields list
 	const fieldList = mapped.filter((field) => {
 		if (filters.categories.length > 0) {
@@ -65,18 +28,6 @@ const FieldCatalog = ({ fields }) => {
 				return false;
 			}
 		}
-
-		// if (filters.tasks.length > 0) {
-		// 	if (!filters.tasks.includes(field.task.name)) {
-		// 		return false;
-		// 	}
-		// }
-
-		// if (filters.capabilities.length > 0) {
-		// 	if (!field.capabilities.some((c) => filters.capabilities.includes(c))) {
-		// 		return false;
-		// 	}
-		// }
 
 		if (filters.search) {
 			// search keywords
@@ -166,9 +117,6 @@ const FieldCatalog = ({ fields }) => {
 									{field.name}
 								</span>
 							</div>
-							{/* <div className="text-xs !m-0">
-								<ModelInfo model={field.model} />
-							</div> */}
 							<p
 								className="!mt-2 line-clamp-2 text-sm leading-6"
 								dangerouslySetInnerHTML={{
