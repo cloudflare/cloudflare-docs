@@ -54,7 +54,7 @@ If you're seeing a 403 response that contains Cloudflare branding in the respon
 * The [Browser Integrity Check](/waf/tools/browser-integrity-check/)
 * [Validation Checks](/waf/analytics/security-events/additional-information/)
 
-Cloudflare will also serve an unstyled 403 error page in the following case. There errors are not logged as they occur early in Cloudflare's infrastructure before the configuration for domains has been loaded.
+Cloudflare will also serve an unstyled 403 error page in the following case. There errors are not logged, as they occur early in Cloudflare's infrastructure, before the configuration for domains has been loaded.
 
 * [SNI](https://www.cloudflare.com/learning/ssl/what-is-sni/) mismatch: a 403 error is returned if there is a mismatch caused by the client sending a different host to the SNI
 
