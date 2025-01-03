@@ -27,7 +27,7 @@ By default, mTLS uses Client Certificates issued by a Cloudflare Managed CA. Clo
 
 To generate and use your own CSR, you can run a command like the following:
 
-```txt
+```sh
 openssl req -new -newkey rsa:2048 -nodes -keyout client1.key -out client1.csr -subj '/C=GB/ST=London/L=London/O=Organization/CN=CommonName'
 ```
 
