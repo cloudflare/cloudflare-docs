@@ -10,7 +10,6 @@ export const fieldsSchema = z.object({
 			summary: z.string(),
 			description: z.string().optional(),
 			plan_info_label: z.string().optional(),
-			plan_info_description: z.string().optional(),
 			example_value: z.string().optional(),
 			example_block: z.string().optional(),
 		})

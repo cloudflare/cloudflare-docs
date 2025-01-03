@@ -1826,18 +1826,3 @@ entries:
       You can use this field to customize the response for a specific type of error (for example, all 1XXX errors or all WAF block actions).
 
       **Note**: This field is only available in [HTTP response header modifications](/rules/transform/response-header-modification/) and [Custom Error Responses](/rules/custom-error-responses/).
-
-  - name: zTEST.request.body.multipart.content_transfer_encodings
-    data_type: "Array<Array<String>>"
-    categories: [Request, Body]
-    keywords: [request, body, payload, form, multipart, upload, client, visitor]
-    summary: One liner here.
-    description: |-
-      This is a longer description, possibly using [Markdown](/).
-    plan_info_label: ENT
-    plan_info_description: Enterprise plan
-    example_value: |-
-      "asdfasdfuhaoweuqhre must keep quotes!"
-    example_block: |-
-      func(a, b)    # correct
-      a func b      # incorrect
