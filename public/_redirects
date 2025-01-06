@@ -308,6 +308,12 @@
 /d1/reference/database-commands/ /d1/reference/sql-statements/ 301
 /d1/reference/sql-statements/ /d1/sql-api/sql-statements/ 301
 
+# Data Localization Suite
+/data-localization/key-management/ /data-localization/key-management/geo-key-manager/ 301
+/data-localization/key-management/geo-key-manager/ /data-localization/geo-key-manager/ 301
+/data-localization/key-management/keyless-ssl/ /ssl/keyless-ssl/ 301
+
+
 # data loss prevention (dlp)
 /cloudflare-one/policies/data-loss-prevention/integration-profiles/ /cloudflare-one/policies/data-loss-prevention/dlp-profiles/integration-profiles/ 301
 /cloudflare-one/policies/data-loss-prevention/dlp-logs/ /cloudflare-one/policies/data-loss-prevention/dlp-policies/ 301
