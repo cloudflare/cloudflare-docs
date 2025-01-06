@@ -1,14 +1,14 @@
+name: Publish
 on:
   push:
     branches:
       - production
 
 jobs:
-  publish:
+  Production:
     runs-on: ubuntu-22.04
     permissions:
       contents: read
-    name: Publish Production
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
