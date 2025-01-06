@@ -23,22 +23,15 @@ To allow users to connect through a captive portal, administrators can configure
 
 ## How captive portal detection works
 
-If WARP cannot establish a connection to Cloudflare, it will send a series of requests to the [Cloudflare captive portal URLs](/cloudflare-one/connections/connect-devices/warp/deployment/firewall/#captive-portal) and other OS and browser-specific captive portal URLs. These requests are sent outside of the WARP tunnel.
+If WARP cannot establish a connection to Cloudflare, it will:
 
-If the HTTPS request is intercepted, WARP assumes the network is behind a captive portal and fully opens the [system firewall](/cloudflare-one/connections/connect-devices/warp/configure-warp/route-traffic/warp-architecture/#ip-traffic). While the firewall is open, all device traffic will bypass WARP. The firewall is automatically re-enabled after the user successfully connects to the portal or after the timeout period expires.
+1. Start the captive portal timer.
 
-```mermaid
-flowchart TB
-accTitle: Captive portal detection
+2. Send a series of requests to the [Cloudflare captive portal URLs](/cloudflare-one/connections/connect-devices/warp/deployment/firewall/#captive-portal) and other OS and browser-specific captive portal URLs. These requests are sent outside of the WARP tunnel.
 
-start[Unable to connect to Cloudflare] --> timerstart(Start captive portal timer)
-timerstart-->dns[Send DNS request to captive portal URLs] -- Succeed --> https[Send HTTPS request]-- Fail --> http[Send HTTP request] -- Succeed --> detected{Captive portal detected}-->open[Turn off firewall]
-open--Captive portal timeout expires--> close[Re-enable firewall]
-open--User logs in to captive portal--> close[Re-enable firewall]
-dns -- Fail --> error[CF_NO_NETWORK error]
-http -- Fail --> error
-https -- Succeed --> noportal{No captive portal}--> retry[Retry connection to Cloudflare]
-```
+3. If a request is intercepted, WARP assumes the network is behind a captive portal and fully opens the [system firewall](/cloudflare-one/connections/connect-devices/warp/configure-warp/route-traffic/warp-architecture/#ip-traffic). While the firewall is open, all device traffic will bypass WARP.
+
+4. Re-enable the firewall after the user successfully connects to the portal or after the timeout period expires.
 
 ## Limitations
 
