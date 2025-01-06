@@ -14,7 +14,7 @@ For up-to-date information, refer to the [Cloudflare China Network](https://www.
 
 Cloudflare publishes a list of IP addresses for JD Cloud data centers, used by Cloudflare when connecting to the origin networks of customers to retrieve assets. These addresses are not the same IP addresses returned to website visitors as part of DNS resolution.
 
-You can obtain the list of JD Cloud data center IP addresses via Cloudflare API. Use the [Cloudflare/JD Cloud IP Details](/api/operations/cloudflare-i-ps-cloudflare-ip-details) operation with the `networks=jdcloud` query string parameter:
+You can obtain the list of JD Cloud data center IP addresses via Cloudflare API. Use the [Cloudflare/JD Cloud IP Details](/api/resources/ips/methods/list/) operation with the `networks=jdcloud` query string parameter:
 
 ```sh title="Example request"
 $ curl https://api.cloudflare.com/client/v4/ips?networks=jdcloud

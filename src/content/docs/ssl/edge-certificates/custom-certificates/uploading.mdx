@@ -139,7 +139,7 @@ Custom certificates of the type `legacy_custom` are not compatible with [BYOIP](
 
 2. Upload your certificate and key
 
-Use the [POST](/api/operations/custom-ssl-for-a-zone-create-ssl-configuration) endpoint to upload your certificate and key.
+Use the [POST](/api/resources/custom_certificates/methods/create/) endpoint to upload your certificate and key.
 
 ```bash
 curl https://api.cloudflare.com/client/v4/zones/{zone_id}/custom_certificates \
@@ -180,7 +180,7 @@ To update a certificate in the dashboard:
 
 </TabItem> <TabItem label="API">
 
-To update a certificate using the API, send a [`PATCH`](/api/operations/custom-ssl-for-a-zone-edit-ssl-configuration) command.
+To update a certificate using the API, send a [`PATCH`](/api/resources/custom_certificates/methods/edit/) command.
 
 </TabItem> </Tabs>
 

@@ -6,16 +6,25 @@ sidebar:
 head:
   - tag: title
     content: Tunnel metrics
-tableOfContents: false
 ---
 
-Tunnel metrics show a Cloudflare Tunnel's throughput and resource usage over time. When you run a tunnel, you can configure `cloudflared` to spin up a Prometheus metrics endpoint — an HTTP server that exposes metrics in [Prometheus](https://prometheus.io/docs/introduction/overview/) format. You can then use the Prometheus toolkit on a remote machine to scrape metrics data from the `cloudflared` server.
+Tunnel metrics show a Cloudflare Tunnel's throughput and resource usage over time. When you run a tunnel, `cloudflared` will spin up a Prometheus metrics endpoint — an HTTP server that exposes metrics in [Prometheus](https://prometheus.io/docs/introduction/overview/) format. You can use the Prometheus toolkit on a remote machine to scrape metrics data from the `cloudflared` server.
 
-## Start the metrics server
+## Default metrics server address
 
-Perform these steps on the `cloudflared` server.
+In non-containerized environments, `cloudflared` starts the metrics server on `127.0.0.1:<PORT>/metrics`, where `<PORT>` is the first available port in the range `20241` to `20245`. In case of all ports being unavailable then the fallback is to bind to a random port. In containerized environments such as Docker and Kubernetes, the default address is `0.0.0.0:<PORT>/metrics`.
 
-1. Use the [--metrics](/cloudflare-one/connections/connect-networks/configure-tunnels/tunnel-run-parameters/#metrics) flag to create a metrics endpoint at the specified IP address and port. Here is an example command for a locally-managed tunnel:
+To determine the default port being used by a `cloudflared` instance, you can check your [Tunnel logs](/cloudflare-one/connections/connect-networks/monitor-tunnels/logs/) around the time when the tunnel started. For example:
+
+```text
+2024-12-19T21:17:58Z INF Starting metrics server on 127.0.0.1:20241/metrics
+```
+
+## Configure the metrics server address
+
+To serve metrics on a custom IP address and port, perform these steps on the `cloudflared` host:
+
+1. Run the tunnel using the [--metrics](/cloudflare-one/connections/connect-networks/configure-tunnels/tunnel-run-parameters/#metrics) flag. Here is an example command for a locally-managed tunnel:
 
    ```sh
    cloudflared tunnel --metrics 127.0.0.1:60123 run my-tunnel
@@ -23,10 +32,9 @@ Perform these steps on the `cloudflared` server.
 
    To learn how to add the `--metrics` flag to a remotely-managed tunnel, refer to [Configure a remotely-managed tunnel](/cloudflare-one/connections/connect-networks/configure-tunnels/remote-management/#add-tunnel-run-parameters).
 
-:::note
-
-If you plan to fetch metrics from another machine on the local network, replace `127.0.0.1` with the internal IP of the `cloudflared` server (for example, `198.168.x.x`). To serve metrics on all available network interfaces, use `0.0.0.0`.
-:::
+		:::note
+		If you plan to fetch metrics from another machine on the local network, replace `127.0.0.1` with the internal IP of the `cloudflared` server (for example, `198.168.x.x`). To serve metrics on all available network interfaces, use `0.0.0.0`.
+		:::
 
 2. Verify that the metrics server is running by going to `http://localhost:60123/metrics`. This will only work if you configured a localhost IP (`127.0.0.1` or `0.0.0.0`).
 

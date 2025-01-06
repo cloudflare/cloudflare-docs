@@ -4,13 +4,12 @@ title: Custom device posture integration
 sidebar:
   label: Custom integration
   order: 1
-  hidden: true
 
 ---
 
 import { Render } from "~/components"
 
-Cloudflare Zero Trust allows you to enforce custom device posture checks on your applications. This involves configuring a WARP service-to-service integration that periodially calls the external API of your choice, whether it is a third-party endpoint provider or a home built solution. When called, the API will receive device identifying information from Cloudflare and be expected to return a value between `0` to `100`. You can then set up a device posture check that determines if the returned value counts as a pass or fail; for example, you could allow access to a user only if their device has a posture value greater than `60`.
+Cloudflare Zero Trust allows you to enforce custom device posture checks on your applications. This involves configuring a WARP service-to-service integration that periodically calls the external API of your choice, whether it is a third-party endpoint provider or a home built solution. When called, the API will receive device identifying information from Cloudflare and be expected to return a value between `0` to `100`. You can then set up a device posture check that determines if the returned value counts as a pass or fail; for example, you could allow access to a user only if their device has a posture value greater than `60`.
 
 ```mermaid
 sequenceDiagram

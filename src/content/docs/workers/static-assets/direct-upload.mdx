@@ -44,7 +44,7 @@ The asset upload flow can be distilled into three distinct phases:
 
 The asset manifest is a ledger which keeps track of files we want to use in our Worker. This manifest is used to track assets associated with each Worker version, and eliminate the need to upload unchanged files prior to a new upload.
 
-The [manifest upload request](/api/operations/worker-script-update-create-assets-upload-session) describes each file which we intend to upload. Each file is its own key representing the file path and name, and is an object which contains metadata about the file.
+The [manifest upload request](/api/resources/workers/subresources/scripts/subresources/assets/subresources/upload/methods/create/) describes each file which we intend to upload. Each file is its own key representing the file path and name, and is an object which contains metadata about the file.
 
 `hash` represents a 32 hexadecimal character hash of the file, while `size` is the size (in bytes) of the file.
 
@@ -102,7 +102,7 @@ If all assets have been previously uploaded, `buckets` will be empty, and `jwt` 
 
 ## Upload Static Assets
 
-The [file upload API](/api/operations/worker-assets-upload) requires files be uploaded using `multipart/form-data`. The contents of each file must be base64 encoded, and the `base64` query parameter in the URL must be set to `true`.
+The [file upload API](/api/resources/workers/subresources/assets/subresources/upload/methods/create/) requires files be uploaded using `multipart/form-data`. The contents of each file must be base64 encoded, and the `base64` query parameter in the URL must be set to `true`.
 
 The `Authorization` header must be provided as a bearer token, using the JWT (upload token) from the aforementioned manifest upload call.
 
@@ -110,7 +110,7 @@ Once every file in the manifest has been uploaded, a status code of 201 will be 
 
 ## Create/Deploy New Version
 
-[Script](/api/operations/worker-script-upload-worker-module) and [version](/api/operations/worker-versions-upload-version) upload endpoints require specifying a metadata part in the form data. Here, we can provide the completion token from the previous (upload assets) step.
+[Script](/api/resources/workers/subresources/scripts/methods/update/) and [version](/api/resources/workers/subresources/scripts/subresources/versions/methods/create/) upload endpoints require specifying a metadata part in the form data. Here, we can provide the completion token from the previous (upload assets) step.
 
 ```bash title="Example Worker Metadata Specifying Completion Token"
 {

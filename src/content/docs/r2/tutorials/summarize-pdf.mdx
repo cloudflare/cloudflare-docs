@@ -218,7 +218,7 @@ To view the front-end of your application, run the following command and navigat
 npm run dev
 ```
 
-```output
+```txt output
  ⛅️ wrangler 3.80.2
 -------------------
 
@@ -238,8 +238,6 @@ When you open the URL in your browser, you will see that there is a file upload 
 ## 3. Handle file upload
 
 To handle the file upload, you will first need to add the R2 binding. In the `wrangler.toml` file, add the following code:
-
-
 
 <WranglerConfig>
 
@@ -308,8 +306,6 @@ npx wrangler queues create pdf-summarizer
 ```
 
 Add the binding to the `wrangler.toml` file:
-
-
 
 <WranglerConfig>
 
@@ -392,8 +388,6 @@ The above code does the following:
 ## 7. Use Workers AI to summarize the content
 
 To use Workers AI, you will need to add the Workers AI binding to the `wrangler.toml` file. The `wrangler.toml` file should contain the following code:
-
-
 
 <WranglerConfig>
 

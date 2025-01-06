@@ -157,11 +157,9 @@ To resolve this, you will need to add the following CAA records which allows all
 
 ```
 example.com.            300     IN      CAA     0 issue "comodoca.com"
-example.com.            300     IN      CAA     0 issue "digicert.com; cansignhttpexchanges=yes"
 example.com.            300     IN      CAA     0 issue "letsencrypt.org"
 example.com.            300     IN      CAA     0 issue "pki.goog; cansignhttpexchanges=yes"
 example.com.            300     IN      CAA     0 issuewild "comodoca.com"
-example.com.            300     IN      CAA     0 issuewild "digicert.com; cansignhttpexchanges=yes"
 example.com.            300     IN      CAA     0 issuewild "letsencrypt.org"
 example.com.            300     IN      CAA     0 issuewild "pki.goog; cansignhttpexchanges=yes"
 ```

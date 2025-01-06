@@ -26,7 +26,7 @@ entries:
   - publish_date: "2024-06-17"
     title: HTTP API now returns a HTTP 429 error for overloaded D1 databases
     description: |-
-      Previously, D1's [HTTP API](/api/operations/cloudflare-d1-query-database) returned a HTTP `500 Internal Server` error for queries that came in while a D1 database was overloaded. These requests now correctly return a `HTTP 429 Too Many Requests` error.
+      Previously, D1's [HTTP API](/api/resources/d1/subresources/database/methods/query/) returned a HTTP `500 Internal Server` error for queries that came in while a D1 database was overloaded. These requests now correctly return a `HTTP 429 Too Many Requests` error.
 
       D1's [Workers API](/d1/worker-api/) is unaffected by this change.
 
@@ -40,7 +40,7 @@ entries:
   - publish_date: "2024-04-12"
     title: HTTP API now returns a HTTP 400 error for invalid queries
     description: |-
-      Previously, D1's [HTTP API](/api/operations/cloudflare-d1-query-database) returned a HTTP `500 Internal Server` error for an invalid query. An invalid SQL query now correctly returns a `HTTP 400 Bad Request` error.
+      Previously, D1's [HTTP API](/api/resources/d1/subresources/database/methods/query/) returned a HTTP `500 Internal Server` error for an invalid query. An invalid SQL query now correctly returns a `HTTP 400 Bad Request` error.
 
       D1's [Workers API](/d1/worker-api/) is unaffected by this change.
 

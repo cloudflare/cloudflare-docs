@@ -83,9 +83,9 @@ To replace these settings you will need to configure the Cloudflare OWASP Core R
 
 ### Configurations that will prevent you from updating
 
-If a zone has [URI-based WAF overrides](/api/operations/waf-overrides-list-waf-overrides) (only available via API), you will not have the option to migrate to WAF Managed Rules. To update to WAF Managed Rules you must:
+If a zone has [URI-based WAF overrides](/api/resources/firewall/subresources/waf/subresources/overrides/methods/list/) (only available via API), you will not have the option to migrate to WAF Managed Rules. To update to WAF Managed Rules you must:
 
-1. Delete any existing URI-based WAF overrides using the [Delete a WAF override](/api/operations/waf-overrides-delete-a-waf-override) operation.
+1. Delete any existing URI-based WAF overrides using the [Delete a WAF override](/api/resources/firewall/subresources/waf/subresources/overrides/methods/delete/) operation.
 2. Follow the update process described below.
 
 ### Cloudflare dashboard changes
@@ -102,9 +102,9 @@ For more information about configuring WAF Managed Rules in the dashboard, refer
 
 Once the migration is complete, the APIs for interacting with WAF managed rules **will stop working**. These APIs are the following:
 
-- [WAF packages](/api/operations/waf-packages-list-waf-packages)
-- [WAF rule groups](/api/operations/waf-rule-groups-list-waf-rule-groups)
-- [WAF rules](/api/operations/waf-rules-list-waf-rules)
+- [WAF packages](/api/resources/firewall/subresources/waf/subresources/packages/methods/list/)
+- [WAF rule groups](/api/resources/firewall/subresources/waf/subresources/packages/subresources/groups/methods/list/)
+- [WAF rules](/api/resources/firewall/subresources/waf/subresources/packages/subresources/rules/methods/list/)
 
 :::caution
 If you have any integrations using the WAF managed rules APIs stated above, you must update them before migrating to the new WAF Managed Rules.
@@ -140,7 +140,7 @@ In phase 2 all zones are eligible for migration. The exact migration procedure v
 
 - **Enterprise** customers can enable the new WAF Managed Rules configuration while keeping the previous version of WAF managed rules enabled, allowing them to check the impact of the new WAF configuration. After reviewing the behavior of the new configuration and making any required adjustments to specific managed rules, Enterprise users can then finish the migration, which will disable the previous version of WAF managed rules.
 
-**Note:** Zones that have [URI-based WAF overrides](/api/operations/waf-overrides-list-waf-overrides), which you could only manage via API, will not be able to migrate immediately to the new WAF Managed Rules. You must delete these overrides before migrating.
+**Note:** Zones that have [URI-based WAF overrides](/api/resources/firewall/subresources/waf/subresources/overrides/methods/list/), which you could only manage via API, will not be able to migrate immediately to the new WAF Managed Rules. You must delete these overrides before migrating.
 
 ### Phase 1 (since 2022-05-04)
 
@@ -157,7 +157,7 @@ In phase 1 the migration became available to a subset of eligible zones, which h
   - Page Rules configured with _Disable Security_.
   - Page Rules configured with _Web Application Firewall: Off_ or _Web Application Firewall: On._
 
-- The zone has no [URI-based WAF overrides](/api/operations/waf-overrides-list-waf-overrides) (only available via API).
+- The zone has no [URI-based WAF overrides](/api/resources/firewall/subresources/waf/subresources/overrides/methods/list/) (only available via API).
 
 ---
 
@@ -276,7 +276,7 @@ The returned configuration in the example above, which would match the existing 
 - A rule that executes the Cloudflare Managed Ruleset (ruleset ID efb7b8c949ac4650a09736fc376e9aee).
 - A single override for the rule `Apache Struts - Open Redirect - CVE:CVE-2013-2248` (rule ID 23ee7cebe6e8443e99ecf932ab579455) in the same ruleset, setting the action to `log` and disabling the rule.
 
-3. (Optional, for Enterprise customers only) If you are migrating an Enterprise zone to WAF Managed Rules, you can enter validation mode before finishing the migration. In this mode, both WAF implementations will be enabled. Use the [Update a zone entry point ruleset](/api/operations/updateZoneEntrypointRuleset) operation, making sure you include the `waf_migration=validation&phase_two=1` query string parameters:
+3. (Optional, for Enterprise customers only) If you are migrating an Enterprise zone to WAF Managed Rules, you can enter validation mode before finishing the migration. In this mode, both WAF implementations will be enabled. Use the [Update a zone entry point ruleset](/api/resources/rulesets/subresources/phases/methods/update/) operation, making sure you include the `waf_migration=validation&phase_two=1` query string parameters:
 
    ```bash
    curl --request PUT \

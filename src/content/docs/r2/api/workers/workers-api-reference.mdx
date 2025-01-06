@@ -87,6 +87,7 @@ export default {
 
   - Deletes the given <code>values</code> and metadata under the associated <code>keys</code>. Once the delete succeeds, returns <code>void</code>.
   - R2 deletes are strongly consistent. Once the Promise resolves, all subsequent read operations will no longer see the provided key value pairs globally.
+  - Up to 1000 keys may be deleted per call.
 
 - `list` <Type text="(options?: R2ListOptions): Promise<R2Objects>" />
 

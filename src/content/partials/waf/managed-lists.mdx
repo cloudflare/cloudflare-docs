@@ -6,12 +6,8 @@
 | ----------------------------------------------- | ------------------- | ----------------------------------------------------------------------------------------------------------------------------------- |
 | Cloudflare Open Proxies                         | `cf.open_proxies`   | IP addresses of known open HTTP and SOCKS proxy endpoints, which are frequently used to launch attacks and hide attackers identity. |
 | Cloudflare Anonymizers                          | `cf.anonymizer`     | IP addresses of known anonymizers (Open SOCKS Proxies, VPNs, and TOR nodes).                                                        |
-| Cloudflare VPNs                                 | `cf.vpn`            | IP addresses of known VPN servers.<br/>Refer to [Important remarks about the Cloudflare VPNs Managed List](#vpn-important-remarks). |
+| Cloudflare VPNs                                 | `cf.vpn`            | IP addresses of known VPN servers. |
 | Cloudflare Malware                              | `cf.malware`        | IP addresses of known sources of malware.                                                                                           |
 | Cloudflare Botnets, Command and Control Servers | `cf.botnetcc`       | IP addresses of known botnet command-and-control servers.                                                                           |
 
 <br />
-
-:::caution[<a id="vpn-important-remarks"></a>Important remarks about the Cloudflare VPNs Managed List]
-Cloudflare primarily detects VPN traffic that passes through our public resolver at 1.1.1.1. Additionally, Cloudflare can identify major VPNs based on their published IP addresses. Managed Lists for VPNs allow you to block these categories of detected VPNs. However, it is important to clarify that Cloudflare does not detect and block all VPNs at this time. Cloudflare is continually working to improve our detection capabilities and expand our coverage to include a wider range of VPN services.
-:::

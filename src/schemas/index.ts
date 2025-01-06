@@ -1,5 +1,6 @@
 export * from "./apps";
 export * from "./base";
+export * from "./changelogs-next";
 export * from "./changelogs";
 export * from "./compatibility-flags";
 export * from "./glossary";

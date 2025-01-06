@@ -6,21 +6,20 @@ sidebar:
 head:
   - tag: title
     content: Configure WAF custom rules with Terraform
-
 ---
 
-import { Render } from "~/components"
+import { Render } from "~/components";
 
 This page provides examples of creating WAF custom rules in a zone or account using Terraform. The examples cover the following scenarios:
 
-* Zone-level configurations:
+- Zone-level configurations:
 
-  * [Add a custom rule to a zone](#add-a-custom-rule-to-a-zone)
+  - [Add a custom rule to a zone](#add-a-custom-rule-to-a-zone)
 
-* Account-level configurations:
+- Account-level configurations:
 
-  * [Create and deploy a custom ruleset](#create-and-deploy-a-custom-ruleset)
-  * [Add a custom rule checking for exposed credentials](#add-a-custom-rule-checking-for-exposed-credentials)
+  - [Create and deploy a custom ruleset](#create-and-deploy-a-custom-ruleset)
+  - [Add a custom rule checking for exposed credentials](#add-a-custom-rule-checking-for-exposed-credentials)
 
 For more information on custom rules, refer to [Custom rules](/waf/custom-rules/) in the Cloudflare WAF documentation.
 
@@ -34,7 +33,7 @@ For more information on custom rules, refer to [Custom rules](/waf/custom-rules/
 
 <Render file="import-delete-existing-rulesets" />
 
-***
+---
 
 ## Zone-level configurations
 
@@ -51,15 +50,15 @@ resource "cloudflare_ruleset" "zone_custom_firewall" {
   phase       = "http_request_firewall_custom"
 
   rules {
-    action = "block"
-    expression = "(not cf.edge.server_port in {80 443})"
+    ref         = "block_non_default_ports"
     description = "Block ports other than 80 and 443"
-    enabled = true
+    expression  = "(not cf.edge.server_port in {80 443})"
+    action      = "block"
   }
 }
 ```
 
-<Render file="add-new-rule" params={{ one: "custom rule" }} /> <br/>
+<Render file="add-new-rule" params={{ one: "custom rule" }} /> <br />
 
 ## Account-level configurations
 
@@ -69,7 +68,7 @@ The following example creates a [custom ruleset](/ruleset-engine/custom-rulesets
 
 :::caution
 
-You can only create and deploy custom rulesets at the account level. 
+You can only create and deploy custom rulesets at the account level.
 :::
 
 The following configuration creates the custom ruleset with a single rule:
@@ -83,15 +82,18 @@ resource "cloudflare_ruleset" "account_firewall_custom_ruleset" {
   phase       = "http_request_firewall_custom"
 
   rules {
-    action = "block"
-    expression = "(not cf.edge.server_port in {80 443})"
+    ref         = "block_non_default_ports"
     description = "Block ports other than 80 and 443"
-    enabled = true
+    expression  = "(not cf.edge.server_port in {80 443})"
+    action      = "block"
   }
 }
 ```
 
-<Render file="add-new-rule" params={{ one: "custom rule in the custom ruleset" }} /> <br/>
+<Render
+	file="add-new-rule"
+	params={{ one: "custom rule in the custom ruleset" }}
+/> <br />
 
 The following configuration deploys the custom ruleset at the account level. It defines a dependency on the `account_firewall_custom_ruleset` resource and uses the ID of the created custom ruleset in `action_parameters`:
 
@@ -106,13 +108,13 @@ resource "cloudflare_ruleset" "account_firewall_custom_entrypoint" {
   depends_on = [cloudflare_ruleset.account_firewall_custom_ruleset]
 
   rules {
-    action = "execute"
+    ref         = "deploy_custom_ruleset_example_com"
+    description = "Deploy custom ruleset for example.com"
+    expression  = "(cf.zone.name eq \"example.com\")"
+    action      = "execute"
     action_parameters {
       id = cloudflare_ruleset.account_firewall_custom_ruleset.id
     }
-    expression = "(cf.zone.name eq \"example.com\")"
-    description = "Deploy custom ruleset for example.com"
-    enabled = true
   }
 }
 ```
@@ -125,7 +127,7 @@ The following configuration creates a custom ruleset with a single rule that [ch
 
 :::caution
 
-You can only add exposed credential checks to rules in a custom ruleset (that is, a ruleset with `kind = "custom"`). 
+You can only add exposed credential checks to rules in a custom ruleset (that is, a ruleset with `kind = "custom"`).
 :::
 
 ```tf
@@ -137,26 +139,26 @@ resource "cloudflare_ruleset" "account_firewall_custom_ruleset_exposed_creds" {
   phase       = "http_request_firewall_custom"
 
   rules {
-    action = "rewrite"
+    ref         = "check_for_exposed_creds_add_header"
+    description = "Add header when there is a rule match and exposed credentials are detected"
+    expression  = "http.request.method == \"POST\" && http.request.uri == \"/login.php\""
+    action      = "rewrite"
     action_parameters {
       headers {
-        name = "Exposed-Credential-Check"
+        name      = "Exposed-Credential-Check"
         operation = "set"
-        value = "1"
+        value     = "1"
       }
     }
     exposed_credential_check {
       username_expression = "url_decode(http.request.body.form[\"username\"][0])"
       password_expression = "url_decode(http.request.body.form[\"password\"][0])"
     }
-    expression = "http.request.method == \"POST\" && http.request.uri == \"/login.php\""
-    description = "Add header when there is a rule match and exposed credentials are detected"
-    enabled = true
   }
 }
 ```
 
-<Render file="add-new-rule" params={{ one: "rule" }} /> <br/>
+<Render file="add-new-rule" params={{ one: "rule" }} /> <br />
 
 The following configuration deploys the custom ruleset. It defines a dependency on the `account_firewall_custom_ruleset_exposed_creds` resource and obtains the ID of the created custom ruleset:
 
@@ -171,13 +173,13 @@ resource "cloudflare_ruleset" "account_firewall_custom_entrypoint" {
   depends_on = [cloudflare_ruleset.account_firewall_custom_ruleset_exposed_creds]
 
   rules {
-    action = "execute"
+    ref         = "deploy_custom_ruleset_example_com"
+    description = "Deploy custom ruleset for example.com"
+    expression  = "(cf.zone.name eq \"example.com\")"
+    action      = "execute"
     action_parameters {
       id = cloudflare_ruleset.account_firewall_custom_ruleset_exposed_creds.id
     }
-    expression = "(cf.zone.name eq \"example.com\")"
-    description = "Deploy custom ruleset for example.com"
-    enabled = true
   }
 }
 ```
