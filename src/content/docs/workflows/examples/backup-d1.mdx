@@ -21,7 +21,13 @@ In this example, we implement a Workflow periodically triggered by a [Cron Trigg
 
 When the Workflow is triggered, it fetches the REST API to initiate an export job for a specific database. Then it fetches the same endpoint to check if the backup job is ready and the SQL dump is available to download.
 
-As shown in this example, Workflows handles both the responses and failures, so the developer does not have to. Workflows retries the API calls until it gets a successful response, retries fetching the backup from the URL provided, and then retries saving the file to [R2](/r2). The workflow can run until the backup file is ready, handling all of the possible conditions until it is completed.
+As shown in this example, Workflows handles both the responses and failures, thereby removing the burden from the developer. Workflows retries the following steps:
+
+- API calls until it gets a successful response
+- Fetching the backup from the URL provided
+- Saving the file to [R2](/r2)
+
+The Workflow can run until the backup file is ready, handling all of the possible conditions until it is completed.
 
 This example provides simplified steps for backing up a [D1](/d1) database to help you understand the possibilities of Workflows. In every step, it uses the [default](/workflows/build/sleeping-and-retrying) sleeping and retrying configuration. In a real-world scenario, more steps and additional logic would likely be needed.
 
