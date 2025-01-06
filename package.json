@@ -50,7 +50,7 @@
 		"astro": "^4.16.18",
 		"astro-breadcrumbs": "^3.3.1",
 		"astro-icon": "^1.1.2",
-		"astro-live-code": "^0.0.4",
+		"astro-live-code": "^0.0.5",
 		"date-fns": "^4.1.0",
 		"dedent": "^1.5.3",
 		"detype": "1.0.12",
