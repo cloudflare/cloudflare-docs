@@ -8,18 +8,25 @@ date: 2025-01-02T11:00:00Z
 
 AI Gateway now supports **DeepSeek**, bringing the total number of AI providers available to **16**—giving you more options than ever for observing your AI workloads through AI Gateway. With AI Gateway, you can track **analytics**, store **logs**, and monitor **token usage** to optimize your AI applications.
 
+![AI Gateway adds DeepSeek as a provider](~/assets/images/ai-gateway/deepseek.png)
+
 To get started, simply update the base URL of your DeepSeek API calls to pass through AI Gateway. For detailed setup instructions, see our [DeepSeek provider documentation](/ai-gateway/providers/deepseek/).
 
 ### Example
 
-```bash
-curl -X POST https://<your-ai-gateway-url>/deepseek/v1/inference \
--H "Authorization: Bearer <your-deepseek-token>" \
--H "Content-Type: application/json" \
--d '{
-  "prompt": "What is the capital of France?",
-  "options": {
-    "model": "ds-large",
-    "temperature": 0.7
-  }
+### cURL
+
+```bash title="Example fetch request"
+curl https://gateway.ai.cloudflare.com/v1/{account_id}/{gateway_id}/deepseek/chat/completions \
+ --header 'content-type: application/json' \
+ --header 'Authorization: Bearer DEEPSEEK_TOKEN' \
+ --data '{
+    "model": "deepseek-chat",
+    "messages": [
+        {
+            "role": "user",
+            "content": "What is Cloudflare?"
+        }
+    ]
 }'
+```
