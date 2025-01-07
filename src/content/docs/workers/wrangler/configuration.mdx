@@ -113,7 +113,11 @@ At a minimum, the `name`, `main` and `compatibility_date` keys are required to d
 
 - `workers_dev` <Type text="boolean" /> <MetaInfo text="optional" />
 
-  - Enables use of `*.workers.dev` subdomain to test and deploy your Worker. If you have a Worker that is only for `scheduled` events, you can set this to `false`. Defaults to `true`.
+  - Enables use of `*.workers.dev` subdomain to deploy your Worker. If you have a Worker that is only for `scheduled` events, you can set this to `false`. Defaults to `true`. Refer to [types of routes](#types-of-routes).
+
+- `preview_urls` <Type text="boolean" /> <MetaInfo text="optional" />
+
+  - Enables use of Preview URLs to test your Worker. Defaults to `true`. Refer to [Preview URLs](/workers/configuration/previews).
 
 - `route` <Type text="Route" /> <MetaInfo text="optional" />
 
