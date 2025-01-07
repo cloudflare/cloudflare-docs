@@ -33,7 +33,7 @@ Hyperdrive automatically manages the connection pool properties for you, includi
 
 ## Pooling mode
 
-The Hyperdrive connection pooler operates in transaction mode, where the client that executes the query communicates through a single connection for the duration of a transaction. Upon the end of a transaction, the connection will be immediately returned to the pool. 
+The Hyperdrive connection pooler operates in transaction mode, where the client that executes the query communicates through a single connection for the duration of a transaction. When that transaction has completed, the connection is returned to the pool.
 
 When that transaction has completed, the connection is returned to the pool.
 
