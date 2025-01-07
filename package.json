@@ -96,7 +96,7 @@
 		"unist-util-visit": "^5.0.0",
 		"vitest": "2.1.8",
 		"wrangler": "^3.97.0",
-		"yaml": "^2.6.1"
+		"yaml": "^2.7.0"
 	},
 	"engines": {
 		"node": ">=22"
