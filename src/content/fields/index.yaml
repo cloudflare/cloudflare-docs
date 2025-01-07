@@ -597,8 +597,8 @@ entries:
 
   - name: cf.tls_client_auth.cert_revoked
     data_type: Boolean
-    categories: [Request]
-    keywords: [request, ssl, tls, client, visitor]
+    categories: [Request, mTLS]
+    keywords: [request, ssl, mtls, client, visitor]
     summary: Indicates whether the request presented a valid but revoked client certificate.
     description: |-
       When `true`, the [`cf.tls_client_auth.cert_verified`](/ruleset-engine/rules-language/fields/reference/cf.tls_client_auth.cert_verified/) field is also `true`.
@@ -607,8 +607,8 @@ entries:
 
   - name: cf.tls_client_auth.cert_verified
     data_type: Boolean
-    categories: [Request]
-    keywords: [request, ssl, tls, client, visitor]
+    categories: [Request, mTLS]
+    keywords: [request, ssl, mtls, client, visitor]
     summary: Returns `true` when a request presents a valid client certificate.
     description: |-
       Also returns `true` when a request includes a valid certificate that was revoked (refer to [`cf.tls_client_auth.cert_revoked`](/ruleset-engine/rules-language/fields/reference/cf.tls_client_auth.cert_revoked/)).
@@ -617,16 +617,16 @@ entries:
 
   - name: cf.tls_client_auth.cert_presented
     data_type: Boolean
-    categories: [Request]
-    keywords: [request, ssl, tls, client, visitor]
+    categories: [Request, mTLS]
+    keywords: [request, ssl, mtls, client, visitor]
     summary: Returns `true` when a request presents a certificate (valid or not).
     description: |-
       This field is only filled in if the request includes a client certificate for [mTLS authentication](/ssl/client-certificates/enable-mtls/).
 
   - name: cf.tls_client_auth.cert_issuer_dn
     data_type: String
-    categories: [Request]
-    keywords: [request, ssl, tls, client, visitor]
+    categories: [Request, mTLS]
+    keywords: [request, ssl, mtls, client, visitor]
     summary: The Distinguished Name (DN) of the Certificate Authority (CA) that issued the certificate included in the request.
     description: |-
       This field is only filled in if the request includes a client certificate for [mTLS authentication](/ssl/client-certificates/enable-mtls/).
@@ -635,8 +635,8 @@ entries:
 
   - name: cf.tls_client_auth.cert_subject_dn
     data_type: String
-    categories: [Request]
-    keywords: [request, ssl, tls, client, visitor]
+    categories: [Request, mTLS]
+    keywords: [request, ssl, mtls, client, visitor]
     summary: The Distinguished Name (DN) of the owner (or requester) of the certificate included in the request.
     description: |-
       This field is only filled in if the request includes a client certificate for [mTLS authentication](/ssl/client-certificates/enable-mtls/).
@@ -645,8 +645,8 @@ entries:
 
   - name: cf.tls_client_auth.cert_issuer_dn_rfc2253
     data_type: String
-    categories: [Request]
-    keywords: [request, ssl, tls, client, visitor]
+    categories: [Request, mTLS]
+    keywords: [request, ssl, mtls, client, visitor]
     summary: The Distinguished Name (DN) of the Certificate Authority (CA) that issued the certificate in the request in [RFC 2253](https://datatracker.ietf.org/doc/html/rfc2253) format.
     description: |-
       This field is only filled in if the request includes a client certificate for [mTLS authentication](/ssl/client-certificates/enable-mtls/).
@@ -655,8 +655,8 @@ entries:
 
   - name: cf.tls_client_auth.cert_subject_dn_rfc2253
     data_type: String
-    categories: [Request]
-    keywords: [request, ssl, tls, client, visitor]
+    categories: [Request, mTLS]
+    keywords: [request, ssl, mtls, client, visitor]
     summary: The Distinguished Name (DN) of the owner (or requester) of the certificate in the request in [RFC 2253](https://datatracker.ietf.org/doc/html/rfc2253) format.
     description: |-
       This field is only filled in if the request includes a client certificate for [mTLS authentication](/ssl/client-certificates/enable-mtls/).
@@ -665,8 +665,8 @@ entries:
 
   - name: cf.tls_client_auth.cert_issuer_dn_legacy
     data_type: String
-    categories: [Request]
-    keywords: [request, ssl, tls, client, visitor]
+    categories: [Request, mTLS]
+    keywords: [request, ssl, mtls, client, visitor]
     summary: The Distinguished Name (DN) of the Certificate Authority (CA) that issued the certificate in the request in a legacy format.
     description: |-
       This field is only filled in if the request includes a client certificate for [mTLS authentication](/ssl/client-certificates/enable-mtls/).
@@ -675,8 +675,8 @@ entries:
 
   - name: cf.tls_client_auth.cert_subject_dn_legacy
     data_type: String
-    categories: [Request]
-    keywords: [request, ssl, tls, client, visitor]
+    categories: [Request, mTLS]
+    keywords: [request, ssl, mtls, client, visitor]
     summary: The Distinguished Name (DN) of the owner (or requester) of the certificate in the request in a legacy format.
     description: |-
       This field is only filled in if the request includes a client certificate for [mTLS authentication](/ssl/client-certificates/enable-mtls/).
@@ -685,8 +685,8 @@ entries:
 
   - name: cf.tls_client_auth.cert_serial
     data_type: String
-    categories: [Request]
-    keywords: [request, ssl, tls, client, visitor]
+    categories: [Request, mTLS]
+    keywords: [request, ssl, mtls, client, visitor]
     summary: Serial number of the certificate in the request.
     description: |-
       This field is only filled in if the request includes a client certificate for [mTLS authentication](/ssl/client-certificates/enable-mtls/).
@@ -695,8 +695,8 @@ entries:
 
   - name: cf.tls_client_auth.cert_issuer_serial
     data_type: String
-    categories: [Request]
-    keywords: [request, ssl, tls, client, visitor]
+    categories: [Request, mTLS]
+    keywords: [request, ssl, mtls, client, visitor]
     summary: Serial number of the direct issuer of the certificate in the request.
     description: |-
       This field is only filled in if the request includes a client certificate for [mTLS authentication](/ssl/client-certificates/enable-mtls/).
@@ -705,8 +705,8 @@ entries:
 
   - name: cf.tls_client_auth.cert_fingerprint_sha256
     data_type: String
-    categories: [Request]
-    keywords: [request, ssl, tls, client, visitor]
+    categories: [Request, mTLS]
+    keywords: [request, ssl, mtls, client, visitor]
     summary: The SHA-256 fingerprint of the certificate in the request.
     description: |-
       This field is only filled in if the request includes a client certificate for [mTLS authentication](/ssl/client-certificates/enable-mtls/).
@@ -715,8 +715,8 @@ entries:
 
   - name: cf.tls_client_auth.cert_fingerprint_sha1
     data_type: String
-    categories: [Request]
-    keywords: [request, ssl, tls, client, visitor]
+    categories: [Request, mTLS]
+    keywords: [request, ssl, mtls, client, visitor]
     summary: The SHA-1 fingerprint of the certificate in the request.
     description: |-
       This field is only filled in if the request includes a client certificate for [mTLS authentication](/ssl/client-certificates/enable-mtls/).
@@ -725,8 +725,8 @@ entries:
 
   - name: cf.tls_client_auth.cert_not_before
     data_type: String
-    categories: [Request]
-    keywords: [request, ssl, tls, client, visitor]
+    categories: [Request, mTLS]
+    keywords: [request, ssl, mtls, client, visitor]
     summary: The certificate in the request is not valid before this date.
     description: |-
       This field is only filled in if the request includes a client certificate for [mTLS authentication](/ssl/client-certificates/enable-mtls/).
@@ -735,8 +735,8 @@ entries:
 
   - name: cf.tls_client_auth.cert_not_after
     data_type: String
-    categories: [Request]
-    keywords: [request, ssl, tls, client, visitor]
+    categories: [Request, mTLS]
+    keywords: [request, ssl, mtls, client, visitor]
     summary: The certificate in the request is not valid after this date.
     description: |-
       This field is only filled in if the request includes a client certificate for [mTLS authentication](/ssl/client-certificates/enable-mtls/).
@@ -745,8 +745,8 @@ entries:
 
   - name: cf.tls_client_auth.cert_ski
     data_type: String
-    categories: [Request]
-    keywords: [request, ssl, tls, client, visitor]
+    categories: [Request, mTLS]
+    keywords: [request, ssl, mtls, client, visitor]
     summary: The Subject Key Identifier (SKI) of the certificate in the request.
     description: |-
       This field is only filled in if the request includes a client certificate for [mTLS authentication](/ssl/client-certificates/enable-mtls/).
@@ -755,8 +755,8 @@ entries:
 
   - name: cf.tls_client_auth.cert_issuer_ski
     data_type: String
-    categories: [Request]
-    keywords: [request, ssl, tls, client, visitor]
+    categories: [Request, mTLS]
+    keywords: [request, ssl, mtls, client, visitor]
     summary: The Subject Key Identifier (SKI) of the direct issuer of the certificate in the request.
     description: |-
       This field is only filled in if the request includes a client certificate for [mTLS authentication](/ssl/client-certificates/enable-mtls/).
