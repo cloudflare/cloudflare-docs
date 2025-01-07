@@ -44,6 +44,10 @@
 
 /src/content/docs/browser-rendering/ @mchenco @cloudflare/pcx-technical-writing @celso @meddulla
 
+# Changelogs
+
+/src/content/changelogs-next/ @elithrar @irvinebroque @jonesphillip @rita3ko @zaidf
+
 # Cloudflare One
 
 /src/content/docs/cloudflare-one/ @ranbel @cloudflare/pcx-technical-writing
