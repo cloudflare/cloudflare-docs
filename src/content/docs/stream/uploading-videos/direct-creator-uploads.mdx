@@ -17,7 +17,7 @@ In either case, you must specify a maximum duration to reserve for the user's up
 
 Use this option if your users upload videos under 200 MB, and you do not need to allow resumable uploads.
 
-1. Generate a unique, one-time upload URL using the [Direct upload API](/api/operations/stream-videos-upload-videos-via-direct-upload-ur-ls).
+1. Generate a unique, one-time upload URL using the [Direct upload API](/api/resources/stream/subresources/direct_upload/methods/create/).
 
 ```sh title="Generate upload"
 curl https://api.cloudflare.com/client/v4/accounts/{account_id}/stream/direct_upload \
@@ -152,7 +152,7 @@ For more details on using tus and example client code, refer to [Resumable and l
 
 ## Upload-Metadata header syntax
 
-You can apply the [same constraints](/api/operations/stream-videos-upload-videos-via-direct-upload-ur-ls) as Direct Creator Upload via basic upload when using tus. To do so, you must pass the `expiry` and `maxDurationSeconds` as part of the `Upload-Metadata` request header as part of the first request (made by the Worker in the example above.) The `Upload-Metadata` values are ignored from subsequent requests that do the actual file upload.
+You can apply the [same constraints](/api/resources/stream/subresources/direct_upload/methods/create/) as Direct Creator Upload via basic upload when using tus. To do so, you must pass the `expiry` and `maxDurationSeconds` as part of the `Upload-Metadata` request header as part of the first request (made by the Worker in the example above.) The `Upload-Metadata` values are ignored from subsequent requests that do the actual file upload.
 
 The `Upload-Metadata` header should contain key-value pairs. The keys are text and the values should be encoded in base64. Separate the key and values by a space, _not_ an equal sign. To join multiple key-value pairs, include a comma with no additional spaces.
 

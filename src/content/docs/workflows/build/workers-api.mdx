@@ -69,6 +69,14 @@ Refer to the [events and parameters](/workflows/build/events-and-parameters/) do
   * `name` - the name of the step.
   * `timestamp` - a JavaScript `Date` object or seconds from the Unix epoch to sleep the Workflow instance until.
 
+:::note
+
+`step.sleep` and `step.sleepUntil` methods do not count towards the maximum Workflow steps limit. 
+
+More information about the limits imposed on Workflow can be found in the [Workflows limits documentation](/workflows/reference/limits/).
+
+:::
+
 ## WorkflowStepConfig
 
 ```ts
@@ -125,16 +133,19 @@ binding = "MY_WORKFLOW"
 # this is class that extends the Workflow class in src/index.ts
 class_name = "MyWorkflow"
 ```
-
 </WranglerConfig>
+
+### Bind from Pages
+
+You can bind and trigger Workflows from [Pages Functions](/pages/functions/) by deploying a Workers project with your Workflow definition and then invoking that Worker using [service bindings](/pages/functions/bindings/#service-bindings) or a standard `fetch()` call.
+
+Visit the documentation on [calling Workflows from Pages](/workflows/build/call-workflows-from-pages/) for examples.
 
 ### Cross-script calls
 
 You can also bind to a Workflow that is defined in a different Worker script from the script your Workflow definition is in. To do this, provide the `script_name` key with the name of the script to the `[[workflows]]` binding definition in your `wrangler.toml` configuration.
 
 For example, if your Workflow is defined in a Worker script named `billing-worker`, but you are calling it from your `web-api-worker` script, your `wrangler.toml` would resemble the following:
-
-
 
 <WranglerConfig>
 
@@ -183,7 +194,7 @@ Create (trigger) a new instance of the given Workflow.
 
 * <code>create(options?: WorkflowInstanceCreateOptions): Promise&lt;WorkflowInstance&gt;</code>
 
-  * `options` - optional properties to pass when creating an instance, includng a user-provided ID and payload parameters.
+  * `options` - optional properties to pass when creating an instance, including a user-provided ID and payload parameters.
 
 An ID is automatically generated, but a user-provided ID can be specified (up to 64 characters [^1]). This can be useful when mapping Workflows to users, merchants or other identifiers in your system. You can also provide a JSON object as the `params` property, allowing you to pass data for the Workflow instance to act on as its [`WorkflowEvent`](/workflows/build/events-and-parameters/).
 
@@ -228,7 +239,7 @@ export default {
 			// params expects the type User
 			params: user
 		})
-		
+
 		return Response.json({
 			id: instance.id,
 			details: await instance.status(),

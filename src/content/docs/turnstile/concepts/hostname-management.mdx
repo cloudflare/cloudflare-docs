@@ -1,0 +1,36 @@
+---
+title: Hostname management
+pcx_content_type: reference
+sidebar:
+  order: 2
+
+---
+
+By default, all widgets can have up to 10 hostnames associated with a widget. A widget requires at least one hostname to be entered.
+
+Only Enterprise Bot Management and Enterprise Turnstile customers can have this limit increased. Contact your account team to increase your hostname limit.
+
+You must specify a list of hostnames when creating a widget. The widget can only be used on these hostnames and will not work on any other hostnames. You can use subdomains to restrict the widgets further.
+
+The hostname should not contain a scheme `http://` or `https://`, a port `443`, or a path `/`.
+
+Specifying a subdomain is optional.
+
+For example, using the `www.example.com` value will allow widgets on the following hostnames:
+
+- `www.example.com`
+- `abc.www.example.com:8080`
+
+but not on the following hostnames:
+
+- `example.com`
+- `dash.example.com`
+- `cloudflare.com`
+
+When the widget is embedded on a hostname not listed, it will show an error message.
+
+## Optional hostname validation
+
+Customers with Enterprise Bot Management or Enterprise Turnstile can have the optional `any hostname` validation entitlement. 
+
+By default, a widget requires at least one hostname to be entered. With this entitlement, you can create and use a widget without entering any hostnames for the widget. Contact your account team to enable this entitlement.

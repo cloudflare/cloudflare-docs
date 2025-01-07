@@ -44,32 +44,35 @@ An MDM file supports a maximum of 25 configurations. The following example inclu
 <TabItem label="Windows">
 
 ```xml
-<array>
-  <dict>
-    <key>organization</key>
-    <string>mycompany</string>
-    <key>display_name</key>
-    <string>Production environment</string>
-  </dict>
-  <dict>
-    <key>organization</key>
-    <string>mycompany</string>
-    <key>override_api_endpoint</key>
-    <string>203.0.113.0</string>
-    <key>override_doh_endpoint</key>
-    <string>203.0.113.0</string>
-    <key>override_warp_endpoint</key>
-    <string>203.0.113.0:2408</string>
-    <key>display_name</key>
-    <string>Cloudflare China network</string>
-  </dict>
-  <dict>
-    <key>organization</key>
-    <string>test-org</string>
-    <key>display_name</key>
-    <string>Test environment</string>
-  </dict>
-</array>
+<dict>
+	<key>configs</key>
+	<array>
+		<dict>
+			<key>organization</key>
+			<string>mycompany</string>
+			<key>display_name</key>
+			<string>Production environment</string>
+		</dict>
+		<dict>
+			<key>organization</key>
+			<string>mycompany</string>
+			<key>override_api_endpoint</key>
+			<string>203.0.113.0</string>
+			<key>override_doh_endpoint</key>
+			<string>203.0.113.0</string>
+			<key>override_warp_endpoint</key>
+			<string>203.0.113.0:2408</string>
+			<key>display_name</key>
+			<string>Cloudflare China network</string>
+		</dict>
+		<dict>
+			<key>organization</key>
+			<string>test-org</string>
+			<key>display_name</key>
+			<string>Test environment</string>
+		</dict>
+	</array>
+</dict>
 ```
 
 </TabItem>
@@ -89,32 +92,35 @@ An MDM file supports a maximum of 25 configurations. The following example inclu
 <TabItem label="Linux">
 
 ```xml
-<array>
-  <dict>
-    <key>organization</key>
-    <string>mycompany</string>
-    <key>display_name</key>
-    <string>Production environment</string>
-  </dict>
-  <dict>
-    <key>organization</key>
-    <string>mycompany</string>
-    <key>override_api_endpoint</key>
-    <string>203.0.113.0</string>
-    <key>override_doh_endpoint</key>
-    <string>203.0.113.0</string>
-    <key>override_warp_endpoint</key>
-    <string>203.0.113.0:2408</string>
-    <key>display_name</key>
-    <string>Cloudflare China network</string>
-  </dict>
-  <dict>
-    <key>organization</key>
-    <string>test-org</string>
-    <key>display_name</key>
-    <string>Test environment</string>
-  </dict>
-</array>
+<dict>
+	<key>configs</key>
+	<array>
+		<dict>
+			<key>organization</key>
+			<string>mycompany</string>
+			<key>display_name</key>
+			<string>Production environment</string>
+		</dict>
+		<dict>
+			<key>organization</key>
+			<string>mycompany</string>
+			<key>override_api_endpoint</key>
+			<string>203.0.113.0</string>
+			<key>override_doh_endpoint</key>
+			<string>203.0.113.0</string>
+			<key>override_warp_endpoint</key>
+			<string>203.0.113.0:2408</string>
+			<key>display_name</key>
+			<string>Cloudflare China network</string>
+		</dict>
+		<dict>
+			<key>organization</key>
+			<string>test-org</string>
+			<key>display_name</key>
+			<string>Test environment</string>
+		</dict>
+	</array>
+</dict>
 ```
 
 </TabItem> </Tabs>

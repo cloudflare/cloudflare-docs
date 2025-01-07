@@ -13,6 +13,7 @@ import {
 	learningPathsSchema,
 	videosSchema,
 	workersAiSchema,
+	changelogsNextSchema,
 	fieldsSchema,
 } from "~/schemas";
 
@@ -68,16 +69,19 @@ export const collections = {
 		schema: workersAiSchema,
 		type: "data",
 	}),
-	fields: defineCollection({
-		schema: fieldsSchema,
-		type: "data",
-	}),
 	videos: defineCollection({
 		schema: videosSchema,
 		type: "data",
 	}),
 	apps: defineCollection({
 		schema: appsSchema,
+		type: "data",
+	}),
+	"changelogs-next": defineCollection({
+		schema: changelogsNextSchema,
+	}),
+	fields: defineCollection({
+		schema: fieldsSchema,
 		type: "data",
 	}),
 };

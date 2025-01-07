@@ -23,7 +23,10 @@ resource "cloudflare_ruleset" "http_origin_example" {
   phase       = "http_request_origin"
 
   rules {
-    action = "route"
+	  ref         = "change_api_origin"
+    description = "Change origin of API requests"
+    expression  = "(http.request.uri.path matches \"^/api/\")"
+    action      = "route"
     action_parameters {
       host_header = "example.net"
       origin {
@@ -31,9 +34,6 @@ resource "cloudflare_ruleset" "http_origin_example" {
         port = 8000
       }
     }
-    expression  = "(http.request.uri.path matches \"^/api/\")"
-    description = "Change origin of API requests"
-    enabled     = true
   }
 }
 ```

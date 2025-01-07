@@ -55,7 +55,7 @@ Currently, you can only send one collect request per minute for sample PCAPs, an
 
 <Details header="Full PCAP">
 
-For full PCAP requests, refer to the required parameters listed at [Create full PCAP requests](/api/operations/magic-pcap-collection-create-pcap-request). Note that full packet captures require two more parameters than sample packets.
+For full PCAP requests, refer to the required parameters listed at [Create full PCAP requests](/api/resources/magic_transit/subresources/pcaps/methods/create/). Note that full packet captures require two more parameters than sample packets.
 
 The full PCAP request endpoint also contains optional fields you can use to limit the amount of packets captured. Both full and sample packet requests contain an optional `filter_v1` parameter you can use to filter packets by IPv4 Source address, for example. For a full list of the filter options, refer to the parameter lists above.
 
@@ -105,7 +105,7 @@ While the collection is in progress, the response returns the `status` field as 
 
 <Details header="Sample PCAP">
 
-To create a sample PCAP request, send a JSON body with the required parameter listed at [Create sample PCAP request](/api/operations/magic-pcap-collection-create-pcap-request).
+To create a sample PCAP request, send a JSON body with the required parameter listed at [Create sample PCAP request](/api/resources/magic_transit/subresources/pcaps/methods/create/).
 
 Leave `filter_v1` to collect all packets without any filtering.
 

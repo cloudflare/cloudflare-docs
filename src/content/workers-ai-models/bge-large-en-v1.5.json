@@ -2,7 +2,7 @@
     "id": "01bc2fb0-4bca-4598-b985-d2584a3f46c0",
     "source": 1,
     "name": "@cf/baai/bge-large-en-v1.5",
-    "description": "BAAI general embedding (bge) models transform any given text into a compact vector",
+    "description": "BAAI general embedding (Large) model that transforms any given text into a 1024-dimensional vector",
     "task": {
         "id": "0137cdcf-162a-4108-94f2-1ca59e8c65ee",
         "name": "Text Embeddings",

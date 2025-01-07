@@ -13,7 +13,7 @@ Cache-tag purging makes multi-file purging easier because you can instantly bulk
 1. Add tags to the `Cache-Tag` HTTP response header from your origin web server for your web content, such as pages, static assets, etc.
 2. [Ensure your web traffic is proxied](/dns/manage-dns-records/reference/proxied-dns-records/) through Cloudflare.
 3. Cloudflare associates the tags in the `Cache-Tag` HTTP header with the content being cached.
-4. Use specific cache-tags to instantly purge your Cloudflare CDN cache of all content containing that cache-tag from your dashboard or [using our API](/api/operations/zone-purge).
+4. Use specific cache-tags to instantly purge your Cloudflare CDN cache of all content containing that cache-tag from your dashboard or [using our API](/api/resources/cache/methods/purge/).
 5. Cloudflare forces a [cache MISS](/cache/concepts/cache-responses/#miss) on content with the purged cache-tag.
 
 :::caution[Warning]
@@ -56,7 +56,7 @@ When your content reaches our edge network, Cloudflare:
 :::note[API]
 
 
-You can purge using cache-tags via the Cloudflare API. For more information, refer to the [API documentation](/api/operations/zone-purge). You can purge up to 30 cache-tags per API call and up to 250,000 cache-tags per a 24-hour period.
+You can purge using cache-tags via the Cloudflare API. For more information, refer to the [API documentation](/api/resources/cache/methods/purge/). You can purge up to 30 cache-tags per API call and up to 250,000 cache-tags per a 24-hour period.
 
 
 :::

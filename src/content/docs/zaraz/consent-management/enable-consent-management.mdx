@@ -28,6 +28,19 @@ In your Zaraz consent settings, you can add your consent modal text and purposes
 3. Select a default language of your choice. The default setting is English.
 4. In **Consent modal text** and **Purposes**, you can select different languages and add translations.
 
+## Overriding the consent modal language
+
+By default, the Zaraz Consent Management Platform will try to match the language of the consent modal with the language requested by the browser, using the `Accept-Language` HTTP header.
+If, for any reason, you would like to force the consent modal language to a specific one, you can use the `zaraz.set` Web API to define the default `__zarazConsentLanguage` value.
+
+Below is an example that forces the language shown to be American English.
+
+```html
+<script>
+  zaraz.set('__zarazConsentLanguage', 'en-US')
+</script>
+```
+
 ## Next steps
 
 If the default consent modal does not suit your website's design, you can use the [Custom CSS tool](/zaraz/consent-management/custom-css/) to add your own custom design.

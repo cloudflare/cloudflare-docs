@@ -9,18 +9,20 @@ import { Render } from "~/components";
 
 The following limits apply to gateway configurations, logs, and related features in Cloudflare's platform.
 
-| Feature                                                         | Limit                               |
-| --------------------------------------------------------------- | ----------------------------------- |
-| Cacheable request size                                          | 25 MB per request                   |
-| Custom metadata                                                 | 5 entries per request               |
-| Datasets                                                        | 10 per gateway                      |
-| Gateways                                                        | 10 per account                      |
-| Gateway name length                                             | 64 characters                       |
-| Logs stored [paid plan](/ai-gateway/reference/pricing/)         | 10 million per gateway <sup>1</sup> |
-| Logs stored [free plan](/ai-gateway/reference/pricing/)         | 100,000 per account <sup>2</sup>    |
-| Log size stored                                                 | 10 MB per log <sup>3</sup>          |
-| Logpush jobs                                                    | 4 per account                       |
-| Logpush size limit                                              | 1MB per log 	                      |
+| Feature                                                          | Limit                               |
+| ---------------------------------------------------------------- | ----------------------------------- |
+| [Cacheable request size](/ai-gateway/configuration/caching/)     | 25 MB per request                   |
+| [Cache TTL](/ai-gateway/configuration/caching/#cache-ttl-cf-aig-cache-ttl)     | 1 month               |
+| [Custom metadata](/ai-gateway/configuration/custom-metadata/)    | 5 entries per request               |
+| [Datasets](/ai-gateway/evaluations/set-up-evaluations/)          | 10 per gateway                      |
+| Gateways                                                         | 10 per account                      |
+| Gateway name length                                              | 64 characters                       |
+| Log storage rate limit                                           | 500 logs per second per gateway     |
+| Logs stored [paid plan](/ai-gateway/reference/pricing/)          | 10 million per gateway <sup>1</sup> |
+| Logs stored [free plan](/ai-gateway/reference/pricing/)          | 100,000 per account <sup>2</sup>    |
+| [Log size stored](/ai-gateway/observability/logging/)            | 10 MB per log <sup>3</sup>          |
+| [Logpush jobs](/ai-gateway/observability/logging/logpush/)       | 4 per account                       |
+| [Logpush size limit](/ai-gateway/observability/logging/logpush/) | 1MB per log                         |
 
 <sup>1</sup> If you have reached 10 million logs stored per gateway, new logs
 will stop being saved. To continue saving logs, you must delete older logs in

@@ -1,0 +1,84 @@
+---
+import { Image } from "astro:assets";
+import { z } from "astro:schema";
+import { getEntry, type CollectionEntry } from "astro:content";
+
+import { StarlightIcon } from "..";
+import HeroImage from "~/assets/images/changelog-next/hero.svg";
+
+type Props = z.infer<typeof props>;
+
+const props = z.object({
+	entries: z.array(z.any()).optional(),
+});
+
+const { entries } = props.parse(Astro.props);
+
+async function uniqueProducts(
+	entries?: Array<CollectionEntry<"changelogs-next">>,
+) {
+	const products = entries?.flatMap((entry) => entry.data.products ?? []);
+
+	const unique = [
+		...new Map(products?.map((product) => [product.id, product])).values(),
+	];
+
+	return Promise.all(
+		unique.map(async (product) => {
+			return getEntry(product);
+		}),
+	);
+}
+
+const products = await uniqueProducts(entries);
+---
+
+<div
+	class="mb-16 flex w-full justify-center border-b-2 border-b-[#EAEAEA] bg-gradient-to-r from-[#FFE9CB99] to-[#FFFFFF99] dark:border-b-[#2C2C2C] dark:from-[#FBAD411F] dark:to-[#2C2C2C00] sm:h-[300px]"
+>
+	<div class="flex justify-between self-center py-4 sm:py-0 md:w-[64rem]">
+		<div class="w-full self-center max-sm:text-center sm:items-start">
+			<div class="!mt-0 justify-items-center sm:hidden">
+				<Image src={HeroImage} alt="hero image" height="240" />
+			</div>
+			<h1 class="sm:!mt-0">Changelog</h1>
+			<p>
+				New updates and improvements at Cloudflare.
+				<span>
+					<a
+						href="/changelog-next/rss.xml"
+						class="px-2 text-[#056DFF] no-underline hover:rounded-[4px] hover:bg-[#DCEBFF] hover:!text-[#056DFF] dark:text-[#79B1FF] dark:hover:bg-[#002B66] dark:hover:!text-[#79B1FF]"
+					>
+						Subscribe to RSS
+						<StarlightIcon
+							name="rss"
+							size="18px"
+							class="!inline align-text-top"
+						/>
+					</a>
+				</span>
+			</p>
+			{
+				entries && (
+					<div>
+						<select id="changelogs-next-filter" class="mt-2 h-8 w-52">
+							<option value="all">All products</option>
+							{products
+								.sort((a, b) => a.id.localeCompare(b.id))
+								.map(async (product) => {
+									return (
+										<option value={product.id}>
+											{product.data.product.title}
+										</option>
+									);
+								})}
+						</select>
+					</div>
+				)
+			}
+		</div>
+		<div class="!mt-0 hidden sm:block">
+			<Image src={HeroImage} alt="hero image" height="240" />
+		</div>
+	</div>
+</div>

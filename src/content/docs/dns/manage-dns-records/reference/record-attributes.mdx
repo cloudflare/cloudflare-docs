@@ -47,11 +47,11 @@ Comments and tags are only supported for [full](/dns/zone-setups/full-setup/) an
 
 ## Add or edit record attributes
 
-Create or edit record attributes just like any other aspect of DNS records, whether through the [dashboard](/dns/manage-dns-records/how-to/create-dns-records/) or [API](/api/operations/dns-records-for-a-zone-create-dns-record).
+Create or edit record attributes just like any other aspect of DNS records, whether through the [dashboard](/dns/manage-dns-records/how-to/create-dns-records/) or [API](/api/resources/dns/subresources/records/methods/create/).
 
 You can also add or edit attributes by [exporting and re-importing](/dns/manage-dns-records/how-to/import-and-export/#dns-record-attributes) your records, or using the [Batch record changes API](/dns/manage-dns-records/how-to/batch-record-changes/#use-the-api).
 
-When exporting and importing, a special tag `cf-flatten` allows you to control [CNAME flattening for individual records](/dns/cname-flattening/set-up-cname-flattening/#per-record). On export, this tag is automatically added to reflect the record configuration you have on your zone.
+When exporting and importing, special tags starting by `cf-` allow you to control specific Cloudflare configurations. On export, these tags are automatically added to reflect the current configuration for each record on your zone. Refer to [reserved cf- tags](/dns/manage-dns-records/how-to/import-and-export/#reserved-cf--tags) for details.
 
 ***
 

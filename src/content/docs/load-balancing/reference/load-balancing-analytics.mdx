@@ -59,7 +59,7 @@ To view latency information for your load balancer, go to **Traffic** > **Load B
 
 **Logs** provide a history of all endpoint status changes and how they affect your load balancing pools. Load Balancing only logs events that represent a status change for an endpoint, from healthy to unhealthy or vice versa.
 
-To access logs in the dashboard, go to **Traffic** > **Load Balancing Analytics**. You can also access healthcheck logs [using the API](/api/operations/load-balancer-healthcheck-events-list-healthcheck-events).
+To access logs in the dashboard, go to **Traffic** > **Load Balancing Analytics**.
 
 ## GraphQL Analytics
 
@@ -131,7 +131,7 @@ This query shows the weighted, round-trip time (RTT) measurement (`avgRttMs`) fo
 
 :::caution
 
-Note that `avgRttMs` refers to the round-trip time that is measured by the monitors and used in steering decisions. `avgRttMs` is different from the raw RTT for individual requests that reach the Cloudflare network. 
+Note that `avgRttMs` refers to the round-trip time that is measured by the monitors and used in steering decisions. `avgRttMs` is different from the raw RTT for individual requests that reach the Cloudflare network.
 :::
 
 ```graphql title="Query"

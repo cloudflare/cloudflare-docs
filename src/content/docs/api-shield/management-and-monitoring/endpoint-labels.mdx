@@ -38,6 +38,23 @@ You can filter your endpoints based on the labels.
 
 `cf-account-update`: Add this label to endpoints that participate in user account or profile updates.
 
+`cf-rss-feed`: Add this label to endpoints that expect traffic from RSS clients.
+
+`cf-risk-missing-auth`: Automatically added when all successful requests lack a session identifier. Refer to the table below for more information.
+
+`cf-risk-mixed-auth`: Automatically added when some successful requests contain a session identifier and some successful requests lack a session identifier. Refer to the table below for more information. 
+
+`cf-risk-sensitive`: Cloudflare will automatically add this label to endpoints when HTTP responses match the WAF's [Sensitive Data Detection](/api-shield/management-and-monitoring/#sensitive-data-detection) ruleset.
+
+:::note
+Cloudflare will only add authentication labels to endpoints with successful response codes. Refer to the below table for more details.
+:::
+
+| Description | 2xx response codes | 4xx, 5xx response codes |
+| --- | --- | --- | 
+| If all requests are missing authentication, Cloudflare will apply the label: | `cf-missing-auth` | Without successful responses, no label will be added. |
+| If only some requests are missing authentication, Cloudflare will apply the label: | `cf-mixed-auth` | Without successful responses, no label will be added. |
+
 ## Create a label
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/) and select your account and domain. 

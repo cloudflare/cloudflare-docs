@@ -34,7 +34,7 @@ npx wrangler dev
 | Product                             | Local Dev Supported | Remote Dev Supported |
 | ----------------------------------- | ------------------- | -------------------- |
 | AI                                  | ✅[^1]              | ✅                   |
-| Assets                              | ✅                  | ❌                   |
+| Assets                              | ✅                  | ✅                   |
 | Analytics Engine                    | ❌                  | ✅                   |
 | Browser Rendering                   | ❌                  | ✅                   |
 | D1                                  | ✅                  | ✅                   |
@@ -48,6 +48,7 @@ npx wrangler dev
 | Rate Limiting                       | ✅                  | ✅                   |
 | Service Bindings (multiple workers) | ✅                  | ✅                   |
 | Vectorize                           | ✅[^2]              | ✅                   |
+| Workflows                           | ✅                  | ❌                   |
 
 With any bindings that are not supported locally, you will need to use the `--remote` command in wrangler, such as `wrangler dev --remote`.
 
@@ -135,5 +136,5 @@ There is a bug associated with how outgoing requests are handled when using `wra
 
 ## Related resources
 
-- [D1 local development](/d1/build-with-d1/local-development/) - The official D1 guide to local development and testing.
+- [D1 local development](/d1/best-practices/local-development/) - The official D1 guide to local development and testing.
 - [DevTools](/workers/observability/dev-tools) - Guides to using DevTools to debug your Worker locally.

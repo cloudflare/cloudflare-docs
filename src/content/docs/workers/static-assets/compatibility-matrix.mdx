@@ -35,14 +35,15 @@ We plan to bridge the gaps between Workers and Pages and provide ways to migrate
 | [Preview URLs](/workers/configuration/previews)                                     | ✅      | ✅      |
 | [Testing tools](/workers/testing)                                                   | ✅      | ✅      |
 | [Local Development](/workers/testing/local-development/)                            | ✅      | ✅      |
-| [Remote Development (`--remote`)](/workers/wrangler/commands/)                      | ✅ [^1] | ❌      |
+| [Remote Development (`--remote`)](/workers/wrangler/commands/)                      | ✅      | ❌      |
 | [Quick Editor in Dashboard](https://blog.cloudflare.com/improved-quick-edit)        | ✅      | ❌      |
 | **Static Assets**                                                                   |         |         |
 | [Early Hints](/pages/configuration/early-hints/)                                    | ❌      | ✅      |
-| [Custom HTTP headers for static assets](/pages/configuration/headers/)              | 🟡 [^2] | ✅      |
-| [Middleware](/pages/functions/middleware/)                                          | 🟡 [^3] | ✅      |
-| [Redirects](/pages/configuration/redirects/)                                        | 🟡 [^4] | ✅      |
+| [Custom HTTP headers for static assets](/pages/configuration/headers/)              | 🟡 [^1] | ✅      |
+| [Middleware](/workers/static-assets/binding/#experimental_serve_directly)           | ✅ [^2] | ✅      |
+| [Redirects](/pages/configuration/redirects/)                                        | 🟡 [^3] | ✅      |
 | [Smart Placement](/workers/configuration/smart-placement/)                          | ✅      | ✅      |
+| [Serve assets on a path](/workers/static-assets/routing/)                           | ✅      | ❌      |
 | **Observability**                                                                   |         |         |
 | [Workers Logs](/workers/observability/)                                             | ✅      | ❌      |
 | [Logpush](/workers/observability/logs/logpush/)                                     | ✅      | ❌      |
@@ -50,14 +51,14 @@ We plan to bridge the gaps between Workers and Pages and provide ways to migrate
 | [Real-time logs](/workers/observability/logs/real-time-logs/)                       | ✅      | ✅      |
 | **Runtime APIs & Compute Models**                                                   |         |         |
 | [Node.js Compatibility Mode](/workers/runtime-apis/nodejs/)                         | ✅      | ✅      |
-| [Durable Objects](/durable-objects/api/)                                            | ✅      | 🟡 [^5] |
+| [Durable Objects](/durable-objects/api/)                                            | ✅      | 🟡 [^4] |
 | [Cron Triggers](/workers/configuration/cron-triggers/)                              | ✅      | ❌      |
 | **Bindings**                                                                        |         |         |
 | [AI](/workers-ai/get-started/workers-wrangler/#2-connect-your-worker-to-workers-ai) | ✅      | ✅      |
 | [Analytics Engine](/analytics/analytics-engine)                                     | ✅      | ✅      |
 | [Assets](/workers/static-assets/binding/)                                           | ✅      | ✅      |
 | [Browser Rendering](/browser-rendering)                                             | ✅      | ✅      |
-| [D1](/d1/build-with-d1/d1-client-api/)                                              | ✅      | ✅      |
+| [D1](/d1/worker-api/)                                                               | ✅      | ✅      |
 | [Email Workers](/email-routing/email-workers/send-email-workers/)                   | ✅      | ❌      |
 | [Environment Variables](/workers/configuration/environment-variables/)              | ✅      | ✅      |
 | [Hyperdrive](/hyperdrive/)                                                          | ✅      | ✅      |
@@ -78,19 +79,17 @@ We plan to bridge the gaps between Workers and Pages and provide ways to migrate
 | [Branch Deploy Controls](/pages/configuration/branch-build-controls/)               | ❌      | ✅      |
 | [Custom Branch Aliases](/pages/how-to/custom-branch-aliases/)                       | ❌      | ✅      |
 | **Pages Functions**                                                                 |         |         |
-| [File-based Routing](/pages/functions/routing/)                                     | ❌ [^6] | ✅      |
-| [Pages Plugins](/pages/functions/plugins/)                                          | ❌ [^7] | ✅      |
+| [File-based Routing](/pages/functions/routing/)                                     | ❌ [^5] | ✅      |
+| [Pages Plugins](/pages/functions/plugins/)                                          | ❌ [^6] | ✅      |
 
-[^1]: Does not currently support Workers with static assets. For more details on which bindings are supported in remote development, [refer to the docs](/workers/testing/local-development/#supported-resource-bindings-in-different-environments).
+[^1]: Similar to <sup>3</sup>, to customize the HTTP headers that are returned by static assets, you can use [Service bindings](/workers/runtime-apis/bindings/service-bindings/) to connect a Worker in front of the Worker with assets.
 
-[^2]: Similar to <sup>3</sup>, to customize the HTTP headers that are returned by static assets, you can use [Service bindings](/workers/runtime-apis/bindings/service-bindings/) to connect a Worker in front of the Worker with assets.
+[^2]: Middleware can be configured via the [`experimental_serve_directly`](/workers/static-assets/binding/#experimental_serve_directly) option, but is charged as a normal Worker invocation. We plan to explore additional related options in the future.
 
-[^3]: If you need to run a Worker before serving static assets, you can create a separate Worker that acts as middleware, and then use [Service bindings](/workers/runtime-apis/bindings/service-bindings/) to forward the request to the Worker with assets. We plan to explore additional configuration to support more complex routing in the future.
+[^3]: You can handle redirects by adding code to your Worker (a [community package](https://npmjs.com/package/redirects-in-workers) is available for `_redirects` support), or you can use [Bulk Redirects](/rules/url-forwarding/bulk-redirects/).
 
-[^4]: You can handle redirects by adding code to your Worker (a [community package](https://npmjs.com/package/redirects-in-workers) is available for `_redirects` support), or you can use [Bulk Redirects](/rules/url-forwarding/bulk-redirects/).
+[^4]: To [use Durable Objects with your Cloudflare Pages project](/pages/functions/bindings/#durable-objects), you must create a separate Worker with a Durable Object and then declare a binding to it in both your Production and Preview environments. Using Durable Objects with Workers is simpler and recommended.
 
-[^5]: To [use Durable Objects with your Cloudflare Pages project](/pages/functions/bindings/#durable-objects), you must create a separate Worker with a Durable Object and then declare a binding to it in both your Production and Preview environments. Using Durable Objects with Workers is simpler and recommended.
+[^5]: Workers [supports popular frameworks](/workers/frameworks/), many of which implement file-based routing.
 
-[^6]: Workers [supports popular frameworks](/workers/frameworks/), many of which implement file-based routing.
-
-[^7]: Everything that is possible with Pages Functions can also be achieved by adding code to your Worker or by using framework-specific plugins for relevant third party tools.
+[^6]: Everything that is possible with Pages Functions can also be achieved by adding code to your Worker or by using framework-specific plugins for relevant third party tools.

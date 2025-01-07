@@ -27,7 +27,7 @@ The `SameSite` cookie attribute has three different modes:
 
 ## SameSite attribute in session affinity cookies
 
-Currently, to configure the `SameSite` attribute on [session affinity cookies](/load-balancing/understand-basics/session-affinity/) you must use the Cloudflare API (for example, the [Create Load Balancer](/api/operations/load-balancers-create-load-balancer) operation).
+Currently, to configure the `SameSite` attribute on [session affinity cookies](/load-balancing/understand-basics/session-affinity/) you must use the Cloudflare API (for example, the [Create Load Balancer](/api/resources/load_balancers/methods/create/) operation).
 
 To configure the value of the `SameSite` cookie attribute, include the `samesite` and `secure` JSON attributes in your HTTP request, inside the `session_affinity_attributes` object.
 

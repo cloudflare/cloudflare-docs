@@ -5,15 +5,73 @@ productLink: "/r2/"
 productArea: Developer platform
 productAreaLink: /workers/platform/changelog/platform/
 entries:
+  - publish_date: "2024-12-03"
+    description: |-
+      - [Server-side Encryption with Customer-Provided Keys](/r2/examples/ssec/) is now available to all users via the Workers and S3-compatible APIs.
+  - publish_date: "2024-11-21"
+    description: |-
+      - Sippy can now be enabled on buckets in [jurisdictions](/r2/reference/data-location/#jurisdictional-restrictions) (e.g., EU, FedRAMP).
+      - Fixed an issue with Sippy where GET/HEAD requests to objects with certain special characters would result in error responses.
   - publish_date: "2024-11-20"
     description: |-
       - Oceania (OC) is now available as an R2 region.
+      - The default maximum number of buckets per account is now 1 million. If you need more than 1 million buckets, contact [Cloudflare Support](/support/contacting-cloudflare-support/).
+      - Public buckets accessible via custom domain now support Smart [Tiered Cache](/r2/buckets/public-buckets/#caching).
+  - publish_date: "2024-11-19"
+    description: |-
+      - R2 [`bucket lifecycle` command](/workers/wrangler/commands/#lifecycle-add) added to Wrangler. Supports listing, adding, and removing object lifecycle rules.
+  - publish_date: "2024-11-14"
+    description: |-
+      - R2 [`bucket info` command](/workers/wrangler/commands/#info-2) added to Wrangler. Displays location of bucket and common metrics.
+  - publish_date: "2024-11-08"
+    description: |-
+      - R2 [`bucket dev-url` command](/workers/wrangler/commands/#dev-url-enable) added to Wrangler. Supports enabling, disabling, and getting status of bucket's [r2.dev public access URL](/r2/buckets/public-buckets/#enable-managed-public-access).
+  - publish_date: "2024-11-06"
+    description: |-
+      - R2 [`bucket domain` command](/workers/wrangler/commands/#domain-add) added to Wrangler. Supports listing, adding, removing, and updating [R2 bucket custom domains](/r2/buckets/public-buckets/#custom-domains).
+  - publish_date: "2024-11-01"
+    description: |-
+      - Add `minTLS` to response of [list custom domains](/api/resources/r2/subresources/buckets/subresources/domains/subresources/custom/methods/list/) endpoint.
+  - publish_date: "2024-10-28"
+    description: |-
+      - Add [get custom domain](/api/resources/r2/subresources/buckets/subresources/domains/subresources/custom/methods/get/) endpoint.
+  - publish_date: "2024-10-21"
+    description: |-
+      - Event notifications can now be configured for R2 buckets in [jurisdictions](/r2/reference/data-location/#jurisdictional-restrictions) (e.g., EU, FedRAMP).
+  - publish_date: "2024-09-26"
+    description: |-
+      - [Event notifications for R2](https://blog.cloudflare.com/builder-day-2024-announcements/#event-notifications-for-r2-is-now-ga) is now generally available. Event notifications now support higher throughput (up to 5,000 messages per second per Queue), can be configured in the dashboard and Wrangler, and support for lifecycle deletes.
+  - publish_date: "2024-09-18"
+    description: |-
+      - Add the ability to set and [update minimum TLS version](/r2/buckets/public-buckets/#minimum-tls-version) for R2 bucket custom domains.
+  - publish_date: "2024-08-26"
+    description: |-
+      - Added support for configuring R2 bucket custom domains via [API](/api/resources/r2/subresources/buckets/subresources/domains/subresources/custom/methods/create/).
+  - publish_date: "2024-08-21"
+    description: |-
+      - [Sippy](/r2/data-migration/sippy/) is now generally available. Metrics for ongoing migrations can now be found in the dashboard or via the GraphQL analytics API.
+  - publish_date: "2024-07-08"
+    description: |-
+      - Added migration log for [Super Slurper](/r2/data-migration/super-slurper/) to the migration summary in the dashboard.
+  - publish_date: "2024-06-12"
+    description: |-
+      - [Super Slurper](/r2/data-migration/super-slurper/) now supports migrating objects up to 1TB in size.
   - publish_date: "2024-06-07"
     description: |-
       - Fixed an issue that prevented Sippy from copying over objects from S3 buckets with SSE set up.
   - publish_date: "2024-06-06"
     description: |-
       - R2 will now ignore the `x-purpose` request parameter.
+  - publish_date: "2024-05-29"
+    description: |-
+      - Added support for [Infrequent Access](/r2/buckets/storage-classes/) storage class (beta).
+  - publish_date: "2024-05-24"
+    description: |-
+      - Added [create temporary access tokens](/api/resources/r2/subresources/temporary_credentials/methods/create/) endpoint.
+  - publish_date: "2024-04-03"
+    description: |-
+      - [Event notifications](/r2/buckets/event-notifications/) for R2 is now available as an open beta.
+      - Super Slurper now supports migration from [Google Cloud Storage](/r2/data-migration/super-slurper/#supported-cloud-storage-providers).
   - publish_date: "2024-02-20"
     description: |-
       - When an `OPTIONS` request against the public entrypoint does not include an `origin` header, an `HTTP 400` instead of an `HTTP 401` is returned.
@@ -22,6 +80,9 @@ entries:
       - The response shape of `GET /buckets/:bucket/sippy` has changed.
       - The `/buckets/:bucket/sippy/validate` endpoint is exposed over APIGW to validate Sippy's configuration.
       - The shape of the configuration object when modifying Sippy's configuration has changed.
+  - publish_date: "2024-02-02"
+    description: |-
+      - Updated [GetBucket](/api/resources/r2/subresources/buckets/methods/get/) endpoint: Now fetches by `bucket_name` instead of `bucket_id`.
   - publish_date: "2024-01-30"
     description: |-
       - Fixed a bug where the API would accept empty strings in the `AllowedHeaders` property of `PutBucketCors` actions.
@@ -57,14 +118,14 @@ entries:
       hashes.
   - publish_date: "2023-06-16"
     description: |-
-      - Fixed a bug where calling [GetBucket](/api/operations/r2-get-bucket) on a non-existent bucket would return a 500 instead of a 404.
+      - Fixed a bug where calling [GetBucket](/api/resources/r2/subresources/buckets/methods/get/) on a non-existent bucket would return a 500 instead of a 404.
       - Improved S3 compatibility for ListObjectsV1, now nextmarker is only set when truncated is true.
       - The R2 worker bindings now support parsing conditional headers with multiple etags. These etags can now be strong, weak or a wildcard. Previously the bindings only accepted headers containing a single strong etag.
       - S3 putObject now supports sha256 and sha1 checksums. These were already supported by the R2 worker bindings.
       - CopyObject in the S3 compatible api now supports Cloudflare specific headers which allow the copy operation to be conditional on the state of the destination object.
   - publish_date: "2023-04-01"
     description: |-
-      - [GetBucket](/api/operations/r2-get-bucket) is now available for use through the Cloudflare API.
+      - [GetBucket](/api/resources/r2/subresources/buckets/methods/get/) is now available for use through the Cloudflare API.
       - [Location hints](https://developers.cloudflare.com/r2/reference/data-location/) can now be set when creating a bucket, both through the S3 API, and the dashboard.
   - publish_date: "2023-03-16"
     description: |-

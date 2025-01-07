@@ -79,7 +79,7 @@ openssl x509 -in <CUSTOM-ROOT-CERT>.pem -text
   <TabItem label="API">
 	1. Verify that the certificate is installed on your devices.
 	2. <Render file="upload-mtls-cert" params={{ one: " " }} />
-	3. Deploy the certificate in Gateway using the certificate's UUID with the [Patch Zero Trust account configuration endpoint](/api/operations/zero-trust-accounts-patch-zero-trust-account-configuration).
+	3. Deploy the certificate in Gateway using the certificate's UUID with the [Patch Zero Trust account configuration endpoint](/api/resources/zero_trust/subresources/gateway/subresources/configurations/methods/edit/).
     	```bash {10}
     	curl --request PATCH \
     	"https://api.cloudflare.com/client/v4/accounts/{account_id}/gateway/configuration" \
@@ -122,7 +122,7 @@ openssl x509 -in <CUSTOM-ROOT-CERT>.pem -text
     		"updated_at": "2014-01-01T05:20:00.12345Z"
     	}
     	```
-	4. Activate the certificate for use in inspection with the [Activate a Zero Trust certificate endpoint](/api/operations/zero-trust-certificates-activate-zero-trust-certificate).
+	4. Activate the certificate for use in inspection with the [Activate a Zero Trust certificate endpoint](/api/resources/zero_trust/subresources/gateway/subresources/certificates/methods/activate/).
 			```bash
 			curl --request POST \
 			"https://api.cloudflare.com/client/v4/accounts/{account_id}/gateway/certificates/{certificate_id}/activate" \

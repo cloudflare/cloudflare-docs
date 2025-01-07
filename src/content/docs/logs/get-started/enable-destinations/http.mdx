@@ -12,6 +12,10 @@ Cloudflare Logpush now supports the ability to send logs to configurable HTTP en
 
 Note that when using Logpush to HTTP endpoints, Cloudflare customers are expected to perform their own authentication of the pushed logs. For example, customers may specify a secret token in the URL or an HTTP header of the Logpush destination.
 
+:::note[Endpoint requirements]
+Cloudflare expects that the endpoint is available over HTTPS, using a trusted certificate. The endpoint must accept `POST` requests. 
+:::
+
 ## Manage via the Cloudflare dashboard
 
 <Render file="enable-logpush-job" />

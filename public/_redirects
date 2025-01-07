@@ -102,6 +102,7 @@
 /ai-gateway/integration/vercel-ai-sdk/ /ai-gateway/integrations/vercel-ai-sdk/ 301
 /ai-gateway/integration/aig-workers-ai-binding/ /ai-gateway/integrations/aig-workers-ai-binding/ 301
 /ai-gateway/integration/ /ai-gateway/integrations/ 301
+/ai-gateway/providers/open-router/ /ai-gateway/providers/openrouter/ 301
 
 # analytics
 /analytics/migration-guides/zone-analytics/ /analytics/graphql-api/migration-guides/zone-analytics/ 301
@@ -258,42 +259,52 @@
 /constellation/ /workers-ai/ 301
 
 # D1
-/d1/client-api/ /d1/build-with-d1/d1-client-api/ 301
+/d1/client-api/ /d1/worker-api/ 301
+/d1/build-with-d1/d1-client-api/ /d1/worker-api/ 301
+/d1/build-with-d1/import-data/ /d1/best-practices/import-export-data/ 301
+/d1/build-with-d1/ /d1/best-practices/ 301
+/d1/build-with-d1/import-export-data/ /d1/best-practices/import-export-data/ 301
+/d1/build-with-d1/use-indexes/ /d1/best-practices/use-indexes/ 301
+/d1/build-with-d1/remote-development/ /d1/best-practices/remote-development/ 301
+/d1/build-with-d1/local-development/ /d1/best-practices/local-development/ 301
+/d1/build-with-d1/foreign-keys/ /d1/sql-api/foreign-keys/ 301
+/d1/build-with-d1/query-json/ /d1/sql-api/query-json/ 301
+/d1/build-with-d1/use-d1-from-pages/ /d1/best-practices/use-d1-from-pages/ 301
 /d1/learning/using-d1-from-pages/ /pages/functions/bindings/#d1-databases 301
 /d1/learning/debug-d1/ /d1/observability/debug-d1/ 301
-/d1/learning/using-indexes/ /d1/build-with-d1/use-indexes/ 301
-/d1/learning/querying-json/ /d1/build-with-d1/query-json/ 301
-/d1/learning/importing-data/ /d1/build-with-d1/import-export-data/ 301
+/d1/learning/using-indexes/ /d1/best-practices/use-indexes/ 301
+/d1/learning/querying-json/ /d1/sql-api/query-json/ 301
+/d1/learning/importing-data/ /d1/best-practices/import-export-data/ 301
 /d1/learning/generated-columns/ /d1/reference/generated-columns/ 301
-/d1/learning/local-development/ /d1/build-with-d1/local-development/ 301
-/d1/learning/remote-development/ /d1/build-with-d1/remote-development/ 301
+/d1/learning/local-development/ /d1/best-practices/local-development/ 301
+/d1/learning/remote-development/ /d1/best-practices/remote-development/ 301
 /d1/learning/data-location/ /d1/configuration/data-location/ 301
 /d1/migrations/ /d1/reference/migrations/ 301
 /d1/platform/wrangler-commands/ /workers/wrangler/commands/#d1 301
 /d1/platform/community-projects/ /d1/reference/community-projects/ 301
-/d1/platform/client-api/ /d1/build-with-d1/d1-client-api/ 301
+/d1/platform/client-api/ /d1/worker-api/ 301
 /d1/platform/data-security/ /d1/reference/data-security/ 301
 /d1/platform/environments/ /d1/configuration/environments/ 301
 /d1/platform/metrics-analytics/ /d1/observability/metrics-analytics/ 301
 /d1/platform/migrations/ /d1/reference/migrations/ 301
-/d1/reference/client-api/ /d1/build-with-d1/d1-client-api/ 301
+/d1/reference/client-api/ /d1/worker-api/ 301
 /d1/reference/environments/ /d1/configuration/environments/ 301
 /d1/reference/metrics-analytics/ /d1/observability/metrics-analytics/ 301
-/d1/how-to/ /d1/build-with-d1/ 301
-/d1/how-to/query-databases/ /d1/build-with-d1/d1-client-api/ 301
-/d1/how-to/using-indexes/ /d1/build-with-d1/use-indexes/ 301
-/d1/how-to/querying-json/ /d1/build-with-d1/query-json/ 301
-/d1/how-to/importing-data/ /d1/build-with-d1/import-export-data/ 301
+/d1/reference/wrangler-commands/ / /d1/wrangler-commands/ 301
+/d1/how-to/ /d1/best-practices/ 301
+/d1/how-to/query-databases/ /d1/best-practices/query-d1/ 301
+/d1/how-to/using-indexes/ /d1/best-practices/use-indexes/ 301
+/d1/how-to/querying-json/ /d1/sql-api/query-json/ 301
+/d1/how-to/importing-data/ /d1/best-practices/import-export-data/ 301
 /d1/how-to/generated-columns/ /d1/reference/generated-columns/ 301
-/d1/build-databases/ /d1/build-with-d1/ 301
-/d1/build-databases/query-databases/ /d1/build-with-d1/d1-client-api/ 301
-/d1/build-databases/use-indexes/ /d1/build-with-d1/use-indexes/ 301
-/d1/build-databases/import-data/ /d1/build-with-d1/import-export-data/ 301
-/d1/build-databases/client-api/ /d1/build-with-d1/d1-client-api/ 301
-/d1/reference/query-json/ /d1/build-with-d1/query-json/ 301
-/d1/configuration/local-development/ /d1/build-with-d1/local-development/ 301
-/d1/configuration/remote-development/ /d1/build-with-d1/remote-development/ 301
-/d1/build-with-d1/import-data/ /d1/build-with-d1/import-export-data/ 301
+/d1/build-databases/ /d1/best-practices/ 301
+/d1/build-databases/query-databases/ /d1/best-practices/query-d1/ 301
+/d1/build-databases/use-indexes/ /d1/best-practices/use-indexes/ 301
+/d1/build-databases/import-data/ /d1/best-practices/import-export-data/ 301
+/d1/build-databases/client-api/ /d1/worker-api/ 301
+/d1/reference/query-json/ /d1/sql-api/query-json/ 301
+/d1/configuration/local-development/ /d1/best-practices/local-development/ 301
+/d1/configuration/remote-development/ /d1/best-practices/remote-development/ 301
 /d1/reference/database-commands/ /d1/reference/sql-statements/ 301
 /d1/reference/sql-statements/ /d1/sql-api/sql-statements/ 301
 
@@ -634,7 +645,7 @@
 /images/cloudflare-images/upload-images/custom-id/ /images/upload-images/upload-custom-path/ 301
 /images/cloudflare-images/upload-images/dashboard-upload/ /images/upload-images/upload-dashboard/ 301
 /images/cloudflare-images/upload-images/direct-creator-upload/ /images/upload-images/direct-creator-upload/ 301
-/images/cloudflare-images/upload-images/images-batch/ /api/operations/cloudflare-images-list-images 301
+/images/cloudflare-images/upload-images/images-batch/ /api/resources/images/subresources/v2/methods/list/ 301
 /images/cloudflare-images/upload-images/upload-via-url/ /images/upload-images/upload-url/ 301
 /images/faq/ /images/ 301
 /images/image-resizing/ /images/manage-images/create-variants/ 301
@@ -782,13 +793,14 @@
 /magic-wan/get-started/configure-static-routes/ /magic-wan/configuration/manually/how-to/configure-static-routes/ 301
 /magic-wan/configuration/connector/configure-connector/ /magic-wan/configuration/connector/configure-hardware-connector/ 301
 /magic-wan/configuration/connector/device-information/ /magic-wan/configuration/connector/reference/ 301
-/magic-wan/configuration/manually/how-to/check-tunnel-health-dashboard/ /magic-wan/configuration/common-settings/check-tunnel-health-dashboard/ 301
+/magic-wan/configuration/manually/how-to/check-tunnel-health-dashboard/ /magic-wan/configuration/common-settings/tunnel-health-checks/ 301
 /magic-wan/configuration/manually/how-to/configure-magic-tunnel-alerts/ /magic-wan/configuration/common-settings/configure-magic-tunnel-alerts/ 301
 /magic-wan/configuration/manually/how-to/enable-magic-roles/ /magic-wan/configuration/common-settings/enable-magic-roles/ 301
 /magic-wan/configuration/common-settings/tunnel-health-checks/ /magic-wan/configuration/manually/how-to/tunnel-health-checks/ 301
 /magic-wan/configuration/manually/how-to/view-analytics/ /magic-wan/analytics/ 301
 /magic-wan/configuration/common-settings/view-analytics/ /magic-wan/analytics/ 301
 /magic-wan/prerequisites/ /magic-wan/get-started/ 301
+/magic-wan/configuration/common-settings/check-tunnel-health-dashboard/ /magic-wan/configuration/common-settings/tunnel-health-checks/ 301
 
 # notifications
 /fundamentals/notifications/ /notifications/ 301
@@ -998,6 +1010,7 @@
 /ssl/certificate-transparency-monitoring/ /ssl/edge-certificates/additional-options/certificate-transparency-monitoring/ 301
 /ssl/client-certificates/byo-ca-api-shield/ /ssl/client-certificates/byo-ca/ 301
 /ssl/edge-certificates/certificate-transparency-monitoring/ /ssl/edge-certificates/additional-options/certificate-transparency-monitoring/ 301
+/ssl/edge-certificates/changing-dcv-method/methods/email/ /ssl/edge-certificates/changing-dcv-method/methods/ 301
 /ssl/edge-certificates/custom-certificates/caa-records/ /ssl/edge-certificates/caa-records/ 301
 /ssl/edge-certificates/disable-weak-cipher-suites/ /ssl/edge-certificates/additional-options/cipher-suites/customize-cipher-suites/ 301
 /ssl/edge-certificates/http-strict-transport-security/ /ssl/edge-certificates/additional-options/http-strict-transport-security/ 301
@@ -1009,6 +1022,7 @@
 /ssl/reference/cipher-suites/custom-certificates/ /ssl/edge-certificates/custom-certificates/#certificate-packs 301
 /ssl/reference/cipher-suites/matching-on-origin/ /ssl/origin-configuration/cipher-suites/#match-on-origin 301
 /ssl/reference/migration-guides/lets-encrypt-chain/ /ssl/reference/certificate-authorities/#lets-encrypt 301
+/ssl/reference/migration-guides/dcv-update/ /ssl/reference/migration-guides/ 301
 /ssl/reference/validation-backoff-schedule/ /ssl/edge-certificates/changing-dcv-method/validation-backoff-schedule/ 301
 /ssl/universal-ssl/changing-dcv-method/ /ssl/edge-certificates/changing-dcv-method/ 301
 /support/dns/how-to/certification-authority-authorization-caa-faq/ /ssl/edge-certificates/troubleshooting/caa-records/ 301
@@ -1027,6 +1041,9 @@
 /cloudflare-for-platforms/cloudflare-for-saas/domain-support/worker-as-origin/ /cloudflare-for-platforms/cloudflare-for-saas/start/advanced-settings/worker-as-origin/ 301
 /cloudflare-for-platforms/cloudflare-for-saas/start/hostname-verification-backoff-schedule/ /cloudflare-for-platforms/cloudflare-for-saas/domain-support/hostname-validation/backoff-schedule/ 301
 /cloudflare-for-platforms/cloudflare-for-saas/domain-support/hostname-verification/ /cloudflare-for-platforms/cloudflare-for-saas/domain-support/hostname-validation/ 301
+/cloudflare-for-platforms/cloudflare-for-saas/reference/status-codes/certificate-authority-specific/ /cloudflare-for-platforms/cloudflare-for-saas/reference/status-codes/ 301
+/cloudflare-for-platforms/cloudflare-for-saas/security/certificate-management/issue-and-validate/validate-certificates/cname/ /cloudflare-for-platforms/cloudflare-for-saas/security/certificate-management/issue-and-validate/validate-certificates/ 301
+/cloudflare-for-platforms/cloudflare-for-saas/security/certificate-management/issue-and-validate/validate-certificates/email/ /cloudflare-for-platforms/cloudflare-for-saas/security/certificate-management/issue-and-validate/validate-certificates/ 301
 
 # workers for platforms
 /cloudflare-for-platforms/workers-for-platforms/learning/ /cloudflare-for-platforms/workers-for-platforms/reference/ 301
@@ -1229,6 +1246,7 @@
 /turnstile/migration/migrating-from-recaptcha/ /turnstile/migration/recaptcha/ 301
 /turnstile/migration/migrating-from-hcaptcha/ /turnstile/migration/hcaptcha/ 301
 /turnstile/concepts/widget-types/ /turnstile/concepts/widget/ 301
+/turnstile/concepts/domain-management/ /turnstile/concepts/hostname-management/ 301
 
 # waf
 /waf/about/ /waf/concepts/ 301
@@ -1307,9 +1325,9 @@
 /workers/about/tips/signing-requests/ /workers/examples/signing-requests/ 301
 /workers/about/using-cache/ /workers/reference/how-the-cache-works/ 301
 /workers/learning/how-the-cache-works/ /workers/reference/how-the-cache-works/ 301
-/workers/api/ /api/operations/worker-script-list-workers 301
+/workers/api/ /api/resources/workers/subresources/scripts/methods/list/ 301
 /workers/learning/how-kv-works/ /kv/learning/how-kv-works/ 301
-/workers/api/resource-bindings/webassembly-modules/ /api/operations/worker-script-list-workers 301
+/workers/api/resource-bindings/webassembly-modules/ /api/resources/workers/subresources/scripts/methods/list/ 301
 /workers/api/route-matching/ /workers/platform/routing/routes/ 301
 /workers/cli-wrangler/ /workers/wrangler/ 301
 /workers/cli-wrangler/configuration/ /workers/wrangler/configuration/ 301
@@ -1324,7 +1342,7 @@
 /workers/learning/fetch-event-lifecycle/ /workers/runtime-apis/fetch-event/ 301
 /workers/learning/getting-started/ /workers/get-started/guide/ 301
 /workers/learning/profiling-workers/ /workers/reference/how-workers-works/ 301
-/workers/platform/scripts/ /api/operations/worker-script-list-workers 301
+/workers/platform/scripts/ /api/resources/workers/subresources/scripts/methods/list/ 301
 /workers/platform/services/ /workers/runtime-apis/bindings/service-bindings/ 301
 /workers/platform/web-assembly/ /workers/platform/webassembly/ 301
 /workers/platform/web-assembly/rust/ /workers/platform/webassembly/rust/ 301
@@ -1598,6 +1616,10 @@
 /cloudflare-one/analytics/gateway/ /cloudflare-one/insights/analytics/gateway/ 301
 /cloudflare-one/analytics/users/ /cloudflare-one/insights/logs/users/ 301
 /cloudflare-one/api-terraform/access-api-examples/azure-group/ /cloudflare-one/api-terraform/access-api-examples/entra-group/ 301
+/cloudflare-one/api-terraform/gateway-api-examples/ /cloudflare-one/policies/gateway/ 301
+/cloudflare-one/api-terraform/gateway-api-examples/dns-policy/ /cloudflare-one/policies/gateway/dns-policies/common-policies/ 301
+/cloudflare-one/api-terraform/gateway-api-examples/network-policy/ /cloudflare-one/policies/gateway/network-policies/common-policies/ 301
+/cloudflare-one/api-terraform/gateway-api-examples/http-policy/ /cloudflare-one/policies/gateway/http-policies/common-policies/ 301
 /cloudflare-one/applications/non-http/arbitrary-tcp/ /cloudflare-one/applications/non-http/cloudflared-authentication/arbitrary-tcp/ 301
 /cloudflare-one/connections/connect-apps/configuration/ /cloudflare-one/connections/connect-networks/configure-tunnels/ 301
 /cloudflare-one/connections/connect-apps/install-and-setup/setup/ /cloudflare-one/connections/connect-networks/get-started/ 301
@@ -1774,6 +1796,7 @@
 /rules/url-forwarding/dynamic-redirects/* /rules/url-forwarding/single-redirects/:splat 301
 /ssl/ssl-tls/* /ssl/reference/:splat 301
 /ssl/reference/cipher-suites/* /ssl/edge-certificates/additional-options/cipher-suites/:splat 301
+/ssl/reference/migration-guides/digicert-update/* /ssl/reference/migration-guides/ 301
 /support/account-management-billing/billing-cloudflare-add-on-services/* https://www.cloudflare.com/plans/ 301
 /tenant/tutorial/* /tenant/get-started/ 301
 /waf/managed-rulesets/* /waf/managed-rules/:splat 301

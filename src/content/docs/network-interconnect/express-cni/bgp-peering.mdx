@@ -1,0 +1,19 @@
+---
+pcx_content_type: concept
+sidebar:
+  order: 3
+title: BGP peering
+---
+
+Magic WAN and Magic Transit customers can use the Cloudflare dashboard to configure and manage BGP peering between their networks and their Magic routing table when using a Direct CNI on-ramp.
+
+Using BGP peering with a CNI allows customers to:
+- Automate the process of adding or removing networks and subnets.
+- Take advantage of failure detection and session recovery features.
+
+With this functionality, customers can:
+- Establish an eBGP session between their devices and the Magic WAN / Magic Transit service when connected via CNI.
+- Secure the session by MD5 authentication to prevent misconfigurations.
+- Exchange routes dynamically between their devices and their Magic routing table.
+
+Refer to [Magic WAN BGP peering](/magic-wan/configuration/manually/how-to/bgp-peering/) or [Magic Transit BGP peering](/magic-transit/how-to/bgp-peering/) to learn more about this feature and how to set it up.

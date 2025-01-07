@@ -42,7 +42,7 @@
 
 # Browser Rendering API
 
-/src/content/docs/browser-rendering/ @tanushree-sharma @mchenco @cloudflare/pcx-technical-writing @celso @meddulla
+/src/content/docs/browser-rendering/ @mchenco @cloudflare/pcx-technical-writing @celso @meddulla
 
 # Cloudflare One
 
@@ -50,16 +50,16 @@
 /src/content/docs/cloudflare-one/applications/ @kennyj42 @ranbel @cloudflare/pcx-technical-writing
 /src/content/docs/cloudflare-one/identity/ @kennyj42 @ranbel @cloudflare/pcx-technical-writing
 /src/content/docs/cloudflare-one/policies/access/ @kennyj42 @ranbel @cloudflare/pcx-technical-writing
-/src/content/docs/cloudflare-one/connections/connect-devices/ @kkrum @ranbel @cloudflare/pcx-technical-writing
-/src/content/docs/cloudflare-one/connections/connect-networks/ @janani-cr @ranbel @cloudflare/pcx-technical-writing
-/src/content/docs/cloudflare-one/insights/ @abelinkinbio @ranbel @cloudflare/pcx-technical-writing
+/src/content/docs/cloudflare-one/connections/connect-devices/ @kkrum @kokolocomotion1 @ranbel @cloudflare/pcx-technical-writing
+/src/content/docs/cloudflare-one/connections/connect-networks/ @ranbel @cloudflare/pcx-technical-writing
 /src/content/docs/cloudflare-one/applications/scan-apps/ @maxvp @cloudflare/pcx-technical-writing
 /src/content/docs/cloudflare-one/policies/gateway/ @maxvp @cloudflare/pcx-technical-writing
-/src/content/docs/cloudflare-one/policies/browser-isolation/ @maxvp @abelinkinbio @cloudflare/pcx-technical-writing
+/src/content/docs/cloudflare-one/policies/browser-isolation/ @maxvp @ranbel @cloudflare/pcx-technical-writing
 /src/content/docs/cloudflare-one/policies/data-loss-prevention/ @maxvp @cloudflare/pcx-technical-writing
+/src/content/docs/cloudflare-one/insights/dex/ @deadlypants1973 @cloudflare/pcx-technical-writing
 /src/content/docs/email-security/ @Maddy-Cloudflare @cloudflare/pcx-technical-writing
 /src/content/changelogs/access.yaml @ranbel @kennyj42 @cloudflare/pcx-technical-writing
-/src/content/changelogs/warp.yaml @ranbel @cloudflare/pcx-technical-writing
+/src/content/changelogs/warp.yaml @kokolocomotion1 @ranbel @cloudflare/pcx-technical-writing
 
 # Consumer products
 
@@ -121,7 +121,7 @@
 /src/content/docs/workers/ci-cd/ @irvinebroque @aninibread @GregBrimble @ToriLindsay @cloudflare/pcx-technical-writing
 /src/content/docs/workers/runtime-apis/ @irvinebroque @jasnell @mikenomitch @GregBrimble @ToriLindsay @cloudflare/pcx-technical-writing
 /src/content/docs/workers/runtime-apis/bindings/ @irvinebroque @mikenomitch @GregBrimble @ToriLindsay @cloudflare/pcx-technical-writing
-/src/content/docs/workers/platform/ @irvinebroque @tanushree-sharma @GregBrimble @cloudflare/deploy-config @cloudflare/pcx-technical-writing
+/src/content/docs/workers/platform/ @irvinebroque @GregBrimble @cloudflare/deploy-config @cloudflare/pcx-technical-writing
 /src/content/docs/workers/configuration/compatibility-dates/ @irvinebroque @mikenomitch @GregBrimble @ToriLindsay @cloudflare/deploy-config @cloudflare/pcx-technical-writing
 /src/content/docs/workers/configuration/compatibility-flags/ @irvinebroque @mikenomitch @GregBrimble @ToriLindsay @cloudflare/deploy-config @cloudflare/pcx-technical-writing
 
@@ -130,11 +130,11 @@
 /src/content/compatibility-flags/ @irvinebroque @mikenomitch @GregBrimble @cloudflare/pcx-technical-writing
 /src/content/docs/workers/wrangler/ @cloudflare/wrangler @cloudflare/wrangler-friends @irvinebroque @ToriLindsay @cloudflare/pcx-technical-writing
 /src/content/docs/workers/frameworks/ @igorminar @dario-piotrowicz @jculvey @aninibread @GregBrimble @ToriLindsay @cloudflare/pcx-technical-writing
-/src/content/docs/pages/framework-guides/ @igorminar @dario-piotrowicz @jculvey @aninibread @GregBrimble @tanushree-sharma @ToriLindsay @cloudflare/pcx-technical-writing
+/src/content/docs/pages/framework-guides/ @igorminar @dario-piotrowicz @jculvey @aninibread @GregBrimble @ToriLindsay @cloudflare/pcx-technical-writing
 /src/content/docs/analytics/analytics-engine/ @irvinebroque @elithrar @cloudflare/pcx-technical-writing
-/cloudflare-for-platforms/workers-for-platforms/ @irvinebroque @tanushree-sharma @angelampcosta @GregBrimble @cloudflare/deploy-config @cloudflare/pcx-technical-writing
+/cloudflare-for-platforms/workers-for-platforms/ @irvinebroque @angelampcosta @GregBrimble @cloudflare/deploy-config @cloudflare/pcx-technical-writing
 /src/content/docs/workers/observability/ @irvinebroque @mikenomitch @rohinlohe @ToriLindsay @cloudflare/pcx-technical-writing
-/src/content/docs/workers/static-assets @irvinebroque @tanushree-sharma @GregBrimble @WalshyDev @ToriLindsay @cloudflare/deploy-config @cloudflare/pcx-technical-writing
+/src/content/docs/workers/static-assets @irvinebroque @GregBrimble @WalshyDev @ToriLindsay @cloudflare/deploy-config @cloudflare/pcx-technical-writing
 /src/content/docs/workflows/ @ToriLindsay @elithrar @celso @sidharthachatterjee @cloudflare/pcx-technical-writing
 
 # DDoS Protection
@@ -180,8 +180,8 @@
 
 # Radar
 
-/src/content/docs/radar/ @meddulla @G4brym @tiagoad @cloudflare/pcx-technical-writing
-/src/content/changelogs/radar.yaml @meddulla @G4brym @tiagoad @cloudflare/pcx-technical-writing
+/src/content/docs/radar/ @meddulla @G4brym @tiagoad @andre-j3sus @cloudflare/pcx-technical-writing
+/src/content/changelogs/radar.yaml @meddulla @G4brym @tiagoad @andre-j3sus @cloudflare/pcx-technical-writing
 
 # Reference architecture
 

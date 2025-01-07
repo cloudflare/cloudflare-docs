@@ -12,7 +12,7 @@ Some D1 Worker Binding APIs return a typed object.
 | [`D1PreparedStatement::run`](/d1/worker-api/prepared-statements/#run), [`D1Database::batch`](/d1/worker-api/d1-database/#batch)| `D1Result`    |
 | [`D1Database::exec`](/d1/worker-api/d1-database/#exec)                                                                         | `D1ExecResult`|
 
-## D1Result
+## `D1Result`
 
 The methods [`D1PreparedStatement::run`](/d1/worker-api/prepared-statements/#run) and [`D1Database::batch`](/d1/worker-api/d1-database/#batch) return a typed [`D1Result`](#d1result) object for each query statement. This object contains:
 
@@ -73,7 +73,7 @@ return Response.json(result)
 }
 ```
 
-## D1ExecResult
+## `D1ExecResult`
 
 The method [`D1Database::exec`](/d1/worker-api/d1-database/#exec) returns a typed [`D1ExecResult`](#d1execresult) object for each query statement. This object contains:
 

@@ -54,7 +54,7 @@ Currently, not all Cloudflare products support lists in their expressions. Refer
 
 ### Search list items
 
-You can search for list items in the dashboard or [via API](/api/operations/lists-get-list-items).
+You can search for list items in the dashboard or [via API](/api/resources/rules/subresources/lists/subresources/items/methods/list/).
 
 For IP Lists, Cloudflare will return IP addresses/ranges that start with your search query (search by prefix). Currently, you cannot search for an IP address contained in a CIDR range of an IP List.
 
@@ -86,6 +86,6 @@ You can only delete a list when there are no rules (enabled or disabled) that re
 
 <Render file="lists-import-notes" product="fundamentals" />
 
-To replace the entire contents of a list, format the data as an array and use the [Update all list items](/api/operations/lists-update-all-list-items) operation in the [Lists API](/waf/tools/lists/lists-api/endpoints/).
+To replace the entire contents of a list, format the data as an array and use the [Update all list items](/api/resources/rules/subresources/lists/subresources/items/methods/update/) operation in the [Lists API](/waf/tools/lists/lists-api/endpoints/).
 
-You cannot download a list in CSV format from the Cloudflare dashboard. If you need to download the contents of a list, use the [Get list items](/api/operations/lists-get-list-items) operation to fetch the list items.
+You cannot download a list in CSV format from the Cloudflare dashboard. If you need to download the contents of a list, use the [Get list items](/api/resources/rules/subresources/lists/subresources/items/methods/list/) operation to fetch the list items.

@@ -40,7 +40,7 @@ sudo launchctl load /Library/LaunchDaemons/com.cloudflare.cloudflared.plist
 sudo launchctl start com.cloudflare.cloudflared
 ```
 
-</TabItem> <TabItem label="debian">
+</TabItem> <TabItem label="Debian">
 
 **If installed via apt:**
 
@@ -72,7 +72,7 @@ curl --location --output cloudflared.deb https://github.com/cloudflare/cloudflar
 sudo systemctl restart cloudflared.service
 ```
 
-</TabItem> <TabItem label="red hat">
+</TabItem> <TabItem label="Red Hat">
 
 1. Update the `cloudflared` package:
 
@@ -86,7 +86,7 @@ sudo yum update cloudflared
 sudo systemctl restart cloudflared.service
 ```
 
-</TabItem> <TabItem label="docker">
+</TabItem> <TabItem label="Docker">
 
 1. In Zero Trust, go to **Networks** > **Tunnels**.
 2. Select your tunnel and select **Configure**.
@@ -95,7 +95,7 @@ sudo systemctl restart cloudflared.service
 
 This creates a new container from the latest `cloudflared` image. You can now delete the old container.
 
-</TabItem> <TabItem label="other">
+</TabItem> <TabItem label="Other">
 
 If you installed `cloudflared` from GitHub-provided binaries or from source, run the following command:
 

@@ -24,7 +24,7 @@ To enable **WebSockets** connections to your origin server in the dashboard:
 
 </TabItem> <TabItem label="API">
 
-To enable **WebSockets** connections to your origin server with the API, send a [`PATCH`](/api/operations/zone-settings-edit-single-setting) request with `websockets` as the setting name in the URI path, and the `value` parameter set to `"on"`.
+To enable **WebSockets** connections to your origin server with the API, send a [`PATCH`](/api/resources/zones/subresources/settings/methods/edit/) request with `websockets` as the setting name in the URI path, and the `value` parameter set to `"on"`.
 
 </TabItem> </Tabs>
 
@@ -62,7 +62,7 @@ Once a WebSocket connection is closed, you can view your aggregated WebSocket us
 
 When Cloudflare releases new code to its global network, we may restart servers, which terminates WebSockets connections.
 
-### Best practises
+### Best practices
 
 - Implement a [keepalive](https://developer.mozilla.org/en-US/docs/Web/API/WebSockets_API/Writing_WebSocket_servers#pings_and_pongs_the_heartbeat_of_websockets).
 - Review and then remove or extend timeout settings on the origin and/or on the client.
