@@ -35,7 +35,8 @@ const stmt = env.DB.prepare("SELECT * FROM Customers WHERE CompanyName = ?").bin
 
 #### Return values
 
-- None.
+- <code>D1PreparedStatement</code>: <Type text="Object"/>
+  - An object which only contains methods `bind`,`run`, `raw`, and `first`.
 
 #### Guidance
 
