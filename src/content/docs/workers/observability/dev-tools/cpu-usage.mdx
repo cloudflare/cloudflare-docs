@@ -14,6 +14,11 @@ Measuring execution time of specific functions in production can be difficult be
 [only increment timers on I/O](/workers/reference/security-model/#step-1-disallow-timers-and-multi-threading)
 for security purposes. However, measuring CPU execution times is possible in local development with DevTools.
 
+When using DevTools to monitor CPU usage, it may be difficult to replicate specific behavior you are
+seeing in production. To mimic production behavior, make sure the requests you send to the local Worker
+are similar to requests in production. This might mean sending a large volume of requests, making requests
+to specific routes, or using production-like data with the [--remote flag](/workers/testing/local-development/#develop-using-remote-resources-and-bindings).
+
 ## Taking a profile
 
 To generate a CPU profile:

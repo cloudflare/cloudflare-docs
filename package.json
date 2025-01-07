@@ -52,6 +52,7 @@
 		"astro-icon": "^1.1.2",
 		"astro-live-code": "^0.0.4",
 		"date-fns": "^4.1.0",
+		"dedent": "^1.5.3",
 		"detype": "1.0.12",
 		"dompurify": "3.2.3",
 		"dot-prop": "^9.0.0",

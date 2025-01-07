@@ -5,6 +5,11 @@ productLink: "/ai-gateway/"
 productArea: Developer platform
 productAreaLink: /workers/platform/changelog/platform/
 entries:
+  - publish_date: "2025-01-02"
+    title: DeepSeek
+    description: |-
+      * **Configuration**: Added [DeepSeek](/ai-gateway/providers/deepseek/) as a new provider.
+    
   - publish_date: "2024-12-17"
     title: AI Gateway Dashboard
     description: |-

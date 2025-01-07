@@ -308,6 +308,12 @@
 /d1/reference/database-commands/ /d1/reference/sql-statements/ 301
 /d1/reference/sql-statements/ /d1/sql-api/sql-statements/ 301
 
+# Data Localization Suite
+/data-localization/key-management/ /data-localization/key-management/geo-key-manager/ 301
+/data-localization/key-management/geo-key-manager/ /data-localization/geo-key-manager/ 301
+/data-localization/key-management/keyless-ssl/ /ssl/keyless-ssl/ 301
+
+
 # data loss prevention (dlp)
 /cloudflare-one/policies/data-loss-prevention/integration-profiles/ /cloudflare-one/policies/data-loss-prevention/dlp-profiles/integration-profiles/ 301
 /cloudflare-one/policies/data-loss-prevention/dlp-logs/ /cloudflare-one/policies/data-loss-prevention/dlp-policies/ 301
@@ -1023,7 +1029,6 @@
 /ssl/reference/cipher-suites/matching-on-origin/ /ssl/origin-configuration/cipher-suites/#match-on-origin 301
 /ssl/reference/migration-guides/lets-encrypt-chain/ /ssl/reference/certificate-authorities/#lets-encrypt 301
 /ssl/reference/migration-guides/dcv-update/ /ssl/reference/migration-guides/ 301
-/ssl/reference/migration-guides/digicert-update/ /ssl/reference/migration-guides/ 301
 /ssl/reference/validation-backoff-schedule/ /ssl/edge-certificates/changing-dcv-method/validation-backoff-schedule/ 301
 /ssl/universal-ssl/changing-dcv-method/ /ssl/edge-certificates/changing-dcv-method/ 301
 /support/dns/how-to/certification-authority-authorization-caa-faq/ /ssl/edge-certificates/troubleshooting/caa-records/ 301

@@ -67,7 +67,7 @@ Requests to a project with static assets can either return static assets or invo
 
 **Requests to static assets are free and unlimited**. Requests to the Worker script (e.g. in the case of SSR content) are billed according to Workers pricing. Refer to [pricing](/workers/platform/pricing/#example-2) for an example.
 
-There's no additional cost for storing Assets.
+There is no additional cost for storing Assets.
 
 ### Troubleshooting
 
@@ -78,7 +78,6 @@ There's no additional cost for storing Assets.
 The following limitations apply for Workers with static assets:
 
 - There is a 20,000 file count limit per [Worker version](/workers/configuration/versions-and-deployments/), and a 25 MiB individual file size limit. This matches the [limits in Cloudflare Pages](/pages/platform/limits/) today.
-- You cannot upload static assets to [Workers for Platforms](/cloudflare-for-platforms/workers-for-platforms/) [user workers](/cloudflare-for-platforms/workers-for-platforms/reference/how-workers-for-platforms-works/). This is a temporary limitation, we are working to remove it.
 - In local development, you cannot make [Service Binding RPC calls](/workers/runtime-apis/bindings/service-bindings/rpc/) to a Worker with static assets. This is a temporary limitation, we are working to remove it.
 - Workers with assets cannot run on a [route or domain](/workers/configuration/routing/) with a path component. For example, `example.com/*` is an acceptable route, but `example.com/foo/*` is not. Wrangler and the Cloudflare dashboard will throw an error when you try and add a route with a path component.
 
