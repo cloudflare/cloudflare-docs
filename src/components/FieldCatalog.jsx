@@ -105,7 +105,7 @@ const FieldCatalog = ({ fields }) => {
 					return (
 						<a
 							key={field.name}
-							className="mb-3 block w-full self-start rounded-md border border-solid border-gray-200 p-3 !text-inherit no-underline hover:bg-gray-50 dark:border-gray-700 dark:hover:bg-gray-800 lg:w-[48%]"
+							className="mb-3 block w-full self-stretch rounded-md border border-solid border-gray-200 p-3 !text-inherit no-underline hover:bg-gray-50 dark:border-gray-700 dark:hover:bg-gray-800 lg:w-[48%]"
 							href={`/ruleset-engine/rules-language/fields/reference/${field.name}/`}
 						>
 							<div className="-mb-1 flex items-center">
