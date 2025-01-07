@@ -49,22 +49,22 @@ const FieldCatalog = ({ fields }) => {
 
 	return (
 		<div className="md:flex">
-			<div className="md:w-1/4 w-full mr-8">
+			<div className="mr-8 w-full md:w-1/4">
 				<input
 					type="text"
-					className="w-full mb-8 rounded-md bg-white dark:bg-black border-2 border-gray-200 dark:border-gray-700 px-2 py-2"
+					className="mb-8 w-full rounded-md border-2 border-gray-200 bg-white px-2 py-2 dark:border-gray-700 dark:bg-gray-800"
 					placeholder="Search fields"
 					value={filters.search}
 					onChange={(e) => setFilters({ ...filters, search: e.target.value })}
 				/>
 
-				<div className="!mb-8 md:block hidden">
-					<span className="uppercase text-gray-600 dark:text-gray-200 text-sm font-bold">
+				<div className="!mb-8 hidden md:block">
+					<span className="text-sm font-bold uppercase text-gray-600 dark:text-gray-200">
 						▼ Categories
 					</span>
 
 					{categories.map((category) => (
-						<label key={category} className="block !my-2">
+						<label key={category} className="!my-2 block">
 							<input
 								type="checkbox"
 								className="mr-2"
@@ -91,9 +91,9 @@ const FieldCatalog = ({ fields }) => {
 				</div>
 			</div>
 
-			<div className="flex md:w-3/4 w-full gap-[1%] items-stretch self-start flex-wrap !mt-0">
+			<div className="!mt-0 flex w-full flex-wrap items-stretch gap-[1%] self-start md:w-3/4">
 				{fieldList.length === 0 && (
-					<div className="border bg-gray-50 dark:bg-gray-800 dark:border-gray-500 rounded-md w-full flex-col flex align-middle justify-center text-center py-6">
+					<div className="flex w-full flex-col justify-center rounded-md border bg-gray-50 py-6 text-center align-middle dark:border-gray-500 dark:bg-gray-800">
 						<span className="text-lg !font-bold">No fields found</span>
 						<p>
 							Try a different search term, or broaden your search by removing
@@ -102,11 +102,10 @@ const FieldCatalog = ({ fields }) => {
 					</div>
 				)}
 				{fieldList.map((field) => {
-					// removed lg:w-[48%] from anchor classes below
 					return (
 						<a
 							key={field.name}
-							className="p-3 border-gray-200 dark:border-gray-700 border-solid border rounded-md lg:w-[48%] w-full block !text-inherit no-underline self-stretch hover:bg-gray-50 dark:hover:bg-black mb-3"
+							className="mb-3 block w-full self-start rounded-md border border-solid border-gray-200 p-3 !text-inherit no-underline hover:bg-gray-50 dark:border-gray-700 dark:hover:bg-gray-800 lg:w-[48%]"
 							href={`/ruleset-engine/rules-language/fields/reference/${field.name}/`}
 						>
 							<div className="-mb-1 flex items-center">
@@ -125,7 +124,7 @@ const FieldCatalog = ({ fields }) => {
 							/>
 
 							{field.plan_info_label && (
-								<div className="text-xs !mt-2">
+								<div className="!mt-2 text-xs">
 									<FieldBadges badges={[field.plan_info_label]} />
 								</div>
 							)}
