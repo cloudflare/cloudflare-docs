@@ -7,9 +7,9 @@ head:
 
 ---
 
-[Spectrum](/spectrum/) allows you to route email, file transfer, games, and more over TCP or UDP through Cloudflare, masking your origin and protecting it from DDoS attacks.
+[Spectrum](/spectrum/) allows you to route email, file transfer, games, and more over TCP or UDP through Cloudflare. This means you can mask your origin and protect it from DDoS attacks.
 
-While you can use [BYOIP](/byoip/) or static IPs to control which IPs are used for ingress with Spectrum, Aegis allows you to have a more strict list of egress IPs as well.
+While you can use [BYOIP](/byoip/) or static IPs to control which IPs are used for ingress with Spectrum, Aegis allows you to have a more strict list of [egress IPs](/aegis/about/) as well.
 
 ```mermaid
 flowchart LR
@@ -18,6 +18,6 @@ flowchart LR
         A[Client] --ingress--> B((Cloudflare))--egress--> C[(Origin server)]
 ```
 
-Aegis with Spectrum supports both TCP and UDP application types.
+Aegis with Spectrum supports both TCP and UDP application types. HTTP/HTTPS types are also supported, although through a different configuration.
 
-When a Spectrum app is configured as HTTP/HTTPS type, Aegis must be manually configured through a CDN Cache Rule.
+If you are interested in any of these solutions, contact your account team.
