@@ -1346,7 +1346,7 @@
 /workers/deploying-workers/terraform/ /workers/configuration/integrations/ 301
 /workers/kv/ /workers/learning/how-kv-works/ 301
 /workers/learning/fetch-event-lifecycle/ /workers/runtime-apis/fetch-event/ 301
-/workers/learning/getting-started/ /workers/get-started/guide/ 301
+/workers/learning/getting-started/ /workers/get-started/quickstarts/ 301
 /workers/learning/profiling-workers/ /workers/reference/how-workers-works/ 301
 /workers/platform/scripts/ /api/resources/workers/subresources/scripts/methods/list/ 301
 /workers/platform/services/ /workers/runtime-apis/bindings/service-bindings/ 301
