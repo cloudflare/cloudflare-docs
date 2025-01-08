@@ -26,7 +26,7 @@ However, storage is scoped per individual Durable Object.
 
 Durable Objects gain access to a persistent Durable Object Storage API via the `DurableObjectStorage` interface and accessed by the `DurableObjectState::storage` property. This is frequently accessed via `this.ctx.storage` when the `ctx` parameter passed to the Durable Object constructor.
 
-JavaScript is a single-threaded and event-driven programming language. This means that JavaScript runtimes by default, allow requests to interleave with each other which can lead to concurrency bugs. The Durable Objects runtime uses a combination of <GlossaryTooltip term="input gate">input gates</GlossaryTooltip> and <GlossaryTooltip term="output gate">output gates</GlossaryTooltip> to avoid this type of concurrency bug when performing storage operations.
+JavaScript is a single-threaded and event-driven programming language. This means that JavaScript runtimes, by default, allow requests to interleave with each other which can lead to concurrency bugs. The Durable Objects runtime uses a combination of <GlossaryTooltip term="input gate">input gates</GlossaryTooltip> and <GlossaryTooltip term="output gate">output gates</GlossaryTooltip> to avoid this type of concurrency bug when performing storage operations.
 
 The following code snippet shows you how to store and retrieve data using the Durable Object Storage API.
 
