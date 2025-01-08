@@ -152,6 +152,7 @@ export default defineConfig({
 				Footer: "./src/components/overrides/Footer.astro",
 				Head: "./src/components/overrides/Head.astro",
 				Hero: "./src/components/overrides/Hero.astro",
+				LastUpdated: "./src/components/overrides/LastUpdated.astro",
 				MarkdownContent: "./src/components/overrides/MarkdownContent.astro",
 				Sidebar: "./src/components/overrides/Sidebar.astro",
 				PageSidebar: "./src/components/overrides/PageSidebar.astro",
