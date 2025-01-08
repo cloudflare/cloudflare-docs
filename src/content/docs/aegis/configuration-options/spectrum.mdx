@@ -1,0 +1,23 @@
+---
+title: Spectrum
+pcx_content_type: concept
+head:
+  - tag: title
+    content: Use Aegis with Spectrum
+
+---
+
+[Spectrum](/spectrum/) allows you to route email, file transfer, games, and more over TCP or UDP through Cloudflare, masking your origin and protecting it from DDoS attacks.
+
+While you can use [BYOIP](/byoip/) or static IPs to control which IPs are used for ingress with Spectrum, Aegis allows you to have a more strict list of egress IPs as well.
+
+```mermaid
+flowchart LR
+        accTitle: Cloudflare as a reverse proxy
+        accDescr: Diagram showing Cloudflare's network between clients and the origin server.
+        A[Client] --ingress--> B((Cloudflare))--egress--> C[(Origin server)]
+```
+
+Aegis with Spectrum supports both TCP and UDP application types.
+
+When a Spectrum app is configured as HTTP/HTTPS type, Aegis must be manually configured through a CDN Cache Rule.
