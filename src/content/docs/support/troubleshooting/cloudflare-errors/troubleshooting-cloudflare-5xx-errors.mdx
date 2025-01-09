@@ -218,16 +218,12 @@ Error 522 occurs when Cloudflare times out contacting the origin web server. Two
 - Packets were dropped at your origin web server.
 
 If you are using [Cloudflare Pages](/pages/), verify that you have a custom domain set up and that your CNAME record is pointed to your [custom Pages domain](/pages/configuration/custom-domains/#add-a-custom-domain).
+If you are using [Workers with a Custom Domain](/workers/configuration/routing/custom-domains/), performing a `fetch` to its own hostname will cause a 522 error. Consider using a [Route](/workers/configuration/routing/) or target another hostname instead. 
 
 If none of the above leads to a resolution, request the following information from your hosting provider or site administrator before [contacting Cloudflare support](/support/contacting-cloudflare-support/):
 
 - An [MTR or traceroute](/support/troubleshooting/general-troubleshooting/gathering-information-for-troubleshooting-sites/#perform-a-traceroute) from your origin web server to a [Cloudflare IP address](http://www.cloudflare.com/ips) that most commonly connected to your origin web server before the issue occurred. Identify a connecting Cloudflare IP recorded in the origin web server logs.
 - Details from the hosting provider's investigation such as pertinent logs or conversations with the hosting provider.
-
-:::note
-
-A Worker using a Custom Domain, performing a `fetch` to its own hostname will cause a 522 error. Consider using a [Route](/workers/configuration/routing/) or target another hostname instead.
-:::
 
 ---
 
@@ -395,9 +391,9 @@ As a result, a valid SSL certificate is required at the origin.
 
 ## Error 530
 
-HTTP error 530 is returned with an accompanying 1XXX error displayed. Search for the specific [1XXX error](/support/troubleshooting/cloudflare-errors/troubleshooting-cloudflare-1xxx-errors) for troubleshooting information.
-
-Enabling [Load Balancing](/load-balancing/) in China will cause a `530` error.
+An HTTP error 530 is returned when Cloudflare is encountering an issue resolving the origin hostname. 
+In this case the body of the response contains an [1XXX error](/support/troubleshooting/cloudflare-errors/troubleshooting-cloudflare-1xxx-errors) code. 
+Please refer to the specific [1XXX error](/support/troubleshooting/cloudflare-errors/troubleshooting-cloudflare-1xxx-errors) for troubleshooting information.
 
 ---
 
