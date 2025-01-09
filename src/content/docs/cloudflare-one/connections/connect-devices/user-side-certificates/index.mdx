@@ -40,7 +40,7 @@ To generate a new Cloudflare root certificate for your Zero Trust organization:
 
 <TabItem label="API">
 
-Send a `POST` request to the [Create Zero Trust certificate](/api/resources/zero_trust/subresources/gateway/subresources/certificates/methods/create/) endpoint. For example:
+Send a `POST` request to the [Create Zero Trust certificate](/api/resources/zero_trust/subresources/gateway/subresources/certificates/methods/create/) endpoint.
 
 ```sh
 curl https://api.cloudflare.com/client/v4/accounts/{account_id}/gateway/certificates \
@@ -66,10 +66,26 @@ Once a certificate is generated in or uploaded to Zero Trust, you need to activa
 
 To activate your root certificate:
 
+<Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
+
 1. In [Zero Trust](https://one.dash.cloudflare.com/), go to **Settings** > **Resources**.
 2. In **Certificates**, select **Manage**.
 3. Select the certificate you want to activate.
 4. Select **Activate**.
+
+</TabItem>
+
+<TabItem label="API">
+
+Send a `POST` request to the [Activate a Zero Trust certificate](/api/resources/zero_trust/subresources/gateway/subresources/certificates/methods/activate/) endpoint.
+
+```sh
+curl https://api.cloudflare.com/client/v4/accounts/{account_id}/gateway/certificates/{certificate_id}/activate \
+--header "Content-Type: application/json" \
+--header "Authorization: Bearer <API_TOKEN>" \
+```
+
+</TabItem> </Tabs>
 
 The status of the certificate will change to **Pending** while it deploys. Once the status of your certificate is **Available**, you can install it on your user's devices either [with WARP](/cloudflare-one/connections/connect-devices/user-side-certificates/automated-deployment/) or [manually](/cloudflare-one/connections/connect-devices/user-side-certificates/manual-deployment/).
 
