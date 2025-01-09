@@ -11,11 +11,10 @@ head:
 import { Details, TabItem, Tabs } from "~/components";
 
 :::note
-
 WAF content scanning is available to customers on an Enterprise plan with a paid add-on.
 :::
 
-## 1. Enable WAF content scanning
+## 1. Turn on the detection
 
 <Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
 
@@ -33,6 +32,19 @@ curl --request POST \
 --header "X-Auth-Email: <EMAIL>" \
 --header "X-Auth-Key: <API_KEY>"
 ```
+
+</TabItem> <TabItem label="Terraform">
+
+Use the `cloudflare_content_scanning` resource to enable malicious uploads detection for a zone. For example:
+
+```terraform
+resource "cloudflare_content_scanning" "zone_malicious_uploads_example" {
+	zone_id = "<ZONE_ID>"
+	enabled = true
+}
+```
+
+For more information, refer to the [Terraform Cloudflare provider documentation](https://registry.terraform.io/providers/cloudflare/cloudflare/latest/docs).
 
 </TabItem> </Tabs>
 
@@ -138,6 +150,17 @@ The above request will add the following expression to the current list of custo
 
 ```txt
 lookup_json_string(http.request.body.raw, "file")
+```
+
+</TabItem> <TabItem label="Terraform">
+
+Use the `cloudflare_content_scanning_expression` resource to add a custom scan expression. For example:
+
+```terraform
+resource "cloudflare_content_scanning_expression" "mu_custom_scan_expression" {
+  zone_id = <ZONE_ID>
+  payload = "lookup_json_string(http.request.body.raw, \"file\")"
+}
 ```
 
 </TabItem> </Tabs>
