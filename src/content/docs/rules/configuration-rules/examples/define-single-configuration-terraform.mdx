@@ -23,14 +23,14 @@ resource "cloudflare_ruleset" "http_config_rules_example" {
   phase       = "http_config_settings"
 
   rules {
-    action = "set_config"
+    ref         = "disable_obfuscation_bic"
+    description = "Disable email obfuscation and BIC for API requests"
+    expression  = "(http.request.uri.path matches \"^/api/\")"
+    action      = "set_config"
     action_parameters {
       email_obfuscation = false
       bic               = false
     }
-    expression  = "(http.request.uri.path matches \"^/api/\")"
-    description = "Disable email obfuscation and BIC for API requests"
-    enabled     = true
   }
 }
 ```

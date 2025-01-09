@@ -6,10 +6,9 @@ sidebar:
 head:
   - tag: title
     content: Configure rate limiting rules with Terraform
-
 ---
 
-import { Details, Render } from "~/components"
+import { Details, Render } from "~/components";
 
 This page provides an example of creating a rate limiting rule in a zone using Terraform.
 
@@ -17,7 +16,7 @@ For more information on rate limiting rules, refer to [Rate limiting rules](/waf
 
 :::note
 
-For more information on configuring the previous version of rate limiting rules in Terraform, refer to the [`cloudflare_rate_limit` resource](https://registry.terraform.io/providers/cloudflare/cloudflare/latest/docs/resources/rate_limit) in the Terraform documentation. 
+For more information on configuring the previous version of rate limiting rules in Terraform, refer to the [`cloudflare_rate_limit` resource](https://registry.terraform.io/providers/cloudflare/cloudflare/latest/docs/resources/rate_limit) in the Terraform documentation.
 :::
 
 ## Before you start
@@ -30,7 +29,7 @@ For more information on configuring the previous version of rate limiting rules 
 
 <Render file="import-delete-existing-rulesets" />
 
-***
+---
 
 ## Create a rate limiting rule
 
@@ -45,31 +44,29 @@ resource "cloudflare_ruleset" "zone_rl" {
   phase       = "http_ratelimit"
 
   rules {
-    action = "block"
+    ref         = "rate_limit_api_requests_ip"
+    description = "Rate limit API requests by IP"
+    expression  = "(http.request.uri.path matches \"^/api/\")"
+    action      = "block"
     ratelimit {
       characteristics = ["cf.colo.id", "ip.src"]
       period = 60
       requests_per_period = 100
       mitigation_timeout = 600
     }
-    expression = "(http.request.uri.path matches \"^/api/\")"
-    description = "My rate limiting rule"
-    enabled = true
   }
 }
 ```
 
-<Render file="add-new-rule" params={{ one: "rate limiting rule" }} /> <br/>
-
+<Render file="add-new-rule" params={{ one: "rate limiting rule" }} /> <br />
 
 <Details header="Account-level example configuration">
 
 :::note[Before you start]
 
+- Account-level rate limiting configuration requires an Enterprise plan with a paid add-on.
 
-* Account-level rate limiting configuration requires an Enterprise plan with a paid add-on.
-
-* Custom rulesets deployed at the account level will only apply to incoming traffic of zones on an Enterprise plan. The expression of your `execute` rule must end with `and cf.zone.plan eq "ENT"`. 
+- Custom rulesets deployed at the account level will only apply to incoming traffic of zones on an Enterprise plan. The expression of your `execute` rule must end with `and cf.zone.plan eq "ENT"`.
   :::
 
 This example defines a [custom ruleset](/ruleset-engine/custom-rulesets/) with a single rate limiting rule in account with ID `<ACCOUNT_ID>` that blocks traffic for the `/api/` path exceeding the configured rate. The second `cloudflare_ruleset` resource defines an `execute` rule that deploys the custom ruleset for traffic addressed at `example.com`.
@@ -83,16 +80,16 @@ resource "cloudflare_ruleset" "account_rl" {
   phase       = "http_ratelimit"
 
   rules {
-    action = "block"
+    ref         = "rate_limit_api_ip"
+    description = "Rate limit API requests by IP"
+    expression  = "http.request.uri.path contains \"/api/\""
+    action      = "block"
     ratelimit {
-      characteristics = ["cf.colo.id", "ip.src"]
-      period = 60
+      characteristics     = ["cf.colo.id", "ip.src"]
+      period              = 60
       requests_per_period = 100
-      mitigation_timeout = 600
+      mitigation_timeout  = 600
     }
-    expression = "http.request.uri.path contains \"/api/\""
-    description = "API rule"
-    enabled = true
   }
 }
 
@@ -108,17 +105,16 @@ resource "cloudflare_ruleset" "account_rl_entrypoint" {
 
   rules {
     # Deploy the previously defined custom ruleset containing a rate limiting rule
-    action = "execute"
+    ref         = "deploy_rate_limit_example_com"
+    description = "Deploy custom ruleset with RL rule"
+    expression  = "cf.zone.name eq \"example.com\" and cf.zone.plan eq \"ENT\""
+    action      = "execute"
     action_parameters {
       id = cloudflare_ruleset.account_rl.id
     }
-    expression = "cf.zone.name eq \"example.com\" and cf.zone.plan eq \"ENT\""
-    description = "Deploy custom ruleset with RL rule"
-    enabled = true
   }
 }
 ```
-
 
 </Details>
 
@@ -126,8 +122,8 @@ resource "cloudflare_ruleset" "account_rl_entrypoint" {
 
 This example creates a rate limiting rule in zone with ID `<ZONE_ID>` with:
 
-* A custom counting expression that includes a response field (`http.response.code`).
-* A custom JSON response for rate limited requests.
+- A custom counting expression that includes a response field (`http.response.code`).
+- A custom JSON response for rate limited requests.
 
 ```tf
 resource "cloudflare_ruleset" "zone_rl_custom_response" {
@@ -138,26 +134,26 @@ resource "cloudflare_ruleset" "zone_rl_custom_response" {
   phase       = "http_ratelimit"
 
   rules {
-    action = "block"
+    ref         = "rate_limit_example_com_status_404"
+    description = "Rate limit requests to www.example.com when exceeding the threshold of 404 responses on /status/"
+    expression  = "http.host eq \"www.example.com\" and (http.request.uri.path matches \"^/status/\")"
+    action      = "block"
     action_parameters {
       response {
-        status_code = 429
-        content = "{\"response\": \"block\"}"
+        status_code  = 429
+        content      = "{\"response\": \"block\"}"
         content_type = "application/json"
       }
     }
     ratelimit {
-      characteristics = ["ip.src", "cf.colo.id"]
-      period = 10
+      characteristics     = ["ip.src", "cf.colo.id"]
+      period              = 10
       requests_per_period = 5
-      mitigation_timeout = 30
+      mitigation_timeout  = 30
       counting_expression = "(http.host eq \"www.example.com\") and (http.request.uri.path matches \"^/status/\") and (http.response.code eq 404)"
     }
-    expression = "http.host eq \"www.example.com\" and (http.request.uri.path matches \"^/status/\")"
-    description = "Rate limit requests to www.example.com when exceeding the threshold of 404 responses on /status/"
-    enabled = true
   }
 }
 ```
 
-<Render file="add-new-rule" params={{ one: "rate limiting rule" }} /> <br/>
+<Render file="add-new-rule" params={{ one: "rate limiting rule" }} /> <br />

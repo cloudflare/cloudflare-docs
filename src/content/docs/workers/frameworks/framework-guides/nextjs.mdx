@@ -33,14 +33,6 @@ To create a new Next.js app, pre-configured to run on Cloudflare using [`@openne
 	}}
 />
 
-## Video Tutorial
-
-<Stream
-	videoId="0b28fdd5938c4929bd7fdedcd167044d"
-	videoTitle="Deploy NextJS to Your Workers Application"
-	thumbnailTimeOrURL="2.5s"
-/>
-
 ## Existing Next.js apps
 
 :::note[Minimum required Wrangler version: 3.78.10.]
@@ -70,11 +62,11 @@ import { WranglerConfig } from "~/components";
 <WranglerConfig>
 
 ```toml
-main = ".worker-next/index.mjs"
+main = ".open-next/worker.js"
 name = "my-app"
 compatibility_date = "2024-09-23"
 compatibility_flags = ["nodejs_compat"]
-assets = { directory = ".worker-next/assets", binding = "ASSETS" }
+assets = { directory = ".open-next/assets", binding = "ASSETS" }
 ```
 
 </WranglerConfig>
@@ -90,7 +82,7 @@ As shown above, you must enable the [`nodejs_compat` compatibility flag](/worker
 Add the following to the scripts field of your `package.json` file:
 
 ```json
-"build:worker": "cloudflare",
+"build:worker": "opennextjs-cloudflare",
 "dev:worker": "wrangler dev --port 8771",
 "preview:worker": "npm run build:worker && npm run dev:worker",
 "deploy:worker": "npm run build:worker && wrangler deploy"
@@ -115,8 +107,6 @@ npx wrangler@latest kv namespace create NEXT_CACHE_WORKERS_KV
 
 #### Add the KV namespace to your Worker
 
-
-
 <WranglerConfig>
 
 ```toml
@@ -135,9 +125,21 @@ As shown above, the name of the binding that you configure for the KV namespace 
 
 You can continue to run `next dev` when developing locally.
 
-In step 3, we also added the `npm run preview:worker`, which allows you to quickly preview your app running locally in the Workers runtime, rather than in Node.js. This allows you to test changes in the same runtime that your app runs in, when deployed to Cloudflare.
+### 6. Preview locally your application and create an OpenNext config file
 
-### 6. Deploy to Cloudflare Workers
+In step 3, we also added the `npm run preview:worker`, which allows you to quickly preview your app running locally in the Workers runtime, rather than in Node.js.
+This allows you to test changes in the same runtime that your app runs in, when deployed to Cloudflare.
+
+To preview your application in such way run:
+
+```sh
+npm run preview:worker
+```
+
+This command will build your OpenNext application, also creating, if not already present, an `open-next.configs.ts` file for you.
+This if necessary if you want to deploy your application with a GibHub/GitLab integration as presented in the next step.
+
+### 7. Deploy to Cloudflare Workers
 
 Either deploy via the command line:
 

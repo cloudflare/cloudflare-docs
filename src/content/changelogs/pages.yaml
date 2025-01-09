@@ -5,6 +5,18 @@ productLink: "/pages/"
 productArea: Developer platform
 productAreaLink: /workers/platform/changelog/platform/
 entries:
+  - publish_date: "2024-12-19"
+    title: Cloudflare GitHub App Permissions Update
+    description: |-
+      - Cloudflare is requesting updated permissions for the [Cloudflare GitHub App](https://github.com/apps/cloudflare-workers-and-pages) to enable features like automatically creating a repository on your GitHub account and deploying the new repository for you when getting started with a template. This feature is coming out soon to support a better onboarding experience.
+        - **Requested permissions:** 
+          - [Repository Administration](https://docs.github.com/en/rest/authentication/permissions-required-for-github-apps?apiVersion=2022-11-28#repository-permissions-for-administration) (read/write) to create repositories.
+          - [Contents](https://docs.github.com/en/rest/authentication/permissions-required-for-github-apps?apiVersion=2022-11-28#repository-permissions-for-contents) (read/write) to push code to the created repositories.
+        - **Who is impacted:**
+          - Existing users will be prompted to update permissions when GitHub sends an email with subject "[GitHub] Cloudflare Workers & Pages is requesting updated permission" on December 19th, 2024.
+          - New users installing the app will see the updated permissions during the connecting repository process.
+        - **Action:** Review and accept the permissions update to use upcoming features. *If you decline or take no action, you can continue connecting repositories and deploying changes via the Cloudflare GitHub App as you do today, but new features requiring these permissions will not be available.*
+        - **Questions?** Visit [#github-permissions-update](https://discord.com/channels/595317990191398933/1313895851520688163) in the Cloudflare Developers Discord.
   - publish_date: "2024-10-24"
     title: Updating Bun version to 1.1.33 in V2 build system
     description: |-

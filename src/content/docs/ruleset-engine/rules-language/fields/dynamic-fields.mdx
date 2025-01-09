@@ -14,6 +14,8 @@ Dynamic fields represent computed or derived values, typically related to threat
 
 :::note
 
+- Access to `cf.api_gateway.auth_id_present` requires a Cloudflare Enterprise plan with [API Shield](/api-shield/) enabled.
+
 - Access to `cf.bot_management.*` fields requires a Cloudflare Enterprise plan with [Bot Management](/bots/plans/bm-subscription/) enabled.
 
 - Access to `cf.waf.content_scan.*` fields requires a Cloudflare Enterprise plan with [malicious uploads detection](/waf/detections/malicious-uploads/) enabled.
@@ -25,6 +27,24 @@ Dynamic fields represent computed or derived values, typically related to threat
 :::
 
 The Cloudflare Rules language supports these dynamic fields.
+
+## `cf.api_gateway.auth_id_present`
+
+`cf.api_gateway.auth_id_present` <Type text='Boolean' />
+
+Indicates whether the request contained an API session authentication token, as defined by API Shield's saved [session identifiers](/api-shield/get-started/#session-identifiers/).
+
+## `cf.api_gateway.request_violates_schema`
+
+`cf.api_gateway.request_violates_schema` <Type text='Boolean' />
+
+Indicates whether the request [violated the schema](/api-shield/security/schema-validation/) assigned to the respective saved endpoint.
+
+## `cf.api_gateway.fallthrough_detected`
+
+`cf.api_gateway.fallthrough_detected` <Type text='Boolean' />
+
+Indicates whether the request matched a saved endpoint in [Endpoint Management](/api-shield/management-and-monitoring/).
 
 ## `cf.bot_management.verified_bot`
 

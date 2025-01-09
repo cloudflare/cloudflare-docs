@@ -5,21 +5,23 @@ updated: 2024-12-04
 
 ---
 
-By connecting a System for Cross-domain Identity Management (SCIM) provider, you can provision access to the Cloudflare dashboard on a per-user basis, through your identity provider (IdP).
+Cloudflare supports bulk provisioning of users into the Cloudflare dashboard by using the System for Cross-domain Identity Management (SCIM) protocol. This allows you to connect your external identity provider (IdP) to Cloudflare and quickly onboard and manage users and their permissions. Cloudflare supports SCIM onboarding with Okta and Microsoft Entra. 
 
-Currently, we only support SCIM connections for Enterprise customers using Okta or Microsoft Entra. If you are an Enterprise customer using Okta or Microsoft Entra, and you are interested in setting up SCIM support, follow the steps below.
+:::note
+Cloudflare Zero Trust also supports SCIM for onboarding users to Cloudflare Access. [Learn more](/cloudflare-one/identity/users/scim/)
+:::
 
 ## Limitations
 
 - If a user is the only Super Administrator on an Enterprise account, they will not be deprovisioned.
-- Cloudflare currently only supports [Account-scoped Roles](/fundamentals/setup/manage-members/roles/#account-scoped-roles) and does not support Domain-scoped Roles provisioning via SCIM. We are working on this limitation.
-- Cloudflare does not currently allow custom group names to leave space for future development.
+- Cloudflare currently only supports [Account-scoped Roles](/fundamentals/setup/manage-members/roles/#account-scoped-roles) and does not support Domain-scoped Roles provisioning via SCIM. 
+- Cloudflare does not allow custom user groups.
 
 ## Prerequisites
 
 - Cloudflare provisioning with SCIM is only available to Enterprise customers using Okta or Microsoft Entra.
-- In Cloudflare, [Super Administrator](/fundamentals/setup/manage-members/roles/) access on the account.
-- In your identity provider, the ability to create applications and groups.
+- You must be a [Super Administrator](/fundamentals/setup/manage-members/roles/) on the account.
+- In your identity provider, you must have the ability to create applications and groups.
 
 :::note
 
@@ -27,8 +29,17 @@ Accounts provisioned with SCIM need to verify their email addresses.
 :::
 
 ---
+## Gather the required data
 
-## Create an API token
+To start, you will need to collect a couple of pieces of data from Cloudflare and set these aside for later use. 
+
+### Get your Account ID
+
+
+1. In the [Cloudflare dashboard](https://dash.cloudflare.com/), go to the Cloudflare account that you want to configure for SCIM provisioning.
+2. Copy your account ID from the account home page.
+
+### Create an API token
 
 1. [Create an API token](/fundamentals/api/get-started/create-token/) with the following permissions:
 
@@ -71,37 +82,39 @@ Accounts provisioned with SCIM need to verify their email addresses.
 
 1. In your integration page, go to **Provisioning** > **Configure API Integration**.
 2. Enable **Enable API Integration**.
-3. In SCIM 2.0 Base URL, enter: `https://api.cloudflare.com/client/v4/accounts/<your_account_ID>/scim/v2`.
+3. In SCIM 2.0 Base URL, enter: `https://api.cloudflare.com/client/v4/accounts/<accountID>/scim/v2`.
 4. In OAuth Bearer Token, enter your API token value.
-5. Disable **Import Groups**.
-6. Select **Save**.
+5. Select **Save**.
 
 ### Set up your SCIM users.
 
 1. In **Provisioning to App**, select **Edit**.
 2. Enable **Create Users** and **Deactivate Users**. Select **Save**.
 3. In the integration page, go to **Assignments** > **Assign** > **Assign to Groups**.
-4. Assign users to your Cloudflare SCIM group.
+4. Choose the group(s) that you want to provision to Cloudflare. 
 5. Select **Done**.
 
-This will provision all of the users affected to your Cloudflare account with "minimal account access."
+This will provision all of the users in the group(s) affected to your Cloudflare account with "minimal account access."
 
-### Configure user permissions on Okta
+### Configure user permissions 
 
-1. Go to **Directory** > **Groups** > **Add group** and add groups with the following names:
-   `CF-<your_account_ID> - <Role_Name>` 
-   :::note
+There are two options for managing user permissions:
 
-   Refer to the list of available [Roles](/fundamentals/setup/manage-members/roles/) for more details. 
-   :::
-2. Go to your SCIM application in the App Integration Catalog, then select **Provisioning**.
-3. Select **Edit**.
-4. Enable **Create Users** and **Deactivate Users**. Select **Save**.
-5. Go to **Push Groups** and make sure the appropriate group matches the existing group of the same name on Cloudflare.
-6. Disable **Rename groups**. Select **Save**.
-7. Within the **Push Groups** tab, select **Push Groups**.
-8. Add the groups you created.
-9. Select **Save**.
+* Manage your user permissions on a per-user basis in the Cloudflare dashboard, API, or using Terraform. 
+* Map your IdP groups to a Cloudflare built-in [Role](/fundamentals/setup/manage-members/roles/). Groups may only be linked to one role. 
+
+1. Go to your SCIM application in the App Integration Catalog, then select **Provisioning**.
+2. Under **To App*, select **Edit**.
+3. Enable **Create Users** and **Deactivate Users**. Select **Save**.
+4. Go to **Push Groups**.
+5. Select **+ Push Groups**, then **Find groups by name**.
+6. Enter the name of the group(s) that you want to sync to Cloudflare. 
+7. Choose **Link Group**.
+8. Cloudflare provisioned user groups are named in the pattern `CF-<accountID> - <Role Name>`. Choose the appropriate group that maps to your target role. 
+9. Disable **Rename groups**. Select **Save**.
+10. Within the **Push Groups** tab, select **Push Groups**.
+11. Add the groups you created.
+12. Select **Save**.
 
 Adding any users to these groups will grant them the role. Removing the users from the identity provider will remove them from the associated role.
 

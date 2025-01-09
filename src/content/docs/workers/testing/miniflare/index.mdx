@@ -1,0 +1,52 @@
+---
+title: Miniflare
+pcx_content_type: navigation
+sidebar:
+  order: 15
+head:
+  - tag: title
+    content: miniflare
+---
+
+import { DirectoryListing, LinkButton } from "~/components";
+
+:::caution
+This documentation describes the Miniflare API, which is only relevant for advanced use cases. Instead, most users should use [Wrangler](/workers/wrangler) to build, run & deploy their Workers locally
+:::
+
+**Miniflare** is a simulator for developing and testing
+[**Cloudflare Workers**](https://workers.cloudflare.com/). It's written in
+TypeScript, and runs your code in a sandbox implementing Workers' runtime APIs.
+
+- 🎉 **Fun:** develop Workers easily with detailed logging, file watching and
+  pretty error pages supporting source maps.
+- 🔋 **Full-featured:** supports most Workers features, including KV, Durable
+  Objects, WebSockets, modules and more.
+- ⚡ **Fully-local:** test and develop Workers without an Internet connection.
+  Reload code on change quickly.
+
+<LinkButton href="/workers/testing/miniflare/get-started">
+	Get Started
+</LinkButton>
+<LinkButton
+	variant="secondary"
+	href="https://github.com/cloudflare/workers-sdk/tree/main/packages/miniflare"
+>
+	GitHub
+</LinkButton>
+<LinkButton variant="secondary" href="https://npmjs.com/package/miniflare">
+	NPM
+</LinkButton>
+
+---
+
+These docs primarily cover Miniflare specific things. For more information on
+runtime APIs, refer to the
+[Cloudflare Workers docs](/workers).
+
+If you find something that doesn't behave as it does in the production Workers
+environment (and this difference isn't documented), or something's wrong in
+these docs, please
+[open a GitHub issue](https://github.com/cloudflare/workers-sdk/issues/new/choose).
+
+<DirectoryListing descriptions />

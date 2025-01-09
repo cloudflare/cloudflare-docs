@@ -12,7 +12,7 @@ import { GlossaryTooltip } from "~/components"
 
 The following <GlossaryTooltip term="sitekey">sitekeys</GlossaryTooltip> and <GlossaryTooltip term="secret key">secret keys</GlossaryTooltip> are available for testing. It is recommended that you use these keys in your development environment to ensure the challenges running in Turnstile do not conflict with your developer tools.
 
-To test locally with real keys, you need to add your testing hostnames (like `localhost`) to your [domain allowlist](/turnstile/concepts/domain-management/).
+To test locally with real keys, you need to add your testing hostnames (like `localhost`) to your [domain allowlist](/turnstile/concepts/hostname-management/).
 
 Dummy sitekeys can be used from any domain, including on `localhost`.
 
@@ -36,4 +36,6 @@ Production secret keys will reject this token. You must also use a dummy secret 
 | `2x0000000000000000000000000000000AA` | Always fails                         |
 | `3x0000000000000000000000000000000AA` | Yields a "token already spent" error |
 
-Dummy secret keys should never be used in production as it will accept any response token as valid.
+Dummy secret keys will only accept the `XXXX.DUMMY.TOKEN.XXXX` dummy response token.
+
+If you pass a real response, it will fail to prevent common misconfigurations.

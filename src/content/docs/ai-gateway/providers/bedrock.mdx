@@ -89,7 +89,7 @@ export default {
 			response.headers.get("content-type")?.includes("application/json")
 		) {
 			const data = await response.json();
-			return new Response(JSON.stringify(response));
+			return new Response(JSON.stringify(data));
 		} else {
 			return new Response("Invalid response", { status: 500 });
 		}

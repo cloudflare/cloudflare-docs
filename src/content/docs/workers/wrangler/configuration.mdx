@@ -11,11 +11,11 @@ description: Use a configuration file to customize the
 
 import { Render, Type, MetaInfo } from "~/components";
 
-Wrangler optionally uses a `wrangler.json`/`wrangler.toml` file to customize the development and deployment setup for a Worker.
+Wrangler optionally uses a `wrangler.json`/`wrangler.jsonc`/`wrangler.toml` file to customize the development and deployment setup for a Worker.
 
 :::note
 
-As of Wrangler v3.91.0, Wrangler supports both JSON (`wrangler.json`) and TOML (`wrangler.toml`) for its configuration file. Prior to that version, only `wrangler.toml` was supported. The format of Wrangler's configuration file is exactly the same across both languages, except that the syntax is `JSON` rather than `TOML`. Throughout this page and the rest of Cloudflare's documentation config snippets are provided as both JSON and TOML.
+As of Wrangler v3.91.0 Wrangler supports both JSON (`wrangler.json` or `wrangler.jsonc`) and TOML (`wrangler.toml`) for its configuration file. Prior to that version, only `wrangler.toml` was supported. The format of Wrangler's configuration file is exactly the same across both languages, except that the syntax is `JSON` rather than `TOML`. Throughout this page and the rest of Cloudflare's documentation config snippets are provided as both JSON and TOML.
 
 :::
 
@@ -113,7 +113,11 @@ At a minimum, the `name`, `main` and `compatibility_date` keys are required to d
 
 - `workers_dev` <Type text="boolean" /> <MetaInfo text="optional" />
 
-  - Enables use of `*.workers.dev` subdomain to test and deploy your Worker. If you have a Worker that is only for `scheduled` events, you can set this to `false`. Defaults to `true`.
+  - Enables use of `*.workers.dev` subdomain to deploy your Worker. If you have a Worker that is only for `scheduled` events, you can set this to `false`. Defaults to `true`. Refer to [types of routes](#types-of-routes).
+
+- `preview_urls` <Type text="boolean" /> <MetaInfo text="optional" />
+
+  - Enables use of Preview URLs to test your Worker. Defaults to `true`. Refer to [Preview URLs](/workers/configuration/previews).
 
 - `route` <Type text="Route" /> <MetaInfo text="optional" />
 
@@ -980,6 +984,10 @@ The following options are available under the `assets` key.
 - `binding` <Type text="string" /> <MetaInfo text="optional" />
 
   - The binding name used to refer to the assets. Optional, and only useful when a Worker script is set with `main`.
+
+- `experimental_serve_directly` <Type text="boolean" /> <MetaInfo text="optional, defaults to true" />
+
+  - Controls whether static assets are fetched directly, or a Worker script is invoked. Learn more about fetching assets when using [`experimental_serve_directly`](/workers/static-assets/routing/#invoking-worker-script-ahead-of-assets).
 
 - `html_handling`: <Type text={'"auto-trailing-slash" | "force-trailing-slash" | "drop-trailing-slash" | "none"'} /> <MetaInfo text={'optional, defaults to "auto-trailing-slash"'} />
 

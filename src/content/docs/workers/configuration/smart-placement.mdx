@@ -31,7 +31,7 @@ Smart Placement is enabled on a per-Worker basis. Once enabled, Smart Placement 
 
 Smart Placement only considers candidate locations where the Worker has previously run, since the estimated request duration in each candidate location is based on historical data from the Worker running in that location. This means that Smart Placement cannot run the Worker in a location that it does not normally receive traffic from.
 
-Smart Placement only affects the execution of [fetch event handlers](/workers/runtime-apis/handlers/fetch/). Workers without a fetch event handler will be ignored by Smart Placement. For Workers with both fetch and non-fetch event handlers, Smart Placement will only affect the execution of the fetch event handler.
+Smart Placement only affects the execution of [fetch event handlers](/workers/runtime-apis/handlers/fetch/). Smart Placement does not affect the execution of [RPC methods](/workers/runtime-apis/rpc/) or [named entrypoints](/workers/runtime-apis/bindings/service-bindings/rpc/#named-entrypoints). Workers without a fetch event handler will be ignored by Smart Placement. For Workers with both fetch and non-fetch event handlers, Smart Placement will only affect the execution of the fetch event handler.
 
 Similarly, Smart Placement will not affect where [static assets](/workers/static-assets/) are served from. Static assets will continue to be served from the location nearest to the incoming request. If a Worker is invoked and your code retrieves assets via the [static assets binding](https://developers.cloudflare.com/workers/static-assets/binding/), then assets will be served from the location that your Worker runs in.
 

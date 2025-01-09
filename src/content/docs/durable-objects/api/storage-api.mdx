@@ -5,7 +5,13 @@ sidebar:
   order: 6
 ---
 
-import { Render, Type, MetaInfo, GlossaryTooltip } from "~/components";
+import {
+	Render,
+	Type,
+	MetaInfo,
+	GlossaryTooltip,
+	TypeScriptExample,
+} from "~/components";
 
 The Durable Object Storage API allows <GlossaryTooltip term="Durable Object">Durable Objects</GlossaryTooltip> to access transactional and strongly consistent storage. A Durable Object's attached storage is private to its unique instance and cannot be accessed by other objects.
 
@@ -18,34 +24,30 @@ Note that Durable Object storage is scoped by individual <GlossaryTooltip term="
 However, storage is scoped per individual Durable Object.
 :::
 
-Durable Objects gain access to a persistent Durable Object Storage API via `ctx.storage`, on the `ctx` parameter passed to the Durable Object constructor.
+Durable Objects gain access to a persistent Durable Object Storage API via the `DurableObjectStorage` interface and accessed by the `DurableObjectState::storage` property. This is frequently accessed via `this.ctx.storage` when the `ctx` parameter passed to the Durable Object constructor.
 
-While access to a Durable Object is single-threaded, request executions can still interleave with each other when they wait on I/O, such as when waiting on the promises returned by persistent storage methods or `fetch()` requests.
+JavaScript is a single-threaded and event-driven programming language. This means that JavaScript runtimes, by default, allow requests to interleave with each other which can lead to concurrency bugs. The Durable Objects runtime uses a combination of <GlossaryTooltip term="input gate">input gates</GlossaryTooltip> and <GlossaryTooltip term="output gate">output gates</GlossaryTooltip> to avoid this type of concurrency bug when performing storage operations.
 
 The following code snippet shows you how to store and retrieve data using the Durable Object Storage API.
 
-```js
-export class Counter {
-	constructor(ctx, env) {
-		this.ctx = ctx;
+<TypeScriptExample>
+```ts
+export class Counter extends DurableObject {
+	constructor(ctx: DurableObjectState, env: Env) {
+		super(ctx, env);
 	}
 
-	async fetch(request) {
-		let url = new URL(request.url);
+    async increment(): Promise<number> {
+    	let value: number = (await this.ctx.storage.get('value')) || 0;
+    	value += 1;
+    	await this.ctx.storage.put('value', value);
+    	return value;
+    }
 
-		// retrieve data
-		let value = (await this.ctx.storage.get("value")) || 0;
-
-		// increment counter and get a new value
-		value += 1;
-
-		// store data
-		await this.ctx.storage.put("value", value);
-
-		return new Response(value);
-	}
 }
+
 ```
+</TypeScriptExample>
 
 ## Methods
 
@@ -261,3 +263,4 @@ The `put()` method returns a `Promise`, but most applications can discard this p
 
 - [Durable Objects: Easy, Fast, Correct – Choose Three](https://blog.cloudflare.com/durable-objects-easy-fast-correct-choose-three/)
 - [WebSockets API](/durable-objects/best-practices/websockets/)
+```

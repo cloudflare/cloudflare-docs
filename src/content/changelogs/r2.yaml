@@ -5,6 +5,9 @@ productLink: "/r2/"
 productArea: Developer platform
 productAreaLink: /workers/platform/changelog/platform/
 entries:
+  - publish_date: "2024-12-03"
+    description: |-
+      - [Server-side Encryption with Customer-Provided Keys](/r2/examples/ssec/) is now available to all users via the Workers and S3-compatible APIs.
   - publish_date: "2024-11-21"
     description: |-
       - Sippy can now be enabled on buckets in [jurisdictions](/r2/reference/data-location/#jurisdictional-restrictions) (e.g., EU, FedRAMP).
