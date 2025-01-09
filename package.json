@@ -92,7 +92,7 @@
 		"tailwindcss": "^3.4.17",
 		"tippy.js": "^6.3.7",
 		"tsx": "^4.19.2",
-		"typescript": "^5.7.2",
+		"typescript": "^5.7.3",
 		"unist-util-visit": "^5.0.0",
 		"vitest": "2.1.8",
 		"wrangler": "^3.97.0",
