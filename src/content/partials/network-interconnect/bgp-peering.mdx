@@ -4,6 +4,7 @@ params:
   - productPath
   - legacyHCs
   - asnProduct
+	- mtLimitations
 ---
 
 import { Markdown } from "~/components";
@@ -51,6 +52,8 @@ BGP support currently has the following limitations:
 - Routes are always injected with a priority of `100`.
 - Bidirectional Forwarding Detection (BFD) is not supported.
 - 4-byte ASNs are not supported.
+
+<Markdown text={props.mtLimitations} />
 
 ## Tunnel health checks
 
