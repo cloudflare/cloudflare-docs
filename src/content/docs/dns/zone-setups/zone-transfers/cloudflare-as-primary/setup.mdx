@@ -106,6 +106,10 @@ To link a primary zone to a peer using the API, send a [POST](/api/resources/dns
 If you link more than one peer to a zone and at least one of them has TSIG configured, all peers are expected to also use the same TSIG.
 :::
 
+:::note[The max number of linked peers per zone]
+You cannot have more than 30 peers linked to the zone.
+:::
+
 ## 4. Update your secondary DNS provider
 
 Your secondary DNS provider should send zone transfer requests (via AXFR or IXFR) to [this IP](/dns/zone-setups/zone-transfers/access-control-lists/cloudflare-ip-addresses/#transfer-ip) on port 53 and from the IP address specified in your [peer configuration](#2-create-peer-dns-server-optional).
