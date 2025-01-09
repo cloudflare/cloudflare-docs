@@ -59,7 +59,7 @@ Each Zero Trust account can generate a new root certificate a maximum of three t
 ## Activate a root certificate
 
 :::note
-Zero Trust accounts using the Cloudflare certificate prior to 2024-10-17 will need to redeploy and activate the newly generated certificate. Zero Trust accounts created during or after 2024-10-17 will use an available certificate by default.
+Zero Trust accounts using the default Cloudflare certificate prior to 2024-10-17 will need to redeploy and activate the newly generated certificate. Zero Trust accounts created during or after 2024-10-17 will use an available certificate by default.
 :::
 
 Once a certificate is generated in or uploaded to Zero Trust, you need to activate it. Activating a certificate deploys it across the Cloudflare network. You can have up to 25 available certificates at once.
@@ -91,9 +91,34 @@ The status of the certificate will change to **Pending** while it deploys. Once 
 
 Once you deploy and install your certificate, you can turn it on for use in inspection:
 
+<Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
+
 1. In [Zero Trust](https://one.dash.cloudflare.com/), go to **Settings** > **Resources**.
 2. In **Certificates**, select **Manage**.
 3. Select the certificate you want to turn on.
 4. In **Basic information**, select **Confirm and turn on certificate**.
+
+</TabItem>
+
+<TabItem label="API">
+
+Send a `PUT` request to the [Update Zero Trust account configuration](/api/resources/zero_trust/subresources/gateway/subresources/configurations/methods/update/) endpoint. For example:
+
+```sh
+curl --request PUT \
+'https://api.cloudflare.com/client/v4/accounts/{account_id}/gateway/configuration' \
+--header "Content-Type: application/json" \
+--header "Authorization: Bearer <API_TOKEN>" \
+--data '{
+  "settings": {
+    "certificate": {
+      "id": "d1b364c5-1311-466e-a194-f0e943e0799f",
+      "in_use": true
+    }
+  }
+}'
+```
+
+</TabItem> </Tabs>
 
 You can set multiple certificates to **Available**, but you can only turn on one certificate for use in inspection at a time. Setting a certificate as **In-Use** will set any other turned on certificates as **Available** and prevent them from being used for inspection until turned on again.
