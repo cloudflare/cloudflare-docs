@@ -42,10 +42,14 @@ import { WranglerConfig } from "~/components";
 <WranglerConfig>
 
 ```toml title="wrangler.toml"
+name = "gwg-main"
+type = "javascript"
+node_compat = true
 [build]
 command = "npm run build"
 cwd = "build_cwd"
 watch_dir = "build_watch_dir"
+
 ```
 
 </WranglerConfig>
