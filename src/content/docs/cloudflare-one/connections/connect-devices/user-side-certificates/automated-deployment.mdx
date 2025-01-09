@@ -35,6 +35,10 @@ The certificate is required if you want to [apply HTTP policies to encrypted web
 
 ## Install a certificate using WARP
 
+:::caution[Out of date certificates]
+WARP versions prior to 2024.12.554.0 will only install the certificate set to **In-Use** and automatically remove any other WARP-installed certificates from your users' devices. To ensure your users' devices have all of your available certificates installed, [update WARP](/cloudflare-one/connections/connect-devices/warp/download-warp/update-warp/#how-to-update-warp).
+:::
+
 To configure WARP to install a root certificate on your organization's devices:
 
 1. (Optional) [Upload](/cloudflare-one/connections/connect-devices/user-side-certificates/custom-certificate/) a custom root certificate to Cloudflare.
@@ -44,15 +48,11 @@ To configure WARP to install a root certificate on your organization's devices:
 5. [Enroll the device](/cloudflare-one/connections/connect-devices/warp/deployment/manual-deployment/) in your Zero Trust organization.
 6. (Optional) If the device is running macOS Big Sur or newer, [manually trust the certificate](#manually-trust-the-certificate).
 
-WARP will download any [certificates set to **Available**](/cloudflare-one/connections/connect-devices/user-side-certificates/#activate-a-root-certificate), then add the files to the `installed_certs/` directory and to the `installed_cert.pem` file in the device's system certificate store. These certificates can be either a [Cloudflare-generated certificate](/cloudflare-one/connections/connect-devices/user-side-certificates/#generate-a-cloudflare-root-certificate) or a [custom certificate](/cloudflare-one/connections/connect-devices/user-side-certificates/custom-certificate/). It may take up to 24 hours for newly available certificates to download to your users' devices.
+WARP will now download any [certificates set to **Available**](/cloudflare-one/connections/connect-devices/user-side-certificates/#activate-a-root-certificate). It may take up to 24 hours for newly available certificates to download to your users' devices.
 
-Cloudflare recommends you set any scripts using the `installed_cert.pem` to use the `installed_certs/` directory instead. `installed_certs.pem` will be removed by 31-06-2025.
+After download, WARP will add the certificates to the device's system certificate store in `installed_certs/<certificate_id>.pem` and append the contents to the `installed_cert.pem` file. If you have any scripts using `installed_cert.pem`, Cloudflare recommends you set them to use the `installed_certs/` directory instead. `installed_certs.pem` will be deprecated by 2025-06-31.
 
-WARP only installs certificates to the system certificate -- it does not install the certificate to individual applications. You will need to [manually add the certificate](/cloudflare-one/connections/connect-devices/user-side-certificates/manual-deployment/#add-the-certificate-to-applications) to applications that rely on their own certificate store.
-
-:::caution[Out of date certificates]
-WARP versions prior to 2024.12.554.0 will only install the certificate set to **In-Use** and automatically remove old certificates from your users' devices. To ensure your users' devices have the most up-to-date certificates installed, [update WARP](/cloudflare-one/connections/connect-devices/warp/download-warp/update-warp/#how-to-update-warp).
-:::
+WARP does not install certificates to individual applications. You will need to [manually add certificates](/cloudflare-one/connections/connect-devices/user-side-certificates/manual-deployment/#add-the-certificate-to-applications) to applications that rely on their own certificate store instead of the system certificate store.
 
 ## Access the installed certificate
 
