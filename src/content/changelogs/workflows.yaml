@@ -6,7 +6,7 @@ productArea: Developer platform
 productAreaLink: /workers/platform/changelog/platform/
 entries:
   - publish_date: "2024-12-19"
-    title: "Better instance control, improved queued logic & step limit increased"
+    title: "Better instance control, improved queued logic, and step limit increased"
     description: |-
       Workflows can now be terminated and pause instances from a queued state and the ID of an instance is now exposed via the `WorkflowEvent` parameter.
 
