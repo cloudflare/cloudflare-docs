@@ -65,7 +65,7 @@
 		"instantsearch.js": "^4.75.6",
 		"jsonc-parser": "^3.3.1",
 		"lz-string": "^1.5.0",
-		"marked": "^15.0.4",
+		"marked": "^15.0.6",
 		"mdast-util-mdx-expression": "^2.0.1",
 		"mermaid": "^11.4.1",
 		"node-html-parser": "^6.1.13",
