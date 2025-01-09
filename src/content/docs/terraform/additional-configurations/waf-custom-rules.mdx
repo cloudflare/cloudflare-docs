@@ -8,17 +8,15 @@ head:
     content: Configure WAF custom rules with Terraform
 ---
 
-import { Render } from "~/components";
+import { Render, GlossaryTooltip } from "~/components";
 
 This page provides examples of creating WAF custom rules in a zone or account using Terraform. The examples cover the following scenarios:
 
 - Zone-level configurations:
-
   - [Add a custom rule to a zone](#add-a-custom-rule-to-a-zone)
   - [Add a custom rule challenging requests with leaked credentials](#add-a-custom-rule-challenging-requests-with-leaked-credentials)
-
+  - [Add a custom rule blocking malicious uploads](#add-a-custom-rule-blocking-malicious-uploads)
 - Account-level configurations:
-
   - [Create and deploy a custom ruleset](#create-and-deploy-a-custom-ruleset)
   - [Add a custom rule checking for exposed credentials](#add-a-custom-rule-checking-for-exposed-credentials)
 
@@ -87,6 +85,33 @@ resource "cloudflare_ruleset" "zone_custom_firewall_leaked_creds" {
 ```
 
 For more information on configuring custom detection locations, refer to the [Terraform example](/waf/detections/leaked-credentials/get-started/#4-optional-configure-a-custom-detection-location) in the WAF documentation.
+
+### Add a custom rule blocking malicious uploads
+
+:::note
+For more information on enabling malicious uploads detection using Terraform, refer to the [malicious uploads detection](/waf/detections/malicious-uploads/get-started/#1-turn-on-the-detection) documentation.
+:::
+
+This example adds a custom rule that blocks requests with one or more <GlossaryTooltip term="content object">content objects</GlossaryTooltip> considered malicious by using one of the [content scanning fields](/waf/detections/malicious-uploads/#content-scanning-fields) in the rule expression.
+
+```tf
+resource "cloudflare_ruleset" "zone_custom_firewall_malicious_uploads" {
+  zone_id     = "<ZONE_ID>"
+  name        = "Phase entry point ruleset for custom rules in my zone"
+  description = ""
+  kind        = "zone"
+  phase       = "http_request_firewall_custom"
+
+  rules {
+    ref         = "block_malicious_uploads"
+    description = "Block requests uploading malicious content objects"
+    expression  = "(cf.waf.content_scan.has_malicious_obj and http.request.uri.path eq \"/upload.php\")"
+    action      = "block"
+  }
+}
+```
+
+For more information on configuring custom scan expressions, refer to the [Terraform example](/waf/detections/malicious-uploads/get-started/#4-optional-configure-a-custom-scan-expression) in the WAF documentation.
 
 ## Account-level configurations
 
