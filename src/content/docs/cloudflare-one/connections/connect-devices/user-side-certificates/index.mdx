@@ -43,9 +43,9 @@ To generate a new Cloudflare root certificate for your Zero Trust organization:
 Send a `POST` request to the [Create Zero Trust certificate](/api/resources/zero_trust/subresources/gateway/subresources/certificates/methods/create/) endpoint.
 
 ```sh
-curl https://api.cloudflare.com/client/v4/accounts/{account_id}/gateway/certificates \
---header "Content-Type: application/json" \
---header "Authorization: Bearer <API_TOKEN>" \
+curl --request POST \
+https://api.cloudflare.com/client/v4/accounts/{account_id}/gateway/certificates \
+--header "Authorization: Bearer <API_TOKEN>"
 ```
 
 The API will respond with the ID and contents of the new certificate.
@@ -80,9 +80,9 @@ To activate your root certificate:
 Send a `POST` request to the [Activate a Zero Trust certificate](/api/resources/zero_trust/subresources/gateway/subresources/certificates/methods/activate/) endpoint.
 
 ```sh
-curl https://api.cloudflare.com/client/v4/accounts/{account_id}/gateway/certificates/{certificate_id}/activate \
---header "Content-Type: application/json" \
---header "Authorization: Bearer <API_TOKEN>" \
+curl --request POST \
+https://api.cloudflare.com/client/v4/accounts/{account_id}/gateway/certificates/{certificate_id}/activate \
+--header "Authorization: Bearer <API_TOKEN>"
 ```
 
 </TabItem> </Tabs>
