@@ -76,7 +76,7 @@ Example value:
 
 `{"username": ["admin"]}`
 
-Example:
+Example usage:
 
 `any(http.request.body.form["username"][*] == "admin")`
 
@@ -100,7 +100,7 @@ Example value:
 
 `["username"]`
 
-Example:
+Example usage:
 
 `any(http.request.body.form.names[*] == "username")`
 
@@ -124,7 +124,7 @@ Example value:
 
 `["admin"]`
 
-Example:
+Example usage:
 
 `any(http.request.body.form.values[*] == "admin")`
 
@@ -140,7 +140,7 @@ Example value:
 
 `"image/jpeg"`
 
-Example:
+Example usage:
 
 `http.request.body.mime in {"image/bmp" "image/gif" "image/jpeg" "image/png" "image/tiff"}`
 
@@ -156,7 +156,7 @@ Example value:
 
 `{"username": ["alice_doe"], "role": ["editor"], "picture": [<binary_content_of_file>]}`
 
-Example:
+Example usage:
 
 `any(http.request.body.multipart["role"][*] == "admin")`
 
@@ -170,7 +170,7 @@ Example value:
 
 `[["username"], ["picture"]]`
 
-Example:
+Example usage:
 
 `any(http.request.body.multipart.names[*][0] == "picture")`
 
@@ -184,7 +184,7 @@ Example value:
 
 `["alice_doe", <binary_content_of_file>]`
 
-Example:
+Example usage:
 
 `any(http.request.body.multipart.values[*] == "alice_doe")`
 
@@ -198,7 +198,7 @@ Example value:
 
 `[["text/plain"], ["image/jpeg"]]`
 
-Example:
+Example usage:
 
 `any(http.request.body.multipart.content_types[*][0] == "application/octet-stream")`
 
@@ -212,7 +212,7 @@ Example value:
 
 `[["form-data; name=\"username\""], ["form-data; name=\"picture\""]]`
 
-Example:
+Example usage:
 
 `any(http.request.body.multipart.content_dispositions[*][0] in {"form-data; name=\"username\"" "form-data; name=\"picture\""})`
 
@@ -226,7 +226,7 @@ Example value:
 
 `[["quoted-printable"], ["base64"]]`
 
-Example:
+Example usage:
 
 `any(http.request.body.multipart.content_transfer_encodings[*][0] == "binary")`
 
@@ -240,6 +240,6 @@ Example value:
 
 `[["file1.txt"], ["photo.jpg"]]`
 
-Example:
+Example usage:
 
 `any(http.request.body.multipart.filenames[*][0] in {"token.txt" "password.txt"})`
