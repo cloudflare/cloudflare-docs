@@ -1677,6 +1677,8 @@ entries:
       Requires a Cloudflare Enterprise plan with a paid add-on.
     example_value: |-
       [["form-data; name=\"username\"], ["form-data;name=\"picture\"]]
+    example_block: |-
+      any(http.request.body.multipart.content_dispositions[*][0] in {"form-data; name=\"username\"" "form-data;name=\"picture\""})
 
   - name: http.request.body.multipart.content_transfer_encodings
     data_type: Array<Array<String>>
