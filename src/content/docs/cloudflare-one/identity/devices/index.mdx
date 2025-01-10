@@ -57,14 +57,14 @@ A --> G[Service provider] --interval--> C
 
 ### Expiration
 
-By default, the posture result on Cloudflare remains valid until it is overwritten by new data. You can specify an `expiration` time using our [API](/api/operations/device-posture-rules-update-device-posture-rule). We recommend setting the expiration to be longer than the [polling frequency](#polling-frequency).
+By default, the posture result on Cloudflare remains valid until it is overwritten by new data. You can specify an `expiration` time using our [API](/api/resources/zero_trust/subresources/devices/subresources/posture/methods/update/). We recommend setting the expiration to be longer than the [polling frequency](#polling-frequency).
 
 ### Polling frequency
 
 #### WARP client checks
 
-By default, the WARP client polls the device for status changes every five minutes. To modify the polling frequency, use the API to update the [`schedule`](/api/operations/device-posture-rules-update-device-posture-rule) parameter.
+By default, the WARP client polls the device for status changes every five minutes. To modify the polling frequency, use the API to update the [`schedule`](/api/resources/zero_trust/subresources/devices/subresources/posture/methods/update/) parameter.
 
 #### Service provider checks
 
-When setting up a [service-to-service integration](/cloudflare-one/identity/devices/service-providers/), you will choose a polling frequency to determine how often Cloudflare will query the third-party API. To set the polling frequency via the API, use the [`interval`](/api/operations/device-posture-integrations-update-device-posture-integration) parameter.
+When setting up a [service-to-service integration](/cloudflare-one/identity/devices/service-providers/), you will choose a polling frequency to determine how often Cloudflare will query the third-party API. To set the polling frequency via the API, use the [`interval`](/api/resources/zero_trust/subresources/devices/subresources/posture/subresources/integrations/methods/edit/) parameter.

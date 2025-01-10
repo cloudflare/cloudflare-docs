@@ -27,7 +27,7 @@ Since per-hostname certificates are more specific, they take precedence over zon
 
 ## Delete a certificate
 
-Client certificates are not deleted from Cloudflare upon expiration unless a [delete](/api/operations/zone-level-authenticated-origin-pulls-delete-certificate) or [replace](/api/operations/zone-level-authenticated-origin-pulls-upload-certificate) request is sent to the Cloudflare API.
+Client certificates are not deleted from Cloudflare upon expiration unless a [delete](/api/resources/origin_tls_client_auth/methods/delete/) or [replace](/api/resources/origin_tls_client_auth/methods/create/) request is sent to the Cloudflare API.
 
 However, requests are dropped at your origin if your origin only accepts a valid client certificate.
 
@@ -35,14 +35,14 @@ However, requests are dropped at your origin if your origin only accepts a valid
 
 For hostname:
 
-1. [Upload the new certificate](/api/operations/per-hostname-authenticated-origin-pull-upload-a-hostname-client-certificate).
+1. [Upload the new certificate](/api/resources/origin_tls_client_auth/subresources/hostnames/subresources/certificates/methods/create/).
 
-2. [Enable Authenticated Origin Pulls for that specific hostname](/api/operations/per-hostname-authenticated-origin-pull-enable-or-disable-a-hostname-for-client-authentication).
+2. [Enable Authenticated Origin Pulls for that specific hostname](/api/resources/origin_tls_client_auth/subresources/hostnames/methods/update/).
 
 For global:
 
-1. [Upload the new certificate](/api/operations/zone-level-authenticated-origin-pulls-upload-certificate).
+1. [Upload the new certificate](/api/resources/origin_tls_client_auth/methods/create/).
 
-2. [Check whether new certificate is Active](/api/operations/zone-level-authenticated-origin-pulls-get-certificate-details).
+2. [Check whether new certificate is Active](/api/resources/origin_tls_client_auth/methods/get/).
 
-3. Once certificate is active, [delete the previous certificate](/api/operations/zone-level-authenticated-origin-pulls-delete-certificate).
+3. Once certificate is active, [delete the previous certificate](/api/resources/origin_tls_client_auth/methods/delete/).

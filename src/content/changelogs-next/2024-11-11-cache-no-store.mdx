@@ -1,0 +1,33 @@
+---
+title: Bypass caching for subrequests made from Cloudflare Workers, with Request.cache
+description: New runtime APIs allow you to control when subrequests are cached, increasing compatibility with popular NPM packages
+products: 
+  - workers
+date: 2024-11-11T14:00:00Z
+---
+
+import { Render, PackageManagers, TypeScriptExample } from "~/components"
+
+You can now use the [`cache`](/workers/runtime-apis/request/#options) property of the [`Request`](/workers/runtime-apis/request/) interface to bypass [Cloudflare's cache](/workers/reference/how-the-cache-works/) when making subrequests from [Cloudflare Workers](/workers), by setting its value to `no-store`.
+
+<TypeScriptExample filename="index.ts">
+```ts
+export default {
+  async fetch(req, env, ctx): Promise<Response> {
+		const request = new Request("https://cloudflare.com", { cache: 'no-store'});
+		const response = await fetch(request);
+    return response;
+  }
+} satisfies ExportedHandler<Environment>
+```
+</TypeScriptExample>
+
+When you set the value to `no-store` on a subrequest made from a Worker, the Cloudflare Workers runtime will not check whether a match exists in the cache, and not add the response to the cache, even if the response includes directives in the `Cache-Control` HTTP header that otherwise indicate that the response is cacheable.
+
+This increases compatibility with NPM packages and JavaScript frameworks that rely on setting the [`cache`](/workers/runtime-apis/request/#options) property, which is a cross-platform standard part of the [`Request`](/workers/runtime-apis/request/) interface. Previously, if you set the `cache` property on `Request`, the Workers runtime threw an exception.
+
+If you've tried to use `@planetscale/database`, `redis-js`, `stytch-node`, `supabase`, `axiom-js` or have seen the error message `The cache field on RequestInitializerDict is not implemented in fetch` — you should try again, making sure that the [Compatibility Date](/workers/configuration/compatibility-dates/) of your Worker is set to on or after `2024-11-11`, or the [`cache_option_enabled` compatibility flag](/workers/configuration/compatibility-flags/#enable-cache-no-store-http-standard-api) is enabled for your Worker.
+
+* Learn [how the Cache works with Cloudflare Workers](/workers/reference/how-the-cache-works/)
+* Enable [Node.js compatibility](/workers/runtime-apis/nodejs/) for your Cloudflare Worker
+* Explore [Runtime APIs](/workers/runtime-apis/) and [Bindings](/workers/runtime-apis/bindings/) available in Cloudflare Workers

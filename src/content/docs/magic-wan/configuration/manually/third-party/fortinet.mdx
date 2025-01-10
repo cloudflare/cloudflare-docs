@@ -24,7 +24,7 @@ Before proceeding, ensure that you have the anycast IPs associated with your acc
 
 ### Magic IPsec Tunnels
 
-Cloudflare recommends customers configure two Magic IPsec tunnels per firewall/router — one to each of the two anycast IP addresses.
+Cloudflare recommends customers configure two Magic IPsec tunnels per firewall/router - one to each of the two anycast IP addresses.
 
 1. Go to the [Cloudflare dashboard](https://dash.cloudflare.com/) and select your account.
 2. Go to **Magic WAN** > **Configuration**.
@@ -37,7 +37,7 @@ Cloudflare recommends customers configure two Magic IPsec tunnels per firewall/r
 
 ### Magic static routes
 
-Add two Magic static routes to define the IP address space that exists behind the Magic IPsec tunnels — one to each of the two Magic IPsec tunnels defined in the previous section.
+Add two Magic static routes to define the IP address space that exists behind the Magic IPsec tunnels - one to each of the two Magic IPsec tunnels defined in the previous section.
 
 By default, the Magic static routes are defined with the priority set to `100`. Cloudflare leverages [Equal Cost Multipath Routing (ECMP)](/magic-wan/reference/traffic-steering/#equal-cost-multi-path-routing) and will load balance the traffic equally across the two tunnels. If you prefer to use an Active/Passive model, you can leave the default value for the first route set to `100`, and set the value for the second tunnel to `150` (higher value is a lower priority).
 
@@ -136,7 +136,7 @@ end
 
 #### Add Phase 2 interfaces
 
-Add two `phase2-interfaces` — one for each of the two `phase1-interfaces` as follows:
+Add two `phase2-interfaces` - one for each of the two `phase1-interfaces` as follows:
 
 ```txt
 fortigate # config vpn ipsec phase2-interface
@@ -169,8 +169,8 @@ Configure the virtual tunnel interfaces that were automatically added when speci
 
 These are the only settings that should need to be added to the virtual tunnel interfaces:
 
-- `ip`: The local IP address (specify with a `/32` netmask — `255.255.255.255`).
-- `remote-ip`: The value associated with the interface address specified earlier in the Magic IPsec tunnels section (specify with a `/31` netmask — `255.255.255.254`).
+- `ip`: The local IP address (specify with a `/32` netmask - `255.255.255.255`).
+- `remote-ip`: The value associated with the interface address specified earlier in the Magic IPsec tunnels section (specify with a `/31` netmask - `255.255.255.254`).
 - `alias`: This value is optional.
 
 The following examples assume `wan1` is the external/egress interface of the FortiGate firewall.
@@ -430,7 +430,7 @@ Packet captures allow you to determine whether or not the policy-based routing r
 Due to the nature of the reply-style tunnel health checks, you will see ICMP Reply packets in both the ingress and egress direction. This is expected behavior.
 :::
 
-The expected behavior should look like the examples below — traffic ingressing Tunnel 01 of 02 should egress the same tunnel.
+The expected behavior should look like the examples below - traffic ingressing Tunnel 01 of 02 should egress the same tunnel.
 
 ```txt
 fortigate # diagnose sniffer packet any 'host 172.64.240.253' 4

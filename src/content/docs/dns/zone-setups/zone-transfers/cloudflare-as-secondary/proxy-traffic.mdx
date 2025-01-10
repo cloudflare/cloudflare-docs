@@ -58,7 +58,7 @@ https://api.cloudflare.com/client/v4/zones/{zone_id}/dns_settings \
 }'
 ```
 
-2. For specific `A`, `AAAA`, or `CNAME` records, send a [POST](/api/operations/dns-records-for-a-zone-create-dns-record) request with the `proxied` status as `true`.
+2. For specific `A`, `AAAA`, or `CNAME` records, send a [POST](/api/resources/dns/subresources/records/methods/create/) request with the `proxied` status as `true`.
    - Make sure the added record has the same name as the transferred record you intend to proxy. Cloudflare only looks at the name and the proxy status, so the record content does not matter.
 
 </TabItem> </Tabs>

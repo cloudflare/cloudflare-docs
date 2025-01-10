@@ -821,7 +821,7 @@ Repeat these commands for the respective tunnel to ensure the IKE SA(s) display 
 
 #### Verify IPsec Phase 2 Communications
 
-To ensure the IPsec tunnels are established, ping the remote Virtual Tunnel Interface (Cloudflare side) from the​ command line on the Palo Alto Networks Next-Generation Firewall. Ensure you specify the source IP address of the ping from the local side of the Virtual Tunnel Interface:
+To ensure the IPsec tunnels are established, ping the remote Virtual Tunnel Interface (Cloudflare side) from the command line on the Palo Alto Networks Next-Generation Firewall. Ensure you specify the source IP address of the ping from the local side of the Virtual Tunnel Interface:
 
 ##### Syntax
 
@@ -938,7 +938,7 @@ While we will leverage policy-based forwarding to implement policy-based routing
 Cloudflare Magic WAN implements [equal-cost multi-path (ECMP) routing](/magic-wan/reference/traffic-steering/#equal-cost-multi-path-routing) to steer traffic across IPsec tunnels. The default behavior is to load balance traffic equally across both tunnels.
 
 :::note
-ECMP is disabled on the ​​Palo Alto Networks Next-Generation Firewall by default. Enabling ECMP will force the Virtual Router to restart. While a restart of the Virtual Router is much faster than restarting the entire firewall, it is still recommended that you make this change during a scheduled maintenance window.
+ECMP is disabled on the Palo Alto Networks Next-Generation Firewall by default. Enabling ECMP will force the Virtual Router to restart. While a restart of the Virtual Router is much faster than restarting the entire firewall, it is still recommended that you make this change during a scheduled maintenance window.
 :::
 
 #### Enable ECMP
@@ -1356,7 +1356,7 @@ set rulebase security rules Cloudflare_Magic_WAN_to_Trust_Allow rule-type univer
 
 ### Policy-based forwarding - production traffic
 
-Whether traffic ingresses or egresses ​​Palo Alto Networks Next-Generation Firewall​​, it is important to ensure that traffic is routed symmetrically. This is accomplished through the use of policy-based forwarding.
+Whether traffic ingresses or egresses Palo Alto Networks Next-Generation Firewall, it is important to ensure that traffic is routed symmetrically. This is accomplished through the use of policy-based forwarding.
 
 Policy-based forwarding rules are only required for egress traffic.
 

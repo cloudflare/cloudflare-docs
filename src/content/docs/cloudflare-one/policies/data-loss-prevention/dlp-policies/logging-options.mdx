@@ -9,7 +9,7 @@ Data Loss Prevention allows you to capture, store, and view the data that trigge
 
 ## Log the payload of matched rules
 
-The data that triggers a DLP policy is stored in the portion of the HTTP request known as the payload. Payload logging is especially useful when diagnosing the behavior of DLP policies. Since the values that triggered a rule may contain sensitive data, they are encrypted with a customer-provided public key so that only you can examine them later. The stored data will include a redacted version of the match, plus 20 bytes of additional context on both sides of the match.
+The data that triggers a DLP policy is stored in the portion of the HTTP request known as the payload. Payload logging is especially useful when diagnosing the behavior of DLP policies. Since the values that triggered a rule may contain sensitive data, they are encrypted with a customer-provided public key so that only you can examine them later. The stored data will include a redacted version of the match, plus 75 bytes of additional context on both sides of the match.
 
 ### 1. Generate a key pair
 
@@ -43,7 +43,7 @@ Data Loss Prevention will now store a portion of the payload for HTTP requests t
 3. Select **Decrypt Payload Log**.
 4. Enter your private key and select **Decrypt**.
 
-You will see the [ID of the matched DLP Profile](/api/operations/dlp-profiles-list-all-profiles) followed by the decrypted payload. Note that DLP currently logs only the first match.
+You will see the [ID of the matched DLP Profile](/api/resources/zero_trust/subresources/dlp/subresources/profiles/methods/list/) followed by the decrypted payload. Note that DLP currently logs only the first match.
 
 :::note
 Neither the key nor the decrypted payload will be stored by Cloudflare.

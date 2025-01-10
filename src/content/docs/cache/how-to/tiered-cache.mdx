@@ -22,6 +22,10 @@ Cloudflare allows you to select your cache topology so that you have control ove
 
 Smart Tiered Cache dynamically selects the single closest upper tier for each of your website’s origins with no configuration required, using our in-house performance and routing data. Cloudflare collects latency data for each request to an origin, and uses the latency data to determine how well any upper-tier data center is connected with an origin. As a result, Cloudflare can select the data center with the lowest latency to be the upper-tier for an origin.
 
+#### Load Balancing interaction
+
+While Smart Tiered Cache selects one Upper Tier per origin, when using Load Balancing, Smart Tiered Cache will select the single best Upper Tier for the entire Load Balancing Pool.
+
 #### Caveats
 
 Smart Tiered Cache does not work when an origin is behind an [anycast](https://www.cloudflare.com/en-gb/learning/cdn/glossary/anycast-network/) or a regional unicast network because that will prevent us from knowing where the origin is located. As a result, we are unable to select the optimal upper tier and latency may be negatively impacted.
@@ -114,7 +118,7 @@ https://api.cloudflare.com/client/v4/zones/{zone_id}/cache/regional_tiered_cache
 
 </Details>
 
-For more API examples and configuration options for Tiered Cache, refer to the [API documentation](/api/operations/tiered-caching-get-tiered-caching-setting).
+For more API examples and configuration options for Tiered Cache, refer to the [API documentation](/api/resources/argo/subresources/tiered_caching/methods/get/).
 
 :::note
 

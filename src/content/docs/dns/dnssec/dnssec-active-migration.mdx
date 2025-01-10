@@ -28,13 +28,13 @@ The provider you are migrating from must allow you to add DNSKEY records on the 
 
 1. [Add your zone to Cloudflare](/fundamentals/setup/manage-domains/add-site/).
 
-   To add your zone using the API, refer to the [Create Zone endpoint](/api/operations/zones-post).
+   To add your zone using the API, refer to the [Create Zone endpoint](/api/resources/zones/methods/create/).
 
 2. [Review the records found by the automatic scan](/dns/manage-dns-records/how-to/create-dns-records/) or [import your zone file](/dns/manage-dns-records/how-to/import-and-export/).
 
-   To import the zone file using the API, refer to the [Import DNS Records endpoint](/api/operations/dns-records-for-a-zone-import-dns-records).
+   To import the zone file using the API, refer to the [Import DNS Records endpoint](/api/resources/dns/subresources/records/methods/import/).
 
-3. Go to **DNS** > **Settings**, and select **Enable DNSSEC**. Or use the following [API request](/api/operations/dnssec-edit-dnssec-status).
+3. Go to **DNS** > **Settings**, and select **Enable DNSSEC**. Or use the following [API request](/api/resources/dns/subresources/dnssec/methods/edit/).
 
 ```bash
 curl --request PATCH \
@@ -45,7 +45,7 @@ https://api.cloudflare.com/client/v4/zones/{zone_id}/dnssec \
 --data '{"status": "active"}'
 ```
 
-4. Go to **DNS** > **Settings**, and enable **Multi-signer DNSSEC**. Or use the following [API request](/api/operations/dnssec-edit-dnssec-status).
+4. Go to **DNS** > **Settings**, and enable **Multi-signer DNSSEC**. Or use the following [API request](/api/resources/dns/subresources/dnssec/methods/edit/).
 
 ```bash
 curl --request PATCH \
@@ -60,7 +60,7 @@ https://api.cloudflare.com/client/v4/zones/{zone_id}/dnssec \
 
 1. Add the [ZSK](https://www.cloudflare.com/learning/dns/dns-records/dnskey-ds-records/) of your previous provider to Cloudflare by creating a DNSKEY record on your zone.
 
-You can do this [on the dashboard](/dns/manage-dns-records/how-to/create-dns-records/#create-dns-records) or through the [Create DNS Record endpoint](/api/operations/dns-records-for-a-zone-create-dns-record), as in the following example.
+You can do this [on the dashboard](/dns/manage-dns-records/how-to/create-dns-records/#create-dns-records) or through the [Create DNS Record endpoint](/api/resources/dns/subresources/records/methods/create/), as in the following example.
 
 ```bash
 curl https://api.cloudflare.com/client/v4/zones/{zone_id}/dns_records \

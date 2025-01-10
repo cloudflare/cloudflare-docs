@@ -2,19 +2,32 @@
 {}
 ---
 
-:::note
+You can customize the block page that displays when users fail to authenticate to an Access application. Each application can have a different block page.
 
-Only available on Pay-as-you-go and Enterprise plans.
-:::
-
-You can display a custom block page when users fail to authenticate to an Access application. Each application can have a different block page.
-
-:::note
-
+:::note[Gateway block page]
 To customize the page that users see when they are blocked by a Gateway firewall policy, refer to [Gateway block page](/cloudflare-one/policies/gateway/block-page/).
 :::
 
+## Types of block pages
+
+Cloudflare Access offers three different block page options:
+
+- **Default**: Displays a Cloudflare branded block page.
+- **Custom Redirect URL** - Redirects blocked requests to the specified URL. For example, you could redirect the user to a [dynamic Access Denied page](https://github.com/cloudflare/cf-identity-dynamic) that fetches their identity and shows the exact reason they were blocked.
+- **Custom Page Template** - (Only available on Pay-as-you-go and Enterprise plans) Displays a [custom HTML page](/cloudflare-one/applications/block-page/#create-a-custom-block-page) hosted by Cloudflare.
+
+### Identity versus non-identity
+
+You can display a different [type of block page](/cloudflare-one/applications/block-page/#types-of-block-pages) to users who fail an identity-based policy versus a non-identity policy.
+
+- **Identity failure block page**: Displays when the user fails an identity-based Access policy (such as email, user group, or external evaluation rule), after logging in to their identity provider.
+- **Non-identity failure block page**: Displays when the user fails a non-identity Access policy (such as country, IP, or device posture). Cloudflare checks non-identity attributes before prompting the user to login. Therefore, the non-identity block page would take precedence over the identity block page.
+
 ## Create a custom block page
+
+:::note
+Only available on Pay-as-you-go and Enterprise plans.
+:::
 
 To create a custom block page for Access:
 
@@ -26,11 +39,9 @@ To create a custom block page for Access:
 
 4. Enter a unique name for the block page.
 
-5. Select **Failed identity provider check**.
+5. In **Type**, select whether this is an [identity or non-identity block page](/cloudflare-one/applications/block-page/#identity-versus-non-identity).
 
-6. Copy the **Required script**.
-
-7. In **Custom HTML**, enter the HTML code for your custom page. For example,
+6. In **Custom HTML**, enter the HTML code for your custom page. For example,
 
    ```html
    <!doctype html>
@@ -43,8 +54,8 @@ To create a custom block page for Access:
    </html>
    ```
 
-8. To check the appearance of your custom page, select **Download** and open the HTML file in a browser.
+7. To check the appearance of your custom page, select **Download** and open the HTML file in a browser.
 
-9. Once you are satisfied with your custom page, select **Save**.
+8. Once you are satisfied with your custom page, select **Save**.
 
 You can now select this block page when you [configure an Access application](/cloudflare-one/applications/configure-apps/).

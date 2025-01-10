@@ -124,10 +124,17 @@ $ wrangler dev
 ...
 Your worker has access to the following bindings:
 - Services:
-  - SOME_OTHER_WORKER: some-other-worker connected
-  - ANOTHER_WORKER: another-worker not connected
+  - SOME_OTHER_WORKER: some-other-worker [connected]
+  - ANOTHER_WORKER: another-worker [not connected]
 ```
 
+Wrangler also supports running multiple Workers at once with one command. To try it out, pass multiple `-c` flags to Wrangler, like this: `wrangler dev -c wrangler.toml -c ../other-worker/wrangler.toml`. The first config will be treated as the _primary_ worker, which will be exposed over HTTP as usual at `http://localhost:8787`. The remaining config files will be treated as _secondary_ and will only be accessible via a service binding from the primary worker.
+
+:::caution
+
+Support for running multiple Workers at once with one Wrangler command is experimental, and subject to change as we work on the experience. If you run into bugs or have any feedback, [open an issue on the workers-sdk repository](https://github.com/cloudflare/workers-sdk/issues/new)
+
+:::
 ## Deployment
 
 Workers using Service bindings are deployed separately.

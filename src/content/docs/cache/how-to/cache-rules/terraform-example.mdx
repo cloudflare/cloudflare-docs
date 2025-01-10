@@ -6,13 +6,11 @@ sidebar:
 head:
   - tag: title
     content: Cache Rules — Terraform example
-
 ---
 
-import { Details } from "~/components"
+import { Details } from "~/components";
 
 The following example defines a single cache rule for a zone using Terraform. The rule configures several cache settings and sets a custom cache key for incoming requests addressed at `example.net`.
-
 
 <Details header="Terraform `cloudflare_ruleset` resource">
 
@@ -26,7 +24,10 @@ resource "cloudflare_ruleset" "cache_rules_example" {
   phase       = "http_request_cache_settings"
 
   rules {
-    action = "set_cache_settings"
+		ref         = "cache_settings_custom_cache_key"
+    description = "Set cache settings and custom cache key for example.net"
+    expression  = "(http.host eq \"example.net\")"
+    action      = "set_cache_settings"
     action_parameters {
       edge_ttl {
         mode    = "override_origin"
@@ -77,13 +78,9 @@ resource "cloudflare_ruleset" "cache_rules_example" {
       }
       origin_error_page_passthru = false
     }
-    expression  = "(http.host eq \"example.net\")"
-    description = "Set cache settings and custom cache key for example.net"
-    enabled     = true
   }
 }
 ```
-
 
 </Details>
 

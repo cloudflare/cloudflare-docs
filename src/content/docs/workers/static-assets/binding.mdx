@@ -1,6 +1,6 @@
 ---
 pcx_content_type: concept
-title: Configuration and binding
+title: Configuration and Bindings
 sidebar:
   order: 7
 head: []
@@ -17,6 +17,8 @@ import {
 	Tabs,
 } from "~/components";
 
+import { WranglerConfig } from "~/components";
+
 Configuring a Worker with assets requires specifying a [directory](/workers/static-assets/binding/#directory) and, optionally, an [assets binding](/workers/static-assets/binding/), in your Worker's `wrangler.toml` file. The [assets binding](/workers/static-assets/binding/) allows you to dynamically fetch assets from within your Worker script (e.g. `env.ASSETS.fetch()`), similarly to how you might with a make a `fetch()` call with a [Service binding](/workers/runtime-apis/bindings/service-bindings/http/).
 
 Only one collection of static assets can be configured in each Worker.
@@ -24,8 +26,6 @@ Only one collection of static assets can be configured in each Worker.
 ## `directory`
 
 The folder of static assets to be served. For many frameworks, this is the `./public/`, `./dist/`, or `./build/` folder.
-
-import { WranglerConfig } from "~/components";
 
 <WranglerConfig>
 
@@ -37,11 +37,52 @@ assets = { directory = "./public/" }
 
 </WranglerConfig>
 
+### Ignoring assets
+
+Sometime there are files in the asset directory that should not be uploaded.
+
+In this case, create a `.assetsignore` file in the root of the assets directory.
+This file takes the same format as `.gitignore`.
+
+Wrangler will not upload asset files that match lines in this file.
+
+**Example**
+
+You are migrating from a Pages project where the assets directory is `dist`.
+You do not want to upload the server-side Worker code nor Pages configuration files as public client-side assets.
+Add the following `.assetsignore` file:
+
+```txt
+_worker.js
+_redirects
+_headers
+```
+
+Now Wrangler will not upload these files as client-side assets when deploying the Worker.
+
+## `experimental_serve_directly`
+
+Controls whether assets will be served first on a matching request. `experimental_serve_directly = true` ([default](/workers/static-assets/routing/#default-behavior)) will serve any static asset matching a request, while `experimental_serve_directly = false` will unconditionally [invoke your Worker script](/workers/static-assets/routing/#invoking-worker-script-ahead-of-assets).
+
+<WranglerConfig>
+
+```toml title="wrangler.toml"
+name = "my-worker"
+compatibility_date = "2024-09-19"
+main = "src/index.ts"
+ # The following configuration unconditionally invokes the Worker script at
+ # `src/index.ts`, which can programatically fetch assets via the ASSETS binding
+[assets]
+directory = "./public/"
+binding = "ASSETS"
+experimental_serve_directly = false
+```
+
+</WranglerConfig>
+
 ## `binding`
 
 Configuring the optional [binding](/workers/runtime-apis/bindings) gives you access to the collection of assets from within your Worker script.
-
-
 
 <WranglerConfig>
 
@@ -50,7 +91,9 @@ name = "my-worker"
 main = "./src/index.js"
 compatibility_date = "2024-09-19"
 
-assets = { directory = "./public/", binding = "ASSETS" }
+[assets]
+directory = "./public/"
+binding = "ASSETS"
 ```
 
 </WranglerConfig>
@@ -75,8 +118,8 @@ Your dynamic code can make new, or forward incoming, requests to your project's 
 
 Take the following example that configures a Worker script to return a response under all requests headed for `/api/`. Otherwise, the Worker script will pass the incoming request through to the asset binding. In this case, because a Worker script is only invoked when the requested route has not matched any static assets, this will always evaluate [`not_found_handling`](/workers/static-assets/routing/#routing-configuration) behavior.
 
-<Tabs> <TabItem label="JavaScript" icon="seti:javascript">
-
+<Tabs>
+<TabItem label="JavaScript" icon="seti:javascript">
 ```js
 export default {
 	async fetch(request, env) {
@@ -91,9 +134,8 @@ export default {
 	},
 };
 ```
-
-</TabItem> <TabItem label="TypeScript" icon="seti:typescript">
-
+</TabItem>
+<TabItem label="TypeScript" icon="seti:typescript">
 ```ts
 interface Env {
 	ASSETS: Fetcher;
@@ -112,9 +154,29 @@ export default {
 	},
 } satisfies ExportedHandler<Env>;
 ```
-
-</TabItem> </Tabs>
+</TabItem>
+</Tabs>
 
 ## Routing configuration
 
 For the various static asset routing configuration options, refer to [Routing](/workers/static-assets/routing/).
+
+## Smart Placement
+
+[Smart Placement](/workers/configuration/smart-placement/) can be used to place a Worker's code close to your back-end infrastructure. Smart Placement will only have an effect if you specified a `main`, pointing to your Worker code.
+
+### Smart Placement with Worker Code First
+
+If you desire to run your [Worker code ahead of assets](/workers/static-assets/routing/#invoking-worker-script-ahead-of-assets) by setting `experimental_serve_directly=false`, all requests must first travel to your Smart-Placed Worker. As a result, you may experience increased latency for asset requests.
+
+Use Smart Placement with `experimental_serve_directly=false` when you need to integrate with other backend services, authenticate requests before serving any assets, or if your want to make modifications to your assets before serving them.
+
+If you want some assets served as quickly as possible to the user, but others to be served behind a smart-placed Worker, considering splitting your app into multiple Workers and [using service bindings to connect them](/workers/configuration/smart-placement/#best-practices).
+
+### Smart Placement with Assets First
+
+Enabling Smart Placement with `experimental_serve_directly=true` lets you serve assets from as close as possible to your users, but moves your Worker logic to run most efficiently (such as near a database).
+
+Use Smart Placement with `experimental_serve_directly=true` when prioritizing fast asset delivery.
+
+This will not impact the [default routing behavior](/workers/static-assets/routing/#default-behavior).

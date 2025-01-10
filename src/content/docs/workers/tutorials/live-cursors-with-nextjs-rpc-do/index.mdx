@@ -1,0 +1,843 @@
+---
+updated: 2024-11-07
+difficulty: Intermediate
+content_type: 📝 Tutorial
+pcx_content_type: tutorial
+title: Build Live Cursors with Next.js, RPC and Durable Objects
+products:
+  - Workers
+  - Durable Objects
+  - Developer Spotlight
+spotlight:
+  author: Ivan Buendia
+  author_bio_link: https://www.linkedin.com/in/ibctx/
+  author_bio_source: LinkedIn
+tags:
+  - Next.js
+  - WebSockets
+  - RPC
+languages:
+  - TypeScript
+---
+import { Render, PackageManagers, Steps, TabItem, Tabs, Details } from "~/components";
+
+In this tutorial, you will learn how to build a real-time [Next.js](https://nextjs.org/) app that displays the live cursor location of each connected user using [Durable Objects](/durable-objects/), the Workers' built-in [RPC (Remote Procedure Call)](/workers/runtime-apis/rpc/) system, and the [OpenNext](https://opennext.js.org/cloudflare) Cloudflare adapter.
+
+The application works like this:
+- An ID is generated for each user that navigates to the application, which is used for identifying the WebSocket connection in the Durable Object.
+- Once the WebSocket connection is established, the application sends a message to the WebSocket Durable Object to determine the current number of connected users.
+- A user can close all active WebSocket connections via a Next.js server action that uses an RPC method.
+- It handles WebSocket and mouse movement events to update the location of other users' cursors in the UI and to send updates about the user's own cursor, as well as join and leave WebSocket events.
+
+![Animated gif of real-time Next.js app for visualizing live cursors](~/assets/images/workers/tutorials/live-cursors-nextjs/demo-live-cursors-nextjs-do.gif)
+
+---
+
+## 1. Create a Next.js Workers Project
+
+<Steps>
+
+1. Run the following command to create your Next.js Worker named `next-rpc`:
+
+	<PackageManagers
+		type="create"
+		pkg="cloudflare@latest"
+		args={"next-rpc --framework=next --experimental"}
+	/>
+
+	<Render
+		file="c3-post-run-steps"
+		product="workers"
+		params={{
+			category: "web-framework",
+			framework: "Next.js",
+		}}
+	/>
+
+2. Change into your new directory:
+
+	```sh
+	cd next-rpc
+	```
+
+3. Install [nanoid](https://www.npmjs.com/package/nanoid) so that string IDs can be generated for clients:
+	<PackageManagers type="add" pkg="nanoid" frame="none" />
+
+4. Install [perfect-cursors](https://www.npmjs.com/package/perfect-cursors) to interpolate cursor positions:
+	<PackageManagers type="add" pkg="perfect-cursors" frame="none" />
+
+5. Define workspaces for each Worker:
+
+	<Tabs> <TabItem label="npm">
+
+	Update your `package.json` file.
+
+
+	```json title="package.json" ins={14-17}
+	{
+		"name": "next-rpc",
+		"version": "0.1.0",
+		"private": true,
+		"scripts": {
+			"dev": "next dev",
+			"build": "next build",
+			"start": "next start",
+			"lint": "next lint",
+			"deploy": "cloudflare && wrangler deploy",
+			"preview": "cloudflare && wrangler dev",
+			"cf-typegen": "wrangler types --env-interface CloudflareEnv env.d.ts"
+		},
+		"workspaces": [
+			".",
+			"worker"
+		],
+		// ...
+	}
+	```
+
+	</TabItem> <TabItem label="pnpm">
+
+	Create a new file `pnpm-workspace.yaml`.
+
+	```yaml title="pnpm-workspace.yaml"
+	packages:
+		- "worker"
+		- "."
+	```
+	</TabItem> </Tabs>
+
+</Steps>
+
+## 2. Create a Durable Object Worker
+
+This Worker will manage the Durable Object and also have internal APIs
+that will be made available to the Next.js Worker using a [`WorkerEntrypoint`](/workers/runtime-apis/bindings/service-bindings/rpc/) class.
+
+<Steps>
+1. Create another Worker named `worker` inside the Next.js directory:
+
+	<PackageManagers
+		type="create"
+		pkg="cloudflare@latest"
+		args={"worker"}
+	/>
+
+	<Render
+		file="c3-post-run-steps"
+		product="workers"
+		params={{
+			category: "hello-world",
+			type: "Hello World Worker using Durable Objects",
+			lang: "TypeScript",
+		}}
+	/>
+</Steps>
+
+## 3. Build Durable Object Worker functionality
+<Steps>
+1. In your `worker/wrangler.toml` file, update the Durable Object binding:
+	```toml {4,5,9} title="worker/wrangler.toml"
+	# ... Other wrangler configuration settings
+
+	[[durable_objects.bindings]]
+	name = "CURSOR_SESSIONS"
+	class_name = "CursorSessions"
+
+	[[migrations]]
+	tag = "v1"
+	new_classes = ["CursorSessions"]
+	```
+2. Initialize the main methods for the Durable Object and define types for WebSocket messages and cursor sessions in your `worker/src/index.ts`
+	to support type-safe interaction:
+	- `WsMessage`. Specifies the structure of WebSocket messages handled by the Durable Object.
+	- `Session`. Represents the connected user's ID and current cursor coordinates.
+
+	```ts title="worker/src/index.ts"
+	import { DurableObject } from 'cloudflare:workers';
+
+	export type WsMessage =
+		| { type: "message"; data: string }
+		| { type: "quit"; id: string }
+		| { type: "join"; id: string }
+		| { type: "move"; id: string; x: number; y: number }
+		| { type: "get-cursors" }
+		| { type: "get-cursors-response"; sessions: Session[] };
+
+	export type Session = { id: string; x: number; y: number };
+
+	export class CursorSessions extends DurableObject<Env> {
+		constructor(ctx: DurableObjectState, env: Env) {}
+		broadcast(message: WsMessage, self?: string) {}
+		async webSocketMessage(ws: WebSocket, message: string) {}
+		async webSocketClose(ws: WebSocket, code: number) {}
+		closeSessions() {}
+		async fetch(request: Request) {
+			return new Response("Hello");
+		}
+	}
+
+	export default {
+		async fetch(request, env, ctx) {
+			return new Response("Ok");
+		},
+	} satisfies ExportedHandler<Env>;
+	```
+
+	Now update `worker-configuration.d.ts` by running:
+
+	```sh
+	cd worker && npm run cf-typegen
+	```
+
+
+3. Update the Durable Object to manage WebSockets:
+	```ts title="worker/src/index.ts" {29-34,36-43,56,79,89-100}
+	// Rest of the code
+
+	export class CursorSessions extends DurableObject<Env> {
+		sessions: Map<WebSocket, Session>;
+
+		constructor(ctx: DurableObjectState, env: Env) {
+			super(ctx, env);
+			this.sessions = new Map();
+			this.ctx.getWebSockets().forEach((ws) => {
+				const meta = ws.deserializeAttachment();
+				this.sessions.set(ws, { ...meta });
+			});
+		}
+
+		broadcast(message: WsMessage, self?: string) {
+			this.ctx.getWebSockets().forEach((ws) => {
+				const { id } = ws.deserializeAttachment();
+				if (id !== self) ws.send(JSON.stringify(message));
+			});
+		}
+
+		async webSocketMessage(ws: WebSocket, message: string) {
+			if (typeof message !== "string") return;
+			const parsedMsg: WsMessage = JSON.parse(message);
+			const session = this.sessions.get(ws);
+			if (!session) return;
+
+			switch (parsedMsg.type) {
+				case "move":
+					session.x = parsedMsg.x;
+					session.y = parsedMsg.y;
+					ws.serializeAttachment(session);
+					this.broadcast(parsedMsg, session.id);
+					break;
+
+				case "get-cursors":
+					const sessions: Session[] = [];
+					this.sessions.forEach((session) => {
+						sessions.push(session);
+					});
+					const wsMessage: WsMessage = { type: "get-cursors-response", sessions };
+					ws.send(JSON.stringify(wsMessage));
+					break;
+
+				case "message":
+					this.broadcast(parsedMsg);
+					break;
+
+				default:
+					break;
+			}
+		}
+
+		async webSocketClose(ws: WebSocket, code: number) {
+			const id = this.sessions.get(ws)?.id;
+			id && this.broadcast({ type: 'quit', id });
+			this.sessions.delete(ws);
+			ws.close();
+		}
+
+		closeSessions() {
+			this.ctx.getWebSockets().forEach((ws) => ws.close());
+		}
+
+		async fetch(request: Request) {
+			const url = new URL(request.url);
+			const webSocketPair = new WebSocketPair();
+			const [client, server] = Object.values(webSocketPair);
+			this.ctx.acceptWebSocket(server);
+			const id = url.searchParams.get("id");
+			if (!id) {
+				return new Response("Missing id", { status: 400 });
+			}
+
+			// Set Id and Default Position
+			const sessionInitialData: Session = { id, x: -1, y: -1 };
+			server.serializeAttachment(sessionInitialData);
+			this.sessions.set(server, sessionInitialData);
+			this.broadcast({ type: "join", id }, id);
+
+			return new Response(null, {
+				status: 101,
+				webSocket: client,
+			});
+		}
+	}
+
+	export default {
+		async fetch(request, env, ctx) {
+			if (request.url.match("/ws")) {
+				const upgradeHeader = request.headers.get("Upgrade");
+				if (!upgradeHeader || upgradeHeader !== "websocket") {
+					return new Response("Durable Object expected Upgrade: websocket", {
+						status: 426,
+					});
+				}
+				const id = env.CURSOR_SESSIONS.idFromName("globalRoom");
+				const stub = env.CURSOR_SESSIONS.get(id);
+				return stub.fetch(request);
+			}
+			return new Response(null, {
+				status: 400,
+				statusText: "Bad Request",
+				headers: {
+					"Content-Type": "text/plain",
+				},
+			});
+		},
+	} satisfies ExportedHandler<Env>;
+
+	```
+	- The main `fetch` handler routes requests with a `/ws` URL to the `CursorSessions` Durable Object where a WebSocket connection is established.
+	- The `CursorSessions` class manages WebSocket connections, session states, and broadcasts messages to other connected clients.
+		- When a new WebSocket connection is established, the Durable Object broadcasts a `join` message to all connected clients; similarly, a `quit` message is broadcast when a client disconnects.
+		- It tracks each WebSocket client's last cursor position under the `move` message, which is broadcasted to all active clients.
+		- When a `get-cursors` message is received, it sends the number of currently active clients to the specific client that requested it.
+
+
+4. Extend the `WorkerEntrypoint` class for RPC:
+	:::note[Note]
+	A service binding to `SessionsRPC` is used here because Durable Object RPC is not yet supported in multiple `wrangler dev` sessions. In this case, two `wrangler dev` sessions are used: one for the Next.js Worker and one for the Durable Object Worker. In production, however, Durable Object RPC is not an issue. For convenience in local development, a service binding is used instead of directly invoking the Durable Object RPC method.
+	:::
+
+
+	```ts title="worker/src/index.ts" ins={2,5-12} del={1}
+	import { DurableObject } from 'cloudflare:workers';
+	import { DurableObject, WorkerEntrypoint } from 'cloudflare:workers';
+	// ... rest of the code
+
+	export class SessionsRPC extends WorkerEntrypoint<Env> {
+		async closeSessions() {
+			const id = this.env.CURSOR_SESSIONS.idFromName("globalRoom");
+			const stub = this.env.CURSOR_SESSIONS.get(id);
+			// Invoking Durable Object RPC method. Same `wrangler dev` session.
+			await stub.closeSessions();
+		}
+	}
+
+	export default {
+		async fetch(request, env, ctx) {
+			if (request.url.match("/ws")) {
+	// ...
+	```
+
+5. Leave the Durable Object Worker running. It's used for RPC and serves as a local WebSocket server:
+	<PackageManagers type="run" pkg="dev" frame="none" />
+
+6. Use the resulting address from the previous step to set the Worker host as a public environment variable in your Next.js project:
+	```text title="next-rpc/.env.local" ins={1}
+	NEXT_PUBLIC_WS_HOST=localhost:8787
+	```
+
+</Steps>
+
+## 4. Build Next.js Worker functionality
+<Steps>
+1. In your Next.js `wrangler.toml` file, declare the external Durable Object binding and the Service binding to `SessionsRPC`:
+
+	```toml title="next-rpc/wrangler.toml" ins={10-18}
+	# ... rest of the configuration
+	compatibility_flags = ["nodejs_compat"]
+
+	# Minification helps to keep the Worker bundle size down and improve start up time.
+	minify = true
+
+	# Use the new Workers + Assets to host the static frontend files
+	assets = { directory = ".worker-next/assets", binding = "ASSETS" }
+
+	[[durable_objects.bindings]]
+	name = "CURSOR_SESSIONS"
+	class_name = "CursorSessions"
+	script_name = "worker"
+
+	[[services]]
+	binding = "RPC_SERVICE"
+	service = "worker"
+	entrypoint = "SessionsRPC"
+	```
+
+2. Update your `env.d.ts` file for type-safety:
+	```ts title="next-rpc/env.d.ts" {2-5}
+	interface CloudflareEnv {
+		CURSOR_SESSIONS: DurableObjectNamespace<
+			import("./worker/src/index").CursorSessions
+		>;
+		RPC_SERVICE: Service<import("./worker/src/index").SessionsRPC>;
+		ASSETS: Fetcher;
+	}
+	```
+3. Include Next.js server side logic:
+	- Add a server action to close all active WebSocket connections.
+	- Use the RPC method `closeSessions` from the `RPC_SERVICE` Service binding instead of invoking the Durable Object RPC method because of the limitation mentioned in the note above.
+	- The server component generates unique IDs using `nanoid` to identify the WebSocket connection within the Durable Object.
+	- Set the [`dynamic`](https://nextjs.org/docs/app/api-reference/file-conventions/route-segment-config) value to `force-dynamic` to ensure unique ID generation and avoid static rendering
+
+	```tsx title="src/app/page.tsx" {5,9-10,19,25-27,33}
+	import { getCloudflareContext } from "@opennextjs/cloudflare";
+	import { Cursors } from "./cursor";
+	import { nanoid } from "nanoid";
+
+	export const dynamic = "force-dynamic";
+
+	async function closeSessions() {
+		"use server";
+		const cf = await getCloudflareContext();
+		await cf.env.RPC_SERVICE.closeSessions();
+
+		// Note: Not supported in `wrangler dev`
+		// const id = cf.env.CURSOR_SESSIONS.idFromName("globalRoom");
+		// const stub = cf.env.CURSOR_SESSIONS.get(id);
+		// await stub.closeSessions();
+	}
+
+	export default function Home() {
+		const id = `ws_${nanoid(50)}`;
+		return (
+			<main className="flex min-h-screen flex-col items-center p-24 justify-center">
+				<div className="border border-dashed w-full">
+					<p className="pt-2 px-2">Server Actions</p>
+					<div className="p-2">
+						<form action={closeSessions}>
+							<button className="border px-2 py-1">Close WebSockets</button>
+						</form>
+					</div>
+				</div>
+				<div className="border border-dashed w-full mt-2.5">
+					<p className="py-2 px-2">Live Cursors</p>
+					<div className="px-2 space-y-2">
+						<Cursors id={id}></Cursors>
+					</div>
+				</div>
+			</main>
+		);
+	}
+	```
+
+4. Create a client component to manage WebSocket and mouse movement events:
+
+	<Details header="src/app/cursor.tsx">
+	```tsx title="src/app/cursor.tsx"
+	"use client";
+	import { useCallback, useEffect, useLayoutEffect, useReducer, useRef, useState } from "react";
+	import type { Session, WsMessage } from "../../worker/src/index";
+	import { PerfectCursor } from "perfect-cursors";
+
+	const INTERVAL = 55;
+
+	export function Cursors(props: { id: string }) {
+		const wsRef = useRef<WebSocket | null>(null);
+		const [cursors, setCursors] = useState<Map<string, Session>>(new Map());
+		const lastSentTimestamp = useRef(0);
+		const [messageState, dispatchMessage] = useReducer(messageReducer, {
+			in: "",
+			out: "",
+		});
+		const [highlightedIn, highlightIn] = useHighlight();
+		const [highlightedOut, highlightOut] = useHighlight();
+
+		function startWebSocket() {
+			const wsProtocol = window.location.protocol === "https:" ? "wss" : "ws";
+			const ws = new WebSocket(
+				`${wsProtocol}://${process.env.NEXT_PUBLIC_WS_HOST}/ws?id=${props.id}`,
+			);
+			ws.onopen = () => {
+				highlightOut();
+				dispatchMessage({ type: "out", message: "get-cursors" });
+				const message: WsMessage = { type: "get-cursors" };
+				ws.send(JSON.stringify(message));
+			};
+			ws.onmessage = (message) => {
+				const messageData: WsMessage = JSON.parse(message.data);
+				highlightIn();
+				dispatchMessage({ type: "in", message: messageData.type });
+				switch (messageData.type) {
+					case "quit":
+						setCursors((prev) => {
+							const updated = new Map(prev);
+							updated.delete(messageData.id);
+							return updated;
+						});
+						break;
+					case "join":
+						setCursors((prev) => {
+							const updated = new Map(prev);
+							if (!updated.has(messageData.id)) {
+								updated.set(messageData.id, { id: messageData.id, x: -1, y: -1 });
+							}
+							return updated;
+						});
+						break;
+					case "move":
+						setCursors((prev) => {
+							const updated = new Map(prev);
+							const session = updated.get(messageData.id);
+							if (session) {
+								session.x = messageData.x;
+								session.y = messageData.y;
+							} else {
+								updated.set(messageData.id, messageData);
+							}
+							return updated;
+						});
+						break;
+					case "get-cursors-response":
+						setCursors(
+							new Map(
+								messageData.sessions.map((session) => [session.id, session]),
+							),
+						);
+						break;
+					default:
+						break;
+				}
+			};
+			ws.onclose = () => setCursors(new Map());
+			return ws;
+		}
+
+		useEffect(() => {
+			const abortController = new AbortController();
+			document.addEventListener(
+				"mousemove",
+				(ev) => {
+					const x = ev.pageX / window.innerWidth,
+						y = ev.pageY / window.innerHeight;
+					const now = Date.now();
+					if (
+						now - lastSentTimestamp.current > INTERVAL &&
+						wsRef.current?.readyState === WebSocket.OPEN
+					) {
+						const message: WsMessage = { type: "move", id: props.id, x, y };
+						wsRef.current.send(JSON.stringify(message));
+						lastSentTimestamp.current = now;
+						highlightOut();
+						dispatchMessage({ type: "out", message: "move" });
+					}
+				},
+				{
+					signal: abortController.signal,
+				},
+			);
+			return () => abortController.abort();
+			// eslint-disable-next-line react-hooks/exhaustive-deps
+		}, []);
+
+		useEffect(() => {
+			wsRef.current = startWebSocket();
+			return () => wsRef.current?.close();
+			// eslint-disable-next-line react-hooks/exhaustive-deps
+		}, [props.id]);
+
+		function sendMessage() {
+			highlightOut();
+			dispatchMessage({ type: "out", message: "message" });
+			wsRef.current?.send(
+				JSON.stringify({ type: "message", data: "Ping" } satisfies WsMessage),
+			);
+		}
+
+		const otherCursors = Array.from(cursors.values()).filter(
+			({ id, x, y }) => id !== props.id && x !== -1 && y !== -1,
+		);
+
+		return (
+			<>
+				<div className="flex border">
+					<div className="px-2 py-1 border-r">WebSocket Connections</div>
+					<div className="px-2 py-1"> {cursors.size} </div>
+				</div>
+				<div className="flex border">
+					<div className="px-2 py-1 border-r">Messages</div>
+					<div className="flex flex-1">
+						<div className="px-2 py-1 border-r">↓</div>
+						<div
+							className="w-full px-2 py-1 [word-break:break-word] transition-colors duration-500"
+							style={{
+								backgroundColor: highlightedIn ? "#ef4444" : "transparent",
+							}}
+						>
+							{messageState.in}
+						</div>
+					</div>
+					<div className="flex flex-1">
+						<div className="px-2 py-1 border-x">↑</div>
+						<div
+							className="w-full px-2 py-1 [word-break:break-word] transition-colors duration-500"
+							style={{
+								backgroundColor: highlightedOut ? "#60a5fa" : "transparent",
+							}}
+						>
+							{messageState.out}
+						</div>
+					</div>
+				</div>
+				<div className="flex gap-2">
+					<button onClick={sendMessage} className="border px-2 py-1">
+						ws message
+					</button>
+					<button
+						className="border px-2 py-1 disabled:opacity-80"
+						onClick={() => {
+							wsRef.current?.close();
+							wsRef.current = startWebSocket();
+						}}
+					>
+						ws reconnect
+					</button>
+					<button
+						className="border px-2 py-1"
+						onClick={() => wsRef.current?.close()}
+					>
+						ws close
+					</button>
+				</div>
+				<div>
+					{otherCursors.map((session) => (
+						<SvgCursor
+							key={session.id}
+							point={[
+								session.x * window.innerWidth,
+								session.y * window.innerHeight,
+							]}
+						/>
+					))}
+				</div>
+			</>
+		);
+	}
+
+	function SvgCursor({ point }: { point: number[] }) {
+		const refSvg = useRef<SVGSVGElement>(null);
+		const animateCursor = useCallback((point: number[]) => {
+			refSvg.current?.style.setProperty(
+				"transform",
+				`translate(${point[0]}px, ${point[1]}px)`,
+			);
+		}, []);
+		const onPointMove = usePerfectCursor(animateCursor);
+		useLayoutEffect(() => onPointMove(point), [onPointMove, point]);
+		const [randomColor] = useState(
+			`#${Math.floor(Math.random() * 16777215)
+				.toString(16)
+				.padStart(6, "0")}`,
+		);
+		return (
+			<svg
+				ref={refSvg}
+				height="32"
+				width="32"
+				viewBox="0 0 32 32"
+				xmlns="http://www.w3.org/2000/svg"
+				className={"absolute -top-[12px] -left-[12px] pointer-events-none"}
+			>
+				<defs>
+					<filter id="shadow" x="-40%" y="-40%" width="180%" height="180%">
+						<feDropShadow dx="1" dy="1" stdDeviation="1.2" floodOpacity="0.5" />
+					</filter>
+				</defs>
+				<g fill="none" transform="rotate(0 16 16)" filter="url(#shadow)">
+					<path
+						d="M12 24.4219V8.4069L23.591 20.0259H16.81l-.411.124z"
+						fill="white"
+					/>
+					<path
+						d="M21.0845 25.0962L17.4795 26.6312L12.7975 15.5422L16.4835 13.9892z"
+						fill="white"
+					/>
+					<path
+						d="M19.751 24.4155L17.907 25.1895L14.807 17.8155L16.648 17.04z"
+						fill={randomColor}
+					/>
+					<path
+						d="M13 10.814V22.002L15.969 19.136l.428-.139h4.768z"
+						fill={randomColor}
+					/>
+				</g>
+			</svg>
+		);
+	}
+
+	function usePerfectCursor(cb: (point: number[]) => void, point?: number[]) {
+		const [pc] = useState(() => new PerfectCursor(cb));
+
+		useLayoutEffect(() => {
+			if (point) pc.addPoint(point);
+			return () => pc.dispose();
+			// eslint-disable-next-line react-hooks/exhaustive-deps
+		}, [pc]);
+
+		useLayoutEffect(() => {
+			PerfectCursor.MAX_INTERVAL = 58;
+		}, []);
+
+		const onPointChange = useCallback(
+			(point: number[]) => pc.addPoint(point),
+			[pc],
+		);
+
+		return onPointChange;
+	}
+
+	type MessageState = { in: string; out: string };
+	type MessageAction = { type: "in" | "out"; message: string };
+	function messageReducer(state: MessageState, action: MessageAction) {
+		switch (action.type) {
+			case "in":
+				return { ...state, in: action.message };
+			case "out":
+				return { ...state, out: action.message };
+			default:
+				return state;
+		}
+	}
+
+	function useHighlight(duration = 250) {
+		const timestampRef = useRef(0);
+		const [highlighted, setHighlighted] = useState(false);
+		function highlight() {
+			timestampRef.current = Date.now();
+			setHighlighted(true);
+			setTimeout(() => {
+				const now = Date.now();
+				if (now - timestampRef.current >= duration) {
+					setHighlighted(false);
+				}
+			}, duration);
+		}
+		return [highlighted, highlight] as const;
+	}
+	```
+	</Details>
+	The generated ID is used here and passed as a parameter to the WebSocket server:
+
+	```ts
+	const ws = new WebSocket(
+		`${wsProtocol}://${process.env.NEXT_PUBLIC_WS_HOST}/ws?id=${props.id}`,
+	);
+	```
+
+	The component starts the WebSocket connection and handles 4 types of WebSocket messages, which trigger updates to React's state:
+		- `join`. Received when a new WebSocket connection is established.
+		- `quit`. Received when a WebSocket connection is closed.
+		- `move`. Received when a user's cursor moves.
+		- `get-cursors-response`. Received	when a client sends a `get-cursors` message, which is triggered once the WebSocket connection is open.
+
+	It sends the user's cursor coordinates to the WebSocket server during the [`mousemove`](https://developer.mozilla.org/en-US/docs/Web/API/Element/mousemove_event) event, which then broadcasts them to all active WebSocket clients.
+
+	Although there are multiple strategies you can use together for real-time cursor synchronization (e.g., batching, interpolation, etc.), in this tutorial throttling, spline interpolation and position normalization are used:
+
+	```ts {4-5,8-9}
+	document.addEventListener(
+		"mousemove",
+		(ev) => {
+			const x = ev.pageX / window.innerWidth,
+				y = ev.pageY / window.innerHeight;
+			const now = Date.now();
+			if (
+					now - lastSentTimestamp.current > INTERVAL &&
+					wsRef.current?.readyState === WebSocket.OPEN
+			) {
+				const message: WsMessage = { type: "move", id: props.id, x, y };
+				wsRef.current.send(JSON.stringify(message));
+				lastSentTimestamp.current = now;
+				// ...
+			}
+		}
+	);
+	```
+
+	Each animated cursor is controlled by a `PerfectCursor` instance, which animates its position along a spline curve defined by the cursor's latest positions:
+	```ts {9-11}
+	// SvgCursor react component
+	const refSvg = useRef<SVGSVGElement>(null);
+	const animateCursor = useCallback((point: number[]) => {
+		refSvg.current?.style.setProperty(
+			"transform",
+			`translate(${point[0]}px, ${point[1]}px)`,
+		);
+	}, []);
+	const onPointMove = usePerfectCursor(animateCursor);
+	// A `point` is added to the path whenever its vule updates;
+	useLayoutEffect(() => onPointMove(point), [onPointMove, point]);
+	// ...
+	```
+
+
+5. Run Next.js development server:
+	:::note[Note]
+	The Durable Object Worker must also be running.
+	:::
+	<PackageManagers type="run" pkg="dev" frame="none" />
+
+6. Open the App in the browser.
+
+</Steps>
+
+
+## 5. Deploy the project
+
+<Steps>
+1. Change into your Durable Object Worker directory:
+	```sh
+	cd worker
+	```
+
+	Deploy the Worker:
+	<PackageManagers type="run" pkg="deploy" frame="none" />
+
+	Copy only the host from the generated Worker URL, excluding the protocol, and set `NEXT_PUBLIC_WS_HOST` in `.env.local` to this value (e.g., `worker-unique-identifier.workers.dev`).
+
+	```txt title="next-rpc/.env.local" ins={2} del={1}
+	NEXT_PUBLIC_WS_HOST=localhost:8787
+	NEXT_PUBLIC_WS_HOST=worker-unique-identifier.workers.dev
+	```
+
+2. Change into your root directory and deploy your Next.js app:
+	:::note[Optional Step]
+	Invoking Durable Object RPC methods between separate workers are fully supported in Cloudflare deployments. You can opt to use them instead of Service Bindings RPC:
+	```ts title="src/app/page.tsx" ins={7-9} del={4}
+	async function closeSessions() {
+		"use server";
+		const cf = await getCloudflareContext();
+		await cf.env.RPC_SERVICE.closeSessions();
+
+		// Note: Not supported in `wrangler dev`
+		const id = cf.env.CURSOR_SESSIONS.idFromName("globalRoom");
+		const stub = cf.env.CURSOR_SESSIONS.get(id);
+		await stub.closeSessions();
+	}
+	```
+	:::
+
+	<PackageManagers type="run" pkg="deploy" frame="none" />
+
+
+</Steps>
+
+
+## Summary
+
+In this tutorial, you learned how to integrate Next.js with Durable Objects to build a real-time application to visualize cursors. You also learned how to use Workers' built-in RPC system alongside Next.js server actions. The complete code for this tutorial is available on [GitHub](https://github.com/exectx/next-live-cursors-do-rpc).
+
+## Related resources
+
+You can check other Cloudflare tutorials or related resources:
+
+- [Workers RPC](/workers/runtime-apis/bindings/service-bindings/rpc/).
+- [Next.js and Workers Static Assets](/workers/frameworks/framework-guides/nextjs/).
+- [Build a seat booking app with SQLite in Durable Objects](/durable-objects/tutorials/build-a-seat-booking-app/).

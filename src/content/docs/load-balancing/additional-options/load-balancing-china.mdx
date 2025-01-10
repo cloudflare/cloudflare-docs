@@ -1,0 +1,29 @@
+---
+pcx_content_type: concept
+title: Load Balancing with the China Network
+sidebar:
+  order: 15
+
+---
+
+## Prerequisites
+
+To enable load balancers to be deployed to the [China Network](/china-network/), your zone will need to meet the following two criteria:
+
+1. A valid [ICP license](/china-network/concepts/icp/) for the zone in question.
+2. The zone must be provisioned with access to the China Network.
+
+Once these two criteria are met, any newly created load balancer will be automatically deployed to the China Network. When choosing a region for a pool's health checks, `China` is now available to be selected in both the dashboard and API. 
+
+You can also create a load balancer by sending a `POST` request to the following endpoint. To deploy to the China Network with the API, the `networks` array in the API call must contain `jdcloud` as a value in addition to `cloudflare`. Refer to the [Cloudflare API documentation](/api/resources/load_balancers/methods/create/) for details on the required fields and their formats.
+
+```bash
+https://api.cloudflare.com/client/v4/zones/{zone_id}/load_balancers
+```
+
+## Limitations
+
+Load balancers deployed to the China Network currently have the following limitations: 
+
+1. Only cookie-based session affinity is supported.
+2. Private network off-ramps (Tunnel, GRE, IPsec) are not supported.

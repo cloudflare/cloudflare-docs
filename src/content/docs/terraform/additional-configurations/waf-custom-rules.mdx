@@ -49,10 +49,10 @@ resource "cloudflare_ruleset" "zone_custom_firewall" {
   phase       = "http_request_firewall_custom"
 
   rules {
-    action = "block"
-    expression = "(not cf.edge.server_port in {80 443})"
+    ref         = "block_non_default_ports"
     description = "Block ports other than 80 and 443"
-    enabled = true
+    expression  = "(not cf.edge.server_port in {80 443})"
+    action      = "block"
   }
 }
 ```
@@ -134,10 +134,10 @@ resource "cloudflare_ruleset" "account_firewall_custom_ruleset" {
   phase       = "http_request_firewall_custom"
 
   rules {
-    action = "block"
-    expression = "(not cf.edge.server_port in {80 443})"
+    ref         = "block_non_default_ports"
     description = "Block ports other than 80 and 443"
-    enabled = true
+    expression  = "(not cf.edge.server_port in {80 443})"
+    action      = "block"
   }
 }
 ```
@@ -160,13 +160,13 @@ resource "cloudflare_ruleset" "account_firewall_custom_entrypoint" {
   depends_on = [cloudflare_ruleset.account_firewall_custom_ruleset]
 
   rules {
-    action = "execute"
+    ref         = "deploy_custom_ruleset_example_com"
+    description = "Deploy custom ruleset for example.com"
+    expression  = "(cf.zone.name eq \"example.com\")"
+    action      = "execute"
     action_parameters {
       id = cloudflare_ruleset.account_firewall_custom_ruleset.id
     }
-    expression = "(cf.zone.name eq \"example.com\")"
-    description = "Deploy custom ruleset for example.com"
-    enabled = true
   }
 }
 ```
@@ -190,21 +190,21 @@ resource "cloudflare_ruleset" "account_firewall_custom_ruleset_exposed_creds" {
   phase       = "http_request_firewall_custom"
 
   rules {
-    action = "rewrite"
+    ref         = "check_for_exposed_creds_add_header"
+    description = "Add header when there is a rule match and exposed credentials are detected"
+    expression  = "http.request.method == \"POST\" && http.request.uri == \"/login.php\""
+    action      = "rewrite"
     action_parameters {
       headers {
-        name = "Exposed-Credential-Check"
+        name      = "Exposed-Credential-Check"
         operation = "set"
-        value = "1"
+        value     = "1"
       }
     }
     exposed_credential_check {
       username_expression = "url_decode(http.request.body.form[\"username\"][0])"
       password_expression = "url_decode(http.request.body.form[\"password\"][0])"
     }
-    expression = "http.request.method == \"POST\" && http.request.uri == \"/login.php\""
-    description = "Add header when there is a rule match and exposed credentials are detected"
-    enabled = true
   }
 }
 ```
@@ -224,13 +224,13 @@ resource "cloudflare_ruleset" "account_firewall_custom_entrypoint" {
   depends_on = [cloudflare_ruleset.account_firewall_custom_ruleset_exposed_creds]
 
   rules {
-    action = "execute"
+    ref         = "deploy_custom_ruleset_example_com"
+    description = "Deploy custom ruleset for example.com"
+    expression  = "(cf.zone.name eq \"example.com\")"
+    action      = "execute"
     action_parameters {
       id = cloudflare_ruleset.account_firewall_custom_ruleset_exposed_creds.id
     }
-    expression = "(cf.zone.name eq \"example.com\")"
-    description = "Deploy custom ruleset for example.com"
-    enabled = true
   }
 }
 ```

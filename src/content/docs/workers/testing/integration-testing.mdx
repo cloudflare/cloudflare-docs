@@ -5,26 +5,25 @@ sidebar:
   order: 3
 head: []
 description: Test multiple units of your Worker working together.
-
 ---
 
-import { Render } from "~/components"
+import { Render } from "~/components";
 
 Integration tests test multiple units of your Worker together by sending HTTP requests to your Worker and asserting on the HTTP responses. As an example, consider the following Worker:
 
 ```js
 export function add(a, b) {
-  return a + b;
+	return a + b;
 }
 
 export default {
-  async fetch(request) {
-    const url = new URL(request.url);
-    const a = parseInt(url.searchParams.get("a"));
-    const b = parseInt(url.searchParams.get("b"));
-    return new Response(add(a, b));
-  }
-}
+	async fetch(request) {
+		const url = new URL(request.url);
+		const a = parseInt(url.searchParams.get("a"));
+		const b = parseInt(url.searchParams.get("b"));
+		return new Response(add(a, b));
+	},
+};
 ```
 
 An integration test for this Worker might look like the following example:
@@ -75,15 +74,13 @@ it("dispatches fetch event", async () => {
 });
 ```
 
-Instead of running the Worker-under-test in the same Worker as the test runner like `SELF`, this example defines the Worker-under-test as an *auxiliary* Worker. This means the Worker runs in a separate isolate to the test runner, with a different global scope. The Worker-under-test runs in an environment closer to production, but Vite transformations and hot-module-reloading aren't applied to the Worker—you must compile your TypeScript to JavaScript beforehand.
+Instead of running the Worker-under-test in the same Worker as the test runner like `SELF`, this example defines the Worker-under-test as an _auxiliary_ Worker. This means the Worker runs in a separate isolate to the test runner, with a different global scope. The Worker-under-test runs in an environment closer to production, but Vite transformations and hot-module-reloading aren't applied to the Worker—you must compile your TypeScript to JavaScript beforehand.
 
 Auxiliary Workers cannot be configured from `wrangler.toml` files. You must use Miniflare [`WorkerOptions`](https://github.com/cloudflare/workers-sdk/tree/main/packages/miniflare#interface-workeroptions) in `vitest.config.ts`.
 
 :::note
 
-
 This method is less recommended than `SELF` for integration tests because of its developer experience. However, it can be useful when you are testing multiple Workers. You can define multiple Workers by different names in `vitest.config.ts` and reference them via `env`.
-
 
 :::
 
@@ -97,46 +94,42 @@ import { unstable_dev } from "wrangler";
 
 const worker = await unstable_dev("./index.mjs");
 try {
-  const response = await worker.fetch("/?a=1&b=2");
-  assert.strictEqual(await response.text(), "3");
+	const response = await worker.fetch("/?a=1&b=2");
+	assert.strictEqual(await response.text(), "3");
 } finally {
-  await worker.stop();
+	await worker.stop();
 }
 ```
 
 :::note
 
-
 If you have been using `unstable_dev()` for integration testing and want to migrate to Cloudflare's Vitest integration, refer to the [Migrate from `unstable_dev` migration guide](/workers/testing/vitest-integration/get-started/migrate-from-unstable-dev/) for more information.
-
 
 :::
 
 ## Miniflare's API
 
-If you would like to write integration tests for multiple Workers, need direct access to [bindings](/workers/runtime-apis/bindings/) outside your Worker in tests, or have another advanced use case, consider using [Miniflare's API](https://github.com/cloudflare/workers-sdk/blob/main/packages/miniflare/README.md) directly. Miniflare is the foundation for the other testing tools on this page, exposing a JavaScript API for the [`workerd` runtime](https://github.com/cloudflare/workerd) and local simulators for the other Developer Platform products. Unlike `unstable_dev()`, Miniflare does not automatically load options from your Wrangler configuration file.
+If you would like to write integration tests for multiple Workers, need direct access to [bindings](/workers/runtime-apis/bindings/) outside your Worker in tests, or have another advanced use case, consider using [Miniflare's API](/workers/testing/miniflare) directly. Miniflare is the foundation for the other testing tools on this page, exposing a JavaScript API for the [`workerd` runtime](https://github.com/cloudflare/workerd) and local simulators for the other Developer Platform products. Unlike `unstable_dev()`, Miniflare does not automatically load options from your Wrangler configuration file.
 
 ```js
 import assert from "node:assert";
 import { Miniflare } from "miniflare";
 
 const mf = new Miniflare({
-  modules: true,
-  scriptPath: "./index.mjs",
+	modules: true,
+	scriptPath: "./index.mjs",
 });
 try {
-  const response = await mf.dispatchFetch("http://example.com/?a=1&b=2");
-  assert.strictEqual(await response.text(), "3");
+	const response = await mf.dispatchFetch("http://example.com/?a=1&b=2");
+	assert.strictEqual(await response.text(), "3");
 } finally {
-  await mf.dispose();
+	await mf.dispose();
 }
 ```
 
 :::note
 
-
 If you have been using the test environments from Miniflare 2 for integration testing and want to migrate to Cloudflare's Vitest integration, refer to the [Migrate from Miniflare 2 migration guide](/workers/testing/vitest-integration/get-started/migrate-from-miniflare-2/) for more information.
-
 
 :::
 
@@ -144,4 +137,4 @@ If you have been using the test environments from Miniflare 2 for integration te
 
 ## Related Resources
 
-* [Recipes](/workers/testing/vitest-integration/recipes/) - Example integration tests for Workers using the Workers Vitest integration.
+- [Recipes](/workers/testing/vitest-integration/recipes/) - Example integration tests for Workers using the Workers Vitest integration.

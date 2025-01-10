@@ -19,7 +19,7 @@ Real-time validation methods put less burden on your customers because it does n
 
 However, it may cause some downtime since Cloudflare takes a few seconds to iterate over DNS records. This downtime also can increase - due to the increasing [validation backoff schedule](/cloudflare-for-platforms/cloudflare-for-saas/domain-support/hostname-validation/backoff-schedule/) - if your customer takes additional time to add their DNS routing record.
 
-To minimize this downtime, you can continually send no-change [`PATCH` requests](/api/operations/custom-hostname-for-a-zone-edit-custom-hostname) for the specific custom hostname until it validates (which resets the validation backoff schedule).
+To minimize this downtime, you can continually send no-change [`PATCH` requests](/api/resources/custom_hostnames/methods/edit/) for the specific custom hostname until it validates (which resets the validation backoff schedule).
 
 To avoid any chance of downtime, use a [pre-validation method](/cloudflare-for-platforms/cloudflare-for-saas/domain-support/hostname-validation/pre-validation/)
 

@@ -11,11 +11,11 @@ description: Use a configuration file to customize the
 
 import { Render, Type, MetaInfo } from "~/components";
 
-Wrangler optionally uses a `wrangler.json`/`wrangler.toml` file to customize the development and deployment setup for a Worker.
+Wrangler optionally uses a `wrangler.json`/`wrangler.jsonc`/`wrangler.toml` file to customize the development and deployment setup for a Worker.
 
 :::note
 
-As of Wrangler v3.91.0 Wrangler supports both JSON (`wrangler.json`) and TOML (`wrangler.toml`) for it's configuration file. Prior to that version, only `wrangler.toml` was supported. The format of Wrangler's configuration file is exactly the same across both languages, except that the syntax is `JSON` rather than `TOML`. Throughout this page and the rest of Cloudflare's documentation config snippets are provided as both JSON and TOML.
+As of Wrangler v3.91.0 Wrangler supports both JSON (`wrangler.json` or `wrangler.jsonc`) and TOML (`wrangler.toml`) for its configuration file. Prior to that version, only `wrangler.toml` was supported. The format of Wrangler's configuration file is exactly the same across both languages, except that the syntax is `JSON` rather than `TOML`. Throughout this page and the rest of Cloudflare's documentation config snippets are provided as both JSON and TOML.
 
 :::
 
@@ -76,7 +76,7 @@ Top-level keys apply to the Worker as a whole (and therefore all environments). 
 
 - `send_metrics` <Type text="boolean" /> <MetaInfo text="optional" />
 
-  - Whether Wrangler should send usage metrics to Cloudflare for this project.
+  - Whether Wrangler should send usage data to Cloudflare for this project. Defaults to `true`. You can learn more about this in our [data policy](https://github.com/cloudflare/workers-sdk/tree/main/packages/wrangler/telemetry.md).
 
 - `site` <Type text="object" /> <MetaInfo text="optional deprecated" />
 
@@ -113,7 +113,11 @@ At a minimum, the `name`, `main` and `compatibility_date` keys are required to d
 
 - `workers_dev` <Type text="boolean" /> <MetaInfo text="optional" />
 
-  - Enables use of `*.workers.dev` subdomain to test and deploy your Worker. If you have a Worker that is only for `scheduled` events, you can set this to `false`. Defaults to `true`.
+  - Enables use of `*.workers.dev` subdomain to deploy your Worker. If you have a Worker that is only for `scheduled` events, you can set this to `false`. Defaults to `true`. Refer to [types of routes](#types-of-routes).
+
+- `preview_urls` <Type text="boolean" /> <MetaInfo text="optional" />
+
+  - Enables use of Preview URLs to test your Worker. Defaults to `true`. Refer to [Preview URLs](/workers/configuration/previews).
 
 - `route` <Type text="Route" /> <MetaInfo text="optional" />
 
@@ -451,7 +455,7 @@ binding = "<BINDING_NAME>"
 
 ### D1 databases
 
-[D1](/d1/) is Cloudflare's serverless SQL database. A Worker can query a D1 database (or databases) by creating a [binding](/workers/runtime-apis/bindings/) to each database for D1's [client API](/d1/build-with-d1/d1-client-api/).
+[D1](/d1/) is Cloudflare's serverless SQL database. A Worker can query a D1 database (or databases) by creating a [binding](/workers/runtime-apis/bindings/) to each database for [D1 Workers Binding API](/d1/worker-api/).
 
 To bind D1 databases to your Worker, assign an array of the below object to the `[[d1_databases]]` key.
 
@@ -475,7 +479,8 @@ To bind D1 databases to your Worker, assign an array of the below object to the 
 
 - `migrations_dir` <Type text="string" /> <MetaInfo text="optional" />
 
-  - The migration directory containing the migration files. By default, `wrangler d1 migrations create` creates a folder named `migrations`. You can use `migrations_dir` to specify a different folder containing the migration files. For more information, refer to [D1 Wrangler `migrations` commands](/workers/wrangler/commands/#migrations-create) and [D1 migrations](/d1/reference/migrations/).
+  - The migration directory containing the migration files. By default, `wrangler d1 migrations create` creates a folder named `migrations`. You can use `migrations_dir` to specify a different folder containing the migration files (for example, if you have a mono-repo setup, and want to use a single D1 instance across your apps/packages).
+  - For more information, refer to [D1 Wrangler `migrations` commands](/workers/wrangler/commands/#migrations-create) and [D1 migrations](/d1/reference/migrations/).
 
 :::note
 
@@ -980,6 +985,10 @@ The following options are available under the `assets` key.
 
   - The binding name used to refer to the assets. Optional, and only useful when a Worker script is set with `main`.
 
+- `experimental_serve_directly` <Type text="boolean" /> <MetaInfo text="optional, defaults to true" />
+
+  - Controls whether static assets are fetched directly, or a Worker script is invoked. Learn more about fetching assets when using [`experimental_serve_directly`](/workers/static-assets/routing/#invoking-worker-script-ahead-of-assets).
+
 - `html_handling`: <Type text={'"auto-trailing-slash" | "force-trailing-slash" | "drop-trailing-slash" | "none"'} /> <MetaInfo text={'optional, defaults to "auto-trailing-slash"'} />
 
   - Determines the redirects and rewrites of requests for HTML content. Learn more about the various options in [assets routing](/workers/static-assets/routing/#html_handling).
@@ -1190,10 +1199,7 @@ upload_source_maps = true
 
 ## Workers Sites
 
-:::note[Cloudflare Pages]
-
-Consider using [Cloudflare Pages](/pages/) for hosting static applications instead of Workers Sites.
-:::
+<Render file="workers_sites"/>
 
 [Workers Sites](/workers/configuration/sites/) allows you to host static websites, or dynamic websites using frameworks like Vue or React, on Workers.
 

@@ -9,17 +9,7 @@ import { Render } from "~/components";
 
 You can control network-level traffic by filtering requests by selectors such as IP addresses and ports. You can also integrate network policies with an [identity provider](/cloudflare-one/identity/idp-integration/) to apply identity-based filtering.
 
-To create a new network policy:
-
-1. In [Zero Trust](https://one.dash.cloudflare.com/), go to **Gateway** > **Firewall policies**.
-2. In the **Network** tab, select **Add a policy**.
-3. Name the policy.
-4. Under **Traffic**, build a logical expression that defines the traffic you want to allow or block.
-5. Choose an **Action** to take when traffic matches the logical expression.
-   <Render
-   	file="gateway/policies/enforce-device-posture"
-   	product="cloudflare-one"
-   />
-6. Select **Create policy**.
-
-For more information, refer to [network policies](/cloudflare-one/policies/gateway/network-policies/).
+<Render
+	file="gateway/get-started/create-network-policy"
+	product="cloudflare-one"
+/>

@@ -14,7 +14,7 @@ import { AvailableNotifications, Render, TabItem, Tabs } from "~/components";
 
 If you are using an existing [Universal SSL certificate](/ssl/edge-certificates/universal-ssl/), Cloudflare will automatically replace this certificate once you finish ordering your advanced certificate.
 
-Once you order a certificate, you can review the [certificate's status](/ssl/reference/certificate-statuses/) in the dashboard at **SSL/TLS** > **Edge Certificates** or via the API with a [GET request](/api/operations/certificate-packs-list-certificate-packs).
+Once you order a certificate, you can review the [certificate's status](/ssl/reference/certificate-statuses/) in the dashboard at **SSL/TLS** > **Edge Certificates** or via the API with a [GET request](/api/resources/ssl/subresources/certificate_packs/methods/list/).
 
 <Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
 
@@ -34,7 +34,7 @@ To create a new advanced certificate in the dashboard:
 
 </TabItem> <TabItem label="API">
 
-To create a new certificate using the API, send a [POST request](/api/operations/certificate-packs-order-advanced-certificate-manager-certificate-pack) to the Cloudflare API.
+To create a new certificate using the API, send a [POST request](/api/resources/ssl/subresources/certificate_packs/methods/create/) to the Cloudflare API.
 
 If you need certificates for hostnames longer than 64 characters ([RFC 5280](https://www.rfc-editor.org/rfc/rfc5280.html)), set the `cloudflare_branding` option to `true`. This will add `sni.cloudflaressl.com` in the Common Name (CN) field and will include the long hostname as a part of the Subject Alternative Name (SAN).
 
@@ -61,7 +61,7 @@ To delete an advanced certificate in the dashboard:
 
 </TabItem> <TabItem label="API">
 
-To delete a certificate using the API, send a [DELETE request](/api/operations/certificate-packs-delete-advanced-certificate-manager-certificate-pack) to the Cloudflare API.
+To delete a certificate using the API, send a [DELETE request](/api/resources/ssl/subresources/certificate_packs/methods/delete/) to the Cloudflare API.
 
 </TabItem> </Tabs>
 
@@ -69,7 +69,7 @@ To delete a certificate using the API, send a [DELETE request](/api/operations/c
 
 ## Restart validation
 
-To restart validation for a certificate in a `validation_timed_out` status, send a [PATCH request](/api/operations/certificate-packs-restart-validation-for-advanced-certificate-manager-certificate-pack) to the API.
+To restart validation for a certificate in a `validation_timed_out` status, send a [PATCH request](/api/resources/ssl/subresources/certificate_packs/methods/edit/) to the API.
 
 ---
 
@@ -89,12 +89,6 @@ Normally, you only need to update DCV if you have your application on a partial 
 
 For more information about DCV, refer to [DCV methods](/ssl/edge-certificates/changing-dcv-method/).
 
-:::caution
-
-Due to recent changes, HTTP DCV validation will soon not be allowed for wildcard certificates or certificates with multiple Subject Alternative Names (SANs). For more details and next steps, refer to [Changes to HTTP DCV](/ssl/reference/migration-guides/dcv-update/).
-
-:::
-
 ---
 
 ## Set up alerts
@@ -107,3 +101,9 @@ You can configure alerts to receive notifications for changes in your certificat
 />
 
 <Render file="get-started" product="notifications" />
+
+---
+
+## Advanced certificate renewal
+
+The certificate validity period you choose determines when the auto renewal will start for your certificate. For details, refer to [Validity period and renewal](/ssl/reference/certificate-validity-periods/).

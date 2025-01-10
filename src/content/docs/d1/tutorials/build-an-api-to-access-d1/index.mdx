@@ -19,7 +19,7 @@ In this tutorial, you will learn how to create an API that allows you to securel
 
 This is useful if you want to access a D1 database outside of a Worker or Pages project, customize access controls and/or limit what tables can be queried.
 
-D1's built-in [REST API](/api/operations/cloudflare-d1-create-database) is best suited for administrative use as the global [Cloudflare API rate limit](/fundamentals/api/reference/limits) applies.
+D1's built-in [REST API](/api/resources/d1/subresources/database/methods/create/) is best suited for administrative use as the global [Cloudflare API rate limit](/fundamentals/api/reference/limits) applies.
 
 To access a D1 database outside of a Worker project, you need to create an API using a Worker. Your application can then securely interact with this API to run D1 queries.
 
@@ -295,8 +295,8 @@ Your application can now access the D1 database. In this step, you will update t
     // Update the API routes
 
     /**
-    * Executes the `stmt.all()` method.
-    * https://developers.cloudflare.com/d1/build-with-d1/d1-client-api/#await-stmtall
+    * Executes the `stmt.run()` method.
+    * https://developers.cloudflare.com/d1/worker-api/prepared-statements/#run
     */
 
     app.post('/api/all', async (c) => {
@@ -308,7 +308,7 @@ Your application can now access the D1 database. In this step, you will update t
     			stmt = stmt.bind(params);
     		}
 
-    		const result = await stmt.all();
+    		const result = await stmt.run();
     		return c.json(result);
     	} catch (err) {
     		return c.json({ error: `Failed to run query: ${err}` }, 500);
@@ -317,7 +317,7 @@ Your application can now access the D1 database. In this step, you will update t
 
     /**
     * Executes the `db.exec()` method.
-    * https://developers.cloudflare.com/d1/build-with-d1/d1-client-api/#await-dbexec
+    * https://developers.cloudflare.com/d1/worker-api/d1-database/#exec
     */
 
     app.post('/api/exec', async (c) => {
@@ -333,7 +333,7 @@ Your application can now access the D1 database. In this step, you will update t
 
     /**
     * Executes the `db.batch()` method.
-    * https://developers.cloudflare.com/d1/build-with-d1/d1-client-api/#dbbatch
+    * https://developers.cloudflare.com/d1/worker-api/d1-database/#batch
     */
 
     app.post('/api/batch', async (c) => {

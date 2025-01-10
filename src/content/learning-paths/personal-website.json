@@ -1,0 +1,8 @@
+{
+	"title": "Build a personal website",
+	"path": "/learning-paths/personal-website/",
+	"priority": 4,
+	"description": "Utilize the Developer Platform to build a personal website for your portfolio or blog.",
+	"products": ["Pages"],
+	"product_group": "Developer platform"
+}

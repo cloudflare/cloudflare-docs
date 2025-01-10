@@ -1,0 +1,515 @@
+---
+title: Designing ZTNA access policies for Cloudflare Access
+pcx_content_type: design-guide
+products:
+  - Gateway
+  - Access
+sidebar:
+  label: "Designing ZTNA access policies"
+updated: 2024-11-27
+---
+
+## Introduction
+
+Organizations today are increasingly adopting a [Zero Trust security](https://www.cloudflare.com/learning/security/glossary/what-is-zero-trust/) posture to safeguard company assets and infrastructure in a constantly evolving threat landscape. The traditional security associated with legacy network design assumes trust within the corporate network perimeter. In contrast, Zero Trust operates on the principle of "Never trust, always verify" and implements continuous [authentication and strict access controls](https://www.cloudflare.com/learning/access-management/what-is-access-control/) for all users, devices, and applications, regardless of their location or network.
+
+Typically two technologies play a role in a Zero Trust architecture. First, a [Secure Web Gateway (SWG)](https://www.cloudflare.com/learning/access-management/what-is-a-secure-web-gateway/) filters outbound traffic destined for the Internet and blocks users from accessing high risk websites such as those involved in phishing campaigns. Then, to enable remote access for users to SaaS apps, internally-hosted applications and networks, Zero Trust Network Access ([ZTNA](https://www.cloudflare.com/learning/access-management/what-is-ztna/)) services are used to create secure tunnels and provide access for remote users into private applications.
+
+This guide is for customers looking to deploy Cloudflare's ZTNA service ([Access](/cloudflare-one/policies/access/)) and provides best practices and guidelines for how to effectively build the right policies. If you have not already done so, we recommend also reading Cloudflare's [SASE reference architecture](/reference-architecture/architectures/sase/), which goes into detail on all aspects of how to use Cloudflare as part of your Zero Trust initiatives.
+
+### Who is this document for and what will you learn?
+
+This document is aimed at administrators who are evaluating or have adopted Cloudflare to replace existing VPN services or provide new remote access to internal resources. This serves as a starting point for designing your first ZTNA policies and as an ongoing reference. This guide covers three main sections:
+
+- **Technical prerequisites**: What needs to be in place before you can secure access to your first application and define access policies.
+- **Building policies**: The main components of an access policy and how they are combined.
+- **Use cases**: Common use cases and policies that can serve as blueprints for your own policy designs.
+
+This design guide assumes you have a basic understanding of Cloudflare's ZTNA solution, [Cloudflare Access](/cloudflare-one/policies/access/). Therefore, this guide focuses on designing effective access policies and assumes you have already configured [DNS](/cloudflare-one/policies/gateway/initial-setup/dns/), [identity](/cloudflare-one/identity/) and [device posture providers](/cloudflare-one/identity/devices/service-providers/) as well as [created connectivity](/cloudflare-one/connections/) to self-hosted applications and related networks.
+
+By the end of this guide, you will be equipped to implement granular access policies that enforce Zero Trust principles across various common enterprise scenarios.
+
+## Prerequisites
+
+This section covers the essential architectural components and concepts to understand before you can design granular access policies.
+
+:::note[Note]
+We recommend reading the [SASE reference architecture](/reference-architecture/architectures/sase/) to get a deeper understanding of connecting applications, identity providers, and device posture providers.
+:::
+
+Cloudflare allows organizations to facilitate application access using our [connectivity cloud](https://www.cloudflare.com/connectivity-cloud/), which securely connects users, applications and data regardless of their location. Core to the platform is Cloudflare's [extensive global network](https://www.cloudflare.com/network/) which delivers low-latency connectivity for users worldwide. By running every service in every data center, Cloudflare applies networking, performance and security functions in a single pass, eliminating the need to route traffic through multiple, specialized security servers, and therefore reduces latency and avoids performance bottlenecks.
+
+![Figure 1 shows the basic components involved in remote access with Cloudflare's ZTNA service.](~/assets/images/reference-architecture/designing-ztna-access-policies-for-cloudflare-access/figure1.svg "Figure 1 shows the basic components involved in remote access with Cloudflare's ZTNA service.")
+
+There are two main ways to provide access to private applications and networks: by public hostname, where requests are proxied to the application, or by private IP, where the user is on a device or network that is connecting them to their private corporate network via Cloudflare.
+
+### Active domain in Cloudflare
+
+To use public hostnames, you need to have an [active domain](/fundamentals/setup/manage-domains/add-site/) in Cloudflare. Most customers use Cloudflare as their primary DNS service, but it is possible to configure domains for use with Access and maintain [DNS records elsewhere](/dns/zone-setups/partial-setup/).
+
+### Network route to applications
+
+For Cloudflare to control access, it needs to be in front of the application and have a secure and reliable network route for successfully authenticated users. Requests for application access come to Cloudflare first, where policy is applied, and then if successful, user requests are routed to the application.
+
+Cloudflare supports access to the following types of applications:
+
+- SaaS applications on the Internet
+- Self-hosted applications accessed via public hostname
+- Self-hosted applications accessed via private IP
+
+For SaaS and other Internet-facing applications, access from Cloudflare is simple — it is already on the Internet. But for self-hosted applications, you create a tunnel from Cloudflare to the private network where the application is running. There are two methods for doing this:
+
+- Our recommended approach is to use [software agents](/cloudflare-one/connections/connect-networks/) such as [cloudflared](/cloudflare-one/connections/connect-networks/get-started/) or [WARP connector](/cloudflare-one/connections/connect-networks/private-net/warp-connector/). (Note, only cloudflared currently supports proxying of public hostnames to private applications.)
+- For network-based connectivity, [Magic WAN](/magic-wan/) uses IPsec or GRE tunnels connecting Cloudflare to existing network appliances that are connected to the private networks, and [Network Interconnect](/network-interconnect/) creates direct connectivity if your applications run on servers in a data center Cloudflare operates in. (For migrating from existing legacy VPN solutions to network-based tunnels, you may find [this guide](/reference-architecture/design-guides/network-vpn-migration/) useful.)
+
+Once we have established connectivity to your applications, it is time to facilitate user access. Depending on your policy requirements (more on this later) users can access the application directly over an Internet connection to a public hostname, or — for greater security — we recommend using our [device agent](/cloudflare-one/connections/connect-devices/warp/), Cloudflare WARP, which creates a tunnel directly to Cloudflare and also provides information about their device for use in access policies.
+
+### Identity
+
+A critical part of application access is authenticating a user. Cloudflare has a [built-in authentication](/cloudflare-one/identity/one-time-pin/) method based on email. But we highly recommend configuring a third-party identity provider. We support both consumer and enterprise [identity providers](/cloudflare-one/identity/), and any SAML or OpenID compliant service can be used. Group membership is one of the most common attributes of defining application access and can be defined manually or imported using the System for Cross-Domain Identity Management ([SCIM](/cloudflare-one/identity/users/scim/)).
+
+### Device posture
+
+The final prerequisite for building really effective access policies is to configure [device posture](/cloudflare-one/identity/devices/). When using the [device agent](/cloudflare-one/connections/connect-devices/warp/), Cloudflare has access to a [variety of information](/cloudflare-one/identity/devices/warp-client-checks/) about the device which can then be used in an access policy. When using an [agentless method](/reference-architecture/diagrams/sase/sase-clientless-access-private-dns/) to access applications, only the user identity information is available. We also support using device posture information from [other vendors](/cloudflare-one/identity/devices/service-providers/), such as Microsoft, Crowdstrike and Sentinel One.
+
+![Figure 2 - two employees with different devices trying to access the same corporate application. Only the user with the device agent can access the SSH service.](~/assets/images/reference-architecture/designing-ztna-access-policies-for-cloudflare-access/figure2.svg "Figure 2 - two employees with different devices trying to access the same corporate application. Only the user with the device agent can access the SSH service.")
+
+## Building policies
+
+To quickly summarize the architecture described so far, Cloudflare is:
+
+- In front of network access to the application.
+- Integrated with your identity providers.
+- Aware of device posture details for your users using our device agent or a third party vendor.
+
+When a user makes a request to access an application, they must first authenticate, then, before access is granted, policies in the application are evaluated based on the data associated with the requesting user. Policies and other application specific settings are defined in an Access application.
+
+### Access application types
+
+Cloudflare Access supports four main types of applications:
+
+- **Self-hosted** refers to applications that your organization hosts and manages, either on premises or in the cloud. Cloudflare creates a public hostname which it uses to proxy traffic through a secure tunnel to the application. While access via public hostnames is supported if your server is just publicly facing on the Internet, we recommend you use `cloudflared` to create a secure, outbound-only connection from your application to Cloudflare's edge. Once that occurs, Cloudflare will then reverse proxy the target application/content to your users.
+- **Private IP** applications are similarly privately hosted, but lack fully-qualified public hostnames. Access can be facilitated via `cloudflared`, WARP Connector, Cloudflare Magic WAN, or Cloudflare Network Interconnect. Remote users not connected to a network already connected to Cloudflare will need to use the device client to get access to the application via private IP and to avoid using IP addresses with users, use [internal DNS services](/cloudflare-one/policies/gateway/resolver-policies/#use-cases) to resolve private hostnames to private IP addresses. But it is possible to provide access without any software deployed to the client by using our agentless [browser isolation service](/reference-architecture/diagrams/sase/sase-clientless-access-private-dns/).
+- **SaaS** applications are accessed over the public Internet, and therefore do not require any tunnel connectivity to Cloudflare. Instead, Access acts as an identity proxy between users and the SaaS application. When a user attempts to access the SaaS app, they are first authenticated by Cloudflare, which redirects to your main identity service. SaaS applications are then configured via SAML or OAuth to trust Cloudflare. This allows organizations to implement additional security layers (like device posture checks) and centralize access control for their SaaS applications, even if the SaaS or identity provider does not natively support these features.
+- **Infrastructure** applications enable users to control access to individual servers, clusters or databases in a private network. Infrastructure apps work by defining a 'target' proxied over `cloudflared`, but allows users to group multiple machines under the same target - essentially, allowing users to define common access policies across potentially disparate infrastructure resources. Built-in access and command logging capabilities means organizations can maintain detailed audit trails for compliance and security investigation purposes.
+
+:::note[]
+It is possible to configure SaaS applications to accept traffic only coming from Cloudflare. This forces all SaaS application traffic to be proxied and routed via Cloudflare Gateway which, in turn, allows for the use of security controls to inspect and filter traffic such as downloads of sensitive company data from SaaS applications. The second use case below will describe how to achieve this.
+:::
+
+Access applications typically map directly to a single application. However, it is possible to have an Access application, and its associated policies sit in front of more than one application endpoint. This might be a range of IPs related to multiple Windows RDP servers where you wish to implement a common access policy. The same idea can also be applied to public hostnames, where you might have more than one hostname that refers to several applications you wish to have the same policies. For instance, you might have wiki.domain.com and wiki.domain.co.uk — different application instances, but with common access policy requirements.
+
+Next, we examine the main elements of a ZTNA-protected application that need to be understood to create effective access policies, then later in the document we will examine some use cases that apply those specific elements.
+
+### Authentication
+
+Authenticating a user's identity is a key component of any Zero Trust policy. When attempting to log into an application, a user will be redirected to a configured identity provider. If a user fails to authenticate with the identity provider, Cloudflare will not accept their request for the application.
+
+As mentioned above, Cloudflare can be integrated with all your identity providers (IdPs), both enterprise and consumer. Then at the application and policy level, you choose which IdPs you want to allow for authentication. For example, you may have an application that only a limited number of employees can access. Therefore, you would only enable your corporate IdP. For another application, you may wish to allow access to a wider group of non-employee users, such as contractors or third-party partners. Some of those users you might authenticate via their GitHub or LinkedIn credentials.
+
+When a user attempts to access an application they will be presented with a sign-in page where they choose which IdP to authenticate with. For applications with only a single IdP, you can automatically redirect the user to that IdP. It is also possible to configure the application to display every possible IdP that has been configured, allowing you to add new providers in the future without the need to update the policy.
+
+![Figure 3 - How employees from different parts of the organization authenticate to the same application.](~/assets/images/reference-architecture/designing-ztna-access-policies-for-cloudflare-access/figure3.svg "Figure 3 - How employees from different parts of the organization authenticate to the same application.")
+
+After authentication, the IdP is going to send information about the identity back to Cloudflare. Depending on the IdP, this information may include [Authentication Method Reference](https://datatracker.ietf.org/doc/html/rfc8176) (amr) values, IdP groups, SAML attributes or OIDC claims which can then be used in policies.
+
+When using our device agent, users must also authenticate and can be presented a custom list of IdPs. Once the agent is authenticated, they are able to connect to Cloudflare and it is possible to configure applications to skip authentication, instead trusting the existing authentication session associated with the device agent.
+
+### Policies
+
+Now we arrive at the main focus of this guide: the policies which define access to applications. This is where the real work is done to define who has access, and how. Before looking at example use cases, here is a breakdown of how policies work.
+
+![Figure 4 - Our ZNTA service Access can use a wide variety of attributes in an access policy.](~/assets/images/reference-architecture/designing-ztna-access-policies-for-cloudflare-access/figure4.svg "Figure 4 - Our ZNTA service Access can use a wide variety of attributes in an access policy.")
+
+Each application can contain multiple policies, and are evaluated in order. Because multiple policies — each with multiple sets of rules — can get quite complex, there is a policy tester where you provide a username and see how the user is evaluated against all the policies and rules. Policies consist of the following elements:
+
+#### Name
+
+While it seems obvious what this is for, we highly recommend having a strategy for naming your policies. This is because you will likely create similar policies across multiple applications, such as "Allow all full-time employees" or "Block high-risk users". Using the same naming scheme across all applications will vastly streamline your ability to review application access and to understand the full list of policies in the future.
+
+#### Action
+
+The Action field in a policy determines what happens when a user or service matches the policy's criteria. There are four main types of actions:
+
+- **Allow** grants access to the application. A login page will be presented to a user on initial access request.
+- **Block** denies access to the application. This is generally not required because Access is denied by default. The only reason users should implement a block policy is for testing a specific policy condition or short-circuiting policy evaluation. If a block policy has higher precedent than an Allow, and a user matches the block policy, all other policy evaluation ceases.
+- **Bypass** allows users or services to disable any enforcement for traffic before accessing the application. For example, a specific endpoint in an application may need to be broadly accessible over the Internet.
+- **Service Auth** allows you to authenticate requests from other services or applications using [mTLS](/ssl/client-certificates/enable-mtls/) or [service tokens](/cloudflare-one/identity/service-tokens/). No login page will be presented to the user or service if they meet this policy criteria. This is designed so that non-user requests, such as those from other applications, can access secured resources.
+
+:::note[]
+Cloudflare Access is a deny by default service, which means if a request does not match any policy action, the default action is "Block."
+:::
+
+#### Session duration
+
+Session duration refers to the length of time a user's authentication remains valid after they have successfully logged in to an application. Typically, the session duration is set for 24 hours, but you can also set durations for sensitive applications to expire immediately. This approach aligns with the core Zero Trust principle of "never trust, always verify." Even if a user initially presents the appropriate device posture and identity context, continuous verification ensures that access rights are reassessed with each new request. This method significantly reduces the risk window, as it removes the assumption that the initial authentication and authorization state remains valid over an extended period.
+
+#### Rules
+
+These are the main focus of a policy. Rules define all the attributes that dictate if the policy allows or denies access, or renders the application in an isolated browser. They are composed of a selector and value, which is essentially the attribute you wish to evaluate and the data you are evaluating.
+
+Each rule is a filter to determine which users this policy is going to affect. There are several categories of rules:
+
+- **Include** rules define who or what is eligible for access. When a user matches an "Include" rule, they become a candidate for access, subject to other rules types in the policy. These rules use OR logic — satisfying any one is sufficient. For example, you may make an application available to a specific group, but need to add in contractors for an email list, and as long as the user matches one of these (group membership, or a valid email) they are included in the rule. Every policy must have at least one Include clause.
+
+- **Require** rules set mandatory conditions that must be met for access to be granted. Unlike Include rules, "Require" rules use AND logic — every rule must be met. This is typically used to layer security on top of the basic access criteria defined by Include rules. For example, administrators can require that anyone trying to access an application use specific MFA methods.
+
+- **Exclude** rules define exceptions to access, overriding other rule types. If a user matches an "Exclude" rule, they're denied access regardless of other policy conditions. For example, a user may meet a requirement to use a MFA method during login, but if their specific [multifactor authentication (MFA) method](/cloudflare-one/policies/access/mfa-requirements/) is defined in an Exclude rule, they will be blocked by the policy. Alternatively, if a user is associated with a 'high risk' IdP group, they can be excluded on that basis even if they meet all the other posture requirements.
+
+A useful way to imagine how these different types of rules are applied, is to imagine a funnel. Include selectors define what attributes of the user, traffic or device are included in the policy that will be Allowed, Blocked and so on. Require then further filters from that list what attributes must be associated with the user with the Exclude type filtering out users who have matched both the Include and Require.
+
+![Figure 5 - Policies and rules are evaluated in a funnel. With Include rules aggregating all users, Require rules mandating specific requirements and Exclude rules removing user identities from the policy evaluation.](~/assets/images/reference-architecture/designing-ztna-access-policies-for-cloudflare-access/figure5.svg "Figure 5 - Policies and rules are evaluated in a funnel. With Include rules aggregating all users, Require rules mandating specific requirements and Exclude rules removing user identities from the policy evaluation.")
+
+The above diagram visualises an example for the policy "All employees and contractors on secure devices using strong MFA". Anyone in the group "All Employees" or contractors who have authenticated with a username in their company domain will match this policy. They are required to be using a device that has the latest OS and is using encrypted storage. They must have authenticated with an MFA factor, but not SMS. Also, they must be accessing the application via Cloudflare's secure web gateway.
+
+There are many different [types of selectors](/cloudflare-one/policies/access/#selectors). While every possible selector is not listed here, the following lists specific outcomes that organizations using Cloudflare Access typically desire when building policies. This will help you understand how to achieve a specific outcome.
+
+- **Is user traffic coming over Cloudflare Gateway?**
+  Guaranteeing that a user only accesses an application over our SWG, Cloudflare Gateway, is a great way to prevent unauthorized access due to phishing or credential theft. Additionally, you can ensure all traffic bound to the application is logged and filtered by Cloudflare Gateway.
+
+  You can configure this control by enabling the "gateway" device posture check and then requiring "gateway" in your application policies. Requiring "gateway" is more flexible than relying solely on the device agent because users can also on-ramp from Browser Isolation or a Magic WAN-connected site, both of which provide traffic logging and filtering. Additionally, when using the device agent, this allows you to guarantee that a user is coming from a compliant device that has passed a set of device posture checks.
+
+  Requiring the gateway is enforced continuously for [self-hosted applications](/cloudflare-one/applications/configure-apps/self-hosted-apps/). For SaaS apps, it is only enforced at the time of login. However, a dedicated egress IP can be leveraged in tandem to enforce that traffic always goes via Cloudflare Gateway.
+
+- **Does the user belong to an existing group, or have specific identity attributes?**
+  If your IdP supports SCIM, group membership information can be imported into Cloudflare, where it can be used in policies. Group information can also come from the SAML or OAuth data sent as part of authentication. In fact, when OIDC or SAML is used and claims are sent, they can be used in a policy. So if your users authenticate to your IDP using SAML, and the resulting token contains their "role," you can query that value in the rule.
+
+- **Which identity service was used for authentication ?**
+  Similar to IdP groups and attributes, this "Login methods" selector asks which identity service was used, and, like IdP groups, this is better suited to an access group rather than a specific line item on an access policy. Login methods allow you to apply different policies to specific users who authenticated with certain identity providers. For example, you might only allow users who have authenticated with a consumer identity such as GitHub or LinkedIn to gain access if their authentication method included a hard token-based MFA.
+
+  This is an atypical scenario, but if you do need to enable multiple IdPs for authentication, then you can use this selector to make sure users are authenticating with a specific service. The value of this requirement becomes clearer when dealing with multiple layered security policies, and need to define different levels of access based on the login.
+
+- **Individual or organizational emails**
+  All identity services provide an email address, which in many cases matches the individual's username. Using an email in a policy can be useful when wanting to allow access to an entire domain of users, but they might authenticate via a consumer IdP that allows for any email. For example, you might only allow access for users who have authenticated via GitHub using their @company.com email address.
+
+  Another good use of this selector is if you are managing a [list of emails](/cloudflare-one/policies/gateway/lists/) of users that might be high risk or have been blocked from a specific application. You can use an Exclude rule, with your list to ensure a subset of users cannot access an application.
+
+- **How did the user authenticate?**
+  When an identity provider authenticates a user and then redirects them back to Cloudflare, it includes information about what authentication method was used. This is typically sent as [Authentication Method Reference](https://datatracker.ietf.org/doc/html/rfc8176) data. Using this you can check if MFA was used and what type.
+
+  This can be useful to define different levels of credential requirements for different applications. For example, a general company application might just require that MFA was used and not care how. But a really sensitive administration tool might require a FIDO2 hardware-based security key,and therefore explicitly deny access if only an OTP via SMS is used as part of the authentication process.
+
+- **What country is the request coming from?**
+  You can set rules based on the geographic lookup of the incoming request. This could be useful for restricting access to certain countries where you do business.
+
+- **What IP range is the request coming from?**
+  You can set rules based on the IP range of the incoming request. This could be allowing access only from your corporate network IP ranges.
+
+- **Is it possible to verify device or user information from a list?**
+  Sometimes, you might want to grant or restrict access based on specific device or user characteristics that do not fit neatly into other categories. This is where [lists](/cloudflare-one/policies/gateway/lists/) come in handy: you can define or import a list of contractor emails, or a list of approved device serial numbers and use those as criteria within an Access policy. These lists can be updated manually or via our [API](/api/resources/zero_trust/subresources/gateway/subresources/lists/methods/create/), allowing for integration with other device or user management systems.
+
+- **Is the device's security posture adequate?**
+  This is where the device client provides telemetry on the native device making the access request. It accomplishes this by performing device-level scans. Is the device's hard drive encrypted? The agent can check if technologies like BitLocker or FileVault are active, in addition to checking for specific volume names. If you are protecting a sensitive application, or something that holds critical information, this is an effective requirement to enforce.
+
+- **Is the request being made by another process or application?**
+  It is not always a real human on a device attempting to access an application. This makes it useful to leverage Cloudflare Access to manage communication to APIs by other software. The request may contain service tokens, mutual TLS certificates, and SSH certificates, which enables logins for automated processes and machine-to-machine communication. Using service auth options within Cloudflare also centralizes the storage and lifecycle management of these tokens and certificates.
+
+- **What does your third-party tool say about your device?**
+  Many organizations use other specialized tools for endpoint security, such as Crowdstrike, SentinelOne, or Microsoft Intune, to provide telemetry regarding the security posture of the device making the application request. Rather than require the user to navigate multiple UIs, you can integrate these tools into Cloudflare One via their API, and apply their insights into device posture attributes that can be enforced during an application login.
+
+:::note[]
+Some third-party device posture integrations can be used even when the user device does not have our agent installed. Instead, the third party integration matches the user based on email and provides information directly to Cloudflare.
+:::
+
+#### Additional settings
+
+Below are a few additional application settings to consider that help improve security.
+
+##### Isolate application
+
+Sometimes you want to manage access to a self-hosted application for less trusted, third-party users such as contractors or partners. You might want to allow them to read content in an application, but limit their ability to download files, copy and paste data, and print the page. Cloudflare Access allows you to render the application in a remote [browser](/cloudflare-one/policies/access/isolate-application/) (using [remote browser isolation, or RBI](/cloudflare-one/policies/browser-isolation/)) so that the application is rendered using a headless browser on our network versus sending all the content down to the user's browser. This allows Cloudflare to then enforce a range of controls over how the user can interact with the content.
+
+The setting is at the policy level, so one policy can allow trusted users (such as employees) to access applications normally, while another policy with browser isolation enabled can apply the RBI service for contractors.
+
+This setting forces traffic to an isolated browser before being delivered to the end user, which means all traffic is then inspected and managed by Cloudflare Gateway. To limit what the user can do, you need to create an accompanying policy in the gateway, which also identifies the same users and then enforces the [controls](/cloudflare-one/policies/browser-isolation/isolation-policies/#policy-settings) you wish to limit access. Note that it is important to write the Gateway policy such that it only enforces RBI for the same group of users accessing the application that the Cloudflare Access policy applies to. Otherwise, the policy will default to enforce browser isolation for all users.
+
+It is possible to actually enforce RBI for the same set of users if they attempt to access the application using a non-secured device. In this case, you would continue to define a policy for employees in Cloudflare Access. But then, also create a policy in Cloudflare Gateway to isolate the application if users going to the same application URL have failed a device posture check that deems the device is not managed or secure. This could be if the device does not have the company endpoint security client (Crowdstrike or SentinelOne for example) installed, or has failed a security check. We will demonstrate this in the use cases below.
+
+Inversely, isolating the browser also protects the local device from anyone attempting to exploit vulnerabilities or execute malicious code against the application.
+
+##### Justification
+
+You may wish to audit an application's every authentication event and capture justification details. This setting creates a more well-defined audit trail of user access, and allows administrators to review and analyze access patterns and justifications. When enabled, users will be prompted to provide a brief explanation before gaining access. This can be particularly useful for sensitive applications or during specific time periods, such as outside normal business hours.
+
+##### Temporary authentication
+
+Add an additional layer of access control by requiring users to obtain "temporary authentication" approval from designated authorizers before accessing the application. When enabled, users requesting access will trigger a notification to authorized approvers.
+
+### Access Groups
+
+One of the most important parts of defining ZTNA policies is to leverage reusable elements called [Access Groups](/cloudflare-one/identity/users/groups/). Each access group uses the same rules we've just described to define users, traffic or devices. These groups can then be used across many policies to allow, deny, bypass, or isolate access to an application.
+
+For example, you can define "Employees" once as an Access Group, and then use that in every application policy where you want to refer to employees. Updates to this Access Group would then be reflected in every policy. This is also a good way to include nested logic (for example, users with a Linux device and has antivirus software enabled)
+
+Below is a diagram featuring an Access Group named "Secure Administrators," which uses a range of attributes to define the characteristics of secure administrators. The diagram shows the addition of two other Access Groups within "Secure Administrators". The groups include devices running on either the latest Windows or macOS, along with the requirement that the device must have either File
+
+![Figure 6 - An access group that matches to IT administrators on secure systems.](~/assets/images/reference-architecture/designing-ztna-access-policies-for-cloudflare-access/figure6.svg "Figure 6 - An access group that matches to IT administrators on secure systems.")
+
+## Use cases
+
+Now that the basic infrastructure to secure access to an application and the policy systems have been covered, let's dive into some common use cases.
+
+### Only allow company wiki access to users on trusted devices
+
+Many companies host some sort of internal content system where confidential company information resides. Wiki's are a common type of application that allows employees to collaborate easily with anyone. But because this information is confidential, it is important to both validate the user authentication with strong credentials, and also ensure that their access is via a secure device, via a secure connection.
+
+However, sometimes company users use non-company devices and need to access the wiki. You may wish to set up a policy that allows this, but limits the user's actions. For instance, prevent them from editing the data, or from copying and pasting it to their unmanaged device. This use case explains how to set up a Cloudflare Access application to define secure access for employees, giving them fully functional access when they are on a secured device over a secured connection, but still allow them some limited access from a non secure device.
+
+First, create an Access application with the following parameters:
+
+| Name            | Company Wiki                                                   |
+| :-------------- | :------------------------------------------------------------- |
+| Type            | Self-hosted                                                    |
+| Public Hostname | wiki.mycustomerexample.com                                     |
+| Authentication  | Company Microsoft Entra IdP                                    |
+| Policies        | Employees on trusted devices Employees using untrusted devices |
+
+Before we examine how the two policies are defined, observe an example where an Access Group was created to identify an employee and approved devices were running the latest operating system version.
+
+#### Access Group: Secure employees
+
+This access group is going to be used in both policies, and its sole goal is to identify what a "Secure Employee" is.
+
+| Name            | Secure Employees                                                                          |
+| :-------------- | :---------------------------------------------------------------------------------------- |
+| **Include**     |                                                                                           |
+| Azure AD Groups | "Full-Time Employees"                                                                     |
+| **Require**     |                                                                                           |
+| Azure AD Groups | "Completed security training"                                                             |
+| OS Version      | "Latest version of macOS", "Latest version of Windows", "Latest Kernel version for Linux" |
+
+This is a very simple Access Group, with just two group selectors. Note that because we are checking membership based on groups from a specific directory, it also implies that the user must have authenticated to that directory. It means in the future, if you move to another identity provider or change the group membership requirements for what defines a Full-Time Employee, you change just this Access Group once.
+
+As you can see, it defines that "all employees" are those in the Azure AD group "Full Time Employees", who are also in the group "Completed security training." The first selector defines the initial scope of the Access Group, and the second selector requires that they must also be in that specific group.
+
+This Access Group requires that three [device posture checks](/cloudflare-one/identity/devices/warp-client-checks/) have been created for the [OS version](/cloudflare-one/identity/devices/warp-client-checks/os-version/). For example, the posture check "Latest version of macOS" is defined as "macOS version is greater than or equal to 15.1" and reflects the latest version the company considers stable and secure (vs. the very latest OS version). Once included in the Access policy, this will enforce the logic we’ve established here - if any user wants to sign in as a 'Secure Employee', they'll need to meet these requirements.
+
+#### Employees on trusted devices
+
+Now we define the first policy in the application. First, select the Access Group that has already been defined. Then, define the following rules to determine how users authenticate and how they connect to the application.
+
+| Policy name             | Employees on trusted devices          |
+| :---------------------- | :------------------------------------ |
+| Action                  | Allow                                 |
+| Access groups           | Include \- Secure employees           |
+| **Rules**               |                                       |
+| Require                 |                                       |
+| Authentication Method   | MFA \- Multiple Factor Authentication |
+| Gateway                 | On                                    |
+| **Additional settings** |                                       |
+| Isolate Application     | No                                    |
+
+This policy ensures that users can gain full access to your company wiki only if they have passed the following requirements:
+
+- They are full-time employees on devices with the latest operating system.
+- Users have authenticated using MFA.
+- Users are accessing the application via a device that has the Cloudflare device agent running.
+
+#### Employees using untrusted devices
+
+The second policy should handle users who are not on secure devices. Note that this policy is second in the list of policies in the application and therefore will be evaluated when users do not meet the requirements of the first policy.
+
+| Policy name             | Employees using untrusted devices     |
+| :---------------------- | :------------------------------------ |
+| Action                  | Allow                                 |
+| Access groups           | Include \- All Employees              |
+| **Rules**               |                                       |
+| Require                 |                                       |
+| Authentication Method   | MFA \- Multiple Factor Authentication |
+| **Additional settings** |                                       |
+| Isolate Application     | Yes                                   |
+
+Although this policy is very similar to the first, it removes the requirement to have a device on the latest operating system and also using our device agent. The user is still required to be a full-time employee authenticated with strong, MFA-backed credentials.
+
+But notice we now enable "Isolate Application." What does this mean? This forces all requests to the application to now be rendered on our RBI technology. RBI will prevent the wiki UX from loading directly in the end user's browser, and instead renders the content in a headless browser running on a server in Cloudflare's global cloud network. Then, the results of that render are securely and efficiently communicated down to the end user's browser. Because of this, the request is also sent via our SWG service, which enables you to write a policy that controls how users can interact with the wiki.
+
+**Gateway HTTP Policy**
+
+| Isolate company applications for users on insecure devices |                            |
+| :--------------------------------------------------------- | :------------------------- |
+| Action                                                     | Isolate                    |
+| **Traffic**                                                |                            |
+| Domain in                                                  | wiki.mycustomerexample.com |
+| **Device Posture**                                         |                            |
+| Passed device posture not in                               | Warp Check                 |
+| **Settings**                                               |                            |
+| Disable copy / paste                                       | Yes                        |
+| Disable file downloads                                     | Yes                        |
+| Disable file uploads                                       | Yes                        |
+| Disable keyboard                                           | Yes                        |
+| Disable printing                                           | Yes                        |
+
+In the example above, the SWG policy is matching any traffic heading to your company wiki, then enforcing RBI (to match the ZTNA application policy) and then disabling all interaction with the wiki.
+
+It also adds the device posture check "WARP Check (Mac OS)" to scan the user's device for the presence of our device agent. If the user's device does not have the agent installed and enabled, then the device posture check cannot occur and they will automatically fail to meet the policy requirements. If the user does have the device agent enabled, then they will pass the posture check and be granted full wiki access. Note that WARP is the name used for our device agent.
+
+Essentially, the employee on an insecure device is permitted to view the wiki in a "read-only" mode, but is restricted from further interactions like uploading/downloading or copying/pasting confidential information.
+
+This policy approach accomplishes several objectives:
+
+1. It enforces the use of trusted devices for full access to the wiki, aligning with your Zero Trust security goals.
+2. It provides a fallback option for employees using personal devices, allowing them to access the wiki in a limited, secure manner through browser isolation.
+3. It incentivizes employees to use their company devices and/or keep WARP enabled, which is a net positive for an organization's security posture.
+4. It demonstrates the power and flexibility of more granular security controls achieved by combining Cloudflare Access policies with Cloudflare Gateway HTTP policies.
+
+This approach both secures your wiki and establishes a model for protecting other applications — allowing your organization to maintain strong cyber hygiene while adapting to the realities of hybrid work scenarios.
+
+### Secure access to Salesforce
+
+The second use case implements a secure access strategy that also requires the use of the device client. However, the implementation is slightly more involved than the previous wiki example.
+
+Before addressing the specifics, you will learn about the benefits of securing access to SaaS apps through Cloudflare. After all, Salesforce and other major SaaS providers already offer robust security features, including their own access controls, MFA, and audit logs. So why do some organizations still choose to route their SaaS traffic through Cloudflare?
+
+The key benefit here is centralizing security policy enforcement across your entire IT ecosystem. By routing Salesforce access through Cloudflare, you are not just securing Salesforce – you are integrating it into a broader Zero Trust strategy that includes a single point of visibility for all user activity, and reduces the complexity of managing multiple security systems. It also allows you to implement the enforcement of many different IdPs for access to a single SaaS application.
+
+In the context of this use case, it is important to protect Salesforce — which contains sensitive customer data — against misuse, and to secure access only to authorized users. We are going to design a secure access policy that can cover both of these objectives.
+
+The first step is to configure an [egress IP policy under Cloudflare Gateway](/cloudflare-one/policies/gateway/egress-policies/). This allows you to purchase and assign specific IPs to your users that have their traffic filtered via Gateway. Then in Salesforce, you can enforce that access is only permitted for traffic with a source IP that matches the one in your egress policy. This combination ensures that the only way to get access to Salesforce is via Cloudflare.
+
+| Egress Policy                       |                  |
+| :---------------------------------- | :--------------- |
+| **Identity**                        |                  |
+| User Group Names                    | All Employees    |
+| **Select Egress IP**                |                  |
+| Use dedicated Cloudflare Egress IPs | \[203.0.113.88\] |
+
+This is important not only for securing access to Salesforce, but also for adequately protecting its contents while in use. The next step is to examine the access policy which is similar to the one we just created for the wiki. However, this policy is limiting access to members of the Sales or Executives groups. We are also using our Crowdstrike integration to ensure that users are on company managed devices.
+
+| Policy name                    | Account executives on trusted devices |
+| :----------------------------- | :------------------------------------ |
+| Action                         | Allow                                 |
+| **Include**                    |                                       |
+| Member of group                | Sales, Executives                     |
+| **Require**                    |                                       |
+| Authentication method          | MFA \- multi-factor authentication    |
+| Gateway                        | On                                    |
+| Crowdstrike Service to Service | Overall Score above 80                |
+
+The second policy now applies to all employees but we are going to apply a few more steps before access is granted.
+
+| Policy name                    | Employees on trusted devices       |
+| :----------------------------- | :--------------------------------- |
+| Action                         | Allow                              |
+| **Include**                    |                                    |
+| Member of group                | All Employees                      |
+| **Require**                    |                                    |
+| Authentication method          | MFA \- multi-factor authentication |
+| Gateway                        | On                                 |
+| Crowdstrike Service to Service | Overall Score above 80             |
+| **Additional Settings**        |                                    |
+| Purpose justification          | On                                 |
+| Temporary authentication       | On                                 |
+| Email addresses of approvers   | salesforce-admin@company.com       |
+
+We are going to add in temporary authentication to this second policy. That means if Cloudflare determines that the incoming request is from someone outside of the Sales or Executives department, an administrator will need to explicitly grant them temporary access. In context, this policy could be used to secure access to Salesforce for employees outside the Sales department, as the customer information could be sensitive and confidential.
+
+This approach is important for several reasons:
+
+- It allows for human oversight on potentially risky access attempts, reducing the chance of unauthorized access through compromised or insecure devices.
+- It provides flexibility for legitimate users to access the application even when their device fails to meet the highest security standards. This encourages users to maintain good security practices on their devices.
+- In addition, since all user traffic is routed through Cloudflare, we can enforce additional security measures (such as preventing the download of sensitive data) via web traffic policies.
+
+### Only allow secure admins access to database tools
+
+This scenario covers protecting a PostgreSQL database administration tool. This represents a privately-hosted, high-value target due to its access to sensitive data. It also requires taking extra care in designing secure access for it. Given the nature of database tools, access policies will not be layered for this use case.
+
+| Policy name                          | Only IT admin access                  |
+| :----------------------------------- | :------------------------------------ |
+| Action                               | Allow                                 |
+| **Include**                          |                                       |
+| Assign a group                       | IT Admins                             |
+| **Require**                          |                                       |
+| Authentication method                | MFA \- multi-factor authentication    |
+| Gateway                              | On                                    |
+| Device Posture \- Serial Number List | Company Managed Device Serial Numbers |
+| OS Version                           | Latest version of Windows             |
+| Domain Joined                        | Joined to corporate AD domain         |
+| **Exclude**                          |                                       |
+| Authentication method                | SMS                                   |
+| **Additional Settings**              |                                       |
+| Purpose justification                | On                                    |
+
+Here, we are introducing a high number of security posture checks, starting with MFA. We have two expressions regarding MFA: the first one requires that users authenticate with a MFA method. The second 'excludes' expression pointing out that SMS is not considered a valid authentication method. We do this because SMS is one of the easier methods for attackers to exploit and subvert, and therefore [considered less secure](https://sec.okta.com/articles/2020/05/sms-two-factor-authentication-worse-just-good-password) than other MFA methods. As a result, we are only allowing access when the user provides stronger credentials such as a hard key or an OTP from an authenticator app. Enforcing these stricter MFA requirements reduces the risk of credential-based attacks, and makes it much more challenging for potential attackers to gain unauthorized access to this critical database—even if they have obtained the user's password.
+
+Other posture elements here include:
+
+- Requiring the latest OS.
+- The user's device is joined to a Microsoft Active Directory domain.
+- The user's device is explicitly a company-managed device (shown by referencing a list of managed device serial numbers).
+
+These combined posture checks ensure that only up-to-date, company-controlled devices within your managed environment can access the database, further reducing the attack surface and the risk of access from potentially compromised or uncontrolled endpoints.
+
+Under additional settings, we are also requiring that users enter a purpose justification for accessing the database. This allows your security teams to analyze access patterns and identify potentially suspicious behavior. This set of security controls also ensures that access to your critical database is tightly regulated, logged, and justified — significantly reducing the risk of unauthorized access or misuse.
+
+This level of protection and visibility would be significantly more complex and resource-intensive to achieve with disparate, standalone security solutions. Centralizing security policy enforcement via Cloudflare allows you to simplify how you implement fine-grained access to critical internal resources.
+
+### Secure RDP access
+
+This final use case centers on securing remote access to devices via RDP in two ways — self-hosted or private IP. Both options offer unique benefits, but ultimately it comes down to your priorities: is it more important to simplify access, or to tightly monitor activity?
+
+We will start with the self-hosted option — proxying port 3389 over a tunnel, mapping it to a hostname.
+
+| Application Configuration |                                     |
+| :------------------------ | :---------------------------------- |
+| Application Name          | RDP service on database server      |
+| Hostname                  | rdp.databaseserver.company.internal |
+
+Define the policy:
+
+| Policy name                          | Admin Access                          |
+| :----------------------------------- | :------------------------------------ |
+| Action                               | Allow                                 |
+| **Include**                          |                                       |
+| Member of Group                      | IT Admins                             |
+| **Require**                          |                                       |
+| Authentication method                | MFA \- multi-factor authentication    |
+| Gateway                              | On                                    |
+| WARP                                 | On                                    |
+| Device Posture \- Serial Number List | Company Managed Device Serial Numbers |
+| External Evaluation                  | \[Time Evaluator URL\]                |
+
+Inside the policy, we have made this application available to our new access group for IT Admins. Under "Require," we are enforcing the use of Cloudflare WARP specifically (as opposed to only Cloudflare Gateway). The user must be on a company-managed device, with an active device client that is authenticated to the company's instance of Cloudflare, MFA must be used during login, and there is an additional option below for external evaluation.
+
+[External evaluation](/cloudflare-one/policies/access/external-evaluation/) means we have an API endpoint containing some sort of [access logic](https://github.com/cloudflare/workers-access-external-auth-example) — in this case, time of day access. We are making an API call to this endpoint, and defining the key that Cloudflare is using to verify that the response came from the API. This is useful for several reasons:
+
+External evaluation allows users to create bespoke security posture checks based on criteria that may not be covered by the default set of posture checks. For this example, we will be using a service built on [Cloudflare Workers](https://workers.cloudflare.com/).
+
+- Restricting access to the terminal outside of business hours implements a form of time-based access control. This adds an extra layer of security by limiting the window of opportunity for potential attackers.
+
+Now, you will learn how to secure RDP access as a private IP application:
+
+| Application Configuration |                 |
+| :------------------------ | :-------------- |
+| Application Name          | RDP             |
+| Destination IP            | 169.254.255.254 |
+
+As mentioned before, private IP applications work because Cloudflare proxies the IP range across its network. The nature of this application necessitates the use of the device client, as unless the user is connected to Cloudflare (and more specifically, unless they can take advantage of the WARP-to-Tunnel connectivity), they will not be able to reach non-local RFC 1918 addresses.
+
+| Traffic                                  |                                                                 |
+| :--------------------------------------- | :-------------------------------------------------------------- |
+| Destination IP                           | 169.254.255.254                                                 |
+| Destination Port                         | 3389                                                            |
+| **Identity**                             |                                                                 |
+| User Group Names                         | Server Admins                                                   |
+| **Device Posture**                       |                                                                 |
+| Passed Device Posture Checks             | WARP Check (Mac OS) (File) Latest Version of macOS (OS version) |
+| **Action**                               | Allow                                                           |
+| **Enforce WARP client session duration** | 60m0s                                                           |
+
+Defining the application here is simple, as Cloudflare automatically fills in the IP range, and you need to limit the detected protocol to RDP. However, the rules for private IP applications are slightly different. You will notice they appear as network policies under the Cloudflare Gateway menu, despite managing them in Access. Certain options, such as checking for MFA and external evaluation, do not appear here. However, these attributes can be verified when the user activates their device client and authenticates to their organization.
+
+One option available here is enforcing the device agent client session duration. This means that after a certain amount of time, the user will be forced to reauthenticate. This feature allows you to take a Zero Trust approach to protecting private IP applications as well. It ensures that even if a user's credentials are compromised or their device is left unattended, the potential window for unauthorized access is limited. By regularly requiring reauthentication, we are continuously verifying the user's identity and authorization status, aligning with the core Zero Trust principle of "never trust, always verify."
+
+By combining granular access controls with detailed activity logging, Cloudflare provides a comprehensive security solution for protecting and monitoring access to critical resources in a Zero Trust methodology.
+
+## Summary
+
+Successful ZTNA implementation is about more than just technical configuration — it requires careful consideration of your organization's specific needs, user workflows, and security requirements. Cloudflare's flexibility allows you to start with basic secure access policies, then evolve them as your organization's needs change and security requirements mature. By following the principles and practices outlined in this guide, you can create a robust security posture that protects you as precisely and transparently as possible.
+
+If you are interested in learning more about ZTNA, SASE, or other aspects of the Cloudflare One platform, please visit our [reference architecture library](/reference-architecture/) or our [developer docs](/) to get started.
+
+Related resources
+
+- [Cloudflare SASE reference architecture](/reference-architecture/architectures/sase/)
+- [Using Cloudflare SASE with Microsoft](/reference-architecture/architectures/cloudflare-sase-with-microsoft/)
+- [How to deploy Cloudflare ZTNA](/learning-paths/zero-trust-web-access/)

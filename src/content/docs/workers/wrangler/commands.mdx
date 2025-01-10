@@ -41,6 +41,7 @@ Wrangler offers a number of commands to manage your Cloudflare Workers.
 - [`dispatch-namespace`](#dispatch-namespace) - Interact with a [dispatch namespace](/cloudflare-for-platforms/workers-for-platforms/reference/how-workers-for-platforms-works/#dispatch-namespace).
 - [`mtls-certificate`](#mtls-certificate) - Manage certificates used for mTLS connections.
 - [`types`](#types) - Generate types from bindings and module rules in configuration.
+- [`telemetry`](#telemetry) - Configure whether Wrangler can collect anonymous usage data.
 
 :::note
 
@@ -183,321 +184,7 @@ wrangler generate [<NAME>] [TEMPLATE]
 
 Interact with Cloudflare's D1 service.
 
-### `create`
-
-Creates a new D1 database, and provides the binding and UUID that you will put in your `wrangler.toml` file.
-
-```txt
-wrangler d1 create <DATABASE_NAME> [OPTIONS]
-```
-
-- `DATABASE_NAME` <Type text="string" /> <MetaInfo text="required" />
-  - The name of the new D1 database.
-- `--location` <Type text="string" /> <MetaInfo text="optional" />
-  - Provide an optional [location hint](/d1/configuration/data-location/) for your database leader.
-  - Available options include `weur` (Western Europe), `eeur` (Eastern Europe), `apac` (Asia Pacific), `oc` (Oceania), `wnam` (Western North America), and `enam` (Eastern North America).
-
-<Render file="wrangler-commands/global-flags" product="workers" />
-
-### `info`
-
-Get information about a D1 database, including the current database size and state.
-
-```txt
-wrangler d1 info <DATABASE_NAME> [OPTIONS]
-```
-
-- `DATABASE_NAME` <Type text="string" /> <MetaInfo text="required" />
-  - The name of the D1 database to get information about.
-- `--json` <Type text="boolean" /> <MetaInfo text="optional" />
-  - Return output as JSON rather than a table.
-
-<Render file="wrangler-commands/global-flags" product="workers" />
-
-### `list`
-
-List all D1 databases in your account.
-
-```txt
-wrangler d1 list [OPTIONS]
-```
-
-- `--json` <Type text="boolean" /> <MetaInfo text="optional" />
-  - Return output as JSON rather than a table.
-
-<Render file="wrangler-commands/global-flags" product="workers" />
-
-### `delete`
-
-Delete a D1 database.
-
-```txt
-wrangler d1 delete <DATABASE_NAME> [OPTIONS]
-```
-
-- `DATABASE_NAME` <Type text="string" /> <MetaInfo text="required" />
-  - The name of the D1 database to delete.
-- `-y, --skip-confirmation` <Type text="boolean" /> <MetaInfo text="optional" />
-  - Skip deletion confirmation prompt.
-
-<Render file="wrangler-commands/global-flags" product="workers" />
-
-### `execute`
-
-Execute a query on a D1 database.
-
-```txt
-wrangler d1 execute <DATABASE_NAME> [OPTIONS]
-```
-
-:::note
-
-You must provide either `--command` or `--file` for this command to run successfully.
-
-:::
-
-- `DATABASE_NAME` <Type text="string" /> <MetaInfo text="required" />
-  - The name of the D1 database to execute a query on.
-- `--command` <Type text="string" /> <MetaInfo text="optional" />
-  - The SQL query you wish to execute.
-- `--file` <Type text="string" /> <MetaInfo text="optional" />
-  - Path to the SQL file you wish to execute.
-- `-y, --yes` <Type text="boolean" /> <MetaInfo text="optional" />
-  - Answer `yes` to any prompts.
-- `--local` <Type text="boolean" /> <MetaInfo text="(default: true) optional" />
-  - Execute commands/files against a local database for use with [wrangler dev](#dev).
-- `--remote` <Type text="boolean" /> <MetaInfo text="(default: false) optional" />
-  - Execute commands/files against a remote D1 database for use with [wrangler dev --remote](#dev).
-- `--persist-to` <Type text="string" /> <MetaInfo text="optional" />
-  - Specify directory to use for local persistence (for use in combination with `--local`).
-- `--json` <Type text="boolean" /> <MetaInfo text="optional" />
-  - Return output as JSON rather than a table.
-- `--preview` <Type text="boolean" /> <MetaInfo text="optional" />
-  - Execute commands/files against a preview D1 database (as defined by `preview_database_id` in [Wrangler.toml](/workers/wrangler/configuration/#d1-databases)).
-- `--batch-size` <Type text="number" /> <MetaInfo text="optional" />
-  - Number of queries to send in a single batch.
-
-<Render file="wrangler-commands/global-flags" product="workers" />
-
-### `export`
-
-Export a D1 database or table's schema and/or content to a `.sql` file.
-
-```txt
-wrangler d1 export <DATABASE_NAME> [OPTIONS]
-```
-
-- `DATABASE_NAME` <Type text="string" /> <MetaInfo text="required" />
-  - The name of the D1 database to export.
-- `--remote` <Type text="boolean" /> <MetaInfo text="(default: false) optional" />
-  - Execute commands/files against a remote D1 database for use with [wrangler dev --remote](#dev).
-- `--output` <Type text="string" /> <MetaInfo text="optional" />
-  - Path to the SQL file for your export.
-- `--table` <Type text="string" /> <MetaInfo text="optional" />
-  - The name of the table within a D1 database to export.
-- `--no-data` <Type text="boolean" /> <MetaInfo text="(default: false) optional" />
-  - Controls whether export SQL file contains database data. Note that `--no-data=true` is not recommended due to a known wrangler limitation that intreprets the value as false.
-- `--no-schema` <Type text="boolean" /> <MetaInfo text="(default: false) optional" />
-  - Controls whether export SQL file contains database schema. Note that `--no-schema=true` is not recommended due to a known wrangler limitation that intreprets the value as false.
-
-<Render file="wrangler-commands/global-flags" product="workers" />
-
-### `time-travel restore`
-
-Restore a database to a specific point-in-time using [Time Travel](/d1/reference/time-travel/).
-
-```txt
-wrangler d1 time-travel restore <DATABASE_NAME> [OPTIONS]
-```
-
-- `DATABASE_NAME` <Type text="string" /> <MetaInfo text="required" />
-  - The name of the D1 database to execute a query on.
-- `--bookmark` <Type text="string" /> <MetaInfo text="optional" />
-  - A D1 bookmark representing the state of a database at a specific point in time.
-- `--timestamp` <Type text="string" /> <MetaInfo text="optional" />
-  - A UNIX timestamp or JavaScript date-time `string` within the last 30 days.
-- `--json` <Type text="boolean" /> <MetaInfo text="optional" />
-  - Return output as JSON rather than a table.
-
-<Render file="wrangler-commands/global-flags" product="workers" />
-
-### `time-travel info`
-
-Inspect the current state of a database for a specific point-in-time using [Time Travel](/d1/reference/time-travel/).
-
-```txt
-wrangler d1 time-travel info <DATABASE_NAME> [OPTIONS]
-```
-
-- `DATABASE_NAME` <Type text="string" /> <MetaInfo text="required" />
-  - The name of the D1 database to execute a query on.
-- `--timestamp` <Type text="string" /> <MetaInfo text="optional" />
-  - A UNIX timestamp or JavaScript date-time `string` within the last 30 days.
-- `--json` b<Type text="boolean" /> <MetaInfo text="optional" />
-  - Return output as JSON rather than a table.
-
-<Render file="wrangler-commands/global-flags" product="workers" />
-
-### `backup create`
-
-:::caution
-
-This command only works on databases created during D1's alpha period. You can check which version your database uses with `wrangler d1 info <DATABASE_NAME>`.
-
-This command will not work on databases that are created during the beta period, or after general availability (GA). Refer to [Time Travel](/d1/reference/time-travel/) in the D1 documentation for more information on D1's approach to backup and restores for databases created during the beta/GA period.
-:::
-
-Initiate a D1 backup.
-
-```txt
-wrangler d1 backup create <DATABASE_NAME>
-```
-
-- `DATABASE_NAME` <Type text="string" /> <MetaInfo text="required" />
-  - The name of the D1 database to backup.
-
-<Render file="wrangler-commands/global-flags" product="workers" />
-
-### `backup list`
-
-:::caution
-
-This command only works on databases created during D1's alpha period. You can check which version your database uses with `wrangler d1 info <DATABASE_NAME>`.
-
-This command will not work on databases that are created during the beta period, or after general availability (GA). Refer to [Time Travel](/d1/reference/time-travel/) in the D1 documentation for more information on D1's approach to backup and restores for databases created during the beta/GA period.
-:::
-
-List all available backups.
-
-```txt
-wrangler d1 backup list <DATABASE_NAME>
-```
-
-- `DATABASE_NAME` <Type text="string" /> <MetaInfo text="required" />
-  - The name of the D1 database to list the backups of.
-
-<Render file="wrangler-commands/global-flags" product="workers" />
-
-### `backup restore`
-
-:::caution
-
-This command only works on databases created during D1's alpha period. You can check which version your database uses with `wrangler d1 info <DATABASE_NAME>`.
-
-This command will not work on databases that are created during the beta period, or after general availability (GA). Refer to [Time Travel](/d1/reference/time-travel/) in the D1 documentation for more information on D1's approach to backup and restores for databases created during the beta/GA period.
-:::
-
-Restore a backup into a D1 database.
-
-```txt
-wrangler d1 backup restore <DATABASE_NAME> <BACKUP_ID>
-```
-
-- `DATABASE_NAME` <Type text="string" /> <MetaInfo text="required" />
-  - The name of the D1 database to restore the backup into.
-- `BACKUP_ID` <Type text="string" /> <MetaInfo text="required" />
-  - The ID of the backup you wish to restore.
-
-<Render file="wrangler-commands/global-flags" product="workers" />
-
-### `backup download`
-
-:::caution
-
-This command only works on databases created during D1's alpha period. You can check which version your database uses with `wrangler d1 info <DATABASE_NAME>`.
-
-This command will not work on databases that are created during the beta period, or after general availability (GA). To download existing data of a beta/GA database to your local machine refer to the `wrangler d1 export` command. Refer to [Time Travel](/d1/reference/time-travel/) in the D1 documentation for more information on D1's approach to backups for databases created during the beta/GA period.
-:::
-
-Download existing data to your local machine.
-
-```txt
-wrangler d1 backup download <DATABASE_NAME> <BACKUP_ID>
-```
-
-- `DATABASE_NAME` <Type text="string" /> <MetaInfo text="required" />
-  - The name of the D1 database you wish to download the backup of.
-- `BACKUP_ID` <Type text="string" /> <MetaInfo text="required" />
-  - The ID of the backup you wish to download.
-- `--output` <Type text="string" /> <MetaInfo text="optional" />
-  - The `.sqlite3` file to write to (defaults to `'<DB_NAME>.<SHORT_BACKUP_ID>.sqlite3'`).
-
-<Render file="wrangler-commands/global-flags" product="workers" />
-
-### `migrations create`
-
-Create a new migration.
-
-This will generate a new versioned file inside the `migrations` folder. Name your migration file as a description of your change. This will make it easier for you to find your migration in the `migrations` folder. An example filename looks like:
-
-`0000_create_user_table.sql`
-
-The filename will include a version number and the migration name you specify below.
-
-```txt
-wrangler d1 migrations create <DATABASE_NAME> <MIGRATION_NAME>
-```
-
-- `DATABASE_NAME` <Type text="string" /> <MetaInfo text="required" />
-  - The name of the D1 database you wish to create a migration for.
-- `MIGRATION_NAME` <Type text="string" /> <MetaInfo text="required" />
-  - A descriptive name for the migration you wish to create.
-
-<Render file="wrangler-commands/global-flags" product="workers" />
-
-### `migrations list`
-
-View a list of unapplied migration files.
-
-```txt
-wrangler d1 migrations list <DATABASE_NAME> [OPTIONS]
-```
-
-- `DATABASE_NAME` <Type text="string" /> <MetaInfo text="required" />
-  - The name of the D1 database you wish to list unapplied migrations for.
-- `--local` <Type text="boolean" /> <MetaInfo text="optional" />
-  - Show the list of unapplied migration files on your locally persisted D1 database.
-- `--remote` <Type text="boolean" /> <MetaInfo text="(default: false) optional" />
-  - Show the list of unapplied migration files on your remote D1 database.
-- `--persist-to` <Type text="string" /> <MetaInfo text="optional" />
-  - Specify directory to use for local persistence (for use in combination with `--local`).
-- `--preview` <Type text="boolean" /> <MetaInfo text="optional" />
-  - Show the list of unapplied migration files on your preview D1 database (as defined by `preview_database_id` in [`wrangler.toml`](/workers/wrangler/configuration/#d1-databases)).
-
-<Render file="wrangler-commands/global-flags" product="workers" />
-
-### `migrations apply`
-
-Apply any unapplied migrations.
-
-This command will prompt you to confirm the migrations you are about to apply. Confirm that you would like to proceed. After, a backup will be captured.
-
-The progress of each migration will be printed in the console.
-
-When running the apply command in a CI/CD environment or another non-interactive command line, the confirmation step will be skipped, but the backup will still be captured.
-
-If applying a migration results in an error, this migration will be rolled back, and the previous successful migration will remain applied.
-
-```txt
-wrangler d1 migrations apply <DATABASE_NAME> [OPTIONS]
-```
-
-- `DATABASE_NAME` <Type text="string" /> <MetaInfo text="required" />
-  - The name of the D1 database you wish to apply your migrations on.
-- `--env` <Type text="string" /> <MetaInfo text="optional" />
-  - Specify which environment configuration to use for D1 binding
-- `--local` <Type text="boolean" /> <MetaInfo text="(default: true) optional" />
-  - Execute any unapplied migrations on your locally persisted D1 database.
-- `--remote` <Type text="boolean" /> <MetaInfo text="(default: false) optional" />
-  - Execute any unapplied migrations on your remote D1 database.
-- `--persist-to` <Type text="string" /> <MetaInfo text="optional" />
-  - Specify directory to use for local persistence (for use in combination with `--local`).
-- `--preview` <Type text="boolean" /> <MetaInfo text="optional" />
-  - Execute any unapplied migrations on your preview D1 database (as defined by `preview_database_id` in [`wrangler.toml`](/workers/wrangler/configuration/#d1-databases)).
-- `--batch-size` <Type text="number" /> <MetaInfo text="optional" />
-  - Number of queries to send in a single batch.
-
-<Render file="wrangler-commands/global-flags" product="workers" />
+<Render file="wrangler-commands/d1" product="workers" />
 
 ---
 
@@ -522,7 +209,7 @@ npx wrangler vectorize create <INDEX_NAME> [--dimensions=<NUM_DIMENSIONS>] [--me
 ```
 
 - `INDEX_NAME` <Type text="string" /> <MetaInfo text="required" />
-  - The name of the new index to create. Must be unique for an account and cannot be changed after creation or reused after the deletion of an index.
+  - The name of the new index to create. Must be unique for an account and cannot be changed after creation.
 - `--dimensions` <Type text="number" /> <MetaInfo text="required" />
   - The vector dimension width to configure the index for. Cannot be changed after creation.
 - `--metric` <Type text="string" /> <MetaInfo text="required" />
@@ -1012,6 +699,57 @@ wrangler r2 bucket list
 
 <Render file="wrangler-commands/global-flags" product="workers" />
 
+### `cors set`
+
+Set the [CORS configuration](/r2/buckets/cors/) for an R2 bucket from a JSON file.
+
+```txt
+wrangler r2 bucket cors set <NAME> [OPTIONS]
+```
+
+- `NAME` <Type text="string" /> <MetaInfo text="required" />
+  - The name of the R2 bucket to set the CORS configuration for.
+- `--file` <Type text="string" /> <MetaInfo text="required" />
+  - Path to the JSON file containing CORS configuration (file must be in format of request body of [put bucket CORS policy API](/api/operations/r2-put-bucket-cors-policy)).
+- `--jurisdiction` <Type text="string" /> <MetaInfo text="optional" />
+  - The jurisdiction where the bucket exists, if a jurisdiction has been specified. Refer to [jurisdictional restrictions](/r2/reference/data-location/#jurisdictional-restrictions).
+- `--force` <Type text="boolean" /> <MetaInfo text="optional" />
+  - Skip confirmation when setting CORS configuration.
+
+<Render file="wrangler-commands/global-flags" product="workers" />
+
+### `cors delete`
+
+Clear the [CORS configuration](/r2/buckets/cors/) for an R2 bucket.
+
+```txt
+wrangler r2 bucket cors delete <NAME> [OPTIONS]
+```
+
+- `NAME` <Type text="string" /> <MetaInfo text="required" />
+  - The name of the R2 bucket to delete the CORS configuration for.
+- `--jurisdiction` <Type text="string" /> <MetaInfo text="optional" />
+  - The jurisdiction where the bucket exists, if a jurisdiction has been specified. Refer to [jurisdictional restrictions](/r2/reference/data-location/#jurisdictional-restrictions).
+- `--force` <Type text="boolean" /> <MetaInfo text="optional" />
+  - Skip confirmation when clearing the CORS configuration.
+
+<Render file="wrangler-commands/global-flags" product="workers" />
+
+### `cors list`
+
+List the [CORS configuration](/r2/buckets/cors/) rules for an R2 bucket.
+
+```txt
+wrangler r2 bucket cors list <NAME> [OPTIONS]
+```
+
+- `NAME` <Type text="string" /> <MetaInfo text="required" />
+  - The name of the R2 bucket to list the CORS rules for.
+- `--jurisdiction` <Type text="string" /> <MetaInfo text="optional" />
+  - The jurisdiction where the bucket exists, if a jurisdiction has been specified. Refer to [jurisdictional restrictions](/r2/reference/data-location/#jurisdictional-restrictions).
+
+<Render file="wrangler-commands/global-flags" product="workers" />
+
 ### `dev-url enable`
 
 Enable public access via the [r2.dev URL](/r2/buckets/public-buckets/#enable-managed-public-access) for an R2 bucket.
@@ -1122,6 +860,23 @@ wrangler r2 bucket domain update <NAME> [OPTIONS]
 
 <Render file="wrangler-commands/global-flags" product="workers" />
 
+### `domain get`
+
+Get [custom domain](/r2/buckets/public-buckets/#custom-domains) connected to an R2 bucket.
+
+```txt
+wrangler r2 bucket domain get <NAME> [OPTIONS]
+```
+
+- `NAME` <Type text="string" /> <MetaInfo text="required" />
+  - The name of the R2 bucket whose custom domain to retrieve.
+- `--domain` <Type text="string" /> <MetaInfo text="required" />
+  - The custom domain to get information for.
+- `--jurisdiction` <Type text="string" /> <MetaInfo text="optional" />
+  - The jurisdiction where the bucket exists, if a jurisdiction has been specified. Refer to [jurisdictional restrictions](/r2/reference/data-location/#jurisdictional-restrictions).
+
+<Render file="wrangler-commands/global-flags" product="workers" />
+
 ### `domain list`
 
 List [custom domains](/r2/buckets/public-buckets/#custom-domains) for an R2 bucket.
@@ -1134,59 +889,6 @@ wrangler r2 bucket domain list <NAME> [OPTIONS]
   - The name of the R2 bucket whose connected custom domains will be listed.
 - `--jurisdiction` <Type text="string" /> <MetaInfo text="optional" />
   - The jurisdiction where the bucket exists, if a jurisdiction has been specified. Refer to [jurisdictional restrictions](/r2/reference/data-location/#jurisdictional-restrictions).
-
-<Render file="wrangler-commands/global-flags" product="workers" />
-
-### `notification create`
-
-Create an [event notification](/r2/buckets/event-notifications/) rule for an R2 bucket.
-
-```txt
-wrangler r2 bucket notification create <NAME> [OPTIONS]
-```
-
-- `NAME` <Type text="string" /> <MetaInfo text="required" />
-  - The name of the R2 bucket to create an event notification rule for.
-- `--event-type` <Type text="'object-create'|'object-delete'[]" /> <MetaInfo text="required" />
-  - The [type of event(s)](/r2/buckets/event-notifications/#event-types) that will trigger event notifications.
-- `--queue` <Type text="string" /> <MetaInfo text="required" />
-  - The name of the queue that will receive event notification messages.
-- `--prefix` <Type text="string" /> <MetaInfo text="optional" />
-  - The prefix that an object must match to emit event notifications (note: regular expressions are not supported).
-- `--suffix` <Type text="string" /> <MetaInfo text="optional" />
-  - The suffix that an object must match to emit event notifications (note: regular expressions are not supported).
-- `--description` <Type text="string" /> <MetaInfo text="optional" />
-  - A description that can be used to identify the event notification rule after creation.
-
-<Render file="wrangler-commands/global-flags" product="workers" />
-
-### `notification delete`
-
-Remove an event notification rule from a bucket's [event notification](/r2/buckets/event-notifications/) configuration.
-
-```txt
-wrangler r2 bucket notification delete <NAME> [OPTIONS]
-```
-
-- `NAME` <Type text="string" /> <MetaInfo text="required" />
-  - The name of the R2 bucket to delete an event notification rule for.
-- `--queue` <Type text="string" /> <MetaInfo text="required" />
-  - The name of the queue that corresponds to the event notification rule. If no `rule` is provided, all event notification rules associated with the queue will be deleted.
-- `--rule` <Type text="string" /> <MetaInfo text="optional" />
-  - The ID of the event notification rule to delete.
-
-<Render file="wrangler-commands/global-flags" product="workers" />
-
-### `notification list`
-
-List the [event notification](/r2/buckets/event-notifications/) rules for a bucket.
-
-```txt
-wrangler r2 bucket notification list <NAME>
-```
-
-- `NAME` <Type text="string" /> <MetaInfo text="required" />
-  - The name of the R2 bucket to get event notification rules for.
 
 <Render file="wrangler-commands/global-flags" product="workers" />
 
@@ -1264,9 +966,64 @@ wrangler r2 bucket lifecycle set <NAME> [OPTIONS]
 - `NAME` <Type text="string" /> <MetaInfo text="required" />
   - The name of the R2 bucket to set lifecycle configuration for.
 - `--file` <Type text="string" /> <MetaInfo text="required" />
-  - Path to the JSON file containing lifecycle configuration (file must be in format of request body of [put object lifecycle configuration API](/api/operations/r2-put-bucket-lifecycle-configuration)).
+  - Path to the JSON file containing lifecycle configuration (file must be in format of request body of [put object lifecycle configuration API](/api/resources/r2/subresources/buckets/subresources/lifecycle/methods/update/)).
 - `--jurisdiction` <Type text="string" /> <MetaInfo text="optional" />
   - The jurisdiction where the bucket exists, if a jurisdiction has been specified. Refer to [jurisdictional restrictions](/r2/reference/data-location/#jurisdictional-restrictions).
+- `--force` <Type text="boolean" /> <MetaInfo text="optional" />
+  - Skip confirmation when setting object lifecycle configuration.
+
+<Render file="wrangler-commands/global-flags" product="workers" />
+
+### `notification create`
+
+Create an [event notification](/r2/buckets/event-notifications/) rule for an R2 bucket.
+
+```txt
+wrangler r2 bucket notification create <NAME> [OPTIONS]
+```
+
+- `NAME` <Type text="string" /> <MetaInfo text="required" />
+  - The name of the R2 bucket to create an event notification rule for.
+- `--event-type` <Type text="'object-create'|'object-delete'[]" /> <MetaInfo text="required" />
+  - The [type of event(s)](/r2/buckets/event-notifications/#event-types) that will trigger event notifications.
+- `--queue` <Type text="string" /> <MetaInfo text="required" />
+  - The name of the queue that will receive event notification messages.
+- `--prefix` <Type text="string" /> <MetaInfo text="optional" />
+  - The prefix that an object must match to emit event notifications (note: regular expressions are not supported).
+- `--suffix` <Type text="string" /> <MetaInfo text="optional" />
+  - The suffix that an object must match to emit event notifications (note: regular expressions are not supported).
+- `--description` <Type text="string" /> <MetaInfo text="optional" />
+  - A description that can be used to identify the event notification rule after creation.
+
+<Render file="wrangler-commands/global-flags" product="workers" />
+
+### `notification delete`
+
+Remove an event notification rule from a bucket's [event notification](/r2/buckets/event-notifications/) configuration.
+
+```txt
+wrangler r2 bucket notification delete <NAME> [OPTIONS]
+```
+
+- `NAME` <Type text="string" /> <MetaInfo text="required" />
+  - The name of the R2 bucket to delete an event notification rule for.
+- `--queue` <Type text="string" /> <MetaInfo text="required" />
+  - The name of the queue that corresponds to the event notification rule. If no `rule` is provided, all event notification rules associated with the queue will be deleted.
+- `--rule` <Type text="string" /> <MetaInfo text="optional" />
+  - The ID of the event notification rule to delete.
+
+<Render file="wrangler-commands/global-flags" product="workers" />
+
+### `notification list`
+
+List the [event notification](/r2/buckets/event-notifications/) rules for a bucket.
+
+```txt
+wrangler r2 bucket notification list <NAME>
+```
+
+- `NAME` <Type text="string" /> <MetaInfo text="required" />
+  - The name of the R2 bucket to get event notification rules for.
 
 <Render file="wrangler-commands/global-flags" product="workers" />
 
@@ -2063,7 +1820,7 @@ wrangler queues info <name>
 ```
 
 - `name` <Type text="string" /> <MetaInfo text="required" />
-	- The name of the queue to inspect.
+  - The name of the queue to inspect.
 
 ### `consumer`
 
@@ -2602,3 +2359,37 @@ The minimum required Wrangler version to use this command is 3.66.0.
   - A custom path must have a `d.ts` extension.
 
 <Render file="wrangler-commands/global-flags" product="workers" />
+
+---
+
+## `telemetry`
+
+Cloudflare collects anonymous usage data to improve Wrangler. You can learn more about this in our [data policy](https://github.com/cloudflare/workers-sdk/tree/main/packages/wrangler/telemetry.md).
+
+You can manage sharing of usage data at any time using these commands.
+
+### `disable`
+
+Disable telemetry collection for Wrangler.
+
+```txt
+wrangler telemetry disable
+```
+
+### `enable`
+
+Enable telemetry collection for Wrangler.
+
+```txt
+wrangler telemetry enable
+```
+
+### `status`
+
+Check whether telemetry collection is currently enabled. The return result is specific to the directory where you have run the command.
+
+This will resolve the global status set by `wrangler telemetry disable / enable`, the environment variable [`WRANGLER_SEND_METRICS`](/workers/wrangler/system-environment-variables/#supported-environment-variables), and the [`send_metrics`](/workers/wrangler/configuration/#top-level-only-keys) key in `wrangler.toml`.
+
+```txt
+wrangler telemetry status
+```

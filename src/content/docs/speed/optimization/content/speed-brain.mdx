@@ -1,7 +1,7 @@
 ---
 pcx_content_type: how-to
 title: Speed Brain
-sidebar: 
+sidebar:
   order: 9
   badge:
     text: Beta
@@ -22,6 +22,7 @@ Speed Brain is a tool for improving web page performance by prefetching the most
 ## Requirements
 
 Speed Brain works under the following conditions:
+
 - The Speed Brain feature is enabled in Cloudflare.
 - The browser of the web page visitor is using a Chromium-based browser version 121 or later.
 - The web page requested by the prefetch is eligible for cache.
@@ -43,15 +44,15 @@ The configuration looks like this:
 
 ```json
 {
-  "prefetch": [{
-    "source": "document",
-    "where": {
-      "and": [
-        { "href_matches": "/*", "relative_to": "document" },
-      ]
-    },
-    "eagerness": "conservative"
-  }]
+	"prefetch": [
+		{
+			"source": "document",
+			"where": {
+				"and": [{ "href_matches": "/*", "relative_to": "document" }]
+			},
+			"eagerness": "conservative"
+		}
+	]
 }
 ```
 
@@ -99,13 +100,13 @@ To disable Speed Brain, set `value:` to `"off"`.
 
 </TabItem> <TabItem label="Terraform">
 
-You can also configure Speed Brain using Terraform. For more details, refer to the [`cloudflare_zone_settings_override` resource](https://registry.terraform.io/providers/cloudflare/cloudflare/4.43.0/docs/resources/cloudflare_zone_settings_override) in the Terraform documentation.
+You can also configure Speed Brain using Terraform. For more details, refer to the `cloudflare_zone_settings_override` resource in the [Terraform documentation](https://registry.terraform.io/providers/cloudflare/cloudflare/latest/docs).
 
 </TabItem> </Tabs>
 
 ## Caveats
 
-- Since prefetch responses are not guaranteed to be rendered by the browser, Speed Brain includes two safeguards to minimize the risk of [unsafe prefetching](https://developer.mozilla.org/en-US/docs/Web/API/Speculation_Rules_API#unsafe_prefetching): 
+- Since prefetch responses are not guaranteed to be rendered by the browser, Speed Brain includes two safeguards to minimize the risk of [unsafe prefetching](https://developer.mozilla.org/en-US/docs/Web/API/Speculation_Rules_API#unsafe_prefetching):
 
   - Speed Brain will not prefetch on routes that run Workers. Without this safeguard, prefetch requests could inadvertently run Worker logic that assumes the incoming request is a normal (that is, not a prefetch) request. An example of this could be an incrementing page view counter running in a Worker. A page view counter should not increment if the page is not actually rendered in the browser.
 
@@ -115,4 +116,4 @@ You can also configure Speed Brain using Terraform. For more details, refer to t
 
 - Speed Brain will not work with restrictive [Content Security Policy](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Security-Policy/script-src) configurations using `strict-dynamic` or `nonce-{hash}` attributes.
 
-- Currently, Speed Brain is not compatible with websites that use or rely on `pages.dev`. 
+- Currently, Speed Brain is not compatible with websites that use or rely on `pages.dev`.

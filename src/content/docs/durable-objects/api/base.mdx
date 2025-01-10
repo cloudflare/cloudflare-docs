@@ -1,0 +1,90 @@
+---
+title: Durable Object Base Class
+pcx_content_type: concept
+sidebar:
+  order: 1
+---
+
+import { Render, Tabs, TabItem, GlossaryTooltip, Type, MetaInfo, TypeScriptExample } from "~/components";
+
+The `DurableObject` base class is an abstract class which all Durable Objects inherit from. This base class provides a set of optional methods, frequently referred to as handler methods, which can respond to events, for example a webSocketMessage when using the [WebSocket Hibernation API](#/durable-objects/best-practices/websockets/#websocket-hibernation-api). To provide a concrete example, here is a Durable Object `MyDurableObject` which extends `DurableObject` and implements the fetch handler to return "Hello, World!" to the calling Worker.
+
+<TypeScriptExample>
+```ts
+export class MyDurableObject extends DurableObject {
+	constructor(ctx: DurableObjectState, env: Env) {
+		super(ctx, env);
+	}
+
+	async fetch(request: Request) {
+		return new Response("Hello, World!");
+	}
+}
+```
+</TypeScriptExample>
+
+## Methods
+
+### `fetch`
+
+- <code>fetch(<Type text="Request"/>)</code>: <Type text="Response"/> | <Type text="Promise <Response>"/>
+
+  - Takes an HTTP request object and returns an HTTP response object. This method allows the Durable Object to emulate an HTTP server where a Worker with a binding to that object is the client.
+
+  - This method can be `async`.
+
+### `alarm`
+
+- <code>alarm(`alarmInfo`<Type text="Object"/>)</code>: <Type text="Promise <void>"/>
+
+  - Called by the system when a scheduled alarm time is reached.
+
+  - The optional parameter `alarmInfo` object has two properties:
+    - `retryCount` <Type text="number"/>: The number of times this alarm event has been retried.
+    - `isRetry` <Type text="boolean"/>: A boolean value to indicate if the alarm has been retried. This value is `true` if this alarm event is a retry.
+
+  - The `alarm()` handler has guaranteed at-least-once execution and will be retried upon failure using exponential backoff, starting at two second delays for up to six retries. Retries will be performed if the method fails with an uncaught exception.
+
+  - This method can be `async`.
+
+  - Refer to [`alarm`](/durable-objects/api/alarms/#alarm) for more information.
+
+### `webSocketMessage`
+
+- <code> webSocketMessage(ws <Type text="WebSocket" />, message{" "} <Type text="string | ArrayBuffer" />)</code>: <Type text="void" />
+
+  - Called by the system when an accepted WebSocket receives a message.
+
+  - This method can be `async`.
+
+  - This method is not called for WebSocket control frames. The system will respond to an incoming [WebSocket protocol ping](https://www.rfc-editor.org/rfc/rfc6455#section-5.5.2) automatically without interrupting hibernation.
+
+### `webSocketClose`
+
+- <code> webSocketClose(ws <Type text="WebSocket" />, code <Type text="number" />, reason <Type text="string" />, wasClean <Type text="boolean" />)</code>: <Type text="void" />
+
+  - Called by the system when a WebSocket is closed. `wasClean()` is true if the connection closed cleanly, false otherwise.
+
+  - This method can be `async`.
+
+### `webSocketError`
+
+- <code> webSocketError(ws <Type text="WebSocket" />, error <Type text="any" />)</code> : <Type text="void" />
+
+  - Called by the system when any non-disconnection related errors occur.
+
+  - This method can be `async`.
+
+## Properties
+
+### `DurableObjectState`
+
+See [`DurableObjectState` documentation](/durable-objects/api/state/).
+
+### `Env`
+
+A list of bindings which are available to the Durable Object.
+
+## Related resources
+
+- Refer to [Use WebSockets](/durable-objects/best-practices/websockets/) for more information on examples of WebSocket methods and best practices.

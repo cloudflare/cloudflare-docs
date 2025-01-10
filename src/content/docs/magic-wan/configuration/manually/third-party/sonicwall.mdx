@@ -194,10 +194,10 @@ https://api.cloudflare.com/client/v4/accounts/{account_id}/magic/ipsec_tunnels/{
 --header "Content-Type: application/json" \
 --data '{
   "health_check": {
+    "direction": "bidirectional",
     "enabled": true,
-    "target": "SONICWALL_WAN_IP",
     "type": "request",
-    "rate": "mid"
+    "rate": "low"
   }
 }'
 ```

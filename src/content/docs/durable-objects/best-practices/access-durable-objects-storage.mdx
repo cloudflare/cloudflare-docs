@@ -78,6 +78,10 @@ new_sqlite_classes = ["MyDurableObject"] # Array of new classes
 
 <Render file="durable-objects-vs-d1" />
 
+## Index for SQLite Durable Objects
+
+Creating indexes for your most queried tables and filtered columns reduces how much data is scanned and improves query performance at the same time. If you have a read-heavy workload (most common), this can be particularly advantageous. Writing to columns referenced in an index will add at least one (1) additional row written to account for updating the index, but this is typically offset by the reduction in rows read due to the benefits of an index.
+
 ## Related resources
 
 * [Zero-latency SQLite storage in every Durable Object blog post](https://blog.cloudflare.com/sqlite-in-durable-objects)

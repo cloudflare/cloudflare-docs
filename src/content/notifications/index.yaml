@@ -213,7 +213,7 @@ entries:
     otherFilters: None.
 
   - name: Magic Tunnel Health Check Alert
-    audience: Magic Transit and Magic WAN customers who wish to receive alerts when the percentage of successful health checks for a Magic Tunnel drops below the selected service-level objective (SLO).
+    audience: Magic Transit and Magic WAN customers who wish to receive alerts when the percentage of tunnel states meeting the selected service-level objective (SLO) drops below the defined threshold for a Magic Tunnel.
     availability: Purchase of Magic Transit and Magic WAN.
     associatedProducts: Magic Transit
     nextSteps: Refer to the [Magic Transit tunnel health](/magic-transit/how-to/check-tunnel-health-dashboard/) or [Magic WAN tunnel health](/magic-wan/configuration/common-settings/check-tunnel-health-dashboard/) for more information on what the issue might be.
@@ -243,7 +243,7 @@ entries:
     associatedProducts: Page Shield
     nextSteps: Investigate to confirm that it is an expected change.
     otherFilters: None.
-    additional_information: Triggered daily.
+    additional_information: Triggered daily. If configured with a zone filter, the alert is triggered immediately.
 
   - name: Page Shield New Domain Alert
     audience: "[Page Shield](/page-shield/) customers who want to receive a notification when resources from new host domains appear in their domain."
@@ -251,7 +251,7 @@ entries:
     associatedProducts: Page Shield
     nextSteps: Investigate to confirm that it is an expected change.
     otherFilters: None.
-    additional_information: Triggered hourly.
+    additional_information: Triggered hourly. If configured with a zone filter, the alert is triggered immediately.
 
   - name: Page Shield New Malicious Domain Alert
     audience: "[Page Shield](/page-shield/) customers who want to receive a notification when resources from a known malicious domain appear in their domain. For more information, refer to [Malicious script and connection detection](/page-shield/how-it-works/malicious-script-detection/)."
@@ -289,7 +289,7 @@ entries:
     associatedProducts: Page Shield
     nextSteps: Investigate to confirm that it is an expected change.
     otherFilters: None.
-    additional_information: Triggered daily.
+    additional_information: Triggered daily. If configured with a zone filter, the alert is triggered immediately.
 
   - name: Page Shield New Resource Exceeds Max URL Length Alert
     audience: "[Page Shield](/page-shield/) customers who want to receive a notification when a resource's URL exceeds the maximum allowed length."
@@ -544,7 +544,7 @@ entries:
     associatedProducts: Web Application Firewall (WAF)
     nextSteps: Review the information in [Security Events](/waf/analytics/security-events/paid-plans/) to identify any possible attack or misconfiguration.
     otherFilters: |-
-      A mandatory [`filters`](/api/operations/notification-policies-create-a-notification-policy) selection is needed when you create a notification policy which includes the list of services and zones that you want to be alerted on.
+      A mandatory [`filters`](/api/resources/alerting/subresources/policies/methods/create/) selection is needed when you create a notification policy which includes the list of services and zones that you want to be alerted on.
 
       * You can search for and add domains from your list of Enterprise zones.
       * You can choose which services the alert should monitor (Managed Firewall, Rate Limiting, etc.).
@@ -552,7 +552,7 @@ entries:
     additional_information: |-
       The mean time to detection is five minutes.
 
-       This alert will look for spikes across all services that generate log entries in [security/firewall events](/waf/analytics/security-events/paid-plans/).
+      When setting up this alert, you can select the services that will be monitored. Each selected service is monitored separately and can be selected as a filter.
     limitations: |-
       Security Events (WAF) alerts are not sent for each individual events, but only when a spike in traffic reaches the threshold for an alert to be sent.
 
@@ -564,7 +564,7 @@ entries:
     associatedProducts: Web Application Firewall (WAF)
     nextSteps: Review the information in [Security Events](/waf/analytics/security-events/paid-plans/) to identify any possible attack or misconfiguration.
     otherFilters: |-
-      A mandatory [`filters`](/api/operations/notification-policies-create-a-notification-policy) selection is needed when you create a notification policy which includes the list of zones that you want to be alerted on.
+      A mandatory [`filters`](/api/resources/alerting/subresources/policies/methods/create/) selection is needed when you create a notification policy which includes the list of zones that you want to be alerted on.
 
       * You can also search for and add domains from your list of business or enterprise zones. The notification will be sent for the domains chosen.
       * You can filter events by a targeted action.

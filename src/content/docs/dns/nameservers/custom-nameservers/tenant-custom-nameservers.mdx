@@ -18,6 +18,10 @@ import { Example, Render } from "~/components"
 
 <Render file="acns-tcns-intro" params={{ one: "Tenant", two: "T", three: "tenant", four: "accounts", five: "tenant " }} />
 
+## Availability
+
+Tenant custom nameservers, if created by the tenant owner, will be available to all zones belonging to any account that is part of the tenant. Via API only.
+
 ## Configuration conditions
 
 For this configuration to be possible, a few conditions apply:
@@ -32,7 +36,7 @@ For this configuration to be possible, a few conditions apply:
 
 If you are an account owner and your account is part of a tenant that has custom nameservers, do the following:
 
-1. Use a [PUT command](/api/operations/account-level-custom-nameservers-usage-for-a-zone-set-account-custom-nameserver-related-zone-metadata) and specify `ns_type` and `ns_set`.
+1. Use a [PUT command](/api/resources/zones/subresources/custom_nameservers/methods/update/) and specify `ns_type` and `ns_set`.
 
 ```bash
 curl --request PUT https://api.cloudflare.com/client/v4/zones/{zone_id}/custom_ns \
@@ -55,7 +59,7 @@ If the parameter `ns_set` is omitted, the default set `1` will be assigned.
 
 2. If you are **not** using [Cloudflare Registrar](/registrar/), update the nameservers at your registrar to use the TCNS names. If you are using [Cloudflare Registrar](/registrar/), no further action is needed.
 
-To make these TCNS the default namerservers for all new zones added to your account from now on, use the endpoint [Update DNS Settings for an Account](/api/operations/dns-settings-for-an-account-update-dns-settings). Within the `zone_defaults` object, set the following:
+To make these TCNS the default namerservers for all new zones added to your account from now on, use the endpoint [Update DNS Settings for an Account](/api/resources/dns/subresources/settings/methods/edit/). Within the `zone_defaults` object, set the following:
 
 ```txt
 "zone_defaults": {
@@ -66,7 +70,7 @@ To make these TCNS the default namerservers for all new zones added to your acco
 ```
 ### Disable tenant custom nameservers on a zone
 
-To remove TCNS and their associated DNS records from a zone, use a [PUT command](/api/operations/account-level-custom-nameservers-usage-for-a-zone-set-account-custom-nameserver-related-zone-metadata).
+To remove TCNS and their associated DNS records from a zone, use a [PUT command](/api/resources/zones/subresources/custom_nameservers/methods/update/).
 
 If you are **not** using [Cloudflare Registrar](/registrar/), also remove the TCNS at your domain’s registrar.
 
@@ -91,7 +95,7 @@ curl https://api.cloudflare.com/client/v4/tenants/{tenant_id}/custom_ns \
 
 <Render file="ns-set-omission-callout" />
 
-2. Add the account custom nameservers and IP addresses to your domain's registrar as [glue (A and AAAA) records](https://www.rfc-editor.org/rfc/rfc1912.html#section-2.3)
+2. Add the account custom nameservers and IP addresses to your domain's registrar as glue (A and AAAA) records ([RFC 1912](https://www.rfc-editor.org/rfc/rfc1912.html)).
 
 3. If the domain or domains that are used for the tenant custom nameservers do not exist within the same account, you must create the `A/AAAA` records on the configured nameserver names (for example, `ns1.example.com`) at the authoritative DNS provider.
 

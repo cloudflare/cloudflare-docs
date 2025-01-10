@@ -38,6 +38,28 @@ const result = await env.MY_DB.prepare(
 ).run<OrderRow>();
 ```
 
+## Type conversion
+
+D1 automatically converts supported JavaScript (including TypeScript) types passed as parameters via the Workers Binding API to their associated D1 types. The type conversion is as follows:
+
+| JavaScript           | D1                                                                           |
+| -------------------- | ---------------------------------------------------------------------------- |
+| null                 | `NULL`                                                                       |
+| Number               | `REAL`                                                                       |
+| Number <sup>1</sup>  | `INTEGER`                                                                    |
+| String               | `TEXT`                                                                       |
+| Boolean <sup>2</sup> | `INTEGER`                                                                    |
+| ArrayBuffer          | `BLOB`                                                                       |
+| undefined            | Not supported. Queries with `undefined` values will return a `D1_TYPE_ERROR` |
+
+<sup>1</sup> D1 supports 64-bit signed `INTEGER` values internally, however
+[BigInts](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/BigInt)
+are not currently supported in the API yet. JavaScript integers are safe up to
+[`Number.MAX_SAFE_INTEGER`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number/MAX_SAFE_INTEGER).
+
+<sup>2</sup> Booleans will be cast to an `INTEGER` type where `1` is `TRUE` and
+`0` is `FALSE`.
+
 ## API playground
 
 The D1 Worker Binding API playground is an `index.js` file where you can test each of the documented Worker Binding APIs for D1. The file builds from the end-state of the [Get started](/d1/get-started/#write-queries-within-your-worker) code.

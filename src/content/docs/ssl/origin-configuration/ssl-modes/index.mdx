@@ -65,7 +65,7 @@ If you wanted to opt out multiple zones:
    - `Zone - Zone - Read`
    - `Zone - Zone Settings - Read`
    - `Zone - Zone Settings - Edit`
-2. Make a [`GET` request](/api/operations/zones-get) to get a list of zones (you can filter this list by `account.id`).
+2. Make a [`GET` request](/api/resources/zones/methods/list/) to get a list of zones (you can filter this list by `account.id`).
 
    ```bash "account.id=<ACCOUNT_ID>"
    curl 'https://api.cloudflare.com/client/v4/zones?account.id=<ACCOUNT_ID>' \

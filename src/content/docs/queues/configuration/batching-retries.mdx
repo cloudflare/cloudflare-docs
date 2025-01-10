@@ -20,7 +20,11 @@ There are two ways to configure how messages are batched. You configure batching
 - `max_batch_size` - The maximum size of a batch delivered to a consumer (defaults to 10 messages).
 - `max_batch_timeout` - the _maximum_ amount of time the queue will wait before delivering a batch to a consumer (defaults to 5 seconds)
 
+:::note[Batch size configuration]
+
 Both `max_batch_size` and `max_batch_timeout` work together. Whichever limit is reached first will trigger the delivery of a batch.
+
+:::
 
 For example, a `max_batch_size = 30` and a `max_batch_timeout = 10` means that if 30 messages are written to the queue, the consumer will deliver a batch of 30 messages. However, if it takes longer than 10 seconds for those 30 messages to be written to the queue, then the consumer will get a batch of messages that contains however many messages were on the queue at the time (somewhere between 1 and 29, in this case).
 
@@ -211,7 +215,7 @@ import { WranglerConfig } from "~/components";
 
 If you use both the `wrangler` CLI and `wrangler.toml` to change the settings associated with a queue or a queue consumer, the most recent configuration change will take effect.
 
-Refer to the [Queues REST API documentation](/api/operations/queue-v2-list-queue-consumers) to learn how to configure message delays and retry delays programmatically.
+Refer to the [Queues REST API documentation](/api/resources/queues/subresources/consumers/methods/get/) to learn how to configure message delays and retry delays programmatically.
 
 ### Message delay precedence
 

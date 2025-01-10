@@ -9,8 +9,8 @@ import { Markdown } from "~/components";
 
 To create a {props.ruleType} for a zone, add a rule <Markdown text={props.extraObject} /> to the <code>{props.phaseName}</code> phase entry point ruleset.
 
-1. Invoke the [Get a zone entry point ruleset](/api/operations/getZoneEntrypointRuleset) operation to obtain the definition of the entry point ruleset for the <code>{props.phaseName}</code> phase. You will need the [zone ID](/fundamentals/setup/find-account-and-zone-ids/) for this task.
+1. Invoke the [Get a zone entry point ruleset](/api/resources/rulesets/subresources/phases/methods/get/) operation to obtain the definition of the entry point ruleset for the <code>{props.phaseName}</code> phase. You will need the [zone ID](/fundamentals/setup/find-account-and-zone-ids/) for this task.
 
-2. If the entry point ruleset already exists (that is, if you received a `200 OK` status code and the ruleset definition), take note of the ruleset ID in the response. Then, invoke the [Create a zone ruleset rule](/api/operations/createZoneRulesetRule) operation to add a {props.ruleType} to the existing ruleset. Refer to the examples below for details.
+2. If the entry point ruleset already exists (that is, if you received a `200 OK` status code and the ruleset definition), take note of the ruleset ID in the response. Then, invoke the [Create a zone ruleset rule](/api/resources/rulesets/subresources/rules/methods/create/) operation to add a {props.ruleType} to the existing ruleset. Refer to the examples below for details.
 
-3. If the entry point ruleset does not exist (that is, if you received a `404 Not Found` status code in step 1), create it using the [Create a zone ruleset](/api/operations/createZoneRuleset) operation. Include your {props.ruleType} in the `rules` array. Refer to [Create ruleset](/ruleset-engine/rulesets-api/create/#example---create-a-zone-level-phase-entry-point-ruleset) for an example.
+3. If the entry point ruleset does not exist (that is, if you received a `404 Not Found` status code in step 1), create it using the [Create a zone ruleset](/api/resources/rulesets/methods/create/) operation. Include your {props.ruleType} in the `rules` array. Refer to [Create ruleset](/ruleset-engine/rulesets-api/create/#example---create-a-zone-level-phase-entry-point-ruleset) for an example.

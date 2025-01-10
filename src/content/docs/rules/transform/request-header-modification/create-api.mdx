@@ -37,7 +37,7 @@ Make sure your API token has the [required permissions](#required-api-token-perm
 
 <Details header="Example: Add an HTTP request header with a static value">
 
-The following example sets the rules of an existing phase ruleset (`{ruleset_id}`) to a single HTTP request header modification rule — adding an HTTP request header with a static value — using the [Update a zone ruleset](/api/operations/updateZoneRuleset) operation. The response will contain the complete definition of the ruleset you updated.
+The following example sets the rules of an existing phase ruleset (`{ruleset_id}`) to a single HTTP request header modification rule — adding an HTTP request header with a static value — using the [Update a zone ruleset](/api/resources/rulesets/methods/update/) operation. The response will contain the complete definition of the ruleset you updated.
 
 ```bash
 curl --request PUT \
@@ -103,7 +103,7 @@ https://api.cloudflare.com/client/v4/zones/{zone_id}/rulesets/{ruleset_id} \
 
 <Details header="Example: Add an HTTP request header with a dynamic value">
 
-The following example sets the rules of an existing phase ruleset (`{ruleset_id}`) to a single HTTP request header modification rule — adding an HTTP request header with a dynamic value — using the [Update a zone ruleset](/api/operations/updateZoneRuleset) operation. The response will contain the complete definition of the ruleset you updated.
+The following example sets the rules of an existing phase ruleset (`{ruleset_id}`) to a single HTTP request header modification rule — adding an HTTP request header with a dynamic value — using the [Update a zone ruleset](/api/resources/rulesets/methods/update/) operation. The response will contain the complete definition of the ruleset you updated.
 
 ```bash
 curl --request PUT \
@@ -169,7 +169,7 @@ https://api.cloudflare.com/client/v4/zones/{zone_id}/rulesets/{ruleset_id} \
 
 <Details header="Example: Remove an HTTP request header">
 
-The following example sets the rules of an existing phase ruleset (`{ruleset_id}`) to a single HTTP request header modification rule — removing an HTTP request header — using the [Update a zone ruleset](/api/operations/updateZoneRuleset). The response will contain the complete definition of the ruleset you updated.
+The following example sets the rules of an existing phase ruleset (`{ruleset_id}`) to a single HTTP request header modification rule — removing an HTTP request header — using the [Update a zone ruleset](/api/resources/rulesets/methods/update/). The response will contain the complete definition of the ruleset you updated.
 
 ```bash
 curl --request PUT \

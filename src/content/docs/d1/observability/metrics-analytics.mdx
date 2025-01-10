@@ -5,6 +5,8 @@ sidebar:
   order: 10
 ---
 
+import { Details } from "~/components";
+
 D1 exposes database analytics that allow you to inspect query volume, query latency, and storage size across all and/or each database in your account.
 
 The metrics displayed in the [Cloudflare dashboard](https://dash.cloudflare.com/) charts are queried from Cloudflare’s [GraphQL Analytics API](/analytics/graphql-api/). You can access the metrics [programmatically](#query-via-the-graphql-api) via GraphQL or HTTP client.
@@ -27,10 +29,10 @@ Metrics can be queried (and are retained) for the past 31 days.
 
 ### Row counts
 
-D1 returns the number of rows read, rows written (or both) in response to each individual query via [the client API](/d1/build-with-d1/d1-client-api/#return-object).
+D1 returns the number of rows read, rows written (or both) in response to each individual query via [the Workers Binding API](/d1/worker-api/return-object/).
 
 Row counts are a precise count of how many rows were read (scanned) or written by that query.
-Inspect row counts to understand the performance and cost of a given query, including whether you can reduce the rows read [using indexes](/d1/build-with-d1/use-indexes/). Use query counts to understand the total volume of traffic against your databases and to discern which databases are actively in-use.
+Inspect row counts to understand the performance and cost of a given query, including whether you can reduce the rows read [using indexes](/d1/best-practices/use-indexes/). Use query counts to understand the total volume of traffic against your databases and to discern which databases are actively in-use.
 
 Refer to the [Pricing documentation](/d1/platform/pricing/) for more details on how rows are counted.
 
@@ -138,11 +140,11 @@ query {
 }
 ```
 
-## Query insights
+## Query `insights`
 
 D1 provides metrics that let you understand and debug query performance. You can access these via GraphQL's `d1QueriesAdaptiveGroups` or `wrangler d1 insights` command.
 
-D1 captures your query strings to make it easier to analyze metrics across query executions. [Bound parameters](/d1/build-with-d1/d1-client-api/#parameter-binding) are not captured to remove any sensitive information.
+D1 captures your query strings to make it easier to analyze metrics across query executions. [Bound parameters](/d1/worker-api/prepared-statements/#guidance) are not captured to remove any sensitive information.
 
 :::note
 
@@ -152,22 +154,173 @@ Run `wrangler d1 insights --help` to view current options.
 
 :::
 
-### Examples
+| Option             | Description                                                                                                      |
+| ------------------ | ---------------------------------------------------------------------------------------------------------------- |
+| `--timePeriod`     | Fetch data from now to the provided time period (default: `1d`).                                                 |
+| `--sort-type`      | The operation you want to sort insights by. Select between `sum` and `avg` (default: `sum`).                     |
+| `--sort-by`        | The field you want to sort insights by. Select between `time`, `reads`, `writes`, and `count` (default: `time`). |
+| `--sort-direction` | The sort direction. Select between `ASC` and `DESC` (default: `DESC`).                                           |
+| `--json`           | A boolean value to specify whether to return the result as clean JSON (default: `false`).                        |
+| `--limit`          | The maximum number of queries to be fetched.                                                                     |
 
-To find top 10 queries by execution count:
-
-```sh
-npx wrangler d1 insights <database_name> --sort-type=sum --sort-by=count --count=10
-```
-
-To find top 10 queries by average execution time:
-
-```sh
-npx wrangler d1 insights <database_name> --sort-type=avg --sort-by=time --count=10
-```
-
-To find top 10 queries by rows written in last 7 days:
+<Details header="To find top 3 queries by execution count:">
 
 ```sh
-npx wrangler d1 insights <database_name> --sort-type=sum --sort-by=writes --count=10 --timePeriod=7d
+npx wrangler d1 insights <database_name> --sort-type=sum --sort-by=count --limit=3
 ```
+```sh output
+ ⛅️ wrangler 3.95.0
+-------------------
+
+-------------------
+🚧 `wrangler d1 insights` is an experimental command.
+🚧 Flags for this command, their descriptions, and output may change between wrangler versions.
+-------------------
+
+[
+  {
+    "query": "SELECT tbl_name as name,\n                   (SELECT ncol FROM pragma_table_list(tbl_name)) as num_columns\n            FROM sqlite_master\n            WHERE TYPE = \"table\"\n              AND tbl_name NOT LIKE \"sqlite_%\"\n              AND tbl_name NOT LIKE \"d1_%\"\n              AND tbl_name NOT LIKE \"_cf_%\"\n            ORDER BY tbl_name ASC;",
+    "avgRowsRead": 2,
+    "totalRowsRead": 4,
+    "avgRowsWritten": 0,
+    "totalRowsWritten": 0,
+    "avgDurationMs": 0.49505,
+    "totalDurationMs": 0.9901,
+    "numberOfTimesRun": 2,
+    "queryEfficiency": 0
+  },
+  {
+    "query": "SELECT * FROM Customers",
+    "avgRowsRead": 4,
+    "totalRowsRead": 4,
+    "avgRowsWritten": 0,
+    "totalRowsWritten": 0,
+    "avgDurationMs": 0.1873,
+    "totalDurationMs": 0.1873,
+    "numberOfTimesRun": 1,
+    "queryEfficiency": 1
+  },
+  {
+    "query": "SELECT * From Customers",
+    "avgRowsRead": 0,
+    "totalRowsRead": 0,
+    "avgRowsWritten": 0,
+    "totalRowsWritten": 0,
+    "avgDurationMs": 1.0225,
+    "totalDurationMs": 1.0225,
+    "numberOfTimesRun": 1,
+    "queryEfficiency": 0
+  }
+]
+```
+</Details>
+
+<Details header="To find top 3 queries by average execution time:">
+
+```sh
+npx wrangler d1 insights <database_name> --sort-type=avg --sort-by=time --limit=3
+```
+```sh output
+⛅️ wrangler 3.95.0
+-------------------
+
+-------------------
+🚧 `wrangler d1 insights` is an experimental command.
+🚧 Flags for this command, their descriptions, and output may change between wrangler versions.
+-------------------
+
+[
+  {
+    "query": "SELECT * From Customers",
+    "avgRowsRead": 0,
+    "totalRowsRead": 0,
+    "avgRowsWritten": 0,
+    "totalRowsWritten": 0,
+    "avgDurationMs": 1.0225,
+    "totalDurationMs": 1.0225,
+    "numberOfTimesRun": 1,
+    "queryEfficiency": 0
+  },
+  {
+    "query": "SELECT tbl_name as name,\n                   (SELECT ncol FROM pragma_table_list(tbl_name)) as num_columns\n            FROM sqlite_master\n            WHERE TYPE = \"table\"\n              AND tbl_name NOT LIKE \"sqlite_%\"\n              AND tbl_name NOT LIKE \"d1_%\"\n              AND tbl_name NOT LIKE \"_cf_%\"\n            ORDER BY tbl_name ASC;",
+    "avgRowsRead": 2,
+    "totalRowsRead": 4,
+    "avgRowsWritten": 0,
+    "totalRowsWritten": 0,
+    "avgDurationMs": 0.49505,
+    "totalDurationMs": 0.9901,
+    "numberOfTimesRun": 2,
+    "queryEfficiency": 0
+  },
+  {
+    "query": "SELECT * FROM Customers",
+    "avgRowsRead": 4,
+    "totalRowsRead": 4,
+    "avgRowsWritten": 0,
+    "totalRowsWritten": 0,
+    "avgDurationMs": 0.1873,
+    "totalDurationMs": 0.1873,
+    "numberOfTimesRun": 1,
+    "queryEfficiency": 1
+  }
+]
+```
+</Details>
+
+<Details header="To find top 10 queries by rows written in last 7 days:">
+
+```sh
+npx wrangler d1 insights <database_name> --sort-type=sum --sort-by=writes --limit=10 --timePeriod=7d
+```
+```sh output
+⛅️ wrangler 3.95.0
+-------------------
+
+-------------------
+🚧 `wrangler d1 insights` is an experimental command.
+🚧 Flags for this command, their descriptions, and output may change between wrangler versions.
+-------------------
+
+[
+  {
+    "query": "SELECT * FROM Customers",
+    "avgRowsRead": 4,
+    "totalRowsRead": 4,
+    "avgRowsWritten": 0,
+    "totalRowsWritten": 0,
+    "avgDurationMs": 0.1873,
+    "totalDurationMs": 0.1873,
+    "numberOfTimesRun": 1,
+    "queryEfficiency": 1
+  },
+  {
+    "query": "SELECT * From Customers",
+    "avgRowsRead": 0,
+    "totalRowsRead": 0,
+    "avgRowsWritten": 0,
+    "totalRowsWritten": 0,
+    "avgDurationMs": 1.0225,
+    "totalDurationMs": 1.0225,
+    "numberOfTimesRun": 1,
+    "queryEfficiency": 0
+  },
+  {
+    "query": "SELECT tbl_name as name,\n                   (SELECT ncol FROM pragma_table_list(tbl_name)) as num_columns\n            FROM sqlite_master\n            WHERE TYPE = \"table\"\n              AND tbl_name NOT LIKE \"sqlite_%\"\n              AND tbl_name NOT LIKE \"d1_%\"\n              AND tbl_name NOT LIKE \"_cf_%\"\n            ORDER BY tbl_name ASC;",
+    "avgRowsRead": 2,
+    "totalRowsRead": 4,
+    "avgRowsWritten": 0,
+    "totalRowsWritten": 0,
+    "avgDurationMs": 0.49505,
+    "totalDurationMs": 0.9901,
+    "numberOfTimesRun": 2,
+    "queryEfficiency": 0
+  }
+]
+```
+</Details>
+
+:::note
+The quantity `queryEfficiency` measures how efficient your query was. It is calculated as: the number of rows returned divided by the number of rows read.
+
+Generally, you should try to get `queryEfficiency` as close to `1` as possible. Refer to [Use indexes](/d1/best-practices/use-indexes/) for more information on efficient querying.
+:::

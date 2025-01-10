@@ -17,7 +17,7 @@ In order to consume the waiting room response in the JSON format, the following 
 To receive a JSON response, you first need to enable that option in your waiting room.
 
 - **Via the dashboard**: When [customizing a waiting room](/waiting-room/how-to/customize-waiting-room/), enable **JSON Response**.
-- **Via the API**: When [creating a waiting room](/api/operations/waiting-room-create-waiting-room), set `json_response_enabled` to true.
+- **Via the API**: When [creating a waiting room](/api/resources/waiting_rooms/methods/create/), set `json_response_enabled` to true.
 
 ## Step 2 – Get JSON data
 
@@ -57,13 +57,13 @@ These are some of the places where the JSON-friendly response can be consumed (t
 
 1. In a mobile app traffic
 
-   - **Integrate Waiting Room variables** – Create a new template in your mobile app to receive the JSON response. For a full list of these variables, refer to the `json_response_enabled` parameter in the [Cloudflare API docs](/api/operations/waiting-room-create-waiting-room).
+   - **Integrate Waiting Room variables** – Create a new template in your mobile app to receive the JSON response. For a full list of these variables, refer to the `json_response_enabled` parameter in the [Cloudflare API docs](/api/resources/waiting_rooms/methods/create/).
    - **Allow cookies** – As mentioned above, a waiting room [requires cookies](/waiting-room/reference/waiting-room-cookie/), and your mobile app will need to support cookies. For ease of use, consider using a cookie manager like [CookieJar](https://pkg.go.dev/net/http#CookieJar).
    - **Consume JSON data** - Make a request to the Waiting Room endpoint with the `Accept: application/json` header.
 
 2. Inside Cloudflare Workers (or in your own backend service)
 
-   - **Integrate Waiting Room variables** – Expect a JSON response in your backend API. For a full list of these variables, refer to the `json_response_enabled` parameter in the [Cloudflare API docs](/api/operations/waiting-room-create-waiting-room).
+   - **Integrate Waiting Room variables** – Expect a JSON response in your backend API. For a full list of these variables, refer to the `json_response_enabled` parameter in the [Cloudflare API docs](/api/resources/waiting_rooms/methods/create/).
    - **Include cookies in the request header** – As mentioned above, a waiting room [requires cookies](/waiting-room/reference/waiting-room-cookie/), and your backend API will need to support cookies. For ease of use, consider using a cookie manager like [CookieJar](https://pkg.go.dev/net/http#CookieJar).
    - **Enable JSON response** - Via the dashboard or via the API.
    - **Consume JSON data** - Make a request to the Waiting Room endpoint with the `Accept: application/json` header.

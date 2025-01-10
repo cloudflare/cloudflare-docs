@@ -214,13 +214,15 @@ API value: `l4_override`
 
 </Details>
 
-Policies with Network Override actions override traffic directed to, or coming from, certain IPv4/IPv6 addresses or ports. Destination IPs can be public IPs or private IPs connected to your Zero Trust network. For example, the following configuration overrides traffic sent to a public IP with a private IP based on a user's identity:
+Policies with Network Override actions override traffic directed to or coming from certain IPv4/IPv6 addresses or ports. Destination IPs can be public IPs or private IPs connected to your Zero Trust network. For example, the following configuration overrides traffic sent to a public IP with a private IP based on a user's identity:
 
 | Selector       | Operator | Value           | Logic | Action           |
 | -------------- | -------- | --------------- | ----- | ---------------- |
 | Destination IP | in       | `95.92.143.151` | And   | Network Override |
 | User Email     | in       | `*@example.com` | And   |                  |
 | Override IP    |          | `10.0.0.1`      |       |                  |
+
+Gateway will only log successful override connections in your [network logs](/cloudflare-one/insights/logs/gateway-logs/#network-logs). If the override destination IP does not exist, Gateway will override the destination IP but will not log the override action.
 
 ## Selectors
 

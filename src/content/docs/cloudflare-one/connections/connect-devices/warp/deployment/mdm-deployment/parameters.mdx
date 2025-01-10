@@ -42,60 +42,36 @@ Instructs the client to direct all DNS queries to a specific [Gateway DNS locati
 
 **Value:** Your <GlossaryTooltip term="DoH subdomain">DoH subdomain</GlossaryTooltip>.
 
-## Optional fields
+## Organization parameters
 
-### `service_mode`
+You can use the following parameters to configure a specific Zero Trust organization.
 
-Allows you to choose the operational mode of the client.
+### `auth_client_id`
+
+Enrolls the device in your Zero Trust organization using a [service token](/cloudflare-one/connections/connect-devices/warp/deployment/device-enrollment/#check-for-service-token).
+Requires the `auth_client_secret` parameter.
 
 **Value Type:** `string`
 
-**Value:**
+**Value:** Client ID of the service token.
 
-* `warp` — (default) [Gateway with WARP](/cloudflare-one/connections/connect-devices/warp/configure-warp/warp-modes/#gateway-with-warp-default).
-* `1dot1` — [Gateway with DoH](/cloudflare-one/connections/connect-devices/warp/configure-warp/warp-modes/#gateway-with-doh).
-* `proxy` — [Proxy mode](/cloudflare-one/connections/connect-devices/warp/configure-warp/warp-modes/#proxy-mode). Use the `proxy_port` parameter to specify the localhost SOCKS proxy port (between `0`-`66535`). For example,
-  ```xml
-  <key>service_mode</key>
-  <string>proxy</string>
-  <key>proxy_port</key>
-  <integer>44444</integer>
-  ```
-* `postureonly` — [Device Information Only](/cloudflare-one/connections/connect-devices/warp/configure-warp/warp-modes/#device-information-only).
+Example configuration:
 
-The service mode [Secure Web Gateway without DNS filtering](/cloudflare-one/connections/connect-devices/warp/configure-warp/warp-modes/#secure-web-gateway-without-dns-filtering) is not currently supported as a value and must be configured in Zero Trust.
+```xml
+<key>auth_client_id</key>
+<string>88bf3b6d86161464f6509f7219099e57.access</string>
+<key>auth_client_secret</key>
+<string>bdd31cbc4dec990953e39163fbbb194c93313ca9f0a6e420346af9d326b1d2a5</string>
+```
 
-### `onboarding`
+### `auth_client_secret`
 
-Controls the visibility of the onboarding screens that ask the user to review the privacy policy during an application's first launch.
+Enrolls the device in your Zero Trust organization using a [service token](/cloudflare-one/connections/connect-devices/warp/deployment/device-enrollment/#check-for-service-token).
+Requires the `auth_client_id` parameter.
 
-**Value Type:** `boolean`
+**Value Type:** `string`
 
-**Value:**
-
-* `false` — Screens hidden.
-* `true` — (default) Screens visible.
-
-### `switch_locked`
-
-Allows the user to turn off the WARP switch and disconnect the client.
-
-**Value Type:** `boolean`
-
-**Value:**
-
-* `false` — (default) The user is able to turn the switch on/off at their discretion. When the switch is off, the user will not have the ability to reach sites protected by Access that leverage certain device posture checks.
-* `true` — The user is prevented from turning off the switch. The WARP client will automatically start in the connected state.
-
-On new deployments, you must also include the `auto_connect` parameter with at least a value of `0`. This will prevent clients from being deployed in the off state without a way for users to manually enable them.
-
-:::note
-
-
-This parameter replaces the old `enabled` property, which can no longer be used in conjunction with the new `switch_locked` and `auto_connect`. If you want to use these parameters, you must remove `enabled`.
-
-
-:::
+**Value:** Client Secret of the service token.
 
 ### `auto_connect`
 
@@ -113,16 +89,25 @@ If switch has been turned off by user, the client will automatically turn itself
 This parameter replaces the old `enabled` property, which can no longer be used in conjunction with the new `switch_locked` and `auto_connect`. If you want to use these parameters, you must remove `enabled`.
 :::
 
-### `support_url`
 
-When the WARP client is deployed via MDM, the in-app **Send Feedback** button is disabled by default. This parameter allows you to re-enable the button and direct feedback towards your organization.
+### `display_name`
+
+Identifies a Zero Trust organization in the WARP GUI when WARP is deployed with [multiple organizations](/cloudflare-one/connections/connect-devices/warp/deployment/mdm-deployment/switch-organizations/). Required if the `organization` parameter is specified within a [`configs` array](#configs).
 
 **Value Type:** `string`
 
+**Value:** Organization nickname shown to users in the WARP GUI (for example, `Test environment`).
+
+### `onboarding`
+
+Controls the visibility of the onboarding screens that ask the user to review the privacy policy during an application's first launch.
+
+**Value Type:** `boolean`
+
 **Value:**
 
-* `https://<support.example.com>` — Use an `https://` link to open your company's internal help site.
-* `mailto:<yoursupport@example.com>` — Use a `mailto:` link to open your default mail client.
+* `false` — Screens hidden.
+* `true` — (default) Screens visible.
 
 ### `override_api_endpoint`
 
@@ -160,6 +145,57 @@ This functionality is intended for use with a Cloudflare China local network par
 
 The string must be a valid IPv4 or IPv6 socket address (containing the IP address and port number), otherwise the WARP client will fail to parse the entire MDM file.
 
+### `service_mode`
+
+Allows you to choose the operational mode of the client.
+
+**Value Type:** `string`
+
+**Value:**
+
+* `warp` — (default) [Gateway with WARP](/cloudflare-one/connections/connect-devices/warp/configure-warp/warp-modes/#gateway-with-warp-default).
+* `1dot1` — [Gateway with DoH](/cloudflare-one/connections/connect-devices/warp/configure-warp/warp-modes/#gateway-with-doh).
+* `proxy` — [Proxy mode](/cloudflare-one/connections/connect-devices/warp/configure-warp/warp-modes/#proxy-mode). Use the `proxy_port` parameter to specify the localhost SOCKS proxy port (between `0`-`66535`). For example,
+  ```xml
+  <key>service_mode</key>
+  <string>proxy</string>
+  <key>proxy_port</key>
+  <integer>44444</integer>
+  ```
+* `postureonly` — [Device Information Only](/cloudflare-one/connections/connect-devices/warp/configure-warp/warp-modes/#device-information-only).
+
+The service mode [Secure Web Gateway without DNS filtering](/cloudflare-one/connections/connect-devices/warp/configure-warp/warp-modes/#secure-web-gateway-without-dns-filtering) is not currently supported as a value and must be configured in Zero Trust.
+
+
+### `support_url`
+
+When the WARP client is deployed via MDM, the in-app **Send Feedback** button is disabled by default. This parameter allows you to re-enable the button and direct feedback towards your organization.
+
+**Value Type:** `string`
+
+**Value:**
+
+* `https://<support.example.com>` — Use an `https://` link to open your company's internal help site.
+* `mailto:<yoursupport@example.com>` — Use a `mailto:` link to open your default mail client.
+
+
+### `switch_locked`
+
+Allows the user to turn off the WARP switch and disconnect the client.
+
+**Value Type:** `boolean`
+
+**Value:**
+
+* `false` — (default) The user is able to turn the switch on/off at their discretion. When the switch is off, the user will not have the ability to reach sites protected by Access that leverage certain device posture checks.
+* `true` — The user is prevented from turning off the switch. The WARP client will automatically start in the connected state.
+
+On new deployments, you must also include the `auto_connect` parameter with at least a value of `0`. This will prevent clients from being deployed in the off state without a way for users to manually enable them.
+
+:::note
+This parameter replaces the old `enabled` property, which can no longer be used in conjunction with the new `switch_locked` and `auto_connect`. If you want to use these parameters, you must remove `enabled`.
+:::
+
 ### `unique_client_id`
 
 Assigns a unique identifier to the device for the [device UUID posture check](/cloudflare-one/identity/devices/warp-client-checks/device-uuid).
@@ -168,37 +204,49 @@ Assigns a unique identifier to the device for the [device UUID posture check](/c
 
 **Value:** UUID for the device (for example, `496c6124-db89-4735-bc4e-7f759109a6f1`).
 
-### `auth_client_id`
+## Top-level parameters
 
-Enrolls the device in your Zero Trust organization using a [service token](/cloudflare-one/connections/connect-devices/warp/deployment/device-enrollment/#check-for-service-token).
-Requires the `auth_client_secret` parameter. 
+Top-level parameters determine how WARP manages device registrations.
 
-**Value Type:** `string`
+### `configs`
 
-**Value:** Client ID of the service token.
+Allows a user to [switch between Zero Trust organizations](/cloudflare-one/connections/connect-devices/warp/deployment/mdm-deployment/switch-organizations/) in the WARP client GUI. The `configs` array is also required when using another [top-level parameter](#top-level-parameters) such as `multi_user` or `pre_login`, even if only one organization is specified.
 
-Example configuration:
+**Value Type:** `array`
 
-```xml
-<key>auth_client_id</key>
-<string>88bf3b6d86161464f6509f7219099e57.access</string>
-<key>auth_client_secret</key>
-<string>bdd31cbc4dec990953e39163fbbb194c93313ca9f0a6e420346af9d326b1d2a5</string>
-```
+**Value:** An array containing one or more Zero Trust organizations.
 
-### `auth_client_secret`
+### `multi_user`
 
-Enrolls the device in your Zero Trust organization using a [service token](/cloudflare-one/connections/connect-devices/warp/deployment/device-enrollment/#check-for-service-token). 
-Requires the `auth_client_id` parameter.
+Enables multiple user registrations on a Windows device.
 
-**Value Type:** `string`
+**Value Type:** `boolean`
 
-**Value:** Client Secret of the service token.
+**Value:**
 
-### `display_name`
+* `false` — (default) Only one WARP registration is stored per device. After a user logs in to WARP, their settings and identity will apply to all traffic from the device.
+* `true` — Each Windows user has their own WARP registration. For more information, refer to [Multiple users on a Windows device](/cloudflare-one/connections/connect-devices/warp/deployment/mdm-deployment/windows-multiuser/).
 
-When WARP is deployed with [multiple organizations or configurations](/cloudflare-one/connections/connect-devices/warp/deployment/mdm-deployment/switch-organizations/), this parameter is used to identify each configuration in the GUI.
+### `pre_login`
 
-**Value Type:** `string`
+Allows WARP to connect with a service token before a user completes the initial Windows login. For more information, refer to [Connect WARP before Windows login](/cloudflare-one/connections/connect-devices/warp/deployment/mdm-deployment/windows-prelogin/).
 
-**Value:** Configuration name shown in the GUI (for example, `Test environment`).
+## Per-App VPN parameters (Android)
+
+To support the per-app VPN for Android devices, Cloudflare has introduced new MDM parameters. The admin can configure these new MDM parameters via any MDM tool that supports deploying an Android app to managed devices or work profiles.
+
+### `app_identifier`
+
+An application package name/bundle identifier which uniquely identifies the app on the Google Play Store. This application will be tunneled through the WARP service.
+
+**Value Type**: `string`
+
+**Value**: The app identifier can be found in the ID query parameter of the specific app's Play Store URL. For example: in the case of `https://play.google.com/store/apps/details?id=com.cloudflare.cloudflareoneagent`, the app identifier for the Cloudflare One Agent app is `com.cloudflare.cloudflareoneagent`.
+
+### `is_browser`
+
+An optional property. `is_browser` will help the Cloudflare One Agent application decide which browser to open instead of the default browser for specific features such as re-authentication and Gateway block notifications. If needed, admins should explicitly indicate that a given `tunneled_app` is a browser, rather than relying on automatic browser detection.
+
+**Value Type**: `boolean`
+
+**Value**: If the value is `true`, identifies the application defined in `app_identifier` as a browser. The default value is `false` and `is_browser` is an optional property.

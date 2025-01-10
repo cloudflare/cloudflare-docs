@@ -17,8 +17,8 @@ Use one of the following API endpoints:
 | [Create an account ruleset rule][ar-account] | `POST /accounts/{account_id}/rulesets/{ruleset_id}/rules` |
 | [Create a zone ruleset rule][ar-zone]        | `POST /zones/{zone_id}/rulesets/{ruleset_id}/rules`       |
 
-[ar-account]: /api/operations/createAccountRulesetRule
-[ar-zone]: /api/operations/createZoneRulesetRule
+[ar-account]: /api/resources/rulesets/subresources/rules/methods/create/
+[ar-zone]: /api/resources/rulesets/subresources/rules/methods/create/
 
 Include the rule definition in the request body.
 
@@ -28,7 +28,7 @@ Invoking this method creates a new version of the ruleset.
 
 ## Example
 
-The following example adds a rule to ruleset `{ruleset_id}` of zone `{zone_id}`. The ruleset ID was previously obtained using the [List zone rulesets](/api/operations/listZoneRulesets) operation, and corresponds to the entry point ruleset for the `http_request_firewall_custom` phase.
+The following example adds a rule to ruleset `{ruleset_id}` of zone `{zone_id}`. The ruleset ID was previously obtained using the [List zone rulesets](/api/resources/rulesets/methods/list/) operation, and corresponds to the entry point ruleset for the `http_request_firewall_custom` phase.
 
 The response will include the complete ruleset after adding the rule.
 
@@ -38,7 +38,7 @@ curl https://api.cloudflare.com/client/v4/zones/{zone_id}/rulesets/{ruleset_id}/
 --header "Content-Type: application/json" \
 --data '{
   "action": "js_challenge",
-  "expression": "(ip.geoip.country eq \"GB\" or ip.geoip.country eq \"FR\") or cf.threat_score > 0",
+  "expression": "(ip.src.country eq \"GB\" or ip.src.country eq \"FR\") or cf.threat_score > 0",
   "description": "challenge GB and FR or based on IP Reputation"
 }'
 ```
@@ -65,7 +65,7 @@ curl https://api.cloudflare.com/client/v4/zones/{zone_id}/rulesets/{ruleset_id}/
 				"id": "<NEW_RULE_ID>",
 				"version": "1",
 				"action": "js_challenge",
-				"expression": "(ip.geoip.country eq \"GB\" or ip.geoip.country eq \"FR\") or cf.threat_score > 0",
+				"expression": "(ip.src.country eq \"GB\" or ip.src.country eq \"FR\") or cf.threat_score > 0",
 				"description": "challenge GB and FR or based on IP Reputation",
 				"last_updated": "2021-06-22T12:35:58.144683Z",
 				"ref": "<NEW_RULE_REF>",

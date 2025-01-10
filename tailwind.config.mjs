@@ -14,11 +14,15 @@ const gray = {
 
 /** @type {import('tailwindcss').Config} */
 export default {
-	content: ["./src/**/*.{astro,html,js,jsx,md,mdx,svelte,ts,tsx,vue}"],
+	content: ["./src/**/*.{astro,html,js,jsx,ts,tsx}"],
 	theme: {
 		extend: {
 			colors: {
+				black: {
+					DEFAULT: "var(--sl-color-white)",
+				},
 				accent: {
+					DEFAULT: "var(--sl-color-accent)",
 					200: "var(--tw-accent-200)",
 					600: "var(--tw-accent-600)",
 					900: "var(--tw-accent-900)",
