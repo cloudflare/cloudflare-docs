@@ -1289,9 +1289,9 @@ Wrangler will display messaging to the user to indicate that the configuration h
 
 ### Custom build tool example
 
-A common approach that a build tool might choose to implement is to output code and configuration in a `dist` directory.
+A common example of using a redirected configuration is where a custom build tool, or framework, wants to modify the user's configuration to be used when deploying, by generating a new configuration in a `dist` directory.
 
-- First, the user writes code that uses Cloudflare Workers resources, configured via a user `wrangler.toml` file.
+- First, the user writes code that uses Cloudflare Workers resources, configured via a user's `wrangler.toml` file.
 
   ```toml
   name = "my-worker"
@@ -1301,7 +1301,7 @@ A common approach that a build tool might choose to implement is to output code 
   id = "<NAMESPACE_ID1>"
   ```
 
-  Note that this configuration points `main` at the user code entry-point.
+  Note that this configuration points `main` at the user's code entry-point.
 
 - Then, the user runs a custom build, which might read the user's `wrangler.toml` to find the source code entry-point:
 
@@ -1309,8 +1309,8 @@ A common approach that a build tool might choose to implement is to output code 
   > my-tool build
   ```
 
-- This `my-tool` generates a `dist` directory that contains both compiled code and a new deployment configuration file.
-  It also generates a `.wrangler/deploy/config.json` file that redirects Wrangler to the new, generated deployment configuration file:
+- This `my-tool` generates a `dist` directory that contains both compiled code and a new generated deployment configuration file.
+  It also creates a `.wrangler/deploy/config.json` file that redirects Wrangler to the new, generated deployment configuration file:
 
   <FileTree>
 
