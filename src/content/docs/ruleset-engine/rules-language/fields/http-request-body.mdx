@@ -205,6 +205,10 @@ Example value:
 
 `[["form-data; name=\"username\"], ["form-data;name=\"picture\"]]`
 
+Example:
+
+`any(http.request.body.multipart.content_dispositions[*][0] in {"form-data; name=\"username\"" "form-data;name=\"picture\""})`
+
 ## `http.request.body.multipart.content_transfer_encodings`
 
 `http.request.body.multipart.content_transfer_encodings` <Type text='Array<Array<String>>' />
