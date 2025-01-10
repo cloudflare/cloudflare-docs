@@ -39,7 +39,7 @@ The entire cookie as a string.
 Example value:
 
 ```txt
-session=8521F670545D7865F79C3D7BEDC29CCE;-background=light
+"session=8521F670545D7865F79C3D7BEDC29CCE;-background=light"
 ```
 
 ## `http.host`
@@ -51,7 +51,7 @@ The hostname used in the full request URI.
 Example value:
 
 ```txt
-www.example.org
+"www.example.org"
 ```
 
 ## `http.referer`
@@ -63,7 +63,7 @@ The HTTP `Referer` request header, which contains the address of the web page th
 Example value:
 
 ```txt
-Referer: htt­ps://developer.example.org/en-US/docs/Web/JavaScript
+"https://developer.example.org/en-US/docs/Web/JavaScript"
 ```
 
 ## `http.request.full_uri`
@@ -75,7 +75,7 @@ The full URI as received by the web server (does not include `#fragment`, which 
 Example value:
 
 ```txt
-htt­ps://www.example.org/articles/index?section=539061&expand=comments
+"https://www.example.org/articles/index?section=539061&expand=comments"
 ```
 
 ## `http.request.method`
@@ -87,7 +87,7 @@ The HTTP method, returned as a string of uppercase characters.
 Example value:
 
 ```txt
-GET
+"GET"
 ```
 
 ## `http.request.cookies`
@@ -98,16 +98,16 @@ The `Cookie` HTTP header associated with a request represented as a Map (associa
 
 **Decoding:** The cookie names are URL decoded. If two cookies have the same name after decoding, their value arrays are merged.
 
-Example:
+Example value:
+
+```txt
+{ "app": ["test"] }
+```
+
+Example usage:
 
 ```txt
 any(http.request.cookies["app"][*] == "test")
-```
-
-Example value:
-
-```json
-{ "app": ["test"] }
 ```
 
 ## `http.request.timestamp.sec`
@@ -149,7 +149,7 @@ The URI path and query string of the request.
 Example value:
 
 ```txt
-/articles/index?section=539061&expand=comments
+"/articles/index?section=539061&expand=comments"
 ```
 
 ## `http.request.uri.path`
@@ -161,7 +161,7 @@ The URI path of the request.
 Example value:
 
 ```txt
-/articles/index
+"/articles/index"
 ```
 
 ## `http.request.uri.path.extension`
@@ -174,7 +174,7 @@ If the first character of the last path segment is a dot and the segment does no
 
 Example values:
 
-- If the URI path is `/articles/index.html`, the field value will be `html`.
+- If the URI path is `/articles/index.html`, the field value will be `"html"`.
 - If the URI path is `/articles/index.`, the field value will be an empty string (`""`).
 
 <Details header="Example values">
@@ -200,7 +200,7 @@ The entire query string, without the `?` delimiter.
 Example value:
 
 ```txt
-section=539061&expand=comments
+"section=539061&expand=comments"
 ```
 
 ## `http.user_agent`
@@ -212,7 +212,7 @@ The HTTP `User-Agent` request header, which contains a characteristic string to 
 Example value:
 
 ```txt
-Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/65.0.3325.181 Safari/537.36
+"Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/65.0.3325.181 Safari/537.36"
 ```
 
 ## `http.request.version`
@@ -223,19 +223,19 @@ The version of the HTTP protocol used. Use this field when different checks are 
 
 Example values:
 
-- `HTTP/1.1`
-- `HTTP/3`
+- `"HTTP/1.1"`
+- `"HTTP/3"`
 
 ## `http.x_forwarded_for`
 
 `http.x_forwarded_for` <Type text='String' />
 
-The full `X-Forwarded-For` HTTP header.
+The full value of the `X-Forwarded-For` HTTP header.
 
 Example value:
 
 ```txt
-203.0.113.195, 70.41.3.18
+"203.0.113.195, 70.41.3.18"
 ```
 
 ## `ip.src`
@@ -259,7 +259,7 @@ The latitude associated with the client IP address.
 Example value:
 
 ```txt
-37.78044
+"37.78044"
 ```
 
 ## `ip.src.lon`
@@ -271,7 +271,7 @@ The longitude associated with the client IP address.
 Example value:
 
 ```txt
--122.39055
+"-122.39055"
 ```
 
 ## `ip.src.city`
@@ -283,7 +283,7 @@ The city associated with the client IP address.
 Example value:
 
 ```txt
-San Francisco
+"San Francisco"
 ```
 
 ## `ip.src.postal_code`
@@ -295,7 +295,7 @@ The postal code associated with the incoming request.
 Example value:
 
 ```txt
-78701
+"78701"
 ```
 
 ## `ip.src.metro_code`
@@ -307,7 +307,7 @@ The metro code or Designated Market Area (DMA) code associated with the incoming
 Example value:
 
 ```txt
-635
+"635"
 ```
 
 ## `ip.src.region`
@@ -319,7 +319,7 @@ The region name associated with the incoming request.
 Example value:
 
 ```txt
-Texas
+"Texas"
 ```
 
 ## `ip.src.region_code`
@@ -331,7 +331,7 @@ The region code associated with the incoming request.
 Example value:
 
 ```txt
-TX
+"TX"
 ```
 
 ## `ip.src.timezone.name`
@@ -343,7 +343,7 @@ The name of the timezone associated with the incoming request. This field is onl
 Example value:
 
 ```txt
-America/Chicago
+"America/Chicago"
 ```
 
 ## `ip.src.asnum`
@@ -360,14 +360,14 @@ This field has the same value as the `ip.geoip.asnum` field, which is deprecated
 
 The continent code associated with the client IP address:
 
-- **AF**: Africa
-- **AN**: Antarctica
-- **AS**: Asia
-- **EU**: Europe
-- **NA**: North America
-- **OC**: Oceania
-- **SA**: South America
-- **T1**: Tor network
+- `"AF"`: Africa
+- `"AN"`: Antarctica
+- `"AS"`: Asia
+- `"EU"`: Europe
+- `"NA"`: North America
+- `"OC"`: Oceania
+- `"SA"`: South America
+- `"T1"`: Tor network
 
 This field has the same value as the `ip.geoip.continent` field, which is deprecated. The `ip.geoip.continent` field is still available for new and existing rules, but you should use the `ip.src.continent` field instead.
 
@@ -380,7 +380,7 @@ The 2-letter country code in [ISO 3166-1 Alpha 2](https://www.iso.org/obp/ui/#se
 Example value:
 
 ```txt
-GB
+"GB"
 ```
 
 For more information on the ISO 3166-1 Alpha 2 format, refer to [ISO 3166-1 Alpha 2](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2) on Wikipedia.
@@ -396,7 +396,7 @@ The ISO 3166-2 code for the first-level region associated with the IP address. W
 Example value:
 
 ```txt
-GB-ENG
+"GB-ENG"
 ```
 
 For more information on the ISO 3166-2 standard and the available regions, refer to [ISO 3166-2](https://en.wikipedia.org/wiki/ISO_3166-2) on Wikipedia.
@@ -412,7 +412,7 @@ The ISO 3166-2 code for the second-level region associated with the IP address. 
 Example value:
 
 ```txt
-GB-SWK
+"GB-SWK"
 ```
 
 For more information on the ISO 3166-2 standard and the available regions, refer to [ISO 3166-2](https://en.wikipedia.org/wiki/ISO_3166-2) on Wikipedia.

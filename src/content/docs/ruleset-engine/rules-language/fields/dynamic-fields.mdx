@@ -94,7 +94,7 @@ Indicates whether the visitor has previously passed a JS Detection. For more det
 
 List of IDs that correlate to the Bot Management heuristic detections made on a request (you can have multiple heuristic detections on the same request). Use this field to explicitly match a specific heuristic or to exclude a heuristic in a rule.
 
-Example:
+Example usage:
 
 ```txt
 any(cf.bot_management.detection_ids[*] eq 33554817)
@@ -148,7 +148,7 @@ Represents a Cloudflare threat score from 0–100, where 0 indicates low risk. V
 
 The cipher for the connection to Cloudflare.
 
-Example:
+Example value:
 
 ```txt
 "AES128-SHA256"
@@ -178,7 +178,7 @@ Returns `true` when a request presents a certificate (valid or not).
 
 The Distinguished Name (DN) of the Certificate Authority (CA) that issued the certificate included in the request.
 
-Example:
+Example value:
 
 ```txt
 "CN=Access Testing CA,OU=TX,O=Access Testing,L=Austin,ST=Texas,C=US"
@@ -190,7 +190,7 @@ Example:
 
 The Distinguished Name (DN) of the owner (or requester) of the certificate included in the request.
 
-Example:
+Example value:
 
 ```txt
 "CN=James Royal,OU=Access Admins,O=Access,L=Austin,ST=Texas,C=US"
@@ -202,9 +202,9 @@ Example:
 
 The Distinguished Name (DN) of the Certificate Authority (CA) that issued the certificate in the request in [RFC 2253](https://datatracker.ietf.org/doc/html/rfc2253) format.
 
-Example:
+Example value:
 
-```
+```txt
 "CN=Access Testing CA,OU=TX,O=Access Testing,L=Austin,ST=Texas,C=US"
 ```
 
@@ -214,9 +214,9 @@ Example:
 
 The Distinguished Name (DN) of the owner (or requester) of the certificate in the request in [RFC 2253](https://datatracker.ietf.org/doc/html/rfc2253) format.
 
-Example:
+Example value:
 
-```
+```txt
 "CN=James Royal,OU=Access Admins,O=Access,L=Austin,ST=Texas,C=US"
 ```
 
@@ -226,9 +226,9 @@ Example:
 
 The Distinguished Name (DN) of the Certificate Authority (CA) that issued the certificate in the request in a legacy format.
 
-Example:
+Example value:
 
-```
+```txt
 "/C=US/ST=Texas/L=Austin/O=Access Testing/OU=TX/CN=Access Testing CA"
 ```
 
@@ -238,9 +238,9 @@ Example:
 
 The Distinguished Name (DN) of the owner (or requester) of the certificate in the request in a legacy format.
 
-Example:
+Example value:
 
-```
+```txt
 "/C=US/ST=Texas/L=Austin/O=Access/OU=Access Admins/CN=James Royal"
 ```
 
@@ -250,9 +250,9 @@ Example:
 
 Serial number of the certificate in the request.
 
-Example:
+Example value:
 
-```
+```txt
 "527E0F20A20EA2A4146C78390F34CE7AF0878CA4"
 ```
 
@@ -262,9 +262,9 @@ Example:
 
 Serial number of the direct issuer of the certificate in the request.
 
-Example:
+Example value:
 
-```
+```txt
 "2688201DBA77402EA87118876F2E1B24CF8B0395"
 ```
 
@@ -274,9 +274,9 @@ Example:
 
 The SHA-256 fingerprint of the certificate in the request.
 
-Example:
+Example value:
 
-```
+```txt
 "af363dc85bc942a892d3cee9796190fdb36d89cd588a4f1cb17c74a943439714"
 ```
 
@@ -286,9 +286,9 @@ Example:
 
 The SHA-1 fingerprint of the certificate in the request.
 
-Example:
+Example value:
 
-```
+```txt
 "933ad5282c560ae3f482a43ecd73bc9de878a190"
 ```
 
@@ -298,9 +298,9 @@ Example:
 
 The certificate in the request is not valid before this date.
 
-Example:
+Example value:
 
-```
+```txt
 "Mar 21 13:35:00 2022 GMT"
 ```
 
@@ -310,9 +310,9 @@ Example:
 
 The certificate in the request is not valid after this date.
 
-Example:
+Example value:
 
-```
+```txt
 "Mar 21 13:35:00 2023 GMT"
 ```
 
@@ -322,9 +322,9 @@ Example:
 
 The Subject Key Identifier (SKI) of the certificate in the request.
 
-Example:
+Example value:
 
-```
+```txt
 "27846FAE6EAC4A8DAD9101B519CF1EB460242831"
 ```
 
@@ -334,9 +334,9 @@ Example:
 
 The Subject Key Identifier (SKI) of the direct issuer of the certificate in the request.
 
-Example:
+Example value:
 
-```
+```txt
 "8204924CF49D471E855862706D889F58F6B784D3"
 ```
 
@@ -346,9 +346,9 @@ Example:
 
 The SHA-1 fingerprint of TLS client extensions, encoded in Base64.
 
-Example:
+Example value:
 
-```
+```txt
 "OWFiM2I5ZDc0YWI0YWYzZmFkMGU0ZjhlYjhiYmVkMjgxNTU5YTU2Mg=="
 ```
 
@@ -358,9 +358,9 @@ Example:
 
 The length of the client hello message sent in a [TLS handshake](https://www.cloudflare.com/learning/ssl/what-happens-in-a-tls-handshake). Specifically, the length of the bytestring of the client hello.
 
-Example:
+Example value:
 
-```
+```txt
 508
 ```
 
@@ -370,9 +370,9 @@ Example:
 
 The value of the 32-byte random value provided by the client in a [TLS handshake](https://www.cloudflare.com/learning/ssl/what-happens-in-a-tls-handshake), encoded in Base64. Refer to [RFC 8446](https://datatracker.ietf.org/doc/html/rfc8446#section-4.1.2) for more details.
 
-Example:
+Example value:
 
-```
+```txt
 "YWJjZA=="
 ```
 
@@ -382,9 +382,9 @@ Example:
 
 The TLS version of the connection to Cloudflare.
 
-Example:
+Example value:
 
-```
+```txt
 "TLSv1.2"
 ```
 
