@@ -5,7 +5,7 @@ entries:
     keywords: [request, cookie, header, client, visitor]
     summary: The entire cookie as a string.
     example_value: |-
-      session=8521F670545D7865F79C3D7BEDC29CCE;-background=light
+      "session=8521F670545D7865F79C3D7BEDC29CCE;-background=light"
 
   - name: http.host
     data_type: String
@@ -13,7 +13,7 @@ entries:
     keywords: [request, uri, url, domain, client, visitor]
     summary: The hostname used in the full request URI.
     example_value: |-
-      www.example.org
+      "www.example.org"
 
   - name: http.referer
     data_type: String
@@ -21,7 +21,7 @@ entries:
     keywords: [request, header, referer, referrer, client, visitor]
     summary: The HTTP `Referer` request header, which contains the address of the web page that linked to the currently requested page.
     example_value: |-
-      Referer: https://developer.example.org/en-US/docs/Web/JavaScript
+      "https://developer.example.org/en-US/docs/Web/JavaScript"
 
   - name: http.request.full_uri
     data_type: String
@@ -31,7 +31,7 @@ entries:
     description: |-
       The value will not include the `#fragment` part, which is not sent to web servers.
     example_value: |-
-      https://www.example.org/articles/index?section=539061&expand=comments
+      "https://www.example.org/articles/index?section=539061&expand=comments"
 
   - name: http.request.method
     data_type: String
@@ -39,7 +39,7 @@ entries:
     keywords: [request, client, visitor]
     summary: The HTTP method, returned as a string of uppercase characters.
     example_value: |-
-      GET
+      "GET"
 
   - name: http.request.cookies
     data_type: Map<Array<String>>
@@ -88,7 +88,7 @@ entries:
     keywords: [request, uri, url, path, query, query string, client, visitor]
     summary: The URI path and query string of the request.
     example_value: |-
-      /articles/index?section=539061&expand=comments
+      "/articles/index?section=539061&expand=comments"
 
   - name: http.request.uri.path
     data_type: String
@@ -96,7 +96,7 @@ entries:
     keywords: [request, uri, url, path, client, visitor]
     summary: The URI path of the request.
     example_value: |-
-      /articles/index
+      "/articles/index"
 
   - name: http.request.uri.path.extension
     data_type: String
@@ -110,7 +110,7 @@ entries:
 
       Example values:
 
-      - If the URI path is `/articles/index.html`, the field value will be `html`.
+      - If the URI path is `/articles/index.html`, the field value will be `"html"`.
       - If the URI path is `/articles/index.`, the field value will be an empty string (`""`).
 
       Example values:
@@ -131,7 +131,7 @@ entries:
     keywords: [request, uri, url, query, query string, client, visitor]
     summary: The entire query string, without the `?` delimiter.
     example_value: |-
-      section=539061&expand=comments
+      "section=539061&expand=comments"
 
   - name: http.user_agent
     data_type: String
@@ -139,7 +139,7 @@ entries:
     keywords: [request, header, agent, user-agent, browser, client, visitor]
     summary: The HTTP `User-Agent` request header, which contains a characteristic string to identify the client operating system and web browser.
     example_value: |-
-      Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/65.0.3325.181 Safari/537.36
+      "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/65.0.3325.181 Safari/537.36"
 
   - name: http.request.version
     data_type: String
@@ -149,16 +149,16 @@ entries:
     description: |-
       Example values:
 
-      - `HTTP/1.1`
-      - `HTTP/3`
+      - `"HTTP/1.1"`
+      - `"HTTP/3"`
 
   - name: http.x_forwarded_for
     data_type: String
     categories: [Request, Headers]
     keywords: [request, header, proxy, ip, client, visitor]
-    summary: The full `X-Forwarded-For` HTTP header.
+    summary: The full value of the `X-Forwarded-For` HTTP header.
     example_value: |-
-      203.0.113.195, 70.41.3.18
+      "203.0.113.195, 70.41.3.18"
 
   - name: ip.src
     data_type: IP address
@@ -174,7 +174,7 @@ entries:
     keywords: [request, location, geolocation, client, visitor]
     summary: The latitude associated with the client IP address.
     example_value: |-
-      37.78044
+      "37.78044"
 
   - name: ip.src.lon
     data_type: String
@@ -182,7 +182,7 @@ entries:
     keywords: [request, location, geolocation, client, visitor]
     summary: The longitude associated with the client IP address.
     example_value: |-
-      -122.39055
+      "-122.39055"
 
   - name: ip.src.city
     data_type: String
@@ -190,7 +190,7 @@ entries:
     keywords: [request, location, geolocation, client, visitor]
     summary: The city associated with the client IP address.
     example_value: |-
-      San Francisco
+      "San Francisco"
 
   - name: ip.src.postal_code
     data_type: String
@@ -198,7 +198,7 @@ entries:
     keywords: [request, location, geolocation, zip, zip code, client, visitor]
     summary: The postal code associated with the incoming request.
     example_value: |-
-      78701
+      "78701"
 
   - name: ip.src.metro_code
     data_type: String
@@ -206,7 +206,7 @@ entries:
     keywords: [request, location, geolocation, dma, client, visitor]
     summary: The metro code or Designated Market Area (DMA) code associated with the incoming request.
     example_value: |-
-      635
+      "635"
 
   - name: ip.src.region
     data_type: String
@@ -214,7 +214,7 @@ entries:
     keywords: [request, location, geolocation, state, client, visitor]
     summary: The region name associated with the incoming request.
     example_value: |-
-      Texas
+      "Texas"
 
   - name: ip.src.region_code
     data_type: String
@@ -222,7 +222,7 @@ entries:
     keywords: [request, location, geolocation, state, client, visitor]
     summary: The region code associated with the incoming request.
     example_value: |-
-      TX
+      "TX"
 
   - name: ip.src.timezone.name
     data_type: String
@@ -233,7 +233,7 @@ entries:
     description: |-
       This field is only available in rewrite expressions of [Transform Rules](/rules/transform/).
     example_value: |-
-      America/Chicago
+      "America/Chicago"
 
   - name: ip.src.asnum
     data_type: Number
@@ -255,14 +255,14 @@ entries:
     description: |-
       Values:
 
-      - **AF**: Africa
-      - **AN**: Antarctica
-      - **AS**: Asia
-      - **EU**: Europe
-      - **NA**: North America
-      - **OC**: Oceania
-      - **SA**: South America
-      - **T1**: Tor network
+      - `"AF"`: Africa
+      - `"AN"`: Antarctica
+      - `"AS"`: Asia
+      - `"EU"`: Europe
+      - `"NA"`: North America
+      - `"OC"`: Oceania
+      - `"SA"`: South America
+      - `"T1"`: Tor network
 
       This field has the same value as the `ip.geoip.continent` field, which is deprecated. The `ip.geoip.continent` field is still available for new and existing rules, but you should use the `ip.src.continent` field instead.
 
@@ -275,7 +275,7 @@ entries:
       [request, location, geolocation, ip.geoip.country, client, visitor]
     summary: The 2-letter country code in [ISO 3166-1 Alpha 2](https://www.iso.org/obp/ui/#search/code/) format.
     example_value: |-
-      GB
+      "GB"
     description: |-
       For more information on the ISO 3166-1 Alpha 2 format, refer to [ISO 3166-1 Alpha 2](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2) on Wikipedia.
 
@@ -299,7 +299,7 @@ entries:
     plan_info_label: Business or above
     summary: The ISO 3166-2 code for the first-level region associated with the IP address.
     example_value: |-
-      GB-ENG
+      "GB-ENG"
     description: |-
       When the actual value is not available, this field contains an empty string.
 
@@ -327,7 +327,7 @@ entries:
     plan_info_label: Business or above
     summary: The ISO 3166-2 code for the second-level region associated with the IP address.
     example_value: |-
-      GB-SWK
+      "GB-SWK"
     description: |-
       When the actual value is not available, this field contains an empty string.
 
@@ -815,6 +815,7 @@ entries:
     summary: Indicates whether the request contains at least one content object.
     description: |-
       Requires a Cloudflare Enterprise plan with [malicious uploads detection](/waf/detections/malicious-uploads/).
+
   - name: cf.waf.content_scan.has_malicious_obj
     data_type: Boolean
     categories: [Request]
@@ -831,6 +832,7 @@ entries:
     summary: Indicates whether the request contains at least one malicious content object.
     description: |-
       Requires a Cloudflare Enterprise plan with [malicious uploads detection](/waf/detections/malicious-uploads/).
+
   - name: cf.waf.content_scan.num_malicious_obj
     data_type: Integer
     categories: [Request]
@@ -847,6 +849,7 @@ entries:
     summary: The number of malicious content objects detected in the request (zero or greater).
     description: |-
       Requires a Cloudflare Enterprise plan with [malicious uploads detection](/waf/detections/malicious-uploads/).
+
   - name: cf.waf.content_scan.has_failed
     data_type: Boolean
     categories: [Request]
@@ -879,6 +882,7 @@ entries:
     summary: The number of content objects detected in the request (zero or greater).
     description: |-
       Requires a Cloudflare Enterprise plan with [malicious uploads detection](/waf/detections/malicious-uploads/).
+
   - name: cf.waf.content_scan.obj_sizes
     data_type: Array<Integer>
     categories: [Request]
@@ -895,6 +899,7 @@ entries:
     summary: An array of file sizes in bytes, in the order the content objects were detected in the request.
     description: |-
       Requires a Cloudflare Enterprise plan with [malicious uploads detection](/waf/detections/malicious-uploads/).
+
   - name: cf.waf.content_scan.obj_types
     data_type: Array<String>
     categories: [Request]
@@ -913,6 +918,7 @@ entries:
       If Cloudflare cannot determine the file type of a content object, the corresponding value in the `obj_types` array will be `application/octet-stream`.
 
       Requires a Cloudflare Enterprise plan with [malicious uploads detection](/waf/detections/malicious-uploads/).
+
   - name: cf.waf.content_scan.obj_results
     data_type: Array<String>
     categories: [Request]
@@ -931,6 +937,7 @@ entries:
       The possible values are: `clean`, `suspicious`, `infected`, and `not scanned`.
 
       Requires a Cloudflare Enterprise plan with [malicious uploads detection](/waf/detections/malicious-uploads/).
+
   - name: cf.waf.score
     data_type: Number
     categories: [Request]
@@ -1490,12 +1497,12 @@ entries:
     example_block: |-
       # Example 1: Request with header "Accept-Language: fr-CH, fr;q=0.8, en;q=0.9, de;q=0.7, *;q=0.5".
       # In this case:
-      http.request.accepted_languages[0] == "fr-CH"
-      http.request.accepted_languages == ["fr-CH", "en", "fr", "de"]
+      http.request.accepted_languages[0] ==> "fr-CH"
+      http.request.accepted_languages    ==> ["fr-CH", "en", "fr", "de"]
 
       # Example 2: Request without an `Accept-Language` HTTP header and a URI of "https://www.example.com/my-path".
       # In this case:
-      concat("/", http.request.accepted_languages[0], http.request.uri.path) == "//my-path"
+      concat("/", http.request.accepted_languages[0], http.request.uri.path) ==> "//my-path"
 
   - name: http.request.body.raw
     data_type: String
@@ -1618,6 +1625,8 @@ entries:
       Supports the most common MIME types of the following general categories: video, audio, image, application, text.
     example_value: |-
       "image/jpeg"
+    example_block: |-
+      http.request.body.mime in {"image/bmp" "image/gif" "image/jpeg" "image/png" "image/tiff"}
 
   - name: http.request.body.multipart
     data_type: Map<Array<String>>
@@ -1628,7 +1637,9 @@ entries:
     description: |-
       Requires a Cloudflare Enterprise plan with a paid add-on.
     example_value: |-
-      {"username": ["alice_doe"], "picture": [<binary_content_of_file>]}
+      {"username": ["alice_doe"], "role": ["editor"], "picture": [<binary_content_of_file>]}
+    example_block: |-
+      any(http.request.body.multipart["role"][*] == "admin")
 
   - name: http.request.body.multipart.names
     data_type: Array<Array<String>>
@@ -1653,6 +1664,8 @@ entries:
       Requires a Cloudflare Enterprise plan with a paid add-on.
     example_value: |-
       ["alice_doe", <binary_content_of_file>]
+    example_block: |-
+      any(http.request.body.multipart.values[*] == "alice_doe")
 
   - name: http.request.body.multipart.content_types
     data_type: Array<Array<String>>
@@ -1676,9 +1689,9 @@ entries:
     description: |-
       Requires a Cloudflare Enterprise plan with a paid add-on.
     example_value: |-
-      [["form-data; name=\"username\"], ["form-data;name=\"picture\"]]
+      [["form-data; name=\"username\""], ["form-data; name=\"picture\""]]
     example_block: |-
-      any(http.request.body.multipart.content_dispositions[*][0] in {"form-data; name=\"username\"" "form-data;name=\"picture\""})
+      any(http.request.body.multipart.content_dispositions[*][0] in {"form-data; name=\"username\"" "form-data; name=\"picture\""})
 
   - name: http.request.body.multipart.content_transfer_encodings
     data_type: Array<Array<String>>
@@ -1689,7 +1702,9 @@ entries:
     description: |-
       Requires a Cloudflare Enterprise plan with a paid add-on.
     example_value: |-
-      [["quoted-printable"], ["quoted-printable"]]
+      [["quoted-printable"], ["base64"]]
+    example_block: |-
+      any(http.request.body.multipart.content_transfer_encodings[*][0] == "binary")
 
   - name: http.request.body.multipart.filenames
     data_type: Array<Array<String>>
@@ -1701,6 +1716,8 @@ entries:
       Requires a Cloudflare Enterprise plan with a paid add-on.
     example_value: |-
       [["file1.txt"], ["photo.jpg"]]
+    example_block: |-
+      any(http.request.body.multipart.filenames[*][0] in {"token.txt" "password.txt"})
 
   - name: http.response.code
     data_type: Integer
@@ -1814,16 +1831,16 @@ entries:
 
       The available values are the following:
 
-      - `managed_challenge`
-      - `iuam`
-      - `legacy_challenge`
-      - `ip_ban`
-      - `waf`
-      - `5xx`
-      - `1xxx`
-      - `always_online`
-      - `country_challenge`
-      - `ratelimit`
+      - `"managed_challenge"`
+      - `"iuam"`
+      - `"legacy_challenge"`
+      - `"ip_ban"`
+      - `"waf"`
+      - `"5xx"`
+      - `"1xxx"`
+      - `"always_online"`
+      - `"country_challenge"`
+      - `"ratelimit"`
 
       You can use this field to customize the response for a specific type of error (for example, all 1XXX errors or all WAF block actions).
 
