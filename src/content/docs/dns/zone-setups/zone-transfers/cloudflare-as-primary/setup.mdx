@@ -85,6 +85,10 @@ To create a peer DNS server using the API, send a [POST](/api/resources/dns/subr
 
 If you previously [created a peer DNS server](#2-create-peer-dns-server-optional), you should link it to your primary zone.
 
+:::note
+<Render file="linked-peers-limit" />
+:::
+
 <Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
 
 To link a primary zone to a peer using the dashboard:
@@ -104,10 +108,6 @@ To link a primary zone to a peer using the API, send a [POST](/api/resources/dns
 
 :::caution[Multiple peers and TSIG]
 If you link more than one peer to a zone and at least one of them has TSIG configured, all peers are expected to also use the same TSIG.
-:::
-
-:::note[The max number of linked peers per zone]
-You cannot have more than 30 peers linked to the zone.
 :::
 
 ## 4. Update your secondary DNS provider
