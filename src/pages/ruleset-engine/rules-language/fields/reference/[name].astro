@@ -42,11 +42,11 @@ const starlightPageProps = {
 ---
 
 <StarlightPage {...starlightPageProps}>
-	<div class="flex align-center">
+	<div class="align-center flex">
 		<div>
 			<h1
 				id="_top"
-				class="!-mt-4 !mb-2 !leading-none !text-2xl !font-bold flex items-center"
+				class="!-mt-4 !mb-2 flex items-center !text-2xl !font-bold !leading-none"
 			>
 				{name}
 			</h1>
@@ -78,7 +78,7 @@ const starlightPageProps = {
 	{
 		field.example_block && (
 			<>
-				<p id="example-block">Example:</p>
+				<p id="example-block">Example usage:</p>
 				<Code code={field.example_block} lang="txt" />
 			</>
 		)
