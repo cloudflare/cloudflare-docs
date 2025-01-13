@@ -55,7 +55,7 @@ Specifically for Durable Object classes with SQLite storage backend, KV operatio
 
 * `query`: <Type text ='string' />
   * The SQL query string to be executed. `query` can contain `?` placeholders for parameter bindings. Multiple SQL statements, separated with a semicolon, can be executed in the `query`. With multiple SQL statements, any parameter bindings are applied to the last SQL statement in the `query`, and the returned cursor is only for the last SQL statement.
-* `bindings`: <Type text='any[]' /> <MetaInfo text='Optional' />
+* `...bindings`: <Type text='any[]' /> <MetaInfo text='Optional' />
   * Optional variable number of arguments that correspond to the `?` placeholders in `query`.
 
 #### Returns
