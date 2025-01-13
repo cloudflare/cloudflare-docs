@@ -49,11 +49,11 @@ If you are on an Enterprise plan, you have the option of manually entering one o
 
 ### DNS resolver IP
 
-When you create a DNS location, Gateway will resolve queries over IPv4 with the default DNS resolver IP addresses. These addresses are Anycast IP addresses shared across every Cloudflare Zero Trust account. To resolve queries over IPv6, your location will receive and use a unique DNS resolver IPv6 address. These IP addresses are how Gateway will match DNS queries to locations and apply the appropriate filtering rules.
+When you create a DNS location, Gateway will resolve queries over IPv4 with the default DNS resolver IP addresses. These addresses are anycast IP addresses shared across every Cloudflare Zero Trust account. To resolve queries over IPv6, your location will receive and use a unique DNS resolver IPv6 address. These IP addresses are how Gateway will match DNS queries to locations and apply the appropriate filtering rules.
 
 #### Dedicated DNS resolver IP
 
-Enterprise users can request a dedicated DNS resolver IPv4 address to be provisioned for a DNS location instead of the default Anycast addresses. Queries forwarded to that address will be identified using the dedicated DNS resolver IPv4 address.
+Enterprise users can request a dedicated DNS resolver IPv4 address to be provisioned for a DNS location instead of the default anycast addresses. Queries forwarded to that address will be identified using the dedicated DNS resolver IPv4 address.
 
 Cloudflare will only assign resolver IP addresses to the Zero Trust account you request. For more information on requesting dedicated DNS resolver IPv4 addresses, contact your account team.
 
