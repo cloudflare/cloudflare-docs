@@ -16,6 +16,11 @@ let flags = await getCollection("compatibility-flags");
 if (experimental) {
 	flags = flags.filter((x) => x.data.experimental);
 }
+
+flags.sort(
+	(a, b) =>
+		new Date(b.data.sort_date).getTime() - new Date(a.data.sort_date).getTime(),
+);
 ---
 
 {

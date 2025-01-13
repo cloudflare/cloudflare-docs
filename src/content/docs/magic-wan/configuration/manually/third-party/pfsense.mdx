@@ -127,20 +127,9 @@ Add a new IPsec tunnel [Phase 1 entry](https://docs.netgate.com/pfsense/en/lates
   - **Encryption algorithm**: _AES 256 bits_
   - **Key length**: _256 bits_
   - **Hash algorithm**: _SHA256_
-  - **DH key group**: _14_
-  - **Lifetime**: `28800`
+  - **DH key group**: _20_
+  - **Lifetime**: `86400`
 
-<div class="full-img">
-
-![pfSense IPsec phase 1 settings](~/assets/images/magic-wan/third-party/pfsense/ipsec-phase1.png)
-
-</div>
-
-<div class="full-img">
-
-![pfSense IPsec phase 1 settings](~/assets/images/magic-wan/third-party/pfsense/ipsec-phase1b.png)
-
-</div>
 
 ### Configure IPsec Phase 2
 
@@ -156,14 +145,8 @@ Add a new IPsec tunnel [Phase 2 entry](https://docs.netgate.com/pfsense/en/lates
   - **Protocol**: _ESP_
   - **Encryption algorithm**: _AES 256 bits_
   - **Hash algorithm**: _SHA256_
-  - **DH key group**: _14_
-  - **Lifetime**: `3600`
-
-<div class="full-img">
-
-![pfSense IPsec phase 2 settings](~/assets/images/magic-wan/third-party/pfsense/ipsec-phase2.png)
-
-</div>
+  - **DH key group**: _20_
+  - **Lifetime**: `28800`
 
 When you are finished, apply your changes. If you go to **Status** > **IPsec**, you should be able to check that both Phase 1 and Phase 2 are connected.
 
