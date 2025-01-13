@@ -21,9 +21,10 @@ import { Render } from "~/components"
 
 7. In the **Domain** dropdown, select the domain that will represent the application. Domains must belong to an active zone in your Cloudflare account. You can use [wildcards](/cloudflare-one/policies/access/app-paths/) to protect multiple parts of an application that share a root path.
 
-		Alternatively, to use a [Cloudflare for SaaS custom hostname](/cloudflare-for-platforms/cloudflare-for-saas/security/secure-with-access/), set **Input method** to _Custom_ and enter the custom hostname.
+		Alternatively, to use a [Cloudflare for SaaS custom hostname](/cloudflare-for-platforms/cloudflare-for-saas/security/secure-with-access/), set **Input method** to _Custom_ and enter your custom hostname.
 
-8. Add [Access policies](/cloudflare-one/policies/access/) to control who can connect to your application. To create a new policy, refer to
+8. Add [Access policies](/cloudflare-one/policies/access/) to control who can connect to your application.
+
 
 9. <Render file="access/access-choose-idps" product="cloudflare-one" />
 
@@ -42,7 +43,7 @@ import { Render } from "~/components"
 		- **Browser rendering settings**:
 				- [Automatic `cloudflared` authentication](/cloudflare-one/applications/non-http/cloudflared-authentication/automatic-cloudflared-authentication/)
 				- [Browser rendering for SSH and VNC](/cloudflare-one/applications/non-http/browser-rendering/)
-		- **401 Response for Service Auth policies**:
+		- **401 Response for Service Auth policies**: Return a `401` response code when a user (or machine) makes a request to the application without the correct [service token](/cloudflare-one/identity/service-tokens/).
 
 15. Select **Save**.
 

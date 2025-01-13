@@ -50,7 +50,7 @@ To create an Access application for your R2 bucket:
 9. To **Assign a group** (or groups) and allow access to your bucket, select one or more groups. If you have not created any groups, you will [need to do this first](/cloudflare-one/identity/users/groups/#access-groups). You should **ensure that this group only contains the users within your organization that need access to this R2 bucket**.
 10. Click **Next** and then **Add an application**.
 
-Review the [Cloudflare Access documentation](/cloudflare-one/applications/configure-apps/self-hosted-apps/) to understand how to configure additional Access application options.
+Review the [Cloudflare Access documentation](/cloudflare-one/applications/configure-apps/self-hosted-public-app/) to understand how to configure additional Access application options.
 
 ## 3. Connect a custom domain
 
@@ -72,7 +72,7 @@ Visit the custom domain you connected to your R2 bucket, which should present a 
 
 For example, if you connected Google and/or GitHub identity providers, you can log in with those providers. If the login is successful and your account is a member of the [Access group](/cloudflare-one/identity/users/groups/#access-groups) you associated with the Access application you created in this guide, you will be able to access (read/download) objects within the R2 bucket.
 
-If you cannot authenticate or receive a block page after authenticating, check that you have an [Access policy](/cloudflare-one/applications/configure-apps/self-hosted-apps/#2-add-an-access-policy) configured within your Access application that explicitly allows the group your user account is associated with.
+If you cannot authenticate or receive a block page after authenticating, check that you have an [Access policy](/cloudflare-one/applications/configure-apps/self-hosted-public-app/#2-add-an-access-policy) configured within your Access application that explicitly allows the group your user account is associated with.
 
 ## Next steps
 

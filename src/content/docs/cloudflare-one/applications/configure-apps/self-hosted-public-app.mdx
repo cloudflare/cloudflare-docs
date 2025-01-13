@@ -12,18 +12,20 @@ You can securely publish internal tools and applications by adding Cloudflare Ac
 
 ## Prerequisites
 
-* An [active domain on Cloudflare](/fundamentals/setup/manage-domains/add-site/)
-* Domain uses either a [full setup](/dns/zone-setups/full-setup/) or a [partial (`CNAME`) setup](/dns/zone-setups/partial-setup/)
+- An [active domain on Cloudflare](/fundamentals/setup/manage-domains/add-site/)
+- Domain uses either a [full setup](/dns/zone-setups/full-setup/) or a [partial (`CNAME`) setup](/dns/zone-setups/partial-setup/)
 
 ## 1. Add your application to Access
 
 <Render file="access/self-hosted-app" />
 
-## 4. Connect your origin to Cloudflare
+## 2. Connect your origin to Cloudflare
 
-Next, set up a [Cloudflare Tunnel](/cloudflare-one/connections/connect-networks/) to make your internal application available over the Internet.
+[Set up a Cloudflare Tunnel](/cloudflare-one/connections/connect-networks/get-started/create-remote-tunnel/) to make your internal application available over the Internet.
 
-## 5. Validate the Access token
+If your application is already publicly routable, a Tunnel is not strictly required. However, you will then need to protect your origin IP using [other methods](/fundamentals/basic-tasks/protect-your-origin-server/).
+
+## 3. Validate the Access token
 
 <Render file="access/secure-tunnel-with-access" />
 

@@ -114,7 +114,7 @@ Additionally, authenticated requests also send the `Cf-Access-Jwt-Assertion\` JW
 
 ## 4. Create the self-hosted applications
 
-Finally, the hostname you want to protect with mTLS needs to be added as a [self-hosted app](/cloudflare-one/applications/configure-apps/self-hosted-apps/) in Cloudflare Access, defining an [Access Policy](/cloudflare-one/policies/access/) which uses the action [Service Auth](/cloudflare-one/policies/access/#service-auth) and the Selector _"Valid Certificate"_, or simply requiring an [IdP](/cloudflare-one/identity/idp-integration/) authentication. You can also take advantage of extra requirements, such as the "Common Name" (CN), which expects the indicated hostname, and more [Selectors](/cloudflare-one/policies/access/#selectors). Alternatively, one can also [extend ZTNA with external authorization and serverless computing](/reference-architecture/diagrams/sase/augment-access-with-serverless/).
+Finally, the hostname you want to protect with mTLS needs to be added as a [self-hosted app](/cloudflare-one/applications/configure-apps/self-hosted-public-app/) in Cloudflare Access, defining an [Access Policy](/cloudflare-one/policies/access/) which uses the action [Service Auth](/cloudflare-one/policies/access/#service-auth) and the Selector _"Valid Certificate"_, or simply requiring an [IdP](/cloudflare-one/identity/idp-integration/) authentication. You can also take advantage of extra requirements, such as the "Common Name" (CN), which expects the indicated hostname, and more [Selectors](/cloudflare-one/policies/access/#selectors). Alternatively, one can also [extend ZTNA with external authorization and serverless computing](/reference-architecture/diagrams/sase/augment-access-with-serverless/).
 
 ## Demo
 
