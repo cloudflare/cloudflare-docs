@@ -112,8 +112,8 @@
 /src/content/docs/pub-sub/ @elithrar @dcpena @cloudflare/pcx-technical-writing
 /src/content/docs/queues/ @elithrar @toddmantell @maheshwarip @cloudflare/pcx-technical-writing
 /src/content/changelogs/queues.yaml @elithrar @toddmantell @maheshwarip @cloudflare/pcx-technical-writing
-/src/content/docs/r2/ @dcpena @elithrar @jonesphillip @cloudflare/workers-docs @cloudflare/pcx-technical-writing
-/src/content/changelogs/r2.yaml @dcpena @elithrar @cloudflare/workers-docs @cloudflare/pcx-technical-writing
+/src/content/docs/r2/ @oxyjun @elithrar @jonesphillip @cloudflare/workers-docs @cloudflare/pcx-technical-writing
+/src/content/changelogs/r2.yaml @oxyjun @elithrar @cloudflare/workers-docs @cloudflare/pcx-technical-writing
 /src/content/docs/stream/ @tsmith512 @dcpena @cloudflare/pcx-technical-writing @renandincer @third774
 /src/content/changelogs/stream.yaml @tsmith512 @dcpena @cloudflare/pcx-technical-writing
 /src/content/docs/workers/ @cloudflare/workers-docs @GregBrimble @irvinebroque @mikenomitch @WalshyDev @cloudflare/deploy-config @cloudflare/pcx-technical-writing @ToriLindsay

@@ -119,15 +119,6 @@ If you are encountering issues with PayPal IPN when the traffic is proxied by Cl
 
 ***
 
-## How can I serve an SSL certificate from Cloudflare's China data centers?
-
-Cloudflare [Universal SSL](/ssl/edge-certificates/universal-ssl) and [advanced](/ssl/edge-certificates/advanced-certificate-manager) certificates are not deployed in China.  If your domain is on an Enterprise plan and has been granted access to China data centers, Cloudflare's data centers in China only serve a SSL certificate for your domain under the following conditions:
-
-1. You have uploaded a [Custom SSL certificate](/ssl/edge-certificates/custom-certificates/uploading).
-2. **Allow Private Keys in China (Custom Certificates)** is set to *On* in the **Edge Certificates** tab of the Cloudflare **SSL/TLS** app.
-
-***
-
 ## Does Cloudflare support TLS client authentication?
 
 Yes. For more details, refer to our documentation on [Mutual TLS authentication](/cloudflare-one/identity/devices/access-integrations/mutual-tls-authentication/).

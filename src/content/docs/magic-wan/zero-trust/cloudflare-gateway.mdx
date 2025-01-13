@@ -47,7 +47,12 @@ This traffic will egress from Cloudflare according to the [egress policies](/clo
 
 By default, TCP, UDP, and ICMP traffic routed through Magic WAN tunnels and destined to routes behind [Cloudflare Tunnel](/cloudflare-one/connections/connect-networks/) will be proxied/filtered through Cloudflare Gateway.
 
-Contact your account team to enable Gateway filtering for traffic destined to routes behind Magic WAN tunnels. If enabled, by default, TCP and UDP traffic sourced from and destined to [RFC1918](https://datatracker.ietf.org/doc/html/rfc1918) space, [WARP](/cloudflare-one/connections/connect-devices/warp/), or [BYO](/byoip/) or [Leased IPs](/magic-transit/cloudflare-ips/) with source port higher than `1023` and destination port lower than `1024` will be proxied/filtered by Cloudflare Gateway.
+Contact your account team to enable Gateway filtering for traffic destined to routes behind Magic WAN tunnels. 
+
+If enabled, by default TCP/UDP traffic meeting **all** the following criteria will be proxied/filtered by Cloudflare Gateway: 
+- Both source and destination IPs are part of either [RFC1918](https://datatracker.ietf.org/doc/html/rfc1918) space, [WARP](/cloudflare-one/connections/connect-devices/warp/), [BYO](/byoip/) or [Leased IPs](/magic-transit/cloudflare-ips/)
+- Source port must be a client port strictly higher than `1023`
+- Destination port is a well-known port lower than `1024` 
 
 Optionally, more specific matches may be specified to override the default:
 
