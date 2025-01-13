@@ -2,7 +2,7 @@
 title: FAQ
 pcx_content_type: faq
 sidebar:
-  order: 8
+  order: 10
 
 ---
 
@@ -18,13 +18,13 @@ Yes, you can use Workers KV outside of Workers by using the [REST API](/api/reso
 
 ### Why can I not immediately see the updated value of a key-value pair?
 
-Workers KV heavily caches data across the Cloudflare network. Therefore, it is possible that you read a cached value for up to the cache TTL duration.
+Workers KV heavily caches data across the Cloudflare network. Therefore, it is possible that you read a cached value for up to the [cache TTL](/kv/api/read-key-value-pairs/#cachettl-parameter) duration.
 
 ### Is Workers KV eventually consistent or strongly consistent?
 
 Workers KV is eventually consistent.
 
-Workers KV stores data in central stores and replicates the data to all Cloudflare locations through a hybrid push/pull replication approach. This means that the previous value of the key-value pair may be seen in a location for as long as the cache TTL. This means that Workers KV is eventually consistent.
+Workers KV stores data in central stores and replicates the data to all Cloudflare locations through a hybrid push/pull replication approach. This means that the previous value of the key-value pair may be seen in a location for as long as the [cache TTL](/kv/api/read-key-value-pairs/#cachettl-parameter). This means that Workers KV is eventually consistent.
 
 Refer to [How KV works](/kv/concepts/how-kv-works/).
 
