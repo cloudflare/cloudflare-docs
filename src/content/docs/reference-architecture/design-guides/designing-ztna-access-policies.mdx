@@ -237,7 +237,7 @@ Add an additional layer of access control by requiring users to obtain "temporar
 
 ### Access Groups
 
-One of the most important parts of defining ZTNA policies is to leverage reusable elements called [Access Groups](/cloudflare-one/identity/users/groups/). Each access group uses the same rules we've just described to define users, traffic or devices. These groups can then be used across many policies to allow, deny, bypass, or isolate access to an application.
+One of the most important parts of defining ZTNA policies is to leverage reusable elements called [Access Groups](/cloudflare-one/policies/access/groups/). Each access group uses the same rules we've just described to define users, traffic or devices. These groups can then be used across many policies to allow, deny, bypass, or isolate access to an application.
 
 For example, you can define "Employees" once as an Access Group, and then use that in every application policy where you want to refer to employees. Updates to this Access Group would then be reflected in every policy. This is also a good way to include nested logic (for example, users with a Linux device and has antivirus software enabled)
 
