@@ -10,7 +10,7 @@ entries:
     description: |-
       D1 will begin enforcing the daily [free tier limits](/d1/platform/limits) from 2025/02/10. These limits only apply to accounts on the Workers Free plan.
 
-      From 10/02/2025, if you do not take any action and exceed the daily free tier limits, queries to D1 databases via the Workers API and/or REST API will return errors until limits reset daily at 00:00 UTC.
+      From 2025/02/10, if you do not take any action and exceed the daily free tier limits, queries to D1 databases via the Workers API and/or REST API will return errors until limits reset daily at 00:00 UTC.
 
       To ensure uninterrupted service, upgrade your account to the [Workers Paid plan](/workers/platform/pricing/) from the [plans page](https://dash.cloudflare.com/?account=/workers/plans). The minimum monthly billing amount is $5 and includes 25 billion rows read and 50 million rows written per month. [Billing metrics](/d1/observability/billing/) for rows read and rows written can be found on the [D1 dashboard](https://dash.cloudflare.com/?account=/workers/d1) or GraphQL API.
 
