@@ -37,7 +37,7 @@
 		"@cloudflare/vitest-pool-workers": "^0.6.0",
 		"@cloudflare/workers-types": "^4.20241218.0",
 		"@codingheads/sticky-header": "^1.0.2",
-		"@expressive-code/plugin-collapsible-sections": "^0.39.0",
+		"@expressive-code/plugin-collapsible-sections": "^0.40.0",
 		"@iarna/toml": "^2.2.5",
 		"@iconify-json/material-symbols": "^1.2.12",
 		"@stoplight/json-schema-tree": "^4.0.0",
