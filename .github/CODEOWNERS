@@ -36,9 +36,9 @@
 # API & Zones
 
 /src/content/docs/pulumi/ @cloudflare/pcx-technical-writing
-/src/content/docs/tenant/ @patriciasantaana @cloudflare/pcx-technical-writing
+/src/content/docs/tenant/ @dcpena @cloudflare/pcx-technical-writing
 /src/content/docs/terraform/ @ranbel @cloudflare/pcx-technical-writing
-/src/content/docs/version-management/ @patriciasantaana @cloudflare/pcx-technical-writing
+/src/content/docs/version-management/ @dcpena @cloudflare/pcx-technical-writing
 
 # Browser Rendering API
 
@@ -78,11 +78,11 @@
 /src/content/docs/cloudflare-for-platforms/cloudflare-for-saas/ @RebeccaTamachiro @cloudflare/pcx-technical-writing
 /src/content/docs/dns/ @RebeccaTamachiro @cloudflare/pcx-technical-writing
 /src/content/docs/fundamentals/ @cloudflare/pcx-technical-writing
-/src/content/docs/fundamentals/account-and-billing/ @patriciasantaana @cloudflare/pcx-technical-writing
+/src/content/docs/fundamentals/account-and-billing/ @dcpena @cloudflare/pcx-technical-writing
 /src/content/docs/learning-paths/ @cloudflare/pcx-technical-writing
 /src/content/docs/network-error-logging/ @dcpena @cloudflare/pcx-technical-writing
 /src/content/docs/network-interconnect/ @marciocloudflare @cloudflare/pcx-technical-writing
-/src/content/docs/notifications/ @patriciasantaana @cloudflare/pcx-technical-writing
+/src/content/docs/notifications/ @dcpena @cloudflare/pcx-technical-writing
 /src/content/docs/registrar/ @jason-cf @cloudflare/pcx-technical-writing
 /src/content/docs/rules/ @pedrosousa @cloudflare/pcx-technical-writing
 /src/content/docs/ruleset-engine/ @pedrosousa @cloudflare/pcx-technical-writing
