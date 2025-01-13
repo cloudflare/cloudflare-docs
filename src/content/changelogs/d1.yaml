@@ -12,7 +12,9 @@ entries:
 
       From 10/02/2025, if you do not take any action and exceed the daily free tier limits, queries to D1 databases via the Workers API and/or REST API will return errors until limits reset daily at 00:00 UTC.
 
-      To ensure uninterrupted service, upgrade your account to the [Workers Paid plan](/workers/platform/pricing/) from the [plans page](https://dash.cloudflare.com/?account=/workers/plans). The minimum monthly billing amount is $5 and includes 25 billion rows read and 50 million rows written per month. [Billing metrics](/d1/observability/billing/) for rows read and rows written can be found on the [D1 dashboard](https://dash.cloudflare.com/?account=/workers/d1) or GraphQL API.
+      To ensure uninterrupted service, upgrade your account to the [Workers Paid plan](/workers/platform/pricing/) from the [plans page](https://dash.cloudflare.com/?account=/workers/plans). The minimum monthly billing amount is $5. Refer to [Workers Paid plan](/workers/platform/pricing/) and [D1 limits](/d1/platform/limits/).
+
+      For better insight into your current usage, refer to your [billing metrics](/d1/observability/billing/) for rows read and rows written, which can be found on the [D1 dashboard](https://dash.cloudflare.com/?account=/workers/d1) or GraphQL API.
 
   - publish_date: "2024-08-23"
     title: D1 alpha databases have stopped accepting SQL queries
