@@ -90,7 +90,7 @@ Cloudflare has built an allowlist of good, automated bots, e.g. Google Search En
 
 This allowlist is large based on reverse DNS verification, meaning that the IPs we allow really match the requesting service. In addition to this, Cloudflare uses multiple validation methods including ASN blocks and public lists. If none of these validation types are available for a customer, we use internal Cloudflare data and machine learning to identify legitimate IP addresses from good bots.
 
-To allow traffic from good bots, use the [Verified Bot](/ruleset-engine/rules-language/fields/dynamic-fields/#cfbot_managementverified_bot) field in your WAF custom rule.
+To allow traffic from good bots, use the [Verified Bot](/ruleset-engine/rules-language/fields/reference/cf.bot_management.verified_bot/) field in your WAF custom rule.
 
 ---
 

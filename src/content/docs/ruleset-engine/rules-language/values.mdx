@@ -184,7 +184,7 @@ any(http.request.headers["accept"][*] == "application/json") # ==> true
 any(http.request.headers["accept"][*] == "text/plain")       # ==> false
 ```
 
-The following example is based on the [`http.request.uri.args`](/ruleset-engine/rules-language/fields/uri/#httprequesturiargs) field with a data type of `Map<Array<String>>`, where array elements are of `String` data type.
+The following example is based on the [`http.request.uri.args`](/ruleset-engine/rules-language/fields/reference/http.request.uri.args/) field with a data type of `Map<Array<String>>`, where array elements are of `String` data type.
 
 If an HTTP request included three `filter` URI arguments `waf`, `botm`, and `cdn`, the following expressions would evaluate to the indicated values:
 

@@ -34,9 +34,9 @@ import { GlossaryTooltip } from "~/components"
    * **Protocol** (HTTP protocol version)
    * **Request headers**
    * **Cookies**
-   * **Geolocation** (request source [country](/ruleset-engine/rules-language/fields/standard-fields/#ipsrccountry), [region](/ruleset-engine/rules-language/fields/standard-fields/#ipsrcregion), and [city](/ruleset-engine/rules-language/fields/standard-fields/#ipsrccity))
+   * **Geolocation** (request source [country](/ruleset-engine/rules-language/fields/reference/ip.src.country/), [region](/ruleset-engine/rules-language/fields/reference/ip.src.region/), and [city](/ruleset-engine/rules-language/fields/reference/ip.src.city/))
    * [**Bot score**](/bots/concepts/bot-score/)
-   * <GlossaryTooltip term="threat score" link="/ruleset-engine/rules-language/fields/dynamic-fields/#cfthreat_score">**Threat score**</GlossaryTooltip>
+   * <GlossaryTooltip term="threat score" link="/ruleset-engine/rules-language/fields/reference/cf.threat_score/">**Threat score**</GlossaryTooltip>
    * **Request body** (for `POST`, `PUT`, and `PATCH` requests)
    * **Skip challenge** (skips a Cloudflare-issued [challenge](/waf/reference/cloudflare-challenges/), if any, allowing the trace to continue)
 
