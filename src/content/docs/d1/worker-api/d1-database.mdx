@@ -212,7 +212,7 @@ return Response.json(returnValue);
 
 #### Guidance
 
-- If an error occurs, an exception is thrown with the query and error messages, execution stops and further statements are not executed. Refer to [Errors](/d1/observability/#errors) to learn more.
+- If an error occurs, an exception is thrown with the query and error messages, execution stops and further statements are not executed. Refer to [Errors](/d1/observability/debug-d1/#errors) to learn more.
 - This method can have poorer performance (prepared statements can be reused in some cases) and, more importantly, is less safe.
 - Only use this method for maintenance and one-shot tasks (for example, migration jobs).
 - The input can be one or multiple queries separated by `\n`.
