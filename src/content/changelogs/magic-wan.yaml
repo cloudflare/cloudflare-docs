@@ -6,6 +6,10 @@ productArea: Cloudflare One
 productAreaLink: /cloudflare-one/changelog/
 entries:
   - publish_date: "2024-12-17"
+    title: Magic WAN Connector configurable health checks
+    description: |-
+      Health check rate on Magic WAN Connector IPsec tunnels are now configurable.
+  - publish_date: "2024-12-17"
     title: BGP support for Cloudflare Network Interconnect (CNI)
     description: |-
       Magic WAN customers can now establish BGP peering over Direct CNI circuits. Customers can now dynamically exchange routes and path availability status between their router device and the Magic WAN table.

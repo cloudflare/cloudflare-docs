@@ -6,9 +6,11 @@ sidebar:
 head:
   - tag: title
     content: Common HTTP policies
+banner:
+  content: The default global Cloudflare root certificate will expire on 2025-02-02. If you installed the default Cloudflare certificate before 2024-10-17, you must <a href="/cloudflare-one/connections/connect-devices/user-side-certificates/#generate-a-cloudflare-root-certificate">generate a new certificate</a> and activate it for your Zero Trust organization to avoid inspection errors.
 ---
 
-import { Render } from "~/components";
+import { Render, Tabs, TabItem } from "~/components";
 
 The following policies are commonly used to secure HTTP traffic.
 
@@ -22,36 +24,210 @@ Block attempts to reach sites by hostname or URL paths. Different approaches may
 
 Block all subdomains that use a host.
 
+<Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
+
 | Selector | Operator      | Value            | Action |
 | -------- | ------------- | ---------------- | ------ |
 | Host     | matches regex | `.*example\.com` | Block  |
+
+</TabItem>
+
+<TabItem label="API">
+
+```bash
+curl https://api.cloudflare.com/client/v4/accounts/{account_id}/gateway/rule \
+--header "Content-Type: application/json" \
+--header "Authorization: Bearer <API_TOKEN>" \
+--data '{
+  "name": "Block sites by hostname",
+  "description": "Block all subdomains that use a specific hostname",
+  "enabled": true,
+  "action": "block",
+  "filters": [
+    "http"
+  ],
+  "traffic": "http.request.host matches \".*example\\.com\"",
+  "identity": "",
+  "device_posture": ""
+}'
+```
+
+</TabItem> </Tabs>
 
 ### Block sites by URL
 
 Block a section of a site without blocking the entire site. For example, you can block a specific subreddit, such as `reddit.com/r/gaming`, without blocking `reddit.com`.
 
+<Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
+
 | Selector | Operator      | Value       | Action |
 | -------- | ------------- | ----------- | ------ |
 | URL      | matches regex | `/r/gaming` | Block  |
 
-<Render file="gateway/policies/content-categories" />
+</TabItem>
 
-<Render file="gateway/policies/block-applications" />
+<TabItem label="API">
 
-<Render file="gateway/policies/policies-optional" />
+```bash
+curl https://api.cloudflare.com/client/v4/accounts/{account_id}/gateway/rule \
+--header "Content-Type: application/json" \
+--header "Authorization: Bearer <API_TOKEN>" \
+--data '{
+  "name": "Block sites by URL",
+  "description": "Block specific parts of a site without blocking the hostname",
+  "enabled": true,
+  "action": "block",
+  "filters": [
+    "http"
+  ],
+  "traffic": "http.request.uri matches \"/r/gaming\"",
+  "identity": "",
+  "device_posture": ""
+}'
+```
+
+</TabItem> </Tabs>
+
+## Block content categories
+
+Block content categories which go against your organization's acceptable use policy.
+
+<Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
+
+| Selector           | Operator | Value                      | Action |
+| ------------------ | -------- | -------------------------- | ------ |
+| Content Categories | in       | _Adult Themes_, _Gambling_ | Block  |
+
+</TabItem>
+
+<TabItem label="API">
+
+```bash
+curl https://api.cloudflare.com/client/v4/accounts/{account_id}/gateway/rule \
+--header "Content-Type: application/json" \
+--header "Authorization: Bearer <API_TOKEN>" \
+--data '{
+  "name": "Block content categories",
+  "description": "Block access to unauthorized adult and gambling applications",
+  "enabled": true,
+  "action": "block",
+  "filters": [
+    "http"
+  ],
+  "traffic": "any(http.request.uri.content_category[*] in {2 67 125 133 99})",
+  "identity": "",
+  "device_posture": ""
+}'
+```
+
+</TabItem> </Tabs>
+
+## Block unauthorized applications
+
+<Render file="gateway/policies/block-applications" product="cloudflare-one" />
+
+<Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
+
+| Selector    | Operator | Value                     | Action |
+| ----------- | -------- | ------------------------- | ------ |
+| Application | in       | _Artificial Intelligence_ | Block  |
+
+</TabItem>
+
+<TabItem label="API">
+
+```bash
+curl https://api.cloudflare.com/client/v4/accounts/{account_id}/gateway/rule \
+--header "Content-Type: application/json" \
+--header "Authorization: Bearer <API_TOKEN>" \
+--data '{
+  "name": "Block unauthorized applications",
+  "description": "Block access to unauthorized AI applications",
+  "enabled": true,
+  "action": "block",
+  "filters": [
+    "http"
+  ],
+  "traffic": "any(app.type.ids[*] in {25})",
+  "identity": "",
+  "device_posture": ""
+}'
+```
+
+</TabItem> </Tabs>
+
+## Check user identity
+
+<Render file="gateway/policies/check-user-identity" />
+
+<Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
+
+| Selector         | Operator | Value         | Logic | Action |
+| ---------------- | -------- | ------------- | ----- | ------ |
+| Application      | in       | _Salesforce_  | And   | Block  |
+| User Group Names | in       | _Contractors_ |       |        |
+
+</TabItem>
+
+<TabItem label="API">
+
+```bash
+curl https://api.cloudflare.com/client/v4/accounts/{account_id}/gateway/rule \
+--header "Content-Type: application/json" \
+--header "Authorization: Bearer <API_TOKEN>" \
+--data '{
+  "name": "Check user identity",
+  "description": "Block access to Salesforce by temporary employees and contractors",
+  "enabled": true,
+  "action": "block",
+  "filters": [
+    "http"
+  ],
+  "traffic": "any(app.ids[*] in {606})",
+  "identity": "any(identity.groups.name[*] in {\"Contractors\"})",
+  "device_posture": ""
+}'
+```
+
+</TabItem> </Tabs>
 
 ## Skip inspection for groups of applications
 
-Certain client applications, such as Zoom or Apple services, rely on certificate pinning. The [TLS inspection](/cloudflare-one/policies/gateway/http-policies/tls-decryption/) performed by Cloudflare Gateway will cause errors when users visit those applications. To avoid this behavior, you must add a Do Not Inspect HTTP policy.
+Certain client applications, such as Zoom or Apple services, rely on certificate pinning. The [TLS decryption](/cloudflare-one/policies/gateway/http-policies/tls-decryption/) performed by Cloudflare Gateway will cause errors when users visit those applications. To avoid this behavior, you must add a Do Not Inspect HTTP policy.
 
 Gateway [evaluates Do Not Inspect policies first](/cloudflare-one/policies/gateway/order-of-enforcement/#http-policies). We recommend moving your Do Not Inspect policies to the top of the list to reduce confusion.
 
-| Selector    | Operator | Value          | Action         |
-| ----------- | -------- | -------------- | -------------- |
-| Application | in       | Do Not Inspect | Do Not Inspect |
+<Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
+
+| Selector    | Operator | Value            | Action         |
+| ----------- | -------- | ---------------- | -------------- |
+| Application | in       | _Do Not Inspect_ | Do Not Inspect |
+
+</TabItem>
+
+<TabItem label="API">
+
+```bash
+curl https://api.cloudflare.com/client/v4/accounts/{account_id}/gateway/rule \
+--header "Content-Type: application/json" \
+--header "Authorization: Bearer <API_TOKEN>" \
+--data '{
+  "name": "Bypass incompatible applications",
+  "description": "Skip TLS decryption for applications that are incompatible with Gateway",
+  "enabled": true,
+  "action": "off",
+  "filters": [
+    "http"
+  ],
+  "traffic": "any(app.type.ids[*] in {16})",
+  "identity": "",
+  "device_posture": ""
+}'
+```
+
+</TabItem> </Tabs>
 
 :::note
-
 You can select either individual applications or the entire Do Not Inspect set, which will update as new applications are added.
 :::
 
@@ -63,20 +239,76 @@ Require devices to have certain software installed or other configuration attrib
 
 Perform an [OS version check](/cloudflare-one/identity/devices/warp-client-checks/os-version/) to ensure users are running at least a minimum version.
 
+<Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
+
 | Selector                     | Operator | Value                | Action |
 | ---------------------------- | -------- | -------------------- | ------ |
-| Passed Device Posture Checks | in       | `Minimum OS version` | Allow  |
+| Passed Device Posture Checks | in       | _Minimum OS version_ | Allow  |
+
+</TabItem>
+
+<TabItem label="API">
+
+```bash
+curl https://api.cloudflare.com/client/v4/accounts/{account_id}/gateway/rule \
+--header "Content-Type: application/json" \
+--header "Authorization: Bearer <API_TOKEN>" \
+--data '{
+  "name": "Require OS version",
+  "description": "Perform an OS version check for minimum version",
+  "enabled": true,
+  "action": "allow",
+  "filters": [
+    "http"
+  ],
+  "traffic": "",
+  "identity": "",
+  "device_posture": "any(device_posture.checks.passed[*] in {\"<POSTURE_CHECK_UUID>\"})"
+}'
+```
+
+To get the UUIDs of your device posture checks, use the [List device posture rules](/api/resources/zero_trust/subresources/devices/subresources/posture/methods/list/) endpoint.
+
+</TabItem> </Tabs>
 
 ### Check for a specific file
 
-Perform a [file check](/cloudflare-one/identity/devices/warp-client-checks/file-check/) to ensure users have a certain file on their system.
+Perform a [file check](/cloudflare-one/identity/devices/warp-client-checks/file-check/) to ensure users have a certain file on their device.
 
 Since the file path will be different for each operating system, you can configure a file check for each system and use the **Or** logical operator to only require one of the checks to pass.
 
+<Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
+
 | Selector                     | Operator | Value              | Logic | Action |
 | ---------------------------- | -------- | ------------------ | ----- | ------ |
-| Passed Device Posture Checks | in       | `macOS File Check` | Or    | Allow  |
-| Passed Device Posture Checks | in       | `Linux File Check` |       |        |
+| Passed Device Posture Checks | in       | _macOS File Check_ | Or    | Allow  |
+| Passed Device Posture Checks | in       | _Linux File Check_ |       |        |
+
+</TabItem>
+
+<TabItem label="API">
+
+```bash
+curl https://api.cloudflare.com/client/v4/accounts/{account_id}/gateway/rule \
+--header "Content-Type: application/json" \
+--header "Authorization: Bearer <API_TOKEN>" \
+--data '{
+  "name": "Check for specific file",
+  "description": "Ensure users have a specific file on their device regardless of operating system",
+  "enabled": true,
+  "action": "allow",
+  "filters": [
+    "http"
+  ],
+  "traffic": "",
+  "identity": "",
+  "device_posture": "any(device_posture.checks.passed[*] in {\"<POSTURE_CHECK_1_UUID>\"}) or any(device_posture.checks.passed[*] in {\"<POSTURE_CHECK_2_UUID>\"})"
+}'
+```
+
+To get the UUIDs of your device posture checks, use the [List device posture rules](/api/resources/zero_trust/subresources/devices/subresources/posture/methods/list/) endpoint.
+
+</TabItem> </Tabs>
 
 ## Enforce session duration
 
@@ -90,9 +322,37 @@ If you are using the [Browser Isolation add-on](/cloudflare-one/policies/browser
 
 When accessing origin servers with certificates not signed by a public certificate authority, you must bypass TLS decryption.
 
-| Selector | Operator | Value               | Action         |
-| -------- | -------- | ------------------- | -------------- |
-| Domain   | in       | `internal.site.com` | Do Not Inspect |
+<Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
+
+| Selector | Operator | Value                  | Action         |
+| -------- | -------- | ---------------------- | -------------- |
+| Domain   | in       | `internal.example.com` | Do Not Inspect |
+
+</TabItem>
+
+<TabItem label="API">
+
+```bash
+curl https://api.cloudflare.com/client/v4/accounts/{account_id}/gateway/rule \
+--header "Content-Type: application/json" \
+--header "Authorization: Bearer <API_TOKEN>" \
+--data '{
+  "name": "Bypass internal site inspection",
+  "description": "Bypass TLS decryption for internal sites with self-signed certificates",
+  "enabled": true,
+  "action": "off",
+  "filters": [
+    "http"
+  ],
+  "traffic": "any(http.conn.domains[*] in {\"internal.example.com\"})",
+  "identity": "",
+  "device_posture": ""
+}'
+```
+
+</TabItem> </Tabs>
+
+## Block file types
 
 <Render file="gateway/policies/block-file-types" />
 
@@ -102,35 +362,72 @@ For more information on supported file types, refer to [Download and Upload File
 
 To enable Gateway inspection for Google Drive traffic, you must [add a Cloudflare certificate to Google Drive](/cloudflare-one/connections/connect-devices/user-side-certificates/manual-deployment/#google-drive-for-desktop).
 
-### Block Google Drive uploads
-
-Block file uploads to Google Drive.
-
-| Selector         | Operator      | Value        | Logic | Action |
-| ---------------- | ------------- | ------------ | ----- | ------ |
-| Application      | in            | Google Drive | And   | Block  |
-| Upload Mime Type | matches regex | `.*`         |       |        |
-
 ### Block Google Drive downloads
 
 Block file downloads from Google Drive.
 
+<Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
+
 | Selector         | Operator      | Value                      | Logic | Action |
 | ---------------- | ------------- | -------------------------- | ----- | ------ |
-| Application      | in            | Google Drive               | And   | Block  |
+| Application      | in            | _Google Drive_             | And   | Block  |
 | URL Path & Query | matches regex | `.*(e=download\|export).*` |       |        |
+
+</TabItem>
+
+<TabItem label="API">
+
+```bash
+curl https://api.cloudflare.com/client/v4/accounts/{account_id}/gateway/rule \
+--header "Content-Type: application/json" \
+--header "Authorization: Bearer <API_TOKEN>" \
+--data '{
+  "name": "Block Google Drive downloads",
+  "description": "Block file downloads from Google Drive",
+  "enabled": true,
+  "action": "block",
+  "filters": [
+    "http"
+  ],
+  "traffic": "any(app.ids[*] in {554}) and http.request.uri.path_and_query matches \".*(e=download\\|export).*\"",
+  "identity": "",
+  "device_posture": ""
+}'
+```
+
+</TabItem> </Tabs>
 
 ### Block Gmail downloads
 
 Block file downloads from Gmail.
+
+<Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
 
 | Selector         | Operator | Value                                   | Logic | Action |
 | ---------------- | -------- | --------------------------------------- | ----- | ------ |
 | Host             | is       | `mail-attachment.googleusercontent.com` | And   | Block  |
 | URL Path & Query | is       | `/attachment/u/0`                       |       |        |
 
-## Isolate ChatGPT
+</TabItem>
 
-[Browser Isolation](/cloudflare-one/policies/browser-isolation/) users can isolate interactions with ChatGPT.
+<TabItem label="API">
 
-<Render file="gateway/policies/isolate-chatgpt" />
+```bash
+curl https://api.cloudflare.com/client/v4/accounts/{account_id}/gateway/rule \
+--header "Content-Type: application/json" \
+--header "Authorization: Bearer <API_TOKEN>" \
+--data '{
+  "name": "Block Gmail downloads",
+  "description": "Block file downloads from Gmail",
+  "enabled": true,
+  "action": "block",
+  "filters": [
+    "http"
+  ],
+  "traffic": "http.request.host == \"mail-attachment.googleusercontent.com\" and http.request.uri.path_and_query matches \"/attachment/u/0\"",
+  "identity": "",
+  "device_posture": ""
+}'
+```
+
+</TabItem> </Tabs>

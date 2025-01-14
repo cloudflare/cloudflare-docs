@@ -107,7 +107,7 @@ For each Event Object in your payload, Zaraz will respond with a Result Object. 
 Depending on what tools you are loading using Zaraz, the body of the response coming from the API might include information you will want to process. This is because some tools do not have a complete server-side implementation and still depend on cookies, client-side JavaScript or similar mechanisms. Each Result Object can include the following information:
 
 | Result key | Description |
-| --- | --- | --- |
+| --- | --- |
 | `fetch` | Fetch requests that tools want to send from the user browser. |
 | `execute` | JavaScript code that tools want to execute in the user browser. |
 | `return` | Information that tools return. |

@@ -152,6 +152,7 @@ export default defineConfig({
 				Footer: "./src/components/overrides/Footer.astro",
 				Head: "./src/components/overrides/Head.astro",
 				Hero: "./src/components/overrides/Hero.astro",
+				LastUpdated: "./src/components/overrides/LastUpdated.astro",
 				MarkdownContent: "./src/components/overrides/MarkdownContent.astro",
 				Sidebar: "./src/components/overrides/Sidebar.astro",
 				PageSidebar: "./src/components/overrides/PageSidebar.astro",
@@ -177,27 +178,27 @@ export default defineConfig({
 			plugins: [
 				...(runLinkCheck
 					? [
-						starlightLinksValidator({
-							errorOnInvalidHashes: false,
-							errorOnLocalLinks: false,
-							exclude: [
-								"/api/",
-								"/api/**",
-								"/changelog/",
-								"/http/resources/**",
-								"{props.*}",
-								"/",
-								"**/glossary/?term=**",
-								"/products/?product-group=*",
-								"/products/",
-								"/rules/snippets/examples/?operation=*",
-								"/rules/transform/examples/?operation=*",
-								"/workers/examples/?languages=*",
-								"/workers/examples/?tags=*",
-								"/workers-ai/models/**",
-							],
-						}),
-					]
+							starlightLinksValidator({
+								errorOnInvalidHashes: false,
+								errorOnLocalLinks: false,
+								exclude: [
+									"/api/",
+									"/api/**",
+									"/changelog/",
+									"/http/resources/**",
+									"{props.*}",
+									"/",
+									"**/glossary/?term=**",
+									"/products/?product-group=*",
+									"/products/",
+									"/rules/snippets/examples/?operation=*",
+									"/rules/transform/examples/?operation=*",
+									"/workers/examples/?languages=*",
+									"/workers/examples/?tags=*",
+									"/workers-ai/models/**",
+								],
+							}),
+						]
 					: []),
 				starlightDocSearch({
 					appId: "D32WIYFTUF",
@@ -207,6 +208,7 @@ export default defineConfig({
 				}),
 				starlightImageZoom(),
 			],
+			lastUpdated: true,
 		}),
 		tailwind({
 			applyBaseStyles: false,

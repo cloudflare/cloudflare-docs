@@ -49,35 +49,35 @@ These IP addresses are different than those associated with your Cloudflare zone
 
 ### 3. Have customer create DNS record
 
-To finish the custom hostname setup, your customer can set up either an `A` or `CNAME` record at their authoritative DNS provider.
+To finish the custom hostname setup, your customer can set up either an A or CNAME record at their authoritative DNS provider.
 
 :::note
 
 
-If you want your customers to be able to use `CNAME` records, you will need to complete the [normal setup process](/cloudflare-for-platforms/cloudflare-for-saas/start/getting-started/) as well.
+If you want your customers to be able to use CNAME records, you will need to complete the [normal setup process](/cloudflare-for-platforms/cloudflare-for-saas/start/getting-started/) as well.
 
 
 :::
 
-#### `A` record
+#### A record
 
-If your customer uses an `A` record at their authoritative DNS provider, they need to point their hostname to the IP prefixed allocated for your account.
+If your customer uses an A record at their authoritative DNS provider, they need to point their hostname to the IP prefixed allocated for your account.
 
 <Render file="get-started-check-statuses" />
 
-Your customer's `A` record might look like the following:
+Your customer's A record might look like the following:
 
 ```txt
 example.com.  60  IN  A   192.0.2.1
 ```
 
-#### `CNAME` record
+#### CNAME record
 
-If your customer uses a `CNAME` record at their authoritative DNS, they need to point their hostname to your [`CNAME` target](/cloudflare-for-platforms/cloudflare-for-saas/start/getting-started/#2-optional-create-cname-target) [^1].
+If your customer uses a CNAME record at their authoritative DNS, they need to point their hostname to your [CNAME target](/cloudflare-for-platforms/cloudflare-for-saas/start/getting-started/#2-optional-create-cname-target) [^1].
 
 <Render file="get-started-check-statuses" />
 
-Your customer's `CNAME` record might look like the following:
+Your customer's CNAME record might look like the following:
 
 ```txt
 mystore.com CNAME customers.saasprovider.com

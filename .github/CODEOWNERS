@@ -29,20 +29,24 @@
 
 # Analytics & Logs
 
-/src/content/docs/analytics/ @46bit @bharatnc @jherre @jimhawkridge @soheiokamoto @victor-perov @angelampcosta @cloudflare/pcx-technical-writing
+/src/content/docs/analytics/ @46bit @jherre @jimhawkridge @soheiokamoto @victor-perov @angelampcosta @cloudflare/pcx-technical-writing
 /src/content/docs/data-localization/ @soheiokamoto @angelampcosta @cloudflare/pcx-technical-writing
-/src/content/docs/logs/ @cmackenzie1 @bharatnc @jherre @soheiokamoto @victor-perov @angelampcosta @cloudflare/pcx-technical-writing
+/src/content/docs/logs/ @cmackenzie1 @jherre @soheiokamoto @victor-perov @angelampcosta @cloudflare/pcx-technical-writing
 
 # API & Zones
 
 /src/content/docs/pulumi/ @cloudflare/pcx-technical-writing
-/src/content/docs/tenant/ @patriciasantaana @cloudflare/pcx-technical-writing
+/src/content/docs/tenant/ @dcpena @cloudflare/pcx-technical-writing
 /src/content/docs/terraform/ @ranbel @cloudflare/pcx-technical-writing
-/src/content/docs/version-management/ @patriciasantaana @cloudflare/pcx-technical-writing
+/src/content/docs/version-management/ @dcpena @cloudflare/pcx-technical-writing
 
 # Browser Rendering API
 
 /src/content/docs/browser-rendering/ @mchenco @cloudflare/pcx-technical-writing @celso @meddulla
+
+# Changelogs
+
+/src/content/changelogs-next/ @elithrar @irvinebroque @jonesphillip @rita3ko @zaidf
 
 # Cloudflare One
 
@@ -50,16 +54,16 @@
 /src/content/docs/cloudflare-one/applications/ @kennyj42 @ranbel @cloudflare/pcx-technical-writing
 /src/content/docs/cloudflare-one/identity/ @kennyj42 @ranbel @cloudflare/pcx-technical-writing
 /src/content/docs/cloudflare-one/policies/access/ @kennyj42 @ranbel @cloudflare/pcx-technical-writing
-/src/content/docs/cloudflare-one/connections/connect-devices/ @kkrum @ranbel @cloudflare/pcx-technical-writing
-/src/content/docs/cloudflare-one/connections/connect-networks/ @janani-cr @ranbel @cloudflare/pcx-technical-writing
-/src/content/docs/cloudflare-one/insights/ @abelinkinbio @ranbel @cloudflare/pcx-technical-writing
+/src/content/docs/cloudflare-one/connections/connect-devices/ @kkrum @kokolocomotion1 @ranbel @cloudflare/pcx-technical-writing
+/src/content/docs/cloudflare-one/connections/connect-networks/ @ranbel @cloudflare/pcx-technical-writing
 /src/content/docs/cloudflare-one/applications/scan-apps/ @maxvp @cloudflare/pcx-technical-writing
 /src/content/docs/cloudflare-one/policies/gateway/ @maxvp @cloudflare/pcx-technical-writing
-/src/content/docs/cloudflare-one/policies/browser-isolation/ @maxvp @abelinkinbio @cloudflare/pcx-technical-writing
+/src/content/docs/cloudflare-one/policies/browser-isolation/ @maxvp @ranbel @cloudflare/pcx-technical-writing
 /src/content/docs/cloudflare-one/policies/data-loss-prevention/ @maxvp @cloudflare/pcx-technical-writing
+/src/content/docs/cloudflare-one/insights/dex/ @deadlypants1973 @cloudflare/pcx-technical-writing
 /src/content/docs/email-security/ @Maddy-Cloudflare @cloudflare/pcx-technical-writing
 /src/content/changelogs/access.yaml @ranbel @kennyj42 @cloudflare/pcx-technical-writing
-/src/content/changelogs/warp.yaml @ranbel @cloudflare/pcx-technical-writing
+/src/content/changelogs/warp.yaml @kokolocomotion1 @ranbel @cloudflare/pcx-technical-writing
 
 # Consumer products
 
@@ -74,11 +78,11 @@
 /src/content/docs/cloudflare-for-platforms/cloudflare-for-saas/ @RebeccaTamachiro @cloudflare/pcx-technical-writing
 /src/content/docs/dns/ @RebeccaTamachiro @cloudflare/pcx-technical-writing
 /src/content/docs/fundamentals/ @cloudflare/pcx-technical-writing
-/src/content/docs/fundamentals/account-and-billing/ @patriciasantaana @cloudflare/pcx-technical-writing
+/src/content/docs/fundamentals/account-and-billing/ @dcpena @cloudflare/pcx-technical-writing
 /src/content/docs/learning-paths/ @cloudflare/pcx-technical-writing
 /src/content/docs/network-error-logging/ @dcpena @cloudflare/pcx-technical-writing
 /src/content/docs/network-interconnect/ @marciocloudflare @cloudflare/pcx-technical-writing
-/src/content/docs/notifications/ @patriciasantaana @cloudflare/pcx-technical-writing
+/src/content/docs/notifications/ @dcpena @cloudflare/pcx-technical-writing
 /src/content/docs/registrar/ @jason-cf @cloudflare/pcx-technical-writing
 /src/content/docs/rules/ @pedrosousa @cloudflare/pcx-technical-writing
 /src/content/docs/ruleset-engine/ @pedrosousa @cloudflare/pcx-technical-writing
@@ -108,8 +112,8 @@
 /src/content/docs/pub-sub/ @elithrar @dcpena @cloudflare/pcx-technical-writing
 /src/content/docs/queues/ @elithrar @toddmantell @maheshwarip @cloudflare/pcx-technical-writing
 /src/content/changelogs/queues.yaml @elithrar @toddmantell @maheshwarip @cloudflare/pcx-technical-writing
-/src/content/docs/r2/ @dcpena @elithrar @jonesphillip @cloudflare/workers-docs @cloudflare/pcx-technical-writing
-/src/content/changelogs/r2.yaml @dcpena @elithrar @cloudflare/workers-docs @cloudflare/pcx-technical-writing
+/src/content/docs/r2/ @oxyjun @elithrar @jonesphillip @cloudflare/workers-docs @cloudflare/pcx-technical-writing
+/src/content/changelogs/r2.yaml @oxyjun @elithrar @cloudflare/workers-docs @cloudflare/pcx-technical-writing
 /src/content/docs/stream/ @tsmith512 @dcpena @cloudflare/pcx-technical-writing @renandincer @third774
 /src/content/changelogs/stream.yaml @tsmith512 @dcpena @cloudflare/pcx-technical-writing
 /src/content/docs/workers/ @cloudflare/workers-docs @GregBrimble @irvinebroque @mikenomitch @WalshyDev @cloudflare/deploy-config @cloudflare/pcx-technical-writing @ToriLindsay
@@ -180,8 +184,8 @@
 
 # Radar
 
-/src/content/docs/radar/ @meddulla @G4brym @tiagoad @cloudflare/pcx-technical-writing
-/src/content/changelogs/radar.yaml @meddulla @G4brym @tiagoad @cloudflare/pcx-technical-writing
+/src/content/docs/radar/ @meddulla @G4brym @tiagoad @andre-j3sus @cloudflare/pcx-technical-writing
+/src/content/changelogs/radar.yaml @meddulla @G4brym @tiagoad @andre-j3sus @cloudflare/pcx-technical-writing
 
 # Reference architecture
 

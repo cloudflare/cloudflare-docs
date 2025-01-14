@@ -41,7 +41,7 @@ const openai = new OpenAI({
 	apiKey: process.env.OPENAI_API_KEY,
 	baseURL: "https://gateway.ai.cloudflare.com/v1/account-id/gateway/openai",
 	defaultHeaders: {
-		"cf-aig-token": `Bearer {token}`,
+		"cf-aig-authorization": `Bearer {token}`,
 	},
 });
 ```
@@ -54,7 +54,7 @@ import { createOpenAI } from "@ai-sdk/openai";
 const openai = createOpenAI({
 	baseURL: "https://gateway.ai.cloudflare.com/v1/account-id/gateway/openai",
 	headers: {
-		"cf-aig-token": `Bearer {token}`,
+		"cf-aig-authorization": `Bearer {token}`,
 	},
 });
 ```

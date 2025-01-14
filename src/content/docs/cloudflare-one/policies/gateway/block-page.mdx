@@ -3,6 +3,8 @@ pcx_content_type: how-to
 title: Block page
 sidebar:
   order: 11
+banner:
+  content: The default global Cloudflare root certificate will expire on 2025-02-02. If you installed the default Cloudflare certificate before 2024-10-17, you must <a href="/cloudflare-one/connections/connect-devices/user-side-certificates/#generate-a-cloudflare-root-certificate">generate a new certificate</a> and activate it for your Zero Trust organization to avoid inspection errors.
 ---
 
 import { Render } from "~/components";
@@ -25,20 +27,17 @@ In order to display the block page as the URL of the blocked domain, your device
 
 ## Turn on the block page
 
-For all HTTP Block policies, Gateway automatically displays a generic Cloudflare block page. For DNS Block policies, you will need to enable the block page on a per-policy basis.
+For all HTTP Block policies, Gateway automatically displays a generic Cloudflare block page. For DNS Block policies, you will need to turn on the block page on a per-policy basis.
 
 To turn on the block page and specify a custom block message:
 
 <Render
 	file="gateway/add-block-page"
 	params={{
-		one: "Gateway > Firewall Policies > DNS or Gateway > Firewall Policies > HTTP",
+		firewallPolicyPath:
+			"**Gateway** > **Firewall policies** > **DNS** or **Gateway** > **Firewall policies** > **HTTP**",
 	}}
 />
-
-## Troubleshoot the block page
-
-If your users receive a security risk warning in their browser when visiting a blocked page, check that you have correctly [installed a Cloudflare certificate](/cloudflare-one/connections/connect-devices/user-side-certificates/manual-deployment/) on their devices.
 
 ## Customize the block page
 
@@ -52,12 +51,20 @@ If your users receive a security risk warning in their browser when visiting a b
 
 You can add a Mailto link to your custom block page, which allows users to directly email you about the blocked site. When users select **Contact your Administrator** on your block page, an email template opens with the email address and subject line you configure, as well as the following diagnostic information:
 
-| Field        | Description                                                                                                                                                                             |
-| ------------ | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Site URL     | The URL of the blocked page.                                                                                                                                                            |
-| Rule ID      | The ID of the Gateway policy that blocked the page.                                                                                                                                     |
-| Source IP    | The public source IP of the user device.                                                                                                                                                |
-| Account ID   | The Cloudflare account associated with the block policy.                                                                                                                                |
+| Field        | Description                                                                                                                                                                                                                 |
+| ------------ | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Site URL     | The URL of the blocked page.                                                                                                                                                                                                |
+| Rule ID      | The ID of the Gateway policy that blocked the page.                                                                                                                                                                         |
+| Source IP    | The public source IP of the user device.                                                                                                                                                                                    |
+| Account ID   | The Cloudflare account associated with the block policy.                                                                                                                                                                    |
 | User ID      | The ID of the user who visited the page. Currently, User IDs are not surfaced in the dashboard and can only be viewed by calling the [API](/api/resources/zero_trust/subresources/access/subresources/users/methods/list/). |
-| Device ID    | The ID of the device that visited the page. This is generated by the WARP client.                                                                                                       |
-| Block Reason | Your policy-specific block message.                                                                                                                                                     |
+| Device ID    | The ID of the device that visited the page. This is generated by the WARP client.                                                                                                                                           |
+| Block Reason | Your policy-specific block message.                                                                                                                                                                                         |
+
+## Limitations
+
+If your users receive a security risk warning in their browser when visiting a blocked page, check that you have correctly [installed a Cloudflare certificate](/cloudflare-one/connections/connect-devices/user-side-certificates/manual-deployment/) on their devices.
+
+If an HTTP request that matches a block policy does not arrive at the same Cloudflare data center as its DNS query, Gateway will display the default block page instead of your custom block page.
+
+If the HTTP request comes from a different IP address than the DNS request, Gateway may not display the rule ID, custom message, or other fields on the block page. This can happen when a recursive DNS resolver's source IP address differs from the user device's IP address.

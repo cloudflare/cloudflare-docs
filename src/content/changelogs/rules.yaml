@@ -5,6 +5,18 @@ productLink: "/rules/"
 productArea: Application performance
 productAreaLink: /fundamentals/reference/changelog/performance/
 entries:
+  - publish_date: "2025-01-09"
+    title: New Rules Overview page
+    description: |-
+      The new **Rules Overview** interface consolidates Cloudflare Rules products into a single, intuitive page, simplifying navigation and rule management. Key features include:
+
+      - **Unified interface**: Manage all rules in one place — no more navigating through multiple menu tabs.
+      - **Search across rules**: Quickly locate specific rules.
+      - **Clear rule order**: View and manage rules by their execution sequence for streamlined configuration.
+      - **Enhanced visibility**: Instantly view the filter (conditions) and action (outcome) for every rule.
+      - **Faster debugging**: Use Trace directly from the zone-level interface for simple, quick troubleshooting.
+
+      The new page is available in the Cloudflare dashboard at **Rules** > **Overview**.
   - publish_date: "2024-12-11"
     title: Snippets support in the Cloudflare provider for Terraform
     description: |-

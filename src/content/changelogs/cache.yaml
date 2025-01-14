@@ -5,6 +5,16 @@ productLink: "/cache/"
 productArea: Application performance
 productAreaLink: /fundamentals/reference/changelog/performance/
 entries:
+  - publish_date: "2025-01-08"
+    title: Smart Tiered Cache for Load balancing
+    description: |-
+      Smart Tiered Cache will now select a common single best Upper Tier for an entire Load Balancing Pool based on Origin performance measurements, increasing the cache HIT ratio.
+
+  - publish_date: "2024-11-20"
+    title: Smart Tiered Cache for R2
+    description: |-
+      R2 now automatically gets tiered cache if using Smart Tiered Cache. We select a data center close to your R2 storage bucket as a common Upper Tier cache.
+
   - publish_date: "2024-11-07"
     title: Shard Cache by cache key
     description: |-

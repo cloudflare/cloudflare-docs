@@ -15,26 +15,28 @@ These are the settings that you can configure when creating a cache rule.
 
 ## Fields
 
-The fields available for Cache Rule matching expressions in the Expression Builder are:
+The fields available for Cache Rule matching expressions in the **Expression Builder** are:
 
-* Cookie - `http.cookie`
-* Hostname - `http.host`
-* Referer - `http.referer`
-* SSL/HTTPS - `ssl`
-* URI Full - `http.request.full_uri`
-* URI - `http.request.uri`
-* URI Path - `http.request.uri.path`
-* URI Query String - `http.request.uri.query`
-* User Agent - `http.user_agent`
-* X-Forwarded-For - `http.x_forwarded_for`
-* Request Headers - `http.request.headers`
-* Cookie value of - `http.request.cookies`
+- URI Full - `http.request.full_uri`
+- URI - `http.request.uri`
+- URI Path - `http.request.uri.path`
+- URI Query String - `http.request.uri.query`
+- Cookie - `http.cookie`
+- Hostname - `http.host`
+- Referer - `http.referer`
+- SSL/HTTPS - `ssl`
+- User Agent - `http.user_agent`
+- X-Forwarded-For - `http.x_forwarded_for`
+- Request Headers - `http.request.headers`
+- Cookie value of - `http.request.cookies`
+- File extension - `http.request.uri.path.extension`
 
-For a list of all available fields refer to [Fields](/ruleset-engine/rules-language/fields/).
+If you select the [**Edit expression**](/ruleset-engine/rules-language/expressions/edit-expressions/#expression-editor) option, you can enter any of the [available fields](/ruleset-engine/rules-language/fields/).
 
 :::note
 
-Not all fields are available as a trigger for Cache Rules due to incompatibility with [Purge](/cache/how-to/purge-cache/). 
+The fields mentioned above support all types of purge. However, the [remaining available fields](/ruleset-engine/rules-language/fields/) support purge by tags, prefix (URL), hostname, and everything but are not compatible with [single file purge](/cache/how-to/purge-cache/purge-by-single-file/). 
+
 :::
 
 ## Operators

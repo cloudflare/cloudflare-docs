@@ -67,23 +67,23 @@ Troubleshooting steps for the most commonly reported crawl errors are mentioned 
 
 ### HTTP 4XX Errors
 
-[HTTP 4XX errors](https://support.cloudflare.com/hc/articles/115003014512) are the most common type of crawl error. Cloudflare delivers these errors from your web server to Google. These errors are caused for various reasons such as a missing page on your web server or a malformed link in your HTML. The solution depends upon the problem encountered.
+[HTTP 4XX errors](/support/troubleshooting/http-status-codes/4xx-client-error/) are the most common type of crawl error. Cloudflare delivers these errors from your web server to Google. These errors are caused for various reasons such as a missing page on your web server or a malformed link in your HTML. The solution depends upon the problem encountered.
 
 ### HTTP 5XX Errors
 
-[HTTP 5XX errors](https://support.cloudflare.com/hc/articles/115003011431) indicate that either Cloudflare or your origin web server experienced an internal error. To correlate occurrences of crawl errors with site outages, monitor your origin web server’s health. Monitoring your website health both through Cloudflare and directly to your origin web server IPs determines whether errors occurred due to Cloudflare or your origin web server.
+[HTTP 5XX errors](/support/troubleshooting/cloudflare-errors/troubleshooting-cloudflare-5xx-errors/) indicate that either Cloudflare or your origin web server experienced an internal error. To correlate occurrences of crawl errors with site outages, monitor your origin web server's health. Monitoring your website health both through Cloudflare and directly to your origin web server IPs determines whether errors occurred due to Cloudflare or your origin web server.
 
 ### DNS Errors
 
-Troubleshooting steps vary depending on whether your domain is on Cloudflare via a Full or CNAME setup. To verify which setup your domain uses, open a terminal and execute the following command (replace *[www.example.com](http://www.example.com)* with your Cloudflare domain):
+Troubleshooting steps vary depending on whether your domain is on Cloudflare via a Full or CNAME setup. To verify which setup your domain uses, open a terminal and execute the following command (replace `www.example.com` with your Cloudflare domain):
 
-`dig +short SOA` `_www.example.com_`
+`dig +short SOA` `www.example.com`
 
-For domains on a CNAME setup, the result response contains cdn.cloudflare.net. For example:
+For domains on a [Partial (CNAME) setup](/dns/zone-setups/partial-setup/), the result response contains cdn.cloudflare.net. For example:
 
 `example.com.cdn.cloudflare.net.`
 
-For domains on a Full setup, the result response contains the cloudflare.com domain in the nameservers listed. For example:
+For domains on a [Full setup](/dns/zone-setups/full-setup/), the result response contains the `cloudflare.com` domain in the nameservers listed. For example:
 
 `josh.ns.cloudflare.com. dns.cloudflare.com. 2013050901 10000 2400 604800 3600`
 

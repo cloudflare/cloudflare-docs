@@ -5,6 +5,10 @@ productLink: "/magic-cloud-networking/"
 productArea: Cloudflare One
 productAreaLink: /cloudflare-one/changelog/
 entries:
+  - publish_date: "2024-12-05"
+    title: Download cloud onramp terraform
+    description: |-
+      Customers can now generate customized terraform files for building cloud network on-ramps to Magic WAN. Magic Cloud can scan and discover existing network resources and generate the required terraform files to automate cloud resource deployment using their existing infrastructure-as-code workflows for cloud automation.
   - publish_date: "2024-11-21"
     title: Import cloud resources for VMs and LBs
     description: |-

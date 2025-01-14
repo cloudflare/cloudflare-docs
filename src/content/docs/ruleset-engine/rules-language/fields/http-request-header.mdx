@@ -30,7 +30,7 @@ The request header values are not pre-processed and retain the original case use
 - **Whitespace:** preserved
 - **Non-ASCII:** preserved
 
-Example:
+Example usage:
 
 ```txt
 any(http.request.headers["content-type"][*] == "application/json")
@@ -62,9 +62,9 @@ Duplicate headers are listed multiple times.
 - **Whitespace:** preserved
 - **Non-ASCII:** preserved
 
-Example:
+Example usage:
 
-```
+```txt
 any(http.request.headers.names[*] == "content-type")
 ```
 
@@ -86,30 +86,30 @@ Duplicate headers are listed multiple times.
 - **Whitespace:** preserved
 - **Non-ASCII:** preserved
 
-Example 1:
-
-```
-any(http.request.headers.values[*] == "application/json")
-```
-
 Example value 1:
 
-```
+```txt
 ["application/json"]
+```
+
+Example usage 1:
+
+```txt
+any(http.request.headers.values[*] == "application/json")
 ```
 
 Additionally used to match requests according to the specified operator and the length/size entered for the header value.
 
-Example 2:
-
-```
-any(len(http.request.headers.values[*])[*] gt 10)
-```
-
 Example value 2:
 
-```
+```txt
 ["This header value is longer than 10 bytes"]
+```
+
+Example usage 2:
+
+```txt
+any(len(http.request.headers.values[*])[*] gt 10)
 ```
 
 ## `http.request.headers.truncated`
@@ -133,13 +133,19 @@ If the HTTP header includes the language tag `*` it will not be stored in the ar
 Example 1:
 
 Request with header `Accept-Language: fr-CH, fr;q=0.8, en;q=0.9, de;q=0.7, *;q=0.5`. In this case:
-`http.request.accepted_languages[0] == "fr-CH"`
-`http.request.accepted_languages == ["fr-CH", "en", "fr", "de"]`
+
+```txt
+http.request.accepted_languages[0] ==> "fr-CH"
+http.request.accepted_languages    ==> ["fr-CH", "en", "fr", "de"]
+```
 
 Example 2:
 
 Request without an `Accept-Language` HTTP header and a URI of `https://www.example.com/my-path`. In this case:
-`concat("/", http.request.accepted_languages[0], http.request.uri.path) == "//my-path"`.
+
+```txt
+concat("/", http.request.accepted_languages[0], http.request.uri.path) ==> "//my-path"
+```
 
 :::note
 This field is only available in [Transform Rules](/rules/transform/).

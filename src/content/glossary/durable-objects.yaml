@@ -63,3 +63,11 @@ entries:
   - term: "event context"
     general_definition: |-
       The duration of time that a Durable Object is processing an event, such as a remote procedure call. [Compute duration charges](/durable-objects/platform/pricing) are incurred for the duration of the event context.
+
+  - term: "input gate"
+    general_definition: |-
+      While a storage operation is executing, no events shall be delivered to a Durable Object except for storage completion events. Any other events will be deferred until such a time as the object is no longer executing JavaScript code and is no longer waiting for any storage operations. We say that these events are waiting for the "input gate" to open.
+
+  - term: "output gate"
+    general_definition: |-
+      When a storage write operation is in progress, any new outgoing network messages will be held back until the write has completed. We say that these messages are waiting for the "output gate" to open. If the write ultimately fails, the outgoing network messages will be discarded and replaced with errors, while the Durable Object will be shut down and restarted from scratch.
