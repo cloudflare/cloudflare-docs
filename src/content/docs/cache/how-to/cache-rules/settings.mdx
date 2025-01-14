@@ -30,11 +30,11 @@ The fields available for Cache Rule matching expressions in the Expression Build
 * Request Headers - `http.request.headers`
 * Cookie value of - `http.request.cookies`
 
-For a list of all available fields refer to [Fields](/ruleset-engine/rules-language/fields/).
+For a list of all available fields refer to the [Fields reference](/ruleset-engine/rules-language/fields/reference/).
 
 :::note
 
-Not all fields are available as a trigger for Cache Rules due to incompatibility with [Purge](/cache/how-to/purge-cache/). 
+Not all fields are available as a trigger for Cache Rules due to incompatibility with [Purge](/cache/how-to/purge-cache/).
 :::
 
 ## Operators
@@ -56,7 +56,7 @@ The operators available for Cache Rule expressions are:
 
 :::note
 
-Not all operators are available for every selected field. 
+Not all operators are available for every selected field.
 :::
 
 ## Cache eligibility
@@ -73,7 +73,7 @@ When you select **Eligible for cache**, you can change the configuration setting
 
 :::note
 
-If you use cache rules, image transformations, and zone versioning simultaneously, some settings may not be applied correctly. 
+If you use cache rules, image transformations, and zone versioning simultaneously, some settings may not be applied correctly.
 :::
 
 #### Edge TTL
@@ -84,7 +84,7 @@ Edge Cache TTL refers to the maximum cache time-to-live (TTL), or how long an as
 * **Use cache-control header if present, use default Cloudflare caching behavior if not**: If a cache-control header is present on the response, follow its directives. If not, cache in accordance with our [default edge TTL settings](/cache/how-to/configure-cache-status-code/#edge-ttl).
 * **Ignore cache-control header and use this TTL**: Completely ignore any cache-control header on the response and instead cache the response for a duration specified in the timing dropdown.
 
-Additionally, you can select how long you would like a particular matching status code’s content to be cached in Cloudflare’s global network. In **Status Code TTL** section you can define the TTL duration for one or more status codes of responses from the origin server. This setting can be applied to a *Single code* status code, to a *Greater than or equal* or *Less than or equal* status code, or to a *Range* of status codes. Status code TTLs are similar to **Ignore cache-control header and use this TTL** in that the cache-control header on the response will be ignored in favor of the TTL specified by the cache rule. For more information, refer to [Status code TTL](/cache/how-to/configure-cache-status-code/).
+Additionally, you can select how long you would like a particular matching status code's content to be cached in Cloudflare's global network. In **Status Code TTL** section you can define the TTL duration for one or more status codes of responses from the origin server. This setting can be applied to a *Single code* status code, to a *Greater than or equal* or *Less than or equal* status code, or to a *Range* of status codes. Status code TTLs are similar to **Ignore cache-control header and use this TTL** in that the cache-control header on the response will be ignored in favor of the TTL specified by the cache rule. For more information, refer to [Status code TTL](/cache/how-to/configure-cache-status-code/).
 
 
 <Details header="API information">
@@ -256,7 +256,7 @@ This rule can also be used to specify Cache Reserve eligibility for website reso
 
 :::note
 
-Cloudflare will still enforce the plan-based [cacheable file limits](/cache/concepts/default-cache-behavior/#customization-options-and-limits) when using this configuration. 
+Cloudflare will still enforce the plan-based [cacheable file limits](/cache/concepts/default-cache-behavior/#customization-options-and-limits) when using this configuration.
 :::
 
 <Details header="API information">
@@ -290,7 +290,7 @@ Cloudflare supports several [network ports](/fundamentals/reference/network-port
 
 :::note
 
-Cloudflare supports many ports by default and will cache on them without needing this rule to be configured. For ports that Cloudflare supports, but for which caching is disabled, use this rule. 
+Cloudflare supports many ports by default and will cache on them without needing this rule to be configured. For ports that Cloudflare supports, but for which caching is disabled, use this rule.
 :::
 
 

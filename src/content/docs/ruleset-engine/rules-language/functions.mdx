@@ -274,7 +274,7 @@ For example, if `http.request.uri.path` is `"/blog/first-post"`, then `starts_wi
 {/* prettier-ignore */}
 <code>substring(field <Type text="String | Bytes" />, start <Type text="Integer" />, end <Type text="Integer" /> <MetaInfo text='optional' />)</code>: <Type text="String" />
 
-Returns part of the `field` value (the value of a String or Bytes [field](/ruleset-engine/rules-language/fields/)) from the `start` byte index up to (but excluding) the `end` byte index. The first byte in `field` has index `0`. If you do not provide the optional `end` index, the function returns the part of the string from `start` index to the end of the string.
+Returns part of the `field` value (the value of a String or Bytes [field](/ruleset-engine/rules-language/fields/reference/)) from the `start` byte index up to (but excluding) the `end` byte index. The first byte in `field` has index `0`. If you do not provide the optional `end` index, the function returns the part of the string from `start` index to the end of the string.
 
 The `start` and `end` indexes can be negative integer values, which allows you to access characters from the end of the string instead of the beginning.
 
