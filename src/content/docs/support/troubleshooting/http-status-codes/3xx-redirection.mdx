@@ -5,7 +5,7 @@ title: 3xx Redirection
 
 ---
 
-3xx codes are a class of responses that indicate that the User-Agent must take another course of action to obtain the complete requested resource.
+3xx codes are a class of responses that indicate that the HTTP client must take another course of action to obtain the complete requested resource.
 
 The redirect location should be specified in one of the following ways:
 
@@ -51,7 +51,7 @@ The response typically includes a `Location` header specifying the new URI. This
 
 ### Cloudflare-specific information
 
-Cloudflare can generate 301 Moved Permanently responses without needing to query the origin server. This is achieved through the use of Page Rules, which allow users to configure permanent redirects directly at the Cloudflare edge. For more information, refer to [Redirect Rules](/rules/url-forwarding/).
+Cloudflare can generate 301 Moved Permanently responses without needing to query the origin server. For more information, refer to [Redirect Rules](/rules/url-forwarding/).
 
 ## 302 Found 
 
@@ -71,7 +71,7 @@ This status is typically used to:
 
 ### Cloudflare-specific information
 
-Cloudflare can generate these responses, eliminating the need to send a request to the origin server by using Page Rules. Learn more about how Cloudflare can help generate redirects with [Redirect Rules](/rules/url-forwarding/).
+Cloudflare can generate these responses, eliminating the need to send a request to the origin serve. Learn more about how Cloudflare can help generate redirects with [Redirect Rules](/rules/url-forwarding/).
 
 ## 303 See Other (since HTTP/1.1)
 
@@ -87,7 +87,7 @@ Although the initial 303 response is not cacheable, the response to the subseque
 
 ### Cloudflare-specific information
 
-Cloudflare allows for the configuration of 303 redirects through [Redirect Rules](/rules/url-forwarding/)., enabling seamless handling of these responses directly at the edge. This approach improves performance by avoiding unnecessary requests to the origin server.
+Cloudflare allows for the configuration of 303 redirects through [Redirect Rules](/rules/url-forwarding/), enabling seamless handling of these responses directly at the edge. This approach improves performance by avoiding unnecessary requests to the origin server.
 
 ## 304 Not Modified
 
