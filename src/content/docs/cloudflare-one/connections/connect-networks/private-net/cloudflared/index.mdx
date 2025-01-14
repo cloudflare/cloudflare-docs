@@ -32,14 +32,15 @@ To connect your infrastructure with Cloudflare Tunnel:
 
 ## 4. (Recommended) Filter network traffic with Gateway
 
-By default, all WARP devices enrolled in your Zero Trust organization can connect to your private network through Cloudflare Tunnel. You can configure Gateway to inspect your network traffic and either block or allow access based on user identity and device posture.
+By default, all WARP devices enrolled in your Zero Trust organization can connect to your private network through Cloudflare Tunnel. You can configure Gateway inspect your network traffic and either block or allow access based on user identity and device posture.
 
 ### Enable the Gateway proxy
 
 <Render file="tunnel/enable-gateway-proxy" />
 
-### Create Zero Trust policies
+### Zero Trust policies
 
+Cloudflare Zero Trust allows you to configure security policies using either Access or Gateway. If you have applications clearly defined by IPs or hostnames, we recommend [creating an Access application](/cloudflare-one/applications/non-http/self-hosted-private-app/) and managing user access alongside your SaaS and other web apps. Alternatively, if you prefer to secure a private network using a traditional firewall model, you can build Gateway [network and DNS policies](/learning-paths/replace-vpn/build-policies/) for IP ranges and domains.
 
 ## 5. Connect as a user
 

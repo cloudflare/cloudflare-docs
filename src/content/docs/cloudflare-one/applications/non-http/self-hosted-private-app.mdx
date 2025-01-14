@@ -5,3 +5,77 @@ sidebar:
   order: 3
   label: Add a self-hosted private application
 ---
+
+import { Render } from "~/components"
+
+You can configure a self-hosted Access application to manage access to specific IPs or hostnames on your private network.
+
+## Prerequisites
+
+- Private IPs and hostnames are reachable over Cloudflare WARP, Magic WAN or Browser Isolation. For more details, refer to [Connect a private network](/cloudflare-one/connections/connect-networks/private-net/).
+- Private hostnames route to your custom DNS resolver through [Local Domain Fallback](/cloudflare-one/connections/connect-devices/warp/configure-warp/route-traffic/local-domains/) or [Gateway resolver policies](/cloudflare-one/policies/gateway/resolver-policies/).
+- [Gateway TLS decryption](/cloudflare-one/policies/gateway/http-policies/tls-decryption/) must be enabled if you would like to present a login page in the browser. Otherwise, users will receive a pop-up notification from the WARP client.
+
+## 1. Add your application to Access
+
+1. In [Zero Trust](https://one.dash.cloudflare.com), go to **Access** > **Applications**.
+
+2. Select **Add an application**.
+
+3. Select **Self-hosted**.
+
+4. Enter any name for the application.
+
+5. In **Session Duration**, choose how often the user's [application token](/cloudflare-one/identity/authorization-cookie/application-token/) should expire.
+
+   Cloudflare checks every HTTP request to your application for a valid application token. If the user's application token (and global token) has expired, they will be prompted to reauthenticate with the IdP. For more information, refer to [Session management](/cloudflare-one/identity/users/session-management/).
+
+6. Add the private IP and/or private hostname that represents the application.
+
+	:::note
+	Private hostnames are currently only available over port `443` over HTTPS.
+	:::
+
+7. Add [Access policies](/cloudflare-one/policies/access/) to control who can connect to your application.
+
+8. <Render file="access/access-choose-idps" product="cloudflare-one" />
+
+9. Select **Next**.
+
+10. (Optional) Configure [App Launcher settings](/cloudflare-one/applications/app-launcher/) for the application.
+
+11. <Render file="access/access-block-page" product="cloudflare-one" />
+
+12. Select **Next**.
+
+13. (Optional) Configure advanced settings for your application:
+
+		- [**Cross-Origin Resource Sharing (CORS) settings**](/cloudflare-one/identity/authorization-cookie/cors/)
+		- [**Cookie settings**](/cloudflare-one/identity/authorization-cookie/#cookie-settings)
+		- **Browser rendering settings**:
+				- [Automatic `cloudflared` authentication](/cloudflare-one/applications/non-http/cloudflared-authentication/automatic-cloudflared-authentication/)
+				- [Browser rendering for SSH and VNC](/cloudflare-one/applications/non-http/browser-rendering/)
+		- **401 Response for Service Auth policies**: Return a `401` response code when a user (or machine) makes a request to the application without the correct [service token](/cloudflare-one/identity/service-tokens/).
+
+14. Select **Save**.
+
+## 2. (Optional) Modify order of precedence in Gateway
+
+By default, Cloudflare will evaluate Access private application policies after evaluating all Gateway network policies. To evaluate Access private application policies before or after specific Gateway policies, create the following [Gateway network policy](/cloudflare-one/policies/gateway/network-policies/):
+
+
+| Selector | Operator | Value        | Action |
+| -------- | -------- | ------------ | ------ |
+| All Access Private Apps | is       | `Enabled` | Allow  |
+
+You can now drag and drop this policy in the Gateway policy builder to change its [order of precedence](/cloudflare-one/policies/gateway/order-of-enforcement/#order-of-precedence).
+
+:::note
+All Access applications are deny by default -- a user must match an associated Access Allow policy before they are granted access. The Gateway policy is strictly for routing and connectivity purposes.
+:::
+
+## 3. Validate the Access token
+
+<Render file="access/secure-tunnel-with-access" />
+
+Users can now connect to your private application after authenticating with Cloudflare Access.
