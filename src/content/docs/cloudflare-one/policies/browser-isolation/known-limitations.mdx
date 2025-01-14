@@ -20,8 +20,14 @@ Our Network Vector Rendering (NVR) technology allows us to deliver a secure remo
 
 ## Browser compatibility
 
-- Modern Chromium, Google Chrome, Mozilla Firefox, Safari, Edge (Chromium) and Opera are supported.
-- Internet Explorer 11 and below is unsupported.
+| Browser                                      | Compatibility |
+| -------------------------------------------- | ------------- |
+| Google Chrome                                | ✅            |
+| Mozilla Firefox                              | ✅            |
+| Safari                                       | ✅            |
+| Microsoft Edge (Chromium-based)              | ✅            |
+| Other Chromium-based browsers (Opera, Brave) | ✅            |
+| Internet Explorer 11 and below               | ❌            |
 
 ## Virtual machines
 
@@ -68,7 +74,6 @@ Direct your users to use access the application via [Clientless Web Isolation](/
 For user convenience, [create a bookmark](/cloudflare-one/applications/bookmarks/) in Cloudflare Access for your application (for example, `https://<authdomain>.cloudflareaccess.com/browser/https://example.com`).
 
 :::note
-
 IdP sessions are not shared between the non-isolated IdP and the Clientless Web Isolation IdP. Users will be prompted to establish an additional session with their IdP.
 :::
 
@@ -76,13 +81,13 @@ IdP sessions are not shared between the non-isolated IdP and the Clientless Web 
 
 Configure a [self-hosted application](/cloudflare-one/applications/configure-apps/self-hosted-apps/) in Cloudflare Access and [enable browser isolation](/cloudflare-one/policies/access/isolate-application/) in the application settings.
 
-#### Isolate both Identity Provider and Service Provider
+#### Isolate both identity provider and service provider
 
-The HTTP `405` error does not occur when both the IdP and SP are isolated.
+The HTTP `405` error does not occur when both the IdP and SP are isolated. For example:
 
-| Order | Selector    | Operator | Value                                    | Action  |
-| ----- | ----------- | -------- | ---------------------------------------- | ------- |
-| 1     | Application | In       | Your Identity Provider, Your Application | Isolate |
+| Precedence | Selector    | Operator | Value             | Action  |
+| ---------- | ----------- | -------- | ----------------- | ------- |
+| 1          | Application | in       | _Okta_, _Zendesk_ | Isolate |
 
 :::note
 SAML HTTP-POST attempts initiated from the remote browser are not forwarded to non-Isolated SPs. All SPs should be isolated to avoid SSO errors.
@@ -90,78 +95,13 @@ SAML HTTP-POST attempts initiated from the remote browser are not forwarded to n
 
 #### In-line SSO between Okta and Salesforce
 
-Some applications that use HTTP-POST bindings (for example, Salesforce) complete SSO with an internal HTTP Redirect. Applying a Do Not Isolate policy to the SAML HTTP-POST endpoint enables the SAML flow to complete, and authenticate the user into the application in the remote browser.
+Some applications that use HTTP-POST bindings (such as Salesforce) complete SSO with an internal HTTP redirect. Applying a Do Not Isolate policy to the SAML HTTP-POST endpoint enables the SAML flow to complete, and authenticate the user into the application in the remote browser. For example:
 
-<table>
-	<tbody>
-		<th colspan="1" rowspan="1">
-			Order
-		</th>
-		<th colspan="1" rowspan="1">
-			Selector
-		</th>
-		<th colspan="1" rowspan="1">
-			Operator
-		</th>
-		<th colspan="1" rowspan="1">
-			Value
-		</th>
-		<th colspan="1" rowspan="1">
-			Action
-		</th>
-		<tr>
-			<td colspan="1" rowspan="3">
-				1
-			</td>
-			<td colspan="1" rowspan="1">
-				Hostname
-			</td>
-			<td colspan="1" rowspan="1">
-				In
-			</td>
-			<td colspan="1" rowspan="1">
-				Your Salesforce Application Domain
-			</td>
-			<td colspan="1" rowspan="1"></td>
-			<td colspan="1" rowspan="1"></td>
-		</tr>
-		<tr>
-			<td colspan="3" rowspan="1">
-				And
-			</td>
-			<td colspan="1" rowspan="1"></td>
-			<td colspan="1" rowspan="1"></td>
-		</tr>
-		<tr>
-			<td colspan="1" rowspan="1">
-				HTTP Method
-			</td>
-			<td colspan="1" rowspan="1">
-				In
-			</td>
-			<td colspan="1" rowspan="1">
-				POST
-			</td>
-			<td colspan="1" rowspan="1">
-				Do Not Isolate
-			</td>
-		</tr>
-		<tr>
-			<td colspan="1" rowspan="1">
-				2
-			</td>
-			<td colspan="1" rowspan="1">
-				Hostname
-			</td>
-			<td colspan="1" rowspan="1">
-				In
-			</td>
-			<td colspan="1" rowspan="1">
-				Your Salesforce application domain
-			</td>
-			<td colspan="1" rowspan="1">
-				Isolate
-			</td>
-		</tr>
-	</tbody>
-</table>
+| Precedence | Selector    | Operator | Value                                | Logic | Action         |
+| ---------- | ----------- | -------- | ------------------------------------ | ----- | -------------- |
+| 1          | Host        | in       | `your-salesforce-domain.example.com` | And   | Do Not Isolate |
+|            | HTTP Method | in       | _POST_                               |       |                |
+
+| Precedence | Selector | Operator | Value                                | Action  |
+| ---------- | -------- | -------- | ------------------------------------ | ------- |
+| 2          | Host     | in       | `your-salesforce-domain.example.com` | Isolate |
