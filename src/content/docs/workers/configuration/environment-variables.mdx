@@ -99,6 +99,48 @@ Select the **Secret** type if your environment variable is a [secret](/workers/c
 
 <Render file="secrets-in-dev" />
 
+## Environment variables and Node.js compatibility
+
+When you enable both the [`nodejs_compat`](/workers/runtime-apis/nodejs/) and
+[`nodejs_compat_populate_process_env`](/workers/configuration/compatibility-flags/#nodejs_compat_populate_process_env)
+compatibility flags, and the `disallow_importable_env` compatibility flag is
+not set, environment variables will also be available via the global
+`process.env`. Note that the `nodejs_compat_populate_process_env` flag is
+enabled automatically when `nodejs_compat` is used with a compatibility date
+on or after April 1st, 2025.
+
+The `process.env` will be populated lazily the first time that `process` is accessed
+in the worker.
+
+Text variable values are exposed directly.
+
+JSON variable values that evaluate to string values are exposed as the parsed value.
+
+JSON variable values that do not evaluate to string values are exposed as the raw
+JSON string.
+
+For example, imagine a Worker with three environment variables, two text values, and
+one JSON value:
+
+```
+[vars]
+FOO =  "abc"
+BAR =  "abc"
+BAZ = { "a": 123 }
+```
+
+Environment variables can be added using either the `wrangler.{json|jsonc|toml}` file or via the Cloudflare
+dashboard UI.
+
+The values of `process.env.FOO` and `process.env.BAR` will each be the
+JavaScript string `"abc"`.
+
+The value of `process.env.BAZ` will be the JSON-encoded string `"{ \"a\": 123 }"`.
+
+:::note
+Note also that because secrets are a form of environment variable within the runtime,
+secrets are also exposed via `process.env`.
+
 ## Related resources
 
 - Migrating environment variables from [Service Worker format to ES modules syntax](/workers/reference/migrate-to-module-workers/#environment-variables).
