@@ -1,37 +1,51 @@
 ---
 import WARPRelease from "./WARPRelease.astro";
 import Details from "./Details.astro";
-import { getEntry } from "astro:content";
+import { getCollection } from "astro:content";
+import { z } from "astro:schema";
 
-const sortByDate = (a: any, b: any) => b.date.getTime() - a.date.getTime();
+type Props = z.infer<typeof props>;
 
-const { data: windowsReleases } = await getEntry("warp-releases", "windows-ga");
+const props = z.object({
+	track: z.enum(["windows/ga", "windows/beta", "macos/ga", "macos/beta"]),
+});
 
-windowsReleases.sort(sortByDate);
+const { track } = props.parse(Astro.props);
 
-const latestWindowsRelease = windowsReleases.at(0);
+const sortByDate = (a: any, b: any) =>
+	b.releaseDate.getTime() - a.releaseDate.getTime();
 
-if (!latestWindowsRelease) {
+const entries = await getCollection("warp-releases", (release) => {
+	return release.id.startsWith(track);
+});
+
+const releases = entries.map((x) => x.data);
+
+releases.sort(sortByDate);
+
+const latestRelease = releases.at(0);
+
+if (!latestRelease) {
 	throw new Error();
 }
+
+const platform = latestRelease.platformName;
 ---
 
 <WARPRelease
 	header="Download latest release"
 	open={true}
-	platform="Windows"
-	release={latestWindowsRelease}
+	release={latestRelease}
 />
 
-<Details header=`Previous version history (${windowsReleases.length - 1})`>
+<Details header=`Previous version history (${releases.length - 1})`>
 	{
-		windowsReleases
+		releases
 			.slice(1)
 			.sort(sortByDate)
 			.map((release) => (
 				<WARPRelease
-					header={`Windows ${release.version}`}
-					platform="Windows"
+					header={`${platform} ${release.version}`}
 					release={release}
 				/>
 			))

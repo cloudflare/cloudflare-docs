@@ -2,8 +2,9 @@ import { z } from "astro:schema";
 
 export const warpReleasesSchema = z.object({
 	version: z.string(),
-	date: z.coerce.date(),
+	releaseDate: z.coerce.date(),
 	releaseNotes: z.string(),
 	packageSize: z.number(),
-	packagePath: z.string(),
+	packageURL: z.string(),
+	platformName: z.enum(["Windows", "macOS"]),
 });

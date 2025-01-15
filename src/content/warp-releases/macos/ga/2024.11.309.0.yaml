@@ -1,0 +1,25 @@
+releaseNotes: |
+  This release contains reliability improvements and general bug fixes.
+
+  Note: If using macOS Sequoia, Cloudflare recommends the use of macOS 15.1 or later. With macOS 15.1, Apple addressed several issues that may have caused the WARP client to not behave as expected when used with macOS 15.0.x.
+
+  ## Changes and improvements
+  - Fixed an issue where SSH sessions and other application connections over TCP or UDP could be dropped when using MASQUE and the device's primary network interface changed.
+  - Fixed an issue to ensure the managed certificate is installed in the trust store if not already there.
+  - Fixed an issue with the WARP client becoming unresponsive during startup.
+  - Extended warp-diag to collect system profiler firewall state as part of diagnostics.
+  - Fixed an issue with the WARP client becoming unresponsive while handling LAN inclusion.
+  - Fixed an issue where users were unable to connect with an IPC error message displayed in the UI.
+  - Fixed an issue that was preventing proper operation of DNS-over-TLS (DoT) for consumer users.
+
+  ## Known issues
+  - macOS Sequoia: Due to changes Apple introduced in macOS 15.0.x, the WARP client may not behave as expected. Cloudflare  recommends the use of macOS 15.1 or later.
+
+  For Zero Trust documentation please see: https://developers.cloudflare.com/cloudflare-one/connections/connect-devices/warp
+
+  For Consumer documentation please see: https://developers.cloudflare.com/warp-client/
+version: 2024.11.309.0
+releaseDate: 2024-11-18T21:48:45.789Z
+packageURL: https://downloads.cloudflareclient.com/v1/download/macos/version/2024.11.309.0
+packageSize: 80967264
+platformName: macOS

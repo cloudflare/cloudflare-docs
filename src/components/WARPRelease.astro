@@ -11,11 +11,10 @@ type Props = z.infer<typeof props>;
 const props = z.object({
 	header: z.string(),
 	open: z.boolean().default(false),
-	platform: z.enum(["Windows", "Linux", "MacOS"]),
 	release: warpReleasesSchema,
 });
 
-const { header, open, platform, release } = props.parse(Astro.props);
+const { header, open, release } = props.parse(Astro.props);
 ---
 
 <Details header={header} open={open}>
@@ -25,11 +24,12 @@ const { header, open, platform, release } = props.parse(Astro.props);
 		</span>
 		<div class="flex gap-2">
 			<span>
-				<a href={release.packagePath}>{platform} {release.version}</a>
+				<a href={release.packageURL}>{release.platformName} {release.version}</a
+				>
 			</span>
 			<span>
 				<strong>Date: </strong>
-				{format(release.date, "yyyy-MM-dd")}
+				{format(release.releaseDate, "yyyy-MM-dd")}
 			</span>
 			<span>
 				<strong>Size: </strong>

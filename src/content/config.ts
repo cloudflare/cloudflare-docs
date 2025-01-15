@@ -76,7 +76,7 @@ export const collections = {
 		type: "data",
 	}),
 	"warp-releases": defineCollection({
-		schema: warpReleasesSchema.array(),
+		schema: warpReleasesSchema,
 		type: "data",
 	}),
 };

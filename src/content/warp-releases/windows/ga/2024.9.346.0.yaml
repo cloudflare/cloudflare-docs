@@ -1,0 +1,25 @@
+releaseNotes: |
+  This release contains minor fixes and improvements.
+
+  ## Changes and improvements
+  - Added list targets to the warp-cli to enhance the user experience with the Access for Infrastructure SSH solution.
+  - Added pre-login configuration details to the warp-diag output.
+  - Added a tunnel reset mtu subcommand to the warp-cli.
+  - Added a JSON output option to the warp-cli.
+  - Added the ability for warp-cli to use the team provided in the MDM file for initial registration.
+  - Added the ability to execute a pcap on multiple interfaces with warp-cli and warp-dex.
+  - Improved warp-dex default interface selection for pcaps; changed warp-dex cli output to JSON.
+  - Fixed an issue where the client, when switching between WireGuard and MASQUE protocols, sometimes required a manual tunnel key reset.
+  - Added MASQUE tunnel protocol support for Consumer WARP.
+
+  ## Known issues
+  - Using MASQUE as the tunnel protocol may be incompatible if your organization has Regional Services enabled.
+
+  For Zero Trust documentation please see: https://developers.cloudflare.com/cloudflare-one/connections/connect-devices/warp
+
+  For Consumer documentation please see: https://developers.cloudflare.com/warp-client/
+version: 2024.9.346.0
+releaseDate: 2024-10-03T22:25:25.836Z
+packageURL: https://downloads.cloudflareclient.com/v1/download/windows/version/2024.9.346.0
+packageSize: 121704448
+platformName: Windows
