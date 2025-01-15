@@ -136,11 +136,11 @@ Adds a `Malicious-Uploads-Detection` request header indicating the outcome of sc
 
 The header can have one of the following values:
 
-| Header + Value                   | Description                                                                                                                                                                                                            |
-| -------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `Malicious-Uploads-Detection: 1` | The request contains at least one malicious content object ([`cf.waf.content_scan.has_malicious_obj`](/ruleset-engine/rules-language/fields/dynamic-fields/#cfwafcontent_scanhas_malicious_obj) is `true`).            |
-| `Malicious-Uploads-Detection: 2` | The file scanner was unable to scan all the content objects detected in the request ([`cf.waf.content_scan.has_failed`](/ruleset-engine/rules-language/fields/dynamic-fields/#cfwafcontent_scanhas_failed) is `true`). |
-| `Malicious-Uploads-Detection: 3` | The request contains at least one content object ([`cf.waf.content_scan.has_obj`](/ruleset-engine/rules-language/fields/dynamic-fields/#cfwafcontent_scanhas_obj) is `true`).                                          |
+| Header + Value                   | Description                                                                                                                                                                                                          |
+| -------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `Malicious-Uploads-Detection: 1` | The request contains at least one malicious content object ([`cf.waf.content_scan.has_malicious_obj`](/ruleset-engine/rules-language/fields/reference/cf.waf.content_scan.has_malicious_obj/) is `true`).            |
+| `Malicious-Uploads-Detection: 2` | The file scanner was unable to scan all the content objects detected in the request ([`cf.waf.content_scan.has_failed`](/ruleset-engine/rules-language/fields/reference/cf.waf.content_scan.has_failed/) is `true`). |
+| `Malicious-Uploads-Detection: 3` | The request contains at least one content object ([`cf.waf.content_scan.has_obj`](/ruleset-engine/rules-language/fields/reference/cf.waf.content_scan.has_obj/) is `true`).                                          |
 
 For more information, refer to [Malicious uploads detection](/waf/detections/malicious-uploads/).
 
