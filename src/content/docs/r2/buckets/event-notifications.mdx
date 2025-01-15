@@ -31,7 +31,7 @@ To begin, install [`npm`](https://docs.npmjs.com/getting-started). Then [install
 
 #### Enable event notifications on your R2 bucket
 
-Log in to Wrangler with the [`wrangler login` command](/workers/wrangler/commands/#login). Then add an [event notification rule](/r2/buckets/event-notifications/#event-notification-rules) to your bucket by running the [`r2 bucket notification create` command](/workers/wrangler/commands/#notification-create).
+Log in to Wrangler with the [`wrangler login` command](/workers/wrangler/commands/#login). Then add an [event notification rule](/r2/buckets/event-notifications/#event-notification-rules) to your bucket by running the [`r2 bucket notification create` command](/workers/wrangler/commands/#r2-bucket-notification-create).
 
 ```sh
 npx wrangler r2 bucket notification create <BUCKET_NAME> --event-type <EVENT_TYPE> --queue <QUEUE_NAME>

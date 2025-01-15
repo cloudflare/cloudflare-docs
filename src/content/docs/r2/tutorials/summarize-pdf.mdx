@@ -455,7 +455,7 @@ The queue handler now adds the summary to the R2 bucket as a text file.
 
 ## 9. Enable event notifications
 
-Your `queue` handler is ready to handle incoming event notification messages. You need to enable event notifications with the [`wrangler r2 bucket notification create` command](/workers/wrangler/commands/#notification-create) for your bucket. The following command creates an event notification for the `object-create` event type for the `pdf` suffix:
+Your `queue` handler is ready to handle incoming event notification messages. You need to enable event notifications with the [`wrangler r2 bucket notification create` command](/workers/wrangler/commands/#r2-bucket-notification-create) for your bucket. The following command creates an event notification for the `object-create` event type for the `pdf` suffix:
 
 ```sh
 npx wrangler r2 bucket notification create <R2_BUCKET_NAME> --event-type object-create --queue pdf-summarizer --suffix "pdf"

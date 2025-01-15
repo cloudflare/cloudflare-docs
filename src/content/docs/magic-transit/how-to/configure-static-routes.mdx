@@ -1,6 +1,6 @@
 ---
 pcx_content_type: how-to
-title: Configure static routes
+title: Configure routes
 sidebar:
   order: 2
 head: []
@@ -12,7 +12,7 @@ description: Magic Transit uses a static configuration to route your traffic
 
 import { Render } from "~/components"
 
-<Render file="static-routes/static-routes1" params={{ productName: "Magic Transit", anycastURL: "/magic-transit/reference/tunnels/", trafficSteering: "/magic-transit/reference/traffic-steering/", magicWANecmp: "" }} />
+<Render file="static-routes/static-routes1" params={{ productName: "Magic Transit", BGPpath: "/magic-transit/how-to/bgp-peering/", anycastURL: "/magic-transit/reference/tunnels/", trafficSteering: "/magic-transit/reference/traffic-steering/", magicWANecmp: "" }} />
 
 <Render file="static-routes/static-routes2-prefixes-smaller-24" />
 

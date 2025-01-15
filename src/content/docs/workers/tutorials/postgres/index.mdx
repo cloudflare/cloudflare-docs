@@ -325,7 +325,7 @@ Create a Hyperdrive configuration using the connection string for your PostgreSQ
 npx wrangler hyperdrive create <NAME_OF_HYPERDRIVE_CONFIG> --connection-string="postgres://user:password@HOSTNAME_OR_IP_ADDRESS:PORT/database_name"
 ```
 
-You can also use explicit parameters by following the [wrangler documentation for Hyperdrive](/workers/wrangler/commands/#create-1).
+You can also use explicit parameters by following the [wrangler documentation for Hyperdrive](/workers/wrangler/commands/#r2-bucket-create).
 
 This command outputs the Hyperdrive configuration `id` that will be used for your Hyperdrive [binding](/workers/runtime-apis/bindings/). Set up your binding by specifying the `id` in the `wrangler.toml` file.
 
