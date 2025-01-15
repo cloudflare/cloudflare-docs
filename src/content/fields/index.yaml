@@ -1615,7 +1615,7 @@ entries:
     categories: [Request, Body]
     keywords: [request, body, form, client, visitor]
     plan_info_label: Enterprise add-on
-    summary: The values of the form fields in an HTTP request
+    summary: The values of the form fields in an HTTP request.
     description: |-
       Populated when the `Content-Type` header is `application/x-www-form-urlencoded`.
 
