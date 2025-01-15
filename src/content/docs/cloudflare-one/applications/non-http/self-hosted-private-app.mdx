@@ -16,7 +16,7 @@ You can configure a self-hosted Access application to manage access to specific 
 - Private hostnames route to your custom DNS resolver through [Local Domain Fallback](/cloudflare-one/connections/connect-devices/warp/configure-warp/route-traffic/local-domains/) or [Gateway resolver policies](/cloudflare-one/policies/gateway/resolver-policies/).
 - [Gateway TLS decryption](/cloudflare-one/policies/gateway/http-policies/tls-decryption/) must be enabled if you would like to present a login page in the browser. Otherwise, users will receive a pop-up notification from the WARP client.
 
-## 1. Add your application to Access
+## Add your application to Access
 
 1. In [Zero Trust](https://one.dash.cloudflare.com), go to **Access** > **Applications**.
 
@@ -48,7 +48,7 @@ You can configure a self-hosted Access application to manage access to specific 
 
 12. Select **Next**.
 
-13. (Optional) Configure advanced settings for your application:
+13. (Optional) Configure advanced settings. These settings only apply to private hostnames and require Gateway TLS decryption.
 
 		- [**Cross-Origin Resource Sharing (CORS) settings**](/cloudflare-one/identity/authorization-cookie/cors/)
 		- [**Cookie settings**](/cloudflare-one/identity/authorization-cookie/#cookie-settings)
@@ -59,7 +59,9 @@ You can configure a self-hosted Access application to manage access to specific 
 
 14. Select **Save**.
 
-## 2. (Optional) Modify order of precedence in Gateway
+Users can now connect to your private application after authenticating with Cloudflare Access.
+
+## Modify order of precedence in Gateway
 
 By default, Cloudflare will evaluate Access private application policies after evaluating all Gateway network policies. To evaluate Access private application policies before or after specific Gateway policies, create the following [Gateway network policy](/cloudflare-one/policies/gateway/network-policies/):
 
@@ -73,9 +75,3 @@ You can now drag and drop this policy in the Gateway policy builder to change it
 :::note
 All Access applications are deny by default -- a user must match an associated Access Allow policy before they are granted access. The Gateway policy is strictly for routing and connectivity purposes.
 :::
-
-## 3. Validate the Access token
-
-<Render file="access/secure-tunnel-with-access" />
-
-Users can now connect to your private application after authenticating with Cloudflare Access.
