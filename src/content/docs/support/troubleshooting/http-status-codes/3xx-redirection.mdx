@@ -5,7 +5,7 @@ title: 3xx Redirection
 
 ---
 
-3xx codes are a class of responses that indicate that the HTTP client must take another course of action to obtain the complete requested resource.
+3xx codes are a class of responses which indicate that the HTTP client must take another course of action to obtain the complete requested resource.
 
 The redirect location should be specified in one of the following ways:
 
@@ -106,7 +106,7 @@ A 304 response contains:
 
 ### Cloudflare-specific information
 
-When a stale request must be revalidated at the origin, Cloudflare sends a 304 response to confirm that the cached version matches the origin version. The response includes the `CF-Cache-Status: REVALIDATED` header, and Cloudflare validates the version using the `If-Modified-Since` header. For more information, refer to  [ETag Headers](/cache/reference/etag-headers/).
+When a stale request must be revalidated at the origin, Cloudflare sends a 304 response to confirm that the cached version matches the origin version. The response includes the `CF-Cache-Status: REVALIDATED` header, and Cloudflare validates the version using the `If-Modified-Since` header. For more information, refer to [ETag Headers](/cache/reference/etag-headers/).
 
 ## 305 Use Proxy (deprecated)
 
@@ -118,7 +118,7 @@ This status code indicates that subsequent requests should be sent through the s
 
 ## 307 Temporary Redirect
 
-The 307 Temporary Redirect status indicates that a requested resource has been temporarily moved to a different URI, as specified in the Location header. Unlike a 302 redirect, the original request method (for example, `GET` or `POST`) must remain unchanged when the redirect is followed automatically. This ensures that temporary changes to a resource's location do not disrupt the intended behavior of the request. User agents may automatically follow the redirect using the `Location` header but should not replace the original URI for future requests.
+The 307 Temporary Redirect status indicates that a requested resource has been temporarily moved to a different URI, as specified in the `Location` header. Unlike a 302 redirect, the original request method (for example, `GET` or `POST`) must remain unchanged when the redirect is followed automatically. This ensures that temporary changes to a resource's location do not disrupt the intended behavior of the request. User agents may automatically follow the redirect using the `Location` header, but should not replace the original URI for future requests.
 
 For more information, refer to [RFC7231](https://tools.ietf.org/html/rfc7231).
 
