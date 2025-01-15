@@ -448,6 +448,25 @@ entries:
     keywords: [request, tls, https, client, visitor]
     summary: Returns `true` when the HTTP connection to the client is encrypted.
 
+  - name: cf.api_gateway.auth_id_present
+    data_type: Boolean
+    categories: [Request]
+    keywords: [request, session, api shield, client, visitor]
+    plan_info_label: Enterprise add-on
+    summary: Indicates whether the request contained an API session authentication token, as defined by API Shield's saved [session identifiers](/api-shield/get-started/#session-identifiers).
+
+  - name: cf.api_gateway.request_violates_schema
+    data_type: Boolean
+    categories: [Request]
+    keywords: [request, api shield, client, visitor]
+    summary: Indicates whether the request [violated the schema](/api-shield/security/schema-validation/) assigned to the respective saved endpoint.
+
+  - name: cf.api_gateway.fallthrough_detected
+    data_type: Boolean
+    categories: [Request]
+    keywords: [request, api shield, client, visitor]
+    summary: Indicates whether the request matched a saved endpoint in [Endpoint Management](/api-shield/management-and-monitoring/).
+
   - name: cf.bot_management.verified_bot
     data_type: Boolean
     categories: [Request, Bots]
