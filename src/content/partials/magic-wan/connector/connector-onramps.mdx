@@ -9,18 +9,18 @@ import { GlossaryTooltip, Markdown, Render, TabItem, Tabs } from "~/components";
 
 ### 1. Add a Connector on-ramp
 
-The first steps you need to do is to add your Connector to the Cloudflare dashboard and set up all the settings associated with it before you can connect your Magic WAN Connector to the Internet.
+You need to add your Connector to your Cloudflare dashboard and configure its settings before connecting it to the Internet.
 
 To add a Connector on-ramp:
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/) and select your account.
 2. Go to **Magic WAN** > **Connector on-ramps**.
 3. Select **Add**.
-4. In **Name**, input a name for your Connector and optionally you can also add a description for it.
-5. You need to decide if you want to turn on high availability for this connector. Refer to [About high availability configurations](#about-high-availability-configurations) for more information.
+4. In **Name**, enter a descriptive name for your Connector. Optionally, you can also add a description for it.
+5. You need to decide if you want to turn on high availability for the Connector. Refer to [About high availability configurations](#about-high-availability-configurations) for more information.
 6. Select **Create and continue**.
 7. Select **Add Connector**. This will show you a list of Magic WAN Connector devices associated with your account. <Markdown text={props.noConnectorShows} />
-8. If you have more than one Connector, choose the one that corresponds to the site you are creating. Connectors are identified by a serial number, also known as a service tag. Use this information to choose the right Connector. Select **Select Connector** when you are ready to proceed.
+8. If you have more than one Connector, choose the one that corresponds to the on-ramp you are creating. Connectors are identified by a serial number, also known as a service tag. Use this information to choose the right Connector. Select **Select Connector** when you are ready to proceed.
 9. The Connector will be added to your account with an **Interrupt window** defined. The interrupt window is the time period when the Magic WAN Connector software can update, which may result in interruption to existing connections. You can change this later. Refer to [Interrupt window](/magic-wan/configuration/connector/maintenance/interrupt-service-window/) for more details on how to define when the Connector can update its systems.
 10. Select **Continue** to proceed to creating your WAN and LAN networks.
 
@@ -117,7 +117,7 @@ curl https://api.cloudflare.com/client/v4/accounts/{account_id}/magic/sites/{sit
 
 ### 4 Add your Connector to a site
 
-After finishing your Connector configuration, you need to add it to a site. Sites represent the local network where you have installed your Magic WAN Connector - for example, a branch office location - and allow you to have all your on-ramps in one place. Sites also allow you to check, at a glance, the state of your on-ramps and set up health alert settings so that you get notified whenre there are issues with the site's on-ramps.
+After finishing your Connector configuration, you need to add it to a site. Sites represent the local network where you have installed your Magic WAN Connector — for example, a branch office location — and allow you to have all your on-ramps in one place. Sites also allow you to check, at a glance, the state of your on-ramps and set up health alert settings so that you get notified when there are issues with the site's on-ramps.
 
 Refer to [Set up a site](#) for more information.
 
