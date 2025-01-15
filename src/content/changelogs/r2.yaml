@@ -19,16 +19,16 @@ entries:
       - Public buckets accessible via custom domain now support Smart [Tiered Cache](/r2/buckets/public-buckets/#caching).
   - publish_date: "2024-11-19"
     description: |-
-      - R2 [`bucket lifecycle` command](/workers/wrangler/commands/#lifecycle-add) added to Wrangler. Supports listing, adding, and removing object lifecycle rules.
+      - R2 [`bucket lifecycle` command](/workers/wrangler/commands/#r2-bucket-lifecycle-add) added to Wrangler. Supports listing, adding, and removing object lifecycle rules.
   - publish_date: "2024-11-14"
     description: |-
-      - R2 [`bucket info` command](/workers/wrangler/commands/#info-2) added to Wrangler. Displays location of bucket and common metrics.
+      - R2 [`bucket info` command](/workers/wrangler/commands/r2-bucket-info) added to Wrangler. Displays location of bucket and common metrics.
   - publish_date: "2024-11-08"
     description: |-
-      - R2 [`bucket dev-url` command](/workers/wrangler/commands/#dev-url-enable) added to Wrangler. Supports enabling, disabling, and getting status of bucket's [r2.dev public access URL](/r2/buckets/public-buckets/#enable-managed-public-access).
+      - R2 [`bucket dev-url` command](/workers/wrangler/commands/#r2-bucket-dev-url-enable) added to Wrangler. Supports enabling, disabling, and getting status of bucket's [r2.dev public access URL](/r2/buckets/public-buckets/#enable-managed-public-access).
   - publish_date: "2024-11-06"
     description: |-
-      - R2 [`bucket domain` command](/workers/wrangler/commands/#domain-add) added to Wrangler. Supports listing, adding, removing, and updating [R2 bucket custom domains](/r2/buckets/public-buckets/#custom-domains).
+      - R2 [`bucket domain` command](/workers/wrangler/commands/#r2-bucket-domain-add) added to Wrangler. Supports listing, adding, removing, and updating [R2 bucket custom domains](/r2/buckets/public-buckets/#custom-domains).
   - publish_date: "2024-11-01"
     description: |-
       - Add `minTLS` to response of [list custom domains](/api/resources/r2/subresources/buckets/subresources/domains/subresources/custom/methods/list/) endpoint.

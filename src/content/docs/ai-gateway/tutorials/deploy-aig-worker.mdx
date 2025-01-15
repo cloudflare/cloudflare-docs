@@ -94,7 +94,7 @@ export default {
 };
 ```
 
-To make this work, you need to use [`wrangler secret put`](/workers/wrangler/commands/#put-3) to set your `OPENAI_API_KEY`. This will save the API key to your environment so your Worker can access it when deployed. This key is the API key you created earlier in the OpenAI dashboard:
+To make this work, you need to use [`wrangler secret put`](/workers/wrangler/commands/#put) to set your `OPENAI_API_KEY`. This will save the API key to your environment so your Worker can access it when deployed. This key is the API key you created earlier in the OpenAI dashboard:
 
 ```sh title="Save your API key to your Workers env"
 npx wrangler secret put OPENAI_API_KEY

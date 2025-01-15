@@ -148,7 +148,7 @@ npx wrangler deploy
 
 ## 8. Enable event notifications
 
-Now that you have your consumer Worker ready to handle incoming event notification messages, you need to enable event notifications with the [`wrangler r2 bucket notification create` command](/workers/wrangler/commands/#notification-create) for `example-upload-bucket`:
+Now that you have your consumer Worker ready to handle incoming event notification messages, you need to enable event notifications with the [`wrangler r2 bucket notification create` command](/workers/wrangler/commands/#r2-bucket-notification-create) for `example-upload-bucket`:
 
 ```sh
 npx wrangler r2 bucket notification create example-upload-bucket --event-type object-create --queue example-event-notification-queue
