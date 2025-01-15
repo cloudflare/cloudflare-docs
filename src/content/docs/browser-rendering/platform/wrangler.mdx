@@ -5,6 +5,8 @@ sidebar:
   order: 20
 ---
 
+import { Render, WranglerConfig } from "~/components"
+
 [Wrangler](/workers/wrangler/) is a command-line tool for building with Cloudflare developer products.
 
 Use Wrangler to deploy projects that use the Workers Browser Rendering API.
@@ -19,12 +21,7 @@ To install Wrangler, refer to [Install and Update Wrangler](/workers/wrangler/in
 
 To deploy a Browser Rendering Worker, you must declare a [browser binding](/workers/runtime-apis/bindings/) in your Worker's `wrangler.toml` configuration file.
 
-:::note[Wrangler configuration]
-
-If you are using [Puppeteer](/browser-rendering/platform/puppeteer/) in your Worker code, then you also need to add "nodejs_compat_v2" to the compatibility_flags in your Worker's `wrangler.toml` configuration. More information [here](/workers/runtime-apis/nodejs/#enable-nodejs-with-workers), including for [pages functions](/workers/runtime-apis/nodejs/#enable-nodejs-with-pages-functions).
-:::
-
-import { WranglerConfig } from "~/components";
+<Render file="nodejs-compat-howto" product="workers" />
 
 <WranglerConfig>
 

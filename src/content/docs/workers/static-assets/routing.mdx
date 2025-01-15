@@ -141,8 +141,8 @@ Based on the incoming requests, the following assets would be served:
 | /folder            | 307 to /folder/ | -                  |
 | /folder.html       | 307 to /folder/ | -                  |
 | /folder/           | 200             | /folder/index.html |
-| /folder/index      | 307 /folder/    | -                  |
-| /folder/index.html | 307 /folder/    | -                  |
+| /folder/index      | 307 to /folder/ | -                  |
+| /folder/index.html | 307 to /folder/ | -                  |
 
 #### 2. `not_found_handling`
 
@@ -185,18 +185,18 @@ Take the following directory structure:
 
 Based on the incoming requests, the following assets would be served:
 
-| Incoming Request   | Response       | Asset Served       |
-| ------------------ | -------------- | ------------------ |
-| /file              | 200            | /file.html         |
-| /file.html         | 307 to /file   | -                  |
-| /file/             | 307 to /file   | -                  |
-| /file/index        | 307 to /file   | -                  |
-| /file/index.html   | 307 to /file   | -                  |
-| /folder            | 307 to /folder | -                  |
-| /folder.html       | 307 to /folder | -                  |
-| /folder/           | 200            | /folder/index.html |
-| /folder/index      | 307 /folder    | -                  |
-| /folder/index.html | 307 /folder    | -                  |
+| Incoming Request   | Response        | Asset Served       |
+| ------------------ | --------------- | ------------------ |
+| /file              | 200             | /file.html         |
+| /file.html         | 307 to /file    | -                  |
+| /file/             | 307 to /file    | -                  |
+| /file/index        | 307 to /file    | -                  |
+| /file/index.html   | 307 to /file    | -                  |
+| /folder            | 307 to /folder/ | -                  |
+| /folder.html       | 307 to /folder  | -                  |
+| /folder/           | 200             | /folder/index.html |
+| /folder/index      | 307 to /folder  | -                  |
+| /folder/index.html | 307 to /folder  | -                  |
 
 **`html_handling: "force-trailing-slash"`**
 
@@ -212,8 +212,8 @@ Based on the incoming requests, the following assets would be served:
 | /folder            | 307 to /folder/ | -                  |
 | /folder.html       | 307 to /folder/ | -                  |
 | /folder/           | 200             | /folder/index.html |
-| /folder/index      | 307 /folder/    | -                  |
-| /folder/index.html | 307 /folder/    | -                  |
+| /folder/index      | 307 to /folder/ | -                  |
+| /folder/index.html | 307 to /folder/ | -                  |
 
 **`html_handling: "drop-trailing-slash"`**
 
@@ -229,8 +229,8 @@ Based on the incoming requests, the following assets would be served:
 | /folder            | 200            | /folder/index.html |
 | /folder.html       | 307 to /folder | -                  |
 | /folder/           | 307 to /folder | -                  |
-| /folder/index      | 307 /folder    | -                  |
-| /folder/index.html | 307 /folder    | -                  |
+| /folder/index      | 307 to /folder | -                  |
+| /folder/index.html | 307 to /folder | -                  |
 
 **`html_handling: "none"`**
 

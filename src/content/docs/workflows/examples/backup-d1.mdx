@@ -63,7 +63,7 @@ export class backupWorkflow extends WorkflowEntrypoint<Env, Params> {
     headers.append("Content-Type", "application/json");
     headers.append("Authorization", `Bearer ${this.env.D1_REST_API_TOKEN}`);
 
-    const bookmark = step.do(`Starting backup for ${databaseId}`, async () => {
+    const bookmark = await step.do(`Starting backup for ${databaseId}`, async () => {
       const payload = { output_format: "polling" };
 
       const res = await fetch(url, { method, headers, body: JSON.stringify(payload) });
@@ -75,7 +75,7 @@ export class backupWorkflow extends WorkflowEntrypoint<Env, Params> {
       return result.at_bookmark;
     });
 
-    step.do("Check backup status and store it on R2", async () => {
+    await step.do("Check backup status and store it on R2", async () => {
       const payload = { current_bookmark: bookmark };
 
       const res = await fetch(url, { method, headers, body: JSON.stringify(payload) });

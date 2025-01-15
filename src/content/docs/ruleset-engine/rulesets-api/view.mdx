@@ -195,9 +195,9 @@ Use one of the following API endpoints:
 | [Get an account entry point ruleset version][gerv-account] | `GET /accounts/{account_id}/rulesets/phases/{phase_name}/entrypoint/versions/{version_number}` |
 | [Get a zone entry point ruleset version][gerv-zone]        | `GET /zones/{zone_id}/rulesets/phases/{phase_name}/entrypoint/versions/{version_number}`       |
 
-[grv-account]: /api/resources/rulesets/methods/get/Version
+[grv-account]: /api/resources/rulesets/subresources/versions/methods/get/
 [grv-zone]: /api/resources/rulesets/subresources/versions/methods/get/
-[gerv-account]: /api/resources/rulesets/subresources/phases/methods/get/Version
+[gerv-account]: /api/resources/rulesets/subresources/phases/subresources/versions/methods/get/
 [gerv-zone]: /api/resources/rulesets/subresources/phases/subresources/versions/methods/get/
 
 When the specified phase entry point ruleset does not exist, this API method returns a `404 Not Found` HTTP status code.

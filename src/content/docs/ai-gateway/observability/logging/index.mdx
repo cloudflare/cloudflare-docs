@@ -16,7 +16,7 @@ You can store up to 10 million logs per gateway. If your limit is reached, new l
 
 To learn more about your plan limits, refer to [Limits](/ai-gateway/reference/limits/).
 
-We recommend using an authenticated gateway when storing logs to prevent unauthorized access and protecs against invalid requests that can inflate log storage usage and make it harder to find the data you need. Learn more about setting up an [authenticated gateway](/ai-gateway/configuration/authentication/).
+We recommend using an authenticated gateway when storing logs to prevent unauthorized access and protects against invalid requests that can inflate log storage usage and make it harder to find the data you need. Learn more about setting up an [authenticated gateway](/ai-gateway/configuration/authentication/).
 
 ## Default configuration
 
@@ -28,7 +28,7 @@ Logs, which include metrics as well as request and response data, are enabled by
 
 To override the default logging behavior set in the settings tab, you can define headers on a per-request basis.
 
-## Collect logs (`cf-aig-collect-log`)
+### Collect logs (`cf-aig-collect-log`)
 
 The `cf-aig-collect-log` header allows you to bypass the default log setting for the gateway. If the gateway is configured to save logs, the header will exclude the log for that specific request. Conversely, if logging is disabled at the gateway level, this header will save the log for that request.
 
@@ -51,8 +51,14 @@ curl https://gateway.ai.cloudflare.com/v1/{account_id}/{gateway_id}/openai/chat/
 '
 ```
 
-## Auto Log Cleanup
+## How to delete logs
+
+### Auto Log Cleanup
 
 Enable Auto Log Cleanup to automatically delete the oldest logs once the default storage limit of 10 million logs is reached, ensuring that new logs are always saved without needing manual deletion. Logs are deleted in chunks of 0.1% of the storage limit, which equates to 10,000 logs at a time.
 
 This setting is useful for maintaining continuous logging while staying within the default storage constraints.
+
+### Manual deletion
+
+To manually delete logs, navigate to the Logs tab in the dashboard. Use the available filters such as status, cache, provider, cost, or any other options in the dropdown to refine the logs you wish to delete. Once filtered, select Delete logs to complete the action.
