@@ -11,7 +11,7 @@ const props = z.object({
 	depth: z.number().min(1).max(6),
 });
 
-var { title, slug, depth } = props.parse(Astro.props);
+const { title, slug, depth } = props.parse(Astro.props);
 
 const slugified = GithubSlug(slug ?? title);
 
