@@ -3,6 +3,9 @@ import { z } from "astro:schema";
 import { marked } from "marked";
 import { slug as GithubSlug } from "github-slugger";
 
+// intentionally unused for CI test
+import { useEffect } from "react";
+
 type Props = z.infer<typeof props>;
 
 const props = z.object({

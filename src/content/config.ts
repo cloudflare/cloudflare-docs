@@ -11,7 +11,7 @@ import {
 	glossarySchema,
 	learningPathsSchema,
 	videosSchema,
-	workersAiSchema,
+	workersAiModelsSchema,
 	changelogsNextSchema,
 } from "~/schemas";
 
@@ -64,7 +64,7 @@ export const collections = {
 		type: "data",
 	}),
 	"workers-ai-models": defineCollection({
-		schema: workersAiSchema,
+		schema: workersAiModelsSchema,
 		type: "data",
 	}),
 	videos: defineCollection({

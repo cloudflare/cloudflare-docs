@@ -1,4 +1,6 @@
-const ModelBadges = ({ model }) => {
+import type { WorkersAIModelsSchema } from "~/schemas";
+
+const ModelBadges = ({ model }: { model: WorkersAIModelsSchema }) => {
 	const badges = model.properties.flatMap(({ property_id, value }) => {
 		if (property_id === "lora" && value === "true") {
 			return {
@@ -35,6 +37,9 @@ const ModelBadges = ({ model }) => {
 					className="bg-gray-100 dark:bg-gray-700 px-2 py-1 rounded-md block !mt-0"
 				>
 					{badge.text}
+					<a href="foo">
+						<a href="bar">baz</a>
+					</a>
 				</li>
 			))}
 		</ul>

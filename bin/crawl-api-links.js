@@ -63,6 +63,7 @@ async function checkLinks() {
 
 				const statusCode = await page.evaluate(() => {
 					return {
+						// eslint-disable-next-line no-undef
 						url: window.location.href,
 					};
 				});
