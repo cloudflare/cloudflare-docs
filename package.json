@@ -94,7 +94,7 @@
 		"tsx": "^4.19.2",
 		"typescript": "^5.7.3",
 		"unist-util-visit": "^5.0.0",
-		"vitest": "2.1.8",
+		"vitest": "3.0.1",
 		"wrangler": "^3.101.0",
 		"yaml": "^2.7.0"
 	},
