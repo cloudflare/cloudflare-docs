@@ -16,6 +16,16 @@ entries:
 
       For better insight into your current usage, refer to your [billing metrics](/d1/observability/billing/) for rows read and rows written, which can be found on the [D1 dashboard](https://dash.cloudflare.com/?account=/workers/d1) or GraphQL API.
 
+  - publish_date: "2024-01-07"
+    title: D1 end-to-end request latency decreases by 40-60%.
+    description: |-
+
+    D1 lowered end-to-end request latency by 40-60% by eliminating latency incurred with multiple network round trips required for each request. Faster D1 performance applies to requests via both D1's [Worker API](/d1/worker-api/) and [REST API](/api/resources/d1/subresources/database/methods/query/). 
+
+    For each request, two to three network round trips were eliminated. One round trip was introduced by a bug that was fixed. 
+    
+    The remaining removed round trips were responsible for creating TCP connections between Cloudflare data centers. D1's networking layer no longer relies on TCP connections, which removes additional round trip time.
+
   - publish_date: "2024-08-23"
     title: D1 alpha databases have stopped accepting SQL queries
     description: |-
