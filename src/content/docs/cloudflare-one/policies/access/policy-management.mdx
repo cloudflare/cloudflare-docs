@@ -6,7 +6,9 @@ sidebar:
 
 ---
 
-Access policies are properties of applications. When setting up an Access application, you will be prompted to create at least one policy for the application. You can go back and create, edit, or delete policies at any time.
+import {Tabs, TabItem } from "~/components";
+
+Access policies define the users who can log in to your Access applications. You can create, edit, or delete policies at any time and reuse them across multiple applications.
 
 ## Create a policy
 
@@ -80,3 +82,30 @@ The policy tester reports the following information:
 * Whether the user is allowed or denied access to the application based on all configured policies.
 * The user's identity from their most recent Access login attempt.
 * Whether the user matches individual Allow, Block, or Bypass policies.
+
+## Legacy policies
+
+Legacy policies are scoped to a specific application and cannot be added to newly created Access applications.
+
+### Migrate to reusable policies
+
+To migrate legacy policies to reusable policies:
+
+1. [Create a reusable policy](#create-a-policy) that will replace the legacy policy.
+2. Go to the application associated with the legacy policy.
+3. Add the reusable policy to the application and remove the legacy policy.
+4. Repeat these steps for each legacy policy. If you have duplicate legacy policies, you can replace them with a single reuseable policy.
+
+### Convert a legacy policy
+
+You can use the API to convert a legacy policy into a reusable policy. Once converted, you will only be able to manage the policy using the [reusable policies endpoints](/api/resources/zero_trust/subresources/access/subresources/policies/).
+
+To convert a legacy policy, make a `PUT` request with an empty request body:
+
+```bash
+curl --request PUT \
+https://api.cloudflare.com/client/v4/accounts/{account_id}/access/apps/{app_id}/policies/{legacy_policy_id}/make_reusable \
+--header "Authorization: Bearer <API_TOKEN>" \
+```
+
+A success response returns the policy details. The policy is now removed from `/access/apps/{app_id}/policies` and available at `/access/policies/{policy_id}`.

@@ -36,7 +36,7 @@ You can configure a self-hosted Access application to manage access to specific 
 	Private hostnames are currently only available over port `443` over HTTPS.
 	:::
 
-7. Add [Access policies](/cloudflare-one/policies/access/) to control who can connect to your application.
+7. Add [Access policies](/cloudflare-one/policies/access/) to control who can connect to your application. All Access applications are deny by default -- a user must match an Allow policy before they are granted access.
 
 8. <Render file="access/access-choose-idps" product="cloudflare-one" />
 
@@ -63,7 +63,7 @@ Users can now connect to your private application after authenticating with Clou
 
 ## Modify order of precedence in Gateway
 
-By default, Cloudflare will evaluate Access private application policies after evaluating all Gateway network policies. To evaluate Access private application policies before or after specific Gateway policies, create the following [Gateway network policy](/cloudflare-one/policies/gateway/network-policies/):
+By default, Cloudflare will evaluate a private application's Access policies after evaluating all Gateway network policies. To evaluate Access private applications before or after specific Gateway policies, create the following [Gateway network policy](/cloudflare-one/policies/gateway/network-policies/):
 
 
 | Selector | Operator | Value        | Action |
@@ -73,5 +73,5 @@ By default, Cloudflare will evaluate Access private application policies after e
 You can now drag and drop this policy in the Gateway policy builder to change its [order of precedence](/cloudflare-one/policies/gateway/order-of-enforcement/#order-of-precedence).
 
 :::note
-All Access applications are deny by default -- a user must match an associated Access Allow policy before they are granted access. The Gateway policy is strictly for routing and connectivity purposes.
+Users must pass the policies in your Access application before they are granted access. The Gateway policy is strictly for routing and connectivity purposes.
 :::

@@ -23,7 +23,7 @@ import { Render } from "~/components"
 
 		Alternatively, to use a [Cloudflare for SaaS custom hostname](/cloudflare-for-platforms/cloudflare-for-saas/security/secure-with-access/), set **Input method** to _Custom_ and enter your custom hostname.
 
-8. Add [Access policies](/cloudflare-one/policies/access/) to control who can connect to your application.
+8. Add [Access policies](/cloudflare-one/policies/access/) to control who can connect to your application. All Access applications are deny by default -- a user must match an Allow policy before they are granted access.
 
 9. <Render file="access/access-choose-idps" product="cloudflare-one" />
 
