@@ -6,5 +6,5 @@ export const warpReleasesSchema = z.object({
 	releaseNotes: z.string(),
 	packageSize: z.number(),
 	packageURL: z.string(),
-	platformName: z.enum(["Windows", "macOS"]),
+	platformName: z.enum(["Windows", "macOS", "Linux"]),
 });
