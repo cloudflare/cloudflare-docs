@@ -1,6 +1,6 @@
 import { useState } from "react";
 import FieldBadges from "./fields/FieldBadges";
-import { marked } from "marked";
+import Markdown from "react-markdown";
 
 const FieldCatalog = ({ fields }) => {
 	const [filters, setFilters] = useState({
@@ -116,12 +116,13 @@ const FieldCatalog = ({ fields }) => {
 									{field.name}
 								</span>
 							</div>
-							<p
+							<Markdown
 								className="!mt-2 line-clamp-2 text-sm leading-6"
-								dangerouslySetInnerHTML={{
-									__html: marked.parseInline(field.summary),
-								}}
-							/>
+								disallowedElements={["a"]}
+								unwrapDisallowed={true}
+							>
+								{field.summary}
+							</Markdown>
 
 							{field.plan_info_label && (
 								<div className="!mt-2 text-xs">
