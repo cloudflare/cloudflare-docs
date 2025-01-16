@@ -8,7 +8,7 @@ date: 2025-01-07T18:00:00Z
  
 [D1](/d1/) lowered end-to-end request latency by 40-60% by eliminating latency incurred with multiple network round trips required for each request. Faster D1 performance applies to requests via both D1's [Worker API](/d1/worker-api/) and [REST API](/api/resources/d1/subresources/database/methods/query/).
 
-Removing netowrk round trips particularily benefit user requests geographically far from the requested D1 database, e.g, user in Europe talking to a database in North America. D1 [location hints](https://developers.cloudflare.com/d1/configuration/data-location/#provide-a-location-hint) can be used to influence the geographic location of a database.
+Removing network round trips particularly benefits user requests geographically far from the requested D1 database. For example, a user in Europe talking to a database in North America. D1 [location hints](/d1/configuration/data-location/#provide-a-location-hint) can be used to influence the geographic location of a database.
 
 [TODO image]
 
