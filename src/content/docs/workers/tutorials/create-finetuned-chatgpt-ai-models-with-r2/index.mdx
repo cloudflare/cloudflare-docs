@@ -71,7 +71,7 @@ cd finetune-chatgpt-model
 
 Next, upload the fine-tune document to R2. R2 is a key-value store that allows you to store and retrieve files from within your Workers application. You will use [Wrangler](/workers/wrangler) to create a new R2 bucket.
 
-To create a new R2 bucket use the [`wrangler r2 bucket create`](/workers/wrangler/commands/#create-2) command. Note that you are logged in with your Cloudflare account. If not logged in via Wrangler, use the [`wrangler login`](/workers/wrangler/commands/#login) command.
+To create a new R2 bucket use the [`wrangler r2 bucket create`](/workers/wrangler/commands/#r2-bucket-create) command. Note that you are logged in with your Cloudflare account. If not logged in via Wrangler, use the [`wrangler login`](/workers/wrangler/commands/#login) command.
 
 ```sh
 npx wrangler r2 bucket create <BUCKET_NAME>
@@ -79,7 +79,7 @@ npx wrangler r2 bucket create <BUCKET_NAME>
 
 Replace `<BUCKET_NAME>` with your desired bucket name. Note that bucket names must be lowercase and can only contain dashes.
 
-Next, upload a file using the [`wrangler r2 object put`](/workers/wrangler/commands/#put-2) command.
+Next, upload a file using the [`wrangler r2 object put`](/workers/wrangler/commands/#r2-object-put) command.
 
 ```sh
 npx wrangler r2 object put <PATH> -f <FILE_NAME>
@@ -239,7 +239,7 @@ app.get("/jobs", async (c) => {
 
 After you have created your Worker application and added the required functions, deploy the application.
 
-Before you deploy, you must set the `OPENAI_API_KEY` [secret](/workers/configuration/secrets/) for your application. Do this by running the [`wrangler secret put`](/workers/wrangler/commands/#put-3) command:
+Before you deploy, you must set the `OPENAI_API_KEY` [secret](/workers/configuration/secrets/) for your application. Do this by running the [`wrangler secret put`](/workers/wrangler/commands/#put) command:
 
 ```sh
 npx wrangler secret put OPENAI_API_KEY

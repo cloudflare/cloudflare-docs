@@ -250,3 +250,13 @@ For example, if you need to resolve `example.com` through Cloudflare in your loc
 ```txt
 example.com CNAME example.com.cdn.cloudflare.net
 ```
+
+---
+
+## Why am I getting a warning for hostname not covered even if I have a custom certificate?
+
+If the [custom certificate](/ssl/edge-certificates/custom-certificates/) has been in place before our new certificate management pipeline, the following warning is displayed but can be discarded.
+
+`This hostname is not covered by a certificate.`
+
+The warning will be gone when you upload a new custom certificate, or start using another type of certificate for this hostname.
