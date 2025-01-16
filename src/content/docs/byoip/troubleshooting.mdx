@@ -6,7 +6,7 @@ sidebar:
 
 ---
 
-import { GlossaryTooltip } from "~/components"
+import { GlossaryTooltip } from "~/components";
 
 The following topics are useful for troubleshooting BYOIP issues.
 
@@ -22,10 +22,6 @@ If you are experiencing packet loss as a result of an upstream ISP implementing 
 
 ## Non-SNI support
 
-:::caution
-
 Currently, BYOIP cannot be used with [legacy custom certificates](/ssl/edge-certificates/custom-certificates/uploading/) to support <GlossaryTooltip term="Server Name Indication (SNI)" link="/ssl/reference/browser-compatibility/#non-sni-support">non-SNI</GlossaryTooltip> requests.
 
-:::
-
-An Address map can set the default SNI to enable non-SNI support, the default SNI can be any valid zone or subdomain owned by the account holding the BYOIP prefix. Refer to [Update Address Map API](/api/resources/addressing/subresources/address_maps/methods/edit/) for more information.
+Instead, you can use Address Maps to set a default SNI for IPs on your account or zone. Refer to [Setup](/byoip/address-maps/setup/#non-sni-support) for further guidance.
