@@ -26,9 +26,9 @@ import { Example, Render } from "~/components"
 
 ### 2. (Optional) Create CNAME target
 
-The `CNAME` target — optional, but highly encouraged — provides a friendly and more flexible place for customers to [route their traffic](#3-have-customer-create-cname-record). You may want to use a subdomain such as `customers.<SAAS_PROVIDER>.com`.
+The CNAME target — optional, but highly encouraged — provides a friendly and more flexible place for customers to [route their traffic](#3-have-customer-create-cname-record). You may want to use a subdomain such as `customers.<SAAS_PROVIDER>.com`.
 
-[Create](/dns/manage-dns-records/how-to/create-dns-records/#create-dns-records) a proxied `CNAME` that points your `CNAME` target to your fallback origin (can be a wildcard such as `*.customers.saasprovider.com`).
+[Create](/dns/manage-dns-records/how-to/create-dns-records/#create-dns-records) a proxied CNAME that points your CNAME target to your fallback origin (can be a wildcard such as `*.customers.saasprovider.com`).
 
 <Example>
 
@@ -46,11 +46,11 @@ The `CNAME` target — optional, but highly encouraged — provides a friendly a
 
 ### 3. Have customer create CNAME record
 
-To finish the custom hostname setup, your customer needs to set up a `CNAME` record at their authoritative DNS that points to your [`CNAME` target](#2-optional-create-cname-target) [^1].
+To finish the custom hostname setup, your customer needs to set up a CNAME record at their authoritative DNS that points to your [CNAME target](#2-optional-create-cname-target) [^1].
 
 <Render file="get-started-check-statuses" />
 
-Your customer's `CNAME` record might look like the following:
+Your customer's CNAME record might look like the following:
 
 ```txt
 mystore.example.com CNAME customers.saasprovider.com
@@ -67,7 +67,7 @@ B --> C[<code>proxy-fallback.saasprovider.com</code>]
 
 <br/>
 
-Requests to `mystore.example.com` would go to your `CNAME` target (`customers.saasprovider.com`), which would then route to your fallback origin (`proxy-fallback.saasprovider.com`).
+Requests to `mystore.example.com` would go to your CNAME target (`customers.saasprovider.com`), which would then route to your fallback origin (`proxy-fallback.saasprovider.com`).
 
 [^1]: <Render file="regional-services" />
 

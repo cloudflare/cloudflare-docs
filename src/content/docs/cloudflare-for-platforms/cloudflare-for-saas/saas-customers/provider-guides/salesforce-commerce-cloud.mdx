@@ -32,9 +32,9 @@ To enable O2O requires the following:
 1. Your SFCC environment must be configured as an "SFCC Proxy Zone". If you currently have an "SFCC Legacy Zone", you cannot enable O2O. More details on the different types of SFCC configurations can be found in the [Salesforce FAQ on SFCC Proxy Zones](https://help.salesforce.com/s/articleView?id=cc.b2c_ecdn_proxy_zone_faq.htm&type=5).
 2. Your own Cloudflare zone on an Enterprise plan.
 
-If you meet the above requirements, O2O can then be enabled per hostname. To enable O2O for a specific hostname within your Cloudflare zone, [create](/dns/manage-dns-records/how-to/create-dns-records/#create-dns-records) a Proxied `CNAME` DNS record with a target of the `CNAME` provided by SFCC Business Manager, which is the dashboard used by SFCC customers to configure their storefront environment.
+If you meet the above requirements, O2O can then be enabled per hostname. To enable O2O for a specific hostname within your Cloudflare zone, [create](/dns/manage-dns-records/how-to/create-dns-records/#create-dns-records) a Proxied CNAME DNS record with a target of the CNAME provided by SFCC Business Manager, which is the dashboard used by SFCC customers to configure their storefront environment.
 
-The `CNAME` provided by SFCC Business Manager will resemble `commcloud.prod-abcd-example-com.cc-ecdn.net` and contains 3 distinct parts. For each hostname routing traffic to SFCC, be sure to update each part of the example `CNAME` to match your SFCC environment:
+The CNAME provided by SFCC Business Manager will resemble `commcloud.prod-abcd-example-com.cc-ecdn.net` and contains 3 distinct parts. For each hostname routing traffic to SFCC, be sure to update each part of the example CNAME to match your SFCC environment:
 
 1. **Environment**: `prod` should be changed to `prod` or `dev` or `stg`.
 2. **Realm**: `abcd` should be changed to the Realm ID assigned to you by SFCC.

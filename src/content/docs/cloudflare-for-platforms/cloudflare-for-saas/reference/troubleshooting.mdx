@@ -66,11 +66,14 @@ You will need to ensure that the required CAA records for the selected Certifica
 For example, here are the records required to issue [Let's Encrypt](https://letsencrypt.org/docs/caa/) and [Google Trust Services](https://pki.goog/faq/#caa) certificates:
 
 ```
+example.com CAA 0 issue "pki.goog; cansignhttpexchanges=yes"
+example.com CAA 0 issuewild "pki.goog; cansignhttpexchanges=yes"
+
 example.com CAA 0 issue "letsencrypt.org"
 example.com CAA 0 issuewild "letsencrypt.org"
 
-example.com CAA 0 issue "pki.goog; cansignhttpexchanges=yes"
-example.com CAA 0 issuewild "pki.goog; cansignhttpexchanges=yes"
+example.com CAA 0 issue "ssl.com"
+example.com CAA 0 issuewild "ssl.com"
 ```
 
 More details can be found on the [CAA records FAQ](/ssl/edge-certificates/troubleshooting/caa-records/).

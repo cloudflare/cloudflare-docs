@@ -62,9 +62,18 @@ The client will automatically reconnect after the [Auto connect period](#auto-co
 
 <Details header="Feature availability">
 
-| Operating Systems     | [WARP mode required](/cloudflare-one/connections/connect-devices/warp/configure-warp/warp-modes/) | [Zero Trust plans](https://www.cloudflare.com/teams-pricing/) |
-| --------------------- | ------------------------------------------------------------------------------------------------- | ------------------------------------------------------------- |
-| Windows, macOS, Linux | Gateway with WARP, Proxy mode                                                                     | All plans                                                     |
+| [WARP modes](/cloudflare-one/connections/connect-devices/warp/configure-warp/warp-modes/) | [Zero Trust plans](https://www.cloudflare.com/teams-pricing/) |
+| ----------------------------------------------------------------------------------------- | ------------------------------------------------------------- |
+| Gateway with WARP, Proxy mode                                                             | All plans                                                     |
+
+| System   | Availability | Minimum WARP version |
+| -------- | ------------ | -------------------- |
+| Windows  | ✅           | 2024.12.554.0        |
+| macOS    | ✅           | 2024.12.554.0        |
+| Linux    | ✅           | 2024.12.554.0        |
+| iOS      | ❌           |                      |
+| Android  | ❌           |                      |
+| ChromeOS | ❌           |                      |
 
 </Details>
 
@@ -74,9 +83,9 @@ When `Enabled`, the WARP client will [automatically install](/cloudflare-one/con
 
 <Details header="Feature availability">
 
-| Operating Systems     | [WARP mode required](/cloudflare-one/connections/connect-devices/warp/configure-warp/warp-modes/) | [Zero Trust plans](https://www.cloudflare.com/teams-pricing/) |
-| --------------------- | ------------------------------------------------------------------------------------------------- | ------------------------------------------------------------- |
-| Windows, macOS, Linux | Gateway with WARP, Secure Web Gateway without DNS Filtering                                       | All plans                                                     |
+| Operating Systems     | [WARP modes](/cloudflare-one/connections/connect-devices/warp/configure-warp/warp-modes/) | [Zero Trust plans](https://www.cloudflare.com/teams-pricing/) |
+| --------------------- | ----------------------------------------------------------------------------------------- | ------------------------------------------------------------- |
+| Windows, macOS, Linux | Gateway with WARP, Secure Web Gateway without DNS Filtering                               | All plans                                                     |
 
 </Details>
 
@@ -106,9 +115,9 @@ Since captive portal implementations vary, WARP may not detect all captive porta
 
 <Details header="Feature availability">
 
-| Operating Systems | [WARP mode required](/cloudflare-one/connections/connect-devices/warp/configure-warp/warp-modes/) | [Zero Trust plans](https://www.cloudflare.com/teams-pricing/) |
-| ----------------- | ------------------------------------------------------------------------------------------------- | ------------------------------------------------------------- |
-| All systems       | Any mode                                                                                          | All plans                                                     |
+| Operating Systems | [WARP modes](/cloudflare-one/connections/connect-devices/warp/configure-warp/warp-modes/) | [Zero Trust plans](https://www.cloudflare.com/teams-pricing/) |
+| ----------------- | ----------------------------------------------------------------------------------------- | ------------------------------------------------------------- |
+| All systems       | Any mode                                                                                  | All plans                                                     |
 
 </Details>
 
@@ -127,9 +136,9 @@ When `Enabled`, users have the option to switch between [Gateway with WARP](/clo
 | Windows  | ✅           | 2024.6.415.0         |
 | macOS    | ✅           | 2024.6.416.0         |
 | Linux    | ✅           | 2024.6.497.0         |
-| iOS      | ✅   			   | 1.7                  |
-| Android  | ✅   			   | 2.0                  |
-| ChromeOS | ✅ 				   | 2.0                  |
+| iOS      | ✅           | 1.7                  |
+| Android  | ✅           | 2.0                  |
+| ChromeOS | ✅           | 2.0                  |
 
 </Details>
 
@@ -146,9 +155,9 @@ For more details on WireGuard versus MASQUE, refer to our [blog post](https://bl
 
 <Details header="Feature availability">
 
-| Operating Systems | [WARP mode required](/cloudflare-one/connections/connect-devices/warp/configure-warp/warp-modes/) | [Zero Trust plans](https://www.cloudflare.com/teams-pricing/) |
-| ----------------- | ------------------------------------------------------------------------------------------------- | ------------------------------------------------------------- |
-| All systems       | Any mode                                                                                          | All plans                                                     |
+| Operating Systems | [WARP modes](/cloudflare-one/connections/connect-devices/warp/configure-warp/warp-modes/) | [Zero Trust plans](https://www.cloudflare.com/teams-pricing/) |
+| ----------------- | ----------------------------------------------------------------------------------------- | ------------------------------------------------------------- |
+| All systems       | Any mode                                                                                  | All plans                                                     |
 
 </Details>
 
@@ -171,9 +180,9 @@ When `Enabled`, users can log out from your Zero Trust organization by selecting
 
 <Details header="Feature availability">
 
-| Operating Systems     | [WARP mode required](/cloudflare-one/connections/connect-devices/warp/configure-warp/warp-modes/) | [Zero Trust plans](https://www.cloudflare.com/teams-pricing/) |
-| --------------------- | ------------------------------------------------------------------------------------------------- | ------------------------------------------------------------- |
-| macOS, Windows, Linux | Any mode                                                                                          | All plans                                                     |
+| Operating Systems     | [WARP modes](/cloudflare-one/connections/connect-devices/warp/configure-warp/warp-modes/) | [Zero Trust plans](https://www.cloudflare.com/teams-pricing/) |
+| --------------------- | ----------------------------------------------------------------------------------------- | ------------------------------------------------------------- |
+| macOS, Windows, Linux | Any mode                                                                                  | All plans                                                     |
 
 </Details>
 
@@ -190,7 +199,7 @@ We recommend keeping this set to a very low value — usually just enough time f
 **Value:**
 
 - `0`: Allow the switch to stay in the off position indefinitely until the user turns it back on.
-- `1` to `1440`: Turn switch back on automatically after the specified number of minutes.
+- `1` to `86400`: Turn switch back on automatically after the specified number of seconds.
 
 ### Support URL
 
@@ -211,9 +220,9 @@ Allows you to choose the operational mode of the client. Refer to [WARP Modes](/
 
 <Details header="Feature availability">
 
-| Operating Systems | [WARP mode required](/cloudflare-one/connections/connect-devices/warp/configure-warp/warp-modes/) | [Zero Trust plans](https://www.cloudflare.com/teams-pricing/) |
-| ----------------- | ------------------------------------------------------------------------------------------------- | ------------------------------------------------------------- |
-| All systems       | Gateway with WARP, Gateway with DoH                                                               | All plans                                                     |
+| Operating Systems | [WARP modes](/cloudflare-one/connections/connect-devices/warp/configure-warp/warp-modes/) | [Zero Trust plans](https://www.cloudflare.com/teams-pricing/) |
+| ----------------- | ----------------------------------------------------------------------------------------- | ------------------------------------------------------------- |
+| All systems       | Gateway with WARP, Gateway with DoH                                                       | All plans                                                     |
 
 </Details>
 

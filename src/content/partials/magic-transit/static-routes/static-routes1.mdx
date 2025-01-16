@@ -1,12 +1,17 @@
 ---
 params:
   - productName
+  - BGPpath
   - anycastURL
   - trafficSteering
   - magicWANecmp
 ---
 
 import { GlossaryTooltip, Markdown } from "~/components";
+
+:::note
+If you are connecting to Cloudflare via a [Direct CNI connection](/network-interconnect/express-cni/), refer to <a href={props.BGPpath}>BGP peering</a> to learn how to take advantage of this routing protocol. If not, continue reading.
+:::
 
 {props.productName} uses a static configuration to route your traffic through <GlossaryTooltip term="anycast" link={props.anycastURL}>anycast tunnels</GlossaryTooltip> from Cloudflare's global network to your locations.
 
