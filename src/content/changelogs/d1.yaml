@@ -17,7 +17,7 @@ entries:
       For better insight into your current usage, refer to your [billing metrics](/d1/observability/billing/) for rows read and rows written, which can be found on the [D1 dashboard](https://dash.cloudflare.com/?account=/workers/d1) or GraphQL API.
 
   - publish_date: "2025-01-07"
-    title: D1's Worker API request latency decreases by 40-60%.
+    title: D1 Worker API request latency decreases by 40-60%.
     description: |-
 
     D1 lowered end-to-end Worker API request latency by 40-60% by eliminating redundant network round trips for each request.
