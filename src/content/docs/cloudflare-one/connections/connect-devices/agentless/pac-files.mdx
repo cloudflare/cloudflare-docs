@@ -194,7 +194,7 @@ You can now use the Proxy Endpoint selector in [network](/cloudflare-one/policie
 
 If you want to use PAC files but your firewall only allows config via domain or IP/CIDR, you will need to configure that with your firewall.
 
-If your firewall only allows config via domain, you will need to create a firewall rule to allow your proxy endpoint domain.
+If your organization's firewall only allows config via domain, you will need to create a firewall rule to allow your proxy endpoint domain.
 
 To get the domain of a proxy endpoint:
 
@@ -213,9 +213,8 @@ To get the domain of a proxy endpoint:
 1. Use the [List proxy endpoints](/api/resources/zero_trust/subresources/gateway/subresources/proxy_endpoints/methods/list/) endpoint to list your proxy endpoints. For example:
 
    ```sh
-   curl https://api.cloudflare.com/client/v4/accounts/{ACCOUNT_ID}/gateway/proxy_endpoints \
-   --header "Authorization: Bearer <API_TOKEN>" \
-   --header "Content-Type: application/json"
+   curl https://api.cloudflare.com/client/v4/accounts/{account_id}/gateway/proxy_endpoints \
+   --header "Authorization: Bearer <API_TOKEN>"
    ```
 
    ```json {9} output
@@ -226,13 +225,14 @@ To get the domain of a proxy endpoint:
     "ips": [
       "192.0.2.1/32"
     ],
-    "name": "Devops team",
+    "name": "DevOps team",
     "subdomain": "oli3n9zkz5.proxy.cloudflare-gateway.com",
     "updated_at": "2014-01-01T05:20:00.12345Z"
    }
    ```
 
-2. Copy the result in `subdomain`.
+2. Find the proxy endpoint you want to use.
+3. Copy the value of the `subdomain` key.
 
 </TabItem>
 
