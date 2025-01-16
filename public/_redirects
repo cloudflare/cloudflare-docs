@@ -793,7 +793,7 @@
 /magic-wan/tutorials/pfsense/ /magic-wan/configuration/manually/third-party/pfsense/ 301
 /magic-wan/tutorials/sophos-firewall/ /magic-wan/configuration/manually/third-party/sophos-firewall/ 301
 /magic-wan/tutorials/warp/ /magic-wan/zero-trust/warp/ 301
-/magic-wan/how-to/run-tunnel-health-checks/ /magic-wan/configuration/manually/how-to/tunnel-health-checks/ 301
+/magic-wan/how-to/run-tunnel-health-checks/ /magic-wan/configuration/common-settings/tunnel-health-checks/ 301
 /magic-wan/reference/probe-construction/ /magic-wan/reference/tunnel-health-checks/ 301
 /magic-wan/get-started/configure-tunnels/ /magic-wan/configuration/manually/how-to/configure-tunnels/ 301
 /magic-wan/get-started/configure-static-routes/ /magic-wan/configuration/manually/how-to/configure-static-routes/ 301
@@ -802,7 +802,6 @@
 /magic-wan/configuration/manually/how-to/check-tunnel-health-dashboard/ /magic-wan/configuration/common-settings/tunnel-health-checks/ 301
 /magic-wan/configuration/manually/how-to/configure-magic-tunnel-alerts/ /magic-wan/configuration/common-settings/configure-magic-tunnel-alerts/ 301
 /magic-wan/configuration/manually/how-to/enable-magic-roles/ /magic-wan/configuration/common-settings/enable-magic-roles/ 301
-/magic-wan/configuration/common-settings/tunnel-health-checks/ /magic-wan/configuration/manually/how-to/tunnel-health-checks/ 301
 /magic-wan/configuration/manually/how-to/view-analytics/ /magic-wan/analytics/ 301
 /magic-wan/configuration/common-settings/view-analytics/ /magic-wan/analytics/ 301
 /magic-wan/prerequisites/ /magic-wan/get-started/ 301
