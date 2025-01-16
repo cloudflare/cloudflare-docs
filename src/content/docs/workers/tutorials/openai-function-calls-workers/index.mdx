@@ -98,7 +98,7 @@ async fetch(request, env, ctx) {
 },
 ```
 
-Use [`wrangler secret put`](/workers/wrangler/commands/#put-3) to set `OPENAI_API_KEY`. This [secret's](/workers/configuration/secrets/) value is the API key you created earlier in the OpenAI dashboard:
+Use [`wrangler secret put`](/workers/wrangler/commands/#put) to set `OPENAI_API_KEY`. This [secret's](/workers/configuration/secrets/) value is the API key you created earlier in the OpenAI dashboard:
 
 ```sh
 npx wrangler secret put <OPENAI_API_KEY>

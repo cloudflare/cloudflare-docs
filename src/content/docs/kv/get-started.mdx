@@ -315,7 +315,7 @@ You can view key-value pairs directly from the dashboard.
 
 When using [`wrangler dev`](/workers/wrangler/commands/#dev) to develop locally, Wrangler defaults to using a local version of KV to avoid interfering with any of your live production data in KV. This means that reading keys that you have not written locally returns null.
 
-To have `wrangler dev` connect to your Workers KV namespace running on Cloudflare's global network, call `wrangler dev --remote` instead. This uses the `preview_id` of the KV binding configuration in the `wrangler.toml` file. See the [KV binding docs](/kv/concepts/kv-bindings/#using-the-kv-binding-when-developing-locally) for more information.
+To have `wrangler dev` connect to your Workers KV namespace running on Cloudflare's global network, call `wrangler dev --remote` instead. This uses the `preview_id` of the KV binding configuration in the `wrangler.toml` file. Refer to the [KV binding docs](/kv/concepts/kv-bindings/#use-kv-bindings-when-developing-locally) for more information.
 
 :::
 

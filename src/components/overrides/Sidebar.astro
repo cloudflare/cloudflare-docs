@@ -95,7 +95,7 @@ async function handleGroup(group: Group): Promise<SidebarEntry> {
 			label: group.label,
 			order: group.order,
 			attrs: {},
-			isCurrent: indexLink.href.slice(1, -1) === Astro.params.slug,
+			isCurrent: Astro.url.pathname.startsWith(indexLink.href),
 		} as Link;
 	}
 
