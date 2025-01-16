@@ -3,6 +3,7 @@ import WARPRelease from "./WARPRelease.astro";
 import Details from "./Details.astro";
 import { getCollection } from "astro:content";
 import { z } from "astro:schema";
+import { sub } from "date-fns";
 
 type Props = z.infer<typeof props>;
 
@@ -16,7 +17,15 @@ const sortByDate = (a: any, b: any) =>
 	b.releaseDate.getTime() - a.releaseDate.getTime();
 
 const entries = await getCollection("warp-releases", (release) => {
-	return release.id.startsWith(track);
+	if (!release.id.startsWith(track)) return false;
+
+	const oneYearAgo = sub(new Date(), {
+		years: 1,
+	});
+
+	if (release.data.releaseDate.getTime() < oneYearAgo.getTime()) return false;
+
+	return true;
 });
 
 const releases = entries.map((x) => x.data);
@@ -32,11 +41,7 @@ if (!latestRelease) {
 const platform = latestRelease.platformName;
 ---
 
-<WARPRelease
-	header="Latest release"
-	open={true}
-	release={latestRelease}
-/>
+<WARPRelease header="Latest release" open={true} release={latestRelease} />
 
 <Details header=`Previous version history (${releases.length - 1})`>
 	{

@@ -15,9 +15,9 @@ releaseNotes: |
   - Fixed an issue with the Cloudflare WARP GUI showing garbled text in some cases
   - Fixed an issue with the WARP client becoming unresponsive while handling LAN inclusion
 
-  ## Known issues:**
-  - The WARP client may not function correctly on macOS 15.0 (Sequoia). We recommend updating to macOS 15.1 to resolve these issues.
+  **Known issues:**
 
+  - The WARP client may not function correctly on macOS 15.0 (Sequoia). We recommend updating to macOS 15.1 to resolve these issues.
 version: 2024.10.537.1
 releaseDate: 2024-11-05T17:42:32.083Z
 packageURL: https://downloads.cloudflareclient.com/v1/download/macos/version/2024.10.537.1

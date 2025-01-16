@@ -1,0 +1,31 @@
+releaseNotes: |-
+  This release contains significant improvements to reliability and a number of exciting new features.
+   
+  **Notable updates**
+  - Added connectivity error reasons to the UI. Examples of this UI and the types of errors your users will see can be found in the [client errors documentation](https://developers.cloudflare.com/cloudflare-one/connections/connect-devices/warp/troubleshooting/client-errors/)
+  - Added new posture type: [Client certificate](https://developers.cloudflare.com/cloudflare-one/identity/devices/warp-client-checks/client-certificate/)
+  - Added support for IPv6 DEX Traceroute tests (previously only IPv4 addresses could be used)
+  - Improved reliability and efficiency in configurating split tunnel rules. Most `error petting the dog` errors should now be gone and organizations with large split tunnel configuration should see reliability improvements.
+  - Fixed an issue where warp-svc.exe could crash under extreme load
+  - Fixed an issue where the Windows GUI could spam the Windows System Eventlog with unhelpful error messages
+  - Fixed an issue with DEX traceroutes tests where not all hops were correctly reported
+  - Fixed an issue where DEX tests would not properly run immediately after a device came out of sleep
+  - Fixed an issue where DEX tests would execute simultaneously causing performance issues for accounts with a large number of tests configured
+  - Fixed an issue where DNS status would flap between Connected / Disconnect in Connectivity panel
+  - Fixed an issue where DoH requests could take too long to timeout causes DNS reliability issues
+  - Fixed an issue that was causing Windows BSOD (DPC_WATCHDOG_VIOLATION)
+  - Fixed an issue where DNS could temporarily fail when DHCP updates were processed
+  - Fixed an issue on initial device registration that could sometimes cause it to fail and try again
+  - Fixed an issue where UI could appear in the wrong location when the app starts
+  - Fixed an issue where short DNS timeouts were causing issues with some captive portals (United in particular)
+  - Fixed an issue where managed network detection could fail when our firewall rules were not correctly removed under certain disconnect scenarios
+  - Fixed an issue with Managed Networks where if the managed endpoint overlapped with your exclude split tunnel configuration, the split tunnel would only be open for IP traffic destined to the same port as your managed TLS endpoint
+  - Fixed an issue where IPv6 traffic could be incorrectly sent down the tunnel in exclude mode
+   
+  **Known issues**
+  - No known issues
+version: 2023.9.248.0
+packageURL: https://downloads.cloudflareclient.com/v1/download/windows/version/2023.9.248.0
+packageSize: 112349184
+releaseDate: 2023-09-27T20:23:59.778Z
+platformName: Windows
