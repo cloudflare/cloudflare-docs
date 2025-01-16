@@ -8,7 +8,7 @@ date: 2025-01-07T18:00:00Z
  
 [D1](/d1/) lowered end-to-end request latency via the [Workers API](/d1/worker-api/) by up to 60% through eliminating redundant network round trips for each request.
 
-![D1 Worker API latency](~/assets/images/d1/faster-d1-worker-api.png)
+![D1 Worker API latency](../../assets/images/d1/faster-d1-worker-api.png)
 *p50, p90, and p95 latency aggregated across entire D1 service. These latencies are a reference point and should not be viewed as your exact workload improvement.
 
 This performance improvement benefits all D1 Worker API traffic, especially cross-region requests where network latency is an outsized latency factor. For example, a user in Europe talking to a database in North America. D1 [location hints](/d1/configuration/data-location/#provide-a-location-hint) can be used to influence the geographic location of a database.
