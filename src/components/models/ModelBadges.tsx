@@ -37,9 +37,6 @@ const ModelBadges = ({ model }: { model: WorkersAIModelsSchema }) => {
 					className="bg-gray-100 dark:bg-gray-700 px-2 py-1 rounded-md block !mt-0"
 				>
 					{badge.text}
-					<a href="foo">
-						<a href="bar">baz</a>
-					</a>
 				</li>
 			))}
 		</ul>

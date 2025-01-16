@@ -3,9 +3,6 @@ import { z } from "astro:schema";
 import { marked } from "marked";
 import { slug as GithubSlug } from "github-slugger";
 
-// intentionally unused for CI test
-import { useEffect } from "react";
-
 type Props = z.infer<typeof props>;
 
 const props = z.object({
@@ -14,7 +11,7 @@ const props = z.object({
 	depth: z.number().min(1).max(6),
 });
 
-const { title, slug, depth } = props.parse(Astro.props);
+var { title, slug, depth } = props.parse(Astro.props);
 
 const slugified = GithubSlug(slug ?? title);
 
