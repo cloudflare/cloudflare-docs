@@ -1,15 +1,17 @@
 ---
-title: 40-60% Faster D1 Requests
-description: D1 end-to-end request latency decreases by 40-60%.
+title: 40-60% Faster D1 Worker API Requests
+description: D1's Worker API request latency decreases by 40-60%.
 products:
   - d1
 date: 2025-01-07T18:00:00Z
 ---
  
-[D1](/d1/) lowered end-to-end request latency by 40-60% by eliminating latency incurred with multiple network round trips required for each request. Faster D1 performance applies to requests via both D1's [Worker API](/d1/worker-api/) and [REST API](/api/resources/d1/subresources/database/methods/query/).
+[D1](/d1/) lowered end-to-end request latency by 40-60% by eliminating redundant network round trips for each request.
 
-Removing network round trips particularly benefits user requests geographically far from the requested D1 database. For example, a user in Europe talking to a database in North America. D1 [location hints](/d1/configuration/data-location/#provide-a-location-hint) can be used to influence the geographic location of a database.
+![D1 Worker API latency](~/assets/images/d1/faster-d1-worker-api.png)
 
-[TODO image]
+Faster D1 performance is most noticeable via requests to D1's [Worker API](/d1/worker-api/). The same improvement applies to D1's [REST API](/api/resources/d1/subresources/database/methods/query/). However, the REST API still depends on Cloudflare's centralized datacenters for authentication, which reduces the relative performance improvement.
 
-For more details on how D1 lowered latency, see product-specific changelog [entry](/d1/platform/changelog/#2025-01-13).
+This performance improvement benefits all D1 Worker API traffic, especially cross-region requests where network latency is an outsized latency factor. For example, a user in Europe talking to a database in North America. D1 [location hints](/d1/configuration/data-location/#provide-a-location-hint) can be used to influence the geographic location of a database.
+
+For more details on how D1 lowered latency, see product-specific changelog [entry](/d1/platform/changelog/#2025-01-07).
