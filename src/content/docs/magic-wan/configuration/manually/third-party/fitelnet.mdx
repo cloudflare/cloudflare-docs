@@ -78,8 +78,8 @@ crypto isakmp policy ISAKMP_POLICY
  authentication pre-share
  encryption aes
  encryption-keysize aes 256 256 256
- group 14
- lifetime 14400
+ group 20
+ lifetime 86400
  hash sha sha-256
  initiate-mode aggressive
 exit
@@ -144,8 +144,8 @@ crypto isakmp policy ISAKMP_POLICY
  authentication pre-share
  encryption aes
  encryption-keysize aes 256 256 256
- group 14
- lifetime 14400
+ group 20
+ lifetime 86400
  hash sha sha-256
  initiate-mode aggressive
 exit
@@ -225,7 +225,7 @@ show crypto sa
     Remote Authentication method : Pre-shared key
     Encryption algorithm : aes256-cbc
     Hash algorithm : hmac-sha256-128
-    Diffie-Hellman group : 14 (2048 bits)
+    Diffie-Hellman group : 20
     Initiator Cookie : aaaaaaaa bbbbbbbb
     Responder Cookie : cccccccc dddddddd
     Life time : 6852/14400 sec

@@ -213,7 +213,7 @@ entries:
     otherFilters: None.
 
   - name: Magic Tunnel Health Check Alert
-    audience: Magic Transit and Magic WAN customers who wish to receive alerts when the percentage of successful health checks for a Magic Tunnel drops below the selected service-level objective (SLO).
+    audience: Magic Transit and Magic WAN customers who wish to receive alerts when the percentage of tunnel states meeting the selected service-level objective (SLO) drops below the defined threshold for a Magic Tunnel.
     availability: Purchase of Magic Transit and Magic WAN.
     associatedProducts: Magic Transit
     nextSteps: Refer to the [Magic Transit tunnel health](/magic-transit/how-to/check-tunnel-health-dashboard/) or [Magic WAN tunnel health](/magic-wan/configuration/common-settings/check-tunnel-health-dashboard/) for more information on what the issue might be.

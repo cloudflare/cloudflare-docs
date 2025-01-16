@@ -31,15 +31,21 @@ If the connection pool does not have pre-existing connections, it will establish
 Hyperdrive automatically manages the connection pool properties for you, including limiting the total number of connections to your origin database. Refer to [Limits](/hyperdrive/platform/limits/) to learn more. 
 :::
 
-The connection pool operates in transaction mode, where the client that executes the query communicates through a single connection for the duration of a transaction.
+## Pooling mode
 
-When that transaction has completed, the connection is returned to the pool.
+The Hyperdrive connection pooler operates in transaction mode, where the client that executes the query communicates through a single connection for the duration of a transaction. When that transaction has completed, the connection is returned to the pool.
+
+
+Hyperdrive supports [`SET` statements](https://www.postgresql.org/docs/current/sql-set.html) for the duration of a transaction or a query. For instance, if you manually create a transaction with `BEGIN`/`COMMIT`, `SET` statements within the transaction will take effect. Moreover, a query that includes a `SET` command (`SET X; SELECT foo FROM bar;`) will also apply the `SET` command. When a connection is returned to the pool, the connection is `RESET` such that the `SET` commands will not take effect on subsequent queries. 
+
+This implies that a single Worker invocation may obtain multiple connections to perform its database operations and may need to `SET` any configurations for every query or transaction. It is not recommended to wrap multiple database operations with a single transaction to maintain the `SET` state. Doing so will affect the performance and scaling of Hyperdrive as the connection cannot be reused by other Worker isolates for the duration of the transaction.
 
 Hyperdrive supports named prepared statements as implemented in the `postgres.js` and `node-postgres` drivers. Named prepared statements in other drivers may have worse performance.
 
+## Unsupported PostgreSQL features:
+
 Hyperdrive does not support the following PostgreSQL features:
 
-* `SET` statements.
 * SQL-level management of prepared statements, such as using `PREPARE`, `DISCARD`, `DEALLOCATE`, or `EXECUTE`.
 * Advisory locks ([PostgreSQL documentation](https://www.postgresql.org/docs/current/explicit-locking.html#ADVISORY-LOCKS)).
 * `LISTEN` and `NOTIFY`.

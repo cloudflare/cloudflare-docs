@@ -3,6 +3,8 @@ pcx_content_type: concept
 title: TLS decryption
 sidebar:
   order: 2
+banner:
+  content: The default global Cloudflare root certificate will expire on 2025-02-02. If you installed the default Cloudflare certificate before 2024-10-17, you must <a href="/cloudflare-one/connections/connect-devices/user-side-certificates/#generate-a-cloudflare-root-certificate">generate a new certificate</a> and activate it for your Zero Trust organization to avoid inspection errors.
 ---
 
 import {
@@ -21,7 +23,13 @@ Cloudflare prevents interference by decrypting, inspecting, and re-encrypting HT
 
 Cloudflare supports connections from users to Gateway over TLS 1.1, 1.2, and 1.3.
 
-## Enable TLS decryption
+## Turn on TLS decryption
+
+:::note[Prerequisite]
+Before you turn on TLS decryption, ensure you have installed either a [Cloudflare-generated certificate](/cloudflare-one/connections/connect-devices/user-side-certificates/) or [custom certificate](/cloudflare-one/connections/connect-devices/user-side-certificates/custom-certificate/) on your users' devices.
+:::
+
+To turn on TLS decryption:
 
 <Render file="gateway/enable-tls-decryption" product="cloudflare-one" />
 

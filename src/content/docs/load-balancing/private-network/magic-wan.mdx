@@ -8,7 +8,7 @@ sidebar:
 
 Consider the following steps to learn how to configure Private Network Load Balancing solution, using [Magic WAN](/magic-wan/) as the on-ramp and off-ramp to securely connect to your private or internal services. This is currently an API only feature.
 
-## 1. Configure a virtual network for Magic Wan
+## 1. Configure a virtual network for Magic WAN
 
 1. Create and [configure virtual networks](/cloudflare-one/connections/connect-networks/private-net/cloudflared/tunnel-virtual-networks/#create-a-virtual-network) using either the Cloudflare UI or the Cloudflare API.
 
@@ -26,10 +26,10 @@ The VNET ID value will be used to ensure that your load balancer is properly int
 
 1. Once you have your [VNets configured](/load-balancing/private-network/magic-wan/#1-configure-a-virtual-network-for-magic-wan), you need to make sure that the [pools](/load-balancing/pools/create-pool/) you will be using with your load balancer are configured with the default VNet value in the **Virtual Network** field.
 
-2. Next, create an Account Load Balancer by sending a `POST` request to the following API endpoint. The request body should be structured similarly to a Zone Load Balancer. Refer to the [Cloudflare API documentation](/api/resources/load_balancers/methods/create/#request-body) for details on the required fields and their formats. Make sure that the pools you are using in your load balancer have the default VNET configured (previous step).
+2. Next, create an Account Load Balancer by sending a `POST` request to the following API endpoint. The request body should be structured similarly to a Zone Load Balancer. Refer to the [Cloudflare API documentation](/api/resources/load_balancers/methods/create/) for details on the required fields and their formats. Make sure that the pools you are using in your load balancer have the default VNET configured (previous step).
 
 ```txt
-https://api.cloudflare.com/client/v4/accounts/{ACCOUNT_ID}/load_balancers/
+https://api.cloudflare.com/client/v4/accounts/{account_id}/load_balancers
 ```
 
 To retrieve a list of all created Account Load Balancers, send a `GET` request to the same endpoint.

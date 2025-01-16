@@ -1,5 +1,5 @@
 ---
-title: Websockets API
+title: WebSockets API
 pcx_content_type: configuration
 sidebar:
   badge:
@@ -8,7 +8,7 @@ sidebar:
 
 The AI Gateway WebSockets API provides a single persistent connection, enabling continuous communication. By using WebSockets, you can establish a single connection for multiple AI requests, eliminating the need for repeated handshakes and TLS negotiations, which enhances performance and reduces latency. This API supports all AI providers connected to AI Gateway, including those that do not natively support WebSockets.
 
-## When to use webSockets?
+## When to use WebSockets?
 
 WebSockets are long-lived TCP connections that enable bi-directional, real-time communication between client and server. Unlike HTTP connections, which require repeated handshakes for each request, WebSockets maintain the connection, supporting continuous data exchange with reduced overhead. WebSockets are ideal for applications needing low-latency, real-time data, such as voice assistants.
 

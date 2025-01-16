@@ -1,0 +1,150 @@
+{
+    "id": "200f0812-148c-48c1-915d-fb3277a94a08",
+    "source": 1,
+    "name": "@cf/openai/whisper-large-v3-turbo",
+    "description": "Whisper is a pre-trained model for automatic speech recognition (ASR) and speech translation. ",
+    "task": {
+        "id": "dfce1c48-2a81-462e-a7fd-de97ce985207",
+        "name": "Automatic Speech Recognition",
+        "description": "Automatic speech recognition (ASR) models convert a speech signal, typically an audio input, to text."
+    },
+    "tags": [],
+    "properties": [
+        {
+            "property_id": "beta",
+            "value": "true"
+        }
+    ],
+    "schema": {
+        "input": {
+            "type": "object",
+            "properties": {
+                "audio": {
+                    "type": "string",
+                    "description": "Base64 encoded value of the audio data."
+                },
+                "task": {
+                    "type": "string",
+                    "default": "transcribe",
+                    "description": "Supported tasks are 'translate' or 'transcribe'."
+                },
+                "language": {
+                    "type": "string",
+                    "default": "en",
+                    "description": "The language of the audio being transcribed or translated."
+                },
+                "vad_filter": {
+                    "type": "string",
+                    "default": "false",
+                    "description": "Preprocess the audio with a voice activity detection model."
+                },
+                "initial_prompt": {
+                    "type": "string",
+                    "description": "A text prompt to help provide context to the model on the contents of the audio."
+                },
+                "prefix": {
+                    "type": "string",
+                    "description": "The prefix it appended the the beginning of the output of the transcription and can guide the transcription result."
+                }
+            },
+            "required": [
+                "audio"
+            ]
+        },
+        "output": {
+            "type": "object",
+            "contentType": "application/json",
+            "properties": {
+                "transcription_info": {
+                    "type": "object",
+                    "properties": {
+                        "language": {
+                            "type": "string",
+                            "description": "The language of the audio being transcribed or translated."
+                        },
+                        "language_probability": {
+                            "type": "number",
+                            "description": "The confidence level or probability of the detected language being accurate, represented as a decimal between 0 and 1."
+                        },
+                        "duration": {
+                            "type": "number",
+                            "description": "The total duration of the original audio file, in seconds."
+                        },
+                        "duration_after_vad": {
+                            "type": "number",
+                            "description": "The duration of the audio after applying Voice Activity Detection (VAD) to remove silent or irrelevant sections, in seconds."
+                        }
+                    }
+                },
+                "text": {
+                    "type": "string",
+                    "description": "The complete transcription of the audio."
+                },
+                "word_count": {
+                    "type": "number",
+                    "description": "The total number of words in the transcription."
+                },
+                "segments": {
+                    "type": "object",
+                    "properties": {
+                        "start": {
+                            "type": "number",
+                            "description": "The starting time of the segment within the audio, in seconds."
+                        },
+                        "end": {
+                            "type": "number",
+                            "description": "The ending time of the segment within the audio, in seconds."
+                        },
+                        "text": {
+                            "type": "string",
+                            "description": "The transcription of the segment."
+                        },
+                        "temperature": {
+                            "type": "number",
+                            "description": "The temperature used in the decoding process, controlling randomness in predictions. Lower values result in more deterministic outputs."
+                        },
+                        "avg_logprob": {
+                            "type": "number",
+                            "description": "The average log probability of the predictions for the words in this segment, indicating overall confidence."
+                        },
+                        "compression_ratio": {
+                            "type": "number",
+                            "description": "The compression ratio of the input to the output, measuring how much the text was compressed during the transcription process."
+                        },
+                        "no_speech_prob": {
+                            "type": "number",
+                            "description": "The probability that the segment contains no speech, represented as a decimal between 0 and 1."
+                        },
+                        "words": {
+                            "type": "array",
+                            "items": {
+                                "type": "object",
+                                "properties": {
+                                    "word": {
+                                        "type": "string",
+                                        "description": "The individual word transcribed from the audio."
+                                    },
+                                    "start": {
+                                        "type": "number",
+                                        "description": "The starting time of the word within the audio, in seconds."
+                                    },
+                                    "end": {
+                                        "type": "number",
+                                        "description": "The ending time of the word within the audio, in seconds."
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "vtt": {
+                    "type": "string",
+                    "description": "The transcription in WebVTT format, which includes timing and text information for use in subtitles."
+                }
+            },
+            "required": [
+                "text"
+            ]
+        }
+    }
+}

@@ -11,7 +11,7 @@ head:
 
 import { GlossaryTooltip } from "~/components"
 
-Universal SSL certificates are limited by the hostnames they cover and the browsers they support.
+Universal SSL certificates present some limitations.
 
 ## Hostname coverage
 
@@ -26,9 +26,28 @@ Universal SSL certificates only support SSL for the root or first-level subdomai
 
 On a CNAME setup zone, each subdomain has its own Universal SSL certificate and does not require additional features or purchases.
 
-## Browser support
+## Certificate authority
 
-For more on browser support, see [Browser compatibility](/ssl/reference/browser-compatibility/).
+For Universal SSL certificates, Cloudflare chooses the <GlossaryTooltip term="Certificate Authority (CA)">certificate authority (CA)</GlossaryTooltip> used for your certificate.
+
+Cloudflare can change the [certificate authority](/ssl/reference/certificate-authorities/) without prior notification, and will not send any notification as the change happens.
+
+If you want to choose the issuing certificate authority, [order an advanced certificate](/ssl/edge-certificates/advanced-certificate-manager/).
+
+
+## Validity period
+
+For Universal certificates, Cloudflare controls the validity period. Refer to [validity periods and renewal](/ssl/reference/certificate-validity-periods/#universal-ssl) for details.
+
+## TLS settings
+
+[Customizing cipher suites](/ssl/edge-certificates/additional-options/cipher-suites/customize-cipher-suites/) is only available with [Advanced Certificate Manager](/ssl/edge-certificates/advanced-certificate-manager/) or within [Cloudflare for SaaS](/cloudflare-for-platforms/cloudflare-for-saas/security/certificate-management/).
+
+You can set up [minimum TLS version](/ssl/edge-certificates/additional-options/minimum-tls/) at the zone level, but, for per-hostname settings, you must have [Advanced Certificate Manager](/ssl/edge-certificates/advanced-certificate-manager/).
+
+## Delegated DCV
+
+Delegated DCV allows zones with [partial DNS setups](/dns/zone-setups/partial-setup/) to delegate the DCV process to Cloudflare. DCV delegation will not work with Universal SSL certificates and requires the use of an [advanced certificate](/ssl/edge-certificates/advanced-certificate-manager/).
 
 ## Spectrum
 
@@ -38,10 +57,6 @@ Universal SSL is not compatible with [Cloudflare Spectrum](/spectrum/). If you a
 
 Due to internal limitations, Universal SSL certificates do not cover [load balancing hostnames](/load-balancing/load-balancers/dns-records/) by default. This behavior will be corrected in the future.
 
-## Certificate authority
+## Browser support
 
-For Universal SSL certificates, Cloudflare chooses the <GlossaryTooltip term="Certificate Authority (CA)">certificate authority (CA)</GlossaryTooltip> used for your certificate.
-
-Cloudflare can change the [certificate authority](/ssl/reference/certificate-authorities/) without prior notification, and will not send any notification as the change happens.
-
-If you want to choose the issuing certificate authority, [order an advanced certificate](/ssl/edge-certificates/advanced-certificate-manager/).
+For more on browser support, see [Browser compatibility](/ssl/reference/browser-compatibility/).

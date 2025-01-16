@@ -76,24 +76,17 @@ Static routes are required for any networks that will be reached via the IPsec t
 5. Select **Proposals**. VPN Policy is somewhat flexible. Adjust these settings to match your organization's preferred security policy. As an example, you can use the settings in the examples below.
 6. In the **IKE (Phase 1) Proposal** group, select the following settings:
    - **Exchange**: _IKEv2 Mode_
-   - **DH Group**: _Group 14_
+   - **DH Group**: _Group 20_
    - **Encryption**: _AES-256_
    - **Authentication**: _SHA256_
-   - **Life Time (seconds)**: `28800`
+   - **Life Time (seconds)**: `86400`
 7. In the **IPsec (Phase 2) Proposal** group, add the following settings:
    - **Protocol**: _ESP_
    - **Encryption**: _AESGCM16-256_
    - **Authentication**: _None_
    - **Enable Perfect Forward Secrecy**: Enabled
-   - **DH Group**: _Group 14_
+   - **DH Group**: _Group 20_
    - **Life Time (seconds)**: `28800`
-
-<div class="large-img">
-
-![Configure a VPN policy on your SonicWall device](~/assets/images/magic-wan/third-party/sonicwall/4-vpn-policy-proposals.png)
-
-</div>
-
 8. Select **Advanced**.
 9. Enable **Disable IPsec Anti-Replay**.
 10. In **VPN Policy bound to** select your WAN interface from the dropdown menu, to bind it to your VPN.
@@ -194,10 +187,10 @@ https://api.cloudflare.com/client/v4/accounts/{account_id}/magic/ipsec_tunnels/{
 --header "Content-Type: application/json" \
 --data '{
   "health_check": {
+    "direction": "bidirectional",
     "enabled": true,
-    "target": "SONICWALL_WAN_IP",
     "type": "request",
-    "rate": "mid"
+    "rate": "low"
   }
 }'
 ```

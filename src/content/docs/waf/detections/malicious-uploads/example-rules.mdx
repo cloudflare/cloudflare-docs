@@ -44,3 +44,9 @@ This custom rule example blocks requests with uploaded content objects over 15 M
 - Action: _Block_
 
 In this example, you must also test for equality because currently any file over 15 MB will be handled internally as if it had a size of 15 MB. This means that using the `>` (greater than) [comparison operator](/ruleset-engine/rules-language/operators/#comparison-operators) would not work for this particular rule — you should use `>=` (greater than or equal) instead.
+
+---
+
+## More resources
+
+- [Terraform example: Add a custom rule blocking malicious uploads](/terraform/additional-configurations/waf-custom-rules/#add-a-custom-rule-blocking-malicious-uploads)

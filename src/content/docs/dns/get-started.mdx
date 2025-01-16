@@ -11,9 +11,15 @@ head:
 
 import { GlossaryDefinition, Render } from "~/components";
 
-You can use Cloudflare DNS with a variety of [setups](/dns/zone-setups/). For an overview of what these setups are and if you are not yet familiar with specific DNS terminology, refer to [Concepts](/dns/concepts/).
+You can use Cloudflare DNS with a variety of [setups](/dns/zone-setups/). For an overview of what these setups are and an introduction to specific DNS terminology, refer to [Concepts](/dns/concepts/).
 
-In the most common setup (full), you [add your domain](/fundamentals/setup/manage-domains/add-site/), import your [DNS records](/dns/manage-dns-records/), and [update your nameservers](/dns/nameservers/update-nameservers/) to make Cloudflare your primary authoritative DNS provider. Once the setup is completed:
+In the most common setup (full), you [add your domain](/fundamentals/setup/manage-domains/add-site/), import your [DNS records](/dns/manage-dns-records/), and [update your nameservers](/dns/nameservers/update-nameservers/) to make Cloudflare your primary authoritative DNS provider.
+
+:::note
+Make sure to [review your DNS records](/dns/zone-setups/full-setup/setup/#review-dns-records) before updating your nameservers. If you activate your domain on Cloudflare *without* setting up the correct DNS records, your domain may not be reachable.
+:::
+
+Once the setup is completed:
 
 - You [manage DNS records](/dns/manage-dns-records/how-to/create-dns-records/) through the Cloudflare dashboard or API. This is how you control which resources are available on the apex domain (`example.com`) or specific subdomains (`blog.example.com`) of your website, as well as control other configurations.
 

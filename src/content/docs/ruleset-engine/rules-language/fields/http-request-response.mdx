@@ -33,16 +33,16 @@ When there are repeating headers, the array includes them in the order they appe
 - Whitespace: preserved
 - Non-ASCII: preserved
 
-Example:
-
-```txt
-any(http.response.headers["server"][*] == "nginx")
-```
-
 Example value:
 
 ```txt
 {"server": ["nginx"]}
+```
+
+Example usage:
+
+```txt
+any(http.response.headers["server"][*] == "nginx")
 ```
 
 ## `http.response.headers.names`
@@ -59,13 +59,15 @@ Duplicate headers are listed multiple times.
 - Whitespace: preserved
 - Non-ASCII: preserved
 
-Example:
+Example value:
 
-```
+`["content-type"]`
+
+Example usage:
+
+```txt
 any(http.response.headers.names[*] == "content-type")
 ```
-
-Example value: `["content-type"]`
 
 ## `http.response.headers.values`
 
@@ -83,24 +85,27 @@ Duplicate headers are listed multiple times.
 - Whitespace: preserved
 - Non-ASCII: preserved
 
-Example 1:
+Example value 1:
 
-```
+`["application/json"]`
+
+Example usage 1:
+
+```txt
 any(http.response.headers.values[*] == "application/json")
 ```
 
-Example value 1: `["application/json"]`
-
 Additionally used to match responses according to the specified operator and the length/size entered for the header value.
 
-Example 2:
+Example value 2:
 
-```
+`["This header value is longer than 10 bytes"]`
+
+Example usage 2:
+
+```txt
 any(len(http.response.headers.values[*])[*] gt 10)
 ```
-
-Example value 2:
-`["This header value is longer than 10 bytes"]`
 
 ## `http.response.content_type.media_type`
 
@@ -128,6 +133,7 @@ The lowercased content type (including subtype and suffix) without any parameter
 Contains the specific code for 1XXX Cloudflare errors. Use this field to differentiate between 1XXX errors associated with the same HTTP status code. The default value is `0`. For a list of 1XXX errors, refer to [Troubleshooting Cloudflare 1XXX errors](/support/troubleshooting/cloudflare-errors/troubleshooting-cloudflare-1xxx-errors/).
 
 Example value:
+
 `1020`
 
 :::note
@@ -142,16 +148,16 @@ A string with the type of error in the response being returned. The default valu
 
 The available values are the following:
 
-- `managed_challenge`
-- `iuam`
-- `legacy_challenge`
-- `ip_ban`
-- `waf`
-- `5xx`
-- `1xxx`
-- `always_online`
-- `country_challenge`
-- `ratelimit`
+- `"managed_challenge"`
+- `"iuam"`
+- `"legacy_challenge"`
+- `"ip_ban"`
+- `"waf"`
+- `"5xx"`
+- `"1xxx"`
+- `"always_online"`
+- `"country_challenge"`
+- `"ratelimit"`
 
 You can use this field to customize the response for a specific type of error (for example, all 1XXX errors or all WAF block actions).
 

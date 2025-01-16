@@ -72,14 +72,13 @@ The return value may be truncated if [`http.request.body.truncated`](#httpreques
 - **Whitespace:** preserved
 - **Non-ASCII:** preserved
 
-Example:
-
-```txt
-any(http.request.body.form["username"][*] == "admin")
-```
-
 Example value:
-`{username": ["admin"]}`
+
+`{"username": ["admin"]}`
+
+Example usage:
+
+`any(http.request.body.form["username"][*] == "admin")`
 
 ## `http.request.body.form.names`
 
@@ -97,15 +96,13 @@ The return value may be truncated if [`http.request.body.truncated`](#httpreques
 - **Whitespace:** preserved
 - **Non-ASCII:** preserved
 
-Example:
-
-```txt
-any(http.request.body.form.names[*] == "username")
-```
-
 Example value:
 
 `["username"]`
+
+Example usage:
+
+`any(http.request.body.form.names[*] == "username")`
 
 ## `http.request.body.form.values`
 
@@ -123,15 +120,13 @@ The return value may be truncated if [`http.request.body.truncated`](#httpreques
 - **Whitespace:** preserved
 - **Non-ASCII:** preserved
 
-Example:
-
-```txt
-any(http.request.body.form.values[*] == "admin")
-```
-
 Example value:
 
 `["admin"]`
+
+Example usage:
+
+`any(http.request.body.form.values[*] == "admin")`
 
 ## `http.request.body.mime`
 
@@ -141,9 +136,13 @@ The MIME type of the request detected from the request body.
 
 Supports the most common MIME types of the following general categories: video, audio, image, application, text.
 
-Example:
+Example value:
 
-`image/jpeg`
+`"image/jpeg"`
+
+Example usage:
+
+`http.request.body.mime in {"image/bmp" "image/gif" "image/jpeg" "image/png" "image/tiff"}`
 
 This field is available on all Cloudflare plans.
 
@@ -155,7 +154,11 @@ A Map (or associative array) representation of multipart names to multipart valu
 
 Example value:
 
-`{"username": ["alice_doe"], "picture": [<binary_content_of_file>]}`
+`{"username": ["alice_doe"], "role": ["editor"], "picture": [<binary_content_of_file>]}`
+
+Example usage:
+
+`any(http.request.body.multipart["role"][*] == "admin")`
 
 ## `http.request.body.multipart.names`
 
@@ -167,7 +170,7 @@ Example value:
 
 `[["username"], ["picture"]]`
 
-Example:
+Example usage:
 
 `any(http.request.body.multipart.names[*][0] == "picture")`
 
@@ -181,6 +184,10 @@ Example value:
 
 `["alice_doe", <binary_content_of_file>]`
 
+Example usage:
+
+`any(http.request.body.multipart.values[*] == "alice_doe")`
+
 ## `http.request.body.multipart.content_types`
 
 `http.request.body.multipart.content_types` <Type text='Array<Array<String>>' />
@@ -191,7 +198,7 @@ Example value:
 
 `[["text/plain"], ["image/jpeg"]]`
 
-Example:
+Example usage:
 
 `any(http.request.body.multipart.content_types[*][0] == "application/octet-stream")`
 
@@ -203,7 +210,11 @@ List of `Content-Disposition` headers for each part in the multipart body.
 
 Example value:
 
-`[["form-data; name=\"username\"], ["form-data;name=\"picture\"]]`
+`[["form-data; name=\"username\""], ["form-data; name=\"picture\""]]`
+
+Example usage:
+
+`any(http.request.body.multipart.content_dispositions[*][0] in {"form-data; name=\"username\"" "form-data; name=\"picture\""})`
 
 ## `http.request.body.multipart.content_transfer_encodings`
 
@@ -213,7 +224,11 @@ List of `Content-Transfer-Encoding` headers for each part in the multipart body.
 
 Example value:
 
-`[["quoted-printable"], ["quoted-printable"]]`
+`[["quoted-printable"], ["base64"]]`
+
+Example usage:
+
+`any(http.request.body.multipart.content_transfer_encodings[*][0] == "binary")`
 
 ## `http.request.body.multipart.filenames`
 
@@ -224,3 +239,7 @@ List of filenames for each part in the multipart body.
 Example value:
 
 `[["file1.txt"], ["photo.jpg"]]`
+
+Example usage:
+
+`any(http.request.body.multipart.filenames[*][0] in {"token.txt" "password.txt"})`

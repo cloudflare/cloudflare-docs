@@ -35,24 +35,21 @@ const stmt = env.DB.prepare("SELECT * FROM Customers WHERE CompanyName = ?").bin
 
 #### Return values
 
-- None.
+- <code>D1PreparedStatement</code>: <Type text="Object"/>
+  - An object which only contains methods. Refer to [Prepared statement methods](/d1/worker-api/prepared-statements/).
 
 #### Guidance
 
-- D1 follows the [SQLite convention](https://www.sqlite.org/lang_expr.html#varparam) for prepared statements parameter binding. Currently, D1 only supports Ordered (`?NNNN`) and Anonymous (`?`) parameters. In the future, D1 will support named parameters as well.
+You  can use the `bind` method to dynamically bind a value into the query statement, as shown below.
 
-	| Syntax | Type      | Description                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       |
-	| ------ | --------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-	| `?NNN` | Ordered   | A question mark followed by a number `NNN` holds a spot for the `NNN`-th parameter. `NNN` must be between `1` and `SQLITE_MAX_VARIABLE_NUMBER`                                                                                                                                                                                                                                                                                                                                                                                                    |
-	| `?`    | Anonymous | A question mark that is not followed by a number creates a parameter with a number one greater than the largest parameter number already assigned. If this means the parameter number is greater than `SQLITE_MAX_VARIABLE_NUMBER`, it is an error. This parameter format is provided for compatibility with other database engines. But because it is easy to miscount the question marks, the use of this parameter format is discouraged. Programmers are encouraged to use one of the symbolic formats below or the `?NNN` format above instead. |
-
-	To bind a parameter, use the `.bind` method.
-
-	Order and anonymous examples:
+- Example of a static statement without using `bind`:
 
 	```js
-	const stmt = db.prepare("SELECT * FROM Customers WHERE CompanyName = ?").bind("");
+	const stmt = db
+		.prepare("SELECT * FROM Customers WHERE CompanyName = Alfreds Futterkiste AND CustomerId = 1")
 	```
+
+- Example of an ordered statement using `bind`:
 
 	```js
 	const stmt = db
@@ -60,36 +57,7 @@ const stmt = env.DB.prepare("SELECT * FROM Customers WHERE CompanyName = ?").bin
 		.bind("Alfreds Futterkiste", 1);
 	```
 
-	```js
-	const stmt = db
-		.prepare("SELECT * FROM Customers WHERE CompanyName = ?2 AND CustomerId = ?1")
-		.bind(1, "Alfreds Futterkiste");
-	```
-
-#### Static statements
-
-D1 API supports static statements. Static statements are SQL statements where the variables have been hard coded. When writing a static statement, you manually type the variable within the statement string.
-
-:::note
-The recommended approach is to bind parameters to create a prepared statement (which are precompiled objects used by the database) to run the SQL. Prepared statements lead to faster overall execution and prevent SQL injection attacks.
-:::
-
-Example of a prepared statement with dynamically bound value:
-
-```js
-const someVariable = `Bs Beverages`;
-const stmt = env.DB.prepare("SELECT * FROM Customers WHERE CompanyName = ?").bind(someVariable);
-// A variable (someVariable) will replace the placeholder '?' in the query.
-// `stmt` is a prepared statement.
-```
-
-Example of a static statement:
-
-```js
-const stmt = env.DB.prepare("SELECT * FROM Customers WHERE CompanyName = Bs Beverages");
-// "Bs Beverages" is hard-coded into the query.
-// `stmt` is a static statement.
-```
+Refer to the [`bind` method documentation](/d1/worker-api/prepared-statements/#bind) for more information.
 
 ### `batch()`
 
@@ -244,7 +212,7 @@ return Response.json(returnValue);
 
 #### Guidance
 
-- If an error occurs, an exception is thrown with the query and error messages, execution stops and further statements are not executed. Refer to [Errors](/d1/observability/#errors) to learn more.
+- If an error occurs, an exception is thrown with the query and error messages, execution stops and further statements are not executed. Refer to [Errors](/d1/observability/debug-d1/#errors) to learn more.
 - This method can have poorer performance (prepared statements can be reused in some cases) and, more importantly, is less safe.
 - Only use this method for maintenance and one-shot tasks (for example, migration jobs).
 - The input can be one or multiple queries separated by `\n`.

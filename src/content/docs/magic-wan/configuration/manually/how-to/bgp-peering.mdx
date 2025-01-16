@@ -1,0 +1,21 @@
+---
+pcx_content_type: how-to
+title: Configure BGP peering
+sidebar:
+  order: 3
+---
+
+import { Render } from "~/components"
+
+<Render
+	file="bgp-peering"
+	product="network-interconnect"
+	params={{
+		productName: "Magic WAN",
+		productPath: "/magic-wan/reference/tunnel-health-checks/",
+		legacyHCs: "/magic-wan/reference/tunnel-health-checks/#legacy-health-checks-system",
+		asnProduct: "<br /> Magic WAN customers should also be aware of the following: <br /> <ul><li>The Cloudflare side ASN will be included in the <code>AS_PATH</code> of announced routes to any BGP enabled interconnect.</li><li>The customer chooses their device ASN, which should be different to the Cloudflare-side ASN.</li></ul>",
+		mtLimitations: " ",
+		productGatewayOrEgress: "Magic WAN with Gateway"
+	}}
+/>

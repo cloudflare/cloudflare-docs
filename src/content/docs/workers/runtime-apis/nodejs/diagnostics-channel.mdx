@@ -10,8 +10,6 @@ import { Render } from "~/components"
 
 The [`diagnostics_channel`](https://nodejs.org/dist/latest-v20.x/docs/api/diagnostics_channel.html) module provides an API to create named channels to report arbitrary message data for diagnostics purposes. The API is essentially a simple event pub/sub model that is specifically designed to support low-overhead diagnostics reporting.
 
-````js
-
 ```js
 import {
   channel,
@@ -32,7 +30,7 @@ myChannel.publish({ foo: 'bar' });
 subscribe('my-channel', (message) => {
   console.log(message);
 });
-````
+```
 
 All `Channel` instances are singletons per each Isolate/context (for example, the same entry point). Subscribers are always invoked synchronously and in the order they were registered, much like an `EventTarget` or Node.js `EventEmitter` class.
 

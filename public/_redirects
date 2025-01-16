@@ -308,6 +308,12 @@
 /d1/reference/database-commands/ /d1/reference/sql-statements/ 301
 /d1/reference/sql-statements/ /d1/sql-api/sql-statements/ 301
 
+# Data Localization Suite
+/data-localization/key-management/ /data-localization/key-management/geo-key-manager/ 301
+/data-localization/key-management/geo-key-manager/ /data-localization/geo-key-manager/ 301
+/data-localization/key-management/keyless-ssl/ /ssl/keyless-ssl/ 301
+
+
 # data loss prevention (dlp)
 /cloudflare-one/policies/data-loss-prevention/integration-profiles/ /cloudflare-one/policies/data-loss-prevention/dlp-profiles/integration-profiles/ 301
 /cloudflare-one/policies/data-loss-prevention/dlp-logs/ /cloudflare-one/policies/data-loss-prevention/dlp-policies/ 301
@@ -793,13 +799,14 @@
 /magic-wan/get-started/configure-static-routes/ /magic-wan/configuration/manually/how-to/configure-static-routes/ 301
 /magic-wan/configuration/connector/configure-connector/ /magic-wan/configuration/connector/configure-hardware-connector/ 301
 /magic-wan/configuration/connector/device-information/ /magic-wan/configuration/connector/reference/ 301
-/magic-wan/configuration/manually/how-to/check-tunnel-health-dashboard/ /magic-wan/configuration/common-settings/check-tunnel-health-dashboard/ 301
+/magic-wan/configuration/manually/how-to/check-tunnel-health-dashboard/ /magic-wan/configuration/common-settings/tunnel-health-checks/ 301
 /magic-wan/configuration/manually/how-to/configure-magic-tunnel-alerts/ /magic-wan/configuration/common-settings/configure-magic-tunnel-alerts/ 301
 /magic-wan/configuration/manually/how-to/enable-magic-roles/ /magic-wan/configuration/common-settings/enable-magic-roles/ 301
 /magic-wan/configuration/common-settings/tunnel-health-checks/ /magic-wan/configuration/manually/how-to/tunnel-health-checks/ 301
 /magic-wan/configuration/manually/how-to/view-analytics/ /magic-wan/analytics/ 301
 /magic-wan/configuration/common-settings/view-analytics/ /magic-wan/analytics/ 301
 /magic-wan/prerequisites/ /magic-wan/get-started/ 301
+/magic-wan/configuration/common-settings/check-tunnel-health-dashboard/ /magic-wan/configuration/common-settings/tunnel-health-checks/ 301
 
 # notifications
 /fundamentals/notifications/ /notifications/ 301
@@ -828,6 +835,8 @@
 /pages/how-to/deploy-a-vue-application/ /pages/framework-guides/deploy-a-vue-site/ 301
 /pages/functions/plugins/mailchannels/ /workers/tutorials/send-emails-with-resend/ 301
 /pages/framework-guides/deploy-a-vue-application/ /pages/framework-guides/deploy-a-vue-site 301
+/pages/framework-guides/deploy-a-solid-site/ /pages/framework-guides/deploy-a-solid-start-site/ 301
+/pages/framework-guides//pages/framework-guides/deploy-a-svelte-site/ /pages/framework-guides/deploy-a-svelte-kit-site/ 301
 /pages/how-to/deploy-a-zola-site/ /pages/framework-guides/deploy-a-zola-site/ 301
 /pages/how-to/elderjs/ /pages/framework-guides/deploy-an-elderjs-site/ 301
 /pages/configuration/language-support-and-tools/ /pages/configuration/build-image/ 301
@@ -1009,6 +1018,7 @@
 /ssl/certificate-transparency-monitoring/ /ssl/edge-certificates/additional-options/certificate-transparency-monitoring/ 301
 /ssl/client-certificates/byo-ca-api-shield/ /ssl/client-certificates/byo-ca/ 301
 /ssl/edge-certificates/certificate-transparency-monitoring/ /ssl/edge-certificates/additional-options/certificate-transparency-monitoring/ 301
+/ssl/edge-certificates/changing-dcv-method/methods/email/ /ssl/edge-certificates/changing-dcv-method/methods/ 301
 /ssl/edge-certificates/custom-certificates/caa-records/ /ssl/edge-certificates/caa-records/ 301
 /ssl/edge-certificates/disable-weak-cipher-suites/ /ssl/edge-certificates/additional-options/cipher-suites/customize-cipher-suites/ 301
 /ssl/edge-certificates/http-strict-transport-security/ /ssl/edge-certificates/additional-options/http-strict-transport-security/ 301
@@ -1020,6 +1030,7 @@
 /ssl/reference/cipher-suites/custom-certificates/ /ssl/edge-certificates/custom-certificates/#certificate-packs 301
 /ssl/reference/cipher-suites/matching-on-origin/ /ssl/origin-configuration/cipher-suites/#match-on-origin 301
 /ssl/reference/migration-guides/lets-encrypt-chain/ /ssl/reference/certificate-authorities/#lets-encrypt 301
+/ssl/reference/migration-guides/dcv-update/ /ssl/reference/migration-guides/ 301
 /ssl/reference/validation-backoff-schedule/ /ssl/edge-certificates/changing-dcv-method/validation-backoff-schedule/ 301
 /ssl/universal-ssl/changing-dcv-method/ /ssl/edge-certificates/changing-dcv-method/ 301
 /support/dns/how-to/certification-authority-authorization-caa-faq/ /ssl/edge-certificates/troubleshooting/caa-records/ 301
@@ -1038,6 +1049,9 @@
 /cloudflare-for-platforms/cloudflare-for-saas/domain-support/worker-as-origin/ /cloudflare-for-platforms/cloudflare-for-saas/start/advanced-settings/worker-as-origin/ 301
 /cloudflare-for-platforms/cloudflare-for-saas/start/hostname-verification-backoff-schedule/ /cloudflare-for-platforms/cloudflare-for-saas/domain-support/hostname-validation/backoff-schedule/ 301
 /cloudflare-for-platforms/cloudflare-for-saas/domain-support/hostname-verification/ /cloudflare-for-platforms/cloudflare-for-saas/domain-support/hostname-validation/ 301
+/cloudflare-for-platforms/cloudflare-for-saas/reference/status-codes/certificate-authority-specific/ /cloudflare-for-platforms/cloudflare-for-saas/reference/status-codes/ 301
+/cloudflare-for-platforms/cloudflare-for-saas/security/certificate-management/issue-and-validate/validate-certificates/cname/ /cloudflare-for-platforms/cloudflare-for-saas/security/certificate-management/issue-and-validate/validate-certificates/ 301
+/cloudflare-for-platforms/cloudflare-for-saas/security/certificate-management/issue-and-validate/validate-certificates/email/ /cloudflare-for-platforms/cloudflare-for-saas/security/certificate-management/issue-and-validate/validate-certificates/ 301
 
 # workers for platforms
 /cloudflare-for-platforms/workers-for-platforms/learning/ /cloudflare-for-platforms/workers-for-platforms/reference/ 301
@@ -1240,6 +1254,7 @@
 /turnstile/migration/migrating-from-recaptcha/ /turnstile/migration/recaptcha/ 301
 /turnstile/migration/migrating-from-hcaptcha/ /turnstile/migration/hcaptcha/ 301
 /turnstile/concepts/widget-types/ /turnstile/concepts/widget/ 301
+/turnstile/concepts/domain-management/ /turnstile/concepts/hostname-management/ 301
 
 # waf
 /waf/about/ /waf/concepts/ 301
@@ -1333,7 +1348,7 @@
 /workers/deploying-workers/terraform/ /workers/configuration/integrations/ 301
 /workers/kv/ /workers/learning/how-kv-works/ 301
 /workers/learning/fetch-event-lifecycle/ /workers/runtime-apis/fetch-event/ 301
-/workers/learning/getting-started/ /workers/get-started/guide/ 301
+/workers/learning/getting-started/ /workers/get-started/quickstarts/ 301
 /workers/learning/profiling-workers/ /workers/reference/how-workers-works/ 301
 /workers/platform/scripts/ /api/resources/workers/subresources/scripts/methods/list/ 301
 /workers/platform/services/ /workers/runtime-apis/bindings/service-bindings/ 301
@@ -1604,11 +1619,15 @@
 /access/common-access-configurations/common-bypass/ /cloudflare-one/policies/access/#bypass 301
 /cloudflare-one/analytics/ /cloudflare-one/insights/ 301
 /cloudflare-one/analytics/logs/activity-log/ /cloudflare-one/insights/logs/gateway-logs/ 301
-/cloudflare-one/analytics/private-network-discovery/ /cloudflare-one/insights/analytics/access/ 301
+/cloudflare-one/analytics/private-network-discovery/ /cloudflare-one/insights/analytics/shadow-it-discovery/#private-network-origins 301
 /cloudflare-one/analytics/access/ /cloudflare-one/insights/analytics/access/ 301
 /cloudflare-one/analytics/gateway/ /cloudflare-one/insights/analytics/gateway/ 301
 /cloudflare-one/analytics/users/ /cloudflare-one/insights/logs/users/ 301
 /cloudflare-one/api-terraform/access-api-examples/azure-group/ /cloudflare-one/api-terraform/access-api-examples/entra-group/ 301
+/cloudflare-one/api-terraform/gateway-api-examples/ /cloudflare-one/policies/gateway/ 301
+/cloudflare-one/api-terraform/gateway-api-examples/dns-policy/ /cloudflare-one/policies/gateway/dns-policies/common-policies/ 301
+/cloudflare-one/api-terraform/gateway-api-examples/network-policy/ /cloudflare-one/policies/gateway/network-policies/common-policies/ 301
+/cloudflare-one/api-terraform/gateway-api-examples/http-policy/ /cloudflare-one/policies/gateway/http-policies/common-policies/ 301
 /cloudflare-one/applications/non-http/arbitrary-tcp/ /cloudflare-one/applications/non-http/cloudflared-authentication/arbitrary-tcp/ 301
 /cloudflare-one/connections/connect-apps/configuration/ /cloudflare-one/connections/connect-networks/configure-tunnels/ 301
 /cloudflare-one/connections/connect-apps/install-and-setup/setup/ /cloudflare-one/connections/connect-networks/get-started/ 301
@@ -1697,6 +1716,7 @@
 /cloudflare-one/identity/idp-integration/saml-okta/ /cloudflare-one/identity/idp-integration/okta-saml/ 301
 /cloudflare-one/identity/idp-integration/workspace-one/ /cloudflare-one/identity/devices/service-providers/workspace-one/ 301
 /cloudflare-one/identity/login-page/ /cloudflare-one/applications/login-page/ 301
+/cloudflare-one/insights/analytics/ /cloudflare-one/insights/analytics/analytics-overview/ 301
 /cloudflare-one/insights/logs/logpush/rdata/ /cloudflare-one/insights/logs/logpush/#parse-logpush-logs 301
 /cloudflare-one/applications/custom-pages/ /cloudflare-one/applications/ 301
 /cloudflare-one/identity/service-auth/service-tokens/ /cloudflare-one/identity/service-tokens/ 301
@@ -1785,6 +1805,7 @@
 /rules/url-forwarding/dynamic-redirects/* /rules/url-forwarding/single-redirects/:splat 301
 /ssl/ssl-tls/* /ssl/reference/:splat 301
 /ssl/reference/cipher-suites/* /ssl/edge-certificates/additional-options/cipher-suites/:splat 301
+/ssl/reference/migration-guides/digicert-update/* /ssl/reference/migration-guides/ 301
 /support/account-management-billing/billing-cloudflare-add-on-services/* https://www.cloudflare.com/plans/ 301
 /tenant/tutorial/* /tenant/get-started/ 301
 /waf/managed-rulesets/* /waf/managed-rules/:splat 301

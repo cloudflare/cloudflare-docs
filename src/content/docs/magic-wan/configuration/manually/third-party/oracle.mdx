@@ -69,14 +69,14 @@ You can try this code in the [Workers playground](https://workers.cloudflare.com
             - Select **Set custom configurations**
             - **Custom encryption algorithm**: **AES_256_CBC**
             - **Custom authentication algorithm**: **SHA2_256**
-            - **Custom Diffie-Hellman group**: **GROUP14**
-            - **IKE session key lifetime in seconds**: **28800**
+            - **Custom Diffie-Hellman group**: **GROUP20**
+            - **IKE session key lifetime in seconds**: **86400**
          3. Select **Phase two (IPsec) configuration**
             - Select **Set custom configurations**
             - **Custom encryption algorithm**: **AES_256_CBC**
             - **HMAC_SHA2_256_128**: **HMAC_SHA2_256_128**
-            - **IPsec session key lifetime in seconds**: **14400**
-            - **Perfect forward secrecy Diffie-Hellman group**: **GROUP14**
+            - **IPsec session key lifetime in seconds**: **28800**
+            - **Perfect forward secrecy Diffie-Hellman group**: **GROUP20**
     - **Tunnel 2**
       - Repeat the above steps for Tunnel 2. Select the right IP for **IPv4 inside tunnel interface - CPE**: `10.200.2.0/31` and **IPv4 inside tunnel interface - Oracle**: `10.200.2.1/31`
 4. Select **Create IPsec connection**

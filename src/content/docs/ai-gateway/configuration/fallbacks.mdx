@@ -7,11 +7,13 @@ sidebar:
 
 import { Render } from "~/components";
 
-Specify model or provider fallback with your [Universal endpoint](/ai-gateway/providers/universal/) to specify what to do if a request fails.
+Specify model or provider fallbacks with your [Universal endpoint](/ai-gateway/providers/universal/) to handle request failures and ensure reliability.
+
+Fallbacks are currently triggered only when a request encounters an error. We are working to expand fallback functionality to include time-based triggers, which will allow requests that exceed a predefined response time to timeout and fallback. 
 
 ## Example
 
-For example, you could set up a gateway endpoint that:
+In the following example, a request first goes to the [Workers AI](/workers-ai/) Inference API. If the request fails, it falls back to OpenAI. The response header `cf-aig-step` indicates which provider successfully processed the request. 
 
 1. Sends a request to Workers AI Inference API.
 2. If that request fails, proceeds to OpenAI.

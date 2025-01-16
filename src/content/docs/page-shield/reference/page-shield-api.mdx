@@ -71,12 +71,12 @@ The malicious script classification (`Malicious` or `Not malicious`) is not dire
 
 This example obtains the current settings of Page Shield, including the status (enabled/disabled).
 
-```bash title="Request"
+```bash
 curl "https://api.cloudflare.com/client/v4/zones/{zone_id}/page_shield" \
 --header "Authorization: Bearer <API_TOKEN>"
 ```
 
-```json title="Response"
+```json output
 {
 	"result": {
 		"enabled": true,
@@ -94,7 +94,7 @@ curl "https://api.cloudflare.com/client/v4/zones/{zone_id}/page_shield" \
 
 This example enables Page Shield in the specified zone.
 
-```bash title="Request"
+```bash
 curl --request PUT \
 "https://api.cloudflare.com/client/v4/zones/{zone_id}/page_shield" \
 --header "Authorization: Bearer <API_TOKEN>" \
@@ -102,7 +102,7 @@ curl --request PUT \
 --data '{ "enabled": true }'
 ```
 
-```json title="Response"
+```json output
 {
 	"result": {
 		"enabled": true,
@@ -120,12 +120,12 @@ This `GET` request fetches a list of scripts detected by Page Shield on hostname
 
 By default, the response will only include scripts with `active` status when you do not specify a `status` filter parameter in the URL query string.
 
-```bash title="Request"
+```bash
 curl "https://api.cloudflare.com/api/v4/zones/{zone_id}/page_shield/scripts?hosts=example.net&page=1&per_page=15" \
 --header "Authorization: Bearer <API_TOKEN>"
 ```
 
-```json title="Response"
+```json output
 {
 	"result": [
 		{
@@ -173,12 +173,12 @@ For details on the available filtering, paging, and sorting parameters, refer to
 
 This `GET` request fetches a list of infrequently reported scripts on hostname `example.net`, requesting the first page with 15 items per page. The URL query string includes filtering and paging parameters.
 
-```bash title="Request"
+```bash
 curl "https://api.cloudflare.com/api/v4/zones/{zone_id}/page_shield/scripts?status=infrequent&hosts=example.net&page=1&per_page=15" \
 --header "Authorization: Bearer <API_TOKEN>"
 ```
 
-```json title="Response"
+```json output
 {
 	"result": [
 		{
@@ -225,12 +225,12 @@ For details on the available filtering, paging, and sorting parameters, refer to
 
 This `GET` request obtains the details of a script detected by Page Shield with script ID `8337233faec2357ff84465a919534e4d`.
 
-```bash title="Request"
+```bash
 curl "https://api.cloudflare.com/api/v4/zones/{zone_id}/page_shield/scripts/8337233faec2357ff84465a919534e4d" \
 --header "Authorization: Bearer <API_TOKEN>"
 ```
 
-```json title="Response"
+```json output
 {
 	"result": {
 		"id": "8337233faec2357ff84465a919534e4d",
@@ -285,12 +285,12 @@ This `GET` request fetches a list of connections detected by Page Shield, reques
 
 By default, the response will only include connections with `active` status when you do not specify a `status` filter parameter in the URL query string.
 
-```bash title="Request"
+```bash
 curl "https://api.cloudflare.com/api/v4/zones/{zone_id}/page_shield/connections?page=1&per_page=15" \
 --header "Authorization: Bearer <API_TOKEN>"
 ```
 
-```json title="Response"
+```json output
 {
 	"result": [
 		{
@@ -329,12 +329,12 @@ For details on the available filtering, paging, and sorting parameters, refer to
 
 This `GET` request obtains the details of a connection detected by Page Shield with connection ID `0a7bb628776f4e50a50d8594c4a01740`.
 
-```bash title="Request"
+```bash
 curl "https://api.cloudflare.com/api/v4/zones/{zone_id}/page_shield/connections/0a7bb628776f4e50a50d8594c4a01740" \
 --header "Authorization: Bearer <API_TOKEN>"
 ```
 
-```json title="Response"
+```json output
 {
 	"result": {
 		"id": "0a7bb628776f4e50a50d8594c4a01740",
@@ -363,12 +363,12 @@ This `GET` request fetches a list of cookies detected by Page Shield, requesting
 
 By default, the response will only include cookies with `active` status when you do not specify a `status` filter parameter in the URL query string.
 
-```bash title="Request"
+```bash
 curl "https://api.cloudflare.com/api/v4/zones/{zone_id}/page_shield/cookies?page=1&per_page=15" \
 --header "Authorization: Bearer <API_TOKEN>"
 ```
 
-```json title="Response"
+```json output
 {
 	"result": [
 		{
@@ -409,12 +409,12 @@ For details on the available filtering, paging, and sorting parameters, refer to
 
 This `GET` request obtains the details of a cookie detected by Page Shield with ID `beee03ada7e047e79f076785d8cd8b8e`.
 
-```bash title="Request"
+```bash
 curl "https://api.cloudflare.com/api/v4/zones/{zone_id}/page_shield/cookies/beee03ada7e047e79f076785d8cd8b8e" \
 --header "Authorization: Bearer <API_TOKEN>"
 ```
 
-```json title="Response"
+```json output
 {
 	"result": {
 		"id": "beee03ada7e047e79f076785d8cd8b8e",
@@ -457,7 +457,7 @@ For more information on <GlossaryTooltip term="content security policy (CSP)">Co
 For a list of CSP directives and keywords supported by Page Shield policies, refer to [CSP directives supported by policies](/page-shield/policies/csp-directives/).
 :::
 
-```bash title="Request"
+```bash
 curl "https://api.cloudflare.com/api/v4/zones/{zone_id}/page_shield/policies" \
 --header "Authorization: Bearer <API_TOKEN>" \
 --header "Content-Type: application/json" \
@@ -470,7 +470,7 @@ curl "https://api.cloudflare.com/api/v4/zones/{zone_id}/page_shield/policies" \
 }'
 ```
 
-```json title="Response"
+```json output
 {
 	"success": true,
 	"errors": [],
