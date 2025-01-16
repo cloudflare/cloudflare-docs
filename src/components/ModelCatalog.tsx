@@ -226,7 +226,7 @@ const ModelCatalog = ({ models }: { models: WorkersAIModelsSchema[] }) => {
 									/>
 								) : (
 									<div className="mr-2 flex h-6 w-6 items-center justify-center rounded-md bg-gray-100 text-sm font-black uppercase text-gray-400">
-										{author.slice(1)}
+										{author.slice(0, 1)}
 									</div>
 								)}
 								<span className="overflow-hidden text-ellipsis whitespace-nowrap text-lg font-semibold">
