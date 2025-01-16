@@ -20,13 +20,11 @@ entries:
     title: D1's Worker API request latency decreases by 40-60%.
     description: |-
 
-    [D1](/d1/) lowered end-to-end Worker API request latency by 40-60% by eliminating redundant network round-trips for each request.
+    [D1](/d1/) lowered end-to-end Worker API request latency by 40-60% by eliminating redundant network round trips for each request.
     
-    Faster D1 performance is most noticeable via requests to D1's [Worker API](/d1/worker-api/). The same improvement applies to D1's [REST API](/api/resources/d1/subresources/database/methods/query/). However, the REST API still depends on Cloudflare's centralized datacenters for authentication, which reduces the relative performance improvement.
+    For each request to a D1 database, at least two network round trips were eliminated. One round trip was due to a bug that is now fixed. The remaining removed round trips are due to avoiding creating a new TCP connection for each request when reaching out to the datacenter hosting the database.
     
-    For each request to a D1 database, at least two network round trips were eliminated.
-    
-    One round trip was due to a bug that is now fixed. The remaining removed round trips are due to avoiding creating a new TCP connection for each request when reaching out to the datacenter hosting the database.
+    The same removal of redundant network round trips fixes apply to D1's [REST API](/api/resources/d1/subresources/database/methods/query/). However, the REST API still depends on Cloudflare's centralized datacenters for authentication, which reduces the relative performance improvement.
 
   - publish_date: "2024-08-23"
     title: D1 alpha databases have stopped accepting SQL queries
