@@ -6,6 +6,8 @@ sidebar:
   label: Setup
 ---
 
+import { GlossaryTooltip } from "~/components";
+
 Consider the sections below to learn how to set up address maps.
 
 ## Create address maps
@@ -40,7 +42,9 @@ You can also enable, disable, and delete address maps. This will likely change t
 
 ## Non-SNI support
 
-Define a hostname to be used by default whenever Cloudflare receives a TLS handshake without [Server Name Indication (SNI)](/ssl/reference/browser-compatibility/#non-sni-support). For further context, refer to [browser compatibility](/ssl/reference/browser-compatibility/#non-sni-support).
+If your visitors use devices that have not been updated since 2011, they may not have <GlossaryTooltip term="Server Name Indication (SNI)">Server Name Indication (SNI)</GlossaryTooltip> support. For further context, refer to [browser compatibility](/ssl/reference/browser-compatibility/#non-sni-support).
+
+Use address maps to specify a hostname as default SNI. This will be used whenever Cloudflare receives a non-SNI TLS handshake.
 
 :::note
 Setting up a default SNI is currently only supported via API.
