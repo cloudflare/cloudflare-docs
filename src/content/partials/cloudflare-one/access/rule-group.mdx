@@ -4,12 +4,12 @@
 
 import { TabItem, Tabs } from "~/components";
 
-To create an Access group:
+To create an Access rule group:
 
 <Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
 
-1. In [Zero Trust](https://one.dash.cloudflare.com), go to **Access** > **Access Groups**.
-2. Select **Add a Group**.
+1. In [Zero Trust](https://one.dash.cloudflare.com), go to **Access** > **Rule groups**.
+2. Select **Add a group**.
 3. Enter a name for the group (for example, `Lisbon-team`).
 4. Specify as many rules as needed to define your user group. For example, the following rules define a team based in Lisbon, Portugal:
 
@@ -54,4 +54,4 @@ curl https://api.cloudflare.com/client/v4/accounts/{account_id}/access/groups \
 
 </TabItem> </Tabs>
 
-You can now select this group in the Access policy builder.
+You can now add this group to an Access policy using the _Rule groups_ selector.
