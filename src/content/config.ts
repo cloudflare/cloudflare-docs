@@ -80,8 +80,8 @@ export const collections = {
 	}),
 	"warp-releases": defineCollection({
 		schema: warpReleasesSchema,
-    type: "data",
-  }),
+		type: "data",
+	}),
 	"changelogs-next": defineCollection({
 		schema: changelogsNextSchema,
 	}),

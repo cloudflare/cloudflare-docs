@@ -9,7 +9,7 @@ type Props = z.infer<typeof props>;
 
 const props = z.object({
 	header: z.string(),
-	open: z.boolean().default(false),
+	open: z.boolean().optional(),
 	release: warpReleasesSchema,
 });
 
