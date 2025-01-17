@@ -12,7 +12,6 @@ releaseNotes: |
     - Fixed an issue that was preventing proper operation of DNS-over-TLS (DoT) for consumer users.
 
 version: 2024.11.309.0
-releaseDate: 2024-11-18T21:57:58.477Z
+releaseDate: 2024-11-18
 packageURL: https://pkg.cloudflareclient.com/
-packageSize: 123456789
 platformName: Linux

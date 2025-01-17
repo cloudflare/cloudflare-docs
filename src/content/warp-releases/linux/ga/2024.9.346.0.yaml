@@ -22,7 +22,6 @@ releaseNotes: |
     - Using MASQUE as the tunnel protocol may be incompatible if your organization has Regional Services is enabled.
 
 version: 2024.9.346.0
-releaseDate: 2024-10-03T22:25:25.836Z
+releaseDate: 2024-10-03
 packageURL: https://pkg.cloudflareclient.com/
-packageSize: 123456789
 platformName: Linux

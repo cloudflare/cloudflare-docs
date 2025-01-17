@@ -13,7 +13,6 @@ releaseNotes: |
     - QLogs are now disabled by default and can be enabled with `warp-cli debug qlog enable`. The QLog setting from previous releases will no longer be respected.
 
 version: 2024.12.554.0
-releaseDate: 2024-12-19T22:24:55.168Z
+releaseDate: 2024-12-19
 packageURL: https://pkg.cloudflareclient.com/
-packageSize: 123456789
 platformName: Linux

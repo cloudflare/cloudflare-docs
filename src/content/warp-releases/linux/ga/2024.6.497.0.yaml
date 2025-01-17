@@ -20,7 +20,6 @@ releaseNotes: |
     - Sometimes the WARP icon will remain gray (disconnected state) while in dark mode.
 
 version: 2024.6.497.0
-releaseDate: 2024-08-15T22:25:25.836Z
+releaseDate: 2024-08-15
 packageURL: https://pkg.cloudflareclient.com/
-packageSize: 123456789
 platformName: Linux

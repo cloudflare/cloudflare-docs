@@ -2,7 +2,6 @@
 import Details from "./Details.astro";
 import { marked } from "marked";
 import { z } from "astro:schema";
-import { format } from "date-fns";
 import prettyBytes from "pretty-bytes";
 import { warpReleasesSchema } from "~/schemas";
 
@@ -22,16 +21,21 @@ const { header, open, release } = props.parse(Astro.props);
 		<div class="flex gap-2">
 			<span>
 				<strong>Version: </strong>
-				{release.platformName} {release.version}
+				{release.platformName}
+				{release.version}
 			</span>
 			<span>
 				<strong>Date: </strong>
-				{format(release.releaseDate, "yyyy-MM-dd")}
+				{release.releaseDate.toISOString().split("T")[0]}
 			</span>
-			<span>
-				<strong>Size: </strong>
-				{prettyBytes(release.packageSize)}
-			</span>
+			{
+				release.packageSize && (
+					<span>
+						<strong>Size: </strong>
+						{prettyBytes(release.packageSize)}
+					</span>
+				)
+			}
 		</div>
 		<span>
 			<a href={release.packageURL}>Download</a>
