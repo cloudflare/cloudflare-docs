@@ -18,7 +18,7 @@ This feature is available in early access and replaces the legacy [private netwo
 
 - Private IPs and hostnames are reachable over Cloudflare WARP, Magic WAN or Browser Isolation. For more details, refer to [Connect a private network](/cloudflare-one/connections/connect-networks/private-net/).
 - Private hostnames route to your custom DNS resolver through [Local Domain Fallback](/cloudflare-one/connections/connect-devices/warp/configure-warp/route-traffic/local-domains/) or [Gateway resolver policies](/cloudflare-one/policies/gateway/resolver-policies/).
-- [Gateway TLS decryption](/cloudflare-one/policies/gateway/http-policies/tls-decryption/) must be enabled if you would like to present a login page in the browser. Otherwise, users will receive a pop-up notification from the WARP client.
+- [Gateway TLS decryption](/cloudflare-one/policies/gateway/http-policies/tls-decryption/) must be enabled if you would like to present a login page in the browser and issue an authorization JWT to your origin. Otherwise, users will receive a pop-up notification from the WARP client and all session management will be handled in the WARP client.
 
 ## Add your application to Access
 
