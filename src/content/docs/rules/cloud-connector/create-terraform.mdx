@@ -63,6 +63,8 @@ resource "cloudflare_cloud_connector_rules" "cloud_connector_rules" {
 }
 ```
 
+The API token used by Terraform must have the `Zone` -> `Cloud Connector` permission.
+
 ## More resources
 
 Refer to the [Terraform Cloudflare provider documentation](https://registry.terraform.io/providers/cloudflare/cloudflare/latest/docs) for more information on the `cloudflare_cloud_connector_rules` resource.
