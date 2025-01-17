@@ -11,9 +11,9 @@ import { Render } from "~/components"
 Many Ruby projects also store these credentials in environment variables instead.
 
 :::note[Compatibility]
-Client version `3.216.0` introduced a modification to the default checksum behavior from the client that is currently incompatible with R2 APIs.
+Client version `1.178.0` introduced a modification to the default checksum behavior from the client that is currently incompatible with R2 APIs.
 
-To mitigate, users can use `3.215.3` or add the following to their s3 client instantiation:
+To mitigate, users can use `1.177.0` or add the following to their s3 client instantiation:
 
 ```ruby
 request_checksum_calculation: "when_required",
