@@ -1,0 +1,11 @@
+releaseNotes: |-
+  This release is a hotfix for 2022.5.227.0.
+  **Notable updates**
+   
+  - Fixed false positives when attempting to detect a captive portal
+  - Fixed issue where OS version would not be updated in dash after OS update
+version: 2022.5.325.1
+packageURL: https://downloads.cloudflareclient.com/v1/download/macos/version/2022.5.325.1
+packageSize: 46889020
+releaseDate: 2022-06-13T23:09:42.305Z
+platformName: macOS

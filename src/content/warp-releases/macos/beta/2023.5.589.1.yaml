@@ -1,0 +1,31 @@
+releaseNotes: >-
+  This release contains bug fixes and support for a new operating mode called
+  "Secure Web Gateway without DNS Filtering". This new mode disabled all DNS
+  functionality of the client while still retaining things such as the WARP
+  Tunnel, DEX and posture support.
+   
+  **Notable updates**
+
+  - Add support for "SWG without DNS Filtering" mode
+
+  - Add support for ProductVersionExtra to be used in OS Version posture checks
+
+  - Improve performance of domain-based split tunneling when the IP was already
+  split tunneled (seen frequently with Zoom domains and IPs being used)
+
+  - Fixed issue that could cause many requests for authentication to open in the
+  browser
+
+  - Fixed issue where client could get into a bad state when auth id/secret
+  removed from plist
+   
+  **Known issues**
+
+  - If you are having issues with upgrading to new beta, please uninstall
+  current app, install the GA version from https://1.1.1.1/ and participate in
+  beta program from Preferences -> Advanced.
+version: 2023.5.589.1
+packageURL: https://downloads.cloudflareclient.com/v1/download/macos/version/2023.5.589.1
+packageSize: 63456758
+releaseDate: 2023-06-12T16:48:13.599Z
+platformName: macOS

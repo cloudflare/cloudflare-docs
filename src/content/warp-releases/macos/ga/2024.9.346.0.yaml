@@ -1,0 +1,24 @@
+releaseNotes: |
+  This release contains minor fixes and improvements.
+
+  All customers running macOS Ventura 13.0 and above (including macOS Sequoia) are advised to upgrade to this release. This release fixes an incompatibility with the firewall that may sometimes result in the firewall becoming disabled.
+
+  **Changes and improvements:**
+  - Added `target list` to the `warp-cli` to enhance the user experience with the [Access for Infrastructure SSH](/cloudflare-one/connections/connect-networks/use-cases/ssh/ssh-infrastructure-access/) solution.
+  - Added a `tunnel reset mtu` subcommand to the `warp-cli`.
+  - Added the ability for `warp-cli` to use the team name provided in the MDM file for initial registration.
+  - Added a JSON output option to the `warp-cli`.
+  - Added the ability to execute a PCAP on multiple interfaces with `warp-cli` and `warp-dex`.
+  - Improved `warp-dex` default interface selection for PCAPs and changed `warp-dex` CLI output to JSON.
+  - Improved [application posture check](/cloudflare-one/identity/devices/warp-client-checks/application-check/) compatibility with symbolically linked files.
+  - Fixed an issue where the client, when switching between WireGuard and MASQUE protocols, sometimes required a manual tunnel key reset.
+  - Added MASQUE tunnel protocol support for the consumer version of WARP ([1.1.1.1 w/ WARP](/warp-client/)).
+
+  **Known issues:**
+  - Using MASQUE as the tunnel protocol may be incompatible if your organization has Regional Services enabled.
+
+version: 2024.9.346.0
+releaseDate: 2024-10-03T22:17:44.714Z
+packageURL: https://downloads.cloudflareclient.com/v1/download/macos/version/2024.9.346.0
+packageSize: 79993994
+platformName: macOS

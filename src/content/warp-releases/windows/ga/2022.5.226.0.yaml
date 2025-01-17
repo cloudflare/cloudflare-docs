@@ -1,0 +1,64 @@
+releaseNotes: >-
+  This release contains significant improvements to our DNS functionality. In
+  addition to overall improved DNS stability and performance, we now fully
+  support DNS requests over TCP. This also modifies our local DNS proxy to use
+  the internal IPs of 127.0.2.2, 127.0.2.3, fd01:db8:1111::2, and
+  fd01:db8:1111::3.
+   
+  **Notable updates**
+   
+  - Added support for DNS over TCP
+
+  - Added support for teams-enroll in the warp-cli utility
+
+  - Modified client font to be system default
+
+  - Modified client behavior to no longer show massive upgrade notification when
+  a new build is released, instead you'll now see a change to our system tray
+  icon to indicate a new build is available
+
+  - Fixed issue where the Virtual Network selector would appear for users with
+  only a single network
+
+  - Fixed issue where the Virtual Network selector may not appear after a reboot
+
+  - Fixed issue where the Logout from Zero trust button would remain locked
+  after an mdm.xml file was removed
+
+  - Fixed issue where settings and/or UI may not properly clear when moving from
+  one Zero Trust org to another
+
+  - Fixed issue where device posture checks (Application and File Check) were
+  case sensitive when they shouldn't have been
+
+  - Fixed issue where updating the mdm.xml file would require the user to
+  re-register in cases where it shouldn't (registration would appear missing)
+
+  - Fixed issue when coming out of sleep where it could take 60 seconds to
+  connect while we waited for Apples connectivity checks to finish (and we
+  didn't really need to)
+
+  - Fixed issue where our service could crash and not properly restart
+
+  - Fixed issue where updated posture checks might not take effect until restart
+
+  - Fixed issue with warp-cli where enable/disable with wifi was allowed in Zero
+  Trust mode
+
+  - Fixed issue where too many DNS requests could result in the following error
+  appearing in logs: WARN warp::dns: Shedding DNS load
+   
+  **Known issues**
+
+  - Certain devices with embedded LTE adapters may need to disable IPv6 for the
+  client to work.
+
+  - Certain devices will fail to load any domains listed as a fallback domain.
+
+  - This version requires at least Windows 10.0.19042. If you are running a
+  prior version of Windows, please delay upgrading.
+version: 2022.5.226.0
+packageURL: https://downloads.cloudflareclient.com/v1/download/windows/version/2022.5.226.0
+packageSize: 91090944
+releaseDate: 2022-05-25T20:46:04.929Z
+platformName: Windows
