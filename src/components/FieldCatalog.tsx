@@ -1,13 +1,17 @@
 import { useState } from "react";
 import FieldBadges from "./fields/FieldBadges";
 import Markdown from "react-markdown";
+import type { CollectionEntry } from "astro:content";
 
-const FieldCatalog = ({ fields }) => {
+type Fields = CollectionEntry<"fields">["data"]["entries"];
+
+const FieldCatalog = ({ fields }: { fields: Fields }) => {
 	const [filters, setFilters] = useState({
 		search: "",
-		categories: [],
-		keywords: [],
+		categories: [""],
+		keywords: [""],
 	});
+
 	const mapped = fields.sort((f1, f2) => {
 		return f1.name < f2.name ? -1 : 1;
 	});
@@ -70,16 +74,18 @@ const FieldCatalog = ({ fields }) => {
 								className="mr-2"
 								value={category}
 								onClick={(e) => {
-									if (e.target.checked) {
+									const target = e.target as HTMLInputElement;
+
+									if (target.checked) {
 										setFilters({
 											...filters,
-											categories: [...filters.categories, e.target.value],
+											categories: [...filters.categories, target.value],
 										});
 									} else {
 										setFilters({
 											...filters,
 											categories: filters.categories.filter(
-												(f) => f !== e.target.value,
+												(f) => f !== target.value,
 											),
 										});
 									}

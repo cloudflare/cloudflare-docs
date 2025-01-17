@@ -1,4 +1,4 @@
-const FieldBadges = ({ badges }) => {
+const FieldBadges = ({ badges }: { badges: string[] }) => {
 	return (
 		<ul className="list-none m-0 p-0 inline-flex items-center gap-2 text-xs">
 			{badges.map((badge) => (

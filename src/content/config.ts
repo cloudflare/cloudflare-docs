@@ -1,6 +1,5 @@
 import { z, defineCollection } from "astro:content";
 import { docsSchema, i18nSchema } from "@astrojs/starlight/schema";
-import { file } from "astro/loaders";
 import {
 	appsSchema,
 	changelogsSchema,
