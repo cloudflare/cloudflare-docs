@@ -5,11 +5,17 @@ import type { CollectionEntry } from "astro:content";
 
 type Fields = CollectionEntry<"fields">["data"]["entries"];
 
+type Filters = {
+	search: string;
+	categories: string[];
+	keywords: string[];
+};
+
 const FieldCatalog = ({ fields }: { fields: Fields }) => {
-	const [filters, setFilters] = useState({
+	const [filters, setFilters] = useState<Filters>({
 		search: "",
-		categories: [""],
-		keywords: [""],
+		categories: [],
+		keywords: [],
 	});
 
 	const mapped = fields.sort((f1, f2) => {
