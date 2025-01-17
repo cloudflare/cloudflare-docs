@@ -35,7 +35,7 @@ This tutorial contains configuration information and a sample template for using
   - SHA512
 
 - **PFS group**
-  - DH group 14 (2048-bit MODP group)
+  - DH group 20 (348-bit random ECP group)
 
 ## Configuration template
 
@@ -43,7 +43,7 @@ This tutorial contains configuration information and a sample template for using
 set interfaces vti <name of the vti interface> address
 '<PRIVATE_IP_ADDRESS_OF_IPSEC_TUNNEL_INTERFACE>'
 set vpn ipsec esp-group <NAME_OF_ESP_GROUP> compression 'disable'
-set vpn ipsec esp-group <NAME_OF_ESP_GROUP> lifetime '14400'
+set vpn ipsec esp-group <NAME_OF_ESP_GROUP> lifetime '86400'
 set vpn ipsec esp-group <NAME_OF_ESP_GROUP> mode 'tunnel'
 set vpn ipsec esp-group <NAME_OF_ESP_GROUP> pfs 'enable'
 set vpn ipsec esp-group <NAME_OF_ESP_GROUP> proposal 1 encryption 'aes256gcm128'
@@ -54,9 +54,9 @@ set vpn ipsec ike-group <NAME_OF_IKE_GROUP> dead-peer-detection interval '30'
 set vpn ipsec ike-group <NAME_OF_IKE_GROUP> dead-peer-detection timeout '120'
 set vpn ipsec ike-group <NAME_OF_IKE_GROUP> ikev2-reauth 'no'
 set vpn ipsec ike-group <NAME_OF_IKE_GROUP> key-exchange 'ikev2'
-set vpn ipsec ike-group <NAME_OF_IKE_GROUP> lifetime '14400'
+set vpn ipsec ike-group <NAME_OF_IKE_GROUP> lifetime '28800'
 set vpn ipsec ike-group <NAME_OF_IKE_GROUP> mobike 'disable'
-set vpn ipsec ike-group <NAME_OF_IKE_GROUP> proposal 1 dh-group '14'
+set vpn ipsec ike-group <NAME_OF_IKE_GROUP> proposal 1 dh-group '20'
 set vpn ipsec ike-group <NAME_OF_IKE_GROUP> proposal 1 encryption 'aes256gcm128'
 set vpn ipsec ike-group <NAME_OF_IKE_GROUP> proposal 1 hash 'sha512'
 set vpn ipsec ipsec-interfaces interface '<UPLINK_INTF_TO_INTERNET/WAN>'

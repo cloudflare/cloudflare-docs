@@ -31,19 +31,17 @@ The following instructions show how to setup an IPsec connection on your Sophos 
    - **Key exchange**: **IKEv2**
    - **Authentication mode**: **Main mode**
 4. In the **Phase 1** group, make sure you have the following settings:
-   - **DH group (key group)**: _14(DH2048)_
+   - **DH group (key group)**: _20_
    - **Encryption**: _AES256_
    - **Authentication**: _SHA2 256_
 5. In the **Phase 2** group, select the following:
    - **PFS group (DH group)**: _Same as phase-1_
-   - **Key life**: _3600_
+   - **Key life**: _28800_
    - **Encryption**: _AES256_
    - **Authentication**: _SHA2 256_
 6. Enable **Dead Peer Detection**.
 7. In **When peer unreachable**, select _Re-initiate_.
 8. Select **Save**.
-
-![Start by setting up an IPsec profile.](~/assets/images/magic-wan/third-party/sophos-firewall/1-ipsec-profile.png)
 
 ### 2. Create IPsec connection tunnel
 
@@ -96,7 +94,7 @@ Below are instruction on how to achieve this on SFOS version 19 and SFOS version
 2. Enter **4** to choose **Device console**, and enter the following command:
 
    ```bash
-   set vpn ipsec-performance-setting anti-replay window-size 0
+   set vpn ipsec-performance anti-replay window-size 0
    ```
 
    ![Access the CLI to disable anti-replay](~/assets/images/magic-wan/third-party/sophos-firewall/5-sfos-19.png)

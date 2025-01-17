@@ -5,6 +5,17 @@ productLink: "/d1/"
 productArea: Developer platform
 productAreaLink: /workers/platform/changelog/platform/
 entries:
+  - publish_date: "2025-01-13"
+    title: D1 will begin enforcing its free tier limits from the 10th of February 2025.
+    description: |-
+      D1 will begin enforcing the daily [free tier limits](/d1/platform/limits) from 2025-02-10. These limits only apply to accounts on the Workers Free plan.
+
+      From 2025-02-10, if you do not take any action and exceed the daily free tier limits, queries to D1 databases via the Workers API and/or REST API will return errors until limits reset daily at 00:00 UTC.
+
+      To ensure uninterrupted service, upgrade your account to the [Workers Paid plan](/workers/platform/pricing/) from the [plans page](https://dash.cloudflare.com/?account=/workers/plans). The minimum monthly billing amount is $5. Refer to [Workers Paid plan](/workers/platform/pricing/) and [D1 limits](/d1/platform/limits/).
+
+      For better insight into your current usage, refer to your [billing metrics](/d1/observability/billing/) for rows read and rows written, which can be found on the [D1 dashboard](https://dash.cloudflare.com/?account=/workers/d1) or GraphQL API.
+
   - publish_date: "2024-08-23"
     title: D1 alpha databases have stopped accepting SQL queries
     description: |-
@@ -26,7 +37,7 @@ entries:
   - publish_date: "2024-06-17"
     title: HTTP API now returns a HTTP 429 error for overloaded D1 databases
     description: |-
-      Previously, D1's [HTTP API](/api/operations/cloudflare-d1-query-database) returned a HTTP `500 Internal Server` error for queries that came in while a D1 database was overloaded. These requests now correctly return a `HTTP 429 Too Many Requests` error.
+      Previously, D1's [HTTP API](/api/resources/d1/subresources/database/methods/query/) returned a HTTP `500 Internal Server` error for queries that came in while a D1 database was overloaded. These requests now correctly return a `HTTP 429 Too Many Requests` error.
 
       D1's [Workers API](/d1/worker-api/) is unaffected by this change.
 
@@ -40,7 +51,7 @@ entries:
   - publish_date: "2024-04-12"
     title: HTTP API now returns a HTTP 400 error for invalid queries
     description: |-
-      Previously, D1's [HTTP API](/api/operations/cloudflare-d1-query-database) returned a HTTP `500 Internal Server` error for an invalid query. An invalid SQL query now correctly returns a `HTTP 400 Bad Request` error.
+      Previously, D1's [HTTP API](/api/resources/d1/subresources/database/methods/query/) returned a HTTP `500 Internal Server` error for an invalid query. An invalid SQL query now correctly returns a `HTTP 400 Bad Request` error.
 
       D1's [Workers API](/d1/worker-api/) is unaffected by this change.
 

@@ -84,7 +84,7 @@ Refer to [How KV works](/kv/concepts/how-kv-works/) for more information on this
 
 ### Write data in bulk
 
-Write more than one key-value pair at a time with Wrangler or [via the REST API](/api/operations/workers-kv-namespace-write-multiple-key-value-pairs).
+Write more than one key-value pair at a time with Wrangler or [via the REST API](/api/resources/kv/subresources/namespaces/methods/bulk_update/).
 
 The bulk API can accept up to 10,000 KV pairs at once.
 
@@ -270,4 +270,4 @@ async function retryWithBackoff(
 
 ## Other methods to access KV
 
-You can also [write key-value pairs from the command line with Wrangler](/kv/reference/kv-commands/#create) and [write data via the REST API](/api/operations/workers-kv-namespace-write-key-value-pair-with-metadata).
+You can also [write key-value pairs from the command line with Wrangler](/kv/reference/kv-commands/#kv-namespace-create) and [write data via the REST API](/api/resources/kv/subresources/namespaces/subresources/values/methods/update/).

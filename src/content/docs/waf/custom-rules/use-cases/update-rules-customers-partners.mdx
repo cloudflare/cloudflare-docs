@@ -22,12 +22,12 @@ If a customer or partner is large enough, you could set up a custom rule based o
 
 This example uses:
 
-- The [`ip.geoip.asnum`](/ruleset-engine/rules-language/fields/standard-fields/#ipsrcasnum) field to specify the general region.
-- The [`cf.bot_management.score`](/ruleset-engine/rules-language/fields/dynamic-fields/#cfbot_managementscore) field to ensure partner traffic does not come from bots.
+- The [`ip.src.asnum`](/ruleset-engine/rules-language/fields/reference/ip.src.asnum/) field to specify the general region.
+- The [`cf.bot_management.score`](/ruleset-engine/rules-language/fields/reference/cf.bot_management.score/) field to ensure partner traffic does not come from bots.
 
 Example rule:
 
-- **Expression**: `(ip.geoip.asnum eq 64496 and cf.bot_management.score gt 30)`
+- **Expression**: `(ip.src.asnum eq 64496 and cf.bot_management.score gt 30)`
 - **Action**: _Skip:_
   - _All remaining custom rules_
 
@@ -39,12 +39,12 @@ Access to [Bot Management](/bots/plans/bm-subscription/) requires a Cloudflare E
 
 This example uses:
 
-- The [`ip.geoip.asnum`](/ruleset-engine/rules-language/fields/standard-fields/#ipsrcasnum) field to specify the general region.
-- The [`cf.threat_score`](/ruleset-engine/rules-language/fields/dynamic-fields/#cfthreat_score) dynamic field to ensure requests are not high-risk traffic.
+- The [`ip.src.asnum`](/ruleset-engine/rules-language/fields/reference/ip.src.asnum/) field to specify the general region.
+- The [`cf.threat_score`](/ruleset-engine/rules-language/fields/reference/cf.threat_score/) dynamic field to ensure requests are not high-risk traffic.
 
 If a request meets these criteria, your custom rule skips [User Agent Blocking](/waf/tools/user-agent-blocking/) rules.
 
-- **Expression**: `(ip.geoip.asnum eq 64496 and cf.threat_score lt 14)`
+- **Expression**: `(ip.src.asnum eq 64496 and cf.threat_score lt 14)`
 - **Action**: _Skip:_
   - _User Agent Blocking_
 
@@ -57,7 +57,7 @@ For smaller organizations, you could set up custom rules based on IP addresses.
 This example:
 
 - Specifies the source IP address and the host.
-- Uses the [`cf.bot_management.score`](/ruleset-engine/rules-language/fields/dynamic-fields/#cfbot_managementscore) field to ensure requests are not high-risk traffic.
+- Uses the [`cf.bot_management.score`](/ruleset-engine/rules-language/fields/reference/cf.bot_management.score/) field to ensure requests are not high-risk traffic.
 
 Example rule:
 

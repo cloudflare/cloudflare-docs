@@ -7,6 +7,10 @@ topLevelLink: "/waf/change-log/"
 productArea: Application security
 productAreaLink: /fundamentals/reference/changelog/security/
 entries:
+  - publish_date: "2024-12-18"
+    title: Improved VPN Managed List
+    description: |-
+      Customers can now effectively manage incoming traffic identified as originating from VPN IPs. Customers with compliance restrictions can now ensure compliance with local laws and regulations. Customers with CDN restrictions can use the improved VPN Managed List to prevent unauthorized access from users attempting to bypass geographical restrictions. With the new VPN Managed List enhancements, customers can improve their overall security posture to reduce exposure to unwanted or malicious traffic.
   - publish_date: "2024-12-10"
     title: Change the order of list items in IP Lists (for API and Terraform users)
     description: |-

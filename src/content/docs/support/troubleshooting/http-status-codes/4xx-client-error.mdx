@@ -41,14 +41,22 @@ If you're seeing a 403 error without Cloudflare branding, this is always retur
 2. Mod\_security rules
 3. IP deny rules. You need to make sure that [Cloudflare's IP ranges](https://www.cloudflare.com/ips) aren't being blocked
 
+### Cloudflare-specific information
+
 Cloudflare will serve 403 responses if the request violated either a default WAF managed rule enabled for all orange-clouded Cloudflare domains or a WAF managed rule enabled for that particular zone. Read more at [WAF Managed Rules](/waf/managed-rules/).
 
 If you're seeing a 403 response that contains Cloudflare branding in the response body, this is the HTTP response code returned along with many of our security features:
 
 * [WAF Custom or Managed Rules](/waf/) with the challenge or block action
 * [Security Level](/waf/tools/security-level/), that is set to Medium by default
+* [DDoS Protection](/ddos-protection/), that is enabled by default on zones onboarded to Cloudflare, IP applications onboarded to Spectrum, and IP Prefixes onboarded to Magic Transit
 * Most [1xxx Cloudflare error codes](/support/troubleshooting/cloudflare-errors/troubleshooting-cloudflare-1xxx-errors/)
 * The [Browser Integrity Check](/waf/tools/browser-integrity-check/)
+* [Validation Checks](/waf/analytics/security-events/additional-information/)
+
+Cloudflare will also serve an unstyled 403 error page in the following case. There errors are not logged, as they occur early in Cloudflare's infrastructure, before the configuration for domains has been loaded.
+
+* [SNI](https://www.cloudflare.com/learning/ssl/what-is-sni/) mismatch: a 403 error is returned if there is a mismatch caused by the client sending a different host to the SNI
 
 ## **404 Not Found ([RFC7231](https://tools.ietf.org/html/rfc7231))**
 

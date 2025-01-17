@@ -243,15 +243,15 @@ export class MyWorkflow extends WorkflowEntrypoint {
 
 ### Name steps deterministically
 
-Steps should be named deterministically (even if dynamic). This  ensures that their state is cached, and prevents the step from being rerun unnecessarily. Step names act as the "cache key" in your Workflow.
+Steps should be named deterministically (ie, not using the current date/time, randomness, etc). This  ensures that their state is cached, and prevents the step from being rerun unnecessarily. Step names act as the "cache key" in your Workflow.
 
 <TypeScriptExample filename="index.ts">
 ```ts
 export class MyWorkflow extends WorkflowEntrypoint {
 	async run(event: WorkflowEvent<Params>, step: WorkflowStep) {
-		// 🔴 Bad: Dynamically naming the step prevents it from being cached
+		// 🔴 Bad: Naming the step non-deterministically prevents it from being cached
 		// This will cause the step to be re-run if subsequent steps fail.
-		await step.do(`step #1 running at: ${Date.now}`, async () => {
+		await step.do(`step #1 running at: ${Date.now()}`, async () => {
 		    let userData = await env.KV.get(event.user)
 				event.data = userData
 		})
@@ -302,7 +302,8 @@ export default {
     	params: payload
     });
 
-    // ✅ Good: use a composite ID or an
+    // ✅ Good: use an ID that is unique
+    // e.g. a transaction ID, order ID, or task ID are good options
     let instanceId = getTransactionId() // e.g. assuming transaction IDs are unique
     // or: compose a composite ID and store it in your database
     // so that you can track all instances associated with a specific user or merchant.
@@ -314,8 +315,8 @@ export default {
     });
 
     return Response.json({
-      id: badInstance.id,
-      details: await badInstance.status(),
+      id: goodInstance.id,
+      details: await goodInstance.status(),
     });
   },
 };

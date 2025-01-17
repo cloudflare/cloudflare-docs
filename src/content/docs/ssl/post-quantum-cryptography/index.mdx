@@ -14,7 +14,7 @@ Post-quantum cryptography (PQC) refers to cryptographic algorithms that have bee
 
 To protect you against the risk of [harvest now, decrypt later](https://en.wikipedia.org/wiki/Harvest_now,_decrypt_later), and considering all the [connections](#three-connections-in-the-life-of-a-request) that take place when your website or application is on Cloudflare, we have deployed and are actively expanding the use of [post-quantum hybrid key agreement](#hybrid-key-agreement).
 
-Refer to [Cloudflare Radar](https://radar.cloudflare.com/adoption-and-usage#post-quantum-encryption-adoption) for current statistics on the adoption of PQ encryption in requests to Cloudflare.
+Refer to [Cloudflare Radar](https://radar.cloudflare.com/adoption-and-usage#post-quantum-encryption-adoption) for current statistics on the adoption of PQ encryption in requests to Cloudflare, and visit [pq.cloudflareresearch.com](https://pq.cloudflareresearch.com) to check if your connection is secured using PQ key agreement.
 
 :::caution[TLS 1.3]
 Cloudflare post-quantum key agreements are only supported in protocols based on TLS 1.3 (including HTTP/3) and are disabled for websites in [FIPS mode](/cloudflare-one/policies/gateway/http-policies/tls-decryption/#fips-compliance).

@@ -19,7 +19,7 @@ You can now apply [DNS policies](/cloudflare-one/policies/gateway/dns-policies/)
 
 ### IPv4 and IPv6 DNS
 
-Cloudflare will prefill the [**Source IPv4 Address**](/cloudflare-one/connections/connect-devices/agentless/dns/locations/dns-resolver-ips/#source-ip) based on the network you are on. Enterprise users have the option of using [dedicated DNS resolver IP addresses](/cloudflare-one/connections/connect-devices/agentless/dns/locations/dns-resolver-ips/#dns-resolver-ip) assigned to their account.
+Cloudflare will prefill the [**Source IPv4 Address**](/cloudflare-one/connections/connect-devices/agentless/dns/locations/dns-resolver-ips/#source-ip) based on the network you are on. Additionally, Enterprise users can use [dedicated DNS resolver IP addresses](/cloudflare-one/connections/connect-devices/agentless/dns/locations/dns-resolver-ips/#dns-resolver-ip) assigned to their account or [resolver IP addresses they provide (BYOIP)](/cloudflare-one/connections/connect-devices/agentless/dns/locations/dns-resolver-ips/#bring-your-own-dns-resolver-ip).
 
 You do not need to configure the IPv4 DNS endpoint if:
 
@@ -27,12 +27,10 @@ You do not need to configure the IPv4 DNS endpoint if:
 - Your users will send all DNS requests from this location using [DNS over HTTPS](#dns-over-https-doh) via a browser.
 - You will deploy the [WARP client](/cloudflare-one/connections/connect-devices/warp/).
 
-:::note[Your IPv4 address is taken]
-
+:::note[Your IPv4 address is taken error]
 When you try to configure a DNS location over IPv4, Gateway may display a **Your source IPv4 address is taken** error. This may mean someone else in the same network configured Gateway before you did. If your network supports IPv6, you can still use Gateway's DNS filtering by sending DNS queries over IPv6. You can also use the DNS over HTTPS hostname to send queries using a DNS over HTTPS client.
 
 If you think someone else is wrongfully using this IPv4 address, [contact Cloudflare support](/support/contacting-cloudflare-support/#getting-help-with-an-issue).
-
 :::
 
 ### DNS over TLS (DoT)

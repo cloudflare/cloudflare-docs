@@ -5,7 +5,7 @@ sidebar:
   order: 1
 ---
 
-import { TabItem, Tabs } from "~/components";
+import { TabItem, Tabs, Render } from "~/components";
 
 If you created a Cloudflare Tunnel [from the dashboard](/cloudflare-one/connections/connect-networks/get-started/create-remote-tunnel/), the tunnel runs as a service on your OS.
 
@@ -164,12 +164,8 @@ To get the token for a remotely-managed tunnel:
 </TabItem>
 <TabItem label="API">
 
-Make a `GET` request to the [Cloudflare Tunnel token](/api/operations/cloudflare-tunnel-get-a-cloudflare-tunnel-token) endpoint:
+Make a `GET` request to the [Cloudflare Tunnel token](/api/resources/zero_trust/subresources/tunnels/subresources/token/methods/get/) endpoint. The token value can be found in the `result`:
 
-```sh
-curl https://api.cloudflare.com/client/v4/accounts/{account_id}/cfd_tunnel/{tunnel_id}/token \
---header "Authorization: Bearer <API_TOKEN>"
-```
 ```sh output
 {
   "success": true,
@@ -210,7 +206,7 @@ To rotate a tunnel token:
 		AQIDBAUGBwgBAgMEBQYHCAECAwQFBgcIAQIDBAUGBwg=
 		```
 
-	2. Make a `PATCH` request to the [Cloudflare Tunnel](/api/operations/cloudflare-tunnel-update-a-cloudflare-tunnel) endpoint:
+	2. Make a `PATCH` request to the [Cloudflare Tunnel](/api/resources/zero_trust/subresources/tunnels/methods/edit/) endpoint:
 		```sh
 		curl --request PATCH \
 		https://api.cloudflare.com/client/v4/accounts/{account_id}/cfd_tunnel/{tunnel_id} \
@@ -281,7 +277,7 @@ The tunnel token is now fully rotated. The old token is no longer in use.
 If your tunnel token is compromised, we recommend taking the following steps:
 
 1. Refresh the token using the dashboard or API. Refer to Step 1 of [Rotate a token without service disruption](#rotate-a-token-without-service-disruption).
-2. [Delete all connections](/api/operations/cloudflare-tunnel-clean-up-cloudflare-tunnel-connections) between `cloudflared` and Cloudflare:
+2. [Delete all connections](/api/resources/zero_trust/subresources/tunnels/subresources/connections/methods/delete/) between `cloudflared` and Cloudflare:
 	```sh
 	curl --request DELETE \
 	https://api.cloudflare.com/client/v4/accounts/{account_id}/cfd_tunnel/{tunnel_id}/connections \
@@ -310,4 +306,4 @@ The tunnel token is now fully rotated. The old token is no longer in use.
 
 ### Account-scoped roles
 
-Account members with [Cloudflare Access](/cloudflare-one/roles-permissions/) and [DNS](/fundamentals/setup/manage-members/roles/) permissions will be able to create, delete, and configure all tunnels for the account.
+<Render file="tunnel/account-scoped-roles" />

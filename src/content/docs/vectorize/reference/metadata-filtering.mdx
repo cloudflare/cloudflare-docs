@@ -31,19 +31,26 @@ Vectors upserted before a metadata index was created won't have their metadata c
 
 ## Supported operations
 
-Optional `filter` property on `query()` method specifies metadata filter:
+An optional `filter` property on `query()` method specifies metadata filters:
 
-| Operator | Description |
-| -------- | ----------- |
-| `$eq`    | Equals      |
-| `$ne`    | Not equals  |
-| `$in`    | In          |
-| `$nin`   | Not in      |
+| Operator | Description              |
+| -------- | ------------------------ |
+| `$eq`    | Equals                   |
+| `$ne`    | Not equals               |
+| `$in`    | In                       |
+| `$nin`   | Not in                   |
+| `$lt`    | Less than                |
+| `$lte`   | Less than or equal to    |
+| `$gt`    | Greater than             |
+| `$gte`   | Greater than or equal to |
 
 - `filter` must be non-empty object whose compact JSON representation must be less than 2048 bytes.
 - `filter` object keys cannot be empty, contain `" | .` (dot is reserved for nesting), start with `$`, or be longer than 512 characters.
 - For `$eq` and `$ne`, `filter` object non-nested values can be `string`, `number`, `boolean`, or `null` values.
 - For `$in` and `$nin`, `filter` object values can be arrays of `string`, `number`, `boolean`, or `null` values.
+- Upper-bound range queries (i.e. `$lt` and `$lte`) can be combined with lower-bound range queries (i.e. `$gt` and `$gte`) within the same filter. Other combinations are not allowed.
+- For range queries (i.e. `$lt`, `$lte`, `$gt`, `$gte`), `filter` object non-nested values can be `string` or `number` values. Strings are ordered lexicographically. 
+- Range queries involving a large number of vectors (~10M and above) may experience reduced accuracy. 
 
 ### Namespace versus metadata filtering
 
@@ -76,6 +83,20 @@ Both [namespaces](/vectorize/best-practices/insert-vectors/#namespaces) and meta
 
 ```json
 { "someKey": { "$nin": ["hbo", "netflix"] } }
+```
+
+#### Range query involving numbers
+
+```json
+{ "timestamp": { "$gte": 1734242400, "$lt": 1734328800 } }
+```
+
+#### Range query involving strings
+Range queries can be used to implement prefix searching on string metadata fields.
+For example, the following filter matches all values starting with "net":
+
+```json
+{ "someKey": { "$gte": "net", "$lt": "neu" } }
 ```
 
 #### Implicit logical `AND` with multiple keys

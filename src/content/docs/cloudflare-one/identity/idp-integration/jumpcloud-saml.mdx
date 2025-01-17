@@ -81,13 +81,15 @@ The JumpCloud integration allows you to synchronize user groups and automaticall
 
 1. In the [JumpCloud Admin Portal](https://console.jumpcloud.com/#/home), go to **SSO Applications**.
 2. Select the Cloudflare application that was created when you [Set up JumpCloud as a SAML provider](/cloudflare-one/identity/idp-integration/jumpcloud-saml/#set-up-jumpcloud-as-a-saml-provider).
-3. Select the **Identity Management** tab.
-4. Make sure that **Enable management of User Groups and Group Membership in this application** is turned on.
-5. Select **Configure**.
-6. In the **Base URL** field, enter the **SCIM Endpoint** obtained from Zero Trust.
-7. In the **Token Key** field, enter the **SCIM Secret** obtained from Zero Trust.
-8. Select **Activate**. You will receive a confirmation that the Identity Management integration has been successfully verified.
-9. Select **Save**.
+3. Select the **SSO** tab.
+3. To provision user groups, select **Include group attribute** and enter `groups`. The group attribute name has to exactly match `groups` or else it will be sent as a SAML attribute.
+5. Select the **Identity Management** tab.
+6. Make sure that **Enable management of User Groups and Group Membership in this application** is turned on.
+7. Select **Configure**.
+8. In the **Base URL** field, enter the **SCIM Endpoint** obtained from Zero Trust.
+9. In the **Token Key** field, enter the **SCIM Secret** obtained from Zero Trust.
+10. Select **Activate**. You will receive a confirmation that the Identity Management integration has been successfully verified.
+11. Select **Save**.
 
 <Render file="access/verify-scim-provisioning"/>
 

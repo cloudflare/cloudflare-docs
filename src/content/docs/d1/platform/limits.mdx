@@ -25,7 +25,7 @@ import { Render } from "~/components";
 | Maximum characters (bytes) in a `LIKE` or `GLOB` pattern                                                            | 50 bytes                                          |
 | Maximum bindings per Workers script                                                                                 | Approximately 5,000 [^2]                          |
 | Maximum SQL query duration                                                                                          | 30 seconds [^3]                                   |
-| Maximum file import (`d1 execute`) size                                                                             | 5 GiB [^4]                                        |
+| Maximum file import (`d1 execute`) size                                                                             | 5 GB [^4]                                        |
 
 :::note[Batch limits]
 Limits for individual queries (listed above) apply to each individual statement contained within a batch statement. For example, the maximum SQL statement length of 100 KB applies to each statement inside a `db.batch()`.

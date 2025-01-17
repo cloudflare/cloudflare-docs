@@ -133,7 +133,7 @@ The schema is saved as a JSON file in OpenAPI `v3.0.0` format.
 - Detected query parameters and its format
 - API Shield’s rate limit threshold recommendations
 
-## Endpoint Performance Analysis
+## Endpoint Analysis
 
 For each saved endpoint, customers can view:
 
@@ -142,6 +142,9 @@ For each saved endpoint, customers can view:
 - **Latency**: The average origin response time in milliseconds (ms). This metric shows how long it takes from the moment a visitor makes a request to the moment the visitor gets a response back from the origin.
 - **Error rate** vs. overall traffic: grouped by 4xx, 5xx, and their sum.
 - **Response size**: The average size of the response (in bytes) returned to the request.
+- **Labels**: The current [labels](/api-shield/management-and-monitoring/endpoint-labels/) assigned to the endpoint.
+- **Authentication status**: The breakdown of which [session identifiers](/api-shield/get-started/#session-identifiers) were seen on successful requests to this endpoint.
+- **Sequences**: The number of [Sequence Analytics](/api-shield/security/sequence-analytics/) sequences the endpoint was found in.
 
 :::note
 
@@ -150,7 +153,7 @@ Customers viewing analytics have the ability to toggle detailed metrics view bet
 
 ## Using the Cloudflare API
 
-You can interact with Endpoint Management through the Cloudflare API. Refer to [Endpoint Management’s API documentation](/api/operations/api-shield-api-discovery-retrieve-discovered-operations-on-a-zone) for more information.
+You can interact with Endpoint Management through the Cloudflare API. Refer to [Endpoint Management’s API documentation](/api/resources/api_gateway/subresources/discovery/subresources/operations/methods/list/) for more information.
 
 ## Sensitive Data Detection
 

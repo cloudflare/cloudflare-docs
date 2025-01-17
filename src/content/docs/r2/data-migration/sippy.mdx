@@ -56,7 +56,7 @@ To begin, install [`npm`](https://docs.npmjs.com/getting-started). Then [install
 
 #### Enable Sippy on your R2 bucket
 
-Log in to Wrangler with the [`wrangler login` command](/workers/wrangler/commands/#login). Then run the [`r2 bucket sippy enable` command](/workers/wrangler/commands/#sippy-enable):
+Log in to Wrangler with the [`wrangler login` command](/workers/wrangler/commands/#login). Then run the [`r2 bucket sippy enable` command](/workers/wrangler/commands/#r2-bucket-sippy-enable):
 
 ```sh
 npx wrangler r2 bucket sippy enable <BUCKET_NAME>
@@ -66,7 +66,7 @@ This will prompt you to select between supported object storage providers and le
 
 ### Enable Sippy via API
 
-For information on required parameters and examples of how to enable Sippy, refer to the [API documentation](/api/operations/r2-put-bucket-sippy-config). For information about getting started with the Cloudflare API, refer to [Make API calls](/fundamentals/api/how-to/make-api-calls/).
+For information on required parameters and examples of how to enable Sippy, refer to the [API documentation](/api/resources/r2/subresources/buckets/subresources/sippy/methods/update/). For information about getting started with the Cloudflare API, refer to [Make API calls](/fundamentals/api/how-to/make-api-calls/).
 
 :::note
 
@@ -127,7 +127,7 @@ You can optionally select a time window to query. This defaults to the last 24 h
 
 ### Wrangler
 
-To disable Sippy, run the [`r2 bucket sippy disable` command](/workers/wrangler/commands/#sippy-disable):
+To disable Sippy, run the [`r2 bucket sippy disable` command](/workers/wrangler/commands/#r2-bucket-sippy-disable):
 
 ```sh
 npx wrangler r2 bucket sippy disable <BUCKET_NAME>
@@ -135,7 +135,7 @@ npx wrangler r2 bucket sippy disable <BUCKET_NAME>
 
 ### API
 
-For more information on required parameters and examples of how to disable Sippy, refer to the [API documentation](/api/operations/r2-delete-bucket-sippy-config).
+For more information on required parameters and examples of how to disable Sippy, refer to the [API documentation](/api/resources/r2/subresources/buckets/subresources/sippy/methods/delete/).
 
 ## Supported cloud storage providers
 

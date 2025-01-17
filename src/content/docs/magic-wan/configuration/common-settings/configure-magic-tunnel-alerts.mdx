@@ -32,7 +32,7 @@ import { Render, Tabs, TabItem } from "~/components";
 Refer to the [documentation for Notifications](/notifications/get-started/) to learn about specific permissions you need to access the service via the API.
 :::
 
-Send a [`POST` request](/api/operations/notification-policies-create-a-notification-policy) to create a Magic WAN tunnel health alert. You can set tunnel health alerts with any SLO value between `0` and `99.99`.
+Send a [`POST` request](/api/resources/alerting/subresources/policies/methods/create/) to create a Magic WAN tunnel health alert. You can set tunnel health alerts with any SLO value between `0` and `99.99`.
 
 ```bash
 curl https://api.cloudflare.com/client/v4/accounts/account_id/alerting/v3/policies \

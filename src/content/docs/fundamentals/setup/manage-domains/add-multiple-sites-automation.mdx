@@ -97,8 +97,8 @@ Cloudflare offers a [quick scan](/dns/zone-setups/reference/dns-quick-scan/) tha
 
 This API call requires the domain `ID`. This can be found in the following locations:
 
-- [Create Zone](/api/operations/zones-post#Request)
-- [List Zones](/api/operations/zones-get)
+- [Create Zone](/api/resources/zones/methods/create/#Request)
+- [List Zones](/api/resources/zones/methods/list/)
 
 Using `jq` with the first option above, modify your script `add-multiple-zones.sh` to extract the domain ID and run a subsequent API call to quick scan DNS records.
 
@@ -139,8 +139,8 @@ For each domain to become active on Cloudflare, it must be activated in either [
 
 You can find your zones nameservers in the following locations:
 
-- [Create Zone](/api/operations/zones-post#Request)
-- [Zone Details](/api/operations/zones-0-get)
+- [Create Zone](/api/resources/zones/methods/create/#Request)
+- [Zone Details](/api/resources/zones/methods/get/)
 
 1. Modify your script `add-multiple-zones.sh` to print a CSV with data from the `Create Zone` JSON response.
 

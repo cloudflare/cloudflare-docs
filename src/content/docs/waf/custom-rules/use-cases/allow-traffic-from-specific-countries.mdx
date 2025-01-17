@@ -3,9 +3,9 @@ pcx_content_type: configuration
 title: Allow traffic from specific countries only
 ---
 
-This example blocks requests based on country code using the [`ip.geoip.country`](/ruleset-engine/rules-language/fields/standard-fields/#ipsrccountry) field, only allowing requests from two countries: United States and Mexico.
+This example blocks requests based on country code using the [`ip.src.country`](/ruleset-engine/rules-language/fields/reference/ip.src.country/) field, only allowing requests from two countries: United States and Mexico.
 
-- **Expression**: `(not ip.geoip.country in {"US" "MX"})`
+- **Expression**: `(not ip.src.country in {"US" "MX"})`
 - **Action**: _Block_
 
 ## Other resources

@@ -5,6 +5,8 @@ import lightTheme from "solarflare-theme/themes/cloudflare-light-color-theme.jso
 import { definePlugin } from "@expressive-code/core";
 import { h } from "@expressive-code/core/hast";
 
+import { pluginCollapsibleSections } from "@expressive-code/plugin-collapsible-sections";
+
 import lzstring from "lz-string";
 
 /**
@@ -156,6 +158,7 @@ export default {
 		workersPlaygroundButton(),
 		outputCodeblocks(),
 		defaultLanguageTitles(),
+		pluginCollapsibleSections(),
 	],
 	themes: [darkTheme, lightTheme],
 	styleOverrides: {

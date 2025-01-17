@@ -1,0 +1,147 @@
+---
+title: Leveraging Cloudflare for your SaaS applications
+pcx_content_type: design-guide
+products:
+  - Cloudflare for SaaS
+  - Cloudflare Tunnel
+  - Load Balancing
+  - Data Localization Suite
+weight: null
+sidebar:
+  order: 1
+  label: Leveraging Cloudflare for your SaaS applications
+updated: 2024-12-19
+---
+
+## Introduction
+
+When building a SaaS application, it is common to create unique hostnames for each customer account (or tenant), for example `app.customer.com`. It is important to ensure that all communication to this application hostname is done using SSL/TLS and therefore a certificate must be created for your customer's hostname on your application. Certificate management is hard, and often application architects and developers would use a [multi-domain certificate](https://www.cloudflare.com/learning/ssl/types-of-ssl-certificates/) (MDC), so they can buy and add just one certificate that has hundreds of domains listed. However, this does not scale well when your application reaches thousands and millions of customers.
+
+Also, a customer of your application might wish to have their main website domain hosted directly on your application. So that, for example, `www.customer.com` is actually delivering content directly from your SaaS application.
+
+Many SaaS applications have caching and security solutions, such as Cloudflare, in front of their applications and as such need to onboard these hostnames. This is often done using a "Zone" model, where inside Cloudflare, or another vendor such as AWS Cloudfront, a "Zone" is created for `app.customer.com`. This means that, as each new customer is onboarded, a new "Zone" must be created - this might be manageable in the tens and hundreds of customers but, when you get to thousands and millions, management of all these zones and their configurations is hard.
+
+Cloudflare for Platforms extends far beyond this traditional model of most edge providers, by managing traffic across many hostnames and domains in one "Zone". You can now manage `www.customer1.com` and `www.customer2.net`, and millions more hostnames, through the same configuration while also customizing features as needed. 
+
+This document provides a reference and guidance for using Cloudflare for Platforms. The document is split into three main sections.
+
+- Overview of the SaaS model and the common challenges Cloudflare for Platforms solves
+- SSL certificate issuance in a SaaS model
+- Customizing the experience for each of your clients
+
+### Who is this document for and what will you learn?
+
+This reference architecture is designed for SaaS application owners, engineers, or architects who want to learn how to make their application more scalable and secure through Cloudflare.
+
+To build a stronger baseline understanding of Cloudflare, we recommend the following resources:
+
+- What is Cloudflare? | [Website](https://www.cloudflare.com/what-is-cloudflare/) (5 minute read) or [video](https://www.youtube.com/watch?v=XHvmX3FhTwU) (2 minutes)
+- [Cloudflare Ruleset Engine](/ruleset-engine/) - We will discuss integrations with the ruleset engine. Familiarity with that feature will be helpful.
+- [Cloudflare Workers](/workers/) \- We will also discuss integrations with Cloudflare Workers, our serverless application platform. A basic familiarity with this platform will be helpful.
+
+Those who read this reference architecture will learn:
+
+- How Cloudflare's unique offering can solve key challenges for SaaS applications
+- How to customize the Cloudflare experience for each of your end customers
+- Tools to integrate serverless applications, for each of your clients, through Workers for Platforms
+
+## Why Cloudflare for Platforms?
+
+### The SaaS model
+
+Software as a Service (SaaS) has been a key innovation of the cloud computing era. On premises managed legacy enterprise software - such as accounting, HR, and CRMs - required dedicated attention from IT personnel to establish a platform (whether dedicated hardware, VMs, or cloud instances) for each application in the enterprise. The SaaS model allows providers, like Shopify and Salesforce, to extend their own platform to their customers instead. Now, the customer does not have to provision hardware or consider any other infrastructure concerns; instead, they subscribe to access to the SaaS platform which is always up to date, secure and available.
+
+### Third party hostname challenges
+
+For many SaaS applications, it is important to provide a service under the client's own domain. Their domain is important for branding, security, and organization; and many clients have heavily invested in the right `.com` to represent their business. Many clients with domains linked to their brand will push back against deploying their applications on the provider's domain.
+
+This is especially true for customer-facing applications like an e-commerce solution. You would want to expose this as `shop.example.com`, not `example.shop.com`. To secure traffic to the SaaS application, the provider ("shop") needs a certificate for their customer, `example.com`.
+
+![Figure 1: eCommerce flow through a SaaS platform.](~/assets/images/reference-architecture/leveraging-cloudflare-for-your-saas-applications/figure1.svg "Figure 1: eCommerce flow through a SaaS platform.")
+
+This is a challenge for SaaS solutions, as certificate issuance is tightly controlled through the [DCV Validation process](/ssl/edge-certificates/changing-dcv-method/dcv-flow/). The owner of a domain needs to authorize any certificates, and traditional methods of validation are driven by the domain owner and deliver the certificate only to them.
+
+![Figure 2: Certificates cannot be automatically renewed on legacy platforms. They will expire and break traffic without manual action.](~/assets/images/reference-architecture/leveraging-cloudflare-for-your-saas-applications/figure2.svg "Figure 2: Certificates cannot be automatically renewed on legacy platforms. They will expire and break traffic without manual action.")
+
+This poses a dilemma: the SaaS model offers clear advantages but introduces a new challenge of its own. A novel solution would let providers and end customers both get the most out of the SaaS model.
+
+## Issuing SSL certificates through Cloudflare for Platforms
+
+### Manage certificates for any hostname on the Internet
+
+Cloudflare for SaaS provides a unique solution to these common challenges for SaaS providers. By leveraging Cloudflare's position as a low-latency, global network, we can transparently manage certificate issuance for end clients while also providing several other benefits to a SaaS platform.
+
+### Secure and powerful validation modes
+
+Cloudflare has a unique ability to manage the Domain Control Validation (DCV) process in a SaaS scenario. In a traditional model, certificate issuers ask domain owners to place a [particular token](/ssl/edge-certificates/changing-dcv-method/dcv-flow/#dcv-tokens) (either a DNS TXT record or a small text file) at their origin in order to validate that they are authorized for that domain. This has to be done repeatedly at certificate renewal, which has become more common with recent security improvements.
+
+![Figure 3: The DCV process.](~/assets/images/reference-architecture/leveraging-cloudflare-for-your-saas-applications/figure3.svg "Figure 3: The DCV process.")
+
+Since Cloudflare's network can easily sit in between the client and the SaaS provider, we can automatically respond with the correct DCV token on behalf of any domain that points traffic to the SaaS provider on Cloudflare.
+
+![Figure 4: Certificates automatically renew on Cloudflare-enabled platforms.](~/assets/images/reference-architecture/leveraging-cloudflare-for-your-saas-applications/figure4.svg "Figure 4: Certificates automatically renew on Cloudflare-enabled platforms.")
+
+Instead of repeatedly performing a complex process at every certificate renewal, the client performs a much simpler process only once.
+
+# Customize your customers Cloudflare experience
+
+## Managed features in Cloudflare for platforms
+
+Cloudflare for Platforms gives you much more than just SSL certificate management. We give you built-in features to control security and performance capabilities, at scale, for each of your clients. Cloudflare's security features, such as [DDoS](/ddos-protection/), [WAF](/waf/), [Bot Management](/bots/), and [Rate Limiting](/waf/rate-limiting-rules/) are seamlessly extended to clients on your platform. Security posture can be customized within [Managed Rules](/waf/managed-rules/) for individual customers, to exempt good traffic or tighten security. On the [performance](/cloudflare-for-platforms/cloudflare-for-saas/performance/) side, [Cache](/cache/), [Argo Smart Routing](/argo-smart-routing/), and HTTP/2 features like [Early Hints](/cloudflare-for-platforms/cloudflare-for-saas/performance/early-hints-for-saas/) provide scalable and customizable behavior for all of your customers. Customizable cache rules lets you drive high hit rates across all of your customers.
+
+If you need even more flexibility than our rules provide, to give individual behavior to thousands or millions of customers, [Custom Metadata](/cloudflare-for-platforms/cloudflare-for-saas/domain-support/custom-metadata/) allows complete per-client flexibility. By setting tags like `WAF: On` or `Performance: Premium` for each customer, you can customize their security and performance feature set. We have built features like [WAF for SaaS](/cloudflare-for-platforms/cloudflare-for-saas/security/waf-for-saas/) which interface with this metadata directly; as well as an API within our Workers serverless environment to use them within custom code.
+
+## Scalable serverless applications with Workers for Platforms
+
+If you need more customization than even metadata can provide, or are running a service where your customers write or generate their own application code, [Workers for Platforms](/cloudflare-for-platforms/workers-for-platforms/) lets you deploy a complete serverless application for each of your customers.
+
+We provide several key features such as the [Dispatch Worker](/cloudflare-for-platforms/workers-for-platforms/get-started/dynamic-dispatch/), which gives you infinite flexibility in deciding which customer application to route to. For example, you can run security checks, then decode an HTTP header telling you the user's ID, and then load the appropriate serverless application for this user's request. [Outbound Workers](/cloudflare-for-platforms/workers-for-platforms/configuration/outbound-workers/) give you additional visibility and control into what Internet resources your customer's applications can access, providing a familiar security model in a distributed deployment.
+
+We also provide features for [observability](/cloudflare-for-platforms/workers-for-platforms/configuration/observability/), [configuration](/terraform/), and many other tools needed for a production-grade platform deployment. These are detailed in other [reference architectures](/reference-architecture/) and function the same way for platform cases as for the more standard models described in those guides.
+
+## Use cases
+
+Let's review three common use cases where Cloudflare for Platforms can enable providers to seamlessly extend SSL, performance, and security to their end customers.
+
+### SSL issuance at scale for your platform
+
+In this common design, Cloudflare enables your platform to issue SSL certificates and provide performance and security features. We will not customize the features for each of your clients, but will provide common capabilities for everyone who uses the platform.
+
+1. Cloudflare secures traffic from your clients to your platform, at global scale, by validating and distributing SSL certificates.
+2. In this design, you will use the same L7 configuration \- that is, all of the features that act on your traffic, and run after SSL, for each of your clients.
+3. Just set up a [Cloudflare for SaaS](/cloudflare-for-platforms/cloudflare-for-saas/start/getting-started/) zone and [order a custom hostname](/cloudflare-for-platforms/cloudflare-for-saas/domain-support/create-custom-hostnames/) for each client hostname. The system will take you through an easy flow to point each client's traffic to your platform, and order their certificate.
+   1. You can almost always use our default settings through this process, but bespoke SSL customization is also possible.
+   2. Origin traffic routing is also handled through the SSL for SaaS process. Our default configuration is secure for most needs.
+      - For highly secure use cases, you can use [Authenticated Origin Pulls](/ssl/origin-configuration/authenticated-origin-pull/), [dedicated egress IPs via Aegis](/aegis/), or an advanced design with [Tunnels](/cloudflare-one/connections/connect-networks/).
+
+![Figure 5](~/assets/images/reference-architecture/leveraging-cloudflare-for-your-saas-applications/figure5.svg)
+
+### Feature Customization for your Platform customers
+
+Here, we are not just provisioning a certificate for each client \- we are giving each of them a custom configuration. For example, your Basic tier only gets essential WAF, Advanced tier gets Bot management. You can also run common features across all customers.
+
+1. In addition to securing SSL traffic, use an additional field provided when you add each customer ([Custom Metadata](/cloudflare-for-platforms/cloudflare-for-saas/domain-support/custom-metadata/)) to tag the correct feature set.
+2. Cloudflare features read the Metadata to customize for each client. [WAF features are the key security customization](/cloudflare-for-platforms/cloudflare-for-saas/security/waf-for-saas/). Provide different levels of security, or even customized WAF rulesets.
+3. [On the performance side,](/cloudflare-for-platforms/cloudflare-for-saas/performance/) you can also add Argo Smart Routing, Cache, and Early Hints to level up the performance for chosen customers.
+
+![Figure 6](~/assets/images/reference-architecture/leveraging-cloudflare-for-your-saas-applications/figure6.svg)
+
+### Serverless application platform for your customers
+
+In the most advanced design, we are customizing a full serverless application in our Workers runtime for each of your customers. Simple Workers perform similar tasks to feature customization. Advanced Workers can run your entire platform on the Cloudflare network.
+
+1. Instead of deploying customized Cloudflare capabilities, each customer has their own "User Worker" JavaScript serverless application containing custom code.
+2. You retain control through Dispatch Workers, which determine which code to run, and Outbound Workers, which restrict the access of customer code.
+3. Use advanced Developer Platform capabilities like D1, Workers KV, and Queues to build your entire business on Cloudflare.
+
+![Figure 7](~/assets/images/reference-architecture/leveraging-cloudflare-for-your-saas-applications/figure7.svg)
+
+## Summary
+
+With Cloudflare for SaaS, you will be able to easily solve the common challenges that come with a growing platform business. From SSL certificate issuance, through Security, and on to custom serverless applications, Cloudflare for SaaS lets you scale our entire platform to your customers \- at the scale of millions.
+
+You can find further details on all of the features we have discussed here in the following links:
+
+- [Cloudflare for Platforms](/cloudflare-for-platforms/)
+- [Custom metadata](/cloudflare-for-platforms/cloudflare-for-saas/domain-support/custom-metadata/)
+- [Workers for Platforms](/cloudflare-for-platforms/workers-for-platforms/)

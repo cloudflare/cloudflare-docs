@@ -17,7 +17,7 @@ If you prefer to add human feedback via the dashboard, refer to [Add Human Feedb
 - `AI Gateway - Edit`
 
 2. Get your [Account ID](/fundamentals/setup/find-account-and-zone-ids/).
-3. Using that API token and Account ID, send a [`POST` request](/api/operations/aig-config-create-gateway) to the Cloudflare API.
+3. Using that API token and Account ID, send a [`POST` request](/api/resources/ai_gateway/methods/create/) to the Cloudflare API.
 
 ## 2. Using the API Token
 
@@ -62,7 +62,7 @@ In the example below, the `cf-aig-log-id` is `01JADMCQQQBWH3NXZ5GCRN98DP`.
 
 ### Method 2: Retrieve the `cf-aig-log-id` via API (GET request)
 
-If you don't have the `cf-aig-log-id` in the response body or you need to access it after the fact, you can retrieve it by querying the logs using the [Cloudflare API](/api/operations/aig-config-list-gateway-logs).
+If you don't have the `cf-aig-log-id` in the response body or you need to access it after the fact, you can retrieve it by querying the logs using the [Cloudflare API](/api/resources/ai_gateway/subresources/logs/methods/list/).
 
 The steps below outline how to do this.
 

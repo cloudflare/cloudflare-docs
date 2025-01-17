@@ -5,6 +5,14 @@ productLink: "/zaraz/"
 productArea: Developer platform
 productAreaLink: /workers/platform/changelog/platform/
 entries:
+  - publish_date: "2024-12-16"
+    description: |
+      * **Consent Management**: Allow forcing the consent modal language
+      - **Zaraz Debugger**: Log the response status and body for server-side requests 
+      * **Monitoring**: Introduce "Advanced Monitoring" with new reports such as geography, user timeline, funnel, retention and more 
+      * **Monitoring**: Show information about server-side requests success rate
+      - **Zaraz Types**: Update the `zaraz-types` package
+      - **Custom HTML Managed Component**: Apply syntax highlighting for inlined JavaScript code
   - publish_date: "2024-11-12"
     description: |
       * **Facebook Component**: Update to version 21 of the API, and fail gracefully when e-commerce payload doesn't match schema

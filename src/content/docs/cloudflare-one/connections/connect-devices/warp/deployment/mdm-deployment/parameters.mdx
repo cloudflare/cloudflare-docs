@@ -75,14 +75,14 @@ Requires the `auth_client_id` parameter.
 
 ### `auto_connect`
 
-If switch has been turned off by user, the client will automatically turn itself back on after the specified number of minutes. We recommend keeping this set to a very low value — usually just enough time for a user to log in to hotel or airport Wi-Fi. If any value is specified for `auto_connect` the default state of the WARP client will always be Connected (for example, after the initial install or a reboot).
+If switch has been turned off by user, the client will automatically turn itself back on after the specified number of seconds. We recommend keeping this set to a very low value — usually just enough time for a user to log in to hotel or airport Wi-Fi. If any value is specified for `auto_connect` the default state of the WARP client will always be Connected (for example, after the initial install or a reboot).
 
 **Value Type:** `integer`
 
 **Value:**
 
 * `0` — Allow the switch to stay in the off position indefinitely until the user turns it back on.
-* `1` to `1440` — Turn switch back on automatically after the specified number of minutes.
+* `1` to `86400` — Turn switch back on automatically after the specified number of seconds.
 
 :::note
 
@@ -230,3 +230,23 @@ Enables multiple user registrations on a Windows device.
 ### `pre_login`
 
 Allows WARP to connect with a service token before a user completes the initial Windows login. For more information, refer to [Connect WARP before Windows login](/cloudflare-one/connections/connect-devices/warp/deployment/mdm-deployment/windows-prelogin/).
+
+## Per-App VPN parameters (Android)
+
+To support the per-app VPN for Android devices, Cloudflare has introduced new MDM parameters. The admin can configure these new MDM parameters via any MDM tool that supports deploying an Android app to managed devices or work profiles.
+
+### `app_identifier`
+
+An application package name/bundle identifier which uniquely identifies the app on the Google Play Store. This application will be tunneled through the WARP service.
+
+**Value Type**: `string`
+
+**Value**: The app identifier can be found in the ID query parameter of the specific app's Play Store URL. For example: in the case of `https://play.google.com/store/apps/details?id=com.cloudflare.cloudflareoneagent`, the app identifier for the Cloudflare One Agent app is `com.cloudflare.cloudflareoneagent`.
+
+### `is_browser`
+
+An optional property. `is_browser` will help the Cloudflare One Agent application decide which browser to open instead of the default browser for specific features such as re-authentication and Gateway block notifications. If needed, admins should explicitly indicate that a given `tunneled_app` is a browser, rather than relying on automatic browser detection.
+
+**Value Type**: `boolean`
+
+**Value**: If the value is `true`, identifies the application defined in `app_identifier` as a browser. The default value is `false` and `is_browser` is an optional property.

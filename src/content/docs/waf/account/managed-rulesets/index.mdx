@@ -50,7 +50,7 @@ Once you finish your configuration, the **Deployed managed rulesets** list will 
 
 </TabItem> <TabItem label="API">
 
-The following `POST` request for the [Create an account ruleset](/api/operations/createAccountRuleset) operation creates an [entry point ruleset](/ruleset-engine/about/rulesets/#entry-point-ruleset) for the `http_request_firewall_managed` phase at the account level. The ruleset includes two rules deploying the Cloudflare OWASP Core Ruleset twice with different configurations.
+The following `POST` request for the [Create an account ruleset](/api/resources/rulesets/methods/create/) operation creates an [entry point ruleset](/ruleset-engine/about/rulesets/#entry-point-ruleset) for the `http_request_firewall_managed` phase at the account level. The ruleset includes two rules deploying the Cloudflare OWASP Core Ruleset twice with different configurations.
 
 ```bash
 curl "https://api.cloudflare.com/client/v4/accounts/{account_id}/rulesets" \

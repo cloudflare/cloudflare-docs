@@ -17,7 +17,7 @@ The following is a Cisco IOS XE configuration example:
 crypto ikev2 proposal CF_MAGIC_WAN_IKEV2_PROPOSAL
  encryption aes-cbc-256
  integrity sha512 sha384 sha256
- group 14
+ group 20
 !
 crypto ikev2 policy CF_MAGIC_WAN_IKEV2_POLICY
  match fvrf any
@@ -56,7 +56,7 @@ crypto ikev2 profile CF_MAGIC_WAN_02
 crypto ipsec profile CF_MAGIC_WAN_01
  set security-association lifetime kilobytes disable
  set security-association replay disable
- set pfs group14
+ set pfs group20
  set ikev2-profile CF_MAGIC_WAN_01
 !
 crypto ipsec profile CF_MAGIC_WAN_02

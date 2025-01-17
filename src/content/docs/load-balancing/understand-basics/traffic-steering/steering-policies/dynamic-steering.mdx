@@ -22,3 +22,10 @@ For TCP health monitors, calculated latency may not reflect the true latency to 
 The diagram below shows how Cloudflare would route traffic to the pool with the lowest EWMA among three regions: Eastern North America, Europe, and Australia. In this case, the ENAM pool is selected because it has the lowest RTT.
 
 ![Dynamic steering routes traffic to the fastest available pool](~/assets/images/load-balancing/traffic-steering-2.png)
+
+:::note
+
+To ensure dynamic steering works as expected, the [Health Monitor Region](/load-balancing/monitors/#health-monitor-regions) must be set to **All Regions**.
+The Enterprise-only **All Data Centers** option is also a viable alternative.
+
+:::

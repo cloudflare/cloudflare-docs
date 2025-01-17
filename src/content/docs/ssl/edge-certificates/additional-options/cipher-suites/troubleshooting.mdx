@@ -31,7 +31,7 @@ It is not possible to configure minimum TLS version nor cipher suites for [Cloud
 
 ## API requirements for custom hostname certificate
 
-When using the [Edit Custom Hostname endpoint](/api/operations/custom-hostname-for-a-zone-edit-custom-hostname), make sure to include `type` and `method` within the `ssl` object, as well as the `settings` specifications.
+When using the [Edit Custom Hostname endpoint](/api/resources/custom_hostnames/methods/edit/), make sure to include `type` and `method` within the `ssl` object, as well as the `settings` specifications.
 
 Including the `settings` only will result in the error message `The SSL attribute is invalid. Please refer to the API documentation, check your input and try again`.
 

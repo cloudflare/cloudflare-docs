@@ -39,7 +39,7 @@ curl https://api.cloudflare.com/client/v4/zones/{zone_id}/rulesets/{ruleset_id}/
 --header "Content-Type: application/json" \
 --data '{
   "description": "My custom rule",
-  "expression": "(ip.geoip.country eq \"GB\" or ip.geoip.country eq \"FR\") and cf.threat_score > 10",
+  "expression": "(ip.src.country eq \"GB\" or ip.src.country eq \"FR\") and cf.threat_score > 10",
   "action": "challenge"
 }'
 ```
@@ -58,7 +58,7 @@ curl https://api.cloudflare.com/client/v4/zones/{zone_id}/rulesets/{ruleset_id}/
 --header "Content-Type: application/json" \
 --data '{
   "description": "My custom rule with plain text response",
-  "expression": "(ip.geoip.country eq \"GB\" or ip.geoip.country eq \"FR\") and cf.threat_score > 50",
+  "expression": "(ip.src.country eq \"GB\" or ip.src.country eq \"FR\") and cf.threat_score > 50",
   "action": "block",
   "action_parameters": {
     "response": {

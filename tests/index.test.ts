@@ -1,6 +1,5 @@
 import { fetchMock, SELF } from "cloudflare:test";
 import { describe, it, expect, beforeAll, afterEach } from "vitest";
-import openAPISchema from "./fixtures/openapi.json";
 import puppeteer, { Browser, HTTPRequest } from "@cloudflare/puppeteer";
 import { inject } from "vitest";
 
@@ -82,44 +81,5 @@ describe("Cloudflare Docs", () => {
 		const textSelector = await page.locator("text/Cloudflare").waitHandle();
 		const fullTitle = await textSelector?.evaluate((el) => el.textContent);
 		expect(fullTitle).toContain("Cloudflare Docs");
-	});
-
-	it("responds with API schema at `/schema`", async () => {
-		fetchMock
-			.get("https://raw.githubusercontent.com")
-			.intercept({ path: "/cloudflare/api-schemas/main/openapi.json" })
-			.reply(200, JSON.stringify(openAPISchema));
-
-		const request = new Request("http://fakehost/schema");
-		const response = await SELF.fetch(request);
-		expect(response.headers.get("Content-Type")).toBe("application/json");
-		const data = (await response.json()) as any;
-		expect(Object.keys(data)).toMatchInlineSnapshot(`
-			[
-			  "components",
-			  "info",
-			  "openapi",
-			  "paths",
-			  "security",
-			  "servers",
-			]
-		`);
-	});
-
-	it("responds with API docs files at `/api/*`", async () => {
-		const mockContents = `const some = 'js';`;
-
-		fetchMock
-			.get("https://cloudflare-api-docs-frontend.pages.dev")
-			.intercept({
-				path: (p) => {
-					return p === "//static/js/file.js";
-				},
-			})
-			.reply(200, mockContents);
-
-		const request = new Request("http://fakehost/api/static/js/file.js");
-		const response = await SELF.fetch(request);
-		expect(await response.text()).toEqual(mockContents);
 	});
 });

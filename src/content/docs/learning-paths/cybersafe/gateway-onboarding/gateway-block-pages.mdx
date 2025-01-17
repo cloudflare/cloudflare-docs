@@ -3,16 +3,21 @@ title: Block pages
 pcx_content_type: learning-unit
 sidebar:
   order: 7
-
 ---
 
-import { Render } from "~/components"
+import { Render } from "~/components";
 
 ## Enable the block page for DNS policies
 
 For DNS policies, you will need to enable the block page on a per-policy basis.
 
-<Render file="gateway/add-block-page" product="cloudflare-one" params={{ one: "Gateway > Firewall Policies > DNS" }} />
+<Render
+	file="gateway/add-block-page"
+	product="cloudflare-one"
+	params={{
+		firewallPolicyPath: "**Gateway** > **Firewall policies** > **DNS**",
+	}}
+/>
 
 ## Customize the block page
 

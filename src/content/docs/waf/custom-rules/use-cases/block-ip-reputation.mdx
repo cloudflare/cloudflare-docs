@@ -9,5 +9,5 @@ import { GlossaryDefinition } from "~/components";
 
 This example blocks requests based on country code ([ISO 3166-1 Alpha 2](https://www.iso.org/obp/ui/#search/code/) format), from IP addresses that score greater than 0. This is equivalent to setting the Security Level in **Security** > **Settings** to _High_. For more information, refer to [Security Level](/waf/tools/security-level/).
 
-- **Expression**: `(ip.geoip.country in {"CN" "TW" "US" "GB"} and cf.threat_score gt 0)`
+- **Expression**: `(ip.src.country in {"CN" "TW" "US" "GB"} and cf.threat_score gt 0)`
 - **Action**: _Block_

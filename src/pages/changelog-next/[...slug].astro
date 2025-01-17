@@ -1,0 +1,100 @@
+---
+import StarlightPage, {
+	type StarlightPageProps,
+} from "@astrojs/starlight/components/StarlightPage.astro";
+import type { GetStaticPaths } from "astro";
+import { getCollection } from "astro:content";
+import Header from "~/components/changelog-next/Header.astro";
+import ProductPills from "~/components/changelog-next/ProductPills.astro";
+import { format } from "date-fns";
+
+export const getStaticPaths = (async () => {
+	const notes = await getCollection("changelogs-next");
+
+	return notes.map((note) => {
+		return {
+			params: {
+				slug: note.slug,
+			},
+			props: {
+				note,
+			},
+		};
+	});
+}) satisfies GetStaticPaths;
+
+const { note } = Astro.props;
+
+const { Content, headings } = await note.render();
+
+const props = {
+	frontmatter: {
+		title: note.data.title,
+		template: "splash",
+	},
+	headings,
+	hideTitle: true,
+	hideBreadcrumbs: true,
+} as StarlightPageProps;
+---
+
+<StarlightPage {...props}>
+	<Header />
+	<div class="w-full max-w-[50rem] justify-self-center">
+		<div class="!mt-0 mb-10">
+			<a href="/changelog-next/" class="no-underline">
+				<span class="text-accent">← </span>
+				<span class="text-black">Back to all posts</span>
+			</a>
+		</div>
+		<div class="w-full justify-self-center">
+			<h2>{note.data.title}</h2>
+			<div>
+				<strong
+					>{format(note.data.date, "MMM dd, yyyy")}, {
+						format(note.data.date, "hh:mm a")
+					}</strong
+				>
+				<ProductPills products={note.data.products} />
+			</div>
+			<div>
+				<Content />
+			</div>
+		</div>
+	</div>
+</StarlightPage>
+
+<style>
+	:root {
+		--sl-content-width: 100% !important;
+
+		.sl-markdown-content {
+			margin-top: 0px !important;
+		}
+
+		.content-panel {
+			padding: 0px !important;
+		}
+
+		#feedback-thumbs,
+		#footer-links {
+			justify-self: center;
+		}
+
+		.sl-markdown-content
+			:not(a, strong, em, del, span, input, code, br)
+			+ :not(
+				a,
+				strong,
+				em,
+				del,
+				span,
+				input,
+				code,
+				br,
+				:where(.not-content *)
+			) {
+			margin-top: 1.5rem;
+		}
+	}
+</style>

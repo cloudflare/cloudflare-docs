@@ -1,0 +1,487 @@
+---
+{}
+---
+
+import { Render, AnchorHeading, Type, MetaInfo } from "~/components";
+
+## `r2 bucket`
+
+Interact with buckets in an R2 store.
+
+:::note
+
+The `r2 bucket` commands allow you to manage application data in the Cloudflare network to be accessed from Workers using [the R2 API](/r2/api/workers/workers-api-reference/).
+:::
+
+<AnchorHeading title="`create`" slug="r2-bucket-create" depth={3} />
+
+Create a new R2 bucket.
+
+```txt
+wrangler r2 bucket create <NAME>
+```
+
+- `NAME` <Type text="string" /> <MetaInfo text="required" />
+  - The name of the new R2 bucket.
+- `--location` <Type text="string" /> <MetaInfo text="optional" />
+  - The optional [location hint](/r2/reference/data-location/#location-hints) that determines geographic placement of the R2 bucket.
+- `--storage-class` <Type text="'Standard|InfrequentAccess'" /> <MetaInfo text="optional" />
+  - The default storage class for objects uploaded to the bucket.
+- `--jurisdiction` <Type text="string" /> <MetaInfo text="optional" />
+  - The jurisdiction where the R2 bucket is created. Refer to [jurisdictional restrictions](/r2/reference/data-location/#jurisdictional-restrictions).
+
+<AnchorHeading title="`info`" slug="r2-bucket-info" depth={3} />
+
+Get information about an R2 bucket, including the bucket size and number of objects.
+
+```txt
+wrangler r2 bucket info <NAME>
+```
+
+- `NAME` <Type text="string" /> <MetaInfo text="required" />
+  - The name of the R2 bucket to get information about.
+- `--jurisdiction` <Type text="string" /> <MetaInfo text="optional" />
+  - The jurisdiction where the bucket exists, if a jurisdiction has been specified. Refer to [jurisdictional restrictions](/r2/reference/data-location/#jurisdictional-restrictions).
+
+<AnchorHeading title="`delete`" slug="r2-bucket-delete" depth={3} />
+
+Delete an R2 bucket.
+
+```txt
+wrangler r2 bucket delete <NAME>
+```
+
+- `NAME` <Type text="string" /> <MetaInfo text="required" />
+  - The name of the R2 bucket to delete.
+
+<AnchorHeading title="`list`" slug="r2-bucket-list" depth={3} />
+
+List R2 bucket in the current account.
+
+```txt
+wrangler r2 bucket list
+```
+
+<AnchorHeading title="`cors set`" slug="r2-bucket-cors-set" depth={3} />
+
+Set the [CORS configuration](/r2/buckets/cors/) for an R2 bucket from a JSON file.
+
+```txt
+wrangler r2 bucket cors set <NAME> [OPTIONS]
+```
+
+- `NAME` <Type text="string" /> <MetaInfo text="required" />
+  - The name of the R2 bucket to set the CORS configuration for.
+- `--file` <Type text="string" /> <MetaInfo text="required" />
+  - Path to the JSON file containing CORS configuration (file must be in format of request body of [put bucket CORS policy API](/api/operations/r2-put-bucket-cors-policy)).
+- `--jurisdiction` <Type text="string" /> <MetaInfo text="optional" />
+  - The jurisdiction where the bucket exists, if a jurisdiction has been specified. Refer to [jurisdictional restrictions](/r2/reference/data-location/#jurisdictional-restrictions).
+- `--force` <Type text="boolean" /> <MetaInfo text="optional" />
+  - Skip confirmation when setting CORS configuration.
+
+<AnchorHeading title="`cors delete`" slug="r2-bucket-cors-delete" depth={3} />
+
+Clear the [CORS configuration](/r2/buckets/cors/) for an R2 bucket.
+
+```txt
+wrangler r2 bucket cors delete <NAME> [OPTIONS]
+```
+
+- `NAME` <Type text="string" /> <MetaInfo text="required" />
+  - The name of the R2 bucket to delete the CORS configuration for.
+- `--jurisdiction` <Type text="string" /> <MetaInfo text="optional" />
+  - The jurisdiction where the bucket exists, if a jurisdiction has been specified. Refer to [jurisdictional restrictions](/r2/reference/data-location/#jurisdictional-restrictions).
+- `--force` <Type text="boolean" /> <MetaInfo text="optional" />
+  - Skip confirmation when clearing the CORS configuration.
+
+<AnchorHeading title="`cors list`" slug="r2-bucket-cors-list" depth={3} />
+
+List the [CORS configuration](/r2/buckets/cors/) rules for an R2 bucket.
+
+```txt
+wrangler r2 bucket cors list <NAME> [OPTIONS]
+```
+
+- `NAME` <Type text="string" /> <MetaInfo text="required" />
+  - The name of the R2 bucket to list the CORS rules for.
+- `--jurisdiction` <Type text="string" /> <MetaInfo text="optional" />
+  - The jurisdiction where the bucket exists, if a jurisdiction has been specified. Refer to [jurisdictional restrictions](/r2/reference/data-location/#jurisdictional-restrictions).
+
+<AnchorHeading title="`dev-url enable`" slug="r2-bucket-dev-url-enable" depth={3} />
+
+Enable public access via the [r2.dev URL](/r2/buckets/public-buckets/#enable-managed-public-access) for an R2 bucket.
+
+```txt
+wrangler r2 bucket dev-url enable <NAME> [OPTIONS]
+```
+
+- `NAME` <Type text="string" /> <MetaInfo text="required" />
+  - The name of the R2 bucket to enable public access via its r2.dev URL.
+- `--jurisdiction` <Type text="string" /> <MetaInfo text="optional" />
+  - The jurisdiction where the bucket exists, if a jurisdiction has been specified. Refer to [jurisdictional restrictions](/r2/reference/data-location/#jurisdictional-restrictions).
+- `--force` <Type text="boolean" /> <MetaInfo text="optional" />
+  - Skip confirmation when enabling public access via r2.dev URL.
+
+<AnchorHeading title="`dev-url disable`" slug="r2-bucket-dev-url-disable" depth={3} />
+
+Disable public access via the [r2.dev URL](/r2/buckets/public-buckets/#enable-managed-public-access) for an R2 bucket.
+
+```txt
+wrangler r2 bucket dev-url disable <NAME> [OPTIONS]
+```
+
+- `NAME` <Type text="string" /> <MetaInfo text="required" />
+  - The name of the R2 bucket to disable public access via its r2.dev URL.
+- `--jurisdiction` <Type text="string" /> <MetaInfo text="optional" />
+  - The jurisdiction where the bucket exists, if a jurisdiction has been specified. Refer to [jurisdictional restrictions](/r2/reference/data-location/#jurisdictional-restrictions).
+- `--force` <Type text="boolean" /> <MetaInfo text="optional" />
+  - Skip confirmation when disabling public access via r2.dev URL.
+
+<AnchorHeading title="`dev-url get`" slug="r2-bucket-dev-url-get" depth={3} />
+
+Get the [r2.dev URL](/r2/buckets/public-buckets/#enable-managed-public-access) and status for an R2 bucket.
+
+```txt
+wrangler r2 bucket dev-url get <NAME> [OPTIONS]
+```
+
+- `NAME` <Type text="string" /> <MetaInfo text="required" />
+  - The name of the R2 bucket whose r2.dev URL status to retrieve.
+- `--jurisdiction` <Type text="string" /> <MetaInfo text="optional" />
+  - The jurisdiction where the bucket exists, if a jurisdiction has been specified. Refer to [jurisdictional restrictions](/r2/reference/data-location/#jurisdictional-restrictions).
+
+<AnchorHeading title="`domain add`" slug="r2-bucket-domain-add" depth={3} />
+
+Connect a [custom domain](/r2/buckets/public-buckets/#custom-domains) to an R2 bucket.
+
+```txt
+wrangler r2 bucket domain add <NAME> [OPTIONS]
+```
+
+- `NAME` <Type text="string" /> <MetaInfo text="required" />
+  - The name of the R2 bucket to connect a custom domain to.
+- `--domain` <Type text="string" /> <MetaInfo text="required" />
+  - The custom domain to connect to the R2 bucket.
+- `--zone-id` <Type text="string" /> <MetaInfo text="required" />
+  - The [zone ID](/fundamentals/setup/find-account-and-zone-ids/) associated with the custom domain.
+- `--min-tls` <Type text="'1.0'|'1.1'|'1.2'|'1.3'" /> <MetaInfo text="optional" />
+  - Set the minimum TLS version for the custom domain (defaults to 1.0 if not set).
+- `--jurisdiction` <Type text="string" /> <MetaInfo text="optional" />
+  - The jurisdiction where the bucket exists, if a jurisdiction has been specified. Refer to [jurisdictional restrictions](/r2/reference/data-location/#jurisdictional-restrictions).
+- `--force` <Type text="boolean" /> <MetaInfo text="optional" />
+  - Skip confirmation when adding the custom domain.
+
+<AnchorHeading title="`domain remove`" slug="r2-bucket-domain-remove" depth={3} />
+
+Remove a [custom domain](/r2/buckets/public-buckets/#custom-domains) from an R2 bucket.
+
+```txt
+wrangler r2 bucket domain remove <NAME> [OPTIONS]
+```
+
+- `NAME` <Type text="string" /> <MetaInfo text="required" />
+  - The name of the R2 bucket to remove the custom domain from.
+- `--domain` <Type text="string" /> <MetaInfo text="required" />
+  - The custom domain to remove from the R2 bucket.
+- `--jurisdiction` <Type text="string" /> <MetaInfo text="optional" />
+  - The jurisdiction where the bucket exists, if a jurisdiction has been specified. Refer to [jurisdictional restrictions](/r2/reference/data-location/#jurisdictional-restrictions).
+- `--force` <Type text="boolean" /> <MetaInfo text="optional" />
+  - Skip confirmation when removing the custom domain.
+
+<AnchorHeading title="`domain update`" slug="r2-bucket-domain-update" depth={3} />
+
+Update settings for a [custom domain](/r2/buckets/public-buckets/#custom-domains) connected to an R2 bucket.
+
+```txt
+wrangler r2 bucket domain update <NAME> [OPTIONS]
+```
+
+- `NAME` <Type text="string" /> <MetaInfo text="required" />
+  - The name of the R2 bucket associated with the custom domain to update.
+- `--domain` <Type text="string" /> <MetaInfo text="required" />
+  - The custom domain whose settings will be updated.
+- `--min-tls` <Type text="'1.0'|'1.1'|'1.2'|'1.3'" /> <MetaInfo text="optional" />
+  - Update the minimum TLS version for the custom domain.
+- `--jurisdiction` <Type text="string" /> <MetaInfo text="optional" />
+  - The jurisdiction where the bucket exists, if a jurisdiction has been specified. Refer to [jurisdictional restrictions](/r2/reference/data-location/#jurisdictional-restrictions).
+
+<AnchorHeading title="`domain get`" slug="r2-bucket-domain-get" depth={3} />
+
+Get [custom domain](/r2/buckets/public-buckets/#custom-domains) connected to an R2 bucket.
+
+```txt
+wrangler r2 bucket domain get <NAME> [OPTIONS]
+```
+
+- `NAME` <Type text="string" /> <MetaInfo text="required" />
+  - The name of the R2 bucket whose custom domain to retrieve.
+- `--domain` <Type text="string" /> <MetaInfo text="required" />
+  - The custom domain to get information for.
+- `--jurisdiction` <Type text="string" /> <MetaInfo text="optional" />
+  - The jurisdiction where the bucket exists, if a jurisdiction has been specified. Refer to [jurisdictional restrictions](/r2/reference/data-location/#jurisdictional-restrictions).
+
+<AnchorHeading title="`domain list`" slug="r2-bucket-domain-list" depth={3} />
+
+List [custom domains](/r2/buckets/public-buckets/#custom-domains) for an R2 bucket.
+
+```txt
+wrangler r2 bucket domain list <NAME> [OPTIONS]
+```
+
+- `NAME` <Type text="string" /> <MetaInfo text="required" />
+  - The name of the R2 bucket whose connected custom domains will be listed.
+- `--jurisdiction` <Type text="string" /> <MetaInfo text="optional" />
+  - The jurisdiction where the bucket exists, if a jurisdiction has been specified. Refer to [jurisdictional restrictions](/r2/reference/data-location/#jurisdictional-restrictions).
+
+<AnchorHeading title="`lifecycle add`" slug="r2-bucket-lifecycle-add" depth={3} />
+
+Add an [object lifecycle](/r2/buckets/object-lifecycles/) rule to an R2 bucket.
+
+```txt
+wrangler r2 bucket lifecycle add <NAME> [OPTIONS]
+```
+
+- `NAME` <Type text="string" /> <MetaInfo text="required" />
+  - The name of the R2 bucket to add a lifecycle rule to.
+- `--id` <Type text="string" /> <MetaInfo text="optional" />
+  - A unique identifier for the lifecycle rule.
+- `--prefix` <Type text="string" /> <MetaInfo text="optional" />
+  - Prefix condition for the lifecycle rule (leave empty for all prefixes).
+- `--expire-days` <Type text="number" /> <MetaInfo text="optional" />
+  - Sets the lifecycle rule action to expire objects after this number of days. Note you can provide only one of `--expire-days` or `--expire-date`.
+- `--expire-date` <Type text="string" /> <MetaInfo text="optional" />
+  - Sets the lifecycle rule action to expire objects after this date (YYYY-MM-DD). Note you can provide only one of `--expire-days` or `--expire-date`.
+- `--ia-transition-days` <Type text="number" /> <MetaInfo text="optional" />
+  - Sets the lifecycle rule action to transition objects to Infrequent Access storage after this number of days. Note you can provide only one of `--ia-transition-days` or `--ia-transition-date`.
+- `--ia-transition-date` <Type text="string" /> <MetaInfo text="optional" />
+  - Sets the lifecycle rule action to transition objects to Infrequent Access storage after this date (YYYY-MM-DD). Note you can provide only one of `--ia-transition-days` or `--ia-transition-date`.
+- `--abort-multipart-days` <Type text="number" /> <MetaInfo text="optional" />
+  - Sets the lifecycle rule action to abort incomplete multipart uploads after this number of days.
+- `--jurisdiction` <Type text="string" /> <MetaInfo text="optional" />
+  - The jurisdiction where the bucket exists, if a jurisdiction has been specified. Refer to [jurisdictional restrictions](/r2/reference/data-location/#jurisdictional-restrictions).
+- `--force` <Type text="boolean" /> <MetaInfo text="optional" />
+  - Skip confirmation when adding the lifecycle rule.
+
+<AnchorHeading title="`lifecycle remove`" slug="r2-bucket-lifecycle-remove" depth={3} />
+
+Remove an [object lifecycle](/r2/buckets/object-lifecycles/) rule from an R2 bucket.
+
+```txt
+wrangler r2 bucket lifecycle remove <NAME> [OPTIONS]
+```
+
+- `NAME` <Type text="string" /> <MetaInfo text="required" />
+  - The name of the R2 bucket to remove a lifecycle rule from.
+- `--id` <Type text="string" /> <MetaInfo text="required" />
+  - The unique identifier of the lifecycle rule to remove.
+- `--jurisdiction` <Type text="string" /> <MetaInfo text="optional" />
+  - The jurisdiction where the bucket exists, if a jurisdiction has been specified. Refer to [jurisdictional restrictions](/r2/reference/data-location/#jurisdictional-restrictions).
+
+<AnchorHeading title="`lifecycle list`" slug="r2-bucket-lifecycle-list" depth={3} />
+
+List [object lifecycle](/r2/buckets/object-lifecycles/) rules for an R2 bucket.
+
+```txt
+wrangler r2 bucket lifecycle list <NAME> [OPTIONS]
+```
+
+- `NAME` <Type text="string" /> <MetaInfo text="required" />
+  - The name of the R2 bucket to list lifecycle rules for.
+- `--jurisdiction` <Type text="string" /> <MetaInfo text="optional" />
+  - The jurisdiction where the bucket exists, if a jurisdiction has been specified. Refer to [jurisdictional restrictions](/r2/reference/data-location/#jurisdictional-restrictions).
+
+<AnchorHeading title="`lifecycle set`" slug="r2-bucket-lifecycle-set" depth={3} />
+
+Set the [object lifecycle](/r2/buckets/object-lifecycles/) configuration for an R2 bucket from a JSON file.
+
+```txt
+wrangler r2 bucket lifecycle set <NAME> [OPTIONS]
+```
+
+- `NAME` <Type text="string" /> <MetaInfo text="required" />
+  - The name of the R2 bucket to set lifecycle configuration for.
+- `--file` <Type text="string" /> <MetaInfo text="required" />
+  - Path to the JSON file containing lifecycle configuration (file must be in format of request body of [put object lifecycle configuration API](/api/resources/r2/subresources/buckets/subresources/lifecycle/methods/update/)).
+- `--jurisdiction` <Type text="string" /> <MetaInfo text="optional" />
+  - The jurisdiction where the bucket exists, if a jurisdiction has been specified. Refer to [jurisdictional restrictions](/r2/reference/data-location/#jurisdictional-restrictions).
+- `--force` <Type text="boolean" /> <MetaInfo text="optional" />
+  - Skip confirmation when setting object lifecycle configuration.
+
+<AnchorHeading title="`notification create`" slug="r2-bucket-notification-create" depth={3} />
+
+Create an [event notification](/r2/buckets/event-notifications/) rule for an R2 bucket.
+
+```txt
+wrangler r2 bucket notification create <NAME> [OPTIONS]
+```
+
+- `NAME` <Type text="string" /> <MetaInfo text="required" />
+  - The name of the R2 bucket to create an event notification rule for.
+- `--event-type` <Type text="'object-create'|'object-delete'[]" /> <MetaInfo text="required" />
+  - The [type of event(s)](/r2/buckets/event-notifications/#event-types) that will trigger event notifications.
+- `--queue` <Type text="string" /> <MetaInfo text="required" />
+  - The name of the queue that will receive event notification messages.
+- `--prefix` <Type text="string" /> <MetaInfo text="optional" />
+  - The prefix that an object must match to emit event notifications (note: regular expressions are not supported).
+- `--suffix` <Type text="string" /> <MetaInfo text="optional" />
+  - The suffix that an object must match to emit event notifications (note: regular expressions are not supported).
+- `--description` <Type text="string" /> <MetaInfo text="optional" />
+  - A description that can be used to identify the event notification rule after creation.
+
+<AnchorHeading title="`notification delete`" slug="r2-bucket-notification-delete" depth={3} />
+
+Remove an event notification rule from a bucket's [event notification](/r2/buckets/event-notifications/) configuration.
+
+```txt
+wrangler r2 bucket notification delete <NAME> [OPTIONS]
+```
+
+- `NAME` <Type text="string" /> <MetaInfo text="required" />
+  - The name of the R2 bucket to delete an event notification rule for.
+- `--queue` <Type text="string" /> <MetaInfo text="required" />
+  - The name of the queue that corresponds to the event notification rule. If no `rule` is provided, all event notification rules associated with the queue will be deleted.
+- `--rule` <Type text="string" /> <MetaInfo text="optional" />
+  - The ID of the event notification rule to delete.
+
+<AnchorHeading title="`notification list`" slug="r2-bucket-notification-list" depth={3} />
+
+List the [event notification](/r2/buckets/event-notifications/) rules for a bucket.
+
+```txt
+wrangler r2 bucket notification list <NAME>
+```
+
+- `NAME` <Type text="string" /> <MetaInfo text="required" />
+  - The name of the R2 bucket to get event notification rules for.
+
+<AnchorHeading title="`sippy enable`" slug="r2-bucket-sippy-enable" depth={3} />
+
+Enable [Sippy](/r2/data-migration/sippy/) incremental migration for a bucket.
+
+```txt
+wrangler r2 bucket sippy enable <NAME> [OPTIONS]
+```
+
+- `NAME` <Type text="string" /> <MetaInfo text="required" />
+  - The name of the R2 bucket to enable Sippy.
+- `--provider` <Type text="'AWS'|'GCS'" /> <MetaInfo text="required" />
+  - The provider of your source object storage bucket.
+- `--bucket` <Type text="string" /> <MetaInfo text="required" />
+  - The name of your source object storage bucket.
+- `--r2-key-id` <Type text="string" /> <MetaInfo text="required" />
+  - Your R2 Access Key ID. Requires read and write access.
+- `--r2-secret-access-key` <Type text="string" /> <MetaInfo text="required" />
+  - Your R2 Secret Access Key. Requires read and write access.
+- `--jurisdiction` <Type text="string" /> <MetaInfo text="optional" />
+  - The jurisdiction where the bucket exists, if a jurisdiction has been specified. Refer to [jurisdictional restrictions](/r2/reference/data-location/#jurisdictional-restrictions).
+- **AWS S3 provider-specific options:**
+- `--key-id` <Type text="string" /> <MetaInfo text="optional" />
+  - Your AWS Access Key ID. Requires [read and list access](/r2/data-migration/sippy/#amazon-s3).
+- `--secret-access-key` <Type text="string" /> <MetaInfo text="optional" />
+  - Your AWS Secret Access Key. Requires [read and list access](/r2/data-migration/sippy/#amazon-s3).
+- `--region` <Type text="string" /> <MetaInfo text="optional" />
+  - The AWS region where your S3 bucket is located. For example: `us-west-2`.
+- **Google Cloud Storage provider-specific options:**
+- `--service-account-key-file` <Type text="string" /> <MetaInfo text="optional" />
+  - The path to your Google Cloud service account key JSON file. This will read the service account key file and populate `client_email` and `private_key` options. Requires [read and list access](/r2/data-migration/sippy/#google-cloud-storage).
+- `--client-email` <Type text="string" /> <MetaInfo text="optional" />
+  - The client email for your Google Cloud service account key. Requires [read and list access](/r2/data-migration/sippy/#google-cloud-storage).
+- `--private-key` <Type text="string" /> <MetaInfo text="optional" />
+  - The private key for your Google Cloud service account key. Requires [read and list access](/r2/data-migration/sippy/#google-cloud-storage).
+- Note that you must provide either `service-account-key-file` or `client_email` and `private_key` for this command to run successfully.
+
+<AnchorHeading title="`sippy disable`" slug="r2-bucket-sippy-disable" depth={3} />
+
+Disable [Sippy](/r2/data-migration/sippy/) incremental migration for a bucket.
+
+```txt
+wrangler r2 bucket sippy disable <NAME>
+```
+
+- `NAME` <Type text="string" /> <MetaInfo text="required" />
+  - The name of the R2 bucket to disable Sippy.
+
+<AnchorHeading title="`sippy get`" slug="r2-bucket-sippy-get" depth={3} />
+
+Get the status of [Sippy](/r2/data-migration/sippy/) incremental migration for a bucket.
+
+```txt
+wrangler r2 bucket sippy get <NAME>
+```
+
+- `NAME` <Type text="string" /> <MetaInfo text="required" />
+  - The name of the R2 bucket to get the status of Sippy.
+
+## `r2 object`
+
+Interact with R2 objects.
+
+:::note
+
+The `r2 object` commands allow you to manage application data in the Cloudflare network to be accessed from Workers using [the R2 API](/r2/api/workers/workers-api-reference/).
+:::
+
+<AnchorHeading title="`get`" slug="r2-object-get" depth={3} />
+
+Fetch an object from an R2 bucket.
+
+```txt
+wrangler r2 object get <OBJECT_PATH> [OPTIONS]
+```
+
+- `OBJECT_PATH` <Type text="string" /> <MetaInfo text="required" />
+  - The source object path in the form of `{bucket}/{key}`.
+- `--local` <Type text="boolean" /> <MetaInfo text="optional" />
+  - Interact with locally persisted data.
+- `--persist-to` <Type text="string" /> <MetaInfo text="optional" />
+  - Specify directory for locally persisted data.
+
+<AnchorHeading title="`put`" slug="r2-object-put" depth={3} />
+
+Create an object in an R2 bucket.
+
+```txt
+wrangler r2 object put <OBJECT_PATH> [OPTIONS]
+```
+
+- `OBJECT_PATH` <Type text="string" /> <MetaInfo text="required" />
+  - The destination object path in the form of `{bucket}/{key}`.
+- `--file` <Type text="string" /> <MetaInfo text="optional" />
+  - The path of the file to upload. Note you must provide either `--file` or `--pipe`.
+- `--pipe` <Type text="boolean" /> <MetaInfo text="optional" />
+  - Enables the file to be piped in, rather than specified with the `--file` option. Note you must provide either `--file` or `--pipe`.
+- `--content-type` <Type text="string" /> <MetaInfo text="optional" />
+  - A standard MIME type describing the format of the object data.
+- `--content-disposition` <Type text="string" /> <MetaInfo text="optional" />
+  - Specifies presentational information for the object.
+- `--content-encoding` <Type text="string" /> <MetaInfo text="optional" />
+  - Specifies what content encodings have been applied to the object and thus what decoding mechanisms must be applied to obtain the media-type referenced by the `Content-Type` header field.
+- `--content-language` <Type text="string" /> <MetaInfo text="optional" />
+  - The language the content is in.
+- `--cache-control` <Type text="string" /> <MetaInfo text="optional" />
+  - Specifies caching behavior along the request/reply chain.
+- `--expires` <Type text="string" /> <MetaInfo text="optional" />
+  - The date and time at which the object is no longer cacheable.
+- `--local` <Type text="boolean" /> <MetaInfo text="optional" />
+  - Interact with locally persisted data.
+- `--persist-to` <Type text="string" /> <MetaInfo text="optional" />
+  - Specify directory for locally persisted data.
+
+<AnchorHeading title="`delete`" slug="r2-object-delete" depth={3} />
+
+Delete an object in an R2 bucket.
+
+```txt
+wrangler r2 object delete <OBJECT_PATH> [OPTIONS]
+```
+
+- `OBJECT_PATH` <Type text="string" /> <MetaInfo text="required" />
+  - The destination object path in the form of `{bucket}/{key}`.
+- `--local` <Type text="boolean" /> <MetaInfo text="optional" />
+  - Interact with locally persisted data.
+- `--persist-to` <Type text="string" /> <MetaInfo text="optional" />
+  - Specify directory for locally persisted data.
+
+:::note
+<Render file="wrangler-commands/global-flags" product="workers" />
+:::

@@ -33,7 +33,7 @@ No. Auto-advertisement only works with API-controlled advertisement, not BGP-con
 
 ## In the API, Magic Network Monitoring rules have a `bandwidth_threshold` data field. Does the value for this field refer to bytes transferred or current throughput?
 
-The threshold for a [Magic Network Monitoring (MNM) rule](/api/operations/magic-network-monitoring-rules-list-rules) has two values. The first value is `bandwidth_threshold`. This value is a measure of the total ingress throughput on a network at any given moment. The second value is `duration`. The `duration`value refers to the amount of time that `bandwidth_threshold` must be exceeded before an alert is sent to the customer.
+The threshold for a [Magic Network Monitoring (MNM) rule](/api/resources/magic_network_monitoring/subresources/rules/methods/list/) has two values. The first value is `bandwidth_threshold`. This value is a measure of the total ingress throughput on a network at any given moment. The second value is `duration`. The `duration`value refers to the amount of time that `bandwidth_threshold` must be exceeded before an alert is sent to the customer.
 
 For example, you create a MNM rule with the following parameters:
 

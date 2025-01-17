@@ -134,7 +134,7 @@ The intended purpose of this header is to provide a means for recipients (for ex
 
 :::note
 
-When configuring WAF custom rules, do not match on this header. These rules are applied before Cloudflare adds the `CF-Worker` header. Instead, use the [`cf.worker.upstream_zone`](/ruleset-engine/rules-language/fields/dynamic-fields/#cfworkerupstream_zone) dynamic field, which contains the same value and exists for the same purpose.
+When configuring WAF custom rules, do not match on this header. These rules are applied before Cloudflare adds the `CF-Worker` header. Instead, use the [`cf.worker.upstream_zone`](/ruleset-engine/rules-language/fields/reference/cf.worker.upstream_zone/) dynamic field, which contains the same value and exists for the same purpose.
 
 :::
 

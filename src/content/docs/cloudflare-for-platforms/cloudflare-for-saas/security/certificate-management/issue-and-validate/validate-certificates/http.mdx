@@ -23,7 +23,7 @@ This HTTP validation should succeed as long as your customer is pointing to your
 
 ## Wildcard custom hostnames
 
-HTTP DCV validation is [no longer allowed](/ssl/reference/migration-guides/dcv-update/) for wildcard certificates. You would instead need to use [TXT validation](/cloudflare-for-platforms/cloudflare-for-saas/security/certificate-management/issue-and-validate/validate-certificates/txt/).
+HTTP DCV validation is not allowed for wildcard certificates. You must use [TXT validation](/cloudflare-for-platforms/cloudflare-for-saas/security/certificate-management/issue-and-validate/validate-certificates/txt/) instead.
 
 ***
 
@@ -59,7 +59,7 @@ If you would like to complete the issuance process before asking your customer t
 
 <Render file="ssl-for-saas-create-hostname" /> <br/>
 
-* [**API**](/api/operations/custom-hostname-for-a-zone-custom-hostname-details): Within the `ssl` object, store the values present in the `validation_records` array (specifically `http_url` and `http_body`).
+* [**API**](/api/resources/custom_hostnames/methods/get/): Within the `ssl` object, store the values present in the `validation_records` array (specifically `http_url` and `http_body`).
 * **Dashboard**: When viewing an individual certificate at **SSL/TLS** > **Custom Hostnames**, refer to the values for **Certificate validation request** and **Certificate validation response**.
 
 At your origin, make the `http_body` available in a TXT record at the path specified in `http_url`. This path should also be publicly accessible to anyone on the Internet so your CA can access it.
