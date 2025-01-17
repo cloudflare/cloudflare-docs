@@ -103,9 +103,6 @@
 		"vitest": "2.1.8",
 		"wrangler": "3.101.0"
 	},
-	"optionalDependencies": {
-		"@rollup/rollup-linux-x64-gnu": "*"
-	},
 	"engines": {
 		"node": ">=22"
 	},
