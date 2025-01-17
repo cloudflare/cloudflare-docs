@@ -22,15 +22,17 @@ const { id } = props.parse(Astro.props);
 
 <style>
 	button {
-		transition: all 100ms ease;
+		transition: opacity 100ms ease;
+
+		opacity: 0.5;
 
 		&:hover {
 			cursor: copy;
-			filter: brightness(1.5);
+			opacity: 0.75;
 		}
 
 		&:active {
-			filter: brightness(1.75);
+			opacity: 1;
 		}
 	}
 </style>
