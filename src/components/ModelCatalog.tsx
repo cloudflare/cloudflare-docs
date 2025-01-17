@@ -4,13 +4,21 @@ import ModelBadges from "./models/ModelBadges";
 import { authorData } from "./models/data";
 import type { WorkersAIModelsSchema } from "~/schemas";
 
+type Filters = {
+	search: string;
+	authors: string[];
+	tasks: string[];
+	capabilities: string[];
+};
+
 const ModelCatalog = ({ models }: { models: WorkersAIModelsSchema[] }) => {
-	const [filters, setFilters] = useState({
+	const [filters, setFilters] = useState<Filters>({
 		search: "",
-		authors: [""],
-		tasks: [""],
-		capabilities: [""],
+		authors: [],
+		tasks: [],
+		capabilities: [],
 	});
+
 	const mapped = models.map((model) => ({
 		model: {
 			...model,

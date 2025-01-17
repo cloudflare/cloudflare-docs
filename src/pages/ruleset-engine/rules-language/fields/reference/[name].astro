@@ -6,7 +6,7 @@ import StarlightPage, {
 	type StarlightPageProps,
 } from "@astrojs/starlight/components/StarlightPage.astro";
 import { Code, Aside, Type } from "~/components";
-import FieldBadges from "~/components/fields/FieldBadges.jsx";
+import FieldBadges from "~/components/fields/FieldBadges.tsx";
 
 export const getStaticPaths = (async () => {
 	const fields = await getEntry("fields", "index");
