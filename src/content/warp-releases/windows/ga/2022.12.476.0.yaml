@@ -1,0 +1,76 @@
+releaseNotes: >-
+  This release has support for new Zero Trust network location aware feature and
+  contains improvements to stability and bug fixes. 
+
+
+  **Notable updates**
+
+  - New `Connectivity` tab in the GUI bubbles up helpful information (Windows
+  only for now). Please let us know how this works for you.
+
+  - Added support for new Zero Trust network location aware WARP feature. More
+  info to be released soon on how you can test.
+
+  - Improved captive portal handling for some more captive portals.
+
+  - Improved reconnect logic when a setting changes to no longer always do a
+  full disconnect->reconnect cycle (for instance when turning on DNS logging).
+
+  - Modified initial connectivity check behavior to now validate both IPv4 and
+  IPv6 are working (previously we only checked IPv4). Test will pass if either
+  connects successfully.
+
+  - Fixed issue where UI could appear hung.
+
+  - Fixed issue where progress bar won't appear during update until update is
+  completed.
+
+  - Fixed issue where client could be stuck on `Connecting` if certain DNS
+  checks failed once.
+
+  - Fixed DNS issue where TXT records were not being correctly returned when at
+  the end of a CNAME chain.
+
+  - Fixed issue where the client may not receive notifications of new settings,
+  re-auth events or posture from the service until reboot.
+
+  - Fixed issue where users could be pointing at an old gateway_doh_subdomain if
+  you have `Allowed to Leave` set to true and they've manually joined their
+  client to your organization.
+
+  - Fixed slow DNS timeout issue that could occur when IPv6 is enabled and an
+  NXDOMAIN record is returned.
+
+  - Fixed issue with `Gateway with DoH` mode could say `Connected` when it
+  wasn't really connected as we could sometimes test the wrong endpoint.
+
+  - Fixed issue where our local DNS proxy server could get unset with an overly
+  active DHCP renew time or by plugging in/out a tethered device.
+
+  - Fixed issue where if `support_url` doesn't have a protocol definitely we now
+  automatically add `https`.
+
+  - Fixed issue where the Cloudflare WARP system Service may crash if a long
+  running child process crashes (such as ipconfig, netsh, etc.).
+
+  - Fixed issue where `warp-cli teams-enroll` wouldn't work when an mdm file was
+  present.
+
+  - Fixed issue where our localhost dns endpoints (ex. 127.0.2.2) could appear
+  in the fallback configuration potentially causing DNS lookups to fail.
+
+  - Fixed issue that could cause the Cloudflare WARP Service to crash (and then
+  potentially the GUI).
+
+  - Fixed issue that could cause some DNS queries to take upto 15 seconds to
+  complete.
+
+
+  **Known issues**
+
+  - No known issues
+version: 2022.12.476.0
+packageURL: https://downloads.cloudflareclient.com/v1/download/windows/version/2022.12.476.0
+packageSize: 105148416
+releaseDate: 2022-12-29T01:02:38.653Z
+platformName: Windows

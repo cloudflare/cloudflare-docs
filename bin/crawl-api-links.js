@@ -43,10 +43,17 @@ async function checkLinks() {
 			continue; // Skip if the link is empty
 		}
 
-		await page.goto(link, {
-			waitUntil: "networkidle0",
-			timeout: navigationTimeout,
-		});
+		try {
+			await page.goto(link, {
+				waitUntil: "networkidle0",
+				timeout: navigationTimeout,
+			});
+		} catch (e) {
+			console.log(
+				`  WARNING: Error loading Dev Docs page: ${e.message}... Skipping.`,
+			);
+			continue;
+		}
 
 		const pageLinks = await page.$$eval("a", (elements) =>
 			elements.map((el) => el.href),
@@ -62,18 +69,28 @@ async function checkLinks() {
 				pageLink.startsWith("/api/resources/")
 			) {
 				console.log(`Evaluating link: ${pageLink}`);
-				const response = await page.goto(pageLink, {
-					waitUntil: "networkidle0",
-					timeout: navigationTimeout,
-				});
-				visitedLinks.push(pageLink);
+
+				let response = null;
+
+				try {
+					response = await page.goto(pageLink, {
+						waitUntil: "networkidle0",
+						timeout: navigationTimeout,
+					});
+					visitedLinks.push(pageLink);
+				} catch (e) {
+					console.log(
+						`  WARNING: Error loading API page: ${e.message}... Skipping.`,
+					);
+					continue;
+				}
 
 				if (response) {
 					if (response.status() === 404) {
 						brokenLinks.push(pageLink);
 					}
 				} else {
-					console.log("WARNING: Didn't receive a response... skipping.");
+					console.log("  WARNING: Didn't receive a response... skipping.");
 				}
 			}
 		}

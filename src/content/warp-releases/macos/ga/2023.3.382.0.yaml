@@ -1,0 +1,62 @@
+releaseNotes: >-
+  This release contains new features and improvements from last GA release.
+   
+  **Notable updates**
+
+  - Added support for Zero Trust Digital Experience Monitoring. More information
+  coming soon for customers who signed up for the beta
+
+  - Added new log message to help customers and support identify when a users
+  local network IP space overlaps with a remote network configured to go through
+  the tunnel
+
+  - Added support for Zero Trust customers to opt in to having the WARP Client
+  install the root CA for your organization if TLS Decryption is enabled. A new
+  toggle switch will appear in the dashboard under Settings->WARP Client soon to
+  enable this
+
+  - Modified behavior of Managed networks tests to always happen outside the
+  tunnel as per original intent
+
+  - Modified firewall behavior to allow incoming UDP traffic on ports 67-68 over
+  split tunnel routes configured to be protected by Gateway. This change should
+  allow organizations with overlapping networks to an end users local network,
+  to not leave their users in a completely broken state without internet
+  connectivity
+
+  - Improved user validation logic during manual ZT login
+
+  - Improve timeouts with broken CNAME records that could result in very long
+  load times for certain apps (Office 365 apps, etc.)
+
+  - Fixed issue where trying to launch a support_url without a valid protocol
+  handler (ex. https://) would result in an error
+
+  - Fixed issue where systems with significantly out of sync system clocks could
+  fail registration
+
+  - Fixed panic that could result in loss of internet connectivity
+
+  - Fixed issue where the WARP daemon can crash and lose connectivity
+
+  - Fixed issue where warp-diag could run traceroutes longer than expected.
+  Traceroute tests will now timeout after 65 seconds.
+
+  - Fixed issue where manually logging into a ZT org could fail if certificate
+  authentication was used
+
+  - Fixed issue where GUI could miss a status message from the WARP Service
+  resulting in the wrong state being reflected to users. An example is the GUI
+  could show `Connecting` even though device was `Connected`
+
+  - Fixed issue when running in local proxy mode where too many log entries were
+  written
+   
+  **Known issues**
+
+  No known issues
+version: 2023.3.382.0
+packageURL: https://downloads.cloudflareclient.com/v1/download/macos/version/2023.3.382.0
+packageSize: 49309406
+releaseDate: 2023-04-04T23:14:09.365Z
+platformName: macOS

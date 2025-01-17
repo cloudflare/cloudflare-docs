@@ -1,0 +1,39 @@
+releaseNotes: >-
+  This release primarily contains bug fixes, no new features are included in
+  this release
+   
+  **Notable updates**
+
+  - Modified behavior of `warp-cli enable-dns-log` to automatically turn off
+  after 7 days (this is the equivalent of manually running `warp-cli
+  disable-dns-log`)
+
+  - Fixed HappyEyeballs search on IPv6 only devices
+
+  - Fixed UI in various states where we would show the wrong text when in
+  various states (ex. Paused when really disabled via Admin Override, etc.)
+
+  - Fixed HappyEyeball issue where Safari users without native IPv6 may see
+  increased captcha challenges
+
+  - Fixed issue where device posture timers were paused while device was asleep.
+  Posture tests are now immediately ran on device wakeup and all timers
+  restarted
+
+  - Fixed issue where GUI may still think user is registered after "warp-cli
+  delete" is run
+
+  - Decreased warp-diag zip file sizes by 60-80%
+   
+
+   
+  **Known issues**
+
+  - If you are having issues with upgrading to new beta, please uninstall
+  current app, install the GA version from https://1.1.1.1/ and participate in
+  beta program from Preferences->Advanced.
+version: 2022.10.107.0
+packageURL: https://downloads.cloudflareclient.com/v1/download/macos/version/2022.10.107.0
+packageSize: 52156967
+releaseDate: 2022-11-17T04:54:58.289Z
+platformName: macOS

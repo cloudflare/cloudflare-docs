@@ -1,0 +1,15 @@
+releaseNotes: |-
+  This release contains bug fixes and connection stability improvement
+
+  **Notable updates**
+  Bug fixes and connection stability improvement
+
+  **Known issues**
+  No known issues
+
+  For releated Cloudflare for Teams documentation please see: https://developers.cloudflare.com/cloudflare-one/connections/connect-devices/warp
+version: 2022.3.186.0
+packageURL: https://downloads.cloudflareclient.com/v1/download/windows/version/2022.3.186.0
+packageSize: 89055232
+releaseDate: 2022-03-24T23:29:02.611Z
+platformName: Windows

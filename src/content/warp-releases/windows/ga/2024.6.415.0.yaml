@@ -1,0 +1,30 @@
+releaseNotes: |-
+  This release includes some exciting new features. It also includes additional fixes and minor improvements.
+
+  **New features**
+  - Admins can now elect to have ZT WARP clients connect using the MASQUE protocol; this setting is in Device Profiles. Note: before MASQUE can be used, the global setting for Override local interface IP must be enabled. For more detail, see https://developers.cloudflare.com/cloudflare-one/connections/connect-devices/warp/configure-warp/warp-settings/#device-tunnel-protocol. This feature will be rolled out to customers in stages over approximately the next month.
+  - The ZT WARP client on Windows devices can now connect before the user completes their Windows login. This Windows pre-login capability allows for connecting to on-premise Active Directory and/or similar resources necessary to complete the Windows login.
+  - The Device Posture client certificate check has been substantially enhanced. The primary enhancement is the ability to check for client certificates that have unique common names, made unique by the inclusion of the device serial number or host name (for example, CN = 123456.mycompany, where 123456 is the device serial number). Additional details can be found here:  https://developers.cloudflare.com/cloudflare-one/identity/devices/warp-client-checks/client-certificate/
+   
+  **Additional changes and improvements**
+  - Added a new message explaining why WARP was unable to connect, to help with troubleshooting.
+  - The upgrade window now uses international date formats.
+  - Made a change to ensure DEX tests are not running when the tunnel is not up due to the device going to or waking from sleep. This is specific to devices using the S3 power model.
+  - Fixed a known issue where the certificate was not always properly left behind in `%ProgramData%\Cloudflare\installed_cert.pem`.
+  - Fixed an issue where ICMPv6 Neighbor Solicitation messages were being incorrectly sent on the WARP tunnel.
+  - Fixed an issue where a silent upgrade was causing certain files to be deleted if the target upgrade version is the same as the current version.
+
+  **Warning**
+  - This is the last GA release that will be supporting older, deprecated warp-cli commands. There are two methods to identify these commands. One, when used in this release, the command will work but will also return a deprecation warning. And two, the deprecated commands do not appear in the output of `warp-cli -h`.
+   
+  **Known issues**
+  - If a user has an MDM file configured to support multiple profiles (for the switch configurations feature), and then changes to an MDM file configured for a single profile, the WARP client may not connect. The workaround is to use the `warp-cli registration delete` command to clear the registration, and then re-register the client.
+  - There are certain known limitations preventing the use of the MASQUE tunnel protocol in certain scenarios. Do not use the MASQUE tunnel protocol if:
+    - A Magic WAN integration is on the account and is not yet migrated to the warp_unified_flow. Please check migration status with your account team.
+    - Your account has Regional Services enabled.
+  - Managed network detection will fail for TLS 1.2 endpoints with EMS (Extended Master Secret) disabled
+version: 2024.6.415.0
+packageURL: https://downloads.cloudflareclient.com/v1/download/windows/version/2024.6.415.0
+packageSize: 119230464
+releaseDate: 2024-06-28T17:01:04.112Z
+platformName: Windows

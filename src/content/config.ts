@@ -12,6 +12,7 @@ import {
 	learningPathsSchema,
 	videosSchema,
 	workersAiModelsSchema,
+	warpReleasesSchema,
 	changelogsNextSchema,
 	fieldsSchema,
 } from "~/schemas";
@@ -74,6 +75,10 @@ export const collections = {
 	}),
 	apps: defineCollection({
 		schema: appsSchema,
+		type: "data",
+	}),
+	"warp-releases": defineCollection({
+		schema: warpReleasesSchema,
 		type: "data",
 	}),
 	"changelogs-next": defineCollection({
