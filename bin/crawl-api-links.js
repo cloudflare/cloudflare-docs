@@ -28,7 +28,7 @@ async function checkLinks() {
 		else request.continue();
 	});
 
-	const sitemapUrl = "https://developers.cloudflare.com/sitemap-index.xml";
+	const sitemapUrl = "https://developers.cloudflare.com/sitemap-0.xml";
 	await page.goto(sitemapUrl, { timeout: navigationTimeout });
 
 	const sitemapLinks = await page.$$eval("url loc", (elements) =>
