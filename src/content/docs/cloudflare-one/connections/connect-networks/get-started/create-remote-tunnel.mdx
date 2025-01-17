@@ -29,6 +29,8 @@ Follow these steps to connect an application through your tunnel. If you are loo
 
 <Render file="tunnel/add-public-hostname" product="cloudflare-one" />
 
+The application is now publicly available on the Internet. To allow or block specific users, [create an Access application](/cloudflare-one/applications/configure-apps/self-hosted-public-app).
+
 ## 3. Connect a network
 
 Follow these steps to connect a private network through your tunnel.
@@ -37,8 +39,11 @@ Follow these steps to connect a private network through your tunnel.
 
 2. Select **Save tunnel**.
 
+To configure Zero Trust policies and connect as a user, refer to [Connect private networks](/cloudflare-one/connections/connect-networks/private-net/cloudflared/).
+
 ## 4. View your tunnel
 
 After saving the tunnel, you will be redirected to the **Tunnels** page. Look for your new tunnel to be listed along with its active connector.
 
 ![Tunnel appearing in the Tunnels table](~/assets/images/cloudflare-one/connections/connect-apps/tunnel-table.png)
+

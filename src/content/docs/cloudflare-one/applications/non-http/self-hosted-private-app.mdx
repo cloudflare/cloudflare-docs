@@ -34,7 +34,7 @@ This feature is available in early access and replaces the legacy [private netwo
 
    Cloudflare checks every HTTPS request to your application for a valid application token. If the user's application token (and global token) has expired, they will be prompted to reauthenticate with the IdP. For more information, refer to [Session management](/cloudflare-one/identity/users/session-management/). If the application is non-HTTPS or you do not have TLS decryption turned on, the session is tracked by the WARP client per application.
 
-6. Add the private IP and/or private hostname that represents the application.
+6. Add the private IP and/or private hostname that represents the application. You can use [wildcards](/cloudflare-one/policies/access/app-paths/) with private hostnames to protect multiple parts of an application that share a root path.
 
 	:::note
 	Private hostnames are currently only available over port `443` over HTTPS and the application must have a valid Server Name Indicator (SNI).
