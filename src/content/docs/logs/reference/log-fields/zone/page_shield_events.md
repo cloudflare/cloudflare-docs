@@ -15,6 +15,12 @@ Type: `string`
 
 The action which was taken against the violation. <br />Possible values are <em>log</em> \| <em>allow</em>.
 
+## CSPDirective
+
+Type: `string`
+
+The violated directive in the report.
+
 ## Host
 
 Type: `string`
@@ -33,6 +39,12 @@ Type: `string`
 
 The ID of the policy which was violated.
 
+## ResourceType
+
+Type: `string`
+
+The resource type of the violated directive. Possible values are 'script', 'connection' or 'other' for unmonitored resource types
+
 ## Timestamp
 
 Type: `int or string`
@@ -45,7 +57,7 @@ Type: `string`
 
 The resource URL.
 
-## URLContainsCDNCGIPath
+## URLContainsCDNCGIPath (deprecated)
 
 Type: `bool`
 

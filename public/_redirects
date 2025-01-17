@@ -750,7 +750,6 @@
 /logs/reference/logpush-api-configuration/examples/example-logpush-curl/ /logs/tutorials/examples/example-logpush-curl/ 301
 
 # magic-firewall
-/magic-firewall/reference/magic-firewall-fields/ /ruleset-engine/rules-language/fields/magic-firewall/ 301
 /magic-firewall/reference/examples/ /magic-firewall/how-to/add-rules/ 301
 /magic-firewall/how-to/pcaps-bucket-setup/ /magic-firewall/packet-captures/pcaps-bucket-setup/ 301
 /magic-firewall/how-to/collect-pcaps/ /magic-firewall/packet-captures/collect-pcaps/ 301
@@ -934,7 +933,6 @@
 /reference-architecture/load-balancing-reference-architecture/ /reference-architecture/architectures/load-balancing/ 301
 /reference-architecture/magic-transit-reference-architecture/ /reference-architecture/architectures/magic-transit/ 301
 /reference-architecture/multi-vendor-architecture/ /reference-architecture/architectures/multi-vendor/ 301
-
 /reference-architecture/secure-application-delivery-design-guide/ /reference-architecture/design-guides/secure-application-delivery/ 301
 
 # radar
@@ -972,6 +970,15 @@
 /rules/url-forwarding/bulk-redirects/use-cases/ /rules/url-forwarding/examples/ 301
 /rules/url-forwarding/single-redirects/examples/ /rules/url-forwarding/examples/ 301
 /rules/url-forwarding/dynamic-redirects/parameters/ /rules/url-forwarding/single-redirects/settings/ 301
+
+# ruleset engine
+/ruleset-engine/rules-language/fields/standard-fields/ /ruleset-engine/rules-language/fields/reference/ 301
+/ruleset-engine/rules-language/fields/dynamic-fields/ /ruleset-engine/rules-language/fields/reference/ 301
+/ruleset-engine/rules-language/fields/uri/ /ruleset-engine/rules-language/fields/reference/ 301
+/ruleset-engine/rules-language/fields/http-request-header/ /ruleset-engine/rules-language/fields/reference/ 301
+/ruleset-engine/rules-language/fields/http-request-body/ /ruleset-engine/rules-language/fields/reference/ 301
+/ruleset-engine/rules-language/fields/http-request-response/ /ruleset-engine/rules-language/fields/reference/ 301
+/ruleset-engine/rules-language/fields/magic-firewall/ /magic-firewall/reference/magic-firewall-fields/ 301
 
 # security center
 /security-center/indicator-feeds/getting-started/ /security-center/indicator-feeds/ 301

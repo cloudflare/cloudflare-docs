@@ -3,6 +3,7 @@ export * from "./base";
 export * from "./changelogs-next";
 export * from "./changelogs";
 export * from "./compatibility-flags";
+export * from "./fields";
 export * from "./glossary";
 export * from "./learning-paths";
 export * from "./notifications";

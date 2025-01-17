@@ -110,6 +110,7 @@ const ProductCatalog = ({ products }: { products: ProductData[] }) => {
 				{productList.map((product) => {
 					return (
 						<a
+							key={product.data.name}
 							href={product.data.product.url}
 							className="block self-stretch rounded-md border border-solid border-gray-200 p-3 !text-inherit no-underline hover:bg-gray-50 dark:border-gray-700 dark:hover:bg-gray-800"
 						>
