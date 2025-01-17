@@ -20,6 +20,10 @@ entries:
     title: D1 Worker API request latency decreases by 40-60%.
     description: |-
       D1 lowered end-to-end Worker API request latency by 40-60% by eliminating redundant network round trips for each request.
+
+      ![D1 Worker API latency](../../assets/images/d1/faster-d1-worker-api.png)
+      
+      *p50, p90, and p95 request latency aggregated across entire D1 service. These latencies are a reference point and should not be viewed as your exact workload improvement.*
       
       For each request to a D1 database, at least two network round trips were eliminated. One round trip was due to a bug that is now fixed. The remaining removed round trips are due to avoiding creating a new TCP connection for each request when reaching out to the datacenter hosting the database.
       

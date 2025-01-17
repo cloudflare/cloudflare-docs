@@ -5,13 +5,13 @@ products:
   - d1
 date: 2025-01-07T18:00:00Z
 ---
- 
-[D1](/d1/) lowered end-to-end request latency via the [Workers API](/d1/worker-api/) by up to 60% through eliminating redundant network round trips for each request.
+
+Users making [D1](/d1/) requests via the [Workers API](/d1/worker-api/) can see up to a 60% end-to-end latency improvement due to the removal of network round trips needed for each request to a D1 database.
 
 ![D1 Worker API latency](../../assets/images/d1/faster-d1-worker-api.png)
 
-*p50, p90, and p95 latency aggregated across entire D1 service. These latencies are a reference point and should not be viewed as your exact workload improvement.*
+*p50, p90, and p95 request latency aggregated across entire D1 service. These latencies are a reference point and should not be viewed as your exact workload improvement.*
 
 This performance improvement benefits all D1 Worker API traffic, especially cross-region requests where network latency is an outsized latency factor. For example, a user in Europe talking to a database in North America. D1 [location hints](/d1/configuration/data-location/#provide-a-location-hint) can be used to influence the geographic location of a database.
 
-For more details on how D1 removed redundnat round trips, see the D1 specific changelog [entry](/d1/platform/changelog/#2025-01-07).
+For more details on how D1 removed redundant round trips, see the D1 specific changelog [entry](/d1/platform/changelog/#2025-01-07).
