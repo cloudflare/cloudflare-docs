@@ -77,7 +77,7 @@
 /src/content/docs/china-network/ @pedrosousa @cloudflare/pcx-technical-writing
 /src/content/docs/cloudflare-for-platforms/cloudflare-for-saas/ @RebeccaTamachiro @cloudflare/pcx-technical-writing
 /src/content/docs/dns/ @RebeccaTamachiro @cloudflare/pcx-technical-writing
-/src/content/docs/fundamentals/ @cloudflare/pcx-technical-writing
+/src/content/docs/fundamentals/ @dcpena @cloudflare/pcx-technical-writing
 /src/content/docs/fundamentals/account-and-billing/ @dcpena @cloudflare/pcx-technical-writing
 /src/content/docs/learning-paths/ @cloudflare/pcx-technical-writing
 /src/content/docs/network-error-logging/ @dcpena @cloudflare/pcx-technical-writing
@@ -150,8 +150,8 @@
 
 # Docs team areas
 
-/src/content/docs/docs-guide/ @crwaters16 @cloudflare/pcx-technical-writing
-/src/content/docs/style-guide/ @crwaters16 @cloudflare/pcx-technical-writing
+/src/content/docs/docs-guide/ @dcpena @cloudflare/pcx-technical-writing
+/src/content/docs/style-guide/ @dcpena @cloudflare/pcx-technical-writing
 
 # Magic products
 
@@ -163,8 +163,8 @@
 
 # Migration guides
 
-/src/content/docs/migration-guides/ @kimj15 @crwaters16 @cloudflare/pcx-technical-writing
-/src/assets/images/migration-guides/ @kimj15 @crwaters16 @cloudflare/pcx-technical-writing
+/src/content/docs/migration-guides/ @kimj15 @cloudflare/pcx-technical-writing
+/src/assets/images/migration-guides/ @kimj15 @cloudflare/pcx-technical-writing
 
 # Performance products
 
@@ -189,8 +189,8 @@
 
 # Reference architecture
 
-/src/content/docs/reference-architecture/ @securitypedant @crwaters16 @cloudflare/pcx-technical-writing
-/src/assets/images/reference-architecture/ @securitypedant @crwaters16 @cloudflare/pcx-technical-writing
+/src/content/docs/reference-architecture/ @securitypedant @haleycode @cloudflare/pcx-technical-writing
+/src/assets/images/reference-architecture/ @securitypedant @haleycode @cloudflare/pcx-technical-writing
 
 # Security products
 
