@@ -4,15 +4,15 @@
 
 # More dev-specific files
 
-/.github/ @pedrosousa @haleycode @kristianfreeman @GregBrimble @KianNH @maxvp @marciocloudflare @WalshyDev
+/.github/ @kodster28 @pedrosousa @haleycode @kristianfreeman @GregBrimble @KianNH @maxvp @marciocloudflare @WalshyDev
 /.github/CODEOWNERS @cloudflare/pcx-technical-writing
 /.github/actions/assign-issue/index.js @cloudflare/pcx-technical-writing
 /.github/actions/assign-pr/index.js @cloudflare/pcx-technical-writing
 /.github/styles/cloudflare/spelling-exceptions.txt @cloudflare/pcx-technical-writing
-/src/components/ @cloudflare/developer-advocacy @kristianfreeman @pedrosousa @marciocloudflare @haleycode @maxvp @GregBrimble @KianNH @WalshyDev
-/functions/ @cloudflare/developer-advocacy @kristianfreeman @pedrosousa @haleycode @marciocloudflare @maxvp @GregBrimble @KianNH @WalshyDev
-*.js @cloudflare/developer-advocacy @kristianfreeman @pedrosousa @haleycode @maxvp @marciocloudflare @GregBrimble @KianNH @WalshyDev
-*.ts @cloudflare/developer-advocacy @kristianfreeman @pedrosousa @haleycode @maxvp @marciocloudflare @GregBrimble @KianNH @WalshyDev
+/src/components/ @cloudflare/developer-advocacy @kristianfreeman @kodster28 @pedrosousa @marciocloudflare @haleycode @maxvp @GregBrimble @KianNH @WalshyDev
+/functions/ @cloudflare/developer-advocacy @kristianfreeman @kodster28 @pedrosousa @haleycode @marciocloudflare @maxvp @GregBrimble @KianNH @WalshyDev
+*.js @cloudflare/developer-advocacy @kristianfreeman @kodster28 @pedrosousa @haleycode @maxvp @marciocloudflare @GregBrimble @KianNH @WalshyDev
+*.ts @cloudflare/developer-advocacy @kristianfreeman @kodster28 @pedrosousa @haleycode @maxvp @marciocloudflare @GregBrimble @KianNH @WalshyDev
 /src/content/workers-ai-models/ @craigsdennis @pedrosousa @cloudflare/pcx-technical-writing
 /public/_redirects @GregBrimble @KianNH @pedrosousa @WalshyDev @cloudflare/pcx-technical-writing
 
