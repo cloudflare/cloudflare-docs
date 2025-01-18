@@ -19,67 +19,67 @@ Cloudflare account ID.
 
 Type: `string`
 
-Source address of the SSH command.
+The source address of the SSH command.
 
 ## Datetime
 
 Type: `int or string`
 
-Timestamp in UTC of when this message is being sent.
+The timestamp in UTC of when this message is being sent.
 
 ## Error
 
 Type: `string`
 
-SSH error. Only used if an error occurred.
+An SSH error. Only used if an error has occurred.
 
 ## PTY
 
 Type: `string`
 
-Used by certain programs when running interactive shells to synchronize local with remote SSH terminal state.
+This is used by certain programs types to synchronize local and remote SSH terminal state.
 
 ## Payload
 
 Type: `string`
 
-Captured request/response data, base64-encoded in asciinema .cast format. This includes the command associated with the "exec" program type.
+The captured request/response data, in asciicast v2 format. This includes the command associated with the 'exec' program type.
 
 ## ProgramFinishDatetime
 
 Type: `int or string`
 
-The date and time the specific SSH program was completed. This is empty until the program ends.
+The timestamp in UTC of the SSH program termination. This is empty until the program ends.
 
 ## ProgramID
 
 Type: `string`
 
-SSH program ID, a single SSH session can have multiple programs running.
+The SSH program ID. A single SSH session can have multiple programs running.
 
 ## ProgramStartDatetime
 
 Type: `int or string`
 
-The date and time the specific SSH program started.
+The timestamp in UTC of the SSH program creation.
 
 ## ProgramType
 
 Type: `string`
 
-The SSH program being run e.g. "shell": default user's shell on target machine, "exec": execute provided command (used with "cmd" below), "x11": an interactive graphical environment, "direct-tcpip": direct tunneling, "forwarded-tcpip": reverse tunneling
+The SSH program being run. The options are 'shell': opens an interactive terminal, 'exec': execute a single specified command, 'x11': is for an interactive graphical environment, 'direct-tcpip': direct tunneling, 'forwarded-tcpip': reverse tunneling.
 
 ## ServerAddress
 
 Type: `string`
 
-Destination address for the SSH command.
+The destination address for the SSH session.
 
 ## SessionFinishDatetime
 
 Type: `int or string`
 
-The date and time the SSH session was completed. This is empty until the session ends.
+The timestamp in UTC of the SSH session termination. This is empty until the session ends.
 
 ## SessionID
 
@@ -91,13 +91,13 @@ SSH session ID.
 
 Type: `int or string`
 
-The date and time the SSH session was created.
+The timestamp in UTC of the SSH session creation.
 
 ## TargetID
 
 Type: `string`
 
-Identifier for which target is being accessed.
+The identifier of the target being accessed.
 
 ## UserEmail
 
@@ -115,4 +115,4 @@ Cloudflare user ID.
 
 Type: `string`
 
-Principal user being accessed on SSH server's machine. Empty if error raised when establishing connection.
+The principal user being accessed on SSH server's machine. This will be empty if an error was thrown when establishing the connection.
