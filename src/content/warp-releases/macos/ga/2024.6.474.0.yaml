@@ -1,0 +1,28 @@
+releaseNotes: >-
+  This release only contains a hotfix from the 2024.6.416.0 release.
+     
+  **Notable updates**
+
+  - Fixed an issue which could cause alternate network detections to fail for
+  hosts using TLS 1.2 which do not support TLS Extended Master Secret (EMS).
+
+  - Improved the stability of device profile switching based on alternate
+  network detection.
+      
+  **Known issues**
+
+  - If a user has an MDM file configured to support multiple profiles (for the
+  switch configurations feature), and then changes to an MDM file configured for
+  a single profile, the WARP client may not connect. The workaround is to use
+  the `warp-cli registration delete` command to clear the registration, and then
+  re-register the client.
+
+  - There are certain known limitations preventing the use of the MASQUE tunnel
+  protocol in certain scenarios. Do not use the MASQUE tunnel protocol if:
+    - A Magic WAN integration is on the account and is not yet migrated to the warp_unified_flow. Please check migration status with your account team.
+    - Your account has Regional Services enabled.
+version: 2024.6.474.0
+packageURL: https://downloads.cloudflareclient.com/v1/download/macos/version/2024.6.474.0
+packageSize: 76919339
+releaseDate: 2024-07-30T20:01:41.355Z
+platformName: macOS

@@ -32,53 +32,15 @@ To connect your infrastructure with Cloudflare Tunnel:
 
 ## 4. (Recommended) Filter network traffic with Gateway
 
-By default, all WARP devices enrolled in your Zero Trust organization can connect to your private network through Cloudflare Tunnel. You can configure Gateway to inspect your network traffic and either block or allow access based on user identity and device posture.
+By default, all WARP devices enrolled in your Zero Trust organization can connect to your private network through Cloudflare Tunnel. You can configure Gateway inspect your network traffic and either block or allow access based on user identity and device posture.
 
 ### Enable the Gateway proxy
 
 <Render file="tunnel/enable-gateway-proxy" />
 
-### Create Zero Trust policies
+### Zero Trust policies
 
-You can create Zero Trust policies to manage access to specific applications on your network.
-
-1. Go to **Access** > **Applications** > **Add an application**.
-
-2. Select **Private Network**.
-
-3. Name your application.
-
-4. For **Application type**, select _Destination IP_.
-
-5. For **Value**, enter the IP address for your application (for example, `10.128.0.7`).
-   :::note
-   If you would like to create a policy for an IP/CIDR range instead of a specific IP address, you can build a [Gateway Network policy](/cloudflare-one/policies/gateway/network-policies/) using the **Destination IP** selector.
-   :::
-
-6. Configure your [App Launcher](/cloudflare-one/applications/app-launcher/) visibility and logo.
-
-7. Select **Next**. You will see two auto-generated Gateway Network policies: one that allows access to the destination IP and another that blocks access.
-
-8. Modify the policies to include additional identity-based conditions. For example:
-
-   - **Policy 1**
-
-     | Selector       | Operator      | Value            | Logic | Action |
-     | -------------- | ------------- | ---------------- | ----- | ------ |
-     | Destination IP | in            | `10.128.0.7`     | And   | Allow  |
-     | User Email     | matches regex | `.*@example.com` |       |        |
-
-   - **Policy 2**
-
-     | Selector       | Operator | Value        | Action |
-     | -------------- | -------- | ------------ | ------ |
-     | Destination IP | in       | `10.128.0.7` | Block  |
-
-   Policies are evaluated in [numerical order](/cloudflare-one/policies/gateway/order-of-enforcement/#order-of-precedence), so a user with an email ending in @example.com will be able to access `10.128.0.7` while all others will be blocked. For more information on building network policies, refer to our [dedicated documentation](/cloudflare-one/policies/gateway/network-policies/).
-
-9. Select **Add application**.
-
-Your application will appear on the **Applications** page.
+Cloudflare Zero Trust allows you to configure security policies using either Access or Gateway. If you have applications clearly defined by IPs or hostnames, we recommend [creating an Access application](/cloudflare-one/applications/non-http/self-hosted-private-app/) and managing user access alongside your SaaS and other web apps. Alternatively, if you prefer to secure a private network using a traditional firewall model, you can build Gateway [network and DNS policies](/learning-paths/replace-vpn/build-policies/) for IP ranges and domains.
 
 ## 5. Connect as a user
 

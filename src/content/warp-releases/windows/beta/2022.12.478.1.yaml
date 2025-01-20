@@ -1,0 +1,13 @@
+releaseNotes: |-
+  This release primarily updates the beta to match GA 2022.12.476.0
+
+  **Notable updates**
+  - None
+
+  **Known issues**
+  - No known issues
+version: 2022.12.478.1
+packageURL: https://downloads.cloudflareclient.com/v1/download/windows/version/2022.12.478.1
+packageSize: 105148416
+releaseDate: 2022-12-29T02:15:28.923Z
+platformName: Windows

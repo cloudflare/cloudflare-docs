@@ -39,33 +39,37 @@ flowchart TB
 2. Next, if the query was not sent with DNS over HTTPS, Gateway checks whether it was sent over IPv4. If yes, it looks up the DNS location by the source IPv4 address.
 3. Last, if the query was not sent over IPv4, it means it was sent over IPv6. Gateway will look up the DNS location associated with the query based on the unique DNS resolver IPv6 address.
 
-## IPv6 address
-
-When you create a DNS location, your location will receive a unique DNS resolver IPv6 address. This IPv6 address is how Gateway will match DNS queries to locations and apply the appropriate filtering rules.
-
-## IPv4 address
+## IPv4/IPv6 address
 
 ### Source IP
 
-Gateway uses the public source IPv4 address of your network to identify your DNS location, apply policies and log DNS requests. Unless you have purchased a [dedicated IPv4 resolver IP](#dns-resolver-ip), you must provide source IP addresses for the IPv4 traffic you want to filter with DNS policies. Otherwise, Gateway will not be able to attribute the traffic to your account.
+Gateway uses the public source IPv4 address of your network to identify your DNS location, apply policies, and log DNS requests. Unless you have purchased a [dedicated IPv4 resolver IP](#dedicated-dns-resolver-ip), you must provide source IP addresses for the IPv4 traffic you want to filter with DNS policies. Otherwise, Gateway will not be able to attribute the traffic to your account.
 
-When creating a DNS location, Zero Trust automatically identifies the source IP address of the network you are on.
-
-If you are on the Enterprise plan, you have the option of manually entering one or more source IP addresses of your choice. This enables you to create Gateway DNS locations even if you are not connecting from any of those networks' IP addresses.
+If you are on an Enterprise plan, you have the option of manually entering one or more source IP addresses of your choice. This enables you to create Gateway DNS locations even if you are not connecting from any of those networks' IP addresses.
 
 ### DNS resolver IP
 
-For queries over IPv4, the default DNS resolver IP addresses are anycast IP addresses, and they are shared across every Cloudflare Zero Trust account.
+When you create a DNS location, Gateway will resolve queries over IPv4 with the default DNS resolver IP addresses. These addresses are anycast IP addresses shared across every Cloudflare Zero Trust account. To resolve queries over IPv6, your location will receive and use a unique DNS resolver IPv6 address. These IP addresses are how Gateway will match DNS queries to locations and apply the appropriate filtering rules.
 
-If you are on the Enterprise plan, you can request a dedicated DNS resolver IPv4 address to be provisioned for a DNS location in lieu of the default anycast addresses. Like IPv6, queries forwarded to that address will be identified using the dedicated DNS resolver IPv4 address.
+#### Dedicated DNS resolver IP
 
-Resolver IP addresses you will only be assigned to the Zero Trust account you request. For more information on requesting dedicated DNS resolver IPv4 addresses, contact your account team.
+Enterprise users can request a dedicated DNS resolver IPv4 address to be provisioned for a DNS location instead of the default anycast addresses. Queries forwarded to that address will be identified using the dedicated DNS resolver IPv4 address.
 
-## DNS over TLS
+Cloudflare will only assign resolver IP addresses to the Zero Trust account you request. For more information on requesting dedicated DNS resolver IPv4 addresses, contact your account team.
+
+#### Bring your own DNS resolver IP
+
+Enterprise users can use their own authority-provided IPv4 and IPv6 addresses as DNS endpoints for a location. Gateway can resolve UDP, TCP, DoT, and DoH queries through the IPv4 addresses provided, as well as UDP and TCP queries through the IPv6 addresses provided.
+
+After you onboard your IP addresses, the IP addresses will appear under the associated endpoint when you create a new DNS location. If you did not provide IP addresses for a specific endpoint type, you can use the default Cloudflare resolver IPs or dedicated resolver IPs alongside your own resolver IPs. For example, if you want to use the IPv6 endpoint but only provided IPv4 addresses, you can use your own resolver IPs for IPv4 and the default Cloudflare IPs for IPv6.
+
+For more information, refer to [Cloudflare BYOIP](/byoip/) or contact your account team.
+
+## DNS over TLS (DoT)
 
 Each DNS location is assigned a unique hostname for DNS over TLS (DoT). Gateway will identify your location based on its DoT hostname.
 
-## DNS over HTTPS
+## DNS over HTTPS (DoH)
 
 Each DNS location is assigned a unique hostname for DNS over HTTPS (DoH). Gateway will identify your location based on its DoH hostname.
 

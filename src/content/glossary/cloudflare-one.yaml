@@ -1,10 +1,6 @@
 ---
 productName: Cloudflare One
 entries:
-  - term: Access group
-    general_definition: |-
-      a set of rules that can be configured once and then quickly applied across many Access applications.
-
   - term: App Launcher
     general_definition: |-
       the App Launcher portal provides end users with a single dashboard to open applications secured by Cloudflare Zero Trust.
@@ -146,6 +142,10 @@ entries:
   - term: RDP
     general_definition: |-
       Remote Desktop Protocol (RDP) allows remote desktop connections to a computer, often used on Windows and Mac operating systems.
+
+  - term: Rule group
+    general_definition: |-
+      a set of Access rules that can be configured once and then quickly applied across many Access policies.
 
   - term: SafeSearch
     general_definition: |-

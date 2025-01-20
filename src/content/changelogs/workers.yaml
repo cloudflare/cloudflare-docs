@@ -9,7 +9,7 @@ entries:
     description: |-
       - **Cloudflare GitHub App Permissions Update**
         - Cloudflare is requesting updated permissions for the [Cloudflare GitHub App](https://github.com/apps/cloudflare-workers-and-pages) to enable features like automatically creating a repository on your GitHub account and deploying the new repository for you when getting started with a template. This feature is coming out soon to support a better onboarding experience.
-        - **Requested permissions:** 
+        - **Requested permissions:**
           - [Repository Administration](https://docs.github.com/en/rest/authentication/permissions-required-for-github-apps?apiVersion=2022-11-28#repository-permissions-for-administration) (read/write) to create repositories.
           - [Contents](https://docs.github.com/en/rest/authentication/permissions-required-for-github-apps?apiVersion=2022-11-28#repository-permissions-for-contents) (read/write) to push code to the created repositories.
         - **Who is impacted:**
@@ -20,6 +20,12 @@ entries:
   - publish_date: "2024-11-18"
     description: |-
       - Updated v8 to version 13.1.
+  - publish_date: "2024-11-12"
+    description: |-
+      - Fixes exception seen when trying to call deleteAll() during a SQLite-backed Durable Object's alarm handler.
+  - publish_date: "2024-11-08"
+    description: |-
+      - Update SQLite to version 3.47.
   - publish_date: "2024-10-21"
     description: |-
       - Fixed encoding of WebSocket pong messages when talking to remote servers. Previously, when a Worker made a WebSocket connection to an external server, the server may have prematurely closed the WebSocket for failure to respond correctly to pings. Client-side connections were not affected.

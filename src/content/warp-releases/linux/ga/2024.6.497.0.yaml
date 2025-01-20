@@ -1,0 +1,25 @@
+releaseNotes: |
+  This release includes some exciting new features. It also includes additional fixes and minor improvements.
+
+    **New features**
+    - The WARP client now supports operation on Ubuntu 24.04.
+    - Admins can now elect to have ZT WARP clients connect using the MASQUE protocol; this setting is in Device Profiles. Note: before MASQUE can be used, the global setting for Override local interface IP must be enabled. For more detail, refer to [Device tunnel protocol](/cloudflare-one/connections/connect-devices/warp/configure-warp/warp-settings/#device-tunnel-protocol). This feature will be rolled out to customers in stages over approximately the next month.
+    - The Device Posture [client certificate check](/cloudflare-one/identity/devices/warp-client-checks/client-certificate/) has been substantially enhanced. The primary enhancement is the ability to check for client certificates that have unique common names, made unique by the inclusion of the device serial number or host name (for example, CN = `123456.mycompany`, where 123456 is the device serial number).
+    - TCP MSS clamping is now used where necessary to meet the MTU requirements of the tunnel interface. This will be especially helpful in Docker use cases.
+
+    **Warning**
+    - Ubuntu 16.04 and 18.04 are not supported by this version of the client.
+    - This is the last GA release that will be supporting older, deprecated `warp-cli` commands. There are two methods to identify these commands. One, when used in this release, the command will work but will also return a deprecation warning. And two, the deprecated commands do not appear in the output of `warp-cli -h`.
+
+    **Known issues**
+    - There are certain known limitations preventing the use of the MASQUE tunnel protocol in certain scenarios. Do not use the MASQUE tunnel protocol if:
+      - A Magic WAN integration is on the account and does not have the latest packet flow path for WARP traffic. To check the migration status, contact your account team.
+      - Your account has Regional Services enabled.
+    - The Linux client GUI does not yet support all GUI features found in the Windows and macOS clients. Future releases of the Linux client will be adding these GUI features.
+    - The Zero Trust team name is not visible in the GUI if you upgraded from the previous GA release using an MDM tool.
+    - Sometimes the WARP icon will remain gray (disconnected state) while in dark mode.
+
+version: 2024.6.497.0
+releaseDate: 2024-08-15
+packageURL: https://pkg.cloudflareclient.com/
+platformName: Linux
