@@ -145,22 +145,22 @@ The last step is to create a Zero Trust application to run your VNC server in th
 
 1. In [Zero Trust](https://one.dash.cloudflare.com), go to **Access** > **Applications**.
 
-2. Select **Add an application** and choose **Self-hosted**.
+2. Select **Add an application**.
 
-3. Name the application and set the domain to which you would like to expose the VNC server.
+3. Select **Self-hosted**.
 
-   ![Example domain name input for VNC application](~/assets/images/cloudflare-one/zero-trust-security/vnc-client-in-browser/vnc-domain-application.png)
+4. Enter any name for the application.
 
-4. Add an Allow or Block policy. In this example, we are only allowing users with emails ending in `@example.com`.
+5. Select **Add public hostname** and set the domain to which you would like to expose the VNC server.
 
-   ![Example Zero Trust policy input for VNC application](~/assets/images/cloudflare-one/zero-trust-security/vnc-client-in-browser/vnc-policy.png)
+6. In **Access policies**, add an Allow or Block policy. For example policies, refer to the [Access policies documentation](/cloudflare-one/policies/access/#allow).
 
 :::note
 
 Service Auth and Bypass policies are not supported for browser-based VNC applications.
 :::
 
-5. In **Additional settings**, set **Browser rendering** to _VNC_.
+7. In **Advanced settings**, set **Browser rendering** to _VNC_.
 
 Users will see a login screen with your configured identity providers. After successful authentication, they may be prompted to enter the VNC server's password.
 

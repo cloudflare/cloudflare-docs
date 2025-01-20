@@ -1,0 +1,50 @@
+releaseNotes: >-
+  This release contains new features and improvements from the last release.
+
+
+  **Notable updates**
+
+  - Client now supports include only split tunnel rules while in Teams mode.
+
+  - Improved overall reliability of DNS and general connectivity when in Teams
+  modes.
+
+  - Improved logging and fixed bug where we got incomplete logs from warp-diag.
+
+  - Fixed connectivity issues some users experienced when coming out of sleep.
+
+  - Fixed occasional registration issues when trying to join Teams organization.
+
+  - Fixed issue where clients shows consumer UI when in Teams mode.
+
+  - Fixed issue when joining org with no posture rules.
+
+  - Fixed issue where build over build upgrades could fail.
+
+  - Fixed issue where certain posture checks failed with the default langugage
+  wasn't english.
+
+  - Fixed issue where AAD/AD was no longer seamlessly authenticating.
+
+  - Fixed issue with Teams enrollment when using JumpCloud (now rely on at least
+  version 1.0.902.49 of WebView2).
+
+  - Fixed issue where device posture information would remain even after you
+  left Teams organization.
+
+  - Fixed issues with localhost Proxy mode, is now more robust to network
+  changes and general bug fixes.
+
+  - Fixed dialog boxes not being correctly modal when launched from Preferences.
+
+
+  **Known issues**
+
+  - When auto_connect=0 and switch_locked=false in plist the client no longer
+  starts tunnel immediately, it must be manually toggled on. This is a bug and
+  will be fixed in a future release.
+version: 1.6.28.0
+packageURL: https://downloads.cloudflareclient.com/v1/download/windows/version/1.6.28.0
+packageSize: 87371776
+releaseDate: 2021-10-04T20:12:51.028Z
+platformName: Windows

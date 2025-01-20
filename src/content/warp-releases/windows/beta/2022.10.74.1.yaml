@@ -1,0 +1,23 @@
+releaseNotes: |-
+  This release primarily contains bug fixes, no new features are included in this release
+   
+  **Notable updates**
+  - Modified installer behavior to now set the following registry key `HKLM\SOFTWARE\POLICIES\MICROSOFT\Windows\NetworkConnectivityStatusIndicator\UseGlobalDNS=1 (REG_DWORD)`. This resolves issues where Windows would think you didn't have a network connection even though you did.
+  - Modified behavior of warp-diag to now also include 24 hours of Windows system event logs (for Zero Trust customers only).
+  - Modified behavior of `warp-cli enable-dns-log` to automatically turn off after 7 days (this is the equivalent of manually running `warp-cli disable-dns-log`)
+  - Fixed HappyEyeballs search on IPv6 only devices
+  - Fixed UI in various states where we would show the wrong text when in various states (ex. Paused when really disabled via Admin Override, etc.)
+  - Fixed issue in consumer on mode where you could add a domain based split tunnel rule but you couldn't delete them
+  - Fixed issue where you could recieve Windows notifications when you weren't supposed to
+  - Fixed issue where DHCP packets may be blocked when switching from Ethernet to Wifi
+  - Fixed `System.AggregateException` that on some systems would cause the WARP UI to crash (note even if the UI is not running, the system service is still enforcing policy)
+  - Fixed issue where the installer would check for an updated version of the app upon install. The installer no longer does this so the client itself can download settings and determine if users should be allowed to self update.
+   
+   
+  **Known issues**
+  - No known issues
+version: 2022.10.74.1
+packageURL: https://downloads.cloudflareclient.com/v1/download/windows/version/2022.10.74.1
+packageSize: 105807872
+releaseDate: 2022-11-04T19:20:09.495Z
+platformName: Windows

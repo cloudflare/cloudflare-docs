@@ -1,0 +1,27 @@
+releaseNotes: >-
+  This release contains reliability improvements and general bug fixes.
+   
+  **Notable updates**
+
+  - Fixed an issue that was causing Windows BSOD (DPC_WATCHDOG_VIOLATION)
+
+  - Fixed an issue where DNS could temporarily fail when DHCP updates were
+  processed
+
+  - Fixed an issue where Learn More links on "unable to connect" errors in the
+  UI were pointing to the wrong place
+
+  - Fixed an issue on initial device registration that could sometimes cause it
+  to fail and try again
+
+  - Fixed an issue where UI could appear in the wrong location when the app
+  starts
+    
+  **Known issues**
+
+  - No known issues
+version: 2023.8.296.1
+packageURL: https://downloads.cloudflareclient.com/v1/download/windows/version/2023.8.296.1
+packageSize: 112414720
+releaseDate: 2023-08-31T21:56:00.717Z
+platformName: Windows
