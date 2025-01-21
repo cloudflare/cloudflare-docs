@@ -238,6 +238,70 @@ To get the domain of a proxy endpoint:
 
 </Tabs>
 
+To get the IP addresses associated with your domain:
+
+<Tabs>
+
+<TabItem label="macOS and Linux">
+
+1. Open a terminal.
+2. Run `dig` to get the IPv4 addresses. For example:
+
+   ```bash
+   dig A example.cloudflare-gateway.com +short
+   ```
+
+   ```bash output
+   162.159.36.5
+   162.159.36.20
+   ```
+
+3. Run `dig` to get the IPv6 addresses. For example:
+
+   ```bash
+   dig A example.cloudflare-gateway.com +short
+   ```
+
+   ```bash output
+   2606:4700:54::a29f:2407
+   2606:4700:5c::a29f:2e07
+   ```
+
+</TabItem>
+
+<TabItem label="Windows">
+
+1. Open a PowerShell terminal.
+2. Run `Resolve-DnsName` to get the IPv4 addresses. For example:
+
+   ```powershell
+   Resolve-DnsName -Name example.cloudflare-gateway.com -Type A
+   ```
+
+   ```powershell output
+   Name                                           Type   TTL   Section    IPAddress
+   ----                                           ----   ---   -------    ---------
+   example.cloudflare-gateway.com                 A      300   Answer     162.159.36.5
+   example.cloudflare-gateway.com                 A      300   Answer     162.159.36.20
+   ```
+
+3. Run `Resolve-DnsName` to get the IPv6 addresses. For example:
+
+   ```powershell
+   Resolve-DnsName -Name example.cloudflare-gateway.com -Type AAAA
+   ```
+
+   ```powershell output
+   Name                                           Type   TTL   Section    IPAddress
+   ----                                           ----   ---   -------    ---------
+   example.cloudflare-gateway.com                 AAAA   300   Answer     2606:4700:5c::a29f:2e07
+   example.cloudflare-gateway.com                 AAAA   300   Answer     2606:4700:54::a29f:2407
+   ```
+
+</TabItem>
+
+</Tabs>
+
 ## Limitations
 
 ### Traffic limitations
