@@ -30,7 +30,6 @@ export default [
 	},
 	{
 		rules: {
-			"prefer-const": "off",
 			"no-var": "error",
 			"@typescript-eslint/no-explicit-any": "off",
 			"@typescript-eslint/triple-slash-reference": "off",

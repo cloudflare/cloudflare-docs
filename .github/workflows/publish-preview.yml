@@ -31,7 +31,6 @@ jobs:
         name: Build
         env:
           NODE_OPTIONS: --max-old-space-size=4096
-          CF_PAGES_BRANCH: production
       - run: npx wrangler pages deploy --project-name cloudflare-docs dist
         name: Deploy to Cloudflare Pages
         env:

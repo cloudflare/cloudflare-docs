@@ -41,7 +41,7 @@ const FieldCatalog = ({ fields }: { fields: Fields }) => {
 
 		if (filters.search) {
 			// search keywords
-			let keywordFound = field.keywords?.some(
+			const keywordFound = field.keywords?.some(
 				(kw) => kw.indexOf(filters.search) >= 0,
 			);
 
