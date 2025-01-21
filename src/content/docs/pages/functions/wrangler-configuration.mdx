@@ -332,7 +332,7 @@ Inheritable keys are configurable at the top-level, and can be inherited (or ove
 
 - `send_metrics` <Type text="boolean" /> <MetaInfo text="optional" />
 
-  - Whether Wrangler should send usage metrics to Cloudflare for this project.
+  - Whether Wrangler should send usage data to Cloudflare for this project. Defaults to `true`. You can learn more about this in our [data policy](https://github.com/cloudflare/workers-sdk/tree/main/packages/wrangler/telemetry.md).
 
 - `limits` Limits optional
 
@@ -431,7 +431,7 @@ A [binding](/pages/functions/bindings/) enables your Pages Functions to interact
 
 ### D1 databases
 
-[D1](/d1/) is Cloudflare's serverless SQL database. A Function can query a D1 database (or databases) by creating a [binding](/workers/runtime-apis/bindings/) to each database for D1's [client API](/d1/build-with-d1/d1-client-api/).
+[D1](/d1/) is Cloudflare's serverless SQL database. A Function can query a D1 database (or databases) by creating a [binding](/workers/runtime-apis/bindings/) to each database for [D1 Workers Binding API](/d1/worker-api/).
 
 :::note
 

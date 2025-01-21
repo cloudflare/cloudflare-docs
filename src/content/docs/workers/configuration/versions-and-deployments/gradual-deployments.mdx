@@ -157,7 +157,7 @@ curl -s https://example.com -H 'Cloudflare-Workers-Version-Overrides: my-worker-
 
 The dictionary can contain multiple key-value pairs. Each key indicates the name of the Worker the override should be applied to. The value indicates the version ID that should be used and must be a [String](https://www.rfc-editor.org/rfc/rfc8941#name-strings).
 
-A version override will only be applied if the specified version is in the current deployment. The versions in the current deployment can be found using the [`wrangler deployments list`](/workers/wrangler/commands/#list-6) command or on the [Workers Dashboard](https://dash.cloudflare.com/?to=/:account/workers) under Worker > Deployments > Active Deployment.
+A version override will only be applied if the specified version is in the current deployment. The versions in the current deployment can be found using the [`wrangler deployments list`](/workers/wrangler/commands/#list-5) command or on the [Workers Dashboard](https://dash.cloudflare.com/?to=/:account/workers) under Worker > Deployments > Active Deployment.
 
 :::note[Verifying that the version override was applied]
 
@@ -238,7 +238,7 @@ When using gradual deployments, you may want to attribute Workers invocations to
 
 ### Logpush
 
-A new `ScriptVersion` object is available in [Workers Logpush](/workers/observability/logs/logpush/). `ScriptVersion` can only be added through the [Logpush API](/api/operations/post-accounts-account_identifier-logpush-jobs) right now. Sample API call:
+A new `ScriptVersion` object is available in [Workers Logpush](/workers/observability/logs/logpush/). `ScriptVersion` can only be added through the Logpush API right now. Sample API call:
 
 ```bash
 curl -X POST 'https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/logpush/jobs' \

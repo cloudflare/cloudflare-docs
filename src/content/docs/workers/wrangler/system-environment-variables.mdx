@@ -40,7 +40,7 @@ Wrangler supports the following environment variables:
 
 * `WRANGLER_SEND_METRICS` <Type text="string" /> <MetaInfo text="optional" />
 
-  * Options for this are `true` and `false`, the default behavior is `false`.
+  * Options for this are `true` and `false`. Defaults to `true`. Controls whether Wrangler can send anonymous usage data to Cloudflare for this project. You can learn more about this in our [data policy](https://github.com/cloudflare/workers-sdk/tree/main/packages/wrangler/telemetry.md).
 
 * `WRANGLER_HYPERDRIVE_LOCAL_CONNECTION_STRING_<BINDING_NAME>`<Type text="string" /> <MetaInfo text="optional" />
 
@@ -52,7 +52,7 @@ Wrangler supports the following environment variables:
 
 * `WRANGLER_LOG` <Type text="string" /> <MetaInfo text="optional" />
 
-  * Options for Logging levels are `"none"`, `"error"`, `"warn"`, `"info"`, `"log"` and `"debug"`. Levels are case-insensitive and default to `"log"`. If an invalid level is specified, Wrangler will fallback to the default.
+  * Options for Logging levels are `"none"`, `"error"`, `"warn"`, `"info"`, `"log"` and `"debug"`. Levels are case-insensitive and default to `"log"`. If an invalid level is specified, Wrangler will fallback to the default. Logs can include requests to Cloudflare's API, any usage data being collected, and more verbose error logs.
 
 * `FORCE_COLOR` <Type text="string" /> <MetaInfo text="optional" />
 

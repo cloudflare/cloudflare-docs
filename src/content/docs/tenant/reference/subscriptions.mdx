@@ -10,11 +10,11 @@ When [provisioning services for an account](/tenant/how-to/manage-subscriptions/
 
 The subscriptions available to you will vary depending on your current partner program ([Self-Service Partner Program](https://www.cloudflare.com/cloudflare-partners-self-serve-program-closed-beta/) or [Enterprise Resellers and MSP Program](https://portal.cloudflarepartners.com)).
 
-The following values are samples and not exhaustive. For the complete list of subscription values available to you, make an API call to the [zone subscriptions](/api/operations/zone-rate-plan-list-available-rate-plans) or [account subscriptions](/api/operations/account-subscriptions-list-subscriptions) endpoints.
+The following values are samples and not exhaustive. For the complete list of subscription values available to you, make an API call to the [zone subscriptions](/api/resources/zones/subresources/rate_plans/methods/get/) or [account subscriptions](/api/resources/accounts/subresources/subscriptions/methods/get/) endpoints.
 
 ## Zone plans
 
-When creating or updating a [zone plan](/api/operations/zone-subscription-zone-subscription-details), Partners can use one of the following values for the `id` of the `rate_plan` field (which controls the zone-level plan subscription).
+When creating or updating a [zone plan](/api/resources/zones/subresources/subscriptions/methods/get/), Partners can use one of the following values for the `id` of the `rate_plan` field (which controls the zone-level plan subscription).
 
 | Partner program                     | Available subscriptions                                         |
 | ----------------------------------- | --------------------------------------------------------------- |

@@ -1,13 +1,13 @@
 ---
-inputParameters: firewallPolicyPath
-
+params:
+  - firewallPolicyPath
 ---
 
-import { Markdown } from "~/components"
+import { Markdown } from "~/components";
 
-1. In [Zero Trust](https://one.dash.cloudflare.com), go to {props.one}.
+1. In [Zero Trust](https://one.dash.cloudflare.com), go to <Markdown text={props.firewallPolicyPath} />.
 2. Find the policy you want to customize and select **Edit**. You can only edit the block page for policies with a Block action.
-3. Under **Configure policy settings**, go to **Display block page**. Choose *Show a custom message*.
+3. Under **Configure policy settings**, go to **Display block page**. Choose _Show a custom message_.
 4. In **Custom message**, enter a block message to show users.
 5. Select **Save policy**.
 

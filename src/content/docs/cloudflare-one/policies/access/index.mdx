@@ -97,33 +97,35 @@ The Exclude rule works like a NOT logical operator. A user meeting any Exclusion
 
 The Require rule works like an AND logical operator. A user must meet all specified Require rules to be allowed access.
 
-#### Requiring multiple conditions
+#### Require rules with OR operators
 
-When setting up a Require rule for an Access policy, keep in mind that any values you add to the rule will be concatenated by an AND operator. For example, let's say you want to grant access to an application to both the full-time employees and the contractors, and only the ones based in specific countries — say Portugal and the United States. If you set up a rule with the following configuration:
+By default, any values added to a Require rule are concatenated by an AND operator. For example, let's say you want to grant access to an application to both the full-time employees and the contractors, and only the ones based in specific countries — say Portugal and the United States. If you set up a rule with the following configuration:
 
 | Action | Rule type | Selector         | Value                                 |
 | ------ | --------- | ---------------- | ------------------------------------- |
-| Allow  | Require   | Emails ending in | `@cloudflare.com`, `@contractors.com` |
-|        | Require   | Country          | `United States`, `Portugal`           |
+| Allow  | Require   | Country          | `United States`, `Portugal`           |
+|        | Require   | Emails ending in | `@cloudflare.com`, `@contractors.com` |
 
 the policy will only grant access to people reaching the application from both the United States AND Portugal, and who have both an email ending in `@cloudflare.com` AND in `@contractors.com`. Therefore, nobody will have access to the application.
 
-Instead, you can address this need by using [Access groups](/cloudflare-one/identity/users/groups/). First, you can set up a group (we will call it `My Access Group`) that includes users in Portugal OR in the United States:
+To require only one country and one email ending:
 
-| Rule type | Selector | Value                       |
-| --------- | -------- | --------------------------- |
-| Include   | Country  | `United States`, `Portugal` |
+1. [Create a rule group](/cloudflare-one/policies/access/groups/) that includes users in Portugal OR in the United States:
 
-Next, you can create a policy for your application that requires the group, and that also includes users with emails ending in either `@cloudflare.com` OR `@contractors.com`:
+		| Rule type | Selector | Value                       |
+		| --------- | -------- | --------------------------- |
+		| Include   | Country  | `United States`, `Portugal` |
 
-| Action | Rule type | Selector          | Value                                 |
-| ------ | --------- | ----------------- | ------------------------------------- |
-| Allow  | Require   | `My Access Group` | -                                     |
-|        | Include   | Emails ending in  | `@cloudflare.com`, `@contractors.com` |
+2. Create a policy that requires the rule group, and that also includes users with emails ending in either `@cloudflare.com` OR `@contractors.com`:
+
+		| Action | Rule type | Selector          | Value                                 |
+		| ------ | --------- | ----------------- | ------------------------------------- |
+		| Allow  | Require   | Rule group         | `Country requirements`                    |
+		|        | Include   | Emails ending in  | `@cloudflare.com`, `@contractors.com` |
 
 ## Selectors
 
-When you add a rule to your policy, you will be asked to specify the criteria/attributes you want users to meet. These attributes are available for all Access application types, including [SaaS](/cloudflare-one/applications/configure-apps/saas-apps/), [self-hosted](/cloudflare-one/applications/configure-apps/self-hosted-apps/), and [non-HTTP](/cloudflare-one/applications/non-http/) applications.
+When you add a rule to your policy, you will be asked to specify the criteria/attributes you want users to meet. These attributes are available for all Access application types, including [SaaS](/cloudflare-one/applications/configure-apps/saas-apps/), [self-hosted](/cloudflare-one/applications/configure-apps/self-hosted-public-app/), and [non-HTTP](/cloudflare-one/applications/non-http/) applications.
 
 Identity-based attributes are only checked when a user authenticates to Access, whereas non-identity attributes are polled continuously for changes during the [user session](/cloudflare-one/identity/users/session-management/). If you have configured [SCIM provisioning](/cloudflare-one/identity/users/scim/), you can force a user to re-attest all attributes with Access whenever you revoke the user in the IdP or update their IdP group membership.
 
@@ -141,7 +143,7 @@ Identity-based attributes are only checked when a user authenticates to Access, 
 | Any Access Service Token | The request will need to present the headers for any [service token](/cloudflare-one/identity/service-tokens/) created for this account.                                      | ✅               | ✅                               |
 | Login Methods            | Checks the identity provider used at the time of login.                                                                                                                       | ✅               | ❌                               |
 | Authentication Method    | Checks the [multifactor authentication](/cloudflare-one/policies/access/mfa-requirements/) method used by the user, if supported by the identity provider.                    | ✅               | ❌                               |
-| Identity provider group  | Checks the user groups you configured with your identity provider (IdP). This selector only displays if you use Microsoft Entra ID, GitHub, Google, or Okta as your IdP.      | ✅               | ❌                               |
+| Identity provider group  | Checks the user groups configured with your identity provider (IdP). This selector only displays if you use Microsoft Entra ID, GitHub, Google, Okta, or an IdP that provisions groups with [SCIM](/cloudflare-one/identity/users/scim/).      | ✅               | ❌                               |
 | SAML Group               | Checks a SAML attribute name / value pair. This selector only displays if you use a [generic SAML](/cloudflare-one/identity/idp-integration/generic-saml/) identity provider. | ✅               | ❌                               |
 | OIDC Claim               | Checks an OIDC claim name / value pair. This selector only displays if you use a [generic OIDC](/cloudflare-one/identity/idp-integration/generic-oidc/) identity provider.    | ✅               | ❌                               |
 | Device posture           | Checks [device posture signals](/cloudflare-one/identity/devices/) from the WARP client or a third-party service provider.                                                    | ✅               | ✅                               |

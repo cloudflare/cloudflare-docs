@@ -1,5 +1,6 @@
 import { z, defineCollection } from "astro:content";
 import { docsSchema, i18nSchema } from "@astrojs/starlight/schema";
+import { file } from "astro/loaders";
 import {
 	appsSchema,
 	changelogsSchema,
@@ -11,7 +12,10 @@ import {
 	glossarySchema,
 	learningPathsSchema,
 	videosSchema,
+	warpReleasesSchema,
 	workersAiSchema,
+	changelogsNextSchema,
+	fieldsSchema,
 } from "~/schemas";
 
 const partialSchema = z.object({
@@ -72,6 +76,17 @@ export const collections = {
 	}),
 	apps: defineCollection({
 		schema: appsSchema,
+		type: "data",
+	}),
+	"warp-releases": defineCollection({
+		schema: warpReleasesSchema,
+		type: "data",
+	}),
+	"changelogs-next": defineCollection({
+		schema: changelogsNextSchema,
+	}),
+	fields: defineCollection({
+		schema: fieldsSchema,
 		type: "data",
 	}),
 };

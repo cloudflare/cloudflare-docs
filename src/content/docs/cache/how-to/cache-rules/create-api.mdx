@@ -24,12 +24,12 @@ When creating a cache rule via API, make sure you:
 
 ## Procedure
 
-1. Use the [List zone rulesets](/api/operations/listZoneRulesets) method to obtain the list of rules already present in the `http_request_cache_settings` phase entry point ruleset.
-2. If the phase ruleset does not exist, create it using the [Create a zone ruleset](/api/operations/createZoneRuleset) operation. In the new ruleset properties, set the following values:
+1. Use the [List zone rulesets](/api/resources/rulesets/methods/list/) method to obtain the list of rules already present in the `http_request_cache_settings` phase entry point ruleset.
+2. If the phase ruleset does not exist, create it using the [Create a zone ruleset](/api/resources/rulesets/methods/create/) operation. In the new ruleset properties, set the following values:
    * kind: `zone`
    * phase: `http_request_cache_settings`
-3. Use the [Update a zone ruleset](/api/operations/updateZoneRuleset) operation to add a cache rule to the list of ruleset rules. Alternatively, include the rule in the [Create a zone ruleset](/api/operations/createZoneRuleset) request mentioned in the previous step.
-4. (Optional) To update an existing cache rule, use the [Update a zone ruleset rule](/api/operations/updateZoneRulesetRule) operation. For an example, refer to the section below.
+3. Use the [Update a zone ruleset](/api/resources/rulesets/methods/update/) operation to add a cache rule to the list of ruleset rules. Alternatively, include the rule in the [Create a zone ruleset](/api/resources/rulesets/methods/create/) request mentioned in the previous step.
+4. (Optional) To update an existing cache rule, use the [Update a zone ruleset rule](/api/resources/rulesets/methods/update/) operation. For an example, refer to the section below.
 
 ## Example requests
 

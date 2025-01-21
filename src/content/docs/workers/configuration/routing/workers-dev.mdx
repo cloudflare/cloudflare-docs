@@ -19,7 +19,17 @@ All Workers are assigned a `workers.dev` route when they are created or renamed 
 
 ## Disabling `workers.dev`
 
-Review your `workers.dev` route in your Worker > **Settings** > **Domains & Routes**.
+### Disabling `workers.dev` in the dashboard
+
+To disable the `workers.dev` route for a Worker:
+
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) and select your account.
+2. Go to **Workers & Pages** and in **Overview**, select your Worker.
+3. Go to **Settings** > **Domains & Routes**.
+4. On `workers.dev` click "Disable".
+5. Confirm you want to disable.
+
+### Disabling `workers.dev` in `wrangler.toml`
 
 To disable the `workers.dev` route for a Worker, include the following in your Worker's `wrangler.toml` file:
 
@@ -33,13 +43,13 @@ workers_dev = false
 
 </WranglerConfig>
 
-When you redeploy your Worker with this change, the `workers.dev` route will be disabled. Disabling your `workers.dev` subdomain will also make [preview URLs](/workers/configuration/previews) inaccessible.
+When you redeploy your Worker with this change, the `workers.dev` route will be disabled. Disabling your `workers.dev` route does not disable Preview URLs. Learn how to [disable Preview URLs](/workers/configuration/previews/#disabling-preview-urls).
 
 If you do not specify `workers_dev = false` but add a [`routes` component](/workers/wrangler/configuration/#routes) to your `wrangler.toml`, the value of `workers_dev` will be inferred as `false` on the next deploy.
 
 :::caution
 
-If you disable your `workers.dev` route in the Cloudflare dashboard but do not update your Worker's `wrangler.toml` file with `workers_dev = false`, the `workers.dev` route will re-enable the next time you publish your Worker.
+If you disable your `workers.dev` route in the Cloudflare dashboard but do not update your Worker's `wrangler.toml` file with `workers_dev = false`, the `workers.dev` route will be re-enabled the next time you deploy your Worker with Wrangler.
 :::
 
 ## Limitations

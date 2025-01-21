@@ -12,11 +12,11 @@ import { TabItem, Tabs } from "~/components";
 
 When you set up [incoming zone transfers](/dns/zone-setups/zone-transfers/cloudflare-as-secondary/setup/) on a secondary zone, you cannot enable the proxy on any transferred DNS records by default.
 
-With Secondary DNS override, you can use Cloudflare as your secondary DNS provider but still get the [performance and security benefits](/learning-paths/get-started/concepts/how-cloudflare-works/#benefits) of Cloudflare's proxy. Additionally it lets you override any `A` and `AAAA` records on your zone apex with a `CNAME` record.
+With Secondary DNS override, you can use Cloudflare as your secondary DNS provider but still get the [performance and security benefits](/learning-paths/get-started/concepts/how-cloudflare-works/#benefits) of Cloudflare's proxy. Additionally it lets you override any A and AAAA records on your zone apex with a CNAME record.
 
 :::note
 
-Only `A`, `AAAA`, and `CNAME` records can be proxied.
+Only A, AAAA, and CNAME records can be proxied.
 
 :::
 
@@ -41,7 +41,7 @@ Before you set up Secondary DNS override, make sure that you have:
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login) and select your account and domain.
 2. Go to **DNS** > **Settings**.
 3. Enable **Secondary DNS override**.
-4. On **DNS** > **Records**, for specific `A`, `AAAA`, or `CNAME` records, [change](/dns/manage-dns-records/how-to/create-dns-records/#edit-dns-records) their **Proxy status** to **Proxied**.
+4. On **DNS** > **Records**, for specific A, AAAA, or CNAME records, [change](/dns/manage-dns-records/how-to/create-dns-records/#edit-dns-records) their **Proxy status** to **Proxied**.
 
 </TabItem> <TabItem label="API">
 
@@ -58,20 +58,20 @@ https://api.cloudflare.com/client/v4/zones/{zone_id}/dns_settings \
 }'
 ```
 
-2. For specific `A`, `AAAA`, or `CNAME` records, send a [POST](/api/operations/dns-records-for-a-zone-create-dns-record) request with the `proxied` status as `true`.
+2. For specific A, AAAA, or CNAME records, send a [POST](/api/resources/dns/subresources/records/methods/create/) request with the `proxied` status as `true`.
    - Make sure the added record has the same name as the transferred record you intend to proxy. Cloudflare only looks at the name and the proxy status, so the record content does not matter.
 
 </TabItem> </Tabs>
 
-## Proxied `A` and `AAAA` records
+## Proxied A and AAAA records
 
-After proxying (orange clouding) a Secondary DNS record, any additional records under that hostname transferred from the primary DNS provider are automatically proxied. This applies to all `A` and `AAAA` records under that domain.
+After proxying (orange clouding) a Secondary DNS record, any additional records under that hostname transferred from the primary DNS provider are automatically proxied. This applies to all A and AAAA records under that domain.
 
-## `CNAME` record on the zone apex
+## CNAME record on the zone apex
 
-You can also add a `CNAME` record on the zone apex (supported through [CNAME Flattening](/dns/cname-flattening/)) and either proxy that record or keep it on DNS Only.
+You can also add a CNAME record on the zone apex (supported through [CNAME Flattening](/dns/cname-flattening/)) and either proxy that record or keep it on DNS Only.
 
-Once you create a `CNAME` record at the apex, existing `A` or `AAAA` records on the zone apex will be deactivated. You can view those deactivated records by clicking **View Inactive Records**. To re-activate the `A` or `AAAA` records at the root, remove the `CNAME` record.
+Once you create a CNAME record at the apex, existing A or AAAA records on the zone apex will be deactivated. You can view those deactivated records by clicking **View Inactive Records**. To re-activate the A or AAAA records at the root, remove the CNAME record.
 
 ## Verify that your records are proxied
 

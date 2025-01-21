@@ -18,6 +18,10 @@ With zone custom nameservers (ZCNS), each custom nameserver name must be a subdo
 
 For example, for a zone `domain.test`, the ZCNS can be `ns1.domain.test` and `ns2.domain.test` but they cannot use a different TLD (`ns1.domain.org`) nor a different domain (`ns1.example.com`).
 
+## Availability
+
+Zone custom nameservers are available for zones on Business or Enterprise plans. Via API or on the dashboard.
+
 ## Use zone custom nameservers
 
 ### Primary (full setup) zones
@@ -28,11 +32,13 @@ To create zone custom nameservers:
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) and select your account and zone.
 2. Go to **DNS** > **Records**.
-3. On **Custom Nameservers**, click **Add Custom Nameservers** and enter the subdomains used for the ZCNS names (for example, `ns1`, `ns2`, `ns3`).
+3. On **Custom nameservers**, select **Configure**.
+4. Select **Create custom nameservers just for `your-domain.com`** and enter the subdomains used for the ZCNS names (for example, `ns1`, `ns2`, `ns3`).
+5. Select **Save** to confirm.
 
 </TabItem> <TabItem label="API">
 
-Use the [Edit zone endpoint](/api/operations/zones-0-patch) and specify the custom nameservers in the payload:
+Use the [Edit zone endpoint](/api/resources/zones/methods/edit/) and specify the custom nameservers in the payload:
 
 ```txt
 "vanity_name_servers": ["ns1.example.com","ns2.example.com"]
@@ -40,20 +46,19 @@ Use the [Edit zone endpoint](/api/operations/zones-0-patch) and specify the cust
 
 </TabItem> </Tabs>
 
-Cloudflare will assign an IPv4 and an IPv6 address to each ZCNS name and automatically create the associated `A` or `AAAA` records (visible after you refresh the page).
+Cloudflare will assign an IPv4 and an IPv6 address to each ZCNS name and automatically create the associated `A` or `AAAA` records.
 
 The next step depends on whether you are using [Cloudflare Registrar](/registrar/) for your domain:
 
 - If you are using Cloudflare Registrar for your domain, [contact Cloudflare Support](/support/contacting-cloudflare-support/) to add the custom nameservers and IP addresses as glue records to the domain.
-- If you are not using Cloudflare Registrar for your domain, add the zone custom nameservers at your registrar as your authoritative nameservers and as [glue (A and AAAA) records](https://www.rfc-editor.org/rfc/rfc1912.html#section-2.3). If you do not add these records, DNS lookups for your domain will fail.
-
+- If you are not using Cloudflare Registrar for your domain, add the zone custom nameservers at your registrar as your authoritative nameservers and as glue (A and AAAA) records ([RFC 1912](https://www.rfc-editor.org/rfc/rfc1912.html)). If you do not add these records, DNS lookups for your domain will fail.
 ### Secondary zones
 
 If you are using [Cloudflare as a secondary DNS provider](/dns/zone-setups/zone-transfers/cloudflare-as-secondary/), you can still set up zone custom nameservers. After following the [steps above](/dns/nameservers/custom-nameservers/zone-custom-nameservers/#primary-full-setup-zones) to create zone custom nameservers, do the following:
 
-1. Get the ZCNS IPs. You can see them on the dashboard (**DNS** > **Records**) or you can use the [Zone details endpoint](/api/operations/zones-0-get) to get the `vanity_name_servers_ips`.
+1. Get the ZCNS IPs. You can see them on the dashboard (**DNS** > **Records**) or you can use the [Zone details endpoint](/api/resources/zones/methods/get/) to get the `vanity_name_servers_ips`.
 2. At your primary DNS provider, add [`NS` records](/dns/manage-dns-records/reference/dns-record-types/#ns) and, on the subdomains that you used as ZCNS names, add `A/AAAA` records.
-3. At your registrar, add the zone custom nameservers as your authoritative nameservers and as [glue (A and AAAA) records](https://www.rfc-editor.org/rfc/rfc1912.html#section-2.3).
+3. At your registrar, add the zone custom nameservers as your authoritative nameservers and as glue (A and AAAA) records ([RFC 1912](https://www.rfc-editor.org/rfc/rfc1912.html)).
 
 ## Remove zone custom nameservers
 
@@ -63,11 +68,11 @@ To remove zone custom nameservers (and their associated, read-only DNS records):
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) and select your account and zone.
 2. Go to **DNS** > **Records**.
-3. On **Custom nameservers**, select **Remove custom nameservers**.
+3. On **Custom nameservers**, select **Disable**.
 
 </TabItem> <TabItem label="API">
 
-Use the [Edit zone endpoint](/api/operations/zones-0-patch) and include an empty array in the payload:
+Use the [Edit zone endpoint](/api/resources/zones/methods/edit/) and include an empty array in the payload:
 
 ```txt
 "vanity_name_servers": []

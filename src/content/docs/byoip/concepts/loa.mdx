@@ -11,16 +11,16 @@ head:
 
 A Letter of Agency (LOA) - sometimes referred to as a Letter of Authorization - is a document that authorizes Cloudflare to announce a prefix(es) on behalf of another entity. The LOA is required by Cloudflare's transit providers so they can accept the routes Cloudflare advertises on behalf of another entity.
 
-The letter must contain both the prefixes you are authorizing Cloudflare to announce and which ASN they will be announced under. Cloudflare can announce a prefix under your ASN or you can use Cloudflare's ASN, which is AS 209242.
+The letter must contain both the prefixes you are authorizing Cloudflare to announce and which ASN they will be announced under. Cloudflare can announce a prefix under your ASN or you can use Cloudflare's ASN, which is AS13335.
+
+:::note
+Current customers who are still using Cloudflare's AS209242 can continue using this same ASN. No further change is required.
+:::
 
 Cloudflare accepts digital signatures on an LOA, as long as it is clear who is signing the LOA.
 
 :::note[Note]
-
-
 An LOA is a formal document which should be on company letterhead and contain a wet signature. The Letter of Agency must be a PDF. Transit providers may reject the LOA if it is in a JPG or PNG format.
-
-
 :::
 
 You can use the below template when creating an LOA document.
@@ -35,7 +35,7 @@ LETTER OF AGENCY ("LOA")
 
 To whom it may concern:
 
-[COMPANY NAME] (the "Company") authorizes Cloudflare, Inc. with AS[CF TO PROVIDE] to advertise the following IP address blocks / originating ASNs:
+[COMPANY NAME] (the "Company") authorizes Cloudflare, Inc. with AS13335 to advertise the following IP address blocks / originating ASNs:
 
 - - - - - - - - - - - - - - - - - - -
 [Subnet & Originating ASN]

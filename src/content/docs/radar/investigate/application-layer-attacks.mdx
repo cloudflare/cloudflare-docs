@@ -10,7 +10,7 @@ While in [HTTP requests](/radar/investigate/http-requests) you can examine all k
 
 :::note[Mitigated traffic]
 
-Mitigated traffic is any HTTP request from an end-user that has a terminating action applied by the Cloudflare platform. These include actions like `BLOCK` or [challenges](/waf/reference/cloudflare-challenges/). 
+Mitigated traffic is any HTTP request from an end-user that has a terminating action applied by the Cloudflare platform. These include actions like `BLOCK` or [challenges](/waf/reference/cloudflare-challenges/).
 :::
 
 Since we are examining attacks, we can inspect both sides of an attack — both the source location and the target location of the attack. For the source of the attack Cloudflare uses the location the attack is coming from associated with the IP (note that the human orchestrator of the attack may be in a different location than the computer the attack is originating from). For the target location of the attacks, Cloudflare uses the billing location associated with the zone under attack.
@@ -61,7 +61,7 @@ From the abbreviated response below, we can conclude that distributed denial-of-
 }
 ```
 
-For more information refer to [Get layer 7 attacks by mitigation technique, over time](/api/operations/radar-get-attacks-layer7-timeseries-group).
+For more information refer to [Get layer 7 attacks by mitigation technique, over time](/api/resources/radar/subresources/attacks/subresources/layer7/subresources/timeseries_groups/).
 
 ### Summary
 
@@ -88,7 +88,7 @@ curl "https://api.cloudflare.com/client/v4/radar/attacks/layer7/summary?location
 
 This response means that 75% of all mitigated requests coming from Great Britain were mitigated by the [WAF](/waf/) product.
 
-For more information refer to [Get layer 7 attacks summary](/api/operations/radar-get-attacks-layer7-summary).
+For more information refer to [Get layer 7 attacks summary](/api/resources/radar/subresources/attacks/subresources/layer7/subresources/summary/methods/get/).
 
 ### Top
 
@@ -144,7 +144,7 @@ curl "https://api.cloudflare.com/client/v4/radar/attacks/layer7/top/locations/ta
 
 During the specified date range, mitigation requests to zones with a billing address located in Belgium represent 18%.
 
-For more information refer to [Get layer 7 top target locations](/api/operations/radar-get-attacks-layer7-top-target-location).
+For more information refer to [Get layer 7 top target locations](/api/resources/radar/subresources/attacks/subresources/layer7/subresources/top/subresources/locations/methods/target/).
 
 #### Example: Top attacks
 
@@ -202,7 +202,7 @@ This means that 3.79% of all mitigated requests are from and to the US, 3.6% of 
 
 This response came from a query that is using attack `magnitude` as the sum of mitigated requests. To use the number of unique zones attacked as the metric, for example, use `attack_magnitude=AFFECTED_ZONES`.
 
-For more information refer to [Get layer 7 top attack pairs](/api/operations/radar-get-attacks-layer7-top-attacks).
+For more information refer to [Get layer 7 top attack pairs](/api/resources/radar/subresources/attacks/subresources/layer7/subresources/top/methods/attacks/).
 
 ## Next steps
 

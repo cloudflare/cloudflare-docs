@@ -192,7 +192,7 @@ curl https://api.cloudflare.com/client/v4/accounts/{account_id}/pcaps/ownership 
 }'
 ```
 
-The [response](/api/operations/magic-pcap-collection-add-buckets-for-full-packet-captures) has a `"filename"` parameter with the name of a file that Cloudflare wrote to your R2 bucket. You need to download it for the next step. Example:
+The [response](/api/resources/magic_transit/subresources/pcaps/subresources/ownership/methods/create/) has a `"filename"` parameter with the name of a file that Cloudflare wrote to your R2 bucket. You need to download it for the next step. Example:
 
 ```json
 {
@@ -212,4 +212,4 @@ The [response](/api/operations/magic-pcap-collection-add-buckets-for-full-packet
 
 ### Validate bucket ownership
 
-Refer to the [Validate a bucket](#validate-a-bucket) API instructions for more details on the entire process to [validate your R2 bucket](/api/operations/magic-pcap-collection-validate-buckets-for-full-packet-captures). When specifying the R2 destination for this validation, exclude the secret and access keys from the URL.
+Refer to the [Validate a bucket](#validate-a-bucket) API instructions for more details on the entire process to [validate your R2 bucket](/api/resources/magic_transit/subresources/pcaps/subresources/ownership/methods/validate/). When specifying the R2 destination for this validation, exclude the secret and access keys from the URL.

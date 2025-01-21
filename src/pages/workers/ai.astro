@@ -8,7 +8,7 @@ import CursorLight from "~/assets/images/workers/ai/cursor-light.png";
 
 <StarlightPage frontmatter={{ title: "AI Assistant", tableOfContents: false }}>
 	<section id="assistant-header">
-		<div class="not-content">
+		<div class="not-content max-lg:hidden">
 			<Image
 				src={CursorDark}
 				alt="Cursor illustration"
@@ -24,9 +24,14 @@ import CursorLight from "~/assets/images/workers/ai/cursor-light.png";
 		</div>
 		<div id="text">
 			<h1>
-				<div class="illustration"></div>
 				Meet your AI assistant, Cursor
-				<div class="alpha">AI Preview</div>
+				<div>
+					<span
+						class="ml-1 rounded-full bg-orange-200 px-2 py-0.5 text-xs text-orange-900"
+					>
+						AI Preview
+					</span>
+				</div>
 			</h1>
 			<p>
 				Cursor is an experimental AI assistant, trained to answer questions

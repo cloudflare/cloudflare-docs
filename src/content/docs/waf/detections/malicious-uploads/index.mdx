@@ -77,13 +77,13 @@ When content scanning is enabled, you can use the following fields in WAF rules:
 
 | Field name in the dashboard                                                                | Field name in expressions                                                                                                           |
 | ------------------------------------------------------------------------------------------ | ----------------------------------------------------------------------------------------------------------------------------------- |
-| Has content object                                                                         | [`cf.waf.content_scan.has_obj`](/ruleset-engine/rules-language/fields/dynamic-fields/#cfwafcontent_scanhas_obj)                     |
-| Has malicious content object                                                               | [`cf.waf.content_scan.has_malicious_obj`](/ruleset-engine/rules-language/fields/dynamic-fields/#cfwafcontent_scanhas_malicious_obj) |
-| Number of malicious content objects                                                        | [`cf.waf.content_scan.num_malicious_obj`](/ruleset-engine/rules-language/fields/dynamic-fields/#cfwafcontent_scannum_malicious_obj) |
-| Content scan has failed                                                                    | [`cf.waf.content_scan.has_failed`](/ruleset-engine/rules-language/fields/dynamic-fields/#cfwafcontent_scanhas_failed)               |
-| Number of content objects                                                                  | [`cf.waf.content_scan.num_obj`](/ruleset-engine/rules-language/fields/dynamic-fields/#cfwafcontent_scannum_obj)                     |
-| Content object size (in bytes)                                                             | [`cf.waf.content_scan.obj_sizes`](/ruleset-engine/rules-language/fields/dynamic-fields/#cfwafcontent_scanobj_sizes)                 |
-| Content object type                                                                        | [`cf.waf.content_scan.obj_types`](/ruleset-engine/rules-language/fields/dynamic-fields/#cfwafcontent_scanobj_types)                 |
-| Content object result<br/>Values: `clean`, `suspicious`,<br/>`infected`, and `not scanned` | [`cf.waf.content_scan.obj_results`](/ruleset-engine/rules-language/fields/dynamic-fields/#cfwafcontent_scanobj_results)             |
+| Has content object                                                                         | [`cf.waf.content_scan.has_obj`](/ruleset-engine/rules-language/fields/reference/cf.waf.content_scan.has_obj/)                     |
+| Has malicious content object                                                               | [`cf.waf.content_scan.has_malicious_obj`](/ruleset-engine/rules-language/fields/reference/cf.waf.content_scan.has_malicious_obj/) |
+| Number of malicious content objects                                                        | [`cf.waf.content_scan.num_malicious_obj`](/ruleset-engine/rules-language/fields/reference/cf.waf.content_scan.num_malicious_obj/) |
+| Content scan has failed                                                                    | [`cf.waf.content_scan.has_failed`](/ruleset-engine/rules-language/fields/reference/cf.waf.content_scan.has_failed/)               |
+| Number of content objects                                                                  | [`cf.waf.content_scan.num_obj`](/ruleset-engine/rules-language/fields/reference/cf.waf.content_scan.num_obj/)                     |
+| Content object size (in bytes)                                                             | [`cf.waf.content_scan.obj_sizes`](/ruleset-engine/rules-language/fields/reference/cf.waf.content_scan.obj_sizes/)                 |
+| Content object type                                                                        | [`cf.waf.content_scan.obj_types`](/ruleset-engine/rules-language/fields/reference/cf.waf.content_scan.obj_types/)                 |
+| Content object result<br/>Values: `clean`, `suspicious`,<br/>`infected`, and `not scanned` | [`cf.waf.content_scan.obj_results`](/ruleset-engine/rules-language/fields/reference/cf.waf.content_scan.obj_results/)             |
 
 For examples of rule expressions using these fields, refer to [Example rules](/waf/detections/malicious-uploads/example-rules/).

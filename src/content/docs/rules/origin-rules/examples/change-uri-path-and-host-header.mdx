@@ -6,18 +6,17 @@ description: Learn how to adjust the URI path and `Host` header for incoming req
 products:
   - Transform Rules
   - Origin Rules
-  
 ---
 
-import { Example } from "~/components"
+import { Example } from "~/components";
 
 To change URI Path and Host Header on incoming requests simultaneously:
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/) and select your account and domain.
-2. Create a **Transform Rule**:
-    - Navigate to **Rules > Transform Rules**.
-    - Click on the **Rewrite URL** tab and select **Create rule**.
-    - Configure the rule to modify the path. For instance, to remove `/uploads` from the path:
+2. Create a URL rewrite:
+   - Navigate to **Rules** > **Overview**.
+   - Next to **URL Rewrite Rules**, select **Create rule** .
+   - Configure the rule to modify the path. For instance, to remove `/uploads` from the path:
 
 <Example>
 
@@ -27,7 +26,7 @@ Text in **Expression Editor**:
 raw.http.request.uri.path matches "^/uploads/.*"
 ```
 
-Text after **Path** > **Rewrite to...** > *Dynamic*:
+Text after **Path** > **Rewrite to** > _Dynamic_:
 
 ```txt
 regex_replace(raw.http.request.uri.path, "^/uploads/", "/")
@@ -38,9 +37,9 @@ regex_replace(raw.http.request.uri.path, "^/uploads/", "/")
 The `regex_replace()` [function](/ruleset-engine/rules-language/functions/#regex_replace) replaces the `/uploads/` part of the path with `/`, changing `/uploads/example.jpg` to `/example.jpg`.
 
 3. Create an **Origin Rule**:
-    - If routing traffic to an object storage bucket, use [Cloud Connector](/rules/cloud-connector). Otherwise, navigate to **Rules > Origin Rules**.
-    - Click **Create rule** and select **Host Header > Rewrite to...**
-    - Configure the rule to modify the Host header to desired hostname:
+   - If routing traffic to an object storage bucket, use [Cloud Connector](/rules/cloud-connector/). Otherwise, navigate to **Rules** > **Overview**.
+   - Next to **Origin Rules**, select **Create rule**, and then select **Host Header** > **Rewrite to**.
+   - Configure the rule to modify the Host header to desired hostname:
 
 <Example>
 
@@ -50,7 +49,7 @@ Text in **Expression Editor**:
 raw.http.request.uri.path matches "^/uploads/.*"
 ```
 
-Text after **Host Header** > **Rewrite to...**:
+Text after **Host Header** > **Rewrite to**:
 
 ```txt
 example.com
@@ -61,13 +60,14 @@ This will set [the Host header](/rules/origin-rules/features/#host-header) to `e
 **Optional:**
 To route requests to a different origin (DNS target), use [DNS override](/rules/origin-rules/features/#dns-record):
 
-Text after **DNS Record** > **Override to...**:
+Text after **DNS Record** > **Override to**:
 
 ```txt
 example.com
 ```
 
 This will route requests to the DNS target of `example.com` instead of your default [DNS record](/dns/manage-dns-records/how-to/create-dns-records/).
+
 </Example>
 
 This setup routes traffic from `https://<YOUR_SOURCE_HOSTNAME>/uploads/*` to `https://<YOUR_TARGET_HOSTNAME>/*`. Ensure the filters for [Transform Rules](/rules/transform/) and [Origin Rules](/rules/origin-rules/) (or [Cloud Connector](/rules/cloud-connector/)) are precise to avoid unintended rule executions.

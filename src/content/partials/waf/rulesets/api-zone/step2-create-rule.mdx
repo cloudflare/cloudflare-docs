@@ -5,4 +5,4 @@ params:
 
 import { Markdown } from "~/components";
 
-If the entry point ruleset already exists (that is, if you received a `200 OK` status code and the ruleset definition), take note of the ruleset ID in the response. Then, invoke the [Create a zone ruleset rule](/api/operations/createZoneRulesetRule) operation to add an `execute` rule to the existing ruleset deploying the <Markdown text={props.deploymentItem} />. By default, the rule will be added at the end of the list of rules already in the ruleset.
+If the entry point ruleset already exists (that is, if you received a `200 OK` status code and the ruleset definition), take note of the ruleset ID in the response. Then, invoke the [Create a zone ruleset rule](/api/resources/rulesets/subresources/rules/methods/create/) operation to add an `execute` rule to the existing ruleset deploying the <Markdown text={props.deploymentItem} />. By default, the rule will be added at the end of the list of rules already in the ruleset.

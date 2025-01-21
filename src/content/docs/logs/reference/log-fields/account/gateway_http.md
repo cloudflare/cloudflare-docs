@@ -53,7 +53,7 @@ Reason file was blocked in the response, if any.
 
 ## BlockedFileSize
 
-Type: `string`
+Type: `int`
 
 File size(bytes) blocked in the response, if any.
 
@@ -101,7 +101,7 @@ Country code of the destination IP of the HTTP request (for example, 'US').
 
 ## DestinationPort
 
-Type: `string`
+Type: `int`
 
 Destination port of the request.
 
@@ -257,7 +257,7 @@ Local LAN IP of the device. Only available when connected via a GRE/IPsec tunnel
 
 ## SourcePort
 
-Type: `string`
+Type: `int`
 
 Source port of the request.
 

@@ -11,9 +11,14 @@ head:
     content: Cloud Connector (beta)
 ---
 
-import { FeatureTable } from "~/components";
+import { FeatureTable, Render } from "~/components";
 
 Cloud Connector (beta) allows you to route matching incoming traffic from your website to a public cloud provider that you define: [Cloudflare R2](/r2/) object storage or an external provider such as AWS, Google Cloud, and Azure. With Cloud Connector you can make Cloudflare the control center for your web traffic, including traffic served from public cloud providers, without having to configure additional rules.
+
+<Render
+	file="rules-requirements"
+	params={{ one: "Cloud Connector requires" }}
+/>
 
 ## How it works
 

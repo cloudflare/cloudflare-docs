@@ -16,6 +16,7 @@ For example, you can create an object lifecycle rule to delete objects after 90 
 - An object is no longer billable once it has been deleted.
 - Buckets have a default lifecycle rule to expire multipart uploads seven days after initiation.
 - When an object is transitioned from Standard storage to Infrequent Access storage, a [Class A operation](/r2/pricing/#class-a-operations) is incurred.
+- When rules conflict and specify both a storage class transition and expire transition within a 24 hour period, the expire (or delete) lifecycle transition takes precedence over transitioning storage class.
 
 ## Configure lifecycle rules for your bucket
 
@@ -38,19 +39,19 @@ When you create an object lifecycle rule, you can specify which prefix you would
 1. Install [`npm`](https://docs.npmjs.com/getting-started).
 2. Install [Wrangler, the Developer Platform CLI](/workers/wrangler/install-and-update/).
 3. Log in to Wrangler with the [`wrangler login` command](/workers/wrangler/commands/#login).
-4. Add a lifecycle rule to your bucket by running the [`r2 bucket lifecycle add` command](/workers/wrangler/commands/#lifecycle-add).
+4. Add a lifecycle rule to your bucket by running the [`r2 bucket lifecycle add` command](/workers/wrangler/commands/#r2-bucket-lifecycle-add).
 
 ```sh
 npx wrangler r2 bucket lifecycle add <BUCKET_NAME> [OPTIONS]
 ```
 
-Alternatively you can set the entire lifecycle configuration for a bucket from a JSON file using the [`r2 bucket lifecycle set` command](/workers/wrangler/commands/#lifecycle-set).
+Alternatively you can set the entire lifecycle configuration for a bucket from a JSON file using the [`r2 bucket lifecycle set` command](/workers/wrangler/commands/#r2-bucket-lifecycle-set).
 
 ```sh
 npx wrangler r2 bucket lifecycle set <BUCKET_NAME> --file <FILE_PATH>
 ```
 
-The JSON file should be in the format of the request body of the [put object lifecycle configuration API](/api/operations/r2-put-bucket-lifecycle-configuration).
+The JSON file should be in the format of the request body of the [put object lifecycle configuration API](/api/resources/r2/subresources/buckets/subresources/lifecycle/methods/update/).
 
 ### S3 API
 
@@ -141,7 +142,7 @@ await client
 
 ### Wrangler
 
-To get the list of lifecycle rules associated with your bucket, run the [`r2 bucket lifecycle list` command](/workers/wrangler/commands/#lifecycle-list).
+To get the list of lifecycle rules associated with your bucket, run the [`r2 bucket lifecycle list` command](/workers/wrangler/commands/#r2-bucket-lifecycle-list).
 
 ```sh
 npx wrangler r2 bucket lifecycle list <BUCKET_NAME>
@@ -185,7 +186,7 @@ console.log(
 
 ### Wrangler
 
-To remove a specific lifecycle rule from your bucket, run the [`r2 bucket lifecycle remove` command](/workers/wrangler/commands/#lifecycle-remove).
+To remove a specific lifecycle rule from your bucket, run the [`r2 bucket lifecycle remove` command](/workers/wrangler/commands/#r2-bucket-lifecycle-remove).
 
 ```sh
 npx wrangler r2 bucket lifecycle remove <BUCKET_NAME> --id <RULE_ID>

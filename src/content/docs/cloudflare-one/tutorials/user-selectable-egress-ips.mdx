@@ -59,7 +59,7 @@ First, create [virtual networks](/cloudflare-one/connections/connect-networks/pr
    }'
    ```
 
-   For more information, refer to [Create a virtual network](/api/operations/tunnel-virtual-network-create-a-virtual-network).
+   For more information, refer to [Create a virtual network](/api/resources/zero_trust/subresources/networks/subresources/virtual_networks/methods/create/).
 
 2. Repeat Step 1 for each dedicated egress IP you want users to switch between. For example, you can create another virtual network called `vnet-EMEA` for egress from Europe, the Middle East, and Africa.
 
@@ -100,7 +100,7 @@ After creating your virtual networks, route your private network CIDRs over each
    }'
    ```
 
-   For more information, refer to [Update a tunnel route](/api/operations/tunnel-route-update-a-tunnel-route).
+   For more information, refer to [Update a tunnel route](/api/resources/zero_trust/subresources/networks/subresources/routes/methods/edit/).
 
 2. Repeat this process for each virtual network you created. For example:
 
@@ -183,7 +183,7 @@ Next, assign your dedicated egress IPs to each virtual network using Gateway egr
    }'
    ```
 
-   For more information, refer to [Create a Zero Trust Gateway rule](/api/operations/zero-trust-gateway-rules-create-zero-trust-gateway-rule).
+   For more information, refer to [Create a Zero Trust Gateway rule](/api/resources/zero_trust/subresources/gateway/subresources/rules/methods/create/).
 
 2. Repeat Step 1 to create an egress policy for each virtual network you created.
 

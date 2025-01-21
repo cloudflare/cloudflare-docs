@@ -81,6 +81,9 @@ To create a secondary zone using the dashboard:
    Cloudflare will not use the REFRESH value inside the SOA record that is served by your primary provider. Instead the value of zone refresh configured for your secondary zone on Cloudflare will be used to determine the interval after which the SOA serial of the primary zone will be checked for changes.
    :::
 7. Select the peer server you [previously created](#2-create-peer-server). If needed, you can link more than one peer server to a zone.
+   :::note
+   <Render file="linked-peers-limit" />
+   :::
 8. Click **Continue**.
 9. Review the list of transferred records and click **Continue**.
    :::note
@@ -90,7 +93,7 @@ To create a secondary zone using the dashboard:
 
 </TabItem> <TabItem label="API">
 
-To create a secondary zone using the API, send a [POST](</api/operations/secondary-dns-(-secondary-zone)-create-secondary-zone-configuration>) request with the `type` parameter set to `"secondary"`.
+To create a secondary zone using the API, send a [POST](/api/resources/dns/subresources/zone_transfers/subresources/incoming/methods/create/) request with the `type` parameter set to `"secondary"`.
 
 </TabItem> </Tabs>
 

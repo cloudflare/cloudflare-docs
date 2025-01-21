@@ -22,7 +22,7 @@ By default, `cloudflared` will periodically check for updates and restart with t
 
 :::note
 
-For locally-managed tunnels only. 
+For locally-managed tunnels only.
 :::
 
 | Syntax                                                  | Default                     |
@@ -75,15 +75,15 @@ Saves application log to this file. Mainly useful for reporting issues. For more
 | ---------------------------------------------------------- | ------- | -------------------- |
 | `cloudflared tunnel --loglevel <VALUE> run <UUID or NAME>` | `info`  | `TUNNEL_LOGLEVEL`    |
 
-Specifies the verbosity of logging. The default `info` level does not produce much output, but you may wish to use the `warn` level in production. Available values are: `debug`, `info`, `warn`, `error`, `fatal`.
+Specifies the verbosity of logging for the local `cloudflared` instance. Available values are `debug`, `info` (default), `warn`, `error`, and `fatal`. At the `debug` level, `cloudflared` will log and display the request URL, method, protocol, content length, as well as all request and response headers. However, note that this can expose sensitive information in your logs.
 
 ## `metrics`
 
 | Syntax                                                      | Default      | Environment Variable |
 | ----------------------------------------------------------- | ------------ | -------------------- |
-| `cloudflared tunnel --metrics <IP:PORT> run <UUID or NAME>` | `localhost:` | `TUNNEL_METRICS`     |
+| `cloudflared tunnel --metrics <IP:PORT> run <UUID or NAME>` | Refer to [Tunnel metrics](/cloudflare-one/connections/connect-networks/monitor-tunnels/metrics/)| `TUNNEL_METRICS`     |
 
-Exposes a Prometheus endpoint on the specified IP address/port, which you can then query for [usage metrics](/cloudflare-one/connections/connect-networks/monitor-tunnels/metrics/).
+Exposes a Prometheus endpoint on the specified IP address and port, which you can then query for [usage metrics](/cloudflare-one/connections/connect-networks/monitor-tunnels/metrics/).
 
 ## `no-autoupdate`
 
@@ -97,7 +97,7 @@ Disables automatic `cloudflared` updates. See also: [`autoupdate-freq`](#autoupd
 
 :::note
 
-For locally-managed tunnels only. 
+For locally-managed tunnels only.
 :::
 
 | Syntax                                                      | Default                   | Environment Variable |
@@ -152,11 +152,11 @@ Specifies custom tags used to identify this tunnel. Multiple tags may be specifi
 
 :::note
 
-For remotely-managed tunnels only. 
+For remotely-managed tunnels only.
 :::
 
 | Syntax                                          | Environment Variable |
 | ----------------------------------------------- | -------------------- |
 | `cloudflared tunnel run --token <TUNNEL_TOKEN>` | `TUNNEL_TOKEN`       |
 
-Associates the `cloudflared` instance with a specific tunnel. The tunnel's token is shown in the dashboard when you first [create the tunnel](/cloudflare-one/connections/connect-networks/get-started/create-remote-tunnel/). You can also retrieve the token using the [API](/api/operations/cloudflare-tunnel-get-a-cloudflare-tunnel-token).
+Associates the `cloudflared` instance with a specific tunnel. The tunnel's token is shown in the dashboard when you first [create the tunnel](/cloudflare-one/connections/connect-networks/get-started/create-remote-tunnel/). You can also retrieve the token using the [API](/api/resources/zero_trust/subresources/tunnels/subresources/token/methods/get/).

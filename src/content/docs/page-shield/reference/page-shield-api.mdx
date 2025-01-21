@@ -7,7 +7,7 @@ sidebar:
 
 import { GlossaryTooltip } from "~/components";
 
-You can enable and disable Page Shield, configure its settings, and fetch information about detected scripts and connections using the [Page Shield API](/api/operations/page-shield-get-settings).
+You can enable and disable Page Shield, configure its settings, and fetch information about detected scripts and connections using the [Page Shield API](/api/resources/page_shield/methods/get/).
 
 To authenticate API requests you need an [API token](/fundamentals/api/get-started/create-token/). For more information on the required API token permissions, refer to [Roles and permissions](/page-shield/reference/roles-and-permissions/).
 
@@ -17,7 +17,7 @@ Refer to [API deprecations](/fundamentals/api/reference/deprecations/) for detai
 
 ## Endpoints
 
-You can obtain the complete endpoint by appending the [Page Shield API](/api/operations/page-shield-get-settings) endpoints to the Cloudflare API base URL:
+You can obtain the complete endpoint by appending the [Page Shield API](/api/resources/page_shield/methods/get/) endpoints to the Cloudflare API base URL:
 
 ```txt
 https://api.cloudflare.com/client/v4
@@ -25,7 +25,7 @@ https://api.cloudflare.com/client/v4
 
 The `{zone_id}` argument is the zone ID (a hexadecimal string). You can find this value in the Cloudflare dashboard or using the Cloudflare API's [`/zones` endpoint](/fundamentals/setup/find-account-and-zone-ids/).
 
-The `{script_id}` argument is the script ID (a hexadecimal string). This value is included in the response of the [List Page Shield scripts](/api/operations/page-shield-list-scripts) operation for every detected script.
+The `{script_id}` argument is the script ID (a hexadecimal string). This value is included in the response of the [List Page Shield scripts](/api/resources/page_shield/subresources/scripts/methods/list/) operation for every detected script.
 
 The `{connection_id}` argument is the connection ID (a hexadecimal string). This value is included in the response of the List Page Shield connections API operation for every detected connection.
 
@@ -47,19 +47,19 @@ The following table summarizes the available operations:
 | [Update a Page Shield policy][12] | `PUT zones/{zone_id}/page_shield/policies/{policy_id}`        | Updates an existing CSP policy.                       |
 | [Delete a Page Shield policy][13] | `DELETE zones/{zone_id}/page_shield/policies/{policy_id}`     | Deletes an existing CSP policy.                       |
 
-[1]: /api/operations/page-shield-get-settings
-[2]: /api/operations/page-shield-update-settings
-[3]: /api/operations/page-shield-list-scripts
-[4]: /api/operations/page-shield-get-script
-[5]: /api/operations/page-shield-list-connections
-[6]: /api/operations/page-shield-get-connection
-[7]: /api/operations/page-shield-list-cookies
-[8]: /api/operations/page-shield-get-cookie
-[9]: /api/operations/page-shield-list-policies
-[10]: /api/operations/page-shield-get-policy
-[11]: /api/operations/page-shield-create-policy
-[12]: /api/operations/page-shield-update-policy
-[13]: /api/operations/page-shield-delete-policy
+[1]: /api/resources/page_shield/methods/get/
+[2]: /api/resources/page_shield/methods/update/
+[3]: /api/resources/page_shield/subresources/scripts/methods/list/
+[4]: /api/resources/page_shield/subresources/scripts/methods/get/
+[5]: /api/resources/page_shield/subresources/connections/methods/list/
+[6]: /api/resources/page_shield/subresources/connections/methods/get/
+[7]: /api/resources/page_shield/subresources/cookies/methods/list/
+[8]: /api/resources/page_shield/subresources/cookies/methods/get/
+[9]: /api/resources/page_shield/subresources/policies/methods/list/
+[10]: /api/resources/page_shield/subresources/policies/methods/get/
+[11]: /api/resources/page_shield/subresources/policies/methods/create/
+[12]: /api/resources/page_shield/subresources/policies/methods/update/
+[13]: /api/resources/page_shield/subresources/policies/methods/delete/
 
 ## API notes
 
@@ -71,12 +71,12 @@ The malicious script classification (`Malicious` or `Not malicious`) is not dire
 
 This example obtains the current settings of Page Shield, including the status (enabled/disabled).
 
-```bash title="Request"
+```bash
 curl "https://api.cloudflare.com/client/v4/zones/{zone_id}/page_shield" \
 --header "Authorization: Bearer <API_TOKEN>"
 ```
 
-```json title="Response"
+```json output
 {
 	"result": {
 		"enabled": true,
@@ -94,7 +94,7 @@ curl "https://api.cloudflare.com/client/v4/zones/{zone_id}/page_shield" \
 
 This example enables Page Shield in the specified zone.
 
-```bash title="Request"
+```bash
 curl --request PUT \
 "https://api.cloudflare.com/client/v4/zones/{zone_id}/page_shield" \
 --header "Authorization: Bearer <API_TOKEN>" \
@@ -102,7 +102,7 @@ curl --request PUT \
 --data '{ "enabled": true }'
 ```
 
-```json title="Response"
+```json output
 {
 	"result": {
 		"enabled": true,
@@ -120,12 +120,12 @@ This `GET` request fetches a list of scripts detected by Page Shield on hostname
 
 By default, the response will only include scripts with `active` status when you do not specify a `status` filter parameter in the URL query string.
 
-```bash title="Request"
+```bash
 curl "https://api.cloudflare.com/api/v4/zones/{zone_id}/page_shield/scripts?hosts=example.net&page=1&per_page=15" \
 --header "Authorization: Bearer <API_TOKEN>"
 ```
 
-```json title="Response"
+```json output
 {
 	"result": [
 		{
@@ -167,18 +167,18 @@ curl "https://api.cloudflare.com/api/v4/zones/{zone_id}/page_shield/scripts?host
 
 Some fields displayed in the example response may not be available, depending on your Cloudflare plan.
 
-For details on the available filtering, paging, and sorting parameters, refer to the [API reference](/api/operations/page-shield-list-scripts).
+For details on the available filtering, paging, and sorting parameters, refer to the [API reference](/api/resources/page_shield/subresources/scripts/methods/list/).
 
 ### Fetch list of infrequently reported scripts
 
 This `GET` request fetches a list of infrequently reported scripts on hostname `example.net`, requesting the first page with 15 items per page. The URL query string includes filtering and paging parameters.
 
-```bash title="Request"
+```bash
 curl "https://api.cloudflare.com/api/v4/zones/{zone_id}/page_shield/scripts?status=infrequent&hosts=example.net&page=1&per_page=15" \
 --header "Authorization: Bearer <API_TOKEN>"
 ```
 
-```json title="Response"
+```json output
 {
 	"result": [
 		{
@@ -219,18 +219,18 @@ curl "https://api.cloudflare.com/api/v4/zones/{zone_id}/page_shield/scripts?stat
 
 Some fields displayed in the example response may not be available, depending on your Cloudflare plan.
 
-For details on the available filtering, paging, and sorting parameters, refer to the [API reference](/api/operations/page-shield-list-scripts).
+For details on the available filtering, paging, and sorting parameters, refer to the [API reference](/api/resources/page_shield/subresources/scripts/methods/list/).
 
 ### Get details of a detected script
 
 This `GET` request obtains the details of a script detected by Page Shield with script ID `8337233faec2357ff84465a919534e4d`.
 
-```bash title="Request"
+```bash
 curl "https://api.cloudflare.com/api/v4/zones/{zone_id}/page_shield/scripts/8337233faec2357ff84465a919534e4d" \
 --header "Authorization: Bearer <API_TOKEN>"
 ```
 
-```json title="Response"
+```json output
 {
 	"result": {
 		"id": "8337233faec2357ff84465a919534e4d",
@@ -285,12 +285,12 @@ This `GET` request fetches a list of connections detected by Page Shield, reques
 
 By default, the response will only include connections with `active` status when you do not specify a `status` filter parameter in the URL query string.
 
-```bash title="Request"
+```bash
 curl "https://api.cloudflare.com/api/v4/zones/{zone_id}/page_shield/connections?page=1&per_page=15" \
 --header "Authorization: Bearer <API_TOKEN>"
 ```
 
-```json title="Response"
+```json output
 {
 	"result": [
 		{
@@ -323,18 +323,18 @@ curl "https://api.cloudflare.com/api/v4/zones/{zone_id}/page_shield/connections?
 }
 ```
 
-For details on the available filtering, paging, and sorting parameters, refer to the [API reference](/api/operations/page-shield-list-scripts).
+For details on the available filtering, paging, and sorting parameters, refer to the [API reference](/api/resources/page_shield/subresources/scripts/methods/list/).
 
 ### Get details of a detected connection
 
 This `GET` request obtains the details of a connection detected by Page Shield with connection ID `0a7bb628776f4e50a50d8594c4a01740`.
 
-```bash title="Request"
+```bash
 curl "https://api.cloudflare.com/api/v4/zones/{zone_id}/page_shield/connections/0a7bb628776f4e50a50d8594c4a01740" \
 --header "Authorization: Bearer <API_TOKEN>"
 ```
 
-```json title="Response"
+```json output
 {
 	"result": {
 		"id": "0a7bb628776f4e50a50d8594c4a01740",
@@ -363,12 +363,12 @@ This `GET` request fetches a list of cookies detected by Page Shield, requesting
 
 By default, the response will only include cookies with `active` status when you do not specify a `status` filter parameter in the URL query string.
 
-```bash title="Request"
+```bash
 curl "https://api.cloudflare.com/api/v4/zones/{zone_id}/page_shield/cookies?page=1&per_page=15" \
 --header "Authorization: Bearer <API_TOKEN>"
 ```
 
-```json title="Response"
+```json output
 {
 	"result": [
 		{
@@ -409,12 +409,12 @@ For details on the available filtering, paging, and sorting parameters, refer to
 
 This `GET` request obtains the details of a cookie detected by Page Shield with ID `beee03ada7e047e79f076785d8cd8b8e`.
 
-```bash title="Request"
+```bash
 curl "https://api.cloudflare.com/api/v4/zones/{zone_id}/page_shield/cookies/beee03ada7e047e79f076785d8cd8b8e" \
 --header "Authorization: Bearer <API_TOKEN>"
 ```
 
-```json title="Response"
+```json output
 {
 	"result": {
 		"id": "beee03ada7e047e79f076785d8cd8b8e",
@@ -457,7 +457,7 @@ For more information on <GlossaryTooltip term="content security policy (CSP)">Co
 For a list of CSP directives and keywords supported by Page Shield policies, refer to [CSP directives supported by policies](/page-shield/policies/csp-directives/).
 :::
 
-```bash title="Request"
+```bash
 curl "https://api.cloudflare.com/api/v4/zones/{zone_id}/page_shield/policies" \
 --header "Authorization: Bearer <API_TOKEN>" \
 --header "Content-Type: application/json" \
@@ -470,7 +470,7 @@ curl "https://api.cloudflare.com/api/v4/zones/{zone_id}/page_shield/policies" \
 }'
 ```
 
-```json title="Response"
+```json output
 {
 	"success": true,
 	"errors": [],

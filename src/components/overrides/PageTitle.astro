@@ -21,8 +21,6 @@ const summary = Astro.props.entry.data.summary;
 
 const slug = Astro.props.entry.slug;
 
-const showBreadcrumbs = !["products"].includes(slug);
-
 const breadcrumbProps: Record<string, any> = {
 	crumbs: [
 		{
@@ -73,10 +71,11 @@ for (let i = 0; i < segments.length; i++) {
 // Currently the officially sanctioned way to alter behaviour on specific routes
 // https://starlight.astro.build/guides/overriding-components/#only-override-on-specific-pages
 const hideTitle = Astro.props.hideTitle;
+const hideBreadcrumbs = Astro.props.hideBreadcrumbs;
 ---
 
 {
-	showBreadcrumbs && (
+	!hideBreadcrumbs && (
 		<Breadcrumbs {...breadcrumbProps}>
 			<svg
 				slot="separator"
@@ -119,3 +118,13 @@ const hideTitle = Astro.props.hideTitle;
 		--color-link-breadcrumbs: var(--sl-color-text-accent);
 	}
 </style>
+
+{ hideTitle && hideBreadcrumbs && 
+	<style>
+		main {
+			.content-panel:first-of-type {
+				display: none;
+			}
+		}
+	</style>
+}

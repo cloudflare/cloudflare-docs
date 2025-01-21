@@ -1,0 +1,43 @@
+---
+title: FAQ
+pcx_content_type: faq
+sidebar:
+  order: 10
+
+---
+
+import { Glossary } from "~/components"
+
+Frequently asked questions regarding Workers KV.
+
+## General
+
+### Can I use Workers KV without using Workers?
+
+Yes, you can use Workers KV outside of Workers by using the [REST API](/api/resources/kv/) or the associated Cloudflare SDKs for the REST API. It is important to note the [limits of the REST API](/fundamentals/api/reference/limits/) that apply.
+
+### Why can I not immediately see the updated value of a key-value pair?
+
+Workers KV heavily caches data across the Cloudflare network. Therefore, it is possible that you read a cached value for up to the [cache TTL](/kv/api/read-key-value-pairs/#cachettl-parameter) duration.
+
+### Is Workers KV eventually consistent or strongly consistent?
+
+Workers KV is eventually consistent.
+
+Workers KV stores data in central stores and replicates the data to all Cloudflare locations through a hybrid push/pull replication approach. This means that the previous value of the key-value pair may be seen in a location for as long as the [cache TTL](/kv/api/read-key-value-pairs/#cachettl-parameter). This means that Workers KV is eventually consistent.
+
+Refer to [How KV works](/kv/concepts/how-kv-works/).
+
+## Pricing
+
+### When writing via Workers KV's [REST API](/api/resources/kv/subresources/namespaces/methods/bulk_update/), how are writes charged?
+
+Each key-value pair in the `PUT` request is counted as a single write, identical to how each call to `PUT` in the Workers API counts as a write. Writing 5,000 keys via the REST API incurs the same write costs as making 5,000 `PUT` calls in a Worker.
+
+### Do queries I issue from the dashboard or wrangler (the CLI) count as billable usage?
+
+Yes, any operations via the Cloudflare dashboard or wrangler, including updating (writing) keys, deleting keys, and listing the keys in a namespace count as billable Workers KV usage.
+
+### Does Workers KV charge for data transfer / egress?
+
+No.

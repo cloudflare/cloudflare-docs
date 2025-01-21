@@ -37,7 +37,7 @@ The typical setup requirements are:
 If your identity provider supports metadata file configuration, you can use the default or identity provider specific metadata endpoint:
 
 - **Default:** `https://<your-team-name>.cloudflareaccess.com/cdn-cgi/access/saml-metadata`
-- **Identity provider specific:** `https://<your-team-name>.cloudflareaccess.com/cdn-cgi/access/<identity-provider-id>/saml-metadata`, where `<identity-provider-id>` is the `id` value obtained from [List Access identity providers](/api/operations/access-identity-providers-list-access-identity-providers). Use this endpoint if your IdP requires a configuration not defined in the default metadata file.
+- **Identity provider specific:** `https://<your-team-name>.cloudflareaccess.com/cdn-cgi/access/<identity-provider-id>/saml-metadata`, where `<identity-provider-id>` is the `id` value obtained from [List Access identity providers](/api/resources/zero_trust/subresources/identity_providers/methods/list/). Use this endpoint if your IdP requires a configuration not defined in the default metadata file.
 
 To download the SAML metadata file, copy-paste the metadata endpoint into a web browser and save the page as an `.xml` file. Upload this XML file to the identity provider.
 
@@ -74,9 +74,12 @@ Your identity provider must support SCIM version 2.0.
 
 Setup instructions vary depending on the identity provider. In your identity provider, you will either need to edit the [original SSO application](#1-create-an-application-in-your-identity-provider) or create a new SCIM application. Refer to your identity provider's documentation for more details. For example instructions, refer to our [Okta](/cloudflare-one/identity/idp-integration/okta/#synchronize-users-and-groups) or [JumpCloud](/cloudflare-one/identity/idp-integration/jumpcloud-saml/#synchronize-users-and-groups) guides.
 
-:::note
-If your IdP requires creating a new SCIM application, ensure that the groups in the SCIM application match the groups in the [original SSO application](/cloudflare-one/identity/idp-integration/generic-saml/#1-create-an-application-in-your-identity-provider). Because SCIM group membership updates will overwrite any groups in a user's identity, assigning the same groups to each app ensures consistent policy evaluation.
-:::
+#### IdP groups
+
+If you would like to build policies based on IdP groups:
+
+- Ensure that your IdP sends a `groups` field. The naming must match exactly (case insensitive). All other values will be sent as a SAML attribute.
+- If your IdP requires creating a new SCIM application, ensure that the groups in the SCIM application match the groups in the [original SSO application](/cloudflare-one/identity/idp-integration/generic-saml/#1-create-an-application-in-your-identity-provider). Because SCIM group membership updates will overwrite any groups in a user's identity, assigning the same groups to each app ensures consistent policy evaluation.
 
 ### 3. Verify SCIM provisioning
 

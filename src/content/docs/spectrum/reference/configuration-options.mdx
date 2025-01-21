@@ -104,15 +104,46 @@ Spectrum offers three modes of TLS termination: 'Flexible', 'Full', and 'Full (S
 
 TLS versions supported by Spectrum include TLS 1.1, TLS 1.2, and TLS 1.3.
 
-You can manage this through the Spectrum app at the Cloudflare dashboard, or using the [Spectrum API endpoint](/api/operations/spectrum-applications-update-spectrum-application-configuration-using-a-name-for-the-origin).
+You can manage this through the Spectrum app at the Cloudflare dashboard, or using the [Spectrum API endpoint](/api/resources/spectrum/subresources/apps/methods/update/).
 
 :::note[Note]
 
-
 If you have the TLS termination setting configured to **off**, this means that Spectrum will then proxy connections to the origin without decrypting. The certificate that is presented in this case will be the certificate installed at your origin server, instead of the Edge Certificate from Cloudflare.
 
+:::
+
+:::caution
+
+If you need to control TLS settings, like the minimum TLS version or cipher suites, you need to use an HTTPS application.
+For TCP applications, default settings will apply. The minimum TLS version will be 1.1 and the cipher suites are:
+
+| OpenSSL Name                      |
+| --------------------------------- |
+|AEAD-CHACHA20-POLY1305-SHA256|
+|AEAD-AES128-GCM-SHA256|
+|AEAD-AES256-GCM-SHA384|
+|ECDHE-RSA-CHACHA20-POLY1305|
+|ECDHE-ECDSA-CHACHA20-POLY1305|
+|ECDHE-RSA-AES128-GCM-SHA256|
+|ECDHE-ECDSA-AES128-GCM-SHA256|
+|ECDHE-RSA-AES256-GCM-SHA384|
+|ECDHE-ECDSA-AES256-GCM-SHA384|
+|ECDHE-RSA-AES128-SHA256|
+|ECDHE-RSA-AES128-SHA|
+|CDHE-ECDSA-AES128-SHA256|
+|ECDHE-ECDSA-AES128-SHA|
+|ECDHE-RSA-AES256-SHA|
+|ECDHE-ECDSA-AES256-SHA|
+|AES128-GCM-SHA256|
+|AES256-GCM-SHA384|
+|AES128-SHA256|
+|AES128-SHA|
+|AES256-SHA|
+|ECDHE-RSA-DES-CBC3-SHA|
+|DES-CBC3-SHA|
 
 :::
+
 
 ## Origin TLS Termination
 

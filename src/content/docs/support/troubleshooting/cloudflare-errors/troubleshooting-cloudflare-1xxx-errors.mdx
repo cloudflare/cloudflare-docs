@@ -490,11 +490,11 @@ Make sure that the rewritten URI path is not empty and it starts with a `/` (sla
 
 For example, the following URI path rewrite expression is not valid:
 
-`concat(lower(ip.geoip.country), http.request.uri.path)`
+`concat(lower(ip.src.country), http.request.uri.path)`
 
 To fix the expression above, add a `/` prefix:
 
-`concat("/", lower(ip.geoip.country), http.request.uri.path)`
+`concat("/", lower(ip.src.country), http.request.uri.path)`
 
 ---
 

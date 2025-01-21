@@ -64,7 +64,7 @@ Performs a dynamic URL redirect, where the target URL is determined by an expres
 
 A dynamic URL redirect has the following configuration parameters:
 
-- **Expression**: An [expression](/ruleset-engine/rules-language/expressions/) that defines the target URL of the redirect. The result of evaluating this expression will be used in the `Location` HTTP header returned in the redirect response. Refer to the [fields](/ruleset-engine/rules-language/fields/) and [functions](/ruleset-engine/rules-language/functions/) you can use in expressions.
+- **Expression**: An [expression](/ruleset-engine/rules-language/expressions/) that defines the target URL of the redirect. The result of evaluating this expression will be used in the `Location` HTTP header returned in the redirect response. Refer to the [fields](/ruleset-engine/rules-language/fields/reference/) and [functions](/ruleset-engine/rules-language/functions/) you can use in expressions.
 
 - **Status code**: The HTTP status code of the redirect response (_301_ by default). Must be one of the following: _301_ (Moved permanently), _302_ (Found, also known as Moved temporarily), _307_ (Temporary redirect), or _308_ (Permanent redirect).
 

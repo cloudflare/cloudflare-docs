@@ -1,0 +1,51 @@
+releaseNotes: >-
+  This release primarily contains bug fixes, no new features are included in
+  this release
+   
+  **Notable updates**
+
+  - Improved captive portal handling for some more captive portals.
+
+  - Improved reconnect logic when a setting changes to no longer always do a
+  full disconnect->reconnect cycle (for instance when turning on DNS logging).
+
+  - Modified initial connectivity check behavior to now validate both IPv4 and
+  IPv6 are working (previously we only checked IPv4). Test will pass if either
+  connects successfully. 
+
+  - Fixed issue where client could be stuck on `Connecting` if certain DNS
+  checks failed once.
+
+  - Fixed DNS issue where TXT records were not being correctly returned when at
+  the end of a CNAME chain.
+
+  - Fixed issue where the client may not receive notifications of new settings,
+  re-auth events or posture from the service until reboot.
+
+  - Fixed issue where users could be pointing at an old gateway_doh_subdomain if
+  you have `Allowed to Leave` set to true and they've manually joined their
+  client to your organization.
+
+  - Fixed slow DNS timeout issue that could occur when IPv6 is enabled and an
+  NXDOMAIN record is returned.
+
+  - Fixed issue with `Gateway with DoH` mode could say `Connected` when it
+  wasn't really connected as we could sometimes test the wrong endpoint.
+
+  - Fixed issue where our local DNS proxy server could get unset with an overly
+  active DHCP renew time or by plugging in/out a tethered device.
+   
+  **Known issues**
+
+  - There is a race condition that may cause IPv4 traffic to fail after the
+  tunnel starts up. This can be fixed by toggling off then back on the
+  connection. A hotfix is in the works.
+
+  - If you are having issues with upgrading to new beta, please uninstall
+  current app, install the GA version from https://1.1.1.1/ and participate in
+  beta program from Preferences->Advanced.
+version: 2022.12.267.1
+packageURL: https://downloads.cloudflareclient.com/v1/download/macos/version/2022.12.267.1
+packageSize: 47987435
+releaseDate: 2022-12-06T23:13:53.633Z
+platformName: macOS

@@ -6,12 +6,11 @@ sidebar:
 head:
   - tag: title
     content: Override expressions for HTTP DDoS Attack Protection
-
 ---
 
 :::note
 
-Only available to Enterprise customers with the Advanced DDoS Protection subscription. 
+Only available to Enterprise customers with the Advanced DDoS Protection subscription.
 :::
 
 Set an override expression for the HTTP DDoS Attack Protection managed ruleset to define a specific scope for [sensitivity level](/ddos-protection/managed-rulesets/http/override-parameters/#sensitivity-level) or [action](/ddos-protection/managed-rulesets/http/override-parameters/#action) adjustments.
@@ -36,12 +35,12 @@ You can use the following fields in override expressions:
 - `http.request.cookies`
 - `http.user_agent`
 - `http.x_forwarded_for`
-- `ip.geoip.asnum`
-- `ip.geoip.continent`
-- `ip.geoip.country`
-- `ip.geoip.is_in_european_union`
 - `ip.src`
+- `ip.src.asnum`
+- `ip.src.continent`
+- `ip.src.country`
+- `ip.src.is_in_european_union`
 - `ssl`
 - `cf.tls_client_auth.cert_verified`
 
-Refer to [Fields](/ruleset-engine/rules-language/fields/) in the Rules language documentation for more information.
+Refer to the [Fields reference](/ruleset-engine/rules-language/fields/reference/) in the Rules language documentation for more information.

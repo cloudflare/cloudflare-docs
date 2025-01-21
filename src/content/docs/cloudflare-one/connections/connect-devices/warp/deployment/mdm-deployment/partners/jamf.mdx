@@ -66,3 +66,56 @@ Create an [XML file](/cloudflare-one/connections/connect-devices/warp/deployment
 8. Select **Save**.
 
 Jamf is now configured to deploy the Cloudflare One Agent.
+
+### Per-app VPN
+
+:::note
+Per-app VPN is supported on Cloudflare One Agent version `1.8` or greater for iOS.
+:::
+
+Before proceeding with per-app VPN configuration, you must make sure Auto connect is disabled for your organization in the Cloudflare dashboard. To disable Auto connect:
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/) and select your account.
+2. Select **Zero Trust** > **Settings** > **WARP Client**.
+3. Go to **Device Settings** > select your profile and select **Edit** > toggle **Auto Connect** off.
+
+To configure per-app VPN:
+
+1. Log in to the Jamf dashboard for your organization.
+2. Go to **Devices** > **Configuration Policies** > select **+ New**.
+3. Under **Options**, select **VPN**. Then:
+   - Give the VPN a **Connection Name**.
+   - Select *Per-App VPN* from the **VPN Type** dropdown menu. 
+   - Check the box for **Automatically start Per-App VPN connection**.
+4. Under Per-App VPN Connection Type, set the **Connection Type** to _Custom SSL_ via the dropdown menu. Then, enter `com.cloudflare.cloudflareoneagent` as the **Identifier**,  `1.1.1.1` as the **Server**, and `com.cloudflare.cloudflareoneagent.worker` as the **Provider Bundle Identifier**.
+5. Set the **Provider Type** to _Packet-Tunnel_ and select the checkboxes for **Include All Networks** and **Enable VPN on Demand**.
+6. Go to the **Scope** tab and add the devices that will use the Per-App VPN.
+7. Save the Configuration Profile.
+8. Go to **Devices** > **Mobile Device Apps** > select **+ New**.
+9. As the **App Type**, select **App Store app or apps purchased in volume** and select **Next**.
+10. In the search bar, enter the name of the app that you want to use the VPN for and select **Next**.
+
+:::note
+Alternatively, if you already know the **Bundle Identifier** of the app you want to go through the VPN, select **Enter Manually**.
+:::
+
+11. Find the app you are looking for in the search results and select **Add**.
+12. Select your preferred **Distribution Method** and under **Per-App Networking**, select the VPN connection you just configured.
+13. Repeat steps 8-12 for each app you want to use the VPN.
+
+:::note
+
+To support re-authentication, you must include a third-party browser that Cloudflare One can use to re-authenticate the user. The following third-party browsers are supported:
+
+- Google Chrome
+- Firefox
+- Firefox Focus
+- Microsoft Edge
+- Brave
+- Opera
+
+Cloudflare One will continue to use a Safari window for initial authentication per-security best practices.
+:::
+
+:::note
+Cloudflare One cannot apply split tunnel setting for a per app VPN. Included or excluded domains can be added to the Configuration Profile under Safelisted Domains and Blocklisted Domains sections respectively.
+:::

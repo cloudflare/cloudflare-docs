@@ -50,7 +50,7 @@ To manage the TLS version applied to your whole zone when proxied through Cloudf
 
 </TabItem> <TabItem label="API">
 
-Use the [Edit zone setting](/api/operations/zone-settings-edit-single-setting) endpoint with `min_tls_version` as the setting name in the URI path, and specify your preferred minimum version in the `value` field.
+Use the [Edit zone setting](/api/resources/zones/subresources/settings/methods/edit/) endpoint with `min_tls_version` as the setting name in the URI path, and specify your preferred minimum version in the `value` field.
 
 In the following example, the minimum TLS version for the zone will be set to `1.2`. Replace the zone ID and API token placeholders with your information, and adjust the `value` field with your chosen TLS version.
 
@@ -73,8 +73,8 @@ curl --request PATCH \
 
 This is currently only available via the API:
 
-- Use the [Edit TLS setting for hostname](/api/operations/per-hostname-tls-settings-put) endpoint to specify different values for `min_tls_version`.
-- Use the [Delete TLS setting for hostname](/api/operations/per-hostname-tls-settings-delete) endpoint to clear previously defined `min_tls_version` setting.
+- Use the [Edit TLS setting for hostname](/api/resources/hostnames/subresources/settings/subresources/tls/methods/update/) endpoint to specify different values for `min_tls_version`.
+- Use the [Delete TLS setting for hostname](/api/resources/hostnames/subresources/settings/subresources/tls/methods/delete/) endpoint to clear previously defined `min_tls_version` setting.
 
 Cloudflare uses the [hostname priority logic](/ssl/reference/certificate-and-hostname-priority/) to determine which setting to apply.
 

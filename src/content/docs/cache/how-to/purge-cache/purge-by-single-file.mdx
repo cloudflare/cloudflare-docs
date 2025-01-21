@@ -3,7 +3,6 @@ title: ​Purge by single-file
 pcx_content_type: how-to
 sidebar:
   order: 1
-
 ---
 
 With purge by single-file, cached resources are instantly removed from the stored assets in your Content Delivery Network (CDN) across all data centers. New requests for the purged asset receive the latest version from your origin web server and add it back to your CDN cache within the specific Cloudflare data center that served the request.
@@ -12,24 +11,20 @@ The single-file purge rate limit for the Free subscription is 1,000 URLs/minute.
 
 A single-file purge performed through your Cloudflare dashboard does not clear objects that contain any of the following:
 
-* [Custom cache keys](/cache/how-to/cache-keys/)
-* [Origin header](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Origin)
-* Any of these request headers:
-  * `X-Forwarded-Host`
-  * `X-Host`
-  * `X-Forwarded-Scheme`
-  * `X-Original-URL`
-  * `X-Rewrite-URL`
-  * `Forwarded`
+- [Custom cache keys](/cache/how-to/cache-keys/)
+- [Origin header](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Origin)
+- Any of these request headers:
+  - `X-Forwarded-Host`
+  - `X-Host`
+  - `X-Forwarded-Scheme`
+  - `X-Original-URL`
+  - `X-Rewrite-URL`
+  - `Forwarded`
 
-You can purge objects with these characteristics using an API call to ([purge files by URL](/api/operations/zone-purge#purge-cached-content-by-url)). In the data/header section of the API call, you must include all headers and cache keys contained in the cached resource, along with their matching values.
+You can purge objects with these characteristics using an API call to ([purge files by URL](/api/resources/cache/methods/purge/)). In the data/header section of the API call, you must include all headers and cache keys contained in the cached resource, along with their matching values.
 
-:::caution[Warning]
-
-
+:::caution
 Always use UTF-8 encoded URLs for single-file cache purges. Wildcards are not supported on single file purge, and you must use purge by hostname, prefix, or implement cache tags as an alternative solution. All of the listed options are Enterprise features.
-
-
 :::
 
 1. Log in to your [Cloudflare dashboard](https://dash.cloudflare.com/login), and select your account and domain.
@@ -41,20 +36,12 @@ Always use UTF-8 encoded URLs for single-file cache purges. Wildcards are not su
 7. Review your entries.
 8. Select **Purge**.
 
-:::note[Note]
-
-
-For information on how to use single-file purge to purge assets cached by a Workers fetch, refer to [​​Using Workers to purge](/workers/reference/how-the-cache-works/#single-file-purge--assets-cached-by-a-worker).
-
-
+:::note
+For information on how to use single-file purge to purge assets cached by a Workers fetch, refer to [Using Workers to purge](/workers/reference/how-the-cache-works/#single-file-purge-assets-cached-by-a-worker).
 :::
 
-:::caution[Warning]
-
-
+:::caution
 If you have a [Transform Rule](/rules/transform/) in place that is modifying part of a URL path, you must use the non-transform (end user) URL when performing single file purge so that purge can take effect.
-
-
 :::
 
 ## Resulting cache status

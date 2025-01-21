@@ -12,12 +12,12 @@ description: In IP address management, service binding refers to the association
 Service bindings are mappings that control whether traffic destined for a given IP address is routed to [Magic Transit](/magic-transit/), the CDN pipeline [^1], or the Spectrum pipeline [^2].
 
 :::note
-Service binding operations are currently only available via API. You can find all endpoints and their specifications in the [Cloudflare API documentation](/api/operations/ip-address-management-service-bindings-list-service-bindings).
+Service binding operations are currently only available via API. You can find all endpoints and their specifications in the [Cloudflare API documentation](/api/resources/addressing/subresources/prefixes/subresources/bgp/subresources/bindings/methods/list/).
 :::
 
 ## Scope
 
-Customers using BYOIP with Magic Transit can leverage the [service binding API endpoints](/api/operations/ip-address-management-service-bindings-list-service-bindings) to selectively route traffic through the CDN [^1] or Spectrum [^2] pipelines on a per-IP address basis.
+Customers using BYOIP with Magic Transit can leverage the [service binding API endpoints](/api/resources/addressing/subresources/prefixes/subresources/bgp/subresources/bindings/methods/list/) to selectively route traffic through the CDN [^1] or Spectrum [^2] pipelines on a per-IP address basis.
 
 You can upgrade individual IPs within a Magic Transit prefix to either a CDN IP or a Spectrum IP. For example, if you have `203.0.113.0/24`, you can upgrade `203.0.113.1` to CDN and `203.0.113.2` to Spectrum.
 
