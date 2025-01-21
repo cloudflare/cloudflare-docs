@@ -106,19 +106,25 @@ Other key formats (such as DSA) are not supported at this time.
 
 ### 4. Create an External Evaluation rule
 
-1. In [Zero Trust](https://one.dash.cloudflare.com/), go to **Access** > **Applications**.
+1. In [Zero Trust](https://one.dash.cloudflare.com/), go to **Access** > **Policies**.
 
-2. Find the application for which you want to apply the External Evaluation rule and select **Edit**.
+2. Edit an existing policy or select **Add a policy**.
 
-3. In the **Policies** tab, edit an existing policy or select **Add a policy**.
-
-4. Add the following rule to your policy:
+3. Add the following rule to your policy:
 
 | Rule Type | Selector            | Evaluate URL                                      | Keys URL                                               |
 | --------- | ------------------- | ------------------------------------------------- | ------------------------------------------------------ |
 | Include   | External Evaluation | `https://my-worker.<YOUR_SUBDOMAIN>.workers.dev/` | `https://my-worker.<YOUR_SUBDOMAIN>.workers.dev/keys/` |
 
-When a user logs in to your application, Access will now check their email, device, location, and other identity-based data against your business logic. To test your policies against an email, go to the **Policies** tab and select **Test your policies**.
+4. Save the policy.
+
+5. Go to **Access** > **Applications** and edit the application for which you want to apply the External Evaluation rule.
+
+6. In the **Policies** tab, add the policy that contains the External Evaluation rule.
+
+7. Select **Save application**.
+
+When a user logs in to your application, Access will now check their email, device, location, and other identity-based data against your business logic.
 
 ### Troubleshooting the Worker
 

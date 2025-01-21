@@ -1,0 +1,27 @@
+releaseNotes: >-
+  This release is a hotfix for 2022.5.226.0.
+
+  **Notable updates**
+   
+  - Fixed false positives when attempting to detect a captive portal
+
+  - Fixed issue where OS version would not be updated in dash after OS update
+
+  - Fixed issue when DNS would not resolve for fallback domains on certain
+  machines
+
+  - Fixed installation failure when a newer version of WebView2 exists
+
+
+  **Known issues**
+
+  - This version requires at least Windows 10.0.19042. If you are running a
+  prior version of Windows, please delay upgrading. 
+
+  - On an unexpected power loss, the wrong DNS servers maybe set on the machine
+  on subsequent boots. Causing DNS resolution to fail.
+version: 2022.5.324.1
+packageURL: https://downloads.cloudflareclient.com/v1/download/windows/version/2022.5.324.1
+packageSize: 91086848
+releaseDate: 2022-06-14T00:13:33.701Z
+platformName: Windows

@@ -21,7 +21,14 @@ async function checkLinks() {
 	});
 	const page = await browser.newPage();
 
-	const sitemapUrl = "https://developers.cloudflare.com/sitemap.xml";
+	// skip image requests
+	await page.setRequestInterception(true);
+	page.on("request", (request) => {
+		if (request.resourceType() === "image") request.abort();
+		else request.continue();
+	});
+
+	const sitemapUrl = "https://developers.cloudflare.com/sitemap-0.xml";
 	await page.goto(sitemapUrl, { timeout: navigationTimeout });
 
 	const sitemapLinks = await page.$$eval("url loc", (elements) =>
@@ -36,10 +43,17 @@ async function checkLinks() {
 			continue; // Skip if the link is empty
 		}
 
-		await page.goto(link, {
-			waitUntil: "networkidle0",
-			timeout: navigationTimeout,
-		});
+		try {
+			await page.goto(link, {
+				waitUntil: "networkidle0",
+				timeout: navigationTimeout,
+			});
+		} catch (e) {
+			console.log(
+				`  WARNING: Error loading Dev Docs page: ${e.message}... Skipping.`,
+			);
+			continue;
+		}
 
 		const pageLinks = await page.$$eval("a", (elements) =>
 			elements.map((el) => el.href),
@@ -51,23 +65,32 @@ async function checkLinks() {
 			}
 
 			if (
-				pageLink.includes("developers.cloudflare.com/api/operations/") ||
-				pageLink.startsWith("/api/operations/")
+				pageLink.includes("developers.cloudflare.com/api/resources/") ||
+				pageLink.startsWith("/api/resources/")
 			) {
 				console.log(`Evaluating link: ${pageLink}`);
-				await page.goto(pageLink, {
-					waitUntil: "networkidle0",
-					timeout: navigationTimeout,
-				});
-				visitedLinks.push(pageLink);
 
-				const statusCode = await page.evaluate(() => {
-					return {
-						url: window.location.href,
-					};
-				});
-				if (statusCode.url === "https://developers.cloudflare.com/api/") {
-					brokenLinks.push(pageLink);
+				let response = null;
+
+				try {
+					response = await page.goto(pageLink, {
+						waitUntil: "networkidle0",
+						timeout: navigationTimeout,
+					});
+					visitedLinks.push(pageLink);
+				} catch (e) {
+					console.log(
+						`  WARNING: Error loading API page: ${e.message}... Skipping.`,
+					);
+					continue;
+				}
+
+				if (response) {
+					if (response.status() === 404) {
+						brokenLinks.push(pageLink);
+					}
+				} else {
+					console.log("  WARNING: Didn't receive a response... skipping.");
 				}
 			}
 		}

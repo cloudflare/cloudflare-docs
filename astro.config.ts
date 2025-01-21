@@ -193,6 +193,7 @@ export default defineConfig({
 									"/products/",
 									"/rules/snippets/examples/?operation=*",
 									"/rules/transform/examples/?operation=*",
+									"/ruleset-engine/rules-language/fields/reference/**",
 									"/workers/examples/?languages=*",
 									"/workers/examples/?tags=*",
 									"/workers-ai/models/**",

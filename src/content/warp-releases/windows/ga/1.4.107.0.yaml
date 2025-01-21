@@ -1,0 +1,26 @@
+releaseNotes: >-
+  **Notable updates in this release**
+
+
+  - Added two new MDM flags for Cloudflare for Teams deployments.
+  ***switch_locked*** to lock main switch and ***auto_connect*** to
+  automatically reconnect tunnel after specified minutes.
+
+  - General bug fixes and improvements.
+
+
+  **Known issues**
+
+
+  - You are unable to subscribe to WARP+ via the Desktop apps. You must
+  subscribe first on your mobile device and then copy/paste your license key
+  into the Accounts page on desktop
+
+
+  For a complete list of known issues please visit
+  https://developers.cloudflare.com/warpclient/known-issues-and-faq
+version: 1.4.107.0
+packageURL: https://downloads.cloudflareclient.com/v1/download/windows/version/1.4.107.0
+packageSize: 81260544
+releaseDate: 2021-04-07T01:22:09.132Z
+platformName: Windows

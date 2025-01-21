@@ -82,25 +82,33 @@ The service token will be used to restrict requests to the tunnel, and is needed
 
 3. Select **Self-hosted**.
 
-4. In **Application Configuration** > **Application name**, enter any name for the application.
+4. Enter any name for the application.
 
-5. In **Application Configuration** > **Session Duration**, select `No duration, expires immediately`.
+5. In **Session Duration**, select `No duration, expires immediately`.
 
-6. In **Application Configuration** > **Application domain**, enter the subdomain and domain that was previously set for the tunnel application.
+6. Select **Add public hostname**. and enter the subdomain and domain that was previously set for the tunnel application.
 
-7. In **Application Appearance**, disable the `Enable App in App Launcher` setting.
+7. Select **Create new policy**.
 
-8. In **Identity providers**, disable the `Accept all available identity providers` setting and select `Deselect all` identity providers.
+8. Enter a **Policy name** and set the **Action** to _Service Auth_.
 
-9. Select **Next**.
+9. Create an **Include** rule. Specify a **Selector** of _Service Token_ and the **Value** of the service token you created in step [2. Create a service token](#2-create-a-service-token).
 
-10. Enter a name in the **Policy name** and set the **Action** to `Service Auth`.
+10. Save the policy.
 
-11. In **Configure rules**, create an **Include** rule. Specify a **Selector** of `Service Token` and the **Value** of the service token you created in step [2. Create a service token](#2-create-a-service-token).
+11. Go back to the application configuration and add the newly created Access policy.
 
-12. Select **Next**.
+12. In **Login methods**, turn off _Accept all available identity providers_ and clear all identity providers.
 
-13. Select **Add application** to create the Access application.
+13. Select **Next**.
+
+14. In **Application Appearance**, turn off **Show application in App Launcher**.
+
+15. Select **Next**.
+
+16. Select **Next**.
+
+17. Save the application.
 
 ## 4. Create a Hyperdrive configuration
 

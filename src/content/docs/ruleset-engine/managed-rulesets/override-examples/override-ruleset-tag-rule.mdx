@@ -14,7 +14,7 @@ Customize the execution of managed rulesets with a combination of ruleset overri
 3. [Configure a tag override](/ruleset-engine/managed-rulesets/override-managed-ruleset/) that sets an action for rules with a given tag.
 4. [Configure a rule override](/ruleset-engine/managed-rulesets/override-managed-ruleset/) that sets an action for the rules you want to execute.
 
-The request below uses the [Update ruleset](/ruleset-engine/rulesets-api/update/) operation to execute the following in a single `PUT` request:
+The request below uses the [Update a zone entry point ruleset](/ruleset-engine/rulesets-api/update/) operation to execute the following in a single `PUT` request:
 
 - Add a rule to the `http_request_firewall_managed` phase entry point ruleset that executes a managed ruleset.
 - Use category overrides to enable rules with `wordpress` and `drupal` tags and set their actions to `log`.
