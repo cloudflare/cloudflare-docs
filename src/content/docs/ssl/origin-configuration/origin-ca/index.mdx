@@ -3,6 +3,7 @@ title: Cloudflare origin CA
 pcx_content_type: how-to
 sidebar:
   order: 3
+  label: Setup
 head: []
 description: Encrypt traffic between Cloudflare and your origin web server and reduce origin bandwidth consumption.
 
@@ -10,7 +11,7 @@ description: Encrypt traffic between Cloudflare and your origin web server and r
 
 import { FeatureTable, GlossaryTooltip } from "~/components"
 
-If your origin only receives traffic from <GlossaryTooltip term="proxy status">proxied records</GlossaryTooltip>, use Cloudflare origin CA certificates to encrypt traffic between Cloudflare and your origin web server and reduce origin bandwidth consumption. Once deployed, these certificates are compatible with [Strict SSL mode](/ssl/origin-configuration/ssl-modes/full-strict/).
+If your origin only receives traffic from <GlossaryTooltip term="proxy status">proxied records</GlossaryTooltip>, use Cloudflare origin CA certificates to encrypt traffic between Cloudflare and your origin web server and reduce bandwidth consumption. Once deployed, these certificates are compatible with [Strict SSL mode](/ssl/origin-configuration/ssl-modes/full-strict/).
 
 For more background information on origin CA certificates, refer to the [introductory blog post](https://blog.cloudflare.com/cloudflare-ca-encryption-origin/).
 
@@ -129,4 +130,4 @@ To automate processes involving Origin CA certificates, use the following API ca
 
 ## Troubleshooting
 
-Site visitors may see untrusted certificate errors if you pause or disable Cloudflare on subdomains that use Origin CA certificates. These certificates only encrypt traffic between Cloudflare and your origin server, not traffic from client browsers to your origin.
+Refer to [Troubleshooting Cloudflare origin CA](/ssl/origin-configuration/origin-ca/troubleshooting/).
