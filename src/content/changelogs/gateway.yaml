@@ -5,6 +5,10 @@ productLink: "/cloudflare-one/policies/gateway/"
 productArea: Cloudflare One
 productAreaLink: /cloudflare-one/changelog/
 entries:
+  - publish_date: "2025-01-08"
+    title: Bring your own resolver IP (BYOIP) for DNS locations
+    description: |-
+      Enterprise users can now [provide an IP address](/cloudflare-one/co
   - publish_date: "2024-11-20"
     title: Category filtering in the network policy builder
     description: |-
