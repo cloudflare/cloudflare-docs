@@ -2289,8 +2289,8 @@ The minimum required Wrangler version to use this command is 3.66.0.
   - A custom path must have a `d.ts` extension.
 - `--strict-vars` <Type text="boolean" /> <MetaInfo text="optional (default: true)" />
   - Control the types that Wrangler generates for `vars` bindings.
-  - If true (the default) Wrangler generates literal and union types for bindings (e.g. `myEnv: 'my dev variable' | 'my prod variable'`).
-  - If false, Wrangler generates generic types (e.g. `myEnv: string`).
+  - If `true` (the default) Wrangler generates literal and union types for bindings (e.g. `myEnv: 'my dev variable' | 'my prod variable'`).
+  - If `false`, Wrangler generates generic types (e.g. `myEnv: string`).
   - Useful when environment variables can often change (especially with multiple environments are involved)
 
 <Render file="wrangler-commands/global-flags" product="workers" />
