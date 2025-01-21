@@ -192,9 +192,7 @@ You can now use the Proxy Endpoint selector in [network](/cloudflare-one/policie
 
 ## Configure firewall
 
-If you want to use PAC files but your firewall only allows config via domain or IP/CIDR, you will need to configure that with your firewall.
-
-If your organization's firewall only allows config via domain, you will need to create a firewall rule to allow your proxy endpoint domain.
+To configure your organization's firewall to allow your users to connect to a proxy endpoint, you will need to create a firewall rule using either your proxy endpoint's domain or IP addresses.
 
 To get the domain of a proxy endpoint:
 
@@ -238,14 +236,14 @@ To get the domain of a proxy endpoint:
 
 </Tabs>
 
-To get the IP addresses associated with your domain:
+Using your proxy endpoint's domain, you can get the IP addresses assigned to the proxy endpoint:
 
 <Tabs>
 
 <TabItem label="macOS and Linux">
 
 1. Open a terminal.
-2. Run `dig` to get the IPv4 addresses. For example:
+2. Run `dig` on your proxy endpoint's `A` records to get its IPv4 addresses. For example:
 
    ```bash
    dig A example.cloudflare-gateway.com +short
@@ -256,10 +254,10 @@ To get the IP addresses associated with your domain:
    162.159.36.20
    ```
 
-3. Run `dig` to get the IPv6 addresses. For example:
+3. Run `dig` on your proxy endpoint's `AAAA` records to get its IPv6 addresses. For example:
 
    ```bash
-   dig A example.cloudflare-gateway.com +short
+   dig AAAA example.cloudflare-gateway.com +short
    ```
 
    ```bash output
@@ -272,7 +270,7 @@ To get the IP addresses associated with your domain:
 <TabItem label="Windows">
 
 1. Open a PowerShell terminal.
-2. Run `Resolve-DnsName` to get the IPv4 addresses. For example:
+2. Run `Resolve-DnsName` on your proxy endpoint's `A` records to get its IPv4 addresses. For example:
 
    ```powershell
    Resolve-DnsName -Name example.cloudflare-gateway.com -Type A
@@ -285,7 +283,7 @@ To get the IP addresses associated with your domain:
    example.cloudflare-gateway.com                 A      300   Answer     162.159.36.20
    ```
 
-3. Run `Resolve-DnsName` to get the IPv6 addresses. For example:
+3. Run `Resolve-DnsName` on your proxy endpoint's `AAAA` records to get its IPv6 addresses. For example:
 
    ```powershell
    Resolve-DnsName -Name example.cloudflare-gateway.com -Type AAAA
