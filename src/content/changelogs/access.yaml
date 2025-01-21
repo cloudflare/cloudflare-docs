@@ -5,6 +5,10 @@ productLink: "/cloudflare-one/applications/configure-apps/"
 productArea: Cloudflare One
 productAreaLink: /cloudflare-one/changelog/
 entries:
+ - publish_date: "2024-12-04"
+    title: Access Applications Support Private Hostname and IPs. Access Reusable Policies.
+    description: |-
+      Cloudflare Access Self-Hosted Applications can now be defined by Private IPs, Private Hostnames (on port 443) and Public Hostnames. Additionally, we made Access Policies into their own object which allows reusing across multiple applications. These updates involved significant updates to the overall Access Dashboard experience. The updates will be slowly rolled out to different customer cohorts. If you are an enterprise customer and would like advanced access, reach out to your account team.
   - publish_date: "2024-12-04"
     title: SCIM GA for Okta and Microsoft Entra ID
     description: |-
