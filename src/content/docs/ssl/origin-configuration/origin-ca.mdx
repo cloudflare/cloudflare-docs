@@ -1,24 +1,22 @@
 ---
-title: Origin CA certificates
+title: Cloudflare origin CA
 pcx_content_type: how-to
 sidebar:
   order: 3
 head: []
-description: Origin Certificate Authority (CA) certificates allow you to encrypt
-  traffic between Cloudflare and your origin web server, and reduce origin
-  bandwidth consumption.
+description: Encrypt traffic between Cloudflare and your origin web server and reduce origin bandwidth consumption.
 
 ---
 
-import { FeatureTable } from "~/components"
+import { FeatureTable, GlossaryTooltip } from "~/components"
 
-Use Origin Certificate Authority (CA) certificates to encrypt traffic between Cloudflare and your origin web server and reduce origin bandwidth consumption. Once deployed, these certificates are compatible with [Strict SSL mode](/ssl/origin-configuration/ssl-modes/full-strict/).
+If your origin only receives traffic from <GlossaryTooltip term="proxy status">proxied records</GlossaryTooltip>, use Cloudflare origin CA certificates to encrypt traffic between Cloudflare and your origin web server and reduce origin bandwidth consumption. Once deployed, these certificates are compatible with [Strict SSL mode](/ssl/origin-configuration/ssl-modes/full-strict/).
 
-For more background information on Origin CA certificates, refer to the [introductory blog post](https://blog.cloudflare.com/cloudflare-ca-encryption-origin/).
+For more background information on origin CA certificates, refer to the [introductory blog post](https://blog.cloudflare.com/cloudflare-ca-encryption-origin/).
 
 :::note
 
-Using Cloudflare Origin CA certificates do not prevent you from using [delegated DCV](/ssl/edge-certificates/changing-dcv-method/methods/delegated-dcv/).
+Using Cloudflare origin CA certificates does not prevent you from using [delegated DCV](/ssl/edge-certificates/changing-dcv-method/methods/delegated-dcv/).
 :::
 
 ## Availability
@@ -114,7 +112,7 @@ Some origin web servers require upload of the Cloudflare Origin CA root certific
 
 ### Hostname and wildcard coverage
 
-Certificates may be generated with up to 200 individual Subject Alternative Names (SANs). A SAN can take the form of a fully-qualified domain name (`www.example.com`) or a wildcard (`*.example.com`). You cannot use IP addresses as SANs on Cloudflare Origin CA certificates.
+Certificates may be generated with up to 200 individual Subject Alternative Names (SANs). A SAN can take the form of a fully-qualified domain name (`www.example.com`) or a wildcard (`*.example.com`). You cannot use IP addresses as SANs on Cloudflare origin CA certificates.
 
 Wildcards may only cover one level, but can be used multiple times on the same certificate for broader coverage (for example, `*.example.com` and `*.secure.example.com` may co-exist).
 
