@@ -9,7 +9,7 @@ description: Encrypt traffic between Cloudflare and your origin web server and r
 
 ---
 
-import { FeatureTable, GlossaryTooltip } from "~/components"
+import { FeatureTable, GlossaryTooltip, Render } from "~/components"
 
 If your origin only receives traffic from <GlossaryTooltip term="proxy status">proxied records</GlossaryTooltip>, use Cloudflare origin CA certificates to encrypt traffic between Cloudflare and your origin web server and reduce bandwidth consumption. Once deployed, these certificates are compatible with [Strict SSL mode](/ssl/origin-configuration/ssl-modes/full-strict/).
 
@@ -87,6 +87,10 @@ If all your origin hosts are protected by Origin CA certificates or publicly tru
 2. For **SSL/TLS encryption mode**, select **Full (strict)**.
 
 If you have origin hosts that are not protected by certificates, set the **SSL/TLS encryption** mode for a specific application to **Full (strict)** by using a [Page Rule](/rules/page-rules/).
+
+:::caution
+<Render file="origin-ca-pause-error" />
+:::
 
 ## Revoke an Origin CA certificate
 
