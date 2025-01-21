@@ -5,7 +5,8 @@ on:
       - production
 
 jobs:
-  Production:
+  publish:
+    name: Production
     runs-on: ubuntu-22.04
     permissions:
       contents: read
