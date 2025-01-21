@@ -270,7 +270,7 @@ Using your proxy endpoint's domain, you can get the IP addresses assigned to the
 <TabItem label="Windows">
 
 1. Open a PowerShell terminal.
-2. Run `Resolve-DnsName` on your proxy endpoint's `A` records to get its IPv4 addresses. For example:
+2. Run `Resolve-DnsName` on your proxy endpoint's `A` records. Your proxy endpoint's IPv4 addresses will appear under `IPAddress`. For example:
 
    ```powershell
    Resolve-DnsName -Name example.cloudflare-gateway.com -Type A
@@ -283,7 +283,7 @@ Using your proxy endpoint's domain, you can get the IP addresses assigned to the
    example.cloudflare-gateway.com                 A      300   Answer     162.159.36.20
    ```
 
-3. Run `Resolve-DnsName` on your proxy endpoint's `AAAA` records to get its IPv6 addresses. For example:
+3. Run `Resolve-DnsName` on your proxy endpoint's `AAAA` records. Your proxy endpoint's IPv6 addresses will appear under `IPAddress`. For example:
 
    ```powershell
    Resolve-DnsName -Name example.cloudflare-gateway.com -Type AAAA
