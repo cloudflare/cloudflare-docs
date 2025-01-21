@@ -10,6 +10,9 @@ entries:
     individual_page: true
     scheduled: true
     link: "/waf/change-log/scheduled-changes/"
+  - publish_date: "2025-01-21"
+    individual_page: true
+    link: "/waf/change-log/2025-01-21/"
   - publish_date: "2025-01-13"
     individual_page: true
     link: "/waf/change-log/2025-01-13/"
