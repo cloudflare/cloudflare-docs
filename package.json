@@ -104,6 +104,11 @@
 		"vitest": "2.1.8",
 		"wrangler": "3.103.2"
 	},
+	"overrides": {
+		"@cloudflare/puppeteer": {
+			"ws": "8.18.0"
+		}
+	},
 	"engines": {
 		"node": ">=22"
 	},
