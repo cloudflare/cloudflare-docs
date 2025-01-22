@@ -662,25 +662,27 @@ If you use Kaniko with Google Cloud SDK, you must install a Cloudflare certifica
 
 #### Google Drive for desktop
 
-To trust a Cloudflare root certificate in the Google Drive desktop application, follow the procedure for your operating system. These steps require you to [download the .pem certificate](#download-the-cloudflare-root-certificate).
+To trust a Cloudflare root certificate in the Google Drive desktop application, follow the procedure for your operating system. These steps require you to [download a .pem certificate](#download-the-cloudflare-root-certificate).
 
 <Tabs>
 <TabItem label="macOS" icon="apple">
 
-1. In the Finder menu bar, go to **Go** > **Go to Folder**. Enter `/Applications/Google Drive.app/Contents/Resources`.
-
-2. Find `roots.pem` and copy it to a permanent location, such as your Documents folder.
-
-3. Append the contents of `cloudflare.pem` to the end of `roots.pem`.
+1. In a terminal, copy the contents of the Google Drive certificate file to a new certificate file in a permanent location, such as your Documents folder. For example:
 
    ```sh
-   cat ~/Downloads/certificate.pem >> path/to/roots.pem
+   cat /Applications/"Google Drive.app"/Contents/Resources/roots.pem > ~/Documents/gdrivecerts.pem
    ```
 
-4. Apply the newly created root certificate to your Google Drive application.
+2. Append the contents of the downloaded certificate to the end of the new file. For example:
 
    ```sh
-   sudo defaults write /Library/Preferences/com.google.drivefs.settings TrustedRootCertsFile -string "path/to/roots.pem"
+   cat ~/Downloads/certificate.pem >> ~/Documents/gdrivecerts.pem
+   ```
+
+3. Apply the newly created root certificate to your Google Drive application. For example:
+
+   ```sh
+   sudo defaults write /Library/Preferences/com.google.drivefs.settings TrustedRootCertsFile "/Users/$(whoami)/Documents/gdrivecerts.pem"
    ```
 
 You can verify the update with the following command.
