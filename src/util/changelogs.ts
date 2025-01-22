@@ -61,7 +61,7 @@ export async function getWranglerChangelog(): Promise<
 	CollectionEntry<"changelogs">
 > {
 	const response = await fetch(
-		"https://api.github.com/repos/cloudflare/workers-sdk/releases",
+		"https://api.github.com/repos/cloudflare/workers-sdk/releases?per_page=100",
 	);
 
 	if (!response.ok) {
