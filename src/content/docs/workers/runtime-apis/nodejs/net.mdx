@@ -1,0 +1,45 @@
+---
+pcx_content_type: configuration
+title: Net
+---
+
+import { Render, TypeScriptExample } from "~/components";
+
+<Render file="nodejs-compat-howto" />
+
+You can use [`node:net`](https://nodejs.org/api/net.html) to create a direct connection to servers via a TCP sockets
+with [`net.Socket`](https://nodejs.org/api/net.html#class-netsocket). This can be useful when connecting to databases such as MySQL or PostgreSQL, though if possible, using
+[Hyperdrive Connection Pooling](/hyperdrive/configuration/how-hyperdrive-works/#connection-pooling) is preferable.
+
+These functions use [`connect`](/workers/runtime-apis/tcp-sockets/#connect) functionality from the built-in `cloudflare:sockets` module.
+
+<TypeScriptExample filename="index.ts">
+```ts
+import net from 'node:net';
+
+const exampleIP = '127.0.0.1';
+
+export default {
+	async fetch(req): Promise<Response> {
+		const socket = new net.Socket();
+		socket.connect(4000, exampleIP, function () {
+			console.log('Connected');
+		});
+
+    	socket.write('Hello, Server!');
+    	socket.end();
+
+    	return new Response('Wrote to server', { status: 200 });
+    },
+
+} satisfies ExportedHandler;
+
+```
+</TypeScriptExample>
+
+Additionally, other APIs such as [`net.BlockList`](https://nodejs.org/api/net.html#class-netblocklist)
+and [`net.SocketAddress`](https://nodejs.org/api/net.html#class-netsocketaddress) are available.
+
+Note that the [`net.Server`](https://nodejs.org/api/net.html#class-netserver) module is not supported by Workers.
+
+The full `node:net` API is documented in the [Node.js documentation for `node:net`](https://nodejs.org/api/net.html).
