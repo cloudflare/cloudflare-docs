@@ -62,7 +62,7 @@ resource "cloudflare_ruleset" "zone_custom_firewall" {
 ### Add a custom rule challenging requests with leaked credentials
 
 :::note
-For more information on enabling leaked credentials detection using Terraform, refer to the [leaked credentials detection](/waf/detections/leaked-credentials/get-started/#1-turn-on-leaked-credentials-detection) documentation.
+For more information on enabling leaked credentials detection using Terraform, refer to the [leaked credentials detection](/waf/detections/leaked-credentials/get-started/#1-turn-on-the-detection) documentation.
 :::
 
 This example adds a custom rule that challenges requests with leaked credentials by using one of the [leaked credentials fields](/waf/detections/leaked-credentials/#leaked-credentials-fields) in the rule expression.

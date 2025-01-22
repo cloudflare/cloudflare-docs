@@ -1,4 +1,6 @@
-const ModelBadges = ({ model }) => {
+import type { WorkersAIModelsSchema } from "~/schemas";
+
+const ModelBadges = ({ model }: { model: WorkersAIModelsSchema }) => {
 	const badges = model.properties.flatMap(({ property_id, value }) => {
 		if (property_id === "lora" && value === "true") {
 			return {

@@ -9,7 +9,7 @@ const props = z.object({
 	products: z.array(reference("products")),
 });
 
-const { products } = Astro.props;
+const { products } = await props.parseAsync(Astro.props);
 
 const data = await getEntries(products);
 ---

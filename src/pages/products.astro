@@ -1,6 +1,6 @@
 ---
 import { getCollection, type CollectionEntry } from "astro:content";
-// @ts-ignore virtual module
+// @ts-expect-error virtual module
 import iconCollection from "virtual:astro-icon";
 import StarlightPage from "@astrojs/starlight/components/StarlightPage.astro";
 import { getIconData, iconToSVG } from "@iconify/utils";

@@ -1,6 +1,7 @@
+import type { WorkersAIModelsSchema } from "~/schemas";
 import { authorData } from "./data";
 
-const ModelInfo = ({ model }) => {
+const ModelInfo = ({ model }: { model: WorkersAIModelsSchema }) => {
 	const author =
 		authorData[model.name.split("/")[1]]?.name ?? model.name.split("/")[1];
 	return (

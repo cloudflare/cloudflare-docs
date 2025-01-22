@@ -5,8 +5,8 @@ import StarlightPage, {
 	type StarlightPageProps,
 } from "@astrojs/starlight/components/StarlightPage.astro";
 import { LinkButton, Tabs, TabItem, Code, Aside } from "~/components";
-import ModelInfo from "~/components/models/ModelInfo.jsx";
-import ModelBadges from "~/components/models/ModelBadges.jsx";
+import ModelInfo from "~/components/models/ModelInfo.tsx";
+import ModelBadges from "~/components/models/ModelBadges.tsx";
 import SchemaViewer from "~/components/models/SchemaViewer.astro";
 
 import TextGenerationCode from "~/components/models/code/TextGenerationCode.astro";
@@ -123,7 +123,11 @@ const starlightPageProps = {
 	<div class="flex align-center">
 		{
 			author ? (
-				<img class="mr-4 w-12 h-12 block" src={author.logo} />
+				<img
+					class="mr-4 w-12 h-12 block"
+					src={author.logo}
+					alt={`${author.name} logo`}
+				/>
 			) : (
 				<div class="w-12 h-12 mr-4 rounded-md bg-gray-100 text-gray-400 uppercase text-2xl font-black flex justify-center items-center">
 					{model.name.split("/")[1].substring(0, 1)}

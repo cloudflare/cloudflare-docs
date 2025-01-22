@@ -9,38 +9,7 @@ Email Security allows you to configure Logpush to send detection data to an endp
 
 ## Prerequisites
 
-Before you can enable Logpush for Email Security, you will have to:
-
-1. Create an [R2 bucket](/r2/get-started/#2-create-a-bucket).
-2. Once you have created your R2 bucket, [create an API token](/r2/api/s3/tokens/). Under **Permissions**, ensure you select **Admin Read & Write**. 
-3. Once you have created your R2 API Token, the dashboard will display an **Access Key ID** and a **Secret Access Key**. Save these two, as you will need them to set up Logpush later.
-
-## Enable Logpush jobs
-
-To enable Logpush for Email Security:
-
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/).
-2. Select **Analytics & Logs** > **Logpush**.
-2. Select **Create a Logpush job**, then select **S3-Compatible**.
-3. Enter the **destination details**:
-    - **Bucket (required)**: Enter the bucket name.
-    - **Endpoint URL**: Enter your endpoint URL. To find your endpoint URL:
-      - On the Cloudflare dashboard, go to **R2 Object Storage** > **Overview** > Select your bucket.
-      - Go to Settings, and copy and paste the **S3 API** URL.
-    - **Bucket region**: Enter the region of your bucket. To find the bucket region:
-      - On the dashboard, go to **R2 Object Storage** > **Overview** > Select your bucket.
-      - Go to **Settings**, and find your region in **Location**.
-    - **Access Key ID**: Enter the Access Key ID you created as a [prerequisite](/cloudflare-one/insights/email-monitoring/enable-logs/#prerequisites).
-    - **Secret Access Key**: Enter the Secret Access Key you created as a [prerequisite](/cloudflare-one/insights/email-monitoring/enable-logs/#prerequisites).
-4. Select **Continue**. 
-
-Your destination has now been configured.
-
-To view the job you created:
-
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/).
-2. Go to **R2 Object Storage**, select your bucket.
-3. Select **Objects**.
+Before you can audit logs for Email Security, you will have to enable logpush jobs to your storage destination. Refer to [Enable destinations](/logs/get-started/enable-destinations/) to enable logs on destinations such as Cloudflare R2, HTTP, Amazon S3, and more.
 
 ## Audit logs
 
@@ -57,4 +26,4 @@ Once you have configured your destination, you can audit logs:
     - **Value**: Enter `email_security`.  
 5. Select **Submit**.
 
-Your job has now been created successfully.
+You can now view logs via the Cloudflare dashboard.
