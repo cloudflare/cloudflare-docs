@@ -133,7 +133,7 @@ Combine the previous information to create a token as in the following example:
 <Tabs>
   <TabItem label="Account token">
 ```bash
-curl "https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/tokens" \
+curl "https://api.cloudflare.com/client/v4/accounts/{account_id}/tokens" \
 --header "Authorization: Bearer <API_TOKEN>" \
 --header "Content-Type: application/json" \
 --data '{
