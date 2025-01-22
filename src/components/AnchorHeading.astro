@@ -22,7 +22,7 @@ const tag = `h${depth}` as "h1" | "h2" | "h3" | "h4" | "h5" | "h6";
 
 const file = await rehype()
 	.use(rehypeAutoLinkHeadings)
-	.process(`<${tag} id=${slugified}>${marked.parseInline(title)}</${tag}`);
+	.process(`<${tag} id=${slugified}>${marked.parseInline(title)}</${tag}>`);
 
 const html = file.toString();
 ---
