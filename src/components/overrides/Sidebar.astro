@@ -7,6 +7,8 @@ import { getEntry } from "astro:content";
 import { Badge } from "@astrojs/starlight/components";
 import type { ComponentProps, HTMLAttributes } from "astro/types";
 
+import { rehypeExternalLinksOptions } from "~/plugins/rehype/external-links";
+
 const { sidebar, slug } = Astro.props;
 
 interface Link {
@@ -134,7 +136,7 @@ async function handleLink(link: Link): Promise<Link> {
 	if (frontmatter.external_link) {
 		return {
 			...link,
-			label: link.label.concat(" ↗"),
+			label: link.label.concat(rehypeExternalLinksOptions.content.value),
 			href: frontmatter.external_link,
 			badge: frontmatter.external_link.startsWith("/api")
 				? {

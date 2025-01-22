@@ -4,6 +4,7 @@ import { entryToString } from "./container";
 import { remark } from "remark";
 import strip from "strip-markdown";
 import he from "he";
+import { rehypeExternalLinksOptions } from "~/plugins/rehype/external-links";
 
 /**
  * Generates a plain-text description for use in the `description` and `og:description` meta tags.
@@ -33,5 +34,7 @@ export async function getPageDescription(
 		if (paragraph) description = he.decode(paragraph.innerText);
 	}
 
-	return description?.replaceAll(" ↗", "").trim();
+	return description
+		?.replaceAll(rehypeExternalLinksOptions.content.value, "")
+		.trim();
 }
