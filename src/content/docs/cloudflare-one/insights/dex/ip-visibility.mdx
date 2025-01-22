@@ -1,0 +1,43 @@
+---
+pcx_content_type: reference
+title: IP visibility
+sidebar:
+  order: 7
+---
+
+DEX's IP visibility gives administrators insight into three different IP types:
+
+1. **Device**: The private IP address of an end-user device.
+2. **ISP**: The public IP assigned by the ISP that the end-user device is being routed though.
+3. **Gateway**: The router's private IP (the router the end device is connected to.)
+
+IP visibility supports both IPv6 and IPv4 addresses.
+
+IP information is crucial for IT administrators to accurately troubleshoot network issues and identify user locations. IT administrators face challenges like:
+
+- Pinpointing the exact location of a user experiencing issues ("AP 87 is bad.")
+- Identifying network access control policy violations ("NAC Policies is not applied properly.").
+- Troubleshooting firewall restrictions ("Firewall on VLAN 93 is blocking.")
+- Resolving Layer 2 and DHCP related problems.
+- Indirectly determining user identity and device location.
+
+## View IP information
+
+To view IP information for a user device:
+
+1. Log in the [Cloudflare dashboard](https://dash.cloudflare.com/) and select your account.
+2. Select **Zero Trust** to go to the Zero Trust dashboard.
+3. Select **My team** > **Devices**.
+4. Select a device > **View details** > under **Details**, scroll down to **IP details**.
+5. Review the IP details for your selected device's most recent session.
+
+## Troubleshoot with IP visbility
+
+While IP visibility allows you to inspect a device's IP information, [DEX's live analytics](/cloudflare-one/insights/dex/fleet-status/#available-metrics) can help you to compare that IP data with location details of which Cloudflare data center the device is connected to.
+
+For example, after viewing IP information, to understand what Cloudflare data center the device is connected to:
+
+1. Go to **DEX** in the Zero Trust dashboard.
+2. Under **Fleet Status**, review **Devices connected by colo**.
+
+! this section is in progress
