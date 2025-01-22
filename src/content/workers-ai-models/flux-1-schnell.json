@@ -9,12 +9,7 @@
         "description": "Generates images from input text. These models can be used to generate and modify images based on text prompts."
     },
     "tags": [],
-    "properties": [
-        {
-            "property_id": "beta",
-            "value": "true"
-        }
-    ],
+    "properties": [],
     "schema": {
         "input": {
             "type": "object",

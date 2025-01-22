@@ -1,12 +1,12 @@
 ---
-import type { GetStaticPaths, MarkdownHeading } from "astro";
+import type { GetStaticPaths } from "astro";
 import { marked } from "marked";
 import { getEntry } from "astro:content";
 import StarlightPage, {
 	type StarlightPageProps,
 } from "@astrojs/starlight/components/StarlightPage.astro";
 import { Code, Aside, Type } from "~/components";
-import FieldBadges from "~/components/fields/FieldBadges.jsx";
+import FieldBadges from "~/components/fields/FieldBadges.tsx";
 
 export const getStaticPaths = (async () => {
 	const fields = await getEntry("fields", "index");
@@ -28,7 +28,6 @@ const { field } = Astro.props;
 // set in /src/pages/changelog/index/index.xml.ts
 marked.use({ walkTokens: null });
 
-let CodeExamples = null;
 const description = field.description;
 
 // Strong type coercion needed due to Starlight's component override for hideTitle
@@ -119,7 +118,7 @@ const starlightPageProps = {
 
 	<div class="!mt-8">
 		<span class="text-xs"
-			>Categories: <FieldBadges badges={field.categories} /></span
+			>Categories: <FieldBadges badges={field.categories as string[]} /></span
 		>
 	</div>
 </StarlightPage>

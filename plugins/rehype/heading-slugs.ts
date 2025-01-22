@@ -31,7 +31,9 @@ export default function () {
 					}
 				} else {
 					if (!element.properties.id) {
-						element.properties.id = slugs.slug(toString(element));
+						const string = toString(element).replaceAll(" ↗", "").trimEnd();
+
+						element.properties.id = slugs.slug(string);
 					}
 				}
 			}

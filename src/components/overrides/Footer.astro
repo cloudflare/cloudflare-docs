@@ -128,15 +128,12 @@ if (
 			<Default {...Astro.props} />
 			<div id="footer-links" class="flex flex-wrap items-center">
 				{Object.entries(links).map(([text, href]) => (
-					<a
-						href={href}
-						class="mx-2 my-2 text-xs text-black decoration-accent-600 dark:text-white dark:decoration-accent-200"
-					>
+					<a href={href} class="mx-2 my-2 text-xs text-black decoration-accent">
 						<span>{text}</span>
 					</a>
 				))}
 				{isProduction && (
-					<div class="mx-2 my-2 text-xs text-black underline decoration-accent-600 dark:text-white dark:decoration-accent-200">
+					<div class="mx-2 my-2 text-xs text-black [&>button]:underline [&>button]:decoration-accent">
 						<OneTrust />
 					</div>
 				)}

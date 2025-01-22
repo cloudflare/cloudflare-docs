@@ -42,7 +42,13 @@ This feature is available in early access and replaces the legacy [private netwo
 
 7. Add [Access policies](/cloudflare-one/policies/access/) to control who can connect to your application. All Access applications are deny by default -- a user must match an Allow policy before they are granted access.
 
-8. <Render file="access/access-choose-idps" product="cloudflare-one" />
+8. Configure how users will authenticate:
+
+		1. Select the [**Identity providers**](/cloudflare-one/identity/idp-integration/) you want to enable for your application.
+
+		2. (Recommended) If you plan to only allow access via a single IdP, turn on **Instant Auth**. End users will not be shown the [Cloudflare Access login page](/cloudflare-one/applications/login-page/). Instead, Cloudflare will redirect users directly to your SSO login event.
+
+		3. (Recommended) Turn on **WARP authentication identity** to allow users to authenticate to the application using their [WARP session identity](/cloudflare-one/connections/connect-devices/warp/configure-warp/warp-sessions/). We recommend turning this on if your application is not in the browser and cannot handle a `302` redirect.
 
 9. Select **Next**.
 

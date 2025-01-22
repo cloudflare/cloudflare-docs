@@ -2,14 +2,23 @@ import { useState } from "react";
 import ModelInfo from "./models/ModelInfo";
 import ModelBadges from "./models/ModelBadges";
 import { authorData } from "./models/data";
+import type { WorkersAIModelsSchema } from "~/schemas";
 
-const ModelCatalog = ({ models }) => {
-	const [filters, setFilters] = useState({
+type Filters = {
+	search: string;
+	authors: string[];
+	tasks: string[];
+	capabilities: string[];
+};
+
+const ModelCatalog = ({ models }: { models: WorkersAIModelsSchema[] }) => {
+	const [filters, setFilters] = useState<Filters>({
 		search: "",
 		authors: [],
 		tasks: [],
 		capabilities: [],
 	});
+
 	const mapped = models.map((model) => ({
 		model: {
 			...model,
@@ -22,6 +31,8 @@ const ModelCatalog = ({ models }) => {
 					if (property_id === "function_calling" && value === "true") {
 						return "Function calling";
 					}
+
+					return [];
 				})
 				.filter((p) => Boolean(p)),
 		},
@@ -101,15 +112,17 @@ const ModelCatalog = ({ models }) => {
 								className="mr-2"
 								value={task}
 								onClick={(e) => {
-									if (e.target.checked) {
+									const target = e.target as HTMLInputElement;
+
+									if (target.checked) {
 										setFilters({
 											...filters,
-											tasks: [...filters.tasks, e.target.value],
+											tasks: [...filters.tasks, target.value],
 										});
 									} else {
 										setFilters({
 											...filters,
-											tasks: filters.tasks.filter((f) => f !== e.target.value),
+											tasks: filters.tasks.filter((f) => f !== target.value),
 										});
 									}
 								}}
@@ -131,16 +144,18 @@ const ModelCatalog = ({ models }) => {
 								value={capability}
 								className="mr-2"
 								onClick={(e) => {
-									if (e.target.checked) {
+									const target = e.target as HTMLInputElement;
+
+									if (target.checked) {
 										setFilters({
 											...filters,
-											capabilities: [...filters.capabilities, e.target.value],
+											capabilities: [...filters.capabilities, target.value],
 										});
 									} else {
 										setFilters({
 											...filters,
 											capabilities: filters.capabilities.filter(
-												(f) => f !== e.target.value,
+												(f) => f !== target.value,
 											),
 										});
 									}
@@ -163,16 +178,18 @@ const ModelCatalog = ({ models }) => {
 								className="mr-2"
 								value={author}
 								onClick={(e) => {
-									if (e.target.checked) {
+									const target = e.target as HTMLInputElement;
+
+									if (target.checked) {
 										setFilters({
 											...filters,
-											authors: [...filters.authors, e.target.value],
+											authors: [...filters.authors, target.value],
 										});
 									} else {
 										setFilters({
 											...filters,
 											authors: filters.authors.filter(
-												(f) => f !== e.target.value,
+												(f) => f !== target.value,
 											),
 										});
 									}
@@ -199,9 +216,8 @@ const ModelCatalog = ({ models }) => {
 							property_id === "beta" && value === "true",
 					);
 
-					const author =
-						authorData[model.model.name.split("/")[1]]?.name ??
-						model.model.name.split("/")[1];
+					const author = model.model.name.split("/")[1];
+					const authorInfo = authorData[author];
 
 					return (
 						<a
@@ -210,14 +226,15 @@ const ModelCatalog = ({ models }) => {
 							href={`/workers-ai/models/${model.model_display_name}`}
 						>
 							<div className="-mb-1 flex items-center">
-								{authorData[model.model.name.split("/")[1]]?.logo ? (
+								{authorInfo?.logo ? (
 									<img
 										className="mr-2 block w-6"
-										src={authorData[model.model.name.split("/")[1]]?.logo}
+										src={authorInfo.logo}
+										alt={`${authorInfo.name} logo`}
 									/>
 								) : (
 									<div className="mr-2 flex h-6 w-6 items-center justify-center rounded-md bg-gray-100 text-sm font-black uppercase text-gray-400">
-										{author.substr(0, 1)}
+										{author.slice(0, 1)}
 									</div>
 								)}
 								<span className="overflow-hidden text-ellipsis whitespace-nowrap text-lg font-semibold">

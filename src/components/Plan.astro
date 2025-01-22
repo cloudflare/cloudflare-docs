@@ -27,15 +27,14 @@ const props = z
 		}),
 	);
 
-// @ts-ignore
+// @ts-expect-error plans are not typed
 const { id, type } = props.parse(Astro.props);
 
 let availability;
 if (type) {
-	// @ts-ignore
+	// @ts-expect-error plans are not typed
 	availability = mappings[type];
 } else {
-	// @ts-ignore
 	availability = await indexPlans(id);
 }
 ---

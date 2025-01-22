@@ -5,7 +5,7 @@ sidebar:
   order: 3
 ---
 
-import { GlossaryTooltip } from "~/components";
+import { GlossaryTooltip, Render } from "~/components";
 
 A user session determines how long a user can access an Access application without re-authenticating.
 
@@ -22,6 +22,8 @@ When a user logs in to an application protected by Access, Access validates thei
 The user can access the application for the entire duration of the application token's lifecycle. When the application token expires, Cloudflare will automatically issue a new application token if the global token is still valid (and the user's identity still passes your Access policies). If the global token has also expired, the user will be prompted to re-authenticate with the IdP.
 
 The global token expiration is usually set to equal or exceed the application token expiration. Setting a longer global token provides a more secure way to allow for longer user sessions, since the global token cannot be used to directly access an application.
+
+<Render file="access/one-time-pin-warning" />
 
 ### Set global session duration
 

@@ -1823,6 +1823,10 @@ The minimum required Wrangler version to use this command is 3.66.0.
   - Leave the path blank to use the default option, e.g. `npx wrangler types --x-include-runtime`
   - A custom path must be relative to the project root, e.g. `./my-runtime-types.d.ts`
   - A custom path must have a `d.ts` extension.
+- `--strict-vars` <Type text="boolean" /> <MetaInfo text="optional (default: true)" />
+  - Control the types that Wrangler generates for `vars` bindings.
+  - If `true`, (the default) Wrangler generates literal and union types for bindings (e.g. `myEnv: 'my dev variable' | 'my prod variable'`).
+  - If `false`, Wrangler generates generic types (e.g. `myEnv: string`). This is useful when variables change frequently, especially when working across multiple environments.
 
 <Render file="wrangler-commands/global-flags" product="workers" />
 

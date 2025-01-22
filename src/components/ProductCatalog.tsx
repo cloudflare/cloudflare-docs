@@ -7,11 +7,13 @@ export type ProductData = CollectionEntry<"products"> & {
 	groups: string[];
 };
 
+type Filters = {
+	search: string;
+	groups: string[];
+};
+
 const ProductCatalog = ({ products }: { products: ProductData[] }) => {
-	const [filters, setFilters] = useState<{
-		search: string;
-		groups: string[];
-	}>({
+	const [filters, setFilters] = useState<Filters>({
 		search: "",
 		groups: [],
 	});

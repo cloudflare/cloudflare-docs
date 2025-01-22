@@ -5,6 +5,10 @@ productLink: "/cloudflare-one/policies/gateway/"
 productArea: Cloudflare One
 productAreaLink: /cloudflare-one/changelog/
 entries:
+  - publish_date: "2025-01-08"
+    title: Bring your own resolver IP (BYOIP) for DNS locations
+    description: |-
+      Enterprise users can now [provide an IP address](/cloudflare-one/connections/connect-devices/agentless/dns/locations/dns-resolver-ips/#bring-your-own-dns-resolver-ip) for a private DNS resolver to use with [DNS locations](/cloudflare-one/connections/connect-devices/agentless/dns/locations/). Gateway supports bringing your own IPv4 and IPv6 addresses.
   - publish_date: "2024-11-20"
     title: Category filtering in the network policy builder
     description: |-

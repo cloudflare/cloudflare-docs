@@ -1,6 +1,5 @@
 import { z, defineCollection } from "astro:content";
 import { docsSchema, i18nSchema } from "@astrojs/starlight/schema";
-import { file } from "astro/loaders";
 import {
 	appsSchema,
 	changelogsSchema,
@@ -12,8 +11,8 @@ import {
 	glossarySchema,
 	learningPathsSchema,
 	videosSchema,
+	workersAiModelsSchema,
 	warpReleasesSchema,
-	workersAiSchema,
 	changelogsNextSchema,
 	fieldsSchema,
 } from "~/schemas";
@@ -67,7 +66,7 @@ export const collections = {
 		type: "data",
 	}),
 	"workers-ai-models": defineCollection({
-		schema: workersAiSchema,
+		schema: workersAiModelsSchema,
 		type: "data",
 	}),
 	videos: defineCollection({
