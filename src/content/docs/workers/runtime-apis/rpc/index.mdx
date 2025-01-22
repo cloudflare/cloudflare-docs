@@ -255,3 +255,4 @@ In this video, we explore how Cloudflare Workers support Remote Procedure Calls 
 ## Limitations
 
 * [Smart Placement](/workers/configuration/smart-placement/) is currently ignored when making RPC calls. If Smart Placement is enabled for Worker A, and Worker B declares a [Service Binding](/workers/runtime-apis/bindings) to it, when Worker B calls Worker A via RPC, Worker A will run locally, on the same machine.
+* The maximum serialized RPC limit is 1 MB. Consider using [`ReadableStream`](/workers/runtime-apis/streams/readablestream/) when returning more data.
