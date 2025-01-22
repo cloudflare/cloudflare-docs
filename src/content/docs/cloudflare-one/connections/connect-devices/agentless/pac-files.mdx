@@ -208,24 +208,26 @@ To get the domain of a proxy endpoint:
 
 <TabItem label="API">
 
-1. Use the [List proxy endpoints](/api/resources/zero_trust/subresources/gateway/subresources/proxy_endpoints/methods/list/) endpoint to get a list of your proxy endpoints and their details. For example:
+1. Use the [List proxy endpoints](/api/resources/zero_trust/subresources/gateway/subresources/proxy_endpoints/methods/list/) operation to get a list of your proxy endpoints and their details. For example:
 
    ```bash
    curl https://api.cloudflare.com/client/v4/accounts/{account_id}/gateway/proxy_endpoints \
    --header "Authorization: Bearer <API_TOKEN>"
    ```
 
-   ```json {9} output
-   "success": true,
-   "result": {
-    "id": "ed35569b41ce4d1facfe683550f54086",
-    "created_at": "2014-01-01T05:20:00.12345Z",
-    "ips": [
-      "192.0.2.1/32"
-    ],
-    "name": "DevOps team",
-    "subdomain": "oli3n9zkz5.proxy.cloudflare-gateway.com",
-    "updated_at": "2014-01-01T05:20:00.12345Z"
+   ```json {10} output
+   {
+    "success": true,
+    "result": {
+      "id": "ed35569b41ce4d1facfe683550f54086",
+      "created_at": "2014-01-01T05:20:00.12345Z",
+      "ips": [
+        "192.0.2.1/32"
+      ],
+      "name": "DevOps team",
+      "subdomain": "oli3n9zkz5.proxy.cloudflare-gateway.com",
+      "updated_at": "2014-01-01T05:20:00.12345Z"
+    }
    }
    ```
 
@@ -243,24 +245,24 @@ Using your proxy endpoint's domain, you can get the IP addresses assigned to the
 <TabItem label="macOS and Linux">
 
 1. Open a terminal.
-2. Run `dig` on your proxy endpoint's `A` records to get its IPv4 addresses. For example:
+2. Run `dig` on your proxy endpoint's A records to get its IPv4 addresses. For example:
 
    ```bash
    dig A example.cloudflare-gateway.com +short
    ```
 
-   ```bash output
+   ```txt output
    162.159.36.5
    162.159.36.20
    ```
 
-3. Run `dig` on your proxy endpoint's `AAAA` records to get its IPv6 addresses. For example:
+3. Run `dig` on your proxy endpoint's AAAA records to get its IPv6 addresses. For example:
 
    ```bash
    dig AAAA example.cloudflare-gateway.com +short
    ```
 
-   ```bash output
+   ```txt output
    2606:4700:54::a29f:2407
    2606:4700:5c::a29f:2e07
    ```
@@ -270,26 +272,26 @@ Using your proxy endpoint's domain, you can get the IP addresses assigned to the
 <TabItem label="Windows">
 
 1. Open a PowerShell terminal.
-2. Run `Resolve-DnsName` on your proxy endpoint's `A` records. Your proxy endpoint's IPv4 addresses will appear under `IPAddress`. For example:
+2. Run `Resolve-DnsName` on your proxy endpoint's A records. Your proxy endpoint's IPv4 addresses will appear under `IPAddress`. For example:
 
    ```powershell
    Resolve-DnsName -Name example.cloudflare-gateway.com -Type A
    ```
 
-   ```powershell output
+   ```txt output
    Name                                           Type   TTL   Section    IPAddress
    ----                                           ----   ---   -------    ---------
    example.cloudflare-gateway.com                 A      300   Answer     162.159.36.5
    example.cloudflare-gateway.com                 A      300   Answer     162.159.36.20
    ```
 
-3. Run `Resolve-DnsName` on your proxy endpoint's `AAAA` records. Your proxy endpoint's IPv6 addresses will appear under `IPAddress`. For example:
+3. Run `Resolve-DnsName` on your proxy endpoint's AAAA records. Your proxy endpoint's IPv6 addresses will appear under `IPAddress`. For example:
 
    ```powershell
    Resolve-DnsName -Name example.cloudflare-gateway.com -Type AAAA
    ```
 
-   ```powershell output
+   ```txt output
    Name                                           Type   TTL   Section    IPAddress
    ----                                           ----   ---   -------    ---------
    example.cloudflare-gateway.com                 AAAA   300   Answer     2606:4700:5c::a29f:2e07
