@@ -32,7 +32,7 @@
 		"@astrojs/sitemap": "3.2.1",
 		"@astrojs/starlight": "0.29.3",
 		"@astrojs/starlight-docsearch": "0.3.0",
-		"@astrojs/starlight-tailwind": "2.0.3",
+		"@astrojs/starlight-tailwind": "3.0.0",
 		"@astrojs/tailwind": "5.1.4",
 		"@cloudflare/puppeteer": "0.0.14",
 		"@cloudflare/vitest-pool-workers": "0.6.0",
