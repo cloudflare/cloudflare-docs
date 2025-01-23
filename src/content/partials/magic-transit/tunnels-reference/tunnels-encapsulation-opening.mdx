@@ -179,6 +179,7 @@ The Child SA. Sometimes referred to as Phase 2 as per IKEv1 language.
 - If your router is behind NAT and requires NAT traversal (NAT-T), then your router must initiate IKE communication on port `4500`. Most devices support configuring NAT-T to begin on port `4500` (exceptions include at least some versions of the Cisco ASA). NAT-T is not supported for IKE sessions which begin on port `500` and then switch to port `4500`.
 - (Uncommon) Extended Sequence Numbers (ESN) must be disabled.
 - If your tunnels need replay protection, enable Dead Peer Detection (DPD) in your router and select the option that restarts your IKE session when a DPD timeout occurs. This "restart" option ensures that the connection can recover in the event that a Cloudflare server goes offline. If your router does not expose this setting, check the router documentation for its dead peer detection behavior.
+- Your tunnels should be set to a reasonable key lifetime for IKE (24 hours) and IPsec (8 hours) to protect against control plane disruption. Additionally, for a device with two tunnels, there needs to be a small lifetime difference between them (1 hour) to ensure redundancy, so that both tunnels won't attempt to renew their key at the same time. For example, to configure IPsec lifetime, set `TUNNEL_1` with the recommended 8 hours and `TUNNEL_2` with a shorter non-overlaping IPsec lifetime of 7 hours.
 
 </Details>
 
