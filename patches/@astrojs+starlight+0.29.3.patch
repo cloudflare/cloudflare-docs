@@ -1,0 +1,26 @@
+diff --git a/node_modules/@astrojs/starlight/user-components/Tabs.astro b/node_modules/@astrojs/starlight/user-components/Tabs.astro
+index 4234eb0..276d211 100644
+--- a/node_modules/@astrojs/starlight/user-components/Tabs.astro
++++ b/node_modules/@astrojs/starlight/user-components/Tabs.astro
+@@ -3,10 +3,11 @@ import Icon from './Icon.astro';
+ import { processPanels } from './rehype-tabs';
+ 
+ interface Props {
++	IconComponent?: typeof Icon;
+ 	syncKey?: string;
+ }
+ 
+-const { syncKey } = Astro.props;
++const { syncKey, IconComponent = Icon } = Astro.props;
+ const panelHtml = await Astro.slots.render('default');
+ const { html, panels } = processPanels(panelHtml);
+ 
+@@ -84,7 +85,7 @@ if (isSynced) {
+ 								aria-selected={idx === 0 ? 'true' : 'false'}
+ 								tabindex={idx !== 0 ? -1 : 0}
+ 							>
+-								{icon && <Icon name={icon} />}
++								{icon && <IconComponent name={icon} />}
+ 								{label}
+ 							</a>
+ 						</li>

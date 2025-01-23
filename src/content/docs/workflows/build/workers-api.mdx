@@ -22,10 +22,26 @@ export class MyWorkflow extends WorkflowEntrypoint<Env, Params> {
 };
 ```
 
+### run
+
 * <code>run(event: WorkflowEvent&lt;T&gt;, step: WorkflowStep): Promise&lt;T&gt;</code>
 
   * `event` - the event passed to the Workflow, including an optional `payload` containing data (parameters)
   * `step` - the `WorkflowStep` type that provides the step methods for your Workflow
+
+The `run` method can optionally return data, which is available when querying the instance status via the [Workers API](/workflows/build/workers-api/#instancestatus), [REST API](/api/resources/workflows/subresources/instances/subresources/status/) and the Workflows dashboard. This can be useful if your Workflow is computing a result, returning the key to data stored in object storage, or generating some kind of identifier you need to act on.
+
+```ts
+export class MyWorkflow extends WorkflowEntrypoint<Env, Params> {
+	async run(event: WorkflowEvent<Params>, step: WorkflowStep) {
+	  // Steps here
+		let someComputedState = step.do("my step", async () => { })
+
+		// Optional: return state from our run() method
+		return someComputedState
+	}
+};
+```
 
 The `WorkflowEvent` type accepts an optional [type parameter](https://www.typescriptlang.org/docs/handbook/2/generics.html#working-with-generic-type-variables) that allows you to provide a type for the `payload` property within the `WorkflowEvent`.
 
