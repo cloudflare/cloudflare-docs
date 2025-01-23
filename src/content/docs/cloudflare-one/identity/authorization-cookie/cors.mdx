@@ -51,8 +51,8 @@ There are three ways you can resolve this error:
 You can configure Cloudflare to send OPTIONS requests directly to your origin server. To bypass Access for OPTIONS requests:
 
 1. In [Zero Trust](https://one.dash.cloudflare.com), go to **Access** > **Applications**.
-2. Locate the origin that will be receiving OPTIONS requests and select **Edit**.
-3. In the **Settings** tab, scroll down to **CORS settings**.
+2. Locate the origin that will be receiving OPTIONS requests and select **Configure**.
+3. Go to **Advanced settings** > **Cross-Origin Resource Sharing (CORS) settings**.
 4. Turn on **Bypass options requests to origin**. This will remove all existing CORS settings for this application.
 
 It is still important to enforce CORS for the Access JWT -- this option should only be used if you have CORS enforcement established in your origin server.
@@ -65,11 +65,11 @@ To configure how Cloudflare responds to preflight requests:
 
 1. In [Zero Trust](https://one.dash.cloudflare.com), go to **Access** > **Applications**.
 
-2. Locate the origin that will be receiving OPTIONS requests and select **Edit**.
+2. Locate the origin that will be receiving OPTIONS requests and select **Configure**.
 
-3. In the **Settings** tab, scroll down to **CORS settings**.
+3. Go to **Advanced settings** > **Cross-Origin Resource Sharing (CORS) settings**.
 
-4. Configure the dashboard [CORS settings](https://developer.mozilla.org/en-US/docs/Web/HTTP/CORS#the_http_response_headers) to match the response headers sent by your origin.
+4. Configure these [CORS settings](https://developer.mozilla.org/en-US/docs/Web/HTTP/CORS#the_http_response_headers) to match the response headers sent by your origin.
 
    For example, if you have configured `api.mysite.com`to return the following headers:
 

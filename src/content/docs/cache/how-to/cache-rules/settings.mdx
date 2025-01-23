@@ -186,7 +186,7 @@ Enterprise customers have these additional options for custom cache keys:
   To check for a header's presence without including its value, use the **Check presence of** option. You can also choose whether to **Include origin header**.
 
 - In the **Cookie** section, you can include cookie names and their values, and check for the presence of another cookie.
-- In the **Host** section, you can select **Use original host** and **Resolved host**. In the **User** section, you can select **Device type**, **Country**, and **Language**.
+- In the **Host** section, you can select **Use original host** and **Resolved host**. In the **User** section, you can select **Device type**, **Country**, and **Language**. Using **Resolved host** means the cache key will contain whatever hostname was used to resolve the origin IP which can be different depending on whether the [resolve override](/rules/origin-rules/features/#dns-record) feature is on or not.
 
 <Details header="API information">
 
