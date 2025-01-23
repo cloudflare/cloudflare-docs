@@ -12,7 +12,15 @@ Guidelines:
 - For instructions related to the feature (such as instructions on turning the feature on or off), you may mention again it's in beta, and also include "(beta)" in the side nav.
 :::
 
-## Example
+## Component
+
+:::caution
+
+Whilst the component from Starlight supports `variant` and `size` props, these are ignored in our styling.
+
+:::
+
+To adopt this styling in a React component, please use a `span` with the `sl-badge` class. In order to style the badge as gray, please apply the `gray` class.
 
 ```mdx live
 import { InlineBadge } from '~/components';
@@ -27,7 +35,7 @@ import { InlineBadge } from '~/components';
 
 ### Legacy <InlineBadge preset="legacy" />
 
-### Custom <InlineBadge text="Custom" variant="success" />
+### Custom <InlineBadge text="Custom" class="gray" />
 ```
 
 ## Inputs

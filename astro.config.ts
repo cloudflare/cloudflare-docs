@@ -164,6 +164,7 @@ export default defineConfig({
 			sidebar: await autogenSections(),
 			customCss: [
 				"./src/asides.css",
+				"./src/badges.css",
 				"./src/code.css",
 				"./src/headings.css",
 				"./src/input.css",

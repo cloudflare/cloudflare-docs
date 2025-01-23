@@ -1,0 +1,40 @@
+:root {
+	--badge-background: #b9d6ff;
+	--badge-text: #002b67;
+
+	.sl-badge {
+		/* Unset Starlight styling */
+		border: none;
+		font-family: var(--__sl-font);
+		overflow-wrap: unset;
+
+		/* Apply styling from https://www.npmjs.com/package/@cloudflare/component-label */
+		align-items: center;
+		border-radius: 50px;
+		display: inline-flex;
+		font-size: 12px;
+		font-weight: 400;
+		line-height: 1;
+		user-select: none;
+		white-space: nowrap;
+		padding: 4px 8px;
+
+		background-color: var(--badge-background);
+		color: var(--badge-text);
+
+		&.gray {
+			background-color: #d9d9d9;
+			color: #313131;
+		}
+	}
+}
+
+:root[data-theme="dark"] {
+	--badge-background: #f8a054;
+	--badge-text: #1d1d1d;
+
+	.sl-badge.gray {
+		background-color: #b6b6b6;
+		color: #1d1d1d;
+	}
+}
