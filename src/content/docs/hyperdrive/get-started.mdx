@@ -74,23 +74,11 @@ This will create a new `hyperdrive-tutorial` directory. Your new `hyperdrive-tut
 - A `"Hello World"` [Worker](/workers/get-started/guide/#3-write-code) at `src/index.ts`.
 - A [`wrangler.toml`](/workers/wrangler/configuration/) configuration file. `wrangler.toml` is how your `hyperdrive-tutorial` Worker will connect to Hyperdrive.
 
-:::note
+### Enable Node.js compatibility
 
-Note that the `wrangler.toml` file contains the following option:
+[Node.js compatibility](/workers/runtime-apis/nodejs/) is required for database drivers, including Postgres.js, and needs to be configured for your Workers project.
 
-import { WranglerConfig } from "~/components";
-
-<WranglerConfig>
-
-```toml title="wrangler.toml"
-compatibility_flags = [ "nodejs_compat" ]
-```
-
-</WranglerConfig>
-
-This enables the Node.js compatibility mode which is required for database drivers, including Postgres.js.
-
-:::
+<Render file="nodejs_compat" product="workers" />
 
 ## 3. Connect Hyperdrive to a database
 
