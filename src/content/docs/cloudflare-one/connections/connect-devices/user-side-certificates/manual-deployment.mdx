@@ -757,13 +757,13 @@ defaults read /Library/Preferences/com.google.drivefs.settings
 
 3. Apply the newly created root certificate to your Google Drive application. For example:
 
-   ```sh
+   ```powershell
    Set-ItemProperty -Path "HKLM:\SOFTWARE\Google\DriveFS" -Name "TrustedRootCertsFile" -Value "$HOME\Documents\gdrivecerts.pem"
    ```
 
 You can verify the update with the following command.
 
-```sh
+```powershell
 Get-ItemProperty -Path "HKLM:\SOFTWARE\Google\DriveFS" | Select-Object TrustedRootCertsFile
 ```
 
