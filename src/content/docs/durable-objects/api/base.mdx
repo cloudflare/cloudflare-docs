@@ -7,7 +7,7 @@ sidebar:
 
 import { Render, Tabs, TabItem, GlossaryTooltip, Type, MetaInfo, TypeScriptExample } from "~/components";
 
-The `DurableObject` base class is an abstract class which all Durable Objects inherit from. This base class provides a set of optional methods, frequently referred to as handler methods, which can respond to events, for example a webSocketMessage when using the [WebSocket Hibernation API](#/durable-objects/best-practices/websockets/#websocket-hibernation-api). To provide a concrete example, here is a Durable Object `MyDurableObject` which extends `DurableObject` and implements the fetch handler to return "Hello, World!" to the calling Worker.
+The `DurableObject` base class is an abstract class which all Durable Objects inherit from. This base class provides a set of optional methods, frequently referred to as handler methods, which can respond to events, for example a webSocketMessage when using the [WebSocket Hibernation API](/durable-objects/best-practices/websockets/#websocket-hibernation-api). To provide a concrete example, here is a Durable Object `MyDurableObject` which extends `DurableObject` and implements the fetch handler to return "Hello, World!" to the calling Worker.
 
 <TypeScriptExample>
 ```ts

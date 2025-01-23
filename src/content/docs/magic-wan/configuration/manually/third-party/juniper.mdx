@@ -197,10 +197,10 @@ Add an IKE proposal that specifies the [Phase 1 Configuration Parameters](/magic
 
 ```txt
 set security ike proposal cf_magic_wan_ike_prop authentication-method pre-shared-keys
-set security ike proposal cf_magic_wan_ike_prop dh-group group14
+set security ike proposal cf_magic_wan_ike_prop dh-group group20
 set security ike proposal cf_magic_wan_ike_prop authentication-algorithm sha-256
 set security ike proposal cf_magic_wan_ike_prop encryption-algorithm aes-256-cbc
-set security ike proposal cf_magic_wan_ike_prop lifetime-seconds 28800
+set security ike proposal cf_magic_wan_ike_prop lifetime-seconds 86400
 ```
 
 ```txt
@@ -208,10 +208,10 @@ admin@srx300> show configuration security ike proposal cf_magic_wan_ike_prop
 ```
 ```txt output
 authentication-method pre-shared-keys;
-dh-group group14;
+dh-group group20;
 authentication-algorithm sha-256;
 encryption-algorithm aes-256-cbc;
-lifetime-seconds 28800;
+lifetime-seconds 86400;
 ```
 
 #### IKE policies
@@ -729,7 +729,7 @@ The log file can be viewed by doing the following:
 	tail -f /var/log/ike-debug.log
 	```
 
-3. Press  <kbd>CTRL</kbd> + <kbd>C</kbd> when finished.
+3. Press `CTRL + C` when finished.
 4. Type `exit` to return to the operational mode prompt.
 
 Either deactivate `traceoptions` or delete `traceoptions` once debugging is complete.

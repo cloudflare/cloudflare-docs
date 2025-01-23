@@ -513,13 +513,11 @@ Multiple DH groups and authentication settings are defined in the desired order.
 
 | Name                | Option                        | Value                                        |
 | ------------------- | ----------------------------- | -------------------------------------------- |
-| `CF_IKE_Crypto_CBC` | DH Group                      | **group14**                                  |
+| `CF_IKE_Crypto_CBC` | DH Group                      | **group20**                                  |
 |                     | Authentication                | **sha512** <br/> **sha384** <br/> **sha256** |
 |                     | Encryption                    | **aes-256-cbc**                              |
-|                     | Key Lifetime                  | 8 hours                                      |
+|                     | Key Lifetime                  | 24 hours                                      |
 |                     | IKEv2 Authentication Multiple | `0`                                          |
-
-![IKE crypto profile you need to set up on your device for Phase 1](~/assets/images/magic-wan/third-party/palo-alto/panw_ipsec_tunnels/01_ike_crypto_profile.png)
 
 #### Set up via command line
 
@@ -527,9 +525,9 @@ You can also set up the crypto profile for Phase 1 via the command line:
 
 ```bash
 set network ike crypto-profiles ike-crypto-profiles CF_IKE_Crypto_CBC hash [ sha512 sha384 sha256 ]
-set network ike crypto-profiles ike-crypto-profiles CF_IKE_Crypto_CBC dh-group [ group14 ]
+set network ike crypto-profiles ike-crypto-profiles CF_IKE_Crypto_CBC dh-group [ group20 ]
 set network ike crypto-profiles ike-crypto-profiles CF_IKE_Crypto_CBC encryption aes-256-cbc
-set network ike crypto-profiles ike-crypto-profiles CF_IKE_Crypto_CBC lifetime hours 8
+set network ike crypto-profiles ike-crypto-profiles CF_IKE_Crypto_CBC lifetime hours 24
 set network ike crypto-profiles ike-crypto-profiles CF_IKE_Crypto_CBC authentication-multiple 0
 ```
 
@@ -545,10 +543,8 @@ Multiple Authentication settings are defined in the desired order. Palo Alto Net
 | --------------------- | -------------- | ------------------------- |
 | `CF_IPsec_Crypto_CBC` | Encryption     | **aes-256-cbc**           |
 |                       | Authentication | **sha256** <br/> **sha1** |
-|                       | DH Group       | **group14**               |
-|                       | Lifetime       | 1 hour                    |
-
-![IPsec crypto profile you need to set up on your device](~/assets/images/magic-wan/third-party/palo-alto/panw_ipsec_tunnels/02_ipsec_crypto_profile.png)
+|                       | DH Group       | **group20**               |
+|                       | Lifetime       | 8 hours                   |
 
 #### Set up via command line
 
@@ -557,8 +553,8 @@ You can also set up the IPsec crypto profile for Phase 2 via the command line:
 ```bash
 set network ike crypto-profiles ipsec-crypto-profiles CF_IPsec_Crypto_CBC esp authentication [ sha256 sha1 ]
 set network ike crypto-profiles ipsec-crypto-profiles CF_IPsec_Crypto_CBC esp encryption aes-256-cbc
-set network ike crypto-profiles ipsec-crypto-profiles CF_IPsec_Crypto_CBC lifetime hours 1
-set network ike crypto-profiles ipsec-crypto-profiles CF_IPsec_Crypto_CBC dh-group group14
+set network ike crypto-profiles ipsec-crypto-profiles CF_IPsec_Crypto_CBC lifetime hours 8
+set network ike crypto-profiles ipsec-crypto-profiles CF_IPsec_Crypto_CBC dh-group group20
 ```
 
 ### IKE Gateways
@@ -751,7 +747,7 @@ Gateway ID      Peer-Address           Gateway Name           Role SN       Algo
 
 ----------      ------------           ------------           ---- --       ---------             -----------     ----------      -- -----  --
 
-2               162.159.66.164         CF_Magic_WAN_IKE_01    Init 67       PSK/DH14/A256/SHA256  Jun.04 21:09:13 Jun.05 05:09:13 0  1      Established
+2               162.159.66.164         CF_Magic_WAN_IKE_01    Init 67       PSK/DH20/A256/SHA256  Jun.04 21:09:13 Jun.05 05:09:13 0  1      Established
 
 IKEv2 IPsec Child SAs
 Gateway Name           TnID     Tunnel                    ID       Parent   Role SPI(in)  SPI(out) MsgID    ST
@@ -777,7 +773,7 @@ Gateway ID      Peer-Address           Gateway Name           Role SN       Algo
 
 ----------      ------------           ------------           ---- --       ---------             -----------     ----------      -- -----  --
 
-3               172.64.242.164         CF_Magic_WAN_IKE_02    Init 66       PSK/DH14/A256/SHA256  Jun.04 20:37:42 Jun.05 04:37:42 0  2      Established
+3               172.64.242.164         CF_Magic_WAN_IKE_02    Init 66       PSK/DH20/A256/SHA256  Jun.04 20:37:42 Jun.05 04:37:42 0  2      Established
 
 IKEv2 IPsec Child SAs
 Gateway Name           TnID     Tunnel                    ID       Parent   Role SPI(in)  SPI(out) MsgID    ST

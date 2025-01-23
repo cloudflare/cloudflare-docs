@@ -76,11 +76,11 @@ If your organization has multiple Cloudflare accounts, also consider using zone 
 
 1. At your authoritative DNS provider:
 
-   1. Create `CNAME` records pointing to `{your-hostname}.cdn.cloudflare.net` for every hostname you wish to proxy through Cloudflare.
+   1. Create CNAME records pointing to `{your-hostname}.cdn.cloudflare.net` for every hostname you wish to proxy through Cloudflare.
 
    <Details header="Example CNAME record at authoritative DNS provider">
 
-   The `CNAME` record for `www.example.com` would be:
+   The CNAME record for `www.example.com` would be:
 
    ```txt
    www.example.com CNAME www.example.com.cdn.cloudflare.net
@@ -88,7 +88,7 @@ If your organization has multiple Cloudflare accounts, also consider using zone 
 
    </Details>
 
-   2. Remove any previously existing `A`, `AAAA`, or `CNAME` records referencing the hostnames you want to proxy through Cloudflare. For these hostnames, leave only the records pointing to `{your-hostname}.cdn.cloudflare.net`.
+   2. Remove any previously existing A, AAAA, or CNAME records referencing the hostnames you want to proxy through Cloudflare. For these hostnames, leave only the records pointing to `{your-hostname}.cdn.cloudflare.net`.
 
 2. Repeat this process for each subdomain that should be proxied to Cloudflare.
 

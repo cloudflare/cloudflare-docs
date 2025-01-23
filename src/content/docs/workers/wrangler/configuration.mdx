@@ -10,12 +10,13 @@ description: Use a configuration file to customize the
 ---
 
 import { Render, Type, MetaInfo } from "~/components";
+import { FileTree } from "@astrojs/starlight/components";
 
-Wrangler optionally uses a `wrangler.json`/`wrangler.toml` file to customize the development and deployment setup for a Worker.
+Wrangler optionally uses a `wrangler.json`/`wrangler.jsonc`/`wrangler.toml` file to customize the development and deployment setup for a Worker.
 
 :::note
 
-As of Wrangler v3.91.0, Wrangler supports both JSON (`wrangler.json`) and TOML (`wrangler.toml`) for its configuration file. Prior to that version, only `wrangler.toml` was supported. The format of Wrangler's configuration file is exactly the same across both languages, except that the syntax is `JSON` rather than `TOML`. Throughout this page and the rest of Cloudflare's documentation config snippets are provided as both JSON and TOML.
+As of Wrangler v3.91.0 Wrangler supports both JSON (`wrangler.json` or `wrangler.jsonc`) and TOML (`wrangler.toml`) for its configuration file. Prior to that version, only `wrangler.toml` was supported. The format of Wrangler's configuration file is exactly the same across both languages, except that the syntax is `JSON` rather than `TOML`. Throughout this page and the rest of Cloudflare's documentation config snippets are provided as both JSON and TOML.
 
 :::
 
@@ -113,7 +114,11 @@ At a minimum, the `name`, `main` and `compatibility_date` keys are required to d
 
 - `workers_dev` <Type text="boolean" /> <MetaInfo text="optional" />
 
-  - Enables use of `*.workers.dev` subdomain to test and deploy your Worker. If you have a Worker that is only for `scheduled` events, you can set this to `false`. Defaults to `true`.
+  - Enables use of `*.workers.dev` subdomain to deploy your Worker. If you have a Worker that is only for `scheduled` events, you can set this to `false`. Defaults to `true`. Refer to [types of routes](#types-of-routes).
+
+- `preview_urls` <Type text="boolean" /> <MetaInfo text="optional" />
+
+  - Enables use of Preview URLs to test your Worker. Defaults to `true`. Refer to [Preview URLs](/workers/configuration/previews).
 
 - `route` <Type text="Route" /> <MetaInfo text="optional" />
 
@@ -166,7 +171,7 @@ At a minimum, the `name`, `main` and `compatibility_date` keys are required to d
 
 - `node_compat` <Type text="boolean" /> <MetaInfo text="optional" />
 
-  - Deprecated — Instead, [enable the `nodejs_compat_v2` compatibility flag](/workers/runtime-apis/nodejs/#enable-nodejs-with-workers), which enables both built-in Node.js APIs, and adds polyfills as necessary.
+  - Deprecated — Instead, [enable the `nodejs_compat` compatibility flag](/workers/configuration/compatibility-flags/#nodejs-compatibility-flag), which enables both built-in Node.js APIs, and adds polyfills as necessary.
     Setting `node_compat = true` will add polyfills for Node.js built-in modules and globals to your Worker's code, when bundled with Wrangler.
     This is powered by `@esbuild-plugins/node-globals-polyfill` which in itself is powered by [rollup-plugin-node-polyfills](https://github.com/ionic-team/rollup-plugin-node-polyfills/).
 
@@ -1195,7 +1200,7 @@ upload_source_maps = true
 
 ## Workers Sites
 
-<Render file="workers_sites"/>
+<Render file="workers_sites" />
 
 [Workers Sites](/workers/configuration/sites/) allows you to host static websites, or dynamic websites using frameworks like Vue or React, on Workers.
 
@@ -1256,3 +1261,92 @@ If you change your environment variables in the Cloudflare dashboard, Wrangler w
 If you change your routes in the dashboard, Wrangler will override them in the next deploy with the routes you have set in your Wrangler configuration file. To manage routes via the Cloudflare dashboard only, remove any route and routes keys from your Wrangler configuration file. Then add `workers_dev = false` to your Wrangler configuration file. For more information, refer to [Deprecations](/workers/wrangler/deprecations/#other-deprecated-behavior).
 
 Wrangler will not delete your secrets (encrypted environment variables) unless you run `wrangler secret delete <key>`.
+
+## Generated Wrangler configuration
+
+:::note
+
+This section describes a feature that can be implemented by frameworks and other build tools that are integrating with Wrangler.
+
+It is unlikely that an application developer will need to use this feature, but it is documented here to help you understand when Wrangler is using a generated configuration rather than the original, user's configuration.
+
+:::
+
+Some framework tools, or custom pre-build processes, generate a modified Wrangler configuration to be used to deploy the Worker code.
+In this case, the tool may also create a special `.wrangler/deploy/config.json` file that redirects Wrangler to use the generated configuration rather than the original, user's configuration.
+
+Wrangler uses this generated configuration only for the following deploy and dev related commands:
+
+- `wrangler deploy`
+- `wrangler dev`
+- `wrangler versions upload`
+- `wrangler versions deploy`
+- `wrangler pages deploy`
+- `wrangler pages build`
+- `wrangler pages build-env`
+
+When running these commands, Wrangler looks up the directory tree from the current working directory for a file at the path `.wrangler/deploy/config.json`.
+This file must contain only a single JSON object of the form:
+
+```json
+{ "configPath": "../../path/to/wrangler.json" }
+```
+
+When this `config.json` file exists, Wrangler will follow the `configPath` (relative to the `.wrangler/deploy/config.json` file) to find the generated Wrangler configuration file to load and use in the current command.
+Wrangler will display messaging to the user to indicate that the configuration has been redirected to a different file than the user's configuration file.
+
+### Custom build tool example
+
+A common example of using a redirected configuration is where a custom build tool, or framework, wants to modify the user's configuration to be used when deploying, by generating a new configuration in a `dist` directory.
+
+- First, the user writes code that uses Cloudflare Workers resources, configured via a user's `wrangler.toml` file.
+
+  ```toml
+  name = "my-worker"
+  main = "src/index.ts"
+  [[kv_namespaces]]
+  binding = "<BINDING_NAME1>"
+  id = "<NAMESPACE_ID1>"
+  ```
+
+  Note that this configuration points `main` at the user's code entry-point.
+
+- Then, the user runs a custom build, which might read the user's `wrangler.toml` to find the source code entry-point:
+
+  ```bash
+  > my-tool build
+  ```
+
+- This `my-tool` generates a `dist` directory that contains both compiled code and a new generated deployment configuration file.
+  It also creates a `.wrangler/deploy/config.json` file that redirects Wrangler to the new, generated deployment configuration file:
+
+  <FileTree>
+
+  - dist
+    - index.js
+    - wrangler.json
+  - .wrangler
+    - deploy
+      - config.json
+
+  </FileTree>
+
+  The generated `dist/wrangler.json` might contain:
+
+  ```json
+  {
+  	"name": "my-worker",
+  	"main": "./index.js",
+  	"kv_namespaces": [{ "binding": "<BINDING_NAME1>", "id": "<NAMESPACE_ID1>" }]
+  }
+  ```
+
+  Note that, now, the `main` property points to the generated code entry-point.
+
+  And the `.wrangler/deploy/config.json` contains the path to the generated configuration file:
+
+  ```json
+  {
+  	"configPath": "../../dist/wrangler.json"
+  }
+  ```

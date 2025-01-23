@@ -102,8 +102,8 @@ import { NonRetryableError } from 'cloudflare:workflows';
 export class MyWorkflow extends WorkflowEntrypoint<Env, Params> {
 	async run(event: WorkflowEvent<Params>, step: WorkflowStep) {
 	  await step.do("some step", async () => {
-			  if !(event.data) {
-					throw new NonRetryableError("event.data did not contain the expected payload")
+			  if !(event.payload.data) {
+					throw new NonRetryableError("event.payload.data did not contain the expected payload")
 				}
 			})
 	}

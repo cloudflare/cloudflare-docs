@@ -626,6 +626,54 @@ To install a certificate for use in a Docker container:
 
    </TabItem> </Tabs>
 
+### Java
+
+Java may have multiple certificate keystore locations depending on different installations or applications that include Java. Depending on your Java Virtual Machine (JVM) installation, you may need to install the certificate for each instance. You may also need to manually configure each Java application to use and trust the certificate.
+
+To install a Cloudflare root certificate in the system JVM, follow the procedure for your operating system. These steps require you to [download a `.pem` certificate](#download-the-cloudflare-root-certificate).
+
+<Tabs>
+<TabItem label="macOS and Linux" icon="seti:shell">
+
+1. Install [OpenSSL](https://www.openssl.org/).
+
+2. In a terminal, format the Cloudflare certificate for Java.
+
+   ```sh
+   openssl x509 -in Cloudflare_CA.pem -inform pem -out Cloudflare_CA.der -outform der
+   ```
+
+3. Import the converted certificate into the Java keystore.
+
+   ```sh
+   sudo $JAVA_HOME/bin/keytool -import -trustcacerts -alias 'Cloudflare Root CA' -file Cloudflare_CA.der -keystore $JAVA_HOME/jre/lib/security/cacerts -storepass changeit -noprompt 2>&1
+   ```
+
+4. Restart any instances of Java.
+
+</TabItem>
+
+<TabItem label="Windows" icon="seti:windows">
+
+1. Install [OpenSSL for Windows](https://slproweb.com/products/Win32OpenSSL.html).
+
+2. In an administrator PowerShell terminal, format the Cloudflare certificate for Java.
+
+   ```powershell
+   openssl x509 -in Cloudflare_CA.pem -inform pem -out Cloudflare_CA.der -outform der
+   ```
+
+3. Import the converted certificate into the Java keystore.
+
+   ```powershell
+   "%JAVA_HOME%\bin\keytool" -import -trustcacerts -alias "Cloudflare Root CA" -file Cloudflare_CA.der -keystore "%JAVA_HOME%\jre\lib\security\cacerts" -storepass changeit -noprompt
+   ```
+
+4. Restart any instances of Java.
+
+</TabItem>
+</Tabs>
+
 ### Google Cloud
 
 #### Google Cloud SDK
@@ -662,7 +710,7 @@ If you use Kaniko with Google Cloud SDK, you must install a Cloudflare certifica
 
 #### Google Drive for desktop
 
-To trust a Cloudflare root certificate in the Google Drive desktop application, follow the procedure for your operating system. These steps require you to [download the .pem certificate](#download-the-cloudflare-root-certificate).
+To trust a Cloudflare root certificate in the Google Drive desktop application, follow the procedure for your operating system. These steps require you to [download a `.pem` certificate](#download-the-cloudflare-root-certificate).
 
 <Tabs>
 <TabItem label="macOS" icon="apple">
@@ -760,7 +808,7 @@ To set the location of the certificate for use as an environment variable:
 
 ### PHP Composer
 
-The command below will set the [`cafile`](https://getcomposer.org/doc/06-config.md#cafile) configuration inside of `composer.json` to use the Cloudflare root certificate. Make sure to [download the certificate](#download-the-cloudflare-root-certificate) in the `.pem` file type.
+The command below will set the [`cafile`](https://getcomposer.org/doc/06-config.md#cafile) configuration inside of `composer.json` to use the Cloudflare root certificate. Make sure to [download a certificate](#download-the-cloudflare-root-certificate) in the `.pem` file type.
 
 ```sh
 composer config cafile [PATH_TO_CLOUDFLARE_CERT.pem]

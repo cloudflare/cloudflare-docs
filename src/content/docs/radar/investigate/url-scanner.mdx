@@ -21,7 +21,7 @@ Once you have the token, and you know your `account_id`, you are ready to make y
 To submit a URL to scan, the only required information is the URL to be scanned in the `POST` request body:
 
 ```bash
-curl "https://api.cloudflare.com/client/v4/accounts/{account_id}/urlscanner/scan" \
+curl "https://api.cloudflare.com/client/v4/accounts/{account_id}/urlscanner/v2/scan" \
 --header "Authorization: Bearer <API_TOKEN>" \
 --header "Content-Type: application/json" \
 --data '{
@@ -35,21 +35,15 @@ A successful response will have a status code of `200` and be similar to the fol
 
 ```json
 {
-  "errors": [],
-  "messages": [{
-      "message": "Submission successful"
-  }],
-  "result": {
-    "time": "2022-09-15T00:00:00Z",
-    "url": "https://www.example.com",
-    "uuid": "095be615-a8ad-4c33-8e9c-c7612fbf6c9f",
-    "visibility": "Public"
-  },
-  "success": true
+  "uuid": "095be615-a8ad-4c33-8e9c-c7612fbf6c9f",
+  "api": "https://api.cloudflare.com/client/v4/accounts/<accountId>/urlscanner/v2/result/095be615-a8ad-4c33-8e9c-c7612fbf6c9f",
+  "visibility": "public",
+  "url": "https://www.example.com",
+  "message": "Submission successful"
 }
 ```
 
-The `result.uuid` property in the response above identifies the scan and will be required when fetching the scan report.
+The `uuid` property in the response above identifies the scan and will be required when fetching the scan report.
 
 #### Submit a custom URL Scan
 
@@ -61,8 +55,10 @@ Here's an example request body with some custom configuration options:
 	"screenshotsResolutions": [
 		"desktop", "mobile", "tablet"
 	],
+  "customagent": "XXX-my-user-agent",
+  "referer": "example"
 	"customHeaders": {
-		"user-agent": "My-custom-user-agent",
+		"Authorization": "xxx-token",
 	},
 	"visibility": "Unlisted"
 }
@@ -70,44 +66,47 @@ Here's an example request body with some custom configuration options:
 
 Above, the visibility level is set as `Unlisted`, which means that the scan report won't be included in the [recent scans](https://radar.cloudflare.com/scan#recent-scans) list nor in search results. In  effect, only users with knowledge of the scan ID will be able to access it.
 
-There will also be three screenshots taken of the webpage, one per target device type. The [`User-Agent`](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/User-Agent) HTTP Header will be set as "My-custom-user-agent". Note that you can set any custom HTTP header, including [Authorization](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Authorization).
+There will also be three screenshots taken of the webpage, one per target device type. The [`User-Agent`](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/User-Agent) will be set as "XXX-my-user-agent". Note that you can set any custom HTTP header, including [Authorization](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Authorization).
 
 ### Get scan report
 
-Once the URL Scan submission is made, the current progress can be checked by calling `https://api.cloudflare.com/client/v4/accounts/{account_id}/urlscanner/scan/{scan_id}`. The `scan_id` will be the `result.uuid` value returned in the previous response.
+Once the URL Scan submission is made, the current progress can be checked by calling `https://api.cloudflare.com/client/v4/accounts/{account_id}/urlscanner/v2/result/{scan_id}`. The `scan_id` will be the `uuid` value returned in the previous response.
 
-While the scan is in progress, the HTTP status code will be `202`, once it's finished it will be `200`. Clients are advised to poll every 10-30 seconds.
+While the scan is in progress, the HTTP status code will be `404`; once it is finished, it will be `200`. Cloudflare recommends that you poll every 10-30 seconds.
 
-The response will include, among others, the following top properties in `result.scan`:
+The response will include, among others, the following top properties:
 
 * `task` - Information on the scan submission.
-* `page` - Information pertaining to the primary request (for example, response cookies) and the webpage itself (e.g. console messages).
-* `meta` - Meta processors output including detected technologies, categories, rank and others.
-* `ips` - IPs contacted.
-* `asns` - AS Numbers contacted.
-* `geo` - GeoIP information derived from contacted IPs.
-* `domains` - Hostnames contacted, including `dns` record information.
-* `links` - Outgoing links detected in the DOM.
-* `performance` - Timings as given by the [`PerformanceNavigationTiming`](https://developer.mozilla.org/en-US/docs/Web/API/PerformanceNavigationTiming) interface.
-* `certificates` - TLS certificates of HTTP responses.
+* `page` - Information pertaining to the primary response, for example IP address, ASN, server, and page redirect history.
+* `data.requests` - Request chains involved in the page load.
+* `data.cookies` - Cookies set by the page.
+* `data.globals` - Non-standard JavaScript global variables.
+* `data.console` - Console logs.
+* `data.performance` - Timings as given by the [`PerformanceNavigationTiming`](https://developer.mozilla.org/en-US/docs/Web/API/PerformanceNavigationTiming) interface.
+* `meta` - Meta processors output including detected technologies, domain and URL categories, rank, geolocation information, and others.
+* `lists.ips` - IPs contacted.
+* `lists.asns` - AS Numbers contacted.
+* `lists.domains` - Hostnames contacted, including `dns` record information.
+* `lists.hashes` - Hashes of response bodies, of the main page HTML structure, screenshots, and favicons.
+* `lists.certificates` - TLS certificates of HTTP responses.
 * `verdicts` - Verdicts on malicious content.
 
 Some examples of more specific properties include:
 
 * `task.uuid` - ID of the scan.
-* `task.effectiveUrl` - URL of the primary request, after all HTTP redirects.
+* `task.url` - Submitted URL of the scan. May differ from final URL (`page.url`) if there are HTTP redirects.
 * `task.success` - Whether scan was successful or not. Scans can fail for various reasons, including DNS errors.
 * `task.status` - Current scan status, for example, `Queued`, `InProgress`, or `Finished`.
-* `meta.processors.categories` - Cloudflare categories of the main hostname contacted.
-* `meta.processors.securityRiskCategories` - Cloudflare categories, representing a security risk, of the main hostname contacted.
+* `meta.processors.domainCategories` - Cloudflare categories of the main hostname contacted.
 * `meta.processors.phishing` - What kind of phishing, if any, was detected.
-* `meta.processors.rank` - [Cloudflare Radar Rank](http://blog.cloudflare.com/radar-domain-rankings/) of the main hostname contacted.
-* `meta.processors.tech` - What kind of technologies were detected as being in use by the website, with the help of [Wappalyzer](https://github.com/wappalyzer/wappalyzer).
+* `meta.processors.radarRank` - [Cloudflare Radar Rank](http://blog.cloudflare.com/radar-domain-rankings/) of the main hostname contacted.
+* `meta.processors.wappa` - The kind of technologies detected as being in use by the website, with the help of [Wappalyzer](https://github.com/Lissy93/wapalyzer).
+* `page.url` - URL of the primary request, after all HTTP redirects.
 * `page.country` - GeoIP country name of the main IP address contacted.
-* `page.cookies` - Cookies set by the page.
-* `page.console` - JavaScript console messages
-* `page.js.variables` - Non-standard JavaScript global variables.
-* `page.securityViolations` - <GlossaryTooltip term="content security policy (CSP)" link="https://developer.mozilla.org/en-US/docs/Web/HTTP/CSP">CSP</GlossaryTooltip> or [SRI](https://developer.mozilla.org/en-US/docs/Web/Security/Subresource_Integrity) violations.
+* `page.history` - Main page history, including any HTTP redirects.
+* `page.screenshot` - Various hashes of the main screenshot. Can be used to search for sites with similar screenshots.
+* `page.domStructHash` - HTML structure hash. Use it to search for sites with similar structure.
+* `page.favicon.hash` - MD5 hash of the favicon.
 * `verdicts.overall.malicious` - Whether the website was considered malicious *at the time of the scan*. Please check the remaining properties for each subsystem(s) for specific threats detected.
 
 The [Get URL Scan](/api/resources/url_scanner/subresources/scans/methods/get/) API endpoint documentation contains the full response schema.
@@ -116,31 +115,46 @@ To fetch the scan's [screenshots](/api/resources/url_scanner/subresources/scans/
 
 ### Search scans
 
-`Public` scans can also be searched for. To search for scans to the hostname `google.com`, use the query parameter `page_hostname=google.com`:
+Use a subset of ElasticSearch Query syntax to filter scans.  Search results will include `Public` scans and your own `Unlisted` scans.
+
+To search for scans to the hostname `google.com`, use the query parameter `q=page.domain:"google.com"`:
 
 ```bash
-curl "https://api.cloudflare.com/client/v4/accounts/{account_id}/urlscanner/scan?page_hostname=google.com" \
+curl 'https://api.cloudflare.com/client/v4/accounts/{account_id}/urlscanner/v2/search?q=page.domain:google.com' \
 --header "Authorization: Bearer <API_TOKEN>"
 ```
 
-Search results will also include your *own* `Unlisted` scans.
 
 If, instead, you wanted to search for scans that made at least one request to the hostname `cdnjs.cloudflare.com`, for example sites that use a JavaScript library hosted at `cdnjs.cloudflare.com`, use the query parameter `hostname=cdnjs.cloudflare.com`:
 
 ```bash
-curl "https://api.cloudflare.com/client/v4/accounts/{account_id}/urlscanner/scan?hostname=cdnjs.cloudflare.com" \
+curl "https://api.cloudflare.com/client/v4/accounts/{account_id}/urlscanner/v2/search?q=domain:cdnjs.cloudflare.com" \
 --header "Authorization: Bearer <API_TOKEN>"
 ```
 
-You can also search for the hash in the URL Scanner API.
+Some other example queries:
+
+- `task.url:"https://google.com" OR task.url:"https://www.google.com"`: Search for scans whose submitted URL was either `google.com` or `www.google.com`. URLs must be enclosed in quotes.
+- `page.url:"https://google.com" AND NOT task.url:"https://google.com"`: Search for scans to `google.com` whose submitted URL was not `google.com` (that is, sites that redirected to google.com).
+- `page.domain:microsoft AND verdicts.malicious:true AND NOT page.domain:microsoft.com`: Malicious scans whose hostname starts with `microsoft`. Would match domains like `microsoft.phish.com`.
+- `apikey:me AND date:[2024-01 TO 2024-10]`: Your scans from January 2024 to October 2024.
+- `page.domain:(blogspot OR www.blogspot)`: Searches for scans whose main domain starts with `blogspot` or with `www.blogspot`.
+- `date:>now-7d AND path:okta-sign-in.min.js`: Scans from the last seven days with any request path that ends with `okta-sign-in.min.js`.
+- `page.asn:AS24940 AND hash:-557369673`: Websites hosted in AS24940 where a resource with the given hash was retrieved.
+- `hash:8f662c2ce9472ba8d03bfeb8cdae112dbc0426f99da01c5d70c7eb4afd5893ca`: Using the hash at `page.domStructHash` search for other scans with the same HTML structure hash.
 
 Go to [Search URL scans](/api/resources/url_scanner/subresources/scans/methods/list/) in the API documentation for the full list of available options.
 
-Alternatively, you can search for the hash on the [Cloudflare dashboard](https://dash.cloudflare.com/) by selecting your account > **Security Center** > **Investigate** > Enter the hash > Select **Search**.
 
-### Search filters
+### Security Center
 
-You can search through the URL Scanner [reports](/radar/investigate/url-scanner/#search-filters) and retrieve information filtered by:
+Alternatively, you can search in the Security Center:
+
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/) and select your account.
+2. Go to **Security Center** > **Investigate**.
+3. Enter your query and select **Search**.
+
+In the Security Center, you can retrieve information already pre-filtered by:
 
 - Similar screenshot
 - Identical favicon

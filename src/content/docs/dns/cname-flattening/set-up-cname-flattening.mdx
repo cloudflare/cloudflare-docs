@@ -14,18 +14,18 @@ import { Render, TabItem, Tabs, GlossaryTooltip } from "~/components"
 :::note
 
 
-If the `CNAME` target is on the same zone as the `CNAME` record, Cloudflare proceeds with `CNAME` flattening and ignores the **CNAME Flattening** setting.
+If the CNAME target is on the same zone as the CNAME record, Cloudflare proceeds with CNAME flattening and ignores the **CNAME Flattening** setting.
 
 
 :::
 
 ## For your zone apex
 
-`CNAME` flattening occurs by default for all plans when your domain uses a `CNAME` record for its zone apex (`example.com`, meaning the record **Name** is set to `@`).
+CNAME flattening occurs by default for all plans when your domain uses a CNAME record for its zone apex (`example.com`, meaning the record **Name** is set to `@`).
 
 ## For all CNAME records
 
-For zones on paid plans, you can choose to flatten all `CNAME` records. This option is useful for <GlossaryTooltip term="proxy status">DNS-only (unproxied)</GlossaryTooltip> `CNAME` records. [Proxied records](/dns/manage-dns-records/reference/proxied-dns-records/#proxied-records) are flattened by default as they return Cloudflare anycast IPs.
+For zones on paid plans, you can choose to flatten all CNAME records. This option is useful for <GlossaryTooltip term="proxy status">DNS-only (unproxied)</GlossaryTooltip> CNAME records. [Proxied records](/dns/manage-dns-records/reference/proxied-dns-records/#proxied-records) are flattened by default as they return Cloudflare anycast IPs.
 
 <Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
 
@@ -45,15 +45,15 @@ Make a `PATCH` request to the [Update DNS Settings](/api/resources/dns/subresour
 
 ## Per record
 
-Paid zones also have the option of flattening specific `CNAME` records.
+Paid zones also have the option of flattening specific CNAME records.
 
-If you use this option, a special [tag](/dns/manage-dns-records/reference/record-attributes/) `cf-flatten` will be added to the respective flattened `CNAME` records in your zone file, allowing you to [export and import records](/dns/manage-dns-records/how-to/import-and-export/) without losing this configuration.
+If you use this option, a special [tag](/dns/manage-dns-records/reference/record-attributes/) `cf-flatten-cname` will be added to the respective flattened CNAME records in your zone file, allowing you to [export and import records](/dns/manage-dns-records/how-to/import-and-export/) without losing this configuration.
 
 <Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login) and select your account and domain.
 2. In **DNS** > **Settings**, make sure that **CNAME flattening for all CNAME records** is turned off.
-3. Go to **DNS** > **Records** and find the `CNAME` record you would like to flatten.
+3. Go to **DNS** > **Records** and find the CNAME record you would like to flatten.
 4. Select **Edit** and turn on the **Flatten** option.
 5. Select **Save** to confirm.
 
@@ -66,7 +66,7 @@ For the following cases, **Flatten** will not be available:
 
 </TabItem> <TabItem label="API">
 
-With the available [API endpoints](/api/resources/dns/subresources/records/methods/create/), specify the following for each `CNAME` record in the request body:
+With the available [API endpoints](/api/resources/dns/subresources/records/methods/create/), specify the following for each CNAME record in the request body:
 
 ```txt
 "settings": {

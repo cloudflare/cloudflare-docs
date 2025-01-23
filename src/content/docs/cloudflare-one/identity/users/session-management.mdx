@@ -5,7 +5,7 @@ sidebar:
   order: 3
 ---
 
-import { GlossaryTooltip } from "~/components";
+import { GlossaryTooltip, Render } from "~/components";
 
 A user session determines how long a user can access an Access application without re-authenticating.
 
@@ -23,6 +23,8 @@ The user can access the application for the entire duration of the application t
 
 The global token expiration is usually set to equal or exceed the application token expiration. Setting a longer global token provides a more secure way to allow for longer user sessions, since the global token cannot be used to directly access an application.
 
+<Render file="access/one-time-pin-warning" />
+
 ### Set global session duration
 
 You can set a global session duration between 15 minutes and 1 month.
@@ -30,6 +32,7 @@ You can set a global session duration between 15 minutes and 1 month.
 1. In [Zero Trust](https://one.dash.cloudflare.com), go to **Settings** > **Authentication**.
 2. Under **Global session timeout**, select **Edit**,
 3. Select the desired timeout duration from the dropdown menu.
+4. Select **Save**.
 
 The user will be required to re-authenticate with the IdP after this period of time.
 
@@ -38,8 +41,9 @@ The user will be required to re-authenticate with the IdP after this period of t
 You can set an application session duration for self-hosted and private Access applications. Available session durations range from immediate timeout to 1 month. The default is 24 hours.
 
 1. In [Zero Trust](https://one.dash.cloudflare.com), go to **Access** > **Applications**.
-2. Locate the application you want to configure and select **Edit**.
-3. In the **Overview** tab, select a **Session Duration** from the dropdown menu.
+2. Choose an application and select **Configure**.
+3. Select a **Session Duration** from the dropdown menu.
+4. Save the application.
 
 The application token will expire after this period of time (unless you have set a [policy session duration](#set-policy-session-duration)).
 
@@ -51,10 +55,10 @@ Access session durations only control the front door to a SaaS app; Access does 
 
 You can set a policy session duration ranging from immediate timeout to one month. The policy session duration takes precedence over the application session duration.
 
-1. In [Zero Trust](https://one.dash.cloudflare.com), go to **Access** > **Applications**.
-2. Locate the application you want to configure and select **Edit**.
-3. Go to the **Policies** tab and select **Configure** for any policy.
-4. Select a **Session Duration** from the dropdown menu.
+1. In [Zero Trust](https://one.dash.cloudflare.com), go to **Access** > **Policies**.
+2. Choose a policy and select **Configure**.
+3. Select a **Session Duration** from the dropdown menu.
+4. Save the policy.
 
 Users who match this policy will be issued an application token with this expiration time.
 
@@ -68,9 +72,9 @@ To immediately terminate all active sessions for a specific application:
 
 1. In [Zero Trust](https://one.dash.cloudflare.com), go to **Access** > **Applications**.
 
-2. Locate the application for which you would like to revoke active sessions and select **Edit**.
+2. Locate the application for which you would like to revoke active sessions and select **Configure**.
 
-3. In the **Overview** tab, select **Revoke existing tokens**.
+3. Select **Revoke existing tokens**.
 
 Unless there are changes to rules in the policy, users can start a new session if their profile in your identity provider is still active.
 

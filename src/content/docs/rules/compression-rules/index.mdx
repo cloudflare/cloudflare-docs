@@ -39,11 +39,11 @@ Compression Rules are available in all Cloudflare plans. Users in the Free plan 
 
 The following fields are commonly used in expressions of compression rules:
 
-| Field in [Expression Builder](/ruleset-engine/rules-language/expressions/edit-expressions/#expression-builder) | Field name                                                                                                                                 |
-| -------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------ |
-| _Media Type_                                                                                                   | [`http.response.content_type.media_type`](/ruleset-engine/rules-language/fields/http-request-response/#httpresponsecontent_typemedia_type) |
-| _File extension_                                                                                               | [`http.request.uri.path.extension`](/ruleset-engine/rules-language/fields/standard-fields/#httprequesturipathextension)                    |
-| N/A                                                                                                            | [`raw.http.request.uri.path.extension`](/ruleset-engine/rules-language/fields/standard-fields/#rawhttprequesturipathextension)             |
+| Field in [Expression Builder](/ruleset-engine/rules-language/expressions/edit-expressions/#expression-builder) | Field name                                                                                                                        |
+| -------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------- |
+| _Media Type_                                                                                                   | [`http.response.content_type.media_type`](/ruleset-engine/rules-language/fields/reference/http.response.content_type.media_type/) |
+| _File extension_                                                                                               | [`http.request.uri.path.extension`](/ruleset-engine/rules-language/fields/reference/http.request.uri.path.extension/)             |
+| N/A                                                                                                            | [`raw.http.request.uri.path.extension`](/ruleset-engine/rules-language/fields/reference/raw.http.request.uri.path.extension/)     |
 
 ## Important remarks
 

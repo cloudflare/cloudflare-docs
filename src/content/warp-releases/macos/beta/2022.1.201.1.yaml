@@ -1,0 +1,25 @@
+releaseNotes: >-
+  This release contains new features and improvements from the last release. In
+  particular, we have made significant changes to how local settings (plist) are
+  processed and how they work with new devices settings in the dashboard.
+
+
+  **Notable updates** 
+
+  - Added support for Gateway session duration enforcement allowing you to force
+  re-authentication after a specified time.
+
+  - Fixed issue where local domain fallback list was empty when in consumer WARP
+  mode.
+
+  - Fixed wake from sleep issue where DNS requests could fail.
+
+
+  **Known issues** 
+
+  - No known issues
+version: 2022.1.201.1
+packageURL: https://downloads.cloudflareclient.com/v1/download/macos/version/2022.1.201.1
+packageSize: 42867563
+releaseDate: 2022-01-26T23:05:09.539Z
+platformName: macOS

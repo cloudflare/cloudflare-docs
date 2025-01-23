@@ -2,7 +2,7 @@
 {}
 ---
 
-import {Render, AnchorHeading, Type, MetaInfo } from "~/components";
+import { Render, AnchorHeading, Type, MetaInfo } from "~/components";
 
 <AnchorHeading title="`create`" slug="d1-create" depth={3} />
 
@@ -78,9 +78,9 @@ You must provide either `--command` or `--file` for this command to run successf
 - `-y, --yes` <Type text="boolean" /> <MetaInfo text="optional" />
   - Answer `yes` to any prompts.
 - `--local` <Type text="boolean" /> <MetaInfo text="(default: true) optional" />
-  - Execute commands/files against a local database for use with [wrangler dev](#dev).
+  - Execute commands/files against a local database for use with [wrangler dev](/workers/wrangler/commands/#dev).
 - `--remote` <Type text="boolean" /> <MetaInfo text="(default: false) optional" />
-  - Execute commands/files against a remote D1 database for use with [wrangler dev --remote](#dev).
+  - Execute commands/files against a remote D1 database for use with [wrangler dev --remote](/workers/wrangler/commands/#dev).
 - `--persist-to` <Type text="string" /> <MetaInfo text="optional" />
   - Specify directory to use for local persistence (for use in combination with `--local`).
 - `--json` <Type text="boolean" /> <MetaInfo text="optional" />
@@ -100,9 +100,11 @@ wrangler d1 export <DATABASE_NAME> [OPTIONS]
 
 - `DATABASE_NAME` <Type text="string" /> <MetaInfo text="required" />
   - The name of the D1 database to export.
+- `--local` <Type text="boolean" /> <MetaInfo text="(default: true) optional" />
+  - Export from a local database for use with [wrangler dev](/workers/wrangler/commands/#dev).
 - `--remote` <Type text="boolean" /> <MetaInfo text="(default: false) optional" />
-  - Execute commands/files against a remote D1 database for use with [wrangler dev --remote](#dev).
-- `--output` <Type text="string" /> <MetaInfo text="optional" />
+  - Export from a remote D1 database for use with [wrangler dev --remote](/workers/wrangler/commands/#dev).
+- `--output` <Type text="string" /> <MetaInfo text="required" />
   - Path to the SQL file for your export.
 - `--table` <Type text="string" /> <MetaInfo text="optional" />
   - The name of the table within a D1 database to export.
@@ -111,7 +113,11 @@ wrangler d1 export <DATABASE_NAME> [OPTIONS]
 - `--no-schema` <Type text="boolean" /> <MetaInfo text="(default: false) optional" />
   - Controls whether export SQL file contains database schema. Note that `--no-schema=true` is not recommended due to a known wrangler limitation that intreprets the value as false.
 
-<AnchorHeading title="`time-travel restore`" slug="d1-time-travel-restore" depth={3} />
+<AnchorHeading
+	title="`time-travel restore`"
+	slug="d1-time-travel-restore"
+	depth={3}
+/>
 
 Restore a database to a specific point-in-time using [Time Travel](/d1/reference/time-travel/).
 
@@ -128,7 +134,11 @@ wrangler d1 time-travel restore <DATABASE_NAME> [OPTIONS]
 - `--json` <Type text="boolean" /> <MetaInfo text="optional" />
   - Return output as JSON rather than a table.
 
-<AnchorHeading title="`time-travel info`" slug="d1-time-travel-info" depth={3} />
+<AnchorHeading
+	title="`time-travel info`"
+	slug="d1-time-travel-info"
+	depth={3}
+/>
 
 Inspect the current state of a database for a specific point-in-time using [Time Travel](/d1/reference/time-travel/).
 
@@ -221,7 +231,11 @@ wrangler d1 backup download <DATABASE_NAME> <BACKUP_ID>
 - `--output` <Type text="string" /> <MetaInfo text="optional" />
   - The `.sqlite3` file to write to (defaults to `'<DB_NAME>.<SHORT_BACKUP_ID>.sqlite3'`).
 
-<AnchorHeading title="`migrations create`" slug="d1-migrations-create" depth={3} />
+<AnchorHeading
+	title="`migrations create`"
+	slug="d1-migrations-create"
+	depth={3}
+/>
 
 Create a new migration.
 
@@ -259,7 +273,11 @@ wrangler d1 migrations list <DATABASE_NAME> [OPTIONS]
 - `--preview` <Type text="boolean" /> <MetaInfo text="optional" />
   - Show the list of unapplied migration files on your preview D1 database (as defined by `preview_database_id` in [`wrangler.toml`](/workers/wrangler/configuration/#d1-databases)).
 
-<AnchorHeading title="`migrations apply`" slug="d1-migrations-apply" depth={3} />
+<AnchorHeading
+	title="`migrations apply`"
+	slug="d1-migrations-apply"
+	depth={3}
+/>
 
 Apply any unapplied migrations.
 

@@ -9,7 +9,7 @@ When enabled, [Cloudflare Hotlink Protection](/waf/tools/scrape-shield/hotlink-p
 
 You can use custom rules to protect against hotlinking while allowing inline links from your partners. In this case, you will need to disable [Hotlink Protection](/waf/tools/scrape-shield/hotlink-protection/) within the **Scrape Shield** app so that partner referrals are not blocked by that feature.
 
-This example uses the [`http.referer`](/ruleset-engine/rules-language/fields/standard-fields/#httpreferer) field to target HTTP referrals from partner sites.
+This example uses the [`http.referer`](/ruleset-engine/rules-language/fields/reference/http.referer/) field to target HTTP referrals from partner sites.
 
 The `not` operator matches HTTP referrals that are not from partner sites, and the action blocks them:
 

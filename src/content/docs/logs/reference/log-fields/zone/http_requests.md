@@ -367,7 +367,7 @@ Inter-request statistics computed for this JA4 fingerprint. JA4Signals field is 
 
 Type: `string`
 
-Result of the check for leaked credentials.
+Result of the check for [leaked credentials](/waf/detections/leaked-credentials/). <br />Possible results are: <em>password_leaked</em> \| <em>username_and_password_leaked</em> \| <em>username_password_similar</em> \| <em>username_leaked</em> \| <em>clean</em>.
 
 ## OriginDNSResponseTimeMs
 

@@ -34,7 +34,6 @@ With Hexo CLI installed, create a new project by running the `hexo init` command
 ```sh
 hexo init my-hexo-site
 cd my-hexo-site
-npm install
 ```
 
 Hexo sites use themes to customize the appearance of statically built HTML sites. Hexo has a default theme automatically installed, which you can find on [Hexo's Themes page](https://hexo.io/themes/).
@@ -64,7 +63,7 @@ To deploy your site to Pages:
 | Configuration option | Value           |
 | -------------------- | --------------- |
 | Production branch    | `main`          |
-| Build command        | `hexo generate` |
+| Build command        | `npm run build` |
 | Build directory      | `public`        |
 
 </div>

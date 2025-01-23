@@ -29,21 +29,19 @@ In this tutorial, a client running `cloudflared` connects over SSH to a MongoDB 
 
 You can build a rule in Cloudflare Access to control who can connect to your MongoDB deployment. Cloudflare Access rules are built around a hostname; even though this deployment will be accessible over SSH, the resource will be represented in Cloudflare as a hostname. For example, if you have the website `app.com` in your Cloudflare account, you can build a rule to secure `mongodb.app.com`.
 
-1. Follow [these instructions](/cloudflare-one/setup/) to set up Cloudflare Access in your account.
+1. In [Zero Trust](https://one.dash.cloudflare.com/), go to **Access** > **Applications**.
 
-2. In [Zero Trust](https://one.dash.cloudflare.com/), go to **Access** > **Applications**.
+2. Select **Add an application**.
 
-3. Select **Add an application** and choose `Self-hosted`.
+3. Select **Self-hosted**.
 
-4. Create an application for a subdomain where users will connect to your deployment. Select **Next**.
+4. Enter any name for the application.
 
-   ![MongoDB screen that shows how to add an application](~/assets/images/cloudflare-one/secure-origin-connections/mongodb-tunnel/add-app.png)
+5. Select **Add public hostname** and enter the subdomain where users will connect to your deployment (for example, `mongodb.app.com`).
 
-5. Build a rule to determine who can reach the deployment. You can build a rule that allows anyone in your organization to connect or you can build more granular rules based on signals like identity provider groups, [multifactor method](/cloudflare-one/tutorials/okta-u2f/), or [country](/cloudflare-one/identity/users/groups/).
+6. Add [Access policies](/cloudflare-one/policies/access/) to control who can reach the deployment. You can build a policy that allows anyone in your organization to connect or you can build more granular policies based on signals like identity provider groups, [multifactor method](/cloudflare-one/tutorials/okta-u2f/), or [country](/cloudflare-one/policies/access/groups/).
 
-   ![MongoDB screen that shows how to configure a rule](~/assets/images/cloudflare-one/secure-origin-connections/mongodb-tunnel/add-rules.png)
-
-6. Select **Next** again and add the application.
+7. Follow the remaining [self-hosted application creation steps](/cloudflare-one/applications/configure-apps/self-hosted-public-app/) to publish the application.
 
 ## Configure the Kubernetes deployment
 

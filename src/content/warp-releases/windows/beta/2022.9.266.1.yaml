@@ -1,0 +1,18 @@
+releaseNotes: >-
+  This release primarily contains bug fixes for beta release 2022.9.213.1
+   
+  **Notable updates**
+   
+  - Fixed issue where WARP DNS servers stay set after Windows update, causing no
+    network for user
+  - Fixed in-app update not showing download progress bar.
+   
+  **Known issues**
+
+  - Device posture check results stop sending after 24 hours (or possibly even
+  sooner)
+version: 2022.9.266.1
+packageURL: https://downloads.cloudflareclient.com/v1/download/windows/version/2022.9.266.1
+packageSize: 103993344
+releaseDate: 2022-09-23T21:15:57.753Z
+platformName: Windows

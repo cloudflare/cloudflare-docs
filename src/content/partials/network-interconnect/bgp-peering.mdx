@@ -4,6 +4,8 @@ params:
   - productPath
   - legacyHCs
   - asnProduct
+  - mtLimitations
+  - productGatewayOrEgress
 ---
 
 import { Markdown } from "~/components";
@@ -27,6 +29,21 @@ All routes in the Magic routing table are advertised to BGP peers. Each BGP peer
 
 BGP peering sessions can advertise reachable prefixes to a peer and withdraw previously advertised prefixes. This should not take more than a few minutes to propagate.
 
+## BGP timers and settings
+
+Cloudflare uses the timers as described below. These are not configurable:
+
+| Setting 				 | Description |
+| --- 						 | --- |
+| **Hold timer** 			 | 240 seconds <br /> (_To establish a session, Cloudflare will compare our hold timer and the peer's hold timer, and use the smaller of the two values to establish the BGP session._) |
+| **Keepalive timer**  | One third of the hold time. |
+| **Graceful restart** | 120 seconds |
+
+- **Hold timer**: Specifies the maximum amount of time that a BGP peer will wait to receive a keepalive, update, or notification message before declaring the BGP session down. Cloudflare will use the smaller of this default hold time and that received from the peer in the open message.
+- **Keepalive timer**: BGP systems exchange keepalive messages to determine whether the peer router is reachable. If keepalive messages are not received within the Hold Timer, the session is assumed to be down, indicating that the peer is no longer reachable at the BGP protocol level.
+- **Graceful restart timer**: Tracks how long a router will wait for a peer to re-establish a BGP session after the peer initiates a graceful restart. If the peer does not reconnect within this time, the router declares the session down and removes stale routes.
+
+
 ## Limitations
 
 BGP multipath is supported. If the same prefix is learned on two different interconnects then traffic destined for that prefix will be distributed across each interconnect according to the usual ECMP behavior.
@@ -36,6 +53,8 @@ BGP support currently has the following limitations:
 - Routes are always injected with a priority of `100`.
 - Bidirectional Forwarding Detection (BFD) is not supported.
 - 4-byte ASNs are not supported.
+
+<Markdown text={props.mtLimitations} />
 
 ## Tunnel health checks
 
@@ -73,5 +92,7 @@ If you already have set up your Cloudflare account ASN, you can skip steps two a
 5. Find the Direct CNI interconnect you want to configure with BGP > select the **three dots** next to it > **Configure BGP**.
 6. In **Customer device ASN**, enter the ASN for your network.
 7. In **MD5 key**, you can optionally enter the key for your network. Note that this is meant to prevent accidental misconfigurations, and is not a security mechanism.
-8. (Optional) In **Advertised prefix list**, input the additional static prefixes automatically assigned by Cloudflare during the creation of the CNI interconnect, to advertise alongside your existing routes. Leave blank if you do not want to advertise extra routes.
+8. (Optional) In **Advertised prefix list**, input the additional prefixes automatically assigned by Cloudflare during the creation of the CNI interconnect, to advertise alongside your existing routes. Leave blank if you do not want to advertise extra routes. <br /> Typical prefixes to configure here include:
+	- A route to `0.0.0.0/0`, the default route — to attract all Internet-bound traffic if using {props.productGatewayOrEgress}.
+	- A route to `100.96.0.0/12`, the portion of CGNAT space [used by default with WARP clients](/cloudflare-one/connections/connect-networks/private-net/warp-connector/user-to-site/#add-route-to-router).
 9. Select **Enable BGP**.

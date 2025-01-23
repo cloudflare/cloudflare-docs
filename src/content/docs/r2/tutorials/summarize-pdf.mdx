@@ -218,7 +218,7 @@ To view the front-end of your application, run the following command and navigat
 npm run dev
 ```
 
-```output
+```txt output
  ⛅️ wrangler 3.80.2
 -------------------
 
@@ -238,8 +238,6 @@ When you open the URL in your browser, you will see that there is a file upload 
 ## 3. Handle file upload
 
 To handle the file upload, you will first need to add the R2 binding. In the `wrangler.toml` file, add the following code:
-
-
 
 <WranglerConfig>
 
@@ -308,8 +306,6 @@ npx wrangler queues create pdf-summarizer
 ```
 
 Add the binding to the `wrangler.toml` file:
-
-
 
 <WranglerConfig>
 
@@ -393,8 +389,6 @@ The above code does the following:
 
 To use Workers AI, you will need to add the Workers AI binding to the `wrangler.toml` file. The `wrangler.toml` file should contain the following code:
 
-
-
 <WranglerConfig>
 
 ```toml title="wrangler.toml"
@@ -461,7 +455,7 @@ The queue handler now adds the summary to the R2 bucket as a text file.
 
 ## 9. Enable event notifications
 
-Your `queue` handler is ready to handle incoming event notification messages. You need to enable event notifications with the [`wrangler r2 bucket notification create` command](/workers/wrangler/commands/#notification-create) for your bucket. The following command creates an event notification for the `object-create` event type for the `pdf` suffix:
+Your `queue` handler is ready to handle incoming event notification messages. You need to enable event notifications with the [`wrangler r2 bucket notification create` command](/workers/wrangler/commands/#r2-bucket-notification-create) for your bucket. The following command creates an event notification for the `object-create` event type for the `pdf` suffix:
 
 ```sh
 npx wrangler r2 bucket notification create <R2_BUCKET_NAME> --event-type object-create --queue pdf-summarizer --suffix "pdf"

@@ -77,7 +77,8 @@ Take note of the site `id` parameter, as you will need it to create WANs and LAN
 3. **Interface number** <Markdown text={props.wan} />
 4. In **VLAN ID**, enter a number between `0` and `4094` to specify a [VLAN ID](/magic-wan/configuration/connector/reference/#vlan-id).
 5. In **Priority**, choose the priority for your WAN. Lower numbers have higher priority. Refer to <GlossaryTooltip term="traffic steering" link="/magic-wan/reference/traffic-steering/">Traffic steering</GlossaryTooltip> to learn more about how Cloudflare calculates priorities.
-6. **Addressing**: Select **DHCP**. This is needed the first time you set up your Connector to successfully download all settings to the machine and activate it. If you need a static IP address in your network environment:
+6. In **Health check rate** configure the health check frequency for your site. Options are `low`, `mid`, and `high`. Refer to [Update tunnel health checks frequency](/magic-wan/configuration/common-settings/tunnel-health-checks/) for more information.
+7. **Addressing**: Select **DHCP**. This is needed the first time you set up your Connector to successfully download all settings to the machine and activate it. If you need a static IP address in your network environment:
 	1. Continue the set up flow below to activate your Connector.
 	2. Refer to [WAN with a static IP address](#wan-with-a-static-ip-address). If you choose a static IP, you also need to specify the static IP and gateway addresses.
 
@@ -87,7 +88,7 @@ Take note of the site `id` parameter, as you will need it to create WANs and LAN
 
   </div>
 
-7. Select **Save** when you are finished.
+8. Select **Save** when you are finished.
 
 </TabItem> <TabItem label="API">
 

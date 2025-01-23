@@ -10,7 +10,7 @@ import { Render } from "~/components";
 
 | Feature                                                                                                             | Limit                                             |
 | ------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------- |
-| Databases                                                                                                           | 50,000 (Workers Paid) / 10 (Free)                 |
+| Databases                                                                                                           | 50,000 (Workers Paid)[^1] / 10 (Free)                 |
 | Maximum database size                                                                                               | 10 GB (Workers Paid) / 500 MB (Free)              |
 | Maximum storage per account                                                                                         | 250 GB (Workers Paid)[^1] / 5 GB (Free)           |
 | [Time Travel](/d1/reference/time-travel/) duration (point-in-time recovery)                                         | 30 days (Workers Paid) / 7 days (Free)            |
@@ -25,7 +25,7 @@ import { Render } from "~/components";
 | Maximum characters (bytes) in a `LIKE` or `GLOB` pattern                                                            | 50 bytes                                          |
 | Maximum bindings per Workers script                                                                                 | Approximately 5,000 [^2]                          |
 | Maximum SQL query duration                                                                                          | 30 seconds [^3]                                   |
-| Maximum file import (`d1 execute`) size                                                                             | 5 GiB [^4]                                        |
+| Maximum file import (`d1 execute`) size                                                                             | 5 GB [^4]                                        |
 
 :::note[Batch limits]
 Limits for individual queries (listed above) apply to each individual statement contained within a batch statement. For example, the maximum SQL statement length of 100 KB applies to each statement inside a `db.batch()`.

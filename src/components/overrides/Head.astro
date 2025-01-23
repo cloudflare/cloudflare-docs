@@ -126,9 +126,20 @@ if (currentSection) {
 			});
 		}
 	}
+
+	if (currentSection === "style-guide") {
+		Astro.props.entry.data.head.push({
+			tag: "meta",
+			attrs: {
+				name: "robots",
+				content: "noindex",
+			},
+			content: "",
+		});
+	}
 }
 
-Astro.props.entry.data.description ??= await getPageDescription(
+Astro.props.entry.data.description = await getPageDescription(
 	// @ts-expect-error TODO: improve types
 	Astro.props.entry,
 	Astro.locals,

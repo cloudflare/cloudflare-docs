@@ -106,12 +106,12 @@ fortigate # config vpn ipsec phase1-interface
     edit "MWAN_IPsec_Tun1"
         set interface "wan1"
         set ike-version 2
-        set keylife 28800
+        set keylife 86400
         set peertype any
         set net-device enable
         set proposal aes256gcm-prfsha512 aes256gcm-prfsha384 aes256gcm-prfsha256
         set localid "f1473dXXXXXXX72e33.49561179.ipsec.cloudflare.com"
-        set dhgrp 14
+        set dhgrp 20
         set nattraversal disable
         set remote-gw 162.159.67.210
         set add-gw-route enable
@@ -120,12 +120,12 @@ fortigate # config vpn ipsec phase1-interface
     edit "MWAN_IPsec_Tun2"
         set interface "wan1"
         set ike-version 2
-        set keylife 28800
+        set keylife 86400
         set peertype any
         set net-device enable
         set proposal aes256gcm-prfsha512 aes256gcm-prfsha384 aes256gcm-prfsha256
         set localid "de91565XXXXXXXfbbd6632.49561179.ipsec.cloudflare.com"
-        set dhgrp 14
+        set dhgrp 20
         set nattraversal disable
         set remote-gw 172.XX.XX.210
         set add-gw-route enable
@@ -143,18 +143,18 @@ fortigate # config vpn ipsec phase2-interface
     edit "MWAN_IPsec_Tun1"
         set phase1name "MWAN_IPsec_Tun1"
         set proposal aes256gcm aes128gcm
-        set dhgrp 14
+        set dhgrp 20
         set replay disable
-        set keylifeseconds 3600
+        set keylifeseconds 28800
         set auto-negotiate enable
         set keepalive enable
     next
     edit "MWAN_IPsec_Tun2"
         set phase1name "MWAN_IPsec_Tun2"
         set proposal aes256gcm aes128gcm
-        set dhgrp 14
+        set dhgrp 20
         set replay disable
-        set keylifeseconds 3600
+        set keylifeseconds 28800
         set auto-negotiate enable
         set keepalive enable
     next
@@ -497,7 +497,7 @@ fortigate # 2023-08-01 09:27:26 id=20085 trace_id=2871 func=print_pkt_detail lin
 
 ### Disable Flow Debugging
 
-The typical use of <kbd>CTRL</kbd> <kbd>C</kbd> will not stop Flow Debugging.
+The typical use of `CTR + C` will not stop Flow Debugging.
 
 You can disable Flow Debugging simply by typing the following at any point while the debug logs are scrolling by:
 

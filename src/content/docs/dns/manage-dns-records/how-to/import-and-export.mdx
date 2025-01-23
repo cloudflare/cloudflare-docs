@@ -2,7 +2,7 @@
 pcx_content_type: how-to
 title: Import and export records
 sidebar:
-  order: 6
+  order: 9
 ---
 
 import { Render, TabItem, Tabs } from "~/components";
@@ -19,7 +19,7 @@ Use import and export to have more control over your DNS records and make proces
 
 Create a [BIND zone file](https://en.wikipedia.org/wiki/Zone_file) for your domain. If you need help, use a [third-party tool](https://pgl.yoyo.org/as/bind-zone-file-creator.php).
 
-If you are using certain record types — for example, `CNAME`, `DNAME`, `MX`, `NS`, `PTR`, or `SRV` records — make sure that the **content** of those records contains fully qualified domain names (which end in a trailing period like `example.com.`). For more details, refer to [RFC 1035](https://www.rfc-editor.org/rfc/rfc1035#section-5.1) or this [post on Stack Exchange](https://superuser.com/questions/348282/fqdn-format-in-bind-zone#348284).
+If you are using certain record types — for example, `CNAME`, `DNAME`, `MX`, `NS`, `PTR`, or `SRV` records — make sure that the **content** of those records contains fully qualified domain names ending in a trailing period (as in `example.com.`). For more details, refer to [RFC 1035](https://www.rfc-editor.org/rfc/rfc1035#section-5.1) or this [post on Stack Exchange](https://superuser.com/questions/348282/fqdn-format-in-bind-zone#348284).
 
 ### Import zone file to Cloudflare
 
@@ -90,9 +90,29 @@ f.example.com.  60  IN  A   1.1.1.1 ; this is the comment cf_tags=tag1:value1,ta
 g.example.com.  60  IN  A   1.1.1.1
 ```
 
-### cf-flatten tag
+### Reserved cf- tags
 
-If you are on a paid zone and want to use [Per-record CNAME flattening](/dns/cname-flattening/set-up-cname-flattening/#per-record), use the tag `cf-flatten` next to each flattened CNAME record in your zone file. On export, this tag is automatically added to reflect the record configuration that you have on your zone.
+When exporting and importing, special tags starting by `cf-` allow you to control specific Cloudflare configurations. On export, these tags are automatically added to reflect the current configuration for each record on your zone.
+
+```txt title="Records with cf- tags example"
+;; CNAME Records
+a.cloudflaredocs.com.	1	IN	CNAME	example.com. ; cf_tags=test:1,cf-flatten-cname
+b.cloudflaredocs.com.	1	IN	CNAME	example.com. ; cf_tags=cf-proxied:false
+c.cloudflaredocs.com.	1	IN	CNAME	example.com. ; cf_tags=tag-without-value,cf-proxied:true
+```
+
+#### cf-proxied
+
+On export, [proxied DNS records](/dns/manage-dns-records/reference/proxied-dns-records/#proxied-records) will present a tag `cf-proxied:true` while DNS-only records will have this tag set to `cf-proxied:false`.
+
+When importing zone files, the value in the `cf-proxied` tag will take precedence in determining whether a record should be proxied. This means that:
+
+- If the tag is present, its value will be considered for the respective record regardless of the **Proxy imported DNS records** option being selected (via dashboard), or the `proxied` parameter being generally set to `true` or `false` (via API).
+- If the tag is absent, the proxied status will fall back to the general import option, meaning **Proxy imported DNS records** selected or not (via dashboard)  or the `proxied` parameter set to `true` or `false` (via API).
+
+#### cf-flatten-cname
+
+If you are on a paid zone and want to use [Per-record CNAME flattening](/dns/cname-flattening/set-up-cname-flattening/#per-record), use the tag `cf-flatten-cname` next to each flattened CNAME record in your zone file. On export, this tag is automatically added to reflect the record configuration that you have on your zone.
 
 ## DNS zone file directives
 
