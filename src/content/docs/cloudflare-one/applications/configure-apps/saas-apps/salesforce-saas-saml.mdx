@@ -29,17 +29,12 @@ This guide covers how to configure [Salesforce](https://help.salesforce.com/s/ar
    * **Name ID format**: *Email*
 
 :::note
-
-
 If you are unsure of which URL to use in the **Entity ID** and **Assertion Consumer Service URL** fields, you can check your Salesforce account's metadata. In Salesforce, go to the **Single Sign-On Settings** page and select **Download Metadata**. In this file, you will find the correct URLs to use.
-
-
 :::
 
 7. Copy the **SSO endpoint**, **Public key**, and **Access Entity ID or Issuer**.
-8. Select **Save configuration**.
-9. Configure [Access policies](/cloudflare-one/policies/access/) for the application.
-10. Select **Done**.
+8. Configure [Access policies](/cloudflare-one/policies/access/) for the application.
+9. Save the application.
 
 ## 2. Create a certificate file
 
@@ -58,11 +53,11 @@ If you are unsure of which URL to use in the **Entity ID** and **Assertion Consu
    * **Issuer:** Paste the Access Entity ID or Issuer from application configuration in Cloudflare Zero Trust.
    * **Identity Provider Certificate**: Upload the `.crt` certificate file from [2. Create a certificate file](#2-create-a-certificate-file).
    * **Entity ID**: `https://<your-domain>.my.salesforce.com`
-   * **SAML Identity type:** If the user's Salesforce username is their email address, select *Assertion contains the User's Salesforce username*. Otherwise, select *Assertion contains the Federation ID from the User object* and make sure the user's Federation ID matches their email address. 
+   * **SAML Identity type:** If the user's Salesforce username is their email address, select *Assertion contains the User's Salesforce username*. Otherwise, select *Assertion contains the Federation ID from the User object* and make sure the user's Federation ID matches their email address.
    <Details header="Configure Federation IDs">
    1. In the **Quick Find** box, enter `users` and select **Users**.
    2. Select the user.
-   3. Verify that the user's **Federation ID** matches the email address used to authenticate to Cloudflare Access. 
+   3. Verify that the user's **Federation ID** matches the email address used to authenticate to Cloudflare Access.
    </Details>
    * **Identity Provider Login URL**: SSO endpoint provided in Cloudflare Zero Trust for this application.
 5. Select **Save**.
