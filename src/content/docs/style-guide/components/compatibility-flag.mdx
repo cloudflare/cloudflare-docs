@@ -1,0 +1,17 @@
+---
+title: Compatibility flag
+---
+
+This component will create an aside with the `enable_date` (if present) and the `enable_flag` of a given flag.
+
+The flag must match the name of a file in the [`compatibility-flags` collection](https://github.com/cloudflare/cloudflare-docs/tree/production/src/content/compatibility-flags), without the file extension.
+
+## Component
+
+```mdx live
+import { CompatibilityFlag } from "~/components";
+
+<CompatibilityFlag flag="global-navigator" />
+
+<CompatibilityFlag flag="nodejs-compat" />
+```
