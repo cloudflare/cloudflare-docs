@@ -26,7 +26,7 @@ There are two major prerequisites before Cloudflare can begin onboarding your IP
     - `origin` matching the correct ASN you want to onboard
 
 :::caution[RPKI validation]
-You are not required to use <GlossaryTooltip term="Resource Public Key Infrastructure (RPKI)">Resource Public Key Infrastructure (RPKI)</GlossaryTooltip>. However, if you do, make sure your <GlossaryTooltip term="Route Origin Authorization (ROA)">ROAs</GlossaryTooltip> are accurate. You can use [Cloudflare's RPKI Portal](https://rpki.cloudflare.com/?view=validator) to check your prefixes.
+You are not required to use <GlossaryTooltip term="Resource Public Key Infrastructure (RPKI)">Resource Public Key Infrastructure (RPKI)</GlossaryTooltip>. However, if you do, make sure your <GlossaryTooltip term="Route Origin Authorization (ROA)">ROAs</GlossaryTooltip> are accurate. You can use [Cloudflare's RPKI Portal](https://rpki.cloudflare.com/?view=validator) and a second source such as [Routinator](https://rpki-validator.ripe.net/ui/) to double check your prefixes.
 :::
 
 After onboarding, [Border Gateway Protocol (BGP)](https://www.cloudflare.com/learning/security/glossary/what-is-bgp/) announcements for customer prefixes can be controlled with the [Dynamic Advertisement](/byoip/concepts/dynamic-advertisement/) API or via the Cloudflare dashboard.
