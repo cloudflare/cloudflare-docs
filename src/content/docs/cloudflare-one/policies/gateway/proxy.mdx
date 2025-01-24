@@ -11,6 +11,31 @@ You can forward [HTTP](/cloudflare-one/policies/gateway/initial-setup/http/) and
 
 The Gateway proxy is required for filtering HTTP and network traffic via the WARP client in Gateway with WARP mode. To proxy HTTP traffic without deploying the WARP client, you can configure [PAC files](/cloudflare-one/connections/connect-devices/agentless/pac-files/) on your devices.
 
+## Happy Eyeballs
+
+When connections are proxied through Gateway they follow the below order.
+
+When Gateway proxies traffic, it uses the [Happy Eyeballs algorithm](https://datatracker.ietf.org/doc/html/rfc6555) in the following order:
+
+1. Receive a TCP SYN from the client
+2. Send a TCP SYN to the origin
+3. If the origin sends SYN/ACK back, then we finish the TCP handshakes of both 1 and 2 above
+4. If all of that is successful, both TCP connections are passed to Gateway that runs the firewall (possibly consuming data from connection 1)
+5. If the firewall allows, then Gateway proxies the connection 1 to connection 2 bidirectionally
+
+```mermaid
+flowchart TD
+    A[Client sends TCP SYN to Gateway] --> B[Gateway sends TCP SYN to Origin]
+    B --> C{{Origin responds with TCP SYN/ACK?}}
+    C -->|Yes| D[Complete handshake with Origin]
+    C -->|No| E[Connection fails]
+    D --> F[Complete handshake with Client]
+    F --> G[Firewall inspects traffic from Client]
+    G --> H{{Firewall allows connection?}}
+    H -->|Yes| I[Gateway proxies data bidirectionally]
+    H -->|No| J[Connection blocked by Firewall]
+```
+
 ## Proxy protocols
 
 Gateway supports proxying TCP, UDP, and ICMP traffic.
