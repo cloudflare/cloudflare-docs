@@ -13,7 +13,7 @@ The Gateway proxy is required for filtering HTTP and network traffic via the WAR
 
 ## Proxy algorithm
 
-Gatway uses the [Happy Eyeballs algorithm](https://datatracker.ietf.org/doc/html/rfc6555) to proxy traffic in the following order:
+Gateway uses the [Happy Eyeballs algorithm](https://datatracker.ietf.org/doc/html/rfc6555) to proxy traffic in the following order:
 
 1. The user's browser initiates the TCP handshake by sending Gateway a TCP SYN segment.
 2. Gateway sends a SYN segment to the origin server.
