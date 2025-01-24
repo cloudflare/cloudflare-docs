@@ -5,6 +5,14 @@ productLink: "/hyperdrive/"
 productArea: Developer platform
 productAreaLink: /workers/platform/changelog/platform/
 entries:
+  - publish_date: "2025-01-28"
+    title: Hyperdrive automatically configures your Cloudflare Tunnel to connect to your private database.
+    description: |-
+      When creating a Hyperdrive configuration for a private database, you only need to provide your database credentials and set up a Cloudflare Tunnel within the private network where your database is accessible.
+
+      Hyperdrive will automatically create the Cloudflare Access, Service Token and Policies needed to secure and restrict your Cloudflare Tunnel to the Hyperdrive configuration.
+
+      Refer to [documentation on how to configure Hyperdrive to connect to a private database](/hyperdrive/configuration/connect-to-private-database/).
   - publish_date: "2024-12-11"
     title: Hyperdrive now caches queries in all Cloudflare locations decreasing cache hit latency by up to 90%
     description: |-
