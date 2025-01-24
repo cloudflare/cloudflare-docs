@@ -115,7 +115,7 @@ PowerShell has specific cmdlets (`Invoke-RestMethod` and `ConvertFrom-Json`) for
 The following example uses the `Invoke-RestMethod` cmdlet:
 
 ```powershell
-Invoke-RestMethod -URI "https://api.cloudflare.com/client/v4/zones/$Env:ZONE_ID/ssl/certificate_packs?ssl_status=all" -Method 'GET' -ContentType 'application/json' -Headers @{'X-Auth-Email'=$Env:CLOUDFLARE_EMAIL;'X-Auth-Key'=$Env:CLOUDFLARE_API_KEY}
+Invoke-RestMethod -URI "https://api.cloudflare.com/client/v4/zones/$Env:ZONE_ID/ssl/certificate_packs?ssl_status=all" -Method 'GET' -Headers @{'X-Auth-Email'=$Env:CLOUDFLARE_EMAIL;'X-Auth-Key'=$Env:CLOUDFLARE_API_KEY}
 ```
 
 ```txt output
