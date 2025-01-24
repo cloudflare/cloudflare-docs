@@ -3,7 +3,7 @@ const FieldBadges = ({ badges }: { badges: string[] }) => {
 		<ul className="m-0 inline-flex list-none items-center gap-2 p-0 text-xs">
 			{badges.map((badge) => (
 				<li key={badge}>
-					<span className="sl-badge gray">{badge}</span>
+					<span className="sl-badge default">{badge}</span>
 				</li>
 			))}
 		</ul>

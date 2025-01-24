@@ -1,40 +1,85 @@
+.sl-badge {
+	/* Unset Starlight styling */
+	border: none;
+	font-family: var(--__sl-font);
+	overflow-wrap: unset;
+
+	/* Apply styling from https://www.npmjs.com/package/@cloudflare/component-label */
+	align-items: center;
+	border-radius: 50px;
+	display: inline-flex;
+	font-size: 12px;
+	font-weight: 400;
+	line-height: 1;
+	user-select: none;
+	white-space: nowrap;
+	padding: 4px 8px;
+}
+
 :root {
-	--badge-background: #b9d6ff;
-	--badge-text: #002b67;
-
 	.sl-badge {
-		/* Unset Starlight styling */
-		border: none;
-		font-family: var(--__sl-font);
-		overflow-wrap: unset;
+		&.note {
+			background-color: theme("colors.cl1.blue.8") !important;
+			color: theme("colors.cl1.blue.2") !important;
+		}
 
-		/* Apply styling from https://www.npmjs.com/package/@cloudflare/component-label */
-		align-items: center;
-		border-radius: 50px;
-		display: inline-flex;
-		font-size: 12px;
-		font-weight: 400;
-		line-height: 1;
-		user-select: none;
-		white-space: nowrap;
-		padding: 4px 8px;
+		&.danger {
+			background-color: theme("colors.cl1.red.8") !important;
+			color: theme("colors.cl1.red.2") !important;
+		}
 
-		background-color: var(--badge-background);
-		color: var(--badge-text);
+		&.success {
+			background-color: theme("colors.cl1.green.8") !important;
+			color: theme("colors.cl1.green.2") !important;
+		}
 
-		&.gray {
-			background-color: #d9d9d9;
-			color: #313131;
+		&.caution {
+			background-color: theme("colors.cl1.orange.8") !important;
+			color: theme("colors.cl1.orange.2") !important;
+		}
+
+		&.tip {
+			background-color: theme("colors.cl1.violet.8") !important;
+			color: theme("colors.cl1.violet.1") !important;
+		}
+
+		&.default {
+			background-color: theme("colors.cl1.gray.9") !important;
+			color: theme("colors.cl1.gray.2") !important;
 		}
 	}
 }
 
 :root[data-theme="dark"] {
-	--badge-background: #f8a054;
-	--badge-text: #1d1d1d;
+	.sl-badge {
+		&.note {
+			background-color: theme("colors.cl1.blue.7") !important;
+			color: theme("colors.cl1.blue.0") !important;
+		}
 
-	.sl-badge.gray {
-		background-color: #b6b6b6;
-		color: #1d1d1d;
+		&.danger {
+			background-color: theme("colors.cl1.red.8") !important;
+			color: theme("colors.cl1.red.0") !important;
+		}
+
+		&.success {
+			background-color: theme("colors.cl1.green.7") !important;
+			color: theme("colors.cl1.green.0") !important;
+		}
+
+		&.caution {
+			background-color: theme("colors.cl1.orange.8") !important;
+			color: theme("colors.cl1.orange.0") !important;
+		}
+
+		&.tip {
+			background-color: theme("colors.cl1.violet.8") !important;
+			color: theme("colors.cl1.violet.0") !important;
+		}
+
+		&.default {
+			background-color: theme("colors.cl1.gray.8") !important;
+			color: theme("colors.cl1.gray.3") !important;
+		}
 	}
 }
