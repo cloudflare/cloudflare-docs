@@ -6,9 +6,12 @@ import { TabItem, Tabs } from "~/components";
 
 ## Create a list from a CSV file
 
-Here is a [sample CSV file](/cloudflare-one/static/list-test.csv) of URLs that you can use for testing. When formatting the CSV:
+Here is a [sample CSV file](/cloudflare-one/static/list-test.csv) of URLs that you can use for testing.
+
+When formatting the CSV:
 
 - Each line should be a single entry.
+- Use a comma to delimit the descriptions of values. For Zero Trust to recognize descriptions, you need to include a header row.
 - Trailing whitespaces are not allowed.
 - CRLF (Windows) and LF (Unix) line endings are valid.
 
