@@ -89,7 +89,7 @@ spec:
       labels:
         pod: cloudflared
     spec:
-			securityContext:
+      securityContext:
         sysctls:
           - name: net.ipv4.ping_group_range
             value: "65532 65532"
