@@ -1,24 +1,23 @@
 ---
-title: Origin CA certificates
+title: Cloudflare origin CA
 pcx_content_type: how-to
 sidebar:
   order: 3
+  label: Setup
 head: []
-description: Origin Certificate Authority (CA) certificates allow you to encrypt
-  traffic between Cloudflare and your origin web server, and reduce origin
-  bandwidth consumption.
+description: Encrypt traffic between Cloudflare and your origin web server and reduce origin bandwidth consumption.
 
 ---
 
-import { FeatureTable } from "~/components"
+import { FeatureTable, GlossaryTooltip, Render } from "~/components"
 
-Use Origin Certificate Authority (CA) certificates to encrypt traffic between Cloudflare and your origin web server and reduce origin bandwidth consumption. Once deployed, these certificates are compatible with [Strict SSL mode](/ssl/origin-configuration/ssl-modes/full-strict/).
+If your origin only receives traffic from <GlossaryTooltip term="proxy status">proxied records</GlossaryTooltip>, use Cloudflare origin CA certificates to encrypt traffic between Cloudflare and your origin web server and reduce bandwidth consumption. Once deployed, these certificates are compatible with [Strict SSL mode](/ssl/origin-configuration/ssl-modes/full-strict/).
 
-For more background information on Origin CA certificates, refer to the [introductory blog post](https://blog.cloudflare.com/cloudflare-ca-encryption-origin/).
+For more background information on origin CA certificates, refer to the [introductory blog post](https://blog.cloudflare.com/cloudflare-ca-encryption-origin/).
 
 :::note
 
-Using Cloudflare Origin CA certificates do not prevent you from using [delegated DCV](/ssl/edge-certificates/changing-dcv-method/methods/delegated-dcv/).
+Using Cloudflare origin CA certificates does not prevent you from using [delegated DCV](/ssl/edge-certificates/changing-dcv-method/methods/delegated-dcv/).
 :::
 
 ## Availability
@@ -89,6 +88,10 @@ If all your origin hosts are protected by Origin CA certificates or publicly tru
 
 If you have origin hosts that are not protected by certificates, set the **SSL/TLS encryption** mode for a specific application to **Full (strict)** by using a [Page Rule](/rules/page-rules/).
 
+:::caution
+<Render file="origin-ca-pause-error" />
+:::
+
 ## Revoke an Origin CA certificate
 
 If you misplace your key material or do not want a certificate to be trusted, you may want to revoke your certificate. You cannot undo this process.
@@ -114,7 +117,7 @@ Some origin web servers require upload of the Cloudflare Origin CA root certific
 
 ### Hostname and wildcard coverage
 
-Certificates may be generated with up to 200 individual Subject Alternative Names (SANs). A SAN can take the form of a fully-qualified domain name (`www.example.com`) or a wildcard (`*.example.com`). You cannot use IP addresses as SANs on Cloudflare Origin CA certificates.
+Certificates may be generated with up to 200 individual Subject Alternative Names (SANs). A SAN can take the form of a fully-qualified domain name (`www.example.com`) or a wildcard (`*.example.com`). You cannot use IP addresses as SANs on Cloudflare origin CA certificates.
 
 Wildcards may only cover one level, but can be used multiple times on the same certificate for broader coverage (for example, `*.example.com` and `*.secure.example.com` may co-exist).
 
@@ -131,4 +134,4 @@ To automate processes involving Origin CA certificates, use the following API ca
 
 ## Troubleshooting
 
-Site visitors may see untrusted certificate errors if you pause or disable Cloudflare on subdomains that use Origin CA certificates. These certificates only encrypt traffic between Cloudflare and your origin server, not traffic from client browsers to your origin.
+If you find `NET::ERR_CERT_AUTHORITY_INVALID` or other issues after setting up Cloudflare origin CA, refer to [troubleshooting](/ssl/origin-configuration/origin-ca/troubleshooting/).

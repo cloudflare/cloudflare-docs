@@ -33,7 +33,7 @@ In this example, request to `example.com/blog` serves the `blog.html` file.
 
 If a Worker is configured, and there are no assets that match the current route requested, the Worker will be invoked. The Worker can then "fall back" to `not_found_handling` asset behavior, by passing the incoming request through to the [asset binding](/workers/static-assets/binding/#runtime-api-reference).
 
-In this example, request to `example.com/api` doesn't match a static asset so the Worker is invoked.
+In this example, a request to `example.com/api` doesn't match a static asset so the Worker is invoked.
 
 ![A request to `example.com/blog` runs the Worker.](~/assets/images/workers/platform/assets/workers-assets-invoke-worker.png)
 
