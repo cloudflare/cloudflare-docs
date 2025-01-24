@@ -15,7 +15,7 @@ import {
 	Render,
 	TabItem,
 	Tabs,
-	WranglerConfig
+	WranglerConfig,
 } from "~/components";
 
 ## Default behavior
@@ -38,7 +38,7 @@ In this example, a request to `example.com/api` doesn't match a static asset so 
 
 ## Invoking Worker Script Ahead of Assets
 
-You may wish to run code before assets are served. This is often the case when implementing authentication, logging, personalization, internationalization, or other similar functions. [`experimental_serve_directly`](/workers/static-assets/binding/#experimental_serve_directly) is a configuration option available in the `wrangler.toml / wrangler.json` file which controls this behavior. When disabled, `experimental_serve_directly = false` will invoke your Worker's code, regardless of any assets that would have otherwise matched.
+You may wish to run code before assets are served. This is often the case when implementing authentication, logging, personalization, internationalization, or other similar functions. [`run_worker_first`](/workers/static-assets/binding/#run_worker_first) is a configuration option available in `wrangler.toml / wrangler.json` which controls this behavior. When enabled, `run_worker_first = true` will invoke your Worker's code, regardless of any assets that would have otherwise matched.
 
 Take the following directory structure, `wrangler.toml / wrangler.json` file, and user Worker code:
 
@@ -59,7 +59,7 @@ Take the following directory structure, `wrangler.toml / wrangler.json` file, an
 name = "my-worker"
 compatibility_date = "2024-09-19"
 main = "src/index.ts"
-assets = { directory = "./public/", binding = "ASSETS", experimental_serve_directly = false }
+assets = { directory = "./public/", binding = "ASSETS", run_worker_first = true }
 ```
 
 </WranglerConfig>
@@ -90,7 +90,7 @@ export default {
 };
 ```
 
-In this example, any request will be routed to our user Worker, due to `experimental_serve_directly` being disabled. As a result, any request being made `/supersecret.txt` without an `Authorization` header will result in a 403.
+In this example, any request will be routed to our user Worker, due to `run_worker_first` being enabled. As a result, any request being made `/supersecret.txt` without an `Authorization` header will result in a 403.
 
 ## Routing configuration
 
@@ -321,3 +321,4 @@ In this example, requests to `example.com/blog/` will serve the `index.html` fil
 
 If you have a file outside the configured path, it will not be served. For example, if you have a `home.html` file in the root of your asset directory, it will not be served when requesting `example.com/blog/home`.
 However, if needed, these files can still be manually fetched over [the binding](/workers/static-assets/binding/#binding).
+```
