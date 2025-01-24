@@ -1158,7 +1158,7 @@ export default fetch;
 
 You can use module aliasing to provide your own polyfill implementation of a Node.js API that is not yet available in the Workers runtime.
 
-For example, let’s say the NPM package you rely on calls [`fs.readFile`](https://nodejs.org/api/fs.html#fsreadfilepath-options-callback). You can alias the fs module by adding the following to your Worker’s wrangler.toml:
+For example, let's say the NPM package you rely on calls [`fs.readFile`](https://nodejs.org/api/fs.html#fsreadfilepath-options-callback). You can alias the fs module by adding the following to your Worker's Wrangler configuration file:
 
 <WranglerConfig>
 
