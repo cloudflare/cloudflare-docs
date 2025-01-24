@@ -48,7 +48,7 @@ cd my-first-worker
 
 In your project directory, C3 will have generated the following:
 
-* `wrangler.toml`: Your [Wrangler](/workers/wrangler/configuration/#sample-wrangler-configuration) configuration file.
+* `wrangler.json`: Your [Wrangler](/workers/wrangler/configuration/#sample-wrangler-configuration) configuration file.
 * `index.js` (in `/src`): A minimal `'Hello World!'` Worker written in [ES module](/workers/reference/migrate-to-module-workers/) syntax.
 * `package.json`: A minimal Node dependencies configuration file.
 * `package-lock.json`: Refer to [`npm` documentation on `package-lock.json`](https://docs.npmjs.com/cli/v9/configuring-npm/package-lock-json).
@@ -78,8 +78,8 @@ npm create cloudflare@latest -- --template <SOURCE>
 Your existing template folder must contain the following files, at a minimum, to meet the requirements for Cloudflare Workers:
 
 - `package.json`
-- `wrangler.toml` [See sample Wrangler configuration](/workers/wrangler/configuration/#sample-wrangler-configuration)
-- `src/` containing a worker script referenced from `wrangler.toml`
+- `wrangler.json` [See sample Wrangler configuration](/workers/wrangler/configuration/#sample-wrangler-configuration)
+- `src/` containing a worker script referenced from `wrangler.json`
 
 </Details>
 

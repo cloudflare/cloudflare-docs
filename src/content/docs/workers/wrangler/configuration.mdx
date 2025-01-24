@@ -12,7 +12,7 @@ description: Use a configuration file to customize the
 import { Render, Type, MetaInfo } from "~/components";
 import { FileTree } from "@astrojs/starlight/components";
 
-Wrangler optionally uses a `wrangler.json`/`wrangler.jsonc`/`wrangler.toml` file to customize the development and deployment setup for a Worker.
+Wrangler optionally uses a `wrangler.json`/`wrangler.jsonc`/Wrangler file to customize the development and deployment setup for a Worker.
 
 :::note
 
@@ -1299,7 +1299,7 @@ Wrangler will display messaging to the user to indicate that the configuration h
 
 A common example of using a redirected configuration is where a custom build tool, or framework, wants to modify the user's configuration to be used when deploying, by generating a new configuration in a `dist` directory.
 
-- First, the user writes code that uses Cloudflare Workers resources, configured via a user's `wrangler.toml` file.
+- First, the user writes code that uses Cloudflare Workers resources, configured via a user's Wrangler file.
 
   ```toml
   name = "my-worker"
