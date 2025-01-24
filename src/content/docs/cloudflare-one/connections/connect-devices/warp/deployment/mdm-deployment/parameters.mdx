@@ -75,14 +75,14 @@ Requires the `auth_client_id` parameter.
 
 ### `auto_connect`
 
-If switch has been turned off by user, the client will automatically turn itself back on after the specified number of seconds. We recommend keeping this set to a very low value — usually just enough time for a user to log in to hotel or airport Wi-Fi. If any value is specified for `auto_connect` the default state of the WARP client will always be Connected (for example, after the initial install or a reboot).
+If switch has been turned off by user, the client will automatically turn itself back on after the specified number of minutes. We recommend keeping this set to a very low value — usually just enough time for a user to log in to hotel or airport Wi-Fi. If any value is specified for `auto_connect` the default state of the WARP client will always be Connected (for example, after the initial install or a reboot).
 
 **Value Type:** `integer`
 
 **Value:**
 
 * `0` — Allow the switch to stay in the off position indefinitely until the user turns it back on.
-* `1` to `86400` — Turn switch back on automatically after the specified number of seconds.
+* `1` to `1440` — Turn switch back on automatically after the specified number of minutes.
 
 :::note
 
