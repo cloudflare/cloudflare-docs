@@ -5,7 +5,7 @@ sidebar:
   order: 7
 ---
 
-import { Render, TabItem, Tabs } from "~/components";
+import { Render, TabItem, Tabs, WranglerConfig } from "~/components";
 
 A [binding](/workers/runtime-apis/bindings/) enables your Pages Functions to interact with resources on the Cloudflare developer platform. Use bindings to integrate your Pages Functions with Cloudflare resources like [KV](/kv/concepts/how-kv-works/), [Durable Objects](/durable-objects/), [R2](/r2/), and [D1](/d1/). You can set bindings for both production and preview environments.
 
@@ -612,8 +612,6 @@ If using a queue producer binding with a Pages Function, you will be able to sen
 :::note
 
 PostgreSQL drivers like [`Postgres.js`](https://github.com/porsager/postgres) depend on Node.js APIs. Pages Functions with Hyperdrive bindings must be [deployed with Node.js compatibility](/workers/runtime-apis/nodejs).
-
-import { WranglerConfig } from "~/components";
 
 <WranglerConfig>
 

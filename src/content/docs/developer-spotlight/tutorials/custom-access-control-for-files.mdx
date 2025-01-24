@@ -17,7 +17,7 @@ spotlight:
   author_bio_source: GitHub
 ---
 
-import { Render, PackageManagers } from "~/components";
+import { Render, PackageManagers, WranglerConfig } from "~/components";
 
 This tutorial gives you an overview on how to create a TypeScript-based Cloudflare Worker which allows you to control file access based on a simple username and password authentication. To achieve this, we will use a [D1 database](/d1/) for user management and an [R2 bucket](/r2/) for file storage.
 
@@ -71,8 +71,6 @@ Replace `<YOUR_DATABASE_NAME>` with the name you want to use for your database. 
 After the database is successfully created, you will see the data for the binding displayed as an output.
 The binding declaration will start with `[[d1_databases]]` and contain the binding name, database name and ID.
 To use the database in your worker, you will need to add the binding to your Wrangler file, by copying the declaration and pasting it into the wrangler file, as shown in the example below.
-
-import { WranglerConfig } from "~/components";
 
 <WranglerConfig>
 

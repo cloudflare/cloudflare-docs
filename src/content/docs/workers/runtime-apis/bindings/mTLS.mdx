@@ -6,7 +6,7 @@ description: Configure your Worker to present a client certificate to services
   that enforce an mTLS connection.
 ---
 
-import { TabItem, Tabs } from "~/components";
+import { TabItem, Tabs, WranglerConfig } from "~/components";
 
 When using [HTTPS](https://www.cloudflare.com/learning/ssl/what-is-https/), a server presents a certificate for the client to authenticate in order to prove their identity. For even tighter security, some services require that the client also present a certificate.
 
@@ -32,8 +32,6 @@ npx wrangler mtls-certificate upload --cert cert.pem --key key.pem --name my-cli
 ```
 
 Then, update your Worker project's Wrangler file to create an mTLS certificate binding:
-
-import { WranglerConfig } from "~/components";
 
 <WranglerConfig>
 

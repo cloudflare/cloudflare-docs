@@ -6,7 +6,7 @@ description: Environment variables are a type of binding that allow you to attac
 
 ---
 
-import { Render, TabItem, Tabs } from "~/components"
+import { Render, TabItem, Tabs, WranglerConfig } from "~/components"
 
 ## Background
 
@@ -51,8 +51,6 @@ export default {
 `vars` is a non-inheritable key. [Non-inheritable keys](/workers/wrangler/configuration/#non-inheritable-keys) are configurable at the top-level, but cannot be inherited by environments and must be specified for each environment.
 
 To define environment variables for different environments, refer to the example below:
-
-import { WranglerConfig } from "~/components";
 
 <WranglerConfig>
 

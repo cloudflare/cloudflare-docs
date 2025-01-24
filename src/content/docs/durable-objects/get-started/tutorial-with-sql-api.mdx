@@ -5,7 +5,7 @@ sidebar:
   order: 2
 ---
 
-import { Render, TabItem, Tabs, PackageManagers } from "~/components";
+import { Render, TabItem, Tabs, PackageManagers, WranglerConfig } from "~/components";
 
 This guide will instruct you through:
 
@@ -202,8 +202,6 @@ Refer to [Access a Durable Object from a Worker](/durable-objects/best-practices
 ## 5. Configure Durable Object bindings
 
 [Bindings](/workers/runtime-apis/bindings/) allow your Workers to interact with resources on the Cloudflare developer platform. The Durable Object bindings in your Worker project's Wrangler configuration file will include a binding name (for this guide, use `MY_DURABLE_OBJECT`) and the class name (`MyDurableObject`).
-
-import { WranglerConfig } from "~/components";
 
 <WranglerConfig>
 

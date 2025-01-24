@@ -9,7 +9,7 @@ description: Use a configuration file to customize the
   Platform products.
 ---
 
-import { Render, Type, MetaInfo } from "~/components";
+import { Render, Type, MetaInfo, WranglerConfig } from "~/components";
 import { FileTree } from "@astrojs/starlight/components";
 
 Wrangler optionally uses a `wrangler.json`/`wrangler.jsonc`/Wrangler file to customize the development and deployment setup for a Worker.
@@ -23,8 +23,6 @@ As of Wrangler v3.91.0 Wrangler supports both JSON (`wrangler.json` or `wrangler
 It is best practice to treat Wrangler's configuration file as the [source of truth](#source-of-truth) for configuring a Worker.
 
 ## Sample Wrangler configuration
-
-import { WranglerConfig } from "~/components";
 
 <WranglerConfig>
 

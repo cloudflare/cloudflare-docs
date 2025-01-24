@@ -3,7 +3,7 @@ pcx_content_type: reference
 title: Workers API reference
 ---
 
-import { Type, MetaInfo } from "~/components";
+import { Type, MetaInfo, WranglerConfig } from "~/components";
 
 The in-Worker R2 API is accessed by binding an R2 bucket to a [Worker](/workers). The Worker you write can expose external access to buckets via a route or manipulate R2 objects internally.
 
@@ -24,8 +24,6 @@ A binding is defined in the Wrangler file of your Worker project's directory.
 :::
 
 To bind your R2 bucket to your Worker, add the following to your Wrangler file. Update the `binding` property to a valid JavaScript variable identifier and `bucket_name` to the name of your R2 bucket:
-
-import { WranglerConfig } from "~/components";
 
 <WranglerConfig>
 

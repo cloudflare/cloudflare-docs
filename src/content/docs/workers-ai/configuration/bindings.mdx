@@ -6,7 +6,7 @@ sidebar:
 
 ---
 
-import { Type, MetaInfo } from "~/components";
+import { Type, MetaInfo, WranglerConfig } from "~/components";
 
 ## Workers
 
@@ -15,8 +15,6 @@ import { Type, MetaInfo } from "~/components";
 To use Workers AI with Workers, you must create a Workers AI [binding](/workers/runtime-apis/bindings/). Bindings allow your Workers to interact with resources, like Workers AI, on the Cloudflare Developer Platform. You create bindings on the Cloudflare dashboard or by updating your [Wrangler file](/workers/wrangler/configuration/).
 
 To bind Workers AI to your Worker, add the following to the end of your Wrangler file:
-
-import { WranglerConfig } from "~/components";
 
 <WranglerConfig>
 

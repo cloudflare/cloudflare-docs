@@ -5,7 +5,7 @@ head: []
 description: Node.js APIs available in Cloudflare Workers
 ---
 
-import { DirectoryListing } from "~/components";
+import { DirectoryListing, WranglerConfig } from "~/components";
 
 When you write a Worker, you may need to import packages from [npm](https://www.npmjs.com/). Many npm packages rely on APIs from the [Node.js runtime](https://nodejs.org/en/about), and will not work unless these Node.js APIs are available.
 
@@ -54,8 +54,6 @@ If an API you wish to use is missing and you want to suggest that Workers suppor
 ## Enable only AsyncLocalStorage
 
 To enable only the Node.js `AsyncLocalStorage` API, use the `nodejs_als` compatibility flag.
-
-import { WranglerConfig } from "~/components";
 
 <WranglerConfig>
 

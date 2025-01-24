@@ -5,7 +5,7 @@ sidebar:
   order: 1
 ---
 
-import { Render, TabItem, Tabs, PackageManagers } from "~/components";
+import { Render, TabItem, Tabs, PackageManagers, WranglerConfig } from "~/components";
 
 By following this guide, you will create a Worker that uses the Browser Rendering API to take screenshots from web pages. This is a common use case for browser automation.
 
@@ -62,11 +62,9 @@ Configure your `browser-worker` project's [Wrangler configuration file](/workers
 
 Update your Wrangler configuration file with the Browser Rendering API binding and the KV namespaces you created:
 
-import { WranglerConfig } from "~/components";
-
 <WranglerConfig>
 
-```toml
+```toml title="wrangler.toml"
 name = "browser-worker"
 main = "src/index.js"
 compatibility_date = "2023-03-14"

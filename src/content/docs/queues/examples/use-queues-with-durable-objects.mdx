@@ -10,6 +10,8 @@ head:
 description: Publish to a queue from within a Durable Object.
 ---
 
+import { WranglerConfig } from "~/components";
+
 The following example shows you how to write a Worker script to publish to [Cloudflare Queues](/queues/) from within a [Durable Object](/durable-objects/).
 
 Prerequisites:
@@ -19,8 +21,6 @@ Prerequisites:
 - A [Durable Object namespace binding](/workers/wrangler/configuration/#durable-objects).
 
 Configure your Wrangler file as follows:
-
-import { WranglerConfig } from "~/components";
 
 <WranglerConfig>
 

@@ -4,7 +4,7 @@ pcx_content_type: tutorial
 updated: 2024-10-17
 ---
 
-import { Render, PackageManagers } from "~/components";
+import { Render, PackageManagers, WranglerConfig } from "~/components";
 
 This guide will walk you through setting up and deploying a Workers AI project. You will use [Workers](/workers/), an AI Gateway binding, and a large language model (LLM), to deploy your first AI-powered application on the Cloudflare global network.
 
@@ -48,8 +48,6 @@ cd hello-ai
 You must create an AI binding for your Worker to connect to Workers AI. Bindings allow your Workers to interact with resources, like Workers AI, on the Cloudflare Developer Platform.
 
 To bind Workers AI to your Worker, add the following to the end of your `wrangler.json` file:
-
-import { WranglerConfig } from "~/components";
 
 <WranglerConfig>
 

@@ -12,7 +12,7 @@ languages:
   - TypeScript
 ---
 
-import { Render, PackageManagers, Details } from "~/components";
+import { Render, PackageManagers, Details, WranglerConfig } from "~/components";
 
 In this tutorial, you will learn how to use [event notifications](/r2/buckets/event-notifications/) to process a PDF file when it is uploaded to an R2 bucket. You will use [Workers AI](/workers-ai/) to summarize the PDF and store the summary as a text file in the same bucket.
 
@@ -62,8 +62,6 @@ cd pdf-summarizer
 ## 2. Create the front-end
 
 Using Static Assets, you can serve the front-end of your application from your Worker. To use Static Assets, you need to add the required bindings to your Wrangler file.
-
-import { WranglerConfig } from "~/components";
 
 <WranglerConfig>
 

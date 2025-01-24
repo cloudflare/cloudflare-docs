@@ -9,7 +9,7 @@ head:
 
 ---
 
-import { Render } from "~/components"
+import { Render, WranglerConfig } from "~/components"
 
 Workers written in Python are executed by [Pyodide](https://pyodide.org/en/stable/index.html). Pyodide is a port of [CPython](https://github.com/python) (the reference implementation of Python — commonly referred to as just "Python") to WebAssembly.
 
@@ -25,8 +25,6 @@ async def on_fetch(request, env):
 ```
 
 …with a wrangler.toml file that points to a .py file:
-
-import { WranglerConfig } from "~/components";
 
 <WranglerConfig>
 
