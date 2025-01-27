@@ -55,6 +55,8 @@ Additionally, you also need to configure the necessary route table entries for t
    - **IKE Version**: `ikev2`
    - **Startup action**: **Start**
    - **DPD timeout action**: `Restart`
+   - **IKE (Phase 1) lifetime**: `86400`
+   - **IPsec (Phase 2) lifetime**: `28800`
 
 9. Select **Save changes**.
 
@@ -80,7 +82,7 @@ After configuring the AWS transit gateway VPN connection and the tunnel as menti
    - **Health check direction**: Choose **Bidirectional**
    - **Replay protection**: Select **Enabled**.
 2. Select **Save**.
-3. Repeat the above steps for `tunnel02`. Chose the same prefix, but select the second IPsec tunnel for **Tunnel/Next hop**.
+3. Repeat the above steps for `tunnel02`. Choose the second anycast IP for your endpoint.
 
 ### Static routes
 
