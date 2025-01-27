@@ -55,12 +55,14 @@ crypto ikev2 profile CF_MAGIC_WAN_02
 !
 crypto ipsec profile CF_MAGIC_WAN_01
  set security-association lifetime kilobytes disable
+ set security-association lifetime seconds 28800
  set security-association replay disable
  set pfs group20
  set ikev2-profile CF_MAGIC_WAN_01
 !
 crypto ipsec profile CF_MAGIC_WAN_02
  set security-association lifetime kilobytes disable
+ set security-association lifetime seconds 25200
  set security-association replay disable
  set pfs group14
  set ikev2-profile CF_MAGIC_WAN_02
