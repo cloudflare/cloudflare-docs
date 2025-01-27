@@ -120,7 +120,7 @@ fortigate # config vpn ipsec phase1-interface
     edit "MWAN_IPsec_Tun2"
         set interface "wan1"
         set ike-version 2
-        set keylife 86400
+        set keylife 82800
         set peertype any
         set net-device enable
         set proposal aes256gcm-prfsha512 aes256gcm-prfsha384 aes256gcm-prfsha256
@@ -154,7 +154,7 @@ fortigate # config vpn ipsec phase2-interface
         set proposal aes256gcm aes128gcm
         set dhgrp 20
         set replay disable
-        set keylifeseconds 28800
+        set keylifeseconds 25200
         set auto-negotiate enable
         set keepalive enable
     next
