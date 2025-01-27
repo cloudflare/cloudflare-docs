@@ -4,6 +4,7 @@ import { Aside } from "~/components";
 import { marked } from "marked";
 import { format } from "date-fns";
 import { getChangelogs } from "~/util/changelogs";
+import { getEntry } from "astro:content";
 
 const { products, productAreas, changelogs } = await getChangelogs();
 ---
@@ -52,42 +53,43 @@ const { products, productAreas, changelogs } = await getChangelogs();
 					<h4 class="text-nowrap">{format(date, "do MMMM yyyy")}</h4>
 				</div>
 				<div class="!mt-0">
-					{entries?.map((entry) => (
-						<div
-							data-product={entry.product.toLowerCase()}
-							data-productArea={entry.productAreaName.toLowerCase()}
-						>
-							<h3>
-								<a href={entry.link}>{entry.product}</a>
-							</h3>
-							{["WAF", "DDoS protection"].includes(entry.product) && (
-								<p
-									set:html={marked.parse(
-										entry.scheduled
-											? "**" +
-													"Scheduled changes for " +
-													(entry.date ?? "") +
-													"**"
-											: "**" + (entry.date ?? "") + "**",
-									)}
-								/>
-							)}
-							{entry.title && (
-								<p set:html={marked.parse("**" + (entry.title ?? "") + "**")} />
-							)}
-							{["WAF", "DDoS protection"].includes(entry.product) ? (
-								<p
-									set:html={marked.parse(
-										"For more details, refer to the [changelog page](" +
-											entry.link +
-											").",
-									)}
-								/>
-							) : (
-								<p set:html={marked.parse(entry.description ?? "")} />
-							)}
-						</div>
-					))}
+					{entries?.map(async (entry) => {
+						let title = entry.title;
+						let description = entry.description || "";
+
+						if (entry.individual_page) {
+							const page = await getEntry(
+								"docs",
+								entry.individual_page.slice(1, -1),
+							);
+
+							if (!page) {
+								throw new Error(
+									`[Changelog] Unable to load page ${entry.individual_page}.`,
+								);
+							}
+
+							title = `${entry.product} - ${page.data.title}`;
+							description = `For more details, refer to the dedicated page for [${title}](${entry.individual_page}).`;
+						}
+
+						return (
+							<div
+								data-product={entry.product.toLowerCase()}
+								data-productArea={entry.productAreaName.toLowerCase()}
+							>
+								<h3>
+									<a href={entry.productLink}>{entry.product}</a>
+								</h3>
+								{title && (
+									<p>
+										<strong>{title}</strong>
+									</p>
+								)}
+								<Fragment set:html={marked.parse(description)} />
+							</div>
+						);
+					})}
 				</div>
 			</div>
 		))

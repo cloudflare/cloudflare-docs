@@ -21,7 +21,7 @@ jobs:
         id: find-files
         run: |
           # Find all .png and .svg files, but only look in the ./src/assets/images directory
-          FILES=$(find . -type f \( -name "*.png" -o -name "*.svg" \) -path "./src/assets/images/*")
+          FILES=$(find . -type f \( -name "*.png" -o -name "*.svg" \) -path "./src/assets/images/*" -not -path "./src/assets/images/workers-ai/*.svg" -not -path "./src/assets/images/workers/ai/*.png" -not -path "./src/assets/images/changelog-next/*")
 
           # Check if files are referenced in any markdown file
           UNUSED_FILES=""

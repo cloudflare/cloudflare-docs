@@ -16,11 +16,7 @@ This guide covers how to configure [Smartsheet](https://help.smartsheet.com/arti
 * A [domain](https://help.smartsheet.com/articles/2483051-domain-management) verified in Smartsheet
 
 :::note
-
-
 In Smartsheet, SSO is configured for a domain. If you have multiple plans using the same domain, the SSO configuration will apply to all Smartsheet users in that domain, regardless of their plan type.
-
-
 :::
 
 ## 1. Add a SaaS application to Cloudflare Zero Trust
@@ -35,9 +31,8 @@ In Smartsheet, SSO is configured for a domain. If you have multiple plans using 
    * **Assertion Consumer Service URL**: `https://saml.authn.smartsheet.com/saml2/idpresponse`
    * **Name ID format**: *Unique ID*
 7. Copy the **SAML Metadata endpoint**.
-8. Select **Save configuration**.
-9. Configure [Access policies](/cloudflare-one/policies/access/) for the application.
-10. Select **Done**.
+8. Configure [Access policies](/cloudflare-one/policies/access/) for the application.
+9. Save the application.
 
 ## 2. Create and test a SAML SSO provider in Smartsheet
 

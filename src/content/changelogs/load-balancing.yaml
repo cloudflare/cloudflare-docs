@@ -5,6 +5,10 @@ productLink: "/load-balancing/"
 productArea: Application performance
 productAreaLink: /fundamentals/reference/changelog/performance/
 entries:
+  - publish_date: "2025-01-24"
+    title: Update to Cloudflare Tunnel Steering
+    description: |-
+      Introduced changes to the resolution of proxied domains that are backed by Cloudflare Tunnels on the same zone. These changes correct how orange-clouded records are steered to Cloudflare Tunnels via Cloudflare Load Balancers.
   - publish_date: "2025-01-16"
     title: Update to Pool Health Monitoring
     description: |-

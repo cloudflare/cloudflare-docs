@@ -1,0 +1,19 @@
+.footnote {
+	font-size: 0.75rem;
+	line-height: 1rem;
+	color: var(--sl-color-accent);
+	font-weight: 600;
+	padding: 0.25rem;
+	margin: -0.25rem;
+}
+
+.data-footnote-backref {
+	display: none;
+}
+
+.tippy-box {
+	background-color: var(--sl-color-bg-nav);
+	border-color: var(--sl-color-text);
+	border: 0.1em solid;
+	color: var(--sl-color-white);
+}
