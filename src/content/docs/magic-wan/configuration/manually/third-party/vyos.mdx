@@ -15,6 +15,7 @@ This tutorial contains configuration information and a sample template for using
 - The IPsec tunnel endpoint on this VyOS router is the `<IP_ADDR_OF_UPLINK_INTF_TO_INTERNET/WAN>`.
 - The IP address of the IPsec tunnel endpoint on the Cloudflare side is the anycast IP address provided by Cloudflare.
 - This router is configured to initiate the IPsec tunnel connection.
+- Configure every endpoint with at least two tunnels, using both anycast IPs provided by Cloudflare. When configuring the second redundant tunnel, use a value that does not overlap with the primary tunnel for the IKE/ESP lifetime configuration. For example, for the primary ESP lifetime of 8 hours as suggested, use 7 hours for the backup tunnel. This ensures they do not rekey at the same time in case of a control plane disruption.
 
 ## Configuration parameters
 
@@ -43,7 +44,7 @@ This tutorial contains configuration information and a sample template for using
 set interfaces vti <name of the vti interface> address
 '<PRIVATE_IP_ADDRESS_OF_IPSEC_TUNNEL_INTERFACE>'
 set vpn ipsec esp-group <NAME_OF_ESP_GROUP> compression 'disable'
-set vpn ipsec esp-group <NAME_OF_ESP_GROUP> lifetime '86400'
+set vpn ipsec esp-group <NAME_OF_ESP_GROUP> lifetime '28800'
 set vpn ipsec esp-group <NAME_OF_ESP_GROUP> mode 'tunnel'
 set vpn ipsec esp-group <NAME_OF_ESP_GROUP> pfs 'enable'
 set vpn ipsec esp-group <NAME_OF_ESP_GROUP> proposal 1 encryption 'aes256gcm128'
@@ -54,7 +55,7 @@ set vpn ipsec ike-group <NAME_OF_IKE_GROUP> dead-peer-detection interval '30'
 set vpn ipsec ike-group <NAME_OF_IKE_GROUP> dead-peer-detection timeout '120'
 set vpn ipsec ike-group <NAME_OF_IKE_GROUP> ikev2-reauth 'no'
 set vpn ipsec ike-group <NAME_OF_IKE_GROUP> key-exchange 'ikev2'
-set vpn ipsec ike-group <NAME_OF_IKE_GROUP> lifetime '28800'
+set vpn ipsec ike-group <NAME_OF_IKE_GROUP> lifetime '86400'
 set vpn ipsec ike-group <NAME_OF_IKE_GROUP> mobike 'disable'
 set vpn ipsec ike-group <NAME_OF_IKE_GROUP> proposal 1 dh-group '20'
 set vpn ipsec ike-group <NAME_OF_IKE_GROUP> proposal 1 encryption 'aes256gcm128'
