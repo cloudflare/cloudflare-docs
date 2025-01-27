@@ -198,37 +198,33 @@ curl.exe --request PATCH `
 
 ## Environment variables
 
-You can define environment variables for values that repeat between curl commands, such as the zone or account ID. The lifetime of an environment variable can be the current shell session, all future sessions of the current user, or even all future sessions of all users on the machine you are defining them.
+You can define environment variables for values that repeat between commands, such as the zone or account ID. The lifetime of an environment variable can be the current shell session, all future sessions of the current user, or even all future sessions of all users on the machine you are defining them.
 
 You can also use environment variables for keeping authentication credentials (API token, API key, and email) for reuse in different commands. However, make sure you define these values in the smallest possible scope (either the current shell session only or all new sessions for the current user).
 
-The procedure for setting environment variables depends on your platform and shell.
+The procedure for setting and referencing environment variables depends on your platform and shell.
 
-<Tabs> <TabItem label="Linux and macOS">
+### Define an environment variable
 
-To define two environment variables for the current shell session, run the following commands:
+<Tabs syncKey="LinuxPowershellCmd"> <TabItem label="Linux and macOS">
+
+To define a `ZONE_ID` environment variable for the current shell session, run the following command:
 
 ```sh
 export ZONE_ID='f2ea6707005a4da1af1b431202e96ac5'
-export CLOUDFLARE_API_TOKEN='<API_TOKEN>'
 ```
 
-When referencing the variable in curl commands, add a `$` prefix to the variable name (for example, `$ZONE_ID`). Make sure that the full string referencing the variable is either unquoted or enclosed in double quotes (`""`).
-
-To define an environment variable for all new shell sessions for the current user, add the command above at the end of your shell configuration file (for example, `~/.bashrc` for the `bash` shell and `~/.zshrc` for the `zsh` shell).
+To define the variable for all new shell sessions for the current user, add the command above at the end of your shell configuration file (for example, `~/.bashrc` for the `bash` shell and `~/.zshrc` for the `zsh` shell).
 
 </TabItem> <TabItem label="PowerShell">
 
-To define two environment variables named `ZONE_ID` and `CLOUDFLARE_API_TOKEN` for the current PowerShell session, run the following commands:
+To define a `ZONE_ID` environment variable for the current PowerShell session, run the following command:
 
 ```powershell
 $Env:ZONE_ID='f2ea6707005a4da1af1b431202e96ac5'
-$Env:CLOUDFLARE_API_TOKEN='<API_TOKEN>'
 ```
 
-When referencing the variable in curl commands, add an `$Env:` prefix to the variable name (for example, `$Env:ZONE_ID`). Make sure that the full string referencing the variable is either unquoted or enclosed in double quotes (`""`).
-
-To define an environment variable for all new PowerShell sessions of the current user, set the variable in your PowerShell profile. You can get the path to your PowerShell profile by running `echo $PROFILE`.
+To define the environment variable for all new PowerShell sessions of the current user, set the variable in your PowerShell profile. You can get the path to your PowerShell profile by running `echo $PROFILE`.
 
 Alternatively, set the variable for all new PowerShell sessions of the current user using the `SetEnvironmentVariable()` method of the `System.Environment` class. For example:
 
@@ -240,21 +236,53 @@ Running this command will not affect the current session. You will need to close
 
 </TabItem> <TabItem label="Windows Command Prompt">
 
-To define a two environment variables for the current Command Prompt session, run the following commands:
+To define a `ZONE_ID` environment variable for the current Command Prompt session, run the following command:
 
-```txt
-C:\>set ZONE_ID=f2ea6707005a4da1af1b431202e96ac5
-C:\>set CLOUDFLARE_API_TOKEN=<API_TOKEN>
+```txt frame="terminal"
+set ZONE_ID=f2ea6707005a4da1af1b431202e96ac5
 ```
-
-When referencing a variable in curl commands, enclose the variable name in `%` characters (for example, `%ZONE_ID%`).
 
 To define an environment variable for all future Command Prompt sessions of the current user, run the following command:
 
-```txt
-C:\>setx ZONE_ID f2ea6707005a4da1af1b431202e96ac5
+```txt frame="terminal"
+setx ZONE_ID f2ea6707005a4da1af1b431202e96ac5
 ```
 
 Running this command will not affect the current window. You will need to either run the `set` command or close and start a new Command Prompt window.
+
+</TabItem> </Tabs>
+
+### Reference an environment variable
+
+<Tabs syncKey="LinuxPowershellCmd"> <TabItem label="Linux and macOS">
+
+When referencing an environment variable in a command, add a `$` prefix to the variable name (for example, `$ZONE_ID`). Make sure that the full string referencing the variable is either unquoted (if it does not contain spaces) or enclosed in double quotes (`""`).
+
+For example:
+
+```sh
+curl "https://api.cloudflare.com/client/v4/zones/$ZONE_ID" \
+--header "Authorization: Bearer $CLOUDFLARE_API_TOKEN"
+```
+
+</TabItem> <TabItem label="PowerShell">
+
+When referencing an environment variable in a command, add an `$Env:` prefix to the variable name (for example, `$Env:ZONE_ID`). Make sure that the full string referencing the variable is either unquoted or enclosed in double quotes (`""`).
+
+For example:
+
+```powershell
+Invoke-RestMethod -URI "https://api.cloudflare.com/client/v4/zones/$Env:ZONE_ID" -Method 'GET' -Headers @{'Authorization'="Bearer $Env:CLOUDFLARE_API_TOKEN"}
+```
+
+</TabItem> <TabItem label="Windows Command Prompt">
+
+When referencing an environment variable in a command, enclose the variable name in `%` characters (for example, `%ZONE_ID%`).
+
+For example:
+
+```txt frame="terminal"
+curl "https://api.cloudflare.com/client/v4/zones/%ZONE_ID%" --header "Authorization: Bearer %CLOUDFLARE_API_TOKEN%"
+```
 
 </TabItem> </Tabs>
