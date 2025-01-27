@@ -76,7 +76,7 @@
 		"node-html-parser": "7.0.1",
 		"prettier": "3.4.2",
 		"prettier-plugin-astro": "0.14.1",
-		"prettier-plugin-tailwindcss": "0.6.9",
+		"prettier-plugin-tailwindcss": "0.6.11",
 		"pretty-bytes": "6.1.1",
 		"puppeteer": "24.1.1",
 		"react": "19.0.0",
