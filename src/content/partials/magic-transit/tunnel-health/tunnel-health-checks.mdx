@@ -191,10 +191,11 @@ Healthy tunnels are preferred to degraded tunnels, and degraded tunnels are pref
 
 {props.productName} steers traffic to tunnels based on priorities you set when you <a href={props.staticRoutes}>assign tunnel route priorities during onboarding</a>. Tunnel routes with lower values have priority over those with higher values.
 
-**Note**
+:::note
 Cloudflare global network servers may be able to reach the origin infrastructure from some locations at a given time but not others. This occurs because Cloudflare does not synchronize health checks among global network servers and because the Internet is not homogeneous.
 
 As a result, tunnel health may be in different states in different parts of the world at the same time.
+:::
 
 ## Tunnel state determination
 
