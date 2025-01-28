@@ -90,7 +90,7 @@ To avoid control plane policies enforced by the origin network, tunnel health ch
 
 #### Bidirectional request style
 
-```
+```mermaid
 flowchart LR
    subgraph Tunnel Healthcheck Probe
    cloudflare(Cloudflare) --- bare_echo_request([ICMP Echo Request])
@@ -116,7 +116,7 @@ flowchart LR
 
 #### Bidirectional reply style
 
-```
+```mermaid
 flowchart LR
    subgraph Tunnel Healthcheck Probe
    cloudflare(Cloudflare) --- bare_echo_probe([ICMP Echo Reply])
@@ -142,7 +142,7 @@ flowchart LR
 
 #### Unidirectional echo request
 
-```
+```mermaid
 flowchart LR
    cloudflare(Cloudflare) --- bare_echo_probe([ICMP Echo Request])
    bare_echo_probe --> tunnel[Tunnel]
@@ -159,7 +159,7 @@ flowchart LR
 
 #### Unidirectional echo reply
 
-```
+```mermaid
 flowchart LR
    cloudflare(Cloudflare) --- bare_echo_probe([ICMP Echo Reply])
    bare_echo_probe --> tunnel[Tunnel]
