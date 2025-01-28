@@ -82,10 +82,9 @@ To avoid control plane policies enforced by the origin network, tunnel health ch
 | Attribute | Type | Unidirectional health checks | Bidirectional health checks |
 | :---: | :---: | :---: | :---: |
 | Source Address | Reply Style | Cloudflare Address (Publicly Routable) | Cloudflare Interface Address (Privately Routable)  |
-| Destination Address |  | Origin Tunnel Endpoint (Publicly Routable) | Origin Interface Address (Privately Routable) / Custom Target |
+| Destination Address | Reply Style | Origin Tunnel Endpoint (Publicly Routable) | Origin Interface Address (Privately Routable) / Custom Target |
 | Source Address | Request Style | Origin Tunnel Endpoint (Publicly Routable) | Origin Interface Address (Privately Routable) / Custom Target |
-| Destination Address |  | Cloudflare Address (Publicly Routable) | Cloudflare Interface Address (Privately Routable) |
-
+| Destination Address | Reply Style | Cloudflare Address (Publicly Routable) | Cloudflare Interface Address (Privately Routable) |
 
 ### Graphics summarizing health check types
 
