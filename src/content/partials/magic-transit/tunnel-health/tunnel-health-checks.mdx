@@ -10,23 +10,25 @@ A tunnel health check probe consists of an [ICMP (Internet Control Message Proto
 
 A tunnel health check probe comes from Cloudflare to the tunnel origin and a response then returns to Cloudflare. This response is used to determine the outcome of the probe and then used to calculate the state of the tunnel (this is explained in greater detail below).
 
-A tunnel health check probe has the following important attributes:
+## Tunnel health check attributes
 
-## Target
+A tunnel health check probe has important attributes described below.
+
+### Target
 
 A tunnel health check probe tests whether Cloudflare can successfully connect to a specific address or endpoint via the tunnel. The target is the address you want to ensure is reachable through the tunnel. This helps verify that the tunnel is functional and traffic can flow properly to the intended destination. It is optional and there are certain defaults depending on the direction of the health check (refer to [Direction](#direction) for more information).
 
-## Direction
+### Direction
 
 A tunnel health check probe can have two possible directions — unidirectional and bidirectional.
 
-### Unidirectional
+#### Unidirectional
 
 A unidirectional health check probe stays encapsulated in one direction and comes into the origin via the tunnel (from Cloudflare to the origin). The response comes back to Cloudflare unencapsulated and is routed outside of the tunnel following standard Internet routing.
 
 The target defaults to the publicly routable origin specified as the `customer_endpoint` on the tunnel if present. Otherwise, you can use a custom target.
 
-### Bidirectional
+#### Bidirectional
 
 A bidirectional probe stays encapsulated in both directions, that is, the probe comes in via the tunnel and the response also leaves encapsulated via the tunnel.
 
@@ -40,16 +42,16 @@ These packets will flow to and from Cloudflare over the tunnels you have configu
 
 Refer to <a href={props.addTunnels}>Add tunnels</a> to learn how to configure bidirectional or unidirectional health checks.
 
-##### Legacy Bidirectional Healthchecks
+#### Legacy bidirectional health checks
 
-For customers using the legacy health check system with a public IP range, Cloudflare recommends that:
+For customers using the legacy health check system with a public IP range, Cloudflare recommends:
 
-1. You configure the IP address for your tunnel health check target to be one from within the prefix range 172.64.240.252/30.
-2. Apply a policy-based route that matches packets with source IP address equal to the configured tunnel health check target (for example 172.64.240.253/32), and route them over the tunnel back to Cloudflare.
+- Configuring the tunnel health check target IP address to one within the `172.64.240.252/30` prefix range.
+- Applying a policy-based route that matches packets with a source IP address equal to the configured tunnel health check target (for example `172.64.240.253/32`), and route them over the tunnel back to Cloudflare.
 
 ### Type
 
-A tunnel health check probe can have two possible types. For each type the source and destination address depends on the direction. Refer to [Configure tunnel endpoints](https://developers.cloudflare.com/magic-transit/how-to/configure-tunnels/#add-tunnels) to learn how to change this setting.
+A tunnel health check probe can have two possible types. For each type the source and destination address depends on the direction. Refer to <a href={props.addTunnels}>Add tunnels</a> to learn how to change this setting.
 
 #### Request Style
 
