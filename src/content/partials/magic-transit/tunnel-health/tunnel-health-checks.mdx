@@ -55,7 +55,7 @@ A tunnel health check probe can have two possible types: request and reply. For 
 
 #### Request style
 
-In a request style health check the payload probe is an ICMP Request.
+In a request style health check the payload probe is an ICMP request.
 
 For a unidirectional probe the source address is the Cloudflare side of the tunnel (a publicly routable address) and the destination is the origin router (also publicly routable). The origin router receives the probe and produces an ICMP response with the opposite source and destination, and sends it outside of the tunnel.
 
@@ -63,14 +63,15 @@ For a bidirectional probe the source address is the interface address of the Clo
 
 #### Reply style
 
-In a reply style health check the payload probe is an ICMP Response.
+In a reply style health check the payload probe is an ICMP response.
 
-For a Unidirectional probe the destination address is the Cloudflare side of the tunnel (a publicly routable address) and the source is the origin router (also publicly routable). The origin router receives the probe and sends the probe as the response back as is outside of the tunnel.
+For a unidirectional probe the destination address is the Cloudflare side of the tunnel (a publicly routable address) and the source is the origin router (also publicly routable). The origin router receives the probe and sends it back as the response, unchanged, outside of the tunnel.
 
-For a Bidirectional probe the destination address is the interface address of the Cloudflare side of the tunnel (a privately routable address) and the source is the interface address of the tunnel (also privately routable). The origin router receives the probe packet and sends the probe packet back as the response (as is) into the tunnel as the destination is routed via the tunnel.
+For a Bidirectional probe the destination address is the interface address of the Cloudflare side of the tunnel (a privately routable address) and the source is the interface address of the tunnel (also privately routable). The origin router receives the probe packet and sends the probe packet back as the response (unchanged) into the tunnel as the destination is routed via the tunnel.
 
-*Note:*
-To avoid control plane policies enforced by the origin network, tunnel health checks can be set to use a Request style healthcheck if Reply style healthchecks are being dropped.
+:::note
+To avoid control plane policies enforced by the origin network, tunnel health checks can be set to use a request style health check if reply style health checks are being dropped.
+:::
 
 | Attribute | Type | Unidirectional Healthchecks | Bidirectional Healthchecks |
 | :---: | :---: | :---: | :---: |
