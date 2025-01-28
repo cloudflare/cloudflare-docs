@@ -1,6 +1,6 @@
 ---
 pcx_content_type: configuration
-title: Timers
+title: timers
 ---
 
 import { Render, TypeScriptExample } from "~/components";
@@ -19,18 +19,21 @@ import timers from 'node:timers';
 
 console.log('first');
 timers.setTimeout(() => {
-	console.log('last');
+console.log('last');
 }, 10);
 
 timers.setTimeout(() => {
-	console.log('next');
+console.log('next');
 });
 
 ```
 </TypeScriptExample>
 
-Note that due to [security-based restrictions on timers](/workers/reference/security-model/#step-1-disallow-timers-and-multi-threading) in Workers,
+:::note
+Due to [security-based restrictions on timers](/workers/reference/security-model/#step-1-disallow-timers-and-multi-threading) in Workers,
 timers are limited to returning the time of the last I/O. This means that while setTimeout, setInterval, and setImmediate will defer your function execution
 until after other events have run, they will not delay them for the full time specified.
+
+:::
 
 The full `node:timers` API is documented in the [Node.js documentation for `node:timers`](https://nodejs.org/api/timers.html).
