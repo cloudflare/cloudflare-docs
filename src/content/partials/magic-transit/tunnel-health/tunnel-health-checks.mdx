@@ -73,7 +73,9 @@ For a Bidirectional probe the destination address is the interface address of th
 To avoid control plane policies enforced by the origin network, tunnel health checks can be set to use a request style health check if reply style health checks are being dropped.
 :::
 
-| Attribute | Type | Unidirectional Healthchecks | Bidirectional Healthchecks |
+### Summary table with tunnel health check probe types
+
+| Attribute | Type | Unidirectional health checks | Bidirectional health checks |
 | :---: | :---: | :---: | :---: |
 | Source Address | Reply Style | Cloudflare Address (Publicly Routable) | Cloudflare Interface Address (Privately Routable)  |
 | Destination Address |  | Origin Tunnel Endpoint (Publicly Routable) | Origin Interface Address (Privately Routable) / Custom Target |
