@@ -74,4 +74,5 @@ If multiple rules apply to the same prefix or object key, the strictest (longest
 ## Notes
 
 - Rules without prefix apply to all objects in the bucket.
+- Rules apply to both new and existing objects in the bucket.
 - Bucket lock rules take precedence over [lifecycle rules](/r2/buckets/object-lifecycles/). For example, if a lifecycle rule attempts to delete an object at 30 days but a bucket lock rule requires it be retained for 90 days, the object will not be deleted until the 90-day requirement is met.
