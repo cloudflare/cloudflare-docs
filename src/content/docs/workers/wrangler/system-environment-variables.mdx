@@ -18,7 +18,7 @@ System environment variables are local environment variables that can change Wra
 
 :::note
 
-You can set system environment variables per environment by creating additional files with the naming convention `.env.<environment-name>`. When you set the environment using `wrangler <command> --env <environment-name>`, such an environment specific file will be loaded instead of the `.env` file - they are not merged.
+To set different system environment variables for each environment, create files named `.env.<environment-name>`. When you use `wrangler <command> --env <environment-name>`, the corresponding environment-specific file will be loaded instead of the `.env` file, so the two files are not merged.
 :::
 
 ## Supported environment variables
