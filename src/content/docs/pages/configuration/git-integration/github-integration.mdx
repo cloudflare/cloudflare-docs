@@ -23,13 +23,13 @@ Every time you open a new pull request on your GitHub repository, Cloudflare Pag
 
 ### Skipping a build via a commit message
 
-Without any configuration required, you can choose to skip a deployment on an adhoc basis. By adding the `[CI Skip]`, `[CI-Skip]`, `[Skip CI]`, `[Skip-CI]`, or `[CF-Pages-Skip]` flag as a prefix in your commit message, and Pages will omit that deployment. The prefixes are not case sensitive.
+Without any configuration required, you can choose to skip a deployment on an ad hoc basis. By adding the `[CI Skip]`, `[CI-Skip]`, `[Skip CI]`, `[Skip-CI]`, or `[CF-Pages-Skip]` flag as a prefix in your commit message, and Pages will omit that deployment. The prefixes are not case sensitive.
 
 ### Check runs
 
 If you have one or multiple projects connected to a repository (i.e. a [monorepo](/pages/configuration/monorepos/)), you can check on the status of each build within GitHub via [GitHub check runs](https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/collaborating-on-repositories-with-code-quality-features/about-status-checks#checks).
 
-You can see the checks by selecting on the status icon next to a commit within your GitHub repository. In the example below, you can select the green check mark to see the results of the check run.
+You can see the checks by selecting the status icon next to a commit within your GitHub repository. In the example below, you can select the green check mark to see the results of the check run.
 
 ![GitHub status](~/assets/images/workers/platform/ci-cd/gh-status-check-runs.png)
 
@@ -51,7 +51,7 @@ When authorizing Cloudflare Pages to access a GitHub account, you can specify ac
 
 :::caution[GitHub security consideration]
 
-A GitHub account should only point to one Cloudflare account. If you are setting up Cloudflare with GitHub for your organization, Cloudflare recommends that you limit the scope of the application to only the repositories you intend to build with Pages. You can modify these permissions by going to the [Applications page](https://github.com/settings/installations) on GitHub, select **Switch settings context** to access your GitHub organization settings. Then, select **Cloudflare Workers & Pages** > For **Repository access**, select **Only select repositories** > select your repositories.
+A GitHub account should only point to one Cloudflare account. If you are setting up Cloudflare with GitHub for your organization, Cloudflare recommends that you limit the scope of the application to only the repositories you intend to build with Pages. To modify these permissions, go to the [Applications page](https://github.com/settings/installations) on GitHub and select **Switch settings context** to access your GitHub organization settings. Then, select **Cloudflare Workers & Pages** > For **Repository access**, select **Only select repositories** > select your repositories.
 
 :::
 
@@ -76,8 +76,8 @@ Note that removing access to GitHub will disable new builds for Workers and Page
 If you see errors where Cloudflare Pages cannot access your git repository, you should attempt to uninstall and reinstall the GitHub application associated with the Cloudflare Pages installation.
 
 1. Go to the installation settings page on GitHub:
-   - Navigate to **Settings > Builds** for the Pages project and click **Manage** under Git Repository.
-   - Alternatively, visit these links to find the Cloudflare Workers and Pages installation and click **Configure**:
+   - Navigate to **Settings > Builds** for the Pages project and select **Manage** under Git Repository.
+   - Alternatively, visit these links to find the Cloudflare Workers and Pages installation and select **Configure**:
 
 |                  |                                                                                    |
 | ---------------- | ---------------------------------------------------------------------------------- |
@@ -85,7 +85,7 @@ If you see errors where Cloudflare Pages cannot access your git repository, you 
 | **Organization** | `https://github.com/organizations/<YOUR_ORGANIZATION_NAME>/settings/installations` |
 
 2. In the Cloudflare Workers and Pages GitHub App settings page, navigate to **Uninstall "Cloudflare Workers and Pages"** and select **Uninstall**.
-3. Go back to the [**Workers & Pages** overview](https://dash.cloudflare.com) page. Click **Create application** > **Pages** > **Connect to Git**
-4. Click the **+ Add account** button, click the GitHub account you want to add, and then click **Install & Authorize**.
+3. Go back to the [**Workers & Pages** overview](https://dash.cloudflare.com) page. Select **Create application** > **Pages** > **Connect to Git**.
+4. Select the **+ Add account** button, select the GitHub account you want to add, and then select **Install & Authorize**.
 5. You should be redirected to the create project page with your GitHub account or organization in the account list.
 6. Attempt to make a new deployment with your project which was previously broken.

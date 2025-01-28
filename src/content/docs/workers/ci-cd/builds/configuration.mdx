@@ -14,13 +14,13 @@ When connecting your Git repository to your Worker, you can customize the config
 
 Build settings can be found by navigating to **Settings** > **Build** within your Worker.
 
-Note that when you update and save build settings, the updated settings will be applied to your **next** build. When you **retry** a build, the build configurations that exist when the build is retried will be applied.
+Note that when you update and save build settings, the updated settings will be applied to your _next_ build. When you _retry_ a build, the build configurations that exist when the build is retried will be applied.
 
 ### Overview
 
 | Setting                                                                      | Description                                                                                                                                                                                                                                                                                                                                                                                                                                                                            |
 | ---------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| **Git account**                                                              | Select the Git account you would like to use. After initial connection, you can continue to use this Git account for future projects.                                                                                                                                                                                                                                                                                                                                                  |
+| **Git account**                                                              | Select the Git account you would like to use. After the initial connection, you can continue to use this Git account for future projects.                                                                                                                                                                                                                                                                                                                                                  |
 | **Git repository**                                                           | Choose the Git repository you would like to connect your Worker to.                                                                                                                                                                                                                                                                                                                                                                                                                    |
 | **Git branch**                                                               | Select the branch you would like Cloudflare to listen to for new commits. This will be defaulted to `main`.                                                                                                                                                                                                                                                                                                                                                                            |
 | **Build command** _(Optional)_                                               | Set a build command if your project requires a build step (e.g. `npm run build`). This is necessary, for example, when using a [front-end framework](/workers/ci-cd/builds/configuration/#framework-support) such as Next.js or Remix.                                                                                                                                                                                                                                                 |
@@ -35,9 +35,9 @@ Currently, Workers Builds does not honor the configurations set in [Custom Build
 
 ### Deploy command
 
-You can run your deploy command using your package manager of choice.
+You can run your deploy command using the package manager of your choice.
 
-If you've added a Wrangler deploy command as a script in your `package.json`, then you can run it by setting it as your deploy command. For example, `npm run deploy`.
+If you have added a Wrangler deploy command as a script in your `package.json`, then you can run it by setting it as your deploy command. For example, `npm run deploy`.
 
 Examples of other deploy commands you can set include:
 
@@ -49,7 +49,7 @@ Examples of other deploy commands you can set include:
 
 ### API token
 
-When you select to **Create new token**, a new API token will be created automatically with the following permissions:
+When you select **Create new token**, a new API token will be created automatically with the following permissions:
 
 - **Account:** Account Settings (read), Workers Scripts (edit), Workers KV Storage (edit), Workers R2 Storage (edit)
 - **Zone:** Workers Routes (edit) for all zones on the account

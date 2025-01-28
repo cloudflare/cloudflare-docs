@@ -50,7 +50,7 @@ ecommerce-monorepo/
 
 You can use [Wrangler Environments](/workers/wrangler/environments/) with Workers Builds by completing the following steps:
 
-1. [Deploy via Wrangler](/workers/wrangler/commands/#deploy) to create the Workers for your environments on the Dashboard, if you don't already have them.
+1. [Deploy via Wrangler](/workers/wrangler/commands/#deploy) to create the Workers for your environments on the Dashboard, if you do not already have them.
 2. Find the Workers for your environments. They are typically named `[name of Worker] - [environment name]`.
 3. Connect your repository to each of the Workers for your environment.
 4. In each of the Workers, edit your Wrangler deploy command to include the flag `--env: <environment name>` in the build configurations.
@@ -59,6 +59,6 @@ When a new commit is detected in the repository, a new build/deploy will trigger
 
 ### Example
 
-Imagine you have a Worker named `my-worker`, and you want to set up two environments `staging` and `production` set in the `wrangler.toml`. If you haven't already, you can deploy `my-worker` for each environment using the commands `wrangler deploy --env staging` and `wrangler deploy --env production`.
+Imagine you have a Worker named `my-worker`, and you want to set up two environments `staging` and `production` set in the `wrangler.toml`. If you have not already, you can deploy `my-worker` for each environment using the commands `wrangler deploy --env staging` and `wrangler deploy --env production`.
 
 In your Cloudflare Dashboard, you should find the two Workers `my-worker-staging` and `my-worker-production`. Then, connect the Git repository for the Worker, `my-worker`, to both of the environment Workers. In the build configurations of each environment Worker, edit the deploy commands to be `npx wrangler deploy --env staging` and `npx wrangler deploy --env production` respectively.
