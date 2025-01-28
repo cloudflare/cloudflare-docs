@@ -225,7 +225,7 @@ In the event a Cloudflare data center is down, Cloudflare's global network does 
 
 ## Recovery
 
-Once a tunnel is in the down state, global network servers continue to emit probes according to the cadence described above. When a probe returns healthy, the global network server that received the healthy packet immediately sends two more probes. If the two probes return healthy, Magic Transit sets the tunnel status to degraded (as three consecutive successful probes no longer satisfy the condition for a down state).
+Once a tunnel is in the down state, global network servers continue to emit probes according to the cadence described above. When a probe returns healthy, the global network server that received the healthy packet immediately sends two more probes. If the two probes return healthy, {props.productName} sets the tunnel status to degraded (as three consecutive successful probes no longer satisfy the condition for a down state).
 
 Tunnels in a degraded state transition to healthy when the failure rate for the previous 30 probes is less than 0.1%. This transition may take up to 30 minutes.
 
