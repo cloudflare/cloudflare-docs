@@ -26,8 +26,8 @@ const learningPath = entry.data;
 
 const modules = await getCollection("docs", (page) => {
 	return (
-		page.slug.startsWith(learningPath.path.slice(1)) &&
-		page.id.endsWith("index.mdx")
+		page.id.startsWith(learningPath.path.slice(1)) &&
+		page.filePath?.endsWith("index.mdx")
 	);
 });
 
@@ -43,7 +43,7 @@ if (!firstModule)
 
 <p set:html={marked.parse(learningPath.description)} />
 
-<LinkButton href={"/" + firstModule.slug + "/"}>Start path</LinkButton>
+<LinkButton href={"/" + firstModule.id + "/"}>Start path</LinkButton>
 <br />
 <Steps>
 	<ol>
@@ -51,7 +51,8 @@ if (!firstModule)
 			sorted.map(async (module) => {
 				let units = await getCollection("docs", (page) => {
 					return (
-						page.slug.startsWith(module.slug) && !page.id.endsWith("index.mdx")
+						page.id.startsWith(module.id) &&
+						!page.filePath?.endsWith("index.mdx")
 					);
 				});
 
@@ -61,7 +62,7 @@ if (!firstModule)
 					<li>
 						<h2>{module.data.title}</h2>
 						{module.data.description && <p>{module.data.description}</p>}
-						<LinkButton href={"/" + module.slug + "/"} variant="secondary">
+						<LinkButton href={"/" + module.id + "/"} variant="secondary">
 							Start module
 						</LinkButton>
 						{units.length > 0 && (
@@ -70,7 +71,7 @@ if (!firstModule)
 									<ol>
 										{units.map((unit) => (
 											<li>
-												<a href={"/" + unit.slug + "/"}>{unit.data.title}</a>
+												<a href={"/" + unit.id + "/"}>{unit.data.title}</a>
 											</li>
 										))}
 									</ol>

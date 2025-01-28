@@ -3,7 +3,7 @@ import StarlightPage, {
 	type StarlightPageProps,
 } from "@astrojs/starlight/components/StarlightPage.astro";
 import type { GetStaticPaths } from "astro";
-import { getCollection } from "astro:content";
+import { getCollection, render } from "astro:content";
 import Header from "~/components/changelog-next/Header.astro";
 import ProductPills from "~/components/changelog-next/ProductPills.astro";
 import { format } from "date-fns";
@@ -14,7 +14,7 @@ export const getStaticPaths = (async () => {
 	return notes.map((note) => {
 		return {
 			params: {
-				slug: note.slug,
+				slug: note.id,
 			},
 			props: {
 				note,
@@ -25,7 +25,7 @@ export const getStaticPaths = (async () => {
 
 const { note } = Astro.props;
 
-const { Content, headings } = await note.render();
+const { Content, headings } = await render(note);
 
 const props = {
 	frontmatter: {

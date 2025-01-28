@@ -140,7 +140,6 @@ if (currentSection) {
 }
 
 Astro.props.entry.data.description = await getPageDescription(
-	// @ts-expect-error TODO: improve types
 	Astro.props.entry,
 	Astro.locals,
 );

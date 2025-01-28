@@ -1,5 +1,10 @@
 import { z, defineCollection } from "astro:content";
+
+import { docsLoader, i18nLoader } from "@astrojs/starlight/loaders";
 import { docsSchema, i18nSchema } from "@astrojs/starlight/schema";
+
+import { glob } from "astro/loaders";
+
 import {
 	appsSchema,
 	changelogsSchema,
@@ -17,75 +22,96 @@ import {
 	fieldsSchema,
 } from "~/schemas";
 
+function contentLoader(name: string) {
+	return glob({
+		pattern: "**/*.(md|mdx)",
+		base: "./src/content/" + name,
+	});
+}
+
+function dataLoader(name: string) {
+	return glob({
+		pattern: "**/*.(json|yml|yaml)",
+		base: "./src/content/" + name,
+	});
+}
+
 const partialSchema = z.object({
 	params: z.string().array().optional(),
 });
 
 export const collections = {
 	docs: defineCollection({
+		loader: docsLoader(),
 		schema: docsSchema({
 			extend: baseSchema,
 		}),
 	}),
-	i18n: defineCollection({ type: "data", schema: i18nSchema() }),
+	i18n: defineCollection({
+		loader: i18nLoader(),
+		schema: i18nSchema(),
+	}),
 	changelogs: defineCollection({
+		loader: dataLoader("changelogs"),
 		schema: changelogsSchema,
-		type: "data",
 	}),
 	"compatibility-flags": defineCollection({
+		loader: contentLoader("compatibility-flags"),
 		schema: compatibilityFlagsSchema,
 	}),
 	partials: defineCollection({
+		loader: contentLoader("partials"),
 		schema: partialSchema,
 	}),
 	glossary: defineCollection({
+		loader: dataLoader("glossary"),
 		schema: glossarySchema,
-		type: "data",
 	}),
 	plans: defineCollection({
+		loader: dataLoader("plans"),
 		// untyped due to https://github.com/colinhacks/zod/issues/2195
-		type: "data",
 	}),
 	"pages-framework-presets": defineCollection({
+		loader: dataLoader("pages-framework-presets"),
 		schema: pagesFrameworkPresetsSchema,
-		type: "data",
 	}),
 	"pages-build-environment": defineCollection({
+		loader: dataLoader("pages-build-environment"),
 		schema: pagesBuildEnvironmentSchema,
-		type: "data",
 	}),
 	notifications: defineCollection({
+		loader: dataLoader("notifications"),
 		schema: notificationsSchema,
-		type: "data",
 	}),
 	"learning-paths": defineCollection({
+		loader: dataLoader("learning-paths"),
 		schema: learningPathsSchema,
-		type: "data",
 	}),
 	products: defineCollection({
-		type: "data",
+		loader: dataLoader("products"),
 	}),
 	"workers-ai-models": defineCollection({
+		loader: dataLoader("workers-ai-models"),
 		schema: workersAiModelsSchema,
-		type: "data",
 	}),
 	videos: defineCollection({
+		loader: dataLoader("videos"),
 		schema: videosSchema,
-		type: "data",
 	}),
 	apps: defineCollection({
+		loader: dataLoader("apps"),
 		schema: appsSchema,
-		type: "data",
 	}),
 	"warp-releases": defineCollection({
+		loader: dataLoader("warp-releases"),
 		schema: warpReleasesSchema,
-		type: "data",
 	}),
 	"changelogs-next": defineCollection({
+		loader: contentLoader("changelogs-next"),
 		schema: changelogsNextSchema,
 	}),
 	fields: defineCollection({
+		loader: dataLoader("fields"),
 		schema: fieldsSchema,
-		type: "data",
 	}),
 };
