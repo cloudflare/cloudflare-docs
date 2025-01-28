@@ -1,0 +1,45 @@
+releaseNotes: >-
+  This release contains only improvements.
+
+
+  **Changes and improvements**
+
+  - Improved command line interface for Access for Infrastructure
+  with added function for filtering and ordering.
+
+  - Fixed client connectivity issues when switching between managed network
+  profiles that use different WARP protocols.
+
+  - Added support for WARP desktop to use additional DoH endpoints to help
+  reduce NAT congestion.
+
+  - Improved Windows multi-user feature with minor bug fixes and optimizations.
+
+  - Improved connectivity check reliability in certain split tunnel
+  configurations.
+
+  - Improved reading of device DNS settings at connection restart.
+
+  - Improved WARP connectivity in environments with virtual machine interfaces.
+
+  - Improved Wireguard connection stability on reconnections.
+
+  - Improved reliability of device posture checks for OS Version, Unique Client
+  ID, Domain Joined, Disk Encryption, and Firewall attributes.
+
+  - Added additional HTTP/3 QUIC connectivity test to `warp-diag`.
+
+
+  **Known issues**
+
+  - DNS resolution may be broken when the following conditions are all true:
+    - WARP is in Secure Web Gateway without DNS filtering (tunnel-only) mode.
+    - A custom DNS server address is configured on the primary network adapter.
+    - The custom DNS server address on the primary network adapter is changed while WARP is connected.
+
+    To work around this issue, reconnect the WARP client by toggling off and back on.
+version: 2025.1.447.1
+releaseDate: 2025-01-28T20:03:23.840Z
+packageURL: https://downloads.cloudflareclient.com/v1/download/windows/version/2025.1.447.1
+packageSize: 128241664
+platformName: Windows
