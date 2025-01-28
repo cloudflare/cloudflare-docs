@@ -7,7 +7,7 @@ import { Render, TypeScriptExample } from "~/components";
 
 <Render file="nodejs-compat-howto" />
 
-You can use [`node:dns`](https://nodejs.org/api/dns.html) for name resolution via DNS lookups using
+You can use [`node:dns`](https://nodejs.org/api/dns.html) for name resolution via [DNS over HTTPS](/1.1.1.1/encryption/dns-over-https/) using
 [Cloudflare DNS](https://www.cloudflare.com/application-services/products/dns/) at 1.1.1.1.
 
 <TypeScriptExample filename="index.ts">
@@ -15,8 +15,7 @@ You can use [`node:dns`](https://nodejs.org/api/dns.html) for name resolution vi
 import dns from "node:dns";
 
 dns.lookup("example.org", (_err: any, address: string, ipFamily: number) =>
-	console.log(`address: ${address} family: IPv${ipFamily}`);
-});
+	console.log(`address: ${address} family: IPv${ipFamily}`));
 ```
 </TypeScriptExample>
 
