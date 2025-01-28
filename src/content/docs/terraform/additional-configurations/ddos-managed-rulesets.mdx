@@ -79,6 +79,8 @@ This example configures the [Network-layer DDoS Attack Protection](/ddos-protect
 
 :::
 
+<Render file="v4-code-snippets" />
+
 ```tf
 resource "cloudflare_ruleset" "account_level_network_ddos_config" {
   account_id  = "<ACCOUNT_ID>"
@@ -127,6 +129,8 @@ The order of the rules is important: the rule with the highest sensitivity level
 - Overrides will not affect read-only rules in the managed ruleset.
 
 :::
+
+<Render file="v4-code-snippets" />
 
 ```tf
 variable "zone_id" {
