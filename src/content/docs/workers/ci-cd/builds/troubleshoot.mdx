@@ -8,19 +8,13 @@ sidebar:
 
 This guide teaches you how to investigate build errors and troubleshoot common errors within the Workers Build's build and deployment process.
 
-## Investigate Build Errors and Retry
-
 Workers Builds provides build logs for each build. To view a Worker's build history, go to **Worker project** > **Deployments** > **View Build History** (located at the bottom of the Deployments tab), then select a build to access its details.
 
-To retry a build, click **•••** next to the desired build in the Build History page and select **Retry build**, or use the **Retry build** button on the Build Details page.
-
-![Retry Build](~/assets/images/workers/platform/ci-cd/workers-builds-retry.png)
-
-## Known Issues or Limitations
+## Known issues or limitations
 
 Here are some common build errors that may surface in the build logs or general issues and how you can resolve them.
 
-### Workers Name Requirement
+### Workers name requirement
 
 `✘ [ERROR] The name in your wrangler.toml file (<Worker name>) must match the name of your Worker. Please update the name field in your wrangler.toml file.`
 
@@ -34,34 +28,34 @@ This does not apply to [Wrangler Environments](/workers/wrangler/environments/) 
 For example, a Worker named `my-worker-staging` on the dashboard can be deployed from a repository that contains a wrangler.toml with the arguemnts `name = my-worker` and `[env.staging]` using the deploy command `npx wrangler deploy --env staging`.
 :::
 
-### Missing Wrangler.toml
+### Missing wrangler.toml
 
 `✘ [ERROR] Missing entry-point: The entry-point should be specified via the command line (e.g. wrangler deploy path/to/script) or the main config field.`
 
 If you see this error, a wrangler.toml is likely missing from the root directory. Navigate to **Settings** > **Build** > **Build Configuration** to update the root directory, or add a [wrangler.toml](/workers/wrangler/configuration/) to the specified directory.
 
-### Incorrect Account_id
+### Incorrect account_id
 
 `Could not route to /client/v4/accounts/<Account ID>/workers/services/<Worker name>, perhaps your object identifier is invalid? [code: 7003]`
 
 If you see this error, the wrangler.toml likely has an `account_id` for a different account. Remove the `account_id` argument or update it with your account's `account_id`, available in **Workers & Pages Overview** under **Account Details**.
 
-### Stale API Token
+### Stale API token
 
 `	Failed: The build token selected for this build has been deleted or rolled and cannot be used for this build. Please update your build token in the Worker Builds settings and retry the build.`
 
 The API Token dropdown in Build Configuration settings may show stale tokens that were edited, deleted, or rolled. If you encounter an error due to a stale token, create a new API Token and select it for the build.
 
-### Build Timed Out
+### Build timed out
 
 `Build was timed out`
 
 There is a maximum build duration of 20 minutes. If a build exceeds this time, then the build will be terminated and the above error log is shown. For more details, see [Workers Builds limits](/workers/ci-cd/builds/limits-and-pricing/).
 
-### Git Integration Issues
+### Git integration issues
 
-If you are running into errors associated with your Git integration, you can try removing access to your GitHub or GitLab integration from Cloudflare, then reinstalling the Git integration.
+If you are running into errors associated with your Git integration, you can try removing access to your [GitHub](/workers/ci-cd/builds/git-integration/github-integration/#removing-access) or [GitLab](/workers/ci-cd/builds/git-integration/gitlab-integration/#removing-access) integration from Cloudflare, then reinstalling the [GitHub](/workers/ci-cd/builds/git-integration/github-integration/#reinstall-a-git-integration) or [GitLab](/workers/ci-cd/builds/git-integration/gitlab-integration/#reinstall-a-git-integration) integration.
 
-## For Additional Support
+## For additional support
 
 If you discover additional issues or would like to provide feedback, please reach out to us in the [Cloudflare Developers Discord](https://discord.com/channels/595317990191398933/1052656806058528849).

@@ -12,23 +12,11 @@ Adding a Git integration also lets you monitor build statuses directly in your G
 
 ## Supported Git Providers
 
-Cloudflare supports the following Git providers:
+Cloudflare supports connecting Cloudflare Workers to your GitHub and GitLab repositories. Workers Builds does not currently support connecting self-hosted instances of GitHub or GitLab.
 
-- GitHub
-  - [GitHub Free](https://github.com/pricing)
-  - [GitHub Team](https://github.com/pricing)
-  - [GitHub Enterprise Cloud](https://github.com/pricing)
-  - [GitHub Enterprise Server](https://docs.github.com/en/enterprise-server@3.10/admin/overview/about-github-enterprise-server) (supported with [GitHub Actions](/workers/ci-cd/external-cicd/github-actions/))
-- GitLab
-  - [GitLab Free](https://about.gitlab.com/pricing/)
-  - [GitLab Premium](https://about.gitlab.com/pricing/)
-  - [GitLab Ultimate](https://about.gitlab.com/pricing/)
-  - [GitLab Enterprise](https://about.gitlab.com/enterprise/)
-  - [Self-Managed GitLab](https://about.gitlab.com/pricing/) (supported with [GitLab CI/CD](/workers/ci-cd/external-cicd/gitlab-cicd/))
+If you using a different Git provider (e.g. Bitbucket), you can use an [external CI/CD provider (e.g. GitHub Actions)](/workers/ci-cd/external-cicd/) and deploy using [Wrangler CLI](/workers/wrangler/commands/#deploy).
 
-If you use a different Git provider (e.g. Bitbucket), you can use an [external CI/CD provider](/workers/ci-cd/external-cicd/) and deploy using [Wrangler CLI](/workers/wrangler/commands/#deploy).
-
-## Adding Git Integration
+## Add a Git Integration
 
 Workers Builds provides direct integration with GitHub and GitLab accounts, including both individual and organization accounts, that are _not_ self-hosted.
 
@@ -43,7 +31,7 @@ You can check the below pages to see if your Git integration has been installed:
 
 For details on providing access to organization accounts, see [GitHub Organizational Access](/workers/ci-cd/builds/git-integration/github-integration/#organizational-access) and [GitLab Organizational Access](/workers/ci-cd/builds/git-integration/gitlab-integration/#organizational-access).
 
-## Managing Git Integration
+## Manage a Git Integration
 
 You can manage the Git installation associated with your repository connection by navigating to the Worker, then going to **Settings** > **Builds** and selecting **Manage** under **Git Repository**.
 

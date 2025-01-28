@@ -32,9 +32,9 @@ Check runs will appear like the following in your repository. You can select **D
 
 Note that when using [build watch paths](/workers/ci-cd/builds/build-watch-paths/), only projects that trigger a build will generate a check run.
 
-## Managing access
+## Manage access
 
-You can deploy projects to Cloudflare Workers from your open-source team, company, or side project on GitHub using the [Cloudflare Workers & Pages GitHub App](https://github.com/apps/cloudflare-workers-and-pages).
+You can deploy projects to Cloudflare Workers from your company or side project on GitHub using the [Cloudflare Workers & Pages GitHub App](https://github.com/apps/cloudflare-workers-and-pages).
 
 ### Organizational access
 
@@ -48,19 +48,23 @@ A GitHub account should only point to one Cloudflare account. If you are setting
 
 :::
 
-### Removing access
+### Remove access
 
-You can remove Cloudflare Workers' access to your GitHub repository or account by viewing the [Applications page](https://github.com/settings/installations) on GitHub (if you're in an organization, select Switch settings context to access your GitHub organization settings) or going to [manage Git installation](/workers/ci-cd/builds/git-integration/#managing-a-git-installation) on the dashboard. The GitHub App is named Cloudflare Workers and Pages, and it is shared between Workers and Pages projects.
+You can remove Cloudflare Workers' access to your GitHub repository or account by going to the [Applications page](https://github.com/settings/installations) on GitHub (if you are in an organization, select Switch settings context to access your GitHub organization settings). The GitHub App is named Cloudflare Workers and Pages, and it is shared between Workers and Pages projects.
+
+#### Remove Cloudflare access to a GitHub repository
 
 To remove access to an individual GitHub repository, you can navigate to **Repository access**. Select the **Only select repositories** option, and configure which repositories you would like Cloudflare to have access to.
 
 ![GitHub Repository Access](~/assets/images/workers/platform/ci-cd/github-repository-access.png)
 
+#### Remove Cloudflare access to the entire GitHub account
+
 To remove Cloudflare Workers and Pages access to your entire Git account, you can navigate to **Uninstall "Cloudflare Workers and Pages"**, then select **Uninstall**. Removing access to the Cloudflare Workers and Pages app will revoke Cloudflare's access to _all repositories_ from that GitHub account. If you want to only disable automatic builds and deployments, follow the [Disable Build](/workers/ci-cd/builds/#disabling-builds) instructions.
 
-Note that removing access to GitHub will disable new builds for Workers and Pages project that were connected to those repositories, though the last build of your project will continue to be hosted via Cloudflare Workers.
+Note that removing access to GitHub will disable new builds for Workers and Pages project that were connected to those repositories, though your previous deployments will continue to be hosted by Cloudflare Workers.
 
-### Reinstall a Git integration
+### Reinstall the Cloudflare GitHub App
 
 When encountering Git integration related issues, a troubleshooting step is attempting to uninstall and reinstall the GitHub app associated with the Cloudflare Workers & Pages installation.
 

@@ -10,7 +10,7 @@ import { DirectoryListing } from "~/components";
 
 When connecting your Git repository to your Worker, you can customize the configurations needed to build and deploy your Worker.
 
-## Build Settings
+## Build settings
 
 Build settings can be found by navigating to **Settings** > **Build** within your Worker.
 
@@ -33,7 +33,7 @@ Note that when you update and save build settings, the updated settings will be 
 Currently, Workers Builds does not honor the configurations set in [Custom Builds](/workers/wrangler/custom-builds/) within your wrangler.toml file.
 :::
 
-### Deploy Command
+### Deploy command
 
 You can run your deploy command using your package manager of choice.
 
@@ -47,7 +47,7 @@ Examples of other deploy commands you can set include:
 | `npx wrangler deploy --assets ./public/` | Deploy your Worker along with static assets from the specified directory. Alternatively, you can use the [assets binding](/workers/static-assets/binding/).                                                                                                                     |
 | `npx wrangler deploy --env staging`      | If you have a [Wrangler environment](/workers/ci-cd/builds/advanced-setups/#wrangler-environments) Worker, you should set your deploy command with the environment flag. For more details, see [Advanced Setups](/workers/ci-cd/builds/advanced-setups/#wrangler-environments). |
 
-### API Token
+### API token
 
 When you select to **Create new token**, a new API token will be created automatically with the following permissions:
 
@@ -59,7 +59,7 @@ You can configure the permissions of this API token by navigating to **My Profil
 
 It is recommended to consistently use the same API token across all uploads and deployments of your Worker to maintain consistent access permissions.
 
-## Framework Support
+## Framework support
 
 [Static assets](/workers/static-assets/) and [frameworks](/workers/frameworks/) are now supported in Cloudflare Workers. Learn to set up Workers projects and the commands for each framework in the framework guides:
 
