@@ -10,7 +10,6 @@
 		"check": "npm run check:astro && npm run check:worker",
 		"check:astro": "npm run sync && astro check",
 		"check:worker": "npm run build:worker && npx tsc --noEmit -p ./worker/tsconfig.json",
-		"crawl-api-links": "node bin/crawl-api-links.js",
 		"dev": "npx astro dev",
 		"format": "npm run format:core && npm run format:data",
 		"format:core": "npx prettier --write \"**/*.{js,jsx,ts,tsx,mjs,css}\"",

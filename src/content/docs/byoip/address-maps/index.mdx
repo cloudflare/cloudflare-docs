@@ -27,7 +27,7 @@ For zones using [Cloudflare's authoritative DNS](/dns/), Cloudflare typically re
 Address maps do not change [how Cloudflare reaches the configured origin](/fundamentals/concepts/how-cloudflare-works/#how-cloudflare-works-as-a-reverse-proxy). The IP addresses defined on the **DNS** > **Records** under your zone continue to instruct Cloudflare how to reach the origin.
 
 :::caution
-Depending on whether you use static IPs or BYOIP, the process to [create an address map](/byoip/address-maps/setup/#create-address-maps) is different.
+Depending on whether you use static IPs or BYOIP, the process to [create an address map](/byoip/address-maps/setup/) is different.
 :::
 
 ### Static IPs or BYOIP
@@ -44,4 +44,4 @@ Some customers may only proxy zones through BYOIP addresses, and are prohibited 
 
 It is still possible to create more specific zone-level address maps with specific BYOIPs, but DNS will fall back to the account-wide address map without one.
 
-To specify different addresses for certain zones, [create a new address map](/byoip/address-maps/setup/#create-address-maps).
+To specify different addresses for certain zones, [create a new address map](/byoip/address-maps/setup/).
