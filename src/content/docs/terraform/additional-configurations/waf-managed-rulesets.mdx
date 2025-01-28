@@ -36,6 +36,8 @@ For more information on WAF Managed Rules, refer to [WAF Managed Rules](/waf/man
 
 The following example deploys two managed rulesets to the zone with ID `<ZONE_ID>` using Terraform, using a `cloudflare_ruleset` resource with two rules that execute the managed rulesets.
 
+<Render file="v4-code-snippets" />
+
 ```tf
 # Configure a ruleset at the zone level for the "http_request_firewall_managed" phase
 resource "cloudflare_ruleset" "zone_level_managed_waf" {

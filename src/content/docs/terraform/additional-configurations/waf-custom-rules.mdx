@@ -40,6 +40,8 @@ For more information on custom rules, refer to [Custom rules](/waf/custom-rules/
 
 The following example configures a custom rule in the zone entry point ruleset for the `http_request_firewall_custom` phase for zone with ID `<ZONE_ID>`. The rule will block all traffic on non-standard HTTP(S) ports:
 
+<Render file="v4-code-snippets" />
+
 ```tf
 resource "cloudflare_ruleset" "zone_custom_firewall" {
   zone_id     = "<ZONE_ID>"

@@ -35,6 +35,8 @@ For more information on configuring the previous version of rate limiting rules 
 
 This example creates a rate limiting rule in zone with ID `<ZONE_ID>` blocking traffic that exceeds the configured rate:
 
+<Render file="v4-code-snippets" />
+
 ```tf
 resource "cloudflare_ruleset" "zone_rl" {
   zone_id     = "<ZONE_ID>"

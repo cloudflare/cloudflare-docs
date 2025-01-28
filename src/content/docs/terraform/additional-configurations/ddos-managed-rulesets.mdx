@@ -36,6 +36,8 @@ For more information on DDoS managed rulesets, refer to [Managed rulesets](/ddos
 
 This example configures the [HTTP DDoS Attack Protection](/ddos-protection/managed-rulesets/http/) managed ruleset for a zone using Terraform, changing the sensitivity level of rule with ID fdfdac75430c4c47a959592f0aa5e68a to `low`.
 
+<Render file="v4-code-snippets" />
+
 ```tf
 resource "cloudflare_ruleset" "zone_level_http_ddos_config" {
   zone_id     = "<ZONE_ID>"
