@@ -2,9 +2,7 @@
 {}
 ---
 
-For example, you can use a list of [device serial numbers](/cloudflare-one/identity/devices/warp-client-checks/corp-device/) to ensure users can only access an application if they connect with the WARP client from a company device:
-
 | Selector                     | Operator | Value                   | Logic | Action |
 | ---------------------------- | -------- | ----------------------- | ----- | ------ |
-| SNI Domain                   | is       | `internalapp.com`       | And   | Block  |
+| SNI Domain                   | is       | `example.com`           | And   | Block  |
 | Passed Device Posture Checks | not in   | _Device serial numbers_ |       |        |

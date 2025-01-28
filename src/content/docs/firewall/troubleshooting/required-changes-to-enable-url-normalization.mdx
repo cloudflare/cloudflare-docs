@@ -24,7 +24,7 @@ Cloudflare did not enable URL normalization automatically for zones that would b
 
 ## Why URL normalization is important
 
-Cloudflare strongly recommends that you enable **Normalize incoming URLs** in **Rules** > **URL Normalization** to strengthen your zone's security posture. Not doing so leaves your zone at greater risk of a successful attack. Malicious parties could craft the URL in a way that the rules are not accounting for.
+Cloudflare strongly recommends that you enable **Normalize incoming URLs** in **Rules** > **Overview** > **URL Normalization** to strengthen your zone's security posture. Not doing so leaves your zone at greater risk of a successful attack. Malicious parties could craft the URL in a way that the rules are not accounting for.
 
 For example, a firewall rule with an expression such as `http.request.uri.path contains "/login"` could be bypassed if the malicious actor has encoded the `l` character as `%6C`. In this scenario, and with URL normalization disabled, traffic would not be matched by the firewall rule.
 
@@ -55,7 +55,7 @@ Before enabling URL normalization, you should review the affected firewall rules
 
 ### 2. Enable URL normalization
 
-Once you have updated the affected firewall rules, enable URL normalization in **Rules** > **URL Normalization**.
+Once you have updated the affected firewall rules, enable URL normalization in **Rules** > **Overview** > **URL Normalization**.
 
 A Cloudflare user must have the [Firewall role](/fundamentals/setup/manage-members/roles/) or one of the Administrator roles to access URL normalization settings in the dashboard.
 

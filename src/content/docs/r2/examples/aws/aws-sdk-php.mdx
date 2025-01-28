@@ -12,6 +12,18 @@ import { Render } from "~/components";
 
 This example uses version 3 of the [aws-sdk-php](https://packagist.org/packages/aws/aws-sdk-php) package. You must pass in the R2 configuration credentials when instantiating your `S3` service client:
 
+:::note[Compatibility]
+Client version `3.337.0` introduced a modification to the default checksum behavior from the client that is currently incompatible with R2 APIs.
+
+To mitigate, users can use `3.336.15` or add the following to their $options:
+
+```php
+'request_checksum_calculation' => 'when_required',
+'response_checksum_validation' => 'when_required'
+```
+
+:::
+
 ```php
 <?php
 require 'vendor/aws/aws-autoloader.php';

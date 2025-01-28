@@ -56,12 +56,58 @@ In this model, a single `workerd` process is started with a single Worker for al
 
 Each Worker has its own module cache. As Workers are reused between test runs, their module caches are also reused. Vitest invalidates parts of the module cache at the start of each test run based on changed files.
 
-The Workers Vitest pool works by running code inside a Cloudflare Worker that Vitest would usually run inside a [Node.js worker thread](https://nodejs.org/api/worker_threads.html). To make this possible, the pool requires the [`nodejs_compat`](/workers/configuration/compatibility-flags/#nodejs-compatibility-flag) and [`export_commonjs_default`](/workers/configuration/compatibility-flags/#commonjs-modules-do-not-export-a-module-namespace) compatibility flags to be enabled. The pool also configures `workerd` to use Node-style module resolution and polyfills required `node:*` modules not provided by `nodejs_compat`.
+The Workers Vitest pool works by running code inside a Cloudflare Worker that Vitest would usually run inside a [Node.js Worker thread](https://nodejs.org/api/worker_threads.html). To make this possible, the pool **automatically injects** the [`nodejs_compat`](/workers/configuration/compatibility-flags/#nodejs-compatibility-flag), [`no_nodejs_compat_v2`] and [`export_commonjs_default`](/workers/configuration/compatibility-flags/#commonjs-modules-do-not-export-a-module-namespace) compatibility flags. This is the minimal compatibility setup that still allows Vitest to run correctly, but without pulling in polyfills and globals that aren't required. If you already have a Node.js compatibility flag defined in your configuration, Vitest Pool Workers will not try to add those flags.
 
 :::caution
 
 
-Using the pool may cause your Worker to behave differently when deployed than during testing, as Node-style resolution and additional polyfills will be available to your Worker's source code and dependencies too.
+Using Vitest Pool Workers may cause your Worker to behave differently when deployed than during testing as the `nodejs_compat` flag is enabled by default. This means that Node.js-specific APIs and modules are available when running your tests. However, Cloudflare Workers do not support these Node.js APIs in the production environment unless you specify this flag in your Worker configuration.
 
+If you do not have a `nodejs_compat` or `nodejs_compat_v2` flag in your configuration and you import a Node.js module in your Worker code, your tests may pass, but you will find that you will not be able to deploy this Worker, as the upload call (either via the REST API or via Wrangler) will throw an error.
+
+However, if you use Node.js globals that are not supported by the runtime, your Worker upload will be successful, but you may see errors in production code. Let's create a contrived example to illustrate the issue.
+
+The `wrangler.toml` does not specify either `nodejs_compat` or `nodejs_compat_v2`:
+
+```toml
+name = "test"
+main = "src/index.ts"
+compatibility_date = "2024-12-16"
+# no nodejs_compat flags here
+```
+
+In our `src/index.ts` file, we use the `process` object, which is a Node.js global, unavailable in the Workerd runtime:
+
+```typescript
+export default {
+	async fetch(request, env, ctx): Promise<Response> {
+		process.env.TEST = 'test';
+		return new Response(process.env.TEST);
+	},
+} satisfies ExportedHandler<Env>;
+```
+
+The test is a simple assertion that the Worker managed to use `process`.
+
+```typescript
+it('responds with "test"', async () => {
+	const response = await SELF.fetch('https://example.com/');
+	expect(await response.text()).toMatchInlineSnapshot(`"test"`);
+});
+```
+
+Now, if we run `npm run test`, we see that the tests will _pass_:
+
+```
+ ✓ test/index.spec.ts (1)
+   ✓ responds with "test"
+
+ Test Files  1 passed (1)
+      Tests  1 passed (1)
+```
+
+And we can run `wrangler dev` and `wrangler deploy` without issues. It _looks like_ our code is fine. However, this code will fail in production as `process` is not available in the Workerd runtime.
+
+To fix the issue, we either need to avoid using Node.js APIs, or add the `nodejs_compat` flag to our Wrangler configuration.
 
 :::

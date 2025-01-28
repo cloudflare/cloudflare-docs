@@ -1,7 +1,22 @@
 import tippy from "tippy.js";
+import { type Props } from "tippy.js";
 
-export function addTooltip(element: HTMLElement, content: string) {
+type Options = Partial<Props & { hideAfter: number }>;
+
+export function addTooltip(
+	element: HTMLElement,
+	content: string,
+	opts?: Options,
+) {
 	const id = "#" + CSS.escape(element.id);
+
+	if (opts?.hideAfter) {
+		opts.onShow = (instance) => {
+			setTimeout(() => {
+				instance.hide();
+			}, opts.hideAfter);
+		};
+	}
 
 	tippy(id, {
 		content,
@@ -14,5 +29,6 @@ export function addTooltip(element: HTMLElement, content: string) {
 		// cutoff by the sidebar
 		// https://atomiks.github.io/tippyjs/v6/faq/#my-tooltip-appears-cut-off-or-is-not-showing-at-all
 		appendTo: document.body,
+		...opts,
 	});
 }

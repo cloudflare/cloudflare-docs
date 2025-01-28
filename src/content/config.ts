@@ -11,7 +11,10 @@ import {
 	glossarySchema,
 	learningPathsSchema,
 	videosSchema,
-	workersAiSchema,
+	workersAiModelsSchema,
+	warpReleasesSchema,
+	changelogsNextSchema,
+	fieldsSchema,
 } from "~/schemas";
 
 const partialSchema = z.object({
@@ -63,7 +66,7 @@ export const collections = {
 		type: "data",
 	}),
 	"workers-ai-models": defineCollection({
-		schema: workersAiSchema,
+		schema: workersAiModelsSchema,
 		type: "data",
 	}),
 	videos: defineCollection({
@@ -72,6 +75,17 @@ export const collections = {
 	}),
 	apps: defineCollection({
 		schema: appsSchema,
+		type: "data",
+	}),
+	"warp-releases": defineCollection({
+		schema: warpReleasesSchema,
+		type: "data",
+	}),
+	"changelogs-next": defineCollection({
+		schema: changelogsNextSchema,
+	}),
+	fields: defineCollection({
+		schema: fieldsSchema,
 		type: "data",
 	}),
 };

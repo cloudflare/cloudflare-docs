@@ -73,7 +73,7 @@ Only available in the Cloudflare dashboard when you enable **Use custom counting
 
 Defines the criteria used for determining the request rate. By default, the counting expression is the same as the rule matching expression (defined in **If incoming requests match**). This default is also applied when you set this field to an empty string (`""`).
 
-The counting expression can include [HTTP response fields](/ruleset-engine/rules-language/fields/http-request-response/). When there are response fields in the counting expression, the counting will happen after the response is sent.
+The counting expression can include [HTTP response fields](/ruleset-engine/rules-language/fields/reference/). When there are response fields in the counting expression, the counting will happen after the response is sent.
 
 In some cases, you cannot include HTTP response fields in the counting expression due to configuration restrictions. Refer to [Configuration restrictions](#configuration-restrictions) for details.
 
@@ -231,4 +231,4 @@ To use claims inside a JSON Web Token (JWT), you must first set up a [token vali
 
 - If the rule expression [includes IP lists](/waf/tools/lists/use-in-expressions/), you must enable the **Also apply rate limiting to cached assets** parameter.
 
-- The rule counting expression, defined in the **Increment counter when** parameter, cannot include both [HTTP response fields](/ruleset-engine/rules-language/fields/http-request-response/) and [IP lists](/waf/tools/lists/custom-lists/#lists-with-ip-addresses-ip-lists). If you use IP lists, you must enable the **Also apply rate limiting to cached assets** parameter.
+- The rule counting expression, defined in the **Increment counter when** parameter, cannot include both [HTTP response fields](/ruleset-engine/rules-language/fields/reference/) and [IP lists](/waf/tools/lists/custom-lists/#lists-with-ip-addresses-ip-lists). If you use IP lists, you must enable the **Also apply rate limiting to cached assets** parameter.

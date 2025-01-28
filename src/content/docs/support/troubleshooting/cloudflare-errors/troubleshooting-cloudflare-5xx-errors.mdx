@@ -218,6 +218,7 @@ Error 522 occurs when Cloudflare times out contacting the origin web server. Two
 - Packets were dropped at your origin web server.
 
 If you are using [Cloudflare Pages](/pages/), verify that you have a custom domain set up and that your CNAME record is pointed to your [custom Pages domain](/pages/configuration/custom-domains/#add-a-custom-domain).
+If you are using [Workers with a Custom Domain](/workers/configuration/routing/custom-domains/), performing a `fetch` to its own hostname will cause a 522 error. Consider using a [Route](/workers/configuration/routing/) or target another hostname instead. 
 
 If none of the above leads to a resolution, request the following information from your hosting provider or site administrator before [contacting Cloudflare support](/support/contacting-cloudflare-support/):
 
@@ -243,9 +244,9 @@ If none of the above leads to a resolution, request the following information fr
 
 ## Error 524: a timeout occurred
 
-Error 524 usually indicates that Cloudflare successfully connected to the origin web server, but the origin did not provide an HTTP response before the default 100 second [Proxy Read Timeout](/fundamentals/reference/connection-limits/). This can happen if the origin server is taking too long because it has too much work to do - e.g. a large data query, or because the server is struggling for resources and cannot return any data in time.
+Error 524 usually indicates that Cloudflare successfully connected to the origin web server, but the origin did not provide an HTTP response before the default 100 seconds [Proxy Read Timeout](/fundamentals/reference/connection-limits/). This can happen if the origin server is taking too long because it has too much work to do, for example, a large data query, or because the server is struggling for resources and cannot return any data in time.
 
-Error 524 can also indicate that Cloudflare successfully connected to the origin web server to write data, but the write did not complete before the 30 seconds [Proxy Write Timeout](/fundamentals/reference/connection-limits/).
+Error 524 can also indicate that Cloudflare successfully connected to the origin web server to write data, but the write did not complete before the 30 seconds [Proxy Write Timeout](/fundamentals/reference/connection-limits/) (or 6.5 seconds in the case of [Cloudflare Images](/images/)).
 
 :::note
 
@@ -335,8 +336,6 @@ level](https://docs.nginx.com/nginx/admin-guide/monitoring/logging/).
 
 ## Error 526: invalid SSL certificate
 
-### Error 526
-
 Error 526 occurs when these two conditions are true:
 
 1. Cloudflare cannot validate the SSL certificate at your origin web server, and
@@ -390,9 +389,9 @@ As a result, a valid SSL certificate is required at the origin.
 
 ## Error 530
 
-HTTP error 530 is returned with an accompanying 1XXX error displayed. Search for the specific [1XXX error](/support/troubleshooting/cloudflare-errors/troubleshooting-cloudflare-1xxx-errors) for troubleshooting information.
-
-Enabling [Load Balancing](/load-balancing/) in China will cause a `530` error.
+An HTTP error 530 is returned when Cloudflare is encountering an issue resolving the origin hostname. 
+In this case the body of the response contains an [1XXX error](/support/troubleshooting/cloudflare-errors/troubleshooting-cloudflare-1xxx-errors) code. 
+Please refer to the specific [1XXX error](/support/troubleshooting/cloudflare-errors/troubleshooting-cloudflare-1xxx-errors) for troubleshooting information.
 
 ---
 

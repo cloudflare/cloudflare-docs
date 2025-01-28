@@ -206,7 +206,39 @@ Access and Gateway policies for an Entra group will also apply to all [nested gr
 
 ## Force user interaction during WARP reauthentication
 
-You can require users to re-enter their credentials into Entra ID whenever they [re-authenticate their WARP session](/cloudflare-one/connections/connect-devices/warp/configure-warp/warp-sessions/). To configure this setting, make a [`PUT` request](/api/resources/zero_trust/subresources/identity_providers/methods/update/) and set the `prompt` parameter to either `login` or `select_account`.
+You can require users to re-enter their credentials into Entra ID whenever they [re-authenticate their WARP session](/cloudflare-one/connections/connect-devices/warp/configure-warp/warp-sessions/). To configure this setting:
+1. Make a `GET` request to the [Identity Providers endpoint](/api/resources/zero_trust/subresources/identity_providers/) and copy the response for the Entra ID identity provider.
+2. [Update the Entra ID identity provider](/api/resources/zero_trust/subresources/identity_providers/methods/update/) using a `PUT` request. In the request body, include all existing configurations and set the `prompt` parameter to either `login` or `select_account`. For example,
+	```sh {17}
+	curl --request PUT \
+	https://api.cloudflare.com/client/v4/accounts/{account_id}/access/identity_providers/{identity_provider_id} \
+	--header "Authorization: Bearer <API_TOKEN>" \
+	--header "Content-Type: application/json" \
+	--data '{
+			"id": "f174e90a-fafe-4643-bbbc-4a0ed4fc8415",
+			"type": "azureAD",
+			"uid": "f174e90a-fafe-4643-bbbc-4a0ed4fc8415",
+			"name": "Entra ID",
+			"version": "31e74e9b4f033e16b604552091a72295",
+			"config": {
+				"azure_cloud": "default",
+				"client_id": "<CLIENT_ID>",
+				"conditional_access_enabled": false,
+				"directory_id": "<AZURE_DIRECTORY_ID>",
+				"redirect_url": "https://<TEAM_NAME>.cloudflareaccess.com/cdn-cgi/access/callback",
+				"prompt": "login",
+				"support_groups": true
+			},
+			"scim_config": {
+				"enabled": true,
+				"user_deprovision": true,
+				"seat_deprovision": false,
+				"group_member_deprovision": false,
+				"identity_update_behavior": "automatic"
+			},
+			"scim_base_url": "https://<TEAM_NAME>.cloudflareaccess.com/populations/f174e90a-fafe-4643-bbbc-4a0ed4fc8415/scim/v2"
+	}'
+	```
 
 ## Example API Configuration
 

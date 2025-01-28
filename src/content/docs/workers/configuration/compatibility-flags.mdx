@@ -45,17 +45,11 @@ Compatibility flags can be set when uploading a Worker using the [Workers Script
 
 ## Node.js compatibility flag
 
-:::note
-You can opt into improved Node.js compatibility by using `nodejs_compat_v2` instead of `nodejs_compat`. This provides the functionality of `nodejs_compat`, but
-additionally you can import Node.js modules without the `node:` prefix and use polyfilled Node.js modules and globals that are not available with `nodejs_compat`.
+import { Render } from "~/components";
 
-On September 23, 2024, `nodejs_compat` will use the improved Node.js compatibility currently enabled with `nodejs_compat_v2`. This will require updating your
-compatibility_date to 2024-09-23 or later.
-:::
+<Render file="nodejs_compat" product="workers" />
 
-A [growing subset](/workers/runtime-apis/nodejs/) of Node.js APIs are available directly as [Runtime APIs](/workers/runtime-apis/nodejs), with no need to add polyfills to your own code. To enable these APIs in your Worker, add the `nodejs_compat` compatibility flag to your `wrangler.toml`:
-
-
+A [growing subset](/workers/runtime-apis/nodejs/) of Node.js APIs are available directly as [Runtime APIs](/workers/runtime-apis/nodejs), with no need to add polyfills to your own code. To enable these APIs in your Worker, only the `nodejs_compat` compatibility flag is required:
 
 <WranglerConfig>
 
@@ -68,8 +62,6 @@ compatibility_flags = [ "nodejs_compat" ]
 As additional Node.js APIs are added, they will be made available under the `nodejs_compat` compatibility flag. Unlike most other compatibility flags, we do not expect the `nodejs_compat` to become active by default at a future date.
 
 The Node.js `AsyncLocalStorage` API is a particularly useful feature for Workers. To enable only the `AsyncLocalStorage` API, use the `nodejs_als` compatibility flag.
-
-
 
 <WranglerConfig>
 

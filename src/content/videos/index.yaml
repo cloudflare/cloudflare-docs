@@ -286,7 +286,7 @@ entries:
     content_type: 🎥 Video
     pcx_content_type: tutorial
   - link: https://developers.cloudflare.com/workers/frameworks/framework-guides/nextjs/#video-tutorial
-    title: Deploy NextJS to your Workers Application
+    title: Deploy Your NextJS Application To Workers
     description: Watch to learn how to easily deploy your NextJS application to the Cloudflare global network.
     tags: [NextJS, Workers, Pages]
     languages: [TypeScript]
@@ -295,7 +295,7 @@ entries:
     cloudflare: true
     author: confidence
     updated: 2024-10-31
-    difficulty: Intermediate
+    difficulty: Beginner
     content_type: 🎥 Video
     pcx_content_type: tutorial
   - link: https://developers.cloudflare.com/workers/observability/logs/#video-tutorial
@@ -381,6 +381,18 @@ entries:
     author: craig
     updated: 2024-11-30
     difficulty: Intermediate
+    content_type: 🎥 Video
+    pcx_content_type: tutorial    
+  - link: https://developers.cloudflare.com/pages/framework-guides/deploy-a-nuxt-site/#video-tutorial
+    title: Deploy Your Nuxt Application To Workers
+    description: Watch to learn how to easily deploy your Nuxt application to the Cloudflare global network.
+    tags: [Workers, Pages, NextJS]
+    languages: [TypeScript]
+    products: [Workers, Pages]
+    cloudflare: true
+    author: kristian
+    updated: 2025-01-08
+    difficulty: Beginner
     content_type: 🎥 Video
     pcx_content_type: tutorial    
   # - link:

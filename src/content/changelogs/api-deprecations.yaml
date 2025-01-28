@@ -5,6 +5,17 @@ productLink: "/fundamentals/"
 productArea: Core platform
 productAreaLink: /fundamentals/reference/changelog/platform/
 entries:
+  - publish_date: "2025-07-01"
+    title: Cloudflare DWeb Resolver
+    description: |-
+      Deprecation date: July 1, 2025
+      
+      The Cloudflare DWeb Resolver experiment is ending.
+      
+      Deprecated APIs:
+      
+      - DoH resolver on resolver.cloudflare-eth.com
+
   - publish_date: "2025-03-23"
     title: "Eligible Zones For Account Custom Nameservers"
     description: |-

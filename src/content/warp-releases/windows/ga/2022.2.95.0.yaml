@@ -1,0 +1,28 @@
+releaseNotes: |-
+  This release contains new features and improvements from the last release. In particular, we have made significant changes to how local settings (MDM) are processed. Additionally, we added the ability to configure all applicable parameters from the Zero Trust dashboard. This allows admins to more easily control client behavior without having to use a 3rd party tool. 
+
+
+
+  **Notable updates**
+  - Added support for Gateway session duration enforcement. This allows administrators to force re-authentication after a specified time.
+  - The "enabled" mdm.xml property has now been completely deprecated and is no longer respected. Please see https://developers.cloudflare.com/cloudflare-one/connections/connect-devices/warp/deployment/mdm-deployment/parameters#switch_locked for switch_locked mechanism that was announced in April 2021
+  - Now that settings exist in the Zero Trust Dashboard, the Client UI should behave the same for clients manually joined to a Team and clients forced to by local mdm.xml policy
+  - Updated Teams logo in app to Zero Trust
+  - Modified GUI exit behavior for users who manually joined their device to a Team. Quitting the app will still keep the service running and enforcing policy for clients that were deployed via mdm/Intune/etc.
+  - Reworked some parts of the UI that are not relevant in Zero Trust Mode (consumer-only features in connection tab, quit button that doesn't really do anything, etc.)
+  - Improved overall stability of Windows installer
+  - Fixed an issue where the Last Seen value was not updated properly in the Zero Trust Dashboard while in Gateway with DoH mode
+  - Fixed an issue where the device name was not updated in the Zero Trust Dashboard if the computer name changed after initial registration
+  - Fixed various issues with split tunnel support in consumer mode
+  - Fixed an issue where the context menu would remain after quitting the GUI
+  - Fixed a wake from sleep issue where DNS requests could fail.
+
+
+
+  **Known issues** 
+  - The organization name is case sensitive, which could cause a device to lose registration.
+version: 2022.2.95.0
+packageURL: https://downloads.cloudflareclient.com/v1/download/windows/version/2022.2.95.0
+packageSize: 88379392
+releaseDate: 2022-02-15T17:10:56.241Z
+platformName: Windows

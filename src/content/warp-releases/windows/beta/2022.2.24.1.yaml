@@ -1,0 +1,26 @@
+releaseNotes: |-
+  This release contains new features and improvements from the last beta release. In particular this build now supports the ability to configure settings via the Dashboard and not just with a mdm.xml file. Note that settings in your mdm.xml always overrule what comes from the dashboard.
+
+  **Notable updates**
+  - The "enabled" mdm.xml property has now been completely deprecated and is no longer read. Please see https://developers.cloudflare.com/cloudflare-one/connections/connect-devices/warp/deployment/mdm-deployment/parameters#switch_locked for the mechanism announced in April 2021
+  - Now that settings exist in the Zero Trust Dashboard the Client UI should behave the same regardless of if you manually joined to a Team or if you were forced to by local mdm.xml policy
+  - Updated Teams logo in app to Zero Trust
+  - Modified GUI exit behavior for users who manually joined their device to a Team. Quiting the app will still keep the service running and enforcing policy as it always has for clients that were reployed via mdm/Intune/etc.
+  - Removed UI that was not relevant when in Zero Trust Mode (consumer only features in connection tab, quit button that doesnt really do anything, etc.)
+  - Fixed issue where the WARP Client might not get updated settings when it initial starts
+  - Fixed issue where the Last Seen value was not updated properly in the Zero Trust Dashboard while in Gateway with DoH mode
+  - Fixed issue where device name was not updated in the Zero trust Dashboard if the computer name changed after initial registration
+  - Fixed issue where you could not log out a team after clicking "Reset Encryption Keys"
+  - Fixed various issues with split tunnel support in consumer mode
+  - Fixed issue where "warp-cli settings" showed connection time in settings instead of minutes
+
+
+  **Known issues**
+  No known issues
+
+  For releated Cloudflare for Teams documentation please see: https://developers.cloudflare.com/cloudflare-one/connections/connect-devices/warp
+version: 2022.2.24.1
+packageURL: https://downloads.cloudflareclient.com/v1/download/windows/version/2022.2.24.1
+packageSize: 88383488
+releaseDate: 2022-02-09T20:27:18.482Z
+platformName: Windows

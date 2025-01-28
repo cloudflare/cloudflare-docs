@@ -30,7 +30,7 @@ In addition, adding caching to your custom domain may cause issues with [Pages r
 
 However, there are some situations where [Cache Rules](/cache/how-to/cache-rules/) on your custom domain does make sense. For example, you may have easily cacheable locations for immutable assets, such as CSS or JS files with content hashes in their file names. Custom caching can help in this case, speeding up the user experience until the file (and associated filename) changes. Just make sure that your caching does not interfere with any redirects or Functions.
 
-Please note that tiered caching is not supported for custom domains on Pages.
+Note that when you use Cloudflare Pages, the static assets that you upload as part of your Pages project are automatically served from [Tiered Cache](/cache/how-to/tiered-cache/). You do not need to separately enable Tiered Cache for the custom domain that your Pages project runs on.
 
 :::note[Purging the cache]
 

@@ -3,33 +3,34 @@ title: Create a remotely-managed tunnel (dashboard)
 pcx_content_type: how-to
 sidebar:
   order: 1
-
 ---
 
-import { Render } from "~/components"
+import { Render } from "~/components";
 
 Follow this step-by-step guide to get your first tunnel up and running using Zero Trust.
-
-## Prerequisites
-
-Before you start, make sure you:
-
-* [Add a website to Cloudflare](/fundamentals/setup/manage-domains/add-site/).
-* [Change your domain nameservers to Cloudflare](/dns/zone-setups/full-setup/setup/).
 
 ## 1. Create a tunnel
 
 <Render file="tunnel/create-tunnel" product="cloudflare-one" />
 
-The next steps depend on whether you want to [connect an application](#2-connect-an-application) or [connect a network](#3-connect-a-network).
+The next steps depend on whether you want to [connect an application](#2a-connect-an-application) or [connect a network](#2b-connect-a-network).
 
-## 2. Connect an application
+## 2a. Connect an application
 
-Follow these steps to connect an application through your tunnel. If you are looking to connect a network, skip to the [Connect a network section](#3-connect-a-network).
+Before you connect an application through your tunnel, you must:
+
+- [Add a website to Cloudflare](/fundamentals/setup/manage-domains/add-site/).
+- [Change your domain nameservers to Cloudflare](/dns/zone-setups/full-setup/setup/).
+
+Follow these steps to connect an application through your tunnel. If you are looking to connect a network, skip to the [Connect a network section](#2b-connect-a-network).
 
 <Render file="tunnel/add-public-hostname" product="cloudflare-one" />
 
-## 3. Connect a network
+If you add a multi-level subdomain (more than one level of subdomain), you must [order an Advanced Certificate for the hostname](/cloudflare-one/faq/troubleshooting/#i-see-this-site-cant-provide-a-secure-connection).
+
+The application is now publicly available on the Internet. To allow or block specific users, [create an Access application](/cloudflare-one/applications/configure-apps/self-hosted-public-app/).
+
+## 2b. Connect a network
 
 Follow these steps to connect a private network through your tunnel.
 
@@ -37,7 +38,9 @@ Follow these steps to connect a private network through your tunnel.
 
 2. Select **Save tunnel**.
 
-## 4. View your tunnel
+To configure Zero Trust policies and connect as a user, refer to [Connect private networks](/cloudflare-one/connections/connect-networks/private-net/cloudflared/).
+
+## 3. View your tunnel
 
 After saving the tunnel, you will be redirected to the **Tunnels** page. Look for your new tunnel to be listed along with its active connector.
 

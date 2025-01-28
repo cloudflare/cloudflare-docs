@@ -16,12 +16,12 @@ With [outgoing zone transfers](/dns/zone-setups/zone-transfers/cloudflare-as-pri
 
 ### DNS-only CNAME records
 
-As explained in [DNS record types](/dns/manage-dns-records/reference/dns-record-types/#cname), Cloudflare uses a process called [`CNAME` flattening](/dns/cname-flattening/) to return the final IP address instead of the `CNAME` target. `CNAME` flattening improves performance and is also what allows you to set a `CNAME` record on the zone apex.
+As explained in [DNS record types](/dns/manage-dns-records/reference/dns-record-types/#cname), Cloudflare uses a process called [CNAME flattening](/dns/cname-flattening/) to return the final IP address instead of the CNAME target. CNAME flattening improves performance and is also what allows you to set a CNAME record on the zone apex.
 
-Depending on the [settings](/dns/cname-flattening/set-up-cname-flattening/) you have, when you use DNS-only `CNAME` records with outgoing zone transfers, you can expect the following:
+Depending on the [settings](/dns/cname-flattening/set-up-cname-flattening/) you have, when you use DNS-only CNAME records with outgoing zone transfers, you can expect the following:
 
-- For DNS-only `CNAME` records on the zone apex, Cloudflare will always transfer out the flattened IP addresses.
-- For DNS-only `CNAME` records on subdomains, Cloudflare will only transfer out flattened IP addresses if the setting [**Flatten all CNAMEs**](/dns/cname-flattening/set-up-cname-flattening/#for-all-cname-records) is enabled.
+- For DNS-only CNAME records on the zone apex, Cloudflare will always transfer out the flattened IP addresses.
+- For DNS-only CNAME records on subdomains, Cloudflare will only transfer out flattened IP addresses if the setting [**Flatten all CNAMEs**](/dns/cname-flattening/set-up-cname-flattening/#for-all-cname-records) is enabled.
 
 ### Proxied records
 
@@ -85,6 +85,10 @@ To create a peer DNS server using the API, send a [POST](/api/resources/dns/subr
 
 If you previously [created a peer DNS server](#2-create-peer-dns-server-optional), you should link it to your primary zone.
 
+:::note
+<Render file="linked-peers-limit" />
+:::
+
 <Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
 
 To link a primary zone to a peer using the dashboard:
@@ -114,9 +118,9 @@ It should also have updated [Access Control Lists (ACLs)](/dns/zone-setups/zone-
 
 ## 5. Add secondary nameservers within Cloudflare
 
-Using the information from your secondary DNS provider, [create `NS` records](/dns/manage-dns-records/how-to/create-dns-records/#create-dns-records) on your zone apex listing your secondary nameservers.
+Using the information from your secondary DNS provider, [create NS records](/dns/manage-dns-records/how-to/create-dns-records/#create-dns-records) on your zone apex listing your secondary nameservers.
 
-By default, Cloudflare ignores `NS` records added to the zone apex. To modify this behavior, enable [multi-provider DNS](/dns/nameservers/nameserver-options/#multi-provider-dns):
+By default, Cloudflare ignores NS records added to the zone apex. To modify this behavior, enable [multi-provider DNS](/dns/nameservers/nameserver-options/#multi-provider-dns):
 
 :::note
 If your account [zone defaults](/dns/additional-options/dns-zone-defaults/) are already defined to have **Multi-provider DNS** enabled, this step may not be necessary.

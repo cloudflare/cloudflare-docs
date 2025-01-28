@@ -7,6 +7,7 @@ export { Icon as AstroIcon } from "astro-icon/components";
 // Custom components
 export { default as AnchorHeading } from "./AnchorHeading.astro";
 export { default as AvailableNotifications } from "./AvailableNotifications.astro";
+export { default as CompatibilityFlag } from "./CompatibilityFlag.astro";
 export { default as CompatibilityFlags } from "./CompatibilityFlags.astro";
 export { default as Description } from "./Description.astro";
 export { default as Details } from "./Details.astro";
@@ -54,6 +55,7 @@ export { default as TunnelCalculator } from "./TunnelCalculator.astro";
 export { default as Type } from "./Type.astro";
 export { default as TypeScriptExample } from "./TypeScriptExample.astro";
 export { default as WranglerConfig } from "./WranglerConfig.astro";
+export { default as WARPReleases } from "./WARPReleases.astro";
 export { default as WorkersArchitectureDiagram } from "./WorkersArchitectureDiagram.astro";
 export { default as WorkersIsolateDiagram } from "./WorkersIsolateDiagram.astro";
 export { default as WorkerStarter } from "./WorkerStarter.astro";

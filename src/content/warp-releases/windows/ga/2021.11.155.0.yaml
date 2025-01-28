@@ -1,0 +1,46 @@
+releaseNotes: >-
+  This release contains new features and improvements from the last release.
+
+
+  **Notable updates**
+
+  - Starting with this release our version number scheme has now changed to
+  YYYY.M.build_number (ex. 2021.11.123).
+
+  - Use timestamps in log file names stored by warp-diag.
+
+  - Added traceroute information to warp-diag for Teams destinations to help
+  debug connectivity issues.
+
+  - warp-diag now reports status when run from terminal so you can see it
+  working.
+
+  - warp-diag now allows for --output flag so you can specify where diagnostics
+  data is stored.
+
+  - Improved general reliability issues by moving DoH requests outside the
+  tunnel.
+
+  - Improved overall reliability of daemon/service including how it connects to
+  the GUI (reduce instance of IPC errors).
+
+  - Fixed localhost proxy mode which was broken in last release.
+
+  - Fixed issue where posture checks were not running every 5 minutes like they
+  should.
+
+  - Fixed issue where DNS sockets could sometimes fail to be released, resulting
+  in address in use errors.
+
+  - Fixed issue where auto_connect mdm parameter wasn't working correctly when
+  switch_locked=false.
+
+  - Fixed issue where invalid certificate on device would cause the client to
+  not connect.
+
+  - Fixed issue where preferences window could be stuck behind other windows.
+version: 2021.11.155.0
+packageURL: https://downloads.cloudflareclient.com/v1/download/windows/version/2021.11.155.0
+packageSize: 87826432
+releaseDate: 2021-11-16T22:47:42.652Z
+platformName: Windows

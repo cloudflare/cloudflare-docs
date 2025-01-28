@@ -62,7 +62,7 @@ npx wrangler@latest workflows trigger workflows-starter '{"some":"data"}'
 
 ## TypeScript and type parameters
 
-By default, the `WorkflowEvent` passed to the `run` method of your Workflow definition has a type that conforms to the following, with `payload` (your data) and `timestamp` properties:
+By default, the `WorkflowEvent` passed to the `run` method of your Workflow definition has a type that conforms to the following, with `payload` (your data), `timestamp`, and `instanceId` properties:
 
 ```ts
 export type WorkflowEvent<T> = {
@@ -70,6 +70,8 @@ export type WorkflowEvent<T> = {
   payload: T;
   // The timestamp that the Workflow was triggered
   timestamp: Date;
+  // ID of the current Workflow instance
+  instanceId: string;
 };
 ```
 

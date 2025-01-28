@@ -25,27 +25,13 @@ To allow users to connect through a captive portal, administrators can configure
 
 If WARP cannot establish a connection to Cloudflare, it will:
 
-1. Temporarily open the [system firewall](/cloudflare-one/connections/connect-devices/warp/configure-warp/route-traffic/warp-architecture/#ip-traffic) so that the device can send traffic outside of the WARP tunnel. The firewall only allows the following traffic:
+1. Start the captive portal timer.
 
-   - HTTP/HTTPS on TCP ports `80`, `443`, `8080`, and `8443`
-   - DNS on UDP port `53`
+2. Send a series of requests to the [Cloudflare captive portal URLs](/cloudflare-one/connections/connect-devices/warp/deployment/firewall/#captive-portal) and other OS and browser-specific captive portal URLs. These requests are sent outside of the WARP tunnel.
 
-2. Send a series of requests to the [captive portal test URLs](/cloudflare-one/connections/connect-devices/warp/deployment/firewall/#captive-portal). If the HTTPS request is intercepted, WARP assumes the network is behind a captive portal.
+3. If a request is intercepted, WARP assumes the network is behind a captive portal and fully opens the [system firewall](/cloudflare-one/connections/connect-devices/warp/configure-warp/route-traffic/warp-architecture/#ip-traffic). While the firewall is open, all device traffic will bypass WARP.
 
-3. Open a browser window with the captive portal login screen if the captive portal sends a redirect HTTP response code (`302`, `303`, `307`, or `308`).
-
-4. Automatically re-enable the firewall after the configured timeout period.
-
-```mermaid
-flowchart TB
-accTitle: Captive portal detection
-
-
-A[Send DNS request] -- Succeed --> B[Send HTTPS request]-- Fail --> C[Send HTTP request] -- Succeed --> D[Captive portal detected]-- Receive HTTP redirect -->I[Redirect to captive portal login]
-A -- Fail --> F(CF_NO_NETWORK error)
-C -- Fail --> F
-B -- Succeed --> G[No captive portal]--> H[Retry connection to Cloudflare]
-```
+4. Re-enable the firewall after the user successfully connects to the portal or after the timeout period expires.
 
 ## Limitations
 

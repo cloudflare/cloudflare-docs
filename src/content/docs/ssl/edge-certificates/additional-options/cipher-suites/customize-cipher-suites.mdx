@@ -11,18 +11,14 @@ head:
 
 import { Render, TabItem, Tabs } from "~/components"
 
-With [Advanced Certificate Manager](/ssl/edge-certificates/advanced-certificate-manager/) or within [Cloudflare for SaaS](/cloudflare-for-platforms/cloudflare-for-saas/security/certificate-management/), you can restrict connections between Cloudflare and clients -- such as your visitor's browser -- to specific [cipher suites](/ssl/edge-certificates/additional-options/cipher-suites/).
+With [Advanced Certificate Manager](/ssl/edge-certificates/advanced-certificate-manager/) or within [Cloudflare for SaaS](/cloudflare-for-platforms/cloudflare-for-saas/security/certificate-management/), you can restrict connections between Cloudflare and clients — such as your visitor's browser — to specific [cipher suites](/ssl/edge-certificates/additional-options/cipher-suites/).
 
 You may want to do this to follow specific [recommendations](/ssl/edge-certificates/additional-options/cipher-suites/recommendations/), to [disable weak cipher suites](/ssl/edge-certificates/additional-options/cipher-suites/troubleshooting/#ssl-labs-weak-ciphers-report), or to comply with [industry standards](/ssl/edge-certificates/additional-options/cipher-suites/compliance-status/).
 
 Customizing cipher suites will not lead to any downtime in your SSL/TLS protection.
 
 :::note
-
-
-Note that this process only refers to connections [between clients and the Cloudflare network](/ssl/concepts/#edge-certificate). For connections between Cloudflare and your origin server, refer to [Origin server > Cipher suites](/ssl/origin-configuration/cipher-suites/).
-
-
+This documentation only refers to connections [between clients and the Cloudflare network](/ssl/concepts/#edge-certificate). For connections between Cloudflare and your origin server, refer to [Origin server > Cipher suites](/ssl/origin-configuration/cipher-suites/).
 :::
 
 ## How it works
@@ -49,6 +45,11 @@ ECDSA cipher suites are prioritized over RSA, and Cloudflare preserves the speci
 
 ## Set up
 
+
+:::note
+For guidance around custom hostnames, refer to [TLS settings - Cloudflare for SaaS](/cloudflare-for-platforms/cloudflare-for-saas/security/certificate-management/enforce-mtls/#cipher-suites).
+:::
+
 ### Before you begin
 
 Note that:
@@ -70,9 +71,8 @@ Note that:
 
 4. Make an API call to either the [Edit zone setting](/api/resources/zones/subresources/settings/methods/edit/) endpoint or the [Edit TLS setting for hostname](/api/resources/hostnames/subresources/settings/subresources/tls/methods/update/) endpoint, specifying `ciphers` in the URL. List your array of chosen cipher suites in the `value` field.
 
-:::caution
-
-For guidance around custom hostnames, refer to [TLS settings - Cloudflare for SaaS](/cloudflare-for-platforms/cloudflare-for-saas/security/certificate-management/enforce-mtls/#cipher-suites). 
+:::note
+Updating the cipher suites will result in certificates being redeployed.
 :::
 
 <Tabs> <TabItem label="modern">
@@ -128,7 +128,7 @@ curl --request PATCH \
 
 :::caution
 
-For compliance with PCI DSS, also [enable TLS 1.3](/ssl/edge-certificates/additional-options/tls-13/#enable-tls-13) on your zone and make sure to up your [Minimum TLS version](/ssl/edge-certificates/additional-options/minimum-tls/) to `1.2`. 
+For compliance with PCI DSS, also [enable TLS 1.3](/ssl/edge-certificates/additional-options/tls-13/#enable-tls-13) on your zone and make sure to up your [Minimum TLS version](/ssl/edge-certificates/additional-options/minimum-tls/) to `1.2`.
 :::
 
 </TabItem> <TabItem label="fips-140-2">

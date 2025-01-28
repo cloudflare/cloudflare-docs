@@ -2,13 +2,15 @@
 import StarlightPage from "@astrojs/starlight/components/StarlightPage.astro";
 import { Image } from "astro:assets";
 
+import { Badge } from "@astrojs/starlight/components";
+
 import CursorDark from "~/assets/images/workers/ai/cursor-dark.png";
 import CursorLight from "~/assets/images/workers/ai/cursor-light.png";
 ---
 
 <StarlightPage frontmatter={{ title: "AI Assistant", tableOfContents: false }}>
 	<section id="assistant-header">
-		<div class="not-content">
+		<div class="not-content max-lg:hidden">
 			<Image
 				src={CursorDark}
 				alt="Cursor illustration"
@@ -24,9 +26,10 @@ import CursorLight from "~/assets/images/workers/ai/cursor-light.png";
 		</div>
 		<div id="text">
 			<h1>
-				<div class="illustration"></div>
 				Meet your AI assistant, Cursor
-				<div class="alpha">AI Preview</div>
+				<div>
+					<Badge text="AI Preview" class="ml-1" />
+				</div>
 			</h1>
 			<p>
 				Cursor is an experimental AI assistant, trained to answer questions

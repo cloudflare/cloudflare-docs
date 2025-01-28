@@ -38,21 +38,21 @@ To show an Access application in the App Launcher:
 
 1. In [Zero Trust](https://one.dash.cloudflare.com/), go to **Access** > **Applications**.
 2. Select an application and select **Configure**.
-3. In the **Overview** tab, select **Enable App in App Launcher**. The App Launcher link will only appear for users who are allowed by your Access policies. Blocked users will not see the app in their App Launcher.
+3. Go to **Experience settings**.
+4. Select **Show application in App Launcher**. The App Launcher link will only appear for users who are allowed by your Access policies. Blocked users will not see the app in their App Launcher.
 
-:::note
+		:::note
 
-This toggle does not impact the user's ability to reach the application. Allowed users can always reach the application via a direct link, regardless of whether the toggle is enabled. Blocked users will never have access to the application.
-:::
+		This toggle does not impact the user's ability to reach the application. Allowed users can always reach the application via a direct link, regardless of whether the toggle is enabled. Blocked users will never have access to the application.
+		:::
 
-4. Choose a domain to use for the App Launcher link.
+5. (Optional) To use a custom logo for the application tile, select **Use custom logo** and enter a link to your desired image.
 
-5. To use a custom logo for the application tile, select **Custom** and enter a link to your desired image.
+		:::note
+		If you are having issues specifying a custom logo, check that the image is served from an HTTPS endpoint. For example, `http://www.example.com/upload/logo.png` will not work. However, `https://www.example.com/upload/logo.png` will.
+		:::
 
-:::note
-
-If you are having issues specifying a custom logo, check that the image is served from an HTTPS endpoint. For example, `http://www.example.com/upload/logo.png` will not work. However, `https://www.example.com/upload/logo.png` will.
-:::
+6. In **Application domains**, choose a domain to use for the App Launcher link.
 
 ## Customize App Launcher appearance
 

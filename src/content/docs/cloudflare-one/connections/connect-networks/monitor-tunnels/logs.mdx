@@ -1,58 +1,42 @@
 ---
 pcx_content_type: reference
-title: Logs
+title: Log streams
 sidebar:
   order: 1
 head:
   - tag: title
-    content: Tunnel logs
+    content: Tunnel log streams
 ---
 
 Tunnel logs record all activity between a `cloudflared` instance and Cloudflare's global network, as well as all activity between `cloudflared` and your origin server. These logs allow you to investigate connectivity or performance issues with a Cloudflare Tunnel. You can configure your server to store persistent logs, or you can stream real-time logs from any client machine.
 
 ## View logs on the server
 
-If you have access to the origin server, you can enable logging when you start the tunnel:
+If you have access to the origin server, you can use the [`--loglevel` flag](/cloudflare-one/connections/connect-networks/configure-tunnels/tunnel-run-parameters/#loglevel) to enable logging when you start the tunnel. By default, `cloudflared` prints logs to stdout and does not store logs on the server. You can optionally use the [`--logfile` flag](/cloudflare-one/connections/connect-networks/configure-tunnels/tunnel-run-parameters/#logfile) to write your logs to a file.
+
+To enable logs for a locally-managed tunnel:
 
 ```sh
-cloudflared tunnel --loglevel debug run <UUID>
+cloudflared tunnel --loglevel debug --logfile cloudflared.log run <UUID>
 ```
 
-The [`--loglevel` flag](/cloudflare-one/connections/connect-networks/configure-tunnels/tunnel-run-parameters/#loglevel) indicates the logging level for the local `cloudflared` instance, which can be one of {`debug`, `info`, `warn`, `error`, `fatal`} (default: `info`). At the `debug` level, `cloudflared` will log and display the request URL, method, protocol, content length, as well as all request and response headers. However, note that this can expose sensitive information in your logs.
-
-### Write logs to file
-
-By default, `cloudflared` prints logs to stdout and does not store logs on the server. You can use the [`--logfile` flag](/cloudflare-one/connections/connect-networks/configure-tunnels/tunnel-run-parameters/#logfile) to save your logs to a file:
-
-```sh
-cloudflared tunnel --logfile mytunnel.log run <UUID>
-```
+To enable logs for a remotely-managed tunnel, add `--loglevel debug` and `--logfile <PATH>` to your system service as shown in [Add tunnel run parameters](/cloudflare-one/connections/connect-networks/configure-tunnels/remote-management/#add-tunnel-run-parameters).
 
 ## View logs on your local machine
 
-You can view real-time logs for a Cloudflare Tunnel via the dashboard or from any machine that has `cloudflared` installed. With remote log streams, you do not need to SSH into the server that is running the tunnel.
+You can view real-time logs for a Cloudflare Tunnel via the dashboard or from any machine that has `cloudflared` installed. With remote log streams, you do not need to SSH into the server that is running the tunnel. To get remote logs, the tunnel must be active and able to receive requests.
 
 ### Dashboard
 
-#### Prerequisites
+Dashboard log streams are only available for remotely-managed tunnels. To view logs from the dashboard:
 
-- `cloudflared` version 2023.5.1 or higher is installed on the origin server.
-- The tunnel is active and able to receive requests.
-
-#### View logs
-
-1. In [Zero Trust](https://one.dash.cloudflare.com/), go to **Networks** > **Tunnels** and select your tunnel.
+1. In [Zero Trust](https://one.dash.cloudflare.com/), go to **Networks** > **Tunnels** and select a remotely-managed tunnel.
 2. In the sidebar, select the **Connector ID** for the `cloudflared` instance you want to view.
 3. Select **Begin log stream**.
 
 ### CLI
 
-The `cloudflared` daemon can stream logs from any tunnel in your account to the local command line.
-
-#### Prerequisites
-
-- `cloudflared` version 2023.5.1 or higher is installed on both your local machine and the origin server.
-- The tunnel is active and able to receive requests.
+The `cloudflared` daemon can stream logs from any tunnel in your account to the local command line. `cloudflared` must be installed on both your local machine and the origin server.
 
 #### View logs
 

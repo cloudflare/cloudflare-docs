@@ -1,0 +1,50 @@
+---
+import Details from "./Details.astro";
+import { marked } from "marked";
+import { z } from "astro:schema";
+import prettyBytes from "pretty-bytes";
+import { warpReleasesSchema } from "~/schemas";
+
+type Props = z.infer<typeof props>;
+
+const props = z.object({
+	header: z.string(),
+	open: z.boolean().optional(),
+	release: warpReleasesSchema,
+});
+
+const { header, open, release } = props.parse(Astro.props);
+---
+
+<Details header={header} open={open}>
+	<p>
+		<div class="flex gap-2">
+			<span>
+				<strong>Version: </strong>
+				{release.platformName}
+				{release.version}
+			</span>
+			<span>
+				<strong>Date: </strong>
+				{release.releaseDate.toISOString().split("T")[0]}
+			</span>
+			{
+				release.packageSize && (
+					<span>
+						<strong>Size: </strong>
+						{prettyBytes(release.packageSize)}
+					</span>
+				)
+			}
+		</div>
+		<span>
+			<a href={release.packageURL}>Download</a>
+		</span>
+	</p>
+	<p>
+		<span>
+			<h4>Release notes</h4>
+		</span>
+		<Fragment set:html={marked.parse(release.releaseNotes)} />
+	</p>
+</Details>

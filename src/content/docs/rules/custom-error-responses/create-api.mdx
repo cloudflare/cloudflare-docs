@@ -33,9 +33,9 @@ Follow this workflow to create a custom error response rule for a given zone via
 
 The examples in this section use the following fields in their rule expressions:
 
-- [`http.response.code`](/ruleset-engine/rules-language/fields/http-request-response/#httpresponsecode): Represents the HTTP status code returned to the client, either set by a Cloudflare product or returned by the origin server. Use this field to customize the error response for error codes returned by the origin server or by a Cloudflare product such as a Worker.
+- [`http.response.code`](/ruleset-engine/rules-language/fields/reference/http.response.code/): Represents the HTTP status code returned to the client, either set by a Cloudflare product or returned by the origin server. Use this field to customize the error response for error codes returned by the origin server or by a Cloudflare product such as a Worker.
 
-- [`cf.response.1xxx_code`](/ruleset-engine/rules-language/fields/http-request-response/#cfresponse1xxx_code): Contains the specific error code for Cloudflare-generated errors. This field will only work for Cloudflare-generated errors such as [52x](/support/troubleshooting/cloudflare-errors/troubleshooting-cloudflare-5xx-errors/) and [1xxx](/support/troubleshooting/cloudflare-errors/troubleshooting-cloudflare-1xxx-errors/).
+- [`cf.response.1xxx_code`](/ruleset-engine/rules-language/fields/reference/cf.response.1xxx_code/): Contains the specific error code for Cloudflare-generated errors. This field will only work for Cloudflare-generated errors such as [52x](/support/troubleshooting/cloudflare-errors/troubleshooting-cloudflare-5xx-errors/) and [1xxx](/support/troubleshooting/cloudflare-errors/troubleshooting-cloudflare-1xxx-errors/).
 
 ### Custom JSON response for all 5xx errors
 

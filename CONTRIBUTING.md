@@ -35,7 +35,7 @@ If we require more information to address your pull request, the `more-informati
 
 ## Wrangler config
 
-If you're adding a code snippet to the docs that represents a Wrangler config file (`wrangler.toml` or `wrangler.json`) make sure you wrap it with the `<WranglerConfig>` component, which ensure it's rendered as both JSON and TOML e.g.
+If you're adding a code snippet to the docs that represents a Wrangler config file (`wrangler.toml`, `wrangler.json`, or `wrangler.jsonc`) make sure you wrap it with the `<WranglerConfig>` component, which ensure it's rendered as both JSON and TOML e.g.
 
 ````
 

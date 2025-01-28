@@ -3,8 +3,43 @@
 
 ---
 
-Since this scan is not guaranteed to find all existing DNS records, you need to review your records, paying special attention to the following record types:
+import { Details } from "~/components"
+
+Since the quick scan is not guaranteed to find all existing DNS records, you need to review your records, paying special attention to the following:
 
 * [Zone apex records (`example.com`)](/dns/manage-dns-records/how-to/create-zone-apex/)
+
+	<Details header="More about zone apex records">
+  Zone apex refers to the domain or subdomain that you are [adding to Cloudflare](/dns/concepts/#zone).
+
+	Usually, the zone apex record makes your domain accessible by visitors. In this case, the necessary record type ([A, AAAA, or CNAME](/dns/manage-dns-records/reference/dns-record-types/#ip-address-resolution)) and its content will depend on the provider that [hosts](/fundamentals/setup/manage-domains/#host-your-domain) your website or application.
+
+  If you are using Cloudflare Pages, refer to [Custom domains](/pages/configuration/custom-domains/).
+
+  If you are using other providers, look for their guidance on how to connect domains managed on external DNS services. Then, make sure you have the records required by your hosting provider on your [DNS records table](/dns/manage-dns-records/#dns-records-table) at Cloudflare.
+  </Details>
+
 * [Subdomain records (`www.example.com` or `blog.example.com`)](/dns/manage-dns-records/how-to/create-subdomain/)
+
+  <Details header="More about subdomain records">
+  Most subdomains serve a specific purpose within the overall context of your website. For example, `blog.example.com` might be your blog, `support.example.com` could be your customer help portal, and `store.example.com` would be your e-commerce site.
+
+  Even if you do not require specific subdomains, you might want to set up at least the `www` subdomain. It will usually point to the same content as what you have on the apex domain (`example.com`) or use a [redirect](/fundamentals/setup/manage-domains/manage-subdomains/#redirect-a-subdomain-to-the-apex-domain). Having a DNS record on the `www` subdomain helps guarantee that a visitor who types `www.` in front of your domain address on their browser can still find your website or application.
+  </Details>
+
 * [Email records](/dns/manage-dns-records/how-to/email-records/)
+
+  <Details header="More about email records">
+  Depending on your business needs, you can configure DNS records so that you can use your domain to receive emails, receive and send emails from your domain, or prevent others from sending emails on your behalf (spoofing).
+
+	Below are some examples of what those DNS records might look like. The exact values for your DNS mail records depend on your email provider. If you have issues, review the [Troubleshooting](/dns/troubleshooting/email-issues/) and contact your email service provider to confirm your DNS records are correct.
+
+  | Type | Name    | Content      | Proxy status | TTL    |
+  | ---- | ------- | ------------ | ------------ | ------ |
+  | A    | `mail`  | `192.0.2.1`  | DNS Only      | Auto   |
+  | MX    | `example.com`  | `5 john.mx.example-server.test`  | DNS Only      | Auto   |
+	| TXT    | `_dmarc`  | `"v=DMARC1; p=reject; sp=...`  | DNS Only      | Auto   |
+  | TXT    | `*._domainkey`  | `"v=DKIM1; k=rsa; p=..."`  | DNS Only      | Auto   |
+  | TXT    | `example.com`  | `"v=spf1 ip4:..."`  | DNS Only      | Auto   |
+
+  </Details>
