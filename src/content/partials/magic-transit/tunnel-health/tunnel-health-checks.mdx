@@ -53,17 +53,17 @@ For customers using the legacy health check system with a public IP range, Cloud
 
 A tunnel health check probe can have two possible types: request and reply. For each type the source and destination address depends on the direction. Refer to <a href={props.addTunnels}>Add tunnels</a> to learn how to change this setting.
 
-#### Request Style
+#### Request style
 
-In a Request Style healthcheck the payload probe is an ICMP Request.
+In a request style health check the payload probe is an ICMP Request.
 
-For a Unidirectional probe the source address is the Cloudflare side of the tunnel (a publicly routable address) and the destination is the origin router (also publicly routable). The origin router receives the probe and produces an ICMP response with the opposite source and destination, and sends it outside of the tunnel.
+For a unidirectional probe the source address is the Cloudflare side of the tunnel (a publicly routable address) and the destination is the origin router (also publicly routable). The origin router receives the probe and produces an ICMP response with the opposite source and destination, and sends it outside of the tunnel.
 
-For a Bidirectional probe the source address is the interface address of the Cloudflare side of the tunnel (a privately routable address) and the destination is the interface address of the tunnel (also privately routable). The origin router receives the probe and produces an ICMP response with the opposite source and destination and sends it into the tunnel.
+For a bidirectional probe the source address is the interface address of the Cloudflare side of the tunnel (a privately routable address) and the destination is the interface address of the tunnel (also privately routable). The origin router receives the probe and produces an ICMP response with the opposite source and destination and sends it into the tunnel.
 
-#### Reply Style
+#### Reply style
 
-In a Reply Style healthcheck the payload probe is an ICMP Response.
+In a reply style health check the payload probe is an ICMP Response.
 
 For a Unidirectional probe the destination address is the Cloudflare side of the tunnel (a publicly routable address) and the source is the origin router (also publicly routable). The origin router receives the probe and sends the probe as the response back as is outside of the tunnel.
 
