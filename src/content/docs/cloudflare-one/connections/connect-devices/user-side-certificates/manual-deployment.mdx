@@ -13,12 +13,12 @@ banner:
 import { Details, Render, TabItem, Tabs } from "~/components";
 
 :::note
-
 This procedure is only required to enable specific Cloudflare Zero Trust features, and should only be done at the direction of your IT department. This procedure is not required to enable the WARP client for consumers.
-
 :::
 
 If your device does not support [certificate installation via WARP](/cloudflare-one/connections/connect-devices/user-side-certificates/automated-deployment/), you can manually install a Cloudflare certificate. You must add the certificate to both the [system keychain](#add-the-certificate-to-operating-systems) and to [individual application stores](#add-the-certificate-to-applications). These steps must be performed on each new device that is to be subject to HTTP filtering.
+
+Zero Trust will only inspect traffic with installed certificates [set to **Available** and **In-Use**](/cloudflare-one/connections/connect-devices/user-side-certificates/#activate-a-root-certificate).
 
 ## Download the Cloudflare root certificate
 
