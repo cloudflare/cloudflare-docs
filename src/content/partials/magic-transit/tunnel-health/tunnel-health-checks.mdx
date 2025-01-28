@@ -1,7 +1,7 @@
 ---
 params:
   - addTunnels
-  - productName
+  - changeHealthCheckRate
 ---
 
 import { Details, GlossaryTooltip, Markdown, Render } from "~/components";
@@ -86,7 +86,7 @@ To avoid control plane policies enforced by the origin network, tunnel health ch
 
 <Render file="icmp-mfirewall" product="magic-transit" />
 
-Every Cloudflare data center configured to process your traffic sends tunnel health check probes. The rate at which these health check probes are sent varies based on tunnel and location. This rate can also be tuned up or down on a per tunnel basis by modifying the health\_check rate of a tunnel [with the API](https://developers.cloudflare.com/magic-transit/how-to/tunnel-health-checks/). A customer can set the rate value as low/mid/high, with mid being default. The actual rate formula considers the number of metals in a colo or the number of metals with the customer namespace provisioned on them for dynamically provisioned namespaces Thus, the rate is not a specific number; it is dynamic and depends on the size of our network.
+Every Cloudflare data center configured to process your traffic sends tunnel health check probes. The rate at which these health check probes are sent varies based on tunnel and location. This rate can also be tuned up or down on a per tunnel basis by modifying the `health_check` rate of a tunnel with the <a href={props.changeHealthCheckRate}>API or the dash</a>. A customer can set the rate value as low/mid/high, with mid being default. The actual rate formula considers the number of metals in a colo or the number of metals with the customer namespace provisioned on them for dynamically provisioned namespaces Thus, the rate is not a specific number; it is dynamic and depends on the size of our network.
 
 When a probe attempt fails for a [healthy](https://developers.cloudflare.com/magic-transit/reference/tunnel-health-checks/#health-state-and-prioritization) tunnel, each server detecting the failure quickly probes up to two more times to obtain an accurate result. We also do the same if a tunnel has been down and probes start returning success. Because Cloudflare global network servers send probes up to every second, you can expect your network to receive several hundred health check packets per second — each Cloudflare data center will only send one health check packet as part of a probe. This represents a relatively trivial amount of traffic.
 
