@@ -5,6 +5,7 @@ params:
   - probeHealth
   - productName
   - staticRoutes
+  - tunnelEndpoints
 ---
 
 import { Details, GlossaryTooltip, Markdown, Render } from "~/components";
@@ -272,6 +273,6 @@ During onboarding, you specify IP addresses to configure endpoint health checks.
 
 Tunnel health checks monitor the status of the tunnels that route traffic from Cloudflare to your origin network. {props.productName} relies on health checks to steer traffic to the best available routes.
 
-During onboarding, you [specify the tunnel endpoints](https://developers.cloudflare.com/magic-transit/how-to/configure-tunnels/) or tunnel healthcheck targets the tunnel probes originating from Cloudflare's global network will target.
+During onboarding, you <a href={props.tunnelEndpoints}>specify the tunnel endpoints</a>] or tunnel healthcheck targets the tunnel probes originating from Cloudflare's global network will target.
 
-Tunnel health check results are exposed [via API](https://developers.cloudflare.com/analytics/graphql-api/tutorials/querying-magic-transit-tunnel-healthcheck-results/). These results are aggregated from individual health check results done on Cloudflare servers.
+Tunnel health check results are exposed [via API](/analytics/graphql-api/tutorials/querying-magic-transit-tunnel-healthcheck-results/). These results are aggregated from individual health check results done on Cloudflare servers.
