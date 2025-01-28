@@ -1,0 +1,37 @@
+---
+title: Enable pre-clearance cookies
+pcx_content_type: get-started
+sidebar:
+  order: 3
+  label: Pre-clearance cookies
+
+---
+
+import { Render } from "~/components"
+
+## Prerequisites
+
+To enable pre-clearance, you must ensure that the hostname of the Turnstile widget matches the zone with the WAF rules. During the Turnstile configuration setup in the Cloudflare dashboard, you can see the registered zones. Select the appropriate hostname from this list.
+
+The prerequisite is crucial for pre-clearance to function properly. If set up correctly, visitors who successfully solve Turnstile will receive a cookie with the security clearance level set by the customer. When encountering a WAF challenge on the same zone, they will bypass additional challenges for the configured clearance level and below. 
+
+For more details on managing hostnames, refer to the [Hostname Management documentation](/turnstile/concepts/hostname-management/).
+
+<Render file="cf-clearance-cookie" product="bots" />
+
+## Enable pre-clearance on a new site
+
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login) and select your account.
+2. Go to **Turnstile** > **Add widget**.
+3. Under **Would you like to opt for pre-clearance for this site?** select **Yes**.
+4. Choose the pre-clearance level from the select box.
+5. Select **Create**.
+
+## Enable pre-clearance on an existing site
+
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login) and select your account.
+2. Go to **Turnstile**.
+3. Go to the existing widget or site and select **Settings**.
+4. Under **Would you like to opt for pre-clearance for this site?** select **Yes**.
+5. Choose the pre-clearance level from the select box.
+6. Select **Update**.

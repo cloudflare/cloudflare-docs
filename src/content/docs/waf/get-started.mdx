@@ -52,7 +52,7 @@ For more information on configuring the Cloudflare Managed Ruleset in the dashbo
 WAF attack score is only available to Business customers (limited access to a single field) and Enterprise customers (full access).
 :::
 
-[WAF attack score](/waf/detections/attack-score/) is a machine-learning layer that complements Cloudflare's managed rulesets, providing additional protection against SQL injection (SQLi), Cross-site scripting (XSS), and many remote code execution (RCE) attacks. It helps identify rule bypasses and potentially new, undiscovered attacks.
+[WAF attack score](/waf/detections/attack-score/) is a machine-learning layer that complements Cloudflare's managed rulesets, providing additional protection against [SQL injection](https://www.cloudflare.com/learning/security/threats/sql-injection/) (SQLi), [cross-site scripting](https://www.cloudflare.com/learning/security/threats/cross-site-scripting/) (XSS), and many [remote code execution](https://www.cloudflare.com/learning/security/what-is-remote-code-execution/) (RCE) attacks. It helps identify rule bypasses and potentially new, undiscovered attacks.
 
 If you are an Enterprise customer, do the following:
 
@@ -79,7 +79,7 @@ If you are on a Business plan, create a custom rule as mentioned above but use t
 Bot score is only available to Enterprise customers with [Bot Management](/bots/get-started/bm-subscription/). Customers on Pro and Business plans may enable [Super Bot Fight mode](/bots/get-started/pro/) instead.
 :::
 
-Customers with access to [Bot Management](/bots/get-started/bm-subscription/) can block automated traffic (for example, from bots scraping online content) using a custom rule with bot score, preventing this traffic from hitting your application.
+Customers with access to [Bot Management](/bots/get-started/bm-subscription/) can block automated traffic (for example, from [bots scraping online content](https://www.cloudflare.com/learning/bots/what-is-content-scraping/)) using a custom rule with bot score, preventing this traffic from hitting your application.
 
 1. Go to your domain > **Security** > **WAF** and select the **Custom rules** tab.
 
@@ -158,7 +158,7 @@ Create a rate limiting rule to [apply rate limiting on a login endpoint](/waf/ra
 
 ### Prevent credential stuffing attacks
 
-Use [leaked credential checks](/waf/managed-rules/check-for-exposed-credentials/) to prevent <GlossaryTooltip term="credential stuffing">credential stuffing</GlossaryTooltip> attacks on your applications.
+Use [leaked credential checks](/waf/managed-rules/check-for-exposed-credentials/) to prevent <GlossaryTooltip term="credential stuffing" link="https://www.cloudflare.com/learning/bots/what-is-credential-stuffing/">credential stuffing</GlossaryTooltip> attacks on your applications.
 
 ### Prevent users from uploading malware into your applications
 

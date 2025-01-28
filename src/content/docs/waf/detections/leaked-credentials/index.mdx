@@ -7,7 +7,7 @@ sidebar:
     label: Leaked credentials
 ---
 
-The leaked credentials [traffic detection](/waf/detections/) scans incoming requests for previously leaked credentials (usernames and passwords) previously leaked from data breaches.
+The leaked credentials [traffic detection](/waf/detections/) scans incoming requests for previously leaked credentials (usernames and passwords) previously leaked from [data breaches](https://www.cloudflare.com/learning/security/what-is-a-data-breach/).
 
 :::note
 If you are currently using [Exposed Credentials Check](/waf/managed-rules/check-for-exposed-credentials/) (a previous implementation) and want to upgrade to leaked credentials detection, refer to our [upgrade guide](/waf/managed-rules/check-for-exposed-credentials/upgrade-to-leaked-credentials-detection/).
@@ -26,7 +26,7 @@ In addition, leaked credentials detection provides a [managed transform](/rules/
 One common approach used in web applications when detecting the use of stolen credentials is to warn end users about the situation and ask them to update their password. You can do this based on the managed header received at your origin server.
 
 :::note
-Cloudflare may detect leaked credentials either because an attacker is performing a credential stuffing attack or because a legitimate end user is reusing a previously leaked password.
+Cloudflare may detect leaked credentials either because an attacker is performing a [credential stuffing](https://www.cloudflare.com/learning/bots/what-is-credential-stuffing/) attack or because a legitimate end user is reusing a previously leaked password.
 :::
 
 ## Availability

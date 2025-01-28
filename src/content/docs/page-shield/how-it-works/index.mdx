@@ -12,7 +12,7 @@ description: Page Shield tracks resources (such as scripts) loaded by your
 
 import { GlossaryTooltip } from "~/components";
 
-Page Shield helps manage resources loaded by your website visitors, including scripts, their connections, and cookies. It can trigger alert notifications when resources change or are considered malicious.
+Page Shield helps manage resources loaded by your website visitors, including scripts, their connections, and [cookies](https://www.cloudflare.com/learning/privacy/what-are-cookies/). It can trigger alert notifications when resources change or are considered malicious.
 
 Enabling Page Shield adds a <GlossaryTooltip term="content security policy (CSP)" link="https://developer.mozilla.org/en-US/docs/Web/HTTP/CSP">Content Security Policy (CSP)</GlossaryTooltip> deployed with a [report-only directive](/page-shield/reference/csp-header/) to collect information from the browser. This allows Cloudflare to provide you with a list of all scripts running on your application and the connections they make to third-party endpoints. Page Shield also monitors ingress and egress traffic for cookies, either set by origin servers or by the visitor's browser.
 

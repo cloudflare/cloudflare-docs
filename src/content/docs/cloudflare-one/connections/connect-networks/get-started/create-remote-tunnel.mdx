@@ -26,6 +26,8 @@ Follow these steps to connect an application through your tunnel. If you are loo
 
 <Render file="tunnel/add-public-hostname" product="cloudflare-one" />
 
+If you add a multi-level subdomain (more than one level of subdomain), you must [order an Advanced Certificate for the hostname](/cloudflare-one/faq/troubleshooting/#i-see-this-site-cant-provide-a-secure-connection).
+
 The application is now publicly available on the Internet. To allow or block specific users, [create an Access application](/cloudflare-one/applications/configure-apps/self-hosted-public-app/).
 
 ## 2b. Connect a network
@@ -43,4 +45,3 @@ To configure Zero Trust policies and connect as a user, refer to [Connect privat
 After saving the tunnel, you will be redirected to the **Tunnels** page. Look for your new tunnel to be listed along with its active connector.
 
 ![Tunnel appearing in the Tunnels table](~/assets/images/cloudflare-one/connections/connect-apps/tunnel-table.png)
-

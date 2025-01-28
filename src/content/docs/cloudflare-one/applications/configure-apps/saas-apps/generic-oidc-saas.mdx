@@ -62,24 +62,22 @@ Some SaaS applications provide the Redirect URL after you [configure the SSO pro
     | Key endpoint           | Returns the current public keys used to [verify the Access JWT](/cloudflare-one/identity/authorization-cookie/validating-json/) <br/> `https://<your-team-name>.cloudflareaccess.com/cdn-cgi/access/sso/oidc/<client-id>/jwks`                                   |
     | User info endpoint     | Returns all user claims in JSON format <br/> `https://<your-team-name>.cloudflareaccess.com/cdn-cgi/access/sso/oidc/<client-id>/userinfo`                                                                                                                        |
 
-11. (Optional) Configure [App Launcher settings](/cloudflare-one/applications/app-launcher/) by turning on **Enable App in App Launcher** and, in **App Launcher URL**, entering the URL that users should be sent to when they select the tile.
+11. Add [Access policies](/cloudflare-one/policies/access/) to control who can connect to your application. All Access applications are deny by default -- a user must match an Allow policy before they are granted access.
 
-12. <Render file="access/access-block-page" />
+12. <Render file="access/access-choose-idps" product="cloudflare-one" />
 
-13. <Render file="access/access-choose-idps" />
+13. Select **Next**.
 
-14. Select **Save configuration**.
+14. (Optional) Configure [App Launcher settings](/cloudflare-one/applications/app-launcher/) for the application.
 
-## 3. Add an Access policy
+15. <Render file="access/access-block-page" product="cloudflare-one" />
 
-1. To control who can access the SaaS application, [create an Access policy](/cloudflare-one/policies/access/).
+16. Select **Save application**.
 
-2. Select **Done**.
-
-## 4. Configure SSO in your SaaS application
+## 3. Configure SSO in your SaaS application
 
 Next, configure your SaaS application to require users to log in through Cloudflare Access. Refer to your SaaS application documentation for instructions on how to configure a third-party OIDC SSO provider.
 
-## 5. Test the integration
+## 4. Test the integration
 
 Open an incognito browser window and go to the SaaS application's login URL. You will be redirected to the Cloudflare Access login screen and prompted to sign in with your identity provider.

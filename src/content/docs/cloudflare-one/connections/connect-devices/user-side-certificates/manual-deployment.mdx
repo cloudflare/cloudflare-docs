@@ -7,7 +7,7 @@ head: []
 description: Manually add a Cloudflare certificate to mobile devices and
   individual applications.
 banner:
-  content: The default global Cloudflare root certificate will expire on 2025-02-02. If you installed the default Cloudflare certificate before 2024-10-17, you must <a href="#generate-a-cloudflare-root-certificate">generate a new certificate</a> and activate it for your Zero Trust organization to avoid inspection errors.
+  content: The default global Cloudflare root certificate will expire on 2025-02-02. If you installed the default Cloudflare certificate before 2024-10-17, you must <a href="/cloudflare-one/connections/connect-devices/user-side-certificates/#generate-a-cloudflare-root-certificate">generate a new certificate</a> and activate it for your Zero Trust organization to avoid inspection errors.
 ---
 
 import { Details, Render, TabItem, Tabs } from "~/components";
@@ -715,20 +715,22 @@ To trust a Cloudflare root certificate in the Google Drive desktop application, 
 <Tabs>
 <TabItem label="macOS" icon="apple">
 
-1. In the Finder menu bar, go to **Go** > **Go to Folder**. Enter `/Applications/Google Drive.app/Contents/Resources`.
-
-2. Find `roots.pem` and copy it to a permanent location, such as your Documents folder.
-
-3. Append the contents of `cloudflare.pem` to the end of `roots.pem`.
+1. In a terminal, copy the contents of the Google Drive certificate file to a new certificate file in a permanent location, such as your Documents folder. For example:
 
    ```sh
-   cat ~/Downloads/certificate.pem >> path/to/roots.pem
+   cat /Applications/"Google Drive.app"/Contents/Resources/roots.pem > ~/Documents/gdrivecerts.pem
    ```
 
-4. Apply the newly created root certificate to your Google Drive application.
+2. Append the contents of the downloaded certificate to the end of the new file. For example:
 
    ```sh
-   sudo defaults write /Library/Preferences/com.google.drivefs.settings TrustedRootCertsFile -string "path/to/roots.pem"
+   cat ~/Downloads/certificate.pem >> ~/Documents/gdrivecerts.pem
+   ```
+
+3. Apply the newly created root certificate to your Google Drive application. For example:
+
+   ```sh
+   sudo defaults write /Library/Preferences/com.google.drivefs.settings TrustedRootCertsFile "/Users/$(whoami)/Documents/gdrivecerts.pem"
    ```
 
 You can verify the update with the following command.
@@ -741,26 +743,28 @@ defaults read /Library/Preferences/com.google.drivefs.settings
 
 <TabItem label="Windows" icon="seti:windows">
 
-1. In File Explorer, go to `\Program Files\Google\Drive File Stream\<version>\config\`.
-
-2. Find `roots.pem` and copy it to a permanent location, such as your Documents folder.
-
-3. Append the contents of `cloudflare.pem` to the end of `roots.pem`.
+1. In an administrator PowerShell terminal, copy the contents of the Google Drive certificate file to a new certificate file in a permanent location, such as your Documents folder. For example:
 
    ```powershell
-   cat ~\Downloads\certificate.pem >> path\to\roots.pem
+   Get-Content "C:\Program Files\Google\Drive File Stream\roots.pem" | Set-Content "$HOME\Documents\gdrivecerts.pem"
    ```
 
-4. Update the Google Drive registry key.
+2. Append the contents of the downloaded certificate to the end of the new file. For example:
 
    ```powershell
-   reg ADD "HKEY_LOCAL_MACHINE\Software\Google\DriveFS" /v TrustedRootCertsFile /t REG_SZ /d "path\to\roots.pem"
+   Get-Content "$HOME\Downloads\certificate.pem" | Add-Content "$HOME\Documents\gdrivecerts.pem"
+   ```
+
+3. Apply the newly created root certificate to your Google Drive application. For example:
+
+   ```powershell
+   Set-ItemProperty -Path "HKLM:\SOFTWARE\Google\DriveFS" -Name "TrustedRootCertsFile" -Value "$HOME\Documents\gdrivecerts.pem"
    ```
 
 You can verify the update with the following command.
 
 ```powershell
-reg QUERY "HKEY_LOCAL_MACHINE\Software\Google\DriveFS" /v TrustedRootCertsFile"
+Get-ItemProperty -Path "HKLM:\SOFTWARE\Google\DriveFS" | Select-Object TrustedRootCertsFile
 ```
 
 </TabItem>

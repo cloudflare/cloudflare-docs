@@ -5,6 +5,7 @@ product:
   title: Privacy Gateway
   url: /privacy-gateway/
   group: Developer platform
+  additional_groups: [Privacy]
 
 meta:
   title: Cloudflare Privacy Gateway
