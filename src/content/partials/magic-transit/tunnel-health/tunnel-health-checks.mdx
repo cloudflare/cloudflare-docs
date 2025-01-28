@@ -3,6 +3,7 @@ params:
   - addTunnels
   - changeHealthCheckRate
   - probeHealth
+  - productName
 ---
 
 import { Details, GlossaryTooltip, Markdown, Render } from "~/components";
@@ -187,7 +188,7 @@ There are three tunnel health states: healthy, degraded, and down.
 
 Healthy tunnels are preferred to degraded tunnels, and degraded tunnels are preferred to those that are down.
 
-Magic Transit steers traffic to tunnels based on priorities you set when you [assign tunnel route priorities during onboarding](https://developers.cloudflare.com/magic-transit/how-to/configure-static-routes/). Tunnel routes with lower values have priority over those with higher values.
+{props.productName} steers traffic to tunnels based on priorities you set when you [assign tunnel route priorities during onboarding](https://developers.cloudflare.com/magic-transit/how-to/configure-static-routes/). Tunnel routes with lower values have priority over those with higher values.
 
 **Note**
 Cloudflare global network servers may be able to reach the origin infrastructure from some locations at a given time but not others. This occurs because Cloudflare does not synchronize health checks among global network servers and because the Internet is not homogeneous.
