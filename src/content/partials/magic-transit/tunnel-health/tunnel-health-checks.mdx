@@ -215,13 +215,13 @@ When {props.productName} identifies a route that is not healthy, it applies thes
 - **Degraded**: Add `500,000` to priority.
 - **Down**: Add `1,000,000` to priority.
 
-The values for failure penalties are intentionally extreme so that they always exceed the priority values assigned during [routing configuration](https://developers.cloudflare.com/magic-transit/how-to/configure-static-routes/).
+The values for failure penalties are intentionally extreme so that they always exceed the priority values assigned during <a href={props.staticRoutes}>routing configuration</a>.
 
 Applying a penalty instead of removing the route altogether preserves redundancy and maintains options for customers with only one tunnel. Penalties also support the case when multiple tunnels are unhealthy.
 
 ## Cloudflare data centers and tunnels
 
-In the event a Cloudflare data center is down, Cloudflare's global network does not advertise your prefixes, and your packets are routed to the next closest data center. To check the system status for Cloudflare's global network and dashboard, refer to [Cloudflare System Status ↗](https://www.cloudflarestatus.com/).
+In the event a Cloudflare data center is down, Cloudflare's global network does not advertise your prefixes, and your packets are routed to the next closest data center. To check the system status for Cloudflare's global network and dashboard, refer to [Cloudflare System Status](https://www.cloudflarestatus.com/).
 
 ## Recovery
 
