@@ -10,7 +10,7 @@ Revalidation is a caching mechanism that checks the [freshness](/cache/concepts/
 
 ## Revalidation towards origin
 
-For stale (expired TTL) content, Cloudflare will send a revalidation request to the origin, if the stale content is still valid a new TTL will be set, if the content is expired then the origin will provide new fresh content replacing the old.
+For stale (expired TTL) content, Cloudflare will send a revalidation request to the origin. If the stale content is still valid Cloudflare will set a new TTL. If the content is expired, then the origin will provide new fresh content to replace the old.
 
 Consider the following example scenarios.
 
@@ -24,4 +24,4 @@ One-thousand (1,000) requests arrive simultaneously at a single Cloudflare data 
 
 ## Smart revalidation towards users
 
-When both [`Last-Modified`](https://datatracker.ietf.org/doc/html/rfc7232?cf_history_state=%7B%22guid%22%3A%22C255D9FF78CD46CDA4F76812EA68C350%22%2C%22historyId%22%3A15%2C%22targetId%22%3A%226C8153BAEF7BC0C5A331E28F8BCF1ABA%22%7D#section-2.2) and [`Etag`](https://datatracker.ietf.org/doc/html/rfc7232?cf_history_state=%7B%22guid%22%3A%22C255D9FF78CD46CDA4F76812EA68C350%22%2C%22historyId%22%3A13%2C%22targetId%22%3A%226C8153BAEF7BC0C5A331E28F8BCF1ABA%22%7D#section-2.3) headers are absent from the origin server response, Smart Edge Revalidation will use the time the object was cached on Cloudflare's edge as the `Last-Modified` header value. When a browser sends a revalidation request to Cloudflare using `If-Modified-Since` or `If-None-Match`, our edge can answer those revalidation questions using the `Last-Modified` header generated from Smart Edge Revalidation. In this way, our edge can ensure efficient revalidation even if the headers are not sent from the origin.
+When both [`Last-Modified`](https://datatracker.ietf.org/doc/html/rfc7232?cf_history_state=%7B%22guid%22%3A%22C255D9FF78CD46CDA4F76812EA68C350%22%2C%22historyId%22%3A15%2C%22targetId%22%3A%226C8153BAEF7BC0C5A331E28F8BCF1ABA%22%7D#section-2.2) and [`Etag`](https://datatracker.ietf.org/doc/html/rfc7232?cf_history_state=%7B%22guid%22%3A%22C255D9FF78CD46CDA4F76812EA68C350%22%2C%22historyId%22%3A13%2C%22targetId%22%3A%226C8153BAEF7BC0C5A331E28F8BCF1ABA%22%7D#section-2.3) headers are absent from the origin server response, Smart Edge Revalidation will use the time the object was cached on Cloudflare's global network as the `Last-Modified` header value. When a browser sends a revalidation request to Cloudflare using `If-Modified-Since` or `If-None-Match`, our global network can answer those revalidation questions using the `Last-Modified` header generated from Smart Edge Revalidation. In this way, our global network can ensure efficient revalidation even if the headers are not sent from the origin.
