@@ -207,13 +207,13 @@ As a result, tunnel health may be in different states in different parts of the 
 
 ### Down
 
-- When all health checks of at least three samples in the last one second fail, Magic Transit immediately transitions the tunnel from healthy or degraded to down, and applies a priority penalty to routes through that tunnel.
+- When all health checks of at least three samples in the last one second fail, {props.productName} immediately transitions the tunnel from healthy or degraded to down, and applies a priority penalty to routes through that tunnel.
 - A down state determination takes precedence over a degraded state determination. This means that a tunnel can only be one of the following: down, degraded, or healthy.
 
-When Magic Transit identifies a route that is not healthy, it applies these penalties:
+When {props.productName} identifies a route that is not healthy, it applies these penalties:
 
-* **Degraded**: Add 500,000 to priority.
-* **Down**: Add 1,000,000 to priority.
+- **Degraded**: Add `500,000` to priority.
+- **Down**: Add `1,000,000` to priority.
 
 The values for failure penalties are intentionally extreme so that they always exceed the priority values assigned during [routing configuration](https://developers.cloudflare.com/magic-transit/how-to/configure-static-routes/).
 
