@@ -7,129 +7,223 @@ title: 4xx Client Error
 
 import { FeatureTable, Render } from "~/components"
 
-4xx codes generally are error responses specifying an issue at the client’s end, potentially a network issue.  
+`4xx` codes are error responses that indicate an issue on the client's end, potentially due to a network problem.
 
-* 4xx codes can be used as a response to any request method.
-* Origin server should include an explanation which should be displayed by User-Agent, with the exception of a `HEAD` request
-* [Custom rules](/waf/custom-rules/) can return any response code in the range 400-499 in your HTML page, if the site owner has created a rule with *Block* action and configured a custom response code. Refer to [custom response](/waf/custom-rules/create-dashboard/#configure-a-custom-response-for-blocked-requests) for more details.
+- `4xx` codes can be used as a response to any request method.
+- The origin server should include an explanation, which should be displayed by the User-Agent, except in the case of a `HEAD` request.
+- [Custom rules](/waf/custom-rules/) can return any response code in the range of `400–499` on your HTML page if the site owner has created a rule with the _Block_ action and configured a custom response code. For more details, refer to [custom response](/waf/custom-rules/create-dashboard/#configure-a-custom-response-for-blocked-requests).
 
-The following are common 4xx codes and their definitions:
+## 400 Bad Request
 
-## **400 Bad Request ([RFC7231](https://tools.ietf.org/html/rfc7231))**
+This error indicates that the client sent a request to the server that could not be understood or processed due to issues with the request itself.
 
-The client did not send a correct request to the server. This is a client error: malformed request syntax, invalid request, message framing, or deceptive request routing.
-For example, if the request contains a special character that is not correctly [URL Encoded (or percent-encoded)](https://en.wikipedia.org/wiki/Percent-encoding), this HTTP Error 400 will be returned.
+For more information, refer to [RFC7231](https://tools.ietf.org/html/rfc7231).
 
-If you're getting an HTTP Error when using the [Cloudflare API](/api/), please make sure that you are using the correct syntax, the correct parameters and correct body for your API call.
+### Common use cases
 
-## **401 Unauthorized ([RFC 7235](https://tools.ietf.org/html/rfc7235))**
-
-The request was not sent with the proper authentication credentials
-
-* Server must send with at least one challenge in the form of a `WWW-Authenticate` header field according to [section 4.1](https://datatracker.ietf.org/doc/html/rfc7235#section-4.1)
-* Client may send a second request with the same credentials and then if the challenge is identical to the one before, an entity will be provided by the server to help the client find what credentials are needed.
-
-## **402 Payment Required ([RFC7231](https://tools.ietf.org/html/rfc7231))**
-
-Not yet implemented by RFC standards but reserved for future use.
-
-## **403 Forbidden ([RFC7231](https://tools.ietf.org/html/rfc7231))**
-
-If you're seeing a 403 error without Cloudflare branding, this is always returned directly from the origin web server, not Cloudflare, and is generally related to permission rules on your server. The top reasons for this error are:
-
-1. Permission rules you have set on the origin web server (in the Apache .htaccess for example)
-2. Mod\_security rules
-3. IP deny rules. You need to make sure that [Cloudflare's IP ranges](https://www.cloudflare.com/ips) aren't being blocked
+A `400 Bad Request` error occurs due to client-side issues, such as malformed request syntax, invalid request content, message framing problems, or deceptive request routing. For example, if the request contains a special character that is not properly [URL Encoded (or percent-encoded)](https://en.wikipedia.org/wiki/Percent-encoding), an `HTTP Error 400` will be returned.
 
 ### Cloudflare-specific information
 
-Cloudflare will serve 403 responses if the request violated either a default WAF managed rule enabled for all orange-clouded Cloudflare domains or a WAF managed rule enabled for that particular zone. Read more at [WAF Managed Rules](/waf/managed-rules/).
+If you encounter an HTTP error while using the [Cloudflare API](/api/), make sure that you are using the correct syntax, parameters, and body for your API call.
 
-If you're seeing a 403 response that contains Cloudflare branding in the response body, this is the HTTP response code returned along with many of our security features:
+## 401 Unauthorized
 
-* [WAF Custom or Managed Rules](/waf/) with the challenge or block action
-* [Security Level](/waf/tools/security-level/), that is set to Medium by default
-* [DDoS Protection](/ddos-protection/), that is enabled by default on zones onboarded to Cloudflare, IP applications onboarded to Spectrum, and IP Prefixes onboarded to Magic Transit
-* Most [1xxx Cloudflare error codes](/support/troubleshooting/cloudflare-errors/troubleshooting-cloudflare-1xxx-errors/)
-* The [Browser Integrity Check](/waf/tools/browser-integrity-check/)
-* [Validation Checks](/waf/analytics/security-events/additional-information/)
+This error indicates that the request was not sent with the proper authentication credentials. The server requires authentication to process the request.
 
-Cloudflare will also serve an unstyled 403 error page in the following case. There errors are not logged, as they occur early in Cloudflare's infrastructure, before the configuration for domains has been loaded.
+For more details, refer to [RFC 7235](https://tools.ietf.org/html/rfc7235).
 
-* [SNI](https://www.cloudflare.com/learning/ssl/what-is-sni/) mismatch: a 403 error is returned if there is a mismatch caused by the client sending a different host to the SNI
+### Common use cases
 
-## **404 Not Found ([RFC7231](https://tools.ietf.org/html/rfc7231))**
+A `401 Unauthorized` error occurs when the client fails to provide valid authentication credentials. The server responds with at least one challenge in the form of a `WWW-Authenticate` header field, as outlined in [section 4.1](https://datatracker.ietf.org/doc/html/rfc7235#section-4.1).
 
-Origin server was unable or unwilling to find the resource requested. This usually means the host server could not find the resource. To serve a more permanent version of this error one should use a 410 error code.
+If the client resends the request with the same credentials and the challenge remains unchanged, the server may return an entity to assist the client in identifying the correct credentials needed.
 
-These errors typically occur when someone mistypes a URL on your site when there is a broken link from another page, when a page that previously existed is moved or removed, or there is an error when a search engine indexes your site. For a typical site, these errors account for approximately 3% of the total page views, but they’re often untracked by traditional analytics platforms like Google Analytics.
+### Cloudflare-specific information
 
-Website owners usually implement a custom page to be served when this error is generated.
+When encountering a `401` error while using the Cloudflare API, ensure that you are providing the correct authentication credentials (for example, [API tokens](/fundamentals/api/get-started/create-token/) or [keys](/fundamentals/api/get-started/ca-keys/)). Double-check that the credentials are active and properly formatted. If the error persists, refer to the `WWW-Authenticate` header in the response for guidance on resolving the issue.
 
-Cloudflare does not generate 404s for customer websites, we only proxy the request from the origin server. When seeing a 404 for your Cloudflare powered site you should contact your hosting provider for help.
+## 402 Payment Required
 
-## **405 Method Not Allowed ([RFC7231](https://tools.ietf.org/html/rfc7231))**
+The `402 Payment Required` status code is reserved for future use and is not yet implemented according to the standards outlined in [RFC7231](https://tools.ietf.org/html/rfc7231).
 
-Origin server is aware of the requested resource, but the request method used is not supported.
+## 403 Forbidden
 
-* Origin server must also provide an `Allow` header with a list of supported targets for that resource.
+The `403 Forbidden` status code indicates that the clien's request was understood by the server but cannot be fulfilled due to insufficient permissions to access the requested resource. 
+For more details, refer to [RFC7231](https://tools.ietf.org/html/rfc7231).
 
-An example would be a POST on an unchangeable resource the thus only accepts GET.
+### Common use cases
 
-## **406 Not Acceptable ([RFC7231](https://tools.ietf.org/html/rfc7231))**
+If you encounter a `403` error without the Cloudflare branding, this means that the error is being returned directly by the origin web server, not Cloudflare. This is typically related to permission rules set on your server. Common reasons for this error are:
 
-Resource is not available at the origin that adheres to negotiation headers that were  set prior (e.g. via `Accept-Charset` and `Accept-Language` headers)
+- Permission rules configured on the origin web server (for example, in an Apache `.htaccess` file).
+- Mod_security rules.
+- IP deny rules, such as blocking traffic from certain IP ranges. Make sure that [Cloudflare's IP ranges](https://www.cloudflare.com/ips) are not being blocked.
 
-This status code can be replaced by simply serving the less preferred method to the User-Agent in lieu of generating this error.
+### Cloudflare-specific information
 
-## **407 Authentication Required  ([RFC 7235](https://tools.ietf.org/html/rfc7235))**
+Cloudflare may serve `403` responses in the following scenarios:
 
-The client did not send the required authentication with the request.
+- **WAF rules**: The request violated a default WAF managed rule (enabled for all orange-clouded Cloudflare domains) or a custom WAF managed rule specific to your zone. For more information, refer to [WAF Managed Rules](/waf/managed-rules/).
 
-## **408 Request Timeout  ([RFC7231](https://tools.ietf.org/html/rfc7231))**
+- **Security features**: A `403` response with Cloudflare branding in the response body may be triggered by:
+    - [WAF Custom or Managed Rules](/waf/) with the challenge or block action
+    - [Security Level](/waf/tools/security-level/) settings, which default to Medium.
+    - [DDoS Protection](/ddos-protection/), which is enabled by default on zones onboarded to Cloudflare, IP applications onboarded to Spectrum, and IP Prefixes onboarded to Magic Transit.
+    - Most [1xxx Cloudflare error codes](/support/troubleshooting/cloudflare-errors/troubleshooting-cloudflare-1xxx-errors/).
+    - The [Browser Integrity Check](/waf/tools/browser-integrity-check/).
+    - [Validation Checks](/waf/analytics/security-events/additional-information/).
 
-The origin server did not receive the complete request in what it considers a reasonable time.
+Cloudflare may also serve an unstyled `403` error page in specific cases. These errors are not logged because they occur early in Cloudflare's infrastructure, before domain configuration is loaded. An example is:
 
-* Implied the server does not wish to wait and continue the connection.
-* Not used much because servers typically choose to use the “close” connection option.
+- [SNI](https://www.cloudflare.com/learning/ssl/what-is-sni/): A `403` error is returned when the client sends a host that does not match the SNI (Server Name Indication).
 
-## **409 Conflict ([RFC7231](https://tools.ietf.org/html/rfc7231))**
+## 404 Not Found
 
-The request did not complete because of a conflict with the current state of the resource. Typically happens on a PUT request where multiple clients are attempting to edit the same resource.
+The `404 Not Found` status code indicates that the origin server was unable to locate the requested resource. Typically, this means the host server could not find the resource. For a more permanent version of this error, the 410 Gone status code should be used.
 
-* The server *should* generate a payload that includes enough information for the client to recognize the source of the conflict.
-* Clients can and should retry the request again
+For more details, refer to [RFC7231](https://tools.ietf.org/html/rfc7231).
 
-Cloudflare will generate and serve a 409 response for a [Error 1001: DNS Resolution Error](/support/troubleshooting/cloudflare-errors/troubleshooting-cloudflare-1xxx-errors/#error-1001-dns-resolution-error).
+### Common use cases
 
-## **410 Gone ([RFC7231](https://tools.ietf.org/html/rfc7231))**
+These errors typically occur when someone mistypes a URL on your site, when there is a broken link from another page, when a page that previously existed is moved or removed, or there is an error when a search engine indexes your site.
 
-The resource requested is permanently missing at the origin.
+These errors typically account for approximately 3% of total page views for a typical site. However, they often go untracked by traditional analytics platforms, such as Google Analytics. To improve user experience, website owners usually implement a custom 404 page to be displayed when this error is generated.
 
-* The server is suggesting the links reference the resource should be removed.
-* The server is not qualified to use this status code over a 404 response nor required to have this response for any specific period of time.
+### Cloudflare-specific information
 
-## **411 Length Required ([RFC7231](https://tools.ietf.org/html/rfc7231))**
+Cloudflare does not generate `404s` for customer websites, we only proxy the request from the origin server. If you encounter a `404` error on a Cloudflare-powered site, the issue lies with the origin server. In such cases, contact your hosting provider for assistance.
 
-Client did not define the `Content-Length` of the request body in the headers and this is required to obtain the resource.
+## 405 Method Not Allowed
 
-* Client may resend the request after adding the header field.
+The 405 Method Not Allowed status code indicates that the origin server recognizes the requested resource but does not support the HTTP method used in the request.
 
-## **412 Precondition Failed  ([RFC 7232](https://tools.ietf.org/html/rfc7232))**
+For more details, refer to [RFC7231](https://tools.ietf.org/html/rfc7231).
 
-Server denies the request because the resource failed to meet the conditions specified by the client.
+### Common use cases
 
-For an example of version control, a client is modifying an existing resource and thus sets the `If-Unmodified-Since` header to match the date that the client downloaded the resource and began edits. If the resource was edited (likely by another client) after this date and before the upload of the edits, this response will be generated since the date of the last edit will come after the date set in `If-Unmodified-Since` by the client.
+This error typically occurs when the client uses an unsupported HTTP method to interact with a specific resource. The origin server must include an `Allow` header in the response, which lists the HTTP methods supported for that resource.
 
-Cloudflare will serve this response. For more information, refer to: [ETag Headers](/cache/reference/etag-headers/)
+For example, attempting a `POST` request on a resource that is unchangeable and only supports `GET` requests will result in a `405` error.
 
-## **413 Payload Too Large  ([RFC7231](https://tools.ietf.org/html/rfc7231))**
+### Cloudflare-specific information
 
-Refusal from the server to process the request because the payload sent from the client is larger than the server wished to accept. Server has the optional to close the connection.
+Cloudflare does not directly generate `405` errors. These errors are returned by the origin server when it does not allow the HTTP method used in the request. If you encounter a `405` error, review the configuration of your origin server to ensure the correct methods are enabled for the resource in question.
 
-* If this refusal would only happen temporarily, then the server should send a `Retry-After`  header to specify when the client should try the request again.
+## 406 Not Acceptable
 
-### Cloudflare customers
+The `406 Not Acceptable` status code indicates that the requested resource is not available in a format that adheres to the content negotiation headers specified by the client (for example, `Accept-Charset` or `Accept-Language`).
+
+For more details, refer to [RFC7231](https://tools.ietf.org/html/rfc7231)1.
+
+### Common use cases
+
+For example, if a client requests content in a specific language or character set that the server does not support, this error will be generated. To avoid returning a `406` error, the server can instead serve the less preferred method to the client's User-Agent, rather than rejecting the request.
+
+### Cloudflare-specific information
+
+Cloudflare does not generate `406` errors directly but can proxy these responses from the origin server. If content negotiation issues occur, they are typically related to configurations at the origin server, such as language or character set settings.
+
+## 407 Authentication Required
+
+The `407 Proxy Authentication Required` status code indicates that the client did not provide the necessary authentication credentials to access the requested resource through a proxy server.
+For more details, refer to [RFC 7235](https://tools.ietf.org/html/rfc7235).
+
+### Common use cases
+
+This error typically occurs in environments where a proxy server is used as an intermediary between the client and the target server. To resolve this, the client must include the appropriate `Proxy-Authorization` header in the request with valid credentials.
+
+### Cloudflare-specific information
+
+Cloudflare does not generate `407` errors but proxies them from the origin server or an upstream proxy. If a `407` error occurs on a Cloudflare-powered site, review the origin server's proxy configuration to ensure authentication requirements are properly set, and verify that the client is providing the required credentials.
+
+## 408 Request Timeout
+
+The `408 Request Timeout` status code indicates that the origin server did not receive the complete request within a reasonable time frame and does not wish to continue waiting for the connection. This response is not commonly used, as servers often prefer to use the "close" connection option to terminate idle connections
+
+For more details, refer to [RFC7231](https://tools.ietf.org/html/rfc7231).
+
+### Common use cases
+
+This error typically occurs when a client fails to send a complete request within the server's timeout period. Common scenarios include slow network connections, server overload or client-side delays to complete the request.
+
+### Cloudflare-specific information
+
+Cloudflare does not generate `408` errors but may proxy them from the origin server. If a `408` error occurs on a Cloudflare-powered site, it is essential to review the origin server's timeout settings and ensure that the server is not overloaded. Additionally, verify that the client's Internet connection is stable and that the request is being sent promptly.
+
+## 409 Conflict
+
+The `409 Conflict` status code indicates that the request could not be completed due to a conflict with the current state of the target resource. 
+
+For more details, refer to [RFC7231](https://tools.ietf.org/html/rfc7231).
+
+### Common use cases
+This error typically happens with a `PUT` request when multiple clients are attempting to edit the same resource. To solve this issue:
+
+    - The server should generate a payload that includes enough information for the client to recognize the source of the conflict.
+    - Clients should retry the request again after resolving the conflict.
+
+### Cloudflare-specific information
+
+Cloudflare will return a 409 response for a [Error 1001: DNS Resolution Error](/support/troubleshooting/cloudflare-errors/troubleshooting-cloudflare-1xxx-errors/#error-1001-dns-resolution-error).
+
+## 410 Gone
+
+When a resource is intentionally and permanently removed, servers use the `410 Gone` status code to inform clients that the resource is no longer available. 
+In this case:
+
+    - The server suggests that links referencing the resource should be removed.
+    - The server is not obligated to use this status code instead of a `404` response, nor is it required to maintain this response for any specific period of time.
+
+For more details, refer to [RFC7231](https://tools.ietf.org/html/rfc7231).
+
+### Common use cases
+
+This status is commonly applied to deprecated content, such as outdated pages or discontinued products.
+
+### Cloudflare-specific information
+
+Cloudflare does not generate `410` for customer websites, we only proxy the request from the origin server. If you encounter a `410` error on a Cloudflare-powered site, the issue lies with the origin server. In such cases, contact your hosting provider for assistance.
+
+## 411 Length Required
+
+The `411 Length Required` status code indicates that the client did not specify the `Content-Length` of the request body in the headers, and this information is required to obtain the resource. The client may resend the request after adding the required header field.
+
+For more details, refer to [RFC7231](https://tools.ietf.org/html/rfc7231).
+
+### Common use cases
+
+This status code can occur in various scenarios, such as when a client sends an API request without the required `Content-Length` header, when uploading a file where the server needs the header to allocate resources, or when proxies or legacy systems enforce strict HTTP compliance. In each case, the server or intermediary requires the `Content-Length` header to process the request properly.
+
+### Cloudflare-specific information
+
+Cloudflare does not generate `411` for customer websites, we only proxy the request from the origin server. If you encounter a `411` error on a Cloudflare-powered site, the issue lies with the origin server. In such cases, contact your hosting provider for assistance.
+
+## 412 Precondition Failed
+
+The `412 Precondition Failed` status code indicates that the server denies the request because the resource does not meet the conditions specified by the client.
+
+For more details, refer to [RFC 7232](https://tools.ietf.org/html/rfc7232).
+
+### Common use cases
+
+One common use case for the `412 Precondition Failed` status code is version control. For example, a client modifying an existing resource may set the `If-Unmodified-Since` header to ensure the resource has not been changed since the client downloaded it for editing. If another client edits the resource after the specified date but before the original client uploads their changes, the server will return a `412` response to prevent overwriting the newer updates.
+
+### Cloudflare-specific information
+
+Cloudflare may serve this response: for more information please refer to [ETag Headers](/cache/reference/etag-headers/).
+
+## 413 Payload Too Large
+
+The `413 Payload Too Large` status code indicates that the server refuses to process the request because the payload sent by the client exceeds the server's acceptable size limit. The server may optionally close the connection. If this refusal would only happen temporarily, then the server should send a `Retry-After` header to specify when the client should try the request again.
+
+For more details, refer to [RFC7231](https://tools.ietf.org/html/rfc7231).
+
+### Common use cases
+
+The `413 Payload Too Large` status code often occurs when clients attempt to upload large files, such as videos or images, or send oversized request bodies, like JSON or XML payloads, that exceed the server's size limits. This can also happen during file transfers or API requests involving large datasets, prompting the server to reject the request.
+
+### Cloudflare-specific information
 
 The upload limit for the Cloudflare API depends on your plan. If you exceed this limit, your API call will receive a `413 Request Entity Too Large` error.
 
@@ -137,74 +231,122 @@ The upload limit for the Cloudflare API depends on your plan. If you exceed this
 
 If you require a larger upload, break up requests into smaller chunks, change your DNS record to [DNS-only](/dns/manage-dns-records/reference/proxied-dns-records/#dns-only-records), or [upgrade your plan](/fundamentals/subscriptions-and-billing/change-plan/).
 
-## **414 URI Too Long ([RFC7231](https://tools.ietf.org/html/rfc7231))**
+## 414 URI Too Long
 
-Refusal from the server that the URI was too long to be processed. For example, if a client is attempting a GET request with an unusually long URI after a POST, this could be seen as a security risk and a 414 gets generated.
+The `414 URI Too Long` status code indicates that the server refuses to process the request because the URI provided by the client is excessively long.
 
-Cloudflare will generate this response for a URI longer than 32KB
+For more details, refer to [RFC7231](https://tools.ietf.org/html/rfc7231).
 
-## **415 Unsupported Media Type ([RFC7231](https://tools.ietf.org/html/rfc7231))**
+### Common use cases
 
-Refusal from the server to process the format of the current payload. One way to identify and fix this issue would be to look at the `Content-Type` or `Content-Encoding` headers sent in the client’s request.
+For example, if a client is attempting a `GET` request with an unusually long URI, such as one containing an excessive number of query parameters, after a `POST`, this could be seen as a security risk and a `414` is generated.
 
-## **416 Range Not Satisfiable ([RFC7233](https://datatracker.ietf.org/doc/html/rfc7233))**
+### Cloudflare-specific information
 
-The 416 error response code indicates that a server cannot serve the requested ranges. For example:
+Cloudflare will generate a `414` response if the URI length exceeds 32KB.
 
-`HTTP/1.1 416 Range Not Satisfiable`
+## 415 Unsupported Media Type
 
-`Content-Range: bytes */12777`
+The `415 Unsupported Media Type` status code indicates that the server refuses to process the request because the format of the payload is not supported. One way to identify and fix this issue would be to look at the `Content-Type` or `Content-Encoding` headers sent in the client's request.
 
-The most common reason is that the file doesn't include such ranges. Browsers usually either request the entire file again or abort the operation.
+For more details, refer to [RFC7231](https://tools.ietf.org/html/rfc7231).
 
-## **417 Expectation Failed ([RFC7231](https://tools.ietf.org/html/rfc7231))**
+### Common use cases
 
-Failure of server to meet the requirements specified in the `Expect` header of the client’s request.
+This may be triggered by submitting a file type or format that the server is not configured to handle, such as uploading an unsupported image or document format, may also trigger this error.
 
-## **429 Too Many Requests ([RFC6585](https://tools.ietf.org/html/rfc6585))**
+### Cloudflare-specific information
 
-Client has sent too many requests in the specified amount of time according to the server. Often known as "rate-limiting". Server may respond with information allowing the requester to retry after a specific period of time.
+Cloudflare typically passes this response from the origin server if it encounters an unsupported media type in the client's request payload.
 
-### Cloudflare customers
+## 416 Range Not Satisfiable
+
+The `416 Range Not Satisfiable` status code indicates that the server cannot fulfill the requested range specified in the `Range` header of the client's request.
+
+For more details, refer to [RFC7233](https://datatracker.ietf.org/doc/html/rfc7233).
+
+### Common use cases
+
+This error can happen when a client requests a byte range outside the bounds of the resource, such as a range exceeding the file's total size. It can also happen if the server does not support partial content delivery or if there is a conflict between the requested range and the server's understanding of the resource, often caused by an outdated or invalid cache.
+
+### Cloudflare-specific information
+
+Cloudflare typically serves this response when the origin server rejects a `Range` header request for a resource. This often occurs if the requested range exceeds the size of the file, as indicated in the `Content-Range` header.
+
+## 417 Expectation Failed
+
+The `417 Expectation Failed` status code indicates that the server could not meet the requirements specified in the `Expect` header of the client's request.
+
+For more details, refer to R[RFC7231](https://tools.ietf.org/html/rfc7231).
+
+### Common use cases
+
+Some clients use the `Expect` header, such as `Expect: 100-continue`, to verify if the server is ready to receive a large payload, and if the server cannot fulfill this expectation, it returns a 417 response. Similarly, a server may reject a request with this error if the client includes an `Expect` header with unsupported or invalid values.
+
+### Cloudflare-specific information
+
+Cloudflare typically forwards this response from the origin server if it encounters an issue related to unsupported or unfulfilled `Expect` headers in the client's request.
+
+## 429 Too Many Requests
+
+The `429 Too Many Requests` status code indicates that the client has sent too many requests in a specified amount of time, as determined by the server's rate-limiting rules. The server may include a `Retry-After` header in the response to specify when the client can try again.
+
+For more details, refer to [RFC6585](https://tools.ietf.org/html/rfc6585).
+
+### Common use cases
+
+Servers use this status code to prevent excessive API requests from overloading the system. For example, a client making repeated API calls within a short time frame may trigger a 429 response. Websites or services may impose rate limits to manage traffic spikes or prevent abuse, temporarily blocking excessive requests from users. 
+
+### Cloudflare-specific information
+
+- **Cloudflare API limits**
 
 <Render file="api-rate-limits" product="fundamentals" />
 
-### Website end users
+- **Website end users**
 
-Cloudflare will generate and send this status code when a request is being [rate limited](https://www.cloudflare.com/rate-limiting/). If visitors to your site are receiving these error codes, you will be able to see this in the [Rate Limiting Analytics](/waf/reference/legacy/old-rate-limiting/#analytics).
+Cloudflare will generate a `429` response when a request is being [rate limited](https://www.cloudflare.com/rate-limiting/). If visitors to your site encounter this error, it will be visible in the [Rate Limiting Analytics](/waf/reference/legacy/old-rate-limiting/#analytics) dashboard.
 
-## **451 Unavailable For Legal Reason ([RFC7725](https://tools.ietf.org/html/rfc7725))**
+## 451 Unavailable For Legal Reason
 
-Server is unable to deliver the resource due to legal actions.
+The `451` status code indicates that the server cannot deliver the requested resource due to legal actions or restrictions.
 
-Typically search engines (e.g. Google) and ISP (e.g. ATT) are the ones affected by this response code and not the origin server.
+For more details, refer to [RFC7725](https://tools.ietf.org/html/rfc7725).
 
-* The response should include an explanation is the response body with details of the legal demand.
+### Common use cases
 
-## **499 Client Close Request**
+This occurs when access to a resource is blocked due to court orders, copyright claims, or other legal demands. Typically search engines (for example, Google) and ISP (for example,  ATT) are the ones affected by this response code, rather than the origin server itself. The server should include an explanation in the response body, detailing the legal demand or reason for the restriction.
 
-nginx specific response code to indicate when the connection has been closed by the client while the server is still processing its request, making the server unable to send a status code back.
+### Cloudflare-specific information
 
-* This will be shown in [Cloudflare Logs](https://support.cloudflare.com/hc/en-us/articles/216672448-Enterprise-Log-Share-REST-API) and status code analytics for Enterprise customers.
+Cloudflare may pass through a `451` response from the origin server if the requested resource is legally restricted.
+
+## 499 Client Close Request
+
+The `HTTP 499` error typically occurs when a client terminates the connection before the server is able to respond.
+
+### Common use cases
+
+Examples of `499` errors include situations where a client times out and closes the connection before the server completes processing, such as during large file uploads or long-running requests. They can also occur due to issues in the TCP three-way handshake, where the client terminates the connection prematurely because of its timeout settings.
+
+### Cloudflare-specific information
+
+The `499 Client Closed Request` status code is specific to nginx and indicates that the client closed the connection while the server was still processing the request, preventing the server from sending a status code in response. This status code appears in [Cloudflare Logs](/logs/) and status code analytics for Enterprise customers.
 
 :::note
-
-Since Cloudflare was built on nginx, we also have a 499 HTTP code in Cloudflare Logs
-and analytics for connections which are terminated before we have finished
-processing the request. It is expected behavior to see these in your
-logs intermittently as clients close connections. 
+Since Cloudflare is built on nginx, the 499 HTTP code is also logged in Cloudflare Logs and analytics for connections terminated by clients before Cloudflare has finished processing the request. It is expected to occasionally see these entries in your logs as clients close connections.
 :::
 
-To provide more context, a TCP connection must be established between Cloudflare and the website's Origin server before any higher protocol (in this case is HTTP) started the "conversation". In order to establish a connection, TCP uses a three-way handshake :
+To provide more context, a TCP connection must be established between Cloudflare and the website's origin server before any higher protocol (such as HTTP) begins communication. TCP uses a three-way handshake to establish connection:
 
-* SYN: Cloudflare sends three SYN packets to the origin server.
-* SYN+ACK: In response, the origin server replies with an SYN+ACK.
-* ACK: Finally, Cloudflare sends an ACK back to the origin server.
+- **SYN**: Cloudflare sends a SYN packet to the origin server.
+- **SYN+ACK**: The origin server responds with a SYN+ACK packet.
+- **ACK**: Cloudflare sends an ACK packet back to the origin server.
 
-At this point, both Cloudflare and the origin server have received an acknowledgment of the connection, and communication is established. However, if the origin server does not send an SYN+ACK back to Cloudflare **within 15 seconds, Cloudflare will retry one more time (another 15 seconds timeout)**.
+At this point, the connection is established, and both Cloudflare and the origin server can communicate. However, if the origin server does not send a SYN+ACK back to Cloudflare within 15 seconds, Cloudflare retries once more, with another 15-second timeout.
 
-So, depending on the timeout value on the client-side, there will be 3 different scenarios along with each own status code generated :
+Depending on the client-side timeout settings, the following scenarios can occur:
 
-* If the client has a shorter timeout (less than 30 seconds), they will give up the connection, and thus Cloudflare logs the 499 error.
-* If the client has a higher timeout (more than 30 seconds), once the TCP connection has been successfully established, the HTTP transaction will be continued as per normal. In this case, Cloudflare returns a normal status code (HTTP 200).
-* If the client has a higher timeout and Cloudflare was unable to establish the TCP handshake with the Origin server, we will return HTTP 522.
+- **Shorter client timeout (less than 30 seconds)**: If the client has a shorter timeout, it will abandon the connection before Cloudflare completes processing, and a `499` error will be logged.
+- **Successful connection (more than 30 seconds)**: If the client has a longer timeout and the TCP connection is successfully established, the HTTP transaction proceeds normally, and Cloudflare returns a standard status code (`HTTP 200`).
+- **Handshake failure**: If the client has a longer timeout but Cloudflare cannot establish the TCP handshake with the origin server, Cloudflare will return an `HTTP 522` status code.

@@ -78,7 +78,7 @@ _This example rule requires Advanced Rate Limiting._
 
 ## Protecting against credential stuffing
 
-A typical use case of rate limiting is to protect a login endpoint. The following example contains three different rate limiting rules with increasing penalties to manage clients making too many requests.
+A typical use case of rate limiting is to protect a login endpoint against attacks such as [credential stuffing](https://www.cloudflare.com/learning/bots/what-is-credential-stuffing/). The following example contains three different rate limiting rules with increasing penalties to manage clients making too many requests.
 
 **Rule #1**
 
@@ -134,7 +134,7 @@ Login endpoints are also commonly protected against the [use of exposed credenti
 
 ## Limiting the number of operations
 
-You can use rate limiting to limit the number of operations performed by a client. The exact rule providing this protection will depend on your application. The following examples address content scraping via query string parameters or JSON body.
+You can use rate limiting to limit the number of operations performed by a client. The exact rule providing this protection will depend on your application. The following examples address [content scraping](https://www.cloudflare.com/learning/bots/what-is-content-scraping/) via query string parameters or JSON body.
 
 ### Prevent content scraping (via query string)
 

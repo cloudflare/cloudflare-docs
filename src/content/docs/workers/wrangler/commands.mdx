@@ -40,6 +40,7 @@ Wrangler offers a number of commands to manage your Cloudflare Workers.
 - [`rollback`](#rollback) - Rollback to a recent deployment.
 - [`dispatch-namespace`](#dispatch-namespace) - Interact with a [dispatch namespace](/cloudflare-for-platforms/workers-for-platforms/reference/how-workers-for-platforms-works/#dispatch-namespace).
 - [`mtls-certificate`](#mtls-certificate) - Manage certificates used for mTLS connections.
+- [`cert`](#cert) - Manage certificates used for mTLS and Certificate Authority (CA) chain connections.
 - [`types`](#types) - Generate types from bindings and module rules in configuration.
 - [`telemetry`](#telemetry) - Configure whether Wrangler can collect anonymous usage data.
 
@@ -1779,6 +1780,135 @@ The following is an example of using the `delete` command to delete an mTLS cert
 
 ```sh
 npx wrangler mtls-certificate delete --id 99f5fef1-6cc1-46b8-bd79-44a0d5082b8d
+```
+
+```sh output
+Are you sure you want to delete certificate 99f5fef1-6cc1-46b8-bd79-44a0d5082b8d (my-origin-cert)? [y/n]
+yes
+Deleting certificate 99f5fef1-6cc1-46b8-bd79-44a0d5082b8d...
+Deleted certificate 99f5fef1-6cc1-46b8-bd79-44a0d5082b8d successfully
+```
+
+---
+
+## `cert`
+
+Manage mTLS client certificates and Certificate Authority (CA) chain certificates used for secured connections.
+
+These certificates can be used in Hyperdrive configurations, enabling them to present the certificate when connecting to an origin database that requires client authentication (mTLS) or a custom Certificate Authority (CA).
+
+### `upload mtls-certificate`
+
+Upload a client certificate.
+
+```txt
+wrangler cert upload mtls-certificate --cert <PATH> --key <PATH> [OPTIONS]
+```
+
+- `--cert` <Type text="string" /> <MetaInfo text="required" />
+  - A path to the TLS certificate to upload. Certificate chains are supported.
+- `--key` <Type text="string" /> <MetaInfo text="required" />
+  - A path to the private key to upload.
+- `--name` <Type text="string" /> <MetaInfo text="optional" />
+  - The name assigned to the mTLS certificate at upload.
+
+<Render file="wrangler-commands/global-flags" product="workers" />
+
+The following is an example of using the `upload` command to upload an mTLS certificate.
+
+```sh
+npx wrangler cert upload --cert cert.pem --key key.pem --name my-origin-cert
+```
+
+```sh output
+Uploading mTLS Certificate my-origin-cert...
+Success! Uploaded mTLS Certificate my-origin-cert
+ID: 99f5fef1-6cc1-46b8-bd79-44a0d5082b8d
+Issuer: CN=my-secured-origin.com,OU=my-team,O=my-org,L=San Francisco,ST=California,C=US
+Expires: 1/01/2025
+```
+
+Note that the certificate and private keys must be in separate (typically `.pem`) files when uploading.
+
+### `upload certificate-authority`
+
+Upload a client certificate.
+
+```txt
+wrangler cert upload certificate-authority --ca-cert <PATH> [OPTIONS]
+```
+
+- `--ca-cert` <Type text="string" /> <MetaInfo text="required" />
+  - A path to the Certificate Authority (CA) chain certificate to upload.
+
+- `--name` <Type text="string" /> <MetaInfo text="optional" />
+  - The name assigned to the mTLS certificate at upload.
+
+<Render file="wrangler-commands/global-flags" product="workers" />
+
+The following is an example of using the `upload` command to upload an CA certificate.
+
+```sh
+npx wrangler cert upload certificate-authority --ca-cert server-ca-chain.pem --name SERVER_CA_CHAIN
+
+```
+
+```sh output
+Uploading CA Certificate SERVER_CA_CHAIN...
+Success! Uploaded CA Certificate SERVER_CA_CHAIN
+ID: 99f5fef1-6cc1-46b8-bd79-44a0d5082b8d
+Issuer: CN=my-secured-origin.com,OU=my-team,O=my-org,L=San Francisco,ST=California,C=US
+Expires: 1/01/2025
+```
+
+### `list`
+
+List mTLS certificates associated with the current account ID. This will display both mTLS certificates and CA certificates.
+
+```txt
+wrangler cert list
+```
+
+<Render file="wrangler-commands/global-flags" product="workers" />
+
+The following is an example of using the `list` command to upload an mTLS or CA certificate.
+
+```sh
+npx wrangler cert list
+```
+
+```sh output
+ID: 99f5fef1-6cc1-46b8-bd79-44a0d5082b8d
+Name: my-origin-cert
+Issuer: CN=my-secured-origin.com,OU=my-team,O=my-org,L=San Francisco,ST=California,C=US
+Created on: 1/01/2023
+Expires: 1/01/2025
+
+ID: c5d004d1-8312-402c-b8ed-6194328d5cbe
+Issuer: CN=another-origin.com,OU=my-team,O=my-org,L=San Francisco,ST=California,C=US
+Created on: 1/01/2023
+Expires: 1/01/2025
+```
+
+### `delete`
+
+Delete a client certificate.
+
+```txt
+wrangler cert delete {--id <ID|--name <NAME>}
+```
+
+- `--id` <Type text="string" />
+  - The ID of the mTLS or CA certificate.
+- `--name` <Type text="string" />
+  - The name assigned to the mTLS or CA certificate at upload.
+
+<Render file="wrangler-commands/global-flags" product="workers" />
+
+The following is an example of using the `delete` command to delete an mTLS or CA certificate.
+
+```sh
+npx wrangler cert delete --id 99f5fef1-6cc1-46b8-bd79-44a0d5082b8d
 ```
 
 ```sh output

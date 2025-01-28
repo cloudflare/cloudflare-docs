@@ -137,12 +137,12 @@ Block Amazon Web Services (AWS) and Google Cloud Platform (GCP) because of large
 
 - Basic rule, no exclusion:
 
-  - **Expression**: `(ip.src.asnum in {16509 15169})`
+  - **Expression**: `(ip.src.asnum in {16509 15169} and not cf.client.bot)`
   - **Action**: Block (or a challenge action)
 
 - Rule that excludes IP addresses from being blocked/challenged:
 
-  - **Expression**: `(http.host eq "example.com" and cf.threat_score > 5) and not (ip.src in {192.0.2.1 198.51.100.42 203.0.113.0/24})`
+  - **Expression**: `(ip.src.asnum in {16509 15169} and not cf.client.bot) and not (ip.src in {192.0.2.1 198.51.100.42 203.0.113.0/24})`
   - **Action**: Block (or a challenge action)
 
 - Two rules to skip remaining custom rules for specific IPs and block the rest.
@@ -154,7 +154,7 @@ Block Amazon Web Services (AWS) and Google Cloud Platform (GCP) because of large
 
   2. Rule 2:
 
-     - Expression: `(http.host eq "example.com" and cf.threat_score > 5)`
+     - Expression: `(ip.src.asnum in {16509 15169} and not cf.client.bot)`
      - Action: Block (or a challenge action)
 
 ### Do the Challenge actions support content types other than HTML (for example, AJAX or XHR requests)?
