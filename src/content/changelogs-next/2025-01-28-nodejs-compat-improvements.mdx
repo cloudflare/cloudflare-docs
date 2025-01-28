@@ -16,12 +16,8 @@ When using a Worker with the [`nodejs_compat`](/workers/runtime-apis/nodejs/) co
 
 #### node:net
 
-This makes it possible to connect to databases such as [MySQL](https://www.mysql.com/), [PostgreSQL](https://www.postgresql.org/),
-[Redis](https://redis.io/), or [MongoDB](https://github.com/mongodb/mongo). Though for production use, we recommend that you connect
-using TLS, which can be done with the [`cloudflare:sockets`](/workers/runtime-apis/tcp-sockets/#connect)
-module, or prefereably by using [Hyperdrive](/hyperdrive), which includes
-[connection pooling](/hyperdrive/configuration/how-hyperdrive-works/#connection-pooling)
-and [query caching](/hyperdrive/configuration/how-hyperdrive-works/#query-caching).
+You can use [`node:net`](https://nodejs.org/api/net.html) to create a direct connection to servers via a TCP sockets
+with [`net.Socket`](https://nodejs.org/api/net.html#class-netsocket).
 
 <TypeScriptExample filename="index.ts">
 ```ts
