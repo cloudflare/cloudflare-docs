@@ -12,8 +12,15 @@ const { node, root } = Astro.props;
 		node.title ? (
 			<span class="mr-2 font-bold">{node.title}</span>
 		) : (
-			<code class="mr-2 !pr-0 font-mono rounded-md bg-gray-100">
+			<code class="mr-2 rounded-md bg-gray-100 !pr-0 font-mono">
 				{node.subpath[node.subpath.length - 1]}
+				{node.parent.fragment?.required?.includes(
+					node.subpath[node.subpath.length - 1],
+				) ? (
+					<span class="font-semibold text-red-500">*</span>
+				) : (
+					""
+				)}
 			</code>
 		)
 	}
@@ -46,7 +53,7 @@ const { node, root } = Astro.props;
 
 	{
 		node.children && (
-			<ul class="!list-none m-0 p-0 ml-4">
+			<ul class="m-0 ml-4 !list-none p-0">
 				{node.children.map((node: SchemaNode) => (
 					<Astro.self node={node} />
 				))}
