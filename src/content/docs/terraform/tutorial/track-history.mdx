@@ -19,6 +19,10 @@ provider "cloudflare" {
 
 In this tutorial, you will store your configuration in GitHub where it can be tracked, peer-reviewed, and rolled back to as needed. First, you will remove your credentials from the Terraform config file to prevent committing them to a repository.
 
+:::note
+Terraform code snippets below refer to the v4 SDK only.
+:::
+
 ## 1. Use environment variables for authentication
 
 As a good security practice, remove your Cloudflare credentials from anything that will be committed to a repository. The Cloudflare Terraform provider supports reading the credentials (and other configuration) [from environment variables](https://registry.terraform.io/providers/cloudflare/cloudflare/latest/docs#schema), as in the following example:
