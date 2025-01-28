@@ -248,7 +248,7 @@ When both tunnels are in a healthy state, routing priority directs traffic exclu
 
 If the link between Tunnel 1 and Cloudflare becomes unusable, Cloudflare global network servers discover the failure on their next health check probe, and immediately issue two more probes (assuming the tunnel was initially healthy).
 
-When a global network server does not receive the proper ICMP reply packets from these two additional probes, the global network server labels Tunnel 1 as down, and downgrades Tunnel 1 priority to 1,000,100. The priority then shifts to Tunnel 2, and Magic Transit immediately steers packets arriving at that global network server to Tunnel 2\.
+When a global network server does not receive the proper ICMP reply packets from these two additional probes, the global network server labels Tunnel 1 as down, and downgrades Tunnel 1 priority to `1,000,100`. The priority then shifts to Tunnel 2, and {props.productName} immediately steers packets arriving at that global network server to Tunnel 2.
 
 ### Recovery response
 
