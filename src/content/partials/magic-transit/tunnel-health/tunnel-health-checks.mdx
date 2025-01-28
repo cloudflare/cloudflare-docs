@@ -84,8 +84,7 @@ To avoid control plane policies enforced by the origin network, tunnel health ch
 
 ### Rate
 
-**Warning**
-Internet Control Message Protocol (ICMP) traffic is subject to Magic Firewall rules. If you have Magic Firewall enabled, ensure your rules allow ICMP traffic sourced from Cloudflare public IPs. Otherwise, health checks will fail. Refer to [Magic Firewall rules](https://developers.cloudflare.com/magic-firewall/about/ruleset-logic/#magic-firewall-rules-and-magic-transit-endpoint-health-checks) for more information.
+<Render file="icmp-mfirewall" product="magic-transit" />
 
 Every Cloudflare data center configured to process your traffic sends tunnel health check probes. The rate at which these health check probes are sent varies based on tunnel and location. This rate can also be tuned up or down on a per tunnel basis by modifying the health\_check rate of a tunnel [with the API](https://developers.cloudflare.com/magic-transit/how-to/tunnel-health-checks/). A customer can set the rate value as low/mid/high, with mid being default. The actual rate formula considers the number of metals in a colo or the number of metals with the customer namespace provisioned on them for dynamically provisioned namespaces Thus, the rate is not a specific number; it is dynamic and depends on the size of our network.
 
