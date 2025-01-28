@@ -10,13 +10,15 @@ import { Render, TypeScriptExample } from "~/components";
 You can use [`node:dns`](https://nodejs.org/api/dns.html) for name resolution via DNS lookups using
 [Cloudflare DNS](https://www.cloudflare.com/application-services/products/dns/) at 1.1.1.1.
 
-```js
+<TypeScriptExample filename="index.ts">
+```ts
 import dns from "node:dns";
 
 dns.lookup("example.org", (_err: any, address: string, ipFamily: number) =>
 	console.log(`address: ${address} family: IPv${ipFamily}`);
 });
 ```
+</TypeScriptExample>
 
 :::note
 

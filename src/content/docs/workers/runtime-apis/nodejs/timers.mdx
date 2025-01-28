@@ -15,17 +15,16 @@ and [`setImmediate`](https://nodejs.org/api/timers.html#setimmediatecallback-arg
 
 <TypeScriptExample filename="index.ts">
 ```ts
-import timers from 'node:timers';
+import timers from "node:timers";
 
-console.log('first');
+console.log("first");
 timers.setTimeout(() => {
-console.log('last');
+  console.log("last");
 }, 10);
 
 timers.setTimeout(() => {
-console.log('next');
+  console.log("next");
 });
-
 ```
 </TypeScriptExample>
 
