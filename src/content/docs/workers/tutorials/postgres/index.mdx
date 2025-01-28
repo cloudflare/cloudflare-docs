@@ -13,7 +13,7 @@ languages:
   - SQL
 ---
 
-import { Render, PackageManagers } from "~/components";
+import { Render, PackageManagers, WranglerConfig } from "~/components";
 
 In this tutorial, you will learn how to create a Cloudflare Workers application and connect it to a PostgreSQL database using [TCP Sockets](/workers/runtime-apis/tcp-sockets/) and [Hyperdrive](/hyperdrive/). The Workers application you create in this tutorial will interact with a product database inside of PostgreSQL.
 
@@ -58,17 +58,9 @@ cd postgres-tutorial
 
 ### Enable Node.js compatibility
 
-<Render file="nodejs-compat-howto" />
+[Node.js compatibility](/workers/runtime-apis/nodejs/) is required for database drivers, including Postgres.js, and needs to be configured for your Workers project.
 
-import { WranglerConfig } from "~/components";
-
-<WranglerConfig>
-
-```toml title="wrangler.toml"
-compatibility_flags = ["nodejs_compat_v2"]
-```
-
-</WranglerConfig>
+<Render file="nodejs_compat" product="workers" />
 
 ## 2. Add the PostgreSQL connection library
 
@@ -112,8 +104,6 @@ npx wrangler secret put DB_URL
 
 Set your `DB_URL` secret locally in a `.dev.vars` file as documented in [Local Development with Secrets](/workers/configuration/secrets/).
 
-
-
 <WranglerConfig>
 
 ```toml
@@ -125,8 +115,6 @@ DB_URL="<ENTER YOUR POSTGRESQL CONNECTION STRING>"
 ### Set explicit parameters
 
 Configure each database parameter as an [environment variable](/workers/configuration/environment-variables/) via the [Cloudflare dashboard](/workers/configuration/environment-variables/#add-environment-variables-via-the-dashboard) or in your `wrangler.toml` file. Refer to an example of a`wrangler.toml` file configuration:
-
-
 
 <WranglerConfig>
 
@@ -328,8 +316,6 @@ npx wrangler hyperdrive create <NAME_OF_HYPERDRIVE_CONFIG> --connection-string="
 You can also use explicit parameters by following the [wrangler documentation for Hyperdrive](/workers/wrangler/commands/#r2-bucket-create).
 
 This command outputs the Hyperdrive configuration `id` that will be used for your Hyperdrive [binding](/workers/runtime-apis/bindings/). Set up your binding by specifying the `id` in the `wrangler.toml` file.
-
-
 
 <WranglerConfig>
 

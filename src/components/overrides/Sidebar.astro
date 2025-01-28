@@ -7,6 +7,8 @@ import { getEntry } from "astro:content";
 import { Badge } from "@astrojs/starlight/components";
 import type { ComponentProps, HTMLAttributes } from "astro/types";
 
+import { rehypeExternalLinksOptions } from "~/plugins/rehype/external-links";
+
 const { sidebar, slug } = Astro.props;
 
 interface Link {
@@ -27,6 +29,28 @@ interface Group {
 	collapsed: boolean;
 	badge: ComponentProps<typeof Badge> | undefined;
 	order: number;
+}
+
+function inferBadgeVariant(badge: ComponentProps<typeof Badge>) {
+	if (badge.variant === "default") {
+		switch (badge.text) {
+			case "Beta": {
+				badge.variant = "caution";
+				break;
+			}
+			case "New": {
+				badge.variant = "note";
+				break;
+			}
+			case "Deprecated":
+			case "Legacy": {
+				badge.variant = "danger";
+				break;
+			}
+		}
+	}
+
+	return badge;
 }
 
 const currentSection = slug?.split("/")[0];
@@ -76,7 +100,10 @@ async function handleGroup(group: Group): Promise<SidebarEntry> {
 
 	group.label = frontmatter.sidebar.group?.label ?? frontmatter.title;
 	group.order = frontmatter.sidebar.order ?? Number.MAX_VALUE;
-	group.badge = frontmatter.sidebar.group?.badge;
+
+	if (frontmatter.sidebar.group?.badge) {
+		group.badge = inferBadgeVariant(frontmatter.sidebar.group?.badge);
+	}
 
 	if (frontmatter.hideChildren) {
 		return {
@@ -127,6 +154,10 @@ async function handleLink(link: Link): Promise<Link> {
 	const frontmatter = page.data;
 	link.order = frontmatter.sidebar.order ?? Number.MAX_VALUE;
 
+	if (link.badge) {
+		link.badge = inferBadgeVariant(link.badge);
+	}
+
 	if (slug === currentSection) {
 		link.order = 0;
 	}
@@ -134,11 +165,12 @@ async function handleLink(link: Link): Promise<Link> {
 	if (frontmatter.external_link) {
 		return {
 			...link,
-			label: link.label.concat(" ↗"),
+			label: link.label.concat(rehypeExternalLinksOptions.content.value),
 			href: frontmatter.external_link,
 			badge: frontmatter.external_link.startsWith("/api")
 				? {
 						text: "API",
+						variant: "note",
 					}
 				: undefined,
 		};

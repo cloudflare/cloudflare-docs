@@ -240,11 +240,7 @@ const ModelCatalog = ({ models }: { models: WorkersAIModelsSchema[] }) => {
 								<span className="overflow-hidden text-ellipsis whitespace-nowrap text-lg font-semibold">
 									{model.model_display_name}
 								</span>
-								{isBeta && (
-									<span className="ml-1 rounded-full bg-orange-200 px-2 py-0.5 text-xs text-orange-900">
-										Beta
-									</span>
-								)}
+								{isBeta && <span className="sl-badge caution ml-1">Beta</span>}
 							</div>
 							<div className="!m-0 text-xs">
 								<ModelInfo model={model.model} />

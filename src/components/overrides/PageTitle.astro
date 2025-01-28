@@ -16,7 +16,6 @@ import { getEntry } from "astro:content";
 
 const spotlightDetails = Astro.props.entry.data.spotlight;
 const updated = Astro.props.entry.data.updated;
-const badge = Astro.props.entry.data.sidebar?.badge;
 const summary = Astro.props.entry.data.summary;
 
 const slug = Astro.props.entry.slug;
@@ -96,8 +95,6 @@ const hideBreadcrumbs = Astro.props.hideBreadcrumbs;
 }
 
 {!hideTitle && <Default {...Astro.props} />}
-
-{badge && <Badge variant={badge.variant} text={badge.text} />}
 
 {updated && <LastReviewed date={updated} />}
 
