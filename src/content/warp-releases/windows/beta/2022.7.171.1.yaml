@@ -1,0 +1,31 @@
+releaseNotes: >-
+  This release contains bug fixes and improvements from the prior beta release.
+  Please note that with this release the authentication flow for users has now
+  moved to the default browser instead of an embedded in-app browser.
+   
+  **Notable updates**
+   
+  - Modified Zero Trust authentication flow to no longer rely on WebView2
+  embedded experience and use default browser instead
+
+  - Fixed major issue introduced with 2022.5.341 where IPv6 traffic was no
+  longer consistently routed through the tunnel
+
+  - Fixed issue where warp-svc.exe may not start due to missing VCRUNTIME140.dll
+  on some systems
+
+  - Fixed issue that could result in broken DNS for users running WiFi until an
+  admin manually reset DNS back to default
+
+  - Removed built in web browser used for Zero Trust Organization log in. Now
+  relies on default web browser on the machine.
+   
+  **Known issues**
+
+  - This version requires at least Windows 10.0.19042. If you are running a
+  prior version of Windows, please delay upgrading.
+version: 2022.7.171.1
+packageURL: https://downloads.cloudflareclient.com/v1/download/windows/version/2022.7.171.1
+packageSize: 88604672
+releaseDate: 2022-07-14T17:29:46.929Z
+platformName: Windows

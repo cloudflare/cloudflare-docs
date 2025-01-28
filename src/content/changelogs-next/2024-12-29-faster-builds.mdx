@@ -1,0 +1,18 @@
+---
+title: Faster Workers Builds with Build Caching and Watch Paths
+description: Speed up your builds with build caching and build watch paths in Workers Builds (beta).
+products:
+  - workers
+date: 2024-12-29T11:00:00Z
+---
+
+![Build caching settings](~/assets/images/workers/platform/ci-cd/workers-build-caching.png)
+![Build watch path settings](~/assets/images/workers/platform/ci-cd/workers-build-watch-paths.png)
+
+[**Workers Builds**](/workers/ci-cd/builds/), the integrated CI/CD system for Workers (currently in beta), now lets you cache artifacts across builds, speeding up build jobs by eliminating repeated work, such as downloading dependencies at the start of each build.
+
+- **[Build Caching](/workers/ci-cd/builds/build-caching/)**: Cache dependencies and build outputs between builds with a shared project-wide cache, ensuring faster builds for the entire team.
+
+- **[Build Watch Paths](/workers/ci-cd/builds/build-watch-paths/)**: Define paths to include or exclude from the build process, ideal for [monorepos](/workers/ci-cd/builds/advanced-setups/#monorepos) to target only the files that need to be rebuilt per Workers project.
+
+To get started, select your Worker on the [Cloudflare dashboard](https://dash.cloudflare.com) then go to **Settings** > **Builds**, and connect a GitHub or GitLab repository. Once connected, you'll see options to configure Build Caching and Build Watch Paths.

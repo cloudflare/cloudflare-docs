@@ -164,12 +164,8 @@ To get the token for a remotely-managed tunnel:
 </TabItem>
 <TabItem label="API">
 
-Make a `GET` request to the [Cloudflare Tunnel token](/api/resources/zero_trust/subresources/tunnels/methods/get/-token) endpoint:
+Make a `GET` request to the [Cloudflare Tunnel token](/api/resources/zero_trust/subresources/tunnels/subresources/token/methods/get/) endpoint. The token value can be found in the `result`:
 
-```sh
-curl https://api.cloudflare.com/client/v4/accounts/{account_id}/cfd_tunnel/{tunnel_id}/token \
---header "Authorization: Bearer <API_TOKEN>"
-```
 ```sh output
 {
   "success": true,

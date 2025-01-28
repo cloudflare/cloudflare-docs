@@ -10,13 +10,13 @@ products:
 To route requests to `/images` on your domain to an AWS S3 bucket:
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/) and select your account and domain.
-2. Navigate to **Rules > Cloud Connector**.
+2. Go to **Rules** > **Cloud Connector**.
 3. Select **Amazon Web Services - S3** as your [cloud provider](/rules/cloud-connector/providers/).
-4. Enter the bucket URL. You can structure this in two ways:
+4. Enter the bucket URL. You can structure the URL in two ways:
    - **Subdomain-style URL**: Set the hostname to `<BUCKET_NAME>.s3.amazonaws.com`. In this case, your files should be organized in the root of the bucket, meaning the URI path will map directly to the file. For example, `https://<YOUR_HOSTNAME>/images/file.jpg` will map to `https://<BUCKET_NAME>.s3.amazonaws.com/images/file.jpg`.
    - **URI path-style URL**: Set the hostname to `s3.amazonaws.com`. Here, your bucket must include a folder named `images`, and files should be placed inside this folder. The URI path will then include the bucket name, like `https://<YOUR_HOSTNAME>/<BUCKET_NAME>/images/file.jpg` mapping to `https://s3.amazonaws.com/<BUCKET_NAME>/images/file.jpg`.
 5. _(Optional)_ Use the [Rewrite URL](/rules/transform/url-rewrite/) feature of [Transform Rules](/rules/transform/) to adjust the URL structure. For example, you can [create a URL rewrite](/rules/transform/url-rewrite/create-dashboard/) that changes `/images` to `/<BUCKET_NAME>/images` to match the URI path-style URL structure.
-6. Click **Next** and enter a descriptive name like `Route images to S3` in **Cloud Connector name**.
+6. Select **Next** and enter a descriptive name like `Route images to S3` in **Cloud Connector name**.
 7. Under **If**, select **Custom filter expression** and enter the following expression:<br />
    `http.request.full_uri wildcard "http*://<YOUR_HOSTNAME>/images/*"`<br />
    Replace `<YOUR_HOSTNAME>` with desired hostname.

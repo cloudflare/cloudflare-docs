@@ -6,9 +6,9 @@ sidebar:
   order: 9
 ---
 
-This guide teaches you how to investigate build errors and troubleshoot common errors within the Workers Build's build and deployment process.
+This guide explains how to identify and resolve build errors, as well as troubleshoot common issues in the Workers Builds deployment process.
 
-Workers Builds provides build logs for each build. To view a Worker's build history, go to **Worker project** > **Deployments** > **View Build History** (located at the bottom of the Deployments tab), then select a build to access its details.
+To view your build history, go to your Worker project in the Cloudflare dashboard, select **Deployment**, select **View Build History** at the bottom of the page, and select the build you want to view. To retry a build, select the ellipses next to the build and select **Retry build**. Alternatively, you can select **Retry build** on the Build Details page.
 
 ## Known issues or limitations
 
@@ -18,7 +18,7 @@ Here are some common build errors that may surface in the build logs or general 
 
 `✘ [ERROR] The name in your wrangler.toml file (<Worker name>) must match the name of your Worker. Please update the name field in your wrangler.toml file.`
 
-When connecting a Git repository to your Workers project, the specified name for the Worker on the Cloudflare dashboard must match the `name` argument in the wrangler.toml file located in the specified root directory. If it doesn't match, please update the name field in your wrangler.toml file to match the name of the Worker on the dashboard.
+When connecting a Git repository to your Workers project, the specified name for the Worker on the Cloudflare dashboard must match the `name` argument in the wrangler.toml file located in the specified root directory. If it does not match, update the name field in your wrangler.toml file to match the name of the Worker on the dashboard.
 
 The build system uses the `name` argument in the wrangler.toml to determine which Worker to deploy to Cloudflare's global network. This requirement ensures consistency between the Worker's name on the dashboard and the deployed Worker.
 
@@ -58,4 +58,4 @@ If you are running into errors associated with your Git integration, you can try
 
 ## For additional support
 
-If you discover additional issues or would like to provide feedback, please reach out to us in the [Cloudflare Developers Discord](https://discord.com/channels/595317990191398933/1052656806058528849).
+If you discover additional issues or would like to provide feedback, reach out to us in the [Cloudflare Developers Discord](https://discord.com/channels/595317990191398933/1052656806058528849).

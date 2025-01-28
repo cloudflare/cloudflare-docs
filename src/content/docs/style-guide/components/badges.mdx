@@ -6,21 +6,19 @@ import { Badge } from "~/components";
 
 Badges are a built-in component provided by [Starlight](https://starlight.astro.build/guides/components/#bades). Use them to indicate a product is in beta, for example.
 
-:::note
-
-For guidance on using badges inline with other text, refer to [Inline badges](/style-guide/components/inline-badge/).
-
-:::
-
 ## Component
+
+To adopt this styling in a React component, apply the `sl-badge` class to a `span` element.
 
 ```mdx live
 import { Badge } from "~/components";
 
-<Badge text="New" variant="tip" size="small" />
-<Badge text="Deprecated" variant="caution" size="medium" />
-<Badge text="Starlight" variant="note" size="large" />
-<Badge text="Custom" variant="success" style={{ fontStyle: "italic" }} />
+<Badge text="Note" variant="note" />
+<Badge text="Success" variant="success" />
+<Badge text="Tip" variant="tip" />
+<Badge text="Caution" variant="caution" />
+<Badge text="Danger" variant="danger" />
+<Badge text="Default" />
 ```
 
 ## Sidebar

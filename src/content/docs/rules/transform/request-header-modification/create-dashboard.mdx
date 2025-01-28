@@ -6,7 +6,6 @@ sidebar:
 head:
   - tag: title
     content: Create an HTTP request header modification rule in the dashboard
-
 ---
 
 Refer to the [Rules examples gallery](/rules/transform/examples/?operation=Request+modification) for examples of rule definitions.
@@ -15,30 +14,27 @@ To create a rule:
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/), and select your account and website.
 
-2. Go to **Rules** > **Transform Rules**.
+2. Go to **Rules** > **Overview**.
 
-3. Go to the **Modify Request Header** tab.
+3. Next to **Request Header Transform Rules**, select **Create rule**.
 
-4. To create a new empty rule, select **Create rule**. To duplicate an existing rule, select the three dots next to it > **Duplicate**.
+4. (Optional) Select one of the rule templates that address common use cases. Then, review and adjust the proposed rule configuration.
 
-   ![The HTTP request header modification rule creation page in the Cloudflare dashboard.](~/assets/images/rules/transform/create-request-header-modification-rule.png)
-
-5. In the rule creation page, enter a descriptive name for the rule in **Rule name**.
+5. Enter a descriptive name for the rule in **Rule name**.
 
 6. Under **When incoming requests match**, select if you wish to apply the rule to all incoming requests or only to requests that match a custom filter expression.
 
 7. (Optional) To define a custom expression, use the Expression Builder (specifying one or more values for **Field**, **Operator**, and **Value**) or manually enter an expression using the Expression Editor. For more information, refer to [Edit expressions in the dashboard](/ruleset-engine/rules-language/expressions/edit-expressions/).
 
    :::note
-
-   Check the [available fields and functions](/rules/transform/request-header-modification/reference/fields-functions/). 
+   Check the [available fields and functions](/rules/transform/request-header-modification/reference/fields-functions/).
    :::
 
 8. For **Modify request header**, select one of the following options:
 
-   * *Set static* — Sets the value of an HTTP request header to a static string value. Overrides the value of an existing header with the same name or adds a new header if it does not exist.
-   * *Set dynamic* — Sets the value of an HTTP request header according to the provided expression. Overrides the value of an existing header with the same name or adds a new header if it does not exist.
-   * *Remove* — Removes the HTTP request header with the provided name, if it exists.
+   - _Set static_ — Sets the value of an HTTP request header to a static string value. Overrides the value of an existing header with the same name or adds a new header if it does not exist.
+   - _Set dynamic_ — Sets the value of an HTTP request header according to the provided expression. Overrides the value of an existing header with the same name or adds a new header if it does not exist.
+   - _Remove_ — Removes the HTTP request header with the provided name, if it exists.
 
 9. Enter the name of the HTTP request header to modify in **Header name** and the static value or expression in **Value**, if you are setting the header value.
 

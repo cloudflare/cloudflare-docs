@@ -195,9 +195,9 @@ Use one of the following API endpoints:
 | [Get an account entry point ruleset version][gerv-account] | `GET /accounts/{account_id}/rulesets/phases/{phase_name}/entrypoint/versions/{version_number}` |
 | [Get a zone entry point ruleset version][gerv-zone]        | `GET /zones/{zone_id}/rulesets/phases/{phase_name}/entrypoint/versions/{version_number}`       |
 
-[grv-account]: /api/resources/rulesets/methods/get/Version
+[grv-account]: /api/resources/rulesets/subresources/versions/methods/get/
 [grv-zone]: /api/resources/rulesets/subresources/versions/methods/get/
-[gerv-account]: /api/resources/rulesets/subresources/phases/methods/get/Version
+[gerv-account]: /api/resources/rulesets/subresources/phases/subresources/versions/methods/get/
 [gerv-zone]: /api/resources/rulesets/subresources/phases/subresources/versions/methods/get/
 
 When the specified phase entry point ruleset does not exist, this API method returns a `404 Not Found` HTTP status code.
@@ -241,3 +241,65 @@ curl https://api.cloudflare.com/client/v4/zones/{zone_id}/rulesets/{ruleset_id}/
 :::note
 When you view a specific version of a managed ruleset, each rule listed in the result can have one or more associated categories/tags, and it will not contain an expression.
 :::
+
+## List rules in a managed ruleset with a specific tag
+
+Returns a list of all the rules in a managed ruleset with a specific tag.
+
+| Operation                                    | Method + Endpoint                                                                                      |
+| -------------------------------------------- | ------------------------------------------------------------------------------------------------------ |
+| List rules in account ruleset version by tag | `GET /accounts/{account_id}/rulesets/{managed_ruleset_id}/versions/{version_number}/by_tag/{tag_name}` |
+
+### Example
+
+```bash
+curl https://api.cloudflare.com/client/v4/accounts/{account_id}/rulesets/{ruleset_id}/versions/2/by_tag/wordpress \
+--header "Authorization: Bearer <API_TOKEN>"
+```
+
+```json output
+{
+	"result": {
+		"id": "<MANAGED_RULESET_ID>",
+		"name": "Cloudflare Managed Ruleset",
+		"description": "Managed ruleset created by Cloudflare",
+		"kind": "managed",
+		"version": "4",
+		"rules": [
+			{
+				"id": "<RULE_ID_1>",
+				"version": "3",
+				"action": "log",
+				"categories": [
+					"cve-2014-5265",
+					"cve-2014-5266",
+					"cve-2014-5267",
+					"dos",
+					"drupal",
+					"wordpress"
+				],
+				"description": "Drupal, WordPress - DoS - XMLRPC - CVE:CVE-2014-5265, CVE:CVE-2014-5266, CVE:CVE-2014-5267",
+				"last_updated": "2023-03-19T16:54:32.942986Z",
+				"ref": "<RULE_REF_1>",
+				"enabled": true
+			},
+			{
+				"id": "<RULE_ID_2>",
+				"version": "3",
+				"action": "block",
+				"categories": ["broken-access-control", "cve-2018-12895", "wordpress"],
+				"description": "WordPress - Broken Access Control - CVE:CVE-2018-12895",
+				"last_updated": "2023-03-19T16:54:32.942986Z",
+				"ref": "<RULE_REF_2>",
+				"enabled": true
+			}
+			// (...)
+		],
+		"last_updated": "2023-03-19T16:54:32.942986Z",
+		"phase": "http_request_firewall_managed"
+	},
+	"success": true,
+	"errors": [],
+	"messages": []
+}
+```

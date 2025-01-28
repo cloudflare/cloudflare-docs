@@ -30,6 +30,12 @@ jobs:
       - run: npm ci
       - run: npm run check
 
+      - uses: reviewdog/action-eslint@v1
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          reporter: github-pr-review
+          fail_level: "error"
+
       - run: npm run format:core:check
       ## TODO: content formatting checks
       - run: npm run build

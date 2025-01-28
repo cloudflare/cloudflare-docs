@@ -79,3 +79,10 @@ Disabling bundling is not recommended in most scenarios. Use this option only wh
 If your build tooling already produces build artifacts suitable for direct deployment to Cloudflare, you can opt out of bundling by using the `--no-bundle` command line flag: `npx wrangler deploy --no-bundle`. If you opt out of bundling, Wrangler will not process your code and some features introduced by Wrangler bundling (for example minification, and polyfills injection) will not be available.
 
 Use [Custom Builds](/workers/wrangler/custom-builds/) to customize what Wrangler will bundle and upload to the Cloudflare global network when you use [`wrangler dev`](/workers/wrangler/commands/#dev) and [`wrangler deploy`](/workers/wrangler/commands/#deploy).
+
+## Generated Wrangler configuration
+
+Some framework tools, or custom pre-build processes, generate a modified Wrangler configuration to be used to deploy the Worker code.
+It is possible for Wrangler to automatically use this generated configuration rather than the original, user's configuration.
+
+See [Generated Wrangler configuration](/workers/wrangler/configuration/#generated-wrangler-configuration) for more information.

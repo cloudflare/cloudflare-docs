@@ -80,13 +80,17 @@ export interface Env {
 export default {
 	async fetch(request, env): Promise<Response> {
 		// Specify the gateway label and other options here
-		const response = await env.AI.run("@cf/meta/llama-3.1-8b-instruct-fast", {
-			prompt: "What is the origin of the phrase Hello, World",
-			gateway: {
-				id: "GATEWAYID", // Use your gateway label here
-				skipCache: true, // Optional: Skip cache if needed
+		const response = await env.AI.run(
+			"@cf/meta/llama-3.1-8b-instruct-fast",
+			{
+				prompt: "What is the origin of the phrase Hello, World",
 			},
-		});
+			{
+				gateway: {
+					id: "GATEWAYID", // Use your gateway label here
+					skipCache: true, // Optional: Skip cache if needed
+				},
+			},
 
 		// Return the AI response as a JSON object
 		return new Response(JSON.stringify(response), {

@@ -5,6 +5,12 @@ productLink: "/dns/"
 productArea: Core platform
 productAreaLink: /fundamentals/reference/changelog/performance/
 entries:
+  - publish_date: "2025-01-27"
+    title: Zone IDs and names on individual DNS records
+    description: |-
+      Records returned by the API will no longer contain the `zone_id` and `zone_name` fields.
+      This change may take up to four weeks to fully roll out.
+      The affected fields were deprecated with an End of Life (EOL) date of November 30, 2024.
   - publish_date: "2024-10-15"
     title: Quote validation for TXT records added via dashboard
     description: |-

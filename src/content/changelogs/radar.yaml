@@ -25,13 +25,13 @@ entries:
       * Added Layer 7 Summaries by `http_method`, `http_version`, `ip_version`, `managed_rules`, `mitigation_product`.
       * Added Layer 7 Timeseries Groups by `http_method`, `http_version`, `ip_version`, `managed_rules`, `mitigation_product`, `industry`, `vertical`.
       * Added Layer 7 Top by `industry`, `vertical`.
-      * Deprecated Layer 7 [timeseries groups without dimension](/api/resources/radar/subresources/attacks/subresources/layer7/methods/timeseries/-group).
+      * Deprecated Layer 7 [timeseries groups without dimension](/api/resources/radar/subresources/attacks/subresources/layer7/subresources/timeseries_groups/methods/get/).
         * To continue getting this data, switch to the new
-          [timeseries group by mitigation_product](/api/resources/radar/subresources/attacks/subresources/layer7/methods/timeseries/-group-by-mitigation-product)
+          [timeseries group by mitigation_product](/api/resources/radar/subresources/attacks/subresources/layer7/subresources/timeseries_groups/methods/mitigation_product/)
           endpoint.
       * Deprecated Layer 7 [summary without dimension)](/api/resources/radar/subresources/attacks/subresources/layer7/subresources/summary/methods/get/).
         * To continue getting this data, switch to the new
-          [summary by mitigation_product](/api/resources/radar/subresources/attacks/subresources/layer7/subresources/summary/methods/get/-by-mitigation-product)
+          [summary by mitigation_product](/api/resources/radar/subresources/attacks/subresources/layer7/subresources/summary/methods/mitigation_product/)
           endpoint.
       * Added new [Error codes](/radar/get-started/error-codes/).
   - publish_date: "2023-10-31"
@@ -59,7 +59,7 @@ entries:
         [summary](/api/resources/radar/subresources/attacks/subresources/layer3/subresources/summary/methods/get/) endpoint, this will stop
         receiving data after 2023-08-14.
         * To continue getting this data, switch to the
-          new [timeseries group protocol](/api/resources/radar/subresources/attacks/subresources/layer3/subresources/summary/methods/get/-by-protocol)
+          new [timeseries group protocol](/api/resources/radar/subresources/attacks/subresources/layer3/subresources/summary/methods/protocol/)
           endpoint.
       * Deprecated Layer 3
         [timeseries groups](/api/resources/radar/subresources/attacks/subresources/layer3/subresources/timeseries_groups/methods/get/)
@@ -71,7 +71,7 @@ entries:
     title: Fix HTTP timeseries endpoint urls
     description: |-
       * Updated HTTP `timeseries` endpoints urls
-        to `timeseries_groups` ([example](/api/resources/radar/subresources/http/methods/timeseries/-group-by-browser-families))
+        to `timeseries_groups` ([example](/api/resources/radar/subresources/http/subresources/timeseries_groups/methods/browser_family/))
         due to consistency. Old timeseries endpoints are still available, but will soon be removed.
   - publish_date: "2023-07-20"
     title: Add URL Scanner endpoints

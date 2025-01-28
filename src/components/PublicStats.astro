@@ -14,10 +14,9 @@ const props = z.object({
 	id: zodEnumFromObjKeys(mappings),
 });
 
-// @ts-ignore
 const { id } = props.parse(Astro.props);
 
-let stat = mappings[id];
+const stat = mappings[id];
 ---
 
 {stat}

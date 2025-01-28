@@ -1,0 +1,19 @@
+releaseNotes: >-
+  This release contains bug fixes from the previous beta
+   
+  **Notable updates**
+   
+  - Fixed issues with device registration after logging out/in of the client.
+
+  - Fixed issue where file device posture checks wouldn't work correctly when
+  the file path was changed for an existing rule.
+   
+  **Known issues**
+
+  - This version requires at least Windows 10.0.19042. If you are running a
+  prior version of Windows, please delay upgrading
+version: 2022.7.370.1
+packageURL: https://downloads.cloudflareclient.com/v1/download/windows/version/2022.7.370.1
+packageSize: 103219200
+releaseDate: 2022-07-29T20:35:45.905Z
+platformName: Windows

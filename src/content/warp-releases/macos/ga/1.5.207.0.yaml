@@ -1,0 +1,40 @@
+releaseNotes: >-
+  **Notable Updates**
+
+
+  - Significant improvements to DoH reliability and performance.
+
+  - Organization name in MDM file is no longer case sensitive.
+
+  - Fixed macOS installer package issue on M1 machines.
+
+  - Fixed an issue where config changes in Teams Dashboard don't automatically
+  propagate to the client.
+
+  - Fixed an issue where MDM file changes were not picked up correctly by
+  client.
+
+  - Fixed issues with local domain fallback not working in all cases.
+
+  - Several other bug fixes and improvements.
+
+
+  **Known issues**
+
+
+  - You are unable to subscribe to WARP+ via the Desktop apps. You must
+  subscribe first on your mobile device and then copy/paste your license key
+  into the Accounts page on desktop.
+
+  - Localization parity with mobile is coming in a future update.
+
+  - Wired networks via a USB dongle are not excluded properly.
+
+
+  For a complete list of known issues please visit
+  https://developers.cloudflare.com/warpclient/known-issues-and-faq
+version: 1.5.207.0
+packageURL: https://downloads.cloudflareclient.com/v1/download/macos/version/1.5.207.0
+packageSize: 34860545
+releaseDate: 2021-06-16T18:02:06.307Z
+platformName: macOS

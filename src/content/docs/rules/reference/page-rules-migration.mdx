@@ -18,7 +18,7 @@ To make the transition seamless, Cloudflare will handle the migration of your ex
 If you wish to explore the benefits of modern Rules features sooner, you can begin adopting them today. Doing so allows you to:
 
 - Take advantage of modern features and capabilities sooner.
-- Customise and refine your rules to match your evolving needs.
+- Customize and refine your rules to match your evolving needs.
 
 To assist with this process, we provide you with a comprehensive mapping between Page Rules settings and modern Rules products in this guide.
 
@@ -49,16 +49,17 @@ The evaluation and execution order of Rules features is different from Page Rule
 
 Modern Rules use filter expressions instead of URL patterns. These expressions, built with the Rules language, allow greater precision by leveraging [fields](/ruleset-engine/rules-language/fields/), [functions](/ruleset-engine/rules-language/functions/), and [operators](/ruleset-engine/rules-language/operators/).
 
-The following example demonstrates the use of the [`http.request.full_uri`](/ruleset-engine/rules-language/fields/standard-fields/#httprequestfull_uri) field and the `wildcard` operator for [wildcard matching](/ruleset-engine/rules-language/operators/#wildcard-matching):
+The following example demonstrates the use of the [`http.request.full_uri`](/ruleset-engine/rules-language/fields/reference/http.request.full_uri/) field and the `wildcard` operator for [wildcard matching](/ruleset-engine/rules-language/operators/#wildcard-matching):
 
 <Example>
 A **Page Rules URL** like:
 
-`example.com/*/downloads/*.txt` 
+`example.com/*/downloads/*.txt`
 
 becomes a **filter expression** such as:
 
 `http.request.full_uri wildcard "http*://example.com/*/downloads/*.txt*"`
+
 </Example>
 
 [Single Redirects](/rules/url-forwarding/single-redirects/create-dashboard/) and [Rewrite URL](/rules/transform/url-rewrite/create-dashboard/) rules also offer a simplified view called **Wildcard pattern**, allowing you to specify URL patterns (`http*://example.com/*/downloads/*.txt*`) without specifying the full filter expression (`http.request.full_uri wildcard "http*://example.com/*/downloads/*.txt*"`).
@@ -144,7 +145,7 @@ You configured a Page Rule to perform an automatic redirect from HTTP to HTTPS f
 
 3. If your tests succeed, delete the existing Page Rule.
 
-</TabItem> <TabItem label="visual guide">
+</TabItem> <TabItem label="Visual guide">
 
 | Page Rules configuration                                                                                                           | Migrate to a single redirect                                                                                                                                          |
 | ---------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -187,7 +188,7 @@ You configured a Page Rule turning on Automatic HTTPS Rewrites for all subdomain
 
 3. If your tests succeed, delete the existing Page Rule.
 
-</TabItem> <TabItem label="visual guide">
+</TabItem> <TabItem label="Visual guide">
 
 | Page Rules configuration                                                                                                                           | Migrate to a configuration rule                                                                                                                                                          |
 | -------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -233,7 +234,7 @@ You configured a Page Rule adjusting browser cache TTL to one day for all subdom
 
 3. If your tests succeed, delete the existing Page Rule.
 
-</TabItem> <TabItem label="visual guide">
+</TabItem> <TabItem label="Visual guide">
 
 | Page Rules configuration                                                                                                             | Migrate to a cache rule                                                                                                                                            |
 | ------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
@@ -276,7 +277,7 @@ You configured a Page Rule turning on Browser Integrity Check for all subdomains
 
 3. If your tests succeed, delete the existing Page Rule.
 
-</TabItem> <TabItem label="visual guide">
+</TabItem> <TabItem label="Visual guide">
 
 | Page Rules configuration                                                                                                                         | Migrate to a configuration rule                                                                                                                                                        |
 | ------------------------------------------------------------------------------------------------------------------------------------------------ | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -320,7 +321,7 @@ You configured a Page Rule turning on Bypass Cache on Cookie for all subdomains 
 
 3. If your tests succeed, delete the existing Page Rule.
 
-</TabItem> <TabItem label="visual guide">
+</TabItem> <TabItem label="Visual guide">
 
 | Page Rules configuration                                                                                                                       | Migrate to a cache rule                                                                                                                                                      |
 | ---------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -366,7 +367,7 @@ You configured a Page Rule turning on Cache By Device Type for all subdomains of
 
 3. If your tests succeed, delete the existing Page Rule.
 
-</TabItem> <TabItem label="visual guide">
+</TabItem> <TabItem label="Visual guide">
 
 | Page Rules configuration                                                                                                                   | Migrate to a cache rule                                                                                                                                                  |
 | ------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
@@ -411,7 +412,7 @@ You configured a Page Rule turning on Cache Deception Armor for all subdomains o
 
 3. If your tests succeed, delete the existing Page Rule.
 
-</TabItem> <TabItem label="visual guide">
+</TabItem> <TabItem label="Visual guide">
 
 | Page Rules configuration                                                                                                                     | Migrate to a cache rule                                                                                                                                                    |
 | -------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -455,7 +456,7 @@ You configured a Page Rule turning on caching of all assets for all subdomains o
 
 3. If your tests succeed, delete the existing Page Rule.
 
-</TabItem> <TabItem label="visual guide">
+</TabItem> <TabItem label="Visual guide">
 
 | Page Rules configuration                                                                                                                              | Migrate to a cache rule                                                                                                                                                             |
 | ----------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -499,7 +500,7 @@ You configured a Page Rule turning on caching for responses that contained cooki
 
 3. If your tests succeed, delete the existing Page Rule.
 
-</TabItem> <TabItem label="visual guide">
+</TabItem> <TabItem label="Visual guide">
 
 | Page Rules configuration                                                                                                         | Migrate to a cache rule                                                                                                                                        |
 | -------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -551,7 +552,7 @@ You configured a Page Rule turning on caching of every response with status code
 
 3. If your tests succeed, delete the existing Page Rule.
 
-</TabItem> <TabItem label="visual guide">
+</TabItem> <TabItem label="Visual guide">
 
 | Page Rules configuration                                                                                                                               | Migrate to a cache rule                                                                                                                                                          |
 | ------------------------------------------------------------------------------------------------------------------------------------------------------ | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -597,7 +598,7 @@ You configured a Page Rule setting a custom cache key for all query string param
 
 3. If your tests succeed, delete the existing Page Rule.
 
-</TabItem> <TabItem label="visual guide">
+</TabItem> <TabItem label="Visual guide">
 
 | Page Rules configuration                                                                                                               | Migrate to a cache rule                                                                                                                                          |
 | -------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -638,7 +639,7 @@ You configured a Page Rule turning off Cloudflare Apps (deprecated) for all subd
 
 3. If your tests succeed, delete the existing Page Rule.
 
-</TabItem> <TabItem label="visual guide">
+</TabItem> <TabItem label="Visual guide">
 
 | Page Rules configuration                                                                                                   | Migrate to a configuration rule                                                                                                                                  |
 | -------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -687,7 +688,7 @@ You configured a Page Rule with **Disable Performance** (deprecated) for all sub
 
 3. If your tests succeed, delete the existing Page Rule.
 
-</TabItem> <TabItem label="visual guide">
+</TabItem> <TabItem label="Visual guide">
 
 | Page Rules configuration                                                                                                                 | Migrate to a configuration rule                                                                                                                                                          |
 | ---------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -766,7 +767,7 @@ You configured a Page Rule turning off [Zaraz](/zaraz/) for all subdomains of `e
 
 3. If your tests succeed, delete the existing Page Rule.
 
-</TabItem> <TabItem label="visual guide">
+</TabItem> <TabItem label="Visual guide">
 
 | Page Rules configuration                                                                                                     | Migrate to a configuration rule                                                                                                                                    |
 | ---------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
@@ -813,7 +814,7 @@ You configured a Page Rule adjusting Edge Cache TTL for all subdomains of `examp
 
 3. If your tests succeed, delete the existing Page Rule.
 
-</TabItem> <TabItem label="visual guide">
+</TabItem> <TabItem label="Visual guide">
 
 | Page Rules configuration                                                                                                           | Migrate to a cache rule                                                                                                                                      |
 | ---------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------ |
@@ -856,7 +857,7 @@ You configured a Page Rule turning off [Email Obfuscation](/waf/tools/scrape-shi
 
 3. If your tests succeed, delete the existing Page Rule.
 
-</TabItem> <TabItem label="visual guide">
+</TabItem> <TabItem label="Visual guide">
 
 | Page Rules configuration                                                                                                             | Migrate to a configuration rule                                                                                                                                                  |
 | ------------------------------------------------------------------------------------------------------------------------------------ | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -909,7 +910,7 @@ You configured a Page Rule permanently redirecting `www.example.com` to `example
 	}}
 />
 
-</TabItem> <TabItem label="visual guide">
+</TabItem> <TabItem label="Visual guide">
 
 | Page Rules configuration                                                                                                          | Migrate to a single redirect                                                                                                                                         |
 | --------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -960,7 +961,7 @@ You configured a Page Rule permanently redirecting `example.com/old-path` to `ex
 	}}
 />
 
-</TabItem> <TabItem label="visual guide">
+</TabItem> <TabItem label="Visual guide">
 
 | Page Rules configuration                                                                                                            | Migrate to a single redirect                                                                                                                                           |
 | ----------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -1003,7 +1004,7 @@ You configured a Page Rule changing the `Host` HTTP header to `example.saas-prov
 
 3. If your tests succeed, delete the existing Page Rule.
 
-</TabItem> <TabItem label="visual guide">
+</TabItem> <TabItem label="Visual guide">
 
 | Page Rules configuration                                                                                                                   | Migrate to an origin rule                                                                                                                                                 |
 | ------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -1029,7 +1030,7 @@ You configured a Page Rule adding a `CF-IPCountry` HTTP header, for all requests
 2. Turn off your existing Page Rule and validate the behavior of the Managed Transform.
 3. If your tests succeed, delete the existing Page Rule.
 
-</TabItem> <TabItem label="visual guide">
+</TabItem> <TabItem label="Visual guide">
 
 | Page Rules configuration                                                                                                                     | Migrate to a Managed Transform                                                                                                                                                                                       |
 | -------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -1072,7 +1073,7 @@ You configured a Page Rule turning off Mirage for all subdomains of `example.com
 
 3. If your tests succeed, delete the existing Page Rule.
 
-</TabItem> <TabItem label="visual guide">
+</TabItem> <TabItem label="Visual guide">
 
 | Page Rules configuration                                                                                       | Migrate to a configuration rule                                                                                                                            |
 | -------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -1115,7 +1116,7 @@ You configured a Page Rule turning off Opportunistic Encryption for all subdomai
 
 3. If your tests succeed, delete the existing Page Rule.
 
-</TabItem> <TabItem label="visual guide">
+</TabItem> <TabItem label="Visual guide">
 
 | Page Rules configuration                                                                                                                           | Migrate to a configuration rule                                                                                                                                                                |
 | -------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -1161,7 +1162,7 @@ You configured a Page Rule turning off Origin Cache Control for all subdomains o
 
 3. If your tests succeed, delete the existing Page Rule.
 
-</TabItem> <TabItem label="visual guide">
+</TabItem> <TabItem label="Visual guide">
 
 | Page Rules configuration                                                                                                                   | Migrate to a cache rule                                                                                                                                                  |
 | ------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
@@ -1207,7 +1208,7 @@ You configured a Page Rule turning on Origin Error Page Pass-thru for all subdom
 
 3. If your tests succeed, delete the existing Page Rule.
 
-</TabItem> <TabItem label="visual guide">
+</TabItem> <TabItem label="Visual guide">
 
 | Page Rules configuration                                                                                                                                 | Migrate to a cache rule                                                                                                                                                                     |
 | -------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -1250,7 +1251,7 @@ You configured a Page Rule turning off [Polish](/images/polish/) for all subdoma
 
 3. If your tests succeed, delete the existing Page Rule.
 
-</TabItem> <TabItem label="visual guide">
+</TabItem> <TabItem label="Visual guide">
 
 | Page Rules configuration                                                                                       | Migrate to a configuration rule                                                                                                                            |
 | -------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -1296,7 +1297,7 @@ You configured a Page Rule turning on Query String Sort for all subdomains of `e
 
 3. If your tests succeed, delete the existing Page Rule.
 
-</TabItem> <TabItem label="visual guide">
+</TabItem> <TabItem label="Visual guide">
 
 | Page Rules configuration                                                                                                             | Migrate to a cache rule                                                                                                                                                 |
 | ------------------------------------------------------------------------------------------------------------------------------------ | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -1338,7 +1339,7 @@ You configured a Page Rule changing the origin to `example.saas-provider.com`, f
 
 3. If your tests succeed, delete the existing Page Rule.
 
-</TabItem> <TabItem label="visual guide">
+</TabItem> <TabItem label="Visual guide">
 
 | Page Rules configuration                                                                                                           | Migrate to an origin rule                                                                                                                                         |
 | ---------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -1384,7 +1385,7 @@ You configured a Page Rule turning on byte-for-byte equivalency checks for all s
 
 3. If your tests succeed, delete the existing Page Rule.
 
-</TabItem> <TabItem label="visual guide">
+</TabItem> <TabItem label="Visual guide">
 
 | Page Rules configuration                                                                                                                   | Migrate to a cache rule                                                                                                                                                       |
 | ------------------------------------------------------------------------------------------------------------------------------------------ | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -1427,7 +1428,7 @@ You configured a Page Rule turning off Rocket Loader for all subdomains of `exam
 
 3. If your tests succeed, delete the existing Page Rule.
 
-</TabItem> <TabItem label="visual guide">
+</TabItem> <TabItem label="Visual guide">
 
 | Page Rules configuration                                                                                                     | Migrate to a configuration rule                                                                                                                                          |
 | ---------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
@@ -1470,7 +1471,7 @@ You configured a Page Rule setting Security Level to _I'm Under Attack_ for all 
 
 3. If your tests succeed, delete the existing Page Rule.
 
-</TabItem> <TabItem label="visual guide">
+</TabItem> <TabItem label="Visual guide">
 
 | Page Rules configuration                                                                                                       | Migrate to a configuration rule                                                                                                                                                         |
 | ------------------------------------------------------------------------------------------------------------------------------ | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -1496,7 +1497,7 @@ You configured a Page Rule adding a `True-Client-IP` HTTP header for all request
 2. Turn off your existing Page Rule and validate the behavior of the Managed Transform.
 3. If your tests succeed, delete the existing Page Rule.
 
-</TabItem> <TabItem label="visual guide">
+</TabItem> <TabItem label="Visual guide">
 
 | Page Rules configuration                                                                                                                     | Migrate to a Managed Transform                                                                                                                                                                                      |
 | -------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -1539,7 +1540,7 @@ You configured a Page Rule setting SSL to _Strict_ for all subdomains of `exampl
 
 3. If your tests succeed, delete the existing Page Rule.
 
-</TabItem> <TabItem label="visual guide">
+</TabItem> <TabItem label="Visual guide">
 
 | Page Rules configuration                                                                                 | Migrate to a configuration rule                                                                                                                |
 | -------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------- |

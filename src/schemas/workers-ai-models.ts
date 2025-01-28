@@ -1,6 +1,8 @@
 import { z } from "astro:schema";
 
-export const workersAiSchema = z.object({
+export type WorkersAIModelsSchema = z.infer<typeof workersAiModelsSchema>;
+
+export const workersAiModelsSchema = z.object({
 	id: z.string(),
 	source: z.number(),
 	name: z.string(),

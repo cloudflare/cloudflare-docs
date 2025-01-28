@@ -6,7 +6,12 @@ interface Props {
 	moreVideosLink: string;
 }
 
-const { videoId, videoTitle, thumbnailTimeOrURL, moreVideosLink="true" } = Astro.props;
+const {
+	videoId,
+	videoTitle,
+	thumbnailTimeOrURL,
+	moreVideosLink = "true",
+} = Astro.props;
 
 const customerId = "1mwganm1ma0xgnmj";
 const baseUrl = `https://customer-${customerId}.cloudflarestream.com/`;
@@ -32,25 +37,46 @@ if (thumbnailTimeOrURL !== undefined) {
 }
 ---
 
-<div style="position: relative; padding-top: 56.25%">
-	<iframe
-		src={url.toString()}
-		style="border: none; position: absolute; top: 0; left: 0; height: 100%; width: 100%;"
-		allow="accelerometer; gyroscope; autoplay; encrypted-media; picture-in-picture;"
-		allowfullscreen="true"
-		title={videoTitle}
-		id={videoId}></iframe>
-</div>
+<stream-player data-id={videoId} data-title={videoTitle}>
+	<div style="position: relative; padding-top: 56.25%">
+		<iframe
+			src={url.toString()}
+			style="border: none; position: absolute; top: 0; left: 0; height: 100%; width: 100%;"
+			allow="accelerometer; gyroscope; autoplay; encrypted-media; picture-in-picture;"
+			allowfullscreen="true"
+			title={videoTitle}
+			id={videoId}></iframe>
+	</div>
 
-{moreVideosLink=="true" &&
-	<a href="https://www.youtube.com/@CloudflareDevelopers" target="_blank">Watch more videos on our Developer Channel</a>
-}
+	{
+		moreVideosLink == "true" && (
+			<a href="https://www.youtube.com/@CloudflareDevelopers" target="_blank">
+				Watch more videos on our Developer Channel
+			</a>
+		)
+	}
+</stream-player>
 
 <script is:inline src="https://embed.cloudflarestream.com/embed/sdk.latest.js"
 ></script>
-<script is:inline define:vars={{ vidId: videoId, videoTitle }}>
-	const video = document.getElementById(vidId);
-	Stream(video).addEventListener("play", () => {
-		zaraz.track("play docs video", { title: videoTitle });
-	});
+
+<script>
+	import { track } from "~/util/zaraz";
+
+	declare function Stream(player: HTMLIFrameElement): HTMLVideoElement;
+
+	class StreamPlayer extends HTMLElement {
+		connectedCallback() {
+			const id = CSS.escape(this.dataset.id as string);
+			const title = this.dataset.title as string;
+
+			const player = this.querySelector(`#${id}`) as HTMLIFrameElement;
+
+			Stream(player).addEventListener("play", () => {
+				track("play docs video", { title: title });
+			});
+		}
+	}
+
+	customElements.define("stream-player", StreamPlayer);
 </script>

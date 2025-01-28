@@ -8,6 +8,8 @@ sidebar:
 
 ---
 
+import { Render } from "~/components"
+
 API Shield's labeling service will help you organize your endpoints and address vulnerabilities in your API. The labeling service comes with managed and user-defined labels.
 
 Today, managed labels are useful for organizing endpoints by use case. In a future release, managed labels will automatically label endpoints by use case and those with informative or security risks, alerting you on endpoints that need attention.
@@ -50,10 +52,7 @@ You can filter your endpoints based on the labels.
 Cloudflare will only add authentication labels to endpoints with successful response codes. Refer to the below table for more details.
 :::
 
-| Description | 2xx response codes | 4xx, 5xx response codes |
-| --- | --- | --- | 
-| If all requests are missing authentication, Cloudflare will apply the label: | `cf-missing-auth` | Without successful responses, no label will be added. |
-| If only some requests are missing authentication, Cloudflare will apply the label: | `cf-mixed-auth` | Without successful responses, no label will be added. |
+<Render file="label-methodology" />
 
 ## Create a label
 

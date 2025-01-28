@@ -144,6 +144,15 @@ To diagnose the issue, go to `https://zero-trust-client.cloudflareclient.com/v0/
 
 In the third-party security product, disable HTTPS inspection and TLS decryption for the [WARP IP addresses](/cloudflare-one/connections/connect-devices/warp/deployment/firewall/).
 
+### Docker container is failing DNS resolution
+
+If you are using WARP and running a CI/CD pipeline inside a Docker container on Microsoft hardware to provide GitHub Actions with an egress IP, your container's `/etc/resolv.conf` file might be injecting a [custom nameserver with the IP address `168.63.129.16`](https://learn.microsoft.com/en-us/azure/virtual-network/what-is-ip-address-168-63-129-16) (specific to Azure infrastructure.)
+The `168.63.129.16` IP address is only accessible to Azure VMs and causes the container's traffic to fail when routed through the Cloudflare WARP tunnel.
+
+#### Solution
+
+To fix this issue, you must exclude the Azure-specific nameserver IP (`168.63.129.16`) from being routed through WARP tunnel. Refer to [Split Tunnels](/cloudflare-one/connections/connect-devices/warp/configure-warp/route-traffic/split-tunnels/#change-split-tunnels-mode) and follow the instructions to exclude the Azure-specific IP.
+
 ## Cannot connect to a specific app or website
 
 Below are the most common reasons why turning on WARP blocks a specific application from loading.

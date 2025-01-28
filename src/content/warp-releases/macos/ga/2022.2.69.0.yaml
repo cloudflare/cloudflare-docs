@@ -1,0 +1,22 @@
+releaseNotes: |-
+  This release contains new features and improvements from the last release. In particular, we have made significant changes to how local settings (plist) are processed. Additionally, we added the ability to configure all applicable parameters from the Zero Trust dashboard. This allows admins to more easily control client behavior without having to use a 3rd party tool. 
+
+  **Notable updates**
+  - Added support for Gateway session duration enforcement. This allows administrators to force re-authentication after a specified time.
+  - The "enabled" plist property has now been completely deprecated and is no longer respected. Please see https://developers.cloudflare.com/cloudflare-one/connections/connect-devices/warp/deployment/mdm-deployment/parameters#switch_locked for switch_locked mechanism that was announced in April 2021
+  - Now that settings exist in the Zero Trust Dashboard, the Client UI should behave the same for clients manually joined to a Team and clients forced to by local .plist policy
+  - Updated Teams logo in app to Zero Trust
+  - Fixed an issue where the Last Seen value was not updated properly in the Zero Trust Dashboard while in Gateway with DoH mode
+  - Fixed an issue where the device name was not updated in the Zero trust Dashboard if the computer name changed after initial registration
+  - Fixed various issues with split tunnel support in consumer mode
+  - Fixed an issue where "warp-cli settings" showed connection time in seconds instead of minutes
+  - Fixed an issue where the local domain fallback list was empty when in consumer WARP mode.
+  - Fixed a wake from sleep issue where DNS requests could fail.
+
+  **Known issues** 
+  - The organization name is case sensitive, which could cause a device to lose registration.
+version: 2022.2.69.0
+packageURL: https://downloads.cloudflareclient.com/v1/download/macos/version/2022.2.69.0
+packageSize: 42940993
+releaseDate: 2022-02-14T17:29:49.970Z
+platformName: macOS

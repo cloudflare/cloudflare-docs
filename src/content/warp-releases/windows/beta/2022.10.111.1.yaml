@@ -1,0 +1,20 @@
+releaseNotes: >-
+  This release is a mirror of GA release 2022.10.106.0
+   
+  - Fixed issue where GUI may still think user is registered after "warp-cli
+  delete" is run
+
+  - Decreased warp-diag run times by not resolving traceroute domains
+
+  - Decreased warp-diag zip file sizes by 60-80%
+   
+
+   
+  **Known issues**
+
+  - No known issues
+version: 2022.10.111.1
+packageURL: https://downloads.cloudflareclient.com/v1/download/windows/version/2022.10.111.1
+packageSize: 105861120
+releaseDate: 2022-11-17T06:26:13.700Z
+platformName: Windows

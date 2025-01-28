@@ -5,6 +5,30 @@ productLink: "/d1/"
 productArea: Developer platform
 productAreaLink: /workers/platform/changelog/platform/
 entries:
+  - publish_date: "2025-01-13"
+    title: D1 will begin enforcing its free tier limits from the 10th of February 2025.
+    description: |-
+      D1 will begin enforcing the daily [free tier limits](/d1/platform/limits) from 2025-02-10. These limits only apply to accounts on the Workers Free plan.
+
+      From 2025-02-10, if you do not take any action and exceed the daily free tier limits, queries to D1 databases via the Workers API and/or REST API will return errors until limits reset daily at 00:00 UTC.
+
+      To ensure uninterrupted service, upgrade your account to the [Workers Paid plan](/workers/platform/pricing/) from the [plans page](https://dash.cloudflare.com/?account=/workers/plans). The minimum monthly billing amount is $5. Refer to [Workers Paid plan](/workers/platform/pricing/) and [D1 limits](/d1/platform/limits/).
+
+      For better insight into your current usage, refer to your [billing metrics](/d1/observability/billing/) for rows read and rows written, which can be found on the [D1 dashboard](https://dash.cloudflare.com/?account=/workers/d1) or GraphQL API.
+
+  - publish_date: "2025-01-07"
+    title: D1 Worker API request latency decreases by 40-60%.
+    description: |-
+      D1 lowered end-to-end Worker API request latency by 40-60% by eliminating redundant network round trips for each request.
+
+      ![D1 Worker API latency](/images/d1/faster-d1-worker-api.png)
+
+      *p50, p90, and p95 request latency aggregated across entire D1 service. These latencies are a reference point and should not be viewed as your exact workload improvement.*
+
+      For each request to a D1 database, at least two network round trips were eliminated. One round trip was due to a bug that is now fixed. The remaining removed round trips are due to avoiding creating a new TCP connection for each request when reaching out to the datacenter hosting the database.
+
+      The removal of redundant network round trips also applies to D1\'s [REST API](/api/resources/d1/subresources/database/methods/query/). However, the REST API still depends on Cloudflare's centralized datacenters for authentication, which reduces the relative performance improvement.
+
   - publish_date: "2024-08-23"
     title: D1 alpha databases have stopped accepting SQL queries
     description: |-

@@ -10,7 +10,7 @@ import { Render } from "~/components";
 
 ## Is Cloudflare a free DNS (domain nameserver) provider?
 
-Yes. Cloudflare offers [free DNS services](https://www.cloudflare.com/dns) to customers in all plans. Note that:
+Yes. Cloudflare offers [free DNS services](https://www.cloudflare.com/dns) to customers on all plans. Note that:
 
 1. You do not need to change your hosting provider to use Cloudflare.
 2. You do not need to move away from your registrar. The only change you make with your registrar is to point the authoritative nameservers to the Cloudflare nameservers.
@@ -29,11 +29,11 @@ For customers on Enterprise plans, Cloudflare uses the number of monthly DNS que
 
 ## Where do I change my nameservers to point to Cloudflare?
 
-Make the change at your registrar, which may or may not be your hosting provider. If you don't know who your registrar is for the domain, you can find this by doing a WHOis search. You can use [ICANN Lookup](https://lookup.icann.org/), for example.
+Make the change at your registrar, which is where you registered your domain. This may or may not be your hosting provider. If you don't know who your registrar is for the domain, you can find this by doing a WHOIS search. You can use [ICANN Lookup](https://lookup.icann.org/), for example.
 
 :::caution
 
-Some country code TLDs may not be supported by ICANN Lookup. If that is the case, use a different WHOis search tool.
+Some country code TLDs may not be supported by ICANN Lookup. If that is the case, use a different WHOIS search tool.
 :::
 
 Once you identify your registrar, follow the instructions in [change nameservers to Cloudflare](/dns/zone-setups/full-setup/setup/#update-your-nameservers).
@@ -44,11 +44,12 @@ Once you identify your registrar, follow the instructions in [change nameserver
 
 Yes. All customers have a limit on the number of DNS records they can create.
 
-- Free zones created before `2024-09-01 00:00:00 UTC`: 1,000
-- Free zones created on or after `2024-09-01 00:00:00 UTC`: 200
+- Free: 200
 - Pro: 3,500
 - Business: 3,500
 - Enterprise: 3,500
+
+Free zones created before 2024-09-01 00:00:00 UTC have an increased limit of 1,000.
 
 :::note[For more DNS records]
 
@@ -59,17 +60,9 @@ If you are an Enterprise customer and require more DNS records, contact your acc
 
 ---
 
-## Which record types does Cloudflare not proxy?
+## Which record types can Cloudflare proxy?
 
-Cloudflare does not proxy the following record types:
-
-- `LOC`
-- `MX`
-- `NS`
-- `SPF`
-- `TXT`
-- `SRV`
-- `CAA`
+Only `A`, `AAAA`, and `CNAME` records can be proxied. Cloudflare will not proxy any other [DNS record types](/dns/manage-dns-records/reference/dns-record-types/).
 
 ---
 
@@ -83,15 +76,17 @@ Redirecting non-Cloudflare sites via `CNAME` records would cause a DNS resolutio
 
 ## Does Cloudflare support wildcard DNS entries?
 
-Cloudflare supports proxying wildcard '\*' record for DNS management in all customer plans.
+Cloudflare supports wildcard '*' DNS records, both proxied and unproxied, on all plans.
 
 ---
 
 ## How long does it take for a DNS change I made to push out?
 
-By default, any changes or additions you make to your Cloudflare zone file will push out in 5 minutes or less. Your local DNS cache may take longer to update; as such, propagation everywhere might take longer than 5 minutes.
+By default, any changes or additions you make to your Cloudflare zone file will take effect globally within 5 minutes, usually much less.
 
-This setting is controlled by the Time-to-Live (TTL) value on a [DNS record](/dns/manage-dns-records/how-to/create-dns-records/). Proxied records update within 300 seconds (Auto), but the TTL for unproxied records can be customized.
+Depending on the Time-to-Live (TTL) set on the previous [DNS record](/dns/manage-dns-records/how-to/create-dns-records/), old data may still remain cached until the TTL expires. Proxied records expire after 5 minutes ("Automatic"), but the TTL for unproxied records can be customized.
+
+If changes to records with large TTLs are anticipated, it may make sense to reduce the TTL ahead of time so that the change takes effect as quickly as possible.
 
 ---
 
@@ -111,9 +106,9 @@ Because of Cloudflare's many advanced DNS features like CNAME flattening, it can
 
 Instead of using `ANY` queries to list records, Cloudflare customers can get a better overview of their DNS records by logging in and checking their DNS app settings.
 
-The decision to block `ANY` queries was implemented for all Authoritative DNS customers in September 2015, and does not affect Virtual DNS customers.
+The decision to block `ANY` queries was implemented for all Authoritative DNS customers in September 2015, and does not affect DNS Firewall customers.
 
-Read [Deprecating the DNS ANY meta-query type](https://blog.cloudflare.com/deprecating-dns-any-meta-query-type/) in the Cloudflare blog.
+Read [Deprecating the DNS ANY meta-query type](https://blog.cloudflare.com/deprecating-dns-any-meta-query-type/) on the Cloudflare blog.
 
 ---
 
@@ -197,9 +192,9 @@ Make sure the argument `zone_id = data.cloudflare_zones.example_com.zones[0].id`
 
 ## Why am I getting hundreds of random DNS records after adding my domain?
 
-This can happen when you had a wildcard \* record configured at your previous authoritative DNS. You can remove these records in bulk [using the API](/api/resources/dns/subresources/records/methods/delete/).
+This can happen when you had a wildcard `*` record configured at your previous authoritative DNS, and for some reason the wildcard record wasn't detected. You can remove these records in bulk [using the API](/api/resources/dns/subresources/records/methods/delete/).
 
-You can also:
+Alternatively, you can also:
 
 1. [Remove your domain](/fundamentals/setup/manage-domains/remove-domain/) from Cloudflare.
 2. Delete the wildcard record from your authoritative DNS.
@@ -241,17 +236,9 @@ server IP address, typically for the `www` subdomain and the apex domain (also k
 
 For domains where Cloudflare hosts the DNS, Cloudflare continuously checks whether the domain uses Cloudflare’s nameservers for DNS resolution. If Cloudflare's nameservers are not used, the [domain status](/dns/zone-setups/reference/domain-status/) is updated from *Active* to *Moved* in the Cloudflare **Overview** app and an email is sent to the customer.
 
-This is important because - if a domain is in a _Moved_ state for a [long enough period of time](/dns/zone-setups/reference/domain-status/) - it will be deleted from Cloudflare.
+This is important because, if a domain is in a _Moved_ state for a [long enough period of time](/dns/zone-setups/reference/domain-status/), it will be deleted from Cloudflare.
 
 <Render file="recover-deleted-domain" />
-
----
-
-## Why can't I add certain TLDs via the DNS API?
-
-The DNS API cannot be used for domains with `.cf`, `.ga`, `.gq`, `.ml`, or `.tk` TLDs. Use the Cloudflare Dashboard for managing such TLDs.
-
-Enterprise customer can [contact Cloudflare Support](/support/contacting-cloudflare-support/) to remove this limitation.
 
 ---
 
@@ -263,3 +250,13 @@ For example, if you need to resolve `example.com` through Cloudflare in your loc
 ```txt
 example.com CNAME example.com.cdn.cloudflare.net
 ```
+
+---
+
+## Why am I getting a warning for hostname not covered even if I have a custom certificate?
+
+If the [custom certificate](/ssl/edge-certificates/custom-certificates/) has been in place before our new certificate management pipeline, the following warning is displayed but can be discarded.
+
+`This hostname is not covered by a certificate.`
+
+The warning will be gone when you upload a new custom certificate, or start using another type of certificate for this hostname.

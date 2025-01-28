@@ -92,7 +92,7 @@ if (
 							<ul class="list-none pl-0">
 								{links.map((link) => (
 									<li>
-										<a href={link.href} class="no-underline text-white">
+										<a href={link.href} class="text-white no-underline">
 											{link.text}
 										</a>
 									</li>
@@ -103,7 +103,7 @@ if (
 				</div>
 			</div>
 			<div>
-				<ul class="flex gap-x-4 text-xs list-outside pl-0 justify-center text-gray-600 dark:!text-gray-400">
+				<ul class="flex list-outside justify-center gap-x-4 pl-0 text-xs text-gray-600 dark:!text-gray-400">
 					<li class="list-none text-gray-600 dark:text-gray-400">
 						2024 Cloudflare, Inc.
 					</li>
@@ -111,7 +111,7 @@ if (
 						<li>
 							<a
 								href={href}
-								class="no-underline text-gray-600 dark:!text-gray-400"
+								class="text-gray-600 no-underline dark:!text-gray-400"
 							>
 								{text}
 							</a>
@@ -126,17 +126,14 @@ if (
 	) : (
 		<>
 			<Default {...Astro.props} />
-			<div class="items-center flex flex-wrap">
+			<div id="footer-links" class="flex flex-wrap items-center">
 				{Object.entries(links).map(([text, href]) => (
-					<a
-						href={href}
-						class="mx-2 my-2 text-xs text-black dark:text-white decoration-accent-600 dark:decoration-accent-200"
-					>
+					<a href={href} class="mx-2 my-2 text-xs text-black decoration-accent">
 						<span>{text}</span>
 					</a>
 				))}
 				{isProduction && (
-					<div class="mx-2 my-2 text-xs text-black dark:text-white underline decoration-accent-600 dark:decoration-accent-200">
+					<div class="mx-2 my-2 text-xs text-black [&>button]:underline [&>button]:decoration-accent">
 						<OneTrust />
 					</div>
 				)}

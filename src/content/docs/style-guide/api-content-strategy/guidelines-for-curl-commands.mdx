@@ -6,7 +6,7 @@ sidebar:
 
 ---
 
-Use long parameter names, like in the [API reference documentation](/api/), for clarity:
+Use long parameter names for clarity:
 
 * `--header` (instead of `-H`)
 * `--request` (when needed, instead of `-X`)
@@ -33,7 +33,7 @@ If you must suggest the use of this tool, you can add a link to the [Make API ca
 ### Preliminary notes
 
 * Make sure not to use typographical or smart quotes in a cURL command, or the command will fail.
-* Placeholders in the URL should follow the same format as in the API documentation: `{zone_id}`
+* Placeholders in the URL should follow the same format as in the API documentation: `$ZONE_ID`
 * Placeholders in the request body (that is, the data included in a `POST`/`PUT`/`PATCH` request) should use this format: `<RULE_ID>`
 
 The same placeholder name should correspond to the same value – use different placeholder names for different ID values. You can use the same request placeholders in the response, if they should match the values in the request.
@@ -43,19 +43,19 @@ The same placeholder name should correspond to the same value – use different 
 If using Email + API Key authentication, include the following arguments in the cURL command to add the two required HTTP headers to the request:
 
 ```txt
---header "X-Auth-Email: <EMAIL>" \
---header "X-Auth-Key: <API_KEY>" \
+--header "X-Auth-Email: $CLOUDFLARE_EMAIL" \
+--header "X-Auth-Key: $CLOUDFLARE_API_KEY" \
 ```
 
 :::note
 
-Ending slashes included to facilitate copy and paste. Do not include the last slash if this is the last line of the cURL command. 
+Ending slashes included to facilitate copy and paste. Do not include the last slash if this is the last line of the cURL command.
 :::
 
 If using API Token (the preferred authentication method), include the following arguments in the cURL command to add the required HTTP header to the request:
 
 ```txt
---header "Authorization: Bearer <API_TOKEN>" \
+--header "Authorization: Bearer $CLOUDFLARE_API_TOKEN" \
 ```
 
 ### Request without body content (`GET`, `DELETE`)
@@ -66,12 +66,12 @@ For `GET` requests, do not include the `--request GET` command-line argument, si
 
 ```txt
 curl {full_url_with_placeholders} \
---header "Authorization: Bearer <API_TOKEN>"
+--header "Authorization: Bearer $CLOUDFLARE_API_TOKEN"
 ```
 
 ```bash title="Example"
-curl https://api.cloudflare.com/client/v4/zones/{zone_id}/firewall/rules \
---header "Authorization: Bearer <API_TOKEN>"
+curl https://api.cloudflare.com/client/v4/zones/$ZONE_ID/firewall/rules \
+--header "Authorization: Bearer $CLOUDFLARE_API_TOKEN"
 ```
 
 #### `DELETE` request template
@@ -79,7 +79,7 @@ curl https://api.cloudflare.com/client/v4/zones/{zone_id}/firewall/rules \
 ```txt
 curl --request DELETE \
 {full_url_with_placeholders} \
---header "Authorization: Bearer <API_TOKEN>"
+--header "Authorization: Bearer $CLOUDFLARE_API_TOKEN"
 ```
 
 Requests without a body do not need syntax highlight, but we use `bash` syntax highlighting to highlight the several delimited strings.
@@ -96,7 +96,7 @@ For `POST` requests with a body, do not include the `--request POST` command-lin
 
 ```txt
 curl {full_url_with_placeholders} \
---header "Authorization: Bearer <API_TOKEN>" \
+--header "Authorization: Bearer $CLOUDFLARE_API_TOKEN" \
 --header "Content-Type: application/json" \
 --data '({|[)
   (...JSON content, pretty printed, using 2-space indents...)
@@ -104,8 +104,8 @@ curl {full_url_with_placeholders} \
 ```
 
 ```bash title="Example"
-curl https://api.cloudflare.com/client/v4/zones/{zone_id}/firewall/rules \
---header "Authorization: Bearer <API_TOKEN>" \
+curl https://api.cloudflare.com/client/v4/zones/$ZONE_ID/firewall/rules \
+--header "Authorization: Bearer $CLOUDFLARE_API_TOKEN" \
 --header "Content-Type: application/json" \
 --data '[
   {
@@ -123,7 +123,7 @@ curl https://api.cloudflare.com/client/v4/zones/{zone_id}/firewall/rules \
 ```txt
 curl --request (PUT/PATCH) \
 {full_url_with_placeholders} \
---header "Authorization: Bearer <API_TOKEN>" \
+--header "Authorization: Bearer $CLOUDFLARE_API_TOKEN" \
 --header "Content-Type: application/json" \
 --data '({|[)
   (...JSON content, pretty printed, using 2-space indents...)
@@ -141,8 +141,8 @@ The recommended way of escaping a single quote inside the body is the following 
 Which means "close string, add escaped single quote, begin string again".
 
 ```bash title="Example"
-curl https://api.cloudflare.com/api/v4/zones/{zone_id}/page_shield/policies \
---header "Authorization: Bearer <API_TOKEN>" \
+curl https://api.cloudflare.com/api/v4/zones/$ZONE_ID/page_shield/policies \
+--header "Authorization: Bearer $CLOUDFLARE_API_TOKEN" \
 --header "Content-Type: application/json" \
 --data '{
   "value": "script-src myapp.example.com cdnjs.cloudflare.com https://www.google-analytics.com/analytics.js '\''self'\''"
@@ -156,7 +156,7 @@ If you have a `POST` request without a body, you must add the `--request POST` a
 ```txt
 curl --request POST \
 {full_url_with_placeholders} \
---header "Authorization: Bearer <API_TOKEN>"
+--header "Authorization: Bearer $CLOUDFLARE_API_TOKEN"
 ```
 
 ### Additional information
@@ -166,8 +166,8 @@ Code blocks with example requests that include a JSON body should use `bash` syn
 ### Full request example
 
 ```bash
-curl https://api.cloudflare.com/api/v4/zones/{zone_id}/page_shield/policies \
---header "Authorization: Bearer <API_TOKEN>" \
+curl https://api.cloudflare.com/api/v4/zones/$ZONE_ID/page_shield/policies \
+--header "Authorization: Bearer $CLOUDFLARE_API_TOKEN" \
 --header "Content-Type: application/json" \
 --data '{
   "description": "My first policy in log mode",

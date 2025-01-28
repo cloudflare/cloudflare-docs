@@ -1,0 +1,20 @@
+releaseNotes: |
+  This release contains minor fixes and improvements.
+
+  **Changes and improvements:**
+  - Fixed an issue where SSH sessions and other application connections over TCP or UDP could be dropped when using MASQUE and the device's primary network interface changed.
+  - Fixed an issue to ensure the managed certificate is installed in the trust store if not already there.
+
+  **Known issues:**
+  - DNS resolution may be broken when the following condition are all true:
+    - WARP is in Secure Web Gateway without DNS filtering (tunnel-only) mode.
+    - A custom DNS server address is configured on the primary network adapter.
+    - The custom DNS server address on the primary network adapter is changed while WARP is connected.
+
+    To work around this issue, please reconnect the WARP client by toggling off and back on.
+
+version: 2024.10.279.1
+releaseDate: 2024-10-22T15:54:53.014Z
+packageURL: https://downloads.cloudflareclient.com/v1/download/windows/version/2024.10.279.1
+packageSize: 122912768
+platformName: Windows

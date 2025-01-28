@@ -8,7 +8,7 @@ sidebar:
 
 import { Render } from "~/components"
 
-The **Proxy status** of a DNS record affects how Cloudflare treats incoming traffic to that record. Cloudflare recommends enabling our proxy for all `A`, `AAAA`, and `CNAME` records.
+The **Proxy status** of a DNS record affects how Cloudflare treats incoming traffic to that record. Cloudflare recommends enabling our proxy for all `A`, `AAAA`, and `CNAME` records that are used for serving web traffic.
 
 ![Proxy status affects how Cloudflare treats traffic intended for specific DNS records](~/assets/images/dns/proxy-status-screenshot.png)
 
@@ -19,6 +19,14 @@ The **Proxy status** of a DNS record affects how Cloudflare treats incoming traf
 <Render file="mix-proxied-and-unproxied" product="dns" />
 
 <Render file="proxied-records-definition" product="dns" />
+
+### Protocol optimization
+
+For proxied records, if your domain has [HTTP/2 or HTTP/3 enabled](/speed/optimization/protocol/), Cloudflare automatically generates corresponding [HTTPS Service (HTTPS) records](/dns/manage-dns-records/reference/dns-record-types/#svcb-and-https) on the fly. HTTPS records allow you to provide a client with information about how it should connect to a server upfront, without the need of an initial plaintext HTTP connection.
+
+:::note
+Both HTTP/2 and HTTP/3 configurations also require that you have an SSL/TLS certificate served by Cloudflare. This means that disabling [Universal SSL](/ssl/edge-certificates/universal-ssl/), for example, could impact this behavior.
+:::
 
 ### Limitations
 

@@ -1,11 +1,12 @@
 ---
-updated: 2024-11-23
+updated: 2024-12-19
 pcx_content_type: tutorial
 difficulty: Intermediate
 content_type: 📝 Tutorial
 title: Generate Dynamic OG Images using Cloudflare Workers
 products:
   - Workers
+  - Developer Spotlight
 tags:
   - OG
 languages:
@@ -213,7 +214,7 @@ minify = true
 watch_dir = "public"
 ```
 
-The `nodejs_compat_v2` flag enables runtime compatibility features required by the OG image generation library, even when using Bun. While we're using Bun as our development runtime, this flag ensures all necessary APIs are available in the Workers environment. The `assets` configuration maps your Worker's public directory, allowing direct access to static files like fonts, images, and favicons through URL paths (for example, `/fonts/Inter.ttf`, `/images/logo.png`).
+[The `nodejs_compat` flag](/workers/configuration/compatibility-flags/#nodejs-compatibility-flag) enables runtime compatibility features required by the OG image generation library, even when using Bun. While we're using Bun as our development runtime, this flag ensures all necessary APIs are available in the Workers environment. The `assets` configuration maps your Worker's public directory, allowing direct access to static files like fonts, images, and favicons through URL paths (for example, `/fonts/Inter.ttf`, `/images/logo.png`).
 
 ## 4. Configure font loading strategies
 

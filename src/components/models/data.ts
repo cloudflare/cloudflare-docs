@@ -6,7 +6,7 @@ import stabilityai from "../../assets/images/workers-ai/stabilityai.svg";
 import huggingface from "../../assets/images/workers-ai/huggingface.svg";
 import google from "../../assets/images/workers-ai/google.svg";
 
-export const authorData = {
+export const authorData: Record<string, { name: string; logo: string }> = {
 	openai: {
 		name: "OpenAI",
 		logo: openai.src,

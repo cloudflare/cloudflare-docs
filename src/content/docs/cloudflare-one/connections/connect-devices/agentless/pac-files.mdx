@@ -8,14 +8,12 @@ sidebar:
 import { Details, GlossaryDefinition, TabItem, Tabs } from "~/components";
 
 :::note
-
 Only available on Enterprise plans.
-
 :::
 
 You can apply Gateway HTTP and DNS policies at the browser level by configuring a Proxy Auto-Configuration (PAC) file.
 
-<GlossaryDefinition term="PAC file" prepend="A PAC file is" />
+<GlossaryDefinition term="PAC file" prepend="A PAC file is " />
 
 When end users visit a website, their browser will send the request to a Cloudflare proxy server associated with your account to be filtered by Gateway. Note that Gateway [cannot filter every type of HTTP traffic](#limitations) proxied using PAC files.
 
@@ -28,7 +26,6 @@ Install a [Cloudflare certificate](/cloudflare-one/connections/connect-devices/u
 You can generate a proxy endpoint on the Zero Trust dashboard or through the Cloudflare API.
 
 :::caution
-
 All devices you add to the proxy endpoint will be able to access your Cloudflare Tunnel applications and services. If you only want to proxy web traffic, you can build a network policy that blocks those source IPs from connecting to your internal resources.
 :::
 
@@ -48,9 +45,7 @@ All devices you add to the proxy endpoint will be able to access your Cloudflare
    - **IPv6**: `2001:0db8:0000:0000:0000:1234:5678:0000/109`
 
    :::note
-
    Gateway limits the prefix length of source networks for proxy endpoints to `/8` for IPv4 networks and `/32` for IPv6 networks.
-
    :::
 
 5. Select **Save endpoint** and confirm the endpoint creation.
@@ -80,9 +75,7 @@ https://<SUBDOMAIN>.proxy.cloudflare-gateway.com
    - **IPv6**: `2001:0db8:0000:0000:0000:1234:5678:0000/32`
 
    :::note
-
    Gateway limits the prefix length of source networks for proxy endpoints to `/8` for IPv4 networks and `/32` for IPv6 networks.
-
    :::
 
 2. After running the call, you should see an output similar to
@@ -196,6 +189,116 @@ Safari relies on your operating system's proxy server settings. To configure you
 To test your configuration, you can test any [supported HTTP policy](#limitations), such as the example policy created in [Step 2](#2-test-your-proxy-server). When you go to `https://example.com` in your browser, you should see the Gateway block page.
 
 You can now use the Proxy Endpoint selector in [network](/cloudflare-one/policies/gateway/network-policies/#proxy-endpoint) and [HTTP](/cloudflare-one/policies/gateway/http-policies/#proxy-endpoint) policies to filter traffic proxied via PAC files.
+
+## Configure firewall
+
+You may need to configure your organization's firewall to allow your users to connect to a proxy endpoint. Depending on your firewall, you will need to create a rule using either your proxy endpoint's domain or IP addresses.
+
+To get the domain of a proxy endpoint:
+
+<Tabs syncKey="dashPlusAPI">
+
+<TabItem label="Dashboard">
+
+1. In [Zero Trust](https://one.dash.cloudflare.com/), go to **Gateway** > **Proxy endpoints**.
+2. Choose the proxy endpoint. Select **Edit**.
+3. In **Proxy Endpoint**, copy the domain.
+
+</TabItem>
+
+<TabItem label="API">
+
+1. Use the [List proxy endpoints](/api/resources/zero_trust/subresources/gateway/subresources/proxy_endpoints/methods/list/) operation to get a list of your proxy endpoints and their details. For example:
+
+   ```bash
+   curl https://api.cloudflare.com/client/v4/accounts/{account_id}/gateway/proxy_endpoints \
+   --header "Authorization: Bearer <API_TOKEN>"
+   ```
+
+   ```json {8} output
+   {
+   	"success": true,
+   	"result": {
+   		"id": "ed35569b41ce4d1facfe683550f54086",
+   		"created_at": "2014-01-01T05:20:00.12345Z",
+   		"ips": ["192.0.2.1/32"],
+   		"name": "DevOps team",
+   		"subdomain": "oli3n9zkz5.proxy.cloudflare-gateway.com",
+   		"updated_at": "2014-01-01T05:20:00.12345Z"
+   	}
+   }
+   ```
+
+2. Find the proxy endpoint you want to use.
+3. Copy the value of the `subdomain` key.
+
+</TabItem>
+
+</Tabs>
+
+Using your proxy endpoint's domain, you can get the IP addresses assigned to the proxy endpoint:
+
+<Tabs>
+
+<TabItem label="macOS and Linux">
+
+1. Open a terminal.
+2. Run `dig` on your proxy endpoint's A records to get its IPv4 addresses. For example:
+
+   ```bash
+   dig A example.cloudflare-gateway.com +short
+   ```
+
+   ```txt output
+   162.159.36.5
+   162.159.36.20
+   ```
+
+3. Run `dig` on your proxy endpoint's AAAA records to get its IPv6 addresses. For example:
+
+   ```bash
+   dig AAAA example.cloudflare-gateway.com +short
+   ```
+
+   ```txt output
+   2606:4700:54::a29f:2407
+   2606:4700:5c::a29f:2e07
+   ```
+
+</TabItem>
+
+<TabItem label="Windows">
+
+1. Open a PowerShell terminal.
+2. Run `Resolve-DnsName` on your proxy endpoint's A records. Your proxy endpoint's IPv4 addresses will appear under `IPAddress`. For example:
+
+   ```powershell
+   Resolve-DnsName -Name example.cloudflare-gateway.com -Type A
+   ```
+
+   ```txt output
+   Name                                           Type   TTL   Section    IPAddress
+   ----                                           ----   ---   -------    ---------
+   example.cloudflare-gateway.com                 A      300   Answer     162.159.36.5
+   example.cloudflare-gateway.com                 A      300   Answer     162.159.36.20
+   ```
+
+3. Run `Resolve-DnsName` on your proxy endpoint's AAAA records. Your proxy endpoint's IPv6 addresses will appear under `IPAddress`. For example:
+
+   ```powershell
+   Resolve-DnsName -Name example.cloudflare-gateway.com -Type AAAA
+   ```
+
+   ```txt output
+   Name                                           Type   TTL   Section    IPAddress
+   ----                                           ----   ---   -------    ---------
+   example.cloudflare-gateway.com                 AAAA   300   Answer     2606:4700:5c::a29f:2e07
+   example.cloudflare-gateway.com                 AAAA   300   Answer     2606:4700:54::a29f:2407
+   ```
+
+</TabItem>
+
+</Tabs>
 
 ## Limitations
 

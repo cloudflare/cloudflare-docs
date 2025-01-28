@@ -60,7 +60,7 @@ The following example adds a rule that skips all remaining rules in the entry po
 
     Save the entry point ruleset ID (`060013b1eeb14c93b0dcd896537e0d2c`) for the next step.
 
-2.  Invoke the [Create a zone ruleset rule](/api/resources/rulesets/methods/create/) operation (a `POST` request) to add an exception (or skip rule) at the beginning of the rules list, since a skip rule applies only to rules listed after it. The exact rule location is defined in the [`position` object](/ruleset-engine/rulesets-api/add-rule/#define-the-rule-position-in-the-ruleset).
+2.  Invoke the [Create a zone ruleset rule](/api/resources/rulesets/subresources/rules/methods/create/) operation (a `POST` request) to add an exception (or skip rule) at the beginning of the rules list, since a skip rule applies only to rules listed after it. The exact rule location is defined in the [`position` object](/ruleset-engine/rulesets-api/add-rule/#define-the-rule-position-in-the-ruleset).
 
     ```bash
     curl "https://api.cloudflare.com/client/v4/zones/{zone_id}/rulesets/{entry_point_ruleset_id}/rules" \
@@ -138,7 +138,7 @@ The following example adds a rule that skips the [Cloudflare Managed Ruleset](/w
     - The ID of the entry point ruleset (`060013b1eeb14c93b0dcd896537e0d2c` in this example)
     - The ID of the `execute` rule deployment the managed ruleset (`1bdb49371c1f46958fc8b985efcb79e7` in this example)
 
-2.  Invoke the [Create a zone ruleset rule](/api/resources/rulesets/methods/create/) operation (a `POST` request) to add an exception (or skip rule) immediately before the `execute` rule deploying the Cloudflare Managed Ruleset, since a skip rule applies only to rules listed after it. The exact rule location is defined in the [`position` object](/ruleset-engine/rulesets-api/add-rule/#define-the-rule-position-in-the-ruleset).
+2.  Invoke the [Create a zone ruleset rule](/api/resources/rulesets/subresources/rules/methods/create/) operation (a `POST` request) to add an exception (or skip rule) immediately before the `execute` rule deploying the Cloudflare Managed Ruleset, since a skip rule applies only to rules listed after it. The exact rule location is defined in the [`position` object](/ruleset-engine/rulesets-api/add-rule/#define-the-rule-position-in-the-ruleset).
 
     ```bash
     curl "https://api.cloudflare.com/client/v4/zones/{zone_id}/rulesets/{entry_point_ruleset_id}/rules" \
@@ -270,7 +270,7 @@ The following example adds a rule that skips a particular rule of the [Cloudflar
     - The ID of the Cloudflare Managed Ruleset (<RuleID id="efb7b8c949ac4650a09736fc376e9aee" />)
     - The ID of the rule to skip (<RuleID id="d9e350f1b72d4730899c8a420e48a85d" /> in this example)
 
-3.  Invoke the [Create a zone ruleset rule](/api/resources/rulesets/methods/create/) operation (a `POST` request) to add an exception (or skip rule) immediately before the `execute` rule deploying the Cloudflare Managed Ruleset, since a skip rule applies only to rules listed after it.
+3.  Invoke the [Create a zone ruleset rule](/api/resources/rulesets/subresources/rules/methods/create/) operation (a `POST` request) to add an exception (or skip rule) immediately before the `execute` rule deploying the Cloudflare Managed Ruleset, since a skip rule applies only to rules listed after it.
 
     ```bash
     curl "https://api.cloudflare.com/client/v4/zones/{zone_id}/rulesets/{entry_point_ruleset_id}/rules" \

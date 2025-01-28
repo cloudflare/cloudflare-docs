@@ -17,22 +17,18 @@ For publicly trusted certificates, Cloudflare partners with different certificat
 
 ## Availability per certificate type and encryption algorithm
 
+| Certificate         | Algorithm | [Let's Encrypt](#lets-encrypt) | [Google Trust Services](#google-trust-services) | [SSL.com](#sslcom) | [Sectigo](#sectigo) |
+|---------------------|-----------|---------------------------------|-----------------------------------------------|--------------------|--------------------|
+| [Universal](/ssl/edge-certificates/universal-ssl/)| ECDSA<br /><br /><br />RSA<br /><sub>(Paid plans only)</sub> | ✅<br /><br /><br />✅| ✅<br /><br /><br />✅ | ✅<br /><br /><br />✅ | N/A<br /><br /><br />N/A |
+| [Advanced](/ssl/edge-certificates/advanced-certificate-manager/) | ECDSA<br /><br /><br />RSA | ✅<br /><br /><br />✅| ✅<br /><br /><br />✅ | ✅<br /><br /> <br /> ✅<br /><br /> | N/A<br /><br /><br />N/A |
+| [Total TLS](/ssl/edge-certificates/additional-options/total-tls/) | ECDSA<br /><br /><br />RSA | ✅<br /><br /><br />✅| ✅<br /><br /><br />✅ | ✅<br /><br /> <br /> ✅<br /><br /> | N/A<br /><br /><br />N/A |
+| [SSL for SaaS](/cloudflare-for-platforms/cloudflare-for-saas/security/certificate-management/issue-and-validate/) | ECDSA<br /><br /><br />RSA |✅<br /><br /><br />✅| ✅<br /><br /><br />✅ | ✅<br /><br /> <br /> ✅<br /><br /> | N/A<br /><br /><br />N/A |
+| [Backup](/ssl/edge-certificates/backup-certificates/) | ECDSA<br /><br />RSA | ✅<br /><br />✅| ✅<br /><br />✅ | ✅<br /><br />✅ | ✅<br /><br />✅ |
 
-
-| Certificate         | Algorithm | [Let's Encrypt](#lets-encrypt) | [Google Trust Services](#google-trust-services) | [SSL.com](#sslcom) | [Sectigo](#sectigo) | [DigiCert](#digicert-deprecating-soon)                 |
-|---------------------|-------|---------------|-----------------------|-|---------|--------------------------|
-| [Universal](/ssl/edge-certificates/universal-ssl/)| ECDSA<br /><br /><br />RSA<br /><sub>(Paid plans only)</sub> | ✅<br /><br /><br />✅| ✅<br /><br /><br />✅ | ❌<br /><br /><br />❌ | N/A<br /><br /><br />N/A | ✅<br /> <sub>Deprecating soon</sub> <br />✅<br /> <sub>Deprecating soon</sub> |
-| [Advanced](/ssl/edge-certificates/advanced-certificate-manager/) | ECDSA<br /><br /><br />RSA | ✅<br /><br /><br />✅| ✅<br /><br /><br />✅ | ✅<br /><br /> <br /> ✅<br /><br /> | N/A<br /><br /><br />N/A | ✅<br /> <sub>Deprecating soon</sub> <br /> ✅<br /> <sub>Deprecating soon</sub> |
-| [Total TLS](/ssl/edge-certificates/additional-options/total-tls/) | ECDSA<br /><br /><br />RSA | ✅<br /><br /><br />✅| ✅<br /><br /><br />✅ | ✅<br /><br /> <br /> ✅<br /><br /> | N/A<br /><br /><br />N/A | ❌ <br /><br /><br /> ❌ |
-| [SSL for SaaS](/cloudflare-for-platforms/cloudflare-for-saas/security/certificate-management/issue-and-validate/) | ECDSA<br /><br /><br />RSA |✅<br /><br /><br />✅| ✅<br /><br /><br />✅ | ✅<br /><br /> <br /> ✅<br /><br /> | N/A<br /><br /><br />N/A | ✅<br /> <sub>Deprecating soon</sub> <br /> ✅<br /> <sub>Deprecating soon</sub> |
-| [Backup](/ssl/edge-certificates/backup-certificates/) | ECDSA<br /><br />RSA | ✅<br /><br />✅| ✅<br /><br />✅ | ✅<br /><br />✅ | ✅<br /><br />✅ | ❌ <br /><br /> ❌ |
-
-
-
-## Features, limitations and browser compatibility
+## Features, limitations, and browser compatibility
 
 :::caution[Universal SSL]
- <Render file="universal-ssl-validity" />
+For Universal certificates, Cloudflare controls the validity periods and certificate authorities (CAs), making sure that renewal always occur. For details, refer to [Universal SSL](/ssl/edge-certificates/universal-ssl/).
 :::
 
 ***
@@ -132,27 +128,6 @@ Refer to [Sectigo documentation](https://www.sectigo.com/knowledge-base/detail/S
 
 ***
 
-### DigiCert (deprecating soon)
-
-* Supports [validity periods](/ssl/reference/certificate-validity-periods/) of 14, 30, and 90 days.
-* [DCV tokens](/ssl/edge-certificates/changing-dcv-method/) are valid for 30 days.
-
-#### Limitations
-
-Due to sanctions imposed by the United States, DigiCert is legally prohibited or restricted from offering its products and services to specific countries or regions. Refer to [Embargoed countries and regions](https://knowledge.digicert.com/solution/Embargoed-Countries-and-Regions.html) for details.
-
-#### Browser compatibility
-
-Refer to [DigiCert documentation](https://www.digicert.com/support/resources/faq/public-trust-and-certificates/are-digicert-tls-ssl-certificates-compatible-with-my-browser).
-
-#### Other resources
-
-[Status page](https://status.digicert.com/)
-
-[DigiCert Root CAs](https://www.digicert.com/kb/digicert-root-certificates.htm): For checking compatibility between chain and client. As explained in [Certificate pinning](/ssl/reference/certificate-pinning/), you should **not** use this list for pinning against.
-
-***
-
 ## CAA records
 
 <Render file="caa-records-definition" /> <br/>
@@ -168,4 +143,3 @@ The following table lists the CAA record content for each CA:
 | Google Trust Services | `pki.goog; cansignhttpexchanges=yes`     |
 | SSL.com               | `ssl.com`                                |
 | Sectigo               | `sectigo.com`                            |
-| DigiCert              | `digicert.com; cansignhttpexchanges=yes` |
