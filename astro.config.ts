@@ -110,6 +110,7 @@ export default defineConfig({
 				"./src/tailwind.css",
 				"./src/title.css",
 			],
+			pagination: false,
 			plugins: [
 				...(runLinkCheck
 					? [
