@@ -18,7 +18,7 @@ Here are some common build errors that may surface in the build logs or general 
 
 `✘ [ERROR] The name in your wrangler.toml file (<Worker name>) must match the name of your Worker. Please update the name field in your wrangler.toml file.`
 
-When connecting a Git repository to your Workers project, the specified name for the Worker on the Cloudflare dashboard must match the `name` argument in the wrangler.toml file located in the specified root directory. If it doesn't match, please update the name field in your wrangler.toml file to match the name of the Worker on the dashboard.
+When connecting a Git repository to your Workers project, the specified name for the Worker on the Cloudflare dashboard must match the `name` argument in the wrangler.toml file located in the specified root directory. If it does not match, update the name field in your wrangler.toml file to match the name of the Worker on the dashboard.
 
 The build system uses the `name` argument in the wrangler.toml to determine which Worker to deploy to Cloudflare's global network. This requirement ensures consistency between the Worker's name on the dashboard and the deployed Worker.
 
@@ -58,4 +58,4 @@ If you are running into errors associated with your Git integration, you can try
 
 ## For additional support
 
-If you discover additional issues or would like to provide feedback, please reach out to us in the [Cloudflare Developers Discord](https://discord.com/channels/595317990191398933/1052656806058528849).
+If you discover additional issues or would like to provide feedback, reach out to us in the [Cloudflare Developers Discord](https://discord.com/channels/595317990191398933/1052656806058528849).
