@@ -201,14 +201,14 @@ As a result, tunnel health may be in different states in different parts of the 
 
 ### Degraded
 
-* When at least 0.1% or more of tunnel health checks fail in the previous five minutes (with at least two failures), Magic Transit considers the link lossy and sets the tunnel state to degraded (assuming the tunnel is not down).
-* Magic Transit requires two failures so that a single lost packet does not trigger a penalty.
-* Magic Transit then immediately sets the tunnel status to degraded and applies a priority penalty.
+- When at least 0.1% or more of tunnel health checks fail in the previous five minutes (with at least two failures), {props.productName} considers the link lossy and sets the tunnel state to degraded (assuming the tunnel is not down).
+- {props.productName} requires two failures so that a single lost packet does not trigger a penalty.
+- {props.productName} then immediately sets the tunnel status to degraded and applies a priority penalty.
 
 ### Down
 
-* When all health checks of at least three samples in the last one second fail, Magic Transit immediately transitions the tunnel from healthy or degraded to down, and applies a priority penalty to routes through that tunnel.
-* A down state determination takes precedence over a degraded state determination. This means that a tunnel can only be one of the following: down, degraded, or healthy.
+- When all health checks of at least three samples in the last one second fail, Magic Transit immediately transitions the tunnel from healthy or degraded to down, and applies a priority penalty to routes through that tunnel.
+- A down state determination takes precedence over a degraded state determination. This means that a tunnel can only be one of the following: down, degraded, or healthy.
 
 When Magic Transit identifies a route that is not healthy, it applies these penalties:
 
