@@ -63,10 +63,42 @@ Build full-stack AI applications with Vectorize, Cloudflare’s vector database.
 </TabItem>
 <TabItem label="Browser Rendering">
 
+Use the [Browser Rendering API](/browser-rendering/) to allow your agents to search the web, take screenshots, and directly interact with websites.
+
+```ts
+
+```
+
+
 </TabItem>
 <TabItem label="AI Gateway">
 
+Use [AI Gateway](/ai-gateway/) to cache, log, retry and run [evals](/ai-gateway/evaluations/) (evaluations) for your agents, no matter where they're deployed.
+
+```py
+from anthropic import Anthropic
+
+anthropic = Anthropic(
+    api_key="<your_anthropic_api_key>",
+    # Route, cache, fallback and log prompt-response pairs between your app
+    # and your AI model provider.
+    base_url="https://gateway.ai.cloudflare.com/v1/${accountId}/${gatewayId}/anthropic"
+)
+
+message = anthropic.messages.create(
+    model="claude-3-opus-20240229",
+    max_tokens=1000,
+    messages=[{
+        "role": "user",
+        "content": "Generate a Cloudflare Worker that returns a simple JSON payload based on a query param",
+    }]
+)
+
+print(message.content)
+```
+
 </TabItem>
+</Tabs>
 
 ## Use your favorite AI framework
 
@@ -230,32 +262,6 @@ export default {
 ```
 
 </TabItem>
-<TabItem label="AI Gateway">
-
-Use [AI Gateway](/ai-gateway/) to cache, log, retry and run [evals](/ai-gateway/evaluations/) (evaluations) for your agents, no matter where they're deployed.
-
-```py
-from anthropic import Anthropic
-
-anthropic = Anthropic(
-    api_key="<your_anthropic_api_key>",
-    # Route, cache, fallback and log prompt-response pairs between your app
-    # and your AI model provider.
-    base_url="https://gateway.ai.cloudflare.com/v1/${accountId}/${gatewayId}/anthropic"
-)
-
-message = anthropic.messages.create(
-    model="claude-3-opus-20240229",
-    max_tokens=1000,
-    messages=[{
-        "role": "user",
-        "content": "Generate a Cloudflare Worker that returns a simple JSON payload based on a query param",
-    }]
-)
-
-print(message.content)
-```
-
-</TabItem>
+</Tabs>
 
 ***
