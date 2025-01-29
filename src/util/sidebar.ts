@@ -225,17 +225,19 @@ async function handleLink(link: Link): Promise<Link> {
 
 	const frontmatter = entry.data;
 	link.order = frontmatter.sidebar.order ?? Number.MAX_VALUE;
+	link.isCurrent = false;
+
+	if (link.href.split("/").filter(Boolean).length === 1) {
+		link.order = 0;
+	}
 
 	if (link.badge) {
 		link.badge = inferBadgeVariant(link.badge);
 	}
 
 	if (frontmatter.external_link) {
-		console.log(link);
-
 		return {
 			...link,
-			isCurrent: false,
 			label: link.label.concat(rehypeExternalLinksOptions.content.value),
 			href: frontmatter.external_link,
 			badge: frontmatter.external_link.startsWith("/api")
@@ -246,8 +248,6 @@ async function handleLink(link: Link): Promise<Link> {
 				: undefined,
 		};
 	}
-
-	link.isCurrent = false;
 
 	return link;
 }
