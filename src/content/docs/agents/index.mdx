@@ -179,7 +179,9 @@ export default {
 </TabItem>
 <TabItem label="Durable Objects">
 
-Ship interactive, real-time agents that can connect to the latest AI models, stream responses, and don't time out while waiting for the latest chain-of-thought models — including `o1` or `deepseek-r1` — to respond.
+Use Durable Objects (/durable-objects/) — stateful, serverless, long-running micro-servers — to ship interactive, real-time agents that can connect to the latest AI models.
+
+Stream responses over [WebSockets](/durable-objects/best-practices/websockets/), and don't time out while waiting for the latest chain-of-thought models — including `o1` or `deepseek-r1` — to respond.
 
 ```ts
 npm i openai
@@ -195,7 +197,7 @@ export interface Env {
 
 export default {
   async fetch(request: Request, env: Env, ctx: ExecutionContext) {
-    if (request.url.endsWith("/websocket")) {
+    if (request.url.endsWith("/agent/chat")) {
       const upgradeHeader = request.headers.get("Upgrade");
       if (!upgradeHeader || upgradeHeader !== "websocket") {
         return Response.json(
@@ -238,14 +240,15 @@ export class DurableAgent extends DurableObject {
     try {
       const openai = new OpenAI({
         apiKey: this.env.OPENAI_API_KEY,
-        timeout: 10 * 60 * 1000, // 10 minute timeout
+        timeout: 10 * 60 * 1000, // Don't let it think TOO long.
       });
 
+      // Stream the response to immediately start sending chunks to the client,
+      // rather than buffering the entire response and making the user wait
       const stream = await openai.chat.completions.create({
         model: "o1",
         messages: [{ role: "user", content: message.toString() }],
-        stream: true, // Stream the response to immediately start sending chunks to the client,
-                     // rather than buffering the entire response and making the user wait
+        stream: true,
       });
 
       for await (const chunk of stream) {
