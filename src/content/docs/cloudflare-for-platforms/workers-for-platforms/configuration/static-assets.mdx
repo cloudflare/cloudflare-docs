@@ -100,7 +100,7 @@ You can compute a SHA-256 digest of the file contents, then truncate or otherwis
 
 If all the files are already stored on Cloudflare, the response will only return the JWT token. If new or updated files are needed, the response will return:
 * `jwt`: An upload token (valid for 1 hour) which will be used in the API request to upload the file contents (Step 2)
-* `buckets`: An array of file-hash groups indicating which files to upload together. Files that have been recently uploaded won’t appear in buckets, since Cloudflare already has them.
+* `buckets`: An array of file-hash groups indicating which files to upload together. Files that have been recently uploaded won't appear in buckets, since Cloudflare already has them.
 
 **Note**: This step alone does not store files on Cloudflare. You must upload the actual file data in the next step.
 
