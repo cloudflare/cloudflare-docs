@@ -11,7 +11,7 @@ languages:
   - TypeScript
 ---
 
-import { Render, PackageManagers } from "~/components";
+import { Render, PackageManagers, WranglerConfig } from "~/components";
 
 This example provides a step-by-step guide on using [event notifications](/r2/buckets/event-notifications/) to capture and store R2 upload logs in a separate bucket.
 
@@ -85,9 +85,7 @@ cd consumer-worker
 
 ## 5. Configure your Worker
 
-In your Worker project's [`wrangler.toml`](/workers/wrangler/configuration/) file, add a [queue consumer](/workers/wrangler/configuration/#queues) and [R2 bucket binding](/workers/wrangler/configuration/#r2-buckets). The queues consumer bindings will register your Worker as a consumer of your future event notifications and the R2 bucket bindings will allow your Worker to access your R2 bucket.
-
-import { WranglerConfig } from "~/components";
+In your Worker project's [`wrangler.toml / wrangler.json` file](/workers/wrangler/configuration/), add a [queue consumer](/workers/wrangler/configuration/#queues) and [R2 bucket binding](/workers/wrangler/configuration/#r2-buckets). The queues consumer bindings will register your Worker as a consumer of your future event notifications and the R2 bucket bindings will allow your Worker to access your R2 bucket.
 
 <WranglerConfig>
 

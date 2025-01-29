@@ -11,6 +11,8 @@ head:
 description: Write Workers in 100% Rust using the [`workers-rs` crate](https://github.com/cloudflare/workers-rs)
 ---
 
+import { WranglerConfig } from "~/components";
+
 Cloudflare Workers provides support for Rust via the [`workers-rs` crate](https://github.com/cloudflare/workers-rs), which makes [Runtime APIs](/workers/runtime-apis) and [bindings](/workers/runtime-apis/bindings/) to developer platform products, such as [Workers KV](/kv/concepts/how-kv-works/), [R2](/r2/), and [Queues](/queues/), available directly from your Rust code.
 
 By following this guide, you will learn how to build a Worker entirely in the Rust programming language.
@@ -44,7 +46,7 @@ cargo generate cloudflare/workers-rs
 Your project will be created in a new directory that you named, in which you will find the following files and folders:
 
 - `Cargo.toml` - The standard project configuration file for Rust's [`Cargo`](https://doc.rust-lang.org/cargo/) package manager. The template pre-populates some best-practice settings for building for Wasm on Workers.
-- `wrangler.toml` - Wrangler configuration, pre-populated with a custom build command to invoke `worker-build` (Refer to [Wrangler Bundling](/workers/languages/rust/#bundling-worker-build)).
+- `wrangler.json` - Wrangler configuration, pre-populated with a custom build command to invoke `worker-build` (Refer to [Wrangler Bundling](/workers/languages/rust/#bundling-worker-build)).
 - `src` - Rust source directory, pre-populated with Hello World Worker.
 
 ## 2. Develop locally
@@ -110,7 +112,7 @@ An object representing the incoming request. This includes methods for accessing
 Provides access to Worker [bindings](/workers/runtime-apis/bindings/).
 
 - [`Secret`](https://github.com/cloudflare/workers-rs/blob/e15f88110d814c2d7759b2368df688433f807694/worker/src/env.rs#L92) - Secret value configured in Cloudflare dashboard or using `wrangler secret put`.
-- [`Var`](https://github.com/cloudflare/workers-rs/blob/e15f88110d814c2d7759b2368df688433f807694/worker/src/env.rs#L92) - Environment variable defined in `wrangler.toml`.
+- [`Var`](https://github.com/cloudflare/workers-rs/blob/e15f88110d814c2d7759b2368df688433f807694/worker/src/env.rs#L92) - Environment variable defined in `wrangler.json`.
 - [`KvStore`](https://docs.rs/worker-kv/latest/worker_kv/struct.KvStore.html) - Workers [KV](/kv/api/) namespace binding.
 - [`ObjectNamespace`](https://docs.rs/worker/latest/worker/durable/struct.ObjectNamespace.html) - [Durable Object](/durable-objects/) binding.
 - [`Fetcher`](https://docs.rs/worker/latest/worker/struct.Fetcher.html) - [Service binding](/workers/runtime-apis/bindings/service-bindings/) to another Worker.
@@ -206,13 +208,11 @@ To run the resulting Wasm binary on Workers, `workers-rs` includes a build tool 
 2. Invokes `web-pack` to minify and bundle the JavaScript code.
 3. Outputs a directory structure that Wrangler can use to bundle and deploy the final Worker.
 
-`worker-build` is invoked by default in the template project using a custom build command specified in `wrangler.toml`.
+`worker-build` is invoked by default in the template project using a custom build command specified in the `wrangler.toml / wrangler.json` file.
 
 ### Binary Size (`wasm-opt`)
 
 Unoptimized Rust Wasm binaries can be large and may exceed Worker bundle size limits or experience long startup times. The template project pre-configures several useful size optimizations in your `Cargo.toml` file:
-
-import { WranglerConfig } from "~/components";
 
 <WranglerConfig>
 

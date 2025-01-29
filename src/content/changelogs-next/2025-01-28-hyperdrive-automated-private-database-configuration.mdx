@@ -1,0 +1,17 @@
+---
+title: Automatic configuration for private databases on Hyperdrive
+description: Hyperdrive now automatically configures your Cloudflare Tunnel to connect to your private database.
+products:
+  - hyperdrive
+date: 2025-01-28T18:00:00Z
+---
+
+Hyperdrive now automatically configures your Cloudflare Tunnel to connect to your private database.
+
+![Automatic configuration of Cloudflare Access and Service Token in the Cloudflare dashboard for Hyperdrive.](~/assets/images/hyperdrive/configuration/hyperdrive-private-database-automatic-configuration.png)
+
+When creating a Hyperdrive configuration for a private database, you only need to provide your database credentials and set up a Cloudflare Tunnel within the private network where your database is accessible. Hyperdrive will automatically create the Cloudflare Access, Service Token, and Policies needed to secure and restrict your Cloudflare Tunnel to the Hyperdrive configuration.
+
+To create a Hyperdrive for a private database, you can follow the [Hyperdrive documentation](/hyperdrive/configuration/connect-to-private-database/). You can still manually create the Cloudflare Access, Service Token, and Policies if you prefer.
+
+This feature is available from the Cloudflare dashboard.

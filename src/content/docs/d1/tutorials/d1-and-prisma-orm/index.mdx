@@ -11,6 +11,8 @@ languages:
   - SQL
 ---
 
+import { WranglerConfig } from "~/components";
+
 ## What is Prisma ORM?
 
 [Prisma ORM](https://www.prisma.io/orm) is a next-generation JavaScript and TypeScript ORM that unlocks a new level of developer experience when working with databases thanks to its intuitive data model, automated migrations, type-safety and auto-completion.
@@ -112,9 +114,7 @@ database_id = "__YOUR_D1_DATABASE_ID__"
 
 You now have a D1 database in your Cloudflare account with a binding to your Cloudflare Worker.
 
-Copy the last part of the command output and paste it into your `wrangler.toml` file. It should look similar to this:
-
-import { WranglerConfig } from "~/components";
+Copy the last part of the command output and paste it into your Wrangler file. It should look similar to this:
 
 <WranglerConfig>
 

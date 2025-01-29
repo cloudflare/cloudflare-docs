@@ -6,27 +6,61 @@ sidebar:
   order: 2
 ---
 
-When connecting your repository, you can configure how to build and deploy your Worker.
+import { DirectoryListing } from "~/components";
 
-## Build Settings
+When connecting your Git repository to your Worker, you can customize the configurations needed to build and deploy your Worker.
 
-Build settings can be found by navigating to **Settings** > **Build** within your Worker. Note that when you update and save build settings, the updated settings will be applied in your next build. The following configurations are available:
+## Build settings
 
-| Setting                                      | Description                                                                                                                                                                                                                                                                                                                                                                                                                     |
-| -------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| **Git account**                              | Select the git account you would like to use. After initial connection, you can continue to use this git account for future projects.                                                                                                                                                                                                                                                                                           |
-| **Git repository**                           | Choose the git repository you would like to connect your Worker to.                                                                                                                                                                                                                                                                                                                                                             |
-| **Git branch**                               | Select the branch you would like Cloudflare to listen to for new commits. This will be defaulted to `main`.                                                                                                                                                                                                                                                                                                                     |
-| **Build command** _(Optional)_ | Set a build command if your project requires a build step. This is necessary, for example, when using a front-end framework such as Astro or Remix.
-| **Deploy command**                           | The deploy command lets you set the **specific** Wrangler command to deploy your Worker. Your deploy command will default to `npx wrangler deploy` but you may customize this command if for example you want to create a [version](/workers/configuration/versions-and-deployments/gradual-deployments/) of your Worker or just run `npm run deploy`. Workers Builds will use the Wrangler version set in your `package json`. |
-| **Root directory** _(Optional)_              | Specify the root directory of your repository. The root directory describes where the build command will be run.                                                                                                                                                                                                                                                                                                                |
-| **API token** _(Optional)_                   | By default, Cloudflare will automatically generate an API token for your account when using Workers Builds. Workers Builds will continue to use this API token for all subsequent projects and builds. Alternatively, you can [create your own API token](/workers/wrangler/migration/v1-to-v2/wrangler-legacy/authentication/#generate-tokens), or select one that you already own.                                            |
-| **Build variables and secrets** _(Optional)_ | Add environment variables and secrets accessible only to your build. Build variables will not be accessible at runtime. If you would like to configure runtime variables you can do so in **Settings** > **Variables & Secrets**                                                                                                                                                                                                |
+Build settings can be found by navigating to **Settings** > **Build** within your Worker.
 
-:::note[API Token Permissions]
-When you connect your Worker to a git repository and configure Workers Builds, Workers Builds will create an API token automatically with the following permissions:
+Note that when you update and save build settings, the updated settings will be applied to your _next_ build. When you _retry_ a build, the build configurations that exist when the build is retried will be applied.
+
+### Overview
+
+| Setting                                                                      | Description                                                                                                                                                                                                                                                                                                                                                                                                                                                                            |
+| ---------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **Git account**                                                              | Select the Git account you would like to use. After the initial connection, you can continue to use this Git account for future projects.                                                                                                                                                                                                                                                                                                                                                  |
+| **Git repository**                                                           | Choose the Git repository you would like to connect your Worker to.                                                                                                                                                                                                                                                                                                                                                                                                                    |
+| **Git branch**                                                               | Select the branch you would like Cloudflare to listen to for new commits. This will be defaulted to `main`.                                                                                                                                                                                                                                                                                                                                                                            |
+| **Build command** _(Optional)_                                               | Set a build command if your project requires a build step (e.g. `npm run build`). This is necessary, for example, when using a [front-end framework](/workers/ci-cd/builds/configuration/#framework-support) such as Next.js or Remix.                                                                                                                                                                                                                                                 |
+| **[Deploy command](/workers/ci-cd/builds/configuration/#deploy-command)**    | The deploy command lets you set the [specific Wrangler command](/workers/wrangler/commands/#deploy) used to deploy your Worker. Your deploy command will default to `npx wrangler deploy` but you may customize this command. Workers Builds will use the Wrangler version set in your `package json`.                                                                                                                                                                                 |
+| **Root directory** _(Optional)_                                              | Specify the path to your project. The root directory defines where the build command will be run and can be helpful in [monorepos](/workers/ci-cd/builds/advanced-setups/#monorepos) to isolate a specific project within the repository for builds.                                                                                                                                                                                                                                   |
+| **[API token](/workers/ci-cd/builds/configuration/#api-token)** _(Optional)_ | The API token is used to authenticate your build request and authorize the upload and deployment of your Worker to Cloudflare. By default, Cloudflare will automatically generate an API token for your account when using Workers Builds, and continue to use this API token for all subsequent builds. Alternatively, you can [create your own API token](/workers/wrangler/migration/v1-to-v2/wrangler-legacy/authentication/#generate-tokens), or select one that you already own. |
+| **Build variables and secrets** _(Optional)_                                 | Add environment variables and secrets accessible only to your build. Build variables will not be accessible at runtime. If you would like to configure runtime variables you can do so in **Settings** > **Variables & Secrets**                                                                                                                                                                                                                                                       |
+
+:::note
+Currently, Workers Builds does not honor the configurations set in [Custom Builds](/workers/wrangler/custom-builds/) within your wrangler.toml file.
+:::
+
+### Deploy command
+
+You can run your deploy command using the package manager of your choice.
+
+If you have added a Wrangler deploy command as a script in your `package.json`, then you can run it by setting it as your deploy command. For example, `npm run deploy`.
+
+Examples of other deploy commands you can set include:
+
+| Example Command                          | Description                                                                                                                                                                                                                                                                     |
+| ---------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `npx wrangler versions upload`           | Upload a [version](/workers/configuration/versions-and-deployments/) of your Worker without deploying it as the Active Deployment.                                                                                                                                              |
+| `npx wrangler deploy --assets ./public/` | Deploy your Worker along with static assets from the specified directory. Alternatively, you can use the [assets binding](/workers/static-assets/binding/).                                                                                                                     |
+| `npx wrangler deploy --env staging`      | If you have a [Wrangler environment](/workers/ci-cd/builds/advanced-setups/#wrangler-environments) Worker, you should set your deploy command with the environment flag. For more details, see [Advanced Setups](/workers/ci-cd/builds/advanced-setups/#wrangler-environments). |
+
+### API token
+
+When you select **Create new token**, a new API token will be created automatically with the following permissions:
 
 - **Account:** Account Settings (read), Workers Scripts (edit), Workers KV Storage (edit), Workers R2 Storage (edit)
 - **Zone:** Workers Routes (edit) for all zones on the account
 - **User:** User Details (read), Memberships (read)
-  :::
+
+You can configure the permissions of this API token by navigating to **My Profile** > **API Tokens** for user tokens.
+
+It is recommended to consistently use the same API token across all uploads and deployments of your Worker to maintain consistent access permissions.
+
+## Framework support
+
+[Static assets](/workers/static-assets/) and [frameworks](/workers/frameworks/) are now supported in Cloudflare Workers. Learn to set up Workers projects and the commands for each framework in the framework guides:
+
+<DirectoryListing folder="workers/frameworks/framework-guides" />

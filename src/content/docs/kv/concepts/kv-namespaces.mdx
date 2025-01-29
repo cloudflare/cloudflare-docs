@@ -5,7 +5,7 @@ sidebar:
   order: 7
 
 ---
-import { Type, MetaInfo } from "~/components";
+import { Type, MetaInfo, WranglerConfig } from "~/components";
 
 A KV namespace is a key-value database replicated to Cloudflare’s global network.
 
@@ -34,8 +34,6 @@ To bind KV namespaces to your Worker, assign an array of the below object to the
   * The ID of the KV namespace used during `wrangler dev`.
 
 Example:
-
-import { WranglerConfig } from "~/components";
 
 <WranglerConfig>
 

@@ -6,9 +6,9 @@ title: Restoring original visitor IPs
 
 import { Render } from "~/components";
 
-When your [website traffic is routed through the Cloudflare network](https://support.cloudflare.com/hc/articles/205177068), we act as a reverse proxy. This allows Cloudflare to speed up page load time by routing packets more efficiently and caching static resources (images, JavaScript, CSS, etc.). As a result, when responding to requests and logging them, your origin server returns a [Cloudflare IP address](https://www.cloudflare.com/ips/).
+When your [website traffic is routed through the Cloudflare network](https://support.cloudflare.com/hc/articles/205177068), we act as a reverse proxy. This allows Cloudflare to speed up page load time by routing packets more efficiently and caching static resources (images, JavaScript, CSS, etc.). As a result, when responding to requests and logging them, your origin server returns a [Cloudflare IP address](https://www.cloudflare.com/ips/).
 
-For example, if you install applications that depend on the incoming IP address of the original visitor, a Cloudflare IP address is logged by default. The original visitor IP address appears in an appended HTTP header called [_CF-Connecting-IP_](/fundamentals/reference/http-request-headers/). By following our [web server instructions](#web-server-instructions), you can log the original visitor IP address at your origin server. If this HTTP header is not available when requests reach your origin server, check your [Transform Rules](/rules/transform/) and [Managed Transforms](/rules/transform/managed-transforms/) configuration.
+For example, if you install applications that depend on the incoming IP address of the original visitor, a Cloudflare IP address is logged by default. The original visitor IP address appears in an appended HTTP header called [`CF-Connecting-IP`](/fundamentals/reference/http-headers/). By following our [web server instructions](#web-server-instructions), you can log the original visitor IP address at your origin server. If this HTTP header is not available when requests reach your origin server, check your [Transform Rules](/rules/transform/) and [Managed Transforms](/rules/transform/managed-transforms/) configuration.
 
 :::note
 
@@ -443,7 +443,7 @@ http-request set-header X-Forwarded-For %[req.hdr(CF-Connecting-IP)] if from_cf 
 
 ### Envoy Gateway
 
-To extract the original client IP for your Envoy Gateway, set a [Client Traffic Policy](https://gateway.envoyproxy.io/latest/tasks/traffic/client-traffic-policy/#configure-client-ip-detection) to look for the custom [`CF-Connecting-IP` header](/fundamentals/reference/http-request-headers/#cf-connecting-ip).
+To extract the original client IP for your Envoy Gateway, set a [Client Traffic Policy](https://gateway.envoyproxy.io/latest/tasks/traffic/client-traffic-policy/#configure-client-ip-detection) to look for the custom [`CF-Connecting-IP` header](/fundamentals/reference/http-headers/#cf-connecting-ip).
 
 ```txt title="Truncated Client Traffic Policy example"
 clientIPDetection:
@@ -458,5 +458,5 @@ For more details, refer to [Custom header original IP detection extension](https
 
 ## Related Resources
 
-- [HTTP request headers](/fundamentals/reference/http-request-headers/)
+- [Cloudflare HTTP headers](/fundamentals/reference/http-headers/)
 - [Transform Rules](/rules/transform/)

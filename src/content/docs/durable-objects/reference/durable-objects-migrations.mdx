@@ -6,7 +6,7 @@ sidebar:
 
 ---
 
-import { GlossaryTooltip } from "~/components";
+import { GlossaryTooltip, WranglerConfig } from "~/components";
 
 A migration is a mapping process from a class name to a runtime state.
 
@@ -41,7 +41,7 @@ The destination class (the class that stored Durable Objects are being transferr
 
 After a rename or transfer migration, requests to the destination Durable Object class will have access to the source Durable Object's stored data.
 
-After a migration, any existing bindings to the original Durable Object class (for example, from other Workers) will automatically forward to the updated destination class. However, any Workers bound to the updated Durable Object class must update their Durable Object binding configuration in the `wrangler.toml` file for their next deployment.
+After a migration, any existing bindings to the original Durable Object class (for example, from other Workers) will automatically forward to the updated destination class. However, any Workers bound to the updated Durable Object class must update their Durable Object binding configuration in the Wrangler file for their next deployment.
 
 
 :::
@@ -56,21 +56,19 @@ Running a delete migration will delete all Durable Objects associated with the d
 
 :::
 
-### Durable Object migrations in `wrangler.toml`
+### Durable Object migrations in the Wrangler configuration file
 
-Migrations are performed through the `[[migrations]]` configurations key in your `wrangler.toml` file.
+Migrations are performed through the `[[migrations]]` configurations key in your Wrangler file.
 
 Migrations require a migration tag, which is defined by the `tag` property in each migration entry.
 
 Migration tags are treated like unique names and are used to determine which migrations have already been applied. Once a given Worker code has a migration tag set on it, all future Worker code deployments must include a migration tag.
 
-The migration list is an ordered array of tables, specified as a top-level key in your `wrangler.toml` file. The migration list is inherited by all environments and cannot be overridden by a specific environment.
+The migration list is an ordered array of tables, specified as a top-level key in your Wrangler file. The migration list is inherited by all environments and cannot be overridden by a specific environment.
 
 All migrations are applied at deployment. Each migration can only be applied once per [environment](/durable-objects/reference/environments/).
 
 To illustrate an example migrations workflow, the `DurableObjectExample` class can be initially defined with:
-
-import { WranglerConfig } from "~/components";
 
 <WranglerConfig>
 
@@ -117,7 +115,7 @@ The new beta version of Durable Objects is available where each Durable Object h
 
 :::
 
-To allow a new Durable Object class to use a SQLite storage backend, use `new_sqlite_classes` on the migration in your Worker's `wrangler.toml` file:
+To allow a new Durable Object class to use a SQLite storage backend, use `new_sqlite_classes` on the migration in your Worker's Wrangler file:
 
 
 

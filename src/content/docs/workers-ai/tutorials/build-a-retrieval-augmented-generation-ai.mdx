@@ -16,7 +16,7 @@ sidebar:
   order: 2
 ---
 
-import { Details, Render, PackageManagers } from "~/components";
+import { Details, Render, PackageManagers, WranglerConfig } from "~/components";
 
 This guide will instruct you through setting up and deploying your first application with Cloudflare AI. You will build a fully-featured AI-powered application, using tools like Workers AI, Vectorize, D1, and Cloudflare Workers.
 
@@ -52,7 +52,7 @@ In your project directory, C3 has generated several files.
 
 <Details header="What files did C3 create?">
 
-1. `wrangler.toml`: Your [Wrangler](/workers/wrangler/configuration/#sample-wrangler-configuration) configuration file.
+1. `wrangler.json`: Your [Wrangler](/workers/wrangler/configuration/#sample-wrangler-configuration) configuration file.
 2. `worker.js` (in `/src`): A minimal `'Hello World!'` Worker written in [ES module](/workers/reference/migrate-to-module-workers/) syntax.
 3. `package.json`: A minimal Node dependencies configuration file.
 4. `package-lock.json`: Refer to [`npm` documentation on `package-lock.json`](https://docs.npmjs.com/cli/v9/configuring-npm/package-lock-json).
@@ -88,11 +88,9 @@ You will now be able to go to [http://localhost:8787](http://localhost:8787) to 
 
 ## 3. Adding the AI binding
 
-To begin using Cloudflare's AI products, you can add the `ai` block to `wrangler.toml`. This will set up a binding to Cloudflare's AI models in your code that you can use to interact with the available AI models on the platform.
+To begin using Cloudflare's AI products, you can add the `ai` block to the `wrangler.toml / wrangler.json` file. This will set up a binding to Cloudflare's AI models in your code that you can use to interact with the available AI models on the platform.
 
 This example features the [`@cf/meta/llama-3-8b-instruct` model](/workers-ai/models/llama-3-8b-instruct/), which generates text.
-
-import { WranglerConfig } from "~/components";
 
 <WranglerConfig>
 
@@ -145,7 +143,7 @@ To begin using Vectorize, create a new embeddings index using `wrangler`. This i
 npx wrangler vectorize create vector-index --dimensions=768 --metric=cosine
 ```
 
-Then, add the configuration details for your new Vectorize index to `wrangler.toml`:
+Then, add the configuration details for your new Vectorize index to the `wrangler.toml / wrangler.json` file:
 
 
 
@@ -171,9 +169,7 @@ Create a new D1 database using `wrangler`:
 npx wrangler d1 create database
 ```
 
-Then, paste the configuration details output from the previous command into `wrangler.toml`:
-
-
+Then, paste the configuration details output from the previous command into the `wrangler.toml / wrangler.json` file:
 
 <WranglerConfig>
 

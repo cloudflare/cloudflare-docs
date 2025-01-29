@@ -9,16 +9,18 @@ head:
 
 ---
 
+import { WranglerConfig } from "~/components";
+
 Cloudflare Queues can be configured using [Wrangler](/workers/wrangler/install-and-update/), the command-line interface for Cloudflare's Developer Platform, which includes [Workers](/workers/), [R2](/r2/), and other developer products.
 
-Each Worker has a `wrangler.toml` configuration file that specifies environment variables, triggers, and resources, such as a Queue. To enable Worker-to-resource communication, you must set up a [binding](/workers/runtime-apis/bindings/) in your Worker project's `wrangler.toml` file.
+Each Worker has a `wrangler.toml / wrangler.json` file that specifies environment variables, triggers, and resources, such as a Queue. To enable Worker-to-resource communication, you must set up a [binding](/workers/runtime-apis/bindings/) in your Worker project's Wrangler file.
 
 Use the options below to configure your queue.
 
 :::note
 
 
-Below are options for Queues, refer to the Wrangler documentation for a full reference of [`wrangler.toml`](/workers/wrangler/configuration/).
+Below are options for Queues, refer to the Wrangler documentation for a full reference of the [`wrangler.toml / wrangler.json` file](/workers/wrangler/configuration/).
 
 
 :::
@@ -27,9 +29,7 @@ Below are options for Queues, refer to the Wrangler documentation for a full ref
 
 A producer is a [Cloudflare Worker](/workers/) that writes to one or more queues. A producer can accept messages over HTTP, asynchronously write messages when handling requests, and/or write to a queue from within a [Durable Object](/durable-objects/). Any Worker can write to a queue.
 
-To produce to a queue, set up a binding in your `wrangler.toml` file. These options should be used when a Worker wants to send messages to a queue.
-
-import { WranglerConfig } from "~/components";
+To produce to a queue, set up a binding in your Wrangler file. These options should be used when a Worker wants to send messages to a queue.
 
 <WranglerConfig>
 
@@ -57,7 +57,7 @@ import { WranglerConfig } from "~/components";
 
 ## Workers
 
-To consume messages from one or more queues, set up a binding in your `wrangler.toml` file. These options should be used when a Worker wants to receive messages from a queue.
+To consume messages from one or more queues, set up a binding in your Wrangler file. These options should be used when a Worker wants to receive messages from a queue.
 
 
 

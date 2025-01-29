@@ -15,11 +15,10 @@ import {
 	Render,
 	TabItem,
 	Tabs,
+	WranglerConfig
 } from "~/components";
 
-import { WranglerConfig } from "~/components";
-
-Configuring a Worker with assets requires specifying a [directory](/workers/static-assets/binding/#directory) and, optionally, an [assets binding](/workers/static-assets/binding/), in your Worker's `wrangler.toml` file. The [assets binding](/workers/static-assets/binding/) allows you to dynamically fetch assets from within your Worker script (e.g. `env.ASSETS.fetch()`), similarly to how you might with a make a `fetch()` call with a [Service binding](/workers/runtime-apis/bindings/service-bindings/http/).
+Configuring a Worker with assets requires specifying a [directory](/workers/static-assets/binding/#directory) and, optionally, an [assets binding](/workers/static-assets/binding/), in your Worker's Wrangler file. The [assets binding](/workers/static-assets/binding/) allows you to dynamically fetch assets from within your Worker script (e.g. `env.ASSETS.fetch()`), similarly to how you might with a make a `fetch()` call with a [Service binding](/workers/runtime-apis/bindings/service-bindings/http/).
 
 Only one collection of static assets can be configured in each Worker.
 

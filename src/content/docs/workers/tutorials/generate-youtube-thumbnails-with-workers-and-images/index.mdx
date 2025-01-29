@@ -11,7 +11,7 @@ languages:
   - Rust
 ---
 
-import { Render, PackageManagers } from "~/components";
+import { Render, PackageManagers, WranglerConfig } from "~/components";
 
 In this tutorial, you will learn how to programmatically generate a custom YouTube thumbnail using Cloudflare Workers and Cloudflare Image Resizing. You may want to generate a custom YouTube thumbnail to customize the thumbnail's design, call-to-actions and images used to encourage more viewers to watch your video.
 
@@ -335,9 +335,7 @@ Adding a query parameter with custom text, you should receive:
 
 ![Follow the instructions above to receive an output image](~/assets/images/workers/tutorials/youtube-thumbnails/build-serverles.png)
 
-To deploy your Worker, open your `wrangler.toml` file and update the `name` key with your project's name. Below is an example with this tutorial's project name:
-
-import { WranglerConfig } from "~/components";
+To deploy your Worker, open your Wrangler file and update the `name` key with your project's name. Below is an example with this tutorial's project name:
 
 <WranglerConfig>
 
@@ -498,7 +496,7 @@ fetch(imageURL, {
 
 Image transformations can only be tested when you deploy your Worker.
 
-To deploy your Worker, open your `wrangler.toml` file and update the `name` key with your project's name. Below is an example with this tutorial's project name:
+To deploy your Worker, open your Wrangler file and update the `name` key with your project's name. Below is an example with this tutorial's project name:
 
 
 

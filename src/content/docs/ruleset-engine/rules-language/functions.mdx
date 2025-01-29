@@ -347,6 +347,9 @@ url_decode("%2520", "r")   will return " "
 
 // Using url_decode() with the any() function:
 any(url_decode(http.request.body.form.values[*])[*] contains "an xss attack")
+
+// Using the u option to match a specific alphabet 
+url_decode(http.request.uri.path) matches "(?u)\p{Hangul}+"
 ```
 
 ### `uuidv4`

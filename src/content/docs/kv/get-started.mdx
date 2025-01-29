@@ -61,13 +61,13 @@ Create a new Worker to read and write to your KV namespace.
     		- testconfig.json
     		- vitest.config.mts
     		- worker-configuration.d.ts
-    		- **wrangler.toml**
+    		- **wrangler.json**
     </FileTree>
 
     Your new `kv-tutorial` directory includes:
 
     - A `"Hello World"` [Worker](/workers/get-started/guide/#3-write-code) in `index.ts`.
-    - A [`wrangler.toml`](/workers/wrangler/configuration/) configuration file. `wrangler.toml` is how your `kv-tutorial` Worker accesses your kv database.
+    - A [`wrangler.json`](/workers/wrangler/configuration/) configuration file. `wrangler.json` is how your `kv-tutorial` Worker accesses your kv database.
 
 2. Change into the directory you just created for your Worker project:
 
@@ -119,7 +119,7 @@ To create a KV namespace via Wrangler:
 	npx wrangler kv namespace create <BINDING_NAME>
 	```
 
-	The `npx wrangler kv namespace create <BINDING_NAME>` subcommand takes a new binding name as its argument. A KV namespace is created using a concatenation of your Worker’s name (from your `wrangler.toml` file) and the binding name you provide. A `BINDING_ID` is randomly generated for you.
+	The `npx wrangler kv namespace create <BINDING_NAME>` subcommand takes a new binding name as its argument. A KV namespace is created using a concatenation of your Worker’s name (from your Wrangler file) and the binding name you provide. A `BINDING_ID` is randomly generated for you.
 
 	For this tutorial, use the binding name `BINDING_NAME`.
 
@@ -161,7 +161,7 @@ To bind your KV namespace to your Worker:
 
 <Tabs syncKey='CLIvsDash'><TabItem label='CLI'>
 <Steps>
-1. In your `wrangler.toml` file, add the following with the values generated in your terminal from [step 2](/kv/get-started/#2-create-a-kv-namespace):
+1. In your Wrangler file, add the following with the values generated in your terminal from [step 2](/kv/get-started/#2-create-a-kv-namespace):
 
 	<WranglerConfig>
 
@@ -182,7 +182,7 @@ To bind your KV namespace to your Worker:
 
 :::note[Bindings]
 
-A binding is how your Worker interacts with external resources such as [KV namespaces](/kv/concepts/kv-namespaces/). A binding is a runtime variable that the Workers runtime provides to your code. You can declare a variable name in your `wrangler.toml` file that binds to these resources at runtime, and interact with them through this variable. Every binding's variable name and behavior is determined by you when deploying the Worker.
+A binding is how your Worker interacts with external resources such as [KV namespaces](/kv/concepts/kv-namespaces/). A binding is a runtime variable that the Workers runtime provides to your code. You can declare a variable name in your Wrangler file that binds to these resources at runtime, and interact with them through this variable. Every binding's variable name and behavior is determined by you when deploying the Worker.
 
 Refer to [Environment](/kv/reference/environments/) for more information.
 
@@ -315,7 +315,7 @@ You can view key-value pairs directly from the dashboard.
 
 When using [`wrangler dev`](/workers/wrangler/commands/#dev) to develop locally, Wrangler defaults to using a local version of KV to avoid interfering with any of your live production data in KV. This means that reading keys that you have not written locally returns null.
 
-To have `wrangler dev` connect to your Workers KV namespace running on Cloudflare's global network, call `wrangler dev --remote` instead. This uses the `preview_id` of the KV binding configuration in the `wrangler.toml` file. Refer to the [KV binding docs](/kv/concepts/kv-bindings/#use-kv-bindings-when-developing-locally) for more information.
+To have `wrangler dev` connect to your Workers KV namespace running on Cloudflare's global network, call `wrangler dev --remote` instead. This uses the `preview_id` of the KV binding configuration in the Wrangler file. Refer to the [KV binding docs](/kv/concepts/kv-bindings/#use-kv-bindings-when-developing-locally) for more information.
 
 :::
 

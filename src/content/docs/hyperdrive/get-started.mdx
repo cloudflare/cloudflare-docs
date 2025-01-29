@@ -72,7 +72,7 @@ Create a new project named `hyperdrive-tutorial` by running:
 This will create a new `hyperdrive-tutorial` directory. Your new `hyperdrive-tutorial` directory will include:
 
 - A `"Hello World"` [Worker](/workers/get-started/guide/#3-write-code) at `src/index.ts`.
-- A [`wrangler.toml`](/workers/wrangler/configuration/) configuration file. `wrangler.toml` is how your `hyperdrive-tutorial` Worker will connect to Hyperdrive.
+- A [`wrangler.json`](/workers/wrangler/configuration/) configuration file. `wrangler.json` is how your `hyperdrive-tutorial` Worker will connect to Hyperdrive.
 
 ### Enable Node.js compatibility
 
@@ -100,7 +100,7 @@ cd hyperdrive-tutorial
 
 :::note
 
-Support for the new `hyperdrive` commands in the wrangler CLI requires a wrangler version of `3.10.0` or later. You can use `npx wrangler@latest` to always ensure you are using the latest version of wrangler.
+Support for the new `hyperdrive` commands in the wrangler CLI requires a wrangler version of `3.10.0` or later. You can use `npx wrangler@latest` to always ensure you are using the latest version of Wrangler.
 
 :::
 
@@ -182,7 +182,7 @@ Populate your `index.ts` file with the following code:
 import postgres from "postgres";
 
 export interface Env {
-	// If you set another name in wrangler.toml as the value for 'binding',
+	// If you set another name in the Wrangler config file as the value for 'binding',
 	// replace "HYPERDRIVE" with the variable name you defined.
 	HYPERDRIVE: Hyperdrive;
 }

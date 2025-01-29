@@ -395,6 +395,18 @@ entries:
     difficulty: Beginner
     content_type: 🎥 Video
     pcx_content_type: tutorial    
+  - link: https://developers.cloudflare.com/workers-ai/tutorials/image-generation-playground/
+    title: How to Build an Image Generator using Workers AI
+    description: In this series of videos, learn how to build an AI Image Playground, add new AI Models and store your generated images using R2.
+    tags: [Workers, R2, Workers AI]
+    languages: [TypeScript]
+    products: [Workers, R2, Workers AI]
+    cloudflare: true
+    author: kristian
+    updated: 2025-01-29
+    difficulty: Beginner
+    content_type: 🎥 Video
+    pcx_content_type: tutorial    
   # - link:
   #   title:
   #   description:
@@ -407,4 +419,3 @@ entries:
   #   difficulty: Intermediate
   #   content_type: 🎥 Video
   #   pcx_content_type: tutorial
-
