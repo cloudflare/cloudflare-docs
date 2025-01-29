@@ -57,7 +57,7 @@ Tunnel health checks make use of ICMP probes sent from the Cloudflare side of th
 - **Cloudflare Dashboard:** In your Magic IPsec tunnel configuration as the address of the virtual tunnel interface (VTI) (so that Cloudflare knows what address to send probes from). Cloudflare requires this address in CIDR notation with a `/31` netmask.
 - **Azure Portal:** In your VPN site's address space (so that Azure routes probe responses back over the tunnel). Azure requires this address in CIDR notation with a `/32` netmask.
 
-Cloudflare recommends customers select a unique `/31` subnet ([RFC 1918 — Address Allocation for Private Internets](https://datatracker.ietf.org/doc/html/rfc1918)) for each IPsec tunnel which is treated as a Point-to-Point Link and provides the ideal addressing scheme to satisfy both requirements.
+Cloudflare recommends customers select a unique `/31` subnet ([RFC 1918 — Address Allocation for Private Internets](https://datatracker.ietf.org/doc/html/rfc1918)) for each IPsec tunnel which is treated as a point-to-point link and provides the ideal addressing scheme to satisfy both requirements.
 
 Example:
 
