@@ -231,8 +231,11 @@ async function handleLink(link: Link): Promise<Link> {
 	}
 
 	if (frontmatter.external_link) {
+		console.log(link);
+
 		return {
 			...link,
+			isCurrent: false,
 			label: link.label.concat(rehypeExternalLinksOptions.content.value),
 			href: frontmatter.external_link,
 			badge: frontmatter.external_link.startsWith("/api")
