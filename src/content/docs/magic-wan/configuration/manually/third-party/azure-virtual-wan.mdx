@@ -7,13 +7,13 @@ This tutorial provides information on how to connect Magic WAN to a Microsoft Az
 
 ## Prerequisites
 
-You will need to have an existing Resource group, Virtual Network, and Virtual Machine created in your Azure account. Refer to [Microsoft's documentation ↗](https://learn.microsoft.com/en-us/azure/virtual-network/) to learn more on how to create these.
+You will need to have an existing Resource group, Virtual Network, and Virtual Machine created in your Azure account. Refer to [Microsoft's documentation](https://learn.microsoft.com/en-us/azure/virtual-network/) to learn more on how to create these.
 
 ## Start Azure Configuration
 
 ### 1. Create a Virtual WAN
 
-In order to connect one or more VNets to Magic WAN via a Virtual WAN hub, you first need to create a Virtual WAN (vWAN) resource representing your Azure network. If you already have a vWAN that you wish to connect to Magic WAN, continue to the next step.
+In order to connect one or more VNets to Magic WAN via a Virtual WAN hub, you first need to create a Virtual WAN (vWAN) resource representing your Azure network. If you already have a vWAN that you wish to connect to Magic WAN, continue to the next step. Refer to [Microsoft's documentation](https://learn.microsoft.com/en-us/azure/virtual-wan/virtual-wan-site-to-site-portal#openvwan) to learn more.
 
 1. Go to your **Virtual WANs** page.
 2. Select the option to create a **Virtual WAN**.
@@ -21,7 +21,7 @@ In order to connect one or more VNets to Magic WAN via a Virtual WAN hub, you fi
 
 ### 2. Create a Virtual WAN Hub
 
-Using traditional hub and spoke terminology, a Virtual WAN Hub deployed within a vWAN is the hub to which your VNet(s) and Magic WAN attach as spokes. The vWAN hub deployed in this step will contain a VPN Gateway for connecting to Magic WAN. Refer to [Microsoft's documentation](https://learn.microsoft.com/en-us/azure/virtual-wan/virtual-wan-site-to-site-portal#openvwan) to learn more.
+Using traditional hub and spoke terminology, a Virtual WAN Hub deployed within a vWAN is the hub to which your VNet(s) and Magic WAN attach as spokes. The vWAN hub deployed in this step will contain a VPN Gateway for connecting to Magic WAN.
 
 1. Create a **Virtual WAN Hub**.
 2. In **Basics**:
@@ -33,7 +33,7 @@ Using traditional hub and spoke terminology, a Virtual WAN Hub deployed within a
 4. Select **Create**. Note that the deployment time for the vWAN Hub and VPN Gateway may take upwards of 30 minutes.
 5. After the VPN Gateway has finished provisioning, go to **Virtual WAN** > **Hubs** > **Your vHub** > **Connectivity** > **VPN (Site to site)**.
 6. In the **Essentials** dropdown select the VPN Gateway listed.
-7. Select the JSON View for the VPN Gateway and take note of the JSON attributes at the paths `properties.ipConfigurations[0].publicIpAddress` and  `properties.ipConfigurations[1].publicIpAddress\`. These will be the customer endpoints needed when configuring IPsec tunnels for Magic WAN.
+7. Select the JSON View for the VPN Gateway and take note of the JSON attributes at the paths `properties.ipConfigurations[0].publicIpAddress` and  `properties.ipConfigurations[1].publicIpAddress`. These will be the customer endpoints needed when configuring IPsec tunnels for Magic WAN.
 
 ### 3. Create a VPN Site
 
