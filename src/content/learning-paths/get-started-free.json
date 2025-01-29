@@ -1,6 +1,6 @@
 {
 	"title": "Get started (Free plan)",
-	"path": "/learning-paths/get-started-free/",
+	"path": "/learning-paths/get-started-free/onboarding/",
 	"priority": 3,
 	"description": "Learn how you can get the most out of your Free plan.",
 	"products": ["Cache", "DNS", "SSL/TLS", "WAF"],

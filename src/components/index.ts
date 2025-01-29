@@ -25,7 +25,6 @@ export { default as GlossaryTooltip } from "./GlossaryTooltip.astro";
 export { default as HomepageHero } from "./HomepageHero.astro";
 export { default as InlineBadge } from "./InlineBadge.astro";
 export { default as LastReviewed } from "./LastReviewed.astro";
-export { default as LearningPath } from "./LearningPath.astro";
 export { default as LinkTitleCard } from "./LinkTitleCard.astro";
 export { default as ListExamples } from "./ListExamples.astro";
 export { default as ListTutorials } from "./ListTutorials.astro";
