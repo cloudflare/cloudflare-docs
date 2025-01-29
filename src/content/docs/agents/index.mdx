@@ -18,6 +18,8 @@ import {
 	Plan,
 	RelatedProduct,
 	Render,
+	TabItem,
+	Tabs,
 } from "~/components";
 
 <Plan type="all" />
@@ -30,10 +32,11 @@ Agents are deployed to Cloudflare's [Workers](/workers/) platform using [Durable
 	Get started
 </LinkButton>
 
-## Why build agents on Cloudflare? 
-- *Designed for durable execution:* [Durable Objects](/durable-objects/) and [Workflows](/workflows) are built for a programming model that enables guaranteed execution for async tasks like long-running deep thinking LLM calls, human-in-the-loop, or unreliable API calls. 
-- *Non I/O bound pricing:* don't pay for long-running processes when your code is not executing. Cloudflare Workers is designed to scale down and [only charge you for CPU time](https://blog.cloudflare.com/workers-pricing-scale-to-zero/), as opposed to wall-clock time. 
-- *Scalable, and reliable, without compromising on performance:* by running on Cloudflare's network, agents can execute tasks close to the user without introducing latency for real-time experiences. 
+## Why build agents on Cloudflare?
+
+- *Designed for durable execution:* [Durable Objects](/durable-objects/) and [Workflows](/workflows) are built for a programming model that enables guaranteed execution for async tasks like long-running deep thinking LLM calls, human-in-the-loop, or unreliable API calls.
+- *Non I/O bound pricing:* don't pay for long-running processes when your code is not executing. Cloudflare Workers is designed to scale down and [only charge you for CPU time](https://blog.cloudflare.com/workers-pricing-scale-to-zero/), as opposed to wall-clock time.
+- *Scalable, and reliable, without compromising on performance:* by running on Cloudflare's network, agents can execute tasks close to the user without introducing latency for real-time experiences.
 
 ## All the products you need in one platform
 
@@ -48,48 +51,211 @@ Observe and control your AI applications with caching, rate limiting, request re
 Build full-stack AI applications with Vectorize, Cloudflare’s vector database. Adding Vectorize enables you to perform tasks such as semantic search, recommendations, anomaly detection or can be used to provide context and memory to an LLM.
 
 
-</RelatedProduct>
+## Start Building
 
-<RelatedProduct header="Workers" href="/workers/" product="workers">
+<Tabs syncKey="agents-products">
+<TabItem label="Workflows">
 
-Build serverless applications and deploy instantly across the globe for exceptional performance, reliability, and scale.
-
-
-</RelatedProduct>
-
-<RelatedProduct header="Pages" href="/pages/" product="pages">
-
-Create full-stack applications that are instantly deployed to the Cloudflare global network.
+</TabItem>
+<TabItem label="Durable Objects">
 
 
-</RelatedProduct>
+</TabItem>
+<TabItem label="Browser Rendering">
 
-<RelatedProduct header="R2" href="/r2/" product="r2">
+</TabItem>
+<TabItem label="AI Gateway">
 
-Store large amounts of unstructured data without the costly egress bandwidth fees associated with typical cloud storage services.
+</TabItem>
 
+## Use your favorite AI framework
 
-</RelatedProduct>
+Build agents using your favorite AI frameworks, and deploy it directly to [Cloudflare Workers](/workers/).
 
-<RelatedProduct header="D1" href="/d1/" product="d1">
+<Tabs syncKey="agents-frameworks">
+<TabItem label="LangChain">
 
-Create new serverless SQL databases to query from your Workers and Pages projects.
+Use [LangChain](https://js.langchain.com/docs/integrations/text_embedding/cloudflare_ai/) to build Retrieval-Augmented Generation (RAG) applications using [Workers AI](/workers-ai/) and [Vectorize](/vectorize/).
 
+Give your agents more context and the ability to search across content, reply to user queries, and expand their domain knowledge.
 
-</RelatedProduct>
+```sh
+npm i @langchain/cloudflare hono
+```
 
-<RelatedProduct header="Durable Objects" href="/durable-objects/" product="durable-objects">
+```ts
+import {
+  CloudflareVectorizeStore,
+  CloudflareWorkersAIEmbeddings
+} from "@langchain/cloudflare";
+import { VectorizeIndex } from "@cloudflare/workers-types";
+import { Ai } from "@cloudflare/ai";
+import { Hono } from "hono";
 
-A globally distributed coordination API with strongly consistent storage.
+export interface Env {
+  VECTORIZE_INDEX: VectorizeIndex;
+  AI: Ai;
+}
 
+const app = new Hono<{ Bindings: Env }>();
 
-</RelatedProduct>
+app.get("/", async (c) => {
+  const embeddings = new CloudflareWorkersAIEmbeddings({
+    binding: c.env.AI,
+    model: "@cf/baai/bge-small-en-v1.5",
+  });
 
-<RelatedProduct header="KV" href="/kv/" product="kv">
+  const store = new CloudflareVectorizeStore(embeddings, {
+    index: c.env.VECTORIZE_INDEX,
+  });
 
-Create a global, low-latency, key-value data storage.
+  const results = await store.similaritySearch("hello", 5);
+  return c.json(results);
+});
 
+app.post("/load", async (c) => {
+  const embeddings = new CloudflareWorkersAIEmbeddings({
+    binding: c.env.AI,
+    model: "@cf/baai/bge-small-en-v1.5",
+  });
 
-</RelatedProduct>
+  const store = new CloudflareVectorizeStore(embeddings, {
+    index: c.env.VECTORIZE_INDEX,
+  });
+
+  const documents = [
+    { pageContent: "hello", metadata: {} },
+    { pageContent: "world", metadata: {} },
+    { pageContent: "hi", metadata: {} }
+  ];
+
+  await store.addDocuments(documents, {
+    ids: ["id1", "id2", "id3"]
+  });
+
+  return c.json({ success: true });
+});
+
+app.delete("/clear", async (c) => {
+  const embeddings = new CloudflareWorkersAIEmbeddings({
+    binding: c.env.AI,
+    model: "@cf/baai/bge-small-en-v1.5",
+  });
+
+  const store = new CloudflareVectorizeStore(embeddings, {
+    index: c.env.VECTORIZE_INDEX,
+  });
+
+  await store.delete({ ids: ["id1", "id2", "id3"] });
+  return c.json({ success: true });
+});
+
+export default app;
+```
+
+</TabItem>
+<TabItem label="AI SDK">
+
+Ship faster with the [AI SDK](https://sdk.vercel.ai/docs/introduction): make it easier to generate text, tool call and/or get structured output from your AI models (and then deploy it [Workers](/workers/).
+
+```sh
+npm i ai workers-ai-provider
+```
+
+```ts
+import { createWorkersAI } from 'workers-ai-provider';
+import { streamText } from 'ai';
+
+type Env = {
+  AI: Ai;
+};
+
+export default {
+  async fetch(_: Request, env: Env) {
+    const workersai = createWorkersAI({ binding: env.AI });
+    const result = streamText({
+      model: workersai('@cf/meta/llama-3.2-3b-instruct'),
+      prompt: 'Write short essay on why you like Cloudflare Durable Objects.',
+    });
+
+    return result.toTextStreamResponse({
+      headers: {
+        'Content-Type': 'text/x-unknown',
+        'content-encoding': 'identity',
+        'transfer-encoding': 'chunked',
+      },
+    });
+  },
+};
+```
+
+</TabItem>
+<TabItem label="OpenAI SDK">
+
+Use any model provider with OpenAI compatible endpoints, including [ChatGPT](https://platform.openai.com/docs/quickstart), [DeepSeek](https://api-docs.deepseek.com/) and [Workers AI](/workers-ai/configuration/open-ai-compatibility/), directly from Cloudflare Workers.
+
+```sh
+npm i openai
+```
+
+```ts
+import OpenAI from "openai";
+
+export interface Env {
+  OPENAI_API_KEY: string;
+}
+
+export default {
+  async fetch(request: Request, env: Env) {
+    const url = new URL(request.url);
+    const prompt = url.searchParams.get('prompt') || "Make some robot noises";
+
+    const openai = new OpenAI({
+      apiKey: env.OPENAI_API_KEY
+    });
+
+    const chatCompletion = await openai.chat.completions.create({
+      messages: [{ role: "user", content: prompt }],
+      model: "gpt-3.5-turbo",
+    });
+
+    const embeddings = await openai.embeddings.create({
+      model: "text-embedding-ada-002",
+      input: "Cloudflare Agents documentation",
+    });
+
+    return new Response(JSON.stringify({ chatCompletion, embeddings }));
+  }
+}
+```
+
+</TabItem>
+<TabItem label="AI Gateway">
+
+Use [AI Gateway](/ai-gateway/) to cache, log, retry and run [evals](/ai-gateway/evaluations/) (evaluations) for your agents, no matter where they're deployed.
+
+```py
+from anthropic import Anthropic
+
+anthropic = Anthropic(
+    api_key="<your_anthropic_api_key>",
+    # Route, cache, fallback and log prompt-response pairs between your app
+    # and your AI model provider.
+    base_url="https://gateway.ai.cloudflare.com/v1/${accountId}/${gatewayId}/anthropic"
+)
+
+message = anthropic.messages.create(
+    model="claude-3-opus-20240229",
+    max_tokens=1000,
+    messages=[{
+        "role": "user",
+        "content": "Generate a Cloudflare Worker that returns a simple JSON payload based on a query param",
+    }]
+)
+
+print(message.content)
+```
+
+</TabItem>
 
 ***
