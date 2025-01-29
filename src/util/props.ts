@@ -5,10 +5,12 @@ import { remark } from "remark";
 import strip from "strip-markdown";
 import { rehypeExternalLinksOptions } from "~/plugins/rehype/external-links";
 
+type TableOfContentsItems = NonNullable<Props["toc"]>["items"];
+
 export async function generateTableOfContents(
 	html: string,
-): Promise<NonNullable<Props["toc"]>["items"]> {
-	const items = [
+): Promise<TableOfContentsItems> {
+	const items: TableOfContentsItems = [
 		{
 			text: "Overview",
 			slug: "_top",
