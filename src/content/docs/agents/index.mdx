@@ -28,7 +28,7 @@ Build AI-powered agents that can autonomously perform tasks, persist state, brow
 - **Designed for durable execution:** [Durable Objects](/durable-objects/) and [Workflows](/workflows) are built for a programming model that enables guaranteed execution for async tasks like long-running deep thinking LLM calls, human-in-the-loop, or unreliable API calls.
 - **Scalable, and reliable, without compromising on performance:** by running on Cloudflare's network, agents can execute tasks close to the user without introducing latency for real-time experiences.
 
-## Start Building
+## Start building
 
 <Tabs syncKey="agents-products">
 <TabItem label="Workflows">
@@ -41,7 +41,7 @@ cd workflows-starter
 npm i resend
 ```
 
-```ts collapse={30,1000}
+```ts collapse={30-1000}
 import { WorkflowEntrypoint, WorkflowStep, WorkflowEvent } from 'cloudflare:workers';
 import { Resend } from 'resend';
 
@@ -163,7 +163,7 @@ Stream responses over [WebSockets](/durable-objects/best-practices/websockets/),
 npm i openai
 ```
 
-```ts collapse={30,1000}
+```ts collapse={30-1000}
 import { DurableObject } from "cloudflare:workers";
 
 export interface Env {
@@ -258,7 +258,7 @@ Use the [Browser Rendering API](/browser-rendering/) to allow your agents to sea
 npm install @cloudflare/puppeteer --save-dev
 ```
 
-```ts collapse={30,1000}
+```ts collapse={30-1000}
 import puppeteer from "@cloudflare/puppeteer";
 
 interface Env {
@@ -305,7 +305,7 @@ export default {
 
 Use [AI Gateway](/ai-gateway/) to cache, log, retry and run [evals](/ai-gateway/evaluations/) (evaluations) for your agents, no matter where they're deployed.
 
-```py collapse={30,1000}
+```py collapse={30-1000}
 from anthropic import Anthropic
 
 anthropic = Anthropic(
@@ -345,7 +345,7 @@ Give your agents more context and the ability to search across content, reply to
 npm i @langchain/cloudflare hono
 ```
 
-```ts collapse={30,1000}
+```ts collapse={30-1000}
 import {
   CloudflareVectorizeStore,
   CloudflareWorkersAIEmbeddings
@@ -424,7 +424,7 @@ Ship faster with the [AI SDK](https://sdk.vercel.ai/docs/introduction): make it 
 npm i ai workers-ai-provider
 ```
 
-```ts collapse={30,1000}
+```ts collapse={30-1000}
 import { createWorkersAI } from 'workers-ai-provider';
 import { streamText } from 'ai';
 
@@ -460,7 +460,7 @@ Use any model provider with OpenAI compatible endpoints, including [ChatGPT](htt
 npm i openai
 ```
 
-```ts collapse={30,1000}
+```ts collapse={30-1000}
 import OpenAI from "openai";
 
 export interface Env {
