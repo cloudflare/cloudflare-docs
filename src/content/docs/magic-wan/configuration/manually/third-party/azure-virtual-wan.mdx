@@ -9,13 +9,13 @@ This tutorial provides information on how to connect Magic WAN to a Microsoft Az
 
 You will need to have an existing Resource group, Virtual Network, and Virtual Machine created in your Azure account. Refer to [Microsoft's documentation](https://learn.microsoft.com/en-us/azure/virtual-network/) to learn more on how to create these.
 
-## Start Azure Configuration
+## Start Azure configuration
 
 ### 1. Create a Virtual WAN
 
-In order to connect one or more VNets to Magic WAN via a Virtual WAN hub, you first need to create a Virtual WAN (vWAN) resource representing your Azure network. If you already have a vWAN that you wish to connect to Magic WAN, continue to the next step. Refer to [Microsoft's documentation](https://learn.microsoft.com/en-us/azure/virtual-wan/virtual-wan-site-to-site-portal#openvwan) to learn more.
+To connect one or more VNets to Magic WAN via a Virtual WAN hub, you first need to create a Virtual WAN (vWAN) resource representing your Azure network. If you already have a vWAN that you wish to connect to Magic WAN, continue to the next step. Refer to [Microsoft's documentation](https://learn.microsoft.com/en-us/azure/virtual-wan/virtual-wan-site-to-site-portal#openvwan) to learn more.
 
-1. Go to your **Virtual WANs** page.
+1. In the Azure portal, go to your **Virtual WANs** page.
 2. Select the option to create a **Virtual WAN**.
 3. Create a Virtual WAN with the **Type** set to **Standard**.
 
@@ -30,25 +30,25 @@ Using traditional hub and spoke terminology, a Virtual WAN Hub deployed within a
 3. In **Site to Site**:
    1. In **Do you want to create a Site to site (VPN gateway)?** select **Yes**.
    2. Select your desired **Gateway scale units** and **Routing Preference**. Refer to [Microsoft's documentation](https://learn.microsoft.com/en-us/azure/virtual-network/ip-services/routing-preference-overview#routing-via-microsoft-global-network) to learn more about Azure routing preferences.
-4. Select **Create**. Note that the deployment time for the vWAN Hub and VPN Gateway may take upwards of 30 minutes.
+4. Select **Create**. Note that the deployment time for the vWAN Hub and VPN Gateway may take 30 minutes or more.
 5. After the VPN Gateway has finished provisioning, go to **Virtual WAN** > **Hubs** > **Your vHub** > **Connectivity** > **VPN (Site to site)**.
 6. In the **Essentials** dropdown select the VPN Gateway listed.
 7. Select the JSON View for the VPN Gateway and take note of the JSON attributes at the paths `properties.ipConfigurations[0].publicIpAddress` and  `properties.ipConfigurations[1].publicIpAddress`. These will be the customer endpoints needed when configuring IPsec tunnels for Magic WAN.
 
 ### 3. Create a VPN site
 
-A VPN site represents the remote site your Azure vWAN can reach through a VPN connection.  This is typically an on-premises location. In this case, the VPN site represents Magic WAN.
+A VPN site represents the remote site your Azure vWAN can reach through a VPN connection. This is typically an on-premises location. In this case, the VPN site represents Magic WAN.
 
 1. Go to **Virtual WAN** > **VPN sites** > **Create site**.
 2. In **Basics**:
    1. Configure your desired region and name.
    2. Configure the **Device vendor** as Cloudflare.
-   3. In **Private address space**, specify the address range(s) you wish to access from your vWAN through Magic WAN. This could include other private networks connected to your Magic WAN, or a default route (`0.0.0.0/0`) if you want Internet egress traffic to traverse Magic WAN (that is, to be scanned by Cloudflare Gateway). The address space can be modified after VPN Site creation.
+   3. In **Private address space**, specify the address range(s) you wish to access from your vWAN through Magic WAN. This could include other private networks connected to your Magic WAN, or a default route (`0.0.0.0/0`) if you want Internet egress traffic to traverse Magic WAN (that is, to be scanned by Cloudflare Gateway). The address space can be modified after VPN site creation.
 3. In **Links**:
    1. Configure a single link. Provide a name, speed (in Mbps), and provider name (here, enter `Cloudflare`) for your link. For the **Link IP address**, enter your Cloudflare anycast address. The **BGP address** and **ASN** fields should be left empty. BGP is not supported at the time of writing this tutorial.
 4. Select **Create**.
 
-### 4. Configure VPN Site for Magic IPsec tunnel health checks
+### 4. Configure VPN site for Magic IPsec tunnel health checks
 
 Magic WAN uses [Tunnel Health Checks](/magic-wan/reference/tunnel-health-checks/) to monitor whether a tunnel is available.
 
@@ -57,7 +57,7 @@ Tunnel health checks make use of ICMP probes sent from the Cloudflare side of th
 - **Cloudflare Dashboard:** In your Magic IPsec tunnel configuration as the address of the virtual tunnel interface (VTI) (so that Cloudflare knows what address to send probes from). Cloudflare requires this address in CIDR notation with a `/31` netmask.
 - **Azure Portal:** In your VPN site's address space (so that Azure routes probe responses back over the tunnel). Azure requires this address in CIDR notation with a `/32` netmask.
 
-Cloudflare recommends customers select a unique `/31` subnet ([RFC 1918 — Address Allocation for Private Internets](https://datatracker.ietf.org/doc/html/rfc1918)) for each IPsec tunnel which is treated as a Point-to-Point Link and provides the ideal addressing scheme to satisfy both requirements.
+Cloudflare recommends that you select a unique `/31` subnet ([RFC 1918 — Address Allocation for Private Internets](https://datatracker.ietf.org/doc/html/rfc1918)) for each IPsec tunnel which is treated as a Point-to-Point Link and provides the ideal addressing scheme to satisfy both requirements.
 
 Example:
 
@@ -75,7 +75,7 @@ Refer to RFC 3021 for more information on using 31-bit prefixes on [IPv4 Point-t
 
 To configure the Address Space for the Local Network Gateway to support Tunnel Health Checks:
 
-1. Go to **Virtual WAN** > **VPN sites** > **Your VPN Site** > **Edit site** to edit the VPN Site configured in the previous section.
+1. Go to **Virtual WAN** > **VPN sites** > **Your VPN Site** > **Edit site** to edit the VPN site configured in the previous section.
 2. Update the **Private address space** to include two `/32` subnets in CIDR notation as described above. When using Azure VPN Gateways with vWAN Hubs, a single VPN Gateway Connection maps to two Magic WAN IPsec Tunnels. For this reason, we need to select two unique `/31` subnets, one for each Cloudflare IPsec Tunnel. The upper address of each `/31` is then added to the VPN Site's Private address space as a `/32`subnet.
 3. Select **Confirm**.
 
