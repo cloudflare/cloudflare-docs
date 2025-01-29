@@ -10,9 +10,9 @@ params:
 
 import { Render } from "~/components";
 
-A tunnel health check probe consists of an [ICMP (Internet Control Message Protocol)](https://www.cloudflare.com/learning/ddos/glossary/internet-control-message-protocol-icmp/) payload encapsulated in the protocol of the tunnel the probe is being conducted for. For example, if the tunnel is an IPsec tunnel the ICMP packet is encrypted within the Encapsulating Security Payload (ESP) packet of the tunnel.
+A tunnel health check probe consists of an [ICMP (Internet Control Message Protocol)](https://www.cloudflare.com/learning/ddos/glossary/internet-control-message-protocol-icmp/) payload encapsulated in the protocol of the tunnel the probe is being conducted for. For example, if the tunnel is an IPsec tunnel, the ICMP packet is encrypted within the Encapsulating Security Payload (ESP) packet of the tunnel.
 
-A tunnel health check probe comes from Cloudflare to the tunnel origin and a response then returns to Cloudflare. This response is used to determine the outcome of the probe and then used to calculate the state of the tunnel (this is explained in greater detail below).
+A tunnel health check probe comes from Cloudflare to the tunnel origin, then returns a response to Cloudflare. This response is used to determine the outcome of the probe, which is used to calculate the state of the tunnel (this is explained in greater detail below).
 
 ## Tunnel health check attributes
 
@@ -20,7 +20,7 @@ A tunnel health check probe has important attributes described below.
 
 ### Target
 
-A tunnel health check probe tests whether Cloudflare can successfully connect to a specific address or endpoint via the tunnel. The target is the address you want to ensure is reachable through the tunnel. This helps verify that the tunnel is functional and traffic can flow properly to the intended destination. It is optional and there are certain defaults depending on the direction of the health check (refer to [Direction](#direction) for more information).
+A tunnel health check probe tests whether Cloudflare can successfully connect to a specific address or endpoint via the tunnel. The target is the address you want to ensure is reachable through the tunnel. This helps verify that the tunnel is functional and traffic can flow properly to the intended destination. It is optional, and there are certain defaults depending on the direction of the health check (refer to [Direction](#direction) for more information).
 
 ### Direction
 
@@ -30,13 +30,13 @@ A tunnel health check probe can have two possible directions — unidirectional 
 
 A unidirectional health check probe stays encapsulated in one direction and comes into the origin via the tunnel (from Cloudflare to the origin). The response comes back to Cloudflare unencapsulated and is routed outside of the tunnel following standard Internet routing.
 
-The target defaults to the publicly routable origin specified as the `customer_endpoint` on the tunnel if present. Otherwise, you can use a custom target.
+The target defaults to the publicly routable origin specified as the `customer_endpoint` on the tunnel, if present. Otherwise, you can use a custom target.
 
 #### Bidirectional
 
 A bidirectional probe stays encapsulated in both directions, that is, the probe comes in via the tunnel and the response also leaves encapsulated via the tunnel.
 
-These packets are by default destined for the Cloudflare side of the interface address field set on the tunnel, and are sourced from the client of the tunnel. For example, if the interface address is `10.100.0.8/31`, then the packet will be destined for `10.100.0.9` and sourced from `10.100.0.8`.
+By default, these packets are destined for the Cloudflare side of the interface address field set on the tunnel, and are sourced from the client of the tunnel. For example, if the interface address is `10.100.0.8/31`, then the packet will be destined for `10.100.0.9` and sourced from `10.100.0.8`.
 
 Note that the interface address field is always a `/30` or `/31` CIDR range. In the case of a `/31` range, the IP provided will be the Cloudflare side, whereas the other will be the client side. For example, if the interface address is `10.100.0.8/31`, `10.100.0.8` is the Cloudflare side, and `10.100.0.9` is the client side. In the case of a `/30` range, the IP provided will be the Cloudflare side whereas the other IP (excluding the broadcast and network identifier) will be the client side. For example, if the interface address is `10.100.0.9/30`, `10.100.0.9` will be the Cloudflare side and `10.100.0.10` will be the client side.
 
@@ -55,23 +55,23 @@ For customers using the legacy health check system with a public IP range, Cloud
 
 ### Type
 
-A tunnel health check probe can have two possible types: request and reply. For each type the source and destination address depends on the direction. Refer to <a href={props.addTunnels}>Add tunnels</a> to learn how to change this setting.
+A tunnel health check probe can have two possible types: request and reply. For each type, the source and destination address depends on the direction. Refer to <a href={props.addTunnels}>Add tunnels</a> to learn how to change this setting.
 
 #### Request style
 
 In a request style health check the payload probe is an ICMP request.
 
-For a unidirectional probe the source address is the Cloudflare side of the tunnel (a publicly routable address) and the destination is the origin router (also publicly routable). The origin router receives the probe and produces an ICMP response with the opposite source and destination, and sends it outside of the tunnel.
+For a unidirectional probe, the source address is the Cloudflare side of the tunnel (a publicly routable address) and the destination is the origin router (also publicly routable). The origin router receives the probe and produces an ICMP response with the opposite source and destination, and sends it outside of the tunnel.
 
-For a bidirectional probe the source address is the interface address of the Cloudflare side of the tunnel (a privately routable address) and the destination is the interface address of the tunnel (also privately routable). The origin router receives the probe and produces an ICMP response with the opposite source and destination and sends it into the tunnel.
+For a bidirectional probe, the source address is the interface address of the Cloudflare side of the tunnel (a privately routable address) and the destination is the interface address of the tunnel (also privately routable). The origin router receives the probe and produces an ICMP response with the opposite source and destination and sends it into the tunnel.
 
 #### Reply style
 
 In a reply style health check the payload probe is an ICMP response.
 
-For a unidirectional probe the destination address is the Cloudflare side of the tunnel (a publicly routable address) and the source is the origin router (also publicly routable). The origin router receives the probe and sends it back as the response, unchanged, outside of the tunnel.
+For a unidirectional probe, the destination address is the Cloudflare side of the tunnel (a publicly routable address) and the source is the origin router (also publicly routable). The origin router receives the probe and sends it back as the response, unchanged, outside of the tunnel.
 
-For a Bidirectional probe the destination address is the interface address of the Cloudflare side of the tunnel (a privately routable address) and the source is the interface address of the tunnel (also privately routable). The origin router receives the probe packet and sends the probe packet back as the response (unchanged) into the tunnel as the destination is routed via the tunnel.
+For a Bidirectional probe, the destination address is the interface address of the Cloudflare side of the tunnel (a privately routable address) and the source is the interface address of the tunnel (also privately routable). The origin router receives the probe packet and sends the probe packet back as the response (unchanged) into the tunnel as the destination is routed via the tunnel.
 
 :::note
 To avoid control plane policies enforced by the origin network, tunnel health checks can be set to use a request style health check if reply style health checks are being dropped.
