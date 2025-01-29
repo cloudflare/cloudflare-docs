@@ -50,15 +50,225 @@ Observe and control your AI applications with caching, rate limiting, request re
 
 Build full-stack AI applications with Vectorize, Cloudflare’s vector database. Adding Vectorize enables you to perform tasks such as semantic search, recommendations, anomaly detection or can be used to provide context and memory to an LLM.
 
+</RelatedProduct>
 
 ## Start Building
 
 <Tabs syncKey="agents-products">
 <TabItem label="Workflows">
 
+Build agents that can execute complex tasks, progressively save state, and call out to _any_ third party API they need to using [Workflows](/workflows/). Send emails or [text messages](/workflows/examples/twilio/), [browse the web](/browser-rendering/), process and summarize documents, and/or query your database.
+
+```sh
+npm create cloudflare@latest workflows-starter -- --template "cloudflare/workflows-starter"
+cd workflows-starter
+npm i resend
+```
+
+```ts
+import { WorkflowEntrypoint, WorkflowStep, WorkflowEvent } from 'cloudflare:workers';
+import { Resend } from 'resend';
+
+type Env = {
+  MY_WORKFLOW: Workflow;
+  RESEND_API_KEY: string;
+};
+
+type Params = {
+  email: string;
+  metadata: Record<string, string>;
+};
+
+export class MyWorkflow extends WorkflowEntrypoint<Env, Params> {
+  async run(event: WorkflowEvent<Params>, step: WorkflowStep) {
+
+    const files = await step.do('my first step', async () => {
+      // Fetch a list of files from $SOME_SERVICE
+      return {
+        files: [
+          'doc_7392_rev3.pdf',
+          'report_x29_final.pdf',
+          'memo_2024_05_12.pdf',
+          'file_089_update.pdf',
+          'proj_alpha_v2.pdf',
+          'data_analysis_q2.pdf',
+          'notes_meeting_52.pdf',
+          'summary_fy24_draft.pdf',
+        ],
+      };
+    });
+
+    const summaries = await step.do('summarize text', async () => {
+      const results = {};
+      for (const filename of files.files) {
+        const fileContent = await this.env.MY_BUCKET.get(filename);
+        if (!fileContent) continue;
+
+        const text = await fileContent.text();
+        const summary = await this.env.WORKERS_AI.run('@cf/meta/llama-3.2-3b-instruct', {
+          messages: [{
+            role: 'user',
+            content: `Please summarize the following text concisely: ${text}`
+          }]
+        });
+        results[filename] = summary.response;
+      }
+      return results;
+    });
+
+    await step.sleep('wait on something', '1 minute');
+
+    let summaryKey = await step.do(
+      'store summaries in R2',
+      async () => {
+        const summaryKey = `summaries-${Date.now()}.json`;
+        await this.env.MY_BUCKET.put(summaryKey, JSON.stringify(summaries));
+        return summaryKey;
+      },
+    );
+
+    await step.do(
+      'email summaries',
+      {
+        retries: {
+          limit: 3,
+          delay: '5 second',
+          backoff: 'exponential',
+        }
+      },
+      async () => {
+        const summaryText = Object.entries(summaries)
+          .map(([filename, summary]) => `${filename}:\n${summary}\n\n`)
+          .join('');
+
+        const resend = new Resend(this.env.RESEND_API_KEY);
+
+        await resend.emails.send({
+          from: 'notifications@yourdomain.com',
+          to: event.payload.email,
+          subject: 'Your Document Summaries',
+          text: summaryText,
+        });
+      }
+    );
+
+    return summaryKey;
+  }
+}
+
+export default {
+  async fetch(req: Request, env: Env): Promise<Response> {
+    let id = new URL(req.url).searchParams.get('instanceId');
+
+    if (id) {
+      let instance = await env.MY_WORKFLOW.get(id);
+      return Response.json({
+        status: await instance.status(),
+      });
+    }
+
+    let instance = await env.MY_WORKFLOW.create();
+    return Response.json({
+      id: instance.id,
+      details: await instance.status(),
+    });
+  },
+};
+```
+
 </TabItem>
 <TabItem label="Durable Objects">
 
+Ship interactive, real-time agents that can connect to the latest AI models, stream responses, and don't time out while waiting for the latest chain-of-thought models — including `o1` or `deepseek-r1` — to respond.
+
+```ts
+npm i openai
+```
+
+```ts
+import { DurableObject } from "cloudflare:workers";
+
+export interface Env {
+  DURABLE_AGENT: DurableObjectNamespace<DurableAgent>;
+  OPENAI_API_KEY: string;
+}
+
+export default {
+  async fetch(request: Request, env: Env, ctx: ExecutionContext) {
+    if (request.url.endsWith("/websocket")) {
+      const upgradeHeader = request.headers.get("Upgrade");
+      if (!upgradeHeader || upgradeHeader !== "websocket") {
+        return Response.json(
+          { error: "Durable Object expected Upgrade: websocket" },
+          { status: 426 }
+        );
+      }
+
+      const url = new URL(request.url);
+      const agentId = url.searchParams.get("id") || (await crypto.randomUUID());
+
+      let id = env.DURABLE_AGENT.idFromName(agentId);
+      let agent = env.DURABLE_AGENT.get(id);
+
+      return agent.fetch(request);
+    }
+
+    return Response.json({ message: "Bad Request" }, { status: 400 });
+  },
+};
+
+export class DurableAgent extends DurableObject {
+  constructor(private state: DurableObjectState, private env: Env) {
+    super();
+  }
+
+  async fetch(request: Request): Promise<Response> {
+    const webSocketPair = new WebSocketPair();
+    const [client, server] = Object.values(webSocketPair);
+
+    this.ctx.acceptWebSocket(server);
+
+    return new Response(null, {
+      status: 101,
+      webSocket: client,
+    });
+  }
+
+  async webSocketMessage(ws: WebSocket, message: ArrayBuffer | string) {
+    try {
+      const openai = new OpenAI({
+        apiKey: this.env.OPENAI_API_KEY,
+        timeout: 10 * 60 * 1000, // 10 minute timeout
+      });
+
+      const stream = await openai.chat.completions.create({
+        model: "o1",
+        messages: [{ role: "user", content: message.toString() }],
+        stream: true, // Stream the response to immediately start sending chunks to the client,
+                     // rather than buffering the entire response and making the user wait
+      });
+
+      for await (const chunk of stream) {
+        const content = chunk.choices[0]?.delta?.content;
+        if (content) {
+          ws.send(content);
+        }
+      }
+    } catch (error) {
+      ws.send(
+        JSON.stringify({
+          error: "OpenAI request failed",
+          message: error.message,
+        })
+      );
+    }
+  }
+
+  async webSocketClose(ws: WebSocket, code: number, reason: string, wasClean: boolean) {
+    ws.close(code, "Durable Object is closing WebSocket");
+  }
+}
+```
 
 </TabItem>
 <TabItem label="Browser Rendering">
