@@ -16,9 +16,9 @@ By default, mTLS uses Client Certificates issued by a Cloudflare Managed CA. Clo
 ## 1. Enable mTLS
 
 1. Go to your Cloudflare dashboard and select your account and domain.
-2. Go to **SSL/TLS** > **[Client Certificates](/ssl/client-certificates/)** tab and select **Edit** to add the Hosts (hostnames) you want to [enable mTLS](/ssl/client-certificates/enable-mtls/) for. 
+2. Go to **SSL/TLS** > **[Client Certificates](/ssl/client-certificates/)** tab and select **Edit** to add the Hosts (hostnames) you want to [enable mTLS](/ssl/client-certificates/enable-mtls/) for.
 
-    Example host: `mtls-test.example.com`
+   Example host: `mtls-test.example.com`
 
 3. Select **Create Certificate** and fill in the required fields. You can choose one of the following options:
 
@@ -27,7 +27,7 @@ By default, mTLS uses Client Certificates issued by a Cloudflare Managed CA. Clo
 
 To generate and use your own CSR, you can run a command like the following:
 
-```txt
+```sh
 openssl req -new -newkey rsa:2048 -nodes -keyout client1.key -out client1.csr -subj '/C=GB/ST=London/L=London/O=Organization/CN=CommonName'
 ```
 
@@ -41,11 +41,11 @@ In order for a client to utilize the Client Certificate you created, it must be 
 
 We generally recommended using one Client Certificate per device. Configuring your system to actually use the Public and Private Certificates is especially important.
 
-An example is to [add both certificates to the Keychain](https://support.apple.com/en-gb/guide/keychain-access/kyca2431/mac) on a MacBook laptop. 
+An example is to [add both certificates to the Keychain](https://support.apple.com/en-gb/guide/keychain-access/kyca2431/mac) on a MacBook laptop.
 
 Another example is to generate a [PKCS12 (P12) certificate](https://en.wikipedia.org/wiki/PKCS_12) file and then [add it to your browser](https://www.ibm.com/docs/en/engineering-lifecycle-management-suite/lifecycle-management/7.0.2?topic=dashboards-importing-certificates-configuring-browsers):
 
-```txt
+```sh
 openssl pkcs12 -export -out certificate.p12 -inkey private-cert.pem -in cert.pem
 ```
 
@@ -53,7 +53,7 @@ Use the values from the previous step.
 
 Example using cURL command:
 
-```cURL
+```sh
 curl -v --cert cert.pem --key private-cert.pem <HOSTNAME>
 ```
 
@@ -63,7 +63,7 @@ Use the values from the previous step.
 
 mTLS is verified and checked in the [Cloudflare WAF phase](/waf/reference/phases/). This is done by creating WAF [Custom Rules](/waf/custom-rules/) using the dynamic fields.
 
-All Client Certificate details can be found in the [`cf.tls_*`](/ruleset-engine/rules-language/fields/dynamic-fields/#cftls_cipher) dynamic fields in the [Cloudflare Ruleset Engine](/ruleset-engine/).
+All Client Certificate details can be found in the [`cf.tls_*`](/ruleset-engine/rules-language/fields/reference/) fields in the [Cloudflare Ruleset Engine](/ruleset-engine/).
 
 Example WAF Custom Rule with action block:
 
@@ -77,18 +77,22 @@ Ensure you are not using a VPN that could interfere with certificates or TLS dec
 
 With the Public and Private Certificates in the same directory, with this cURL command, we will gain access:
 
-```curl
+```sh
 curl -I --cert cert.pem --key private-cert.pem https://mtls-test.example.com/mtls-test
+```
 
-HTTP/2 200 
+```txt output
+HTTP/2 200
 server: cloudflare
 ```
 
 Without the certificates, the terminal will display the following:
 
-```curl
-$ curl -I https://mtls-test.example.com/mtls-test
+```sh
+curl -I https://mtls-test.example.com/mtls-test
+```
 
+```txt output
 HTTP/2 403
 server: cloudflare
 ```

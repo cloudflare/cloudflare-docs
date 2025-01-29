@@ -13,12 +13,13 @@ import {
 	FileTree,
 	Tabs,
 	TabItem,
-	TypeScriptExample
+	TypeScriptExample,
+	WranglerConfig
 } from "~/components";
 
 This guide instructs you through:
 
-- Creating your first database using D1, Cloudflare’s native serverless SQL database.
+- Creating your first database using D1, Cloudflare's native serverless SQL database.
 - Creating a schema and querying your database via the command-line.
 - Connecting a [Cloudflare Worker](/workers/) to your D1 database to query your D1 database programmatically.
 
@@ -66,13 +67,13 @@ Create a new Worker as the means to query your database.
     	- testconfig.json
     	- vitest.config.mts
     	- worker-configuration.d.ts
-    	- **wrangler.toml**
+    	- **wrangler.json**
     </FileTree>
 
     Your new `d1-tutorial` directory includes:
 
     - A `"Hello World"` [Worker](/workers/get-started/guide/#3-write-code) in `index.ts`.
-    - A [`wrangler.toml`](/workers/wrangler/configuration/) configuration file. `wrangler.toml` is how your `d1-tutorial` Worker accesses your D1 database.
+    - A [`wrangler.toml / wrangler.json` file](/workers/wrangler/configuration/). This file is how your `d1-tutorial` Worker accesses your D1 database.
 
 </Steps>
 
@@ -169,12 +170,14 @@ To bind your D1 database to your Worker:
 
 <Tabs syncKey='CLIvDash'> <TabItem label='CLI'>
 
-You create bindings by updating your `wrangler.toml` file.
+You create bindings by updating your Wrangler file.
 
 <Steps>
 
 1. Copy the lines obtained from [step 2](/d1/get-started/#2-create-a-database) from your terminal.
-2. Add them to the end of your `wrangler.toml` file.
+2. Add them to the end of your Wrangler file.
+
+   <WranglerConfig>
 
    ```toml
    [[d1_databases]]
@@ -183,18 +186,18 @@ You create bindings by updating your `wrangler.toml` file.
    database_id = "<unique-ID-for-your-database>"
    ```
 
+   </WranglerConfig>
+
    Specifically:
 
    - The value (string) you set for `binding` is the **binding name**, and is used to reference this database in your Worker. In this tutorial, name your binding `DB`.
    - The binding name must be [a valid JavaScript variable name](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Grammar_and_types#variables). For example, `binding = "MY_DB"` or `binding = "productionDB"` would both be valid names for the binding.
-   - Your binding is available in your Worker at `env.<BINDING_NAME>` and the D1 [client API](/d1/build-with-d1/d1-client-api/) is exposed on this binding.
+   - Your binding is available in your Worker at `env.<BINDING_NAME>` and the D1 [Workers Binding API](/d1/worker-api/) is exposed on this binding.
 
 </Steps>
 
 :::note
-
-When you execute the `wrangler d1 create` command, the client API package (which implements the D1 API and database class) is automatically installed. For more information on the D1 Client API, refer to [D1 Client API](/d1/build-with-d1/d1-client-api/).
-
+When you execute the `wrangler d1 create` command, the client API package (which implements the D1 API and database class) is automatically installed. For more information on the D1 Workers Binding API, refer to [Workers Binding API](/d1/worker-api/).
 :::
 
 You can also bind your D1 database to a [Pages Function](/pages/functions/). For more information, refer to [Functions Bindings for D1](/pages/functions/bindings/#d1-databases).
@@ -227,7 +230,7 @@ You create bindings by adding them to the Worker you have created.
 
 <Tabs syncKey='CLIvDash'> <TabItem label='CLI'>
 
-With `wrangler.toml` configured properly, set up your database. Use the example `schema.sql` file below to initialize your database.
+After correctly preparing your `wrangler.toml / wrangler.json` file, set up your database. Use the example `schema.sql` file below to initialize your database.
 
 <Steps>
 1. Copy the following code and save it as a `schema.sql` file in the `d1-tutorial` Worker directory you created in step 1:
@@ -306,7 +309,7 @@ After you have set up your database, run an SQL query from within your Worker.
     <TypeScriptExample filename="index.ts">
     ```typescript
     export interface Env {
-    	// If you set another name in wrangler.toml as the value for 'binding',
+    	// If you set another name in the Wrangler config file for the value for 'binding',
     	// replace "DB" with the variable name you defined.
     	DB: D1Database;
     }
@@ -335,8 +338,8 @@ After you have set up your database, run an SQL query from within your Worker.
 
     In the code above, you:
 
-    1. Define a binding to your D1 database in your TypeScript code. This binding matches the `binding` value you set in `wrangler.toml` under `[[d1_databases]]`.
-    2. Query your database using `env.DB.prepare` to issue a [prepared query](/d1/build-with-d1/d1-client-api/) with a placeholder (the `?` in the query).
+    1. Define a binding to your D1 database in your TypeScript code. This binding matches the `binding` value you set in the `wrangler.toml / wrangler.json` file under `[[d1_databases]]`.
+    2. Query your database using `env.DB.prepare` to issue a [prepared query](/d1/worker-api/d1-database/#prepare) with a placeholder (the `?` in the query).
     3. Call `bind()` to safely and securely bind a value to that placeholder. In a real application, you would allow a user to define the `CompanyName` they want to list results for. Using `bind()` prevents users from executing arbitrary SQL (known as "SQL injection") against your application and deleting or otherwise modifying your database.
     4. Execute the query by calling `all()` to return all rows (or none, if the query returns none).
     5. Return your query results, if any, in JSON format with `Response.json(results)`.

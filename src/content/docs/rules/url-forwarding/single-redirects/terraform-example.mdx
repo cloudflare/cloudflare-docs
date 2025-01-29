@@ -20,7 +20,10 @@ resource "cloudflare_ruleset" "single_redirects_example" {
   phase       = "http_request_dynamic_redirect"
 
   rules {
-    action = "redirect"
+    ref         = "redirect_old_url"
+    description = "Redirect visitors still using old URL"
+    expression  = "(http.request.uri.path matches \"^/contact-us/\")"
+    action      = "redirect"
     action_parameters {
       from_value {
         status_code = 301
@@ -30,9 +33,6 @@ resource "cloudflare_ruleset" "single_redirects_example" {
         preserve_query_string = false
       }
     }
-    expression  = "(http.request.uri.path matches \"^/contact-us/\")"
-    description = "Redirect visitors still using old URL"
-    enabled     = true
   }
 }
 ```

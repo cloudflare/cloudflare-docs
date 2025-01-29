@@ -1,0 +1,47 @@
+---
+title: About address maps
+pcx_content_type: concept
+sidebar:
+  order: 5
+  label: About
+  group:
+    label: Address maps
+---
+
+import { GlossaryDefinition } from "~/components"
+
+<GlossaryDefinition term="address map" prepend="Address map is " />
+
+If you do not have BYOIP or static IPs and you want to use Address Maps, contact your account manager. You can [customize the IPs Cloudflare uses](/fundamentals/concepts/cloudflare-ip-addresses/#customize-cloudflare-ip-addresses) by bringing your own IP addresses to Cloudflare (BYOIP) or by leasing static Cloudflare IPs.
+
+:::note
+Both IPv4 and IPv6 addresses are supported.
+:::
+
+---
+
+## How Address Maps works
+
+For zones using [Cloudflare's authoritative DNS](/dns/), Cloudflare typically responds to DNS queries for proxied hostnames with [anycast IPs](/fundamentals/concepts/cloudflare-ip-addresses/). However, if you [customize the IPs Cloudflare uses](/fundamentals/concepts/cloudflare-ip-addresses/#customize-cloudflare-ip-addresses) and use Address Maps, Cloudflare will respond with the IP address(es) on the address map.
+
+Address maps do not change [how Cloudflare reaches the configured origin](/fundamentals/concepts/how-cloudflare-works/#how-cloudflare-works-as-a-reverse-proxy). The IP addresses defined on the **DNS** > **Records** under your zone continue to instruct Cloudflare how to reach the origin.
+
+:::caution
+Depending on whether you use static IPs or BYOIP, the process to [create an address map](/byoip/address-maps/setup/) is different.
+:::
+
+### Static IPs or BYOIP
+
+Leased static IPs allow you to use a set of specifically assigned Cloudflare IPs to ensure they do not change. Cloudflare creates an address map with your static IPs that you may edit. You cannot create another map using your static IPs.
+
+With BYOIP, you use your IPs by bringing an address space that you lease or own and creating an address map.
+
+---
+
+## Immutable address maps
+
+Some customers may only proxy zones through BYOIP addresses, and are prohibited from using Cloudflare IP addresses for proxied DNS names. In this case, Cloudflare will create an immutable, account-wide address map to ensure all zones in your account receive BYOIP addresses as a fallback. These address maps cannot be deleted.
+
+It is still possible to create more specific zone-level address maps with specific BYOIPs, but DNS will fall back to the account-wide address map without one.
+
+To specify different addresses for certain zones, [create a new address map](/byoip/address-maps/setup/).

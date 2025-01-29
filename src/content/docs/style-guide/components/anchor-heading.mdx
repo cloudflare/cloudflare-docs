@@ -19,14 +19,9 @@ Markdown files (including partials) have this behavior by default, applied via r
 
 To override the ID given to a heading within Markdown, add an MDX comment at the end of the line:
 
-```mdx
-# foo {/*bar*/}
-```
-
-It will result in the following HTML:
-
-```html
-<a id="bar">foo</a>
+```mdx live
+## foo {/*bar*/}
+{/* HTML: <h2 id="bar">foo</h2> */}
 ```
 
 :::note

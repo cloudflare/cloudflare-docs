@@ -6,25 +6,23 @@ pcx_content_type: tutorial
 
 import { Render } from "~/components"
 
-Follow these steps to add your website or application to Cloudflare. Once your domain is [active](/dns/zone-setups/reference/domain-status/#active), your web traffic will [proxy through Cloudflare](/fundamentals/concepts/how-cloudflare-works/#how-cloudflare-works-as-a-reverse-proxy), which speeds up and protects websites and services on your domain.
+Follow these steps to onboard your website or application to Cloudflare. Once your domain is [active](/dns/zone-setups/reference/domain-status/#active), your web traffic will [proxy through Cloudflare](/fundamentals/concepts/how-cloudflare-works/#how-cloudflare-works-as-a-reverse-proxy), which speeds up and protects websites and services on your domain.
 
 Cloudflare will become the primary [DNS provider](/fundamentals/concepts/how-cloudflare-works/#how-cloudflare-works-as-a-dns-provider) for your domain, meaning your [DNS records](/dns/concepts/#dns-records) are managed at Cloudflare, and we authoritatively answer all DNS queries.
 
 :::note
 
 
-These instructions are tailored to customers using a full setup for Cloudflare DNS (the most common configuration). If you are using a [partial setup](/dns/zone-setups/partial-setup/) or [secondary setup](/dns/zone-setups/zone-transfers/), your setup process will be different.
+These instructions are tailored to customers using a [full DNS setup](/dns/zone-setups/full-setup) (the most common configuration). If you are using a [partial setup](/dns/zone-setups/partial-setup/) or [secondary setup](/dns/zone-setups/zone-transfers/), your onboarding process will be different.
 
 
 :::
 
 ## Prerequisites
 
-To use Cloudflare, you need to own a domain (`example.com`).
+To onboard a website or application to Cloudflare, you need to own the domain name (`example.com`).
 
-If you do not already own a domain name and plan to use Cloudflare for your [authoritative DNS](/dns/zone-setups/full-setup/), we highly recommend purchasing your domain name through [Cloudflare Registrar](/registrar/get-started/register-domain/).
-
-Using Cloudflare Registrar simplifies your setup process by automatically using Cloudflare for authoritative DNS.
+If you do not already own a domain and plan to use Cloudflare for your [authoritative DNS](/dns/zone-setups/full-setup/), we highly recommend purchasing your domain name through [Cloudflare Registrar](/registrar/get-started/register-domain/). This simplifies your setup process by automatically using Cloudflare for authoritative DNS.
 
 <Render file="disable_dnssec" product="dns" />
 
@@ -38,8 +36,8 @@ Using Cloudflare Registrar simplifies your setup process by automatically using 
 
 ## 3. Complete SSL/TLS setup
 
-To prevent insecure connections and visitor browser errors, [make sure you have SSL/TLS protection](/ssl/get-started/) and go through the **Quick Start Guide** to improve security.
+To prevent insecure connections and visitor browser errors, [make sure you have SSL/TLS protection](/ssl/get-started/).
 
 ## 4. Go beyond the basics
 
-For suggestions and guidance about getting the most out of your Cloudflare account, refer to our [Fundamental Tasks](/fundamentals/basic-tasks/).
+Many Cloudflare services will automatically protect and speed up your web traffic once your nameservers are updated. To customize how we process your traffic and to get more out of Cloudflare, refer to our [basic tasks](/fundamentals/basic-tasks/).

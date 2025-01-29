@@ -22,8 +22,8 @@ Use one of the following API endpoints:
 | [Delete an account ruleset][dr-account] | `DELETE /accounts/{account_id}/rulesets/{ruleset_id}` |
 | [Delete a zone ruleset][dr-zone]        | `DELETE /zones/{zone_id}/rulesets/{ruleset_id}`       |
 
-[dr-account]: /api/operations/deleteAccountRuleset
-[dr-zone]: /api/operations/deleteZoneRuleset
+[dr-account]: /api/resources/rulesets/methods/delete/
+[dr-zone]: /api/resources/rulesets/methods/delete/
 
 If the delete operation succeeds, the API method call returns a `204 No Content` HTTP status code.
 
@@ -56,8 +56,8 @@ Use one of the following API endpoints:
 | [Delete an account ruleset version][drv-account] | `DELETE /accounts/{account_id}/rulesets/{ruleset_id}/versions/{version_number}` |
 | [Delete a zone ruleset version][drv-zone]        | `DELETE /zones/{zone_id}/rulesets/{ruleset_id}/versions/{version_number}`       |
 
-[drv-account]: /api/operations/deleteAccountRulesetVersion
-[drv-zone]: /api/operations/deleteZoneRulesetVersion
+[drv-account]: /api/resources/rulesets/subresources/versions/methods/delete/
+[drv-zone]: /api/resources/rulesets/subresources/versions/methods/delete/
 
 If the delete operation succeeds, the method call returns a `204 No Content` HTTP status code.
 

@@ -1,0 +1,47 @@
+releaseNotes: >-
+  In addition to general bug fixes this release contains two new exciting
+  features.
+
+
+  The first we hope will improve diagnosing connectivity issues by bubbling up
+  common errors to the GUI so admins no longer have to dig through logs to find
+  a conflicting app or configuration issue.
+
+
+  The second is a new Zero Trust posture support: checking for the presence of a
+  certificate. You can get started today from your dashboard. 
+   
+  **Notable updates**
+
+  - Added connectivity error reasons to the UI
+
+  - Added new posture type: Check for presence of a certificate
+
+  - Modify IPv6 DNS behavior to no longer bind to discrete stub resolvers and
+  instead point interfaces at a V6->V4 mapping `::ffff:127.0.2.2`. This change
+  makes DNS mapping consistent on all platforms
+
+  - Fixed an issue with DEX traceroutes tests where not all hops were correctly
+  reported
+
+  - Fixed am issue where the WARP background process could crash under extreme
+  load
+
+  - Fixed an issue where managed network detection could fail when firewall
+  rules were not correctly removed under certain disconnect scenarios
+
+  - Fixed a timing issue exposed during previous beta where the client could get
+  stuck on Connecting state. This mostly happens coming out of sleep or
+  switching teams
+
+  - Fixed an issue where an invalid override code could cause warp to disconnect
+  when the lock switch was not set to true
+   
+  **Known issues**
+
+  - No known issues
+version: 2023.7.343.1
+packageURL: https://downloads.cloudflareclient.com/v1/download/macos/version/2023.7.343.1
+packageSize: 65324213
+releaseDate: 2023-08-08T23:12:37.922Z
+platformName: macOS

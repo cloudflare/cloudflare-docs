@@ -4,7 +4,9 @@ title: Outbound Workers
 
 ---
 
-Outbound Workers sit between your customer’s Workers and the public Internet. They give you visibility into all outgoing `fetch()` requests from user Workers.
+import { WranglerConfig } from "~/components";
+
+Outbound Workers sit between your customer's Workers and the public Internet. They give you visibility into all outgoing `fetch()` requests from user Workers.
 
 ![Outbound Workers diagram information](~/assets/images/cloudflare-for-platforms/outbound-worker-diagram.png)
 
@@ -25,12 +27,16 @@ To use Outbound Workers:
 
 Make sure that you have `wrangler@3.3.0` or later [installed](/workers/wrangler/install-and-update/).
 
+<WranglerConfig>
+
 ```toml
 [[dispatch_namespaces]]
 binding = "dispatcher"
 namespace = "<NAMESPACE_NAME>"
 outbound = {service = "<SERVICE_NAME>", parameters = ["params_object"]}
 ```
+
+</WranglerConfig>
 
 3. Edit your dynamic dispatch Worker to call the Outbound Worker and declare variables to pass on `dispatcher.get()`.
 

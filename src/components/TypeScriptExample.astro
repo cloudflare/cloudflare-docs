@@ -1,6 +1,7 @@
 ---
 import { z } from "astro:content";
-import { transform } from "detype";
+import tsBlankSpace from "ts-blank-space";
+import { format } from "prettier";
 import { parse } from "node-html-parser";
 import { Code, Tabs, TabItem } from "@astrojs/starlight/components";
 
@@ -58,7 +59,7 @@ if (!code) {
 
 code = code.replace(/\u007f/g, "\n");
 
-const js = await transform(code, "placeholder.ts");
+const js = await format(tsBlankSpace(code), { parser: "babel", useTabs: true });
 
 const TabsWrapper = tabsWrapper ? Tabs : Fragment;
 ---

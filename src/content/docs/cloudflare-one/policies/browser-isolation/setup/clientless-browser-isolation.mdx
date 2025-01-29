@@ -93,7 +93,7 @@ Selecting **Expand** or the hostname text will expand the notch to the full addr
 
 ### Full address bar view
 
-The full address bar allows users to search and go to isolated websites. Users can jump to the address bar at any time by pressing <kbd>CTRL</kbd> + <kbd>L</kbd> on the keyboard.
+The full address bar allows users to search and go to isolated websites. Users can jump to the address bar at any time by pressing `CTRL + L` on the keyboard.
 
 ![Viewing full address of an isolated page in the clientless remote browser](~/assets/images/cloudflare-one/policies/rbi-address-bar-full.png)
 
@@ -103,8 +103,9 @@ To turn on or off the address bar, users can right-click on any isolated page an
 
 ## Logs
 
-* **Authentication events** — User login events are available in Access Audit Logs.
-* **HTTP request logs** — Traffic from the remote browser to the Internet is logged in Gateway request logs.
+- **Authentication events**: User login events are available in [Access audit logs](/cloudflare-one/insights/logs/audit-logs/).
+- **HTTP requests**: Traffic from the remote browser to the Internet is logged in [Gateway activity logs](/cloudflare-one/insights/logs/gateway-logs/).
+- **DNS queries**: DNS queries from the remote browser are shown in [Gateway activity logs](/cloudflare-one/insights/logs/gateway-logs/).
 
 ## Redirect traffic to the remote browser
 

@@ -48,7 +48,7 @@ For step-by-step guidance, refer to [Create a load balancer](/load-balancing/loa
 
 ## Properties
 
-For an up-to-date list of load balancer properties, refer to [Load balancer properties](/api/operations/load-balancers-load-balancer-details) in the Cloudflare API documentation.
+For an up-to-date list of load balancer properties, refer to [Load balancer properties](/api/resources/load_balancers/methods/get/) in the Cloudflare API documentation.
 
 ***
 
@@ -58,9 +58,9 @@ The Cloudflare API supports the following commands for load balancers.
 
 | Command                                                                               | Method   | Endpoint                             |
 | ------------------------------------------------------------------------------------- | -------- | ------------------------------------ |
-| [Create Load Balancer](/api/operations/load-balancers-create-load-balancer)           | `POST`   | `/zones/:zone_id/load_balancers`     |
-| [Delete Load Balancer](/api/operations/load-balancers-delete-load-balancer)           | `DELETE` | `/zones/:zone_id/load_balancers/:id` |
-| [List Load Balancers](/api/operations/load-balancers-list-load-balancers)             | `GET`    | `/zones/:zone_id/load_balancers`     |
-| [Load Balancer Details](/api/operations/load-balancers-load-balancer-details)         | `GET`    | `/zones/:zone_id/load_balancers/:id` |
-| [Overwrite specific properties](/api/operations/load-balancers-patch-load-balancer)   | `PATCH`  | `/zones/:zone_id/load_balancers/:id` |
-| [Overwrite entire Load Balancer](/api/operations/load-balancers-update-load-balancer) | `PUT`    | `/zones/:zone_id/load_balancers/:id` |
+| [Create Load Balancer](/api/resources/load_balancers/methods/create/)           | `POST`   | `/zones/:zone_id/load_balancers`     |
+| [Delete Load Balancer](/api/resources/load_balancers/methods/delete/)           | `DELETE` | `/zones/:zone_id/load_balancers/:id` |
+| [List Load Balancers](/api/resources/load_balancers/methods/list/)             | `GET`    | `/zones/:zone_id/load_balancers`     |
+| [Load Balancer Details](/api/resources/load_balancers/methods/get/)         | `GET`    | `/zones/:zone_id/load_balancers/:id` |
+| [Overwrite specific properties](/api/resources/load_balancers/methods/edit/)   | `PATCH`  | `/zones/:zone_id/load_balancers/:id` |
+| [Overwrite entire Load Balancer](/api/resources/load_balancers/methods/update/) | `PUT`    | `/zones/:zone_id/load_balancers/:id` |

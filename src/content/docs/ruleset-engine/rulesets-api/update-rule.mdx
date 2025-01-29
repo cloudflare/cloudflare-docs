@@ -17,8 +17,8 @@ Use one of the following API endpoints:
 | [Update an account ruleset rule][ur-account] | `PATCH /accounts/{account_id}/rulesets/{ruleset_id}/rules/{rule_id}` |
 | [Update a zone ruleset rule][ur-zone]        | `PATCH /zones/{zone_id}/rulesets/{ruleset_id}/rules/{rule_id}`       |
 
-[ur-account]: /api/operations/updateAccountRulesetRule
-[ur-zone]: /api/operations/updateZoneRulesetRule
+[ur-account]: /api/resources/rulesets/subresources/rules/methods/edit/
+[ur-zone]: /api/resources/rulesets/methods/update/
 
 You can update the definition of the rule, changing its fields, or change the order of the rule in the ruleset. Invoking this method creates a new version of the ruleset.
 
@@ -35,7 +35,7 @@ https://api.cloudflare.com/client/v4/accounts/{account_id}/rulesets/{ruleset_id}
 --header "Content-Type: application/json" \
 --data '{
   "action": "js_challenge",
-  "expression": "(ip.geoip.country eq \"GB\" or ip.geoip.country eq \"FR\") or cf.threat_score > 0",
+  "expression": "(ip.src.country eq \"GB\" or ip.src.country eq \"FR\") or cf.threat_score > 0",
   "description": "challenge GB and FR or based on IP Reputation"
 }'
 ```
@@ -53,7 +53,7 @@ https://api.cloudflare.com/client/v4/accounts/{account_id}/rulesets/{ruleset_id}
 				"id": "<RULE_ID_1>",
 				"version": "2",
 				"action": "js_challenge",
-				"expression": "(ip.geoip.country eq \"GB\" or ip.geoip.country eq \"FR\") or cf.threat_score > 0",
+				"expression": "(ip.src.country eq \"GB\" or ip.src.country eq \"FR\") or cf.threat_score > 0",
 				"description": "challenge GB and FR or based on IP Reputation",
 				"last_updated": "2023-03-22T12:54:58.144683Z",
 				"ref": "<RULE_REF_1>",

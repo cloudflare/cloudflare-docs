@@ -18,7 +18,7 @@ Starting September 9, 2024, visitors that try to connect to your website using o
 
 ### Resolution
 
-The fastest way to resolve this issue is to change your certificate to use [Google Trust Services](/ssl/reference/certificate-authorities/#google-trust-services) as the certificate authority. Refer to the [migration guide](/ssl/reference/migration-guides/lets-encrypt-chain/#how-your-products-are-affected) to learn how to proceed with each certificate type.
+The fastest way to resolve this issue is to change your certificate to use [Google Trust Services](/ssl/reference/certificate-authorities/#google-trust-services) as the certificate authority.
 
 ## Outdated browsers
 
@@ -116,10 +116,11 @@ The HSTS headers (`Strict-Transport-Security` and `X-Content-Type-Options`) in t
 
 You may have configured [HTTP Response Header Modification Rules](/rules/transform/response-header-modification) that are overriding the HSTS header values defined in the **SSL/TLS** app.
 
-1. Go to **Rules** > **Transform Rules**.
-2. Under **HTTP Response Header Modification**, check the existing rules for a rule that is setting the value of one of the HSTS headers (`Strict-Transport-Security` or `X-Content-Type-Options`).
-3. Delete (or edit) the rule so that the HSTS configuration settings defined in the **SSL/TLS** app are applied.
-4. Repeat this procedure for the other HSTS header.
+1. Go to **Rules** > **Overview**.
+2. Next to **Response Header Transform Rules**, select **Manage Response Header Transform Rules**.
+3. Check the existing rules for a rule that is setting the value of one of the HSTS headers (`Strict-Transport-Security` or `X-Content-Type-Options`).
+4. Delete (or edit) the rule so that the HSTS configuration settings defined in the **SSL/TLS** app are applied.
+5. Repeat this procedure for the other HSTS header.
 
 ---
 

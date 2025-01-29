@@ -8,7 +8,7 @@ sidebar:
 
 import { Render, TabItem, Tabs } from "~/components";
 
-Hotlink Protection prevents your images from being used by other sites, which can reduce the bandwidth consumed by your origin server.
+Hotlink Protection prevents your images from being used by other sites, which can reduce the bandwidth consumed by your [origin server](https://www.cloudflare.com/learning/cdn/glossary/origin-server/).
 
 :::note
 
@@ -38,7 +38,7 @@ To enable **Hotlink Protection** in the dashboard:
 
 </TabItem> <TabItem label="API">
 
-To enable **Hotlink Protection** with the API, send a [`PATCH`](/api/operations/zone-settings-edit-single-setting) request with `hotlink_protection` as the setting name in the URI path, and the `value` parameter set to `"on"`.
+To enable **Hotlink Protection** with the API, send a [`PATCH`](/api/resources/zones/subresources/settings/methods/edit/) request with `hotlink_protection` as the setting name in the URI path, and the `value` parameter set to `"on"`.
 
 </TabItem> </Tabs>
 

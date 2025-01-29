@@ -18,10 +18,6 @@ The WARP client does not run on Windows Server. Refer to the [downloads page](/c
 
 [Managed network detection](/cloudflare-one/connections/connect-devices/warp/configure-warp/managed-networks/) will not work when the TLS certificate is served from IIS 8.5 on Windows Server 2012 R2. To work around the limitation, move the certificate to a different host.
 
-## Multi-user support on Windows
-
-The WARP client does not support multiple users on a single Windows device. WARP uses hard-coded global paths to store settings and keys and does not save information on a per-user basis. Therefore, after one user logs into WARP, their settings will apply to all traffic from the device.
-
 ## nslookup on Windows in DoH mode
 
 On Windows devices in [Gateway with DoH mode](/cloudflare-one/connections/connect-devices/warp/configure-warp/warp-modes/#gateway-with-doh), `nslookup` by default sends DNS requests to the [WARP local DNS proxy](/cloudflare-one/connections/connect-devices/warp/configure-warp/route-traffic/warp-architecture/#dns-traffic) over IPv6. However, because WARP uses an IPv4-mapped IPv6 address (instead of a real IPv6 address), `nslookup` will not recognize this address type and the query will fail:
@@ -84,7 +80,7 @@ Cisco Meraki devices have a bug where WARP traffic can sometimes be identified a
 
 ## Windows Teredo
 
-The [Windows Teredo](https://learn.microsoft.com/en-us/windows/win32/teredo/about-teredo) interface conflicts with the WARP client. Since Teredo and WARP will fight for control over IPv6 traffic routing, you must disable Terado on your Windows device. This allows the WARP client to provide IPv6 connectivity on the device.
+The [Windows Teredo](https://learn.microsoft.com/en-us/windows/win32/teredo/about-teredo) interface conflicts with the WARP client. Since Teredo and WARP will fight for control over IPv6 traffic routing, you must disable Teredo on your Windows device. This allows the WARP client to provide IPv6 connectivity on the device.
 
 ## Docker on Linux with bridged networking
 
@@ -105,3 +101,7 @@ docker network create -o "com.docker.network.driver.mtu=1420" my-docker-network
 ```
 
 The MTU value should be set to the MTU of your host's default interface minus 80 bytes for the WARP protocol overhead. Most MTUs are 1500, therefore 1420 should work for most people.
+
+## Windows 10 in Microsoft 365 Cloud PC is not supported
+
+Use of the WARP client in a Microsoft 365 Windows 10 Cloud PC is not supported. To work around this limitation, use Windows 11.

@@ -23,8 +23,8 @@ Use one of the following API endpoints:
 | [List account rulesets][lr-account] | `GET /accounts/{account_id}/rulesets` |
 | [List zone rulesets][lr-zone]       | `GET /zones/{zone_id}/rulesets`       |
 
-[lr-account]: /api/operations/listAccountRulesets
-[lr-zone]: /api/operations/listZoneRulesets
+[lr-account]: /api/resources/rulesets/methods/list/
+[lr-zone]: /api/resources/rulesets/methods/list/
 
 The result includes rulesets across all phases at a given level (account or zone). The `phase` field in each result element indicates the [phase](/ruleset-engine/about/phases/) where that ruleset is defined.
 
@@ -75,10 +75,10 @@ Use one of the following API endpoints:
 | [Get an account entry point ruleset][gep-account] | `GET /accounts/{account_id}/rulesets/phases/{phase_name}/entrypoint` |
 | [Get a zone entry point ruleset][gep-zone]        | `GET /zones/{zone_id}/rulesets/phases/{phase_name}/entrypoint`       |
 
-[gr-account]: /api/operations/getAccountRuleset
-[gr-zone]: /api/operations/getZoneRuleset
-[gep-account]: /api/operations/getAccountEntrypointRuleset
-[gep-zone]: /api/operations/getZoneEntrypointRuleset
+[gr-account]: /api/resources/rulesets/methods/get/
+[gr-zone]: /api/resources/rulesets/methods/get/
+[gep-account]: /api/resources/rulesets/subresources/phases/methods/get/
+[gep-zone]: /api/resources/rulesets/subresources/phases/methods/get/
 
 :::note
 You can only use the _Get a zone ruleset_ operation for zone-level phase entry points (entry points where `kind` is set to `zone`).
@@ -138,10 +138,10 @@ Use one of the following API endpoints:
 | [List account entry point ruleset versions][lev-account] | `GET /accounts/{account_id}/rulesets/phases/{phase_name}/entrypoint/versions` |
 | [List zone entry point ruleset versions][lev-zone]       | `GET /zones/{zone_id}/rulesets/phases/{phase_name}/entrypoint/versions`       |
 
-[lv-account]: /api/operations/listAccountRulesetVersions
-[lv-zone]: /api/operations/listZoneRulesetVersions
-[lev-account]: /api/operations/listAccountEntrypointRulesetVersions
-[lev-zone]: /api/operations/listZoneEntrypointRulesetVersions
+[lv-account]: /api/resources/rulesets/subresources/versions/methods/list/
+[lv-zone]: /api/resources/rulesets/subresources/versions/methods/list/
+[lev-account]: /api/resources/rulesets/subresources/phases/subresources/versions/methods/list/
+[lev-zone]: /api/resources/rulesets/subresources/phases/subresources/versions/methods/list/
 
 The result contains the ruleset properties of each version, but it does not include the list of rules. Refer to [View a specific version of a ruleset](#view-a-specific-version-of-a-ruleset) for instructions on obtaining this information.
 
@@ -195,10 +195,10 @@ Use one of the following API endpoints:
 | [Get an account entry point ruleset version][gerv-account] | `GET /accounts/{account_id}/rulesets/phases/{phase_name}/entrypoint/versions/{version_number}` |
 | [Get a zone entry point ruleset version][gerv-zone]        | `GET /zones/{zone_id}/rulesets/phases/{phase_name}/entrypoint/versions/{version_number}`       |
 
-[grv-account]: /api/operations/getAccountRulesetVersion
-[grv-zone]: /api/operations/getZoneRulesetVersion
-[gerv-account]: /api/operations/getAccountEntrypointRulesetVersion
-[gerv-zone]: /api/operations/getZoneEntrypointRulesetVersion
+[grv-account]: /api/resources/rulesets/subresources/versions/methods/get/
+[grv-zone]: /api/resources/rulesets/subresources/versions/methods/get/
+[gerv-account]: /api/resources/rulesets/subresources/phases/subresources/versions/methods/get/
+[gerv-zone]: /api/resources/rulesets/subresources/phases/subresources/versions/methods/get/
 
 When the specified phase entry point ruleset does not exist, this API method returns a `404 Not Found` HTTP status code.
 
@@ -246,11 +246,9 @@ When you view a specific version of a managed ruleset, each rule listed in the r
 
 Returns a list of all the rules in a managed ruleset with a specific tag.
 
-| Operation                                            | Method + Endpoint                                                                                      |
-| ---------------------------------------------------- | ------------------------------------------------------------------------------------------------------ |
-| [List rules in account ruleset version by tag][lrbt] | `GET /accounts/{account_id}/rulesets/{managed_ruleset_id}/versions/{version_number}/by_tag/{tag_name}` |
-
-[lrbt]: /api/operations/listAccountRulesetVersionRulesByTag
+| Operation                                    | Method + Endpoint                                                                                      |
+| -------------------------------------------- | ------------------------------------------------------------------------------------------------------ |
+| List rules in account ruleset version by tag | `GET /accounts/{account_id}/rulesets/{managed_ruleset_id}/versions/{version_number}/by_tag/{tag_name}` |
 
 ### Example
 

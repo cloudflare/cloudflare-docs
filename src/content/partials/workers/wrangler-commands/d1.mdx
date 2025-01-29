@@ -1,0 +1,309 @@
+---
+{}
+---
+
+import { Render, AnchorHeading, Type, MetaInfo } from "~/components";
+
+<AnchorHeading title="`create`" slug="d1-create" depth={3} />
+
+Creates a new D1 database, and provides the binding and UUID that you will put in your Wrangler file.
+
+```txt
+wrangler d1 create <DATABASE_NAME> [OPTIONS]
+```
+
+- `DATABASE_NAME` <Type text="string" /> <MetaInfo text="required" />
+  - The name of the new D1 database.
+- `--location` <Type text="string" /> <MetaInfo text="optional" />
+  - Provide an optional [location hint](/d1/configuration/data-location/) for your database leader.
+  - Available options include `weur` (Western Europe), `eeur` (Eastern Europe), `apac` (Asia Pacific), `oc` (Oceania), `wnam` (Western North America), and `enam` (Eastern North America).
+
+<AnchorHeading title="`info`" slug="d1-info" depth={3} />
+
+Get information about a D1 database, including the current database size and state.
+
+```txt
+wrangler d1 info <DATABASE_NAME> [OPTIONS]
+```
+
+- `DATABASE_NAME` <Type text="string" /> <MetaInfo text="required" />
+  - The name of the D1 database to get information about.
+- `--json` <Type text="boolean" /> <MetaInfo text="optional" />
+  - Return output as JSON rather than a table.
+
+<AnchorHeading title="`list`" slug="d1-list" depth={3} />
+
+List all D1 databases in your account.
+
+```txt
+wrangler d1 list [OPTIONS]
+```
+
+- `--json` <Type text="boolean" /> <MetaInfo text="optional" />
+  - Return output as JSON rather than a table.
+
+<AnchorHeading title="`delete`" slug="d1-delete" depth={3} />
+
+Delete a D1 database.
+
+```txt
+wrangler d1 delete <DATABASE_NAME> [OPTIONS]
+```
+
+- `DATABASE_NAME` <Type text="string" /> <MetaInfo text="required" />
+  - The name of the D1 database to delete.
+- `-y, --skip-confirmation` <Type text="boolean" /> <MetaInfo text="optional" />
+  - Skip deletion confirmation prompt.
+
+<AnchorHeading title="`execute`" slug="d1-execute" depth={3} />
+
+Execute a query on a D1 database.
+
+```txt
+wrangler d1 execute <DATABASE_NAME> [OPTIONS]
+```
+
+:::note
+
+You must provide either `--command` or `--file` for this command to run successfully.
+
+:::
+
+- `DATABASE_NAME` <Type text="string" /> <MetaInfo text="required" />
+  - The name of the D1 database to execute a query on.
+- `--command` <Type text="string" /> <MetaInfo text="optional" />
+  - The SQL query you wish to execute.
+- `--file` <Type text="string" /> <MetaInfo text="optional" />
+  - Path to the SQL file you wish to execute.
+- `-y, --yes` <Type text="boolean" /> <MetaInfo text="optional" />
+  - Answer `yes` to any prompts.
+- `--local` <Type text="boolean" /> <MetaInfo text="(default: true) optional" />
+  - Execute commands/files against a local database for use with [wrangler dev](/workers/wrangler/commands/#dev).
+- `--remote` <Type text="boolean" /> <MetaInfo text="(default: false) optional" />
+  - Execute commands/files against a remote D1 database for use with [wrangler dev --remote](/workers/wrangler/commands/#dev).
+- `--persist-to` <Type text="string" /> <MetaInfo text="optional" />
+  - Specify directory to use for local persistence (for use in combination with `--local`).
+- `--json` <Type text="boolean" /> <MetaInfo text="optional" />
+  - Return output as JSON rather than a table.
+- `--preview` <Type text="boolean" /> <MetaInfo text="optional" />
+  - Execute commands/files against a preview D1 database (as defined by `preview_database_id` in the [`wrangler.toml / wrangler.json` file](/workers/wrangler/configuration/#d1-databases)).
+- `--batch-size` <Type text="number" /> <MetaInfo text="optional" />
+  - Number of queries to send in a single batch.
+
+<AnchorHeading title="`export`" slug="d1-export" depth={3} />
+
+Export a D1 database or table's schema and/or content to a `.sql` file.
+
+```txt
+wrangler d1 export <DATABASE_NAME> [OPTIONS]
+```
+
+- `DATABASE_NAME` <Type text="string" /> <MetaInfo text="required" />
+  - The name of the D1 database to export.
+- `--local` <Type text="boolean" /> <MetaInfo text="(default: true) optional" />
+  - Export from a local database for use with [wrangler dev](/workers/wrangler/commands/#dev).
+- `--remote` <Type text="boolean" /> <MetaInfo text="(default: false) optional" />
+  - Export from a remote D1 database for use with [wrangler dev --remote](/workers/wrangler/commands/#dev).
+- `--output` <Type text="string" /> <MetaInfo text="required" />
+  - Path to the SQL file for your export.
+- `--table` <Type text="string" /> <MetaInfo text="optional" />
+  - The name of the table within a D1 database to export.
+- `--no-data` <Type text="boolean" /> <MetaInfo text="(default: false) optional" />
+  - Controls whether export SQL file contains database data. Note that `--no-data=true` is not recommended due to a known wrangler limitation that intreprets the value as false.
+- `--no-schema` <Type text="boolean" /> <MetaInfo text="(default: false) optional" />
+  - Controls whether export SQL file contains database schema. Note that `--no-schema=true` is not recommended due to a known wrangler limitation that intreprets the value as false.
+
+<AnchorHeading
+	title="`time-travel restore`"
+	slug="d1-time-travel-restore"
+	depth={3}
+/>
+
+Restore a database to a specific point-in-time using [Time Travel](/d1/reference/time-travel/).
+
+```txt
+wrangler d1 time-travel restore <DATABASE_NAME> [OPTIONS]
+```
+
+- `DATABASE_NAME` <Type text="string" /> <MetaInfo text="required" />
+  - The name of the D1 database to execute a query on.
+- `--bookmark` <Type text="string" /> <MetaInfo text="optional" />
+  - A D1 bookmark representing the state of a database at a specific point in time.
+- `--timestamp` <Type text="string" /> <MetaInfo text="optional" />
+  - A UNIX timestamp or JavaScript date-time `string` within the last 30 days.
+- `--json` <Type text="boolean" /> <MetaInfo text="optional" />
+  - Return output as JSON rather than a table.
+
+<AnchorHeading
+	title="`time-travel info`"
+	slug="d1-time-travel-info"
+	depth={3}
+/>
+
+Inspect the current state of a database for a specific point-in-time using [Time Travel](/d1/reference/time-travel/).
+
+```txt
+wrangler d1 time-travel info <DATABASE_NAME> [OPTIONS]
+```
+
+- `DATABASE_NAME` <Type text="string" /> <MetaInfo text="required" />
+  - The name of the D1 database to execute a query on.
+- `--timestamp` <Type text="string" /> <MetaInfo text="optional" />
+  - A UNIX timestamp or JavaScript date-time `string` within the last 30 days.
+- `--json` b<Type text="boolean" /> <MetaInfo text="optional" />
+  - Return output as JSON rather than a table.
+
+<AnchorHeading title="`backup create`" slug="d1-backup-create" depth={3} />
+
+:::caution
+
+This command only works on databases created during D1's alpha period. You can check which version your database uses with `wrangler d1 info <DATABASE_NAME>`.
+
+This command will not work on databases that are created during the beta period, or after general availability (GA). Refer to [Time Travel](/d1/reference/time-travel/) in the D1 documentation for more information on D1's approach to backup and restores for databases created during the beta/GA period.
+:::
+
+Initiate a D1 backup.
+
+```txt
+wrangler d1 backup create <DATABASE_NAME>
+```
+
+- `DATABASE_NAME` <Type text="string" /> <MetaInfo text="required" />
+  - The name of the D1 database to backup.
+
+<AnchorHeading title="`backup list`" slug="d1-backup-list" depth={3} />
+
+:::caution
+
+This command only works on databases created during D1's alpha period. You can check which version your database uses with `wrangler d1 info <DATABASE_NAME>`.
+
+This command will not work on databases that are created during the beta period, or after general availability (GA). Refer to [Time Travel](/d1/reference/time-travel/) in the D1 documentation for more information on D1's approach to backup and restores for databases created during the beta/GA period.
+:::
+
+List all available backups.
+
+```txt
+wrangler d1 backup list <DATABASE_NAME>
+```
+
+- `DATABASE_NAME` <Type text="string" /> <MetaInfo text="required" />
+  - The name of the D1 database to list the backups of.
+
+<AnchorHeading title="`backup restore`" slug="d1-backup-restore" depth={3} />
+
+:::caution
+
+This command only works on databases created during D1's alpha period. You can check which version your database uses with `wrangler d1 info <DATABASE_NAME>`.
+
+This command will not work on databases that are created during the beta period, or after general availability (GA). Refer to [Time Travel](/d1/reference/time-travel/) in the D1 documentation for more information on D1's approach to backup and restores for databases created during the beta/GA period.
+:::
+
+Restore a backup into a D1 database.
+
+```txt
+wrangler d1 backup restore <DATABASE_NAME> <BACKUP_ID>
+```
+
+- `DATABASE_NAME` <Type text="string" /> <MetaInfo text="required" />
+  - The name of the D1 database to restore the backup into.
+- `BACKUP_ID` <Type text="string" /> <MetaInfo text="required" />
+  - The ID of the backup you wish to restore.
+
+<AnchorHeading title="`backup download`" slug="d1-backup-download" depth={3} />
+
+:::caution
+
+This command only works on databases created during D1's alpha period. You can check which version your database uses with `wrangler d1 info <DATABASE_NAME>`.
+
+This command will not work on databases that are created during the beta period, or after general availability (GA). To download existing data of a beta/GA database to your local machine refer to the `wrangler d1 export` command. Refer to [Time Travel](/d1/reference/time-travel/) in the D1 documentation for more information on D1's approach to backups for databases created during the beta/GA period.
+:::
+
+Download existing data to your local machine.
+
+```txt
+wrangler d1 backup download <DATABASE_NAME> <BACKUP_ID>
+```
+
+- `DATABASE_NAME` <Type text="string" /> <MetaInfo text="required" />
+  - The name of the D1 database you wish to download the backup of.
+- `BACKUP_ID` <Type text="string" /> <MetaInfo text="required" />
+  - The ID of the backup you wish to download.
+- `--output` <Type text="string" /> <MetaInfo text="optional" />
+  - The `.sqlite3` file to write to (defaults to `'<DB_NAME>.<SHORT_BACKUP_ID>.sqlite3'`).
+
+<AnchorHeading
+	title="`migrations create`"
+	slug="d1-migrations-create"
+	depth={3}
+/>
+
+Create a new migration.
+
+This will generate a new versioned file inside the `migrations` folder. Name your migration file as a description of your change. This will make it easier for you to find your migration in the `migrations` folder. An example filename looks like:
+
+`0000_create_user_table.sql`
+
+The filename will include a version number and the migration name you specify below.
+
+```txt
+wrangler d1 migrations create <DATABASE_NAME> <MIGRATION_NAME>
+```
+
+- `DATABASE_NAME` <Type text="string" /> <MetaInfo text="required" />
+  - The name of the D1 database you wish to create a migration for.
+- `MIGRATION_NAME` <Type text="string" /> <MetaInfo text="required" />
+  - A descriptive name for the migration you wish to create.
+
+<AnchorHeading title="`migrations list`" slug="d1-migrations-list" depth={3} />
+
+View a list of unapplied migration files.
+
+```txt
+wrangler d1 migrations list <DATABASE_NAME> [OPTIONS]
+```
+
+- `DATABASE_NAME` <Type text="string" /> <MetaInfo text="required" />
+  - The name of the D1 database you wish to list unapplied migrations for.
+- `--local` <Type text="boolean" /> <MetaInfo text="optional" />
+  - Show the list of unapplied migration files on your locally persisted D1 database.
+- `--remote` <Type text="boolean" /> <MetaInfo text="(default: false) optional" />
+  - Show the list of unapplied migration files on your remote D1 database.
+- `--persist-to` <Type text="string" /> <MetaInfo text="optional" />
+  - Specify directory to use for local persistence (for use in combination with `--local`).
+- `--preview` <Type text="boolean" /> <MetaInfo text="optional" />
+  - Show the list of unapplied migration files on your preview D1 database (as defined by `preview_database_id` in the [`wrangler.toml / wrangler.json` file](/workers/wrangler/configuration/#d1-databases)).
+
+<AnchorHeading
+	title="`migrations apply`"
+	slug="d1-migrations-apply"
+	depth={3}
+/>
+
+Apply any unapplied migrations.
+
+This command will prompt you to confirm the migrations you are about to apply. Confirm that you would like to proceed. After, a backup will be captured.
+
+The progress of each migration will be printed in the console.
+
+When running the apply command in a CI/CD environment or another non-interactive command line, the confirmation step will be skipped, but the backup will still be captured.
+
+If applying a migration results in an error, this migration will be rolled back, and the previous successful migration will remain applied.
+
+```txt
+wrangler d1 migrations apply <DATABASE_NAME> [OPTIONS]
+```
+
+- `DATABASE_NAME` <Type text="string" /> <MetaInfo text="required" />
+  - The name of the D1 database you wish to apply your migrations on.
+- `--env` <Type text="string" /> <MetaInfo text="optional" />
+  - Specify which environment configuration to use for D1 binding
+- `--local` <Type text="boolean" /> <MetaInfo text="(default: true) optional" />
+  - Execute any unapplied migrations on your locally persisted D1 database.
+- `--remote` <Type text="boolean" /> <MetaInfo text="(default: false) optional" />
+  - Execute any unapplied migrations on your remote D1 database.
+- `--persist-to` <Type text="string" /> <MetaInfo text="optional" />
+  - Specify directory to use for local persistence (for use in combination with `--local`).
+- `--preview` <Type text="boolean" /> <MetaInfo text="optional" />
+  - Execute any unapplied migrations on your preview D1 database (as defined by `preview_database_id` in the [`wrangler.toml / wrangler.json` file](/workers/wrangler/configuration/#d1-databases)).
+- `--batch-size` <Type text="number" /> <MetaInfo text="optional" />
+  - Number of queries to send in a single batch.

@@ -17,6 +17,13 @@ import { AvailableNotifications, Details, Render } from "~/components"
 
 [Cipher suites](/ssl/edge-certificates/additional-options/cipher-suites/) are a combination of ciphers used to negotiate security settings during the [SSL/TLS handshake](https://www.cloudflare.com/learning/ssl/what-happens-in-a-tls-handshake/). As a SaaS provider, you can [specify configurations for cipher suites](#cipher-suites) on your zone as a whole and cipher suites on individual custom hostnames via the API.
 
+
+:::caution
+When you [issue a custom hostname certificate](/cloudflare-for-platforms/cloudflare-for-saas/security/certificate-management/issue-and-validate/) with wildcards enabled, any cipher suites or Minimum TLS settings applied to that hostname will only apply to the direct hostname.
+
+However, if you want to update the Minimum TLS settings for all wildcard hostnames, you can change Minimum TLS version at the [zone level](/ssl/edge-certificates/additional-options/minimum-tls/).
+:::
+
 ## Enable mTLS
 
 Once you have [added a custom hostname](/cloudflare-for-platforms/cloudflare-for-saas/start/getting-started/), you can enable mTLS by using Cloudflare Access. Go to [Cloudflare Zero Trust](https://one.dash.cloudflare.com/) and [add mTLS authentication](/cloudflare-one/identity/devices/access-integrations/mutual-tls-authentication/) with a few clicks.
@@ -41,7 +48,7 @@ Currently, you cannot add mTLS policies for custom hostnames using [API Shield](
 
 :::note
 
-While TLS 1.3 is the most recent and secure version, it is not supported by some older devices. Refer to Cloudflare's recommendations when [deciding what version to use](/ssl/reference/protocols/#decide-which-version-to-use). 
+While TLS 1.3 is the most recent and secure version, it is not supported by some older devices. Refer to Cloudflare's recommendations when [deciding what version to use](/ssl/reference/protocols/#decide-which-version-to-use).
 :::
 
 ## Cipher suites
@@ -51,7 +58,7 @@ For security and regulatory reasons, you may want to only allow connections from
 
 <Details header="Restrict cipher suites for zone">
 
-Refer to [Edit zone setting](/api/operations/zone-settings-edit-single-setting) and use `ciphers` as the setting name in the URI path.
+Refer to [Edit zone setting](/api/resources/zones/subresources/settings/methods/edit/) and use `ciphers` as the setting name in the URI path.
 
 
 </Details>
@@ -59,7 +66,7 @@ Refer to [Edit zone setting](/api/operations/zone-settings-edit-single-setting) 
 
 <Details header="Restrict cipher suites for custom hostname">
 
-Refer to [SSL properties of a custom hostname](/api/operations/custom-hostname-for-a-zone-edit-custom-hostname).
+Refer to [SSL properties of a custom hostname](/api/resources/custom_hostnames/methods/edit/).
 
 <Render file="edit-custom-hostname-api" params={{ one: "When making the request," }} />
 

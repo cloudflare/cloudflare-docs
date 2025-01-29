@@ -13,7 +13,7 @@ Cloudflare R2 is an object storage service that provides a highly available, sca
 
 ### Create R2 bucket
 
-Using [Wrangler](/workers/wrangler/install-and-update/), [API](/api/operations/r2-create-bucket), or [Account View Dashboard](https://dash.cloudflare.com/?to=/:account/r2/new) create an [R2 Bucket](/r2/buckets/create-buckets/).
+Using [Wrangler](/workers/wrangler/install-and-update/), [API](/api/resources/r2/subresources/buckets/methods/create/), or [Account View Dashboard](https://dash.cloudflare.com/?to=/:account/r2/new) create an [R2 Bucket](/r2/buckets/create-buckets/).
 
 <Render file="create-r2-buckets" />
 
@@ -37,6 +37,8 @@ After your token has been successfully created, review your **Secret Access Key*
 ## Define R2 backend
 
 Update your [`cloudflare.tf`](/terraform/tutorial/initialize-terraform/) file to include a [backend](https://developer.hashicorp.com/terraform/language/settings/backends/configuration) for the `<YOUR_BUCKET_NAME>` bucket you created above.
+
+<Render file="v4-code-snippets" />
 
 ```tf
 terraform {

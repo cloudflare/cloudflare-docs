@@ -1,0 +1,28 @@
+---
+title: Workflows is now in open beta
+description: Build long-running, reliable and durable applications on Cloudflare Workers
+products: 
+  - workers
+  - workflows
+date: 2024-10-24T14:00:00Z
+---
+
+import { Render, PackageManagers } from "~/components"
+
+Workflows is now in open beta, and available to any developer a free or paid Workers plan.
+
+Workflows allow you to build multi-step applications that can automatically retry, persist state and run for minutes, hours, days, or weeks. Workflows introduces a programming model that makes it easier to build reliable, long-running tasks, observe as they progress, and programatically trigger instances based on events across your services. 
+
+### Get started
+
+You can get started with Workflows by [following our get started guide](/workflows/get-started/guide/) and/or using `npm create cloudflare` to pull down the starter project:
+
+```sh
+npm create cloudflare@latest workflows-starter -- --template "cloudflare/workflows-starter"
+```
+
+You can open the `src/index.ts` file, extend it, and use `wrangler deploy` to deploy your first Workflow. From there, you can:
+
+* Learn the [Workflows API](/workflows/build/workers-api/)
+* [Trigger Workflows](/workflows/build/trigger-workflows/) via your Workers apps.
+* Understand the [Rules of Workflows](/workflows/build/rules-of-workflows/) and how to adopt best practices

@@ -16,7 +16,7 @@ import { Render } from "~/components"
 | Writes to different keys     | 1,000 writes per day  | Unlimited    |
 | Writes to same key           | 1 per second          | 1 per second |
 | Operations/worker invocation | 1000                  | 1000         |
-| Namespaces                   | 200                   | 200          |
+| Namespaces                   | 1000                  | 1000         |
 | Storage/account              | 1 GB                  | Unlimited    |
 | Storage/namespace            | 1 GB                  | Unlimited    |
 | Keys/namespace               | Unlimited             | Unlimited    |
@@ -31,8 +31,12 @@ import { Render } from "~/components"
 
 :::note[Free versus Paid plan pricing]
 
-
 Refer to [KV pricing](/kv/platform/pricing/) to review the specific KV operations you are allowed under each plan with their pricing.
 
+:::
+
+:::note[Workers KV REST API limits]
+
+Using the REST API to access Cloudflare Workers KV is subject to the [rate limits that apply to all operations of the Cloudflare REST API](/fundamentals/api/reference/limits).
 
 :::

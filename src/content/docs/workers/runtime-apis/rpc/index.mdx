@@ -7,7 +7,7 @@ description: The built-in, JavaScript-native RPC system built into Workers and
 
 ---
 
-import { DirectoryListing, Render, Stream } from "~/components"
+import { DirectoryListing, Render, Stream, WranglerConfig } from "~/components"
 
 :::note
 To use RPC, [define a compatibility date](/workers/configuration/compatibility-dates) of `2024-04-03` or higher, or include `rpc` in your [compatibility flags](/workers/configuration/compatibility-flags/#nodejs-compatibility-flag).
@@ -68,10 +68,14 @@ To use an instance of a class that you define as a parameter or return value of 
 
 Consider the following example:
 
+<WranglerConfig>
+
 ```toml
 name = "counter"
 main = "./src/counter.js"
 ```
+
+</WranglerConfig>
 
 ```js
 import { WorkerEntrypoint, RpcTarget } from "cloudflare:workers";
@@ -104,6 +108,10 @@ export default {
 
 The method `increment` can be called directly by the client, as can the public property `value`:
 
+
+
+<WranglerConfig>
+
 ```toml
 name = "client-worker"
 main = "./src/clientWorker.js"
@@ -111,6 +119,8 @@ services = [
   { binding = "COUNTER_SERVICE", service = "counter", entrypoint = "CounterService" }
 ]
 ```
+
+</WranglerConfig>
 
 ```js
 export default {
@@ -243,3 +253,4 @@ In this video, we explore how Cloudflare Workers support Remote Procedure Calls 
 ## Limitations
 
 * [Smart Placement](/workers/configuration/smart-placement/) is currently ignored when making RPC calls. If Smart Placement is enabled for Worker A, and Worker B declares a [Service Binding](/workers/runtime-apis/bindings) to it, when Worker B calls Worker A via RPC, Worker A will run locally, on the same machine.
+* The maximum serialized RPC limit is 1 MB. Consider using [`ReadableStream`](/workers/runtime-apis/streams/readablestream/) when returning more data.

@@ -9,6 +9,8 @@ head:
 
 ---
 
+import { Render } from "~/components";
+
 To increase availability and fault tolerance, you can use one or more DNS provider(s) alongside Cloudflare in case one provider becomes unavailable (known as a [peer DNS server](#peer-dns-server)). Your providers will then transfer DNS records between themselves using authoritative ([AXFR](https://datatracker.ietf.org/doc/html/rfc5936)) or incremental ([IXFR](https://datatracker.ietf.org/doc/html/rfc1995)) zone transfers.
 
 With AXFR, the entire zone will be transferred from the primary to the secondary provider, even if only one record changes. With IXFR, only the changes will be transferred. Cloudflare supports both protocols.
@@ -22,7 +24,9 @@ With zone transfers, you have two configuration options:
 
 Peer DNS servers can be used as primary and secondary external DNS servers. The same peer can be linked to multiple primary and secondary zones. Each peer can be associated with only one Transaction Signature (TSIG).
 
-You can manage peers via the [API](/api/operations/secondary-dns-\(-peer\)-list-peers) or the dashboard by going to **Manage Account** > **Configurations** > **DNS Zone Transfers**.
+<Render file="linked-peers-limit" />
+
+You can manage peers via the [API](/api/resources/dns/subresources/zone_transfers/subresources/peers/methods/list/) or the dashboard by going to **Manage Account** > **Configurations** > **DNS Zone Transfers**.
 
 Depending on the usage of the peer, the fields are interpreted in a different way:
 

@@ -38,7 +38,7 @@ If **Health Monitor Regions** for a pool is set to **All Data Centers (Enterpris
 
 Load balancing analytics and logs will only show global health changes.
 
-For greater accuracy and consistency when changing endpoint health status, you can also set the `consecutive_up` and `consecutive_down` parameters via the [Create Monitor API endpoint](/api/operations/account-load-balancer-monitors-create-monitor). To change from healthy to unhealthy, an endpoint will have to be marked healthy a consecutive number of times (specified by `consecutive_down`). The same applies — from unhealthy to healthy — for `consecutive_up`.
+For greater accuracy and consistency when changing endpoint health status, you can also set the `consecutive_up` and `consecutive_down` parameters via the [Create Monitor API endpoint](/api/resources/load_balancers/subresources/monitors/methods/create/). To change from healthy to unhealthy, an endpoint will have to be marked healthy a consecutive number of times (specified by `consecutive_down`). The same applies — from unhealthy to healthy — for `consecutive_up`.
 
 ***
 
@@ -47,7 +47,6 @@ For greater accuracy and consistency when changing endpoint health status, you c
 When an [individual endpoint becomes unhealthy](#how-an-endpoint-becomes-unhealthy), that may affect the health status of any associated pools (visible in the dashboard):
 
 * **Healthy**: All endpoints are healthy.
-* **Degraded**: At least one endpoint is unhealthy, but the pool is still considered healthy and could be receiving traffic.
 * **Critical**: The pool has fallen below the number of available endpoints specified in its **Health Threshold** and will not receive traffic from your load balancer (unless other pools are also unhealthy and this pool is marked as the [**Fallback Pool**](#fallback-pools)).
 * **Health unknown**: There are either no monitors attached to pool endpoints or the monitors have not yet determined endpoint health.
 * **No health**: Reserved for your load balancer's [**Fallback Pool**](#fallback-pools).

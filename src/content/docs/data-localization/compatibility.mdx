@@ -42,14 +42,14 @@ The table below provides a summary of the Data Localization Suite product's beha
 | ---------------------------- | --------------- | ----------------- | -------------------------- |
 | Advanced Certificate Manager | ⚫️              | ⚫️                | ⚫️                        |
 | Advanced DDoS Protection     | ✅              | ✅                | 🚧 [^3]                   |
-| API Shield                   | ✅              | ✅                | ✘ [^4]                    |
+| API Shield                   | ✅              | ✅                | 🚧 [^4]                    |
 | Bot Management               | ✅              | ✅                | 🚧 [^5]                   |
-| DNS Firewall                 | ⚫️              | ⚫️                | 🚧 [^1]                   |
+| DNS Firewall                 | ⚫️              | ⚫️                | 🚧 [^22]                   |
 | Page Shield                  | ✅              | ✅                | ✅                        |
-| Rate Limiting                | ✅              | ✅                | 🚧 [^1]                   |
+| Rate Limiting                | ✅              | ✅                | ✅ [^37]                   |
 | SSL                          | ✅              | ✅                | ✅                        |
 | Cloudflare for SaaS          | ✘               | ✅                | ✅                        |
-| Turnstile                    | ⚫️              | ✘                 | ✅                        |
+| Turnstile                    | ⚫️              | ✘                 | ✅ [^38]                       |
 | WAF/L7 Firewall              | ✅              | ✅                | ✅                        |
 | DMARC Management             | ⚫️              | ⚫️                | ✅                        |
 
@@ -60,17 +60,19 @@ The table below provides a summary of the Data Localization Suite product's beha
 | Product                      | Geo Key Manager | Regional Services | Customer Metadata Boundary |
 | ---------------------------- | --------------- | ----------------- | -------------------------- |
 | Cloudflare Images            | ⚫️              | ✅ [^36]          | 🚧 [^35]                    |
-| Cloudflare Pages             | ✘               | ✅ [^11]          | 🚧 [^1]                   |
+| AI Gateway                   | ✘               | ✘                | 🚧 [^39]                    |
+| Cloudflare Pages             | ✅ [^11]        | ✅ [^11]          | 🚧 [^1]                   |
+| Cloudflare D1                | ⚫️             |  ⚫️                | 🚧 [^40]                   |
 | Durable Objects              | ⚫️              | ✅ [^7]           | 🚧 [^1]                   |
 | Email Routing                | ⚫️              | ⚫️                | ✅                        |
 | R2                           | ✅ [^27]        | ✅ [^8]           | ✅ [^28]                  |
 | Smart Placement              | ⚫️              | ✘                 | ✘                         |
 | Stream                       | ⚫️              | ✘                 | 🚧 [^1]                    |
-| Workers (deployed on a Zone) | ✅              | ✅                | 🚧 [^1]                   |
+| Workers (deployed on a Zone) | ✅              | ✅                | 🚧 [^41]                   |
 | Workers AI                   | ⚫️              | ✘                 | ✅                        |
 | Workers KV                   | ⚫️              | ✘                 | ✅ [^34]                   |
 | Workers.dev                  | ✘              | ✘                 | ✘                         |
-
+| Workers Analytics Engine (WAE) | ⚫️           | ⚫️                 | 🚧 [^1]                    |
 
 ***
 
@@ -81,9 +83,10 @@ The table below provides a summary of the Data Localization Suite product's beha
 | Argo Smart Routing | ✅              | ✘ [^9]           | ✘ [^10]                    |
 | Static IP/BYOIP    | ⚫️              | ✅ [^26]         | ⚫️                         |
 | Magic Firewall     | ⚫️              | ⚫️               | ✅                         |
+| Magic Network Monitoring | ⚫️        | ⚫️               | 🚧 [^1]                    |
 | Magic Transit      | ⚫️              | ⚫️               | 🚧 [^1]                    |
 | Magic WAN          | ⚫️              | ⚫️               | ✅                         |
-| Spectrum           | ✅              | ✅               | ✅                         |
+| Spectrum           | ✅              | ✅ [^42]         | ✅                         |
 
 ***
 
@@ -112,7 +115,7 @@ The table below provides a summary of the Data Localization Suite product's beha
 [^1]: Logs / Analytics not available outside US region when using Customer Metadata Boundary.
 [^2]: Regular and Custom Tiered Cache works; Smart Tiered Caching not available with Regional Services.
 [^3]: Adaptive DDoS Protection is only supported for US CMB.
-[^4]: API shield will not yet work with Customer Metadata Boundary enabled outside of US region.
+[^4]: Features such as API Discovery and Volumetric Abuse Detection will not work with CMB set to EU only.
 [^5]: Some advanced Enterprise features, including the [Anomaly Detection engine](/bots/concepts/bot-score/#anomaly-detection), are not available.
 [^6]: Only when using a Custom Domain set to a region, either through Workers or [Transform Rules](/images/transform-images/serve-images-custom-paths/) within the same zone.
 [^7]: [Jurisdiction restrictions for Durable Objects](/durable-objects/reference/data-location/#restrict-durable-objects-to-a-jurisdiction).
@@ -126,13 +129,13 @@ The table below provides a summary of the Data Localization Suite product's beha
 [^15]: Can be localized to US FedRAMP region only. More regions coming in 2024.
 [^16]: Customer Metadata Boundary can be used to limit data transfer outside region, but Access User Logs will not be available outside US region.
 [^17]: Currently may only be used with US FedRAMP region.
-[^18]: Only US FedRAMP region.
+[^18]: The only connectivity option is [US FedRAMP region](/cloudflare-one/connections/connect-networks/configure-tunnels/tunnel-run-parameters/#region). Regional Services only applies when using [Public Hostnames](/cloudflare-one/connections/connect-networks/routing-to-tunnel/) set to a region.
 [^19]: Uses Gateway HTTP and CASB.
 [^20]: You can [bring your own certificate](https://blog.cloudflare.com/bring-your-certificates-cloudflare-gateway/) to Gateway but these cannot yet be restricted to a specific region.
 [^21]: Gateway HTTP supports Regional Services. Gateway DNS does not yet support regionalization. <br/> ICMP proxy and WARP-to-WARP proxy are not available to Regional Services users.
 [^22]: Dashboard Analytics and Logs are empty when using CMB outside the US region. Use Logpush instead.
 [^26]: Static IP/BYOIP can be used with the legacy Spectrum setup.
-[^27]: Only when using a Custom Domain and a [Custom Certificate](/r2/reference/data-security/#encryption-in-transit) or [Keyless SSL](/data-localization/key-management/keyless-ssl/).
+[^27]: Only when using a Custom Domain and a [Custom Certificate](/r2/reference/data-security/#encryption-in-transit) or [Keyless SSL](/ssl/keyless-ssl/).
 [^28]: R2 Dashboard [Metrics and Analytics](/r2/platform/metrics-analytics/) are populated. Additionally, [Jurisdictional Restrictions](/r2/reference/data-location/#jurisdictional-restrictions) guarantee objects in a bucket are stored within a specific jurisdiction.
 [^29]: You cannot yet specify region location for object storage itself.
 [^30]: Regular/Generic and Custom Tiered Cache works; Smart Tiered Caching does not work with Customer Metadata Boundary (CMB). <br/> With CMB set to EU, the Zone Dashboard **Caching** > **Tiered Cache** > **Smart Tiered Caching** option will not populate the Dashboard Analytics.
@@ -142,3 +145,9 @@ The table below provides a summary of the Data Localization Suite product's beha
 [^34]: Jurisdictional Restrictions (storage) for Workers KV pairs is not supported today.
 [^35]: Logs / Analytics not available outside US region when using Customer Metadata Boundary. Jurisdictional Restrictions (storage) options are not supported today.
 [^36]: Only when using a [Custom Domain](/images/manage-images/serve-images/serve-from-custom-domains/) set to a region.
+[^37]: Legacy Zone Analytics & Logs section not available outside US region when using CMB. Use [Security Analytics](/waf/analytics/security-analytics/) instead.
+[^38]: [Turnstile Analytics](/turnstile/turnstile-analytics/) are available. However, there are no regionalization guarantees for the Siteverify API yet.
+[^39]: Jurisdictional Restrictions (storage) options for [Logs](/ai-gateway/observability/logging/) are not supported today.
+[^40]: Jurisdictional Restrictions ([data location](/d1/configuration/data-location/) / storage) options are not supported today.
+[^41]: Logs / Analytics not available outside US region when using Customer Metadata Boundary. Use Logpush instead.
+[^42]: Only applies to HTTP/S Spectrum applications.

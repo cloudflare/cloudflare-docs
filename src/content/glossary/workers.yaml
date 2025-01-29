@@ -43,7 +43,7 @@ entries:
 
   - term: environment
     general_definition: |-
-      [Environments](/workers/wrangler/environments/) allow you to deploy the same Worker application with different configuration for each environment. Only available for use with `wrangler.toml`.
+      [Environments](/workers/wrangler/environments/) allow you to deploy the same Worker application with different configuration for each environment. Only available for use with `wrangler.toml` or `wrangler.json`.
 
   - term: environment variable
     general_definition: |-
@@ -111,7 +111,7 @@ entries:
 
   - term: version
     general_definition: |-
-      A [version](/workers/configuration/versions-and-deployments/#versions) is defined by the state of code as well as the state of configuration in a Worker's `wrangler.toml` file.
+      A [version](/workers/configuration/versions-and-deployments/#versions) is defined by the state of code as well as the state of configuration in a Worker's Wrangler file.
 
   - term: V8
     general_definition: |-

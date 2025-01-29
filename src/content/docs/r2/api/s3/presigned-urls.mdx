@@ -68,9 +68,9 @@ A valid alternative design to presigned URLs is to use a Worker with a [binding]
 :::note[Bindings]
 
 
-A binding is how your Worker interacts with external resources such as [KV Namespaces](/kv/concepts/kv-namespaces/), [Durable Objects](/durable-objects/), or [R2 Buckets](/r2/buckets/). A binding is a runtime variable that the Workers runtime provides to your code. You can declare a variable name in your `wrangler.toml` file that will be bound to these resources at runtime, and interact with them through this variable. Every binding's variable name and behavior is determined by you when deploying the Worker. Refer to [Environment Variables](/workers/configuration/environment-variables/) for more information.
+A binding is how your Worker interacts with external resources such as [KV Namespaces](/kv/concepts/kv-namespaces/), [Durable Objects](/durable-objects/), or [R2 Buckets](/r2/buckets/). A binding is a runtime variable that the Workers runtime provides to your code. You can declare a variable name in your Wrangler file that will be bound to these resources at runtime, and interact with them through this variable. Every binding's variable name and behavior is determined by you when deploying the Worker. Refer to [Environment Variables](/workers/configuration/environment-variables/) for more information.
 
-A binding is defined in the `wrangler.toml` file of your Worker project's directory.
+A binding is defined in the Wrangler file of your Worker project's directory.
 
 
 :::
@@ -131,7 +131,7 @@ export default {
 } satisfies ExportedHandler;
 ```
 
-Notice the total absence of any configuration or token secrets present in the Worker code. Instead, you would create a `wrangler.toml` [binding](/r2/api/workers/workers-api-usage/#4-bind-your-bucket-to-a-worker) to whatever bucket represents the bucket you will upload to. Additionally, authorization is handled in-line with the upload which can reduce latency.
+Notice the total absence of any configuration or token secrets present in the Worker code. Instead, you would create a `wrangler.toml / wrangler.json` file [binding](/r2/api/workers/workers-api-usage/#4-bind-your-bucket-to-a-worker) to whatever bucket represents the bucket you will upload to. Additionally, authorization is handled in-line with the upload which can reduce latency.
 
 In some cases, Workers lets you implement certain functionality more easily. For example, if you wanted to offer a write-once guarantee so that users can only upload to a path once, with pre-signed URLs, you would need to sign specific headers and require the sender to send them. You can modify the previous Worker to sign additional headers:
 

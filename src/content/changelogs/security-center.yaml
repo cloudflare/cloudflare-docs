@@ -5,6 +5,9 @@ productLink: "/security-center/"
 productArea: Application security
 productAreaLink: /fundamentals/reference/changelog/security/
 entries:
+  - publish_date: "2025-01-20"
+    description: |-
+      - On the URL scanner, customers who search for a report will now get a list of all reports related to that specific hostname. A hash is also available in the security report. By selecting the hash, the dashboard will list reports containing the same hash.
   - publish_date: "2024-07-22"
     description: |-
       - Customers can now archive multiple Security Insights at the same time. Go to **Security Center** > **Security Insights** and select the insights to archive.

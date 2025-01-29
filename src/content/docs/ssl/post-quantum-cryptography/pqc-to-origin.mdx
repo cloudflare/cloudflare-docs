@@ -26,7 +26,7 @@ If the origin supports post-quantum hybrid key agreement, it can use HelloRetryR
 
 ### Cloudflare zone settings
 
-The method described above is the one Cloudflare uses to support post-quantum to all outbound connections. However, if your origin server supports PQC and prefers it, you can use the [API](/api/operations/zone-cache-settings-change-origin-post-quantum-encryption-setting) to adjust your Cloudflare zone settings and avoid the extra round trip.
+The method described above is the one Cloudflare uses to support post-quantum to all outbound connections. However, if your origin server supports PQC and prefers it, you can use the [API](/api/resources/origin_post_quantum_encryption/methods/update/) to adjust your Cloudflare zone settings and avoid the extra round trip.
 
 It is also possible to opt out of PQC using the same API endpoint.
 

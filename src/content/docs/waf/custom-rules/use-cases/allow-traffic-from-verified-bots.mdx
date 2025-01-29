@@ -8,14 +8,14 @@ head:
 
 This example challenges requests from a list of countries, but allows traffic from search engine bots — such as Googlebot and Bingbot — and from other [verified bots](/bots/concepts/bot/#verified-bots).
 
-The rule expression uses the [`cf.client.bot`](/ruleset-engine/rules-language/fields/dynamic-fields/#cfclientbot) field to determine if the request originated from a known good bot or crawler.
+The rule expression uses the [`cf.client.bot`](/ruleset-engine/rules-language/fields/reference/cf.client.bot/) field to determine if the request originated from a known good bot or crawler.
 
-- **Expression**: `(ip.geoip.country in {"US" "MX"} and not cf.client.bot)`
+- **Expression**: `(ip.src.country in {"US" "MX"} and not cf.client.bot)`
 - **Action**: _Managed Challenge_
 
 ## Other resources
 
 - [Use case: Challenge bad bots](/waf/custom-rules/use-cases/challenge-bad-bots/)
 - [Cloudflare bot solutions](/bots/)
-- [Troubleshooting: Bing’s Site Scan blocked by a WAF managed rule](/waf/troubleshooting/blocked-bing-site-scans/)
+- [Troubleshooting: Bing's Site Scan blocked by a WAF managed rule](/waf/troubleshooting/blocked-bing-site-scans/)
 - [Learning Center: What is a web crawler?](https://www.cloudflare.com/learning/bots/what-is-a-web-crawler/)

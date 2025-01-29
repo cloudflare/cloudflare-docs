@@ -1,19 +1,16 @@
 ---
 {}
-
 ---
 
-import { GlossaryTooltip, Render } from "~/components"
+import { GlossaryTooltip, Render } from "~/components";
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login).
 2. Select **Add a domain**.
-3. Enter your website’s <GlossaryTooltip term="apex domain">apex domain</GlossaryTooltip> ('example.com'), choose how you would like to add your [DNS records](/dns/manage-dns-records/), and select **Continue**.
-
+3. Enter your website's <GlossaryTooltip term="apex domain">apex domain</GlossaryTooltip> (for example, `example.com`), choose how you would like to add your [DNS records](/dns/manage-dns-records/), and select **Continue**.
    :::note
-
    If Cloudflare is unable to identify your domain as a registered domain, make sure you are using an existing [top-level domain](https://www.cloudflare.com/learning/dns/top-level-domain/) (`.com`, `.net`, `.biz`, or others).
 
-   Cloudflare requires your `apex domain` to be one level below a valid TLD defined in the [Public Suffix List (PSL)](https://github.com/publicsuffix/list/blob/master/public_suffix_list.dat). Enterprise customers can onboard lower-level subdomains using [Subdomain setup](/dns/zone-setups/subdomain-setup/).
+   Cloudflare requires your apex domain to be one level below a valid TLD defined in the [Public Suffix List (PSL)](https://github.com/publicsuffix/list/blob/master/public_suffix_list.dat). Enterprise customers can onboard lower-level subdomains using [Subdomain setup](/dns/zone-setups/subdomain-setup/).
    :::
 
 4. Select a [plan](https://www.cloudflare.com/plans/#compare-features).
@@ -26,7 +23,5 @@ import { GlossaryTooltip, Render } from "~/components"
       <Render file="dns-nxdomain-warning" product="dns" />
 
    2. If you find any missing records, [manually add](/dns/manage-dns-records/how-to/create-dns-records/) those records.
-
    3. Depending on your site setup, you may want to adjust the [proxy status](/dns/manage-dns-records/reference/proxied-dns-records/) for certain `A`, `AAAA`, or `CNAME` records.
-
    4. Select **Continue**.

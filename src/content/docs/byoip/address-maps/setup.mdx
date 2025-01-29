@@ -1,0 +1,60 @@
+---
+title: Set up address maps
+pcx_content_type: how-to
+sidebar:
+  order: 2
+  label: Setup
+---
+
+import { GlossaryTooltip } from "~/components";
+
+Consider the sections below to learn how to set up address maps.
+
+:::note
+There is **no expected downtime** when setting up or updating your address maps.
+:::
+
+## Create address maps
+
+To avoid any errors if you have [static IPs](/byoip/concepts/static-ips/), Cloudflare creates an address map during the static IP onboarding process, meaning you cannot create a new address map with your static IPs. You may only edit the Cloudflare-created map and add or edit your zones within the existing map.
+
+If you are using BYOIP instead, refer to the following steps:
+
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/) and select your account.
+2. Go to **IP Addresses** > **Address Maps**.
+3. Select **Create an address map**.
+4. Choose the scope of the address map.
+5. Add the zones and IP addresses that you want to map.
+6. Name your address map.
+7. Review the information and select **Save and Deploy**.
+
+:::note
+Creating an address map does not automatically change DNS configuration. DNS responses only begin to change when a zone or account is added to a map. Additionally, address maps that are not yet enabled will not take effect in DNS responses.
+:::
+
+## Manage address maps
+
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/) and select your account.
+2. Go to **IP Addresses** > **Address Maps**.
+3. Go to your address map and select **Review**.
+4. Edit your address map.
+5. Review the information and select **Save**.
+
+:::note
+You can also enable, disable, and delete address maps. This will likely change the IP addresses used for your zones.
+:::
+
+## Non-SNI support
+
+If your visitors use devices that have not been updated since 2011, they may not have <GlossaryTooltip term="Server Name Indication (SNI)">Server Name Indication (SNI)</GlossaryTooltip> support. For further context, refer to [browser compatibility](/ssl/reference/browser-compatibility/#non-sni-support).
+
+Use address maps to specify a hostname as default SNI. This will be used whenever Cloudflare receives a non-SNI TLS handshake.
+
+:::note
+Setting up a default SNI is currently only supported via API.
+:::
+
+1. If you have not already, create an address map. Refer to the [section above](#create-address-maps) or to the [Create Address Map](/api/resources/addressing/subresources/address_maps/methods/create/) API endpoint.
+2. Take note of the address map `id`. If needed, you can use the [List Address Maps](/api/resources/addressing/subresources/address_maps/methods/list/) endpoint to get it.
+3. Make sure you add the desired IPs to the address map. Cloudflare will respond with the default SNI on those IPs. Use the dashboard or refer to [Add An IP To An Address Map](/api/resources/addressing/subresources/address_maps/subresources/ips/methods/update/).
+4. Configure the `default_sni` value on the address map created in step 1. Refer to the [Update Address Map](/api/resources/addressing/subresources/address_maps/methods/edit/) API endpoint for details. The default SNI can be any valid domain or subdomain owned by your account.

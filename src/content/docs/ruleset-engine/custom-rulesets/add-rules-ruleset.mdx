@@ -5,16 +5,16 @@ sidebar:
   order: 3
 ---
 
-To add rules to an existing custom ruleset, use the [Update an account ruleset](/api/operations/updateAccountRuleset) operation and pass the rules in an array. Each rule has an expression and an action.
+To add rules to an existing custom ruleset, use the [Update an account ruleset](/api/resources/rulesets/methods/update/) operation and pass the rules in an array. Each rule has an expression and an action.
 
 :::note[Choosing the appropriate API method]
 
-When you add rules to a custom ruleset using the [Update an account ruleset](/api/operations/updateAccountRuleset) operation, you replace all the rules in the ruleset with the rules in the request. Use this API method when adding or updating several rules at once. This method will update the ruleset version number only once.
+When you add rules to a custom ruleset using the [Update an account ruleset](/api/resources/rulesets/methods/update/) operation, you replace all the rules in the ruleset with the rules in the request. Use this API method when adding or updating several rules at once. This method will update the ruleset version number only once.
 
 You can use other API operations depending on the type of operation:
 
-- Add a single rule to an existing custom ruleset: Use the [Create an account ruleset rule](/api/operations/createAccountRulesetRule) operation.
-- Update a single rule in a custom ruleset: Use the [Update an account ruleset rule](/api/operations/updateAccountRulesetRule) operation.
+- Add a single rule to an existing custom ruleset: Use the [Create an account ruleset rule](/api/resources/rulesets/subresources/rules/methods/create/) operation.
+- Update a single rule in a custom ruleset: Use the [Update an account ruleset rule](/api/resources/rulesets/subresources/rules/methods/edit/) operation.
 
 :::
 
@@ -32,7 +32,7 @@ https://api.cloudflare.com/client/v4/accounts/{account_id}/rulesets/{custom_rule
 --data '{
   "rules": [
     {
-      "expression": "(ip.geoip.country eq \"GB\" or ip.geoip.country eq \"FR\") or cf.threat_score > 0",
+      "expression": "(ip.src.country eq \"GB\" or ip.src.country eq \"FR\") or cf.threat_score > 0",
       "action": "challenge",
       "description": "challenge GB and FR or based on IP Reputation"
     },
@@ -57,7 +57,7 @@ https://api.cloudflare.com/client/v4/accounts/{account_id}/rulesets/{custom_rule
 				"id": "<CUSTOM_RULE_ID_1>",
 				"version": "1",
 				"action": "challenge",
-				"expression": "(ip.geoip.country eq \"GB\" or ip.geoip.country eq \"FR\") or cf.threat_score \u003e 0",
+				"expression": "(ip.src.country eq \"GB\" or ip.src.country eq \"FR\") or cf.threat_score \u003e 0",
 				"description": "challenge GB and FR or based on IP Reputation",
 				"last_updated": "2021-03-18T18:25:08.122758Z",
 				"ref": "<CUSTOM_RULE_REF_1>",
@@ -85,7 +85,7 @@ https://api.cloudflare.com/client/v4/accounts/{account_id}/rulesets/{custom_rule
 
 ## Update rules
 
-To update one or more rules in a custom ruleset, use the [Update an account ruleset](/api/operations/updateAccountRuleset) operation. Include the ID of the rules you want to modify in the rules array and add the fields you wish to update. The request replaces the entire ruleset with a new version. Therefore, you must include the ID of all the rules you wish to keep.
+To update one or more rules in a custom ruleset, use the [Update an account ruleset](/api/resources/rulesets/methods/update/) operation. Include the ID of the rules you want to modify in the rules array and add the fields you wish to update. The request replaces the entire ruleset with a new version. Therefore, you must include the ID of all the rules you wish to keep.
 
 The following request edits one rule in a custom ruleset and updates the execution order of the rules.
 
@@ -133,7 +133,7 @@ https://api.cloudflare.com/client/v4/accounts/{account_id}/rulesets/{ruleset_id}
 				"id": "<CUSTOM_RULE_ID_1>",
 				"version": "1",
 				"action": "challenge",
-				"expression": "(ip.geoip.country eq \"GB\" or ip.geoip.country eq \"FR\") or cf.threat_score \u003e 0",
+				"expression": "(ip.src.country eq \"GB\" or ip.src.country eq \"FR\") or cf.threat_score \u003e 0",
 				"description": "challenge GB and FR or based on IP Reputation",
 				"last_updated": "2021-03-18T18:25:08.122758Z",
 				"ref": "<CUSTOM_RULE_ID_1>",

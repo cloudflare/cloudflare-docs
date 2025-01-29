@@ -1,9 +1,6 @@
 ---
 title: Grok
 pcx_content_type: get-started
-sidebar:
-  badge:
-    text: Beta
 ---
 
 [Grok](https://docs.x.ai/docs#getting-started) is s a general purpose model that can be used for a variety of tasks, including generating and understanding text, code, and function calling.
@@ -17,6 +14,15 @@ https://gateway.ai.cloudflare.com/v1/{account_id}/{gateway_id}/grok
 ## URL structure
 
 When making requests to [Grok](https://docs.x.ai/docs#getting-started), replace `https://api.x.ai/v1` in the URL you are currently using with `https://gateway.ai.cloudflare.com/v1/{account_id}/{gateway_id}/grok`.
+
+## Prerequisites
+
+When making requests to Grok, ensure you have the following:
+
+- Your AI Gateway Account ID.
+- Your AI Gateway gateway name.
+- An active Grok API token.
+- The name of the Grok model you want to use.
 
 ## Examples
 
@@ -36,6 +42,8 @@ curl https://gateway.ai.cloudflare.com/v1/{account_id}/{gateway_id}/grok/v1/chat
     ]
 }'
 ```
+
+### Use OpenAI SDK with JavaScript
 
 If you are using the OpenAI SDK with JavaScript, you can set your endpoint like this:
 
@@ -66,6 +74,8 @@ const completion = await openai.chat.completions.create({
 console.log(completion.choices[0].message);
 ```
 
+### Use OpenAI SDK with Python
+
 If you are using the OpenAI SDK with Python, you can set your endpoint like this:
 
 ```python title="Python"
@@ -88,6 +98,8 @@ completion = client.chat.completions.create(
 
 print(completion.choices[0].message)
 ```
+
+### Use Anthropic SDK with JavaScript
 
 If you are using the Anthropic SDK with JavaScript, you can set your endpoint like this:
 
@@ -115,6 +127,8 @@ const msg = await anthropic.messages.create({
 
 console.log(msg);
 ```
+
+### Use Anthropic SDK with Python
 
 If you are using the Anthropic SDK with Python, you can set your endpoint like this:
 

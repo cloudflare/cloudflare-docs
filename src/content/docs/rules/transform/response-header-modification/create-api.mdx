@@ -36,7 +36,7 @@ Make sure your API token has the [required permissions](#required-api-token-perm
 
 <Details header="Example: Set an HTTP response header to a static value">
 
-The following example configures the rules of an existing phase ruleset (`{ruleset_id}`) to a single HTTP response header modification rule — setting an HTTP response header to a static value — using the [Update a zone ruleset](/api/operations/updateZoneRuleset) operation. The response will contain the complete definition of the ruleset you updated.
+The following example configures the rules of an existing phase ruleset (`{ruleset_id}`) to a single HTTP response header modification rule — setting an HTTP response header to a static value — using the [Update a zone ruleset](/api/resources/rulesets/methods/update/) operation. The response will contain the complete definition of the ruleset you updated.
 
 ```bash
 curl --request PUT \
@@ -102,7 +102,7 @@ https://api.cloudflare.com/client/v4/zones/{zone_id}/rulesets/{ruleset_id} \
 
 <Details header="Example: Set an HTTP response header to a dynamic value">
 
-The following example configures the rules of an existing phase ruleset (`{ruleset_id}`) to a single HTTP response header modification rule — setting an HTTP response header to a dynamic value — using the [Update a zone ruleset](/api/operations/updateZoneRuleset) operation. The response will contain the complete definition of the ruleset you updated.
+The following example configures the rules of an existing phase ruleset (`{ruleset_id}`) to a single HTTP response header modification rule — setting an HTTP response header to a dynamic value — using the [Update a zone ruleset](/api/resources/rulesets/methods/update/) operation. The response will contain the complete definition of the ruleset you updated.
 
 ```bash
 curl --request PUT \
@@ -168,7 +168,7 @@ https://api.cloudflare.com/client/v4/zones/{zone_id}/rulesets/{ruleset_id} \
 
 <Details header="Example: Add a `set-cookie` HTTP response header with a static value">
 
-The following example configures the rules of an existing phase ruleset (`{ruleset_id}`) to a single HTTP response header modification rule — adding a `set-cookie` HTTP response header with a static value — using the [Update a zone ruleset](/api/operations/updateZoneRuleset) operation. By configuring the rule with the `add` operation you will keep any existing `set-cookie` headers that may already exist in the response. The response will contain the complete definition of the ruleset you updated.
+The following example configures the rules of an existing phase ruleset (`{ruleset_id}`) to a single HTTP response header modification rule — adding a `set-cookie` HTTP response header with a static value — using the [Update a zone ruleset](/api/resources/rulesets/methods/update/) operation. By configuring the rule with the `add` operation you will keep any existing `set-cookie` headers that may already exist in the response. The response will contain the complete definition of the ruleset you updated.
 
 ```bash
 curl --request PUT \
@@ -234,7 +234,7 @@ https://api.cloudflare.com/client/v4/zones/{zone_id}/rulesets/{ruleset_id} \
 
 <Details header="Example: Remove an HTTP response header">
 
-The following example sets the rules of an existing phase ruleset (`<RULESET_ID>`) to a single HTTP response header modification rule — removing an HTTP response header — using the [Update a zone ruleset](/api/operations/updateZoneRuleset) operation. The response will contain the complete definition of the ruleset you updated.
+The following example sets the rules of an existing phase ruleset (`<RULESET_ID>`) to a single HTTP response header modification rule — removing an HTTP response header — using the [Update a zone ruleset](/api/resources/rulesets/methods/update/) operation. The response will contain the complete definition of the ruleset you updated.
 
 ```bash
 curl --request PUT \

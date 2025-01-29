@@ -78,17 +78,22 @@ Hints are a best effort and not a guarantee. Unlike with jurisdictions, Durable 
 
 ### Supported locations
 
-| Parameter | Location              |
-| --------- | --------------------- |
-| wnam      | Western North America |
-| enam      | Eastern North America |
-| sam       | South America         |
-| weur      | Western Europe        |
-| eeur      | Eastern Europe        |
-| apac      | Asia-Pacific          |
-| oc        | Oceania               |
-| afr       | Africa                |
-| me        | Middle East           |
+| Parameter | Location                   |
+| --------- | -------------------------- |
+| wnam      | Western North America      |
+| enam      | Eastern North America      |
+| sam       | South America <sup>2</sup> |
+| weur      | Western Europe             |
+| eeur      | Eastern Europe             |
+| apac      | Asia-Pacific               |
+| oc        | Oceania                    |
+| afr       | Africa <sup>2</sup>        |
+| me        | Middle East <sup>2</sup>   |
 
 <sup>1</sup> Dynamic relocation of existing Durable Objects is planned for the
 future.
+
+<sup>2</sup> Durable Objects currently do not spawn in this location. Instead,
+the Durable Object will spawn in a nearby location which does support Durable
+Objects. For example, Durable Objects hinted to South America spawn in Eastern
+North America instead.

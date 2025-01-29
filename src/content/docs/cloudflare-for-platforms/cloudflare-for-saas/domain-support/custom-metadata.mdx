@@ -30,7 +30,7 @@ Please speak with your Solutions Engineer to discuss additional logic and requir
 
 ## Submitting custom metadata
 
-You may add custom metadata to Cloudflare via the Custom Hostnames API. This data can be added via a [`PATCH` request](/api/operations/custom-hostname-for-a-zone-edit-custom-hostname) to the specific hostname ID to set metadata for that hostname, for example:
+You may add custom metadata to Cloudflare via the Custom Hostnames API. This data can be added via a [`PATCH` request](/api/resources/custom_hostnames/methods/edit/) to the specific hostname ID to set metadata for that hostname, for example:
 
 ```bash
 curl --request PATCH \
@@ -83,7 +83,7 @@ export default {
 
 ## Accessing custom metadata in a rule expression
 
-Use the [`cf.hostname.metadata`](/ruleset-engine/rules-language/fields/dynamic-fields/#cfhostnamemetadata) field to access the metadata object in rule expressions. To obtain the different values from the JSON object, use the [`lookup_json_string`](/ruleset-engine/rules-language/functions/#lookup_json_string) function.
+Use the [`cf.hostname.metadata`](/ruleset-engine/rules-language/fields/reference/cf.hostname.metadata/) field to access the metadata object in rule expressions. To obtain the different values from the JSON object, use the [`lookup_json_string`](/ruleset-engine/rules-language/functions/#lookup_json_string) function.
 
 The following rule expression defines that there will be a rule match if the `security_tag` value in custom metadata contains the value `low`:
 

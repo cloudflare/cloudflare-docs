@@ -3,9 +3,9 @@ pcx_content_type: configuration
 title: Block traffic from specific countries
 ---
 
-This example blocks requests based on country code using the [`ip.geoip.country`](/ruleset-engine/rules-language/fields/standard-fields/#ipsrccountry) field.
+This example blocks requests based on country code using the [`ip.src.country`](/ruleset-engine/rules-language/fields/reference/ip.src.country/) field.
 
-- **Expression**: `(ip.geoip.country in {"KN" "SY"})`
+- **Expression**: `(ip.src.country in {"KN" "SY"})`
 - **Action**: _Block_
 
 ## Other resources

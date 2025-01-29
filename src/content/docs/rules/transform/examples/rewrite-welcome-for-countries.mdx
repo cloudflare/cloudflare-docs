@@ -22,7 +22,7 @@ To have a welcome page in two languages, create two rewrite URL rules with a sta
 Text in **Expression Editor**:
 
 ```txt
-http.request.uri.path == "/welcome.html" && ip.geoip.country == "GB"
+http.request.uri.path == "/welcome.html" && ip.src.country == "GB"
 ```
 
 Text after **Path** > **Rewrite to...** > _Static_:
@@ -40,7 +40,7 @@ Text after **Path** > **Rewrite to...** > _Static_:
 Text in **Expression Editor**:
 
 ```txt
-http.request.uri.path == "/welcome.html" && ip.geoip.country == "PT"
+http.request.uri.path == "/welcome.html" && ip.src.country == "PT"
 ```
 
 Text after **Path** > **Rewrite to...** > _Static_:

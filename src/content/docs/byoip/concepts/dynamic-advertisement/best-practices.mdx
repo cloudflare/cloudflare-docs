@@ -14,7 +14,7 @@ To prevent issues and simplify the advertisement process during an attack scenar
 
 - Assign appropriate user roles. Ensure that users assigned to manage the status of IP prefix advertisement have the **Administrator** or **Super Administrator** role in your Cloudflare account. For more information, refer to [Setting up Multi-user accounts on Cloudflare](/fundamentals/setup/manage-members/).
 
-- Get a list of the prefix IDs that you want to manage. Maintain a list of Cloudflare prefix IDs to simplify dynamic advertisement management and operations. You can [obtain prefix IDs](#obtain-prefix-ids) via the Cloudflare dashboard or use the [list prefixes](/api/operations/ip-address-management-prefixes-list-prefixes) operation in the Cloudflare API. Refer to these prefix IDs when managing prefix advertisement.
+- Get a list of the prefix IDs that you want to manage. Maintain a list of Cloudflare prefix IDs to simplify dynamic advertisement management and operations. You can [obtain prefix IDs](#obtain-prefix-ids) via the Cloudflare dashboard or use the [list prefixes](/api/resources/addressing/subresources/prefixes/methods/list/) operation in the Cloudflare API. Refer to these prefix IDs when managing prefix advertisement.
 
 ## Enable prefix advertisement
 
@@ -55,7 +55,7 @@ After saving your changes, it takes between two to seven minutes to enable adver
 
 ### Via the API
 
-To configure prefix advertisement with the Cloudflare API, use the [IP Address Management and Dynamic Advertisement](/api/operations/ip-address-management-dynamic-advertisement-get-advertisement-status) API.
+To configure prefix advertisement with the Cloudflare API, use the [IP Address Management and Dynamic Advertisement](/api/resources/addressing/subresources/prefixes/subresources/bgp/subresources/statuses/methods/get/) API.
 
 Most dynamic advertisement operations require that you supply the Cloudflare ID for any prefix you want to access with the Cloudflare API. The following section outlines how to obtain prefix IDs.
 
@@ -70,6 +70,6 @@ Most dynamic advertisement operations require that you supply the Cloudflare ID 
 
 </TabItem> <TabItem label="API">
 
-To obtain prefix IDs using the API, refer to the [list prefixes](/api/operations/ip-address-management-prefixes-list-prefixes) operation in the Cloudflare API.
+To obtain prefix IDs using the API, refer to the [list prefixes](/api/resources/addressing/subresources/prefixes/methods/list/) operation in the Cloudflare API.
 
 </TabItem> </Tabs>

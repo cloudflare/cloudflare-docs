@@ -23,7 +23,8 @@ import { TabItem, Tabs } from "~/components";
 ```js
 export default {
 	async fetch(request, env) {
-		const SITE_KEY = env.SITE_KEY
+		const SITE_KEY = env.SITE_KEY; // The Turnstile Sitekey of your widget (pass as env or secret)
+		const TURNSTILE_ATTR_NAME = 'your_id_to_replace'; // The id of the element to put a Turnstile widget in
 		let res = await fetch(request)
 
 		// Instantiate the API to run on specific elements, for example, `head`, `div`
@@ -32,17 +33,15 @@ export default {
 			// `.on` attaches the element handler and this allows you to match on element/attributes or to use the specific methods per the API
 			.on('head', {
 				element(element) {
-
 					// In this case, you are using `append` to add a new script to the `head` element
 					element.append(`<script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>`, { html: true });
 				},
 			})
 			.on('div', {
 				element(element) {
-
-					// You are using the `getAttribute` method here to retrieve the `id` or `class` of an element
-					if (element.getAttribute('id') === <NAME_OF_ATTRIBUTE>) {
-						element.append(`<div class="cf-turnstile" data-sitekey="${SITE_KEY}" data-theme="light"></div>`, { html: true });
+					// Add a turnstile widget element into if an element with the id of TURNSTILE_ATTR_NAME is found
+					if (element.getAttribute('id') === TURNSTILE_ATTR_NAME) {
+						element.append(`<div class="cf-turnstile" data-sitekey="${SITE_KEY}"></div>`, { html: true });
 					}
 				},
 			})
@@ -57,7 +56,9 @@ export default {
 ```ts
 export default {
 	async fetch(request, env): Promise<Response> {
-		const SITE_KEY = env.SITE_KEY
+		const SITE_KEY = env.SITE_KEY; // The Turnstile Sitekey of your widget (pass as env or secret)
+		const TURNSTILE_ATTR_NAME = 'your_id_to_replace'; // The id of the element to put a Turnstile widget in
+
 		let res = await fetch(request)
 
 		// Instantiate the API to run on specific elements, for example, `head`, `div`
@@ -73,9 +74,8 @@ export default {
 			})
 			.on('div', {
 				element(element) {
-
-					// You are using the `getAttribute` method here to retrieve the `id` or `class` of an element
-					if (element.getAttribute('id') === <NAME_OF_ATTRIBUTE>) {
+					// Add a turnstile widget element into if an element with the id of TURNSTILE_ATTR_NAME is found
+					if (element.getAttribute('id') === TURNSTILE_ATTR_NAME) {
 						element.append(`<div class="cf-turnstile" data-sitekey="${SITE_KEY}" data-theme="light"></div>`, { html: true });
 					}
 				},
@@ -94,6 +94,7 @@ from js import HTMLRewriter, fetch
 
 async def on_fetch(request, env):
     site_key = env.SITE_KEY
+	attr_name = env.TURNSTILE_ATTR_NAME
     res = await fetch(request)
 
     class Append:
@@ -112,7 +113,7 @@ async def on_fetch(request, env):
 
     # Instantiate the API to run on specific elements, for example, `head`, `div`
     head = create_proxy(Append())
-    div = create_proxy(AppendOnID("NAME_OF_ATTRIBUTE"))
+    div = create_proxy(AppendOnID(attr_name))
     new_res = HTMLRewriter.new().on("head", head).on("div", div).transform(res)
 
     return new_res
@@ -128,7 +129,7 @@ This is only half the implementation for Turnstile. The corresponding token that
 <TabItem label="JavaScript" icon="seti:javascript">
 
 ```js
-async function handlePost(request) {
+async function handlePost(request, env) {
     const body = await request.formData();
     // Turnstile injects a token in `cf-turnstile-response`.
     const token = body.get('cf-turnstile-response');
@@ -137,10 +138,10 @@ async function handlePost(request) {
     // Validate the token by calling the `/siteverify` API.
     let formData = new FormData();
 
-    // `secret_key` here is set using Wrangler secrets
-    formData.append('secret', secret_key);
+    // `secret_key` here is the Turnstile Secret key, which should be set using Wrangler secrets
+    formData.append('secret', env.SECRET_KEY);
     formData.append('response', token);
-    formData.append('remoteip', ip);
+    formData.append('remoteip', ip); //This is optional.
 
     const url = 'https://challenges.cloudflare.com/turnstile/v0/siteverify';
     const result = await fetch(url, {
@@ -155,16 +156,26 @@ async function handlePost(request) {
     }
     // The Turnstile token was successfully validated. Proceed with your application logic.
     // Validate login, redirect user, etc.
-    return await fetch(request)
+
+	// Clone the original request with a new body
+    const newRequest = new Request(request, {
+        body: request.body, // Reuse the body
+        method: request.method,
+        headers: request.headers
+    });
+
+    return await fetch(newRequest);
 }
 
 export default {
 	async fetch(request, env) {
-		const SITE_KEY = env.SITE_KEY
+		const SITE_KEY = env.SITE_KEY; // The Turnstile Sitekey of your widget (pass as env or secret)
+		const TURNSTILE_ATTR_NAME = 'your_id_to_replace'; // The id of the element to put a Turnstile widget in
+
 		let res = await fetch(request)
 
 		if (request.method === 'POST') {
-			return handlePost(request)
+			return handlePost(request, env)
 		}
 
 		// Instantiate the API to run on specific elements, for example, `head`, `div`

@@ -36,7 +36,7 @@ The traffic for the applications you chose are now processed first by Connector.
 
 <Render file="connector/account-id-api-key" />
 
-1. Send a [`GET` request](/api/operations/magic-account-apps-list-apps) to list the applications associated with an account.
+1. Send a [`GET` request](/api/resources/magic_transit/subresources/apps/methods/list/) to list the applications associated with an account.
 
    Example:
 
@@ -64,7 +64,7 @@ The traffic for the applications you chose are now processed first by Connector.
 
    Take note of the `"managed_app_id"` value for any application you want to configure.
 
-2. Send a [`POST` request](/api/operations/magic-site-app-configs-add-app-config) to add new apps the priority traffic policy.
+2. Send a [`POST` request](/api/resources/magic_transit/subresources/sites/subresources/app_configuration/methods/create/) to add new apps the priority traffic policy.
 
    Example:
 
@@ -106,7 +106,7 @@ The traffic for the applications you chose are now processed first by Connector.
 
 </TabItem> <TabItem label="API">
 
-1. Send a [`GET` request](/api/operations/magic-site-app-configs-list-app-configs) to list the applications associated with a site.
+1. Send a [`GET` request](/api/resources/magic_transit/subresources/sites/subresources/app_configuration/methods/list/) to list the applications associated with a site.
 
    Example:
 
@@ -134,7 +134,7 @@ The traffic for the applications you chose are now processed first by Connector.
 
    Take note of the `"id"` value for the application that want to delete.
 
-2. Send a `DELETE` request [using the API](/api/operations/magic-site-app-configs-delete-app-config) to delete an application from the breakout traffic policy.
+2. Send a `DELETE` request [using the API](/api/resources/magic_transit/subresources/sites/subresources/app_configuration/methods/delete/) to delete an application from the breakout traffic policy.
 
    ```bash
    curl --request DELETE \

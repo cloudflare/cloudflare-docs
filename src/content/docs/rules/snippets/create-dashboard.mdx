@@ -1,38 +1,28 @@
 ---
-title: Create in the dashboard
+title: Create a snippet in the dashboard
 pcx_content_type: how-to
 sidebar:
   order: 2
+  label: Create in the dashboard
 head:
   - tag: title
     content: Create a snippet in the dashboard
-
 ---
-
-The snippet creation wizard will guide you through the following steps:
-
-1. Define snippet code and test your snippet.
-2. Create snippet rule. The rule expression defines for which requests the snippet code will run.
-3. Review your snippet configuration and deploy the snippet.
-
-## Procedure
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/), and select your account and website.
 
 2. Go to **Rules** > **Snippets**, and select **Create a Snippet**.
 
-3. Enter a descriptive name for the snippet.
+3. In **Snippet name**, enter a descriptive name for the snippet. You cannot change the name after creating the snippet.
 
-4. Enter the snippet's JavaScript code. You can test how your snippet will handle incoming requests using the **HTTP** and **Preview** tabs.
+4. Enter the snippet's JavaScript code in the code editor. You can test how your snippet will handle incoming requests using the **HTTP** and **Preview** tabs.
 
-5. Select **Continue to add Snippet rule**.
+5. Select **Snippet rule** to configure when the snippet will run.
 
-6. Enter a descriptive name for the snippet rule. The snippet rule specifies for which requests the snippet code will run.
+6. Under **Run this Snippet if incoming requests match**, select if you wish to run the snippet only for requests that match a custom filter expression or for all incoming requests.
 
-7. Under **When incoming requests match**, select if you wish to run the snippet for all incoming requests or only for requests that match a custom filter expression.
+7. (Optional) To define a custom expression, use the Expression Builder (specifying one or more values for **Field**, **Operator**, and **Value**) or manually enter an expression using the Expression Editor. For more information, refer to [Edit expressions in the dashboard](/ruleset-engine/rules-language/expressions/edit-expressions/).
 
-8. (Optional) To define a custom expression, use the Expression Builder (specifying one or more values for **Field**, **Operator**, and **Value**) or manually enter an expression using the Expression Editor. For more information, refer to [Edit expressions in the dashboard](/ruleset-engine/rules-language/expressions/edit-expressions/).
+8. Select **Done**.
 
-9. Select **Continue to create Snippet**.
-
-10. Review the snippet code and the snippet rule that defines when the snippet will run. To save your snippet and deploy a rule that enables it, select **Save and deploy Snippet**. If you are not ready to deploy your snippet, select **Save and enable later**.
+9. To deploy your snippet, select **Deploy**. If you are not ready to deploy your snippet, open the dropdown next to **Deploy** and select **Save as Draft**.

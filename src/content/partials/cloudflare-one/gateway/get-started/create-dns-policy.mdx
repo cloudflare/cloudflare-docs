@@ -1,0 +1,65 @@
+---
+{}
+---
+
+import { Render, Tabs, TabItem } from "~/components";
+
+To create a new DNS policy:
+
+<Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
+
+1. In [Zero Trust](https://one.dash.cloudflare.com/), go to **Gateway** > **Firewall policies**.
+2. In the **DNS** tab, select **Add a policy**.
+3. Name the policy.
+4. Under **Traffic**, build a logical expression that defines the traffic you want to allow or block.
+5. Choose an **Action** to take when traffic matches the logical expression. For example, we recommend adding a policy to block all [security categories](/cloudflare-one/policies/gateway/domain-categories/#security-categories):
+   <Render
+   	file="gateway/policies/block-security-categories"
+   	product="cloudflare-one"
+   />
+6. Select **Create policy**.
+
+</TabItem>
+
+<TabItem label="API">
+
+1. [Create an API token](/fundamentals/api/get-started/create-token/) with the following permissions:
+
+   | Type    | Item       | Permission |
+   | ------- | ---------- | ---------- |
+   | Account | Zero Trust | Edit       |
+
+2. (Optional) Configure your API environment variables to include your [account ID](/fundamentals/setup/find-account-and-zone-ids/) and API token.
+3. Send a `POST` request to the [Create a Zero Trust Gateway rule](/api/resources/zero_trust/subresources/gateway/subresources/rules/methods/create/) endpoint. For example, we recommend adding a policy to block all [security categories](/cloudflare-one/policies/gateway/domain-categories/#security-categories):
+
+   ```sh title="curl API DNS policy example"
+   curl https://api.cloudflare.com/client/v4/accounts/{account_id}/gateway/rules \
+   --header "Content-Type: application/json" \
+   --header "Authorization: Bearer <API_TOKEN>" \
+   --data '{
+     "name": "Block security threats",
+     "description": "Block all default Cloudflare DNS security categories",
+     "precedence": 0,
+     "enabled": true,
+     "action": "block",
+     "filters": [
+       "dns"
+     ],
+     "traffic": "any(dns.security_category[*] in {68 178 80 83 176 175 117 131 134 151 153})",
+     "identity": ""
+   }'
+   ```
+
+   ```sh output
+   {
+   	 "success": true,
+   	 "errors": [],
+   	 "messages": []
+   }
+   ```
+
+   The API will respond with a summary of the policy and the result of your request.
+
+</TabItem> </Tabs>
+
+For more information, refer to [DNS policies](/cloudflare-one/policies/gateway/dns-policies/).

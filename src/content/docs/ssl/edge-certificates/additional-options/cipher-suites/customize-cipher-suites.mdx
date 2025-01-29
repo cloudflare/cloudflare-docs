@@ -11,18 +11,14 @@ head:
 
 import { Render, TabItem, Tabs } from "~/components"
 
-With [Advanced Certificate Manager](/ssl/edge-certificates/advanced-certificate-manager/) or within [Cloudflare for SaaS](/cloudflare-for-platforms/cloudflare-for-saas/security/certificate-management/), you can restrict connections between Cloudflare and clients -- such as your visitor's browser -- to specific [cipher suites](/ssl/edge-certificates/additional-options/cipher-suites/).
+With [Advanced Certificate Manager](/ssl/edge-certificates/advanced-certificate-manager/) or within [Cloudflare for SaaS](/cloudflare-for-platforms/cloudflare-for-saas/security/certificate-management/), you can restrict connections between Cloudflare and clients — such as your visitor's browser — to specific [cipher suites](/ssl/edge-certificates/additional-options/cipher-suites/).
 
 You may want to do this to follow specific [recommendations](/ssl/edge-certificates/additional-options/cipher-suites/recommendations/), to [disable weak cipher suites](/ssl/edge-certificates/additional-options/cipher-suites/troubleshooting/#ssl-labs-weak-ciphers-report), or to comply with [industry standards](/ssl/edge-certificates/additional-options/cipher-suites/compliance-status/).
 
 Customizing cipher suites will not lead to any downtime in your SSL/TLS protection.
 
 :::note
-
-
-Note that this process only refers to connections [between clients and the Cloudflare network](/ssl/concepts/#edge-certificate). For connections between Cloudflare and your origin server, refer to [Origin server > Cipher suites](/ssl/origin-configuration/cipher-suites/).
-
-
+This documentation only refers to connections [between clients and the Cloudflare network](/ssl/concepts/#edge-certificate). For connections between Cloudflare and your origin server, refer to [Origin server > Cipher suites](/ssl/origin-configuration/cipher-suites/).
 :::
 
 ## How it works
@@ -37,8 +33,8 @@ Custom cipher suites is a hostname-level setting, which implies that:
 
 Currently, you can only customize cipher suites when using the API:
 
-* [Zone](/api/operations/zone-settings-edit-single-setting) (using `ciphers` as the setting name in the URI path)
-* [Per-hostname](/api/operations/per-hostname-tls-settings-put) (regular zones only)
+* [Zone](/api/resources/zones/subresources/settings/methods/edit/) (using `ciphers` as the setting name in the URI path)
+* [Per-hostname](/api/resources/hostnames/subresources/settings/subresources/tls/methods/update/) (regular zones only)
 * [Custom hostname](/cloudflare-for-platforms/cloudflare-for-saas/security/certificate-management/enforce-mtls/#cipher-suites) (Cloudflare for SaaS zones only)
 
 ### Settings priority and ciphers order
@@ -48,6 +44,11 @@ Cloudflare uses the [hostname priority logic](/ssl/reference/certificate-and-hos
 ECDSA cipher suites are prioritized over RSA, and Cloudflare preserves the specified cipher suites in the order they are set. This means that, if both ECDSA and RSA are used, Cloudflare presents the ECDSA ciphers first - in the order they were set - and then the RSA ciphers, also in the order they were set.
 
 ## Set up
+
+
+:::note
+For guidance around custom hostnames, refer to [TLS settings - Cloudflare for SaaS](/cloudflare-for-platforms/cloudflare-for-saas/security/certificate-management/enforce-mtls/#cipher-suites).
+:::
 
 ### Before you begin
 
@@ -68,11 +69,10 @@ Note that:
 
 3. Get the Zone ID from the [Overview page](https://dash.cloudflare.com/?to=/:account/:zone/) of the domain you want to specify cipher suites for.
 
-4. Make an API call to either the [Edit zone setting](/api/operations/zone-settings-edit-single-setting) endpoint or the [Edit TLS setting for hostname](/api/operations/per-hostname-tls-settings-put) endpoint, specifying `ciphers` in the URL. List your array of chosen cipher suites in the `value` field.
+4. Make an API call to either the [Edit zone setting](/api/resources/zones/subresources/settings/methods/edit/) endpoint or the [Edit TLS setting for hostname](/api/resources/hostnames/subresources/settings/subresources/tls/methods/update/) endpoint, specifying `ciphers` in the URL. List your array of chosen cipher suites in the `value` field.
 
-:::caution
-
-For guidance around custom hostnames, refer to [TLS settings - Cloudflare for SaaS](/cloudflare-for-platforms/cloudflare-for-saas/security/certificate-management/enforce-mtls/#cipher-suites). 
+:::note
+Updating the cipher suites will result in certificates being redeployed.
 :::
 
 <Tabs> <TabItem label="modern">
@@ -128,7 +128,7 @@ curl --request PATCH \
 
 :::caution
 
-For compliance with PCI DSS, also [enable TLS 1.3](/ssl/edge-certificates/additional-options/tls-13/#enable-tls-13) on your zone and make sure to up your [Minimum TLS version](/ssl/edge-certificates/additional-options/minimum-tls/) to `1.2`. 
+For compliance with PCI DSS, also [enable TLS 1.3](/ssl/edge-certificates/additional-options/tls-13/#enable-tls-13) on your zone and make sure to up your [Minimum TLS version](/ssl/edge-certificates/additional-options/minimum-tls/) to `1.2`.
 :::
 
 </TabItem> <TabItem label="fips-140-2">
@@ -154,7 +154,7 @@ curl --request PATCH \
 
 <Tabs> <TabItem label="zone">
 
-To reset to the default cipher suites at zone level, use the [Edit zone setting](/api/operations/zone-settings-edit-single-setting) endpoint, specifying `ciphers` as the setting name in the URL, and send an empty array in the `value` field.
+To reset to the default cipher suites at zone level, use the [Edit zone setting](/api/resources/zones/subresources/settings/methods/edit/) endpoint, specifying `ciphers` as the setting name in the URL, and send an empty array in the `value` field.
 
 ```bash
 curl --request PATCH \
@@ -167,7 +167,7 @@ curl --request PATCH \
 
 </TabItem> <TabItem label="per-hostname">
 
-For specific hostname settings, use the [Delete TLS setting for hostname](/api/operations/per-hostname-tls-settings-delete) endpoint.
+For specific hostname settings, use the [Delete TLS setting for hostname](/api/resources/hostnames/subresources/settings/subresources/tls/methods/delete/) endpoint.
 
 ```bash
 curl --request DELETE \

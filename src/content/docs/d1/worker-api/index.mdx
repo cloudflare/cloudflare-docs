@@ -10,7 +10,7 @@ import { DirectoryListing, Details, Steps } from "~/components";
 You can execute SQL queries on your D1 database from a Worker using the Worker Binding API. To do this, you can perform the following steps:
 
 1. [Bind the D1 Database](/d1/worker-api/d1-database).
-2. [Prepare a statement](/d1/worker-api/d1-database/#dbprepare).
+2. [Prepare a statement](/d1/worker-api/d1-database/#prepare).
 3. [Run the prepared statement](/d1/worker-api/prepared-statements).
 4. Analyze the [return object](/d1/worker-api/return-object) (if necessary).
 
@@ -20,7 +20,7 @@ Refer to the relevant sections for the API documentation.
 
 D1 Worker Bindings API is fully-typed via the [`@cloudflare/workers-types`](/workers/languages/typescript/#typescript) package, and also supports [generic types](https://www.typescriptlang.org/docs/handbook/2/generics.html#generic-types) as part of its TypeScript API. A generic type allows you to provide an optional `type parameter` so that a function understands the type of the data it is handling.
 
-When using the query statement methods [`D1PreparedStatement::run`](/d1/worker-api/prepared-statements/#run), [`D1PreparedStatement::raw`](/d1/worker-api/prepared-statements/#raw) and [`D1PreparedStatement::first`](/d1/worker-api/prepared-statements/#first), you can provide a type representing each database row. D1's API will [return the result object](#return-object) with the correct type.
+When using the query statement methods [`D1PreparedStatement::run`](/d1/worker-api/prepared-statements/#run), [`D1PreparedStatement::raw`](/d1/worker-api/prepared-statements/#raw) and [`D1PreparedStatement::first`](/d1/worker-api/prepared-statements/#first), you can provide a type representing each database row. D1's API will [return the result object](/d1/worker-api/return-object/#d1result) with the correct type.
 
 For example, providing an `OrderRow` type as a type parameter to [`D1PreparedStatement::run`](/d1/worker-api/prepared-statements/#run) will return a typed `Array<OrderRow>` object instead of the default `Record<string, unknown>` type:
 
@@ -37,6 +37,28 @@ const result = await env.MY_DB.prepare(
 "SELECT Id, CustomerName, OrderDate FROM [Order] ORDER BY ShippedDate DESC LIMIT 100",
 ).run<OrderRow>();
 ```
+
+## Type conversion
+
+D1 automatically converts supported JavaScript (including TypeScript) types passed as parameters via the Workers Binding API to their associated D1 types. The type conversion is as follows:
+
+| JavaScript           | D1                                                                           |
+| -------------------- | ---------------------------------------------------------------------------- |
+| null                 | `NULL`                                                                       |
+| Number               | `REAL`                                                                       |
+| Number <sup>1</sup>  | `INTEGER`                                                                    |
+| String               | `TEXT`                                                                       |
+| Boolean <sup>2</sup> | `INTEGER`                                                                    |
+| ArrayBuffer          | `BLOB`                                                                       |
+| undefined            | Not supported. Queries with `undefined` values will return a `D1_TYPE_ERROR` |
+
+<sup>1</sup> D1 supports 64-bit signed `INTEGER` values internally, however
+[BigInts](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/BigInt)
+are not currently supported in the API yet. JavaScript integers are safe up to
+[`Number.MAX_SAFE_INTEGER`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number/MAX_SAFE_INTEGER).
+
+<sup>2</sup> Booleans will be cast to an `INTEGER` type where `1` is `TRUE` and
+`0` is `FALSE`.
 
 ## API playground
 

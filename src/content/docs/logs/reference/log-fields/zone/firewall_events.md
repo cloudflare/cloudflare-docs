@@ -13,7 +13,7 @@ The descriptions below detail the fields available for `firewall_events`.
 
 Type: `string`
 
-The code of the first-class action the Cloudflare Firewall took on this request. <br />Possible actions are <em>unknown</em> \| <em>allow</em> \| <em>block</em> \| <em>challenge</em> \| <em>jschallenge</em> \| <em>log</em> \| <em>connectionclose</em> \| <em>challengesolved</em> \| <em>challengefailed</em> \| <em>challengebypassed</em> \| <em>jschallengesolved</em> \| <em>jschallengefailed</em> \| <em>jschallengebypassed</em> \| <em>bypass</em> \| <em>managedchallenge</em> \| <em>managedchallengeskipped</em> \| <em>managedchallengenoninteractivesolved</em> \| <em>managedchallengeinteractivesolved</em> \| <em>managedchallengebypassed</em>.
+The code of the first-class action the Cloudflare Firewall took on this request. <br />Possible actions are <em>unknown</em> \| <em>allow</em> \| <em>block</em> \| <em>challenge</em> \| <em>jschallenge</em> \| <em>log</em> \| <em>connectionclose</em> \| <em>challengesolved</em> \| <em>challengebypassed</em> \| <em>jschallengesolved</em> \| <em>jschallengebypassed</em> \| <em>bypass</em> \| <em>managedchallenge</em> \| <em>managedchallengenoninteractivesolved</em> \| <em>managedchallengeinteractivesolved</em> \| <em>managedchallengebypassed</em>.
 
 ## ClientASN
 
@@ -163,7 +163,7 @@ The kind of event, currently only possible values are: <em>firewall</em>.
 
 Type: `string`
 
-Result of the check for leaked credentials.
+Result of the check for [leaked credentials](/waf/detections/leaked-credentials/). <br />Possible results are: <em>password_leaked</em> \| <em>username_and_password_leaked</em> \| <em>username_password_similar</em> \| <em>username_leaked</em> \| <em>clean</em>.
 
 ## MatchIndex
 

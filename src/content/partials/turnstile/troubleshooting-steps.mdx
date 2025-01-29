@@ -3,19 +3,19 @@
 
 ---
 
-- Verify your browser compatibility: Ensure that the browser you are using is one of the supported browsers for Turnstile and the browser is up to date. Refer to [supported browsers](/waf/reference/cloudflare-challenges/#browser-support) for more information.
-  - Cloudflare challenges  support all major browsers except Internet Explorer. 
-- Clear your browser cache and cookies: Refer to the guides below on how to clear your browser cache and cookies based on your preferred browser.
-  - [Google Chrome](https://support.google.com/accounts/answer/32050?hl=en\&co=GENIE.Platform%3DDesktop)
-  - [Mozilla Firefox](https://support.mozilla.org/kb/clear-cookies-and-site-data-firefox)
-  - Safari
-    - [Desktop](https://support.apple.com/guide/safari/manage-cookies-sfri11471/mac)
-    - [Mobile](https://support.apple.com/105082)
-  - [Microsoft Edge](https://support.microsoft.com/windows/manage-cookies-in-microsoft-edge-view-allow-block-delete-and-use-168dab11-0753-043d-7c16-ede5947fc64d)
-- Disable all browser extensions: Browser extensions may hinder the challenge from being successfully executed. To resolve this issue, disable your extensions and reload the page.
-- Ensure that JavaScript is enabled.
-- Confirm that cookies are enabled.
-- Try again in incognito or private mode.
-- Test with another browser or device.
-- Ensure that you are not behind a VPN or proxy.
-- Try from a different network.
+1. Verify your browser compatibility.
+    - Turnstile supports all major browsers, except Internet Explorer.
+    - Ensure your browser is up to date. For more information, refer to our [Supported browsers](/waf/reference/cloudflare-challenges/#supported-browsers).
+2. Disable your browser extensions.
+    - Some browser extensions, such as ad blockers, may block the scripts Turnstile needs to operate.
+    - Temporarily disable all extensions and reload the page.
+3. Enable JavaScript.
+    - Turnstile requires JavaScript to run. Ensure it is enabled in your browser settings. Refer to your browser's documentation for instructions on enabling JavaScript.
+4. Try Incognito or Private mode.
+    - Use your browser's incognito or private mode to rule out issues caused by extensions or cached data.
+5. Test another browser or device.
+    - Switch to a different browser or device to see if the issue is specific to your current setup.
+6. Avoid VPNs or proxies.
+    - Some virtual private networks (VPN) or proxies may interfere with Turnstile. Disable them temporarily to test.
+7. Switch to a different network.
+    - Your current network may have restrictions causing Turnstile challenges to fail. Try switching to another network, such as a mobile hotspot.

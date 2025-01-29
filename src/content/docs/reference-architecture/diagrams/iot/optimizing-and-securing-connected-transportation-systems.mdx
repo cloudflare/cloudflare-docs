@@ -1,0 +1,77 @@
+---
+title: Optimizing and securing connected transportation systems
+pcx_content_type: reference-architecture-diagram
+products:
+  - Access
+  - Gateway
+  - Workers
+  - DDoS Protection
+  - DNS Firewall
+  - SSL/TLS
+  - WAF
+  - KV
+  - D1
+  - Durable Objects
+  - Workers AI
+  - R2
+  - WAF
+  - Load Balancing
+  - Cache
+  - CDN
+sidebar:
+  order: 1
+  label: Connected transportation systems
+updated: 2024-12-02
+---
+
+## Introduction
+
+A connected transport system is an integrated network of vehicles, infrastructure, and/or services that rely on constant data exchange in real-time to improve safety, efficiency, and mobility. Examples include public transportation (buses, trams, and trains), emergency vehicles (ambulances, fire trucks, and police cars), fleet management systems (logistics and delivery trucks), autonomous vehicles, connected infrastructure (traffic lights, road signs), platooning systems (truck convoys), drone delivery vehicles, and connected cars. They can be broadly categorized into:
+
+- **Fixed location devices**: Systems such as CCTV cameras, traffic signals, and roadside sensors that remain in fixed locations and push data through a central gateway.
+- **Roaming devices**: These include trucks, delivery vehicles, emergency vehicles, drones, and autonomous cars that require continuous connectivity for real-time communication and control.
+
+These systems need secure and reliable network connections to operate safely and efficiently. Emergency vehicles rely on stable, secure connections to respond quickly without delays. Public transportation systems, including buses and trains, depend on real-time data to keep schedules on track and passengers safe. Fleet management, autonomous vehicles, and drone delivery systems all require secure connections to protect sensitive data and ensure operational reliability.
+
+These systems are prime targets for cyberattacks, which could disrupt services, put public safety at risk, or compromise sensitive data. Their safety and reliability are vital for modern mobility.
+
+This reference architecture diagram illustrates the key Cloudflare components and technologies involved in effectively minimizing latency, ensuring high reliability, and maintaining strong security for connected transportation system communications. Each component plays a crucial role in processing, routing, optimizing, and securing data flow, ensuring that critical data is delivered efficiently and securely.
+
+Devices connect to Cloudflare's anycast network, which inspects and filters incoming data to protect against threats like DDoS attacks, malicious bots, and unauthorised access. Cloudflare's integrated services (including the content delivery network, load balancing, edge computing, and storage solutions), work together seamlessly to enhance data delivery, scalability, and resilience. This ensures that data is processed, optimized, and delivered efficiently to reduce latency, distribute traffic effectively, and handle requests closer to users. Additionally, the routing of data to origins is optimized by the vast global network and smart routing to identify the fastest, most efficient paths. This combination of security, scalability, performance, and routing results in a safer and faster connection between devices and their destination services.
+
+![Figure 1: Optimizing and securing connected transportation systems](~/assets/images/reference-architecture/optimizing-and-securing-connected-transportation-systems/figure1.svg)
+
+1. **Mutual TLS (mTLS)**: To ensure strong authentication, Cloudflare utilizes [mutual TLS](/ssl/client-certificates/enable-mtls/) (mTLS) to verify both client and server identities. This adds an initial layer of trust, ensuring only authorized devices can communicate with the application.
+
+2. **Cloudflare anycast network**: Cloudflare uses [anycast](https://www.cloudflare.com/learning/cdn/glossary/anycast-network/) networking and is one of the world's most connected and geographically distributed networks. Traffic is routed to the nearest Cloudflare data center, which reduces the number of network hops, dynamically adapts to changing network conditions, and ensures data takes the shortest path to its destination, minimizing latency and maximizing reliability.
+
+3. **Security services**:
+
+   1. **API Gateway**: Cloudflare's [API Gateway](/api-shield/get-started/) protects critical APIs from unauthorized access and abuse, ensuring secure data exchange between connected systems.
+   2. **Web Application Firewall (WAF)**: Cloudflare's [WAF](/waf/) helps block malicious traffic and prevent application or API vulnerabilities from being exploited, safeguarding your network, devices and applications.
+   3. **DDoS Protection**: Cloudflare's [DDoS protection](/ddos-protection/about/attack-coverage/), covering the network, transport and application layer, prevents volumetric attacks that could compromise the availability of connected systems. By providing multi-layered protection, Cloudflare is able to mitigate a wide variety of DDoS threats. At lower layers, Cloudflare defends against high-volume attacks such as SYN floods, UDP floods, and other types of protocol-based disruptions that can overwhelm network resources. At the application layer, more sophisticated attacks targeting the application itself, such as HTTP floods \- which aim to exhaust server resources and disrupt user-facing services \- are blocked even in the face of [large-scale DDoS attempts](https://blog.cloudflare.com/tag/ddos-reports/).
+   4. **DNS security**: Cloudflare's [DNS security](https://www.cloudflare.com/en-gb/application-services/products/dns/) helps protect name resolution, ensuring that malicious actors cannot hijack requests.
+   5. **TLS encryption**: [TLS encryption](/ssl/edge-certificates/) ensures that data exchanged across the network is protected from interception, maintaining data integrity and privacy.
+
+4. **Performance and reliability services**:
+
+   1. **Content Delivery Network (CDN)**: [Distribute content](https://www.cloudflare.com/en-gb/learning/cdn/what-is-a-cdn/) efficiently across the network, reducing latency for end users by caching data closer to them.
+   2. **Load balancing**: [Distribute incoming traffic](/load-balancing/get-started/quickstart/) across multiple servers or data centers, ensuring optimal resource utilization, preventing single points of failure, and improving the performance of connected systems.
+   3. **Cloudflare Workers**: Our serverless compute platform, [Cloudflare Workers](/workers/), allows data processing at the edge, reducing the need for data to travel long distances and significantly reducing latency. Combined with related services like [Workers KV](/kv/get-started/) and [D1](https://www.cloudflare.com/en-gb/developer-platform/products/d1/), Cloudflare's edge-based storage solutions enable efficient data management close to the user. Workers KV allows for quick, read-heavy data access, perfect for caching configurations and frequently used data, while D1 provides a serverless SQL database for more robust storage needs. Additionally, Cloudflare's [Durable Objects](https://blog.cloudflare.com/sqlite-in-durable-objects/) help manage stateful interactions at the edge, facilitating real-time data consistency. These tools together allow for seamless data processing, storage and lazy updates to core services, minimizing back-and-forth to centralized servers and ensuring faster, more efficient performance.
+   4. **Workers AI**: [Workers AI](/workers-ai/) is a serverless AI inference platform that allows developers to run machine learning models on Cloudflare's global network. It can be used for real-time data analysis, anomaly detection, and predictive maintenance, providing intelligence at the edge and enhancing the reliability of connected systems.
+   5. **Argo Smart Routing**: [Argo Smart Routing](/argo-smart-routing/) optimizes path selection by analyzing real-time network conditions, ensuring that data packets follow the fastest and most reliable routes.
+   6. **Cloudflare R2 Storage**: [R2](/r2/) provides cost-effective, high-performance storage for data such as telemetry and sensor logs, allowing frequent access without incurring egress fees.
+
+5. **Origin connections:** Cloudflare is origin agnostic, meaning it can securely connect to a wide range of disparate locations regardless of where the origin server is hosted. These origins could include on-premise servers, datacenters, or cloud service providers (CSPs) like AWS, Azure, or Google Cloud. Whether data needs to flow from public cloud environments or proprietary private systems, Cloudflare can establish secure connections to facilitate efficient data exchange.
+
+   Connections to these origins can be made using a variety of methods based on the specific requirements of the setup. These range from simple public DNS configurations to more advanced options like [Cloudflare Network Interconnect (CNI)](/network-interconnect/) and [cloudflared tunnels](/cloudflare-one/faq/cloudflare-tunnels-faq/#how-can-origin-servers-be-secured-when-using-tunnel). CNI allows for private, direct connectivity between origin locations and Cloudflare, creating a secure layer that keeps data protected as it moves across networks. The cloudflared tunnel creates encrypted tunnels directly from the origin to Cloudflare's network, bypassing public exposure entirely and enhancing both security and reliability. By being origin agnostic and supporting multiple secure connection options, Cloudflare allows businesses to continue using their existing proprietary systems and infrastructure, while benefiting from Cloudflare's performance, security, and scalability features.
+
+These components work together to deliver an optimized, secure, and reliable solution for connected vehicles and other transportation systems, addressing both fixed-location and roaming device needs. For example, imagine a fleet of connected delivery trucks that use digital tablets for both navigation, tracking and real-time customer interactions. These tablets display delivery updates, allow customers to provide signatures and even enable on-the-spot payments. Cloudflare's network ensures that data to and from the device is updated with minimal latency, allowing drivers to navigate efficiently without delays. Cloudflare's API Gateway helps secure any interactions between the tablet and backend systems, protecting customer information and ensuring that payment data is transmitted securely. The system also benefits from Workers running at the edge, which can process data in real-time, such as verifying customer signatures with AI without having to send everything back to a central server. This seamless integration of Cloudflare's components helps enhance both operational effectiveness and customer satisfaction.
+
+## Related resources
+
+- [Composable AI Architecture](/reference-architecture/diagrams/ai/ai-composable/)
+- [Secure Application Delivery](/reference-architecture/design-guides/secure-application-delivery/)
+- [Preventing DDOS Attacks](/learning-paths/prevent-ddos-attacks/)
+- [Video \- Quick API Gateway Demo](https://www.youtube.com/watch?v=zzw2jIGcv5A)
+- [MTLS at Cloudflare](/learning-paths/mtls/)

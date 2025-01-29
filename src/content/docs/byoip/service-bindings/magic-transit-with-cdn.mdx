@@ -48,8 +48,8 @@ This guide assumes that the prefix is tied to a single Cloudflare account that h
 ## 1. Get account information
 
 1. Log in to your Cloudflare account and get your [account ID](/fundamentals/setup/find-account-and-zone-ids/) and [API token](/fundamentals/api/get-started/create-token/). The token permissions should include `Account` - `IP Prefixes` - `Edit`.
-2. Make a `GET` request to the [List Services](/api/operations/ip-address-management-service-bindings-list-services) endpoint and take note of the `id` associated with the CDN service.
-3. Use the [List Prefixes](/api/operations/ip-address-management-prefixes-list-prefixes) endpoint and take note of the `id` associated with the prefix (`cidr`) you will configure.
+2. Make a `GET` request to the [List Services](/api/resources/addressing/subresources/services/methods/list/) endpoint and take note of the `id` associated with the CDN service.
+3. Use the [List Prefixes](/api/resources/addressing/subresources/prefixes/methods/list/) endpoint and take note of the `id` associated with the prefix (`cidr`) you will configure.
 
 <Example>
 
@@ -62,7 +62,7 @@ At this point, continuing the [example](#before-you-begin), you should have a ma
 
 </Example>
 
-4. To confirm you currently only have a Magic Transit service binding and that it spans across your entire prefix, make a `GET` request to the [List Service Bindings](/api/operations/ip-address-management-service-bindings-list-service-bindings) endpoint. Replace the `{prefix_id}` in the URI path by the actual prefix ID you got from the previous step.
+4. To confirm you currently only have a Magic Transit service binding and that it spans across your entire prefix, make a `GET` request to the [List Service Bindings](/api/resources/addressing/subresources/prefixes/subresources/bgp/subresources/bindings/methods/list/) endpoint. Replace the `{prefix_id}` in the URI path by the actual prefix ID you got from the previous step.
 
 <Example>
 
@@ -79,7 +79,7 @@ curl https://api.cloudflare.com/client/v4/accounts/{account_id}/addressing/prefi
 Once a service binding is created (or deleted), it will take four to six hours to propagate across Cloudflare's global network. Services for the IP addresses in scope will likely be disrupted during this window.
 :::
 
-1. Make a `POST` request to the [Create service binding](/api/operations/ip-address-management-service-bindings-create-service-binding) endpoint, indicating the IP address you want to bind to the CDN. Specify the **corresponding network mask** as needed.
+1. Make a `POST` request to the [Create service binding](/api/resources/addressing/subresources/prefixes/subresources/bgp/subresources/bindings/methods/create/) endpoint, indicating the IP address you want to bind to the CDN. Specify the **corresponding network mask** as needed.
 
 <Example>
 
@@ -119,7 +119,7 @@ In the response body, the initial provisioning state should be `provisioning`.
 
 </Example>
 
-You can periodically check the service binding status using the [List Service Bindings](/api/operations/ip-address-management-service-bindings-list-service-bindings) endpoint.
+You can periodically check the service binding status using the [List Service Bindings](/api/resources/addressing/subresources/prefixes/subresources/bgp/subresources/bindings/methods/list/) endpoint.
 
 ## 3. Create address maps
 
@@ -148,7 +148,7 @@ If you need to map only specific subdomains (and not all proxied DNS records) to
 </TabItem>
 <TabItem label="api" no-code="true">
 
-Use the [Create Address Map](/api/operations/ip-address-management-address-maps-create-address-map) endpoint.
+Use the [Create Address Map](/api/resources/addressing/subresources/address_maps/methods/create/) endpoint.
 
 Make sure you have the correct Key/Token and permissions.
 
@@ -173,7 +173,7 @@ To create a DNS record in the dashboard:
 
 <TabItem label="api" no-code="true">
 
-To create records with the API, use a [POST request](/api/operations/dns-records-for-a-zone-create-dns-record). For field definitions, select a record type under the request body specification.
+To create records with the API, use a [POST request](/api/resources/dns/subresources/records/methods/create/). For field definitions, select a record type under the request body specification.
 
 </TabItem>
 </Tabs>

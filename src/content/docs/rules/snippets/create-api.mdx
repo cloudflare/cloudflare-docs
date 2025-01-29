@@ -1,8 +1,9 @@
 ---
-title: Configure via API
+title: Configure Snippets via API
 pcx_content_type: how-to
 sidebar:
   order: 3
+  label: Configure via API
 head:
   - tag: title
     content: Configure Snippets via API
@@ -57,6 +58,8 @@ curl --request PUT https://api.cloudflare.com/client/v4/zones/{zone_id}/snippets
 --form metadata='{"main_module":"example.js"}'
 ```
 
+The name of a snippet can only contain the characters `a-z`, `0-9`, and `_` (underscore). The name must be unique in the context of the zone. You cannot change the snippet name after creating the snippet.
+
 The required body parameters are:
 
 - `files`: The file with your JavaScript code.
@@ -76,6 +79,8 @@ To make this example work, save your JavaScript code in a file named `example.js
 	}
 }
 ```
+
+To deploy a new snippet you must [create a snippet rule](#createupdatedelete-snippet-rules). The expression of the snippet rule defines when the snippet code will run.
 
 ### Create/update/delete snippet rules
 

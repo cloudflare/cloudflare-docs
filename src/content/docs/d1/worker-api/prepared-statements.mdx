@@ -7,9 +7,82 @@ sidebar:
 
 import { Type, MetaInfo, Details } from "~/components";
 
-This chapter documents the various ways you can run and retrieve the results of a query after you have [prepared your statement](/d1/worker-api/d1-database/#dbprepare).
+This chapter documents the various ways you can run and retrieve the results of a query after you have [prepared your statement](/d1/worker-api/d1-database/#prepare).
 
 ## Methods
+
+### `bind()`
+
+Binds a parameter to the prepared statement.
+
+```js
+const someVariable = `Bs Beverages`;
+const stmt = env.DB.prepare("SELECT * FROM Customers WHERE CompanyName = ?").bind(someVariable);
+```
+
+#### Parameter
+
+- <code>Variable</code>: <Type text="string"/>
+  - The variable to be appended into the prepared statement. See [guidance](#guidance) below.
+
+#### Return values
+
+- <code>D1PreparedStatement</code>: <Type text="Object"/>
+  - A `D1PreparedStatement` where the input parameter has been included in the statement.
+
+#### Guidance
+
+- D1 follows the [SQLite convention](https://www.sqlite.org/lang_expr.html#varparam) for prepared statements parameter binding. Currently, D1 only supports Ordered (`?NNNN`) and Anonymous (`?`) parameters. In the future, D1 will support named parameters as well.
+
+	| Syntax | Type      | Description                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       |
+	| ------ | --------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+	| `?NNN` | Ordered   | A question mark followed by a number `NNN` holds a spot for the `NNN`-th parameter. `NNN` must be between `1` and `SQLITE_MAX_VARIABLE_NUMBER`                                                                                                                                                                                                                                                                                                                                                                                                    |
+	| `?`    | Anonymous | A question mark that is not followed by a number creates a parameter with a number one greater than the largest parameter number already assigned. If this means the parameter number is greater than `SQLITE_MAX_VARIABLE_NUMBER`, it is an error. This parameter format is provided for compatibility with other database engines. But because it is easy to miscount the question marks, the use of this parameter format is discouraged. Programmers are encouraged to use one of the symbolic formats below or the `?NNN` format above instead. |
+
+	To bind a parameter, use the `.bind` method.
+
+	Order and anonymous examples:
+
+	```js
+	const stmt = db.prepare("SELECT * FROM Customers WHERE CompanyName = ?").bind("");
+	```
+
+	```js
+	const stmt = db
+		.prepare("SELECT * FROM Customers WHERE CompanyName = ? AND CustomerId = ?")
+		.bind("Alfreds Futterkiste", 1);
+	```
+
+	```js
+	const stmt = db
+		.prepare("SELECT * FROM Customers WHERE CompanyName = ?2 AND CustomerId = ?1")
+		.bind(1, "Alfreds Futterkiste");
+	```
+
+#### Static statements
+
+D1 API supports static statements. Static statements are SQL statements where the variables have been hard coded. When writing a static statement, you manually type the variable within the statement string.
+
+:::note
+The recommended approach is to bind parameters to create a prepared statement (which are precompiled objects used by the database) to run the SQL. Prepared statements lead to faster overall execution and prevent SQL injection attacks.
+:::
+
+Example of a prepared statement with dynamically bound value:
+
+```js
+const someVariable = `Bs Beverages`;
+const stmt = env.DB.prepare("SELECT * FROM Customers WHERE CompanyName = ?").bind(someVariable);
+// A variable (someVariable) will replace the placeholder '?' in the query.
+// `stmt` is a prepared statement.
+```
+
+Example of a static statement:
+
+```js
+const stmt = env.DB.prepare("SELECT * FROM Customers WHERE CompanyName = Bs Beverages");
+// "Bs Beverages" is hard-coded into the query.
+// `stmt` is a static statement.
+```
 
 ### `run()`
 
@@ -23,7 +96,7 @@ const returnValue = await stmt.run();
 
 - None.
 
-#### Return value
+#### Return values
 
 - <code>D1Result</code>: <Type text="Object"/>
   - An object containing the success status, a meta object, and an array of objects containing the query results.
@@ -70,7 +143,7 @@ return Response.json(returnValue);
 #### Guidance
 
 - `results` is empty for write operations such as `UPDATE`, `DELETE`, or `INSERT`.
-- When using TypeScript, you can pass a [type parameter](/d1/build-with-d1/d1-client-api/#typescript-support) to [`D1PreparedStatement::run`](#run) to return a typed result object.
+- When using TypeScript, you can pass a [type parameter](/d1/worker-api/#typescript-support) to [`D1PreparedStatement::run`](#run) to return a typed result object.
 - [`D1PreparedStatement::run`](#run) is functionally equivalent to `D1PreparedStatement::all`, and can be treated as an alias.
 - You can choose to extract only the results you expect from the statement by simply returning the `results` property of the return object.
 
@@ -158,7 +231,7 @@ return Response.json(returnValue)
 
 #### Guidance
 
-- When using TypeScript, you can pass a [type parameter](/d1/build-with-d1/d1-client-api/#typescript-support) to [`D1PreparedStatement::raw`](#raw) to return a typed result array.
+- When using TypeScript, you can pass a [type parameter](/d1/worker-api/#typescript-support) to [`D1PreparedStatement::raw`](#raw) to return a typed result array.
 
 ### `first()`
 
@@ -219,5 +292,5 @@ return Response.json(returnValue)
 
 - If the query returns rows but `column` does not exist, then [`D1PreparedStatement::first`](#first) throws the `D1_ERROR` exception.
 - [`D1PreparedStatement::first`](#first) does not alter the SQL query. To improve performance, consider appending `LIMIT 1` to your statement.
-- When using TypeScript, you can pass a [type parameter](/d1/build-with-d1/d1-client-api/#typescript-support) to [`D1PreparedStatement::first`](#first) to return a typed result object.
+- When using TypeScript, you can pass a [type parameter](/d1/worker-api/#typescript-support) to [`D1PreparedStatement::first`](#first) to return a typed result object.
 

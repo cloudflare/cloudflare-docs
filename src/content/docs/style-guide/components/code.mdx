@@ -10,6 +10,15 @@ This is just a small showcase of functionality, it has a lot of options!
 Write-Output "This one has a title!"
 ```
 
+```js collapse={3-5}
+// Collapsing
+const foo = {
+  1: 1,
+  2: 2,
+  3: 3,
+};
+```
+
 ```js wrap
 // Example with wrap
 function getLongString() {
@@ -94,7 +103,13 @@ export default {
 
 ## TypeScript examples
 
-The `TypeScriptExample` component uses [`detype`](https://www.npmjs.com/package/detype) to remove TypeScript-specific syntax from your example and provide a JavaScript tab. This reduces maintenance burden by only having a single example to maintain.
+The `TypeScriptExample` component uses [`ts-blank-space`](https://github.com/bloomberg/ts-blank-space) to remove TypeScript-specific syntax from your example and provide a JavaScript tab. This reduces maintenance burden by only having a single example to maintain.
+
+:::note
+Some TypeScript syntax influences runtime behaviour, and cannot be stripped.
+
+Please refer to the [Unsupported Syntax](https://github.com/bloomberg/ts-blank-space?tab=readme-ov-file#unsupported-syntax) section of the project's README.
+:::
 
 ### Input
 

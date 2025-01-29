@@ -131,7 +131,7 @@ import "instantsearch.css/themes/satellite.css";
 
 		return (widgetParams: any) => {
 			const widget = makeWidget(widgetParams);
-			let state: {
+			const state: {
 				windowClickListener?: (event: MouseEvent) => void;
 			} = {};
 			let rootElem: HTMLElement | null;
@@ -318,7 +318,7 @@ import "instantsearch.css/themes/satellite.css";
 			container: "#hits",
 			templates: {
 				item(hit, { html, components }) {
-					if (hit.path.startsWith("/api/operations/")) {
+					if (hit.path.startsWith("/api/resources/")) {
 						return html`
 							<div class="searchResult">
 								<a href=${hit.url}>

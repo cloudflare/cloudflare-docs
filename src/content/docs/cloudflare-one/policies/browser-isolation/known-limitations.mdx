@@ -6,7 +6,6 @@ sidebar:
 head:
   - tag: title
     content: Known limitations - Browser Isolation
-
 ---
 
 Below, you will find information regarding the current limitations for Browser Isolation.
@@ -15,14 +14,20 @@ Below, you will find information regarding the current limitations for Browser I
 
 Our Network Vector Rendering (NVR) technology allows us to deliver a secure remote computing experience without the bandwidth limitations of video streams. While we expect most websites to work perfectly, some browser features and web technologies are unsupported and will be implemented in the future:
 
-* Webcam and microphone support is unavailable.
-* Websites that use WebGL may not function. To turn off WebGL in the browser, refer to [WebGL Rendering Error](/cloudflare-one/faq/troubleshooting/#i-see-webgl-rendering-error).
-* Netflix and Spotify Web Player are unavailable.
+- Webcam and microphone support is unavailable.
+- Websites that use WebGL may not function. To turn off WebGL in the browser, refer to [WebGL Rendering Error](/cloudflare-one/faq/troubleshooting/#i-see-webgl-rendering-error).
+- Netflix and Spotify Web Player are unavailable.
 
 ## Browser compatibility
 
-* Modern Chromium, Google Chrome, Mozilla Firefox, Safari, Edge (Chromium) and Opera are supported.
-* Internet Explorer 11 and below is unsupported.
+| Browser                                      | Compatibility |
+| -------------------------------------------- | ------------- |
+| Google Chrome                                | ✅            |
+| Mozilla Firefox                              | ✅            |
+| Safari                                       | ✅            |
+| Microsoft Edge (Chromium-based)              | ✅            |
+| Other Chromium-based browsers (Opera, Brave) | ✅            |
+| Internet Explorer 11 and below               | ❌            |
 
 ## Virtual machines
 
@@ -32,15 +37,15 @@ Browser Isolation is not supported in virtualized environments (VMs).
 
 Certain selectors for Gateway HTTP policies bypass Browser Isolation, including:
 
-* [Destination Continent IP Geolocation](/cloudflare-one/policies/gateway/http-policies/#destination-continent)
-* [Destination Country IP Geolocation](/cloudflare-one/policies/gateway/http-policies/#destination-country)
-* [Destination IP](/cloudflare-one/policies/gateway/http-policies/#destination-ip)
+- [Destination Continent IP Geolocation](/cloudflare-one/policies/gateway/http-policies/#destination-continent)
+- [Destination Country IP Geolocation](/cloudflare-one/policies/gateway/http-policies/#destination-country)
+- [Destination IP](/cloudflare-one/policies/gateway/http-policies/#destination-ip)
 
-You cannot use these selectors to isolate traffic, and isolation matches for these selectors will not appear in your Gateway logs.
+You cannot use these selectors to isolate traffic and isolation matches for these selectors will not appear in your Gateway logs. Additionally, you cannot apply other policies based on these selectors while in isolation. For example, if you have a Block policy that matches traffic based on destination IP, Gateway will not block the matching traffic if it is already isolated by an Isolate policy.
 
 ## File download size
 
-When a user downloads a file within the remote browser, the file is held in memory and destroyed at the end of the remote browser session. Therefore, the total size of files downloaded per session is shared with the amount of memory available to the remote browser. We recommend a maximum individual file size of 512MB.
+When a user downloads a file within the remote browser, the file is held in memory and destroyed at the end of the remote browser session. Therefore, the total size of files downloaded per session is shared with the amount of memory available to the remote browser. We recommend a maximum individual file size of 512 MB.
 
 ## Multifactor authentication
 
@@ -69,111 +74,34 @@ Direct your users to use access the application via [Clientless Web Isolation](/
 For user convenience, [create a bookmark](/cloudflare-one/applications/bookmarks/) in Cloudflare Access for your application (for example, `https://<authdomain>.cloudflareaccess.com/browser/https://example.com`).
 
 :::note
-
 IdP sessions are not shared between the non-isolated IdP and the Clientless Web Isolation IdP. Users will be prompted to establish an additional session with their IdP.
 :::
 
 #### Add the application to Access
 
-Configure a [self-hosted application](/cloudflare-one/applications/configure-apps/self-hosted-apps/) in Cloudflare Access and [enable browser isolation](/cloudflare-one/policies/access/isolate-application/) in the application settings.
+Configure a [self-hosted application](/cloudflare-one/applications/configure-apps/self-hosted-public-app/) in Cloudflare Access and [enable browser isolation](/cloudflare-one/policies/access/isolate-application/) in the application settings.
 
-#### Isolate both Identity Provider and Service Provider
+#### Isolate both identity provider and service provider
 
-The HTTP `405` error does not occur when both the IdP and SP are isolated.
+The HTTP `405` error does not occur when both the IdP and SP are isolated. For example:
 
-
-
-| Order | Selector    | Operator | Value                                    | Action  |
-| ----- | ----------- | -------- | ---------------------------------------- | ------- |
-| 1     | Application | In       | Your Identity Provider, Your Application | Isolate |
-
-
+| Precedence | Selector    | Operator | Value             | Action  |
+| ---------- | ----------- | -------- | ----------------- | ------- |
+| 1          | Application | in       | _Okta_, _Zendesk_ | Isolate |
 
 :::note
-
 SAML HTTP-POST attempts initiated from the remote browser are not forwarded to non-Isolated SPs. All SPs should be isolated to avoid SSO errors.
 :::
 
 #### In-line SSO between Okta and Salesforce
 
-Some applications that use HTTP-POST bindings (for example, Salesforce) complete SSO with an internal HTTP Redirect. Applying a Do Not Isolate policy to the SAML HTTP-POST endpoint enables the SAML flow to complete, and authenticate the user into the application in the remote browser.
+Some applications that use HTTP-POST bindings (such as Salesforce) complete SSO with an internal HTTP redirect. Applying a Do Not Isolate policy to the SAML HTTP-POST endpoint enables the SAML flow to complete, and authenticate the user into the application in the remote browser. For example:
 
+| Precedence | Selector    | Operator | Value                                | Logic | Action         |
+| ---------- | ----------- | -------- | ------------------------------------ | ----- | -------------- |
+| 1          | Host        | in       | `your-salesforce-domain.example.com` | And   | Do Not Isolate |
+|            | HTTP Method | in       | _POST_                               |       |                |
 
-
-<table>
-  <tbody>
-    <th colspan="1" rowspan="1">
-      Order
-    </th>
-    <th colspan="1" rowspan="1">
-      Selector
-    </th>
-    <th colspan="1" rowspan="1">
-      Operator
-    </th>
-    <th colspan="1" rowspan="1">
-      Value
-    </th>
-    <th colspan="1" rowspan="1">
-      Action
-    </th>
-    <tr>
-      <td colspan="1" rowspan="3">
-      1
-      </td>
-      <td colspan="1" rowspan="1">
-      Hostname
-      </td>
-      <td colspan="1" rowspan="1">
-      In
-      </td>
-      <td colspan="1" rowspan="1">
-      Your Salesforce Application Domain
-      </td>
-      <td colspan="1" rowspan="1">
-      </td>
-      <td colspan="1" rowspan="1">
-      </td>
-    </tr>
-    <tr>
-      <td colspan="3" rowspan="1">
-      And
-      </td>
-      <td colspan="1" rowspan="1">
-      </td>
-      <td colspan="1" rowspan="1">
-      </td>
-    </tr>
-    <tr>
-      <td colspan="1" rowspan="1">
-      HTTP Method
-      </td>
-      <td colspan="1" rowspan="1">
-      In
-      </td>
-      <td colspan="1" rowspan="1">
-      POST
-      </td>
-      <td colspan="1" rowspan="1">
-      Do Not Isolate
-      </td>
-    </tr>
-    <tr>
-      <td colspan="1" rowspan="1">
-      2
-      </td>
-      <td colspan="1" rowspan="1">
-      Hostname
-      </td>
-      <td colspan="1" rowspan="1">
-      In
-      </td>
-      <td colspan="1" rowspan="1">
-      Your Salesforce application domain
-      </td>
-      <td colspan="1" rowspan="1">
-      Isolate
-      </td>
-    </tr>
-  </tbody>
-</table>
+| Precedence | Selector | Operator | Value                                | Action  |
+| ---------- | -------- | -------- | ------------------------------------ | ------- |
+| 2          | Host     | in       | `your-salesforce-domain.example.com` | Isolate |

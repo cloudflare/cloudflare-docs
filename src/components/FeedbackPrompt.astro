@@ -51,8 +51,10 @@ import { AstroIcon } from "~/components";
 					>
 				</div>
 				<div>
-					<input type="radio" id="other" value="other" name="reason" />
-					<label for="other">Other</label>
+					<input type="radio" id="other-yes" value="other" name="reason" />
+					<label for="other-yes">Other</label>
+				</div>
+				<div>
 					<input
 						type="text"
 						placeholder="Tell us more about your experience."
@@ -60,7 +62,7 @@ import { AstroIcon } from "~/components";
 						name="info"
 					/>
 				</div>
-				<input type="submit" value="Submit" />
+				<input type="submit" value="Submit" disabled />
 			</fieldset>
 		</form>
 	</div>
@@ -96,8 +98,10 @@ import { AstroIcon } from "~/components";
 					<label for="missing-the-information">Missing the information</label>
 				</div>
 				<div>
-					<input type="radio" id="other" value="other" name="reason" />
-					<label for="other">Other</label>
+					<input type="radio" id="other-no" value="other" name="reason" />
+					<label for="other-no">Other</label>
+				</div>
+				<div>
 					<input
 						type="text"
 						placeholder="Tell us more about your experience."
@@ -105,7 +109,7 @@ import { AstroIcon } from "~/components";
 						name="info"
 					/>
 				</div>
-				<input type="submit" value="Submit" />
+				<input type="submit" value="Submit" disabled />
 			</fieldset>
 		</form>
 	</div>
@@ -137,14 +141,6 @@ import { AstroIcon } from "~/components";
 		font-weight: 600;
 		line-height: var(--sl-line-height-headings);
 		margin-bottom: 0.5rem;
-	}
-
-	#info {
-		display: none;
-	}
-
-	#other:checked ~ #info {
-		display: flex;
 	}
 
 	[data-icon] {
@@ -188,6 +184,28 @@ import { AstroIcon } from "~/components";
 					const form = questionsDiv.querySelector("form");
 
 					if (!form) return;
+
+					const reasons = form.querySelectorAll<HTMLInputElement>(
+						"input[type='radio']",
+					);
+
+					if (!reasons) return;
+
+					const submit = form.querySelector<HTMLInputElement>(
+						"input[type='submit']",
+					);
+
+					if (!submit) return;
+
+					reasons.forEach((reason) =>
+						reason.addEventListener(
+							"change",
+							() => {
+								submit.disabled = false;
+							},
+							{ once: true },
+						),
+					);
 
 					form.addEventListener("submit", async (e) => {
 						e.preventDefault();

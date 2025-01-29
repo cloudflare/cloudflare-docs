@@ -34,7 +34,7 @@ The following table summarizes the available operations.
 
 | Operation                                  | Verb + Endpoint                              |
 | ------------------------------------------ | -------------------------------------------- |
-| List Cloud Connector rules                 | `GET /zones/{zone_id}/cloud_connector/rules`  |
+| List Cloud Connector rules                 | `GET /zones/{zone_id}/cloud_connector/rules` |
 | Create/update/delete Cloud Connector rules | `PUT /zones/{zone_id}/cloud_connector/rules` |
 
 ## Example API calls
@@ -84,10 +84,10 @@ curl --request PUT \
 --data '[
   {
     "expression": "http.request.uri.path wildcard \"/images/*\"",
-    "provider": "aws_s3",
-    "description": "Connect to S3 bucket containing images",
+    "provider": "cloudflare_r2",
+    "description": "Connect to R2 bucket containing images",
     "parameters": {
-      "host": "examplebucketwithimages.s3.north-eu.amazonaws.com"
+      "host": "mybucketcustomdomain.example.com"
     }
   }
 ]'
@@ -95,4 +95,4 @@ curl --request PUT \
 
 The required body parameters for each rule are: `expression`, `provider`, and `parameters.host`.
 
-The `provider` value must be one of the following: `aws_s3`, `azure_storage`, and `gcp_storage`.
+The `provider` value must be one of the following: `cloudflare_r2`, `aws_s3`, `azure_storage`, and `gcp_storage`.

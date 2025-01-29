@@ -11,8 +11,8 @@ This requires an active Enterprise [Account](/fundamentals/setup/accounts-and-zo
 
 Setting up [mTLS](/cloudflare-one/identity/devices/access-integrations/mutual-tls-authentication/) with [Cloudflare Access](/cloudflare-one/policies/access/) can help in cases where the customer:
 
-- Already has existing Client Certificates on devices.  
-- Needs to protect Access applications with Bring Your Own CA (BYOCA).  
+- Already has existing Client Certificates on devices.
+- Needs to protect Access applications with Bring Your Own CA (BYOCA).
 - Needs to integrate with a Zero Trust solution.
 
 ## 1. Create a CA
@@ -25,42 +25,42 @@ In case you want to [create your own CA](/cloudflare-one/identity/devices/access
 
 ```json
 {
-    "CN": "Cloudflare Access Testing CA",
-    "key": {
-      "algo": "rsa",
-      "size": 4096
-    },
-    "names": [
-      {
-        "C": "US",
-        "L": "LA",
-        "O": "Access Testing",
-        "OU": "CA",
-        "ST": "California"
-      }
-    ]
-    }
+	"CN": "Cloudflare Access Testing CA",
+	"key": {
+		"algo": "rsa",
+		"size": 4096
+	},
+	"names": [
+		{
+			"C": "US",
+			"L": "LA",
+			"O": "Access Testing",
+			"OU": "CA",
+			"ST": "California"
+		}
+	]
+}
 ```
 
 2. Create a JSON file called `ca-config.json`:
 
 ```json
 {
-  "signing": {
-    "default": {
-      "expiry": "8760h"
-    },
-    "profiles": {
-      "server": {
-        "usages": ["signing", "key encipherment", "server auth"],
-        "expiry": "8760h"
-      },
-      "client": {
-        "usages": ["signing","key encipherment","client auth"],
-        "expiry": "8760h"
-      }
-    }
-  }
+	"signing": {
+		"default": {
+			"expiry": "8760h"
+		},
+		"profiles": {
+			"server": {
+				"usages": ["signing", "key encipherment", "server auth"],
+				"expiry": "8760h"
+			},
+			"client": {
+				"usages": ["signing", "key encipherment", "client auth"],
+				"expiry": "8760h"
+			}
+		}
+	}
 }
 ```
 
@@ -92,11 +92,11 @@ cfssl gencert -initca ca-csr.json | cfssljson -bare ca
       }
     ]
   }
-  ```
+```
 
 2. Now you can run the following command to generate the Client Certificates, which will output the files `client.pem`, `client-key.pem` and `client.csr`:
 
-```txt
+```sh
 cfssl gencert -ca=ca.pem -ca-key=ca-key.pem -config=ca-config.json -profile=client client-csr.json | cfssljson -bare client
 ```
 
@@ -104,7 +104,7 @@ cfssl gencert -ca=ca.pem -ca-key=ca-key.pem -config=ca-config.json -profile=clie
 
 Follow the steps outlined in the [developer documentation](/cloudflare-one/identity/devices/access-integrations/mutual-tls-authentication/#add-mtls-authentication-to-your-access-configuration).
 
-Using the example from Step 2: upload the `ca.pem` to your Cloudflare Access account via the [dashboard](/cloudflare-one/identity/devices/access-integrations/mutual-tls-authentication/#add-mtls-authentication-to-your-access-configuration) or [Cloudflare API](/api/operations/access-mtls-authentication-add-an-mtls-certificate).
+Using the example from Step 2: upload the `ca.pem` to your Cloudflare Access account via the [dashboard](/cloudflare-one/identity/devices/access-integrations/mutual-tls-authentication/#add-mtls-authentication-to-your-access-configuration) or [Cloudflare API](/api/resources/zero_trust/subresources/access/subresources/certificates/methods/create/).
 
 Do not forget to enter the fully-qualified domain names (FQDN / associated hostnames) that will use this CA certificate.
 
@@ -114,7 +114,7 @@ Additionally, authenticated requests also send the `Cf-Access-Jwt-Assertion\` JW
 
 ## 4. Create the self-hosted applications
 
-Finally, the hostname you want to protect with mTLS needs to be added as a [self-hosted app](/cloudflare-one/applications/configure-apps/self-hosted-apps/) in Cloudflare Access, defining an [Access Policy](/cloudflare-one/policies/access/) which uses the action [Service Auth](/cloudflare-one/policies/access/#service-auth) and the Selector *“Valid Certificate”*, or simply requiring an [IdP](/cloudflare-one/identity/idp-integration/) authentication. You can also take advantage of extra requirements, such as the “Common Name” (CN), which expects the indicated hostname, and more [Selectors](/cloudflare-one/policies/access/#selectors). Alternatively, one can also [extend ZTNA with external authorization and serverless computing](/reference-architecture/diagrams/sase/augment-access-with-serverless/).
+Finally, the hostname you want to protect with mTLS needs to be added as a [self-hosted app](/cloudflare-one/applications/configure-apps/self-hosted-public-app/) in Cloudflare Access, defining an [Access Policy](/cloudflare-one/policies/access/) which uses the action [Service Auth](/cloudflare-one/policies/access/#service-auth) and the Selector _"Valid Certificate"_, or simply requiring an [IdP](/cloudflare-one/identity/idp-integration/) authentication. You can also take advantage of extra requirements, such as the "Common Name" (CN), which expects the indicated hostname, and more [Selectors](/cloudflare-one/policies/access/#selectors). Alternatively, one can also [extend ZTNA with external authorization and serverless computing](/reference-architecture/diagrams/sase/augment-access-with-serverless/).
 
 ## Demo
 
@@ -124,18 +124,22 @@ Make sure that you are not using any VPN that could interfere with the certifica
 
 With the Public and Private Client Certificates in the same directory, with this cURL command, we will gain access:
 
-```curl
+```sh
 curl -IXGET --cert client.pem --key client-key.pem https://mtls-access.example.com/
+```
 
-HTTP/2 200 
+```txt output
+HTTP/2 200
 server: cloudflare
 ```
 
-Without the certificates, we'd see the following:
+Without the certificates, we would see the following:
 
-```curl
+```sh
 curl -I https://mtls-access.example.com/mtls-test
+```
 
-HTTP/2 401 
+```txt output
+HTTP/2 401
 server: cloudflare
 ```

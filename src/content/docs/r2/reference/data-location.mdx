@@ -5,6 +5,8 @@ sidebar:
   order: 7
 ---
 
+import { WranglerConfig } from "~/components";
+
 Learn how the location of data stored in R2 is determined and about the different available inputs that control the physical location where objects in your buckets are stored.
 
 ## Automatic (recommended)
@@ -77,7 +79,9 @@ Use Jurisdictional Restrictions when you need to ensure data is stored and proce
 
 ### Using jurisdictions from Workers
 
-To access R2 buckets that belong to a jurisdiction from [Workers](/workers/), you will need to specify the jurisdiction as well as the bucket name as part of your [bindings](/r2/api/workers/workers-api-usage/#3-bind-your-bucket-to-a-worker) in your `wrangler.toml`:
+To access R2 buckets that belong to a jurisdiction from [Workers](/workers/), you will need to specify the jurisdiction as well as the bucket name as part of your [bindings](/r2/api/workers/workers-api-usage/#3-bind-your-bucket-to-a-worker) in your `wrangler.toml / wrangler.json` file:
+
+<WranglerConfig>
 
 ```toml
 [[r2_buckets]]
@@ -85,6 +89,8 @@ bindings = [
   { binding = "MY_BUCKET", bucket_name = "<YOUR_BUCKET_NAME>", jurisdiction = "<JURISDICTION>" }
 ]
 ```
+
+</WranglerConfig>
 
 For more information on getting started, refer to [Use R2 from Workers](/r2/api/workers/workers-api-usage/).
 
@@ -138,7 +144,7 @@ Cloudflare Enterprise customers may contact their account team or [Cloudflare Su
 The following services do not interact with R2 resources with assigned jurisdictions:
 
 - [Super Slurper](/r2/data-migration/) (_coming soon_)
-- [Logpush](/logs/get-started/enable-destinations/r2/)
+- [Logpush](/logs/get-started/enable-destinations/r2/). As a workaround to this limitation, you can set up a [Logpush job using an S3-compatible endpoint](/data-localization/how-to/r2/#send-logs-to-r2-via-s3-compatible-endpoint) to store logs in an R2 bucket in the jurisdiction of your choice.
 
 ### Additional considerations
 

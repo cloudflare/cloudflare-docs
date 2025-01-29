@@ -98,7 +98,7 @@ The following script within the `<body>` section after `<main>` fetches the wait
 
 #### Available variables
 
-When you create a waiting room with custom HTML, you can have access to several variables to customize your response. For a full list of variables, refer to the `json_response_enabled` parameter in the [Cloudflare API docs](/api/operations/waiting-room-create-waiting-room).
+When you create a waiting room with custom HTML, you can have access to several variables to customize your response. For a full list of variables, refer to the `json_response_enabled` parameter in the [Cloudflare API docs](/api/resources/waiting_rooms/methods/create/).
 
 #### Multiple-language support
 
@@ -222,7 +222,7 @@ You do not have to have a Cloudflare account to access the preview link, so you 
 
 ### Preview the default or current waiting room web page
 
-After [generating a preview URL](/api/operations/waiting-room-create-a-custom-waiting-room-page-preview), use the following endpoint to generate a link to preview the currently configured web page for a waiting room, or the default page if no custom page is configured.
+After [generating a preview URL](/api/resources/waiting_rooms/subresources/page/methods/preview/), use the following endpoint to generate a link to preview the currently configured web page for a waiting room, or the default page if no custom page is configured.
 
 ```txt
 GET https://waitingrooms.dev/preview/{preview_id}

@@ -40,7 +40,7 @@ Additionally, you can configure Okta to use risk information from Zero Trust [us
 9. Set the **Groups claim filter** to _Matches regex_ and its value to `.*`.
 
    :::note
-   Groups managed outside of Okta (for example, Microsoft Entra ID or Google groups) may require different regex values. For more information, refer to the [Okta documentation](https://support.okta.com/help/s/article/Why-isnt-my-Groups-claim-returning-Active-Directory-groups).
+   Groups managed outside of Okta (for example, Microsoft Entra ID or Google groups) may require different regex values. For more information, refer to the Okta documentation on [Groups Claims](https://support.okta.com/help/s/article/Why-isnt-my-Groups-claim-returning-Active-Directory-groups) and [OpenID Connect Claims](https://support.okta.com/help/s/article/Can-we-retrieve-both-Active-Directory-and-Okta-groups-in-OpenID-Connect-claims).
    :::
 
 10. In the **General** tab, copy the **Client ID** and **Client secret**.
@@ -88,12 +88,13 @@ The Okta integration allows you to synchronize IdP groups and automatically depr
 - The Okta OIDC connector you created when adding [Okta as an identity provider](/cloudflare-one/identity/idp-integration/okta/#set-up-okta-as-an-oidc-provider).
 - A second Okta application of type **SCIM 2.0 Test App (Header Auth)**. This is technically a SAML app but is responsible for sending user and group info via SCIM.
 
+:::note
+If you would like to only maintain one Okta app instance, Okta does support SAML and SCIM within the same application. Create a [generic SAML integration](/cloudflare-one/identity/idp-integration/generic-saml/) and configure those values in the **Sign-On** field of your Okta SCIM application.
+:::
+
 ### 1. Enable SCIM in Zero Trust
 
-<Render
-	file="access/enable-scim-on-dashboard"
-	params={{ idp: "Okta"}}
-/>
+<Render file="access/enable-scim-on-dashboard" params={{ idp: "Okta" }} />
 
 ### 2. Configure SCIM in Okta
 
@@ -131,17 +132,17 @@ The Okta integration allows you to synchronize IdP groups and automatically depr
 
 13. Select **Save** to complete the configuration.
 
-14. In the **Assignments** tab, add the users you want to synchronize with Cloudflare Access. You can add users in batches by assigning a group.
+14. In the **Assignments** tab, add the users you want to synchronize with Cloudflare Access. You can add users in batches by assigning a group. If a user is removed from the application assignment via a either direct user assignment or removed from the group that was assigned to the app, this will trigger a deprovisioning event from Okta to Cloudflare.
 
-	:::note
-	Groups in this SCIM app integration should match the groups in your base [OIDC app integration](/cloudflare-one/identity/idp-integration/okta/#set-up-okta-as-an-oidc-provider). Because SCIM group membership updates will overwrite any groups in a user's identity, assigning the same groups to each app ensures consistent policy evaluation.
-	:::
+15. In the **Push Groups** tab, add the Okta groups you want to synchronize with Cloudflare Access. These groups will display in the Access policy builder and are the group memberships that will be added and removed upon membership change in Okta.
 
-15. In the **Push Groups** tab, add the Okta groups you want to synchronize with Cloudflare Access. These groups will display in the Access policy builder.
+    :::note
+    Groups in this SCIM app Push Groups integration should match the groups in your base [OIDC app integration](/cloudflare-one/identity/idp-integration/okta/#set-up-okta-as-an-oidc-provider). Because SCIM group membership updates will overwrite any groups in a user's identity, assigning the same groups to each app ensures consistent policy evaluation.
+    :::
 
 To verify the integration, select **View Logs** in the Okta SCIM application.
 
-<Render file="access/verify-scim-provisioning"/>
+<Render file="access/verify-scim-provisioning" />
 
 ## Example API Configuration
 

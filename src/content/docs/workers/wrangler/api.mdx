@@ -8,7 +8,7 @@ description: A set of programmatic APIs that can be integrated with local
   Cloudflare Workers-related workflows.
 ---
 
-import { Render, TabItem, Tabs, Type, MetaInfo } from "~/components";
+import { Render, TabItem, Tabs, Type, MetaInfo, WranglerConfig } from "~/components";
 
 Wrangler offers APIs to programmatically interact with your Cloudflare Workers.
 
@@ -252,13 +252,13 @@ const platform = await getPlatformProxy(options);
 
       The path to the config file to use.
 
-      If no path is specified the default behavior is to search from the current directory up the filesystem for a `wrangler.toml` to use.
+      If no path is specified, the default behavior is to search from the current directory up the filesystem for a `wrangler.toml / wrangler.json` file to use.
 
       **Note:** this field is optional but if a path is specified it must point to a valid file on the filesystem.
 
     - `experimentalJsonConfig` boolean
 
-      If `true`, allows the utility to read a JSON config file (for example, `wrangler.json`).
+      If `true`, allows the utility to read a JSON config file (for example, `wrangler.json` or `wrangler.jsonc`).
 
     - `persist` boolean | `{ path: string }`
 
@@ -295,12 +295,16 @@ const platform = await getPlatformProxy(options);
 
 ### Usage
 
-The `getPlatformProxy` function uses bindings found in `wrangler.toml`. For example, if you have an [environment variable](/workers/configuration/environment-variables/#add-environment-variables-via-wrangler) configuration set up in `wrangler.toml`:
+The `getPlatformProxy` function uses bindings found in the `wrangler.toml / wrangler.json` file. For example, if you have an [environment variable](/workers/configuration/environment-variables/#add-environment-variables-via-wrangler) configuration set up in the `wrangler.toml / wrangler.json` file:
+
+<WranglerConfig>
 
 ```toml
 [vars]
 MY_VARIABLE = "test"
 ```
+
+</WranglerConfig>
 
 You can access the bindings by importing `getPlatformProxy` like this:
 
@@ -320,7 +324,7 @@ This will print the following output: `MY_VARIABLE = test`.
 
 ### Supported bindings
 
-All supported bindings found in your `wrangler.toml` are available to you via `env`.
+All supported bindings found in your `wrangler.toml / wrangler.json` file are available to you via `env`.
 
 The bindings supported by `getPlatformProxy` are:
 
@@ -336,12 +340,18 @@ The bindings supported by `getPlatformProxy` are:
 
     For example, you might have the following file read by `getPlatformProxy`.
 
+
+
+    <WranglerConfig>
+
     ```toml
     [[durable_objects.bindings]]
     name = "MyDurableObject"
     class_name = "MyDurableObject"
     script_name = "my-worker"
     ```
+
+    </WranglerConfig>
 
     In order for this binding to be successfully proxied by `getPlatformProxy`, a worker named `my-worker`
     with a Durable Object declaration using the same `class_name` of `"MyDurableObject"` must be run
@@ -351,7 +361,7 @@ The bindings supported by `getPlatformProxy` are:
 
 - [Queue bindings](/queues/configuration/javascript-apis/)
 
-- [D1 database bindings](/d1/build-with-d1/d1-client-api/)
+- [D1 database bindings](/d1/worker-api/)
 
 - [Hyperdrive bindings](/hyperdrive)
 

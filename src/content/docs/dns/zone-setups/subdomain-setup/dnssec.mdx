@@ -22,12 +22,12 @@ Ideally, you should also wait 12 to 24 hours after enabling DNSSEC on the parent
 
 2. Make sure the child zone is [active](/dns/zone-setups/reference/domain-status/) on Cloudflare and that DNS resolution is working properly for your subdomain.
 
-3. [Enable DNSSEC](/dns/dnssec/) for the child zone and save the information provided within the `DS` record output.
+3. [Enable DNSSEC](/dns/dnssec/) for the child zone and save the information provided within the DS record output.
 
-4. In the **DNS** > **Records** settings of the parent zone, [add the `DS` record](/dns/manage-dns-records/how-to/create-dns-records/) from the previous step.
+4. In the **DNS** > **Records** settings of the parent zone, [add the DS record](/dns/manage-dns-records/how-to/create-dns-records/) from the previous step.
 
    ![Screenshot showing how to add a DS record within Cloudflare](~/assets/images/dns/ds-record-example.png)
 
-5. Add an `A` record to the child zone to validate DNS resolution.
+5. Add an A record to the child zone to validate DNS resolution.
 
-6. Wait two to six hours. Then, [test the `A` record](/dns/dnssec/troubleshooting/#test-dnssec-with-dig) added in the previous step using multiple DNS resolvers with DNSSEC validation (`1.1.1.1`, `8.8.8.8`, and `9.9.9.9`). For example, if the `A` record is for `test.child.example.com`: `dig test.child.example.com +dnssec @1.1.1.1`.
+6. Wait two to six hours. Then, [test the A record](/dns/dnssec/troubleshooting/#test-dnssec-with-dig) added in the previous step using multiple DNS resolvers with DNSSEC validation (`1.1.1.1`, `8.8.8.8`, and `9.9.9.9`). For example, if the A record is for `test.child.example.com`: `dig test.child.example.com +dnssec @1.1.1.1`.

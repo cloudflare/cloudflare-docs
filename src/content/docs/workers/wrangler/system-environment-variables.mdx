@@ -16,6 +16,11 @@ System environment variables are local environment variables that can change Wra
 
 3. Set the values in your shell environment. For example, if you are using Z shell, adding `export CLOUDFLARE_API_TOKEN=...` to your `~/.zshrc` file will set this token as part of your shell configuration.
 
+:::note
+
+To set different system environment variables for each environment, create files named `.env.<environment-name>`. When you use `wrangler <command> --env <environment-name>`, the corresponding environment-specific file will be loaded instead of the `.env` file, so the two files are not merged.
+:::
+
 ## Supported environment variables
 
 Wrangler supports the following environment variables:
@@ -40,7 +45,7 @@ Wrangler supports the following environment variables:
 
 * `WRANGLER_SEND_METRICS` <Type text="string" /> <MetaInfo text="optional" />
 
-  * Options for this are `true` and `false`, the default behavior is `false`.
+  * Options for this are `true` and `false`. Defaults to `true`. Controls whether Wrangler can send anonymous usage data to Cloudflare for this project. You can learn more about this in our [data policy](https://github.com/cloudflare/workers-sdk/tree/main/packages/wrangler/telemetry.md).
 
 * `WRANGLER_HYPERDRIVE_LOCAL_CONNECTION_STRING_<BINDING_NAME>`<Type text="string" /> <MetaInfo text="optional" />
 
@@ -52,7 +57,7 @@ Wrangler supports the following environment variables:
 
 * `WRANGLER_LOG` <Type text="string" /> <MetaInfo text="optional" />
 
-  * Options for Logging levels are `"none"`, `"error"`, `"warn"`, `"info"`, `"log"` and `"debug"`. Levels are case-insensitive and default to `"log"`. If an invalid level is specified, Wrangler will fallback to the default.
+  * Options for Logging levels are `"none"`, `"error"`, `"warn"`, `"info"`, `"log"` and `"debug"`. Levels are case-insensitive and default to `"log"`. If an invalid level is specified, Wrangler will fallback to the default. Logs can include requests to Cloudflare's API, any usage data being collected, and more verbose error logs.
 
 * `FORCE_COLOR` <Type text="string" /> <MetaInfo text="optional" />
 

@@ -62,13 +62,26 @@ This node complements the information in the `dosdAttackAnalyticsGroups` node. P
 
 Each row represents a packet sample. The sample rate is 1/10,000 packets.
 
-### `flowtrackdNetworkAnalyticsAdaptiveGroups`
+### `advancedTcpProtectionNetworkAnalyticsAdaptiveGroups`
 
-This node is only available to Magic Transit customers. Provides metadata about out-of-state TCP DDoS attacks mitigated by `flowtrackd`, Cloudflare’s Advanced TCP Protection system.
+This node is only available to Magic Transit customers. Provides metadata about out-of-state TCP DDoS attacks mitigated by Cloudflare's [Advanced TCP Protection](/ddos-protection/advanced-ddos-systems/overview/advanced-tcp-protection/) system.
 
-`flowtrackd` does not use the following ID fields: attack ID, rule ID, and ruleset ID.
+Advanced TCP Protection does not use the following ID fields: attack ID, rule ID, and ruleset ID.
 
-The sample rate is 1/10,000 packets.
+The sample rate is 1/1,000 packets.
+
+### `advancedDnsProtectionNetworkAnalyticsAdaptiveGroups`
+
+This node is only available to Magic Transit customers. Provides metadata about DNS-based DDoS attacks mitigated by Cloudflare's [Advanced DNS Protection](/ddos-protection/advanced-ddos-systems/overview/advanced-dns-protection/) system. 
+
+Samples include information about the following DNS header fields:
+
+- `dnsQueryName`
+- `dnsQueryType`
+
+Advanced DNS Protection does not use the following ID fields: attack ID, rule ID, and ruleset ID.
+
+The sample rate is 1/1,000 packets.
 
 ### `magicFirewallNetworkAnalyticsAdaptiveGroups`
 

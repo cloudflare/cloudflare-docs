@@ -18,21 +18,25 @@ This feature is only available if you are using the following identity providers
 
 To enforce an MFA requirement to an application:
 
-1. In Zero Trust, go to **Access** > **Applications**.
+1. In [Zero Trust](https://one.dash.cloudflare.com/), go to **Access** > **Applications**.
 
-2. Find the application for which you want to enforce MFA and select **Edit**. Alternatively, [create a new application](/cloudflare-one/applications/configure-apps/).
+2. Find the application for which you want to enforce MFA and select **Configure**. Alternatively, [create a new application](/cloudflare-one/applications/configure-apps/).
 
-3. Go to the **Rules** section of the application.
+3. Go to **Policies**.
 
-4. If your application already has a rule containing an identity requirement, find it and select **Edit**.
+4. If your application already has a policy containing an identity requirement, find it and select **Configure**.
 
-   The rule must contain an Include rule which defines an identity. For example, the Include rule should allow for users who are part of a user [group](/cloudflare-one/identity/users/groups/), email domain, or identity provider group.
+	:::note
+	The policy should contain an Include rule that uses identity-based selectors. For example, the Include rule could allow users who are part of a [rule group](/cloudflare-one/policies/access/groups/), email domain, or identity provider group.
+	:::
 
-5. Add a _Require_ action to the rule.
+5. Add the following rule to the policy:
 
-6. Select _Authentication Method_ and choose `mfa - multiple-factor authentication`.
+		| Rule type | Selector | Value |
+		| ---------- | -------- | ------ |
+		| Require    | Authentication method |  `mfa - multiple-factor authentication` |
 
-7. Save the rule.
+6. Save the policy.
 
 :::caution[Important]
 

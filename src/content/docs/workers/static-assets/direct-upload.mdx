@@ -16,15 +16,18 @@ import {
 	TabItem,
 	Tabs,
 } from "~/components";
+import { Icon } from "astro-icon/components";
 
 :::note
 
-Directly uploading assets via APIs is an advanced approach that most users will not need. Instead, we encourage users to deploy your Worker with [Wrangler](/workers/static-assets/get-started/#1-create-a-new-worker-project-using-the-cli).
+Directly uploading assets via APIs is an advanced approach which, unless you are building a programatic integration, most users will not need. Instead, we encourage users to deploy your Worker with [Wrangler](/workers/static-assets/get-started/#1-create-a-new-worker-project-using-the-cli).
 
 :::
 
 Our API empowers users to upload and include static assets as part of a Worker. These static assets can be served for free, and additionally, users can also fetch assets through an optional [assets binding](/workers/static-assets/binding/) to power more advanced applications. This guide will describe the process for attaching assets to your Worker directly with the API.
 
+<Tabs syncKey="workers-vs-platforms" IconComponent={Icon}>
+<TabItem icon="workers" label="Workers">
 ```mermaid
 sequenceDiagram
     participant User
@@ -33,6 +36,18 @@ sequenceDiagram
     User<<->>Workers API: Upload files<br/>POST /client/v4/accounts/:accountId/workers/assets/upload?base64=true
     User<<->>Workers API: Upload script version<br/>PUT /client/v4/accounts/:accountId/workers/scripts/:scriptName
 ```
+</TabItem>
+<TabItem icon="cloudflare-for-platforms" label="Workers for Platforms" IconComponent={Icon}>
+```mermaid
+sequenceDiagram
+    participant User
+    participant Workers API
+    User<<->>Workers API: Submit manifest<br/>POST /client/v4/accounts/:accountId/workers/dispatch/namespaces/:dispatchNamespace/scripts/:scriptName/assets-upload-session
+    User<<->>Workers API: Upload files<br/>POST /client/v4/accounts/:accountId/workers/assets/upload?base64=true
+    User<<->>Workers API: Upload script version<br/>PUT /client/v4/accounts/:accountId/workers/dispatch/namespaces/:dispatchNamespace/scripts/:scriptName
+```
+</TabItem>
+</Tabs>
 
 The asset upload flow can be distilled into three distinct phases:
 
@@ -44,10 +59,12 @@ The asset upload flow can be distilled into three distinct phases:
 
 The asset manifest is a ledger which keeps track of files we want to use in our Worker. This manifest is used to track assets associated with each Worker version, and eliminate the need to upload unchanged files prior to a new upload.
 
-The [manifest upload request](/api/operations/worker-script-update-create-assets-upload-session) describes each file which we intend to upload. Each file is its own key representing the file path and name, and is an object which contains metadata about the file.
+The [manifest upload request](/api/resources/workers/subresources/scripts/subresources/assets/subresources/upload/methods/create/) describes each file which we intend to upload. Each file is its own key representing the file path and name, and is an object which contains metadata about the file.
 
 `hash` represents a 32 hexadecimal character hash of the file, while `size` is the size (in bytes) of the file.
 
+<Tabs syncKey="workers-vs-platforms" IconComponent={Icon}>
+<TabItem icon="workers" label="Workers">
 ```bash
 curl -X POST https://api.cloudflare.com/client/v4/accounts/{account_id}/workers/scripts/{script_name}/assets-upload-session \
 --header 'content-type: application/json' \
@@ -69,6 +86,31 @@ curl -X POST https://api.cloudflare.com/client/v4/accounts/{account_id}/workers/
 	}
 }'
 ```
+</TabItem>
+<TabItem icon="cloudflare-for-platforms" label="Workers for Platforms">
+```bash
+curl -X POST https://api.cloudflare.com/client/v4/accounts/{account_id}/workers/dispatch/namespaces/{dispatch_namespace}/scripts/{script_name}/assets-upload-session \
+--header 'content-type: application/json' \
+--header 'Authorization: Bearer <API_TOKEN>' \
+--data '{
+  "manifest": {
+		"/filea.html": {
+			"hash": "08f1dfda4574284ab3c21666d1",
+			"size": 12
+		},
+		"/fileb.html": {
+			"hash": "4f1c1af44620d531446ceef93f",
+			"size": 23
+		},
+		"/filec.html": {
+			"hash": "54995e302614e0523757a04ec1",
+			"size": 23
+		}
+	}
+}'
+```
+</TabItem>
+</Tabs>
 
 The resulting response will contain a JWT, which provides authentication during file upload. The JWT is valid for one hour.
 
@@ -102,7 +144,7 @@ If all assets have been previously uploaded, `buckets` will be empty, and `jwt` 
 
 ## Upload Static Assets
 
-The [file upload API](/api/operations/worker-assets-upload) requires files be uploaded using `multipart/form-data`. The contents of each file must be base64 encoded, and the `base64` query parameter in the URL must be set to `true`.
+The [file upload API](/api/resources/workers/subresources/assets/subresources/upload/methods/create/) requires files be uploaded using `multipart/form-data`. The contents of each file must be base64 encoded, and the `base64` query parameter in the URL must be set to `true`.
 
 The `Authorization` header must be provided as a bearer token, using the JWT (upload token) from the aforementioned manifest upload call.
 
@@ -110,7 +152,7 @@ Once every file in the manifest has been uploaded, a status code of 201 will be 
 
 ## Create/Deploy New Version
 
-[Script](/api/operations/worker-script-upload-worker-module) and [version](/api/operations/worker-versions-upload-version) upload endpoints require specifying a metadata part in the form data. Here, we can provide the completion token from the previous (upload assets) step.
+[Script](/api/resources/workers/subresources/scripts/methods/update/), [Version](/api/resources/workers/subresources/scripts/subresources/versions/methods/create/), and [Workers for Platform script](/api/resources/workers_for_platforms/subresources/dispatch/subresources/namespaces/subresources/scripts/methods/update/) upload endpoints require specifying a metadata part in the form data. Here, we can provide the completion token from the previous (upload assets) step.
 
 ```bash title="Example Worker Metadata Specifying Completion Token"
 {
@@ -181,6 +223,7 @@ import "node:process";
 const accountId: string = ""; // Replace with your actual account ID
 const filesDirectory: string = "assets"; // Adjust to your assets directory
 const scriptName: string = "my-new-script"; // Replace with desired script name
+const dispatchNamespace: string = ""; // Replace with a dispatch namespace if using Workers for Platforms
 
 interface FileMetadata {
 	hash: string;
@@ -320,16 +363,17 @@ async function scriptUpload(completionToken: string): Promise<void> {
 		),
 	);
 
-	const response = await fetch(
-		`https://api.cloudflare.com/client/v4/accounts/${accountId}/workers/scripts/${scriptName}`,
-		{
-			method: "PUT",
-			headers: {
-				Authorization: `Bearer ${process.env.CLOUDFLARE_API_TOKEN}`,
-			},
-			body: form,
+	const url = dispatchNamespace
+		? `https://api.cloudflare.com/client/v4/accounts/${accountId}/workers/dispatch/namespaces/${dispatchNamespace}/scripts/${scriptName}`
+		: `https://api.cloudflare.com/client/v4/accounts/${accountId}/workers/scripts/${scriptName}`;
+
+	const response = await fetch(url, {
+		method: "PUT",
+		headers: {
+			Authorization: `Bearer ${process.env.CLOUDFLARE_API_TOKEN}`,
 		},
-	);
+		body: form,
+	});
 
 	if (response.status != 200) {
 		throw new Error("unexpected status code");
@@ -344,17 +388,18 @@ async function startUploadSession(): Promise<UploadSessionData> {
 		manifest: fileMetadata,
 	});
 
-	const response = await fetch(
-		`https://api.cloudflare.com/client/v4/accounts/${accountId}/workers/scripts/${scriptName}/assets-upload-session`,
-		{
-			method: "POST",
-			headers: {
-				Authorization: `Bearer ${process.env.CLOUDFLARE_API_TOKEN}`,
-				"Content-Type": "application/json",
-			},
-			body: requestBody,
+	const url = dispatchNamespace
+		? `https://api.cloudflare.com/client/v4/accounts/${accountId}/workers/dispatch/namespaces/${dispatchNamespace}/scripts/${scriptName}/assets-upload-session`
+		: `https://api.cloudflare.com/client/v4/accounts/${accountId}/workers/scripts/${scriptName}/assets-upload-session`;
+
+	const response = await fetch(url, {
+		method: "POST",
+		headers: {
+			Authorization: `Bearer ${process.env.CLOUDFLARE_API_TOKEN}`,
+			"Content-Type": "application/json",
 		},
-	);
+		body: requestBody,
+	});
 
 	const data = (await response.json()) as UploadResponse;
 	const jwt = data.result.jwt;

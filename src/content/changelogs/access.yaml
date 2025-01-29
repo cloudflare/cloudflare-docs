@@ -5,6 +5,14 @@ productLink: "/cloudflare-one/applications/configure-apps/"
 productArea: Cloudflare One
 productAreaLink: /cloudflare-one/changelog/
 entries:
+  - publish_date: "2025-01-21"
+    title: Access Applications support private hostnames/IPs and reusable Access policies.
+    description: |-
+      Cloudflare Access self-hosted applications can now be defined by [private IPs](/cloudflare-one/applications/non-http/self-hosted-private-app/), [private hostnames](/cloudflare-one/applications/non-http/self-hosted-private-app/) (on port 443) and [public hostnames](/cloudflare-one/applications/configure-apps/self-hosted-public-app/). Additionally, we made Access policies into their own object which can be reused across multiple applications. These updates involved significant updates to the overall Access dashboard experience. The updates will be slowly rolled out to different customer cohorts. If you are an Enterprise customer and would like early access, reach out to your account team.
+  - publish_date: "2024-12-04"
+    title: SCIM GA for Okta and Microsoft Entra ID
+    description: |-
+      Cloudflare's SCIM integrations with [Okta](/cloudflare-one/identity/idp-integration/okta/#synchronize-users-and-groups) and [Microsoft Entra ID](//cloudflare-one/identity/idp-integration/entra-id/#synchronize-users-and-groups) (formerly AzureAD) are now out of beta and generally available (GA) for all customers. These integrations can be used for Access and Gateway policies and Zero Trust user management. Note: This GA release does not include [Dashboard SSO SCIM](/fundamentals/setup/account/account-security/scim-setup/) support.
   - publish_date: "2024-08-26"
     title: Reduce automatic seat deprovisioning minimum to 1 month, down from 2 months.
     description: |-

@@ -25,14 +25,15 @@ If you wish to disable HTTP/2 to Origin, you can follow these steps:
 3. Select **Speed > Optimization**.
 4. Navigate to the **Protocol Optimization** tab and under **HTTP/2 to Origin** set the toggle to **Off**.
 
+## Connection multiplexing
+
+Connection multiplexing is enabled by default on Free, Pro and Business zones. Enterprise zones can enable multiplexing manually and configure concurrent requests per connection.
+
+HTTP/2 uses multiplexing to allow multiple concurrent requests and responses over a single TCP connection. If your origin does not support multiplexing, enabling HTTP/2 to origin may result in 5xx errors, particularly 520s.
+
 ## Protocol compatibility
 
 Note that if the origin does not support HTTP/2, Cloudflare will initiate an HTTP/1.1 connection.
 We connect to servers who announce support of HTTP/2 connections via [ALPN](https://blog.cloudflare.com/introducing-http2).
 
 If you are unsure if your server supports HTTP/2, we suggest checking your origin server’s documentation or using a testing tool for HTTP/2 implementation (for example, [h2spec](https://github.com/summerwind/h2spec)).
-
-:::note[Note]
-
-Connection multiplexing is currently being rolled out. It has been enabled by default on Free, Pro and Business zones. Enterprise zones will be enabled at a later date. 
-:::

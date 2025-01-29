@@ -33,12 +33,11 @@ if (!res.ok) {
 	throw new Error(`[GitHubCode] Received ${res.status} from Worker.`);
 }
 
-let content = await res.text();
+const content = await res.text();
+let contentLines = content.split("\n");
 
 if (lines) {
 	const [start, end] = lines;
-
-	const contentLines = content.split("\n");
 
 	if (contentLines.length < end - 1) {
 		throw new Error(
@@ -46,10 +45,8 @@ if (lines) {
 		);
 	}
 
-	content = contentLines.slice(start - 1, end).join("\n");
+	contentLines = contentLines.slice(start - 1, end);
 } else if (tag) {
-	const contentLines = content.split("\n");
-
 	const startTag = contentLines.findIndex((x) =>
 		x.includes(`<docs-tag name="${tag}">`),
 	);
@@ -61,8 +58,12 @@ if (lines) {
 		throw new Error(`[GitHubCode] Unable to find a region using tag "${tag}".`);
 	}
 
-	content = contentLines.slice(startTag + 1, endTag).join("\n");
+	contentLines = contentLines.slice(startTag + 1, endTag);
 }
+
+contentLines = contentLines.filter(
+	(line) => !/<[/]?docs-tag name=".*">/.test(line),
+);
 ---
 
-<Code code={content} lang={lang} />
+<Code code={contentLines.join("\n")} lang={lang} />

@@ -5,7 +5,7 @@ sidebar:
   order: 1
 ---
 
-import { Aside } from "~/components";
+import { Aside, WranglerConfig } from "~/components";
 
 As seen in the [Getting Started guide](/browser-rendering/get-started/screenshots/), Browser Rendering can be used to generate screenshots for any given URL. Alongside screenshots, you can also generate full PDF documents for a given webpage, and can also provide the webpage markup and style ourselves.
 
@@ -23,11 +23,13 @@ npm create cloudflare@latest -- browser-worker
 npm install @cloudflare/puppeteer --save-dev
 ```
 
-3. Add your Browser Rendering binding to your new `wrangler.toml` configuration:
+3. Add your Browser Rendering binding to your new Wrangler configuration:
 
-```yaml
+<WranglerConfig>
+```toml
 browser = { binding = "BROWSER" }
 ```
+</WranglerConfig>
 
 4. Replace the contents of `src/index.ts` (or `src/index.js` for JavaScript projects) with the following skeleton script:
 
@@ -66,15 +68,12 @@ export default {
 Rather than using Browser Rendering to navigate to a user-provided URL, manually generate a webpage, then provide that webpage to the Browser Rendering instance. This allows you to render any design you want.
 
 :::note
-It's worth noting that you can generate your HTML or CSS using any method
-you'd like. For now we're using string interpolation, but this method is
-	fully-compatible with web frameworks capable of rendering HTML on Workers such
-	as React, Remix, and Vue.
+You can generate your HTML or CSS using any method you like. This example uses string interpolation, but the method is also fully compatible with web frameworks capable of rendering HTML on Workers such as React, Remix, and Vue.
 :::
 
 For this example, we're going to take in user-provided content (via a '?name=' parameter), and have that name output in the final PDF document.
 
-To start, let's fill out your 'generateDocument' function with the following:
+To start, fill out your `generateDocument` function with the following:
 
 ```ts
 const generateDocument = (name: string) => {
@@ -128,11 +127,7 @@ const generateDocument = (name: string) => {
 This example HTML document should render a beige background imitating a certificate showing that the user-provided name has successfully rendered a PDF using Cloudflare Workers.
 
 :::note
-It's usually best to avoid directly interpolating user-provided content into
-	an image or PDF renderer in production applications. To render contents like
-	an invoice, it wold be best to validate the data input, and fetch data
-	yourself using tools like [D1](/d1/) or
-	[Workers KV](/kv/).
+It is usually best to avoid directly interpolating user-provided content into an image or PDF renderer in production applications. To render contents like an invoice, it would be best to validate the data input and fetch the data yourself using tools like [D1](/d1/) or [Workers KV](/kv/).
 :::
 
 ## 2. Load HTML and CSS Into Browser

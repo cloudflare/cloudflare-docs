@@ -35,7 +35,7 @@ You should use Delegated DCV when all of the following conditions are true:
 
 :::note[Delegated DCV and origin certificates]
 
-As explained in the [announcement blog post](https://blog.cloudflare.com/introducing-dcv-delegation/), currently, you can only delegate DCV to one provider at a time. If you also issue publicly trusted certificates for the same hostname for your [origin server](/ssl/concepts/#origin-certificate), this will no longer be possible. You can use [Cloudflare Origin CA certificates](/ssl/origin-configuration/origin-ca/) instead.
+As explained in the [announcement blog post](https://blog.cloudflare.com/introducing-dcv-delegation/), currently, you can only delegate DCV to one provider at a time. If you also issue publicly trusted certificates for the same hostname for your [origin server](/ssl/concepts/#origin-certificate), this will no longer be possible. You can use [Cloudflare origin CA certificates](/ssl/origin-configuration/origin-ca/) instead.
 :::
 
 ## Setup
@@ -108,7 +108,7 @@ Note that settings that interfere with the validation URLs can cause issues in t
 
 :::note
 
-If a hostname becomes unreachable during certificate renewal time, the certificate will not be able to be renewed automatically via Delegated DCV. Should you need to renew a certificate for a hostname that is not resolving currently, you can send a PATCH request to [the changing DCV method API endpoint](/api/operations/ssl-verification-edit-ssl-certificate-pack-validation-method) and change the method to TXT to proceed with manual renewal per [the TXT DCV method](/ssl/edge-certificates/changing-dcv-method/methods/txt/).
+If a hostname becomes unreachable during certificate renewal time, the certificate will not be able to be renewed automatically via Delegated DCV. Should you need to renew a certificate for a hostname that is not resolving currently, you can send a PATCH request to [the changing DCV method API endpoint](/api/resources/ssl/subresources/verification/methods/edit/) and change the method to TXT to proceed with manual renewal per [the TXT DCV method](/ssl/edge-certificates/changing-dcv-method/methods/txt/).
 
 Once the hostname becomes resolvable again, [Delegated DCV](/ssl/edge-certificates/changing-dcv-method/methods/delegated-dcv/) will resume working as expected.
 :::

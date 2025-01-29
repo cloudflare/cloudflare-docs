@@ -121,7 +121,7 @@ entries:
   - publish_date: "2022-11-01"
     title: Create an unlimited number of live inputs
     description: |-
-      Cloudflare Stream now has no limit on the number of [live inputs](/api/operations/stream-live-inputs-retrieve-a-live-input) you can create. Stream is designed to allow your end-users to go live — live inputs can be created quickly on-demand via a single API request for each of user of your platform or app.
+      Cloudflare Stream now has no limit on the number of [live inputs](/api/resources/stream/subresources/live_inputs/methods/get/) you can create. Stream is designed to allow your end-users to go live — live inputs can be created quickly on-demand via a single API request for each of user of your platform or app.
 
       For more on creating and managing live inputs, get started with the [docs](/stream/stream-live/).
   - publish_date: "2022-10-20"
@@ -174,7 +174,7 @@ entries:
     title: Live inputs
     description:
       The Live Inputs API now supports optional pagination, search, and filter
-      parameters. For more information, refer to the [Live Inputs API documentation](/api/operations/stream-live-inputs-list-live-inputs).
+      parameters. For more information, refer to the [Live Inputs API documentation](/api/resources/stream/subresources/live_inputs/methods/list/).
   - publish_date: "2022-05-24"
     title: Picture-in-Picture support
     description:

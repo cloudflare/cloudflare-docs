@@ -72,7 +72,7 @@ Verify your Internet Routing Registry (IRR) entries to ensure that the IP prefix
 Each IRR entry record must include the following information:
 
 * **Route**: Each IP prefix Cloudflare advertises for you.
-* **Origin ASN**: Your ASN, or if you do not have your own ASN, the Cloudflare ASN (`AS209242`).
+* **Origin ASN**: Your ASN, or if you do not have your own ASN, the Cloudflare ASN (AS13335).
 * **Source**: The name of the routing registry, for example, AFRINIC, APNIC, ARIN, RADB, RIPE, or NTT.
 
 Add or update IRR entries when they meet any of these criteria:
@@ -80,10 +80,6 @@ Add or update IRR entries when they meet any of these criteria:
 * The entry is missing.
 * The entry is incomplete or inaccurate — for example, when the route object does not show the correct origin.
 * The entry is complete but requires updating — for example, when they correspond to supernets but need to correspond to subnets used in Magic Transit.
-
-You are strongly encouraged to verify IRR entries for the exact prefixes you will use to onboard with Cloudflare.
-
-IRR entries for less specific prefixes are acceptable as long as you understand and accept the following risk: if you modify your IRR entries in the future (for example, by changing your ASN) and the IRR entry for the supernet no longer matches the prefix or origin mapping in your Magic Transit configuration, the prefix will have reduced reachability due to networks Cloudflare peers with automatically filtering the prefix. Having specific IRR entries helps minimize (but not entirely remove) this risk.
 
 ### IRR entry verification methods
 
@@ -109,7 +105,7 @@ To verify your prefix and ASN route, use the tools and methods outlined on the t
     <tr>
       <td>ASN for the<br/>subnet prefix</td>
       <td><span style="white-space: nowrap"><a href=" https://irrexplorer.nlnog.net">IRR Explorer</a></span></td>
-      <td><span style="white-space: nowrap">Search for the ASN, for example <code>AS209242</code>.</span></td>
+      <td><span style="white-space: nowrap">Search for the ASN, for example <code>AS13335</code>.</span></td>
       <td><span style="white-space: nowrap">List of prefixes, source, and any associated errors.</span></td>
     </tr>
     <tr>
@@ -155,6 +151,6 @@ source:         APNIC
 
 :::note
 
-WHOIS output also shows the RPKI entry information for prefix IP addresses. When your WHOIS output only contains an RPKI entry, you must add the IRR entry. 
+WHOIS output also shows the RPKI entry information for prefix IP addresses. When your WHOIS output only contains an RPKI entry, you must add the IRR entry.
 
 :::

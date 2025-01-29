@@ -10,7 +10,7 @@ head:
 
 import { Render, TabItem, Tabs, Details } from "~/components";
 
-## 1. Turn on leaked credentials detection
+## 1. Turn on the detection
 
 <Render file="leaked-credentials-detection-enable" />
 
@@ -76,7 +76,7 @@ For additional examples, refer to [Mitigation examples](/waf/detections/leaked-c
 
 ### Handle detected leaked credentials at the origin server
 
-Additionally, you may want to handle leaked credentials detected by Cloudflare at your origin server.
+Additionally, you may want to handle leaked credentials detected by Cloudflare at your [origin server](https://www.cloudflare.com/learning/cdn/glossary/origin-server/).
 
 1. Turn on the [**Add Leaked Credentials Checks Header** managed transform](/rules/transform/managed-transforms/reference/#add-leaked-credentials-checks-header).
 
@@ -125,6 +125,20 @@ This pair of lookup expressions (for username and password) will scan incoming H
 ```
 
 Refer to the [`lookup_json_string()`](/ruleset-engine/rules-language/functions/#lookup_json_string) documentation for more information on this function.
+
+</TabItem> <TabItem label="Terraform">
+
+Use the `cloudflare_leaked_credential_check_rule` resource to add a custom detection location. For example:
+
+```terraform
+resource "cloudflare_leaked_credential_check_rule" "custom_location_example" {
+	zone_id = "<ZONE_ID>"
+	username = "lookup_json_string(http.request.body.raw, \"user\")"
+	password = "lookup_json_string(http.request.body.raw, \"secret\")"
+}
+```
+
+For more information, refer to the [Terraform Cloudflare provider documentation](https://registry.terraform.io/providers/cloudflare/cloudflare/latest/docs).
 
 </TabItem> </Tabs>
 

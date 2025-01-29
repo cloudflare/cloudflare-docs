@@ -28,9 +28,9 @@ If you need a different AOP certificate to apply to different custom hostnames, 
 
 First, upload a certificate to your origin.
 
-To use a Cloudflare certificate (which uses a specific CA), [download the .PEM file](/ssl/static/authenticated_origin_pull_ca.pem) and upload it to your origin. This certificate is **not** the same as the Cloudflare Origin CA certificate and will not appear on your Dashboard.
+To use a Cloudflare certificate (which uses a specific CA), [download the .PEM file](/ssl/static/authenticated_origin_pull_ca.pem) and upload it to your origin. This certificate is **not** the same as the [Cloudflare origin CA certificate](/ssl/origin-configuration/origin-ca/) and will not appear on your Dashboard.
 
-To use a custom certificate, follow the API instructions to [upload a custom certificate to Cloudflare](/ssl/edge-certificates/custom-certificates/uploading/#upload-a-custom-certificate), but use the [`origin_tls_client_auth` endpoint](/api/operations/zone-level-authenticated-origin-pulls-upload-certificate). Then, upload the certificate to your origin.
+To use a custom certificate, follow the API instructions to [upload a custom certificate to Cloudflare](/ssl/edge-certificates/custom-certificates/uploading/#upload-a-custom-certificate), but use the [`origin_tls_client_auth` endpoint](/api/resources/origin_tls_client_auth/methods/create/). Then, upload the certificate to your origin.
 
 :::caution
 
@@ -52,7 +52,7 @@ Using a custom certificate is required if you need your domain to be [FIPS](http
 
 ## 4. Enable Authenticated Origin Pulls for all hostnames in a zone
 
-Use the Cloudflare API to send a [`PUT`](/api/operations/zone-level-authenticated-origin-pulls-set-enablement-for-zone) request to enable zone-level authenticated origin pulls.
+Use the Cloudflare API to send a [`PUT`](/api/resources/origin_tls_client_auth/subresources/settings/methods/update/) request to enable zone-level authenticated origin pulls.
 
 If you had set up logging on your origin during [step 2](#2-configure-origin-to-accept-client-certificates), test and confirm that Authenticated Origin Pulls is working.
 
