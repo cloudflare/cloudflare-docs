@@ -101,3 +101,7 @@ docker network create -o "com.docker.network.driver.mtu=1420" my-docker-network
 ```
 
 The MTU value should be set to the MTU of your host's default interface minus 80 bytes for the WARP protocol overhead. Most MTUs are 1500, therefore 1420 should work for most people.
+
+## Windows 10 in Microsoft 365 Cloud PC is not supported
+
+Use of the WARP client in a Microsoft 365 Windows 10 Cloud PC is not supported. To work around this limitation, use Windows 11.

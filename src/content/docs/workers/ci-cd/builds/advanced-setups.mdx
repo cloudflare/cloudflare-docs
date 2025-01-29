@@ -1,6 +1,6 @@
 ---
 pcx_content_type: reference
-title: Advanced Setups
+title: Advanced setups
 description: Learn how to use Workers Builds with more advanced setups
 sidebar:
   order: 7
@@ -8,22 +8,31 @@ sidebar:
 
 ## Monorepos
 
-While the Workers Builds beta has limited support for monorepos, it is still possible to set up a monorepo workflow. In the Cloudflare Dashboard, you must connect your monorepo to each of the existing Worker projects. When a new commit is detected in the monorepo, a new build/deploy will trigger for each Worker.
+To set up a monorepo workflow:
+
+1. Find the Workers associated with your project in the [Workers & Pages Dashboard](https://dash.cloudflare.com).
+2. Connect your monorepo to each Worker in the repository.
+3. Set the root directory for each Worker to specify the location of its `wrangler.toml` and where build and deploy commands should run.
+4. Optionally, configure unique build and deploy commands for each Worker.
+5. Optionally, configure [build watch paths](/workers/ci-cd/builds/build-watch-paths/) for each Worker to monitor specific paths for changes.
+
+When a new commit is made to the monorepo, a new build and deploy will trigger for each Worker if the change is within each of its included watch paths. You can also check on the status of each build associated with your repository within GitHub with [check runs](/workers/ci-cd/builds/git-integration/github-integration/#check-run) or within GitLab with [commit statuses](/workers/ci-cd/builds/git-integration/gitlab-integration/#commit-status).
 
 ### Example
 
-In the example `ecommerce-monorepo`, a Workers project should be created for `product-service`, `auth-service`, `order-service`, and `notification-service`.
+In the example `ecommerce-monorepo`, a Workers project should be created for `product-service`, `order-service`, and `notification-service`.
 
-A git connection to `ecommerce-monorepo` should be added in all of the Workers projects. If you are using a monorepo tool (e.g. [Turborepo](https://turbo.build/)), you can configure a different deploy command for each Worker (e.g. `turbo deploy -F product-service`). When a new commit is made to `ecommerce-monorepo`, a build and deploy will be triggered for each of the Workers (i.e. `product-service`, `auth-service`, `order-service`, `notification-service`) and respect the configured commands for that Worker.
+A Git connection to `ecommerce-monorepo` should be added in all of the Workers projects. If you are using a monorepo tool, such as [Turborepo](https://turbo.build/), you can configure a different deploy command for each Worker, for example, `turbo deploy -F product-service`.
+
+Set the root directory of each Worker to where its wrangler.toml is located. For example, for `product-service`, the root directory should be `/workers/product-service/`. Optionally, you can add [build watch paths](/workers/ci-cd/builds/build-watch-paths/) to optimize your builds.
+
+When a new commit is made to `ecommerce-monorepo`, a build and deploy will be triggered for each of the Workers if the change is within its included watch paths using the configured commands for that Worker.
 
 ```
 ecommerce-monorepo/
 │
 ├── workers/
 │ ├── product-service/
-│ │ ├── src/
-│ │ └── wrangler.toml
-│ ├── auth-service/
 │ │ ├── src/
 │ │ └── wrangler.toml
 │ ├── order-service/
@@ -37,11 +46,11 @@ ecommerce-monorepo/
 └── README.md
 ```
 
-## Wrangler environments
+## Wrangler Environments
 
-If you are using [Wrangler Environments](/workers/wrangler/environments/), you can choose to continue using with Workers Builds with a bit of set up:
+You can use [Wrangler Environments](/workers/wrangler/environments/) with Workers Builds by completing the following steps:
 
-1. [Deploy via Wrangler](/workers/wrangler/commands/#deploy) to create the Workers for your environments in the Dashboard, if you don't already have them.
+1. [Deploy via Wrangler](/workers/wrangler/commands/#deploy) to create the Workers for your environments on the Dashboard, if you do not already have them.
 2. Find the Workers for your environments. They are typically named `[name of Worker] - [environment name]`.
 3. Connect your repository to each of the Workers for your environment.
 4. In each of the Workers, edit your Wrangler deploy command to include the flag `--env: <environment name>` in the build configurations.
@@ -50,17 +59,6 @@ When a new commit is detected in the repository, a new build/deploy will trigger
 
 ### Example
 
-Imagine you have a Worker named `my-worker`, and you want to set up two environments `staging` and `production` set in the `wrangler.toml`. If you haven't already, you can deploy `my-worker` for each environment using the commands `wrangler deploy --env staging` and `wrangler deploy --env production`.
+Imagine you have a Worker named `my-worker`, and you want to set up two environments `staging` and `production` set in the `wrangler.toml`. If you have not already, you can deploy `my-worker` for each environment using the commands `wrangler deploy --env staging` and `wrangler deploy --env production`.
 
-In your Cloudflare Dashboard, you should find two Workers `my-worker-staging` and `my-worker-production`. A git connection to a `my-worker` git repository should be added to both of the environment Workers. In the build configurations of each environment Worker, edit the deploy commands to be `npx wrangler deploy --env staging` and `npx wrangler deploy --env production` respectively.
-
-```mermaid
-graph TD
-    A[Git Repo for my-worker] --> |Connect| B[my-worker-staging]
-    A --> |Connect| C[my-worker-production]
-
-    subgraph Cloudflare Dashboard
-        B
-        C
-    end
-```
+In your Cloudflare Dashboard, you should find the two Workers `my-worker-staging` and `my-worker-production`. Then, connect the Git repository for the Worker, `my-worker`, to both of the environment Workers. In the build configurations of each environment Worker, edit the deploy commands to be `npx wrangler deploy --env staging` and `npx wrangler deploy --env production` respectively.

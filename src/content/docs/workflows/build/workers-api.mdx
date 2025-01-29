@@ -6,7 +6,7 @@ sidebar:
 
 ---
 
-import { MetaInfo, Render, Type } from "~/components";
+import { MetaInfo, Render, Type, WranglerConfig } from "~/components";
 
 This guide details the Workflows API within Cloudflare Workers, including methods, types, and usage examples.
 
@@ -89,7 +89,7 @@ Refer to the [events and parameters](/workflows/build/events-and-parameters/) do
 
 :::note
 
-`step.sleep` and `step.sleepUntil` methods do not count towards the maximum Workflow steps limit. 
+`step.sleep` and `step.sleepUntil` methods do not count towards the maximum Workflow steps limit.
 
 More information about the limits imposed on Workflow can be found in the [Workflows limits documentation](/workflows/reference/limits/).
 
@@ -123,17 +123,15 @@ Refer to the [documentation on sleeping and retrying](/workflows/build/sleeping-
 
 :::note[Workflows beta]
 
-Workflows currently requires you to bind to a Workflow via `wrangler.toml` and does not yet support bindings via the Workers dashboard.
+Workflows currently requires you to bind to a Workflow via the `wrangler.toml / wrangler.json` file, and does not yet support bindings via the Workers dashboard.
 
 :::
 
 Workflows exposes an API directly to your Workers scripts via the [bindings](/workers/runtime-apis/bindings/#what-is-a-binding) concept. Bindings allow you to securely call a Workflow without having to manage API keys or clients.
 
-You can bind to a Workflow by defining a `[[workflows]]` binding within your `wrangler.toml` configuration.
+You can bind to a Workflow by defining a `[[workflows]]` binding within your Wrangler configuration.
 
 For example, to bind to a Workflow called `workflows-starter` and to make it available on the `MY_WORKFLOW` variable to your Worker script, you would configure the following fields within the `[[workflows]]` binding definition:
-
-import { WranglerConfig } from "~/components";
 
 <WranglerConfig>
 
@@ -161,9 +159,9 @@ Visit the documentation on [calling Workflows from Pages](/workflows/build/call-
 
 ### Cross-script calls
 
-You can also bind to a Workflow that is defined in a different Worker script from the script your Workflow definition is in. To do this, provide the `script_name` key with the name of the script to the `[[workflows]]` binding definition in your `wrangler.toml` configuration.
+You can also bind to a Workflow that is defined in a different Worker script from the script your Workflow definition is in. To do this, provide the `script_name` key with the name of the script to the `[[workflows]]` binding definition in your Wrangler configuration.
 
-For example, if your Workflow is defined in a Worker script named `billing-worker`, but you are calling it from your `web-api-worker` script, your `wrangler.toml` would resemble the following:
+For example, if your Workflow is defined in a Worker script named `billing-worker`, but you are calling it from your `web-api-worker` script, your `wrangler.toml / wrangler.json` file would resemble the following:
 
 <WranglerConfig>
 
@@ -199,7 +197,7 @@ The `Workflow` type provides methods that allow you to create, inspect the statu
 
 ```ts
 interface Env {
-  // The 'MY_WORKFLOW' variable should match the "binding" value set in wrangler.toml
+  // The 'MY_WORKFLOW' variable should match the "binding" value set in the Wrangler config file
   MY_WORKFLOW: Workflow;
 }
 ```

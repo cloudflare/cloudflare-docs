@@ -2,12 +2,11 @@
 pcx_content_type: troubleshooting
 source: https://support.cloudflare.com/hc/en-us/articles/206776727-Understanding-the-True-Client-IP-Header
 title: Understanding the True-Client-IP Header
-
 ---
 
-import { FeatureTable } from "~/components"
+import { FeatureTable } from "~/components";
 
-Enabling the True-Client-IP Header adds the [`True-Client-IP` header](/fundamentals/reference/http-request-headers/#true-client-ip-enterprise-plan-only) to all requests to your origin server, which includes the end user’s IP address.
+Enabling the True-Client-IP Header adds the [`True-Client-IP` header](/fundamentals/reference/http-headers/#true-client-ip-enterprise-plan-only) to all requests to your origin server, which includes the end user's IP address.
 
 ## Availability
 
@@ -18,17 +17,13 @@ Enabling the True-Client-IP Header adds the [`True-Client-IP` header](/fundament
 The recommended procedure to access client IP information is to [enable the **Add "True-Client-IP" header** Managed Transform](/rules/transform/managed-transforms/reference/#add-true-client-ip-header).
 
 :::note
-
-
-In order to use this data, you will need to then retrieve it from the [`True-Client-IP` header](/fundamentals/reference/http-request-headers/#cf-ipcountry).
-
-
+To use this data, you will need to then retrieve it from the [`True-Client-IP` header](/fundamentals/reference/http-headers/#cf-ipcountry).
 :::
 
 ## Additional resources
 
 For additional guidance on using True-Client-IP Header with Cloudflare, refer to the following resources:
 
-* [Available Managed Transforms](/rules/transform/managed-transforms/reference/#add-true-client-ip-header)
-* [HTTP request headers](/fundamentals/reference/http-request-headers/#true-client-ip-enterprise-plan-only)
-* [Restoring original visitor IPs](/support/troubleshooting/restoring-visitor-ips/restoring-original-visitor-ips/)
+- [Available Managed Transforms](/rules/transform/managed-transforms/reference/#add-true-client-ip-header)
+- [Cloudflare HTTP headers](/fundamentals/reference/http-headers/#true-client-ip-enterprise-plan-only)
+- [Restoring original visitor IPs](/support/troubleshooting/restoring-visitor-ips/restoring-original-visitor-ips/)

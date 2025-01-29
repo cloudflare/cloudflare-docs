@@ -6,7 +6,7 @@ head: []
 description: Opt into a specific features of the Workers runtime for your Workers project.
 ---
 
-import { CompatibilityFlags } from "~/components";
+import { CompatibilityFlags, WranglerConfig } from "~/components";
 
 Compatibility flags enable specific features. They can be useful if you want to help the Workers team test upcoming changes that are not yet enabled by default, or if you need to hold back a change that your code depends on but still want to apply other compatibility changes.
 
@@ -18,11 +18,9 @@ You may provide a list of `compatibility_flags`, which enable or disable specifi
 
 #### Via Wrangler
 
-Compatibility flags can be set in a Worker's [`wrangler.toml`](/workers/wrangler/configuration/) file.
+Compatibility flags can be set in a Worker's [`wrangler.toml / wrangler.json` file](/workers/wrangler/configuration/).
 
 This example enables the specific flag `formdata_parser_supports_files`, which is described [below](/workers/configuration/compatibility-flags/#formdata-parsing-supports-file). As of the specified date, `2021-09-14`, this particular flag was not yet enabled by default, but, by specifying it in `compatibility_flags`, we can enable it anyway. `compatibility_flags` can also be used to disable changes that became the default in the past.
-
-import { WranglerConfig } from "~/components";
 
 <WranglerConfig>
 

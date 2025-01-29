@@ -11,7 +11,7 @@ languages:
   - SQL
 ---
 
-import { Render, PackageManagers, Details } from "~/components";
+import { Render, PackageManagers, Details, WranglerConfig } from "~/components";
 
 In this tutorial, you will learn how to build a seat reservation app using Durable Objects. This app will allow users to book a seat for a flight. The app will be written in TypeScript and will use the new [SQLite storage backend in Durable Object](/durable-objects/best-practices/access-durable-objects-storage/#sqlite-storage-backend) to store the data.
 
@@ -256,13 +256,11 @@ The frontend of the application is a simple HTML page that allows users to selec
 - It also uses a WebSocket connection to receive updates about the available seats.
 - When a user clicks on a seat, the `bookSeat()` function is called that prompts the user to enter their name and then makes a `POST` request to the `/book-seat` endpoint.
 
-4. Update the bindings in `wrangler.toml` to configure `assets` to serve the `public` directory.
-
-import { WranglerConfig } from "~/components";
+4. Update the bindings in the `wrangler.toml / wrangler.json` file to configure `assets` to serve the `public` directory.
 
 <WranglerConfig>
 
-```toml title="wrangler.toml"
+```toml
 [assets]
 directory = "public"
 ```
@@ -283,15 +281,13 @@ npm run dev
 
 ## 3. Create table for each flight
 
-The application already has the binding for the Durable Objects class configured in `wrangler.toml`. If you update the name of the Durable Objects class in `src/index.ts`, make sure to also update the binding in `wrangler.toml`.
+The application already has the binding for the Durable Objects class configured in the `wrangler.toml / wrangler.json` file. If you update the name of the Durable Objects class in `src/index.ts`, make sure to also update the binding in the `wrangler.toml / wrangler.json` file.
 
-1. Update the binding to use the SQLite storage in Durable Objects. In `wrangler.toml`, replace `new_classes=["Flight"]` with `new_sqlite_classes=["Flight"]`, `name = "FLIGHT"` with `name = "FLIGHT"`, and `class_name = "MyDurableObject"` with `class_name = "Flight"`. Your `wrangler.toml` should look like this:
-
-
+1. Update the binding to use the SQLite storage in Durable Objects. In the `wrangler.toml / wrangler.json` file, replace `new_classes=["Flight"]` with `new_sqlite_classes=["Flight"]`, `name = "FLIGHT"` with `name = "FLIGHT"`, and `class_name = "MyDurableObject"` with `class_name = "Flight"`. your `wrangler.toml / wrangler.json` file should look like this:
 
 <WranglerConfig>
 
-```toml {9} title="wrangler.toml"
+```toml {9}
 [[durable_objects.bindings]]
 name = "FLIGHT"
 class_name = "Flight"

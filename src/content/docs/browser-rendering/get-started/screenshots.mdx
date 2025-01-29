@@ -5,7 +5,7 @@ sidebar:
   order: 1
 ---
 
-import { Render, TabItem, Tabs, PackageManagers } from "~/components";
+import { Render, TabItem, Tabs, PackageManagers, WranglerConfig } from "~/components";
 
 By following this guide, you will create a Worker that uses the Browser Rendering API to take screenshots from web pages. This is a common use case for browser automation.
 
@@ -56,17 +56,15 @@ npx wrangler kv:namespace create BROWSER_KV_DEMO --preview
 
 Take note of the IDs for the next step.
 
-## 4. Configure `wrangler.toml`
+## 4. Configure the `wrangler.toml / wrangler.json` file
 
-Configure your `browser-worker` project's [`wrangler.toml`](/workers/wrangler/configuration/) file by adding a browser [binding](/workers/runtime-apis/bindings/) and a [Node.js compatibility flag](/workers/configuration/compatibility-flags/#nodejs-compatibility-flag). Bindings allow your Workers to interact with resources on the Cloudflare developer platform. Your browser `binding` name is set by you, this guide uses the name `MYBROWSER`. Browser bindings allow for communication between a Worker and a headless browser which allows you to do actions such as taking a screenshot, generating a PDF and more.
+Configure your `browser-worker` project's [`wrangler.toml / wrangler.json` file](/workers/wrangler/configuration/) by adding a browser [binding](/workers/runtime-apis/bindings/) and a [Node.js compatibility flag](/workers/configuration/compatibility-flags/#nodejs-compatibility-flag). Bindings allow your Workers to interact with resources on the Cloudflare developer platform. Your browser `binding` name is set by you, this guide uses the name `MYBROWSER`. Browser bindings allow for communication between a Worker and a headless browser which allows you to do actions such as taking a screenshot, generating a PDF and more.
 
-Update your `wrangler.toml` configuration file with the Browser Rendering API binding and the KV namespaces you created:
-
-import { WranglerConfig } from "~/components";
+Update your `wrangler.toml / wrangler.json` file with the Browser Rendering API binding and the KV namespaces you created:
 
 <WranglerConfig>
 
-```toml
+```toml title="wrangler.toml"
 name = "browser-worker"
 main = "src/index.js"
 compatibility_date = "2023-03-14"

@@ -13,19 +13,19 @@ Review the tools available for testing and debugging Workers.
 
 ## Testing comparison matrix
 
-| Feature                                   | Vitest Pool | `unstable_dev()` | Miniflare's API |
-| ----------------------------------------- | ----------- | ---------------- | --------------- |
-| Unit testing                              | ✅          | ❌               | ❌              |
-| Integration testing                       | ✅          | ✅               | ✅              |
-| Loading Wrangler configuration files      | ✅          | ✅               | ❌              |
-| Bindings directly in tests                | ✅          | ❌               | ✅              |
-| Isolated per-test storage                 | ✅          | ❌               | ❌              |
-| Outbound request mocking                  | ✅          | ❌               | ✅              |
-| Multiple Worker support                   | ✅          | 🚧[^1]           | ✅              |
-| Direct access to Durable Objects          | ✅          | ❌               | ❌              |
-| Run Durable Object alarms immediately     | ✅          | ❌               | ❌              |
-| List Durable Objects                      | ✅          | ❌               | ❌              |
-| Testing service Workers                   | ❌          | ✅               | ✅              |
+| Feature                                         | Vitest Pool | `unstable_dev()` | Miniflare's API |
+| ----------------------------------------------- | ----------- | ---------------- | --------------- |
+| Unit testing                                    | ✅          | ❌                | ❌              |
+| Integration testing                             | ✅          | ✅                | ✅              |
+| Loading `wrangler.toml / wrangler.json` files   | ✅          | ✅                | ❌              |
+| Bindings directly in tests                      | ✅          | ❌                | ✅              |
+| Isolated per-test storage                       | ✅          | ❌                | ❌              |
+| Outbound request mocking                        | ✅          | ❌                | ✅              |
+| Multiple Worker support                         | ✅          | 🚧[^1]            | ✅              |
+| Direct access to Durable Objects                | ✅          | ❌                | ❌              |
+| Run Durable Object alarms immediately           | ✅          | ❌                | ❌              |
+| List Durable Objects                            | ✅          | ❌                | ❌              |
+| Testing service Workers                         | ❌          | ✅                | ✅              |
 
 [^1]: Support for multiple Workers in [`unstable_dev()`](/workers/wrangler/api/#unstable_dev) relies on `wrangler dev`'s service registry which can be unreliable when running multiple tests in parallel.
 
