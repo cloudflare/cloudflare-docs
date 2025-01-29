@@ -27,7 +27,7 @@ Wrangler offers a number of commands to manage your Cloudflare Workers.
 - [`r2 bucket`](#r2-bucket) - Manage Workers R2 buckets.
 - [`r2 object`](#r2-object) - Manage Workers R2 objects.
 - [`secret`](#secret) - Manage the secret variables for a Worker.
-- [`secret:bulk`](#secretbulk) - Manage multiple secret variables for a Worker.
+- [`secret bulk`](#secretbulk) - Manage multiple secret variables for a Worker.
 - [`workflows`](#workflows) - Manage and configure Workflows.
 - [`tail`](#tail) - Start a session to livestream logs from a deployed Worker.
 - [`pages`](#pages) - Configure Cloudflare Pages.
@@ -730,12 +730,12 @@ npx wrangler secret list
 
 ---
 
-## `secret:bulk`
+## `secret bulk`
 
 Upload multiple secrets for a Worker at once.
 
 ```txt
-wrangler secret:bulk [<FILENAME>] [OPTIONS]
+wrangler secret bulk [<FILENAME>] [OPTIONS]
 ```
 
 - `FILENAME` <Type text="string" /> <MetaInfo text="optional" />
@@ -758,7 +758,7 @@ The following is an example of uploading secrets from a JSON file redirected to 
 ```
 
 ```sh
-npx wrangler secret:bulk < secrets.json
+npx wrangler secret bulk < secrets.json
 ```
 
 ```sh output
