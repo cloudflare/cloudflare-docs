@@ -8,9 +8,13 @@ head:
     content: Configure HTTPS settings
 ---
 
+import { Render } from "~/components";
+
 After proxying a basic website through Cloudflare, you can use Terraform to adjust zone settings. In this tutorial, you will configure some optional HTTPS settings and then push the updated configuration to GitHub for posterity.
 
 You will use a new Git branch for the changes and then merge it into the `master` branch before applying. On a team, you might consider using this step as an opportunity for others to review your change before merging and deploying it. You can also integrate Terraform into your CI/CD system to perform tests automatically using another Cloudflare domain.
+
+<Render file="v4-code-snippets" />
 
 ## 1. Create a new branch and append the new zone settings
 

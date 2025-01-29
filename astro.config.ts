@@ -82,6 +82,7 @@ export default defineConfig({
 			sidebar,
 			customCss: [
 				"./src/asides.css",
+				"./src/badges.css",
 				"./src/code.css",
 				"./src/footnotes.css",
 				"./src/headings.css",

@@ -10,7 +10,14 @@ description: Use C3 (`create-cloudflare` CLI) to set up and deploy new
   deployment.
 ---
 
-import { Render, TabItem, Tabs, Type, MetaInfo, PackageManagers } from "~/components";
+import {
+	Render,
+	TabItem,
+	Tabs,
+	Type,
+	MetaInfo,
+	PackageManagers,
+} from "~/components";
 
 Cloudflare provides a CLI command for creating new Workers and Pages projects — `npm create cloudflare`, powered by the [`create-cloudflare` package](https://www.npmjs.com/package/create-cloudflare).
 
@@ -229,7 +236,7 @@ Cloudflare collects anonymous usage data to improve `create-cloudflare` over tim
 You can opt-out if you do not wish to share any information.
 
 <PackageManagers
-  type="create"
+	type="create"
 	pkg="cloudflare@latest"
 	args="telemetry disable"
 />
@@ -243,15 +250,15 @@ export CREATE_CLOUDFLARE_TELEMETRY_DISABLED=1
 You can check the status of telemetry collection at any time.
 
 <PackageManagers
-  type="create"
-  pkg="cloudflare@latest"
-  args="telemetry status"
+	type="create"
+	pkg="cloudflare@latest"
+	args="telemetry status"
 />
 
 You can always re-enable telemetry collection.
 
 <PackageManagers
-  type="create"
-  pkg="cloudflare@latest"
-  args="telemetry enable"
+	type="create"
+	pkg="cloudflare@latest"
+	args="telemetry enable"
 />

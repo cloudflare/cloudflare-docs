@@ -8,6 +8,8 @@ head:
     content: Track your history
 ---
 
+import { Render } from "~/components";
+
 In the [Initialize Terraform](/terraform/tutorial/initialize-terraform/) tutorial, you created and applied some basic Cloudflare configuration. Terraform applied this configuration to your zone because you provided your API token at the top of the `cloudflare.tf` file that has access to this zone.
 
 ```sh
@@ -18,6 +20,8 @@ provider "cloudflare" {
 ```
 
 In this tutorial, you will store your configuration in GitHub where it can be tracked, peer-reviewed, and rolled back to as needed. First, you will remove your credentials from the Terraform config file to prevent committing them to a repository.
+
+<Render file="v4-code-snippets" />:
 
 ## 1. Use environment variables for authentication
 

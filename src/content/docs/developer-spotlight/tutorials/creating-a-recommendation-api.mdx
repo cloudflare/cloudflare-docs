@@ -173,7 +173,7 @@ Let's start implementing step-by-step.
 
 ### Bind Workers AI and Vectorize to your Worker
 
-This API requires the use of Workers AI and Vectorize. To use these resources from a Worker, you will need to first create the resources then [bind](/workers/runtime-apis/bindings/#what-is-a-binding) them to a Worker. First, let's create a Vectorize index with Wrangler using the command `wrangler vectorize create {index_name} --dimensions={number_of_dimensions} --metric={similarity_metric}`. The values for `dimensions` and `metric` depend on the type of [Text Embedding Model](/workers-ai/models/#text-embeddings) you are using for data vectorization (Embedding). For example, if you are using the `bge-large-en-v1.5` model, the command is:
+This API requires the use of Workers AI and Vectorize. To use these resources from a Worker, you will need to first create the resources then [bind](/workers/runtime-apis/bindings/#what-is-a-binding) them to a Worker. First, let's create a Vectorize index with Wrangler using the command `wrangler vectorize create {index_name} --dimensions={number_of_dimensions} --metric={similarity_metric}`. The values for `dimensions` and `metric` depend on the type of [Text Embedding Model](/workers-ai/models/) you are using for data vectorization (Embedding). For example, if you are using the `bge-large-en-v1.5` model, the command is:
 
 ```sh
 npx wrangler vectorize create stripe-products --dimensions=1024 --metric=cosine

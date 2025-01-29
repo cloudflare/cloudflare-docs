@@ -2,6 +2,8 @@
 import StarlightPage from "@astrojs/starlight/components/StarlightPage.astro";
 import { Image } from "astro:assets";
 
+import { Badge } from "@astrojs/starlight/components";
+
 import CursorDark from "~/assets/images/workers/ai/cursor-dark.png";
 import CursorLight from "~/assets/images/workers/ai/cursor-light.png";
 ---
@@ -26,11 +28,7 @@ import CursorLight from "~/assets/images/workers/ai/cursor-light.png";
 			<h1>
 				Meet your AI assistant, Cursor
 				<div>
-					<span
-						class="ml-1 rounded-full bg-orange-200 px-2 py-0.5 text-xs text-orange-900"
-					>
-						AI Preview
-					</span>
+					<Badge text="AI Preview" class="ml-1" />
 				</div>
 			</h1>
 			<p>

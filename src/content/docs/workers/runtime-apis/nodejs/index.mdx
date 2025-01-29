@@ -14,7 +14,7 @@ Cloudflare Workers provides a subset of Node.js APIs in two forms:
 1. As built-in APIs provided by the Workers Runtime
 2. As polyfills that [Wrangler](/workers/wrangler/) adds to your Worker's code
 
-You can view which APIs are supported using the [Node.js compatability matrix](https://workers-nodejs-compat-matrix.pages.dev).
+You can view which APIs are supported using the [Node.js compatibility matrix](https://workers-nodejs-compat-matrix.pages.dev).
 
 ## Get Started
 
@@ -32,7 +32,7 @@ Unless otherwise specified, implementations of Node.js APIs in Workers are inten
 
 ## Node.js API Polyfills
 
-When you enable the `nodejs_compat` compatability flag and set your compatibility date to `2024-09-23` or later, in addition to enabling Node.js APIs in the Workers Runtime, [Wrangler](/workers/wrangler/) will use [unenv](https://github.com/unjs/unenv) to automatically detect uses of Node.js APIs, and add polyfills where relevant.
+When you enable the `nodejs_compat` compatibility flag and set your compatibility date to `2024-09-23` or later, in addition to enabling Node.js APIs in the Workers Runtime, [Wrangler](/workers/wrangler/) will use [unenv](https://github.com/unjs/unenv) to automatically detect uses of Node.js APIs, and add polyfills where relevant.
 
 Adding polyfills maximizes compatibility with existing npm packages, while recognizing that not all APIs from Node.js make sense in the context of serverless functions.
 
@@ -46,7 +46,7 @@ Calling these mocked methods will either noop or will throw an error with a mess
 
 This allows you to import packages that use these Node.js modules, even if certain methods are not supported.
 
-For a full list of APIs supported, including information on which are mocked, see the [Node.js compatability matrix](https://workers-nodejs-compat-matrix.pages.dev).
+For a full list of APIs supported, including information on which are mocked, see the [Node.js compatibility matrix](https://workers-nodejs-compat-matrix.pages.dev).
 
 If an API you wish to use is missing and you want to suggest that Workers support it, please add a post or comment in the
 [Node.js APIs discussions category](https://github.com/cloudflare/workerd/discussions/categories/node-js-apis) on GitHub.

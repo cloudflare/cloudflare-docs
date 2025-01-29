@@ -31,6 +31,28 @@ interface Group {
 	order: number;
 }
 
+function inferBadgeVariant(badge: ComponentProps<typeof Badge>) {
+	if (badge.variant === "default") {
+		switch (badge.text) {
+			case "Beta": {
+				badge.variant = "caution";
+				break;
+			}
+			case "New": {
+				badge.variant = "note";
+				break;
+			}
+			case "Deprecated":
+			case "Legacy": {
+				badge.variant = "danger";
+				break;
+			}
+		}
+	}
+
+	return badge;
+}
+
 const currentSection = slug?.split("/")[0];
 
 let filtered = sidebar.filter(
@@ -78,7 +100,10 @@ async function handleGroup(group: Group): Promise<SidebarEntry> {
 
 	group.label = frontmatter.sidebar.group?.label ?? frontmatter.title;
 	group.order = frontmatter.sidebar.order ?? Number.MAX_VALUE;
-	group.badge = frontmatter.sidebar.group?.badge;
+
+	if (frontmatter.sidebar.group?.badge) {
+		group.badge = inferBadgeVariant(frontmatter.sidebar.group?.badge);
+	}
 
 	if (frontmatter.hideChildren) {
 		return {
@@ -129,6 +154,10 @@ async function handleLink(link: Link): Promise<Link> {
 	const frontmatter = page.data;
 	link.order = frontmatter.sidebar.order ?? Number.MAX_VALUE;
 
+	if (link.badge) {
+		link.badge = inferBadgeVariant(link.badge);
+	}
+
 	if (slug === currentSection) {
 		link.order = 0;
 	}
@@ -141,6 +170,7 @@ async function handleLink(link: Link): Promise<Link> {
 			badge: frontmatter.external_link.startsWith("/api")
 				? {
 						text: "API",
+						variant: "note",
 					}
 				: undefined,
 		};

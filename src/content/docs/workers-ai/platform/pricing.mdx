@@ -3,16 +3,13 @@ pcx_content_type: concept
 title: Pricing
 sidebar:
   order: 1
-
 ---
 
 :::note
 
-
-Workers AI has deprecated the usage of neurons in favor of unit-based pricing. The Cloudflare dashboards will be migrated this unit-based pricing soon so you can track your usage. Individual model pages will soon document the price for each model. We also made pricing cheaper! 
+Workers AI has deprecated the usage of neurons in favor of unit-based pricing. The Cloudflare dashboards will be migrated this unit-based pricing soon so you can track your usage. Individual model pages will soon document the price for each model. We also made pricing cheaper!
 
 We will begin billing for all models under this new pricing structure beginning November 1, 2024.
-
 
 :::
 
@@ -24,20 +21,24 @@ These docs will be updated as we add new pricing for new task types in our model
 
 ## Pricing Structure
 
+Some models may have specific pricing. For specific details, check the page of the [specific model](/workers-ai/models/).
+
 ### Text Generation LLMs (incl Vision models)
+
 Model size is measured in parameters.
 Pricing is based on blended tokens (input + output).
 Vision models will convert the image input into tokens for billing. Depending on size and aspect ratio, images will be charged for between 1,601 and 6,404 tokens. Most images that are more that 224 pixels wide or tall will be charged as 6,404 tokens each.
 
-| Model Size       | Pricing                  |
-| ---------------- | ------------------------ |
-| \<= 3B           | $0.10 per Million Tokens |
-| 3.1B - 8B        | $0.15 per Million Tokens |
-| 8.1B - 20B       | $0.20 per Million Tokens |
-| 20.1B - 40B      | $0.50 per Million Tokens |
-| 40.1B+           | $0.75 per Million Tokens |
+| Model Size  | Pricing                  |
+| ----------- | ------------------------ |
+| \<= 3B      | $0.10 per Million Tokens |
+| 3.1B - 8B   | $0.15 per Million Tokens |
+| 8.1B - 20B  | $0.20 per Million Tokens |
+| 20.1B - 40B | $0.50 per Million Tokens |
+| 40.1B+      | $0.75 per Million Tokens |
 
 ### Embeddings
+
 Model size is measured in parameters.
 Pricing is based on input tokens.
 
@@ -47,29 +48,29 @@ Pricing is based on input tokens.
 | 151M+ parameters    | $0.015 per Million Tokens |
 
 ## Image Generation
+
 Standard models are large image models such as `@cf/stabilityai/stable-diffusion-xl-base-1.0`
 Fast models are usually smaller image models that require fewer steps to generate an image, such as `@cf/black-forest-labs/flux-1-schnell` and `@cf/bytedance/stable-diffusion-xl-lightning`
 We take the maximum of the image height and width to calculate pricing. For example, an image of 1024x768 would fall under 1024x1024 pricing.
 
-| Image Size   | Price                 |
-| ------------ | --------------------- |
-| \<=256x256   | $0.00025 per 5 steps  |
-| \<=512x512   | $0.0005 per 5 steps   |
-| \<=1024x1024 | $0.001 per 5 steps    |
-| \<=2048x2048 | $0.002 per 5 steps    |
+| Image Size   | Price                |
+| ------------ | -------------------- |
+| \<=256x256   | $0.00025 per 5 steps |
+| \<=512x512   | $0.0005 per 5 steps  |
+| \<=1024x1024 | $0.001 per 5 steps   |
+| \<=2048x2048 | $0.002 per 5 steps   |
 
 ## Speech-to-text
+
 Speech-to-text models like `@cf/openai/whisper` are billed on minutes of audio input.
 
 | Price                             |
 | --------------------------------- |
 | $0.0039 per minute of audio input |
 
-
 ## Free Allocation
 
 Our free allocation allows anyone to use Workers AI up to a certain limit per day. To use more than the free allocation, upgrade to the Workers Paid plan, where you will be charged on any usage above the free tier based on the pricing structure above.
-
 
 | Model                 | Free tier size                               |
 | --------------------- | -------------------------------------------- |
@@ -79,7 +80,6 @@ Our free allocation allows anyone to use Workers AI up to a certain limit per da
 | Speech-to-text        | 10 minutes of audio a day                    |
 
 All limits reset daily at 00:00 UTC. If you exceed any one of the above limits, further operations will fail with an error.
-
 
 ## Archived Pricing
 
