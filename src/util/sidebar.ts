@@ -9,7 +9,7 @@ type Group = Extract<Props["sidebar"][0], { type: "group" }> & {
 	order?: number;
 };
 
-type SidebarEntry = Link | Group;
+export type SidebarEntry = Link | Group;
 type Badge = Link["badge"];
 
 const sidebars = new Map<string, Group>();
@@ -83,7 +83,10 @@ export async function generateSidebar(group: Group) {
 	);
 
 	group.entries.sort(sortBySidebarOrder);
-	group.entries[0].label = "Overview";
+
+	if (group.entries[0].type === "link") {
+		group.entries[0].label = "Overview";
+	}
 
 	return group;
 }
@@ -188,6 +191,10 @@ async function handleGroup(group: Group): Promise<SidebarEntry> {
 
 	const idx = group.entries.indexOf(index);
 	const removed = group.entries.splice(idx, 1).at(0) as Link;
+
+	removed.attrs = {
+		"data-group-label": group.label,
+	};
 
 	if (!removed) {
 		throw new Error(

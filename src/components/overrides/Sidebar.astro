@@ -3,12 +3,9 @@ import type { Props } from "@astrojs/starlight/props";
 import Default from "@astrojs/starlight/components/Sidebar.astro";
 
 import { Icon as AstroIcon } from "astro-icon/components";
-
-import { getSidebar, lookupProductTitle } from "~/util/sidebar";
+import { lookupProductTitle } from "~/util/sidebar";
 
 const [product, module] = Astro.url.pathname.split("/").slice(1, -1);
-
-const sidebar = await getSidebar(Astro);
 ---
 
 <a
@@ -26,7 +23,9 @@ const sidebar = await getSidebar(Astro);
 	</span>
 </a>
 <!-- @ts-expect-error sidebar props don't match as we add additional things -->
-<Default {...Astro.props} sidebar={sidebar.entries}><slot /></Default>
+<Default {...Astro.props} sidebar={Astro.props.sidebar.entries}
+	><slot /></Default
+>
 
 <style is:global>
 	:root {
