@@ -8,7 +8,7 @@ date: 2024-12-11T18:00:00Z
 
 Hyperdrive now caches queries in all Cloudflare locations, decreasing cache hit latency by up to 90%.
 
-When you make a query to your database and Hyperdrive has cached the query results, Hyperdrive will now return the results from the nearest cache. This reduces latency for cache hits by up to 90% by caching data closer to your users.
+When you make a query to your database and Hyperdrive has cached the query results, Hyperdrive will now return the results from the nearest cache. By caching data closer to your users, the latency for cache hits reduces by up to 90%.
 
 This reduction in cache hit latency is reflected in a reduction of the session duration for all queries (cached and uncached) from Cloudflare Workers to Hyperdrive, as illustrated below.
 
