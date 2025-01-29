@@ -65,10 +65,51 @@ Build full-stack AI applications with Vectorize, Cloudflare’s vector database.
 
 Use the [Browser Rendering API](/browser-rendering/) to allow your agents to search the web, take screenshots, and directly interact with websites.
 
-```ts
-
+```sh
+npm install @cloudflare/puppeteer --save-dev
 ```
 
+```ts
+import puppeteer from "@cloudflare/puppeteer";
+
+interface Env {
+  MYBROWSER: Fetcher;
+  BROWSER_KV_DEMO: KVNamespace;
+}
+
+export default {
+  async fetch(request: Request, env: Env): Promise<Response> {
+    const { searchParams } = new URL(request.url);
+    const url = searchParams.get("url");
+
+    if (!url) {
+      return new Response("Please add an ?url=https://example.com/ parameter");
+    }
+
+    const normalizedUrl = new URL(url).toString();
+    let img = await env.BROWSER_KV_DEMO.get(normalizedUrl, { type: "arrayBuffer" });
+
+    if (img === null) {
+      const browser = await puppeteer.launch(env.MYBROWSER);
+      const page = await browser.newPage();
+      await page.goto(normalizedUrl);
+      img = await page.screenshot() as Buffer;
+
+      await env.BROWSER_KV_DEMO.put(normalizedUrl, img, {
+        expirationTtl: 60 * 60 * 24, // 24 hours
+      });
+
+      await browser.close();
+    }
+
+    return new Response(img, {
+      headers: {
+        "content-type": "image/jpeg",
+      },
+    });
+  },
+};
+```
 
 </TabItem>
 <TabItem label="AI Gateway">
