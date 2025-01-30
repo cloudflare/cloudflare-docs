@@ -22,7 +22,7 @@ sidebar:
   order: 2
 ---
 
-import { Render, TabItem, Tabs } from "~/components";
+import { Render, TabItem, Tabs, PackageManagers } from "~/components";
 
 E-commerce and media sites often work on increasing the average transaction value to boost profitability. One of the strategies to increase the average transaction value is "cross-selling," which involves recommending related products. Cloudflare offers a range of products designed to build mechanisms for retrieving data related to the products users are viewing or requesting. In this tutorial, you will experience developing functionalities necessary for cross-selling by creating APIs for related product searches and product recommendations.
 
@@ -60,6 +60,12 @@ First, let's create a Cloudflare Workers project.
 
 To efficiently create and manage multiple APIs, let's use [`Hono`](https://hono.dev). Hono is an open-source application framework released by a Cloudflare Developer Advocate. It is lightweight and allows for the creation of multiple API paths, as well as efficient request and response handling.
 Open your command line interface (CLI) and run the following command:
+
+<PackageManagers
+	type="create"
+	pkg="cloudflare@latest"
+	args={"cross-sell-api --framework=hono"}
+/>
 
 <Tabs> <TabItem label="npm">
 
@@ -209,8 +215,6 @@ index_name = "stripe-products"
 </WranglerConfig>
 
 Additionally, let's add the configuration to use Workers AI in `wrangler.toml`.
-
-
 
 <WranglerConfig>
 
