@@ -9,7 +9,9 @@ date: 2025-01-30T13:00:00Z
 
 import { Render, PackageManagers, TypeScriptExample } from "~/components"
 
-[Browser Rendering](/browser-rendering/) now supports 10 concurrent browser instances per account, up from the previous limit of 2. This allows you to launch more browser tasks from [Cloudflare Workers](/workers).
+[Browser Rendering](/browser-rendering/) now supports 10 concurrent browser instances per account _and_ 10 new instances per minute, up from the previous limits of 2.
+
+This allows you to launch more browser tasks from [Cloudflare Workers](/workers).
 
 To manage concurrent browser sessions, you can use [Queues](/queues/) or [Workflows](/workflows/):
 
