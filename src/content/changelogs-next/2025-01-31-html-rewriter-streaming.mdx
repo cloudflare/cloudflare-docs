@@ -14,9 +14,9 @@ Methods like `replace`, `append`, and `prepend` now accept [`Response`](/workers
 values as [`Content`](/workers/runtime-apis/html-rewriter/#global-types).
 
 This can be helpful in a variety of situations. For instance, you may have a Worker in front of an origin,
-and want to replace an element with content from a different source. Prior to this change, if you wanted
-to replace an element with content from an upstream URL, you would have to load all of the content and convert
-it into a string before replacing the element. This slowed down overall response times.
+and want to replace an element with content from a different source. Prior to this change, you would have to load
+all of the content from the upstream URL and convert it into a string before replacing the element. This slowed
+down overall response times.
 
 Now, you can pass the `Response` object directly into the `replace` method, and HTMLRewriter will immediately
 start replacing the content as it is streamed in. This makes responses faster.
