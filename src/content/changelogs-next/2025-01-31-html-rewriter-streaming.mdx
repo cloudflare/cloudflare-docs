@@ -3,18 +3,17 @@ title: Rewrite HTML with streaming content
 description: HTMLRewiter now supports streamed content for more efficient replacement of HTML elements
 products:
   - workers
-date: 2025-02-03T3:00:00Z
+date: 2025-01-31T10:00:00Z
 ---
 
 import { Render, TypeScriptExample } from "~/components";
 
 [`HTMLRewriter`](/workers/runtime-apis/html-rewriter) now supports replacing HTML with content from a stream.
-
-This allows you to process HTML more efficiently, as content does not have to be loaded into memory before replacements are made.
-
 [`Response`](/workers/runtime-apis/response/) and [`ReadableStream`](/workers/runtime-apis/streams/readablestream/) values can now
 be passed as [`Content`](/workers/runtime-apis/html-rewriter/#global-types) into methods duch as
 `replace`, `append`, and `prepend`.
+
+This allows you to process HTML more efficiently, as content does not have to be loaded into memory before replacements are made.
 
 <TypeScriptExample filename="index.ts">
 ```ts
