@@ -147,6 +147,8 @@ entries:
       * The minimum megabits-per-second rate that will trigger the alert.
       * The protocols for which you wish to receive notifications (all protocols by default).
 
+      If you specify multiple filters, Cloudflare applies an `AND` logic. This means the alert will only trigger if all filters you set are true. Keep this in mind when setting up this alert with more than one filter.
+
   - name: Health Checks status notification
     audience: Customers who want to be warned about changes to server health as determined by [health checks](/health-checks/).
     availability: Professional plans or higher.

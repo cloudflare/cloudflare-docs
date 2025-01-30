@@ -38,13 +38,15 @@ To turn on TLS inspection for your Zero Trust organization:
 
 ### 3. Determine the certificate used for inspection
 
-TLS inspection requires a trusted private root certificate to be able to inspect and filter encrypted traffic. A [Cloudflare root certificate](/cloudflare-one/connections/connect-devices/user-side-certificates/automated-deployment/) is a simple and common solution that is usually appropriate for testing or proof-of-concept conditions when deployed to your devices.
+TLS inspection requires a trusted private root certificate to be able to inspect and filter encrypted traffic. A [Cloudflare root certificate](/cloudflare-one/connections/connect-devices/user-side-certificates/automated-deployment/) is a simple and common solution that is usually appropriate for testing or proof-of-concept conditions when deployed to your devices. You can [generate a Cloudflare certificate](/cloudflare-one/connections/connect-devices/user-side-certificates/#generate-a-cloudflare-root-certificate) in Zero Trust.
 
 Alternatively, if you already have a root CA that you use for other inspection or trust applications, we recommend [using your own certificate](/cloudflare-one/connections/connect-devices/user-side-certificates/custom-certificate/). A few reasons for this include:
 
 - Assuming the root certificate is already deployed on the relevant fleet of devices, using a single certificate streamlines your IT management.
 - If external services like Git workflows or CLI tools rely on an existing certificate store, presenting the same certificate in inspection is far less likely to interrupt their traffic flow, although these are things that you may wish to exempt from inspection.
 - If you are using [WARP Connector](/cloudflare-one/connections/connect-networks/private-net/warp-connector/) or a [Magic WAN](/magic-wan/) IPsec/GRE tunnel to on-ramp traffic to Cloudflare, devices behind those tunnels will not be able to use HTTP policies that require TLS inspection unless they have a certificate that matches your organization's certificate of choice. Your network infrastructure most likely already has your own device certificates deployed, so using your own existing public key infrastructure for inspection will simplify protection.
+
+Once you generate a Cloudflare certificate or upload a custom certificate, you will need to set it as **Available** to deploy it across the Cloudflare network and as **In-Use** to use it for inspection. For more information, refer to [Activate a root certificate](/cloudflare-one/connections/connect-devices/user-side-certificates/#activate-a-root-certificate).
 
 ### 4. Build a baseline Do Not Inspect policy
 

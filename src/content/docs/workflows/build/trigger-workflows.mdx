@@ -6,6 +6,8 @@ sidebar:
 
 ---
 
+import { WranglerConfig } from "~/components";
+
 You can trigger Workflows both programmatically and via the Workflows APIs, including:
 
 1. With [Workers](/workers) via HTTP requests in a `fetch` handler, or bindings from a `queue` or `scheduled` handler
@@ -29,9 +31,7 @@ New to Workflows? Start with the [Workflows tutorial](/workflows/get-started/gui
 
 :::
 
-To bind to a Workflow from your Workers code, you need to define a [binding](/workers/wrangler/configuration/) to a specific Workflow. For example, to bind to the Workflow defined in the [get started guide](/workflows/get-started/guide/), you would configure a `wrangler.toml` with the below:
-
-import { WranglerConfig } from "~/components";
+To bind to a Workflow from your Workers code, you need to define a [binding](/workers/wrangler/configuration/) to a specific Workflow. For example, to bind to the Workflow defined in the [get started guide](/workflows/get-started/guide/), you would configure the `wrangler.toml / wrangler.json` file with the below:
 
 <WranglerConfig>
 

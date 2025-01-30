@@ -7,23 +7,23 @@ head: []
 description: Manually add a Cloudflare certificate to mobile devices and
   individual applications.
 banner:
-  content: The default global Cloudflare root certificate will expire on 2025-02-02. If you installed the default Cloudflare certificate before 2024-10-17, you must <a href="#generate-a-cloudflare-root-certificate">generate a new certificate</a> and activate it for your Zero Trust organization to avoid inspection errors.
+  content: The default global Cloudflare root certificate will expire on 2025-02-02. If you installed the default Cloudflare certificate before 2024-10-17, you must <a href="/cloudflare-one/connections/connect-devices/user-side-certificates/#generate-a-cloudflare-root-certificate">generate a new certificate</a> and activate it for your Zero Trust organization to avoid inspection errors.
 ---
 
 import { Details, Render, TabItem, Tabs } from "~/components";
 
 :::note
-
 This procedure is only required to enable specific Cloudflare Zero Trust features, and should only be done at the direction of your IT department. This procedure is not required to enable the WARP client for consumers.
-
 :::
 
 If your device does not support [certificate installation via WARP](/cloudflare-one/connections/connect-devices/user-side-certificates/automated-deployment/), you can manually install a Cloudflare certificate. You must add the certificate to both the [system keychain](#add-the-certificate-to-operating-systems) and to [individual application stores](#add-the-certificate-to-applications). These steps must be performed on each new device that is to be subject to HTTP filtering.
 
+Zero Trust will only inspect traffic using installed certificates set to [**Available** and **In-Use**](/cloudflare-one/connections/connect-devices/user-side-certificates/#activate-a-root-certificate).
+
 ## Download the Cloudflare root certificate
 
 :::note[Download limitation]
-You can only download certificates from the Zero Trust dashboard.
+You can only download Cloudflare-generated certificates from the Zero Trust dashboard or with WARP.
 :::
 
 First, [generate](/cloudflare-one/connections/connect-devices/user-side-certificates/#generate-a-cloudflare-root-certificate) and download a Cloudflare certificate. The certificate is available in both `.pem` and `.crt` file format. Certain applications require the certificate to be in a specific file type, so ensure you download the most appropriate file for your use case.
@@ -32,6 +32,8 @@ First, [generate](/cloudflare-one/connections/connect-devices/user-side-certific
 2. In **Certificates**, select **Manage**.
 3. Select the certificate you want to download.
 4. Depending on which format you want, choose **Download .pem** and/or **Download .crt**.
+
+Alternatively, you can download and install a certificate [using WARP](/cloudflare-one/connections/connect-devices/user-side-certificates/automated-deployment/#install-a-certificate-using-warp). WARP will add the certificates to the device's system certificate store in `installed_certs/<certificate_id>.pem`.
 
 ### Verify the downloaded certificate
 
@@ -626,6 +628,54 @@ To install a certificate for use in a Docker container:
 
    </TabItem> </Tabs>
 
+### Java
+
+Java may have multiple certificate keystore locations depending on different installations or applications that include Java. Depending on your Java Virtual Machine (JVM) installation, you may need to install the certificate for each instance. You may also need to manually configure each Java application to use and trust the certificate.
+
+To install a Cloudflare root certificate in the system JVM, follow the procedure for your operating system. These steps require you to [download a `.pem` certificate](#download-the-cloudflare-root-certificate).
+
+<Tabs>
+<TabItem label="macOS and Linux" icon="seti:shell">
+
+1. Install [OpenSSL](https://www.openssl.org/).
+
+2. In a terminal, format the Cloudflare certificate for Java.
+
+   ```sh
+   openssl x509 -in Cloudflare_CA.pem -inform pem -out Cloudflare_CA.der -outform der
+   ```
+
+3. Import the converted certificate into the Java keystore.
+
+   ```sh
+   sudo $JAVA_HOME/bin/keytool -import -trustcacerts -alias 'Cloudflare Root CA' -file Cloudflare_CA.der -keystore $JAVA_HOME/jre/lib/security/cacerts -storepass changeit -noprompt 2>&1
+   ```
+
+4. Restart any instances of Java.
+
+</TabItem>
+
+<TabItem label="Windows" icon="seti:windows">
+
+1. Install [OpenSSL for Windows](https://slproweb.com/products/Win32OpenSSL.html).
+
+2. In an administrator PowerShell terminal, format the Cloudflare certificate for Java.
+
+   ```powershell
+   openssl x509 -in Cloudflare_CA.pem -inform pem -out Cloudflare_CA.der -outform der
+   ```
+
+3. Import the converted certificate into the Java keystore.
+
+   ```powershell
+   "%JAVA_HOME%\bin\keytool" -import -trustcacerts -alias "Cloudflare Root CA" -file Cloudflare_CA.der -keystore "%JAVA_HOME%\jre\lib\security\cacerts" -storepass changeit -noprompt
+   ```
+
+4. Restart any instances of Java.
+
+</TabItem>
+</Tabs>
+
 ### Google Cloud
 
 #### Google Cloud SDK
@@ -662,25 +712,27 @@ If you use Kaniko with Google Cloud SDK, you must install a Cloudflare certifica
 
 #### Google Drive for desktop
 
-To trust a Cloudflare root certificate in the Google Drive desktop application, follow the procedure for your operating system. These steps require you to [download the .pem certificate](#download-the-cloudflare-root-certificate).
+To trust a Cloudflare root certificate in the Google Drive desktop application, follow the procedure for your operating system. These steps require you to [download a `.pem` certificate](#download-the-cloudflare-root-certificate).
 
 <Tabs>
 <TabItem label="macOS" icon="apple">
 
-1. In the Finder menu bar, go to **Go** > **Go to Folder**. Enter `/Applications/Google Drive.app/Contents/Resources`.
-
-2. Find `roots.pem` and copy it to a permanent location, such as your Documents folder.
-
-3. Append the contents of `cloudflare.pem` to the end of `roots.pem`.
+1. In a terminal, copy the contents of the Google Drive certificate file to a new certificate file in a permanent location, such as your Documents folder. For example:
 
    ```sh
-   cat ~/Downloads/certificate.pem >> path/to/roots.pem
+   cat /Applications/"Google Drive.app"/Contents/Resources/roots.pem > ~/Documents/gdrivecerts.pem
    ```
 
-4. Apply the newly created root certificate to your Google Drive application.
+2. Append the contents of the downloaded certificate to the end of the new file. For example:
 
    ```sh
-   sudo defaults write /Library/Preferences/com.google.drivefs.settings TrustedRootCertsFile -string "path/to/roots.pem"
+   cat ~/Downloads/certificate.pem >> ~/Documents/gdrivecerts.pem
+   ```
+
+3. Apply the newly created root certificate to your Google Drive application. For example:
+
+   ```sh
+   sudo defaults write /Library/Preferences/com.google.drivefs.settings TrustedRootCertsFile "/Users/$(whoami)/Documents/gdrivecerts.pem"
    ```
 
 You can verify the update with the following command.
@@ -693,26 +745,28 @@ defaults read /Library/Preferences/com.google.drivefs.settings
 
 <TabItem label="Windows" icon="seti:windows">
 
-1. In File Explorer, go to `\Program Files\Google\Drive File Stream\<version>\config\`.
-
-2. Find `roots.pem` and copy it to a permanent location, such as your Documents folder.
-
-3. Append the contents of `cloudflare.pem` to the end of `roots.pem`.
+1. In an administrator PowerShell terminal, copy the contents of the Google Drive certificate file to a new certificate file in a permanent location, such as your Documents folder. For example:
 
    ```powershell
-   cat ~\Downloads\certificate.pem >> path\to\roots.pem
+   Get-Content "C:\Program Files\Google\Drive File Stream\roots.pem" | Set-Content "$HOME\Documents\gdrivecerts.pem"
    ```
 
-4. Update the Google Drive registry key.
+2. Append the contents of the downloaded certificate to the end of the new file. For example:
 
    ```powershell
-   reg ADD "HKEY_LOCAL_MACHINE\Software\Google\DriveFS" /v TrustedRootCertsFile /t REG_SZ /d "path\to\roots.pem"
+   Get-Content "$HOME\Downloads\certificate.pem" | Add-Content "$HOME\Documents\gdrivecerts.pem"
+   ```
+
+3. Apply the newly created root certificate to your Google Drive application. For example:
+
+   ```powershell
+   Set-ItemProperty -Path "HKLM:\SOFTWARE\Google\DriveFS" -Name "TrustedRootCertsFile" -Value "$HOME\Documents\gdrivecerts.pem"
    ```
 
 You can verify the update with the following command.
 
 ```powershell
-reg QUERY "HKEY_LOCAL_MACHINE\Software\Google\DriveFS" /v TrustedRootCertsFile"
+Get-ItemProperty -Path "HKLM:\SOFTWARE\Google\DriveFS" | Select-Object TrustedRootCertsFile
 ```
 
 </TabItem>
@@ -760,7 +814,7 @@ To set the location of the certificate for use as an environment variable:
 
 ### PHP Composer
 
-The command below will set the [`cafile`](https://getcomposer.org/doc/06-config.md#cafile) configuration inside of `composer.json` to use the Cloudflare root certificate. Make sure to [download the certificate](#download-the-cloudflare-root-certificate) in the `.pem` file type.
+The command below will set the [`cafile`](https://getcomposer.org/doc/06-config.md#cafile) configuration inside of `composer.json` to use the Cloudflare root certificate. Make sure to [download a certificate](#download-the-cloudflare-root-certificate) in the `.pem` file type.
 
 ```sh
 composer config cafile [PATH_TO_CLOUDFLARE_CERT.pem]

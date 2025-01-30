@@ -3,6 +3,8 @@ pcx_content_type: tutorial
 title: Import Cloudflare resources
 ---
 
+import { Render } from "~/components";
+
 An important point to understand about Terraform is that it can only manage configuration it created or was explicitly told about after the fact. The reason for this limitation is that Terraform expects to be authoritative for the resources it manages. It relies on two types of files to understand what resources it controls and what state they are in. Terraform determines when and how to make changes from the following:
 
 - A [configuration file](https://developer.hashicorp.com/terraform/language) (ending in `.tf`) that defines the configuration of resources for Terraform to manage. This is what you worked with in the tutorial steps.
@@ -54,6 +56,8 @@ To start managing existing Cloudflare resources in Terraform, for example, DNS r
 
 If you do not have a Terraform configuration file defined, you need the `provider` block defined as follows:
 
+<Render file="v4-code-snippets" />
+
 ```hcl
 provider 'cloudflare' {
  # Cloudflare email saved in $CLOUDFLARE_EMAIL
@@ -70,6 +74,8 @@ cf-terraforming generate --email $CLOUDFLARE_EMAIL --token $CLOUDFLARE_API_TOKEN
 ```
 
 If you had not redirected the output to the `importing-example.tf` file, the result displayed in the standard output (your terminal window) would look like the following:
+
+<Render file="v4-code-snippets" />
 
 ```tf
 resource "cloudflare_record" "terraform_managed_resource_3c0b456bc2aa443089c5f40f45f51b31" {

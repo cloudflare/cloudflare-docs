@@ -30,13 +30,10 @@ const ModelBadges = ({ model }: { model: WorkersAIModelsSchema }) => {
 	});
 
 	return (
-		<ul className="list-none m-0 p-0 flex items-center gap-2 text-xs">
+		<ul className="m-0 flex list-none items-center gap-2 p-0 text-xs">
 			{badges.map((badge) => (
-				<li
-					key={badge.text}
-					className="bg-gray-100 dark:bg-gray-700 px-2 py-1 rounded-md block !mt-0"
-				>
-					{badge.text}
+				<li key={badge.text}>
+					<span className="sl-badge gray">{badge.text}</span>
 				</li>
 			))}
 		</ul>

@@ -19,7 +19,7 @@ When configuring Google Cloud with Access, the following limitations apply:
 - The integration of Access as a single sign-on provider for your Google Cloud account does not work for Google super admins. It will work for other users.
   :::
 
-## Prerequistes
+## Prerequisites
 
 - An [identity provider](/cloudflare-one/identity/idp-integration/) configured in Cloudflare Zero Trust
 - Admin access to a Google Workspace account
@@ -37,9 +37,8 @@ When configuring Google Cloud with Access, the following limitations apply:
    - **Assertion Consumer Service URL**: `https://www.google.com/a/<your_domain.com>/acs`
    - **Name ID format**: _Email_
 7. Copy the **SSO endpoint**, **Access Entity ID or Issuer**, and **Public key**.
-8. Select **Save configuration**.
-9. Configure [Access policies](/cloudflare-one/policies/access/) for the application.
-10. Select **Done**.
+8. Configure [Access policies](/cloudflare-one/policies/access/) for the application.
+9. Save the application.
 
 ## 2. Create a x.509 certificate
 

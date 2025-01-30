@@ -1,0 +1,81 @@
+---
+title: Snowflake
+sidebar:
+  hidden: true
+---
+
+import { Render } from "~/components";
+
+This page details which R2 location or jurisdiction is recommended based on your Snowflake region.
+
+You have the following inputs to control the physical location where objects in your R2 buckets are stored (for more information refer to [data location](/r2/reference/data-location/)):
+
+- [**Location hints**](/r2/reference/data-location/#location-hints): Specify a geophrical area (for example, Asia-Pacific or Western Europe). R2 makes a best effort to place your bucket in or near that location to optimize performance. You can confirm bucket placement after creation by navigating to the **Settings** tab of your bucket and referring to the **Bucket details** section.
+- [**Jurisdictions**](/r2/reference/data-location/#jurisdictional-restrictions): Enforce that data is both stored and processed within a specific jurisdiction (for example, the EU or FedRAMP environment). Use jurisdictions when you need to ensure data is stored and processed within a jurisdiction to meet data residency requirements, including local regulations such as the [GDPR](https://gdpr-info.eu/) or [FedRAMP](https://blog.cloudflare.com/cloudflare-achieves-fedramp-authorization/).
+
+## North and South America (Commercial)
+
+| Snowflake region name     | Cloud | Region ID        | Recommended R2 location |
+| ------------------------- | ----- | ---------------- | ----------------------- |
+| Canada (Central)          | AWS   | `ca-central-1`   | Location hint: `enam`   |
+| South America (Sao Paulo) | AWS   | `sa-east-1`      | Location hint: `enam`   |
+| US West (Oregon)          | AWS   | `us-west-2`      | Location hint: `wnam`   |
+| US East (Ohio)            | AWS   | `us-east-2`      | Location hint: `enam`   |
+| US East (N. Virginia)     | AWS   | `us-east-1`      | Location hint: `enam`   |
+| US Central1 (Iowa)        | GCP   | `us-central1`    | Location hint: `enam`   |
+| US East4 (N. Virginia)    | GCP   | `us-east4`       | Location hint: `enam`   |
+| Canada Central (Toronto)  | Azure | `canadacentral`  | Location hint: `enam`   |
+| Central US (Iowa)         | Azure | `centralus`      | Location hint: `enam`   |
+| East US 2 (Virginia)      | Azure | `eastus2`        | Location hint: `enam`   |
+| South Central US (Texas)  | Azure | `southcentralus` | Location hint: `enam`   |
+| West US 2 (Washington)    | Azure | `westus2`        | Location hint: `wnam`   |
+
+## U.S. Government
+
+| Snowflake region name | Cloud | Region ID       | Recommended R2 location |
+| --------------------- | ----- | --------------- | ----------------------- |
+| US Gov East 1         | AWS   | `us-gov-east-1` | Jurisdiction: `fedramp` |
+| US Gov West 1         | AWS   | `us-gov-west-1` | Jurisdiction: `fedramp` |
+| US Gov Virginia       | Azure | `usgovvirginia` | Jurisdiction: `fedramp` |
+
+:::note
+
+Cloudflare Enterprise customers may contact their account team or [Cloudflare Support](/support/contacting-cloudflare-support/) to get access to the FedRAMP jurisdiction.
+:::
+
+## Europe and Middle East
+
+| Snowflake region name         | Cloud | Region ID          | Recommended R2 location                   |
+| ----------------------------- | ----- | ------------------ | ----------------------------------------- |
+| EU (Frankfurt)                | AWS   | `eu-central-1`     | Jurisdiction: `eu` or hint: `weur`/`eeur` |
+| EU (Zurich)                   | AWS   | `eu-central-2`     | Jurisdiction: `eu` or hint: `weur`/`eeur` |
+| EU (Stockholm)                | AWS   | `eu-north-1`       | Jurisdiction: `eu` or hint: `weur`/`eeur` |
+| EU (Ireland)                  | AWS   | `eu-west-1`        | Jurisdiction: `eu` or hint: `weur`/`eeur` |
+| Europe (London)               | AWS   | `eu-west-2`        | Jurisdiction: `eu` or hint: `weur`/`eeur` |
+| EU (Paris)                    | AWS   | `eu-west-3`        | Jurisdiction: `eu` or hint: `weur`/`eeur` |
+| Middle East Central2 (Dammam) | GCP   | `me-central2`      | Location hint: `weur`/`eeur`              |
+| Europe West2 (London)         | GCP   | `europe-west-2`    | Jurisdiction: `eu` or hint: `weur`/`eeur` |
+| Europe West3 (Frankfurt)      | GCP   | `europe-west-3`    | Jurisdiction: `eu` or hint: `weur`/`eeur` |
+| Europe West4 (Netherlands)    | GCP   | `europe-west-4`    | Jurisdiction: `eu` or hint: `weur`/`eeur` |
+| North Europe (Ireland)        | Azure | `northeurope`      | Jurisdiction: `eu` or hint: `weur`/`eeur` |
+| Switzerland North (Zurich)    | Azure | `switzerlandnorth` | Jurisdiction: `eu` or hint: `weur`/`eeur` |
+| West Europe (Netherlands)     | Azure | `westeurope`       | Jurisdiction: `eu` or hint: `weur`/`eeur` |
+| UAE North (Dubai)             | Azure | `uaenorth`         | Location hint: `weur`/`eeur`              |
+| UK South (London)             | Azure | `uksouth`          | Jurisdiction: `eu` or hint: `weur`/`eeur` |
+
+## Asia Pacific and China
+
+| Snowflake region name            | Cloud | Region ID        | Recommended R2 location |
+| -------------------------------- | ----- | ---------------- | ----------------------- |
+| Asia Pacific (Tokyo)             | AWS   | `ap-northeast-1` | Location hint: `apac`   |
+| Asia Pacific (Seoul)             | AWS   | `ap-northeast-2` | Location hint: `apac`   |
+| Asia Pacific (Osaka)             | AWS   | `ap-northeast-3` | Location hint: `apac`   |
+| Asia Pacific (Mumbai)            | AWS   | `ap-south-1`     | Location hint: `apac`   |
+| Asia Pacific (Singapore)         | AWS   | `ap-southeast-1` | Location hint: `apac`   |
+| Asia Pacific (Sydney)            | AWS   | `ap-southeast-2` | Location hint: `oc`     |
+| Asia Pacific (Jakarta)           | AWS   | `ap-southeast-3` | Location hint: `apac`   |
+| China (Ningxia)                  | AWS   | `cn-northwest-1` | Location hint: `apac`   |
+| Australia East (New South Wales) | Azure | `australiaeast`  | Location hint: `oc`     |
+| Central India (Pune)             | Azure | `centralindia`   | Location hint: `apac`   |
+| Japan East (Tokyo)               | Azure | `japaneast`      | Location hint: `apac`   |
+| Southeast Asia (Singapore)       | Azure | `southeastasia`  | Location hint: `apac`   |

@@ -13,7 +13,7 @@ Only available on Enterprise plans.
 
 You can apply Gateway HTTP and DNS policies at the browser level by configuring a Proxy Auto-Configuration (PAC) file.
 
-<GlossaryDefinition term="PAC file" prepend="A PAC file is" />
+<GlossaryDefinition term="PAC file" prepend="A PAC file is " />
 
 When end users visit a website, their browser will send the request to a Cloudflare proxy server associated with your account to be filtered by Gateway. Note that Gateway [cannot filter every type of HTTP traffic](#limitations) proxied using PAC files.
 
@@ -215,19 +215,17 @@ To get the domain of a proxy endpoint:
    --header "Authorization: Bearer <API_TOKEN>"
    ```
 
-   ```json {10} output
+   ```json {8} output
    {
-    "success": true,
-    "result": {
-      "id": "ed35569b41ce4d1facfe683550f54086",
-      "created_at": "2014-01-01T05:20:00.12345Z",
-      "ips": [
-        "192.0.2.1/32"
-      ],
-      "name": "DevOps team",
-      "subdomain": "oli3n9zkz5.proxy.cloudflare-gateway.com",
-      "updated_at": "2014-01-01T05:20:00.12345Z"
-    }
+   	"success": true,
+   	"result": {
+   		"id": "ed35569b41ce4d1facfe683550f54086",
+   		"created_at": "2014-01-01T05:20:00.12345Z",
+   		"ips": ["192.0.2.1/32"],
+   		"name": "DevOps team",
+   		"subdomain": "oli3n9zkz5.proxy.cloudflare-gateway.com",
+   		"updated_at": "2014-01-01T05:20:00.12345Z"
+   	}
    }
    ```
 

@@ -82,6 +82,11 @@ We plan to bridge the gaps between Workers and Pages and provide ways to migrate
 | **Pages Functions**                                                                 |         |         |
 | [File-based Routing](/pages/functions/routing/)                                     | ❌ [^5] | ✅      |
 | [Pages Plugins](/pages/functions/plugins/)                                          | ❌ [^6] | ✅      |
+| **Domain Configuration**																														|					|					|
+| [Custom domains](/workers/configuration/routing/custom-domains/#add-a-custom-domain)| ✅      | ✅      |
+| [Custom subdomains](/workers/configuration/routing/custom-domains/#set-up-a-custom-domain-in-the-dashboard)|✅|✅|
+| [Custom domains outside Cloudflare zones](/pages/configuration/custom-domains/#add-a-custom-cname-record)|❌|✅|
+| [Non-root routes](/workers/configuration/routing/routes/) | ✅ | ❌ |
 
 [^1]: Similar to <sup>3</sup>, to customize the HTTP headers that are returned by static assets, you can use [Service bindings](/workers/runtime-apis/bindings/service-bindings/) to connect a Worker in front of the Worker with assets.
 

@@ -7,7 +7,7 @@ description: The built-in, JavaScript-native RPC system built into Workers and
 
 ---
 
-import { DirectoryListing, Render, Stream } from "~/components"
+import { DirectoryListing, Render, Stream, WranglerConfig } from "~/components"
 
 :::note
 To use RPC, [define a compatibility date](/workers/configuration/compatibility-dates) of `2024-04-03` or higher, or include `rpc` in your [compatibility flags](/workers/configuration/compatibility-flags/#nodejs-compatibility-flag).
@@ -67,8 +67,6 @@ Because of this, the words "client" and "server" can be ambiguous when talking a
 To use an instance of a class that you define as a parameter or return value of an RPC method, you must extend the built-in `RpcTarget` class.
 
 Consider the following example:
-
-import { WranglerConfig } from "~/components";
 
 <WranglerConfig>
 

@@ -17,20 +17,17 @@ The following limits apply to Hyperdrive configuration, connections, and queries
 | Maximum query (statement) duration             | 60 seconds                                                                            |
 | Maximum username length                        | 63 characters (bytes) [^1]                                                            |
 | Maximum database name length                   | 63 characters (bytes) [^1]                                                            |
-| Maximum origin database connections per region | 10-20                                                                                 |
-| Maximum potential origin database connections  | 10 \* number of regions serving traffic (approx. \~80 - 100 connections) [^2]         |
+| Maximum potential origin database connections  | approx. \~100 connections [^2]																													 |
 
 :::note
-
 Hyperdrive does not have a hard limit on the number of concurrent *client* connections made from your Workers.
 
 As many hosted databases have limits on the number of unique connections they can manage, Hyperdrive attempts to keep number of concurrent pooled connections to your origin database lower.
-
 :::
 
 [^1]: This is a limit enforced by PostgreSQL. Some database providers may enforce smaller limits.
 
-[^2]: Hyperdrive maintains semi-regional connection pools to balance between latency, reliability and overall load on your origin database.
+[^2]: Hyperdrive is a distributed system, so it is possible for a client to be unable to reach an existing pool. In this scenario, a new pool will be established, with its own allocation of connections. This favors availability over strictly enforcing limits, but does mean that it is possible in edge cases to overshoot the normal connection limit.
 
 :::note
 You can request adjustments to limits that conflict with your project goals by contacting Cloudflare. Not all limits can be increased. To request an increase, submit a [Limit Increase Request](https://forms.gle/ukpeZVLWLnKeixDu7) and we will contact you with next steps.

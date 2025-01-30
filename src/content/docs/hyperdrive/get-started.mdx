@@ -72,25 +72,13 @@ Create a new project named `hyperdrive-tutorial` by running:
 This will create a new `hyperdrive-tutorial` directory. Your new `hyperdrive-tutorial` directory will include:
 
 - A `"Hello World"` [Worker](/workers/get-started/guide/#3-write-code) at `src/index.ts`.
-- A [`wrangler.toml`](/workers/wrangler/configuration/) configuration file. `wrangler.toml` is how your `hyperdrive-tutorial` Worker will connect to Hyperdrive.
+- A [`wrangler.json`](/workers/wrangler/configuration/) configuration file. `wrangler.json` is how your `hyperdrive-tutorial` Worker will connect to Hyperdrive.
 
-:::note
+### Enable Node.js compatibility
 
-Note that the `wrangler.toml` file contains the following option:
+[Node.js compatibility](/workers/runtime-apis/nodejs/) is required for database drivers, including Postgres.js, and needs to be configured for your Workers project.
 
-import { WranglerConfig } from "~/components";
-
-<WranglerConfig>
-
-```toml title="wrangler.toml"
-compatibility_flags = [ "nodejs_compat" ]
-```
-
-</WranglerConfig>
-
-This enables the Node.js compatibility mode which is required for database drivers, including Postgres.js.
-
-:::
+<Render file="nodejs_compat" product="workers" />
 
 ## 3. Connect Hyperdrive to a database
 
@@ -112,7 +100,7 @@ cd hyperdrive-tutorial
 
 :::note
 
-Support for the new `hyperdrive` commands in the wrangler CLI requires a wrangler version of `3.10.0` or later. You can use `npx wrangler@latest` to always ensure you are using the latest version of wrangler.
+Support for the new `hyperdrive` commands in the wrangler CLI requires a wrangler version of `3.10.0` or later. You can use `npx wrangler@latest` to always ensure you are using the latest version of Wrangler.
 
 :::
 
@@ -194,7 +182,7 @@ Populate your `index.ts` file with the following code:
 import postgres from "postgres";
 
 export interface Env {
-	// If you set another name in wrangler.toml as the value for 'binding',
+	// If you set another name in the Wrangler config file as the value for 'binding',
 	// replace "HYPERDRIVE" with the variable name you defined.
 	HYPERDRIVE: Hyperdrive;
 }

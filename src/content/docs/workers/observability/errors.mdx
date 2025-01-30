@@ -30,7 +30,7 @@ Other `11xx` errors generally indicate a problem with the Workers runtime itself
 
 ### Loop limit
 
-A Worker cannot call itself or another Worker more than 16 times. In order to prevent infinite loops between Workers, the [`CF-EW-Via`](/fundamentals/reference/http-request-headers/#cf-ew-via) header's value is an integer that indicates how many invocations are left. Every time a Worker is invoked, the integer will decrement by 1. If the count reaches zero, a [`1019`](#error-pages-generated-by-workers) error is returned.
+A Worker cannot call itself or another Worker more than 16 times. In order to prevent infinite loops between Workers, the [`CF-EW-Via`](/fundamentals/reference/http-headers/#cf-ew-via) header's value is an integer that indicates how many invocations are left. Every time a Worker is invoked, the integer will decrement by 1. If the count reaches zero, a [`1019`](#error-pages-generated-by-workers) error is returned.
 
 ### "The script will never generate a response" errors
 
@@ -132,7 +132,6 @@ export default {
 };
 ```
 
-
 ### Cannot perform I/O on behalf of a different request
 
 ```
@@ -149,12 +148,14 @@ This error is most commonly caused by attempting to cache an I/O object, like a 
 let cachedResponse = null;
 
 export default {
-  async fetch(request, env, ctx) {
-	  if (cachedResponse) { return cachedResponse; }
-	  cachedResponse = new Response('Hello, world!');
-	  await new Promise(resolve => setTimeout(resolve, 5000)); // Sleep for 5s to demonstrate this particular error case
-	  return cachedResponse;
-  }
+	async fetch(request, env, ctx) {
+		if (cachedResponse) {
+			return cachedResponse;
+		}
+		cachedResponse = new Response("Hello, world!");
+		await new Promise((resolve) => setTimeout(resolve, 5000)); // Sleep for 5s to demonstrate this particular error case
+		return cachedResponse;
+	},
 };
 ```
 
@@ -164,12 +165,14 @@ You can fix this by instead storing only the data in global scope, rather than t
 let cachedData = null;
 
 export default {
-  async fetch(request, env, ctx) {
-    if (cachedData) { return new Response(cachedData); }
-	const response = new Response('Hello, world!');
-    cachedData = await response.text();
-	return new Response(cachedData, response);
-  }
+	async fetch(request, env, ctx) {
+		if (cachedData) {
+			return new Response(cachedData);
+		}
+		const response = new Response("Hello, world!");
+		cachedData = await response.text();
+		return new Response(cachedData, response);
+	},
 };
 ```
 
@@ -199,7 +202,7 @@ These errors occur when a Worker is uploaded or modified.
 
 ### Validation Errors (10021)
 
-The 10021 error code includes all errors that occur when you attempt to deploy a Worker, and Cloudflare then attempts to load and run the top-level scope (everything that happens before your Worker's [handler](/workers/runtime-apis/handlers/) is invoked). For example, if you attempt to deploy a broken Worker with invalid JavaScript that would throw a `SyntaxError` — Cloudflare will not deploy your Worker.
+The 10021 error code includes all errors that occur when you attempt to deploy a Worker, and Cloudflare then attempts to load and run the top-level scope (everything that happens before your Worker's [handler](/workers/runtime-apis/handlers/) is invoked). For example, if you attempt to deploy a broken Worker with invalid JavaScript that would throw a `SyntaxError` — Cloudflare will not deploy your Worker.
 
 Specific error cases include but are not limited to:
 

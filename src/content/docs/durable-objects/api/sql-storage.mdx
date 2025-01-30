@@ -148,3 +148,57 @@ let now = new Date();
 let bookmark = ctx.storage.getBookmarkForTime(now - 2);
 ctx.storage.onNextSessionRestoreBookmark(bookmark);
 ```
+
+## TypeScript and query results
+
+You can use TypeScript [type parameters](https://www.typescriptlang.org/docs/handbook/2/generics.html#working-with-generic-type-variables) to provide a type for your results, allowing you to benefit from type hints and checks when iterating over the results of a query.
+
+:::caution
+
+Providing a type parameter does _not_ validate that the query result matches your type definition. In TypeScript, properties (fields) that do not exist in your result type will be silently dropped.
+
+:::
+
+Your type must conform to the shape of a TypeScript [Record](https://www.typescriptlang.org/docs/handbook/utility-types.html#recordkeys-type) type representing the name (`string`) of the column and the type of the column. The column type must be a valid `SqlStorageValue`: one of `ArrayBuffer | string | number | null`.
+
+For example, 
+
+```ts
+type User = {
+	id: string;
+	name: string;
+	email_address: string;
+	version: number;
+}
+```
+
+This type can then be passed as the type parameter to a `sql.exec` call:
+
+```ts
+// The type parameter is passed between the "pointy brackets" before the function argument:
+const result = this.ctx.storage.sql.exec<User>("SELECT id, name, email_address, version FROM users WHERE id = ?", [user_id]).one()
+// result will now have a type of "User"
+
+// Alternatively, if you are iterating over results using a cursor
+let cursor = this.sql.exec<User>("SELECT id, name, email_address, version FROM users WHERE id = ?", [user_id])
+for (let row of cursor) {
+	// Each row object will be of type User
+}
+
+// Or, if you are using raw() to convert results into an array, define an array type:
+type UserRow = [
+  id: string,
+  name: string,
+  email_address: string,
+  version: number,
+];
+
+// ... and then pass it as the type argument to the raw() method:
+let cursor = sql.exec("SELECT id, name, email_address, version FROM users WHERE id = ?", [user_id]).raw<UserRow>();
+
+for (let row of cursor) {
+	// row is of type User
+}
+```
+
+You can represent the shape of any result type you wish, including more complex types. If you are performing a JOIN across multiple tables, you can compose a type that reflects the results of your queries.

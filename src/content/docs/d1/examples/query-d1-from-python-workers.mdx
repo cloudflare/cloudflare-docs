@@ -11,6 +11,8 @@ sidebar:
 description: Learn how to query D1 from a Python Worker
 ---
 
+import { WranglerConfig } from "~/components";
+
 The Cloudflare Workers platform supports [multiple languages](/workers/languages/), including TypeScript, JavaScript, Rust and Python. This guide shows you how to query a D1 database from [Python](/workers/languages/python/) and deploy your application globally.
 
 :::note
@@ -31,7 +33,7 @@ If you are new to Cloudflare Workers, refer to the [Get started guide](/workers/
 
 ## Query from Python
 
-This example assumes you have an existing D1 database. To allow your Python Worker to query your database, you first need to create a [binding](/workers/runtime-apis/bindings/) between your Worker and your D1 database and define this in your `wrangler.toml` configuration file.
+This example assumes you have an existing D1 database. To allow your Python Worker to query your database, you first need to create a [binding](/workers/runtime-apis/bindings/) between your Worker and your D1 database and define this in your `wrangler.toml / wrangler.json` file.
 
 You will need the `database_name` and `database_id` for a D1 database. You can use the `wrangler` CLI to create a new database or fetch the ID for an existing database as follows:
 
@@ -55,9 +57,7 @@ npx wrangler d1 info some-existing-db
 
 ### 1. Configure bindings
 
-In your `wrangler.toml` file, create a new `[[d1_databases]]` configuration block and set `database_name` and `database_id` to the name and id (respectively) of the D1 database you want to query:
-
-import { WranglerConfig } from "~/components";
+In your Wrangler file, create a new `[[d1_databases]]` configuration block and set `database_name` and `database_id` to the name and id (respectively) of the D1 database you want to query:
 
 <WranglerConfig>
 
@@ -79,7 +79,7 @@ The value of `binding` is how you will refer to your database from within your W
 
 ### 2. Create your Python Worker
 
-To create a Python Worker, create an empty file at `src/entry.py`, matching the value of `main` in your `wrangler.toml` file with the contents below:
+To create a Python Worker, create an empty file at `src/entry.py`, matching the value of `main` in your Wrangler file with the contents below:
 
 ```python
 from js import Response
@@ -94,7 +94,7 @@ async def on_fetch(request, env):
 
 ```
 
-The value of `binding` in your `wrangler.toml` file exactly must match the name of the variable in your Python code. This example refers to the database via a `DB` binding, and query this binding via `await env.DB.prepare(...)`.
+The value of `binding` in your Wrangler file exactly must match the name of the variable in your Python code. This example refers to the database via a `DB` binding, and query this binding via `await env.DB.prepare(...)`.
 
 You can then deploy your Python Worker directly:
 
@@ -119,8 +119,8 @@ Your Worker will be available at `https://python-and-d1.YOUR_SUBDOMAIN.workers.d
 
 If you receive an error deploying:
 
-- Make sure you have configured your `wrangler.toml` with the `database_id` and `database_name` of a valid D1 database.
-- Ensure `compatibility_flags = ["python_workers"]` is set in your `wrangler.toml`, which is required for Python.
+- Make sure you have configured your `wrangler.toml / wrangler.json` file with the `database_id` and `database_name` of a valid D1 database.
+- Ensure `compatibility_flags = ["python_workers"]` is set in your `wrangler.toml / wrangler.json` file, which is required for Python.
 - Review the [list of error codes](/workers/observability/errors/), and ensure your code does not throw an uncaught exception.
 
 ## Next steps

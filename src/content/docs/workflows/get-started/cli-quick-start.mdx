@@ -7,7 +7,7 @@ sidebar:
 
 ---
 
-import { Render, PackageManagers } from "~/components"
+import { Render, PackageManagers, WranglerConfig } from "~/components"
 
 :::note
 
@@ -45,7 +45,7 @@ npm create cloudflare@latest workflows-starter -- --template "cloudflare/workflo
 This will create a new folder called `workflows-tutorial`, which contains two files:
 
 * `src/index.ts` - this is where your Worker script, including your Workflows definition, is defined.
-* `wrangler.toml` - the configuration for your Workers project and your Workflow.
+* `wrangler.json` - the configuration for your Workers project and your Workflow.
 
 Open the `src/index.ts` file in your text editor. This file contains the following code, which is the most basic instance of a Workflow definition:
 
@@ -169,13 +169,11 @@ Refer to the [events and parameters documentation](/workflows/build/events-and-p
 
 You can [bind to a Workflow](/workers/runtime-apis/bindings/#what-is-a-binding) from any handler in a Workers script, allowing you to programatically trigger and pass parameters to a Workflow instance from your own application code.
 
-To bind a Workflow to a Worker, you need to define a `[[workflows]]` binding in your `wrangler.toml` configuration:
-
-import { WranglerConfig } from "~/components";
+To bind a Workflow to a Worker, you need to define a `[[workflows]]` binding in your Wrangler configuration:
 
 <WranglerConfig>
 
-```toml title="wrangler.toml"
+```toml
 [[workflows]]
 # name of your workflow
 name = "workflows-starter"
@@ -200,7 +198,7 @@ For example, the following Worker will fetch the status of an existing Workflow 
 import { WorkflowEntrypoint, WorkflowStep, WorkflowEvent} from 'cloudflare:workers';
 
 interface Env {
-  // Matches the binding definition in your wrangler.toml
+  // Matches the binding definition in your `wrangler.toml / wrangler.json` file
   MY_WORKFLOW: Workflow;
 }
 

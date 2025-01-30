@@ -4,9 +4,9 @@ sidebar:
   order: 2
 ---
 
-import { Aside } from "~/components";
+import { Aside, WranglerConfig } from "~/components";
 
-The ability to browse websites can be crucial when building workflows with AI. Here, we provide an example where we use Browser Rendering to visit 
+The ability to browse websites can be crucial when building workflows with AI. Here, we provide an example where we use Browser Rendering to visit
 `https://news.ycombinator.com/` and then, using a machine learning model available in [Workers AI](/workers-ai/), extract the first post as JSON with a specified schema.
 
 ## Prerequisites
@@ -30,16 +30,20 @@ npm i zod
 npm i zod-to-json-schema
 ```
 
-3. Activate the nodejs compatibility flag and add your Browser Rendering binding to your new `wrangler.toml` configuration:
+3. Activate the nodejs compatibility flag and add your Browser Rendering binding to your new Wrangler configuration:
 
+<WranglerConfig>
 ```toml
 compatibility_flags = [ "nodejs_compat" ]
 ```
+</WranglerConfig>
 
+<WranglerConfig>
 ```toml
 [browser]
 binding = "MY_BROWSER"
 ```
+</WranglerConfig>
 
 4.  In order to use [Workers AI](/workers-ai/), you need to get your [Account ID and API token](/workers-ai/get-started/rest-api/#1-get-api-token-and-account-id).
 Once you have those, create a [`.dev.vars`](/workers/configuration/environment-variables/#add-environment-variables-via-wrangler) file and set them there:

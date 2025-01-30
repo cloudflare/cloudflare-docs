@@ -40,7 +40,7 @@ resource "cloudflare_snippet_rules" "cookie_snippet_rule" {
 }
 ```
 
-The name of a snippet can only contain the characters `a-z`, `0-9`, and `_` (underscore). The name must be unique in the context of the zone.
+The name of a snippet can only contain the characters `a-z`, `0-9`, and `_` (underscore). The name must be unique in the context of the zone. You cannot change the snippet name after creating the snippet.
 
 All `snippet_name` values in the `cloudflare_snippet_rules` resource must match the names of existing snippets.
 

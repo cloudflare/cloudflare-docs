@@ -3,6 +3,8 @@ import { getEntries } from "astro:content";
 import { reference } from "astro:content";
 import { z } from "astro:schema";
 
+import { Badge } from "@astrojs/starlight/components";
+
 type Props = z.infer<typeof props>;
 
 const props = z.object({
@@ -18,9 +20,7 @@ const data = await getEntries(products);
 	{
 		data.map((product) => (
 			<a href={product.data.product.url} class="no-underline">
-				<span class="ml-1 rounded-full bg-orange-200 px-2 py-0.5 text-xs text-orange-900">
-					{product.data.product.title}
-				</span>
+				<Badge text={product.data.product.title} class="ml-1" />
 			</a>
 		))
 	}
