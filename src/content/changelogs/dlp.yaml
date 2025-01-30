@@ -9,6 +9,10 @@ entries:
     title: Source code confidence levels
     description: |-
       DLP now supports setting a confidence level for [source code profiles](/cloudflare-one/policies/data-loss-prevention/dlp-profiles/predefined-profiles/#source-code).
+  - publish_date: "2025-01-15"
+    title: Payload log match visibility
+    description: |-
+      When viewing decrypted payload log matches, DLP now provides more context by listing multiple DLP matches and the matching DLP profile.
   - publish_date: "2024-11-25"
     title: Profile confidence levels
     description: |-

@@ -49,3 +49,9 @@ For <GlossaryTooltip term="disposition">disposition</GlossaryTooltip>-specific s
 For Email Security Horizon Enterprise customers, detections search would index for a period of 12 months and rotate over to a rolling 12-month period.
 
 For Email Security Horizon Advantage customers, detections search would index for three months and rotate over to a rolling 3-month period.
+
+## Scope of data retained
+
+For messages that are not detected, the body of the message itself is not retained. Only the metadata such as sender, recipient, subject, message_id, and delivery log will be retained. It is also possible to view the messages as the preview image.
+
+For detections, full messages are retained, including attachments, in addition to the metadata described above. The raw message including attachments can be downloaded as an `.eml` file.

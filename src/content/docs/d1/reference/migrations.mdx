@@ -6,6 +6,8 @@ sidebar:
 
 ---
 
+import { WranglerConfig } from "~/components";
+
 Database migrations are a way of versioning your database. Each migration is stored as an `.sql` file in your `migrations` folder. The `migrations` folder is created in your project directory when you create your first migration. This enables you to store and track changes throughout database development.
 
 ## Features
@@ -22,9 +24,7 @@ Every migration file in the `migrations` folder has a specified version number i
 
 By default, migrations are created in the `migrations/` folder in your Worker project directory. Creating migrations will keep a record of applied migrations in the `d1_migrations` table found in your database.
 
-This location and table name can be customized in your `wrangler.toml` file, inside the D1 binding.
-
-import { WranglerConfig } from "~/components";
+This location and table name can be customized in your Wrangler file, inside the D1 binding.
 
 <WranglerConfig>
 

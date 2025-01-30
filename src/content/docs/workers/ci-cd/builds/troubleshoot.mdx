@@ -1,18 +1,61 @@
 ---
 pcx_content_type: troubleshooting
-title: Troubleshooting
-description: Learn about troubleshooting and known issues in Workers Builds.
+title: Troubleshooting builds
+description: Learn how to troubleshoot common and known issues in Workers Builds.
 sidebar:
   order: 9
 ---
 
-Workers Builds provides build logs for every build started. You can view build logs by navigating to your **Worker project** > **Deployments** > **View Build History** > **View Build**.
+This guide explains how to identify and resolve build errors, as well as troubleshoot common issues in the Workers Builds deployment process.
 
-While Workers Builds is in Open Beta, the following issues and limitations may apply:
+To view your build history, go to your Worker project in the Cloudflare dashboard, select **Deployment**, select **View Build History** at the bottom of the page, and select the build you want to view. To retry a build, select the ellipses next to the build and select **Retry build**. Alternatively, you can select **Retry build** on the Build Details page.
 
-- **Worker name:** The Worker name in your Cloudflare dashboard and the Worker name written in the associated `wrangler.toml` must be the same. If they do not match, the deploy will fail, and you must update either the file or dashboard.
-- **Updating API tokens:** If you have updated or deleted an API Token, the changes may not be reflected in the Build Configuration settings on the dashboard. If you are encountering authentication errors after updating your build's API Token, we recommend creating a new API Token for the build.
-- **Failed builds stuck in in-progress:** If your build has failed but the status still show that the build is "In-progress", you should cancel the build, review your build configuration, then retry the build.
-- **Git integration:** If you are running into errors associated with your git integration, you can try [removing access](/workers/ci-cd/builds/git-integration/#removing-access) to your GitHub or GitLab from Cloudflare, then [reinstalling the git integration](/workers/ci-cd/builds/git-integration/#reinstall-a-git-installation).
+## Known issues or limitations
 
-If you discover additional issues or would like to provide feedback, please notify us in the [Discord](https://discord.com/channels/595317990191398933/1052656806058528849).
+Here are some common build errors that may surface in the build logs or general issues and how you can resolve them.
+
+### Workers name requirement
+
+`✘ [ERROR] The name in your wrangler.toml file (<Worker name>) must match the name of your Worker. Please update the name field in your wrangler.toml file.`
+
+When connecting a Git repository to your Workers project, the specified name for the Worker on the Cloudflare dashboard must match the `name` argument in the wrangler.toml file located in the specified root directory. If it does not match, update the name field in your wrangler.toml file to match the name of the Worker on the dashboard.
+
+The build system uses the `name` argument in the wrangler.toml to determine which Worker to deploy to Cloudflare's global network. This requirement ensures consistency between the Worker's name on the dashboard and the deployed Worker.
+
+:::note
+This does not apply to [Wrangler Environments](/workers/wrangler/environments/) if the Worker name before the `-<env_name>` suffix matches the name in wrangler.toml.
+
+For example, a Worker named `my-worker-staging` on the dashboard can be deployed from a repository that contains a wrangler.toml with the arguments `name = my-worker` and `[env.staging]` using the deploy command `npx wrangler deploy --env staging`.
+:::
+
+### Missing wrangler.toml
+
+`✘ [ERROR] Missing entry-point: The entry-point should be specified via the command line (e.g. wrangler deploy path/to/script) or the main config field.`
+
+If you see this error, a wrangler.toml is likely missing from the root directory. Navigate to **Settings** > **Build** > **Build Configuration** to update the root directory, or add a [wrangler.toml](/workers/wrangler/configuration/) to the specified directory.
+
+### Incorrect account_id
+
+`Could not route to /client/v4/accounts/<Account ID>/workers/services/<Worker name>, perhaps your object identifier is invalid? [code: 7003]`
+
+If you see this error, the wrangler.toml likely has an `account_id` for a different account. Remove the `account_id` argument or update it with your account's `account_id`, available in **Workers & Pages Overview** under **Account Details**.
+
+### Stale API token
+
+`	Failed: The build token selected for this build has been deleted or rolled and cannot be used for this build. Please update your build token in the Worker Builds settings and retry the build.`
+
+The API Token dropdown in Build Configuration settings may show stale tokens that were edited, deleted, or rolled. If you encounter an error due to a stale token, create a new API Token and select it for the build.
+
+### Build timed out
+
+`Build was timed out`
+
+There is a maximum build duration of 20 minutes. If a build exceeds this time, then the build will be terminated and the above error log is shown. For more details, see [Workers Builds limits](/workers/ci-cd/builds/limits-and-pricing/).
+
+### Git integration issues
+
+If you are running into errors associated with your Git integration, you can try removing access to your [GitHub](/workers/ci-cd/builds/git-integration/github-integration/#removing-access) or [GitLab](/workers/ci-cd/builds/git-integration/gitlab-integration/#removing-access) integration from Cloudflare, then reinstalling the [GitHub](/workers/ci-cd/builds/git-integration/github-integration/#reinstall-a-git-integration) or [GitLab](/workers/ci-cd/builds/git-integration/gitlab-integration/#reinstall-a-git-integration) integration.
+
+## For additional support
+
+If you discover additional issues or would like to provide feedback, reach out to us in the [Cloudflare Developers Discord](https://discord.com/channels/595317990191398933/1052656806058528849).

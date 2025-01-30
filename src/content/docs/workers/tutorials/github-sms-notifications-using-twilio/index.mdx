@@ -8,7 +8,7 @@ languages:
   - JavaScript
 ---
 
-import { Render, PackageManagers } from "~/components";
+import { Render, PackageManagers, WranglerConfig } from "~/components";
 
 In this tutorial, you will learn to build an SMS notification system on Workers to receive updates on a GitHub repository. Your Worker will send you a text update using Twilio when there is new activity on your repository.
 
@@ -153,9 +153,7 @@ To make this work, you need to use [`wrangler secret put`](/workers/wrangler/com
 npx wrangler secret put GITHUB_SECRET_TOKEN
 ```
 
-Add the nodejs_compat flag to your `wrangler.toml` file:
-
-import { WranglerConfig } from "~/components";
+Add the nodejs_compat flag to your Wrangler file:
 
 <WranglerConfig>
 

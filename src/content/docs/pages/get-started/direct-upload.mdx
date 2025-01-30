@@ -10,7 +10,13 @@ description: Upload your prebuilt assets to Pages and deploy them via the
 
 import { Render } from "~/components";
 
-Direct Upload enables you to upload your prebuilt assets to Pages and deploy them to the Cloudflare global network. This guide will instruct you how to upload your assets using Wrangler or the drag and drop method.
+Direct Upload enables you to upload your prebuilt assets to Pages and deploy them to the Cloudflare global network. You should choose Direct Upload over Git integration if you want to [integrate your own build platform](/pages/how-to/use-direct-upload-with-continuous-integration/) or upload from your local computer.
+
+This guide will instruct you how to upload your assets using Wrangler or the drag and drop method.
+
+:::caution[You cannot switch to Git integration later]
+If you choose Direct Upload, you cannot switch to [Git integration](/pages/get-started/git-integration/) later. You will have to create a new project with Git integration to use automatic deployments.
+:::
 
 ## Prerequisites
 

@@ -2,6 +2,8 @@
 {}
 ---
 
+import { WranglerConfig } from "~/components";
+
 To configure Hyperdrive, you will need:
 
 - The IP address (or hostname) and port of your database.
@@ -29,9 +31,7 @@ Hyperdrive will attempt to connect to your database with the provided credential
 
 :::
 
-This command outputs a binding for `wrangler.toml`:
-
-import { WranglerConfig } from "~/components";
+This command outputs a binding for the `wrangler.toml / wrangler.json` file:
 
 <WranglerConfig>
 
@@ -61,7 +61,7 @@ Copy the below Worker code, which passes the connection string generated from `e
 import postgres from "postgres";
 
 export interface Env {
-	// If you set another name in wrangler.toml as the value for 'binding',
+	// If you set another name in the Wrangler config file as the value for 'binding',
 	// replace "HYPERDRIVE" with the variable name you defined.
 	HYPERDRIVE: Hyperdrive;
 }

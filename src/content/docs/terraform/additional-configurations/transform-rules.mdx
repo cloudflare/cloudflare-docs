@@ -33,6 +33,8 @@ For more information on Transform Rules, refer to [Transform Rules](/rules/trans
 
 The following example creates a Rewrite URL Rule that rewrites requests for `example.com/old-folder` to `example.com/new-folder`:
 
+<Render file="v4-code-snippets" />
+
 ```tf
 resource "cloudflare_ruleset" "transform_url_rewrite" {
   zone_id     = "<ZONE_ID>"
@@ -68,6 +70,8 @@ The following configuration example performs the following adjustments to HTTP r
 - Adds a `my-header-1` header to the request with a static value.
 - Adds a `my-header-2` header to the request with a dynamic value defined by an expression.
 - Deletes the `existing-header` header from the request, if it exists.
+
+<Render file="v4-code-snippets" />
 
 ```tf
 resource "cloudflare_ruleset" "transform_modify_request_headers" {
@@ -116,6 +120,8 @@ The following configuration example performs the following adjustments to HTTP r
 - Adds a `my-header-1` header to the response with a static value.
 - Adds a `my-header-2` header to the response with a dynamic value defined by an expression.
 - Deletes the `existing-header` header from the response, if it exists.
+
+<Render file="v4-code-snippets" />
 
 ```tf
 resource "cloudflare_ruleset" "transform_modify_response_headers" {

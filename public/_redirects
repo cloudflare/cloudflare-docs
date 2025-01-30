@@ -290,7 +290,7 @@
 /d1/reference/client-api/ /d1/worker-api/ 301
 /d1/reference/environments/ /d1/configuration/environments/ 301
 /d1/reference/metrics-analytics/ /d1/observability/metrics-analytics/ 301
-/d1/reference/wrangler-commands/ / /d1/wrangler-commands/ 301
+/d1/reference/wrangler-commands/ /d1/wrangler-commands/ 301
 /d1/how-to/ /d1/best-practices/ 301
 /d1/how-to/query-databases/ /d1/best-practices/query-d1/ 301
 /d1/how-to/using-indexes/ /d1/best-practices/use-indexes/ 301
@@ -399,6 +399,7 @@
 /durable-objects/api/transactional-storage-api/ /durable-objects/api/storage-api/ 301
 /durable-objects/platform/changelog/ /durable-objects/changelog/ 301
 /durable-objects/glossary/ /durable-objects/reference/glossary/ 301
+/durable-objects/get-started/walkthrough/ /durable-objects/get-started/tutorial/ 301
 
 # email-routing
 /email-routing/enable-email-routing/ /email-routing/get-started/enable-email-routing/ 301
@@ -448,7 +449,7 @@
 /fundamentals/get-started/how-cloudflare-works/ /fundamentals/concepts/how-cloudflare-works/ 301
 /fundamentals/get-started/cloudflare-cookies/ /fundamentals/reference/policies-compliances/cloudflare-cookies/ 301
 /fundamentals/get-started/google-analytics/ /fundamentals/reference/google-analytics/ 301
-/fundamentals/get-started/http-request-headers/ /fundamentals/reference/http-request-headers/ 301
+/fundamentals/get-started/http-request-headers/ /fundamentals/reference/http-headers/ 301
 /fundamentals/get-started/network-ports/ /fundamentals/reference/network-ports/ 301
 /fundamentals/get-started/basic-tasks/improve-seo/ /fundamentals/basic-tasks/improve-seo/ 301
 /fundamentals/get-started/basic-tasks/allow-cloudflare-ip-addresses/ /fundamentals/concepts/cloudflare-ip-addresses/ 301
@@ -463,6 +464,7 @@
 /fundamentals/internet/ /fundamentals/concepts/the-internet/ 301
 /fundamentals/reference/developer-spotlight/ /developer-spotlight/ 301
 /fundamentals/reference/the-internet/ /fundamentals/concepts/the-internet/ 301
+/fundamentals/reference/http-request-headers/ /fundamentals/reference/http-headers/ 301
 /fundamentals/security/browser-integrity-check/ /waf/tools/browser-integrity-check/ 301
 /fundamentals/signed-exchanges/ /speed/optimization/other/signed-exchanges/ 301
 /fundamentals/signed-exchanges/amp-real-ulr/ /speed/optimization/other/amp-real-url/ 301
@@ -1563,6 +1565,7 @@
 /workers-ai/configuration/workers-ai-sdk/ /workers-ai/configuration/bindings/ 301
 /workers-ai/tutorials/creating-a-recommendation-api/ /developer-spotlight/tutorials/creating-a-recommendation-api/ 301
 /workers/observability/baselime-integration/ /workers/observability/integrations/baselime-integration/ 301
+/workers-ai/tutorials/image-generator-flux/ /workers-ai/tutorials/image-generation-playground/ 301
 
 # workers KV
 /kv/platform/environments/ /kv/reference/environments/ 301

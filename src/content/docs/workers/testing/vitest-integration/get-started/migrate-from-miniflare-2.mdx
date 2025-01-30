@@ -36,7 +36,7 @@ npm install --save-dev @cloudflare/vitest-pool-workers
 
 ## Update your Vitest configuration file
 
-After installing the Workers Vitest configuration, update your Vitest configuration file to use the pool instead. Most Miniflare configuration previously specified `environmentOptions` can be moved to `poolOptions.workers.miniflare` instead. Refer to [Miniflare's `WorkerOptions` interface](https://github.com/cloudflare/workers-sdk/blob/main/packages/miniflare/README.md#interface-workeroptions) for supported options and the [Miniflare version 2 to 3 migration guide](https://miniflare.dev/get-started/migrating#api-changes) for more information. If you relied on configuration stored in a `wrangler.toml` file, set `wrangler.configPath` too.
+After installing the Workers Vitest configuration, update your Vitest configuration file to use the pool instead. Most Miniflare configuration previously specified `environmentOptions` can be moved to `poolOptions.workers.miniflare` instead. Refer to [Miniflare's `WorkerOptions` interface](https://github.com/cloudflare/workers-sdk/blob/main/packages/miniflare/README.md#interface-workeroptions) for supported options and the [Miniflare version 2 to 3 migration guide](https://miniflare.dev/get-started/migrating#api-changes) for more information. If you relied on configuration stored in a Wrangler file, set `wrangler.configPath` too.
 
 ```diff
 + import { defineWorkersConfig } from "@cloudflare/vitest-pool-workers/config";

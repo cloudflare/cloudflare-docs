@@ -9,7 +9,7 @@ head:
 description: Deploy your first Cloudflare Workers AI project using the CLI.
 ---
 
-import { Render, PackageManagers } from "~/components";
+import { Render, PackageManagers, WranglerConfig } from "~/components";
 
 This guide will instruct you through setting up and deploying your first Workers AI project. You will use [Workers](/workers/), a Workers AI binding, and a large language model (LLM) to deploy your first AI-powered application on the Cloudflare global network.
 
@@ -38,7 +38,7 @@ Running `npm create cloudflare@latest` will prompt you to install the [`create-c
 This will create a new `hello-ai` directory. Your new `hello-ai` directory will include:
 
 - A `"Hello World"` [Worker](/workers/get-started/guide/#3-write-code) at `src/index.ts`.
-- A [`wrangler.toml`](/workers/wrangler/configuration/) configuration file.
+- A [`wrangler.json`](/workers/wrangler/configuration/) configuration file.
 
 Go to your application directory:
 
@@ -50,13 +50,11 @@ cd hello-ai
 
 You must create an AI binding for your Worker to connect to Workers AI. [Bindings](/workers/runtime-apis/bindings/) allow your Workers to interact with resources, like Workers AI, on the Cloudflare Developer Platform.
 
-To bind Workers AI to your Worker, add the following to the end of your `wrangler.toml` file:
-
-import { WranglerConfig } from "~/components";
+To bind Workers AI to your Worker, add the following to the end of your Wrangler file:
 
 <WranglerConfig>
 
-```toml title="wrangler.toml"
+```toml
 [ai]
 binding = "AI"
 ```
@@ -77,7 +75,7 @@ Update the `index.ts` file in your `hello-ai` application directory with the fol
 
 ```typescript title="src/index.ts"
 export interface Env {
-	// If you set another name in wrangler.toml as the value for 'binding',
+	// If you set another name in the Wrangler config file as the value for 'binding',
 	// replace "AI" with the variable name you defined.
 	AI: Ai;
 }

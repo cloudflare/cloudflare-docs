@@ -78,7 +78,7 @@ The Cloudflare API supports the following commands for monitors. Examples are gi
 
 The following table summarizes the different types of monitors available in Cloudflare Load Balancing, their monitoring types, and how each health check process evaluates the success criteria to determine endpoint health:
 
-| Monitor type | Monitoring type | Description | Health check process | Sucess critera |
+| Monitor type | Monitoring type | Description | Health check process | Success criteria |
 | ------------ | -------------- | ----------- | -------------------- | -------------- |
 | HTTP/HTTPS   | Public and private | Used for HTTP and HTTPS endpoints with specific protocol attributes. | The probe is configured with settings and success criteria such as Method, Simulate Zone, Follow Redirects, Request Headers, and Response Body. The probe then evaluates the configured success criteria using the HTTP protocol. Throughout the configured timeout period, the TCP connection is kept active using [keep-alives](/fundamentals/reference/tcp-connections/#tcp-connections-and-keep-alives), even if no response is received. | Success is based on meeting the configured HTTP success criteria. No response within the configured timeout and retries is considered unhealthy. |  
 | TCP | Public and private | Checks TCP connectivity by attempting to open a connection to the endpoint. | The monitor sends a TCP SYN message to the specified port. A successful health check requires receiving a SYN/ACK message to establish the connection. The connection is closed by sending a FIN or RST packet, or by receiving a FIN packet from the endpoint. | Failure to establish a TCP connection within the configured timeout and retries is considered unhealthy. | 
