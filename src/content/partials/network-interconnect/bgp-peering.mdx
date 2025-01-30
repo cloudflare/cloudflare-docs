@@ -26,10 +26,12 @@ With this functionality, customers can:
 For both Magic WAN and Magic Transit use cases, BGP peering is with the Magic networking routing table (as opposed to peering with the Cloudflare Internet global network).
 
 The Magic networking routing table is a virtual network overlay, private to your account, that spans all Cloudflare data centers globally. This overlay network provides:
+
 - Magic Transit packet delivery for DoS and Magic Firewall filtered Internet traffic, from the entry data center where the traffic ingressed, to your publicly addressed edge/border network via tunnels (GRE/IPsec) or interconnect (CNI).
 - Magic WAN packet transport between Magic tunnels, interconnects, Cloudflare Load Balancer, and Zero Trust connections such as WARP Client, Remote Browser Isolation, Access, and Gateway.
 
 The Magic routing table supports IPv4 routes to:
+
 - RFC1918 address space
 - BYOIP public address space which you have onboarded to Cloudflare Magic Transit.
 
