@@ -1,6 +1,7 @@
 ---
 pcx_content_type: concept
 title: Static assets
+description: Host static assets on Cloudflare's global network and deliver faster load times worldwide with Workers for Platforms.
 ---
 Workers for Platforms lets you deploy front-end applications at scale. By hosting static assets on Cloudflare's global network, you can deliver faster load times worldwide and eliminate the need for external infrastructure. You can also combine these static assets with dynamic logic in Cloudflare Workers, providing a full-stack experience for your customers.
 
@@ -48,7 +49,7 @@ Before sending any file data, you need to tell Cloudflare which files you intend
 * A hash (32-hex characters) representing the file contents
 * The file size in bytes
 
-**Example manifest (JSON):**
+#### Example manifest (JSON)
 
 ```json
 {
@@ -75,7 +76,7 @@ Path Parameters:
 
 In the request body, include a JSON object listing each file path along with its hash and size. This helps Cloudflare identify which files you intend to upload and allows Cloudflare to check if any of them are already stored.
 
-**Sample request:**
+#### Sample request
 
 ```bash
 curl -X POST \
@@ -96,11 +97,11 @@ curl -X POST \
   }'
 ```
 
-**Generating the hash**
+#### Generating the hash
 
 You can compute a SHA-256 digest of the file contents, then truncate or otherwise represent it consistently as a 32-hex-character string. Make sure to do it the same way each time so Cloudflare can reliably match files across uploads.
 
-**API Response**
+#### API Response
 
 If all the files are already stored on Cloudflare, the response will only return the JWT token. If new or updated files are needed, the response will return:
 
@@ -117,7 +118,7 @@ If the response to the Upload Session API returns `buckets`, that means you have
 
 Use the [Workers Assets Upload API](https://developers.cloudflare.com/api/resources/workers/subresources/assets/subresources/upload/) to transmit the raw file bytes in base64-encoded format for any missing or changed files. Once uploaded, Cloudflare will store these files so they can then be attached to a User Worker.
 
-**API Request Authentication**
+#### API Request Authentication
 
 Unlike most Cloudflare API calls that use an account-wide API token in the Authorization header, uploading file contents requires using the short-lived JWT token returned in the `jwt` field of the `assets-upload-session` response.
 
@@ -129,13 +130,13 @@ Authorization: Bearer <upload-session-token>
 
 This token is valid for one hour and must be supplied for each upload request to the Workers Assets Upload API.
 
-**File fields (multipart/form-data)**
+#### File fields (multipart/form-data)
 You must send the files as multipart/form-data with base64-encoded content:
 
 * Field name: The file hash (for example, `36b8be012ee77df5f269b11b975611d3`)
 * Field value: A Base64-encoded string of the file's raw bytes
 
-**Example: Uploading multiple files within a single bucket**
+#### Example: Uploading multiple files within a single bucket
 
 If your Upload Session response listed a single "bucket" containing two file hashes:
 
@@ -185,7 +186,7 @@ Now that Cloudflare has all the files it needs (from the previous upload steps),
 
 You can also specify any optional settings under the `assets.config` field to customize how your files are served (for example, to handle trailing slashes in HTML paths).
 
-**API request example:**
+#### API request example
 
 ```bash
 curl -X PUT \
