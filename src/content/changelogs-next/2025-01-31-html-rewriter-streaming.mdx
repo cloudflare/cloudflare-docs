@@ -1,19 +1,25 @@
 ---
-title: Rewrite HTML with streaming content
+title: Transform HTML quickly with streaming content
 description: HTMLRewiter now supports streamed content for more efficient replacement of HTML elements
 products:
   - workers
-date: 2025-01-31T10:00:00Z
+date: 2025-01-31T01:00:00Z
 ---
 
 import { Render, TypeScriptExample } from "~/components";
 
-[`HTMLRewriter`](/workers/runtime-apis/html-rewriter) now supports replacing HTML with content from a stream.
-[`Response`](/workers/runtime-apis/response/) and [`ReadableStream`](/workers/runtime-apis/streams/readablestream/) values can now
-be passed as [`Content`](/workers/runtime-apis/html-rewriter/#global-types) into methods duch as
-`replace`, `append`, and `prepend`.
+You can now transform HTML elements with streamed content using [`HTMLRewriter`](/workers/runtime-apis/html-rewriter).
 
-This allows you to process HTML more efficiently, as content does not have to be loaded into memory before replacements are made.
+Methods like `replace`, `append`, and `prepend` now accept [`Response`](/workers/runtime-apis/response/) and [`ReadableStream`](/workers/runtime-apis/streams/readablestream/)
+values as [`Content`](/workers/runtime-apis/html-rewriter/#global-types).
+
+This can be helpful in a variety of situations. For instance, you may have a Worker in front of an origin,
+and want to replace an element with content from a different source. Prior to this change, if you wanted
+to replace an element with content from an upstream URL, you would have to load all of the content and convert
+it into a string before replacing the element. This slowed down overall response times.
+
+Now, you can pass the `Response` object directly into the `replace` method, and HTMLRewriter will immediately
+start replacing the content as it is streamed in. This makes responses faster.
 
 <TypeScriptExample filename="index.ts">
 ```ts
