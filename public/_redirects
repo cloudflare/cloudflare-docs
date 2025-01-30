@@ -399,6 +399,7 @@
 /durable-objects/api/transactional-storage-api/ /durable-objects/api/storage-api/ 301
 /durable-objects/platform/changelog/ /durable-objects/changelog/ 301
 /durable-objects/glossary/ /durable-objects/reference/glossary/ 301
+/durable-objects/get-started/walkthrough/ /durable-objects/get-started/tutorial/ 301
 
 # email-routing
 /email-routing/enable-email-routing/ /email-routing/get-started/enable-email-routing/ 301
