@@ -1,0 +1,25 @@
+---
+title: AI Gateway Introduces New Worker Binding Methods
+description: New Worker binding methods, enhancing integration capabilities for developers.
+products:
+  - ai-gateway
+date: 2025-01-26T14:00:00Z
+---
+
+Cloudflare's AI Gateway has released new Worker binding methods, enhancing integration capabilities for developers. These methods enable more streamlined interactions between Workers and AI Gateway.
+
+To utilize these features, you need to add an AI binding to your Worker. In your `wrangler.toml` or `wrangler.json` file, include the following:
+
+![Add an AI binding to your Worker.](~/assets/images/ai-gateway/add-binding.png)
+
+With the new AI Gateway binding methods, you can now:
+
+- Send feedback and update metadata with `patchLog`.
+- Retrieve detailed log information using `getLog`.
+- Execute universal requests to any AI Gateway provider with `run`.
+
+For example, to send feedback and update metadata using patchLog:
+
+![Send feedback and update metadata using patchLog:](~/assets/images/ai-gateway/send-feedback.png)
+
+For detailed setup instructions, see our [AI Gateway Binding methods documentation](/ai-gateway/integrations/worker-binding-methods/).
