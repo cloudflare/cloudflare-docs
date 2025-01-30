@@ -42,6 +42,21 @@ The second expression uses the `http.request.uri.path` field, combined with the 
 
 Because the [action](/ruleset-engine/rules-language/actions/) for your rule is *Block*, only requests that present a valid client certificate can access the specified hosts.
 
+For enhanced security, we recommend validating the SHA-256 certificate hash alongside the verified certificate field. This ensures that only requests presenting a valid client certificate with a specific fingerprint are allowed.
+
+You can implement this by using the following expression:
+`not (cf.tls_client_auth.cert_verified and cf.tls_client_auth.cert_fingerprint_sha256 eq "253E08C1AB67EB7630C61734D377D75D5DCCDE2F6E69986C221D66E848B64321")` 
+
+To retrieve the SHA-256 fingerprint of your client certificate, run the following OpenSSL command:
+
+`openssl x509 -noout -fingerprint -sha256 -inform pem -in mtls.crt | cut -d "=" -f 2 | tr -d ':'`
+
+Example output:
+
+```
+253E08C1AB67EB7630C61734D377D75D5DCCDE2F6E69986C221D66E848B64321
+```
+
 ### Check for revoked certificates
 
 To check for [revoked client certificates](/ssl/client-certificates/revoke-client-certificate/), you can either add a new mTLS rule or add a new expression to the [default rule](#expression-builder). To check for revoked certificates, you must use the Expression Builder.
