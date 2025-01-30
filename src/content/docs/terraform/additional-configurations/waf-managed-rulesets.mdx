@@ -36,6 +36,8 @@ For more information on WAF Managed Rules, refer to [WAF Managed Rules](/waf/man
 
 The following example deploys two managed rulesets to the zone with ID `<ZONE_ID>` using Terraform, using a `cloudflare_ruleset` resource with two rules that execute the managed rulesets.
 
+<Render file="v4-code-snippets" />
+
 ```tf
 # Configure a ruleset at the zone level for the "http_request_firewall_managed" phase
 resource "cloudflare_ruleset" "zone_level_managed_waf" {
@@ -80,6 +82,8 @@ resource "cloudflare_ruleset" "zone_level_managed_waf" {
 
 The following example deploys two managed rulesets to the account with ID `<ACCOUNT_ID>` using Terraform, using a `cloudflare_ruleset` resource with two rules that execute the managed rulesets for two hostnames belonging to Enterprise zones.
 
+<Render file="v4-code-snippets" />
+
 ```tf
 resource "cloudflare_ruleset" "account_level_managed_waf" {
   account_id  = "<ACCOUNT_ID>"
@@ -122,6 +126,8 @@ The following example adds two [skip rules](/waf/managed-rules/waf-exceptions/) 
 - The second rule will skip the execution of two rules belonging to the Cloudflare Managed Ruleset for specific URLs, according to the rule expression.
 
 Add the two skip rules to the `cloudflare_ruleset` resource before the rule that deploys the Cloudflare Managed Ruleset:
+
+<Render file="v4-code-snippets" />
 
 ```tf null {4-13,15-27}
 resource "cloudflare_ruleset" "zone_level_managed_waf" {
@@ -184,6 +190,8 @@ The following example adds three [overrides](/ruleset-engine/managed-rulesets/ov
 
 The following configuration includes the three overrides in the rule that executes the Cloudflare Managed Ruleset:
 
+<Render file="v4-code-snippets" />
+
 ```tf null {9-24}
   # (...)
 
@@ -223,6 +231,8 @@ This example enables [payload logging](/waf/managed-rules/payload-logging/) for 
 
 Building upon the rule that deploys the Cloudflare Managed Ruleset, the following rule configuration adds the `matched_data` object with the public key used to encrypt the payload:
 
+<Render file="v4-code-snippets" />
+
 ```tf null {9-11}
   # (...)
 
@@ -261,6 +271,8 @@ The following example rule of a `cloudflare_ruleset` Terraform resource performs
 - Sets the OWASP paranoia level to _PL2_.
 - Sets the score threshold to `60` (_Low_).
 - Sets the ruleset action to `log`.
+
+<Render file="v4-code-snippets" />
 
 ```tf null {8-25}
   # (...)

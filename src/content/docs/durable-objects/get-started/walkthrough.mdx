@@ -5,7 +5,7 @@ sidebar:
   order: 1
 ---
 
-import { Render, TabItem, Tabs, PackageManagers } from "~/components";
+import { Render, TabItem, Tabs, PackageManagers, WranglerConfig } from "~/components";
 
 This guide will instruct you through:
 
@@ -49,7 +49,7 @@ Running `create cloudflare@latest` will install [Wrangler](/workers/wrangler/ins
 	}}
 />
 
-This will create a new directory, which will include either a `src/index.js` or `src/index.ts` file to write your code and a [`wrangler.toml`](/workers/wrangler/configuration/) configuration file.
+This will create a new directory, which will include either a `src/index.js` or `src/index.ts` file to write your code and a [`wrangler.json`](/workers/wrangler/configuration/) configuration file.
 
 Move into your new directory:
 
@@ -174,9 +174,7 @@ export default {
 
 ## 5. Configure Durable Object bindings
 
-To allow a Worker to invoke methods on a Durable Object, the Worker must have a [Durable Object binding](/workers/runtime-apis/bindings/) in the project's [`wrangler.toml`](/workers/wrangler/configuration/#durable-objects) file. The binding is configured to use a particular Durable Object class.
-
-import { WranglerConfig } from "~/components";
+To allow a Worker to invoke methods on a Durable Object, the Worker must have a [Durable Object binding](/workers/runtime-apis/bindings/) in the project's [`wrangler.toml / wrangler.json` file](/workers/wrangler/configuration/#durable-objects). The binding is configured to use a particular Durable Object class.
 
 <WranglerConfig>
 
@@ -201,9 +199,9 @@ Refer to [Wrangler Configuration](/workers/wrangler/configuration/#durable-objec
 
 A migration is a mapping process from a class name to a runtime state. You perform a migration when creating a new Durable Object class, or when renaming, deleting or transferring an existing Durable Object class.
 
-Migrations are performed through the `[[migrations]]` configurations key in your `wrangler.toml` file.
+Migrations are performed through the `[[migrations]]` configurations key in your Wrangler file.
 
-The Durable Object migration to create a new Durable Object class will look like the following in your Worker's `wrangler.toml` file:
+The Durable Object migration to create a new Durable Object class will look like the following in your Worker's Wrangler file:
 
 
 
@@ -227,7 +225,7 @@ New beta version of Durable Objects is available where each Durable Object has a
 
 A Durable Object class can only have a single storage type, which cannot be changed after the Durable Object class is created.
 
-To configure SQL storage and API, replace `new_classes` with `new_sqlite_classes` in your Worker's `wrangler.toml` file:
+To configure SQL storage and API, replace `new_classes` with `new_sqlite_classes` in your Worker's Wrangler file:
 
 
 

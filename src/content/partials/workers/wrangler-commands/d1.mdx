@@ -6,7 +6,7 @@ import { Render, AnchorHeading, Type, MetaInfo } from "~/components";
 
 <AnchorHeading title="`create`" slug="d1-create" depth={3} />
 
-Creates a new D1 database, and provides the binding and UUID that you will put in your `wrangler.toml` file.
+Creates a new D1 database, and provides the binding and UUID that you will put in your Wrangler file.
 
 ```txt
 wrangler d1 create <DATABASE_NAME> [OPTIONS]
@@ -86,7 +86,7 @@ You must provide either `--command` or `--file` for this command to run successf
 - `--json` <Type text="boolean" /> <MetaInfo text="optional" />
   - Return output as JSON rather than a table.
 - `--preview` <Type text="boolean" /> <MetaInfo text="optional" />
-  - Execute commands/files against a preview D1 database (as defined by `preview_database_id` in [Wrangler.toml](/workers/wrangler/configuration/#d1-databases)).
+  - Execute commands/files against a preview D1 database (as defined by `preview_database_id` in the [`wrangler.toml / wrangler.json` file](/workers/wrangler/configuration/#d1-databases)).
 - `--batch-size` <Type text="number" /> <MetaInfo text="optional" />
   - Number of queries to send in a single batch.
 
@@ -271,7 +271,7 @@ wrangler d1 migrations list <DATABASE_NAME> [OPTIONS]
 - `--persist-to` <Type text="string" /> <MetaInfo text="optional" />
   - Specify directory to use for local persistence (for use in combination with `--local`).
 - `--preview` <Type text="boolean" /> <MetaInfo text="optional" />
-  - Show the list of unapplied migration files on your preview D1 database (as defined by `preview_database_id` in [`wrangler.toml`](/workers/wrangler/configuration/#d1-databases)).
+  - Show the list of unapplied migration files on your preview D1 database (as defined by `preview_database_id` in the [`wrangler.toml / wrangler.json` file](/workers/wrangler/configuration/#d1-databases)).
 
 <AnchorHeading
 	title="`migrations apply`"
@@ -304,6 +304,6 @@ wrangler d1 migrations apply <DATABASE_NAME> [OPTIONS]
 - `--persist-to` <Type text="string" /> <MetaInfo text="optional" />
   - Specify directory to use for local persistence (for use in combination with `--local`).
 - `--preview` <Type text="boolean" /> <MetaInfo text="optional" />
-  - Execute any unapplied migrations on your preview D1 database (as defined by `preview_database_id` in [`wrangler.toml`](/workers/wrangler/configuration/#d1-databases)).
+  - Execute any unapplied migrations on your preview D1 database (as defined by `preview_database_id` in the [`wrangler.toml / wrangler.json` file](/workers/wrangler/configuration/#d1-databases)).
 - `--batch-size` <Type text="number" /> <MetaInfo text="optional" />
   - Number of queries to send in a single batch.

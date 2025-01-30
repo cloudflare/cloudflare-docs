@@ -363,7 +363,7 @@ Now that you have your authentication system in place, create a Durable Object t
 - Handles multiple interview sessions efficiently without performance issues.
 - Creates a dedicated instance for each user, giving them their own isolated environment.
 
-First, you will need to configure the Durable Object in `wrangler.toml` file. Add the following configuration:
+First, you will need to configure the Durable Object in Wrangler file. Add the following configuration:
 
 ```toml title="wrangler.toml"
 [[durable_objects.bindings]]
@@ -735,36 +735,36 @@ export class InterviewDatabaseService {
 		// ... previous queries ...
 
 		INSERT_INTERVIEW: `
-      INSERT INTO ${CONFIG.database.tables.interviews} 
+      INSERT INTO ${CONFIG.database.tables.interviews}
       (interviewId, title, skills, status, createdAt, updatedAt)
       VALUES (?, ?, ?, ?, ?, ?)
     `,
 
 		GET_ALL_INTERVIEWS: `
-      SELECT 
-        interviewId, 
-        title, 
-        skills, 
-        createdAt, 
-        updatedAt, 
-        status 
-      FROM ${CONFIG.database.tables.interviews} 
+      SELECT
+        interviewId,
+        title,
+        skills,
+        createdAt,
+        updatedAt,
+        status
+      FROM ${CONFIG.database.tables.interviews}
       ORDER BY createdAt DESC
     `,
 
 		INSERT_MESSAGE: `
-      INSERT INTO ${CONFIG.database.tables.messages} 
+      INSERT INTO ${CONFIG.database.tables.messages}
       (messageId, interviewId, role, content, timestamp)
       VALUES (?, ?, ?, ?, ?)
     `,
 
 		GET_INTERVIEW: `
-      SELECT 
-        i.interviewId, 
-        i.title, 
-        i.skills, 
-        i.status, 
-        i.createdAt, 
+      SELECT
+        i.interviewId,
+        i.title,
+        i.skills,
+        i.status,
+        i.createdAt,
         i.updatedAt,
         COALESCE(
           json_group_array(
@@ -1197,7 +1197,7 @@ Your `handleBinaryAudio` method currently logs when it receives audio data. Next
 
 Now that audio processing pipeline is set up, you will now integrate Workers AI's Whisper model for speech-to-text transcription.
 
-Configure the Worker AI binding in your `wrangler.toml` file by adding:
+Configure the Worker AI binding in your Wrangler file by adding:
 
 ```toml
 # ... previous configuration ...

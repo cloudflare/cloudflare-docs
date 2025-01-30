@@ -5,7 +5,7 @@ sidebar:
   order: 3
 ---
 
-import { TabItem, Tabs, Render } from "~/components";
+import { TabItem, Tabs, Render, WranglerConfig } from "~/components";
 
 Hyperdrive supports PostgreSQL and PostgreSQL-compatible databases, [popular drivers](#supported-drivers) and Object Relational Mapper (ORM) libraries that use those drivers.
 
@@ -26,9 +26,7 @@ When using wrangler, replace the placeholder value provided to `--connection-str
 npx wrangler hyperdrive create my-first-hyperdrive --connection-string="postgres://user:password@database.host.example.com:5432/databasenamehere"
 ```
 
-The command above will output the ID of your Hyperdrive, which you will need to set in the `wrangler.toml` configuration file for your Workers project:
-
-import { WranglerConfig } from "~/components";
+The command above will output the ID of your Hyperdrive, which you will need to set in the `wrangler.toml / wrangler.json` file for your Workers project:
 
 <WranglerConfig>
 
@@ -110,7 +108,7 @@ Install the `node-postgres` driver:
 npm install pg
 ```
 
-**Ensure you have `compatibility_flags` and `compatibility_date` set in your `wrangler.toml` configuration file** as shown below:
+**Ensure you have `compatibility_flags` and `compatibility_date` set in your `wrangler.toml / wrangler.json` file** as shown below:
 
 <Render file="nodejs-compat-wrangler-toml" product="workers" />
 
@@ -120,7 +118,7 @@ Create a new `Client` instance and pass the Hyperdrive parameters:
 import { Client } from "pg";
 
 export interface Env {
-	// If you set another name in wrangler.toml as the value for 'binding',
+	// If you set another name in the `wrangler.toml / wrangler.json` file as the value for 'binding',
 	// replace "HYPERDRIVE" with the variable name you defined.
 	HYPERDRIVE: Hyperdrive;
 }

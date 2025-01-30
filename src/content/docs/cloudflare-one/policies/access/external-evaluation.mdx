@@ -5,7 +5,7 @@ sidebar:
   order: 4
 ---
 
-import { GlossaryTooltip, Example } from "~/components";
+import { GlossaryTooltip, Example, WranglerConfig } from "~/components";
 
 With Cloudflare Access, you can create Allow or Block policies which evaluate the user based on custom criteria. This is done by adding an **External Evaluation** rule to your policy. The **External Evaluation** selector requires two values:
 
@@ -53,12 +53,14 @@ You can set up External Evaluation rules using any API service, but to get start
       id = "YOUR_KV_NAMESPACE_ID"
    ```
 
-4. Open `wrangler.toml` in a text editor and insert the following:
+4. Open the `wrangler.toml / wrangler.json` file in an editor and insert the following:
 
    - `[[kv_namespaces]]`: Add the output generated in the previous step.
    - `<TEAM_NAME>`: your Cloudflare Zero Trust <GlossaryTooltip term="team name">team name</GlossaryTooltip>.
 
-   ```txt
+  <WranglerConfig>
+
+   ```toml
    name = "my-worker"
    workers_dev = true
    compatibility_date = "2024-08-06"
@@ -73,6 +75,7 @@ You can set up External Evaluation rules using any API service, but to get start
    TEAM_DOMAIN="<TEAM_NAME>.cloudflareaccess.com"
    DEBUG=false
    ```
+	 </WranglerConfig>
 
 ### 2. Program your business logic
 
@@ -136,7 +139,7 @@ To debug your External Evaluation rule:
    cd my-worker
    ```
 
-2. Open `wrangler.toml` in a text editor and set the `debug` variable to `TRUE`.
+2. Open the `wrangler.toml / wrangler.json` file in an editor and set the `debug` variable to `TRUE`.
 
 3. Deploy your changes.
 

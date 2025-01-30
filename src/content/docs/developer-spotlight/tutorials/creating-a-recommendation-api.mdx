@@ -22,7 +22,7 @@ sidebar:
   order: 2
 ---
 
-import { Render, TabItem, Tabs } from "~/components";
+import { Render, TabItem, Tabs, WranglerConfig } from "~/components";
 
 E-commerce and media sites often work on increasing the average transaction value to boost profitability. One of the strategies to increase the average transaction value is "cross-selling," which involves recommending related products. Cloudflare offers a range of products designed to build mechanisms for retrieving data related to the products users are viewing or requesting. In this tutorial, you will experience developing functionalities necessary for cross-selling by creating APIs for related product searches and product recommendations.
 
@@ -179,7 +179,7 @@ This API requires the use of Workers AI and Vectorize. To use these resources fr
 npx wrangler vectorize create stripe-products --dimensions=1024 --metric=cosine
 ```
 
-When this command executes successfully, you will see a message like the following. It provides the items you need to add to `wrangler.toml` to bind the Vectorize index with your Worker application. Copy the three lines starting with `[[vectorize]]`.
+When this command executes successfully, you will see a message like the following. It provides the items you need to add to the `wrangler.toml / wrangler.json` file to bind the Vectorize index with your Worker application. Copy the three lines starting with `[[vectorize]]`.
 
 ```sh
 ✅ Successfully created a new Vectorize index: 'stripe-products'
@@ -190,9 +190,7 @@ binding = "VECTORIZE_INDEX"
 index_name = "stripe-products"
 ```
 
-To use the created Vectorize index from your Worker, let's add the binding. Open `wrangler.toml` and add the copied lines.
-
-import { WranglerConfig } from "~/components";
+To use the created Vectorize index from your Worker, let's add the binding. Open the `wrangler.toml / wrangler.json` file and add the copied lines.
 
 <WranglerConfig>
 
@@ -208,9 +206,7 @@ index_name = "stripe-products"
 
 </WranglerConfig>
 
-Additionally, let's add the configuration to use Workers AI in `wrangler.toml`.
-
-
+Additionally, let's add the configuration to use Workers AI in the `wrangler.toml / wrangler.json` file.
 
 <WranglerConfig>
 

@@ -6,7 +6,7 @@ sidebar:
   label: Stable releases
 ---
 
-import { Render, Details, WARPReleases } from "~/components";
+import { Render, Details, LinkButton, WARPReleases } from "~/components";
 
 This page contains the stable WARP client releases currently supported by Cloudflare. We recommend using stable releases for production environments. You can download stable releases from the links below after checking requirements.
 
@@ -14,17 +14,23 @@ Cloudflare also offers an unstable beta release track with the latest features a
 
 ## Windows
 
+<LinkButton href="https://downloads.cloudflareclient.com/v1/download/windows/ga">Download latest stable release</LinkButton>
+
 <Render file="warp/system-requirements/windows" />
 
 <WARPReleases track="windows/ga" />
 
 ## macOS
 
+<LinkButton href="https://downloads.cloudflareclient.com/v1/download/macos/ga">Download latest stable release</LinkButton>
+
 <Render file="warp/system-requirements/macos" />
 
 <WARPReleases track="macos/ga" />
 
 ## Linux
+
+<LinkButton href="https://pkg.cloudflareclient.com/">Package repository</LinkButton>
 
 <Render file="warp/system-requirements/linux" />
 

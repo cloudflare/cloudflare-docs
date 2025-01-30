@@ -39,6 +39,30 @@
                             "default": false,
                             "description": "If true, a chat template is not applied and you must adhere to the specific model's expected formatting."
                         },
+                        "top_p": {
+                            "type": "number",
+                            "description": "Controls the creativity of the AI's responses by adjusting how many possible words it considers. Lower values make outputs more predictable; higher values allow for more varied and creative responses."
+                        },
+                        "top_k": {
+                            "type": "number",
+                            "description": "Limits the AI to choose from the top 'k' most probable words. Lower values make responses more focused; higher values introduce more variety and potential surprises."
+                        },
+                        "seed": {
+                            "type": "number",
+                            "description": "Random seed for reproducibility of the generation."
+                        },
+                        "repetition_penalty": {
+                            "type": "number",
+                            "description": "Penalty for repeated tokens; higher values discourage repetition."
+                        },
+                        "frequency_penalty": {
+                            "type": "number",
+                            "description": "Decreases the likelihood of the model repeating the same lines verbatim."
+                        },
+                        "presence_penalty": {
+                            "type": "number",
+                            "description": "Increases the likelihood of the model introducing new topics."
+                        },
                         "image": {
                             "oneOf": [
                                 {

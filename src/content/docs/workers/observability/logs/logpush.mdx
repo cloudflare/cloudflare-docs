@@ -9,6 +9,8 @@ sidebar:
 
 ---
 
+import { WranglerConfig } from "~/components";
+
 [Cloudflare Logpush](/logs/about/) supports the ability to send [Workers Trace Event Logs](/logs/reference/log-fields/account/workers_trace_events/) to a [supported destination](/logs/get-started/enable-destinations/). Worker’s Trace Events Logpush includes metadata about requests and responses, unstructured `console.log()` messages and any uncaught exceptions. This product is available on the Workers Paid plan. For pricing information, refer to [Pricing](/workers/platform/pricing/#workers-trace-events-logpush).
 
 :::caution
@@ -73,9 +75,7 @@ In Logpush, you can configure [filters](/logs/reference/filters/) and a [samplin
 
 ## Enable logging on your Worker
 
-Enable logging on your Worker by adding a new property, `logpush = true`, to your `wrangler.toml` file. This can be added either in the top-level configuration or under an [environment](/workers/wrangler/environments/). Any new Workers with this property will automatically get picked up by the Logpush job.
-
-import { WranglerConfig } from "~/components";
+Enable logging on your Worker by adding a new property, `logpush = true`, to your Wrangler file. This can be added either in the top-level configuration or under an [environment](/workers/wrangler/environments/). Any new Workers with this property will automatically get picked up by the Logpush job.
 
 <WranglerConfig>
 

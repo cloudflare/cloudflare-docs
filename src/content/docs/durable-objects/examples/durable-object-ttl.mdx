@@ -12,7 +12,7 @@ sidebar:
 description: Use the Durable Objects Alarms API to implement a Time To Live (TTL) for Durable Object instances.
 ---
 
-import { TabItem, Tabs, GlossaryTooltip } from "~/components";
+import { TabItem, Tabs, GlossaryTooltip, WranglerConfig } from "~/components";
 
 A common feature request for Durable Objects is a Time To Live (TTL) for Durable Object instances. Durable Objects give developers the tools to implement a custom TTL in only a few lines of code. This example demonstrates how to implement a TTL making use of <GlossaryTooltip term="alarm">`alarms`</GlossaryTooltip>. While this TTL will be extended upon every new request to the Durable Object, this can be customized based on a particular use case.
 
@@ -100,9 +100,7 @@ export default {
 
 </TabItem> </Tabs>
 
-To test and deploy this example, configure your `wrangler.toml` file to include a Durable Object [binding](/durable-objects/get-started/walkthrough/#5-configure-durable-object-bindings) and [migration](/durable-objects/reference/durable-objects-migrations/) based on the namespace and class name chosen previously.
-
-import { WranglerConfig } from "~/components";
+To test and deploy this example, configure your Wrangler file to include a Durable Object [binding](/durable-objects/get-started/walkthrough/#5-configure-durable-object-bindings) and [migration](/durable-objects/reference/durable-objects-migrations/) based on the namespace and class name chosen previously.
 
 <WranglerConfig>
 

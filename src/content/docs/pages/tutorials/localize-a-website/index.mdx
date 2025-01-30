@@ -10,7 +10,7 @@ tags:
   - HTMLRewriter
 ---
 
-import { Render, PackageManagers } from "~/components";
+import { Render, PackageManagers, WranglerConfig } from "~/components";
 
 In this tutorial, you will build an example internationalization and localization engine (commonly referred to as **i18n** and **l10n**) for your application, serve the content of your site, and automatically translate the content based on your visitors’ location in the world.
 
@@ -258,9 +258,7 @@ export async function onRequest(context) {
 
 Your i18n tool built on Cloudflare Pages is complete and it is time to deploy it to your domain.
 
-To deploy your application to a `*.pages.dev` subdomain, you need to specify a directory of static assets to serve, configure the `pages_build_output_dir` in your project’s `wrangler.toml` file and set the value to `./public`:
-
-import { WranglerConfig } from "~/components";
+To deploy your application to a `*.pages.dev` subdomain, you need to specify a directory of static assets to serve, configure the `pages_build_output_dir` in your project’s Wrangler file and set the value to `./public`:
 
 <WranglerConfig>
 

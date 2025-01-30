@@ -8,11 +8,11 @@ description: Facilitate Worker-to-Worker communication by forwarding Request obj
 
 ---
 
+import { WranglerConfig } from "~/components";
+
 Worker A that declares a Service binding to Worker B can forward a [`Request`](/workers/runtime-apis/request/) object to Worker B, by calling the `fetch()` method that is exposed on the binding object.
 
 For example, consider the following Worker that implements a [`fetch()` handler](/workers/runtime-apis/handlers/fetch/):
-
-import { WranglerConfig } from "~/components";
 
 <WranglerConfig>
 

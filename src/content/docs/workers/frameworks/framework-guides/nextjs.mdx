@@ -12,6 +12,7 @@ import {
 	Render,
 	PackageManagers,
 	Stream,
+	WranglerConfig
 } from "~/components";
 
 ## New apps
@@ -49,11 +50,9 @@ First, install [@opennextjs/cloudflare](https://www.npmjs.com/package/@opennextj
 npm install --save-dev @opennextjs/cloudflare
 ```
 
-### 2. Add a `wrangler.toml` file
+### 2. Add a Wrangler file
 
-Then, add a [`wrangler.toml`](/workers/wrangler/configuration/) file to the root directory of your Next.js app:
-
-import { WranglerConfig } from "~/components";
+Then, add a [`wrangler.toml / wrangler.json` file](/workers/wrangler/configuration/) to the root directory of your Next.js app:
 
 <WranglerConfig>
 
@@ -71,7 +70,7 @@ assets = { directory = ".open-next/assets", binding = "ASSETS" }
 As shown above, you must enable the [`nodejs_compat` compatibility flag](/workers/runtime-apis/nodejs/) _and_ set your [compatibility date](/workers/configuration/compatibility-dates/) to `2024-09-23` or later for your Next.js app to work with @opennextjs/cloudflare.
 :::
 
-`wrangler.toml` is where you configure your Worker and define what resources it can access via [bindings](/workers/runtime-apis/bindings/).
+You configure your Worker and define what resources it can access via [bindings](/workers/runtime-apis/bindings/) in the `wrangler.toml / wrangler.json` file.
 
 ### 3. Update `package.json`
 
