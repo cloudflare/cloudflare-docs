@@ -1,0 +1,19 @@
+{
+  "errors": [
+    {
+      "code": 1000,
+      "message": "message"
+    }
+  ],
+  "messages": [
+    {
+      "code": 1000,
+      "message": "message"
+    }
+  ],
+  "success": true,
+  "result": {
+    "id": "0rtt",
+    "value": "on"
+  }
+}
