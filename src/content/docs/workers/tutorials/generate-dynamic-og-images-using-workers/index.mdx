@@ -18,7 +18,7 @@ spotlight:
   author_bio_source: GitHub
 ---
 
-import { PackageManagers, Render, Tabs, TabItem } from "~/components";
+import { PackageManagers, Render, Tabs, TabItem, WranglerConfig } from "~/components";
 
 Social media thrives on compelling visuals. With Cloudflare Workers, you can effortlessly generate dynamic Open Graph (OG) images that grab attention and boost platform performance. In this tutorial, you'll learn how to create a customizable OG image generator powered by serverless edge computing. Cloudflare Workers enable you to deliver blazing-fast visuals globally, ensuring a seamless experience for your users. Let's dive in to see how you can take your OG images to the next level with Cloudflare Workers.
 
@@ -203,8 +203,9 @@ Key TypeScript configuration features:
 
 ### Configure Wrangler for runtime compatibility and static assets
 
-Before starting, ensure your `wrangler.toml` includes these essential configurations:
+Before starting, ensure your `wrangler.toml / wrangler.json` file includes these essential configurations:
 
+<WranglerConfig>
 ```toml title="wrangler.toml"
 compatibility_date = "2024-11-06"
 compatibility_flags = [ "nodejs_compat_v2" ]
@@ -213,6 +214,7 @@ minify = true
 [build]
 watch_dir = "public"
 ```
+</WranglerConfig>
 
 [The `nodejs_compat` flag](/workers/configuration/compatibility-flags/#nodejs-compatibility-flag) enables runtime compatibility features required by the OG image generation library, even when using Bun. While we're using Bun as our development runtime, this flag ensures all necessary APIs are available in the Workers environment. The `assets` configuration maps your Worker's public directory, allowing direct access to static files like fonts, images, and favicons through URL paths (for example, `/fonts/Inter.ttf`, `/images/logo.png`).
 

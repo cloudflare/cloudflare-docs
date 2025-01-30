@@ -42,11 +42,11 @@ The template project contains the following files and directories:
 
 - `public`: The static assets for your project. By default it contains an `index.html` and a `favicon.ico`.
 - `src`: The Worker configured for serving your assets. You do not need to edit this but if you want to see how it works or add more functionality to your Worker, you can edit `src/index.ts`.
-- `wrangler.toml`: The file containing project configuration.
+- `wrangler.json`: The file containing project configuration.
   The `bucket` property tells Wrangler where to find the static assets (e.g. `site = { bucket = "./public" }`).
 - `package.json`/`package-lock.json`: define the required Node.js dependencies.
 
-## Customize `wrangler.toml`:
+## Customize the `wrangler.toml / wrangler.json` file:
 
 - Change the `name` property to the name of your project:
 

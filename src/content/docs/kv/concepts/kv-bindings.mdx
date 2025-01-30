@@ -5,6 +5,8 @@ sidebar:
   order: 7
 ---
 
+import { WranglerConfig } from "~/components";
+
 KV [bindings](/workers/runtime-apis/bindings/) allow for communication between a Worker and a KV namespace.
 
 Configure KV bindings in the [wrangler.toml file](/workers/wrangler/configuration/).
@@ -21,9 +23,7 @@ A KV namespace will have a name you choose (for example, `My tasks`), and an ass
 
 To execute your Worker, define the binding.
 
-In the following example, the binding is called `TODO`. In the `kv_namespaces` portion of your `wrangler.toml` file, add:
-
-import { WranglerConfig } from "~/components";
+In the following example, the binding is called `TODO`. In the `kv_namespaces` portion of your Wrangler file, add:
 
 <WranglerConfig>
 
@@ -58,7 +58,7 @@ export default {
 
 When you use Wrangler to develop locally with the `wrangler dev` command, Wrangler will default to using a local version of KV to avoid interfering with any of your live production data in KV. This means that reading keys that you have not written locally will return `null`.
 
-To have `wrangler dev` connect to your Workers KV namespace running on Cloudflare's global network, call `wrangler dev --remote` instead. This will use the `preview_id` of the KV binding configuration in the `wrangler.toml` file. This is how a `wrangler.toml` file looks with the `preview_id` specified.
+To have `wrangler dev` connect to your Workers KV namespace running on Cloudflare's global network, call `wrangler dev --remote` instead. This will use the `preview_id` of the KV binding configuration in the Wrangler file. This is how a Wrangler file looks with the `preview_id` specified.
 
 
 

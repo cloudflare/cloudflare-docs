@@ -60,9 +60,9 @@ With any bindings that are not supported locally, you will need to use the `--re
 
 When running `wrangler dev`, resources such as KV, Durable Objects, D1, and R2 will be stored and persisted locally and not affect the production resources.
 
-### Use bindings in `wrangler.toml`
+### Use bindings in Wrangler configuration files
 
-[Wrangler](/workers/wrangler/) will automatically create local versions of bindings found in the `wrangler.toml` [configuration file](/workers/wrangler/configuration/). These local resources will not have data in them initially, so you will need to add data manually via Wrangler commands and the [`--local` flag](/workers/testing/local-development/#use---local-flag).
+[Wrangler](/workers/wrangler/) will automatically create local versions of bindings found in the [`wrangler.toml / wrangler.json` file](/workers/wrangler/configuration/). These local resources will not have data in them initially, so you will need to add data manually via Wrangler commands and the [`--local` flag](/workers/testing/local-development/#use---local-flag).
 
 When you run `wrangler dev` Wrangler stores local resources in a `.wrangler/state` folder, which is automatically created.
 
@@ -97,7 +97,7 @@ If using `--persist-to` to specify a custom folder with `wrangler dev` you shoul
 npx wrangler kv:key put test 12345 --binding MY_KV_NAMESPACE --local --persist-to worker-local
 ```
 
-Running `wrangler kv:key put` will create a new key `test` with a value of `12345` on the local namespace specified via the binding `MY_KV_NAMESPACE` in `wrangler.toml`. This example command sets the local persistence directory to `worker-local` using `--persist-to`, to ensure that the data is created in the correct location. If `--persist-to` was not set, it would create the data in the `.wrangler` folder.
+Running `wrangler kv:key put` will create a new key `test` with a value of `12345` on the local namespace specified via the binding `MY_KV_NAMESPACE` in the `wrangler.toml / wrangler.json` file. This example command sets the local persistence directory to `worker-local` using `--persist-to`, to ensure that the data is created in the correct location. If `--persist-to` was not set, it would create the data in the `.wrangler` folder.
 
 ### Clear Wrangler's local storage
 
@@ -107,7 +107,7 @@ Any deleted folders will be created automatically the next time you run `wrangle
 
 ## Local-only environment variables
 
-When running `wrangler dev`, variables in `wrangler.toml` are automatically overridden by values defined in a `.dev.vars` file located in the root directory of your worker. This is useful for providing values you do not want to check in to source control.
+When running `wrangler dev`, variables in the `wrangler.toml / wrangler.json` file are automatically overridden by values defined in a `.dev.vars` file located in the root directory of your worker. This is useful for providing values you do not want to check in to source control.
 
 ```shell
 API_HOST = "localhost:4000"
@@ -122,7 +122,7 @@ There may be times you want to develop against remote resources and bindings. To
 npx wrangler dev --remote
 ```
 
-For some products like KV and R2, remote resources used for `wrangler dev --remote` must be specified with preview ID/names in `wrangler.toml` such as `preview_id` for KV or `preview_bucket name` for R2. Resources used for remote mode (preview) can be different from resources used for production to prevent changing production data during development. To use production data in `wrangler dev --remote`, set the preview ID/name of the resource to the ID/name of your production resource.
+For some products like KV and R2, remote resources used for `wrangler dev --remote` must be specified with preview ID/names in the `wrangler.toml / wrangler.json` file such as `preview_id` for KV or `preview_bucket name` for R2. Resources used for remote mode (preview) can be different from resources used for production to prevent changing production data during development. To use production data in `wrangler dev --remote`, set the preview ID/name of the resource to the ID/name of your production resource.
 
 ## Customize `wrangler dev`
 

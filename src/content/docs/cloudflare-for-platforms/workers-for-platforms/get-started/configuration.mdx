@@ -5,7 +5,7 @@ sidebar:
   order: 1
 ---
 
-import { Render, PackageManagers } from "~/components";
+import { Render, PackageManagers, WranglerConfig } from "~/components";
 
 ## Prerequisites:
 
@@ -113,9 +113,7 @@ Change to your project's directory:
 cd my-dispatcher
 ```
 
-Open the `wrangler.toml` file in your project directory, and add the dispatch namespace binding:
-
-import { WranglerConfig } from "~/components";
+Open the Wrangler file in your project directory, and add the dispatch namespace binding:
 
 <WranglerConfig>
 

@@ -6,15 +6,17 @@ description: Deploy the same Worker application with different configuration for
   each environment.
 ---
 
+import { WranglerConfig } from "~/components";
+
 ## Background
 
-Wrangler allows you to deploy the same Worker application with different configuration for each environment. You must configure environments in your Worker application's `wrangler.toml` file.
+Wrangler allows you to deploy the same Worker application with different configuration for each environment. You must configure environments in your Worker application's Wrangler file.
 
 Review the following environments flow:
 
 1. You have created a Worker application named `my-worker`.
-2. You create an environment, for example, `dev`, in the Worker's `wrangler.toml` configuration file.
-3. In `wrangler.toml`, you configure the `dev` environment by [adding bindings](/workers/runtime-apis/bindings/) and/or [routes](/workers/configuration/routing/routes/).
+2. You create an environment, for example, `dev`, in the Worker's `wrangler.toml / wrangler.json` file.
+3. In `wrangler.json`, you configure the `dev` environment by [adding bindings](/workers/runtime-apis/bindings/) and/or [routes](/workers/configuration/routing/routes/).
 4. You deploy the Worker using `npx wrangler deploy -e dev`.
 5. In the background, Wrangler creates a new Worker named `my-worker-dev`.
 6. You can now change your `my-worker` Worker code and configuration, and choose which environment to deploy your changes to.
@@ -25,15 +27,13 @@ Environments are used with the `--env` or `-e` flag on `wrangler dev`, `npx wran
 
 To create an environment:
 
-1. Open your Worker's `wrangler.toml` file.
+1. Open your Worker's Wrangler file.
 2. Add `[env.<NAME>]` and change `<NAME>` to the desired name of your environment.
 3. Repeat step 2 to create multiple environments.
 
 Be careful when naming your environments that they do not contain sensitive information, such as, `migrating-service-from-company1-to-company2` or `company1-acquisition-load-test`.
 
 Review the layout of an example `[env.dev]` environment that sets up a custom `dev.example.com` route:
-
-import { WranglerConfig } from "~/components";
 
 <WranglerConfig>
 
@@ -57,9 +57,9 @@ After you have configured your environment, run `npx wrangler deploy` in your Wo
 
 [Non-inheritable keys](/workers/wrangler/configuration/#non-inheritable-keys) are configurable at the top-level, but cannot be inherited by environments and must be specified for each environment.
 
-[Bindings](/workers/runtime-apis/bindings/) and [environment variables](/workers/configuration/environment-variables/) must be specified per each [environment](/workers/wrangler/environments/) in your [`wrangler.toml`](/workers/wrangler/configuration/) file.
+[Bindings](/workers/runtime-apis/bindings/) and [environment variables](/workers/configuration/environment-variables/) must be specified per each [environment](/workers/wrangler/environments/) in your [`wrangler.toml / wrangler.json` file](/workers/wrangler/configuration/).
 
-Review the following example `wrangler.toml` file:
+Review the following example Wrangler file:
 
 
 
@@ -93,7 +93,7 @@ You may assign environment-specific [secrets](/workers/configuration/secrets/) b
 
 ### Staging and production environments
 
-The following `wrangler.toml` file adds two environments, `[env.staging]` and `[env.production]`, to the `wrangler.toml` file. If you are deploying to a [Custom Domain](/workers/configuration/routing/custom-domains/) or [route](/workers/configuration/routing/routes/), you must provide a [`route` or `routes` key](/workers/wrangler/configuration/) for each environment.
+The following Wrangler file adds two environments, `[env.staging]` and `[env.production]`, to the Wrangler file. If you are deploying to a [Custom Domain](/workers/configuration/routing/custom-domains/) or [route](/workers/configuration/routing/routes/), you must provide a [`route` or `routes` key](/workers/wrangler/configuration/) for each environment.
 
 
 
@@ -166,7 +166,7 @@ if (ENVIRONMENT === "staging") {
 
 ### Staging environment with \*.workers.dev
 
-To deploy your code to your `*.workers.dev` subdomain, include `workers_dev = true` in the desired environment. Your `wrangler.toml` file may look like this:
+To deploy your code to your `*.workers.dev` subdomain, include `workers_dev = true` in the desired environment. Your Wrangler file may look like this:
 
 
 

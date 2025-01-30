@@ -89,21 +89,6 @@ The metrics aggregated under this tab span multiple Cloudflare services.  The p
 * **Origin Performance (Argo)** (add-on service) - Displays metrics related to response time between the Cloudflare edge network and origin servers for the last 48 hours.  For additional details, refer to [Argo Analytics](/argo-smart-routing/analytics/).
 * **Overview** - Displays a set of pie charts for: **Client HTTP Version Used**, **Bandwidth Saved**, and **Content Type Breakdown**. If available, the expandable **Details** link display a table with numerical data.
 
-### DNS <Badge text="Legacy" variant="caution" size="medium" />
-
-:::note[New DNS analytics]
-The **Analytics** > **DNS** tab will be deprecated soon.
-
-To access the new analytics dashboard, go to **DNS** > **Analytics**. Refer to [Analytics and logs](/dns/additional-options/analytics/) for details.
-:::
-
-The DNS tab presents statistics for DNS queries.  Note that metrics are available as long as Cloudflare is the site’s authoritative DNS server, even if the site is not proxied by Cloudflare. Therefore, DNS metrics are not offered for sites with a [CNAME Setup](/dns/zone-setups/partial-setup/).
-
-The metrics panels available under the DNS tab may include:
-
-* **DNS Queries** - Displays area charts and data tables for DNS record metrics. For free plans, this section includes *Queries by Response Code* and, for Pro and above, this section also includes *Queries by Record Type*. Records that return an *NXDOMAIN* response (dns record doesn’t exist) are also considered. For zones in Enterprise plan, you can also filter by one or several DNS records by entering record names (for example, [www.example.com](http://www.example.com)) in the dropdown near the top.
-* **DNS Queries by Data Center** - Displays DNS query distribution across Cloudflare’s data centers. Metrics appear as interactive maps and data tables, and include statistics for *DNS Traffic*, *NXDOMAIN*, and *NOERROR*. This section is available to zones in Pro plan or above.
-
 ### Workers
 
 This panel features metrics for Cloudflare Workers. To learn more, read [Cloudflare analytics with Workers](/analytics/account-and-zone-analytics/analytics-with-workers/).

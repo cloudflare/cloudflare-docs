@@ -137,6 +137,11 @@ export default defineConfig({
 		}),
 		icon(),
 		sitemap({
+			filter(page) {
+				return !page.startsWith(
+					"https://developers.cloudflare.com/style-guide/",
+				);
+			},
 			serialize(item) {
 				item.lastmod = new Date().toISOString();
 				return item;

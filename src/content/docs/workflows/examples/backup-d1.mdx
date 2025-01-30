@@ -15,7 +15,7 @@ description: Send invoice when shopping cart is checked out and paid for
 
 ---
 
-import { TabItem, Tabs } from "~/components"
+import { TabItem, Tabs, WranglerConfig } from "~/components"
 
 In this example, we implement a Workflow periodically triggered by a [Cron Trigger](/workers/configuration/cron-triggers). That Workflow initiates a backup for a D1 database using the REST API, and then stores the SQL dump in an [R2](/r2) bucket.
 
@@ -120,9 +120,7 @@ Here is a minimal package.json:
 }
 ```
 
-Here is a wrangler.toml:
-
-import { WranglerConfig } from "~/components";
+Here is a `wrangler.toml / wrangler.json` file:
 
 <WranglerConfig>
 
