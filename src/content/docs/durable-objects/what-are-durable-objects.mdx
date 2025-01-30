@@ -19,7 +19,7 @@ Durable Objects have properties and capabilities that make them a great fit for 
 
 **Serverless compute, zero infrastructure management**
 
-- Durable Objects are built on-top of the Workers runtime, so they support exactly the same code (Javascript and WASM), and similar memory and CPU limits.
+- Durable Objects are built on-top of the Workers runtime, so they support exactly the same code (JavaScript and WASM), and similar memory and CPU limits.
 - Each Durable Object is [implicitly created on first access](/durable-objects/api/namespace/#get). User applications are not concerned with their lifecycle, creating them or destroying them. Durable Objects migrate among healthy servers, and therefore applications never have to worry about managing them.
 - Each Durable Object stays alive as long as requests are being processed, and remains alive for several seconds after being idle before hibernating, allowing applications to [exploit in-memory caching](/durable-objects/reference/in-memory-state/) while handling many consecutive requests and boosting their performance.
 
@@ -30,12 +30,12 @@ Durable Objects have properties and capabilities that make them a great fit for 
 **Single-threaded concurrency**
 
 - Each [Durable Object instance has an identifier](/durable-objects/api/id/), either randomly-generated or user-generated, which allows you to globally address which Durable Object should handle a specific action or request.
-- Durable Objects are single-threaded and cooperatively multi-tasked, just like code running in the browser. For more details on how safety and correctness are achieved, refer to the blog post [_“Durable Objects: Easy, Fast, Correct — Choose three”_](https://blog.cloudflare.com/durable-objects-easy-fast-correct-choose-three/).
+- Durable Objects are single-threaded and cooperatively multi-tasked, just like code running in the browser. For more details on how safety and correctness are achieved, refer to the blog post ["Durable Objects: Easy, Fast, Correct — Choose three"](https://blog.cloudflare.com/durable-objects-easy-fast-correct-choose-three/).
 
 **Elastic horizontal scaling across Cloudflare's global network**
 
 - Durable Objects can be spread around the world, and you can [optionally influence where each instance should be located](/durable-objects/reference/data-location/#provide-a-location-hint). Durable Objects are not yet available in every Cloudflare data center; refer to the [where.durableobjects.live](https://where.durableobjects.live/) project for live locations.
-- Each Durable Object type (or ["Namespace binding"](/durable-objects/api/namespace/) in Cloudflare terms) corresponds to a Javascript class implementing the actual logic. There is no hard limit on how many Durable Objects can be created for each namespace.
+- Each Durable Object type (or ["Namespace binding"](/durable-objects/api/namespace/) in Cloudflare terms) corresponds to a JavaScript class implementing the actual logic. There is no hard limit on how many Durable Objects can be created for each namespace.
 - Durable Objects scale elastically as your application creates millions of objects. There is no need for applications to manage infrastructure or plan ahead for capacity.
 
 ## Durable Object features
