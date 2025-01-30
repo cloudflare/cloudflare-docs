@@ -19,7 +19,7 @@ Durable Objects have properties and capabilities that make them a great fit for 
 
 **Serverless compute, zero infrastructure management**
 
-- Durable Objects are built on-top of the Workers runtime, so they support exactly the same code (Javascript and WASM), and similar memory and CPU limits.
+- Durable Objects are built on-top of the Workers runtime, so they support exactly the same code (JavaScript and WASM), and similar memory and CPU limits.
 - Each Durable Object is [implicitly created on first access](/durable-objects/api/namespace/#get). User applications are not concerned with their lifecycle, creating them or destroying them. Durable Objects migrate among healthy servers, and therefore applications never have to worry about managing them.
 - Each Durable Object stays alive as long as requests are being processed, and remains alive for several seconds after being idle before hibernating, allowing applications to [exploit in-memory caching](/durable-objects/reference/in-memory-state/) while handling many consecutive requests and boosting their performance.
 
