@@ -2,7 +2,7 @@
 import StarlightPage, {
 	type StarlightPageProps,
 } from "@astrojs/starlight/components/StarlightPage.astro";
-import { getCollection } from "astro:content";
+import { getCollection, render } from "astro:content";
 
 import Header from "~/components/changelog-next/Header.astro";
 import ProductPills from "~/components/changelog-next/ProductPills.astro";
@@ -38,7 +38,7 @@ const props = {
 					entry.data.products.map((product) => product.id),
 				);
 
-				const { Content } = await entry.render();
+				const { Content } = await render(entry);
 
 				return (
 					<>
@@ -53,7 +53,7 @@ const props = {
 								<li class="!pb-16">
 									<div>
 										<a
-											href={`/changelog-next/${entry.slug}/`}
+											href={`/changelog-next/${entry.id}/`}
 											class="no-underline hover:underline"
 										>
 											<h3 class="mb-4 !leading-[36px] text-black">

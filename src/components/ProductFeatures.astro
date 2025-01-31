@@ -1,8 +1,7 @@
 ---
 import { z } from "astro:schema";
-import { getEntry } from "astro:content";
-import { getProperty } from "dot-prop";
 import { marked } from "marked";
+import { indexPlans } from "~/util/plans";
 
 type Props = z.infer<typeof props>;
 
@@ -15,11 +14,7 @@ const props = z
 
 const { id, additional_descriptions } = props.parse(Astro.props);
 
-const { data } = await getEntry("plans", "index");
-
-const plan = getProperty(data, id);
-
-if (!plan) throw new Error(`Failed to index plans using ${id}`);
+const plan = await indexPlans(id);
 
 const entries = Object.entries(plan);
 ---

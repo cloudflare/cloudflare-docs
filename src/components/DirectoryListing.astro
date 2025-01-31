@@ -19,7 +19,7 @@ const depth = folder.split("/").length + 1;
 
 let pages = await getCollection("docs", (page) => {
 	return (
-		page.slug.startsWith(`${folder}/`) && page.slug.split("/").length === depth
+		page.id.startsWith(`${folder}/`) && page.id.split("/").length === depth
 	);
 });
 
@@ -30,7 +30,7 @@ pages.sort(sortBySidebarOrder);
 	{
 		pages.map((page) => {
 			const description = descriptions && page.data.description;
-			const href = page.data.external_link ?? "/" + page.slug + "/";
+			const href = page.data.external_link ?? "/" + page.id + "/";
 			return (
 				<li>
 					<a href={href}>{page.data.title}</a>

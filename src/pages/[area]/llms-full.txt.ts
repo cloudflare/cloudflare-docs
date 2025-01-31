@@ -33,21 +33,21 @@ export const GET: APIRoute = async ({ params }) => {
 		if (!e.body) return false;
 
 		if (
-			e.slug === "warp-client/legal/3rdparty" ||
-			e.slug === "magic-wan/legal/3rdparty"
+			e.id === "warp-client/legal/3rdparty" ||
+			e.id === "magic-wan/legal/3rdparty"
 		)
 			return false;
 
 		return products.some((p) =>
-			e.slug.startsWith(p.data.product.url.slice(1, -1)),
+			e.id.startsWith(p.data.product.url.slice(1, -1)),
 		);
 	})
 		.then((entries) =>
 			entries.map((entry) => {
 				return [
 					`# ${entry.data.title}`,
-					`URL: https://developers.cloudflare.com/${entry.slug}/`,
-					`${entry.body.trim()}`,
+					`URL: https://developers.cloudflare.com/${entry.id}/`,
+					`${entry.body?.trim()}`,
 					"---",
 				].join("\n\n");
 			}),

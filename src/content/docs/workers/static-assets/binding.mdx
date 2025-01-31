@@ -59,9 +59,9 @@ _headers
 
 Now Wrangler will not upload these files as client-side assets when deploying the Worker.
 
-## `experimental_serve_directly`
+## `run_worker_first`
 
-Controls whether assets will be served first on a matching request. `experimental_serve_directly = true` ([default](/workers/static-assets/routing/#default-behavior)) will serve any static asset matching a request, while `experimental_serve_directly = false` will unconditionally [invoke your Worker script](/workers/static-assets/routing/#invoking-worker-script-ahead-of-assets).
+Controls whether to invoke the Worker script regardless of a request which would have otherwise matched an asset. `run_worker_first = false` ([default](/workers/static-assets/routing/#default-behavior)) will serve any static asset matching a request, while `run_worker_first = true` will unconditionally [invoke your Worker script](/workers/static-assets/routing/#invoking-worker-script-ahead-of-assets).
 
 <WranglerConfig>
 
@@ -74,7 +74,7 @@ main = "src/index.ts"
 [assets]
 directory = "./public/"
 binding = "ASSETS"
-experimental_serve_directly = false
+run_worker_first = true
 ```
 
 </WranglerConfig>
@@ -166,16 +166,16 @@ For the various static asset routing configuration options, refer to [Routing](/
 
 ### Smart Placement with Worker Code First
 
-If you desire to run your [Worker code ahead of assets](/workers/static-assets/routing/#invoking-worker-script-ahead-of-assets) by setting `experimental_serve_directly=false`, all requests must first travel to your Smart-Placed Worker. As a result, you may experience increased latency for asset requests.
+If you desire to run your [Worker code ahead of assets](/workers/static-assets/routing/#invoking-worker-script-ahead-of-assets) by setting `run_worker_first=true`, all requests must first travel to your Smart-Placed Worker. As a result, you may experience increased latency for asset requests.
 
-Use Smart Placement with `experimental_serve_directly=false` when you need to integrate with other backend services, authenticate requests before serving any assets, or if your want to make modifications to your assets before serving them.
+Use Smart Placement with `run_worker_first=true` when you need to integrate with other backend services, authenticate requests before serving any assets, or if your want to make modifications to your assets before serving them.
 
 If you want some assets served as quickly as possible to the user, but others to be served behind a smart-placed Worker, considering splitting your app into multiple Workers and [using service bindings to connect them](/workers/configuration/smart-placement/#best-practices).
 
 ### Smart Placement with Assets First
 
-Enabling Smart Placement with `experimental_serve_directly=true` lets you serve assets from as close as possible to your users, but moves your Worker logic to run most efficiently (such as near a database).
+Enabling Smart Placement with `run_worker_first=false` (or not specifying it) lets you serve assets from as close as possible to your users, but moves your Worker logic to run most efficiently (such as near a database).
 
-Use Smart Placement with `experimental_serve_directly=true` when prioritizing fast asset delivery.
+Use Smart Placement with `run_worker_first=false` (or not specifying it) when prioritizing fast asset delivery.
 
 This will not impact the [default routing behavior](/workers/static-assets/routing/#default-behavior).

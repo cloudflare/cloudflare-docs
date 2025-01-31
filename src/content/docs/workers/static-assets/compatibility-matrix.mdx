@@ -40,7 +40,7 @@ We plan to bridge the gaps between Workers and Pages and provide ways to migrate
 | **Static Assets**                                                                   |         |         |
 | [Early Hints](/pages/configuration/early-hints/)                                    | ❌      | ✅      |
 | [Custom HTTP headers for static assets](/pages/configuration/headers/)              | 🟡 [^1] | ✅      |
-| [Middleware](/workers/static-assets/binding/#experimental_serve_directly)           | ✅ [^2] | ✅      |
+| [Middleware](/workers/static-assets/binding/#run_worker_first)                      | ✅ [^2] | ✅      |
 | [Redirects](/pages/configuration/redirects/)                                        | 🟡 [^3] | ✅      |
 | [Smart Placement](/workers/configuration/smart-placement/)                          | ✅      | ✅      |
 | [Serve assets on a path](/workers/static-assets/routing/)                           | ✅      | ❌      |
@@ -90,7 +90,7 @@ We plan to bridge the gaps between Workers and Pages and provide ways to migrate
 
 [^1]: Similar to <sup>3</sup>, to customize the HTTP headers that are returned by static assets, you can use [Service bindings](/workers/runtime-apis/bindings/service-bindings/) to connect a Worker in front of the Worker with assets.
 
-[^2]: Middleware can be configured via the [`experimental_serve_directly`](/workers/static-assets/binding/#experimental_serve_directly) option, but is charged as a normal Worker invocation. We plan to explore additional related options in the future.
+[^2]: Middleware can be configured via the [`run_worker_first`](/workers/static-assets/binding/#run_worker_first) option, but is charged as a normal Worker invocation. We plan to explore additional related options in the future.
 
 [^3]: You can handle redirects by adding code to your Worker (a [community package](https://npmjs.com/package/redirects-in-workers) is available for `_redirects` support), or you can use [Bulk Redirects](/rules/url-forwarding/bulk-redirects/).
 

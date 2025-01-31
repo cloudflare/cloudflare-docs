@@ -27,7 +27,7 @@ if (directory) {
 const examples = await getCollection("docs", (entry) => {
 	return (
 		entry.data.pcx_content_type === "example" &&
-		((target && entry.slug.startsWith(target)) ||
+		((target && entry.id.startsWith(target)) ||
 			(additionalProducts !== undefined &&
 				entry.data.products?.some((v: string) =>
 					additionalProducts?.includes(v),
@@ -51,13 +51,13 @@ if (filters) {
 {
 	filters && (
 		<>
-			<div id="filters" class="flex not-content">
+			<div id="filters" class="not-content flex">
 				{filters.map((filter) => (
-					<div class="flex flex-col mr-6">
+					<div class="mr-6 flex flex-col">
 						<label for={filter}>
 							{filter[0].toUpperCase() + filter.slice(1)}
 						</label>
-						<select id={filter} class="w-52 h-8 mt-2">
+						<select id={filter} class="mt-2 h-8 w-52">
 							<option value="all">Select...</option>
 							{filterValues[filter]
 								.sort((a, b) => a.localeCompare(b))
@@ -96,7 +96,7 @@ if (filters) {
 					return (
 						<LinkTitleCard
 							title={example.data.title}
-							href={`/${example.slug}/`}
+							href={`/${example.id}/`}
 							data-example
 							{...filterAttributes}
 							set:html={marked.parse(
