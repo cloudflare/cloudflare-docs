@@ -22,7 +22,7 @@ Durable Objects have properties that make them a great fit for distributed state
 
 **Storage colocated with compute**
 
-- Each Durable Object has its own [durable, transactional, and strongly consistent storage](/durable-objects/api/storage-api/) (up to 10 GB), persisted across requests, and accessible only within that object.
+- Each Durable Object has its own [durable, transactional, and strongly consistent storage](/durable-objects/api/storage-api/) (up to 10 GB[^1]), persisted across requests, and accessible only within that object.
 
 **Single-threaded concurrency**
 
@@ -109,3 +109,5 @@ Finally, the following blog posts may help you learn some of the technical imple
 ## Get started
 
 Get started now by following the ["Tutorial with SQL API"](/durable-objects/get-started/tutorial-with-sql-api/) to create your first application using Durable Objects.
+
+[^1]: Storage per Durable Object with SQLite is currently 1 GB. This will be raised to 10 GB for general availability.
