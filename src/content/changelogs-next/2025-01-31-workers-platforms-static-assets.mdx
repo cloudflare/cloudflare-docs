@@ -3,7 +3,7 @@ title: Workers for Platforms now supports Static Assets
 description: Workers for Platforms customers can now serve static assets for User Workers directly from Cloudflare's global edge
 products:
   - workers-for-platforms
-date: 2025-01-31T01:00:00Z
+date: 2025-01-31T17:00:00Z
 ---
 
 import { Render, TypeScriptExample } from "~/components";
@@ -12,13 +12,11 @@ Workers for Platforms customers can now attach static assets (HTML, CSS, JavaScr
 
 This allows your platform to serve entire front-end applications from Cloudflare’s global edge, utilizing caching for fast load times, while supporting dynamic logic within the same Worker. Cloudflare automatically scales its infrastructure to handle high traffic volumes, enabling you to focus on building features without managing servers.
 
-## Use Cases
+### What you can build
 
-### Static Sites
-Host and serve HTML, CSS, JavaScript, and media files directly from Cloudflare's network, ensuring fast loading times worldwide. This is ideal for blogs, landing pages, and documentation sites because static assets can be efficiently cached and delivered closer to the user, reducing latency and enhancing the overall user experience.
+**Static Sites:** Host and serve HTML, CSS, JavaScript, and media files directly from Cloudflare's network, ensuring fast loading times worldwide. This is ideal for blogs, landing pages, and documentation sites because static assets can be efficiently cached and delivered closer to the user, reducing latency and enhancing the overall user experience.
 
-### Full-Stack Applications
-Combine asset hosting with Cloudflare Workers to power dynamic, interactive applications. For example, an e-commerce platform can serve product pages while handling real-time inventory checks within the same Worker.
+**Full-Stack Applications:** Combine asset hosting with Cloudflare Workers to power dynamic, interactive applications. If you're an e-commerce platform, you can serve your customers' product pages and run inventory checks from within the same Worker.
 
 <TypeScriptExample filename="index.ts">
 ```ts
@@ -40,4 +38,5 @@ export default {
 ```
 </TypeScriptExample>
 
-You can upload static assets through the Workers for Platforms API or Wrangler. For more information, visit our [Workers for Platforms documentation](https://developers.cloudflare.com/cloudflare-for-platforms/workers-for-platforms/configuration/static-assets/).
+**Get Started:**
+Upload static assets using the Workers for Platforms API or Wrangler. For more information, visit our [Workers for Platforms documentation.](https://developers.cloudflare.com/cloudflare-for-platforms/workers-for-platforms/configuration/static-assets/)
