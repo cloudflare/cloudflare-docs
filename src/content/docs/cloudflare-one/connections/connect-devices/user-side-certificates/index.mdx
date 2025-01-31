@@ -13,6 +13,13 @@ Advanced security features such as [HTTPS traffic inspection](/cloudflare-one/po
 
 Zero Trust [generates a unique root CA](#generate-a-cloudflare-root-certificate) for each account and deploys it across the Cloudflare global network. Alternatively, Enterprise users can upload and deploy their own [custom certificate](/cloudflare-one/connections/connect-devices/user-side-certificates/custom-certificate/).
 
+:::caution[Default WARP certificate expiring on 2025-02-02]
+
+The default Cloudflare certificate will expire on 2025-02-02.
+
+Review how this change will impact certificate propagation to your end-user devices and how to address browser issues in [Troubleshooting](/cloudflare-one/faq/troubleshooting/#as-of-february-2-2025-my-end-user-devices-browser-is-returning-a-your-connection-is-not-private-warning).
+:::
+
 ## Certificate status
 
 Zero Trust will indicate if a certificate is ready for use in inspection based on its deployment status:
