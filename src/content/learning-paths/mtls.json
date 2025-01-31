@@ -1,6 +1,6 @@
 {
 	"title": "mTLS at Cloudflare",
-	"path": "/learning-paths/mtls/",
+	"path": "/learning-paths/mtls/concepts/",
 	"priority": 5,
 	"description": "Safeguard APIs and Devices on Cloudflare's network.",
 	"products": ["API Shield", "Access", "SSL/TLS"],

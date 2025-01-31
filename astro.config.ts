@@ -8,14 +8,35 @@ import starlightLinksValidator from "starlight-links-validator";
 import icon from "astro-icon";
 import sitemap from "@astrojs/sitemap";
 import react from "@astrojs/react";
+import { readdir } from "fs/promises";
 
 import rehypeTitleFigure from "rehype-title-figure";
 import rehypeMermaid from "./src/plugins/rehype/mermaid.ts";
 import rehypeAutolinkHeadings from "./src/plugins/rehype/autolink-headings.ts";
 import rehypeExternalLinks from "./src/plugins/rehype/external-links.ts";
 import rehypeHeadingSlugs from "./src/plugins/rehype/heading-slugs.ts";
+import { fileURLToPath } from "url";
 
-import { sidebar } from "./src/util/sidebar.ts";
+async function autogenSections() {
+	const sections = (
+		await readdir("./src/content/docs/", {
+			withFileTypes: true,
+		})
+	)
+		.filter((x) => x.isDirectory())
+		.map((x) => x.name);
+	return sections.map((x) => {
+		return {
+			label: x,
+			autogenerate: {
+				directory: x,
+				collapsed: true,
+			},
+		};
+	});
+}
+
+const sidebar = await autogenSections();
 
 const runLinkCheck = process.env.RUN_LINK_CHECK || false;
 
@@ -35,8 +56,6 @@ export default defineConfig({
 	},
 	experimental: {
 		contentIntellisense: true,
-		contentLayer: true,
-		directRenderScript: true,
 	},
 	server: {
 		port: 1111,
@@ -70,13 +89,10 @@ export default defineConfig({
 				Footer: "./src/components/overrides/Footer.astro",
 				Head: "./src/components/overrides/Head.astro",
 				Hero: "./src/components/overrides/Hero.astro",
-				LastUpdated: "./src/components/overrides/LastUpdated.astro",
 				MarkdownContent: "./src/components/overrides/MarkdownContent.astro",
 				Sidebar: "./src/components/overrides/Sidebar.astro",
-				PageSidebar: "./src/components/overrides/PageSidebar.astro",
 				PageTitle: "./src/components/overrides/PageTitle.astro",
 				SocialIcons: "./src/components/overrides/SocialIcons.astro",
-				SkipLink: "./src/components/overrides/SkipLink.astro",
 				TableOfContents: "./src/components/overrides/TableOfContents.astro",
 			},
 			sidebar,
@@ -149,4 +165,16 @@ export default defineConfig({
 		}),
 		react(),
 	],
+	vite: {
+		resolve: {
+			alias: {
+				"./Page.astro": fileURLToPath(
+					new URL("./src/components/overrides/Page.astro", import.meta.url),
+				),
+				"../components/Page.astro": fileURLToPath(
+					new URL("./src/components/overrides/Page.astro", import.meta.url),
+				),
+			},
+		},
+	},
 });

@@ -9,9 +9,13 @@ const props = z.object({
 
 const { flag } = await props.parseAsync(Astro.props);
 
-const { data } = await getEntry("compatibility-flags", flag.slug);
+const entry = await getEntry("compatibility-flags", flag.id);
 
-const { enable_flag, enable_date } = data;
+if (!entry) {
+	throw new Error("Failed to load data");
+}
+
+const { enable_flag, enable_date } = entry.data;
 ---
 
 <Aside>

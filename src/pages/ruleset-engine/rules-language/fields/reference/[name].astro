@@ -11,6 +11,10 @@ import FieldBadges from "~/components/fields/FieldBadges.tsx";
 export const getStaticPaths = (async () => {
 	const fields = await getEntry("fields", "index");
 
+	if (!fields) {
+		throw new Error("Failed to load fields");
+	}
+
 	return fields.data.entries.map((entry) => {
 		return {
 			params: {

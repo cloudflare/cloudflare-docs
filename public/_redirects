@@ -702,6 +702,22 @@
 /learning-paths/dns-filtering/deploy/policy-migration/ /learning-paths/secure-internet-traffic/understand-policies/create-list/ 301
 /learning-paths/dns-filtering/deploy/next-steps/ /learning-paths/secure-internet-traffic/build-network-policies/ 301
 
+## landing pages
+/learning-paths/application-security/ /learning-paths/application-security/account-security/ 301
+/learning-paths/cybersafe/ /learning-paths/cybersafe/concepts/ 301
+/learning-paths/get-started-free/ /learning-paths/get-started-free/onboarding/ 301
+/learning-paths/get-started/ /learning-paths/get-started/concepts/ 301
+/learning-paths/load-balancing/ /learning-paths/load-balancing/concepts/ 301
+/learning-paths/mtls/ /learning-paths/mtls/concepts/ 301
+/learning-paths/personal-website/ /learning-paths/personal-website/concepts/ 301
+/learning-paths/prevent-ddos-attacks/ /learning-paths/prevent-ddos-attacks/concepts/ 301
+/learning-paths/replace-vpn/ /learning-paths/replace-vpn/concepts/ 301
+/learning-paths/secure-internet-traffic/ /learning-paths/secure-internet-traffic/concepts/ 301
+/learning-paths/secure-o365-email/ /learning-paths/secure-o365-email/concepts/ 301
+/learning-paths/workers/ /learning-paths/workers/concepts/ 301
+/learning-paths/zero-trust-web-access/ /learning-paths/zero-trust-web-access/concepts/ 301
+
+
 # more redirects in the /dynamic/ section
 
 # load-balancing

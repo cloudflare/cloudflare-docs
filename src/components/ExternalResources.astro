@@ -15,6 +15,10 @@ const { type, tags, products, cloudflareOnly } = props.parse(Astro.props);
 
 const resources = await getEntry(type, "index");
 
+if (!resources) {
+	throw new Error("Failed to load data");
+}
+
 const filtered = resources.data.entries.filter((entry) => {
 	return (
 		(cloudflareOnly ? entry.cloudflare : true) &&

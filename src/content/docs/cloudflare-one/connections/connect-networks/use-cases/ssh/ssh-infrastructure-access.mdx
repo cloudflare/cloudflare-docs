@@ -78,7 +78,7 @@ Users can use any SSH client to connect to the target, as long as they are logge
 ssh <username>@<target IP>
 ```
 
-SSH with Access for Infrastructure also supports `scp` and `rsync` commands. At this time, `sftp` is not supported.
+SSH with Access for Infrastructure also supports `scp` and `rsync` commands. At this time, `sftp` is not supported. Note that `scp` commands that utilize OpenSSH versions > 9.0 will not work at this time because OpenSSH 9.0+ leverages `sftp` to execute the command.
 
 To learn more about user connections, refer to the [Access for Infrastructure documentation](/cloudflare-one/applications/non-http/infrastructure-apps/#4-connect-as-a-user).
 
@@ -131,3 +131,5 @@ To manually retrieve logs:
 2. Select a user who was allowed to access the target.
 3. Select **Download** to download the session's command log.
 4. <Render file="ssh/decrypt-ssh-log" />
+
+Enterprise customers can also export command logs using [Logpush](/cloudflare-one/insights/logs/logpush/).
