@@ -193,7 +193,7 @@ If you added a [multi-level subdomain](/cloudflare-one/connections/connect-netwo
 
 The default global Cloudflare root certificate expires on 2025-02-02. If you installed the default Cloudflare certificate before 2024-10-17, you must [generate a new certificate](/cloudflare-one/connections/connect-devices/user-side-certificates/#generate-a-cloudflare-root-certificate) and activate it for your Zero Trust organization to avoid inspection errors. If you did not generate a new certificate before February 2, 2025, you will encounter browser warnings like `Your connection is not private`.
 
-Starting with WARP client version 2024.12.554.0 and later, the WARP client will automatically install Cloudflare certificates in an end-user device's certificate store as soon as the Cloudflare certificates appears as **Available** in the Cloudflare dashboard.
+Starting with WARP client version 2024.12.554.0 and later, the WARP client will automatically install Cloudflare certificates in an end-user device's certificate store as soon as the Cloudflare certificates appear as **Available** in the Cloudflare dashboard.
 
 For WARP client versions prior to 2024.12.554.0, certificates had to be marked as **In-Use** in the Cloudflare dashboard before the WARP client could push the Cloudflare certificates to an end-user device's certificate store.
 
@@ -206,7 +206,7 @@ For WARP client versions before and after 2024.12.554.0, certificate propagation
 1. In [Zero Trust](https://one.dash.cloudflare.com/), go to **Settings** > **WARP Client**.
 2. Turn on **Install CA to system certificate store**.
 
-If **Install CA to system certificate store** is toggled off, you must [manually install the certificate](/cloudflare-one/connections/connect-devices/user-side-certificates/manual-deployment/), use an [MDM solution](/cloudflare-one/connections/connect-devices/user-side-certificates/manual-deployment/#mobile-device-management-mdm-software) to distribute the Cloudflare certificate to your fleet of devices, or not use the Cloudflare certificate because you do not want to have TLS decryption enabled. [TLS decryption](/cloudflare-one/policies/gateway/http-policies/tls-decryption/) must be enabled to enforce Gateway HTTP policies for HTTPS traffic.
+If **Install CA to system certificate store** is turned off, you must [manually install the certificate](/cloudflare-one/connections/connect-devices/user-side-certificates/manual-deployment/), use an [MDM solution](/cloudflare-one/connections/connect-devices/user-side-certificates/manual-deployment/#mobile-device-management-mdm-software) to distribute the Cloudflare certificate to your fleet of devices, or not use the Cloudflare certificate because you do not want to have TLS decryption enabled. [TLS decryption](/cloudflare-one/policies/gateway/http-policies/tls-decryption/) must be enabled to enforce Gateway HTTP policies for HTTPS traffic.
 
 After enabling certificate propagation, you must update your certificate:
 
@@ -232,7 +232,7 @@ After confirming that the certificate is installed and trusted on the end-user d
 1. In [Zero Trust](https://one.dash.cloudflare.com/), go to **Settings** > **Resources**, then select **Manage** next to **Cloudflare certificates**.
 2. Select a certificate.
 3. In the detailed menu under **Basic Information**, select **Confirm and turn on certificate**.
-4. Once turned on, the new certificate will now show as **In-Use** within the dashboard. **In-Use** indicates that the certificate is being used for inspection.
+4. Once turned on, the new certificate will now show as **In-Use** in Zero Trust. **In-Use** indicates that the certificate is being used for inspection.
 
 It is recommended to have end users disconnect and reconnect WARP to expedite this change being reflected on their local machine. To verify the new certificate is being used correctly:
 
