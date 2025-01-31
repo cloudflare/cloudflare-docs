@@ -37,7 +37,7 @@ This tutorial contains configuration information and a sample template for using
 - **PFS group**
   - DH group 20 (348-bit random ECP group)
 
-## Configuration template
+## Configuration template (VyOS 1.4)
 
 ```bash
 set interfaces vti <name of the vti interface> address
@@ -71,4 +71,92 @@ set vpn ipsec site-to-site peer <CF_ANYCAST_IP> ikev2-reauth 'no'
 set vpn ipsec site-to-site peer <CF_ANYCAST_IP> local-address '<IP_ADDR_OF_UPLINK_INTF_TO_INTERNET/WAN>'
 set vpn ipsec site-to-site peer <CF_ANYCAST_IP> vti bind '<NAME_OF_VTI_INTERFACE>'
 set vpn ipsec site-to-site peer <CF_ANYCAST_IP> vti esp-group '<NAME_OF_ESP_GROUP>'
+```
+
+## Configuration template (VyOS 1.5)
+The below template uses bash variables to simplify configuration and deployment.
+
+```bash
+# Configure IKE/ESP group names that will be created - Check these are not already in use
+IKE_GROUP_NAME=IKE_CF_GROUP
+ESP_GROUP_NAME=ESP_CF_GROUP
+# Configure Cloudflare Anycast IPs
+CF_MWAN_1_IP_REMOTE=162.159.x.y
+CF_MWAN_2_IP_REMOTE=172.64.x.y
+# Configure IP used for WAN/Uplink
+CF_MWAN_1_IP_LOCAL=123.123.123.1
+CF_MWAN_2_IP_LOCAL=123.123.123.2
+# Configure VTI interface names (eg. vti0)
+CF_MWAN_1_VTI_IF=vtiX
+CF_MWAN_2_VTI_IF=vtiY
+# Configure WAN interfaces for IPSEC (eg. eth0)
+CF_MWAN_1_WAN_IF=ethX
+CF_MWAN_2_WAN_IF=ethY
+# Configure IP address to assign to the VTI interfaces, should be the high IP of the /31 assigned
+CF_MWAN_1_VTI_IP=169.254.241.1/31
+CF_MWAN_2_VTI_IP=169.254.241.3/31
+# Configure PSK for IPSEC
+CF_MWAN_1_PSK=topsecret
+CF_MWAN_2_PSK=topsecret
+# Configure IPSEC ID
+CF_MWAN_1_ID=ipsec@abc.xyz.ipsec.cloudflare.com
+CF_MWAN_2_ID=ipsec@def.xyz.ipsec.cloudflare.com
+
+# Apply configuration using variables defined above
+set interfaces vti $CF_MWAN_1_VTI_IF address "$CF_MWAN_1_VTI_IP"
+set interfaces vti $CF_MWAN_1_VTI_IF description "Magic WAN - $CF_MWAN_1_IP_REMOTE"
+set interfaces vti $CF_MWAN_1_VTI_IF ip adjust-mss '1350'
+set interfaces vti $CF_MWAN_1_VTI_IF ip source-validation 'disable'
+set interfaces vti $CF_MWAN_1_VTI_IF mtu '1450'
+set interfaces vti $CF_MWAN_2_VTI_IF address "$CF_MWAN_2_VTI_IP"
+set interfaces vti $CF_MWAN_2_VTI_IF description "Magic WAN - $CF_MWAN_2_IP_REMOTE"
+set interfaces vti $CF_MWAN_2_VTI_IF ip adjust-mss '1350'
+set interfaces vti $CF_MWAN_2_VTI_IF ip source-validation 'disable'
+set interfaces vti $CF_MWAN_2_VTI_IF mtu '1450'
+set vpn ipsec authentication psk CF_MWAN_1 id "$CF_MWAN_1_ID"
+set vpn ipsec authentication psk CF_MWAN_1 id "$CF_MWAN_1_IP_REMOTE"
+set vpn ipsec authentication psk CF_MWAN_1 secret "$CF_MWAN_1_PSK"
+set vpn ipsec authentication psk CF_MWAN_2 id "$CF_MWAN_2_ID"
+set vpn ipsec authentication psk CF_MWAN_2 id "$CF_MWAN_2_IP_REMOTE"
+set vpn ipsec authentication psk CF_MWAN_2 secret "$CF_MWAN_2_PSK"
+set vpn ipsec esp-group $ESP_GROUP_NAME lifetime '86400'
+set vpn ipsec esp-group $ESP_GROUP_NAME mode 'tunnel'
+set vpn ipsec esp-group $ESP_GROUP_NAME pfs 'enable'
+set vpn ipsec esp-group $ESP_GROUP_NAME proposal 1 encryption 'aes256gcm128'
+set vpn ipsec esp-group $ESP_GROUP_NAME proposal 1 hash 'sha512'
+set vpn ipsec ike-group $IKE_GROUP_NAME close-action 'start'
+set vpn ipsec ike-group $IKE_GROUP_NAME dead-peer-detection action 'restart'
+set vpn ipsec ike-group $IKE_GROUP_NAME dead-peer-detection interval '30'
+set vpn ipsec ike-group $IKE_GROUP_NAME dead-peer-detection timeout '120'
+set vpn ipsec ike-group $IKE_GROUP_NAME disable-mobike
+set vpn ipsec ike-group $IKE_GROUP_NAME key-exchange 'ikev2'
+set vpn ipsec ike-group $IKE_GROUP_NAME lifetime '28800'
+set vpn ipsec ike-group $IKE_GROUP_NAME proposal 1 dh-group '20'
+set vpn ipsec ike-group $IKE_GROUP_NAME proposal 1 encryption 'aes256gcm128'
+set vpn ipsec ike-group $IKE_GROUP_NAME proposal 1 hash 'sha512'
+set vpn ipsec interface $CF_MWAN_1_WAN_IF
+set vpn ipsec interface $CF_MWAN_2_WAN_IF
+set vpn ipsec options disable-route-autoinstall
+set vpn ipsec site-to-site peer CF_MWAN_1 authentication local-id "$CF_MWAN_1_ID"
+set vpn ipsec site-to-site peer CF_MWAN_1 authentication mode 'pre-shared-secret'
+set vpn ipsec site-to-site peer CF_MWAN_1 authentication remote-id "$CF_MWAN_1_IP_REMOTE"
+set vpn ipsec site-to-site peer CF_MWAN_1 connection-type 'initiate'
+set vpn ipsec site-to-site peer CF_MWAN_1 ike-group "$IKE_GROUP_NAME"
+set vpn ipsec site-to-site peer CF_MWAN_1 ikev2-reauth 'no'
+set vpn ipsec site-to-site peer CF_MWAN_1 local-address "$CF_MWAN_1_IP_LOCAL"
+set vpn ipsec site-to-site peer CF_MWAN_1 remote-address "$CF_MWAN_1_IP_REMOTE"
+set vpn ipsec site-to-site peer CF_MWAN_1 replay-window '0'
+set vpn ipsec site-to-site peer CF_MWAN_1 vti bind "$CF_MWAN_1_VTI_IF"
+set vpn ipsec site-to-site peer CF_MWAN_1 vti esp-group "$ESP_GROUP_NAME"
+set vpn ipsec site-to-site peer CF_MWAN_2 authentication local-id "$CF_MWAN_2_ID"
+set vpn ipsec site-to-site peer CF_MWAN_2 authentication mode 'pre-shared-secret'
+set vpn ipsec site-to-site peer CF_MWAN_2 authentication remote-id "$CF_MWAN_2_IP_REMOTE"
+set vpn ipsec site-to-site peer CF_MWAN_2 connection-type 'initiate'
+set vpn ipsec site-to-site peer CF_MWAN_2 ike-group "$IKE_GROUP_NAME"
+set vpn ipsec site-to-site peer CF_MWAN_2 ikev2-reauth 'no'
+set vpn ipsec site-to-site peer CF_MWAN_2 local-address "$CF_MWAN_2_IP_LOCAL"
+set vpn ipsec site-to-site peer CF_MWAN_2 remote-address "$CF_MWAN_2_IP_REMOTE"
+set vpn ipsec site-to-site peer CF_MWAN_2 replay-window '0'
+set vpn ipsec site-to-site peer CF_MWAN_2 vti bind "$CF_MWAN_2_VTI_IF"
+set vpn ipsec site-to-site peer CF_MWAN_2 vti esp-group "$ESP_GROUP_NAME"
 ```
