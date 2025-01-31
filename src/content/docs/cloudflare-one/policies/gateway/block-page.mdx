@@ -17,7 +17,7 @@ Gateway supports custom block pages for DNS and HTTP policies.
 
 ## Prerequisites
 
-In order to display the block page as the URL of the blocked domain, your devices must have a [Cloudflare certificate](/cloudflare-one/connections/connect-devices/user-side-certificates/manual-deployment/) installed. Enterprise users can also [deploy their own root CA certificate](/cloudflare-one/connections/connect-devices/user-side-certificates/custom-certificate/).
+In order to display the block page as the URL of the blocked domain, your devices must have a [Cloudflare certificate](/cloudflare-one/connections/connect-devices/user-side-certificates/manual-deployment/) installed. Enterprise users can also [deploy their own root CA certificate](/cloudflare-one/connections/connect-devices/user-side-certificates/custom-certificate/). If you do not install a certificate, the block page [will not display correctly](#certificate-warning).
 
 ## Turn on the block page
 
@@ -57,13 +57,18 @@ You can add a Mailto link to your custom block page, which allows users to direc
 
 ## Limitations
 
+### Certificate warning
+
+If your users receive a security risk warning in their browser when visiting a blocked page, check that you have correctly [installed a certificate](/cloudflare-one/connections/connect-devices/user-side-certificates/manual-deployment/) on their devices. If a certificate is not installed or the installed certificate is invalid or expired, your user's browser may:
+
+- Display an **HTTP Response Code: 526** error page, indicating an insecure upstream.
+- Close the connection and fail to display any pages.
+
+For more information on fixing certificate issues, refer to [Troubleshooting](/cloudflare-one/faq/troubleshooting/#as-of-february-2-2025-my-end-user-devices-browser-is-returning-a-your-connection-is-not-private-warning).
+
 ### Third-party filtering conflict
 
 <Render file="gateway/third-party-warning" />
-
-### Certificate warning
-
-If your users receive a security risk warning in their browser when visiting a blocked page, check that you have correctly [installed a certificate](/cloudflare-one/connections/connect-devices/user-side-certificates/manual-deployment/) on their devices.
 
 ### Data center and IP address matching
 
