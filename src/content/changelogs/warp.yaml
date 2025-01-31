@@ -28,7 +28,7 @@ entries:
   - publish_date: "2025-01-28"
     title: WARP client for Windows (version 2025.1.447.1)
     description: |-
-      A new beta release for the Windows WARP client is now available on the [Downloads page](/cloudflare-one/connections/connect-devices/warp/download-warp/beta-releases). This release contains only improvements.
+      A new beta release for the Windows WARP client is now available on the [Downloads page](/cloudflare-one/connections/connect-devices/warp/download-warp/beta-releases/). This release contains only improvements.
 
       **Changes and improvements**
       - Improved command line interface for Access for Infrastructure with added function for filtering and ordering.
