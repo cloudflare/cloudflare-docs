@@ -91,6 +91,6 @@ Now that you have configured your tunnels, the next step is to create a site. <R
 
 ## Next steps
 
-Now that you have set up your tunnel endpoints, you need to configure <GlossaryTooltip term="static route" link="/magic-wan/configuration/manually/how-to/configure-static-routes/">static routes</GlossaryTooltip> to route your traffic through Cloudflare.
+- Now that you have set up your tunnel endpoints, you need to configure <GlossaryTooltip term="static route" link="/magic-wan/configuration/manually/how-to/configure-static-routes/">static routes</GlossaryTooltip> to route your traffic through Cloudflare. <br /> If you are connecting to Cloudflare through a [Direct CNI connection](/network-interconnect/express-cni/), you can [configure BGP routing](/magic-wan/configuration/manually/how-to/bgp-peering/) instead.
 
-If you are connecting to Cloudflare through a [Direct CNI connection](/network-interconnect/express-cni/), you can [configure BGP routing](/magic-wan/configuration/manually/how-to/bgp-peering/) instead.
+- After configuring either static routes or BGP routing, you will have to [set up a site](/magic-wan/configuration/common-settings/sites/).
