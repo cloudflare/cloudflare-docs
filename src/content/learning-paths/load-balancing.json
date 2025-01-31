@@ -1,6 +1,6 @@
 {
 	"title": "Load balancing",
-	"path": "/learning-paths/load-balancing/",
+	"path": "/learning-paths/load-balancing/concepts/",
 	"priority": 2,
 	"description": "Maximize application performance and availability.",
 	"products": ["Load balancing"],

@@ -55,7 +55,7 @@ Delivery is counted by HTTP requests for video segments or parts of the MP4. The
 - Content played from client-side/browser cache is not billable, like a short looping video. Some mobile app player libraries do not cache HLS segments by default.
 - MP4 Downloads are billed by percentage of the file delivered.
 
-HLS and DASH playback is rounded to the segment length. For uploaded content, HLS and DASH segments are four seconds. Live broadcast segments are determined by the keyframe interval or GOP size.
+Minutes delivered for web playback (HLS and DASH) are rounded to the _segment_ length: for uploaded content, segments are four seconds. Live broadcast and recording segments are determined by the keyframe interval or GOP size of the original broadcast.
 
 ## Example scenarios
 

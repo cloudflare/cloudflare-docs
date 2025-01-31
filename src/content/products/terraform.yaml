@@ -7,11 +7,11 @@ product:
 
 meta:
   title: Cloudflare Terraform docs
-  description: 
-    Manage your edge using the same familiar tools you use to automate the 
-    rest of your infrastructure, with Cloudflare’s Terraform provider. 
-    Define and store configuration in source code repositories like GitHub, 
-    track and version changes over time, and roll back when needed — all 
+  description:
+    Manage your edge using the same familiar tools you use to automate the
+    rest of your infrastructure, with Cloudflare's Terraform provider.
+    Define and store configuration in source code repositories like GitHub,
+    track and version changes over time, and roll back when needed — all
     without needing to learn the Cloudflare APIs.
   author: "@cloudflare"
 
@@ -20,7 +20,7 @@ externals:
     url: https://github.com/cloudflare/terraform-provider-cloudflare
   - title: Cloudflare in the Terraform registry
     url: https://registry.terraform.io/providers/cloudflare/cloudflare/latest/docs/resources/record
-  - title: Hashicorp Cloudflare integration
+  - title: HashiCorp Cloudflare integration
     url: https://www.hashicorp.com/integrations/cloudflare/terraform
   - title: Terraform homepage
     url: https://www.terraform.io/

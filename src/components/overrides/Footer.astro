@@ -68,8 +68,7 @@ const homepageLegalLinks = Object.entries({
 	Trademark: "https://www.cloudflare.com/trademark/",
 });
 
-const isHomepage =
-	Astro.props.siteTitleHref === "/" && Astro.props.id === ".md";
+const isHomepage = Astro.props.id === "";
 
 let isProduction = false;
 

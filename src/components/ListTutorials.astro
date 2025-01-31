@@ -18,7 +18,7 @@ const tutorials = await getCollection("docs", (entry) => {
 		// pcx_content_type: tutorial
 		entry.data.pcx_content_type === "tutorial" &&
 		// /src/content/r2/**/*.mdx
-		(entry.slug.startsWith(`${currentSection}/`) ||
+		(entry.id.startsWith(`${currentSection}/`) ||
 			// products: [R2]
 			entry.data.products?.some(
 				(v: string) => v.toUpperCase() === productTitle.toUpperCase(),
@@ -32,11 +32,16 @@ type FinalTutorials = {
 	data: InferEntrySchema<"docs"> | VideoEntry;
 }[];
 const finalTutorials: FinalTutorials = tutorials.map((x) => ({
-	slug: x.slug,
+	slug: x.id,
 	data: x.data,
 }));
 
 const videos = await getEntry("videos", "index");
+
+if (!videos) {
+	throw new Error("Failed to load data");
+}
+
 const filteredVideos = videos.data.entries.filter((x) =>
 	x.products.some(
 		(v: string) => v.toUpperCase() === productTitle.toUpperCase(),

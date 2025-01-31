@@ -15,7 +15,7 @@ caption file.
 
 To create or modify a caption on a video a [Cloudflare API Token](https://www.cloudflare.com/a/account/my-account) is required.
 
-The `<LANGUAGE_TAG>` must adhere to the [BCP 47 format](http://www.unicode.org/reports/tr35/#Unicode_Language_and_Locale_Identifiers). For convenience, the most common
+The `<LANGUAGE_TAG>` must adhere to the [BCP 47 format](http://www.unicode.org/reports/tr35/#Unicode_Language_and_Locale_Identifiers). For convenience, many common
 language codes are provided [at the bottom of this document](#most-common-language-codes).
 If the language you are adding isn't included in the table, you can find the value
 through the [The IANA registry](https://www.iana.org/assignments/language-subtag-registry/language-subtag-registry), which maintains a list of language codes. To find the
@@ -45,19 +45,34 @@ Generated captions use artificial intelligence based speech-to-text technology
 to generate closed captions for your videos.
 
 A video must be uploaded and in a ready state before captions can be generated.
-In the following example URLs, the video’s UID is referenced as \<VIDEO\_UID>.
+In the following example URLs, the video's UID is referenced as `<VIDEO_UID>`.
 To receive webhooks when a video transitions to ready after upload, follow the
 instructions provided [here](/stream/manage-video-library/using-webhooks/).
 
-Only English language caption generation is currently supported.
+Captions can be generated for the following languages:
 
-Videos may include several language captions, but each language must be unique.
+- `cs` - Czech
+- `nl` - Dutch
+- `en` - English
+- `fr` - French
+- `de` - German
+- `it` - Italian
+- `ja` - Japanese
+- `ko` - Korean
+- `pl` - Polish
+- `pt` - Portuguese
+- `ru` - Russian
+- `es` - Spanish
+
+When generating captions, generate them for the spoken language in the audio.
+
+Videos may include captions for several languages, but each language must be unique.
 For example, a video may have English, French, and German captions associated
 with it, but it cannot have two English captions. If you have already uploaded
 an English language caption for a video, you must first delete it in order to
 create an English generated caption. Instructions on how to delete a caption can be found below.
 
-The \<LANGUAGE\_TAG> must adhere to the BCP 47 format. The tag for English is `en`.
+The `<LANGUAGE_TAG>` must adhere to the BCP 47 format. The tag for English is `en`.
 You may specify a region in the tag, such as `en-GB`, which will render a label
 that shows `British English` for the caption.
 
@@ -171,7 +186,7 @@ https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/stream/<VIDEO_UID>/ca
 
 ### Example response to get the caption file for a video
 
-```bash
+``` text
 WEBVTT
 
 1
