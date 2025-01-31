@@ -17,7 +17,7 @@ entries:
       - Fixed client connectivity issues when switching between managed network profiles that use different WARP protocols.
       - Improved OS version posture checks on macOS for greater reliability and availability.
       - Added support for WARP desktop to use additional DoH endpoints to help reduce NAT congestion.
-      - Improved Wireguard connection stability on reconnections.
+      - Improved WireGuard connection stability on reconnections.
       - Added additional HTTP/3 QUIC connectivity test to `warp-diag`.
 
       **Known issues**
