@@ -34,7 +34,7 @@
 		"@astrojs/starlight-tailwind": "3.0.0",
 		"@astrojs/tailwind": "5.1.5",
 		"@cloudflare/puppeteer": "0.0.14",
-		"@cloudflare/vitest-pool-workers": "0.6.0",
+		"@cloudflare/vitest-pool-workers": "0.6.11",
 		"@cloudflare/workers-types": "4.20250121.0",
 		"@codingheads/sticky-header": "1.0.2",
 		"@expressive-code/plugin-collapsible-sections": "0.40.1",
