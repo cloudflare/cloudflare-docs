@@ -2,20 +2,6 @@
 {}
 ---
 
-import { TabItem, Tabs } from "~/components";
+import { PackageManagers } from "~/components";
 
-<Tabs> <TabItem label="npm">
-
-```sh
-npm create cloudflare@latest
-```
-
-</TabItem>
-
-<TabItem label="yarn">
-
-```sh
-yarn create cloudflare@latest
-```
-
-</TabItem> </Tabs>
+<PackageManagers type="create" pkg="cloudflare@latest" />

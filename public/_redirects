@@ -290,7 +290,7 @@
 /d1/reference/client-api/ /d1/worker-api/ 301
 /d1/reference/environments/ /d1/configuration/environments/ 301
 /d1/reference/metrics-analytics/ /d1/observability/metrics-analytics/ 301
-/d1/reference/wrangler-commands/ / /d1/wrangler-commands/ 301
+/d1/reference/wrangler-commands/ /d1/wrangler-commands/ 301
 /d1/how-to/ /d1/best-practices/ 301
 /d1/how-to/query-databases/ /d1/best-practices/query-d1/ 301
 /d1/how-to/using-indexes/ /d1/best-practices/use-indexes/ 301
@@ -399,6 +399,7 @@
 /durable-objects/api/transactional-storage-api/ /durable-objects/api/storage-api/ 301
 /durable-objects/platform/changelog/ /durable-objects/changelog/ 301
 /durable-objects/glossary/ /durable-objects/reference/glossary/ 301
+/durable-objects/get-started/walkthrough/ /durable-objects/get-started/tutorial/ 301
 
 # email-routing
 /email-routing/enable-email-routing/ /email-routing/get-started/enable-email-routing/ 301
