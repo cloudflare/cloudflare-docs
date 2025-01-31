@@ -212,20 +212,6 @@ Third-party tools can sometimes fail to return correct DNS results if a recursiv
 
 ---
 
-## No A, AAAA or CNAME record found?
-
-`No A, AAAA or CNAME record found` means the Cloudflare **DNS** app lacks proper records for DNS resolution.
-
-[Add the missing DNS records](/dns/manage-dns-records/how-to/create-dns-records) to your domain.
-
-:::note
-
-Sites generally have at least an `A` record that points to the origin
-server IP address, typically for the `www` subdomain and the apex domain (also known as "root domain" and represented by `@`).
-:::
-
----
-
 ## Why have I received an email: Your Name Servers have Changed?
 
 For domains where Cloudflare hosts the DNS, Cloudflare continuously checks whether the domain uses Cloudflare’s nameservers for DNS resolution. If Cloudflare's nameservers are not used, the [domain status](/dns/zone-setups/reference/domain-status/) is updated from *Active* to *Moved* in the Cloudflare **Overview** app and an email is sent to the customer.
