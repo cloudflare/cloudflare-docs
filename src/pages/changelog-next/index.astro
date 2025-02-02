@@ -26,53 +26,50 @@ const props = {
 ---
 
 <StarlightPage {...props}>
-	<Header entries={notes} />
-	<div
-		class="w-full max-w-[50rem] justify-self-center px-4 md:grid md:grid-cols-[15%_auto]"
-	>
-		{
-			notes.map(async (entry) => {
-				const date = format(entry.data.date, "MMM dd, yyyy");
-				const time = format(entry.data.date, "hh:mm a");
-				const productIds = JSON.stringify(
-					entry.data.products.map((product) => product.id),
-				);
+	<Header notes={notes} />
+	{
+		notes.map(async (entry) => {
+			const date = format(entry.data.date, "MMM dd, yyyy");
+			const time = format(entry.data.date, "hh:mm a");
+			const productIds = JSON.stringify(
+				entry.data.products.map((product) => product.id),
+			);
 
-				const { Content } = await render(entry);
+			const { Content } = await render(entry);
 
-				return (
-					<>
-						<div class="!mt-0" data-products={productIds}>
-							<p class="md:content-center md:pr-4 md:text-right md:leading-none">
-								<strong class="text-xs">{date}</strong>
-								<span class="text-xs">{time}</span>
-							</p>
-						</div>
-						<Steps>
-							<ol class="!mt-0 overflow-x-auto" data-products={productIds}>
-								<li class="!pb-16">
-									<div>
+			return (
+				<div class="!mt-0 sm:flex" data-products={productIds}>
+					<time
+						datetime={entry.data.date.toISOString()}
+						class="whitespace-nowrap leading-none sm:pr-4 sm:text-right"
+					>
+						<strong class="text-xs">{date}</strong>
+						<span class="text-xs sm:block">{time}</span>
+					</time>
+					<Steps>
+						<ol class="!mt-0 overflow-x-auto">
+							<li class="!pb-16">
+								<div>
+									<h3 class="leading-none">
 										<a
 											href={`/changelog-next/${entry.id}/`}
-											class="no-underline hover:underline"
+											class="mb-4 !text-black no-underline hover:underline"
 										>
-											<h3 class="mb-4 !leading-[36px] text-black">
-												{entry.data.title}
-											</h3>
+											{entry.data.title}
 										</a>
-										<ProductPills products={entry.data.products} />
-									</div>
-									<p>
-										<Content />
-									</p>
-								</li>
-							</ol>
-						</Steps>
-					</>
-				);
-			})
-		}
-	</div>
+									</h3>
+									<ProductPills products={entry.data.products} />
+								</div>
+								<p>
+									<Content />
+								</p>
+							</li>
+						</ol>
+					</Steps>
+				</div>
+			);
+		})
+	}
 </StarlightPage>
 
 <script>
@@ -111,30 +108,9 @@ const props = {
 
 <style>
 	:root {
-		--sl-content-width: 100% !important;
-
-		.sl-markdown-content
-			:not(a, strong, em, del, span, input, code, br)
-			+ :not(
-				a,
-				strong,
-				em,
-				del,
-				span,
-				input,
-				code,
-				br,
-				:where(.not-content *)
-			) {
-			margin-top: 1.5rem;
-		}
-
-		.sl-markdown-content {
-			margin-top: 0px !important;
-		}
-
-		.content-panel {
-			padding: 0px !important;
+		.sl-container {
+			--sl-content-width: 50rem !important;
+			margin-inline: auto !important;
 		}
 
 		.feedback-prompt-content {
@@ -142,21 +118,21 @@ const props = {
 		}
 
 		#footer-links {
-			justify-self: center;
+			justify-content: center;
 		}
+	}
 
-		.sl-steps {
-			--bullet-size: 24px !important;
+	.sl-steps {
+		--bullet-size: 24px !important;
 
-			& > li {
-				padding-inline-start: calc(var(--bullet-size) + 2.5rem) !important;
+		& > li {
+			padding-inline-start: calc(var(--bullet-size) + 2.5rem) !important;
 
-				&::before {
-					content: "•" !important;
-					font-size: calc(var(--bullet-size) * 2) !important;
-					line-height: calc(var(--bullet-size) / 1.5) !important;
-					color: var(--orange-accent-200) !important;
-				}
+			&::before {
+				content: "•" !important;
+				font-size: calc(var(--bullet-size) * 2) !important;
+				line-height: calc(var(--bullet-size) / 1.5) !important;
+				color: var(--orange-accent-200) !important;
 			}
 		}
 	}

@@ -10,7 +10,7 @@ export const GET: APIRoute = async () => {
 	return rss({
 		title: "Changelogs",
 		description: `Cloudflare changelogs`,
-		site: "https://developers.cloudflare.com",
+		site: "https://developers.cloudflare.com/changelog-next/",
 		items: notes.map((entry) => {
 			return {
 				title: entry.data.title,

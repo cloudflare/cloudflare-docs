@@ -40,61 +40,37 @@ const props = {
 
 <StarlightPage {...props}>
 	<Header />
-	<div class="w-full max-w-[50rem] justify-self-center px-4">
-		<div class="!mt-0 mb-10">
-			<a href="/changelog-next/" class="no-underline">
-				<span class="text-accent">← </span>
-				<span class="text-black">Back to all posts</span>
-			</a>
+	<div class="mt-0! mb-10">
+		<a href="/changelog-next/" class="no-underline">
+			<span class="text-accent">← </span>
+			<span class="text-black">Back to all posts</span>
+		</a>
+	</div>
+	<div>
+		<h2>{note.data.title}</h2>
+		<div>
+			<strong
+				>{format(note.data.date, "MMM dd, yyyy")}, {
+					format(note.data.date, "hh:mm a")
+				}</strong
+			>
+			<ProductPills products={note.data.products} />
 		</div>
-		<div class="w-full justify-self-center">
-			<h2>{note.data.title}</h2>
-			<div>
-				<strong
-					>{format(note.data.date, "MMM dd, yyyy")}, {
-						format(note.data.date, "hh:mm a")
-					}</strong
-				>
-				<ProductPills products={note.data.products} />
-			</div>
-			<div>
-				<Content />
-			</div>
+		<div>
+			<Content />
 		</div>
 	</div>
 </StarlightPage>
 
 <style>
 	:root {
-		--sl-content-width: 100% !important;
-
-		.sl-markdown-content {
-			margin-top: 0px !important;
+		.sl-container {
+			--sl-content-width: 50rem !important;
+			margin-inline: auto !important;
 		}
 
-		.content-panel {
-			padding: 0px !important;
-		}
-
-		#feedback-thumbs,
 		#footer-links {
-			justify-self: center;
-		}
-
-		.sl-markdown-content
-			:not(a, strong, em, del, span, input, code, br)
-			+ :not(
-				a,
-				strong,
-				em,
-				del,
-				span,
-				input,
-				code,
-				br,
-				:where(.not-content *)
-			) {
-			margin-top: 1.5rem;
+			justify-content: center;
 		}
 	}
 </style>
