@@ -1,4 +1,4 @@
-on:
+noon:
   push:
     branches-ignore:
       - production
