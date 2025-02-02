@@ -75,7 +75,7 @@ set vpn ipsec site-to-site peer <CF_ANYCAST_IP> vti esp-group '<NAME_OF_ESP_GROU
 ## Configuration template (VyOS 1.5)
 The below template uses bash variables to simplify configuration and deployment.
 
-This script will apply the global configuration `set vpn ipsec options disable-route-autoinstall`, if applying to an existing IPSEC enabled VyOS install, validate if this will cause issues.
+This script will apply the global configuration `set vpn ipsec options disable-route-autoinstall`, if applying to an existing IPsec enabled VyOS install, validate if this will cause issues.
 
 ```bash
 # Configure IKE/ESP group names that will be created - Check these are not already in use
