@@ -191,7 +191,7 @@ If you added a [multi-level subdomain](/cloudflare-one/connections/connect-netwo
 
 ### Why am I getting this error?
 
-The default global Cloudflare root certificate expires on 2025-02-02. If you installed the default Cloudflare certificate before 2024-10-17, you must [generate a new certificate](/cloudflare-one/connections/connect-devices/user-side-certificates/#generate-a-cloudflare-root-certificate) and activate it for your Zero Trust organization to avoid inspection errors. If you did not generate a new certificate before February 2, 2025, you will encounter browser warnings like `Your connection is not private`.
+The default global Cloudflare root certificate expired on 2025-02-02 at 16:05 UTC. If you installed the default Cloudflare certificate before 2024-10-17, you must [generate a new certificate](/cloudflare-one/connections/connect-devices/user-side-certificates/#generate-a-cloudflare-root-certificate) and activate it for your Zero Trust organization to avoid inspection errors. If you did not generate a new certificate before February 2, 2025, you will encounter browser warnings like `Your connection is not private`.
 
 Starting with WARP client version 2024.12.554.0 and later, the WARP client will automatically install Cloudflare certificates in an end-user device's certificate store as soon as the Cloudflare certificates appear as **Available** in the Cloudflare dashboard.
 
