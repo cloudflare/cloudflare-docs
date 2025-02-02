@@ -6,16 +6,6 @@ title: VyOS
 
 This tutorial contains configuration information and a sample template for using a VyOS device with an IPsec configuration.
 
-## Notes
-
-- `vti <NAME_OF_VTI_INTERFACE` - Specifies the virtual tunnel interface of the IPsec tunnel.
-- `esp-group <NAME_OF_ESP_GROUP>` - Defines the ESP group for encrypted traffic defined by the tunnel or defines a particular ESP policy or profile.
-- `ike-group <NAME_OF_IKE_GROUP>` - Defines IKE group to use for key exchanges or defines a particular IKE policy or profile.
-- The IP addresses of the IPsec tunnel interfaces on both ends of the tunnel should be a pair of private IP addresses (RFC 1918) on the same /31 or /30 subnet, essentially specifying a point-to-point link.
-- The IPsec tunnel endpoint on this VyOS router is the `<IP_ADDR_OF_UPLINK_INTF_TO_INTERNET/WAN>`.
-- The IP address of the IPsec tunnel endpoint on the Cloudflare side is the anycast IP address provided by Cloudflare.
-- This router is configured to initiate the IPsec tunnel connection.
-
 ## Configuration parameters
 
 ### Phase 1
@@ -39,9 +29,18 @@ This tutorial contains configuration information and a sample template for using
 
 ## Configuration template (VyOS 1.4)
 
+### Notes
+
+- `vti <NAME_OF_VTI_INTERFACE` - Specifies the virtual tunnel interface of the IPsec tunnel.
+- `esp-group <NAME_OF_ESP_GROUP>` - Defines the ESP group for encrypted traffic defined by the tunnel or defines a particular ESP policy or profile.
+- `ike-group <NAME_OF_IKE_GROUP>` - Defines IKE group to use for key exchanges or defines a particular IKE policy or profile.
+- The IP addresses of the IPsec tunnel interfaces on both ends of the tunnel should be a pair of private IP addresses (RFC 1918) on the same /31 or /30 subnet, essentially specifying a point-to-point link.
+- The IPsec tunnel endpoint on this VyOS router is the `<IP_ADDR_OF_UPLINK_INTF_TO_INTERNET/WAN>`.
+- The IP address of the IPsec tunnel endpoint on the Cloudflare side is the anycast IP address provided by Cloudflare.
+- This router is configured to initiate the IPsec tunnel connection.
+
 ```bash
-set interfaces vti <name of the vti interface> address
-'<PRIVATE_IP_ADDRESS_OF_IPSEC_TUNNEL_INTERFACE>'
+set interfaces vti <name of the vti interface> address '<PRIVATE_IP_ADDRESS_OF_IPSEC_TUNNEL_INTERFACE>'
 set vpn ipsec esp-group <NAME_OF_ESP_GROUP> compression 'disable'
 set vpn ipsec esp-group <NAME_OF_ESP_GROUP> lifetime '86400'
 set vpn ipsec esp-group <NAME_OF_ESP_GROUP> mode 'tunnel'
@@ -76,6 +75,8 @@ set vpn ipsec site-to-site peer <CF_ANYCAST_IP> vti esp-group '<NAME_OF_ESP_GROU
 ## Configuration template (VyOS 1.5)
 The below template uses bash variables to simplify configuration and deployment.
 
+This script will apply the global configuration `set vpn ipsec options disable-route-autoinstall`, if applying to an existing IPSEC enabled VyOS install, validate if this will cause issues.
+
 ```bash
 # Configure IKE/ESP group names that will be created - Check these are not already in use
 IKE_GROUP_NAME=IKE_CF_GROUP
@@ -102,28 +103,29 @@ CF_MWAN_2_PSK=topsecret
 CF_MWAN_1_ID=ipsec@abc.xyz.ipsec.cloudflare.com
 CF_MWAN_2_ID=ipsec@def.xyz.ipsec.cloudflare.com
 
-# Apply configuration using variables defined above
-set interfaces vti $CF_MWAN_1_VTI_IF address "$CF_MWAN_1_VTI_IP"
-set interfaces vti $CF_MWAN_1_VTI_IF description "Magic WAN - $CF_MWAN_1_IP_REMOTE"
-set interfaces vti $CF_MWAN_1_VTI_IF ip adjust-mss '1350'
-set interfaces vti $CF_MWAN_1_VTI_IF ip source-validation 'disable'
-set interfaces vti $CF_MWAN_1_VTI_IF mtu '1450'
-set interfaces vti $CF_MWAN_2_VTI_IF address "$CF_MWAN_2_VTI_IP"
-set interfaces vti $CF_MWAN_2_VTI_IF description "Magic WAN - $CF_MWAN_2_IP_REMOTE"
-set interfaces vti $CF_MWAN_2_VTI_IF ip adjust-mss '1350'
-set interfaces vti $CF_MWAN_2_VTI_IF ip source-validation 'disable'
-set interfaces vti $CF_MWAN_2_VTI_IF mtu '1450'
+### No Adjustments required below, configuration applied based on variables above
+
+# Configure global IPSEC, disable route autoinstall and enable IPSEC on WAN interfaces
+set vpn ipsec options disable-route-autoinstall
+set vpn ipsec interface $CF_MWAN_1_WAN_IF
+set vpn ipsec interface $CF_MWAN_2_WAN_IF
+
+# Configure authentication
 set vpn ipsec authentication psk CF_MWAN_1 id "$CF_MWAN_1_ID"
 set vpn ipsec authentication psk CF_MWAN_1 id "$CF_MWAN_1_IP_REMOTE"
 set vpn ipsec authentication psk CF_MWAN_1 secret "$CF_MWAN_1_PSK"
 set vpn ipsec authentication psk CF_MWAN_2 id "$CF_MWAN_2_ID"
 set vpn ipsec authentication psk CF_MWAN_2 id "$CF_MWAN_2_IP_REMOTE"
 set vpn ipsec authentication psk CF_MWAN_2 secret "$CF_MWAN_2_PSK"
+
+# Configure ESP Group
 set vpn ipsec esp-group $ESP_GROUP_NAME lifetime '86400'
 set vpn ipsec esp-group $ESP_GROUP_NAME mode 'tunnel'
 set vpn ipsec esp-group $ESP_GROUP_NAME pfs 'enable'
 set vpn ipsec esp-group $ESP_GROUP_NAME proposal 1 encryption 'aes256gcm128'
 set vpn ipsec esp-group $ESP_GROUP_NAME proposal 1 hash 'sha512'
+
+# Configure IKE Group
 set vpn ipsec ike-group $IKE_GROUP_NAME close-action 'start'
 set vpn ipsec ike-group $IKE_GROUP_NAME dead-peer-detection action 'restart'
 set vpn ipsec ike-group $IKE_GROUP_NAME dead-peer-detection interval '30'
@@ -134,9 +136,20 @@ set vpn ipsec ike-group $IKE_GROUP_NAME lifetime '28800'
 set vpn ipsec ike-group $IKE_GROUP_NAME proposal 1 dh-group '20'
 set vpn ipsec ike-group $IKE_GROUP_NAME proposal 1 encryption 'aes256gcm128'
 set vpn ipsec ike-group $IKE_GROUP_NAME proposal 1 hash 'sha512'
-set vpn ipsec interface $CF_MWAN_1_WAN_IF
-set vpn ipsec interface $CF_MWAN_2_WAN_IF
-set vpn ipsec options disable-route-autoinstall
+
+# Create vti interfaces
+set interfaces vti $CF_MWAN_1_VTI_IF address "$CF_MWAN_1_VTI_IP"
+set interfaces vti $CF_MWAN_1_VTI_IF description "Magic WAN - $CF_MWAN_1_IP_REMOTE"
+set interfaces vti $CF_MWAN_1_VTI_IF ip adjust-mss '1350'
+set interfaces vti $CF_MWAN_1_VTI_IF ip source-validation 'disable'
+set interfaces vti $CF_MWAN_1_VTI_IF mtu '1450'
+set interfaces vti $CF_MWAN_2_VTI_IF address "$CF_MWAN_2_VTI_IP"
+set interfaces vti $CF_MWAN_2_VTI_IF description "Magic WAN - $CF_MWAN_2_IP_REMOTE"
+set interfaces vti $CF_MWAN_2_VTI_IF ip adjust-mss '1350'
+set interfaces vti $CF_MWAN_2_VTI_IF ip source-validation 'disable'
+set interfaces vti $CF_MWAN_2_VTI_IF mtu '1450'
+
+# Create site-to-site configurations
 set vpn ipsec site-to-site peer CF_MWAN_1 authentication local-id "$CF_MWAN_1_ID"
 set vpn ipsec site-to-site peer CF_MWAN_1 authentication mode 'pre-shared-secret'
 set vpn ipsec site-to-site peer CF_MWAN_1 authentication remote-id "$CF_MWAN_1_IP_REMOTE"
