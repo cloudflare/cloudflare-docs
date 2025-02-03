@@ -1,0 +1,104 @@
+---
+pcx_content_type: tutorial
+title: Build MCP Server on Cloudflare Workers
+sidebar:
+  order: 1
+  group:
+    hideIndex: true
+description: Build and deploy an MCP server on Cloudflare Workers
+---
+
+# Building an MCP Server on Cloudflare Workers
+
+Model Context Protocol (MCP) is an open standard for interacting with AI services and applications. MCP is like a standardized interface that LLMs can use to connect to various data sources and tools. With Cloudflare Workers, you can easily build and deploy an MCP server that grants AI assistants access to your service’s functionality.
+
+## Why Build an MCP Server on Cloudflare Workers?
+
+Using Cloudflare Workers to run your MCP server offers several key benefits:
+
+- **Minimal setup & built-in boilerplate:** Workers automatically handle API routing, server management, and protocol compliance. The [workers-mcp](https://www.npmjs.com/package/workers-mcp) package bootstraps your MCP server, so you can focus on your service logic.
+- **Automatic documentation:** Public methods annotated with JSDoc are automatically documented and exposed as MCP tools. This means AI assistants can quickly understand how to interact with your service, making tool discovery and integration much easier.
+- **Scalability & performance:** Deploy your MCP server on Cloudflare’s global edge network so that users can make fast, performant requests from their LLMs. Cloudflare automatically handles traffic spikes and high load, ensuring your service remains responsive regardless of demand.
+- **Expand MCP Server capabilities:** Easily connect to Workers AI, D1 databases, Durable Objects, and other Cloudflare services to add more functionality to your MCP Server. 
+
+## Get Started
+
+Follow these steps to create and deploy your own MCP server on Cloudflare Workers.
+
+
+### 1. Create a New Worker Project
+
+If you haven't already, install [Wrangler](https://developers.cloudflare.com/workers/wrangler/) and log in:
+
+```bash
+npm install -g wrangler
+wrangler login
+```
+
+Initialize a new project:
+```bash
+wrangler init my-mcp-project
+cd my-mcp-project
+```
+
+### 2. Install the MCP Tooling
+Inside your project directory, install the workers-mcp package:
+
+```bash
+npm install workers-mcp
+```
+
+This package provides the tools needed to run your Worker as an MCP server.
+
+### 3. Set up the MCP Server on Workers
+Replace the contents of your src/index.ts (or index.js) with the following boilerplate code:
+
+<TypeScriptExample filename="index.ts">
+```ts
+import { WorkerEntrypoint } from 'cloudflare:workers';
+import { ProxyToSelf } from 'workers-mcp';
+
+/**
+ * Extend the Env interface to declare KV, secrets, or other bindings from your wrangler.toml.
+ */
+export interface Env {
+  // Example: MY_KV: KVNamespace
+}
+
+export default class MyWorker extends WorkerEntrypoint<Env> {
+  /**
+   * A warm, friendly greeting from your new MCP server.
+   * @param name {string} The name of the person to greet.
+   * @return {string} The greeting message.
+   */
+  sayHello(name: string) {
+    return `Hello from an MCP Worker, ${name}!`;
+  }
+
+  /**
+   * @ignore
+   */
+  async fetch(request: Request): Promise<Response> {
+    // ProxyToSelf handles MCP protocol compliance.
+    return new ProxyToSelf(this).fetch(request);
+  }
+}
+```
+</TypeScriptExample>
+
+**Note:** Every public method (like sayHello) that is annotated with JSDoc becomes an MCP tool that is discoverable by AI assistants.
+
+### 4. Deploy the MCP Server
+Update your wrangler.toml with the appropriate configuration then deploy your Worker:
+```bash
+wrangler deploy
+```
+
+Your MCP server is now deployed globally and all your public class methods are exposed as MCP tools that AI assistants can now interact with. 
+
+### Expanding the MCP Server capabilities
+Use existing Cloudflare products to expand the functionality of your MCP Server. You can: 
+- Send emails using [Email Routing](/email-routing/)
+- Capture and share website previews using [Browser Rendering](/browser-rendering/)
+- Store and manage sessions, user data, or other persistent information with [Durable Objects](/durable-objects/)
+- Query and update data using a [D1 database](/d1/)
