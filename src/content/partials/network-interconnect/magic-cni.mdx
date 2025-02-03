@@ -5,7 +5,7 @@ params:
   - legacyHCLink
 ---
 
-import { GlossaryTooltip } from "~/components";
+import { Aside, GlossaryTooltip } from "~/components";
 
 Cloudflare Network Interconnect (CNI) allows you to connect your network infrastructure directly with Cloudflare - rather than using the public Internet - for a more reliable and secure experience. With CNI, you can bring Cloudflare's full suite of network functions to your physical network edge.
 
@@ -26,13 +26,13 @@ With Direct CNI you can also setup BGP peering between your network and Cloudfla
 
 ### Bidirectional health checks
 
-Bidirectional health checks do not work when you use Direct CNI to onboard your traffic to Cloudflare. You will need to resort to the <a hred={ props.legacyHCLink }>legacy health check system</a>.
+Bidirectional health checks do not work when you use Direct CNI to onboard your traffic to Cloudflare. You will need to resort to the <a href={ props.legacyHCLink }>legacy health check system</a>.
 
 { props.magic === "Magic WAN" && (
   <>
-    :::note
-    Do not use Magic WAN Connector with Direct CNI. You can use the Connector with a [Public Peering or a Private Network Interconnection (PNI)](/network-interconnect/pni-and-peering/) if needed.
-    :::
+    <Aside>
+    Do not use Magic WAN Connector with Direct CNI. You can use the Connector with a Public Peering or a Private Network Interconnection <a href="/network-interconnect/pni-and-peering/">PNI</a> if needed.
+    </Aside>
   </>
   )
 }
@@ -43,10 +43,11 @@ With Classic CNI you need to [set up an onboarding process](/network-interconnec
 
 { props.magic === "Magic Transit" && (
   <>
-    With Classic CNI, you can create:
-
-    - **GRE tunnels over CNI**: For ingress and egress traffic. To accommodate overhead from additional headers, you will need to set the MTU size of your GRE tunnel interface to 1,476 bytes and your MSS clamp to be 1,436 bytes. These are used to backhaul data from the data center where traffic is ingested - close to the end user - to the facility with the CNI link.
-    - **CNI connections without GRE tunnels**: For ingress traffic from Cloudflare to customer device. There is no need to set <GlossaryTooltip term="maximum segment size (MSS)">MSS clamping</GlossaryTooltip>, as this supports IP packets with 1,500 bytes.
+    <p>With Classic CNI, you can create:</p>
+		<ul>
+		  <li><strong>GRE tunnels over CNI</strong>: For ingress and egress traffic. To accommodate overhead from additional headers, you will need to set the MTU size of your GRE tunnel interface to 1,476 bytes and your MSS clamp to be 1,436 bytes. These are used to backhaul data from the data center where traffic is ingested - close to the end user - to the facility with the CNI link.</li>
+		  <li><strong>CNI connections without GRE tunnels</strong>: For ingress traffic from Cloudflare to customer device. There is no need to set <GlossaryTooltip term="maximum segment size (MSS)">MSS clamping</GlossaryTooltip>, as this supports IP packets with 1,500 bytes.</li>
+		</ul>
   </>
   )
 }
