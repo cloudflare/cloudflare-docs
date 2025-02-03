@@ -12,8 +12,7 @@ entries:
         * `event.timestamp` is now `Date`, fixing a regression
         *  Fixed issue where instances without metadata were not terminated as expected
 
-      Also, this release brings the following improvements:
-        * More reliable Engine for loaded accounts
+      Also, this release makes Workflows execution more reliable for accounts with high loads.
   - publish_date: "2025-01-09"
     title: "Improved Wrangler local dev experience for step's output, matching production"
     description: |-
