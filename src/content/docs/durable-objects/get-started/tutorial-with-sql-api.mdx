@@ -14,6 +14,8 @@ This guide will instruct you through:
 - Instantiating and communicating with a Durable Object from another Worker.
 - Deploying a Durable Object and a Worker that communicates with a Durable Object.
 
+If you wish to learn more about Durable Objects, refer to [What are Durable Objects?](/durable-objects/what-are-durable-objects/).
+
 :::note[SQLite in Durable Objects Beta]
 
 The new beta version of Durable Objects is available where each Durable Object has a private, embedded SQLite database. When deploying a new Durable Object class, users can [opt-in to a SQLite storage backend](/durable-objects/best-practices/access-durable-objects-storage/#sqlite-storage-backend) in order to access new [SQL API](/durable-objects/api/sql-storage/#exec), part of Durable Objects Storage API.
@@ -138,7 +140,7 @@ export class MyDurableObject extends DurableObject {
 In the code above, you have:
 
 1. Defined a RPC method, `sayHello()`, that can be called by a Worker to communicate with a Durable Object.
-2. Accessed a Durable Object's attached storage, which is a private SQLite database only accesible to the object, using [SQL API](/durable-objects/api/sql-storage/#exec) methods (`sql.exec()`) available on `ctx.storage` .
+2. Accessed a Durable Object's attached storage, which is a private SQLite database only accessible to the object, using [SQL API](/durable-objects/api/sql-storage/#exec) methods (`sql.exec()`) available on `ctx.storage` .
 3. Returned an object representing the single row query result using `one()`, which checks that the query result has exactly one row.
 4. Return the `greeting` column from the row object result.
 

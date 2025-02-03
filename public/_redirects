@@ -290,7 +290,7 @@
 /d1/reference/client-api/ /d1/worker-api/ 301
 /d1/reference/environments/ /d1/configuration/environments/ 301
 /d1/reference/metrics-analytics/ /d1/observability/metrics-analytics/ 301
-/d1/reference/wrangler-commands/ / /d1/wrangler-commands/ 301
+/d1/reference/wrangler-commands/ /d1/wrangler-commands/ 301
 /d1/how-to/ /d1/best-practices/ 301
 /d1/how-to/query-databases/ /d1/best-practices/query-d1/ 301
 /d1/how-to/using-indexes/ /d1/best-practices/use-indexes/ 301
@@ -399,6 +399,7 @@
 /durable-objects/api/transactional-storage-api/ /durable-objects/api/storage-api/ 301
 /durable-objects/platform/changelog/ /durable-objects/changelog/ 301
 /durable-objects/glossary/ /durable-objects/reference/glossary/ 301
+/durable-objects/get-started/walkthrough/ /durable-objects/get-started/tutorial/ 301
 
 # email-routing
 /email-routing/enable-email-routing/ /email-routing/get-started/enable-email-routing/ 301
@@ -700,6 +701,22 @@
 /learning-paths/dns-filtering/deploy/phased-rollout/ /learning-paths/secure-internet-traffic/connect-devices/ 301
 /learning-paths/dns-filtering/deploy/policy-migration/ /learning-paths/secure-internet-traffic/understand-policies/create-list/ 301
 /learning-paths/dns-filtering/deploy/next-steps/ /learning-paths/secure-internet-traffic/build-network-policies/ 301
+
+## landing pages
+/learning-paths/application-security/ /learning-paths/application-security/account-security/ 301
+/learning-paths/cybersafe/ /learning-paths/cybersafe/concepts/ 301
+/learning-paths/get-started-free/ /learning-paths/get-started-free/onboarding/ 301
+/learning-paths/get-started/ /learning-paths/get-started/concepts/ 301
+/learning-paths/load-balancing/ /learning-paths/load-balancing/concepts/ 301
+/learning-paths/mtls/ /learning-paths/mtls/concepts/ 301
+/learning-paths/personal-website/ /learning-paths/personal-website/concepts/ 301
+/learning-paths/prevent-ddos-attacks/ /learning-paths/prevent-ddos-attacks/concepts/ 301
+/learning-paths/replace-vpn/ /learning-paths/replace-vpn/concepts/ 301
+/learning-paths/secure-internet-traffic/ /learning-paths/secure-internet-traffic/concepts/ 301
+/learning-paths/secure-o365-email/ /learning-paths/secure-o365-email/concepts/ 301
+/learning-paths/workers/ /learning-paths/workers/concepts/ 301
+/learning-paths/zero-trust-web-access/ /learning-paths/zero-trust-web-access/concepts/ 301
+
 
 # more redirects in the /dynamic/ section
 
@@ -1880,6 +1897,7 @@
 /waf/change-log/2021-* /waf/change-log/historical-2021/ 301
 /waf/change-log/2022-* /waf/change-log/historical-2022/ 301
 /waf/change-log/2023-* /waf/change-log/historical-2023/ 301
+/waf/change-log/2024-* /waf/change-log/historical-2024/ 301
 
 # Cloudflare for SaaS
 /ssl/ssl-for-saas/common-tasks/* /cloudflare-for-platforms/cloudflare-for-saas/ 301

@@ -22,7 +22,7 @@ sidebar:
   order: 2
 ---
 
-import { Render, TabItem, Tabs } from "~/components";
+import { Render, TabItem, Tabs, PackageManagers } from "~/components";
 
 This tutorial shows how you can build a more secure payment form using Turnstile. You can learn how to block bot access on the checkout page and trigger additional authentication flows by integrating Turnstile with Stripe.
 
@@ -49,25 +49,11 @@ To efficiently create and manage multiple APIs, let's use [`Hono`](https://hono.
 
 Open your command line interface (CLI) and run the following command:
 
-<Tabs> <TabItem label="npm">
-
-```sh
-npm create cloudflare@latest secure-payment-form -- --framework hono
-```
-
-</TabItem> <TabItem label="yarn">
-
-```sh
-yarn create cloudflare@latest secure-payment-form -- --framework hono
-```
-
-</TabItem> <TabItem label="pnpm">
-
-```sh
-pnpm create cloudflare@latest secure-payment-form -- --framework hono
-```
-
-</TabItem> </Tabs>
+<PackageManagers
+	type="create"
+	pkg="cloudflare@latest"
+	args={"secure-payment-form --framework=hono"}
+/>
 
 If this is your first time running the `C3` command, you will be asked whether you want to install it. Confirm that the package name for installation is `create-cloudflare` and answer `y`.
 

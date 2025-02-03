@@ -20,7 +20,7 @@ const data = await getEntries(products);
 	{
 		data.map((product) => (
 			<a href={product.data.product.url} class="no-underline">
-				<Badge text={product.data.product.title} class="ml-1" />
+				<Badge text={product.data.product.title} variant="tip" />
 			</a>
 		))
 	}

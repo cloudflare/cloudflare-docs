@@ -1,0 +1,45 @@
+---
+title: Transform HTML quickly with streaming content
+description: HTMLRewiter now supports streamed content for more efficient replacement of HTML elements
+products:
+  - workers
+date: 2025-01-31T01:00:00Z
+---
+
+import { Render, TypeScriptExample } from "~/components";
+
+You can now transform HTML elements with streamed content using [`HTMLRewriter`](/workers/runtime-apis/html-rewriter).
+
+Methods like `replace`, `append`, and `prepend` now accept [`Response`](/workers/runtime-apis/response/) and [`ReadableStream`](/workers/runtime-apis/streams/readablestream/)
+values as [`Content`](/workers/runtime-apis/html-rewriter/#global-types).
+
+This can be helpful in a variety of situations. For instance, you may have a Worker in front of an origin,
+and want to replace an element with content from a different source. Prior to this change, you would have to load
+all of the content from the upstream URL and convert it into a string before replacing the element. This slowed
+down overall response times.
+
+Now, you can pass the `Response` object directly into the `replace` method, and HTMLRewriter will immediately
+start replacing the content as it is streamed in. This makes responses faster.
+
+<TypeScriptExample filename="index.ts">
+```ts
+class ElementRewriter {
+	async element(element: any) {
+		// able to replace elements while streaming content
+		// the fetched body is not buffered into memory as part
+		// of the replace
+		let res = await fetch('https://upstream-content-provider.example');
+		element.replace(res);
+	}
+}
+
+export default {
+	async fetch(request, env, ctx): Promise<Response> {
+		let response = await fetch('https://site-to-replace.com');
+		return new HTMLRewriter().on('[data-to-replace]', new ElementRewriter()).transform(response);
+	},
+} satisfies ExportedHandler<Env>;
+```
+</TypeScriptExample>
+
+For more information, see the [`HTMLRewriter` documentation](/workers/runtime-apis/html-rewriter).

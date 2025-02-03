@@ -224,7 +224,7 @@ export default {
     	try {
         	bqJWT = await generateBQJWT(env);
     	} catch (e) {
-        	return new Response('An error has ocurred while generating the JWT', { status: 500 })
+        	return new Response('An error has occurred while generating the JWT', { status: 500 })
     	}
 	},
        ...
@@ -596,7 +596,7 @@ export default {
 			bqJWT = await generateBQJWT(env);
 		} catch (error) {
 			console.log(error);
-			return new Response("An error has ocurred while generating the JWT", {
+			return new Response("An error has occurred while generating the JWT", {
 				status: 500,
 			});
 		}

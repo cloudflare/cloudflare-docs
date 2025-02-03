@@ -1,6 +1,6 @@
 {
 	"title": "Deploy Zero Trust Web Access",
-	"path": "/learning-paths/zero-trust-web-access/",
+	"path": "/learning-paths/zero-trust-web-access/concepts/",
 	"priority": 2,
 	"description": "Secure access to internal web applications without a device client.",
 	"products": [
