@@ -5,6 +5,10 @@ productLink: "/browser-rendering/"
 productArea: Developer platform
 productAreaLink: /workers/platform/changelog/platform/
 entries:
+  - publish_date: "2025-01-31"
+    title: Increased limits
+    description: |-
+      * Increased the limits on the number of concurrent browsers, and browsers per minute from 2 to 10.
   - publish_date: "2024-08-08"
     title: Update puppeteer to 21.1.0
     description: |-

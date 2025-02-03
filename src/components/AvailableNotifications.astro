@@ -16,24 +16,28 @@ const props = z
 
 const { product, notificationFilter } = props.parse(Astro.props);
 
-let notificationsRaw = (await getEntry("notifications", "index"))["data"][
-	"entries"
-];
+const entry = await getEntry("notifications", "index");
+
+if (!entry) {
+	throw new Error(`[AvailableNotifications] Unable to fetch notifications`);
+}
+
+let notifications = entry.data.entries;
 
 if (product) {
-	notificationsRaw = notificationsRaw.filter(
+	notifications = notifications.filter(
 		(x) => x.associatedProducts.toLowerCase() === product.toLowerCase(),
 	);
 }
 
 if (notificationFilter) {
-	notificationsRaw = notificationsRaw.filter(
+	notifications = notifications.filter(
 		(x) => x.name.toLowerCase() === notificationFilter.toLowerCase(),
 	);
 }
 
-const notifications = Object.groupBy(
-	notificationsRaw,
+const grouped = Object.groupBy(
+	notifications,
 	(entry) => entry.associatedProducts,
 );
 
@@ -41,7 +45,7 @@ const showProductHeadings = !product && !notificationFilter;
 ---
 
 {
-	Object.entries(notifications)
+	Object.entries(grouped)
 		.sort()
 		.map(([product, entries]) => (
 			<>

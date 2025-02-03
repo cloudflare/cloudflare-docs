@@ -2,6 +2,7 @@
 import type { Props } from "@astrojs/starlight/props";
 import Default from "@astrojs/starlight/components/Footer.astro";
 import OneTrust from "../OneTrust.astro";
+import FeedbackPrompt from "../FeedbackPrompt.tsx";
 import { getEntry } from "astro:content";
 
 let links = {
@@ -68,8 +69,7 @@ const homepageLegalLinks = Object.entries({
 	Trademark: "https://www.cloudflare.com/trademark/",
 });
 
-const isHomepage =
-	Astro.props.siteTitleHref === "/" && Astro.props.id === ".md";
+const isHomepage = Astro.props.id === "";
 
 let isProduction = false;
 
@@ -124,7 +124,10 @@ if (
 			</div>
 		</>
 	) : (
-		<>
+		<div>
+			<div class="feedback-prompt">
+				<FeedbackPrompt client:idle />
+			</div>
 			<Default {...Astro.props} />
 			<div id="footer-links" class="flex flex-wrap items-center">
 				{Object.entries(links).map(([text, href]) => (
@@ -138,11 +141,29 @@ if (
 					</div>
 				)}
 			</div>
-		</>
+		</div>
 	)
 }
 
 <style>
+	.feedback-prompt {
+		h2 {
+			color: var(--sl-color-white);
+			font-size: var(--sl-text-h5);
+			font-weight: 600;
+			line-height: var(--sl-line-height-headings);
+			margin-bottom: 0.5rem;
+		}
+	}
+
+	@media (min-width: 72rem) {
+		html[data-has-toc] {
+			.feedback-prompt {
+				display: none;
+			}
+		}
+	}
+
 	.bleed {
 		box-shadow: 0 0 0 100vmax #001c43 !important;
 		clip-path: inset(0 -100vmax);

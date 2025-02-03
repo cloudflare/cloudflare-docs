@@ -739,7 +739,9 @@ wrangler secret bulk [<FILENAME>] [OPTIONS]
 ```
 
 - `FILENAME` <Type text="string" /> <MetaInfo text="optional" />
+  - A file containing either [JSON](https://www.json.org/json-en.html) or the [.env](https://www.dotenv.org/docs/security/env) format
   - The JSON file containing key-value pairs to upload as secrets, in the form `{"SECRET_NAME": "secret value", ...}`.
+  - The `.env` file containing key-value pairs to upload as secrets, in the form `SECRET_NAME=secret value`.
   - If omitted, Wrangler expects to receive input from `stdin` rather than a file.
 - `--name` <Type text="string" /> <MetaInfo text="optional" />
   - Perform on a specific Worker rather than inheriting from the `wrangler.toml / wrangler.json` file.
@@ -925,8 +927,6 @@ wrangler workflows trigger <WORKFLOW_NAME> <PARAMS> [OPTIONS]
 wrangler workflows trigger my-workflow '{"hello":"world"}'
 ```
 
-{/*
-
 ### `delete`
 
 Delete (unregister) a Workflow.
@@ -938,7 +938,7 @@ wrangler workflows delete <WORKFLOW_NAME> [OPTIONS]
 - `WORKFLOW_NAME` <Type text="string" /> <MetaInfo text="required" />
   - The name of a registered Workflow.
 
-*/}
+\*/}
 
 ## `tail`
 
@@ -1227,7 +1227,9 @@ wrangler pages secret bulk [<FILENAME>] [OPTIONS]
 ```
 
 - `FILENAME` <Type text="string" /> <MetaInfo text="optional" />
+  - A file containing either [JSON](https://www.json.org/json-en.html) or the [.env](https://www.dotenv.org/docs/security/env) format
   - The JSON file containing key-value pairs to upload as secrets, in the form `{"SECRET_NAME": "secret value", ...}`.
+  - The `.env` file containing key-value pairs to upload as secrets, in the form `SECRET_NAME=secret value`.
   - If omitted, Wrangler expects to receive input from `stdin` rather than a file.
 - `--project-name` <Type text="string" /> <MetaInfo text="optional" />
   - The name of your Pages project.
@@ -1519,7 +1521,9 @@ wrangler versions secret bulk <FILENAME> [OPTIONS]
 ```
 
 - `FILENAME` <Type text="string" /> <MetaInfo text="optional" />
+  - A file containing either [JSON](https://www.json.org/json-en.html) or the [.env](https://www.dotenv.org/docs/security/env) format
   - The JSON file containing key-value pairs to upload as secrets, in the form `{"SECRET_NAME": "secret value", ...}`.
+  - The `.env` file containing key-value pairs to upload as secrets, in the form `SECRET_NAME=secret value`.
   - If omitted, Wrangler expects to receive input from `stdin` rather than a file.
 - `--name` <Type text="string" /> <MetaInfo text="optional" />
   - Perform on a specific Worker rather than inheriting from the `wrangler.toml / wrangler.json` file.

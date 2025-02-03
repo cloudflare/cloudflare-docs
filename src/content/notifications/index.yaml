@@ -39,6 +39,13 @@ entries:
     associatedProducts: Security Center
     nextSteps: Review the domains and URLs that are potentially impersonating your brand.
     otherFilters: You can select the query that you want to be alerted on.
+  
+  - name: Security Insights
+    audience: Customers who want to receive notifications based on security insights findings.
+    availability: All Cloudflare plans.
+    associatedProducts: Security Center
+    nextSteps: Review the insight and decide whether you want to resolve it, archive it, or export it.
+    otherFilters: You can select the insight(s) you want to be alerted on.
 
   - name: Maintenance Notification
     audience: Customers interested in knowing about planned [Cloudflare maintenance](/support/troubleshooting/disruptive-maintenance/) for specific data centers. The notification lets you know when maintenance has been scheduled, changed, or canceled on an entire point of presence.

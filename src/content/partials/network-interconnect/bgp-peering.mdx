@@ -21,6 +21,24 @@ With this functionality, customers can:
 - Secure the session by MD5 authentication to prevent misconfigurations.
 - Exchange routes dynamically between their devices and their Magic routing table.
 
+## Peering with the Magic routing table
+
+For both Magic WAN and Magic Transit use cases, BGP peering is with the Magic networking routing table (as opposed to peering with the Cloudflare Internet global network).
+
+The Magic networking routing table is a virtual network overlay, private to your account, that spans all Cloudflare data centers globally. This overlay network provides:
+
+- Magic Transit packet delivery for [DoS](/ddos-protection/) and [Magic Firewall](/magic-firewall/) filtered Internet traffic, from the entry data center where the traffic ingressed, to your publicly addressed edge/border network via tunnels (GRE/IPsec) or interconnect (CNI).
+- Magic WAN packet transport between Magic tunnels, interconnects, [Cloudflare Load Balancer](/load-balancing/), and [Zero Trust](/cloudflare-one/) connections such as [WARP Client](/cloudflare-one/connections/connect-devices/warp/), [Remote Browser Isolation](/cloudflare-one/policies/browser-isolation/), [Access](/cloudflare-one/policies/access/), and [Gateway](/cloudflare-one/policies/gateway/).
+
+The Magic routing table supports IPv4 routes to:
+
+- [RFC 1918](https://datatracker.ietf.org/doc/html/rfc1918) address space
+- [BYOIP](/byoip/) public address space which you have onboarded to Cloudflare Magic Transit
+
+BGP peers configured by following this guide will receive advertisements for all prefixes in the Magic routing table plus any additional prefixes configured in the per-interconnect [Advertised prefix list](#how-to-set-up-bgp-peering).
+
+If instead you are seeking to do public peering with the Cloudflare ASN 13335 at one of the Cloudflare data centers, refer to [PNI and peering setup](/network-interconnect/pni-and-peering/). Note that it is not currently possible to share Magic network BGP peering and PNI on the same physical interconnect port.
+
 ## Route distribution and convergence
 
 Routes received from the customer device will be redistributed into the Magic routing table, which is used by both Magic WAN and Magic Transit.

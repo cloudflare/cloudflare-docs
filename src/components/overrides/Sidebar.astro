@@ -3,230 +3,29 @@ import type { Props } from "@astrojs/starlight/props";
 import Default from "@astrojs/starlight/components/Sidebar.astro";
 
 import { Icon as AstroIcon } from "astro-icon/components";
-import { getEntry } from "astro:content";
-import { Badge } from "@astrojs/starlight/components";
-import type { ComponentProps, HTMLAttributes } from "astro/types";
+import { lookupProductTitle } from "~/util/sidebar";
 
-import { rehypeExternalLinksOptions } from "~/plugins/rehype/external-links";
-
-const { sidebar, slug } = Astro.props;
-
-interface Link {
-	type: "link";
-	label: string;
-	href: string;
-	isCurrent: boolean;
-	badge: ComponentProps<typeof Badge> | undefined;
-	attrs: HTMLAttributes<"a">;
-	order: number;
-}
-type SidebarEntry = Link | Group;
-
-interface Group {
-	type: "group";
-	label: string;
-	entries: SidebarEntry[];
-	collapsed: boolean;
-	badge: ComponentProps<typeof Badge> | undefined;
-	order: number;
-}
-
-function inferBadgeVariant(badge: ComponentProps<typeof Badge>) {
-	if (badge.variant === "default") {
-		switch (badge.text) {
-			case "Beta": {
-				badge.variant = "caution";
-				break;
-			}
-			case "New": {
-				badge.variant = "note";
-				break;
-			}
-			case "Deprecated":
-			case "Legacy": {
-				badge.variant = "danger";
-				break;
-			}
-		}
-	}
-
-	return badge;
-}
-
-const currentSection = slug?.split("/")[0];
-
-let filtered = sidebar.filter(
-	(x) => x.label.toLowerCase() === currentSection,
-)[0] as Group;
-
-if (currentSection === "learning-paths") {
-	const module = slug.split("/")[1];
-	filtered.entries = filtered.entries.filter(
-		(x) => x.label.toLowerCase() === module,
-	);
-	filtered.entries = (filtered.entries[0] as Group).entries.filter(
-		(x) => x.type === "group",
-	);
-}
-
-if (!filtered.entries) {
-	throw new Error(`[Sidebar] Failed to find entries for ${currentSection}`);
-}
-
-function sortGroup(a: SidebarEntry, b: SidebarEntry): number {
-	const collator = new Intl.Collator("en");
-
-	if (a.order !== b.order) return a.order - b.order;
-
-	return collator.compare(a.label, b.label);
-}
-
-async function handleGroup(group: Group): Promise<SidebarEntry> {
-	const indexLink = group.entries.find(
-		(x) => x.type === "link" && x.href.endsWith(`/${group.label}/`),
-	) as Link | undefined;
-
-	if (!indexLink) {
-		throw new Error(`Unable to find index link in group ${group.label}`);
-	}
-
-	const indexPage = await getEntry("docs", indexLink.href.slice(1, -1));
-
-	if (!indexPage) {
-		throw new Error(`Unable to find index page with href ${indexLink}`);
-	}
-
-	const frontmatter = indexPage.data;
-
-	group.label = frontmatter.sidebar.group?.label ?? frontmatter.title;
-	group.order = frontmatter.sidebar.order ?? Number.MAX_VALUE;
-
-	if (frontmatter.sidebar.group?.badge) {
-		group.badge = inferBadgeVariant(frontmatter.sidebar.group?.badge);
-	}
-
-	if (frontmatter.hideChildren) {
-		return {
-			type: "link",
-			href: indexLink.href,
-			label: group.label,
-			order: group.order,
-			attrs: {},
-			isCurrent: Astro.url.pathname.startsWith(indexLink.href),
-		} as Link;
-	}
-
-	for (const entry of group.entries.keys()) {
-		if (group.entries[entry].type === "group") {
-			group.entries[entry] = await handleGroup(group.entries[entry] as Group);
-		} else {
-			group.entries[entry] = await handleLink(group.entries[entry] as Link);
-		}
-	}
-
-	group.entries = group.entries.sort(sortGroup);
-
-	const indexIdx = group.entries.findIndex(
-		(x) =>
-			x.type === "link" &&
-			[indexLink.href, frontmatter.external_link].includes(x.href),
-	) as number;
-
-	if (indexPage.data.sidebar.group?.hideIndex) {
-		group.entries.splice(indexIdx, 1);
-		return group;
-	}
-
-	group.entries.unshift(group.entries.splice(indexIdx, 1)[0]);
-	group.entries[0].label = indexPage.data.sidebar.label ?? "Overview";
-
-	return group;
-}
-
-async function handleLink(link: Link): Promise<Link> {
-	const slug = link.href.slice(1, -1);
-	const page = await getEntry("docs", slug);
-
-	if (!page) {
-		throw new Error(`Oops`);
-	}
-
-	const frontmatter = page.data;
-	link.order = frontmatter.sidebar.order ?? Number.MAX_VALUE;
-
-	if (link.badge) {
-		link.badge = inferBadgeVariant(link.badge);
-	}
-
-	if (slug === currentSection) {
-		link.order = 0;
-	}
-
-	if (frontmatter.external_link) {
-		return {
-			...link,
-			label: link.label.concat(rehypeExternalLinksOptions.content.value),
-			href: frontmatter.external_link,
-			badge: frontmatter.external_link.startsWith("/api")
-				? {
-						text: "API",
-						variant: "note",
-					}
-				: undefined,
-		};
-	}
-
-	return link;
-}
-
-filtered.entries = await Promise.all(
-	filtered.entries.map((entry) => {
-		if (entry.type === "group") {
-			return handleGroup(entry);
-		} else {
-			return handleLink(entry);
-		}
-	}),
-);
-
-filtered.entries = filtered.entries.sort(sortGroup);
-
-filtered.entries[0].label = "Overview";
-
-const lookupProductTitle = async (slug: string) => {
-	const segments = slug.split("/");
-	const product = segments[0];
-
-	if (product === "learning-paths") {
-		const path = segments[1];
-
-		const entryData = await getEntry("learning-paths", path);
-
-		return `${entryData?.data?.title} (Learning Paths)`;
-	}
-
-	const entryData = await getEntry("products", product);
-
-	return entryData?.data?.product?.title ?? "Unknown";
-};
+const [product, module] = Astro.url.pathname.split("/").slice(1, -1);
 ---
 
 <a
-	href={"/" + currentSection + "/"}
+	href={"/" + product + "/"}
 	class="flex items-center decoration-[color:var(--orange-accent-200)] hover:opacity-80"
 >
 	<AstroIcon
-		name={currentSection}
+		name={product}
 		class="mr-2 text-4xl text-[color:var(--orange-accent-200)]"
 	/>
 	<span class="text-black">
 		<strong>
-			{lookupProductTitle(slug)}
+			{lookupProductTitle(product, module)}
 		</strong>
 	</span>
 </a>
 <!-- @ts-expect-error sidebar props don't match as we add additional things -->
-<Default {...Astro.props} sidebar={filtered.entries}><slot /></Default>
+<Default {...Astro.props} sidebar={Astro.props.sidebar.entries}
+	><slot /></Default
+>
 
 <style is:global>
 	:root {

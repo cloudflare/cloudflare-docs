@@ -162,12 +162,6 @@ For DNS records proxied to Cloudflare, Cloudflare's IP addresses are returned in
 
 ---
 
-## Should the cloud icon beside my DNS record be orange or gray?
-
-By default, only A and CNAME records that handle web traffic (HTTP and HTTPS) can be proxied to Cloudflare. All other DNS records should be toggled to a gray cloud. For further details, refer to our [support guide](/dns/manage-dns-records/reference/proxied-dns-records).
-
----
-
 ## Can subdomains be added directly to Cloudflare?
 
 Only Enterprise customers can add subdomains directly to Cloudflare via [Subdomain Support](/dns/zone-setups/subdomain-setup/).
@@ -215,20 +209,6 @@ Third-party tools can sometimes fail to return correct DNS results if a recursiv
 - [Purging your DNS cache at OpenDNS](http://www.opendns.com/support/cache/)
 - [Purging your DNS cache at Google](https://developers.google.com/speed/public-dns/cache)
 - [Purging your DNS cache locally](https://docs.cpanel.net/knowledge-base/dns/how-to-clear-your-dns-cache/)
-
----
-
-## No A, AAAA or CNAME record found?
-
-`No A, AAAA or CNAME record found` means the Cloudflare **DNS** app lacks proper records for DNS resolution.
-
-[Add the missing DNS records](/dns/manage-dns-records/how-to/create-dns-records) to your domain.
-
-:::note
-
-Sites generally have at least an `A` record that points to the origin
-server IP address, typically for the `www` subdomain and the apex domain (also known as "root domain" and represented by `@`).
-:::
 
 ---
 

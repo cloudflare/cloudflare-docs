@@ -6,8 +6,6 @@ import { marked } from "marked";
 import { Breadcrumbs } from "astro-breadcrumbs";
 import "astro-breadcrumbs/breadcrumbs.css";
 
-import { Badge } from "@astrojs/starlight/components";
-
 import Description from "~/components/Description.astro";
 import SpotlightAuthorDetails from "~/components/SpotlightAuthorDetails.astro";
 import LastReviewed from "~/components/LastReviewed.astro";
@@ -57,8 +55,8 @@ for (let i = 0; i < segments.length; i++) {
 	let title = segments[i];
 	if (entry) {
 		title = entry.data.title;
-	} else if (i + 1 === segments.length) {
-		title = Astro.props.entry.data.title;
+	} else {
+		continue;
 	}
 
 	breadcrumbProps.crumbs.push({

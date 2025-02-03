@@ -102,7 +102,7 @@ Otherwise, your entire Workflow might not be as durable as you might think, and 
 ```ts
 export class MyWorkflow extends WorkflowEntrypoint {
 	async run(event: WorkflowEvent<Params>, step: WorkflowStep) {
-		// 🔴 Bad: you're calling two seperate services from within the same step. This might cause
+		// 🔴 Bad: you are calling two separate services from within the same step. This might cause
 		// some extra calls to the first service in case the second one fails, and in some cases, makes
 		// the step non-idempotent altogether
 		const image = await step.do("get cutest cat from KV", async () => {

@@ -5,7 +5,6 @@ import { differenceInCalendarDays } from "date-fns";
 import "tippy.js/dist/tippy.css";
 
 import { getEntry } from "astro:content";
-import { getPageDescription } from "~/util/description";
 
 const currentSection = Astro.url.pathname.split("/")[1];
 
@@ -139,14 +138,7 @@ if (currentSection) {
 	}
 }
 
-Astro.props.entry.data.description = await getPageDescription(
-	// @ts-expect-error TODO: improve types
-	Astro.props.entry,
-	Astro.locals,
-);
-
 // Adding metadata used for reporting and search indexing
-
 // content type
 if (Astro.props.entry.data.pcx_content_type) {
 	const contentType = Astro.props.entry.data.pcx_content_type;
