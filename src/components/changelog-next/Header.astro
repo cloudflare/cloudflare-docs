@@ -6,7 +6,7 @@ import { getEntry, type CollectionEntry } from "astro:content";
 import { StarlightIcon } from "..";
 import HeroImage from "~/assets/images/changelog-next/hero.svg";
 
-type Props = z.infer<typeof props>;
+type Props = z.input<typeof props>;
 
 const props = z.object({
 	notes: z.any().array().default([]),
