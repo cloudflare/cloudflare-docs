@@ -79,7 +79,7 @@ export default class MyWorker extends WorkerEntrypoint<Env> {
 
 This converts your Cloudflare Worker into an MCP server, enabling interactions with AI assistants. The key components are:
 - **WorkerEntrypoint:** The WorkerEntrypoint class handles all incoming request management and routing. This provides the structure needed to expose MCP tools within the Worker.
-- **Tool Definition:** Methods (e.g. sayHello) are annotated with JSDoc, which automatically registers the method it as an MCP tool. AI assistants can call this method dynamically, passing a name and receiving a greeting in response. Additional tools can be defined using the same pattern.
+- **Tool Definition:** Methods (for example, sayHello) are annotated with JSDoc, which automatically registers the method as an MCP tool. AI assistants can call this method dynamically, passing a name and receiving a greeting in response. Additional tools can be defined using the same pattern.
 - **ProxyToSelf:** MCP servers must follow a specific request/response format. ProxyToSelf ensures that incoming requests are properly routed to the correct MCP tools. Without this, you would need to manually parse requests and validate responses.
 
 
