@@ -9,7 +9,7 @@ entries:
     title: "Major bugfixes and improvements"
     description: |-
       With this release, some bug were fixed:
-        * `event.timestamp` is now Date, fixing a regression
+        * `event.timestamp` is now `Date`, fixing a regression
         *  Fixed issue where instances without metadata are not terminated as expected
 
       Also, this release brings the following improvements:
