@@ -10,7 +10,7 @@ entries:
     description: |-
       With this release, some bug were fixed:
         * `event.timestamp` is now `Date`, fixing a regression
-        *  Fixed issue where instances without metadata are not terminated as expected
+        *  Fixed issue where instances without metadata were not terminated as expected
 
       Also, this release brings the following improvements:
         * More reliable Engine for loaded accounts
