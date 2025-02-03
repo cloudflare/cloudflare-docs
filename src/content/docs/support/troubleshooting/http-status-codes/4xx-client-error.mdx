@@ -2,10 +2,9 @@
 pcx_content_type: troubleshooting
 source: https://support.cloudflare.com/hc/en-us/articles/115003014512-4xx-Client-Error
 title: 4xx Client Error
-
 ---
 
-import { FeatureTable, Render } from "~/components"
+import { FeatureTable, Render } from "~/components";
 
 `4xx` codes are error responses that indicate an issue on the client's end, potentially due to a network problem.
 
@@ -17,7 +16,7 @@ import { FeatureTable, Render } from "~/components"
 
 This error indicates that the client sent a request to the server that could not be understood or processed due to issues with the request itself.
 
-For more information, refer to [RFC7231](https://tools.ietf.org/html/rfc7231).
+For more information, refer to [RFC 7231](https://tools.ietf.org/html/rfc7231).
 
 ### Common use cases
 
@@ -45,12 +44,12 @@ When encountering a `401` error while using the Cloudflare API, ensure that you 
 
 ## 402 Payment Required
 
-The `402 Payment Required` status code is reserved for future use and is not yet implemented according to the standards outlined in [RFC7231](https://tools.ietf.org/html/rfc7231).
+The `402 Payment Required` status code is reserved for future use and is not yet implemented according to the standards outlined in [RFC 7231](https://tools.ietf.org/html/rfc7231).
 
 ## 403 Forbidden
 
-The `403 Forbidden` status code indicates that the clien's request was understood by the server but cannot be fulfilled due to insufficient permissions to access the requested resource. 
-For more details, refer to [RFC7231](https://tools.ietf.org/html/rfc7231).
+The `403 Forbidden` status code indicates that the client's request was understood by the server but cannot be fulfilled due to insufficient permissions to access the requested resource.
+For more details, refer to [RFC 7231](https://tools.ietf.org/html/rfc7231).
 
 ### Common use cases
 
@@ -67,12 +66,12 @@ Cloudflare may serve `403` responses in the following scenarios:
 - **WAF rules**: The request violated a default WAF managed rule (enabled for all orange-clouded Cloudflare domains) or a custom WAF managed rule specific to your zone. For more information, refer to [WAF Managed Rules](/waf/managed-rules/).
 
 - **Security features**: A `403` response with Cloudflare branding in the response body may be triggered by:
-    - [WAF Custom or Managed Rules](/waf/) with the challenge or block action
-    - [Security Level](/waf/tools/security-level/) settings, which default to Medium.
-    - [DDoS Protection](/ddos-protection/), which is enabled by default on zones onboarded to Cloudflare, IP applications onboarded to Spectrum, and IP Prefixes onboarded to Magic Transit.
-    - Most [1xxx Cloudflare error codes](/support/troubleshooting/cloudflare-errors/troubleshooting-cloudflare-1xxx-errors/).
-    - The [Browser Integrity Check](/waf/tools/browser-integrity-check/).
-    - [Validation Checks](/waf/analytics/security-events/additional-information/).
+  - [WAF Custom or Managed Rules](/waf/) with the challenge or block action.
+  - [Security Level](/waf/tools/security-level/) settings, which default to Medium.
+  - [DDoS Protection](/ddos-protection/), which is enabled by default on zones onboarded to Cloudflare, IP applications onboarded to Spectrum, and IP Prefixes onboarded to Magic Transit.
+  - Most [1xxx Cloudflare error codes](/support/troubleshooting/cloudflare-errors/troubleshooting-cloudflare-1xxx-errors/).
+  - The [Browser Integrity Check](/waf/tools/browser-integrity-check/).
+  - [Validation Checks](/waf/analytics/security-events/additional-information/).
 
 Cloudflare may also serve an unstyled `403` error page in specific cases. These errors are not logged because they occur early in Cloudflare's infrastructure, before domain configuration is loaded. An example is:
 
@@ -82,7 +81,7 @@ Cloudflare may also serve an unstyled `403` error page in specific cases. These 
 
 The `404 Not Found` status code indicates that the origin server was unable to locate the requested resource. Typically, this means the host server could not find the resource. For a more permanent version of this error, the 410 Gone status code should be used.
 
-For more details, refer to [RFC7231](https://tools.ietf.org/html/rfc7231).
+For more details, refer to [RFC 7231](https://tools.ietf.org/html/rfc7231).
 
 ### Common use cases
 
@@ -98,7 +97,7 @@ Cloudflare does not generate `404s` for customer websites, we only proxy the req
 
 The 405 Method Not Allowed status code indicates that the origin server recognizes the requested resource but does not support the HTTP method used in the request.
 
-For more details, refer to [RFC7231](https://tools.ietf.org/html/rfc7231).
+For more details, refer to [RFC 7231](https://tools.ietf.org/html/rfc7231).
 
 ### Common use cases
 
@@ -114,7 +113,7 @@ Cloudflare does not directly generate `405` errors. These errors are returned by
 
 The `406 Not Acceptable` status code indicates that the requested resource is not available in a format that adheres to the content negotiation headers specified by the client (for example, `Accept-Charset` or `Accept-Language`).
 
-For more details, refer to [RFC7231](https://tools.ietf.org/html/rfc7231)1.
+For more details, refer to [RFC 7231](https://tools.ietf.org/html/rfc7231).
 
 ### Common use cases
 
@@ -141,7 +140,7 @@ Cloudflare does not generate `407` errors but proxies them from the origin serve
 
 The `408 Request Timeout` status code indicates that the origin server did not receive the complete request within a reasonable time frame and does not wish to continue waiting for the connection. This response is not commonly used, as servers often prefer to use the "close" connection option to terminate idle connections
 
-For more details, refer to [RFC7231](https://tools.ietf.org/html/rfc7231).
+For more details, refer to [RFC 7231](https://tools.ietf.org/html/rfc7231).
 
 ### Common use cases
 
@@ -153,11 +152,12 @@ Cloudflare does not generate `408` errors but may proxy them from the origin ser
 
 ## 409 Conflict
 
-The `409 Conflict` status code indicates that the request could not be completed due to a conflict with the current state of the target resource. 
+The `409 Conflict` status code indicates that the request could not be completed due to a conflict with the current state of the target resource.
 
-For more details, refer to [RFC7231](https://tools.ietf.org/html/rfc7231).
+For more details, refer to [RFC 7231](https://tools.ietf.org/html/rfc7231).
 
 ### Common use cases
+
 This error typically happens with a `PUT` request when multiple clients are attempting to edit the same resource. To solve this issue:
 
     - The server should generate a payload that includes enough information for the client to recognize the source of the conflict.
@@ -169,13 +169,13 @@ Cloudflare will return a 409 response for a [Error 1001: DNS Resolution Error](/
 
 ## 410 Gone
 
-When a resource is intentionally and permanently removed, servers use the `410 Gone` status code to inform clients that the resource is no longer available. 
+When a resource is intentionally and permanently removed, servers use the `410 Gone` status code to inform clients that the resource is no longer available.
 In this case:
 
     - The server suggests that links referencing the resource should be removed.
     - The server is not obligated to use this status code instead of a `404` response, nor is it required to maintain this response for any specific period of time.
 
-For more details, refer to [RFC7231](https://tools.ietf.org/html/rfc7231).
+For more details, refer to [RFC 7231](https://tools.ietf.org/html/rfc7231).
 
 ### Common use cases
 
@@ -189,7 +189,7 @@ Cloudflare does not generate `410` for customer websites, we only proxy the requ
 
 The `411 Length Required` status code indicates that the client did not specify the `Content-Length` of the request body in the headers, and this information is required to obtain the resource. The client may resend the request after adding the required header field.
 
-For more details, refer to [RFC7231](https://tools.ietf.org/html/rfc7231).
+For more details, refer to [RFC 7231](https://tools.ietf.org/html/rfc7231).
 
 ### Common use cases
 
@@ -217,7 +217,7 @@ Cloudflare may serve this response: for more information please refer to [ETag H
 
 The `413 Payload Too Large` status code indicates that the server refuses to process the request because the payload sent by the client exceeds the server's acceptable size limit. The server may optionally close the connection. If this refusal would only happen temporarily, then the server should send a `Retry-After` header to specify when the client should try the request again.
 
-For more details, refer to [RFC7231](https://tools.ietf.org/html/rfc7231).
+For more details, refer to [RFC 7231](https://tools.ietf.org/html/rfc7231).
 
 ### Common use cases
 
@@ -235,7 +235,7 @@ If you require a larger upload, break up requests into smaller chunks, change yo
 
 The `414 URI Too Long` status code indicates that the server refuses to process the request because the URI provided by the client is excessively long.
 
-For more details, refer to [RFC7231](https://tools.ietf.org/html/rfc7231).
+For more details, refer to [RFC 7231](https://tools.ietf.org/html/rfc7231).
 
 ### Common use cases
 
@@ -249,7 +249,7 @@ Cloudflare will generate a `414` response if the URI length exceeds 32KB.
 
 The `415 Unsupported Media Type` status code indicates that the server refuses to process the request because the format of the payload is not supported. One way to identify and fix this issue would be to look at the `Content-Type` or `Content-Encoding` headers sent in the client's request.
 
-For more details, refer to [RFC7231](https://tools.ietf.org/html/rfc7231).
+For more details, refer to [RFC 7231](https://tools.ietf.org/html/rfc7231).
 
 ### Common use cases
 
@@ -263,7 +263,7 @@ Cloudflare typically passes this response from the origin server if it encounter
 
 The `416 Range Not Satisfiable` status code indicates that the server cannot fulfill the requested range specified in the `Range` header of the client's request.
 
-For more details, refer to [RFC7233](https://datatracker.ietf.org/doc/html/rfc7233).
+For more details, refer to [RFC 7233](https://datatracker.ietf.org/doc/html/rfc7233).
 
 ### Common use cases
 
@@ -277,7 +277,7 @@ Cloudflare typically serves this response when the origin server rejects a `Rang
 
 The `417 Expectation Failed` status code indicates that the server could not meet the requirements specified in the `Expect` header of the client's request.
 
-For more details, refer to R[RFC7231](https://tools.ietf.org/html/rfc7231).
+For more details, refer to [RFC 7231](https://tools.ietf.org/html/rfc7231).
 
 ### Common use cases
 
@@ -291,11 +291,11 @@ Cloudflare typically forwards this response from the origin server if it encount
 
 The `429 Too Many Requests` status code indicates that the client has sent too many requests in a specified amount of time, as determined by the server's rate-limiting rules. The server may include a `Retry-After` header in the response to specify when the client can try again.
 
-For more details, refer to [RFC6585](https://tools.ietf.org/html/rfc6585).
+For more details, refer to [RFC 6585](https://tools.ietf.org/html/rfc6585).
 
 ### Common use cases
 
-Servers use this status code to prevent excessive API requests from overloading the system. For example, a client making repeated API calls within a short time frame may trigger a 429 response. Websites or services may impose rate limits to manage traffic spikes or prevent abuse, temporarily blocking excessive requests from users. 
+Servers use this status code to prevent excessive API requests from overloading the system. For example, a client making repeated API calls within a short time frame may trigger a 429 response. Websites or services may impose rate limits to manage traffic spikes or prevent abuse, temporarily blocking excessive requests from users.
 
 ### Cloudflare-specific information
 
@@ -311,11 +311,11 @@ Cloudflare will generate a `429` response when a request is being [rate limited]
 
 The `451` status code indicates that the server cannot deliver the requested resource due to legal actions or restrictions.
 
-For more details, refer to [RFC7725](https://tools.ietf.org/html/rfc7725).
+For more details, refer to [RFC 7725](https://tools.ietf.org/html/rfc7725).
 
 ### Common use cases
 
-This occurs when access to a resource is blocked due to court orders, copyright claims, or other legal demands. Typically search engines (for example, Google) and ISP (for example,  ATT) are the ones affected by this response code, rather than the origin server itself. The server should include an explanation in the response body, detailing the legal demand or reason for the restriction.
+This occurs when access to a resource is blocked due to court orders, copyright claims, or other legal demands. Typically search engines (for example, Google) and ISP (for example, ATT) are the ones affected by this response code, rather than the origin server itself. The server should include an explanation in the response body, detailing the legal demand or reason for the restriction.
 
 ### Cloudflare-specific information
 
