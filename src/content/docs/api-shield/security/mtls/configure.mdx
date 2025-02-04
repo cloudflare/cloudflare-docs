@@ -41,7 +41,7 @@ The second expression uses the `http.request.uri.path` field, combined with the 
 
 Because the [action](/ruleset-engine/rules-language/actions/) for your rule is _Block_, only requests that present a valid client certificate can access the specified hosts.
 
-For enhanced security, Cloudflare recommends that you validate the Issuer Subject Key Identifer (SKI) hash alongside the verified certificate field. This ensures that only requests presenting a valid client certificate with a specific issuer are allowed.
+For enhanced security, Cloudflare recommends that you validate the Issuer Subject Key Identifier (SKI) hash alongside the verified certificate field. This ensures that only requests presenting a valid client certificate with a specific issuer are allowed.
 
 You can implement this by using an expression similar to the following:
 
