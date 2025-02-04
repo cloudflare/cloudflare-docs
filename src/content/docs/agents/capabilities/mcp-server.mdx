@@ -31,14 +31,14 @@ Follow these steps to create and deploy your own MCP server on Cloudflare Worker
 If you haven't already, install [Wrangler](https://developers.cloudflare.com/workers/wrangler/) and log in:
 
 ```bash
-npm install -g wrangler
+npm install wrangler
 wrangler login
 ```
 
 Initialize a new project:
 ```bash
-wrangler init my-mcp-project
-cd my-mcp-project
+npx create-cloudflare@latest my-mcp-worker
+cd my-mcp-worker
 ```
 
 ### 2. Install the MCP Tooling
