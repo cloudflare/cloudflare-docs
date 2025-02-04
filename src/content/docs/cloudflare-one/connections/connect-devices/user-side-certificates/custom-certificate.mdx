@@ -112,7 +112,7 @@ openssl x509 -in <CUSTOM-ROOT-CERT>.pem -text
    }
    ```
 
-3. Use the Get Zero Trust certificate details endpoint to verify the certificate's binding status is set to `available`.
+3. Use the [Get Zero Trust certificate details endpoint](/api/resources/zero_trust/subresources/gateway/subresources/certificates/methods/get/) to verify the certificate's binding status is set to `available`.
 
    ```sh
    curl https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/gateway/certificates/$CERTIFICATE_ID \
@@ -145,7 +145,7 @@ openssl x509 -in <CUSTOM-ROOT-CERT>.pem -text
 
 5. Use the [Patch Zero Trust account configuration endpoint](/api/resources/zero_trust/subresources/gateway/subresources/configurations/methods/edit/) to turn on the certificate for use in inspection. For example:
 
-   ```sh {10}
+   ```sh {9}
    curl --request PATCH \
    "https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/gateway/configuration" \
    --header "Authorization: Bearer $CLOUDFLARE_API_TOKEN" \
