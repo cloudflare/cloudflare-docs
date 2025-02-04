@@ -352,7 +352,6 @@ curl https://api.cloudflare.com/client/v4/accounts/{account_id}/gateway/rule \
 
 </TabItem> </Tabs>
 
-
 ## Block file types
 
 <Render file="gateway/policies/block-file-types" />
@@ -397,11 +396,11 @@ curl https://api.cloudflare.com/client/v4/accounts/{account_id}/gateway/rule \
 ```
 
 </TabItem> </Tabs>
-  
+
 ### Block Google Drive uploads
-  
+
 Block file uploads from Google Drive.
-  
+
 | Selector         | Operator      | Value                                  | Logic | Action |
 | ---------------- | ------------- | -------------------------------------- | ----- | ------ |
 | Application      | in            | Google Drive                           | And   | Block  |
