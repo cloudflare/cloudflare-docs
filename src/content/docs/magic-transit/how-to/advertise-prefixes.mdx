@@ -96,7 +96,7 @@ If you use Direct CNI as a way to on-ramp your network traffic to Magic Transit,
 
 ### Regional settings
 
-Magic Transit requires static routing to steer traffic from Cloudflare's network over one of your configured tunnel off-ramps (GRE, IPsec or CNI). Currently, advertisement of routes for traffic engineering purposes is not supported. As a best practice to reduce last-hop latency, you should consider scoping your routes regionally. The default setting for static route regions is **All Regions**. Refer to [Configure static routes](/magic-transit/how-to/configure-static-routes/) for more information.
+Magic Transit requires static routing to steer traffic from Cloudflare's network over one of your configured tunnel off-ramps (for GRE and IPsec tunnels). For CNI, both static routing and [BGP](/magic-transit/how-to/bgp-peering/) options are available. Currently, advertisement of routes for traffic engineering purposes is not supported. As a best practice to reduce last-hop latency, you should consider scoping your routes regionally. The default setting for static route regions is **All Regions**. Refer to [Configure static routes](/magic-transit/how-to/configure-static-routes/) for more information.
 
 ## Example router configurations
 
