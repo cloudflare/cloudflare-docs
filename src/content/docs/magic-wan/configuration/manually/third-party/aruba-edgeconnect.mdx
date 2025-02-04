@@ -143,7 +143,7 @@ The service name used to send traffic through the tunnel created in the next ste
 
 ![Diagram of GCP, Aruba Orchestratror, and Cloudflare products for IPsec tunnels](~/assets/images/magic-wan/third-party/aruba-edge-connect/gcp-edgeconnect-diagram-ipsec.png)
 
-For additional information on creating IPsec tunnels, refer to [API documentation for IPsec tunnels](/api/operations/magic-ipsec-tunnels-create-ipsec-tunnels).
+For additional information on creating IPsec tunnels, refer to [API documentation for IPsec tunnels](/api/resources/magic_transit/subresources/ipsec_tunnels/methods/create/).
 
 - `X-Auth-Email`: Your Cloudflare email ID
 - `X-Auth-Key`: Seen in the URL (`dash.cloudflare.com/<X-Auth-Key>/....`)
@@ -313,11 +313,11 @@ To validate east-west traffic flow, perform a traceroute as shown in the example
 
 The example shows a client in GCP East (`10.3.0.3`), which can ping the private IP of a client in GCP West (`10.30.0.4`).
 
-The traceroute shows the path going from the client (`10.3.0.3`) <br/>
-→ to the GCP East lan0 IP on the EdgeConnect (`10.3.0.2`) <br/>
-→ to the Cloudflare private GRE endpoint IP (`10.4.8.11`) <br/>
-→ to the GCP West lan0 IP on the West EdgeConnect (`10.30.0.3`) <br/>
-→ to the GCP West client (`10.30.0.4`).
+The traceroute shows the path going from the client (`10.3.0.3`) to:
+- the GCP East lan0 IP on the EdgeConnect (`10.3.0.2`)
+- the Cloudflare private GRE endpoint IP (`10.4.8.11`)
+- the GCP West lan0 IP on the West EdgeConnect (`10.30.0.3`)
+- the GCP West client (`10.30.0.4`)
 
 This validates the east-west traffic flow through Cloudflare Magic WAN.
 
@@ -343,11 +343,11 @@ To validate east-west traffic flow, perform a traceroute as shown in the example
 
 The example shows a client in GCP Central (`10.22.0.9`), which can ping the private IP of a client in GCP West (`10.77.0.10`).
 
-The traceroute shows the path going from the client (`10.22.0.9`) <br/>
-→ to the GCP Central lan0 IP on the EdgeConnect (`10.22.0.2`) <br/>
-→ to the Cloudflare private IPsec endpoint IP (`192.168.10.11`) <br/>
-→ to the GCP West EdgeConnect private IPsec endpoint IP (`192.168.15.10`) <br/>
-→ to the GCP West client (`10.77.0.10`).
+The traceroute shows the path going from the client (`10.22.0.9`) to:
+- the GCP Central lan0 IP on the EdgeConnect (`10.22.0.2`)
+- the Cloudflare private IPsec endpoint IP (`192.168.10.11`)
+- the GCP West EdgeConnect private IPsec endpoint IP (`192.168.15.10`)
+- the GCP West client (`10.77.0.10`)
 
 This validates the east-west traffic flow through Cloudflare Magic WAN.
 

@@ -1,0 +1,15 @@
+---
+link: "/magic-transit/changelog/"
+productName: Magic Transit
+productLink: "/magic-transit/"
+productArea: Cloudflare One
+productAreaLink: /cloudflare-one/changelog/
+entries:
+  - publish_date: "2024-12-17"
+    title: BGP support for Cloudflare Network Interconnect (CNI)
+    description: |-
+      Magic Transit customers can now establish BGP peering over Direct CNI circuits. Customers can now dynamically exchange routes and path availability status between their router device and the Magic Transit routing table.
+  - publish_date: "2024-10-01"
+    title: Early access testing for BGP on CNI 2.0 circuits
+    description: |-
+      Customers can exchange routes dynamically with their Magic virtual network overlay via Direct CNI or Cloud CNI based connectivity.

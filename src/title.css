@@ -1,0 +1,11 @@
+.site-title {
+	gap: calc(0.5 * var(--sl-nav-gap));
+
+	span {
+		color: var(--sl-color-white);
+	}
+
+	img {
+		height: calc(var(--sl-nav-height) - 3 * var(--sl-nav-pad-y));
+	}
+}

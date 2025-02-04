@@ -1,0 +1,36 @@
+---
+link: "/cache/changelog/"
+productName: Cache
+productLink: "/cache/"
+productArea: Application performance
+productAreaLink: /fundamentals/reference/changelog/performance/
+entries:
+  - publish_date: "2025-01-08"
+    title: Smart Tiered Cache for Load balancing
+    description: |-
+      Smart Tiered Cache will now select a common single best Upper Tier for an entire Load Balancing Pool based on Origin performance measurements, increasing the cache HIT ratio.
+
+  - publish_date: "2024-11-20"
+    title: Smart Tiered Cache for R2
+    description: |-
+      R2 now automatically gets tiered cache if using Smart Tiered Cache. We select a data center close to your R2 storage bucket as a common Upper Tier cache.
+
+  - publish_date: "2024-11-07"
+    title: Shard Cache by cache key
+    description: |-
+      For custom cache keys, enterprise customers can now shard their cache using up to three values for previously restricted headers `accept*`, `referer`, and `user-agent`. Sharding the cache can improve cache `HIT` ratio and performance. However, overly sharding your cache, can have the opposite effect.
+
+  - publish_date: "2024-11-07"
+    title: Versioning
+    description: |-
+      Cache now supports versioned environments allowing customers to stage configurations and purge staged environments. Note that Cache Reserve is only supported for your production environment.
+
+  - publish_date: "2024-09-05"
+    title: New Cache Rules templates for one-click rule creation
+    description: |-
+      The new **Rules** > **Templates** page in the Cloudflare dashboard provides one-click templates for creating cache rules, making it easy to optimize your caching strategy. Access these pre-built templates directly from each product's rule builder, and explore the [Examples gallery](/rules/examples/) in the developer documentation for real-world use cases.
+
+  - publish_date: "2024-07-19"
+    title: Generic tiered cache
+    description: |-
+      [Generic Global Tiered Cache](/cache/how-to/tiered-cache/#generic-global-tiered-cache) topology leverages all Cloudflare data centers as upper-tier cache network. It now hashes content within a region reducing duplication in upper-tier caches, which increases cache `HIT` ratio.

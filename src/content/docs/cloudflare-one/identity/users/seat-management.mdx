@@ -5,51 +5,69 @@ sidebar:
   order: 4
 ---
 
-Cloudflare Zero Trust subscriptions consist of seats that active users in your account consume. Active users are added to Zero Trust through any authentication event.
+Cloudflare Zero Trust subscriptions consist of seats that active users in your account consume. Active users are added to Zero Trust through any [authentication event](#authentication-event).
 
-The amount of user seats available in your Zero Trust account depends on the amount of users you purchase. If you want to increase the number of seats available, you will have to purchase more users. Learn more about adding and removing seats from your account in the [Zero Trust FAQ](/cloudflare-one/faq/getting-started-faq/#how-do-i-change-my-subscription-plan).
+The amount of seats available in your Zero Trust account depends on the amount of users you purchase. If you want to increase the number of seats available, you will have to purchase more users. Learn more about adding and removing seats from your account in the [Zero Trust FAQ](/cloudflare-one/faq/getting-started-faq/#how-do-i-change-my-subscription-plan).
 
-## What constitutes an authentication event
+## Authentication events
 
-For Access, this is any Cloudflare Access authentication event, like a login to the [App Launcher](/cloudflare-one/applications/app-launcher/) or an application. For Gateway, this means any Cloudflare WARP authentication event, like enrolling a device to your ZT organization.
+A user consumes a seat when they perform an authentication event. For Access, this is any Cloudflare Access authentication event, such as a login to the [App Launcher](/cloudflare-one/applications/app-launcher/) or an application. For Gateway, this is when any devices associated with the user connect to Zero Trust within the [specified period](#enable-seat-expiration).
 
-If either one of these events occurs, that user's identity is added as an Active user to Zero Trust and consumes one seat.
+If either one of these events occurs, that user's identity is added as an Active user to Zero Trust and consumes one seat from your plan. The user will occupy and consume a single seat regardless of the number of applications accessed or login events from their user account. Once the total amount of seats in the subscription has been consumed, additional users who attempt to log in are blocked.
 
-The user then continues to occupy and consume a single seat regardless of the number of applications accessed or login events. Once the total amount of seats in the subscription has been consumed, additional users who attempt to log in are blocked.
+A user who authenticates will hold their seat until you [remove the user](#remove-a-user) from your account. By default, inactive users will not be [automatically removed](#enable-seat-expiration) from your account. You can remove a single user or all users at any time, and those users will immediately stop counting against the seat count defined in your subscription.
 
-A user who authenticates will hold their seat until you [remove the user](#remove-a-user) from your account. By default, inactive users will not be [automatically removed](#enable-seat-expiration) from your account. You can remove a single user or all users at any time, and those users will immediately stop counting against your subscription.
+If you notice a number of accounts greater than the number of your users, you may need to configure an Access [bypass policy](/cloudflare-one/policies/access/#bypass). Alternatively, you can use Access [service tokens](/cloudflare-one/identity/service-tokens/) to allow access to applications without consuming seats.
 
-## Revoke vs remove a user
+## Manage users
 
-When you revoke a user, this action will terminate active sessions, but will not remove the user's consumption of an active seat. On the other hand, removing a user will end their active session and free up one seat from your account.
+### Check number of seats used
 
-## Check number of Active Users
+To check the number of seats consumed by active users in your organization, log in to [Zero Trust](https://one.dash.cloudflare.com). **Zero Trust overview** will display the amount of seats consumed and the remaining amount available. For more details on your users, go to **My team** > **Users**.
 
-You can check for the number of active users in [Zero Trust](https://one.dash.cloudflare.com) home.
+### Revoke a user
 
-## Remove a user
+When you revoke a user, this action will terminate active sessions, but will not remove the user's consumption of an active seat.
 
-1. In [Zero Trust](https://one.dash.cloudflare.com), go to **My Team** > **Users**.
-2. Select the checkbox next to an **Active** user.
+To revoke a user from your Zero Trust organization:
+
+1. In [Zero Trust](https://one.dash.cloudflare.com), go to **My team** > **Users**.
+2. Select the checkbox next to a user with an **Active** status in the **Seat usage** column.
+3. Select **Action** > **Revoke**.
+4. Select **Revoke sessions**.
+
+Revoked users can still log in if your policies allow them.
+
+### Remove a user
+
+Removing a user from your Zero Trust organization will free up the seat the user consumed. The user will still appear in your list of users.
+
+To remove a user from your Zero Trust organization:
+
+1. In [Zero Trust](https://one.dash.cloudflare.com), go to **My team** > **Users**.
+2. Select the checkbox next to a user with an **Active** status in the **Seat usage** column.
 3. Select **Action** > **Remove users**.
+4. Select **Remove**.
 
-The user will now show as **Inactive** and will no longer occupy a seat. If a user is removed, and then authenticates once more, they will count as a seat again.
+The user will now show as **Inactive** and will no longer occupy a seat. If a user is removed but authenticates later, they will consume a seat again.
 
-## Enable seat expiration
+To automate the removal of users who have not logged in or triggered a device enrollment in a specific amount of time, turn on [seat expiration](#enable-seat-expiration).
 
-Cloudflare Zero Trust can automatically remove any user who does not log in to an Access application or who does not trigger a device enrollment event within a specified time period (between 1 month and 1 year). These users will no longer count against your seat count.
+:::note[User record persistence]
+You cannot delete or archive a user record. You can [remove a user](#remove-a-user) from a seat, but their user record will remain in your Zero Trust organization. Inactive users do not count towards billing.
+:::
+
+### Enable seat expiration
+
+Cloudflare Zero Trust can automatically remove any user who does not log in to an Access application or who does not trigger a device enrollment event within a specified time period (between one month and one year). These users will no longer count against your number of seats.
 
 To enable user seat expiration:
 
 1. In [Zero Trust](https://one.dash.cloudflare.com), go to **Settings** > **Account**.
-2. Scroll down to **User Seat Expiration** and select **Edit**.
+2. In **Seat Expiration**, select **Edit**.
 3. Select an inactivity time from the dropdown menu.
 4. Select **Save**.
 
-If a user is removed, and then authenticates once more, they will count as a seat again.
+If a user is removed but authenticates later, they will consume a seat again.
 
-Refer to the FAQ to [learn more](/cloudflare-one/faq/getting-started-faq/#removing-users) about the consequences of removing a user for Access and Gateway.
-
-## Delete a user record
-
-There is currently no way to delete or archive a user record. You can [remove a user](#remove-a-user) from a seat, but their user record will remain in Zero Trust.
+For more information about removing a user for Access and Gateway, refer to the [FAQ](/cloudflare-one/faq/getting-started-faq/#removing-users).

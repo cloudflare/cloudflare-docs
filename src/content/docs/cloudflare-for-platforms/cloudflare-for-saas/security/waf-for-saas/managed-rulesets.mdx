@@ -21,15 +21,15 @@ If you would like to deploy a managed ruleset at the account level, refer to the
 
 Ensure you have reviewed [Get Started with Cloudflare for SaaS](/cloudflare-for-platforms/cloudflare-for-saas/start/getting-started/) and familiarize yourself with [WAF for SaaS](/cloudflare-for-platforms/cloudflare-for-saas/security/waf-for-saas/).
 
-Customers can automate the [custom metadata](/cloudflare-for-platforms/cloudflare-for-saas/domain-support/custom-metadata/) tagging by adding it to the custom hostnames at creation. For more information on tagging a custom hostname with custom metadata, refer to the [API documentation](/api/operations/custom-hostname-for-a-zone-edit-custom-hostname).
+Customers can automate the [custom metadata](/cloudflare-for-platforms/cloudflare-for-saas/domain-support/custom-metadata/) tagging by adding it to the custom hostnames at creation. For more information on tagging a custom hostname with custom metadata, refer to the [API documentation](/api/resources/custom_hostnames/methods/edit/).
 
 ***
 
-## Step 1 - Choose security tagging system
+## 1. Choose security tagging system
 
 1. Outline `security_tag` buckets. These are fully customizable with no strict limit on quantity. For example, you can set `security_tag` to `low`,`medium`, and `high` as a default, with one tag per custom hostname.
 
-2. If you have not already done so, [associate your custom metadata to custom hostnames](/cloudflare-for-platforms/cloudflare-for-saas/security/waf-for-saas#step-1---associate-custom-metadata-to-a-custom-hostname) by including the `security_tag`in the custom metadata associated with the custom hostname. The JSON blob associated with the custom hostname is fully customizable.
+2. If you have not already done so, [associate your custom metadata to custom hostnames](/cloudflare-for-platforms/cloudflare-for-saas/security/waf-for-saas/#1-associate-custom-metadata-to-a-custom-hostname) by including the `security_tag`in the custom metadata associated with the custom hostname. The JSON blob associated with the custom hostname is fully customizable.
 
 :::note
 
@@ -41,7 +41,7 @@ After the association is complete, the JSON blob is added to the defined custom 
 
 ***
 
-## Step 2 - Deploy Rulesets
+## 2. Deploy Rulesets
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/) and navigate to your account.
 

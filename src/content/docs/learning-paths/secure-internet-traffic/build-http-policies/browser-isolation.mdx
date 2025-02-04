@@ -9,7 +9,7 @@ import { GlossaryDefinition, TabItem, Tabs } from "~/components";
 
 <GlossaryDefinition term="Cloudflare Browser Isolation" />
 
-Browser Isolation provides unique and transparent protection for your users using methods that surpass the capabilities of a traditional secure web gateway. This section focuses primarily on Browser Isolation for external services, assuming that most traffic from a device or a network is being forwarded to Cloudflare. For other applications of Browser Isolation, refer to the [Zero Trust Web Access (ZTWA) learning path](/learning-paths/zero-trust-web-access/).
+Browser Isolation provides unique and transparent protection for your users using methods that surpass the capabilities of a traditional secure web gateway. This section focuses primarily on Browser Isolation for external services, assuming that most traffic from a device or a network is being forwarded to Cloudflare. For other applications of Browser Isolation, refer to the [Zero Trust Web Access (ZTWA) learning path](/learning-paths/zero-trust-web-access/concepts/).
 
 As a note, Cloudflare's Browser Isolation technology was built to be used for 100% of your user's daily browsing. These recommendations do not suggest that you should limit or be cautious with your use of Browser Isolation, but instead help identify practical outcomes that balance technology with actualized security benefits.
 
@@ -19,7 +19,7 @@ If your organization is interested in implementing Browser Isolation, there are 
 
 ### Block copy, paste, and upload/download for shadow IT
 
-As you have begun deploying Cloudflare Zero Trust, you may have started to visualize user traffic patterns using [Shadow IT Discovery](/cloudflare-one/insights/analytics/access/). This feature gives you visibility into detected SaaS applications that your users use. Administrators can categorize applications and services on the basis of proper organizational use. If you do not use Shadow IT Discovery and instead maintain a similar list manually or with other tools, you can port that data into a [Zero Trust list](/learning-paths/secure-internet-traffic/understand-policies/create-list/), update it via the API, and achieve the same outcomes.
+As you have begun deploying Cloudflare Zero Trust, you may have started to visualize user traffic patterns using [Shadow IT Discovery](/cloudflare-one/insights/analytics/shadow-it-discovery/). This feature gives you visibility into detected SaaS applications that your users use. Administrators can categorize applications and services on the basis of proper organizational use. If you do not use Shadow IT Discovery and instead maintain a similar list manually or with other tools, you can port that data into a [Zero Trust list](/learning-paths/secure-internet-traffic/understand-policies/create-list/), update it via the API, and achieve the same outcomes.
 
 You can control potential risk and shape user behavior without applying heavy-handed block policies by applying policies to isolate user traffic to applications that match your defined categories. You can then set additional parameters in the policy, such as the ability to restrict copy/paste and upload/download. Users can still access information in the tools -- if not use the tools to a lesser extent -- while you minimize the risk of data loss.
 

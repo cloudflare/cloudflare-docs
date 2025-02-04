@@ -1,8 +1,7 @@
 ---
 import { z } from "astro:schema";
-import { getEntry } from "astro:content";
-import { getProperty } from "dot-prop";
 import { marked } from "marked";
+import { indexPlans } from "~/util/plans";
 
 type Props = z.infer<typeof props>;
 
@@ -15,11 +14,7 @@ const props = z
 
 const { id, additional_descriptions } = props.parse(Astro.props);
 
-const { data } = await getEntry("plans", "index");
-
-const plan = getProperty(data, id);
-
-if (!plan) throw new Error(`Failed to index plans using ${id}`);
+const plan = await indexPlans(id);
 
 const entries = Object.entries(plan);
 ---
@@ -38,7 +33,7 @@ const entries = Object.entries(plan);
 						<a href={value.link}>{value.title}</a>
 					</p>
 				)}
-				{Object.entries(value.properties).map(([_, value]: [string, any]) => (
+				{Object.values(value.properties).map((value: any) => (
 					<p>
 						<strong
 							set:html={marked.parseInline(
@@ -51,52 +46,78 @@ const entries = Object.entries(plan);
 							<p>{value.summary}</p>
 						)}
 						<ul>
-							<li>
-								<strong>Free: </strong>
-								<Fragment
-									set:html={marked.parseInline(value.free.toString())}
-								/>
-							</li>
-							{additional_descriptions && (
+							{value.free && (
 								<li>
-									<strong>Lite: </strong>
-									{value.lite ? (
-										<Fragment
-											set:html={marked.parseInline(value.lite.toString())}
-										/>
-									) : (
-										<Fragment
-											set:html={marked.parseInline(value.free.toString())}
-										/>
-									)}
+									<strong>Free: </strong>
+									<Fragment
+										set:html={marked.parseInline(value.free.toString())}
+									/>
 								</li>
 							)}
-							<li>
-								<strong>Pro: </strong>
-								<Fragment set:html={marked.parseInline(value.pro.toString())} />
-							</li>
 							{additional_descriptions && (
+								<>
+									{value.lite ||
+										(value.free && (
+											<li>
+												<strong>Lite: </strong>
+												{value.lite ? (
+													<Fragment
+														set:html={marked.parseInline(value.lite.toString())}
+													/>
+												) : (
+													<Fragment
+														set:html={marked.parseInline(value.free.toString())}
+													/>
+												)}
+											</li>
+										))}
+								</>
+							)}
+							{value.pro && (
 								<li>
-									<strong>Pro Plus: </strong>
-									{value.pro_plus ? (
-										<Fragment
-											set:html={marked.parseInline(value.pro_plus.toString())}
-										/>
-									) : (
-										<Fragment
-											set:html={marked.parseInline(value.pro.toString())}
-										/>
-									)}
+									<strong>Pro: </strong>
+									<Fragment
+										set:html={marked.parseInline(value.pro.toString())}
+									/>
 								</li>
 							)}
-							<li>
-								<strong>Business: </strong>
-								<Fragment set:html={marked.parseInline(value.biz.toString())} />
-							</li>
-							<li>
-								<strong>Enterprise: </strong>
-								<Fragment set:html={marked.parseInline(value.ent.toString())} />
-							</li>
+							{additional_descriptions && (
+								<>
+									{value.pro_plus ||
+										(value.pro && (
+											<li>
+												<strong>Pro Plus: </strong>
+												{value.pro_plus ? (
+													<Fragment
+														set:html={marked.parseInline(
+															value.pro_plus.toString(),
+														)}
+													/>
+												) : (
+													<Fragment
+														set:html={marked.parseInline(value.pro.toString())}
+													/>
+												)}
+											</li>
+										))}
+								</>
+							)}
+							{value.biz && (
+								<li>
+									<strong>Business: </strong>
+									<Fragment
+										set:html={marked.parseInline(value.biz.toString())}
+									/>
+								</li>
+							)}
+							{value.ent && (
+								<li>
+									<strong>Enterprise: </strong>
+									<Fragment
+										set:html={marked.parseInline(value.ent.toString())}
+									/>
+								</li>
+							)}
 						</ul>
 					</p>
 				))}

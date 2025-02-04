@@ -14,6 +14,10 @@ import { TabItem, Tabs } from "~/components";
 
 This option is extremely useful when you want site visitors to access the endpoint closest to them, which improves page-loading performance.
 
+:::note
+Custom load balancing rules are incompatible with Geo steering. As a result, any custom rule applied to Geo-steered Load Balancers will not function as expected.
+:::
+
 ## Pool assignment
 
 You can assign multiple pools to the same area and the load balancer will use them in failover order. Any options not explicitly defined — whether in data centers, countries, or regions — will fall back to using default pools and failover.
@@ -41,7 +45,7 @@ When [creating or editing a load balancer](/load-balancing/load-balancers/create
 
 </TabItem> <TabItem label="API">
 
-Use the `regions_pool` property of the [Update Load Balancers](/api/operations/load-balancers-update-load-balancer) command to specify an array of regions. Specify each region using the [appropriate region code](/load-balancing/reference/region-mapping-api/#list-of-load-balancer-regions) followed by a list of endpoints to use for that region.
+Use the `regions_pool` property of the [Update Load Balancers](/api/resources/load_balancers/methods/update/) command to specify an array of regions. Specify each region using the [appropriate region code](/load-balancing/reference/region-mapping-api/#list-of-load-balancer-regions) followed by a list of endpoints to use for that region.
 
 In the example below, `WNAM` and `ENAM` represent the West and East Coasts of North America, respectively.
 
@@ -94,7 +98,7 @@ When [creating or editing a load balancer](/load-balancing/load-balancers/create
 
 </TabItem> <TabItem label="API">
 
-When creating a load balancer [via the API](/api/operations/load-balancers-create-load-balancer), include the `country_pools` object to map countries to a list of pool IDs (ordered by their failover priority).
+When creating a load balancer [via the API](/api/resources/load_balancers/methods/create/), include the `country_pools` object to map countries to a list of pool IDs (ordered by their failover priority).
 
 To get a list of country codes, use the [Region API](/load-balancing/reference/region-mapping-api/).
 
@@ -104,7 +108,7 @@ Any country not explicitly defined will fall back to using the corresponding `re
 
 ### PoP steering
 
-When creating a load balancer [via the API](/api/operations/load-balancers-create-load-balancer), include the `pop_pools` object to map Cloudflare data centers to a list of pool IDs (ordered by their failover priority).
+When creating a load balancer [via the API](/api/resources/load_balancers/methods/create/), include the `pop_pools` object to map Cloudflare data centers to a list of pool IDs (ordered by their failover priority).
 
 For help finding data center identifiers, refer to [this community thread](https://community.cloudflare.com/t/is-there-a-way-to-retrieve-cloudflare-pops-list-and-locations-programmatically/234643).
 

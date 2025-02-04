@@ -1,0 +1,463 @@
+---
+updated: 2024-10-28
+difficulty: Beginner
+content_type: Tutorial
+pcx_content_type: tutorial
+title: Bulk import to D1 using REST API
+products:
+  - D1
+languages:
+  - JavaScript
+  - TypeScript
+  - SQL
+---
+
+import { Render, Steps } from "~/components";
+
+In this tutorial, you will learn how to import a database into D1 using the [REST API](/api/resources/d1/subresources/database/methods/import/).
+
+## Prerequisites
+
+<Render file="prereqs" product="workers" />
+
+## 1. Create a D1 API token
+
+To use REST APIs, you need to generate an API token to authenticate your API requests. You can do this through the Cloudflare dashboard.
+
+<Render file="generate-d1-api-token" product="d1" />
+
+## 2. Create the target table
+
+You must have an existing D1 table which matches the schema of the data you wish to import.
+
+This tutorial uses the following:
+
+- A database called `d1-import-tutorial`.
+- A table called `TargetD1Table`
+- Within `TargetD1Table`, three columns called `id`, `text`, and `date_added`.
+
+To create the table, follow these steps:
+
+<Steps>
+1. Go to **Storage & Databases** > **D1**.
+2. Select **Create**.
+3. Name your database. For this tutorial, name your D1 database `d1-import-tutorial`.
+4. (Optional) Provide a location hint. Location hint is an optional parameter you can provide to indicate your desired geographical location for your database. Refer to [Provide a location hint](/d1/configuration/data-location/#provide-a-location-hint) for more information.
+5. Select **Create**.
+6. Go to **Console**, then paste the following SQL snippet. This creates a table named `TargetD1Table`.
+
+	```sql
+	DROP TABLE IF EXISTS TargetD1Table;
+	CREATE TABLE IF NOT EXISTS TargetD1Table (id INTEGER PRIMARY KEY, text TEXT, date_added TEXT);
+	```
+
+	Alternatively, you can use the [Wrangler CLI](/workers/wrangler/install-and-update/).
+
+	```bash
+	# Create a D1 database
+	npx wrangler d1 create d1-import-tutorial
+
+	# Create a D1 table
+	npx wrangler d1 execute d1-import-tutorial --command="DROP TABLE IF EXISTS TargetD1Table; CREATE TABLE IF NOT EXISTS TargetD1Table (id INTEGER PRIMARY KEY, text TEXT, date_added TEXT);" --remote
+
+	```
+</Steps>
+
+## 3. Create an `index.js` file
+
+<Steps>
+1. Create a new directory and initialize a new Node.js project.
+
+	```bash
+	mkdir d1-import-tutorial
+	cd d1-import-tutorial
+	npm init -y
+	```
+
+2. In this repository, create a new file called `index.js`. This file will contain the code which uses REST API to import your data to your D1 database.
+
+3. In your `index.js` file, define the following variables:
+
+	- `TARGET_TABLE`: The target table name
+	- `ACCOUNT_ID`: The account ID (you can find this in the Cloudflare dashboard > **Workers & Pages**)
+	- `DATABASE_ID`: The D1 database ID (you can find this in the Cloudflare dashboard > **Storage & Databases** > **D1 SQL Database** > your database)
+	- `D1_API_KEY`: The D1 API token generated in [step 1](/d1/tutorials/import-to-d1-with-rest-api#1-create-a-d1-api-token)
+
+	:::caution
+	In production, you should use environment variables to store sensitive information.
+	:::
+
+	```js title="index.js"
+	const TARGET_TABLE = " "; // for the tutorial, `TargetD1Table`
+	const ACCOUNT_ID = " ";
+	const DATABASE_ID = " ";
+	const D1_API_KEY = " ";
+	const D1_URL = `https://api.cloudflare.com/client/v4/accounts/${ACCOUNT_ID}/d1/database/${DATABASE_ID}/import`;
+	const filename = crypto.randomUUID(); // create a random filename
+	const uploadSize = 500;
+	const headers = {
+		"Content-Type": "application/json",
+		Authorization: `Bearer ${D1_API_KEY}`,
+	};
+	```
+</Steps>
+
+## 4. Generate example data (optional)
+
+In practice, you may already have the data you wish to import to a D1 database.
+
+This tutorial generates example data to demonstrate the import process.
+
+<Steps>
+1. Install the `@faker-js/faker` module.
+
+	```sh
+	npm install @faker-js/faker
+	```
+
+2. Add the following code at the beginning of the `index.js` file. This code creates an array called `data` with 2500 (`uploadSize`) array elements, where each array element contains an object with `id`, `text`, and `date_added`. Each array element corresponds to a table row.
+
+	```js title="index.js"
+	import crypto from "crypto";
+	import { faker } from "@faker-js/faker";
+
+	// Generate Fake data
+	const data = Array.from({ length: uploadSize }, () => ({
+		id: Math.floor(Math.random() * 1000000),
+		text: faker.lorem.paragraph(),
+		date_added: new Date().toISOString().slice(0, 19).replace("T", " "),
+	}));
+	```
+</Steps>
+
+## 5. Generate the SQL command
+
+<Steps>
+1. Create a function that will generate the SQL command to insert the data into the target table. This function uses the `data` array generated in the previous step.
+
+	```js title="index.js"
+	function makeSqlInsert(data, tableName, skipCols = []) {
+		const columns = Object.keys(data[0]).join(",");
+		const values = data
+			.map((row) => {
+				return (
+					"(" +
+					Object.values(row)
+						.map((val) => {
+							if (skipCols.includes(val) || val === null || val === "") {
+								return "NULL";
+							}
+							return `'${String(val).replace(/'/g, "").replace(/"/g, "'")}'`;
+						})
+						.join(",") +
+					")"
+				);
+			})
+			.join(",");
+
+		return `INSERT INTO ${tableName} (${columns}) VALUES ${values};`;
+	}
+	```
+</Steps>
+
+## 6. Import the data to D1
+
+The import process consists of four steps:
+
+1. **Init upload**: This step initializes the upload process. It sends the hash of the SQL command to the D1 API and receives an upload URL.
+2. **Upload to R2**: This step uploads the SQL command to the upload URL.
+3. **Start ingestion**: This step starts the ingestion process.
+4. **Polling**: This step polls the import process until it completes.
+
+<Steps>
+1. Create a function called `uploadToD1` which executes the four steps of the import process.
+
+	```js title="index.js"
+	async function uploadToD1() {
+		// 1. Init upload
+		const hashStr = crypto.createHash("md5").update(sqlInsert).digest("hex");
+
+		try {
+			const initResponse = await fetch(D1_URL, {
+				method: "POST",
+				headers,
+				body: JSON.stringify({
+					action: "init",
+					etag: hashStr,
+				}),
+			});
+
+			const uploadData = await initResponse.json();
+			const uploadUrl = uploadData.result.upload_url;
+			const filename = uploadData.result.filename;
+
+			// 2. Upload to R2
+			const r2Response = await fetch(uploadUrl, {
+				method: "PUT",
+				body: sqlInsert,
+			});
+
+			const r2Etag = r2Response.headers.get("ETag").replace(/"/g, "");
+
+			// Verify etag
+			if (r2Etag !== hashStr) {
+				throw new Error("ETag mismatch");
+			}
+
+			// 3. Start ingestion
+			const ingestResponse = await fetch(D1_URL, {
+				method: "POST",
+				headers,
+				body: JSON.stringify({
+					action: "ingest",
+					etag: hashStr,
+					filename,
+				}),
+			});
+
+			const ingestData = await ingestResponse.json();
+			console.log("Ingestion Response:", ingestData);
+
+			// 4. Polling
+			await pollImport(ingestData.result.at_bookmark);
+
+			return "Import completed successfully";
+		} catch (e) {
+			console.error("Error:", e);
+			return "Import failed";
+		}
+	}
+	```
+
+	In the above code:
+
+	- An `md5` hash of the SQL command is generated.
+	- `initResponse` initializes the upload process and receives the upload URL.
+	- `r2Response` uploads the SQL command to the upload URL.
+	- Before starting ingestion, the ETag is verified.
+	- `ingestResponse` starts the ingestion process.
+	- `pollImport` polls the import process until it completes.
+
+2. Add the `pollImport` function to the `index.js` file.
+
+	```js title="index.js"
+	async function pollImport(bookmark) {
+		const payload = {
+			action: "poll",
+			current_bookmark: bookmark,
+		};
+
+		while (true) {
+			const pollResponse = await fetch(D1_URL, {
+				method: "POST",
+				headers,
+				body: JSON.stringify(payload),
+			});
+
+			const result = await pollResponse.json();
+			console.log("Poll Response:", result.result);
+
+			const { success, error } = result.result;
+
+			if (
+				success ||
+				(!success && error === "Not currently importing anything.")
+			) {
+				break;
+			}
+
+			await new Promise((resolve) => setTimeout(resolve, 1000));
+		}
+	}
+	```
+
+	The code above does the following:
+
+	- Sends a `poll` action to the D1 API.
+	- Polls the import process until it completes.
+
+3. Finally, add the `runImport` function to the `index.js` file to run the import process.
+
+	```js title="index.js"
+	async function runImport() {
+		const result = await uploadToD1();
+		console.log(result);
+	}
+
+	runImport();
+	```
+</Steps>
+
+## 7. Write the final code
+
+In the previous steps, you have created functions to execute various processes involved in importing data into D1. The final code executes those functions to import the example data into the target D1 table.
+
+<Steps>
+1. Copy the final code of your `index.js` file as shown below, with your variables defined at the top of the code.
+
+	```js
+	import crypto from "crypto";
+	import { faker } from "@faker-js/faker";
+
+	const TARGET_TABLE = "";
+	const ACCOUNT_ID = "";
+	const DATABASE_ID = "";
+	const D1_API_KEY = "";
+	const D1_URL = `https://api.cloudflare.com/client/v4/accounts/${ACCOUNT_ID}/d1/database/${DATABASE_ID}/import`;
+	const uploadSize = 500;
+	const headers = {
+		"Content-Type": "application/json",
+		Authorization: `Bearer ${D1_API_KEY}`,
+	};
+
+	// Generate Fake data
+	const data = Array.from({ length: uploadSize }, () => ({
+		id: Math.floor(Math.random() * 1000000),
+		text: faker.lorem.paragraph(),
+		date_added: new Date().toISOString().slice(0, 19).replace("T", " "),
+	}));
+
+	// Make SQL insert statements
+	function makeSqlInsert(data, tableName, skipCols = []) {
+		const columns = Object.keys(data[0]).join(",");
+		const values = data
+			.map((row) => {
+				return (
+					"(" +
+					Object.values(row)
+						.map((val) => {
+							if (skipCols.includes(val) || val === null || val === "") {
+								return "NULL";
+							}
+							return `'${String(val).replace(/'/g, "").replace(/"/g, "'")}'`;
+						})
+						.join(",") +
+					")"
+				);
+			})
+			.join(",");
+
+		return `INSERT INTO ${tableName} (${columns}) VALUES ${values};`;
+	}
+
+	const sqlInsert = makeSqlInsert(data, TARGET_TABLE);
+
+	async function pollImport(bookmark) {
+		const payload = {
+			action: "poll",
+			current_bookmark: bookmark,
+		};
+
+		while (true) {
+			const pollResponse = await fetch(D1_URL, {
+				method: "POST",
+				headers,
+				body: JSON.stringify(payload),
+			});
+
+			const result = await pollResponse.json();
+			console.log("Poll Response:", result.result);
+
+			const { success, error } = result.result;
+
+			if (
+				success ||
+				(!success && error === "Not currently importing anything.")
+			) {
+				break;
+			}
+
+			await new Promise((resolve) => setTimeout(resolve, 1000));
+		}
+	}
+
+	// Upload to D1
+	async function uploadToD1() {
+		// 1. Init upload
+		const hashStr = crypto.createHash("md5").update(sqlInsert).digest("hex");
+
+		try {
+			const initResponse = await fetch(D1_URL, {
+				method: "POST",
+				headers,
+				body: JSON.stringify({
+					action: "init",
+					etag: hashStr,
+				}),
+			});
+
+			const uploadData = await initResponse.json();
+			const uploadUrl = uploadData.result.upload_url;
+			const filename = uploadData.result.filename;
+
+			// 2. Upload to R2
+			const r2Response = await fetch(uploadUrl, {
+				method: "PUT",
+				body: sqlInsert,
+			});
+
+			const r2Etag = r2Response.headers.get("ETag").replace(/"/g, "");
+
+			// Verify etag
+			if (r2Etag !== hashStr) {
+				throw new Error("ETag mismatch");
+			}
+
+			// 3. Start ingestion
+			const ingestResponse = await fetch(D1_URL, {
+				method: "POST",
+				headers,
+				body: JSON.stringify({
+					action: "ingest",
+					etag: hashStr,
+					filename,
+				}),
+			});
+
+			const ingestData = await ingestResponse.json();
+			console.log("Ingestion Response:", ingestData);
+
+			// 4. Polling
+			await pollImport(ingestData.result.at_bookmark);
+
+			return "Import completed successfully";
+		} catch (e) {
+			console.error("Error:", e);
+			return "Import failed";
+		}
+	}
+
+	async function runImport() {
+		const result = await uploadToD1();
+		console.log(result);
+	}
+
+	runImport();
+	```
+</Steps>
+
+## 8. Run the code
+
+<Steps>
+1. Run your code.
+
+	```sh
+	node index.js
+	```
+</Steps>
+
+You will now see your target D1 table populated with the example data.
+
+:::note
+If you encounter the `statement too long` error, you would need to break your SQL command into smaller chunks and upload them in batches. You can learn more about this error in the [D1 documentation](/d1/best-practices/import-export-data/#resolve-statement-too-long-error).
+:::
+
+## Summary
+
+By completing this tutorial, you have
+
+1. Created an API token.
+2. Created a target database and table.
+3. Generated example data.
+4. Created SQL command for the example data.
+5. Imported your example data into the D1 target table using REST API.

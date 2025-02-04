@@ -18,7 +18,7 @@ export async function getStaticPaths() {
 	return changelogs.map((entry) => {
 		return {
 			params: {
-				changelog: entry.slug + `/index`,
+				changelog: entry.id + `/index`,
 			},
 			props: {
 				entry,
@@ -79,7 +79,8 @@ export const GET: APIRoute = async (context) => {
 							`Changelog entry points to ${link.slice(1, -1)} but unable to find entry with that slug`,
 						);
 
-					description = (await entryToString(page)) ?? page.body;
+					description =
+						(await entryToString(page, context.locals)) ?? page.body;
 				} else {
 					description = entry.description;
 				}
@@ -118,7 +119,7 @@ export const GET: APIRoute = async (context) => {
 		entry.data.changelog_product_area_name || changelogs[0].data.productName;
 
 	const site = new URL(context.site ?? "");
-	site.pathname = entry.slug.concat("/");
+	site.pathname = entry.id.concat("/");
 
 	const isArea = Boolean(entry.data.changelog_product_area_name);
 

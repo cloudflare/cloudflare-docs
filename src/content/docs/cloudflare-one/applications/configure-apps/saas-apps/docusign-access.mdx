@@ -45,20 +45,17 @@ This guide covers how to configure [Docusign](https://support.docusign.com/s/doc
 
 7. Set an Access policy (for example, create a policy based on _Emails ending in @example.com_).
 
-8. Copy and save SSO Endpoint, Entity ID and Public Key.
+8. Copy and save the **SSO Endpoint**, **Entity ID** and **Public Key**.
 
-   :::note
+9. Transform the **Public Key** into a fingerprint:
 
-   The Public key must be transformed into a fingerprint. To do that:
+		1. Copy the **Public Key** Value.
 
-9. Copy the Public Key Value.
+		2. Paste the **Public Key** into VIM or another code editor.
 
-10. Paste the Public Key into VIM or another code editor.
+		3. Wrap the value in `-----BEGIN CERTIFICATE-----` and `-----END CERTIFICATE-----`.
 
-11. Wrap the value in `-----BEGIN CERTIFICATE-----` and `-----END CERTIFICATE-----`.
-
-12. Set the file extension to `.crt` and save.
-    :::
+		4. Set the file extension to `.crt` and save.
 
 ## 2. Configure your DocuSign SSO instance
 

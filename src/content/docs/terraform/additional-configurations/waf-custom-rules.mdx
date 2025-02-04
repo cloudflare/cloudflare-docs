@@ -1,28 +1,25 @@
 ---
-title: WAF custom rules
+title: WAF custom rules configuration using Terraform
 pcx_content_type: how-to
 sidebar:
   order: 5
+  label: WAF custom rules
 head:
   - tag: title
-    content: Configure WAF custom rules with Terraform
-
+    content: WAF custom rules configuration using Terraform
 ---
 
-import { Render } from "~/components"
+import { Render, GlossaryTooltip } from "~/components";
 
-This page provides examples of creating WAF custom rules in a zone or account using Terraform. The examples cover the following scenarios:
+This page provides examples of creating [WAF custom rules](/waf/custom-rules/) in a zone or account using Terraform. The examples cover the following scenarios:
 
-* Zone-level configurations:
-
-  * [Add a custom rule to a zone](#add-a-custom-rule-to-a-zone)
-
-* Account-level configurations:
-
-  * [Create and deploy a custom ruleset](#create-and-deploy-a-custom-ruleset)
-  * [Add a custom rule checking for exposed credentials](#add-a-custom-rule-checking-for-exposed-credentials)
-
-For more information on custom rules, refer to [Custom rules](/waf/custom-rules/) in the Cloudflare WAF documentation.
+- Zone-level configurations:
+  - [Add a custom rule to a zone](#add-a-custom-rule-to-a-zone)
+  - [Add a custom rule challenging requests with leaked credentials](#add-a-custom-rule-challenging-requests-with-leaked-credentials)
+  - [Add a custom rule blocking malicious uploads](#add-a-custom-rule-blocking-malicious-uploads)
+- Account-level configurations:
+  - [Create and deploy a custom ruleset](#create-and-deploy-a-custom-ruleset)
+  - [Add a custom rule checking for exposed credentials](#add-a-custom-rule-checking-for-exposed-credentials)
 
 ## Before you start
 
@@ -34,13 +31,15 @@ For more information on custom rules, refer to [Custom rules](/waf/custom-rules/
 
 <Render file="import-delete-existing-rulesets" />
 
-***
+---
 
 ## Zone-level configurations
 
 ### Add a custom rule to a zone
 
 The following example configures a custom rule in the zone entry point ruleset for the `http_request_firewall_custom` phase for zone with ID `<ZONE_ID>`. The rule will block all traffic on non-standard HTTP(S) ports:
+
+<Render file="v4-code-snippets" />
 
 ```tf
 resource "cloudflare_ruleset" "zone_custom_firewall" {
@@ -51,15 +50,73 @@ resource "cloudflare_ruleset" "zone_custom_firewall" {
   phase       = "http_request_firewall_custom"
 
   rules {
-    action = "block"
-    expression = "(not cf.edge.server_port in {80 443})"
+    ref         = "block_non_default_ports"
     description = "Block ports other than 80 and 443"
-    enabled = true
+    expression  = "(not cf.edge.server_port in {80 443})"
+    action      = "block"
   }
 }
 ```
 
-<Render file="add-new-rule" params={{ one: "custom rule" }} /> <br/>
+<Render file="add-new-rule" params={{ one: "custom rule" }} /> <br />
+
+### Add a custom rule challenging requests with leaked credentials
+
+:::note
+For more information on enabling leaked credentials detection using Terraform, refer to the [leaked credentials detection](/waf/detections/leaked-credentials/get-started/#1-turn-on-the-detection) documentation.
+:::
+
+This example adds a custom rule that challenges requests with leaked credentials by using one of the [leaked credentials fields](/waf/detections/leaked-credentials/#leaked-credentials-fields) in the rule expression.
+
+<Render file="v4-code-snippets" />
+
+```tf
+resource "cloudflare_ruleset" "zone_custom_firewall_leaked_creds" {
+  zone_id     = "<ZONE_ID>"
+  name        = "Phase entry point ruleset for custom rules in my zone"
+  description = ""
+  kind        = "zone"
+  phase       = "http_request_firewall_custom"
+
+  rules {
+    ref         = "challenge_leaked_username_password"
+    description = "Challenge requests with a leaked username and password"
+    expression  = "(cf.waf.credential_check.username_and_password_leaked)"
+    action      = "managed_challenge"
+  }
+}
+```
+
+For more information on configuring custom detection locations, refer to the [Terraform example](/waf/detections/leaked-credentials/get-started/#4-optional-configure-a-custom-detection-location) in the WAF documentation.
+
+### Add a custom rule blocking malicious uploads
+
+:::note
+For more information on enabling malicious uploads detection using Terraform, refer to the [malicious uploads detection](/waf/detections/malicious-uploads/get-started/#1-turn-on-the-detection) documentation.
+:::
+
+This example adds a custom rule that blocks requests with one or more <GlossaryTooltip term="content object">content objects</GlossaryTooltip> considered malicious by using one of the [content scanning fields](/waf/detections/malicious-uploads/#content-scanning-fields) in the rule expression.
+
+<Render file="v4-code-snippets" />
+
+```tf
+resource "cloudflare_ruleset" "zone_custom_firewall_malicious_uploads" {
+  zone_id     = "<ZONE_ID>"
+  name        = "Phase entry point ruleset for custom rules in my zone"
+  description = ""
+  kind        = "zone"
+  phase       = "http_request_firewall_custom"
+
+  rules {
+    ref         = "block_malicious_uploads"
+    description = "Block requests uploading malicious content objects"
+    expression  = "(cf.waf.content_scan.has_malicious_obj and http.request.uri.path eq \"/upload.php\")"
+    action      = "block"
+  }
+}
+```
+
+For more information on configuring custom scan expressions, refer to the [Terraform example](/waf/detections/malicious-uploads/get-started/#4-optional-configure-a-custom-scan-expression) in the WAF documentation.
 
 ## Account-level configurations
 
@@ -68,11 +125,12 @@ resource "cloudflare_ruleset" "zone_custom_firewall" {
 The following example creates a [custom ruleset](/ruleset-engine/custom-rulesets/) in the account with ID `<ACCOUNT_ID>` containing a single custom rule. This custom ruleset is then deployed using a separate `cloudflare_ruleset` Terraform resource. If you do not deploy a custom ruleset, it will not execute.
 
 :::caution
-
-You can only create and deploy custom rulesets at the account level. 
+You can only create and deploy custom rulesets at the account level.
 :::
 
 The following configuration creates the custom ruleset with a single rule:
+
+<Render file="v4-code-snippets" />
 
 ```tf
 resource "cloudflare_ruleset" "account_firewall_custom_ruleset" {
@@ -83,17 +141,22 @@ resource "cloudflare_ruleset" "account_firewall_custom_ruleset" {
   phase       = "http_request_firewall_custom"
 
   rules {
-    action = "block"
-    expression = "(not cf.edge.server_port in {80 443})"
+    ref         = "block_non_default_ports"
     description = "Block ports other than 80 and 443"
-    enabled = true
+    expression  = "(not cf.edge.server_port in {80 443})"
+    action      = "block"
   }
 }
 ```
 
-<Render file="add-new-rule" params={{ one: "custom rule in the custom ruleset" }} /> <br/>
+<Render
+	file="add-new-rule"
+	params={{ one: "custom rule in the custom ruleset" }}
+/> <br />
 
 The following configuration deploys the custom ruleset at the account level. It defines a dependency on the `account_firewall_custom_ruleset` resource and uses the ID of the created custom ruleset in `action_parameters`:
+
+<Render file="v4-code-snippets" />
 
 ```tf
 resource "cloudflare_ruleset" "account_firewall_custom_entrypoint" {
@@ -106,13 +169,13 @@ resource "cloudflare_ruleset" "account_firewall_custom_entrypoint" {
   depends_on = [cloudflare_ruleset.account_firewall_custom_ruleset]
 
   rules {
-    action = "execute"
+    ref         = "deploy_custom_ruleset_example_com"
+    description = "Deploy custom ruleset for example.com"
+    expression  = "(cf.zone.name eq \"example.com\")"
+    action      = "execute"
     action_parameters {
       id = cloudflare_ruleset.account_firewall_custom_ruleset.id
     }
-    expression = "(cf.zone.name eq \"example.com\")"
-    description = "Deploy custom ruleset for example.com"
-    enabled = true
   }
 }
 ```
@@ -121,12 +184,13 @@ For more information on configuring and deploying custom rulesets, refer to [Wor
 
 ### Add a custom rule checking for exposed credentials
 
+<Render file="leaked-credentials-recommend-detection" product="waf" />
+
 The following configuration creates a custom ruleset with a single rule that [checks for exposed credentials](/waf/managed-rules/check-for-exposed-credentials/configure-api/#create-a-custom-rule-checking-for-exposed-credentials).
 
-:::caution
+You can only add exposed credential checks to rules in a custom ruleset (that is, a ruleset with `kind = "custom"`).
 
-You can only add exposed credential checks to rules in a custom ruleset (that is, a ruleset with `kind = "custom"`). 
-:::
+<Render file="v4-code-snippets" />
 
 ```tf
 resource "cloudflare_ruleset" "account_firewall_custom_ruleset_exposed_creds" {
@@ -137,28 +201,30 @@ resource "cloudflare_ruleset" "account_firewall_custom_ruleset_exposed_creds" {
   phase       = "http_request_firewall_custom"
 
   rules {
-    action = "rewrite"
+    ref         = "check_for_exposed_creds_add_header"
+    description = "Add header when there is a rule match and exposed credentials are detected"
+    expression  = "http.request.method == \"POST\" && http.request.uri == \"/login.php\""
+    action      = "rewrite"
     action_parameters {
       headers {
-        name = "Exposed-Credential-Check"
+        name      = "Exposed-Credential-Check"
         operation = "set"
-        value = "1"
+        value     = "1"
       }
     }
     exposed_credential_check {
       username_expression = "url_decode(http.request.body.form[\"username\"][0])"
       password_expression = "url_decode(http.request.body.form[\"password\"][0])"
     }
-    expression = "http.request.method == \"POST\" && http.request.uri == \"/login.php\""
-    description = "Add header when there is a rule match and exposed credentials are detected"
-    enabled = true
   }
 }
 ```
 
-<Render file="add-new-rule" params={{ one: "rule" }} /> <br/>
+<Render file="add-new-rule" params={{ one: "rule" }} /> <br />
 
 The following configuration deploys the custom ruleset. It defines a dependency on the `account_firewall_custom_ruleset_exposed_creds` resource and obtains the ID of the created custom ruleset:
+
+<Render file="v4-code-snippets" />
 
 ```tf
 resource "cloudflare_ruleset" "account_firewall_custom_entrypoint" {
@@ -171,13 +237,13 @@ resource "cloudflare_ruleset" "account_firewall_custom_entrypoint" {
   depends_on = [cloudflare_ruleset.account_firewall_custom_ruleset_exposed_creds]
 
   rules {
-    action = "execute"
+    ref         = "deploy_custom_ruleset_example_com"
+    description = "Deploy custom ruleset for example.com"
+    expression  = "(cf.zone.name eq \"example.com\")"
+    action      = "execute"
     action_parameters {
       id = cloudflare_ruleset.account_firewall_custom_ruleset_exposed_creds.id
     }
-    expression = "(cf.zone.name eq \"example.com\")"
-    description = "Deploy custom ruleset for example.com"
-    enabled = true
   }
 }
 ```

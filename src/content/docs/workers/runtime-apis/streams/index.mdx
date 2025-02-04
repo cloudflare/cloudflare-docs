@@ -6,27 +6,24 @@ head:
     content: Streams - Runtime APIs
 description: A web standard API that allows JavaScript to programmatically
   access and process streams of data.
-
 ---
 
-import { DirectoryListing, TabItem, Tabs } from "~/components"
+import { DirectoryListing, TabItem, Tabs } from "~/components";
 
 The [Streams API](https://developer.mozilla.org/en-US/docs/Web/API/Streams_API) is a web standard API that allows JavaScript to programmatically access and process streams of data.
 
 <DirectoryListing />
 
-Workers do not need to prepare an entire response body before delivering it to `event.respondWith()`. You can use [`TransformStream`](/workers/runtime-apis/streams/transformstream/) to stream a response body after sending the front matter (that is, HTTP status line and headers). This allows you to minimize:
+Workers do not need to prepare an entire response body before returning a `Response`. You can use a [`ReadableStream`](/workers/runtime-apis/streams/readablestream/) to stream a response body after sending the front matter (that is, HTTP status line and headers). This allows you to minimize:
 
-* The visitor’s time-to-first-byte.
-* The buffering done in the Worker.
+- The visitor's time-to-first-byte.
+- The buffering done in the Worker.
 
 Minimizing buffering is especially important for processing or transforming response bodies larger than the Worker's memory limit. For these cases, streaming is the only implementation strategy.
 
 :::note
 
-
 By default, Cloudflare Workers is capable of streaming responses using the [Streams APIs](https://developer.mozilla.org/en-US/docs/Web/API/Streams_API). To maintain the streaming behavior, you should only modify the response body using the methods in the Streams APIs. If your Worker only forwards subrequest responses to the client verbatim without reading their body text, then its body handling is already optimal and you do not have to use these APIs.
-
 
 :::
 
@@ -37,29 +34,29 @@ The worker can create a `Response` object using a `ReadableStream` as the body. 
 
 ```js
 export default {
-  async fetch(request, env, ctx) {
-    // Fetch from origin server.
-    let response = await fetch(request);
+	async fetch(request, env, ctx) {
+		// Fetch from origin server.
+		const response = await fetch(request);
 
-    // ... and deliver our Response while that’s running.
-    return new Response(response.body, response);
-  }
-}
+		// ... and deliver our Response while that’s running.
+		return new Response(response.body, response);
+	},
+};
 ```
 
 </TabItem> <TabItem label="Service Worker" icon="seti:javascript">
 
 ```js
-addEventListener('fetch', event => {
-  event.respondWith(fetchAndStream(event.request));
+addEventListener("fetch", (event) => {
+	event.respondWith(fetchAndStream(event.request));
 });
 
 async function fetchAndStream(request) {
-  // Fetch from origin server.
-  let response = await fetch(request);
+	// Fetch from origin server.
+	const response = await fetch(request);
 
-  // ... and deliver our Response while that’s running.
-  return new Response(readable.body, response);
+	// ... and deliver our Response while that’s running.
+	return new Response(readable.body, response);
 }
 ```
 
@@ -71,47 +68,47 @@ A [`TransformStream`](/workers/runtime-apis/streams/transformstream/) and the [`
 
 ```js
 export default {
-  async fetch(request, env, ctx) {
-    // Fetch from origin server.
-    let response = await fetch(request);
+	async fetch(request, env, ctx) {
+		// Fetch from origin server.
+		const response = await fetch(request);
 
-    let { readable, writable } = new TransformStream({
-      transform(chunk, controller) {
-        controller.enqueue(modifyChunkSomehow(chunk));
-      }
-    });
+		const { readable, writable } = new TransformStream({
+			transform(chunk, controller) {
+				controller.enqueue(modifyChunkSomehow(chunk));
+			},
+		});
 
-    // Start pumping the body. NOTE: No await!
-    response.body.pipeTo(writable);
+		// Start pumping the body. NOTE: No await!
+		response.body.pipeTo(writable);
 
-    // ... and deliver our Response while that’s running.
-    return new Response(readable, response);
-  }
-}
+		// ... and deliver our Response while that’s running.
+		return new Response(readable, response);
+	},
+};
 ```
 
 </TabItem> <TabItem label="Service Worker" icon="seti:javascript">
 
 ```js
-addEventListener('fetch', event => {
-  event.respondWith(fetchAndStream(event.request));
+addEventListener("fetch", (event) => {
+	event.respondWith(fetchAndStream(event.request));
 });
 
 async function fetchAndStream(request) {
-  // Fetch from origin server.
-  let response = await fetch(request);
+	// Fetch from origin server.
+	const response = await fetch(request);
 
-  let { readable, writable } = new TransformStream({
-    transform(chunk, controller) {
-      controller.enqueue(modifyChunkSomehow(chunk));
-    }
-  });
+	const { readable, writable } = new TransformStream({
+		transform(chunk, controller) {
+			controller.enqueue(modifyChunkSomehow(chunk));
+		},
+	});
 
-  // Start pumping the body. NOTE: No await!
-  response.body.pipeTo(writable);
+	// Start pumping the body. NOTE: No await!
+	response.body.pipeTo(writable);
 
-  // ... and deliver our Response while that’s running.
-  return new Response(readable, response);
+	// ... and deliver our Response while that’s running.
+	return new Response(readable, response);
 }
 ```
 
@@ -121,22 +118,20 @@ This example calls `response.body.pipeTo(writable)` but does not `await` it. Thi
 
 The runtime can continue running a function (`response.body.pipeTo(writable)`) after a response is returned to the client. This example pumps the subrequest response body to the final response body. However, you can use more complicated logic, such as adding a prefix or a suffix to the body or to process it somehow.
 
-***
+---
 
 ## Common issues
 
 :::caution[Warning]
 
-
 The Streams API is only available inside of the [Request context](/workers/runtime-apis/request/), inside the `fetch` event listener callback.
-
 
 :::
 
-***
+---
 
 ## Related resources
 
-* [MDN’s Streams API documentation](https://developer.mozilla.org/en-US/docs/Web/API/Streams_API)
-* [Streams API spec](https://streams.spec.whatwg.org/)
-* Write your Worker code in [ES modules syntax](/workers/reference/migrate-to-module-workers/) for an optimized experience.
+- [MDN's Streams API documentation](https://developer.mozilla.org/en-US/docs/Web/API/Streams_API)
+- [Streams API spec](https://streams.spec.whatwg.org/)
+- Write your Worker code in [ES modules syntax](/workers/reference/migrate-to-module-workers/) for an optimized experience.

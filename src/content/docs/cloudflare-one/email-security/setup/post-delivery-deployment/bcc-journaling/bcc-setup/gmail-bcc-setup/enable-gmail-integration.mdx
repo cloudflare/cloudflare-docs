@@ -1,0 +1,87 @@
+---
+title: Enable Gmail BCC integration
+pcx_content_type: how-to
+sidebar:
+  order: 2
+---
+
+To enable Gmail BCC integration:
+
+1. Log in to [Zero Trust](https://one.dash.cloudflare.com/).
+2. Select **Zero Trust** > **Settings**.
+3. Select **SaaS Integrations**.
+4. Select **Add integration** > **Google Workspace**.
+5. Select **Select Integration**.
+
+## Create an integration
+
+Name your integration, then select **Next**.
+
+### 1. Create a Service Account in your GCP Project
+
+1. Once you have named your integration, select **Next**.
+2. On the [Google Cloud Console](https://console.cloud.google.com/welcome/new), go to the sidebar, select **APIs & Services**, then select **Credentials**.
+3. Select **CREATE CREDENTIALS** > **Service account**.
+4. Fill in the details to create a service account:
+    - **Service account name**: Enter `Message Retraction Service Account`.
+    - **Service account ID**: Enter `message-retraction-service-acc`.
+    - **Service account description**: Enter `Email Security Message Retraction`.
+    - Select **CREATE AND CONTINUE**.
+5. In **Grant this service account access to project**, select **Select a role** > Choose **Owner**. Select **CONTINUE**, then select **DONE**.
+6. Go back to **Credentials** on the sidebar, and select your service account under **Service Accounts**. In **Details**, take note of the **Unique ID**.
+7. Select **Advanced settings** > **VIEW GOOGLE WORKSPACE ADMIN CONSOLE**, then enter your password. This will redirect you to the Google admin portal.
+8. On the sidebar, select **Security** > **Access and data control** > **API controls** > Select **MANAGE DOMAIN WIDE DELEGATION**.
+9. Select **Add new** > Add a new client ID:
+    - **Client ID**: Enter the **Unique ID** you took note of in step 5.
+    - **OAuth scopes**: Enter the following URLs:
+    
+        ```txt
+        https://www.googleapis.com/auth/admin.directory.user.readonly, https://www.googleapis.com/auth/admin.directory.group.readonly, https://www.googleapis.com/auth/admin.directory.user.alias.readonly, https://www.googleapis.com/auth/gmail.labels, https://mail.google.com/
+        ```
+    - Select **AUTHORIZE**.
+
+### 2. Create a JSON Key for your Service Account
+
+On the [Google Cloud Console](https://console.cloud.google.com/welcome/new), select **Service Accounts** on the sidebar:
+    - Select the three dots, then:
+        - Select **Manage keys**.
+        - Select **ADD KEY** > **Create new key**.
+        - Select **JSON** > Select **CREATE**. This downloads a `.json` file which you will use at a later stage.
+
+### 3. Upload JSON Key
+
+On the [Zero Trust dashboard](https://one.dash.cloudflare.com/), upload the `.json` file downloaded on step 3.
+
+### 4. Enable Necessary Google Workspace APIs in GCP
+
+Enable the following APIs on the Google Cloud Console:
+    - [Enable Google Calendar API](https://console.cloud.google.com/apis/library/calendar-json.googleapis.com?project=winter-surf-439414-h1)
+    - [Enable Google Drive API](https://console.cloud.google.com/apis/library/drive.googleapis.com?project=winter-surf-439414-h1)
+    - [Enable Google Admin SDK API](https://console.cloud.google.com/apis/library/admin.googleapis.com?project=winter-surf-439414-h1)
+    - [Enable Gmail API](https://console.cloud.google.com/apis/library/gmail.googleapis.com?project=winter-surf-439414-h1)
+    - [Enable Google Service Usage API](https://console.cloud.google.com/apis/library/serviceusage.googleapis.com?project=winter-surf-439414-h1)
+
+### 5. Log in to Google Workspace Admin Console
+
+Log in to Google Workspace Admin Console: Enter your password and log in to the Google Workspace Admin Console.
+
+### 6. Create a Domain-Wide Delegation API Client
+
+1. Copy the **Client ID** and **Scopes** displayed on the Zero Trust dashboard.
+2. On Google Admin, go to **Security** > **Access and data control** > **API controls**.
+3. Select **MANAGE DOMAIN WIDE DELEGATION** > **Add new**.
+4. Use the Client ID and copy the scopes to create a new API client. Refer to [Delegate domain-wide authority to your service account](https://cloud.google.com/chronicle/docs/soar/marketplace-integrations/google-alert-center?_gl=1*skktsb*_ga*MTMxODg5NDExMy4xNzI5NjA1MzYy*_ga_WH2QY8WWF5*MTcyOTc3MDg2Ny40LjEuMTcyOTc3MDg5OC4yOS4wLjA.#delegate_domain-wide_authority_to_your_service_account). Then, select **Next**.
+
+### 7. Confirm Workspace Administrator Email
+
+Enter the email associated with the Google Workspace Administrator account. Your email must match the email associated with your Google Workspace account, or else your integration will not work.
+
+### 8. Create integration
+
+1. Select **Create integration**.
+2. Once you created your integration, you will be redirected to the **Review details** page, where you will be able to review **Integration details**. 
+3. Review your details, then select **Complete Email Security set up** > **Continue to Email Security**.
+
+## Next steps
+
+Now that you have created an integration, you will need to [connect your domains](/cloudflare-one/email-security/setup/post-delivery-deployment/bcc-journaling/bcc-setup/gmail-bcc-setup/connect-domains/) for Email Security to start scanning your inbox.

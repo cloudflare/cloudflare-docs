@@ -11,13 +11,14 @@ head:
     content: Cloud Connector (beta)
 ---
 
-import { FeatureTable } from "~/components";
+import { FeatureTable, Render } from "~/components";
 
-Cloud Connector (beta) allows you to route matching incoming traffic from your website to a public cloud provider that you define such as AWS, Google Cloud, and Azure. With Cloud Connector you can make Cloudflare the control center for your web traffic, including traffic served from public cloud providers, without having to configure additional rules.
+Cloud Connector (beta) allows you to route matching incoming traffic from your website to a public cloud provider that you define: [Cloudflare R2](/r2/) object storage or an external provider such as AWS, Google Cloud, and Azure. With Cloud Connector you can make Cloudflare the control center for your web traffic, including traffic served from public cloud providers, without having to configure additional rules.
 
-:::note
-Support for Cloudflare R2 will be added soon.
-:::
+<Render
+	file="rules-requirements"
+	params={{ one: "Cloud Connector requires" }}
+/>
 
 ## How it works
 
@@ -35,7 +36,7 @@ Cloud Connector rules are evaluated last in the request evaluation workflow. Whe
 Cloud Connector will perform the following configurations automatically, depending on the cloud provider:
 
 - Modify the `Host` header.
-- Adjust SSL/TLS for bucket-related traffic (AWS S3 only).
+- Adjust SSL/TLS for bucket-related traffic ([AWS S3 website endpoints](/rules/cloud-connector/providers/#ssl-connections-to-aws-s3-endpoints) only).
 
 ## Availability
 

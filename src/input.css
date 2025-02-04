@@ -1,4 +1,5 @@
 input,
+textarea,
 select {
 	background-color: var(--sl-color-bg-nav);
 	border-color: var(--sl-color-gray-5);

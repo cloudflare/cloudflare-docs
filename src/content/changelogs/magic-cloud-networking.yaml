@@ -5,10 +5,22 @@ productLink: "/magic-cloud-networking/"
 productArea: Cloudflare One
 productAreaLink: /cloudflare-one/changelog/
 entries:
-  - publish_date: "2024-09-11"
-    title: Cost estimates for network resources
+  - publish_date: "2024-12-05"
+    title: Download cloud onramp terraform
     description: |-
-      Customers can now view estimated costs for discovered network resources.
+      Customers can now generate customized terraform files for building cloud network on-ramps to Magic WAN. Magic Cloud can scan and discover existing network resources and generate the required terraform files to automate cloud resource deployment using their existing infrastructure-as-code workflows for cloud automation.
+  - publish_date: "2024-11-21"
+    title: Import cloud resources for VMs and LBs
+    description: |-
+      Cloud network discovery now includes cloud native virtual machine (VM) and load-balancer (LB) resources.
+  - publish_date: "2024-11-21"
+    title: Export resource catalog
+    description: |-
+      Customers can export their resource catalog including all discovered resource metadata to a downloadable JSON file, suitable for offline analysis.
+  - publish_date: "2024-10-01"
+    title: Cost visibility for managed cloud configuration
+    description: |-
+      Customers can now see the cloud provider list price of discovered network resources and will be informed of total cost and delta cost when deploying managed configuration.
   - publish_date: "2024-08-14"
     title: GCP on-ramps
     description: |-

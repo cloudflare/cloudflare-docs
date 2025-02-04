@@ -27,7 +27,7 @@ The Expression Builder allows you to visually create rule expressions by using d
 The **Expression Preview** displays the expression in text:
 
 ```sql
-(ip.geoip.country ne "GB")
+(ip.src.country ne "GB")
 ```
 
 The Expression Builder will [automatically escape](#escape-special-characters) the backslash (`\`) and double quote (`"`) special characters in string literals.
@@ -63,14 +63,14 @@ The following rule expression will match requests from any visitor who is not fr
 contains "/wp-login.php") or (http.request.uri.path contains "/wp-admin/"
 and not http.request.uri.path contains "/wp-admin/admin-ajax.php" and not
 http.request.uri.path contains "/wp-admin/theme-editor.php")) and
-ip.geoip.country ne "MY"
+ip.src.country ne "MY"
 ```
 
 Only the Expression Editor supports nested expressions such as the one above. If you create a rule with nested expressions in the Expression Editor and try to switch to the Expression Builder, a dialog will warn you that the expression is not supported in the builder. You will be prompted to **Discard changes** and switch to the Expression Builder or **Cancel** and continue working in the editor.
 
 :::note
 
-String comparison in rule expressions is case sensitive. To account for possible variations of string capitalization in an expression, you can use the [`lower()`](/ruleset-engine/rules-language/functions/#lower) function and compare the result with a lowercased string, like in the following example:
+String comparison in rule expressions is case-sensitive. To account for possible variations of string capitalization in an expression, you can use the [`lower()`](/ruleset-engine/rules-language/functions/#lower) function and compare the result with a lowercased string, like in the following example:
 
 ```txt
 lower(http.request.uri.path) contains "/wp-login.php"
@@ -88,5 +88,5 @@ Filter parsing error (1:313): ((http.request.uri.path contains
 (http.request.uri.path contains "/wp-admin/" and not
 http.request.uri.path contains "/wp-admin/admin-ajax.php" and not
 http.request.uri.path contains "/wp-admin/theme-editor.php")) and
-ip.geoip.country ne "MY") ^ unrecognised input
+ip.src.country ne "MY") ^ unrecognised input
 ```

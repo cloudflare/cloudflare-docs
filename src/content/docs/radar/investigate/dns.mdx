@@ -25,13 +25,25 @@ The response shows that most queries come from the United States and Brazil:
 
 ```json
 {
-  "clientCountryAlpha2": "US",
-  "clientCountryName": "United States",
-  "value": "43.474518"
-}, {
-  "clientCountryAlpha2": "BR",
-  "clientCountryName": "Brazil",
-  "value": "10.772799"
+  "success": true,
+  "errors": [],
+  "result": {
+		"top_0": [
+			{
+				"clientCountryAlpha2": "US",
+				"clientCountryName": "United States",
+				"value": "43.474518"
+			},
+			{
+				"clientCountryAlpha2": "BR",
+				"clientCountryName": "Brazil",
+				"value": "10.772799"
+			}
+		],
+		"meta": {
+      // ...
+    }
+  }
 }
 ```
 
@@ -46,13 +58,25 @@ Returns the following response:
 
 ```json
 {
-  "clientCountryAlpha2": "RU",
-  "clientCountryName": "Russian Federation",
-  "value": "73.710495"
-}, {
-  "clientCountryAlpha2": "DE",
-  "clientCountryName": "Germany",
-  "value": "5.518052"
+  "success": true,
+  "errors": [],
+  "result": {
+		"top_0": [
+			{
+				"clientCountryAlpha2": "RU",
+				"clientCountryName": "Russian Federation",
+				"value": "73.710495"
+			},
+			{
+				"clientCountryAlpha2": "DE",
+				"clientCountryName": "Germany",
+				"value": "5.518052"
+			}
+		],
+		"meta": {
+      // ...
+    }
+  }
 }
 ```
 
@@ -60,10 +84,10 @@ As expected, most queries come from Russia.
 
 :::note
 
-Note that these examples return the total number of DNS queries from a location to a hostname, *out* of the total DNS queries to a given hostname. In this sense, it is expected that locations with higher population numbers — like the United States — frequently appear in the top spots, even if the actual percentage is low. 
+Note that these examples return the total number of DNS queries from a location to a hostname, *out* of the total DNS queries to a given hostname. In this sense, it is expected that locations with higher population numbers — like the United States — frequently appear in the top spots, even if the actual percentage is low.
 :::
 
-You can also provide multiple hostnames. Refer to [Get DNS top locations](/api/operations/radar-get-dns-top-locations) for more information. This is useful when the application you want to explore uses several hostnames to serve its content (like a hostname for the main website, another hostname dedicated to its API, etc.).
+You can also provide multiple hostnames. Refer to [Get DNS top locations](/api/resources/radar/subresources/dns/subresources/top/methods/locations/) for more information. This is useful when the application you want to explore uses several hostnames to serve its content (like a hostname for the main website, another hostname dedicated to its API, etc.).
 
 ## Next steps
 

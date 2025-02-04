@@ -7,10 +7,10 @@ sidebar:
 
 This guide will show you how to manage miscategorization of reports. To complete this guide, you will need to generate an [API token](/fundamentals/api/get-started/create-token/).
 
-1. Create an [API token](/fundamentals/api/get-started/create-token/) if you do not have one already. 
+1. Create an [API token](/fundamentals/api/get-started/create-token/) if you do not have one already.
 2. Choose **Custom Token**.
 3. Name the token, and grant permissions.
-4. Send a `POST` request to the miscategorization [API endpoint](https://developers.cloudflare.com/api/operations/miscategorization-create-miscategorization). You can find an example below:
+4. Send a `POST` request to the miscategorization [API endpoint](https://developers.cloudflare.com/api/resources/intel/subresources/miscategorizations/methods/create/). You can find an example below:
 
 ```json title="Example of a POST request to miscategorization API"
 
@@ -18,19 +18,19 @@ export URL="https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/intel/misc
 curl -X POST "$URL" \
      -H "Authorization: Bearer $TOKEN" \
      -H "Content-Type:application/json" \
---data '{                                                                                                            
-  "content_adds": [                                                                                                  
-  ],                                                                                                                 
-  "content_removes": [                                                                                               
-  ],                                                                                                                 
-  "indicator_type": "domain",                                                                                        
-  "ip": null,                                                                                                        
-  "security_adds": [                                                                                                 
-    115                                                                                                              
-  ],                                                                                                                 
-  "security_removes": [                                                                                              
-  ],                                                                                                                 
-  "url": "cloudflare.com"                                                                                            
+--data '{
+  "content_adds": [
+  ],
+  "content_removes": [
+  ],
+  "indicator_type": "domain",
+  "ip": null,
+  "security_adds": [
+    115
+  ],
+  "security_removes": [
+  ],
+  "url": "cloudflare.com"
 }'
 ```
 

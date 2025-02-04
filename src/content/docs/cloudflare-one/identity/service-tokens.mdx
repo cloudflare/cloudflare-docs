@@ -46,7 +46,7 @@ curl -H "cookie: CF_Authorization=<CF_AUTHORIZATION_COOKIE>" https://app.example
 If you prefer to use a raw header, send the value as `cf-access-token`:
 
 ```sh
-curl -H "cf-access-token=<CF_AUTHORIZATION_COOKIE>" https://app.example.com
+curl -H "cf-access-token: <CF_AUTHORIZATION_COOKIE>" https://app.example.com
 ```
 
 All requests with this cookie will succeed until the JWT expires.

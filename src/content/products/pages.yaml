@@ -24,8 +24,3 @@ externals:
     url: https://blog.cloudflare.com/cloudflare-pages
   - title: First look at Cloudflare Pages (video)
     url: https://www.youtube.com/watch?v=IeHC4NwkEfc
-
-algolia:
-  index: TEST - Re-dev docs
-  apikey: 4edb0a6cef3338ff4bcfbc6b3d2db56b
-  product: pages

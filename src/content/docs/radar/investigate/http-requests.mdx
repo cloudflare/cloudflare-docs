@@ -6,11 +6,11 @@ sidebar:
 
 ---
 
-While in [Netflows](/radar/investigate/netflows/) we can inspect bytes and packets reaching Cloudflare's edge routers, in HTTP requests we are a layer above in the [OSI model](https://en.wikipedia.org/wiki/OSI_model). HTTP requests examines complete HTTP requests from end users that reach websites served by Cloudflare's [CDN](https://www.cloudflare.com/en-gb/learning/cdn/what-is-a-cdn/).
+While in [NetFlows](/radar/investigate/netflows/) we can inspect bytes and packets reaching Cloudflare's edge routers, in HTTP requests we are a layer above in the [OSI model](https://en.wikipedia.org/wiki/OSI_model). HTTP requests examines complete HTTP requests from end users that reach websites served by Cloudflare's [CDN](https://www.cloudflare.com/en-gb/learning/cdn/what-is-a-cdn/).
 
 :::note
 
-HTTP traffic includes both HTTP and HTTPS traffic coming from end users. 
+HTTP traffic includes both HTTP and HTTPS traffic coming from end users.
 :::
 
 Most of the charts in the [Adoption and Usage](https://radar.cloudflare.com/adoption-and-usage) section on Radar come from this data source.
@@ -68,10 +68,10 @@ Mobile devices tend to be considerably more present when examining human generat
 
 :::note
 
-Note that device classification comes from the [User-agent](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/User-Agent) header. Ultimately, this classification depends on the user agent(s) that bots use. 
+Note that device classification comes from the [User-agent](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/User-Agent) header. Ultimately, this classification depends on the user agent(s) that bots use.
 :::
 
-For more information refer to [Get device types time series](/api/operations/radar-get-http-timeseries-group-by-device-type).
+For more information refer to [Get device types time series](/api/resources/radar/subresources/http/subresources/timeseries_groups/methods/device_type/).
 
 ### Summary
 
@@ -87,19 +87,25 @@ curl "https://api.cloudflare.com/client/v4/radar/http/summary/device_type?name=h
 Here is the abbreviated response:
 
 ```json
-"human": {
-  "mobile": "54.967243",
-  "desktop": "44.974006",
-  "other": "0.058751"
-},
-"bot": {
-  "desktop": "83.275452",
-  "mobile": "16.707455",
-  "other": "0.017093"
+{
+  "success": true,
+  "errors": [],
+  "result": {
+		"human": {
+			"mobile": "54.967243",
+			"desktop": "44.974006",
+			"other": "0.058751"
+		},
+		"bot": {
+			"desktop": "83.275452",
+			"mobile": "16.707455",
+			"other": "0.017093"
+		}
+  }
 }
 ```
 
-For more information refer to the [API reference](/api/operations/radar-get-http-summary-by-device-type) for this endpoint.
+For more information refer to the [API reference](/api/resources/radar/subresources/http/subresources/summary/methods/device_type/) for this endpoint.
 
 #### Example: breakdown by IP version and human/bot traffic
 
@@ -113,19 +119,25 @@ curl "https://api.cloudflare.com/client/v4/radar/http/summary/ip_version?name=hu
 This returns the following:
 
 ```json
-"human": {
-  "IPv4": "76.213647",
-  "IPv6": "23.786353"
-},
-"bot": {
-  "IPv4": "91.492032",
-  "IPv6": "8.507968"
+{
+  "success": true,
+  "errors": [],
+  "result": {
+		"human": {
+			"IPv4": "76.213647",
+			"IPv6": "23.786353"
+		},
+		"bot": {
+			"IPv4": "91.492032",
+			"IPv6": "8.507968"
+		}
+  }
 }
 ```
 
 Bots tend to use more IPv4 addresses.
 
-It is also interesting to know how your ISP fares in IPv6 adoption. If you know your ISP’s autonomous system number (ASN), you can use the `asn` parameter to query for this information. Refer to the [API reference](/api/operations/radar-get-http-summary-by-ip-version) for other parameters.
+It is also interesting to know how your ISP fares in IPv6 adoption. If you know your ISP’s autonomous system number (ASN), you can use the `asn` parameter to query for this information. Refer to the [API reference](/api/resources/radar/subresources/http/subresources/summary/methods/ip_version/) for other parameters.
 
 If you do not know your ISP’s ASN, you can use [Radar](https://radar.cloudflare.com/ip) to find what it is.
 
@@ -141,34 +153,44 @@ curl "https://api.cloudflare.com/client/v4/radar/http/top/locations/ip_version/I
 ```
 
 ```json
-"ipv6": [
-  {
-    "clientCountryAlpha2": "IN",
-    "clientCountryName": "India",
-    "value": "50.612747"
-  }, {
-    "clientCountryAlpha2": "MY",
-    "clientCountryName": "Malaysia",
-    "value": "46.233654"
-  }, {
-    "clientCountryAlpha2": "UY",
-    "clientCountryName": "Uruguay",
-    "value": "39.796762"
-  }, {
-    "clientCountryAlpha2": "LK",
-    "clientCountryName": "Sri Lanka",
-    "value": "39.709355"
-  }, {
-    "clientCountryAlpha2": "VN",
-    "clientCountryName": "Vietnam",
-    "value": "39.1514"
+{
+  "success": true,
+  "errors": [],
+  "result": {
+		"ipv6": [
+			{
+				"clientCountryAlpha2": "IN",
+				"clientCountryName": "India",
+				"value": "50.612747"
+			},
+			{
+				"clientCountryAlpha2": "MY",
+				"clientCountryName": "Malaysia",
+				"value": "46.233654"
+			},
+			{
+				"clientCountryAlpha2": "UY",
+				"clientCountryName": "Uruguay",
+				"value": "39.796762"
+			},
+			{
+				"clientCountryAlpha2": "LK",
+				"clientCountryName": "Sri Lanka",
+				"value": "39.709355"
+			},
+			{
+				"clientCountryAlpha2": "VN",
+				"clientCountryName": "Vietnam",
+				"value": "39.1514"
+			}
+		]
   }
-]
+}
 ```
 
 According to the returned data, India is leading in IPv6 adoption.
 
-For more information refer to the [API reference](/api/operations/radar-get-http-top-locations-by-ip-version) for this endpoint.
+For more information refer to the [API reference](/api/resources/radar/subresources/http/subresources/locations/subresources/ip_version/methods/get/) for this endpoint.
 
 ## Next steps
 

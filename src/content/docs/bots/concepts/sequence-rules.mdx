@@ -56,45 +56,7 @@ Cloudflare only stores up to the 10 most recent operations in a sequence for up 
 
 ## Availability
 
-These sequence fields are available in:
-
-- [Custom rules](/waf/custom-rules/) (`http_request_firewall_custom` phase)
-- [Rate limiting rules](/waf/rate-limiting-rules/) (`http_request_ratelimit`)
-- [Bulk redirects](/workers/examples/bulk-redirects/) (`http_request_redirect`)
-- [HTTP request header modification rules](/rules/transform/response-header-modification/) (`http_request_late_transform`)
-
-<table>
-  <thead>
-   <tr>
-      <th style="width: 35%;">Field name</th>
-      <th>Description</th>
-      <th>Example value</th>
-   </tr>
-  </thead>
-  <tbody style='vertical-align:top'>
-    <tr>
-        <td><p><code>cf.sequence.current_op</code><br />`String`</p></td>
-        <td>
-          <p>This field contains the ID of the operation that matches the current request. If the current request does not match any operations defined in Endpoint Management, it will be an empty string.</p>
-        </td>
-        <td><p><code>c821cc00</code></p></td>
-    </tr>
-    <tr>
-        <td><p><code>cf.sequence.previous_ops</code><br />`Array<String>`</p></td>
-        <td>
-          <p>This field contains an array of the prior operation IDs in the sequence, ordered from most to least recent. It does not include the current request. <br /><br /> If an operation is repeated, it will appear multiple times in the sequence.</p>
-        </td>
-        <td><p><code>["f54dac32", "c821cc00", "a37dc89b"]</code></p></td>
-    </tr>
-    <tr>
-        <td><p><code>cf.sequence.msec_since_op</code><br />`Map<Number>`</p></td>
-        <td>
-          <p>This field contains a map where the keys are operation IDs and the values are the number of milliseconds since that operation has most recently occurred. <br /><br /> This does not include the current request or operation as it only factors in previous operations in the sequence.</p>
-        </td>
-        <td><p>`{"f54dac32": 1000, "c821cc00": 2000}`</p></td>
-    </tr>
-    </tbody>
-</table>
+<Render file="sequence-rules-availability" />
 
 ### Example rules
 

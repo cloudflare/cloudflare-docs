@@ -59,7 +59,7 @@ tools:
     supported: "Any version"
     environment_variable: "YARN_VERSION"
   - name: Bun
-    default: "1.0.1"
+    default: "1.1.33"
     supported: "Any version"
     environment_variable: "BUN_VERSION"
 build_environment:

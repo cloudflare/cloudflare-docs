@@ -1,0 +1,52 @@
+---
+title: FAQ
+pcx_content_type: faq
+sidebar:
+  order: 8
+head:
+  - tag: title
+    content: Frequently asked questions about Cloudflare Browser Rendering
+---
+
+import { GlossaryTooltip } from "~/components";
+
+Below you will find answers to our most commonly asked questions. If you cannot find the answer you are looking for, refer to the [Discord](https://discord.cloudflare.com) to explore additional resources.
+
+##### Uncaught (in response) TypeError: Cannot read properties of undefined (reading 'fetch')
+
+Make sure that you are passing your Browser binding to the `puppeteer.launch` api and that you have [Workers for Platforms Paid plan](/cloudflare-for-platforms/workers-for-platforms/platform/pricing/).
+
+##### Will browser rendering bypass Cloudflare's Bot Protection?
+
+Browser rendering requests are always identified as bots by Cloudflare.
+
+If you are trying to **scan** your **own zone**, you can create a [WAF skip rule](/waf/custom-rules/skip/) to bypass the bot protection using a header or a custom user agent.
+
+## Puppeteer
+
+##### Code generation from strings disallowed for this context while using an Xpath selector
+
+Currently it's not possible to use Xpath to select elements since this poses a security risk to Workers.
+
+As an alternative try to use a css selector or `page.evaluate` for example:
+
+```ts
+const innerHtml = await page.evaluate(() => {
+	return (
+		// @ts-ignore this runs on browser context
+		new XPathEvaluator()
+			.createExpression("/html/body/div/h1")
+			// @ts-ignore this runs on browser context
+			.evaluate(document, XPathResult.FIRST_ORDERED_NODE_TYPE).singleNodeValue
+			.innerHTML
+	);
+});
+```
+
+:::note
+
+Keep in mind that `page.evaluate` can only return primitive types like strings, numbers, etc.
+
+Returning an `HTMLElement` will not work.
+
+:::

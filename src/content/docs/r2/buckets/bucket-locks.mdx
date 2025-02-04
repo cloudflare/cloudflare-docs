@@ -1,0 +1,78 @@
+---
+title: Bucket locks
+pcx_content_type: how-to
+---
+
+Bucket locks prevent the deletion and overwriting of objects in an R2 bucket for a specified period — or indefinitely. When enabled, bucket locks enforce retention policies on your objects, helping protect them from accidental or premature deletions.
+
+## Get started with bucket locks
+
+### Prerequisites
+
+Before getting started, you will need:
+
+- An existing R2 bucket. If you do not already have an existing R2 bucket, refer to [Create buckets](/r2/buckets/create-buckets/).
+- An API token with [permissions](/r2/api/s3/tokens/#permissions) to edit R2 bucket configuration.
+
+:::note
+
+Currently, Bucket locks are only configurable via API.
+:::
+
+### Enable bucket lock via API
+
+Below is an example of setting a bucket lock configuration (a collection of rules):
+
+```bash
+curl -X PUT "https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/r2/buckets/<BUCKET_NAME>/lock" \
+    -H "Authorization: Bearer <API_TOKEN>" \
+    -H "Content-Type: application/json" \
+    -d '{
+        "rules": [
+            {
+                "id": "lock-logs-7d",
+                "enabled": true,
+                "prefix": "logs/",
+                "condition": {
+                    "type": "Age",
+                    "maxAgeSeconds": 604800
+                }
+            },
+            {
+                "id": "lock-images-indefinite",
+                "enabled": true,
+                "prefix": "images/",
+                "condition": {
+                    "type": "Indefinite"
+                }
+            }
+        ]
+    }'
+```
+
+This request creates two rules:
+
+- `lock-logs-7d`: Objects under the `logs/` prefix are retained for 7 days (604800 seconds).
+- `lock-images-indefinite`: Objects under the `images/` prefix are locked indefinitely.
+
+For more information on required parameters and examples of how to enable bucket lock, refer to the [API documentation](/api/resources/r2/subresources/buckets/subresources/locks/methods/update/). For information about getting started with the Cloudflare API, refer to [Make API calls](/fundamentals/api/how-to/make-api-calls/).
+
+### Get bucket lock rules via API
+
+For more information on required parameters and examples of how to get bucket lock rules, refer to the [API documentation](/api/resources/r2/subresources/buckets/subresources/locks/methods/get/).
+
+## Bucket lock rules
+
+A bucket lock configuration can include up to 1,000 rules. Each rule specifies which object it covers (via prefix) and how long those objects must remain locked. You can:
+
+- Lock objects for a specific duration. For example, 90 days.
+- Retain objects until a certain date. For example, until January 1, 2026.
+- Keep objects locked indefinitely.
+
+If multiple rules apply to the same prefix or object key, the strictest (longest) retention requirement takes precedence.
+
+## Notes
+
+- Rules without prefix apply to all objects in the bucket.
+- Rules apply to both new and existing objects in the bucket.
+- Bucket lock rules take precedence over [lifecycle rules](/r2/buckets/object-lifecycles/). For example, if a lifecycle rule attempts to delete an object at 30 days but a bucket lock rule requires it be retained for 90 days, the object will not be deleted until the 90-day requirement is met.

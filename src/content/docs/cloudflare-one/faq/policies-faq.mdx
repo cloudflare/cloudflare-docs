@@ -1,6 +1,6 @@
 ---
 pcx_content_type: faq
-title: Policies
+title: Policies FAQ
 sidebar:
   order: 5
 head:
@@ -56,3 +56,15 @@ If the domain is only blocked by a DNS policy, it may be because:
 If the domain is only blocked by a network policy, it may be because:
 
 - **Your browser is reusing an existing connection**. Network policies only apply when a connection is opened. If a browser is connected to a domain to be blocked by a network policy, Gateway will not block requests until the connection is closed. To block the domain, close any related tabs or restart your browser.
+
+## When does Access return a Forbidden status page versus a login page?
+
+Access returns a Forbidden page with status codes `401`/`403` when it determines there is no way a user can pass a [policy](/cloudflare-one/policies/access/). If Cloudflare can make a full policy determination that a user will not be able to log in, Access will return a Forbidden page instead of a [login page](/cloudflare-one/applications/login-page/).
+
+For example, your application has a policy that requires a user to be in a [specific geolocation](/cloudflare-one/policies/access/#allow) to log in.
+
+As admin, you could define this geolocation policy by using [Include](/cloudflare-one/policies/access/#include) rules, meaning the user could log in to the application from Country A or Country B.
+
+Or you could define this geolocation policy using a [Require](/cloudflare-one/policies/access/#require) rule, meaning the user must be in Country A to log in.
+
+If a user from country C attempts to access the application, in both the Include and Require scenarios, the user will receive the Forbidden page. This is because Country C was not defined in either scenario. Therefore, Cloudflare has determined that this user cannot meet policy requirements and will receive the Forbidden status page.

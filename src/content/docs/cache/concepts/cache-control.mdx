@@ -86,7 +86,7 @@ The `stale-if-error` directive is ignored if [Always Online](/cache/how-to/alway
 Additional directives that influence cache behavior are listed below.
 
 * `no-transform` — Indicates that an intermediary — regardless of whether it implements a cache — must not transform the payload.
-* `vary` — Cloudflare does not consider vary values in caching decisions. Nevertheless, vary values are respected when [Vary for images](/cache/advanced-configuration/vary-for-images/) is configured and when the vary header is [`vary: accept-encoding`](/speed/optimization/content/brotli/).
+* `vary` — Cloudflare does not consider vary values in caching decisions. Nevertheless, vary values are respected when [Vary for images](/cache/advanced-configuration/vary-for-images/) is configured and when the vary header is [`vary: accept-encoding`](/speed/optimization/content/compression/).
 * `immutable` — Indicates to clients the response body does not change over time. The resource, if unexpired, is unchanged on the server. The user should not send a conditional revalidation request, such as `If-None-Match` or `If-Modified-Since`, to check for updates, even when the user explicitly refreshes the page. This directive has no effect on public caches like Cloudflare, but does change browser behavior.
 
 ## Enable Origin Cache Control

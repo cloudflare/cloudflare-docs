@@ -20,49 +20,61 @@ Widgets can be implemented in normal, flexible, or compact sizes.
 
 Refer to [widget sizes](/turnstile/get-started/client-side-rendering/#widget-size) for an example on how to configure flexible or compact mode.
 
-## Managed (recommended)
+:::note[Offlabel]
+Customers with Enterprise Bot Management and Enterprise Turnstile have the ability to remove the Cloudflare branding and customize the Turnstile widget.
+:::
+
+## Availability 
+
+Free users are limited to 10 widgets per account. 
+
+Customers with Enterprise Bot Management and Enterprise Turnstile can have this limit increased. Contact your account team to increase your widget limit.
+
+## Widget types
+
+### Managed (recommended)
 
 This mode is fully managed by Cloudflare. It automatically chooses the appropriate action based on various signals and risk levels. Cloudflare will use the information from the visitor to decide if an interactive challenge should be used. Turnstile will only require interaction if a further check is necessary to verify that the visitor is human. When an interaction is required, the user will be prompted to check a box (no images or text to decipher). This managed mode is ideal for users who want a simple configuration without needing to fine-tune the behavior.
 
-### Light mode
+#### Light mode
 
 ![Managed challenge](~/assets/images/turnstile/light-regular.png)
 ![Verifying the challenge](~/assets/images/turnstile/light-verifying.png)
 ![Successful managed challenge](~/assets/images/turnstile/light-success.png)
 
-### Dark mode
+#### Dark mode
 
 ![Managed challenge](~/assets/images/turnstile/dark-regular.png)
 ![Verifying the challenge](~/assets/images/turnstile/dark-verifying.png)
 ![Successful managed challenge](~/assets/images/turnstile/dark-success.png)
 
-## Compact mode
+### Compact mode
 
 You can configure the Turnstile widget in compact mode, which functions in the same way as a Managed widget. 
 
-### Light mode
+#### Light mode
 
 ![Compact managed challenge](~/assets/images/turnstile/light-compact.png)
 
-### Dark mode
+#### Dark mode
 
 ![Compact managed challenge](~/assets/images/turnstile/dark-compact.png)
 
-## Non-Interactive
+### Non-Interactive
 
 Visitors will see a widget with a loading bar while the browser challenges run. Unlike managed mode, visitors will never be required or prompted to interact with the widget. This mode is ideal for users who want to prioritize visitor experience and do not want to add any friction with a Turnstile interaction.
 
-### Light mode
+#### Light mode
 
 ![Verifying the challenge](~/assets/images/turnstile/light-verifying.png)
 ![Successful managed challenge](~/assets/images/turnstile/light-success.png)
 
-### Dark mode
+#### Dark mode
 
 ![Verifying the challenge](~/assets/images/turnstile/dark-verifying.png)
 ![Successful managed challenge](~/assets/images/turnstile/dark-success.png)
 
-## Invisible
+### Invisible
 
 This mode is similar to non-interactive mode where visitors will never interact with the Turnstile widget. Visitors will not see a widget or any indication that an invisible browser challenge is in progress. Invisible challenges should take a few seconds to complete.
 
@@ -92,4 +104,4 @@ The widget expires when a token was issued but the user did not solve the challe
 
 ![Unsupported browser](~/assets/images/turnstile/unsupported-browser.png)
 
-Visitors with outdated browsers or unsupported browsers will encouter this widget state. Refer to [Supported browsers](/waf/reference/cloudflare-challenges/#browser-support) for more information regarding supported browsers.
+Visitors with outdated browsers or unsupported browsers will encounter this widget state. Refer to [Supported browsers](/waf/reference/cloudflare-challenges/#browser-support) for more information regarding supported browsers.

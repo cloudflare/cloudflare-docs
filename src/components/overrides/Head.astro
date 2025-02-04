@@ -5,7 +5,6 @@ import { differenceInCalendarDays } from "date-fns";
 import "tippy.js/dist/tippy.css";
 
 import { getEntry } from "astro:content";
-import { getPageDescription } from "~/util/description";
 
 const currentSection = Astro.url.pathname.split("/")[1];
 
@@ -14,18 +13,37 @@ if (currentSection) {
 
 	if (product) {
 		if (product.data.meta.title) {
-			const title = `${Astro.props.entry.data.title} | ${product.data.meta.title}`;
-			Astro.props.entry.data.head.push({
-				tag: "title",
-				attrs: {},
-				content: title,
-			});
+			const titleIdx = Astro.props.entry.data.head.findIndex(
+				(x) => x.tag === "title",
+			);
+
+			let title: string;
+
+			if (titleIdx !== -1) {
+				const existingTitle = Astro.props.entry.data.head[titleIdx].content;
+				title = `${existingTitle} · ${product.data.meta.title}`;
+
+				Astro.props.entry.data.head[titleIdx] = {
+					tag: "title",
+					attrs: {},
+					content: title,
+				};
+			} else {
+				title = `${Astro.props.entry.data.title} · ${product.data.meta.title}`;
+				Astro.props.entry.data.head.push({
+					tag: "title",
+					attrs: {},
+					content: title,
+				});
+			}
+
 			Astro.props.entry.data.head.push({
 				tag: "meta",
 				attrs: { property: "og:title", content: title },
 				content: "",
 			});
 		}
+
 		if (product.data.product.title) {
 			const productName = product.data.product.title;
 			Astro.props.entry.data.head.push({
@@ -45,7 +63,58 @@ if (currentSection) {
 				content: "",
 			});
 		}
+
 		if (product.data.product.group) {
+			const group = product.data.product.group.toLowerCase();
+
+			let ogImage = "https://developers.cloudflare.com/cf-twitter-card.png";
+			const images: Record<string, string> = {
+				"cloudflare essentials":
+					"https://developers.cloudflare.com/core-services-preview.png",
+				"cloudflare one": "https://developers.cloudflare.com/zt-preview.png",
+				"developer platform":
+					"https://developers.cloudflare.com/dev-products-preview.png",
+				"network security":
+					"https://developers.cloudflare.com/core-services-preview.png",
+				"application performance":
+					"https://developers.cloudflare.com/core-services-preview.png",
+				"application security":
+					"https://developers.cloudflare.com/core-services-preview.png",
+			};
+
+			if (images[group]) {
+				ogImage = images[group];
+			}
+
+			const tags = [
+				{
+					tag: "meta",
+					attrs: {
+						name: "image",
+						content: ogImage,
+					},
+					content: "",
+				},
+				{
+					tag: "meta",
+					attrs: {
+						name: "og:image",
+						content: ogImage,
+					},
+					content: "",
+				},
+				{
+					tag: "meta",
+					attrs: {
+						name: "twitter:image",
+						content: ogImage,
+					},
+					content: "",
+				},
+			] as const;
+
+			Astro.props.entry.data.head.push(...tags);
+
 			Astro.props.entry.data.head.push({
 				tag: "meta",
 				attrs: {
@@ -56,15 +125,20 @@ if (currentSection) {
 			});
 		}
 	}
+
+	if (currentSection === "style-guide") {
+		Astro.props.entry.data.head.push({
+			tag: "meta",
+			attrs: {
+				name: "robots",
+				content: "noindex",
+			},
+			content: "",
+		});
+	}
 }
 
-Astro.props.entry.data.description ??= await getPageDescription(
-	// @ts-expect-error TODO: improve types
-	Astro.props.entry,
-);
-
 // Adding metadata used for reporting and search indexing
-
 // content type
 if (Astro.props.entry.data.pcx_content_type) {
 	const contentType = Astro.props.entry.data.pcx_content_type;

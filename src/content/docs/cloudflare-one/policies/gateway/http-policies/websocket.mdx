@@ -3,11 +3,12 @@ pcx_content_type: how-to
 title: WebSocket traffic
 sidebar:
   order: 7
-
+banner:
+  content: The default global Cloudflare root certificate expired on 2025-02-02. If you installed the default Cloudflare certificate before 2024-10-17, you must <a href="/cloudflare-one/connections/connect-devices/user-side-certificates/#generate-a-cloudflare-root-certificate">generate a new certificate</a> and activate it for your Zero Trust organization to avoid inspection errors.
 ---
 
 Gateway does not inspect or log [WebSocket](https://datatracker.ietf.org/doc/html/rfc6455) traffic. Instead, Gateway will only log the HTTP details used to make the WebSocket connection, as well as [network session information](/logs/reference/log-fields/account/zero_trust_network_sessions/). To filter your WebSocket traffic, create a policy with the `101` HTTP response code.
 
-| Selector      | Operator | Value                    | Action |
-| ------------- | -------- | ------------------------ | ------ |
-| HTTP Response | is       | 101 SWITCHING\_PROTOCOLS | Allow  |
+| Selector      | Operator | Value                   | Action |
+| ------------- | -------- | ----------------------- | ------ |
+| HTTP Response | is       | 101 SWITCHING_PROTOCOLS | Allow  |

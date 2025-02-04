@@ -27,7 +27,7 @@ First you should determine which pools are using notifications. It's often easie
 
 <Details header="With code">
 
-Use the [Cloudflare API](/api/operations/account-load-balancer-pools-list-pools) to list all your pools and then look for whether each pool has a value for the `notification_email` parameter.
+Use the [Cloudflare API](/api/resources/load_balancers/subresources/pools/methods/list/) to list all your pools and then look for whether each pool has a value for the `notification_email` parameter.
 
 ```bash title="Request"
 curl "https://api.cloudflare.com/client/v4/accounts/{account_id}/load_balancers/pools" \
@@ -80,7 +80,7 @@ In this step, you should create new notifications to replace all of your existin
 
 <Details header="With code">
 
-If using the Cloudflare API, [re-create all your existing notifications](/api/operations/notification-policies-create-a-notification-policy) with the following parameters specified:
+If using the Cloudflare API, [re-create all your existing notifications](/api/resources/alerting/subresources/policies/methods/create/) with the following parameters specified:
 
 ```json
 "alert_type": "load_balancing_health_alert",
@@ -111,7 +111,7 @@ Though you can perform these steps in the dashboard, Cloudflare recommends you u
 
 <Details header="With code">
 
-If using the Cloudflare API, we recently added a [`PATCH`](/api/operations/account-load-balancer-pools-patch-pools) endpoint so you can easily remove email notifications from multiple pools at the same time.
+If using the Cloudflare API, we recently added a [`PATCH`](/api/resources/load_balancers/subresources/pools/methods/bulk_edit/) endpoint so you can easily remove email notifications from multiple pools at the same time.
 
 ```bash title="Request"
 curl --request PATCH \

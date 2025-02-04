@@ -8,6 +8,7 @@ languages:
   - JavaScript
   - TypeScript
   - Python
+  - Rust
 pcx_content_type: example
 title: CORS header proxy
 sidebar:
@@ -436,4 +437,128 @@ async def on_fetch(request):
     return raw_html_response(demo_page)
 ```
 
+</TabItem> <TabItem label="Rust" icon="seti:rust">
+```rs
+use std::{borrow::Cow, collections::HashMap};
+use worker::*;
+
+fn raw_html_response(html: &str) -> Result<Response> {
+    Response::from_html(html)
+}
+async fn handle_request(req: Request, api_url: &str) -> Result<Response> {
+    let url = req.url().unwrap();
+    let mut api_url2 = url
+        .query_pairs()
+        .find(|x| x.0 == Cow::Borrowed("apiurl"))
+        .unwrap()
+        .1
+        .to_string();
+    if api_url2 == String::from("") {
+        api_url2 = api_url.to_string();
+    }
+    let mut request = req.clone_mut()?;
+    *request.path_mut()? = api_url2.clone();
+    if let url::Origin::Tuple(origin, _, _) = Url::parse(&api_url2)?.origin() {
+        (*request.headers_mut()?).set("Origin", &origin)?;
+    }
+    let mut response = Fetch::Request(request).send().await?.cloned()?;
+    let headers = response.headers_mut();
+    if let url::Origin::Tuple(origin, _, _) = url.origin() {
+        headers.set("Access-Control-Allow-Origin", &origin)?;
+        headers.set("Vary", "Origin")?;
+    }
+
+    Ok(response)
+}
+
+fn handle_options(req: Request, cors_headers: &HashMap<&str, &str>) -> Result<Response> {
+    let headers: Vec<_> = req.headers().keys().collect();
+    if [
+        "access-control-request-method",
+        "access-control-request-headers",
+        "origin",
+    ]
+    .iter()
+    .all(|i| headers.contains(&i.to_string()))
+    {
+        let mut headers = Headers::new();
+        for (k, v) in cors_headers.iter() {
+            headers.set(k, v)?;
+        }
+        return Ok(Response::empty()?.with_headers(headers));
+    }
+    Response::empty()
+}
+#[event(fetch)]
+async fn fetch(req: Request, _env: Env, _ctx: Context) -> Result<Response> {
+    let cors_headers = HashMap::from([
+        ("Access-Control-Allow-Origin", "*"),
+        ("Access-Control-Allow-Methods", "GET,HEAD,POST,OPTIONS"),
+        ("Access-Control-Max-Age", "86400"),
+    ]);
+    let api_url = "https://examples.cloudflareworkers.com/demos/demoapi";
+    let proxy_endpoint = "/corsproxy/";
+    let demo_page = format!(
+        r#"
+    <!DOCTYPE html>
+    <html>
+    <body>
+    <h1>API GET without CORS Proxy</h1>
+    <a target="_blank" href="https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API/Using_Fetch#Checking_that_the_fetch_was_successful">Shows TypeError: Failed to fetch since CORS is misconfigured</a>
+    <p id="noproxy-status"/>
+    <code id="noproxy">Waiting</code>
+    <h1>API GET with CORS Proxy</h1>
+    <p id="proxy-status"/>
+    <code id="proxy">Waiting</code>
+    <h1>API POST with CORS Proxy + Preflight</h1>
+    <p id="proxypreflight-status"/>
+    <code id="proxypreflight">Waiting</code>
+    <script>
+    let reqs = {{}};
+    reqs.noproxy = () => {{
+        return fetch("{api_url}").then(r => r.json())
+    }}
+    reqs.proxy = async () => {{
+        let href = "{proxy_endpoint}?apiurl={api_url}"
+        return fetch(window.location.origin + href).then(r => r.json())
+    }}
+    reqs.proxypreflight = async () => {{
+        let href = "{proxy_endpoint}?apiurl={api_url}"
+        let response = await fetch(window.location.origin + href, {{
+        method: "POST",
+        headers: {{
+            "Content-Type": "application/json"
+        }},
+        body: JSON.stringify({{
+            msg: "Hello world!"
+        }})
+        }})
+        return response.json()
+    }}
+    (async () => {{
+    for (const [reqName, req] of Object.entries(reqs)) {{
+        try {{
+        let data = await req()
+        document.getElementById(reqName).innerHTML = JSON.stringify(data)
+        }} catch (e) {{
+        document.getElementById(reqName).innerHTML = e
+        }}
+    }}
+    }})()
+    </script>
+    </body>
+    </html>
+    "#
+    );
+
+    if req.url()?.path().starts_with(proxy_endpoint) {
+        match req.method() {
+            Method::Options => return handle_options(req, &cors_headers),
+            Method::Get | Method::Head | Method::Post => return handle_request(req, api_url).await,
+            _ => return Response::error("Method Not Allowed", 405),
+        }
+    }
+    raw_html_response(&demo_page)
+}
+```
 </TabItem> </Tabs>

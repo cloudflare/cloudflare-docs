@@ -1,0 +1,42 @@
+releaseNotes: >-
+  This release primarily contains improvements to stability and bug fixes.
+   
+  **Notable updates**
+
+  - Fixed issue where WARP DNS servers stay set after Windows update, causing no
+  network for user
+
+  - Improved connection time on slow network connections
+
+  - Fixed bug where initial teams registration could take awhile to show up on
+  client UI
+
+  - Fixed bug that could cause Teams registration to fail (mostly server side
+  but mentioning here as well) and handoff from the success page in the browser
+  to the client
+
+  - Fixed notification experience so you only recieve a single notification if
+  registration fails instead of hundreds
+
+  - Fixed DNS fallback timeouts and related performance issues
+
+  - Fixed issue where coming out of sleep on some systems could take an
+  unreasonably long time to connect
+
+  - Fixed InvalidPacket error in logs that indicated the client needed to reset
+  its connection
+
+  - Fixed issue where user experienced no network after boot
+
+  - Fixed issue where warp-diag rotated daemon logs did not collect older logs
+
+   
+  **Known issues**
+
+  - Device posture check results stop sending after 24 hours (or possibly even
+  sooner)
+version: 2022.9.383.0
+packageURL: https://downloads.cloudflareclient.com/v1/download/windows/version/2022.9.383.0
+packageSize: 103960576
+releaseDate: 2022-09-30T18:27:45.527Z
+platformName: Windows

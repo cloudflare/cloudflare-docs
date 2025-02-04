@@ -22,7 +22,7 @@ Use your certificate staging environment to test new custom (modern) certificate
 
 ## Use your staging environment
 
-### Step 1 — Upload certificate
+### 1. Upload certificate
 
 To upload custom (modern) certificates to your staging environment:
 
@@ -31,7 +31,7 @@ To upload custom (modern) certificates to your staging environment:
 3. Upload your custom (modern) certificate ([detailed instructions](/ssl/edge-certificates/custom-certificates/uploading/)).
 4. Your certificate will appear in the dashboard with a status of **Staging Deployment**. If you refresh the page, its status should go to **Staging Active**.
 
-### Step 2 — Test certificate
+### 2. Test certificate
 
 Test your custom (modern) certificate by sending `curl` requests to the IP addresses listed in the dashboard card at **SSL/TLS** > **Staging Certificates**:
 
@@ -45,7 +45,7 @@ You should confirm whether:
 * The right certificate is being served at the edge.
 * Any clients are pinning the old certificate.
 
-### Step 3 — Push certificate to production
+### 3. Push certificate to production
 
 Assuming there are no issues, push your custom (modern) certificate to your production environment:
 
@@ -55,7 +55,7 @@ Assuming there are no issues, push your custom (modern) certificate to your prod
 
 If there were issues with your certificate, you can keep it in your staging environment or select **Deactivate** on the certificate itself.
 
-### Step 4 (optional) — Push certificate back to staging
+### 4. (Optional) Push certificate back to staging
 
 If you roll out a custom (modern) certificate to production and encounter issues, you can deactivate that certificate to delete the certificate from the edge and then push the certificate back to your staging environment for additional testing:
 

@@ -1,0 +1,46 @@
+---
+type: example
+summary: Connect Hyperdrive to a Nile database instance.
+pcx_content_type: example
+title: Connect to Nile
+sidebar:
+  order: 3
+description: Connect Hyperdrive to a Nile database instance.
+---
+
+import { Render } from "~/components";
+
+This example shows you how to connect Hyperdrive to a [Nile](https://thenile.dev) PostgreSQL database instance.
+
+Nile is PostgreSQL re-engineered for multi-tenant applications. Nile's virtual tenant databases provide you with isolation, placement, insight, and other features for your tenant's data and embedding. Refer to [Nile documentation](https://www.thenile.dev/docs/getting-started/whatisnile) to learn more.
+
+## 1. Allow Hyperdrive access
+
+You can connect Cloudflare Hyperdrive to any Nile database in your workspace using its connection string - either with a new set of credentials, or using an existing set.
+
+### Nile console
+
+To get a connection string from Nile console:
+
+1. Log in to [Nile console](https://console.thenile.dev), then select a database.
+2. On the left hand menu, click **Settings** (the bottom-most icon) and then select **Connection**.
+3. Select the PostgreSQL logo to show the connection string.
+4. Select "Generate credentials" to generate new credentials.
+5. Copy the connection string (without the "psql" part).
+
+You will have obtained a connection string similar to the following:
+
+```txt
+    postgres://0191c898-...:4d7d8b45-...@eu-central-1.db.thenile.dev:5432/my_database
+```
+
+With the connection string, you can now create a Hyperdrive database configuration.
+
+## 2. Create a database configuration
+
+<Render file="create-hyperdrive-config" />
+
+
+
+
+

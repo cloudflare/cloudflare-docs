@@ -15,7 +15,7 @@ Creating an index requires three inputs:
 - The (fixed) [dimension size](#dimensions) of each vector, for example 384 or 1536.
 - The (fixed) [distance metric](#distance-metrics) to use for calculating vector similarity.
 
-An index cannot be created using the same name as an index previously deleted on your account. We are in the process of addressing this limitation.
+An index cannot be created using the same name as an index that is currently active on your account. However, an index can be created with a name that belonged to an index that has been deleted.
 
 The configuration of an index cannot be changed after creation.
 
@@ -41,7 +41,7 @@ npx wrangler vectorize create your-index-name --dimensions=768 --metric=cosine
 
 ### HTTP API
 
-Vectorize also supports creating indexes via [REST API](/api/operations/vectorize-create-vectorize-index).
+Vectorize also supports creating indexes via [REST API](/api/resources/vectorize/subresources/indexes/methods/create/).
 
 For example, to create an index directly from a Python script:
 

@@ -1,0 +1,56 @@
+---
+title: Convert full setup to secondary setup
+pcx_content_type: tutorial
+sidebar:
+  order: 2
+  label: Full to secondary
+---
+
+import { Tabs, TabItem, Render, GlossaryTooltip } from "~/components";
+
+If you initially configured a [full setup](/dns/zone-setups/full-setup/), you can later convert your zone to use [incoming zone transfers (Cloudflare as secondary)](/dns/zone-setups/zone-transfers/cloudflare-as-secondary/setup/).
+
+<Render file="conversion-subdomain-setup-callout" />
+
+Follow the steps below to achieve this conversion.
+
+## 1. Prepare DNS records
+
+1. [Export a zone file](/dns/manage-dns-records/how-to/import-and-export/#export-records).
+2. Import the zone file into your new primary DNS provider.
+3. At your Cloudflare zone, use the [Update DNS Settings](/api/resources/dns/subresources/settings/methods/edit/) endpoint to enable [secondary DNS overrides](/dns/zone-setups/zone-transfers/cloudflare-as-secondary/proxy-traffic/). Set the value for `secondary_overrides` to `true`.
+
+    :::note
+    Enabling secondary DNS overrides is necessary in case you have DNS records that you wish to keep <GlossaryTooltip term="proxy status" link="/dns/manage-dns-records/reference/proxied-dns-records/">proxied</GlossaryTooltip>.
+    :::
+
+## 2. Prepare the zone transfers
+
+1. Make adjustments to DNSSEC according to your option for [DNSSEC with secondary setup](/dns/zone-setups/zone-transfers/cloudflare-as-secondary/dnssec-for-secondary/).
+2. (Optional) Create a Transaction Signature (TSIG).
+
+    <Render file="tsig-definition" />
+
+    <Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
+
+    <Render file="tsig-create-dash" />
+
+    </TabItem> <TabItem label="API">
+
+    <Render file="tsig-create-api" />
+
+    </TabItem> </Tabs>
+
+3. Create a peer server.
+
+    <Render file="create-peer-server" />
+
+## 3. Convert the zone and initiate zone transfers
+
+1. Use the [Edit Zone endpoint](/api/resources/zones/methods/edit/) with `type` set to `secondary` to convert the zone type. The existing records will remain in place.
+2. Go to **DNS** > **Settings** > **DNS Zone Transfers** and select **Manage linked peers**.
+3. Link the peer server you created in the previous steps and select **Save**.
+4. On  **DNS** > **Settings**, select **Initiate zone transfer**.
+5. Confirm the DNS records are transferring as expected.
+6. Go to [**DNS** > **Records**](https://dash.cloudflare.com/?to=/:account/:zone/dns/records) and take note of your new **Cloudflare Nameservers**.
+7. At your domain registrar (or parent zone), [update your nameservers](/dns/nameservers/update-nameservers/) to include the `secondary.cloudflare.com` nameservers.

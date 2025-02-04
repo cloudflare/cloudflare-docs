@@ -2,9 +2,13 @@
 	"extends": "astro/tsconfigs/strict",
 	"compilerOptions": {
 		"baseUrl": ".",
+		"target": "ESNext",
 		"paths": {
 			"~/*": ["src/*"]
-		}
+		},
+		"jsx": "react-jsx",
+		"jsxImportSource": "react"
 	},
-	"exclude": ["dist", "functions", "./worker"]
+	"include": [".astro/types.d.ts", "**/*"],
+	"exclude": ["dist", "functions", "./worker", "tests"]
 }

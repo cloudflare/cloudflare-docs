@@ -6,7 +6,7 @@ title: IP geolocation
 
 import { FeatureTable, TabItem, Tabs } from "~/components";
 
-IP geolocation adds the [`CF-IPCountry` header](/fundamentals/reference/http-request-headers/#cf-ipcountry) to all requests to your origin server.
+IP geolocation adds the [`CF-IPCountry` header](/fundamentals/reference/http-headers/#cf-ipcountry) to all requests to your origin server.
 
 Cloudflare automatically updates its IP geolocation database using MaxMind and other data sources, typically twice a week.
 
@@ -30,13 +30,13 @@ To enable **IP Geolocation** in the dashboard:
 
 </TabItem> <TabItem label="API">
 
-To enable **IP Geolocation** with the API, send a [`PATCH`](/api/operations/zone-settings-edit-single-setting) request with `ip_geolocation` as the setting name in the URI path, and the `value` parameter set to `"on"`.
+To enable **IP Geolocation** with the API, send a [`PATCH`](/api/resources/zones/subresources/settings/methods/edit/) request with `ip_geolocation` as the setting name in the URI path, and the `value` parameter set to `"on"`.
 
 </TabItem> </Tabs>
 
 :::note
 
-In order to use this data, you will need to then retrieve it from the [`CF-IPCountry` header](/fundamentals/reference/http-request-headers/#cf-ipcountry).
+In order to use this data, you will need to then retrieve it from the [`CF-IPCountry` header](/fundamentals/reference/http-headers/#cf-ipcountry).
 
 :::
 

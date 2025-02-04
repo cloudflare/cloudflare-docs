@@ -6,7 +6,7 @@ sidebar:
   label: About
 ---
 
-import { DirectoryListing, FeatureTable, GlossaryTooltip } from "~/components"
+import { DirectoryListing, FeatureTable, GlossaryTooltip, Render } from "~/components"
 
 When you use a subdomain setup, you can manage the [Cloudflare configurations](/fundamentals/concepts/how-cloudflare-works/) for one or more subdomains separately from those associated with your <GlossaryTooltip term="apex domain">apex domain</GlossaryTooltip>. This means that, on your [account homepage](https://dash.cloudflare.com/?to=/:account/), you would find websites like `example.com` or `blog.example.com` listed as separate <GlossaryTooltip term="DNS zone">zones</GlossaryTooltip>.
 
@@ -21,6 +21,10 @@ Subdomain setups are also useful when different subdomains require entirely diff
 ## Availability
 
 <FeatureTable id="dns.subdomain_setup" />
+
+### Access applications
+
+<Render file="subdomain-setup-access-apps" />
 
 ## Resources
 

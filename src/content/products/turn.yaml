@@ -6,4 +6,6 @@ product:
   group: Developer platform
   additional_groups: [Media]
   url: /calls/turn/
-  grid_placeholder: true
+
+meta:
+  description: Separately from Cloudflare Calls' SFU, Calls offers a managed TURN service.

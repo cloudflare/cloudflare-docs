@@ -1,0 +1,78 @@
+---
+title: SQL statements
+pcx_content_type: concept
+sidebar:
+  order: 1
+---
+
+import { Details, Render } from "~/components";
+
+D1 is compatible with most SQLite's SQL convention since it leverages SQLite's query engine. D1 supports a number of database-level statements that allow you to list tables, indexes, and inspect the schema for a given table or index.
+
+You can execute any of these statements via the D1 console in the Cloudflare dashboard, [`wrangler d1 execute`](/workers/wrangler/commands/#d1), or with the [D1 Worker Bindings API](/d1/worker-api/d1-database).
+
+## Supported SQLite extensions
+
+D1 supports a subset of SQLite extensions for added functionality, including:
+
+- Default SQLite extensions.
+- [FTS5 module](https://www.sqlite.org/fts5.html) for full-text search.
+
+## Compatible PRAGMA statements
+
+D1 supports some [SQLite PRAGMA](https://www.sqlite.org/pragma.html) statements. The PRAGMA statement is an SQL extension for SQLite. PRAGMA commands can be used to:
+
+- Modify the behavior of certain SQLite operations.
+- Query the SQLite library for internal data about schemas or tables (but note that PRAGMA statements cannot query the contents of a table).
+- Control environmental variables.
+
+<Render file="use-pragma-statements" />
+
+## Query `sqlite_master`
+
+You can also query the `sqlite_master` table to show all tables, indexes, and the original SQL used to generate them:
+
+```sql
+SELECT name, sql FROM sqlite_master
+```
+
+```json
+      {
+        "name": "users",
+        "sql": "CREATE TABLE users ( user_id INTEGER PRIMARY KEY, email_address TEXT, created_at INTEGER, deleted INTEGER, settings TEXT)"
+      },
+      {
+        "name": "idx_ordered_users",
+        "sql": "CREATE INDEX idx_ordered_users ON users(created_at DESC)"
+      },
+      {
+        "name": "Order",
+        "sql": "CREATE TABLE \"Order\" ( \"Id\" INTEGER PRIMARY KEY, \"CustomerId\" VARCHAR(8000) NULL, \"EmployeeId\" INTEGER NOT NULL, \"OrderDate\" VARCHAR(8000) NULL, \"RequiredDate\" VARCHAR(8000) NULL, \"ShippedDate\" VARCHAR(8000) NULL, \"ShipVia\" INTEGER NULL, \"Freight\" DECIMAL NOT NULL, \"ShipName\" VARCHAR(8000) NULL, \"ShipAddress\" VARCHAR(8000) NULL, \"ShipCity\" VARCHAR(8000) NULL, \"ShipRegion\" VARCHAR(8000) NULL, \"ShipPostalCode\" VARCHAR(8000) NULL, \"ShipCountry\" VARCHAR(8000) NULL)"
+      },
+      {
+        "name": "Product",
+        "sql": "CREATE TABLE \"Product\" ( \"Id\" INTEGER PRIMARY KEY, \"ProductName\" VARCHAR(8000) NULL, \"SupplierId\" INTEGER NOT NULL, \"CategoryId\" INTEGER NOT NULL, \"QuantityPerUnit\" VARCHAR(8000) NULL, \"UnitPrice\" DECIMAL NOT NULL, \"UnitsInStock\" INTEGER NOT NULL, \"UnitsOnOrder\" INTEGER NOT NULL, \"ReorderLevel\" INTEGER NOT NULL, \"Discontinued\" INTEGER NOT NULL)"
+      }
+```
+
+## Search with LIKE
+
+You can perform a search using SQL's `LIKE` operator:
+
+```js
+const { results } = await env.DB.prepare(
+	"SELECT * FROM Customers WHERE CompanyName LIKE ?",
+)
+	.bind("%eve%")
+	.all();
+console.log("results: ", results);
+```
+```js output
+results:  [...]
+```
+
+## Related resources
+
+- Learn [how to create indexes](/d1/best-practices/use-indexes/#list-indexes) in D1.
+- Use D1's [JSON functions](/d1/sql-api/query-json/) to query JSON data.
+- Use [`wrangler dev`](/workers/wrangler/commands/#dev) to run your Worker and D1 locally and debug issues before deploying.

@@ -93,7 +93,7 @@ const INITIAL_VISIBLE_ROWS = 20;
 		if (rows.length === 0) {
 			button?.classList.add("hidden");
 		}
-		const extraRows = Array.from(rows).slice(0, 5);
+		const extraRows = Array.from(rows).slice(0, 20);
 
 		extraRows.forEach((row) => row.classList.remove("hidden"));
 	}

@@ -1,8 +1,8 @@
 build_configs:
-  create-react-app:
-    display_name: Create React App
+  react:
+    display_name: React (Vite)
     build_command: npm run build
-    build_output_directory: build
+    build_output_directory: dist
     icon: /icons/framework-icons/logo-react.svg
   gatsby:
     display_name: Gatsby

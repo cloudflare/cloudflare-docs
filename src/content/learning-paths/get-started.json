@@ -1,6 +1,6 @@
 {
 	"title": "Get started with Cloudflare",
-	"path": "/learning-paths/get-started/",
+	"path": "/learning-paths/get-started/concepts/",
 	"priority": 1,
 	"description": "Set up your application to benefit from Cloudflare’s speed, security, and reliability.",
 	"products": ["Cloudflare Essentials", "DNS", "SSL/TLS", "WAF", "Cache"],

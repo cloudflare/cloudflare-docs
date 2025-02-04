@@ -3,11 +3,16 @@ title: Gateway locations
 pcx_content_type: learning-unit
 sidebar:
   order: 2
-
 ---
 
-import { Render } from "~/components"
+import { Render } from "~/components";
 
 <Render file="gateway/add-locations" product="cloudflare-one" />
 
-<Render file="gateway/add-locations-static-ip-warning" product="cloudflare-one" />
+:::caution[Captive portal limitation]
+
+<Render
+	file="gateway/add-locations-static-ip-warning"
+	product="cloudflare-one"
+/>
+:::

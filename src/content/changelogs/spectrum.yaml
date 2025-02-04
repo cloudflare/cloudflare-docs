@@ -1,0 +1,18 @@
+---
+link: "/spectrum/changelog/"
+productName: Spectrum
+productLink: "/spectrum/"
+productArea: Application security
+productAreaLink: /fundamentals/reference/changelog/security/
+entries:
+  - publish_date: "2023-06-27"
+    description: |-
+      - Argo Smart Routing is available for UDP applications, providing faster and more reliable traffic routing.
+
+  - publish_date: "2019-11-07"
+    description: |-
+      - Argo Smart Routing is available for optimizing traffic on TCP applications, ensuring faster and more reliable routing.
+
+  - publish_date: "2018-10-02"
+    description: |-
+      - Users can set up Spectrum with [Cloudflare Load Balancing](/load-balancing/) to enable TCP health checks, failover support, and traffic steering, ensuring high resilience for your Spectrum applications.

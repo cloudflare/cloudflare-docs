@@ -6,11 +6,13 @@ title: Redirect one domain to another
 
 import { Render } from "~/components"
 
-If you have an alias domain that only forwards traffic to another domain, you can set up redirects directly within Cloudflare.
+If you have an alias domain that only forwards traffic to another domain (that is, the domain does not have an associated origin server of its own), you can set up redirects directly within Cloudflare.
 
 1. [Add](/fundamentals/setup/manage-domains/#add-a-domain-to-cloudflare) your alias domain (for example, `previous.com`) to Cloudflare.
 
 2. Make sure that your alias domain has a proxied [DNS A or CNAME record](/dns/manage-dns-records/how-to/create-dns-records/) that properly resolves DNS queries. You may also want to include a record for the `www` subdomain.
+
+   Use the IP address `192.0.2.1` for the `A` record. This address does not route traffic to an origin server but allows Cloudflare to apply rules, redirects, and Workers to incoming traffic. The equivalent IP address for an `AAAA` record is `100::`.
 
    | **Type** | **Name** | **IPv4 address** | **Proxy status** |
    | -------- | -------- | ---------------- | ---------------- |

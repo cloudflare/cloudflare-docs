@@ -1,0 +1,112 @@
+---
+pcx_content_type: integration-guide
+title: Oracle Cloud
+---
+
+This tutorial provides information and examples of how to configure IPsec between Cloudflare Magic WAN and an Oracle Cloud Site-to-site VPN.
+
+## Prerequisites
+
+You need a pre-shared key to establish the IPsec tunnel. You can use the following code to create a random key:
+
+```js
+		const a = new Uint8Array(48);
+		crypto.getRandomValues(a);
+		let base64String = btoa(String.fromCharCode.apply(null, a));
+
+		base64String = base64String.replace(/\+/g, '')
+								   .replace(/\//g, '')
+								   .replace(/=/g, '');
+
+		console.log(base64String.substring(0, 32));
+```
+
+:::caution
+The code above is an example of how you might generate a random key. However, make sure you generate a key that is strong enough to comply with your security needs.
+:::
+
+You can try this code in the [Workers playground](https://workers.cloudflare.com/playground#LYVwNgLglgDghgJwgegGYHsHALQBM4RwDcABAEbogB2+CAngLzbPYDqApmQNJQQBimYACFKNRHSoBzAB4ArAEoBBANYR5AEVYAJAOJCAagA0AXCxYduvAVhHVaEmQpVrNug4YCwAKADC6KhDsAdjqUADOMOhhvFD+xiQYWHgExCRUcMDsDABEUDTs0gB0smHZpKhQYEEZWbn5RSXZ3n4BQRDYACp0MOzxcDAwYFAAxgSxVMiycABucGHDCLAQANTA6Ljg7N7eBZFIJLjsqHDgECQA3l4AkHMSwwnsEMMAFgAUAJQXXtdXw-5hZzgJAYaXYAHcSABVPIQAAcigQCDgdFeABZYe8iD8Ft0IOhCpJHvI4DR0MB9HAwCB2GFXnBMT8qmcyHN2AA2VEAZQgiykwPIeLgr25vMkhVQCDJPmeiD8h0K-UGKKo4DAABoSPSGT8WWF2VyeXlJPzdfqRUbCgh2IM4MN2K9kAAdZbISQagDk7vePyuvr9JADlutYFt9qdyFdHq9Pr9voDJCDNrtDoYkZInu1vr+VABCTylPNfJBpo5hbFYRAZABoteAAYNQBmABMmauVogIAQVFBEPkNMiOftFXSYDLGsufue7DghwQYXiE792WzgWCEG67Gy8WygWkKGeEGAYGyap9AF9T76zwyrhevGesd4zMwLDx+IJbGJ6FI5EpVBptD0Ixmn8Vd2lCCIohiOIEkEZJCFIdJMhyTJCHwQgyjzKokNqMgwHQMgml8UC2k6Dc+gGIZRmgfxJjCfxti8c5lzJeBoDISpeDoAB9dDN2MbIm1rJtUWwWsGzEgB2E8WOANioA4oZ1241AQ0kUpjAAbWyKh1nYEpuL+OSCGyABdNVsmAOA8m4tYNiqLc6kOBpSjPJ9n1fKwP1Eewfycf9XCAwxmG8IA).
+
+## Oracle Cloud
+
+### 1. Create Oracle Cloud customer-premises equipment
+
+1. Go to **Networking** > **Customer connectivity**, and select **Customer-premises equipment**.
+2. Select **Create CPE**.
+3. Select the following settings (you can leave settings not mentioned here with their default values):
+   - **Name**: Enter a name.
+   - **IP Address**: Enter your Cloudflare anycast IP address.
+   - **CPE vendor information**: Select **Other**.
+4. Select **Create CPE**.
+
+### 2. Create Oracle Cloud dynamic routing gateways
+
+1. Go to **Networking** > **Customer connectivity**, and select **Dynamic routing gateways**.
+2. Select **Create Dynamic routing gateways**.
+3. Select the following settings (you can leave settings not mentioned here with their default values):
+   - **Name**: Enter a name.
+4. Select **Create Dynamic routing gateways**.
+
+### 3. Create an IPsec connection
+
+1. Go to **Networking** > **Customer connectivity**, and select **Site-to-Site VPN**.
+2. Select **Create IPsec connection**.
+3. Select the following settings (you can leave settings not mentioned here with their default values):
+   - **Name**: Enter a name.
+   - **Customer-premises equipment**: Select the CPE you have created in step 1.
+   - **Dynamic routing gateways**: Select the DRG you have created in step 2.
+   - **Routes to your on-premises network**: Enter a CIDR range you want to route to Magic WAN.
+   - **Tunnel 1**
+      - **Name**: Enter a name.
+      - Select **Provide custom shared secret**.
+      - Enter the **pre-shared key** you created in the Prerequisites section.
+      - **IKE version**: **IKEv2**
+      - **Routing type**: **Static routing**
+      - **IPv4 inside tunnel interface - CPE**:  Enter the internal tunnel IP on the Cloudflare side of the IPsec tunnel. In this example, it is `10.200.1.0/31`.
+      - **IPv4 inside tunnel interface - Oracle**: Enter the internal tunnel IP on the Oracle side of the IPsec tunnel. In this example, it is `10.200.1.1/31`. This matches with the Cloudflare side for this tunnel.
+         1. Select **Show advanced options**
+         2. Select **Phase one (ISAKMP) configuration**
+            - Select **Set custom configurations**
+            - **Custom encryption algorithm**: **AES_256_CBC**
+            - **Custom authentication algorithm**: **SHA2_256**
+            - **Custom Diffie-Hellman group**: **GROUP20**
+            - **IKE session key lifetime in seconds**: **86400**
+         3. Select **Phase two (IPsec) configuration**
+            - Select **Set custom configurations**
+            - **Custom encryption algorithm**: **AES_256_CBC**
+            - **HMAC_SHA2_256_128**: **HMAC_SHA2_256_128**
+            - **IPsec session key lifetime in seconds**: **28800**
+            - **Perfect forward secrecy Diffie-Hellman group**: **GROUP20**
+    - **Tunnel 2**
+      - Repeat the above steps for Tunnel 2. Select the right IP for **IPv4 inside tunnel interface - CPE**: `10.200.2.0/31` and **IPv4 inside tunnel interface - Oracle**: `10.200.2.1/31`
+4. Select **Create IPsec connection**
+
+## Magic WAN
+
+After configuring the Oracle Site-to-site VPN connection and the tunnels as mentioned above, go to the Cloudflare dashboard and create the corresponding IPsec tunnel and static routes on the Magic WAN side.
+
+### IPsec tunnels
+
+1. Refer to [Add tunnels](/magic-wan/configuration/manually/how-to/configure-tunnels/#add-tunnels) to learn how to add an IPsec tunnel. When creating your IPsec tunnel, make sure you define the following settings:
+   - **Tunnel name**: Enter a name.
+   - **Interface address**: Enter the internal tunnel IP on the Cloudflare side of the IPsec tunnel. In this example, it is `10.200.1.0/31`.
+   - **Customer endpoint**: The Oracle VPN public IP address.
+   - **Cloudflare endpoint**: Enter your Cloudflare anycast IP address.
+   - **Health check type**: **Request**
+   - **Health check direction**: **Unidirectional**
+   - **Health check target**: **Default**
+   - **Pre-shared key**: Choose **Use my own pre-shared key**, and enter the pre-shared key you created in the Prerequisites section.
+   - **Replay protection**: **Enabled**.
+2. Select **Add tunnels**.
+3. Repeat the above steps for Tunnel 2. Chose the same Cloudflare anycast IP address and select the right IP for **Interface address**: `10.200.2.0/31`
+
+### Static routes
+
+The static route in Magic WAN should point to the appropriate virtual machine (VM) subnet you created inside your Oracle Virtual Cloud Network (VCN). For example, if your VM has a subnet of  `192.168.192.0/26`, you should use it as the prefix for your static route.
+
+To create a static route:
+
+1. Refer to [Create a static route](/magic-wan/configuration/manually/how-to/configure-static-routes/#create-a-static-route) to learn how to create one.
+2. In **Prefix**, enter the subnet for your VM. For example, `192.xx.xx.xx/24`.
+3. For the **Tunnel/Next hop**, choose the IPsec tunnel you created in the previous step.
+4. Repeat the steps above for the second IPsec tunnel you created.

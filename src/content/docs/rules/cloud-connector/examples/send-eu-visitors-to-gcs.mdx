@@ -10,15 +10,15 @@ products:
 To route requests from visitors in the European Union to a Google Cloud Storage bucket:
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/) and select your account and domain.
-2. Go to **Rules > Cloud Connector**.
+2. Go to **Rules** > **Cloud Connector**.
 3. Select **Google Cloud Platform - Cloud Storage** as your [cloud provider](/rules/cloud-connector/providers/).
-4. Enter the bucket URL. You can structure this in two ways:
+4. Enter the bucket URL. You can structure the URL in two ways:
    - **Subdomain-style URL**: For `<BUCKET_NAME>.storage.googleapis.com`, your files should be organized in the root of the bucket. For example, `https://<YOUR_HOSTNAME>/index.html` will map to `https://<BUCKET_NAME>.storage.googleapis.com/index.html`.
    - **URI path-style URL**: If you set the hostname to `storage.googleapis.com`, your bucket must include folders corresponding to the intended URI paths. For example, if you want `https://<YOUR_HOSTNAME>/eu/index.html` to map to a file in your bucket, the file should be placed at `https://storage.googleapis.com/<BUCKET_NAME>/eu/index.html`.
 5. _(Optional)_ Use the [Rewrite URL](/rules/transform/url-rewrite/) feature of [Transform Rules](/rules/transform/) to adjust the URL structure. For example, you can [create a URL rewrite](/rules/transform/url-rewrite/create-dashboard/) that changes `/eu` to `/<BUCKET_NAME>` to match the URI path-style URL structure.
-6. Click **Next** and enter a descriptive name like "Route EU visitors to GCP" in Cloud Connector name.
+6. Select **Next** and enter a descriptive name like `Route EU visitors to GCP` in **Cloud Connector name**.
 7. Under **If**, select **Custom filter expression** and enter the following expression:
-   `(ip.geoip.is_in_european_union)`<br />
+   `(ip.src.is_in_european_union)`<br />
    This expression targets traffic from European Union users.
 8. Select **Deploy** to activate the rule.
 

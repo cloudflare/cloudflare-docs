@@ -62,17 +62,25 @@ To enforce your Conditional Access policies on a Cloudflare Access application:
 
 1. In [Zero Trust](https://one.dash.cloudflare.com), go to **Access** > **Applications**.
 
-2. Create a new [self-hosted application](/cloudflare-one/applications/configure-apps/self-hosted-apps/).
+2. Select **Add an application**.
 
-3. In **Application domain**, enter the target URL of the protected application.
+3. Select **Self-hosted**.
 
-4. For **Identity providers**, select your Microsoft Entra ID integration.
+4. Enter any name for the application.
 
-5. Finally, create an [Access policy](/cloudflare-one/policies/access/) using the _Azure AD - Auth context_ selector. For example:
+5. Select **Add public hostname** and enter the target URL of the protected application.
+
+6. Select **Create new policy** and build an [Access policy](/cloudflare-one/policies/access/) using the _Azure AD - Auth context_ selector. For example:
 
    | Action | Rule type | Selector                | Value                       |
    | ------ | --------- | ----------------------- | --------------------------- |
    | Allow  | Include   | Emails ending in        | `@example.com`              |
    |        | Require   | Azure AD - Auth context | `Require compliant devices` |
+
+7. Add this policy to your application configuration.
+
+8. For **Identity providers**, select your Microsoft Entra ID integration.
+
+9. Follow the remaining [self-hosted application creation steps](/cloudflare-one/applications/configure-apps/self-hosted-public-app/) to publish the application.
 
 Users will only be allowed access if they pass the Microsoft Entra ID Conditional Access policies associated with this authentication context.

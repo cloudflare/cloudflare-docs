@@ -3,7 +3,6 @@ pcx_content_type: how-to
 title: Serve private images
 sidebar:
   order: 23
-
 ---
 
 You can serve private images by using signed URL tokens. When an image requires a signed URL, the image cannot be accessed without a token unless it is being requested for a variant set to always allow public access.
@@ -14,9 +13,7 @@ You can serve private images by using signed URL tokens. When an image requires 
 
 :::note
 
-
 Private images do not currently support custom paths.
-
 
 :::
 
@@ -62,11 +59,13 @@ async function generateSignedUrl(url) {
   return new Response(url);
 }
 
-addEventListener('fetch', event => {
-  const url = new URL(event.request.url);
-  const imageDeliveryURL = new URL(
-    url.pathname.slice(1).replace('https:/imagedelivery.net', 'https://imagedelivery.net')
-  );
-  event.respondWith(generateSignedUrl(imageDeliveryURL));
-});
+export default {
+  async fetch(request, env, ctx): Promise<Response> {
+    const url = new URL(event.request.url);
+    const imageDeliveryURL = new URL(
+      url.pathname.slice(1).replace('https:/imagedelivery.net', 'https://imagedelivery.net')
+    );
+    return generateSignedUrl(imageDeliveryURL);
+  },
+} satisfies ExportedHandler<Env>;
 ```

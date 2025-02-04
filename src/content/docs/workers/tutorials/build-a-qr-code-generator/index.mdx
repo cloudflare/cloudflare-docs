@@ -122,43 +122,27 @@ export default {
 
 ## 3. Build a QR code generator
 
-All projects deployed to Cloudflare Workers support npm packages. This support makes it easy to rapidly build out functionality in your Workers. The [`qr-image`](https://github.com/alexeyten/qr-image) package is a great way to take text and encode it into a QR code. The package supports generating the QR codes in a number of file formats (such as PNG, the default, and SVG) and configuring other aspects of the generated QR code. In the command line, install and save `qr-image` to your project’s `package.json`:
+All projects deployed to Cloudflare Workers support npm packages. This support makes it easy to rapidly build out functionality in your Workers. The ['qrcode-svg'](https://github.com/papnkukn/qrcode-svg) package is a great way to take text and encode it into a QR code. In the command line, install and save 'qrcode-svg' to your project’s 'package.json':
 
 ```sh title="Installing the qr-image package"
-npm install --save qr-image
+npm install --save qrcode-svg
 ```
 
-In `index.js`, import the `qr-image` package as the variable `qr`. In the `generateQRCode` function, parse the incoming request as JSON using `request.json`, and generate a QR code from `text` using `qr.imageSync`:
+In `index.js`, import the `qrcode-svg` package as the variable `QRCode`. In the `generateQRCode` function, parse the incoming request as JSON using `request.json`, and generate a new QR code using the `qrcode-svg` package. The QR code is generated as an SVG. Construct a new instance of `Response`, passing in the SVG data as the body, and a `Content-Type` header of `image/svg+xml`. This will allow browsers to properly parse the data coming back from your Worker as an image:
 
 ```js null {1,2,3,4,5,6}
-const qr = require("qr-image");
+import QRCode from "qrcode-svg";
 
 async function generateQRCode(request) {
 	const { text } = await request.json();
-	const qr_png = qr.imageSync(text || "https://workers.dev");
+	const qr = new QRCode({ content: text || "https://workers.dev" });
+	return new Response(qr.svg(), { headers: { "Content-Type": "image/svg+xml" } });
 }
-```
-
-By default, the QR code is generated as a PNG. Construct a new instance of `Response`, passing in the PNG data as the body, and a `Content-Type` header of `image/png`. This will allow browsers to properly parse the data coming back from your Worker as an image:
-
-```js null {3,4,5}
-async function generateQRCode(request) {
-	const { text } = await request.json();
-	const headers = { "Content-Type": "image/png" };
-	const qr_png = qr.imageSync(text || "https://workers.dev");
-	return new Response(qr_png, { headers });
-}
-```
-
-The `qr-image` package you installed depends on Node.js APIs. For this to work, you need to set the ["nodejs_compat_v2" compatibility flag](/workers/runtime-apis/nodejs/#enable-nodejs-with-workers) in your Wrangler configuration file:
-
-```toml
-compatibility_flags = [ "nodejs_compat_v2"]
 ```
 
 ## 4. Test in an application UI
 
-The Worker will work if a user sends a `POST` request to a route, but it would be best practice to also be able to test the function with a proper interface. At this point in the tutorial, if any request is received by your function that is not a `POST`, a `405` response is returned. The new version of `fetch` should return a new `Response` with a static HTML document instead of the `405` error:
+The Worker will execute when a user sends a `POST` request to a route, but it is best practice to also provide a proper interface for testing the function. At this point in the tutorial, if any request is received by your function that is not a `POST`, a `405` response is returned. The new version of `fetch` should return a new `Response` with a static HTML document instead of the `405` error:
 
 ```js null {23-54}
 export default {
@@ -177,10 +161,8 @@ export default {
 
 async function generateQRCode(request) {
 	const { text } = await request.json();
-	const headers = { "Content-Type": "image/png" };
-	const qr_png = qr.imageSync(text || "https://workers.dev");
-
-	return new Response(qr_png, { headers });
+	const qr = new QRCode({ content: text || "https://workers.dev" });
+	return new Response(qr.svg(), { headers: { "Content-Type": "image/svg+xml" } });
 }
 
 const landing = `
@@ -215,7 +197,7 @@ The `landing` variable, which is a static HTML string, sets up an `input` tag an
 With the above steps complete, your Worker is ready. The full version of the code looks like this:
 
 ```js
-const qr = require("qr-image");
+const QRCode = require("qrcode-svg");
 
 export default {
 	async fetch(request, env, ctx) {
@@ -233,10 +215,8 @@ export default {
 
 async function generateQRCode(request) {
 	const { text } = await request.json();
-	const headers = { "Content-Type": "image/png" };
-	const qr_png = qr.imageSync(text || "https://workers.dev");
-
-	return new Response(qr_png, { headers });
+	const qr = new QRCode({ content: text || "https://workers.dev" });
+	return new Response(qr.svg(), { headers: { "Content-Type": "image/svg+xml" } });
 }
 
 const landing = `
@@ -278,6 +258,6 @@ npx wrangler deploy
 
 ## Related resources
 
-In this tutorial, you built and deployed a Worker application for generating QR codes. If you would like to see the full source code for this application, you can find it [on GitHub](https://github.com/cloudflare/workers-sdk/tree/main/templates/examples/qr-code-generator).
+In this tutorial, you built and deployed a Worker application for generating QR codes. If you would like to see the full source code for this application, you can find it [on GitHub](https://github.com/kristianfreeman/workers-qr-code-generator).
 
 If you want to get started building your own projects, review the existing list of [Quickstart templates](/workers/get-started/quickstarts/).

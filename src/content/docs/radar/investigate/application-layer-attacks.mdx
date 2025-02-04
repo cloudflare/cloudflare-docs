@@ -10,7 +10,7 @@ While in [HTTP requests](/radar/investigate/http-requests) you can examine all k
 
 :::note[Mitigated traffic]
 
-Mitigated traffic is any HTTP request from an end-user that has a terminating action applied by the Cloudflare platform. These include actions like `BLOCK` or [challenges](/waf/reference/cloudflare-challenges/). 
+Mitigated traffic is any HTTP request from an end-user that has a terminating action applied by the Cloudflare platform. These include actions like `BLOCK` or [challenges](/waf/reference/cloudflare-challenges/).
 :::
 
 Since we are examining attacks, we can inspect both sides of an attack — both the source location and the target location of the attack. For the source of the attack Cloudflare uses the location the attack is coming from associated with the IP (note that the human orchestrator of the attack may be in a different location than the computer the attack is originating from). For the target location of the attacks, Cloudflare uses the billing location associated with the zone under attack.
@@ -30,7 +30,7 @@ Like in [HTTP requests](/radar/investigate/http-requests), these endpoints can b
 Let us examine the global distribution of mitigated requests by product.
 
 ```bash
-curl "https://api.cloudflare.com/client/v4/radar/attacks/layer7/timeseries_groups?aggInterval=1h&dateRange=1d&name=attacks&format=json" \
+curl "https://api.cloudflare.com/client/v4/radar/attacks/layer7/timeseries_groups/mitigation_product?aggInterval=1h&dateRange=1d&name=attacks&format=json" \
 --header "Authorization: Bearer <API_TOKEN>"
 ```
 
@@ -56,12 +56,13 @@ From the abbreviated response below, we can conclude that distributed denial-of-
         "startTime": "2022-11-05T11:00:00Z",
         "endTime": "2022-11-06T11:00:00Z"
       },
+			// ...
     }
   }
 }
 ```
 
-For more information refer to [Get layer 7 attacks by mitigation technique, over time](/api/operations/radar-get-attacks-layer7-timeseries-group).
+For more information refer to [Get layer 7 attacks by mitigation technique, over time](/api/resources/radar/subresources/attacks/subresources/layer7/subresources/timeseries_groups/).
 
 ### Summary
 
@@ -75,20 +76,29 @@ curl "https://api.cloudflare.com/client/v4/radar/attacks/layer7/summary?location
 ```
 
 ```json
-"attacks_gb": {
-  "waf": "75.012138",
-  "ddos": "18.539149",
-  "ip_reputation": "5.721021",
-  "access_rules": "0.592515",
-  "bot_management": "0.131998",
-  "api_shield": "0.003178",
-  "data_loss_prevention": "0.0"
+{
+  "success": true,
+  "errors": [],
+  "result": {
+		"attacks_gb": {
+			"waf": "75.012138",
+			"ddos": "18.539149",
+			"ip_reputation": "5.721021",
+			"access_rules": "0.592515",
+			"bot_management": "0.131998",
+			"api_shield": "0.003178",
+			"data_loss_prevention": "0.0"
+  	},
+		"meta": {
+			// ...
+    }
+	}
 }
 ```
 
 This response means that 75% of all mitigated requests coming from Great Britain were mitigated by the [WAF](/waf/) product.
 
-For more information refer to [Get layer 7 attacks summary](/api/operations/radar-get-attacks-layer7-summary).
+For more information refer to [Get layer 7 attacks summary](/api/resources/radar/subresources/attacks/subresources/layer7/subresources/summary/methods/get/).
 
 ### Top
 
@@ -106,37 +116,44 @@ curl "https://api.cloudflare.com/client/v4/radar/attacks/layer7/top/locations/ta
   "success": true,
   "errors": [],
   "result": {
-    "attacks_target": [{
-      "targetCountryName": "Belgium",
-      "targetCountryAlpha2": "BE",
-      "value": "18.536740",
-      "rank": 1
-    }, {
-      "targetCountryName": "United States",
-      "targetCountryAlpha2": "US",
-      "value": "16.116210",
-      "rank": 2
-    }, {
-      "targetCountryName": "China",
-      "targetCountryAlpha2": "CN",
-      "value": "13.864696",
-      "rank": 3
-    }, {
-      "targetCountryName": "India",
-      "targetCountryAlpha2": "IN",
-      "value": "4.344139",
-      "rank": 4
-    }, {
-      "targetCountryName": "Germany",
-      "targetCountryAlpha2": "DE",
-      "value": "4.182777",
-      "rank": 5
-    }],
+    "attacks_target": [
+			{
+				"targetCountryName": "Belgium",
+				"targetCountryAlpha2": "BE",
+				"value": "18.536740",
+				"rank": 1
+			},
+			{
+				"targetCountryName": "United States",
+				"targetCountryAlpha2": "US",
+				"value": "16.116210",
+				"rank": 2
+			},
+			{
+				"targetCountryName": "China",
+				"targetCountryAlpha2": "CN",
+				"value": "13.864696",
+				"rank": 3
+			},
+			{
+				"targetCountryName": "India",
+				"targetCountryAlpha2": "IN",
+				"value": "4.344139",
+				"rank": 4
+			},
+			{
+				"targetCountryName": "Germany",
+				"targetCountryAlpha2": "DE",
+				"value": "4.182777",
+				"rank": 5
+			}
+		],
     "meta": {
       "dateRange": {
         "startTime": "2022-11-05T12:00:00Z",
         "endTime": "2022-11-06T12:00:00Z"
       },
+			// ...
     }
   }
 }
@@ -144,7 +161,7 @@ curl "https://api.cloudflare.com/client/v4/radar/attacks/layer7/top/locations/ta
 
 During the specified date range, mitigation requests to zones with a billing address located in Belgium represent 18%.
 
-For more information refer to [Get layer 7 top target locations](/api/operations/radar-get-attacks-layer7-top-target-location).
+For more information refer to [Get layer 7 top target locations](/api/resources/radar/subresources/attacks/subresources/layer7/subresources/top/subresources/locations/methods/target/).
 
 #### Example: Top attacks
 
@@ -159,50 +176,65 @@ curl "https://api.cloudflare.com/client/v4/radar/attacks/layer7/top/attacks?limi
 
 A typical response will be similar to the following:
 
-```
-[{
-  "originCountryName": "United States",
-  "originCountryAlpha2": "US",
-  "targetCountryName": "United States",
-  "targetCountryAlpha2": "US",
-  "value": "3.790724",
-  "rank": 1
-}, {
-  "originCountryName": "United States",
-  "originCountryAlpha2": "US",
-  "targetCountryName": "Belgium",
-  "targetCountryAlpha2": "BE",
-  "value": "3.602177",
-  "rank": 2
-}, {
-  "originCountryName": "China",
-  "originCountryAlpha2": "CN",
-  "targetCountryName": "Netherlands",
-  "targetCountryAlpha2": "NL",
-  "value": "3.017341",
-  "rank": 3
-}, {
-  "originCountryName": "China",
-  "originCountryAlpha2": "CN",
-  "targetCountryName": "China",
-  "targetCountryAlpha2": "CN",
-  "value": "2.472068",
-  "rank": 4
-}, {
-  "originCountryName": "Indonesia",
-  "originCountryAlpha2": "ID",
-  "targetCountryName": "China",
-  "targetCountryAlpha2": "CN",
-  "value": "2.056729",
-  "rank": 5
-}]
+```json
+{
+  "success": true,
+  "errors": [],
+  "result": {
+		"top_0": [
+			{
+				"originCountryName": "United States",
+				"originCountryAlpha2": "US",
+				"targetCountryName": "United States",
+				"targetCountryAlpha2": "US",
+				"value": "3.790724",
+				"rank": 1
+			},
+			{
+				"originCountryName": "United States",
+				"originCountryAlpha2": "US",
+				"targetCountryName": "Belgium",
+				"targetCountryAlpha2": "BE",
+				"value": "3.602177",
+				"rank": 2
+			},
+			{
+				"originCountryName": "China",
+				"originCountryAlpha2": "CN",
+				"targetCountryName": "Netherlands",
+				"targetCountryAlpha2": "NL",
+				"value": "3.017341",
+				"rank": 3
+			},
+			{
+				"originCountryName": "China",
+				"originCountryAlpha2": "CN",
+				"targetCountryName": "China",
+				"targetCountryAlpha2": "CN",
+				"value": "2.472068",
+				"rank": 4
+			},
+			{
+				"originCountryName": "Indonesia",
+				"originCountryAlpha2": "ID",
+				"targetCountryName": "China",
+				"targetCountryAlpha2": "CN",
+				"value": "2.056729",
+				"rank": 5
+			}
+		],
+    "meta": {
+			// ...
+    }
+  }
+}
 ```
 
 This means that 3.79% of all mitigated requests are from and to the US, 3.6% of all mitigated requests are from the US to Belgium, etc..
 
 This response came from a query that is using attack `magnitude` as the sum of mitigated requests. To use the number of unique zones attacked as the metric, for example, use `attack_magnitude=AFFECTED_ZONES`.
 
-For more information refer to [Get layer 7 top attack pairs](/api/operations/radar-get-attacks-layer7-top-attacks).
+For more information refer to [Get layer 7 top attack pairs](/api/resources/radar/subresources/attacks/subresources/layer7/subresources/top/methods/attacks/).
 
 ## Next steps
 

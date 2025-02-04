@@ -18,15 +18,9 @@ No action is required for desktop clients at this time. The existing Cloudflare 
 
 ## iOS and Android
 
-Zero Trust users must migrate from the 1.1.1.1 app to the Cloudflare One Agent app by 2023-12-31.
+Zero Trust users must migrate from the 1.1.1.1 app to the Cloudflare One Agent app. Cloudflare is no longer supporting customers using the 1.1.1.1 app for Zero Trust features.
 
 Organizations can migrate their teams with minimal disruption in one of two modes: [manually](#migrate-manual-deployments) or via a [managed endpoint solution](#migrate-managed-deployments).
-
-### Migration impact
-
-* New Zero Trust features will only be released to the Cloudflare One Agent.
-* The 1.1.1.1 app will continue to support the current feature set (and any security updates) through 2023-12-31.
-* All Zero Trust functionality will be removed from 1.1.1.1 app versions released after 2023-12-31. Zero Trust will continue to work on 1.1.1.1 app versions released prior to 2023-12-31.
 
 ### Migrate manual deployments
 
@@ -36,7 +30,7 @@ If you downloaded and installed the 1.1.1.1 app manually, here are the recommend
 
 1. Update the **1.1.1.1** app to version 6.29 or above. The update ensures that 1.1.1.1 can [co-exist](#what-to-do-with-the-old-app) with the new Cloudflare One Agent app.
 
-2. If you have enabled [TLS decryption](/cloudflare-one/policies/gateway/http-policies/tls-decryption/), ensure that you have a [Do Not Inspect policy](/cloudflare-one/policies/gateway/initial-setup/http/#bypass-inspection-for-incompatible-applications) in place for the following applications:
+2. If you have enabled [TLS decryption](/cloudflare-one/policies/gateway/http-policies/tls-decryption/), ensure that you have a [Do Not Inspect policy](/cloudflare-one/policies/gateway/initial-setup/http/) in place for the following applications:
 
    * *Google Services (Do Not Inspect)*
    * *Google Play Store (Do Not Inspect)*
@@ -81,7 +75,7 @@ If you deployed the 1.1.1.1 app with an [MDM provider](/cloudflare-one/connectio
 
 2. Add the **Cloudflare One Agent** app from the Google Play store. Its application ID is `com.cloudflare.cloudflareoneagent`.
 
-3. Copy your [MDM deployment parameters](/cloudflare-one/connections/connect-devices/warp/deployment/mdm-deployment/#android) for the **1.1.1.1** app.
+3. Copy your [MDM deployment parameters](/cloudflare-one/connections/connect-devices/warp/deployment/mdm-deployment/#android--chromeos) for the **1.1.1.1** app.
 
 4. Paste the MDM deployment parameters into the **Cloudflare One Agent** app configuration. Make sure that you do not accidentally overwrite the application ID (`com.cloudflare.cloudflareoneagent`).
 
@@ -95,7 +89,7 @@ If you deployed the 1.1.1.1 app with an [MDM provider](/cloudflare-one/connectio
 
 2. Add the **Cloudflare One Agent** app from the App store. Its application ID is `com.cloudflare.cloudflareoneagent`.
 
-3. Copy your [MDM deployment parameters](/cloudflare-one/connections/connect-devices/warp/deployment/mdm-deployment/#android) for the **1.1.1.1** app.
+3. Copy your [MDM deployment parameters](/cloudflare-one/connections/connect-devices/warp/deployment/mdm-deployment/#ios) for the **1.1.1.1** app.
 
 4. Paste the MDM deployment parameters into the **Cloudflare One Agent** app configuration. Make sure that you do not accidentally overwrite the application ID (`com.cloudflare.cloudflareoneagent`).
 

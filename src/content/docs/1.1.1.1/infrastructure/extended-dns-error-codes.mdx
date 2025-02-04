@@ -1,8 +1,9 @@
 ---
 pcx_content_type: reference
 title: Extended DNS error codes
+sidebar:
+  order: 4
 slug: 1.1.1.1/infrastructure/extended-dns-error-codes
-
 ---
 
 
@@ -106,6 +107,12 @@ slug: 1.1.1.1/infrastructure/extended-dns-error-codes
             <td>Network Error</td>
             <td><code>EDE: 23 (Network Error): (1.1.1.1:53 rcode=SERVFAIL for example.com. A)</code></td>
             <td>1.1.1.1 could not determine a network path to the upstream nameservers, or the nameserver did not respond. If this issue persists, reach out to the <a href="https://community.cloudflare.com/c/reliability/dns-1111/47">community forum</a>.</td>
+        </tr>
+        <tr>
+            <td>30</td>
+            <td>Invalid Query Type</td>
+            <td><code>EDE: 30 (Invalid Query Type): Invalid Query Type</code></td>
+            <td>The record type in the request cannot give a valid answer. If this is returned for standard query types, such as A or AAAA records, please reach out to the <a href="https://community.cloudflare.com/c/reliability/dns-1111/47">community forum</a>.</td>
         </tr>
     </tbody>
 </table>

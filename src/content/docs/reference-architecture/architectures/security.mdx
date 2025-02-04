@@ -74,7 +74,7 @@ A unique aspect of the network's security architecture is how we use anycast net
 
 Server updates, such as access policies, rate limiting, and firewall rules, are performed by our [Quicksilver service](https://blog.cloudflare.com/introducing-quicksilver-configuration-distribution-at-internet-scale). Customer changes are reflected across the entire network in seconds, allowing customers to respond to changing business requirements and ensuring policies are quickly implemented globally.
 
-Every level of the network conforms to strict hardened security controls. Processes running on the edge are designed with a need-to-know basis and run with least privilege. We make heavy use of hardware security modules (HSMs) and the keys maintained within them ensure only the right access is given at the right time. To ensure tight control over and detailed visibility of changes to the network, all infrastructure is managed via code ([IaC](https://en.wikipedia.org/wiki/Infrastructure_as_code)).
+Every level of the network conforms to strict hardened security controls. Processes running on the edge are designed with a need-to-know basis and run with least privilege. We have our own key management system to ensure keys are secured at rest and in transit and that the right access to keys is given at the right time. To ensure tight control over and detailed visibility of changes to the network, all infrastructure is managed via code ([IaC](https://en.wikipedia.org/wiki/Infrastructure_as_code)).
 
 #### Servers
 

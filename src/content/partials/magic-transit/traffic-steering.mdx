@@ -8,7 +8,7 @@ params:
 
 import { GlossaryTooltip, Markdown } from "~/components";
 
-{props.productName} uses a static configuration to route traffic through <GlossaryTooltip term="anycast">anycast</GlossaryTooltip> tunnels using the <GlossaryTooltip term="GRE tunnel" link={props.greURL}>GRE</GlossaryTooltip> and <GlossaryTooltip term="IPsec tunnel" link={props.ipsecURL}>Internet Protocol Security (IPsec)</GlossaryTooltip> protocols from Cloudflare’s global network to your network, and from your network to Cloudflare’s global network.
+{props.productName} uses a static configuration to route traffic through [Cloudflare Network Interconnect (CNI)](/network-interconnect/), as well as <GlossaryTooltip term="anycast">anycast</GlossaryTooltip> tunnels using the <GlossaryTooltip term="GRE tunnel" link={props.greURL}>GRE</GlossaryTooltip> and <GlossaryTooltip term="IPsec tunnel" link={props.ipsecURL}>Internet Protocol Security (IPsec)</GlossaryTooltip> protocols from Cloudflare's global network to your network, and from your network to Cloudflare's global network.
 
 {props.productName} steers traffic along tunnel routes based on priorities you define in the Cloudflare dashboard or via API.
 
@@ -51,7 +51,7 @@ Using ECMP has a number of consequences:
 As a result, ECMP provides load balancing across tunnels with the same prefix and priority.
 
 :::note[Note:]
-Packets in the same flow use the same tunnel unless the tunnel priority changes. Packets for different flows can use different tunnels depending on which tunnel the flow’s 4-tuple – source and destination IP and source and destination port – hash to.
+Packets in the same flow use the same tunnel unless the tunnel priority changes. Packets for different flows can use different tunnels depending on which tunnel the flow's 4-tuple - source and destination IP and source and destination port - hash to.
 :::
 
 ### Examples

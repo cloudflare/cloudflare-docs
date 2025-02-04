@@ -1,0 +1,40 @@
+---
+pcx_content_type: reference
+title: Scans and penetration testing policy
+
+---
+
+Customers may conduct scans and penetration tests (with certain restrictions) on application and network-layer aspects of their own assets, such as their [zones](/fundamentals/setup/accounts-and-zones/#zones) within their Cloudflare accounts, provided they adhere to Cloudflare's policy.
+
+- **Permitted targets** - all scans or testing must be limited to the following:
+
+  	- Customer-owned IPs,
+  	- Cloudflare's designated public IPs, or
+ 	- The customer's registered DNS entries.
+
+Targets like `*.cloudflare.com` or other Cloudflare-owned destinations are only allowed as part of Cloudflare's Public Bug Bounty program. Refer to the [Additional Resources](#additional-resources) section for more information.
+
+### Scanning
+
+- **Throttling**: Scans should be throttled to a reasonable rate to prevent disruptions and ensure stable system performance.
+- **Scope and intent**: Scans should identify the presence of vulnerabilities without attempting to actively exploit any detected weaknesses.
+- **Exclusions**: It is recommended to exclude [`/cdn-cgi/` endpoints](/fundamentals/reference/cdn-cgi-endpoint/) from scans to avoid false positives or irrelevant results.
+- **Compliance checks**: Customers may conduct [PCI compliance scans](/fundamentals/basic-tasks/pci-scans/) or verify that [known vulnerabilities](/ssl/reference/compliance-and-vulnerabilities/#known-vulnerabilities-mitigations) have been addressed.
+
+### Penetration testing
+
+- **Network behavior**:
+  - Cloudflare's [anycast network](/fundamentals/concepts/how-cloudflare-works/) will report ports other than `80` and `443` as open due to its shared infrastructure and the nature of Cloudflare's proxy. This is expected behavior and does not indicate a vulnerability.
+  - Tools like Netcat may list [non-standard HTTP ports](/fundamentals/reference/network-ports/) as open; however, these ports are open solely for Cloudflare's routing purposes and do not necessarily indicate that a connection can be established with the customer's origin over those ports.
+- **Known false positives**: Any findings related to the [ROBOT vulnerability](/ssl/reference/compliance-and-vulnerabilities/#return-of-bleichenbachers-oracle-threat-robot) are false positives when the customer's assets are behind Cloudflare.
+- **Customer security review**: During penetration testing, customers should be aware of the Cloudflare security and performance features, configurations, and rules active on their account or zone. After completing the test, it is recommended that customers review their security posture and make any necessary adjustments based on the findings.
+
+Customers can download the latest Penetration Test Report of Cloudflare via the [Dashboard](/fundamentals/reference/policies-compliances/compliance-docs/).
+
+### Denial-of-Service (DoS) testing
+
+For guidelines on required notification and necessary information, refer to Cloudflare's documentation [Simulating DDoS Attacks](/ddos-protection/reference/simulate-ddos-attack). Customers should also familiarize themselves with Cloudflare's [DDoS protection best practices](/ddos-protection/best-practices/).
+
+### Additional Resources
+
+For information about Cloudflare's Public Bug Bounty program, visit [HackerOne](https://hackerone.com/cloudflare).

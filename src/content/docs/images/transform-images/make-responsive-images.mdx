@@ -2,9 +2,15 @@
 pcx_content_type: reference
 title: Make responsive images
 sidebar:
-  order: 26
+  order: 7
 
 ---
+
+You can serve responsive images in two different ways:
+- Use the HTML `srcset` feature to allow browsers to choose the most optimal image. This is the most reliable solution to serve responsive images.
+- Use the `width=auto` option to serve the most optimal image based on the available browser and device information. This is a server-side solution that is supported only by Chromium-based browsers.
+
+## Transform with HTML `srcset`
 
 The `srcset` [feature of HTML](https://developer.mozilla.org/en-US/docs/Learn/HTML/Multimedia_and_embedding/Responsive_images) allows browsers to automatically choose an image that is best suited for user’s screen resolution.
 
@@ -15,7 +21,7 @@ There are two different scenarios where it is useful to use `srcset`:
 * Images with a fixed size in terms of CSS pixels, but adapting to high-DPI screens (also known as Retina displays). These images take the same amount of space on the page regardless of screen size, but are sharper on high-resolution displays. This is appropriate for icons, thumbnails, and most images on pages with fixed-width layouts.
 * Responsive images that stretch to fill a certain percentage of the screen (usually full width). This is best for hero images and pages with fluid layouts, including pages using media queries to adapt to various screen sizes.
 
-## `srcset` for high-DPI displays
+### `srcset` for high-DPI displays
 
 For high-DPI display you need two versions of every image. One for `1x` density, suitable for typical desktop displays (such as HD/1080p monitors or low-end laptops), and one for `2x` high-density displays used by almost all mobile phones, high-end laptops, and 4K desktop displays. Some mobile phones have very high-DPI displays and could use even a `3x` resolution. However, while the jump from `1x` to `2x` is a clear improvement, there are diminishing returns from increasing the resolution further. The difference between `2x` and `3x` is visually insignificant, but `3x` files are two times larger than `2x` files.
 
@@ -34,7 +40,7 @@ The `srcset` attribute adds another, high-DPI image. The browser will automatica
 
 Note that it does not make sense to scale images up for use in `srcset`. That would only increase file sizes without improving visual quality. The source images you should use with `srcset` must be high resolution, so that they are only scaled down for `1x` displays, and displayed as-is or also scaled down for `2x` displays.
 
-## `srcset` for responsive images
+### `srcset` for responsive images
 
 When you want to display an image that takes a certain percentage of the window or screen width, the image should have dimensions that are appropriate for a visitor’s screen size. Screen sizes vary a lot, typically from 320 pixels to 3840 pixels, so there is not a single image size that fits all cases. With `<img srcset>` you can offer the browser several possible sizes and let it choose the most appropriate size automatically.
 
@@ -61,7 +67,7 @@ If the image is not displayed at full width of the screen (or browser window), y
 * If the image is displayed at full width of a fixed-width column, use the first technique that uses one specific image size.
 * If it takes a specific percentage of the screen, or stretches to full width only sometimes (using CSS media queries), then add the `sizes` attribute as described below.
 
-### The `sizes` attribute
+#### The `sizes` attribute
 
 If the image takes 50% of the screen (or window) width:
 
@@ -86,7 +92,7 @@ The `vw` unit is a percentage of the viewport (screen or window) width. If the i
 
 In this example, `sizes` says that for screens smaller than 640 pixels the image is displayed at full viewport width; on all larger screens the image stays at 640px. Note that one of the options in `srcset` is 1280 pixels, because an image displayed at 640 CSS pixels may need twice as many image pixels on a high-dpi (`2x`) display.
 
-## What about other formats?
+## WebP images
 
 `srcset` is useful for pixel-based formats such as PNG, JPEG, and WebP. It is unnecessary for vector-based SVG images.
 
@@ -96,3 +102,42 @@ If you want to use WebP images, but do not need resizing, you have two options:
 
 * You can enable the automatic [WebP conversion in Polish](/images/polish/activate-polish/). This will convert all images on the site.
 * Alternatively, you can change specific image paths on the site to start with `/cdn-cgi/image/format=auto/`. For example, change `https://example.com/assets/hero.jpg` to `https://example.com/cdn-cgi/image/format=auto/assets/hero.jpg`.
+
+## Transform with `width` parameter
+
+When setting up a [transformation URL](/images/transform-images/transform-via-url/#width), you can apply the `width=auto` option to serve the most optimal image based on the available information about the user's browser and device.
+
+This method can serve multiple sizes from a single URL. Currently, images will be served in one of four sizes:
+
+- 1200 (large desktop/monitor)
+- 960 (desktop)
+- 768 (tablet)
+- 320 (mobile)
+
+Each width is counted as a separate transformation. For example, if you use `width=auto` and the image is delivered with a width of 320px to one user and 960px to another user, then this counts as two unique transformations.
+
+By default, this feature uses information from the user agent, which detects the platform type (for example, iOS or Android) and browser.
+
+### Client hints
+
+For more accurate results, you can use client hints to send the user's browser information as request headers. 
+
+This method currently works only on Chromium-based browsers such as Chrome, Edge, and Opera.
+
+You can enable client hints via HTML by adding the following tag in the `<head>` tag of your page before any other elements:
+
+```txt
+<meta http-equiv="Delegate-CH" content="sec-ch-dpr https://example.com; sec-ch-viewport-width https://example.com"/>
+```
+
+Replace `https://example.com` with your Cloudflare zone where transformations are enabled.
+
+Alternatively, you can enable client hints via HTTP by adding the following headers to your HTML page's response:
+
+```txt
+critical-ch: sec-ch-viewport-width, sec-ch-dpr
+
+permissions-policy: ch-dpr=("https://example.com"), ch-viewport-width=("https://example.com")
+```
+
+Replace `https://example.com` with your Cloudflare zone where transformations are enabled.

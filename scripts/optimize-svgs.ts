@@ -60,7 +60,7 @@ async function run() {
 	const end = performance.now();
 	const duration = end - start;
 	const seconds = Math.floor(duration / 1000);
-	console.log(`Optimized ${files.length} SVG files in ${seconds}s`);
+	console.log(`Optimized ${processed} SVG files in ${seconds}s`);
 	console.log(
 		`Original size: ~${formatBytes(originalSize)}, optimized size: ~${formatBytes(optimizedSize)}. Saved ~${formatBytes(originalSize - optimizedSize)}`,
 	);

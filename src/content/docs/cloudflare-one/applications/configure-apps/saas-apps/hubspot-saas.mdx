@@ -30,19 +30,21 @@ This guide covers how to configure [Hubspot](https://knowledge.hubspot.com/accou
 
    | Hubspot values | Cloudflare values              |
    | -------------- | ------------------------------ |
-   | Audience URI   | EntityID                       |
+   | Audience URI   | Entity ID                       |
    | Sign On URL    | Assertion Consumer Service URL |
 
 4. Set **NameID** to *Email*.
 
 5. Add any desired [Access policies](/cloudflare-one/policies/access/) to your application.
 
-6. Copy SSO endpoint and Access Entity ID.
+6. Copy the **SSO endpoint** and **Access Entity ID**.
 
-## 3. Create the certificate
+7. Save the application.
 
-1. Wrap the certificate in `-----BEGIN CERTIFICATE-----` and `-----END CERTIFICATE-----`.
-2. Paste the certificate contents into the Certificate field.
+## 3. Create a x.509 certificate
+
+1. Paste the **Public key** in a text editor.
+2. Wrap the certificate in `-----BEGIN CERTIFICATE-----` and `-----END CERTIFICATE-----`.
 
 ## 4. Finalize Hubspot configuration
 

@@ -31,9 +31,13 @@ Storage is not consumed by:
 - Deleted videos
 - Downloadable files generated for [MP4 Downloads](/stream/viewing-videos/download-videos/)
 
-Storage consumption is rounded up to the second of video duration. File size does not matter.
+Storage consumption is rounded up to the second of video duration; file size does not matter. Video stored in Stream does not incur additional storage fees from other storage products such as R2.
 
-**If you run out of storage**, you will not be able to upload new videos or start new live streams until you purchase more storage or delete videos.
+:::note
+If you run out of storage, you will not be able to upload new videos or start new live streams until you purchase more storage or delete videos.
+
+Enterprise customers _may_ continue to upload new content beyond their contracted quota without interruption.
+:::
 
 ## Minutes of video delivered
 
@@ -51,7 +55,7 @@ Delivery is counted by HTTP requests for video segments or parts of the MP4. The
 - Content played from client-side/browser cache is not billable, like a short looping video. Some mobile app player libraries do not cache HLS segments by default.
 - MP4 Downloads are billed by percentage of the file delivered.
 
-HLS and DASH playback is rounded to the segment length. For uploaded content, HLS and DASH segments are four seconds. Live broadcast segments are determined by the keyframe interval or GOP size.
+Minutes delivered for web playback (HLS and DASH) are rounded to the _segment_ length: for uploaded content, segments are four seconds. Live broadcast and recording segments are determined by the keyframe interval or GOP size of the original broadcast.
 
 ## Example scenarios
 

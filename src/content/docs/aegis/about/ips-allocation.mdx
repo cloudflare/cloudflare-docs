@@ -13,11 +13,18 @@ Cloudflare Aegis supports both IPv4 and IPv6 addresses.
 
 IPv6 address ranges are deployed globally, meaning your Aegis IPv6 addresses can be used for connections from Cloudflare to your origin servers across all Cloudflare data centers.
 
-For IPv4 addresses, you should work with your account team to choose the locations where each IP should be deployed. Ideally, your Aegis IPv4 addresses should be placed near your origin servers and adjusted to the amount of traffic expected for each region.
-
-:::caution[Warning]
-
-If you are using [Regional Services](/data-localization/regional-services/), you should take this into consideration when allocating Aegis IPv4. Traffic will egress from the specified locations as long as you have Aegis IPs provisioned in those locations. 
+:::note[China exception]
+Aegis is currently **not** available in the [Cloudflare China Network](/china-network/), operated by Cloudflare's partner JD Cloud.
 :::
 
+For IPv4 addresses, you should work with your account team to choose the locations where each IP should be deployed. Ideally, your Aegis IPv4 addresses should be placed near your origin servers and adjusted to the amount of traffic expected for each region.
+
 Refer to [connection forwarding](/aegis/about/connection-forwarding/) to understand how requests are processed when reaching different Cloudflare data centers.
+
+## Connections to your origin
+
+Each Aegis IP can support 40,000 concurrent connections per origin IP. For example, if you have one Aegis IP and two origins (A and B), this single Aegis IP can support 40,000 concurrent connections to origin A, while simultaneously supporting 40,000 concurrent connections to origin B.
+
+## Regional services
+
+If you are using [Regional Services](/data-localization/regional-services/), you should take this into consideration when allocating Aegis IPv4. Traffic will egress from the specified locations as long as you have Aegis IPs provisioned in those locations.

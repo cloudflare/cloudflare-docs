@@ -1,0 +1,17 @@
+---
+{}
+---
+
+A dedicated [device profile](/cloudflare-one/connections/connect-devices/warp/configure-warp/device-profiles/) allows you to manage the WARP Connector host machine separately from WARP client user devices. WARP Connector hosts are registered to your Zero Trust organization with the email address `warp_connector@<your-team-name>.cloudflareaccess.com`. To set up a device profile for WARP Connector:
+
+1. [Create a new profile](/cloudflare-one/connections/connect-devices/warp/configure-warp/device-profiles/#create-a-new-profile) that matches on the following expression:
+
+		| Selector | Operator | Value |
+		| -------- | -------- | ----- |
+		| User email | is | `warp_connector@<your-team-name>.cloudflareaccess.com` |
+
+2. In the profile settings, ensure that **Service mode** is set to **Gateway with WARP**.
+
+:::note
+`warp_connector@<your-team-name>.cloudflareaccess.com` will only match WARP Connectors deployed with WARP client version `2024.9.346.0` and above. WARP Connectors deployed using the legacy workflow will use the generic email for service token registrations (`non-identity@<your-team-name>.cloudflareaccess.com`).
+:::

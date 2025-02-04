@@ -1,28 +1,46 @@
 ---
-title: Alerts
+title: Page Shield alerts
 pcx_content_type: reference
 sidebar:
   order: 3
-head:
-  - tag: title
-    content: Page Shield alerts
-
+  label: Alerts
 ---
 
-import { AvailableNotifications } from "~/components"
+import { AvailableNotifications } from "~/components";
 
 You can configure alerts for resources detected in your domain. Refer to [Configure Page Shield alerts](/page-shield/detection/configure-alerts/) for instructions.
 
 ## New resource alerts
 
-<AvailableNotifications product="Page Shield" notificationFilter="Page Shield New Resources Alert" /> <AvailableNotifications product="Page Shield" notificationFilter="Page Shield New Domain Alert" /> <AvailableNotifications product="Page Shield" notificationFilter="Page Shield New Resource Exceeds Max URL Length Alert" />
+<AvailableNotifications
+	product="Page Shield"
+	notificationFilter="Page Shield New Resources Alert"
+/> <AvailableNotifications
+	product="Page Shield"
+	notificationFilter="Page Shield New Domain Alert"
+/> <AvailableNotifications
+	product="Page Shield"
+	notificationFilter="Page Shield New Resource Exceeds Max URL Length Alert"
+/>
 
 ## Code change alert
 
-<AvailableNotifications product="Page Shield" notificationFilter="Page Shield New Code Change Detection Alert" />
+<AvailableNotifications
+	product="Page Shield"
+	notificationFilter="Page Shield New Code Change Detection Alert"
+/>
 
 ## Malicious resource alerts
 
-<AvailableNotifications product="Page Shield" notificationFilter="Page Shield New Malicious Domain Alert" /> <AvailableNotifications product="Page Shield" notificationFilter="Page Shield New Malicious URL Alert" /> <AvailableNotifications product="Page Shield" notificationFilter="Page Shield New Malicious Script Alert" />
+<AvailableNotifications
+	product="Page Shield"
+	notificationFilter="Page Shield New Malicious Domain Alert"
+/> <AvailableNotifications
+	product="Page Shield"
+	notificationFilter="Page Shield New Malicious URL Alert"
+/> <AvailableNotifications
+	product="Page Shield"
+	notificationFilter="Page Shield New Malicious Script Alert"
+/>
 
-Malicious resource alerts will only include resources with an *Active* status. Refer to [Script and connection statuses](/page-shield/reference/script-statuses/) for more information.
+Malicious resource alerts will only include resources with an _Active_ status. Refer to [Script and connection statuses](/page-shield/reference/script-statuses/) for more information.

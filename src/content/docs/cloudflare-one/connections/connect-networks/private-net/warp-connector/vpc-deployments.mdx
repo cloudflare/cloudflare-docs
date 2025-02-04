@@ -1,0 +1,23 @@
+---
+pcx_content_type: reference
+title: Tips for VPC deployments
+sidebar:
+  label: VPC deployments
+  order: 3
+---
+
+When setting up WARP Connector on a virtual private cloud (VPC), you may need to configure additional settings in the cloud service provider.
+
+## GCP
+
+For Google Cloud Project (GCP) deployments, [enable IP forwarding](https://cloud.google.com/vpc/docs/using-routes#canipforward) on the VM instance where you installed WARP Connector.
+
+## AWS
+
+For Amazon Web Services (AWS) deployments:
+- Stop [source/destination checking](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/using-eni.html) on the EC2 instance where you installed WARP Connector.
+- In your [subnet route table](https://docs.aws.amazon.com/vpc/latest/userguide/subnet-route-tables.html), route all IPv4 traffic to the EC2 instance where you installed WARP Connector. For example,
+
+		| Destination | Target |
+		| ----------- | ------ |
+		| `0.0.0.0/0` | `eni-11223344556677889` |

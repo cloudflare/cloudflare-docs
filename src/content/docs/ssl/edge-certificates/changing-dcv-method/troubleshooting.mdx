@@ -17,7 +17,7 @@ Taking into account the [steps involved in DCV](/ssl/edge-certificates/changing-
 
 :::note
 
-If you are using the Cloudflare API, error messages are presented under the `validation_errors` parameter. 
+If you are using the Cloudflare API, error messages are presented under the `validation_errors` parameter.
 :::
 
 ## Blocked validation URL
@@ -29,8 +29,16 @@ If you have issues while HTTP DCV is in place, review the following settings:
 * **Cloudflare Account Settings** and **Page Rules**: Review your [account settings](/fundamentals/reference/under-attack-mode/), [Configuration Rules](/rules/configuration-rules/), and [Page Rules](/rules/page-rules/) to ensure you have not enabled **I'm Under Attack Mode** on the validation URL.
 
   :::caution
-   <Render file="dcv-path-security" /> 
+   <Render file="dcv-path-security" />
   :::
+
+## Redirection
+
+Enabling [Always Use HTTPS](/ssl/edge-certificates/additional-options/always-use-https/) does not impact the validation process.
+
+In a [Partial (CNAME) setup](/ssl/edge-certificates/changing-dcv-method/#partial-dns-setup---action-sometimes-required) where you are managing the token on the origin side, please ensure that no redirection from HTTP to HTTPS occurs on the `/.well-known/*` path.
+
+When using [Redirect Rules](/rules/url-forwarding/single-redirects/) the `/.well-known/*` path should be excluded from redirections.
 
 ## DNS settings and records
 

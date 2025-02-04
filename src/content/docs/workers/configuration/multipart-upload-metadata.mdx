@@ -6,7 +6,7 @@ title: Multipart upload metadata
 
 import { Type, MetaInfo } from "~/components";
 
-If you're using the [Workers Script Upload API](/api/operations/worker-script-upload-worker-module) or [Version Upload API](/api/operations/worker-versions-upload-version) directly, `multipart/form-data` uploads require you to specify a `metadata` part. This metadata defines the Worker's configuration in JSON format, analogue to the [wrangler.toml file](/workers/wrangler/configuration/).
+If you're using the [Workers Script Upload API](/api/resources/workers/subresources/scripts/methods/update/) or [Version Upload API](/api/resources/workers/subresources/scripts/subresources/versions/methods/create/) directly, `multipart/form-data` uploads require you to specify a `metadata` part. This metadata defines the Worker's configuration in JSON format, analogue to the [wrangler.toml file](/workers/wrangler/configuration/).
 
 ## Sample `metadata`
 
@@ -30,7 +30,7 @@ The following attributes are configurable at the top-level.
 
 :::note
 
-At a minimum, the `main_module` key is required to upload a Worker. 
+At a minimum, the `main_module` key is required to upload a Worker.
 :::
 
 
@@ -38,6 +38,18 @@ At a minimum, the `main_module` key is required to upload a Worker.
 * `main_module` <Type text="string" /> <MetaInfo text="required" />
 
   * The part name that contains the module entry point of the Worker that will be executed. For example, `main.js`.
+
+* `assets` <Type text="object" /> <MetaInfo text="optional" />
+
+  * [Asset](/workers/static-assets/) configuration for a Worker.
+  * `config` <Type text="object" /> <MetaInfo text="optional" />
+    * [html_handling](/workers/static-assets/routing/#1-html_handling) determines the redirects and rewrites of requests for HTML content.
+    * [not_found_handling](/workers/static-assets/routing/#2-not_found_handling) determines the response when a request does not match a static asset, and there is no Worker script.
+  * `jwt` field provides a token authorizing assets to be attached to a Worker.
+
+* `keep_assets` <Type text="boolean" /> <MetaInfo text="optional" />
+
+  * Specifies whether assets should be retained from a previously uploaded Worker version; used in lieu of providing a completion token.
 
 * `bindings` array\[object] optional
 
@@ -54,7 +66,7 @@ At a minimum, the `main_module` key is required to upload a Worker.
 
 * `compatibility_flags` array\[string] optional
 
-  * [Compatibility Flags](/workers/configuration/compatibility-dates/#setting-compatibility-flags) that enable or disable certain features in the Workers runtime. Used to enable upcoming features or opt in or out of specific changes not included in a `compatibility_date`.
+  * [Compatibility Flags](/workers/configuration/compatibility-flags/#setting-compatibility-flags) that enable or disable certain features in the Workers runtime. Used to enable upcoming features or opt in or out of specific changes not included in a `compatibility_date`.
 
 * `usage_model` <Type text="string" /> <MetaInfo text="optional" />
 
@@ -62,13 +74,13 @@ At a minimum, the `main_module` key is required to upload a Worker.
 
 
 
-## Additional attributes: [Workers Script Upload API](/api/operations/worker-script-upload-worker-module)
+## Additional attributes: [Workers Script Upload API](/api/resources/workers/subresources/scripts/methods/update/)
 
 For [immediately deployed uploads](/workers/configuration/versions-and-deployments/#upload-a-new-version-and-deploy-it-immediately), the following **additional** attributes are configurable at the top-level.
 
 :::note
 
-These attributes are **not available** for version uploads. 
+These attributes are **not available** for version uploads.
 :::
 
 
@@ -91,13 +103,13 @@ These attributes are **not available** for version uploads.
 
 
 
-## Additional attributes: [Version Upload API](/api/operations/worker-versions-upload-version)
+## Additional attributes: [Version Upload API](/api/resources/workers/subresources/scripts/subresources/versions/methods/create/)
 
 For [version uploads](/workers/configuration/versions-and-deployments/#upload-a-new-version-to-be-gradually-deployed-or-deployed-at-a-later-time), the following **additional** attributes are configurable at the top-level.
 
 :::note
 
-These attributes are **not available** for immediately deployed uploads. 
+These attributes are **not available** for immediately deployed uploads.
 :::
 
 
@@ -125,6 +137,10 @@ Workers can interact with resources on the Cloudflare Developer Platform using [
       "type": "analytics_engine",
       "name": "<VARIABLE_NAME>",
       "dataset": "<DATASET>"
+    },
+    {
+      "type": "assets",
+      "name": "<VARIABLE_NAME>"
     },
     {
       "type": "browser_rendering",

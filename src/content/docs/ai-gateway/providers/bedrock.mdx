@@ -10,7 +10,18 @@ sidebar:
 
 ## Endpoint
 
-`https://gateway.ai.cloudflare.com/v1/{account_id}/{gateway_id}/aws-bedrock`
+```txt
+https://gateway.ai.cloudflare.com/v1/{account_id}/{gateway_id}/aws-bedrock`
+```
+
+## Prerequisites
+
+When making requests to Amazon Bedrock, ensure you have the following:
+
+- Your AI Gateway Account ID.
+- Your AI Gateway gateway name.
+- An active Amazon Bedrock API token.
+- The name of the Amazon Bedrock model you want to use.
 
 ## Make a request
 
@@ -18,7 +29,9 @@ When making requests to Amazon Bedrock, replace `https://bedrock-runtime.us-east
 
 With Bedrock, you will need to sign the URL before you make requests to AI Gateway. You can try using the [`aws4fetch`](https://github.com/mhart/aws4fetch) SDK.
 
-## Example:
+## Examples
+
+### Use `aws4fetch` SDK with TypeScript
 
 ```typescript
 import { AwsClient } from "aws4fetch";
@@ -85,7 +98,7 @@ export default {
 			response.headers.get("content-type")?.includes("application/json")
 		) {
 			const data = await response.json();
-			return new Response(JSON.stringify(response));
+			return new Response(JSON.stringify(data));
 		} else {
 			return new Response("Invalid response", { status: 500 });
 		}

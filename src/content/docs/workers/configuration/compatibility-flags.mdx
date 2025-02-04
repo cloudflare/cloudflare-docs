@@ -1,0 +1,82 @@
+---
+pcx_content_type: concept
+title: Compatibility flags
+rss: https://github.com/cloudflare/cloudflare-docs/commits/production/src/content/compatibility-flags.atom
+head: []
+description: Opt into a specific features of the Workers runtime for your Workers project.
+---
+
+import { CompatibilityFlags, WranglerConfig } from "~/components";
+
+Compatibility flags enable specific features. They can be useful if you want to help the Workers team test upcoming changes that are not yet enabled by default, or if you need to hold back a change that your code depends on but still want to apply other compatibility changes.
+
+Compatibility flags will often have a date in which they are enabled by default, and so, by specifying a [`compatibility_date`](/workers/configuration/compatibility-dates) for your Worker, you can quickly enable all of these various compatibility flags up to, and including, that date.
+
+## Setting compatibility flags
+
+You may provide a list of `compatibility_flags`, which enable or disable specific changes.
+
+#### Via Wrangler
+
+Compatibility flags can be set in a Worker's [`wrangler.toml / wrangler.json` file](/workers/wrangler/configuration/).
+
+This example enables the specific flag `formdata_parser_supports_files`, which is described [below](/workers/configuration/compatibility-flags/#formdata-parsing-supports-file). As of the specified date, `2021-09-14`, this particular flag was not yet enabled by default, but, by specifying it in `compatibility_flags`, we can enable it anyway. `compatibility_flags` can also be used to disable changes that became the default in the past.
+
+<WranglerConfig>
+
+```toml
+# Opt into backwards-incompatible changes through September 14, 2021.
+compatibility_date = "2021-09-14"
+# Also opt into an upcoming fix to the FormData API.
+compatibility_flags = [ "formdata_parser_supports_files" ]
+```
+
+</WranglerConfig>
+
+#### Via the Cloudflare Dashboard
+
+Compatibility flags can be updated in the Workers settings on the [Cloudflare dashboard](https://dash.cloudflare.com/).
+
+#### Via the Cloudflare API
+
+Compatibility flags can be set when uploading a Worker using the [Workers Script API](/api/resources/workers/subresources/scripts/methods/update/) or [Workers Versions API](/api/resources/workers/subresources/scripts/subresources/versions/methods/create/) in the request body's `metadata` field.
+
+## Node.js compatibility flag
+
+import { Render } from "~/components";
+
+<Render file="nodejs_compat" product="workers" />
+
+A [growing subset](/workers/runtime-apis/nodejs/) of Node.js APIs are available directly as [Runtime APIs](/workers/runtime-apis/nodejs), with no need to add polyfills to your own code. To enable these APIs in your Worker, only the `nodejs_compat` compatibility flag is required:
+
+<WranglerConfig>
+
+```toml title="wrangler.toml"
+compatibility_flags = [ "nodejs_compat" ]
+```
+
+</WranglerConfig>
+
+As additional Node.js APIs are added, they will be made available under the `nodejs_compat` compatibility flag. Unlike most other compatibility flags, we do not expect the `nodejs_compat` to become active by default at a future date.
+
+The Node.js `AsyncLocalStorage` API is a particularly useful feature for Workers. To enable only the `AsyncLocalStorage` API, use the `nodejs_als` compatibility flag.
+
+<WranglerConfig>
+
+```toml title="wrangler.toml"
+compatibility_flags = [ "nodejs_als" ]
+```
+
+</WranglerConfig>
+
+## Flags history
+
+Newest flags are listed first.
+
+<CompatibilityFlags />
+
+## Experimental flags
+
+These flags can be enabled via `compatibility_flags`, but are not yet scheduled to become default on any particular date.
+
+<CompatibilityFlags experimental />

@@ -3,15 +3,27 @@
 
 ---
 
-import { Render } from "~/components"
+import { Render, Details } from "~/components"
 
-1. Make a `POST` request to the Cloudflare API with your email address and [API key](/fundamentals/api/get-started/keys/) as request headers.
+1. [Create an API token](/fundamentals/api/get-started/create-token/) with the following permissions:
 
-   ```bash
-   curl --request POST \
-   "https://api.cloudflare.com/client/v4/accounts/{account_id}/access/gateway_ca" \
-   --header "X-Auth-Email: <EMAIL>" \
-   --header "X-Auth-Key: <API_KEY>"
-   ```
+		| Type    | Item             | Permission |
+		| ------- | ---------------- | ---------- |
+		| Account | Access: SSH Auditing | Edit       |
 
-2. Copy the `public_key` value returned in the response.
+2. If you have not yet generated a Cloudflare SSH CA, make a `POST` request to the Cloudflare API:
+
+		```bash
+		curl --request POST \
+		"https://api.cloudflare.com/client/v4/accounts/{account_id}/access/gateway_ca" \
+		--header "Authorization: Bearer <API_TOKEN>"
+		```
+
+3. If you have already created a Cloudflare SSH CA or receive the error message `access.api.error.gateway_ca_already_exists`, make a `GET` request instead:
+
+		```bash
+		curl https://api.cloudflare.com/client/v4/accounts/{account_id}/access/gateway_ca \
+		--header "Authorization: Bearer <API_TOKEN>"
+		```
+
+4. Copy the `public_key` value returned in the response.

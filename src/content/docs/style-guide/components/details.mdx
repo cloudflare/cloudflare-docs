@@ -11,3 +11,13 @@ import { Details } from "~/components"
     Hello, world!
 </Details>
 ```
+
+You can specify the default configuration of each instance of the `<Details>` component (that is, whether it is open or closed by default).
+
+```mdx live
+import { Details } from "~/components"
+
+<Details header="Close me!" open = {true}>
+    Long piece of code example.
+</Details>
+```

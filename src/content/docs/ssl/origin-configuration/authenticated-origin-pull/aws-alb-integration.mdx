@@ -69,7 +69,7 @@ curl --verbose https://<your-application-load-balancer>
 
 <Render file="aop-per-hostname-upload-cert" />
 
-2.[Associate the certificate with the hostname](/api/operations/per-hostname-authenticated-origin-pull-enable-or-disable-a-hostname-for-client-authentication) that should use it.
+2.[Associate the certificate with the hostname](/api/resources/origin_tls_client_auth/subresources/hostnames/methods/update/) that should use it.
 
 ```bash
 curl --silent --request PUT \
@@ -110,7 +110,7 @@ Make sure your [encryption mode](/ssl/origin-configuration/ssl-modes/) is set to
 
 ## Rollback the Cloudflare configuration
 
-1. Use a [`PUT` request](/api/operations/per-hostname-authenticated-origin-pull-enable-or-disable-a-hostname-for-client-authentication) to disable Authenticated Origin Pulls on the hostname.
+1. Use a [`PUT` request](/api/resources/origin_tls_client_auth/subresources/hostnames/methods/update/) to disable Authenticated Origin Pulls on the hostname.
 
 ```bash
 curl -s --request PUT \
@@ -129,7 +129,7 @@ curl -s --request PUT \
 }'
 ```
 
-2. (Optional) Use a [`GET` request](/api/operations/per-hostname-authenticated-origin-pull-list-certificates) to obtain a list of the client certificate IDs. You will need the ID of the certificate you want to remove for the following step.
+2. (Optional) Use a [`GET` request](/api/resources/origin_tls_client_auth/subresources/hostnames/subresources/certificates/methods/list/) to obtain a list of the client certificate IDs. You will need the ID of the certificate you want to remove for the following step.
 
 ```bash
 curl "https://api.cloudflare.com/client/v4/zones/$ZONEID/origin_tls_client_auth/hostnames/certificates" \
@@ -137,7 +137,7 @@ curl "https://api.cloudflare.com/client/v4/zones/$ZONEID/origin_tls_client_auth/
 --header "X-Auth-Key: $MYAUTHKEY"
 ```
 
-3. Use the [Delete hostname client certificate](/api/operations/per-hostname-authenticated-origin-pull-delete-hostname-client-certificate) endpoint to remove the certificate you had uploaded.
+3. Use the [Delete hostname client certificate](/api/resources/origin_tls_client_auth/subresources/hostnames/subresources/certificates/methods/delete/) endpoint to remove the certificate you had uploaded.
 
 ```bash
 curl --request DELETE \

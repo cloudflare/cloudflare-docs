@@ -1,0 +1,14 @@
+releaseNotes: |-
+  This release contains hotfixes for 2022.9.387.1.
+
+  **Notable updates**
+  - Fix issue where device posture check results stopped sending after 24 hours
+    (or possibly even sooner)
+
+  **Known issues**
+  - No known issues
+version: 2022.9.587.1
+packageURL: https://downloads.cloudflareclient.com/v1/download/macos/version/2022.9.587.1
+packageSize: 49724992
+releaseDate: 2022-10-12T00:54:02.445Z
+platformName: macOS

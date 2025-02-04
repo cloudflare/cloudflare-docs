@@ -1,0 +1,14 @@
+---
+link: "/logs/changelog/"
+productName: Logs
+productLink: "/logs/"
+productArea: Core platform
+productAreaLink: /fundamentals/reference/changelog/platform/
+entries:
+  - publish_date: "2024-10-08"
+    description: |-
+      - Cloudflare has introduced new fields two Gateway-related datasets in Cloudflare Logs:
+
+        - **Gateway HTTP**: `ApplicationIDs`, `ApplicationNames`, `CategoryIDs`, `CategoryNames`, `DestinationIPContinentCode`, `DestinationIPCountryCode`, `ProxyEndpoint`, `SourceIPContinentCode`, `SourceIPCountryCode`, `VirtualNetworkID`, and `VirtualNetworkName`.
+
+        - **Gateway Network**: `ApplicationIDs`, `ApplicationNames`, `DestinationIPContinentCode`, `DestinationIPCountryCode`, `ProxyEndpoint`, `SourceIPContinentCode`, `SourceIPCountryCode`, `TransportProtocol`, `VirtualNetworkID`, and `VirtualNetworkName`.

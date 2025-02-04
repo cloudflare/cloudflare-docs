@@ -99,7 +99,26 @@ Description of external resource related to current product.
 
 ## Additional Information
 
-Only use Overview for the first page in a developer documentation set.
+Overview pages are the default "first" page in any nested navigation. In some cases, to ensure good information architecture and navigability, you may need to rename or remove overview pages. 
+
+### When to consider removing an verview page
+
+If the overview acts as a table of contents that provides no additional information or context, consider removing it altogether.
+
+### How to remove an overview page
+
+Deleting the `index.mdx` file in a nested folder is not possible and will result in a build error. To remove the page from the docs, the `index.mdx` file must be hidden using sidebar styling changes. Also, to ensure that users do not accidentally access the overview page, add a redirect.
+
+To hide an overview page, set the `group.hideIndex` property to `true` in the page's frontmatter.
+
+```
+---
+title: Placeholder
+sidebar:
+  group:
+    hideIndex: true
+---
+```
 
 ## Examples
 

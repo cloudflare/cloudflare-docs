@@ -1,0 +1,59 @@
+---
+pcx_content_type: reference
+title: Sequence Mitigation custom rules
+sidebar:
+  order: 2
+
+---
+
+import { GlossaryTooltip, Render } from "~/components"
+
+API Shield sequence custom rules use the configured API Shield <GlossaryTooltip term="session identifier">session identifier</GlossaryTooltip> to track the order of requests a user has made and the time between requests, and makes them available via [Cloudflare Rules](/rules). This allows you to write rules that match valid or invalid sequences.
+
+These rules are different from [cookie sequence rules](/bots/concepts/sequence-rules/) in a few ways: 
+
+- They only require an API Shield subscription.
+- They require [session identifiers](/api-shield/get-started/#session-identifiers) to be set in API Shield.
+- Because they use an API's session identifiers, they can be used for APIs designed for mobile applications.
+- Because Cloudflare stores the user state in memory and not in a cookie, the session lifetime is limited to 10 minutes.
+
+Rules built using these custom rules are different from sequence mitigation rules built [via API or the Cloudflare dashboard](/api-shield/security/sequence-mitigation/). The custom rules syntax enables free-form logic and response options that the dashboard does not.
+
+## Availability
+
+<Render file="sequence-rules-availability" product="bots" />
+
+## Example rules
+
+Each saved endpoint will have an endpoint ID visible in its details page in Endpoint Management in the form of a UUID. The references below (`aaaaaaaa`, `bbbbbbbb`, and `cccccccc`) are the first eight characters of the endpoint ID.
+
+The visitor must wait more than 2 seconds after requesting endpoint `aaaaaaaa` before requesting endpoint `bbbbbbbb`:
+
+```txt
+cf.sequence.current_op eq "bbbbbbbb" and 
+cf.sequence.msec_since_op["aaaaaaaa"] ge 2000
+```
+
+The visitor must request endpoints `aaaaaaaa`, then `bbbbbbbb`, then `cccccccc` in that exact order:
+
+```txt
+cf.sequence.current_op eq "cccccccc" and 
+cf.sequence.previous_ops[0] == "bbbbbbbb" and 
+cf.sequence.previous_ops[1] == "aaaaaaaa"
+```
+
+The visitor must request endpoint `aaaaaaaa` before endpoint `bbbbbbbb`, but endpoint `aaaaaaaa` can be anywhere in the previous 10 requests:
+
+```txt
+cf.sequence.current_op eq "bbbbbbbb" and 
+any(cf.sequence.previous_ops[*] == "aaaaaaaa")
+```
+
+The visitor must request either endpoint `aaaaaaaa` before endpoint `bbbbbbbb`, or endpoint `cccccccc` before endpoint `bbbbbbbb`:
+
+```txt
+(cf.sequence.current_op eq "bbbbbbbb" and 
+any(cf.sequence.previous_ops[*] == "aaaaaaaa")) or 
+(cf.sequence.current_op eq "bbbbbbbb" and 
+any(cf.sequence.previous_ops[*] == "cccccccc"))
+```

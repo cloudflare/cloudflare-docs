@@ -9,7 +9,7 @@ sidebar:
 
 ---
 
-import { Render } from "~/components"
+import { Render, WranglerConfig } from "~/components"
 
 <Render file="source-maps" product="workers" />
 
@@ -23,11 +23,15 @@ Support for uploading source maps is available now in open beta. Minimum require
 
 ## Source Maps
 
-To enable source maps, add the following to your Worker's [`wrangler.toml`](/workers/wrangler/configuration/) file:
+To enable source maps, add the following to your Worker's [Wrangler configuration](/workers/wrangler/configuration/) file:
+
+<WranglerConfig>
 
 ```toml
 upload_source_maps = true
 ```
+
+</WranglerConfig>
 
 When `upload_source_maps` is set to `true`, Wrangler will automatically generate and upload source map files when you run [`wrangler deploy`](/workers/wrangler/commands/#deploy) or [`wrangler versions deploy`](/workers/wrangler/commands/#deploy-2).
 ​​
@@ -45,7 +49,7 @@ Miniflare can also [output source maps](https://miniflare.dev/developing/source-
 ​​
 When your Worker throws an uncaught exception, we fetch the source map and use it to map the stack trace of the exception back to lines of your Worker’s original source code.
 
-You can then view the stack trace in when streaming [real-time logs](/workers/observability/logs/real-time-logs/) or in [Tail Workers](/workers/observability/logs/tail-workers/).
+You can then view the stack trace when streaming [real-time logs](/workers/observability/logs/real-time-logs/) or in [Tail Workers](/workers/observability/logs/tail-workers/).
 
 :::note
 

@@ -1,10 +1,6 @@
 ---
 productName: Cloudflare One
 entries:
-  - term: Access group
-    general_definition: |-
-      a set of rules that can be configured once and then quickly applied across many Access applications.
-
   - term: App Launcher
     general_definition: |-
       the App Launcher portal provides end users with a single dashboard to open applications secured by Cloudflare Zero Trust.
@@ -23,7 +19,7 @@ entries:
 
   - term: CGNAT IP
     general_definition: |-
-      a unique, virtual IP address assigned to each WARP device from the `100.96.0.0/12` range. You can view the CGNAT IP for a device on its **My Team** > **Devices** page.
+      a unique, virtual IP address assigned to each WARP device from the `100.96.0.0/12` range. You can view the CGNAT IP for a device in **My Team** > **Devices** > **Virtual IPv4/IPv6**.
 
   - term: cloudflared
     general_definition: |-
@@ -147,6 +143,10 @@ entries:
     general_definition: |-
       Remote Desktop Protocol (RDP) allows remote desktop connections to a computer, often used on Windows and Mac operating systems.
 
+  - term: Rule group
+    general_definition: |-
+      a set of Access rules that can be configured once and then quickly applied across many Access policies.
+
   - term: SafeSearch
     general_definition: |-
       SafeSearch is a feature of search engines that filters explicit or offensive content from search results.
@@ -238,6 +238,10 @@ entries:
   - term: Virtual network
     general_definition: |-
       a software abstraction that allows you to logically segregate resources on a private network. Virtual networks are especially useful for exposing resources which have overlapping IP routes.
+
+  - term: Virtual Private Cloud (VPC)
+    general_definition: |-
+      a secure, isolated private network hosted on public cloud infrastructure. Examples of public cloud providers include Google Cloud, AWS, and Microsoft Azure.
 
   - term: Virtual Private Network (VPN)
     general_definition: |-

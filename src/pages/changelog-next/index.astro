@@ -1,0 +1,139 @@
+---
+import StarlightPage, {
+	type StarlightPageProps,
+} from "@astrojs/starlight/components/StarlightPage.astro";
+import { getCollection, render } from "astro:content";
+
+import Header from "~/components/changelog-next/Header.astro";
+import ProductPills from "~/components/changelog-next/ProductPills.astro";
+
+import { Steps } from "~/components";
+import { format } from "date-fns";
+
+const notes = await getCollection("changelogs-next");
+
+notes.sort((a, b) => b.data.date.getTime() - a.data.date.getTime());
+
+const props = {
+	frontmatter: {
+		title: "Changelogs",
+		tableOfContents: false,
+		template: "splash",
+	},
+	hideTitle: true,
+	hideBreadcrumbs: true,
+} as StarlightPageProps;
+---
+
+<StarlightPage {...props}>
+	<Header notes={notes} />
+	{
+		notes.map(async (entry) => {
+			const date = format(entry.data.date, "MMM dd, yyyy");
+			const time = format(entry.data.date, "hh:mm a");
+			const productIds = JSON.stringify(
+				entry.data.products.map((product) => product.id),
+			);
+
+			const { Content } = await render(entry);
+
+			return (
+				<div class="!mt-0 sm:flex" data-products={productIds}>
+					<time
+						datetime={entry.data.date.toISOString()}
+						class="whitespace-nowrap leading-none sm:pr-4 sm:text-right"
+					>
+						<strong class="text-xs">{date}</strong>
+						<span class="text-xs sm:block">{time}</span>
+					</time>
+					<Steps>
+						<ol class="!mt-0 overflow-x-auto">
+							<li class="!pb-16">
+								<div>
+									<h3 class="leading-none">
+										<a
+											href={`/changelog-next/${entry.id}/`}
+											class="mb-4 !text-black no-underline hover:underline"
+										>
+											{entry.data.title}
+										</a>
+									</h3>
+									<ProductPills products={entry.data.products} />
+								</div>
+								<p>
+									<Content />
+								</p>
+							</li>
+						</ol>
+					</Steps>
+				</div>
+			);
+		})
+	}
+</StarlightPage>
+
+<script>
+	const filter = document.querySelector<HTMLSelectElement>(
+		"#changelogs-next-filter",
+	);
+
+	filter?.addEventListener("change", () => {
+		const entries = document.querySelectorAll<HTMLElement>("[data-products]");
+
+		if (!entries) return;
+
+		const value = filter.value;
+
+		if (value === "all") {
+			entries.forEach((entry) => (entry.style.display = ""));
+
+			return;
+		}
+
+		for (const entry of entries) {
+			if (!entry.dataset.products) continue;
+
+			const products = JSON.parse(entry.dataset.products);
+
+			const show = products.includes(value);
+
+			if (show) {
+				entry.style.display = "";
+			} else {
+				entry.style.display = "none";
+			}
+		}
+	});
+</script>
+
+<style>
+	:root {
+		.sl-container {
+			--sl-content-width: 50rem !important;
+			margin-inline: auto !important;
+		}
+
+		.feedback-prompt-content {
+			display: none !important;
+		}
+
+		#footer-links {
+			justify-content: center;
+		}
+	}
+
+	.sl-steps {
+		--bullet-size: 24px !important;
+
+		& > li {
+			padding-inline-start: calc(var(--bullet-size) + 2.5rem) !important;
+
+			&::before {
+				content: "•" !important;
+				font-size: calc(var(--bullet-size) * 2) !important;
+				line-height: calc(var(--bullet-size) / 1.5) !important;
+				color: var(--orange-accent-200) !important;
+			}
+		}
+	}
+</style>

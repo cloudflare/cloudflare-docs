@@ -22,6 +22,11 @@ paths:
             type: string
           required: true
           description: WebRTC application ID
+        - in: query
+          name: thirdparty
+          schema:
+            type: boolean
+          description: Session is intended to connect to an ICE-lite peer like a third party SFU/server
       responses:
         "201":
           description: Created
@@ -75,6 +80,61 @@ paths:
                     - location: remote
                       sessionId: 2a45361d5fd7cc14eface0587c276c94
                       trackName: 2e037563-a35d-4bf6-a9ee-2d474cbb9a58
+              push_track_with_bidirectional_stream:
+                description: Share a track through a bidirectional transceiver
+                value:
+                  sessionDescription:
+                    sdp: |
+                      v=0
+                      o=- 0 0 IN IP4 127.0.0.1
+                      s=-
+                      c=IN IP4 127.0.0.1
+                      t=0 0
+                      m=audio 4000 RTP/AVP 111
+                      a=rtpmap:111 OPUS/48000/2
+                      m=video 4002 RTP/AVP 96
+                      a=rtpmap:96 VP8/90000
+                      ...
+                    type: offer
+                  tracks:
+                    - location: local
+                      mid: "0"
+                      trackName: mic-1
+                      bidirectionalMediaStream: true
+                      kind: "audio"
+              push_track_without_an_offer:
+                description: SFU can generate an offer to push a local track
+                value:
+                  tracks:
+                    - location: local
+                      trackName: mic-1
+                      kind: "audio"
+              push_tracks_with_autodiscover:
+                description: SFU detects any new track in the offered SDP
+                value:
+                  autoDiscover: true
+                  sessionDescription:
+                    sdp: |
+                      v=0
+                      o=- 0 0 IN IP4 127.0.0.1
+                      s=-
+                      c=IN IP4 127.0.0.1
+                      t=0 0
+                      m=audio 4000 RTP/AVP 111
+                      a=rtpmap:111 OPUS/48000/2
+                      m=video 4002 RTP/AVP 96
+                      a=rtpmap:96 VP8/90000
+                      ...
+                    type: offer
+              pull_track_with_bidirectional_stream:
+                description: Pull a track through an existing bidirectional transceiver identified by a mid
+                value:
+                  tracks:
+                    - location: remote
+                      mid: "#mic-1"
+                      sessionId: 2a45361d5fd7cc14eface0587c276c94
+                      trackName: generated-audio
+                      kind: "audio"
       security:
         - secret: []
       parameters:
@@ -151,9 +211,7 @@ paths:
         content:
           application/json:
             schema:
-              properties:
-                sessionDescription:
-                  $ref: "#/components/schemas/SessionDescription"
+              $ref: "#/components/schemas/RenegotiateRequest"
             example:
               sessionDescription:
                 sdp: |
@@ -193,7 +251,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/SessionDescription"
+                $ref: "#/components/schemas/RenegotiateResponse"
               example: {}
   /apps/{appId}/sessions/{sessionId}/tracks/close:
     put:
@@ -336,13 +394,19 @@ components:
           description: If you want to share a track, it should be local. If you want to play a track shared by a remote agent, it should be remote
         mid:
           type: string
-          description: mid associated to track's transceiver. It should be set with local tracks only
+          description: mid associated to track's transceiver. It also can be prefixed with \# to reference an existing transceiver by its trackName
         sessionId:
           type: string
           description: Session ID of the track owner. It should be set for remote tracks only
         trackName:
           type: string
           description: Given name for the track
+        bidirectionalMediaStream:
+          type: boolean
+          description: Make the associated transceiver bidirectional. This option works only when the SFU generates the offer
+        kind:
+          type: string
+          description: Give a hint to the SFU about the transceiver kind. This is required when the SFU generates the offer
     CloseTrackObject:
       type: object
       properties:
@@ -358,9 +422,16 @@ components:
           type: array
           items:
             $ref: "#/components/schemas/TrackObject"
+        autoDiscover:
+          type: boolean
+          description: Assign a random track name to any new track in the offered SDP
     TracksResponse:
       type: object
       properties:
+        errorCode:
+          type: string
+        errorDescription:
+          type: string
         requiresImmediateRenegotiation:
           type: boolean
         sessionDescription:
@@ -371,21 +442,24 @@ components:
             allOf:
               - $ref: "#/components/schemas/TrackObject"
               - properties:
-                  error:
-                    type: object
-                    properties:
-                      errorCode:
-                        type: string
-                      errorDescription:
-                        type: string
+                  errorCode:
+                    type: string
+                  errorDescription:
+                    type: string
     NewSessionRequest:
       type: object
       properties:
         sessionDescription:
           $ref: "#/components/schemas/SessionDescription"
     NewSessionResponse:
+      required:
+        - sessionId
       type: object
       properties:
+        errorCode:
+          type: string
+        errorDescription:
+          type: string
         sessionDescription:
           type: object
           properties:
@@ -413,6 +487,10 @@ components:
     CloseTracksResponse:
       type: object
       properties:
+        errorCode:
+          type: string
+        errorDescription:
+          type: string
         sessionDescription:
           $ref: "#/components/schemas/SessionDescription"
         tracks:
@@ -421,18 +499,19 @@ components:
             allOf:
               - $ref: "#/components/schemas/CloseTrackObject"
               - properties:
-                  error:
-                    type: object
-                    properties:
-                      errorCode:
-                        type: string
-                      errorDescription:
-                        type: string
+                  errorCode:
+                    type: string
+                  errorDescription:
+                     type: string
         requiresImmediateRenegotiation:
           type: boolean
     GetSessionStateResponse:
       type: object
       properties:
+        errorCode:
+          type: string
+        errorDescription:
+          type: string
         tracks:
           type: array
           items:
@@ -445,3 +524,20 @@ components:
                       - active
                       - inactive
                       - waiting
+    RenegotiateRequest:
+      type: object
+      properties:
+        sessionDescription:
+          $ref: "#/components/schemas/SessionDescription"
+    RenegotiateResponse:
+      type: object
+      properties:
+        errorCode:
+          type: string
+        errorDescription:
+          type: string
+        sessionDescription:
+          $ref: "#/components/schemas/SessionDescription"
+
+
+  

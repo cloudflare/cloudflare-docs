@@ -35,7 +35,7 @@ The Cache API is not compatible with tiered caching. To take advantage of tiered
 
 When using single-file purge to purge assets cached by a Worker, make sure not to purge the end user URL. Instead, purge the URL that is in the `fetch` request. For example, you have a Worker that runs on `https://example.com/hello` and this Worker makes a `fetch` request to `https://notexample.com/hello`.
 
-As far as cache is concerned, the asset in the `fetch` request (`https://notexample.com/hello`) is the asset that is cached (`https://notexample.com/hello`). To purge it, you need to purge `https://notexample.com/hello`.
+As far as cache is concerned, the asset in the `fetch` request (`https://notexample.com/hello`) is the asset that is cached. To purge it, you need to purge `https://notexample.com/hello`.
 
 Purging the end user URL, `https://example.com/hello`, will not work because that is not the URL that cache sees. You need to confirm in your Worker which URL you are actually fetching, so you can purge the correct asset.
 
@@ -74,7 +74,7 @@ Assets stored in the cache through [Cache API](/workers/runtime-apis/cache/) ope
 
 ## Edge versus browser caching
 
-The browser cache is controlled through the `Cache-Control` header sent in the response to the client (the response passed or promised to `event.respondWith()`). Workers can customize browser cache behavior by setting this header on the response.
+The browser cache is controlled through the `Cache-Control` header sent in the response to the client (the `Response` instance return from the handler). Workers can customize browser cache behavior by setting this header on the response.
 
 Other means to control Cloudflare’s cache that are not mentioned in this documentation include: Page Rules and Cloudflare cache settings. Refer to the [How to customize Cloudflare’s cache](/cache/concepts/customize-cache/) if you wish to avoid writing JavaScript with still some granularity of control.
 

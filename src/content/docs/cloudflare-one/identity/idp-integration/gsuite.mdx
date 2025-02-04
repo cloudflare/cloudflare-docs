@@ -16,6 +16,8 @@ You do not need to be a Google Cloud Platform user to integrate Google Workspace
 
 ## Set up Google Workspace as an identity provider
 
+### 1. Configure Google Workspace
+
 1. Log in to the Google Cloud Platform [console](https://console.cloud.google.com/). This is separate from your Google Workspace console.
 
 2. A Google Cloud project is required to enable Google Workspace APIs. If you do not already have a Google Cloud project, go to **IAM & Admin** > **Create Project**. Name the project and select **Create**.
@@ -66,21 +68,21 @@ You do not need to be a Google Cloud Platform user to integrate Google Workspace
 
 15. Enable the **Trust internal, domain-owned apps** option. This setting is disabled by default and must be enabled for Cloudflare Access to work correctly.
 
-16. In [Zero Trust](https://one.dash.cloudflare.com/), go to **Settings** > **Authentication**.
+### 2. Add Google Workspace to Zero Trust
 
-17. Under **Login methods**, select **Add new** and choose **Google Workspace**.
+1. In [Zero Trust](https://one.dash.cloudflare.com/), go to **Settings** > **Authentication**.
 
-18. Input the Client ID and Client Secret fields generated previously. Additionally, input the domain of your Google Workspace account.
+2. Under **Login methods**, select **Add new** and choose **Google Workspace**.
 
-19. (Optional) Enable [Proof of Key Exchange (PKCE)](https://www.oauth.com/oauth2-servers/pkce/). PKCE will be performed on all login attempts.
+3. Input the Client ID and Client Secret fields generated previously. Additionally, input the domain of your Google Workspace account.
 
-20. (Optional) Under **Optional configurations**, enter [custom OIDC claims](/cloudflare-one/identity/idp-integration/generic-oidc/#oidc-claims) that you wish to add to your Access [application token](/cloudflare-one/identity/authorization-cookie/application-token/).
+4. (Optional) Enable [Proof of Key Exchange (PKCE)](https://www.oauth.com/oauth2-servers/pkce/). PKCE will be performed on all login attempts.
 
-21. Select **Save**. To complete setup, you must visit the generated link. If you are not the Google Workspace administrator, share the link with the administrator.
+5. (Optional) Under **Optional configurations**, enter [custom OIDC claims](/cloudflare-one/identity/idp-integration/generic-oidc/#oidc-claims) that you wish to add to your Access [application token](/cloudflare-one/identity/authorization-cookie/application-token/).
 
-22. The generated link will prompt you to log in to your Google admin account and to authorize Cloudflare Access to view group information. After allowing permissions, you will see a success page from Cloudflare Access.
+6. Select **Save**. To complete setup, you must visit the generated link. If you are not the Google Workspace administrator, share the link with the administrator.
 
-## Test your connection
+7. The generated link will prompt you to log in to your Google admin account and to authorize Cloudflare Access to view group information. After allowing permissions, you will see a success page from Cloudflare Access.
 
 To test that your connection is working, go to **Authentication** > **Login methods** and select **Test** next to Google Workspace. Your user identity and group membership should return.
 

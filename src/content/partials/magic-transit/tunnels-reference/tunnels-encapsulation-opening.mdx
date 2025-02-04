@@ -100,6 +100,10 @@ It is important to note that the IKE SA and the Child SA are separate things, ea
 
 In summary, an IKE SA is created that uses certain cryptographic transforms. That IKE SA is then used to create a Child SA which itself uses certain cryptographic transforms. The configuration section below details which of these transforms for IKE SAs and Child SAs are currently supported by {props.productName}.
 
+:::note
+Internet Key Exchange (IKE) is one of the protocols that makes up IPsec. Cloudflare only operates as an IKE responder.
+:::
+
 ### Supported configuration parameters
 
 Below is a list of the configuration parameters supported by Magic WAN. Choose which ones to use based on what your appliance supports.
@@ -122,7 +126,7 @@ IKE SA is sometimes referred to as Phase 1 as per IKEv1 language.
   Below is a list of all Diffie-Hellman (DH) groups supported by Cloudflare.
 
   :::caution
-  Cloudflare recommends that you use only one DH group when configuring your device, specifically **DH group 14**.
+  Cloudflare recommends that you use only one DH group when configuring your device, specifically **DH group 20**.
   :::
 
   - DH group 20 (384-bit random ECP group)
@@ -159,7 +163,7 @@ The Child SA. Sometimes referred to as Phase 2 as per IKEv1 language.
   Below is a list of all Diffie-Hellman (DH) groups supported by Cloudflare.
 
   :::caution
-  Cloudflare recommends that you use only one DH group when configuring your device, specifically **DH group 14**.
+  Cloudflare recommends that you use only one DH group when configuring your device, specifically **DH group 20**.
   :::
 
   - DH group 20 (384-bit random ECP group)
@@ -206,8 +210,8 @@ The Child SA. Sometimes referred to as Phase 2 as per IKEv1 language.
 
 Additionally, the IKE ID type of `ID_IPV4_ADDR` is supported if the following two conditions are met:
 
-1. The IPsec tunnel’s `customer_endpoint` value is set.
-2. The combination of `cloudflare_endpoint` and `customer_endpoint` is unique among the customer’s IPsec tunnels.
+1. The IPsec tunnel's `customer_endpoint` value is set.
+2. The combination of `cloudflare_endpoint` and `customer_endpoint` is unique among the customer's IPsec tunnels.
 
 :::caution
 Make sure each IPsec tunnel has a unique combination of a <a href={props.tunnelEndpoints}>Cloudflare endpoint and customer endpoint</a>. If this combination is not unique among your IPsec tunnels, you should use one of the custom IKE formats (`ID_RFC822_ADDR`, `ID_FQDN`, or `ID_KEY_ID`) to specify the tunnel ID and account ID. This helps Cloudflare link the IKE packet to the right IPsec tunnel for tasks like authentication.

@@ -3,5 +3,7 @@ name: CASB
 product:
   title: CASB
   group: Cloudflare One
-  url: /cloudflare-one/applications/scan-apps/
-  grid_placeholder: true
+  url: /cloudflare-one/applications/casb/
+
+meta:
+  description: Scan SaaS applications for misconfigurations, unauthorized user activity, shadow IT, and other data security issues that can occur after a user has successfully logged in.

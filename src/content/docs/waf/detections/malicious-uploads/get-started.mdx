@@ -5,17 +5,16 @@ sidebar:
   order: 2
 head:
   - tag: title
-    content: Get started with content scanning
+    content: Get started with malicious uploads detection
 ---
 
 import { Details, TabItem, Tabs } from "~/components";
 
 :::note
-
 WAF content scanning is available to customers on an Enterprise plan with a paid add-on.
 :::
 
-## 1. Enable WAF content scanning
+## 1. Turn on the detection
 
 <Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
 
@@ -33,6 +32,19 @@ curl --request POST \
 --header "X-Auth-Email: <EMAIL>" \
 --header "X-Auth-Key: <API_KEY>"
 ```
+
+</TabItem> <TabItem label="Terraform">
+
+Use the `cloudflare_content_scanning` resource to enable malicious uploads detection for a zone. For example:
+
+```terraform
+resource "cloudflare_content_scanning" "zone_malicious_uploads_example" {
+	zone_id = "<ZONE_ID>"
+	enabled = true
+}
+```
+
+For more information, refer to the [Terraform Cloudflare provider documentation](https://registry.terraform.io/providers/cloudflare/cloudflare/latest/docs).
 
 </TabItem> </Tabs>
 
@@ -140,6 +152,17 @@ The above request will add the following expression to the current list of custo
 lookup_json_string(http.request.body.raw, "file")
 ```
 
+</TabItem> <TabItem label="Terraform">
+
+Use the `cloudflare_content_scanning_expression` resource to add a custom scan expression. For example:
+
+```terraform
+resource "cloudflare_content_scanning_expression" "my_custom_scan_expression" {
+  zone_id = <ZONE_ID>
+  payload = "lookup_json_string(http.request.body.raw, \"file\")"
+}
+```
+
 </TabItem> </Tabs>
 
 The custom scan expression will scan any string found in an HTTP body with the following JSON string:
@@ -148,7 +171,7 @@ The custom scan expression will scan any string found in an HTTP body with the f
 { "file": "<BASE64_ENCODED_STRING>" }
 ```
 
-Refer to the [`lookup_json_string()` function reference](/ruleset-engine/rules-language/functions/#lookup_json_string) for more information and additional examples of looking up fields in nested JSON payloads.
+Refer to the [`lookup_json_string()`](/ruleset-engine/rules-language/functions/#lookup_json_string) documentation for more information and additional examples of looking up fields in nested JSON payloads.
 
 :::note
 The content scanner will automatically decode Base64 strings.

@@ -13,11 +13,16 @@ import {
 	ResourcesBySelector,
 	ExternalResources,
 	PackageManagers,
+	Stream,
 } from "~/components";
 
 [Nuxt](https://nuxt.com) is a web framework making Vue.js-based development simple and powerful.
 
 In this guide, you will create a new Nuxt application and deploy it using Cloudflare Pages.
+
+### Video Tutorial
+
+<Stream videoId="fd106a56e13af42eb39b35c499432e4b" videoTitle="Deploy a Nuxt Application to Cloudflare" thumbnailTimeOrURL="2.5s" />
 
 ## Create a new project using the `create-cloudflare` CLI (C3)
 
@@ -102,7 +107,7 @@ export default defineNuxtConfig({
 });
 ```
 
-This module is powered by the [`getPlatformProxy` helper function](/workers/wrangler/api#getplatformproxy). `getPlatformProxy` will automatically detect any bindings defined in your project's `wrangler.toml` file and emulate those bindings in local development. Review [Wrangler configuration information on bindings](/workers/wrangler/configuration/#bindings) for more information on how to configure bindings in `wrangler.toml`.
+This module is powered by the [`getPlatformProxy` helper function](/workers/wrangler/api#getplatformproxy). `getPlatformProxy` will automatically detect any bindings defined in your project's Wrangler file and emulate those bindings in local development. Review [Wrangler configuration information on bindings](/workers/wrangler/configuration/#bindings) for more information on how to configure bindings in the `wrangler.toml / wrangler.json` file.
 
 :::note
 

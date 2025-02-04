@@ -36,6 +36,10 @@ Each custom certificate you upload must:
 
 ## Upload a custom certificate
 
+:::caution
+When using `compatible` or `modern` [bundling](/ssl/edge-certificates/custom-certificates/bundling-methodologies), make sure to upload only the leaf certificate. This will allow Cloudflare to properly handle [the expiration of intermediate and root certificates](/ssl/edge-certificates/custom-certificates/bundling-methodologies/#intermediate-and-root-certificates).
+:::
+
 <Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
 
 To upload a custom SSL certificate in the dashboard:
@@ -135,7 +139,7 @@ Custom certificates of the type `legacy_custom` are not compatible with [BYOIP](
 
 2. Upload your certificate and key
 
-Use the [POST](/api/operations/custom-ssl-for-a-zone-create-ssl-configuration) endpoint to upload your certificate and key.
+Use the [POST](/api/resources/custom_certificates/methods/create/) endpoint to upload your certificate and key.
 
 ```bash
 curl https://api.cloudflare.com/client/v4/zones/{zone_id}/custom_certificates \
@@ -176,7 +180,7 @@ To update a certificate in the dashboard:
 
 </TabItem> <TabItem label="API">
 
-To update a certificate using the API, send a [`PATCH`](/api/operations/custom-ssl-for-a-zone-edit-ssl-configuration) command.
+To update a certificate using the API, send a [`PATCH`](/api/resources/custom_certificates/methods/edit/) command.
 
 </TabItem> </Tabs>
 

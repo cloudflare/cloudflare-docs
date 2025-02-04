@@ -216,9 +216,64 @@
 			"title": "Cache keys",
 			"link": "/cache/how-to/cache-keys/",
 			"properties": {
-				"availability": {
-					"title": "Availability",
-					"summary": "Enterprise-only",
+				"deception_armor": {
+					"title": "Cache deception armor",
+					"free": "Yes",
+					"pro": "Yes",
+					"biz": "Yes",
+					"ent": "Yes"
+				},
+				"device_type": {
+					"title": "Cache by device type",
+					"free": "Yes",
+					"pro": "Yes",
+					"biz": "Yes",
+					"ent": "Yes"
+				},
+				"ignore_query_string": {
+					"title": "Ignore query string",
+					"free": "Yes",
+					"pro": "Yes",
+					"biz": "Yes",
+					"ent": "Yes"
+				},
+				"sort_query_string": {
+					"title": "Sort query string",
+					"free": "Yes",
+					"pro": "Yes",
+					"biz": "Yes",
+					"ent": "Yes"
+				},
+				"query_string": {
+					"title": "Query string",
+					"free": "No",
+					"pro": "No",
+					"biz": "No",
+					"ent": "Yes"
+				},
+				"headers": {
+					"title": "Headers",
+					"free": "No",
+					"pro": "No",
+					"biz": "No",
+					"ent": "Yes"
+				},
+				"cookie": {
+					"title": "Cookie",
+					"free": "No",
+					"pro": "No",
+					"biz": "No",
+					"ent": "Yes"
+				},
+				"host": {
+					"title": "Host",
+					"free": "No",
+					"pro": "No",
+					"biz": "No",
+					"ent": "Yes"
+				},
+				"user": {
+					"title": "User features",
 					"free": "No",
 					"pro": "No",
 					"biz": "No",
@@ -985,7 +1040,7 @@
 		},
 		"true_client_ip_header": {
 			"title": "True Client IP Header",
-			"link": "/fundamentals/reference/http-request-headers/#true-client-ip-enterprise-plan-only",
+			"link": "/fundamentals/reference/http-headers/#true-client-ip-enterprise-plan-only",
 			"properties": {
 				"availability": {
 					"title": "Availability",
@@ -1406,7 +1461,7 @@
 				},
 				"tcp_protection": {
 					"title": "Advanced TCP Protection",
-					"link": "/ddos-protection/tcp-protection/",
+					"link": "/ddos-protection/advanced-ddos-systems/overview/advanced-tcp-protection/",
 					"free": "Available to [Magic Transit](/magic-transit/) customers",
 					"pro": "Available to [Magic Transit](/magic-transit/) customers",
 					"biz": "Available to [Magic Transit](/magic-transit/) customers",
@@ -1415,7 +1470,7 @@
 				},
 				"u_dns_protection": {
 					"title": "Advanced DNS Protection",
-					"link": "/ddos-protection/dns-protection/",
+					"link": "/ddos-protection/advanced-ddos-systems/overview/advanced-dns-protection/",
 					"free": "Available to [Magic Transit](/magic-transit/) customers",
 					"pro": "Available to [Magic Transit](/magic-transit/) customers",
 					"biz": "Available to [Magic Transit](/magic-transit/) customers",
@@ -1625,12 +1680,12 @@
 				},
 				"managed_rulesets_response": {
 					"title": "Cloudflare Sensitive Data Detection",
-					"summary": "Enterprise-only",
+					"summary": "Enterprise with add-on",
 					"link": "/waf/managed-rules/reference/sensitive-data-detection/",
 					"free": "No",
 					"pro": "No",
 					"biz": "No",
-					"ent": "Yes"
+					"ent": "Paid add-on"
 				}
 			}
 		},
@@ -1955,6 +2010,53 @@
 					"ent": 200
 				}
 			}
+		},
+		"turnstile": {
+			"title": "Turnstile",
+			"link": "/turnstile/",
+			"properties": {
+				"widgets": {
+					"title": "Number of widgets",
+					"link": "/turnstile/concepts/widget/",
+					"free": "10 widgets",
+					"ent": "Unlimited"
+				},
+				"modes": {
+					"title": "Interactivity modes",
+					"link": "/turnstile/get-started/client-side-rendering/#appearance-modes",
+					"free": "Managed, Invisible, Interactive",
+					"ent": "Managed, Invisible, Interactive"
+				},
+				"offlabel": {
+					"title": "Offlabel (remove Cloudflare branding)",
+					"free": "No",
+					"ent": "Yes"
+				},
+				"preclearance": {
+					"title": "Pre-clearance support",
+					"link": "/turnstile/concepts/pre-clearance-support/",
+					"free": "Yes",
+					"ent": "Yes"
+				},
+				"hostname_validation": {
+					"title": "Hostname validation",
+					"link": "/turnstile/concepts/hostname-management/",
+					"free": "10 hostnames per widget",
+					"ent": "Maximum of 200 hostnames per widget. <br> The `any hostname` entitlement removes hostname as a requirement and allows you to use the widget anywhere."
+				},
+				"graphql_analytics": {
+					"title": "Analytics time window",
+					"link": "/turnstile/turnstile-analytics/",
+					"free": "30 days maximum",
+					"ent": "30 days maximum"
+				},
+				"ephemeral_ids": {
+					"title": "Ephemeral IDs",
+					"link": "/turnstile/concepts/ephemeral-id/",
+					"free": "No",
+					"ent": "Yes"
+				}
+			}
 		}
 	},
 	"scrape_shield": {
@@ -2091,7 +2193,7 @@
 		},
 		"brotli": {
 			"title": "Brotli compression",
-			"link": "/speed/optimization/content/brotli/",
+			"link": "/speed/optimization/content/compression/",
 			"properties": {
 				"availability": {
 					"title": "Availability",
@@ -2730,34 +2832,34 @@
 					"ent": "Yes"
 				}
 			}
-    },
-    "client_certificates": {
-      "title": "Client Certificates",
-      "link": "/ssl/client-certificates/",
-      "properties": {
-        "availability": {
-          "title": "Availability",
-          "summary": "Available on all plans.",
-          "free": "Yes",
-          "pro": "Yes",
-          "biz": "Yes",
-          "ent": "Yes"
-        },
-        "quantity": {
-          "title": "Client Certificates included, issued by a Cloudflare Managed CA",
-          "free": 100,
-          "pro": 100,
-          "biz": 100,
-          "ent": "100 (default), but can allocate more quota."
-        },
-        "byo_ca": {
-          "title": "[Bring your own CA](/ssl/client-certificates/byo-ca/)",
-          "free": "No",
-          "pro": "No",
-          "biz": "No",
-          "ent": "Yes"
-        }
-      }
+		},
+		"client_certificates": {
+			"title": "Client Certificates",
+			"link": "/ssl/client-certificates/",
+			"properties": {
+				"availability": {
+					"title": "Availability",
+					"summary": "Available on all plans.",
+					"free": "Yes",
+					"pro": "Yes",
+					"biz": "Yes",
+					"ent": "Yes"
+				},
+				"quantity": {
+					"title": "Client Certificates included, issued by a Cloudflare Managed CA",
+					"free": 100,
+					"pro": 100,
+					"biz": 100,
+					"ent": "100 (default), but can allocate more quota."
+				},
+				"byo_ca": {
+					"title": "[Bring your own CA](/ssl/client-certificates/byo-ca/)",
+					"free": "No",
+					"pro": "No",
+					"biz": "No",
+					"ent": "Yes"
+				}
+			}
 		}
 	},
 	"support": {
@@ -3023,6 +3125,22 @@
 					"pro": "No",
 					"biz": "Yes",
 					"ent": "Yes"
+				},
+				"turnstile_widget_mode": {
+					"title": "Turnstile Widget Mode",
+					"link": "/waiting-room/how-to/create-waiting-room/",
+					"free": "No",
+					"pro": "No",
+					"biz": "Invisible only",
+					"ent": "Invisible (default)\n\n<em>With add-on</em>\nAll options"
+				},
+				"turnstile_fail_action": {
+					"title": "Turnstile Fail Action",
+					"link": "/waiting-room/how-to/create-waiting-room/",
+					"free": "No",
+					"pro": "No",
+					"biz": "Log only",
+					"ent": "Log only (default)\n\n<em>With add-on</em>\nInfinite queue"
 				}
 			}
 		}

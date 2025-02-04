@@ -1,0 +1,29 @@
+---
+title: Enable Email Security logs
+pcx_content_type: how-to
+sidebar:
+  order: 5
+---
+
+Email Security allows you to configure Logpush to send detection data to an endpoint of your choice.
+
+## Prerequisites
+
+Before you can audit logs for Email Security, you will have to enable logpush jobs to your storage destination. Refer to [Enable destinations](/logs/get-started/enable-destinations/) to enable logs on destinations such as Cloudflare R2, HTTP, Amazon S3, and more.
+
+## Audit logs
+
+Once you have configured your destination, you can audit logs:
+
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/).
+2. Select **Analytics & Logs** > **Logpush**.
+3. Select **Audit logs**.
+4. Under **Configure logpush job**: 
+  - **Job name**: Enter the job name.
+  - **If logs match**: Select **Filtered logs**:
+    - **Field**: Choose `ResourceType`.
+    - **Operator**: Choose `starts with`.
+    - **Value**: Enter `email_security`.  
+5. Select **Submit**.
+
+You can now view logs via the Cloudflare dashboard.

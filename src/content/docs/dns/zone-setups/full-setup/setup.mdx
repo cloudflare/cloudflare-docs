@@ -16,19 +16,14 @@ import { Render } from "~/components"
 ## Before you begin
 
 
-
 Before you update your domain nameservers, make sure that you:
 
 * Already own a domain name (such as `example.com` or `cloudflare.com`).
 
 :::note
-
-
 If you do not already have a [domain name](https://www.cloudflare.com/learning/dns/glossary/what-is-a-domain-name/), get one at-cost through [Cloudflare Registrar](https://dash.cloudflare.com/?to=/:account/domains/register).
 
 All domains purchased through Cloudflare Registrar automatically use Cloudflare for authoritative DNS, which means you can skip the rest of this tutorial.
-
-
 :::
 
 * Have previously created a [Cloudflare account](/fundamentals/setup/account/create-account/).
@@ -43,6 +38,10 @@ All domains purchased through Cloudflare Registrar automatically use Cloudflare 
 
 
 In the Cloudflare dashboard, [add your domain](/fundamentals/setup/manage-domains/add-site/).
+
+If Cloudflare is unable to identify your domain as a registered domain, make sure you are using an existing [top-level domain](https://www.cloudflare.com/learning/dns/top-level-domain/) (`.com`, `.net`, `.biz`, or others).
+
+Cloudflare requires your `apex domain` to be one level below a valid TLD defined in the [Public Suffix List (PSL)](https://github.com/publicsuffix/list/blob/master/public_suffix_list.dat). Enterprise customers can onboard lower-level subdomains using [Subdomain setup](/dns/zone-setups/subdomain-setup/).
 
 ## Review DNS records
 

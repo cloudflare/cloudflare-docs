@@ -5,13 +5,80 @@ productLink: "/fundamentals/"
 productArea: Core platform
 productAreaLink: /fundamentals/reference/changelog/platform/
 entries:
+  - publish_date: "2025-07-01"
+    title: Cloudflare DWeb Resolver
+    description: |-
+      Deprecation date: July 1, 2025
+      
+      The Cloudflare DWeb Resolver experiment is ending.
+      
+      Deprecated APIs:
+      
+      - DoH resolver on resolver.cloudflare-eth.com
+
+  - publish_date: "2025-03-23"
+    title: "Eligible Zones For Account Custom Nameservers"
+    description: |-
+      Deprecation date: March 23, 2025
+
+      Users can now add custom nameservers that are not part of a zone managed within their account. As a result, any zone is eligible for custom nameservers, regardless of whether it is managed by Cloudflare. Given this change, an endpoint to check for eligible zones is no longer relevant and is therefore being deprecated.
+
+      Deprecated APIs:
+      - `GET /accounts/:account_id/custom_ns/availability`
+
+  - publish_date: "2024-12-09"
+    title: "Access applications: self_hosted_domains"
+    description: |-
+      Deprecation date: November 21, 2025
+
+      The `self_hosted_domains` field for [Access applications](https://developers.cloudflare.com/api/resources/zero_trust/subresources/access/subresources/applications/methods/update/) is deprecated in favor of `destinations` to allow for more flexibility in defining different types of domains.
+
+      Before:
+      ```json
+      {
+        // ...
+        "self_hosted_domains": ["foo.example.com", "bar.example.com"]
+      }
+      ```
+
+      After:
+      ```json
+      {
+        // ...
+        "destinations": [
+          {
+            "type": "public",
+            "uri": "foo.example.com"
+          },
+          {
+            "type": "public",
+            "uri": "bar.example.com"
+          }
+        ]
+      }
+      ```
+
+      The API will accept both fields until the deprecation date. If `self_hosted_domains` are provided, then they will be interpreted as `public` destinations. However, if `destinations` are provided, then `self_hosted_domains` will be ignored even if provided.
+
+      Additionally, the API will continue to return `self_hosted_domains` until the deprecation date. The field will contain the URIs of the subset of destinations that have type `public`.
+
+      Affected APIs:
+      - `GET /accounts/:account_id/access/apps`
+      - `POST /accounts/:account_id/access/apps`
+      - `GET /accounts/:account_id/access/apps/:app_id`
+      - `PUT /accounts/:account_id/access/apps/:app_id`
+      - `GET /zones/:zone_id/access/apps`
+      - `POST /zones/:zone_id/access/apps`
+      - `GET /zones/:zone_id/access/apps/:app_id`
+      - `PUT /zones/:zone_id/access/apps/:app_id`
+
   - publish_date: "2025-03-21"
     title: "Zone Setting: cname_flattening"
     description: |-
       Deprecation date: March 21, 2025
 
       The Zone Settings API endpoints for managing zone-level CNAME flattening are deprecated.
-      Instead, use the [Show DNS Settings](/api/operations/dns-settings-for-a-zone-list-dns-settings) and [Update DNS Settings](/api/operations/dns-settings-for-a-zone-update-dns-settings) endpoints to manage this setting.
+      Instead, use the [Show DNS Settings](/api/resources/dns/subresources/settings/methods/get/) and [Update DNS Settings](/api/resources/dns/subresources/settings/methods/edit/) endpoints to manage this setting.
 
       Changes via the old endpoints will be reflected in the new ones, and vice versa, so there is no need to migrate existing zones. However, future API calls must use DNS Settings instead of the Zone Settings endpoints.
 
@@ -34,7 +101,7 @@ entries:
       Deprecation date: March 14, 2025
 
       The fields `"default_nameservers"` and `"use_account_custom_ns_by_default"` within the `"settings"` object of accounts are deprecated.
-      Instead, use the [Show DNS Settings](/api/operations/dns-settings-for-an-account-list-dns-settings) and [Update DNS Settings](/api/operations/dns-settings-for-an-account-update-dns-settings) endpoints to manage this setting.
+      Instead, use the [Show DNS Settings](/api/resources/dns/subresources/settings/methods/get/) and [Update DNS Settings](/api/resources/dns/subresources/settings/methods/edit/) endpoints to manage this setting.
       This setting is available in the new API as `.zone_defaults.nameservers.type`, with allowed values `"cloudflare.standard"`, `"cloudflare.standard.random"`, `"custom.account"` and `"custom.tenant"`.
 
       Changes via the old endpoints will be reflected in the new ones, and vice versa, so there is no need to migrate existing zones. However, future API calls must use DNS Settings instead of the Accounts endpoints.
@@ -46,10 +113,10 @@ entries:
       - `GET /accounts/:account_id`
       - `PUT /accounts/:account_id`
 
-  - publish_date: "2025-01-15"
+  - publish_date: "2025-06-15"
     title: "Firewall Rules API and Filters API"
     description: |-
-      Deprecation date: January 15, 2025
+      Deprecation date: June 15, 2025
 
       The Firewall Rules API and the Filters API are deprecated, since Firewall Rules was deprecated in favor of [WAF custom rules](/waf/custom-rules/). Refer to [Firewall Rules to WAF custom rules migration](/waf/reference/migration-guides/firewall-rules-to-custom-rules/) for more information about this change.
 
@@ -74,10 +141,10 @@ entries:
 
       Replacement: [WAF custom rules](/waf/custom-rules/)
 
-  - publish_date: "2025-01-15"
+  - publish_date: "2025-06-15"
     title: "WAF managed rules APIs (previous version)"
     description: |-
-      Deprecation date: January 15, 2025
+      Deprecation date: June 15, 2025
 
       The APIs for managing WAF managed rules (previous version) — namely for managing packages, rule groups, rules, and overrides — are deprecated in favor of [WAF Managed Rules](/waf/managed-rules/). Refer to [WAF Managed Rules migration](/waf/reference/migration-guides/waf-managed-rules-migration/) for more information about this change.
 
@@ -100,10 +167,10 @@ entries:
 
       Replacement: [WAF Managed Rules](/waf/managed-rules/) (new version)
 
-  - publish_date: "2025-01-15"
+  - publish_date: "2025-06-15"
     title: "Rate Limiting API (previous version)"
     description: |-
-      Deprecation date: January 15, 2025
+      Deprecation date: June 15, 2025
 
       The Rate Limiting API is deprecated, since the previous version of rate limiting rules was deprecated in favor of the new [rate limiting rules](/waf/rate-limiting-rules/) based on the Ruleset Engine. Refer to [Rate limiting (previous version) deprecation notice](/waf/reference/migration-guides/old-rate-limiting-deprecation/) for more information about this change.
 
@@ -116,6 +183,44 @@ entries:
       - `DELETE /zones/:zone_id/rate_limits/:rate_limit_id`
 
       Replacement: [Rate limiting rules](/waf/rate-limiting-rules/) (new version)
+
+  - publish_date: "2025-02-21"
+    title: "DNS Records API: Changes to Filter Parameters"
+    description: |-
+      Deprecation date: February 21, 2025
+
+      The following URL parameters for filtering DNS records are deprecated:
+
+      - `name=contains:value`  
+        Instead, use the supported `name.contains=value` syntax.
+      - `name=starts_with:value`  
+        Instead, use the supported `name.startswith=value` syntax.
+      - `name=ends_with:value`  
+        Instead, use the supported `name.endswith=value` syntax.
+      - `name=one,two,three` (searching for one of multiple possible names, separated by commas)  
+        Instead, make multiple requests, one for each possible `name`.
+        Alternatively, if only querying the `name` field, the `?match=any&name=one&name=two&name=three` syntax can be used instead.
+        This syntax has an extended deprecation date of May 23, 2025.
+      - `content=contains:value`  
+        Instead, use the supported `content.contains=value` syntax.
+      - `content=starts_with:value`  
+        Instead, use the supported `content.startswith=value` syntax.
+      - `content=ends_with:value`  
+        Instead, use the supported `content.endswith=value` syntax.
+      - `content=one,two,three` (searching for one of multiple possible contents, separated by commas)  
+        Instead, make multiple requests, one for each possible `content`.
+        Alternatively, if only querying the `content` field, the `?match=any&content=one&content=two&content=three` syntax can be used instead.
+        This syntax has an extended deprecation date of May 23, 2025.
+      - `type=contains:value`  
+        Searching for substrings of a type name will no longer be supported.
+        Instead, please search for an exact type name, such as `type=CNAME`.
+        If the input value is a free-text search from a human user, consider using the `search` parameter instead.
+
+      None of the parameters being deprecated were ever officially supported per our API documentation.
+
+      Affected APIs:
+
+      - `GET /zones/:zone_id/dns_records`
 
   - publish_date: "2024-11-30"
     title: "Zone information in individual DNS records"
@@ -199,7 +304,7 @@ entries:
 
       The dedicated endpoints for DNS settings `use_apex_ns` and `secondary_overrides` are being deprecated.
 
-      Instead, use the [Show DNS Settings](/api/operations/dns-settings-for-a-zone-list-dns-settings) and [Update DNS Settings](/api/operations/dns-settings-for-a-zone-update-dns-settings) endpoints to manage these settings.
+      Instead, use the [Show DNS Settings](/api/resources/dns/subresources/settings/methods/get/) and [Update DNS Settings](/api/resources/dns/subresources/settings/methods/edit/) endpoints to manage these settings.
 
       - Instead of the `.../use_apex_ns` endpoint, use the `multi_provider` field.
       - Instead of the `.../secondary_overrides` endpoint, use the `secondary_overrides` field.
@@ -216,7 +321,7 @@ entries:
     description: |-
       Deprecation date: August 15, 2024
 
-      The Brotli setting and its API endpoints are deprecated. After the end of life date, Brotli compression will be enabled by default for all zones.
+      The Brotli setting and its API endpoints are deprecated. Brotli compression is available for all non-Enterprise zones, and it will be extended to Enterprise zones in the coming year.
 
       Deprecated APIs:
 
@@ -287,7 +392,7 @@ entries:
 
       The complete name would then be, e.g., `_xmpp._tcp.example.com`.
 
-      When interacting with DNS records through the [API](/api/operations/dns-records-for-a-zone-create-dns-record), SRV records contain both a full `name` as well as a `data` map containing the individual components of the name:
+      When interacting with DNS records through the [API](/api/resources/dns/subresources/records/methods/create/), SRV records contain both a full `name` as well as a `data` map containing the individual components of the name:
 
       ```txt
       {

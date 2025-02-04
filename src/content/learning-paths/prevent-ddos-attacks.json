@@ -1,6 +1,6 @@
 {
 	"title": "Prevent DDoS attacks",
-	"path": "/learning-paths/prevent-ddos-attacks/",
+	"path": "/learning-paths/prevent-ddos-attacks/concepts/",
 	"priority": 2,
 	"description": "Protect your application from distributed (DDoS) and regular denial of service (DoS) attacks.",
 	"products": ["Cache", "DDoS protection", "SSL/TLS", "WAF"],

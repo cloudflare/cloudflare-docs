@@ -1,0 +1,20 @@
+---
+pcx_content_type: configuration
+title: Issue challenge for admin user in JWT claim based on attack score
+head:
+  - tag: title
+    content: Issue challenge for admin user in JWT claim based on attack score
+---
+
+:::note
+To use claims inside a JSON Web Token (JWT), you must first set up a [token validation configuration](/api-shield/security/jwt-validation/configure/) in API Shield.
+:::
+
+This example configures additional protection for requests with a JSON Web Token (JWT) with a user claim of `admin`, based on the request's [attack score](/waf/detections/attack-score/).
+
+Create a custom rule that issues a Managed Challenge if the user claim in a JWT is `admin` and the attack score is below 40.
+
+- **Expression**: `(lookup_json_string(http.request.jwt.claims["<TOKEN_CONFIGURATION_ID>"][0], "user") eq "admin" and cf.waf.score < 40)`
+- **Action**: _Managed Challenge_
+
+In this example, `<TOKEN_CONFIGURATION_ID>` is your [token configuration ID](/api-shield/security/jwt-validation/configure/) found in JWT Validation and `user` is the JWT claim.

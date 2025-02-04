@@ -7,9 +7,22 @@ pcx_content_type: get-started
 
 ## Endpoint
 
-`https://gateway.ai.cloudflare.com/v1/{account_id}/{gateway_id}/perplexity-ai`
+```txt
+https://gateway.ai.cloudflare.com/v1/{account_id}/{gateway_id}/perplexity-ai
+```
+
+## Prerequisites
+
+When making requests to Perplexity, ensure you have the following:
+
+- Your AI Gateway Account ID.
+- Your AI Gateway gateway name.
+- An active Perplexity API token.
+- The name of the Perplexity model you want to use.
 
 ## Examples
+
+### cURL
 
 ```bash title="Example fetch request"
 curl https://gateway.ai.cloudflare.com/v1/{account_id}/{gateway_id}/perplexity-ai/chat/completions \
@@ -27,7 +40,9 @@ curl https://gateway.ai.cloudflare.com/v1/{account_id}/{gateway_id}/perplexity-a
     }'
 ```
 
-Perplexity doesn't have their own SDK, but they have compatibility with the OpenAI SDK. You can use the OpenAI SDK to make a Perplexity call through AI Gateway as follows:
+### Use Perplexity through OpenAI SDK with JavaScript
+
+Perplexity does not have their own SDK, but they have compatibility with the OpenAI SDK. You can use the OpenAI SDK to make a Perplexity call through AI Gateway as follows:
 
 ```js title="JavaScript"
 import OpenAI from "openai";

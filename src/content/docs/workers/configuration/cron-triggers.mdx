@@ -5,11 +5,19 @@ head: []
 description: Enable your Worker to be executed on a schedule.
 ---
 
+import { WranglerConfig } from "~/components";
+
 ## Background
 
 Cron Triggers allow users to map a cron expression to a Worker using a [`scheduled()` handler](/workers/runtime-apis/handlers/scheduled/) that enables Workers to be executed on a schedule.
 
 Cron Triggers are ideal for running periodic jobs, such as for maintenance or calling third-party APIs to collect up-to-date data. Workers scheduled by Cron Triggers will run on underutilized machines to make the best use of Cloudflare's capacity and route traffic efficiently.
+
+:::note
+
+Cron Triggers can also be combined with [Workflows](/workflows/) to trigger multi-step, long-running tasks. You can [bind to a Workflow](/workflows/build/workers-api/) from directly from your Cron Trigger to execute a Workflow on a schedule.
+
+:::
 
 Cron Triggers execute on UTC time.
 
@@ -28,11 +36,13 @@ Refer to the following examples to write your code:
 
 After you have updated your Worker code to include a `"scheduled"` event, you must update your Worker project configuration.
 
-#### Via `wrangler.toml`
+#### Via the `wrangler.toml / wrangler.json` file
 
-If a Worker is managed with Wrangler, Cron Triggers should be exclusively managed through the [`wrangler.toml`](/workers/wrangler/configuration/) file.
+If a Worker is managed with Wrangler, Cron Triggers should be exclusively managed through the [`wrangler.toml / wrangler.json` file](/workers/wrangler/configuration/).
 
-Refer to the example below for a sample `wrangler.toml` Cron Triggers configuration:
+Refer to the example below for a Cron Triggers configuration:
+
+<WranglerConfig>
 
 ```toml
 [triggers]
@@ -43,12 +53,20 @@ Refer to the example below for a sample `wrangler.toml` Cron Triggers configurat
 crons = [ "*/3 * * * *", "0 15 1 * *", "59 23 LW * *" ]
 ```
 
-You also can set a different Cron Trigger for each [environment](/workers/wrangler/environments/) in your `wrangler.toml`. You need to put the `[triggers]` table under your chosen environment. For example:
+</WranglerConfig>
+
+You also can set a different Cron Trigger for each [environment](/workers/wrangler/environments/) in your `wrangler.toml / wrangler.json` file. You need to put the `[triggers]` table under your chosen environment. For example:
+
+
+
+<WranglerConfig>
 
 ```toml
 [env.dev.triggers]
 crons = ["0 * * * *"]
 ```
+
+</WranglerConfig>
 
 #### Via the dashboard
 
@@ -155,7 +173,7 @@ To delete a Cron Trigger on a deployed Worker via the dashboard:
 
 :::note
 
-You can only delete Cron Triggers using the Cloudflare dashboard (and not through your `wrangler.toml` file).
+You can only delete Cron Triggers using the Cloudflare dashboard (and not through your Wrangler file).
 
 :::
 
@@ -180,5 +198,5 @@ Green Compute can be configured at the account level:
 
 ## Related resources
 
-- [Triggers](/workers/wrangler/configuration/#triggers) - Review `wrangler.toml` syntax for Cron Triggers.
+- [Triggers](/workers/wrangler/configuration/#triggers) - Review `wrangler.toml / wrangler.json` file syntax for Cron Triggers.
 - Learn how to access Cron Triggers in [ES modules syntax](/workers/reference/migrate-to-module-workers/) for an optimized experience.

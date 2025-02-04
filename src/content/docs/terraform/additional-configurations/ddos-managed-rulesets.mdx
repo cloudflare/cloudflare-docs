@@ -1,16 +1,17 @@
 ---
-title: DDoS managed rulesets
+title: DDoS managed rulesets configuration using Terraform
 pcx_content_type: how-to
 sidebar:
   order: 3
+  label: DDoS managed rulesets
 head:
   - tag: title
-    content: Configure DDoS managed rulesets with Terraform
+    content: DDoS managed rulesets configuration using Terraform
 ---
 
-import { Render } from "~/components";
+import { Render, RuleID } from "~/components";
 
-This page provides examples of configuring DDoS managed rulesets in your zone or account using Terraform. It covers the following configurations:
+This page provides examples of configuring [DDoS managed rulesets](/ddos-protection/managed-rulesets/) in your zone or account using Terraform. It covers the following configurations:
 
 - [Example: Configure HTTP DDoS Attack Protection](#example-configure-http-ddos-attack-protection)
 - [Example: Configure Network-layer DDoS Attack Protection](#example-configure-network-layer-ddos-attack-protection)
@@ -18,7 +19,7 @@ This page provides examples of configuring DDoS managed rulesets in your zone or
 
 DDoS managed rulesets are always enabled. Depending on your Cloudflare services, you may be able to adjust their behavior.
 
-For more information on DDoS managed rulesets, refer to [Managed rulesets](/ddos-protection/managed-rulesets/) in the Cloudflare DDoS Protection documentation. For more information on deploying and configuring rulesets using the Rulesets API, refer to [Work with managed rulesets](/ruleset-engine/managed-rulesets/) in the Ruleset Engine documentation.
+For more information on deploying and configuring rulesets using the Rulesets API, refer to [Work with managed rulesets](/ruleset-engine/managed-rulesets/) in the Ruleset Engine documentation.
 
 ## Before you start
 
@@ -34,7 +35,9 @@ For more information on DDoS managed rulesets, refer to [Managed rulesets](/ddos
 
 ## Example: Configure HTTP DDoS Attack Protection
 
-This example configures the [HTTP DDoS Attack Protection](/ddos-protection/managed-rulesets/http/) managed ruleset for a zone using Terraform, changing the sensitivity level of rule with ID fdfdac75430c4c47a959592f0aa5e68a to `low`.
+This example configures the [HTTP DDoS Attack Protection](/ddos-protection/managed-rulesets/http/) managed ruleset for a zone using Terraform, changing the sensitivity level of rule with ID <RuleID id="fdfdac75430c4c47a959592f0aa5e68a" /> to `low`.
+
+<Render file="v4-code-snippets" />
 
 ```tf
 resource "cloudflare_ruleset" "zone_level_http_ddos_config" {
@@ -45,21 +48,21 @@ resource "cloudflare_ruleset" "zone_level_http_ddos_config" {
   phase       = "ddos_l7"
 
   rules {
-    action = "execute"
+    ref         = "override_l7_ddos_ruleset_all"
+    description = "Override the HTTP DDoS Attack Protection managed ruleset"
+    expression  = "true"
+    action      = "execute"
     action_parameters {
       # Cloudflare L7 DDoS Attack Protection Ruleset
       id = "4d21379b4f9f4bb088e0729962c8b3cf"
       overrides {
         rules {
           # Rule: HTTP requests with unusual HTTP headers or URI path (signature #11).
-          id = "fdfdac75430c4c47a959592f0aa5e68a"
+          id                = "fdfdac75430c4c47a959592f0aa5e68a"
           sensitivity_level = "low"
         }
       }
     }
-    expression = "true"
-    description = "Override the HTTP DDoS Attack Protection managed ruleset"
-    enabled = true
   }
 }
 ```
@@ -68,7 +71,7 @@ For more information about HTTP DDoS Attack Protection, refer to [HTTP DDoS Atta
 
 ## Example: Configure Network-layer DDoS Attack Protection
 
-This example configures the [Network-layer DDoS Attack Protection](/ddos-protection/managed-rulesets/network/) managed ruleset for an account using Terraform, changing the sensitivity level of rule with ID 599dab0942ff4898ac1b7797e954e98b to `low` using an override.
+This example configures the [Network-layer DDoS Attack Protection](/ddos-protection/managed-rulesets/network/) managed ruleset for an account using Terraform, changing the sensitivity level of rule with ID <RuleID id="599dab0942ff4898ac1b7797e954e98b" /> to `low` using an override.
 
 :::caution[Important]
 
@@ -76,6 +79,8 @@ This example configures the [Network-layer DDoS Attack Protection](/ddos-protect
 - This managed ruleset only supports overrides at the account level.
 
 :::
+
+<Render file="v4-code-snippets" />
 
 ```tf
 resource "cloudflare_ruleset" "account_level_network_ddos_config" {
@@ -86,21 +91,21 @@ resource "cloudflare_ruleset" "account_level_network_ddos_config" {
   phase       = "ddos_l4"
 
   rules {
-    action = "execute"
+    ref         = "override_l7_ddos_ruleset_dst_ip"
+    description = "Override the HTTP DDoS Attack Protection managed ruleset"
+    expression  = "ip.dst in { 192.0.2.0/24 }"
+    action      = "execute"
     action_parameters {
       # Cloudflare L3/4 DDoS Attack Protection Ruleset
       id = "3b64149bfa6e4220bbbc2bd6db589552"
       overrides {
         rules {
           # Rule: Generic high-volume UDP traffic flows.
-          id = "599dab0942ff4898ac1b7797e954e98b"
+          id                = "599dab0942ff4898ac1b7797e954e98b"
           sensitivity_level = "low"
         }
       }
     }
-    expression = "ip.dst in { 192.0.2.0/24 }"
-    description = "Override the HTTP DDoS Attack Protection managed ruleset"
-    enabled = true
   }
 }
 ```
@@ -125,6 +130,8 @@ The order of the rules is important: the rule with the highest sensitivity level
 - Overrides will not affect read-only rules in the managed ruleset.
 
 :::
+
+<Render file="v4-code-snippets" />
 
 ```tf
 variable "zone_id" {
@@ -159,53 +166,53 @@ resource "cloudflare_ruleset" "zone_level_http_ddos_config" {
   # level.
 
   rules {
+    ref         = "l7_ddos_block_traffic_low_threshold"
     description = "At the low sensitivity threshold, block the traffic"
-    action = "execute"
+    expression  = "true"
+    action      = "execute"
     action_parameters {
       # Cloudflare L7 DDoS Attack Protection Ruleset
       id = "4d21379b4f9f4bb088e0729962c8b3cf"
       overrides {
         rules {
           # Rule: HTTP requests from known botnet (signature #4).
-          id = "29d170ba2f004cc787b1ac272c9e04e7"
+          id                = "29d170ba2f004cc787b1ac272c9e04e7"
           sensitivity_level = "low"
-          action = "block"
+          action            = "block"
         }
         rules {
           # Rule: HTTP requests with unusual HTTP headers or URI path (signature #16).
-          id = "60a48054bbcf4014ac63c44f1712a123"
+          id                = "60a48054bbcf4014ac63c44f1712a123"
           sensitivity_level = "low"
-          action = "block"
+          action            = "block"
         }
       }
     }
-    expression = "true"
-    enabled = true
   }
 
   rules {
+    ref         = "l7_ddos_log_default_threshold"
     description = "At the default sensitivity threshold, log to see if any legitimate traffic gets caught"
-    action = "execute"
+    expression  = "true"
+    action      = "execute"
     action_parameters {
       # Cloudflare L7 DDoS Attack Protection Ruleset
       id = "4d21379b4f9f4bb088e0729962c8b3cf"
       overrides {
         rules {
           # Rule: HTTP requests from known botnet (signature #4).
-          id = "29d170ba2f004cc787b1ac272c9e04e7"
+          id                = "29d170ba2f004cc787b1ac272c9e04e7"
           sensitivity_level = "default"
-          action = "log"
+          action            = "log"
         }
         rules {
           # Rule: HTTP requests with unusual HTTP headers or URI path (signature #16).
-          id = "60a48054bbcf4014ac63c44f1712a123"
+          id                = "60a48054bbcf4014ac63c44f1712a123"
           sensitivity_level = "default"
-          action = "log"
+          action            = "log"
         }
       }
     }
-    expression = "true"
-    enabled = true
   }
 }
 ```

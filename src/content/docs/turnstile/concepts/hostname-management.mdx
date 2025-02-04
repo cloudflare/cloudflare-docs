@@ -1,0 +1,66 @@
+---
+title: Hostname management
+pcx_content_type: reference
+sidebar:
+  order: 2
+
+---
+
+You can associate hostnames with your widget to control where it can be used using Hostname Management. Managing your hostnames ensures that Turnstile works seamlessly with your setup, whether you add standalone hostnames or leverage zones registered to your Cloudflare account.
+
+## Hostname limits
+
+By default, all widgets can have up to 10 hostnames associated with a widget. A widget requires at least one hostname to be entered.
+
+Only Enterprise Bot Management and Enterprise Turnstile customers can have this limit increased. Contact your account team to increase your hostname limit.
+
+## Add a custom hostname
+
+You can add a hostname to your Turnstile widget even if it is not on the Cloudflare network or registered as a zone. There are no prerequisites for using Turnstile. 
+
+To add a custom hostname:
+
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/) and select your account.
+2. Go to **Turnstile**.
+3. On an existing widget, select **Settings**. 
+4. Select **Add Hostnames** under Hostname Management.
+5. Add a custom hostname or choose from an existing hostname.
+6. Select **Add**.
+
+## Add hostnames with a registered zone
+
+If you already have a zone registered with Cloudflare, you can add hostnames during the Turnstile widget setup. You will see all zones registered to your account, where you can select the relevant hostname from the list, and it will be added to your Turnstile widget seamlessly.
+
+## Hostname requirements
+
+When associating hostnames with a widget, follow these requirements:
+
+- Hostnames must be fully qualified domain names (FQDNs), such as `example.com` or `subdomain.example.com`.
+- Wildcards are not supported. Specify each hostname you want Turnstile to work on.
+- The hostname should not include:
+  - A scheme (for example, `http://` or `https://`)
+  - A port (for example, `443`)
+  - A path (for example, `/path`)
+
+### Subdomain specification 
+
+Specifying a subdomain is optional, but it can be used to further restrict the widget. For example, adding `www.example.com` as a hostname will allow widgets to work on:
+
+- `www.example.com`
+- `abc.www.example.com:8080`
+
+However, it will not work on the following hostnames:
+
+- `example.com`
+- `dash.example.com`
+- `cloudflare.com`
+
+:::note
+If the widget is embedded on a hostname not listed, it will display an error message.
+:::
+
+## Optional hostname validation (Enterprise only)
+
+Customers with Enterprise Bot Management or Enterprise Turnstile can have the optional `any hostname` validation entitlement.
+
+By default, a widget requires at least one hostname to be entered. With this entitlement, you can create and use a widget without entering any hostnames for the widget. Contact your account team to enable this entitlement.

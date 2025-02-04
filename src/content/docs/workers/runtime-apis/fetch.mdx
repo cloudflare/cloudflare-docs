@@ -75,9 +75,12 @@ async function eventHandler(event) {
 * [`resource`](https://developer.mozilla.org/en-US/docs/Web/API/fetch#resource) Request | string | URL
 
 * `options` options
+	* `cache` `undefined | 'no-store'` optional
+		* Standard HTTP `cache` header. Only `cache: 'no-store'` is supported.
+		Any other `cache` header will result in a `TypeError` with the message `Unsupported cache mode: <attempted-cache-mode>`.
+			* For all requests this forwards the `Pragma: no-cache` and `Cache-Control: no-cache` headers to the origin.
+			* For requests to origins not hosted by Cloudflare, `no-store` bypasses the use of Cloudflare's caches.
   * An object that defines the content and behavior of the request.
-
-
 
 ***
 
@@ -87,7 +90,7 @@ When making a subrequest with the `fetch()` API, you can specify which forms of 
 
 Workers supports both the gzip and brotli compression algorithms. Usually it is not necessary to specify `Accept-Encoding` or `Content-Encoding` headers in the Workers Runtime production environment – brotli or gzip compression is automatically requested when fetching from an origin and applied to the response when returning data to the client, depending on the capabilities of the client and origin server.
 
-To support requesting brotli from the origin, you must enable the [`brotli_content_encoding`](/workers/configuration/compatibility-dates/#brotli-content-encoding-support) compatibility flag in your Worker. Soon, this compatibility flag will be enabled by default for all Workers past an upcoming compatibility date.
+To support requesting brotli from the origin, you must enable the [`brotli_content_encoding`](/workers/configuration/compatibility-flags/#brotli-content-encoding-support) compatibility flag in your Worker. Soon, this compatibility flag will be enabled by default for all Workers past an upcoming compatibility date.
 
 ### Passthrough behavior
 

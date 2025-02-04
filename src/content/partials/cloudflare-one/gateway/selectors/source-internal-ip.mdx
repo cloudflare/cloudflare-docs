@@ -6,6 +6,6 @@ import { Markdown } from "~/components";
 
 Use this selector to apply {props.one} policies to a private IP address, assigned by a user's local network, that requests arrive to Gateway from. This selector will only apply to users connected through a [Magic GRE or IPSec tunnel](/magic-wan/zero-trust/cloudflare-gateway/).
 
-| UI name            | API example                                                       |
-| ------------------ | ----------------------------------------------------------------- |
-| Source Internal IP | <code>{props.two}.src.internal_src_ip == "192.168.86.0/27"</code> |
+| UI name            | API example                                   |
+| ------------------ | --------------------------------------------- |
+| Source Internal IP | <code>{props.two} == "192.168.86.0/27"</code> |

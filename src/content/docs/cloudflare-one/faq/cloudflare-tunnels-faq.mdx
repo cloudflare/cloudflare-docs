@@ -1,6 +1,6 @@
 ---
 pcx_content_type: faq
-title: Tunnels
+title: Tunnels FAQ
 structured_data: true
 sidebar:
   order: 4
@@ -75,32 +75,14 @@ No. You cannot undo a tunnel deletion. If the tunnel was locally-managed, its [`
 
 ## How do I contact support?
 
-### I am having an issue with a locally-managed tunnel.
-
 Before contacting the Cloudflare support team:
 
-- Take note of any specific error messages and/or problematic behaviors.
+1. Take note of any specific error messages and/or problematic behaviors.
 
-- Take note of any options you specified, either on the command line or in your configuration file, when starting your tunnel.
+2. Make sure that `cloudflared` is updated to the [latest version](https://github.com/cloudflare/cloudflared).
 
-- Make sure that `cloudflared` is updated to the [latest version](https://github.com/cloudflare/cloudflared).
+3. Gather any relevant error/access logs from your server.
 
-- Gather any relevant error/access logs from your server.
+4. (Locally-managed tunnels only) Set [`--loglevel`](/cloudflare-one/connections/connect-networks/configure-tunnels/tunnel-run-parameters/#loglevel) to `debug`, so the Cloudflare support team can get more info from the `cloudflared.log` file.
 
-Set [`loglevel`](/cloudflare-one/connections/connect-networks/configure-tunnels/tunnel-run-parameters/#loglevel) to `debug`, so the Cloudflare support team can get more info from the `cloudflared.log` file.
-
-- Include your Cloudflare Tunnel logs file (`cloudflared.log`). If you did not specify a log file when starting your tunnel, you can do so using the [`logfile` option](/cloudflare-one/connections/connect-networks/configure-tunnels/tunnel-run-parameters/#logfile) either on the command line or in your configuration file.
-
-- Include your full `config.yml` file for the affected tunnel.
-
-### I am having an issue with a remotely-managed/dashboard tunnel.
-
-Before contacting the Cloudflare support team:
-
-- Take note of any specific error messages and/or problematic behaviors.
-
-- Make sure that `cloudflared` is updated to the [latest version](https://github.com/cloudflare/cloudflared).
-
-- Gather any relevant error/access logs from your server.
-
-- Include your Cloudflare Tunnel logs file (`cloudflared.log`). If you did not specify a log file when starting your tunnel, add [`--logfile <PATH>`](/cloudflare-one/connections/connect-networks/configure-tunnels/tunnel-run-parameters/#logfile) and [`--loglevel debug`](/cloudflare-one/connections/connect-networks/configure-tunnels/tunnel-run-parameters/#loglevel) to your system service configuration. To modify the system service, refer to [Configure a remotely-managed tunnel](/cloudflare-one/connections/connect-networks/configure-tunnels/remote-management/).
+5. Include your [Cloudflare Tunnel diagnostic logs](/cloudflare-one/connections/connect-networks/troubleshoot-tunnels/diag-logs/) (`cloudflared-diag-YYYY-MM-DDThh-mm-ss.zip`).
