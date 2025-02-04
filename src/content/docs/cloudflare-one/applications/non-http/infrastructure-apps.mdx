@@ -97,6 +97,14 @@ warp-cli target list
 ╰──────────────────────────────────────┴──────────┴──────┴────────────────────────────────┴───────────────────────────────────────────────────┴───────────╯
 ```
 
+You can optionally add flags to filter the output. For example:
+
+```sh
+warp-cli target list --attribute hostname=digital-ocean-target --username root
+```
+
+To view all available filters, type `warp-cli target list --help`.
+
 ## Revoke a user's session
 
 To revoke a user's access to all infrastructure targets, you can either [revoke the user from Zero Trust](/cloudflare-one/identity/users/session-management/#per-user) or revoke their device. Cloudflare does not currently support revoking a user's session for a specific target.

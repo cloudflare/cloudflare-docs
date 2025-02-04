@@ -127,7 +127,7 @@ let resp = await fetch(
 			authorization: `Bearer ${QUEUES_API_TOKEN}`,
 		},
 		// Optional - you can provide an empty object '{}' and the defaults will apply.
-		body: JSON.stringify({ visibility_timeout: 6000, batch_size: 50 }),
+		body: JSON.stringify({ visibility_timeout_ms: 6000, batch_size: 50 }),
 	},
 );
 ```

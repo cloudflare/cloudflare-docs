@@ -27,13 +27,20 @@ const tutorials = await getCollection("docs", (entry) => {
 });
 
 type VideoEntry = InferEntrySchema<"videos">["entries"][number];
+
 type FinalTutorials = {
 	slug?: string;
-	data: InferEntrySchema<"docs"> | VideoEntry;
+	data:
+		| ({ type: "docs" } & InferEntrySchema<"docs">)
+		| ({ type: "videos" } & VideoEntry);
 }[];
+
 const finalTutorials: FinalTutorials = tutorials.map((x) => ({
 	slug: x.id,
-	data: x.data,
+	data: {
+		type: "docs",
+		...x.data,
+	},
 }));
 
 const videos = await getEntry("videos", "index");
@@ -49,7 +56,14 @@ const filteredVideos = videos.data.entries.filter((x) =>
 );
 
 if (filteredVideos) {
-	filteredVideos.forEach((x) => finalTutorials.push({ data: x }));
+	filteredVideos.forEach((x) =>
+		finalTutorials.push({
+			data: {
+				type: "videos",
+				...x,
+			},
+		}),
+	);
 }
 
 finalTutorials.sort((a, b) => Number(b.data.updated) - Number(a.data.updated));
@@ -72,8 +86,10 @@ const timeAgo = (date?: Date) => {
 	<tbody>
 		{
 			finalTutorials.map((tutorial) => {
-				// @ts-expect-error TODO: improve types
-				const href = tutorial.slug ? `/${tutorial.slug}` : tutorial.data.link;
+				const href =
+					tutorial.data.type === "docs"
+						? `/${tutorial.slug}/`
+						: tutorial.data.link;
 				return (
 					<tr>
 						<td>

@@ -110,6 +110,10 @@ Internet connectivity can experience outages or disruptions due to a number of f
 
 An early warning signal that an Internet outage may be underway on a given network or in a given country is an anomalous drop in traffic as compared to historical traffic patterns and trends. Internet anomalies listed in the Cloudflare Radar Outage Center represent an algorithmically-observed anomalous drop in traffic for the listed entity. If a given entry is marked as verified, it means that we have manually corroborated the observed drop in traffic across multiple Cloudflare data sources and/or third-party sources such as [IODA](https://ioda.inetintel.cc.gatech.edu/), or third-party sources of information, such as those listed above. In the case of the latter, an associated Internet outage event will be opened, with the event listed in the Internet Outages table (and API).
 
+## Internet services ranking
+
+Internet services ranking is based on our anonymized and aggregated 1.1.1.1 resolver data, complies with our [privacy policy](https://www.cloudflare.com/en-gb/privacypolicy/), and aims to identify the top most popular Internet services that reflect how people use the Internet globally. A service represents one or more domains aggregated together. Ranking popularity metric is best described as the estimated number of unique users that access domains associated with a service, over some period of time.
+
 ## Internet traffic trends
 
 Trends observed in Internet traffic originating globally or within a given location or autonomous system within the selected time range, based on aggregated data from our network.
@@ -153,6 +157,14 @@ Network-level DDoS attacks graphs are based on traffic measured in bytes.
 ## Post-quantum encryption adoption
 
 The Post-Quantum Encryption Adoption graph shows the share of HTTPS requests to Cloudflare that are encrypted with post-quantum (PQ) cryptography. Additional details about Cloudflare's support for PQ cryptography can be found at [Cloudflare Research](https://pq.cloudflareresearch.com/).
+
+## Robots.txt
+
+A [robots.txt](https://www.cloudflare.com/learning/bots/what-is-robots-txt/) file contains instructions for bots that tell them which webpages they can and cannot access.
+
+The data displayed for robots.txt is based on successfully parsed robots.txt files from the top 10,000 domains. From these files, we count the occurrences of each user agent under the "Allow" and "Disallow" directives. A user agent is classified as "fully allowed" or "fully disallowed" if the directive value is "*". Otherwise, if the user agent is only allowed or disallowed to crawl specific paths, it is classified as "partially allowed" or "partially disallowed."
+
+Currently, we only include AI-focused user agents listed in the [ai.robots.txt](https://github.com/ai-robots-txt/ai.robots.txt) repository.
 
 ## TCP resets and timeouts
 
@@ -205,3 +217,7 @@ The data displayed on domain-specific geographic traffic patterns is based solel
 ## WHOIS
 
 WHOIS is a standard for publishing the contact and nameserver information for all registered domains. Each registrar maintains their own WHOIS service. Anyone can query the registrar's WHOIS service to reveal the data behind a given domain.
+
+## Workers AI
+
+[Workers AI](/workers-ai/) allows you to run machine learning models, on the Cloudflare network, from your own code -- whether that be from Workers, Pages, or anywhere via the Cloudflare API. The data displayed for Workers AI is based on the number of Cloudflare accounts using a model during a specific time interval.
