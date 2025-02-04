@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="275815de-2434-4f23-ad5d-e3419839fc08" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/src/content/docs/workers/ci-cd/index.mdx" beforeDir="false" afterPath="$PROJECT_DIR$/src/content/docs/workers/ci-cd/index.mdx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/content/docs/workers/configuration/index.mdx" beforeDir="false" afterPath="$PROJECT_DIR$/src/content/docs/workers/configuration/index.mdx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/content/docs/workers/databases/index.mdx" beforeDir="false" afterPath="$PROJECT_DIR$/src/content/docs/workers/databases/index.mdx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/content/docs/workers/demos.mdx" beforeDir="false" afterPath="$PROJECT_DIR$/src/content/docs/workers/demos.mdx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/content/docs/workers/examples/index.mdx" beforeDir="false" afterPath="$PROJECT_DIR$/src/content/docs/workers/examples/index.mdx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/content/docs/workers/frameworks/index.mdx" beforeDir="false" afterPath="$PROJECT_DIR$/src/content/docs/workers/frameworks/index.mdx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/content/docs/workers/glossary.mdx" beforeDir="false" afterPath="$PROJECT_DIR$/src/content/docs/workers/glossary.mdx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/content/docs/workers/languages/index.mdx" beforeDir="false" afterPath="$PROJECT_DIR$/src/content/docs/workers/languages/index.mdx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/content/docs/workers/observability/index.mdx" beforeDir="false" afterPath="$PROJECT_DIR$/src/content/docs/workers/observability/index.mdx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/content/docs/workers/platform/index.mdx" beforeDir="false" afterPath="$PROJECT_DIR$/src/content/docs/workers/platform/index.mdx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/content/docs/workers/playground.mdx" beforeDir="false" afterPath="$PROJECT_DIR$/src/content/docs/workers/playground.mdx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/content/docs/workers/reference/index.mdx" beforeDir="false" afterPath="$PROJECT_DIR$/src/content/docs/workers/reference/index.mdx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/content/docs/workers/runtime-apis/index.mdx" beforeDir="false" afterPath="$PROJECT_DIR$/src/content/docs/workers/runtime-apis/index.mdx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/content/docs/workers/static-assets/index.mdx" beforeDir="false" afterPath="$PROJECT_DIR$/src/content/docs/workers/static-assets/index.mdx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/content/docs/workers/testing/index.mdx" beforeDir="false" afterPath="$PROJECT_DIR$/src/content/docs/workers/testing/index.mdx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/content/docs/workers/testing/local-development.mdx" beforeDir="false" afterPath="$PROJECT_DIR$/src/content/docs/workers/local-development.mdx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/content/docs/workers/tutorials/index.mdx" beforeDir="false" afterPath="$PROJECT_DIR$/src/content/docs/workers/tutorials/index.mdx" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="GitHubPullRequestSearchHistory">{
+  &quot;lastFilter&quot;: {
+    &quot;state&quot;: &quot;OPEN&quot;,
+    &quot;assignee&quot;: &quot;andyjessop&quot;
+  }
+}</component>
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;git@github.com:cloudflare/cloudflare-docs.git&quot;,
+    &quot;accountId&quot;: &quot;b27fdc60-e604-48ac-ba60-f57217c27162&quot;
+  }
+}</component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 4
+}</component>
+  <component name="ProjectId" id="2qQTZxopMs56TU8i3UxIrlrhIyd" />
+  <component name="ProjectViewState">
+    <option name="autoscrollFromSource" value="true" />
+    <option name="autoscrollToSource" value="true" />
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="openDirectoriesWithSingleClick" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "git-widget-placeholder": "aj/local-dev-1",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "prettierjs.PrettierConfiguration.Package": "/Users/andy/dev/docs/node_modules/prettier",
+    "settings.editor.selected.configurable": "preferences.pluginManager",
+    "ts.external.directory.path": "/Users/andy/dev/docs/node_modules/typescript/lib",
+    "vue.rearranger.settings.migration": "true"
+  }
+}]]></component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/src/content/docs/workers" />
+    </key>
+  </component>
+  <component name="SharedIndexes">
+    <attachedChunks>
+      <set>
+        <option value="bundled-js-predefined-d6986cc7102b-5c90d61e3bab-JavaScript-WS-242.24807.6" />
+      </set>
+    </attachedChunks>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="275815de-2434-4f23-ad5d-e3419839fc08" name="Changes" comment="" />
+      <created>1734593858363</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1734593858363</updated>
+      <workItem from="1734593859409" duration="3474000" />
+      <workItem from="1736763711720" duration="1435000" />
+      <workItem from="1736767395654" duration="1061000" />
+      <workItem from="1736780198588" duration="415000" />
+      <workItem from="1738657661754" duration="422000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+    <option name="exactExcludedFiles">
+      <list>
+        <option value="$PROJECT_DIR$/.github/actions/assign-pr/index.js" />
+        <option value="$PROJECT_DIR$/.github/actions/label-size/index.js" />
+        <option value="$PROJECT_DIR$/.github/actions/assign-issue/index.js" />
+        <option value="$PROJECT_DIR$/.github/actions/label-products/index.js" />
+        <option value="$PROJECT_DIR$/.github/actions/show-changed-files/index.js" />
+      </list>
+    </option>
+  </component>
+</project>
