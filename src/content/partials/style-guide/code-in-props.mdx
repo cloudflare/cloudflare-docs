@@ -9,12 +9,11 @@ import { Code } from "~/components";
 
 **Don't do this!**
 
-`` `{props.code}` ``
+`{props.code}`
 
 **Do this!**
 
-`<code>{props.code}</code>`
-<code>{props.code}</code>
+<p><code>{props.code}</code></p>
 
 <hr />
 
@@ -22,17 +21,10 @@ import { Code } from "~/components";
 
 **Don't do this!**
 
-````
-```js
-{props.code}
-```
-````
-
 ```js
 {props.code}
 ```
 
 **Do this!**
 
-`<Code code={props.code} lang="js" />`
 <Code code={props.code} lang="js" />
