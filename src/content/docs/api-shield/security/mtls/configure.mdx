@@ -52,7 +52,7 @@ not (cf.tls_client_auth.cert_verified and cf.tls_client_auth.cert_issuer_ski eq 
 To obtain the issuer Subject Key Identifier (SKI) hash of a client certificate stored in the `mtls.crt` file, you can run the following OpenSSL command:
 
 ```sh
-openssl x509 -noout -ext authorityKeyIdentifier -in mtls.crt | tail -n1 | tr -d ':' | awk '{$1=$1};1'
+openssl x509 -noout -ext authorityKeyIdentifier -in mtls.crt | tail -n1 | tr -d ': '
 ```
 
 ```txt output
