@@ -137,15 +137,15 @@ Choose the following settings when creating your VPN Connection:
 4. **BGP**: **Disabled**
 5. **IPsec / IKE policy**: **Custom**
    1. **IKE Phase 1**
-      1. **Encryption**: _GCMAES256_ or _AES256_
-      2. **Integrity/PRF**: _SHA256_
-      3. **DH Group**: _DHGroup14_
+      1. **Encryption**: _GCMAES256_
+      2. **Integrity/PRF**: _SHA384_
+      3. **DH Group**: _ECP384_
    2. **IKE Phase 2(IPsec)**
-      1. **IPsec Encryption**: _GCMAES256_ or _AES256_
-      2. **IPsec Integrity**: _SHA256_
-      3. **PFS Group**: _PFS2048_
+      1. **IPsec Encryption**: _GCMAES256_
+      2. **IPsec Integrity**: _GCMAES256_
+      3. **PFS Group**: _ECP384_
    3. **IPsec SA lifetime in KiloBytes**: `0`
-   4. **IPsec SA lifetime in seconds**: `27000`
+   4. **IPsec SA lifetime in seconds**: `28800`
    5. **Use policy based traffic selector**: **Disable**
    6. **DPD timeout in seconds**: `45`
    7. **Connection mode**: **Default**
