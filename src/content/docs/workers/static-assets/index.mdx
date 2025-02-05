@@ -125,7 +125,7 @@ Cloudflare provides automatic caching for static assets across its network, ensu
 
 - **First Request:** When an asset is requested for the first time, it is fetched from storage and cached at the nearest Cloudflare location.
 
-- **Subsequent Requests:** If a request for the same asset reaches a data center that does not have it cached, Cloudflare's [tiered caching system](/cache/how-to/tiered-cache/) allows it to be retrieved from a nearby cache rather than going back to storage. This improves cache hit ratios and reduces latency, and reduces unnecessary origin fetches.
+- **Subsequent Requests:** If a request for the same asset reaches a data center that does not have it cached, Cloudflare's [tiered caching system](/cache/how-to/tiered-cache/) allows it to be retrieved from a nearby cache rather than going back to storage. This improves cache hit ratio, reduces latency, and reduces unnecessary origin fetches.
 
 ## Try it out
 
