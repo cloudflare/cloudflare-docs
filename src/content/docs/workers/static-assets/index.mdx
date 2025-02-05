@@ -236,7 +236,7 @@ Replace the file contents of our Wrangler configuration with the following:
 - We've added an `ASSETS` binding, which our Worker code can use to fetch and serve assets.
 - We've enabled routing for Single Page Applications, which ensures that unmatched routes (such as `/dashboard`) serve our `index.html`.
 
-<Aside type="note">
+:::note
 
 By default, Cloudflare serves a `404 Not Found` to unmatched routes. In order to have the frontend handle routing instead of the server, you must enable `not_found_handling = "single-page-application"`.
 
