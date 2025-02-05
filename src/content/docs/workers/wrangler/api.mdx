@@ -252,13 +252,13 @@ const platform = await getPlatformProxy(options);
 
       The path to the config file to use.
 
-      If no path is specified, the default behavior is to search from the current directory up the filesystem for a `wrangler.toml / wrangler.json` file to use.
+      If no path is specified, the default behavior is to search from the current directory up the filesystem for a `wrangler.toml / wrangler.json(c)` file to use.
 
       **Note:** this field is optional but if a path is specified it must point to a valid file on the filesystem.
 
     - `experimentalJsonConfig` boolean
 
-      If `true`, allows the utility to read a JSON config file (for example, `wrangler.json` or `wrangler.jsonc`).
+      If `true`, allows the utility to read a JSON config file (for example, `wrangler.json(c)` or `wrangler.json(c)c`).
 
     - `persist` boolean | `{ path: string }`
 
@@ -295,7 +295,7 @@ const platform = await getPlatformProxy(options);
 
 ### Usage
 
-The `getPlatformProxy` function uses bindings found in the `wrangler.toml / wrangler.json` file. For example, if you have an [environment variable](/workers/configuration/environment-variables/#add-environment-variables-via-wrangler) configuration set up in the `wrangler.toml / wrangler.json` file:
+The `getPlatformProxy` function uses bindings found in the `wrangler.toml / wrangler.json(c)` file. For example, if you have an [environment variable](/workers/configuration/environment-variables/#add-environment-variables-via-wrangler) configuration set up in the `wrangler.toml / wrangler.json(c)` file:
 
 <WranglerConfig>
 
@@ -324,7 +324,7 @@ This will print the following output: `MY_VARIABLE = test`.
 
 ### Supported bindings
 
-All supported bindings found in your `wrangler.toml / wrangler.json` file are available to you via `env`.
+All supported bindings found in your `wrangler.toml / wrangler.json(c)` file are available to you via `env`.
 
 The bindings supported by `getPlatformProxy` are:
 

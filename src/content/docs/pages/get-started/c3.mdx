@@ -164,8 +164,8 @@ pnpm create cloudflare@latest [--] [<DIRECTORY>] [OPTIONS] [-- <NESTED ARGS...>]
     At a minimum, templates must contain the following:
 
     - `package.json`
-    - `wrangler.json`
-    - `src/` containing a worker script referenced from `wrangler.json`
+    - `wrangler.toml / wrangler.json(c)`
+    - `src/` containing a worker script referenced from `wrangler.toml / wrangler.json(c)`
 
     See the [templates folder](https://github.com/cloudflare/workers-sdk/tree/main/packages/create-cloudflare/templates) of this repo for more examples.
 
