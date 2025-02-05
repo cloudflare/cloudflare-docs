@@ -50,7 +50,19 @@ npm install workers-mcp
 
 This package provides the tools needed to run your Worker as an MCP server.
 
-### 3. Set up the MCP Server on Workers
+### 3. Configure your Worker to support MCP
+Run the following setup command:
+
+```bash
+npx workers-mcp setup
+```
+
+This guided installation process takes a brand new or existing Workers project and adds the required tooling to become an MCP server:
+- Automatic documentation generation
+- Shared-secret security using Wrangler Secrets
+- Installs a local proxy so you can access it from your MCP desktop clients (like Claude Desktop)
+
+### 4. Set up the MCP Server
 Replace the contents of your src/index.ts with the following boilerplate code:
 
 ```ts
@@ -86,7 +98,7 @@ This converts your Cloudflare Worker into an MCP server, enabling interactions w
 **Note:** Every public method that is annotated with JSDoc becomes an MCP tool that is discoverable by AI assistants. 
 
 
-### 4. Deploy the MCP Server
+### 5. Deploy the MCP Server
 Update your wrangler.toml with the appropriate configuration then deploy your Worker:
 ```bash
 wrangler deploy
