@@ -1,11 +1,15 @@
 import * as core from "@actions/core";
 import * as github from "@actions/github";
 
-import { slug } from "github-slugger";
+import {
+	CONTENT_BASE_PATH,
+	DOCS_BASE_URL,
+	EXISTING_COMMENT_SUBSTRING,
+	GITHUB_ACTIONS_BOT_ID,
+	PREVIEW_URL_REGEX,
+} from "./constants";
 
-const GITHUB_ACTIONS_BOT_ID = 41898282;
-const DOCS_BASE_URL = "https://developers.cloudflare.com";
-const CONTENT_BASE_PATH = "src/content/docs/";
+import { filenameToPath } from "./util";
 
 async function run(): Promise<void> {
 	try {
@@ -13,6 +17,12 @@ async function run(): Promise<void> {
 		const octokit = github.getOctokit(token);
 
 		const ctx = github.context;
+
+		if (!ctx.payload.issue) {
+			core.setFailed(`Payload ${ctx.payload} is missing an 'issue' property`);
+			process.exit();
+		}
+
 		const issue = ctx.payload.issue.number;
 
 		const files = await octokit.paginate(octokit.rest.pulls.listFiles, {
@@ -30,33 +40,31 @@ async function run(): Promise<void> {
 
 		const existingComment = comments.find(
 			(comment) =>
-				comment.user.id === GITHUB_ACTIONS_BOT_ID &&
-				comment.body.includes("| Original Link | Updated Link |"),
+				comment.user?.id === GITHUB_ACTIONS_BOT_ID &&
+				comment.body?.includes(EXISTING_COMMENT_SUBSTRING),
 		);
 
 		const urlComment = comments.find(
 			(comment) =>
-				comment.user.id === GITHUB_ACTIONS_BOT_ID &&
-				comment.body.includes("**Preview URL:**"),
+				comment.user?.id === GITHUB_ACTIONS_BOT_ID &&
+				PREVIEW_URL_REGEX.test(comment.body ?? ""),
 		);
 
-		let previewUrl: string;
-
-		if (urlComment) {
-			if (!urlComment.body) {
-				core.setFailed(`${urlComment.id} has no body`);
-				process.exit();
-			}
-
-			const match = urlComment.body.match(/^\*\*Preview URL:\*\* (.*)$/m)[1];
-
-			if (!match) {
-				core.setFailed(`Could not extract URL from ${urlComment.body}`);
-				process.exit();
-			}
-
-			previewUrl = match;
+		if (!urlComment || !urlComment.body) {
+			core.setFailed(
+				`Could not find a comment from ${GITHUB_ACTIONS_BOT_ID} on ${issue}`,
+			);
+			process.exit();
 		}
+
+		const match = urlComment.body.match(PREVIEW_URL_REGEX);
+
+		if (!match) {
+			core.setFailed(`Could not extract URL from ${urlComment.body}`);
+			process.exit();
+		}
+
+		const previewUrl = match[1];
 
 		core.debug(previewUrl);
 
@@ -64,29 +72,12 @@ async function run(): Promise<void> {
 			.filter(
 				(file) =>
 					file.filename.endsWith(".mdx") &&
-					file.filename.startsWith(CONTENT_BASE_PATH),
+					(file.filename.startsWith(`${CONTENT_BASE_PATH}/docs/`) ||
+						file.filename.startsWith(`${CONTENT_BASE_PATH}/changelogs-next/`)),
 			)
 			.sort((a, b) => b.changes - a.changes)
 			.slice(0, 15) // Limit to 15 entries
 			.map(({ filename }) => {
-				const filenameToPath = (filename: string) => {
-					return filename
-						.replace(".mdx", "")
-						.split("/")
-						.map((segment, idx) => {
-							const slugified = slug(segment);
-
-							if (idx === 0 && slugified === "1111") {
-								return "1.1.1.1";
-							}
-
-							return slugified;
-						})
-						.join("/")
-						.replace(/\/index$/, "")
-						.concat("/");
-				};
-
 				const original = `${DOCS_BASE_URL}/${filenameToPath(filename)}`;
 				const preview = `${previewUrl}/${filenameToPath(filename)}`;
 
@@ -122,7 +113,9 @@ async function run(): Promise<void> {
 			});
 		}
 	} catch (error) {
-		core.setFailed(error.message);
+		if (error instanceof Error) {
+			core.setFailed(error.message);
+		}
 		process.exit();
 	}
 }

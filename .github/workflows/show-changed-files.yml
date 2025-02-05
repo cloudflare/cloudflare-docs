@@ -13,16 +13,15 @@ on:
 jobs:
   changed-files-links:
     name: Show Changed Files
-    if: github.event.issue.pull_request && github.event.issue.state == 'open' && github.event.comment.user.id == 41898282 && contains(github.event.comment.body, '**Preview URL**')
+    if: github.event.issue.pull_request && github.event.issue.state == 'open' && github.event.comment.user.id == 41898282 && contains(github.event.comment.body, '**Preview URL:**')
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - run: cd ./.github/actions/show-changed-files
       - uses: actions/setup-node@v4
         with:
           node-version: 22
           cache: "npm"
       - run: npm ci
-      - run: npx tsx index.ts
+      - run: npx tsx bin/show-changed-files/index.ts
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

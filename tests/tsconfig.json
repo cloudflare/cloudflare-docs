@@ -7,5 +7,9 @@
 			"@cloudflare/vitest-pool-workers"
 		]
 	},
-	"include": ["./**/*.ts", "../wrangler-configuration.d.ts"]
+	"include": [
+		"./**/*.ts",
+		"../wrangler-configuration.d.ts",
+		"../../vitest.workspace.ts"
+	]
 }
