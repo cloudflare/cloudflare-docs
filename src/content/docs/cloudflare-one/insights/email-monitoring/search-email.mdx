@@ -72,7 +72,43 @@ To modify your screening criteria, under **Active screen criteria**, select **Mo
 
 To reset your screening criteria, select **Reset**.
 
-## Reclassify messages
+## Reclassifications
+
+Reclassifications allows you to monitor emails your security team or users requested to be reclassified. To view reclassifications:
+
+1. Log in to [Zero Trust](https://one.dash.cloudflare.com/).
+2. Select **Email Security** > **Reclassifications**.
+3. Choose **Team submissions** to view emails your security team submitted for reclassification. **User submissions** to view emails your users submitted for reclassification.
+
+### Team submissions
+
+Team submissions allows you to to view emails your security team submitted for reclassification. All team submissions receive a human review by Cloudflare.
+
+Select among the following filters:
+
+1. **Date Range**: You can select a date range from the last 7, last 30, and last 90 days.
+2. **Original disposition**: Select among the [available values](/cloudflare-one/email-security/reference/dispositions-and-attributes/#available-values).
+3. **Submitted as**: Select among the [available values](/cloudflare-one/email-security/reference/dispositions-and-attributes/#available-values).
+4. **Final disposition**: Select among the [available values](/cloudflare-one/email-security/reference/dispositions-and-attributes/#available-values).
+5. **Escalation**: This field describes whether the team submissions has been escalated or not. Select among `Yes`, `No`, or `All`.
+
+Once you have selected all the filters, select **Apply filters**.
+
+The dashboard will populate the table with the list of emails your security team submitted for reclassification, including a **Submission ID**, and the **Email subject**.
+
+### User submissions
+
+User submissions allows you to view the emails your users submitted for reclassification. User submissions help enhance our detection model, but can be escalated for human review.
+
+1. **Date Range**: You can select a date range from the last 7, last 30, and last 90 days.
+2. **Original disposition**: Select among the [available values](/cloudflare-one/email-security/reference/dispositions-and-attributes/#available-values).
+3. **Submitted as**: Select among the [available values](/cloudflare-one/email-security/reference/dispositions-and-attributes/#available-values).
+
+Once you have selected all the filters, select **Apply filters**.
+
+The dashboard will populate the table with the list of emails your users submitted for reclassification, including a **Submission ID**, and the **Email subject**.
+
+### Reclassify messages
 
 Reclassifying messages allows you to choose the disposition of your messages if the disposition is incorrect.
 
