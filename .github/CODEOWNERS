@@ -45,8 +45,8 @@
 
 # Changelogs
 
-/src/content/changelogs/ @cloudflare/pm-changelogs
-/src/assets/images/changelogs/ @cloudflare/pm-changelogs
+/src/content/changelog-next/ @cloudflare/pm-changelogs
+/src/assets/images/changelog-next/ @cloudflare/pm-changelogs
 
 # Cloudflare One
 
