@@ -87,7 +87,7 @@ By default, if a requested URL matches a file in the static assets directory, th
 
 - If a Worker is configured and a request does not match a static asset, the Worker will handle the request. The Worker can choose to pass the request to the asset binding (through `env.ASSETS.fetch()`), following the `not_found_handling` rules.
 
-This default routing behavior can be configured and overridden. For example, if you have a Single Page Application and want to serve `index.html` for all unmatched routes, you can set `not_found_handling = "single-page-application"`:
+You can configure and override this default routing behaviour. For example, if you have a Single Page Application and want to serve `index.html` for all unmatched routes, you can set `not_found_handling = "single-page-application"`:
 
 <WranglerConfig>
 
