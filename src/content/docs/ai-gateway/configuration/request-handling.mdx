@@ -30,7 +30,7 @@ A timeout is set in milliseconds. Additionaly, the timeout is based on when the 
 
 If set on a [Universal Endpoint](/ai-gateway/providers/universal/), a request timeout specifies the timeout duration for requests and triggers a fallback.
 
-For a Universal Endpoint, configure the timeout value by setting a `requestTimeout` property within the provider-specific `config` object. Each provider can have a different `requestTimeout` value for granular customization. 
+For a Universal Endpoint, configure the timeout value by setting a `requestTimeout` property within the provider-specific `config` object. Each provider can have a different `requestTimeout` value for granular customization.
 
 ```bash title="Provider-level config" {12-14} collapse={15-48}
 curl 'https://gateway.ai.cloudflare.com/v1/{account_id}/{gateway_id}' \
@@ -135,7 +135,64 @@ config:{
 }
 ```
 
-As with the [request timeout](/ai-gateway/configuration/request-handling/#universal-endpoint), each provider can have a different retry settings for granular customization. 
+As with the [request timeout](/ai-gateway/configuration/request-handling/#universal-endpoint), each provider can have a different retry settings for granular customization.
+
+```bash title="Provider-level config" {11-15} collapse={16-55}
+curl 'https://gateway.ai.cloudflare.com/v1/{account_id}/{gateway_id}' \
+	--header 'Content-Type: application/json' \
+	--data '[
+    {
+        "provider": "workers-ai",
+        "endpoint": "@cf/meta/llama-3.1-8b-instruct",
+        "headers": {
+            "Authorization": "Bearer {cloudflare_token}",
+            "Content-Type": "application/json"
+        },
+        "config": {
+            "maxAttempts": 2,
+						"retryDelay": 1000,
+						"backoff": "constant"
+        },
+        "query": {
+            "messages": [
+                {
+                    "role": "system",
+                    "content": "You are a friendly assistant"
+                },
+                {
+                    "role": "user",
+                    "content": "What is Cloudflare?"
+                }
+            ]
+        }
+    },
+    {
+        "provider": "workers-ai",
+        "endpoint": "@cf/meta/llama-3.1-8b-instruct-fast",
+        "headers": {
+            "Authorization": "Bearer {cloudflare_token}",
+            "Content-Type": "application/json"
+        },
+        "query": {
+            "messages": [
+                {
+                    "role": "system",
+                    "content": "You are a friendly assistant"
+                },
+                {
+                    "role": "user",
+                    "content": "What is Cloudflare?"
+                }
+            ]
+        },
+				"config": {
+            "maxAttempts": 4,
+						"retryDelay": 1000,
+						"backoff": "exponential"
+        },
+    }
+]'
+```
 
 #### Direct provider
 
