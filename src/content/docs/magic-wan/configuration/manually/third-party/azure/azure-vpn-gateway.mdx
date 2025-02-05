@@ -26,21 +26,20 @@ The Virtual Network Gateway is used to form the tunnel to the devices on your pr
 
 :::note
 This configuration guide applies to Azure Virtual Network Gateway which includes the functionality found in the Azure VPN Gateway.
-:::
 
-:::note
+
 Active/Active and Active/Standby configurations are both supported. Two Azure public IP addresses and two Magic WAN IPsec tunnels are required for the Active/Active configuration.
 :::
 
-#### Active/Active connfiguration
+#### Active/Active configuration
 
 1. Create a Virtual Network Gateway.
 2. Create two new public IP addresses or use existing IPs. Take note of the public IP addresses assigned to the Virtual Network Gateway as these will be the **Customer endpoint** for Magic WAN's IPsec tunnels configuration.
-3. Navigate to the Virtual Network Gateway created earier.
+3. Navigate to the Virtual Network Gateway created earlier.
 4. In **Configuration**, enable **Active-active mode** and disable **Gateway Private IPs**.
 5. Select **Create**.
 
-#### Active/Standby connfiguration
+#### Active/Standby configuration
 
 1. Create a Virtual Network Gateway.
 2. Create a new public IP address or use an existing IP. Take note of the public IP address assigned to the Virtual Network Gateway as this will be the **Customer endpoint** for Magic WAN's IPsec tunnels configuration.
@@ -146,7 +145,7 @@ Choose the following settings when creating your VPN Connection:
       2. **IPsec Integrity**: _SHA256_
       3. **PFS Group**: _PFS2048_
    3. **IPsec SA lifetime in KiloBytes**: `0`
-   4. **IPsec SA lifetime in seconds**: `28800`
+   4. **IPsec SA lifetime in seconds**: `27000`
    5. **Use policy based traffic selector**: **Disable**
    6. **DPD timeout in seconds**: `45`
    7. **Connection mode**: **Default**
