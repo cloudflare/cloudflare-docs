@@ -72,9 +72,27 @@ To modify your screening criteria, under **Active screen criteria**, select **Mo
 
 To reset your screening criteria, select **Reset**.
 
-## Reclassifications
+## Reclassify messages
 
-Reclassifications allows you to monitor emails your security team or users requested to be reclassified. To view reclassifications:
+Reclassifying messages allows you to choose the disposition of your messages if the disposition is incorrect.
+
+To reclassify a message:
+
+1. On the **Investigation** page, under **Your matching messages**, select the message you want to reclassify.
+2. Select the three dots, then select **Reclassify**. 
+3. Under **New disposition**, select among the following:
+   * **Malicious**: Traffic invoked multiple phishing verdict triggers, met thresholds for bad behavior, and is associated with active campaigns.
+   * **Spoof**: Traffic associated with phishing campaigns that is either non-compliant with your email authentication policies (SPF, DKIM, DMARC) or has mismatching Envelope From and `Header From` values.
+   * **Spam**: Traffic associated with non-malicious, commercial campaigns.
+   * **Bulk**: Traffic associated with [Graymail](https://en.wikipedia.org/wiki/Graymail_%28email%29), that falls in between the definitions of `SPAM` and `SUSPICIOUS`. For example, a marketing email that intentionally obscures its unsubscribe link.
+   * **Clean**: Traffic not associated with any phishing campaigns.
+4. Select **Save**.
+
+To reclassify messages in bulk, select the messages you want to reclassify > **Action** > **Reclassify**.
+
+Once you have reclassified your messages, you can access those on **Reclassifications**.
+
+To view reclassifications:
 
 1. Log in to [Zero Trust](https://one.dash.cloudflare.com/).
 2. Select **Email Security** > **Reclassifications**.
@@ -107,24 +125,6 @@ User submissions allows you to view the emails your users submitted for reclassi
 Once you have selected all the filters, select **Apply filters**.
 
 The dashboard will populate the table with the list of emails your users submitted for reclassification, including a **Submission ID**, and the **Email subject**.
-
-### Reclassify messages
-
-Reclassifying messages allows you to choose the disposition of your messages if the disposition is incorrect.
-
-To reclassify a message:
-
-1. On the **Investigation** page, under **Your matching messages**, select the message you want to reclassify.
-2. Select the three dots, then select **Reclassify**. 
-3. Under **New disposition**, select among the following:
-   * **Malicious**: Traffic invoked multiple phishing verdict triggers, met thresholds for bad behavior, and is associated with active campaigns.
-   * **Spoof**: Traffic associated with phishing campaigns that is either non-compliant with your email authentication policies (SPF, DKIM, DMARC) or has mismatching Envelope From and `Header From` values.
-   * **Spam**: Traffic associated with non-malicious, commercial campaigns.
-   * **Bulk**: Traffic associated with [Graymail](https://en.wikipedia.org/wiki/Graymail_%28email%29), that falls in between the definitions of `SPAM` and `SUSPICIOUS`. For example, a marketing email that intentionally obscures its unsubscribe link.
-   * **Clean**: Traffic not associated with any phishing campaigns.
-4. Select **Save**.
-
-To reclassify messages in bulk, select the messages you want to reclassify > **Action** > **Reclassify**.
 
 ## Move messages
 
