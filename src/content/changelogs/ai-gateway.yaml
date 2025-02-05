@@ -5,7 +5,7 @@ productLink: "/ai-gateway/"
 productArea: Developer platform
 productAreaLink: /workers/platform/changelog/platform/
 entries:
-  - publish_date: "2025-02-04"
+  - publish_date: "2025-02-05"
     title: Added request handling
     description: |-
       * Added [request handling options](/ai-gateway/request-handling/) to help manage AI provider interactions effectively, ensuring your applications remain responsive and reliable.
