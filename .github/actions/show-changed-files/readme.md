@@ -1,3 +1,3 @@
-# actions/label-size
+# actions/show-changed-files
 
-> Label all PRs with the product files that they're touching.
+> Create PR comment with a list of changed MDX files (up to 15 entries and excluding partials).
