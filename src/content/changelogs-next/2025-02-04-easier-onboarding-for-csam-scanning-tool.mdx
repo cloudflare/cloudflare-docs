@@ -1,0 +1,15 @@
+# Easier Onboarding for the CSAM Scanning Tool  
+
+Our **free child safety tooling**, the **[CSAM Scanning Tool](https://developers.cloudflare.com/cache/reference/csam-scanning/)**, is now easier to implement and only requires a verified email address for notifications to onboard. Previously, external reporting credentials were required to sign up and were used by Cloudflare when a match was found. Removing this requirement makes the tool accessible to more of our customers.
+
+## **How It Works**  
+
+When enabled, the tool automatically [hashes images for enabled websites as they enter the Cloudflare cache](https://blog.cloudflare.com/the-csam-scanning-tool/). These hashes are then checked against a database of **known abusive images**.  
+
+- **Potential match detected?**  
+  - The **content URL is blocked**, and  
+  - The **customer is notified** via the provided email address.  
+
+## **Updated Service-Specific Terms**  
+
+We have also made updates to our **[Service-Specific Terms](https://www.cloudflare.com/service-specific-terms-application-services/#csam-scanning-tool-terms)** to reflect these changes.
