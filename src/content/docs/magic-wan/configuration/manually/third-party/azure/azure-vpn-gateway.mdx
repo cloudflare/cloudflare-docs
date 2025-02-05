@@ -104,9 +104,9 @@ Tunnel health checks make use of ICMP probes sent from the Cloudflare side of th
 Cloudflare recommends customers select a unique `/31` subnet ([RFC 1918 - Address Allocation for Private Internets](https://datatracker.ietf.org/doc/html/rfc1918)) for each IPsec tunnel which is treated as a Point-to-Point Link and provides the ideal addressing scheme to satisfy both requirements.
 
 Example:
-- Select 169.254.251.137/31 as your unique point-to-point link subnet.
-- In the Cloudflare dashboard, set `169.254.251.137/31` as your tunnel's **IPv4 Interface address** (refer to [Configure Magic WAN](#configure-magic-wan)).
-- In the Azure portal, add `169.254.251.137/32` to your Local Network Gateway's **Address space**.
+- Select 10.252.3.55/31 as your unique point-to-point link subnet.
+- In the Cloudflare dashboard, set `10.252.3.55/31` as your tunnel's **IPv4 Interface address** (refer to [Configure Magic WAN](#configure-magic-wan)).
+- In the Azure portal, add `10.252.3.55/32` to your Local Network Gateway's **Address space**.
 
 :::note
 It is important to ensure the subnet selected for the Interface Address does not overlap with any other subnet.
