@@ -7,7 +7,7 @@ head: []
 description: Review common troubleshooting scenarios for Cloudflare Zero Trust.
 ---
 
-import { GlossaryTooltip } from "~/components";
+import { GlossaryTooltip, Render } from "~/components";
 
 [❮ Back to FAQ](/cloudflare-one/faq/)
 
@@ -263,3 +263,7 @@ If the new certificate is not activating on the end-user device or you are getti
 If no measure is working quickly and you are encountering browser warnings that are blocking work, [turning off TLS decryption](/cloudflare-one/policies/gateway/http-policies/tls-decryption/#turn-on-tls-decryption) will prevent HTTP policies from being enforced and will ensure websites resolve until the certificate can be deployed to more user devices.
 
 Turning off TLS decryption should be a temporary measure. TLS decryption should be turned on if you need to enforce HTTP policies and log traffic for HTTPS traffic.
+
+## I am getting an `Error 401: deleted_client - The OAuth Client was deleted` authorization error.
+
+<Render file="access/error-401" product="cloudflare-one" />
