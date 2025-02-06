@@ -32,7 +32,7 @@ If set on a [Universal Endpoint](/ai-gateway/providers/universal/), a request ti
 
 For a Universal Endpoint, configure the timeout value by setting a `requestTimeout` property within the provider-specific `config` object. Each provider can have a different `requestTimeout` value for granular customization.
 
-```bash title="Provider-level config" {12-14} collapse={15-48}
+```bash title="Provider-level config" {11-13} collapse={15-48}
 curl 'https://gateway.ai.cloudflare.com/v1/{account_id}/{gateway_id}' \
 	--header 'Content-Type: application/json' \
 	--data '[
