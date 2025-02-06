@@ -53,15 +53,17 @@ Use a [POST request](/api/resources/custom_hostnames/methods/create/) to upload 
 
 The serial number returned is unique to the issuer, but not globally unique. Additionally, it is returned as a string, not an integer.
 
-## Certificate bundling
+## Upload certificate packs: RSA and ECDSA uploads
 
-Use a [PATCH request](/api/resources/custom_hostnames/methods/edit/) to upload an RSA and/or ECDSA certificate to a custom hostname.
+A certificate pack can support up to one RSA certificate and one ECDSA certificate.
 
-### Delete a custom certificate and custom key for custom hostname
+To upload an RSA and/or ECDSA certificate to a custom hostname certificate pack, use a [POST request](/api/resources/custom_hostnames/methods/create/) with the `custom_cert_bundle` property. Use a [PATCH request](/api/resources/custom_hostnames/methods/edit/) to edit an RSA and/or ECDSA certificate to a custom hostname.
+
+### Delete a custom certificate and private key for custom hostname
 
 Use a [DELETE request](/api/resources/custom_hostnames/subresources/certificate_pack/) to remove one custom certificate and key from a custom hostname. You cannot delete a certificate if it is the only remaining certificate in the pack.
 
-### Replace a custom certificate and custom key in custom hostname
+### Replace a custom certificate and private key in custom hostname
 
 Use a [PUT request](/api/resources/custom_hostnames/subresources/certificate_pack/subresources/certificates/methods/update/) to replace a single custom certificate within a certificate pack within a certificate pack that contains two bundled certificates. You can only replace an RSA certificate with another RSA certificate or an ECDSA certificate with another ECDSA certificate.
 
