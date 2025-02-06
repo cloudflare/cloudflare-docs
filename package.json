@@ -5,11 +5,10 @@
 	"scripts": {
 		"astro": "npx astro",
 		"build": "npx astro build",
-		"postbuild": "npm run build:worker",
-		"build:worker": "npx wrangler types -c wrangler-workers.toml --experimental-include-runtime",
+		"typegen:worker": "npx wrangler types ./worker/worker-configuration.d.ts",
 		"check": "npm run check:astro && npm run check:worker",
-		"check:astro": "npm run sync && astro check",
-		"check:worker": "npm run build:worker && npx tsc --noEmit -p ./worker/tsconfig.json",
+		"check:astro": "npx astro check",
+		"check:worker": "npx tsc --noEmit -p ./worker/tsconfig.json",
 		"dev": "npx astro dev",
 		"format": "npm run format:core && npm run format:data",
 		"format:core": "npx prettier --write \"**/*.{js,jsx,ts,tsx,mjs,css}\"",
@@ -25,6 +24,8 @@
 		"lint": "npx eslint"
 	},
 	"devDependencies": {
+		"@actions/core": "1.11.1",
+		"@actions/github": "6.0.0",
 		"@astrojs/check": "0.9.4",
 		"@astrojs/react": "4.2.0",
 		"@astrojs/rss": "4.0.11",
@@ -33,7 +34,6 @@
 		"@astrojs/starlight-docsearch": "0.5.0",
 		"@astrojs/starlight-tailwind": "3.0.0",
 		"@astrojs/tailwind": "5.1.5",
-		"@cloudflare/puppeteer": "0.0.14",
 		"@cloudflare/vitest-pool-workers": "0.6.11",
 		"@cloudflare/workers-types": "4.20250121.0",
 		"@codingheads/sticky-header": "1.0.2",
@@ -78,7 +78,6 @@
 		"prettier-plugin-astro": "0.14.1",
 		"prettier-plugin-tailwindcss": "0.6.9",
 		"pretty-bytes": "6.1.1",
-		"puppeteer": "24.1.1",
 		"react": "19.0.0",
 		"react-dom": "19.0.0",
 		"react-icons": "5.4.0",
@@ -87,6 +86,8 @@
 		"rehype": "13.0.2",
 		"rehype-autolink-headings": "7.1.0",
 		"rehype-external-links": "3.0.0",
+		"rehype-parse": "9.0.1",
+		"rehype-stringify": "10.0.1",
 		"rehype-title-figure": "0.1.2",
 		"remark": "15.0.1",
 		"sharp": "0.33.5",
@@ -102,14 +103,11 @@
 		"tsx": "4.19.2",
 		"typescript": "5.7.3",
 		"typescript-eslint": "8.20.0",
+		"unified": "11.0.5",
 		"unist-util-visit": "5.0.0",
-		"vitest": "2.1.9",
+		"vite-tsconfig-paths": "5.1.4",
+		"vitest": "2.1.6",
 		"wrangler": "3.103.2"
-	},
-	"overrides": {
-		"@cloudflare/puppeteer": {
-			"ws": "8.18.0"
-		}
 	},
 	"engines": {
 		"node": ">=22"

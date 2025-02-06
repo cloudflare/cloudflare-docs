@@ -1,0 +1,28 @@
+---
+pcx_content_type: concept
+title: Billing and Limitations
+sidebar:
+  order: 12
+head: []
+description: Billing, troubleshooting, and limitations for Static assets on Workers
+---
+
+## Billing
+
+Requests to a project with static assets can either return static assets or invoke the Worker script, depending on if the request [matches a static asset or not](/workers/static-assets/routing/).
+
+Requests to static assets are free and unlimited. Requests to the Worker script (for example, in the case of SSR content) are billed according to Workers pricing. Refer to [pricing](/workers/platform/pricing/#example-2) for an example.
+
+There is no additional cost for storing Assets.
+
+## Limitations
+
+The following limitations apply for Workers with static assets:
+
+- There is a 20,000 file count limit per [Worker version](/workers/configuration/versions-and-deployments/), and a 25 MiB individual file size limit. This matches the [limits in Cloudflare Pages](/pages/platform/limits/) today.
+- In local development, you cannot make [Service Binding RPC calls](/workers/runtime-apis/bindings/service-bindings/rpc/) to a Worker with static assets. This is a temporary limitation, we are working to remove it.
+- Workers with assets cannot run on a [route or domain](/workers/configuration/routing/) with a path component. For example, `example.com/*` is an acceptable route, but `example.com/foo/*` is not. Wrangler and the Cloudflare dashboard will throw an error when you try and add a route with a path component.
+
+## Troubleshooting
+
+- `assets.bucket is a required field` — if you see this error, you need to update Wrangler to at least `3.78.10` or later. `bucket` is not a required field.

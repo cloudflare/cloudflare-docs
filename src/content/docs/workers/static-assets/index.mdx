@@ -2,7 +2,7 @@
 pcx_content_type: navigation
 title: Static Assets
 sidebar:
-  order: 10
+  order: 11
   group:
     badge: Beta
 head: []
@@ -10,79 +10,354 @@ description: Create full-stack applications deployed to Cloudflare Workers.
 ---
 
 import {
+	Aside,
 	Badge,
+	Card,
+	CardGrid,
+	Details,
 	Description,
 	InlineBadge,
+	Icon,
 	DirectoryListing,
+	FileTree,
 	Render,
 	TabItem,
 	Tabs,
 	Feature,
 	LinkButton,
+	LinkCard,
 	Stream,
 	Flex,
+	WranglerConfig,
+	Steps,
 } from "~/components";
 
-<Description>
-	Create fast, scalable front-end applications deployed to Cloudflare Workers.
-</Description>
+You can upload static assets (HTML, CSS, images and other files) as part of your Worker, and Cloudflare will handle caching and serving them to web browsers.
 
----
+<LinkCard
+	title="Supported frameworks"
+	href="/workers/frameworks/"
+	description="Start building on Workers with our framework guides."
+/>
 
-## What you can build
+### How it works
 
-### Static Websites
+When you deploy your project, Cloudflare deploys both your Worker code and your static assets in a single operation. This deployment operates as a tightly integrated "unit" running across Cloudflare's network, combining static file hosting, custom logic, and global caching.
 
-Deploy static sites like blogs, portfolios, or documentation pages. Serve HTML, CSS, JavaScript, and media files directly from Cloudflare's network for low-latency access worldwide.
+The **assets directory** specified in your [Wrangler configuration file](/workers/wrangler/configuration/#assets) is central to this design. During deployment, Wrangler automatically uploads the files from this directory to Cloudflare's infrastructure. Once deployed, requests for these assets are routed efficiently to locations closest to your users.
 
-<LinkButton href="/workers/static-assets/get-started/#deploy-a-static-site">
-	Deploy a static site
-</LinkButton>
+<WranglerConfig>
 
-### Full-stack Applications
+    ```toml {3-4}
+    	name = "my-spa"
+    	main = "src/index.js"
+    	compatibility_date = "2025-01-01"
+    	[assets]
+    	directory = "./dist"
+    	binding = "ASSETS"
+    	```
 
-Build dynamic and interactive server-side rendered (SSR) applications on Cloudflare Workers.
+</WranglerConfig>
 
-You can combine asset hosting with Cloudflare's data and storage products such as [Workers KV](/kv/), [Durable Objects](/durable-objects/), and [R2 Storage](/r2/) to build full-stack applications that serve both front-end and back-end logic in a single Worker.
+By adding an [**assets binding**](/workers/static-assets/binding/#binding), you can directly fetch and serve assets within your Worker code.
 
-<LinkButton href="/workers/static-assets/get-started/#deploy-a-full-stack-application">
-	Deploy a full-stack application
-</LinkButton>
+```js {13}
+// index.js
 
-### Supported frameworks
+export default {
+	async fetch(request, env) {
+		const url = new URL(request.url);
 
-The following Frameworks are currently supported on Cloudflare Workers:
+		if (url.pathname.startsWith("/api/")) {
+			return new Response(JSON.stringify({ name: "Cloudflare" }), {
+				headers: { "Content-Type": "application/json" },
+			});
+		}
 
-<DirectoryListing folder="workers/frameworks/framework-guides" />
+		return env.ASSETS.fetch(request);
+	},
+};
+```
+
+### Routing behavior
+
+By default, if a requested URL matches a file in the static assets directory, that file will always be served — without running Worker code. If no matching asset is found and a Worker is configured, the request will be processed by the Worker instead.
+
+- If no Worker is set up, the [`not_found_handling`](/workers/static-assets/routing/#2-not_found_handling-1) setting in your Wrangler configuration determines what happens next. By default, a `404 Not Found` response is returned.
+
+- If a Worker is configured and a request does not match a static asset, the Worker will handle the request. The Worker can choose to pass the request to the asset binding (through `env.ASSETS.fetch()`), following the `not_found_handling` rules.
+
+You can configure and override this default routing behaviour. For example, if you have a Single Page Application and want to serve `index.html` for all unmatched routes, you can set `not_found_handling = "single-page-application"`:
+
+<WranglerConfig>
+
+    ```toml
+    	[assets]
+    	directory = "./dist"
+    	not_found_handling = "single-page-application"
+
+    	```
+
+</WranglerConfig>
+
+If you want the Worker code to execute before serving an asset (for example, to protect an asset behind authentication), you can set `run_worker_first = true`.
+
+<WranglerConfig>
+
+    ```toml
+    	[assets]
+    	directory = "./dist"
+    	run_worker_first = true
+
+    	```
+
+</WranglerConfig>
+
+<LinkCard
+	title="Routing options"
+	href="/workers/static-assets/routing/#routing-configuration"
+	description="Learn more about how you can customize routing behavior."
+/>
+
+### Caching behavior
+
+Cloudflare provides automatic caching for static assets across its network, ensuring fast delivery to users worldwide. When a static asset is requested, it is automatically cached for future requests.
+
+- **First Request:** When an asset is requested for the first time, it is fetched from storage and cached at the nearest Cloudflare location.
+
+- **Subsequent Requests:** If a request for the same asset reaches a data center that does not have it cached, Cloudflare's [tiered caching system](/cache/how-to/tiered-cache/) allows it to be retrieved from a nearby cache rather than going back to storage. This improves cache hit ratio, reduces latency, and reduces unnecessary origin fetches.
+
+## Try it out
+
+#### 1. Create a new Worker project
+
+```sh
+npm create cloudflare@latest -- my-dynamic-site
+```
+
+**For setup, select the following options**:
+
+- For _What would you like to start with?_, choose `Framework`.
+- For _Which framework would you like to use?_, choose `React`.
+- For _Which language do you want to use?_, choose `TypeScript`.
+- For _Do you want to use git for version control_?, choose `Yes`.
+- For _Do you want to deploy your application_?, choose `No` (we will be making some changes before deploying).
+
+After setting up the project, change the directory by running the following command:
+
+```sh
+cd my-dynamic-site
+```
+
+#### 2. Build project
+
+Run the following command to build the project:
+
+```sh
+npm run build
+```
+
+We should now see a new directory `/dist` in our project, which contains the compiled assets:
+
+<FileTree>
+- package.json
+- index.html
+- ...
+- dist Asset directory
+	- ... Compiled assets
+- src
+	- ...
+- ...
+
+</FileTree>
+
+In the next step, we use a Wrangler configuration file to allow Cloudflare to locate our compiled assets.
+
+#### 3. Add a Wrangler configuration file (`wrangler.toml` or `wrangler.json`)
+
+<WranglerConfig>
+
+    ```toml
+    	name = "my-spa"
+    	compatibility_date = "2025-01-01"
+    	[assets]
+    	directory = "./dist"
+    	```
+
+</WranglerConfig>
+
+**Notice the `[assets]` block**: here we have specified our directory where Cloudflare can find our compiled assets (`./dist`).
+
+Our project structure should now look like this:
+
+<FileTree>
+- package.json
+- index.html
+- **wrangler.toml** Wrangler configuration
+- ...
+- dist Asset directory
+	- ... Compiled assets
+- src
+	- ...
+- ...
+
+</FileTree>
+
+#### 4. Deploy with Wrangler
+
+```sh
+npx wrangler deploy
+```
+
+Our project is now deployed on Workers! But we can take this even further, by adding an **API Worker**.
+
+#### 5. Adjust our Wrangler configuration
+
+Replace the file contents of our Wrangler configuration with the following:
+
+<WranglerConfig>
+
+    ```toml
+    	name = "my-spa"
+    	main = "src/api/index.js"
+    	compatibility_date = "2025-01-01"
+    	[assets]
+    	directory = "./dist"
+    	binding = "ASSETS"
+    	not_found_handling = "single-page-application"
+
+    	```
+
+</WranglerConfig>
+
+We have edited the Wrangler file in the following ways:
+
+- Added `main = "src/api/index.js"` to tell Cloudflare where to find our Worker code.
+- Added an `ASSETS` binding, which our Worker code can use to fetch and serve assets.
+- Enabled routing for Single Page Applications, which ensures that unmatched routes (such as `/dashboard`) serve our `index.html`.
 
 :::note
 
-Static Assets for Workers is currently in open beta. If you're looking for a framework not on this list, it may be supported in [Cloudflare Pages](/pages/). Visit [Pages Frameworks guides](/pages/framework-guides/) for a full list.
+By default, Cloudflare serves a `404 Not Found` to unmatched routes. To have the frontend handle routing instead of the server, you must enable `not_found_handling = "single-page-application"`.
 
 :::
 
-### Pricing
+#### 5. Create a new directory `/api`, and add an `index.js` file
 
-Requests to a project with static assets can either return static assets or invoke the Worker script, depending on if the request [matches a static asset or not](/workers/static-assets/routing/).
+Copy the contents below into the index.js file.
 
-**Requests to static assets are free and unlimited**. Requests to the Worker script (e.g. in the case of SSR content) are billed according to Workers pricing. Refer to [pricing](/workers/platform/pricing/#example-2) for an example.
+```js {13}
+// api/index.js
 
-There is no additional cost for storing Assets.
+export default {
+	async fetch(request, env) {
+		const url = new URL(request.url);
 
-### Troubleshooting
+		if (url.pathname.startsWith("/api/")) {
+			return new Response(JSON.stringify({ name: "Cloudflare" }), {
+				headers: { "Content-Type": "application/json" },
+			});
+		}
 
-- `assets.bucket is a required field` — if you see this error, you need to update Wrangler to at least `3.78.10` or later. `bucket` is not a required field.
+		return env.ASSETS.fetch(request);
+	},
+};
+```
 
-### Limitations
+**Consider what this Worker does:**
 
-The following limitations apply for Workers with static assets:
+- Our Worker receives a HTTP request and extracts the URL.
+- If the request is for an API route (`/api/...`), it returns a JSON response.
+- Otherwise, it serves static assets from our directory (`env.ASSETS`).
 
-- There is a 20,000 file count limit per [Worker version](/workers/configuration/versions-and-deployments/), and a 25 MiB individual file size limit. This matches the [limits in Cloudflare Pages](/pages/platform/limits/) today.
-- In local development, you cannot make [Service Binding RPC calls](/workers/runtime-apis/bindings/service-bindings/rpc/) to a Worker with static assets. This is a temporary limitation, we are working to remove it.
-- Workers with assets cannot run on a [route or domain](/workers/configuration/routing/) with a path component. For example, `example.com/*` is an acceptable route, but `example.com/foo/*` is not. Wrangler and the Cloudflare dashboard will throw an error when you try and add a route with a path component.
+#### 6. Call the API from the client
 
-:::note
+Edit `src/App.tsx` so that it includes an additional button that calls the API, and sets some state. Replace the file contents with the following code:
 
-Have a framework you would like to see supported on Workers or a feature request? Tell us about it on [Cloudflare's Developer Discord](https://discord.gg/dqgZUwcD)!
+```js {9,25, 33-47}
 
-:::
+// src/App.tsx
+import { useState } from "react";
+import reactLogo from "./assets/react.svg";
+import viteLogo from "/vite.svg";
+import "./App.css";
+
+function App() {
+  const [count, setCount] = useState(0);
+  const [name, setName] = useState("unknown");
+
+  return (
+    <>
+      <div>
+        <a href="https://vite.dev" target="_blank">
+          <img src={viteLogo} className="logo" alt="Vite logo" />
+        </a>
+        <a href="https://react.dev" target="_blank">
+          <img src={reactLogo} className="logo react" alt="React logo" />
+        </a>
+      </div>
+      <h1>Vite + React</h1>
+      <div className="card">
+        <button
+          onClick={() => setCount((count) => count + 1)}
+          aria-label="increment"
+        >
+          count is {count}
+        </button>
+        <p>
+          Edit <code>src/App.tsx</code> and save to test HMR
+        </p>
+      </div>
+      <div className="card">
+        <button
+          onClick={() => {
+            fetch("/api/")
+              .then((res) => res.json() as Promise<{ name: string }>)
+              .then((data) => setName(data.name));
+          }}
+          aria-label="get name"
+        >
+          Name from API is: {name}
+        </button>
+        <p>
+          Edit <code>api/index.ts</code> to change the name
+        </p>
+      </div>
+      <p className="read-the-docs">
+        Click on the Vite and React logos to learn more
+      </p>
+    </>
+  );
+}
+
+export default App;
+```
+
+Before deploying again, we need to rebuild our project:
+
+```sh
+npm run build
+```
+
+#### 7. Deploy with Wrangler
+
+```sh
+npx wrangler deploy
+
+```
+
+Now we can see a new button **Name from API**, and if you click the button, we can see our API response as **Cloudflare**!
+
+## Learn more
+
+<LinkCard
+	title="Supported frameworks"
+	href="/workers/frameworks/"
+	description="Start building on Workers with our framework guides."
+/>
+
+<LinkCard
+	title="Billing and limitations"
+	href="/workers/static-assets/billing-and-limitations/"
+	description="Learn more about how requests are billed, current limitations, and troubleshooting."
+/>

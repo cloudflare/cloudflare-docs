@@ -77,9 +77,9 @@ export const GET: APIRoute = async (context) => {
 	});
 
 	return rss({
-		title: `Cloudflare product changelog`,
+		title: `Cloudflare release notes`,
 		description: `Updates to various Cloudflare products.`,
-		site: "https://developers.cloudflare.com/changelog/",
+		site: "https://developers.cloudflare.com/release-notes/",
 		trailingSlash: false,
 		items: entries.map((entry) => {
 			return {

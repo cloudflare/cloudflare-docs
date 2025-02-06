@@ -10,13 +10,13 @@ export const GET: APIRoute = async () => {
 	return rss({
 		title: "Changelogs",
 		description: `Cloudflare changelogs`,
-		site: "https://developers.cloudflare.com/changelog-next/",
+		site: "https://developers.cloudflare.com/changelog/",
 		items: notes.map((entry) => {
 			return {
 				title: entry.data.title,
 				description: entry.data.description,
 				pubDate: entry.data.date,
-				link: `/changelog-next/${entry.id}/`,
+				link: `/changelog/${entry.id}/`,
 			};
 		}),
 	});

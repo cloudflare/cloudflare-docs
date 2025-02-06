@@ -2,12 +2,12 @@
 title: Local development
 pcx_content_type: concept
 sidebar:
-  order: 2
+  order: 5
 head: []
 description: Develop your Workers locally via Wrangler.
 ---
 
-Cloudflare Workers and most connected resources can be fully developed and tested locally - providing confidence that the applications you build locally will work the same way in production. This allows you to be more efficient and effective by providing a faster feedback loop and removing the need to test against remote resources. Local development runs against the same production runtime used by Cloudflare Workers, [workerd](https://github.com/cloudflare/workerd).
+Cloudflare Workers and most connected resources can be fully developed and tested locally - providing confidence that the applications you build locally will work the same way in production. This allows you to be more efficient and effective by providing a faster feedback loop and removing the need to [test against remote resources](#develop-using-remote-resources-and-bindings). Local development runs against the same production runtime used by Cloudflare Workers, [workerd](https://github.com/cloudflare/workerd).
 
 In addition to testing Workers locally with [`wrangler dev`](/workers/wrangler/commands/#dev), the use of Miniflare allows you to test other Developer Platform products locally, such as [R2](/r2/), [KV](/kv/), [D1](/d1/), and [Durable Objects](/durable-objects/).
 
@@ -50,7 +50,7 @@ npx wrangler dev
 | Vectorize                           | ✅[^2]              | ✅                   |
 | Workflows                           | ✅                  | ❌                   |
 
-With any bindings that are not supported locally, you will need to use the `--remote` command in wrangler, such as `wrangler dev --remote`.
+With any bindings that are not supported locally, you will need to use the [`--remote` command](#develop-using-remote-resources-and-bindings) in wrangler, such as `wrangler dev --remote`.
 
 [^1]: Using Workers AI always accesses your Cloudflare account in order to run AI models and will incur usage charges even in local development.
 
@@ -62,7 +62,7 @@ When running `wrangler dev`, resources such as KV, Durable Objects, D1, and R2 w
 
 ### Use bindings in Wrangler configuration files
 
-[Wrangler](/workers/wrangler/) will automatically create local versions of bindings found in the [`wrangler.toml / wrangler.json` file](/workers/wrangler/configuration/). These local resources will not have data in them initially, so you will need to add data manually via Wrangler commands and the [`--local` flag](/workers/testing/local-development/#use---local-flag).
+[Wrangler](/workers/wrangler/) will automatically create local versions of bindings found in the [`wrangler.toml / wrangler.json` file](/workers/wrangler/configuration/). These local resources will not have data in them initially, so you will need to add data manually via Wrangler commands and the [`--local` flag](#use---local-flag).
 
 When you run `wrangler dev` Wrangler stores local resources in a `.wrangler/state` folder, which is automatically created.
 
