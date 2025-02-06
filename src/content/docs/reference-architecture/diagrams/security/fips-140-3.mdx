@@ -26,7 +26,7 @@ FIPS 140 compliance demonstrates a strong commitment to data security, builds tr
 
 ## FIPS 140-3 levels
 
-Organizations use the FIPS 140-3 standard to ensure that the hardware they select meets specific security requirements. The FIPS certification standard defines four increasing, qualitative levels of security
+Organizations use the FIPS 140-3 standard to ensure that the hardware they select meets specific security requirements. The FIPS certification standard defines four increasing, qualitative levels of security.
 
 <Tabs syncKey="dashPlusAPI"> <TabItem label="Level 1">
 
@@ -38,7 +38,7 @@ Adds requirements for physical tamper-evidence and role-based authentication.
 
 </TabItem> <TabItem label="Level 3">
 
-Adds requirements for physical tamper-resistance and identity-based authentication. There must also be physical or logical separation between the interfaces by which "critical security parameters" enter and leave the module. Private keys can only enter or leave in encrypted form. Level 3 also requires the module to detect and react to out-of-range voltage or temperature (environmental failure protection, or EFP), or alternatively undergo environmental failure testing (EFT).
+Adds requirements for physical tamper-resistance and identity-based authentication. There must also be physical or logical separation between the interfaces by which critical security parameters enter and leave the module. Private keys can only enter or leave in encrypted form. Level 3 also requires the module to detect and react to out-of-range voltage or temperature (environmental failure protection, or EFP), or alternatively undergo environmental failure testing (EFT).
 
 </TabItem> <TabItem label="Level 4">
 
@@ -49,7 +49,7 @@ This level makes the physical security requirements more stringent, requiring th
 ## Key components
 
 - **Cloudflare Keyless SSL**: A service that allows organizations to use Cloudflare's SSL/TLS protection while keeping their private keys securely stored in their own infrastructure, ensuring private keys remain under their control and never leave their premises, while still benefiting from Cloudflare's DDoS protection and performance optimization features.
-- **Cloudflare Tunnel**: Provides a secure, encrypted connection between Cloudflare's edge and the private infrastructure hosting CloudHSM, protecting data in transit.
+- **Cloudflare Tunnel**: Provides a secure, encrypted connection between Cloudflare's global network and the private infrastructure hosting CloudHSM, protecting data in transit.
 - **Hardware Security module**: A FIPS 140-2 Level 3 compliant HSM that securely manages cryptographic keys. Cloudflare supports a handful of HSMs, including AWS CloudHSM, Azure Key Vault, and Google Cloud KMS.
 
 ## Architecture overview
@@ -88,16 +88,16 @@ The architecture diagram below illustrates the key components and data flow for 
 </div>
 
 <Steps>
-1. **User/Client**: Initiates an HTTPS request to a domain protected by Cloudflare. The Server Name Indication (SNI) extension in the request specifies the domain name, e.g., `keyless.example.com`. That domain is mapped to a certificate declared as [keyless](https://developers.cloudflare.com/ssl/keyless-ssl/), which means that only the public is being imported to Cloudflare, but a keyless listener is also declared, for subsequent key operations.
-2. **Cloudflare secure tunnel establishment**: The Cloudflare [tunnel](https://developers.cloudflare.com/cloudflare-one/connections/connect-networks/) component is used to establish a secure and reliable connection with Cloudflare's Edge Network. Only outgoing traffic is leaving the perimeter and the traffic can be narrowed down by a firewall. That secure connectivity will be used as a secured overlay for the key operations.
-3. **Key Operations**: Cloudflare [SSL](https://developers.cloudflare.com/ssl/) is detecting a keyless operations is necessary and then sends all the key operations towards the keyless module installed on the private infrastructure. All the traffic is flowing through the previously established secured tunnel.
-4. **Keyless Module**: The [keyless module](https://developers.cloudflare.com/ssl/keyless-ssl/configuration/cloudflare-tunnel/#install) is responsible for forwarding the key operations to the Hardware Security Module (HSM) for cryptographic operations. The keyless module is a software component that acts as a proxy between Cloudflare and the HSM, ensuring that the private key never leaves the HSM.
+1. **User/Client**: Initiates an HTTPS request to a domain protected by Cloudflare. The Server Name Indication (SNI) extension in the request specifies the domain name like, for example, `keyless.example.com`. That domain is mapped to a certificate declared as [keyless](/ssl/keyless-ssl/), which means that only the public is being imported to Cloudflare, but a keyless listener is also declared, for subsequent key operations.
+2. **Cloudflare secure tunnel establishment**: The Cloudflare [tunnel](/cloudflare-one/connections/connect-networks/) component is used to establish a secure and reliable connection with Cloudflare's global network. Only outgoing traffic is leaving the perimeter and the traffic can be narrowed down by a firewall. That secure connectivity will be used as a secured overlay for the key operations.
+3. **Key Operations**: Cloudflare [SSL](/ssl/)detects that a keyless operation is necessary and then sends all the key operations towards the keyless module installed on the private infrastructure. All the traffic is flowing through the previously established secured tunnel.
+4. **Keyless Module**: The [keyless module](/ssl/keyless-ssl/configuration/cloudflare-tunnel/#install) is responsible for forwarding the key operations to the Hardware Security Module (HSM) for cryptographic operations. The keyless module is a software component that acts as a proxy between Cloudflare and the HSM, ensuring that the private key never leaves the HSM.
 5. **Key operations via PKCS11**: The HSM performs cryptographic operations using the private key stored securely within the HSM. The HSM is a tamper-resistant device that securely manages cryptographic keys and performs cryptographic operations, ensuring the highest level of security for sensitive data.
 </Steps>
 
 ## Further reading
-- [Cloudflare Keyless SSL](https://developers.cloudflare.com/ssl/keyless-ssl)
-- [Cloudflare Tunnel](https://developers.cloudflare.com/cloudflare-one/connections/connect-networks/)
-- [Keyless SSL with secured Tunnel](https://developers.cloudflare.com/ssl/keyless-ssl/configuration/cloudflare-tunnel/)
+- [Cloudflare Keyless SSL](/ssl/keyless-ssl)
+- [Cloudflare Tunnel](/cloudflare-one/connections/connect-networks/)
+- [Keyless SSL with secured Tunnel](/ssl/keyless-ssl/configuration/cloudflare-tunnel/)
 - Supported HSMs:
 	<DirectoryListing folder="ssl/keyless-ssl/hardware-security-modules" descriptions />
