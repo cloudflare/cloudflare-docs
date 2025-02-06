@@ -39,7 +39,7 @@ Once your SSO domain is approved, a new **SSO App** application will appear unde
 
 :::note
 
-Cloudflare recommends noting down your [Global API key](/fundamentals/api/get-started/keys/) in case you need to [disable SSO](#option-2-disable-dashboard-sso) later.
+Cloudflare recommends carefully storing your [Global API key](/fundamentals/api/get-started/keys/) to access when necessary. You will need your Global API key when you [disable SSO](#option-2-disable-dashboard-sso).
 :::
 
 1. In [Zero Trust](https://one.dash.cloudflare.com/), go to **Settings** > **Authentication**.
@@ -58,8 +58,8 @@ Cloudflare recommends noting down your [Global API key](/fundamentals/api/get-st
 Cloudflare dashboard SSO does not support:
 
 - Users with plus-addressed emails, such as `example+2@domain.com`. If you have users like this added to your Cloudflare organization, they will be unable to login with SSO.
-- IdP initiated logins (such as a tile in Okta). All login attempts must originate from `https://dash.cloudflare.com`. You can create a bookmark for this URL in your IdP to assist users.
-- Adding a separate email-based policy to the SSO application that does not match your SSO domain policy. As your account team must [approve and create your SSO domain](/cloudflare-one/applications/configure-apps/dash-sso-apps/#2-contact-your-account-team) based on the [SSO domain requirements](/cloudflare-one/applications/configure-apps/dash-sso-apps/#sso-domain-requirements), adding a new policy domain policy on your own will not work.
+- IdP-initiated logins (such as a tile in Okta). All login attempts must originate from `https://dash.cloudflare.com`. You can create a bookmark for this URL in your IdP to assist users.
+- Adding a separate email-based policy to the SSO application that does not match your SSO domain policy. As your account team must [approve and create your SSO domain](/cloudflare-one/applications/configure-apps/dash-sso-apps/#2-contact-your-account-team) based on the [SSO domain requirements](/cloudflare-one/applications/configure-apps/dash-sso-apps/#sso-domain-requirements), adding a new domain policy on your own will not work.
 - Deleting the auto-generated `allow email domain` policy. If this policy was deleted, your organization's administrators would not be able to access the Cloudflare dashboard.
 
 ## Bypass dashboard SSO
