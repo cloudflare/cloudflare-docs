@@ -8,7 +8,7 @@ entries:
   - publish_date: "2025-02-05"
     title: New AI Gateway providers
     description: |-
-      * **Configuration**: Added [ElevenLabs](https://elevenlabs.io/), [Cartesia](https://docs.cartesia.ai/) and [Cerebras](https://inference-docs.cerebras.ai/) as new providers.
+      * **Configuration**: Added [ElevenLabs](https://elevenlabs.io/), [Cartesia](https://docs.cartesia.ai/), and [Cerebras](https://inference-docs.cerebras.ai/) as new providers.
 
   - publish_date: "2025-01-02"
     title: DeepSeek
