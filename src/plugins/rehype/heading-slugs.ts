@@ -16,7 +16,8 @@ export default function () {
 			if (/^h[1-6]$/.test(element.tagName)) {
 				const last = element.children.at(-1);
 
-				// @ts-expect-error this is added by mdast-util-mdx-expression
+				if (!last) return;
+
 				if (last.type === "mdxTextExpression") {
 					const lastElement = last as MdxTextExpression;
 					if (

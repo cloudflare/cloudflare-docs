@@ -136,10 +136,7 @@ export default defineConfig({
 						]
 					: []),
 				starlightDocSearch({
-					appId: "D32WIYFTUF",
-					apiKey: "5cec275adc19dd3bc17617f7d9cf312a",
-					indexName: "prod_devdocs",
-					insights: true,
+					clientOptionsModule: "./src/plugins/docsearch/index.ts",
 				}),
 				starlightImageZoom(),
 			],

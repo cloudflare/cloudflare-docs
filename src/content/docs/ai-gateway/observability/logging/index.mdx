@@ -36,7 +36,7 @@ In the example below, we use `cf-aig-collect-log` to bypass the default setting 
 
 ```bash
 curl https://gateway.ai.cloudflare.com/v1/{account_id}/{gateway_id}/openai/chat/completions \
-  --header 'Authorization: Bearer $TOKEN' \
+  --header "Authorization: Bearer $TOKEN" \
   --header 'Content-Type: application/json' \
   --header 'cf-aig-collect-log: false \
   --data ' {

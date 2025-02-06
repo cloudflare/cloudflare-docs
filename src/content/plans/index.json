@@ -3125,6 +3125,22 @@
 					"pro": "No",
 					"biz": "Yes",
 					"ent": "Yes"
+				},
+				"turnstile_widget_mode": {
+					"title": "Turnstile Widget Mode",
+					"link": "/waiting-room/how-to/create-waiting-room/",
+					"free": "No",
+					"pro": "No",
+					"biz": "Invisible only",
+					"ent": "Invisible (default)\n\n<em>With add-on</em>\nAll options"
+				},
+				"turnstile_fail_action": {
+					"title": "Turnstile Fail Action",
+					"link": "/waiting-room/how-to/create-waiting-room/",
+					"free": "No",
+					"pro": "No",
+					"biz": "Log only",
+					"ent": "Log only (default)\n\n<em>With add-on</em>\nInfinite queue"
 				}
 			}
 		}

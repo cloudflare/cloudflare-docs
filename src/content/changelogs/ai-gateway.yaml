@@ -5,10 +5,14 @@ productLink: "/ai-gateway/"
 productArea: Developer platform
 productAreaLink: /workers/platform/changelog/platform/
 entries:
-  - publish_date: "2025-02-05"
+   - publish_date: "2025-02-06"
     title: Added request handling
     description: |-
       * Added [request handling options](/ai-gateway/request-handling/) to help manage AI provider interactions effectively, ensuring your applications remain responsive and reliable.
+  - publish_date: "2025-02-05"
+    title: New AI Gateway providers
+    description: |-
+      * **Configuration**: Added [ElevenLabs](https://elevenlabs.io/), [Cartesia](https://docs.cartesia.ai/), and [Cerebras](https://inference-docs.cerebras.ai/) as new providers.
 
   - publish_date: "2025-01-02"
     title: DeepSeek
