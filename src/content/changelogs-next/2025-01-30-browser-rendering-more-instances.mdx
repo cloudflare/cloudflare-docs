@@ -1,0 +1,49 @@
+---
+title: Increased Browser Rendering limits!
+description: Browser Rendering now supports more concurrent browser sessions.
+products:
+  - workers
+  - browser-rendering
+date: 2025-01-30T13:00:00Z
+---
+
+import { Render, PackageManagers, TypeScriptExample } from "~/components"
+
+[Browser Rendering](/browser-rendering/) now supports 10 concurrent browser instances per account _and_ 10 new instances per minute, up from the previous limits of 2.
+
+This allows you to launch more browser tasks from [Cloudflare Workers](/workers).
+
+To manage concurrent browser sessions, you can use [Queues](/queues/) or [Workflows](/workflows/):
+
+<TypeScriptExample filename="index.ts">
+
+```ts
+interface QueueMessage {
+  url: string;
+  waitUntil: number;
+}
+
+export interface Env {
+  BROWSER_QUEUE: Queue<QueueMessage>;
+  BROWSER: Fetcher;
+}
+
+export default {
+  async queue(batch: MessageBatch<QueueMessage>, env: Env): Promise<void> {
+    for (const message of batch.messages) {
+      const browser = await puppeteer.launch(env.BROWSER);
+      const page = await browser.newPage();
+
+      try {
+        await page.goto(message.url, {
+          waitUntil: message.waitUntil
+        });
+        // Process page...
+      } finally {
+        await browser.close();
+      }
+    }
+  }
+};
+```
+</TypeScriptExample>

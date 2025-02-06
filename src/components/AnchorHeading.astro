@@ -21,6 +21,9 @@ const slugified = GithubSlug(slug ?? title);
 const tag = `h${depth}` as "h1" | "h2" | "h3" | "h4" | "h5" | "h6";
 
 const file = await rehype()
+	.data("settings", {
+		fragment: true,
+	})
 	.use(rehypeAutoLinkHeadings)
 	.process(`<${tag} id=${slugified}>${marked.parseInline(title)}</${tag}>`);
 

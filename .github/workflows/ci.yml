@@ -34,7 +34,8 @@ jobs:
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           reporter: github-pr-review
-          fail_level: "error"
+          fail_level: error
+          filter_mode: nofilter
 
       - run: npm run format:core:check
       ## TODO: content formatting checks

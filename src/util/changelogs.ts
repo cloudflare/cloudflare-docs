@@ -84,7 +84,6 @@ export async function getWranglerChangelog(): Promise<
 	releases = releases.filter((x) => x.name.startsWith("wrangler@"));
 
 	return {
-		// @ts-expect-error id is a union of on-disk YAML files but we're adding this one dynamically
 		id: "wrangler",
 		collection: "changelogs",
 		data: {

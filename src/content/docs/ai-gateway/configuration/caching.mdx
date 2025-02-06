@@ -13,7 +13,7 @@ Enable and customize your gateway cache to serve requests directly from Cloudfla
 
 :::note
 
-Currently caching is supported only for text and image responses, and it applies only to identical requests. 
+Currently caching is supported only for text and image responses, and it applies only to identical requests.
 
 This is helpful for use cases when there are limited prompt options - for example, a support bot that asks "How can I help you?" and lets the user select an answer from a limited set of options works well with the current caching configuration.
 We plan on adding semantic search for caching in the future to improve cache hit rates.
@@ -73,7 +73,7 @@ As an example, when submitting a request to OpenAI, include the header in the fo
 
 ```bash title="Request skipping the cache"
 curl https://gateway.ai.cloudflare.com/v1/{account_id}/{gateway_id}/openai/chat/completions \
-  --header 'Authorization: Bearer $TOKEN' \
+  --header "Authorization: Bearer $TOKEN" \
   --header 'Content-Type: application/json' \
   --header 'cf-aig-skip-cache: true' \
   --data ' {
@@ -98,7 +98,7 @@ As an example, when submitting a request to OpenAI, include the header in the fo
 
 ```bash title="Request to be cached for an hour"
 curl https://gateway.ai.cloudflare.com/v1/{account_id}/{gateway_id}/openai/chat/completions \
-  --header 'Authorization: Bearer $TOKEN' \
+  --header "Authorization: Bearer $TOKEN" \
   --header 'Content-Type: application/json' \
   --header 'cf-aig-cache-ttl: 3600' \
   --data ' {

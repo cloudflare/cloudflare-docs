@@ -6,8 +6,6 @@ sidebar:
 
 ---
 
-import { GlossaryTooltip } from "~/components"
-
 To better understand Internet usage around the world, use Cloudflare's URL Scanner. With Cloudflare's URL Scanner, you have the ability to investigate the details of a domain, IP, URL, or ASN. Cloudflare's URL Scanner is available in the Security Center of the Cloudflare dashboard, [Cloudflare Radar](https://radar.cloudflare.com/scan) and the Cloudflare [API](/api/resources/url_scanner/subresources/scans/).
 
 ## Use the API
@@ -56,9 +54,9 @@ Here's an example request body with some custom configuration options:
 		"desktop", "mobile", "tablet"
 	],
   "customagent": "XXX-my-user-agent",
-  "referer": "example"
+  "referer": "example",
 	"customHeaders": {
-		"Authorization": "xxx-token",
+		"Authorization": "xxx-token"
 	},
 	"visibility": "Unlisted"
 }

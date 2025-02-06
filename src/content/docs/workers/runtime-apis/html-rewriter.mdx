@@ -30,9 +30,9 @@ Throughout the `HTMLRewriter` API, there are a few consistent types that many pr
 
 
 
-* `Content` string
+* `Content` string | Response | ReadableStream
 
-  * Content inserted in the output stream should be a string.
+  * Content inserted in the output stream should be a string, [`Response`](/workers/runtime-apis/response/), or [`ReadableStream`](/workers/runtime-apis/streams/readablestream/).
 
 * `ContentOptions` Object
 

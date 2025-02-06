@@ -89,7 +89,7 @@ export default {
 
 You can also acknowledge or negatively acknowledge messages at a batch level with `ackAll()` and `retryAll()`. Calling `ackAll()` on the batch of messages (`MessageBatch`) delivered to your consumer Worker has the same behaviour as a consumer Worker that successfully returns (does not throw an error).
 
-Note that calls to `ack()`, `retry()` and their `ackAll()` / `retryAll` equivalents follow the below precedence rules:
+Note that calls to `ack()`, `retry()` and their `ackAll()` / `retryAll()` equivalents follow the below precedence rules:
 
 - If you call `ack()` on a message, subsequent calls to `ack()` or `retry()` are silently ignored.
 - If you call `retry()` on a message and then call `ack()`: the `ack()` is ignored. The first method call wins in all cases.

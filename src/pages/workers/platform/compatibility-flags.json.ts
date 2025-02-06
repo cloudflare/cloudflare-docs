@@ -22,7 +22,7 @@ export async function GET() {
 		const { sort_date: _, ...data } = x.data;
 		return {
 			...data,
-			description: x.body.trim(),
+			description: x.body?.trim(),
 			experimental: x.data.experimental ?? false,
 		};
 	});
