@@ -1,5 +1,4 @@
 import { describe, expect, test } from "vitest";
-
 import { DOCS_BASE_URL, PREVIEW_URL_REGEX } from "./constants";
 import { filenameToPath } from "./util";
 
