@@ -8,7 +8,7 @@ entries:
   - publish_date: "2025-02-06"
     title: Added request handling
     description: |-
-      * Added [request handling options](/ai-gateway/request-handling/) to help manage AI provider interactions effectively, ensuring your applications remain responsive and reliable.
+      * Added [request handling options](/ai-gateway/configuration/request-handling/) to help manage AI provider interactions effectively, ensuring your applications remain responsive and reliable.
 
   - publish_date: "2025-02-05"
     title: New AI Gateway providers
