@@ -23,13 +23,6 @@ const workspace = defineWorkspace([
 		},
 		plugins: [tsconfigPaths()],
 	}),
-	getViteConfig({
-		test: {
-			name: "Astro",
-			include: ["**/*.astro.test.ts"],
-		},
-		plugins: [tsconfigPaths()],
-	}),
 ]);
 
 export default workspace;
