@@ -29,3 +29,5 @@ export const filenameToPath = (filename: string) => {
 		.replace(/\/index$/, "")
 		.concat("/");
 };
+
+export { slug };

@@ -32,11 +32,15 @@ jobs:
         name: Build
         env:
           NODE_OPTIONS: --max-old-space-size=4096
-      - run: npx wrangler versions upload
-        name: Deploy to Cloudflare Workers
+      - name: Deploy to Cloudflare Workers
         env:
           CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
-          WRANGLER_OUTPUT_FILE_PATH: wrangler-logs.ndjson
+        run: |
+          SHORT_SHA=$(git rev-parse --short=8 HEAD)
+          BRANCH_SLUG=$(git rev-parse --abbrev-ref HEAD | iconv -c -t ascii//TRANSLIT | sed -E 's/[~^]+//g' | sed -E 's/[^a-zA-Z0-9]+/-/g' | sed -E 's/^-+|-+$//g' | tr A-Z a-z)
+
+          npx wrangler deploy --dispatch-namespace preview-deployments --name $SHORT_SHA
+          npx wrangler deploy --dispatch-namespace preview-deployments --name $BRANCH_SLUG
       - name: Post preview URL on PR
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

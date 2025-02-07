@@ -1,22 +1,19 @@
 import * as core from "@actions/core";
 import * as github from "@actions/github";
 
-import { readFile } from "node:fs/promises";
-
 import {
 	CONTENT_BASE_PATH,
 	DOCS_BASE_URL,
 	GITHUB_ACTIONS_BOT_ID,
 	PREVIEW_URL_REGEX,
-	WRANGLER_LOGS_PATH,
 } from "./constants";
 
-import { filenameToPath } from "./util";
+import { filenameToPath, slug } from "./util";
 
 async function run(): Promise<void> {
 	try {
-		if (!process.env.GITHUB_TOKEN) {
-			core.setFailed(`Could not find GITHUB_TOKEN in env`);
+		if (!process.env.GITHUB_TOKEN || !process.env.GITHUB_REF_NAME) {
+			core.setFailed(`Could not find GITHUB_TOKEN or GITHUB_REF_NAME in env`);
 			process.exit();
 		}
 
@@ -53,22 +50,12 @@ async function run(): Promise<void> {
 				PREVIEW_URL_REGEX.test(comment.body ?? ""),
 		);
 
-		const previewUrl: string = (
-			await readFile(WRANGLER_LOGS_PATH, { encoding: "utf-8" })
-		)
-			.split("\n")
-			.filter(Boolean)
-			.map((json) => JSON.parse(json))
-			.filter((json) => json.type === "version-upload")
-			.map((json) => json.preview_url)
-			.at(0);
+		const previewUrl = {
+			branch: `https://${slug(process.env.GITHUB_REF_NAME)}.preview.developers.cloudflare.com`,
+			commit: `https://${ctx.sha.slice(0, 8)}.preview.developers.cloudflare.com`,
+		};
 
-		if (!previewUrl) {
-			core.setFailed(`Found no version-upload at ${WRANGLER_LOGS_PATH}`);
-			process.exit();
-		}
-
-		core.debug(previewUrl);
+		core.debug(JSON.stringify(previewUrl));
 
 		const changedFiles = files
 			.filter(
@@ -81,14 +68,14 @@ async function run(): Promise<void> {
 			.slice(0, 15) // Limit to 15 entries
 			.map(({ filename }) => {
 				const original = `${DOCS_BASE_URL}/${filenameToPath(filename)}`;
-				const preview = `${previewUrl}/${filenameToPath(filename)}`;
+				const preview = `${previewUrl.branch}/${filenameToPath(filename)}`;
 
 				core.debug([filename, original, preview].toString());
 
 				return { original, preview };
 			});
 
-		let comment = `**Preview URL:** ${previewUrl}`;
+		let comment = `**Preview URL:** ${previewUrl.branch}`;
 		if (changedFiles.length !== 0) {
 			comment = comment.concat(
 				`**Files with changes (up to 15)**\n\n| Original Link | Updated Link |\n| --- | --- |\n${changedFiles
