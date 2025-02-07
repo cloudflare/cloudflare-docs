@@ -5,6 +5,18 @@ productLink: "/cloudflare-one/connections/connect-devices/warp/"
 productArea: Cloudflare One
 productAreaLink: /cloudflare-one/changelog/
 entries:
+  - publish_date: "2025-02-07"
+    title: WARP client for macOS (version 2025.1.634.1)
+    description: |-
+      A new beta release for the macOS WARP client is now available on the [Downloads page](/cloudflare-one/connections/connect-devices/warp/download-warp/beta-releases/). This release contains only a hotfix from the 2025.1.447.1 release.
+
+      Note: If using macOS Sequoia, Cloudflare recommends the use of macOS 15.2 or later. With macOS 15.2, Apple addressed several issues that may have caused the WARP client to not behave as expected when used with macOS 15.0.x.
+
+      **Changes and improvements**
+      - Improved device registration retrieval for graceful restarts
+
+      **Known issues**
+      - macOS Sequoia: Due to changes Apple introduced in macOS 15.0.x, the WARP client may not behave as expected. Cloudflare recommends the use of macOS 15.2 or later.
   - publish_date: "2025-01-28"
     title: WARP client for macOS (version 2025.1.447.1)
     description: |-
