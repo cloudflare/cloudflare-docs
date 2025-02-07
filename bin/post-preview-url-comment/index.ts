@@ -20,6 +20,8 @@ async function run(): Promise<void> {
 		const octokit = github.getOctokit(process.env.GITHUB_TOKEN);
 		const ctx = github.context;
 
+		core.info(`Finding pull requests for ${ctx.ref}`);
+
 		const { data: pulls } = await octokit.rest.pulls.list({
 			...ctx.repo,
 			head: ctx.ref,
@@ -32,11 +34,15 @@ async function run(): Promise<void> {
 			process.exit();
 		}
 
+		core.info(`Found ${pull_number}`);
+
 		const files = await octokit.paginate(octokit.rest.pulls.listFiles, {
 			...ctx.repo,
 			pull_number,
 			per_page: 100,
 		});
+
+		core.info(`Found ${files.length} changed files for ${pull_number}`);
 
 		const { data: comments } = await octokit.rest.issues.listComments({
 			...ctx.repo,
@@ -50,12 +56,20 @@ async function run(): Promise<void> {
 				PREVIEW_URL_REGEX.test(comment.body ?? ""),
 		);
 
+		if (existingComment) {
+			core.info(`Found existing comment with ID ${existingComment.id}`);
+		} else {
+			core.info(`No existing comment found`);
+		}
+
 		const previewUrl = {
 			branch: `https://${branchToSubdomain(process.env.GITHUB_REF_NAME)}.preview.developers.cloudflare.com`,
 			commit: `https://${ctx.sha.slice(0, 8)}.preview.developers.cloudflare.com`,
 		};
 
-		core.debug(JSON.stringify(previewUrl));
+		core.info(
+			`Commit URL: ${previewUrl.commit}\nBranch URL:${previewUrl.branch}`,
+		);
 
 		const changedFiles = files
 			.filter(
@@ -70,13 +84,17 @@ async function run(): Promise<void> {
 				const original = `${DOCS_BASE_URL}/${filenameToPath(filename)}`;
 				const preview = `${previewUrl.branch}/${filenameToPath(filename)}`;
 
-				core.debug([filename, original, preview].toString());
+				core.info(
+					`Filename: ${filename}\nOriginal: ${original}\nPreview: ${preview}`,
+				);
 
 				return { original, preview };
 			});
 
 		let comment = `**Preview URL:** ${previewUrl.commit}\n**Preview Branch URL:** ${previewUrl.branch}`;
 		if (changedFiles.length !== 0) {
+			core.info(`Found ${changedFiles.length} after filtering paths`);
+
 			comment = comment.concat(
 				`\n\n**Files with changes (up to 15)**\n\n| Original Link | Updated Link |\n| --- | --- |\n${changedFiles
 					.map(
@@ -88,6 +106,9 @@ async function run(): Promise<void> {
 		}
 
 		if (existingComment) {
+			core.info(
+				`Updating ${existingComment.id} with ${JSON.stringify(comment)}`,
+			);
 			await octokit.rest.issues.updateComment({
 				owner: ctx.repo.owner,
 				repo: ctx.repo.repo,
@@ -95,6 +116,7 @@ async function run(): Promise<void> {
 				body: comment,
 			});
 		} else {
+			core.info(`Creating new comment with ${JSON.stringify(comment)}`);
 			await octokit.rest.issues.createComment({
 				owner: ctx.repo.owner,
 				repo: ctx.repo.repo,

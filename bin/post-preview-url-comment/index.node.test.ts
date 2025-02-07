@@ -2,15 +2,24 @@ import { describe, expect, test } from "vitest";
 import { DOCS_BASE_URL, PREVIEW_URL_REGEX } from "./constants";
 import { filenameToPath, branchToSubdomain } from "./util";
 
-test("PREVIEW_URL_REGEX", () => {
-	const comment =
-		"**Preview URL:** https://ac148943-cloudflare-docs.cloudflare-docs.workers.dev";
-	const matches = comment.match(PREVIEW_URL_REGEX);
+describe("PREVIEW_URL_REGEX", () => {
+	test("no changed files", () => {
+		const comment =
+			"**Preview URL:** https://e9c79bc3.preview.developers.cloudflare.com\n**Preview Branch URL:** https://kian-pcx-15803.preview.developers.cloudflare.com";
 
-	expect(matches).toBeDefined();
-	expect(matches![1]).toEqual(
-		"https://ac148943-cloudflare-docs.cloudflare-docs.workers.dev",
-	);
+		expect(PREVIEW_URL_REGEX.test(comment)).toBe(true);
+	});
+
+	test("changed files", () => {
+		const comment =
+			"**Preview URL:** https://e9c79bc3.preview.developers.cloudflare.com\n**Preview Branch URL:** https://kian-pcx-15803.preview.developers.cloudflare.com\n\n**Files with changes (up to 15)**\n\n| Original Link | Updated Link |\n| --- | --- |\n| [https://developers.cloudflare.com/workers/get-started/guide/](https://developers.cloudflare.com/workers/get-started/guide/) | [https://kian-pcx-15803.preview.developers.cloudflare.com/workers/get-started/guide/](https://kian-pcx-15803.preview.developers.cloudflare.com/workers/get-started/guide/) |";
+
+		expect(PREVIEW_URL_REGEX.test(comment)).toBe(true);
+	});
+
+	test("empty", () => {
+		expect(PREVIEW_URL_REGEX.test("")).toBe(false);
+	});
 });
 
 describe("branchToSubdomain", () => {
