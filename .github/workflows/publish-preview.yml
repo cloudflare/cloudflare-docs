@@ -36,21 +36,11 @@ jobs:
         name: Deploy to Cloudflare Workers
         env:
           CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
-          WRANGLER_OUTPUT_FILE_PATH: wrangler-logs.json
+          WRANGLER_OUTPUT_FILE_PATH: wrangler-logs.ndjson
       - name: Post preview URL on PR
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: |
-          PR=$(gh pr list --head ${{ github.ref_name }} --limit 1 --json number --jq '.[].number')
-
-          if [ -n "$PR" ]; then
-            URL=$(cat wrangler-logs.json | jq -r 'select(.type=="version-upload") | .preview_url')
-
-            if [ -n "$URL" ]; then
-              BODY="**Preview URL:** $URL"
-              gh pr comment "$PR" --edit-last --body "$BODY" || gh pr comment "$PR" --body "$BODY"
-            fi
-          fi
+        run: npx tsx bin/post-preview-url-comment/index.ts
       - uses: actions/cache/save@v4
         if: always()
         with:

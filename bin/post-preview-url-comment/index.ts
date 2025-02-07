@@ -1,12 +1,14 @@
 import * as core from "@actions/core";
 import * as github from "@actions/github";
 
+import { readFile } from "node:fs/promises";
+
 import {
 	CONTENT_BASE_PATH,
 	DOCS_BASE_URL,
-	EXISTING_COMMENT_SUBSTRING,
 	GITHUB_ACTIONS_BOT_ID,
 	PREVIEW_URL_REGEX,
+	WRANGLER_LOGS_PATH,
 } from "./constants";
 
 import { filenameToPath } from "./util";
@@ -15,56 +17,52 @@ async function run(): Promise<void> {
 	try {
 		const token = core.getInput("GITHUB_TOKEN", { required: true });
 		const octokit = github.getOctokit(token);
-
 		const ctx = github.context;
 
-		if (!ctx.payload.issue) {
-			core.setFailed(`Payload ${ctx.payload} is missing an 'issue' property`);
+		const { data: pulls } = await octokit.rest.pulls.list({
+			...ctx.repo,
+			head: ctx.ref,
+		});
+
+		const pull_number = pulls.at(0)?.number;
+
+		if (!pull_number) {
+			core.setFailed(`Could not find pull requests for ${ctx.ref}`);
 			process.exit();
 		}
 
-		const issue = ctx.payload.issue.number;
-
 		const files = await octokit.paginate(octokit.rest.pulls.listFiles, {
 			...ctx.repo,
-			pull_number: issue,
+			pull_number,
 			per_page: 100,
 		});
 
 		const { data: comments } = await octokit.rest.issues.listComments({
-			owner: ctx.repo.owner,
-			repo: ctx.repo.repo,
-			issue_number: issue,
+			...ctx.repo,
+			issue_number: pull_number,
 			per_page: 100,
 		});
 
 		const existingComment = comments.find(
 			(comment) =>
 				comment.user?.id === GITHUB_ACTIONS_BOT_ID &&
-				comment.body?.includes(EXISTING_COMMENT_SUBSTRING),
-		);
-
-		const urlComment = comments.find(
-			(comment) =>
-				comment.user?.id === GITHUB_ACTIONS_BOT_ID &&
 				PREVIEW_URL_REGEX.test(comment.body ?? ""),
 		);
 
-		if (!urlComment || !urlComment.body) {
-			core.setFailed(
-				`Could not find a comment from ${GITHUB_ACTIONS_BOT_ID} on ${issue}`,
-			);
+		const previewUrl: string = (
+			await readFile(WRANGLER_LOGS_PATH, { encoding: "utf-8" })
+		)
+			.split("\n")
+			.filter(Boolean)
+			.map((json) => JSON.parse(json))
+			.filter((json) => json.type === "version-upload")
+			.map((json) => json.preview_url)
+			.at(0);
+
+		if (!previewUrl) {
+			core.setFailed(`Found no version-upload at ${WRANGLER_LOGS_PATH}`);
 			process.exit();
 		}
-
-		const match = urlComment.body.match(PREVIEW_URL_REGEX);
-
-		if (!match) {
-			core.setFailed(`Could not extract URL from ${urlComment.body}`);
-			process.exit();
-		}
-
-		const previewUrl = match[1];
 
 		core.debug(previewUrl);
 
@@ -86,30 +84,31 @@ async function run(): Promise<void> {
 				return { original, preview };
 			});
 
-		if (changedFiles.length === 0) {
-			return;
+		let comment = `**Preview URL:** ${previewUrl}`;
+		if (changedFiles.length !== 0) {
+			comment = comment.concat(
+				`**Files with changes (up to 15)**\n\n| Original Link | Updated Link |\n| --- | --- |\n${changedFiles
+					.map(
+						(file) =>
+							`| [${file.original}](${file.original}) | [${file.preview}](${file.preview}) |`,
+					)
+					.join("\n")}`,
+			);
 		}
-
-		const commentBody = `**Files with changes (up to 15)**\n\n| Original Link | Updated Link |\n| --- | --- |\n${changedFiles
-			.map(
-				(file) =>
-					`| [${file.original}](${file.original}) | [${file.preview}](${file.preview}) |`,
-			)
-			.join("\n")}`;
 
 		if (existingComment) {
 			await octokit.rest.issues.updateComment({
 				owner: ctx.repo.owner,
 				repo: ctx.repo.repo,
 				comment_id: existingComment.id,
-				body: commentBody,
+				body: comment,
 			});
 		} else {
 			await octokit.rest.issues.createComment({
 				owner: ctx.repo.owner,
 				repo: ctx.repo.repo,
-				issue_number: issue,
-				body: commentBody,
+				issue_number: pull_number,
+				body: comment,
 			});
 		}
 	} catch (error) {
