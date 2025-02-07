@@ -75,10 +75,10 @@ async function run(): Promise<void> {
 				return { original, preview };
 			});
 
-		let comment = `**Preview URL:** ${previewUrl.branch}`;
+		let comment = `**Preview URL:** ${previewUrl.commit}\n**Preview Branch URL:** ${previewUrl.branch}`;
 		if (changedFiles.length !== 0) {
 			comment = comment.concat(
-				`**Files with changes (up to 15)**\n\n| Original Link | Updated Link |\n| --- | --- |\n${changedFiles
+				`\n\n**Files with changes (up to 15)**\n\n| Original Link | Updated Link |\n| --- | --- |\n${changedFiles
 					.map(
 						(file) =>
 							`| [${file.original}](${file.original}) | [${file.preview}](${file.preview}) |`,
