@@ -122,7 +122,7 @@ const FieldCatalog = ({ fields }: { fields: Fields }) => {
 						>
 							<div className="-mb-1 flex items-center">
 								<span
-									className="font-semibold text-lg text-ellipsis overflow-hidden whitespace-nowrap"
+									className="overflow-hidden text-ellipsis whitespace-nowrap text-lg font-semibold"
 									title={`${field.name}: ${field.data_type}`}
 								>
 									{field.name}
