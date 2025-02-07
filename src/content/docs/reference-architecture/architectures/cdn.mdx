@@ -10,7 +10,7 @@ sidebar:
 updated: 2022-12-02
 ---
 
-import { Render } from "~/components";
+import { Render, PublicStats } from "~/components";
 
 ## Introduction
 
@@ -128,7 +128,7 @@ In the above diagram, there are a few important key points to understand about t
 - An important differentiator is that Cloudflare utilizes one global network and runs every service on every server in every Cloudflare data center, thus providing end users the closest proximity to Cloudflare’s services, with the highest scale, resiliency, and performance.
 - Cloudflare is a reverse proxy, meaning it receives requests from clients and proxies the requests back to the customer’s origin servers. Thus, every request traverses through Cloudflare’s network before reaching the customer’s network. Since Cloudflare has hardened and protected its infrastructure at the edge (ingress), all customers are consequently also protected from infrastructure-level and volumetric DDoS attacks. Requests and traffic must go through the protected Cloudflare network before reaching the customer’s origin server.
 - The Cloudflare CDN leverages the Cloudflare global anycast network. Thus the incoming request is routed to and answered by the node closest to the user.
-- The inherent benefits of anycast are decreased latency, network resiliency, higher availability, and increased security due to larger surface area for absorbing both legitimate traffic loads and DDoS attacks. Cloudflare’s global anycast network spans [hundreds of cities worldwide](https://www.cloudflare.com/network/), reaching 95% of the world’s Internet-connected population within 50 milliseconds while providing over 280 Tbps of network capacity and DDoS protection capability.
+- The inherent benefits of anycast are decreased latency, network resiliency, higher availability, and increased security due to larger surface area for absorbing both legitimate traffic loads and DDoS attacks. Cloudflare’s global anycast network spans [hundreds of cities worldwide](https://www.cloudflare.com/network/), reaching 95% of the world’s Internet-connected population within 50 milliseconds while providing <PublicStats id="total_bandwidth" /> and DDoS protection capability.
 - Edge nodes within the Cloudflare network cache content from the origin server and are able to respond to requests via a cached copy. Cloudflare also provides [DNS](/dns/), [DDoS protection](/ddos-protection/), [WAF](/waf/), and other performance, reliability, and security services using the same edge architecture.
 - [Argo](/argo-smart-routing/) uses optimized routing and caching technology across the Cloudflare network to deliver responses to users more quickly, reliably, and securely. Argo includes Smart Routing and [Tiered Cache](/cache/how-to/tiered-cache/). Cloudflare leverages Argo to provide an enhanced CDN solution.
 
