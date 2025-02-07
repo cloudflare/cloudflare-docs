@@ -46,9 +46,9 @@ A site set up in high availability (HA) mode has two Magic WAN Connectors with t
 
 ### Active/Standby Election
 
-During the LAN configuration, one of the LAN links is configured as a HA link, which is used to exchange heartbeats, resulting in the active / standby electron of nodes.
+During the LAN configuration, one of the LAN links is configured as a HA link, which is used to exchange heartbeats, resulting in the active / standby election of nodes.
 
-The state election uses a `PRIORITY` parameter where the node  with the higher priority becomes active and the other assumes the standby state. If the priority is the same, the state machine picks one of the nodes as active.
+The state election uses a `PRIORITY` parameter where the node with the higher priority becomes active and the other assumes the standby state. If the priority is the same, the state machine automatically picks one of the nodes as active.
 
 The HA pair is configured in non-preemptive mode, meaning that once a node becomes active, it will remain active unless its priority drops below that of the other node.
 
@@ -73,6 +73,6 @@ The Magic WAN Connector's health can be in one of three states:
   - All LAN interfaces are disconnected
   - Connector software is not healthy
 
-A failover happens when the active node's health declines to a level lower than that of the standby node. For example, from `GOOD` to `DEGRADED` or from `DEGRADED` to `DOWN`. In the case of a failover where a Connector is acting as a DHCP server, DHCP leases will be synchronized.
+A failover happens when the active node's health declines to a level lower than that of the standby node. For example, from `GOOD` to `DEGRADED`, or from `DEGRADED` to `DOWN`. In the case of a failover where a Connector is acting as a DHCP server, DHCP leases will be synchronized.
 
 When a failover occurs, traffic is moved to the new active node. It could take up to 30 seconds for traffic to be fully restored over the new active node.
