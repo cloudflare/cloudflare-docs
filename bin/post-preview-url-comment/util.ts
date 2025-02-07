@@ -1,5 +1,5 @@
 import { slug } from "github-slugger";
-
+import { execSync } from "node:child_process";
 import { CONTENT_BASE_PATH } from "./constants";
 
 export const filenameToPath = (filename: string) => {
@@ -30,4 +30,9 @@ export const filenameToPath = (filename: string) => {
 		.concat("/");
 };
 
-export { slug };
+export const branchToSubdomain = (branch: string) => {
+	return execSync(
+		`echo "${branch}" | iconv -c -t ascii//TRANSLIT | sed -E 's/[~^]+//g' | sed -E 's/[^a-zA-Z0-9]+/-/g' | sed -E 's/^-+|-+$//g' | tr A-Z a-z`,
+		{ encoding: "utf-8" },
+	).trim();
+};

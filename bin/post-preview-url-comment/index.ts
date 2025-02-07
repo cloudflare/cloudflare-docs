@@ -8,7 +8,7 @@ import {
 	PREVIEW_URL_REGEX,
 } from "./constants";
 
-import { filenameToPath, slug } from "./util";
+import { filenameToPath, branchToSubdomain } from "./util";
 
 async function run(): Promise<void> {
 	try {
@@ -51,7 +51,7 @@ async function run(): Promise<void> {
 		);
 
 		const previewUrl = {
-			branch: `https://${slug(process.env.GITHUB_REF_NAME)}.preview.developers.cloudflare.com`,
+			branch: `https://${branchToSubdomain(process.env.GITHUB_REF_NAME)}.preview.developers.cloudflare.com`,
 			commit: `https://${ctx.sha.slice(0, 8)}.preview.developers.cloudflare.com`,
 		};
 

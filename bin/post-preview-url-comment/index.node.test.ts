@@ -1,6 +1,6 @@
 import { describe, expect, test } from "vitest";
 import { DOCS_BASE_URL, PREVIEW_URL_REGEX } from "./constants";
-import { filenameToPath } from "./util";
+import { filenameToPath, branchToSubdomain } from "./util";
 
 test("PREVIEW_URL_REGEX", () => {
 	const comment =
@@ -11,6 +11,20 @@ test("PREVIEW_URL_REGEX", () => {
 	expect(matches![1]).toEqual(
 		"https://ac148943-cloudflare-docs.cloudflare-docs.workers.dev",
 	);
+});
+
+describe("branchToSubdomain", () => {
+	test("slash", () => {
+		expect(branchToSubdomain("kian/pcx-15803")).toEqual("kian-pcx-15803");
+	});
+
+	test("normal", () => {
+		expect(branchToSubdomain("pcx-15803")).toEqual("pcx-15803");
+	});
+
+	test("capitalisation", () => {
+		expect(branchToSubdomain("PCX-15803")).toEqual("pcx-15803");
+	});
 });
 
 describe("filenameToPath", () => {
