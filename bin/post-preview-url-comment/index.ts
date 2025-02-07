@@ -12,19 +12,20 @@ import { filenameToPath, branchToSubdomain } from "./util";
 
 async function run(): Promise<void> {
 	try {
-		if (!process.env.GITHUB_TOKEN || !process.env.GITHUB_REF_NAME) {
-			core.setFailed(`Could not find GITHUB_TOKEN or GITHUB_REF_NAME in env`);
+		if (!process.env.GITHUB_TOKEN) {
+			core.setFailed(`Could not find GITHUB_TOKEN in env`);
 			process.exit();
 		}
 
 		const octokit = github.getOctokit(process.env.GITHUB_TOKEN);
 		const ctx = github.context;
+		const branch = ctx.ref.replace("refs/heads/", "");
 
 		core.info(`Finding pull requests for ${ctx.ref}`);
 
 		const { data: pulls } = await octokit.rest.pulls.list({
 			...ctx.repo,
-			head: ctx.ref,
+			head: `${ctx.repo.owner}:${branch}`,
 		});
 
 		const pull_number = pulls.at(0)?.number;
@@ -63,12 +64,12 @@ async function run(): Promise<void> {
 		}
 
 		const previewUrl = {
-			branch: `https://${branchToSubdomain(process.env.GITHUB_REF_NAME)}.preview.developers.cloudflare.com`,
+			branch: `https://${branchToSubdomain(branch)}.preview.developers.cloudflare.com`,
 			commit: `https://${ctx.sha.slice(0, 8)}.preview.developers.cloudflare.com`,
 		};
 
 		core.info(
-			`Commit URL: ${previewUrl.commit}\nBranch URL:${previewUrl.branch}`,
+			`Commit URL: ${previewUrl.commit}\nBranch URL: ${previewUrl.branch}`,
 		);
 
 		const changedFiles = files
