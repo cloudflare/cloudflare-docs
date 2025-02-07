@@ -30,7 +30,7 @@ const props = {
 	{
 		notes.map(async (entry) => {
 			const date = format(entry.data.date, "MMM dd, yyyy");
-			const time = format(entry.data.date, "hh:mm a");
+
 			const productIds = JSON.stringify(
 				entry.data.products.map((product) => product.id),
 			);
@@ -41,10 +41,9 @@ const props = {
 				<div class="!mt-0 sm:flex" data-products={productIds}>
 					<time
 						datetime={entry.data.date.toISOString()}
-						class="whitespace-nowrap leading-none sm:pr-4 sm:text-right"
+						class="whitespace-nowrap leading-6 sm:pr-4 sm:text-right"
 					>
 						<strong class="text-xs">{date}</strong>
-						<span class="text-xs sm:block">{time}</span>
 					</time>
 					<Steps>
 						<ol class="!mt-0 overflow-x-auto">
