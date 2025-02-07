@@ -1922,6 +1922,7 @@
 /workers/reference/apis/* /workers/runtime-apis/:splat 301
 /workers/templates/pages/* /workers/examples/:splat 301
 /workers/observability/logging/* /workers/observability/logs/:splat 301
+/workers/tutorials/generate-dynamic-og-images-using-workers/ /workers/tutorials 302
 
 # Others
 /ssl/custom-certificates/* /ssl/edge-certificates/custom-certificates/:splat 301
