@@ -15,7 +15,7 @@ For use cases and limitations, refer to [custom certificates](/cloudflare-for-pl
 
 ## Upload certificates
 
-This section describes the general process for uploading a custom certificate corresponding to one of the [supported types](/cloudflare-for-platforms/cloudflare-for-saas/security/certificate-management/custom-certificates/#limitations). If you must support both RSA and ECDSA with the same certificate refer to [TBD](#) below.
+This section describes the general process for uploading a custom certificate corresponding to one of the [supported types](/cloudflare-for-platforms/cloudflare-for-saas/security/certificate-management/custom-certificates/#limitations). If you must support both RSA and ECDSA refer to [certificate packs](#use-certificate-packs-rsa-and-ecdsa) below.
 
 <Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
 
@@ -57,19 +57,25 @@ The serial number returned is unique to the issuer, but not globally unique. Add
 
 </TabItem> </Tabs>
 
-## Upload certificate packs: RSA and ECDSA uploads
+## Use certificate packs: RSA and ECDSA
 
-A certificate pack can support up to one RSA certificate and one ECDSA certificate.
+A certificate pack allows you to upload up to one RSA and one ECDSA custom certificates.
 
-To upload an RSA and/or ECDSA certificate to a custom hostname certificate pack, use a [POST request](/api/resources/custom_hostnames/methods/create/) with the `custom_cert_bundle` property. Use a [PATCH request](/api/resources/custom_hostnames/methods/edit/) to edit an RSA and/or ECDSA certificate to a custom hostname.
+To upload an RSA and ECDSA certificate to a custom hostname, use the `custom_cert_bundle` property when making a POST request to the [Create Custom Hostname](/api/resources/custom_hostnames/methods/create/) endpoint.
 
-### Delete a custom certificate and private key for custom hostname
+You can also use `custom_cert_bundle` with a PATCH request to the [Edit Custom Hostname](/api/resources/custom_hostnames/methods/edit/) endpoint.
 
-Use a [DELETE request](/api/resources/custom_hostnames/subresources/certificate_pack/) to remove one custom certificate and key from a custom hostname. You cannot delete a certificate if it is the only remaining certificate in the pack.
+### Delete a custom certificate and private key
 
-### Replace a custom certificate and private key in custom hostname
+Use the [Delete Single Certificate And Key For Custom Hostname](/api/resources/custom_hostnames/subresources/certificate_pack/subresources/certificates/methods/delete/) endpoint to remove one of the custom certificates and corresponding key from a certificate pack.
 
-Use a [PUT request](/api/resources/custom_hostnames/subresources/certificate_pack/subresources/certificates/methods/update/) to replace a single custom certificate within a certificate pack that contains two bundled certificates. You can only replace an RSA certificate with another RSA certificate, or an ECDSA certificate with another ECDSA certificate.
+You cannot delete a certificate if it is the only remaining certificate in the pack.
+
+### Replace a custom certificate and private key
+
+To replace a single custom certificate within a certificate pack that contains two bundled certificates, use the [Replace Custom Certificate And Custom Key In Custom Hostname](/api/resources/custom_hostnames/subresources/certificate_pack/subresources/certificates/methods/update/) endpoint.
+
+You can only replace an RSA certificate with another RSA certificate, or an ECDSA certificate with another ECDSA certificate.
 
 ***
 
