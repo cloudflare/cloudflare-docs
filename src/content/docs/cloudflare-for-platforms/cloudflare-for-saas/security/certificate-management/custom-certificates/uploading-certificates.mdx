@@ -1,21 +1,26 @@
 ---
 title: Manage custom certificates
 pcx_content_type: how-to
+description: Learn how to manage custom certificates for your Cloudflare for SaaS custom hostnames.
 sidebar:
   order: 6
 head:
   - tag: title
-    content: Manage custom certificates — Cloudflare for SaaS
+    content: Manage custom certificates
 
 ---
 
 import { Render, TabItem, Tabs } from "~/components"
 
-For use cases and limitations, refer to [custom certificates](/cloudflare-for-platforms/cloudflare-for-saas/security/certificate-management/custom-certificates/).
+Learn how to manage custom certificates for your Cloudflare for SaaS custom hostnames. For use cases and limitations, refer to [custom certificates](/cloudflare-for-platforms/cloudflare-for-saas/security/certificate-management/custom-certificates/).
 
 ## Upload certificates
 
-This section describes the general process for uploading a custom certificate corresponding to one of the [supported types](/cloudflare-for-platforms/cloudflare-for-saas/security/certificate-management/custom-certificates/#limitations). If you must support both RSA and ECDSA refer to [certificate packs](#use-certificate-packs-rsa-and-ecdsa) below.
+This section describes the general process for uploading a custom certificate corresponding to one of the [supported types](/cloudflare-for-platforms/cloudflare-for-saas/security/certificate-management/custom-certificates/#limitations).
+
+:::note
+If you must support both RSA and ECDSA refer to [certificate packs](#use-certificate-packs-rsa-and-ecdsa) below.
+:::
 
 <Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
 
@@ -61,9 +66,9 @@ The serial number returned is unique to the issuer, but not globally unique. Add
 
 A certificate pack allows you to upload up to one RSA and one ECDSA custom certificates to a custom hostname. This process is currently only supported via API.
 
-To upload an RSA and ECDSA certificate to a custom hostname, use the `custom_cert_bundle` property when making a `POST` request to the [Create Custom Hostname](/api/resources/custom_hostnames/methods/create/) endpoint.
+To upload an RSA and ECDSA certificate to a custom hostname, set the `bundle_method` to `force` and define the `custom_cert_bundle` property when [creating a custom hostname via API](/api/resources/custom_hostnames/methods/create/).
 
-You can also use `custom_cert_bundle` with a `PATCH` request to the [Edit Custom Hostname](/api/resources/custom_hostnames/methods/edit/) endpoint.
+You can also use `"bundle_method": "force"` and `custom_cert_bundle` with a `PATCH` request to the [Edit Custom Hostname](/api/resources/custom_hostnames/methods/edit/) endpoint.
 
 ### Delete a custom certificate and private key
 
