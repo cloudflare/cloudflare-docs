@@ -33,7 +33,7 @@ A non-zero value set up for the VLAN ID field in your WAN/LAN is used to handle 
 
 You can setup VLAN IDs both for WAN and LAN. Refer to [Configure hardware connector](/magic-wan/configuration/connector/configure-hardware-connector/) or [Configure software connector](/magic-wan/configuration/connector/configure-virtual-connector/) to learn where you can set up VLAN IDs.
 
-## High availability for Magic WAN Connector
+## High availability configurations
 
 ### Terminology
 
@@ -73,6 +73,6 @@ The Magic WAN Connector's health can be in one of three states:
   - All LAN interfaces are disconnected
   - Connector software is not healthy
 
-A failover happens when the active node's health declines to a level lower than that of the standby node. For example, from `GOOD` to `DEGRADED` or from `DEGRADED` to `DOWN`.
+A failover happens when the active node's health declines to a level lower than that of the standby node. For example, from `GOOD` to `DEGRADED` or from `DEGRADED` to `DOWN`. In the case of a failover where a Connector is acting as a DHCP server, DHCP leases will be synchronized.
 
 When a failover occurs, traffic is moved to the new active node. It could take up to 30 seconds for traffic to be fully restored over the new active node.
