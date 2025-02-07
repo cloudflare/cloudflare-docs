@@ -39,7 +39,7 @@ jobs:
           WRANGLER_OUTPUT_FILE_PATH: wrangler-logs.ndjson
       - name: Post preview URL on PR
         env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: npx tsx bin/post-preview-url-comment/index.ts
       - uses: actions/cache/save@v4
         if: always()
