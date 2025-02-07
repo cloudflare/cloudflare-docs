@@ -15,8 +15,12 @@ import { filenameToPath } from "./util";
 
 async function run(): Promise<void> {
 	try {
-		const token = core.getInput("GITHUB_TOKEN", { required: true });
-		const octokit = github.getOctokit(token);
+		if (!process.env.GITHUB_TOKEN) {
+			core.setFailed(`Could not find GITHUB_TOKEN in env`);
+			process.exit();
+		}
+
+		const octokit = github.getOctokit(process.env.GITHUB_TOKEN);
 		const ctx = github.context;
 
 		const { data: pulls } = await octokit.rest.pulls.list({
