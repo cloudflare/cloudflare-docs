@@ -52,9 +52,9 @@ The sections below describe specific behaviors and expected outcomes when you ha
 ### Predefined time to live
 
 
-By default, all proxied records have a time to live (TTL) of **Auto**, which is set to 300 seconds.
+By default, all proxied records have a time to live (TTL) of **Auto**, which is set to 300 seconds. This value cannot be edited.
 
-Since only [records used for IP address resolution](/dns/manage-dns-records/reference/dns-record-types/#ip-address-resolution) can be proxied, this setting ensures that queries to your domain name resolve fairly quickly. This setting also means that any changes to proxied A, AAAA, or CNAME records will take place within five minutes or less.
+Since only [records used for IP address resolution](/dns/manage-dns-records/reference/dns-record-types/#ip-address-resolution) can be proxied, this setting ensures that potential changes to the assigned [anycast IP address](/fundamentals/concepts/cloudflare-ip-addresses/) will take effect quickly, as recursive resolvers will not cache them for longer than 300 seconds (five minutes).
 
 :::note
 It may take longer than five minutes for you to actually experience record changes, as your local DNS cache may take longer to update.
