@@ -11,7 +11,7 @@ import { DirectoryListing, Render } from "~/components";
 
 <Render
   file="casb/integration-description"
-  params={{ one: "Google Workspace", two: "Google Workspace account" }}
+  params={{ integrationName: "Google Workspace", integrationAccountType: "Google Workspace account" }}
 />
 
 This integration covers the following Google Workspace products:
@@ -40,7 +40,7 @@ These permissions follow the principle of least privilege to ensure that only th
 
 <Render
   file="casb/security-findings"
-  params={{ one: "Google Workspace", two: "google-workspace" }}
+  params={{ integrationName: "Google Workspace", slugRelativePath: "google-workspace" }}
 />
 
 ### User account settings

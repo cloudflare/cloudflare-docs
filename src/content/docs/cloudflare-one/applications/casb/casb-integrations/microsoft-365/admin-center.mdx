@@ -10,7 +10,7 @@ import { GlossaryTooltip, Render } from "~/components";
 
 <Render
   file="casb/integration-description"
-  params={{ one: "Admin Center", two: "Microsoft 365 account" }}
+  params={{ integrationName: "Admin Center", integrationAccountType: "Microsoft 365 account" }}
 />
 
 ## Integration prerequisites
@@ -21,14 +21,14 @@ import { GlossaryTooltip, Render } from "~/components";
 
 <Render
   file="casb/integration-perms"
-  params={{ one: "Microsoft 365", two: "microsoft-365" }}
+  params={{ parentIntegration: "Microsoft 365", parentSlug: "microsoft-365" }}
 />
 
 ## Security findings
 
 <Render
   file="casb/security-findings"
-  params={{ one: "Admin Center", two: "microsoft-365/admin-center" }}
+  params={{ integrationName: "Admin Center", slugRelativePath: "microsoft-365/admin-center" }}
 />
 
 ### User account settings
