@@ -3,6 +3,8 @@ pcx_content_type: how-to
 title: Google Workspace
 ---
 
+import { GlossaryTooltip, Render } from "~/components";
+
 :::note
 
 The Google Workspace IdP integration is not supported if your Google Workspace account is protected by Access.
@@ -99,3 +101,9 @@ To test that your connection is working, go to **Authentication** > **Login meth
 	"name": "my example idp"
 }
 ```
+
+## Troubleshooting
+
+### `Error 401: deleted_client`
+
+<Render file="access/error-401" product="cloudflare-one" />

@@ -18,7 +18,7 @@ sidebar:
 updated: 2024-09-07
 ---
 
-import { Render } from "~/components";
+import { Render, PublicStats } from "~/components";
 
 Download a [PDF version](/reference-architecture/static/cloudflare-evolving-to-a-sase-architecture.pdf) of this reference architecture.
 
@@ -31,7 +31,7 @@ Cloudflare One is a secure access service edge (SASE) platform that protects ent
 - Protecting data in order to comply with regulations and prevent leaks
 - Simplifying connectivity across offices, data centers, and cloud environments
 
-Cloudflare One is built on Cloudflare's [connectivity cloud](https://www.cloudflare.com/connectivity-cloud/), ​​a unified, intelligent platform of programmable cloud-native services that enable any-to-any connectivity between all networks (enterprise and Internet), cloud environments, applications, and users. It is one of the [largest global networks](https://www.cloudflare.com/network/), with data centers spanning [hundreds of cities worldwide](https://www.cloudflare.com/network/) and interconnection with over 12,500 other networks. It also has a greater presence in [core Internet exchanges](https://bgp.he.net/report/exchanges#_participants) than many other large technology companies.
+Cloudflare One is built on Cloudflare's [connectivity cloud](https://www.cloudflare.com/connectivity-cloud/), ​​a unified, intelligent platform of programmable cloud-native services that enable any-to-any connectivity between all networks (enterprise and Internet), cloud environments, applications, and users. It is one of the [largest global networks](https://www.cloudflare.com/network/), with data centers spanning [hundreds of cities worldwide](https://www.cloudflare.com/network/) and interconnection with <PublicStats id="network_peers" />. It also has a greater presence in [core Internet exchanges](https://bgp.he.net/report/exchanges#_participants) than many other large technology companies.
 
 As a result, Cloudflare operates within \~50 ms of \~95% of the world's Internet-connected population. And since all Cloudflare services are designed to run across every network location, all traffic is connected, inspected, and filtered close to the source for the best performance and consistent user experience.
 
@@ -680,6 +680,6 @@ It's worth noting that many of the capabilities described in this document can b
 | Remote Browser Isolation  | [Understanding browser isolation](/cloudflare-one/policies/browser-isolation/)                                                                                           |
 | API-Driven CASB           | [Scanning SaaS applications](/cloudflare-one/applications/casb/)                                                                                                         |
 | Email Security            | [Understanding Cloudflare Email Security](/email-security/)                                                                                                              |
-| Replacing your VPN        | [Using Cloudflare to replace your VPN](/learning-paths/replace-vpn/concepts/)                                                                                                     |
+| Replacing your VPN        | [Using Cloudflare to replace your VPN](/learning-paths/replace-vpn/concepts/)                                                                                            |
 
 If you would like to discuss your SASE requirements in greater detail and connect with one of our architects, please visit [https://www.cloudflare.com/cloudflare-one/](https://www.cloudflare.com/cloudflare-one/) and request a consultation.

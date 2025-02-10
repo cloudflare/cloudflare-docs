@@ -129,14 +129,14 @@ if (
 				<FeedbackPrompt client:idle />
 			</div>
 			<Default {...Astro.props} />
-			<div id="footer-links" class="flex flex-wrap items-center">
+			<div id="footer-links" class="mt-6 flex flex-wrap items-center space-x-4">
 				{Object.entries(links).map(([text, href]) => (
-					<a href={href} class="mx-2 my-2 text-xs text-black decoration-accent">
+					<a href={href} class="text-xs text-black decoration-accent">
 						<span>{text}</span>
 					</a>
 				))}
 				{isProduction && (
-					<div class="mx-2 my-2 text-xs text-black [&>button]:underline [&>button]:decoration-accent">
+					<div class="text-xs text-black [&>button]:underline [&>button]:decoration-accent">
 						<OneTrust />
 					</div>
 				)}
@@ -146,6 +146,18 @@ if (
 }
 
 <style>
+	:global(footer) {
+		flex-direction: column-reverse !important;
+	}
+
+	:global(.meta) {
+		margin-top: 0 !important;
+	}
+
+	:global(.pagination-links) {
+		margin-top: 3rem !important;
+	}
+
 	.feedback-prompt {
 		h2 {
 			color: var(--sl-color-white);

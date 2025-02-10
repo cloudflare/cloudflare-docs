@@ -51,6 +51,8 @@ If you are using a Cloudflare IP, you do not need to verify your IRR entries.
 
 You can also use the Resource Public Key Infrastructure (RPKI) as an additional option to validate your prefixes. RPKI is a [security framework method](https://blog.cloudflare.com/rpki/) that associates a route with an autonomous system. It uses cryptography to validate the information before being passed onto the routers.
 
+If you operate a network (ISP, cloud provider, enterprise, etc.), using RPKI ensures that your IP prefixes are correctly recognized. This prevents service disruptions and protects your brand's reputation. Without RPKI, attackers could announce your IP space, misdirect your traffic, and potentially harm your business.
+
 To check your prefixes, you can use [Cloudflare's RPKI Portal](https://rpki.cloudflare.com/?view=validator).
 
 ### Set maximum segment size
