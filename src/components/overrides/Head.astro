@@ -68,8 +68,7 @@ if (currentSection) {
 			const group = product.data.product.group.toLowerCase();
 
 			let ogImage = "https://developers.cloudflare.com/cf-twitter-card.png";
-			let changelogImage =
-				"https://developers.cloudflare.com/changelog-preview.png";
+
 			const images: Record<string, string> = {
 				"cloudflare essentials":
 					"https://developers.cloudflare.com/core-services-preview.png",
@@ -86,10 +85,6 @@ if (currentSection) {
 
 			if (images[group]) {
 				ogImage = images[group];
-			}
-
-			if (currentSection === "changelog") {
-				ogImage = changelogImage;
 			}
 
 			const tags = [
@@ -141,6 +136,40 @@ if (currentSection) {
 			},
 			content: "",
 		});
+	}
+
+	if (currentSection === "changelog") {
+		let changelogImage =
+			"https://developers.cloudflare.com/changelog-preview.png";
+
+		const tags = [
+			{
+				tag: "meta",
+				attrs: {
+					name: "image",
+					content: changelogImage,
+				},
+				content: "",
+			},
+			{
+				tag: "meta",
+				attrs: {
+					name: "og:image",
+					content: changelogImage,
+				},
+				content: "",
+			},
+			{
+				tag: "meta",
+				attrs: {
+					name: "twitter:image",
+					content: changelogImage,
+				},
+				content: "",
+			},
+		] as const;
+
+		Astro.props.entry.data.head.push(...tags);
 	}
 }
 

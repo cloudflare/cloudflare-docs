@@ -8,14 +8,15 @@ import starlightLinksValidator from "starlight-links-validator";
 import icon from "astro-icon";
 import sitemap from "@astrojs/sitemap";
 import react from "@astrojs/react";
+
 import { readdir } from "fs/promises";
+import { fileURLToPath } from "url";
 
 import rehypeTitleFigure from "rehype-title-figure";
 import rehypeMermaid from "./src/plugins/rehype/mermaid.ts";
 import rehypeAutolinkHeadings from "./src/plugins/rehype/autolink-headings.ts";
 import rehypeExternalLinks from "./src/plugins/rehype/external-links.ts";
 import rehypeHeadingSlugs from "./src/plugins/rehype/heading-slugs.ts";
-import { fileURLToPath } from "url";
 
 async function autogenSections() {
 	const sections = (
