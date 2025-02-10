@@ -83,12 +83,15 @@ The new settings may take up to 24 hours to propagate to devices.
 
 ## Verify device profile
 
-To check if pro
-To check WARP client settings on a specific device, open a terminal on the device and run:
+To check which device profile and profile settings are currently on a device, open a terminal and run:
 
 ```sh
 warp-cli settings
 ```
+
+The device profile UUID is shown in the `Profile ID` field.
+
+Alternatively, if you do not have access to the CLI, you can use [DEX remote captures](/cloudflare-one/insights/dex/remote-captures/) to generate a WARP diagnostic log. The `warp-settings.txt` log file will contain the output of `warp-cli settings`.
 
 ## Selectors
 
