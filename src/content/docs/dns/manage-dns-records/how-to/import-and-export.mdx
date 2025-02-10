@@ -103,7 +103,7 @@ c.cloudflaredocs.com.	1	IN	CNAME	example.com. ; cf_tags=tag-without-value,cf-pro
 
 #### cf-proxied
 
-On export, [proxied DNS records](/dns/proxy-status/#proxied-records) will present a tag `cf-proxied:true` while DNS-only records will have this tag set to `cf-proxied:false`.
+On export, [proxied DNS records](/dns/proxy-status/) will present a tag `cf-proxied:true` while DNS-only records will have this tag set to `cf-proxied:false`.
 
 When importing zone files, the value in the `cf-proxied` tag will take precedence in determining whether a record should be proxied. This means that:
 
