@@ -39,7 +39,7 @@ resource "cloudflare_zero_trust_gateway_policy" "block_security_threats" {
   account_id  = var.account_id
   name        = "All-DNS-SecurityCategories-Blocklist"
   description = "Block all default Cloudflare DNS security categories"
-  precednece  = 20
+  precedence  = 20
 	enabled     = false
   action      = "block"
   filters     = ["dns"]

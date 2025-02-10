@@ -54,35 +54,10 @@ To get the UUIDs of your lists, use the [List Zero Trust lists](/api/resources/z
 
 Block [security categories](/cloudflare-one/policies/gateway/domain-categories/#security-categories) such as Command & Control, Botnet and Malware based on Cloudflare's threat intelligence.
 
-<Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
-
 <Render
-	file="gateway/policies/block-security-categories"
+	file="gateway/policies/dash-plus-api/dns-block-security-categories"
 	product="cloudflare-one"
 />
-
-</TabItem>
-
-<TabItem label="API">
-
-```bash
-curl https://api.cloudflare.com/client/v4/accounts/{account_id}/gateway/rule \
---header "Content-Type: application/json" \
---header "Authorization: Bearer <API_TOKEN>" \
---data '{
-  "name": "Block security threats",
-  "description": "Block all default Cloudflare DNS security categories",
-  "enabled": true,
-  "action": "block",
-  "filters": [
-    "dns"
-  ],
-  "traffic": "any(dns.security_category[*] in {68 178 80 83 176 175 117 131 134 151 153})",
-  "identity": ""
-}'
-```
-
-</TabItem> </Tabs>
 
 ## Block content categories
 
