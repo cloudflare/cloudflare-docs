@@ -64,10 +64,10 @@ if (currentSection) {
 			});
 		}
 
-		let ogImage = "https://developers.cloudflare.com/cf-twitter-card.png";
-
 		if (product.data.product.group) {
 			const group = product.data.product.group.toLowerCase();
+
+			let ogImage = "https://developers.cloudflare.com/cf-twitter-card.png";
 
 			const images: Record<string, string> = {
 				"cloudflare essentials":
