@@ -48,6 +48,7 @@ Wrangler offers a number of commands to manage your Cloudflare Workers.
 - [`cert`](#cert) - Manage certificates used for mTLS and Certificate Authority (CA) chain connections.
 - [`types`](#types) - Generate types from bindings and module rules in configuration.
 - [`telemetry`](#telemetry) - Configure whether Wrangler can collect anonymous usage data.
+- [`check`](#check) - Validate your Worker.
 
 :::note
 
@@ -1966,3 +1967,26 @@ This will resolve the global status set by `wrangler telemetry disable / enable`
 ```txt
 wrangler telemetry status
 ```
+
+<Render file="wrangler-commands/global-flags" product="workers" />
+
+---
+
+## `check`
+
+### `startup`
+
+Generate a CPU profile of your Worker's startup phase.
+
+This can be imported into Chrome DevTools or opened directly in VSCode to view a flamegraph of your Worker's startup phase. Additionally, when a Worker deployment fails with a startup time error Wrangler will automatically generate a CPU profile for easy investigation.
+
+```sh
+wrangler check startup
+```
+
+- `--deploy-args` <Type text="string" /> <MetaInfo text="optional" />
+  - To customise the way `wrangler check startup` builds your Worker for analysis, provide the exact arguments you use when deploying your Worker with `wrangler deploy`. For instance, if you deploy your Worker with `wrangler deploy --no-bundle`, you should use `wrangler check startup --deploy-args="--no-bundle"` to profile the startup phase.
+- `--worker-bundle` <Type text="string" /> <MetaInfo text="optional" />
+  - If you don't use Wrangler to deploy your Worker, you can use this argument to provide a Worker bundle to analyse. This should be a file path to a serialised multipart upload, with the exact same format as [the API expects](https://developers.cloudflare.com/api/resources/workers/subresources/scripts/methods/update/)
+
+<Render file="wrangler-commands/global-flags" product="workers" />
