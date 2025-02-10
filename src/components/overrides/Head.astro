@@ -87,6 +87,35 @@ if (currentSection) {
 				ogImage = images[group];
 			}
 
+			const tags = [
+				{
+					tag: "meta",
+					attrs: {
+						name: "image",
+						content: ogImage,
+					},
+					content: "",
+				},
+				{
+					tag: "meta",
+					attrs: {
+						name: "og:image",
+						content: ogImage,
+					},
+					content: "",
+				},
+				{
+					tag: "meta",
+					attrs: {
+						name: "twitter:image",
+						content: ogImage,
+					},
+					content: "",
+				},
+			] as const;
+
+			Astro.props.entry.data.head.push(...tags);
+
 			Astro.props.entry.data.head.push({
 				tag: "meta",
 				attrs: {
@@ -96,35 +125,6 @@ if (currentSection) {
 				content: "",
 			});
 		}
-
-		const tags = [
-			{
-				tag: "meta",
-				attrs: {
-					name: "image",
-					content: ogImage,
-				},
-				content: "",
-			},
-			{
-				tag: "meta",
-				attrs: {
-					name: "og:image",
-					content: ogImage,
-				},
-				content: "",
-			},
-			{
-				tag: "meta",
-				attrs: {
-					name: "twitter:image",
-					content: ogImage,
-				},
-				content: "",
-			},
-		] as const;
-
-		Astro.props.entry.data.head.push(...tags);
 	}
 
 	if (currentSection === "style-guide") {
