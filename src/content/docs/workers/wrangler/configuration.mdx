@@ -439,7 +439,7 @@ A [browser binding](/workers/runtime-apis/bindings/) will provide your Worker wi
 
 - `binding` <Type text="string" /> <MetaInfo text="required" />
 
-  - The binding name used to refer to the D1 database. The value (string) you set will be used to reference this database in your Worker. The binding must be [a valid JavaScript variable name](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Grammar_and_types#variables). For example, `binding = "MY_DB"` or `binding = "productionDB"` would both be valid names for the binding.
+  - The binding name used to refer to the browser binding. The value (string) you set will be used to reference this headless browser in your Worker. The binding must be [a valid JavaScript variable name](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Grammar_and_types#variables). For example, `binding = "HEAD_LESS"` or `binding = "simulatedBrowser"` would both be valid names for the binding.
 
 Example:
 
@@ -472,9 +472,7 @@ To bind D1 databases to your Worker, assign an array of the below object to the 
 
 - `preview_database_id` <Type text="string" /> <MetaInfo text="optional" />
 
-  - The preview ID of this D1 database. If provided, `wrangler dev` will use this ID. Otherwise, it will use `database_id`. This option is required when using `wrangler dev --remote`.
-
-  - The ID of the database. The database ID is available when you first use `wrangler d1 create` or when you call `wrangler d1 list`, and uniquely identifies your database.
+  - The preview ID of this D1 database. If provided, `wrangler dev` uses this ID. Otherwise, it uses `database_id`. This option is required when using `wrangler dev --remote`.
 
 - `migrations_dir` <Type text="string" /> <MetaInfo text="optional" />
 
@@ -483,7 +481,7 @@ To bind D1 databases to your Worker, assign an array of the below object to the 
 
 :::note
 
-When using Wrangler in the default local development mode, files will be written to local storage instead of the preview or production database. Refer to [Local development and testing](/workers/testing/local-development/) for more details.
+When using Wrangler in the default local development mode, files will be written to local storage instead of the preview or production database. Refer to [Local development and testing](/workers/local-development/) for more details.
 
 :::
 
@@ -680,7 +678,7 @@ To bind KV namespaces to your Worker, assign an array of the below object to the
 
 :::note
 
-When using Wrangler in the default local development mode, files will be written to local storage instead of the preview or production namespace. Refer to [Local development and testing](/workers/testing/local-development/) for more details.
+When using Wrangler in the default local development mode, files will be written to local storage instead of the preview or production namespace. Refer to [Local development and testing](/workers/local-development/) for more details.
 
 :::
 
@@ -805,7 +803,7 @@ To bind R2 buckets to your Worker, assign an array of the below object to the `r
 
 :::note
 
-When using Wrangler in the default local development mode, files will be written to local storage instead of the preview or production bucket. Refer to [Local development and testing](/workers/testing/local-development/) for more details.
+When using Wrangler in the default local development mode, files will be written to local storage instead of the preview or production bucket. Refer to [Local development and testing](/workers/local-development/) for more details.
 
 :::
 

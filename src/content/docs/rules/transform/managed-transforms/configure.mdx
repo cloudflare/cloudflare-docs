@@ -7,9 +7,9 @@ head: []
 description: Learn how to configure Managed Transforms.
 ---
 
-import { Details, TabItem, Tabs } from "~/components";
+import { Details, TabItem, Tabs, Render } from "~/components";
 
-<Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
+<Tabs syncKey="dashPlusAPIPlusTerraform"> <TabItem label="Dashboard">
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/), and select your account and website.
 
@@ -181,5 +181,29 @@ The response will include all the available Managed Transforms and their new sta
 ```
 
 </Details>
+
+</TabItem> <TabItem label="Terraform">
+
+<Render file="v4-code-snippets" product="terraform" />
+
+Use the `cloudflare_managed_headers` Terraform resource to configure Managed Transforms. For example:
+
+```tf
+resource "cloudflare_managed_headers" "tf_example" {
+  zone_id = "<ZONE_ID>"
+
+  managed_request_headers {
+    id      = "add_visitor_location_headers"
+    enabled = true
+  }
+
+  managed_response_headers {
+    id      = "remove_x-powered-by_header"
+    enabled = true
+  }
+}
+```
+
+Make sure you include the Managed Transforms you are updating in the correct object (`managed_request_headers` or `managed_response_headers`).
 
 </TabItem> </Tabs>

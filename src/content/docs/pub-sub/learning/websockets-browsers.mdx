@@ -35,7 +35,7 @@ In this example, we use MQTT.js’s WebSocket support to subscribe to a topic an
 
 :::note
 
-You can view a live demo available at [demo.mqtt.dev](http://demo.mqtt.dev) that allows you to use your own Pub/Sub Broker and a valid token to subscribe to a topic and publish messages to it. 
+You can view a live demo available at [demo.mqtt.dev](http://demo.mqtt.dev) that allows you to use your own Pub/Sub Broker and a valid token to subscribe to a topic and publish messages to it.
 :::
 
 In a real-world deployment, our publisher could be another client, a native MQTT client, or a WebSocket client running on a remote server elsewhere.
@@ -54,7 +54,7 @@ function example(url) {
     password: jwt, // pass this from a form field in your app
     clientId: '',
   })
-  
+ 
   client.on('connect', function () {
     client.subscribe(topic, function (err) {
       if (err) {
@@ -63,7 +63,7 @@ function example(url) {
         console.log(`subscribed to ${topic}`)
       }
   })
-  
+ 
   client.on('message', function (topic, message) {
     let line = (new Date()).toLocaleString('en-US') + ": " + message.toString() + "\n";
     console.log(line)

@@ -22,7 +22,7 @@ Although it is possible to add discrete bindings for non-contiguous CIDR blocks,
 
 <Details header="Example">
 
-**Magic Transit protected prefix:** `203.0.113.100/24`
+**Magic Transit protected prefix:** `203.0.113.0/24`
 
 **IPs to upgrade to the CDN:**
 
@@ -58,7 +58,7 @@ At this point, continuing the [example](#before-you-begin), you should have a ma
 | Variables      | Description                                                                                                                                       |
 | -------------- | ------------------------------------------------------------------------------------------------------------------------------------------------- |
 | `{service_id}` | The ID of the CDN service within Cloudflare. <br /><br /> Example: `969xxxxxxxx000xxx0000000x00001bf`                                             |
-| `{prefix_id}`  | The ID of the Magic Transit protected prefix (`203.0.113.100/24`) you want to configure. <br /><br /> Example: `6b25xxxxxxx000xxx0000000x0000cfc` |
+| `{prefix_id}`  | The ID of the Magic Transit protected prefix (`203.0.113.0/24`) you want to configure. <br /><br /> Example: `6b25xxxxxxx000xxx0000000x0000cfc` |
 
 </Example>
 
@@ -193,7 +193,7 @@ While the DNS record proxy status and address map will determine how Cloudflare'
 At this point, if an address map for a zone `example.com` specifies that Cloudflare should use `203.0.113.100` for proxied records and the above record exists in the same zone, you can expect the following:
 
 1. Cloudflare responds to DNS requests with `203.0.113.100`.
-2. Cloudflare proxies requests through the CDN and then routes the requests via [GRE](/magic-transit/reference/tunnels/) or [CNI](/magic-transit/network-interconnect/) to the origin server `203.0.113.150` (Magic Transit protected prefix).
+2. Cloudflare proxies requests through the CDN and then routes the requests via [GRE](/magic-transit/reference/tunnels/) or [CNI](/magic-transit/network-interconnect/) to the origin server `203.0.113.150` (which is within the Magic Transit protected prefix).
 3. Depending on whether Magic Transit is implemented with [direct server return model or with Magic Transit egress](/magic-transit/how-to/configure-tunnels/#bidirectional-vs-unidirectional-health-checks), the origin server responds back to Cloudflare either:
 
    - Directly over the Internet in a Magic Transit direct server return model

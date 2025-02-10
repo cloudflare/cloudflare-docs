@@ -4,6 +4,12 @@ title: Using JSON
 slug: 1.1.1.1/encryption/dns-over-https/make-api-requests/dns-json
 ---
 
+:::caution
+The DNS over HTTPS JSON format does not have a formal RFC, which means behavior might be different between providers. Additionally, there might be small changes in behavior in the future.
+
+For critical use cases, it is recommended to use the [DNS over HTTPS wireformat](/1.1.1.1/encryption/dns-over-https/make-api-requests/dns-wireformat/), which is defined in [RFC 1035](https://www.rfc-editor.org/rfc/rfc1035.html).
+:::
+
 Cloudflare's DNS over HTTPS endpoint also supports JSON format for querying DNS data. For lack of an agreed upon JSON schema for DNS over HTTPS in the Internet Engineering Task Force (IETF), Cloudflare has chosen to follow the same schema as Google's DNS over HTTPS resolver.
 
 JSON formatted queries are sent using a `GET` request. When making requests using `GET`, the DNS query is encoded into the URL. The client should include an HTTP `Accept` request header field with a MIME type of `application/dns-json` to indicate that the client is able to accept a JSON response from the DNS over HTTPS resolver.

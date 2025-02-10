@@ -70,12 +70,6 @@ yarn remove @cloudflare/workers-types
 pnpm uninstall @cloudflare/workers-types
 ```
 
-</TabItem> <TabItem label="bun">
-
-```sh
-bun remove @cloudflare/workers-types
-```
-
 </TabItem> </Tabs>
 
 ##### Generate runtime types using wrangler
@@ -138,14 +132,6 @@ In CI, you may have separate build and test commands. It is best practice to run
 - run: pnpm run generate-types
 - run: pnpm run build
 - run: pnpm test
-```
-
-</TabItem> <TabItem label="bun">
-
-```yaml
-- run: bun run generate-types
-- run: bun run build
-- run: bun test
 ```
 
 </TabItem> </Tabs>
