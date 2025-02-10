@@ -2,17 +2,21 @@
 {}
 ---
 
-import { Tabs, TabItem, Render } from "~/components";
+import { Tabs, TabItem } from "~/components";
 
 In the following example, you can use a list of [device serial numbers](/cloudflare-one/identity/devices/warp-client-checks/corp-device/) to ensure users can only access an application if they connect with the WARP client from a company device:
+
 <Tabs syncKey="dashPlusAPI">
 <TabItem label="Dashboard">
+
 | Selector                     | Operator | Value                   | Logic | Action |
 | ---------------------------- | -------- | ----------------------- | ----- | ------ |
 | Passed Device Posture Checks | not in   | _Device serial numbers_ | And   | Block  |
 | SNI Domain                   | is       | `internalapp.com`       |       |        |
+
 </TabItem>
 <TabItem label="API">
+
 ```sh
 curl --request POST \
   --url https://api.cloudflare.com/client/v4/accounts/{account_id}/gateway/rules \
@@ -35,8 +39,10 @@ curl --request POST \
     }
 	}'
 ```
+
 </TabItem>
 <TabItem label="Terraform">
+
 ```tf
 resource "cloudflare_zero_trust_gateway_policy" "dns_resolvedip_blocklist_rule" {
   account_id  = var.account_id
@@ -54,5 +60,6 @@ resource "cloudflare_zero_trust_gateway_policy" "dns_resolvedip_blocklist_rule" 
     }
 }
 ```
+
 </TabItem>
 </Tabs>
