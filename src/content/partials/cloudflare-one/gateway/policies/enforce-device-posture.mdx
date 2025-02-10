@@ -2,64 +2,7 @@
 {}
 ---
 
-import { Tabs, TabItem } from "~/components";
-
-In the following example, you can use a list of [device serial numbers](/cloudflare-one/identity/devices/warp-client-checks/corp-device/) to ensure users can only access an application if they connect with the WARP client from a company device:
-
-<Tabs syncKey="dashPlusAPI">
-<TabItem label="Dashboard">
-
 | Selector                     | Operator | Value                   | Logic | Action |
 | ---------------------------- | -------- | ----------------------- | ----- | ------ |
 | Passed Device Posture Checks | not in   | _Device serial numbers_ | And   | Block  |
 | SNI Domain                   | is       | `internalapp.com`       |       |        |
-
-</TabItem>
-<TabItem label="API">
-
-```sh
-curl --request POST \
-  --url https://api.cloudflare.com/client/v4/accounts/{account_id}/gateway/rules \
-  --header 'Content-Type: application/json' \
-  --header "Authorization: Bearer <API TOKEN>" \
-	--data '{
-	"name": "All-NET-ApplicationAccess-Allow",
-  "description": "Ensure access to the application comes from authorized WARP clients",
-  "precedence": 5000,
-  "enabled": false,
-  "action": "block",
-  "filters": [
-    "l4"
-  ],
-  "traffic": "any(net.sni.domains[*] == \"internalapp.com\")",
-	"device_posture": "not(any(device_posture.checks.passed[*] in {\"<Device Serial Numbers List UUID>\"}))",
-  "rule_settings": {
-    "block_page_enabled": true,
-    "block_reason": "This domain/IP was explicitly blocked by your network administrator. Please reach out to your helpdesk for assistance"
-    }
-	}'
-```
-
-</TabItem>
-<TabItem label="Terraform">
-
-```tf
-resource "cloudflare_zero_trust_gateway_policy" "dns_resolvedip_blocklist_rule" {
-  account_id  = var.account_id
-  name        = "All-NET-ApplicationAccess-Allow"
-  description = "Ensure access to the application comes from authorized WARP clients"
-  precedence  = 5000
-  enabled     = false
-  action      = "block"
-  filters     = ["l4"]
-  traffic     = "any(net.sni.domains[*] == \"internalapp.com\")"
-	posture			=	"not(any(device_posture.checks.passed[*] in {\"${"$"}${cloudflare_zero_trust_list.allowed_devices_sn_list.id}\"}))"
-  rule_settings {
-      block_page_enabled = true
-      block_page_reason = "This domain/IP was explicitly blocked by your network administrator. Please reach out to your helpdesk for assistance"
-    }
-}
-```
-
-</TabItem>
-</Tabs>
