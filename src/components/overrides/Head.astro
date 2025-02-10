@@ -88,7 +88,7 @@ if (currentSection) {
 				ogImage = images[group];
 			}
 
-			if (currentSection === "changelog") {
+			if (Astro.url.pathname.startsWith("/changelog/")) {
 				ogImage = changelogImage;
 			}
 
