@@ -15,7 +15,7 @@ Configure Custom Error Responses as [rules](/ruleset-engine/about/rules/) belong
 When creating a custom error response via API, make sure you:
 
 - Set the rule action to `serve_error`.
-- Define the [parameters](/rules/custom-error-responses/parameters/) in the `action_parameters` field according to response type.
+- Define the [parameters](/rules/custom-errors/parameters/) in the `action_parameters` field according to response type.
 - Deploy the custom error response rule to the `http_custom_errors` phase at the zone level.
 
 The first rule in the `http_custom_errors` phase ruleset that matches will be applied. No other rules in the ruleset will be matched or applied.
