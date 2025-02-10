@@ -33,7 +33,7 @@ For any given hostname, Cloudflare uses the following order to determine which c
    | 6        | [Advanced - Total TLS](/ssl/edge-certificates/additional-options/total-tls/)            |
    | 7        | [Universal](/ssl/edge-certificates/universal-ssl/)                                      |
 
-4. **Certificate expiration**: If the hostname and certificate type are the same, Cloudflare deploys the certificate with the latest expiration date.
+4. **Certificate expiration**: The most recently ordered certificate takes precedence unless a certificate deletion has occurred. If and when a certificate is deleted, the certificate with the latest expiration date is deployed.
 
 :::note
 In this case, when the certificate with the closest expiration date is renewed, it will then become the one with the latest expiration date and get presented.
