@@ -5,6 +5,16 @@ productLink: "/dns/"
 productArea: Core platform
 productAreaLink: /fundamentals/reference/changelog/performance/
 entries:
+  - publish_date: "2025-02-03"
+    title: Removal of unused DNS record meta fields
+    description: |-
+      Cloudflare is removing five fields from the `meta` object of DNS records.
+      These fields have been unused for more than a year and are no longer set on new records.
+      This change may take up to four weeks to fully roll out.
+      The affected fields are:
+      - the `auto_added` boolean
+      - the `managed_by_apps` boolean and corresponding `apps_install_id`
+      - the `managed_by_argo_tunnel` boolean and corresponding `argo_tunnel_id`
   - publish_date: "2025-01-27"
     title: Zone IDs and names on individual DNS records
     description: |-

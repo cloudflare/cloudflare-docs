@@ -5,6 +5,13 @@ productLink: "/d1/"
 productArea: Developer platform
 productAreaLink: /workers/platform/changelog/platform/
 entries:
+  - publish_date: "2025-02-04"
+    title: Fixed bug with D1 read-only access via UI and /query REST API.
+    description: |-
+      Fixed a bug with D1 permissions which allowed users with read-only roles via the UI and users with read-only API tokens via the `/query` [REST API](/api/resources/d1/subresources/database/methods/query/) to execute queries that modified databases. UI actions via the `Tables` tab, such as creating and deleting tables, were incorrectly allowed with read-only access. However, UI actions via the `Console` tab were not affected by this bug and correctly required write access.
+      
+      Write queries with read-only access will now fail. If you relied on the previous incorrect behavior, please assign the correct roles to users or permissions to API tokens to perform D1 write queries.
+
   - publish_date: "2025-01-13"
     title: D1 will begin enforcing its free tier limits from the 10th of February 2025.
     description: |-

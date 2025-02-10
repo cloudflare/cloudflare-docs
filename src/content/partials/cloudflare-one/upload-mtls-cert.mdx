@@ -1,16 +1,14 @@
 ---
 inputParameters: param1
-
 ---
 
-import { Markdown } from "~/components"
+import { Markdown } from "~/components";
 
 Use the [Upload mTLS certificate endpoint](/api/resources/mtls_certificates/methods/create/) to upload the certificate and private key to Cloudflare. The certificate must be a root CA, formatted as a single string with `\n` replacing the line breaks. {props.one}
 
-```bash
-curl "https://api.cloudflare.com/client/v4/accounts/{account_id}/mtls_certificates" \
---header "X-Auth-Email: <EMAIL>" \
---header "X-Auth-Key: <API_KEY>" \
+```sh
+curl "https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/mtls_certificates" \
+--header "Authorization: Bearer $CLOUDFLARE_API_TOKEN" \
 --header "Content-Type: application/json" \
 --data '{
   "name": "example_ca_cert",
@@ -31,7 +29,7 @@ The response will return a UUID for the certificate. For example:
     "id": "2458ce5a-0c35-4c7f-82c7-8e9487d3ff60",
     "name": "example_ca_cert",
     "issuer": "O=Example Inc.,L=California,ST=San Francisco,C=US",
-    "signature": "SHA256WithRSA"
+    "signature": "SHA256WithRSA",
     ...
   }
 }

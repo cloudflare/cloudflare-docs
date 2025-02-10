@@ -9,10 +9,18 @@ entries:
     title: Access Applications support private hostnames/IPs and reusable Access policies.
     description: |-
       Cloudflare Access self-hosted applications can now be defined by [private IPs](/cloudflare-one/applications/non-http/self-hosted-private-app/), [private hostnames](/cloudflare-one/applications/non-http/self-hosted-private-app/) (on port 443) and [public hostnames](/cloudflare-one/applications/configure-apps/self-hosted-public-app/). Additionally, we made Access policies into their own object which can be reused across multiple applications. These updates involved significant updates to the overall Access dashboard experience. The updates will be slowly rolled out to different customer cohorts. If you are an Enterprise customer and would like early access, reach out to your account team.
+  - publish_date: "2025-01-15"
+    title: Logpush for SSH command logs
+    description: |-
+      Enterprise customers can now use Logpush to export SSH command logs for Access for Infrastructure targets.
   - publish_date: "2024-12-04"
     title: SCIM GA for Okta and Microsoft Entra ID
     description: |-
       Cloudflare's SCIM integrations with [Okta](/cloudflare-one/identity/idp-integration/okta/#synchronize-users-and-groups) and [Microsoft Entra ID](//cloudflare-one/identity/idp-integration/entra-id/#synchronize-users-and-groups) (formerly AzureAD) are now out of beta and generally available (GA) for all customers. These integrations can be used for Access and Gateway policies and Zero Trust user management. Note: This GA release does not include [Dashboard SSO SCIM](/fundamentals/setup/account/account-security/scim-setup/) support.
+  - publish_date: "2024-10-23"
+    title: SSH with Access for Infrastructure
+    description: |-
+      Admins can now use [Access for Infrastructure](/cloudflare-one/connections/connect-networks/use-cases/ssh/ssh-infrastructure-access/) to manage privileged access to SSH servers. Access for Infrastructure provides improved control and visibility over who accessed what service and what they did during their SSH session. Access for Infrastructure also eliminates the risk and overhead associated with managing SSH keys by using short-lived SSH certificates to access SSH servers.
   - publish_date: "2024-08-26"
     title: Reduce automatic seat deprovisioning minimum to 1 month, down from 2 months.
     description: |-

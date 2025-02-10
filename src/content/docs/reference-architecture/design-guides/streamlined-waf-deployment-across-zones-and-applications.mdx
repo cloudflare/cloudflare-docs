@@ -36,7 +36,7 @@ In this setup, Cloudflare is a DNS-based reverse proxy. Each Fully Qualified Dom
 
 Frequently, multiple FQDNs are pointing to the same, shared web infrastructure. This is reached using an IP address or another FQDN, for example. It is also possible that some FQDNs are pointed at dedicated origin infrastructure or to an external SaaS endpoint.
 
-In many cases, Cloudflare customers end up managing many Cloudflare Zones (such as `example.com`,`example.org`, `myappexample.com` and so on) within a single Cloudflare Account, and many FQDNs within each zone. Frequently, many FQDNs across multiple zones are pointing at a shared web infrastrcuture behind the scenes.
+In many cases, Cloudflare customers end up managing many Cloudflare Zones (such as `example.com`,`example.org`, `myappexample.com` and so on) within a single Cloudflare Account, and many FQDNs within each zone. Frequently, many FQDNs across multiple zones are pointing at a shared web infrastructure behind the scenes.
 
 For example, you could be in the following (or similar) scenario:
 * The majority of your web applications run on a newly deployed in-house Content Management System (CMS)
@@ -67,7 +67,7 @@ For the purposes of this guide, we will build on the example scenario and WAF Re
 Let's imagine that there are six applications behind six FQDNs across two domains. For these applications, you want to apply a baseline WAF security posture. However, of these six applications, two will require a more special treatment:
 
 * One is implemented on a legacy application server, prone to false positives.
-* Another is implemented by a third party on their own infrastrcuture.
+* Another is implemented by a third party on their own infrastructure.
 
 Let's visualize the scenario below:
 
